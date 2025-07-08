@@ -51,7 +51,7 @@ export const AboutWhatWeDo = () => {
 
             <AboutWhatWeDoItem
               title="Expert Insights & Curation"
-              description="Stay up-to-date with emerging artists, market trends, and deep editorial storytelling. Whether you're curious or collecting, Artsy helps you build knowledge with confidence."
+              description="Stay up-to-date with emerging artists, market trends, and deep editorial storytelling. Whether you’re curious or collecting, Artsy helps you build knowledge with confidence."
             />
           </Stack>
         </Column>

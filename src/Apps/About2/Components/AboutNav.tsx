@@ -13,10 +13,10 @@ import {
 } from "react"
 
 export const SECTIONS = [
-  { id: "mission-and-vision", label: "Mission and vision" },
-  { id: "our-story", label: "Our story" },
-  { id: "what-we-do", label: "What we do" },
-  { id: "our-team", label: "Our team" },
+  { id: "mission-and-vision", label: "Mission and Vision" },
+  { id: "our-story", label: "Our Story" },
+  { id: "what-we-do", label: "What We Do" },
+  { id: "our-team", label: "Our Team" },
   { id: "press", label: "Press" },
   { id: "contact", label: "Contact" },
 ] as const
@@ -25,8 +25,12 @@ export type Section = (typeof SECTIONS)[number]["id"]
 
 export const AboutNav = () => {
   const { theme } = useTheme()
+
   const { active, activate, visible } = useAboutNav()
+
   const { jumpTo } = useJump()
+
+  const [isScrolling, setIsScrolling] = useState(false)
 
   const items = useMemo(() => {
     return SECTIONS.map(section => {
@@ -39,10 +43,15 @@ export const AboutNav = () => {
           <Pill
             key={section.id}
             ref={ref as any}
-            selected={active === section.id}
+            selected={active === section.id && !isScrolling}
             onClick={() => {
+              setIsScrolling(true)
               activate(section.id)
-              jumpTo(section.id)
+              jumpTo(section.id, {
+                onComplete: () => {
+                  setIsScrolling(false)
+                },
+              })
             }}
           >
             {section.label}
@@ -50,10 +59,10 @@ export const AboutNav = () => {
         ),
       }
     })
-  }, [active, activate, jumpTo])
+  }, [active, activate, jumpTo, isScrolling])
 
   useEffect(() => {
-    if (!active) return
+    if (!active || isScrolling) return
 
     const item = items.find(item => item.id === active)
 
@@ -64,7 +73,7 @@ export const AboutNav = () => {
       block: "nearest",
       inline: "center",
     })
-  }, [active, items])
+  }, [active, items, isScrolling])
 
   return (
     <>
@@ -76,6 +85,17 @@ export const AboutNav = () => {
           bottom={0}
           left={0}
           zIndex={Z.globalNav}
+          pb="env(safe-area-inset-bottom)"
+          style={{
+            boxShadow: theme.effects.dropShadow,
+            transition: "opacity 0.3s ease-in-out, transform 0.3s ease-in-out",
+            ...(visible
+              ? { opacity: 1, transform: "translateY(0)" }
+              : {
+                  opacity: 0,
+                  transform: "translateY(10%)",
+                }),
+          }}
         >
           <HorizontalOverflow>
             <Stack gap={1} p={1} flexDirection="row">
@@ -178,7 +198,7 @@ export const AboutNavEntry = () => {
   return <div ref={ref as any} />
 }
 
-export const AboutNavExit = () => {
+export const AboutNavExit = ({ children }: { children: React.ReactNode }) => {
   const { show, hide } = useAboutNav()
 
   const { ref } = useIntersectionObserver({
@@ -190,5 +210,5 @@ export const AboutNavExit = () => {
     onOffIntersection: show,
   })
 
-  return <div ref={ref as any} />
+  return <div ref={ref as any}>{children}</div>
 }

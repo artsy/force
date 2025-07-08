@@ -5,12 +5,7 @@ import { AboutHeader } from "Apps/About2/Components/AboutHeader"
 import { AboutHero } from "Apps/About2/Components/AboutHero"
 import { AboutJoin } from "Apps/About2/Components/AboutJoin"
 import { AboutMissionAndVision } from "Apps/About2/Components/AboutMissionAndVision"
-import {
-  AboutNav,
-  AboutNavEntry,
-  AboutNavExit,
-  AboutNavProvider,
-} from "Apps/About2/Components/AboutNav"
+import { AboutNav, AboutNavEntry } from "Apps/About2/Components/AboutNav"
 import { AboutOurStory } from "Apps/About2/Components/AboutOurStory"
 import { AboutOurTeam } from "Apps/About2/Components/AboutOurTeam"
 import { AboutPress } from "Apps/About2/Components/AboutPress"
@@ -19,12 +14,11 @@ import { AboutTagline } from "Apps/About2/Components/AboutTagline"
 import { AboutWhatWeDo } from "Apps/About2/Components/AboutWhatWeDo"
 import { MetaTags } from "Components/MetaTags"
 
-export const DESCRIPTION =
-  "Artsy’s mission is to expand the art market to support more artists and art in the world."
+export const DESCRIPTION = "Artsy is the leading global online art marketplace."
 
 export const About2App: React.FC<React.PropsWithChildren<unknown>> = () => {
   return (
-    <AboutNavProvider>
+    <>
       <MetaTags
         title="About | Artsy"
         description={DESCRIPTION}
@@ -71,8 +65,6 @@ export const About2App: React.FC<React.PropsWithChildren<unknown>> = () => {
 
         <AboutContact />
       </Stack>
-
-      <AboutNavExit />
-    </AboutNavProvider>
+    </>
   )
 }

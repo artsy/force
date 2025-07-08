@@ -5,9 +5,16 @@ import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import type { BaseLayoutProps } from "Apps/Components/Layouts"
 import { LayoutFooter } from "Apps/Components/Layouts/Components/LayoutFooter"
 import { LayoutNav } from "Apps/Components/Layouts/Components/LayoutNav"
-import type { FC } from "react"
+import type { FC, ReactNode } from "react"
 
-export const LayoutDefault: FC<React.PropsWithChildren<BaseLayoutProps>> = ({
+export interface LayoutDefaultProps extends BaseLayoutProps {
+  nav?: ReactNode
+  footer?: ReactNode
+}
+
+export const LayoutDefault: FC<React.PropsWithChildren<LayoutDefaultProps>> = ({
+  nav,
+  footer,
   children,
 }) => {
   return (
@@ -23,7 +30,7 @@ export const LayoutDefault: FC<React.PropsWithChildren<BaseLayoutProps>> = ({
         minHeight="100vh"
         flexDirection="column"
       >
-        <LayoutNav />
+        {nav ?? <LayoutNav />}
 
         <AppContainer as="main" id="main" flex={1} minHeight="100vh">
           <HorizontalPadding>{children}</HorizontalPadding>
@@ -31,7 +38,7 @@ export const LayoutDefault: FC<React.PropsWithChildren<BaseLayoutProps>> = ({
 
         <Spacer y={4} />
 
-        <LayoutFooter />
+        {footer ?? <LayoutFooter />}
       </Flex>
     </>
   )

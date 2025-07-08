@@ -27,7 +27,7 @@ export const AboutMissionAndVision = () => {
             justifyContent="center"
             order={[1, 0]}
           >
-            <Text variant="sm-display">Our mission:</Text>
+            <Text variant="sm-display">Our Mission:</Text>
 
             <Text variant={["lg-display", "xl"]}>
               Expand the Art Market to Support More Artists
@@ -100,7 +100,7 @@ export const AboutMissionAndVision = () => {
             justifyContent="center"
             order={3}
           >
-            <Text variant="sm-display">Our vision:</Text>
+            <Text variant="sm-display">Our Vision:</Text>
 
             <Text variant={["lg-display", "xl"]}>
               A World Where Everyone Is Moved by Art Every Day
