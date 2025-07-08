@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6bcf4dd61ac777d4bdcd082e8227b6cf>>
+ * @generated SignedSource<<914fc50202c945b935db08f1c968a5c3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,6 +10,8 @@
 
 import { ReaderFragment } from 'relay-runtime';
 export type DisplayTextsMessageTypeEnum = "APPROVED_PICKUP" | "APPROVED_SHIP" | "APPROVED_SHIP_EXPRESS" | "APPROVED_SHIP_STANDARD" | "APPROVED_SHIP_WHITE_GLOVE" | "CANCELED" | "COMPLETED_PICKUP" | "COMPLETED_SHIP" | "DECLINED_BY_BUYER" | "DECLINED_BY_SELLER" | "PAYMENT_FAILED" | "PROCESSING_PAYMENT_PICKUP" | "PROCESSING_PAYMENT_SHIP" | "PROCESSING_WIRE" | "REFUNDED" | "SHIPPED" | "SUBMITTED_OFFER" | "SUBMITTED_ORDER" | "UNKNOWN" | "%future added value";
+export type OrderModeEnum = "BUY" | "OFFER" | "%future added value";
+export type OrderSourceEnum = "ARTWORK_PAGE" | "INQUIRY" | "PARTNER_OFFER" | "PRIVATE_SALE" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type Order2DetailsMessage_order$data = {
   readonly buyerStateExpiresAt: string | null | undefined;
@@ -33,6 +35,8 @@ export type Order2DetailsMessage_order$data = {
       readonly slug: string;
     } | null | undefined;
   } | null | undefined>;
+  readonly mode: OrderModeEnum;
+  readonly source: OrderSourceEnum;
   readonly " $fragmentType": "Order2DetailsMessage_order";
 };
 export type Order2DetailsMessage_order$key = {
@@ -176,6 +180,20 @@ return {
         }
       ],
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "source",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "mode",
+      "storageKey": null
     }
   ],
   "type": "Order",
@@ -183,6 +201,6 @@ return {
 };
 })();
 
-(node as any).hash = "6460a22407fc63f9e79cf4ede91a6477";
+(node as any).hash = "63459dabdf8b235d0c7a8ee7496e08ae";
 
 export default node;

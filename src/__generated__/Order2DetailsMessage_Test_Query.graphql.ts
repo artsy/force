@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7783aad5dc3f3eb462369181779fe143>>
+ * @generated SignedSource<<0e3ed6faffef30c782e8822ae55519f7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,8 @@
 import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type DisplayTextsMessageTypeEnum = "APPROVED_PICKUP" | "APPROVED_SHIP" | "APPROVED_SHIP_EXPRESS" | "APPROVED_SHIP_STANDARD" | "APPROVED_SHIP_WHITE_GLOVE" | "CANCELED" | "COMPLETED_PICKUP" | "COMPLETED_SHIP" | "DECLINED_BY_BUYER" | "DECLINED_BY_SELLER" | "PAYMENT_FAILED" | "PROCESSING_PAYMENT_PICKUP" | "PROCESSING_PAYMENT_SHIP" | "PROCESSING_WIRE" | "REFUNDED" | "SHIPPED" | "SUBMITTED_OFFER" | "SUBMITTED_ORDER" | "UNKNOWN" | "%future added value";
+export type OrderModeEnum = "BUY" | "OFFER" | "%future added value";
+export type OrderSourceEnum = "ARTWORK_PAGE" | "INQUIRY" | "PARTNER_OFFER" | "PRIVATE_SALE" | "%future added value";
 export type Order2DetailsMessage_Test_Query$variables = Record<PropertyKey, never>;
 export type Order2DetailsMessage_Test_Query$data = {
   readonly me: {
@@ -47,6 +49,8 @@ export type Order2DetailsMessage_Test_Query$rawResponse = {
         } | null | undefined;
         readonly id: string;
       } | null | undefined>;
+      readonly mode: OrderModeEnum;
+      readonly source: OrderSourceEnum;
     } | null | undefined;
   } | null | undefined;
 };
@@ -263,6 +267,20 @@ return {
                 ],
                 "storageKey": null
               },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "source",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "mode",
+                "storageKey": null
+              },
               (v2/*: any*/)
             ],
             "storageKey": "order(id:\"123\")"
@@ -274,12 +292,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5bda85285498dd7bf3a6dd7b3686d3fb",
+    "cacheID": "615fa5e01d5d07c1c85507c98fc5f7f2",
     "id": null,
     "metadata": {},
     "name": "Order2DetailsMessage_Test_Query",
     "operationKind": "query",
-    "text": "query Order2DetailsMessage_Test_Query {\n  me {\n    order(id: \"123\") {\n      ...Order2DetailsMessage_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DetailsMessage_order on Order {\n  buyerStateExpiresAt\n  code\n  currencyCode\n  internalID\n  impulseConversationId\n  displayTexts {\n    messageType\n  }\n  deliveryInfo {\n    shipperName\n    trackingNumber\n    trackingURL\n    estimatedDelivery\n    estimatedDeliveryWindow\n  }\n  lineItems {\n    artwork {\n      internalID\n      slug\n      id\n    }\n    id\n  }\n}\n"
+    "text": "query Order2DetailsMessage_Test_Query {\n  me {\n    order(id: \"123\") {\n      ...Order2DetailsMessage_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DetailsMessage_order on Order {\n  buyerStateExpiresAt\n  code\n  currencyCode\n  internalID\n  impulseConversationId\n  displayTexts {\n    messageType\n  }\n  deliveryInfo {\n    shipperName\n    trackingNumber\n    trackingURL\n    estimatedDelivery\n    estimatedDeliveryWindow\n  }\n  lineItems {\n    artwork {\n      internalID\n      slug\n      id\n    }\n    id\n  }\n  source\n  mode\n}\n"
   }
 };
 })();

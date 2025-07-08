@@ -1,13 +1,8 @@
-import {
-  ActionType,
-  type ClickedContactGallery,
-  OwnerType,
-} from "@artsy/cohesion"
 import { Box, Flex, Spacer, Text } from "@artsy/palette"
+import { useOrder2Tracking } from "Apps/Order2/Hooks/useOrder2Tracking"
 import { RouterLink } from "System/Components/RouterLink"
 import type { Order2DetailsMessage_order$key } from "__generated__/Order2DetailsMessage_order.graphql"
 import { graphql, useFragment } from "react-relay"
-import { useTracking } from "react-tracking"
 import { WireTransferInfo } from "./WireTransferInfo"
 
 interface Order2DetailsMessageProps {
@@ -53,17 +48,8 @@ const ContactOrdersLink: React.FC = () => (
 )
 
 const getMessageContent = (order): React.ReactNode => {
-  const { trackEvent } = useTracking()
-  const handleContactGallery = () => {
-    const event: ClickedContactGallery = {
-      action: ActionType.clickedContactGallery,
-      context_owner_type: OwnerType.artwork,
-      context_owner_slug: order.lineItems[0]?.artwork?.slug,
-      context_owner_id: order.lineItems[0]?.artwork?.internalID,
-    }
+  const tracking = useOrder2Tracking(order.source, order.mode)
 
-    trackEvent(event)
-  }
   const messageType = order.displayTexts.messageType
 
   const formattedStateExpireTime =
@@ -114,7 +100,9 @@ const getMessageContent = (order): React.ReactNode => {
             {!!order.impulseConversationId ? (
               <RouterLink
                 to={`/user/conversations/${order.impulseConversationId}`}
-                onClick={handleContactGallery}
+                onClick={() =>
+                  tracking.clickedContactGallery(order.lineItems[0]?.artwork)
+                }
               >
                 contact the gallery
               </RouterLink>
@@ -122,7 +110,7 @@ const getMessageContent = (order): React.ReactNode => {
               <a
                 href="/user/conversations"
                 onClick={() => {
-                  handleContactGallery()
+                  tracking.clickedContactGallery(order.lineItems[0]?.artwork)
                 }}
               >
                 contact the gallery
@@ -415,5 +403,7 @@ const FRAGMENT = graphql`
         slug
       }
     }
+    source
+    mode
   }
 `
