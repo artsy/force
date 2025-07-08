@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<dc8a40529452afe4e7cfb5ffc012085f>>
+ * @generated SignedSource<<df632c0461a22019d0ef23f618449402>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -284,6 +284,7 @@ return {
                             "storageKey": null
                           },
                           (v4/*: any*/),
+                          (v2/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -543,7 +544,6 @@ return {
                     ],
                     "storageKey": null
                   },
-                  (v3/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -551,6 +551,7 @@ return {
                     "name": "source",
                     "storageKey": null
                   },
+                  (v3/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -844,12 +845,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2b2f35f60330c7fd0283e6ba34b04147",
+    "cacheID": "179f06fbe12c88c3c8bb508db1a5af72",
     "id": null,
     "metadata": {},
     "name": "order2Routes_DetailsQuery",
     "operationKind": "query",
-    "text": "query order2Routes_DetailsQuery(\n  $orderID: ID!\n) {\n  viewer {\n    ...Order2DetailsRoute_viewer_3HPek8\n    me {\n      order(id: $orderID) {\n        internalID\n        mode\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment Order2DetailsFulfillmentInfo_order on Order {\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    country\n    name\n    postalCode\n    region\n    phoneNumber {\n      display(format: INTERNATIONAL)\n    }\n  }\n  selectedFulfillmentOption {\n    type\n  }\n  shippingOrigin\n}\n\nfragment Order2DetailsHeader_order on Order {\n  code\n  displayTexts {\n    title\n  }\n}\n\nfragment Order2DetailsMessage_order on Order {\n  buyerStateExpiresAt\n  code\n  currencyCode\n  internalID\n  impulseConversationId\n  displayTexts {\n    messageType\n  }\n  deliveryInfo {\n    shipperName\n    trackingNumber\n    trackingURL\n    estimatedDelivery\n    estimatedDeliveryWindow\n  }\n}\n\nfragment Order2DetailsOrderSummary_order on Order {\n  ...Order2DetailsPricingBreakdown_order\n  source\n  mode\n  totalListPrice {\n    display\n  }\n  itemsTotal {\n    display\n  }\n  shippingTotal {\n    display\n  }\n  taxTotal {\n    display\n  }\n  lineItems {\n    artwork {\n      slug\n      published\n      partner {\n        name\n        id\n      }\n      id\n    }\n    artworkOrEditionSet {\n      __typename\n      ... on Artwork {\n        price\n        dimensions {\n          in\n          cm\n        }\n      }\n      ... on EditionSet {\n        price\n        dimensions {\n          in\n          cm\n        }\n        id\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n    artworkVersion {\n      title\n      artistNames\n      date\n      attributionClass {\n        shortDescription\n        id\n      }\n      image {\n        resized(height: 360, width: 700) {\n          url\n          width\n          height\n        }\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DetailsPage_order on Order {\n  lineItems {\n    artwork {\n      slug\n      id\n    }\n    id\n  }\n  ...Order2DetailsHeader_order\n  ...Order2DetailsMessage_order\n  ...Order2DetailsOrderSummary_order\n  ...Order2DetailsPricingBreakdown_order\n  ...Order2DetailsPaymentInfo_order\n  ...Order2DetailsFulfillmentInfo_order\n  ...Order2HelpLinks_order\n}\n\nfragment Order2DetailsPaymentInfo_order on Order {\n  creditCardWalletType\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      brand\n      lastDigits\n      expirationYear\n      expirationMonth\n      id\n    }\n    ... on BankAccount {\n      last4\n      id\n    }\n    ... on WireTransfer {\n      isManualPayment\n    }\n  }\n}\n\nfragment Order2DetailsPricingBreakdown_order on Order {\n  mode\n  source\n  pricingBreakdownLines {\n    __typename\n    ... on ShippingLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TaxLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on SubtotalLine {\n      displayName\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TotalLine {\n      displayName\n      amountFallbackText\n      amount {\n        display\n      }\n    }\n  }\n}\n\nfragment Order2DetailsRoute_viewer_3HPek8 on Viewer {\n  me {\n    order(id: $orderID) {\n      internalID\n      ...Order2DetailsPage_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2HelpLinks_order on Order {\n  internalID\n  mode\n  source\n}\n"
+    "text": "query order2Routes_DetailsQuery(\n  $orderID: ID!\n) {\n  viewer {\n    ...Order2DetailsRoute_viewer_3HPek8\n    me {\n      order(id: $orderID) {\n        internalID\n        mode\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment Order2DetailsFulfillmentInfo_order on Order {\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    country\n    name\n    postalCode\n    region\n    phoneNumber {\n      display(format: INTERNATIONAL)\n    }\n  }\n  selectedFulfillmentOption {\n    type\n  }\n  shippingOrigin\n}\n\nfragment Order2DetailsHeader_order on Order {\n  code\n  displayTexts {\n    title\n  }\n}\n\nfragment Order2DetailsMessage_order on Order {\n  buyerStateExpiresAt\n  code\n  currencyCode\n  internalID\n  impulseConversationId\n  displayTexts {\n    messageType\n  }\n  deliveryInfo {\n    shipperName\n    trackingNumber\n    trackingURL\n    estimatedDelivery\n    estimatedDeliveryWindow\n  }\n  lineItems {\n    artwork {\n      internalID\n      slug\n      id\n    }\n    id\n  }\n  source\n  mode\n}\n\nfragment Order2DetailsOrderSummary_order on Order {\n  ...Order2DetailsPricingBreakdown_order\n  source\n  mode\n  totalListPrice {\n    display\n  }\n  itemsTotal {\n    display\n  }\n  shippingTotal {\n    display\n  }\n  taxTotal {\n    display\n  }\n  lineItems {\n    artwork {\n      slug\n      published\n      partner {\n        name\n        id\n      }\n      id\n    }\n    artworkOrEditionSet {\n      __typename\n      ... on Artwork {\n        price\n        dimensions {\n          in\n          cm\n        }\n      }\n      ... on EditionSet {\n        price\n        dimensions {\n          in\n          cm\n        }\n        id\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n    artworkVersion {\n      title\n      artistNames\n      date\n      attributionClass {\n        shortDescription\n        id\n      }\n      image {\n        resized(height: 360, width: 700) {\n          url\n          width\n          height\n        }\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DetailsPage_order on Order {\n  lineItems {\n    artwork {\n      slug\n      id\n    }\n    id\n  }\n  ...Order2DetailsHeader_order\n  ...Order2DetailsMessage_order\n  ...Order2DetailsOrderSummary_order\n  ...Order2DetailsPricingBreakdown_order\n  ...Order2DetailsPaymentInfo_order\n  ...Order2DetailsFulfillmentInfo_order\n  ...Order2HelpLinks_order\n}\n\nfragment Order2DetailsPaymentInfo_order on Order {\n  creditCardWalletType\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      brand\n      lastDigits\n      expirationYear\n      expirationMonth\n      id\n    }\n    ... on BankAccount {\n      last4\n      id\n    }\n    ... on WireTransfer {\n      isManualPayment\n    }\n  }\n}\n\nfragment Order2DetailsPricingBreakdown_order on Order {\n  mode\n  source\n  pricingBreakdownLines {\n    __typename\n    ... on ShippingLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TaxLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on SubtotalLine {\n      displayName\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TotalLine {\n      displayName\n      amountFallbackText\n      amount {\n        display\n      }\n    }\n  }\n}\n\nfragment Order2DetailsRoute_viewer_3HPek8 on Viewer {\n  me {\n    order(id: $orderID) {\n      internalID\n      ...Order2DetailsPage_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2HelpLinks_order on Order {\n  internalID\n  mode\n  source\n}\n"
   }
 };
 })();
