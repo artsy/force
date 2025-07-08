@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<46172896c6f1a0e3ef6603d87c2721d0>>
+ * @generated SignedSource<<7783aad5dc3f3eb462369181779fe143>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -39,6 +39,14 @@ export type Order2DetailsMessage_Test_Query$rawResponse = {
       readonly id: string;
       readonly impulseConversationId: string | null | undefined;
       readonly internalID: string;
+      readonly lineItems: ReadonlyArray<{
+        readonly artwork: {
+          readonly id: string;
+          readonly internalID: string;
+          readonly slug: string;
+        } | null | undefined;
+        readonly id: string;
+      } | null | undefined>;
     } | null | undefined;
   } | null | undefined;
 };
@@ -57,6 +65,13 @@ var v0 = [
   }
 ],
 v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -144,13 +159,7 @@ return {
                 "name": "currencyCode",
                 "storageKey": null
               },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "internalID",
-                "storageKey": null
-              },
+              (v1/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -222,23 +231,55 @@ return {
                 ],
                 "storageKey": null
               },
-              (v1/*: any*/)
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "LineItem",
+                "kind": "LinkedField",
+                "name": "lineItems",
+                "plural": true,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Artwork",
+                    "kind": "LinkedField",
+                    "name": "artwork",
+                    "plural": false,
+                    "selections": [
+                      (v1/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "slug",
+                        "storageKey": null
+                      },
+                      (v2/*: any*/)
+                    ],
+                    "storageKey": null
+                  },
+                  (v2/*: any*/)
+                ],
+                "storageKey": null
+              },
+              (v2/*: any*/)
             ],
             "storageKey": "order(id:\"123\")"
           },
-          (v1/*: any*/)
+          (v2/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "2f3c109a75dff495720b52b17eb51026",
+    "cacheID": "5bda85285498dd7bf3a6dd7b3686d3fb",
     "id": null,
     "metadata": {},
     "name": "Order2DetailsMessage_Test_Query",
     "operationKind": "query",
-    "text": "query Order2DetailsMessage_Test_Query {\n  me {\n    order(id: \"123\") {\n      ...Order2DetailsMessage_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DetailsMessage_order on Order {\n  buyerStateExpiresAt\n  code\n  currencyCode\n  internalID\n  impulseConversationId\n  displayTexts {\n    messageType\n  }\n  deliveryInfo {\n    shipperName\n    trackingNumber\n    trackingURL\n    estimatedDelivery\n    estimatedDeliveryWindow\n  }\n}\n"
+    "text": "query Order2DetailsMessage_Test_Query {\n  me {\n    order(id: \"123\") {\n      ...Order2DetailsMessage_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DetailsMessage_order on Order {\n  buyerStateExpiresAt\n  code\n  currencyCode\n  internalID\n  impulseConversationId\n  displayTexts {\n    messageType\n  }\n  deliveryInfo {\n    shipperName\n    trackingNumber\n    trackingURL\n    estimatedDelivery\n    estimatedDeliveryWindow\n  }\n  lineItems {\n    artwork {\n      internalID\n      slug\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();

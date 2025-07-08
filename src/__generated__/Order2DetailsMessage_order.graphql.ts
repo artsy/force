@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<71cdbafdb63415c714f5da35b96191aa>>
+ * @generated SignedSource<<6bcf4dd61ac777d4bdcd082e8227b6cf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -27,6 +27,12 @@ export type Order2DetailsMessage_order$data = {
   };
   readonly impulseConversationId: string | null | undefined;
   readonly internalID: string;
+  readonly lineItems: ReadonlyArray<{
+    readonly artwork: {
+      readonly internalID: string;
+      readonly slug: string;
+    } | null | undefined;
+  } | null | undefined>;
   readonly " $fragmentType": "Order2DetailsMessage_order";
 };
 export type Order2DetailsMessage_order$key = {
@@ -34,7 +40,15 @@ export type Order2DetailsMessage_order$key = {
   readonly " $fragmentSpreads": FragmentRefs<"Order2DetailsMessage_order">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -61,13 +75,7 @@ const node: ReaderFragment = {
       "name": "currencyCode",
       "storageKey": null
     },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "internalID",
-      "storageKey": null
-    },
+    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -138,12 +146,43 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "LineItem",
+      "kind": "LinkedField",
+      "name": "lineItems",
+      "plural": true,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Artwork",
+          "kind": "LinkedField",
+          "name": "artwork",
+          "plural": false,
+          "selections": [
+            (v0/*: any*/),
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "slug",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
     }
   ],
   "type": "Order",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "f87da796df218afc454f46697843fd3f";
+(node as any).hash = "6460a22407fc63f9e79cf4ede91a6477";
 
 export default node;

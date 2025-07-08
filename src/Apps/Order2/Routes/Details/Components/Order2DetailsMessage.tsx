@@ -1,7 +1,13 @@
+import {
+  ActionType,
+  type ClickedContactGallery,
+  OwnerType,
+} from "@artsy/cohesion"
 import { Box, Flex, Spacer, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
 import type { Order2DetailsMessage_order$key } from "__generated__/Order2DetailsMessage_order.graphql"
 import { graphql, useFragment } from "react-relay"
+import { useTracking } from "react-tracking"
 import { WireTransferInfo } from "./WireTransferInfo"
 
 interface Order2DetailsMessageProps {
@@ -47,6 +53,17 @@ const ContactOrdersLink: React.FC = () => (
 )
 
 const getMessageContent = (order): React.ReactNode => {
+  const { trackEvent } = useTracking()
+  const handleContactGallery = () => {
+    const event: ClickedContactGallery = {
+      action: ActionType.clickedContactGallery,
+      context_owner_type: OwnerType.artwork,
+      context_owner_slug: order.lineItems[0]?.artwork?.slug,
+      context_owner_id: order.lineItems[0]?.artwork?.internalID,
+    }
+
+    trackEvent(event)
+  }
   const messageType = order.displayTexts.messageType
 
   const formattedStateExpireTime =
@@ -97,11 +114,19 @@ const getMessageContent = (order): React.ReactNode => {
             {!!order.impulseConversationId ? (
               <RouterLink
                 to={`/user/conversations/${order.impulseConversationId}`}
+                onClick={handleContactGallery}
               >
                 contact the gallery
               </RouterLink>
             ) : (
-              <a href={"/user/conversations"}>contact the gallery</a>
+              <a
+                href="/user/conversations"
+                onClick={() => {
+                  handleContactGallery()
+                }}
+              >
+                contact the gallery
+              </a>
             )}{" "}
             with any questions about your offer.
           </Text>
@@ -383,6 +408,12 @@ const FRAGMENT = graphql`
       trackingURL
       estimatedDelivery
       estimatedDeliveryWindow
+    }
+    lineItems {
+      artwork {
+        internalID
+        slug
+      }
     }
   }
 `
