@@ -85,6 +85,7 @@ export const AboutNav = () => {
           bottom={0}
           left={0}
           zIndex={Z.globalNav}
+          pb="env(safe-area-inset-bottom)"
           style={{
             boxShadow: theme.effects.dropShadow,
             transition: "opacity 0.3s ease-in-out, transform 0.3s ease-in-out",
