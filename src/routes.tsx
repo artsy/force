@@ -63,6 +63,7 @@ import { saleRoutes } from "./Apps/Sale/saleRoutes"
 import { tagRoutes } from "./Apps/Tag/tagRoutes"
 import { userRoutes } from "./Apps/User/userRoutes"
 import { worksForYouRoutes } from "./Apps/WorksForYou/worksForYouRoutes"
+import { recsBasedOnSavesRoutes } from "./Apps/RecsBasedOnSaves/recsBasedOnSavesRoutes"
 
 const ROUTES = buildAppRoutes([
   aboutRoutes,
@@ -116,6 +117,7 @@ const ROUTES = buildAppRoutes([
   preferencesRoutes,
   pressRoutes,
   priceDatabaseRoutes,
+  recsBasedOnSavesRoutes,
   saleRoutes,
   saleAgreementsRoutes,
   searchRoutes,
