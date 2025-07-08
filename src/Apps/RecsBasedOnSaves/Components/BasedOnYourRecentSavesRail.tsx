@@ -9,6 +9,7 @@ interface ArtworkData {
   title: string
   href: string
   artistNames: string
+  saleMessage?: string
   image: {
     src: string
     width: number
@@ -38,6 +39,7 @@ export const BasedOnYourRecentSavesRail: React.FC = () => {
                     title
                     href
                     artistNames
+                    saleMessage
                     image {
                       src: url(version: ["larger", "large"])
                       width

@@ -5,6 +5,7 @@ interface ArtworkData {
   title: string
   href: string
   artistNames: string
+  saleMessage?: string
   image: {
     src: string
     width: number
@@ -63,6 +64,11 @@ export const SimpleArtworkCard: React.FC<SimpleArtworkCardProps> = ({
         <Text variant="sm" color="mono60" lineClamp={1}>
           {artwork.artistNames}
         </Text>
+        {artwork.saleMessage && (
+          <Text variant="sm" color="mono100" fontWeight="bold" lineClamp={1}>
+            {artwork.saleMessage}
+          </Text>
+        )}
       </Box>
     </RouterLink>
   )
