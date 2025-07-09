@@ -16,7 +16,7 @@ export const AboutHeader = () => {
         </Text>
 
         <Text variant={["xl", "xxl"]} as="h1">
-          Artsy is the leading global online art marketplace
+          Artsy is the Leading Global Online Art Marketplace
         </Text>
       </Column>
     </GridColumns>
