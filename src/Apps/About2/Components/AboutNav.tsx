@@ -16,13 +16,21 @@ import {
 import { useTracking } from "react-tracking"
 
 export const SECTIONS = [
-  { id: "mission-and-vision", label: "Mission and Vision" },
-  { id: "our-story", label: "Our Story" },
-  { id: "what-we-do", label: "What We Do" },
-  { id: "our-team", label: "Our Team" },
-  { id: "press", label: "Press" },
-  { id: "contact", label: "Contact" },
+  { id: "mission-and-vision", label: "Mission and Vision", offset: 0 },
+  { id: "our-story", label: "Our Story", offset: 0 },
+  { id: "what-we-do", label: "What We Do", offset: 20 },
+  { id: "our-team", label: "Our Team", offset: 0 },
+  { id: "press", label: "Press", offset: 20 },
+  { id: "contact", label: "Contact", offset: 20 },
 ] as const
+
+export const INDEXED_SECTIONS = SECTIONS.reduce(
+  (acc, section) => {
+    acc[section.id] = section
+    return acc
+  },
+  {} as Record<string, (typeof SECTIONS)[number]>,
+)
 
 export type Section = (typeof SECTIONS)[number]["id"]
 
@@ -38,12 +46,15 @@ export const AboutNav = () => {
   const [isScrolling, setIsScrolling] = useState(false)
 
   const handleClick = useCallback(
-    (section: Section) => {
+    (key: Section) => {
+      const section = INDEXED_SECTIONS[key]
+
       setIsScrolling(true)
 
-      activate(section)
+      activate(section.id)
 
-      jumpTo(section, {
+      jumpTo(section.id, {
+        offset: section.offset,
         onComplete: () => {
           setIsScrolling(false)
         },
@@ -51,7 +62,7 @@ export const AboutNav = () => {
 
       trackEvent({
         action_type: DeprecatedAnalyticsSchema.ActionType.Click,
-        subject: SECTIONS.find(s => s.id === section)?.label,
+        subject: section.label,
       })
     },
     [activate, jumpTo, trackEvent],
