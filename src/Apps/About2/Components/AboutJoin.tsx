@@ -1,3 +1,4 @@
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import {
   Button,
   Column,
@@ -10,8 +11,11 @@ import {
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { cropped } from "Utils/resized"
+import { useTracking } from "react-tracking"
 
 export const AboutJoin = () => {
+  const { trackEvent } = useTracking()
+
   return (
     <FullBleed
       bg="mono100"
@@ -59,6 +63,17 @@ export const AboutJoin = () => {
                   variant="primaryWhite"
                   alignSelf="center"
                   width={["100%", "auto"]}
+                  // @ts-expect-error
+                  as="a"
+                  href="https://partners.artsy.net/gallery-partnerships"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => {
+                    trackEvent({
+                      action_type: DeprecatedAnalyticsSchema.ActionType.Click,
+                      subject: "Apply Here",
+                    })
+                  }}
                 >
                   Apply Here
                 </Button>

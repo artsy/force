@@ -1,3 +1,4 @@
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { Box, HorizontalOverflow, Pill, Stack, useTheme } from "@artsy/palette"
 import { Z } from "Apps/Components/constants"
 import { useIntersectionObserver } from "Utils/Hooks/useIntersectionObserver"
@@ -6,11 +7,13 @@ import { Media } from "Utils/Responsive"
 import {
   createContext,
   createRef,
+  useCallback,
   useContext,
   useEffect,
   useMemo,
   useState,
 } from "react"
+import { useTracking } from "react-tracking"
 
 export const SECTIONS = [
   { id: "mission-and-vision", label: "Mission and Vision" },
@@ -24,6 +27,8 @@ export const SECTIONS = [
 export type Section = (typeof SECTIONS)[number]["id"]
 
 export const AboutNav = () => {
+  const { trackEvent } = useTracking()
+
   const { theme } = useTheme()
 
   const { active, activate, visible } = useAboutNav()
@@ -31,6 +36,26 @@ export const AboutNav = () => {
   const { jumpTo } = useJump()
 
   const [isScrolling, setIsScrolling] = useState(false)
+
+  const handleClick = useCallback(
+    (section: Section) => {
+      setIsScrolling(true)
+
+      activate(section)
+
+      jumpTo(section, {
+        onComplete: () => {
+          setIsScrolling(false)
+        },
+      })
+
+      trackEvent({
+        action_type: DeprecatedAnalyticsSchema.ActionType.Click,
+        subject: SECTIONS.find(s => s.id === section)?.label,
+      })
+    },
+    [activate, jumpTo, trackEvent],
+  )
 
   const items = useMemo(() => {
     return SECTIONS.map(section => {
@@ -45,13 +70,7 @@ export const AboutNav = () => {
             ref={ref as any}
             selected={active === section.id && !isScrolling}
             onClick={() => {
-              setIsScrolling(true)
-              activate(section.id)
-              jumpTo(section.id, {
-                onComplete: () => {
-                  setIsScrolling(false)
-                },
-              })
+              handleClick(section.id)
             }}
           >
             {section.label}
@@ -59,7 +78,7 @@ export const AboutNav = () => {
         ),
       }
     })
-  }, [active, activate, jumpTo, isScrolling])
+  }, [active, handleClick, isScrolling])
 
   useEffect(() => {
     if (!active || isScrolling) return

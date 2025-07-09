@@ -1,3 +1,4 @@
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import {
   Box,
   Button,
@@ -15,9 +16,12 @@ import {
 import { AboutSection } from "Apps/About2/Components/AboutSection"
 import { RouterLink } from "System/Components/RouterLink"
 import { Suspense } from "react"
+import { useTracking } from "react-tracking"
 
 export const AboutPress = () => {
   const { theme } = useTheme()
+
+  const { trackEvent } = useTracking()
 
   return (
     <AboutSection id="press">
@@ -79,6 +83,12 @@ export const AboutPress = () => {
               as={RouterLink}
               to="/press"
               variant="primaryBlack"
+              onClick={() => {
+                trackEvent({
+                  action_type: DeprecatedAnalyticsSchema.ActionType.Click,
+                  subject: "Visit Artsy Press Page",
+                })
+              }}
             >
               Visit Artsy’s Press Page
             </Button>
