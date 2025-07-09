@@ -42,6 +42,7 @@ interface CheckoutState {
   steps: CheckoutStep[]
   activeFulfillmentDetailsTab: FulfillmentDetailsTab | null
   confirmationToken: any
+  saveCreditCard: boolean
   checkoutMode: CheckoutMode
 }
 
@@ -59,7 +60,10 @@ interface CheckoutActions {
   editPayment: () => void
   setLoadingError: (error: CheckoutLoadingError | null) => void
   setLoadingComplete: () => void
-  setConfirmationToken: (args: { confirmationToken: any }) => void
+  setConfirmationToken: (args: {
+    confirmationToken: any
+    saveCreditCard: boolean
+  }) => void
   redirectToOrderDetails: () => void
   setCheckoutMode: (mode: CheckoutMode) => void
 }
@@ -318,10 +322,16 @@ const useBuildCheckoutContext = (
   )
 
   const setConfirmationToken = useCallback(
-    ({ confirmationToken }: { confirmationToken: any }) => {
+    ({
+      confirmationToken,
+      saveCreditCard,
+    }: {
+      confirmationToken: any
+      saveCreditCard: boolean
+    }) => {
       dispatch({
         type: "PAYMENT_COMPLETE",
-        payload: { confirmationToken: confirmationToken },
+        payload: { confirmationToken, saveCreditCard },
       })
     },
     [],
@@ -435,6 +445,7 @@ const initialStateForOrder = (
     expressCheckoutPaymentMethods: null,
     activeFulfillmentDetailsTab: null,
     confirmationToken: null,
+    saveCreditCard: true,
     steps,
     checkoutMode: savedCheckoutMode || "standard",
   }
@@ -470,7 +481,7 @@ type Action =
     }
   | {
       type: "PAYMENT_COMPLETE"
-      payload: { confirmationToken: any }
+      payload: { confirmationToken: any; saveCreditCard: boolean }
     }
   | {
       type: "SET_ACTIVE_FULFILLMENT_DETAILS_TAB"
@@ -664,6 +675,7 @@ const reducer = (state: CheckoutState, action: Action): CheckoutState => {
       return {
         ...state,
         confirmationToken: action.payload.confirmationToken,
+        saveCreditCard: action.payload.saveCreditCard,
         steps: newSteps,
       }
     case "SET_EXPRESS_CHECKOUT_SUBMITTING":
