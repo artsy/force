@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0e3ed6faffef30c782e8822ae55519f7>>
+ * @generated SignedSource<<5b5d15aa0080ebacc2a815cc14941c38>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -41,14 +41,6 @@ export type Order2DetailsMessage_Test_Query$rawResponse = {
       readonly id: string;
       readonly impulseConversationId: string | null | undefined;
       readonly internalID: string;
-      readonly lineItems: ReadonlyArray<{
-        readonly artwork: {
-          readonly id: string;
-          readonly internalID: string;
-          readonly slug: string;
-        } | null | undefined;
-        readonly id: string;
-      } | null | undefined>;
       readonly mode: OrderModeEnum;
       readonly source: OrderSourceEnum;
     } | null | undefined;
@@ -69,13 +61,6 @@ var v0 = [
   }
 ],
 v1 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "internalID",
-  "storageKey": null
-},
-v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -163,7 +148,13 @@ return {
                 "name": "currencyCode",
                 "storageKey": null
               },
-              (v1/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "internalID",
+                "storageKey": null
+              },
               {
                 "alias": null,
                 "args": null,
@@ -238,38 +229,6 @@ return {
               {
                 "alias": null,
                 "args": null,
-                "concreteType": "LineItem",
-                "kind": "LinkedField",
-                "name": "lineItems",
-                "plural": true,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "Artwork",
-                    "kind": "LinkedField",
-                    "name": "artwork",
-                    "plural": false,
-                    "selections": [
-                      (v1/*: any*/),
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "slug",
-                        "storageKey": null
-                      },
-                      (v2/*: any*/)
-                    ],
-                    "storageKey": null
-                  },
-                  (v2/*: any*/)
-                ],
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
                 "kind": "ScalarField",
                 "name": "source",
                 "storageKey": null
@@ -281,23 +240,23 @@ return {
                 "name": "mode",
                 "storageKey": null
               },
-              (v2/*: any*/)
+              (v1/*: any*/)
             ],
             "storageKey": "order(id:\"123\")"
           },
-          (v2/*: any*/)
+          (v1/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "615fa5e01d5d07c1c85507c98fc5f7f2",
+    "cacheID": "e288c1108728662a6598617765352b15",
     "id": null,
     "metadata": {},
     "name": "Order2DetailsMessage_Test_Query",
     "operationKind": "query",
-    "text": "query Order2DetailsMessage_Test_Query {\n  me {\n    order(id: \"123\") {\n      ...Order2DetailsMessage_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DetailsMessage_order on Order {\n  buyerStateExpiresAt\n  code\n  currencyCode\n  internalID\n  impulseConversationId\n  displayTexts {\n    messageType\n  }\n  deliveryInfo {\n    shipperName\n    trackingNumber\n    trackingURL\n    estimatedDelivery\n    estimatedDeliveryWindow\n  }\n  lineItems {\n    artwork {\n      internalID\n      slug\n      id\n    }\n    id\n  }\n  source\n  mode\n}\n"
+    "text": "query Order2DetailsMessage_Test_Query {\n  me {\n    order(id: \"123\") {\n      ...Order2DetailsMessage_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DetailsMessage_order on Order {\n  buyerStateExpiresAt\n  code\n  currencyCode\n  internalID\n  impulseConversationId\n  displayTexts {\n    messageType\n  }\n  deliveryInfo {\n    shipperName\n    trackingNumber\n    trackingURL\n    estimatedDelivery\n    estimatedDeliveryWindow\n  }\n  source\n  mode\n}\n"
   }
 };
 })();

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<914fc50202c945b935db08f1c968a5c3>>
+ * @generated SignedSource<<6a853ecc911972dc60a3a18877508e3a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -29,12 +29,6 @@ export type Order2DetailsMessage_order$data = {
   };
   readonly impulseConversationId: string | null | undefined;
   readonly internalID: string;
-  readonly lineItems: ReadonlyArray<{
-    readonly artwork: {
-      readonly internalID: string;
-      readonly slug: string;
-    } | null | undefined;
-  } | null | undefined>;
   readonly mode: OrderModeEnum;
   readonly source: OrderSourceEnum;
   readonly " $fragmentType": "Order2DetailsMessage_order";
@@ -44,15 +38,7 @@ export type Order2DetailsMessage_order$key = {
   readonly " $fragmentSpreads": FragmentRefs<"Order2DetailsMessage_order">;
 };
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "internalID",
-  "storageKey": null
-};
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -79,7 +65,13 @@ return {
       "name": "currencyCode",
       "storageKey": null
     },
-    (v0/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "internalID",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -154,36 +146,6 @@ return {
     {
       "alias": null,
       "args": null,
-      "concreteType": "LineItem",
-      "kind": "LinkedField",
-      "name": "lineItems",
-      "plural": true,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "Artwork",
-          "kind": "LinkedField",
-          "name": "artwork",
-          "plural": false,
-          "selections": [
-            (v0/*: any*/),
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "slug",
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
       "kind": "ScalarField",
       "name": "source",
       "storageKey": null
@@ -199,8 +161,7 @@ return {
   "type": "Order",
   "abstractKey": null
 };
-})();
 
-(node as any).hash = "63459dabdf8b235d0c7a8ee7496e08ae";
+(node as any).hash = "04a4d0f9f60bab0e40613efc9cb94e7a";
 
 export default node;
