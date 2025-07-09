@@ -1,13 +1,14 @@
-import { calculateCheckoutSteps } from "Apps/Order2/Routes/Checkout/CheckoutContext/calculateCheckoutSteps"
-import type {
-  CheckoutLoadingError,
-  CheckoutStep,
-  ExpressCheckoutPaymentMethod,
-  FulfillmentDetailsTab,
-} from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import {
+  type CheckoutProgress,
+  type CheckoutStep,
   CheckoutStepName,
   CheckoutStepState,
+  useCheckoutProgress,
+} from "Apps/Order2/Routes/Checkout/CheckoutContext/CheckoutProgress/useCheckoutProgress"
+import type {
+  CheckoutLoadingError,
+  ExpressCheckoutPaymentMethod,
+  FulfillmentDetailsTab,
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { useCheckoutTracking } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutTracking"
 import { useRouter } from "System/Hooks/useRouter"
@@ -17,6 +18,7 @@ import type {
   Order2CheckoutContext_order$data,
   Order2CheckoutContext_order$key,
 } from "__generated__/Order2CheckoutContext_order.graphql"
+import { set } from "cookies"
 import { every } from "lodash"
 import { DateTime } from "luxon"
 import type React from "react"
@@ -34,20 +36,25 @@ const logger = createLogger("Order2CheckoutContext.tsx")
 const MINIMUM_LOADING_MS = 1000
 const CHECKOUT_MODE_STORAGE_KEY = "checkout_mode"
 
-interface CheckoutState {
+export interface CheckoutState {
   isLoading: boolean
   /** Order is redirecting to the details page */
   expressCheckoutSubmitting: boolean
   loadingError: CheckoutLoadingError | null
   expressCheckoutPaymentMethods: ExpressCheckoutPaymentMethod[] | null
-  steps: CheckoutStep[]
   activeFulfillmentDetailsTab: FulfillmentDetailsTab | null
   confirmationToken: any
   checkoutMode: CheckoutMode
+  partnerOffer?: {
+    timer: ReturnType<typeof useCountdownTimer>
+  } | null
+  steps: CheckoutStep[] | null
+  editingStep?: CheckoutStepName | null
 }
 
 interface CheckoutActions {
   checkoutTracking: ReturnType<typeof useCheckoutTracking>
+  setCheckoutSteps: (steps: CheckoutStep[]) => void
   setActiveFulfillmentDetailsTab: (
     activeFulfillmentDetailsTab: FulfillmentDetailsTab | null,
   ) => void
@@ -68,12 +75,8 @@ interface CheckoutActions {
   setCheckoutMode: (mode: CheckoutMode) => void
 }
 
-export type Order2CheckoutContextValue = CheckoutState &
-  CheckoutActions & {
-    partnerOffer: {
-      timer: ReturnType<typeof useCountdownTimer>
-    } | null
-  }
+export type Order2CheckoutContextValue = CheckoutState & CheckoutActions
+
 type CheckoutMode = "standard" | "express"
 
 export const Order2CheckoutContext =
@@ -91,12 +94,16 @@ export const Order2CheckoutContextProvider: React.FC<
 
   const context = useBuildCheckoutContext(orderData)
 
+  useCheckoutProgress({
+    order: orderData,
+    context: context,
+  })
+
   const {
     expressCheckoutPaymentMethods,
     isLoading,
     setLoadingError,
     setLoadingComplete,
-    partnerOffer,
   } = context
 
   const isExpressCheckoutLoaded = expressCheckoutPaymentMethods !== null
@@ -105,13 +112,16 @@ export const Order2CheckoutContextProvider: React.FC<
   const [orderValidated, setOrderValidated] = useState(false)
 
   const isPartnerOfferLoadingComplete =
-    !partnerOffer || !partnerOffer.timer.isLoading
+    !context.partnerOffer || !context.partnerOffer.timer.isLoading
+
+  const haveStepsLoaded = !!context.steps?.length
 
   const checks = [
     minimumLoadingPassed,
     orderValidated,
     isExpressCheckoutLoaded,
     isPartnerOfferLoadingComplete,
+    haveStepsLoaded,
   ]
 
   // Validate order and get into good initial checkout state on load
@@ -158,6 +168,7 @@ export const Order2CheckoutContextProvider: React.FC<
 
 const ORDER_FRAGMENT = graphql`
   fragment Order2CheckoutContext_order on Order {
+    ...useCheckoutProgress_order
     internalID
     mode
     source
@@ -191,6 +202,15 @@ const validateOrder = (order: Order2CheckoutContext_order$data) => {
   return
 }
 
+const DEFAULT_INITIAL_STATE = {
+  isLoading: true,
+  expressCheckoutSubmitting: false,
+  loadingError: null,
+  expressCheckoutPaymentMethods: null,
+  activeFulfillmentDetailsTab: null,
+  confirmationToken: null,
+}
+
 const usePartnerOfferOnOrder = (orderData: {
   source: "PARTNER_OFFER" | unknown
   buyerStateExpiresAt?: string | null
@@ -219,14 +239,24 @@ const usePartnerOfferOnOrder = (orderData: {
 const useBuildCheckoutContext = (
   orderData: Order2CheckoutContext_order$data,
 ): Order2CheckoutContextValue => {
-  const initialState: CheckoutState = useMemo(
-    () => initialStateForOrder(orderData),
-    [orderData],
-  )
+  const { router } = useRouter()
   const checkoutTracking = useCheckoutTracking(orderData)
   const partnerOffer = usePartnerOfferOnOrder(orderData)
 
-  const { router } = useRouter()
+  const initialState = useMemo((): CheckoutState => {
+    const savedCheckoutMode = getStorageValue(
+      CHECKOUT_MODE_STORAGE_KEY,
+      "standard",
+    ) as CheckoutMode
+
+    return {
+      ...DEFAULT_INITIAL_STATE,
+      checkoutMode: savedCheckoutMode || "standard",
+      partnerOffer,
+      steps: null, // Will be set in useCheckoutProgress
+    }
+  }, [partnerOffer])
+
   const [state, dispatch] = useReducer(reducer, initialState)
 
   const redirectToOrderDetails = useCallback(() => {
@@ -293,11 +323,11 @@ const useBuildCheckoutContext = (
     })
   }, [])
 
-  const currentStepName = state.steps.find(
+  const currentStepName = state.steps?.find(
     step => step.state === CheckoutStepState.ACTIVE,
   )?.name
 
-  const previousStepName = state.steps.reduce(
+  const previousStepName = state.steps?.reduce(
     (acc, current) => {
       if (current.state === CheckoutStepState.ACTIVE) {
         return acc
@@ -393,48 +423,14 @@ const useBuildCheckoutContext = (
   return {
     ...state,
     ...actions,
-    partnerOffer,
-  }
-}
-
-const initialStateForOrder = (
-  order: Order2CheckoutContext_order$data,
-): CheckoutState => {
-  const savedCheckoutMode = getStorageValue(
-    CHECKOUT_MODE_STORAGE_KEY,
-    "standard",
-  ) as CheckoutMode
-
-  const stepNamesInOrder = [
-    CheckoutStepName.FULFILLMENT_DETAILS,
-    CheckoutStepName.DELIVERY_OPTION,
-    CheckoutStepName.PAYMENT,
-    CheckoutStepName.CONFIRMATION,
-  ]
-
-  if (order.mode === "OFFER") {
-    stepNamesInOrder.unshift(CheckoutStepName.OFFER_AMOUNT)
-  }
-
-  const steps = calculateCheckoutSteps({
-    order,
-    context: {},
-    freshStart: true,
-  })
-
-  return {
-    isLoading: true,
-    expressCheckoutSubmitting: false,
-    loadingError: null,
-    expressCheckoutPaymentMethods: null,
-    activeFulfillmentDetailsTab: null,
-    confirmationToken: null,
-    steps,
-    checkoutMode: savedCheckoutMode || "standard",
   }
 }
 
 type Action =
+  | {
+      type: "SET_CHECKOUT_STEPS"
+      payload: { steps: CheckoutStep[] }
+    }
   | {
       type: "SET_EXPRESS_CHECKOUT_LOADED"
       payload: { expressCheckoutPaymentMethods: ExpressCheckoutPaymentMethod[] }
@@ -478,33 +474,40 @@ type Action =
 
 const reducer = (state: CheckoutState, action: Action): CheckoutState => {
   switch (action.type) {
+    case "SET_CHECKOUT_STEPS":
+      return {
+        ...state,
+        steps: action.payload.steps,
+        isLoading: false,
+      }
+
     case "SET_ACTIVE_FULFILLMENT_DETAILS_TAB":
       return {
         ...state,
         activeFulfillmentDetailsTab: action.payload.activeFulfillmentDetailsTab,
-        steps: state.steps.map(step => {
-          if (step.name === CheckoutStepName.DELIVERY_OPTION) {
-            const shouldHide =
-              action.payload.activeFulfillmentDetailsTab === "PICKUP"
-            if (shouldHide) {
-              return {
-                ...step,
-                state: CheckoutStepState.HIDDEN,
-              }
-            } else if (step.state === CheckoutStepState.HIDDEN) {
-              return {
-                ...step,
-                state: CheckoutStepState.UPCOMING,
-              }
-            } else {
-              return {
-                ...step,
-                state: step.state,
-              }
-            }
-          }
-          return step
-        }),
+        // steps: state.steps.map(step => {
+        //   if (step.name === CheckoutStepName.DELIVERY_OPTION) {
+        //     const shouldHide =
+        //       action.payload.activeFulfillmentDetailsTab === "PICKUP"
+        //     if (shouldHide) {
+        //       return {
+        //         ...step,
+        //         state: CheckoutStepState.HIDDEN,
+        //       }
+        //     } else if (step.state === CheckoutStepState.HIDDEN) {
+        //       return {
+        //         ...step,
+        //         state: CheckoutStepState.UPCOMING,
+        //       }
+        //     } else {
+        //       return {
+        //         ...step,
+        //         state: step.state,
+        //       }
+        //     }
+        //   }
+        //   return step
+        // }),
       }
     case "SET_EXPRESS_CHECKOUT_LOADED":
       return {
@@ -525,148 +528,149 @@ const reducer = (state: CheckoutState, action: Action): CheckoutState => {
     case "EDIT_FULFILLMENT_DETAILS":
       return {
         ...state,
-        steps: state.steps.reduce((acc, current) => {
-          const isAfterFulfillmentDetailsStep = acc
-            .map(step => step.name)
-            .includes(CheckoutStepName.FULFILLMENT_DETAILS)
+        // steps: state.steps?.reduce((acc, current) => {
+        //   const isAfterFulfillmentDetailsStep = acc
+        //     .map(step => step.name)
+        //     .includes(CheckoutStepName.FULFILLMENT_DETAILS)
 
-          if (
-            isAfterFulfillmentDetailsStep &&
-            current.state !== CheckoutStepState.HIDDEN
-          ) {
-            return [
-              ...acc,
-              {
-                ...current,
-                state: CheckoutStepState.UPCOMING,
-              },
-            ]
-          }
-          if (current.name === CheckoutStepName.FULFILLMENT_DETAILS) {
-            return [
-              ...acc,
-              {
-                ...current,
-                state: CheckoutStepState.ACTIVE,
-              },
-            ]
-          }
+        //   if (
+        //     isAfterFulfillmentDetailsStep &&
+        //     current.state !== CheckoutStepState.HIDDEN
+        //   ) {
+        //     return [
+        //       ...acc,
+        //       {
+        //         ...current,
+        //         state: CheckoutStepState.UPCOMING,
+        //       },
+        //     ]
+        //   }
+        //   if (current.name === CheckoutStepName.FULFILLMENT_DETAILS) {
+        //     return [
+        //       ...acc,
+        //       {
+        //         ...current,
+        //         state: CheckoutStepState.ACTIVE,
+        //       },
+        //     ]
+        //   }
 
-          return [...acc, current]
-        }, [] as CheckoutStep[]),
+        //   return [...acc, current]
+        // }, [] as CheckoutStep[]),
       }
 
-    case "FULFILLMENT_DETAILS_COMPLETE":
-      const { isPickup, isFlatShipping } = action.payload
-      let hasActivatedNext = false
+    // case "FULFILLMENT_DETAILS_COMPLETE":
+    //   const { isPickup, isFlatShipping } = action.payload
+    //   let hasActivatedNext = false
 
-      return {
-        ...state,
-        steps: state.steps.map(step => {
-          // Mark fulfillment details as completed
-          if (step.name === CheckoutStepName.FULFILLMENT_DETAILS) {
-            return { ...step, state: CheckoutStepState.COMPLETED }
-          }
+    //   return {
+    //     ...state,
+    //     steps: state.steps.map(step => {
+    //       // Mark fulfillment details as completed
+    //       if (step.name === CheckoutStepName.FULFILLMENT_DETAILS) {
+    //         return { ...step, state: CheckoutStepState.COMPLETED }
+    //       }
 
-          // Hide delivery option if pickup is selected
-          if (step.name === CheckoutStepName.DELIVERY_OPTION && isPickup) {
-            return { ...step, state: CheckoutStepState.HIDDEN }
-          }
+    //       // Hide delivery option if pickup is selected
+    //       if (step.name === CheckoutStepName.DELIVERY_OPTION && isPickup) {
+    //         return { ...step, state: CheckoutStepState.HIDDEN }
+    //       }
 
-          if (
-            step.name === CheckoutStepName.DELIVERY_OPTION &&
-            isFlatShipping
-          ) {
-            return { ...step, state: CheckoutStepState.COMPLETED }
-          }
+    //       if (
+    //         step.name === CheckoutStepName.DELIVERY_OPTION &&
+    //         isFlatShipping
+    //       ) {
+    //         return { ...step, state: CheckoutStepState.COMPLETED }
+    //       }
 
-          // Activate the first upcoming step
-          if (!hasActivatedNext && step.state === CheckoutStepState.UPCOMING) {
-            hasActivatedNext = true
-            return { ...step, state: CheckoutStepState.ACTIVE }
-          }
+    //       // Activate the first upcoming step
+    //       if (!hasActivatedNext && step.state === CheckoutStepState.UPCOMING) {
+    //         hasActivatedNext = true
+    //         return { ...step, state: CheckoutStepState.ACTIVE }
+    //       }
 
-          return step
-        }),
-      }
+    //       return step
+    //     }),
+    //   }
     case "EDIT_PAYMENT":
       return {
         ...state,
-        steps: state.steps.reduce((acc, current) => {
-          const isAfterPaymentStep = acc
-            .map(step => step.name)
-            .includes(CheckoutStepName.PAYMENT)
+        editingStep: CheckoutStepName.PAYMENT,
+        // steps: state.steps.reduce((acc, current) => {
+        //   const isAfterPaymentStep = acc
+        //     .map(step => step.name)
+        //     .includes(CheckoutStepName.PAYMENT)
 
-          if (
-            isAfterPaymentStep &&
-            current.state !== CheckoutStepState.HIDDEN
-          ) {
-            return [
-              ...acc,
-              {
-                ...current,
-                state: CheckoutStepState.UPCOMING,
-              },
-            ]
-          }
-          if (current.name === CheckoutStepName.PAYMENT) {
-            return [
-              ...acc,
-              {
-                ...current,
-                state: CheckoutStepState.ACTIVE,
-              },
-            ]
-          }
+        //   if (
+        //     isAfterPaymentStep &&
+        //     current.state !== CheckoutStepState.HIDDEN
+        //   ) {
+        //     return [
+        //       ...acc,
+        //       {
+        //         ...current,
+        //         state: CheckoutStepState.UPCOMING,
+        //       },
+        //     ]
+        //   }
+        //   if (current.name === CheckoutStepName.PAYMENT) {
+        //     return [
+        //       ...acc,
+        //       {
+        //         ...current,
+        //         state: CheckoutStepState.ACTIVE,
+        //       },
+        //     ]
+        //   }
 
-          return [...acc, current]
-        }, [] as CheckoutStep[]),
+        //   return [...acc, current]
+        // }, [] as CheckoutStep[]),
       }
     case "PAYMENT_COMPLETE":
-      const newSteps = state.steps.reduce((acc, current) => {
-        const isThisStep = current.name === CheckoutStepName.PAYMENT
-        if (isThisStep) {
-          return [
-            ...acc,
-            {
-              ...current,
-              state: CheckoutStepState.COMPLETED,
-            },
-          ]
-        }
+      // const newSteps = state.steps.reduce((acc, current) => {
+      //   const isThisStep = current.name === CheckoutStepName.PAYMENT
+      //   if (isThisStep) {
+      //     return [
+      //       ...acc,
+      //       {
+      //         ...current,
+      //         state: CheckoutStepState.COMPLETED,
+      //       },
+      //     ]
+      //   }
 
-        const shouldBeHidden = current.state === CheckoutStepState.HIDDEN
-        if (shouldBeHidden) {
-          // no change for hidden steps on payment complete
-          return [...acc, current]
-        }
+      //   const shouldBeHidden = current.state === CheckoutStepState.HIDDEN
+      //   if (shouldBeHidden) {
+      //     // no change for hidden steps on payment complete
+      //     return [...acc, current]
+      //   }
 
-        if (current.state === CheckoutStepState.COMPLETED) {
-          return [...acc, current]
-        }
+      //   if (current.state === CheckoutStepState.COMPLETED) {
+      //     return [...acc, current]
+      //   }
 
-        // We've already returned if it is completed or hidden, so this
-        // must be an upcoming step. If it is the first one, then
-        // we activate it, otherwise we leave it as upcoming.
-        const firstStepAfterCompleted =
-          acc.find(step => step.state === CheckoutStepState.COMPLETED) &&
-          !acc.find(step => step.state === CheckoutStepState.UPCOMING)
-        if (firstStepAfterCompleted) {
-          return [
-            ...acc,
-            {
-              ...current,
-              state: CheckoutStepState.ACTIVE,
-            },
-          ]
-        }
-        return [...acc, current]
-      }, [] as CheckoutStep[])
+      //   // We've already returned if it is completed or hidden, so this
+      //   // must be an upcoming step. If it is the first one, then
+      //   // we activate it, otherwise we leave it as upcoming.
+      //   const firstStepAfterCompleted =
+      //     acc.find(step => step.state === CheckoutStepState.COMPLETED) &&
+      //     !acc.find(step => step.state === CheckoutStepState.UPCOMING)
+      //   if (firstStepAfterCompleted) {
+      //     return [
+      //       ...acc,
+      //       {
+      //         ...current,
+      //         state: CheckoutStepState.ACTIVE,
+      //       },
+      //     ]
+      //   }
+      //   return [...acc, current]
+      // }, [] as CheckoutStep[])
 
       return {
         ...state,
         confirmationToken: action.payload.confirmationToken,
-        steps: newSteps,
+        // steps: newSteps,
       }
     case "SET_EXPRESS_CHECKOUT_SUBMITTING":
       return {

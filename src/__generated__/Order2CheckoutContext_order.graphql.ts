@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fc1940ddeddf3a866b871cf8e41b2150>>
+ * @generated SignedSource<<06e07865e5703bacd370c1a74d867115>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -29,6 +29,7 @@ export type Order2CheckoutContext_order$data = {
     readonly type: FulfillmentOptionTypeEnum;
   } | null | undefined;
   readonly source: OrderSourceEnum;
+  readonly " $fragmentSpreads": FragmentRefs<"useCheckoutProgress_order">;
   readonly " $fragmentType": "Order2CheckoutContext_order";
 };
 export type Order2CheckoutContext_order$key = {
@@ -50,6 +51,11 @@ return {
   "metadata": null,
   "name": "Order2CheckoutContext_order",
   "selections": [
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "useCheckoutProgress_order"
+    },
     (v0/*: any*/),
     {
       "alias": null,
@@ -137,6 +143,6 @@ return {
 };
 })();
 
-(node as any).hash = "8711adf24dd771a67a9c83aa053292f0";
+(node as any).hash = "651e7bfe0aa3b089ba6033e210877c98";
 
 export default node;
