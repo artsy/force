@@ -1,4 +1,5 @@
 import { Box, Spacer, Text } from "@artsy/palette"
+import { COUNTRY_CODE_TO_COUNTRY_NAME } from "Components/CountrySelect"
 import type { Order2DetailsFulfillmentInfo_order$key } from "__generated__/Order2DetailsFulfillmentInfo_order.graphql"
 import type React from "react"
 import { useFragment } from "react-relay"
@@ -83,7 +84,7 @@ const getShippingContent = (fulfillmentDetails): React.ReactNode => {
       )}
       {country && (
         <Text variant={["xs", "sm"]} color="mono100">
-          {country}
+          {country && (COUNTRY_CODE_TO_COUNTRY_NAME[country] || country)}
         </Text>
       )}
       {phoneNumber && (
