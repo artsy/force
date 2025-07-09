@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5ae1bcc90e9abe46831a3bf0c9b65c50>>
+ * @generated SignedSource<<35c78f4f8a076f1d53d9f93296b09698>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,6 +18,7 @@ export type updateOrderInput = {
   creditCardWalletType?: OrderCreditCardWalletTypeEnum | null | undefined;
   id: string;
   paymentMethod?: OrderPaymentMethodEnum | null | undefined;
+  stripeConfirmationToken?: string | null | undefined;
 };
 export type useUpdateOrderMutation$variables = {
   input: updateOrderInput;

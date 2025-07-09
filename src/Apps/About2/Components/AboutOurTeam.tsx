@@ -137,7 +137,7 @@ export const AboutOurTeam = () => {
                   <Text variant="lg-display">Looking to join our team?</Text>
 
                   <Text variant="lg-display">
-                    <AboutOurTeamCareersLink to="/careers">
+                    <AboutOurTeamCareersLink to="/jobs">
                       Careers at Artsy
                     </AboutOurTeamCareersLink>
                   </Text>
@@ -154,17 +154,17 @@ export const AboutOurTeam = () => {
 const MORE_TEAM_MEMBERS = [
   {
     name: "Dustyn Kim",
-    title: "Head of Collector Services & Private Sales",
+    title: "President",
     src: "https://files.artsy.net/images/about2-dustyn-kim-c.jpg",
   },
   {
     name: "Alex Forbes",
-    title: "Head of Collector Services & Private Sales",
+    title: "VP, Global Partnerships",
     src: "https://files.artsy.net/images/about2-alex-forbes-c.jpg",
   },
   {
     name: "Casey Lesser",
-    title: "Head of Collector Services & Private Sales",
+    title: "Editor in Chief & Director of Content",
     src: "https://files.artsy.net/images/about2-casey-lesser-c.jpg",
   },
 ]

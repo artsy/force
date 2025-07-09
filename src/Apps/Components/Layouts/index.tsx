@@ -8,7 +8,7 @@ import { LayoutNavOnly } from "Apps/Components/Layouts/LayoutNavOnly"
 import { LayoutCheckout } from "Apps/Order2/Layouts/LayoutCheckout"
 import { LayoutOrderDetails } from "Apps/Order2/Layouts/LayoutOrderDetails"
 import { useRouter } from "System/Hooks/useRouter"
-import type { FC, ReactNode } from "react"
+import type { FC, PropsWithChildren, ReactNode } from "react"
 
 export interface BaseLayoutProps {
   children: ReactNode
@@ -25,11 +25,13 @@ export const LAYOUTS = {
   FullBleed: LayoutFullBleed,
   LogoOnly: LayoutLogoOnly,
   NavOnly: LayoutNavOnly,
-  Checkout: LayoutCheckout,
-  OrderDetails: LayoutOrderDetails,
+  Checkout: LayoutCheckout, // TODO: Should just be a custom layout in the routes
+  OrderDetails: LayoutOrderDetails, // TODO: Should just be a custom layout in the routes
 } as const
 
-export type LayoutVariant = keyof typeof LAYOUTS
+export type LayoutVariant =
+  | keyof typeof LAYOUTS
+  | FC<PropsWithChildren<BaseLayoutProps>>
 
 export const Layout: FC<React.PropsWithChildren<LayoutProps>> = ({
   variant = "Default",
@@ -42,13 +44,16 @@ export const Layout: FC<React.PropsWithChildren<LayoutProps>> = ({
   // If we're fetching, we want to render the previous layout and not execute
   // the new one right away.
   const previousVariant = usePrevious(variant)
-  const Previous = LAYOUTS[previousVariant]
+  const Previous =
+    typeof previousVariant === "string"
+      ? LAYOUTS[previousVariant]
+      : previousVariant
 
   if (isFetching) {
     return <Previous>{children}</Previous>
   }
 
-  const Component = LAYOUTS[variant]
+  const Component = typeof variant === "string" ? LAYOUTS[variant] : variant
 
   return <Component>{children}</Component>
 }

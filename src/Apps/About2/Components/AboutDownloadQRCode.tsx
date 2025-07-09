@@ -11,7 +11,7 @@ export const AboutDownloadQRCode = () => {
       aria-label="Download the Artsy app"
       role="img"
       width="100%"
-      height="100%"
+      height="auto"
     >
       <g fill={theme.colors.mono100} clip-path="url(#a)">
         <path d="M27.686.521h2.458V2.98h-2.458V.52Z" />

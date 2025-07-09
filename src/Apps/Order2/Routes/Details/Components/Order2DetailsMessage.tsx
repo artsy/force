@@ -1,4 +1,5 @@
 import { Box, Flex, Spacer, Text } from "@artsy/palette"
+import { useOrder2Tracking } from "Apps/Order2/Hooks/useOrder2Tracking"
 import { RouterLink } from "System/Components/RouterLink"
 import type { Order2DetailsMessage_order$key } from "__generated__/Order2DetailsMessage_order.graphql"
 import { graphql, useFragment } from "react-relay"
@@ -47,6 +48,8 @@ const ContactOrdersLink: React.FC = () => (
 )
 
 const getMessageContent = (order): React.ReactNode => {
+  const tracking = useOrder2Tracking(order.source, order.mode)
+
   const messageType = order.displayTexts.messageType
 
   const formattedStateExpireTime =
@@ -97,11 +100,19 @@ const getMessageContent = (order): React.ReactNode => {
             {!!order.impulseConversationId ? (
               <RouterLink
                 to={`/user/conversations/${order.impulseConversationId}`}
+                onClick={() => tracking.clickedContactGallery(order.internalID)}
               >
                 contact the gallery
               </RouterLink>
             ) : (
-              <a href={"/user/conversations"}>contact the gallery</a>
+              <a
+                href="/user/conversations"
+                onClick={() => {
+                  tracking.clickedContactGallery(order.internalID)
+                }}
+              >
+                contact the gallery
+              </a>
             )}{" "}
             with any questions about your offer.
           </Text>
@@ -384,5 +395,7 @@ const FRAGMENT = graphql`
       estimatedDelivery
       estimatedDeliveryWindow
     }
+    source
+    mode
   }
 `

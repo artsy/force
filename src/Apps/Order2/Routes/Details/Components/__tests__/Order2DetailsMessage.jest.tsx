@@ -2,9 +2,13 @@ import { screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { Order2DetailsMessage_Test_Query } from "__generated__/Order2DetailsMessage_Test_Query.graphql"
 import { graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 import { Order2DetailsMessage } from "../Order2DetailsMessage"
 
+jest.mock("react-tracking")
+
 jest.unmock("react-relay")
+const trackEvent = jest.fn()
 
 const { renderWithRelay } = setupTestWrapperTL<Order2DetailsMessage_Test_Query>(
   {
@@ -23,6 +27,11 @@ const { renderWithRelay } = setupTestWrapperTL<Order2DetailsMessage_Test_Query>(
 )
 
 describe("Order2DetailsMessage", () => {
+  beforeEach(() => {
+    ;(useTracking as jest.Mock).mockImplementation(() => ({
+      trackEvent,
+    }))
+  })
   const mockDate = "2024-03-20T15:30:00Z"
 
   it.each([
@@ -83,6 +92,30 @@ describe("Order2DetailsMessage", () => {
     expect(
       screen.getByRole("link", { name: "contact the gallery" }),
     ).toHaveAttribute("href", "/user/conversations/conv-123")
+  })
+
+  it("tracks contact gallery click", () => {
+    renderWithRelay({
+      Order: () => ({
+        buyerStateExpiresAt: mockDate,
+        code: "123",
+        internalID: "test-id",
+        displayTexts: {
+          messageType: "SUBMITTED_OFFER",
+        },
+        impulseConversationId: "conv-123",
+      }),
+    })
+
+    const contactLink = screen.getByRole("link", {
+      name: "contact the gallery",
+    })
+    contactLink.click()
+    expect(trackEvent).toBeCalledWith({
+      action: "clickedContactGallery",
+      context_owner_id: "test-id",
+      context_owner_type: "orders-detail",
+    })
   })
 
   it("renders wire transfer details for PROCESSING_WIRE", () => {

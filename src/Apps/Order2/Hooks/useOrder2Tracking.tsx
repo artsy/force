@@ -2,6 +2,7 @@ import {
   ActionType,
   type ClickedAskSpecialist,
   type ClickedBuyerProtection,
+  type ClickedContactGallery,
   type ClickedImportFees,
   type ClickedVisitHelpCenter,
   type ContextModule,
@@ -80,6 +81,15 @@ export const useOrder2Tracking = (
           destination_page_owner_slug:
             "How-are-taxes-and-customs-fees-calculated",
           flow,
+        }
+        trackEvent(payload)
+      },
+
+      clickedContactGallery: (orderId: string) => {
+        const payload: ClickedContactGallery = {
+          action: ActionType.clickedContactGallery,
+          context_owner_type: OwnerType.ordersDetail,
+          context_owner_id: orderId,
         }
         trackEvent(payload)
       },

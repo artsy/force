@@ -42,7 +42,7 @@ export const AboutOurStory = () => {
           gap={2}
           flexDirection="column"
         >
-          <Text variant="xl">Our story</Text>
+          <Text variant="xl">Our Story</Text>
 
           <Text variant="sm">
             Artsy was founded in 2009 by Carter Cleveland, a computer science
@@ -53,10 +53,10 @@ export const AboutOurStory = () => {
 
           <Text variant="sm">
             Today, over 3.4 million collectors and enthusiasts use Artsy to
-            browse, learn, and purchase works from the most respected names in
-            contemporary and modern art. We’re proud to support the full
-            spectrum of the art world—from major fairs and blue-chip galleries
-            to independent artists and new buyers.
+            browse, learn about, and purchase works from the most respected
+            names in contemporary and modern art. We’re proud to support the
+            full spectrum of the art world—from major fairs and blue-chip
+            galleries to independent artists and new buyers.
           </Text>
 
           <Text variant="sm">

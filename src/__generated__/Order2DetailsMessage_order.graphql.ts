@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<71cdbafdb63415c714f5da35b96191aa>>
+ * @generated SignedSource<<6a853ecc911972dc60a3a18877508e3a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,6 +10,8 @@
 
 import { ReaderFragment } from 'relay-runtime';
 export type DisplayTextsMessageTypeEnum = "APPROVED_PICKUP" | "APPROVED_SHIP" | "APPROVED_SHIP_EXPRESS" | "APPROVED_SHIP_STANDARD" | "APPROVED_SHIP_WHITE_GLOVE" | "CANCELED" | "COMPLETED_PICKUP" | "COMPLETED_SHIP" | "DECLINED_BY_BUYER" | "DECLINED_BY_SELLER" | "PAYMENT_FAILED" | "PROCESSING_PAYMENT_PICKUP" | "PROCESSING_PAYMENT_SHIP" | "PROCESSING_WIRE" | "REFUNDED" | "SHIPPED" | "SUBMITTED_OFFER" | "SUBMITTED_ORDER" | "UNKNOWN" | "%future added value";
+export type OrderModeEnum = "BUY" | "OFFER" | "%future added value";
+export type OrderSourceEnum = "ARTWORK_PAGE" | "INQUIRY" | "PARTNER_OFFER" | "PRIVATE_SALE" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type Order2DetailsMessage_order$data = {
   readonly buyerStateExpiresAt: string | null | undefined;
@@ -27,6 +29,8 @@ export type Order2DetailsMessage_order$data = {
   };
   readonly impulseConversationId: string | null | undefined;
   readonly internalID: string;
+  readonly mode: OrderModeEnum;
+  readonly source: OrderSourceEnum;
   readonly " $fragmentType": "Order2DetailsMessage_order";
 };
 export type Order2DetailsMessage_order$key = {
@@ -138,12 +142,26 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "source",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "mode",
+      "storageKey": null
     }
   ],
   "type": "Order",
   "abstractKey": null
 };
 
-(node as any).hash = "f87da796df218afc454f46697843fd3f";
+(node as any).hash = "04a4d0f9f60bab0e40613efc9cb94e7a";
 
 export default node;

@@ -305,6 +305,7 @@ describe("Order2CheckoutRoute", () => {
           userEvent.click(screen.getByText("Pickup"))
         })
         expect(screen.getByText("Free pickup")).toBeInTheDocument()
+        expect(screen.queryByText("Eagle, CO, US")).toBeInTheDocument()
 
         // Verify submit button is present and disabled
         const submitButton = screen.getByText("Continue to Payment")
@@ -871,6 +872,7 @@ const baseProps = {
           },
         },
       ],
+      shippingOrigin: "Eagle, CO, US",
     },
     addressConnection: {
       edges: [],
