@@ -93,6 +93,7 @@ export const AboutPress = () => {
                 trackEvent({
                   action_type: DeprecatedAnalyticsSchema.ActionType.Click,
                   subject: "Visit Artsy Press Page",
+                  destination_path: "/press",
                 })
               }}
             >

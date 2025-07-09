@@ -72,6 +72,8 @@ export const AboutJoin = () => {
                     trackEvent({
                       action_type: DeprecatedAnalyticsSchema.ActionType.Click,
                       subject: "Apply Here",
+                      destination_path:
+                        "https://partners.artsy.net/gallery-partnerships",
                     })
                   }}
                 >
