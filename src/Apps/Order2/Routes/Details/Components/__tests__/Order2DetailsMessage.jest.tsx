@@ -104,14 +104,6 @@ describe("Order2DetailsMessage", () => {
           messageType: "SUBMITTED_OFFER",
         },
         impulseConversationId: "conv-123",
-        lineItems: [
-          {
-            artwork: {
-              slug: "artwork-123",
-              internalID: "supermegaid",
-            },
-          },
-        ],
       }),
     })
 
@@ -121,9 +113,8 @@ describe("Order2DetailsMessage", () => {
     contactLink.click()
     expect(trackEvent).toBeCalledWith({
       action: "clickedContactGallery",
-      context_owner_id: "supermegaid",
-      context_owner_slug: "artwork-123",
-      context_owner_type: "artwork",
+      context_owner_id: "test-id",
+      context_owner_type: "orders-detail",
     })
   })
 

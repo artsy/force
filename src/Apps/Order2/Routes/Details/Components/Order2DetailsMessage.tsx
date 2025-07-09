@@ -100,9 +100,7 @@ const getMessageContent = (order): React.ReactNode => {
             {!!order.impulseConversationId ? (
               <RouterLink
                 to={`/user/conversations/${order.impulseConversationId}`}
-                onClick={() =>
-                  tracking.clickedContactGallery(order.lineItems[0]?.artwork)
-                }
+                onClick={() => tracking.clickedContactGallery(order.internalID)}
               >
                 contact the gallery
               </RouterLink>
@@ -110,7 +108,7 @@ const getMessageContent = (order): React.ReactNode => {
               <a
                 href="/user/conversations"
                 onClick={() => {
-                  tracking.clickedContactGallery(order.lineItems[0]?.artwork)
+                  tracking.clickedContactGallery(order.internalID)
                 }}
               >
                 contact the gallery
@@ -396,12 +394,6 @@ const FRAGMENT = graphql`
       trackingURL
       estimatedDelivery
       estimatedDeliveryWindow
-    }
-    lineItems {
-      artwork {
-        internalID
-        slug
-      }
     }
     source
     mode

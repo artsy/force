@@ -85,15 +85,11 @@ export const useOrder2Tracking = (
         trackEvent(payload)
       },
 
-      clickedContactGallery: (artwork: {
-        slug: string
-        internalID: string
-      }) => {
+      clickedContactGallery: (orderId: string) => {
         const payload: ClickedContactGallery = {
           action: ActionType.clickedContactGallery,
-          context_owner_type: OwnerType.artwork,
-          context_owner_slug: artwork.slug,
-          context_owner_id: artwork.internalID,
+          context_owner_type: OwnerType.ordersDetail,
+          context_owner_id: orderId,
         }
         trackEvent(payload)
       },
