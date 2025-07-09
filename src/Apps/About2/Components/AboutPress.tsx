@@ -45,20 +45,26 @@ export const AboutPress = () => {
             <Text variant="sm-display">Featured By:</Text>
 
             <Stack gap={2} flexDirection="row" flexWrap="wrap">
-              {LOGOS.map(({ src, name, width, height }) => (
-                <Image
-                  height={18}
+              {LOGOS.map(({ src, href, name, width, height }) => (
+                <a
                   key={name}
-                  src={src}
-                  alt={name}
-                  style={{
-                    aspectRatio: `${width} / ${height}`,
-                    ...(theme.name === "dark" && {
-                      filter: "invert(1) hue-rotate(180deg)",
-                    }),
-                  }}
-                  loading="lazy"
-                />
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Image
+                    height={18}
+                    src={src}
+                    alt={name}
+                    style={{
+                      aspectRatio: `${width} / ${height}`,
+                      ...(theme.name === "dark" && {
+                        filter: "invert(1) hue-rotate(180deg)",
+                      }),
+                    }}
+                    loading="lazy"
+                  />
+                </a>
               ))}
             </Stack>
           </Box>
@@ -101,38 +107,37 @@ export const AboutPress = () => {
 
 const LOGOS: {
   src: string
+  href: string
   name: string
   width: number
   height: number
 }[] = [
   {
     src: "https://files.artsy.net/images/logo-forbes.png",
+    href: "https://www.forbes.com/sites/natalierobehmed/2013/09/06/why-artsy-is-succeeding-in-putting-the-art-world-online/",
     name: "Forbes",
     width: 148,
     height: 36,
   },
   {
     src: "https://files.artsy.net/images/logo-the-new-york-times.png",
+    href: "https://www.nytimes.com/2018/01/26/arts/design/art-market-apps-magnus-artsy.html",
     name: "The New York Times",
     width: 388,
     height: 58,
   },
   {
     src: "https://files.artsy.net/images/logo-bloomberg.png",
+    href: "https://www.bloomberg.com/news/articles/2018-03-27/new-york-s-artsy-is-making-it-even-easier-to-buy-art-online",
     name: "Bloomberg",
     width: 259,
     height: 54,
   },
   {
     src: "https://files.artsy.net/images/logo-fast-company.png",
+    href: "https://www.fastcompany.com/40487205/by-harnessing-data-artsy-hopes-to-democratize-the-art-world",
     name: "Fast Company",
     width: 223,
     height: 41,
-  },
-  {
-    src: "https://files.artsy.net/images/logo-techcrunch.png",
-    name: "TechCrunch",
-    width: 275,
-    height: 48,
   },
 ]
