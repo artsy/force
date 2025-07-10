@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<90289524244860e129aeb7420336cf4c>>
+ * @generated SignedSource<<4b4f80410774cebeb39df70c6e97cfc2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,6 +12,7 @@ import { ReaderFragment } from 'relay-runtime';
 export type FulfillmentOptionTypeEnum = "DOMESTIC_FLAT" | "INTERNATIONAL_FLAT" | "PICKUP" | "SHIPPING_TBD" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type Order2FulfillmentDetailsStep_order$data = {
+  readonly availableShippingCountries: ReadonlyArray<string>;
   readonly fulfillmentDetails: {
     readonly addressLine1: string | null | undefined;
     readonly addressLine2: string | null | undefined;
@@ -190,6 +191,13 @@ return {
         }
       ],
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "availableShippingCountries",
+      "storageKey": null
     }
   ],
   "type": "Order",
@@ -197,6 +205,6 @@ return {
 };
 })();
 
-(node as any).hash = "b2c42081bf3205e8ee12fe37dd2e7491";
+(node as any).hash = "a0bdad413562eb41948cb4d680aad020";
 
 export default node;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3bada599a5d3a670d869ef2395ccb28d>>
+ * @generated SignedSource<<4bd5eb180a7e225850b36b59e4d71e80>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,6 +13,7 @@ export type submitOrderInput = {
   clientMutationId?: string | null | undefined;
   confirmationToken?: string | null | undefined;
   id: string;
+  oneTimeUse?: boolean | null | undefined;
 };
 export type useSubmitOrderMutation$variables = {
   input: submitOrderInput;

@@ -33,8 +33,13 @@ const Order2ReviewStepComponent: React.FC<Order2ReviewStepProps> = ({
 }) => {
   const orderData = useFragment(FRAGMENT, order)
   const submitOrderMutation = useSubmitOrderMutation()
-  const { steps, confirmationToken, redirectToOrderDetails, checkoutTracking } =
-    useCheckoutContext()
+  const {
+    steps,
+    confirmationToken,
+    saveCreditCard,
+    redirectToOrderDetails,
+    checkoutTracking,
+  } = useCheckoutContext()
 
   const artworkData = extractLineItemMetadata(orderData.lineItems[0]!)
 
@@ -71,6 +76,7 @@ const Order2ReviewStepComponent: React.FC<Order2ReviewStepProps> = ({
           input: {
             id: orderData.internalID,
             confirmationToken: confirmationToken.id,
+            oneTimeUse: !saveCreditCard,
           },
         },
       })
