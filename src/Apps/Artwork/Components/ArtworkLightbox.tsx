@@ -38,10 +38,6 @@ const ArtworkLightbox: React.FC<
 
   const isArtworkCaptionEnabled = useFlag("diamond_artwork-captions")
 
-  const artworkCaption = isArtworkCaptionEnabled
-    ? (artwork.caption ?? artwork.formattedMetadata)
-    : artwork.formattedMetadata
-
   const resizedLocalImage = localImage && {
     src: localImage.data,
     srcSet: undefined,
@@ -58,6 +54,11 @@ const ArtworkLightbox: React.FC<
     resized,
     mobileLightboxSource,
   } = images[activeIndex]
+
+  const artworkCaption =
+    isArtworkCaptionEnabled && isDefault
+      ? (artwork.caption ?? artwork.formattedMetadata)
+      : artwork.formattedMetadata
 
   const image = resizedLocalImage ?? (hasGeometry ? resized : fallback)
 
