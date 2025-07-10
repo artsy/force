@@ -142,7 +142,7 @@ export const ArtistInfoFragmentContainer = createFragmentContainer(ArtistInfo, {
       ...ArtistMarketInsights_artist
       # The below data is only used to determine whether a section
       # should be rendered
-      biographyBlurb: biographyBlurb(format: HTML, partnerBio: false) {
+      biographyBlurb: biographyBlurb(format: HTML) {
         text
       }
     }

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1a56efe9512a6510c19e141294babb94>>
+ * @generated SignedSource<<57d967b8b074c19f98168b9d2c212953>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -321,11 +321,6 @@ return {
           "kind": "Literal",
           "name": "format",
           "value": "HTML"
-        },
-        {
-          "kind": "Literal",
-          "name": "partnerBio",
-          "value": false
         }
       ],
       "concreteType": "ArtistBlurb",
@@ -341,7 +336,7 @@ return {
           "storageKey": null
         }
       ],
-      "storageKey": "biographyBlurb(format:\"HTML\",partnerBio:false)"
+      "storageKey": "biographyBlurb(format:\"HTML\")"
     }
   ],
   "type": "Artist",
@@ -349,6 +344,6 @@ return {
 };
 })();
 
-(node as any).hash = "5d066e98bb28abd4606a54b1ce1e52be";
+(node as any).hash = "e42561b7ef84c53e800ff09f5b23a720";
 
 export default node;
