@@ -300,6 +300,7 @@ const helpers = {
       expect(submitOrderMutation.operationVariables.input).toEqual({
         id: "order-id",
         confirmationToken: "confirmation-token-id",
+        oneTimeUse: false,
       })
 
       await flushPromiseQueue()
@@ -1037,6 +1038,7 @@ const baseProps = {
     order: {
       id: "ORDER:RELAY-ID-MAKES-TEST-WORK",
 
+      availableShippingCountries: ["US", "DE"],
       internalID: "order-id",
       mode: "BUY",
       source: "ARTWORK_PAGE",
