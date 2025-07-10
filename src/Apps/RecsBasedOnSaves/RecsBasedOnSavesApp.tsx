@@ -2,6 +2,7 @@ import { Spacer, Text } from "@artsy/palette"
 import { MetaTags } from "Components/MetaTags"
 import { BecauseYouSavedRail } from "./Components/BecauseYouSavedRail"
 import { BasedOnYourRecentSavesRail } from "Apps/RecsBasedOnSaves/Components/BasedOnYourRecentSavesRail"
+import { BasedOnYourRecentSavesRail2 } from "Apps/RecsBasedOnSaves/Components/BasedOnYourRecentSavesRail2"
 
 export const RecsBasedOnSavesApp: React.FC = () => {
   return (
@@ -21,6 +22,8 @@ export const RecsBasedOnSavesApp: React.FC = () => {
       <Spacer y={4} />
 
       <BasedOnYourRecentSavesRail />
+      <Spacer y={4} />
+      <BasedOnYourRecentSavesRail2 />
       <Spacer y={4} />
       <BecauseYouSavedRail />
     </>

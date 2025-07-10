@@ -1,0 +1,318 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: force
+    app.kubernetes.io/version: staging
+    component: web
+    layer: application
+  name: force-web
+  namespace: recs-based-on-saves
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: force
+      component: web
+      layer: application
+  strategy:
+    rollingUpdate:
+      maxSurge: 2
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: force
+        app.kubernetes.io/version: staging
+        component: web
+        layer: application
+      name: force-web
+      namespace: default
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: tier
+                operator: In
+                values:
+                - foreground
+      containers:
+      - env:
+        - name: PORT
+          value: '5000'
+        - name: DD_TRACE_AGENT_HOSTNAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+        - name: KEEPALIVE_TIMEOUT_SECONDS
+          value: '95'
+        - name: HEADERS_TIMEOUT_SECONDS
+          value: '105'
+        - name: DD_VERSION
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.labels['app.kubernetes.io/version']
+        envFrom:
+        - configMapRef:
+            name: secrets-config
+        - configMapRef:
+            name: force-environment
+        image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/force:recs-based-on-saves
+        imagePullPolicy: Always
+        lifecycle:
+          preStop:
+            exec:
+              command:
+              - sh
+              - -c
+              - sleep 10
+        name: force-web
+        ports:
+        - containerPort: 5000
+          name: force-http
+        readinessProbe:
+          httpGet:
+            httpHeaders:
+            - name: X-FORWARDED-PROTO
+              value: https
+            path: /system/up
+            port: force-http
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        resources:
+          limits:
+            memory: 1Gi
+          requests:
+            cpu: 500m
+            memory: 500Mi
+        volumeMounts:
+        - mountPath: /secrets
+          name: secrets
+          readOnly: true
+      dnsConfig:
+        options:
+        - name: ndots
+          value: '1'
+      dnsPolicy: ClusterFirst
+      initContainers:
+      - command:
+        - python
+        - src/load/load.py
+        - kubernetes
+        - staging
+        - force
+        envFrom:
+        - configMapRef:
+            name: secrets-config
+        image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/fortress:staging
+        imagePullPolicy: Always
+        name: setenv
+        volumeMounts:
+        - mountPath: /secrets
+          name: secrets
+      serviceAccountName: force
+      volumes:
+      - emptyDir: {}
+        name: secrets
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: force
+    app.kubernetes.io/version: staging
+    component: web
+    layer: application
+  name: force-web-spotty
+  namespace: recs-based-on-saves
+spec:
+  selector:
+    matchLabels:
+      app: force
+      component: web
+      layer: application
+  strategy:
+    rollingUpdate:
+      maxSurge: 2
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: force
+        app.kubernetes.io/version: staging
+        component: web
+        layer: application
+      name: force-web-spotty
+      namespace: default
+    spec:
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - preference:
+              matchExpressions:
+              - key: tier
+                operator: In
+                values:
+                - foreground-spot
+            weight: 100
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: tier
+                operator: In
+                values:
+                - foreground
+                - foreground-spot
+      containers:
+      - env:
+        - name: PORT
+          value: '5000'
+        - name: DD_TRACE_AGENT_HOSTNAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+        - name: KEEPALIVE_TIMEOUT_SECONDS
+          value: '95'
+        - name: HEADERS_TIMEOUT_SECONDS
+          value: '105'
+        - name: DD_VERSION
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.labels['app.kubernetes.io/version']
+        envFrom:
+        - configMapRef:
+            name: secrets-config
+        - configMapRef:
+            name: force-environment
+        image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/force:recs-based-on-saves
+        imagePullPolicy: Always
+        lifecycle:
+          preStop:
+            exec:
+              command:
+              - sh
+              - -c
+              - sleep 10
+        name: force-web-spotty
+        ports:
+        - containerPort: 5000
+          name: force-http
+        readinessProbe:
+          httpGet:
+            httpHeaders:
+            - name: X-FORWARDED-PROTO
+              value: https
+            path: /system/up
+            port: force-http
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        resources:
+          limits:
+            memory: 1Gi
+          requests:
+            cpu: 500m
+            memory: 500Mi
+        volumeMounts:
+        - mountPath: /secrets
+          name: secrets
+          readOnly: true
+      dnsConfig:
+        options:
+        - name: ndots
+          value: '1'
+      dnsPolicy: ClusterFirst
+      initContainers:
+      - command:
+        - python
+        - src/load/load.py
+        - kubernetes
+        - staging
+        - force
+        envFrom:
+        - configMapRef:
+            name: secrets-config
+        image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/fortress:staging
+        imagePullPolicy: Always
+        name: setenv
+        volumeMounts:
+        - mountPath: /secrets
+          name: secrets
+      serviceAccountName: force
+      tolerations:
+      - effect: NoSchedule
+        key: reserved
+        operator: Equal
+        value: spot
+      volumes:
+      - emptyDir: {}
+        name: secrets
+---
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: force-web-spotty
+  namespace: recs-based-on-saves
+spec:
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 1800
+  maxReplicas: 2
+  metrics:
+  - resource:
+      name: cpu
+      target:
+        averageUtilization: 70
+        type: Utilization
+    type: Resource
+  minReplicas: 1
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: force-web-spotty
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: force
+    component: web
+    layer: application
+  name: force-web-internal
+  namespace: recs-based-on-saves
+spec:
+  ports:
+  - name: force-http
+    port: 5000
+    protocol: TCP
+    targetPort: force-http
+  selector:
+    app: force
+    component: web
+    layer: application
+  type: ClusterIP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/whitelist-source-range: 173.245.48.0/20,103.21.244.0/22,103.22.200.0/22,103.31.4.0/22,141.101.64.0/18,108.162.192.0/18,190.93.240.0/20,188.114.96.0/20,197.234.240.0/22,198.41.128.0/17,162.158.0.0/15,172.64.0.0/13,131.0.72.0/22,104.16.0.0/13,104.24.0.0/14,10.0.0.0/16,100.64.0.0/10
+  name: force
+  namespace: recs-based-on-saves
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: recs-based-on-saves.artsy.net
+    http:
+      paths:
+      - backend:
+          service:
+            name: force-web-internal
+            port:
+              name: force-http
+        path: /
+        pathType: Prefix
