@@ -290,6 +290,7 @@ describe("Order2CheckoutRoute", () => {
               ],
               fulfillmentDetails: null,
               selectedFulfillmentOption: null,
+              stripeConfirmationToken: null,
             },
           },
         }
@@ -464,6 +465,7 @@ describe("Order2CheckoutRoute", () => {
               updateOrderPayload: () =>
                 orderMutationSuccess(initialOrder, {
                   paymentMethod: "CREDIT_CARD",
+                  stripeConfirmationToken: "confirmation-token-id",
                 }),
             })
           expect(updateOrderPaymentMethodMutation.operationName).toBe(
@@ -474,6 +476,7 @@ describe("Order2CheckoutRoute", () => {
           ).toEqual({
             id: "order-id",
             paymentMethod: "CREDIT_CARD",
+            stripeConfirmationToken: "confirmation-token-id",
           })
 
           await flushPromiseQueue()

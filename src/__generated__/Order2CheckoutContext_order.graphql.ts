@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6bae1474ab55760d1faa8de978715058>>
+ * @generated SignedSource<<ac004ec19f9290a5b20c891da9aaeaf0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -26,6 +26,7 @@ export type Order2CheckoutContext_order$data = {
     readonly type: FulfillmentOptionTypeEnum;
   } | null | undefined;
   readonly source: OrderSourceEnum;
+  readonly stripeConfirmationToken: string | null | undefined;
   readonly " $fragmentType": "Order2CheckoutContext_order";
 };
 export type Order2CheckoutContext_order$key = {
@@ -67,6 +68,13 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "buyerStateExpiresAt",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "stripeConfirmationToken",
       "storageKey": null
     },
     {
@@ -116,6 +124,6 @@ return {
 };
 })();
 
-(node as any).hash = "08de7502377354ab7d2de6a7d89ce4f0";
+(node as any).hash = "aa8b5fec8c295d7234ec0a67f18d64af";
 
 export default node;
