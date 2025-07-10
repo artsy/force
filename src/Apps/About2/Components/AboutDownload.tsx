@@ -1,4 +1,10 @@
 import {
+  ActionType,
+  type ClickedAppDownload,
+  ContextModule,
+  OwnerType,
+} from "@artsy/cohesion"
+import {
   Box,
   Button,
   Column,
@@ -14,6 +20,7 @@ import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { useDeviceDetection } from "Utils/Hooks/useDeviceDetection"
 import { cropped } from "Utils/resized"
+import { useTracking } from "react-tracking"
 import styled from "styled-components"
 
 const ABOUT_DOWNLOAD_BACKDROP_IMAGE =
@@ -23,6 +30,8 @@ const ABOUT_DOWNLOAD_FOREGROUND_IMAGE =
 
 export const AboutDownload = () => {
   const { downloadAppUrl } = useDeviceDetection()
+
+  const { trackEvent } = useTracking()
 
   return (
     <FullBleed bg="mono100" color="mono0" position="relative">
@@ -126,6 +135,17 @@ export const AboutDownload = () => {
                       target="_blank"
                       rel="noopener"
                       width={["100%", "auto"]}
+                      onClick={() => {
+                        const payload: ClickedAppDownload = {
+                          action: ActionType.clickedAppDownload,
+                          context_module: ContextModule.about,
+                          destination_path: downloadAppUrl,
+                          subject: "Download Now",
+                          context_page_owner_type: OwnerType.about,
+                        }
+
+                        trackEvent(payload)
+                      }}
                     >
                       Download Now
                     </Button>
