@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9fda4504b6239f14dcbc93331210af77>>
+ * @generated SignedSource<<581a9476ab7fd016b9f24518c0d9b24d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,7 +20,6 @@ export type ArtistBioTestQuery$rawResponse = {
   readonly bio: {
     readonly biographyBlurb: {
       readonly credit: string | null | undefined;
-      readonly partnerID: string | null | undefined;
       readonly text: string | null | undefined;
     } | null | undefined;
     readonly id: string;
@@ -94,11 +93,6 @@ return {
                 "kind": "Literal",
                 "name": "format",
                 "value": "HTML"
-              },
-              {
-                "kind": "Literal",
-                "name": "partnerBio",
-                "value": false
               }
             ],
             "concreteType": "ArtistBlurb",
@@ -117,18 +111,11 @@ return {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
-                "name": "partnerID",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
                 "name": "text",
                 "storageKey": null
               }
             ],
-            "storageKey": "biographyBlurb(format:\"HTML\",partnerBio:false)"
+            "storageKey": "biographyBlurb(format:\"HTML\")"
           },
           {
             "alias": null,
@@ -143,7 +130,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "05ebe8eb11518db5711bac9b45daaf90",
+    "cacheID": "2c5040c3686825f3044089c983f0cc4a",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -160,7 +147,6 @@ return {
           "type": "ArtistBlurb"
         },
         "bio.biographyBlurb.credit": (v1/*: any*/),
-        "bio.biographyBlurb.partnerID": (v1/*: any*/),
         "bio.biographyBlurb.text": (v1/*: any*/),
         "bio.id": {
           "enumValues": null,
@@ -172,7 +158,7 @@ return {
     },
     "name": "ArtistBioTestQuery",
     "operationKind": "query",
-    "text": "query ArtistBioTestQuery {\n  bio: artist(id: \"unused\") {\n    ...ArtistBio_bio\n    id\n  }\n}\n\nfragment ArtistBio_bio on Artist {\n  biographyBlurb(format: HTML, partnerBio: false) {\n    credit\n    partnerID\n    text\n  }\n}\n"
+    "text": "query ArtistBioTestQuery {\n  bio: artist(id: \"unused\") {\n    ...ArtistBio_bio\n    id\n  }\n}\n\nfragment ArtistBio_bio on Artist {\n  biographyBlurb(format: HTML) {\n    credit\n    text\n  }\n}\n"
   }
 };
 })();

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b3ec9c13c69f543ab194c8222f67fd48>>
+ * @generated SignedSource<<866720d929493d835c3bc2b0992a6ff2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,7 +13,6 @@ import { FragmentRefs } from "relay-runtime";
 export type ArtistBio_bio$data = {
   readonly biographyBlurb: {
     readonly credit: string | null | undefined;
-    readonly partnerID: string | null | undefined;
     readonly text: string | null | undefined;
   } | null | undefined;
   readonly " $fragmentType": "ArtistBio_bio";
@@ -36,11 +35,6 @@ const node: ReaderFragment = {
           "kind": "Literal",
           "name": "format",
           "value": "HTML"
-        },
-        {
-          "kind": "Literal",
-          "name": "partnerBio",
-          "value": false
         }
       ],
       "concreteType": "ArtistBlurb",
@@ -59,24 +53,17 @@ const node: ReaderFragment = {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
-          "name": "partnerID",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
           "name": "text",
           "storageKey": null
         }
       ],
-      "storageKey": "biographyBlurb(format:\"HTML\",partnerBio:false)"
+      "storageKey": "biographyBlurb(format:\"HTML\")"
     }
   ],
   "type": "Artist",
   "abstractKey": null
 };
 
-(node as any).hash = "ed3e96658bfe75ed22574c19e19d0634";
+(node as any).hash = "a48596ee5a5f7462c8f8da2ac41272c3";
 
 export default node;
