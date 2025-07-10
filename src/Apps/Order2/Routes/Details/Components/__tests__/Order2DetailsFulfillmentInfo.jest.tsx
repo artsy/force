@@ -44,7 +44,7 @@ describe("Order2DetailsFulfillmentInfo", () => {
     expect(screen.getByText("Andy Warhol")).toBeInTheDocument()
     expect(screen.getByText("222 West 23rd Street")).toBeInTheDocument()
     expect(screen.getByText("New York, NY, 10011")).toBeInTheDocument()
-    expect(screen.getByText("US")).toBeInTheDocument()
+    expect(screen.getByText("United States")).toBeInTheDocument()
     expect(screen.getByText("+1 (123) 456-7890")).toBeInTheDocument()
   })
 
