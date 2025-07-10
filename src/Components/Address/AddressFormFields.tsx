@@ -33,7 +33,7 @@ interface Props {
   withPhoneNumber?: boolean
   /* @deprecated - legacy plain-text phone input */
   withLegacyPhoneInput?: boolean
-  shippableCounties?: CountryData[]
+  shippableCountries?: CountryData[]
 }
 
 /**
@@ -95,13 +95,13 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
   } = useFormikContext<V>()
 
   const dataTestIdPrefix = "addressFormFields"
-  const { shippableCounties } = props
+  const { shippableCountries } = props
 
   const countryInputOptions = useMemo(() => {
     return sortCountriesForCountryInput(
-      shippableCounties || countryPhoneOptions,
+      shippableCountries || countryPhoneOptions,
     )
-  }, [shippableCounties])
+  }, [shippableCountries])
 
   // Formik types don't understand our specific nested structure
   // so we need to cast these to what we know to be the correct types

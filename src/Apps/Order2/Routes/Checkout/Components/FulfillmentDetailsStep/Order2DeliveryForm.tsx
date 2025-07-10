@@ -22,7 +22,7 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
   order,
 }) => {
   const { setCheckoutMode, checkoutTracking } = useCheckoutContext()
-  const shippableCounties = getShippableCountries(
+  const shippableCountries = getShippableCountries(
     order.availableShippingCountries,
   )
 
@@ -65,7 +65,7 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
           <Flex flexDirection={"column"} mb={2}>
             <AddressFormFields
               withPhoneNumber
-              shippableCounties={shippableCounties}
+              shippableCountries={shippableCountries}
             />
             <Spacer y={4} />
             <Button
