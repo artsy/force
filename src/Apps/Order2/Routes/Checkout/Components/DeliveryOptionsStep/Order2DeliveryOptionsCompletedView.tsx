@@ -1,5 +1,5 @@
 import CheckmarkIcon from "@artsy/icons/CheckmarkIcon"
-import { Box, Clickable, Flex, Spacer, Text } from "@artsy/palette"
+import { Clickable, Flex, Spacer, Text } from "@artsy/palette"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import type { Order2DeliveryOptionsCompletedView_order$key } from "__generated__/Order2DeliveryOptionsCompletedView_order.graphql"
 import { useCallback } from "react"

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<317f07e6b414f6f6b0ef00a81739d7fb>>
+ * @generated SignedSource<<6635572f1ecd247249ec8e1af8215db2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,7 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type Order2DeliveryForm_order$data = {
+  readonly availableShippingCountries: ReadonlyArray<string>;
   readonly internalID: string;
   readonly " $fragmentType": "Order2DeliveryForm_order";
 };
@@ -31,12 +32,19 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "internalID",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "availableShippingCountries",
+      "storageKey": null
     }
   ],
   "type": "Order",
   "abstractKey": null
 };
 
-(node as any).hash = "a3ebd86de69f60016da67fa882ebc639";
+(node as any).hash = "bb715c2e181ce58f6c7b87ccaa15a600";
 
 export default node;

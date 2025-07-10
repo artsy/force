@@ -66,8 +66,6 @@ interface CheckoutActions {
   setDeliveryOptionsComplete: () => void
   editDeliveryOptions: () => void
 
-  setEditingStep: (stepName: CheckoutStepName) => void
-  updateCheckoutProgress: (args: CalculateStepsArgs) => void
   editPayment: () => void
 
   setLoadingError: (error: CheckoutLoadingError | null) => void

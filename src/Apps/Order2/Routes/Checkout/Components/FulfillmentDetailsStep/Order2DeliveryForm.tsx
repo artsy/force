@@ -3,14 +3,13 @@ import { Button, Flex, Spacer, Text } from "@artsy/palette"
 import type { AddressFormValues } from "Apps/Invoice/Components/AddressFormWithCreditCard"
 import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
-import { useOrder2SetFulfillmentOptionMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetFulfillmentOptionMutation"
+
 import { useOrder2UpdateShippingAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2UpdateShippingAddressMutation"
 import { getShippableCountries } from "Apps/Order2/Utils/getShippableCountries"
 import {
   AddressFormFields,
   addressFormFieldsValidator,
 } from "Components/Address/AddressFormFields"
-import createLogger from "Utils/logger"
 import type { Order2DeliveryForm_order$key } from "__generated__/Order2DeliveryForm_order.graphql"
 import { Formik, type FormikHelpers, type FormikValues } from "formik"
 import type * as React from "react"
@@ -22,7 +21,6 @@ interface Order2DeliveryFormProps {
   order: Order2DeliveryForm_order$key
 }
 
-const logger = createLogger("Order2DeliveryForm.tsx")
 const validationSchema = yup
   .object()
   .shape(addressFormFieldsValidator({ withPhoneNumber: true }))
@@ -30,17 +28,17 @@ const validationSchema = yup
 export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
   order,
 }) => {
-  const shippableCountries = getShippableCountries(
-    order.availableShippingCountries,
-  )
   const orderData = useFragment(FRAGMENT, order)
+
+  const shippableCountries = getShippableCountries(
+    orderData.availableShippingCountries,
+  )
 
   const checkoutContext = useCheckoutContext()
 
   const { setCheckoutMode, checkoutTracking, setFulfillmentDetailsComplete } =
     checkoutContext
   const updateShippingAddressMutation = useOrder2UpdateShippingAddressMutation()
-  const setFulfillmentOptionMutation = useOrder2SetFulfillmentOptionMutation()
 
   // Placeholders
   const initialValues = {
@@ -95,7 +93,6 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
       checkoutTracking,
       orderData.internalID,
       updateShippingAddressMutation,
-      setFulfillmentOptionMutation,
       setFulfillmentDetailsComplete,
     ],
   )
@@ -142,5 +139,6 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
 const FRAGMENT = graphql`
   fragment Order2DeliveryForm_order on Order {
     internalID
+    availableShippingCountries
   }
 `
