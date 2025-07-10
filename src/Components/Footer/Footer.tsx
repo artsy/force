@@ -395,6 +395,10 @@ const PolicyLinks = () => {
           Do not sell my personal information
         </Clickable>
 
+        <FooterLink color="mono60" mr={1} to="/artsy-accessibility-statement">
+          Accessibility
+        </FooterLink>
+
         <ThemeSelect />
       </Text>
     </>
