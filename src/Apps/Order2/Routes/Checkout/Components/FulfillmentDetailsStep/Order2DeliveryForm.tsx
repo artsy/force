@@ -1,6 +1,5 @@
 import { ContextModule } from "@artsy/cohesion"
 import { Button, Flex, Spacer, Text } from "@artsy/palette"
-import type { AddressFormValues } from "Apps/Invoice/Components/AddressFormWithCreditCard"
 import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 
@@ -8,10 +7,11 @@ import { useOrder2UpdateShippingAddressMutation } from "Apps/Order2/Routes/Check
 import { getShippableCountries } from "Apps/Order2/Utils/getShippableCountries"
 import {
   AddressFormFields,
+  type FormikContextWithAddress,
   addressFormFieldsValidator,
 } from "Components/Address/AddressFormFields"
 import type { Order2DeliveryForm_order$key } from "__generated__/Order2DeliveryForm_order.graphql"
-import { Formik, type FormikHelpers, type FormikValues } from "formik"
+import { Formik } from "formik"
 import type * as React from "react"
 import { useCallback } from "react"
 import { graphql, useFragment } from "react-relay"
@@ -55,20 +55,19 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
     phoneNumberCountryCode: "",
   }
   const onSubmit = useCallback(
-    async (
-      values: AddressFormValues,
-      formikHelpers: FormikHelpers<FormikValues>,
-    ) => {
+    async (values: FormikContextWithAddress) => {
       try {
         checkoutTracking.clickedOrderProgression(
           ContextModule.ordersFulfillment,
         )
+        console.log("**", values)
         const updateShippingAddressResult =
           await updateShippingAddressMutation.submitMutation({
             variables: {
               input: {
                 id: orderData.internalID,
-                buyerPhoneNumber: values.address.phoneNumber,
+                buyerPhoneNumber: values.phoneNumber,
+                buyerPhoneNumberCountryCode: values.phoneNumberCountryCode,
                 shippingAddressLine1: values.address.addressLine1,
                 shippingAddressLine2: values.address.addressLine2,
                 shippingCity: values.address.city,

@@ -27,7 +27,7 @@ export const Order2DeliveryOptionsForm: React.FC<
   Order2DeliveryOptionsFormProps
 > = ({ order }) => {
   const orderData = useFragment(FRAGMENT, order)
-  const { checkoutTracking, setDeliveryOptionsComplete } = useCheckoutContext()
+  const { checkoutTracking, setDeliveryOptionComplete } = useCheckoutContext()
   const setFulfillmentOptionMutation = useOrder2SetFulfillmentOptionMutation()
 
   const { fulfillmentOptions } = orderData
@@ -59,7 +59,7 @@ export const Order2DeliveryOptionsForm: React.FC<
       setFulfillmentOptionResult.setOrderFulfillmentOption?.orderOrError,
     ).order
 
-    setDeliveryOptionsComplete()
+    setDeliveryOptionComplete()
   }
 
   return (

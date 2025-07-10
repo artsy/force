@@ -63,8 +63,8 @@ interface CheckoutActions {
 
   editFulfillmentDetails: () => void
 
-  setDeliveryOptionsComplete: () => void
-  editDeliveryOptions: () => void
+  setDeliveryOptionComplete: () => void
+  editDeliveryOption: () => void
 
   editPayment: () => void
 
@@ -319,15 +319,15 @@ const useBuildCheckoutContext = (
     [currentStepName],
   )
 
-  const setDeliveryOptionsComplete = useCallback(() => {
+  const setDeliveryOptionComplete = useCallback(() => {
     if (currentStepName !== CheckoutStepName.DELIVERY_OPTION) {
       logger.error(
-        `setDeliveryOptionsComplete called when current step is not DELIVERY_OPTION but ${currentStepName}`,
+        `setDeliveryOptionComplete called when current step is not DELIVERY_OPTION but ${currentStepName}`,
       )
       return
     }
     dispatch({
-      type: "DELIVERY_OPTIONS_COMPLETE",
+      type: "DELIVERY_OPTION_COMPLETE",
     })
   }, [currentStepName])
 
@@ -353,9 +353,9 @@ const useBuildCheckoutContext = (
     })
   }, [])
 
-  const editDeliveryOptions = useCallback(() => {
+  const editDeliveryOption = useCallback(() => {
     dispatch({
-      type: "EDIT_FULFILLMENT_DETAILS",
+      type: "EDIT_DELIVERY_OPTION",
     })
   }, [])
 
@@ -369,13 +369,13 @@ const useBuildCheckoutContext = (
     return {
       checkoutTracking,
       editFulfillmentDetails,
-      editDeliveryOptions,
+      editDeliveryOption,
       editPayment,
       setActiveFulfillmentDetailsTab,
       setExpressCheckoutSubmitting,
       setExpressCheckoutLoaded,
       setFulfillmentDetailsComplete,
-      setDeliveryOptionsComplete,
+      setDeliveryOptionComplete,
       setLoadingError,
       setLoadingComplete,
       setConfirmationToken,
@@ -384,8 +384,8 @@ const useBuildCheckoutContext = (
     }
   }, [
     checkoutTracking,
-    setDeliveryOptionsComplete,
-    editDeliveryOptions,
+    setDeliveryOptionComplete,
+    editDeliveryOption,
     editFulfillmentDetails,
     editPayment,
     redirectToOrderDetails,
@@ -485,10 +485,10 @@ type Action =
       type: "EDIT_FULFILLMENT_DETAILS"
     }
   | {
-      type: "DELIVERY_OPTIONS_COMPLETE"
+      type: "DELIVERY_OPTION_COMPLETE"
     }
   | {
-      type: "EDIT_DELIVERY_OPTIONS"
+      type: "EDIT_DELIVERY_OPTION"
     }
   | {
       type: "PAYMENT_COMPLETE"
@@ -585,7 +585,7 @@ const reducer = (state: CheckoutState, action: Action): CheckoutState => {
           return [...acc, current]
         }, [] as CheckoutStep[]),
       }
-    case "EDIT_DELIVERY_OPTIONS":
+    case "EDIT_DELIVERY_OPTION":
       return {
         ...state,
         steps: state.steps.reduce((acc, current) => {
@@ -644,7 +644,7 @@ const reducer = (state: CheckoutState, action: Action): CheckoutState => {
           return step
         }),
       }
-    case "DELIVERY_OPTIONS_COMPLETE":
+    case "DELIVERY_OPTION_COMPLETE":
       return {
         ...state,
         steps: state.steps.reduce((acc, current) => {
@@ -656,11 +656,16 @@ const reducer = (state: CheckoutState, action: Action): CheckoutState => {
             isAfterDeliveryOptionsStep &&
             current.state !== CheckoutStepState.HIDDEN
           ) {
+            const hasActivatedNext = acc.some(
+              step => step.state === CheckoutStepState.ACTIVE,
+            )
             return [
               ...acc,
               {
                 ...current,
-                state: CheckoutStepState.UPCOMING,
+                state: hasActivatedNext
+                  ? CheckoutStepState.UPCOMING
+                  : CheckoutStepState.ACTIVE,
               },
             ]
           }

@@ -14,7 +14,7 @@ export const Order2DeliveryOptionsCompletedView: React.FC<
   Order2DeliveryOptionsCompletedViewProps
 > = ({ order }) => {
   const orderData = useFragment(FRAGMENT, order)
-  const { editDeliveryOptions, checkoutTracking } = useCheckoutContext()
+  const { editDeliveryOption, checkoutTracking } = useCheckoutContext()
 
   const selectedFulfillmentOptionType =
     orderData.selectedFulfillmentOption?.type
@@ -31,8 +31,8 @@ export const Order2DeliveryOptionsCompletedView: React.FC<
   const onClickEdit = useCallback(() => {
     checkoutTracking.clickedChangePaymentMethod()
 
-    editDeliveryOptions()
-  }, [checkoutTracking, editDeliveryOptions])
+    editDeliveryOption()
+  }, [checkoutTracking, editDeliveryOption])
 
   return (
     <Flex flexDirection="column" backgroundColor="mono0" py={2} px={[2, 4]}>
