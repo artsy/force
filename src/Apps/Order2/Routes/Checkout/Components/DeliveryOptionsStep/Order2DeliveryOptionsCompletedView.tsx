@@ -1,5 +1,9 @@
 import CheckmarkIcon from "@artsy/icons/CheckmarkIcon"
-import { Clickable, Flex, Spacer, Text } from "@artsy/palette"
+import { Box, Clickable, Flex, Spacer, Text } from "@artsy/palette"
+import {
+  deliveryOptionLabel,
+  deliveryOptionTimeEstimate,
+} from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/utils"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import type { Order2DeliveryOptionsCompletedView_order$key } from "__generated__/Order2DeliveryOptionsCompletedView_order.graphql"
 import { useCallback } from "react"
@@ -16,17 +20,13 @@ export const Order2DeliveryOptionsCompletedView: React.FC<
   const orderData = useFragment(FRAGMENT, order)
   const { editDeliveryOption, checkoutTracking } = useCheckoutContext()
 
-  const selectedFulfillmentOptionType =
-    orderData.selectedFulfillmentOption?.type
+  const selectedFulfillmentOption = orderData.selectedFulfillmentOption
 
-  const amount = orderData.selectedFulfillmentOption?.amount?.display || null
-
-  const isFlatShipping = ["DOMESTIC_FLAT", "INTERNATIONAL_FLAT"].includes(
-    selectedFulfillmentOptionType || "",
+  const label = deliveryOptionLabel(selectedFulfillmentOption?.type)
+  const timeEstimate = deliveryOptionTimeEstimate(
+    selectedFulfillmentOption?.type,
   )
-  const label: string = isFlatShipping
-    ? "Flat rate shipping"
-    : "Shipping somehow"
+  const [prefix, timeRange] = timeEstimate || []
 
   const onClickEdit = useCallback(() => {
     checkoutTracking.clickedChangePaymentMethod()
@@ -60,17 +60,18 @@ export const Order2DeliveryOptionsCompletedView: React.FC<
         </Clickable>
       </Flex>
       <Spacer y={1} />
-      <Flex alignItems="center">
+      <Box>
         <Spacer y={0.5} />
-        <Flex justifyContent="space-between">
-          <Text variant="sm-display" color="mono100">
-            {label}
+
+        <Text variant="sm-display" color="mono100">
+          {label}
+        </Text>
+        {timeEstimate && (
+          <Text variant="xs" color="mono60">
+            {prefix} <strong>{timeRange}</strong>
           </Text>
-          <Text variant="sm-display" color="mono100">
-            {amount}
-          </Text>
-        </Flex>
-      </Flex>
+        )}
+      </Box>
     </Flex>
   )
 }
@@ -80,9 +81,6 @@ const FRAGMENT = graphql`
     internalID
     selectedFulfillmentOption {
       type
-      amount {
-        display
-      }
     }
   }
 `

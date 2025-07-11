@@ -1,5 +1,9 @@
 import { Button, Flex, Radio, RadioGroup, Spacer, Text } from "@artsy/palette"
 import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
+import {
+  deliveryOptionLabel,
+  deliveryOptionTimeEstimate,
+} from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/utils"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useOrder2SetFulfillmentOptionMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetFulfillmentOptionMutation"
 import { BUYER_GUARANTEE_URL } from "Apps/Order2/constants"
@@ -95,7 +99,7 @@ export const Order2DeliveryOptionsForm: React.FC<
               <MultipleShippingOptionsForm options={deliveryOptions} />
             )}
           </Flex>
-          <Spacer y={4} />
+          <Spacer y={2} />
           <Button
             loading={isSubmitting}
             variant="primaryBlack"
@@ -123,41 +127,37 @@ const FRAGMENT = graphql`
   }
 `
 
-interface FlatShippingFormProps {
+interface SingleShippingOptionProps {
   option: DeliveryOption
 }
 
-// TODO: Get these from MP?
-const deliveryOptionLabel = (option: DeliveryOption) => {
-  switch (option.type) {
-    case "DOMESTIC_FLAT":
-      return "Flat rate"
-    case "INTERNATIONAL_FLAT":
-      return "Flat rate"
-    default:
-      return option.type.replace(/_/g, " ").toLocaleLowerCase()
-  }
-}
-
-const SingleShippingOption = ({ option }: FlatShippingFormProps) => {
-  const label = deliveryOptionLabel(option)
-
+const SingleShippingOption = ({ option }: SingleShippingOptionProps) => {
+  const label = deliveryOptionLabel(option.type)
+  const timeEstimate = deliveryOptionTimeEstimate(option.type)
+  const [prefix, timeRange] = timeEstimate || []
   // TODO: Extract option into shared component so completed view can take advantage, probably using MP's labels
   return (
-    <Flex flexDirection="column">
+    <>
+      <Spacer y={1} />
       <Spacer y={0.5} />
-      <Flex justifyContent="space-between">
-        <Text variant="sm-display" color="mono100">
-          {label}
-        </Text>
-        <Text variant="sm-display" color="mono100">
-          {option.amount?.display}
-        </Text>
+      <Flex flexDirection="column">
+        <Flex justifyContent="space-between">
+          <Text variant="sm-display" color="mono100">
+            {label}
+          </Text>
+          <Text variant="sm-display" color="mono100">
+            {option.amount?.display}
+          </Text>
+        </Flex>
+        {timeEstimate && (
+          <Text variant="xs" color="mono60">
+            {prefix} <strong>{timeRange}</strong>
+          </Text>
+        )}
       </Flex>
-      <Text variant="xs" color="mono60">
-        Estimated to ship between <strong>TODO 28-30</strong>
-      </Text>
-    </Flex>
+      <Spacer y={0.5} />
+      <Spacer y={1} />
+    </>
   )
 }
 
