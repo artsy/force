@@ -12,7 +12,6 @@ import {
 } from "Components/Address/AddressFormFields"
 import type { Order2DeliveryForm_order$key } from "__generated__/Order2DeliveryForm_order.graphql"
 import { Formik } from "formik"
-import type * as React from "react"
 import { useCallback } from "react"
 import { graphql, useFragment } from "react-relay"
 import * as yup from "yup"

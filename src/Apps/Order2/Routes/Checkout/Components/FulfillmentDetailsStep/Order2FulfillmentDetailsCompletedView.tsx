@@ -127,32 +127,32 @@ const ShippingContent = ({ fulfillmentDetails }) => {
   return (
     <>
       {name && (
-        <Text variant={["xs", "sm"]} color="mono100">
+        <Text variant={["xs", "sm-display"]} color="mono100">
           {name}
         </Text>
       )}
       {addressLine1 && (
-        <Text variant={["xs", "sm"]} color="mono100">
+        <Text variant={["xs", "sm-display"]} color="mono100">
           {addressLine1}
         </Text>
       )}
       {addressLine2 && (
-        <Text variant={["xs", "sm"]} color="mono100">
+        <Text variant={["xs", "sm-display"]} color="mono100">
           {addressLine2}
         </Text>
       )}
       {(city || region || postalCode) && (
-        <Text variant={["xs", "sm"]} color="mono100">
+        <Text variant={["xs", "sm-display"]} color="mono100">
           {[city, region, postalCode].filter(Boolean).join(", ")}
         </Text>
       )}
       {country && (
-        <Text variant={["xs", "sm"]} color="mono100">
+        <Text variant={["xs", "sm-display"]} color="mono100">
           {country}
         </Text>
       )}
       {phoneNumber && (
-        <Text variant={["xs", "sm"]} color="mono100">
+        <Text variant={["xs", "sm-display"]} color="mono100">
           {phoneNumber.display}
         </Text>
       )}
