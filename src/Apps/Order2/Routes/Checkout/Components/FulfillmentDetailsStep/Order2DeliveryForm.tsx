@@ -1,17 +1,23 @@
 import { ContextModule } from "@artsy/cohesion"
 import { Button, Flex, Spacer, Text } from "@artsy/palette"
+import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+
+import { useOrder2UpdateShippingAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2UpdateShippingAddressMutation"
 import { getShippableCountries } from "Apps/Order2/Utils/getShippableCountries"
 import {
   AddressFormFields,
+  type FormikContextWithAddress,
   addressFormFieldsValidator,
 } from "Components/Address/AddressFormFields"
-import { Formik, type FormikHelpers, type FormikValues } from "formik"
-import type * as React from "react"
+import type { Order2DeliveryForm_order$key } from "__generated__/Order2DeliveryForm_order.graphql"
+import { Formik } from "formik"
+import { useCallback } from "react"
+import { graphql, useFragment } from "react-relay"
 import * as yup from "yup"
 
 interface Order2DeliveryFormProps {
-  order: any
+  order: Order2DeliveryForm_order$key
 }
 
 const validationSchema = yup
@@ -21,31 +27,85 @@ const validationSchema = yup
 export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
   order,
 }) => {
-  const { setCheckoutMode, checkoutTracking } = useCheckoutContext()
+  const orderData = useFragment(FRAGMENT, order)
+
   const shippableCountries = getShippableCountries(
-    order.availableShippingCountries,
+    orderData.availableShippingCountries,
   )
 
-  // Placeholders
-  const initialValues = {
-    address: {
-      name: "",
-      country: "",
-      postalCode: "",
-      addressLine1: "",
-      addressLine2: "",
-      city: "",
-      region: "",
+  const checkoutContext = useCheckoutContext()
+
+  const { setCheckoutMode, checkoutTracking, setFulfillmentDetailsComplete } =
+    checkoutContext
+  const updateShippingAddressMutation = useOrder2UpdateShippingAddressMutation()
+
+  const fulfillmentDetails = orderData.fulfillmentDetails || {
+    addressLine1: "",
+    addressLine2: "",
+    city: "",
+    region: "",
+    postalCode: "",
+    country: "",
+    name: "",
+    phoneNumber: {
+      countryCode: "",
+      originalNumber: "",
     },
-    phoneNumber: "",
-    phoneNumberCountryCode: "",
   }
-  const onSubmit = (
-    values: FormikValues,
-    formikHelpers: FormikHelpers<FormikValues>,
-  ) => {
-    checkoutTracking.clickedOrderProgression(ContextModule.ordersFulfillment)
+  const initialValues: FormikContextWithAddress = {
+    address: {
+      name: fulfillmentDetails.name || "",
+      country: fulfillmentDetails.country || "",
+      postalCode: fulfillmentDetails.postalCode || "",
+      addressLine1: fulfillmentDetails.addressLine1 || "",
+      addressLine2: fulfillmentDetails.addressLine2 || "",
+      city: fulfillmentDetails.city || "",
+      region: fulfillmentDetails.region || "",
+    },
+    phoneNumber: fulfillmentDetails.phoneNumber?.originalNumber || "",
+    phoneNumberCountryCode: fulfillmentDetails.phoneNumber?.countryCode || "",
   }
+
+  const onSubmit = useCallback(
+    async (values: FormikContextWithAddress) => {
+      try {
+        checkoutTracking.clickedOrderProgression(
+          ContextModule.ordersFulfillment,
+        )
+        const updateShippingAddressResult =
+          await updateShippingAddressMutation.submitMutation({
+            variables: {
+              input: {
+                id: orderData.internalID,
+                buyerPhoneNumber: values.phoneNumber,
+                buyerPhoneNumberCountryCode: values.phoneNumberCountryCode,
+                shippingAddressLine1: values.address.addressLine1,
+                shippingAddressLine2: values.address.addressLine2,
+                shippingCity: values.address.city,
+                shippingRegion: values.address.region,
+                shippingPostalCode: values.address.postalCode,
+                shippingCountry: values.address.country,
+                shippingName: values.address.name,
+              },
+            },
+          })
+
+        validateAndExtractOrderResponse(
+          updateShippingAddressResult.updateOrderShippingAddress?.orderOrError,
+        ).order
+
+        setFulfillmentDetailsComplete({}) // TODO: Clean up signature
+      } catch (error) {
+        console.error("Error submitting delivery form:", error)
+      }
+    },
+    [
+      checkoutTracking,
+      orderData.internalID,
+      updateShippingAddressMutation,
+      setFulfillmentDetailsComplete,
+    ],
+  )
   return (
     <>
       <Text
@@ -70,11 +130,13 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
             <Spacer y={4} />
             <Button
               type="submit"
+              loading={formikContext.isSubmitting}
               onClick={() => {
                 setCheckoutMode("standard")
                 formikContext.handleSubmit()
               }}
             >
+              {/* TODO: This would not apply for flat shipping */}
               See Shipping Methods
             </Button>
           </Flex>
@@ -83,3 +145,23 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
     </>
   )
 }
+
+const FRAGMENT = graphql`
+  fragment Order2DeliveryForm_order on Order {
+    internalID
+    availableShippingCountries
+    fulfillmentDetails {
+      addressLine1
+      addressLine2
+      city
+      region
+      postalCode
+      country
+      name
+      phoneNumber {
+        countryCode
+        originalNumber
+      }
+    }
+  }
+`

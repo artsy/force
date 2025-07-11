@@ -75,7 +75,7 @@ export const useValidatePhoneNumber = ({ national, regionCode }) => {
 
   useEffect(() => {
     validate()
-  }, [national, regionCode, validate])
+  }, [validate])
 
   return isPhoneNumberValid
 }

@@ -3,21 +3,36 @@ import {
   CheckoutStepName,
   CheckoutStepState,
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
+import { Order2DeliveryOptionsCompletedView } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/Order2DeliveryOptionsCompletedView"
+import { Order2DeliveryOptionsForm } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/Order2DeliveryOptionsForm"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import type { Order2DeliveryOptionsStep_order$key } from "__generated__/Order2DeliveryOptionsStep_order.graphql"
+import { graphql, useFragment } from "react-relay"
 
-interface Order2DeliveryOptionsStepProps {}
+type Order2DeliveryOptionsStepProps = {
+  order: Order2DeliveryOptionsStep_order$key
+}
 
 export const Order2DeliveryOptionsStep: React.FC<
   Order2DeliveryOptionsStepProps
-> = () => {
+> = ({ order }) => {
   const { steps } = useCheckoutContext()
+  const orderData = useFragment(FRAGMENT, order)
 
   const stepState = steps?.find(
     step => step.name === CheckoutStepName.DELIVERY_OPTION,
   )?.state
 
-  if (stepState !== CheckoutStepState.UPCOMING) {
+  if (stepState === CheckoutStepState.HIDDEN) {
     return null
+  }
+
+  if (stepState === CheckoutStepState.ACTIVE) {
+    return <Order2DeliveryOptionsForm order={orderData} />
+  }
+
+  if (stepState === CheckoutStepState.COMPLETED) {
+    return <Order2DeliveryOptionsCompletedView order={orderData} />
   }
 
   return (
@@ -39,3 +54,17 @@ export const Order2DeliveryOptionsStep: React.FC<
     </Flex>
   )
 }
+
+const FRAGMENT = graphql`
+  fragment Order2DeliveryOptionsStep_order on Order {
+    internalID
+    ...Order2DeliveryOptionsForm_order
+    ...Order2DeliveryOptionsCompletedView_order
+    selectedFulfillmentOption {
+      type
+      amount {
+        display
+      }
+    }
+  }
+`
