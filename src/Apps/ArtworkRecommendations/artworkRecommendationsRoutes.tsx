@@ -13,6 +13,7 @@ const ArtworkRecommendationsApp = loadable(
   },
 )
 
+// TODO: remove this comment
 export const artworkRecommendationsRoutes: RouteProps[] = [
   {
     path: "/artwork-recommendations",
