@@ -59,7 +59,6 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
         checkoutTracking.clickedOrderProgression(
           ContextModule.ordersFulfillment,
         )
-        console.log("**", values)
         const updateShippingAddressResult =
           await updateShippingAddressMutation.submitMutation({
             variables: {

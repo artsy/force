@@ -857,6 +857,14 @@ describe("Order2CheckoutRoute", () => {
           context_module: "ordersShippingMethods",
         },
         {
+          action: "clickedOrderProgression",
+          context_module: "ordersShippingMethods",
+        },
+        {
+          action: "orderProgressionViewed",
+          context_module: "ordersPayment",
+        },
+        {
           action: "clickedPaymentMethod",
           payment_method: "CREDIT_CARD",
         },

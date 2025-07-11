@@ -1,3 +1,4 @@
+import { ContextModule } from "@artsy/cohesion"
 import { Button, Flex, Radio, RadioGroup, Spacer, Text } from "@artsy/palette"
 import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
 import {
@@ -44,26 +45,33 @@ export const Order2DeliveryOptionsForm: React.FC<
   const handleSubmit: FormikConfig<FormValues>["onSubmit"] = async ({
     deliveryOption,
   }) => {
-    const setFulfillmentOptionResult =
-      await setFulfillmentOptionMutation.submitMutation({
-        variables: {
-          input: {
-            id: orderData.internalID,
-            fulfillmentOption: {
-              type: deliveryOption.type as Exclude<
-                DeliveryOption["type"],
-                "SHIPPING_TBD"
-              >,
+    try {
+      checkoutTracking.clickedOrderProgression(
+        ContextModule.ordersShippingMethods,
+      )
+      const setFulfillmentOptionResult =
+        await setFulfillmentOptionMutation.submitMutation({
+          variables: {
+            input: {
+              id: orderData.internalID,
+              fulfillmentOption: {
+                type: deliveryOption.type as Exclude<
+                  DeliveryOption["type"],
+                  "SHIPPING_TBD"
+                >,
+              },
             },
           },
-        },
-      })
+        })
 
-    validateAndExtractOrderResponse(
-      setFulfillmentOptionResult.setOrderFulfillmentOption?.orderOrError,
-    ).order
+      validateAndExtractOrderResponse(
+        setFulfillmentOptionResult.setOrderFulfillmentOption?.orderOrError,
+      ).order
 
-    setDeliveryOptionComplete()
+      setDeliveryOptionComplete()
+    } catch (error) {
+      console.error("Error tracking order progression:", error)
+    }
   }
 
   return (
