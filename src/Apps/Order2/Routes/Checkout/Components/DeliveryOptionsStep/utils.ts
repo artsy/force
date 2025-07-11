@@ -15,6 +15,7 @@ export const deliveryOptionLabel = (type?: string | null) => {
 }
 
 const today = new Date()
+
 const dateRangeString = (args: {
   from: Date
   startOffsetDays: number

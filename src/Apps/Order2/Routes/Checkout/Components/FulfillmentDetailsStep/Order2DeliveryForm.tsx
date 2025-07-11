@@ -39,20 +39,33 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
     checkoutContext
   const updateShippingAddressMutation = useOrder2UpdateShippingAddressMutation()
 
-  // Placeholders
-  const initialValues = {
-    address: {
-      name: "",
-      country: "",
-      postalCode: "",
-      addressLine1: "",
-      addressLine2: "",
-      city: "",
-      region: "",
+  const fulfillmentDetails = orderData.fulfillmentDetails || {
+    addressLine1: "",
+    addressLine2: "",
+    city: "",
+    region: "",
+    postalCode: "",
+    country: "",
+    name: "",
+    phoneNumber: {
+      countryCode: "",
+      originalNumber: "",
     },
-    phoneNumber: "",
-    phoneNumberCountryCode: "",
   }
+  const initialValues: FormikContextWithAddress = {
+    address: {
+      name: fulfillmentDetails.name || "",
+      country: fulfillmentDetails.country || "",
+      postalCode: fulfillmentDetails.postalCode || "",
+      addressLine1: fulfillmentDetails.addressLine1 || "",
+      addressLine2: fulfillmentDetails.addressLine2 || "",
+      city: fulfillmentDetails.city || "",
+      region: fulfillmentDetails.region || "",
+    },
+    phoneNumber: fulfillmentDetails.phoneNumber?.originalNumber || "",
+    phoneNumberCountryCode: fulfillmentDetails.phoneNumber?.countryCode || "",
+  }
+
   const onSubmit = useCallback(
     async (values: FormikContextWithAddress) => {
       try {
@@ -137,5 +150,18 @@ const FRAGMENT = graphql`
   fragment Order2DeliveryForm_order on Order {
     internalID
     availableShippingCountries
+    fulfillmentDetails {
+      addressLine1
+      addressLine2
+      city
+      region
+      postalCode
+      country
+      name
+      phoneNumber {
+        countryCode
+        originalNumber
+      }
+    }
   }
 `

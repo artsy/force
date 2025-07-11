@@ -143,7 +143,7 @@ const SingleShippingOption = ({ option }: SingleShippingOptionProps) => {
   const label = deliveryOptionLabel(option.type)
   const timeEstimate = deliveryOptionTimeEstimate(option.type)
   const [prefix, timeRange] = timeEstimate || []
-  // TODO: Extract option into shared component so completed view can take advantage, probably using MP's labels
+
   return (
     <>
       <Spacer y={1} />
@@ -172,6 +172,7 @@ const SingleShippingOption = ({ option }: SingleShippingOptionProps) => {
 interface MultipleShippingOptionsFormProps {
   options: DeliveryOption[]
 }
+
 const MultipleShippingOptionsForm = ({
   options,
 }: MultipleShippingOptionsFormProps) => {
