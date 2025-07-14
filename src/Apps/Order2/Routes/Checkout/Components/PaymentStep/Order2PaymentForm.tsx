@@ -261,6 +261,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
               input: {
                 id: order.internalID,
                 paymentMethod: "CREDIT_CARD",
+                stripeConfirmationToken: confirmationToken.id,
               },
             },
           })

@@ -36,6 +36,7 @@ export const useUpdateOrderMutation = () => {
                   minor
                 }
                 availableShippingCountries
+                stripeConfirmationToken
               }
             }
             ... on OrderMutationError {
