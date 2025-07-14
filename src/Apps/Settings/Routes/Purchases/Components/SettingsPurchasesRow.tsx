@@ -61,7 +61,7 @@ const ORDER_LABELS = {
   APPROVED: "Confirmed",
   CANCELED: "Canceled",
   FULFILLED: "Delivered",
-  IN_TRANSIT: "In transit",
+  IN_TRANSIT: "Shipped",
   OFFER_RECEIVED: "Counteroffer received",
   PROCESSING: "Processing",
   REFUNDED: "Refunded",
