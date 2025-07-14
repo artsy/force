@@ -3,10 +3,14 @@ import CheckmarkStrokeIcon from "@artsy/icons/CheckmarkStrokeIcon"
 import EmptyCheckCircleIcon from "@artsy/icons/EmptyCheckCircleIcon"
 import FacebookIcon from "@artsy/icons/FacebookIcon"
 import InstagramIcon from "@artsy/icons/InstagramIcon"
+import LinkedInIcon from "@artsy/icons/LinkedInIcon"
+import PinterestIcon from "@artsy/icons/PinterestIcon"
 import SpotifyIcon from "@artsy/icons/SpotifyIcon"
+import ThreadsIcon from "@artsy/icons/ThreadsIcon"
 import TikTokIcon from "@artsy/icons/TikTokIcon"
 import WeChatIcon from "@artsy/icons/WeChatIcon"
 import XIcon from "@artsy/icons/XIcon"
+import YouTubeIcon from "@artsy/icons/YouTubeIcon"
 import {
   Box,
   type BoxProps,
@@ -17,9 +21,9 @@ import {
   FullBleed,
   GridColumns,
   Image,
-  Join,
   Separator,
   Spacer,
+  Stack,
   Text,
   boxMixin,
 } from "@artsy/palette"
@@ -197,7 +201,7 @@ export const Footer: React.FC<React.PropsWithChildren<FooterProps>> = props => {
           </Media>
 
           <Flex alignItems="center">
-            <Join separator={<Spacer x={2} />}>
+            <Stack gap={[1, 1, 2]} flexDirection="row">
               <Dropdown
                 dropdown={
                   <Image
@@ -232,19 +236,27 @@ export const Footer: React.FC<React.PropsWithChildren<FooterProps>> = props => {
               </Dropdown>
 
               <FooterLink
-                to="https://twitter.com/artsy"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <XIcon />
-              </FooterLink>
-
-              <FooterLink
                 to="https://www.facebook.com/artsy"
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 <FacebookIcon />
+              </FooterLink>
+
+              <FooterLink
+                to="https://www.linkedin.com/company/artsyinc/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <LinkedInIcon />
+              </FooterLink>
+
+              <FooterLink
+                to="https://www.youtube.com/artsy"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <YouTubeIcon />
               </FooterLink>
 
               <FooterLink
@@ -270,7 +282,31 @@ export const Footer: React.FC<React.PropsWithChildren<FooterProps>> = props => {
               >
                 <SpotifyIcon />
               </FooterLink>
-            </Join>
+
+              <FooterLink
+                to="https://www.pinterest.com/artsy"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <PinterestIcon />
+              </FooterLink>
+
+              <FooterLink
+                to="https://www.threads.com/@artsy"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <ThreadsIcon />
+              </FooterLink>
+
+              <FooterLink
+                to="https://x.com/artsy"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <XIcon />
+              </FooterLink>
+            </Stack>
           </Flex>
         </Flex>
       </Box>
