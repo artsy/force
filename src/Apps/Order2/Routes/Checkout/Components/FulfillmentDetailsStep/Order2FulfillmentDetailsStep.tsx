@@ -27,14 +27,7 @@ export const Order2FulfillmentDetailsStep: React.FC<
     step => step.name === CheckoutStepName.FULFILLMENT_DETAILS,
   )?.state
 
-  // TODO: This is to see saved data coming through and may be
-  // promoted to some higher-level context/dispatch in the future
-  // Question: should this come from the context where step is?
-  const savedFulfillmentDetails = orderData?.fulfillmentDetails
-  const selectedFulfillmentOption = orderData?.selectedFulfillmentOption
-
   const fulfillmentOptions = orderData?.fulfillmentOptions
-
   const pickupOption = fulfillmentOptions.find(
     option => option.type === "PICKUP",
   )
@@ -46,12 +39,11 @@ export const Order2FulfillmentDetailsStep: React.FC<
       backgroundColor="mono0"
       py={2}
     >
-      <Box px={[2, 4]} hidden={stepState !== CheckoutStepState.COMPLETED}>
-        <Order2FulfillmentDetailsCompletedView
-          fulfillmentDetails={savedFulfillmentDetails}
-          fulfillmentOption={selectedFulfillmentOption}
-        />
-      </Box>
+      {stepState === CheckoutStepState.COMPLETED && (
+        <Box px={[2, 4]}>
+          <Order2FulfillmentDetailsCompletedView order={orderData} />
+        </Box>
+      )}
       <Box hidden={stepState !== CheckoutStepState.ACTIVE}>
         {pickupOption ? (
           <Tabs
@@ -94,6 +86,8 @@ export const Order2FulfillmentDetailsStep: React.FC<
 const ORDER_FRAGMENT = graphql`
   fragment Order2FulfillmentDetailsStep_order on Order {
     ...Order2PickupForm_order
+    ...Order2DeliveryForm_order
+    ...Order2FulfillmentDetailsCompletedView_order
     id
     fulfillmentDetails {
       phoneNumber {
