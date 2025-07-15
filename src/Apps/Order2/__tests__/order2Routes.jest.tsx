@@ -63,7 +63,7 @@ describe("order2Routes redirect logic", () => {
           buyerState: "SUBMITTED",
         }),
       )
-      expect(res.redirect.url).toMatch(/\/orders2\/.*\/details/)
+      expect(res.redirect.url).toMatch(/\/orders\/.*\/details/)
     })
 
     it("does not redirect when buyerState is INCOMPLETE", async () => {
