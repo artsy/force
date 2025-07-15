@@ -3,7 +3,6 @@ import {
   type ClickedArtworkGroup,
   ContextModule,
   OwnerType,
-  PageOwnerType,
 } from "@artsy/cohesion"
 import { Skeleton } from "@artsy/palette"
 import {
@@ -22,6 +21,7 @@ import type {
   HomeArtworkRecommendationsRailQuery$data,
 } from "__generated__/HomeArtworkRecommendationsRailQuery.graphql"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import { useFlag } from "@unleash/proxy-client-react"
 
 interface HomeArtworkRecommendationsRailProps {
   me: HomeArtworkRecommendationsRailQuery$data["me"]
@@ -48,8 +48,7 @@ export const HomeArtworkRecommendationsRail: React.FC<
           action: ActionType.clickedArtworkGroup,
           context_module: ContextModule.artworkRecommendationsRail,
           context_page_owner_type: OwnerType.home,
-          destination_page_owner_type:
-            OwnerType.artworkRecommendations as PageOwnerType, // TODO: add artworkRecommendations as PageOwnerType to cohesion
+          destination_page_owner_type: OwnerType.artworkRecommendations,
           destination_page_owner_id: "artwork-recommendations",
           destination_page_owner_slug: "artwork-recommendations",
           type: "viewAll",
@@ -97,6 +96,11 @@ export const HomeArtworkRecommendationsRailQueryRenderer: React.FC<
   React.PropsWithChildren<unknown>
 > = () => {
   const { relayEnvironment, user } = useSystemContext()
+  const enabled = useFlag("onyx_artwork_recommendations_rail_on_web")
+
+  if (!enabled) {
+    return null
+  }
 
   if (!user) {
     return null
@@ -117,7 +121,6 @@ export const HomeArtworkRecommendationsRailQueryRenderer: React.FC<
                   slug
                   href
                   collectorSignals {
-                    primaryLabel
                     auction {
                       bidCount
                       lotWatcherCount
