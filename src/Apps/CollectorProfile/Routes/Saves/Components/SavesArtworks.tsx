@@ -17,6 +17,8 @@ import { Jump } from "Utils/Hooks/useJump"
 import type { CollectionArtworkSorts } from "__generated__/SavesArtworksGridQuery.graphql"
 import { type FC, useMemo, useState } from "react"
 
+export const SAVES_ARTWORKS_SECTION_ID = "SavesArtworks"
+
 interface SavesArtworksProps {
   id: string
 }
@@ -81,7 +83,7 @@ export const SavesArtworks: FC<React.PropsWithChildren<SavesArtworksProps>> = ({
 
   return (
     <>
-      <Jump id="SavesArtworks" />
+      <Jump id={SAVES_ARTWORKS_SECTION_ID} />
 
       <Stack gap={2}>
         <Stack

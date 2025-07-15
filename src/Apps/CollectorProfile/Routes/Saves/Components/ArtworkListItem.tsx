@@ -5,9 +5,11 @@ import { StackedImageLayout } from "./Images/StackedImageLayout"
 
 import HideIcon from "@artsy/icons/HideIcon"
 import { themeGet } from "@styled-system/theme-get"
-import { useArtworkListVisibilityContext } from "Apps/CollectorProfile/Routes/Saves/Utils/useArtworkListVisibility"
+import { ARTWORK_LIST_SCROLL_TARGET_ID } from "Apps/CollectorProfile/Routes/Saves/CollectorProfileSavesRoute"
+import { SAVES_ARTWORKS_SECTION_ID } from "Apps/CollectorProfile/Routes/Saves/Components/SavesArtworks"
 import { BASE_SAVES_PATH } from "Apps/CollectorProfile/constants"
 import { RouterLink, type RouterLinkProps } from "System/Components/RouterLink"
+import { useJump } from "Utils/Hooks/useJump"
 import { extractNodes } from "Utils/extractNodes"
 import type { ArtworkListItem_item$data } from "__generated__/ArtworkListItem_item.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -26,7 +28,7 @@ const ArtworkListItem: FC<
 
   const artworkNodes = extractNodes(item.artworksConnection)
   const imageURLs = artworkNodes.map(node => node.image?.url ?? null)
-  const { setArtworkListItemHasBeenTouched } = useArtworkListVisibilityContext()
+  const { jumpTo } = useJump()
 
   const getLink = () => {
     if (item.default) {
@@ -36,13 +38,32 @@ const ArtworkListItem: FC<
     return `${BASE_SAVES_PATH}/${item.internalID}`
   }
 
+  const isContentOutOfView = () => {
+    const element = document.getElementById(
+      `JUMP--${SAVES_ARTWORKS_SECTION_ID}`,
+    )
+
+    if (element === null) return false
+
+    const { top } = element.getBoundingClientRect()
+
+    const viewportHeight =
+      window.innerHeight || document.documentElement.clientHeight
+
+    return top >= viewportHeight
+  }
+
   return (
     <ArtworkListItemLink
       to={getLink()}
       textDecoration="none"
       aria-current={!!isSelected}
       isSelected={!!isSelected}
-      onClick={setArtworkListItemHasBeenTouched}
+      onClick={() => {
+        if (isContentOutOfView()) {
+          jumpTo(ARTWORK_LIST_SCROLL_TARGET_ID)
+        }
+      }}
     >
       <Flex
         p={1}
