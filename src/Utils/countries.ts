@@ -1,4 +1,4 @@
-interface CountryData {
+export interface CountryData {
   name: string
   countryCode: string
   text: string

@@ -1,7 +1,15 @@
 import { ContextModule } from "@artsy/cohesion"
 import LockIcon from "@artsy/icons/LockIcon"
 import ReceiptIcon from "@artsy/icons/ReceiptIcon"
-import { Box, Button, Flex, Spacer, Text, useTheme } from "@artsy/palette"
+import {
+  Box,
+  Button,
+  Checkbox,
+  Flex,
+  Spacer,
+  Text,
+  useTheme,
+} from "@artsy/palette"
 import {
   Elements,
   PaymentElement,
@@ -121,6 +129,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
     null | "saved" | "stripe-card" | "wire" | "stripe-other"
   >(null)
+  const [saveCreditCard, setSaveCreditCard] = useState(true)
 
   const isSelectedPaymentMethodStripe = selectedPaymentMethod?.match(/^stripe/)
 
@@ -252,6 +261,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
               input: {
                 id: order.internalID,
                 paymentMethod: "CREDIT_CARD",
+                stripeConfirmationToken: confirmationToken.id,
               },
             },
           })
@@ -271,6 +281,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
           id: confirmationToken.id,
           ...response?.me?.confirmationToken,
         },
+        saveCreditCard,
       })
     }
 
@@ -376,6 +387,15 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
           </Collapse>
         </Box>
       </FadeInBox>
+
+      <Collapse open={selectedPaymentMethod === "stripe-card"}>
+        <Box p={2}>
+          <Checkbox selected={saveCreditCard} onSelect={setSaveCreditCard}>
+            Save credit card for later use
+          </Checkbox>
+        </Box>
+      </Collapse>
+
       <Spacer y={2} />
       {/* Stripe error messages are displayed within the Payment Element, so we don't need to handle them here. */}
       {errorMessage && !isSelectedPaymentMethodStripe && (

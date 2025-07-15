@@ -1,6 +1,7 @@
 import { ContextModule } from "@artsy/cohesion"
 import { Button, Flex, Spacer, Text } from "@artsy/palette"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import { getShippableCountries } from "Apps/Order2/Utils/getShippableCountries"
 import {
   AddressFormFields,
   addressFormFieldsValidator,
@@ -17,8 +18,13 @@ const validationSchema = yup
   .object()
   .shape(addressFormFieldsValidator({ withPhoneNumber: true }))
 
-export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = () => {
+export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
+  order,
+}) => {
   const { setCheckoutMode, checkoutTracking } = useCheckoutContext()
+  const shippableCountries = getShippableCountries(
+    order.availableShippingCountries,
+  )
 
   // Placeholders
   const initialValues = {
@@ -57,7 +63,10 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = () => {
       >
         {formikContext => (
           <Flex flexDirection={"column"} mb={2}>
-            <AddressFormFields withPhoneNumber />
+            <AddressFormFields
+              withPhoneNumber
+              shippableCountries={shippableCountries}
+            />
             <Spacer y={4} />
             <Button
               type="submit"

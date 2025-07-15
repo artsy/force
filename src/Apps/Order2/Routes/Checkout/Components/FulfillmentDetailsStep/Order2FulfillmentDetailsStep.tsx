@@ -116,5 +116,6 @@ const ORDER_FRAGMENT = graphql`
       type
       selected
     }
+    availableShippingCountries
   }
 `

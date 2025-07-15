@@ -22,10 +22,10 @@
   dependencies:
     preact "^10.11.3"
 
-"@artsy/cohesion@4.282.0":
-  version "4.282.0"
-  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-4.282.0.tgz#bffadbd7c1599d1439be77979acb6ece1e5e5c8a"
-  integrity sha512-UJSOQ7NZMT/GBpvA3aBSgAF5IL0dzjwKv0Z0F0aTZU8Z9yosAi3Aa0eStTh1onqAxei+LKfs5M4T9BfqgiyVaA==
+"@artsy/cohesion@4.283.0":
+  version "4.283.0"
+  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-4.283.0.tgz#f8c05bfef049868223bd32672cc976946e136e06"
+  integrity sha512-xTeH/gBc0CedV51SakzvVf1qZIvLsw2jgkdJYIlePQmasjplJm+iFJ4aIKakqZ6J5PbATRnqKae2X6jNJlvXlw==
   dependencies:
     core-js "3"
 
@@ -60,15 +60,15 @@
   resolved "https://registry.yarnpkg.com/@artsy/fresnel/-/fresnel-8.1.0.tgz#25dff4bdacda24f94636bbde0cc08e55b0f09f45"
   integrity sha512-zlTUFfMDlJa2rmt631qC3/uwuZlGtLIpJtwddDEYdmy/p2P/rvZej+IXLHTP5a922CUMujWtEJHm/9wh93B2OQ==
 
+"@artsy/icons@3.47.0":
+  version "3.47.0"
+  resolved "https://registry.yarnpkg.com/@artsy/icons/-/icons-3.47.0.tgz#a7d08b67882db99f0466a2549cfcc0d091c8a1f9"
+  integrity sha512-WtwqDioA+ISlTyXbDbP/LE1voVoEWEpTdihQQuY4ca/7Tpt/GWRsIrxUg2023P+cdjDlj0exlPjDq50CPfii7Q==
+
 "@artsy/icons@^3.2.2":
   version "3.22.1"
   resolved "https://registry.yarnpkg.com/@artsy/icons/-/icons-3.22.1.tgz#953301cbe182604f474d2ecd4ed65f7b1fecd850"
   integrity sha512-XlSJbP3spHWifhEpe/wrYHooG8bHT2LFTzeoE/VF3h5nz8f93Qpw1Y5aNHR9+IgSIVUyj3bK+rcUgVMY+RWp6g==
-
-"@artsy/icons@^3.30.0":
-  version "3.30.0"
-  resolved "https://registry.yarnpkg.com/@artsy/icons/-/icons-3.30.0.tgz#b5a75f91f2f89997646dfd402639d596170160f9"
-  integrity sha512-t3bHuoNeNk1njN/Wv/XktgqYWMBhaYkTxqcck159OI2burJ6N8Z1pxvlfikxTJ++9N37yzX8XS1zete1sWmLNQ==
 
 "@artsy/img@1.0.3":
   version "1.0.3"
