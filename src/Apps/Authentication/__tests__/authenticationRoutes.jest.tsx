@@ -31,6 +31,9 @@ jest.mock("Utils/EnableRecaptcha", () => ({
 
 jest.mock("Utils/Hooks/useAuthValidation")
 jest.mock("Components/AuthDialog/Hooks/useAuthDialogTracking")
+jest.mock("Utils/Hooks/useSetupAuth", () => ({
+  useSetupAuth: jest.fn(),
+}))
 
 jest.mock("Utils/getENV", () => ({
   getENV: jest.fn(),
@@ -175,7 +178,7 @@ describe("authenticationRoutes", () => {
   describe("/signup", () => {
     describe("client", () => {
       it("renders signup", async () => {
-        renderClientRoute(`/signup`)
+        renderClientRoute("/signup")
 
         await waitFor(() => {
           expect(screen.getByText("Sign up or log in")).toBeInTheDocument()
