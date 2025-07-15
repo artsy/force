@@ -25,9 +25,7 @@ export const ArtistCareerHighlight: FC<
               },
             }
           : {
-              children: insight.entities
-                .join(", ")
-                .replace(/,\s([^,]+)$/, ", and $1"),
+              children: formatList(insight.entities),
             })}
       />
     </Expandable>
@@ -46,6 +44,15 @@ export const ArtistCareerHighlightFragmentContainer = createFragmentContainer(
     `,
   },
 )
+
+const formatList = (entities: readonly string[]) => {
+  if (entities.length === 0) return ""
+  if (entities.length === 1) return entities[0]
+  if (entities.length === 2) return entities.join(" and ")
+  return (
+    entities.slice(0, -1).join(", ") + ", and " + entities[entities.length - 1]
+  )
+}
 
 // remove paragraph margins from markdown
 const Description = styled(Text)`

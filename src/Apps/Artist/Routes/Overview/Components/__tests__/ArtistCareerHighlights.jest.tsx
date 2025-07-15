@@ -55,6 +55,30 @@ describe("ArtistCareerHighlights", () => {
     expect(screen.getByText("View CV")).toBeInTheDocument()
   })
 
+  it("renders one Career Highlight with commas correctly", () => {
+    renderWithRelay({
+      Artist: () => ({
+        insights: [
+          {
+            label: "Solo show at a major institution",
+            entities: ["National Gallery of Art, Washington, D.C."],
+            kind: "SOLO_SHOW",
+            description: null,
+          },
+        ],
+        name: "Test Artist",
+        slug: "test-artist",
+      }),
+    })
+
+    const button = screen.getByRole("button")
+    fireEvent.click(button)
+
+    expect(
+      screen.getByText("National Gallery of Art, Washington, D.C."),
+    ).toBeInTheDocument()
+  })
+
   it("renders multiple Career Highlights correctly", () => {
     renderWithRelay({
       Artist: () => ({
@@ -78,8 +102,38 @@ describe("ArtistCareerHighlights", () => {
     expect(
       screen.getByText("Solo show at 2 major institutions"),
     ).toBeInTheDocument()
-    expect(screen.getByText("Foo Museum, and Bar Museum")).toBeInTheDocument()
+    expect(screen.getByText("Foo Museum and Bar Museum")).toBeInTheDocument()
     expect(screen.getByText("View CV")).toBeInTheDocument()
+  })
+
+  it("renders multiple Career Highlights with commas correctly", () => {
+    renderWithRelay({
+      Artist: () => ({
+        insights: [
+          {
+            label: "Solo show at major institutions",
+            entities: [
+              "Tate Modern",
+              "Museum of Modern Art, New York",
+              "National Gallery of Art, Washington, D.C.",
+            ],
+            kind: "SOLO_SHOW",
+            description: null,
+          },
+        ],
+        name: "Test Artist",
+        slug: "test-artist",
+      }),
+    })
+
+    const button = screen.getByRole("button")
+    fireEvent.click(button)
+
+    expect(
+      screen.getByText(
+        "Tate Modern, Museum of Modern Art, New York, and National Gallery of Art, Washington, D.C.",
+      ),
+    ).toBeInTheDocument()
   })
 
   it("does not render if there are no Career Highlights", () => {

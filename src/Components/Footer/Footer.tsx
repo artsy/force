@@ -202,6 +202,62 @@ export const Footer: React.FC<React.PropsWithChildren<FooterProps>> = props => {
 
           <Flex alignItems="center">
             <Stack gap={[1, 1, 2]} flexDirection="row">
+              <FooterLink
+                to="https://www.instagram.com/artsy/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <InstagramIcon />
+              </FooterLink>
+
+              <FooterLink
+                to="https://www.tiktok.com/@artsy"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <TikTokIcon />
+              </FooterLink>
+
+              <FooterLink
+                to="https://www.facebook.com/artsy"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FacebookIcon />
+              </FooterLink>
+
+              <FooterLink
+                to="https://www.linkedin.com/company/artsyinc/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <LinkedInIcon />
+              </FooterLink>
+
+              <FooterLink
+                to="https://www.youtube.com/artsy"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <YouTubeIcon />
+              </FooterLink>
+
+              <FooterLink
+                to="https://open.spotify.com/user/ic7ea71nb4o0dy7xpu958vx2q"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <SpotifyIcon />
+              </FooterLink>
+
+              <FooterLink
+                to="https://www.pinterest.com/artsy"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <PinterestIcon />
+              </FooterLink>
+
               <Dropdown
                 dropdown={
                   <Image
@@ -234,62 +290,6 @@ export const Footer: React.FC<React.PropsWithChildren<FooterProps>> = props => {
                   )
                 }}
               </Dropdown>
-
-              <FooterLink
-                to="https://www.facebook.com/artsy"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <FacebookIcon />
-              </FooterLink>
-
-              <FooterLink
-                to="https://www.linkedin.com/company/artsyinc/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <LinkedInIcon />
-              </FooterLink>
-
-              <FooterLink
-                to="https://www.youtube.com/artsy"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <YouTubeIcon />
-              </FooterLink>
-
-              <FooterLink
-                to="https://www.instagram.com/artsy/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <InstagramIcon />
-              </FooterLink>
-
-              <FooterLink
-                to="https://www.tiktok.com/@artsy"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <TikTokIcon />
-              </FooterLink>
-
-              <FooterLink
-                to="https://open.spotify.com/user/ic7ea71nb4o0dy7xpu958vx2q"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <SpotifyIcon />
-              </FooterLink>
-
-              <FooterLink
-                to="https://www.pinterest.com/artsy"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <PinterestIcon />
-              </FooterLink>
 
               <FooterLink
                 to="https://www.threads.com/@artsy"

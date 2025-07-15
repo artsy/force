@@ -12,8 +12,8 @@ export const HomeHeroUnitLoggedOut: React.FC<{ index: number }> = ({
 
   return (
     <HomeHeroUnitBase
-      title="Discover and Buy Art that Moves You."
-      body="Artsy makes it easy to discover artists and artworks you’ll love."
+      title="Discover and Buy Art That Moves You"
+      body="Turn art into a daily habit. Follow artists, explore stories, and get personalized recommendations, all in one place."
       imageUrl="https://files.artsy.net/images/new-works-for-you-hero.jpg"
       link={{
         desktop: {
