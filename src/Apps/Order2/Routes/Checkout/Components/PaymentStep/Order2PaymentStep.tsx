@@ -18,7 +18,7 @@ export const Order2PaymentStep: React.FC<Order2PaymentStepProps> = ({
 }) => {
   const orderData = useFragment(FRAGMENT, order)
 
-  const { confirmationToken, steps } = useCheckoutContext()
+  const { confirmationToken, savedCreditCard, steps } = useCheckoutContext()
 
   const stepState = steps?.find(
     step => step.name === CheckoutStepName.PAYMENT,
@@ -46,7 +46,10 @@ export const Order2PaymentStep: React.FC<Order2PaymentStepProps> = ({
         px={[2, 4]}
         hidden={stepState !== CheckoutStepState.COMPLETED}
       >
-        <Order2PaymentCompletedView confirmationToken={confirmationToken} />
+        <Order2PaymentCompletedView
+          savedCreditCard={savedCreditCard}
+          confirmationToken={confirmationToken}
+        />
       </Box>
 
       <Box py={2} px={[2, 4]} hidden={stepState !== CheckoutStepState.ACTIVE}>

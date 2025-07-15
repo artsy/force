@@ -6,6 +6,8 @@ import {
   Button,
   Checkbox,
   Flex,
+  Radio,
+  RadioGroup,
   Spacer,
   Text,
   useTheme,
@@ -25,6 +27,7 @@ import {
 } from "@stripe/stripe-js"
 import { Collapse } from "Apps/Order/Components/Collapse"
 import { useUpdateOrderMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useUpdateOrderMutation"
+import { useSetPayment } from "Apps/Order/Mutations/useSetPayment"
 import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
 import { CheckoutErrorBanner } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
@@ -32,20 +35,23 @@ import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckou
 import { FadeInBox } from "Components/FadeInBox"
 import { RouterLink } from "System/Components/RouterLink"
 import { getENV } from "Utils/getENV"
+import { extractNodes } from "Utils/extractNodes"
 import createLogger from "Utils/logger"
 import type { Order2PaymentFormConfirmationTokenQuery } from "__generated__/Order2PaymentFormConfirmationTokenQuery.graphql"
+import type { Order2PaymentFormSavedCreditCardsQuery } from "__generated__/Order2PaymentFormSavedCreditCardsQuery.graphql"
 import type {
   Order2PaymentForm_order$data,
   Order2PaymentForm_order$key,
 } from "__generated__/Order2PaymentForm_order.graphql"
 import type React from "react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import {
   fetchQuery,
   graphql,
   useFragment,
   useRelayEnvironment,
 } from "react-relay"
+import { Brand, BrandCreditCardIcon } from "Components/BrandCreditCardIcon"
 
 const stripePromise = loadStripe(getENV("STRIPE_PUBLISHABLE_KEY"))
 const logger = createLogger("Order2PaymentForm")
@@ -119,7 +125,9 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
   const elements = useElements()
   const environment = useRelayEnvironment()
   const updateOrderMutation = useUpdateOrderMutation()
-  const { setConfirmationToken, checkoutTracking } = useCheckoutContext()
+  const setPaymentMutation = useSetPayment()
+  const { setConfirmationToken, checkoutTracking, setSavedCreditCard } =
+    useCheckoutContext()
 
   const [isSubmittingToStripe, setIsSubmittingToStripe] = useState(false)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
@@ -130,8 +138,55 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
     null | "saved" | "stripe-card" | "wire" | "stripe-other"
   >(null)
   const [saveCreditCard, setSaveCreditCard] = useState(true)
+  const [savedCreditCards, setSavedCreditCards] = useState<any[]>([])
+  const [isLoadingCreditCards, setIsLoadingCreditCards] = useState(false)
+  const [selectedCreditCard, setSelectedCreditCard] = useState<any | null>(null)
 
   const isSelectedPaymentMethodStripe = selectedPaymentMethod?.match(/^stripe/)
+
+  useEffect(() => {
+    const fetchSavedCreditCards = async () => {
+      setIsLoadingCreditCards(true)
+      try {
+        const response =
+          await fetchQuery<Order2PaymentFormSavedCreditCardsQuery>(
+            environment,
+            graphql`
+              query Order2PaymentFormSavedCreditCardsQuery {
+                me {
+                  creditCards(first: 10) {
+                    edges {
+                      node {
+                        internalID
+                        brand
+                        lastDigits
+                      }
+                    }
+                  }
+                }
+              }
+            `,
+            {},
+            { fetchPolicy: "store-or-network" },
+          ).toPromise()
+
+        if (response?.me?.creditCards) {
+          const cards = extractNodes(response.me.creditCards)
+          setSavedCreditCards(cards)
+          if (cards.length > 0) {
+            setSelectedPaymentMethod("saved")
+            setSelectedCreditCard(cards[0])
+          }
+        }
+      } catch (error) {
+        logger.error("Error fetching saved credit cards", error)
+      } finally {
+        setIsLoadingCreditCards(false)
+      }
+    }
+
+    fetchSavedCreditCards()
+  }, [])
 
   if (!(stripe && elements)) {
     return null
@@ -290,7 +345,36 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
     }
 
     if (selectedPaymentMethod === "saved") {
-      handleError(new Error("Saved payment method not supported yet"))
+      if (!selectedCreditCard) {
+        setSubtitleErrorMessage("Select a saved payment method")
+        return
+      }
+
+      setIsSubmittingToStripe(true)
+
+      try {
+        const orderOrError = (
+          await setPaymentMutation.submitMutation({
+            variables: {
+              input: {
+                id: order.internalID,
+                paymentMethod: "CREDIT_CARD",
+                paymentMethodId: selectedCreditCard?.internalID,
+              },
+            },
+          })
+        ).commerceSetPayment?.orderOrError
+
+        if (orderOrError?.error) {
+          throw orderOrError.error
+        }
+      } catch (error) {
+        logger.error("Error while updating order payment method", error)
+        handleError(new Error(defaultErrorMessage))
+      } finally {
+        setIsSubmittingToStripe(false)
+        setSavedCreditCard({ savedCreditCard: selectedCreditCard })
+      }
     }
   }
 
@@ -310,40 +394,74 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
         </>
       )}
       <Spacer y={2} />
-      <FadeInBox>
-        <Box
-          backgroundColor="mono5"
-          borderRadius="5px"
-          padding="1rem"
-          marginBottom="10px"
-          style={{ cursor: "pointer" }}
-          onClick={onClickSavedPaymentMethods}
-        >
-          <Flex alignItems="center">
-            <LockIcon fill="mono100" />
-            {/* Spacer has to be 31px to match Stripe's spacing */}
-            <Spacer x="31px" />
-            <Text
-              variant="sm"
-              color="mono100"
-              fontWeight={selectedPaymentMethod === "saved" ? "bold" : "normal"}
-            >
-              Saved payments
-            </Text>
-          </Flex>
-          <Collapse open={selectedPaymentMethod === "saved"}>
-            <Text variant="sm" ml="50px">
-              Select a saved payment method or add a new one.
-            </Text>
-            <Text variant="sm" p="10px">
-              Visa ....1234
-            </Text>
-            <Text variant="sm" p="10px">
-              Visa ....5678
-            </Text>
-          </Collapse>
-        </Box>
-      </FadeInBox>
+      {savedCreditCards.length > 0 && (
+        <FadeInBox>
+          <Box
+            backgroundColor="mono5"
+            borderRadius="5px"
+            padding="1rem"
+            marginBottom="10px"
+            style={{ cursor: "pointer" }}
+            onClick={onClickSavedPaymentMethods}
+          >
+            <Flex alignItems="center">
+              <LockIcon fill="mono100" />
+              {/* Spacer has to be 31px to match Stripe's spacing */}
+              <Spacer x="31px" />
+              <Text
+                variant="sm"
+                color="mono100"
+                fontWeight={
+                  selectedPaymentMethod === "saved" ? "bold" : "normal"
+                }
+              >
+                Saved payments
+              </Text>
+            </Flex>
+            <Collapse open={selectedPaymentMethod === "saved"}>
+              <Text variant="sm" ml="50px">
+                Select a saved payment method or add a new one.
+              </Text>
+              <Box ml="50px">
+                {isLoadingCreditCards ? (
+                  <Text variant="sm" ml="50px">
+                    Loading saved cards...
+                  </Text>
+                ) : (
+                  <>
+                    <RadioGroup
+                      defaultValue={selectedCreditCard}
+                      onSelect={val => {
+                        setSelectedCreditCard(val)
+                      }}
+                    >
+                      {savedCreditCards.map(card => (
+                        <Radio
+                          key={card.internalID}
+                          value={card}
+                          pb="15px"
+                          pt="15px"
+                          label={
+                            <Flex>
+                              <BrandCreditCardIcon
+                                type={card.brand as Brand}
+                                width="24px"
+                                height="24px"
+                                mr={1}
+                              />
+                              <Text variant="sm">•••• {card.lastDigits}</Text>
+                            </Flex>
+                          }
+                        ></Radio>
+                      ))}
+                    </RadioGroup>
+                  </>
+                )}
+              </Box>
+            </Collapse>
+          </Box>
+        </FadeInBox>
+      )}
       <PaymentElement options={paymentElementOptions} onChange={onChange} />
       <Spacer y={1} />
       <FadeInBox>
