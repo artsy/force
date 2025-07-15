@@ -1,7 +1,7 @@
 import { fireEvent, screen } from "@testing-library/dom"
 import { Order2HelpLinks } from "Apps/Order2/Components/Order2HelpLinks"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import type { Order2DetailsPage_Test_Query } from "__generated__/Order2DetailsPage_Test_Query.graphql"
+import type { Order2HelpLinks_Test_Query } from "__generated__/Order2HelpLinks_Test_Query.graphql"
 import { useTracking } from "react-tracking"
 import { graphql } from "relay-runtime"
 
@@ -16,7 +16,7 @@ jest.mock("System/Hooks/useAnalyticsContext", () => ({
 }))
 
 describe("Order2HelpLinks", () => {
-  const { renderWithRelay } = setupTestWrapperTL<Order2DetailsPage_Test_Query>({
+  const { renderWithRelay } = setupTestWrapperTL<Order2HelpLinks_Test_Query>({
     Component: (props: any) => (
       <Order2HelpLinks
         order={props.me.order}
