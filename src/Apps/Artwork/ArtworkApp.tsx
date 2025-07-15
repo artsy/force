@@ -37,7 +37,7 @@ import styled from "styled-components"
 import { ArtistInfoQueryRenderer } from "./Components/ArtistInfo"
 import { ArtworkArtistSeriesQueryRenderer } from "./Components/ArtworkArtistSeries"
 import { ArtworkDetailsQueryRenderer } from "./Components/ArtworkDetails"
-import { ArtworkImageBrowserFragmentContainer } from "./Components/ArtworkImageBrowser/ArtworkImageBrowser"
+import { ArtworkImageBrowserQueryRenderer } from "./Components/ArtworkImageBrowser/ArtworkImageBrowser"
 import { ArtworkMeta } from "./Components/ArtworkMeta"
 import { ArtworkRelatedArtistsQueryRenderer } from "./Components/ArtworkRelatedArtists"
 import {
@@ -248,7 +248,10 @@ export const ArtworkApp: React.FC<React.PropsWithChildren<Props>> = props => {
           // Safe to remove once artwork masonry uses CSS grid.
           width="100%"
         >
-          <ArtworkImageBrowserFragmentContainer artwork={artwork} />
+          <ArtworkImageBrowserQueryRenderer
+            artworkID={artwork.internalID}
+            isMyCollectionArtwork={false}
+          />
 
           {isPrivateArtwork ? (
             <Media greaterThanOrEqual="sm">
