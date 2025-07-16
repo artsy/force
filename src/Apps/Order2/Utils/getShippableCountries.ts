@@ -7,7 +7,7 @@
 import { COUNTRIES, type CountryData } from "Utils/countries"
 
 export function getShippableCountries(
-  availableShippingCountries: string[],
+  availableShippingCountries: ReadonlyArray<string>,
 ): CountryData[] {
   const lowercaseCountryCodes = availableShippingCountries.map(code =>
     code.toLowerCase(),

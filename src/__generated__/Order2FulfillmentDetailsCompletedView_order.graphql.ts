@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8acd7b2208cecb0d9013e9554a211666>>
+ * @generated SignedSource<<a645b277f571e70ca5821fbb023173c4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,8 +11,7 @@
 import { ReaderFragment } from 'relay-runtime';
 export type FulfillmentOptionTypeEnum = "DOMESTIC_FLAT" | "INTERNATIONAL_FLAT" | "PICKUP" | "SHIPPING_TBD" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
-export type Order2FulfillmentDetailsStep_order$data = {
-  readonly availableShippingCountries: ReadonlyArray<string>;
+export type Order2FulfillmentDetailsCompletedView_order$data = {
   readonly fulfillmentDetails: {
     readonly addressLine1: string | null | undefined;
     readonly addressLine2: string | null | undefined;
@@ -20,65 +19,28 @@ export type Order2FulfillmentDetailsStep_order$data = {
     readonly country: string | null | undefined;
     readonly name: string | null | undefined;
     readonly phoneNumber: {
-      readonly countryCode: string | null | undefined;
-      readonly originalNumber: string | null | undefined;
-      readonly regionCode: string | null | undefined;
+      readonly display: string | null | undefined;
     } | null | undefined;
     readonly postalCode: string | null | undefined;
     readonly region: string | null | undefined;
   } | null | undefined;
-  readonly fulfillmentOptions: ReadonlyArray<{
-    readonly selected: boolean | null | undefined;
-    readonly type: FulfillmentOptionTypeEnum;
-  }>;
-  readonly id: string;
   readonly selectedFulfillmentOption: {
     readonly type: FulfillmentOptionTypeEnum;
   } | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"Order2DeliveryForm_order" | "Order2FulfillmentDetailsCompletedView_order" | "Order2PickupForm_order">;
-  readonly " $fragmentType": "Order2FulfillmentDetailsStep_order";
+  readonly shippingOrigin: string | null | undefined;
+  readonly " $fragmentType": "Order2FulfillmentDetailsCompletedView_order";
 };
-export type Order2FulfillmentDetailsStep_order$key = {
-  readonly " $data"?: Order2FulfillmentDetailsStep_order$data;
-  readonly " $fragmentSpreads": FragmentRefs<"Order2FulfillmentDetailsStep_order">;
+export type Order2FulfillmentDetailsCompletedView_order$key = {
+  readonly " $data"?: Order2FulfillmentDetailsCompletedView_order$data;
+  readonly " $fragmentSpreads": FragmentRefs<"Order2FulfillmentDetailsCompletedView_order">;
 };
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "type",
-  "storageKey": null
-};
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "Order2FulfillmentDetailsStep_order",
+  "name": "Order2FulfillmentDetailsCompletedView_order",
   "selections": [
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "Order2PickupForm_order"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "Order2DeliveryForm_order"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "Order2FulfillmentDetailsCompletedView_order"
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "id",
-      "storageKey": null
-    },
     {
       "alias": null,
       "args": null,
@@ -87,38 +49,6 @@ return {
       "name": "fulfillmentDetails",
       "plural": false,
       "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "PhoneNumberType",
-          "kind": "LinkedField",
-          "name": "phoneNumber",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "countryCode",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "regionCode",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "originalNumber",
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        },
         {
           "alias": null,
           "args": null,
@@ -167,6 +97,24 @@ return {
           "kind": "ScalarField",
           "name": "region",
           "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "PhoneNumberType",
+          "kind": "LinkedField",
+          "name": "phoneNumber",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "display",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
         }
       ],
       "storageKey": null
@@ -179,24 +127,11 @@ return {
       "name": "selectedFulfillmentOption",
       "plural": false,
       "selections": [
-        (v0/*: any*/)
-      ],
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "FulfillmentOption",
-      "kind": "LinkedField",
-      "name": "fulfillmentOptions",
-      "plural": true,
-      "selections": [
-        (v0/*: any*/),
         {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
-          "name": "selected",
+          "name": "type",
           "storageKey": null
         }
       ],
@@ -206,15 +141,14 @@ return {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "availableShippingCountries",
+      "name": "shippingOrigin",
       "storageKey": null
     }
   ],
   "type": "Order",
   "abstractKey": null
 };
-})();
 
-(node as any).hash = "ac66c2d1f7736340aa2ce0e4bdabaa4a";
+(node as any).hash = "834ecbb1d09dd2c4d811417f202823f1";
 
 export default node;
