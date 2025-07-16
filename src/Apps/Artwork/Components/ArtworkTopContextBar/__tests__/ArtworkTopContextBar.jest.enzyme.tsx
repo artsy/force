@@ -90,7 +90,8 @@ describe("ArtworkTopContextBar", () => {
           "@type": "ListItem",
           position: 2,
           item: {
-            "@id": "https://artsy.net/artwork/andy-warhol-campbells-soup-can",
+            "@id":
+              "https://artsy.net/artwork/andy-warhol-campbells-soup-can#visual-artwork",
             "@type": "VisualArtwork",
             name: "Campbell's Soup Can",
           },
