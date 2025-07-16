@@ -6,7 +6,6 @@ import {
 } from "Apps/CollectorProfile/Routes/Saves/Components/ArtworkListItemsList"
 import { SavesArtworks } from "Apps/CollectorProfile/Routes/Saves/Components/SavesArtworks"
 import { SavesArtworksHeaderQueryRenderer } from "Apps/CollectorProfile/Routes/Saves/Components/SavesArtworksHeader"
-import { ArtworkListVisibilityProvider } from "Apps/CollectorProfile/Routes/Saves/Utils/useArtworkListVisibility"
 import { ClientSuspense } from "Components/ClientSuspense"
 import { MetaTags } from "Components/MetaTags"
 import { Analytics } from "System/Contexts/AnalyticsContext"
@@ -94,7 +93,7 @@ const CollectorProfileSavesRoute: FC<
   }
 
   return (
-    <ArtworkListVisibilityProvider>
+    <>
       <MetaTags title="Saves | Artsy" pathname="favorites/saves" />
 
       <ArtworkListsHeader
@@ -104,8 +103,6 @@ const CollectorProfileSavesRoute: FC<
         me={me}
       />
 
-      <Jump id={ARTWORK_LIST_SCROLL_TARGET_ID} />
-
       <Spacer y={4} />
 
       <ClientSuspense fallback={<ArtworkListItemsListPlaceholder />}>
@@ -114,12 +111,14 @@ const CollectorProfileSavesRoute: FC<
 
       <Spacer y={4} />
 
+      <Jump id={ARTWORK_LIST_SCROLL_TARGET_ID} />
+
       <SavesArtworksHeaderQueryRenderer id={selectedArtworkListId} />
 
       <Spacer y={4} />
 
       <SavesArtworks key={selectedArtworkListId} id={selectedArtworkListId} />
-    </ArtworkListVisibilityProvider>
+    </>
   )
 }
 

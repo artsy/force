@@ -4,7 +4,13 @@ import type { ArtworkStructuredData_artwork$key } from "__generated__/ArtworkStr
 import { map } from "lodash"
 import { useMemo } from "react"
 import { graphql, useFragment } from "react-relay"
-import type { ArtGallery, ImageObject, Offer, Person } from "schema-dts"
+import type {
+  ArtGallery,
+  ImageObject,
+  Offer,
+  Person,
+  PostalAddress,
+} from "schema-dts"
 
 interface ArtworkStructuredDataProps {
   artwork: ArtworkStructuredData_artwork$key
@@ -46,14 +52,28 @@ export const ArtworkStructuredData: React.FC<ArtworkStructuredDataProps> = ({
 
   const partner: ArtGallery | undefined = useMemo(() => {
     if (!artwork.partner?.name) return
+    const partner = artwork.partner
 
-    const image = artwork.partner?.profile?.image?.resized?.url
+    const image = partner.profile?.image?.resized?.url
+    const location = partner.locationsConnection?.edges?.[0]?.node
+
+    const address: PostalAddress | undefined = location
+      ? {
+          "@type": "PostalAddress",
+          streetAddress: location.address ?? undefined,
+          addressLocality: location.city ?? undefined,
+          addressRegion: location.state ?? undefined,
+          postalCode: location.postalCode ?? undefined,
+          addressCountry: location.country ?? undefined,
+        }
+      : undefined
 
     return {
       "@type": "ArtGallery" as const,
       name: artwork.partner.name,
       image,
       url: `${getENV("APP_URL")}${artwork.partner.href}`,
+      address,
     }
   }, [artwork.partner])
 
@@ -82,7 +102,7 @@ export const ArtworkStructuredData: React.FC<ArtworkStructuredDataProps> = ({
           price: artwork.listPrice.major,
           priceCurrency: artwork.listPrice.currencyCode,
           availability,
-          condition: "https://schema.org/NewCondition",
+          itemCondition: "https://schema.org/NewCondition",
           seller: partner,
         }
     }
@@ -95,7 +115,7 @@ export const ArtworkStructuredData: React.FC<ArtworkStructuredDataProps> = ({
         "@graph": [
           {
             "@type": "VisualArtwork",
-            "@id": artworkUrl,
+            "@id": `${artworkUrl}#visual-artwork`,
             name: artwork.title ?? "Untitled",
             creator,
             artform: artwork.mediumType?.name ?? undefined,
@@ -128,13 +148,13 @@ export const ArtworkStructuredData: React.FC<ArtworkStructuredDataProps> = ({
           },
           {
             "@type": "Product",
-            "@id": artworkUrl,
+            "@id": `${artworkUrl}#product`,
             name: artwork.title ?? "Untitled",
             brand: {
               "@id": artistUrl,
             },
             isRelatedTo: {
-              "@id": artworkUrl,
+              "@id": `${artworkUrl}#visual-artwork`,
             },
             material: artwork.medium ?? undefined,
             image,
@@ -147,7 +167,7 @@ export const ArtworkStructuredData: React.FC<ArtworkStructuredDataProps> = ({
             "@type": "WebPage",
             "@id": artworkUrl,
             mainEntity: {
-              "@id": artworkUrl,
+              "@id": `${artworkUrl}#product`,
             },
           },
         ],
@@ -208,6 +228,17 @@ const fragment = graphql`
         image {
           resized(width: 320, height: 320) {
             url
+          }
+        }
+      }
+      locationsConnection {
+        edges {
+          node {
+            address
+            city
+            state
+            postalCode
+            country
           }
         }
       }

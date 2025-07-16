@@ -48,16 +48,26 @@ interface CheckoutState {
 
 interface CheckoutActions {
   checkoutTracking: ReturnType<typeof useCheckoutTracking>
-  setActiveFulfillmentDetailsTab: (
-    activeFulfillmentDetailsTab: FulfillmentDetailsTab | null,
-  ) => void
   setExpressCheckoutLoaded: (
     availablePaymentMethods: ExpressCheckoutPaymentMethod[],
   ) => void
   setExpressCheckoutSubmitting: (isSubmitting: boolean) => void
-  setFulfillmentDetailsComplete: (args: { isPickup: boolean }) => void
+  setFulfillmentDetailsComplete: (args: {
+    isPickup?: boolean
+    isFlatShipping?: boolean
+  }) => void
+
+  setActiveFulfillmentDetailsTab: (
+    activeFulfillmentDetailsTab: FulfillmentDetailsTab | null,
+  ) => void
+
   editFulfillmentDetails: () => void
+
+  setDeliveryOptionComplete: () => void
+  editDeliveryOption: () => void
+
   editPayment: () => void
+
   setLoadingError: (error: CheckoutLoadingError | null) => void
   setLoadingComplete: () => void
   setConfirmationToken: (args: {
@@ -293,21 +303,9 @@ const useBuildCheckoutContext = (
     step => step.state === CheckoutStepState.ACTIVE,
   )?.name
 
-  const previousStepName = state.steps.reduce(
-    (acc, current) => {
-      if (current.state === CheckoutStepState.ACTIVE) {
-        return acc
-      }
-      if (current.state === CheckoutStepState.COMPLETED) {
-        return current.name
-      }
-      return acc
-    },
-    null as CheckoutStepName | null,
-  )
-
   const setFulfillmentDetailsComplete = useCallback(
-    ({ isPickup }: { isPickup: boolean }) => {
+    (args?: { isPickup?: boolean }) => {
+      const isPickup = args?.isPickup ?? false
       if (currentStepName !== CheckoutStepName.FULFILLMENT_DETAILS) {
         logger.error(
           `setFulfillmentDetailsComplete called when current step is not FULFILLMENT_DETAILS but ${currentStepName}`,
@@ -321,6 +319,18 @@ const useBuildCheckoutContext = (
     },
     [currentStepName],
   )
+
+  const setDeliveryOptionComplete = useCallback(() => {
+    if (currentStepName !== CheckoutStepName.DELIVERY_OPTION) {
+      logger.error(
+        `setDeliveryOptionComplete called when current step is not DELIVERY_OPTION but ${currentStepName}`,
+      )
+      return
+    }
+    dispatch({
+      type: "DELIVERY_OPTION_COMPLETE",
+    })
+  }, [currentStepName])
 
   const setConfirmationToken = useCallback(
     ({
@@ -339,38 +349,34 @@ const useBuildCheckoutContext = (
   )
 
   const editFulfillmentDetails = useCallback(() => {
-    if (previousStepName !== CheckoutStepName.FULFILLMENT_DETAILS) {
-      logger.error(
-        `editFulfillmentDetails called when previous step is not FULFILLMENT_DETAILS but ${previousStepName}`,
-      )
-      return
-    }
     dispatch({
       type: "EDIT_FULFILLMENT_DETAILS",
     })
-  }, [previousStepName])
+  }, [])
+
+  const editDeliveryOption = useCallback(() => {
+    dispatch({
+      type: "EDIT_DELIVERY_OPTION",
+    })
+  }, [])
 
   const editPayment = useCallback(() => {
-    if (previousStepName !== CheckoutStepName.PAYMENT) {
-      logger.error(
-        `editPayment called when current step is not PAYMENT but ${previousStepName}`,
-      )
-      return
-    }
     dispatch({
       type: "EDIT_PAYMENT",
     })
-  }, [previousStepName])
+  }, [])
 
   const actions = useMemo(() => {
     return {
       checkoutTracking,
       editFulfillmentDetails,
+      editDeliveryOption,
       editPayment,
       setActiveFulfillmentDetailsTab,
       setExpressCheckoutSubmitting,
       setExpressCheckoutLoaded,
       setFulfillmentDetailsComplete,
+      setDeliveryOptionComplete,
       setLoadingError,
       setLoadingComplete,
       setConfirmationToken,
@@ -379,17 +385,19 @@ const useBuildCheckoutContext = (
     }
   }, [
     checkoutTracking,
+    setDeliveryOptionComplete,
+    editDeliveryOption,
     editFulfillmentDetails,
     editPayment,
-    setActiveFulfillmentDetailsTab,
-    setExpressCheckoutLoaded,
-    setFulfillmentDetailsComplete,
-    setLoadingError,
-    setLoadingComplete,
-    setConfirmationToken,
-    setExpressCheckoutSubmitting,
     redirectToOrderDetails,
+    setActiveFulfillmentDetailsTab,
     setCheckoutMode,
+    setConfirmationToken,
+    setExpressCheckoutLoaded,
+    setExpressCheckoutSubmitting,
+    setFulfillmentDetailsComplete,
+    setLoadingComplete,
+    setLoadingError,
   ])
 
   return {
@@ -486,18 +494,24 @@ type Action =
   | {
       type: "FULFILLMENT_DETAILS_COMPLETE"
       payload: {
-        isPickup: boolean
+        isPickup?: boolean
       }
     }
   | {
       type: "EDIT_FULFILLMENT_DETAILS"
     }
   | {
-      type: "EDIT_PAYMENT"
+      type: "DELIVERY_OPTION_COMPLETE"
+    }
+  | {
+      type: "EDIT_DELIVERY_OPTION"
     }
   | {
       type: "PAYMENT_COMPLETE"
       payload: { confirmationToken: any; saveCreditCard: boolean }
+    }
+  | {
+      type: "EDIT_PAYMENT"
     }
   | {
       type: "SET_ACTIVE_FULFILLMENT_DETAILS_TAB"
@@ -587,7 +601,39 @@ const reducer = (state: CheckoutState, action: Action): CheckoutState => {
           return [...acc, current]
         }, [] as CheckoutStep[]),
       }
+    case "EDIT_DELIVERY_OPTION":
+      return {
+        ...state,
+        steps: state.steps.reduce((acc, current) => {
+          const isAfterDeliveryOptionsStep = acc
+            .map(step => step.name)
+            .includes(CheckoutStepName.DELIVERY_OPTION)
 
+          if (
+            isAfterDeliveryOptionsStep &&
+            current.state !== CheckoutStepState.HIDDEN
+          ) {
+            return [
+              ...acc,
+              {
+                ...current,
+                state: CheckoutStepState.UPCOMING,
+              },
+            ]
+          }
+          if (current.name === CheckoutStepName.DELIVERY_OPTION) {
+            return [
+              ...acc,
+              {
+                ...current,
+                state: CheckoutStepState.ACTIVE,
+              },
+            ]
+          }
+
+          return [...acc, current]
+        }, [] as CheckoutStep[]),
+      }
     case "FULFILLMENT_DETAILS_COMPLETE":
       const { isPickup } = action.payload
       let hasActivatedNext = false
@@ -614,6 +660,45 @@ const reducer = (state: CheckoutState, action: Action): CheckoutState => {
           return step
         }),
       }
+    case "DELIVERY_OPTION_COMPLETE":
+      return {
+        ...state,
+        steps: state.steps.reduce((acc, current) => {
+          const isAfterDeliveryOptionsStep = acc
+            .map(step => step.name)
+            .includes(CheckoutStepName.DELIVERY_OPTION)
+
+          if (
+            isAfterDeliveryOptionsStep &&
+            current.state !== CheckoutStepState.HIDDEN
+          ) {
+            const hasActivatedNext = acc.some(
+              step => step.state === CheckoutStepState.ACTIVE,
+            )
+            return [
+              ...acc,
+              {
+                ...current,
+                state: hasActivatedNext
+                  ? CheckoutStepState.UPCOMING
+                  : CheckoutStepState.ACTIVE,
+              },
+            ]
+          }
+          if (current.name === CheckoutStepName.DELIVERY_OPTION) {
+            return [
+              ...acc,
+              {
+                ...current,
+                state: CheckoutStepState.COMPLETED,
+              },
+            ]
+          }
+
+          return [...acc, current]
+        }, [] as CheckoutStep[]),
+      }
+
     case "EDIT_PAYMENT":
       return {
         ...state,

@@ -5,6 +5,7 @@ import {
   Spacer,
   Stack,
 } from "@artsy/palette"
+import { SAVES_ARTWORKS_SECTION_ID } from "Apps/CollectorProfile/Routes/Saves/Components/SavesArtworks"
 import ArtworkGridItemFragmentContainer from "Components/Artwork/GridItem"
 import { ArtworkGridPlaceholder } from "Components/ArtworkGrid/ArtworkGrid"
 import { Masonry } from "Components/Masonry"
@@ -69,7 +70,7 @@ export const SavesArtworksGrid: FC<
         }}
         onNext={onPage}
         pageCursors={me?.collection?.artworksConnection?.pageCursors}
-        scrollTo="SavesArtworks"
+        scrollTo={SAVES_ARTWORKS_SECTION_ID}
       />
     </Stack>
   )

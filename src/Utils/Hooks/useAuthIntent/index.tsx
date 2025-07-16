@@ -1,8 +1,17 @@
+import {
+  ActionType,
+  type AuthContextModule,
+  type FollowedArtist,
+  type FollowedPartner,
+  OwnerType,
+} from "@artsy/cohesion"
 import { useDismissibleContext } from "@artsy/dismissible"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import Cookies from "cookies-js"
 import { createContext, useContext, useEffect, useState } from "react"
 import type { Environment } from "react-relay"
+import { useTracking } from "react-tracking"
 import * as Yup from "yup"
 import { createOfferOrderMutation } from "./mutations/AuthIntentCreateOfferOrderMutation"
 import { createOrderMutation } from "./mutations/AuthIntentCreateOrderMutation"
@@ -119,6 +128,11 @@ export const useRunAuthIntent = () => {
 
   const { syncFromLoggedOutUser } = useDismissibleContext()
 
+  const { trackEvent } = useTracking()
+
+  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
+    useAnalyticsContext()
+
   useEffect(() => {
     if (!relayEnvironment) return
 
@@ -128,23 +142,68 @@ export const useRunAuthIntent = () => {
       onSuccess: value => {
         setValue(value)
 
+        const context = {
+          context_module: contextPageOwnerType as unknown as AuthContextModule,
+          context_owner_id: contextPageOwnerId,
+          context_owner_slug: contextPageOwnerSlug,
+          context_owner_type: contextPageOwnerType as unknown as OwnerType,
+        }
+
         // Run any success actions/clean up
         switch (value.action) {
           case "follow":
             switch (value.kind) {
-              case "artist":
+              case "artist": {
                 syncFromLoggedOutUser()
+
+                const payload: FollowedArtist = {
+                  ...context,
+                  action: ActionType.followedArtist,
+                  owner_id: value.objectId,
+                  owner_slug: value.objectId,
+                  owner_type: OwnerType.artist,
+                }
+
+                trackEvent(payload)
+
+                break
+              }
+
+              case "profile": {
+                const payload: FollowedPartner = {
+                  ...context,
+                  action: ActionType.followedPartner,
+                  owner_id: value.objectId,
+                  owner_slug: value.objectId,
+                  owner_type: OwnerType.partner,
+                }
+
+                trackEvent(payload)
+
+                break
+              }
             }
             break
           case "saveArtworkToLists":
             switch (value.kind) {
               case "artworks":
                 syncFromLoggedOutUser()
+
+                break
             }
         }
       },
     })
-  }, [relayEnvironment, setValue, syncFromLoggedOutUser, user])
+  }, [
+    relayEnvironment,
+    setValue,
+    syncFromLoggedOutUser,
+    user,
+    contextPageOwnerId,
+    contextPageOwnerSlug,
+    contextPageOwnerType,
+    trackEvent,
+  ])
 }
 
 const AuthIntentContext = createContext<{

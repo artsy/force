@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2a7d5e0c8b29b1cee4aa4ae16c6d326e>>
+ * @generated SignedSource<<a24ce0d842d8aeeeb4807d98e6d36ac0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -55,6 +55,17 @@ export type ArtworkStructuredData_artwork$data = {
   readonly metric: string | null | undefined;
   readonly partner: {
     readonly href: string | null | undefined;
+    readonly locationsConnection: {
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly address: string | null | undefined;
+          readonly city: string | null | undefined;
+          readonly country: string | null | undefined;
+          readonly postalCode: string | null | undefined;
+          readonly state: string | null | undefined;
+        } | null | undefined;
+      } | null | undefined> | null | undefined;
+    } | null | undefined;
     readonly name: string | null | undefined;
     readonly profile: {
       readonly image: {
@@ -386,6 +397,74 @@ return {
             }
           ],
           "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "LocationConnection",
+          "kind": "LinkedField",
+          "name": "locationsConnection",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "LocationEdge",
+              "kind": "LinkedField",
+              "name": "edges",
+              "plural": true,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "Location",
+                  "kind": "LinkedField",
+                  "name": "node",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "address",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "city",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "state",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "postalCode",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "country",
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
         }
       ],
       "storageKey": null
@@ -396,6 +475,6 @@ return {
 };
 })();
 
-(node as any).hash = "977c52ea8756a1dd3bf50b7c365ed995";
+(node as any).hash = "27208c5dc643acc58de6389817a620f8";
 
 export default node;
