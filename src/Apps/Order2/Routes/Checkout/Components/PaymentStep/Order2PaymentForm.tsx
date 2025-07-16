@@ -148,6 +148,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
       applePay: "never",
       googlePay: "never",
     },
+    business: { name: "Artsy" },
   }
 
   const onChange = (event: StripePaymentElementChangeEvent) => {
