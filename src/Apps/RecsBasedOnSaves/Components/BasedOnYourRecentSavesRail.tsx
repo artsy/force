@@ -75,7 +75,7 @@ export const BasedOnYourRecentSavesRail: React.FC = () => {
 
   return (
     <Rail
-      title={title}
+      title={"Version A"}
       getItems={() =>
         artworks.map((artwork, i) => (
           <SimpleArtworkCard key={i} artwork={artwork} />
