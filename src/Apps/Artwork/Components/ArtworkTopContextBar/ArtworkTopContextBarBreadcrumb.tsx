@@ -41,7 +41,7 @@ export const ArtworkTopContextBarBreadcrumb: React.FC<
               position: 2,
               item: {
                 "@type": "VisualArtwork",
-                "@id": `${getENV("APP_URL")}${artwork.href}`,
+                "@id": `${getENV("APP_URL")}${artwork.href}#visual-artwork`,
                 ...(artwork.title ? { name: artwork.title } : {}),
               },
             },

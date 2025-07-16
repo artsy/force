@@ -115,7 +115,7 @@ export const ArtworkStructuredData: React.FC<ArtworkStructuredDataProps> = ({
         "@graph": [
           {
             "@type": "VisualArtwork",
-            "@id": artworkUrl,
+            "@id": `${artworkUrl}#visual-artwork`,
             name: artwork.title ?? "Untitled",
             creator,
             artform: artwork.mediumType?.name ?? undefined,
@@ -148,13 +148,13 @@ export const ArtworkStructuredData: React.FC<ArtworkStructuredDataProps> = ({
           },
           {
             "@type": "Product",
-            "@id": artworkUrl,
+            "@id": `${artworkUrl}#product`,
             name: artwork.title ?? "Untitled",
             brand: {
               "@id": artistUrl,
             },
             isRelatedTo: {
-              "@id": artworkUrl,
+              "@id": `${artworkUrl}#visual-artwork`,
             },
             material: artwork.medium ?? undefined,
             image,
@@ -167,7 +167,7 @@ export const ArtworkStructuredData: React.FC<ArtworkStructuredDataProps> = ({
             "@type": "WebPage",
             "@id": artworkUrl,
             mainEntity: {
-              "@id": artworkUrl,
+              "@id": `${artworkUrl}#product`,
             },
           },
         ],
