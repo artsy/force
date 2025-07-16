@@ -22,7 +22,6 @@ export const BecauseYouSavedRail: React.FC = () => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [artworks, setArtworks] = useState<ArtworkData[]>([])
-  const [title, setTitle] = useState<string>("")
 
   useEffect(() => {
     setLoading(true)
@@ -57,7 +56,6 @@ export const BecauseYouSavedRail: React.FC = () => {
     )
       .then(data => {
         const section = data.homeView?.becauseYouSaved
-        setTitle(section?.component?.title ?? "Because You Saved")
         setArtworks(
           section?.artworksConnection?.edges?.map((e: any) => e.node) ?? [],
         )
@@ -75,7 +73,7 @@ export const BecauseYouSavedRail: React.FC = () => {
 
   return (
     <Rail
-      title={"Version B"}
+      title={"Version A"}
       getItems={() =>
         artworks.map((artwork, i) => (
           <SimpleArtworkCard key={i} artwork={artwork} />

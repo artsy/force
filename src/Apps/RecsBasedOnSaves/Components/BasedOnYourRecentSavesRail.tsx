@@ -22,7 +22,6 @@ export const BasedOnYourRecentSavesRail: React.FC = () => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [artworks, setArtworks] = useState<ArtworkData[]>([])
-  const [title, setTitle] = useState<string>("")
 
   useEffect(() => {
     setLoading(true)
@@ -57,7 +56,6 @@ export const BasedOnYourRecentSavesRail: React.FC = () => {
     )
       .then(data => {
         const section = data.homeView?.basedOnYourRecentSaves
-        setTitle(section?.component?.title ?? "Based on Your Recent Saves")
         setArtworks(
           section?.artworksConnection?.edges?.map((e: any) => e.node) ?? [],
         )
@@ -75,7 +73,7 @@ export const BasedOnYourRecentSavesRail: React.FC = () => {
 
   return (
     <Rail
-      title={"Version A"}
+      title={"Version B"}
       getItems={() =>
         artworks.map((artwork, i) => (
           <SimpleArtworkCard key={i} artwork={artwork} />
