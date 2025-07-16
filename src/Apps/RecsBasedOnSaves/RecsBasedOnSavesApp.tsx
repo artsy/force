@@ -20,9 +20,9 @@ export const RecsBasedOnSavesApp: React.FC = () => {
 
       <Spacer y={4} />
 
-      <BasedOnYourRecentSavesRail />
-      <Spacer y={4} />
       <BecauseYouSavedRail />
+      <Spacer y={4} />
+      <BasedOnYourRecentSavesRail />
     </>
   )
 }
