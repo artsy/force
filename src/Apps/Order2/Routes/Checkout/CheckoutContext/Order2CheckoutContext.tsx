@@ -388,6 +388,7 @@ const useBuildCheckoutContext = (
       editFulfillmentDetails,
       editDeliveryOption,
       editPayment,
+      redirectToOrderDetails,
       setActiveFulfillmentDetailsTab,
       setExpressCheckoutSubmitting,
       setExpressCheckoutLoaded,
@@ -396,9 +397,8 @@ const useBuildCheckoutContext = (
       setLoadingError,
       setLoadingComplete,
       setConfirmationToken,
-      setSavedCreditCard,
-      redirectToOrderDetails,
       setCheckoutMode,
+      setSavedCreditCard,
     }
   }, [
     checkoutTracking,
@@ -414,12 +414,8 @@ const useBuildCheckoutContext = (
     setExpressCheckoutSubmitting,
     setFulfillmentDetailsComplete,
     setLoadingComplete,
-    setConfirmationToken,
-    setSavedCreditCard,
-    setExpressCheckoutSubmitting,
-    redirectToOrderDetails,
-    setCheckoutMode,
     setLoadingError,
+    setSavedCreditCard,
   ])
 
   return {
