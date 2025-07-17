@@ -209,16 +209,6 @@ export const newCheckoutEnabled = ({
   )
 }
 
-export const newDetailsEnabled = ({
-  order,
-  featureFlags,
-}: Order2RedirectArgs): boolean => {
-  return !!(
-    (order.mode === "BUY" || order.mode === "OFFER") &&
-    featureFlags?.isEnabled?.("emerald_order-details-page")
-  )
-}
-
 export const redirects: RedirectRecord<OrderQuery> = {
   path: "",
   rules: [goToArtworkIfOrderWasAbandoned],
