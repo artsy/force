@@ -75,6 +75,13 @@ const StatusRoute = loadable(
   },
 )
 
+const DetailsRoute = loadable(
+  () => import(/* webpackChunkName: "orderBundle" */ "./Routes/Details"),
+  {
+    resolveComponent: component => component.OrderDetailsRoute,
+  },
+)
+
 const OrderApp = loadable(
   () => import(/* webpackChunkName: "orderBundle" */ "./OrderApp"),
   {
@@ -306,6 +313,21 @@ export const orderRoutes: RouteProps[] = [
           query orderRoutes_StatusQuery($orderID: ID!) {
             order: commerceOrder(id: $orderID) {
               ...Status_order
+            }
+          }
+        `,
+        cacheConfig: {
+          force: true,
+        },
+      },
+      {
+        path: "details",
+        Component: DetailsRoute,
+        layout: "OrderDetails",
+        query: graphql`
+          query orderRoutes_DetailsQuery($orderID: ID!) {
+            viewer {
+              ...OrderDetailsRoute_viewer @arguments(orderID: $orderID)
             }
           }
         `,
