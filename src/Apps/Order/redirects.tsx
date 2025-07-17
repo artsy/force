@@ -14,12 +14,12 @@ interface OrderQuery {
 
 type OrderPredicate = RedirectPredicate<OrderQuery>
 
-const goToStatusIf =
+const goToDetailsIf =
   (pred: (order: redirects_order$data) => boolean, reason): OrderPredicate =>
   ({ order }) => {
     if (pred(order)) {
       return {
-        path: `/orders/${order.internalID}/status`,
+        path: `/orders/${order.internalID}/details`,
         reason,
       }
     }
@@ -39,7 +39,7 @@ const goToArtworkIfOrderWasAbandoned: OrderPredicate = ({ order }) => {
   }
 }
 
-const goToStatusIfOrderIsNotPending = goToStatusIf(
+const goToDetailsIfOrderIsNotPending = goToDetailsIf(
   order => order.state !== "PENDING",
   "Order is no longer pending",
 )
@@ -95,29 +95,29 @@ const goToOfferIfNoOfferMade: OrderPredicate = ({ order }) => {
   }
 }
 
-const goToStatusIfNotOfferOrder = goToStatusIf(
+const goToDetailsIfNotOfferOrder = goToDetailsIf(
   order => order.mode !== "OFFER",
   "Not an offer order",
 )
 
-const goToStatusIfBuyNowCreditCardOrder = goToStatusIf(
+const goToDetailsIfBuyNowCreditCardOrder = goToDetailsIf(
   order => order.paymentMethod === "CREDIT_CARD" && order.mode === "BUY",
   "Order paid by credit card must be offer",
 )
 
-const goToStatusIfNotAwaitingBuyerResponse = goToStatusIf(
+const goToDetailsIfNotAwaitingBuyerResponse = goToDetailsIf(
   order => order.awaitingResponseFrom !== "BUYER",
   "Not currently awaiting buyer response",
 )
 
 // displayState is used here since an order may be in_review, in which case
 // it is still "submitted" to the user and we shouldn't redirect
-const goToStatusIfOrderIsNotSubmitted = goToStatusIf(
+const goToDetailsIfOrderIsNotSubmitted = goToDetailsIf(
   order => order.displayState !== "SUBMITTED",
   "Order was not yet submitted",
 )
 
-const goToStatusIfNotLastTransactionFailed = goToStatusIf(
+const goToDetailsIfNotLastTransactionFailed = goToDetailsIf(
   order => !(order.lastTransactionFailed && order.state === "SUBMITTED"),
   "Order's lastTransactionFailed must be true + state submitted",
 )
@@ -226,16 +226,16 @@ export const redirects: RedirectRecord<OrderQuery> = {
     {
       path: "respond",
       rules: [
-        goToStatusIfNotOfferOrder,
-        goToStatusIfNotAwaitingBuyerResponse,
-        goToStatusIfOrderIsNotSubmitted,
+        goToDetailsIfNotOfferOrder,
+        goToDetailsIfNotAwaitingBuyerResponse,
+        goToDetailsIfOrderIsNotSubmitted,
         goToNewPaymentIfOfferLastTransactionFailed,
       ],
     },
     {
       path: "offer",
       rules: [
-        goToStatusIfOrderIsNotPending,
+        goToDetailsIfOrderIsNotPending,
         goToShippingIfOrderIsNotOfferOrder,
       ],
     },
@@ -243,7 +243,7 @@ export const redirects: RedirectRecord<OrderQuery> = {
       path: "shipping",
       rules: [
         goToPaymentIfPrivateSaleOrder,
-        goToStatusIfOrderIsNotPending,
+        goToDetailsIfOrderIsNotPending,
         goToOfferIfNoOfferMade,
         goToOrder2CheckoutIfEnabled,
       ],
@@ -251,7 +251,7 @@ export const redirects: RedirectRecord<OrderQuery> = {
     {
       path: "payment",
       rules: [
-        goToStatusIfOrderIsNotPending,
+        goToDetailsIfOrderIsNotPending,
         goToShippingIfShippingIsNotCompleted,
         goToOrder2CheckoutIfEnabled,
       ],
@@ -259,14 +259,14 @@ export const redirects: RedirectRecord<OrderQuery> = {
     {
       path: "payment/new",
       rules: [
-        goToStatusIfBuyNowCreditCardOrder,
-        goToStatusIfNotLastTransactionFailed,
+        goToDetailsIfBuyNowCreditCardOrder,
+        goToDetailsIfNotLastTransactionFailed,
       ],
     },
     {
       path: "review",
       rules: [
-        goToStatusIfOrderIsNotPending,
+        goToDetailsIfOrderIsNotPending,
         goToShippingIfShippingIsNotCompleted,
         goToPaymentIfPaymentIsNotCompleted,
         goToOrder2CheckoutIfEnabled,
@@ -275,36 +275,39 @@ export const redirects: RedirectRecord<OrderQuery> = {
     {
       path: "review/counter",
       rules: [
-        goToStatusIfNotOfferOrder,
-        goToStatusIfNotAwaitingBuyerResponse,
-        goToStatusIfOrderIsNotSubmitted,
+        goToDetailsIfNotOfferOrder,
+        goToDetailsIfNotAwaitingBuyerResponse,
+        goToDetailsIfOrderIsNotSubmitted,
         goToRespondIfMyLastOfferIsNotMostRecentOffer,
       ],
     },
     {
       path: "review/accept",
       rules: [
-        goToStatusIfNotOfferOrder,
-        goToStatusIfNotAwaitingBuyerResponse,
-        goToStatusIfOrderIsNotSubmitted,
+        goToDetailsIfNotOfferOrder,
+        goToDetailsIfNotAwaitingBuyerResponse,
+        goToDetailsIfOrderIsNotSubmitted,
       ],
     },
     {
       path: "review/decline",
       rules: [
-        goToStatusIfNotOfferOrder,
-        goToStatusIfNotAwaitingBuyerResponse,
-        goToStatusIfOrderIsNotSubmitted,
+        goToDetailsIfNotOfferOrder,
+        goToDetailsIfNotAwaitingBuyerResponse,
+        goToDetailsIfOrderIsNotSubmitted,
       ],
     },
     {
       path: "status",
+      rules: [goToOrderDetails],
+    },
+    {
+      path: "details",
       rules: [
         goToReviewIfOrderIsPending,
         goToShippingIfShippingIsNotCompleted,
         goToPaymentIfPaymentIsNotCompleted,
         goToRespondIfAwaitingBuyerResponse,
-        goToOrderDetails,
       ],
     },
   ],

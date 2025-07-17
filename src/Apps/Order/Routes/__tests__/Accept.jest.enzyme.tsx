@@ -179,7 +179,7 @@ describe("Accept seller offer", () => {
       global.setInterval = realSetInterval
     })
 
-    it("routes to status page after mutation completes", async () => {
+    it("routes to details page after mutation completes", async () => {
       commitMutation.mockReturnValue(acceptOfferSuccess)
       const { wrapper } = getWrapper({
         CommerceOrder: () => testOrder,
@@ -188,7 +188,7 @@ describe("Accept seller offer", () => {
 
       await page.clickSubmit()
       expect(pushMock).toHaveBeenCalledWith(
-        `/orders/${testOrder.internalID}/status`,
+        `/orders/${testOrder.internalID}/details`,
       )
     })
 

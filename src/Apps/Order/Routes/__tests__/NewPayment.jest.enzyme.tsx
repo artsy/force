@@ -172,13 +172,13 @@ describe("Payment", () => {
     )
   })
 
-  it("takes the user to the status page", async () => {
+  it("takes the user to the details page", async () => {
     mockCommitMutation.mockResolvedValue(fixFailedPaymentSuccess)
     const { wrapper } = getWrapper({ CommerceOrder: () => testOrder })
     const page = new OrderAppTestPage(wrapper)
     await page.clickSubmit()
 
-    expect(pushMock).toHaveBeenCalledWith("/orders/1234/status")
+    expect(pushMock).toHaveBeenCalledWith("/orders/1234/details")
   })
 
   it("does not do anything when there are form errors", async () => {

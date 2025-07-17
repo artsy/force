@@ -144,7 +144,7 @@ describe("Review", () => {
       await page.clickSubmit()
 
       expect(mockCommitMutation).toHaveBeenCalledTimes(1)
-      expect(pushMock).toBeCalledWith("/orders/1234/status")
+      expect(pushMock).toBeCalledWith("/orders/1234/details")
     })
 
     it("disables the submit button when props.stripe is not present", () => {
@@ -547,7 +547,7 @@ describe("Review", () => {
 
         await waitFor(() =>
           expect(pushMock).toHaveBeenCalledWith(
-            "/orders/offer-order-id/status",
+            "/orders/offer-order-id/details",
           ),
         )
       })
@@ -771,7 +771,7 @@ describe("Review", () => {
         source: "artwork_page",
       }
 
-      it("routes to the status page", async () => {
+      it("routes to the details page", async () => {
         mockCommitMutation.mockResolvedValue(submitOfferOrderSuccessInReview)
         const { wrapper } = getWrapper({
           CommerceOrder: () => OfferOrderInReviewFromArtworkPage,
@@ -780,7 +780,7 @@ describe("Review", () => {
         await page.clickSubmit()
 
         expect(mockCommitMutation).toHaveBeenCalledTimes(1)
-        expect(pushMock).toBeCalledWith("/orders/offer-order-id/status")
+        expect(pushMock).toBeCalledWith("/orders/offer-order-id/details")
       })
     })
 
@@ -834,7 +834,7 @@ describe("Review", () => {
 
           await waitFor(() =>
             expect(pushMock).toHaveBeenCalledWith(
-              "/orders/offer-order-id/status",
+              "/orders/offer-order-id/details",
             ),
           )
         })
@@ -858,7 +858,7 @@ describe("Review", () => {
 
           await waitFor(() =>
             expect(pushMock).toHaveBeenCalledWith(
-              "/orders/offer-order-id/status",
+              "/orders/offer-order-id/details",
             ),
           )
         })
