@@ -239,7 +239,7 @@ const useBuildCheckoutContext = (
 
   const redirectToOrderDetails = useCallback(() => {
     const orderID = orderData.internalID
-    const orderDetailsURL = `/orders2/${orderID}/details`
+    const orderDetailsURL = `/orders/${orderID}/details`
 
     router.replace(orderDetailsURL)
   }, [orderData.internalID, router])
