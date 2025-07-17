@@ -75,7 +75,7 @@ const Order2ReviewStepComponent: React.FC<Order2ReviewStepProps> = ({
         variables: {
           input: {
             id: orderData.internalID,
-            confirmationToken: confirmationToken.id,
+            confirmationToken: confirmationToken?.id,
             oneTimeUse: !saveCreditCard,
           },
         },

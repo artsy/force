@@ -5,10 +5,11 @@ import { type Brand, BrandCreditCardIcon } from "Components/BrandCreditCardIcon"
 
 interface Order2PaymentCompletedViewProps {
   confirmationToken: any
+  savedCreditCard: any
 }
 export const Order2PaymentCompletedView: React.FC<
   Order2PaymentCompletedViewProps
-> = ({ confirmationToken }) => {
+> = ({ confirmationToken, savedCreditCard }) => {
   const { editPayment, checkoutTracking } = useCheckoutContext()
 
   const onClickEdit = () => {
@@ -44,13 +45,16 @@ export const Order2PaymentCompletedView: React.FC<
         <BrandCreditCardIcon
           mr={1}
           type={
-            confirmationToken?.paymentMethodPreview?.card?.displayBrand as Brand
+            (confirmationToken?.paymentMethodPreview?.card?.displayBrand ||
+              savedCreditCard?.brand) as Brand
           }
           width="26px"
           height="26px"
         />
         <Text variant="sm-display">
-          •••• {confirmationToken?.paymentMethodPreview?.card?.last4}
+          ••••{" "}
+          {confirmationToken?.paymentMethodPreview?.card?.last4 ||
+            savedCreditCard?.lastDigits}
         </Text>
       </Flex>
     </Flex>
