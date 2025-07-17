@@ -176,7 +176,7 @@ const goToRespondIfAwaitingBuyerResponse: OrderPredicate = ({ order }) => {
   }
 }
 
-const goToOrderDetails: OrderPredicate = ({ order, featureFlags }) => {
+const goToOrderDetails: OrderPredicate = ({ order }) => {
   return {
     path: `/orders/${order.internalID}/details`,
     reason: "Order details page is ready for this order",
