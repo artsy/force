@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<18352e0c779a90ad43ad670476fe8baa>>
+ * @generated SignedSource<<16f3bfd5a0b4d7edc1a9ca2f41eefe46>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,9 +12,15 @@ import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkRecommendationsArtworksGrid_me$data = {
   readonly artworkRecommendations: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly id: string;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
     readonly totalCount: number | null | undefined;
     readonly " $fragmentSpreads": FragmentRefs<"ArtworkGrid_artworks">;
   } | null | undefined;
+  readonly id: string;
   readonly " $fragmentType": "ArtworkRecommendationsArtworksGrid_me";
 };
 export type ArtworkRecommendationsArtworksGrid_me$key = {
@@ -22,8 +28,24 @@ export type ArtworkRecommendationsArtworksGrid_me$key = {
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkRecommendationsArtworksGrid_me">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = [
+  "artworkRecommendations"
+],
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "after"
+    },
     {
       "defaultValue": null,
       "kind": "LocalArgument",
@@ -31,21 +53,42 @@ const node: ReaderFragment = {
     }
   ],
   "kind": "Fragment",
-  "metadata": null,
+  "metadata": {
+    "connection": [
+      {
+        "count": "first",
+        "cursor": "after",
+        "direction": "forward",
+        "path": (v0/*: any*/)
+      }
+    ],
+    "refetch": {
+      "connection": {
+        "forward": {
+          "count": "first",
+          "cursor": "after"
+        },
+        "backward": null,
+        "path": (v0/*: any*/)
+      },
+      "fragmentPathInResult": [
+        "node"
+      ],
+      "operation": require('./ArtworkRecommendationsArtworksGridPaginationQuery.graphql'),
+      "identifierInfo": {
+        "identifierField": "id",
+        "identifierQueryVariableName": "id"
+      }
+    }
+  },
   "name": "ArtworkRecommendationsArtworksGrid_me",
   "selections": [
     {
-      "alias": null,
-      "args": [
-        {
-          "kind": "Variable",
-          "name": "first",
-          "variableName": "first"
-        }
-      ],
+      "alias": "artworkRecommendations",
+      "args": null,
       "concreteType": "ArtworkConnection",
       "kind": "LinkedField",
-      "name": "artworkRecommendations",
+      "name": "__ArtworkRecommendationsArtworksGrid_artworkRecommendations_connection",
       "plural": false,
       "selections": [
         {
@@ -56,18 +99,82 @@ const node: ReaderFragment = {
           "storageKey": null
         },
         {
+          "alias": null,
+          "args": null,
+          "concreteType": "ArtworkEdge",
+          "kind": "LinkedField",
+          "name": "edges",
+          "plural": true,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "Artwork",
+              "kind": "LinkedField",
+              "name": "node",
+              "plural": false,
+              "selections": [
+                (v1/*: any*/),
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "__typename",
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "cursor",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        },
+        {
           "args": null,
           "kind": "FragmentSpread",
           "name": "ArtworkGrid_artworks"
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "PageInfo",
+          "kind": "LinkedField",
+          "name": "pageInfo",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "endCursor",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "hasNextPage",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
         }
       ],
       "storageKey": null
-    }
+    },
+    (v1/*: any*/)
   ],
   "type": "Me",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "4224295c9203bddb03054bf999c38766";
+(node as any).hash = "4a37acf3be00028ddc7a23c3d6702a2a";
 
 export default node;

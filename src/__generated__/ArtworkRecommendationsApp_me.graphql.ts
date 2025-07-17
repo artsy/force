@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<87e49b96460ad48e88e8660adf367af8>>
+ * @generated SignedSource<<a21e0238de5cb4d26ba6b2cca5a08e7a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -24,6 +24,11 @@ const node: ReaderFragment = {
     {
       "defaultValue": null,
       "kind": "LocalArgument",
+      "name": "after"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
       "name": "first"
     }
   ],
@@ -33,6 +38,11 @@ const node: ReaderFragment = {
   "selections": [
     {
       "args": [
+        {
+          "kind": "Variable",
+          "name": "after",
+          "variableName": "after"
+        },
         {
           "kind": "Variable",
           "name": "first",
@@ -47,6 +57,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "1589783b7dc91006b4b488ed940a20f0";
+(node as any).hash = "0d05f641d78de85ad6e65f863926f636";
 
 export default node;

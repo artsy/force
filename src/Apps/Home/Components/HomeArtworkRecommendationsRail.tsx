@@ -1,5 +1,6 @@
 import {
   ActionType,
+  AuthContextModule,
   type ClickedArtworkGroup,
   ContextModule,
   OwnerType,
@@ -14,17 +15,15 @@ import { Rail } from "Components/Rail/Rail"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
 import { getSignalLabel } from "Utils/getSignalLabel"
-import { graphql } from "react-relay"
+import { graphql, useFragment } from "react-relay"
 import { useTracking } from "react-tracking"
-import type {
-  HomeArtworkRecommendationsRailQuery,
-  HomeArtworkRecommendationsRailQuery$data,
-} from "__generated__/HomeArtworkRecommendationsRailQuery.graphql"
+import type { HomeArtworkRecommendationsRailQuery } from "__generated__/HomeArtworkRecommendationsRailQuery.graphql"
+import type { HomeArtworkRecommendationsRail_me$key } from "__generated__/HomeArtworkRecommendationsRail_me.graphql"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useFlag } from "@unleash/proxy-client-react"
 
 interface HomeArtworkRecommendationsRailProps {
-  me: HomeArtworkRecommendationsRailQuery$data["me"]
+  me: HomeArtworkRecommendationsRail_me$key
 }
 
 export const HomeArtworkRecommendationsRail: React.FC<
@@ -32,7 +31,9 @@ export const HomeArtworkRecommendationsRail: React.FC<
 > = ({ me }) => {
   const { trackEvent } = useTracking()
   const { signals } = useArtworkGridContext()
-  const artworks = extractNodes(me?.artworkRecommendations)
+  const data = useFragment(FRAGMENT, me)
+
+  const artworks = extractNodes(data?.artworkRecommendations)
 
   if (artworks.length === 0) {
     return null
@@ -40,9 +41,9 @@ export const HomeArtworkRecommendationsRail: React.FC<
 
   return (
     <Rail
-      title="We Think You'll Love"
+      title="We Think You’ll Love"
       viewAllLabel="View All Works"
-      viewAllHref="/artwork-recommendations"
+      viewAllHref="/recommendations/artworks"
       viewAllOnClick={() => {
         const trackingEvent: ClickedArtworkGroup = {
           action: ActionType.clickedArtworkGroup,
@@ -62,8 +63,9 @@ export const HomeArtworkRecommendationsRail: React.FC<
             artwork={artwork}
             key={artwork.internalID}
             lazyLoad
-            // @ts-expect-error TODO: add to the union type of auth context module
-            contextModule={ContextModule.artworkRecommendationsRail}
+            contextModule={
+              ContextModule.artworkRecommendationsRail as AuthContextModule
+            }
             onClick={() => {
               const trackingEvent: ClickedArtworkGroup = {
                 action: ActionType.clickedArtworkGroup,
@@ -92,6 +94,27 @@ export const HomeArtworkRecommendationsRail: React.FC<
   )
 }
 
+const FRAGMENT = graphql`
+  fragment HomeArtworkRecommendationsRail_me on Me {
+    artworkRecommendations(first: 10) {
+      edges {
+        node {
+          internalID
+          slug
+          href
+          collectorSignals {
+            auction {
+              bidCount
+              lotWatcherCount
+            }
+          }
+          ...ShelfArtwork_artwork
+        }
+      }
+    }
+  }
+`
+
 export const HomeArtworkRecommendationsRailQueryRenderer: React.FC<
   React.PropsWithChildren<unknown>
 > = () => {
@@ -114,22 +137,7 @@ export const HomeArtworkRecommendationsRailQueryRenderer: React.FC<
       query={graphql`
         query HomeArtworkRecommendationsRailQuery {
           me {
-            artworkRecommendations(first: 10) {
-              edges {
-                node {
-                  internalID
-                  slug
-                  href
-                  collectorSignals {
-                    auction {
-                      bidCount
-                      lotWatcherCount
-                    }
-                  }
-                  ...ShelfArtwork_artwork
-                }
-              }
-            }
+            ...HomeArtworkRecommendationsRail_me
           }
         }
       `}
@@ -143,10 +151,6 @@ export const HomeArtworkRecommendationsRailQueryRenderer: React.FC<
           return PLACEHOLDER
         }
 
-        if (!props?.me?.artworkRecommendations) {
-          return null
-        }
-
         return <HomeArtworkRecommendationsRail me={props.me} />
       }}
     />
@@ -156,7 +160,7 @@ export const HomeArtworkRecommendationsRailQueryRenderer: React.FC<
 const PLACEHOLDER = (
   <Skeleton>
     <Rail
-      title="We Think You'll Love"
+      title="We Think You’ll Love"
       getItems={() => {
         return [...new Array(8)].map((_, i) => {
           return <ShelfArtworkPlaceholder key={i} index={i} />

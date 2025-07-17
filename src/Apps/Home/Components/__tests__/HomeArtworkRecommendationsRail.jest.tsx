@@ -24,16 +24,7 @@ const { renderWithRelay } = setupTestWrapperTL({
   query: graphql`
     query HomeArtworkRecommendationsRail_Test_Query @relay_test_operation {
       me {
-        artworkRecommendations(first: 10) {
-          edges {
-            node {
-              internalID
-              slug
-              href
-              ...ShelfArtwork_artwork
-            }
-          }
-        }
+        ...HomeArtworkRecommendationsRail_me
       }
     }
   `,
@@ -50,6 +41,7 @@ describe("HomeArtworkRecommendationsRail", () => {
                 internalID: "artwork-1",
                 slug: "test-artwork",
                 href: "/artwork/test-artwork",
+                collectorSignals: null,
               },
             },
           ],
@@ -57,11 +49,11 @@ describe("HomeArtworkRecommendationsRail", () => {
       }),
     })
 
-    expect(screen.getByText("We Think You'll Love")).toBeInTheDocument()
+    expect(screen.getByText("We Think You’ll Love")).toBeInTheDocument()
     expect(screen.getByText("View All Works")).toBeInTheDocument()
     expect(
       screen.getByRole("link", { name: "View All Works" }),
-    ).toHaveAttribute("href", "/artwork-recommendations")
+    ).toHaveAttribute("href", "/recommendations/artworks")
   })
 
   it("does not render when no artworks", () => {
@@ -86,6 +78,7 @@ describe("HomeArtworkRecommendationsRail", () => {
                 internalID: "artwork-1",
                 slug: "test-artwork",
                 href: "/artwork/test-artwork",
+                collectorSignals: null,
               },
             },
           ],
@@ -119,6 +112,7 @@ describe("HomeArtworkRecommendationsRail", () => {
                 internalID: "artwork-1",
                 slug: "test-artwork",
                 href: "/artwork/test-artwork",
+                collectorSignals: null,
               },
             },
           ],
@@ -149,6 +143,7 @@ describe("HomeArtworkRecommendationsRail", () => {
                 internalID: "artwork-1",
                 slug: "test-artwork-1",
                 href: "/artwork/test-artwork-1",
+                collectorSignals: null,
               },
             },
             {
@@ -156,6 +151,7 @@ describe("HomeArtworkRecommendationsRail", () => {
                 internalID: "artwork-2",
                 slug: "test-artwork-2",
                 href: "/artwork/test-artwork-2",
+                collectorSignals: null,
               },
             },
           ],

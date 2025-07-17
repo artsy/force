@@ -8,31 +8,25 @@ const ArtworkRecommendationsApp = loadable(
       /* webpackChunkName: "artworkRecommendationsBundle" */ "./ArtworkRecommendationsApp"
     ),
   {
-    resolveComponent: component =>
-      component.ArtworkRecommendationsAppFragmentContainer,
+    resolveComponent: component => component.ArtworkRecommendationsApp,
   },
 )
 
 export const artworkRecommendationsRoutes: RouteProps[] = [
   {
-    path: "/artwork-recommendations",
+    path: "/recommendations/artworks",
     getComponent: () => ArtworkRecommendationsApp,
     onPreloadJS: () => {
       ArtworkRecommendationsApp.preload()
     },
-    prepareVariables: (params, props) => {
-      const first = Number.parseInt(props.location.query.first, 10) || 100
-
-      return {
-        ...params,
-        ...props,
-        first,
-      }
-    },
     query: graphql`
-      query artworkRecommendationsRoutes_TopLevelQuery($first: Int) {
+      query artworkRecommendationsRoutes_TopLevelQuery(
+        $first: Int = 20
+        $after: String
+      ) {
         me {
-          ...ArtworkRecommendationsApp_me @arguments(first: $first)
+          ...ArtworkRecommendationsApp_me
+            @arguments(first: $first, after: $after)
         }
       }
     `,

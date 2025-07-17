@@ -1,26 +1,28 @@
 import { type AuthContextModule, ContextModule } from "@artsy/cohesion"
 import { Spacer, Text } from "@artsy/palette"
 import { LogInPrompt } from "Apps/Components/LogInPrompt"
-import { ArtworkRecommendationsArtworksGridFragmentContainer } from "Apps/ArtworkRecommendations/Components/ArtworkRecommendationsArtworksGrid"
+import { ArtworkRecommendationsArtworksGrid } from "Apps/ArtworkRecommendations/Components/ArtworkRecommendationsArtworksGrid"
 import { MetaTags } from "Components/MetaTags"
-import type { ArtworkRecommendationsApp_me$data } from "__generated__/ArtworkRecommendationsApp_me.graphql"
+import type { ArtworkRecommendationsApp_me$key } from "__generated__/ArtworkRecommendationsApp_me.graphql"
 import type { FC } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
+import { graphql, useFragment } from "react-relay"
 
 interface ArtworkRecommendationsAppProps {
-  me: ArtworkRecommendationsApp_me$data
+  me: ArtworkRecommendationsApp_me$key
 }
 
 export const ArtworkRecommendationsApp: FC<
   React.PropsWithChildren<ArtworkRecommendationsAppProps>
 > = ({ me }) => {
+  const data = useFragment(FRAGMENT, me)
+
   return (
     <>
-      <MetaTags title="We Think You'll Love" />
+      <MetaTags title="We Think You’ll Love" />
 
       <Spacer y={4} />
 
-      <Text variant="xl">We Think You'll Love</Text>
+      <Text variant="xl">We Think You’ll Love</Text>
 
       <Spacer y={4} />
 
@@ -30,17 +32,15 @@ export const ArtworkRecommendationsApp: FC<
         }
       />
 
-      {me && <ArtworkRecommendationsArtworksGridFragmentContainer me={me} />}
+      {data && <ArtworkRecommendationsArtworksGrid me={data} />}
     </>
   )
 }
 
-export const ArtworkRecommendationsAppFragmentContainer =
-  createFragmentContainer(ArtworkRecommendationsApp, {
-    me: graphql`
-      fragment ArtworkRecommendationsApp_me on Me
-      @argumentDefinitions(first: { type: "Int" }) {
-        ...ArtworkRecommendationsArtworksGrid_me @arguments(first: $first)
-      }
-    `,
-  })
+const FRAGMENT = graphql`
+  fragment ArtworkRecommendationsApp_me on Me
+  @argumentDefinitions(first: { type: "Int" }, after: { type: "String" }) {
+    ...ArtworkRecommendationsArtworksGrid_me
+      @arguments(first: $first, after: $after)
+  }
+`
