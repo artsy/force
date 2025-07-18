@@ -18,18 +18,23 @@ import {
   useElements,
   useStripe,
 } from "@stripe/react-stripe-js"
-import {
-  type StripeElementsOptions,
-  type StripeElementsUpdateOptions,
-  type StripePaymentElementChangeEvent,
-  type StripePaymentElementOptions,
+import type {
+  StripeElementsOptions,
+  StripeElementsUpdateOptions,
+  StripePaymentElementChangeEvent,
+  StripePaymentElementOptions,
 } from "@stripe/stripe-js"
 import { Collapse } from "Apps/Order/Components/Collapse"
 import { useUpdateOrderMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useUpdateOrderMutation"
-import { useSetPayment } from "Apps/Order/Mutations/useSetPayment"
 import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
-import { CheckoutErrorBanner } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
+import { useSetPayment } from "Apps/Order/Mutations/useSetPayment"
+import {
+  CheckoutErrorBanner,
+  MailtoOrderSupport,
+} from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+
+import { type Brand, BrandCreditCardIcon } from "Components/BrandCreditCardIcon"
 import { FadeInBox } from "Components/FadeInBox"
 import { RouterLink } from "System/Components/RouterLink"
 import { extractNodes } from "Utils/extractNodes"
@@ -41,18 +46,20 @@ import type {
   Order2PaymentForm_order$key,
 } from "__generated__/Order2PaymentForm_order.graphql"
 import type React from "react"
-import { useState, useEffect } from "react"
+import { useEffect, useState } from "react"
 import {
   fetchQuery,
   graphql,
   useFragment,
   useRelayEnvironment,
 } from "react-relay"
-import { Brand, BrandCreditCardIcon } from "Components/BrandCreditCardIcon"
 
 const logger = createLogger("Order2PaymentForm")
-const defaultErrorMessage =
-  "Something went wrong. Please try again or contact orders@artsy.net"
+const defaultErrorMessage = (
+  <>
+    Something went wrong. Please try again or contact <MailtoOrderSupport />.
+  </>
+)
 
 interface Order2PaymentFormProps {
   order: Order2PaymentForm_order$key
@@ -183,7 +190,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
     }
 
     fetchSavedCreditCards()
-  }, [])
+  }, [environment])
 
   if (!(stripe && elements)) {
     return null
@@ -450,7 +457,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
                               <Text variant="sm">•••• {card.lastDigits}</Text>
                             </Flex>
                           }
-                        ></Radio>
+                        />
                       ))}
                     </RadioGroup>
                   </>
