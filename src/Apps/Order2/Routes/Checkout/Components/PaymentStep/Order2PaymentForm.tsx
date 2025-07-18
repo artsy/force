@@ -23,7 +23,6 @@ import {
   type StripeElementsUpdateOptions,
   type StripePaymentElementChangeEvent,
   type StripePaymentElementOptions,
-  loadStripe,
 } from "@stripe/stripe-js"
 import { Collapse } from "Apps/Order/Components/Collapse"
 import { useUpdateOrderMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useUpdateOrderMutation"
@@ -31,10 +30,8 @@ import { useSetPayment } from "Apps/Order/Mutations/useSetPayment"
 import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
 import { CheckoutErrorBanner } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
-
 import { FadeInBox } from "Components/FadeInBox"
 import { RouterLink } from "System/Components/RouterLink"
-import { getENV } from "Utils/getENV"
 import { extractNodes } from "Utils/extractNodes"
 import createLogger from "Utils/logger"
 import type { Order2PaymentFormConfirmationTokenQuery } from "__generated__/Order2PaymentFormConfirmationTokenQuery.graphql"
@@ -53,7 +50,6 @@ import {
 } from "react-relay"
 import { Brand, BrandCreditCardIcon } from "Components/BrandCreditCardIcon"
 
-const stripePromise = loadStripe(getENV("STRIPE_PUBLISHABLE_KEY"))
 const logger = createLogger("Order2PaymentForm")
 const defaultErrorMessage =
   "Something went wrong. Please try again or contact orders@artsy.net"
@@ -66,6 +62,7 @@ export const Order2PaymentForm: React.FC<Order2PaymentFormProps> = ({
   order,
 }) => {
   const orderData = useFragment(FRAGMENT, order)
+  const stripe = useStripe()
   const { itemsTotal, seller } = orderData
 
   if (!itemsTotal) {
@@ -111,7 +108,7 @@ export const Order2PaymentForm: React.FC<Order2PaymentFormProps> = ({
   }
 
   return (
-    <Elements stripe={stripePromise} options={options}>
+    <Elements stripe={stripe} options={options}>
       <PaymentFormContent order={orderData} />
     </Elements>
   )
