@@ -2,6 +2,12 @@ export type OrderMutationSuccess<T> = Extract<
   T,
   { __typename: "OrderMutationSuccess" }
 >
+
+type OrderMutationActionRequired<T> = Extract<
+  T,
+  { __typename: "OrderMutationActionRequired" }
+>
+
 type OrderMutationError<T> = Extract<
   T,
   { __typename: "OrderMutationError"; mutationError: { message: string } }
@@ -11,6 +17,12 @@ const isOrderMutationSuccess = <T extends { __typename?: string }>(
   data: T | null | undefined,
 ): data is OrderMutationSuccess<T> => {
   return data?.__typename === "OrderMutationSuccess"
+}
+
+const isOrderMutationActionRequired = <T extends { __typename?: string }>(
+  data: T | null | undefined,
+): data is OrderMutationActionRequired<T> => {
+  return data?.__typename === "OrderMutationActionRequired"
 }
 
 const isOrderMutationError = <T extends { __typename?: string }>(
@@ -27,8 +39,12 @@ export const validateAndExtractOrderResponse = <
   T extends { __typename?: string },
 >(
   orderOrError?: T | null | undefined,
-): OrderMutationSuccess<T> => {
+): OrderMutationSuccess<T> | OrderMutationActionRequired<T> => {
   if (isOrderMutationSuccess(orderOrError)) {
+    return orderOrError
+  }
+
+  if (isOrderMutationActionRequired(orderOrError)) {
     return orderOrError
   }
 
