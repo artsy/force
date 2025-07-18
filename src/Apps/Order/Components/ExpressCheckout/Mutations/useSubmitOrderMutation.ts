@@ -19,6 +19,11 @@ export const useSubmitOrderMutation = () => {
                 message
               }
             }
+            ... on OrderMutationActionRequired {
+              actionData {
+                clientSecret
+              }
+            }
           }
         }
       }

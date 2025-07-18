@@ -1,6 +1,7 @@
 import { ContextModule } from "@artsy/cohesion"
 import ShieldIcon from "@artsy/icons/ShieldIcon"
 import { Box, Button, Flex, Image, Message, Spacer, Text } from "@artsy/palette"
+import { useStripe } from "@stripe/react-stripe-js"
 import { useSubmitOrderMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useSubmitOrderMutation"
 import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
 import { type Dialog, injectDialog } from "Apps/Order/Dialogs"
@@ -33,6 +34,7 @@ const Order2ReviewStepComponent: React.FC<Order2ReviewStepProps> = ({
 }) => {
   const orderData = useFragment(FRAGMENT, order)
   const submitOrderMutation = useSubmitOrderMutation()
+  const stripe = useStripe()
   const {
     steps,
     confirmationToken,
@@ -66,7 +68,7 @@ const Order2ReviewStepComponent: React.FC<Order2ReviewStepProps> = ({
     })
   }
 
-  const handleClick = async _event => {
+  const handleClick = async () => {
     checkoutTracking.clickedOrderProgression(ContextModule.ordersReview)
     setLoading(true)
 
@@ -84,6 +86,23 @@ const Order2ReviewStepComponent: React.FC<Order2ReviewStepProps> = ({
       validateAndExtractOrderResponse(
         submitOrderResult.submitOrder?.orderOrError,
       )
+
+      if (
+        submitOrderResult.submitOrder?.orderOrError?.__typename ===
+        "OrderMutationActionRequired"
+      ) {
+        const cardActionResults = await stripe?.handleNextAction({
+          clientSecret:
+            submitOrderResult.submitOrder.orderOrError.actionData.clientSecret,
+        })
+
+        if (cardActionResults?.error) {
+          throw new Error(cardActionResults.error.message)
+        } else {
+          handleClick()
+          return
+        }
+      }
 
       checkoutTracking.submittedOrder()
       redirectToOrderDetails()
