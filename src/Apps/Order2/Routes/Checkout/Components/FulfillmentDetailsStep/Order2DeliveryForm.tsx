@@ -1,6 +1,15 @@
 import { ContextModule } from "@artsy/cohesion"
 import { Button, Flex, Spacer, Text } from "@artsy/palette"
-import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
+import {
+  CheckoutError,
+  validateAndExtractOrderResponse,
+} from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
+import {
+  CheckoutErrorBanner,
+  type CheckoutErrorBannerProps,
+  MailtoOrderSupport,
+} from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
+import { handleError } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/utils"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 
 import { useOrder2UpdateShippingAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2UpdateShippingAddressMutation"
@@ -11,7 +20,7 @@ import {
   addressFormFieldsValidator,
 } from "Components/Address/AddressFormFields"
 import type { Order2DeliveryForm_order$key } from "__generated__/Order2DeliveryForm_order.graphql"
-import { Formik } from "formik"
+import { Formik, type FormikHelpers } from "formik"
 import { useCallback } from "react"
 import { graphql, useFragment } from "react-relay"
 import * as yup from "yup"
@@ -67,7 +76,10 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
   }
 
   const onSubmit = useCallback(
-    async (values: FormikContextWithAddress) => {
+    async (
+      values: FormikContextWithAddress,
+      formikHelpers: FormikHelpers<FormikContextWithAddress>,
+    ) => {
       try {
         checkoutTracking.clickedOrderProgression(
           ContextModule.ordersFulfillment,
@@ -94,9 +106,18 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
           updateShippingAddressResult.updateOrderShippingAddress?.orderOrError,
         ).order
 
+        formikHelpers.setStatus({ errorBanner: null })
         setFulfillmentDetailsComplete({}) // TODO: Clean up signature
       } catch (error) {
-        console.error("Error submitting delivery form:", error)
+        handleError(error, formikHelpers, {
+          title: "An error occurred",
+          message: (
+            <>
+              Something went wrong while updating your delivery address. Please
+              try again or contact <MailtoOrderSupport />.
+            </>
+          ),
+        })
       }
     },
     [
@@ -116,6 +137,7 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
         Delivery address
       </Text>
       <Spacer y={2} />
+
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
@@ -123,6 +145,12 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
       >
         {formikContext => (
           <Flex flexDirection={"column"} mb={2}>
+            {formikContext.status?.errorBanner && (
+              <>
+                <CheckoutErrorBanner error={formikContext.status.errorBanner} />
+                <Spacer y={2} />
+              </>
+            )}
             <AddressFormFields
               withPhoneNumber
               shippableCountries={shippableCountries}
