@@ -78,7 +78,7 @@ export const Reject: FC<React.PropsWithChildren<RejectProps>> = ({
         throw orderOrError.error
       }
 
-      router.push(`/orders/${order.internalID}/status`)
+      router.push(`/orders/${order.internalID}/details`)
     } catch (error) {
       logger.error(error)
       dialog.showErrorDialog()

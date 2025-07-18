@@ -143,7 +143,7 @@ const OrderLink: FC<OrderLinkProps> = ({
 
   if (isOrderActive) {
     return (
-      <RouterLink inline to={`/orders/${order.internalID}/status`}>
+      <RouterLink inline to={`/orders/${order.internalID}/details`}>
         {order.code}
       </RouterLink>
     )
@@ -179,7 +179,7 @@ const OrderActionButton: FC<OrderActionButtonProps> = ({
         <Button
           // @ts-ignore
           as={RouterLink}
-          to={`/orders/${orderId}/status`}
+          to={`/orders/${orderId}/details`}
           variant="primaryBlack"
           size="large"
           width="50%"

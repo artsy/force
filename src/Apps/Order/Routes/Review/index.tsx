@@ -194,7 +194,7 @@ export const ReviewRoute: FC<React.PropsWithChildren<ReviewProps>> = props => {
               // We cannot expect Eigen to respond all the time to messages sent from the webview
               // a default fallback page is safer for old/broken Eigen versions
               setTimeout(() => {
-                router.push(`/orders/${order.internalID}/status`)
+                router.push(`/orders/${order.internalID}/details`)
               }, 500)
               return
             }
@@ -207,7 +207,7 @@ export const ReviewRoute: FC<React.PropsWithChildren<ReviewProps>> = props => {
           }
         }
 
-        // Eigen redirects to the status page for non-Offer orders (must keep
+        // Eigen redirects to the details page for non-Offer orders (must keep
         // the user inside the webview)
         // For in-review offers, we also want to override the default "go to
         // artwork page and display modal linking to conversation" behavior
@@ -219,18 +219,18 @@ export const ReviewRoute: FC<React.PropsWithChildren<ReviewProps>> = props => {
             orderOrError?.order?.state === "IN_REVIEW" &&
             order.source === "artwork_page")
         ) {
-          return router.push(`/orders/${orderId}/status`)
+          return router.push(`/orders/${orderId}/details`)
         }
         // Make offer and Purchase in inquiry redirects to the conversation page
         if (order.source === "inquiry") {
           return router.push(`/user/conversations/${conversationId}`)
         }
-        // Make offer from the artwork page redirects to the status page
+        // Make offer from the artwork page redirects to the details page
         if (order.mode === "OFFER") {
-          return router.push(`/orders/${orderId}/status`)
+          return router.push(`/orders/${orderId}/details`)
         }
-        // Purchase from the artwork page redirects to the status page
-        return router.push(`/orders/${orderId}/status`)
+        // Purchase from the artwork page redirects to the details page
+        return router.push(`/orders/${orderId}/details`)
       }
     } catch (error) {
       handleSubmitError(error)

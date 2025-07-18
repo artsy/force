@@ -1,12 +1,11 @@
-import { order2Routes } from "../order2Routes"
 import { Resolver } from "found-relay"
 import { getFarceResult } from "found/server"
 import type { FarceRedirectResult } from "found/server"
 import { MockPayloadGenerator, createMockEnvironment } from "relay-test-utils"
+import { order2Routes } from "../order2Routes"
 
 jest.mock("Apps/Order/redirects", () => ({
   newCheckoutEnabled: jest.fn(() => true),
-  newDetailsEnabled: jest.fn(() => true),
 }))
 
 jest.mock("Utils/logger", () => ({
