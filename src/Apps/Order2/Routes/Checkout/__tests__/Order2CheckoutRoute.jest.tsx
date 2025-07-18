@@ -481,6 +481,19 @@ describe("Order2CheckoutRoute", () => {
           })
         })
 
+        await act(async () => {
+          await waitFor(() => {
+            return mockResolveLastOperation({
+              Me: () => ({
+                creditCards: {
+                  edges: [],
+                },
+              }),
+            })
+          })
+          await flushPromiseQueue()
+        })
+
         // Run back-to-back mutations and verify they happened in the correct order
         await act(async () => {
           const setFulfilmentTypeOperation = await waitFor(() => {
@@ -703,7 +716,7 @@ describe("Order2CheckoutRoute", () => {
         ])
 
         expect(mockRouter.replace).toHaveBeenCalledWith(
-          "/orders2/order-id/details",
+          "/orders/order-id/details",
         )
       },
     )
@@ -805,6 +818,19 @@ describe("Checkout with flat-rate shipping", () => {
       "City is required",
       "Phone number is required",
     ])
+
+    await act(async () => {
+      await waitFor(() => {
+        return mockResolveLastOperation({
+          Me: () => ({
+            creditCards: {
+              edges: [],
+            },
+          }),
+        })
+      })
+      await flushPromiseQueue()
+    })
 
     expect(env.mock.getAllOperations()).toHaveLength(0)
 
@@ -1036,6 +1062,19 @@ describe("within the payment section", () => {
         Viewer: () => props,
       })
       await helpers.waitForLoadingComplete()
+
+      await act(async () => {
+        await waitFor(() => {
+          return mockResolveLastOperation({
+            Me: () => ({
+              creditCards: {
+                edges: [],
+              },
+            }),
+          })
+        })
+        await flushPromiseQueue()
+      })
 
       await waitFor(() => {
         act(() => {

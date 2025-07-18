@@ -6,7 +6,7 @@ import { LayoutFullBleed } from "Apps/Components/Layouts/LayoutFullBleed"
 import { LayoutLogoOnly } from "Apps/Components/Layouts/LayoutLogoOnly"
 import { LayoutNavOnly } from "Apps/Components/Layouts/LayoutNavOnly"
 import { LayoutCheckout } from "Apps/Order2/Layouts/LayoutCheckout"
-import { LayoutOrderDetails } from "Apps/Order2/Layouts/LayoutOrderDetails"
+import { LayoutOrderDetails } from "Apps/Order/Layouts/LayoutOrderDetails"
 import { useRouter } from "System/Hooks/useRouter"
 import type { FC, PropsWithChildren, ReactNode } from "react"
 

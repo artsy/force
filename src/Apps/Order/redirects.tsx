@@ -176,15 +176,10 @@ const goToRespondIfAwaitingBuyerResponse: OrderPredicate = ({ order }) => {
   }
 }
 
-const goToOrder2DetailsIfEnabled: OrderPredicate = ({
-  order,
-  featureFlags,
-}) => {
-  if (newDetailsEnabled({ order, featureFlags })) {
-    return {
-      path: `/orders2/${order.internalID}/details`,
-      reason: "Order2 is enabled for this order",
-    }
+const goToOrderDetails: OrderPredicate = ({ order, featureFlags }) => {
+  return {
+    path: `/orders/${order.internalID}/details`,
+    reason: "Order details page is ready for this order",
   }
 }
 
@@ -309,7 +304,7 @@ export const redirects: RedirectRecord<OrderQuery> = {
         goToShippingIfShippingIsNotCompleted,
         goToPaymentIfPaymentIsNotCompleted,
         goToRespondIfAwaitingBuyerResponse,
-        goToOrder2DetailsIfEnabled,
+        goToOrderDetails,
       ],
     },
   ],

@@ -1,0 +1,634 @@
+/**
+ * @generated SignedSource<<296d8385853a05982d516faf50c321d7>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
+/* tslint:disable */
+/* eslint-disable */
+// @ts-nocheck
+
+import { ConcreteRequest } from 'relay-runtime';
+import { FragmentRefs } from "relay-runtime";
+export type OrderModeEnum = "BUY" | "OFFER" | "%future added value";
+export type OrderSourceEnum = "ARTWORK_PAGE" | "INQUIRY" | "PARTNER_OFFER" | "PRIVATE_SALE" | "%future added value";
+export type OrderDetailsOrderSummary_Test_Query$variables = Record<PropertyKey, never>;
+export type OrderDetailsOrderSummary_Test_Query$data = {
+  readonly me: {
+    readonly order: {
+      readonly " $fragmentSpreads": FragmentRefs<"OrderDetailsOrderSummary_order">;
+    } | null | undefined;
+  } | null | undefined;
+};
+export type OrderDetailsOrderSummary_Test_Query$rawResponse = {
+  readonly me: {
+    readonly id: string;
+    readonly order: {
+      readonly id: string;
+      readonly itemsTotal: {
+        readonly display: string | null | undefined;
+      } | null | undefined;
+      readonly lineItems: ReadonlyArray<{
+        readonly artwork: {
+          readonly id: string;
+          readonly partner: {
+            readonly id: string;
+            readonly name: string | null | undefined;
+          } | null | undefined;
+          readonly published: boolean;
+          readonly slug: string;
+        } | null | undefined;
+        readonly artworkOrEditionSet: {
+          readonly __typename: "Artwork";
+          readonly __isNode: "Artwork";
+          readonly dimensions: {
+            readonly cm: string | null | undefined;
+            readonly in: string | null | undefined;
+          } | null | undefined;
+          readonly id: string;
+          readonly price: string | null | undefined;
+        } | {
+          readonly __typename: "EditionSet";
+          readonly __isNode: "EditionSet";
+          readonly dimensions: {
+            readonly cm: string | null | undefined;
+            readonly in: string | null | undefined;
+          } | null | undefined;
+          readonly id: string;
+          readonly price: string | null | undefined;
+        } | {
+          readonly __typename: string;
+          readonly __isNode: string;
+          readonly id: string;
+        } | null | undefined;
+        readonly artworkVersion: {
+          readonly artistNames: string | null | undefined;
+          readonly attributionClass: {
+            readonly id: string;
+            readonly shortDescription: string | null | undefined;
+          } | null | undefined;
+          readonly date: string | null | undefined;
+          readonly id: string;
+          readonly image: {
+            readonly resized: {
+              readonly height: number | null | undefined;
+              readonly url: string;
+              readonly width: number | null | undefined;
+            } | null | undefined;
+          } | null | undefined;
+          readonly title: string | null | undefined;
+        } | null | undefined;
+        readonly id: string;
+      } | null | undefined>;
+      readonly mode: OrderModeEnum;
+      readonly pricingBreakdownLines: ReadonlyArray<{
+        readonly __typename: "ShippingLine";
+        readonly amount: {
+          readonly amount: string | null | undefined;
+          readonly currencySymbol: string | null | undefined;
+        } | null | undefined;
+        readonly amountFallbackText: string | null | undefined;
+        readonly displayName: string;
+      } | {
+        readonly __typename: "SubtotalLine";
+        readonly amount: {
+          readonly amount: string | null | undefined;
+          readonly currencySymbol: string | null | undefined;
+        } | null | undefined;
+        readonly displayName: string;
+      } | {
+        readonly __typename: "TaxLine";
+        readonly amount: {
+          readonly amount: string | null | undefined;
+          readonly currencySymbol: string | null | undefined;
+        } | null | undefined;
+        readonly amountFallbackText: string | null | undefined;
+        readonly displayName: string;
+      } | {
+        readonly __typename: "TotalLine";
+        readonly amount: {
+          readonly display: string | null | undefined;
+        } | null | undefined;
+        readonly amountFallbackText: string | null | undefined;
+        readonly displayName: string;
+      } | {
+        readonly __typename: string;
+      } | null | undefined>;
+      readonly shippingTotal: {
+        readonly display: string | null | undefined;
+      } | null | undefined;
+      readonly source: OrderSourceEnum;
+      readonly taxTotal: {
+        readonly display: string | null | undefined;
+      } | null | undefined;
+      readonly totalListPrice: {
+        readonly display: string | null | undefined;
+      } | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
+};
+export type OrderDetailsOrderSummary_Test_Query = {
+  rawResponse: OrderDetailsOrderSummary_Test_Query$rawResponse;
+  response: OrderDetailsOrderSummary_Test_Query$data;
+  variables: OrderDetailsOrderSummary_Test_Query$variables;
+};
+
+const node: ConcreteRequest = (function(){
+var v0 = [
+  {
+    "kind": "Literal",
+    "name": "id",
+    "value": "123"
+  }
+],
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "__typename",
+  "storageKey": null
+},
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "displayName",
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "amountFallbackText",
+  "storageKey": null
+},
+v4 = {
+  "alias": null,
+  "args": null,
+  "concreteType": "Money",
+  "kind": "LinkedField",
+  "name": "amount",
+  "plural": false,
+  "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "amount",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "currencySymbol",
+      "storageKey": null
+    }
+  ],
+  "storageKey": null
+},
+v5 = [
+  (v2/*: any*/),
+  (v3/*: any*/),
+  (v4/*: any*/)
+],
+v6 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "display",
+    "storageKey": null
+  }
+],
+v7 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v8 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "price",
+  "storageKey": null
+},
+v9 = {
+  "alias": null,
+  "args": null,
+  "concreteType": "dimensions",
+  "kind": "LinkedField",
+  "name": "dimensions",
+  "plural": false,
+  "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "in",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "cm",
+      "storageKey": null
+    }
+  ],
+  "storageKey": null
+};
+return {
+  "fragment": {
+    "argumentDefinitions": [],
+    "kind": "Fragment",
+    "metadata": null,
+    "name": "OrderDetailsOrderSummary_Test_Query",
+    "selections": [
+      {
+        "alias": null,
+        "args": null,
+        "concreteType": "Me",
+        "kind": "LinkedField",
+        "name": "me",
+        "plural": false,
+        "selections": [
+          {
+            "alias": null,
+            "args": (v0/*: any*/),
+            "concreteType": "Order",
+            "kind": "LinkedField",
+            "name": "order",
+            "plural": false,
+            "selections": [
+              {
+                "args": null,
+                "kind": "FragmentSpread",
+                "name": "OrderDetailsOrderSummary_order"
+              }
+            ],
+            "storageKey": "order(id:\"123\")"
+          }
+        ],
+        "storageKey": null
+      }
+    ],
+    "type": "Query",
+    "abstractKey": null
+  },
+  "kind": "Request",
+  "operation": {
+    "argumentDefinitions": [],
+    "kind": "Operation",
+    "name": "OrderDetailsOrderSummary_Test_Query",
+    "selections": [
+      {
+        "alias": null,
+        "args": null,
+        "concreteType": "Me",
+        "kind": "LinkedField",
+        "name": "me",
+        "plural": false,
+        "selections": [
+          {
+            "alias": null,
+            "args": (v0/*: any*/),
+            "concreteType": "Order",
+            "kind": "LinkedField",
+            "name": "order",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "mode",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "source",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": null,
+                "kind": "LinkedField",
+                "name": "pricingBreakdownLines",
+                "plural": true,
+                "selections": [
+                  (v1/*: any*/),
+                  {
+                    "kind": "InlineFragment",
+                    "selections": (v5/*: any*/),
+                    "type": "ShippingLine",
+                    "abstractKey": null
+                  },
+                  {
+                    "kind": "InlineFragment",
+                    "selections": (v5/*: any*/),
+                    "type": "TaxLine",
+                    "abstractKey": null
+                  },
+                  {
+                    "kind": "InlineFragment",
+                    "selections": [
+                      (v2/*: any*/),
+                      (v4/*: any*/)
+                    ],
+                    "type": "SubtotalLine",
+                    "abstractKey": null
+                  },
+                  {
+                    "kind": "InlineFragment",
+                    "selections": [
+                      (v2/*: any*/),
+                      (v3/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "Money",
+                        "kind": "LinkedField",
+                        "name": "amount",
+                        "plural": false,
+                        "selections": (v6/*: any*/),
+                        "storageKey": null
+                      }
+                    ],
+                    "type": "TotalLine",
+                    "abstractKey": null
+                  }
+                ],
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Money",
+                "kind": "LinkedField",
+                "name": "totalListPrice",
+                "plural": false,
+                "selections": (v6/*: any*/),
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Money",
+                "kind": "LinkedField",
+                "name": "itemsTotal",
+                "plural": false,
+                "selections": (v6/*: any*/),
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Money",
+                "kind": "LinkedField",
+                "name": "shippingTotal",
+                "plural": false,
+                "selections": (v6/*: any*/),
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Money",
+                "kind": "LinkedField",
+                "name": "taxTotal",
+                "plural": false,
+                "selections": (v6/*: any*/),
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "LineItem",
+                "kind": "LinkedField",
+                "name": "lineItems",
+                "plural": true,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Artwork",
+                    "kind": "LinkedField",
+                    "name": "artwork",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "slug",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "published",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "Partner",
+                        "kind": "LinkedField",
+                        "name": "partner",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "name",
+                            "storageKey": null
+                          },
+                          (v7/*: any*/)
+                        ],
+                        "storageKey": null
+                      },
+                      (v7/*: any*/)
+                    ],
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": null,
+                    "kind": "LinkedField",
+                    "name": "artworkOrEditionSet",
+                    "plural": false,
+                    "selections": [
+                      (v1/*: any*/),
+                      {
+                        "kind": "InlineFragment",
+                        "selections": [
+                          (v8/*: any*/),
+                          (v9/*: any*/)
+                        ],
+                        "type": "Artwork",
+                        "abstractKey": null
+                      },
+                      {
+                        "kind": "InlineFragment",
+                        "selections": [
+                          (v8/*: any*/),
+                          (v9/*: any*/),
+                          (v7/*: any*/)
+                        ],
+                        "type": "EditionSet",
+                        "abstractKey": null
+                      },
+                      {
+                        "kind": "InlineFragment",
+                        "selections": [
+                          (v7/*: any*/)
+                        ],
+                        "type": "Node",
+                        "abstractKey": "__isNode"
+                      }
+                    ],
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "ArtworkVersion",
+                    "kind": "LinkedField",
+                    "name": "artworkVersion",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "title",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "artistNames",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "date",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "AttributionClass",
+                        "kind": "LinkedField",
+                        "name": "attributionClass",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "shortDescription",
+                            "storageKey": null
+                          },
+                          (v7/*: any*/)
+                        ],
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "Image",
+                        "kind": "LinkedField",
+                        "name": "image",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": [
+                              {
+                                "kind": "Literal",
+                                "name": "height",
+                                "value": 360
+                              },
+                              {
+                                "kind": "Literal",
+                                "name": "width",
+                                "value": 700
+                              }
+                            ],
+                            "concreteType": "ResizedImageUrl",
+                            "kind": "LinkedField",
+                            "name": "resized",
+                            "plural": false,
+                            "selections": [
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "url",
+                                "storageKey": null
+                              },
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "width",
+                                "storageKey": null
+                              },
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "height",
+                                "storageKey": null
+                              }
+                            ],
+                            "storageKey": "resized(height:360,width:700)"
+                          }
+                        ],
+                        "storageKey": null
+                      },
+                      (v7/*: any*/)
+                    ],
+                    "storageKey": null
+                  },
+                  (v7/*: any*/)
+                ],
+                "storageKey": null
+              },
+              (v7/*: any*/)
+            ],
+            "storageKey": "order(id:\"123\")"
+          },
+          (v7/*: any*/)
+        ],
+        "storageKey": null
+      }
+    ]
+  },
+  "params": {
+    "cacheID": "3ee75f61d1ae469382f7e40d376d4316",
+    "id": null,
+    "metadata": {},
+    "name": "OrderDetailsOrderSummary_Test_Query",
+    "operationKind": "query",
+    "text": "query OrderDetailsOrderSummary_Test_Query {\n  me {\n    order(id: \"123\") {\n      ...OrderDetailsOrderSummary_order\n      id\n    }\n    id\n  }\n}\n\nfragment OrderDetailsOrderSummary_order on Order {\n  ...OrderDetailsPricingBreakdown_order\n  source\n  mode\n  totalListPrice {\n    display\n  }\n  itemsTotal {\n    display\n  }\n  shippingTotal {\n    display\n  }\n  taxTotal {\n    display\n  }\n  lineItems {\n    artwork {\n      slug\n      published\n      partner {\n        name\n        id\n      }\n      id\n    }\n    artworkOrEditionSet {\n      __typename\n      ... on Artwork {\n        price\n        dimensions {\n          in\n          cm\n        }\n      }\n      ... on EditionSet {\n        price\n        dimensions {\n          in\n          cm\n        }\n        id\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n    artworkVersion {\n      title\n      artistNames\n      date\n      attributionClass {\n        shortDescription\n        id\n      }\n      image {\n        resized(height: 360, width: 700) {\n          url\n          width\n          height\n        }\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment OrderDetailsPricingBreakdown_order on Order {\n  mode\n  source\n  pricingBreakdownLines {\n    __typename\n    ... on ShippingLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TaxLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on SubtotalLine {\n      displayName\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TotalLine {\n      displayName\n      amountFallbackText\n      amount {\n        display\n      }\n    }\n  }\n}\n"
+  }
+};
+})();
+
+(node as any).hash = "23e74aa0e217077887d34babbc78eef8";
+
+export default node;

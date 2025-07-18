@@ -156,7 +156,7 @@ describe("OrderApp routing redirects", () => {
           state: "SUBMITTED",
         }),
       )
-      expect(res.redirect.url).toBe("/orders2/2939023/details")
+      expect(res.redirect.url).toBe("/orders/2939023/details")
     })
 
     it("redirects from the legacy status page to the new details page for a submitted order if the order is OFFER mode", async () => {
@@ -170,7 +170,7 @@ describe("OrderApp routing redirects", () => {
           displayState: "SUBMITTED",
         }),
       )
-      expect(res.redirect.url).toBe("/orders2/2939023/details")
+      expect(res.redirect.url).toBe("/orders/2939023/details")
     })
   })
 
