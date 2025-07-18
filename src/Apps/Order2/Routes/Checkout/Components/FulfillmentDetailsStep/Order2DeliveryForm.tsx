@@ -102,6 +102,7 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
             },
           })
 
+        console.log("***", updateShippingAddressResult)
         validateAndExtractOrderResponse(
           updateShippingAddressResult.updateOrderShippingAddress?.orderOrError,
         ).order
@@ -109,6 +110,7 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
         formikHelpers.setStatus({ errorBanner: null })
         setFulfillmentDetailsComplete({}) // TODO: Clean up signature
       } catch (error) {
+        console.log("****", error)
         handleError(error, formikHelpers, {
           title: "An error occurred",
           message: (

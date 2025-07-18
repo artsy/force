@@ -16,7 +16,7 @@ export const handleError = (
   const isCheckoutError = error instanceof CheckoutError
   const errorMatchField = isCheckoutError ? error.code : error.message
 
-  console.error("**", error.message, errorMatchField)
+  console.log("**", error.message, errorMatchField)
   switch (errorMatchField) {
     case "missing_postal_code":
       errorBanner = null

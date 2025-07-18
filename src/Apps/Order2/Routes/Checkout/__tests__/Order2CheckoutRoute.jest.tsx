@@ -130,6 +130,14 @@ const orderMutationSuccess = (initialValues, newValues) => {
     },
   }
 }
+const orderMutationError = error => {
+  return {
+    orderOrError: {
+      __typename: "OrderMutationError",
+      error,
+    },
+  }
+}
 
 /**
  *  Assert that the given events were tracked in order.
@@ -720,316 +728,58 @@ describe("Order2CheckoutRoute", () => {
         )
       },
     )
-  })
 
-  it("shows the pickup details pre-filled if they exist", async () => {
-    renderWithRelay({
-      Viewer: () => ({
-        ...baseProps,
-        me: {
-          ...baseProps.me,
-          order: {
-            ...baseProps.me.order,
-            fulfillmentOptions: [
-              {
-                type: "PICKUP",
-                __typename: "PickupFulfillmentOption",
-                selected: true,
-              },
-              { type: "DOMESTIC_FLAT" },
-            ],
-            fulfillmentDetails: {
-              phoneNumber: {
-                originalNumber: "03012345678",
-                regionCode: "de",
-              },
-            },
-            selectedFulfillmentOption: {
-              type: "PICKUP",
-            },
-          },
-        },
-      }),
-    })
-
-    await helpers.waitForLoadingComplete()
-
-    const pickupTab = within(
-      screen.getByTestId(testIDs.fulfillmentDetailsStepTabs),
-    ).getByText("Pickup")
-
-    act(() => {
-      userEvent.click(pickupTab)
-    })
-
-    // Verify that the phone number is pre-filled
-    const phoneCountryPicker = screen.getByTestId(testIDs.phoneCountryPicker)
-    expect(phoneCountryPicker).toHaveTextContent("🇩🇪")
-    expect(screen.getByTestId("PickupPhoneNumberInput")).toHaveValue(
-      "03012345678",
-    )
-  })
-})
-
-describe("Checkout with flat-rate shipping", () => {
-  it("allows the user to progress through order submission with flat-rate shipping + credit card", async () => {
-    const props = {
-      ...baseProps,
-      me: {
-        ...baseProps.me,
-        order: {
-          ...baseProps.me.order,
-          fulfillmentOptions: [
-            {
-              type: "DOMESTIC_FLAT",
-            },
-          ],
-          fulfillmentDetails: null,
-          selectedFulfillmentOption: null,
-        },
-      },
-    }
-    const initialOrder = props.me.order
-
-    const { mockResolveLastOperation, env } = renderWithRelay({
-      Viewer: () => props,
-    })
-
-    await helpers.waitForLoadingComplete()
-
-    expect(screen.getByText("Shipping method")).toBeInTheDocument()
-
-    const submitButton = screen.getByText("See Shipping Methods")
-
-    // Verify submit button does not work
-    act(() => {
-      userEvent.click(submitButton)
-    })
-
-    await screen.findByText("Phone number is required")
-    let requiredMessages = screen.getAllByText("required", {
-      exact: false,
-    })
-
-    expect(requiredMessages.map(el => el.textContent)).toEqual([
-      "Full name is required",
-      "Country is required",
-      "Street address is required",
-      "City is required",
-      "Phone number is required",
-    ])
-
-    await act(async () => {
-      await waitFor(() => {
-        return mockResolveLastOperation({
-          Me: () => ({
-            creditCards: {
-              edges: [],
-            },
-          }),
-        })
-      })
-      await flushPromiseQueue()
-    })
-
-    expect(env.mock.getAllOperations()).toHaveLength(0)
-
-    const addressInputValue = {
-      name: "John Doe",
-      country: "US",
-      addressLine1: "123 Main St",
-      addressLine2: "Apt 4B",
-      city: "New York",
-      region: "NY",
-      postalCode: "10001",
-      phoneNumberCountryCode: "🇺🇸 + 1",
-      phoneNumber: "1234567890",
-    }
-
-    const countrySelect = screen.getByLabelText("Country")
-
-    await act(async () => {
-      userEvent.selectOptions(countrySelect, addressInputValue.country)
-    })
-
-    const [
-      nameInput,
-      addressLine1Input,
-      addressLine2Input,
-      cityInput,
-      regionInput,
-      postalCodeInput,
-      phoneNumberInput,
-      countryPicker,
-    ] = await Promise.all([
-      screen.findByPlaceholderText("Add full name"),
-      screen.findByLabelText("Street address"),
-      screen.findByLabelText("Apt, floor, suite, etc. (optional)"),
-      screen.findByLabelText("City"),
-      screen.findByLabelText("State, region or province"),
-      screen.findByLabelText("ZIP/Postal code"),
-      screen.findByTestId("addressFormFields.phoneNumber"),
-      screen.findByTestId(testIDs.phoneCountryPicker),
-    ])
-
-    helpers.selectCountryCode(
-      countryPicker,
-      addressInputValue.phoneNumberCountryCode,
-    )
-
-    await act(async () => {
-      userEvent.type(nameInput, addressInputValue.name)
-      userEvent.type(addressLine1Input, addressInputValue.addressLine1)
-      userEvent.type(addressLine2Input, addressInputValue.addressLine2)
-      userEvent.type(cityInput, addressInputValue.city)
-      userEvent.type(regionInput, addressInputValue.region)
-      userEvent.type(postalCodeInput, addressInputValue.postalCode)
-      userEvent.type(phoneNumberInput, addressInputValue.phoneNumber)
-      userEvent.selectOptions(countrySelect, addressInputValue.country)
-    })
-
-    // Theory: This is required because the phone input
-    // validation is debounced which must be blocking every other validation
-    // update.
-    jest.advanceTimersByTime(250)
-
-    await waitFor(() => {
-      requiredMessages = screen.getAllByText("required", {
-        exact: false,
-      })
-
-      expect(
-        requiredMessages.filter(el => el.textContent !== "*Required").length,
-      ).toEqual(0)
-    })
-
-    act(() => {
-      userEvent.click(submitButton)
-    })
-
-    let setShippingAddressOperation
-    await act(async () => {
-      const operation = await waitFor(() => {
-        return mockResolveLastOperation({
-          updateOrderShippingAddressPayload: () =>
-            orderMutationSuccess(initialOrder, {
-              selectedFulfillmentOption: {
-                type: "DOMESTIC_FLAT",
-              },
+    it("shows the pickup details pre-filled if they exist", async () => {
+      renderWithRelay({
+        Viewer: () => ({
+          ...baseProps,
+          me: {
+            ...baseProps.me,
+            order: {
+              ...baseProps.me.order,
+              fulfillmentOptions: [
+                {
+                  type: "PICKUP",
+                  __typename: "PickupFulfillmentOption",
+                  selected: true,
+                },
+                { type: "DOMESTIC_FLAT" },
+              ],
               fulfillmentDetails: {
                 phoneNumber: {
-                  originalNumber: "1234567890",
-                  countryCode: "us",
-                },
-                address: {
-                  name: "John Doe",
-                  addressLine1: "123 Main St",
-                  addressLine2: "Apt 4B",
-                  city: "New York",
-                  region: "NY",
-                  postalCode: "10001",
-                  country: "US",
+                  originalNumber: "03012345678",
+                  regionCode: "de",
                 },
               },
-            }),
-        })
-      })
-      await flushPromiseQueue()
-      setShippingAddressOperation = operation
-    })
-
-    expect(setShippingAddressOperation.operationName).toBe(
-      "useOrder2UpdateShippingAddressMutation",
-    )
-
-    // Complete shipping option step
-    const submitPaymentButton = await screen.findByText("Continue to Payment")
-
-    let setFulfillmentOptionOperation
-    userEvent.click(submitPaymentButton)
-
-    await act(async () => {
-      // Shipping MUTATIONS
-      const operation = await waitFor(() => {
-        return mockResolveLastOperation({
-          setOrderFulfillmentOptionPayload: () =>
-            orderMutationSuccess(initialOrder, {
               selectedFulfillmentOption: {
-                type: "DOMESTIC_FLAT",
+                type: "PICKUP",
               },
-            }),
-        })
+            },
+          },
+        }),
       })
-      await flushPromiseQueue()
-      setFulfillmentOptionOperation = operation
+
+      await helpers.waitForLoadingComplete()
+
+      const pickupTab = within(
+        screen.getByTestId(testIDs.fulfillmentDetailsStepTabs),
+      ).getByText("Pickup")
+
+      act(() => {
+        userEvent.click(pickupTab)
+      })
+
+      // Verify that the phone number is pre-filled
+      const phoneCountryPicker = screen.getByTestId(testIDs.phoneCountryPicker)
+      expect(phoneCountryPicker).toHaveTextContent("🇩🇪")
+      expect(screen.getByTestId("PickupPhoneNumberInput")).toHaveValue(
+        "03012345678",
+      )
     })
-
-    expect(setFulfillmentOptionOperation.operationName).toBe(
-      "useOrder2SetFulfillmentOptionMutation",
-    )
-
-    await helpers.fillInMockCreditCard({
-      mockResolveLastOperation,
-      initialOrder,
-    })
-
-    await helpers.submitOrder({
-      mockResolveLastOperation,
-      initialOrder,
-    })
-
-    expectTrackedEvents({ mockTrackEvent, exact: false }, [
-      {
-        action: "orderProgressionViewed",
-        context_module: "ordersFulfillment",
-      },
-      {
-        action: "clickedOrderProgression",
-        context_module: "ordersFulfillment",
-      },
-      {
-        action: "orderProgressionViewed",
-        context_module: "ordersShippingMethods",
-      },
-      {
-        action: "clickedOrderProgression",
-        context_module: "ordersShippingMethods",
-      },
-      {
-        action: "orderProgressionViewed",
-        context_module: "ordersPayment",
-      },
-      {
-        action: "clickedPaymentMethod",
-        payment_method: "CREDIT_CARD",
-      },
-      {
-        action: "clickedOrderProgression",
-        context_module: "ordersPayment",
-      },
-      {
-        action: "orderProgressionViewed",
-        context_module: "ordersReview",
-      },
-      {
-        action: "clickedOrderProgression",
-        context_module: "ordersReview",
-      },
-      {
-        action: "submittedOrder",
-      },
-    ])
   })
-})
 
-describe("within the payment section", () => {
-  it.todo(
-    // TODO: Example of this assertion is above for clickedChangeShippingAddress
-    "Allows clicking the edit button to change payment method",
-  )
-
-  describe("error handling when saving and continuing", () => {
-    it("shows an error if no payment method is selected", async () => {
+  describe("Checkout with flat-rate shipping", () => {
+    it("allows the user to progress through order submission with flat-rate shipping + credit card", async () => {
       const props = {
         ...baseProps,
         me: {
@@ -1038,30 +788,43 @@ describe("within the payment section", () => {
             ...baseProps.me.order,
             fulfillmentOptions: [
               {
-                type: "PICKUP",
-                __typename: "PickupFulfillmentOption",
-                selected: true,
+                type: "DOMESTIC_FLAT",
               },
-              { type: "DOMESTIC_FLAT" },
             ],
-            fulfillmentDetails: {
-              phoneNumber: {
-                originalNumber: "03012345678",
-                regionCode: "de",
-              },
-            },
-            selectedFulfillmentOption: {
-              type: "PICKUP",
-            },
+            fulfillmentDetails: null,
+            selectedFulfillmentOption: null,
           },
         },
       }
       const initialOrder = props.me.order
 
-      const { mockResolveLastOperation } = await renderWithRelay({
+      const { mockResolveLastOperation, env } = renderWithRelay({
         Viewer: () => props,
       })
+
       await helpers.waitForLoadingComplete()
+
+      expect(screen.getByText("Shipping method")).toBeInTheDocument()
+
+      const submitButton = screen.getByText("See Shipping Methods")
+
+      // Verify submit button does not work
+      act(() => {
+        userEvent.click(submitButton)
+      })
+
+      await screen.findByText("Phone number is required")
+      let requiredMessages = screen.getAllByText("required", {
+        exact: false,
+      })
+
+      expect(requiredMessages.map(el => el.textContent)).toEqual([
+        "Full name is required",
+        "Country is required",
+        "Street address is required",
+        "City is required",
+        "Phone number is required",
+      ])
 
       await act(async () => {
         await waitFor(() => {
@@ -1076,115 +839,472 @@ describe("within the payment section", () => {
         await flushPromiseQueue()
       })
 
-      await waitFor(() => {
-        act(() => {
-          userEvent.click(screen.getByText("Continue to Payment"))
-        })
+      expect(env.mock.getAllOperations()).toHaveLength(0)
+
+      const addressInputValue = {
+        name: "John Doe",
+        country: "US",
+        addressLine1: "123 Main St",
+        addressLine2: "Apt 4B",
+        city: "New York",
+        region: "NY",
+        postalCode: "10001",
+        phoneNumberCountryCode: "🇺🇸 + 1",
+        phoneNumber: "1234567890",
+      }
+
+      const countrySelect = screen.getByLabelText("Country")
+
+      await act(async () => {
+        userEvent.selectOptions(countrySelect, addressInputValue.country)
       })
 
-      // PICKUP MUTATIONS
+      const [
+        nameInput,
+        addressLine1Input,
+        addressLine2Input,
+        cityInput,
+        regionInput,
+        postalCodeInput,
+        phoneNumberInput,
+        countryPicker,
+      ] = await Promise.all([
+        screen.findByPlaceholderText("Add full name"),
+        screen.findByLabelText("Street address"),
+        screen.findByLabelText("Apt, floor, suite, etc. (optional)"),
+        screen.findByLabelText("City"),
+        screen.findByLabelText("State, region or province"),
+        screen.findByLabelText("ZIP/Postal code"),
+        screen.findByTestId("addressFormFields.phoneNumber"),
+        screen.findByTestId(testIDs.phoneCountryPicker),
+      ])
+
+      helpers.selectCountryCode(
+        countryPicker,
+        addressInputValue.phoneNumberCountryCode,
+      )
+
       await act(async () => {
-        await waitFor(() => {
+        userEvent.type(nameInput, addressInputValue.name)
+        userEvent.type(addressLine1Input, addressInputValue.addressLine1)
+        userEvent.type(addressLine2Input, addressInputValue.addressLine2)
+        userEvent.type(cityInput, addressInputValue.city)
+        userEvent.type(regionInput, addressInputValue.region)
+        userEvent.type(postalCodeInput, addressInputValue.postalCode)
+        userEvent.type(phoneNumberInput, addressInputValue.phoneNumber)
+        userEvent.selectOptions(countrySelect, addressInputValue.country)
+      })
+
+      // Theory: This is required because the phone input
+      // validation is debounced which must be blocking every other validation
+      // update.
+      act(() => {
+        jest.advanceTimersByTime(250)
+      })
+
+      await waitFor(() => {
+        requiredMessages = screen.getAllByText("required", {
+          exact: false,
+        })
+
+        expect(
+          requiredMessages.filter(el => el.textContent !== "*Required").length,
+        ).toEqual(0)
+      })
+
+      act(() => {
+        userEvent.click(submitButton)
+      })
+
+      let setShippingAddressOperation
+      await act(async () => {
+        const operation = await waitFor(() => {
           return mockResolveLastOperation({
-            setOrderFulfillmentOptionPayload: () =>
+            updateOrderShippingAddressPayload: () =>
               orderMutationSuccess(initialOrder, {
                 selectedFulfillmentOption: {
-                  type: "PICKUP",
+                  type: "DOMESTIC_FLAT",
+                },
+                fulfillmentDetails: {
+                  phoneNumber: {
+                    originalNumber: "1234567890",
+                    countryCode: "us",
+                  },
+                  address: {
+                    name: "John Doe",
+                    addressLine1: "123 Main St",
+                    addressLine2: "Apt 4B",
+                    city: "New York",
+                    region: "NY",
+                    postalCode: "10001",
+                    country: "US",
+                  },
                 },
               }),
           })
         })
         await flushPromiseQueue()
+        setShippingAddressOperation = operation
+      })
+
+      expect(setShippingAddressOperation.operationName).toBe(
+        "useOrder2UpdateShippingAddressMutation",
+      )
+
+      // Complete shipping option step
+      const submitPaymentButton = await screen.findByText("Continue to Payment")
+
+      let setFulfillmentOptionOperation
+      userEvent.click(submitPaymentButton)
+
+      await act(async () => {
+        // Shipping MUTATIONS
+        const operation = await waitFor(() => {
+          return mockResolveLastOperation({
+            setOrderFulfillmentOptionPayload: () =>
+              orderMutationSuccess(initialOrder, {
+                selectedFulfillmentOption: {
+                  type: "DOMESTIC_FLAT",
+                },
+              }),
+          })
+        })
+        await flushPromiseQueue()
+        setFulfillmentOptionOperation = operation
+      })
+
+      expect(setFulfillmentOptionOperation.operationName).toBe(
+        "useOrder2SetFulfillmentOptionMutation",
+      )
+
+      await helpers.fillInMockCreditCard({
+        mockResolveLastOperation,
+        initialOrder,
+      })
+
+      await helpers.submitOrder({
+        mockResolveLastOperation,
+        initialOrder,
+      })
+
+      expectTrackedEvents({ mockTrackEvent, exact: false }, [
+        {
+          action: "orderProgressionViewed",
+          context_module: "ordersFulfillment",
+        },
+        {
+          action: "clickedOrderProgression",
+          context_module: "ordersFulfillment",
+        },
+        {
+          action: "orderProgressionViewed",
+          context_module: "ordersShippingMethods",
+        },
+        {
+          action: "clickedOrderProgression",
+          context_module: "ordersShippingMethods",
+        },
+        {
+          action: "orderProgressionViewed",
+          context_module: "ordersPayment",
+        },
+        {
+          action: "clickedPaymentMethod",
+          payment_method: "CREDIT_CARD",
+        },
+        {
+          action: "clickedOrderProgression",
+          context_module: "ordersPayment",
+        },
+        {
+          action: "orderProgressionViewed",
+          context_module: "ordersReview",
+        },
+        {
+          action: "clickedOrderProgression",
+          context_module: "ordersReview",
+        },
+        {
+          action: "submittedOrder",
+        },
+      ])
+    })
+    fit("displays a missing_postal_code error from the server", async () => {
+      const props = {
+        ...baseProps,
+        me: {
+          ...baseProps.me,
+          order: {
+            ...baseProps.me.order,
+            fulfillmentOptions: [
+              {
+                type: "DOMESTIC_FLAT",
+              },
+            ],
+            fulfillmentDetails: null,
+            selectedFulfillmentOption: null,
+          },
+        },
+      }
+
+      const { mockResolveLastOperation, env } = renderWithRelay({
+        Viewer: () => props,
+      })
+
+      await helpers.waitForLoadingComplete()
+
+      expect(screen.getByText("Shipping method")).toBeInTheDocument()
+
+      const submitButton = screen.getByText("See Shipping Methods")
+
+      const addressInputValue = {
+        name: "John Doe",
+        country: "DE",
+        addressLine1: "123 Main St",
+        addressLine2: "Apt 4B",
+        city: "New York",
+        region: "NY",
+        phoneNumberCountryCode: "🇺🇸 + 1",
+        phoneNumber: "1234567890",
+      }
+
+      const countrySelect = screen.getByLabelText("Country")
+
+      await act(async () => {
+        userEvent.selectOptions(countrySelect, addressInputValue.country)
+      })
+
+      const [
+        nameInput,
+        addressLine1Input,
+        addressLine2Input,
+        cityInput,
+        regionInput,
+        phoneNumberInput,
+        countryPicker,
+      ] = await Promise.all([
+        screen.findByPlaceholderText("Add full name"),
+        screen.findByLabelText("Street address"),
+        screen.findByLabelText("Apt, floor, suite, etc. (optional)"),
+        screen.findByLabelText("City"),
+        screen.findByLabelText("State, region or province"),
+        screen.findByTestId("addressFormFields.phoneNumber"),
+        screen.findByTestId(testIDs.phoneCountryPicker),
+      ])
+
+      helpers.selectCountryCode(
+        countryPicker,
+        addressInputValue.phoneNumberCountryCode,
+      )
+
+      await act(async () => {
+        userEvent.type(nameInput, addressInputValue.name)
+        userEvent.type(addressLine1Input, addressInputValue.addressLine1)
+        userEvent.type(addressLine2Input, addressInputValue.addressLine2)
+        userEvent.type(cityInput, addressInputValue.city)
+        userEvent.type(regionInput, addressInputValue.region)
+        userEvent.type(phoneNumberInput, addressInputValue.phoneNumber)
+        userEvent.selectOptions(countrySelect, addressInputValue.country)
+      })
+
+      act(() => {
+        jest.advanceTimersByTime(250)
+      })
+
+      let requiredMessages
+      await waitFor(() => {
+        requiredMessages = screen.getAllByText("required", {
+          exact: false,
+        })
+
+        expect(
+          requiredMessages.filter(el => el.textContent !== "*Required").length,
+        ).toEqual(0)
+      })
+
+      act(() => {
+        userEvent.click(submitButton)
       })
 
       await act(async () => {
         await waitFor(() => {
           return mockResolveLastOperation({
             updateOrderShippingAddressPayload: () =>
-              orderMutationSuccess(initialOrder, {
-                selectedFulfillmentOption: {
-                  type: "PICKUP",
-                },
-                fulfillmentDetails: {
-                  phoneNumber: {
-                    originalNumber: "03012345678",
-                    countryCode: "de",
-                  },
-                },
-              }),
+              orderMutationError({ code: "missing_postal_code" }),
           })
         })
-
         await flushPromiseQueue()
       })
 
-      await userEvent.click(screen.getByText("Save and Continue"))
-      expect(screen.getByText("Select a payment method")).toBeInTheDocument()
-
-      const wirePaymentOption = screen.getByTestId(testIDs.paymentFormWire)
-      act(() => {
-        userEvent.click(wirePaymentOption)
-      })
-      await waitFor(() => {
-        expect(
-          screen.queryByLabelText("Select a payment method"),
-        ).not.toBeInTheDocument()
-      })
-    })
-  })
-})
-
-describe("Navigation guards", () => {
-  let addEventListenerSpy: jest.SpyInstance
-  let removeEventListenerSpy: jest.SpyInstance
-  let preventHardReloadMock: jest.Mock
-  let handleBackNavigationMock: jest.Mock
-
-  beforeEach(() => {
-    preventHardReloadMock = jest.fn()
-    handleBackNavigationMock = jest.fn()
-
-    addEventListenerSpy = jest.spyOn(window, "addEventListener")
-    removeEventListenerSpy = jest.spyOn(window, "removeEventListener")
-
-    addEventListenerSpy.mockImplementation(event => {
-      if (event === "beforeunload") {
-        Object.defineProperty(window, "preventHardReload", {
-          value: preventHardReloadMock,
-          configurable: true,
-        })
-      }
-
-      if (event === "popstate") {
-        Object.defineProperty(window, "handleBackNavigation", {
-          value: handleBackNavigationMock,
-          configurable: true,
-        })
-      }
+      jest.advanceTimersByTime(250)
+      await screen.findByText("Postal code is required")
     })
   })
 
-  afterEach(() => {
-    addEventListenerSpy.mockRestore()
-    removeEventListenerSpy.mockRestore()
-    jest.restoreAllMocks()
-  })
-
-  it("adds event listeners on mount", async () => {
-    await renderWithRelay({
-      Viewer: () => ({
-        ...baseProps,
-      }),
-    })
-
-    expect(addEventListenerSpy).toHaveBeenCalledWith(
-      "beforeunload",
-      preventHardReload,
+  describe("within the payment section", () => {
+    it.todo(
+      // TODO: Example of this assertion is above for clickedChangeShippingAddress
+      "Allows clicking the edit button to change payment method",
     )
-    expect(addEventListenerSpy).toHaveBeenCalledWith(
-      "popstate",
-      handleBackNavigation,
-    )
+
+    describe("error handling when saving and continuing", () => {
+      it("shows an error if no payment method is selected", async () => {
+        const props = {
+          ...baseProps,
+          me: {
+            ...baseProps.me,
+            order: {
+              ...baseProps.me.order,
+              fulfillmentOptions: [
+                {
+                  type: "PICKUP",
+                  __typename: "PickupFulfillmentOption",
+                  selected: true,
+                },
+                { type: "DOMESTIC_FLAT" },
+              ],
+              fulfillmentDetails: {
+                phoneNumber: {
+                  originalNumber: "03012345678",
+                  regionCode: "de",
+                },
+              },
+              selectedFulfillmentOption: {
+                type: "PICKUP",
+              },
+            },
+          },
+        }
+        const initialOrder = props.me.order
+
+        const { mockResolveLastOperation } = await renderWithRelay({
+          Viewer: () => props,
+        })
+        await helpers.waitForLoadingComplete()
+
+        await act(async () => {
+          await waitFor(() => {
+            return mockResolveLastOperation({
+              Me: () => ({
+                creditCards: {
+                  edges: [],
+                },
+              }),
+            })
+          })
+          await flushPromiseQueue()
+        })
+
+        await waitFor(() => {
+          act(() => {
+            userEvent.click(screen.getByText("Continue to Payment"))
+          })
+        })
+
+        // PICKUP MUTATIONS
+        await act(async () => {
+          await waitFor(() => {
+            return mockResolveLastOperation({
+              setOrderFulfillmentOptionPayload: () =>
+                orderMutationSuccess(initialOrder, {
+                  selectedFulfillmentOption: {
+                    type: "PICKUP",
+                  },
+                }),
+            })
+          })
+          await flushPromiseQueue()
+        })
+
+        await act(async () => {
+          await waitFor(() => {
+            return mockResolveLastOperation({
+              updateOrderShippingAddressPayload: () =>
+                orderMutationSuccess(initialOrder, {
+                  selectedFulfillmentOption: {
+                    type: "PICKUP",
+                  },
+                  fulfillmentDetails: {
+                    phoneNumber: {
+                      originalNumber: "03012345678",
+                      countryCode: "de",
+                    },
+                  },
+                }),
+            })
+          })
+
+          await flushPromiseQueue()
+        })
+
+        await userEvent.click(screen.getByText("Save and Continue"))
+        expect(screen.getByText("Select a payment method")).toBeInTheDocument()
+
+        const wirePaymentOption = screen.getByTestId(testIDs.paymentFormWire)
+        act(() => {
+          userEvent.click(wirePaymentOption)
+        })
+        await waitFor(() => {
+          expect(
+            screen.queryByLabelText("Select a payment method"),
+          ).not.toBeInTheDocument()
+        })
+      })
+    })
+  })
+
+  describe("Navigation guards", () => {
+    let addEventListenerSpy: jest.SpyInstance
+    let removeEventListenerSpy: jest.SpyInstance
+    let preventHardReloadMock: jest.Mock
+    let handleBackNavigationMock: jest.Mock
+
+    beforeEach(() => {
+      preventHardReloadMock = jest.fn()
+      handleBackNavigationMock = jest.fn()
+
+      addEventListenerSpy = jest.spyOn(window, "addEventListener")
+      removeEventListenerSpy = jest.spyOn(window, "removeEventListener")
+
+      addEventListenerSpy.mockImplementation(event => {
+        if (event === "beforeunload") {
+          Object.defineProperty(window, "preventHardReload", {
+            value: preventHardReloadMock,
+            configurable: true,
+          })
+        }
+
+        if (event === "popstate") {
+          Object.defineProperty(window, "handleBackNavigation", {
+            value: handleBackNavigationMock,
+            configurable: true,
+          })
+        }
+      })
+    })
+
+    afterEach(() => {
+      addEventListenerSpy.mockRestore()
+      removeEventListenerSpy.mockRestore()
+      jest.restoreAllMocks()
+    })
+
+    it("adds event listeners on mount", async () => {
+      await renderWithRelay({
+        Viewer: () => ({
+          ...baseProps,
+        }),
+      })
+
+      expect(addEventListenerSpy).toHaveBeenCalledWith(
+        "beforeunload",
+        preventHardReload,
+      )
+      expect(addEventListenerSpy).toHaveBeenCalledWith(
+        "popstate",
+        handleBackNavigation,
+      )
+    })
   })
 })
 
