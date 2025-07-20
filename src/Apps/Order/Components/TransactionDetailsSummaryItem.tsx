@@ -357,9 +357,8 @@ const Entry: React.FC<React.PropsWithChildren<EntryProps>> = ({
   value,
   final,
   source,
-  ...props
 }) => (
-  <Flex justifyContent="space-between" alignItems="baseline" {...props}>
+  <Flex justifyContent="space-between" alignItems="baseline">
     <div>
       <Text variant="sm" color={getLabelColor(final, source)}>
         {label}

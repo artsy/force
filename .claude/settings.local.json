@@ -1,9 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(yarn lint:*)",
-      "Bash(grep:*)"
-    ],
-    "deny": []
-  }
-}

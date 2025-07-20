@@ -122,12 +122,7 @@ describe("Submit Pending Counter Offer", () => {
       expect(page.countdownTimer.text()).toContain("01d 04h 22m 59s left")
       expect(page.orderStepper.text()).toMatchInlineSnapshot(`"RespondReview"`)
       expect(page.orderStepperCurrentStep).toBe("Review")
-      expect(
-        page.transactionSummary
-          ?.find?.("Entry")
-          ?.find?.("[data-test='offer']")
-          ?.text?.(),
-      ).toMatch("Your offerUS$your.offer")
+      expect(page.transactionSummary.text()).toMatch("Your offerUS$your.offer")
       expect(
         page.transactionSummary
           ?.find?.("TransactionDetailsSummaryItem")

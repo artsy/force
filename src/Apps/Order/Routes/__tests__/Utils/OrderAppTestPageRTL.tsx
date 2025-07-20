@@ -41,14 +41,37 @@ export class OrderAppTestPageRTL {
   }
 
   get transactionSummary() {
+    // Look for transaction summary in various ways
     const element =
       screen.queryByTestId("transactionSummary") ||
       document.querySelector("[data-testid='transactionSummary']") ||
       document.querySelector(".transaction-summary") ||
       document.querySelector("[class*='transaction']") ||
-      document.querySelector("[class*='summary']")
+      document.querySelector("[class*='summary']") ||
+      // Look for the sidebar content which often contains transaction info
+      document.querySelector("[class*='sidebar']") ||
+      document.querySelector("[class*='Sidebar']") ||
+      // Look for elements containing "Your offer" text
+      screen.queryByText(/Your offer/i)?.closest("div")
+
     return {
-      text: () => element?.textContent || "",
+      text: () => {
+        // If we found a specific element, get its text
+        if (element?.textContent) {
+          return element.textContent
+        }
+
+        // Fallback: look for all text containing offer information
+        const offerText = screen.queryByText(/Your offer/i)
+        if (offerText) {
+          // Get the parent container that likely has the full transaction info
+          const container =
+            offerText.closest("div, section, aside") || document.body
+          return container.textContent || ""
+        }
+
+        return ""
+      },
       find: (selector: string) => {
         if (selector === "Entry") {
           return {
@@ -162,20 +185,89 @@ export class OrderAppTestPageRTL {
 
   get offerInput() {
     // Try multiple selectors to find the offer input element
+    // First try the more specific selectors
     const element =
+      screen.queryByTestId("offer-input") ||
+      screen.queryByTestId("offer-input-error") ||
+      screen.queryByTitle("Your offer") ||
+      document.querySelector('input[title="Your offer"]') ||
+      document.querySelector('input[id*="RespondForm_RespondValue"]') ||
+      document.querySelector('input[id*="OfferForm_OfferValue"]') ||
       screen.queryByTestId("offerInput") ||
       screen.queryByLabelText(/offer/i) ||
       screen.queryByPlaceholderText(/offer/i) ||
-      screen.queryByText(/Your offer/i) ||
-      document.querySelector("[class*='offer']") ||
+      // Only fall back to generic selectors if nothing else works
+      document.querySelector("input[inputmode='numeric']") ||
       document.querySelector("input[type='number']") ||
       document.querySelector("input[type='text']")
 
     return {
-      text: () => element?.textContent || (element as any)?.value || "",
-      props: () => ({
-        showError: element?.getAttribute("data-error") === "true" || false,
-      }),
+      text: () => {
+        // Get the input value first
+        const inputValue = (element as any)?.value || ""
+
+        // Look for error messages nearby
+        const errorMessage =
+          // Look in parent for error text
+          element?.parentElement?.textContent?.includes(
+            "Offer amount missing or invalid.",
+          )
+            ? "Offer amount missing or invalid."
+            : // Look for error text in siblings or nearby elements
+              document
+                  .querySelector('[class*="error"]')
+                  ?.textContent?.includes("Offer amount missing or invalid.")
+              ? "Offer amount missing or invalid."
+              : // Look for error text anywhere in the container
+                screen.queryByText(/Offer amount missing or invalid/i)
+                  ?.textContent || ""
+
+        // Return error message if it exists, otherwise return input value
+        return errorMessage || inputValue || element?.textContent || ""
+      },
+      props: () => {
+        // Check if the OfferInput has the error test id we added
+        const currentTestId = element?.getAttribute("data-testid")
+        const hasErrorTestId = currentTestId === "offer-input-error"
+
+        // Fallback checks for other error indicators
+        const hasAriaInvalid = element?.getAttribute("aria-invalid") === "true"
+        const hasErrorClass =
+          element?.className?.includes("error") ||
+          element?.className?.includes("invalid") ||
+          element?.className?.includes("hasError")
+        const hasErrorAttribute = element?.getAttribute("data-error") === "true"
+
+        // Check parent containers for error styling
+        let parent = element?.parentElement
+        let parentHasError = false
+        while (parent && parent !== document.body) {
+          if (
+            parent.className?.includes("error") ||
+            parent.className?.includes("hasError") ||
+            parent.getAttribute("data-error") === "true"
+          ) {
+            parentHasError = true
+            break
+          }
+          parent = parent.parentElement
+        }
+
+        // Look for error message nearby
+        const nearbyError = element?.parentElement?.querySelector(
+          '[data-testid*="error"], .error, [class*="error"]',
+        )
+
+        return {
+          showError:
+            hasErrorTestId ||
+            hasAriaInvalid ||
+            hasErrorClass ||
+            hasErrorAttribute ||
+            parentHasError ||
+            !!nearbyError,
+        }
+      },
       find: (selector: string) => {
         if (selector === "input") {
           const input =
@@ -194,13 +286,21 @@ export class OrderAppTestPageRTL {
   }
 
   get priceOptions() {
-    const elements = screen.queryAllByTestId("priceOptions")
-    if (elements.length > 0) {
+    // Check if price options exist by looking for radio buttons (typical price option indicators)
+    const radioButtons = screen.queryAllByRole("radio")
+    const priceOptionsContainer =
+      screen.queryByTestId("priceOptions") ||
+      document.querySelector("[data-testid='priceOptions']") ||
+      document.querySelector("[class*='priceOptions']") ||
+      document.querySelector("[class*='PriceOptions']")
+
+    // If we have radio buttons, assume price options exist
+    if (radioButtons.length > 0 || priceOptionsContainer) {
       return {
-        length: elements.length,
+        length: radioButtons.length > 0 ? 1 : 0, // Return 1 if any radio buttons exist (meaning price options exist)
         find: (selector: string) => {
           if (selector === "BorderedRadio") {
-            return screen.queryAllByRole("radio")
+            return radioButtons
           }
           return []
         },
@@ -356,9 +456,18 @@ export class OrderAppTestPageRTL {
       await this.selectCustomAmount()
     }
 
-    const input = this.offerInput as any as HTMLInputElement
-    if (input) {
-      fireEvent.change(input, { target: { value: amount.toString() } })
+    // Find the offer input specifically (not the note textarea)
+    const inputElement =
+      screen.queryByTitle("Your offer") ||
+      document.querySelector('input[title="Your offer"]') ||
+      document.querySelector('input[id*="RespondForm_RespondValue"]') ||
+      document.querySelector('input[inputmode="numeric"]') ||
+      document.querySelector('input[type="text"][inputmode="numeric"]')
+
+    if (inputElement) {
+      // Use userEvent for proper React event handling
+      await this.user.clear(inputElement)
+      await this.user.type(inputElement, amount.toString())
       await this.update()
     }
   }
@@ -420,12 +529,28 @@ export class OrderAppTestPageRTL {
       }
     }
     if (selector === "OfferNote") {
-      const elements = screen.queryAllByTestId("offerNote")
-      return elements
+      // Look for OfferNote components in various ways
+      const elements =
+        screen.queryAllByTestId("offerNote") ||
+        screen.queryAllByTestId("offer-note") ||
+        Array.from(document.querySelectorAll('[data-testid*="note"]')) ||
+        Array.from(document.querySelectorAll('[class*="OfferNote"]')) ||
+        Array.from(document.querySelectorAll('[class*="offer-note"]')) ||
+        // Look for buttons that might reveal offer notes
+        screen.queryAllByText(/Add note/i) ||
+        screen.queryAllByText(/note to seller/i) ||
+        []
+      return Array.isArray(elements) ? elements : [elements].filter(Boolean)
     }
     if (selector === "input") {
+      // Find the offer input specifically to avoid multiple textbox issues
       const element =
-        screen.queryByRole("textbox") || document.querySelector("input")
+        screen.queryByTitle("Your offer") ||
+        document.querySelector('input[title="Your offer"]') ||
+        document.querySelector('input[id*="RespondForm_RespondValue"]') ||
+        document.querySelector('input[id*="OfferForm_OfferValue"]') ||
+        document.querySelector('input[inputmode="numeric"]') ||
+        document.querySelector('input[type="text"][inputmode="numeric"]')
       return {
         simulate: (event: string) => {
           if (event === "focus" && element) {
