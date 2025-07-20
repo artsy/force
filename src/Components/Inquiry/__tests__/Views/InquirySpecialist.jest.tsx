@@ -52,27 +52,32 @@ describe("InquirySpecialist", () => {
       expect(
         screen.getByText(/An Artsy Specialist is available/),
       ).toBeInTheDocument()
-      expect(screen.getByText("Your email address")).toBeInTheDocument()
+      expect(
+        screen.getByPlaceholderText("Your email address"),
+      ).toBeInTheDocument()
     })
 
     it("fills out the inquiry and nexts", async () => {
       render(<InquirySpecialist />)
 
       // Fill inputs
-      fireEvent.change(screen.getByLabelText(/message/i), {
+      fireEvent.change(screen.getByPlaceholderText("Leave your comments"), {
         target: { value: "Hello world." },
       })
-      fireEvent.change(screen.getByLabelText(/name/i), {
+      fireEvent.change(screen.getByPlaceholderText("Your full name"), {
         target: { value: "Example Example" },
       })
-      fireEvent.change(screen.getByLabelText(/email/i), {
+      fireEvent.change(screen.getByPlaceholderText("Your email address"), {
         target: { value: "example@example.com" },
       })
 
       expect(setInqirySpy).toHaveBeenCalledTimes(3)
 
       // Submit form
-      fireEvent.submit(screen.getByRole("form"))
+      const form = screen
+        .getByText(/An Artsy Specialist is available/)
+        .closest("form")
+      fireEvent.submit(form)
       await flushPromiseQueue()
 
       // Doesn't send the inquiry
@@ -96,23 +101,28 @@ describe("InquirySpecialist", () => {
       expect(
         screen.getByText(/An Artsy Specialist is available/),
       ).toBeInTheDocument()
-      expect(screen.queryByText("Your email address")).not.toBeInTheDocument()
-      expect(screen.getByText("Logged In")).toBeInTheDocument()
-      expect(screen.getByText("loggedin@example.com")).toBeInTheDocument()
+      expect(
+        screen.queryByPlaceholderText("Your email address"),
+      ).not.toBeInTheDocument()
+      expect(screen.getByText("From")).toBeInTheDocument()
+      expect(screen.getByText(/loggedin@example\.com/)).toBeInTheDocument()
     })
 
     it("sends the inquiry and nexts", async () => {
       render(<InquirySpecialist />)
 
       // Fill input
-      fireEvent.change(screen.getByLabelText(/message/i), {
+      fireEvent.change(screen.getByPlaceholderText("Leave your comments"), {
         target: { value: "Hello world." },
       })
 
       expect(setInqirySpy).toHaveBeenCalledTimes(1)
 
       // Submit form
-      fireEvent.submit(screen.getByRole("form"))
+      const form = screen
+        .getByText(/An Artsy Specialist is available/)
+        .closest("form")
+      fireEvent.submit(form)
       await flushPromiseQueue()
 
       // Sends the inquiry

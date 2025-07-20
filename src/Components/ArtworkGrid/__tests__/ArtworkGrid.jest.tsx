@@ -117,8 +117,9 @@ describe("ArtworkGrid", () => {
         FilterArtworksConnection: () => ({ edges: [] }),
       })
 
+      expect(screen.getByText("Clear all filters")).toBeInTheDocument()
       expect(
-        screen.getByText(/There aren't any works available/),
+        screen.getByText(/Change your filter criteria to view more works/),
       ).toBeInTheDocument()
     })
 

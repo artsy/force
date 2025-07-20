@@ -282,7 +282,7 @@ describe("AuctionRegistrationRoute", () => {
     })
 
     await waitFor(() => {
-      expect(screen.getByText("Register")).toBeInTheDocument()
+      expect(screen.getAllByText("Register")).toHaveLength(2)
       expect(screen.getByText("AddressFormWithCreditCard")).toBeInTheDocument()
       expect(
         screen.getByText("IdentityVerificationWarning"),

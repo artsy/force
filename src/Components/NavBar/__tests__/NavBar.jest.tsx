@@ -122,14 +122,9 @@ describe("NavBar", () => {
 
       getWrapper()
 
-      const loginButtons = screen.getAllByRole("button")
-      const loginButton = loginButtons.find(btn =>
-        btn.textContent?.includes("Log In"),
-      )
+      const loginButton = screen.getByText("Log In")
       expect(loginButton).toBeDefined()
-      if (loginButton) {
-        fireEvent.click(loginButton)
-      }
+      fireEvent.click(loginButton)
 
       expect(showAuthDialog).toBeCalledWith({
         analytics: {
@@ -145,14 +140,9 @@ describe("NavBar", () => {
 
       getWrapper()
 
-      const signupButtons = screen.getAllByRole("button")
-      const signupButton = signupButtons.find(btn =>
-        btn.textContent?.includes("Sign Up"),
-      )
+      const signupButton = screen.getByText("Sign Up")
       expect(signupButton).toBeDefined()
-      if (signupButton) {
-        fireEvent.click(signupButton)
-      }
+      fireEvent.click(signupButton)
 
       expect(showAuthDialog).toBeCalledWith({
         analytics: {

@@ -51,7 +51,7 @@ describe("ConfirmPasswordModal", () => {
   it("calls ConfirmPassword and onConfirm on submit", async () => {
     getWrapper()
 
-    const passwordInput = screen.getByPlaceholderText("Password")
+    const passwordInput = screen.getByPlaceholderText("Enter your password")
     fireEvent.change(passwordInput, { target: { value: "mypassword" } })
 
     const submitButton = screen.getByRole("button", { name: "Confirm" })
@@ -69,7 +69,7 @@ describe("ConfirmPasswordModal", () => {
     ConfirmPassword.mockRejectedValue({ error: "Invalid password." })
     getWrapper()
 
-    const passwordInput = screen.getByPlaceholderText("Password")
+    const passwordInput = screen.getByPlaceholderText("Enter your password")
     fireEvent.change(passwordInput, { target: { value: "mypassword" } })
 
     const submitButton = screen.getByRole("button", { name: "Confirm" })

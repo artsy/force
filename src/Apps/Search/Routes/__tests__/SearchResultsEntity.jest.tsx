@@ -73,11 +73,11 @@ describe("SearchResultsEntity", () => {
 
   it("renders the pagination control", () => {
     getWrapper(props)
-    expect(screen.getByTestId("pagination")).toBeInTheDocument()
+    expect(screen.getByLabelText("Pagination")).toBeInTheDocument()
   })
 
   it("renders zero state when there are no items", () => {
     getWrapper(emptyResults)
-    expect(screen.getByTestId("zero-state")).toBeInTheDocument()
+    expect(screen.getByText("No results found for")).toBeInTheDocument()
   })
 })

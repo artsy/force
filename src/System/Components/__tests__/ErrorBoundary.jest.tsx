@@ -99,17 +99,15 @@ describe("ErrorBoundary", () => {
       if (errorBoundaryInstance) {
         errorBoundaryInstance.setState({
           kind: "GenericError",
+          message: "Test error message",
         })
       }
     })
 
     rerender(<TestWrapper />)
     expect(container.textContent).not.toContain("erroneous render")
-    expect(
-      container.querySelector(
-        '[data-testid="ErrorPage"], [class*="ErrorPage"]',
-      ),
-    ).toBeTruthy()
+    // Look for the error message content instead of specific CSS class
+    expect(container.textContent).toContain("Something Went Wrong")
   })
 
   it("shows error page when the error kind is AsyncChunkLoadError", () => {
@@ -132,17 +130,15 @@ describe("ErrorBoundary", () => {
       if (errorBoundaryInstance) {
         errorBoundaryInstance.setState({
           kind: "AsyncChunkLoadError",
+          message: "Loading chunk failed",
         })
       }
     })
 
     rerender(<TestWrapper />)
     expect(container.textContent).not.toContain("erroneous render")
-    expect(
-      container.querySelector(
-        '[data-testid="ErrorPage"], [class*="ErrorPage"]',
-      ),
-    ).toBeTruthy()
+    // Look for the error message content instead of specific CSS class
+    expect(container.textContent).toContain("Error Loading Script")
   })
 
   it("derives state for a generic error", () => {

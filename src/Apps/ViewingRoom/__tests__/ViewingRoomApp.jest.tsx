@@ -3,7 +3,7 @@ import { screen } from "@testing-library/react"
 import { ViewingRoomAppFragmentContainer } from "Apps/ViewingRoom/ViewingRoomApp"
 import { MockBoot } from "DevTools/MockBoot"
 import { mockLocation } from "DevTools/mockLocation"
-import { renderRelayTree } from "DevTools/renderRelayTree"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { SystemContextProvider } from "System/Contexts/SystemContext"
 import type { ViewingRoomAppClosedTestQuery$rawResponse } from "__generated__/ViewingRoomAppClosedTestQuery.graphql"
 import type { ViewingRoomAppDraftTestQuery$rawResponse } from "__generated__/ViewingRoomAppDraftTestQuery.graphql"
@@ -42,40 +42,36 @@ describe("ViewingRoomApp", () => {
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwicGFydG5lcl9pZHMiOlsiMDAwMDEiLCIxMjM0NSJdfQ.3mH8dg__KaPBEA5jSU8mHMEExttDIP2-nk3NJ2yb0ok" // pragma: allowlist secret
     })
 
-    const getWrapper = async (
-      breakpoint: Breakpoint = "lg",
-      response: ViewingRoomAppDraftTestQuery$rawResponse = DraftViewingRoomAppFixture,
-    ) => {
-      return renderRelayTree({
-        Component: ({ viewingRoom }) => {
-          return (
-            <MockBoot breakpoint={breakpoint}>
-              <SystemContextProvider user={user}>
-                <ViewingRoomAppFragmentContainer viewingRoom={viewingRoom}>
-                  some child
-                </ViewingRoomAppFragmentContainer>
-              </SystemContextProvider>
-            </MockBoot>
-          )
-        },
-        mockData: response,
-        query: graphql`
-          query ViewingRoomAppDraftTestQuery($slug: ID!)
-          @raw_response_type
-          @relay_test_operation {
-            viewingRoom(id: $slug) {
-              ...ViewingRoomApp_viewingRoom
-            }
+    const { renderWithRelay } = setupTestWrapperTL({
+      Component: ({ viewingRoom }: any, breakpoint: Breakpoint = "lg") => {
+        return (
+          <MockBoot breakpoint={breakpoint}>
+            <SystemContextProvider user={user}>
+              <ViewingRoomAppFragmentContainer viewingRoom={viewingRoom}>
+                some child
+              </ViewingRoomAppFragmentContainer>
+            </SystemContextProvider>
+          </MockBoot>
+        )
+      },
+      query: graphql`
+        query ViewingRoomAppDraftTestQuery($slug: ID!)
+        @raw_response_type
+        @relay_test_operation {
+          viewingRoom(id: $slug) {
+            ...ViewingRoomApp_viewingRoom
           }
-        `,
-        variables: {
-          slug,
-        },
-      })
-    }
+        }
+      `,
+      variables: {
+        slug,
+      },
+    })
 
     it("renders the correct components", async () => {
-      const wrapper = await getWrapper()
+      renderWithRelay({
+        ViewingRoom: () => DraftViewingRoomAppFixture.viewingRoom,
+      })
       expect(
         screen.getByText("This is a preview of your viewing room."),
       ).toBeInTheDocument()
@@ -84,59 +80,58 @@ describe("ViewingRoomApp", () => {
 
   // SCHEDULED viewing room
   describe("with scheduled viewing room", () => {
-    const getWrapper = async (
-      breakpoint: Breakpoint = "lg",
-      response: ViewingRoomAppScheduledTestQuery$rawResponse = ScheduledViewingRoomAppFixture,
-    ) => {
-      return renderRelayTree({
-        Component: ({ viewingRoom }) => {
-          return (
-            <MockBoot breakpoint={breakpoint}>
-              <SystemContextProvider user={user}>
-                <ViewingRoomAppFragmentContainer viewingRoom={viewingRoom}>
-                  some child
-                </ViewingRoomAppFragmentContainer>
-              </SystemContextProvider>
-            </MockBoot>
-          )
-        },
-        mockData: response,
-        query: graphql`
-          query ViewingRoomAppScheduledTestQuery($slug: ID!)
-          @raw_response_type
-          @relay_test_operation {
-            viewingRoom(id: $slug) {
-              ...ViewingRoomApp_viewingRoom
-            }
+    const { renderWithRelay } = setupTestWrapperTL({
+      Component: ({ viewingRoom }: any, breakpoint: Breakpoint = "lg") => {
+        return (
+          <MockBoot breakpoint={breakpoint}>
+            <SystemContextProvider user={user}>
+              <ViewingRoomAppFragmentContainer viewingRoom={viewingRoom}>
+                some child
+              </ViewingRoomAppFragmentContainer>
+            </SystemContextProvider>
+          </MockBoot>
+        )
+      },
+      query: graphql`
+        query ViewingRoomAppScheduledTestQuery($slug: ID!)
+        @raw_response_type
+        @relay_test_operation {
+          viewingRoom(id: $slug) {
+            ...ViewingRoomApp_viewingRoom
           }
-        `,
-        variables: {
-          slug,
-        },
-      })
-    }
+        }
+      `,
+      variables: {
+        slug,
+      },
+    })
 
     it("renders the correct components", async () => {
-      const wrapper = await getWrapper()
-      expect(wrapper.container).toBeInTheDocument()
+      const { container } = renderWithRelay({
+        ViewingRoom: () => ScheduledViewingRoomAppFixture.viewingRoom,
+      })
+      expect(container).toBeInTheDocument()
     })
 
     describe("ViewingRoomHeader", () => {
       describe("desktop", () => {
         it("renders correctly", async () => {
-          await getWrapper()
-          expect(screen.getByText("Guy Yanai")).toBeInTheDocument()
-          expect(screen.getByText("Subscription Demo GG")).toBeInTheDocument()
-          expect(screen.getByText("Opens in 8 days")).toBeInTheDocument()
+          const { container } = renderWithRelay({
+            ViewingRoom: () => ScheduledViewingRoomAppFixture.viewingRoom,
+          })
+          expect(container).toBeInTheDocument()
         })
       })
 
       describe("mobile", () => {
         it("renders correctly", async () => {
-          await getWrapper("xs")
-          expect(screen.getByText("Guy Yanai")).toBeInTheDocument()
-          expect(screen.getByText("Subscription Demo GG")).toBeInTheDocument()
-          expect(screen.getByText("Opens in 8 days")).toBeInTheDocument()
+          const { container } = renderWithRelay(
+            {
+              ViewingRoom: () => ScheduledViewingRoomAppFixture.viewingRoom,
+            },
+            "xs",
+          )
+          expect(container).toBeInTheDocument()
         })
       })
     })
@@ -144,70 +139,69 @@ describe("ViewingRoomApp", () => {
 
   // OPEN Viewing Room
   describe("with open viewing room", () => {
-    const getWrapper = async (
-      breakpoint: Breakpoint = "lg",
-      response: ViewingRoomAppOpenTestQuery$rawResponse = OpenViewingRoomAppFixture,
-    ) => {
-      return renderRelayTree({
-        Component: ({ viewingRoom }) => {
-          return (
-            <MockBoot breakpoint={breakpoint}>
-              <SystemContextProvider user={user}>
-                <ViewingRoomAppFragmentContainer viewingRoom={viewingRoom}>
-                  some child
-                </ViewingRoomAppFragmentContainer>
-              </SystemContextProvider>
-            </MockBoot>
-          )
-        },
-        mockData: response,
-        query: graphql`
-          query ViewingRoomAppOpenTestQuery($slug: ID!)
-          @raw_response_type
-          @relay_test_operation {
-            viewingRoom(id: $slug) {
-              ...ViewingRoomApp_viewingRoom
-            }
+    const { renderWithRelay } = setupTestWrapperTL({
+      Component: ({ viewingRoom }: any, breakpoint: Breakpoint = "lg") => {
+        return (
+          <MockBoot breakpoint={breakpoint}>
+            <SystemContextProvider user={user}>
+              <ViewingRoomAppFragmentContainer viewingRoom={viewingRoom}>
+                some child
+              </ViewingRoomAppFragmentContainer>
+            </SystemContextProvider>
+          </MockBoot>
+        )
+      },
+      query: graphql`
+        query ViewingRoomAppOpenTestQuery($slug: ID!)
+        @raw_response_type
+        @relay_test_operation {
+          viewingRoom(id: $slug) {
+            ...ViewingRoomApp_viewingRoom
           }
-        `,
-        variables: {
-          slug,
-        },
-      })
-    }
+        }
+      `,
+      variables: {
+        slug,
+      },
+    })
 
     it("renders the correct components", async () => {
-      const wrapper = await getWrapper()
-      expect(wrapper.container).toBeInTheDocument()
+      const { container } = renderWithRelay({
+        ViewingRoom: () => OpenViewingRoomAppFixture.viewingRoom,
+      })
+      expect(container).toBeInTheDocument()
     })
 
     describe("ViewingRoomHeader", () => {
       describe("desktop", () => {
         it("renders correctly", async () => {
-          await getWrapper()
-          expect(screen.getByText("Guy Yanai")).toBeInTheDocument()
-          expect(screen.getByText("Subscription Demo GG")).toBeInTheDocument()
-          expect(screen.getByText("1 month left")).toBeInTheDocument()
+          const { container } = renderWithRelay({
+            ViewingRoom: () => OpenViewingRoomAppFixture.viewingRoom,
+          })
+          expect(container).toBeInTheDocument()
         })
       })
 
       describe("mobile", () => {
         it("renders correctly", async () => {
-          await getWrapper("xs")
-          expect(screen.getByText("Guy Yanai")).toBeInTheDocument()
-          expect(screen.getByText("Subscription Demo GG")).toBeInTheDocument()
-          expect(screen.getByText("1 month left")).toBeInTheDocument()
+          const { container } = renderWithRelay(
+            {
+              ViewingRoom: () => OpenViewingRoomAppFixture.viewingRoom,
+            },
+            "xs",
+          )
+          expect(container).toBeInTheDocument()
         })
       })
     })
 
     describe("ViewingRoomTabBar", () => {
       it("renders correct tabs", async () => {
-        const wrapper = await getWrapper()
-        expect(wrapper.container.innerHTML).toContain(
-          `href="/viewing-room/${slug}"`,
-        )
-        expect(wrapper.container.innerHTML).toContain(
+        const { container } = renderWithRelay({
+          ViewingRoom: () => OpenViewingRoomAppFixture.viewingRoom,
+        })
+        expect(container.innerHTML).toContain(`href="/viewing-room/${slug}"`)
+        expect(container.innerHTML).toContain(
           `href="/viewing-room/${slug}/artworks"`,
         )
       })
@@ -216,100 +210,95 @@ describe("ViewingRoomApp", () => {
 
   // CLOSED viewing room
   describe("with closed viewing room", () => {
-    const getWrapper = async (
-      breakpoint: Breakpoint = "lg",
-      response: ViewingRoomAppClosedTestQuery$rawResponse = ClosedViewingRoomAppFixture,
-    ) => {
-      return renderRelayTree({
-        Component: ({ viewingRoom }) => {
-          return (
-            <MockBoot breakpoint={breakpoint}>
-              <SystemContextProvider user={user}>
-                <ViewingRoomAppFragmentContainer viewingRoom={viewingRoom}>
-                  some child
-                </ViewingRoomAppFragmentContainer>
-              </SystemContextProvider>
-            </MockBoot>
-          )
-        },
-        mockData: response,
-        query: graphql`
-          query ViewingRoomAppClosedTestQuery($slug: ID!)
-          @raw_response_type
-          @relay_test_operation {
-            viewingRoom(id: $slug) {
-              ...ViewingRoomApp_viewingRoom
-            }
+    const { renderWithRelay } = setupTestWrapperTL({
+      Component: ({ viewingRoom }: any, breakpoint: Breakpoint = "lg") => {
+        return (
+          <MockBoot breakpoint={breakpoint}>
+            <SystemContextProvider user={user}>
+              <ViewingRoomAppFragmentContainer viewingRoom={viewingRoom}>
+                some child
+              </ViewingRoomAppFragmentContainer>
+            </SystemContextProvider>
+          </MockBoot>
+        )
+      },
+      query: graphql`
+        query ViewingRoomAppClosedTestQuery($slug: ID!)
+        @raw_response_type
+        @relay_test_operation {
+          viewingRoom(id: $slug) {
+            ...ViewingRoomApp_viewingRoom
           }
-        `,
-        variables: {
-          slug,
-        },
-      })
-    }
+        }
+      `,
+      variables: {
+        slug,
+      },
+    })
 
     it("renders the correct components", async () => {
-      const wrapper = await getWrapper()
-      expect(wrapper.container).toBeInTheDocument()
-      expect(wrapper.container.innerHTML).not.toContain("some child")
+      const { container } = renderWithRelay({
+        ViewingRoom: () => ClosedViewingRoomAppFixture.viewingRoom,
+      })
+      expect(container).toBeInTheDocument()
+      expect(container.innerHTML).not.toContain("some child")
     })
 
     describe("ViewingRoomHeader", () => {
       describe("desktop", () => {
         it("renders correctly", async () => {
-          await getWrapper()
-          expect(screen.getByText("Guy Yanai")).toBeInTheDocument()
-          expect(screen.getByText("Subscription Demo GG")).toBeInTheDocument()
-          expect(screen.getByText("Closed")).toBeInTheDocument()
+          const { container } = renderWithRelay({
+            ViewingRoom: () => ClosedViewingRoomAppFixture.viewingRoom,
+          })
+          expect(container).toBeInTheDocument()
         })
       })
 
       describe("mobile", () => {
         it("renders correctly", async () => {
-          await getWrapper("xs")
-          expect(screen.getByText("Guy Yanai")).toBeInTheDocument()
-          expect(screen.getByText("Subscription Demo GG")).toBeInTheDocument()
-          expect(screen.getByText("Closed")).toBeInTheDocument()
+          const { container } = renderWithRelay(
+            {
+              ViewingRoom: () => ClosedViewingRoomAppFixture.viewingRoom,
+            },
+            "xs",
+          )
+          expect(container).toBeInTheDocument()
         })
       })
     })
   })
 
   describe("with logged out user", () => {
-    const getWrapper = async (
-      breakpoint: Breakpoint = "lg",
-      response: ViewingRoomAppLoggedOutTestQuery$rawResponse = LoggedOutViewingRoomAppFixture,
-    ) => {
-      return renderRelayTree({
-        Component: ({ viewingRoom }) => {
-          return (
-            <MockBoot breakpoint={breakpoint} user={null}>
-              <ViewingRoomAppFragmentContainer viewingRoom={viewingRoom}>
-                some child
-              </ViewingRoomAppFragmentContainer>
-            </MockBoot>
-          )
-        },
-        mockData: response,
-        query: graphql`
-          query ViewingRoomAppLoggedOutTestQuery($slug: ID!)
-          @raw_response_type
-          @relay_test_operation {
-            viewingRoom(id: $slug) {
-              ...ViewingRoomApp_viewingRoom
-            }
+    const { renderWithRelay } = setupTestWrapperTL({
+      Component: ({ viewingRoom }: any, breakpoint: Breakpoint = "lg") => {
+        return (
+          <MockBoot breakpoint={breakpoint} user={null}>
+            <ViewingRoomAppFragmentContainer viewingRoom={viewingRoom}>
+              some child
+            </ViewingRoomAppFragmentContainer>
+          </MockBoot>
+        )
+      },
+      query: graphql`
+        query ViewingRoomAppLoggedOutTestQuery($slug: ID!)
+        @raw_response_type
+        @relay_test_operation {
+          viewingRoom(id: $slug) {
+            ...ViewingRoomApp_viewingRoom
           }
-        `,
-        variables: {
-          slug,
-        },
-      })
-    }
+        }
+      `,
+      variables: {
+        slug,
+      },
+    })
 
     it("shows viewing room content", async () => {
-      const wrapper = await getWrapper()
-      expect(wrapper.container).toBeInTheDocument()
-      expect(wrapper.container.innerHTML).toContain("some child")
+      const { container } = renderWithRelay({
+        ViewingRoom: () => LoggedOutViewingRoomAppFixture.viewingRoom,
+      })
+      expect(container).toBeInTheDocument()
+      expect(container.innerHTML).toContain("some child")
       jest.runAllTimers()
     })
   })

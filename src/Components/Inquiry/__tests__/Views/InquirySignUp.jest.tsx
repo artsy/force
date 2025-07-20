@@ -69,18 +69,21 @@ describe("InquirySignUp", () => {
       expect(next).not.toBeCalled()
 
       // Fill inputs
-      fireEvent.change(screen.getByLabelText(/name/i), {
+      fireEvent.change(screen.getByPlaceholderText("Your full name"), {
         target: { value: "Example Example" },
       })
-      fireEvent.change(screen.getByLabelText(/email/i), {
+      fireEvent.change(screen.getByDisplayValue("example@example.com"), {
         target: { value: "example@example.com" },
       })
-      fireEvent.change(screen.getByLabelText(/password/i), {
+      fireEvent.change(screen.getByPlaceholderText("Your password"), {
         target: { value: "secret" },
       })
 
       // Submit form
-      fireEvent.submit(screen.getByRole("form"))
+      const form = screen
+        .getByText("Sign up to send your message")
+        .closest("form")
+      fireEvent.submit(form)
       await flushPromiseQueue()
 
       expect(submitArtworkInquiryRequest).toBeCalledWith({
@@ -118,18 +121,21 @@ describe("InquirySignUp", () => {
       expect(next).not.toBeCalled()
 
       // Fill inputs
-      fireEvent.change(screen.getByLabelText(/name/i), {
+      fireEvent.change(screen.getByPlaceholderText("Your full name"), {
         target: { value: "Example Example" },
       })
-      fireEvent.change(screen.getByLabelText(/email/i), {
+      fireEvent.change(screen.getByDisplayValue("example@example.com"), {
         target: { value: "example@example.com" },
       })
-      fireEvent.change(screen.getByLabelText(/password/i), {
+      fireEvent.change(screen.getByPlaceholderText("Your password"), {
         target: { value: "secret" },
       })
 
       // Submit form
-      fireEvent.submit(screen.getByRole("form"))
+      const form = screen
+        .getByText("Sign up to send your message")
+        .closest("form")
+      fireEvent.submit(form)
       await flushPromiseQueue()
 
       expect(submitArtworkInquiryRequest).not.toBeCalled()
