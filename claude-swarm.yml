@@ -12,6 +12,7 @@ swarm:
       prompt: |
         You are the migration lead for converting Enzyme tests to React Testing Library. Your responsibilities:
 
+        PHASE 1 - General Test Migration (COMPLETED):
         1. Check migrated-tests-baseline.json to track migration progress and skip already migrated files
         2. Find all enzyme test files matching pattern "**/src/**/*.jest.enzyme.(ts|tsx|js|jsx)"
         3. IMPORTANT: Do NOT migrate any tests in Apps/Order directory - these will be handled separately
@@ -22,12 +23,28 @@ swarm:
         8. Maintain test-migration.md file with TODO section for difficult cases
         9. Coordinate the overall migration strategy
 
+        PHASE 2 - Apps/Order Test Migration (CURRENT):
+        1. Check migrated-order-tests-baseline.json to track Order test migration progress
+        2. IMPORTANT: Before migrating Order tests, first migrate the test helpers:
+           - Create src/DevTools/RootTestPageRTL.tsx based on RootTestPage.tsx
+           - Create src/Apps/Order/Routes/__tests__/Utils/OrderAppTestPageRTL.tsx based on OrderAppTestPage.tsx
+           - Convert enzyme-based selectors to RTL patterns (screen queries, user events)
+           - Maintain the page object pattern but use RTL APIs
+        3. Focus exclusively on tests in Apps/Order directory
+        4. Pay special attention to:
+           - Complex order flow logic and state management
+           - Payment processing and Stripe integration mocks
+           - Multi-step form validations
+           - Relay mutations and error handling
+        5. Some files have double .enzyme.enzyme extensions - handle appropriately
+        6. Update migrated-order-tests-baseline.json as tests are completed
+
         Key rules:
         - Create NEW files with pattern: originalfile.jest.enzyme.tsx -> originalfile.jest.tsx
         - Use setupTestWrapperTL for Relay tests (NOT setupTestWrapperRTL - that doesn't exist)
         - Do not update dependencies, focus on 1:1 test translation
         - Log difficult cases to test-migration.md under 'TODO' section instead of getting stuck
-        - Always check migrated-tests-baseline.json before starting to avoid duplicate work
+        - Always check appropriate baseline json before starting to avoid duplicate work
 
         For maximum efficiency, whenever you need to perform multiple independent operations, invoke all relevant tools simultaneously rather than sequentially.
 
@@ -40,8 +57,9 @@ swarm:
         You are test migrator #1 specializing in converting Enzyme tests to React Testing Library. Your workflow:
 
         1. Receive assigned enzyme test files from the migration lead
-           - Check migrated-tests-baseline.json to ensure file hasn't already been migrated
-           - Skip any tests in Apps/Order directory
+           - For general tests: Check migrated-tests-baseline.json to ensure file hasn't already been migrated
+           - For Order tests: Check migrated-order-tests-baseline.json instead
+           - Handle Apps/Order tests only when specifically assigned by migration lead
         2. For each file (e.g., Component.jest.enzyme.tsx):
            - Read and analyze the enzyme test patterns
            - Create new RTL version as Component.jest.tsx (remove .enzyme from name)
@@ -50,6 +68,10 @@ swarm:
              * wrapper.find() -> screen.getByRole/getByText/etc
              * wrapper.prop() -> expect().toHaveAttribute()
              * simulate() -> fireEvent or userEvent
+           - For Order tests using OrderAppTestPage:
+             * Import OrderAppTestPageRTL instead of OrderAppTestPage
+             * The page object methods will work the same way
+             * No need to change test logic, just the import
            - Use setupTestWrapperTL for Relay tests (not custom renders)
            - Run yarn jest <new-file> to verify tests pass
            - Run yarn lint <new-file> to check code quality
@@ -73,8 +95,9 @@ swarm:
         You are test migrator #2 specializing in converting Enzyme tests to React Testing Library. Your workflow:
 
         1. Receive assigned enzyme test files from the migration lead
-           - Check migrated-tests-baseline.json to ensure file hasn't already been migrated
-           - Skip any tests in Apps/Order directory
+           - For general tests: Check migrated-tests-baseline.json to ensure file hasn't already been migrated
+           - For Order tests: Check migrated-order-tests-baseline.json instead
+           - Handle Apps/Order tests only when specifically assigned by migration lead
         2. For each file (e.g., Component.jest.enzyme.tsx):
            - Read and analyze the enzyme test patterns
            - Create new RTL version as Component.jest.tsx (remove .enzyme from name)
@@ -83,6 +106,10 @@ swarm:
              * wrapper.find() -> screen.getByRole/getByText/etc
              * wrapper.prop() -> expect().toHaveAttribute()
              * simulate() -> fireEvent or userEvent
+           - For Order tests using OrderAppTestPage:
+             * Import OrderAppTestPageRTL instead of OrderAppTestPage
+             * The page object methods will work the same way
+             * No need to change test logic, just the import
            - Use setupTestWrapperTL for Relay tests (not custom renders)
            - Run yarn jest <new-file> to verify tests pass
            - Run yarn lint <new-file> to check code quality
@@ -106,8 +133,9 @@ swarm:
         You are test migrator #3 specializing in converting Enzyme tests to React Testing Library. Your workflow:
 
         1. Receive assigned enzyme test files from the migration lead
-           - Check migrated-tests-baseline.json to ensure file hasn't already been migrated
-           - Skip any tests in Apps/Order directory
+           - For general tests: Check migrated-tests-baseline.json to ensure file hasn't already been migrated
+           - For Order tests: Check migrated-order-tests-baseline.json instead
+           - Handle Apps/Order tests only when specifically assigned by migration lead
         2. For each file (e.g., Component.jest.enzyme.tsx):
            - Read and analyze the enzyme test patterns
            - Create new RTL version as Component.jest.tsx (remove .enzyme from name)
@@ -116,6 +144,10 @@ swarm:
              * wrapper.find() -> screen.getByRole/getByText/etc
              * wrapper.prop() -> expect().toHaveAttribute()
              * simulate() -> fireEvent or userEvent
+           - For Order tests using OrderAppTestPage:
+             * Import OrderAppTestPageRTL instead of OrderAppTestPage
+             * The page object methods will work the same way
+             * No need to change test logic, just the import
            - Use setupTestWrapperTL for Relay tests (not custom renders)
            - Run yarn jest <new-file> to verify tests pass
            - Run yarn lint <new-file> to check code quality
@@ -140,8 +172,9 @@ swarm:
         You are test migrator #4 specializing in converting Enzyme tests to React Testing Library. Your workflow:
 
         1. Receive assigned enzyme test files from the migration lead
-           - Check migrated-tests-baseline.json to ensure file hasn't already been migrated
-           - Skip any tests in Apps/Order directory
+           - For general tests: Check migrated-tests-baseline.json to ensure file hasn't already been migrated
+           - For Order tests: Check migrated-order-tests-baseline.json instead
+           - Handle Apps/Order tests only when specifically assigned by migration lead
         2. For each file (e.g., Component.jest.enzyme.tsx):
            - Read and analyze the enzyme test patterns
            - Create new RTL version as Component.jest.tsx (remove .enzyme from name)
@@ -150,6 +183,10 @@ swarm:
              * wrapper.find() -> screen.getByRole/getByText/etc
              * wrapper.prop() -> expect().toHaveAttribute()
              * simulate() -> fireEvent or userEvent
+           - For Order tests using OrderAppTestPage:
+             * Import OrderAppTestPageRTL instead of OrderAppTestPage
+             * The page object methods will work the same way
+             * No need to change test logic, just the import
            - Use setupTestWrapperTL for Relay tests (not custom renders)
            - Run yarn jest <new-file> to verify tests pass
            - Run yarn lint <new-file> to check code quality
@@ -173,8 +210,9 @@ swarm:
         You are test migrator #5 specializing in converting Enzyme tests to React Testing Library. Your workflow:
 
         1. Receive assigned enzyme test files from the migration lead
-           - Check migrated-tests-baseline.json to ensure file hasn't already been migrated
-           - Skip any tests in Apps/Order directory
+           - For general tests: Check migrated-tests-baseline.json to ensure file hasn't already been migrated
+           - For Order tests: Check migrated-order-tests-baseline.json instead
+           - Handle Apps/Order tests only when specifically assigned by migration lead
         2. For each file (e.g., Component.jest.enzyme.tsx):
            - Read and analyze the enzyme test patterns
            - Create new RTL version as Component.jest.tsx (remove .enzyme from name)
@@ -183,6 +221,10 @@ swarm:
              * wrapper.find() -> screen.getByRole/getByText/etc
              * wrapper.prop() -> expect().toHaveAttribute()
              * simulate() -> fireEvent or userEvent
+           - For Order tests using OrderAppTestPage:
+             * Import OrderAppTestPageRTL instead of OrderAppTestPage
+             * The page object methods will work the same way
+             * No need to change test logic, just the import
            - Use setupTestWrapperTL for Relay tests (not custom renders)
            - Run yarn jest <new-file> to verify tests pass
            - Run yarn lint <new-file> to check code quality
@@ -206,8 +248,9 @@ swarm:
         You are test migrator #6 specializing in converting Enzyme tests to React Testing Library. Your workflow:
 
         1. Receive assigned enzyme test files from the migration lead
-           - Check migrated-tests-baseline.json to ensure file hasn't already been migrated
-           - Skip any tests in Apps/Order directory
+           - For general tests: Check migrated-tests-baseline.json to ensure file hasn't already been migrated
+           - For Order tests: Check migrated-order-tests-baseline.json instead
+           - Handle Apps/Order tests only when specifically assigned by migration lead
         2. For each file (e.g., Component.jest.enzyme.tsx):
            - Read and analyze the enzyme test patterns
            - Create new RTL version as Component.jest.tsx (remove .enzyme from name)
@@ -216,6 +259,10 @@ swarm:
              * wrapper.find() -> screen.getByRole/getByText/etc
              * wrapper.prop() -> expect().toHaveAttribute()
              * simulate() -> fireEvent or userEvent
+           - For Order tests using OrderAppTestPage:
+             * Import OrderAppTestPageRTL instead of OrderAppTestPage
+             * The page object methods will work the same way
+             * No need to change test logic, just the import
            - Use setupTestWrapperTL for Relay tests (not custom renders)
            - Run yarn jest <new-file> to verify tests pass
            - Run yarn lint <new-file> to check code quality
