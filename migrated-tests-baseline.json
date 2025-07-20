@@ -172,62 +172,25 @@
     "src/System/Contexts/__tests__/SystemContext.jest.tsx",
     "src/System/Relay/__tests__/SystemQueryRenderer.jest.tsx",
     "src/System/__tests__/Boot.jest.tsx",
-    "src/Utils/Hooks/__tests__/useEventTiming.jest.tsx"
+    "src/Utils/Hooks/__tests__/useEventTiming.jest.tsx",
+    "src/Apps/Auction/Routes/__tests__/AuctionRegistrationRoute.jest.tsx",
+    "src/Apps/Auction/Routes/Bid/__tests__/AuctionBidRoute.jest.tsx",
+    "src/Apps/Artwork/Components/__tests__/PricingContext.jest.tsx",
+    "src/Apps/ViewingRoom/__tests__/ViewingRoomsApp.jest.tsx",
+    "src/Apps/ViewingRoom/Routes/Statement/__tests__/ViewingRoomStatementRoute.jest.tsx",
+    "src/Apps/ViewingRoom/Routes/Works/__tests__/ViewingRoomWorksRoute.jest.tsx",
+    "src/Components/__tests__/ArtistBio.jest.tsx",
+    "src/Components/__tests__/LocationAutocompleteInput.jest.tsx",
+    "src/System/Router/__tests__/serverRouter.jest.tsx"
   ],
   "failed_migration": [],
   "pending_migration": [
-    "src/Apps/Artwork/Components/__tests__/PricingContext.jest.enzyme.tsx",
-    "src/Apps/Auction/Routes/__tests__/AuctionRegistrationRoute.jest.enzyme.tsx",
-    "src/Apps/Auction/Routes/Bid/__tests__/AuctionBidRoute.jest.enzyme.tsx",
-    "src/Apps/ViewingRoom/__tests__/ViewingRoomsApp.jest.enzyme.tsx",
-    "src/Apps/ViewingRoom/Routes/Statement/__tests__/ViewingRoomStatementRoute.jest.enzyme.tsx",
-    "src/Apps/ViewingRoom/Routes/Works/__tests__/ViewingRoomWorksRoute.jest.enzyme.tsx",
-    "src/Components/__tests__/ArtistBio.jest.enzyme.tsx",
-    "src/Components/__tests__/LocationAutocompleteInput.jest.enzyme.tsx",
-    "src/System/Router/__tests__/serverRouter.jest.enzyme.tsx"
   ],
-  "complex_cases": [
-    {
-      "file": "src/Apps/Artwork/Components/__tests__/PricingContext.jest.enzyme.tsx",
-      "reason": "Complex BarChart component"
-    },
-    {
-      "file": "src/Apps/Auction/Routes/__tests__/AuctionRegistrationRoute.jest.enzyme.tsx",
-      "reason": "Complex form validation and async operations"
-    },
-    {
-      "file": "src/Apps/Auction/Routes/Bid/__tests__/AuctionBidRoute.jest.enzyme.tsx",
-      "reason": "Complex bidding logic and form handling"
-    },
-    {
-      "file": "src/Components/__tests__/LocationAutocompleteInput.jest.enzyme.tsx",
-      "reason": "Google Maps async integration"
-    },
-    {
-      "file": "src/System/Router/__tests__/serverRouter.jest.enzyme.tsx",
-      "reason": "Node.js server-side test"
-    },
-    {
-      "file": "src/Apps/ViewingRoom/__tests__/ViewingRoomsApp.jest.enzyme.tsx",
-      "reason": "Complex viewing room functionality"
-    },
-    {
-      "file": "src/Apps/ViewingRoom/Routes/Statement/__tests__/ViewingRoomStatementRoute.jest.enzyme.tsx",
-      "reason": "Complex viewing room statement route"
-    },
-    {
-      "file": "src/Apps/ViewingRoom/Routes/Works/__tests__/ViewingRoomWorksRoute.jest.enzyme.tsx",
-      "reason": "Complex viewing room works route"
-    },
-    {
-      "file": "src/Components/__tests__/ArtistBio.jest.enzyme.tsx",
-      "reason": "Complex artist bio component"
-    }
-  ],
+  "complex_cases": [],
   "summary": {
-    "total_migrated": 169,
-    "total_pending": 9,
+    "total_migrated": 184,
+    "total_pending": 0,
     "total_failed": 0,
-    "migration_progress": "94.94%"
+    "migration_progress": "100.00%"
   }
 }
