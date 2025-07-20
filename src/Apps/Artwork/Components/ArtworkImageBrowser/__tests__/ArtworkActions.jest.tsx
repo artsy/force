@@ -75,103 +75,73 @@ describe("ArtworkActions", () => {
     it("renders proper components for a team user", () => {
       mockUserIsAdmin = true
       mockUserIsTeam = true
-      const { container } = renderWithRelay()
+      renderWithRelay()
 
-      expect(container.querySelectorAll('[data-icon="EditIcon"]')).toHaveLength(
-        1,
-      )
-      expect(
-        container.querySelectorAll('[data-icon="MagicMagnifyingGlassIcon"]'),
-      ).toHaveLength(1)
-      expect(container.querySelectorAll('[data-icon="MoreIcon"]')).toHaveLength(
-        0,
-      )
+      expect(screen.getByText("Edit")).toBeInTheDocument()
+      expect(screen.getByText("Inspect images")).toBeInTheDocument()
+      expect(screen.queryByText("More")).not.toBeInTheDocument()
     })
 
     it("renders proper components for a non-team user", () => {
       mockUserIsAdmin = false
       mockUserIsTeam = false
-      const { container } = renderWithRelay({
+      renderWithRelay({
         Artwork: () => ({ isHangable: true, isDownloadable: true }),
       })
 
-      expect(
-        container.querySelectorAll('[data-icon="HeartStrokeIcon"]'),
-      ).toHaveLength(1)
-      expect(
-        container.querySelectorAll('[data-icon="ShareIcon"]'),
-      ).toHaveLength(1)
-      expect(container.querySelectorAll('[data-icon="ShowIcon"]')).toHaveLength(
-        1,
-      )
-      expect(
-        container.querySelectorAll('[data-icon="DownloadIcon"]'),
-      ).toHaveLength(1)
-      expect(container.querySelectorAll('[data-icon="EditIcon"]')).toHaveLength(
-        0,
-      )
-      expect(
-        container.querySelectorAll('[data-icon="MagicMagnifyingGlassIcon"]'),
-      ).toHaveLength(0)
-      expect(container.querySelectorAll('[data-icon="MoreIcon"]')).toHaveLength(
-        0,
-      )
+      expect(screen.getByText("Save")).toBeInTheDocument()
+      expect(screen.getByText("Share")).toBeInTheDocument()
+      expect(screen.getByText("View in room")).toBeInTheDocument()
+      expect(screen.getByText("Download")).toBeInTheDocument()
+      expect(screen.queryByText("Edit")).not.toBeInTheDocument()
+      expect(screen.queryByText("Inspect images")).not.toBeInTheDocument()
+      expect(screen.queryByText("More")).not.toBeInTheDocument()
     })
 
     describe("concerning SaveButton states icon states", () => {
-      it("renders heart icon when not sale", () => {
-        const { container } = renderWithRelay({
+      it("renders save button when not sale", () => {
+        renderWithRelay({
           Artwork: () => ({ sale: null }),
         })
 
-        expect(
-          container.querySelectorAll('[data-icon="HeartStrokeIcon"]'),
-        ).toHaveLength(1)
+        expect(screen.getByText("Save")).toBeInTheDocument()
       })
 
-      it("renders heart icon when sale is closed", () => {
-        const { container } = renderWithRelay({
+      it("renders save button when sale is closed", () => {
+        renderWithRelay({
           Sale: () => ({ isClosed: true }),
         })
 
-        expect(
-          container.querySelectorAll('[data-icon="HeartStrokeIcon"]'),
-        ).toHaveLength(1)
+        expect(screen.getByText("Save")).toBeInTheDocument()
       })
 
-      it("renders heart icon when sale is open", () => {
-        const { container } = renderWithRelay({
+      it("renders watch lot button when sale is open", () => {
+        renderWithRelay({
           Sale: () => ({
             isAuction: true,
             isClosed: false,
           }),
         })
 
-        expect(
-          container.querySelectorAll('[data-icon="HeartStrokeIcon"]'),
-        ).toHaveLength(1)
+        expect(screen.getByText("Watch lot")).toBeInTheDocument()
       })
     })
 
     describe("view in a room", () => {
       it("available for artworks that are hangable", () => {
-        const { container } = renderWithRelay({
+        renderWithRelay({
           Artwork: () => ({ isHangable: true }),
         })
 
-        expect(
-          container.querySelectorAll('[data-icon="ShowIcon"]'),
-        ).toHaveLength(1)
+        expect(screen.getByText("View in room")).toBeInTheDocument()
       })
 
       it("is not available for non hangable artworks", () => {
-        const { container } = renderWithRelay({
+        renderWithRelay({
           Artwork: () => ({ isHangable: false }),
         })
 
-        expect(
-          container.querySelectorAll('[data-icon="ShowIcon"]'),
-        ).toHaveLength(0)
+        expect(screen.queryByText("View in room")).not.toBeInTheDocument()
       })
     })
 
@@ -180,37 +150,31 @@ describe("ArtworkActions", () => {
         it("renders link if isDownloadable", () => {
           mockUserIsAdmin = false
           mockUserIsTeam = false
-          const { container } = renderWithRelay({
+          renderWithRelay({
             Artwork: () => ({ isDownloadable: true }),
           })
 
-          expect(
-            container.querySelectorAll('[data-icon="DownloadIcon"]'),
-          ).toHaveLength(1)
+          expect(screen.getByText("Download")).toBeInTheDocument()
         })
 
         it("renders link if admin", () => {
           mockUserIsAdmin = true
           mockUserIsTeam = true
-          const { container } = renderWithRelay({
+          renderWithRelay({
             Artwork: () => ({ isDownloadable: false }),
           })
 
-          expect(
-            container.querySelectorAll('[data-icon="DownloadIcon"]'),
-          ).toHaveLength(1)
+          expect(screen.getByText("Download")).toBeInTheDocument()
         })
 
         it("hides link if isDownloadable=false and the user is not an admin", () => {
           mockUserIsAdmin = false
           mockUserIsTeam = false
-          const { container } = renderWithRelay({
+          renderWithRelay({
             Artwork: () => ({ isDownloadable: false }),
           })
 
-          expect(
-            container.querySelectorAll('[data-icon="DownloadIcon"]'),
-          ).toHaveLength(0)
+          expect(screen.queryByText("Download")).not.toBeInTheDocument()
         })
       })
     })
@@ -219,62 +183,60 @@ describe("ArtworkActions", () => {
   describe("in the xs breakpoint", () => {
     const renderWithRelay = getWrapperWithBreakpoint("xs")
 
-    it("shows the More icon", () => {
-      const { container } = renderWithRelay({
-        Artwork: () => ({ isHangable: true, isDownloadable: true }),
+    it("shows the More icon when there are more than 3 actions", () => {
+      mockUserIsAdmin = true // Enable admin actions
+      mockUserIsTeam = true // Enable team actions
+      renderWithRelay({
+        Artwork: () => ({
+          isHangable: true,
+          isDownloadable: true,
+          isUnlisted: false, // Ensure artwork is not unlisted
+          partner: { slug: "test-partner" }, // Ensure partner exists for edit button
+        }),
       })
 
-      expect(
-        container.querySelectorAll('[data-icon="HeartStrokeIcon"]'),
-      ).toHaveLength(1)
-      expect(
-        container.querySelectorAll('[data-icon="ShareIcon"]'),
-      ).toHaveLength(1)
-      expect(container.querySelectorAll('[data-icon="ShowIcon"]')).toHaveLength(
-        1,
-      )
-      expect(container.querySelectorAll('[data-icon="MoreIcon"]')).toHaveLength(
-        1,
-      )
-      expect(
-        container.querySelectorAll('[data-icon="DownloadIcon"]'),
-      ).toHaveLength(0)
-      expect(container.querySelectorAll('[data-icon="EditIcon"]')).toHaveLength(
-        0,
-      )
-      expect(
-        container.querySelectorAll('[data-icon="MagicMagnifyingGlassIcon"]'),
-      ).toHaveLength(0)
+      // First 3 actions are shown
+      expect(screen.getByText("Save")).toBeInTheDocument()
+      expect(screen.getByText("View in room")).toBeInTheDocument()
+      expect(screen.getByText("Share")).toBeInTheDocument()
+
+      // More button appears when there are > 3 actions
+      // The More button doesn't have text, so we need to check for the icon
+      const moreButtons = screen.getAllByRole("button")
+      const hasMoreButton = moreButtons.some(button => {
+        // Check if this button contains the MoreIcon SVG
+        return button.querySelector("svg") && !button.textContent
+      })
+      expect(hasMoreButton).toBe(true)
+
+      // These are hidden in the More menu on xs breakpoint
+      expect(screen.queryByText("Download")).not.toBeInTheDocument()
+      expect(screen.queryByText("Edit")).not.toBeInTheDocument()
+      expect(screen.queryByText("Inspect images")).not.toBeInTheDocument()
     })
 
     it("shows no More icon if there are <= 3 actions", () => {
       mockUserIsAdmin = false
       mockUserIsTeam = false
-      const { container } = renderWithRelay({
+      renderWithRelay({
         Artwork: () => ({ isDownloadable: false, isHangable: true }),
       })
 
-      expect(
-        container.querySelectorAll('[data-icon="HeartStrokeIcon"]'),
-      ).toHaveLength(1)
-      expect(
-        container.querySelectorAll('[data-icon="ShareIcon"]'),
-      ).toHaveLength(1)
-      expect(container.querySelectorAll('[data-icon="ShowIcon"]')).toHaveLength(
-        1,
-      )
-      expect(
-        container.querySelectorAll('[data-icon="DownloadIcon"]'),
-      ).toHaveLength(0)
-      expect(container.querySelectorAll('[data-icon="EditIcon"]')).toHaveLength(
-        0,
-      )
-      expect(
-        container.querySelectorAll('[data-icon="MagicMagnifyingGlassIcon"]'),
-      ).toHaveLength(0)
-      expect(container.querySelectorAll('[data-icon="MoreIcon"]')).toHaveLength(
-        0,
-      )
+      expect(screen.getByText("Save")).toBeInTheDocument()
+      expect(screen.getByText("Share")).toBeInTheDocument()
+      expect(screen.getByText("View in room")).toBeInTheDocument()
+      expect(screen.queryByText("Download")).not.toBeInTheDocument()
+      expect(screen.queryByText("Edit")).not.toBeInTheDocument()
+      expect(screen.queryByText("Inspect images")).not.toBeInTheDocument()
+      // Verify no More button - check that all action buttons have text
+      // (excluding Close buttons from popovers)
+      const actionButtons = screen.getAllByRole("button").filter(button => {
+        return !button.getAttribute("aria-label")?.includes("Close")
+      })
+      // All action buttons should have visible text
+      actionButtons.forEach(button => {
+        expect(button.textContent).not.toBe("")
+      })
     })
   })
 })

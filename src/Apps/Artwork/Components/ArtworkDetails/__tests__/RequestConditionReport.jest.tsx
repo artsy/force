@@ -1,5 +1,5 @@
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { screen } from "@testing-library/react"
+import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { Toasts, ToastsProvider } from "@artsy/palette"
 import { RequestConditionReportFragmentContainer } from "Apps/Artwork/Components/ArtworkDetails/RequestConditionReport"
 import { useAuthDialog } from "Components/AuthDialog"
@@ -12,7 +12,6 @@ import {
   MockPayloadGenerator,
   createMockEnvironment,
 } from "relay-test-utils"
-import { RequestConditionReportTestPage } from "./Utils/RequestConditionReportTestPage"
 
 jest.unmock("react-relay")
 jest.mock("System/Hooks/useSystemContext")
@@ -89,24 +88,22 @@ describe("RequestConditionReport", () => {
   })
 
   it("requests a condition report and tracks click event", async () => {
-    const { container } = renderWithRelay(
+    renderWithRelay(
       {
         Artwork: () => artwork,
       },
       {},
       relayEnv,
     )
-    const page = new RequestConditionReportTestPage({
-      find: selector => container.querySelector(selector),
-      text: () => container.textContent || "",
-    } as any)
 
-    await page.clickRequestConditionReportButton()
+    const requestButton = screen.getByText("Request condition report")
+    fireEvent.click(requestButton)
 
-    relayEnv.mock.resolveMostRecentOperation(operation =>
-      MockPayloadGenerator.generate(operation),
-    )
-    await page.update()
+    await waitFor(() => {
+      relayEnv.mock.resolveMostRecentOperation(operation =>
+        MockPayloadGenerator.generate(operation),
+      )
+    })
 
     expect(trackEvent).toBeCalledWith({
       action_type:
@@ -114,28 +111,34 @@ describe("RequestConditionReport", () => {
       subject: DeprecatedAnalyticsSchema.Subject.RequestConditionReport,
     })
 
-    expect(screen.getByText("Condition report requested")).toBeInTheDocument()
+    await waitFor(() => {
+      expect(screen.getByText("Condition report requested")).toBeInTheDocument()
+    })
   })
 
   it("shows a toast if the mutation fails", async () => {
-    const { container } = renderWithRelay(
+    renderWithRelay(
       {
         Artwork: () => artwork,
       },
       {},
       relayEnv,
     )
-    const page = new RequestConditionReportTestPage({
-      find: selector => container.querySelector(selector),
-      text: () => container.textContent || "",
-    } as any)
 
-    await page.clickRequestConditionReportButton()
+    const requestButton = screen.getByText("Request condition report")
+    fireEvent.click(requestButton)
 
-    relayEnv.mock.rejectMostRecentOperation(() => new Error("Error"))
-    await page.update()
+    await waitFor(() => {
+      relayEnv.mock.rejectMostRecentOperation(() => new Error("Error"))
+    })
 
-    expect(screen.getByText("Something went wrong")).toBeInTheDocument()
+    await waitFor(() => {
+      expect(
+        screen.getByText(
+          "Something went wrong. Please try again or contact support@artsy.net.",
+        ),
+      ).toBeInTheDocument()
+    })
   })
 
   describe("when unauthenticated", () => {
@@ -150,25 +153,24 @@ describe("RequestConditionReport", () => {
       })
 
       me = null
-      const { container } = renderWithRelay(
+      renderWithRelay(
         {
           Artwork: () => artwork,
         },
         {},
         relayEnv,
       )
-      const page = new RequestConditionReportTestPage({
-        find: selector => container.querySelector(selector),
-        text: () => container.textContent || "",
-      } as any)
 
-      await page.clickLogInButton()
+      const loginButton = screen.getByText("Log in to request")
+      fireEvent.click(loginButton)
 
-      expect(showAuthDialog).toHaveBeenCalledWith({
-        analytics: {
-          contextModule: "aboutTheWork",
-          intent: "requestConditionReport",
-        },
+      await waitFor(() => {
+        expect(showAuthDialog).toHaveBeenCalledWith({
+          analytics: {
+            contextModule: "aboutTheWork",
+            intent: "requestConditionReport",
+          },
+        })
       })
 
       expect(trackEvent).toHaveBeenCalledWith({

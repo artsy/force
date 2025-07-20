@@ -2,7 +2,7 @@ import { PhotoDropzone } from "Components/PhotoUpload/Components/PhotoDropzone"
 import { MBSize } from "Components/PhotoUpload/Utils/fileUtils"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { MediaContextProvider } from "Utils/Responsive"
-import { render, screen, fireEvent } from "@testing-library/react"
+import { render, screen, fireEvent, waitFor } from "@testing-library/react"
 import { Formik } from "formik"
 
 const validImage = {
@@ -130,19 +130,21 @@ describe("PhotoDropzone", () => {
 
       await flushPromiseQueue()
 
-      expect(onDropMock).not.toHaveBeenCalled()
-      expect(onRejectMock).toHaveBeenCalled()
-      expect(onRejectMock).toHaveBeenCalledWith([
-        {
-          file: tooBigImage,
-          errors: [
-            {
-              message: "",
-              code: "total-size-limit",
-            },
-          ],
-        },
-      ])
+      await waitFor(() => {
+        expect(onDropMock).not.toHaveBeenCalled()
+        expect(onRejectMock).toHaveBeenCalled()
+        expect(onRejectMock).toHaveBeenCalledWith([
+          {
+            file: tooBigImage,
+            errors: [
+              {
+                message: "",
+                code: "total-size-limit",
+              },
+            ],
+          },
+        ])
+      })
     })
 
     it("rejects too big pdf files", async () => {
@@ -160,20 +162,25 @@ describe("PhotoDropzone", () => {
 
       await flushPromiseQueue()
 
-      expect(onDropMock).not.toHaveBeenCalled()
-      expect(onRejectMock).toHaveBeenCalled()
-      expect(onRejectMock).toHaveBeenCalledWith([
-        {
-          file: tooBigPdf,
-          errors: [
-            {
-              message:
-                "File type must be one of image/jpeg, image/png, image/heic",
-              code: "file-invalid-type",
-            },
-          ],
-        },
-      ])
+      await waitFor(() => {
+        expect(onDropMock).not.toHaveBeenCalled()
+        expect(onRejectMock).toHaveBeenCalled()
+        // Check the last call to onRejectMock
+        const lastCall =
+          onRejectMock.mock.calls[onRejectMock.mock.calls.length - 1]
+        expect(lastCall[0]).toEqual([
+          {
+            file: tooBigPdf,
+            errors: [
+              {
+                message:
+                  "File type must be one of image/jpeg, image/png, image/heic",
+                code: "file-invalid-type",
+              },
+            ],
+          },
+        ])
+      })
     })
 
     it("rejects image over size limit", async () => {
@@ -191,12 +198,13 @@ describe("PhotoDropzone", () => {
 
       await flushPromiseQueue()
 
-      expect(onDropMock).toHaveBeenCalled()
-
-      expect(onDropMock).toHaveBeenCalledWith(
-        [...Array(5)].map(() => validImage),
-      )
-      expect(onRejectMock).toHaveBeenCalled()
+      await waitFor(() => {
+        expect(onDropMock).toHaveBeenCalled()
+        expect(onDropMock).toHaveBeenCalledWith(
+          [...Array(5)].map(() => validImage),
+        )
+        expect(onRejectMock).toHaveBeenCalled()
+      })
       expect(onRejectMock).toHaveBeenCalledWith([
         {
           file: validImage,
@@ -252,20 +260,22 @@ describe("PhotoDropzone", () => {
 
       await flushPromiseQueue()
 
-      expect(onDropMock).not.toHaveBeenCalled()
-      expect(onRejectMock).toHaveBeenCalled()
-      expect(onRejectMock).toHaveBeenCalledWith(
-        [...Array(3)].map(() => ({
-          file: pdfFile,
-          errors: [
-            {
-              message:
-                "File type must be one of image/jpeg, image/png, image/heic",
-              code: "file-invalid-type",
-            },
-          ],
-        })),
-      )
+      await waitFor(() => {
+        expect(onDropMock).not.toHaveBeenCalled()
+        expect(onRejectMock).toHaveBeenCalled()
+        expect(onRejectMock).toHaveBeenCalledWith(
+          [...Array(3)].map(() => ({
+            file: pdfFile,
+            errors: [
+              {
+                message:
+                  "File type must be one of image/jpeg, image/png, image/heic",
+                code: "file-invalid-type",
+              },
+            ],
+          })),
+        )
+      })
     })
 
     it("rejects too big files", async () => {
@@ -281,19 +291,24 @@ describe("PhotoDropzone", () => {
 
       await flushPromiseQueue()
 
-      expect(onDropMock).not.toHaveBeenCalled()
-      expect(onRejectMock).toHaveBeenCalled()
-      expect(onRejectMock).toHaveBeenCalledWith([
-        {
-          file: tooBigImage,
-          errors: [
-            {
-              message: "",
-              code: "total-size-limit",
-            },
-          ],
-        },
-      ])
+      await waitFor(() => {
+        expect(onDropMock).not.toHaveBeenCalled()
+        expect(onRejectMock).toHaveBeenCalled()
+        // Check the last call to onRejectMock
+        const lastCall =
+          onRejectMock.mock.calls[onRejectMock.mock.calls.length - 1]
+        expect(lastCall[0]).toEqual([
+          {
+            file: tooBigImage,
+            errors: [
+              {
+                message: "",
+                code: "total-size-limit",
+              },
+            ],
+          },
+        ])
+      })
     })
 
     it("rejects too big pdf files", async () => {
@@ -309,20 +324,22 @@ describe("PhotoDropzone", () => {
 
       await flushPromiseQueue()
 
-      expect(onDropMock).not.toHaveBeenCalled()
-      expect(onRejectMock).toHaveBeenCalled()
-      expect(onRejectMock).toHaveBeenCalledWith([
-        {
-          file: tooBigPdf,
-          errors: [
-            {
-              message:
-                "File type must be one of image/jpeg, image/png, image/heic",
-              code: "file-invalid-type",
-            },
-          ],
-        },
-      ])
+      await waitFor(() => {
+        expect(onDropMock).not.toHaveBeenCalled()
+        expect(onRejectMock).toHaveBeenCalled()
+        expect(onRejectMock).toHaveBeenCalledWith([
+          {
+            file: tooBigPdf,
+            errors: [
+              {
+                message:
+                  "File type must be one of image/jpeg, image/png, image/heic",
+                code: "file-invalid-type",
+              },
+            ],
+          },
+        ])
+      })
     })
 
     it("rejects image over size limit", async () => {
@@ -338,23 +355,27 @@ describe("PhotoDropzone", () => {
 
       await flushPromiseQueue()
 
-      expect(onDropMock).toHaveBeenCalled()
-
-      expect(onDropMock).toHaveBeenCalledWith(
-        [...Array(5)].map(() => validImage),
-      )
-      expect(onRejectMock).toHaveBeenCalled()
-      expect(onRejectMock).toHaveBeenCalledWith([
-        {
-          file: validImage,
-          errors: [
-            {
-              message: "",
-              code: "total-size-limit",
-            },
-          ],
-        },
-      ])
+      await waitFor(() => {
+        expect(onDropMock).toHaveBeenCalled()
+        expect(onDropMock).toHaveBeenCalledWith(
+          [...Array(5)].map(() => validImage),
+        )
+        expect(onRejectMock).toHaveBeenCalled()
+        // Check the last call to onRejectMock
+        const lastCall =
+          onRejectMock.mock.calls[onRejectMock.mock.calls.length - 1]
+        expect(lastCall[0]).toEqual([
+          {
+            file: validImage,
+            errors: [
+              {
+                message: "",
+                code: "total-size-limit",
+              },
+            ],
+          },
+        ])
+      })
     })
   })
 })
