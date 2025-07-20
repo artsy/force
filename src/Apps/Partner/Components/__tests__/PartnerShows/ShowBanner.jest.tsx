@@ -14,7 +14,7 @@ const { renderWithRelay } = setupTestWrapperTL({
     )
   },
   query: graphql`
-    query ShowBanner_Test_Query @relay_test_operation {
+    query ShowBannerTestQuery @relay_test_operation {
       partner(id: "white-cube") @principalField {
         showsConnection(first: 1) {
           edges {

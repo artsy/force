@@ -1,6 +1,6 @@
 import { AuctionDetailsFragmentContainer } from "Apps/Auction/Components/AuctionDetails/AuctionDetails"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import type { AuctionDetailsTestQuery } from "__generated__/AuctionDetailsTestQuery.graphql"
+import type { AuctionDetailsQuery } from "__generated__/AuctionDetailsQuery.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { screen } from "@testing-library/react"
@@ -17,12 +17,12 @@ jest.mock("../AuctionInfoSidebar", () => ({
 describe("AuctionDetails", () => {
   const mockUseTracking = useTracking as jest.Mock
 
-  const { renderWithRelay } = setupTestWrapperTL<AuctionDetailsTestQuery>({
+  const { renderWithRelay } = setupTestWrapperTL<AuctionDetailsQuery>({
     Component: (props: any) => {
       return <AuctionDetailsFragmentContainer {...props} />
     },
     query: graphql`
-      query AuctionDetailsTestQuery @relay_test_operation {
+      query AuctionDetailsQuery @relay_test_operation {
         sale(id: "foo") {
           ...AuctionDetails_sale
         }

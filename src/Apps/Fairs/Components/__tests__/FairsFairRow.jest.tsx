@@ -1,16 +1,16 @@
 import { FairsFairRowFragmentContainer } from "Apps/Fairs/Components/FairsFairRow"
 import { screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import type { FairsFairRow_Test_Query } from "__generated__/FairsFairRow_Test_Query.graphql"
+import type { FairsFairRowTestQuery } from "__generated__/FairsFairRowTestQuery.graphql"
 import { DateTime } from "luxon"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 
-const { renderWithRelay } = setupTestWrapperTL<FairsFairRow_Test_Query>({
+const { renderWithRelay } = setupTestWrapperTL<FairsFairRowTestQuery>({
   Component: ({ fair }) => <FairsFairRowFragmentContainer fair={fair!} />,
   query: graphql`
-    query FairsFairRow_Test_Query @relay_test_operation {
+    query FairsFairRowTestQuery @relay_test_operation {
       fair(id: "example") {
         ...FairsFairRow_fair
       }

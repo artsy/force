@@ -33,7 +33,7 @@ describe("IdentityVerification route", () => {
       )
     },
     query: graphql`
-      query IdentityVerificationAppTestQuery
+      query IdentityVerificationAppQuery
       @raw_response_type
       @relay_test_operation {
         identityVerification(id: "identity-verification-id") {

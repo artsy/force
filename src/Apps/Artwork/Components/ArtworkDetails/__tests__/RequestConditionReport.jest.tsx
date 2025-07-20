@@ -53,7 +53,7 @@ describe("RequestConditionReport", () => {
       </ToastsProvider>
     ),
     query: graphql`
-      query RequestConditionReportTestQuery
+      query RequestConditionReportJestQuery
       @raw_response_type
       @relay_test_operation {
         me {

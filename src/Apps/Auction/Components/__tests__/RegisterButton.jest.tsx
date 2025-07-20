@@ -3,7 +3,7 @@ import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
 import { useAuthDialog } from "Components/AuthDialog"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useRouter } from "System/Hooks/useRouter"
-import type { RegisterButton_Test_Query } from "__generated__/RegisterButton_Test_Query.graphql"
+import type { RegisterButtonTestQuery } from "__generated__/RegisterButtonTestQuery.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { screen } from "@testing-library/react"
@@ -20,10 +20,10 @@ describe("RegisterButton", () => {
   const mockUseAuctionTracking = useAuctionTracking as jest.Mock
   const mockUseRouter = useRouter as jest.Mock
 
-  const { renderWithRelay } = setupTestWrapperTL<RegisterButton_Test_Query>({
+  const { renderWithRelay } = setupTestWrapperTL<RegisterButtonTestQuery>({
     Component: RegisterButtonFragmentContainer,
     query: graphql`
-      query RegisterButton_Test_Query {
+      query RegisterButtonTestQuery {
         sale(id: "foo") {
           ...RegisterButton_sale
         }

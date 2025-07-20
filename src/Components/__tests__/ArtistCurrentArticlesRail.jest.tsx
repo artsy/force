@@ -1,6 +1,6 @@
 import { ArtistCurrentArticlesRailFragmentContainer } from "Components/ArtistCurrentArticlesRail"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import type { ArtistCurrentArticlesRail_Test_Query } from "__generated__/ArtistCurrentArticlesRail_Test_Query.graphql"
+import type { ArtistCurrentArticlesRailTestQuery } from "__generated__/ArtistCurrentArticlesRailTestQuery.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { screen } from "@testing-library/react"
@@ -11,10 +11,10 @@ jest.mock("react-tracking")
 
 describe("ArtistCurrentArticlesRail", () => {
   const { renderWithRelay } =
-    setupTestWrapperTL<ArtistCurrentArticlesRail_Test_Query>({
+    setupTestWrapperTL<ArtistCurrentArticlesRailTestQuery>({
       Component: ArtistCurrentArticlesRailFragmentContainer,
       query: graphql`
-        query ArtistCurrentArticlesRail_Test_Query @relay_test_operation {
+        query ArtistCurrentArticlesRailTestQuery @relay_test_operation {
           artist(id: "test") {
             ...ArtistCurrentArticlesRail_artist
           }

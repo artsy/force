@@ -2,7 +2,7 @@ import { waitFor, screen } from "@testing-library/react"
 import { FairOverviewFragmentContainer } from "Apps/Fair/Routes/FairOverview"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useRouter } from "System/Hooks/useRouter"
-import type { FairOverview_Test_Query } from "__generated__/FairOverview_Test_Query.graphql"
+import type { FairOverviewTestQuery } from "__generated__/FairOverviewTestQuery.graphql"
 import { graphql } from "react-relay"
 
 const mockJumpTo = jest.fn()
@@ -14,10 +14,10 @@ jest.mock("Utils/Hooks/useJump", () => ({
   Jump: () => null,
 }))
 
-const { renderWithRelay } = setupTestWrapperTL<FairOverview_Test_Query>({
+const { renderWithRelay } = setupTestWrapperTL<FairOverviewTestQuery>({
   Component: ({ fair }) => <FairOverviewFragmentContainer fair={fair!} />,
   query: graphql`
-    query FairOverview_Test_Query @relay_test_operation {
+    query FairOverviewTestQuery @relay_test_operation {
       fair(id: "example") {
         ...FairOverview_fair
       }

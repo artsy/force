@@ -10,7 +10,7 @@ import {
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { screen } from "@testing-library/react"
-import type { GeneArtworkFilter_Query } from "__generated__/GeneArtworkFilter_Query.graphql"
+import type { GeneArtworkFilterTestQuery } from "__generated__/GeneArtworkFilterTestQuery.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 
@@ -27,14 +27,14 @@ jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
 }))
 
-const { renderWithRelay } = setupTestWrapperTL<GeneArtworkFilter_Query>({
+const { renderWithRelay } = setupTestWrapperTL<GeneArtworkFilterTestQuery>({
   Component: ({ gene }) => (
     <MockBoot user={{ id: "percy-z" }}>
       <GeneArtworkFilterRefetchContainer gene={gene!} />
     </MockBoot>
   ),
   query: graphql`
-    query GeneArtworkFilter_Query($slug: String!) @relay_test_operation {
+    query GeneArtworkFilterTestQuery($slug: String!) @relay_test_operation {
       gene(id: $slug) {
         ...GeneArtworkFilter_gene
       }

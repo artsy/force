@@ -55,7 +55,7 @@ const getWrapperWithBreakpoint = (breakpoint: Breakpoint) =>
       )
     },
     query: graphql`
-      query ArtworkActions_Test_Query @relay_test_operation {
+      query ArtworkActionsTestQuery @relay_test_operation {
         artwork(id: "example") {
           ...ArtworkActions_artwork
         }

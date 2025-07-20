@@ -24,8 +24,7 @@ const getWrapperWithResponsibilityMessage = (showDisclaimer?: boolean) =>
       )
     },
     query: graphql`
-      query ArtworkSidebarClassificationsModal_test_Query
-      @relay_test_operation {
+      query ArtworkSidebarClassificationsModalTestQuery @relay_test_operation {
         viewer {
           ...ArtworkSidebarClassificationsModal_viewer
         }

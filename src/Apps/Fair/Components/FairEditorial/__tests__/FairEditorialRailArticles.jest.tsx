@@ -1,19 +1,19 @@
 import { FairEditorialRailArticlesFragmentContainer } from "Apps/Fair/Components/FairEditorial/FairEditorialRailArticles"
 import { screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import type { FairEditorialRailArticles_Test_Query } from "__generated__/FairEditorialRailArticles_Test_Query.graphql"
+import type { FairEditorialRailArticlesTestQuery } from "__generated__/FairEditorialRailArticlesTestQuery.graphql"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 
 describe("FairEditorialRailArticles", () => {
   const { renderWithRelay } =
-    setupTestWrapperTL<FairEditorialRailArticles_Test_Query>({
+    setupTestWrapperTL<FairEditorialRailArticlesTestQuery>({
       Component: ({ fair }) => (
         <FairEditorialRailArticlesFragmentContainer fair={fair!} />
       ),
       query: graphql`
-        query FairEditorialRailArticles_Test_Query @relay_test_operation {
+        query FairEditorialRailArticlesTestQuery @relay_test_operation {
           fair(id: "test") {
             ...FairEditorialRailArticles_fair
           }

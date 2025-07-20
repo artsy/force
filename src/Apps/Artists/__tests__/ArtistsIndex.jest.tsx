@@ -2,13 +2,13 @@ import { screen } from "@testing-library/react"
 import { ArtistsIndexFragmentContainer } from "Apps/Artists/Routes/ArtistsIndex"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import type { ArtistsIndexFragmentContainer_Test_Query } from "__generated__/ArtistsIndexFragmentContainer_Test_Query.graphql"
+import type { ArtistsIndexFragmentContainerTestQuery } from "__generated__/ArtistsIndexFragmentContainerTestQuery.graphql"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 
 const { renderWithRelay } =
-  setupTestWrapperTL<ArtistsIndexFragmentContainer_Test_Query>({
+  setupTestWrapperTL<ArtistsIndexFragmentContainerTestQuery>({
     Component: props => (
       <MockBoot>
         {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
@@ -16,7 +16,7 @@ const { renderWithRelay } =
       </MockBoot>
     ),
     query: graphql`
-      query ArtistsIndexFragmentContainer_Test_Query @relay_test_operation {
+      query ArtistsIndexFragmentContainerTestQuery @relay_test_operation {
         featuredArtists: orderedSets(key: "homepage:featured-artists") {
           ...ArtistsIndex_featuredArtists
         }

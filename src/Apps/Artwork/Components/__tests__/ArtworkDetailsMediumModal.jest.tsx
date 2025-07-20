@@ -1,7 +1,7 @@
 import { screen } from "@testing-library/react"
 import { ArtworkDetailsMediumModalFragmentContainer } from "Apps/Artwork/Components/ArtworkDetailsMediumModal"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import type { ArtworkDetailsMediumModal_Test_Query } from "__generated__/ArtworkDetailsMediumModal_Test_Query.graphql"
+import type { ArtworkDetailsMediumModalTestQuery } from "__generated__/ArtworkDetailsMediumModalTestQuery.graphql"
 import { graphql } from "react-relay"
 
 jest.mock("@artsy/palette", () => {
@@ -14,7 +14,7 @@ jest.mock("@artsy/palette", () => {
 jest.unmock("react-relay")
 
 const { renderWithRelay } =
-  setupTestWrapperTL<ArtworkDetailsMediumModal_Test_Query>({
+  setupTestWrapperTL<ArtworkDetailsMediumModalTestQuery>({
     Component: props => {
       if (!props.artwork) return null
 
@@ -27,7 +27,7 @@ const { renderWithRelay } =
       )
     },
     query: graphql`
-      query ArtworkDetailsMediumModal_Test_Query @relay_test_operation {
+      query ArtworkDetailsMediumModalTestQuery @relay_test_operation {
         artwork(id: "xxx") {
           ...ArtworkDetailsMediumModal_artwork
         }

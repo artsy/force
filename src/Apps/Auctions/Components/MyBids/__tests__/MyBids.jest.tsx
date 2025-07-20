@@ -4,6 +4,7 @@ import { graphql } from "react-relay"
 import { useTracking as baseUseTracking } from "react-tracking"
 import { screen } from "@testing-library/react"
 import { fireEvent } from "@testing-library/react"
+import type { MyBidsTestQuery } from "__generated__/MyBidsTestQuery.graphql"
 
 jest.mock("react-tracking")
 jest.unmock("react-relay")
@@ -12,12 +13,12 @@ describe("MyBids", () => {
   const useTracking = baseUseTracking as jest.Mock
   const trackEvent = jest.fn()
 
-  const { renderWithRelay } = setupTestWrapperTL({
+  const { renderWithRelay } = setupTestWrapperTL<MyBidsTestQuery>({
     Component: (props: any) => {
       return <MyBidsFragmentContainer me={props.me} />
     },
     query: graphql`
-      query MyBids_Test_Query @relay_test_operation {
+      query MyBidsTestQuery @relay_test_operation {
         me {
           ...MyBids_me
         }

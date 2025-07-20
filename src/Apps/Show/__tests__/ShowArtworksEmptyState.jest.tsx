@@ -1,22 +1,23 @@
 import { screen } from "@testing-library/react"
 import { ShowArtworksEmptyStateFragmentContainer } from "Apps/Show/Components/ShowArtworksEmptyState"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import type { ShowArtworksEmptyState_Test_Query } from "__generated__/ShowArtworksEmptyState_Test_Query.graphql"
+import type { ShowArtworksEmptyStateTestQuery } from "__generated__/ShowArtworksEmptyStateTestQuery.graphql"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 
-const { renderWithRelay } =
-  setupTestWrapperTL<ShowArtworksEmptyState_Test_Query>({
+const { renderWithRelay } = setupTestWrapperTL<ShowArtworksEmptyStateTestQuery>(
+  {
     Component: ShowArtworksEmptyStateFragmentContainer,
     query: graphql`
-      query ShowArtworksEmptyState_Test_Query @relay_test_operation {
+      query ShowArtworksEmptyStateTestQuery @relay_test_operation {
         show(id: "example-show-id") {
           ...ShowArtworksEmptyState_show
         }
       }
     `,
-  })
+  },
+)
 
 describe("ShowArtworksEmptyState", () => {
   describe("fair booth", () => {

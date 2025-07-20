@@ -1,6 +1,6 @@
 import { NavigationTabsFragmentContainer as NavigationTabs } from "Apps/Partner/Components/NavigationTabs"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import type { NavigationTabs_Test_PartnerQuery } from "__generated__/NavigationTabs_Test_PartnerQuery.graphql"
+import type { NavigationTabsTestPartnerQuery } from "__generated__/NavigationTabsTestPartnerQuery.graphql"
 import { screen } from "@testing-library/react"
 import { graphql } from "react-relay"
 
@@ -10,21 +10,20 @@ jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => false,
 }))
 
-const { renderWithRelay } =
-  setupTestWrapperTL<NavigationTabs_Test_PartnerQuery>({
-    Component: ({ partner }: any) => {
-      return <NavigationTabs partner={partner} />
-    },
-    query: graphql`
-      query NavigationTabs_Test_PartnerQuery
-      @raw_response_type
-      @relay_test_operation {
-        partner(id: "white-cube") {
-          ...NavigationTabs_partner
-        }
+const { renderWithRelay } = setupTestWrapperTL<NavigationTabsTestPartnerQuery>({
+  Component: ({ partner }: any) => {
+    return <NavigationTabs partner={partner} />
+  },
+  query: graphql`
+    query NavigationTabsTestPartnerQuery
+    @raw_response_type
+    @relay_test_operation {
+      partner(id: "white-cube") {
+        ...NavigationTabs_partner
       }
-    `,
-  })
+    }
+  `,
+})
 
 describe("PartnerNavigationTabs", () => {
   it("renders all tabs by default", () => {

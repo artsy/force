@@ -1,7 +1,7 @@
 import { FairHeaderFragmentContainer } from "Apps/Fair/Components/FairHeader"
 import { screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import type { FairHeader_Test_Query } from "__generated__/FairHeader_Test_Query.graphql"
+import type { FairHeaderTestQuery } from "__generated__/FairHeaderTestQuery.graphql"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
@@ -10,10 +10,10 @@ jest.mock("Components/HeaderIcon", () => ({
   HeaderIcon: () => null,
 }))
 
-const { renderWithRelay } = setupTestWrapperTL<FairHeader_Test_Query>({
+const { renderWithRelay } = setupTestWrapperTL<FairHeaderTestQuery>({
   Component: ({ fair }) => <FairHeaderFragmentContainer fair={fair!} />,
   query: graphql`
-    query FairHeader_Test_Query @relay_test_operation {
+    query FairHeaderTestQuery @relay_test_operation {
       fair(id: "example") {
         ...FairHeader_fair
       }

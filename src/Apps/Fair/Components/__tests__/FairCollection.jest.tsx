@@ -2,7 +2,7 @@ import { FairCollectionFragmentContainer } from "Apps/Fair/Components/FairCollec
 import { fireEvent, screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { AnalyticsCombinedContextProvider } from "System/Contexts/AnalyticsContext"
-import type { FairCollection_Query } from "__generated__/FairCollection_Query.graphql"
+import type { FairCollectionQuery } from "__generated__/FairCollectionQuery.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 
@@ -12,7 +12,7 @@ jest.mock("react-tracking")
 describe("FairCollection", () => {
   let trackEvent
 
-  const { renderWithRelay } = setupTestWrapperTL<FairCollection_Query>({
+  const { renderWithRelay } = setupTestWrapperTL<FairCollectionQuery>({
     Component: ({ marketingCollection: collection }) => {
       return (
         <AnalyticsCombinedContextProvider
@@ -27,7 +27,7 @@ describe("FairCollection", () => {
       )
     },
     query: graphql`
-      query FairCollection_Query($slug: String!)
+      query FairCollectionQuery($slug: String!)
       @raw_response_type
       @relay_test_operation {
         marketingCollection(slug: $slug) {

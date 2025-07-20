@@ -1,20 +1,20 @@
 import { DedicatedArticlesBreadcrumbsFragmentContainer } from "Apps/FairOrginizer/Components/DedicatedArticlesBreadcrumbs"
 import { screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import type { DedicatedArticlesBreadcrumbs_Test_Query } from "__generated__/DedicatedArticlesBreadcrumbs_Test_Query.graphql"
+import type { DedicatedArticlesBreadcrumbsTestQuery } from "__generated__/DedicatedArticlesBreadcrumbsTestQuery.graphql"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 
 const { renderWithRelay } =
-  setupTestWrapperTL<DedicatedArticlesBreadcrumbs_Test_Query>({
+  setupTestWrapperTL<DedicatedArticlesBreadcrumbsTestQuery>({
     Component: ({ fairOrganizer }) => (
       <DedicatedArticlesBreadcrumbsFragmentContainer
         fairOrganizer={fairOrganizer!}
       />
     ),
     query: graphql`
-      query DedicatedArticlesBreadcrumbs_Test_Query @relay_test_operation {
+      query DedicatedArticlesBreadcrumbsTestQuery @relay_test_operation {
         fairOrganizer(id: "example") {
           ...DedicatedArticlesBreadcrumbs_fairOrganizer
         }

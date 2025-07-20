@@ -6,7 +6,7 @@ import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { render, screen } from "@testing-library/react"
 import { useRouter } from "System/Hooks/useRouter"
-import type { AuctionConfirmRegistrationRouteTestQuery } from "__generated__/AuctionConfirmRegistrationRouteTestQuery.graphql"
+import type { AuctionConfirmRegistrationRouteQuery } from "__generated__/AuctionConfirmRegistrationRouteQuery.graphql"
 import { Formik } from "formik"
 import { graphql } from "react-relay"
 
@@ -45,12 +45,12 @@ jest.mock("formik", () => ({
 
 describe("AuctionConfirmRegistrationRoute", () => {
   const { renderWithRelay } =
-    setupTestWrapperTL<AuctionConfirmRegistrationRouteTestQuery>({
+    setupTestWrapperTL<AuctionConfirmRegistrationRouteQuery>({
       Component: (props: any) => {
         return <AuctionConfirmRegistrationRouteFragmentContainer {...props} />
       },
       query: graphql`
-        query AuctionConfirmRegistrationRouteTestQuery @relay_test_operation {
+        query AuctionConfirmRegistrationRouteQuery @relay_test_operation {
           me {
             ...AuctionConfirmRegistrationRoute_me
           }

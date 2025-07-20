@@ -1,7 +1,7 @@
 import { ShowViewingRoomFragmentContainer as ShowViewingRoom } from "Apps/Show/Components/ShowViewingRoom"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { AnalyticsCombinedContextProvider } from "System/Contexts/AnalyticsContext"
-import type { ShowViewingRoom_Test_Query } from "__generated__/ShowViewingRoom_Test_Query.graphql"
+import type { ShowViewingRoomTestQuery } from "__generated__/ShowViewingRoomTestQuery.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { screen } from "@testing-library/react"
@@ -10,7 +10,7 @@ import { fireEvent } from "@testing-library/react"
 jest.mock("react-tracking")
 jest.unmock("react-relay")
 
-const { renderWithRelay } = setupTestWrapperTL<ShowViewingRoom_Test_Query>({
+const { renderWithRelay } = setupTestWrapperTL<ShowViewingRoomTestQuery>({
   Component: props => {
     return (
       <AnalyticsCombinedContextProvider
@@ -23,7 +23,7 @@ const { renderWithRelay } = setupTestWrapperTL<ShowViewingRoom_Test_Query>({
     )
   },
   query: graphql`
-    query ShowViewingRoom_Test_Query @relay_test_operation {
+    query ShowViewingRoomTestQuery @relay_test_operation {
       show(id: "example-show-id") {
         ...ShowViewingRoom_show
       }

@@ -3,7 +3,7 @@ import type { Breakpoint } from "@artsy/palette"
 import { ViewingRoomStatementRouteFragmentContainer } from "Apps/ViewingRoom/Routes/Statement/ViewingRoomStatementRoute"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import type { ViewingRoomStatementRoute_Test_Query$rawResponse } from "__generated__/ViewingRoomStatementRoute_Test_Query.graphql"
+import type { ViewingRoomStatementRouteTestQuery } from "__generated__/ViewingRoomStatementRouteTestQuery.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 
@@ -45,7 +45,7 @@ describe("ViewingRoomStatementRoute", () => {
       )
     },
     query: graphql`
-      query ViewingRoomStatementRoute_Test_Query($slug: ID!)
+      query ViewingRoomStatementRouteTestQuery($slug: ID!)
       @raw_response_type
       @relay_test_operation {
         viewingRoom(id: $slug) {
@@ -215,7 +215,7 @@ describe("ViewingRoomStatementRoute", () => {
   })
 })
 
-const ViewingRoomStatmentRouteFixture: ViewingRoomStatementRoute_Test_Query$rawResponse =
+const ViewingRoomStatmentRouteFixture: ViewingRoomStatementRouteTestQuery$rawResponse =
   {
     viewingRoom: {
       introStatement:

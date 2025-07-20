@@ -10,7 +10,7 @@ import {
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { screen, within } from "@testing-library/react"
-import type { TagArtworkFilter_Query } from "__generated__/TagArtworkFilter_Query.graphql"
+import type { TagArtworkFilterTestQuery } from "__generated__/TagArtworkFilterTestQuery.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 
@@ -27,14 +27,14 @@ jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
 }))
 
-const { renderWithRelay } = setupTestWrapperTL<TagArtworkFilter_Query>({
+const { renderWithRelay } = setupTestWrapperTL<TagArtworkFilterTestQuery>({
   Component: ({ tag }) => (
     <MockBoot user={{ id: "percy-z" }}>
       <TagArtworkFilterRefetchContainer tag={tag!} />
     </MockBoot>
   ),
   query: graphql`
-    query TagArtworkFilter_Query($slug: String!) @relay_test_operation {
+    query TagArtworkFilterTestQuery($slug: String!) @relay_test_operation {
       tag(id: $slug) {
         ...TagArtworkFilter_tag
       }

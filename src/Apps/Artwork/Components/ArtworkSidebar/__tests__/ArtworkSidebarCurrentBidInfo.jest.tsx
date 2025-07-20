@@ -39,7 +39,7 @@ describe("ArtworkSidebarCurrentBidInfo", () => {
       <ArtworkSidebarCurrentBidInfoFragmentContainer artwork={props.artwork!} />
     ),
     query: graphql`
-      query ArtworkSidebarCurrentBidInfo_Test_Query
+      query ArtworkSidebarCurrentBidInfoTestQuery
       @raw_response_type
       @relay_test_operation {
         artwork(id: "auction_artwork_estimate_premium") {

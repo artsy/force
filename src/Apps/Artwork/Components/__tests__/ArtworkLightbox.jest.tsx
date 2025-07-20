@@ -20,7 +20,7 @@ describe("ArtworkLightbox", () => {
         <ArtworkLightboxFragmentContainer {...props} {...passedProps} />
       ),
       query: graphql`
-        query ArtworkLightboxTestQuery {
+        query ArtworkLightboxQuery {
           artwork(id: "foo") {
             ...ArtworkLightbox_artwork
           }

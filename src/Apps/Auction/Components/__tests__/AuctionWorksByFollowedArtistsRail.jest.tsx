@@ -1,6 +1,6 @@
 import { AuctionWorksByFollowedArtistsRailFragmentContainer } from "Apps/Auction/Components/AuctionWorksByFollowedArtistsRail"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import type { AuctionWorksByFollowedArtistsRailTestQuery } from "__generated__/AuctionWorksByFollowedArtistsRailTestQuery.graphql"
+import type { AuctionWorksByFollowedArtistsRailQuery } from "__generated__/AuctionWorksByFollowedArtistsRailQuery.graphql"
 import { graphql } from "react-relay"
 import { screen } from "@testing-library/react"
 
@@ -8,12 +8,12 @@ jest.unmock("react-relay")
 
 describe("AuctionWorksByFollowedArtistsRail", () => {
   const { renderWithRelay } =
-    setupTestWrapperTL<AuctionWorksByFollowedArtistsRailTestQuery>({
+    setupTestWrapperTL<AuctionWorksByFollowedArtistsRailQuery>({
       Component: (props: any) => {
         return <AuctionWorksByFollowedArtistsRailFragmentContainer {...props} />
       },
       query: graphql`
-        query AuctionWorksByFollowedArtistsRailTestQuery {
+        query AuctionWorksByFollowedArtistsRailQuery {
           viewer {
             ...AuctionWorksByFollowedArtistsRail_viewer
           }

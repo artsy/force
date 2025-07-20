@@ -2,7 +2,7 @@ import { screen } from "@testing-library/react"
 import { ArtworkImageBrowserSmallFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkImageBrowserSmall"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import type { ArtworkImageBrowserSmall_Test_Query } from "__generated__/ArtworkImageBrowserSmall_Test_Query.graphql"
+import type { ArtworkImageBrowserSmallTestQuery } from "__generated__/ArtworkImageBrowserSmallTestQuery.graphql"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
@@ -11,7 +11,7 @@ jest.mock("react-tracking", () => ({
 }))
 
 const { renderWithRelay } =
-  setupTestWrapperTL<ArtworkImageBrowserSmall_Test_Query>({
+  setupTestWrapperTL<ArtworkImageBrowserSmallTestQuery>({
     Component: props => {
       if (!props.artwork) return null
 
@@ -27,7 +27,7 @@ const { renderWithRelay } =
       )
     },
     query: graphql`
-      query ArtworkImageBrowserSmall_Test_Query @relay_test_operation {
+      query ArtworkImageBrowserSmallTestQuery @relay_test_operation {
         artwork(id: "example") {
           ...ArtworkImageBrowserSmall_artwork
         }

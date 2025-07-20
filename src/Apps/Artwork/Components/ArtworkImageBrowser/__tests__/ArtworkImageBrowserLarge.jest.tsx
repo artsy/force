@@ -2,7 +2,7 @@ import { screen } from "@testing-library/react"
 import { ArtworkImageBrowserLargeFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkImageBrowserLarge"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import type { ArtworkImageBrowserLarge_Test_Query } from "__generated__/ArtworkImageBrowserLarge_Test_Query.graphql"
+import type { ArtworkImageBrowserLargeTestQuery } from "__generated__/ArtworkImageBrowserLargeTestQuery.graphql"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
@@ -11,7 +11,7 @@ jest.mock("react-tracking", () => ({
 }))
 
 const { renderWithRelay } =
-  setupTestWrapperTL<ArtworkImageBrowserLarge_Test_Query>({
+  setupTestWrapperTL<ArtworkImageBrowserLargeTestQuery>({
     Component: props => {
       if (!props.artwork) return null
 
@@ -29,7 +29,7 @@ const { renderWithRelay } =
       )
     },
     query: graphql`
-      query ArtworkImageBrowserLarge_Test_Query @relay_test_operation {
+      query ArtworkImageBrowserLargeTestQuery @relay_test_operation {
         artwork(id: "example") {
           ...ArtworkImageBrowserLarge_artwork
         }

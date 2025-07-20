@@ -1,15 +1,15 @@
 import { FairArticlesPaginationContainer } from "Apps/Fair/Routes/FairArticles"
 import { screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import type { FairArticles_test_Query } from "__generated__/FairArticles_test_Query.graphql"
+import type { FairArticlesTestQuery } from "__generated__/FairArticlesTestQuery.graphql"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 
-const { renderWithRelay } = setupTestWrapperTL<FairArticles_test_Query>({
+const { renderWithRelay } = setupTestWrapperTL<FairArticlesTestQuery>({
   Component: ({ fair }) => <FairArticlesPaginationContainer fair={fair!} />,
   query: graphql`
-    query FairArticles_test_Query($id: String!, $page: Int!)
+    query FairArticlesTestQuery($id: String!, $page: Int!)
     @relay_test_operation {
       fair(id: $id) {
         ...FairArticles_fair @arguments(page: $page)

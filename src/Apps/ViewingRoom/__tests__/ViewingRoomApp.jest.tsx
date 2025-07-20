@@ -5,11 +5,11 @@ import { MockBoot } from "DevTools/MockBoot"
 import { mockLocation } from "DevTools/mockLocation"
 import { renderRelayTree } from "DevTools/renderRelayTree"
 import { SystemContextProvider } from "System/Contexts/SystemContext"
-import type { ViewingRoomApp_ClosedTest_Query$rawResponse } from "__generated__/ViewingRoomApp_ClosedTest_Query.graphql"
-import type { ViewingRoomApp_DraftTest_Query$rawResponse } from "__generated__/ViewingRoomApp_DraftTest_Query.graphql"
-import type { ViewingRoomApp_LoggedOutTest_Query$rawResponse } from "__generated__/ViewingRoomApp_LoggedOutTest_Query.graphql"
-import type { ViewingRoomApp_OpenTest_Query$rawResponse } from "__generated__/ViewingRoomApp_OpenTest_Query.graphql"
-import type { ViewingRoomApp_ScheduledTest_Query$rawResponse } from "__generated__/ViewingRoomApp_ScheduledTest_Query.graphql"
+import type { ViewingRoomAppClosedTestQuery$rawResponse } from "__generated__/ViewingRoomAppClosedTestQuery.graphql"
+import type { ViewingRoomAppDraftTestQuery$rawResponse } from "__generated__/ViewingRoomAppDraftTestQuery.graphql"
+import type { ViewingRoomAppLoggedOutTestQuery$rawResponse } from "__generated__/ViewingRoomAppLoggedOutTestQuery.graphql"
+import type { ViewingRoomAppOpenTestQuery$rawResponse } from "__generated__/ViewingRoomAppOpenTestQuery.graphql"
+import type { ViewingRoomAppScheduledTestQuery$rawResponse } from "__generated__/ViewingRoomAppScheduledTestQuery.graphql"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
@@ -44,7 +44,7 @@ describe("ViewingRoomApp", () => {
 
     const getWrapper = async (
       breakpoint: Breakpoint = "lg",
-      response: ViewingRoomApp_DraftTest_Query$rawResponse = DraftViewingRoomAppFixture,
+      response: ViewingRoomAppDraftTestQuery$rawResponse = DraftViewingRoomAppFixture,
     ) => {
       return renderRelayTree({
         Component: ({ viewingRoom }) => {
@@ -60,7 +60,7 @@ describe("ViewingRoomApp", () => {
         },
         mockData: response,
         query: graphql`
-          query ViewingRoomApp_DraftTest_Query($slug: ID!)
+          query ViewingRoomAppDraftTestQuery($slug: ID!)
           @raw_response_type
           @relay_test_operation {
             viewingRoom(id: $slug) {
@@ -86,7 +86,7 @@ describe("ViewingRoomApp", () => {
   describe("with scheduled viewing room", () => {
     const getWrapper = async (
       breakpoint: Breakpoint = "lg",
-      response: ViewingRoomApp_ScheduledTest_Query$rawResponse = ScheduledViewingRoomAppFixture,
+      response: ViewingRoomAppScheduledTestQuery$rawResponse = ScheduledViewingRoomAppFixture,
     ) => {
       return renderRelayTree({
         Component: ({ viewingRoom }) => {
@@ -102,7 +102,7 @@ describe("ViewingRoomApp", () => {
         },
         mockData: response,
         query: graphql`
-          query ViewingRoomApp_ScheduledTest_Query($slug: ID!)
+          query ViewingRoomAppScheduledTestQuery($slug: ID!)
           @raw_response_type
           @relay_test_operation {
             viewingRoom(id: $slug) {
@@ -146,7 +146,7 @@ describe("ViewingRoomApp", () => {
   describe("with open viewing room", () => {
     const getWrapper = async (
       breakpoint: Breakpoint = "lg",
-      response: ViewingRoomApp_OpenTest_Query$rawResponse = OpenViewingRoomAppFixture,
+      response: ViewingRoomAppOpenTestQuery$rawResponse = OpenViewingRoomAppFixture,
     ) => {
       return renderRelayTree({
         Component: ({ viewingRoom }) => {
@@ -162,7 +162,7 @@ describe("ViewingRoomApp", () => {
         },
         mockData: response,
         query: graphql`
-          query ViewingRoomApp_OpenTest_Query($slug: ID!)
+          query ViewingRoomAppOpenTestQuery($slug: ID!)
           @raw_response_type
           @relay_test_operation {
             viewingRoom(id: $slug) {
@@ -218,7 +218,7 @@ describe("ViewingRoomApp", () => {
   describe("with closed viewing room", () => {
     const getWrapper = async (
       breakpoint: Breakpoint = "lg",
-      response: ViewingRoomApp_ClosedTest_Query$rawResponse = ClosedViewingRoomAppFixture,
+      response: ViewingRoomAppClosedTestQuery$rawResponse = ClosedViewingRoomAppFixture,
     ) => {
       return renderRelayTree({
         Component: ({ viewingRoom }) => {
@@ -234,7 +234,7 @@ describe("ViewingRoomApp", () => {
         },
         mockData: response,
         query: graphql`
-          query ViewingRoomApp_ClosedTest_Query($slug: ID!)
+          query ViewingRoomAppClosedTestQuery($slug: ID!)
           @raw_response_type
           @relay_test_operation {
             viewingRoom(id: $slug) {
@@ -278,7 +278,7 @@ describe("ViewingRoomApp", () => {
   describe("with logged out user", () => {
     const getWrapper = async (
       breakpoint: Breakpoint = "lg",
-      response: ViewingRoomApp_LoggedOutTest_Query$rawResponse = LoggedOutViewingRoomAppFixture,
+      response: ViewingRoomAppLoggedOutTestQuery$rawResponse = LoggedOutViewingRoomAppFixture,
     ) => {
       return renderRelayTree({
         Component: ({ viewingRoom }) => {
@@ -292,7 +292,7 @@ describe("ViewingRoomApp", () => {
         },
         mockData: response,
         query: graphql`
-          query ViewingRoomApp_LoggedOutTest_Query($slug: ID!)
+          query ViewingRoomAppLoggedOutTestQuery($slug: ID!)
           @raw_response_type
           @relay_test_operation {
             viewingRoom(id: $slug) {
@@ -315,7 +315,7 @@ describe("ViewingRoomApp", () => {
   })
 })
 
-const DraftViewingRoomAppFixture: ViewingRoomApp_DraftTest_Query$rawResponse = {
+const DraftViewingRoomAppFixture: ViewingRoomAppDraftTestQuery$rawResponse = {
   viewingRoom: {
     internalID: "example",
     href: "/viewing-room/example",
@@ -342,7 +342,7 @@ const DraftViewingRoomAppFixture: ViewingRoomApp_DraftTest_Query$rawResponse = {
   },
 }
 
-const ScheduledViewingRoomAppFixture: ViewingRoomApp_ScheduledTest_Query$rawResponse =
+const ScheduledViewingRoomAppFixture: ViewingRoomAppScheduledTestQuery$rawResponse =
   {
     viewingRoom: {
       internalID: "example",
@@ -370,7 +370,7 @@ const ScheduledViewingRoomAppFixture: ViewingRoomApp_ScheduledTest_Query$rawResp
     },
   }
 
-const OpenViewingRoomAppFixture: ViewingRoomApp_OpenTest_Query$rawResponse = {
+const OpenViewingRoomAppFixture: ViewingRoomAppOpenTestQuery$rawResponse = {
   viewingRoom: {
     internalID: "example",
     href: "/viewing-room/example",
@@ -397,35 +397,34 @@ const OpenViewingRoomAppFixture: ViewingRoomApp_OpenTest_Query$rawResponse = {
   },
 }
 
-const ClosedViewingRoomAppFixture: ViewingRoomApp_ClosedTest_Query$rawResponse =
-  {
-    viewingRoom: {
-      internalID: "example",
-      href: "/viewing-room/example",
-      pullQuote: "Example pull quote",
-      introStatement: "Example intro statement",
-      startAt: "2024-01-01T00:00:00Z",
-      endAt: "2024-02-01T00:00:00Z",
-      distanceToClose: null,
-      distanceToOpen: null,
-      image: {
-        imageURLs: {
-          normalized:
-            "https://artsy-media-uploads.s3.amazonaws.com/0RnxWDsVmKuALfpmd75YyA/CTPHSEPT19_018_JO_Guy_Yanai_TLV_031_20190913.jpg",
-        },
+const ClosedViewingRoomAppFixture: ViewingRoomAppClosedTestQuery$rawResponse = {
+  viewingRoom: {
+    internalID: "example",
+    href: "/viewing-room/example",
+    pullQuote: "Example pull quote",
+    introStatement: "Example intro statement",
+    startAt: "2024-01-01T00:00:00Z",
+    endAt: "2024-02-01T00:00:00Z",
+    distanceToClose: null,
+    distanceToOpen: null,
+    image: {
+      imageURLs: {
+        normalized:
+          "https://artsy-media-uploads.s3.amazonaws.com/0RnxWDsVmKuALfpmd75YyA/CTPHSEPT19_018_JO_Guy_Yanai_TLV_031_20190913.jpg",
       },
-      partner: {
-        href: "/partner-demo-gg",
-        id: "UGFydG5lcjo1NTQxMjM3MzcyNjE2OTJiMTk4YzAzMDA=", // pragma: allowlist secret
-        internalID: "212121",
-        name: "Subscription Demo GG",
-      },
-      status: "closed",
-      title: "Guy Yanai",
     },
-  }
+    partner: {
+      href: "/partner-demo-gg",
+      id: "UGFydG5lcjo1NTQxMjM3MzcyNjE2OTJiMTk4YzAzMDA=", // pragma: allowlist secret
+      internalID: "212121",
+      name: "Subscription Demo GG",
+    },
+    status: "closed",
+    title: "Guy Yanai",
+  },
+}
 
-const LoggedOutViewingRoomAppFixture: ViewingRoomApp_LoggedOutTest_Query$rawResponse =
+const LoggedOutViewingRoomAppFixture: ViewingRoomAppLoggedOutTestQuery$rawResponse =
   {
     viewingRoom: {
       internalID: "example",

@@ -2,12 +2,12 @@ import { screen } from "@testing-library/react"
 import { ShowContextualLinkFragmentContainer } from "Apps/Show/Components/ShowContextualLink"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import type { ShowContextualLink_Test_Query } from "__generated__/ShowContextualLink_Test_Query.graphql"
+import type { ShowContextualLinkTestQuery } from "__generated__/ShowContextualLinkTestQuery.graphql"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 
-const { renderWithRelay } = setupTestWrapperTL<ShowContextualLink_Test_Query>({
+const { renderWithRelay } = setupTestWrapperTL<ShowContextualLinkTestQuery>({
   Component: props => (
     <MockBoot breakpoint="lg">
       {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
@@ -15,7 +15,7 @@ const { renderWithRelay } = setupTestWrapperTL<ShowContextualLink_Test_Query>({
     </MockBoot>
   ),
   query: graphql`
-    query ShowContextualLink_Test_Query @relay_test_operation {
+    query ShowContextualLinkTestQuery @relay_test_operation {
       show(id: "catty-show") {
         ...ShowContextualLink_show
       }

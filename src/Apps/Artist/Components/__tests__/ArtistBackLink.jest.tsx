@@ -2,14 +2,14 @@ import { screen, fireEvent } from "@testing-library/react"
 import { ArtistBackLinkFragmentContainer } from "Apps/Artist/Components/ArtistBackLink"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import type { ArtistBackLink_Test_Query } from "__generated__/ArtistBackLink_Test_Query.graphql"
+import type { ArtistBackLinkTestQuery } from "__generated__/ArtistBackLinkTestQuery.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
 
-const { renderWithRelay } = setupTestWrapperTL<ArtistBackLink_Test_Query>({
+const { renderWithRelay } = setupTestWrapperTL<ArtistBackLinkTestQuery>({
   Component: props => {
     return (
       <MockBoot>
@@ -18,7 +18,7 @@ const { renderWithRelay } = setupTestWrapperTL<ArtistBackLink_Test_Query>({
     )
   },
   query: graphql`
-    query ArtistBackLink_Test_Query @relay_test_operation {
+    query ArtistBackLinkTestQuery @relay_test_operation {
       artist(id: "example") {
         ...ArtistBackLink_artist
       }

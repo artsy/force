@@ -1,7 +1,7 @@
 import { ShowsCityRefetchContainer } from "Apps/Shows/Routes/ShowsCity"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import type { ShowsCity_Test_Query } from "__generated__/ShowsCity_Test_Query.graphql"
+import type { ShowsCityTestQuery } from "__generated__/ShowsCityTestQuery.graphql"
 import { graphql } from "react-relay"
 import { screen } from "@testing-library/react"
 
@@ -20,7 +20,7 @@ jest.mock("Utils/Hooks/useJump", () => ({
   Jump: () => null,
 }))
 
-const { renderWithRelay } = setupTestWrapperTL<ShowsCity_Test_Query>({
+const { renderWithRelay } = setupTestWrapperTL<ShowsCityTestQuery>({
   Component: ({ viewer, city }) => {
     return (
       <MockBoot>
@@ -29,7 +29,7 @@ const { renderWithRelay } = setupTestWrapperTL<ShowsCity_Test_Query>({
     )
   },
   query: graphql`
-    query ShowsCity_Test_Query @relay_test_operation {
+    query ShowsCityTestQuery @relay_test_operation {
       viewer {
         ...ShowsCity_viewer
       }

@@ -87,7 +87,7 @@ describe("ArtworkGrid", () => {
         )
       },
       query: graphql`
-        query ArtworkGrid_Test_Query @raw_response_type @relay_test_operation {
+        query ArtworkGridTestQuery @raw_response_type @relay_test_operation {
           artworksConnection(first: 4) {
             ...ArtworkGrid_artworks
           }

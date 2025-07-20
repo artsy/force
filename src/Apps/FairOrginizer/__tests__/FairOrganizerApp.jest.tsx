@@ -2,19 +2,19 @@ import { FairOrganizerAppFragmentContainer } from "Apps/FairOrginizer/FairOrgani
 import { MockBoot } from "DevTools/MockBoot"
 import { screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import type { FairOrganizerApp_Test_Query } from "__generated__/FairOrganizerApp_Test_Query.graphql"
+import type { FairOrganizerAppTestQuery } from "__generated__/FairOrganizerAppTestQuery.graphql"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 
-const { renderWithRelay } = setupTestWrapperTL<FairOrganizerApp_Test_Query>({
+const { renderWithRelay } = setupTestWrapperTL<FairOrganizerAppTestQuery>({
   Component: ({ fairOrganizer }) => (
     <MockBoot>
       <FairOrganizerAppFragmentContainer fairOrganizer={fairOrganizer!} />
     </MockBoot>
   ),
   query: graphql`
-    query FairOrganizerApp_Test_Query @relay_test_operation {
+    query FairOrganizerAppTestQuery @relay_test_operation {
       fairOrganizer(id: "example") {
         ...FairOrganizerApp_fairOrganizer
       }

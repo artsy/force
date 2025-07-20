@@ -1,7 +1,7 @@
 import { screen, fireEvent } from "@testing-library/react"
 import { ArtistWorksForSaleRailFragmentContainer } from "Apps/Artist/Routes/Overview/Components/ArtistWorksForSaleRail"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import type { ArtistWorksForSaleRail_Test_Query } from "__generated__/ArtistWorksForSaleRail_Test_Query.graphql"
+import type { ArtistWorksForSaleRailTestQuery } from "__generated__/ArtistWorksForSaleRailTestQuery.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 
@@ -13,10 +13,10 @@ jest.mock("Utils/Hooks/useJump", () => ({
 
 describe("ArtistWorksForSaleRail", () => {
   const { renderWithRelay } =
-    setupTestWrapperTL<ArtistWorksForSaleRail_Test_Query>({
+    setupTestWrapperTL<ArtistWorksForSaleRailTestQuery>({
       Component: ArtistWorksForSaleRailFragmentContainer,
       query: graphql`
-        query ArtistWorksForSaleRail_Test_Query @relay_test_operation {
+        query ArtistWorksForSaleRailTestQuery @relay_test_operation {
           artist(id: "test") {
             ...ArtistWorksForSaleRail_artist
           }

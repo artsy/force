@@ -14,7 +14,7 @@ jest.mock("@artsy/palette", () => {
 const { renderWithRelay } = setupTestWrapperTL({
   Component: ViewInRoomFragmentContainer,
   query: graphql`
-    query ViewInRoom_Test_Query @relay_test_operation {
+    query ViewInRoomTestQuery @relay_test_operation {
       artwork(id: "example") {
         ...ViewInRoom_artwork
       }

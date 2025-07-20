@@ -1,7 +1,7 @@
 import { screen, within } from "@testing-library/react"
 import { ArtistArticlesRouteFragmentContainer } from "Apps/Artist/Routes/Articles/ArtistArticlesRoute"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import type { ArtistArticlesRoute_Test_Query } from "__generated__/ArtistArticlesRoute_Test_Query.graphql"
+import type { ArtistArticlesRouteTestQuery } from "__generated__/ArtistArticlesRouteTestQuery.graphql"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
@@ -10,17 +10,16 @@ jest.mock("Components/Pagination", () => ({
 }))
 
 describe("ArtistArticlesRoute", () => {
-  const { renderWithRelay } =
-    setupTestWrapperTL<ArtistArticlesRoute_Test_Query>({
-      Component: ArtistArticlesRouteFragmentContainer,
-      query: graphql`
-        query ArtistArticlesRoute_Test_Query @relay_test_operation {
-          artist(id: "example") {
-            ...ArtistArticlesRoute_artist
-          }
+  const { renderWithRelay } = setupTestWrapperTL<ArtistArticlesRouteTestQuery>({
+    Component: ArtistArticlesRouteFragmentContainer,
+    query: graphql`
+      query ArtistArticlesRouteTestQuery @relay_test_operation {
+        artist(id: "example") {
+          ...ArtistArticlesRoute_artist
         }
-      `,
-    })
+      }
+    `,
+  })
 
   it("render a zero state if no articles", () => {
     const { container } = renderWithRelay({

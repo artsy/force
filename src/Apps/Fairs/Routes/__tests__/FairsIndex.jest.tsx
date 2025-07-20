@@ -2,12 +2,12 @@ import { FairsIndexFragmentContainer } from "Apps/Fairs/Routes/FairsIndex"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { screen } from "@testing-library/react"
-import type { FairsIndex_Test_Query } from "__generated__/FairsIndex_Test_Query.graphql"
+import type { FairsIndexTestQuery } from "__generated__/FairsIndexTestQuery.graphql"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 
-const { renderWithRelay } = setupTestWrapperTL<FairsIndex_Test_Query>({
+const { renderWithRelay } = setupTestWrapperTL<FairsIndexTestQuery>({
   Component: props => {
     return (
       <MockBoot>
@@ -17,7 +17,7 @@ const { renderWithRelay } = setupTestWrapperTL<FairsIndex_Test_Query>({
     )
   },
   query: graphql`
-    query FairsIndex_Test_Query @relay_test_operation {
+    query FairsIndexTestQuery @relay_test_operation {
       featuredFairs: orderedSets(key: "art-fairs:featured") {
         ...FairsIndex_featuredFairs
       }

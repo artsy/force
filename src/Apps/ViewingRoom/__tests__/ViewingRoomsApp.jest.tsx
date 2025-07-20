@@ -3,7 +3,7 @@ import type { Breakpoint } from "@artsy/palette"
 import { ViewingRoomsAppFragmentContainer } from "Apps/ViewingRoom/ViewingRoomsApp"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import type { ViewingRoomsApp_Test_Query$rawResponse } from "__generated__/ViewingRoomsApp_Test_Query.graphql"
+import type { ViewingRoomsAppTestQuery$rawResponse } from "__generated__/ViewingRoomsAppTestQuery.graphql"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
@@ -30,9 +30,7 @@ describe("ViewingRoomsApp", () => {
       )
     },
     query: graphql`
-      query ViewingRoomsApp_Test_Query
-      @raw_response_type
-      @relay_test_operation {
+      query ViewingRoomsAppTestQuery @raw_response_type @relay_test_operation {
         allViewingRooms: viewer {
           ...ViewingRoomsApp_allViewingRooms
         }
@@ -148,7 +146,7 @@ describe("ViewingRoomsApp", () => {
   })
 })
 
-const ViewingRoomsAppFixture: ViewingRoomsApp_Test_Query$rawResponse = {
+const ViewingRoomsAppFixture: ViewingRoomsAppTestQuery$rawResponse = {
   allViewingRooms: {
     viewingRoomsConnection: {
       edges: [

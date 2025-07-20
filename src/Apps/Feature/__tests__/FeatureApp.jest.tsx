@@ -2,12 +2,12 @@ import { FeatureAppFragmentContainer } from "Apps/Feature/FeatureApp"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { screen } from "@testing-library/react"
-import type { FeatureApp_Test_Query } from "__generated__/FeatureApp_Test_Query.graphql"
+import type { FeatureAppTestQuery } from "__generated__/FeatureAppTestQuery.graphql"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 
-const { renderWithRelay } = setupTestWrapperTL<FeatureApp_Test_Query>({
+const { renderWithRelay } = setupTestWrapperTL<FeatureAppTestQuery>({
   Component: props => {
     return (
       <MockBoot>
@@ -17,7 +17,7 @@ const { renderWithRelay } = setupTestWrapperTL<FeatureApp_Test_Query>({
     )
   },
   query: graphql`
-    query FeatureApp_Test_Query @relay_test_operation {
+    query FeatureAppTestQuery @relay_test_operation {
       feature(id: "example") {
         ...FeatureApp_feature
       }

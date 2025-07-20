@@ -1,7 +1,7 @@
 import { ArtworkTopContextBarFragmentContainer } from "Apps/Artwork/Components/ArtworkTopContextBar/ArtworkTopContextBar"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { getENV } from "Utils/getENV"
-import type { ArtworkTopContextBar_Test_Query } from "__generated__/ArtworkTopContextBar_Test_Query.graphql"
+import type { ArtworkTopContextBarTestQuery } from "__generated__/ArtworkTopContextBarTestQuery.graphql"
 import { graphql } from "react-relay"
 import { screen } from "@testing-library/react"
 
@@ -11,19 +11,20 @@ jest.mock("Utils/getENV", () => ({
 }))
 
 describe("ArtworkTopContextBar", () => {
-  const { renderWithRelay } =
-    setupTestWrapperTL<ArtworkTopContextBar_Test_Query>({
+  const { renderWithRelay } = setupTestWrapperTL<ArtworkTopContextBarTestQuery>(
+    {
       Component: (props: any) => (
         <ArtworkTopContextBarFragmentContainer artwork={props.artwork!} />
       ),
       query: graphql`
-        query ArtworkTopContextBar_Test_Query @relay_test_operation {
+        query ArtworkTopContextBarTestQuery @relay_test_operation {
           artwork(id: "richard-anuszkiewicz-lino-yellow-318") {
             ...ArtworkTopContextBar_artwork
           }
         }
       `,
-    })
+    },
+  )
 
   beforeEach(() => {
     ;(getENV as jest.Mock).mockImplementation(key => {

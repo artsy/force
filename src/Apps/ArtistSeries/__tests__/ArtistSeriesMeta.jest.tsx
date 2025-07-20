@@ -1,7 +1,7 @@
 import { ArtistSeriesMetaFragmentContainer } from "Apps/ArtistSeries/Components/ArtistSeriesMeta"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import type { ArtistSeriesMeta_TestQuery$rawResponse } from "__generated__/ArtistSeriesMeta_TestQuery.graphql"
+import type { ArtistSeriesMetaTestQuery$rawResponse } from "__generated__/ArtistSeriesMetaTestQuery.graphql"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
@@ -13,7 +13,7 @@ const { renderWithRelay } = setupTestWrapperTL({
     </MockBoot>
   ),
   query: graphql`
-    query ArtistSeriesMeta_TestQuery($slug: ID!)
+    query ArtistSeriesMetaTestQuery($slug: ID!)
     @raw_response_type
     @relay_test_operation {
       artistSeries(id: $slug) {
@@ -75,7 +75,7 @@ describe("ArtistSeriesMeta", () => {
   })
 })
 
-const ArtistSeriesMetaFixture: ArtistSeriesMeta_TestQuery$rawResponse = {
+const ArtistSeriesMetaFixture: ArtistSeriesMetaTestQuery$rawResponse = {
   artistSeries: {
     id: "123",
     title: "Pumpkins",
@@ -91,14 +91,13 @@ const ArtistSeriesMetaFixture: ArtistSeriesMeta_TestQuery$rawResponse = {
   },
 }
 
-const ArtistSeriesMetaFixtureNoArtist: ArtistSeriesMeta_TestQuery$rawResponse =
-  {
-    artistSeries: {
-      id: "123",
-      title: "Squashes",
-      description:
-        "Squashes are a lot like pumpkins except that they don't belong to any particular holiday. The most independent gourd, they always remain in style throughout the year.",
-      slug: "squashes",
-      artists: [],
-    },
-  }
+const ArtistSeriesMetaFixtureNoArtist: ArtistSeriesMetaTestQuery$rawResponse = {
+  artistSeries: {
+    id: "123",
+    title: "Squashes",
+    description:
+      "Squashes are a lot like pumpkins except that they don't belong to any particular holiday. The most independent gourd, they always remain in style throughout the year.",
+    slug: "squashes",
+    artists: [],
+  },
+}

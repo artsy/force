@@ -1,17 +1,17 @@
 import { screen } from "@testing-library/react"
 import { PartnerContactsFragmentContainer } from "Apps/Partner/Components/PartnerContacts/PartnerContacts"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import type { PartnerContacts_Test_Query } from "__generated__/PartnerContacts_Test_Query.graphql"
+import type { PartnerContactsTestQuery } from "__generated__/PartnerContactsTestQuery.graphql"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 
-const { renderWithRelay } = setupTestWrapperTL<PartnerContacts_Test_Query>({
+const { renderWithRelay } = setupTestWrapperTL<PartnerContactsTestQuery>({
   Component: ({ partner }: any) => {
     return <PartnerContactsFragmentContainer edges={partner.locations.edges} />
   },
   query: graphql`
-    query PartnerContacts_Test_Query @raw_response_type @relay_test_operation {
+    query PartnerContactsTestQuery @raw_response_type @relay_test_operation {
       partner(id: "white-cube") {
         locations: locationsConnection(first: 50) {
           edges {

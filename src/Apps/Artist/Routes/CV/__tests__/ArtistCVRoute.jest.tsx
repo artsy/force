@@ -1,7 +1,7 @@
 import { screen } from "@testing-library/react"
 import { ArtistCVRouteFragmentContainer } from "Apps/Artist/Routes/CV/ArtistCVRoute"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import type { ArtistCVRoute_Test_Query } from "__generated__/ArtistCVRoute_Test_Query.graphql"
+import type { ArtistCVRouteTestQuery } from "__generated__/ArtistCVRouteTestQuery.graphql"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
@@ -10,10 +10,10 @@ jest.mock("Components/MetaTags", () => ({
 }))
 
 describe("ArtistCVRoute", () => {
-  const { renderWithRelay } = setupTestWrapperTL<ArtistCVRoute_Test_Query>({
+  const { renderWithRelay } = setupTestWrapperTL<ArtistCVRouteTestQuery>({
     Component: ArtistCVRouteFragmentContainer,
     query: graphql`
-      query ArtistCVRoute_Test_Query($artistID: String!) @relay_test_operation {
+      query ArtistCVRouteTestQuery($artistID: String!) @relay_test_operation {
         viewer {
           ...ArtistCVRoute_viewer
         }

@@ -11,7 +11,7 @@ import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type {
   PricingContextTestQuery$data,
-  PricingContextTestQuery$rawResponse,
+  PricingContextQuery$rawResponse,
 } from "__generated__/PricingContextTestQuery.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -42,7 +42,7 @@ jest.mock("react-waypoint", () => ({
 }))
 
 // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-const mockPricingContext: PricingContextTestQuery$rawResponse["artwork"]["pricingContext"] =
+const mockPricingContext: PricingContextQuery$rawResponse["artwork"]["pricingContext"] =
   {
     appliedFiltersDisplay: "Price ranges of small mocks by David Sheldrick",
     appliedFilters: {
@@ -81,7 +81,7 @@ const mockPricingContext: PricingContextTestQuery$rawResponse["artwork"]["pricin
     ],
   }
 
-const mockArtwork: PricingContextTestQuery$rawResponse["artwork"] = {
+const mockArtwork: PricingContextQuery$rawResponse["artwork"] = {
   artists: [{ id: "asfwef", slug: "andy-warhol" }],
   category: "Photography",
   id: "abc124",
@@ -103,7 +103,7 @@ describe("PricingContext", () => {
       </div>
     ),
     query: graphql`
-      query PricingContextTestQuery @raw_response_type @relay_test_operation {
+      query PricingContextJestQuery @raw_response_type @relay_test_operation {
         artwork(id: "unused") {
           ...PricingContext_artwork
         }

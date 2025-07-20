@@ -1,7 +1,7 @@
 import { screen } from "@testing-library/react"
 import { ArtistCurrentShowsRailFragmentContainer } from "Apps/Artist/Routes/Overview/Components/ArtistCurrentShowsRail"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import type { ArtistCurrentShowsRail_Test_Query } from "__generated__/ArtistCurrentShowsRail_Test_Query.graphql"
+import type { ArtistCurrentShowsRailTestQuery } from "__generated__/ArtistCurrentShowsRailTestQuery.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { fireEvent } from "@testing-library/react"
@@ -11,10 +11,10 @@ jest.mock("react-tracking")
 
 describe("ArtistCurrentShowsRail", () => {
   const { renderWithRelay } =
-    setupTestWrapperTL<ArtistCurrentShowsRail_Test_Query>({
+    setupTestWrapperTL<ArtistCurrentShowsRailTestQuery>({
       Component: ArtistCurrentShowsRailFragmentContainer,
       query: graphql`
-        query ArtistCurrentShowsRail_Test_Query @relay_test_operation {
+        query ArtistCurrentShowsRailTestQuery @relay_test_operation {
           artist(id: "test") {
             ...ArtistCurrentShowsRail_artist
           }

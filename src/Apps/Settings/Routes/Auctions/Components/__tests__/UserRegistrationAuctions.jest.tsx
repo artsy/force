@@ -1,16 +1,16 @@
 import { UserRegistrationAuctionsFragmentContainer } from "Apps/Settings/Routes/Auctions/Components/UserRegistrationAuctions"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { screen } from "@testing-library/react"
-import type { UserRegistrationAuctions_Test_Query } from "__generated__/UserRegistrationAuctions_Test_Query.graphql"
+import type { UserRegistrationAuctionsTestQuery } from "__generated__/UserRegistrationAuctionsTestQuery.graphql"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 
 const { renderWithRelay } =
-  setupTestWrapperTL<UserRegistrationAuctions_Test_Query>({
+  setupTestWrapperTL<UserRegistrationAuctionsTestQuery>({
     Component: UserRegistrationAuctionsFragmentContainer,
     query: graphql`
-      query UserRegistrationAuctions_Test_Query @relay_test_operation {
+      query UserRegistrationAuctionsTestQuery @relay_test_operation {
         me {
           ...UserRegistrationAuctions_me
         }

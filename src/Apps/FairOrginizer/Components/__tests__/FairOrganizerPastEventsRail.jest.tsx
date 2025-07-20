@@ -1,17 +1,17 @@
 import { FairOrganizerPastEventsRailFragmentContainer as FairOrganizerPastEventsRail } from "Apps/FairOrginizer/Components/FairOrganizerPastEventsRail"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { screen } from "@testing-library/react"
-import type { FairOrganizerPastEventsRail_Test_Query } from "__generated__/FairOrganizerPastEventsRail_Test_Query.graphql"
+import type { FairOrganizerPastEventsRailTestQuery } from "__generated__/FairOrganizerPastEventsRailTestQuery.graphql"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 
 describe("FairOrganizerPastEventsRail", () => {
   const { renderWithRelay } =
-    setupTestWrapperTL<FairOrganizerPastEventsRail_Test_Query>({
+    setupTestWrapperTL<FairOrganizerPastEventsRailTestQuery>({
       Component: FairOrganizerPastEventsRail,
       query: graphql`
-        query FairOrganizerPastEventsRail_Test_Query @relay_test_operation {
+        query FairOrganizerPastEventsRailTestQuery @relay_test_operation {
           fairOrganizer(id: "the-armory-show") {
             ...FairOrganizerPastEventsRail_fairOrganizer
           }

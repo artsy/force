@@ -21,7 +21,7 @@ const { renderWithRelay } = setupTestWrapperTL<ArtistsByLetterQuery>({
     )
   },
   query: graphql`
-    query ArtistsByLetter_test_Query($letter: String!, $size: Int, $page: Int) {
+    query ArtistsByLetterTestQuery($letter: String!, $size: Int, $page: Int) {
       viewer {
         ...ArtistsByLetter_viewer
           @arguments(letter: $letter, page: $page, size: $size)

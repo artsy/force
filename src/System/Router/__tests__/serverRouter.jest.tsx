@@ -110,7 +110,7 @@ describe("serverRouter", () => {
           path: "/relay",
           Component,
           query: graphql`
-            query serverRouterTestQuery @relay_test_operation {
+            query serverRouterQuery @relay_test_operation {
               me {
                 id
               }

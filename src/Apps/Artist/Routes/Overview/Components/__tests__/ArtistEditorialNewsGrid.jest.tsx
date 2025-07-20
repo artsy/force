@@ -1,7 +1,7 @@
 import { screen, fireEvent } from "@testing-library/react"
 import { ArtistEditorialNewsGridFragmentContainer } from "Apps/Artist/Routes/Overview/Components/ArtistEditorialNewsGrid"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import type { ArtistEditorialNewsGrid_Test_Query } from "__generated__/ArtistEditorialNewsGrid_Test_Query.graphql"
+import type { ArtistEditorialNewsGridTestQuery } from "__generated__/ArtistEditorialNewsGridTestQuery.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 
@@ -9,10 +9,10 @@ jest.unmock("react-relay")
 jest.mock("react-tracking")
 
 const { renderWithRelay } =
-  setupTestWrapperTL<ArtistEditorialNewsGrid_Test_Query>({
+  setupTestWrapperTL<ArtistEditorialNewsGridTestQuery>({
     Component: ArtistEditorialNewsGridFragmentContainer,
     query: graphql`
-      query ArtistEditorialNewsGrid_Test_Query @relay_test_operation {
+      query ArtistEditorialNewsGridTestQuery @relay_test_operation {
         artist(id: "test-artist") {
           ...ArtistEditorialNewsGrid_artist
         }

@@ -2,7 +2,7 @@ import { GeneShowFragmentContainer } from "Apps/Gene/Routes/GeneShow"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { screen } from "@testing-library/react"
-import type { GeneShow_Test_Query } from "__generated__/GeneShow_Test_Query.graphql"
+import type { GeneShowTestQuery } from "__generated__/GeneShowTestQuery.graphql"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
@@ -10,7 +10,7 @@ jest.mock("../../Components/GeneArtworkFilter", () => ({
   GeneArtworkFilterQueryRenderer: () => <div />,
 }))
 
-const { renderWithRelay } = setupTestWrapperTL<GeneShow_Test_Query>({
+const { renderWithRelay } = setupTestWrapperTL<GeneShowTestQuery>({
   Component: props => {
     return (
       <MockBoot>
@@ -20,7 +20,7 @@ const { renderWithRelay } = setupTestWrapperTL<GeneShow_Test_Query>({
     )
   },
   query: graphql`
-    query GeneShow_Test_Query @relay_test_operation {
+    query GeneShowTestQuery @relay_test_operation {
       gene(id: "example") {
         ...GeneShow_gene
       }

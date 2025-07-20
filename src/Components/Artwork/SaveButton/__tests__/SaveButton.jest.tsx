@@ -2,7 +2,7 @@ import { ContextModule } from "@artsy/cohesion"
 import { SaveButtonFragmentContainer } from "Components/Artwork/SaveButton/SaveButton"
 import { useAuthDialog } from "Components/AuthDialog/useAuthDialog"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import type { SaveButtonTestQuery } from "__generated__/SaveButtonTestQuery.graphql"
+import type { SaveButtonQuery } from "__generated__/SaveButtonQuery.graphql"
 import { graphql } from "react-relay"
 import { screen, fireEvent } from "@testing-library/react"
 
@@ -13,7 +13,7 @@ jest.mock("Components/AuthDialog/useAuthDialog")
 describe("SaveButton", () => {
   const mockUseAuthDialog = useAuthDialog as jest.Mock
 
-  const { renderWithRelay } = setupTestWrapperTL<SaveButtonTestQuery>({
+  const { renderWithRelay } = setupTestWrapperTL<SaveButtonQuery>({
     Component: props => (
       <SaveButtonFragmentContainer
         artwork={props.artwork as any}
@@ -21,7 +21,7 @@ describe("SaveButton", () => {
       />
     ),
     query: graphql`
-      query SaveButtonTestQuery {
+      query SaveButtonJestQuery {
         artwork(id: "gerhard-richter-bagdad-ii-flow-p10-1") {
           ...SaveButton_artwork
         }

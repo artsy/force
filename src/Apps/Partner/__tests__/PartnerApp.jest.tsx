@@ -1,7 +1,7 @@
 import { PartnerHeaderImageFragmentContainer } from "Apps/Partner/Components/PartnerHeader/PartnerHeaderImage"
 import { PartnerAppFragmentContainer } from "Apps/Partner/PartnerApp"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import type { PartnerApp_Test_Query } from "__generated__/PartnerApp_Test_Query.graphql"
+import type { PartnerAppTestQuery } from "__generated__/PartnerAppTestQuery.graphql"
 import { HeadProvider } from "react-head"
 import { graphql } from "react-relay"
 
@@ -24,7 +24,7 @@ jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => false,
 }))
 
-const { renderWithRelay } = setupTestWrapperTL<PartnerApp_Test_Query>({
+const { renderWithRelay } = setupTestWrapperTL<PartnerAppTestQuery>({
   Component: props => {
     return (
       <HeadProvider>
@@ -34,7 +34,7 @@ const { renderWithRelay } = setupTestWrapperTL<PartnerApp_Test_Query>({
     )
   },
   query: graphql`
-    query PartnerApp_Test_Query @relay_test_operation {
+    query PartnerAppTestQuery @relay_test_operation {
       partner(id: "example") {
         ...PartnerApp_partner
       }

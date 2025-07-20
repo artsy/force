@@ -1,7 +1,7 @@
 import { ShowContextCardFragmentContainer } from "Apps/Show/Components/ShowContextCard"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { AnalyticsCombinedContextProvider } from "System/Contexts/AnalyticsContext"
-import type { ShowContextCard_Test_Query } from "__generated__/ShowContextCard_Test_Query.graphql"
+import type { ShowContextCardTestQuery } from "__generated__/ShowContextCardTestQuery.graphql"
 import { screen, fireEvent } from "@testing-library/react"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -9,7 +9,7 @@ import { useTracking } from "react-tracking"
 jest.unmock("react-relay")
 jest.mock("react-tracking")
 
-const { renderWithRelay } = setupTestWrapperTL<ShowContextCard_Test_Query>({
+const { renderWithRelay } = setupTestWrapperTL<ShowContextCardTestQuery>({
   Component: props => (
     <AnalyticsCombinedContextProvider
       contextPageOwnerId="example-show-id"
@@ -20,7 +20,7 @@ const { renderWithRelay } = setupTestWrapperTL<ShowContextCard_Test_Query>({
     </AnalyticsCombinedContextProvider>
   ),
   query: graphql`
-    query ShowContextCard_Test_Query @relay_test_operation {
+    query ShowContextCardTestQuery @relay_test_operation {
       show(id: "xxx") {
         ...ShowContextCard_show
       }

@@ -1,18 +1,18 @@
 import { AuctionInfoSidebarFragmentContainer } from "Apps/Auction/Components/AuctionDetails/AuctionInfoSidebar"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import type { AuctionInfoSidebarTestQuery } from "__generated__/AuctionInfoSidebarTestQuery.graphql"
+import type { AuctionInfoSidebarQuery } from "__generated__/AuctionInfoSidebarQuery.graphql"
 import { graphql } from "react-relay"
 import { screen } from "@testing-library/react"
 
 jest.unmock("react-relay")
 
 describe("AuctionInfoSidebar", () => {
-  const { renderWithRelay } = setupTestWrapperTL<AuctionInfoSidebarTestQuery>({
+  const { renderWithRelay } = setupTestWrapperTL<AuctionInfoSidebarQuery>({
     Component: (props: any) => {
       return <AuctionInfoSidebarFragmentContainer {...props} />
     },
     query: graphql`
-      query AuctionInfoSidebarTestQuery @relay_test_operation {
+      query AuctionInfoSidebarQuery @relay_test_operation {
         sale(id: "foo") {
           ...AuctionInfoSidebar_sale
         }

@@ -1,7 +1,7 @@
 import { screen, fireEvent } from "@testing-library/react"
 import { MarketStatsFragmentContainer } from "Apps/Artist/Routes/AuctionResults/Components/MarketStats"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import type { MarketStats_Test_Query } from "__generated__/MarketStats_Test_Query.graphql"
+import type { MarketStatsTestQuery } from "__generated__/MarketStatsTestQuery.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 
@@ -9,11 +9,10 @@ jest.unmock("react-relay")
 jest.mock("react-tracking")
 
 describe("MarketStats", () => {
-  const { renderWithRelay } = setupTestWrapperTL<MarketStats_Test_Query>({
+  const { renderWithRelay } = setupTestWrapperTL<MarketStatsTestQuery>({
     Component: MarketStatsFragmentContainer,
     query: graphql`
-      query MarketStats_Test_Query($artistInternalID: ID!)
-      @relay_test_operation {
+      query MarketStatsTestQuery($artistInternalID: ID!) @relay_test_operation {
         priceInsightsConnection: priceInsights(
           artistId: $artistInternalID
           sort: ANNUAL_VALUE_SOLD_CENTS_DESC

@@ -16,7 +16,7 @@ const { renderWithRelay } = setupTestWrapperTL({
     partnerId: "unit-london",
   },
   query: graphql`
-    query ArtistsRail_Test_Query($partnerId: String!) @relay_test_operation {
+    query ArtistsRailTestQuery($partnerId: String!) @relay_test_operation {
       partner(id: $partnerId) @principalField {
         ...ArtistsRail_partner
       }

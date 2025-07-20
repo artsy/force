@@ -5,7 +5,7 @@ import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { render, screen, fireEvent } from "@testing-library/react"
 import { getENV } from "Utils/getENV"
-import type { AuctionAppTestQuery } from "__generated__/AuctionAppTestQuery.graphql"
+import type { AuctionAppJestQuery } from "__generated__/AuctionAppJestQuery.graphql"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
@@ -72,7 +72,7 @@ describe("AuctionApp", () => {
   const mockGetENV = getENV as jest.Mock
   let breakpoint
 
-  const { renderWithRelay } = setupTestWrapperTL<AuctionAppTestQuery>({
+  const { renderWithRelay } = setupTestWrapperTL<AuctionAppJestQuery>({
     Component: (props: any) => {
       return (
         <MockBoot breakpoint={breakpoint}>
@@ -81,7 +81,7 @@ describe("AuctionApp", () => {
       )
     },
     query: graphql`
-      query AuctionAppTestQuery($slug: String!) {
+      query AuctionAppJestQuery($slug: String!) {
         me {
           ...AuctionApp_me @arguments(saleID: $slug)
         }

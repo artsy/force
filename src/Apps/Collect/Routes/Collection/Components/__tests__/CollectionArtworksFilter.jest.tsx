@@ -10,7 +10,7 @@ import {
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { screen } from "@testing-library/react"
-import type { CollectionArtworksFilter_Query } from "__generated__/CollectionArtworksFilter_Query.graphql"
+import type { CollectionArtworksFilterTestQuery } from "__generated__/CollectionArtworksFilterTestQuery.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 
@@ -27,34 +27,35 @@ jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
 }))
 
-const { renderWithRelay } = setupTestWrapperTL<CollectionArtworksFilter_Query>({
-  Component: ({ collection }) => (
-    <MockBoot user={{ id: "percy-z" }}>
-      <CollectionArtworksFilter
-        aggregations={[
-          artistAggregation,
-          partnerAggregation,
-          locationCityAggregation,
-          mediumAggregation,
-          materialsTermsAggregation,
-          artistNationalityAggregation,
-        ]}
-        collection={collection!}
-      />
-    </MockBoot>
-  ),
-  query: graphql`
-    query CollectionArtworksFilter_Query(
-      $input: FilterArtworksInput
-      $slug: String!
-    ) @relay_test_operation {
-      collection: marketingCollection(slug: $slug) {
-        ...CollectionArtworksFilter_collection @arguments(input: $input)
+const { renderWithRelay } =
+  setupTestWrapperTL<CollectionArtworksFilterTestQuery>({
+    Component: ({ collection }) => (
+      <MockBoot user={{ id: "percy-z" }}>
+        <CollectionArtworksFilter
+          aggregations={[
+            artistAggregation,
+            partnerAggregation,
+            locationCityAggregation,
+            mediumAggregation,
+            materialsTermsAggregation,
+            artistNationalityAggregation,
+          ]}
+          collection={collection!}
+        />
+      </MockBoot>
+    ),
+    query: graphql`
+      query CollectionArtworksFilterTestQuery(
+        $input: FilterArtworksInput
+        $slug: String!
+      ) @relay_test_operation {
+        collection: marketingCollection(slug: $slug) {
+          ...CollectionArtworksFilter_collection @arguments(input: $input)
+        }
       }
-    }
-  `,
-  variables: { slug: "representations-of-architecture" },
-})
+    `,
+    variables: { slug: "representations-of-architecture" },
+  })
 
 describe("CollectionArtworksFilter", () => {
   const trackEvent = jest.fn()

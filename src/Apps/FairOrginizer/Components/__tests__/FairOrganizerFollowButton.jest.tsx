@@ -4,7 +4,7 @@ import { useAuthDialog } from "Components/AuthDialog"
 import { fireEvent, screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import type { FairOrganizerFollowButton_Test_Query } from "__generated__/FairOrganizerFollowButton_Test_Query.graphql"
+import type { FairOrganizerFollowButtonTestQuery } from "__generated__/FairOrganizerFollowButtonTestQuery.graphql"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
@@ -14,14 +14,14 @@ jest.mock("Components/AuthDialog/useAuthDialog")
 
 describe("FairOrganizerFollowButton", () => {
   const { renderWithRelay } =
-    setupTestWrapperTL<FairOrganizerFollowButton_Test_Query>({
+    setupTestWrapperTL<FairOrganizerFollowButtonTestQuery>({
       Component: ({ fairOrganizer }) => (
         <FairOrganizerFollowButtonFragmentContainer
           fairOrganizer={fairOrganizer!}
         />
       ),
       query: graphql`
-        query FairOrganizerFollowButton_Test_Query($id: String!)
+        query FairOrganizerFollowButtonTestQuery($id: String!)
         @relay_test_operation {
           fairOrganizer(id: $id) {
             ...FairOrganizerFollowButton_fairOrganizer

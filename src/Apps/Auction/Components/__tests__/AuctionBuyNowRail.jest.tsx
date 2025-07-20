@@ -1,18 +1,18 @@
 import { AuctionBuyNowRailFragmentContainer } from "Apps/Auction/Components/AuctionBuyNowRail"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import type { AuctionBuyNowRailTestQuery } from "__generated__/AuctionBuyNowRailTestQuery.graphql"
+import type { AuctionBuyNowRailQuery } from "__generated__/AuctionBuyNowRailQuery.graphql"
 import { graphql } from "react-relay"
 import { screen } from "@testing-library/react"
 
 jest.unmock("react-relay")
 
 describe("AuctionBuyNowRail", () => {
-  const { renderWithRelay } = setupTestWrapperTL<AuctionBuyNowRailTestQuery>({
+  const { renderWithRelay } = setupTestWrapperTL<AuctionBuyNowRailQuery>({
     Component: (props: any) => {
       return <AuctionBuyNowRailFragmentContainer {...props} />
     },
     query: graphql`
-      query AuctionBuyNowRailTestQuery {
+      query AuctionBuyNowRailQuery {
         sale(id: "foo") {
           ...AuctionBuyNowRail_sale
         }

@@ -2,7 +2,7 @@ import { ShowsIndexFragmentContainer } from "Apps/Shows/Routes/ShowsIndex"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { screen } from "@testing-library/react"
-import type { ShowsIndex_Test_Query } from "__generated__/ShowsIndex_Test_Query.graphql"
+import type { ShowsIndexTestQuery } from "__generated__/ShowsIndexTestQuery.graphql"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
@@ -11,7 +11,7 @@ jest.mock("System/Hooks/useRouter", () => ({
   useRouter: () => ({ router: { push: () => {} } }),
 }))
 
-const { renderWithRelay } = setupTestWrapperTL<ShowsIndex_Test_Query>({
+const { renderWithRelay } = setupTestWrapperTL<ShowsIndexTestQuery>({
   Component: ({ featuredShows, viewer }) => {
     return (
       <MockBoot>
@@ -23,7 +23,7 @@ const { renderWithRelay } = setupTestWrapperTL<ShowsIndex_Test_Query>({
     )
   },
   query: graphql`
-    query ShowsIndex_Test_Query @relay_test_operation {
+    query ShowsIndexTestQuery @relay_test_operation {
       viewer {
         ...ShowsIndex_viewer
       }

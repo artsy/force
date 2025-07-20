@@ -3,9 +3,9 @@ import { MockBoot } from "DevTools/MockBoot"
 import { fireEvent, screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type {
-  FairArtworks_Query,
-  FairArtworks_Query$rawResponse,
-} from "__generated__/FairArtworks_Query.graphql"
+  FairArtworksQuery,
+  FairArtworksQuery$rawResponse,
+} from "__generated__/FairArtworksQuery.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 
@@ -33,14 +33,14 @@ describe("FairArtworks", () => {
     })
   })
 
-  const { renderWithRelay } = setupTestWrapperTL<FairArtworks_Query>({
+  const { renderWithRelay } = setupTestWrapperTL<FairArtworksQuery>({
     Component: ({ fair }) => (
       <MockBoot user={{ id: "percy-z" }}>
         <FairArtworksRefetchContainer fair={fair!} />
       </MockBoot>
     ),
     query: graphql`
-      query FairArtworks_Query($slug: String!)
+      query FairArtworksQuery($slug: String!)
       @raw_response_type
       @relay_test_operation {
         fair(id: $slug) {
@@ -73,7 +73,7 @@ describe("FairArtworks", () => {
   })
 })
 
-const FAIR_ARTWORKS_FIXTURE: FairArtworks_Query$rawResponse = {
+const FAIR_ARTWORKS_FIXTURE: FairArtworksQuery$rawResponse = {
   fair: {
     id: "xxx",
     slug: "cool-fair",

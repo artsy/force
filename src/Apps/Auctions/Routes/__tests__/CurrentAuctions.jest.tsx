@@ -21,7 +21,7 @@ describe("CurrentAuctions", () => {
       )
     },
     query: graphql`
-      query CurrentAuctions_Test_Query @relay_test_operation {
+      query CurrentAuctionsTestQuery @relay_test_operation {
         viewer {
           ...CurrentAuctions_viewer
         }

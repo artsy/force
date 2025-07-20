@@ -5,7 +5,7 @@ import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { render, screen, fireEvent } from "@testing-library/react"
 import { useRouter } from "System/Hooks/useRouter"
-import type { AuctionActiveBidsTestQuery } from "__generated__/AuctionActiveBidsTestQuery.graphql"
+import type { AuctionActiveBidsQuery } from "__generated__/AuctionActiveBidsQuery.graphql"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
@@ -24,7 +24,7 @@ describe("AuctionActiveBids", () => {
   const mockUseAuctionTracking = useAuctionTracking as jest.Mock
 
   const setup = (breakpoint: Breakpoint = "lg") => {
-    const { renderWithRelay } = setupTestWrapperTL<AuctionActiveBidsTestQuery>({
+    const { renderWithRelay } = setupTestWrapperTL<AuctionActiveBidsQuery>({
       Component: (props: any) => {
         return (
           <MockBoot breakpoint={breakpoint}>
@@ -33,7 +33,7 @@ describe("AuctionActiveBids", () => {
         )
       },
       query: graphql`
-        query AuctionActiveBidsTestQuery($slug: String!) @relay_test_operation {
+        query AuctionActiveBidsQuery($slug: String!) @relay_test_operation {
           me {
             ...AuctionActiveBids_me @arguments(saleID: $slug)
           }

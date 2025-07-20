@@ -2,7 +2,7 @@ import { FairBoothsFragmentContainer } from "Apps/Fair/Components/FairBooths"
 import { MockBoot } from "DevTools/MockBoot"
 import { fireEvent, screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import type { FairBooths_Test_Query } from "__generated__/FairBooths_Test_Query.graphql"
+import type { FairBoothsTestQuery } from "__generated__/FairBoothsTestQuery.graphql"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
@@ -22,7 +22,7 @@ jest.mock("Utils/Hooks/useMatchMedia", () => ({
 }))
 
 describe("FairBooths", () => {
-  const { renderWithRelay } = setupTestWrapperTL<FairBooths_Test_Query>({
+  const { renderWithRelay } = setupTestWrapperTL<FairBoothsTestQuery>({
     Component: ({ fair }) => {
       return (
         <MockBoot>
@@ -31,7 +31,7 @@ describe("FairBooths", () => {
       )
     },
     query: graphql`
-      query FairBooths_Test_Query(
+      query FairBoothsTestQuery(
         $id: String!
         $first: Int
         $page: Int

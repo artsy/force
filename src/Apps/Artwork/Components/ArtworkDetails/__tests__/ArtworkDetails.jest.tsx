@@ -2,7 +2,7 @@ import { screen } from "@testing-library/react"
 import { ArtworkDetailsFragmentContainer } from "Apps/Artwork/Components/ArtworkDetails"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import type { ArtworkDetails_Test_Query } from "__generated__/ArtworkDetails_Test_Query.graphql"
+import type { ArtworkDetailsTestQuery } from "__generated__/ArtworkDetailsTestQuery.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 
@@ -17,7 +17,7 @@ jest.mock("Components/EntityHeaders/EntityHeaderPartner", () => ({
     "EntityHeaderPartnerFragmentContainer",
 }))
 
-const { renderWithRelay } = setupTestWrapperTL<ArtworkDetails_Test_Query>({
+const { renderWithRelay } = setupTestWrapperTL<ArtworkDetailsTestQuery>({
   Component: ({ artwork }) => {
     return (
       <MockBoot breakpoint="xs">
@@ -26,7 +26,7 @@ const { renderWithRelay } = setupTestWrapperTL<ArtworkDetails_Test_Query>({
     )
   },
   query: graphql`
-    query ArtworkDetails_Test_Query @relay_test_operation {
+    query ArtworkDetailsTestQuery @relay_test_operation {
       artwork(id: "example") {
         ...ArtworkDetails_artwork
       }

@@ -13,7 +13,7 @@ jest.mock("Components/HeaderIcon", () => ({
 const { renderWithRelay } = setupTestWrapperTL({
   Component: FairOrganizerHeaderFragmentContainer,
   query: graphql`
-    query FairOrganizerHeader_Test_Query @relay_test_operation {
+    query FairOrganizerHeaderTestQuery @relay_test_operation {
       fairOrganizer(id: "example") {
         ...FairOrganizerHeader_fairOrganizer
       }

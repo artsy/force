@@ -2,7 +2,7 @@ import { screen } from "@testing-library/react"
 import { ArtistSeriesArtworksFilterRefetchContainer } from "Apps/ArtistSeries/Components/ArtistSeriesArtworksFilter"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import type { ArtistSeriesArtworksFilter_Query } from "__generated__/ArtistSeriesArtworksFilter_Query.graphql"
+import type { ArtistSeriesArtworksFilterTestQuery } from "__generated__/ArtistSeriesArtworksFilterTestQuery.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 
@@ -20,7 +20,7 @@ jest.mock("Utils/Hooks/useMatchMedia", () => ({
 }))
 
 const { renderWithRelay } =
-  setupTestWrapperTL<ArtistSeriesArtworksFilter_Query>({
+  setupTestWrapperTL<ArtistSeriesArtworksFilterTestQuery>({
     Component: ({ artistSeries }) => (
       <MockBoot user={{ id: "percy-z" }}>
         <ArtistSeriesArtworksFilterRefetchContainer
@@ -29,7 +29,8 @@ const { renderWithRelay } =
       </MockBoot>
     ),
     query: graphql`
-      query ArtistSeriesArtworksFilter_Query($slug: ID!) @relay_test_operation {
+      query ArtistSeriesArtworksFilterTestQuery($slug: ID!)
+      @relay_test_operation {
         artistSeries(id: $slug) {
           ...ArtistSeriesArtworksFilter_artistSeries
         }

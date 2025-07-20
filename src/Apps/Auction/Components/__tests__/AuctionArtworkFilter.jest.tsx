@@ -1,7 +1,7 @@
 import { AuctionArtworkFilterRefetchContainer } from "Apps/Auction/Components/AuctionArtworkFilter"
 import { getArtworkFilterInputArgs } from "Apps/Auction/Components/getArtworkFilterInputArgs"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import type { AuctionArtworkFilterTestQuery } from "__generated__/AuctionArtworkFilterTestQuery.graphql"
+import type { AuctionArtworkFilterJestQuery } from "__generated__/AuctionArtworkFilterJestQuery.graphql"
 import { graphql } from "react-relay"
 import { screen } from "@testing-library/react"
 
@@ -32,13 +32,13 @@ jest.mock("Components/ArtworkGrid/ArtworkGridContext", () => ({
 }))
 
 describe("AuctionArtworkFilter", () => {
-  const { renderWithRelay } = setupTestWrapperTL<AuctionArtworkFilterTestQuery>(
+  const { renderWithRelay } = setupTestWrapperTL<AuctionArtworkFilterJestQuery>(
     {
       Component: (props: any) => {
         return <AuctionArtworkFilterRefetchContainer {...props} />
       },
       query: graphql`
-        query AuctionArtworkFilterTestQuery {
+        query AuctionArtworkFilterJestQuery {
           viewer {
             ...AuctionArtworkFilter_viewer
               @arguments(saleID: "test-sale", isLoggedIn: false)

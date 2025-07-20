@@ -2,7 +2,7 @@ import { SearchAppFragmentContainer as SearchApp } from "Apps/Search/SearchApp"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { SystemContextProvider } from "System/Contexts/SystemContext"
-import type { SearchApp_Test_Query } from "__generated__/SearchApp_Test_Query.graphql"
+import type { SearchAppTestQuery } from "__generated__/SearchAppTestQuery.graphql"
 import { screen } from "@testing-library/react"
 import { graphql } from "react-relay"
 
@@ -22,7 +22,7 @@ jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => false,
 }))
 
-const { renderWithRelay } = setupTestWrapperTL<SearchApp_Test_Query>({
+const { renderWithRelay } = setupTestWrapperTL<SearchAppTestQuery>({
   Component: props => {
     return (
       <MockBoot breakpoint="lg">
@@ -33,7 +33,7 @@ const { renderWithRelay } = setupTestWrapperTL<SearchApp_Test_Query>({
     )
   },
   query: graphql`
-    query SearchApp_Test_Query @relay_test_operation {
+    query SearchAppTestQuery @relay_test_operation {
       viewer {
         ...SearchApp_viewer @arguments(term: "andy")
       }

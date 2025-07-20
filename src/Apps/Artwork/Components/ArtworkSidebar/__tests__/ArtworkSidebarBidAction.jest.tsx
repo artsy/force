@@ -32,7 +32,7 @@ describe("ArtworkSidebarBidAction", () => {
       />
     ),
     query: graphql`
-      query ArtworkSidebarBidAction_Test_Query
+      query ArtworkSidebarBidActionTestQuery
       @raw_response_type
       @relay_test_operation {
         artwork(id: "auction_artwork") {

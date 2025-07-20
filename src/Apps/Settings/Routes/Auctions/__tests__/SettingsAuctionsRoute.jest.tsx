@@ -1,17 +1,17 @@
 import { screen } from "@testing-library/react"
 import { SettingsAuctionsRouteFragmentContainer } from "Apps/Settings/Routes/Auctions/SettingsAuctionsRoute"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import type { SettingsAuctionsRouteQuery_Test_Query } from "__generated__/SettingsAuctionsRouteQuery_Test_Query.graphql"
+import type { SettingsAuctionsRouteQueryTestQuery } from "__generated__/SettingsAuctionsRouteQueryTestQuery.graphql"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 
 describe("SettingsAuctionsRoute", () => {
   const { renderWithRelay } =
-    setupTestWrapperTL<SettingsAuctionsRouteQuery_Test_Query>({
+    setupTestWrapperTL<SettingsAuctionsRouteQueryTestQuery>({
       Component: SettingsAuctionsRouteFragmentContainer,
       query: graphql`
-        query SettingsAuctionsRouteQuery_Test_Query @relay_test_operation {
+        query SettingsAuctionsRouteQueryTestQuery @relay_test_operation {
           me {
             ...SettingsAuctionsRoute_me
           }

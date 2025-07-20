@@ -2,7 +2,7 @@ import { GeneFamiliesFragmentContainer } from "Apps/Categories/Components/GeneFa
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { render, screen } from "@testing-library/react"
-import type { GeneFamilies_Test_Query } from "__generated__/GeneFamilies_Test_Query.graphql"
+import type { GeneFamiliesTestQuery } from "__generated__/GeneFamiliesTestQuery.graphql"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
@@ -10,7 +10,7 @@ jest.mock("Utils/Hooks/useMatchMedia", () => ({
   useMatchMedia: () => false,
 }))
 
-const { renderWithRelay } = setupTestWrapperTL<GeneFamilies_Test_Query>({
+const { renderWithRelay } = setupTestWrapperTL<GeneFamiliesTestQuery>({
   Component: props => {
     return (
       <MockBoot>
@@ -19,7 +19,7 @@ const { renderWithRelay } = setupTestWrapperTL<GeneFamilies_Test_Query>({
     )
   },
   query: graphql`
-    query GeneFamilies_Test_Query @relay_test_operation {
+    query GeneFamiliesTestQuery @relay_test_operation {
       geneFamiliesConnection(first: 20) {
         ...GeneFamilies_geneFamiliesConnection
       }

@@ -2,7 +2,7 @@ import { ShowViewingRoom } from "Apps/Show/Components/ShowViewingRoom"
 import { ShowAppFragmentContainer } from "Apps/Show/ShowApp"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { screen } from "@testing-library/react"
-import type { ShowApp_Test_Query } from "__generated__/ShowApp_Test_Query.graphql"
+import type { ShowAppTestQuery } from "__generated__/ShowAppTestQuery.graphql"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
@@ -29,10 +29,10 @@ jest.mock("System/Hooks/useRouter", () => ({
   }),
 }))
 
-const { renderWithRelay } = setupTestWrapperTL<ShowApp_Test_Query>({
+const { renderWithRelay } = setupTestWrapperTL<ShowAppTestQuery>({
   Component: ShowAppFragmentContainer,
   query: graphql`
-    query ShowApp_Test_Query @relay_test_operation {
+    query ShowAppTestQuery @relay_test_operation {
       show(id: "xxx") {
         ...ShowApp_show
       }

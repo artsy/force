@@ -1,7 +1,7 @@
 import { screen } from "@testing-library/react"
 import { ArtworkSidebarAuctionPartnerInfoFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarAuctionPartnerInfo"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import type { ArtworkSidebarAuctionPartnerInfo_Test_Query$rawResponse } from "__generated__/ArtworkSidebarAuctionPartnerInfo_Test_Query.graphql"
+import type { ArtworkSidebarAuctionPartnerInfoTestQuery$rawResponse } from "__generated__/ArtworkSidebarAuctionPartnerInfoTestQuery.graphql"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
@@ -10,7 +10,7 @@ describe("ArtworkSidebarAuctionPartnerInfo", () => {
   const { renderWithRelay } = setupTestWrapperTL({
     Component: ArtworkSidebarAuctionPartnerInfoFragmentContainer,
     query: graphql`
-      query ArtworkSidebarAuctionPartnerInfo_Test_Query
+      query ArtworkSidebarAuctionPartnerInfoTestQuery
       @raw_response_type
       @relay_test_operation {
         artwork(id: "auction_artwork_estimate_premium") {
@@ -82,7 +82,7 @@ describe("ArtworkSidebarAuctionPartnerInfo", () => {
   })
 })
 
-const ArtworkWithEstimateAndPremium: ArtworkSidebarAuctionPartnerInfo_Test_Query$rawResponse["artwork"] =
+const ArtworkWithEstimateAndPremium: ArtworkSidebarAuctionPartnerInfoTestQuery$rawResponse["artwork"] =
   {
     id: "auction_artwork_estimate_premium",
     partner: {

@@ -38,7 +38,7 @@ describe("Deprecated Save artwork", () => {
       </MockBoot>
     ),
     query: graphql`
-      query DeprecatedSaveButtonTestQuery @relay_test_operation {
+      query DeprecatedSaveButtonJestQuery @relay_test_operation {
         artwork(id: "example-artwork-id") {
           ...DeprecatedSaveButton_artwork
         }

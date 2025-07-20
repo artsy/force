@@ -1,7 +1,7 @@
 import { ExhibitorsLetterNavFragmentContainer } from "Apps/Fair/Components/ExhibitorsLetterNav"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import type { ExhibitorsLetterNav_Test_Query } from "__generated__/ExhibitorsLetterNav_Test_Query.graphql"
+import type { ExhibitorsLetterNavTestQuery } from "__generated__/ExhibitorsLetterNavTestQuery.graphql"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
@@ -13,14 +13,14 @@ jest.mock("Utils/Hooks/useJump", () => ({
   Jump: () => null,
 }))
 
-const { renderWithRelay } = setupTestWrapperTL<ExhibitorsLetterNav_Test_Query>({
+const { renderWithRelay } = setupTestWrapperTL<ExhibitorsLetterNavTestQuery>({
   Component: ({ fair }) => (
     <MockBoot breakpoint="lg">
       <ExhibitorsLetterNavFragmentContainer fair={fair!} />
     </MockBoot>
   ),
   query: graphql`
-    query ExhibitorsLetterNav_Test_Query @relay_test_operation {
+    query ExhibitorsLetterNavTestQuery @relay_test_operation {
       fair(id: "one-x-artsy") {
         ...ExhibitorsLetterNav_fair
       }
