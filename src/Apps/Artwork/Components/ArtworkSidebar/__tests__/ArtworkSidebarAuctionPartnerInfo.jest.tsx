@@ -8,7 +8,11 @@ jest.unmock("react-relay")
 
 describe("ArtworkSidebarAuctionPartnerInfo", () => {
   const { renderWithRelay } = setupTestWrapperTL({
-    Component: ArtworkSidebarAuctionPartnerInfoFragmentContainer,
+    Component: (props: any) => (
+      <ArtworkSidebarAuctionPartnerInfoFragmentContainer
+        artwork={props.artwork}
+      />
+    ),
     query: graphql`
       query ArtworkSidebarAuctionPartnerInfoTestQuery
       @raw_response_type
@@ -36,10 +40,8 @@ describe("ArtworkSidebarAuctionPartnerInfo", () => {
       renderWithRelay({
         Artwork: () => ({
           ...ArtworkWithEstimateAndPremium,
-          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           sale: {
-            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-            ...ArtworkWithEstimateAndPremium.sale,
+            ...(ArtworkWithEstimateAndPremium?.sale || {}),
             // FIXME: This selection doesn't seem to exist, is this test obsolete?
             // is_with_buyers_premium: null,
           },
@@ -53,10 +55,8 @@ describe("ArtworkSidebarAuctionPartnerInfo", () => {
       renderWithRelay({
         Artwork: () => ({
           ...ArtworkWithEstimateAndPremium,
-          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           sale_artwork: {
-            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-            ...ArtworkWithEstimateAndPremium.sale_artwork,
+            ...(ArtworkWithEstimateAndPremium?.sale_artwork || {}),
             estimate: null,
           },
         }),
@@ -69,10 +69,8 @@ describe("ArtworkSidebarAuctionPartnerInfo", () => {
       const { container } = renderWithRelay({
         Artwork: () => ({
           ...ArtworkWithEstimateAndPremium,
-          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           sale: {
-            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-            ...ArtworkWithEstimateAndPremium.sale,
+            ...(ArtworkWithEstimateAndPremium?.sale || {}),
             is_closed: true,
           },
         }),

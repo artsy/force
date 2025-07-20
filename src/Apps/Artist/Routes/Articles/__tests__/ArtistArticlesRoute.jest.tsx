@@ -1,4 +1,4 @@
-import { screen, within } from "@testing-library/react"
+import { screen } from "@testing-library/react"
 import { ArtistArticlesRouteFragmentContainer } from "Apps/Artist/Routes/Articles/ArtistArticlesRoute"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { ArtistArticlesRouteTestQuery } from "__generated__/ArtistArticlesRouteTestQuery.graphql"

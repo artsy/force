@@ -1,9 +1,8 @@
-import { screen, fireEvent, within } from "@testing-library/react"
-import type { Breakpoint } from "@artsy/palette"
+import { screen, fireEvent } from "@testing-library/react"
 import { ViewingRoomStatementRouteFragmentContainer } from "Apps/ViewingRoom/Routes/Statement/ViewingRoomStatementRoute"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import type { ViewingRoomStatementRouteTestQuery } from "__generated__/ViewingRoomStatementRouteTestQuery.graphql"
+import type { ViewingRoomStatementRouteTestQuery$rawResponse } from "__generated__/ViewingRoomStatementRouteTestQuery.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 
@@ -60,7 +59,7 @@ describe("ViewingRoomStatementRoute", () => {
 
   it("renders the correct components", async () => {
     renderWithRelay({
-      ViewingRoom: () => ViewingRoomStatmentRouteFixture.viewingRoom,
+      ViewingRoom: () => ViewingRoomStatementRouteFixture.viewingRoom,
     })
 
     // Check for main sections
@@ -79,7 +78,7 @@ describe("ViewingRoomStatementRoute", () => {
 
   it("renders view works", async () => {
     renderWithRelay({
-      ViewingRoom: () => ViewingRoomStatmentRouteFixture.viewingRoom,
+      ViewingRoom: () => ViewingRoomStatementRouteFixture.viewingRoom,
     })
 
     const viewWorksButtons = screen.getAllByText(/View works \(5\)/)
@@ -89,7 +88,7 @@ describe("ViewingRoomStatementRoute", () => {
   describe("ViewingRoomIntro", () => {
     it("renders an intro statement", async () => {
       renderWithRelay({
-        ViewingRoom: () => ViewingRoomStatmentRouteFixture.viewingRoom,
+        ViewingRoom: () => ViewingRoomStatementRouteFixture.viewingRoom,
       })
 
       expect(
@@ -101,7 +100,7 @@ describe("ViewingRoomStatementRoute", () => {
   describe("ViewingRoomWorks", () => {
     it("renders artworks", () => {
       renderWithRelay({
-        ViewingRoom: () => ViewingRoomStatmentRouteFixture.viewingRoom,
+        ViewingRoom: () => ViewingRoomStatementRouteFixture.viewingRoom,
       })
 
       // Check for artwork artist names (these should be visible)
@@ -111,7 +110,7 @@ describe("ViewingRoomStatementRoute", () => {
 
     it("renders buttons", async () => {
       renderWithRelay({
-        ViewingRoom: () => ViewingRoomStatmentRouteFixture.viewingRoom,
+        ViewingRoom: () => ViewingRoomStatementRouteFixture.viewingRoom,
       })
 
       // Check for links containing the viewing room slug
@@ -124,7 +123,7 @@ describe("ViewingRoomStatementRoute", () => {
 
     it("tracks artwork image clicks", () => {
       renderWithRelay({
-        ViewingRoom: () => ViewingRoomStatmentRouteFixture.viewingRoom,
+        ViewingRoom: () => ViewingRoomStatementRouteFixture.viewingRoom,
       })
 
       // Find artwork links by their href pattern
@@ -149,7 +148,7 @@ describe("ViewingRoomStatementRoute", () => {
 
     it("tracks view works button clicks", () => {
       renderWithRelay({
-        ViewingRoom: () => ViewingRoomStatmentRouteFixture.viewingRoom,
+        ViewingRoom: () => ViewingRoomStatementRouteFixture.viewingRoom,
       })
 
       // Find the button by its text content - there are multiple "View works" links
@@ -175,7 +174,7 @@ describe("ViewingRoomStatementRoute", () => {
   describe("ViewingRoomPullQuote", () => {
     it("displays the correct text", async () => {
       renderWithRelay({
-        ViewingRoom: () => ViewingRoomStatmentRouteFixture.viewingRoom,
+        ViewingRoom: () => ViewingRoomStatementRouteFixture.viewingRoom,
       })
 
       expect(
@@ -187,7 +186,7 @@ describe("ViewingRoomStatementRoute", () => {
   describe("ViewingRoomBody", () => {
     it("displays the correct text", async () => {
       renderWithRelay({
-        ViewingRoom: () => ViewingRoomStatmentRouteFixture.viewingRoom,
+        ViewingRoom: () => ViewingRoomStatementRouteFixture.viewingRoom,
       })
 
       expect(
@@ -201,7 +200,7 @@ describe("ViewingRoomStatementRoute", () => {
   describe("ViewingRoomSubsections", () => {
     it("displays the correct text", async () => {
       renderWithRelay({
-        ViewingRoom: () => ViewingRoomStatmentRouteFixture.viewingRoom,
+        ViewingRoom: () => ViewingRoomStatementRouteFixture.viewingRoom,
       })
 
       expect(screen.getByText("Guy Yanai")).toBeInTheDocument()
@@ -215,7 +214,7 @@ describe("ViewingRoomStatementRoute", () => {
   })
 })
 
-const ViewingRoomStatmentRouteFixture: ViewingRoomStatementRouteTestQuery$rawResponse =
+const ViewingRoomStatementRouteFixture: ViewingRoomStatementRouteTestQuery$rawResponse =
   {
     viewingRoom: {
       introStatement:

@@ -1,6 +1,6 @@
 import { Boot } from "System/Boot"
 import { SystemContextConsumer } from "System/Contexts/SystemContext"
-import { render, screen } from "@testing-library/react"
+import { render } from "@testing-library/react"
 
 describe("Boot", () => {
   const bootProps: any = {

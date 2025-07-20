@@ -3,7 +3,6 @@ import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { ShowsCityTestQuery } from "__generated__/ShowsCityTestQuery.graphql"
 import { graphql } from "react-relay"
-import { screen } from "@testing-library/react"
 
 jest.unmock("react-relay")
 

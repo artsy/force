@@ -1,7 +1,6 @@
 import { ShowInstallShotsFragmentContainer } from "Apps/Show/Components/ShowInstallShots"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
-import { screen } from "@testing-library/react"
 
 jest.mock("@artsy/palette", () => {
   return {

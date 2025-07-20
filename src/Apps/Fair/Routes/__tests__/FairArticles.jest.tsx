@@ -1,5 +1,4 @@
 import { FairArticlesPaginationContainer } from "Apps/Fair/Routes/FairArticles"
-import { screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { FairArticlesTestQuery } from "__generated__/FairArticlesTestQuery.graphql"
 import { graphql } from "react-relay"

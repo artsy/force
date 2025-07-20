@@ -3,7 +3,6 @@ import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { ArtistCurrentArticlesRailTestQuery } from "__generated__/ArtistCurrentArticlesRailTestQuery.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { screen } from "@testing-library/react"
 import { fireEvent } from "@testing-library/react"
 
 jest.unmock("react-relay")
@@ -56,12 +55,6 @@ describe("ArtistCurrentArticlesRail", () => {
     expect(links[0].getAttribute("href")).toContain(
       "/artist/artistSlug/articles",
     )
-
-    // Check for shelf component (may not have exact selector)
-    const hasShelfContent =
-      container.innerHTML.includes("Shelf") ||
-      container.querySelector('[role="region"]') ||
-      container.querySelector(".rail")
 
     const image = container.querySelector("img")
     expect(image).toBeTruthy()

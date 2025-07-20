@@ -3,7 +3,6 @@ import { getArtworkFilterInputArgs } from "Apps/Auction/Components/getArtworkFil
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { AuctionArtworkFilterJestQuery } from "__generated__/AuctionArtworkFilterJestQuery.graphql"
 import { graphql } from "react-relay"
-import { screen } from "@testing-library/react"
 
 jest.unmock("react-relay")
 

@@ -1,7 +1,7 @@
 import { PastAuctionsPaginationContainer } from "Apps/Auctions/Routes/PastAuctions"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { render, screen } from "@testing-library/react"
+import { screen } from "@testing-library/react"
 import { graphql } from "react-relay"
 import { useTracking as baseUseTracking } from "react-tracking"
 

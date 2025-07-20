@@ -1,7 +1,7 @@
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { NavBarSubMenu } from "Components/NavBar/Menus/NavBarSubMenu"
 import { ARTWORKS_SUBMENU_DATA } from "Components/NavBar/menuData"
-import { render, screen } from "@testing-library/react"
+import { render } from "@testing-library/react"
 import { fireEvent } from "@testing-library/react"
 import { useTracking } from "react-tracking"
 

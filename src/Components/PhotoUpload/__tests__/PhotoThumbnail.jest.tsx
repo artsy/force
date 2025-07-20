@@ -1,4 +1,3 @@
-import { Image, ProgressBar } from "@artsy/palette"
 import {
   PhotoThumbnail,
   type PhotoThumbnailProps,

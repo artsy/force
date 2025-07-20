@@ -1,5 +1,4 @@
 import { screen, fireEvent, waitFor } from "@testing-library/react"
-import { Input } from "@artsy/palette"
 import {
   LocationAutocompleteInput,
   type Place,

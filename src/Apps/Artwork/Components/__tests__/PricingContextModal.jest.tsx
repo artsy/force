@@ -1,6 +1,4 @@
-import { fireEvent, screen, waitFor } from "@testing-library/react"
-import HelpIcon from "@artsy/icons/HelpIcon"
-import { Button } from "@artsy/palette"
+import { fireEvent, screen } from "@testing-library/react"
 import { PricingContextModal } from "Apps/Artwork/Components/PricingContextModal"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { mockTracking } from "DevTools/mockTracking"

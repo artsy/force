@@ -1,4 +1,3 @@
-import { ShowViewingRoom } from "Apps/Show/Components/ShowViewingRoom"
 import { ShowAppFragmentContainer } from "Apps/Show/ShowApp"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { screen } from "@testing-library/react"
@@ -74,7 +73,7 @@ describe("ShowApp", () => {
   })
 
   it("renders a viewing room if there are any", () => {
-    const { container } = renderWithRelay({
+    renderWithRelay({
       Show: () => ({
         viewingRoomsConnection: {
           edges: [
@@ -88,11 +87,11 @@ describe("ShowApp", () => {
 
     // Since ShowViewingRoom is mocked, we can check for its presence in a different way
     // This test may need adjustment based on actual component behavior
-    expect(container).toBeInTheDocument()
+    expect(document.body).toBeInTheDocument()
   })
 
   it("does not render `Back to Fair` banner by default", () => {
-    const { container } = renderWithRelay({
+    renderWithRelay({
       Show: () => ({
         isFairBooth: false,
         name: "Example Show",
@@ -104,7 +103,7 @@ describe("ShowApp", () => {
   })
 
   it("does not render `Back to Fair` banner without full featured fair", () => {
-    const { container } = renderWithRelay({
+    renderWithRelay({
       Show: () => ({
         isFairBooth: true,
         name: "Example Show",

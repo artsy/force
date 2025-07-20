@@ -1,6 +1,5 @@
 import { CollectionsRailFixture } from "Apps/__tests__/Fixtures/Collections"
 import { RelatedCollectionEntity } from "Components/RelatedCollectionsRail/RelatedCollectionEntity"
-import { RouterLink } from "System/Components/RouterLink"
 import { AnalyticsCombinedContextProvider } from "System/Contexts/AnalyticsContext"
 import { render, screen, fireEvent } from "@testing-library/react"
 import { useTracking } from "react-tracking"

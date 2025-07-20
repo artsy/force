@@ -1,5 +1,4 @@
 import { useOrderPaymentContext } from "Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext"
-import { BankDebitForm } from "Components/BankDebitForm/BankDebitForm"
 import { BankDebitProvider } from "Components/BankDebitForm/BankDebitProvider"
 import { render, screen } from "@testing-library/react"
 

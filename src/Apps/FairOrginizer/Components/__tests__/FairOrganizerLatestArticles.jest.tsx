@@ -1,6 +1,5 @@
 import { FairOrganizerLatestArticlesFragmentContainer } from "Apps/FairOrginizer/Components/FairOrganizerLatestArticles"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { screen } from "@testing-library/react"
 import type { FairOrganizerLatestArticlesTestQuery } from "__generated__/FairOrganizerLatestArticlesTestQuery.graphql"
 import { graphql } from "react-relay"
 

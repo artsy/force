@@ -88,7 +88,7 @@ describe("FairBooths", () => {
 
   describe("sort", () => {
     it("renders correctly", () => {
-      const { container } = renderWithRelay()
+      renderWithRelay()
 
       expect(screen.getByText("Sort")).toBeInTheDocument()
       expect(screen.getByText("Relevance")).toBeInTheDocument()

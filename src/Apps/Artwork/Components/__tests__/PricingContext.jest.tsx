@@ -1,23 +1,12 @@
 import { screen, fireEvent, waitFor } from "@testing-library/react"
-import HelpIcon from "@artsy/icons/HelpIcon"
-import { Link } from "@artsy/palette"
-import { BarChart } from "@artsy/palette-charts"
-import {
-  PricingContext,
-  PricingContextFragmentContainer,
-} from "Apps/Artwork/Components/PricingContext"
+import { PricingContextFragmentContainer } from "Apps/Artwork/Components/PricingContext"
 import { MockBoot } from "DevTools/MockBoot"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import type {
-  PricingContextTestQuery$data,
-  PricingContextQuery$rawResponse,
-} from "__generated__/PricingContextTestQuery.graphql"
+import type {} from "__generated__/PricingContextTestQuery.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-// eslint-disable-next-line no-restricted-imports
-import Waypoint from "react-waypoint"
-import { MockPayloadGenerator, createMockEnvironment } from "relay-test-utils"
+import { createMockEnvironment } from "relay-test-utils"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -34,54 +23,52 @@ jest.mock("react-waypoint", () => ({
   default: ({ onEnter, children }: any) => {
     // Expose onEnter callback via data attribute
     return (
-      <div data-testid="waypoint" onClick={onEnter}>
+      <button data-testid="waypoint" onClick={onEnter} type="button">
         {children}
-      </div>
+      </button>
     )
   },
 }))
 
-// @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-const mockPricingContext: PricingContextQuery$rawResponse["artwork"]["pricingContext"] =
-  {
-    appliedFiltersDisplay: "Price ranges of small mocks by David Sheldrick",
-    appliedFilters: {
-      category: "PAINTING",
-      dimension: "SMALL",
+const mockPricingContext = {
+  appliedFiltersDisplay: "Price ranges of small mocks by David Sheldrick",
+  appliedFilters: {
+    category: "PAINTING" as const,
+    dimension: "SMALL" as const,
+  },
+  bins: [
+    {
+      maxPrice: "$88",
+      maxPriceCents: 8855,
+      minPrice: "$9",
+      minPriceCents: 900,
+      numArtworks: 67,
     },
-    bins: [
-      {
-        maxPrice: "$88",
-        maxPriceCents: 8855,
-        minPrice: "$9",
-        minPriceCents: 900,
-        numArtworks: 67,
-      },
-      {
-        maxPrice: "$168",
-        maxPriceCents: 16810,
-        minPrice: "$88",
-        minPriceCents: 8855,
-        numArtworks: 1,
-      },
-      {
-        maxPrice: "$247",
-        maxPriceCents: 24765,
-        minPrice: "$168",
-        minPriceCents: 16810,
-        numArtworks: 0,
-      },
-      {
-        maxPrice: "$327",
-        maxPriceCents: 32720,
-        minPrice: "$247",
-        minPriceCents: 24765,
-        numArtworks: 17,
-      },
-    ],
-  }
+    {
+      maxPrice: "$168",
+      maxPriceCents: 16810,
+      minPrice: "$88",
+      minPriceCents: 8855,
+      numArtworks: 1,
+    },
+    {
+      maxPrice: "$247",
+      maxPriceCents: 24765,
+      minPrice: "$168",
+      minPriceCents: 16810,
+      numArtworks: 0,
+    },
+    {
+      maxPrice: "$327",
+      maxPriceCents: 32720,
+      minPrice: "$247",
+      minPriceCents: 24765,
+      numArtworks: 17,
+    },
+  ],
+}
 
-const mockArtwork: PricingContextQuery$rawResponse["artwork"] = {
+const mockArtwork = {
   artists: [{ id: "asfwef", slug: "andy-warhol" }],
   category: "Photography",
   id: "abc124",
@@ -89,21 +76,20 @@ const mockArtwork: PricingContextQuery$rawResponse["artwork"] = {
     __typename: "Money",
     minor: 23455,
   },
-  pricingContext: mockPricingContext,
+  pricingContext: mockPricingContext as any,
 }
 
 describe("PricingContext", () => {
-  const { renderWithRelay } = setupTestWrapperTL<PricingContextTestQuery$data>({
-    Component: (props: PricingContextTestQuery$data) => (
+  const { renderWithRelay } = setupTestWrapperTL({
+    Component: (props: any) => (
       <div>
         <MockBoot>
-          {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
-          <PricingContextFragmentContainer {...props} />
+          <PricingContextFragmentContainer artwork={props.artwork} />
         </MockBoot>
       </div>
     ),
     query: graphql`
-      query PricingContextJestQuery @raw_response_type @relay_test_operation {
+      query PricingContextTestQuery @raw_response_type @relay_test_operation {
         artwork(id: "unused") {
           ...PricingContext_artwork
         }
@@ -230,7 +216,6 @@ describe("PricingContext", () => {
     renderWithRelay({
       Artwork: () => ({
         ...mockArtwork,
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         pricingContext: {
           ...mockArtwork.pricingContext,
           bins: [
@@ -272,7 +257,6 @@ describe("PricingContext", () => {
     renderWithRelay({
       Artwork: () => ({
         ...mockArtwork,
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         pricingContext: {
           ...mockArtwork.pricingContext,
           bins: [
@@ -324,7 +308,7 @@ describe("PricingContext", () => {
 
     it("Tracks impressions", async () => {
       const env = createMockEnvironment()
-      const { container } = renderWithRelay(
+      renderWithRelay(
         {
           Artwork: () => mockArtwork,
         },

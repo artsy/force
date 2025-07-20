@@ -3,7 +3,7 @@ import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
 import { InquirySignUp } from "Components/Inquiry/Views/InquirySignUp"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { signUp } from "Utils/auth"
-import { render, screen, fireEvent, waitFor } from "@testing-library/react"
+import { render, screen, fireEvent } from "@testing-library/react"
 import { useTracking } from "react-tracking"
 
 jest.mock("Utils/auth")
@@ -83,6 +83,9 @@ describe("InquirySignUp", () => {
       const form = screen
         .getByText("Sign up to send your message")
         .closest("form")
+      if (!form) {
+        throw new Error("Form not found")
+      }
       fireEvent.submit(form)
       await flushPromiseQueue()
 
@@ -135,6 +138,9 @@ describe("InquirySignUp", () => {
       const form = screen
         .getByText("Sign up to send your message")
         .closest("form")
+      if (!form) {
+        throw new Error("Form not found")
+      }
       fireEvent.submit(form)
       await flushPromiseQueue()
 

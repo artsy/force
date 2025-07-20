@@ -1,5 +1,4 @@
 import { screen, fireEvent } from "@testing-library/react"
-import type { Breakpoint } from "@artsy/palette"
 import { ViewingRoomWorksRouteFragmentContainer } from "Apps/ViewingRoom/Routes/Works/ViewingRoomWorksRoute"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"

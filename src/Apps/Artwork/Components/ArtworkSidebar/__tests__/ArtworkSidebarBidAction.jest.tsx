@@ -29,6 +29,10 @@ describe("ArtworkSidebarBidAction", () => {
       <ArtworkSidebarBidActionFragmentContainer
         artwork={props.artwork!}
         me={props.me!}
+        tracking={{
+          trackEvent: jest.fn(),
+          getTrackingData: jest.fn(() => ({})),
+        }}
       />
     ),
     query: graphql`

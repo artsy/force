@@ -49,7 +49,11 @@ const ArtworkSummaryItem: React.FC<
   const priceLabel = mode === "OFFER" || isPartnerOffer ? "List price" : "Price"
 
   return (
-    <StackableBorderBox flexDirection="row" {...others}>
+    <StackableBorderBox
+      flexDirection="row"
+      {...others}
+      data-testid="artworkSummary"
+    >
       <Box height="auto">
         {imageURL &&
           (isPrivateSale ? (

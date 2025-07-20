@@ -110,7 +110,7 @@ describe("The respond page", () => {
       </MockBoot>
     ),
     query: graphql`
-      query RespondTestQuery @raw_response_type @relay_test_operation {
+      query RespondTestEQuery @raw_response_type @relay_test_operation {
         order: commerceOrder(id: "unused") {
           ...Respond_order
         }

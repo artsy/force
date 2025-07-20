@@ -249,7 +249,7 @@ describe("AuctionBidRoute", () => {
 
   it("submits bid", async () => {
     const spy = jest.fn()
-    let formikOnSubmit: jest.Mock
+    let formikOnSubmit: jest.Mock = jest.fn()
 
     mockUseSubmitBid.mockImplementation(() => ({
       submitBid: spy,

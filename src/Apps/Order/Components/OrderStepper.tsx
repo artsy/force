@@ -45,6 +45,7 @@ const StepperComponent: FC<StepperComponentProps> = ({
       initialTabIndex={stepIndex}
       currentStepIndex={stepIndex}
       disableNavigation={false}
+      data-testid="orderStepper"
     >
       {steps.map(step => (
         <Step
@@ -56,6 +57,7 @@ const StepperComponent: FC<StepperComponentProps> = ({
             )
           }
           key={step}
+          data-testid={currentStep === step ? "currentStep" : undefined}
         />
       ))}
     </Stepper>

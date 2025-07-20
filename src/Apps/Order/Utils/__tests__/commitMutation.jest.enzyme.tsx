@@ -74,7 +74,7 @@ describe("injectCommitMutation", () => {
                   },
                   // TODO: Inputs to the mutation might have changed case of the keys!
                   mutation: graphql`
-                    mutation commitMutationTest1Mutation(
+                    mutation commitMutationTestEnzymeMutation(
                       $input: CommerceSetPaymentInput!
                     ) {
                       commerceSetPayment(input: $input) {

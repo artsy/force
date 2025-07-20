@@ -4,7 +4,6 @@ import { AnalyticsCombinedContextProvider } from "System/Contexts/AnalyticsConte
 import type { ShowViewingRoomTestQuery } from "__generated__/ShowViewingRoomTestQuery.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { screen } from "@testing-library/react"
 import { fireEvent } from "@testing-library/react"
 
 jest.mock("react-tracking")

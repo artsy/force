@@ -1,6 +1,6 @@
 import { FairArtworksRefetchContainer } from "Apps/Fair/Routes/FairArtworks"
 import { MockBoot } from "DevTools/MockBoot"
-import { fireEvent, screen } from "@testing-library/react"
+import { screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type {
   FairArtworksQuery,
@@ -65,7 +65,7 @@ describe("FairArtworks", () => {
   })
 
   it("includes the artist filter", async () => {
-    const { container } = renderWithRelay({
+    renderWithRelay({
       Fair: () => FAIR_ARTWORKS_FIXTURE.fair,
     })
 

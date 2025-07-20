@@ -1,6 +1,5 @@
 import { useAuthDialog } from "Components/AuthDialog"
 import { NavBar } from "Components/NavBar/NavBar"
-import { NavBarMobileMenuNotificationsIndicatorQueryRenderer as NavBarMobileMenuNotificationsIndicator } from "Components/NavBar/NavBarMobileMenu/NavBarMobileMenuNotificationsIndicator"
 import { SystemContextProvider } from "System/Contexts/SystemContext"
 import { render, screen } from "@testing-library/react"
 import { fireEvent } from "@testing-library/react"

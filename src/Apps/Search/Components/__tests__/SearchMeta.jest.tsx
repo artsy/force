@@ -1,7 +1,6 @@
 import { SearchMeta } from "Apps/Search/Components/SearchMeta"
 import { MockBoot } from "DevTools/MockBoot"
 import { render } from "@testing-library/react"
-import { Link, Title } from "react-head"
 
 jest.mock("sharify", () => ({
   data: {

@@ -9,7 +9,7 @@ import {
 } from "Apps/__tests__/Fixtures/aggregations"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { screen, within } from "@testing-library/react"
+import { screen } from "@testing-library/react"
 import type { TagArtworkFilterTestQuery } from "__generated__/TagArtworkFilterTestQuery.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"

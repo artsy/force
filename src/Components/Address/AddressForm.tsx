@@ -161,7 +161,7 @@ export const AddressForm: React.FC<
   }
 
   return (
-    <GridColumns>
+    <GridColumns data-testid="address-form">
       <Column span={12}>
         <Input
           tabIndex={tabIndex}

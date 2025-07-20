@@ -102,7 +102,9 @@ const OrderApp: FC<React.PropsWithChildren<OrderAppProps>> = props => {
 
     return (
       <Media greaterThan="xs">
-        <SalesforceWrapper />
+        <div data-testid="salesforce-wrapper">
+          <SalesforceWrapper />
+        </div>
       </Media>
     )
   }

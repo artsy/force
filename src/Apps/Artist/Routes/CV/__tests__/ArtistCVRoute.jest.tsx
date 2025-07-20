@@ -1,4 +1,3 @@
-import { screen } from "@testing-library/react"
 import { ArtistCVRouteFragmentContainer } from "Apps/Artist/Routes/CV/ArtistCVRoute"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { ArtistCVRouteTestQuery } from "__generated__/ArtistCVRouteTestQuery.graphql"

@@ -1,7 +1,6 @@
 import { AuctionFAQsDialogFragmentContainer } from "Components/AuctionFAQsDialog"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
-import { screen } from "@testing-library/react"
 
 jest.unmock("react-relay")
 

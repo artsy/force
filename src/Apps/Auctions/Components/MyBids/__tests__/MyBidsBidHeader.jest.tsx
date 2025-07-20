@@ -1,6 +1,6 @@
 import { MyBidsBidHeaderFragmentContainer } from "Apps/Auctions/Components/MyBids/MyBidsBidHeader"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { render, screen, fireEvent } from "@testing-library/react"
+import { screen, fireEvent } from "@testing-library/react"
 import { graphql } from "react-relay"
 import { useTracking as baseUseTracking } from "react-tracking"
 import type { MyBidsBidHeaderTestQuery } from "__generated__/MyBidsBidHeaderTestQuery.graphql"

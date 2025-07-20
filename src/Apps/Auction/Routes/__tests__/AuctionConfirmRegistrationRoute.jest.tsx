@@ -4,7 +4,7 @@ import { AuctionConfirmRegistrationRouteFragmentContainer } from "Apps/Auction/R
 import { redirectToSaleHome } from "Apps/Auction/Routes/AuctionRegistrationRoute"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { render, screen } from "@testing-library/react"
+import { screen } from "@testing-library/react"
 import { useRouter } from "System/Hooks/useRouter"
 import type { AuctionConfirmRegistrationRouteQuery } from "__generated__/AuctionConfirmRegistrationRouteQuery.graphql"
 import { Formik } from "formik"

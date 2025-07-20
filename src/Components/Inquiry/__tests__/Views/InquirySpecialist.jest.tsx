@@ -77,6 +77,9 @@ describe("InquirySpecialist", () => {
       const form = screen
         .getByText(/An Artsy Specialist is available/)
         .closest("form")
+      if (!form) {
+        throw new Error("Form not found")
+      }
       fireEvent.submit(form)
       await flushPromiseQueue()
 
@@ -122,6 +125,9 @@ describe("InquirySpecialist", () => {
       const form = screen
         .getByText(/An Artsy Specialist is available/)
         .closest("form")
+      if (!form) {
+        throw new Error("Form not found")
+      }
       fireEvent.submit(form)
       await flushPromiseQueue()
 

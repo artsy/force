@@ -293,7 +293,7 @@ describe("AuctionRegistrationRoute", () => {
   describe("#handleSubmit", () => {
     it("creates a bidder on submit and tracks registration", async () => {
       const createTokenSpy = jest.fn()
-      let formikOnSubmit: jest.Mock
+      let formikOnSubmit: jest.Mock = jest.fn()
 
       mockUseCreateTokenAndSubmit.mockImplementation(() => ({
         createToken: createTokenSpy,

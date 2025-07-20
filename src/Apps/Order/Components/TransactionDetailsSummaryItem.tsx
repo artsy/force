@@ -254,7 +254,11 @@ export const TransactionDetailsSummaryItem: FC<
   }
 
   return (
-    <StepSummaryItem {...others}>
+    <StepSummaryItem
+      {...others}
+      data-testid="transactionSummary"
+      data-testid-inner="transactionDetailsSummaryItem"
+    >
       {renderPriceEntry()}
       <Spacer y={2} />
       <Entry
@@ -353,8 +357,9 @@ const Entry: React.FC<React.PropsWithChildren<EntryProps>> = ({
   value,
   final,
   source,
+  ...props
 }) => (
-  <Flex justifyContent="space-between" alignItems="baseline">
+  <Flex justifyContent="space-between" alignItems="baseline" {...props}>
     <div>
       <Text variant="sm" color={getLabelColor(final, source)}>
         {label}

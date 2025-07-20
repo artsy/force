@@ -1,18 +1,11 @@
-import GridItem, { ArtworkGridItem } from "Components/Artwork/GridItem"
 import ArtworkGrid, {
-  ArtworkGridContainer,
-  type ArtworkGridContainerState,
   createSectionedArtworks,
 } from "Components/ArtworkGrid/ArtworkGrid"
-import {
-  ArtworkGridEmptyState,
-  ResetFilterLink,
-} from "Components/ArtworkGrid/ArtworkGridEmptyState"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { ArtworkGrid_artworks$data } from "__generated__/ArtworkGrid_artworks.graphql"
 import { graphql } from "react-relay"
-import { screen, fireEvent, waitFor } from "@testing-library/react"
+import { screen, fireEvent } from "@testing-library/react"
 import { ArtworkGridFixture } from "./ArtworkGridFixture"
 
 jest.unmock("react-relay")

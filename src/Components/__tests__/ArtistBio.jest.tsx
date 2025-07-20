@@ -1,8 +1,4 @@
 import { screen } from "@testing-library/react"
-import type {
-  ArtistBioTestQuery$data,
-  ArtistBioTestQuery$rawResponse,
-} from "__generated__/ArtistBioTestQuery.graphql"
 
 import { ArtistBioFragmentContainer as ArtistBio } from "Components/ArtistBio"
 import { MockBoot } from "DevTools/MockBoot"
@@ -18,12 +14,13 @@ describe("ArtistBio", () => {
   }
 
   const { renderWithRelay } = setupTestWrapperTL({
-    Component: ({ bio }: ArtistBioTestQuery$data) => (
-      <MockBoot breakpoint="lg">
-        {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
-        <ArtistBio bio={bio} />
-      </MockBoot>
-    ),
+    Component: (props: any) => {
+      return (
+        <MockBoot breakpoint="lg">
+          <ArtistBio bio={props.bio} />
+        </MockBoot>
+      )
+    },
     query: graphql`
       query ArtistBioJestQuery @raw_response_type @relay_test_operation {
         bio: artist(id: "unused") {

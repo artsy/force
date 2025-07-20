@@ -62,7 +62,7 @@ describe("Status", () => {
       </MockBoot>
     ),
     query: graphql`
-      query StatusQuery @raw_response_type @relay_test_operation {
+      query StatusEQuery @raw_response_type @relay_test_operation {
         order: commerceOrder(id: "42") {
           ...Status_order
         }

@@ -1,27 +1,28 @@
 {
-  "successfully_migrated": [],
-  "failed_migration": [],
-  "pending_migration": [
-    "src/Apps/Order/__tests__/OrderApp.jest.enzyme.tsx",
-    "src/Apps/Order/Components/__tests__/BankAccountPicker.jest.enzyme.enzyme.tsx",
-    "src/Apps/Order/Components/__tests__/Collapse.jest.enzyme.tsx",
-    "src/Apps/Order/Components/__tests__/CreditCardPicker.jest.enzyme.enzyme.tsx",
+  "successfully_migrated": [
+    "src/Apps/Order/Routes/__tests__/NewPayment.jest.enzyme.tsx",
     "src/Apps/Order/Components/__tests__/OfferHistoryItem.jest.enzyme.tsx",
     "src/Apps/Order/Components/__tests__/OfferInput.jest.enzyme.tsx",
     "src/Apps/Order/Components/__tests__/OfferNote.jest.enzyme.tsx",
-    "src/Apps/Order/Components/__tests__/StickyFooter.jest.enzyme.tsx",
-    "src/Apps/Order/Components/__tests__/TransactionDetailsSummary.jest.enzyme.tsx",
-    "src/Apps/Order/Routes/__tests__/Accept.jest.enzyme.tsx",
-    "src/Apps/Order/Routes/__tests__/Counter.jest.enzyme.tsx",
-    "src/Apps/Order/Routes/__tests__/NewPayment.jest.enzyme.tsx",
     "src/Apps/Order/Routes/__tests__/Offer.jest.enzyme.tsx",
-    "src/Apps/Order/Routes/__tests__/Payment.jest.enzyme.tsx",
-    "src/Apps/Order/Routes/__tests__/Reject.jest.enzyme.tsx",
+    "src/Apps/Order/Routes/__tests__/Counter.jest.enzyme.tsx",
     "src/Apps/Order/Routes/__tests__/Respond.jest.enzyme.enzyme.tsx",
-    "src/Apps/Order/Routes/__tests__/Review.jest.enzyme.enzyme.tsx",
-    "src/Apps/Order/Routes/__tests__/Status.jest.enzyme.enzyme.tsx",
+    "src/Apps/Order/Routes/__tests__/Accept.jest.enzyme.tsx",
+    "src/Apps/Order/Routes/__tests__/Reject.jest.enzyme.tsx",
+    "src/Apps/Order/Components/__tests__/TransactionDetailsSummary.jest.enzyme.tsx",
+    "src/Apps/Order/Components/__tests__/Collapse.jest.enzyme.tsx",
+    "src/Apps/Order/Components/__tests__/StickyFooter.jest.enzyme.tsx",
     "src/Apps/Order/Utils/__tests__/commitMutation.jest.enzyme.tsx",
-    "src/Apps/Order/Utils/__tests__/scrollToFormikErrors.jest.enzyme.tsx"
+    "src/Apps/Order/Utils/__tests__/scrollToFormikErrors.jest.enzyme.tsx",
+    "src/Apps/Order/Components/__tests__/BankAccountPicker.jest.enzyme.enzyme.tsx",
+    "src/Apps/Order/Components/__tests__/CreditCardPicker.jest.enzyme.enzyme.tsx",
+    "src/Apps/Order/Routes/__tests__/Payment.jest.enzyme.tsx"
+  ],
+  "failed_migration": [],
+  "pending_migration": [
+    "src/Apps/Order/__tests__/OrderApp.jest.enzyme.tsx",
+    "src/Apps/Order/Routes/__tests__/Review.jest.enzyme.enzyme.tsx",
+    "src/Apps/Order/Routes/__tests__/Status.jest.enzyme.enzyme.tsx"
   ],
   "complex_cases": [],
   "notes": {
@@ -35,9 +36,10 @@
     "description": "Apps/Order tests require special attention due to complex order flow logic, payment processing, and state management"
   },
   "summary": {
-    "total_migrated": 0,
-    "total_pending": 20,
+    "total_migrated": 17,
+    "total_pending": 3,
     "total_failed": 0,
-    "migration_progress": "0.00%"
+    "total_complex": 0,
+    "migration_progress": "85%"
   }
 }

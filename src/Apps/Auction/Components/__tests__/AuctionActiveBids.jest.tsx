@@ -3,7 +3,7 @@ import { AuctionActiveBidsRefetchContainer } from "Apps/Auction/Components/Aucti
 import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { render, screen, fireEvent } from "@testing-library/react"
+import { screen, fireEvent } from "@testing-library/react"
 import { useRouter } from "System/Hooks/useRouter"
 import type { AuctionActiveBidsQuery } from "__generated__/AuctionActiveBidsQuery.graphql"
 import { graphql } from "react-relay"

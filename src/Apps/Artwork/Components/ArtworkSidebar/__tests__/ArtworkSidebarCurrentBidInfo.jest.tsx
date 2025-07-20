@@ -1,5 +1,3 @@
-import CheckmarkStrokeIcon from "@artsy/icons/CheckmarkStrokeIcon"
-import CloseStrokeIcon from "@artsy/icons/CloseStrokeIcon"
 import { ArtworkSidebarCurrentBidInfoFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarCurrentBidInfo"
 import {
   AuctionPreview,
@@ -36,7 +34,10 @@ describe("ArtworkSidebarCurrentBidInfo", () => {
 
   const { renderWithRelay } = setupTestWrapperTL({
     Component: (props: any) => (
-      <ArtworkSidebarCurrentBidInfoFragmentContainer artwork={props.artwork!} />
+      <ArtworkSidebarCurrentBidInfoFragmentContainer
+        artwork={props.artwork!}
+        currentBidChanged={false}
+      />
     ),
     query: graphql`
       query ArtworkSidebarCurrentBidInfoTestQuery

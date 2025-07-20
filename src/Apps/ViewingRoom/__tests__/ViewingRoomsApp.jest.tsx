@@ -1,5 +1,4 @@
-import { screen, within } from "@testing-library/react"
-import type { Breakpoint } from "@artsy/palette"
+import { screen } from "@testing-library/react"
 import { ViewingRoomsAppFragmentContainer } from "Apps/ViewingRoom/ViewingRoomsApp"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"

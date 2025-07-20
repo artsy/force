@@ -1,4 +1,3 @@
-import { PartnerHeaderImageFragmentContainer } from "Apps/Partner/Components/PartnerHeader/PartnerHeaderImage"
 import { PartnerAppFragmentContainer } from "Apps/Partner/PartnerApp"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { PartnerAppTestQuery } from "__generated__/PartnerAppTestQuery.graphql"

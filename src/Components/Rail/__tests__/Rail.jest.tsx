@@ -5,6 +5,7 @@ describe("Rail", () => {
   const renderComponent = (props = {}) => {
     return render(
       <Rail
+        title="Test Rail"
         getItems={() => [
           <div key="1">slide-1</div>,
           <div key="2">slide-2</div>,

@@ -7,9 +7,9 @@ import { graphql } from "react-relay"
 jest.unmock("react-relay")
 
 const { renderWithRelay } = setupTestWrapperTL({
-  Component: ({ artistSeries }) => (
+  Component: (props: any) => (
     <MockBoot breakpoint="lg" user={{ lab_features: ["Artist Series"] }}>
-      <ArtistSeriesMetaFragmentContainer artistSeries={artistSeries} />
+      <ArtistSeriesMetaFragmentContainer artistSeries={props.artistSeries} />
     </MockBoot>
   ),
   query: graphql`
@@ -28,7 +28,9 @@ const { renderWithRelay } = setupTestWrapperTL({
 
 describe("ArtistSeriesMeta", () => {
   it("creates search and social meta tags for title", () => {
-    renderWithRelay(ArtistSeriesMetaFixture)
+    renderWithRelay({
+      ArtistSeries: () => ArtistSeriesMetaFixture.artistSeries,
+    })
     // Check that title tag exists with mock data
     expect(document.querySelector("title")).toHaveTextContent(
       /For Sale on Artsy/,
@@ -42,7 +44,9 @@ describe("ArtistSeriesMeta", () => {
   })
 
   it("creates search and social meta tags for description", () => {
-    renderWithRelay(ArtistSeriesMetaFixture)
+    renderWithRelay({
+      ArtistSeries: () => ArtistSeriesMetaFixture.artistSeries,
+    })
     // Check that description meta tags exist
     expect(
       document.querySelector('meta[name="description"]'),
@@ -56,7 +60,9 @@ describe("ArtistSeriesMeta", () => {
   })
 
   it("omits the artist name in the title an description when there is no artist", () => {
-    renderWithRelay(ArtistSeriesMetaFixtureNoArtist)
+    renderWithRelay({
+      ArtistSeries: () => ArtistSeriesMetaFixtureNoArtist.artistSeries,
+    })
     // Check that title tag exists
     expect(document.querySelector("title")).toHaveTextContent(
       /For Sale on Artsy/,
@@ -67,7 +73,9 @@ describe("ArtistSeriesMeta", () => {
   })
 
   it("creates cannonical tags for the artist series", () => {
-    renderWithRelay(ArtistSeriesMetaFixture)
+    renderWithRelay({
+      ArtistSeries: () => ArtistSeriesMetaFixture.artistSeries,
+    })
     expect(document.querySelector('link[rel="canonical"]')).toHaveAttribute(
       "href",
       expect.stringContaining("/artist-series/"),

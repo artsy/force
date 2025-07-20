@@ -1,5 +1,4 @@
 import { render, screen } from "@testing-library/react"
-import { Header } from "Apps/Artwork/Components/OtherWorks/Header"
 import { OtherWorksFragmentContainer as OtherWorks } from "Apps/Artwork/Components/OtherWorks/index"
 import { useTracking } from "react-tracking"
 

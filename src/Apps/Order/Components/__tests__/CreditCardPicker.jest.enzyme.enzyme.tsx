@@ -177,7 +177,9 @@ describe("CreditCardPickerFragmentContainer", () => {
       </MockBoot>
     ),
     query: graphql`
-      query CreditCardPickerTestQuery @raw_response_type @relay_test_operation {
+      query CreditCardPickerTestEQuery
+      @raw_response_type
+      @relay_test_operation {
         me {
           ...CreditCardPicker_me
         }
