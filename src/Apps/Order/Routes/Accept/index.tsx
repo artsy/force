@@ -127,7 +127,7 @@ export const Accept: FC<
       }
 
       if (!orderOrError?.error) {
-        router.push(`/orders/${order.internalID}/status`)
+        router.push(`/orders/${order.internalID}/details`)
         return
       }
 

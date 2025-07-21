@@ -170,7 +170,7 @@ describe("Submit Pending Counter Offer", () => {
       global.setInterval = realSetInterval
     })
 
-    it("routes to status page after mutation completes", async () => {
+    it("routes to details page after mutation completes", async () => {
       mockCommitMutation.mockResolvedValue(submitPendingOfferSuccess)
       const { wrapper } = getWrapper({
         CommerceOrder: () => commerceOrder,
@@ -179,7 +179,7 @@ describe("Submit Pending Counter Offer", () => {
 
       await page.clickSubmit()
       expect(pushMock).toHaveBeenCalledWith(
-        `/orders/${testOrder?.internalID}/status`,
+        `/orders/${testOrder?.internalID}/details`,
       )
     })
 

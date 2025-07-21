@@ -64,6 +64,7 @@ import { tagRoutes } from "./Apps/Tag/tagRoutes"
 import { userRoutes } from "./Apps/User/userRoutes"
 import { worksForYouRoutes } from "./Apps/WorksForYou/worksForYouRoutes"
 import { recommendedArtistsRoutes } from "Apps/RecommendedArtists/recommendedArtistsRoutes"
+import { artworkRecommendationsRoutes } from "./Apps/ArtworkRecommendations/artworkRecommendationsRoutes"
 
 const ROUTES = buildAppRoutes([
   aboutRoutes,
@@ -78,6 +79,7 @@ const ROUTES = buildAppRoutes([
   artQuizRoutes,
   alertRoutes,
   artworkRoutes,
+  artworkRecommendationsRoutes,
   auctionRoutes,
   auctionsRoutes,
   authenticationRoutes,

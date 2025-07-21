@@ -716,7 +716,7 @@ describe("Order2CheckoutRoute", () => {
         ])
 
         expect(mockRouter.replace).toHaveBeenCalledWith(
-          "/orders2/order-id/details",
+          "/orders/order-id/details",
         )
       },
     )
