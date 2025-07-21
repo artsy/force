@@ -17,10 +17,11 @@ import {
   yupAddressValidator,
 } from "Components/Address/utils"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { useUserLocation } from "Utils/Hooks/useUserLocation"
 import { countries as countryPhoneOptions } from "Utils/countries"
 import { useFormikContext } from "formik"
 import { sortBy } from "lodash"
-import { useMemo } from "react"
+import { useEffect, useMemo } from "react"
 
 export interface FormikContextWithAddress {
   address: Address
@@ -99,12 +100,49 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
 
   const dataTestIdPrefix = "addressFormFields"
   const { shippableCountries } = props
+  const { location, loading } = useUserLocation()
 
   const countryInputOptions = useMemo(() => {
     return sortCountriesForCountryInput(
       shippableCountries || countryPhoneOptions,
     )
   }, [shippableCountries])
+
+  // Pre-populate country and phone number country code field with user's location if available
+  useEffect(() => {
+    if (!loading && !values.address?.country) {
+      let selectedCountryCode = countryInputOptions[1]?.value
+
+      if (location?.country) {
+        const matchingCountry = countryInputOptions.find(country =>
+          country.text.toLowerCase().includes(location.country!.toLowerCase()),
+        )
+        if (matchingCountry) {
+          selectedCountryCode = matchingCountry.value
+        }
+      }
+
+      setFieldValue("address.country", selectedCountryCode)
+
+      if (props.withPhoneNumber && !values.phoneNumberCountryCode) {
+        const phoneCountry = countryPhoneOptions.find(
+          country =>
+            country.value.toLowerCase() === selectedCountryCode.toLowerCase(),
+        )
+        if (phoneCountry) {
+          setFieldValue("phoneNumberCountryCode", phoneCountry.value)
+        }
+      }
+    }
+  }, [
+    loading,
+    location?.country,
+    values.address?.country,
+    values.phoneNumberCountryCode,
+    setFieldValue,
+    props.withPhoneNumber,
+    countryInputOptions,
+  ])
 
   // Formik types don't understand our specific nested structure
   // so we need to cast these to what we know to be the correct types
@@ -155,13 +193,12 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
 
       <Column span={12}>
         <Select
+          key={`country-select-${values.address?.country || "empty"}`}
           options={countryInputOptions}
           name="address.country"
           id="address.country"
           title="Country"
           data-testid={`${dataTestIdPrefix}.country`}
-          // TODO: Accept a value prop in Select
-          // @ts-ignore
           value={values.address.country}
           onChange={e => {
             setFieldValue("address.country", e.target.value)
@@ -297,6 +334,7 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
       {phoneInputType === "rich" && (
         <Column span={12}>
           <PhoneInput
+            key={`phone-input-${values.phoneNumberCountryCode || "empty"}`}
             // mt required to match spacing for other text inputs
             mt={1}
             name="phoneNumber"
