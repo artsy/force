@@ -779,7 +779,7 @@ describe("Order2CheckoutRoute", () => {
   })
 
   describe("Checkout with flat-rate shipping", () => {
-    fit("allows the user to progress through order submission with flat-rate shipping + credit card", async () => {
+    it("allows the user to progress through order submission with flat-rate shipping + credit card", async () => {
       const props = {
         ...baseProps,
         me: {
@@ -1029,7 +1029,7 @@ describe("Order2CheckoutRoute", () => {
         },
       ])
     })
-    fit("displays a missing_postal_code error from the server", async () => {
+    it("displays a missing_postal_code error from the server", async () => {
       const props = {
         ...baseProps,
         me: {
@@ -1047,7 +1047,7 @@ describe("Order2CheckoutRoute", () => {
         },
       }
 
-      const { mockResolveLastOperation, env } = renderWithRelay({
+      const { mockResolveLastOperation } = renderWithRelay({
         Viewer: () => props,
       })
 

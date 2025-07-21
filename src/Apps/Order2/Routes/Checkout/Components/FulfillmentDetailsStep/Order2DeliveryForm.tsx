@@ -1,12 +1,8 @@
 import { ContextModule } from "@artsy/cohesion"
 import { Button, Flex, Spacer, Text } from "@artsy/palette"
-import {
-  CheckoutError,
-  validateAndExtractOrderResponse,
-} from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
+import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
 import {
   CheckoutErrorBanner,
-  type CheckoutErrorBannerProps,
   MailtoOrderSupport,
 } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { handleError } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/handleError"

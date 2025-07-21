@@ -134,7 +134,9 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
     useCheckoutContext()
 
   const [isSubmittingToStripe, setIsSubmittingToStripe] = useState(false)
-  const [errorMessage, setErrorMessage] = useState<string | null>(null)
+  const [errorMessage, setErrorMessage] = useState<JSX.Element | string | null>(
+    null,
+  )
   const [subtitleErrorMessage, setSubtitleErrorMessage] = useState<
     string | null
   >(null)
@@ -250,8 +252,8 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
     elements?.getElement("payment")?.collapse()
   }
 
-  const handleError = error => {
-    setErrorMessage(error.message)
+  const handleError = (error: { message?: string | JSX.Element }) => {
+    setErrorMessage(error.message || defaultErrorMessage)
     setIsSubmittingToStripe(false)
   }
 
@@ -310,7 +312,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
 
       if (!response) {
         logger.error("Failed to fetch confirmation token from Gravity")
-        handleError(new Error(defaultErrorMessage))
+        handleError({ message: defaultErrorMessage })
         return
       }
 
@@ -331,7 +333,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
         )
       } catch (error) {
         logger.error("Error while updating order payment method", error)
-        handleError(new Error(defaultErrorMessage))
+        handleError({ message: defaultErrorMessage })
       } finally {
         setIsSubmittingToStripe(false)
       }
@@ -375,7 +377,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
         }
       } catch (error) {
         logger.error("Error while updating order payment method", error)
-        handleError(new Error(defaultErrorMessage))
+        handleError({ message: defaultErrorMessage })
       } finally {
         setIsSubmittingToStripe(false)
         setSavedCreditCard({ savedCreditCard: selectedCreditCard })
