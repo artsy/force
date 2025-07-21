@@ -1,19 +1,14 @@
-import { Message, type MessageProps } from "@artsy/palette"
+import { Message } from "@artsy/palette"
 
 export interface CheckoutErrorBannerProps {
   error?: {
     title?: string
     message?: string | React.ReactNode
-    variant?: MessageProps["variant"]
   } | null
 }
 
 const SUPPORT_EMAIL = "orders@artsy.net" as const
 
-/**
- * A banner to display errors that occur during the checkout process.
- * use [[MAILTO_ORDER_SUPPORT]] in the message to insert the support email.
- */
 export const CheckoutErrorBanner: React.FC<CheckoutErrorBannerProps> = ({
   error,
 }) => {
@@ -26,7 +21,7 @@ export const CheckoutErrorBanner: React.FC<CheckoutErrorBannerProps> = ({
     </>
   )
 
-  const variant = error.variant || "error"
+  const variant = "error"
 
   return (
     <Message variant={variant} title={title}>

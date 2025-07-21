@@ -6,6 +6,7 @@ import {
   preventHardReload,
 } from "Apps/Order2/Utils/navigationGuards"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
+import mockStripe from "DevTools/mockStripe"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { Order2CheckoutRouteTestQuery } from "__generated__/Order2CheckoutRouteTestQuery.graphql"
 import { merge } from "lodash"
@@ -18,10 +19,6 @@ import { Order2CheckoutRoute } from "../Order2CheckoutRoute"
 jest.unmock("react-relay")
 jest.useFakeTimers()
 jest.mock("react-tracking")
-
-const mockStripe = {
-  createConfirmationToken: jest.fn(),
-}
 
 jest.mock("System/Hooks/useAnalyticsContext", () => {
   const actual = jest.requireActual("System/Hooks/useAnalyticsContext")
@@ -1029,6 +1026,7 @@ describe("Order2CheckoutRoute", () => {
         },
       ])
     })
+
     it("displays a missing_postal_code error from the server", async () => {
       const props = {
         ...baseProps,
@@ -1094,7 +1092,6 @@ describe("Order2CheckoutRoute", () => {
         addressLine2Input,
         cityInput,
         regionInput,
-        // postalCodeInput,
         phoneNumberInput,
         countryPicker,
       ] = await Promise.all([
@@ -1103,7 +1100,6 @@ describe("Order2CheckoutRoute", () => {
         screen.findByLabelText("Apt, floor, suite, etc. (optional)"),
         screen.findByLabelText("City"),
         screen.findByLabelText("State, region or province"),
-        // screen.findByLabelText("ZIP/Postal code"),
         screen.findByTestId("addressFormFields.phoneNumber"),
         screen.findByTestId(testIDs.phoneCountryPicker),
       ])
@@ -1119,7 +1115,6 @@ describe("Order2CheckoutRoute", () => {
         userEvent.type(addressLine2Input, addressInputValue.addressLine2)
         userEvent.type(cityInput, addressInputValue.city)
         userEvent.type(regionInput, addressInputValue.region)
-        // userEvent.type(postalCodeInput, "xxx")
         userEvent.type(phoneNumberInput, addressInputValue.phoneNumber)
         userEvent.selectOptions(countrySelect, addressInputValue.country)
       })
