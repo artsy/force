@@ -61,8 +61,8 @@ export const RecommendedArtistsGrid: FC<
             onClick={() => {
               const trackingEvent: ClickedArtistGroup = {
                 action: ActionType.clickedArtistGroup,
-                context_module: ContextModule.recommendedArtistsRail, // TODO: new context module
-                context_page_owner_type: OwnerType.home, // TODO: new screen
+                context_module: ContextModule.artistGrid,
+                context_page_owner_type: OwnerType.recommendedArtists,
                 destination_page_owner_id: artist.internalID,
                 destination_page_owner_slug: artist.slug,
                 destination_page_owner_type: OwnerType.artist,

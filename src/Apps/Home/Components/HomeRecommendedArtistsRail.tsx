@@ -45,7 +45,7 @@ export const HomeRecommendedArtistsRail: React.FC<
           action: ActionType.clickedArtistGroup,
           context_module: ContextModule.recommendedArtistsRail,
           context_page_owner_type: OwnerType.home,
-          destination_page_owner_type: OwnerType.artists,
+          destination_page_owner_type: OwnerType.recommendedArtists,
           type: "viewAll",
         }
         trackEvent(trackingEvent)

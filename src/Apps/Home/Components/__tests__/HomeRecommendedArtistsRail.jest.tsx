@@ -121,7 +121,7 @@ describe("HomeArtworkRecommendationsRail", () => {
       action: "clickedArtistGroup",
       context_module: "recommendedArtistsRail",
       context_page_owner_type: "home",
-      destination_page_owner_type: "artists",
+      destination_page_owner_type: "recommendedArtists",
       type: "viewAll",
     })
   })
