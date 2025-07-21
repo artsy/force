@@ -84,25 +84,26 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
         checkoutTracking.clickedOrderProgression(
           ContextModule.ordersFulfillment,
         )
+        const input = {
+          id: orderData.internalID,
+          buyerPhoneNumber: values.phoneNumber,
+          buyerPhoneNumberCountryCode: values.phoneNumberCountryCode,
+          shippingAddressLine1: values.address.addressLine1,
+          shippingAddressLine2: values.address.addressLine2,
+          shippingCity: values.address.city,
+          shippingRegion: values.address.region,
+          shippingPostalCode: values.address.postalCode,
+          shippingCountry: values.address.country,
+          shippingName: values.address.name,
+        }
+
         const updateShippingAddressResult =
           await updateShippingAddressMutation.submitMutation({
             variables: {
-              input: {
-                id: orderData.internalID,
-                buyerPhoneNumber: values.phoneNumber,
-                buyerPhoneNumberCountryCode: values.phoneNumberCountryCode,
-                shippingAddressLine1: values.address.addressLine1,
-                shippingAddressLine2: values.address.addressLine2,
-                shippingCity: values.address.city,
-                shippingRegion: values.address.region,
-                shippingPostalCode: values.address.postalCode,
-                shippingCountry: values.address.country,
-                shippingName: values.address.name,
-              },
+              input,
             },
           })
 
-        console.log("***", updateShippingAddressResult)
         validateAndExtractOrderResponse(
           updateShippingAddressResult.updateOrderShippingAddress?.orderOrError,
         ).order
@@ -110,7 +111,6 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
         formikHelpers.setStatus({ errorBanner: null })
         setFulfillmentDetailsComplete({}) // TODO: Clean up signature
       } catch (error) {
-        console.log("****", error)
         handleError(error, formikHelpers, {
           title: "An error occurred",
           message: (

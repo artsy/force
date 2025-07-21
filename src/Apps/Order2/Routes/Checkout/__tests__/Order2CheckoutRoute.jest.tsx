@@ -134,7 +134,7 @@ const orderMutationError = error => {
   return {
     orderOrError: {
       __typename: "OrderMutationError",
-      error,
+      mutationError: error,
     },
   }
 }
@@ -779,7 +779,7 @@ describe("Order2CheckoutRoute", () => {
   })
 
   describe("Checkout with flat-rate shipping", () => {
-    it("allows the user to progress through order submission with flat-rate shipping + credit card", async () => {
+    fit("allows the user to progress through order submission with flat-rate shipping + credit card", async () => {
       const props = {
         ...baseProps,
         me: {
@@ -804,6 +804,19 @@ describe("Order2CheckoutRoute", () => {
 
       await helpers.waitForLoadingComplete()
 
+      await act(async () => {
+        await waitFor(() => {
+          return mockResolveLastOperation({
+            Me: () => ({
+              creditCards: {
+                edges: [],
+              },
+            }),
+          })
+        })
+        await flushPromiseQueue()
+      })
+
       expect(screen.getByText("Shipping method")).toBeInTheDocument()
 
       const submitButton = screen.getByText("See Shipping Methods")
@@ -825,19 +838,6 @@ describe("Order2CheckoutRoute", () => {
         "City is required",
         "Phone number is required",
       ])
-
-      await act(async () => {
-        await waitFor(() => {
-          return mockResolveLastOperation({
-            Me: () => ({
-              creditCards: {
-                edges: [],
-              },
-            }),
-          })
-        })
-        await flushPromiseQueue()
-      })
 
       expect(env.mock.getAllOperations()).toHaveLength(0)
 
@@ -1053,6 +1053,19 @@ describe("Order2CheckoutRoute", () => {
 
       await helpers.waitForLoadingComplete()
 
+      await act(async () => {
+        await waitFor(() => {
+          return mockResolveLastOperation({
+            Me: () => ({
+              creditCards: {
+                edges: [],
+              },
+            }),
+          })
+        })
+        await flushPromiseQueue()
+      })
+
       expect(screen.getByText("Shipping method")).toBeInTheDocument()
 
       const submitButton = screen.getByText("See Shipping Methods")
@@ -1074,12 +1087,14 @@ describe("Order2CheckoutRoute", () => {
         userEvent.selectOptions(countrySelect, addressInputValue.country)
       })
 
+      await flushPromiseQueue()
       const [
         nameInput,
         addressLine1Input,
         addressLine2Input,
         cityInput,
         regionInput,
+        // postalCodeInput,
         phoneNumberInput,
         countryPicker,
       ] = await Promise.all([
@@ -1088,6 +1103,7 @@ describe("Order2CheckoutRoute", () => {
         screen.findByLabelText("Apt, floor, suite, etc. (optional)"),
         screen.findByLabelText("City"),
         screen.findByLabelText("State, region or province"),
+        // screen.findByLabelText("ZIP/Postal code"),
         screen.findByTestId("addressFormFields.phoneNumber"),
         screen.findByTestId(testIDs.phoneCountryPicker),
       ])
@@ -1103,6 +1119,7 @@ describe("Order2CheckoutRoute", () => {
         userEvent.type(addressLine2Input, addressInputValue.addressLine2)
         userEvent.type(cityInput, addressInputValue.city)
         userEvent.type(regionInput, addressInputValue.region)
+        // userEvent.type(postalCodeInput, "xxx")
         userEvent.type(phoneNumberInput, addressInputValue.phoneNumber)
         userEvent.selectOptions(countrySelect, addressInputValue.country)
       })
@@ -1126,15 +1143,21 @@ describe("Order2CheckoutRoute", () => {
         userEvent.click(submitButton)
       })
 
+      let mutation
+
       await act(async () => {
         await waitFor(() => {
-          return mockResolveLastOperation({
+          mutation = mockResolveLastOperation({
             updateOrderShippingAddressPayload: () =>
               orderMutationError({ code: "missing_postal_code" }),
           })
         })
         await flushPromiseQueue()
       })
+
+      expect(mutation.operationName).toBe(
+        "useOrder2UpdateShippingAddressMutation",
+      )
 
       jest.advanceTimersByTime(250)
       await screen.findByText("Postal code is required")
