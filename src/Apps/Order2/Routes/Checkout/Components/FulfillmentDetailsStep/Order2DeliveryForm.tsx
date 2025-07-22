@@ -152,6 +152,7 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
             <AddressFormFields
               withPhoneNumber
               shippableCountries={shippableCountries}
+              useProfileLocation
             />
             <Spacer y={4} />
             <Button

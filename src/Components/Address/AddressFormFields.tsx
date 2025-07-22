@@ -36,7 +36,10 @@ interface Props {
   withPhoneNumber?: boolean
   /* @deprecated - legacy plain-text phone input */
   withLegacyPhoneInput?: boolean
+  /** Whether to only include shippable countries */
   shippableCountries?: CountryData[]
+  /** Whether to pre-populate country from user's profile location */
+  useProfileLocation?: boolean
 }
 
 /**
@@ -99,7 +102,7 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
   } = useFormikContext<V>()
 
   const dataTestIdPrefix = "addressFormFields"
-  const { shippableCountries } = props
+  const { shippableCountries, useProfileLocation, withPhoneNumber } = props
   const { location, loading } = useUserLocation()
 
   const countryInputOptions = useMemo(() => {
@@ -110,7 +113,7 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
 
   // Pre-populate country and phone number country code field with user's location if available
   useEffect(() => {
-    if (!loading && !values.address?.country) {
+    if (useProfileLocation && !loading && !values.address?.country) {
       let selectedCountryCode = countryInputOptions[1]?.value
 
       if (location?.country) {
@@ -124,7 +127,7 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
 
       setFieldValue("address.country", selectedCountryCode)
 
-      if (props.withPhoneNumber && !values.phoneNumberCountryCode) {
+      if (withPhoneNumber && !values.phoneNumberCountryCode) {
         const phoneCountry = countryPhoneOptions.find(
           country =>
             country.value.toLowerCase() === selectedCountryCode.toLowerCase(),
@@ -135,12 +138,13 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
       }
     }
   }, [
+    useProfileLocation,
     loading,
     location?.country,
     values.address?.country,
     values.phoneNumberCountryCode,
     setFieldValue,
-    props.withPhoneNumber,
+    withPhoneNumber,
     countryInputOptions,
   ])
 
