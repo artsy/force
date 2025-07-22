@@ -1,27 +1,35 @@
 import { Message } from "@artsy/palette"
 
-interface ErrorBannerProps {
-  error: ErrorProps
+export interface CheckoutErrorBannerProps {
+  error?: {
+    title?: string
+    message?: string | React.ReactNode
+  } | null
 }
 
-interface ErrorProps {
-  title?: string
-  message?: string
-}
+const SUPPORT_EMAIL = "orders@artsy.net" as const
 
-const SUPPORT_EMAIL = "orders@artsy.net"
-
-export const CheckoutErrorBanner: React.FC<ErrorBannerProps> = ({ error }) => {
+export const CheckoutErrorBanner: React.FC<CheckoutErrorBannerProps> = ({
+  error,
+}) => {
   if (!error) return null
 
   const title = error.title || "An error occurred"
-  const message =
-    error.message ||
-    `Something went wrong. Please try again or contact ${SUPPORT_EMAIL}.`
+  const message = error.message || (
+    <>
+      Something went wrong. Please try again or contact <MailtoOrderSupport />.
+    </>
+  )
+
+  const variant = "error"
 
   return (
-    <Message variant="alert" title={title}>
+    <Message variant={variant} title={title}>
       {message}
     </Message>
   )
+}
+
+export const MailtoOrderSupport = () => {
+  return <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a>
 }

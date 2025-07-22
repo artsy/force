@@ -28,6 +28,7 @@ export const mockStripe = () => ({
   paymentRequest: jest.fn(),
   handleCardAction: jest.fn(),
   _registerWrapper: jest.fn(),
+  createConfirmationToken: jest.fn(),
 })
 
 // Export a singleton mock
