@@ -114,26 +114,26 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
   // Pre-populate country and phone number country code field with user's location if available
   useEffect(() => {
     if (useProfileLocation && !loading && !values.address?.country) {
-      let selectedCountryCode = countryInputOptions[1]?.value
+      let selectedCountry = countryInputOptions[1]?.value
 
       if (location?.country) {
         const matchingCountry = countryInputOptions.find(country =>
           country.text.toLowerCase().includes(location.country!.toLowerCase()),
         )
         if (matchingCountry) {
-          selectedCountryCode = matchingCountry.value
+          selectedCountry = matchingCountry.value
         }
       }
 
-      setFieldValue("address.country", selectedCountryCode)
+      setFieldValue("address.country", selectedCountry)
 
       if (withPhoneNumber && !values.phoneNumberCountryCode) {
-        const phoneCountry = countryPhoneOptions.find(
+        const matchingPhoneCountry = countryPhoneOptions.find(
           country =>
-            country.value.toLowerCase() === selectedCountryCode.toLowerCase(),
+            country.value.toLowerCase() === selectedCountry.toLowerCase(),
         )
-        if (phoneCountry) {
-          setFieldValue("phoneNumberCountryCode", phoneCountry.value)
+        if (matchingPhoneCountry) {
+          setFieldValue("phoneNumberCountryCode", matchingPhoneCountry.value)
         }
       }
     }
