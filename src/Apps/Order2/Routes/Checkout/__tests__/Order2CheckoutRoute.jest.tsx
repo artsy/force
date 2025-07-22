@@ -1109,7 +1109,7 @@ describe("Order2CheckoutRoute", () => {
         addressInputValue.phoneNumberCountryCode,
       )
 
-      await act(async () => {
+      act(() => {
         userEvent.type(nameInput, addressInputValue.name)
         userEvent.type(addressLine1Input, addressInputValue.addressLine1)
         userEvent.type(addressLine2Input, addressInputValue.addressLine2)

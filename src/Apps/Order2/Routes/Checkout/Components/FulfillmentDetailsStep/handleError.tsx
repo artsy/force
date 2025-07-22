@@ -11,31 +11,36 @@ export const handleError = (
   formikHelpers: FormikHelpers<FormikContextWithAddress>,
   defaultErrorBanner: CheckoutErrorBannerProps["error"],
 ) => {
-  let errorBanner: CheckoutErrorBannerProps["error"] = {}
-
   const isCheckoutError = error instanceof CheckoutError
   const errorMatchField = (isCheckoutError && error.code) || error.message
 
-  switch (errorMatchField) {
-    case "missing_postal_code":
-      errorBanner = null
-      // This error message will not persist through subsequent form validations
-      // that refer to the validation schema.
-      formikHelpers.setFieldError(
-        "address.postalCode",
-        "Postal code is required",
-      )
-      break
-    case "missing_region":
-      errorBanner = null
-      formikHelpers.setFieldError("address.region", "Region is required")
-      break
-    case "missing_country":
-      errorBanner = null
-      formikHelpers.setFieldError("address.country", "Country is required")
-      break
-    case "destination_could_not_be_geocoded":
-      errorBanner = {
+  const errorHandlers: Record<
+    string,
+    {
+      errorBanner?: CheckoutErrorBannerProps["error"]
+      fieldErrors?: Record<string, string>
+    }
+  > = {
+    missing_postal_code: {
+      errorBanner: null,
+      fieldErrors: {
+        "address.postalCode": "Postal code is required",
+      },
+    },
+    missing_region: {
+      errorBanner: null,
+      fieldErrors: {
+        "address.region": "Region is required",
+      },
+    },
+    missing_country: {
+      errorBanner: null,
+      fieldErrors: {
+        "address.country": "Country is required",
+      },
+    },
+    destination_could_not_be_geocoded: {
+      errorBanner: {
         title: "Cannot calculate shipping",
         message: (
           <>
@@ -43,14 +48,19 @@ export const handleError = (
             If the issue continues contact <MailtoOrderSupport />.
           </>
         ),
-      }
-      break
-    default:
-      errorBanner = defaultErrorBanner || {}
-      break
+      },
+    },
   }
 
+  const errorHandler = errorHandlers[errorMatchField] || {
+    errorBanner: defaultErrorBanner || {},
+  }
+
+  Object.entries(errorHandler.fieldErrors || {}).forEach(([field, message]) => {
+    formikHelpers.setFieldError(field, message)
+  })
+
   formikHelpers.setStatus({
-    errorBanner,
+    errorBanner: errorHandler.errorBanner,
   })
 }
