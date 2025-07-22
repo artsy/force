@@ -37,10 +37,7 @@ export const RecommendedArtistsGrid: FC<
     loadNext(10)
   }
 
-  if (
-    !data.artistRecommendations ||
-    (data.artistRecommendations?.totalCount ?? 0) === 0
-  ) {
+  if (!data.artistRecommendations?.totalCount) {
     return (
       <Text variant="lg-display" mt={4} color="mono60">
         Nothing yet.

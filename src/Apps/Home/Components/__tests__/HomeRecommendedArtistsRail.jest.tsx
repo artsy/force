@@ -30,7 +30,7 @@ const { renderWithRelay } = setupTestWrapperTL({
   `,
 })
 
-describe("HomeArtworkRecommendationsRail", () => {
+describe("HomeRecommendedArtistsRail", () => {
   it("renders correctly", () => {
     renderWithRelay({
       Me: () => ({
