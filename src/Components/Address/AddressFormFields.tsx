@@ -117,8 +117,10 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
       let selectedCountry = countryInputOptions[1]?.value
 
       if (location?.country) {
-        const matchingCountry = countryInputOptions.find(country =>
-          country.text.toLowerCase().includes(location.country!.toLowerCase()),
+        const matchingCountry = countryInputOptions.find(
+          country =>
+            location.country &&
+            country.text.toLowerCase().includes(location.country.toLowerCase()),
         )
         if (matchingCountry) {
           selectedCountry = matchingCountry.value
