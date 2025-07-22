@@ -15,10 +15,22 @@ import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { Formik } from "formik"
 import * as Yup from "yup"
 
+const mockUseUserLocation = jest.fn()
+jest.mock("Utils/Hooks/useUserLocation", () => ({
+  useUserLocation: () => mockUseUserLocation(),
+}))
+
 describe("AddressFormFields", () => {
   const mockOnSubmit = jest.fn()
+
   beforeEach(() => {
     mockOnSubmit.mockClear()
+    mockUseUserLocation.mockReturnValue({
+      location: null,
+      loading: false,
+      error: null,
+      isLoggedIn: false,
+    })
   })
 
   describe("without phone number input", () => {
@@ -258,6 +270,173 @@ describe("AddressFormFields", () => {
       })
       screen.getByText("State is required")
       screen.getByText("ZIP code is required")
+    })
+  })
+
+  describe("useProfileLocation prop", () => {
+    it("pre-populates country when useProfileLocation is true and user has location", async () => {
+      mockUseUserLocation.mockReturnValue({
+        location: { country: "Germany" },
+        loading: false,
+        error: null,
+        isLoggedIn: true,
+      })
+
+      render(
+        <Formik
+          onSubmit={mockOnSubmit}
+          initialValues={{
+            address: emptyAddress,
+          }}
+          validationSchema={Yup.object().shape({
+            ...addressFormFieldsValidator({ withLegacyPhoneInput: false }),
+          })}
+        >
+          <AddressFormFields useProfileLocation />
+        </Formik>,
+      )
+
+      await waitFor(() => {
+        const countrySelect = screen.getByTestId("addressFormFields.country")
+        expect(countrySelect).toHaveValue("DE")
+      })
+    })
+
+    it("pre-populates phone country code when useProfileLocation is true and withPhoneNumber is enabled", async () => {
+      mockUseUserLocation.mockReturnValue({
+        location: { country: "Canada" },
+        loading: false,
+        error: null,
+        isLoggedIn: true,
+      })
+
+      render(
+        <Formik
+          onSubmit={mockOnSubmit}
+          initialValues={{
+            address: emptyAddress,
+            phoneNumber: "",
+            phoneNumberCountryCode: "",
+          }}
+          validationSchema={Yup.object().shape({
+            ...addressFormFieldsValidator({ withPhoneNumber: true }),
+          })}
+        >
+          <AddressFormFields useProfileLocation withPhoneNumber />
+        </Formik>,
+      )
+
+      await waitFor(() => {
+        const countrySelect = screen.getByTestId("addressFormFields.country")
+        expect(countrySelect).toHaveValue("CA")
+      })
+    })
+
+    it("does not pre-populate when useProfileLocation is false", async () => {
+      mockUseUserLocation.mockReturnValue({
+        location: { country: "Germany" },
+        loading: false,
+        error: null,
+        isLoggedIn: true,
+      })
+
+      render(
+        <Formik
+          onSubmit={mockOnSubmit}
+          initialValues={{
+            address: emptyAddress,
+          }}
+          validationSchema={Yup.object().shape({
+            ...addressFormFieldsValidator({ withLegacyPhoneInput: false }),
+          })}
+        >
+          <AddressFormFields />
+        </Formik>,
+      )
+
+      // Should show empty/default state, not Germany
+      const countrySelect = screen.getByRole("combobox", { name: /country/i })
+      expect(countrySelect).toHaveValue("")
+    })
+
+    it("does not pre-populate when loading is true", async () => {
+      mockUseUserLocation.mockReturnValue({
+        location: { country: "Germany" },
+        loading: true,
+        error: null,
+        isLoggedIn: true,
+      })
+
+      render(
+        <Formik
+          onSubmit={mockOnSubmit}
+          initialValues={{
+            address: emptyAddress,
+          }}
+          validationSchema={Yup.object().shape({
+            ...addressFormFieldsValidator({ withLegacyPhoneInput: false }),
+          })}
+        >
+          <AddressFormFields useProfileLocation />
+        </Formik>,
+      )
+
+      const countrySelect = screen.getByRole("combobox", { name: /country/i })
+      expect(countrySelect).toHaveValue("")
+    })
+
+    it("does not pre-populate when address country is already set", async () => {
+      mockUseUserLocation.mockReturnValue({
+        location: { country: "Germany" },
+        loading: false,
+        error: null,
+        isLoggedIn: true,
+      })
+
+      render(
+        <Formik
+          onSubmit={mockOnSubmit}
+          initialValues={{
+            address: { ...emptyAddress, country: "US" },
+          }}
+          validationSchema={Yup.object().shape({
+            ...addressFormFieldsValidator({ withLegacyPhoneInput: false }),
+          })}
+        >
+          <AddressFormFields useProfileLocation />
+        </Formik>,
+      )
+
+      const countrySelect = screen.getByTestId("addressFormFields.country")
+      expect(countrySelect).toHaveValue("US")
+    })
+
+    it("falls back to first country in list when no user location is available", async () => {
+      mockUseUserLocation.mockReturnValue({
+        location: null,
+        loading: false,
+        error: null,
+        isLoggedIn: true,
+      })
+
+      render(
+        <Formik
+          onSubmit={mockOnSubmit}
+          initialValues={{
+            address: emptyAddress,
+          }}
+          validationSchema={Yup.object().shape({
+            ...addressFormFieldsValidator({ withLegacyPhoneInput: false }),
+          })}
+        >
+          <AddressFormFields useProfileLocation />
+        </Formik>,
+      )
+
+      await waitFor(() => {
+        const countrySelect = screen.getByRole("combobox", { name: /country/i })
+        expect(countrySelect).toHaveValue("US")
+      })
     })
   })
 })
