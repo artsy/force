@@ -1,12 +1,5 @@
 import { ContextModule } from "@artsy/cohesion"
-import {
-  type AutocompleteInputOptionType,
-  Column,
-  GridColumns,
-  Input,
-  PhoneInput,
-  Select,
-} from "@artsy/palette"
+import { Column, GridColumns, Input, PhoneInput, Select } from "@artsy/palette"
 import { AddressAutocompleteInput } from "Components/Address/AddressAutocompleteInput"
 import {
   type Address,
@@ -16,12 +9,11 @@ import {
   richPhoneValidators,
   yupAddressValidator,
 } from "Components/Address/utils"
+import { sortCountriesForCountryInput } from "Components/Address/utils/sortCountriesForCountryInput"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import { useUserLocation } from "Utils/Hooks/useUserLocation"
 import { countries as countryPhoneOptions } from "Utils/countries"
 import { useFormikContext } from "formik"
-import { sortBy } from "lodash"
-import { useEffect, useMemo } from "react"
+import { useMemo } from "react"
 
 export interface FormikContextWithAddress {
   address: Address
@@ -38,8 +30,6 @@ interface Props {
   withLegacyPhoneInput?: boolean
   /** Whether to only include shippable countries */
   shippableCountries?: CountryData[]
-  /** Whether to pre-populate country from user's profile location */
-  useProfileLocation?: boolean
 }
 
 /**
@@ -102,53 +92,13 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
   } = useFormikContext<V>()
 
   const dataTestIdPrefix = "addressFormFields"
-  const { shippableCountries, useProfileLocation, withPhoneNumber } = props
-  const { location, loading } = useUserLocation()
+  const { shippableCountries } = props
 
   const countryInputOptions = useMemo(() => {
     return sortCountriesForCountryInput(
       shippableCountries || countryPhoneOptions,
     )
   }, [shippableCountries])
-
-  // Pre-populate country and phone number country code field with user's location if available
-  useEffect(() => {
-    if (useProfileLocation && !loading && !values.address?.country) {
-      let selectedCountry = countryInputOptions[1]?.value
-
-      if (location?.country) {
-        const matchingCountry = countryInputOptions.find(
-          country =>
-            location.country &&
-            country.text.toLowerCase().includes(location.country.toLowerCase()),
-        )
-        if (matchingCountry) {
-          selectedCountry = matchingCountry.value
-        }
-      }
-
-      setFieldValue("address.country", selectedCountry)
-
-      if (withPhoneNumber && !values.phoneNumberCountryCode) {
-        const matchingPhoneCountry = countryPhoneOptions.find(
-          country =>
-            country.value.toLowerCase() === selectedCountry.toLowerCase(),
-        )
-        if (matchingPhoneCountry) {
-          setFieldValue("phoneNumberCountryCode", matchingPhoneCountry.value)
-        }
-      }
-    }
-  }, [
-    useProfileLocation,
-    loading,
-    location?.country,
-    values.address?.country,
-    values.phoneNumberCountryCode,
-    setFieldValue,
-    withPhoneNumber,
-    countryInputOptions,
-  ])
 
   // Formik types don't understand our specific nested structure
   // so we need to cast these to what we know to be the correct types
@@ -366,29 +316,4 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
       )}
     </GridColumns>
   )
-}
-
-const BLANK_COUNTRY = { text: "", value: "" }
-/** countries are sorted by phone number code first - sort alphabetically */
-const sortCountriesForCountryInput = (
-  unsorted: typeof countryPhoneOptions,
-  firstCode: CountryData["value"] = "us",
-): AutocompleteInputOptionType[] => {
-  // Sort firstCode first, then by name
-  const sortedCountries = sortBy(unsorted, [
-    country => country.value !== firstCode,
-    "name",
-  ])
-
-  const options = [
-    BLANK_COUNTRY,
-    ...sortedCountries.map(countryData => {
-      return {
-        text: countryData.name,
-        value: countryData.value.toUpperCase(),
-      }
-    }),
-  ]
-
-  return options
 }

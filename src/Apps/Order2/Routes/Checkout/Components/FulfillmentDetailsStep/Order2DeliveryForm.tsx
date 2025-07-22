@@ -15,9 +15,11 @@ import {
   type FormikContextWithAddress,
   addressFormFieldsValidator,
 } from "Components/Address/AddressFormFields"
+import { getInitialLocationValues } from "Components/Address/utils/getInitialLocationValues"
+import { sortCountriesForCountryInput } from "Components/Address/utils/sortCountriesForCountryInput"
 import type { Order2DeliveryForm_order$key } from "__generated__/Order2DeliveryForm_order.graphql"
 import { Formik, type FormikHelpers } from "formik"
-import { useCallback } from "react"
+import { useCallback, useMemo } from "react"
 import { graphql, useFragment } from "react-relay"
 import * as yup from "yup"
 
@@ -38,6 +40,16 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
     orderData.availableShippingCountries,
   )
 
+  // Get country options for locationBasedInitialValues
+  const countryInputOptions = useMemo(() => {
+    return sortCountriesForCountryInput(shippableCountries)
+  }, [shippableCountries])
+
+  // Get initial values based on user location if no existing fulfillment details
+  const locationBasedInitialValues = useMemo(() => {
+    return getInitialLocationValues(countryInputOptions)
+  }, [countryInputOptions])
+
   const checkoutContext = useCheckoutContext()
 
   const { setCheckoutMode, checkoutTracking, setFulfillmentDetailsComplete } =
@@ -57,10 +69,14 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
       originalNumber: "",
     },
   }
+
   const initialValues: FormikContextWithAddress = {
     address: {
       name: fulfillmentDetails.name || "",
-      country: fulfillmentDetails.country || "",
+      country:
+        fulfillmentDetails.country ||
+        locationBasedInitialValues.selectedCountry ||
+        "",
       postalCode: fulfillmentDetails.postalCode || "",
       addressLine1: fulfillmentDetails.addressLine1 || "",
       addressLine2: fulfillmentDetails.addressLine2 || "",
@@ -68,7 +84,10 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
       region: fulfillmentDetails.region || "",
     },
     phoneNumber: fulfillmentDetails.phoneNumber?.originalNumber || "",
-    phoneNumberCountryCode: fulfillmentDetails.phoneNumber?.countryCode || "",
+    phoneNumberCountryCode:
+      fulfillmentDetails.phoneNumber?.countryCode ||
+      locationBasedInitialValues.phoneNumberCountryCode ||
+      "",
   }
 
   const onSubmit = useCallback(
@@ -138,6 +157,7 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
 
       <Formik
         initialValues={initialValues}
+        enableReinitialize={true}
         validationSchema={validationSchema}
         onSubmit={onSubmit}
       >
@@ -152,7 +172,6 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
             <AddressFormFields
               withPhoneNumber
               shippableCountries={shippableCountries}
-              useProfileLocation
             />
             <Spacer y={4} />
             <Button
