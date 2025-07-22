@@ -14,6 +14,7 @@ import { validAddress } from "Components/__tests__/Utils/addressForm2"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import { useUserLocation } from "Utils/Hooks/useUserLocation"
 import type { DeepPartial } from "Utils/typeSupport"
 import type { AddressModalTestQuery } from "__generated__/AddressModalTestQuery.graphql"
 import { graphql } from "react-relay"
@@ -23,7 +24,9 @@ jest.setTimeout(10000)
 
 jest.unmock("react-relay")
 jest.mock("System/Hooks/useSystemContext")
+jest.mock("Utils/Hooks/useUserLocation")
 const mockUseSystemContext = useSystemContext as jest.Mock
+const mockUseUserLocation = useUserLocation as jest.Mock
 
 const mockSavedAddress: SavedAddressType = {
   ...validAddress,
@@ -76,6 +79,15 @@ describe("AddressModal", () => {
         user: { lab_features: [] },
         isLoggedIn: true,
         relayEnvironment: mockRelayEnv,
+      }
+    })
+
+    mockUseUserLocation.mockImplementation(() => {
+      return {
+        location: null,
+        loading: false,
+        error: null,
+        isLoggedIn: true,
       }
     })
 

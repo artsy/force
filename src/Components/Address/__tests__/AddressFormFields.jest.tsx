@@ -354,7 +354,6 @@ describe("AddressFormFields", () => {
         </Formik>,
       )
 
-      // Should show empty/default state, not Germany
       const countrySelect = screen.getByRole("combobox", { name: /country/i })
       expect(countrySelect).toHaveValue("")
     })

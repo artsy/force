@@ -830,9 +830,11 @@ describe("Order2CheckoutRoute", () => {
 
       expect(requiredMessages.map(el => el.textContent)).toEqual([
         "Full name is required",
-        "Country is required",
+        "*Required",
         "Street address is required",
         "City is required",
+        "State is required",
+        "ZIP code is required",
         "Phone number is required",
       ])
 
