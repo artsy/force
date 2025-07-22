@@ -15,22 +15,10 @@ import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { Formik } from "formik"
 import * as Yup from "yup"
 
-const mockUseUserLocation = jest.fn()
-jest.mock("Utils/Hooks/useUserLocation", () => ({
-  useUserLocation: () => mockUseUserLocation(),
-}))
-
 describe("AddressFormFields", () => {
   const mockOnSubmit = jest.fn()
-
   beforeEach(() => {
     mockOnSubmit.mockClear()
-    mockUseUserLocation.mockReturnValue({
-      location: null,
-      loading: false,
-      error: null,
-      isLoggedIn: false,
-    })
   })
 
   describe("without phone number input", () => {

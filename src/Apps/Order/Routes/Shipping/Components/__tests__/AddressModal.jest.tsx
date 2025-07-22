@@ -312,8 +312,6 @@ describe("AddressModal", () => {
 
       mockRejectLastOperation(new TypeError("Network request failed"))
 
-      await flushPromiseQueue()
-
       const errorMessage = await screen.findByText(
         "Sorry, there has been an issue saving your address. Please try again.",
       )
