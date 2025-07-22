@@ -134,7 +134,7 @@ const getProps = ({
         variant: "info",
         message: `Congratulations! ${offerType} Accepted`,
         subMessage: "Tap to view",
-        actionUrl: `/orders/${activeOrder.internalID}/status`,
+        actionUrl: `/orders/${activeOrder.internalID}/details`,
         Icon: MoneyFillIcon,
       }
     }
@@ -161,7 +161,7 @@ const getProps = ({
         variant: "info",
         message: "Offer Accepted",
         subMessage: "Tap to view",
-        actionUrl: `/orders/${activeOrder.internalID}/status`,
+        actionUrl: `/orders/${activeOrder.internalID}/details`,
         Icon: MoneyFillIcon,
       }
     }

@@ -86,7 +86,7 @@ describe("ConversationReviewOfferCTA", () => {
     expect(screen.getByText("Tap to view")).toBeInTheDocument()
     expect(screen.getByTestId("orderActionLink")).toHaveAttribute(
       "href",
-      "/orders/orderID/status",
+      "/orders/orderID/details",
     )
   })
 
@@ -163,7 +163,7 @@ describe("ConversationReviewOfferCTA", () => {
 
     expect(screen.getByTestId("orderActionLink")).toHaveAttribute(
       "href",
-      "/orders/orderID/status",
+      "/orders/orderID/details",
     )
   })
 })

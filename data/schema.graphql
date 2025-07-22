@@ -2562,6 +2562,9 @@ input ArtsyShippingOptInMutationInput {
 
   # ID of the partner
   id: String!
+
+  # Source of the mutation being triggered, E.g. admin, artworks_list
+  source: BulkUpdateSourceEnum
 }
 
 type ArtsyShippingOptInMutationPayload {
@@ -3203,6 +3206,7 @@ type ArtworkImport implements Node {
     last: Int
   ): ArtworkImportRowConnection
   state: ArtworkImportState
+  summary: ArtworkImportSummary
   unmatchedArtistNames: [String!]!
 }
 
@@ -3331,6 +3335,11 @@ enum ArtworkImportState {
   ARTWORKS_CREATION_COMPLETE
   CANCELED
   PENDING
+}
+
+type ArtworkImportSummary {
+  currencies: [String!]!
+  dimensionMetrics: [String!]!
 }
 
 type ArtworkImportTransformedData {
@@ -4559,6 +4568,9 @@ input BulkAddArtworksToShowMutationInput {
 
   # ID of the show to which artworks will be added
   showId: String!
+
+  # Source of the mutation being triggered, E.g. admin, artworks_list
+  source: BulkUpdateSourceEnum
 }
 
 type BulkAddArtworksToShowMutationPayload {
@@ -4616,6 +4628,9 @@ input BulkUpdateArtworksMetadataInput {
   # The partner location ID to assign
   locationId: String
 
+  # The medium (materials) to be assigned, E.g. Oil on Canvas
+  medium: String
+
   # Whether the artworks must be listed as Make Offer
   offer: Boolean
 
@@ -4625,8 +4640,14 @@ input BulkUpdateArtworksMetadataInput {
   # The price for the artworks
   priceListed: Float
 
+  # The provenance to be assigned
+  provenance: String
+
   # Publish or unpublish artworks
   published: Boolean
+
+  # Details about the signature
+  signature: String
 }
 
 type BulkUpdateArtworksMetadataMutationFailure {
@@ -4644,6 +4665,9 @@ input BulkUpdateArtworksMetadataMutationInput {
 
   # Metadata to be updated
   metadata: BulkUpdateArtworksMetadataInput
+
+  # Source of the mutation being triggered, E.g. admin, artworks_list
+  source: BulkUpdateSourceEnum
 }
 
 type BulkUpdateArtworksMetadataMutationPayload {
@@ -4663,6 +4687,14 @@ union BulkUpdateArtworksMetadataMutationType =
 type BulkUpdateArtworksMetadataResponse {
   count: Int
   ids: [String]
+}
+
+# Possible sources of the bulk operation
+enum BulkUpdateSourceEnum {
+  ADMIN
+  ARTWORKS_LIST
+  PARTNER_ARTIST_ARTWORKS_LIST
+  SHOW_ARTWORKS_LIST
 }
 
 type BuyersPremium {
@@ -6306,6 +6338,9 @@ input CommerceOptInMutationInput {
 
   # whether or not other is selected for signature
   signedOther: Boolean
+
+  # Source of the mutation being triggered, E.g. admin, artworks_list
+  source: BulkUpdateSourceEnum
 
   # whether or not it is stamped by the artist estate
   stampedByArtistEstate: Boolean
@@ -16103,6 +16138,12 @@ type Mutation {
   updateArtwork(
     input: UpdateArtworkMutationInput!
   ): UpdateArtworkMutationPayload
+  updateArtworkImportCurrency(
+    input: UpdateArtworkImportCurrencyInput!
+  ): UpdateArtworkImportCurrencyPayload
+  updateArtworkImportDimensionMetric(
+    input: UpdateArtworkImportDimensionMetricInput!
+  ): UpdateArtworkImportDimensionMetricPayload
   updateArtworkImportRow(
     input: UpdateArtworkImportRowInput!
   ): UpdateArtworkImportRowPayload
@@ -16799,6 +16840,10 @@ type Order {
   totalListPrice: Money
 }
 
+type OrderActionData {
+  clientSecret: String!
+}
+
 enum OrderBuyerStateEnum {
   # Order has been approved
   APPROVED
@@ -16850,11 +16895,18 @@ enum OrderModeEnum {
   OFFER
 }
 
+type OrderMutationActionRequired {
+  actionData: OrderActionData!
+}
+
 type OrderMutationError {
   mutationError: ExchangeError!
 }
 
-union OrderMutationResponse = OrderMutationError | OrderMutationSuccess
+union OrderMutationResponse =
+  | OrderMutationActionRequired
+  | OrderMutationError
+  | OrderMutationSuccess
 
 type OrderMutationSuccess {
   order: Order!
@@ -22713,6 +22765,54 @@ input UpdateArtworkEditionSetInput {
   published: Boolean
   shippingWeight: Float
   shippingWeightMetric: String
+}
+
+type UpdateArtworkImportCurrencyFailure {
+  mutationError: GravityMutationError
+}
+
+input UpdateArtworkImportCurrencyInput {
+  artworkImportID: String!
+  clientMutationId: String
+  fromCurrency: String!
+  toCurrency: String!
+}
+
+type UpdateArtworkImportCurrencyPayload {
+  clientMutationId: String
+  updateArtworkImportCurrencyOrError: UpdateArtworkImportCurrencyResponseOrError
+}
+
+union UpdateArtworkImportCurrencyResponseOrError =
+  | UpdateArtworkImportCurrencyFailure
+  | UpdateArtworkImportCurrencySuccess
+
+type UpdateArtworkImportCurrencySuccess {
+  artworkImport: ArtworkImport
+}
+
+type UpdateArtworkImportDimensionMetricFailure {
+  mutationError: GravityMutationError
+}
+
+input UpdateArtworkImportDimensionMetricInput {
+  artworkImportID: String!
+  clientMutationId: String
+  fromDimensionMetric: String!
+  toDimensionMetric: String!
+}
+
+type UpdateArtworkImportDimensionMetricPayload {
+  clientMutationId: String
+  updateArtworkImportDimensionMetricOrError: UpdateArtworkImportDimensionMetricResponseOrError
+}
+
+union UpdateArtworkImportDimensionMetricResponseOrError =
+  | UpdateArtworkImportDimensionMetricFailure
+  | UpdateArtworkImportDimensionMetricSuccess
+
+type UpdateArtworkImportDimensionMetricSuccess {
+  artworkImport: ArtworkImport
 }
 
 type UpdateArtworkImportRowFailure {

@@ -30,8 +30,8 @@ export interface OrderAppProps extends RouterState {
 }
 
 export const preventHardReload = event => {
-  // Don't block navigation for status page, as we've completed the flow
-  if (window.location.pathname.includes("/status")) {
+  // Don't block navigation for details page, as we've completed the flow
+  if (window.location.pathname.includes("/details")) {
     return false
   }
 

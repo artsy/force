@@ -202,7 +202,7 @@ describe("SettingsPurchases", () => {
 
       const link = screen.getByRole("link", { name: /123/i })
       expect(link).toBeInTheDocument()
-      expect(link).toHaveAttribute("href", "/orders/123/status")
+      expect(link).toHaveAttribute("href", "/orders/123/details")
     })
 
     it("renders a button to respond to the offer", () => {
@@ -227,7 +227,7 @@ describe("SettingsPurchases", () => {
         name: /Respond to Counteroffer/i,
       })
       expect(button).toBeInTheDocument()
-      expect(button).toHaveAttribute("href", "/orders/123/status")
+      expect(button).toHaveAttribute("href", "/orders/123/details")
     })
   })
 

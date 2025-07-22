@@ -40,6 +40,7 @@ const CellArtist: FC<React.PropsWithChildren<CellArtistProps>> = ({
       display="block"
       textDecoration="none"
       width={width}
+      data-testid="CellArtist"
       {...rest}
     >
       <ResponsiveBox aspectWidth={4} aspectHeight={3} maxWidth="100%">

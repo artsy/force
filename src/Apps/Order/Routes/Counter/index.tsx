@@ -114,7 +114,7 @@ export const CounterRoute: FC<
       order_id: props.order.internalID,
     })
 
-    router.push(`/orders/${order.internalID}/status`)
+    router.push(`/orders/${order.internalID}/details`)
   }
 
   const onChangeResponse = () => {

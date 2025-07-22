@@ -189,7 +189,7 @@ describe("OrderApp routing redirects", () => {
     }
   })
 
-  it("redirects to the status route if the order is not pending", async () => {
+  it("redirects to the details route if the order is not pending", async () => {
     const res = await render(
       "/orders/2939023/shipping",
       mockResolver({
@@ -199,7 +199,7 @@ describe("OrderApp routing redirects", () => {
       }),
     )
 
-    expect(res.redirect.url).toBe("/orders/2939023/status")
+    expect(res.redirect.url).toBe("/orders/2939023/details")
   })
 
   it("redirects to the payment route if order is private sale", async () => {
@@ -364,7 +364,7 @@ describe("OrderApp routing redirects", () => {
         state: "APPROVED",
       }),
     )
-    expect(redirect.url).toBe("/orders/2939023/status")
+    expect(redirect.url).toBe("/orders/2939023/details")
   })
 
   it("stays on the review route if there are payment and shipping options set", async () => {
@@ -386,9 +386,9 @@ describe("OrderApp routing redirects", () => {
     }
   })
 
-  it("redirects from the status route to the review route if the order is pending", async () => {
+  it("redirects from the details route to the review route if the order is pending", async () => {
     const { redirect } = await render(
-      "/orders/2939023/status",
+      "/orders/2939023/details",
       mockResolver({
         ...UntouchedBuyOrder,
         creditCard: {
@@ -404,10 +404,10 @@ describe("OrderApp routing redirects", () => {
     expect(redirect.url).toBe("/orders/2939023/review")
   })
 
-  it("stays on the status page if the order is submitted", async () => {
+  it("stays on the details page if the order is submitted", async () => {
     try {
       await render(
-        "/orders/2939023/status",
+        "/orders/2939023/details",
         mockResolver({
           ...UntouchedBuyOrder,
           ...CreditCardPaymentDetails,
@@ -451,7 +451,7 @@ describe("OrderApp routing redirects", () => {
     expect(redirect.url).toBe("/orders/2939023/shipping")
   })
 
-  it("redirects from the offer route to the status route if the order is not pending", async () => {
+  it("redirects from the offer route to the details route if the order is not pending", async () => {
     const { redirect } = await render(
       "/orders/2939023/offer",
       mockResolver({
@@ -460,10 +460,10 @@ describe("OrderApp routing redirects", () => {
         state: "SUBMITTED",
       }),
     )
-    expect(redirect.url).toBe("/orders/2939023/status")
+    expect(redirect.url).toBe("/orders/2939023/details")
   })
 
-  it("redirects from the respond route to the status route if not offer order", async () => {
+  it("redirects from the respond route to the details route if not offer order", async () => {
     const { redirect } = await render(
       "/orders/2939023/respond",
       mockResolver({
@@ -472,10 +472,10 @@ describe("OrderApp routing redirects", () => {
         state: "SUBMITTED",
       }),
     )
-    expect(redirect.url).toBe("/orders/2939023/status")
+    expect(redirect.url).toBe("/orders/2939023/details")
   })
 
-  it("redirects from the respond route to the status route if order is not submitted", async () => {
+  it("redirects from the respond route to the details route if order is not submitted", async () => {
     const { redirect } = await render(
       "/orders/2939023/respond",
       mockResolver({
@@ -486,7 +486,7 @@ describe("OrderApp routing redirects", () => {
         displayState: "PENDING",
       }),
     )
-    expect(redirect.url).toBe("/orders/2939023/status")
+    expect(redirect.url).toBe("/orders/2939023/details")
   })
 
   it("redirects to the new payment route if lastTransactionFailed failed on offer and state is submitted", async () => {
@@ -519,9 +519,9 @@ describe("OrderApp routing redirects", () => {
     }
   })
 
-  it("Redirects from the status route to the respond route if awaiting buyer response", async () => {
+  it("Redirects from the details route to the respond route if awaiting buyer response", async () => {
     const { redirect } = await render(
-      "/orders/2939023/status",
+      "/orders/2939023/details",
       mockResolver({
         ...OfferOrderWithShippingDetails,
         awaitingResponseFrom: "BUYER",
@@ -561,8 +561,8 @@ describe("OrderApp routing redirects", () => {
         expect(error.message).toBe("No redirect found for order")
       }
     })
-    // goToStatusIfNotOfferOrder,
-    it("redirects to /status if not an offer order", async () => {
+    // goToDetailsIfNotOfferOrder,
+    it("redirects to /details if not an offer order", async () => {
       const { redirect } = await render(
         "/orders/2939023/review/counter",
         mockResolver({
@@ -570,10 +570,10 @@ describe("OrderApp routing redirects", () => {
           mode: "BUY",
         }),
       )
-      expect(redirect.url).toBe("/orders/2939023/status")
+      expect(redirect.url).toBe("/orders/2939023/details")
     })
-    // goToStatusIfNotAwaitingBuyerResponse,
-    it("redirects to /status if not awaiting a buyer response", async () => {
+    // goToDetailsIfNotAwaitingBuyerResponse,
+    it("redirects to /details if not awaiting a buyer response", async () => {
       const { redirect } = await render(
         "/orders/2939023/review/counter",
         mockResolver({
@@ -581,10 +581,10 @@ describe("OrderApp routing redirects", () => {
           awaitingResponseFrom: "SELLER",
         }),
       )
-      expect(redirect.url).toBe("/orders/2939023/status")
+      expect(redirect.url).toBe("/orders/2939023/details")
     })
-    // goToStatusIfOrderIsNotSubmitted,
-    it("redirects to /status if order is not submitted", async () => {
+    // goToDetailsIfOrderIsNotSubmitted,
+    it("redirects to /details if order is not submitted", async () => {
       const { redirect } = await render(
         "/orders/2939023/review/counter",
         mockResolver({
@@ -593,7 +593,7 @@ describe("OrderApp routing redirects", () => {
           displayState: "PENDING",
         }),
       )
-      expect(redirect.url).toBe("/orders/2939023/status")
+      expect(redirect.url).toBe("/orders/2939023/details")
     })
     // goToRespondIfMyLastOfferIsNotMostRecentOffer,
     it("redirects to /respond if myLastOffer is not more recent than lastOffer", async () => {
@@ -642,8 +642,8 @@ describe("OrderApp routing redirects", () => {
         expect(error.message).toBe("No redirect found for order")
       }
     })
-    // goToStatusIfNotOfferOrder,
-    it("redirects to /status if not an offer order", async () => {
+    // goToDetailsIfNotOfferOrder,
+    it("redirects to /details if not an offer order", async () => {
       const { redirect } = await render(
         "/orders/2939023/payment/new",
         mockResolver({
@@ -651,10 +651,10 @@ describe("OrderApp routing redirects", () => {
           mode: "BUY",
         }),
       )
-      expect(redirect.url).toBe("/orders/2939023/status")
+      expect(redirect.url).toBe("/orders/2939023/details")
     })
-    // goToStatusIfOrderIsNotSubmitted,
-    it("redirects to /status if order is not submitted", async () => {
+    // goToDetailsIfOrderIsNotSubmitted,
+    it("redirects to /details if order is not submitted", async () => {
       const { redirect } = await render(
         "/orders/2939023/payment/new",
         mockResolver({
@@ -663,10 +663,10 @@ describe("OrderApp routing redirects", () => {
           displayState: "PENDING",
         }),
       )
-      expect(redirect.url).toBe("/orders/2939023/status")
+      expect(redirect.url).toBe("/orders/2939023/details")
     })
 
-    it("redirects to /status if order does not have a failing last transaction", async () => {
+    it("redirects to /details if order does not have a failing last transaction", async () => {
       const { redirect } = await render(
         "/orders/2939023/payment/new",
         mockResolver({
@@ -674,7 +674,7 @@ describe("OrderApp routing redirects", () => {
           lastTransactionFailed: false,
         }),
       )
-      expect(redirect.url).toBe("/orders/2939023/status")
+      expect(redirect.url).toBe("/orders/2939023/details")
     })
   })
 })
