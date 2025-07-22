@@ -14,13 +14,13 @@ export const handleError = (
   let errorBanner: CheckoutErrorBannerProps["error"] = {}
 
   const isCheckoutError = error instanceof CheckoutError
-  const errorMatchField = isCheckoutError ? error.code : error.message
+  const errorMatchField = (isCheckoutError && error.code) || error.message
 
   switch (errorMatchField) {
     case "missing_postal_code":
       errorBanner = null
-      // TODO: Will this work when the user touches the field? We could set some kind of meta value on the formik context
-      // for the schema to reference, like to say 'actually this field is required'
+      // This error message will not persist through subsequent form validations
+      // that refer to the validation schema.
       formikHelpers.setFieldError(
         "address.postalCode",
         "Postal code is required",
