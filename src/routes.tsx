@@ -37,10 +37,12 @@ import { newWorksFromGalleriesYouFollowRoutes } from "Apps/NewWorksFromGalleries
 import { onboardingRoutes } from "Apps/Onboarding/onboardingRoutes"
 import { orderRoutes } from "Apps/Order/orderRoutes"
 import { order2Routes } from "Apps/Order2/order2Routes"
+import { order3Routes } from "Apps/Order3/order3Routes"
 import { pageRoutes } from "Apps/Page/pageRoutes"
 import { partnerRoutes } from "Apps/Partner/partnerRoutes"
 import { partnerOfferRoutes } from "Apps/PartnerOffer/partnerOfferRoutes"
 import { partnersRoutes } from "Apps/Partners/partnersRoutes"
+import { recommendedArtistsRoutes } from "Apps/RecommendedArtists/recommendedArtistsRoutes"
 import { saleAgreementsRoutes } from "Apps/SaleAgreements/saleAgreementsRoutes"
 import { searchRoutes } from "Apps/Search/searchRoutes"
 import { settingsRoutes } from "Apps/Settings/settingsRoutes"
@@ -51,6 +53,7 @@ import type { RouteProps } from "System/Router/Route"
 import { buildAppRoutes } from "System/Router/Utils/buildAppRoutes"
 import { HttpError } from "found"
 import { artQuizRoutes } from "./Apps/ArtQuiz/artQuizRoutes"
+import { artworkRecommendationsRoutes } from "./Apps/ArtworkRecommendations/artworkRecommendationsRoutes"
 import { auctionRoutes } from "./Apps/Auction/auctionRoutes"
 import { categoriesRoutes } from "./Apps/Categories/categoriesRoutes"
 import { contactRoutes } from "./Apps/Contact/contactRoutes"
@@ -63,8 +66,6 @@ import { saleRoutes } from "./Apps/Sale/saleRoutes"
 import { tagRoutes } from "./Apps/Tag/tagRoutes"
 import { userRoutes } from "./Apps/User/userRoutes"
 import { worksForYouRoutes } from "./Apps/WorksForYou/worksForYouRoutes"
-import { recommendedArtistsRoutes } from "Apps/RecommendedArtists/recommendedArtistsRoutes"
-import { artworkRecommendationsRoutes } from "./Apps/ArtworkRecommendations/artworkRecommendationsRoutes"
 
 const ROUTES = buildAppRoutes([
   aboutRoutes,
@@ -112,6 +113,7 @@ const ROUTES = buildAppRoutes([
   onboardingRoutes,
   orderRoutes,
   order2Routes,
+  order3Routes,
   pageRoutes,
   partnerRoutes,
   partnerOfferRoutes,
