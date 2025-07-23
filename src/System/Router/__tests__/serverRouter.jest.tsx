@@ -206,8 +206,6 @@ describe("serverRouter", () => {
   it("resolves with headTags if react-head components present", async () => {
     const component = () => <Title>test</Title>
     const { headTags } = await getWrapper(component)
-    // Enzyme won't render the right results for the title for whatever reason
-    // It renders fine with renderToString though. ¯\_(ツ)_/¯
     expect(headTags?.[headTags.length - 1].type).toBe("title")
     expect(headTags?.[headTags.length - 1].props.children).toBe("test")
   })
