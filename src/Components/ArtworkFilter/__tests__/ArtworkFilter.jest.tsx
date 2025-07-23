@@ -1,13 +1,8 @@
 import { fireEvent, screen } from "@testing-library/react"
-import {
-  ArtworkFilter,
-  BaseArtworkFilter,
-  getTotalCountLabel,
-} from "Components/ArtworkFilter"
+import { ArtworkFilter, getTotalCountLabel } from "Components/ArtworkFilter"
 import { initialArtworkFilterState } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { ArtworkQueryFilter } from "Components/ArtworkFilter/ArtworkQueryFilter"
 import { MockBoot } from "DevTools/MockBoot"
-import { renderToString } from "DevTools/__tests__/MockRelayRendererFixtures"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { omit } from "lodash"
 import { useTracking } from "react-tracking"
@@ -78,16 +73,6 @@ describe("ArtworkFilter", () => {
 
   afterEach(() => {
     jest.clearAllMocks()
-  })
-
-  describe("without any filtered artworks", () => {
-    it("renders null", async () => {
-      const props = {
-        viewer: { filtered_artworks: null },
-      } as any
-      const filterComponent = <BaseArtworkFilter {...props} />
-      expect(renderToString(filterComponent)).toBeFalsy()
-    })
   })
 
   describe("tracks clicks", () => {

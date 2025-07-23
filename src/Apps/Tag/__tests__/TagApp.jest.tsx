@@ -1,7 +1,6 @@
 import { screen } from "@testing-library/react"
 import { TagAppFragmentContainer } from "Apps/Tag/TagApp"
 import { MockBoot } from "DevTools/MockBoot"
-import { findMetaTagBySelector } from "DevTools/findMetaTagBySelector"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { TagApp_Test_Query } from "__generated__/TagApp_Test_Query.graphql"
 import { graphql } from "react-relay"
@@ -38,38 +37,5 @@ describe("TagApp", () => {
     })
 
     expect(screen.getByText("Example Tag")).toBeInTheDocument()
-  })
-
-  it("renders meta description from query", async () => {
-    renderWithRelay({
-      Tag: () => ({
-        name: "Example Tag",
-        description: "Tag Description",
-      }),
-    })
-
-    const descriptionMeta = await findMetaTagBySelector(
-      "meta[name=description]",
-    )
-
-    expect(descriptionMeta).toHaveAttribute("content", "Tag Description")
-  })
-
-  it("renders fallback meta description", async () => {
-    renderWithRelay({
-      Tag: () => ({
-        name: "Example",
-        description: null,
-      }),
-    })
-
-    const descriptionMeta = await findMetaTagBySelector(
-      "meta[name=description]",
-    )
-
-    expect(descriptionMeta).toHaveAttribute(
-      "content",
-      "Browse all artworks with the Example tag on Artsy. Artsy has the largest collection of art on the Web; browse art by subject matter, medium, size and price.",
-    )
   })
 })

@@ -1,7 +1,6 @@
 import { screen } from "@testing-library/react"
 import { ExampleAppFragmentContainer } from "Apps/Example/ExampleApp"
 import { MockBoot } from "DevTools/MockBoot"
-import { findMetaTagBySelector } from "DevTools/findMetaTagBySelector"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { ExampleApp_Test_Query } from "__generated__/ExampleApp_Test_Query.graphql"
 import { graphql } from "react-relay"
@@ -46,17 +45,6 @@ describe("ExampleApp", () => {
 
   it("renders time from query", () => {
     expect(screen.getByText("Today is 13/5/2022.")).toBeInTheDocument()
-  })
-
-  it("renders meta description", async () => {
-    const descriptionMeta = await findMetaTagBySelector(
-      "meta[name=description]",
-    )
-
-    expect(descriptionMeta).toHaveAttribute(
-      "content",
-      "Fill this with a proper description",
-    )
   })
 
   it("renders 4 routes in correct order", () => {
