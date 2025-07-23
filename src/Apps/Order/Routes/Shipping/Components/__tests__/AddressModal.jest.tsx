@@ -302,7 +302,7 @@ describe("AddressModal", () => {
 
       await flushPromiseQueue()
 
-      const errorMessage = screen.getByText(
+      const errorMessage = await screen.findByText(
         "Sorry, there has been an issue saving your address. Please try again.",
       )
 

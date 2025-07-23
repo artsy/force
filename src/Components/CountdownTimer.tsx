@@ -51,7 +51,7 @@ export const CountdownTimer: React.FC<
       : "brand"
 
   return (
-    <StackableBorderBox flexDirection="column">
+    <StackableBorderBox flexDirection="column" data-testid="countdownTimer">
       <Flex justifyContent="flex-start" alignItems="center">
         <StopwatchIcon width={14} height={17} fill={highlight} />
 

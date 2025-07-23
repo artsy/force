@@ -93,7 +93,7 @@ describe("TransactionDetailsSummaryItem", () => {
       />
     ),
     query: graphql`
-      query TransactionDetailsSummaryItemTestQuery
+      query TransactionDetailsSummaryItemTestEQuery
       @raw_response_type
       @relay_test_operation {
         order: commerceOrder(id: "whatevs") {

@@ -20,7 +20,7 @@ const order: OfferHistoryItemTestQuery$rawResponse["order"] = {
 const { getWrapper } = setupTestWrapper({
   Component: (props: any) => <OfferHistoryItemFragmentContainer {...props} />,
   query: graphql`
-    query OfferHistoryItemTestQuery @raw_response_type @relay_test_operation {
+    query OfferHistoryItemTestEQuery @raw_response_type @relay_test_operation {
       order: commerceOrder(id: "foo") {
         ...OfferHistoryItem_order
       }

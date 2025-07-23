@@ -91,7 +91,10 @@ export const PaymentContent: FC<React.PropsWithChildren<Props>> = props => {
       )}
 
       {/* Credit card */}
-      <Collapse open={selectedPaymentMethod === "CREDIT_CARD"}>
+      <Collapse
+        open={selectedPaymentMethod === "CREDIT_CARD"}
+        data-testid="credit-card-form"
+      >
         {creditCards.length > 0 &&
           getPaymentMethodInfo(
             selectedPaymentMethod,
@@ -123,7 +126,10 @@ export const PaymentContent: FC<React.PropsWithChildren<Props>> = props => {
       </Collapse>
 
       {/* US Bank transfer */}
-      <Collapse open={selectedPaymentMethod === "US_BANK_ACCOUNT"}>
+      <Collapse
+        open={selectedPaymentMethod === "US_BANK_ACCOUNT"}
+        data-testid="bank-account-form"
+      >
         {getPaymentMethodInfo(
           selectedPaymentMethod,
           order.source,
@@ -147,7 +153,10 @@ export const PaymentContent: FC<React.PropsWithChildren<Props>> = props => {
       </Collapse>
 
       {/* SEPA bank transfer */}
-      <Collapse open={selectedPaymentMethod === "SEPA_DEBIT"}>
+      <Collapse
+        open={selectedPaymentMethod === "SEPA_DEBIT"}
+        data-testid="sepa-bank-account-form"
+      >
         {getPaymentMethodInfo(
           selectedPaymentMethod,
           order.source,

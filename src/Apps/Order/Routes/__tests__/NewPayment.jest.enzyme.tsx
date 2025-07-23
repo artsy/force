@@ -110,7 +110,7 @@ describe("Payment", () => {
       </MockBoot>
     ),
     query: graphql`
-      query NewPaymentTestQuery @raw_response_type @relay_test_operation {
+      query NewPaymentTestEQuery @raw_response_type @relay_test_operation {
         me {
           ...NewPayment_me
         }

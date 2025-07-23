@@ -103,7 +103,7 @@ describe("Accept seller offer", () => {
       </MockBoot>
     ),
     query: graphql`
-      query AcceptTestQuery @raw_response_type @relay_test_operation {
+      query AcceptTestEQuery @raw_response_type @relay_test_operation {
         order: commerceOrder(id: "test-id") {
           ...Accept_order
         }

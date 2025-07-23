@@ -1,4 +1,5 @@
 import { type RenderResult, act, render } from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
 import { MockBoot } from "DevTools/MockBoot"
 import type * as React from "react"
 import {
@@ -86,6 +87,7 @@ type RTLRenderResult = RenderResult<
 
 type RenderWithRelay = RTLRenderResult & {
   env: MockEnvironment
+  user: typeof userEvent
   mockResolveLastOperation: (mockResolvers: MockResolvers) => {
     operation: OperationDescriptor
     operationName: string
@@ -109,6 +111,7 @@ export const setupTestWrapperTL = <T extends OperationType>({
     mockedEnv?: ReturnType<typeof createMockEnvironment>,
   ): RenderWithRelay => {
     const env = mockedEnv ?? createMockEnvironment()
+    const user = userEvent
 
     const TestRenderer = () =>
       query ? (
@@ -173,6 +176,7 @@ export const setupTestWrapperTL = <T extends OperationType>({
     return {
       ...view,
       env,
+      user,
       mockResolveLastOperation,
       mockRejectLastOperation,
     }

@@ -2,6 +2,7 @@ const mockElement = () => ({
   mount: jest.fn(),
   destroy: jest.fn(),
   on: jest.fn(),
+  off: jest.fn(),
   update: jest.fn(),
 })
 
