@@ -45,8 +45,8 @@ export const deliveryOptionTimeEstimate = (
         "Estimated to ship between",
         dateRangeString({
           from,
-          startOffsetDays: 3,
-          endOffsetDays: 5,
+          startOffsetDays: 8,
+          endOffsetDays: 10,
         }),
       ]
     case "INTERNATIONAL_FLAT":
@@ -54,8 +54,8 @@ export const deliveryOptionTimeEstimate = (
         "Estimated to ship between",
         dateRangeString({
           from,
-          startOffsetDays: 3,
-          endOffsetDays: 5,
+          startOffsetDays: 8,
+          endOffsetDays: 10,
         }),
       ]
     default:
@@ -63,8 +63,8 @@ export const deliveryOptionTimeEstimate = (
         "Estimated to ship between",
         dateRangeString({
           from,
-          startOffsetDays: 3,
-          endOffsetDays: 5,
+          startOffsetDays: 8,
+          endOffsetDays: 10,
         }),
       ]
   }

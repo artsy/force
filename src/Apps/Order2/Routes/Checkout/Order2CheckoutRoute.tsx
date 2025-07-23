@@ -1,3 +1,5 @@
+import { Elements } from "@stripe/react-stripe-js"
+import { loadStripe } from "@stripe/stripe-js"
 import { Order2CheckoutContextProvider } from "Apps/Order2/Routes/Checkout/CheckoutContext/Order2CheckoutContext"
 import { Order2CheckoutApp } from "Apps/Order2/Routes/Checkout/Order2CheckoutApp"
 import {
@@ -6,6 +8,7 @@ import {
 } from "Apps/Order2/Utils/navigationGuards"
 import { ErrorPage } from "Components/ErrorPage"
 import { Analytics } from "System/Contexts/AnalyticsContext"
+import { getENV } from "Utils/getENV"
 import type { Order2CheckoutRoute_viewer$key } from "__generated__/Order2CheckoutRoute_viewer.graphql"
 import { useEffect } from "react"
 import { graphql, useFragment } from "react-relay"
@@ -13,6 +16,8 @@ import { graphql, useFragment } from "react-relay"
 interface Order2CheckoutRouteProps {
   viewer: Order2CheckoutRoute_viewer$key
 }
+
+const stripePromise = loadStripe(getENV("STRIPE_PUBLISHABLE_KEY"))
 
 export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
   viewer,
@@ -37,9 +42,11 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
 
   return (
     <Analytics contextPageOwnerId={order.internalID}>
-      <Order2CheckoutContextProvider order={order}>
-        <Order2CheckoutApp order={order} />
-      </Order2CheckoutContextProvider>
+      <Elements stripe={stripePromise}>
+        <Order2CheckoutContextProvider order={order}>
+          <Order2CheckoutApp order={order} />
+        </Order2CheckoutContextProvider>
+      </Elements>
     </Analytics>
   )
 }

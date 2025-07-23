@@ -1,14 +1,12 @@
 import { Flex } from "@artsy/palette"
-import { Elements } from "@stripe/react-stripe-js"
+import { Elements, useStripe } from "@stripe/react-stripe-js"
 import {
   type StripeElementsOptions,
   type StripeElementsUpdateOptions,
-  loadStripe,
 } from "@stripe/stripe-js"
 import { Order2ExpressCheckoutUI } from "Apps/Order2/Routes/Checkout/Components/ExpressCheckout/Order2ExpressCheckoutUI"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { getENV } from "Utils/getENV"
 import createLogger from "Utils/logger"
 import type { Order2ExpressCheckoutQuery } from "__generated__/Order2ExpressCheckoutQuery.graphql"
 import type {
@@ -18,8 +16,6 @@ import type {
 import { graphql, useFragment } from "react-relay"
 
 const logger = createLogger("Order2ExpressCheckout.tsx")
-
-const stripePromise = loadStripe(getENV("STRIPE_PUBLISHABLE_KEY"))
 
 interface Order2ExpressCheckoutProps {
   order: Order2ExpressCheckout_order$key
@@ -34,6 +30,7 @@ export const Order2ExpressCheckout: React.FC<Order2ExpressCheckoutProps> = ({
   order,
 }) => {
   const orderData = useFragment(FRAGMENT, order)
+  const stripe = useStripe()
   const { expressCheckoutPaymentMethods } = useCheckoutContext()
 
   const expressCheckoutLoadedEmpty = expressCheckoutPaymentMethods?.length === 0
@@ -77,7 +74,7 @@ export const Order2ExpressCheckout: React.FC<Order2ExpressCheckoutProps> = ({
 
   return (
     <Flex flexDirection="column" backgroundColor="mono0" py={2} px={[2, 4]}>
-      <Elements stripe={stripePromise} options={options}>
+      <Elements stripe={stripe} options={options}>
         <Order2ExpressCheckoutUI order={orderData} />
       </Elements>
     </Flex>

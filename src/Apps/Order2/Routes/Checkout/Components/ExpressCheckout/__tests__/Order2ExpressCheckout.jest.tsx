@@ -21,8 +21,7 @@ jest.mock("Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext", () => {
 
 const { renderWithRelay } =
   setupTestWrapperTL<Order2ExpressCheckout_Test_Query>({
-    Component: ({ me }) =>
-      me?.order && <Order2ExpressCheckout order={me.order!} />,
+    Component: ({ me }) => <Order2ExpressCheckout order={me!.order!} />,
     query: graphql`
       query Order2ExpressCheckout_Test_Query @raw_response_type {
         me {
@@ -36,6 +35,7 @@ const { renderWithRelay } =
 
 jest.mock("@stripe/react-stripe-js", () => {
   return {
+    useStripe: jest.fn(),
     Elements: jest.fn(() => {
       return <button type="button" />
     }),
@@ -44,9 +44,7 @@ jest.mock("@stripe/react-stripe-js", () => {
 
 describe("Order2ExpressCheckout", () => {
   it("passes correct props to Stripe Elements", async () => {
-    renderWithRelay({
-      Order: () => ({ ...orderData }),
-    })
+    renderWithRelay({ Order: () => ({ ...orderData }) })
 
     const elementsProps = mockElements.mock.calls[0][0]
 
