@@ -45,7 +45,6 @@ Force should now be running at [http://localhost:4000/](http://localhost:4000/).
 ```sh
 yarn type-check
 yarn jest
-yarn jest-enzyme # for legacy tests
 ```
 
 ## Running a local copy of Force in Production mode
