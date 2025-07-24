@@ -9,7 +9,7 @@ import {
 } from "Apps/__tests__/Fixtures/Order"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import type { BankAccountPickerTestQuery$rawResponse } from "__generated__/BankAccountPickerTestQuery.graphql"
+import type { BankAccountPickerTestEQuery$rawResponse } from "__generated__/BankAccountPickerTestEQuery.graphql"
 import type { BankAccountPicker_me$data } from "__generated__/BankAccountPicker_me.graphql"
 import { graphql } from "react-relay"
 
@@ -47,7 +47,7 @@ const orderWithBankAccount = {
   ...orderBankAccount,
 }
 
-const defaultData: BankAccountPickerTestQuery$rawResponse = {
+const defaultData: BankAccountPickerTestEQuery$rawResponse = {
   me: {
     id: "my-id",
     bankAccounts: {

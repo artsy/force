@@ -2,7 +2,6 @@
  * @jest-environment node
  */
 
-import { createMockNetworkLayer } from "DevTools/createMockNetworkLayer"
 import type { ArtsyResponse } from "Server/middleware/artsyExpress"
 import { SystemContextConsumer } from "System/Contexts/SystemContext"
 import { findRoutesByPath } from "System/Router/Utils/routeUtils"
@@ -291,52 +290,6 @@ describe("serverRouter", () => {
     })
   })
 
-  describe("concerning GraphQL errors", () => {
-    const consoleError = console.error
-    jest.mock("System/Relay/createRelaySSREnvironment", () => ({
-      createRelaySSREnvironment: jest.fn(),
-    }))
-
-    const createRelaySSREnvironment =
-      require("System/Relay/createRelaySSREnvironment")
-        .createRelaySSREnvironment as jest.Mock
-
-    beforeAll(() => {
-      // @ts-ignore
-      global.fetch = jest.fn().mockResolvedValueOnce({
-        ok: null,
-        json: jest.fn(),
-      })
-      console.error = jest.fn()
-    })
-
-    afterAll(() => {
-      console.error = consoleError
-      // @ts-ignore
-      global.fetch.mockRestore()
-    })
-
-    it("rejects with a GraphQL error", async () => {
-      const relay = () => {
-        const relayNetwork = createMockNetworkLayer({
-          Query: () => ({
-            me: () => {
-              throw new Error("Oh noes")
-            },
-          }),
-        })
-        return createRelaySSREnvironment({ relayNetwork })
-      }
-      createRelaySSREnvironment.mockReturnValue(relay())
-
-      try {
-        await getWrapper(defaultComponent, options)
-      } catch (error) {
-        // eslint-disable-next-line jest/no-conditional-expect, jest/no-try-expect
-        expect(error.message).toMatch(/Oh noes/)
-      }
-    })
-  })
 
   it("invokes onServerSideRender hook", async () => {
     const spy = jest.fn()

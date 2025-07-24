@@ -36,7 +36,7 @@ import { mockLocation } from "DevTools/mockLocation"
 import { mockStripe } from "DevTools/mockStripe"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { CommercePaymentMethodEnum } from "__generated__/Payment_order.graphql"
-import type { ReviewTestQuery$rawResponse } from "__generated__/ReviewTestQuery.graphql"
+import type { ReviewTestEQuery$rawResponse } from "__generated__/ReviewTestEQuery.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { OrderAppTestPageRTL } from "./Utils/OrderAppTestPageRTL"
@@ -78,7 +78,7 @@ jest.mock("Apps/Order/Utils/commitMutation", () => ({
   ),
 }))
 
-const testOrder: ReviewTestQuery$rawResponse["order"] = {
+const testOrder: ReviewTestEQuery$rawResponse["order"] = {
   ...BuyOrderWithShippingDetails,
   internalID: "1234",
   impulseConversationId: null,

@@ -1,14 +1,10 @@
-import { createMockFetchQuery } from "DevTools/createMockNetworkLayer"
-import { createMockNetworkLayer2 } from "DevTools/createMockNetworkLayer"
+import { createMockNetworkLayer } from "DevTools/createMockNetworkLayer"
 import type { createMockNetworkLayerTestAliasPrecendenceQuery } from "__generated__/createMockNetworkLayerTestAliasPrecendenceQuery.graphql"
 import type { createMockNetworkLayerTestAliasQuery } from "__generated__/createMockNetworkLayerTestAliasQuery.graphql"
-import type { createMockNetworkLayerTestMutationResultsMutation } from "__generated__/createMockNetworkLayerTestMutationResultsMutation.graphql"
 import type { createMockNetworkLayerTestQuery } from "__generated__/createMockNetworkLayerTestQuery.graphql"
-import { type GraphQLTaggedNode, commitMutation, graphql } from "react-relay"
-import type { Environment as IEnvironment } from "react-relay"
+import { type GraphQLTaggedNode, graphql } from "react-relay"
 import {
   Environment,
-  Network,
   type OperationType,
   RecordSource,
   Store,
@@ -18,10 +14,10 @@ jest.unmock("react-relay")
 
 describe("createMockNetworkLayer", () => {
   async function _fetchQueryWithResolvers<T extends OperationType>(
-    options: Parameters<typeof createMockNetworkLayer2>[0],
+    options: Parameters<typeof createMockNetworkLayer>[0],
     query: GraphQLTaggedNode,
   ) {
-    const network = createMockNetworkLayer2(options)
+    const network = createMockNetworkLayer(options)
 
     const source = new RecordSource()
     const store = new Store(source)
@@ -31,7 +27,7 @@ describe("createMockNetworkLayer", () => {
   }
 
   function fetchArtworkQueryWithResolvers(
-    options: Parameters<typeof createMockNetworkLayer2>[0],
+    options: Parameters<typeof createMockNetworkLayer>[0],
   ) {
     return _fetchQueryWithResolvers<createMockNetworkLayerTestQuery>(
       options,
@@ -46,38 +42,6 @@ describe("createMockNetworkLayer", () => {
     )
   }
 
-  function fetchMutationResults<Input extends OperationType>({
-    mockMutationResults,
-    query,
-    variables,
-    mockNetworkFailure,
-  }: {
-    mockMutationResults: object
-    query: GraphQLTaggedNode
-    variables: Input["variables"]
-    mockNetworkFailure?: boolean
-  }): Promise<any> {
-    const mockFetchQuery = mockNetworkFailure
-      ? () => Promise.reject(new Error("failed to fetch"))
-      : createMockFetchQuery({ mockMutationResults })
-
-    const source = new RecordSource()
-    const store = new Store(source)
-    const environment = new Environment({
-      network: Network.create(mockFetchQuery),
-      store,
-    }) as IEnvironment
-
-    return new Promise((resolve, reject) => {
-      commitMutation(environment, {
-        // tslint:disable-next-line:relay-operation-generics
-        mutation: query,
-        onCompleted: resolve,
-        onError: reject,
-        variables,
-      })
-    })
-  }
 
   describe("preserves the upstream behaviour", () => {
     it("returns the data if present", async () => {
@@ -99,67 +63,6 @@ describe("createMockNetworkLayer", () => {
     })
   })
 
-  it("complains with a helpful error when selected field is not present", async () => {
-    try {
-      await fetchArtworkQueryWithResolvers({
-        mockData: {
-          artwork: { id: "blah" },
-        },
-      })
-    } catch (e) {
-      // eslint-disable-next-line jest/no-conditional-expect, jest/no-try-expect
-      expect(e.message).toMatchInlineSnapshot(
-        `"RelayMockNetworkLayerError: A mock for field at path 'artwork/title' of type 'String' was expected for operation 'createMockNetworkLayerTestQuery', but none was found."`,
-      )
-    }
-  })
-
-  // TODO: upgrade graphql. The version we have does hardly any validaton of leaf values.
-  // see https://github.com/graphql/graphql-js/commit/3521e1429eec7eabeee4da65c93306b51308727b
-  // eslint-disable-next-line jest/no-disabled-tests
-  it.skip("complains with a helpful error when leaf field type is incorrect", async () => {
-    try {
-      await fetchArtworkQueryWithResolvers({
-        mockData: {
-          artwork: { id: "blah", title: 32 },
-        },
-      })
-    } catch (e) {
-      // eslint-disable-next-line jest/no-conditional-expect, jest/no-try-expect
-      expect(e.message).toMatchInlineSnapshot()
-    }
-  })
-
-  // TODO: related to above, the only check right now is that you can't return an array as a string
-  it("complains with a helpful error when leaf field type is incorrect 2", async () => {
-    try {
-      await fetchArtworkQueryWithResolvers({
-        mockData: {
-          artwork: { id: "blah", title: [] },
-        },
-      })
-    } catch (e) {
-      // eslint-disable-next-line jest/no-conditional-expect, jest/no-try-expect
-      expect(e.message).toMatchInlineSnapshot(
-        `"RelayMockNetworkLayerError: Expected mock value of type 'String' but got 'object' at path 'artwork/title' for operation 'createMockNetworkLayerTestQuery'"`,
-      )
-    }
-  })
-
-  it("complains with a helpful error when non-leaf field type is incorrect", async () => {
-    try {
-      await fetchArtworkQueryWithResolvers({
-        mockData: {
-          artwork: 3,
-        },
-      })
-    } catch (e) {
-      // eslint-disable-next-line jest/no-conditional-expect, jest/no-try-expect
-      expect(e.message).toMatchInlineSnapshot(
-        `"RelayMockNetworkLayerError: The value at path 'artwork' for operation 'createMockNetworkLayerTestQuery' should be an object but is a number."`,
-      )
-    }
-  })
 
   it("Does not complain when non-leaf nullable field type is null", async () => {
     const data = await fetchArtworkQueryWithResolvers({
@@ -245,212 +148,4 @@ describe("createMockNetworkLayer", () => {
     })
   })
 
-  describe("mutations", () => {
-    const query =
-      // TODO: Inputs to the mutation might have changed case of the keys!
-      graphql`
-        mutation createMockNetworkLayerTestMutationResultsMutation(
-          $input: CommerceBuyerAcceptOfferInput!
-        ) {
-          commerceBuyerAcceptOffer(input: $input) {
-            orderOrError {
-              ... on CommerceOrderWithMutationFailure {
-                error {
-                  type
-                  code
-                  data
-                }
-              }
-              ... on CommerceOrderWithMutationSuccess {
-                order {
-                  internalID
-                  state
-                }
-              }
-            }
-          }
-        }
-      `
-
-    it("allows mocking successful mutation results", async () => {
-      const data =
-        await fetchMutationResults<createMockNetworkLayerTestMutationResultsMutation>(
-          {
-            mockMutationResults: {
-              commerceBuyerAcceptOffer: {
-                orderOrError: {
-                  __typename: "CommerceOrderWithMutationSuccess",
-                  order: {
-                    __typename: "CommerceOfferOrder",
-                    id: "my-order",
-                    internalID: "my-order",
-                    state: "ABANDONED",
-                  },
-                },
-              },
-            },
-            query,
-            variables: {
-              input: {
-                offerId: "offer-id",
-              },
-            },
-          },
-        )
-
-      expect(data.commerceBuyerAcceptOffer.orderOrError.order.state).toBe(
-        "ABANDONED",
-      )
-    })
-
-    it("allows not specifying typenames when possible", async () => {
-      const data =
-        await fetchMutationResults<createMockNetworkLayerTestMutationResultsMutation>(
-          {
-            mockMutationResults: {
-              commerceBuyerAcceptOffer: {
-                orderOrError: {
-                  order: {
-                    __typename: "CommerceBuyOrder",
-                    id: "my-order",
-                    internalID: "my-order",
-                    state: "ABANDONED",
-                  },
-                },
-              },
-            },
-            query,
-            variables: {
-              input: {
-                offerId: "offer-id",
-              },
-            },
-          },
-        )
-
-      expect(data.commerceBuyerAcceptOffer.orderOrError.order.state).toBe(
-        "ABANDONED",
-      )
-    })
-
-    it("complains about ambiguous types", async () => {
-      try {
-        await fetchMutationResults<createMockNetworkLayerTestMutationResultsMutation>(
-          {
-            mockMutationResults: {
-              commerceBuyerAcceptOffer: {
-                orderOrError: {
-                  order: {
-                    id: "my-order",
-                    internalID: "my-order",
-                    state: "ABANDONED",
-                  },
-                },
-              },
-            },
-            query,
-            variables: {
-              input: {
-                offerId: "offer-id",
-              },
-            },
-          },
-        )
-      } catch (e) {
-        // eslint-disable-next-line jest/no-conditional-expect, jest/no-try-expect
-        expect(e.message).toMatchInlineSnapshot(
-          `"RelayMockNetworkLayerError: Ambiguous object at path 'commerceBuyerAcceptOffer/orderOrError/order' for operation 'createMockNetworkLayerTestMutationResultsMutation'. Add a __typename from this list: [CommerceBuyOrder, CommerceOfferOrder]"`,
-        )
-      }
-    })
-
-    it("does not complain about unambiguous interface types", async () => {
-      const data =
-        await fetchMutationResults<createMockNetworkLayerTestMutationResultsMutation>(
-          {
-            mockMutationResults: {
-              commerceBuyerAcceptOffer: {
-                orderOrError: {
-                  order: {
-                    id: "my-order",
-                    internalID: "my-order",
-                    state: "ABANDONED",
-                    myLastOffer: {},
-                  },
-                },
-              },
-            },
-            query,
-            variables: {
-              input: {
-                offerId: "offer-id",
-              },
-            },
-          },
-        )
-      expect(data.commerceBuyerAcceptOffer.orderOrError.order.state).toBe(
-        "ABANDONED",
-      )
-    })
-
-    it("allows mocking network failures", async () => {
-      try {
-        await fetchMutationResults<createMockNetworkLayerTestMutationResultsMutation>(
-          {
-            mockMutationResults: {
-              commerceBuyerAcceptOffer: {
-                orderOrError: {
-                  __typename: "CommerceOrderWithMutationSuccess",
-                  order: {
-                    __typename: "CommerceOfferOrder",
-                    id: "my-order",
-                    internalID: "my-order",
-                    state: "ABANDONED",
-                  },
-                },
-              },
-            },
-            query,
-            variables: {
-              input: {
-                offerId: "offer-id",
-              },
-            },
-            mockNetworkFailure: true,
-          },
-        )
-      } catch (e) {
-        // eslint-disable-next-line jest/no-conditional-expect, jest/no-try-expect
-        expect(e.message).toMatchInlineSnapshot(`"failed to fetch"`)
-      }
-    })
-
-    it("complains if you return the wrong type in an abstract position", async () => {
-      try {
-        await fetchMutationResults<createMockNetworkLayerTestMutationResultsMutation>(
-          {
-            mockMutationResults: {
-              commerceBuyerAcceptOffer: {
-                orderOrError: {
-                  __typename: "CommerceOrderWithMutationSuccess",
-                  order: "hello I am a string",
-                },
-              },
-            },
-            query,
-            variables: {
-              input: {
-                offerId: "offer-id",
-              },
-            },
-          },
-        )
-      } catch (e) {
-        // eslint-disable-next-line jest/no-conditional-expect, jest/no-try-expect
-        expect(e.message).toMatchInlineSnapshot(
-          `"RelayMockNetworkLayerError: Expected object of type 'CommerceOrder!' but got 'string' at path 'commerceBuyerAcceptOffer/orderOrError/order' for operation 'createMockNetworkLayerTestMutationResultsMutation'"`,
-        )
-      }
-    })
-  })
 })

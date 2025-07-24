@@ -7,7 +7,7 @@ import {
 import { OfferOrderWithShippingDetails } from "Apps/__tests__/Fixtures/Order"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import type { RejectTestQuery$rawResponse } from "__generated__/RejectTestQuery.graphql"
+import type { RejectTestEQuery$rawResponse } from "__generated__/RejectTestEQuery.graphql"
 import { DateTime } from "luxon"
 import { graphql } from "react-relay"
 import { OrderAppTestPageRTL } from "./Utils/OrderAppTestPageRTL"
@@ -52,7 +52,7 @@ jest.mock("Apps/Order/Utils/commitMutation", () => ({
   ),
 }))
 
-const testOrder: RejectTestQuery$rawResponse["order"] = {
+const testOrder: RejectTestEQuery$rawResponse["order"] = {
   ...OfferOrderWithShippingDetails,
   __isCommerceOrder: "CommerceOfferOrder",
   __typename: "CommerceOfferOrder",
