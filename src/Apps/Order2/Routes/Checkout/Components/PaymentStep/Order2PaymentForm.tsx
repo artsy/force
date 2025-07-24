@@ -53,6 +53,7 @@ import {
   useFragment,
   useRelayEnvironment,
 } from "react-relay"
+import { CreateBankDebitSetupForOrder } from "Components/BankDebitForm/Mutations/CreateBankDebitSetupForOrder"
 
 const logger = createLogger("Order2PaymentForm")
 const defaultErrorMessage = (
@@ -80,8 +81,6 @@ export const Order2PaymentForm: React.FC<Order2PaymentFormProps> = ({
     amount: itemsTotal.minor,
     currency: itemsTotal.currencyCode.toLowerCase(),
     onBehalfOf: seller?.merchantAccount?.externalId,
-    setupFutureUsage: "off_session",
-    captureMethod: "manual",
   }
 
   const { theme } = useTheme()
@@ -130,6 +129,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
   const environment = useRelayEnvironment()
   const updateOrderMutation = useUpdateOrderMutation()
   const setPaymentMutation = useSetPayment()
+  const createBankDebitSetupForOrder = CreateBankDebitSetupForOrder()
   const { setConfirmationToken, checkoutTracking, setSavedCreditCard } =
     useCheckoutContext()
 
@@ -219,6 +219,10 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
     })
     if (elementType === "payment" && !collapsed) {
       if (value.type === "card") {
+        elements.update({
+          captureMethod: "manual",
+          setupFutureUsage: "off_session",
+        })
         // Only track this the first time it happens
         if (selectedPaymentMethod !== "stripe-card") {
           checkoutTracking.clickedPaymentMethod({
@@ -229,9 +233,11 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
         }
         setSelectedPaymentMethod("stripe-card")
       } else {
-        // TODO
+        elements.update({ captureMethod: "automatic", setupFutureUsage: null })
         setSelectedPaymentMethod("stripe-other")
       }
+    } else {
+      elements.update({ captureMethod: "automatic", setupFutureUsage: null })
     }
   }
 
@@ -289,62 +295,95 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
         return
       }
 
-      const response =
-        await fetchQuery<Order2PaymentFormConfirmationTokenQuery>(
-          environment,
-          graphql`
-            query Order2PaymentFormConfirmationTokenQuery($id: String!) {
-              me {
-                confirmationToken(id: $id) {
-                  paymentMethodPreview {
-                    card {
-                      displayBrand
-                      last4
+      if (selectedPaymentMethod === "stripe-card") {
+        const response =
+          await fetchQuery<Order2PaymentFormConfirmationTokenQuery>(
+            environment,
+            graphql`
+              query Order2PaymentFormConfirmationTokenQuery($id: String!) {
+                me {
+                  confirmationToken(id: $id) {
+                    paymentMethodPreview {
+                      card {
+                        displayBrand
+                        last4
+                      }
                     }
                   }
                 }
               }
-            }
-          `,
-          { id: confirmationToken.id },
-          { fetchPolicy: "store-or-network" },
-        ).toPromise()
+            `,
+            { id: confirmationToken.id },
+            { fetchPolicy: "store-or-network" },
+          ).toPromise()
 
-      if (!response) {
-        logger.error("Failed to fetch confirmation token from Gravity")
-        handleError({ message: defaultErrorMessage })
-        return
-      }
+        if (!response) {
+          logger.error("Failed to fetch confirmation token from Exchange")
+          handleError({ message: defaultErrorMessage })
+          return
+        }
 
-      try {
-        const updateOrderPaymentMethodResult =
-          await updateOrderMutation.submitMutation({
-            variables: {
-              input: {
-                id: order.internalID,
-                paymentMethod: "CREDIT_CARD",
-                stripeConfirmationToken: confirmationToken.id,
+        try {
+          const updateOrderPaymentMethodResult =
+            await updateOrderMutation.submitMutation({
+              variables: {
+                input: {
+                  id: order.internalID,
+                  paymentMethod: "CREDIT_CARD",
+                  stripeConfirmationToken: confirmationToken.id,
+                },
               },
+            })
+
+          validateAndExtractOrderResponse(
+            updateOrderPaymentMethodResult.updateOrder?.orderOrError,
+          )
+
+          setConfirmationToken({
+            confirmationToken: {
+              id: confirmationToken.id,
+              ...response?.me?.confirmationToken,
             },
+            saveCreditCard,
+          })
+        } catch (error) {
+          logger.error("Error while updating order payment method", error)
+          handleError({ message: defaultErrorMessage })
+        } finally {
+          setIsSubmittingToStripe(false)
+        }
+      } else {
+        // For now, only ACH is supported as a non-card payment method
+        try {
+          await createBankDebitSetupForOrder.submitMutation({
+            variables: { input: { id: order.internalID } },
           })
 
-        validateAndExtractOrderResponse(
-          updateOrderPaymentMethodResult.updateOrder?.orderOrError,
-        )
-      } catch (error) {
-        logger.error("Error while updating order payment method", error)
-        handleError({ message: defaultErrorMessage })
-      } finally {
-        setIsSubmittingToStripe(false)
-      }
+          const updateOrderPaymentMethodResult =
+            await updateOrderMutation.submitMutation({
+              variables: {
+                input: {
+                  id: order.internalID,
+                  paymentMethod: "US_BANK_ACCOUNT",
+                  stripeConfirmationToken: confirmationToken.id,
+                },
+              },
+            })
 
-      setConfirmationToken({
-        confirmationToken: {
-          id: confirmationToken.id,
-          ...response?.me?.confirmationToken,
-        },
-        saveCreditCard,
-      })
+          validateAndExtractOrderResponse(
+            updateOrderPaymentMethodResult.updateOrder?.orderOrError,
+          )
+
+          setConfirmationToken({
+            confirmationToken: { id: confirmationToken.id },
+            saveCreditCard: false,
+          })
+        } catch (error) {
+          handleError({ message: defaultErrorMessage })
+        } finally {
+          setIsSubmittingToStripe(false)
+        }
+      }
     }
 
     if (selectedPaymentMethod === "wire") {
