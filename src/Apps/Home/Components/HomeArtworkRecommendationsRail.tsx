@@ -1,6 +1,6 @@
 import {
   ActionType,
-  AuthContextModule,
+  type AuthContextModule,
   type ClickedArtworkGroup,
   ContextModule,
   OwnerType,
@@ -12,15 +12,14 @@ import {
 } from "Components/Artwork/ShelfArtwork"
 import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
 import { Rail } from "Components/Rail/Rail"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
 import { getSignalLabel } from "Utils/getSignalLabel"
-import { graphql, useFragment } from "react-relay"
-import { useTracking } from "react-tracking"
 import type { HomeArtworkRecommendationsRailQuery } from "__generated__/HomeArtworkRecommendationsRailQuery.graphql"
 import type { HomeArtworkRecommendationsRail_me$key } from "__generated__/HomeArtworkRecommendationsRail_me.graphql"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { useFlag } from "@unleash/proxy-client-react"
+import { graphql, useFragment } from "react-relay"
+import { useTracking } from "react-tracking"
 
 interface HomeArtworkRecommendationsRailProps {
   me: HomeArtworkRecommendationsRail_me$key
@@ -119,11 +118,6 @@ export const HomeArtworkRecommendationsRailQueryRenderer: React.FC<
   React.PropsWithChildren<unknown>
 > = () => {
   const { relayEnvironment, user } = useSystemContext()
-  const enabled = useFlag("onyx_artwork_recommendations_rail_on_web")
-
-  if (!enabled) {
-    return null
-  }
 
   if (!user) {
     return null
