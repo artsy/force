@@ -1,12 +1,5 @@
 import { ContextModule } from "@artsy/cohesion"
-import {
-  type AutocompleteInputOptionType,
-  Column,
-  GridColumns,
-  Input,
-  PhoneInput,
-  Select,
-} from "@artsy/palette"
+import { Column, GridColumns, Input, PhoneInput, Select } from "@artsy/palette"
 import { AddressAutocompleteInput } from "Components/Address/AddressAutocompleteInput"
 import {
   type Address,
@@ -16,10 +9,10 @@ import {
   richPhoneValidators,
   yupAddressValidator,
 } from "Components/Address/utils"
+import { sortCountriesForCountryInput } from "Components/Address/utils/sortCountriesForCountryInput"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { countries as countryPhoneOptions } from "Utils/countries"
 import { useFormikContext } from "formik"
-import { sortBy } from "lodash"
 import { useMemo } from "react"
 
 export interface FormikContextWithAddress {
@@ -35,6 +28,7 @@ interface Props {
   withPhoneNumber?: boolean
   /* @deprecated - legacy plain-text phone input */
   withLegacyPhoneInput?: boolean
+  /** Whether to only include shippable countries */
   shippableCountries?: CountryData[]
 }
 
@@ -155,13 +149,12 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
 
       <Column span={12}>
         <Select
+          key={`country-select-${values.address?.country || "empty"}`}
           options={countryInputOptions}
           name="address.country"
           id="address.country"
           title="Country"
           data-testid={`${dataTestIdPrefix}.country`}
-          // TODO: Accept a value prop in Select
-          // @ts-ignore
           value={values.address.country}
           onChange={e => {
             setFieldValue("address.country", e.target.value)
@@ -297,6 +290,7 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
       {phoneInputType === "rich" && (
         <Column span={12}>
           <PhoneInput
+            key={`phone-input-${values.phoneNumberCountryCode || "empty"}`}
             // mt required to match spacing for other text inputs
             mt={1}
             name="phoneNumber"
@@ -322,29 +316,4 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
       )}
     </GridColumns>
   )
-}
-
-const BLANK_COUNTRY = { text: "", value: "" }
-/** countries are sorted by phone number code first - sort alphabetically */
-const sortCountriesForCountryInput = (
-  unsorted: typeof countryPhoneOptions,
-  firstCode: CountryData["value"] = "us",
-): AutocompleteInputOptionType[] => {
-  // Sort firstCode first, then by name
-  const sortedCountries = sortBy(unsorted, [
-    country => country.value !== firstCode,
-    "name",
-  ])
-
-  const options = [
-    BLANK_COUNTRY,
-    ...sortedCountries.map(countryData => {
-      return {
-        text: countryData.name,
-        value: countryData.value.toUpperCase(),
-      }
-    }),
-  ]
-
-  return options
 }
