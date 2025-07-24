@@ -14,11 +14,16 @@ export const getInitialPaymentMethodValue = ({
   paymentSet,
   paymentMethod,
   availablePaymentMethods,
-}: Payment_order$data): CommercePaymentMethodEnum | undefined =>
-  paymentSet
-    ? paymentMethod!
-    : availablePaymentMethods.length > 1
-      ? undefined
-      : orderedPaymentMethods.find(method =>
-          availablePaymentMethods.includes(method),
-        )
+}: Payment_order$data): CommercePaymentMethodEnum | undefined => {
+  if (paymentSet && paymentMethod) {
+    return paymentMethod
+  }
+
+  if (availablePaymentMethods.length > 1) {
+    return undefined
+  }
+
+  return orderedPaymentMethods.find(method =>
+    availablePaymentMethods.includes(method),
+  )
+}
