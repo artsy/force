@@ -1,23 +1,22 @@
 import {
   ActionType,
-  ClickedArtistGroup,
+  type ClickedArtistGroup,
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
 import { Skeleton } from "@artsy/palette"
-import { useFlag } from "@unleash/proxy-client-react"
 import {
   CellArtistFragmentContainer,
   CellArtistPlaceholder,
 } from "Components/Cells/CellArtist"
 import { Rail } from "Components/Rail/Rail"
-import { graphql, useFragment } from "react-relay"
-import { useTracking } from "react-tracking"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
-import type { HomeRecommendedArtistsRail_me$key } from "__generated__/HomeRecommendedArtistsRail_me.graphql"
 import type { HomeRecommendedArtistsRailQuery } from "__generated__/HomeRecommendedArtistsRailQuery.graphql"
+import type { HomeRecommendedArtistsRail_me$key } from "__generated__/HomeRecommendedArtistsRail_me.graphql"
+import { graphql, useFragment } from "react-relay"
+import { useTracking } from "react-tracking"
 
 interface HomeRecommendedArtistsRailProps {
   me: HomeRecommendedArtistsRail_me$key
@@ -94,11 +93,6 @@ export const HomeRecommendedArtistsRailQueryRenderer: React.FC<
   React.PropsWithChildren<unknown>
 > = () => {
   const { relayEnvironment, user } = useSystemContext()
-  const enabled = useFlag("onyx_artist_recommendations_rail_on_web")
-
-  if (!enabled) {
-    return null
-  }
 
   if (!user) {
     return null
