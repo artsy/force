@@ -11,7 +11,7 @@ export const createMockNetworkLayer2 = ({
     // Simple mock that returns the mockData wrapped in a data property
     return new Promise(resolve => {
       resolve({
-        data: operation.name === "mutation" ? mockMutationResults : mockData,
+        data: operation.operationKind === "mutation" ? mockMutationResults : mockData,
       })
     })
   })
