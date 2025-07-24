@@ -1,8 +1,5 @@
 import { AppShell } from "Apps/Components/AppShell"
-import {
-  createMockNetworkLayer,
-  createMockNetworkLayer2,
-} from "DevTools/createMockNetworkLayer"
+import { createMockNetworkLayer2 } from "DevTools/createMockNetworkLayer"
 import type { SystemContextProps } from "System/Contexts/SystemContext"
 import type { RouteProps } from "System/Router/Route"
 import {
@@ -11,7 +8,6 @@ import {
 } from "System/Router/clientRouter"
 import { getUser } from "Utils/user"
 import type { HistoryEnhancerOptions } from "farce"
-import type { IMocks } from "graphql-tools/dist/Interfaces"
 import type React from "react"
 import { useEffect, useState } from "react"
 import type { Environment } from "react-relay"
@@ -22,7 +18,6 @@ interface MockRouterProps {
   initialRoute?: string
   mockData?: object
   mockMutationResults?: object
-  mockResolvers?: IMocks
   routes: RouteProps[]
 }
 
@@ -32,7 +27,6 @@ export const MockRouter: React.FC<React.PropsWithChildren<MockRouterProps>> = ({
   initialRoute = "/",
   mockData,
   mockMutationResults,
-  mockResolvers,
   routes,
 }) => {
   const [MockRouterApp, setMockRouterApp] =
@@ -44,11 +38,9 @@ export const MockRouter: React.FC<React.PropsWithChildren<MockRouterProps>> = ({
       try {
         const user = getUser(context?.user)
 
-        const relayEnvironment = mockResolvers
-          ? createMockNetworkLayer(mockResolvers)
-          : mockData || mockMutationResults
-            ? createMockNetworkLayer2({ mockData, mockMutationResults })
-            : null
+        const relayEnvironment = (mockData || mockMutationResults)
+          ? createMockNetworkLayer2({ mockData, mockMutationResults })
+          : null
 
         const { ClientRouter } = await setupClientRouter({
           routes: [
