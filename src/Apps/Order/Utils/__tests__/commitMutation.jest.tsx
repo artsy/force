@@ -3,7 +3,7 @@ import {
   type CommitMutation,
   injectCommitMutation,
 } from "Apps/Order/Utils/commitMutation"
-import { createMockNetworkLayer2 } from "DevTools/createMockNetworkLayer"
+import { createMockNetworkLayer } from "DevTools/createMockNetworkLayer"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { SystemContextProvider } from "System/Contexts/SystemContext"
 import type { commitMutationTest1Mutation } from "__generated__/commitMutationTest1Mutation.graphql"
@@ -14,7 +14,7 @@ import { Environment, RecordSource, Store } from "relay-runtime"
 jest.unmock("react-relay")
 
 describe("injectCommitMutation", () => {
-  const network = createMockNetworkLayer2({
+  const network = createMockNetworkLayer({
     mockMutationResults: {
       ...settingOrderPaymentFailed,
     },

@@ -1,4 +1,4 @@
-import { createMockNetworkLayer2 } from "DevTools/createMockNetworkLayer"
+import { createMockNetworkLayer } from "DevTools/createMockNetworkLayer"
 import type { createMockNetworkLayerTestAliasPrecendenceQuery } from "__generated__/createMockNetworkLayerTestAliasPrecendenceQuery.graphql"
 import type { createMockNetworkLayerTestAliasQuery } from "__generated__/createMockNetworkLayerTestAliasQuery.graphql"
 import type { createMockNetworkLayerTestQuery } from "__generated__/createMockNetworkLayerTestQuery.graphql"
@@ -14,10 +14,10 @@ jest.unmock("react-relay")
 
 describe("createMockNetworkLayer", () => {
   async function _fetchQueryWithResolvers<T extends OperationType>(
-    options: Parameters<typeof createMockNetworkLayer2>[0],
+    options: Parameters<typeof createMockNetworkLayer>[0],
     query: GraphQLTaggedNode,
   ) {
-    const network = createMockNetworkLayer2(options)
+    const network = createMockNetworkLayer(options)
 
     const source = new RecordSource()
     const store = new Store(source)
@@ -27,7 +27,7 @@ describe("createMockNetworkLayer", () => {
   }
 
   function fetchArtworkQueryWithResolvers(
-    options: Parameters<typeof createMockNetworkLayer2>[0],
+    options: Parameters<typeof createMockNetworkLayer>[0],
   ) {
     return _fetchQueryWithResolvers<createMockNetworkLayerTestQuery>(
       options,

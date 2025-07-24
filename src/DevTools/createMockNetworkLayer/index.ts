@@ -1,6 +1,6 @@
 import { type INetwork, Network } from "relay-runtime"
 
-export const createMockNetworkLayer2 = ({
+export const createMockNetworkLayer = ({
   mockData = {},
   mockMutationResults = {},
 }: {

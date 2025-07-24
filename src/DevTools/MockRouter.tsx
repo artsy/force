@@ -1,5 +1,5 @@
 import { AppShell } from "Apps/Components/AppShell"
-import { createMockNetworkLayer2 } from "DevTools/createMockNetworkLayer"
+import { createMockNetworkLayer } from "DevTools/createMockNetworkLayer"
 import type { SystemContextProps } from "System/Contexts/SystemContext"
 import type { RouteProps } from "System/Router/Route"
 import {
@@ -39,7 +39,7 @@ export const MockRouter: React.FC<React.PropsWithChildren<MockRouterProps>> = ({
         const user = getUser(context?.user)
 
         const relayEnvironment = (mockData || mockMutationResults)
-          ? createMockNetworkLayer2({ mockData, mockMutationResults })
+          ? createMockNetworkLayer({ mockData, mockMutationResults })
           : null
 
         const { ClientRouter } = await setupClientRouter({
