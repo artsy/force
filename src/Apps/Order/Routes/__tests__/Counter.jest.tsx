@@ -11,7 +11,7 @@ import {
 } from "Apps/__tests__/Fixtures/Order"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import type { CounterTestQuery$rawResponse } from "__generated__/CounterTestQuery.graphql"
+import type { CounterTestEQuery$rawResponse } from "__generated__/CounterTestEQuery.graphql"
 import { DateTime } from "luxon"
 import { commitMutation as _commitMutation, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -41,7 +41,7 @@ jest.mock("Apps/Order/Utils/commitMutation", () => ({
 
 const realSetInterval = global.setInterval
 
-const testOrder: CounterTestQuery$rawResponse["order"] = {
+const testOrder: CounterTestEQuery$rawResponse["order"] = {
   ...OfferOrderWithShippingDetails,
   stateExpiresAt: DateTime.fromISO(NOW).plus({ days: 1 }).toString(),
   lastOffer: {
