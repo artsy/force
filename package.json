@@ -167,7 +167,7 @@
     "react-tracking": "^7.0.1",
     "react-waypoint": "8.0.0",
     "regenerator-runtime": "^0.14.1",
-    "relay-mock-network-layer": "2.0.0",
+    "relay-mock-network-layer": "3.0.0",
     "relay-runtime": "^18.2.0",
     "s3": "4.4.0",
     "schema-dts": "^1.1.5",
