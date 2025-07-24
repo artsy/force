@@ -76,7 +76,9 @@ export const NavBarUserMenu: React.FC<
           </Suspense>
 
           <Box>
-            {user.name}
+            <Text variant="sm-display" lineClamp={2} hyphenate>
+              {user.name}
+            </Text>
 
             <Text
               variant="xs"

@@ -1,5 +1,4 @@
 import loadable from "@loadable/component"
-import { serverCacheTTLs } from "Apps/serverCacheTTLs"
 import { getInitialFilterState } from "Components/ArtworkFilter/Utils/getInitialFilterState"
 import type { RouteProps } from "System/Router/Route"
 import { graphql } from "react-relay"
@@ -26,7 +25,6 @@ const CollectionApp = loadable(
 export const collectRoutes: RouteProps[] = [
   {
     path: "/collect/:medium?",
-    serverCacheTTL: serverCacheTTLs.collect,
     getComponent: () => CollectApp,
     onPreloadJS: () => {
       CollectApp.preload()
@@ -36,7 +34,6 @@ export const collectRoutes: RouteProps[] = [
   },
   {
     path: "/collect/color/:color?",
-    serverCacheTTL: serverCacheTTLs.collect,
     getComponent: () => CollectApp,
     onPreloadJS: () => {
       CollectApp.preload()
@@ -46,7 +43,6 @@ export const collectRoutes: RouteProps[] = [
   },
   {
     path: "/collections",
-    serverCacheTTL: serverCacheTTLs.collections,
     getComponent: () => CollectionsApp,
     onPreloadJS: () => {
       CollectionsApp.preload()
@@ -61,7 +57,6 @@ export const collectRoutes: RouteProps[] = [
   },
   {
     path: "/collection/:slug",
-    serverCacheTTL: serverCacheTTLs.collections,
     getComponent: () => CollectionApp,
     onPreloadJS: () => {
       CollectionApp.preload()

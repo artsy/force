@@ -1,6 +1,7 @@
 import "Server/webpackPublicPath"
 import { loadableReady } from "@loadable/component"
 import { setupAnalytics } from "Server/analytics/helpers"
+import { getOrInitUnleashClient } from "System/FeatureFlags/unleashClient"
 import { setupClientRouter } from "System/Router/clientRouter"
 import { setupSentryClient } from "System/Utils/setupSentryClient"
 import { setupWebVitals } from "System/Utils/setupWebVitals"
@@ -13,8 +14,16 @@ setupWebVitals()
 
 // Rehydrate app
 ;(async () => {
+  const unleashClient = getOrInitUnleashClient()
+
   const { ClientRouter } = await setupClientRouter({
     routes: getAppRoutes(),
+    context: {
+      featureFlags: {
+        isEnabled: unleashClient.isEnabled.bind(unleashClient),
+        getVariant: unleashClient.getVariant.bind(unleashClient),
+      },
+    },
   })
 
   loadableReady().then(() => {

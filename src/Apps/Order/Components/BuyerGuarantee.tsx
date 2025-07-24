@@ -78,7 +78,7 @@ export const BuyerGuarantee: React.FC<
 
   if (orderSource !== "private_sale") {
     return (
-      <Flex p={2} my={1} backgroundColor="mono5">
+      <Flex p={2} my={1} backgroundColor="mono5" data-testid="buyerGuarantee">
         <CheckmarkFillIcon mr={1} />
         <Flex flexDirection="column">
           <Text fontWeight="bold" variant="sm-display">
@@ -93,7 +93,7 @@ export const BuyerGuarantee: React.FC<
               to={BUYER_GUARANTEE_URL}
               onClick={handleClick}
             >
-              Artsy’s buyer protection
+              Artsy’s Buyer Guarantee
             </RouterLink>
             .
           </Text>

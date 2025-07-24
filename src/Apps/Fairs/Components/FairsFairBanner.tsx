@@ -16,10 +16,7 @@ const FairsFairBanner: React.FC<FairsFairBannerProps> = ({
   lazyLoad = true,
   ...rest
 }) => {
-  const banner =
-    fair.image &&
-    (fair.bannerSize === "x-large" ? fair.image.large : fair.image.small)
-
+  const banner = fair.image?.cropped
   const icon = fair?.profile?.icon?.resized
 
   return (
@@ -89,15 +86,8 @@ export const FairsFairBannerFragmentContainer = createFragmentContainer(
         href
         name
         exhibitionPeriod
-        bannerSize
         image {
-          large: cropped(width: 1840, height: 790, version: ["wide"]) {
-            src
-            srcSet
-            width
-            height
-          }
-          small: cropped(width: 910, height: 512, version: ["wide"]) {
+          cropped(width: 910, height: 512, version: ["wide"]) {
             src
             srcSet
             width

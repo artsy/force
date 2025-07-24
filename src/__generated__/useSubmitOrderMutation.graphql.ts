@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3bada599a5d3a670d869ef2395ccb28d>>
+ * @generated SignedSource<<6cc04dd18109b670b01b27e011d8d7ea>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,6 +13,7 @@ export type submitOrderInput = {
   clientMutationId?: string | null | undefined;
   confirmationToken?: string | null | undefined;
   id: string;
+  oneTimeUse?: boolean | null | undefined;
 };
 export type useSubmitOrderMutation$variables = {
   input: submitOrderInput;
@@ -20,6 +21,11 @@ export type useSubmitOrderMutation$variables = {
 export type useSubmitOrderMutation$data = {
   readonly submitOrder: {
     readonly orderOrError: {
+      readonly __typename: "OrderMutationActionRequired";
+      readonly actionData: {
+        readonly clientSecret: string;
+      };
+    } | {
       readonly __typename: "OrderMutationError";
       readonly mutationError: {
         readonly message: string;
@@ -94,6 +100,31 @@ v4 = {
   ],
   "type": "OrderMutationError",
   "abstractKey": null
+},
+v5 = {
+  "kind": "InlineFragment",
+  "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "OrderActionData",
+      "kind": "LinkedField",
+      "name": "actionData",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "clientSecret",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    }
+  ],
+  "type": "OrderMutationActionRequired",
+  "abstractKey": null
 };
 return {
   "fragment": {
@@ -138,7 +169,8 @@ return {
                 "type": "OrderMutationSuccess",
                 "abstractKey": null
               },
-              (v4/*: any*/)
+              (v4/*: any*/),
+              (v5/*: any*/)
             ],
             "storageKey": null
           }
@@ -198,7 +230,8 @@ return {
                 "type": "OrderMutationSuccess",
                 "abstractKey": null
               },
-              (v4/*: any*/)
+              (v4/*: any*/),
+              (v5/*: any*/)
             ],
             "storageKey": null
           }
@@ -208,16 +241,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e4930667c3eb11814e4e342e98152fca",
+    "cacheID": "04dd22dab64704667cd8fce817b55e46",
     "id": null,
     "metadata": {},
     "name": "useSubmitOrderMutation",
     "operationKind": "mutation",
-    "text": "mutation useSubmitOrderMutation(\n  $input: submitOrderInput!\n) {\n  submitOrder(input: $input) {\n    orderOrError {\n      __typename\n      ... on OrderMutationSuccess {\n        order {\n          internalID\n          id\n        }\n      }\n      ... on OrderMutationError {\n        mutationError {\n          message\n        }\n      }\n    }\n  }\n}\n"
+    "text": "mutation useSubmitOrderMutation(\n  $input: submitOrderInput!\n) {\n  submitOrder(input: $input) {\n    orderOrError {\n      __typename\n      ... on OrderMutationSuccess {\n        order {\n          internalID\n          id\n        }\n      }\n      ... on OrderMutationError {\n        mutationError {\n          message\n        }\n      }\n      ... on OrderMutationActionRequired {\n        actionData {\n          clientSecret\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "f192b5a9509059d5cfcfa998b7550d2b";
+(node as any).hash = "2de12560f2441689161c907c0e2ab6e5";
 
 export default node;

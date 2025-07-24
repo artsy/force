@@ -1,0 +1,234 @@
+import { ContextModule } from "@artsy/cohesion"
+import {
+  Button,
+  Column,
+  GridColumns,
+  PhoneInput,
+  Spacer,
+  Text,
+} from "@artsy/palette"
+import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
+import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import { useSetOrderFulfillmentOptionMutation } from "Apps/Order2/Routes/Checkout/Mutations/useSetOrderFulfillmentOptionMutation"
+import { useSetOrderPickupDetailsMutation } from "Apps/Order2/Routes/Checkout/Mutations/useSetOrderPickupDetailsMutation"
+import { richPhoneValidators } from "Components/Address/utils"
+import { countries as phoneCountryOptions } from "Utils/countries"
+import createLogger from "Utils/logger"
+import type { Order2PickupForm_order$key } from "__generated__/Order2PickupForm_order.graphql"
+import { Formik, type FormikHelpers, type FormikValues } from "formik"
+import { useCallback } from "react"
+import { graphql, useFragment } from "react-relay"
+import * as Yup from "yup"
+
+const logger = createLogger("Order2PickupForm.tsx")
+
+interface Order2PickupFormProps {
+  order: Order2PickupForm_order$key
+}
+
+interface PickupFormValues {
+  phoneNumber: string
+  phoneNumberCountryCode: string
+}
+
+export const Order2PickupForm: React.FC<Order2PickupFormProps> = ({
+  order,
+}) => {
+  const orderData = useFragment(FRAGMENT, order)
+
+  const { setFulfillmentDetailsComplete, setCheckoutMode, checkoutTracking } =
+    useCheckoutContext()
+
+  const fulfillmentOptions = orderData?.fulfillmentOptions
+  // By the time we get here, this option should be available
+  const pickupFulfillmentOption = fulfillmentOptions?.find(
+    option => option.type === "PICKUP",
+  )
+
+  const setOrderPickupDetails = useSetOrderPickupDetailsMutation()
+  const setOrderFulfillmentOption = useSetOrderFulfillmentOptionMutation()
+
+  const handleSubmit = useCallback(
+    async (
+      values: FormikValues,
+      formikHelpers: FormikHelpers<PickupFormValues>,
+    ): Promise<void> => {
+      if (!pickupFulfillmentOption) {
+        logger.error(
+          "No pickup fulfillment option available (should not happen)",
+        )
+        return
+      }
+
+      try {
+        checkoutTracking.clickedOrderProgression(
+          ContextModule.ordersFulfillment,
+        )
+
+        const setOrderFulfillmentOptionResult =
+          await setOrderFulfillmentOption.submitMutation({
+            variables: {
+              input: {
+                id: orderData.internalID,
+                fulfillmentOption: pickupFulfillmentOption as {
+                  type: "PICKUP"
+                },
+              },
+            },
+          })
+        validateAndExtractOrderResponse(
+          setOrderFulfillmentOptionResult.setOrderFulfillmentOption
+            ?.orderOrError,
+        )
+
+        const setOrderPickupDetailsResult =
+          await setOrderPickupDetails.submitMutation({
+            variables: {
+              input: {
+                id: orderData.internalID,
+                buyerPhoneNumber: values.phoneNumber,
+                buyerPhoneNumberCountryCode: values.phoneNumberCountryCode,
+              },
+            },
+          })
+        validateAndExtractOrderResponse(
+          setOrderPickupDetailsResult.updateOrderShippingAddress?.orderOrError,
+        )
+
+        setFulfillmentDetailsComplete({ isPickup: true })
+      } catch (error) {
+        logger.error("Error while setting pickup details", error)
+      }
+    },
+    [
+      setOrderFulfillmentOption,
+      setOrderPickupDetails,
+      orderData.internalID,
+      pickupFulfillmentOption,
+      setFulfillmentDetailsComplete,
+      checkoutTracking.clickedOrderProgression,
+    ],
+  )
+
+  const existingPickupValues =
+    orderData?.selectedFulfillmentOption?.type === "PICKUP"
+      ? orderData.fulfillmentDetails
+      : null
+
+  const existingRegionCode = existingPickupValues?.phoneNumber?.regionCode
+
+  const initialCountryOptionFromExisting =
+    existingRegionCode &&
+    phoneCountryOptions.find(
+      option =>
+        option.value.toLowerCase() === existingRegionCode?.toLowerCase(),
+    )?.value
+
+  const initialValues = !!(
+    initialCountryOptionFromExisting &&
+    existingPickupValues?.phoneNumber?.originalNumber
+  )
+    ? {
+        phoneNumber: existingPickupValues?.phoneNumber?.originalNumber,
+        phoneNumberCountryCode: initialCountryOptionFromExisting,
+      }
+    : {
+        phoneNumber: "",
+        phoneNumberCountryCode: phoneCountryOptions[0].value,
+      }
+
+  return (
+    <>
+      <Text fontWeight="normal" color="mono100" variant={["sm-display", "md"]}>
+        Free pickup
+      </Text>
+      <Spacer y={1} />
+      <Text variant="sm" color="mono60">
+        {orderData.shippingOrigin}
+      </Text>
+      <Text variant="sm" color="mono60">
+        After your order is confirmed, a specialist will contact you with
+        details on how to pickup the work.
+      </Text>
+      <Spacer y={[2, 4]} />
+      <Formik<PickupFormValues>
+        initialValues={initialValues}
+        validationSchema={VALIDATION_SCHEMA}
+        onSubmit={handleSubmit}
+      >
+        {formikContext => (
+          <GridColumns data-testid={"PickupDetailsForm"}>
+            <Column span={12}>
+              <PhoneInput
+                mt={1}
+                name="phoneNumber"
+                onChange={formikContext.handleChange}
+                onBlur={formikContext.handleBlur}
+                data-testid={"PickupPhoneNumberInput"}
+                options={phoneCountryOptions}
+                onSelect={(
+                  option: (typeof phoneCountryOptions)[number],
+                ): void => {
+                  formikContext.setFieldValue(
+                    "phoneNumberCountryCode",
+                    option.value,
+                  )
+                }}
+                dropdownValue={formikContext.values.phoneNumberCountryCode}
+                inputValue={formikContext.values.phoneNumber}
+                placeholder="(000) 000 0000"
+                error={
+                  (formikContext.touched.phoneNumberCountryCode &&
+                    (formikContext.errors.phoneNumberCountryCode as
+                      | string
+                      | undefined)) ||
+                  (formikContext.touched.phoneNumber &&
+                    (formikContext.errors.phoneNumber as string | undefined))
+                }
+                required
+              />
+              <Spacer y={4} />
+              <Button
+                variant={"primaryBlack"}
+                width="100%"
+                type="submit"
+                onClick={() => {
+                  setCheckoutMode("standard")
+                  formikContext.handleSubmit()
+                }}
+                loading={formikContext.isSubmitting}
+                disabled={!formikContext.isValid}
+              >
+                Continue to Payment
+              </Button>
+            </Column>
+          </GridColumns>
+        )}
+      </Formik>
+    </>
+  )
+}
+
+const VALIDATION_SCHEMA = Yup.object().shape({
+  ...richPhoneValidators,
+})
+
+const FRAGMENT = graphql`
+  fragment Order2PickupForm_order on Order {
+    internalID
+    fulfillmentOptions {
+      type
+    }
+    selectedFulfillmentOption {
+      type
+    }
+    fulfillmentDetails {
+      phoneNumber {
+        countryCode
+        regionCode
+        originalNumber
+      }
+    }
+    shippingOrigin
+  }
+`

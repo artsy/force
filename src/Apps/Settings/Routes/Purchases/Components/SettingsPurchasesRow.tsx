@@ -61,7 +61,7 @@ const ORDER_LABELS = {
   APPROVED: "Confirmed",
   CANCELED: "Canceled",
   FULFILLED: "Delivered",
-  IN_TRANSIT: "In transit",
+  IN_TRANSIT: "Shipped",
   OFFER_RECEIVED: "Counteroffer received",
   PROCESSING: "Processing",
   REFUNDED: "Refunded",
@@ -100,8 +100,15 @@ const getPaymentMethodText = (
   paymentMethodDetails: SettingsPurchasesRow_order$data["paymentMethodDetails"],
   creditCardWalletType: SettingsPurchasesRow_order$data["creditCardWalletType"],
 ) => {
-  if (creditCardWalletType === "apple_pay") {
-    return "Apple Pay"
+  if (!!creditCardWalletType) {
+    switch (creditCardWalletType) {
+      case "google_pay":
+        return "Google Pay"
+      case "apple_pay":
+        return "Apple Pay"
+      default:
+        break
+    }
   }
   switch (paymentMethodDetails?.__typename) {
     case "BankAccount":
@@ -136,7 +143,7 @@ const OrderLink: FC<OrderLinkProps> = ({
 
   if (isOrderActive) {
     return (
-      <RouterLink inline to={`/orders/${order.internalID}/status`}>
+      <RouterLink inline to={`/orders/${order.internalID}/details`}>
         {order.code}
       </RouterLink>
     )
@@ -172,7 +179,7 @@ const OrderActionButton: FC<OrderActionButtonProps> = ({
         <Button
           // @ts-ignore
           as={RouterLink}
-          to={`/orders/${orderId}/status`}
+          to={`/orders/${orderId}/details`}
           variant="primaryBlack"
           size="large"
           width="50%"
@@ -191,11 +198,12 @@ const SettingsPurchasesRow: FC<
   React.PropsWithChildren<SettingsPurchasesRowProps>
 > = ({ order }) => {
   const [lineItem] = extractNodes(order?.lineItems)
-  const { artwork, artworkVersion, fulfillments } = lineItem
+  const { artwork, artworkVersion, fulfillments, shipment } = lineItem
   const { requestedFulfillment, buyerAction } = order
 
   const orderCreatedAt = DateTime.fromISO(order.createdAt)
   const trackingId = fulfillments?.edges?.[0]?.node?.trackingId
+  const trackingUrl = shipment?.trackingUrl
   const image = artworkVersion?.image?.cropped
 
   const isPrivateSale = order.source === "private_sale"
@@ -204,7 +212,7 @@ const SettingsPurchasesRow: FC<
   // TODO: figure out how to move it to the server
   let buyerDisplayState: BuyerDisplayStateEnum = order.displayState
   if (
-    buyerDisplayState == "SUBMITTED" &&
+    buyerDisplayState === "SUBMITTED" &&
     !!buyerAction &&
     [
       "OFFER_RECEIVED",
@@ -213,6 +221,12 @@ const SettingsPurchasesRow: FC<
     ].includes(buyerAction)
   ) {
     buyerDisplayState = "OFFER_RECEIVED"
+  }
+  // if fulfilment with trackingId is present the order is partner shipped
+  // and we do not want to display it as delivered.
+  // We want the end state to be IN_TRANSIT for pargtner shipped orders
+  if (buyerDisplayState === "FULFILLED" && trackingId) {
+    buyerDisplayState = "IN_TRANSIT"
   }
 
   const { trackEvent } = useTracking()
@@ -245,14 +259,15 @@ const SettingsPurchasesRow: FC<
             {ORDER_LABELS[buyerDisplayState]}
           </Text>
 
-          {trackingId && (
+          {/* Only whant to add tracking if order is arta shippied and url is present  */}
+          {trackingUrl && (
             <>
               <Text variant="sm-display" mx={1}>
                 •
               </Text>
 
               <RouterLink
-                to={`https://google.com/search?q=${trackingId}`}
+                to={trackingUrl}
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -462,6 +477,9 @@ export const SettingsPurchasesRowFragmentContainer = createFragmentContainer(
                     trackingId
                   }
                 }
+              }
+              shipment {
+                trackingUrl
               }
             }
           }

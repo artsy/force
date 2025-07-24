@@ -18,6 +18,8 @@ import { HomeHeroUnitsFragmentContainer } from "./Components/HomeHeroUnits"
 import { HomeMeta } from "./Components/HomeMeta"
 import { HomeTrendingArtistsRailQueryRenderer } from "./Components/HomeTrendingArtistsRail"
 import { HomeWorksForYouTabBar } from "./Components/HomeWorksForYouTabBar"
+import { HomeRecommendedArtistsRailQueryRenderer } from "Apps/Home/Components/HomeRecommendedArtistsRail"
+import { HomeArtworkRecommendationsRailQueryRenderer } from "Apps/Home/Components/HomeArtworkRecommendationsRail"
 
 interface HomeAppProps {
   featuredEventsOrderedSet: HomeApp_featuredEventsOrderedSet$data | null
@@ -53,6 +55,8 @@ export const HomeApp: React.FC<React.PropsWithChildren<HomeAppProps>> = ({
 
           <HomeWorksForYouTabBar />
 
+          <HomeArtworkRecommendationsRailQueryRenderer />
+
           <ArtworkGridContextProvider hideSignals>
             <HomeEmergingPicksArtworksRailQueryRenderer />
           </ArtworkGridContextProvider>
@@ -68,6 +72,8 @@ export const HomeApp: React.FC<React.PropsWithChildren<HomeAppProps>> = ({
           <HomeFeaturedGalleriesRailQueryRenderer />
 
           <HomeNewWorksFromGalleriesYouFollowRailQueryRenderer />
+
+          <HomeRecommendedArtistsRailQueryRenderer />
 
           <HomeTrendingArtistsRailQueryRenderer />
         </Join>

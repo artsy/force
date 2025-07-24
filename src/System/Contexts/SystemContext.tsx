@@ -17,7 +17,13 @@ export interface SystemContextState {
   user: User
 }
 
+interface FeatureFlags {
+  isEnabled: (flag: string) => boolean
+  getVariant: (flag: string) => any
+}
+
 export interface SystemContextProps extends SystemContextState {
+  featureFlags?: FeatureFlags
   injectedData?: any
   isEigen?: boolean
   isLoggedIn?: boolean
@@ -46,6 +52,7 @@ export const SystemContextProvider: React.FC<
     <SystemContext.Provider
       value={{
         ...props,
+
         isEigen: getENV("EIGEN") || props.isEigen,
         isLoggedIn: !!user,
         relayEnvironment,

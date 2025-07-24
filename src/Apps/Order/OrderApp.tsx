@@ -30,8 +30,8 @@ export interface OrderAppProps extends RouterState {
 }
 
 export const preventHardReload = event => {
-  // Don't block navigation for status page, as we've completed the flow
-  if (window.location.pathname.includes("/status")) {
+  // Don't block navigation for details page, as we've completed the flow
+  if (window.location.pathname.includes("/details")) {
     return false
   }
 
@@ -64,7 +64,10 @@ const OrderApp: FC<React.PropsWithChildren<OrderAppProps>> = props => {
   }, [])
 
   const handleTransition = () => newLocation => {
-    const isToTheSameApp = newLocation?.pathname?.includes("/orders/")
+    // Regex to test for both 'orders' and 'orders2' pages
+    // as we plan to do a staged release where Order and Order2
+    // will exist in parallel in production for some time
+    const isToTheSameApp = /\/orders?2?\//.test(newLocation?.pathname ?? "")
     const isRedirect = newLocation?.action === "PUSH"
 
     if (isToTheSameApp || isRedirect) {
@@ -99,7 +102,9 @@ const OrderApp: FC<React.PropsWithChildren<OrderAppProps>> = props => {
 
     return (
       <Media greaterThan="xs">
-        <SalesforceWrapper />
+        <div data-testid="salesforce-wrapper">
+          <SalesforceWrapper />
+        </div>
       </Media>
     )
   }

@@ -13,6 +13,7 @@ export const useUpdateOrderMutation = () => {
               order {
                 internalID
                 ...ExpressCheckoutUI_order
+                ...Order2ExpressCheckoutUI_order
                 fulfillmentOptions {
                   type
                   amount {
@@ -35,6 +36,7 @@ export const useUpdateOrderMutation = () => {
                   minor
                 }
                 availableShippingCountries
+                stripeConfirmationToken
               }
             }
             ... on OrderMutationError {

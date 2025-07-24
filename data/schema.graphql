@@ -157,11 +157,17 @@ input AddInstallShotToPartnerShowMutationInput {
   caption: String
   clientMutationId: String
 
+  # Optional URL of the image to add as an installation shot. If provided, this will be used instead of the S3 bucket and key.
+  imageUrl: String
+
+  # Optional flag to indicate if this installation shot should be set as the default (cover) image for the show.
+  isDefault: Boolean
+
   # The S3 bucket where the image is stored.
-  s3Bucket: String!
+  s3Bucket: String
 
   # The S3 key for the image to add as an installation shot.
-  s3Key: String!
+  s3Key: String
 
   # The ID of the show.
   showId: String!
@@ -348,6 +354,7 @@ type Alert {
     attributionClass: [String]
     availability: String
     before: String
+    categories: [String]
     color: String
     colors: [String]
     dimensionRange: String
@@ -364,6 +371,7 @@ type Alert {
     geneID: String
     geneIDs: [String]
     height: String
+    importSources: [String]
     includeAllJSON: Boolean
     includeArtworksByFollowedArtists: Boolean
     includeMediumFilterInAggregation: Boolean
@@ -397,6 +405,7 @@ type Alert {
     # When false, will only return unpublished artworks for authorized users.
     published: Boolean
     saleID: ID
+    showID: String
 
     # When true, will only return signed artworks.
     signed: Boolean
@@ -1686,7 +1695,7 @@ type Artist implements EntityWithFilterArtworksConnectionInterface & Node & Sear
   biographyBlurb(
     format: Format
 
-    # If true, will return featured bio over Artsy one.
+    # DEPRECATED: Artsy bios are always returned over featured bios.
     partnerBio: Boolean = true
   ): ArtistBlurb
   birthday: String
@@ -1754,6 +1763,7 @@ type Artist implements EntityWithFilterArtworksConnectionInterface & Node & Sear
     attributionClass: [String]
     availability: String
     before: String
+    categories: [String]
     color: String
     colors: [String]
     dimensionRange: String
@@ -1770,6 +1780,7 @@ type Artist implements EntityWithFilterArtworksConnectionInterface & Node & Sear
     geneID: String
     geneIDs: [String]
     height: String
+    importSources: [String]
     includeAllJSON: Boolean
     includeArtworksByFollowedArtists: Boolean
     includeMediumFilterInAggregation: Boolean
@@ -1803,6 +1814,7 @@ type Artist implements EntityWithFilterArtworksConnectionInterface & Node & Sear
     # When false, will only return unpublished artworks for authorized users.
     published: Boolean
     saleID: ID
+    showID: String
 
     # When true, will only return signed artworks.
     signed: Boolean
@@ -2198,6 +2210,7 @@ type ArtistPartnerEdge {
     attributionClass: [String]
     availability: String
     before: String
+    categories: [String]
     color: String
     colors: [String]
     dimensionRange: String
@@ -2214,6 +2227,7 @@ type ArtistPartnerEdge {
     geneID: String
     geneIDs: [String]
     height: String
+    importSources: [String]
     includeAllJSON: Boolean
     includeArtworksByFollowedArtists: Boolean
     includeMediumFilterInAggregation: Boolean
@@ -2247,6 +2261,7 @@ type ArtistPartnerEdge {
     # When false, will only return unpublished artworks for authorized users.
     published: Boolean
     saleID: ID
+    showID: String
 
     # When true, will only return signed artworks.
     signed: Boolean
@@ -2351,6 +2366,7 @@ type ArtistSeries implements Node {
     attributionClass: [String]
     availability: String
     before: String
+    categories: [String]
     color: String
     colors: [String]
     dimensionRange: String
@@ -2367,6 +2383,7 @@ type ArtistSeries implements Node {
     geneID: String
     geneIDs: [String]
     height: String
+    importSources: [String]
     includeAllJSON: Boolean
     includeArtworksByFollowedArtists: Boolean
     includeMediumFilterInAggregation: Boolean
@@ -2400,6 +2417,7 @@ type ArtistSeries implements Node {
     # When false, will only return unpublished artworks for authorized users.
     published: Boolean
     saleID: ID
+    showID: String
 
     # When true, will only return signed artworks.
     signed: Boolean
@@ -2544,6 +2562,9 @@ input ArtsyShippingOptInMutationInput {
 
   # ID of the partner
   id: String!
+
+  # Source of the mutation being triggered, E.g. admin, artworks_list
+  source: BulkUpdateSourceEnum
 }
 
 type ArtsyShippingOptInMutationPayload {
@@ -2603,6 +2624,9 @@ type Artwork implements Node & Searchable & Sellable {
 
   # Can a user request a lot conditions report for this artwork?
   canRequestLotConditionsReport: Boolean
+
+  # This field is intended for use exclusively on the individual Artwork page for alt tags
+  caption: String
 
   # Represents the "**medium type**", such as _Painting_. (This field is also commonly referred to as just "medium", but should not be confused with the artwork attribute called `medium`.)
   category: String @deprecated(reason: "Prefer to use `mediumType`.")
@@ -2718,6 +2742,7 @@ type Artwork implements Node & Searchable & Sellable {
 
   # Whether a request for price estimate has been submitted for this artwork
   hasPriceEstimateRequest: Boolean
+  hasTitle: Boolean!
 
   # The height as expressed by the original input metric
   height: String
@@ -2999,6 +3024,7 @@ enum ArtworkAggregation {
   DIMENSION_RANGE
   FOLLOWED_ARTISTS
   GALLERY
+  IMPORT_SOURCE
   INSTITUTION
   LOCATION_CITY
   MAJOR_PERIOD
@@ -3158,7 +3184,8 @@ type ArtworkImport implements Node {
     timezone: String
   ): String
   createdBy: ArtworkImportCreatedBy
-  currency: String
+  currency: String!
+  dimensionMetric: String!
   fileName: String!
 
   # A globally unique ID.
@@ -3179,6 +3206,7 @@ type ArtworkImport implements Node {
     last: Int
   ): ArtworkImportRowConnection
   state: ArtworkImportState
+  summary: ArtworkImportSummary
   unmatchedArtistNames: [String!]!
 }
 
@@ -3213,10 +3241,19 @@ type ArtworkImportEdge {
 
 enum ArtworkImportError {
   ARTWORK_CREATION_FAILED
+  INVALID_CERTIFICATE_OF_AUTHENTICITY
+  INVALID_CLASSIFICATION
   INVALID_DEPTH
   INVALID_DIAMETER
+  INVALID_FRAMED_DEPTH
+  INVALID_FRAMED_DIAMETER
+  INVALID_FRAMED_HEIGHT
+  INVALID_FRAMED_WIDTH
   INVALID_HEIGHT
+  INVALID_MEDIUM
   INVALID_PRICE
+  INVALID_SIGNATURE
+  INVALID_TITLE
   INVALID_WIDTH
   MISSING_ARTIST
   MISSING_DATE
@@ -3229,6 +3266,8 @@ enum ArtworkImportError {
 type ArtworkImportRow {
   artists: [Artist!]
   artwork: Artwork
+  currency: String!
+  dimensionMetric: String!
   errors: [ArtworkImportRowError!]!
 
   # A globally unique ID.
@@ -3263,6 +3302,7 @@ type ArtworkImportRowEdge {
 }
 
 type ArtworkImportRowError {
+  blocking: Boolean!
   errorType: ArtworkImportError
 
   # A globally unique ID.
@@ -3297,15 +3337,32 @@ enum ArtworkImportState {
   PENDING
 }
 
+type ArtworkImportSummary {
+  currencies: [String!]!
+  dimensionMetrics: [String!]!
+}
+
 type ArtworkImportTransformedData {
   artistNames: String
+  artworkCondition: String
   artworkTitle: String
+  certificateOfAuthenticity: String
+  classification: String
   date: String
   depth: String
   diameter: String
+  framedDepth: String
+  framedDiameter: String
+  framedHeight: String
+  framedWidth: String
   height: String
   imageFileNames: String
+  inventoryId: String
+  materials: String
+  medium: String
   price: String
+  signature: [String]
+  signatureDetails: String
   width: String
 }
 
@@ -3930,6 +3987,21 @@ enum AuctionResultsState {
   UPCOMING
 }
 
+# Classification of users based on auction activity
+enum AuctionSegmentationType {
+  # Users with recent auction-related activity
+  ADJACENT
+
+  # Users who have not engaged with auctions recently
+  DISENGAGED
+
+  # Users with a recent auction registration
+  ENGAGED
+
+  # Users with recently created accounts
+  NEW
+}
+
 enum AuctionState {
   CLOSED
   OPEN
@@ -4260,6 +4332,15 @@ type Author {
   twitterHandle: String
 }
 
+enum Availability {
+  FOR_SALE
+  NOT_FOR_SALE
+  ON_HOLD
+  ON_LOAN
+  PERMANENT_COLLECTION
+  SOLD
+}
+
 type BackupSecondFactor implements SecondFactor {
   code: String!
   disabledAt(
@@ -4472,29 +4553,101 @@ type BidderPositionSuggestedNextBid {
 # exceed the size of a 32-bit integer, it's encoded as a string.
 scalar BigInt
 
-input BulkUpdateArtworksFilterInput {
+type BulkAddArtworksToShowMutationFailure {
+  mutationError: GravityMutationError
+}
+
+input BulkAddArtworksToShowMutationInput {
+  clientMutationId: String
+
+  # Filter options to apply
+  filters: BulkArtworkFilterInput
+
+  # ID of the partner
+  id: String!
+
+  # ID of the show to which artworks will be added
+  showId: String!
+
+  # Source of the mutation being triggered, E.g. admin, artworks_list
+  source: BulkUpdateSourceEnum
+}
+
+type BulkAddArtworksToShowMutationPayload {
+  bulkAddArtworksToShowOrError: BulkAddArtworksToShowMutationType
+  clientMutationId: String
+}
+
+type BulkAddArtworksToShowMutationSuccess {
+  skippedPartnerArtworks: BulkAddArtworksToShowResponse
+  updatedPartnerArtworks: BulkAddArtworksToShowResponse
+}
+
+union BulkAddArtworksToShowMutationType =
+  | BulkAddArtworksToShowMutationFailure
+  | BulkAddArtworksToShowMutationSuccess
+
+type BulkAddArtworksToShowResponse {
+  count: Int
+  ids: [String]
+}
+
+input BulkArtworkFilterInput {
+  # Filter artworks by artist id
+  artistId: String
+
   # Filter artworks with matching ids
   artworkIds: [String]
+
+  # Filter artworks by availability
+  availability: Availability
 
   # Filter artworks by location
   locationId: String
 
   # Filter artworks by partner artist id
   partnerArtistId: String
+
+  # Filter artworks by published status
+  published: Boolean
 }
 
 input BulkUpdateArtworksMetadataInput {
+  # The availaiblity to be assigned
+  availability: Availability
+
   # The category (medium type) to be assigned
   category: String
+
+  # Flat fee for domestic shipping. It must be entered in cents.
+  domesticShippingFeeCents: Int
+
+  # Whether the artworks must be listed as Purchase
+  ecommerce: Boolean
 
   # The partner location ID to assign
   locationId: String
 
+  # The medium (materials) to be assigned, E.g. Oil on Canvas
+  medium: String
+
+  # Whether the artworks must be listed as Make Offer
+  offer: Boolean
+
+  # Adjusts the artworks' prices according to the value passed (percentage).
+  priceAdjustment: Int
+
   # The price for the artworks
   priceListed: Float
 
+  # The provenance to be assigned
+  provenance: String
+
   # Publish or unpublish artworks
   published: Boolean
+
+  # Details about the signature
+  signature: String
 }
 
 type BulkUpdateArtworksMetadataMutationFailure {
@@ -4505,13 +4658,16 @@ input BulkUpdateArtworksMetadataMutationInput {
   clientMutationId: String
 
   # Filter options to apply
-  filters: BulkUpdateArtworksFilterInput
+  filters: BulkArtworkFilterInput
 
   # ID of the partner
   id: String!
 
   # Metadata to be updated
   metadata: BulkUpdateArtworksMetadataInput
+
+  # Source of the mutation being triggered, E.g. admin, artworks_list
+  source: BulkUpdateSourceEnum
 }
 
 type BulkUpdateArtworksMetadataMutationPayload {
@@ -4531,6 +4687,14 @@ union BulkUpdateArtworksMetadataMutationType =
 type BulkUpdateArtworksMetadataResponse {
   count: Int
   ids: [String]
+}
+
+# Possible sources of the bulk operation
+enum BulkUpdateSourceEnum {
+  ADMIN
+  ARTWORKS_LIST
+  PARTNER_ARTIST_ARTWORKS_LIST
+  SHOW_ARTWORKS_LIST
 }
 
 type BuyersPremium {
@@ -4596,25 +4760,6 @@ union CancelArtworkImportResponseOrError =
 
 type CancelArtworkImportSuccess {
   artworkImport: ArtworkImport
-}
-
-# Autogenerated input type of CaptureHold
-input CaptureHoldInput {
-  # A unique identifier for the client performing the mutation.
-  clientMutationId: String
-
-  # Globally unique ID for the hold.
-  inventoryHoldId: ID!
-
-  # Globally unique ID for the requester of the hold. Ex. Exchange Order ID.
-  referenceId: String!
-}
-
-# Autogenerated return type of CaptureHold
-type CaptureHoldPayload {
-  # A unique identifier for the client performing the mutation.
-  clientMutationId: String
-  holdOrError: InventoryHoldOrErrorUnion!
 }
 
 type Card {
@@ -5249,6 +5394,7 @@ type CommerceBuyOrder implements CommerceOrder {
     # A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
     timezone: String
   ): String
+  stripeConfirmationToken: String
   taxTotal(
     decimal: String = "."
 
@@ -6098,6 +6244,7 @@ type CommerceOfferOrder implements CommerceOrder {
     # A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
     timezone: String
   ): String
+  stripeConfirmationToken: String
   taxTotal(
     decimal: String = "."
 
@@ -6191,6 +6338,9 @@ input CommerceOptInMutationInput {
 
   # whether or not other is selected for signature
   signedOther: Boolean
+
+  # Source of the mutation being triggered, E.g. admin, artworks_list
+  source: BulkUpdateSourceEnum
 
   # whether or not it is stamped by the artist estate
   stampedByArtistEstate: Boolean
@@ -6435,6 +6585,7 @@ interface CommerceOrder {
     # A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
     timezone: String
   ): String
+  stripeConfirmationToken: String
   taxTotal(
     decimal: String = "."
 
@@ -8683,8 +8834,11 @@ type CreateArtworkImportFailure {
 }
 
 input CreateArtworkImportInput {
+  async: Boolean
   clientMutationId: String
   fileName: String
+  parseWithAI: Boolean
+  parseWithAIModel: String
   partnerID: String!
   s3Bucket: String!
   s3Key: String!
@@ -8701,6 +8855,7 @@ union CreateArtworkImportResponseOrError =
 
 type CreateArtworkImportSuccess {
   artworkImport: ArtworkImport
+  queued: Boolean
 }
 
 input CreateArtworkMutationInput {
@@ -8709,10 +8864,16 @@ input CreateArtworkMutationInput {
   clientMutationId: String
 
   # The S3 bucket where the artwork image is stored.
-  imageS3Bucket: String!
+  imageS3Bucket: String
+
+  # The S3 buckets where the artwork images are stored. This is a list of bucket names.
+  imageS3Buckets: [String!]
 
   # The S3 key for the artwork image.
-  imageS3Key: String!
+  imageS3Key: String
+
+  # The S3 keys for the artwork images. This is a list of object keys.
+  imageS3Keys: [String!]
 
   # The ID of the partner under which the artwork is created.
   partnerId: String!
@@ -9167,7 +9328,7 @@ input CreatePartnerContactInput {
   email: String
 
   # ID of the contact's partner location
-  locationID: String
+  locationId: String
 
   # Contact's name
   name: String
@@ -9350,6 +9511,26 @@ type CreatePartnerShowFailure {
   mutationError: GravityMutationError
 }
 
+input CreatePartnerShowFairLocationInput {
+  # The booth of the show in the fair.
+  booth: String
+
+  # The floor of the show in the fair.
+  floor: String
+
+  # The hall of the show in the fair.
+  hall: String
+
+  # The pier of the show in the fair.
+  pier: String
+
+  # The room of the show in the fair.
+  room: String
+
+  # The section of the show in the fair.
+  section: String
+}
+
 input CreatePartnerShowMutationInput {
   clientMutationId: String
 
@@ -9359,11 +9540,9 @@ input CreatePartnerShowMutationInput {
   # The end date of the show.
   endAt: String!
 
-  # The booth of the fair to create the show for.
-  fairBooth: String
-
   # The id of the fair to create the show for.
   fairId: String
+  fairLocation: CreatePartnerShowFairLocationInput
 
   # Is the show featured?
   featured: Boolean
@@ -9400,6 +9579,18 @@ union CreatePartnerShowResponseOrError =
 
 type CreatePartnerShowSuccess {
   show: Show
+}
+
+type CreatePurchaseFailure {
+  mutationError: GravityMutationError
+}
+
+union CreatePurchaseResponseOrError =
+  | CreatePurchaseFailure
+  | CreatePurchaseSuccess
+
+type CreatePurchaseSuccess {
+  purchase: Purchase
 }
 
 type CreateSaleAgreementFailure {
@@ -10285,6 +10476,18 @@ type DeletePartnerShowSuccess {
   show: Show
 }
 
+type DeletePurchaseFailure {
+  mutationError: GravityMutationError
+}
+
+union DeletePurchaseResponseOrError =
+  | DeletePurchaseFailure
+  | DeletePurchaseSuccess
+
+type DeletePurchaseSuccess {
+  purchase: Purchase
+}
+
 # Autogenerated input type of DeleteUserAddress
 input DeleteUserAddressInput {
   # A unique identifier for the client performing the mutation.
@@ -10461,6 +10664,24 @@ type Delivery {
   ): String
 }
 
+# Shipment details for an order
+type DeliveryInfo {
+  # Estimated delivery date saved on the order as date stringr
+  estimatedDelivery: String
+
+  # Estimated delivery window saved on the otder as display text
+  estimatedDeliveryWindow: String
+
+  # The carrier handling the shipment as saved on the order (e.g., UPS, FedEx, DHL, USPS)
+  shipperName: String
+
+  # The tracking number for the shipment
+  trackingNumber: String
+
+  # The URL to track the shipment
+  trackingURL: String
+}
+
 type Department {
   id: ID!
   jobs: [Job!]! @deprecated
@@ -10498,6 +10719,41 @@ type DisableSecondFactorPayload {
   secondFactorOrErrors: SecondFactorOrErrorsUnion!
 }
 
+# A connection to a list of items.
+type DiscoveryCategoriesConnectionConnection {
+  # A list of edges.
+  edges: [DiscoveryCategoriesConnectionEdge]
+  pageCursors: PageCursors!
+
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+# An edge in a connection.
+type DiscoveryCategoriesConnectionEdge {
+  # A cursor for use in pagination
+  cursor: String!
+
+  # The item at the end of the edge
+  node: DiscoveryCategory
+}
+
+# A category for discovering and browsing art
+type DiscoveryCategory {
+  # The ID of the category
+  category: String!
+
+  # The URL of the image representing this category
+  imageUrl: String
+
+  # The slug of the category
+  slug: String
+
+  # The display title of the category
+  title: String!
+}
+
 input DislikeArtworkInput {
   artworkID: String!
   clientMutationId: String
@@ -10531,6 +10787,37 @@ union DismissTaskResponseOrError = DismissTaskFailure | DismissTaskSuccess
 
 type DismissTaskSuccess {
   task: Task!
+}
+
+# Display texts for the order based on its state and order shipping/payment states
+type DisplayTexts {
+  # Granular order states specific type that should be directly interpreted by clients
+  messageType: DisplayTextsMessageTypeEnum!
+
+  # Text to display as a first message on the page (header)
+  title: String!
+}
+
+enum DisplayTextsMessageTypeEnum {
+  APPROVED_PICKUP
+  APPROVED_SHIP
+  APPROVED_SHIP_EXPRESS
+  APPROVED_SHIP_STANDARD
+  APPROVED_SHIP_WHITE_GLOVE
+  CANCELED
+  COMPLETED_PICKUP
+  COMPLETED_SHIP
+  DECLINED_BY_BUYER
+  DECLINED_BY_SELLER
+  PAYMENT_FAILED
+  PROCESSING_PAYMENT_PICKUP
+  PROCESSING_PAYMENT_SHIP
+  PROCESSING_WIRE
+  REFUNDED
+  SHIPPED
+  SUBMITTED_OFFER
+  SUBMITTED_ORDER
+  UNKNOWN
 }
 
 type DoNotUseThisPartner {
@@ -10627,6 +10914,9 @@ type EditionSet implements Sellable {
 
   # In CMS, has the artwork been marked as BNMO?
   listingOptions: ArtworkListingOptions
+
+  # The unit of length of the edition set, expressed in `in` or `cm`
+  metric: String
   price: String
   priceDisplay: String
   priceListed: Money
@@ -10700,6 +10990,7 @@ interface EntityWithFilterArtworksConnectionInterface {
     attributionClass: [String]
     availability: String
     before: String
+    categories: [String]
     color: String
     colors: [String]
     dimensionRange: String
@@ -10716,6 +11007,7 @@ interface EntityWithFilterArtworksConnectionInterface {
     geneID: String
     geneIDs: [String]
     height: String
+    importSources: [String]
     includeAllJSON: Boolean
     includeArtworksByFollowedArtists: Boolean
     includeMediumFilterInAggregation: Boolean
@@ -10748,6 +11040,7 @@ interface EntityWithFilterArtworksConnectionInterface {
     # When false, will only return unpublished artworks for authorized users.
     published: Boolean
     saleID: ID
+    showID: String
 
     # When true, will only return signed artworks.
     signed: Boolean
@@ -10813,6 +11106,30 @@ enum EventStatus {
 type ExchangeError {
   code: String!
   message: String!
+}
+
+type ExcludeArtistFromDiscoveryFailure {
+  mutationError: GravityMutationError
+}
+
+input ExcludeArtistFromDiscoveryInput {
+  artistId: String!
+  clientMutationId: String
+}
+
+type ExcludeArtistFromDiscoveryPayload {
+  clientMutationId: String
+
+  # On success: the excluded artist information.
+  excludeArtistFromDiscoveryOrError: ExcludeArtistFromDiscoveryResponseOrError
+}
+
+union ExcludeArtistFromDiscoveryResponseOrError =
+  | ExcludeArtistFromDiscoveryFailure
+  | ExcludeArtistFromDiscoverySuccess
+
+type ExcludeArtistFromDiscoverySuccess {
+  artistId: String
 }
 
 enum ExhibitionPeriodFormat {
@@ -10965,6 +11282,7 @@ type Fair implements EntityWithFilterArtworksConnectionInterface & Node {
     attributionClass: [String]
     availability: String
     before: String
+    categories: [String]
     color: String
     colors: [String]
     dimensionRange: String
@@ -10981,6 +11299,7 @@ type Fair implements EntityWithFilterArtworksConnectionInterface & Node {
     geneID: String
     geneIDs: [String]
     height: String
+    importSources: [String]
     includeAllJSON: Boolean
     includeArtworksByFollowedArtists: Boolean
     includeMediumFilterInAggregation: Boolean
@@ -11014,6 +11333,7 @@ type Fair implements EntityWithFilterArtworksConnectionInterface & Node {
     # When false, will only return unpublished artworks for authorized users.
     published: Boolean
     saleID: ID
+    showID: String
 
     # When true, will only return signed artworks.
     signed: Boolean
@@ -11493,6 +11813,7 @@ input FilterArtworksInput {
   attributionClass: [String]
   availability: String
   before: String
+  categories: [String]
   color: String
   colors: [String]
   dimensionRange: String
@@ -11509,6 +11830,7 @@ input FilterArtworksInput {
   geneID: String
   geneIDs: [String]
   height: String
+  importSources: [String]
   includeAllJSON: Boolean
   includeArtworksByFollowedArtists: Boolean
   includeMediumFilterInAggregation: Boolean
@@ -11541,6 +11863,7 @@ input FilterArtworksInput {
   # When false, will only return unpublished artworks for authorized users.
   published: Boolean
   saleID: ID
+  showID: String
 
   # When true, will only return signed artworks.
   signed: Boolean
@@ -11572,6 +11895,33 @@ type FilterSaleArtworksCounts {
     format: String
     label: String
   ): FormattedNumber
+}
+
+type FlagArtworkImportCellFailure {
+  mutationError: GravityMutationError
+}
+
+input FlagArtworkImportCellInput {
+  artworkImportID: String!
+  clientMutationId: String
+  columnName: String!
+  flaggedValue: String
+  originalValue: String
+  rowID: String!
+  userNote: String!
+}
+
+type FlagArtworkImportCellPayload {
+  clientMutationId: String
+  flagArtworkImportCellOrError: FlagArtworkImportCellResponseOrError
+}
+
+union FlagArtworkImportCellResponseOrError =
+  | FlagArtworkImportCellFailure
+  | FlagArtworkImportCellSuccess
+
+type FlagArtworkImportCellSuccess {
+  artworkImport: ArtworkImport
 }
 
 type FollowArtist {
@@ -11946,10 +12296,13 @@ type FulfillmentDetails {
   name: String
 
   # Phone number of the buyer
-  phoneNumber: String
+  phoneNumber: PhoneNumberType
 
   # Country code of the buyer's phone number
   phoneNumberCountryCode: String
+    @deprecated(
+      reason: "Use `phoneNumber.regionCode` for the alpha-2 country code or phoneNumber.countryCode for the numeric country code"
+    )
 
   # Shipping address postal code
   postalCode: String
@@ -12018,6 +12371,7 @@ type Gene implements Node & Searchable {
     attributionClass: [String]
     availability: String
     before: String
+    categories: [String]
     color: String
     colors: [String]
     dimensionRange: String
@@ -12034,6 +12388,7 @@ type Gene implements Node & Searchable {
     geneID: String
     geneIDs: [String]
     height: String
+    importSources: [String]
     includeAllJSON: Boolean
     includeArtworksByFollowedArtists: Boolean
     includeMediumFilterInAggregation: Boolean
@@ -12067,6 +12422,7 @@ type Gene implements Node & Searchable {
     # When false, will only return unpublished artworks for authorized users.
     published: Boolean
     saleID: ID
+    showID: String
 
     # When true, will only return signed artworks.
     signed: Boolean
@@ -12309,24 +12665,6 @@ type Highlights {
     # Number of results to return
     size: Int
   ): [Artist]
-}
-
-# Autogenerated input type of HoldInventory
-input HoldInventoryInput {
-  # A unique identifier for the client performing the mutation.
-  clientMutationId: String
-  expiresInSeconds: Int
-  items: [InventoryHoldItemAttributes!]!
-
-  # Globally unique ID for the requester of this hold. Ex. Exchange Order ID.
-  referenceId: String!
-}
-
-# Autogenerated return type of HoldInventory
-type HoldInventoryPayload {
-  # A unique identifier for the client performing the mutation.
-  clientMutationId: String
-  holdOrErrors: InventoryHoldOrErrorsUnion!
 }
 
 type HomePage {
@@ -12716,6 +13054,7 @@ type HomeViewSectionArtworks implements HomeViewSectionGeneric & Node {
 
   # [Analytics] `owner type` analytics value for this scetion when displayed in a standalone UI, as defined in our schema (artsy/cohesion)
   ownerType: String
+  trackItemImpressions: Boolean!
 }
 
 # An auction results section in the home view
@@ -13209,6 +13548,7 @@ type Image {
     width: Int!
   ): CroppedImageUrl
   deepZoom: DeepZoom
+  geminiToken: String
   height: Int
   href: String
   imageURL: String
@@ -13440,72 +13780,6 @@ enum Intents {
   SELL_ART_AND_DESIGN
 }
 
-type InventoryHold {
-  capturedAt: String
-  id: ID!
-  items(
-    # Returns the elements in the list that come after the specified cursor.
-    after: String
-
-    # Returns the elements in the list that come before the specified cursor.
-    before: String
-
-    # Returns the first _n_ elements from the list.
-    first: Int
-
-    # Returns the last _n_ elements from the list.
-    last: Int
-  ): InventoryHoldItemConnection
-  referenceId: String!
-}
-
-type InventoryHoldItem {
-  artworkId: String!
-  editionSetId: String
-  id: ID!
-  quantity: Int!
-}
-
-# Attributes for creating or updating an inventory hold item
-input InventoryHoldItemAttributes {
-  # ID of the artwork
-  artworkId: String!
-
-  # ID of edition set
-  editionSetId: String
-  quantity: Int!
-}
-
-# The connection type for InventoryHoldItem.
-type InventoryHoldItemConnection {
-  # A list of edges.
-  edges: [InventoryHoldItemEdge]
-
-  # A list of nodes.
-  nodes: [InventoryHoldItem]
-
-  # Information to aid in pagination.
-  pageInfo: PageInfo!
-
-  # Total count of matching nodes, before pagination
-  totalCount: Int!
-}
-
-# An edge in a connection.
-type InventoryHoldItemEdge {
-  # A cursor for use in pagination.
-  cursor: String!
-
-  # The item at the end of the edge.
-  node: InventoryHoldItem
-}
-
-# A hold or error object
-union InventoryHoldOrErrorUnion = Error | InventoryHold
-
-# A hold or error object
-union InventoryHoldOrErrorsUnion = Errors | InventoryHold
-
 type Invoice {
   currency: String!
   email: String
@@ -13652,6 +13926,7 @@ enum LengthUnitPreference {
 # A line item in an order
 type LineItem {
   artwork: Artwork
+  artworkOrEditionSet: ArtworkOrEditionSetType
   artworkVersion: ArtworkVersion
   currencyCode: String!
 
@@ -13703,6 +13978,7 @@ type Location {
 
   # Buisness, temporary, or private address
   addressType: String
+  booth: String
   cached: Int
   city: String
   coordinates: LatLng
@@ -13715,6 +13991,8 @@ type Location {
   displayCountry: String
   email: String
   euShippingLocation: Boolean
+  floor: String
+  hall: String
 
   # A globally unique ID.
   id: ID!
@@ -13725,10 +14003,13 @@ type Location {
   # Union returning opening hours in formatted structure or a string
   openingHours: OpeningHoursUnion
   phone: String
+  pier: String
   postalCode: String
 
   # Boolean flag that denotes whether a location is publicly viewable on Partner's Artsy Profile
   publiclyViewable: Boolean
+  room: String
+  section: String
   state: String
   summary: String
 }
@@ -13971,6 +14252,7 @@ type MarketingCollection implements Node {
     attributionClass: [String]
     availability: String
     before: String
+    categories: [String]
     color: String
     colors: [String]
     dimensionRange: String
@@ -13987,6 +14269,7 @@ type MarketingCollection implements Node {
     geneID: String
     geneIDs: [String]
     height: String
+    importSources: [String]
     includeAllJSON: Boolean
     includeArtworksByFollowedArtists: Boolean
     includeMediumFilterInAggregation: Boolean
@@ -14020,6 +14303,7 @@ type MarketingCollection implements Node {
     # When false, will only return unpublished artworks for authorized users.
     published: Boolean
     saleID: ID
+    showID: String
 
     # When true, will only return signed artworks.
     signed: Boolean
@@ -14298,6 +14582,9 @@ type Me implements Node {
     # State of the returned auction results (can be past, upcoming, or all)
     state: AuctionResultsState = ALL
   ): AuctionResultConnection
+
+  # Classification of the user based on their auction-related activity
+  auctionSegmentation: AuctionSegmentationType
   auctionsLotStandingConnection(
     after: String
     before: String
@@ -14425,6 +14712,7 @@ type Me implements Node {
   followsAndSaves: FollowsAndSaves
   hasCreditCards: Boolean
   hasPassword: Boolean!
+  hasPriceRange: Boolean!
   hasQualifiedCreditCards: Boolean
   hasSecondFactorEnabled: Boolean!
   icon: Image
@@ -14593,7 +14881,7 @@ type Me implements Node {
     # The ID of the Notification
     id: String!
   ): Notification
-  order(id: String!): Order
+  order(id: ID!): Order
   orders(
     after: String
     before: String
@@ -14630,6 +14918,9 @@ type Me implements Node {
   pendingIdentityVerification: IdentityVerification
   phone: String
   phoneNumber: PhoneNumberType
+
+  # User's price preference, in USD.
+  pricePreference: Float
   priceRange: String
   priceRangeMax: Float
   priceRangeMin: Float
@@ -14988,6 +15279,9 @@ type Money {
   # The symbol used for the currency
   currencyPrefix: String
 
+  # The symbol used for the currency without disambiguation
+  currencySymbol: String
+
   # A pre-formatted price.
   display: String
 
@@ -15073,6 +15367,11 @@ type Mutation {
     input: AssignArtworkImportArtistInput!
   ): AssignArtworkImportArtistPayload
 
+  # Bulk add artworks to a show
+  bulkAddArtworksToShow(
+    input: BulkAddArtworksToShowMutationInput!
+  ): BulkAddArtworksToShowMutationPayload
+
   # Update all artworks that belong to the partner
   bulkUpdateArtworksMetadata(
     input: BulkUpdateArtworksMetadataMutationInput!
@@ -15080,10 +15379,6 @@ type Mutation {
   cancelArtworkImport(
     input: CancelArtworkImportInput!
   ): CancelArtworkImportPayload
-  captureHold(
-    # Parameters for CaptureHold
-    input: CaptureHoldInput!
-  ): CaptureHoldPayload
 
   # Creates a pending offer on an pending order.
   commerceAddInitialOfferToOrder(
@@ -15434,6 +15729,9 @@ type Mutation {
     input: CreatePartnerShowEventMutationInput!
   ): CreatePartnerShowEventMutationPayload
 
+  # Create a purchase
+  createPurchase(input: createPurchaseInput!): createPurchasePayload
+
   # Creates a static Markdown-backed sale agreement.
   createSaleAgreement(
     input: CreateSaleAgreementMutationInput!
@@ -15584,6 +15882,9 @@ type Mutation {
     input: DeletePartnerShowEventMutationInput!
   ): DeletePartnerShowEventMutationPayload
 
+  # Deletes a purchase
+  deletePurchase(input: deletePurchaseInput!): deletePurchasePayload
+
   # Delete a User
   deleteUser(input: DeleteUserInput!): DeleteUserPayload
   deleteUserAddress(
@@ -15638,6 +15939,14 @@ type Mutation {
   # Mark sale as ended.
   endSale(input: EndSaleInput!): EndSalePayload
 
+  # Excludes an artist from appearing in Infinite Discovery recommendations.
+  excludeArtistFromDiscovery(
+    input: ExcludeArtistFromDiscoveryInput!
+  ): ExcludeArtistFromDiscoveryPayload
+  flagArtworkImportCell(
+    input: FlagArtworkImportCellInput!
+  ): FlagArtworkImportCellPayload
+
   # Follow (or unfollow) an artist
   followArtist(input: FollowArtistInput!): FollowArtistPayload
 
@@ -15649,10 +15958,6 @@ type Mutation {
 
   # Follow (or unfollow) a show
   followShow(input: FollowShowInput!): FollowShowPayload
-  holdInventory(
-    # Parameters for HoldInventory
-    input: HoldInventoryInput!
-  ): HoldInventoryPayload
 
   # Links a 3rd party account
   linkAuthentication(
@@ -15833,6 +16138,12 @@ type Mutation {
   updateArtwork(
     input: UpdateArtworkMutationInput!
   ): UpdateArtworkMutationPayload
+  updateArtworkImportCurrency(
+    input: UpdateArtworkImportCurrencyInput!
+  ): UpdateArtworkImportCurrencyPayload
+  updateArtworkImportDimensionMetric(
+    input: UpdateArtworkImportDimensionMetricInput!
+  ): UpdateArtworkImportDimensionMetricPayload
   updateArtworkImportRow(
     input: UpdateArtworkImportRowInput!
   ): UpdateArtworkImportRowPayload
@@ -15915,6 +16226,11 @@ type Mutation {
   # Update an order
   updateOrder(input: updateOrderInput!): updateOrderPayload
 
+  # Update an order's shipping address
+  updateOrderShippingAddress(
+    input: updateOrderShippingAddressInput!
+  ): updateOrderShippingAddressPayload
+
   # updates an ordered set.
   updateOrderedSet(
     input: UpdateOrderedSetMutationInput!
@@ -15953,6 +16269,11 @@ type Mutation {
     input: UpdatePartnerLocationInput!
   ): UpdatePartnerLocationPayload
 
+  # Updates the icon or cover image for a partner's profile page
+  updatePartnerProfileImage(
+    input: UpdatePartnerProfileImageInput!
+  ): UpdatePartnerProfileImagePayload
+
   # Updates a partner show.
   updatePartnerShow(
     input: UpdatePartnerShowMutationInput!
@@ -15967,6 +16288,14 @@ type Mutation {
   updatePartnerShowEvent(
     input: UpdatePartnerShowEventMutationInput!
   ): UpdatePartnerShowEventMutationPayload
+
+  # Updates a profile.
+  updateProfile(
+    input: UpdateProfileMutationInput!
+  ): UpdateProfileMutationPayload
+
+  # Update a purchase
+  updatePurchase(input: updatePurchaseInput!): updatePurchasePayload
 
   # Update a quiz artwork interacted_with flag
   updateQuiz(input: updateQuizMutationInput!): updateQuizMutationPayload
@@ -16435,11 +16764,29 @@ type Order {
   buyerPhoneNumber: String
     @deprecated(reason: "Use `order.fulfillmentDetails.phoneNumber`")
 
+  # Calculated state of the order that defines buyer facing state/actions
+  buyerState: OrderBuyerStateEnum
+
+  # Expiration for the current state of the order
+  buyerStateExpiresAt: String
+
   # The total amount the buyer is expected to pay
   buyerTotal: Money
 
   # Order code
   code: String!
+
+  # Express Checkout wallet type
+  creditCardWalletType: OrderCreditCardWalletTypeEnum
+
+  # Currency code
+  currencyCode: String!
+
+  # Details about the shipment of an order
+  deliveryInfo: DeliveryInfo
+
+  # Display texts for the order based on its buyer_state and order shipping/payment states
+  displayTexts: DisplayTexts!
 
   # Buyer fulfillment details for order
   fulfillmentDetails: FulfillmentDetails
@@ -16447,6 +16794,9 @@ type Order {
 
   # A globally unique ID.
   id: ID!
+
+  # Impulse conversation Id for the order
+  impulseConversationId: String
 
   # A type-specific ID likely used as a database ID.
   internalID: ID!
@@ -16456,11 +16806,23 @@ type Order {
   lineItems: [LineItem]!
   mode: OrderModeEnum!
 
+  # Payment method used for the order
+  paymentMethod: OrderPaymentMethodEnum
+
+  # The payment method details that was used for the order
+  paymentMethodDetails: PaymentMethodUnion
+
+  # Order pricing breakdown lines
+  pricingBreakdownLines: [PricingBreakdownLineUnion]!
+
   # The selected fulfillment option for the order
   selectedFulfillmentOption: FulfillmentOption
 
   # The seller of the order
   seller: SellerType
+
+  # Display short version of order's artwork location
+  shippingOrigin: String
 
   # The total amount for shipping
   shippingTotal: Money
@@ -16468,12 +16830,64 @@ type Order {
   # Source of the order
   source: OrderSourceEnum!
 
+  # Stripe confirmation token for the order
+  stripeConfirmationToken: String
+
   # The total amount for tax
   taxTotal: Money
+
+  # The total list price of items (accounting for limited partner offer if applicable)
+  totalListPrice: Money
+}
+
+type OrderActionData {
+  clientSecret: String!
+}
+
+enum OrderBuyerStateEnum {
+  # Order has been approved
+  APPROVED
+
+  # Order has been cancelled
+  CANCELLED
+
+  # Order is completed
+  COMPLETED
+
+  # Order was declined by the buyer
+  DECLINED_BY_BUYER
+
+  # Order was declined by the seller
+  DECLINED_BY_SELLER
+
+  # Order is incomplete (pending or abandoned)
+  INCOMPLETE
+
+  # Payment has failed
+  PAYMENT_FAILED
+
+  # Processing offline payment
+  PROCESSING_OFFLINE_PAYMENT
+
+  # Processing payment
+  PROCESSING_PAYMENT
+
+  # Order has been refunded
+  REFUNDED
+
+  # Order has been shipped
+  SHIPPED
+
+  # Order has been submitted
+  SUBMITTED
+
+  # Order status is unknown
+  UNKNOWN
 }
 
 enum OrderCreditCardWalletTypeEnum {
   APPLE_PAY
+  GOOGLE_PAY
 }
 
 enum OrderModeEnum {
@@ -16481,9 +16895,18 @@ enum OrderModeEnum {
   OFFER
 }
 
+type OrderMutationActionRequired {
+  actionData: OrderActionData!
+}
+
 type OrderMutationError {
   mutationError: ExchangeError!
 }
+
+union OrderMutationResponse =
+  | OrderMutationActionRequired
+  | OrderMutationError
+  | OrderMutationSuccess
 
 type OrderMutationSuccess {
   order: Order!
@@ -16493,6 +16916,9 @@ union OrderParty = Partner | User
 
 enum OrderPaymentMethodEnum {
   CREDIT_CARD
+  SEPA_DEBIT
+  US_BANK_ACCOUNT
+  WIRE_TRANSFER
 }
 
 enum OrderSourceEnum {
@@ -16827,9 +17253,9 @@ type Partner implements Node {
     before: String
     first: Int
     last: Int
-    page: Int = 1
+    page: Int
     query: String!
-    size: Int = 10
+    size: Int
   ): ArtworkConnection
   cached: Int
   categories: [PartnerCategory]
@@ -16896,6 +17322,7 @@ type Partner implements Node {
     attributionClass: [String]
     availability: String
     before: String
+    categories: [String]
     color: String
     colors: [String]
     dimensionRange: String
@@ -16912,6 +17339,7 @@ type Partner implements Node {
     geneID: String
     geneIDs: [String]
     height: String
+    importSources: [String]
     includeAllJSON: Boolean
     includeArtworksByFollowedArtists: Boolean
     includeMediumFilterInAggregation: Boolean
@@ -16945,6 +17373,7 @@ type Partner implements Node {
     # When false, will only return unpublished artworks for authorized users.
     published: Boolean
     saleID: ID
+    showID: String
 
     # When true, will only return signed artworks.
     signed: Boolean
@@ -16961,6 +17390,9 @@ type Partner implements Node {
   fullProfileEligible: Boolean
     @deprecated(reason: "Prefer displayFullPartnerPage")
   hasFairPartnership: Boolean
+
+  # If the partner has more than 500 follows
+  hasVisibleFollowsCount: Boolean!
 
   # The url for a partner. May be `null` if partner is not eligible for page.
   href: String
@@ -17069,7 +17501,11 @@ type Partner implements Node {
   # A slug ID.
   slug: ID!
   type: String
+
+  # Returns VAT number or a fallback message based on the partner's VAT status.
+  vatInformation: String
   vatNumber: String
+  vatStatus: String
   viewingRoomsConnection(
     after: String
     before: String
@@ -17217,6 +17653,7 @@ type PartnerArtist {
     attributionClass: [String]
     availability: String
     before: String
+    categories: [String]
     color: String
     colors: [String]
     dimensionRange: String
@@ -17233,6 +17670,7 @@ type PartnerArtist {
     geneID: String
     geneIDs: [String]
     height: String
+    importSources: [String]
     includeAllJSON: Boolean
     includeArtworksByFollowedArtists: Boolean
     includeMediumFilterInAggregation: Boolean
@@ -17266,6 +17704,7 @@ type PartnerArtist {
     # When false, will only return unpublished artworks for authorized users.
     published: Boolean
     saleID: ID
+    showID: String
 
     # When true, will only return signed artworks.
     signed: Boolean
@@ -17411,6 +17850,7 @@ type PartnerArtistEdge {
     attributionClass: [String]
     availability: String
     before: String
+    categories: [String]
     color: String
     colors: [String]
     dimensionRange: String
@@ -17427,6 +17867,7 @@ type PartnerArtistEdge {
     geneID: String
     geneIDs: [String]
     height: String
+    importSources: [String]
     includeAllJSON: Boolean
     includeArtworksByFollowedArtists: Boolean
     includeMediumFilterInAggregation: Boolean
@@ -17460,6 +17901,7 @@ type PartnerArtistEdge {
     # When false, will only return unpublished artworks for authorized users.
     published: Boolean
     saleID: ID
+    showID: String
 
     # When true, will only return signed artworks.
     signed: Boolean
@@ -17980,11 +18422,16 @@ enum PhoneNumberFormats {
 }
 
 type PhoneNumberType {
+  # Numeric phone number country code
   countryCode: String
+
+  # A formatted phone number if the number could be parsed
   display(format: PhoneNumberFormats): String
   error: PhoneNumberErrors
   isValid: Boolean
   originalNumber: String
+
+  # Two-letter region code (ISO 3166-1 alpha-2)
   regionCode: String
 }
 
@@ -18281,6 +18728,13 @@ type PriceRange {
   minPrice: Money
 }
 
+# Pricing breakdown line
+union PricingBreakdownLineUnion =
+  | ShippingLine
+  | SubtotalLine
+  | TaxLine
+  | TotalLine
+
 type Profile {
   bio: String
   cached: Int
@@ -18349,6 +18803,64 @@ input PublishViewingRoomInput {
 type PublishViewingRoomPayload {
   clientMutationId: String
   viewingRoom: ViewingRoom!
+}
+
+type Purchase implements Node {
+  artsyCommission: Float
+  artwork: Artwork
+  createdAt(
+    format: String
+
+    # A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    timezone: String
+  ): String
+
+  # Person who found the sale
+  discoverAdmin: User
+  email: String
+  fair: Fair
+
+  # A globally unique ID.
+  id: ID!
+
+  # A type-specific ID.
+  internalID: ID!
+  note: String
+  ownerID: String
+  ownerType: String
+  sale: Sale
+
+  # Person who facilitated the sale
+  saleAdmin: User
+  saleDate(
+    format: String
+
+    # A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    timezone: String
+  ): String
+  salePrice: Float
+  source: String
+  user: User
+}
+
+# A connection to a list of items.
+type PurchasesConnection {
+  # A list of edges.
+  edges: [PurchasesEdge]
+  pageCursors: PageCursors!
+
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+# An edge in a connection.
+type PurchasesEdge {
+  # A cursor for use in pagination
+  cursor: String!
+
+  # The item at the end of the edge
+  node: Purchase
 }
 
 type Query {
@@ -18626,6 +19138,7 @@ type Query {
     attributionClass: [String]
     availability: String
     before: String
+    categories: [String]
     color: String
     colors: [String]
     dimensionRange: String
@@ -18642,6 +19155,7 @@ type Query {
     geneID: String
     geneIDs: [String]
     height: String
+    importSources: [String]
     includeAllJSON: Boolean
     includeArtworksByFollowedArtists: Boolean
     includeMediumFilterInAggregation: Boolean
@@ -18675,6 +19189,7 @@ type Query {
     # When false, will only return unpublished artworks for authorized users.
     published: Boolean
     saleID: ID
+    showID: String
 
     # When true, will only return signed artworks.
     signed: Boolean
@@ -18970,6 +19485,23 @@ type Query {
     osWeights: [Float] = [0.6, 0.4]
   ): ArtworkConnection
 
+  # A connection of discovery categories for browsing art
+  discoveryCategoriesConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): DiscoveryCategoriesConnectionConnection
+
+  # Discovery Marketing Collections for personalized recommendations
+  discoveryMarketingCollections(
+    after: String
+    before: String
+    first: Int
+    last: Int
+    size: Int = 12
+  ): [MarketingCollection!]
+
   # A namespace external partners (provided by Galaxy)
   external: External!
 
@@ -19020,6 +19552,9 @@ type Query {
     near: Near
     sort: FairSorts
     status: EventStatus
+
+    # Search term to match against fair names for authenticated users
+    term: String
   ): FairConnection
 
   # A Feature
@@ -19185,6 +19720,7 @@ type Query {
     artistID: String
     before: String
     category: String
+    categorySlug: String
     first: Int
     isFeaturedArtistContent: Boolean
     last: Int
@@ -19441,7 +19977,13 @@ type Query {
   ): PartnerConnection
 
   # Phone number information
-  phoneNumber(phoneNumber: String!, regionCode: String): PhoneNumberType
+  phoneNumber(
+    # Phone number to parse
+    phoneNumber: String!
+
+    # Two-letter region code (ISO 3166-1 alpha-2)
+    regionCode: String
+  ): PhoneNumberType
 
   # A previewed saved search
   previewSavedSearch(
@@ -19485,6 +20027,32 @@ type Query {
     # If present, will search by term
     term: String
   ): ProfileConnection
+  purchase(
+    # The ID of the purchase
+    id: String!
+  ): Purchase
+
+  # A list of purchases made by users.
+  purchasesConnection(
+    after: String
+
+    # The ID or slug of the artist to filter purchases by.
+    artistId: String
+
+    # The ID or slug of the artwork to filter purchases by.
+    artworkId: String
+    before: String
+    first: Int
+    last: Int
+    page: Int
+
+    # The ID of the sale to filter purchases by.
+    saleId: String
+    size: Int
+
+    # The ID of the user to filter purchases by.
+    userId: String
+  ): PurchasesConnection
 
   # Static set of recently sold artworks for the SWA landing page
   recentlySoldArtworks(
@@ -21105,9 +21673,17 @@ type Services {
   metaphysics: MetaphysicsService!
 }
 
-union SetOrderFulfillmentOptionResponse =
-  | OrderMutationError
-  | OrderMutationSuccess
+# Shipping line
+type ShippingLine {
+  # The monetary amount for the line
+  amount: Money
+
+  # Fallback text if no monetary amount is available
+  amountFallbackText: String
+
+  # Display name of the shipping line
+  displayName: String!
+}
 
 type Shortcut {
   # A globally unique ID.
@@ -21225,6 +21801,7 @@ type Show implements EntityWithFilterArtworksConnectionInterface & Node {
     attributionClass: [String]
     availability: String
     before: String
+    categories: [String]
     color: String
     colors: [String]
     dimensionRange: String
@@ -21241,6 +21818,7 @@ type Show implements EntityWithFilterArtworksConnectionInterface & Node {
     geneID: String
     geneIDs: [String]
     height: String
+    importSources: [String]
     includeAllJSON: Boolean
     includeArtworksByFollowedArtists: Boolean
     includeMediumFilterInAggregation: Boolean
@@ -21274,6 +21852,7 @@ type Show implements EntityWithFilterArtworksConnectionInterface & Node {
     # When false, will only return unpublished artworks for authorized users.
     published: Boolean
     saleID: ID
+    showID: String
 
     # When true, will only return signed artworks.
     signed: Boolean
@@ -21318,6 +21897,9 @@ type Show implements EntityWithFilterArtworksConnectionInterface & Node {
     after: String
     before: String
     first: Int
+
+    # When false, will exclude the cover image from the results
+    isDefault: Boolean
     last: Int
   ): ImageConnection
 
@@ -21329,6 +21911,9 @@ type Show implements EntityWithFilterArtworksConnectionInterface & Node {
 
   # Is this something we can display to the front-end?
   isDisplayable: Boolean
+
+  # Should this show be displayed on the partner profile page?
+  isDisplayableOnPartnerProfile: Boolean
 
   # Does the show exist as a fair booth?
   isFairBooth: Boolean
@@ -21451,6 +22036,8 @@ type ShowCounts {
     format: String
     label: String
   ): FormattedNumber
+  publishedArtworks: Int
+  unpublishedArtworks: Int
 }
 
 # An edge in a connection.
@@ -21699,6 +22286,18 @@ type SubmittedPriceEstimateParams {
   requesterPhoneNumber: String
 }
 
+# Subtotal line
+type SubtotalLine {
+  # The monetary amount for the line
+  amount: Money
+
+  # Fallback text if no monetary amount is available
+  amountFallbackText: String
+
+  # Display name of the subtotal line
+  displayName: String!
+}
+
 type SuggestedAddress {
   addressLine1: String!
   addressLine2: String
@@ -21773,6 +22372,7 @@ type Tag implements Node {
     attributionClass: [String]
     availability: String
     before: String
+    categories: [String]
     color: String
     colors: [String]
     dimensionRange: String
@@ -21789,6 +22389,7 @@ type Tag implements Node {
     geneID: String
     geneIDs: [String]
     height: String
+    importSources: [String]
     includeAllJSON: Boolean
     includeArtworksByFollowedArtists: Boolean
     includeMediumFilterInAggregation: Boolean
@@ -21822,6 +22423,7 @@ type Tag implements Node {
     # When false, will only return unpublished artworks for authorized users.
     published: Boolean
     saleID: ID
+    showID: String
 
     # When true, will only return signed artworks.
     signed: Boolean
@@ -21945,9 +22547,33 @@ type TaxInfo {
   moreInfo: TaxMoreInfo!
 }
 
+# Tax line
+type TaxLine {
+  # The monetary amount for the line
+  amount: Money
+
+  # Fallback text if no monetary amount is available
+  amountFallbackText: String
+
+  # Display name of the tax line
+  displayName: String!
+}
+
 type TaxMoreInfo {
   displayText: String!
   url: String!
+}
+
+# Total line
+type TotalLine {
+  # The monetary amount for the line
+  amount: Money
+
+  # Fallback text if no monetary amount is available
+  amountFallbackText: String
+
+  # Display name of the total line
+  displayName: String!
 }
 
 # Autogenerated input type of TransferMyCollection
@@ -22125,6 +22751,7 @@ input UpdateArtworkEditionSetInput {
 
   # True for `Make Offer` artworks
   offer: Boolean
+  partnerLocationId: String
   priceCurrency: String
 
   # Show/Hide the price of an artwork
@@ -22138,6 +22765,54 @@ input UpdateArtworkEditionSetInput {
   published: Boolean
   shippingWeight: Float
   shippingWeightMetric: String
+}
+
+type UpdateArtworkImportCurrencyFailure {
+  mutationError: GravityMutationError
+}
+
+input UpdateArtworkImportCurrencyInput {
+  artworkImportID: String!
+  clientMutationId: String
+  fromCurrency: String!
+  toCurrency: String!
+}
+
+type UpdateArtworkImportCurrencyPayload {
+  clientMutationId: String
+  updateArtworkImportCurrencyOrError: UpdateArtworkImportCurrencyResponseOrError
+}
+
+union UpdateArtworkImportCurrencyResponseOrError =
+  | UpdateArtworkImportCurrencyFailure
+  | UpdateArtworkImportCurrencySuccess
+
+type UpdateArtworkImportCurrencySuccess {
+  artworkImport: ArtworkImport
+}
+
+type UpdateArtworkImportDimensionMetricFailure {
+  mutationError: GravityMutationError
+}
+
+input UpdateArtworkImportDimensionMetricInput {
+  artworkImportID: String!
+  clientMutationId: String
+  fromDimensionMetric: String!
+  toDimensionMetric: String!
+}
+
+type UpdateArtworkImportDimensionMetricPayload {
+  clientMutationId: String
+  updateArtworkImportDimensionMetricOrError: UpdateArtworkImportDimensionMetricResponseOrError
+}
+
+union UpdateArtworkImportDimensionMetricResponseOrError =
+  | UpdateArtworkImportDimensionMetricFailure
+  | UpdateArtworkImportDimensionMetricSuccess
+
+type UpdateArtworkImportDimensionMetricSuccess {
+  artworkImport: ArtworkImport
 }
 
 type UpdateArtworkImportRowFailure {
@@ -22195,6 +22870,7 @@ input UpdateArtworkMutationInput {
 
   # True for `Make Offer` artworks
   offer: Boolean
+  partnerLocationId: String
   priceCurrency: String
 
   # Show/Hide the price of an artwork
@@ -22968,6 +23644,9 @@ type UpdatePartnerLocationSuccess {
 }
 
 input UpdatePartnerMutationInput {
+  # Admin assigned for this partner.
+  adminId: String
+
   # Alternate names or synonyms for this partner.
   alternateNames: [String]
 
@@ -22975,11 +23654,17 @@ input UpdatePartnerMutationInput {
   artsyCollectsSalesTax: Boolean
   clientMutationId: String
 
+  # Partner could opt their works to buy now / make offer and accept payments using their merchant account.
+  commerceEnabled: Boolean
+
   # Commission paid by non-subscriber/fair partner.
   commissionRate: Float
 
   # Contract type.
   contractType: String
+
+  # Include in Criteo artwork report.
+  criteoEligible: Boolean
 
   # Whether the partner is directly contactable.
   directlyContactable: Boolean
@@ -22999,14 +23684,41 @@ input UpdatePartnerMutationInput {
   # The email of the partner.
   email: String
 
+  # Whether the partner should have access to ACH payment method on subscriptions.
+  enableAchPaymentMethod: Boolean
+
+  # Triggers partner on platform transaction notifications.
+  enforceOnPlatformTransactions: Boolean
+
+  # Suggested filters for associated artworks.
+  featuredKeywords: [String]
+
   # The given name of the partner.
   givenName: String
 
   # Profile completeness.
   hasFullProfile: Boolean
 
+  # Whether this partner has limited Folio access.
+  hasLimitedFolioAccess: Boolean
+
   # The id of the partner to update.
   id: String!
+
+  # Partner can have artworks implictly enrolled as 'Make Offer' on the artwork page.
+  implicitOfferEnabled: Boolean
+
+  # Partner could list artworks for purchasing from inquiry conversations.
+  inquiryOrderEnabled: Boolean
+
+  # Whether the partner is managed by ERP for subscriptions.
+  managedByErp: Boolean
+
+  # Admin that signed up this partner.
+  outreachAdminId: String
+
+  # Array of partner slugs to assign to this partner.
+  partnerCategories: [String]
 
   # Whether the partner requires pre-qualification.
   preQualify: Boolean
@@ -23017,8 +23729,17 @@ input UpdatePartnerMutationInput {
   # Banner display on the profile overview page.
   profileBannerDisplay: String
 
+  # Admin that referred this partner and gets the commission.
+  referralContactId: String
+
   # The region of the partner.
   region: String
+
+  # Size of the partner.
+  relativeSize: Int
+
+  # Partner is required to configure a merchant account.
+  requiresMerchantAccount: Boolean
 
   # The short name of the partner.
   shortName: String
@@ -23029,8 +23750,23 @@ input UpdatePartnerMutationInput {
   # Type of the partner.
   type: String
 
+  # Whether the partner's VAT exempt status is approved by Artsy.
+  vatExemptApproved: Boolean
+
+  # The VAT identification number belonging to this partner.
+  vatNumber: String
+
+  # Whether the partner is registered, registered_and_exempt, exempt, or ineligible for a VAT identification number.
+  vatStatus: String
+
+  # Indicates the partner is a trusted seller on Artsy.
+  verifiedSeller: Boolean
+
   # The website of the partner.
   website: String
+
+  # Indicates the partner is eligible for manual wire transfers.
+  wireTransferEnabled: Boolean
 }
 
 type UpdatePartnerMutationPayload {
@@ -23038,6 +23774,39 @@ type UpdatePartnerMutationPayload {
 
   # On success: the updated partner. On error: the error that occurred.
   partnerOrError: UpdatePartnerResponseOrError
+}
+
+type UpdatePartnerProfileImageFailure {
+  mutationError: GravityMutationError
+}
+
+input UpdatePartnerProfileImageInput {
+  clientMutationId: String
+
+  # ID of the partner
+  partnerId: String!
+
+  # S3 bucket containing the image to be uploaded
+  remoteImageS3Bucket: String!
+
+  # S3 key of the image to be uploaded
+  remoteImageS3Key: String!
+
+  # Can be of type Cover or Icon
+  type: String!
+}
+
+union UpdatePartnerProfileImageOrError =
+  | UpdatePartnerProfileImageFailure
+  | UpdatePartnerProfileImageSuccess
+
+type UpdatePartnerProfileImagePayload {
+  clientMutationId: String
+  partnerOrError: UpdatePartnerProfileImageOrError
+}
+
+type UpdatePartnerProfileImageSuccess {
+  partner: Partner
 }
 
 union UpdatePartnerResponseOrError = UpdatePartnerFailure | UpdatePartnerSuccess
@@ -23133,20 +23902,41 @@ type UpdatePartnerShowFailure {
   mutationError: GravityMutationError
 }
 
+input UpdatePartnerShowFairLocationInput {
+  # The booth of the show in the fair.
+  booth: String
+
+  # The floor of the show in the fair
+  floor: String
+
+  # The hall of the show in the fair
+  hall: String
+
+  # The pier of the show in the fair
+  pier: String
+
+  # The room of the show in the fair
+  room: String
+
+  # The section of the show in the fair
+  section: String
+}
+
 input UpdatePartnerShowMutationInput {
   clientMutationId: String
 
   # The description of the show.
   description: String
 
+  # Should the show be displayed on the partner profile page?
+  displayOnPartnerProfile: Boolean
+
   # The end date of the show.
   endAt: String
 
-  # The booth of the fair to update the show for.
-  fairBooth: String
-
   # The id of the fair to update the show for.
   fairId: String
+  fairLocation: UpdatePartnerShowFairLocationInput
 
   # Is the show featured?
   featured: Boolean
@@ -23190,6 +23980,59 @@ type UpdatePartnerShowSuccess {
 
 type UpdatePartnerSuccess {
   partner: Partner
+}
+
+type UpdateProfileFailure {
+  mutationError: GravityMutationError
+}
+
+input UpdateProfileMutationInput {
+  # Short bio (275 character max).
+  bio: String
+  clientMutationId: String
+
+  # Full bio (800 character max).
+  fullBio: String
+
+  # Unique handle.
+  handle: String
+
+  # The id of the profile to update.
+  id: String!
+
+  # Private profiles hide certain features for non admins.
+  isPrivate: Boolean
+
+  # Location.
+  location: String
+
+  # Website.
+  website: String
+}
+
+type UpdateProfileMutationPayload {
+  clientMutationId: String
+
+  # On success: the updated profile. On error: the error that occurred.
+  profileOrError: UpdateProfileResponseOrError
+}
+
+union UpdateProfileResponseOrError = UpdateProfileFailure | UpdateProfileSuccess
+
+type UpdateProfileSuccess {
+  profile: Profile
+}
+
+type UpdatePurchaseFailure {
+  mutationError: GravityMutationError
+}
+
+union UpdatePurchaseResponseOrError =
+  | UpdatePurchaseFailure
+  | UpdatePurchaseSuccess
+
+type UpdatePurchaseSuccess {
+  purchase: Purchase
 }
 
 type UpdateSaleAgreementFailure {
@@ -23370,6 +24213,7 @@ input UpdateUserMutationInput {
   clientMutationId: String
   dataTransferOptOut: Boolean
   email: String
+  enabled: Boolean
   id: String!
   name: String
   phone: String
@@ -23478,6 +24322,9 @@ type User implements Node {
     # A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
     timezone: String
   ): String
+
+  # If the user is enabled
+  enabled: Boolean!
   follows: UserFollows
 
   # A globally unique ID.
@@ -24272,6 +25119,7 @@ type Viewer {
     attributionClass: [String]
     availability: String
     before: String
+    categories: [String]
     color: String
     colors: [String]
     dimensionRange: String
@@ -24288,6 +25136,7 @@ type Viewer {
     geneID: String
     geneIDs: [String]
     height: String
+    importSources: [String]
     includeAllJSON: Boolean
     includeArtworksByFollowedArtists: Boolean
     includeMediumFilterInAggregation: Boolean
@@ -24321,6 +25170,7 @@ type Viewer {
     # When false, will only return unpublished artworks for authorized users.
     published: Boolean
     saleID: ID
+    showID: String
 
     # When true, will only return signed artworks.
     signed: Boolean
@@ -24491,6 +25341,23 @@ type Viewer {
     osWeights: [Float] = [0.6, 0.4]
   ): ArtworkConnection
 
+  # A connection of discovery categories for browsing art
+  discoveryCategoriesConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): DiscoveryCategoriesConnectionConnection
+
+  # Discovery Marketing Collections for personalized recommendations
+  discoveryMarketingCollections(
+    after: String
+    before: String
+    first: Int
+    last: Int
+    size: Int = 12
+  ): [MarketingCollection!]
+
   # A namespace external partners (provided by Galaxy)
   external: External!
 
@@ -24541,6 +25408,9 @@ type Viewer {
     near: Near
     sort: FairSorts
     status: EventStatus
+
+    # Search term to match against fair names for authenticated users
+    term: String
   ): FairConnection
 
   # A Feature
@@ -24703,6 +25573,7 @@ type Viewer {
     artistID: String
     before: String
     category: String
+    categorySlug: String
     first: Int
     isFeaturedArtistContent: Boolean
     last: Int
@@ -24928,7 +25799,13 @@ type Viewer {
   ): PartnerConnection
 
   # Phone number information
-  phoneNumber(phoneNumber: String!, regionCode: String): PhoneNumberType
+  phoneNumber(
+    # Phone number to parse
+    phoneNumber: String!
+
+    # Two-letter region code (ISO 3166-1 alpha-2)
+    regionCode: String
+  ): PhoneNumberType
 
   # A previewed saved search
   previewSavedSearch(
@@ -24953,6 +25830,32 @@ type Viewer {
     # If present, will search by term
     term: String
   ): ProfileConnection
+  purchase(
+    # The ID of the purchase
+    id: String!
+  ): Purchase
+
+  # A list of purchases made by users.
+  purchasesConnection(
+    after: String
+
+    # The ID or slug of the artist to filter purchases by.
+    artistId: String
+
+    # The ID or slug of the artwork to filter purchases by.
+    artworkId: String
+    before: String
+    first: Int
+    last: Int
+    page: Int
+
+    # The ID of the sale to filter purchases by.
+    saleId: String
+    size: Int
+
+    # The ID of the user to filter purchases by.
+    userId: String
+  ): PurchasesConnection
 
   # Static set of recently sold artworks for the SWA landing page
   recentlySoldArtworks(
@@ -25540,6 +26443,31 @@ type createPartnerOfferSuccess {
   partnerOffer: PartnerOffer
 }
 
+input createPurchaseInput {
+  artsyCommission: Float
+  artworkID: String
+  clientMutationId: String
+  discoverAdminID: String
+  email: String
+  fairID: String
+  note: String
+  ownerID: String
+  ownerType: String
+  saleAdminID: String
+  saleDate: String
+  saleID: String
+
+  # Sale price in USD.
+  salePrice: Float
+  source: String
+  userID: String
+}
+
+type createPurchasePayload {
+  clientMutationId: String
+  responseOrError: CreatePurchaseResponseOrError
+}
+
 type createUserAdminNoteFailure {
   mutationError: GravityMutationError
 }
@@ -25673,6 +26601,16 @@ type deleteOrderedSetSuccess {
   set: OrderedSet
 }
 
+input deletePurchaseInput {
+  clientMutationId: String
+  id: String!
+}
+
+type deletePurchasePayload {
+  clientMutationId: String
+  responseOrError: DeletePurchaseResponseOrError
+}
+
 type deleteUserAdminNoteFailure {
   mutationError: GravityMutationError
 }
@@ -25762,7 +26700,7 @@ input setOrderFulfillmentOptionInput {
 
 type setOrderFulfillmentOptionPayload {
   clientMutationId: String
-  orderOrError: SetOrderFulfillmentOptionResponse
+  orderOrError: OrderMutationResponse
 }
 
 enum sort {
@@ -25790,11 +26728,14 @@ input submitOrderInput {
 
   # Order id.
   id: ID!
+
+  # Whether the credit card should be one-time use.
+  oneTimeUse: Boolean
 }
 
 type submitOrderPayload {
   clientMutationId: String
-  orderOrError: SetOrderFulfillmentOptionResponse
+  orderOrError: OrderMutationResponse
 }
 
 input unsetOrderFulfillmentOptionInput {
@@ -25806,7 +26747,7 @@ input unsetOrderFulfillmentOptionInput {
 
 type unsetOrderFulfillmentOptionPayload {
   clientMutationId: String
-  orderOrError: SetOrderFulfillmentOptionResponse
+  orderOrError: OrderMutationResponse
 }
 
 input unsetOrderPaymentMethodInput {
@@ -25818,7 +26759,7 @@ input unsetOrderPaymentMethodInput {
 
 type unsetOrderPaymentMethodPayload {
   clientMutationId: String
-  orderOrError: SetOrderFulfillmentOptionResponse
+  orderOrError: OrderMutationResponse
 }
 
 input updateAlertInput {
@@ -25918,11 +26859,6 @@ type updateNotificationPreferencesMutationPayload {
 }
 
 input updateOrderInput {
-  # Buyer's phone number
-  buyerPhoneNumber: String
-
-  # Buyer's phone number country code
-  buyerPhoneNumberCountryCode: String
   clientMutationId: String
 
   # Credit card wallet type
@@ -25933,6 +26869,26 @@ input updateOrderInput {
 
   # Payment method.
   paymentMethod: OrderPaymentMethodEnum
+
+  # Stripe confirmation token
+  stripeConfirmationToken: String
+}
+
+type updateOrderPayload {
+  clientMutationId: String
+  orderOrError: OrderMutationResponse
+}
+
+input updateOrderShippingAddressInput {
+  # Buyer's phone number
+  buyerPhoneNumber: String
+
+  # Buyer's phone number country code
+  buyerPhoneNumberCountryCode: String
+  clientMutationId: String
+
+  # Order id.
+  id: ID!
 
   # Shipping address line 1
   shippingAddressLine1: String
@@ -25956,9 +26912,35 @@ input updateOrderInput {
   shippingRegion: String
 }
 
-type updateOrderPayload {
+type updateOrderShippingAddressPayload {
   clientMutationId: String
-  orderOrError: SetOrderFulfillmentOptionResponse
+  orderOrError: OrderMutationResponse
+}
+
+input updatePurchaseInput {
+  artsyCommission: Float
+  artworkID: String
+  clientMutationId: String
+  discoverAdminID: String
+  email: String
+  fairID: String
+  id: String!
+  note: String
+  ownerID: String
+  ownerType: String
+  saleAdminID: String
+  saleDate: String
+  saleID: String
+
+  # Sale price in USD.
+  salePrice: Float
+  source: String
+  userID: String
+}
+
+type updatePurchasePayload {
+  clientMutationId: String
+  responseOrError: UpdatePurchaseResponseOrError
 }
 
 input updateQuizMutationInput {

@@ -12,18 +12,18 @@ import type {
   ArtsyResponse,
 } from "Server/middleware/artsyExpress"
 import { errorHandlerMiddleware } from "Server/middleware/errorHandler"
+import { getOrInitUnleashServer } from "System/FeatureFlags/unleashServer"
 import { getRoutes } from "System/Router/Utils/routeUtils"
 import { renderServerApp } from "System/Router/renderServerApp"
 import { setupServerRouter } from "System/Router/serverRouter"
 import express from "express"
 import type { NextFunction } from "express"
 import { initializeMiddleware } from "middleware"
-import { getOrInitUnleashServerClient } from "Server/featureFlags/unleashHelpers"
 
 const app = express()
 
 // Initialize unleash server client
-getOrInitUnleashServerClient()
+const unleashClient = getOrInitUnleashServer()
 
 // Mount middleware
 initializeMiddleware(app)
@@ -40,12 +40,25 @@ app.get("/collection/:slug", redirectCollectionToArtistSeries)
 app.get(
   routePaths,
   async (req: ArtsyRequest, res: ArtsyResponse, next: NextFunction) => {
+    const unleashContext = {
+      userId: req.user?.id, // res.locals.sd.CURRENT_USER.id
+      sessionId: req.session.id, // res.locals.sd.SESSION_ID
+    }
+
     try {
       const { status, redirect, ...rest } = await setupServerRouter({
         next,
         req,
         res,
         routes,
+        context: {
+          featureFlags: {
+            isEnabled: (flag: string) =>
+              unleashClient.isEnabled(flag, unleashContext),
+            getVariant: (flag: string) =>
+              unleashClient.getVariant(flag, unleashContext),
+          },
+        },
       })
 
       if (redirect) {

@@ -28,7 +28,7 @@ useTracking.mockImplementation(() => ({ trackEvent: jest.fn() }))
 
 jest.mock("lodash/debounce", () => jest.fn(e => e))
 jest.mock("Utils/logger")
-jest.mock("System/Contexts/FeatureFlagContext.tsx", () => ({
+jest.mock("System/FeatureFlags/FeatureFlagContext.tsx", () => ({
   FeatureFlagProvider: ({ children }) => children,
 }))
 

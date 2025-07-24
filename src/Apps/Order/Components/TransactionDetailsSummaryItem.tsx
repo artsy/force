@@ -9,6 +9,7 @@ import {
 } from "Components/StepSummaryItem"
 import { RouterLink } from "System/Components/RouterLink"
 import { withSystemContext } from "System/Contexts/SystemContext"
+import { Device, useDeviceDetection } from "Utils/Hooks/useDeviceDetection"
 import { extractNodes } from "Utils/extractNodes"
 import type { TransactionDetailsSummaryItem_order$data } from "__generated__/TransactionDetailsSummaryItem_order.graphql"
 import type { Omit } from "lodash"
@@ -41,6 +42,8 @@ export const TransactionDetailsSummaryItem: FC<
   useLastSubmittedOffer,
   ...others
 }) => {
+  const { device } = useDeviceDetection()
+
   const renderPriceEntry = () => {
     const currency = order.currencyCode
 
@@ -251,7 +254,11 @@ export const TransactionDetailsSummaryItem: FC<
   }
 
   return (
-    <StepSummaryItem {...others}>
+    <StepSummaryItem
+      {...others}
+      data-testid="transactionSummary"
+      data-testid-inner="transactionDetailsSummaryItem"
+    >
       {renderPriceEntry()}
       <Spacer y={2} />
       <Entry
@@ -311,9 +318,13 @@ export const TransactionDetailsSummaryItem: FC<
             {isEigen ? (
               <>
                 View and manage all artworks in your Collection through your{" "}
-                <RouterLink inline to={"/my-profile"}>
-                  profile.
-                </RouterLink>
+                {device === Device.iPhone ? (
+                  <RouterLink inline to={"/my-collection"}>
+                    profile.
+                  </RouterLink>
+                ) : (
+                  "profile."
+                )}
               </>
             ) : (
               <Stack gap={1}>

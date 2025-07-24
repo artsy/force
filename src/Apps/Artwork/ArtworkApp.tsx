@@ -47,7 +47,6 @@ import {
 import { ArtworkTopContextBarFragmentContainer } from "./Components/ArtworkTopContextBar/ArtworkTopContextBar"
 import { OtherWorksQueryRenderer } from "./Components/OtherWorks"
 import { PricingContextQueryRenderer } from "./Components/PricingContext"
-import { SubmittedOrderModalQueryRenderer } from "./Components/SubmittedOrderModal"
 import { UseRecordArtworkView } from "./useRecordArtworkView"
 
 export interface Props {
@@ -73,6 +72,7 @@ const BelowTheFoldArtworkDetails: React.FC<
   return (
     <>
       <Spacer y={6} />
+
       <Join separator={<Spacer y={2} />}>
         <ArtworkDetailsQueryRenderer slug={slug} />
 
@@ -95,7 +95,7 @@ const BelowTheFoldArtworkDetails: React.FC<
 
 export const ArtworkApp: React.FC<React.PropsWithChildren<Props>> = props => {
   const { artwork, me, referrer, tracking } = props
-  const { match, silentPush, silentReplace } = useRouter()
+  const { match, silentReplace } = useRouter()
   const { showAuthDialog } = useAuthDialog()
   const isMobile = !!getENV("IS_MOBILE")
 
@@ -205,7 +205,6 @@ export const ArtworkApp: React.FC<React.PropsWithChildren<Props>> = props => {
     trackLotView()
   }, [trackPageview, trackProductView, trackLotView])
 
-  const submittedOrderId = props.match.location.query["order-submitted"]
   /**
    * On mount, trigger a page view and product view
    *
@@ -213,15 +212,6 @@ export const ArtworkApp: React.FC<React.PropsWithChildren<Props>> = props => {
    * the `trackingMiddleware` file as we need to pass along additional metadata.
    *
    */
-
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  useEffect(() => {
-    if (!!submittedOrderId) {
-      // TODO: Look into using router push
-      // this.props.router.replace(this.props.match.location.pathname)
-      silentPush(props.match.location.pathname)
-    }
-  }, [])
 
   useEffect(() => {
     track()
@@ -328,9 +318,6 @@ export const ArtworkApp: React.FC<React.PropsWithChildren<Props>> = props => {
 
           <RecentlyViewed />
         </>
-      )}
-      {!!submittedOrderId && (
-        <SubmittedOrderModalQueryRenderer orderId={submittedOrderId} />
       )}
     </SelectedEditionSetProvider>
   )

@@ -44,7 +44,7 @@ export const basicPhoneValidator = {
 
 export const richPhoneValidators = {
   phoneNumber: Yup.string()
-    .required("Phone Number is required")
+    .required("Phone number is required")
     .test({
       name: "phone-number-is-valid",
       message: "Please enter a valid phone number",
@@ -56,12 +56,30 @@ export const richPhoneValidators = {
       },
     }),
   phoneNumberCountryCode: Yup.string().required(
-    "Phone Number Country Code is required",
+    "Phone number country code is required",
   ),
 }
 
 const usPostalCodeRegexp = /^[0-9]{5}(?:-[0-9]{4})?$/
 const caPostalCodeRegexp = /^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/
+
+// These functions should match the required behavior in the yup validation schema
+// below
+export const isPostalCodeRequired = (alpha2Country?: string): boolean => {
+  if (!alpha2Country) {
+    return false
+  }
+  const country = alpha2Country.toUpperCase()
+  return country === "US" || country === "CA"
+}
+
+export const isRegionRequired = (alpha2Country?: string): boolean => {
+  if (!alpha2Country) {
+    return false
+  }
+  const country = alpha2Country.toUpperCase()
+  return country === "US" || country === "CA"
+}
 
 export const postalCodeValidator = Yup.string().when("country", {
   is: country => country === "US",

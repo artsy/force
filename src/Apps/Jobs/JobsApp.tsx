@@ -83,7 +83,7 @@ const JobsApp: FC<React.PropsWithChildren<JobsAppProps>> = ({ viewer }) => {
             , and{" "}
             <RouterLink
               inline
-              to="https://www.RouterLinkedin.com/company/artsyinc?trk=top_nav_home"
+              to="https://www.linkedin.com/company/artsyinc?trk=top_nav_home"
               target="_blank"
               rel="noopener noreferrer"
             >

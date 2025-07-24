@@ -82,7 +82,7 @@ describe("RouterLink", () => {
     await flushPromiseQueue()
 
     expect(screen.queryByText("FooLink")).not.toBeInTheDocument()
-    expect(screen.getByRole("link", { name: "Foo" })).toBeInTheDocument()
+    expect(await screen.findByRole("link", { name: "Foo" })).toBeInTheDocument()
   })
 
   it("falls back to an <a> tag if missing a router context", () => {

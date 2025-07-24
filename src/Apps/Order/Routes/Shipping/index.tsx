@@ -3,12 +3,14 @@ import { Box, Flex, Spacer } from "@artsy/palette"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
 import { BuyerGuarantee } from "Apps/Order/Components/BuyerGuarantee"
 import { ExpressCheckoutQueryRenderer } from "Apps/Order/Components/ExpressCheckout"
+import { EXPRESS_CHECKOUT_PLACEHOLDER } from "Apps/Order/Components/ExpressCheckout/ExpressCheckoutUI"
 import { useShowStoredErrorDialog } from "Apps/Order/Components/ExpressCheckout/Util/useShowStoredErrorDialog"
 import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 import {
   buyNowFlowSteps,
   offerFlowSteps,
 } from "Apps/Order/Components/OrderStepper"
+import { SubmittingOrderSpinner } from "Apps/Order/Components/SubmittingOrderSpinner"
 import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "Apps/Order/Components/TransactionDetailsSummaryItem"
 import { type Dialog, injectDialog } from "Apps/Order/Dialogs"
 import { FulfillmentDetails } from "Apps/Order/Routes/Shipping/Components/FulfillmentDetails"
@@ -17,7 +19,6 @@ import { ShippingQuotes } from "Apps/Order/Routes/Shipping/Components/ShippingQu
 import { useShippingContext } from "Apps/Order/Routes/Shipping/Hooks/useShippingContext"
 import { ShippingContextProvider } from "Apps/Order/Routes/Shipping/ShippingContext"
 import { Analytics } from "System/Contexts/AnalyticsContext"
-import { useFlag } from "@unleash/proxy-client-react"
 import { Jump, useJump } from "Utils/Hooks/useJump"
 import { Media } from "Utils/Responsive"
 import type {
@@ -28,7 +29,7 @@ import type {
   Shipping_order$data,
   Shipping_order$key,
 } from "__generated__/Shipping_order.graphql"
-import { type FC, useEffect } from "react"
+import { type FC, useEffect, useState } from "react"
 import { graphql, useFragment } from "react-relay"
 
 export type ShippingStage =
@@ -72,19 +73,18 @@ const ShippingRouteLayout: FC<
   React.PropsWithChildren<Omit<ShippingProps, "dialog">>
 > = ({ me, order }) => {
   useShowStoredErrorDialog()
+  const [showSpinner, setShowSpinner] = useState(false)
 
   const shippingContext = useShippingContext()
 
   const { jumpTo } = useJump()
 
-  const expressCheckoutPrototypeEnabled = useFlag(
-    "emerald_stripe-express-checkout-prototype",
-  )
-  // order can be processed with express checkout
   const isExpressCheckoutEligible =
-    expressCheckoutPrototypeEnabled &&
     !shippingContext.orderData.isOffer &&
     shippingContext.orderData.isFixedShipping
+
+  const isExpressCheckoutLoading =
+    shippingContext.state.isExpressCheckoutLoading
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
@@ -106,27 +106,38 @@ const ShippingRouteLayout: FC<
           shippingContext.orderData.isOffer ? offerFlowSteps : buyNowFlowSteps
         }
         content={
-          <Flex
-            flexDirection="column"
-            style={
-              shippingContext.state.isPerformingOperation
-                ? { pointerEvents: "none" }
-                : {}
-            }
-          >
-            {isExpressCheckoutEligible && (
-              <ExpressCheckoutQueryRenderer orderID={order.internalID} />
-            )}
+          <>
+            {!!showSpinner && <SubmittingOrderSpinner />}
 
-            <FulfillmentDetails me={me} order={order} />
+            <Flex
+              display={showSpinner ? "none" : "flex"}
+              flexDirection="column"
+              style={
+                shippingContext.state.isPerformingOperation
+                  ? { pointerEvents: "none" }
+                  : {}
+              }
+            >
+              {isExpressCheckoutEligible && (
+                <>
+                  {isExpressCheckoutLoading && EXPRESS_CHECKOUT_PLACEHOLDER}
+                  <ExpressCheckoutQueryRenderer
+                    orderID={order.internalID}
+                    setShowSpinner={setShowSpinner}
+                  />
+                </>
+              )}
 
-            <Jump id="shippingOptionsTop" />
-            <ShippingQuotes order={order} />
+              <FulfillmentDetails me={me} order={order} />
 
-            <Media greaterThan="xs">
-              <SaveAndContinueButton width="50%" order={order} />
-            </Media>
-          </Flex>
+              <Jump id="shippingOptionsTop" />
+              <ShippingQuotes order={order} />
+
+              <Media greaterThan="xs">
+                <SaveAndContinueButton width="50%" order={order} />
+              </Media>
+            </Flex>
+          </>
         }
         sidebar={
           <Flex flexDirection="column">

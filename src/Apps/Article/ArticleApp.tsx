@@ -1,4 +1,5 @@
 import { FullBleed, Join, Separator, Spacer } from "@artsy/palette"
+import { ArticleStructuredData } from "Apps/Article/Components/ArticleStructuredData"
 import { useScrollToOpenEditorialAuthModal } from "Utils/Hooks/useScrollToOpenEditorialAuthModal"
 import type { ArticleApp_article$data } from "__generated__/ArticleApp_article.graphql"
 import type { FC } from "react"
@@ -23,64 +24,70 @@ const ArticleApp: FC<React.PropsWithChildren<ArticleAppProps>> = ({
   useScrollToOpenEditorialAuthModal()
 
   return (
-    <ArticleAdProvider>
-      <ArticleMetaTagsFragmentContainer article={article} />
+    <>
+      <ArticleAdProvider>
+        <ArticleMetaTagsFragmentContainer article={article} />
 
-      <Join separator={<Spacer y={4} />}>
-        {(() => {
-          switch (article.layout) {
-            case "SERIES":
-              return <ArticleSeriesFragmentContainer article={article} />
+        <Join separator={<Spacer y={4} />}>
+          {(() => {
+            switch (article.layout) {
+              case "SERIES":
+                return <ArticleSeriesFragmentContainer article={article} />
 
-            case "VIDEO":
-              return <ArticleVideoFragmentContainer article={article} />
+              case "VIDEO":
+                return <ArticleVideoFragmentContainer article={article} />
 
-            case "NEWS":
-              return <ArticleBodyFragmentContainer article={article} />
+              case "NEWS":
+                return <ArticleBodyFragmentContainer article={article} />
 
-            case "CLASSIC":
-              return (
-                <>
-                  <ArticleBodyFragmentContainer article={article} />
-
-                  <FullBleed>
-                    <Separator />
-                  </FullBleed>
-
-                  <ArticleChannelRelatedArticlesQueryRenderer
-                    id={article.internalID}
-                  />
-                </>
-              )
-
-            case "FEATURE":
-            case "STANDARD":
-              return (
-                <>
-                  <ArticleVisibilityMetadataFragmentContainer article={article}>
+              case "CLASSIC":
+                return (
+                  <>
                     <ArticleBodyFragmentContainer article={article} />
-                  </ArticleVisibilityMetadataFragmentContainer>
 
-                  <FullBleed>
-                    <Separator />
-                  </FullBleed>
+                    <FullBleed>
+                      <Separator />
+                    </FullBleed>
 
-                  <ArticleVerticalRelatedArticlesQueryRenderer
-                    id={article.internalID}
-                  />
-
-                  {article.channelID && (
-                    <ArticleInfiniteScrollQueryRenderer
-                      articleID={article.internalID}
-                      channelID={article.channelID}
+                    <ArticleChannelRelatedArticlesQueryRenderer
+                      id={article.internalID}
                     />
-                  )}
-                </>
-              )
-          }
-        })()}
-      </Join>
-    </ArticleAdProvider>
+                  </>
+                )
+
+              case "FEATURE":
+              case "STANDARD":
+                return (
+                  <>
+                    <ArticleVisibilityMetadataFragmentContainer
+                      article={article}
+                    >
+                      <ArticleBodyFragmentContainer article={article} />
+                    </ArticleVisibilityMetadataFragmentContainer>
+
+                    <FullBleed>
+                      <Separator />
+                    </FullBleed>
+
+                    <ArticleVerticalRelatedArticlesQueryRenderer
+                      id={article.internalID}
+                    />
+
+                    {article.channelID && (
+                      <ArticleInfiniteScrollQueryRenderer
+                        articleID={article.internalID}
+                        channelID={article.channelID}
+                      />
+                    )}
+                  </>
+                )
+            }
+          })()}
+        </Join>
+      </ArticleAdProvider>
+
+      <ArticleStructuredData article={article} />
+    </>
   )
 }
 
@@ -92,6 +99,7 @@ export const ArticleAppFragmentContainer = createFragmentContainer(ArticleApp, {
       ...ArticleVideo_article
       ...ArticleVisibilityMetadata_article
       ...ArticleMetaTags_article
+      ...ArticleStructuredData_article
       internalID
       layout
       channelID

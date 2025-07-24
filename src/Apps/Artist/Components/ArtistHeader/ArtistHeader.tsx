@@ -45,8 +45,15 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
 
   const image = artist.coverArtwork?.image
   const hasImage = isValidImage(image)
-  const hasPartnerSuppliedBio = !!artist.biographyBlurb?.credit
-  const hasBio = artist.biographyBlurb?.text && !hasPartnerSuppliedBio
+  const altText =
+    artist.coverArtwork?.imageTitle ?? `Artwork by ${artist.name!}`
+  const biographyText = artist.biographyBlurb?.text
+  const biographyCredit = artist.biographyBlurb?.credit
+  const hasBio = !!biographyText
+  const biographyContent =
+    hasBio && biographyCredit
+      ? `${biographyText} ${biographyCredit}`
+      : biographyText
   const hasVerifiedRepresentatives = artist?.verifiedRepresentatives?.length > 0
   const hasInsights = artist.insights.length > 0
   const hasRightDetails = hasVerifiedRepresentatives || hasInsights
@@ -62,7 +69,7 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
           alignItems="center"
         >
           <RouterLink to={artist.coverArtwork.href} display="block">
-            <ArtistHeaderImage image={image} />
+            <ArtistHeaderImage image={image} alt={altText} />
           </RouterLink>
         </Column>
       )}
@@ -154,9 +161,9 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
           </Flex>
         </Flex>
 
-        {hasBio && (
+        {biographyContent && (
           <Bio variant="sm">
-            <ReadMore maxChars={250} content={artist.biographyBlurb.text} />
+            <ReadMore maxChars={250} content={biographyContent} />
           </Bio>
         )}
 
@@ -250,7 +257,7 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
         counts {
           follows
         }
-        biographyBlurb(format: HTML, partnerBio: false) {
+        biographyBlurb(format: HTML) {
           text
           credit
         }
@@ -277,6 +284,7 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
         }
         coverArtwork {
           title
+          imageTitle
           href
           image {
             src: url(version: ["larger", "larger"])

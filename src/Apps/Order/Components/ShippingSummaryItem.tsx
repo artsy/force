@@ -26,17 +26,18 @@ const ShippingSummaryItem = ({
 
   return requestedFulfillment.__typename === "CommerceShip" ||
     requestedFulfillment.__typename === "CommerceShipArta" ? (
-    <StepSummaryItem title="Ship to" {...others}>
+    <StepSummaryItem title="Ship to" {...others} data-testid="shippingSummary">
       <ShippingAddress ship={requestedFulfillment} textColor={textColor} />
     </StepSummaryItem>
   ) : (
     <StepSummaryItem
       title={
-        <>Pick up ({lineItems?.edges?.[0]?.node?.artwork?.shippingOrigin})</>
+        <>Pickup ({lineItems?.edges?.[0]?.node?.artwork?.shippingOrigin})</>
       }
       /* Fixes spacing issues with title when no pickup description copy is present */
       mb={showPickupCopy(state) ? undefined : -1}
       {...others}
+      data-testid="shippingSummary"
     >
       {showPickupCopy(state) && (
         <Text variant="xs" color={textColor}>

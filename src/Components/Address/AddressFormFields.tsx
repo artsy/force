@@ -11,6 +11,8 @@ import { AddressAutocompleteInput } from "Components/Address/AddressAutocomplete
 import {
   type Address,
   basicPhoneValidator,
+  isPostalCodeRequired,
+  isRegionRequired,
   richPhoneValidators,
   yupAddressValidator,
 } from "Components/Address/utils"
@@ -33,11 +35,13 @@ interface Props {
   withPhoneNumber?: boolean
   /* @deprecated - legacy plain-text phone input */
   withLegacyPhoneInput?: boolean
+  shippableCountries?: CountryData[]
 }
 
 /**
  * Validation schema for address form fields. Arguments match the
  * <AddressFormFields/> component - e.g. to include phone number validation
+ *
  * @example
  * ```tsx
  * const validationSchema = yup.object().shape({
@@ -94,10 +98,13 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
   } = useFormikContext<V>()
 
   const dataTestIdPrefix = "addressFormFields"
+  const { shippableCountries } = props
 
   const countryInputOptions = useMemo(() => {
-    return sortCountriesForCountryInput(countryPhoneOptions)
-  }, [])
+    return sortCountriesForCountryInput(
+      shippableCountries || countryPhoneOptions,
+    )
+  }, [shippableCountries])
 
   // Formik types don't understand our specific nested structure
   // so we need to cast these to what we know to be the correct types
@@ -246,7 +253,7 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
           onChange={handleChange}
           onBlur={handleBlur}
           error={touchedAddress?.region && errorsAddress?.region}
-          required
+          required={isRegionRequired(values.address.country)}
         />
       </Column>
 
@@ -262,7 +269,7 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
           onChange={handleChange}
           onBlur={handleBlur}
           error={touchedAddress?.postalCode && errorsAddress?.postalCode}
-          required
+          required={isPostalCodeRequired(values.address.country)}
         />
       </Column>
 
@@ -290,6 +297,8 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
       {phoneInputType === "rich" && (
         <Column span={12}>
           <PhoneInput
+            // mt required to match spacing for other text inputs
+            mt={1}
             name="phoneNumber"
             onChange={handleChange}
             onBlur={handleBlur}
@@ -302,10 +311,10 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
             inputValue={values.phoneNumber}
             placeholder="(000) 000 0000"
             error={
-              (touched.phoneNumberCountryCode &&
-                (errors.phoneNumberCountryCode as string | undefined)) ||
               (touched.phoneNumber &&
-                (errors.phoneNumber as string | undefined))
+                (errors.phoneNumber as string | undefined)) ||
+              (touched.phoneNumberCountryCode &&
+                (errors.phoneNumberCountryCode as string | undefined))
             }
             required
           />

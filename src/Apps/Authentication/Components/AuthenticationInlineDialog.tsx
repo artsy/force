@@ -43,7 +43,7 @@ const AuthenticationInlineDialogContents: FC<
 
   return (
     <>
-      <MetaTags title={pageTitle} />
+      <MetaTags title={pageTitle} pathname={location.pathname} />
 
       <Flex
         alignItems="center"

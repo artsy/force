@@ -1,5 +1,4 @@
 import loadable from "@loadable/component"
-import { serverCacheTTLs } from "Apps/serverCacheTTLs"
 import type { RouteProps } from "System/Router/Route"
 import { RedirectException } from "found"
 import { graphql } from "react-relay"
@@ -22,7 +21,6 @@ const GeneShowRoute = loadable(
 export const geneRoutes: RouteProps[] = [
   {
     path: "/gene/:slug",
-    serverCacheTTL: serverCacheTTLs.gene,
     getComponent: () => GeneApp,
     onServerSideRender: redirectGeneToCollection,
     onPreloadJS: () => {
@@ -41,7 +39,6 @@ export const geneRoutes: RouteProps[] = [
       },
       {
         path: "",
-        serverCacheTTL: serverCacheTTLs.gene,
         getComponent: () => GeneShowRoute,
         onPreloadJS: () => {
           GeneShowRoute.preload()

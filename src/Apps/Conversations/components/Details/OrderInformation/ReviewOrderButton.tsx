@@ -1,7 +1,6 @@
 import { Button, type ButtonProps } from "@artsy/palette"
 import type { CounterOfferState } from "Apps/Conversations/components/Details/OrderState/ConversationOrderState"
 import { RouterLink } from "System/Components/RouterLink"
-import { useRouter } from "System/Hooks/useRouter"
 import type { ReviewOrderButton_order$key } from "__generated__/ReviewOrderButton_order.graphql"
 import { graphql, useFragment } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -13,7 +12,6 @@ interface ReviewOrderButtonProps {
 export const ReviewOrderButton: React.FC<
   React.PropsWithChildren<ReviewOrderButtonProps>
 > = ({ order }) => {
-  const { match } = useRouter()
   const { trackEvent } = useTracking()
 
   const data = useFragment(
@@ -83,7 +81,7 @@ export const ReviewOrderButton: React.FC<
 
   return (
     <RouterLink
-      to={`/orders/${data.id}/status?backToConversationId=${match.params.conversationId}`}
+      to={`/orders/${data.id}/details`}
       enablePrefetch={false}
       onClick={() =>
         trackEvent({

@@ -80,10 +80,10 @@ export const ArtworkSidebarAuthenticityCertificate: React.FC<
             <Spacer y={2} />
 
             <Text variant="sm">
-              Read more about artwork authenticity in our
+              Explore how Artsy supports artwork authenticity in our{" "}
               <RouterLink
                 inline
-                to="https://support.artsy.net/s/article/What-Counts-as-an-Artworks-Proof-of-Authenticity"
+                to="https://support.artsy.net/s/article/The-Artsy-Guarantee"
                 target="_blank"
                 rel="noopener noreferrer"
               >

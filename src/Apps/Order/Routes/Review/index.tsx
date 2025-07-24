@@ -1,5 +1,4 @@
 import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
-import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { Box, Button, Flex, Join, Spacer } from "@artsy/palette"
 import type { Stripe, StripeElements } from "@stripe/stripe-js"
 import { AdditionalArtworkDetailsFragmentContainer as AdditionalArtworkDetails } from "Apps/Order/Components/AdditionalArtworkDetails"
@@ -20,6 +19,7 @@ import { ShippingArtaSummaryItemFragmentContainer } from "Apps/Order/Components/
 import { ShippingSummaryItemFragmentContainer as ShippingSummaryItem } from "Apps/Order/Components/ShippingSummaryItem"
 import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "Apps/Order/Components/TransactionDetailsSummaryItem"
 import { type Dialog, injectDialog } from "Apps/Order/Dialogs"
+import { useOrderTracking } from "Apps/Order/Hooks/useOrderTracking"
 import {
   type CommitMutation,
   injectCommitMutation,
@@ -67,8 +67,8 @@ const OrdersReviewOwnerType = OwnerType.ordersReview
 export const ReviewRoute: FC<React.PropsWithChildren<ReviewProps>> = props => {
   const [isLoading, setIsLoading] = useState(true)
   const { trackEvent } = useTracking()
-  const productId = extractNodes(props.order.lineItems)[0].artwork?.internalID
   const artworkVersion = extractNodes(props.order.lineItems)[0]?.artworkVersion
+  const orderTracking = useOrderTracking()
 
   useEffect(() => {
     if (props.order) {
@@ -97,21 +97,17 @@ export const ReviewRoute: FC<React.PropsWithChildren<ReviewProps>> = props => {
   }
 
   const onSubmit = async (setupIntentId?: any) => {
-    const submitEvent = {
-      action_type:
-        props.order.mode === "BUY"
-          ? DeprecatedSchema.ActionType.SubmittedOrder
-          : DeprecatedSchema.ActionType.SubmittedOffer,
-      order_id: props.order.internalID,
-      products: [
-        {
-          product_id: productId,
-          quantity: 1,
-          price: props.order.itemsTotal,
-        },
-      ],
+    if (props.order.mode === "BUY") {
+      orderTracking.submittedOrder({
+        order: props.order,
+      })
     }
-    trackEvent(submitEvent)
+
+    if (props.order.mode === "OFFER") {
+      orderTracking.submittedOffer({
+        order: props.order,
+      })
+    }
 
     try {
       const orderOrError =
@@ -175,11 +171,6 @@ export const ReviewRoute: FC<React.PropsWithChildren<ReviewProps>> = props => {
         const orderId = order.internalID
         const conversationId = order.impulseConversationId
 
-        const artworkId = get(
-          order,
-          o => o.lineItems?.edges?.[0]?.node?.artwork?.slug,
-        )
-
         if (isEigen) {
           if (order.mode === "OFFER") {
             if (
@@ -203,7 +194,7 @@ export const ReviewRoute: FC<React.PropsWithChildren<ReviewProps>> = props => {
               // We cannot expect Eigen to respond all the time to messages sent from the webview
               // a default fallback page is safer for old/broken Eigen versions
               setTimeout(() => {
-                router.push(`/orders/${order.internalID}/status`)
+                router.push(`/orders/${order.internalID}/details`)
               }, 500)
               return
             }
@@ -216,7 +207,7 @@ export const ReviewRoute: FC<React.PropsWithChildren<ReviewProps>> = props => {
           }
         }
 
-        // Eigen redirects to the status page for non-Offer orders (must keep
+        // Eigen redirects to the details page for non-Offer orders (must keep
         // the user inside the webview)
         // For in-review offers, we also want to override the default "go to
         // artwork page and display modal linking to conversation" behavior
@@ -228,18 +219,18 @@ export const ReviewRoute: FC<React.PropsWithChildren<ReviewProps>> = props => {
             orderOrError?.order?.state === "IN_REVIEW" &&
             order.source === "artwork_page")
         ) {
-          return router.push(`/orders/${orderId}/status`)
+          return router.push(`/orders/${orderId}/details`)
         }
         // Make offer and Purchase in inquiry redirects to the conversation page
         if (order.source === "inquiry") {
           return router.push(`/user/conversations/${conversationId}`)
         }
-        // Make offer from the artwork page redirects to the artwork page with a confirmation modal
+        // Make offer from the artwork page redirects to the details page
         if (order.mode === "OFFER") {
-          return router.push(`/artwork/${artworkId}?order-submitted=${orderId}`)
+          return router.push(`/orders/${orderId}/details`)
         }
-        // Purchase from the artwork page redirects to the status page
-        return router.push(`/orders/${orderId}/status`)
+        // Purchase from the artwork page redirects to the details page
+        return router.push(`/orders/${orderId}/details`)
       }
     } catch (error) {
       handleSubmitError(error)

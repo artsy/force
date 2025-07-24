@@ -189,7 +189,7 @@ export const NewPaymentRoute: FC<
           }
         }
 
-        router.push(`/orders/${order.internalID}/status`)
+        router.push(`/orders/${order.internalID}/details`)
       }
     } catch (error) {
       logger.error(error)

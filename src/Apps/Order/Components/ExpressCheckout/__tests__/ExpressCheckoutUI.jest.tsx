@@ -1,8 +1,10 @@
 import { ExpressCheckoutElement } from "@stripe/react-stripe-js"
 import { fireEvent, waitFor } from "@testing-library/react"
 import { screen } from "@testing-library/react"
+import type { ShippingContextProps } from "Apps/Order/Routes/Shipping/ShippingContext"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import type { DeepPartial } from "Utils/typeSupport"
 import type { ExpressCheckoutUI_Test_Query } from "__generated__/ExpressCheckoutUI_Test_Query.graphql"
 import { useEffect } from "react"
 import React from "react"
@@ -17,13 +19,27 @@ jest.unmock("react-relay")
 jest.mock("System/Hooks/useAnalyticsContext", () => ({
   useAnalyticsContext: jest.fn(() => ({
     contextPageOwnerSlug: "artwork-slug-from-context",
-    contextPageOwnerId: "artwork-id-from-context",
+    contextPageOwnerId: "order-id-from-context",
+    contextPageOwnerType: "owner-type-from-context",
   })),
+}))
+
+let shippingRateId = "DOMESTIC_FLAT"
+
+const mockShippingContext: DeepPartial<ShippingContextProps> = {
+  actions: {
+    setIsExpressCheckoutLoading: jest.fn(),
+  },
+}
+
+jest.mock("Apps/Order/Routes/Shipping/Hooks/useShippingContext", () => ({
+  useShippingContext: () => mockShippingContext,
 }))
 
 const mockExpressCheckoutElement = ExpressCheckoutElement as jest.Mock
 const mockResolveOnClick = jest.fn()
 const mockElementsUpdate = jest.fn()
+const mockShowSpinner = jest.fn()
 const mockCreateConfirmationToken = jest.fn(() => {
   return {
     confirmationToken: {
@@ -72,6 +88,7 @@ jest.mock("@stripe/react-stripe-js", () => {
               data-testid="express-checkout-confirm"
               onClick={() =>
                 onConfirm({
+                  expressPaymentType: "apple_pay",
                   shippingAddress: {
                     name: "Buyer Name",
                     address: {
@@ -87,9 +104,8 @@ jest.mock("@stripe/react-stripe-js", () => {
                     phone: "1234567890",
                   },
                   shippingRate: {
-                    id: "PICKUP",
-                    amount: 123,
-                    displayName: "Pickup",
+                    id: shippingRateId,
+                    amount: 4200,
                   },
                 })
               }
@@ -111,7 +127,10 @@ jest.mock("@stripe/react-stripe-js", () => {
 })
 
 const { renderWithRelay } = setupTestWrapperTL<ExpressCheckoutUI_Test_Query>({
-  Component: ({ me }) => me?.order && <ExpressCheckoutUI order={me.order!} />,
+  Component: ({ me }) =>
+    me?.order && (
+      <ExpressCheckoutUI order={me.order!} setShowSpinner={mockShowSpinner} />
+    ),
   query: graphql`
     query ExpressCheckoutUI_Test_Query @raw_response_type {
       me {
@@ -156,8 +175,18 @@ describe("ExpressCheckoutUI", () => {
     const elementProps = mockExpressCheckoutElement.mock.calls[0][0]
 
     expect(elementProps.options).toEqual({
-      buttonTheme: { applePay: "white-outline" },
+      buttonTheme: { applePay: "white-outline", googlePay: "white" },
       buttonHeight: 50,
+      paymentMethods: {
+        applePay: "always",
+        googlePay: "always",
+      },
+      buttonType: {
+        googlePay: "plain",
+      },
+      layout: {
+        overflow: "never",
+      },
     })
   })
 
@@ -171,22 +200,40 @@ describe("ExpressCheckoutUI", () => {
 
     fireEvent.click(screen.getByTestId("express-checkout-confirm"))
 
-    const { operationName, operationVariables } =
-      await mockResolveLastOperation({
-        updateOrderPayload: () => ({
-          orderOrError: {
-            __typename: "OrderMutationSuccess",
-            order: orderData,
-          },
-        }),
-      })
-    expect(operationName).toBe("useUpdateOrderMutation")
-    expect(operationVariables.input).toEqual({
+    // First, test the payment method update
+    const paymentMethodUpdate = await mockResolveLastOperation({
+      updateOrder: () => ({
+        orderOrError: {
+          __typename: "OrderMutationSuccess",
+          order: orderData,
+        },
+      }),
+    })
+
+    expect(paymentMethodUpdate.operationName).toBe("useUpdateOrderMutation")
+    expect(paymentMethodUpdate.operationVariables.input).toEqual({
+      id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
+      paymentMethod: "CREDIT_CARD",
+      creditCardWalletType: "APPLE_PAY",
+    })
+
+    // Second, test the shipping address update
+    const shippingAddressUpdate = await mockResolveLastOperation({
+      updateOrderShippingAddress: () => ({
+        orderOrError: {
+          __typename: "OrderMutationSuccess",
+          order: orderData,
+        },
+      }),
+    })
+
+    expect(shippingAddressUpdate.operationName).toBe(
+      "useUpdateOrderShippingAddressMutation",
+    )
+    expect(shippingAddressUpdate.operationVariables.input).toEqual({
       id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
       buyerPhoneNumber: "1234567890",
       buyerPhoneNumberCountryCode: null,
-      creditCardWalletType: "APPLE_PAY",
-      paymentMethod: "CREDIT_CARD",
       shippingAddressLine1: "401 Broadway",
       shippingAddressLine2: null,
       shippingCity: "New York",
@@ -199,16 +246,21 @@ describe("ExpressCheckoutUI", () => {
     await flushPromiseQueue()
     expect(mockCreateConfirmationToken).toHaveBeenCalled()
 
-    const mutation = await mockResolveLastOperation({
-      submitOrderPayload: () => ({
+    // show the spinner after token creation
+    expect(mockShowSpinner).toHaveBeenCalledWith(true)
+
+    // Third, test the order submission
+    const orderSubmission = await mockResolveLastOperation({
+      submitOrder: () => ({
         orderOrError: {
           __typename: "OrderMutationSuccess",
           order: orderData,
         },
       }),
     })
-    expect(mutation.operationName).toBe("useSubmitOrderMutation")
-    expect(mutation.operationVariables.input).toEqual({
+
+    expect(orderSubmission.operationName).toBe("useSubmitOrderMutation")
+    expect(orderSubmission.operationVariables.input).toEqual({
       id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
       confirmationToken: "ctoken_123",
     })
@@ -218,6 +270,7 @@ describe("ExpressCheckoutUI", () => {
   })
 
   it("omits shipping data when order is pickup", async () => {
+    shippingRateId = "PICKUP"
     const { mockResolveLastOperation, env } = renderWithRelay({
       Order: () => ({
         ...orderData,
@@ -236,29 +289,44 @@ describe("ExpressCheckoutUI", () => {
 
     fireEvent.click(screen.getByTestId("express-checkout-confirm"))
 
+    // First, test the payment method update
+    const paymentMethodUpdate = await mockResolveLastOperation({
+      updateOrder: () => ({
+        orderOrError: {
+          __typename: "OrderMutationSuccess",
+          order: orderData,
+        },
+      }),
+    })
+
+    expect(paymentMethodUpdate.operationName).toBe("useUpdateOrderMutation")
+    expect(paymentMethodUpdate.operationVariables.input).toEqual({
+      id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
+      paymentMethod: "CREDIT_CARD",
+      creditCardWalletType: "APPLE_PAY",
+    })
+
     const { operationName, operationVariables } =
       await mockResolveLastOperation({
-        updateOrderPayload: () => ({
+        updateOrderShippingAddress: () => ({
           orderOrError: {
             __typename: "OrderMutationSuccess",
             order: orderData,
           },
         }),
       })
-    expect(operationName).toBe("useUpdateOrderMutation")
+    expect(operationName).toBe("useUpdateOrderShippingAddressMutation")
     expect(operationVariables.input).toEqual({
       id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
       buyerPhoneNumber: "1234567890",
       buyerPhoneNumberCountryCode: null,
-      creditCardWalletType: "APPLE_PAY",
-      paymentMethod: "CREDIT_CARD",
-      shippingAddressLine1: "401 Broadway",
+      shippingAddressLine1: null,
       shippingAddressLine2: null,
-      shippingCity: "New York",
-      shippingCountry: "US",
-      shippingName: "Buyer Name",
-      shippingPostalCode: "10013",
-      shippingRegion: "NY",
+      shippingCity: null,
+      shippingCountry: null,
+      shippingName: null,
+      shippingPostalCode: null,
+      shippingRegion: null,
     })
 
     await flushPromiseQueue()
@@ -279,6 +347,7 @@ describe("ExpressCheckoutUI", () => {
         },
       }),
     )
+    expect(mockShowSpinner).toHaveBeenCalledWith(true)
 
     const mutation = await mockResolveLastOperation({
       submitOrderPayload: () => ({
@@ -349,9 +418,9 @@ describe("ExpressCheckoutUI", () => {
 
     expect(trackEvent).toHaveBeenCalledWith({
       action: "expressCheckoutViewed",
-      context_page_owner_id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
+      context_page_owner_id: "order-id-from-context",
       context_page_owner_slug: "artwork-slug-from-context",
-      context_page_owner_type: "orders-shipping",
+      context_page_owner_type: "owner-type-from-context",
       flow: "Buy now",
       credit_card_wallet_types: ["applePay"],
     })
@@ -366,9 +435,64 @@ describe("ExpressCheckoutUI", () => {
 
     expect(trackEvent).toHaveBeenCalledWith({
       action: "clickedExpressCheckout",
-      context_page_owner_id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
-      context_page_owner_slug: "artwork-slug-from-context",
-      context_page_owner_type: "orders-shipping",
+      context_page_owner_id: "order-id-from-context",
+      context_page_owner_type: "owner-type-from-context",
+      flow: "Buy now",
+      credit_card_wallet_type: "apple_pay",
+    })
+  })
+
+  it("tracks an express checkout submitted event", async () => {
+    const { mockResolveLastOperation } = renderWithRelay({
+      Order: () => ({
+        ...orderData,
+        fulfillmentOptions: [{ type: "SHIPPING_TBD", amount: null }],
+      }),
+    })
+
+    fireEvent.click(screen.getByTestId("express-checkout-confirm"))
+
+    // First, test the payment method update
+    await mockResolveLastOperation({
+      updateOrder: () => ({
+        orderOrError: {
+          __typename: "OrderMutationSuccess",
+          order: orderData,
+        },
+      }),
+    })
+
+    await flushPromiseQueue()
+
+    // Resolve the update order mutation
+    await mockResolveLastOperation({
+      updateOrderPayload: () => ({
+        orderOrError: {
+          __typename: "OrderMutationSuccess",
+          order: orderData,
+        },
+      }),
+    })
+
+    await flushPromiseQueue()
+    expect(mockCreateConfirmationToken).toHaveBeenCalled()
+
+    // Resolve the submit order mutation
+    await mockResolveLastOperation({
+      submitOrderPayload: () => ({
+        orderOrError: {
+          __typename: "OrderMutationSuccess",
+          order: orderData,
+        },
+      }),
+    })
+
+    await flushPromiseQueue()
+
+    expect(trackEvent).toHaveBeenCalledWith({
+      action: "submittedOrder",
+      order_id: "order-id-from-context",
+      context_page_owner_type: "owner-type-from-context",
       flow: "Buy now",
       credit_card_wallet_type: "apple_pay",
     })
@@ -384,9 +508,19 @@ describe("ExpressCheckoutUI", () => {
 
     fireEvent.click(screen.getByTestId("express-checkout-confirm"))
 
+    // Resolve the payment method update mutation
+    await mockResolveLastOperation({
+      updateOrder: () => ({
+        orderOrError: {
+          __typename: "OrderMutationSuccess",
+          order: orderData,
+        },
+      }),
+    })
+
     // Resolve the update order mutation
     await mockResolveLastOperation({
-      updateOrderPayload: () => ({
+      updateOrderShippingAddress: () => ({
         orderOrError: {
           __typename: "OrderMutationSuccess",
           order: orderData,
@@ -396,6 +530,7 @@ describe("ExpressCheckoutUI", () => {
 
     await flushPromiseQueue()
     expect(mockCreateConfirmationToken).toHaveBeenCalled()
+    expect(mockShowSpinner).toHaveBeenCalledWith(true)
 
     // Resolve the submit order mutation
     await mockResolveLastOperation({
@@ -434,9 +569,8 @@ describe("ExpressCheckoutUI", () => {
 
       expect(trackEvent).toHaveBeenCalledWith({
         action: "clickedCancelExpressCheckout",
-        context_page_owner_id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
-        context_page_owner_slug: "artwork-slug-from-context",
-        context_page_owner_type: "orders-shipping",
+        context_page_owner_id: "order-id-from-context",
+        context_page_owner_type: "owner-type-from-context",
         flow: "Buy now",
         credit_card_wallet_type: "apple_pay",
       })
@@ -454,8 +588,8 @@ describe("ExpressCheckoutUI", () => {
 
       expect(trackEvent).toHaveBeenCalledWith({
         action: "errorMessageViewed",
-        context_owner_id: "artwork-id-from-context",
-        context_owner_type: "orders-shipping",
+        context_owner_id: "order-id-from-context",
+        context_owner_type: "owner-type-from-context",
         error_code: "test_error_code",
         title: "An error occurred",
         message:

@@ -28,7 +28,7 @@ export const ErrorPage: React.FC<React.PropsWithChildren<ErrorPageProps>> = ({
     typeof code === "number" ? ERROR_MESSAGES[code] : "Internal Error"
 
   return (
-    <Box {...rest}>
+    <Box data-testid="error-page" {...rest}>
       <GridColumns gridRowGap={4}>
         <Column span={6} wrap>
           <Text variant="xl">{headline}</Text>

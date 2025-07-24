@@ -547,10 +547,12 @@ const artaLocation = (
 ): ArtaLocation | null => {
   const shippingOrigin = artwork.shippingOrigin?.split(", ") ?? []
   const city = shippingOrigin[0]
+  const state = shippingOrigin.length === 3 ? shippingOrigin[1] : ""
   const country = shippingOrigin[shippingOrigin.length - 1]
   return shippingOrigin.length > 1 && !!city && !!country
     ? {
         city,
+        region: state,
         country,
       }
     : null

@@ -1,4 +1,11 @@
-import { Box, Spacer, Text } from "@artsy/palette"
+import {
+  Box,
+  Skeleton,
+  SkeletonBox,
+  SkeletonText,
+  Spacer,
+  Text,
+} from "@artsy/palette"
 import {
   ExpressCheckoutElement,
   useElements,
@@ -21,12 +28,14 @@ import { useSubmitOrderMutation } from "Apps/Order/Components/ExpressCheckout/Mu
 import { useUnsetOrderFulfillmentOptionMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useUnsetOrderFulfillmentOptionMutation"
 import { useUnsetOrderPaymentMethodMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useUnsetOrderPaymentMethodMutation"
 import { useUpdateOrderMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useUpdateOrderMutation"
+import { useUpdateOrderShippingAddressMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useUpdateOrderShippingAddressMutation"
 import {
   type OrderMutationSuccess,
   validateAndExtractOrderResponse,
 } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
 import { useOrderTracking } from "Apps/Order/Hooks/useOrderTracking"
 import { preventHardReload } from "Apps/Order/OrderApp"
+import { useShippingContext } from "Apps/Order/Routes/Shipping/Hooks/useShippingContext"
 import { RouterLink } from "System/Components/RouterLink"
 import createLogger from "Utils/logger"
 import type {
@@ -37,13 +46,16 @@ import type {
   FulfillmentOptionInputEnum,
   useSetFulfillmentOptionMutation$data,
 } from "__generated__/useSetFulfillmentOptionMutation.graphql"
-import type { useUpdateOrderMutation$data } from "__generated__/useUpdateOrderMutation.graphql"
-import { useRef, useState } from "react"
+import type {
+  OrderCreditCardWalletTypeEnum,
+  useUpdateOrderMutation$data,
+} from "__generated__/useUpdateOrderMutation.graphql"
+import { type Dispatch, type SetStateAction, useRef, useState } from "react"
 import { graphql, useFragment } from "react-relay"
-import styled from "styled-components"
 
 interface ExpressCheckoutUIProps {
   order: ExpressCheckoutUI_order$key
+  setShowSpinner?: Dispatch<SetStateAction<boolean>>
 }
 
 const logger = createLogger("ExpressCheckoutUI")
@@ -53,13 +65,18 @@ type HandleCancelCallback = NonNullable<
   React.ComponentProps<typeof ExpressCheckoutElement>["onCancel"]
 >
 
-export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
+export const ExpressCheckoutUI = ({
+  order,
+  setShowSpinner,
+}: ExpressCheckoutUIProps) => {
   const orderData = useFragment(ORDER_FRAGMENT, order)
   const [visible, setVisible] = useState(false)
   const elements = useElements()
   const stripe = useStripe()
   const setFulfillmentOptionMutation = useSetFulfillmentOptionMutation()
   const updateOrderMutation = useUpdateOrderMutation()
+  const updateOrderShippingAddressMutation =
+    useUpdateOrderShippingAddressMutation()
   const submitOrderMutation = useSubmitOrderMutation()
   const unsetFulfillmentOptionMutation =
     useUnsetOrderFulfillmentOptionMutation()
@@ -68,9 +85,32 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
     useState<ExpressPaymentType | null>(null)
   const orderTracking = useOrderTracking()
   const errorRef = useRef<string | null>(null)
+  const [hasMultiplePaymentOptions, setHasMultiplePaymentOptions] =
+    useState<boolean>(false)
+  const shippingContext = useShippingContext()
+  const [expressCheckoutSubmitting, setExpressCheckoutSubmitting] =
+    useState(false)
 
   if (!(stripe && elements)) {
     return null
+  }
+
+  const expressCheckoutOptions: StripeExpressCheckoutElementOptions = {
+    buttonTheme: {
+      applePay: "white-outline",
+      googlePay: "white",
+    },
+    buttonHeight: 50,
+    paymentMethods: {
+      applePay: "always",
+      googlePay: "always",
+    },
+    layout: {
+      overflow: "never",
+    },
+    buttonType: {
+      googlePay: "plain",
+    },
   }
 
   const checkoutOptions: ClickResolveDetails = {
@@ -122,7 +162,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
 
     orderTracking.clickedExpressCheckout({
       order: orderData,
-      paymentMethod: expressPaymentType,
+      walletType: expressPaymentType,
     })
     const { itemsTotal } = orderData
 
@@ -152,7 +192,7 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
     if (!errorRef.current) {
       orderTracking.clickedCancelExpressCheckout({
         order: orderData,
-        paymentMethod: expressCheckoutType as string,
+        walletType: expressCheckoutType as string,
       })
     }
 
@@ -176,7 +216,10 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
     }
 
     setExpressCheckoutType(null)
-    resetOrder()
+
+    if (!expressCheckoutSubmitting) {
+      resetOrder()
+    }
   }
 
   // User selects a shipping address
@@ -193,21 +236,23 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
     const { city, state, country, postal_code } = address
 
     try {
-      const updateOrderResult = await updateOrderMutation.submitMutation({
-        variables: {
-          input: {
-            id: orderData.internalID,
-            shippingCity: city,
-            shippingRegion: state,
-            shippingCountry: country,
-            shippingPostalCode: postal_code,
-            shippingName: name,
+      const updateOrderShippingAddressResult =
+        await updateOrderShippingAddressMutation.submitMutation({
+          variables: {
+            input: {
+              id: orderData.internalID,
+              shippingCity: city,
+              shippingRegion: state,
+              shippingCountry: country,
+              shippingPostalCode: postal_code,
+              shippingName: name,
+            },
           },
-        },
-      })
+        })
 
       const validatedResult = validateAndExtractOrderResponse(
-        updateOrderResult.updateOrder?.orderOrError,
+        updateOrderShippingAddressResult.updateOrderShippingAddress
+          ?.orderOrError,
       )
 
       const shippingRates = extractShippingRates(validatedResult.order)
@@ -288,6 +333,10 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
     shippingRate,
   }: StripeExpressCheckoutElementConfirmEvent) => {
     window.removeEventListener("beforeunload", preventHardReload)
+    setExpressCheckoutSubmitting(true)
+
+    const creditCardWalletType =
+      expressPaymentType.toUpperCase() as OrderCreditCardWalletTypeEnum
 
     const {
       name,
@@ -300,35 +349,60 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
       StripeExpressCheckoutElementConfirmEvent["billingDetails"]
     >
 
+    orderTracking.submittedOrder({
+      order: orderData,
+      walletType: expressPaymentType,
+    })
+
     try {
-      // Finally we have all fulfillment details
-      const updateOrderResult = await updateOrderMutation.submitMutation({
-        variables: {
-          input: {
-            id: orderData.internalID,
-            paymentMethod: "CREDIT_CARD",
-            creditCardWalletType: "APPLE_PAY",
-            buyerPhoneNumber: phone,
-            buyerPhoneNumberCountryCode: null,
-            shippingName: name,
-            shippingAddressLine1: line1,
-            shippingAddressLine2: line2,
-            shippingPostalCode: postal_code,
-            shippingCity: city,
-            shippingRegion: state,
-            shippingCountry: country,
+      // update order payment method
+      const updateOrderPaymentMethodResult =
+        await updateOrderMutation.submitMutation({
+          variables: {
+            input: {
+              id: orderData.internalID,
+              paymentMethod: "CREDIT_CARD",
+              creditCardWalletType,
+            },
           },
-        },
-      })
+        })
 
       validateAndExtractOrderResponse(
-        updateOrderResult.updateOrder?.orderOrError,
+        updateOrderPaymentMethodResult.updateOrder?.orderOrError,
+      )
+
+      // Finally we have all fulfillment details
+      const updateOrderShippingAddressResult =
+        await updateOrderShippingAddressMutation.submitMutation({
+          variables: {
+            input: {
+              id: orderData.internalID,
+              buyerPhoneNumber: phone,
+              buyerPhoneNumberCountryCode: null,
+              shippingName: shippingRate?.id === "PICKUP" ? null : name,
+              shippingAddressLine1:
+                shippingRate?.id === "PICKUP" ? null : line1,
+              shippingAddressLine2:
+                shippingRate?.id === "PICKUP" ? null : line2,
+              shippingPostalCode:
+                shippingRate?.id === "PICKUP" ? null : postal_code,
+              shippingCity: shippingRate?.id === "PICKUP" ? null : city,
+              shippingRegion: shippingRate?.id === "PICKUP" ? null : state,
+              shippingCountry: shippingRate?.id === "PICKUP" ? null : country,
+            },
+          },
+        })
+
+      validateAndExtractOrderResponse(
+        updateOrderShippingAddressResult.updateOrderShippingAddress
+          ?.orderOrError,
       )
 
       // Trigger form validation and wallet collection
       const { error: submitError } = await elements.submit()
       if (submitError) {
         logger.error(submitError)
+        setExpressCheckoutSubmitting(false)
         return
       }
 
@@ -359,8 +433,11 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
         // This point is only reached if there's an immediate error when
         // creating the ConfirmationToken. Show the error to customer (for example, payment details incomplete)
         logger.error(error)
+        setExpressCheckoutSubmitting(false)
         return
       }
+
+      setShowSpinner?.(true)
 
       const submitOrderResult = await submitOrderMutation.submitMutation({
         variables: {
@@ -400,27 +477,41 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
     }
   }
 
+  const handleReady = e => {
+    try {
+      const paymentMethods = e.availablePaymentMethods
+
+      if (paymentMethods) {
+        setHasMultiplePaymentOptions(
+          Object.values(paymentMethods).filter(Boolean).length > 1,
+        )
+
+        setVisible(true)
+
+        orderTracking.expressCheckoutViewed({
+          order: orderData,
+          walletType: getAvailablePaymentMethods(paymentMethods),
+        })
+      }
+    } finally {
+      shippingContext.actions.setIsExpressCheckoutLoading(false)
+    }
+  }
+
   return (
-    <UncollapsingBox visible={visible}>
+    <Box display={visible ? "block" : "none"}>
       <Text variant="lg-display">Express checkout</Text>
       <Spacer y={1} />
-      <Box maxWidth={["100%", "50%"]}>
+      <Box
+        minWidth="240px"
+        maxWidth={hasMultiplePaymentOptions ? "100%" : ["100%", "50%"]}
+        paddingX="1px"
+      >
         <ExpressCheckoutElement
           options={expressCheckoutOptions}
           onClick={handleOpenExpressCheckout}
           onCancel={handleCancel}
-          onReady={e => {
-            if (!!e.availablePaymentMethods) {
-              setVisible(true)
-
-              orderTracking.expressCheckoutViewed({
-                order: orderData,
-                paymentMethods: getAvailablePaymentMethods(
-                  e.availablePaymentMethods,
-                ),
-              })
-            }
-          }}
+          onReady={handleReady}
           onShippingAddressChange={handleShippingAddressChange}
           onShippingRateChange={handleShippingRateChange}
           onLoadError={e => {
@@ -442,15 +533,8 @@ export const ExpressCheckoutUI = ({ order }: ExpressCheckoutUIProps) => {
         .
       </Text>
       <Spacer y={4} />
-    </UncollapsingBox>
+    </Box>
   )
-}
-
-const expressCheckoutOptions: StripeExpressCheckoutElementOptions = {
-  buttonTheme: {
-    applePay: "white-outline",
-  },
-  buttonHeight: 50,
 }
 
 const ORDER_FRAGMENT = graphql`
@@ -625,18 +709,18 @@ const extractShippingRates = (order: ParseableOrder): Array<ShippingRate> => {
     shippingRatesOnly.length === 0
       ? rates.concat(CALCULATING_SHIPPING_RATE)
       : rates
-
-  return finalRates.sort(sortPickupLast)
+  const selectedFulfillmentOption = order.fulfillmentOptions.find(
+    option => option.selected,
+  )
+  if (selectedFulfillmentOption!.type === "PICKUP") {
+    // if pickup is selected, it should be the first option since Stripe auto
+    // selects the first option
+    return finalRates
+  } else {
+    // on modal open, the first option should always be ship
+    return finalRates.sort(sortPickupLast)
+  }
 }
-
-// Only max-height can be animated
-const UncollapsingBox = styled(Box)<{ visible: boolean }>`
-  display: flex;
-  flex-direction: column;
-  max-height: ${({ visible }) => (visible ? "1000px" : "0")};
-  overflow: hidden;
-  transition: max-height 0.3s ease-in-out;
-`
 
 function getAvailablePaymentMethods(
   paymentMethods: AvailablePaymentMethods,
@@ -645,3 +729,16 @@ function getAvailablePaymentMethods(
     .filter(([_, isAvailable]) => isAvailable)
     .map(([method]) => method)
 }
+
+export const EXPRESS_CHECKOUT_PLACEHOLDER = (
+  <Skeleton>
+    <SkeletonText variant="lg-display">Express checkout</SkeletonText>
+    <Spacer y={1} />
+    <SkeletonBox width={["100%", "50%"]} height={50} borderRadius={50} />
+    <Spacer y={1} />
+    <SkeletonText variant="xs" ml={0.5}>
+      By clicking Pay, I agree to Artsy’s General Terms and Conditions of Sale
+    </SkeletonText>
+    <Spacer y={4} />
+  </Skeleton>
+)

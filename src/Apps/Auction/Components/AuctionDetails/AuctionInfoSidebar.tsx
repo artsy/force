@@ -1,6 +1,5 @@
 import { Box, Join, Spacer, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
-import { useFlag } from "@unleash/proxy-client-react"
 import { useSaleWebsocket } from "Utils/Hooks/useSaleWebsocket"
 import type { AuctionInfoSidebar_sale$data } from "__generated__/AuctionInfoSidebar_sale.graphql"
 import { useState } from "react"
@@ -14,7 +13,6 @@ interface AuctionInfoSidebarProps {
 const AuctionInfoSidebar: React.FC<
   React.PropsWithChildren<AuctionInfoSidebarProps>
 > = ({ sale }) => {
-  const showTotalRaisedFlag = useFlag("emerald_hackathon-sale-total-raised")
   const totalRaisedDisplay = sale.totalRaised?.display
   const [updatedTotalRaisedDisplay, setUpdatedTotalRaisedDisplay] =
     useState(totalRaisedDisplay)
@@ -28,16 +26,14 @@ const AuctionInfoSidebar: React.FC<
 
   return (
     <Join separator={<Spacer y={2} />}>
-      {!sale.hideTotal &&
-        showTotalRaisedFlag &&
-        sale.totalRaised?.minor > 0 && (
-          <Box>
-            <Text variant="sm">Bid Total</Text>
-            <Text variant="sm" fontWeight="bold">
-              {updatedTotalRaisedDisplay}
-            </Text>
-          </Box>
-        )}
+      {!sale.hideTotal && sale.totalRaised?.minor > 0 && (
+        <Box>
+          <Text variant="sm">Bid Total</Text>
+          <Text variant="sm" fontWeight="bold">
+            {updatedTotalRaisedDisplay}
+          </Text>
+        </Box>
+      )}
 
       <LiveAuctionToolTip show={!!sale.liveStartAt} />
 

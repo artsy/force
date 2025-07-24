@@ -9,11 +9,14 @@ import {
   type ErrorMessageViewed,
   type ExpressCheckoutViewed,
   OwnerType,
+  type SubmittedOffer,
+  type SubmittedOrder,
 } from "@artsy/cohesion"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import type { FulfillmentType } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import type { ExpressCheckoutUI_order$data } from "__generated__/ExpressCheckoutUI_order.graphql"
+import type { Review_order$data } from "__generated__/Review_order.graphql"
 import { useMemo } from "react"
 import { useTracking } from "react-tracking"
 
@@ -22,6 +25,7 @@ export const useOrderTracking = () => {
   const analytics = useAnalyticsContext()
   const contextPageOwnerId = analytics.contextPageOwnerId as string
   const contextPageOwnerSlug = analytics.contextPageOwnerSlug as string
+  const contextPageOwnerType = analytics.contextPageOwnerType as OwnerType
 
   const trackingCalls = useMemo(() => {
     return {
@@ -61,7 +65,7 @@ export const useOrderTracking = () => {
       }) => {
         const payload: ErrorMessageViewed = {
           action: ActionType.errorMessageViewed,
-          context_owner_type: OwnerType.ordersShipping,
+          context_owner_type: contextPageOwnerType,
           context_owner_id: contextPageOwnerId,
           title,
           message,
@@ -99,15 +103,15 @@ export const useOrderTracking = () => {
 
       expressCheckoutViewed: ({
         order,
-        paymentMethods,
+        walletType,
       }: {
         order: ExpressCheckoutUI_order$data
-        paymentMethods: string[]
+        walletType: string[]
       }) => {
         const payload: ExpressCheckoutViewed = {
           action: ActionType.expressCheckoutViewed,
-          context_page_owner_type: OwnerType.ordersShipping,
-          context_page_owner_id: order.internalID ?? "",
+          context_page_owner_type: contextPageOwnerType,
+          context_page_owner_id: contextPageOwnerId,
           context_page_owner_slug: contextPageOwnerSlug,
           flow:
             order.source === "PARTNER_OFFER"
@@ -115,7 +119,7 @@ export const useOrderTracking = () => {
               : order.mode === "BUY"
                 ? "Buy now"
                 : "Make offer",
-          credit_card_wallet_types: paymentMethods,
+          credit_card_wallet_types: walletType,
         }
 
         trackEvent(payload)
@@ -123,23 +127,22 @@ export const useOrderTracking = () => {
 
       clickedExpressCheckout: ({
         order,
-        paymentMethod,
+        walletType,
       }: {
         order: ExpressCheckoutUI_order$data
-        paymentMethod: string
+        walletType: string
       }) => {
         const payload: ClickedExpressCheckout = {
           action: ActionType.clickedExpressCheckout,
-          context_page_owner_type: OwnerType.ordersShipping,
-          context_page_owner_id: order.internalID ?? "",
-          context_page_owner_slug: contextPageOwnerSlug,
+          context_page_owner_type: contextPageOwnerType,
+          context_page_owner_id: contextPageOwnerId,
           flow:
             order.source === "PARTNER_OFFER"
               ? "Partner offer"
               : order.mode === "BUY"
                 ? "Buy now"
                 : "Make offer",
-          credit_card_wallet_type: paymentMethod,
+          credit_card_wallet_type: walletType,
         }
 
         trackEvent(payload)
@@ -147,29 +150,70 @@ export const useOrderTracking = () => {
 
       clickedCancelExpressCheckout: ({
         order,
-        paymentMethod,
+        walletType,
       }: {
         order: ExpressCheckoutUI_order$data
-        paymentMethod: string
+        walletType: string
       }) => {
         const payload: ClickedCancelExpressCheckout = {
           action: ActionType.clickedCancelExpressCheckout,
-          context_page_owner_type: OwnerType.ordersShipping,
-          context_page_owner_id: order.internalID ?? "",
-          context_page_owner_slug: contextPageOwnerSlug,
+          context_page_owner_type: contextPageOwnerType,
+          context_page_owner_id: contextPageOwnerId,
           flow:
             order.source === "PARTNER_OFFER"
               ? "Partner offer"
               : order.mode === "BUY"
                 ? "Buy now"
                 : "Make offer",
-          credit_card_wallet_type: paymentMethod,
+          credit_card_wallet_type: walletType,
+        }
+
+        trackEvent(payload)
+      },
+
+      submittedOffer: ({
+        order,
+        walletType,
+      }: {
+        order: ExpressCheckoutUI_order$data | Review_order$data
+        walletType?: string
+      }) => {
+        const payload: SubmittedOffer = {
+          action: ActionType.submittedOffer,
+          context_page_owner_type: contextPageOwnerType,
+          order_id: contextPageOwnerId,
+          flow:
+            order.source === "PARTNER_OFFER" ? "Partner offer" : "Make offer",
+          ...(walletType ? { credit_card_wallet_type: walletType } : {}),
+        }
+
+        trackEvent(payload)
+      },
+
+      submittedOrder: ({
+        order,
+        walletType,
+      }: {
+        order: ExpressCheckoutUI_order$data | Review_order$data
+        walletType?: string
+      }) => {
+        const payload: SubmittedOrder = {
+          action: ActionType.submittedOrder,
+          context_page_owner_type: contextPageOwnerType,
+          order_id: contextPageOwnerId,
+          flow: order.source === "PARTNER_OFFER" ? "Partner offer" : "Buy now",
+          ...(walletType ? { credit_card_wallet_type: walletType } : {}),
         }
 
         trackEvent(payload)
       },
     }
-  }, [trackEvent, contextPageOwnerId, contextPageOwnerSlug])
+  }, [
+    trackEvent,
+    contextPageOwnerId,
+    contextPageOwnerSlug,
+    contextPageOwnerType,
+  ])
 
   return trackingCalls
 }

@@ -1,6 +1,6 @@
-import type { ArtworkSidebarBidAction_Test_Query$rawResponse } from "__generated__/ArtworkSidebarBidAction_Test_Query.graphql"
+import type { ArtworkSidebarBidActionTestQuery$rawResponse } from "__generated__/ArtworkSidebarBidActionTestQuery.graphql"
 
-export const ArtworkFromAuctionPreview: ArtworkSidebarBidAction_Test_Query$rawResponse["artwork"] =
+export const ArtworkFromAuctionPreview: ArtworkSidebarBidActionTestQuery$rawResponse["artwork"] =
   {
     slug: "artwork_from_preview_auction",
     id: "sdfsdfsdf2",
@@ -35,7 +35,7 @@ export const ArtworkFromAuctionPreview: ArtworkSidebarBidAction_Test_Query$rawRe
     },
   }
 
-export const ArtworkFromTimedAuctionRegistrationOpen: ArtworkSidebarBidAction_Test_Query$rawResponse["artwork"] =
+export const ArtworkFromTimedAuctionRegistrationOpen: ArtworkSidebarBidActionTestQuery$rawResponse["artwork"] =
   {
     slug: "artwork_from_open_non_live_auction",
     id: "sdfsdfsdf2",
@@ -70,7 +70,7 @@ export const ArtworkFromTimedAuctionRegistrationOpen: ArtworkSidebarBidAction_Te
     },
   }
 
-export const ArtworkFromTimedAuctionRegistrationClosed: ArtworkSidebarBidAction_Test_Query$rawResponse["artwork"] =
+export const ArtworkFromTimedAuctionRegistrationClosed: ArtworkSidebarBidActionTestQuery$rawResponse["artwork"] =
   {
     slug: "artwork_from_registration_closed_timed_auction",
     id: "sdfsdfsdf2",
@@ -107,34 +107,34 @@ export const ArtworkFromTimedAuctionRegistrationClosed: ArtworkSidebarBidAction_
 
 export const SaleRequiringIDV: Partial<
   // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  ArtworkSidebarBidAction_Test_Query$rawResponse["artwork"]["sale"]
+  ArtworkSidebarBidActionTestQuery$rawResponse["artwork"]["sale"]
 > = {
   requireIdentityVerification: true,
 }
 
-export const NotIDVedUser: ArtworkSidebarBidAction_Test_Query$rawResponse["me"] =
+export const NotIDVedUser: ArtworkSidebarBidActionTestQuery$rawResponse["me"] =
   {
     id: "user-id",
     isIdentityVerified: false,
     pendingIdentityVerification: undefined,
   }
 
-export const UserPendingIDV: ArtworkSidebarBidAction_Test_Query$rawResponse["me"] =
+export const UserPendingIDV: ArtworkSidebarBidActionTestQuery$rawResponse["me"] =
   {
     id: "user-id",
     isIdentityVerified: false,
     pendingIdentityVerification: { internalID: "idv-id", id: "idv-id" },
   }
 
-export const IDVedUser: ArtworkSidebarBidAction_Test_Query$rawResponse["me"] = {
+export const IDVedUser: ArtworkSidebarBidActionTestQuery$rawResponse["me"] = {
   id: "user-id",
   isIdentityVerified: true,
   pendingIdentityVerification: undefined,
 }
 
-export const NoUser: ArtworkSidebarBidAction_Test_Query$rawResponse["me"] = null
+export const NoUser: ArtworkSidebarBidActionTestQuery$rawResponse["me"] = null
 
-export const ArtworkFromLiveAuctionRegistrationOpen: ArtworkSidebarBidAction_Test_Query$rawResponse["artwork"] =
+export const ArtworkFromLiveAuctionRegistrationOpen: ArtworkSidebarBidActionTestQuery$rawResponse["artwork"] =
   {
     slug: "artwork_from_open_live_auction_open_registration",
     id: "sdfsdfsdf2",
@@ -169,7 +169,7 @@ export const ArtworkFromLiveAuctionRegistrationOpen: ArtworkSidebarBidAction_Tes
     },
   }
 
-export const ArtworkFromLiveAuctionRegistrationClosed: ArtworkSidebarBidAction_Test_Query$rawResponse["artwork"] =
+export const ArtworkFromLiveAuctionRegistrationClosed: ArtworkSidebarBidActionTestQuery$rawResponse["artwork"] =
   {
     slug: "artwork_from_open_live_auction_closed_registration",
     id: "sdfsdfsdf2",
@@ -204,7 +204,7 @@ export const ArtworkFromLiveAuctionRegistrationClosed: ArtworkSidebarBidAction_T
     },
   }
 
-export const ArtworkFromClosedAuction: ArtworkSidebarBidAction_Test_Query$rawResponse["artwork"] =
+export const ArtworkFromClosedAuction: ArtworkSidebarBidActionTestQuery$rawResponse["artwork"] =
   {
     slug: "artwork_from_closed_auction",
     id: "sdfsdfsdf2",

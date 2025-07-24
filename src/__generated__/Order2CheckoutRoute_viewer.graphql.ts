@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8b6a1c9432208069b07c325050dde4db>>
+ * @generated SignedSource<<f3d9e5283276c3ba17cb11780f4d78e5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,6 +21,7 @@ export type Order2CheckoutRoute_viewer$data = {
     } | null | undefined;
     readonly order: {
       readonly internalID: string;
+      readonly " $fragmentSpreads": FragmentRefs<"Order2CheckoutApp_order" | "Order2CheckoutContext_order">;
     } | null | undefined;
   } | null | undefined;
   readonly " $fragmentType": "Order2CheckoutRoute_viewer";
@@ -31,15 +32,13 @@ export type Order2CheckoutRoute_viewer$key = {
 };
 
 const node: ReaderFragment = (function(){
-var v0 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "internalID",
-    "storageKey": null
-  }
-];
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+};
 return {
   "argumentDefinitions": [
     {
@@ -73,7 +72,19 @@ return {
           "kind": "LinkedField",
           "name": "order",
           "plural": false,
-          "selections": (v0/*: any*/),
+          "selections": [
+            (v0/*: any*/),
+            {
+              "args": null,
+              "kind": "FragmentSpread",
+              "name": "Order2CheckoutContext_order"
+            },
+            {
+              "args": null,
+              "kind": "FragmentSpread",
+              "name": "Order2CheckoutApp_order"
+            }
+          ],
           "storageKey": null
         },
         {
@@ -105,7 +116,9 @@ return {
                   "kind": "LinkedField",
                   "name": "node",
                   "plural": false,
-                  "selections": (v0/*: any*/),
+                  "selections": [
+                    (v0/*: any*/)
+                  ],
                   "storageKey": null
                 }
               ],
@@ -123,6 +136,6 @@ return {
 };
 })();
 
-(node as any).hash = "ff23f050a828e69bef8ab4483c2966d2";
+(node as any).hash = "1dda868a9fdd9664177e9210db608447";
 
 export default node;

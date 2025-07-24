@@ -22,8 +22,6 @@ interface AppShellProps {
 export const AppShell: React.FC<
   React.PropsWithChildren<AppShellProps>
 > = props => {
-  useSetupAuth()
-
   const { onboardingComponent } = useOnboardingModal()
 
   const { children, match } = props
@@ -63,6 +61,8 @@ export const AppShell: React.FC<
 
       <NavigationHistoryProvider>
         <AnalyticsContextProvider path={match?.location?.pathname}>
+          <UseSetupAuth />
+
           <Layout variant={routeConfig?.layout}>{children}</Layout>
 
           {onboardingComponent}
@@ -70,4 +70,11 @@ export const AppShell: React.FC<
       </NavigationHistoryProvider>
     </>
   )
+}
+
+// Nest inside the AnalyticsContextProvider
+const UseSetupAuth = () => {
+  useSetupAuth()
+
+  return null
 }

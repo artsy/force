@@ -4,6 +4,7 @@ import {
   Image,
   ResponsiveBox,
 } from "@artsy/palette"
+import { useFlag } from "@unleash/proxy-client-react"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { getENV } from "Utils/getENV"
 import { useLocalImage } from "Utils/localImageHelpers"
@@ -35,6 +36,8 @@ const ArtworkLightbox: React.FC<
 
   const localImage = useLocalImage(images[activeIndex])
 
+  const isArtworkCaptionEnabled = useFlag("diamond_artwork-captions")
+
   const resizedLocalImage = localImage && {
     src: localImage.data,
     srcSet: undefined,
@@ -51,6 +54,11 @@ const ArtworkLightbox: React.FC<
     resized,
     mobileLightboxSource,
   } = images[activeIndex]
+
+  const artworkCaption =
+    isArtworkCaptionEnabled && isDefault
+      ? (artwork.caption ?? artwork.formattedMetadata)
+      : artwork.formattedMetadata
 
   const image = resizedLocalImage ?? (hasGeometry ? resized : fallback)
 
@@ -120,7 +128,7 @@ const ArtworkLightbox: React.FC<
             height="100%"
             src={lightboxImage.src}
             srcSet={lightboxImage.srcSet}
-            alt={artwork.formattedMetadata ?? ""}
+            alt={artworkCaption ?? ""}
             position="relative"
             preventRightClick={!isTeam}
             style={{
@@ -141,6 +149,7 @@ export const ArtworkLightboxFragmentContainer = createFragmentContainer(
       @argumentDefinitions(
         includeAllImages: { type: "Boolean", defaultValue: false }
       ) {
+        caption
         formattedMetadata
         images(includeAll: $includeAllImages) {
           internalID

@@ -1,6 +1,5 @@
-import { LocalBusiness } from "Components/Seo/LocalBusiness"
+import { PartnerMetaStructuredData } from "Apps/Partner/Components/PartnerMeta/PartnerMetaStructuredData"
 import { useRouter } from "System/Hooks/useRouter"
-import { extractNodes } from "Utils/extractNodes"
 import { getENV } from "Utils/getENV"
 import type { PartnerMeta_partner$data } from "__generated__/PartnerMeta_partner.graphql"
 import type * as React from "react"
@@ -12,7 +11,7 @@ interface PartnerMetaProps {
 }
 
 const PartnerMeta: React.FC<React.PropsWithChildren<PartnerMetaProps>> = ({
-  partner: { locationsConnection, meta, name, slug },
+  partner,
 }) => {
   const {
     match: {
@@ -21,12 +20,12 @@ const PartnerMeta: React.FC<React.PropsWithChildren<PartnerMetaProps>> = ({
     },
   } = useRouter()
 
+  const { meta, slug } = partner
+
   const href = `${getENV("APP_URL")}${pathname}`
   const canonicalHref = artistId
-    ? `${getENV("APP_URL")}/partner/${slug}/artists/${artistId}`
+    ? `${getENV("APP_URL")}/artist/${artistId}`
     : `${getENV("APP_URL")}/partner/${slug}`
-
-  const partnerLocation = extractNodes(locationsConnection)[0]
 
   return (
     <>
@@ -45,7 +44,8 @@ const PartnerMeta: React.FC<React.PropsWithChildren<PartnerMetaProps>> = ({
 
       {meta?.image && <Meta property="og:image" content={meta?.image} />}
       {meta?.image && <Meta name="thumbnail" content={meta?.image} />}
-      <LocalBusiness partnerLocation={partnerLocation} partnerName={name} />
+
+      <PartnerMetaStructuredData partner={partner} />
     </>
   )
 }
@@ -55,29 +55,12 @@ export const PartnerMetaFragmentContainer = createFragmentContainer(
   {
     partner: graphql`
       fragment PartnerMeta_partner on Partner {
-        locationsConnection(first: 1) {
-          edges {
-            node {
-              address
-              address2
-              city
-              coordinates {
-                lat
-                lng
-              }
-              country
-              phone
-              postalCode
-              state
-            }
-          }
-        }
+        ...PartnerMetaStructuredData_partner
         meta {
           image
           title
           description
         }
-        name
         slug
       }
     `,

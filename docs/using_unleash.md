@@ -104,12 +104,10 @@ const MyExperiment = () => {
 ### Checking Feature Flags in Server Code
 
 ```typescript
-import { getOrInitUnleashServerClient } from "Server/featureFlags/unleashHelpers"
+import { isFeatureFlagEnabled } from "System/FeatureFlags/unleashServer"
 
 async function someServerFunction() {
-  const unleashClient = await getOrInitUnleashServerClient()
-
-  if (unleashClient.isEnabled("demo-feature")) {
+  if (isFeatureFlagEnabled("demo-feature")) {
     return newFeatureBehavior()
   }
 
@@ -120,32 +118,75 @@ async function someServerFunction() {
 ### Using Context for Targeted Rollouts
 
 ```typescript
-import { getOrInitUnleashServerClient } from "Server/featureFlags/unleashHelpers"
-
-const unleashClient = await getOrInitUnleashServerClient()
-
-// Setup context
-// NOTE: developers will need to handle passing in the context
-// when retrieving flags/variant while working server side. This
-// was done for them in the previous implementation.
-const context = {
-  userId: res.locals.sd.CURRENT_USER,
-  sessionId: res.locals.sd.SESSION_ID,
-}
+import {
+  isFeatureFlagEnabled,
+  getVariant,
+} from "System/FeatureFlags/unleashServer"
 
 // Check toggle
-if (unleash.isEnabled("demo", context)) {
+if (isFeatureFlagEnabled("demo")) {
   console.log("Toggle enabled")
 } else {
   console.log("Toggle disabled")
 }
 
 // Check variant
-const variant = unleash.getVariant("demo-variant", context)
+const variant = getVariant("demo-variant")
 
 if (variant.name === "experiment") {
   // do something with the experiment variant...
 }
+```
+
+## Accessing Unleash from the Router
+
+When the router first mounts we inject it into the router context, which can be used in the render function in our router to perform redirects and other operations. Example:
+
+### Performing server-side redirects
+
+```tsx
+const routes = [
+  {
+    path: "/some-route",
+    render: ({ match }) => {
+      if (isServer) {
+        if (
+          match.context.featureFlags.isEnabled("emerald_order-details-page")
+        ) {
+          console.log("Successfully found feature flag flag")
+
+          throw new RedirectException("/")
+        }
+      }
+
+      return <>This shouldn't render on the server, but rather redirect</>
+    },
+  },
+]
+```
+
+### Accessing from `prepareVariables` to pass to GraphQL query
+
+```tsx
+const routes = [
+  {
+    path: "/some-route",
+    prepareVariables: (params, { context }) => {
+      const id = context.featureFlags.isEnabled("some-flag") ? "foo" : "bar"
+
+      return {
+        id,
+      }
+    },
+    query: graphql`
+      query someRouteQuery($id: String!) {
+        artist(id: $id) {
+          internalID
+        }
+      }
+    `,
+  },
+]
 ```
 
 ## Common Pattern Examples

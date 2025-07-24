@@ -1,4 +1,5 @@
 import { MetaTags } from "Components/MetaTags"
+import { useRouter } from "System/Hooks/useRouter"
 import type { ShowMeta_show$data } from "__generated__/ShowMeta_show.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -18,6 +19,10 @@ const ShowMeta: React.FC<React.PropsWithChildren<ShowMetaProps>> = ({
     formattedEndAt,
   },
 }) => {
+  const router = useRouter()
+
+  // Fallback to current href if show is not `displayable`
+  const fallbackHref = router.match.location.pathname
   const fallbackDescription = `Explore ${name} presented by ${
     partner ? `${partner.name} on` : ""
   } Artsy. On view from ${formattedStartAt} to ${formattedEndAt}.`
@@ -26,7 +31,7 @@ const ShowMeta: React.FC<React.PropsWithChildren<ShowMetaProps>> = ({
     <MetaTags
       title={`${name} | Artsy`}
       description={metaDescription || fallbackDescription}
-      pathname={href}
+      pathname={href || fallbackHref}
       imageURL={metaImage?.src}
     />
   )

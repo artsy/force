@@ -155,4 +155,29 @@ describe("clientRouter", () => {
       expect(screen.getByText("SystemContextConsumer")).toBeInTheDocument()
     })
   })
+
+  it("passes unleash to match context", async () => {
+    const { ClientRouter } = await setupClientRouter({
+      history: {
+        protocol: "memory",
+      },
+      routes: [
+        {
+          path: "/",
+          render: ({ match }) => {
+            expect(match.context.featureFlags.isEnabled()).toBe(true)
+            return null
+          },
+        },
+      ],
+      context: {
+        featureFlags: {
+          isEnabled: jest.fn().mockReturnValue(true),
+          getVariant: jest.fn(),
+        },
+      },
+    })
+
+    render(<ClientRouter />)
+  })
 })

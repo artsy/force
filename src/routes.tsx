@@ -1,4 +1,5 @@
 import { aboutRoutes } from "Apps/About/aboutRoutes"
+import { about2Routes } from "Apps/About2/about2Routes"
 import { adminRoutes } from "Apps/Admin/adminRoutes"
 import { alertRoutes } from "Apps/Alert/alertRoutes"
 import { artAppraisalsRoutes } from "Apps/ArtAppraisals/artAppraisalsRoutes"
@@ -62,9 +63,12 @@ import { saleRoutes } from "./Apps/Sale/saleRoutes"
 import { tagRoutes } from "./Apps/Tag/tagRoutes"
 import { userRoutes } from "./Apps/User/userRoutes"
 import { worksForYouRoutes } from "./Apps/WorksForYou/worksForYouRoutes"
+import { recommendedArtistsRoutes } from "Apps/RecommendedArtists/recommendedArtistsRoutes"
+import { artworkRecommendationsRoutes } from "./Apps/ArtworkRecommendations/artworkRecommendationsRoutes"
 
 const ROUTES = buildAppRoutes([
   aboutRoutes,
+  about2Routes,
   adminRoutes,
   artAppraisalsRoutes,
   articleRoutes,
@@ -75,6 +79,7 @@ const ROUTES = buildAppRoutes([
   artQuizRoutes,
   alertRoutes,
   artworkRoutes,
+  artworkRecommendationsRoutes,
   auctionRoutes,
   auctionsRoutes,
   authenticationRoutes,
@@ -114,6 +119,7 @@ const ROUTES = buildAppRoutes([
   preferencesRoutes,
   pressRoutes,
   priceDatabaseRoutes,
+  recommendedArtistsRoutes,
   saleRoutes,
   saleAgreementsRoutes,
   searchRoutes,

@@ -2,6 +2,7 @@ const mockElement = () => ({
   mount: jest.fn(),
   destroy: jest.fn(),
   on: jest.fn(),
+  off: jest.fn(),
   update: jest.fn(),
 })
 
@@ -28,6 +29,7 @@ export const mockStripe = () => ({
   paymentRequest: jest.fn(),
   handleCardAction: jest.fn(),
   _registerWrapper: jest.fn(),
+  createConfirmationToken: jest.fn(),
 })
 
 // Export a singleton mock

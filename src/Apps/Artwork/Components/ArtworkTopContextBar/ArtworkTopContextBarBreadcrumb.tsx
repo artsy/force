@@ -24,22 +24,25 @@ export const ArtworkTopContextBarBreadcrumb: React.FC<
 
       <StructuredData
         schemaData={{
+          "@context": "https://schema.org",
           "@type": "BreadcrumbList",
           itemListElement: [
             {
               "@type": "ListItem",
               position: 1,
               item: {
+                "@type": "Person",
                 "@id": `${getENV("APP_URL")}${artwork.artist.href}`,
-                name: artwork.artist.name,
+                ...(artwork.artist.name ? { name: artwork.artist.name } : {}),
               },
             },
             {
               "@type": "ListItem",
               position: 2,
               item: {
-                "@id": `${getENV("APP_URL")}${artwork.href}`,
-                name: artwork.title,
+                "@type": "VisualArtwork",
+                "@id": `${getENV("APP_URL")}${artwork.href}#visual-artwork`,
+                ...(artwork.title ? { name: artwork.title } : {}),
               },
             },
           ],

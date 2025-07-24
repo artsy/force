@@ -6,4 +6,4 @@ export const Z = {
   toasts: 150,
   dropdown: 200,
   pageLoadingBar: 300,
-}
+} as const

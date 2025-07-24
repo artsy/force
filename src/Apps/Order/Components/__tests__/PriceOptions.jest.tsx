@@ -96,10 +96,6 @@ describe("PriceOptions", () => {
       expect(radios[2]).toHaveTextContent("US$100.00")
       expect(radios[3]).toHaveTextContent("Different amount")
     })
-    it("defaults to the correct value", async () => {
-      expect(onChange).toHaveBeenCalledWith(200)
-      await waitFor(() => expect(radios[0]).toBeChecked())
-    })
     it("fires click event with correct value", () => {
       fireEvent.click(radios[1])
       expect(radios[1]).toBeChecked()
@@ -121,27 +117,17 @@ describe("PriceOptions", () => {
       fireEvent.click(radios[0])
       expect(trackEvent).toHaveBeenLastCalledWith(
         expect.objectContaining(
-          getTrackingObject(
-            "Top-end of range (high chance of acceptance)",
-            200,
-            "USD",
-          ),
+          getTrackingObject("Top-end of range", 200, "USD"),
         ),
       )
       fireEvent.click(radios[1])
       expect(trackEvent).toHaveBeenLastCalledWith(
-        expect.objectContaining(
-          getTrackingObject("Midpoint (good chance of acceptance)", 150, "USD"),
-        ),
+        expect.objectContaining(getTrackingObject("Midpoint", 150, "USD")),
       )
       fireEvent.click(radios[2])
       expect(trackEvent).toHaveBeenLastCalledWith(
         expect.objectContaining(
-          getTrackingObject(
-            "Low-end of range (lower chance of acceptance)",
-            100,
-            "USD",
-          ),
+          getTrackingObject("Low-end of range", 100, "USD"),
         ),
       )
       fireEvent.click(radios[3])
@@ -198,41 +184,23 @@ describe("PriceOptions", () => {
       expect(radios[2]).toHaveTextContent("€80.00")
       expect(radios[3]).toHaveTextContent("Different amount")
     })
-    it("defaults to the correct value", async () => {
-      expect(onChange).toHaveBeenCalledWith(100)
-      await waitFor(() => expect(radios[0]).toBeChecked())
-    })
     it("correctly tracks the clicking of an option", async () => {
       fireEvent.click(radios[0])
       expect(trackEvent).toHaveBeenLastCalledWith(
-        expect.objectContaining(
-          getTrackingObject(
-            "List price (high chance of acceptance)",
-            100,
-            "EUR",
-          ),
-        ),
+        expect.objectContaining(getTrackingObject("List price", 100, "EUR")),
       )
 
       fireEvent.click(radios[1])
       expect(trackEvent).toHaveBeenLastCalledWith(
         expect.objectContaining(
-          getTrackingObject(
-            "10% below the list price (good chance of acceptance)",
-            90,
-            "EUR",
-          ),
+          getTrackingObject("10% below the list price", 90, "EUR"),
         ),
       )
 
       fireEvent.click(radios[2])
       expect(trackEvent).toHaveBeenLastCalledWith(
         expect.objectContaining(
-          getTrackingObject(
-            "20% below the list price (substantial reduction, lower chance of acceptance)",
-            80,
-            "EUR",
-          ),
+          getTrackingObject("20% below the list price", 80, "EUR"),
         ),
       )
 
@@ -274,15 +242,6 @@ describe("PriceOptions", () => {
       expect(
         screen.queryByText("Offer amount missing or invalid."),
       ).not.toBeInTheDocument()
-    })
-    it("displays the error and automatically selects the custom value option when an error is passed", async () => {
-      await waitFor(() => expect(radios[3]).toBeChecked())
-
-      const selected = await screen.findByRole("radio", { checked: true })
-
-      expect(selected).toBeInTheDocument()
-      expect(selected).toHaveTextContent("Different amount")
-      expect(selected).toHaveTextContent("Offer amount missing or invalid.")
     })
     it("correctly rounds the values and displays the currency symbol", () => {
       expect(radios[0]).toHaveTextContent("A$99.00") // List price

@@ -1,7 +1,7 @@
-import type { ArtworkGrid_Test_Query$rawResponse } from "__generated__/ArtworkGrid_Test_Query.graphql"
+import type { ArtworkGridTestQuery$rawResponse } from "__generated__/ArtworkGridTestQuery.graphql"
 
 // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-export const ArtworksGridEdges: ArtworkGrid_Test_Query$rawResponse["artist"]["artworks_connection"]["edges"] =
+export const ArtworksGridEdges: ArtworkGridTestQuery$rawResponse["artist"]["artworks_connection"]["edges"] =
   [
     {
       __typename: "ArtworkEdge",
@@ -197,7 +197,7 @@ export const ArtworksGridEdges: ArtworkGrid_Test_Query$rawResponse["artist"]["ar
   ]
 
 // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-export const ArtworkGridFixture: ArtworkGrid_Test_Query$rawResponse["artist"]["artworks_connection"] =
+export const ArtworkGridFixture: ArtworkGridTestQuery$rawResponse["artist"]["artworks_connection"] =
   {
     // pageInfo: {
     //   hasNextPage: true,

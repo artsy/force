@@ -1,5 +1,6 @@
 import { Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import { PageHTML } from "Apps/Page/Components/PageHTML"
+import { MetaTags } from "Components/MetaTags"
 import { TopContextBar } from "Components/TopContextBar"
 import type { SaleAgreementRoute_saleAgreement$key } from "__generated__/SaleAgreementRoute_saleAgreement.graphql"
 import type { FC } from "react"
@@ -20,11 +21,16 @@ export const SaleAgreementRoute: FC<
 
   return (
     <>
+      <MetaTags
+        title={`${data.sale.name} | Supplemental Conditions of Sale | Artsy`}
+      />
+
       <TopContextBar displayBackArrow href="/supplemental-cos">
         All Supplemental Conditions of Sale
       </TopContextBar>
 
       <Spacer y={4} />
+
       <Text variant="xl" as="h1">
         {data.sale.name}
       </Text>

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<97a7674f0c1b9100d7abcb75f9fc72ba>>
+ * @generated SignedSource<<c9123f46c1a71b202fc33a09de0b7cc2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -61,6 +61,9 @@ export type SettingsPurchasesRow_order$data = {
               readonly trackingId: string | null | undefined;
             } | null | undefined;
           } | null | undefined> | null | undefined;
+        } | null | undefined;
+        readonly shipment: {
+          readonly trackingUrl: string | null | undefined;
         } | null | undefined;
       } | null | undefined;
     } | null | undefined> | null | undefined;
@@ -465,6 +468,24 @@ return {
                     }
                   ],
                   "storageKey": "fulfillments(first:1)"
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "CommerceShipment",
+                  "kind": "LinkedField",
+                  "name": "shipment",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "trackingUrl",
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": null
                 }
               ],
               "storageKey": null
@@ -495,6 +516,6 @@ return {
 };
 })();
 
-(node as any).hash = "021ada8370092c02304816255a395b79";
+(node as any).hash = "dff74ba1badadd723d716d65bd2e66f9";
 
 export default node;

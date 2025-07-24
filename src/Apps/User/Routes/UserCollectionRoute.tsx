@@ -7,6 +7,7 @@ import { MetaTags } from "Components/MetaTags"
 import { useRouter } from "System/Hooks/useRouter"
 import { Jump } from "Utils/Hooks/useJump"
 import type { UserCollectionRoute_collection$data } from "__generated__/UserCollectionRoute_collection.graphql"
+import { HttpError } from "found"
 import { useEffect } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -25,6 +26,10 @@ const UserCollectionRoute = ({ collection }: UserCollectionRouteProps) => {
   useEffect(() => {
     trackEvent(tracks.openedPage(collection))
   }, [collection, trackEvent])
+
+  if (!collection) {
+    throw new HttpError(404)
+  }
 
   return (
     <>

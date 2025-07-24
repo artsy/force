@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<460155b22f1bb9b95bd09fc7e33e10d4>>
+ * @generated SignedSource<<df0b4c314b01db216a2fe760de7ebde6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -26,6 +26,7 @@ export type ArtistHeader_artist$data = {
       readonly src: string | null | undefined;
       readonly width: number | null | undefined;
     } | null | undefined;
+    readonly imageTitle: string | null | undefined;
     readonly title: string | null | undefined;
   } | null | undefined;
   readonly formattedNationalityAndBirthday: string | null | undefined;
@@ -138,11 +139,6 @@ return {
           "kind": "Literal",
           "name": "format",
           "value": "HTML"
-        },
-        {
-          "kind": "Literal",
-          "name": "partnerBio",
-          "value": false
         }
       ],
       "concreteType": "ArtistBlurb",
@@ -165,7 +161,7 @@ return {
           "storageKey": null
         }
       ],
-      "storageKey": "biographyBlurb(format:\"HTML\",partnerBio:false)"
+      "storageKey": "biographyBlurb(format:\"HTML\")"
     },
     {
       "alias": null,
@@ -294,6 +290,13 @@ return {
           "name": "title",
           "storageKey": null
         },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "imageTitle",
+          "storageKey": null
+        },
         (v2/*: any*/),
         {
           "alias": null,
@@ -345,6 +348,6 @@ return {
 };
 })();
 
-(node as any).hash = "966307beb64f1a2a1d34d53688a526e4";
+(node as any).hash = "c224dda436b4f73fca88cbeed8d625f6";
 
 export default node;
