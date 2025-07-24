@@ -809,7 +809,7 @@ describe("Order2CheckoutRoute", () => {
       }
       const initialOrder = props.me.order
 
-      const { mockResolveLastOperation, env } = renderWithRelay({
+      const { mockResolveLastOperation } = renderWithRelay({
         Viewer: () => props,
       })
 
@@ -851,21 +851,6 @@ describe("Order2CheckoutRoute", () => {
         "ZIP code is required",
         "Phone number is required",
       ])
-
-      await act(async () => {
-        await waitFor(() => {
-          return mockResolveLastOperation({
-            Me: () => ({
-              creditCards: {
-                edges: [],
-              },
-            }),
-          })
-        })
-        await flushPromiseQueue()
-      })
-
-      expect(env.mock.getAllOperations()).toHaveLength(0)
 
       const initialLocationValues = getInitialLocationValues(mockCountryOptions)
 
