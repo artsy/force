@@ -2,6 +2,7 @@
 .artifacts
 .cache
 .cache-loader
+.claude/settings.local.json
 .DS_Store
 .env
 .env.*
