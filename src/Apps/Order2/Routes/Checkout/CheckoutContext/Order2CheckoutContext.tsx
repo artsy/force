@@ -50,7 +50,7 @@ type SavedCreditCard = {
   lastDigits: string
 }
 
-interface Order2CheckoutModel {
+export interface Order2CheckoutModel {
   // State
   isLoading: boolean
   /** Order is redirecting to the details page */
@@ -94,8 +94,6 @@ interface Order2CheckoutModel {
   redirectToOrderDetails: Action<this>
   setCheckoutMode: Action<this, CheckoutMode>
 }
-
-export type Order2CheckoutContextValue = Order2CheckoutModel
 
 export const Order2CheckoutContext: ReturnType<
   typeof createContextStore<Order2CheckoutModel>
@@ -492,17 +490,14 @@ export const Order2CheckoutContextProvider: React.FC<
 
   return (
     <Order2CheckoutContext.Provider runtimeModel={runtimeModel}>
-      <Order2CheckoutContextInternal
-        orderData={orderData}
-        partnerOffer={partnerOffer}
-      >
+      <CheckoutLoadingManager orderData={orderData} partnerOffer={partnerOffer}>
         {children}
-      </Order2CheckoutContextInternal>
+      </CheckoutLoadingManager>
     </Order2CheckoutContext.Provider>
   )
 }
 
-const Order2CheckoutContextInternal: React.FC<{
+const CheckoutLoadingManager: React.FC<{
   orderData: Order2CheckoutContext_order$data
   partnerOffer: {
     timer: ReturnType<typeof useCountdownTimer>
