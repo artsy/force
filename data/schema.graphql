@@ -4613,6 +4613,9 @@ input BulkArtworkFilterInput {
 }
 
 input BulkUpdateArtworksMetadataInput {
+  # The artist IDs to be assigned
+  artistIds: [String]
+
   # The availaiblity to be assigned
   availability: Availability
 
@@ -16757,6 +16760,9 @@ union OpeningHoursUnion = OpeningHoursArray | OpeningHoursText
 
 # Buyer's representation of an order
 type Order {
+  # List of available payment methods for the order
+  availablePaymentMethods: [OrderPaymentMethodEnum!]!
+
   # List of alpha-2 country codes to which the order can be shipped
   availableShippingCountries: [String!]!
 
