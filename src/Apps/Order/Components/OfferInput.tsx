@@ -38,6 +38,7 @@ export const OfferInput: FC<React.PropsWithChildren<OfferInputProps>> = ({
       onFocus={onFocus}
       onBlur={onBlur}
       value={formatValueForDisplay(value)}
+      data-testid={showError ? "offer-input-error" : "offer-input"}
       onChange={ev => {
         const currentValue = ev.currentTarget.value
         const cleanedValue = currentValue.replace(/[^\d]/g, "") // Remove non-digits

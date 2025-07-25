@@ -1,6 +1,6 @@
-import type { ArtworkSidebarCurrentBidInfo_Test_Query$rawResponse } from "__generated__/ArtworkSidebarCurrentBidInfo_Test_Query.graphql"
+import type { ArtworkSidebarCurrentBidInfoTestQuery$rawResponse } from "__generated__/ArtworkSidebarCurrentBidInfoTestQuery.graphql"
 
-export const ClosedAuctionArtwork: ArtworkSidebarCurrentBidInfo_Test_Query$rawResponse["artwork"] =
+export const ClosedAuctionArtwork: ArtworkSidebarCurrentBidInfoTestQuery$rawResponse["artwork"] =
   {
     id: "artwork_from_closed_auction",
     sale: {
@@ -35,7 +35,7 @@ export const ClosedAuctionArtwork: ArtworkSidebarCurrentBidInfo_Test_Query$rawRe
     },
   }
 
-export const ClosedLotArtwork: ArtworkSidebarCurrentBidInfo_Test_Query$rawResponse["artwork"] =
+export const ClosedLotArtwork: ArtworkSidebarCurrentBidInfoTestQuery$rawResponse["artwork"] =
   {
     id: "artwork_from_closed_auction",
     sale: {
@@ -70,7 +70,7 @@ export const ClosedLotArtwork: ArtworkSidebarCurrentBidInfo_Test_Query$rawRespon
     },
   }
 
-export const AuctionPreview: ArtworkSidebarCurrentBidInfo_Test_Query$rawResponse["artwork"] =
+export const AuctionPreview: ArtworkSidebarCurrentBidInfoTestQuery$rawResponse["artwork"] =
   {
     id: "artwork_from_auction_preview",
     sale: {
@@ -105,7 +105,7 @@ export const AuctionPreview: ArtworkSidebarCurrentBidInfo_Test_Query$rawResponse
     },
   }
 
-export const AuctionPreviewNoStartingBid: ArtworkSidebarCurrentBidInfo_Test_Query$rawResponse["artwork"] =
+export const AuctionPreviewNoStartingBid: ArtworkSidebarCurrentBidInfoTestQuery$rawResponse["artwork"] =
   {
     id: "artwork_from_auction_preview",
     sale: {
@@ -138,7 +138,7 @@ export const AuctionPreviewNoStartingBid: ArtworkSidebarCurrentBidInfo_Test_Quer
     },
   }
 
-export const OpenAuctionNoReserveNoBids: ArtworkSidebarCurrentBidInfo_Test_Query$rawResponse["artwork"] =
+export const OpenAuctionNoReserveNoBids: ArtworkSidebarCurrentBidInfoTestQuery$rawResponse["artwork"] =
   {
     id: "open_auction_no_reserve_no_bids",
     sale: {
@@ -173,7 +173,7 @@ export const OpenAuctionNoReserveNoBids: ArtworkSidebarCurrentBidInfo_Test_Query
     },
   }
 
-export const OpenAuctionNoReserveWithBids: ArtworkSidebarCurrentBidInfo_Test_Query$rawResponse["artwork"] =
+export const OpenAuctionNoReserveWithBids: ArtworkSidebarCurrentBidInfoTestQuery$rawResponse["artwork"] =
   {
     id: "artwork_from_open_auction",
     sale: {
@@ -208,7 +208,7 @@ export const OpenAuctionNoReserveWithBids: ArtworkSidebarCurrentBidInfo_Test_Que
     },
   }
 
-export const OpenAuctionReserveNoBids: ArtworkSidebarCurrentBidInfo_Test_Query$rawResponse["artwork"] =
+export const OpenAuctionReserveNoBids: ArtworkSidebarCurrentBidInfoTestQuery$rawResponse["artwork"] =
   {
     id: "open_auction_reserve_no_bids",
     sale: {
@@ -243,7 +243,7 @@ export const OpenAuctionReserveNoBids: ArtworkSidebarCurrentBidInfo_Test_Query$r
     },
   }
 
-export const OpenAuctionReserveNotMetWithBids: ArtworkSidebarCurrentBidInfo_Test_Query$rawResponse["artwork"] =
+export const OpenAuctionReserveNotMetWithBids: ArtworkSidebarCurrentBidInfoTestQuery$rawResponse["artwork"] =
   {
     id: "open_auction_reserve_not_met_with_bids",
     sale: {
@@ -278,7 +278,7 @@ export const OpenAuctionReserveNotMetWithBids: ArtworkSidebarCurrentBidInfo_Test
     },
   }
 
-export const OpenAuctionReserveMetWithBids: ArtworkSidebarCurrentBidInfo_Test_Query$rawResponse["artwork"] =
+export const OpenAuctionReserveMetWithBids: ArtworkSidebarCurrentBidInfoTestQuery$rawResponse["artwork"] =
   {
     id: "open_auction_reserve_met_with_bids",
     sale: {
@@ -313,7 +313,7 @@ export const OpenAuctionReserveMetWithBids: ArtworkSidebarCurrentBidInfo_Test_Qu
     },
   }
 
-export const OpenAuctionReserveNotMetIncreasingOwnBid: ArtworkSidebarCurrentBidInfo_Test_Query$rawResponse["artwork"] =
+export const OpenAuctionReserveNotMetIncreasingOwnBid: ArtworkSidebarCurrentBidInfoTestQuery$rawResponse["artwork"] =
   {
     // @ts-ignore
     id: "open_auction_reserve_not_met_increading_own_bid",
@@ -332,7 +332,7 @@ export const OpenAuctionReserveNotMetIncreasingOwnBid: ArtworkSidebarCurrentBidI
     ],
   }
 
-export const OpenAuctionReserveMetWithMyWinningBid: ArtworkSidebarCurrentBidInfo_Test_Query$rawResponse["artwork"] =
+export const OpenAuctionReserveMetWithMyWinningBid: ArtworkSidebarCurrentBidInfoTestQuery$rawResponse["artwork"] =
   {
     // @ts-ignore
     id: "open_auction_reserve_met_my_winning_bid",
@@ -345,7 +345,7 @@ export const OpenAuctionReserveMetWithMyWinningBid: ArtworkSidebarCurrentBidInfo
     ],
   }
 
-export const OpenAuctionReserveMetWithMyLosingBid: ArtworkSidebarCurrentBidInfo_Test_Query$rawResponse["artwork"] =
+export const OpenAuctionReserveMetWithMyLosingBid: ArtworkSidebarCurrentBidInfoTestQuery$rawResponse["artwork"] =
   {
     // @ts-ignore
     id: "open_auction_reserve_met_my_losing_bid",
@@ -358,7 +358,7 @@ export const OpenAuctionReserveMetWithMyLosingBid: ArtworkSidebarCurrentBidInfo_
     ],
   }
 
-export const LiveAuctionInProgress: ArtworkSidebarCurrentBidInfo_Test_Query$rawResponse["artwork"] =
+export const LiveAuctionInProgress: ArtworkSidebarCurrentBidInfoTestQuery$rawResponse["artwork"] =
   {
     id: "artwork_from_live_auction",
     sale: {

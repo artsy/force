@@ -1,5 +1,5 @@
 import { IdentityVerificationAppQueryResponseFixture } from "Apps/IdentityVerification/__fixtures__/routes_IdentityVerificationAppQuery"
-import { createMockNetworkLayer2 } from "DevTools/createMockNetworkLayer"
+import { createMockNetworkLayer } from "DevTools/createMockNetworkLayer"
 import {
   type FarceElementResult,
   type FarceRedirectResult,
@@ -22,7 +22,7 @@ describe("IdentityVerification/routes", () => {
     url,
     mockData: identityVerificationRoutes_IdentityVerificationAppQuery$rawResponse,
   ) {
-    const network = createMockNetworkLayer2({ mockData })
+    const network = createMockNetworkLayer({ mockData })
     const source = new RecordSource()
     const store = new Store(source)
     const environment = new Environment({ network, store }) as IEnvironment

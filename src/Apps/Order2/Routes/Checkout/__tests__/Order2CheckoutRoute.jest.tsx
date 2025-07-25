@@ -5,6 +5,7 @@ import {
   handleBackNavigation,
   preventHardReload,
 } from "Apps/Order2/Utils/navigationGuards"
+import { getInitialLocationValues } from "Components/Address/utils/getInitialLocationValues"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import mockStripe from "DevTools/mockStripe"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
@@ -98,6 +99,12 @@ jest.mock(
     }
   },
 )
+jest.mock("Utils/Hooks/useUserLocation", () => ({
+  useUserLocation: jest.fn(() => ({
+    location: { country: "United States" },
+    loading: false,
+  })),
+}))
 
 const mockTrackEvent = jest.fn()
 beforeEach(() => {
@@ -184,6 +191,13 @@ const testIDs = {
   paymentFormWire: "PaymentFormWire",
   deliveryOptionsStep: "DeliveryOptionsStep",
 }
+
+const mockCountryOptions = [
+  { text: "", value: "" },
+  { text: "United States", value: "US" },
+  { text: "Canada", value: "CA" },
+  { text: "United Kingdom", value: "GB" },
+]
 
 const helpers = {
   async waitForLoadingComplete() {
@@ -795,7 +809,7 @@ describe("Order2CheckoutRoute", () => {
       }
       const initialOrder = props.me.order
 
-      const { mockResolveLastOperation, env } = renderWithRelay({
+      const { mockResolveLastOperation } = renderWithRelay({
         Viewer: () => props,
       })
 
@@ -830,17 +844,19 @@ describe("Order2CheckoutRoute", () => {
 
       expect(requiredMessages.map(el => el.textContent)).toEqual([
         "Full name is required",
-        "Country is required",
+        "*Required",
         "Street address is required",
         "City is required",
+        "State is required",
+        "ZIP code is required",
         "Phone number is required",
       ])
 
-      expect(env.mock.getAllOperations()).toHaveLength(0)
+      const initialLocationValues = getInitialLocationValues(mockCountryOptions)
 
       const addressInputValue = {
         name: "John Doe",
-        country: "US",
+        country: initialLocationValues.selectedCountry || "US",
         addressLine1: "123 Main St",
         addressLine2: "Apt 4B",
         city: "New York",

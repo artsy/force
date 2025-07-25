@@ -15,7 +15,7 @@ export const OfferNote: React.FC<
   })
 
   return (
-    <>
+    <div data-testid="offerNote">
       {inquiryComponent}
 
       <TextArea
@@ -26,6 +26,6 @@ export const OfferNote: React.FC<
         onChange={onChange}
         value={value}
       />
-    </>
+    </div>
   )
 }

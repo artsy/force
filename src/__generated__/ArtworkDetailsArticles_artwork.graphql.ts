@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<58012ae7ddaa6f2749dc3c7e9d7cf499>>
+ * @generated SignedSource<<bc5f9fdeb81cf0f4fe5952b70f36f4c5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,7 +13,7 @@ import { FragmentRefs } from "relay-runtime";
 export type ArtworkDetailsArticles_artwork$data = {
   readonly articles: ReadonlyArray<{
     readonly author: {
-      readonly name: string | null | undefined;
+      readonly name: string;
     } | null | undefined;
     readonly href: string | null | undefined;
     readonly publishedAt: string | null | undefined;

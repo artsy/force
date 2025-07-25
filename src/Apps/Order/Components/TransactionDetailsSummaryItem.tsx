@@ -254,7 +254,11 @@ export const TransactionDetailsSummaryItem: FC<
   }
 
   return (
-    <StepSummaryItem {...others}>
+    <StepSummaryItem
+      {...others}
+      data-testid="transactionSummary"
+      data-testid-inner="transactionDetailsSummaryItem"
+    >
       {renderPriceEntry()}
       <Spacer y={2} />
       <Entry

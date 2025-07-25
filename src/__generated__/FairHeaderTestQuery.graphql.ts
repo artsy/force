@@ -1,0 +1,191 @@
+/**
+ * @generated SignedSource<<543c04d0df3699d912f21dbc28ed445f>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
+/* tslint:disable */
+/* eslint-disable */
+// @ts-nocheck
+
+import { ConcreteRequest } from 'relay-runtime';
+import { FragmentRefs } from "relay-runtime";
+export type FairHeaderTestQuery$variables = Record<PropertyKey, never>;
+export type FairHeaderTestQuery$data = {
+  readonly fair: {
+    readonly " $fragmentSpreads": FragmentRefs<"FairHeader_fair">;
+  } | null | undefined;
+};
+export type FairHeaderTestQuery = {
+  response: FairHeaderTestQuery$data;
+  variables: FairHeaderTestQuery$variables;
+};
+
+const node: ConcreteRequest = (function(){
+var v0 = [
+  {
+    "kind": "Literal",
+    "name": "id",
+    "value": "example"
+  }
+],
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v2 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v3 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+};
+return {
+  "fragment": {
+    "argumentDefinitions": [],
+    "kind": "Fragment",
+    "metadata": null,
+    "name": "FairHeaderTestQuery",
+    "selections": [
+      {
+        "alias": null,
+        "args": (v0/*: any*/),
+        "concreteType": "Fair",
+        "kind": "LinkedField",
+        "name": "fair",
+        "plural": false,
+        "selections": [
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "FairHeader_fair"
+          }
+        ],
+        "storageKey": "fair(id:\"example\")"
+      }
+    ],
+    "type": "Query",
+    "abstractKey": null
+  },
+  "kind": "Request",
+  "operation": {
+    "argumentDefinitions": [],
+    "kind": "Operation",
+    "name": "FairHeaderTestQuery",
+    "selections": [
+      {
+        "alias": null,
+        "args": (v0/*: any*/),
+        "concreteType": "Fair",
+        "kind": "LinkedField",
+        "name": "fair",
+        "plural": false,
+        "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "name",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "exhibitionPeriod",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Profile",
+            "kind": "LinkedField",
+            "name": "profile",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Image",
+                "kind": "LinkedField",
+                "name": "icon",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": [
+                      {
+                        "kind": "Literal",
+                        "name": "version",
+                        "value": [
+                          "large",
+                          "square",
+                          "square140"
+                        ]
+                      }
+                    ],
+                    "kind": "ScalarField",
+                    "name": "url",
+                    "storageKey": "url(version:[\"large\",\"square\",\"square140\"])"
+                  }
+                ],
+                "storageKey": null
+              },
+              (v1/*: any*/)
+            ],
+            "storageKey": null
+          },
+          (v1/*: any*/)
+        ],
+        "storageKey": "fair(id:\"example\")"
+      }
+    ]
+  },
+  "params": {
+    "cacheID": "cc1090aea89735da3b34f6e1af95c95e",
+    "id": null,
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "fair": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Fair"
+        },
+        "fair.exhibitionPeriod": (v2/*: any*/),
+        "fair.id": (v3/*: any*/),
+        "fair.name": (v2/*: any*/),
+        "fair.profile": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Profile"
+        },
+        "fair.profile.icon": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Image"
+        },
+        "fair.profile.icon.url": (v2/*: any*/),
+        "fair.profile.id": (v3/*: any*/)
+      }
+    },
+    "name": "FairHeaderTestQuery",
+    "operationKind": "query",
+    "text": "query FairHeaderTestQuery {\n  fair(id: \"example\") {\n    ...FairHeader_fair\n    id\n  }\n}\n\nfragment FairHeader_fair on Fair {\n  name\n  exhibitionPeriod\n  profile {\n    icon {\n      url(version: [\"large\", \"square\", \"square140\"])\n    }\n    id\n  }\n}\n"
+  }
+};
+})();
+
+(node as any).hash = "1ffb5826228f3c7608cb454151b921b7";
+
+export default node;

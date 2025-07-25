@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f4eba589e507f6eb84160691fee7ec93>>
+ * @generated SignedSource<<da1f15f3a0adb8329e1cbfd6ad215cdf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,7 +21,7 @@ export type ArticleByline_article$data = {
     } | null | undefined;
     readonly initials: string | null | undefined;
     readonly internalID: string;
-    readonly name: string | null | undefined;
+    readonly name: string;
   }>;
   readonly byline: string | null | undefined;
   readonly " $fragmentType": "ArticleByline_article";

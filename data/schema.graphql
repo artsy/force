@@ -4319,6 +4319,7 @@ type AuthenticationType {
 }
 
 type Author {
+  articles: [Article!]!
   bio(format: Format): String
 
   # A globally unique ID.
@@ -4328,7 +4329,7 @@ type Author {
 
   # A type-specific ID.
   internalID: ID!
-  name: String
+  name: String!
   twitterHandle: String
 }
 
@@ -4613,6 +4614,9 @@ input BulkArtworkFilterInput {
 }
 
 input BulkUpdateArtworksMetadataInput {
+  # The artist IDs to be assigned
+  artistIds: [String]
+
   # The availaiblity to be assigned
   availability: Availability
 
@@ -16757,6 +16761,9 @@ union OpeningHoursUnion = OpeningHoursArray | OpeningHoursText
 
 # Buyer's representation of an order
 type Order {
+  # List of available payment methods for the order
+  availablePaymentMethods: [OrderPaymentMethodEnum!]!
+
   # List of alpha-2 country codes to which the order can be shipped
   availableShippingCountries: [String!]!
 
@@ -18992,6 +18999,7 @@ type Query {
   # A list of Articles
   articles(
     auctionID: String
+    authorID: String
     channelID: String
     featured: Boolean
 
@@ -19243,6 +19251,12 @@ type Query {
 
   # If user is logged out; status is `LOGGED_OUT`. If user is logged in; status is `LOGGED_IN`. If user is logged in with invalid authentication (401); 'Promise' resolves to 'Status.Invalid'. All other status codes will resolve to `LOGGED_IN` because we don't know whether or not the authentication is valid (error could be something else).
   authenticationStatus: AuthenticationStatus!
+
+  # An Editorial author
+  author(
+    # The ID of the author
+    id: String!
+  ): Author
 
   # A user's bank account
   bankAccount(
@@ -24973,6 +24987,7 @@ type Viewer {
   # A list of Articles
   articles(
     auctionID: String
+    authorID: String
     channelID: String
     featured: Boolean
 
@@ -25210,6 +25225,12 @@ type Viewer {
 
   # If user is logged out; status is `LOGGED_OUT`. If user is logged in; status is `LOGGED_IN`. If user is logged in with invalid authentication (401); 'Promise' resolves to 'Status.Invalid'. All other status codes will resolve to `LOGGED_IN` because we don't know whether or not the authentication is valid (error could be something else).
   authenticationStatus: AuthenticationStatus!
+
+  # An Editorial author
+  author(
+    # The ID of the author
+    id: String!
+  ): Author
 
   # A user's bank account
   bankAccount(

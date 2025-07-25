@@ -318,7 +318,7 @@ export class CreditCardPicker extends React.Component<
 
         <Collapse open={this.state.creditCardSelection.type === "new"}>
           {userHasExistingCards && <Spacer y={2} />}
-          <Flex flexDirection="column">
+          <Flex flexDirection="column" data-testid="new-card-form">
             <CreditCardInput
               error={stripeError?.message}
               onChange={response => {

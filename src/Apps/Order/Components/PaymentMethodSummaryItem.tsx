@@ -53,7 +53,7 @@ export const PaymentMethodSummaryItem = ({
   }
 
   return (
-    <StepSummaryItem {...others}>
+    <StepSummaryItem {...others} data-testid="paymentSummary">
       {renderPaymentMethodSummary()}
     </StepSummaryItem>
   )
