@@ -16,24 +16,42 @@ import type {
   Order2CheckoutContext_order$data,
   Order2CheckoutContext_order$key,
 } from "__generated__/Order2CheckoutContext_order.graphql"
+import { type Action, action, createContextStore } from "easy-peasy"
 import { every } from "lodash"
 import { DateTime } from "luxon"
 import type React from "react"
-import {
-  createContext,
-  useCallback,
-  useEffect,
-  useMemo,
-  useReducer,
-  useState,
-} from "react"
+import { useEffect, useMemo, useState } from "react"
 import { graphql, useFragment } from "react-relay"
 
 const logger = createLogger("Order2CheckoutContext.tsx")
 const MINIMUM_LOADING_MS = 1000
 const CHECKOUT_MODE_STORAGE_KEY = "checkout_mode"
 
-interface CheckoutState {
+type CheckoutMode = "standard" | "express"
+
+type ConfirmationTokenState = {
+  id: string
+  paymentMethodPreview?:
+    | {
+        readonly card:
+          | {
+              readonly displayBrand: string
+              readonly last4: string
+            }
+          | null
+          | undefined
+      }
+    | undefined
+} | null
+
+type SavedCreditCard = {
+  internalID: string
+  brand: string
+  lastDigits: string
+}
+
+export interface Order2CheckoutModel {
+  // State
   isLoading: boolean
   /** Order is redirecting to the details page */
   expressCheckoutSubmitting: boolean
@@ -41,55 +59,392 @@ interface CheckoutState {
   expressCheckoutPaymentMethods: ExpressCheckoutPaymentMethod[] | null
   steps: CheckoutStep[]
   activeFulfillmentDetailsTab: FulfillmentDetailsTab | null
-  confirmationToken: any
+  confirmationToken: ConfirmationTokenState
   saveCreditCard: boolean
-  savedCreditCard: any
+  savedCreditCard: SavedCreditCard | null
   checkoutMode: CheckoutMode
-}
 
-interface CheckoutActions {
+  // External data - passed in as runtime props
   checkoutTracking: ReturnType<typeof useCheckoutTracking>
-  setExpressCheckoutLoaded: (
-    availablePaymentMethods: ExpressCheckoutPaymentMethod[],
-  ) => void
-  setExpressCheckoutSubmitting: (isSubmitting: boolean) => void
-  setFulfillmentDetailsComplete: (args: {
-    isPickup?: boolean
-    isFlatShipping?: boolean
-  }) => void
+  router: ReturnType<typeof useRouter>["router"]
+  orderData: Order2CheckoutContext_order$data
+  partnerOffer: {
+    timer: ReturnType<typeof useCountdownTimer>
+  } | null
 
-  setActiveFulfillmentDetailsTab: (
-    activeFulfillmentDetailsTab: FulfillmentDetailsTab | null,
-  ) => void
-
-  editFulfillmentDetails: () => void
-
-  setDeliveryOptionComplete: () => void
-  editDeliveryOption: () => void
-
-  editPayment: () => void
-
-  setLoadingError: (error: CheckoutLoadingError | null) => void
-  setLoadingComplete: () => void
-  setConfirmationToken: (args: {
-    confirmationToken: any
-    saveCreditCard: boolean
-  }) => void
-  setSavedCreditCard: (args: { savedCreditCard: any }) => void
-  redirectToOrderDetails: () => void
-  setCheckoutMode: (mode: CheckoutMode) => void
+  // Actions
+  setExpressCheckoutLoaded: Action<this, ExpressCheckoutPaymentMethod[]>
+  setExpressCheckoutSubmitting: Action<this, boolean>
+  setFulfillmentDetailsComplete: Action<
+    this,
+    { isPickup?: boolean; isFlatShipping?: boolean }
+  >
+  setActiveFulfillmentDetailsTab: Action<this, FulfillmentDetailsTab | null>
+  editFulfillmentDetails: Action<this>
+  setDeliveryOptionComplete: Action<this>
+  editDeliveryOption: Action<this>
+  editPayment: Action<this>
+  setLoadingError: Action<this, CheckoutLoadingError | null>
+  setLoadingComplete: Action<this>
+  setConfirmationToken: Action<
+    this,
+    { confirmationToken: ConfirmationTokenState; saveCreditCard: boolean }
+  >
+  setSavedCreditCard: Action<this, { savedCreditCard: SavedCreditCard }>
+  redirectToOrderDetails: Action<this>
+  setCheckoutMode: Action<this, CheckoutMode>
 }
 
-export type Order2CheckoutContextValue = CheckoutState &
-  CheckoutActions & {
-    partnerOffer: {
-      timer: ReturnType<typeof useCountdownTimer>
-    } | null
-  }
-type CheckoutMode = "standard" | "express"
+export const Order2CheckoutContext: ReturnType<
+  typeof createContextStore<Order2CheckoutModel>
+> = createContextStore<Order2CheckoutModel>(initialState => ({
+  // Initial state with defaults
+  isLoading: true,
+  expressCheckoutSubmitting: false,
+  loadingError: null,
+  expressCheckoutPaymentMethods: null,
+  activeFulfillmentDetailsTab: null,
+  confirmationToken: null,
+  saveCreditCard: true,
+  savedCreditCard: null,
+  checkoutMode: "standard",
+  steps: [],
 
-export const Order2CheckoutContext =
-  createContext<Order2CheckoutContextValue | null>(null)
+  // Required runtime props - will be provided by Provider
+  // These will be overridden by the Provider with actual values
+  checkoutTracking: null as any,
+  router: null as any,
+  orderData: null as any,
+  partnerOffer: null,
+
+  // Override with initialState values if provided
+  ...initialState,
+
+  // Actions
+  setExpressCheckoutLoaded: action((state, availablePaymentMethods) => {
+    if (state.isLoading && state.expressCheckoutPaymentMethods === null) {
+      state.expressCheckoutPaymentMethods = availablePaymentMethods
+    }
+  }),
+
+  setExpressCheckoutSubmitting: action((state, isSubmitting) => {
+    state.expressCheckoutSubmitting = isSubmitting
+  }),
+
+  setActiveFulfillmentDetailsTab: action(
+    (state, activeFulfillmentDetailsTab) => {
+      state.activeFulfillmentDetailsTab = activeFulfillmentDetailsTab
+
+      // Update delivery option step visibility based on pickup selection
+      state.steps = state.steps.map(step => {
+        if (step.name === CheckoutStepName.DELIVERY_OPTION) {
+          const shouldHide = activeFulfillmentDetailsTab === "PICKUP"
+          if (shouldHide) {
+            return {
+              ...step,
+              state: CheckoutStepState.HIDDEN,
+            }
+          } else if (step.state === CheckoutStepState.HIDDEN) {
+            return {
+              ...step,
+              state: CheckoutStepState.UPCOMING,
+            }
+          }
+        }
+        return step
+      })
+    },
+  ),
+
+  setLoadingError: action((state, error) => {
+    state.loadingError = error
+  }),
+
+  setLoadingComplete: action(state => {
+    state.isLoading = false
+  }),
+
+  setCheckoutMode: action((state, mode) => {
+    setStorageValue(CHECKOUT_MODE_STORAGE_KEY, mode)
+    state.checkoutMode = mode
+  }),
+
+  setFulfillmentDetailsComplete: action((state, args) => {
+    const isPickup = args?.isPickup ?? false
+
+    const currentStepName = state.steps.find(
+      step => step.state === CheckoutStepState.ACTIVE,
+    )?.name
+
+    if (currentStepName !== CheckoutStepName.FULFILLMENT_DETAILS) {
+      logger.error(
+        `setFulfillmentDetailsComplete called when current step is not FULFILLMENT_DETAILS but ${currentStepName}`,
+      )
+      return
+    }
+
+    let hasActivatedNext = false
+    state.steps = state.steps.map(step => {
+      // Mark fulfillment details as completed
+      if (step.name === CheckoutStepName.FULFILLMENT_DETAILS) {
+        return { ...step, state: CheckoutStepState.COMPLETED }
+      }
+
+      // Hide delivery option if pickup is selected
+      if (step.name === CheckoutStepName.DELIVERY_OPTION && isPickup) {
+        return { ...step, state: CheckoutStepState.HIDDEN }
+      }
+
+      // Activate the first upcoming step
+      if (!hasActivatedNext && step.state === CheckoutStepState.UPCOMING) {
+        hasActivatedNext = true
+        return { ...step, state: CheckoutStepState.ACTIVE }
+      }
+
+      return step
+    })
+  }),
+
+  setDeliveryOptionComplete: action(state => {
+    const currentStepName = state.steps.find(
+      step => step.state === CheckoutStepState.ACTIVE,
+    )?.name
+
+    if (currentStepName !== CheckoutStepName.DELIVERY_OPTION) {
+      logger.error(
+        `setDeliveryOptionComplete called when current step is not DELIVERY_OPTION but ${currentStepName}`,
+      )
+      return
+    }
+
+    const newSteps: CheckoutStep[] = []
+    let hasActivatedNext = false
+
+    for (const step of state.steps) {
+      if (step.name === CheckoutStepName.DELIVERY_OPTION) {
+        newSteps.push({
+          ...step,
+          state: CheckoutStepState.COMPLETED,
+        })
+      } else {
+        const isAfterDeliveryOptionsStep = newSteps
+          .map(s => s.name)
+          .includes(CheckoutStepName.DELIVERY_OPTION)
+
+        if (
+          isAfterDeliveryOptionsStep &&
+          step.state !== CheckoutStepState.HIDDEN
+        ) {
+          if (!hasActivatedNext) {
+            hasActivatedNext = true
+            newSteps.push({
+              ...step,
+              state: CheckoutStepState.ACTIVE,
+            })
+          } else {
+            newSteps.push({
+              ...step,
+              state: CheckoutStepState.UPCOMING,
+            })
+          }
+        } else {
+          newSteps.push(step)
+        }
+      }
+    }
+
+    state.steps = newSteps
+  }),
+
+  setConfirmationToken: action(
+    (state, { confirmationToken, saveCreditCard }) => {
+      const newSteps: CheckoutStep[] = []
+      let hasActivatedNext = false
+
+      for (const step of state.steps) {
+        if (step.name === CheckoutStepName.PAYMENT) {
+          newSteps.push({
+            ...step,
+            state: CheckoutStepState.COMPLETED,
+          })
+        } else {
+          const shouldBeHidden = step.state === CheckoutStepState.HIDDEN
+          if (shouldBeHidden) {
+            newSteps.push(step)
+            continue
+          }
+
+          if (step.state === CheckoutStepState.COMPLETED) {
+            newSteps.push(step)
+            continue
+          }
+
+          // We've already returned if it is completed or hidden, so this
+          // must be an upcoming step. If it is the first one, then
+          // we activate it, otherwise we leave it as upcoming.
+          const hasCompletedStep = newSteps.find(
+            s => s.state === CheckoutStepState.COMPLETED,
+          )
+          const hasUpcomingStep = newSteps.find(
+            s => s.state === CheckoutStepState.UPCOMING,
+          )
+
+          if (hasCompletedStep && !hasUpcomingStep && !hasActivatedNext) {
+            hasActivatedNext = true
+            newSteps.push({
+              ...step,
+              state: CheckoutStepState.ACTIVE,
+            })
+          } else {
+            newSteps.push(step)
+          }
+        }
+      }
+
+      state.confirmationToken = confirmationToken
+      state.saveCreditCard = saveCreditCard
+      state.steps = newSteps
+    },
+  ),
+
+  setSavedCreditCard: action((state, { savedCreditCard }) => {
+    // Update payment completion logic similar to setConfirmationToken
+    const newSteps: CheckoutStep[] = []
+    let hasActivatedNext = false
+
+    for (const step of state.steps) {
+      if (step.name === CheckoutStepName.PAYMENT) {
+        newSteps.push({
+          ...step,
+          state: CheckoutStepState.COMPLETED,
+        })
+      } else {
+        const shouldBeHidden = step.state === CheckoutStepState.HIDDEN
+        if (shouldBeHidden) {
+          newSteps.push(step)
+          continue
+        }
+
+        if (step.state === CheckoutStepState.COMPLETED) {
+          newSteps.push(step)
+          continue
+        }
+
+        const hasCompletedStep = newSteps.find(
+          s => s.state === CheckoutStepState.COMPLETED,
+        )
+        const hasUpcomingStep = newSteps.find(
+          s => s.state === CheckoutStepState.UPCOMING,
+        )
+
+        if (hasCompletedStep && !hasUpcomingStep && !hasActivatedNext) {
+          hasActivatedNext = true
+          newSteps.push({
+            ...step,
+            state: CheckoutStepState.ACTIVE,
+          })
+        } else {
+          newSteps.push(step)
+        }
+      }
+    }
+
+    state.savedCreditCard = savedCreditCard
+    state.saveCreditCard = false
+    state.confirmationToken = null
+    state.steps = newSteps
+  }),
+
+  editFulfillmentDetails: action(state => {
+    const newSteps: CheckoutStep[] = []
+
+    for (const step of state.steps) {
+      const isAfterFulfillmentDetailsStep = newSteps
+        .map(s => s.name)
+        .includes(CheckoutStepName.FULFILLMENT_DETAILS)
+
+      if (
+        isAfterFulfillmentDetailsStep &&
+        step.state !== CheckoutStepState.HIDDEN
+      ) {
+        newSteps.push({
+          ...step,
+          state: CheckoutStepState.UPCOMING,
+        })
+      } else if (step.name === CheckoutStepName.FULFILLMENT_DETAILS) {
+        newSteps.push({
+          ...step,
+          state: CheckoutStepState.ACTIVE,
+        })
+      } else {
+        newSteps.push(step)
+      }
+    }
+
+    state.steps = newSteps
+  }),
+
+  editDeliveryOption: action(state => {
+    const newSteps: CheckoutStep[] = []
+
+    for (const step of state.steps) {
+      const isAfterDeliveryOptionsStep = newSteps
+        .map(s => s.name)
+        .includes(CheckoutStepName.DELIVERY_OPTION)
+
+      if (
+        isAfterDeliveryOptionsStep &&
+        step.state !== CheckoutStepState.HIDDEN
+      ) {
+        newSteps.push({
+          ...step,
+          state: CheckoutStepState.UPCOMING,
+        })
+      } else if (step.name === CheckoutStepName.DELIVERY_OPTION) {
+        newSteps.push({
+          ...step,
+          state: CheckoutStepState.ACTIVE,
+        })
+      } else {
+        newSteps.push(step)
+      }
+    }
+
+    state.steps = newSteps
+  }),
+
+  editPayment: action(state => {
+    const newSteps: CheckoutStep[] = []
+
+    for (const step of state.steps) {
+      const isAfterPaymentStep = newSteps
+        .map(s => s.name)
+        .includes(CheckoutStepName.PAYMENT)
+
+      if (isAfterPaymentStep && step.state !== CheckoutStepState.HIDDEN) {
+        newSteps.push({
+          ...step,
+          state: CheckoutStepState.UPCOMING,
+        })
+      } else if (step.name === CheckoutStepName.PAYMENT) {
+        newSteps.push({
+          ...step,
+          state: CheckoutStepState.ACTIVE,
+        })
+      } else {
+        newSteps.push(step)
+      }
+    }
+
+    state.steps = newSteps
+  }),
+
+  redirectToOrderDetails: action(state => {
+    const orderID = state.orderData.internalID
+    const orderDetailsURL = `/orders/${orderID}/details`
+    state.router.replace(orderDetailsURL)
+  }),
+}))
 
 interface Order2CheckoutContextProviderProps {
   order: Order2CheckoutContext_order$key
@@ -100,21 +455,70 @@ export const Order2CheckoutContextProvider: React.FC<
   Order2CheckoutContextProviderProps
 > = ({ order, children }) => {
   const orderData = useFragment(ORDER_FRAGMENT, order)
+  const checkoutTracking = useCheckoutTracking(orderData)
+  const partnerOffer = usePartnerOfferOnOrder(orderData)
+  const { router } = useRouter()
 
-  const context = useBuildCheckoutContext(orderData)
+  // Initialize the store with the initial state
+  const initialState = useMemo(
+    () => initialStateForOrder(orderData),
+    [orderData],
+  )
 
-  const {
-    expressCheckoutPaymentMethods,
-    isLoading,
-    setLoadingError,
-    setLoadingComplete,
+  const runtimeModel = {
+    // Default values
+    isLoading: true,
+    expressCheckoutSubmitting: false,
+    loadingError: null,
+    expressCheckoutPaymentMethods: null,
+    activeFulfillmentDetailsTab: null,
+    confirmationToken: null,
+    saveCreditCard: true,
+    savedCreditCard: null,
+    checkoutMode: "standard",
+    steps: [],
+
+    // Override with initialState values
+    ...initialState,
+
+    // Runtime dependencies
+    checkoutTracking,
+    router,
+    orderData,
     partnerOffer,
-  } = context
+  } as Order2CheckoutModel
 
-  const isExpressCheckoutLoaded = expressCheckoutPaymentMethods !== null
+  return (
+    <Order2CheckoutContext.Provider runtimeModel={runtimeModel}>
+      <CheckoutLoadingManager orderData={orderData} partnerOffer={partnerOffer}>
+        {children}
+      </CheckoutLoadingManager>
+    </Order2CheckoutContext.Provider>
+  )
+}
 
+const CheckoutLoadingManager: React.FC<{
+  orderData: Order2CheckoutContext_order$data
+  partnerOffer: {
+    timer: ReturnType<typeof useCountdownTimer>
+  } | null
+  children: React.ReactNode
+}> = ({ orderData, partnerOffer, children }) => {
   const [minimumLoadingPassed, setMinimumLoadingPassed] = useState(false)
   const [orderValidated, setOrderValidated] = useState(false)
+
+  const isExpressCheckoutLoaded = Order2CheckoutContext.useStoreState(
+    state => state.expressCheckoutPaymentMethods !== null,
+  )
+  const isLoading = Order2CheckoutContext.useStoreState(
+    state => state.isLoading,
+  )
+  const setLoadingError = Order2CheckoutContext.useStoreActions(
+    actions => actions.setLoadingError,
+  )
+  const setLoadingComplete = Order2CheckoutContext.useStoreActions(
+    actions => actions.setLoadingComplete,
+  )
 
   const isPartnerOfferLoadingComplete =
     !partnerOffer || !partnerOffer.timer.isLoading
@@ -161,11 +565,7 @@ export const Order2CheckoutContextProvider: React.FC<
     }
   }, [...checks])
 
-  return (
-    <Order2CheckoutContext.Provider value={context}>
-      {children}
-    </Order2CheckoutContext.Provider>
-  )
+  return <>{children}</>
 }
 
 const ORDER_FRAGMENT = graphql`
@@ -224,214 +624,13 @@ const usePartnerOfferOnOrder = (orderData: {
     : null
 }
 
-const useBuildCheckoutContext = (
-  orderData: Order2CheckoutContext_order$data,
-): Order2CheckoutContextValue => {
-  const initialState: CheckoutState = useMemo(
-    () => initialStateForOrder(orderData),
-    [orderData],
-  )
-  const checkoutTracking = useCheckoutTracking(orderData)
-  const partnerOffer = usePartnerOfferOnOrder(orderData)
-
-  const { router } = useRouter()
-  const [state, dispatch] = useReducer(reducer, initialState)
-
-  const redirectToOrderDetails = useCallback(() => {
-    const orderID = orderData.internalID
-    const orderDetailsURL = `/orders/${orderID}/details`
-
-    router.replace(orderDetailsURL)
-  }, [orderData.internalID, router])
-
-  const setExpressCheckoutLoaded = useCallback(
-    (availablePaymentMethods: ExpressCheckoutPaymentMethod[]) => {
-      if (state.isLoading && state.expressCheckoutPaymentMethods === null) {
-        dispatch({
-          type: "SET_EXPRESS_CHECKOUT_LOADED",
-          payload: { expressCheckoutPaymentMethods: availablePaymentMethods },
-        })
-      }
-    },
-    [state.isLoading, state.expressCheckoutPaymentMethods],
-  )
-
-  const setActiveFulfillmentDetailsTab = useCallback(
-    (activeFulfillmentDetailsTab: "DELIVERY" | "PICKUP" | null) => {
-      if (state.activeFulfillmentDetailsTab !== activeFulfillmentDetailsTab) {
-        dispatch({
-          type: "SET_ACTIVE_FULFILLMENT_DETAILS_TAB",
-          payload: { activeFulfillmentDetailsTab },
-        })
-      }
-    },
-    [state.activeFulfillmentDetailsTab],
-  )
-
-  const setExpressCheckoutSubmitting = useCallback(
-    (isSubmitting: boolean) => {
-      if (state.expressCheckoutSubmitting !== isSubmitting) {
-        dispatch({
-          type: "SET_EXPRESS_CHECKOUT_SUBMITTING",
-          payload: { isSubmittingOrder: isSubmitting },
-        })
-      }
-    },
-    [state.expressCheckoutSubmitting],
-  )
-
-  // This used only by the useLoadCheckout hook
-  const setLoadingError = useCallback((error: CheckoutLoadingError | null) => {
-    dispatch({
-      type: "SET_LOADING_ERROR",
-      payload: { loadingError: error },
-    })
-  }, [])
-
-  const setLoadingComplete = useCallback(() => {
-    dispatch({ type: "LOADING_COMPLETE" })
-  }, [])
-
-  const setCheckoutMode = useCallback((mode: CheckoutMode) => {
-    setStorageValue(CHECKOUT_MODE_STORAGE_KEY, mode)
-
-    dispatch({
-      type: "SET_CHECKOUT_MODE",
-      payload: { mode },
-    })
-  }, [])
-
-  const currentStepName = state.steps.find(
-    step => step.state === CheckoutStepState.ACTIVE,
-  )?.name
-
-  const setFulfillmentDetailsComplete = useCallback(
-    (args?: { isPickup?: boolean }) => {
-      const isPickup = args?.isPickup ?? false
-      if (currentStepName !== CheckoutStepName.FULFILLMENT_DETAILS) {
-        logger.error(
-          `setFulfillmentDetailsComplete called when current step is not FULFILLMENT_DETAILS but ${currentStepName}`,
-        )
-        return
-      }
-      dispatch({
-        type: "FULFILLMENT_DETAILS_COMPLETE",
-        payload: { isPickup },
-      })
-    },
-    [currentStepName],
-  )
-
-  const setDeliveryOptionComplete = useCallback(() => {
-    if (currentStepName !== CheckoutStepName.DELIVERY_OPTION) {
-      logger.error(
-        `setDeliveryOptionComplete called when current step is not DELIVERY_OPTION but ${currentStepName}`,
-      )
-      return
-    }
-    dispatch({
-      type: "DELIVERY_OPTION_COMPLETE",
-    })
-  }, [currentStepName])
-
-  const setConfirmationToken = useCallback(
-    ({
-      confirmationToken,
-      saveCreditCard,
-    }: {
-      confirmationToken: any
-      saveCreditCard: boolean
-    }) => {
-      dispatch({
-        type: "PAYMENT_COMPLETE",
-        payload: { confirmationToken, saveCreditCard },
-      })
-    },
-    [],
-  )
-
-  const setSavedCreditCard = useCallback(
-    ({ savedCreditCard }: { savedCreditCard: any }) => {
-      dispatch({
-        type: "PAYMENT_COMPLETE",
-        payload: {
-          savedCreditCard,
-          saveCreditCard: false,
-          confirmationToken: null,
-        },
-      })
-    },
-    [],
-  )
-
-  const editFulfillmentDetails = useCallback(() => {
-    dispatch({
-      type: "EDIT_FULFILLMENT_DETAILS",
-    })
-  }, [])
-
-  const editDeliveryOption = useCallback(() => {
-    dispatch({
-      type: "EDIT_DELIVERY_OPTION",
-    })
-  }, [])
-
-  const editPayment = useCallback(() => {
-    dispatch({
-      type: "EDIT_PAYMENT",
-    })
-  }, [])
-
-  const actions = useMemo(() => {
-    return {
-      checkoutTracking,
-      editFulfillmentDetails,
-      editDeliveryOption,
-      editPayment,
-      redirectToOrderDetails,
-      setActiveFulfillmentDetailsTab,
-      setExpressCheckoutSubmitting,
-      setExpressCheckoutLoaded,
-      setFulfillmentDetailsComplete,
-      setDeliveryOptionComplete,
-      setLoadingError,
-      setLoadingComplete,
-      setConfirmationToken,
-      setCheckoutMode,
-      setSavedCreditCard,
-    }
-  }, [
-    checkoutTracking,
-    setDeliveryOptionComplete,
-    editDeliveryOption,
-    editFulfillmentDetails,
-    editPayment,
-    redirectToOrderDetails,
-    setActiveFulfillmentDetailsTab,
-    setCheckoutMode,
-    setConfirmationToken,
-    setExpressCheckoutLoaded,
-    setExpressCheckoutSubmitting,
-    setFulfillmentDetailsComplete,
-    setLoadingComplete,
-    setLoadingError,
-    setSavedCreditCard,
-  ])
-
-  return {
-    ...state,
-    ...actions,
-    partnerOffer,
-  }
-}
-
 const initialStateForOrder = (
   order: Order2CheckoutContext_order$data,
-): CheckoutState => {
+): Partial<Order2CheckoutModel> => {
   const savedCheckoutMode = getStorageValue(
     CHECKOUT_MODE_STORAGE_KEY,
     "standard",
-  ) as CheckoutMode
+  )
 
   const stepNamesInOrder = [
     CheckoutStepName.FULFILLMENT_DETAILS,
@@ -490,335 +689,9 @@ const initialStateForOrder = (
     saveCreditCard: true,
     savedCreditCard: null,
     steps,
-    checkoutMode: savedCheckoutMode || "standard",
-  }
-}
-
-type Action =
-  | {
-      type: "SET_EXPRESS_CHECKOUT_LOADED"
-      payload: { expressCheckoutPaymentMethods: ExpressCheckoutPaymentMethod[] }
-    }
-  | {
-      type: "SET_LOADING_ERROR"
-      payload: { loadingError: CheckoutLoadingError | null }
-    }
-  | {
-      type: "LOADING_COMPLETE"
-    }
-  | {
-      type: "SET_EXPRESS_CHECKOUT_SUBMITTING"
-      payload: { isSubmittingOrder: boolean }
-    }
-  | {
-      type: "FULFILLMENT_DETAILS_COMPLETE"
-      payload: {
-        isPickup?: boolean
-      }
-    }
-  | {
-      type: "EDIT_FULFILLMENT_DETAILS"
-    }
-  | {
-      type: "DELIVERY_OPTION_COMPLETE"
-    }
-  | {
-      type: "EDIT_DELIVERY_OPTION"
-    }
-  | {
-      type: "PAYMENT_COMPLETE"
-      payload: {
-        confirmationToken: any
-        saveCreditCard: boolean
-        savedCreditCard?: any
-      }
-    }
-  | {
-      type: "EDIT_PAYMENT"
-    }
-  | {
-      type: "EDIT_PAYMENT"
-    }
-  | {
-      type: "SET_ACTIVE_FULFILLMENT_DETAILS_TAB"
-      payload: { activeFulfillmentDetailsTab: "DELIVERY" | "PICKUP" | null }
-    }
-  | {
-      type: "SET_CHECKOUT_MODE"
-      payload: { mode: CheckoutMode }
-    }
-
-const reducer = (state: CheckoutState, action: Action): CheckoutState => {
-  switch (action.type) {
-    case "SET_ACTIVE_FULFILLMENT_DETAILS_TAB":
-      return {
-        ...state,
-        activeFulfillmentDetailsTab: action.payload.activeFulfillmentDetailsTab,
-        steps: state.steps.map(step => {
-          if (step.name === CheckoutStepName.DELIVERY_OPTION) {
-            const shouldHide =
-              action.payload.activeFulfillmentDetailsTab === "PICKUP"
-            if (shouldHide) {
-              return {
-                ...step,
-                state: CheckoutStepState.HIDDEN,
-              }
-            } else if (step.state === CheckoutStepState.HIDDEN) {
-              return {
-                ...step,
-                state: CheckoutStepState.UPCOMING,
-              }
-            } else {
-              return {
-                ...step,
-                state: step.state,
-              }
-            }
-          }
-          return step
-        }),
-      }
-    case "SET_EXPRESS_CHECKOUT_LOADED":
-      return {
-        ...state,
-        expressCheckoutPaymentMethods:
-          action.payload.expressCheckoutPaymentMethods,
-      }
-    case "SET_LOADING_ERROR":
-      return {
-        ...state,
-        loadingError: action.payload.loadingError,
-      }
-    case "LOADING_COMPLETE":
-      return {
-        ...state,
-        isLoading: false,
-      }
-    case "EDIT_FULFILLMENT_DETAILS":
-      return {
-        ...state,
-        steps: state.steps.reduce((acc, current) => {
-          const isAfterFulfillmentDetailsStep = acc
-            .map(step => step.name)
-            .includes(CheckoutStepName.FULFILLMENT_DETAILS)
-
-          if (
-            isAfterFulfillmentDetailsStep &&
-            current.state !== CheckoutStepState.HIDDEN
-          ) {
-            return [
-              ...acc,
-              {
-                ...current,
-                state: CheckoutStepState.UPCOMING,
-              },
-            ]
-          }
-          if (current.name === CheckoutStepName.FULFILLMENT_DETAILS) {
-            return [
-              ...acc,
-              {
-                ...current,
-                state: CheckoutStepState.ACTIVE,
-              },
-            ]
-          }
-
-          return [...acc, current]
-        }, [] as CheckoutStep[]),
-      }
-    case "EDIT_DELIVERY_OPTION":
-      return {
-        ...state,
-        steps: state.steps.reduce((acc, current) => {
-          const isAfterDeliveryOptionsStep = acc
-            .map(step => step.name)
-            .includes(CheckoutStepName.DELIVERY_OPTION)
-
-          if (
-            isAfterDeliveryOptionsStep &&
-            current.state !== CheckoutStepState.HIDDEN
-          ) {
-            return [
-              ...acc,
-              {
-                ...current,
-                state: CheckoutStepState.UPCOMING,
-              },
-            ]
-          }
-          if (current.name === CheckoutStepName.DELIVERY_OPTION) {
-            return [
-              ...acc,
-              {
-                ...current,
-                state: CheckoutStepState.ACTIVE,
-              },
-            ]
-          }
-
-          return [...acc, current]
-        }, [] as CheckoutStep[]),
-      }
-    case "FULFILLMENT_DETAILS_COMPLETE":
-      const { isPickup } = action.payload
-      let hasActivatedNext = false
-
-      return {
-        ...state,
-        steps: state.steps.map(step => {
-          // Mark fulfillment details as completed
-          if (step.name === CheckoutStepName.FULFILLMENT_DETAILS) {
-            return { ...step, state: CheckoutStepState.COMPLETED }
-          }
-
-          // Hide delivery option if pickup is selected
-          if (step.name === CheckoutStepName.DELIVERY_OPTION && isPickup) {
-            return { ...step, state: CheckoutStepState.HIDDEN }
-          }
-
-          // Activate the first upcoming step
-          if (!hasActivatedNext && step.state === CheckoutStepState.UPCOMING) {
-            hasActivatedNext = true
-            return { ...step, state: CheckoutStepState.ACTIVE }
-          }
-
-          return step
-        }),
-      }
-    case "DELIVERY_OPTION_COMPLETE":
-      return {
-        ...state,
-        steps: state.steps.reduce((acc, current) => {
-          const isAfterDeliveryOptionsStep = acc
-            .map(step => step.name)
-            .includes(CheckoutStepName.DELIVERY_OPTION)
-
-          if (
-            isAfterDeliveryOptionsStep &&
-            current.state !== CheckoutStepState.HIDDEN
-          ) {
-            const hasActivatedNext = acc.some(
-              step => step.state === CheckoutStepState.ACTIVE,
-            )
-            return [
-              ...acc,
-              {
-                ...current,
-                state: hasActivatedNext
-                  ? CheckoutStepState.UPCOMING
-                  : CheckoutStepState.ACTIVE,
-              },
-            ]
-          }
-          if (current.name === CheckoutStepName.DELIVERY_OPTION) {
-            return [
-              ...acc,
-              {
-                ...current,
-                state: CheckoutStepState.COMPLETED,
-              },
-            ]
-          }
-
-          return [...acc, current]
-        }, [] as CheckoutStep[]),
-      }
-
-    case "EDIT_PAYMENT":
-      return {
-        ...state,
-        steps: state.steps.reduce((acc, current) => {
-          const isAfterPaymentStep = acc
-            .map(step => step.name)
-            .includes(CheckoutStepName.PAYMENT)
-
-          if (
-            isAfterPaymentStep &&
-            current.state !== CheckoutStepState.HIDDEN
-          ) {
-            return [
-              ...acc,
-              {
-                ...current,
-                state: CheckoutStepState.UPCOMING,
-              },
-            ]
-          }
-          if (current.name === CheckoutStepName.PAYMENT) {
-            return [
-              ...acc,
-              {
-                ...current,
-                state: CheckoutStepState.ACTIVE,
-              },
-            ]
-          }
-
-          return [...acc, current]
-        }, [] as CheckoutStep[]),
-      }
-    case "PAYMENT_COMPLETE":
-      const newSteps = state.steps.reduce((acc, current) => {
-        const isThisStep = current.name === CheckoutStepName.PAYMENT
-        if (isThisStep) {
-          return [
-            ...acc,
-            {
-              ...current,
-              state: CheckoutStepState.COMPLETED,
-            },
-          ]
-        }
-
-        const shouldBeHidden = current.state === CheckoutStepState.HIDDEN
-        if (shouldBeHidden) {
-          // no change for hidden steps on payment complete
-          return [...acc, current]
-        }
-
-        if (current.state === CheckoutStepState.COMPLETED) {
-          return [...acc, current]
-        }
-
-        // We've already returned if it is completed or hidden, so this
-        // must be an upcoming step. If it is the first one, then
-        // we activate it, otherwise we leave it as upcoming.
-        const firstStepAfterCompleted =
-          acc.find(step => step.state === CheckoutStepState.COMPLETED) &&
-          !acc.find(step => step.state === CheckoutStepState.UPCOMING)
-        if (firstStepAfterCompleted) {
-          return [
-            ...acc,
-            {
-              ...current,
-              state: CheckoutStepState.ACTIVE,
-            },
-          ]
-        }
-        return [...acc, current]
-      }, [] as CheckoutStep[])
-
-      return {
-        ...state,
-        confirmationToken: action.payload.confirmationToken,
-        saveCreditCard: action.payload.saveCreditCard,
-        savedCreditCard: action.payload.savedCreditCard,
-        steps: newSteps,
-      }
-    case "SET_EXPRESS_CHECKOUT_SUBMITTING":
-      return {
-        ...state,
-        expressCheckoutSubmitting: action.payload.isSubmittingOrder,
-      }
-    case "SET_CHECKOUT_MODE":
-      setStorageValue(CHECKOUT_MODE_STORAGE_KEY, action.payload.mode)
-      return {
-        ...state,
-        checkoutMode: action.payload.mode,
-      }
-    default:
-      return state
+    checkoutMode: (savedCheckoutMode === "express"
+      ? "express"
+      : "standard") as CheckoutMode,
   }
 }
 
