@@ -85,7 +85,9 @@ export const PaymentContent: FC<React.PropsWithChildren<Props>> = props => {
           </RadioGroup>
           <Spacer y={4} />
           <Jump id="paymentDetailsTop" />
-          <Text variant="lg-display">Payment details</Text>
+          {selectedPaymentMethod && (
+            <Text variant="lg-display">Payment details</Text>
+          )}
           <Spacer y={2} />
         </>
       )}
