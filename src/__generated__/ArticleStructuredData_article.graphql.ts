@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<997dddc4e602c8fe2cb4e9e069c231de>>
+ * @generated SignedSource<<cd78ab0ec2d70fae9ee0f2ecbc7b9a42>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,7 +12,7 @@ import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArticleStructuredData_article$data = {
   readonly authors: ReadonlyArray<{
-    readonly name: string | null | undefined;
+    readonly name: string;
   }>;
   readonly href: string | null | undefined;
   readonly publishedAt: string | null | undefined;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1fffe277f759a6a327d2ea6571bc2fd2>>
+ * @generated SignedSource<<a29feb2c123e35ec3bc5b72e188cc02d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -1309,7 +1309,7 @@ return {
         "article.authors.image.cropped.srcSet": (v34/*: any*/),
         "article.authors.initials": (v30/*: any*/),
         "article.authors.internalID": (v31/*: any*/),
-        "article.authors.name": (v30/*: any*/),
+        "article.authors.name": (v34/*: any*/),
         "article.byline": (v30/*: any*/),
         "article.hero": {
           "enumValues": null,
