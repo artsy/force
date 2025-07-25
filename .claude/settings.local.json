@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls:*)",
+      "Bash(yarn tsc:*)",
+      "Bash(yarn jest:*)",
+      "Bash(yarn lint:*)",
+      "Bash(yarn relay)"
+    ],
+    "deny": []
+  }
+}
