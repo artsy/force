@@ -16,13 +16,7 @@ import type {
   Order2CheckoutContext_order$data,
   Order2CheckoutContext_order$key,
 } from "__generated__/Order2CheckoutContext_order.graphql"
-import {
-  type Action,
-  type Computed,
-  action,
-  computed,
-  createContextStore,
-} from "easy-peasy"
+import { type Action, action, createContextStore } from "easy-peasy"
 import { every } from "lodash"
 import { DateTime } from "luxon"
 import type React from "react"
@@ -56,9 +50,6 @@ interface Order2CheckoutModel {
   partnerOffer: {
     timer: ReturnType<typeof useCountdownTimer>
   } | null
-
-  // Computed
-  currentStepName: Computed<this, CheckoutStepName | undefined>
 
   // Actions
   setExpressCheckoutLoaded: Action<this, ExpressCheckoutPaymentMethod[]>
@@ -108,12 +99,6 @@ export const Order2CheckoutContext: ReturnType<
 
   // Override with initialState values if provided
   ...initialState,
-
-  // Computed
-  currentStepName: computed(state => {
-    return state.steps.find(step => step.state === CheckoutStepState.ACTIVE)
-      ?.name
-  }),
 
   // Actions
   setExpressCheckoutLoaded: action((state, availablePaymentMethods) => {
@@ -495,7 +480,6 @@ export const Order2CheckoutContextProvider: React.FC<
   )
 }
 
-// Internal component to handle loading logic using the easy-peasy store
 const Order2CheckoutContextInternal: React.FC<{
   orderData: Order2CheckoutContext_order$data
   partnerOffer: {
@@ -506,7 +490,6 @@ const Order2CheckoutContextInternal: React.FC<{
   const [minimumLoadingPassed, setMinimumLoadingPassed] = useState(false)
   const [orderValidated, setOrderValidated] = useState(false)
 
-  // Use the easy-peasy hooks to access store state and actions
   const isExpressCheckoutLoaded = Order2CheckoutContext.useStoreState(
     state => state.expressCheckoutPaymentMethods !== null,
   )
