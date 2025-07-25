@@ -4319,6 +4319,7 @@ type AuthenticationType {
 }
 
 type Author {
+  articles: [Article!]!
   bio(format: Format): String
 
   # A globally unique ID.
@@ -4328,7 +4329,7 @@ type Author {
 
   # A type-specific ID.
   internalID: ID!
-  name: String
+  name: String!
   twitterHandle: String
 }
 
@@ -19251,6 +19252,12 @@ type Query {
   # If user is logged out; status is `LOGGED_OUT`. If user is logged in; status is `LOGGED_IN`. If user is logged in with invalid authentication (401); 'Promise' resolves to 'Status.Invalid'. All other status codes will resolve to `LOGGED_IN` because we don't know whether or not the authentication is valid (error could be something else).
   authenticationStatus: AuthenticationStatus!
 
+  # An Editorial author
+  author(
+    # The ID of the author
+    id: String!
+  ): Author
+
   # A user's bank account
   bankAccount(
     # The ID of the bank account
@@ -25218,6 +25225,12 @@ type Viewer {
 
   # If user is logged out; status is `LOGGED_OUT`. If user is logged in; status is `LOGGED_IN`. If user is logged in with invalid authentication (401); 'Promise' resolves to 'Status.Invalid'. All other status codes will resolve to `LOGGED_IN` because we don't know whether or not the authentication is valid (error could be something else).
   authenticationStatus: AuthenticationStatus!
+
+  # An Editorial author
+  author(
+    # The ID of the author
+    id: String!
+  ): Author
 
   # A user's bank account
   bankAccount(

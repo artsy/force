@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c6bfd7248f5768e7d20f9903719ed9a5>>
+ * @generated SignedSource<<f56c1ad290bee6cdbc6a4cec0f37ef2b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -474,7 +474,7 @@ return {
           "type": "Author"
         },
         "artwork.articles.author.id": (v7/*: any*/),
-        "artwork.articles.author.name": (v6/*: any*/),
+        "artwork.articles.author.name": (v8/*: any*/),
         "artwork.articles.href": (v6/*: any*/),
         "artwork.articles.id": (v7/*: any*/),
         "artwork.articles.publishedAt": (v6/*: any*/),
