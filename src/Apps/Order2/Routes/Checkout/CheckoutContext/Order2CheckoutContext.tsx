@@ -29,6 +29,27 @@ const CHECKOUT_MODE_STORAGE_KEY = "checkout_mode"
 
 type CheckoutMode = "standard" | "express"
 
+type ConfirmationTokenState = {
+  id: string
+  paymentMethodPreview?:
+    | {
+        readonly card:
+          | {
+              readonly displayBrand: string
+              readonly last4: string
+            }
+          | null
+          | undefined
+      }
+    | undefined
+} | null
+
+type SavedCreditCard = {
+  internalID: string
+  brand: string
+  lastDigits: string
+}
+
 interface Order2CheckoutModel {
   // State
   isLoading: boolean
@@ -38,9 +59,9 @@ interface Order2CheckoutModel {
   expressCheckoutPaymentMethods: ExpressCheckoutPaymentMethod[] | null
   steps: CheckoutStep[]
   activeFulfillmentDetailsTab: FulfillmentDetailsTab | null
-  confirmationToken: any
+  confirmationToken: ConfirmationTokenState
   saveCreditCard: boolean
-  savedCreditCard: any
+  savedCreditCard: SavedCreditCard | null
   checkoutMode: CheckoutMode
 
   // External data - passed in as runtime props
@@ -67,9 +88,9 @@ interface Order2CheckoutModel {
   setLoadingComplete: Action<this>
   setConfirmationToken: Action<
     this,
-    { confirmationToken: any; saveCreditCard: boolean }
+    { confirmationToken: ConfirmationTokenState; saveCreditCard: boolean }
   >
-  setSavedCreditCard: Action<this, { savedCreditCard: any }>
+  setSavedCreditCard: Action<this, { savedCreditCard: SavedCreditCard }>
   redirectToOrderDetails: Action<this>
   setCheckoutMode: Action<this, CheckoutMode>
 }
@@ -88,13 +109,14 @@ export const Order2CheckoutContext: ReturnType<
   confirmationToken: null,
   saveCreditCard: true,
   savedCreditCard: null,
-  checkoutMode: "standard" as CheckoutMode,
+  checkoutMode: "standard",
   steps: [],
 
   // Required runtime props - will be provided by Provider
-  checkoutTracking: {} as ReturnType<typeof useCheckoutTracking>,
-  router: {} as ReturnType<typeof useRouter>["router"],
-  orderData: {} as Order2CheckoutContext_order$data,
+  // These will be overridden by the Provider with actual values
+  checkoutTracking: null as any,
+  router: null as any,
+  orderData: null as any,
   partnerOffer: null,
 
   // Override with initialState values if provided
@@ -445,7 +467,7 @@ export const Order2CheckoutContextProvider: React.FC<
     [orderData],
   )
 
-  const runtimeModel: Order2CheckoutModel = {
+  const runtimeModel = {
     // Default values
     isLoading: true,
     expressCheckoutSubmitting: false,
@@ -613,7 +635,7 @@ const initialStateForOrder = (
   const savedCheckoutMode = getStorageValue(
     CHECKOUT_MODE_STORAGE_KEY,
     "standard",
-  ) as CheckoutMode
+  )
 
   const stepNamesInOrder = [
     CheckoutStepName.FULFILLMENT_DETAILS,
@@ -672,7 +694,9 @@ const initialStateForOrder = (
     saveCreditCard: true,
     savedCreditCard: null,
     steps,
-    checkoutMode: savedCheckoutMode || "standard",
+    checkoutMode: (savedCheckoutMode === "express"
+      ? "express"
+      : "standard") as CheckoutMode,
   }
 }
 
