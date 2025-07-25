@@ -87,7 +87,7 @@ export type Order2CheckoutContextValue = Order2CheckoutModel
 
 export const Order2CheckoutContext = createContextStore<Order2CheckoutModel>(
   initialState => ({
-    // Initial state
+    // Initial state with defaults
     isLoading: true,
     expressCheckoutSubmitting: false,
     loadingError: null,
@@ -96,14 +96,14 @@ export const Order2CheckoutContext = createContextStore<Order2CheckoutModel>(
     confirmationToken: null,
     saveCreditCard: true,
     savedCreditCard: null,
-    checkoutMode: "standard",
+    checkoutMode: "standard" as CheckoutMode,
     steps: [],
 
-    // Runtime props - spread in from initialState
-    checkoutTracking: initialState?.checkoutTracking,
-    router: initialState?.router,
-    orderData: initialState?.orderData,
-    partnerOffer: initialState?.partnerOffer,
+    // Required runtime props - will be provided by Provider
+    checkoutTracking: {} as ReturnType<typeof useCheckoutTracking>,
+    router: {} as ReturnType<typeof useRouter>["router"],
+    orderData: {} as Order2CheckoutContext_order$data,
+    partnerOffer: null,
 
     // Override with initialState values if provided
     ...initialState,
@@ -460,13 +460,28 @@ export const Order2CheckoutContextProvider: React.FC<
     [orderData],
   )
 
-  const runtimeModel = {
+  const runtimeModel: Order2CheckoutModel = {
+    // Default values
+    isLoading: true,
+    expressCheckoutSubmitting: false,
+    loadingError: null,
+    expressCheckoutPaymentMethods: null,
+    activeFulfillmentDetailsTab: null,
+    confirmationToken: null,
+    saveCreditCard: true,
+    savedCreditCard: null,
+    checkoutMode: "standard",
+    steps: [],
+
+    // Override with initialState values
     ...initialState,
+
+    // Runtime dependencies
     checkoutTracking,
     router,
     orderData,
     partnerOffer,
-  }
+  } as Order2CheckoutModel
 
   return (
     <Order2CheckoutContext.Provider runtimeModel={runtimeModel}>
