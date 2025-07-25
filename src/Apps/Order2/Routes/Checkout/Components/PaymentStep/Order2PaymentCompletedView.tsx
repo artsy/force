@@ -1,4 +1,5 @@
 import CheckmarkIcon from "@artsy/icons/CheckmarkIcon"
+import HomeIcon from "@artsy/icons/HomeIcon"
 import { Clickable, Flex, Spacer, Text } from "@artsy/palette"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { type Brand, BrandCreditCardIcon } from "Components/BrandCreditCardIcon"
@@ -16,6 +17,9 @@ export const Order2PaymentCompletedView: React.FC<
     checkoutTracking.clickedChangePaymentMethod()
     editPayment()
   }
+
+  const isBankAccount =
+    !savedCreditCard && !confirmationToken?.paymentMethodPreview?.card
   return (
     <Flex flexDirection="column" backgroundColor="mono0">
       <Flex justifyContent="space-between">
@@ -42,20 +46,34 @@ export const Order2PaymentCompletedView: React.FC<
         </Clickable>
       </Flex>
       <Flex alignItems="center" ml="30px" mt={1}>
-        <BrandCreditCardIcon
-          mr={1}
-          type={
-            (confirmationToken?.paymentMethodPreview?.card?.displayBrand ||
-              savedCreditCard?.brand) as Brand
-          }
-          width="26px"
-          height="26px"
-        />
-        <Text variant="sm-display">
-          ••••{" "}
-          {confirmationToken?.paymentMethodPreview?.card?.last4 ||
-            savedCreditCard?.lastDigits}
-        </Text>
+        {isBankAccount ? (
+          <>
+            <HomeIcon
+              fill="mono100"
+              width={["18px", "26px"]}
+              height={["18px", "26px"]}
+              mr={1}
+            />
+            <Text variant={["xs", "sm-display"]}>Bank transfer</Text>
+          </>
+        ) : (
+          <>
+            <BrandCreditCardIcon
+              mr={1}
+              type={
+                (confirmationToken?.paymentMethodPreview?.card?.displayBrand ||
+                  savedCreditCard?.brand) as Brand
+              }
+              width={["18px", "26px"]}
+              height={["18px", "26px"]}
+            />
+            <Text variant={["xs", "sm-display"]}>
+              ••••{" "}
+              {confirmationToken?.paymentMethodPreview?.card?.last4 ||
+                savedCreditCard?.lastDigits}
+            </Text>
+          </>
+        )}
       </Flex>
     </Flex>
   )
