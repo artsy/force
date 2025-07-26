@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b1c50231396502ff8a11ea943fcf2a1f>>
+ * @generated SignedSource<<0ed739a2e83eedac4be2347a747ed06e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -30,6 +30,12 @@ var v0 = {
   "storageKey": null
 },
 v1 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v2 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
@@ -99,6 +105,40 @@ return {
                     "name": "slug",
                     "storageKey": null
                   },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "formattedMetadata",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Image",
+                    "kind": "LinkedField",
+                    "name": "image",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": [
+                          {
+                            "kind": "Literal",
+                            "name": "version",
+                            "value": [
+                              "larger",
+                              "large"
+                            ]
+                          }
+                        ],
+                        "kind": "ScalarField",
+                        "name": "url",
+                        "storageKey": "url(version:[\"larger\",\"large\"])"
+                      }
+                    ],
+                    "storageKey": null
+                  },
                   (v0/*: any*/)
                 ],
                 "storageKey": null
@@ -113,7 +153,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f6558e1a7ea490fcc501c5997d6408c4",
+    "cacheID": "d2895c3d84f82540c76cce1b39989934",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -135,14 +175,22 @@ return {
           "plural": false,
           "type": "Artwork"
         },
-        "filtered_artworks.edges.immersiveArtworkNode.id": (v1/*: any*/),
-        "filtered_artworks.edges.immersiveArtworkNode.slug": (v1/*: any*/),
-        "filtered_artworks.id": (v1/*: any*/)
+        "filtered_artworks.edges.immersiveArtworkNode.formattedMetadata": (v1/*: any*/),
+        "filtered_artworks.edges.immersiveArtworkNode.id": (v2/*: any*/),
+        "filtered_artworks.edges.immersiveArtworkNode.image": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Image"
+        },
+        "filtered_artworks.edges.immersiveArtworkNode.image.url": (v1/*: any*/),
+        "filtered_artworks.edges.immersiveArtworkNode.slug": (v2/*: any*/),
+        "filtered_artworks.id": (v2/*: any*/)
       }
     },
     "name": "ImmersiveViewTestQuery",
     "operationKind": "query",
-    "text": "query ImmersiveViewTestQuery {\n  filtered_artworks: artworksConnection {\n    ...ImmersiveView_filtered_artworks\n    id\n  }\n}\n\nfragment ImmersiveView_filtered_artworks on FilterArtworksConnection {\n  edges {\n    immersiveArtworkNode: node {\n      slug\n      id\n    }\n  }\n}\n"
+    "text": "query ImmersiveViewTestQuery {\n  filtered_artworks: artworksConnection {\n    ...ImmersiveView_filtered_artworks\n    id\n  }\n}\n\nfragment ImmersiveView_filtered_artworks on FilterArtworksConnection {\n  edges {\n    immersiveArtworkNode: node {\n      slug\n      formattedMetadata\n      image {\n        url(version: [\"larger\", \"large\"])\n      }\n      id\n    }\n  }\n}\n"
   }
 };
 })();

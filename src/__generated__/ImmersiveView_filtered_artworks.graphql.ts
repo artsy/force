@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3e185bd24bf6c61d1457052804277083>>
+ * @generated SignedSource<<c97dc1ac296e4381c7ecfd552386c197>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,6 +13,10 @@ import { FragmentRefs } from "relay-runtime";
 export type ImmersiveView_filtered_artworks$data = {
   readonly edges: ReadonlyArray<{
     readonly immersiveArtworkNode: {
+      readonly formattedMetadata: string | null | undefined;
+      readonly image: {
+        readonly url: string | null | undefined;
+      } | null | undefined;
       readonly slug: string;
     } | null | undefined;
   } | null | undefined> | null | undefined;
@@ -51,6 +55,40 @@ const node: ReaderFragment = {
               "kind": "ScalarField",
               "name": "slug",
               "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "formattedMetadata",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "Image",
+              "kind": "LinkedField",
+              "name": "image",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": [
+                    {
+                      "kind": "Literal",
+                      "name": "version",
+                      "value": [
+                        "larger",
+                        "large"
+                      ]
+                    }
+                  ],
+                  "kind": "ScalarField",
+                  "name": "url",
+                  "storageKey": "url(version:[\"larger\",\"large\"])"
+                }
+              ],
+              "storageKey": null
             }
           ],
           "storageKey": null
@@ -63,6 +101,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "b70e5cfac706a3bb8776ef832ad7d993";
+(node as any).hash = "881595f70a412848181aa8d16eda7d04";
 
 export default node;
