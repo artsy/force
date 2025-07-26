@@ -144,7 +144,12 @@ export const ArtworkFilterPlaceholder: React.FC<
                         </Flex>
                       </Flex>
 
-                      <SkeletonText variant="xs">Sort: Default</SkeletonText>
+                      <Flex gap={6} pr={1}>
+                        <SkeletonText variant="xs">⤢ Immersive</SkeletonText>
+                        <SkeletonText variant="xs">
+                          ⇅ Sort: Recommended
+                        </SkeletonText>
+                      </Flex>
                     </Flex>
                   </HorizontalPadding>
                 </AppContainer>
