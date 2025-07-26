@@ -2,7 +2,9 @@ import { useCallback, useEffect, useState } from "react"
 import { graphql, useFragment } from "react-relay"
 import styled from "styled-components"
 import { Link } from "react-head"
+import { Blurhash } from "react-blurhash"
 import {
+  Box,
   Button,
   Flex,
   Image,
@@ -12,7 +14,10 @@ import {
 } from "@artsy/palette"
 import CollapseIcon from "@artsy/icons/CollapseIcon"
 import { useDarkModeToggle } from "Utils/Hooks/useDarkModeToggle"
-import type { ImmersiveView_filtered_artworks$key } from "__generated__/ImmersiveView_filtered_artworks.graphql"
+import type {
+  ImmersiveView_filtered_artworks$data,
+  ImmersiveView_filtered_artworks$key,
+} from "__generated__/ImmersiveView_filtered_artworks.graphql"
 import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { FocusOn } from "react-focus-on"
 
@@ -31,6 +36,8 @@ export const ImmersiveView: React.FC<ImmersiveViewProps> = props => {
     artworkNodes.edges?.map(edge => edge?.immersiveArtworkNode) ?? []
 
   const [currentIndex, setCurrentIndex] = useState(0)
+  const [isImageLoading, setIsImageLoading] = useState(true)
+
   const currentArtwork = artworks[currentIndex]
   const nextArtwork = artworks[currentIndex + 1]
   const prevArtwork = artworks[currentIndex - 1]
@@ -49,6 +56,7 @@ export const ImmersiveView: React.FC<ImmersiveViewProps> = props => {
     if (page > 1) {
       setFilter("page", page - 1)
       setCurrentIndex(ITEMS_PER_PAGE - 1)
+      setIsImageLoading(true)
     }
   }, [filters?.page, setFilter])
 
@@ -57,6 +65,7 @@ export const ImmersiveView: React.FC<ImmersiveViewProps> = props => {
       const page = filters?.page ?? 1
       setFilter("page", page + 1)
       setCurrentIndex(0)
+      setIsImageLoading(true)
     }
   }, [filters?.page, setFilter, artworkNodes.pageInfo.hasNextPage])
 
@@ -64,6 +73,7 @@ export const ImmersiveView: React.FC<ImmersiveViewProps> = props => {
     const newIndex = Math.max(0, currentIndex - 1)
     if (newIndex !== currentIndex) {
       setCurrentIndex(newIndex)
+      setIsImageLoading(true)
     } else {
       navigateToPreviousPage()
     }
@@ -73,6 +83,7 @@ export const ImmersiveView: React.FC<ImmersiveViewProps> = props => {
     const newIndex = Math.min(artworks.length - 1, currentIndex + 1)
     if (newIndex !== currentIndex) {
       setCurrentIndex(newIndex)
+      setIsImageLoading(true)
     } else {
       navigateToNextPage()
     }
@@ -155,14 +166,25 @@ export const ImmersiveView: React.FC<ImmersiveViewProps> = props => {
                 onClick={e => e.currentTarget.blur()}
               >
                 <Flex flexDirection={"column"} alignItems={"center"} gap={2}>
+                  {isImageLoading && (
+                    <ImagePlaceholder currentArtwork={currentArtwork} />
+                  )}
+
                   <Image
+                    data-testid="immersive-view-image"
                     src={currentImageSrc}
                     alt={currentArtwork.formattedMetadata ?? "…"}
                     style={{
                       height: "85vh",
                       objectFit: "contain",
                     }}
+                    display={isImageLoading ? "none" : "block"}
+                    onLoad={() => {
+                      setIsImageLoading(false)
+                    }}
+                    onError={() => setIsImageLoading(false)}
                   />
+
                   <Text color="mono60">
                     {currentArtwork.formattedMetadata ?? "…"}
                   </Text>
@@ -187,6 +209,8 @@ const FRAGMENT = graphql`
         slug
         formattedMetadata
         image {
+          aspectRatio
+          blurhash
           url(version: ["larger", "large"])
         }
       }
@@ -227,3 +251,37 @@ const Previous = styled(ShelfPrevious)`
   transform: translateY(-50%);
   left: 2vw;
 `
+
+interface ImagePlaceholderProps {
+  currentArtwork: NonNullable<
+    NonNullable<ImmersiveView_filtered_artworks$data["edges"]>[number]
+  >["immersiveArtworkNode"]
+}
+
+const ImagePlaceholder: React.FC<ImagePlaceholderProps> = props => {
+  const { currentArtwork } = props
+
+  if (!currentArtwork?.image) return null
+
+  if (!currentArtwork.image.blurhash)
+    return (
+      <Box
+        bg={"mono10"}
+        width={`${(currentArtwork?.image?.aspectRatio ?? 1) * 85}vh`}
+        height={"85vh"}
+      />
+    )
+
+  return (
+    <Blurhash
+      data-testid="immersive-view-blurhash"
+      hash={currentArtwork.image.blurhash}
+      width={`${currentArtwork.image.aspectRatio * 85}vh`}
+      height={"85vh"}
+      resolutionX={32}
+      resolutionY={32}
+      punch={1}
+      aria-hidden="true"
+    />
+  )
+}
