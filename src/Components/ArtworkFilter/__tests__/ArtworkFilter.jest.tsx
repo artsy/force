@@ -176,6 +176,9 @@ describe("ArtworkFilter", () => {
       expect(screen.getAllByText("Andy Warhol")).toHaveLength(30)
       expect(screen.getAllByText("Yellow")).toHaveLength(2)
       expect(screen.getByText("All Filters")).toBeInTheDocument()
+      expect(
+        screen.getByRole("button", { name: "Immersive" }),
+      ).toBeInTheDocument()
     })
 
     it("triggers #onFilterClick on filter click, passing back the changed value and current filter state", () => {
@@ -233,6 +236,18 @@ describe("ArtworkFilter", () => {
       expect(screen.queryByRole("option")).not.toBeInTheDocument()
     })
 
+    it("opens the immersive view", async () => {
+      renderWithRelay({
+        Viewer: () => ({
+          ...ArtworkFilterFixture.viewer,
+        }),
+      })
+
+      fireEvent.click(screen.getByRole("button", { name: "Immersive" }))
+      expect(screen.getByTestId("immersive-view")).toBeInTheDocument()
+      expect(screen.getByText("Immersive View TKTK")).toBeInTheDocument()
+    })
+
     describe("total count label", () => {
       it("computs total count correctly", () => {
         let label = getTotalCountLabel({ total: "0", isAuctionArtwork: false })
@@ -261,7 +276,7 @@ describe("ArtworkFilter", () => {
   })
 
   describe("mobile", () => {
-    it("renders default UI items", () => {
+    it("renders default UI items", async () => {
       breakpoint = "xs"
       renderWithRelay({
         Viewer: () => ({
@@ -270,6 +285,9 @@ describe("ArtworkFilter", () => {
       })
 
       expect(screen.getAllByRole("button")[0]).toHaveTextContent("Filter")
+      expect(
+        screen.queryByRole("button", { name: "Immersive" }),
+      ).not.toBeInTheDocument()
     })
 
     it("toggles mobile action sheet", () => {
