@@ -14,6 +14,7 @@ import CollapseIcon from "@artsy/icons/CollapseIcon"
 import { useDarkModeToggle } from "Utils/Hooks/useDarkModeToggle"
 import type { ImmersiveView_filtered_artworks$key } from "__generated__/ImmersiveView_filtered_artworks.graphql"
 import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
+import { FocusOn } from "react-focus-on"
 
 const ITEMS_PER_PAGE = 30
 
@@ -122,51 +123,54 @@ export const ImmersiveView: React.FC<ImmersiveViewProps> = props => {
       {prevImageSrc && <Link rel="prefetch" href={prevImageSrc} as="image" />}
 
       <div className="immersive-view" data-testid="immersive-view">
-        <Container isDarkMode={isDarkModeActive}>
-          <Button
-            onClick={onClose}
-            variant={"tertiary"}
-            position="fixed"
-            top={20}
-            right={20}
-          >
-            <CollapseIcon mr={0.5} /> Close
-          </Button>
-
-          <Previous
-            onClick={handlePreviousArtwork}
-            aria-label="Previous artwork"
-          />
-
-          <Next onClick={handleNextArtwork} aria-label="Next artwork" />
-
-          {isPageLoading ? (
-            <Text>Loading more artworks…</Text>
-          ) : isArtworkMissing ? (
-            <Text>No artwork to display</Text>
-          ) : (
-            <a
-              key={currentArtwork.slug}
-              href={`/artwork/${currentArtwork.slug}`}
-              target="_new"
-              style={{ textDecoration: "none" }}
+        <FocusOn>
+          <Container isDarkMode={isDarkModeActive}>
+            <Button
+              onClick={onClose}
+              variant={"tertiary"}
+              position="fixed"
+              top={20}
+              right={20}
             >
-              <Flex flexDirection={"column"} alignItems={"center"} gap={2}>
-                <Image
-                  src={currentImageSrc}
-                  alt={currentArtwork.formattedMetadata ?? "…"}
-                  style={{
-                    height: "85vh",
-                    objectFit: "contain",
-                  }}
-                />
-                <Text color="mono60">
-                  {currentArtwork.formattedMetadata ?? "…"}
-                </Text>
-              </Flex>
-            </a>
-          )}
-        </Container>
+              <CollapseIcon mr={0.5} /> Close
+            </Button>
+
+            <Previous
+              onClick={handlePreviousArtwork}
+              aria-label="Previous artwork"
+            />
+
+            <Next onClick={handleNextArtwork} aria-label="Next artwork" />
+
+            {isPageLoading ? (
+              <Text>Loading more artworks…</Text>
+            ) : isArtworkMissing ? (
+              <Text>No artwork to display</Text>
+            ) : (
+              <a
+                key={currentArtwork.slug}
+                href={`/artwork/${currentArtwork.slug}`}
+                target="_new"
+                style={{ textDecoration: "none" }}
+                onClick={e => e.currentTarget.blur()}
+              >
+                <Flex flexDirection={"column"} alignItems={"center"} gap={2}>
+                  <Image
+                    src={currentImageSrc}
+                    alt={currentArtwork.formattedMetadata ?? "…"}
+                    style={{
+                      height: "85vh",
+                      objectFit: "contain",
+                    }}
+                  />
+                  <Text color="mono60">
+                    {currentArtwork.formattedMetadata ?? "…"}
+                  </Text>
+                </Flex>
+              </a>
+            )}
+          </Container>
+        </FocusOn>
       </div>
     </>
   )
