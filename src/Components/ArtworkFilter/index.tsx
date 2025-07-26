@@ -436,6 +436,7 @@ export const BaseArtworkFilter: React.FC<
         {isImmersed && (
           <ImmersiveView
             artworks={viewer.filtered_artworks}
+            isPageLoading={isLoading}
             onClose={() => setIsImmersed(false)}
           />
         )}

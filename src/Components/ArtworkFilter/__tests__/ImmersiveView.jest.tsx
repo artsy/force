@@ -7,11 +7,13 @@ import { ImmersiveView_filtered_artworks$data } from "__generated__/ImmersiveVie
 
 jest.unmock("react-relay")
 
-const mockClose = jest.fn()
-
 const { renderWithRelay } = setupTestWrapperTL<ImmersiveViewTestQuery>({
-  Component: props => (
-    <ImmersiveView artworks={props.filtered_artworks!} onClose={mockClose} />
+  Component: (props: any) => (
+    <ImmersiveView
+      artworks={props.filtered_artworks!}
+      isPageLoading={props.isPageLoading || false}
+      onClose={props.onClose}
+    />
   ),
   query: graphql`
     query ImmersiveViewTestQuery @relay_test_operation {
@@ -43,7 +45,11 @@ describe("ImmersiveView", () => {
   })
 
   it("closes", () => {
-    renderWithRelay()
+    const mockClose = jest.fn()
+    const props = {
+      onClose: mockClose,
+    }
+    renderWithRelay({}, props)
 
     screen.getByRole("button", { name: "Close" }).click()
 
@@ -91,12 +97,29 @@ describe("ImmersiveView", () => {
       expect(screen.queryByText("Artwork 2")).not.toBeInTheDocument()
     })
   })
+
+  it("navigates to prev/next pages via keyboard", async () => {
+    renderWithRelay(
+      { FilterArtworksConnection: () => filterArtworksConnectionData },
+      { isPageLoading: false },
+    )
+
+    expect(screen.queryByText("Loading more artworks…")).not.toBeInTheDocument()
+
+    renderWithRelay(
+      { FilterArtworksConnection: () => filterArtworksConnectionData },
+      { isPageLoading: true },
+    )
+
+    expect(screen.getByText("Loading more artworks…")).toBeInTheDocument()
+  })
 })
 
 const filterArtworksConnectionData: Pick<
   ImmersiveView_filtered_artworks$data,
-  "edges"
+  "edges" | "pageInfo"
 > = {
+  pageInfo: { hasNextPage: true },
   edges: [
     {
       immersiveArtworkNode: {
