@@ -1,9 +1,17 @@
-import styled from "styled-components"
-import { Button, Flex, Image, Text } from "@artsy/palette"
-import CollapseIcon from "@artsy/icons/CollapseIcon"
-import { useDarkModeToggle } from "Utils/Hooks/useDarkModeToggle"
 import { useCallback, useEffect, useState } from "react"
 import { graphql, useFragment } from "react-relay"
+import styled from "styled-components"
+import { Link } from "react-head"
+import {
+  Button,
+  Flex,
+  Image,
+  ShelfNext,
+  ShelfPrevious,
+  Text,
+} from "@artsy/palette"
+import CollapseIcon from "@artsy/icons/CollapseIcon"
+import { useDarkModeToggle } from "Utils/Hooks/useDarkModeToggle"
 import type { ImmersiveView_filtered_artworks$key } from "__generated__/ImmersiveView_filtered_artworks.graphql"
 
 interface ImmersiveViewProps {
@@ -17,13 +25,32 @@ export const ImmersiveView: React.FC<ImmersiveViewProps> = props => {
   const artworks =
     artworkNodes.edges?.map(edge => edge?.immersiveArtworkNode) ?? []
 
-  const [currentIndex, _setCurrentIndex] = useState(0)
+  const [currentIndex, setCurrentIndex] = useState(0)
   const currentArtwork = artworks[currentIndex]
+  const nextArtwork = artworks[currentIndex + 1]
+  const prevArtwork = artworks[currentIndex - 1]
 
   const currentImageSrc = currentArtwork?.image?.url as string
+  const nextImageSrc = nextArtwork?.image?.url as string
+  const prevImageSrc = prevArtwork?.image?.url as string
+
   const isArtworkMissing = !currentArtwork || !currentImageSrc
 
   const { isDarkModeActive } = useDarkModeToggle()
+
+  const handlePreviousArtwork = useCallback(() => {
+    const newIndex = Math.max(0, currentIndex - 1)
+    if (newIndex !== currentIndex) {
+      setCurrentIndex(newIndex)
+    }
+  }, [currentIndex])
+
+  const handleNextArtwork = useCallback(() => {
+    const newIndex = Math.min(artworks.length - 1, currentIndex + 1)
+    if (newIndex !== currentIndex) {
+      setCurrentIndex(newIndex)
+    }
+  }, [currentIndex])
 
   const handleKeyDown = useCallback(
     (event: KeyboardEvent) => {
@@ -31,12 +58,26 @@ export const ImmersiveView: React.FC<ImmersiveViewProps> = props => {
         case "Escape":
           onClose()
           break
+        case "ArrowLeft": {
+          handlePreviousArtwork()
+          break
+        }
+        case "ArrowRight": {
+          handleNextArtwork()
+          break
+        }
         default:
           // No action for other keys
           break
       }
     },
-    [onClose],
+    [
+      artworks.length,
+      currentIndex,
+      onClose,
+      handleNextArtwork,
+      handlePreviousArtwork,
+    ],
   )
 
   useEffect(() => {
@@ -50,42 +91,62 @@ export const ImmersiveView: React.FC<ImmersiveViewProps> = props => {
   }, [handleKeyDown])
 
   return (
-    <div className="immersive-view" data-testid="immersive-view">
-      <Container isDarkMode={isDarkModeActive}>
-        <Button
-          onClick={onClose}
-          variant={"tertiary"}
-          position="fixed"
-          top={20}
-          right={20}
-        >
-          <CollapseIcon mr={0.5} /> Close
-        </Button>
-        {isArtworkMissing ? (
-          <Text>No artwork to display</Text>
-        ) : (
-          <a
-            href={`/artwork/${currentArtwork.slug}`}
-            target="_new"
-            style={{ textDecoration: "none" }}
+    <>
+      {/* Prefetch prev/next image using link tags */}
+      {nextImageSrc && <Link rel="prefetch" href={nextImageSrc} as="image" />}
+      {prevImageSrc && <Link rel="prefetch" href={prevImageSrc} as="image" />}
+
+      <div className="immersive-view" data-testid="immersive-view">
+        <Container isDarkMode={isDarkModeActive}>
+          <Button
+            onClick={onClose}
+            variant={"tertiary"}
+            position="fixed"
+            top={20}
+            right={20}
           >
-            <Flex flexDirection={"column"} alignItems={"center"} gap={2}>
-              <Image
-                src={currentImageSrc}
-                alt={currentArtwork.formattedMetadata ?? "…"}
-                style={{
-                  height: "85vh",
-                  objectFit: "contain",
-                }}
-              />
-              <Text color="mono60">
-                {currentArtwork.formattedMetadata ?? "…"}
-              </Text>
-            </Flex>
-          </a>
-        )}
-      </Container>
-    </div>
+            <CollapseIcon mr={0.5} /> Close
+          </Button>
+
+          <Previous
+            onClick={handlePreviousArtwork}
+            disabled={currentIndex === 0}
+            aria-label="Previous artwork"
+          />
+
+          <Next
+            onClick={handleNextArtwork}
+            disabled={currentIndex === artworks.length - 1}
+            aria-label="Next artwork"
+          />
+
+          {isArtworkMissing ? (
+            <Text>No artwork to display</Text>
+          ) : (
+            <a
+              key={currentArtwork.slug}
+              href={`/artwork/${currentArtwork.slug}`}
+              target="_new"
+              style={{ textDecoration: "none" }}
+            >
+              <Flex flexDirection={"column"} alignItems={"center"} gap={2}>
+                <Image
+                  src={currentImageSrc}
+                  alt={currentArtwork.formattedMetadata ?? "…"}
+                  style={{
+                    height: "85vh",
+                    objectFit: "contain",
+                  }}
+                />
+                <Text color="mono60">
+                  {currentArtwork.formattedMetadata ?? "…"}
+                </Text>
+              </Flex>
+            </a>
+          )}
+        </Container>
+      </div>
+    </>
   )
 }
 
@@ -121,4 +182,18 @@ const Container = styled.div<ContainerProps>`
   z-index: 1000;
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px); /* Safari */
+`
+
+const Next = styled(ShelfNext)`
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 2vw;
+`
+
+const Previous = styled(ShelfPrevious)`
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 2vw;
 `

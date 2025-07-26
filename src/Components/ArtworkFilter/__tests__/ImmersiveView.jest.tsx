@@ -1,4 +1,4 @@
-import { screen } from "@testing-library/react"
+import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { ImmersiveView } from "Components/ArtworkFilter/ImmersiveView"
 import type { ImmersiveViewTestQuery } from "__generated__/ImmersiveViewTestQuery.graphql"
@@ -48,6 +48,48 @@ describe("ImmersiveView", () => {
     screen.getByRole("button", { name: "Close" }).click()
 
     expect(mockClose).toHaveBeenCalled()
+  })
+
+  it("navigates to prev/next artworks via keyboard", () => {
+    renderWithRelay({
+      FilterArtworksConnection: () => filterArtworksConnectionData,
+    })
+
+    expect(screen.getByText("Artwork 1")).toBeInTheDocument()
+    expect(screen.queryByText("Artwork 2")).not.toBeInTheDocument()
+
+    fireEvent.keyDown(document, { key: "ArrowRight" })
+
+    expect(screen.queryByText("Artwork 1")).not.toBeInTheDocument()
+    expect(screen.getByText("Artwork 2")).toBeInTheDocument()
+
+    fireEvent.keyDown(document, { key: "ArrowLeft" })
+
+    expect(screen.getByText("Artwork 1")).toBeInTheDocument()
+    expect(screen.queryByText("Artwork 2")).not.toBeInTheDocument()
+  })
+
+  it("navigates to prev/next artworks via buttons", async () => {
+    renderWithRelay({
+      FilterArtworksConnection: () => filterArtworksConnectionData,
+    })
+
+    expect(screen.getByText("Artwork 1")).toBeInTheDocument()
+    expect(screen.queryByText("Artwork 2")).not.toBeInTheDocument()
+
+    screen.getByRole("button", { name: "Next artwork" }).click()
+
+    waitFor(() => {
+      expect(screen.queryByText("Artwork 1")).not.toBeInTheDocument()
+      expect(screen.getByText("Artwork 2")).toBeInTheDocument()
+    })
+
+    screen.getByRole("button", { name: "Previous artwork" }).click()
+
+    waitFor(() => {
+      expect(screen.getByText("Artwork 1")).toBeInTheDocument()
+      expect(screen.queryByText("Artwork 2")).not.toBeInTheDocument()
+    })
   })
 })
 
