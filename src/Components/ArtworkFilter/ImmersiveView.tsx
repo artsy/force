@@ -2,14 +2,24 @@ import styled from "styled-components"
 import { Button, Flex } from "@artsy/palette"
 import CollapseIcon from "@artsy/icons/CollapseIcon"
 import { useDarkModeToggle } from "Utils/Hooks/useDarkModeToggle"
-import { useCallback, useEffect } from "react"
+import { useCallback, useEffect, useState } from "react"
+import { graphql, useFragment } from "react-relay"
+import type { ImmersiveView_filtered_artworks$key } from "__generated__/ImmersiveView_filtered_artworks.graphql"
 
 interface ImmersiveViewProps {
+  artworks: ImmersiveView_filtered_artworks$key
   onClose: () => void
 }
 
 export const ImmersiveView: React.FC<ImmersiveViewProps> = props => {
   const { onClose } = props
+  const artworkNodes = useFragment(FRAGMENT, props.artworks) || { edges: [] }
+  const artworks =
+    artworkNodes.edges?.map(edge => edge?.immersiveArtworkNode) ?? []
+
+  const [currentIndex, _setCurrentIndex] = useState(0)
+  const currentArtwork = artworks[currentIndex]
+
   const { isDarkModeActive } = useDarkModeToggle()
 
   const handleKeyDown = useCallback(
@@ -49,12 +59,22 @@ export const ImmersiveView: React.FC<ImmersiveViewProps> = props => {
           <CollapseIcon mr={0.5} /> Close
         </Button>
         <Flex alignItems={"center"} justifyContent="center" height="100%">
-          Immersive View TKTK
+          {currentArtwork?.slug}
         </Flex>
       </Container>
     </div>
   )
 }
+
+const FRAGMENT = graphql`
+  fragment ImmersiveView_filtered_artworks on FilterArtworksConnection {
+    edges {
+      immersiveArtworkNode: node {
+        slug
+      }
+    }
+  }
+`
 
 interface ContainerProps {
   isDarkMode?: boolean

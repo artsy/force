@@ -413,6 +413,7 @@ export const BaseArtworkFilter: React.FC<
                           variant={"tertiary"}
                           size={"small"}
                           onClick={() => setIsImmersed(true)}
+                          disabled={Number(total) === 0}
                         >
                           <ExpandIcon mr={0.5} />
                           Immersive

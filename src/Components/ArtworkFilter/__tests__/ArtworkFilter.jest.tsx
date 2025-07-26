@@ -236,16 +236,33 @@ describe("ArtworkFilter", () => {
       expect(screen.queryByRole("option")).not.toBeInTheDocument()
     })
 
-    it("opens the immersive view", async () => {
-      renderWithRelay({
-        Viewer: () => ({
-          ...ArtworkFilterFixture.viewer,
-        }),
+    describe("immersive view", () => {
+      it("enables the immersive view when there are artworks", async () => {
+        renderWithRelay({
+          Viewer: () => ({
+            ...ArtworkFilterFixture.viewer,
+          }),
+        })
+
+        fireEvent.click(screen.getByRole("button", { name: "Immersive" }))
+        expect(screen.getByTestId("immersive-view")).toBeInTheDocument()
       })
 
-      fireEvent.click(screen.getByRole("button", { name: "Immersive" }))
-      expect(screen.getByTestId("immersive-view")).toBeInTheDocument()
-      expect(screen.getByText("Immersive View TKTK")).toBeInTheDocument()
+      it("disables the immersive view when there are no artworks", async () => {
+        renderWithRelay({
+          Viewer: () => ({
+            filtered_artworks: {
+              edges: [],
+              counts: { total: 0 },
+            },
+          }),
+        })
+
+        const button = screen.getByRole("button", { name: "Immersive" })
+        expect(button).toBeDisabled()
+        fireEvent.click(button)
+        expect(screen.queryByTestId("immersive-view")).not.toBeInTheDocument()
+      })
     })
 
     describe("total count label", () => {
