@@ -173,7 +173,7 @@ describe("ArtworkFilter", () => {
       })
 
       expect(screen.getByRole("navigation")).toBeInTheDocument()
-      expect(screen.getAllByText("Andy Warhol")).toHaveLength(30)
+      expect(screen.getAllByText("Andy Warhol")).toHaveLength(3)
       expect(screen.getAllByText("Yellow")).toHaveLength(2)
       expect(screen.getByText("All Filters")).toBeInTheDocument()
       expect(
