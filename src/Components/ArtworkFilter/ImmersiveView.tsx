@@ -13,14 +13,18 @@ import {
 import CollapseIcon from "@artsy/icons/CollapseIcon"
 import { useDarkModeToggle } from "Utils/Hooks/useDarkModeToggle"
 import type { ImmersiveView_filtered_artworks$key } from "__generated__/ImmersiveView_filtered_artworks.graphql"
+import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
+
+const ITEMS_PER_PAGE = 30
 
 interface ImmersiveViewProps {
   artworks: ImmersiveView_filtered_artworks$key
+  isPageLoading: boolean
   onClose: () => void
 }
 
 export const ImmersiveView: React.FC<ImmersiveViewProps> = props => {
-  const { onClose } = props
+  const { onClose, isPageLoading } = props
   const artworkNodes = useFragment(FRAGMENT, props.artworks) || { edges: [] }
   const artworks =
     artworkNodes.edges?.map(edge => edge?.immersiveArtworkNode) ?? []
@@ -37,11 +41,30 @@ export const ImmersiveView: React.FC<ImmersiveViewProps> = props => {
   const isArtworkMissing = !currentArtwork || !currentImageSrc
 
   const { isDarkModeActive } = useDarkModeToggle()
+  const { filters, setFilter } = useArtworkFilterContext()
+
+  const navigateToPreviousPage = useCallback(() => {
+    const page = filters?.page ?? 1
+    if (page > 1) {
+      setFilter("page", page - 1)
+      setCurrentIndex(ITEMS_PER_PAGE - 1)
+    }
+  }, [filters?.page, setFilter])
+
+  const navigateToNextPage = useCallback(() => {
+    if (artworkNodes.pageInfo.hasNextPage) {
+      const page = filters?.page ?? 1
+      setFilter("page", page + 1)
+      setCurrentIndex(0)
+    }
+  }, [filters?.page, setFilter, artworkNodes.pageInfo.hasNextPage])
 
   const handlePreviousArtwork = useCallback(() => {
     const newIndex = Math.max(0, currentIndex - 1)
     if (newIndex !== currentIndex) {
       setCurrentIndex(newIndex)
+    } else {
+      navigateToPreviousPage()
     }
   }, [currentIndex])
 
@@ -49,6 +72,8 @@ export const ImmersiveView: React.FC<ImmersiveViewProps> = props => {
     const newIndex = Math.min(artworks.length - 1, currentIndex + 1)
     if (newIndex !== currentIndex) {
       setCurrentIndex(newIndex)
+    } else {
+      navigateToNextPage()
     }
   }, [currentIndex])
 
@@ -110,17 +135,14 @@ export const ImmersiveView: React.FC<ImmersiveViewProps> = props => {
 
           <Previous
             onClick={handlePreviousArtwork}
-            disabled={currentIndex === 0}
             aria-label="Previous artwork"
           />
 
-          <Next
-            onClick={handleNextArtwork}
-            disabled={currentIndex === artworks.length - 1}
-            aria-label="Next artwork"
-          />
+          <Next onClick={handleNextArtwork} aria-label="Next artwork" />
 
-          {isArtworkMissing ? (
+          {isPageLoading ? (
+            <Text>Loading more artworks…</Text>
+          ) : isArtworkMissing ? (
             <Text>No artwork to display</Text>
           ) : (
             <a
@@ -152,6 +174,10 @@ export const ImmersiveView: React.FC<ImmersiveViewProps> = props => {
 
 const FRAGMENT = graphql`
   fragment ImmersiveView_filtered_artworks on FilterArtworksConnection {
+    pageInfo {
+      # hasPreviousPage # seems broken
+      hasNextPage
+    }
     edges {
       immersiveArtworkNode: node {
         slug
