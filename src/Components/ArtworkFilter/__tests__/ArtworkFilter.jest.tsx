@@ -7,6 +7,7 @@ import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { omit } from "lodash"
 import { useTracking } from "react-tracking"
 import { ArtworkFilterFixture } from "./fixtures/ArtworkFilter.fixture"
+import { useFlag } from "@unleash/proxy-client-react"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -165,6 +166,12 @@ describe("ArtworkFilter", () => {
   })
 
   describe("desktop", () => {
+    beforeEach(() => {
+      ;(useFlag as jest.Mock).mockImplementation(
+        flag => flag === "onyx_enable-immersive-view",
+      )
+    })
+
     it("renders default UI items", () => {
       renderWithRelay({
         Viewer: () => ({

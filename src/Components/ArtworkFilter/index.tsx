@@ -60,6 +60,7 @@ import { allowedFilters } from "./Utils/allowedFilters"
 import { getTotalSelectedFiltersCount } from "./Utils/getTotalSelectedFiltersCount"
 import ExpandIcon from "@artsy/icons/ExpandIcon"
 import { ImmersiveView } from "Components/ArtworkFilter/ImmersiveView"
+import { useFlag } from "@unleash/proxy-client-react"
 
 interface ArtworkFilterProps extends SharedArtworkFilterContextProps, BoxProps {
   Filters?: JSX.Element
@@ -135,7 +136,9 @@ export const BaseArtworkFilter: React.FC<
 
   const [isLoading, setIsLoading] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
+
   const [isImmersed, setIsImmersed] = useState(false)
+  const enableImmersiveView = useFlag("onyx_enable-immersive-view")
 
   const handleOpen = () => {
     setIsOpen(true)
@@ -409,15 +412,17 @@ export const BaseArtworkFilter: React.FC<
                       </HorizontalOverflow>
 
                       <Flex gap={1}>
-                        <Button
-                          variant={"tertiary"}
-                          size={"small"}
-                          onClick={() => setIsImmersed(true)}
-                          disabled={Number(total) === 0}
-                        >
-                          <ExpandIcon mr={0.5} />
-                          Immersive
-                        </Button>
+                        {enableImmersiveView && (
+                          <Button
+                            variant={"tertiary"}
+                            size={"small"}
+                            onClick={() => setIsImmersed(true)}
+                            disabled={Number(total) === 0}
+                          >
+                            <ExpandIcon mr={0.5} />
+                            Immersive
+                          </Button>
+                        )}
 
                         <ArtworkFilterSort {...(stuck ? { offset: 20 } : {})} />
                       </Flex>
