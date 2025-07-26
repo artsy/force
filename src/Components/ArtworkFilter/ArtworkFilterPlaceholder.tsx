@@ -12,6 +12,7 @@ import {
   SkeletonText,
   Spacer,
 } from "@artsy/palette"
+import { useFlag } from "@unleash/proxy-client-react"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { ArtworkFilterActiveFilters } from "Components/ArtworkFilter/ArtworkFilterActiveFilters"
@@ -30,6 +31,8 @@ interface ArtworkFilterPlaceholderProps extends BoxProps {
 export const ArtworkFilterPlaceholder: React.FC<
   React.PropsWithChildren<ArtworkFilterPlaceholderProps>
 > = ({ showCreateAlert = false, layout = "MASONRY", ...rest }) => {
+  const enableImmersiveView = useFlag("onyx_enable-immersive-view")
+
   return (
     <Skeleton {...rest}>
       {/* Mobile Artwork Filter Placeholder */}
@@ -145,7 +148,9 @@ export const ArtworkFilterPlaceholder: React.FC<
                       </Flex>
 
                       <Flex gap={6} pr={1}>
-                        <SkeletonText variant="xs">⤢ Immersive</SkeletonText>
+                        {enableImmersiveView && (
+                          <SkeletonText variant="xs">⤢ Immersive</SkeletonText>
+                        )}
                         <SkeletonText variant="xs">
                           ⇅ Sort: Recommended
                         </SkeletonText>
