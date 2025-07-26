@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<10e33e50af2aec1b48e054c4feadb046>>
+ * @generated SignedSource<<c80b6f487d21eb27124684410483227d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -22,7 +22,7 @@ export type ArtistSeriesArtworksFilter_artistSeries$data = {
       readonly total: any | null | undefined;
     } | null | undefined;
     readonly id: string;
-    readonly " $fragmentSpreads": FragmentRefs<"ArtworkFilterArtworkGrid_filtered_artworks">;
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkFilterArtworkGrid_filtered_artworks" | "ImmersiveView_filtered_artworks">;
   } | null | undefined;
   readonly internalID: string;
   readonly sidebar: {
@@ -211,6 +211,11 @@ return {
           "args": null,
           "kind": "FragmentSpread",
           "name": "ArtworkFilterArtworkGrid_filtered_artworks"
+        },
+        {
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "ImmersiveView_filtered_artworks"
         }
       ],
       "storageKey": null
@@ -228,6 +233,6 @@ return {
 };
 })();
 
-(node as any).hash = "075bfe56ad1678c3b905730755d49eb7";
+(node as any).hash = "f52b71cd0930d6f369fb849423cc2faa";
 
 export default node;

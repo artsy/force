@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<31df492a30aa76336ec41c7100c28deb>>
+ * @generated SignedSource<<b58b0bb5b02191fd3a70b7df611b04ec>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,7 +17,7 @@ export type GeneArtworkFilter_gene$data = {
       readonly total: any | null | undefined;
     } | null | undefined;
     readonly id: string;
-    readonly " $fragmentSpreads": FragmentRefs<"ArtworkFilterArtworkGrid_filtered_artworks">;
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkFilterArtworkGrid_filtered_artworks" | "ImmersiveView_filtered_artworks">;
   } | null | undefined;
   readonly internalID: string;
   readonly sidebar: {
@@ -195,6 +195,11 @@ const node: ReaderFragment = {
           "args": null,
           "kind": "FragmentSpread",
           "name": "ArtworkFilterArtworkGrid_filtered_artworks"
+        },
+        {
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "ImmersiveView_filtered_artworks"
         }
       ],
       "storageKey": null
@@ -204,6 +209,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "163364967e7c06edecb9195531d1adf9";
+(node as any).hash = "1e9bb0967faf64ef69c99c3c77ba55e0";
 
 export default node;
