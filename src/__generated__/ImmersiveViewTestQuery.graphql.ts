@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<73bf14f0512546e8cdf7cacff776185a>>
+ * @generated SignedSource<<b879b871f684c7adb0cb0b60cda1142e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -140,6 +140,20 @@ return {
                     "selections": [
                       {
                         "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "aspectRatio",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "blurhash",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
                         "args": [
                           {
                             "kind": "Literal",
@@ -171,7 +185,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b7e14444c6005a957afc705afe01b1ae",
+    "cacheID": "44ef43307ab572d42a9324fabd2ca40d",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -201,6 +215,13 @@ return {
           "plural": false,
           "type": "Image"
         },
+        "filtered_artworks.edges.immersiveArtworkNode.image.aspectRatio": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "Float"
+        },
+        "filtered_artworks.edges.immersiveArtworkNode.image.blurhash": (v1/*: any*/),
         "filtered_artworks.edges.immersiveArtworkNode.image.url": (v1/*: any*/),
         "filtered_artworks.edges.immersiveArtworkNode.slug": (v2/*: any*/),
         "filtered_artworks.id": (v2/*: any*/),
@@ -220,7 +241,7 @@ return {
     },
     "name": "ImmersiveViewTestQuery",
     "operationKind": "query",
-    "text": "query ImmersiveViewTestQuery {\n  filtered_artworks: artworksConnection {\n    ...ImmersiveView_filtered_artworks\n    id\n  }\n}\n\nfragment ImmersiveView_filtered_artworks on FilterArtworksConnection {\n  pageInfo {\n    hasNextPage\n  }\n  edges {\n    immersiveArtworkNode: node {\n      slug\n      formattedMetadata\n      image {\n        url(version: [\"larger\", \"large\"])\n      }\n      id\n    }\n  }\n}\n"
+    "text": "query ImmersiveViewTestQuery {\n  filtered_artworks: artworksConnection {\n    ...ImmersiveView_filtered_artworks\n    id\n  }\n}\n\nfragment ImmersiveView_filtered_artworks on FilterArtworksConnection {\n  pageInfo {\n    hasNextPage\n  }\n  edges {\n    immersiveArtworkNode: node {\n      slug\n      formattedMetadata\n      image {\n        aspectRatio\n        blurhash\n        url(version: [\"larger\", \"large\"])\n      }\n      id\n    }\n  }\n}\n"
   }
 };
 })();

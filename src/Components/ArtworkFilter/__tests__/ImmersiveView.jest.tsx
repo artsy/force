@@ -7,6 +7,13 @@ import { ImmersiveView_filtered_artworks$data } from "__generated__/ImmersiveVie
 
 jest.unmock("react-relay")
 
+// Mock Blurhash to avoid canvas-related errors in tests
+jest.mock("react-blurhash", () => ({
+  Blurhash: ({ props }: any) => (
+    <div data-testid="immersive-view-blurhash-mock" {...props} />
+  ),
+}))
+
 const { renderWithRelay } = setupTestWrapperTL<ImmersiveViewTestQuery>({
   Component: (props: any) => (
     <ImmersiveView
@@ -29,19 +36,42 @@ describe("ImmersiveView", () => {
     jest.clearAllMocks()
   })
 
-  it("renders correctly", () => {
+  it("renders correctly", async () => {
     renderWithRelay({
       FilterArtworksConnection: () => filterArtworksConnectionData,
     })
 
     expect(screen.getByText("Artwork 1")).toBeInTheDocument()
-    expect(screen.getByRole("img", { name: "Artwork 1" })).toHaveAttribute(
-      "src",
-      "https://example.com/artwork-1.jpg",
-    )
-
     expect(screen.queryByText("Artwork 2")).not.toBeInTheDocument()
     expect(screen.queryByText("Artwork 3")).not.toBeInTheDocument()
+  })
+
+  it("renders blurhash while loading, and then the actual image", async () => {
+    renderWithRelay({
+      FilterArtworksConnection: () => filterArtworksConnectionData,
+    })
+
+    expect(
+      screen.queryByRole("img", { name: "Artwork 1" }),
+    ).not.toBeInTheDocument()
+
+    expect(
+      screen.getByTestId("immersive-view-blurhash-mock"),
+    ).toBeInTheDocument()
+
+    const imageComponent = screen.getByTestId("immersive-view-image")
+    fireEvent.load(imageComponent)
+
+    await waitFor(() => {
+      expect(screen.getByRole("img", { name: "Artwork 1" })).toHaveAttribute(
+        "src",
+        "https://example.com/artwork-1.jpg",
+      )
+
+      expect(
+        screen.queryByTestId("immersive-view-blurhash-mock"),
+      ).not.toBeInTheDocument()
+    })
   })
 
   it("closes", () => {
@@ -126,6 +156,8 @@ const filterArtworksConnectionData: Pick<
         slug: "artwork-1",
         formattedMetadata: "Artwork 1",
         image: {
+          aspectRatio: 1,
+          blurhash: "H4$#",
           url: "https://example.com/artwork-1.jpg",
         },
       },
@@ -135,6 +167,8 @@ const filterArtworksConnectionData: Pick<
         slug: "artwork-2",
         formattedMetadata: "Artwork 2",
         image: {
+          aspectRatio: 1,
+          blurhash: "H4$#",
           url: "https://example.com/artwork-2.jpg",
         },
       },
@@ -144,6 +178,8 @@ const filterArtworksConnectionData: Pick<
         slug: "artwork-3",
         formattedMetadata: "Artwork 3",
         image: {
+          aspectRatio: 1,
+          blurhash: "H4$#",
           url: "https://example.com/artwork-3.jpg",
         },
       },
