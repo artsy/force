@@ -109,6 +109,16 @@ const FAIR_ARTWORKS_FIXTURE: FairArtworksQuery$rawResponse = {
       },
       edges: [
         {
+          immersiveArtworkNode: {
+            formattedMetadata: "Yayoi Kusama, 'Pumpkin', 2222",
+            id: "ggg123",
+            image: {
+              aspectRatio: 1.27,
+              blurhash: null,
+              url: "https://test.artsy.net/image",
+            },
+            slug: "yayoi-kusama-pumpkin-2222222222222222",
+          },
           node: {
             id: "ggg123",
             slug: "yayoi-kusama-pumpkin-2222222222222222",
@@ -186,6 +196,16 @@ const FAIR_ARTWORKS_FIXTURE: FairArtworksQuery$rawResponse = {
           id: "nodeidabc",
         },
         {
+          immersiveArtworkNode: {
+            formattedMetadata: "Yayoi Kusama, 'Pumpkin', 3333",
+            id: "abc123",
+            image: {
+              aspectRatio: 1.43,
+              blurhash: null,
+              url: "https://test.artsy.net/image2",
+            },
+            slug: "yayoi-kusama-pumpkin-33333333333333333",
+          },
           node: {
             id: "abc123",
             slug: "yayoi-kusama-pumpkin-33333333333333333",
