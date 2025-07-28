@@ -71,6 +71,7 @@ const mockCheckoutContext = {
   checkoutTracking: {
     clickedPaymentMethod: jest.fn(),
     clickedOrderProgression: jest.fn(),
+    savedPaymentMethodViewed: jest.fn(),
   },
 }
 
@@ -274,6 +275,46 @@ describe("Order2PaymentForm", () => {
         amountMinor: 100000,
         currency: "USD",
       })
+    })
+
+    it("tracks initial saved payment method viewed if there are saved cards", async () => {
+      const savedCards = [
+        {
+          id: "card-1",
+          brand: "Visa",
+          last4: "1234",
+        },
+      ]
+
+      const { mockResolveLastOperation } = renderWithRelay({
+        Me: () => ({
+          order: {
+            ...baseOrderProps,
+          },
+          savedCreditCards: savedCards,
+        }),
+      })
+
+      await waitFor(() => {
+        expect(screen.getByTestId("payment-element")).toBeInTheDocument()
+      })
+
+      expect(
+        mockCheckoutContext.checkoutTracking.savedPaymentMethodViewed,
+      ).not.toHaveBeenCalled()
+
+      await waitFor(() => {
+        mockResolveLastOperation({
+          Me: () => ({
+            creditCards: savedCards,
+          }),
+        })
+      })
+
+      // Should track saved payment method viewed
+      expect(
+        mockCheckoutContext.checkoutTracking.savedPaymentMethodViewed,
+      ).toHaveBeenCalledWith(["CREDIT_CARD"])
     })
   })
 
