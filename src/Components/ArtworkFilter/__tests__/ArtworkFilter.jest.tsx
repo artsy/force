@@ -7,6 +7,7 @@ import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { omit } from "lodash"
 import { useTracking } from "react-tracking"
 import { ArtworkFilterFixture } from "./fixtures/ArtworkFilter.fixture"
+import { useFlag } from "@unleash/proxy-client-react"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -165,6 +166,12 @@ describe("ArtworkFilter", () => {
   })
 
   describe("desktop", () => {
+    beforeEach(() => {
+      ;(useFlag as jest.Mock).mockImplementation(
+        flag => flag === "onyx_enable-immersive-view",
+      )
+    })
+
     it("renders default UI items", () => {
       renderWithRelay({
         Viewer: () => ({
@@ -173,9 +180,12 @@ describe("ArtworkFilter", () => {
       })
 
       expect(screen.getByRole("navigation")).toBeInTheDocument()
-      expect(screen.getAllByText("Andy Warhol")).toHaveLength(30)
+      expect(screen.getAllByText("Andy Warhol")).toHaveLength(3)
       expect(screen.getAllByText("Yellow")).toHaveLength(2)
       expect(screen.getByText("All Filters")).toBeInTheDocument()
+      expect(
+        screen.getByRole("button", { name: "Immersive" }),
+      ).toBeInTheDocument()
     })
 
     it("triggers #onFilterClick on filter click, passing back the changed value and current filter state", () => {
@@ -233,6 +243,35 @@ describe("ArtworkFilter", () => {
       expect(screen.queryByRole("option")).not.toBeInTheDocument()
     })
 
+    describe("immersive view", () => {
+      it("enables the immersive view when there are artworks", async () => {
+        renderWithRelay({
+          Viewer: () => ({
+            ...ArtworkFilterFixture.viewer,
+          }),
+        })
+
+        fireEvent.click(screen.getByRole("button", { name: "Immersive" }))
+        expect(screen.getByTestId("immersive-view")).toBeInTheDocument()
+      })
+
+      it("disables the immersive view when there are no artworks", async () => {
+        renderWithRelay({
+          Viewer: () => ({
+            filtered_artworks: {
+              edges: [],
+              counts: { total: 0 },
+            },
+          }),
+        })
+
+        const button = screen.getByRole("button", { name: "Immersive" })
+        expect(button).toBeDisabled()
+        fireEvent.click(button)
+        expect(screen.queryByTestId("immersive-view")).not.toBeInTheDocument()
+      })
+    })
+
     describe("total count label", () => {
       it("computs total count correctly", () => {
         let label = getTotalCountLabel({ total: "0", isAuctionArtwork: false })
@@ -261,7 +300,7 @@ describe("ArtworkFilter", () => {
   })
 
   describe("mobile", () => {
-    it("renders default UI items", () => {
+    it("renders default UI items", async () => {
       breakpoint = "xs"
       renderWithRelay({
         Viewer: () => ({
@@ -270,6 +309,9 @@ describe("ArtworkFilter", () => {
       })
 
       expect(screen.getAllByRole("button")[0]).toHaveTextContent("Filter")
+      expect(
+        screen.queryByRole("button", { name: "Immersive" }),
+      ).not.toBeInTheDocument()
     })
 
     it("toggles mobile action sheet", () => {

@@ -1,6 +1,8 @@
 import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
 import ChevronDownIcon from "@artsy/icons/ChevronDownIcon"
+import ExpandIcon from "@artsy/icons/ExpandIcon"
 import FilterIcon from "@artsy/icons/FilterIcon"
+import SortIcon from "@artsy/icons/SortIcon"
 import {
   Box,
   type BoxProps,
@@ -12,6 +14,7 @@ import {
   SkeletonText,
   Spacer,
 } from "@artsy/palette"
+import { useFlag } from "@unleash/proxy-client-react"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { ArtworkFilterActiveFilters } from "Components/ArtworkFilter/ArtworkFilterActiveFilters"
@@ -30,6 +33,8 @@ interface ArtworkFilterPlaceholderProps extends BoxProps {
 export const ArtworkFilterPlaceholder: React.FC<
   React.PropsWithChildren<ArtworkFilterPlaceholderProps>
 > = ({ showCreateAlert = false, layout = "MASONRY", ...rest }) => {
+  const enableImmersiveView = useFlag("onyx_enable-immersive-view")
+
   return (
     <Skeleton {...rest}>
       {/* Mobile Artwork Filter Placeholder */}
@@ -144,7 +149,17 @@ export const ArtworkFilterPlaceholder: React.FC<
                         </Flex>
                       </Flex>
 
-                      <SkeletonText variant="xs">Sort: Default</SkeletonText>
+                      <Flex gap={6} pr={1}>
+                        {enableImmersiveView && (
+                          <SkeletonText variant="xs">
+                            <ExpandIcon mr={0.5} />
+                            Immersive
+                          </SkeletonText>
+                        )}
+                        <SkeletonText variant="xs">
+                          <SortIcon /> Sort: Recommended
+                        </SkeletonText>
+                      </Flex>
                     </Flex>
                   </HorizontalPadding>
                 </AppContainer>
