@@ -1,6 +1,8 @@
 import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
 import ChevronDownIcon from "@artsy/icons/ChevronDownIcon"
+import ExpandIcon from "@artsy/icons/ExpandIcon"
 import FilterIcon from "@artsy/icons/FilterIcon"
+import SortIcon from "@artsy/icons/SortIcon"
 import {
   Box,
   type BoxProps,
@@ -149,10 +151,13 @@ export const ArtworkFilterPlaceholder: React.FC<
 
                       <Flex gap={6} pr={1}>
                         {enableImmersiveView && (
-                          <SkeletonText variant="xs">⤢ Immersive</SkeletonText>
+                          <SkeletonText variant="xs">
+                            <ExpandIcon mr={0.5} />
+                            Immersive
+                          </SkeletonText>
                         )}
                         <SkeletonText variant="xs">
-                          ⇅ Sort: Recommended
+                          <SortIcon /> Sort: Recommended
                         </SkeletonText>
                       </Flex>
                     </Flex>
