@@ -69,7 +69,7 @@
     "strip-ansi": "6.0.1"
   },
   "dependencies": {
-    "@artsy/cohesion": "4.289.0",
+    "@artsy/cohesion": "4.290.0",
     "@artsy/commerce_helpers": "artsy/commerce_helpers",
     "@artsy/detect-responsive-traits": "^0.1.0",
     "@artsy/dismissible": "^0.4.1",
