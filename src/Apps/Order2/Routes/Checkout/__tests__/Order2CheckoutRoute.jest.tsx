@@ -40,23 +40,43 @@ const mockElements = {
     collapse: jest.fn(),
   }),
   submit: jest.fn(),
+  update: jest.fn(),
 }
 
 jest.mock("@stripe/react-stripe-js", () => {
   const originalModule = jest.requireActual("@stripe/react-stripe-js")
-  const mockPaymentElement = jest.fn(({ options: _options, onChange }) => {
+  const mockPaymentElement = jest.fn(({ onChange }) => {
     return (
-      <button
-        type="button"
-        onClick={() =>
-          onChange({
-            elementType: "payment",
-            value: { type: "card" },
-          })
-        }
-      >
-        Mock enter credit card
-      </button>
+      <div data-testid="payment-element">
+        <button
+          type="button"
+          data-testid="mock-credit-card"
+          onClick={() => {
+            const changeEvent = {
+              elementType: "payment",
+              collapsed: false,
+              value: { type: "card" },
+            }
+            onChange(changeEvent)
+          }}
+        >
+          Mock enter credit card
+        </button>
+        <button
+          type="button"
+          data-testid="mock-ach"
+          onClick={() => {
+            const changeEvent = {
+              elementType: "payment",
+              collapsed: false,
+              value: { type: "us_bank_account" },
+            }
+            onChange(changeEvent)
+          }}
+        >
+          Mock ACH
+        </button>
+      </div>
     )
   })
   return {

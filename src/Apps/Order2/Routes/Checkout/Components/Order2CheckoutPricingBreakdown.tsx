@@ -1,6 +1,6 @@
 import StopwatchIcon from "@artsy/icons/StopwatchIcon"
 import { Flex, Spacer, Text } from "@artsy/palette"
-import type { Order2CheckoutContextValue } from "Apps/Order2/Routes/Checkout/CheckoutContext/Order2CheckoutContext"
+import type { Order2CheckoutModel } from "Apps/Order2/Routes/Checkout/CheckoutContext/Order2CheckoutContext"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { RouterLink } from "System/Components/RouterLink"
 import type {
@@ -179,8 +179,8 @@ const isKnownLineType = (
 }
 
 const isValidTimer = (
-  partnerOffer?: Order2CheckoutContextValue["partnerOffer"],
-): partnerOffer is NonNullable<Order2CheckoutContextValue["partnerOffer"]> => {
+  partnerOffer?: Order2CheckoutModel["partnerOffer"],
+): partnerOffer is NonNullable<Order2CheckoutModel["partnerOffer"]> => {
   if (!partnerOffer?.timer?.remainingTime?.length) {
     return false
   }
