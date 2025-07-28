@@ -13,7 +13,6 @@ import {
   Text,
 } from "@artsy/palette"
 import CollapseIcon from "@artsy/icons/CollapseIcon"
-import { useDarkModeToggle } from "Utils/Hooks/useDarkModeToggle"
 import type {
   ImmersiveView_filtered_artworks$data,
   ImmersiveView_filtered_artworks$key,
@@ -48,7 +47,6 @@ export const ImmersiveView: React.FC<ImmersiveViewProps> = props => {
 
   const isArtworkMissing = !currentArtwork || !currentImageSrc
 
-  const { isDarkModeActive } = useDarkModeToggle()
   const { filters, setFilter } = useArtworkFilterContext()
 
   const navigateToPreviousPage = useCallback(() => {
@@ -135,7 +133,7 @@ export const ImmersiveView: React.FC<ImmersiveViewProps> = props => {
 
       <div className="immersive-view" data-testid="immersive-view">
         <FocusOn>
-          <Container isDarkMode={isDarkModeActive}>
+          <Container>
             <Button
               onClick={onClose}
               variant={"tertiary"}
@@ -218,17 +216,14 @@ const FRAGMENT = graphql`
   }
 `
 
-interface ContainerProps {
-  isDarkMode?: boolean
-}
-
-const Container = styled.div<ContainerProps>`
+const Container = styled.div`
   position: fixed;
   top: 0px;
   left: 0px;
   right: 0px;
   bottom: 0px;
-  background-color: ${props => (props.isDarkMode ? "#000000dd" : "#ffffffdd")};
+  background-color: ${({ theme }) =>
+    theme.name === "light" ? "rgba(255, 255, 255, 0.9)" : "rgba(0, 0, 0, 0.9)"};
   display: flex;
   flex-direction: column;
   align-items: center;
