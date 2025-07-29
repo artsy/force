@@ -69,7 +69,7 @@
     "strip-ansi": "6.0.1"
   },
   "dependencies": {
-    "@artsy/cohesion": "4.289.0",
+    "@artsy/cohesion": "4.291.0",
     "@artsy/commerce_helpers": "artsy/commerce_helpers",
     "@artsy/detect-responsive-traits": "^0.1.0",
     "@artsy/dismissible": "^0.4.1",
@@ -99,6 +99,7 @@
     "analytics-node": "2.4.1",
     "async": "^3.2.4",
     "autosuggest-highlight": "3.1.1",
+    "blurhash": "^2.0.5",
     "body-parser": "1.20.3",
     "chalk": "4.1.0",
     "cheerio": "0.22.0",
@@ -152,6 +153,7 @@
     "qrcode.react": "1.0.0",
     "qs": "6.5.3",
     "react": "^18.3.1",
+    "react-blurhash": "^0.3.0",
     "react-dfp": "^0.21.0",
     "react-dom": "^18.3.1",
     "react-dropzone": "^11.4.2",

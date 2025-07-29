@@ -3,7 +3,7 @@ import {
   type ClickedCancelExpressCheckout,
   type ClickedChangePaymentMethod,
   type ClickedChangeShippingAddress,
-  ClickedChangeShippingMethod,
+  type ClickedChangeShippingMethod,
   type ClickedExpressCheckout,
   type ClickedFulfillmentTab,
   type ClickedOrderProgression,
@@ -13,6 +13,7 @@ import {
   type ExpressCheckoutViewed,
   type OrderProgressionViewed,
   type PageOwnerType,
+  type SavedPaymentMethodViewed,
   type SubmittedOffer,
   type SubmittedOrder,
   type ToggledCollapsibleOrderSummary,
@@ -234,6 +235,17 @@ export const useCheckoutTracking = ({
           flow,
         }
 
+        trackEvent(payload)
+      },
+
+      savedPaymentMethodViewed: (paymentMethods: string[]) => {
+        const payload: SavedPaymentMethodViewed = {
+          action: ActionType.savedPaymentMethodViewed,
+          context_page_owner_type: contextPageOwnerType,
+          context_page_owner_id: contextPageOwnerId,
+          flow,
+          payment_methods: paymentMethods,
+        }
         trackEvent(payload)
       },
 

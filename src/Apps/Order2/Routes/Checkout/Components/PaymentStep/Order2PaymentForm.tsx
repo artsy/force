@@ -181,7 +181,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
           setSavedCreditCards(cards)
           if (cards.length > 0) {
             setSelectedPaymentMethod("saved")
-            setSelectedCreditCard(cards[0])
+            checkoutTracking.savedPaymentMethodViewed(["CREDIT_CARD"])
           }
         }
       } catch (error) {
@@ -192,7 +192,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
     }
 
     fetchSavedCreditCards()
-  }, [environment])
+  }, [environment, checkoutTracking.savedPaymentMethodViewed])
 
   if (!(stripe && elements)) {
     return null
@@ -242,6 +242,11 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
   }
 
   const onClickSavedPaymentMethods = () => {
+    checkoutTracking.clickedPaymentMethod({
+      paymentMethod: "SAVED_CREDIT_CARD",
+      amountMinor: order.itemsTotal?.minor,
+      currency: order.itemsTotal?.currencyCode ?? "",
+    })
     setErrorMessage(null) // Clear any previous error messages
     setSelectedPaymentMethod("saved")
     elements?.getElement("payment")?.collapse()
