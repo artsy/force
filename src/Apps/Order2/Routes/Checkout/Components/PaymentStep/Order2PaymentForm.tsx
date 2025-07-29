@@ -579,7 +579,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
         width="100%"
         type="submit"
       >
-        Save and Continue
+        Continue to Review
       </Button>
     </form>
   )
