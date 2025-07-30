@@ -1,4 +1,4 @@
-import { getInternalHref, getURLHost } from "Utils/url"
+import { getInternalHref, getPageNumber, getURLHost } from "Utils/url"
 
 describe("getURLHost", () => {
   it("returns host for url with host", () => {
@@ -60,5 +60,51 @@ describe("getInternalHref", () => {
     const url = "https://artsy.net"
     const result = getInternalHref(url)
     expect(result).toBe(url)
+  })
+})
+
+describe("getPageNumber", () => {
+  it("should return 1 when location is undefined", () => {
+    const result = getPageNumber(undefined)
+    expect(result).toBe(1)
+  })
+
+  it("should return 1 when location has no query", () => {
+    const location = { pathname: "/artists" }
+    const result = getPageNumber(location)
+    expect(result).toBe(1)
+  })
+
+  it("should return 1 when query has no page parameter", () => {
+    const location = { pathname: "/artists", query: { sort: "name" } }
+    const result = getPageNumber(location)
+    expect(result).toBe(1)
+  })
+
+  it("should return the page number when page parameter exists", () => {
+    const location = { pathname: "/artists", query: { page: "3" } }
+    const result = getPageNumber(location)
+    expect(result).toBe(3)
+  })
+
+  it("should handle numeric page parameter", () => {
+    const location = { pathname: "/artists", query: { page: 5 } }
+    const result = getPageNumber(location)
+    expect(result).toBe(5)
+  })
+
+  it("should return 1 for invalid page parameter", () => {
+    const location = { pathname: "/artists", query: { page: "invalid" } }
+    const result = getPageNumber(location)
+    expect(result).toBe(1)
+  })
+
+  it("should handle page parameter with other query params", () => {
+    const location = {
+      pathname: "/artists",
+      query: { page: "2", sort: "name", utm_source: "google" },
+    }
+    const result = getPageNumber(location)
+    expect(result).toBe(2)
   })
 })
