@@ -277,7 +277,7 @@ const helpers = {
       await userEvent.click(screen.getByText("Save credit card for later use"))
     }
 
-    await userEvent.click(screen.getByText("Save and Continue"))
+    await userEvent.click(screen.getByText("Continue to Review"))
 
     expect(mockElements.submit).toHaveBeenCalled()
     expect(mockStripe.createConfirmationToken).toHaveBeenCalled()
@@ -614,7 +614,7 @@ describe("Order2CheckoutRoute", () => {
           )
         }
 
-        await userEvent.click(screen.getByText("Save and Continue"))
+        await userEvent.click(screen.getByText("Continue to Review"))
 
         expect(mockElements.submit).toHaveBeenCalled()
         expect(mockStripe.createConfirmationToken).toHaveBeenCalled()
@@ -1291,7 +1291,7 @@ describe("Order2CheckoutRoute", () => {
           await flushPromiseQueue()
         })
 
-        await userEvent.click(screen.getByText("Save and Continue"))
+        await userEvent.click(screen.getByText("Continue to Review"))
         expect(screen.getByText("Select a payment method")).toBeInTheDocument()
 
         const wirePaymentOption = screen.getByTestId(testIDs.paymentFormWire)

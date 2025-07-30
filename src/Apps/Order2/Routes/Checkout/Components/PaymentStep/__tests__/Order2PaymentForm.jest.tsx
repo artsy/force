@@ -148,7 +148,7 @@ describe("Order2PaymentForm", () => {
     })
 
     await waitFor(() => {
-      expect(screen.getByText("Save and Continue")).toBeInTheDocument()
+      expect(screen.getByText("Continue to Review")).toBeInTheDocument()
     })
 
     expect(screen.getByTestId("payment-element")).toBeInTheDocument()
@@ -374,7 +374,7 @@ describe("Order2PaymentForm", () => {
         },
       })
 
-      await userEvent.click(screen.getByText("Save and Continue"))
+      await userEvent.click(screen.getByText("Continue to Review"))
 
       expect(mockElements.submit).toHaveBeenCalled()
       expect(mockStripe.createConfirmationToken).toHaveBeenCalledWith({
@@ -436,7 +436,7 @@ describe("Order2PaymentForm", () => {
         new Error("Bank setup failed"),
       )
 
-      await userEvent.click(screen.getByText("Save and Continue"))
+      await userEvent.click(screen.getByText("Continue to Review"))
 
       await waitFor(() => {
         // Should call bank debit setup but it will fail
@@ -449,7 +449,7 @@ describe("Order2PaymentForm", () => {
       expect(mockCheckoutContext.setConfirmationToken).not.toHaveBeenCalled()
 
       // Button should be available again (not in loading state)
-      expect(screen.getByText("Save and Continue")).toBeInTheDocument()
+      expect(screen.getByText("Continue to Review")).toBeInTheDocument()
     })
 
     it("handles updateOrderMutation error", async () => {
@@ -480,7 +480,7 @@ describe("Order2PaymentForm", () => {
         new Error("Order update failed"),
       )
 
-      await userEvent.click(screen.getByText("Save and Continue"))
+      await userEvent.click(screen.getByText("Continue to Review"))
 
       await waitFor(() => {
         // Should call both mutations, second one fails
@@ -494,7 +494,7 @@ describe("Order2PaymentForm", () => {
       expect(mockCheckoutContext.setConfirmationToken).not.toHaveBeenCalled()
 
       // Button should be available again (not in loading state)
-      expect(screen.getByText("Save and Continue")).toBeInTheDocument()
+      expect(screen.getByText("Continue to Review")).toBeInTheDocument()
     })
   })
 })
