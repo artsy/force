@@ -45,7 +45,10 @@ import { RouterLink } from "System/Components/RouterLink"
 import { extractNodes } from "Utils/extractNodes"
 import createLogger from "Utils/logger"
 import type { Order2PaymentFormConfirmationTokenQuery } from "__generated__/Order2PaymentFormConfirmationTokenQuery.graphql"
-import type { Order2PaymentFormSavedCreditCardsQuery } from "__generated__/Order2PaymentFormSavedCreditCardsQuery.graphql"
+import type {
+  Order2PaymentForm_me$data,
+  Order2PaymentForm_me$key,
+} from "__generated__/Order2PaymentForm_me.graphql"
 import type {
   Order2PaymentForm_order$data,
   Order2PaymentForm_order$key,
@@ -68,12 +71,15 @@ const defaultErrorMessage = (
 
 interface Order2PaymentFormProps {
   order: Order2PaymentForm_order$key
+  me: Order2PaymentForm_me$key
 }
 
 export const Order2PaymentForm: React.FC<Order2PaymentFormProps> = ({
   order,
+  me,
 }) => {
-  const orderData = useFragment(FRAGMENT, order)
+  const orderData = useFragment(ORDER_FRAGMENT, order)
+  const meData = useFragment(ME_FRAGMENT, me)
   const stripe = useStripe()
   const { itemsTotal, seller } = orderData
 
@@ -119,15 +125,19 @@ export const Order2PaymentForm: React.FC<Order2PaymentFormProps> = ({
 
   return (
     <Elements stripe={stripe} options={options}>
-      <PaymentFormContent order={orderData} />
+      <PaymentFormContent order={orderData} me={meData} />
     </Elements>
   )
 }
 
 interface PaymentFormContentProps {
   order: Order2PaymentForm_order$data
+  me: Order2PaymentForm_me$data
 }
-const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
+const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
+  order,
+  me,
+}) => {
   const stripe = useStripe()
   const elements = useElements()
   const environment = useRelayEnvironment()
@@ -148,23 +158,21 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
     null | "saved" | "stripe-card" | "wire" | "stripe-other"
   >(null)
   const [saveCreditCard, setSaveCreditCard] = useState(true)
-  const [savedCreditCards, setSavedCreditCards] = useState<any[] | null>(null)
   const [selectedCreditCard, setSelectedCreditCard] = useState<any | null>(null)
 
   const isSelectedPaymentMethodStripe = selectedPaymentMethod?.match(/^stripe/)
+  const savedCreditCards = extractNodes(me.creditCards)
+  const hasSavedCreditCards = savedCreditCards.length > 0
 
   const stepIsActive =
     steps?.find(step => step.name === CheckoutStepName.PAYMENT)?.state ===
     CheckoutStepState.ACTIVE
-  const isLoadingCreditCards = savedCreditCards === null
-  const hasSavedCreditCards =
-    !isLoadingCreditCards && savedCreditCards.length > 0
   const [hasActivatedPaymentStep, setHasActivatedPaymentStep] = useState(false)
 
   // one-time event after step becomes active and credit cards have loaded if
   // the user has any saved credit cards available
   useEffect(() => {
-    if (stepIsActive && !hasActivatedPaymentStep && !isLoadingCreditCards) {
+    if (stepIsActive && !hasActivatedPaymentStep) {
       if (hasSavedCreditCards) {
         checkoutTracking.savedPaymentMethodViewed(["CREDIT_CARD"])
       }
@@ -173,49 +181,16 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
   }, [
     stepIsActive,
     hasActivatedPaymentStep,
-    isLoadingCreditCards,
     hasSavedCreditCards,
     checkoutTracking,
   ])
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: one-time effect to default to saved payment method if available
   useEffect(() => {
-    const fetchSavedCreditCards = async () => {
-      try {
-        const response =
-          await fetchQuery<Order2PaymentFormSavedCreditCardsQuery>(
-            environment,
-            graphql`
-              query Order2PaymentFormSavedCreditCardsQuery {
-                me {
-                  creditCards(first: 10) {
-                    edges {
-                      node {
-                        internalID
-                        brand
-                        lastDigits
-                      }
-                    }
-                  }
-                }
-              }
-            `,
-            {},
-            { fetchPolicy: "store-or-network" },
-          ).toPromise()
-
-        if (response?.me?.creditCards) {
-          const cards = extractNodes(response.me.creditCards)
-          setSavedCreditCards(cards)
-          if (cards.length > 0) {
-            setSelectedPaymentMethod("saved")
-          }
-        }
-      } catch (error) {
-        logger.error("Error fetching saved credit cards", error)
-      }
+    if (hasSavedCreditCards) {
+      setSelectedPaymentMethod("saved")
+      return
     }
-
-    fetchSavedCreditCards()
   }, [environment])
 
   if (!(stripe && elements)) {
@@ -498,40 +473,32 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
                 Select a saved payment method or add a new one.
               </Text>
               <Box ml="50px">
-                {isLoadingCreditCards ? (
-                  <Text variant="sm" ml="50px">
-                    Loading saved cards...
-                  </Text>
-                ) : (
-                  <>
-                    <RadioGroup
-                      defaultValue={selectedCreditCard}
-                      onSelect={val => {
-                        setSelectedCreditCard(val)
-                      }}
-                    >
-                      {savedCreditCards.map(card => (
-                        <Radio
-                          key={card.internalID}
-                          value={card}
-                          pb="15px"
-                          pt="15px"
-                          label={
-                            <Flex>
-                              <BrandCreditCardIcon
-                                type={card.brand as Brand}
-                                width="24px"
-                                height="24px"
-                                mr={1}
-                              />
-                              <Text variant="sm">•••• {card.lastDigits}</Text>
-                            </Flex>
-                          }
-                        />
-                      ))}
-                    </RadioGroup>
-                  </>
-                )}
+                <RadioGroup
+                  defaultValue={selectedCreditCard}
+                  onSelect={val => {
+                    setSelectedCreditCard(val)
+                  }}
+                >
+                  {savedCreditCards.map(card => (
+                    <Radio
+                      key={card.internalID}
+                      value={card}
+                      pb="15px"
+                      pt="15px"
+                      label={
+                        <Flex>
+                          <BrandCreditCardIcon
+                            type={card.brand as Brand}
+                            width="24px"
+                            height="24px"
+                            mr={1}
+                          />
+                          <Text variant="sm">•••• {card.lastDigits}</Text>
+                        </Flex>
+                      }
+                    />
+                  ))}
+                </RadioGroup>
               </Box>
             </Collapse>
           </Box>
@@ -609,7 +576,21 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
   )
 }
 
-const FRAGMENT = graphql`
+const ME_FRAGMENT = graphql`
+  fragment Order2PaymentForm_me on Me {
+    creditCards(first: 10) {
+      edges {
+        node {
+          internalID
+          brand
+          lastDigits
+        }
+      }
+    }
+  }
+`
+
+const ORDER_FRAGMENT = graphql`
   fragment Order2PaymentForm_order on Order {
     mode
     source

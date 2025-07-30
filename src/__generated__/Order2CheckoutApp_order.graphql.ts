@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ea34dd43001dd283c0c4e15db0417b00>>
+ * @generated SignedSource<<aabd2dbc0055bc4f64292a6eb30ec379>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,14 +9,9 @@
 // @ts-nocheck
 
 import { ReaderFragment } from 'relay-runtime';
-export type FulfillmentOptionTypeEnum = "DOMESTIC_FLAT" | "INTERNATIONAL_FLAT" | "PICKUP" | "SHIPPING_TBD" | "%future added value";
 export type OrderModeEnum = "BUY" | "OFFER" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type Order2CheckoutApp_order$data = {
-  readonly fulfillmentOptions: ReadonlyArray<{
-    readonly type: FulfillmentOptionTypeEnum;
-  }>;
-  readonly internalID: string;
   readonly lineItems: ReadonlyArray<{
     readonly artwork: {
       readonly isFixedShippingFeeOnly: boolean | null | undefined;
@@ -38,31 +33,6 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "Order2CheckoutApp_order",
   "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "internalID",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "FulfillmentOption",
-      "kind": "LinkedField",
-      "name": "fulfillmentOptions",
-      "plural": true,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "type",
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
-    },
     {
       "alias": null,
       "args": null,
@@ -151,6 +121,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "f856dde90840b5566a4f46fa9d83cee9";
+(node as any).hash = "4f0f4407187333626345140baf6af957";
 
 export default node;

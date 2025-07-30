@@ -1,8 +1,8 @@
 import { Flex } from "@artsy/palette"
 import { Elements, useStripe } from "@stripe/react-stripe-js"
-import {
-  type StripeElementsOptions,
-  type StripeElementsUpdateOptions,
+import type {
+  StripeElementsOptions,
+  StripeElementsUpdateOptions,
 } from "@stripe/stripe-js"
 import { Order2ExpressCheckoutUI } from "Apps/Order2/Routes/Checkout/Components/ExpressCheckout/Order2ExpressCheckoutUI"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
