@@ -225,6 +225,7 @@ const helpers = {
       // CheckoutContext MINIMUM_LOADING_MS
       jest.advanceTimersByTime(1000)
     })
+
     await waitFor(() => {
       expect(
         screen.queryByLabelText("Checkout loading skeleton"),
@@ -399,7 +400,6 @@ describe("Order2CheckoutRoute", () => {
       expect(MockExpressCheckout).toHaveBeenCalled()
     })
 
-    // TODO: Make our mock more strategic if necessary.
     it("does not render express checkout if not eligible", async () => {
       const props = {
         ...baseProps,
@@ -525,7 +525,15 @@ describe("Order2CheckoutRoute", () => {
             return mockResolveLastOperation({
               Me: () => ({
                 creditCards: {
-                  edges: [],
+                  edges: [
+                    {
+                      node: {
+                        id: "credit-card-id",
+                        brand: "Visa",
+                        lastDigits: "1234",
+                      },
+                    },
+                  ],
                 },
               }),
             })
@@ -713,6 +721,12 @@ describe("Order2CheckoutRoute", () => {
             context_module: "ordersFulfillment",
             context_page_owner_id: "order-id",
             flow: "Buy now",
+          },
+          {
+            action: "savedPaymentMethodViewed",
+            context_page_owner_id: "order-id",
+            flow: "Buy now",
+            payment_methods: ["CREDIT_CARD"],
           },
           {
             action: "orderProgressionViewed",
@@ -1200,6 +1214,52 @@ describe("Order2CheckoutRoute", () => {
       // TODO: Example of this assertion is above for clickedChangeShippingAddress
       "Allows clicking the edit button to change payment method",
     )
+
+    it("tracks viewing saved payment methods one time when the step becomes active", async () => {
+      const props = {
+        ...baseProps,
+        me: {
+          ...baseProps.me,
+          order: {
+            ...baseProps.me.order,
+            fulfillmentOptions: [
+              {
+                type: "PICKUP",
+                __typename: "PickupFulfillmentOption",
+                selected: true,
+              },
+              { type: "DOMESTIC_FLAT" },
+            ],
+            fulfillmentDetails: {
+              phoneNumber: {
+                originalNumber: "03012345678",
+                regionCode: "de",
+              },
+            },
+            selectedFulfillmentOption: {
+              type: "PICKUP",
+            },
+          },
+        },
+      }
+      const initialOrder = props.me.order
+      const { mockResolveLastOperation } = await renderWithRelay({
+        Viewer: () => props,
+      })
+      await helpers.waitForLoadingComplete()
+      await act(async () => {
+        await waitFor(() => {
+          return mockResolveLastOperation({
+            Me: () => ({
+              creditCards: {
+                edges: [],
+              },
+            }),
+          })
+        })
+        await flushPromiseQueue()
+      })
+    })
 
     describe("error handling when saving and continuing", () => {
       it("shows an error if no payment method is selected", async () => {

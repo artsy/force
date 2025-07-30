@@ -10,7 +10,6 @@ import {
   RadioGroup,
   Spacer,
   Text,
-  usePrevious,
   useTheme,
 } from "@artsy/palette"
 import {
@@ -29,6 +28,10 @@ import { Collapse } from "Apps/Order/Components/Collapse"
 import { useUpdateOrderMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useUpdateOrderMutation"
 import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
 import { useSetPayment } from "Apps/Order/Mutations/useSetPayment"
+import {
+  CheckoutStepName,
+  CheckoutStepState,
+} from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import {
   CheckoutErrorBanner,
   MailtoOrderSupport,
@@ -131,7 +134,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
   const updateOrderMutation = useUpdateOrderMutation()
   const setPaymentMutation = useSetPayment()
   const createBankDebitSetupForOrder = CreateBankDebitSetupForOrder()
-  const { setConfirmationToken, checkoutTracking, setSavedCreditCard } =
+  const { setConfirmationToken, checkoutTracking, setSavedCreditCard, steps } =
     useCheckoutContext()
 
   const [isSubmittingToStripe, setIsSubmittingToStripe] = useState(false)
@@ -145,30 +148,38 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
     null | "saved" | "stripe-card" | "wire" | "stripe-other"
   >(null)
   const [saveCreditCard, setSaveCreditCard] = useState(true)
-  const [savedCreditCards, setSavedCreditCards] = useState<any[]>([])
-  const [isLoadingCreditCards, setIsLoadingCreditCards] = useState(false)
+  const [savedCreditCards, setSavedCreditCards] = useState<any[] | null>(null)
   const [selectedCreditCard, setSelectedCreditCard] = useState<any | null>(null)
 
   const isSelectedPaymentMethodStripe = selectedPaymentMethod?.match(/^stripe/)
-  const hasSavedCreditCards = savedCreditCards.length > 0
 
-  const previousSelectedPaymentMethod = usePrevious(selectedPaymentMethod)
+  const stepIsActive =
+    steps?.find(step => step.name === CheckoutStepName.PAYMENT)?.state ===
+    CheckoutStepState.ACTIVE
+  const isLoadingCreditCards = savedCreditCards === null
+  const hasSavedCreditCards =
+    !isLoadingCreditCards && savedCreditCards.length > 0
+  const [hasActivatedPaymentStep, setHasActivatedPaymentStep] = useState(false)
+
+  // one-time event after step becomes active and credit cards have loaded if
+  // the user has any saved credit cards available
   useEffect(() => {
-    if (selectedPaymentMethod === previousSelectedPaymentMethod) {
-      return
-    }
-    if (selectedPaymentMethod === "saved" && hasSavedCreditCards) {
-      checkoutTracking.savedPaymentMethodViewed(["CREDIT_CARD"])
+    if (stepIsActive && !hasActivatedPaymentStep && !isLoadingCreditCards) {
+      if (hasSavedCreditCards) {
+        checkoutTracking.savedPaymentMethodViewed(["CREDIT_CARD"])
+      }
+      setHasActivatedPaymentStep(true)
     }
   }, [
-    selectedPaymentMethod,
-    previousSelectedPaymentMethod,
-    checkoutTracking.savedPaymentMethodViewed,
+    stepIsActive,
+    hasActivatedPaymentStep,
+    isLoadingCreditCards,
     hasSavedCreditCards,
+    checkoutTracking,
   ])
+
   useEffect(() => {
     const fetchSavedCreditCards = async () => {
-      setIsLoadingCreditCards(true)
       try {
         const response =
           await fetchQuery<Order2PaymentFormSavedCreditCardsQuery>(
@@ -201,8 +212,6 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
         }
       } catch (error) {
         logger.error("Error fetching saved credit cards", error)
-      } finally {
-        setIsLoadingCreditCards(false)
       }
     }
 

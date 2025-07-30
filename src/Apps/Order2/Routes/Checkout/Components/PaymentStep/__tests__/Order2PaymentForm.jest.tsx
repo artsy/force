@@ -1,5 +1,6 @@
 import { screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
+import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { Order2PaymentFormTestQuery } from "__generated__/Order2PaymentFormTestQuery.graphql"
 import { graphql } from "react-relay"
@@ -73,6 +74,12 @@ const mockCheckoutContext = {
     clickedOrderProgression: jest.fn(),
     savedPaymentMethodViewed: jest.fn(),
   },
+  steps: [
+    {
+      name: "PAYMENT",
+      state: "ACTIVE",
+    },
+  ],
 }
 
 jest.mock("Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext", () => ({
@@ -311,12 +318,12 @@ describe("Order2PaymentForm", () => {
         })
       })
 
+      await flushPromiseQueue()
+
       // Should track saved payment method viewed
-      await waitFor(() =>
-        expect(
-          mockCheckoutContext.checkoutTracking.savedPaymentMethodViewed,
-        ).toHaveBeenCalledWith(["CREDIT_CARD"]),
-      )
+      expect(
+        mockCheckoutContext.checkoutTracking.savedPaymentMethodViewed,
+      ).toHaveBeenCalledWith(["CREDIT_CARD"])
     })
   })
 
