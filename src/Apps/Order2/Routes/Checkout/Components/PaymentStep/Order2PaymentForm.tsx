@@ -29,11 +29,16 @@ import { useUpdateOrderMutation } from "Apps/Order/Components/ExpressCheckout/Mu
 import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
 import { useSetPayment } from "Apps/Order/Mutations/useSetPayment"
 import {
+  CheckoutStepName,
+  CheckoutStepState,
+} from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
+import {
   CheckoutErrorBanner,
   MailtoOrderSupport,
 } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 
+import { CreateBankDebitSetupForOrder } from "Components/BankDebitForm/Mutations/CreateBankDebitSetupForOrder"
 import { type Brand, BrandCreditCardIcon } from "Components/BrandCreditCardIcon"
 import { FadeInBox } from "Components/FadeInBox"
 import { RouterLink } from "System/Components/RouterLink"
@@ -53,7 +58,6 @@ import {
   useFragment,
   useRelayEnvironment,
 } from "react-relay"
-import { CreateBankDebitSetupForOrder } from "Components/BankDebitForm/Mutations/CreateBankDebitSetupForOrder"
 
 const logger = createLogger("Order2PaymentForm")
 const defaultErrorMessage = (
@@ -130,7 +134,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
   const updateOrderMutation = useUpdateOrderMutation()
   const setPaymentMutation = useSetPayment()
   const createBankDebitSetupForOrder = CreateBankDebitSetupForOrder()
-  const { setConfirmationToken, checkoutTracking, setSavedCreditCard } =
+  const { setConfirmationToken, checkoutTracking, setSavedCreditCard, steps } =
     useCheckoutContext()
 
   const [isSubmittingToStripe, setIsSubmittingToStripe] = useState(false)
@@ -144,15 +148,38 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
     null | "saved" | "stripe-card" | "wire" | "stripe-other"
   >(null)
   const [saveCreditCard, setSaveCreditCard] = useState(true)
-  const [savedCreditCards, setSavedCreditCards] = useState<any[]>([])
-  const [isLoadingCreditCards, setIsLoadingCreditCards] = useState(false)
+  const [savedCreditCards, setSavedCreditCards] = useState<any[] | null>(null)
   const [selectedCreditCard, setSelectedCreditCard] = useState<any | null>(null)
 
   const isSelectedPaymentMethodStripe = selectedPaymentMethod?.match(/^stripe/)
 
+  const stepIsActive =
+    steps?.find(step => step.name === CheckoutStepName.PAYMENT)?.state ===
+    CheckoutStepState.ACTIVE
+  const isLoadingCreditCards = savedCreditCards === null
+  const hasSavedCreditCards =
+    !isLoadingCreditCards && savedCreditCards.length > 0
+  const [hasActivatedPaymentStep, setHasActivatedPaymentStep] = useState(false)
+
+  // one-time event after step becomes active and credit cards have loaded if
+  // the user has any saved credit cards available
+  useEffect(() => {
+    if (stepIsActive && !hasActivatedPaymentStep && !isLoadingCreditCards) {
+      if (hasSavedCreditCards) {
+        checkoutTracking.savedPaymentMethodViewed(["CREDIT_CARD"])
+      }
+      setHasActivatedPaymentStep(true)
+    }
+  }, [
+    stepIsActive,
+    hasActivatedPaymentStep,
+    isLoadingCreditCards,
+    hasSavedCreditCards,
+    checkoutTracking,
+  ])
+
   useEffect(() => {
     const fetchSavedCreditCards = async () => {
-      setIsLoadingCreditCards(true)
       try {
         const response =
           await fetchQuery<Order2PaymentFormSavedCreditCardsQuery>(
@@ -181,18 +208,15 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
           setSavedCreditCards(cards)
           if (cards.length > 0) {
             setSelectedPaymentMethod("saved")
-            checkoutTracking.savedPaymentMethodViewed(["CREDIT_CARD"])
           }
         }
       } catch (error) {
         logger.error("Error fetching saved credit cards", error)
-      } finally {
-        setIsLoadingCreditCards(false)
       }
     }
 
     fetchSavedCreditCards()
-  }, [environment, checkoutTracking.savedPaymentMethodViewed])
+  }, [environment])
 
   if (!(stripe && elements)) {
     return null
@@ -445,7 +469,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
         </>
       )}
       <Spacer y={2} />
-      {savedCreditCards.length > 0 && (
+      {hasSavedCreditCards && (
         <FadeInBox>
           <Box
             backgroundColor="mono5"

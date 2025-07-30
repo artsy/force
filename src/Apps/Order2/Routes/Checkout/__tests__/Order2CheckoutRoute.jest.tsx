@@ -225,6 +225,7 @@ const helpers = {
       // CheckoutContext MINIMUM_LOADING_MS
       jest.advanceTimersByTime(1000)
     })
+
     await waitFor(() => {
       expect(
         screen.queryByLabelText("Checkout loading skeleton"),
@@ -399,7 +400,6 @@ describe("Order2CheckoutRoute", () => {
       expect(MockExpressCheckout).toHaveBeenCalled()
     })
 
-    // TODO: Make our mock more strategic if necessary.
     it("does not render express checkout if not eligible", async () => {
       const props = {
         ...baseProps,
@@ -525,7 +525,15 @@ describe("Order2CheckoutRoute", () => {
             return mockResolveLastOperation({
               Me: () => ({
                 creditCards: {
-                  edges: [],
+                  edges: [
+                    {
+                      node: {
+                        id: "credit-card-id",
+                        brand: "Visa",
+                        lastDigits: "1234",
+                      },
+                    },
+                  ],
                 },
               }),
             })
@@ -713,6 +721,12 @@ describe("Order2CheckoutRoute", () => {
             context_module: "ordersFulfillment",
             context_page_owner_id: "order-id",
             flow: "Buy now",
+          },
+          {
+            action: "savedPaymentMethodViewed",
+            context_page_owner_id: "order-id",
+            flow: "Buy now",
+            payment_methods: ["CREDIT_CARD"],
           },
           {
             action: "orderProgressionViewed",
@@ -1198,7 +1212,7 @@ describe("Order2CheckoutRoute", () => {
   describe("within the payment section", () => {
     it.todo(
       // TODO: Example of this assertion is above for clickedChangeShippingAddress
-      "Allows clicking the edit button to change payment method",
+      "Allows clicking the edit button to change payment method, but only tracks savedPaymentMethodViewed one time for a user with saved credit cards",
     )
 
     describe("error handling when saving and continuing", () => {
