@@ -62,13 +62,6 @@ const FRAGMENT = graphql`
         ...Order2CheckoutContext_order
         ...Order2CheckoutApp_order
       }
-      addressConnection(first: 10) {
-        edges {
-          node {
-            internalID
-          }
-        }
-      }
     }
   }
 `

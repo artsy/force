@@ -164,10 +164,6 @@ const ME_FRAGMENT = graphql`
 
 const ORDER_FRAGMENT = graphql`
   fragment Order2CheckoutApp_order on Order {
-    internalID
-    fulfillmentOptions {
-      type
-    }
     mode
     lineItems {
       artwork {
