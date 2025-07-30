@@ -150,20 +150,21 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
   const [selectedCreditCard, setSelectedCreditCard] = useState<any | null>(null)
 
   const isSelectedPaymentMethodStripe = selectedPaymentMethod?.match(/^stripe/)
+  const hasSavedCreditCards = savedCreditCards.length > 0
 
   const previousSelectedPaymentMethod = usePrevious(selectedPaymentMethod)
   useEffect(() => {
     if (selectedPaymentMethod === previousSelectedPaymentMethod) {
       return
     }
-    if (selectedPaymentMethod === "saved" && savedCreditCards.length > 0) {
+    if (selectedPaymentMethod === "saved" && hasSavedCreditCards) {
       checkoutTracking.savedPaymentMethodViewed(["CREDIT_CARD"])
     }
   }, [
     selectedPaymentMethod,
     previousSelectedPaymentMethod,
     checkoutTracking.savedPaymentMethodViewed,
-    savedCreditCards.length,
+    hasSavedCreditCards,
   ])
   useEffect(() => {
     const fetchSavedCreditCards = async () => {
@@ -459,7 +460,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
         </>
       )}
       <Spacer y={2} />
-      {savedCreditCards.length > 0 && (
+      {hasSavedCreditCards && (
         <FadeInBox>
           <Box
             backgroundColor="mono5"
