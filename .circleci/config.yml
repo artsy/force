@@ -122,6 +122,33 @@ jobs:
       - store_artifacts:
           path: cypress/screenshots
 
+  playwright-smoke-tests:
+    executor: node-executor
+    working_directory: ~/app
+    parallelism: 6
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn
+      - run:
+          name: Install Playwright Browsers
+          command: |
+            npx playwright install --with-deps
+      - run:
+          name: Run Playwright Smoke Tests
+          command: |
+            if [ ! -f ".env" ]; then
+              echo "Using .env.oss as .env"
+              cp .env.oss .env
+            fi
+            
+            TESTS=$(circleci tests glob "playwright/e2e/**/*" | circleci tests split | paste -sd ' ')
+            npx playwright test $TESTS
+      - store_artifacts:
+          path: playwright-report
+      - store_artifacts:
+          path: test-results
+
   validate_production_schema:
     executor: node-executor
     steps:
@@ -295,6 +322,10 @@ workflows:
       - smoke-tests:
           <<: *not_staging_or_release
 
+      # Playwright e2e tests
+      - playwright-smoke-tests:
+          <<: *not_staging_or_release
+
       - artsy-remote-docker/build:
           <<: *not_staging_or_release
           name: build-and-push-docker
@@ -313,6 +344,7 @@ workflows:
             - type-check
             - test
             - smoke-tests
+            - playwright-smoke-tests
           post-steps:
             - slack/notify:
                 event: fail
