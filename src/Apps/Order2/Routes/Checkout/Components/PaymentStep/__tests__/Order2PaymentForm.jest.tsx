@@ -312,9 +312,11 @@ describe("Order2PaymentForm", () => {
       })
 
       // Should track saved payment method viewed
-      expect(
-        mockCheckoutContext.checkoutTracking.savedPaymentMethodViewed,
-      ).toHaveBeenCalledWith(["CREDIT_CARD"])
+      await waitFor(() =>
+        expect(
+          mockCheckoutContext.checkoutTracking.savedPaymentMethodViewed,
+        ).toHaveBeenCalledWith(["CREDIT_CARD"]),
+      )
     })
   })
 
