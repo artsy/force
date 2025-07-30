@@ -14,6 +14,7 @@ import { LoadingArea } from "Components/LoadingArea"
 import { PaginationFragmentContainer } from "Components/Pagination"
 import { RouterLink } from "System/Components/RouterLink"
 import { useRouter } from "System/Hooks/useRouter"
+import { getPageNumber, buildPageQuery } from "Utils/url"
 import type { ArtistsByLetter_viewer$data } from "__generated__/ArtistsByLetter_viewer.graphql"
 import { useState } from "react"
 import type * as React from "react"
@@ -50,6 +51,9 @@ export const ArtistsByLetter: React.FC<
   } = useRouter()
   const [isLoading, setLoading] = useState(false)
 
+  const page = getPageNumber(location)
+  const h1Text = getH1Text(params.letter, page)
+
   if (!viewer?.artistsConnection?.artists) {
     return null
   }
@@ -78,7 +82,7 @@ export const ArtistsByLetter: React.FC<
 
       router.push({
         pathname: location.pathname,
-        query: { ...location.query, page },
+        query: buildPageQuery(location.query, page),
       })
     })
   }
@@ -90,8 +94,7 @@ export const ArtistsByLetter: React.FC<
       <GridColumns mt={4}>
         <Column span={6}>
           <Text as="h1" variant="xl" mb={1}>
-            Artists
-            {params.letter && <> - {params.letter.toUpperCase()}</>}
+            {h1Text}
           </Text>
 
           <Breadcrumbs>
@@ -136,6 +139,17 @@ export const ArtistsByLetter: React.FC<
       />
     </>
   )
+}
+
+const buildH1Title = (letter: string, page: number): string => {
+  const baseTitle = `Artists - ${letter.toUpperCase()}`
+  const isPagedContent = page > 1
+
+  return isPagedContent ? `Page ${page}: ${baseTitle}` : baseTitle
+}
+
+const getH1Text = (letter: string | undefined, page: number): string => {
+  return letter ? buildH1Title(letter, page) : "Artists"
 }
 
 export const ARTISTS_BY_LETTER_QUERY = graphql`

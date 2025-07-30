@@ -1,5 +1,6 @@
 import { useRouter } from "System/Hooks/useRouter"
 import { getENV } from "Utils/getENV"
+import { getPageNumber } from "Utils/url"
 import type * as React from "react"
 import { Link, Meta, Title } from "react-head"
 
@@ -9,16 +10,16 @@ export const ArtistsByLetterMeta: React.FC<
   React.PropsWithChildren<unknown>
 > = () => {
   const {
-    match: { params },
+    match: { params, location },
   } = useRouter()
 
   if (!params.letter) return <Title>{TITLE}</Title>
 
-  const title = `Artists Starting with ${params.letter.toUpperCase()} | ${TITLE}`
-  const description = `Research and discover artists starting with ${params.letter.toUpperCase()} on Artsy. Find works for sale, biographies, CVs, and auction results.`
+  const page = getPageNumber(location)
   const appUrl = getENV("APP_URL")
-  const prefix = "/artists/artists-starting-with-"
-  const href = [appUrl, prefix, params.letter].join("")
+  const href = buildCanonicalUrl(appUrl, params.letter, page)
+  const title = buildTitle(params.letter, page)
+  const description = `Research and discover artists starting with ${params.letter.toUpperCase()} on Artsy. Find works for sale, biographies, CVs, and auction results.`
 
   return (
     <>
@@ -33,4 +34,23 @@ export const ArtistsByLetterMeta: React.FC<
       <Meta property="twitter:card" content="summary" />
     </>
   )
+}
+
+const buildCanonicalUrl = (
+  appUrl: string,
+  letter: string,
+  page: number,
+): string => {
+  const basePath = `/artists/artists-starting-with-${letter}`
+  const isPagedContent = page > 1
+
+  const canonicalPath = isPagedContent ? `${basePath}?page=${page}` : basePath
+  return `${appUrl}${canonicalPath}`
+}
+
+const buildTitle = (letter: string, page: number): string => {
+  const baseTitle = `Artists Starting with ${letter.toUpperCase()} | ${TITLE}`
+  const isPagedContent = page > 1
+
+  return isPagedContent ? `Page ${page}: ${baseTitle}` : baseTitle
 }

@@ -16,3 +16,22 @@ export const getInternalHref = (url: string) => {
 
   return href
 }
+
+export const getPageNumber = (location: any): number => {
+  if (!location?.query?.page) return 1
+
+  const page = Number(location.query.page)
+  if (isNaN(page)) return 1
+
+  return page
+}
+
+export const buildPageQuery = (query: any, page: number) => {
+  const updatedQuery = { ...query }
+  if (page === 1) {
+    delete updatedQuery.page
+  } else {
+    updatedQuery.page = String(page)
+  }
+  return updatedQuery
+}
