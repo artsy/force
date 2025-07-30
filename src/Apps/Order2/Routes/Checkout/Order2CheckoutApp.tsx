@@ -24,6 +24,7 @@ import { Order2PaymentStep } from "Apps/Order2/Routes/Checkout/Components/Paymen
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { ErrorPage } from "Components/ErrorPage"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import type { Order2CheckoutApp_me$key } from "__generated__/Order2CheckoutApp_me.graphql"
 import type { Order2CheckoutApp_order$key } from "__generated__/Order2CheckoutApp_order.graphql"
 import { useEffect } from "react"
 import { Meta, Title } from "react-head"
@@ -32,14 +33,17 @@ import { graphql, useFragment } from "react-relay"
 import { Provider } from "unstated"
 interface Order2CheckoutAppProps {
   order: Order2CheckoutApp_order$key
+  me: Order2CheckoutApp_me$key
 }
 
 export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
   order,
+  me,
 }) => {
   const { isEigen } = useSystemContext()
 
-  const orderData = useFragment(FRAGMENT, order)
+  const orderData = useFragment(ORDER_FRAGMENT, order)
+  const meData = useFragment(ME_FRAGMENT, me)
   const artworkSlug = orderData?.lineItems[0]?.artwork?.slug
 
   const {
@@ -118,7 +122,7 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
             )}
             <Order2FulfillmentDetailsStep order={orderData} />
             <Order2DeliveryOptionsStep order={orderData} />
-            <Order2PaymentStep order={orderData} />
+            <Order2PaymentStep order={orderData} me={meData} />
           </Stack>
           <Box display={["block", "none"]}>
             <Spacer y={1} />
@@ -152,7 +156,13 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
   )
 }
 
-const FRAGMENT = graphql`
+const ME_FRAGMENT = graphql`
+  fragment Order2CheckoutApp_me on Me {
+    ...Order2PaymentStep_me
+  }
+`
+
+const ORDER_FRAGMENT = graphql`
   fragment Order2CheckoutApp_order on Order {
     internalID
     fulfillmentOptions {

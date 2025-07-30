@@ -1,6 +1,5 @@
 import { screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { Order2PaymentFormTestQuery } from "__generated__/Order2PaymentFormTestQuery.graphql"
 import { graphql } from "react-relay"
@@ -67,6 +66,7 @@ jest.mock("@stripe/react-stripe-js", () => {
   }
 })
 
+let savedCreditCards = []
 const mockCheckoutContext = {
   setConfirmationToken: jest.fn(),
   checkoutTracking: {
@@ -80,6 +80,7 @@ const mockCheckoutContext = {
       state: "ACTIVE",
     },
   ],
+  creditCards: { edges: savedCreditCards.map(card => ({ node: card })) },
 }
 
 jest.mock("Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext", () => ({
@@ -114,13 +115,17 @@ beforeEach(() => {
   ;(useTracking as jest.Mock).mockImplementation(() => ({
     trackEvent: jest.fn(),
   }))
+  savedCreditCards = []
 })
 
 const { renderWithRelay } = setupTestWrapperTL<Order2PaymentFormTestQuery>({
-  Component: (props: any) => <Order2PaymentForm order={props.me.order} />,
+  Component: (props: any) => (
+    <Order2PaymentForm order={props.me.order} me={props.me} />
+  ),
   query: graphql`
     query Order2PaymentFormTestQuery @relay_test_operation {
       me {
+        ...Order2PaymentForm_me
         order(id: "order-id") {
           ...Order2PaymentForm_order
         }
@@ -130,19 +135,22 @@ const { renderWithRelay } = setupTestWrapperTL<Order2PaymentFormTestQuery>({
 })
 
 describe("Order2PaymentForm", () => {
-  const baseOrderProps = {
-    id: "T3JkZXI6b3JkZXItaWQ=", // Relay ID
-    internalID: "order-id",
-    mode: "BUY",
-    source: "ARTWORK_PAGE",
-    itemsTotal: {
-      minor: 100000,
-      currencyCode: "USD",
-    },
-    seller: {
-      __typename: "Partner",
-      merchantAccount: {
-        externalId: "merchant-123",
+  const baseMeProps = {
+    creditCards: { edges: [] },
+    order: {
+      id: "T3JkZXI6b3JkZXItaWQ=", // Relay ID
+      internalID: "order-id",
+      mode: "BUY",
+      source: "ARTWORK_PAGE",
+      itemsTotal: {
+        minor: 100000,
+        currencyCode: "USD",
+      },
+      seller: {
+        __typename: "Partner",
+        merchantAccount: {
+          externalId: "merchant-123",
+        },
       },
     },
   }
@@ -150,7 +158,7 @@ describe("Order2PaymentForm", () => {
   it("renders the payment form", async () => {
     renderWithRelay({
       Me: () => ({
-        order: baseOrderProps,
+        ...baseMeProps,
       }),
     })
 
@@ -165,7 +173,7 @@ describe("Order2PaymentForm", () => {
     it("updates Stripe's captureMethod and setupFutureUsage when selecting credit card", async () => {
       renderWithRelay({
         Me: () => ({
-          order: baseOrderProps,
+          ...baseMeProps,
         }),
       })
 
@@ -195,7 +203,7 @@ describe("Order2PaymentForm", () => {
     it("updates Stripe's captureMethod and setupFutureUsage when selecting ACH", async () => {
       renderWithRelay({
         Me: () => ({
-          order: baseOrderProps,
+          ...baseMeProps,
         }),
       })
 
@@ -216,7 +224,7 @@ describe("Order2PaymentForm", () => {
     it("switching from credit card to ACH updates Stripe settings correctly", async () => {
       renderWithRelay({
         Me: () => ({
-          order: baseOrderProps,
+          ...baseMeProps,
         }),
       })
 
@@ -247,7 +255,7 @@ describe("Order2PaymentForm", () => {
     it("switching from ACH to credit card updates Stripe settings correctly", async () => {
       renderWithRelay({
         Me: () => ({
-          order: baseOrderProps,
+          ...baseMeProps,
         }),
       })
 
@@ -293,32 +301,16 @@ describe("Order2PaymentForm", () => {
         },
       ]
 
-      const { mockResolveLastOperation } = renderWithRelay({
+      renderWithRelay({
         Me: () => ({
-          order: {
-            ...baseOrderProps,
-          },
-          savedCreditCards: savedCards,
+          ...baseMeProps,
+          creditCards: { edges: savedCards.map(card => ({ node: card })) },
         }),
       })
 
       await waitFor(() => {
         expect(screen.getByTestId("payment-element")).toBeInTheDocument()
       })
-
-      expect(
-        mockCheckoutContext.checkoutTracking.savedPaymentMethodViewed,
-      ).not.toHaveBeenCalled()
-
-      await waitFor(() => {
-        mockResolveLastOperation({
-          Me: () => ({
-            creditCards: savedCards,
-          }),
-        })
-      })
-
-      await flushPromiseQueue()
 
       // Should track saved payment method viewed
       expect(
@@ -351,7 +343,7 @@ describe("Order2PaymentForm", () => {
     it("successfully submits an ACH order", async () => {
       renderWithRelay({
         Me: () => ({
-          order: baseOrderProps,
+          ...baseMeProps,
         }),
       })
 
@@ -375,7 +367,7 @@ describe("Order2PaymentForm", () => {
           orderOrError: {
             __typename: "OrderMutationSuccess",
             order: {
-              ...baseOrderProps,
+              ...baseMeProps,
               paymentMethod: "US_BANK_ACCOUNT",
               stripeConfirmationToken: "ach-confirmation-token-id",
             },
@@ -421,7 +413,7 @@ describe("Order2PaymentForm", () => {
     it("handles createBankDebitSetupForOrder error", async () => {
       renderWithRelay({
         Me: () => ({
-          order: baseOrderProps,
+          ...baseMeProps,
         }),
       })
 
@@ -464,7 +456,7 @@ describe("Order2PaymentForm", () => {
     it("handles updateOrderMutation error", async () => {
       renderWithRelay({
         Me: () => ({
-          order: baseOrderProps,
+          ...baseMeProps,
         }),
       })
 

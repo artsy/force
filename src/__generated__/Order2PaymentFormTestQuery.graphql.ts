@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<eb8dcb9efbea8f5ba21732ace7df0569>>
+ * @generated SignedSource<<4b935a21c2a03500502fd1ff53fdf8f7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,6 +16,7 @@ export type Order2PaymentFormTestQuery$data = {
     readonly order: {
       readonly " $fragmentSpreads": FragmentRefs<"Order2PaymentForm_order">;
     } | null | undefined;
+    readonly " $fragmentSpreads": FragmentRefs<"Order2PaymentForm_me">;
   } | null | undefined;
 };
 export type Order2PaymentFormTestQuery = {
@@ -35,20 +36,27 @@ v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "internalID",
   "storageKey": null
 },
 v2 = {
-  "enumValues": null,
-  "nullable": false,
-  "plural": false,
-  "type": "ID"
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
 },
 v3 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "String"
+},
+v4 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
 };
 return {
   "fragment": {
@@ -65,6 +73,11 @@ return {
         "name": "me",
         "plural": false,
         "selections": [
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "Order2PaymentForm_me"
+          },
           {
             "alias": null,
             "args": (v0/*: any*/),
@@ -104,6 +117,61 @@ return {
         "selections": [
           {
             "alias": null,
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "first",
+                "value": 10
+              }
+            ],
+            "concreteType": "CreditCardConnection",
+            "kind": "LinkedField",
+            "name": "creditCards",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "CreditCardEdge",
+                "kind": "LinkedField",
+                "name": "edges",
+                "plural": true,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "CreditCard",
+                    "kind": "LinkedField",
+                    "name": "node",
+                    "plural": false,
+                    "selections": [
+                      (v1/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "brand",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "lastDigits",
+                        "storageKey": null
+                      },
+                      (v2/*: any*/)
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": "creditCards(first:10)"
+          },
+          {
+            "alias": null,
             "args": (v0/*: any*/),
             "concreteType": "Order",
             "kind": "LinkedField",
@@ -124,13 +192,7 @@ return {
                 "name": "source",
                 "storageKey": null
               },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "internalID",
-                "storageKey": null
-              },
+              (v1/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -199,7 +261,7 @@ return {
                   {
                     "kind": "InlineFragment",
                     "selections": [
-                      (v1/*: any*/)
+                      (v2/*: any*/)
                     ],
                     "type": "Node",
                     "abstractKey": "__isNode"
@@ -207,18 +269,18 @@ return {
                 ],
                 "storageKey": null
               },
-              (v1/*: any*/)
+              (v2/*: any*/)
             ],
             "storageKey": "order(id:\"order-id\")"
           },
-          (v1/*: any*/)
+          (v2/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "6b51808473b72ee70dd9f886154b22d8",
+    "cacheID": "44ed8d45490efea84c405cb75143ec7f",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -228,15 +290,37 @@ return {
           "plural": false,
           "type": "Me"
         },
-        "me.id": (v2/*: any*/),
+        "me.creditCards": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "CreditCardConnection"
+        },
+        "me.creditCards.edges": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "CreditCardEdge"
+        },
+        "me.creditCards.edges.node": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "CreditCard"
+        },
+        "me.creditCards.edges.node.brand": (v3/*: any*/),
+        "me.creditCards.edges.node.id": (v4/*: any*/),
+        "me.creditCards.edges.node.internalID": (v4/*: any*/),
+        "me.creditCards.edges.node.lastDigits": (v3/*: any*/),
+        "me.id": (v4/*: any*/),
         "me.order": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Order"
         },
-        "me.order.id": (v2/*: any*/),
-        "me.order.internalID": (v2/*: any*/),
+        "me.order.id": (v4/*: any*/),
+        "me.order.internalID": (v4/*: any*/),
         "me.order.itemsTotal": {
           "enumValues": null,
           "nullable": true,
@@ -267,7 +351,7 @@ return {
         },
         "me.order.seller.__isNode": (v3/*: any*/),
         "me.order.seller.__typename": (v3/*: any*/),
-        "me.order.seller.id": (v2/*: any*/),
+        "me.order.seller.id": (v4/*: any*/),
         "me.order.seller.merchantAccount": {
           "enumValues": null,
           "nullable": true,
@@ -290,11 +374,11 @@ return {
     },
     "name": "Order2PaymentFormTestQuery",
     "operationKind": "query",
-    "text": "query Order2PaymentFormTestQuery {\n  me {\n    order(id: \"order-id\") {\n      ...Order2PaymentForm_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2PaymentForm_order on Order {\n  mode\n  source\n  internalID\n  itemsTotal {\n    minor\n    currencyCode\n  }\n  seller {\n    __typename\n    ... on Partner {\n      merchantAccount {\n        externalId\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n"
+    "text": "query Order2PaymentFormTestQuery {\n  me {\n    ...Order2PaymentForm_me\n    order(id: \"order-id\") {\n      ...Order2PaymentForm_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2PaymentForm_me on Me {\n  creditCards(first: 10) {\n    edges {\n      node {\n        internalID\n        brand\n        lastDigits\n        id\n      }\n    }\n  }\n}\n\nfragment Order2PaymentForm_order on Order {\n  mode\n  source\n  internalID\n  itemsTotal {\n    minor\n    currencyCode\n  }\n  seller {\n    __typename\n    ... on Partner {\n      merchantAccount {\n        externalId\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "1b7e93d6e6ad093404d0036d7991ed6d";
+(node as any).hash = "24e18b2278970f3566c23079df27c18d";
 
 export default node;
