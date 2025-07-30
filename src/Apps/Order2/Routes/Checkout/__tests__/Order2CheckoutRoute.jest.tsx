@@ -1212,54 +1212,8 @@ describe("Order2CheckoutRoute", () => {
   describe("within the payment section", () => {
     it.todo(
       // TODO: Example of this assertion is above for clickedChangeShippingAddress
-      "Allows clicking the edit button to change payment method",
+      "Allows clicking the edit button to change payment method, but only tracks savedPaymentMethodViewed one time for a user with saved credit cards",
     )
-
-    it("tracks viewing saved payment methods one time when the step becomes active", async () => {
-      const props = {
-        ...baseProps,
-        me: {
-          ...baseProps.me,
-          order: {
-            ...baseProps.me.order,
-            fulfillmentOptions: [
-              {
-                type: "PICKUP",
-                __typename: "PickupFulfillmentOption",
-                selected: true,
-              },
-              { type: "DOMESTIC_FLAT" },
-            ],
-            fulfillmentDetails: {
-              phoneNumber: {
-                originalNumber: "03012345678",
-                regionCode: "de",
-              },
-            },
-            selectedFulfillmentOption: {
-              type: "PICKUP",
-            },
-          },
-        },
-      }
-      const initialOrder = props.me.order
-      const { mockResolveLastOperation } = await renderWithRelay({
-        Viewer: () => props,
-      })
-      await helpers.waitForLoadingComplete()
-      await act(async () => {
-        await waitFor(() => {
-          return mockResolveLastOperation({
-            Me: () => ({
-              creditCards: {
-                edges: [],
-              },
-            }),
-          })
-        })
-        await flushPromiseQueue()
-      })
-    })
 
     describe("error handling when saving and continuing", () => {
       it("shows an error if no payment method is selected", async () => {
