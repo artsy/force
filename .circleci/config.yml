@@ -123,17 +123,14 @@ jobs:
           path: cypress/screenshots
 
   playwright-smoke-tests:
-    executor: node-executor
+    docker:
+      - image: mcr.microsoft.com/playwright:v1.54.0-noble
     working_directory: ~/app
     parallelism: 6
     steps:
       - checkout
       - node/install-packages:
           pkg-manager: yarn
-      - run:
-          name: Install Playwright Browsers
-          command: |
-            npx playwright install --with-deps
       - run:
           name: Run Playwright Smoke Tests
           command: |
