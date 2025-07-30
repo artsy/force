@@ -10,6 +10,7 @@ import {
   RadioGroup,
   Spacer,
   Text,
+  usePrevious,
   useTheme,
 } from "@artsy/palette"
 import {
@@ -34,6 +35,7 @@ import {
 } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 
+import { CreateBankDebitSetupForOrder } from "Components/BankDebitForm/Mutations/CreateBankDebitSetupForOrder"
 import { type Brand, BrandCreditCardIcon } from "Components/BrandCreditCardIcon"
 import { FadeInBox } from "Components/FadeInBox"
 import { RouterLink } from "System/Components/RouterLink"
@@ -53,7 +55,6 @@ import {
   useFragment,
   useRelayEnvironment,
 } from "react-relay"
-import { CreateBankDebitSetupForOrder } from "Components/BankDebitForm/Mutations/CreateBankDebitSetupForOrder"
 
 const logger = createLogger("Order2PaymentForm")
 const defaultErrorMessage = (
@@ -150,6 +151,20 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
 
   const isSelectedPaymentMethodStripe = selectedPaymentMethod?.match(/^stripe/)
 
+  const previousSelectedPaymentMethod = usePrevious(selectedPaymentMethod)
+  useEffect(() => {
+    if (selectedPaymentMethod === previousSelectedPaymentMethod) {
+      return
+    }
+    if (selectedPaymentMethod === "saved" && savedCreditCards.length > 0) {
+      checkoutTracking.savedPaymentMethodViewed(["CREDIT_CARD"])
+    }
+  }, [
+    selectedPaymentMethod,
+    previousSelectedPaymentMethod,
+    checkoutTracking.savedPaymentMethodViewed,
+    savedCreditCards.length,
+  ])
   useEffect(() => {
     const fetchSavedCreditCards = async () => {
       setIsLoadingCreditCards(true)
@@ -181,7 +196,6 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
           setSavedCreditCards(cards)
           if (cards.length > 0) {
             setSelectedPaymentMethod("saved")
-            checkoutTracking.savedPaymentMethodViewed(["CREDIT_CARD"])
           }
         }
       } catch (error) {
@@ -192,7 +206,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({ order }) => {
     }
 
     fetchSavedCreditCards()
-  }, [environment, checkoutTracking.savedPaymentMethodViewed])
+  }, [environment])
 
   if (!(stripe && elements)) {
     return null
