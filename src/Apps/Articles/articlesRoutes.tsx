@@ -12,9 +12,15 @@ const NewsApp = loadable(
   () => import(/* webpackChunkName: "articlesBundle" */ "./NewsApp"),
   { resolveComponent: component => component.NewsAppFragmentContainer },
 )
+
 const ChannelApp = loadable(
   () => import(/* webpackChunkName: "articlesBundle" */ "./ChannelApp"),
   { resolveComponent: component => component.ChannelAppFragmentContainer },
+)
+
+const AuthorApp = loadable(
+  () => import(/* webpackChunkName: "articlesBundle" */ "./AuthorApp"),
+  { resolveComponent: component => component.AuthorApp },
 )
 
 export const articlesRoutes: RouteProps[] = [
@@ -58,6 +64,21 @@ export const articlesRoutes: RouteProps[] = [
       query articlesRoutes_ChannelQuery($id: ID!) {
         channel(id: $id) @principalField {
           ...ChannelApp_channel
+        }
+      }
+    `,
+    serverCacheTTL: serverCacheTTLs.articles,
+  },
+  {
+    path: "/articles/author/:id",
+    Component: AuthorApp,
+    onPreloadJS: () => {
+      AuthorApp.preload()
+    },
+    query: graphql`
+      query articlesRoutes_AuthorQuery($id: String!) {
+        author(id: $id) @principalField {
+          ...AuthorApp_author
         }
       }
     `,
