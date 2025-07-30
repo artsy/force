@@ -162,11 +162,11 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
 
   const isSelectedPaymentMethodStripe = selectedPaymentMethod?.match(/^stripe/)
   const savedCreditCards = extractNodes(me.creditCards)
+  const hasSavedCreditCards = savedCreditCards.length > 0
 
   const stepIsActive =
     steps?.find(step => step.name === CheckoutStepName.PAYMENT)?.state ===
     CheckoutStepState.ACTIVE
-  const hasSavedCreditCards = savedCreditCards.length > 0
   const [hasActivatedPaymentStep, setHasActivatedPaymentStep] = useState(false)
 
   // one-time event after step becomes active and credit cards have loaded if

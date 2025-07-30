@@ -448,7 +448,6 @@ export const Order2CheckoutContext: ReturnType<
 
 interface Order2CheckoutContextProviderProps {
   order: Order2CheckoutContext_order$key
-
   children: React.ReactNode
 }
 
@@ -456,14 +455,13 @@ export const Order2CheckoutContextProvider: React.FC<
   Order2CheckoutContextProviderProps
 > = ({ order, children }) => {
   const orderData = useFragment(ORDER_FRAGMENT, order)
-
   const checkoutTracking = useCheckoutTracking(orderData)
   const partnerOffer = usePartnerOfferOnOrder(orderData)
   const { router } = useRouter()
 
   // Initialize the store with the initial state
   const initialState = useMemo(
-    () => initialStateForCheckout(orderData),
+    () => initialStateForOrder(orderData),
     [orderData],
   )
 
@@ -626,8 +624,8 @@ const usePartnerOfferOnOrder = (orderData: {
     : null
 }
 
-const initialStateForCheckout = (
-  orderData: Order2CheckoutContext_order$data,
+const initialStateForOrder = (
+  order: Order2CheckoutContext_order$data,
 ): Partial<Order2CheckoutModel> => {
   const savedCheckoutMode = getStorageValue(
     CHECKOUT_MODE_STORAGE_KEY,
@@ -641,7 +639,7 @@ const initialStateForCheckout = (
     CheckoutStepName.CONFIRMATION,
   ]
 
-  if (orderData.mode === "OFFER") {
+  if (order.mode === "OFFER") {
     stepNamesInOrder.unshift(CheckoutStepName.OFFER_AMOUNT)
   }
 
@@ -651,14 +649,14 @@ const initialStateForCheckout = (
   // or set the current step based on the order data at load time
 
   // Check if payment is already complete based on stripeConfirmationToken
-  const hasStripeConfirmationToken = !!orderData.stripeConfirmationToken
+  const hasStripeConfirmationToken = !!order.stripeConfirmationToken
 
   const steps = stepNamesInOrder.map((stepName, index) => {
     if (stepName === CheckoutStepName.DELIVERY_OPTION) {
       return {
         name: stepName,
         state:
-          orderData.selectedFulfillmentOption?.type === "PICKUP"
+          order.selectedFulfillmentOption?.type === "PICKUP"
             ? CheckoutStepState.HIDDEN
             : CheckoutStepState.UPCOMING,
       }
@@ -686,10 +684,10 @@ const initialStateForCheckout = (
     expressCheckoutPaymentMethods: null,
     activeFulfillmentDetailsTab: null,
     confirmationToken: hasStripeConfirmationToken
-      ? { id: orderData.stripeConfirmationToken }
+      ? { id: order.stripeConfirmationToken }
       : null,
-    savedCreditCard: null,
     saveCreditCard: true,
+    savedCreditCard: null,
     steps,
     checkoutMode: (savedCheckoutMode === "express"
       ? "express"

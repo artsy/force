@@ -66,7 +66,6 @@ jest.mock("@stripe/react-stripe-js", () => {
   }
 })
 
-let savedCreditCards = []
 const mockCheckoutContext = {
   setConfirmationToken: jest.fn(),
   checkoutTracking: {
@@ -80,7 +79,6 @@ const mockCheckoutContext = {
       state: "ACTIVE",
     },
   ],
-  creditCards: { edges: savedCreditCards.map(card => ({ node: card })) },
 }
 
 jest.mock("Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext", () => ({
@@ -115,7 +113,6 @@ beforeEach(() => {
   ;(useTracking as jest.Mock).mockImplementation(() => ({
     trackEvent: jest.fn(),
   }))
-  savedCreditCards = []
 })
 
 const { renderWithRelay } = setupTestWrapperTL<Order2PaymentFormTestQuery>({
