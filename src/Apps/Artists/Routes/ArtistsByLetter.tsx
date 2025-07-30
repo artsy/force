@@ -14,7 +14,7 @@ import { LoadingArea } from "Components/LoadingArea"
 import { PaginationFragmentContainer } from "Components/Pagination"
 import { RouterLink } from "System/Components/RouterLink"
 import { useRouter } from "System/Hooks/useRouter"
-import { getPageNumber } from "Utils/url"
+import { getPageNumber, buildPageQuery } from "Utils/url"
 import type { ArtistsByLetter_viewer$data } from "__generated__/ArtistsByLetter_viewer.graphql"
 import { useState } from "react"
 import type * as React from "react"
@@ -82,7 +82,7 @@ export const ArtistsByLetter: React.FC<
 
       router.push({
         pathname: location.pathname,
-        query: { ...location.query, page },
+        query: buildPageQuery(location.query, page),
       })
     })
   }

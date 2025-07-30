@@ -4,6 +4,7 @@ import {
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { buildUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
 import { useRouter } from "System/Hooks/useRouter"
+import { buildPageQuery } from "Utils/url"
 import { stringify } from "qs"
 
 const buildGenericPageUrl = (
@@ -13,14 +14,7 @@ const buildGenericPageUrl = (
 ): string => {
   if (!pathname) return ""
 
-  const updatedQuery = { ...query }
-
-  if (page === 1) {
-    delete updatedQuery.page
-  } else {
-    updatedQuery.page = page
-  }
-
+  const updatedQuery = buildPageQuery(query, page)
   const queryString = stringify(updatedQuery)
   return queryString ? `${pathname}?${queryString}` : pathname
 }

@@ -25,3 +25,13 @@ export const getPageNumber = (location: any): number => {
 
   return page
 }
+
+export const buildPageQuery = (query: any, page: number) => {
+  const updatedQuery = { ...query }
+  if (page === 1) {
+    delete updatedQuery.page
+  } else {
+    updatedQuery.page = String(page)
+  }
+  return updatedQuery
+}
