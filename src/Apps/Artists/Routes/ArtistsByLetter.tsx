@@ -145,7 +145,7 @@ const buildH1Title = (letter: string, page: number): string => {
   const baseTitle = `Artists - ${letter.toUpperCase()}`
   const isPagedContent = page > 1
 
-  return isPagedContent ? `Page ${page}: ${baseTitle}` : baseTitle
+  return isPagedContent ? `${baseTitle} - Page ${page}` : baseTitle
 }
 
 const getH1Text = (letter: string | undefined, page: number): string => {

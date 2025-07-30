@@ -52,5 +52,5 @@ const buildTitle = (letter: string, page: number): string => {
   const baseTitle = `Artists Starting with ${letter.toUpperCase()} | ${TITLE}`
   const isPagedContent = page > 1
 
-  return isPagedContent ? `Page ${page}: ${baseTitle}` : baseTitle
+  return isPagedContent ? `${baseTitle} - Page ${page}` : baseTitle
 }
