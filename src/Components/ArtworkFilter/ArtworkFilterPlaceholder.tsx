@@ -1,3 +1,5 @@
+import styled from "styled-components"
+import { themeGet } from "@styled-system/theme-get"
 import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
 import ChevronDownIcon from "@artsy/icons/ChevronDownIcon"
 import ExpandIcon from "@artsy/icons/ExpandIcon"
@@ -7,12 +9,18 @@ import {
   Box,
   type BoxProps,
   Button,
+  Clickable,
+  Dropdown,
   Flex,
   FullBleed,
+  HorizontalOverflow,
   Pill,
+  Radio,
+  RadioGroup,
   Skeleton,
   SkeletonText,
   Spacer,
+  Text,
 } from "@artsy/palette"
 import { useFlag } from "@unleash/proxy-client-react"
 import { AppContainer } from "Apps/Components/AppContainer"
@@ -95,70 +103,90 @@ export const ArtworkFilterPlaceholder: React.FC<
                       py={1}
                       bg="mono0"
                     >
-                      <Flex gap={1}>
-                        {showCreateAlert && (
-                          <Flex gap={2}>
-                            <Button
-                              variant="secondaryBlack"
+                      <HorizontalOverflow minWidth={0}>
+                        <Flex gap={1}>
+                          {showCreateAlert && (
+                            <Flex gap={2}>
+                              <Button
+                                variant="secondaryBlack"
+                                size="small"
+                                Icon={BellStrokeIcon}
+                                disabled
+                              >
+                                Create Alert
+                              </Button>
+
+                              <Box width="1px" bg="mono30" />
+
+                              <Pill Icon={FilterIcon} size="small" disabled>
+                                All Filters
+                              </Pill>
+                            </Flex>
+                          )}
+                          <Flex gap={1}>
+                            {!showCreateAlert && (
+                              <Pill Icon={FilterIcon} size="small" disabled>
+                                All Filters
+                              </Pill>
+                            )}
+                            <Pill
+                              Icon={ChevronDownIcon}
                               size="small"
-                              Icon={BellStrokeIcon}
+                              iconPosition="right"
                               disabled
                             >
-                              Create Alert
-                            </Button>
+                              Rarity
+                            </Pill>
 
-                            <Box width="1px" bg="mono30" />
+                            <Pill
+                              Icon={ChevronDownIcon}
+                              size="small"
+                              iconPosition="right"
+                              disabled
+                            >
+                              Medium
+                            </Pill>
 
-                            <Pill Icon={FilterIcon} size="small" disabled>
-                              All Filters
+                            <Pill
+                              Icon={ChevronDownIcon}
+                              size="small"
+                              iconPosition="right"
+                              disabled
+                            >
+                              Price Range
                             </Pill>
                           </Flex>
-                        )}
-                        <Flex gap={1}>
-                          {!showCreateAlert && (
-                            <Pill Icon={FilterIcon} size="small" disabled>
-                              All Filters
-                            </Pill>
-                          )}
-                          <Pill
-                            Icon={ChevronDownIcon}
-                            size="small"
-                            iconPosition="right"
-                            disabled
-                          >
-                            Rarity
-                          </Pill>
-
-                          <Pill
-                            Icon={ChevronDownIcon}
-                            size="small"
-                            iconPosition="right"
-                            disabled
-                          >
-                            Medium
-                          </Pill>
-
-                          <Pill
-                            Icon={ChevronDownIcon}
-                            size="small"
-                            iconPosition="right"
-                            disabled
-                          >
-                            Price Range
-                          </Pill>
                         </Flex>
-                      </Flex>
+                      </HorizontalOverflow>
 
-                      <Flex gap={6} pr={1}>
+                      <Flex gap={1}>
                         {enableImmersiveView && (
-                          <SkeletonText variant="xs">
+                          <Button variant={"tertiary"} size={"small"} disabled>
                             <ExpandIcon mr={0.5} />
                             Immersive
-                          </SkeletonText>
+                          </Button>
                         )}
-                        <SkeletonText variant="xs">
-                          <SortIcon /> Sort: Recommended
-                        </SkeletonText>
+
+                        <Dropdown
+                          dropdown={
+                            <RadioGroup>
+                              <Radio
+                                key={1}
+                                value={"-decayed_merch"}
+                                label={"Recommended"}
+                              />
+                            </RadioGroup>
+                          }
+                          openDropdownByClick
+                          placement="bottom-end"
+                        >
+                          {({ anchorRef, anchorProps, onHide }) => (
+                            <SortButton ref={anchorRef as any} {...anchorProps}>
+                              <SortIcon />
+                              <Text variant="xs">Sort: Recommended</Text>
+                            </SortButton>
+                          )}
+                        </Dropdown>
                       </Flex>
                     </Flex>
                   </HorizontalPadding>
@@ -187,3 +215,15 @@ export const ArtworkFilterPlaceholder: React.FC<
     </Skeleton>
   )
 }
+
+const SortButton = styled(Clickable).attrs({
+  gap: 0.5,
+  px: 2,
+  py: 0.5,
+  disabled: true,
+})`
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  color: ${themeGet("colors.mono30")};
+`
