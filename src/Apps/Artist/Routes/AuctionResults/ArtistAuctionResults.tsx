@@ -30,7 +30,7 @@ import type { ArtistAuctionResults_artist$data } from "__generated__/ArtistAucti
 import { isEqual } from "lodash"
 import type * as React from "react"
 import { useContext, useState } from "react"
-import { Meta, Title } from "react-head"
+import { PaginationMeta } from "Utils/PaginationMeta"
 import {
   type RelayRefetchProp,
   createRefetchContainer,
@@ -227,9 +227,11 @@ const AuctionResultsContainer: React.FC<
   if (!artist.statuses?.auctionLots) {
     return (
       <>
-        <Title>{title}</Title>
-        <Meta name="title" content={title} />
-        <Meta name="description" content={description} />
+        <PaginationMeta
+          basePath={`/artist/${artist.slug}/auction-results`}
+          title={title}
+          description={description}
+        />
 
         <Spacer y={[2, 0]} />
 
@@ -240,9 +242,11 @@ const AuctionResultsContainer: React.FC<
 
   return (
     <>
-      <Title>{title}</Title>
-      <Meta name="title" content={title} />
-      <Meta name="description" content={description} />
+      <PaginationMeta
+        basePath={`/artist/${artist.slug}/auction-results`}
+        title={title}
+        description={description}
+      />
 
       <Jump id="marketSignalsTop" />
 
@@ -257,7 +261,9 @@ const AuctionResultsContainer: React.FC<
 
       <Jump id="artistAuctionResultsTop" />
 
-      <Text variant={["sm-display", "lg-display"]}>Auction Results</Text>
+      <Text variant={["sm-display", "lg-display"]} as="h2">
+        Auction Results
+      </Text>
 
       <Spacer y={4} />
 
@@ -360,7 +366,6 @@ const AuctionResultsContainer: React.FC<
           </LoadingArea>
 
           <Pagination
-            getHref={() => ""}
             hasNextPage={Boolean(pageInfo?.hasNextPage)}
             pageCursors={artist.auctionResultsConnection?.pageCursors}
             onClick={loadPage}
