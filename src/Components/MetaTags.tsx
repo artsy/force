@@ -1,5 +1,7 @@
 import { getENV } from "Utils/getENV"
 import { cropped } from "Utils/resized"
+import { useRouter } from "System/Hooks/useRouter"
+import { getPageNumber } from "Utils/url"
 import type * as React from "react"
 import { Link, Meta, Title } from "react-head"
 
@@ -21,6 +23,10 @@ interface MetaTagsProps {
   pathname?: string | null
   /** Include a `noindex, nofollow` meta tag */
   blockRobots?: boolean
+  /** Enable pagination behavior - requires paginationBasePath */
+  paginated?: boolean
+  /** Base path for pagination (e.g., "/artist/slug/auction-results") */
+  paginationBasePath?: string
 }
 
 export const MetaTags: React.FC<React.PropsWithChildren<MetaTagsProps>> = ({
@@ -30,12 +36,29 @@ export const MetaTags: React.FC<React.PropsWithChildren<MetaTagsProps>> = ({
   imageURL: _imageURL,
   pathname: _pathname,
   blockRobots,
+  paginated,
+  paginationBasePath,
 }) => {
-  const title = _title ?? DEFAULT_TITLE
-  const socialTitle = _socialTitle ?? _title ?? DEFAULT_TITLE
+  const { match } = useRouter()
+
+  // Handle pagination logic
+  const page = paginated ? getPageNumber(match?.location) : 1
+  const isPaginated = paginated && page > 1
+
+  // Build paginated title and pathname
+  const baseTitle = _title ?? DEFAULT_TITLE
+  const title = isPaginated ? `${baseTitle} - Page ${page}` : baseTitle
+  const socialTitle = _socialTitle ?? title
+
+  const basePath_resolved = paginationBasePath ?? DEFAULT_PATHNAME
+  const pathname = paginated
+    ? isPaginated
+      ? `${basePath_resolved}?page=${page}`
+      : basePath_resolved
+    : (_pathname ?? DEFAULT_PATHNAME)
+
   const description = _description ?? DEFAULT_DESCRIPTION
   const imageURL = _imageURL ?? DEFAULT_IMAGE_URL
-  const pathname = _pathname ?? DEFAULT_PATHNAME
 
   const href = [
     getENV("APP_URL"),
