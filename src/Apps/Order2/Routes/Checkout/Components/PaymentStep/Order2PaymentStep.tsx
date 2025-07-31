@@ -6,17 +6,21 @@ import {
 import { Order2PaymentCompletedView } from "Apps/Order2/Routes/Checkout/Components/PaymentStep/Order2PaymentCompletedView"
 import { Order2PaymentForm } from "Apps/Order2/Routes/Checkout/Components/PaymentStep/Order2PaymentForm"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import type { Order2PaymentStep_me$key } from "__generated__/Order2PaymentStep_me.graphql"
 import type { Order2PaymentStep_order$key } from "__generated__/Order2PaymentStep_order.graphql"
 import { graphql, useFragment } from "react-relay"
 
 interface Order2PaymentStepProps {
   order: Order2PaymentStep_order$key
+  me: Order2PaymentStep_me$key
 }
 
 export const Order2PaymentStep: React.FC<Order2PaymentStepProps> = ({
   order,
+  me,
 }) => {
-  const orderData = useFragment(FRAGMENT, order)
+  const orderData = useFragment(ORDER_FRAGMENT, order)
+  const meData = useFragment(ME_FRAGMENT, me)
 
   const { confirmationToken, savedCreditCard, steps } = useCheckoutContext()
 
@@ -61,14 +65,14 @@ export const Order2PaymentStep: React.FC<Order2PaymentStepProps> = ({
           >
             Payment
           </Text>
-          <Order2PaymentForm order={orderData} />
+          <Order2PaymentForm order={orderData} me={meData} />
         </Flex>
       </Box>
     </Flex>
   )
 }
 
-const FRAGMENT = graphql`
+const ORDER_FRAGMENT = graphql`
   fragment Order2PaymentStep_order on Order {
     ...Order2PaymentForm_order
     internalID
@@ -94,5 +98,11 @@ const FRAGMENT = graphql`
         }
       }
     }
+  }
+`
+
+const ME_FRAGMENT = graphql`
+  fragment Order2PaymentStep_me on Me {
+    ...Order2PaymentForm_me
   }
 `

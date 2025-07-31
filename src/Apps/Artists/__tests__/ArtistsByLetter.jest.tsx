@@ -8,8 +8,10 @@ import { graphql } from "react-relay"
 jest.unmock("react-relay")
 jest.mock("Components/Pagination/useComputeHref")
 
+const mockUseRouter = jest.fn()
+
 jest.mock("System/Hooks/useRouter", () => ({
-  useRouter: () => ({ match: { params: { letter: "a" } } }),
+  useRouter: () => mockUseRouter(),
 }))
 
 const { renderWithRelay } = setupTestWrapperTL<ArtistsByLetterQuery>({
@@ -31,7 +33,93 @@ const { renderWithRelay } = setupTestWrapperTL<ArtistsByLetterQuery>({
 })
 
 describe("ArtistsByLetter", () => {
-  it("renders the page", () => {
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
+
+  it("renders the page with correct H1 for page 1", () => {
+    mockUseRouter.mockReturnValue({
+      match: {
+        params: { letter: "a" },
+        location: { query: {} },
+      },
+    })
+
+    renderWithRelay()
+
+    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
+      "Artists - A",
+    )
+  })
+
+  it("includes page number in H1 for page 2+", () => {
+    mockUseRouter.mockReturnValue({
+      match: {
+        params: { letter: "d" },
+        location: { query: { page: "3" } },
+      },
+    })
+
+    renderWithRelay()
+
+    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
+      "Artists - D - Page 3",
+    )
+  })
+
+  it("handles different letters correctly in H1", () => {
+    mockUseRouter.mockReturnValue({
+      match: {
+        params: { letter: "z" },
+        location: { query: { page: "2" } },
+      },
+    })
+
+    renderWithRelay()
+
+    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
+      "Artists - Z - Page 2",
+    )
+  })
+
+  it("handles explicit page=1 as normal page 1", () => {
+    mockUseRouter.mockReturnValue({
+      match: {
+        params: { letter: "a" },
+        location: { query: { page: "1" } },
+      },
+    })
+
+    renderWithRelay()
+
+    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
+      "Artists - A",
+    )
+  })
+
+  it("handles missing letter parameter", () => {
+    mockUseRouter.mockReturnValue({
+      match: {
+        params: {},
+        location: { query: {} },
+      },
+    })
+
+    renderWithRelay()
+
+    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
+      "Artists",
+    )
+  })
+
+  it("handles invalid page numbers", () => {
+    mockUseRouter.mockReturnValue({
+      match: {
+        params: { letter: "a" },
+        location: { query: { page: "invalid" } },
+      },
+    })
+
     renderWithRelay()
 
     expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(

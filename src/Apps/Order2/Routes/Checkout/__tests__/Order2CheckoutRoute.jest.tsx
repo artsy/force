@@ -225,6 +225,7 @@ const helpers = {
       // CheckoutContext MINIMUM_LOADING_MS
       jest.advanceTimersByTime(1000)
     })
+
     await waitFor(() => {
       expect(
         screen.queryByLabelText("Checkout loading skeleton"),
@@ -265,10 +266,9 @@ const helpers = {
       confirmationToken: {
         id: "confirmation-token-id",
         paymentMethodPreview: {
-          card: {
-            displayBrand: "Visa",
-            last4: "5309",
-          },
+          __typename: "Card",
+          displayBrand: "Visa",
+          last4: "5309",
         },
       },
     })
@@ -289,10 +289,9 @@ const helpers = {
             return {
               confirmationToken: {
                 paymentMethodPreview: {
-                  card: {
-                    displayBrand: "Visa",
-                    last4: "5309",
-                  },
+                  __typename: "Card",
+                  displayBrand: "Visa",
+                  last4: "5309",
                 },
               },
             }
@@ -399,7 +398,6 @@ describe("Order2CheckoutRoute", () => {
       expect(MockExpressCheckout).toHaveBeenCalled()
     })
 
-    // TODO: Make our mock more strategic if necessary.
     it("does not render express checkout if not eligible", async () => {
       const props = {
         ...baseProps,
@@ -458,6 +456,17 @@ describe("Order2CheckoutRoute", () => {
               fulfillmentDetails: null,
               selectedFulfillmentOption: null,
               stripeConfirmationToken: null,
+            },
+            creditCards: {
+              edges: [
+                {
+                  node: {
+                    id: "credit-card-id",
+                    brand: "Visa",
+                    lastDigits: "1234",
+                  },
+                },
+              ],
             },
           },
         }
@@ -518,19 +527,6 @@ describe("Order2CheckoutRoute", () => {
           act(() => {
             userEvent.click(screen.getByText("Continue to Payment"))
           })
-        })
-
-        await act(async () => {
-          await waitFor(() => {
-            return mockResolveLastOperation({
-              Me: () => ({
-                creditCards: {
-                  edges: [],
-                },
-              }),
-            })
-          })
-          await flushPromiseQueue()
         })
 
         // Run back-to-back mutations and verify they happened in the correct order
@@ -600,10 +596,9 @@ describe("Order2CheckoutRoute", () => {
           confirmationToken: {
             id: "confirmation-token-id",
             paymentMethodPreview: {
-              card: {
-                displayBrand: "Visa",
-                last4: "5309",
-              },
+              __typename: "Card",
+              displayBrand: "Visa",
+              last4: "5309",
             },
           },
         })
@@ -626,10 +621,9 @@ describe("Order2CheckoutRoute", () => {
                 return {
                   confirmationToken: {
                     paymentMethodPreview: {
-                      card: {
-                        displayBrand: "Visa",
-                        last4: "5309",
-                      },
+                      __typename: "Card",
+                      displayBrand: "Visa",
+                      last4: "5309",
                     },
                   },
                 }
@@ -713,6 +707,12 @@ describe("Order2CheckoutRoute", () => {
             context_module: "ordersFulfillment",
             context_page_owner_id: "order-id",
             flow: "Buy now",
+          },
+          {
+            action: "savedPaymentMethodViewed",
+            context_page_owner_id: "order-id",
+            flow: "Buy now",
+            payment_methods: ["CREDIT_CARD"],
           },
           {
             action: "orderProgressionViewed",
@@ -825,6 +825,9 @@ describe("Order2CheckoutRoute", () => {
             fulfillmentDetails: null,
             selectedFulfillmentOption: null,
           },
+          creditCards: {
+            edges: [],
+          },
         },
       }
       const initialOrder = props.me.order
@@ -834,19 +837,6 @@ describe("Order2CheckoutRoute", () => {
       })
 
       await helpers.waitForLoadingComplete()
-
-      await act(async () => {
-        await waitFor(() => {
-          return mockResolveLastOperation({
-            Me: () => ({
-              creditCards: {
-                edges: [],
-              },
-            }),
-          })
-        })
-        await flushPromiseQueue()
-      })
 
       expect(screen.getByText("Shipping method")).toBeInTheDocument()
 
@@ -1078,6 +1068,9 @@ describe("Order2CheckoutRoute", () => {
             fulfillmentDetails: null,
             selectedFulfillmentOption: null,
           },
+          creditCards: {
+            edges: [],
+          },
         },
       }
 
@@ -1086,19 +1079,6 @@ describe("Order2CheckoutRoute", () => {
       })
 
       await helpers.waitForLoadingComplete()
-
-      await act(async () => {
-        await waitFor(() => {
-          return mockResolveLastOperation({
-            Me: () => ({
-              creditCards: {
-                edges: [],
-              },
-            }),
-          })
-        })
-        await flushPromiseQueue()
-      })
 
       expect(screen.getByText("Shipping method")).toBeInTheDocument()
 
@@ -1198,7 +1178,7 @@ describe("Order2CheckoutRoute", () => {
   describe("within the payment section", () => {
     it.todo(
       // TODO: Example of this assertion is above for clickedChangeShippingAddress
-      "Allows clicking the edit button to change payment method",
+      "Allows clicking the edit button to change payment method, but only tracks savedPaymentMethodViewed one time for a user with saved credit cards",
     )
 
     describe("error handling when saving and continuing", () => {
@@ -1227,6 +1207,9 @@ describe("Order2CheckoutRoute", () => {
                 type: "PICKUP",
               },
             },
+            creditCards: {
+              edges: [],
+            },
           },
         }
         const initialOrder = props.me.order
@@ -1235,19 +1218,6 @@ describe("Order2CheckoutRoute", () => {
           Viewer: () => props,
         })
         await helpers.waitForLoadingComplete()
-
-        await act(async () => {
-          await waitFor(() => {
-            return mockResolveLastOperation({
-              Me: () => ({
-                creditCards: {
-                  edges: [],
-                },
-              }),
-            })
-          })
-          await flushPromiseQueue()
-        })
 
         await waitFor(() => {
           act(() => {

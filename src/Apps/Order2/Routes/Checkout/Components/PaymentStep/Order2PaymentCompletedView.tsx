@@ -19,7 +19,7 @@ export const Order2PaymentCompletedView: React.FC<
   }
 
   const isBankAccount =
-    !savedCreditCard && !confirmationToken?.paymentMethodPreview?.card
+    confirmationToken?.paymentMethodPreview?.__typename !== "Card"
   return (
     <Flex flexDirection="column" backgroundColor="mono0">
       <Flex justifyContent="space-between">
@@ -61,7 +61,7 @@ export const Order2PaymentCompletedView: React.FC<
             <BrandCreditCardIcon
               mr={1}
               type={
-                (confirmationToken?.paymentMethodPreview?.card?.displayBrand ||
+                (confirmationToken?.paymentMethodPreview?.displayBrand ||
                   savedCreditCard?.brand) as Brand
               }
               width={["18px", "26px"]}
@@ -69,7 +69,7 @@ export const Order2PaymentCompletedView: React.FC<
             />
             <Text variant={["xs", "sm-display"]}>
               ••••{" "}
-              {confirmationToken?.paymentMethodPreview?.card?.last4 ||
+              {confirmationToken?.paymentMethodPreview?.last4 ||
                 savedCreditCard?.lastDigits}
             </Text>
           </>

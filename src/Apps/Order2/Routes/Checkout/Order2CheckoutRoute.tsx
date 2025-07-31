@@ -23,9 +23,10 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
   viewer,
 }) => {
   const data = useFragment(FRAGMENT, viewer)
-  const order = data.me?.order
+  const me = data.me
+  const order = me?.order
 
-  if (!order) {
+  if (!(order && me)) {
     return <ErrorPage code={404} message="Order not found" />
   }
 
@@ -44,7 +45,7 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
     <Analytics contextPageOwnerId={order.internalID}>
       <Elements stripe={stripePromise}>
         <Order2CheckoutContextProvider order={order}>
-          <Order2CheckoutApp order={order} />
+          <Order2CheckoutApp order={order} me={me} />
         </Order2CheckoutContextProvider>
       </Elements>
     </Analytics>
@@ -55,17 +56,11 @@ const FRAGMENT = graphql`
   fragment Order2CheckoutRoute_viewer on Viewer
   @argumentDefinitions(orderID: { type: "ID!" }) {
     me {
+      ...Order2CheckoutApp_me
       order(id: $orderID) {
         internalID
         ...Order2CheckoutContext_order
         ...Order2CheckoutApp_order
-      }
-      addressConnection(first: 10) {
-        edges {
-          node {
-            internalID
-          }
-        }
       }
     }
   }

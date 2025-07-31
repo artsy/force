@@ -2666,6 +2666,9 @@ type Artwork implements Node & Searchable & Sellable {
   # Notes by a partner or MyCollection user on the artwork, can only be accessed by partner or the user that owns the artwork
   confidentialNotes: String
   consignmentSubmission: ArtworkConsignmentSubmission
+    @deprecated(
+      reason: "This field is deprecated as collector artwork submissions are no longer accepted."
+    )
   contactLabel: String
 
   # Pre-filled inquiry text
@@ -2742,6 +2745,9 @@ type Artwork implements Node & Searchable & Sellable {
 
   # Whether a request for price estimate has been submitted for this artwork
   hasPriceEstimateRequest: Boolean
+    @deprecated(
+      reason: "This field is deprecated as collector artwork submissions are no longer accepted."
+    )
   hasTitle: Boolean!
 
   # The height as expressed by the original input metric
@@ -2826,6 +2832,9 @@ type Artwork implements Node & Searchable & Sellable {
   # Do we want to encourage inquiries on this work?
   isInquireable: Boolean
   isListed: Boolean!
+    @deprecated(
+      reason: "This field is deprecated as collector artwork submissions are no longer accepted."
+    )
   isNotForSale: String
 
   # Whether a user can make an offer on a work
@@ -2839,6 +2848,9 @@ type Artwork implements Node & Searchable & Sellable {
   # Whether a work is available for pickup
   isPickupAvailable: Boolean
   isPriceEstimateRequestable: Boolean
+    @deprecated(
+      reason: "This field is deprecated as collector artwork submissions are no longer accepted."
+    )
   isPriceHidden: Boolean
   isPriceRange: Boolean
 
@@ -2881,6 +2893,9 @@ type Artwork implements Node & Searchable & Sellable {
     first: Int
     last: Int
   ): ArtworkConnection!
+    @deprecated(
+      reason: "This field is deprecated as collector artwork submissions are no longer accepted."
+    )
 
   # In CMS, has the artwork been marked as BNMO?
   listingOptions: ArtworkListingOptions
@@ -2993,6 +3008,9 @@ type Artwork implements Node & Searchable & Sellable {
   # A slug ID.
   slug: ID!
   submissionId: String
+    @deprecated(
+      reason: "This field is deprecated as collector artwork submissions are no longer accepted."
+    )
   taxInfo: TaxInfo
   title: String
 
@@ -4321,6 +4339,14 @@ type AuthenticationType {
 
 type Author {
   articles: [Article!]!
+  articlesConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+    page: Int
+    size: Int
+  ): AuthorArticlesConnectionConnection
   bio(format: Format): String
 
   # A globally unique ID.
@@ -4332,6 +4358,26 @@ type Author {
   internalID: ID!
   name: String!
   twitterHandle: String
+}
+
+# A connection to a list of items.
+type AuthorArticlesConnectionConnection {
+  # A list of edges.
+  edges: [AuthorArticlesConnectionEdge]
+  pageCursors: PageCursors!
+
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+# An edge in a connection.
+type AuthorArticlesConnectionEdge {
+  # A cursor for use in pagination
+  cursor: String!
+
+  # The item at the end of the edge
+  node: Article
 }
 
 enum Availability {
@@ -18411,10 +18457,7 @@ enum PartnersSortType {
   SORTABLE_ID_DESC
 }
 
-type PaymentMethodPreview {
-  # Details of the card used in the payment method.
-  card: Card
-}
+union PaymentMethodPreview = Card | SEPADebit | USBankAccount
 
 union PaymentMethodUnion = BankAccount | CreditCard | WireTransfer
 
@@ -20763,6 +20806,11 @@ type S3PolicyDocumentType {
   expiration: String!
 }
 
+type SEPADebit {
+  # The last 4 digits of the bank account.
+  last4: String!
+}
+
 type Sale implements Node {
   # Returns a connection of artworks for a sale.
   artworksConnection(
@@ -22687,6 +22735,14 @@ union TriggerCampaignMutationSuccessOrError =
 type TriggerCampaignPayload {
   clientMutationId: String
   successOrError: TriggerCampaignMutationSuccessOrError
+}
+
+type USBankAccount {
+  # The name of the bank.
+  bankName: String!
+
+  # The last 4 digits of the bank account.
+  last4: String!
 }
 
 union UnderlyingCurrentEvent = Sale | Show

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bbdda568c2d48ae5e42ad7f621bca813>>
+ * @generated SignedSource<<6db046a0232ed43878f4d8298a08b96b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,10 +16,13 @@ export type Order2PaymentFormConfirmationTokenQuery$data = {
   readonly me: {
     readonly confirmationToken: {
       readonly paymentMethodPreview: {
-        readonly card: {
-          readonly displayBrand: string;
-          readonly last4: string;
-        } | null | undefined;
+        readonly __typename: "Card";
+        readonly displayBrand: string;
+        readonly last4: string;
+      } | {
+        // This will never be '%other', but we need some
+        // value in case none of the concrete values match.
+        readonly __typename: "%other";
       };
     } | null | undefined;
   } | null | undefined;
@@ -54,7 +57,7 @@ v1 = {
     {
       "alias": null,
       "args": null,
-      "concreteType": "PaymentMethodPreview",
+      "concreteType": null,
       "kind": "LinkedField",
       "name": "paymentMethodPreview",
       "plural": false,
@@ -62,10 +65,12 @@ v1 = {
         {
           "alias": null,
           "args": null,
-          "concreteType": "Card",
-          "kind": "LinkedField",
-          "name": "card",
-          "plural": false,
+          "kind": "ScalarField",
+          "name": "__typename",
+          "storageKey": null
+        },
+        {
+          "kind": "InlineFragment",
           "selections": [
             {
               "alias": null,
@@ -82,7 +87,8 @@ v1 = {
               "storageKey": null
             }
           ],
-          "storageKey": null
+          "type": "Card",
+          "abstractKey": null
         }
       ],
       "storageKey": null
@@ -141,16 +147,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d4612ed23a1d13ad49bb05124b7324b3",
+    "cacheID": "9bfe3f723794ec6378dd5497e2f32fef",
     "id": null,
     "metadata": {},
     "name": "Order2PaymentFormConfirmationTokenQuery",
     "operationKind": "query",
-    "text": "query Order2PaymentFormConfirmationTokenQuery(\n  $id: String!\n) {\n  me {\n    confirmationToken(id: $id) {\n      paymentMethodPreview {\n        card {\n          displayBrand\n          last4\n        }\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query Order2PaymentFormConfirmationTokenQuery(\n  $id: String!\n) {\n  me {\n    confirmationToken(id: $id) {\n      paymentMethodPreview {\n        __typename\n        ... on Card {\n          displayBrand\n          last4\n        }\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "e9f951dc045909eead43c783c98cddd6";
+(node as any).hash = "dda891ea97da866799f824acdc83fc4a";
 
 export default node;

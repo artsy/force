@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f3d9e5283276c3ba17cb11780f4d78e5>>
+ * @generated SignedSource<<d7c6cc9aca771fe7cef58b92a765fe67>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,17 +12,11 @@ import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type Order2CheckoutRoute_viewer$data = {
   readonly me: {
-    readonly addressConnection: {
-      readonly edges: ReadonlyArray<{
-        readonly node: {
-          readonly internalID: string;
-        } | null | undefined;
-      } | null | undefined> | null | undefined;
-    } | null | undefined;
     readonly order: {
       readonly internalID: string;
       readonly " $fragmentSpreads": FragmentRefs<"Order2CheckoutApp_order" | "Order2CheckoutContext_order">;
     } | null | undefined;
+    readonly " $fragmentSpreads": FragmentRefs<"Order2CheckoutApp_me">;
   } | null | undefined;
   readonly " $fragmentType": "Order2CheckoutRoute_viewer";
 };
@@ -31,15 +25,7 @@ export type Order2CheckoutRoute_viewer$key = {
   readonly " $fragmentSpreads": FragmentRefs<"Order2CheckoutRoute_viewer">;
 };
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "internalID",
-  "storageKey": null
-};
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [
     {
       "defaultValue": null,
@@ -60,6 +46,11 @@ return {
       "plural": false,
       "selections": [
         {
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "Order2CheckoutApp_me"
+        },
+        {
           "alias": null,
           "args": [
             {
@@ -73,7 +64,13 @@ return {
           "name": "order",
           "plural": false,
           "selections": [
-            (v0/*: any*/),
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "internalID",
+              "storageKey": null
+            },
             {
               "args": null,
               "kind": "FragmentSpread",
@@ -86,46 +83,6 @@ return {
             }
           ],
           "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": [
-            {
-              "kind": "Literal",
-              "name": "first",
-              "value": 10
-            }
-          ],
-          "concreteType": "UserAddressConnection",
-          "kind": "LinkedField",
-          "name": "addressConnection",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "concreteType": "UserAddressEdge",
-              "kind": "LinkedField",
-              "name": "edges",
-              "plural": true,
-              "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "concreteType": "UserAddress",
-                  "kind": "LinkedField",
-                  "name": "node",
-                  "plural": false,
-                  "selections": [
-                    (v0/*: any*/)
-                  ],
-                  "storageKey": null
-                }
-              ],
-              "storageKey": null
-            }
-          ],
-          "storageKey": "addressConnection(first:10)"
         }
       ],
       "storageKey": null
@@ -134,8 +91,7 @@ return {
   "type": "Viewer",
   "abstractKey": null
 };
-})();
 
-(node as any).hash = "1dda868a9fdd9664177e9210db608447";
+(node as any).hash = "78b22fd92562bb4ee75880369d75f0b4";
 
 export default node;
