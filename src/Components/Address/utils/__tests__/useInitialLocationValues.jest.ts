@@ -1,3 +1,4 @@
+import { renderHook } from "@testing-library/react-hooks"
 import { useInitialLocationValues } from "../useInitialLocationValues"
 
 const mockUseUserLocation = jest.fn()
@@ -23,8 +24,10 @@ describe("useInitialLocationValues", () => {
       loading: true,
     })
 
-    const result = useInitialLocationValues(mockCountryOptions)
-    expect(result).toEqual({})
+    const { result } = renderHook(() =>
+      useInitialLocationValues(mockCountryOptions),
+    )
+    expect(result.current).toEqual({})
   })
 
   it("returns empty object when no location country", () => {
@@ -33,8 +36,10 @@ describe("useInitialLocationValues", () => {
       loading: false,
     })
 
-    const result = useInitialLocationValues(mockCountryOptions)
-    expect(result).toEqual({})
+    const { result } = renderHook(() =>
+      useInitialLocationValues(mockCountryOptions),
+    )
+    expect(result.current).toEqual({})
   })
 
   it("returns default US country when location doesn't match", () => {
@@ -43,8 +48,10 @@ describe("useInitialLocationValues", () => {
       loading: false,
     })
 
-    const result = useInitialLocationValues(mockCountryOptions)
-    expect(result).toEqual({
+    const { result } = renderHook(() =>
+      useInitialLocationValues(mockCountryOptions),
+    )
+    expect(result.current).toEqual({
       selectedCountry: "US",
       phoneNumberCountryCode: "us",
     })
@@ -56,8 +63,10 @@ describe("useInitialLocationValues", () => {
       loading: false,
     })
 
-    const result = useInitialLocationValues(mockCountryOptions)
-    expect(result).toEqual({
+    const { result } = renderHook(() =>
+      useInitialLocationValues(mockCountryOptions),
+    )
+    expect(result.current).toEqual({
       selectedCountry: "CA",
       phoneNumberCountryCode: "ca",
     })
@@ -69,8 +78,10 @@ describe("useInitialLocationValues", () => {
       loading: false,
     })
 
-    const result = useInitialLocationValues(mockCountryOptions)
-    expect(result).toEqual({
+    const { result } = renderHook(() =>
+      useInitialLocationValues(mockCountryOptions),
+    )
+    expect(result.current).toEqual({
       selectedCountry: "US",
       phoneNumberCountryCode: "us", // phone options use lowercase
     })
