@@ -14,15 +14,11 @@ export const MyCollectionArtworkAboutTab: FC<
 > = props => {
   const artwork = useFragment(FRAGMENT, props.artwork)
 
-  const submission = artwork.consignmentSubmission
-  const isP1Artist = artwork.artist?.targetSupply?.priority === "TRUE"
-  const showSubmitForSaleButton = isP1Artist && !submission
-
   return (
     <Box pt={[1, 0]}>
       <MyCollectionArtworkDetails artwork={artwork} />
 
-      {!showSubmitForSaleButton && <Spacer x={6} y={6} />}
+      <Spacer x={6} y={6} />
 
       <ArtistCurrentArticlesRailQueryRenderer
         slug={artwork?.artist?.slug ?? ""}
@@ -41,9 +37,6 @@ const FRAGMENT = graphql`
       targetSupply {
         priority
       }
-    }
-    consignmentSubmission {
-      internalID
     }
     internalID
   }
