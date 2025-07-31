@@ -1,9 +1,6 @@
 import { MetaTags } from "Components/MetaTags"
 import { MockBoot } from "DevTools/MockBoot"
 import { render } from "@testing-library/react"
-import { useRouter } from "System/Hooks/useRouter"
-
-jest.mock("System/Hooks/useRouter")
 
 jest.mock("Utils/getENV", () => ({
   getENV: (name: string) => {
@@ -14,18 +11,7 @@ jest.mock("Utils/getENV", () => ({
   },
 }))
 
-const mockUseRouter = useRouter as jest.MockedFunction<typeof useRouter>
-
 describe("MetaTags", () => {
-  beforeEach(() => {
-    mockUseRouter.mockReturnValue({
-      match: {
-        location: { query: {} },
-        params: {},
-      },
-    } as any)
-  })
-
   const getTags = () => {
     const meta = [...document.getElementsByTagName("meta")].map(tag => ({
       name: tag.getAttribute("name"),
@@ -230,155 +216,5 @@ describe("MetaTags", () => {
     expect(tags.meta.find(tag => tag.property === "og:url")?.content).toBe(
       "https://www.artsy.net/",
     )
-  })
-
-  describe("pagination", () => {
-    it("renders non-paginated meta tags when paginated=false", () => {
-      render(
-        <MockBoot>
-          <MetaTags
-            title="Artist Auction Results"
-            description="View auction results"
-            pathname="/artist/example/auction-results"
-          />
-        </MockBoot>,
-      )
-
-      const tags = getTags()
-
-      expect(tags.title).toEqual("Artist Auction Results")
-      expect(tags.links.find(tag => tag.rel === "canonical")?.href).toBe(
-        "https://www.artsy.net/artist/example/auction-results",
-      )
-    })
-
-    it("renders non-paginated meta tags when paginated=true but on page 1", () => {
-      mockUseRouter.mockReturnValue({
-        match: {
-          location: { query: {} }, // No page query = page 1
-          params: {},
-        },
-      } as any)
-
-      render(
-        <MockBoot>
-          <MetaTags
-            title="Artist Auction Results"
-            description="View auction results"
-            paginated
-            paginationBasePath="/artist/example/auction-results"
-          />
-        </MockBoot>,
-      )
-
-      const tags = getTags()
-
-      expect(tags.title).toEqual("Artist Auction Results")
-      expect(tags.links.find(tag => tag.rel === "canonical")?.href).toBe(
-        "https://www.artsy.net/artist/example/auction-results",
-      )
-    })
-
-    it("renders paginated meta tags when paginated=true and on page 2+", () => {
-      mockUseRouter.mockReturnValue({
-        match: {
-          location: { query: { page: "3" } },
-          params: {},
-        },
-      } as any)
-
-      render(
-        <MockBoot>
-          <MetaTags
-            title="Artist Auction Results"
-            description="View auction results"
-            paginated
-            paginationBasePath="/artist/example/auction-results"
-          />
-        </MockBoot>,
-      )
-
-      const tags = getTags()
-
-      expect(tags.title).toEqual("Artist Auction Results - Page 3")
-      expect(tags.meta.find(tag => tag.name === "title")?.content).toBe(
-        "Artist Auction Results - Page 3",
-      )
-      expect(tags.meta.find(tag => tag.property === "og:title")?.content).toBe(
-        "Artist Auction Results - Page 3",
-      )
-      expect(
-        tags.meta.find(tag => tag.property === "twitter:title")?.content,
-      ).toBe("Artist Auction Results - Page 3")
-      expect(tags.links.find(tag => tag.rel === "canonical")?.href).toBe(
-        "https://www.artsy.net/artist/example/auction-results?page=3",
-      )
-      expect(tags.meta.find(tag => tag.property === "og:url")?.content).toBe(
-        "https://www.artsy.net/artist/example/auction-results?page=3",
-      )
-      expect(
-        tags.meta.find(tag => tag.property === "twitter:url")?.content,
-      ).toBe("https://www.artsy.net/artist/example/auction-results?page=3")
-    })
-
-    it("allows custom socialTitle to override paginated title for social media", () => {
-      mockUseRouter.mockReturnValue({
-        match: {
-          location: { query: { page: "2" } },
-          params: {},
-        },
-      } as any)
-
-      render(
-        <MockBoot>
-          <MetaTags
-            title="Artist Auction Results"
-            socialTitle="Custom Social Title"
-            description="View auction results"
-            paginated
-            paginationBasePath="/artist/example/auction-results"
-          />
-        </MockBoot>,
-      )
-
-      const tags = getTags()
-
-      expect(tags.title).toEqual("Artist Auction Results - Page 2")
-      expect(tags.meta.find(tag => tag.name === "title")?.content).toBe(
-        "Artist Auction Results - Page 2",
-      )
-      expect(tags.meta.find(tag => tag.property === "og:title")?.content).toBe(
-        "Custom Social Title",
-      )
-      expect(
-        tags.meta.find(tag => tag.property === "twitter:title")?.content,
-      ).toBe("Custom Social Title")
-    })
-
-    it("falls back to default values when paginated=true but no paginationBasePath provided", () => {
-      mockUseRouter.mockReturnValue({
-        match: {
-          location: { query: { page: "2" } },
-          params: {},
-        },
-      } as any)
-
-      render(
-        <MockBoot>
-          <MetaTags
-            title="Some Title"
-            paginated
-            // No paginationBasePath provided
-          />
-        </MockBoot>,
-      )
-
-      const tags = getTags()
-
-      expect(tags.title).toEqual("Some Title - Page 2")
-      expect(tags.links.find(tag => tag.rel === "canonical")?.href).toBe(
-        "https://www.artsy.net/?page=2",
-      )
-    })
   })
 })

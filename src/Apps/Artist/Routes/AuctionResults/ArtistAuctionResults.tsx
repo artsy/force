@@ -30,7 +30,7 @@ import type { ArtistAuctionResults_artist$data } from "__generated__/ArtistAucti
 import { isEqual } from "lodash"
 import type * as React from "react"
 import { useContext, useState } from "react"
-import { MetaTags } from "Components/MetaTags"
+import { PaginatedMetaTags } from "Components/PaginatedMetaTags"
 import {
   type RelayRefetchProp,
   createRefetchContainer,
@@ -227,11 +227,10 @@ const AuctionResultsContainer: React.FC<
   if (!artist.statuses?.auctionLots) {
     return (
       <>
-        <MetaTags
+        <PaginatedMetaTags
           title={title}
           description={description}
-          paginated
-          paginationBasePath={`/artist/${artist.slug}/auction-results`}
+          basePath={`/artist/${artist.slug}/auction-results`}
         />
 
         <Spacer y={[2, 0]} />
@@ -243,11 +242,10 @@ const AuctionResultsContainer: React.FC<
 
   return (
     <>
-      <MetaTags
+      <PaginatedMetaTags
         title={title}
         description={description}
-        paginated
-        paginationBasePath={`/artist/${artist.slug}/auction-results`}
+        basePath={`/artist/${artist.slug}/auction-results`}
       />
 
       <Jump id="marketSignalsTop" />
