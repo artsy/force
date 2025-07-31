@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d0ea0465a6e81e2e46ec5ed710c25b63>>
+ * @generated SignedSource<<6db046a0232ed43878f4d8298a08b96b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,8 +16,13 @@ export type Order2PaymentFormConfirmationTokenQuery$data = {
   readonly me: {
     readonly confirmationToken: {
       readonly paymentMethodPreview: {
-        readonly displayBrand?: string;
-        readonly last4?: string;
+        readonly __typename: "Card";
+        readonly displayBrand: string;
+        readonly last4: string;
+      } | {
+        // This will never be '%other', but we need some
+        // value in case none of the concrete values match.
+        readonly __typename: "%other";
       };
     } | null | undefined;
   } | null | undefined;
@@ -35,33 +40,61 @@ var v0 = [
     "name": "id"
   }
 ],
-v1 = [
-  {
-    "kind": "Variable",
-    "name": "id",
-    "variableName": "id"
-  }
-],
-v2 = {
-  "kind": "InlineFragment",
+v1 = {
+  "alias": null,
+  "args": [
+    {
+      "kind": "Variable",
+      "name": "id",
+      "variableName": "id"
+    }
+  ],
+  "concreteType": "ConfirmationToken",
+  "kind": "LinkedField",
+  "name": "confirmationToken",
+  "plural": false,
   "selections": [
     {
       "alias": null,
       "args": null,
-      "kind": "ScalarField",
-      "name": "displayBrand",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "last4",
+      "concreteType": null,
+      "kind": "LinkedField",
+      "name": "paymentMethodPreview",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "__typename",
+          "storageKey": null
+        },
+        {
+          "kind": "InlineFragment",
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "displayBrand",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "last4",
+              "storageKey": null
+            }
+          ],
+          "type": "Card",
+          "abstractKey": null
+        }
+      ],
       "storageKey": null
     }
   ],
-  "type": "Card",
-  "abstractKey": null
+  "storageKey": null
 };
 return {
   "fragment": {
@@ -78,29 +111,7 @@ return {
         "name": "me",
         "plural": false,
         "selections": [
-          {
-            "alias": null,
-            "args": (v1/*: any*/),
-            "concreteType": "ConfirmationToken",
-            "kind": "LinkedField",
-            "name": "confirmationToken",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": null,
-                "kind": "LinkedField",
-                "name": "paymentMethodPreview",
-                "plural": false,
-                "selections": [
-                  (v2/*: any*/)
-                ],
-                "storageKey": null
-              }
-            ],
-            "storageKey": null
-          }
+          (v1/*: any*/)
         ],
         "storageKey": null
       }
@@ -122,36 +133,7 @@ return {
         "name": "me",
         "plural": false,
         "selections": [
-          {
-            "alias": null,
-            "args": (v1/*: any*/),
-            "concreteType": "ConfirmationToken",
-            "kind": "LinkedField",
-            "name": "confirmationToken",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": null,
-                "kind": "LinkedField",
-                "name": "paymentMethodPreview",
-                "plural": false,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "__typename",
-                    "storageKey": null
-                  },
-                  (v2/*: any*/)
-                ],
-                "storageKey": null
-              }
-            ],
-            "storageKey": null
-          },
+          (v1/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -175,6 +157,6 @@ return {
 };
 })();
 
-(node as any).hash = "bce4cdbd879db7d252d391b8c075448e";
+(node as any).hash = "dda891ea97da866799f824acdc83fc4a";
 
 export default node;
