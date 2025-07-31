@@ -1,8 +1,8 @@
+import { MetaTags } from "Components/MetaTags"
 import { useRouter } from "System/Hooks/useRouter"
-import { getENV } from "Utils/getENV"
 import { getPageNumber } from "Utils/url"
 import type * as React from "react"
-import { Link, Meta, Title } from "react-head"
+import { Title } from "react-head"
 
 const TITLE = "Modern and Contemporary Artists"
 
@@ -16,36 +16,20 @@ export const ArtistsByLetterMeta: React.FC<
   if (!params.letter) return <Title>{TITLE}</Title>
 
   const page = getPageNumber(location)
-  const appUrl = getENV("APP_URL")
-  const href = buildCanonicalUrl(appUrl, params.letter, page)
   const title = buildTitle(params.letter, page)
   const description = `Research and discover artists starting with ${params.letter.toUpperCase()} on Artsy. Find works for sale, biographies, CVs, and auction results.`
+  const pathname = buildPathname(params.letter, page)
 
   return (
-    <>
-      <Title>{title}</Title>
-      <Meta property="og:title" content={title} />
-      <Meta name="description" content={description} />
-      <Meta property="og:description" content={description} />
-      <Meta property="twitter:description" content={description} />
-      <Link rel="canonical" href={href} />
-      <Meta property="og:url" content={href} />
-      <Meta property="og:type" content="website" />
-      <Meta property="twitter:card" content="summary" />
-    </>
+    <MetaTags title={title} description={description} pathname={pathname} />
   )
 }
 
-const buildCanonicalUrl = (
-  appUrl: string,
-  letter: string,
-  page: number,
-): string => {
+const buildPathname = (letter: string, page: number): string => {
   const basePath = `/artists/artists-starting-with-${letter}`
   const isPagedContent = page > 1
 
-  const canonicalPath = isPagedContent ? `${basePath}?page=${page}` : basePath
-  return `${appUrl}${canonicalPath}`
+  return isPagedContent ? `${basePath}?page=${page}` : basePath
 }
 
 const buildTitle = (letter: string, page: number): string => {
