@@ -93,11 +93,7 @@ export const ArtistsByLetter: React.FC<
 
   return (
     <>
-      <PaginatedMetaTags
-        title={title}
-        description={description}
-        basePath={`/artists/artists-starting-with-${params.letter}`}
-      />
+      <PaginatedMetaTags title={title} description={description} />
 
       <GridColumns mt={4}>
         <Column span={6}>

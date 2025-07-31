@@ -41,7 +41,10 @@ describe("PaginatedMetaTags", () => {
   it("renders non-paginated meta tags when on page 1 (no page param)", () => {
     mockUseRouter.mockReturnValue({
       match: {
-        location: { query: {} },
+        location: {
+          pathname: "/artist/example/auction-results",
+          query: {},
+        },
         params: {},
       },
     } as any)
@@ -51,7 +54,6 @@ describe("PaginatedMetaTags", () => {
         <PaginatedMetaTags
           title="Artist Auction Results"
           description="View auction results"
-          basePath="/artist/example/auction-results"
         />
       </MockBoot>,
     )
@@ -67,7 +69,10 @@ describe("PaginatedMetaTags", () => {
   it("renders non-paginated meta tags when on page 1 (explicit page=1)", () => {
     mockUseRouter.mockReturnValue({
       match: {
-        location: { query: { page: "1" } },
+        location: {
+          pathname: "/artist/example/auction-results",
+          query: { page: "1" },
+        },
         params: {},
       },
     } as any)
@@ -77,7 +82,6 @@ describe("PaginatedMetaTags", () => {
         <PaginatedMetaTags
           title="Artist Auction Results"
           description="View auction results"
-          basePath="/artist/example/auction-results"
         />
       </MockBoot>,
     )
@@ -93,7 +97,10 @@ describe("PaginatedMetaTags", () => {
   it("renders paginated meta tags when on page 2+", () => {
     mockUseRouter.mockReturnValue({
       match: {
-        location: { query: { page: "3" } },
+        location: {
+          pathname: "/artist/example/auction-results",
+          query: { page: "3" },
+        },
         params: {},
       },
     } as any)
@@ -103,7 +110,6 @@ describe("PaginatedMetaTags", () => {
         <PaginatedMetaTags
           title="Artist Auction Results"
           description="View auction results"
-          basePath="/artist/example/auction-results"
         />
       </MockBoot>,
     )
@@ -134,7 +140,10 @@ describe("PaginatedMetaTags", () => {
   it("allows custom socialTitle to override paginated title for social media", () => {
     mockUseRouter.mockReturnValue({
       match: {
-        location: { query: { page: "2" } },
+        location: {
+          pathname: "/artist/example/auction-results",
+          query: { page: "2" },
+        },
         params: {},
       },
     } as any)
@@ -145,7 +154,6 @@ describe("PaginatedMetaTags", () => {
           title="Artist Auction Results"
           socialTitle="Custom Social Title"
           description="View auction results"
-          basePath="/artist/example/auction-results"
         />
       </MockBoot>,
     )
@@ -167,7 +175,10 @@ describe("PaginatedMetaTags", () => {
   it("handles invalid page numbers as page 1", () => {
     mockUseRouter.mockReturnValue({
       match: {
-        location: { query: { page: "invalid" } },
+        location: {
+          pathname: "/artist/example/auction-results",
+          query: { page: "invalid" },
+        },
         params: {},
       },
     } as any)
@@ -177,7 +188,6 @@ describe("PaginatedMetaTags", () => {
         <PaginatedMetaTags
           title="Artist Auction Results"
           description="View auction results"
-          basePath="/artist/example/auction-results"
         />
       </MockBoot>,
     )

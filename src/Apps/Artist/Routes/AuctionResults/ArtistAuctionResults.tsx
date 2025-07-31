@@ -227,11 +227,7 @@ const AuctionResultsContainer: React.FC<
   if (!artist.statuses?.auctionLots) {
     return (
       <>
-        <PaginatedMetaTags
-          title={title}
-          description={description}
-          basePath={`/artist/${artist.slug}/auction-results`}
-        />
+        <PaginatedMetaTags title={title} description={description} />
 
         <Spacer y={[2, 0]} />
 
@@ -242,11 +238,7 @@ const AuctionResultsContainer: React.FC<
 
   return (
     <>
-      <PaginatedMetaTags
-        title={title}
-        description={description}
-        basePath={`/artist/${artist.slug}/auction-results`}
-      />
+      <PaginatedMetaTags title={title} description={description} />
 
       <Jump id="marketSignalsTop" />
 
