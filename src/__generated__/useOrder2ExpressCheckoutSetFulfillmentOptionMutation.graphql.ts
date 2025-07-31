@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<278042032d84cfd3b11f40f10be2956c>>
+ * @generated SignedSource<<7b279225d7b52eca5ccf6a550d9f8f0b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,16 +10,21 @@
 
 import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
+export type FulfillmentOptionInputEnum = "DOMESTIC_FLAT" | "INTERNATIONAL_FLAT" | "PICKUP" | "%future added value";
 export type FulfillmentOptionTypeEnum = "DOMESTIC_FLAT" | "INTERNATIONAL_FLAT" | "PICKUP" | "SHIPPING_TBD" | "%future added value";
-export type unsetOrderFulfillmentOptionInput = {
+export type setOrderFulfillmentOptionInput = {
   clientMutationId?: string | null | undefined;
+  fulfillmentOption: FulfillmentOptionInput;
   id: string;
 };
-export type useUnsetOrderFulfillmentOptionMutation$variables = {
-  input: unsetOrderFulfillmentOptionInput;
+export type FulfillmentOptionInput = {
+  type: FulfillmentOptionInputEnum;
 };
-export type useUnsetOrderFulfillmentOptionMutation$data = {
-  readonly unsetOrderFulfillmentOption: {
+export type useOrder2ExpressCheckoutSetFulfillmentOptionMutation$variables = {
+  input: setOrderFulfillmentOptionInput;
+};
+export type useOrder2ExpressCheckoutSetFulfillmentOptionMutation$data = {
+  readonly setOrderFulfillmentOption: {
     readonly orderOrError: {
       readonly __typename: "OrderMutationError";
       readonly mutationError: {
@@ -40,7 +45,6 @@ export type useUnsetOrderFulfillmentOptionMutation$data = {
           readonly selected: boolean | null | undefined;
           readonly type: FulfillmentOptionTypeEnum;
         }>;
-        readonly internalID: string;
         readonly itemsTotal: {
           readonly minor: any;
         } | null | undefined;
@@ -50,7 +54,7 @@ export type useUnsetOrderFulfillmentOptionMutation$data = {
         readonly taxTotal: {
           readonly minor: any;
         } | null | undefined;
-        readonly " $fragmentSpreads": FragmentRefs<"ExpressCheckoutUI_order">;
+        readonly " $fragmentSpreads": FragmentRefs<"Order2ExpressCheckoutUI_order">;
       };
     } | {
       // This will never be '%other', but we need some
@@ -59,9 +63,9 @@ export type useUnsetOrderFulfillmentOptionMutation$data = {
     } | null | undefined;
   } | null | undefined;
 };
-export type useUnsetOrderFulfillmentOptionMutation = {
-  response: useUnsetOrderFulfillmentOptionMutation$data;
-  variables: useUnsetOrderFulfillmentOptionMutation$variables;
+export type useOrder2ExpressCheckoutSetFulfillmentOptionMutation = {
+  response: useOrder2ExpressCheckoutSetFulfillmentOptionMutation$data;
+  variables: useOrder2ExpressCheckoutSetFulfillmentOptionMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -90,35 +94,28 @@ v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "internalID",
-  "storageKey": null
-},
-v4 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
   "name": "minor",
   "storageKey": null
 },
-v5 = [
-  (v4/*: any*/)
+v4 = [
+  (v3/*: any*/)
 ],
-v6 = {
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "selected",
   "storageKey": null
 },
-v7 = {
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "type",
   "storageKey": null
 },
-v8 = [
-  (v4/*: any*/),
+v7 = [
+  (v3/*: any*/),
   {
     "alias": null,
     "args": null,
@@ -127,14 +124,24 @@ v8 = [
     "storageKey": null
   }
 ],
-v9 = {
+v8 = {
   "alias": null,
   "args": null,
   "concreteType": "Money",
   "kind": "LinkedField",
   "name": "buyerTotal",
   "plural": false,
-  "selections": (v8/*: any*/),
+  "selections": (v7/*: any*/),
+  "storageKey": null
+},
+v9 = {
+  "alias": null,
+  "args": null,
+  "concreteType": "Money",
+  "kind": "LinkedField",
+  "name": "itemsTotal",
+  "plural": false,
+  "selections": (v4/*: any*/),
   "storageKey": null
 },
 v10 = {
@@ -142,9 +149,9 @@ v10 = {
   "args": null,
   "concreteType": "Money",
   "kind": "LinkedField",
-  "name": "itemsTotal",
+  "name": "shippingTotal",
   "plural": false,
-  "selections": (v5/*: any*/),
+  "selections": (v4/*: any*/),
   "storageKey": null
 },
 v11 = {
@@ -152,29 +159,19 @@ v11 = {
   "args": null,
   "concreteType": "Money",
   "kind": "LinkedField",
-  "name": "shippingTotal",
+  "name": "taxTotal",
   "plural": false,
-  "selections": (v5/*: any*/),
+  "selections": (v4/*: any*/),
   "storageKey": null
 },
 v12 = {
-  "alias": null,
-  "args": null,
-  "concreteType": "Money",
-  "kind": "LinkedField",
-  "name": "taxTotal",
-  "plural": false,
-  "selections": (v5/*: any*/),
-  "storageKey": null
-},
-v13 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "availableShippingCountries",
   "storageKey": null
 },
-v14 = {
+v13 = {
   "kind": "InlineFragment",
   "selections": [
     {
@@ -199,6 +196,13 @@ v14 = {
   "type": "OrderMutationError",
   "abstractKey": null
 },
+v14 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
 v15 = {
   "alias": null,
   "args": null,
@@ -211,14 +215,14 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "useUnsetOrderFulfillmentOptionMutation",
+    "name": "useOrder2ExpressCheckoutSetFulfillmentOptionMutation",
     "selections": [
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "unsetOrderFulfillmentOptionPayload",
+        "concreteType": "setOrderFulfillmentOptionPayload",
         "kind": "LinkedField",
-        "name": "unsetOrderFulfillmentOption",
+        "name": "setOrderFulfillmentOption",
         "plural": false,
         "selections": [
           {
@@ -241,7 +245,11 @@ return {
                     "name": "order",
                     "plural": false,
                     "selections": [
-                      (v3/*: any*/),
+                      {
+                        "args": null,
+                        "kind": "FragmentSpread",
+                        "name": "Order2ExpressCheckoutUI_order"
+                      },
                       {
                         "alias": null,
                         "args": null,
@@ -257,24 +265,19 @@ return {
                             "kind": "LinkedField",
                             "name": "amount",
                             "plural": false,
-                            "selections": (v5/*: any*/),
+                            "selections": (v4/*: any*/),
                             "storageKey": null
                           },
-                          (v6/*: any*/),
-                          (v7/*: any*/)
+                          (v5/*: any*/),
+                          (v6/*: any*/)
                         ],
                         "storageKey": null
                       },
+                      (v8/*: any*/),
                       (v9/*: any*/),
                       (v10/*: any*/),
                       (v11/*: any*/),
-                      (v12/*: any*/),
-                      (v13/*: any*/),
-                      {
-                        "args": null,
-                        "kind": "FragmentSpread",
-                        "name": "ExpressCheckoutUI_order"
-                      }
+                      (v12/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -282,7 +285,7 @@ return {
                 "type": "OrderMutationSuccess",
                 "abstractKey": null
               },
-              (v14/*: any*/)
+              (v13/*: any*/)
             ],
             "storageKey": null
           }
@@ -297,14 +300,14 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "useUnsetOrderFulfillmentOptionMutation",
+    "name": "useOrder2ExpressCheckoutSetFulfillmentOptionMutation",
     "selections": [
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "unsetOrderFulfillmentOptionPayload",
+        "concreteType": "setOrderFulfillmentOptionPayload",
         "kind": "LinkedField",
-        "name": "unsetOrderFulfillmentOption",
+        "name": "setOrderFulfillmentOption",
         "plural": false,
         "selections": [
           {
@@ -327,35 +330,7 @@ return {
                     "name": "order",
                     "plural": false,
                     "selections": [
-                      (v3/*: any*/),
-                      {
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "FulfillmentOption",
-                        "kind": "LinkedField",
-                        "name": "fulfillmentOptions",
-                        "plural": true,
-                        "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "concreteType": "Money",
-                            "kind": "LinkedField",
-                            "name": "amount",
-                            "plural": false,
-                            "selections": (v8/*: any*/),
-                            "storageKey": null
-                          },
-                          (v6/*: any*/),
-                          (v7/*: any*/)
-                        ],
-                        "storageKey": null
-                      },
-                      (v9/*: any*/),
-                      (v10/*: any*/),
-                      (v11/*: any*/),
-                      (v12/*: any*/),
-                      (v13/*: any*/),
+                      (v14/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -368,6 +343,34 @@ return {
                         "args": null,
                         "kind": "ScalarField",
                         "name": "mode",
+                        "storageKey": null
+                      },
+                      (v8/*: any*/),
+                      (v9/*: any*/),
+                      (v10/*: any*/),
+                      (v11/*: any*/),
+                      (v12/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "FulfillmentOption",
+                        "kind": "LinkedField",
+                        "name": "fulfillmentOptions",
+                        "plural": true,
+                        "selections": [
+                          (v6/*: any*/),
+                          {
+                            "alias": null,
+                            "args": null,
+                            "concreteType": "Money",
+                            "kind": "LinkedField",
+                            "name": "amount",
+                            "plural": false,
+                            "selections": (v7/*: any*/),
+                            "storageKey": null
+                          },
+                          (v5/*: any*/)
+                        ],
                         "storageKey": null
                       },
                       {
@@ -446,7 +449,7 @@ return {
                             "name": "artwork",
                             "plural": false,
                             "selections": [
-                              (v3/*: any*/),
+                              (v14/*: any*/),
                               {
                                 "alias": null,
                                 "args": null,
@@ -470,7 +473,7 @@ return {
                 "type": "OrderMutationSuccess",
                 "abstractKey": null
               },
-              (v14/*: any*/)
+              (v13/*: any*/)
             ],
             "storageKey": null
           }
@@ -480,16 +483,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d4fa75cec60379145cc4335ad9bc7761",
+    "cacheID": "93e0767ac567addbc41244cfaf95ecee",
     "id": null,
     "metadata": {},
-    "name": "useUnsetOrderFulfillmentOptionMutation",
+    "name": "useOrder2ExpressCheckoutSetFulfillmentOptionMutation",
     "operationKind": "mutation",
-    "text": "mutation useUnsetOrderFulfillmentOptionMutation(\n  $input: unsetOrderFulfillmentOptionInput!\n) {\n  unsetOrderFulfillmentOption(input: $input) {\n    orderOrError {\n      __typename\n      ... on OrderMutationSuccess {\n        order {\n          internalID\n          fulfillmentOptions {\n            amount {\n              minor\n            }\n            selected\n            type\n          }\n          buyerTotal {\n            minor\n            currencyCode\n          }\n          itemsTotal {\n            minor\n          }\n          shippingTotal {\n            minor\n          }\n          taxTotal {\n            minor\n          }\n          availableShippingCountries\n          ...ExpressCheckoutUI_order\n          id\n        }\n      }\n      ... on OrderMutationError {\n        mutationError {\n          message\n        }\n      }\n    }\n  }\n}\n\nfragment ExpressCheckoutUI_order on Order {\n  internalID\n  source\n  mode\n  buyerTotal {\n    minor\n    currencyCode\n  }\n  itemsTotal {\n    minor\n  }\n  shippingTotal {\n    minor\n  }\n  taxTotal {\n    minor\n  }\n  availableShippingCountries\n  fulfillmentOptions {\n    type\n    amount {\n      minor\n      currencyCode\n    }\n    selected\n  }\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    postalCode\n    region\n    country\n    name\n  }\n  lineItems {\n    artwork {\n      internalID\n      slug\n      id\n    }\n    id\n  }\n}\n"
+    "text": "mutation useOrder2ExpressCheckoutSetFulfillmentOptionMutation(\n  $input: setOrderFulfillmentOptionInput!\n) {\n  setOrderFulfillmentOption(input: $input) {\n    orderOrError {\n      __typename\n      ... on OrderMutationSuccess {\n        order {\n          ...Order2ExpressCheckoutUI_order\n          fulfillmentOptions {\n            amount {\n              minor\n            }\n            selected\n            type\n          }\n          buyerTotal {\n            minor\n            currencyCode\n          }\n          itemsTotal {\n            minor\n          }\n          shippingTotal {\n            minor\n          }\n          taxTotal {\n            minor\n          }\n          availableShippingCountries\n          id\n        }\n      }\n      ... on OrderMutationError {\n        mutationError {\n          message\n        }\n      }\n    }\n  }\n}\n\nfragment Order2ExpressCheckoutUI_order on Order {\n  internalID\n  source\n  mode\n  buyerTotal {\n    minor\n    currencyCode\n  }\n  itemsTotal {\n    minor\n  }\n  shippingTotal {\n    minor\n  }\n  taxTotal {\n    minor\n  }\n  availableShippingCountries\n  fulfillmentOptions {\n    type\n    amount {\n      minor\n      currencyCode\n    }\n    selected\n  }\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    postalCode\n    region\n    country\n    name\n  }\n  lineItems {\n    artwork {\n      internalID\n      slug\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "ec7777b29ae9aa77f566d415643f9982";
+(node as any).hash = "90b479f28573249024f7c6c77edba445";
 
 export default node;

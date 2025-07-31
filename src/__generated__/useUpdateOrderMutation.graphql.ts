@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<48a83eb3be06d974160389c166b03c5b>>
+ * @generated SignedSource<<4844c4ed9b38f2f4d66378dc542877db>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -57,7 +57,7 @@ export type useUpdateOrderMutation$data = {
         readonly taxTotal: {
           readonly minor: any;
         } | null | undefined;
-        readonly " $fragmentSpreads": FragmentRefs<"ExpressCheckoutUI_order" | "Order2ExpressCheckoutUI_order">;
+        readonly " $fragmentSpreads": FragmentRefs<"ExpressCheckoutUI_order">;
       };
     } | {
       // This will never be '%other', but we need some
@@ -276,17 +276,12 @@ return {
                     "name": "order",
                     "plural": false,
                     "selections": [
-                      (v3/*: any*/),
                       {
                         "args": null,
                         "kind": "FragmentSpread",
                         "name": "ExpressCheckoutUI_order"
                       },
-                      {
-                        "args": null,
-                        "kind": "FragmentSpread",
-                        "name": "Order2ExpressCheckoutUI_order"
-                      },
+                      (v3/*: any*/),
                       (v6/*: any*/),
                       (v7/*: any*/),
                       (v9/*: any*/),
@@ -478,16 +473,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "017c11c9026fb991fbab85042ad27bd7",
+    "cacheID": "5f230d121b5be22d8887ce9b167b15e7",
     "id": null,
     "metadata": {},
     "name": "useUpdateOrderMutation",
     "operationKind": "mutation",
-    "text": "mutation useUpdateOrderMutation(\n  $input: updateOrderInput!\n) {\n  updateOrder(input: $input) {\n    orderOrError {\n      __typename\n      ... on OrderMutationSuccess {\n        order {\n          internalID\n          ...ExpressCheckoutUI_order\n          ...Order2ExpressCheckoutUI_order\n          fulfillmentOptions {\n            type\n            amount {\n              minor\n              currencyCode\n            }\n            selected\n          }\n          buyerTotal {\n            minor\n            currencyCode\n          }\n          itemsTotal {\n            minor\n          }\n          shippingTotal {\n            minor\n          }\n          taxTotal {\n            minor\n          }\n          availableShippingCountries\n          stripeConfirmationToken\n          id\n        }\n      }\n      ... on OrderMutationError {\n        mutationError {\n          message\n        }\n      }\n    }\n  }\n}\n\nfragment ExpressCheckoutUI_order on Order {\n  internalID\n  source\n  mode\n  buyerTotal {\n    minor\n    currencyCode\n  }\n  itemsTotal {\n    minor\n  }\n  shippingTotal {\n    minor\n  }\n  taxTotal {\n    minor\n  }\n  availableShippingCountries\n  fulfillmentOptions {\n    type\n    amount {\n      minor\n      currencyCode\n    }\n    selected\n  }\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    postalCode\n    region\n    country\n    name\n  }\n  lineItems {\n    artwork {\n      internalID\n      slug\n      id\n    }\n    id\n  }\n}\n\nfragment Order2ExpressCheckoutUI_order on Order {\n  internalID\n  source\n  mode\n  buyerTotal {\n    minor\n    currencyCode\n  }\n  itemsTotal {\n    minor\n  }\n  shippingTotal {\n    minor\n  }\n  taxTotal {\n    minor\n  }\n  availableShippingCountries\n  fulfillmentOptions {\n    type\n    amount {\n      minor\n      currencyCode\n    }\n    selected\n  }\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    postalCode\n    region\n    country\n    name\n  }\n  lineItems {\n    artwork {\n      internalID\n      slug\n      id\n    }\n    id\n  }\n}\n"
+    "text": "mutation useUpdateOrderMutation(\n  $input: updateOrderInput!\n) {\n  updateOrder(input: $input) {\n    orderOrError {\n      __typename\n      ... on OrderMutationSuccess {\n        order {\n          ...ExpressCheckoutUI_order\n          internalID\n          fulfillmentOptions {\n            type\n            amount {\n              minor\n              currencyCode\n            }\n            selected\n          }\n          buyerTotal {\n            minor\n            currencyCode\n          }\n          itemsTotal {\n            minor\n          }\n          shippingTotal {\n            minor\n          }\n          taxTotal {\n            minor\n          }\n          availableShippingCountries\n          stripeConfirmationToken\n          id\n        }\n      }\n      ... on OrderMutationError {\n        mutationError {\n          message\n        }\n      }\n    }\n  }\n}\n\nfragment ExpressCheckoutUI_order on Order {\n  internalID\n  source\n  mode\n  buyerTotal {\n    minor\n    currencyCode\n  }\n  itemsTotal {\n    minor\n  }\n  shippingTotal {\n    minor\n  }\n  taxTotal {\n    minor\n  }\n  availableShippingCountries\n  fulfillmentOptions {\n    type\n    amount {\n      minor\n      currencyCode\n    }\n    selected\n  }\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    postalCode\n    region\n    country\n    name\n  }\n  lineItems {\n    artwork {\n      internalID\n      slug\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "803b284490b1b94f3051370c80e836c0";
+(node as any).hash = "59e706e20100ebda42e14c16093d7550";
 
 export default node;
