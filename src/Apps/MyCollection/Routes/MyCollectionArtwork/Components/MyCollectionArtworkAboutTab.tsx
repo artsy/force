@@ -45,7 +45,6 @@ const FRAGMENT = graphql`
     consignmentSubmission {
       internalID
     }
-    hasPriceEstimateRequest
     internalID
   }
 `

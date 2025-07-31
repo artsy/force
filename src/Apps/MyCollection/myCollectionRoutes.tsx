@@ -13,27 +13,6 @@ const MyCollectionArtwork = loadable(
   },
 )
 
-const PriceEstimateContactInformation = loadable(
-  () =>
-    import(
-      /* webpackChunkName: "myCollectionBundle" */ "./Routes/PriceEstimate/PriceEstimateContactInformation"
-    ),
-  {
-    resolveComponent: component =>
-      component.PriceEstimateContactInformationFragmentContainer,
-  },
-)
-
-const PriceEstimateConfirmation = loadable(
-  () =>
-    import(
-      /* webpackChunkName: "myCollectionBundle" */ "./Routes/PriceEstimate/PriceEstimateConfirmation"
-    ),
-  {
-    resolveComponent: component => component.PriceEstimateConfirmation,
-  },
-)
-
 const MyCollectionCreateArtwork = loadable(
   () =>
     import(
@@ -72,34 +51,6 @@ export const myCollectionRoutes: RouteProps[] = [
     `,
     cacheConfig: {
       force: true,
-    },
-  },
-  {
-    path: "/my-collection/artwork/:artworkID/price-estimate",
-    layout: "ContainerOnly",
-    getComponent: () => PriceEstimateContactInformation,
-    onPreloadJS: () => {
-      PriceEstimateContactInformation.preload()
-    },
-    query: graphql`
-      query myCollectionRoutes_priceEstimateContactInformationQuery(
-        $artworkID: String!
-      ) {
-        artwork(id: $artworkID) @principalField {
-          ...PriceEstimateContactInformation_artwork
-        }
-        me {
-          ...PriceEstimateContactInformation_me
-        }
-      }
-    `,
-  },
-  {
-    path: "/my-collection/artwork/:artworkID/price-estimate/success",
-    layout: "ContainerOnly",
-    getComponent: () => PriceEstimateConfirmation,
-    onPreloadJS: () => {
-      PriceEstimateConfirmation.preload()
     },
   },
   {

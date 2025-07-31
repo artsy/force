@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f858fe845fce536bb8277aad9bfb9df0>>
+ * @generated SignedSource<<b9170a52103f1c0e0ebc8b68c2ee8a24>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -25,9 +25,7 @@ export type MyCollectionArtworkInsights_artwork$data = {
   readonly auctionResults: {
     readonly totalCount: number | null | undefined;
   } | null | undefined;
-  readonly hasPriceEstimateRequest: boolean | null | undefined;
   readonly internalID: string;
-  readonly isPriceEstimateRequestable: boolean | null | undefined;
   readonly marketPriceInsights: {
     readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkArtistMarket_marketPriceInsights" | "MyCollectionArtworkDemandIndex_marketPriceInsights">;
   } | null | undefined;
@@ -62,20 +60,6 @@ return {
   "metadata": null,
   "name": "MyCollectionArtworkInsights_artwork",
   "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "hasPriceEstimateRequest",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "isPriceEstimateRequestable",
-      "storageKey": null
-    },
     {
       "alias": null,
       "args": null,
@@ -182,6 +166,6 @@ return {
 };
 })();
 
-(node as any).hash = "2b02b6ffa8c53c160dc890684ae61288";
+(node as any).hash = "ff281610068d9fa14d510773bb8dbaf1";
 
 export default node;
