@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<394965654e8666745f8f7517d553cb7f>>
+ * @generated SignedSource<<83cef64ce2e484ec82c36ee293490ad1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -31,7 +31,6 @@ export type MyCollectionArtwork_artwork$data = {
     readonly state: ArtworkConsignmentSubmissionState;
   } | null | undefined;
   readonly hasMarketPriceInsights: boolean | null | undefined;
-  readonly hasPriceEstimateRequest: boolean | null | undefined;
   readonly internalID: string;
   readonly slug: string;
   readonly submissionId: string | null | undefined;
@@ -127,13 +126,6 @@ return {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "hasPriceEstimateRequest",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
       "name": "hasMarketPriceInsights",
       "storageKey": null
     },
@@ -222,6 +214,6 @@ return {
 };
 })();
 
-(node as any).hash = "29cfc1e3257da4cb44b4b42d0093efb6";
+(node as any).hash = "f4060a4ba6a5a9f8e3900761e2497ce1";
 
 export default node;

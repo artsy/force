@@ -101,7 +101,6 @@ export const MyCollectionArtworkFragmentContainer = createFragmentContainer(
         comparables: comparableAuctionResults {
           totalCount
         }
-        hasPriceEstimateRequest
         hasMarketPriceInsights
         submissionId
         internalID

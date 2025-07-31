@@ -49,8 +49,6 @@ export const MyCollectionArtworkInsights: React.FC<
 
 const FRAGMENT = graphql`
   fragment MyCollectionArtworkInsights_artwork on Artwork {
-    hasPriceEstimateRequest
-    isPriceEstimateRequestable
     internalID
     auctionResults: comparableAuctionResults(first: 1) @optionalField {
       totalCount

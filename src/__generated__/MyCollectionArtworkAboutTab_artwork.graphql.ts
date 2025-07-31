@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b5c6e237b34b5f9f054c2fb65069305b>>
+ * @generated SignedSource<<e3816a6cda19687d5560812c091d505c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,7 +21,6 @@ export type MyCollectionArtworkAboutTab_artwork$data = {
   readonly consignmentSubmission: {
     readonly internalID: string | null | undefined;
   } | null | undefined;
-  readonly hasPriceEstimateRequest: boolean | null | undefined;
   readonly internalID: string;
   readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkDetails_artwork">;
   readonly " $fragmentType": "MyCollectionArtworkAboutTab_artwork";
@@ -104,13 +103,6 @@ return {
       ],
       "storageKey": null
     },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "hasPriceEstimateRequest",
-      "storageKey": null
-    },
     (v0/*: any*/)
   ],
   "type": "Artwork",
@@ -118,6 +110,6 @@ return {
 };
 })();
 
-(node as any).hash = "c75bd82cf83b0a8c4c7c7f02f7e9f8d8";
+(node as any).hash = "be66eebb93c5fa7de4baed85ae6f18be";
 
 export default node;
