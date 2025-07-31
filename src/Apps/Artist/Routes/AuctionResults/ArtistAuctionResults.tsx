@@ -253,9 +253,7 @@ const AuctionResultsContainer: React.FC<
 
       <Jump id="artistAuctionResultsTop" />
 
-      <Text variant={["sm-display", "lg-display"]} as="h2">
-        Auction Results
-      </Text>
+      <Text variant={["sm-display", "lg-display"]}>Auction Results</Text>
 
       <Spacer y={4} />
 
