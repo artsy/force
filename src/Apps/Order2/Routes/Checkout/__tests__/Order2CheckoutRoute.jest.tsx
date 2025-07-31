@@ -266,10 +266,9 @@ const helpers = {
       confirmationToken: {
         id: "confirmation-token-id",
         paymentMethodPreview: {
-          card: {
-            displayBrand: "Visa",
-            last4: "5309",
-          },
+          __typename: "Card",
+          displayBrand: "Visa",
+          last4: "5309",
         },
       },
     })
@@ -290,10 +289,9 @@ const helpers = {
             return {
               confirmationToken: {
                 paymentMethodPreview: {
-                  card: {
-                    displayBrand: "Visa",
-                    last4: "5309",
-                  },
+                  __typename: "Card",
+                  displayBrand: "Visa",
+                  last4: "5309",
                 },
               },
             }
@@ -598,10 +596,9 @@ describe("Order2CheckoutRoute", () => {
           confirmationToken: {
             id: "confirmation-token-id",
             paymentMethodPreview: {
-              card: {
-                displayBrand: "Visa",
-                last4: "5309",
-              },
+              __typename: "Card",
+              displayBrand: "Visa",
+              last4: "5309",
             },
           },
         })
@@ -624,10 +621,9 @@ describe("Order2CheckoutRoute", () => {
                 return {
                   confirmationToken: {
                     paymentMethodPreview: {
-                      card: {
-                        displayBrand: "Visa",
-                        last4: "5309",
-                      },
+                      __typename: "Card",
+                      displayBrand: "Visa",
+                      last4: "5309",
                     },
                   },
                 }
