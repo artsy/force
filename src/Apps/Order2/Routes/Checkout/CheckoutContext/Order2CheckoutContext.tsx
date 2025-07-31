@@ -38,13 +38,7 @@ type ConfirmationTokenState = {
         readonly last4: string
       }
     | {
-        readonly __typename: "USBankAccount"
-        readonly bankName: string
-        readonly last4: string
-      }
-    | {
-        readonly __typename: "SEPADebit"
-        readonly last4: string
+        readonly __typename: "%other"
       }
     | null
     | undefined
