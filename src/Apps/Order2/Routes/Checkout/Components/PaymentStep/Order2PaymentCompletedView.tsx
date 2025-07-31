@@ -54,7 +54,9 @@ export const Order2PaymentCompletedView: React.FC<
               height={["18px", "26px"]}
               mr={1}
             />
-            <Text variant={["xs", "sm-display"]}>Bank transfer</Text>
+            <Text variant={["xs", "sm-display"]}>
+              •••• {confirmationToken?.paymentMethodPreview?.last4}
+            </Text>
           </>
         ) : (
           <>

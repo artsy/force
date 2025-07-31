@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6db046a0232ed43878f4d8298a08b96b>>
+ * @generated SignedSource<<85617503c91ce44ec677efe0bc45cced>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,6 +18,10 @@ export type Order2PaymentFormConfirmationTokenQuery$data = {
       readonly paymentMethodPreview: {
         readonly __typename: "Card";
         readonly displayBrand: string;
+        readonly last4: string;
+      } | {
+        readonly __typename: "USBankAccount";
+        readonly bankName: string;
         readonly last4: string;
       } | {
         // This will never be '%other', but we need some
@@ -41,6 +45,13 @@ var v0 = [
   }
 ],
 v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "last4",
+  "storageKey": null
+},
+v2 = {
   "alias": null,
   "args": [
     {
@@ -79,15 +90,24 @@ v1 = {
               "name": "displayBrand",
               "storageKey": null
             },
+            (v1/*: any*/)
+          ],
+          "type": "Card",
+          "abstractKey": null
+        },
+        {
+          "kind": "InlineFragment",
+          "selections": [
             {
               "alias": null,
               "args": null,
               "kind": "ScalarField",
-              "name": "last4",
+              "name": "bankName",
               "storageKey": null
-            }
+            },
+            (v1/*: any*/)
           ],
-          "type": "Card",
+          "type": "USBankAccount",
           "abstractKey": null
         }
       ],
@@ -111,7 +131,7 @@ return {
         "name": "me",
         "plural": false,
         "selections": [
-          (v1/*: any*/)
+          (v2/*: any*/)
         ],
         "storageKey": null
       }
@@ -133,7 +153,7 @@ return {
         "name": "me",
         "plural": false,
         "selections": [
-          (v1/*: any*/),
+          (v2/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -147,16 +167,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "9bfe3f723794ec6378dd5497e2f32fef",
+    "cacheID": "9c17470e7dad56ed793a4ba13e664c6a",
     "id": null,
     "metadata": {},
     "name": "Order2PaymentFormConfirmationTokenQuery",
     "operationKind": "query",
-    "text": "query Order2PaymentFormConfirmationTokenQuery(\n  $id: String!\n) {\n  me {\n    confirmationToken(id: $id) {\n      paymentMethodPreview {\n        __typename\n        ... on Card {\n          displayBrand\n          last4\n        }\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query Order2PaymentFormConfirmationTokenQuery(\n  $id: String!\n) {\n  me {\n    confirmationToken(id: $id) {\n      paymentMethodPreview {\n        __typename\n        ... on Card {\n          displayBrand\n          last4\n        }\n        ... on USBankAccount {\n          bankName\n          last4\n        }\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "dda891ea97da866799f824acdc83fc4a";
+(node as any).hash = "994035499519134f6a987402ffff7607";
 
 export default node;
