@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8edc5f2de8b27140e68cfcdd4944fec3>>
+ * @generated SignedSource<<26fca1a34a4742c991ed6656be65bb21>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -31,6 +31,7 @@ export type AuctionActiveBids_me$data = {
         readonly endAt: string | null | undefined;
         readonly isClosed: boolean | null | undefined;
         readonly isLiveOpen: boolean | null | undefined;
+        readonly isLiveOpenHappened: boolean | null | undefined;
         readonly slug: string;
       } | null | undefined;
       readonly saleID: string | null | undefined;
@@ -225,6 +226,13 @@ return {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
+                  "name": "isLiveOpenHappened",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
                   "name": "isClosed",
                   "storageKey": null
                 }
@@ -243,6 +251,6 @@ return {
 };
 })();
 
-(node as any).hash = "bc85d0416013a6bdb76c05f9dd09c7d1";
+(node as any).hash = "31b412e100a924ece5cf56aec89c16d4";
 
 export default node;

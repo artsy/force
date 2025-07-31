@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fa4bace0a24a886e5ba711d388ce18fc>>
+ * @generated SignedSource<<a3be59adde22108d6979e64461206d8e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -28,8 +28,8 @@ export type ArtworkSidebarCurrentBidInfo_artwork$data = {
   }> | null | undefined;
   readonly sale: {
     readonly internalID: string;
+    readonly isLiveOpenHappened: boolean | null | undefined;
     readonly is_closed: boolean | null | undefined;
-    readonly is_live_open: boolean | null | undefined;
     readonly is_with_buyers_premium: boolean | null | undefined;
   } | null | undefined;
   readonly sale_artwork: {
@@ -84,10 +84,10 @@ return {
           "storageKey": null
         },
         {
-          "alias": "is_live_open",
+          "alias": null,
           "args": null,
           "kind": "ScalarField",
-          "name": "isLiveOpen",
+          "name": "isLiveOpenHappened",
           "storageKey": null
         },
         {
@@ -270,6 +270,6 @@ return {
 };
 })();
 
-(node as any).hash = "d5c339551677ad3ccfbe7ca7b1e50104";
+(node as any).hash = "080ee615deab55b7387e91f28d845c5b";
 
 export default node;

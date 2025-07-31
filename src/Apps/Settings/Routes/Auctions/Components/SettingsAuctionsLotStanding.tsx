@@ -26,8 +26,7 @@ const SettingsAuctionsLotStanding: FC<
   if (!artwork || !sale) return null
 
   const image = artwork.image?.cropped
-  const showLotStanding =
-    !sale.isLiveOpen && !(sale.isClosed && sale.liveStartAt)
+  const showLotStanding = !sale.isLiveOpenHappened
 
   return (
     <Fragment>
@@ -131,6 +130,7 @@ export const SettingsAuctionsLotStandingFragmentContainer =
           sale {
             isClosed
             isLiveOpen
+            isLiveOpenHappened
             liveStartAt
             slug
           }

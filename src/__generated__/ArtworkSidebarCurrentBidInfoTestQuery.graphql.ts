@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c9010680c4e81d7407ce32934beabd28>>
+ * @generated SignedSource<<dfb5dab063fb1521b5ab0f61a53e45fe>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -54,8 +54,8 @@ export type ArtworkSidebarCurrentBidInfoTestQuery$rawResponse = {
     readonly sale: {
       readonly id: string;
       readonly internalID: string;
+      readonly isLiveOpenHappened: boolean | null | undefined;
       readonly is_closed: boolean | null | undefined;
-      readonly is_live_open: boolean | null | undefined;
       readonly is_with_buyers_premium: boolean | null | undefined;
     } | null | undefined;
     readonly sale_artwork: {
@@ -195,10 +195,10 @@ return {
                 "storageKey": null
               },
               {
-                "alias": "is_live_open",
+                "alias": null,
                 "args": null,
                 "kind": "ScalarField",
-                "name": "isLiveOpen",
+                "name": "isLiveOpenHappened",
                 "storageKey": null
               },
               (v1/*: any*/),
@@ -438,7 +438,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2aefe2493a85049c8f1d55c574b4de65",
+    "cacheID": "d4061ebbbd7e360a8a2f0ad197210ac3",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -529,8 +529,8 @@ return {
         },
         "artwork.sale.id": (v5/*: any*/),
         "artwork.sale.internalID": (v5/*: any*/),
+        "artwork.sale.isLiveOpenHappened": (v7/*: any*/),
         "artwork.sale.is_closed": (v7/*: any*/),
-        "artwork.sale.is_live_open": (v7/*: any*/),
         "artwork.sale.is_with_buyers_premium": (v7/*: any*/),
         "artwork.sale_artwork": {
           "enumValues": null,
@@ -566,7 +566,7 @@ return {
     },
     "name": "ArtworkSidebarCurrentBidInfoTestQuery",
     "operationKind": "query",
-    "text": "query ArtworkSidebarCurrentBidInfoTestQuery {\n  artwork(id: \"auction_artwork_estimate_premium\") {\n    ...ArtworkSidebarCurrentBidInfo_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarBiddingClosedMessage_artwork on Artwork {\n  isEligibleToCreateAlert\n  artists(shallow: true) {\n    internalID\n    id\n  }\n  attributionClass {\n    internalID\n    id\n  }\n  mediumType {\n    filterGene {\n      slug\n      id\n    }\n  }\n}\n\nfragment ArtworkSidebarCurrentBidInfo_artwork on Artwork {\n  sale {\n    is_closed: isClosed\n    is_live_open: isLiveOpen\n    internalID\n    is_with_buyers_premium: isWithBuyersPremium\n    id\n  }\n  sale_artwork: saleArtwork {\n    is_with_reserve: isWithReserve\n    reserve_message: reserveMessage\n    reserve_status: reserveStatus\n    endedAt\n    current_bid: currentBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n  myLotStanding(live: true) {\n    active_bid: activeBid {\n      is_winning: isWinning\n      id\n    }\n    most_recent_bid: mostRecentBid {\n      max_bid: maxBid {\n        display\n      }\n      id\n    }\n  }\n  collectorSignals {\n    auction {\n      lotWatcherCount\n    }\n  }\n  ...ArtworkSidebarBiddingClosedMessage_artwork\n}\n"
+    "text": "query ArtworkSidebarCurrentBidInfoTestQuery {\n  artwork(id: \"auction_artwork_estimate_premium\") {\n    ...ArtworkSidebarCurrentBidInfo_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarBiddingClosedMessage_artwork on Artwork {\n  isEligibleToCreateAlert\n  artists(shallow: true) {\n    internalID\n    id\n  }\n  attributionClass {\n    internalID\n    id\n  }\n  mediumType {\n    filterGene {\n      slug\n      id\n    }\n  }\n}\n\nfragment ArtworkSidebarCurrentBidInfo_artwork on Artwork {\n  sale {\n    is_closed: isClosed\n    isLiveOpenHappened\n    internalID\n    is_with_buyers_premium: isWithBuyersPremium\n    id\n  }\n  sale_artwork: saleArtwork {\n    is_with_reserve: isWithReserve\n    reserve_message: reserveMessage\n    reserve_status: reserveStatus\n    endedAt\n    current_bid: currentBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n  myLotStanding(live: true) {\n    active_bid: activeBid {\n      is_winning: isWinning\n      id\n    }\n    most_recent_bid: mostRecentBid {\n      max_bid: maxBid {\n        display\n      }\n      id\n    }\n  }\n  collectorSignals {\n    auction {\n      lotWatcherCount\n    }\n  }\n  ...ArtworkSidebarBiddingClosedMessage_artwork\n}\n"
   }
 };
 })();

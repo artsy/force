@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<00addd9654b0daf8c44d11f880d6e92c>>
+ * @generated SignedSource<<f70fbac3bba552434bbb64644cdcde3e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -445,6 +445,13 @@ return {
                             "name": "isLiveOpen",
                             "storageKey": null
                           },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "isLiveOpenHappened",
+                            "storageKey": null
+                          },
                           (v0/*: any*/),
                           (v4/*: any*/)
                         ],
@@ -467,7 +474,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "7b86f2d9934212a163dbf6be9279f0a7",
+    "cacheID": "a586bfb2c9d4ae73eee01c6205d7d194",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -576,13 +583,14 @@ return {
         "me.myBids.active.saleArtworks.sale": (v8/*: any*/),
         "me.myBids.active.saleArtworks.sale.id": (v7/*: any*/),
         "me.myBids.active.saleArtworks.sale.isLiveOpen": (v14/*: any*/),
+        "me.myBids.active.saleArtworks.sale.isLiveOpenHappened": (v14/*: any*/),
         "me.myBids.active.saleArtworks.sale.slug": (v7/*: any*/),
         "me.myBids.active.saleArtworks.slug": (v7/*: any*/)
       }
     },
     "name": "MyBidsTestQuery",
     "operationKind": "query",
-    "text": "query MyBidsTestQuery {\n  me {\n    ...MyBids_me\n    id\n  }\n}\n\nfragment MyBidsBidHeader_sale on Sale {\n  coverImage {\n    cropped(width: 330, height: 100, version: [\"source\", \"wide\", \"large_rectangle\"]) {\n      src\n      srcSet\n    }\n  }\n  formattedStartDateTime\n  name\n  partner {\n    name\n    id\n  }\n  slug\n}\n\nfragment MyBidsBidItem_saleArtwork on SaleArtwork {\n  artwork {\n    artistNames\n    image {\n      cropped(width: 55, height: 55) {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n    collectorSignals {\n      auction {\n        bidCount\n        lotWatcherCount\n      }\n    }\n    id\n  }\n  estimate\n  currentBid {\n    display\n  }\n  internalID\n  isHighestBidder\n  isWatching\n  lotState {\n    bidCount\n    sellingPrice {\n      display\n    }\n  }\n  lotLabel\n  slug\n  sale {\n    isLiveOpen\n    slug\n    id\n  }\n}\n\nfragment MyBids_me on Me {\n  myBids {\n    active {\n      sale {\n        slug\n        ...MyBidsBidHeader_sale\n        id\n      }\n      saleArtworks {\n        ...MyBidsBidItem_saleArtwork\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query MyBidsTestQuery {\n  me {\n    ...MyBids_me\n    id\n  }\n}\n\nfragment MyBidsBidHeader_sale on Sale {\n  coverImage {\n    cropped(width: 330, height: 100, version: [\"source\", \"wide\", \"large_rectangle\"]) {\n      src\n      srcSet\n    }\n  }\n  formattedStartDateTime\n  name\n  partner {\n    name\n    id\n  }\n  slug\n}\n\nfragment MyBidsBidItem_saleArtwork on SaleArtwork {\n  artwork {\n    artistNames\n    image {\n      cropped(width: 55, height: 55) {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n    collectorSignals {\n      auction {\n        bidCount\n        lotWatcherCount\n      }\n    }\n    id\n  }\n  estimate\n  currentBid {\n    display\n  }\n  internalID\n  isHighestBidder\n  isWatching\n  lotState {\n    bidCount\n    sellingPrice {\n      display\n    }\n  }\n  lotLabel\n  slug\n  sale {\n    isLiveOpen\n    isLiveOpenHappened\n    slug\n    id\n  }\n}\n\nfragment MyBids_me on Me {\n  myBids {\n    active {\n      sale {\n        slug\n        ...MyBidsBidHeader_sale\n        id\n      }\n      saleArtworks {\n        ...MyBidsBidItem_saleArtwork\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
