@@ -19,7 +19,7 @@ export const Order2PaymentCompletedView: React.FC<
   }
 
   const isBankAccount =
-    confirmationToken?.paymentMethodPreview?.__typename !== "Card"
+    confirmationToken?.paymentMethodPreview?.__typename === "USBankAccount"
   return (
     <Flex flexDirection="column" backgroundColor="mono0">
       <Flex justifyContent="space-between">
