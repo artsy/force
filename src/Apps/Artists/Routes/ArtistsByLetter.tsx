@@ -5,6 +5,7 @@ import {
   GridColumns,
   Spacer,
   Text,
+  VisuallyHidden,
   media,
   space,
 } from "@artsy/palette"
@@ -141,14 +142,27 @@ export const ArtistsByLetter: React.FC<
   )
 }
 
-const buildH1Title = (letter: string, page: number): string => {
+const buildH1Title = (
+  letter: string,
+  page: number,
+): string | React.JSX.Element => {
   const baseTitle = `Artists - ${letter.toUpperCase()}`
   const isPagedContent = page > 1
 
-  return isPagedContent ? `Page ${page}: ${baseTitle}` : baseTitle
+  return isPagedContent ? (
+    <>
+      {baseTitle}
+      <VisuallyHidden> - Page {page}</VisuallyHidden>
+    </>
+  ) : (
+    baseTitle
+  )
 }
 
-const getH1Text = (letter: string | undefined, page: number): string => {
+const getH1Text = (
+  letter: string | undefined,
+  page: number,
+): string | React.JSX.Element => {
   return letter ? buildH1Title(letter, page) : "Artists"
 }
 

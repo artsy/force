@@ -63,7 +63,7 @@ describe("ArtistsByLetter", () => {
     renderWithRelay()
 
     expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
-      "Page 3: Artists - D",
+      "Artists - D - Page 3",
     )
   })
 
@@ -78,7 +78,7 @@ describe("ArtistsByLetter", () => {
     renderWithRelay()
 
     expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
-      "Page 2: Artists - Z",
+      "Artists - Z - Page 2",
     )
   })
 

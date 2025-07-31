@@ -144,7 +144,7 @@ describe("ArtistsByLetterMeta", () => {
       )
 
       expect(document.title).toBe(
-        "Page 4: Artists Starting with D | Modern and Contemporary Artists",
+        "Artists Starting with D | Modern and Contemporary Artists - Page 4",
       )
     })
 
@@ -163,7 +163,7 @@ describe("ArtistsByLetterMeta", () => {
       )
 
       expect(document.title).toBe(
-        "Page 2: Artists Starting with Z | Modern and Contemporary Artists",
+        "Artists Starting with Z | Modern and Contemporary Artists - Page 2",
       )
     })
   })
