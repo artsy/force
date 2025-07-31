@@ -308,7 +308,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
                 me {
                   confirmationToken(id: $id) {
                     paymentMethodPreview {
-                      card {
+                      ... on Card {
                         displayBrand
                         last4
                       }

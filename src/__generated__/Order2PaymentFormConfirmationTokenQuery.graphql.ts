@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bbdda568c2d48ae5e42ad7f621bca813>>
+ * @generated SignedSource<<d0ea0465a6e81e2e46ec5ed710c25b63>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,10 +16,8 @@ export type Order2PaymentFormConfirmationTokenQuery$data = {
   readonly me: {
     readonly confirmationToken: {
       readonly paymentMethodPreview: {
-        readonly card: {
-          readonly displayBrand: string;
-          readonly last4: string;
-        } | null | undefined;
+        readonly displayBrand?: string;
+        readonly last4?: string;
       };
     } | null | undefined;
   } | null | undefined;
@@ -37,58 +35,33 @@ var v0 = [
     "name": "id"
   }
 ],
-v1 = {
-  "alias": null,
-  "args": [
-    {
-      "kind": "Variable",
-      "name": "id",
-      "variableName": "id"
-    }
-  ],
-  "concreteType": "ConfirmationToken",
-  "kind": "LinkedField",
-  "name": "confirmationToken",
-  "plural": false,
+v1 = [
+  {
+    "kind": "Variable",
+    "name": "id",
+    "variableName": "id"
+  }
+],
+v2 = {
+  "kind": "InlineFragment",
   "selections": [
     {
       "alias": null,
       "args": null,
-      "concreteType": "PaymentMethodPreview",
-      "kind": "LinkedField",
-      "name": "paymentMethodPreview",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "Card",
-          "kind": "LinkedField",
-          "name": "card",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "displayBrand",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "last4",
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        }
-      ],
+      "kind": "ScalarField",
+      "name": "displayBrand",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "last4",
       "storageKey": null
     }
   ],
-  "storageKey": null
+  "type": "Card",
+  "abstractKey": null
 };
 return {
   "fragment": {
@@ -105,7 +78,29 @@ return {
         "name": "me",
         "plural": false,
         "selections": [
-          (v1/*: any*/)
+          {
+            "alias": null,
+            "args": (v1/*: any*/),
+            "concreteType": "ConfirmationToken",
+            "kind": "LinkedField",
+            "name": "confirmationToken",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": null,
+                "kind": "LinkedField",
+                "name": "paymentMethodPreview",
+                "plural": false,
+                "selections": [
+                  (v2/*: any*/)
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          }
         ],
         "storageKey": null
       }
@@ -127,7 +122,36 @@ return {
         "name": "me",
         "plural": false,
         "selections": [
-          (v1/*: any*/),
+          {
+            "alias": null,
+            "args": (v1/*: any*/),
+            "concreteType": "ConfirmationToken",
+            "kind": "LinkedField",
+            "name": "confirmationToken",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": null,
+                "kind": "LinkedField",
+                "name": "paymentMethodPreview",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "__typename",
+                    "storageKey": null
+                  },
+                  (v2/*: any*/)
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          },
           {
             "alias": null,
             "args": null,
@@ -141,16 +165,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d4612ed23a1d13ad49bb05124b7324b3",
+    "cacheID": "9bfe3f723794ec6378dd5497e2f32fef",
     "id": null,
     "metadata": {},
     "name": "Order2PaymentFormConfirmationTokenQuery",
     "operationKind": "query",
-    "text": "query Order2PaymentFormConfirmationTokenQuery(\n  $id: String!\n) {\n  me {\n    confirmationToken(id: $id) {\n      paymentMethodPreview {\n        card {\n          displayBrand\n          last4\n        }\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query Order2PaymentFormConfirmationTokenQuery(\n  $id: String!\n) {\n  me {\n    confirmationToken(id: $id) {\n      paymentMethodPreview {\n        __typename\n        ... on Card {\n          displayBrand\n          last4\n        }\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "e9f951dc045909eead43c783c98cddd6";
+(node as any).hash = "bce4cdbd879db7d252d391b8c075448e";
 
 export default node;
