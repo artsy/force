@@ -5,7 +5,7 @@ jest.mock("Utils/Hooks/useUserLocation", () => ({
   useUserLocation: () => mockUseUserLocation(),
 }))
 
-describe("getInitialLocationValues", () => {
+describe("useInitialLocationValues", () => {
   const mockCountryOptions = [
     { text: "", value: "" },
     { text: "United States", value: "US" },
