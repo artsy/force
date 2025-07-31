@@ -33,14 +33,14 @@ type ConfirmationTokenState = {
   id: string
   paymentMethodPreview?:
     | {
-        readonly card:
-          | {
-              readonly displayBrand: string
-              readonly last4: string
-            }
-          | null
-          | undefined
+        readonly __typename: "Card"
+        readonly displayBrand: string
+        readonly last4: string
       }
+    | {
+        readonly __typename: "%other"
+      }
+    | null
     | undefined
 } | null
 
