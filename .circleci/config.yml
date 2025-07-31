@@ -124,7 +124,7 @@ jobs:
 
   playwright-smoke-tests:
     docker:
-      - image: mcr.microsoft.com/playwright:v1.54.0-noble
+      - image: mcr.microsoft.com/playwright:v1.54.1-noble
     working_directory: ~/app
     parallelism: 6
     steps:
