@@ -2666,6 +2666,9 @@ type Artwork implements Node & Searchable & Sellable {
   # Notes by a partner or MyCollection user on the artwork, can only be accessed by partner or the user that owns the artwork
   confidentialNotes: String
   consignmentSubmission: ArtworkConsignmentSubmission
+    @deprecated(
+      reason: "This field is deprecated as collector artwork submissions are no longer accepted."
+    )
   contactLabel: String
 
   # Pre-filled inquiry text
@@ -2742,6 +2745,9 @@ type Artwork implements Node & Searchable & Sellable {
 
   # Whether a request for price estimate has been submitted for this artwork
   hasPriceEstimateRequest: Boolean
+    @deprecated(
+      reason: "This field is deprecated as collector artwork submissions are no longer accepted."
+    )
   hasTitle: Boolean!
 
   # The height as expressed by the original input metric
@@ -2826,6 +2832,9 @@ type Artwork implements Node & Searchable & Sellable {
   # Do we want to encourage inquiries on this work?
   isInquireable: Boolean
   isListed: Boolean!
+    @deprecated(
+      reason: "This field is deprecated as collector artwork submissions are no longer accepted."
+    )
   isNotForSale: String
 
   # Whether a user can make an offer on a work
@@ -2839,6 +2848,9 @@ type Artwork implements Node & Searchable & Sellable {
   # Whether a work is available for pickup
   isPickupAvailable: Boolean
   isPriceEstimateRequestable: Boolean
+    @deprecated(
+      reason: "This field is deprecated as collector artwork submissions are no longer accepted."
+    )
   isPriceHidden: Boolean
   isPriceRange: Boolean
 
@@ -2881,6 +2893,9 @@ type Artwork implements Node & Searchable & Sellable {
     first: Int
     last: Int
   ): ArtworkConnection!
+    @deprecated(
+      reason: "This field is deprecated as collector artwork submissions are no longer accepted."
+    )
 
   # In CMS, has the artwork been marked as BNMO?
   listingOptions: ArtworkListingOptions
@@ -2993,6 +3008,9 @@ type Artwork implements Node & Searchable & Sellable {
   # A slug ID.
   slug: ID!
   submissionId: String
+    @deprecated(
+      reason: "This field is deprecated as collector artwork submissions are no longer accepted."
+    )
   taxInfo: TaxInfo
   title: String
 
