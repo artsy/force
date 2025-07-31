@@ -102,14 +102,8 @@ export const MyCollectionArtworkFragmentContainer = createFragmentContainer(
           totalCount
         }
         hasMarketPriceInsights
-        submissionId
         internalID
         slug
-        consignmentSubmission {
-          state
-          internalID
-        }
-        submissionId
         artist(shallow: true) {
           slug
           targetSupply {

@@ -48,9 +48,6 @@ export const MyCollectionArtworkGrid = createFragmentContainer(
                 priority
               }
             }
-            consignmentSubmission {
-              state
-            }
             ...GridItem_artwork @arguments(includeAllImages: true)
             ...FlatGridItem_artwork @arguments(includeAllImages: true)
           }
