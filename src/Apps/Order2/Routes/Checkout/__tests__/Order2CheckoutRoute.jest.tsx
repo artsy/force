@@ -5,7 +5,6 @@ import {
   handleBackNavigation,
   preventHardReload,
 } from "Apps/Order2/Utils/navigationGuards"
-import { getInitialLocationValues } from "Components/Address/utils/getInitialLocationValues"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import mockStripe from "DevTools/mockStripe"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
@@ -211,13 +210,6 @@ const testIDs = {
   paymentFormWire: "PaymentFormWire",
   deliveryOptionsStep: "DeliveryOptionsStep",
 }
-
-const mockCountryOptions = [
-  { text: "", value: "" },
-  { text: "United States", value: "US" },
-  { text: "Canada", value: "CA" },
-  { text: "United Kingdom", value: "GB" },
-]
 
 const helpers = {
   async waitForLoadingComplete() {
@@ -866,11 +858,9 @@ describe("Order2CheckoutRoute", () => {
         "Phone number is required",
       ])
 
-      const initialLocationValues = getInitialLocationValues(mockCountryOptions)
-
       const addressInputValue = {
         name: "John Doe",
-        country: initialLocationValues.selectedCountry || "US",
+        country: "US",
         addressLine1: "123 Main St",
         addressLine2: "Apt 4B",
         city: "New York",

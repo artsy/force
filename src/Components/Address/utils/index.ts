@@ -1,3 +1,3 @@
 export * from "./utils"
-export * from "./getInitialLocationValues"
+export * from "./useInitialLocationValues"
 export * from "./sortCountriesForCountryInput"

@@ -1,4 +1,4 @@
-import { getInitialLocationValues } from "../getInitialLocationValues"
+import { useInitialLocationValues } from "../useInitialLocationValues"
 
 const mockUseUserLocation = jest.fn()
 jest.mock("Utils/Hooks/useUserLocation", () => ({
@@ -23,7 +23,7 @@ describe("getInitialLocationValues", () => {
       loading: true,
     })
 
-    const result = getInitialLocationValues(mockCountryOptions)
+    const result = useInitialLocationValues(mockCountryOptions)
     expect(result).toEqual({})
   })
 
@@ -33,7 +33,7 @@ describe("getInitialLocationValues", () => {
       loading: false,
     })
 
-    const result = getInitialLocationValues(mockCountryOptions)
+    const result = useInitialLocationValues(mockCountryOptions)
     expect(result).toEqual({})
   })
 
@@ -43,7 +43,7 @@ describe("getInitialLocationValues", () => {
       loading: false,
     })
 
-    const result = getInitialLocationValues(mockCountryOptions)
+    const result = useInitialLocationValues(mockCountryOptions)
     expect(result).toEqual({
       selectedCountry: "US",
       phoneNumberCountryCode: "us",
@@ -56,7 +56,7 @@ describe("getInitialLocationValues", () => {
       loading: false,
     })
 
-    const result = getInitialLocationValues(mockCountryOptions)
+    const result = useInitialLocationValues(mockCountryOptions)
     expect(result).toEqual({
       selectedCountry: "CA",
       phoneNumberCountryCode: "ca",
@@ -69,7 +69,7 @@ describe("getInitialLocationValues", () => {
       loading: false,
     })
 
-    const result = getInitialLocationValues(mockCountryOptions)
+    const result = useInitialLocationValues(mockCountryOptions)
     expect(result).toEqual({
       selectedCountry: "US",
       phoneNumberCountryCode: "us", // phone options use lowercase
