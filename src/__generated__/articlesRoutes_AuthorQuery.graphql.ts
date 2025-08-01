@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<52dd9c813f768fbec3dc79a25bed4413>>
+ * @generated SignedSource<<5a5a72a87cf976314250606b32d10520>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -37,31 +37,6 @@ v1 = [
     "name": "id",
     "variableName": "id"
   }
-],
-v2 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-},
-v3 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "src",
-  "storageKey": null
-},
-v4 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "srcSet",
-  "storageKey": null
-},
-v5 = [
-  (v3/*: any*/),
-  (v4/*: any*/)
 ];
 return {
   "fragment": {
@@ -111,7 +86,13 @@ return {
             "name": "__typename",
             "storageKey": null
           },
-          (v2/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "internalID",
+            "storageKey": null
+          },
           {
             "alias": null,
             "args": null,
@@ -159,7 +140,22 @@ return {
                 "kind": "LinkedField",
                 "name": "cropped",
                 "plural": false,
-                "selections": (v5/*: any*/),
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "src",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "srcSet",
+                    "storageKey": null
+                  }
+                ],
                 "storageKey": "cropped(height:100,width:100)"
               }
             ],
@@ -168,138 +164,8 @@ return {
           {
             "alias": null,
             "args": null,
-            "concreteType": "Article",
-            "kind": "LinkedField",
-            "name": "articles",
-            "plural": true,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "vertical",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "title",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "thumbnailTitle",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "byline",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "href",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": [
-                  {
-                    "kind": "Literal",
-                    "name": "format",
-                    "value": "MMM D, YYYY"
-                  }
-                ],
-                "kind": "ScalarField",
-                "name": "publishedAt",
-                "storageKey": "publishedAt(format:\"MMM D, YYYY\")"
-              },
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "Image",
-                "kind": "LinkedField",
-                "name": "thumbnailImage",
-                "plural": false,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": [
-                      {
-                        "kind": "Literal",
-                        "name": "height",
-                        "value": 334
-                      },
-                      {
-                        "kind": "Literal",
-                        "name": "width",
-                        "value": 445
-                      }
-                    ],
-                    "concreteType": "CroppedImageUrl",
-                    "kind": "LinkedField",
-                    "name": "cropped",
-                    "plural": false,
-                    "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "width",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "height",
-                        "storageKey": null
-                      },
-                      (v3/*: any*/),
-                      (v4/*: any*/)
-                    ],
-                    "storageKey": "cropped(height:334,width:445)"
-                  },
-                  {
-                    "alias": "large",
-                    "args": [
-                      {
-                        "kind": "Literal",
-                        "name": "height",
-                        "value": 600
-                      },
-                      {
-                        "kind": "Literal",
-                        "name": "width",
-                        "value": 600
-                      }
-                    ],
-                    "concreteType": "CroppedImageUrl",
-                    "kind": "LinkedField",
-                    "name": "cropped",
-                    "plural": false,
-                    "selections": (v5/*: any*/),
-                    "storageKey": "cropped(height:600,width:600)"
-                  }
-                ],
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "internalID",
-                "storageKey": null
-              },
-              (v2/*: any*/)
-            ],
+            "kind": "ScalarField",
+            "name": "id",
             "storageKey": null
           }
         ],
@@ -308,12 +174,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "42a3e1f25eb85404401bab2a84035b5f",
+    "cacheID": "4e6988eac6f51fdaccef143173fd12b3",
     "id": null,
     "metadata": {},
     "name": "articlesRoutes_AuthorQuery",
     "operationKind": "query",
-    "text": "query articlesRoutes_AuthorQuery(\n  $id: String!\n) {\n  author(id: $id) @principalField {\n    ...AuthorApp_author\n    id\n  }\n}\n\nfragment AuthorApp_author on Author {\n  __typename\n  id\n  name\n  bio\n  initials\n  image {\n    cropped(width: 100, height: 100) {\n      src\n      srcSet\n    }\n  }\n  articles {\n    ...CellArticle_article\n    internalID\n    href\n    vertical\n    thumbnailTitle\n    title\n    byline\n    publishedAt(format: \"MMM D, YYYY\")\n    thumbnailImage {\n      large: cropped(width: 600, height: 600) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  thumbnailTitle\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query articlesRoutes_AuthorQuery(\n  $id: String!\n) {\n  author(id: $id) @principalField {\n    ...AuthorApp_author\n    id\n  }\n}\n\nfragment AuthorApp_author on Author {\n  __typename\n  internalID\n  name\n  bio\n  initials\n  image {\n    cropped(width: 100, height: 100) {\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();
