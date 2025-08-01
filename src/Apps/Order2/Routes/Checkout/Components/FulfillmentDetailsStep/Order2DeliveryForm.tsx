@@ -15,8 +15,8 @@ import {
   type FormikContextWithAddress,
   addressFormFieldsValidator,
 } from "Components/Address/AddressFormFields"
-import { getInitialLocationValues } from "Components/Address/utils/getInitialLocationValues"
 import { sortCountriesForCountryInput } from "Components/Address/utils/sortCountriesForCountryInput"
+import { useInitialLocationValues } from "Components/Address/utils/useInitialLocationValues"
 import type { Order2DeliveryForm_order$key } from "__generated__/Order2DeliveryForm_order.graphql"
 import { Formik, type FormikHelpers } from "formik"
 import { useCallback, useMemo } from "react"
@@ -46,9 +46,8 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
   }, [shippableCountries])
 
   // Get initial values based on user location if no existing fulfillment details
-  const locationBasedInitialValues = useMemo(() => {
-    return getInitialLocationValues(countryInputOptions)
-  }, [countryInputOptions])
+  const locationBasedInitialValues =
+    useInitialLocationValues(countryInputOptions)
 
   const checkoutContext = useCheckoutContext()
 

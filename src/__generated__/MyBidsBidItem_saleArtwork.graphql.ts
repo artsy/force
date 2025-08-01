@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5f31f0d2e3b8bef73f6c7ec55fca9163>>
+ * @generated SignedSource<<74fe32eef65f0bf575b02c6f4550facf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -44,6 +44,7 @@ export type MyBidsBidItem_saleArtwork$data = {
   } | null | undefined;
   readonly sale: {
     readonly isLiveOpen: boolean | null | undefined;
+    readonly isLiveOpenHappened: boolean | null | undefined;
     readonly slug: string;
   } | null | undefined;
   readonly slug: string;
@@ -276,6 +277,13 @@ return {
           "name": "isLiveOpen",
           "storageKey": null
         },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "isLiveOpenHappened",
+          "storageKey": null
+        },
         (v2/*: any*/)
       ],
       "storageKey": null
@@ -286,6 +294,6 @@ return {
 };
 })();
 
-(node as any).hash = "14ba03e06ec40c3a9c690e7f3b9051a8";
+(node as any).hash = "7aa87a1f83b9777ccf1124802027404b";
 
 export default node;

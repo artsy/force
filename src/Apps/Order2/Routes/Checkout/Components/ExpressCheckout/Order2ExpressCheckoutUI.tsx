@@ -116,6 +116,9 @@ export const Order2ExpressCheckoutUI: React.FC<
     paymentMethods: {
       applePay: "always",
       googlePay: "always",
+      link: "never",
+      amazonPay: "never",
+      paypal: "never",
     },
     layout: {
       overflow: "never",

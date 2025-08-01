@@ -162,6 +162,7 @@ export const AuctionActiveBidsRefetchContainer = createRefetchContainer(
               slug
               endAt
               isLiveOpen
+              isLiveOpenHappened
               isClosed
             }
           }
@@ -191,14 +192,26 @@ const BidStatus: React.FC<
     case lotStanding.saleArtwork?.sale?.isLiveOpen: {
       return (
         <Text variant="xs" color="blue100" display="flex">
-          &nbsp; Bidding live now
+          Bidding live now
+        </Text>
+      )
+    }
+    case lotStanding.saleArtwork?.sale?.isLiveOpenHappened: {
+      return (
+        <Text variant="xs" color="mono60" display="flex">
+          Live auction
         </Text>
       )
     }
     case lotStanding.isHighestBidder: {
       return (
         <Text variant="xs" color="green100" display="flex">
-          <ChevronCircleUpIcon height={15} width={15} fill="green100" />
+          <ChevronCircleUpIcon
+            height={15}
+            width={15}
+            mt={"2px"}
+            fill="green100"
+          />
           &nbsp; Highest bid
         </Text>
       )
@@ -206,7 +219,7 @@ const BidStatus: React.FC<
     case lotStanding.saleArtwork?.reserveStatus === "reserve_not_met": {
       return (
         <Text variant="xs" color="red100" display="flex" alignItems="center">
-          <MessageIcon height={15} width={15} fill="red100" />
+          <MessageIcon height={15} width={15} mt={"2px"} fill="red100" />
           &nbsp; Reserve Not Met
         </Text>
       )
@@ -215,7 +228,12 @@ const BidStatus: React.FC<
     default: {
       return (
         <Text variant="xs" color="red100" display="flex" alignItems="center">
-          <ChevronCircleDownIcon height={15} width={15} fill="red100" />
+          <ChevronCircleDownIcon
+            height={15}
+            width={15}
+            mt={"2px"}
+            fill="red100"
+          />
           &nbsp; Outbid
         </Text>
       )

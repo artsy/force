@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9225bd0bd7f922339e5d6c77f7182e61>>
+ * @generated SignedSource<<c9ade8d6a25fccb94bd1d7ba93ebbbf7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -379,6 +379,13 @@ return {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
+                        "name": "isLiveOpenHappened",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
                         "name": "isClosed",
                         "storageKey": null
                       },
@@ -400,7 +407,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "25fd3aafb831296a2988f91794ea7953",
+    "cacheID": "5734a792ee702b5b0690a6a4ecde5f06",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -495,6 +502,7 @@ return {
         "me.lotStandings.saleArtwork.sale.id": (v6/*: any*/),
         "me.lotStandings.saleArtwork.sale.isClosed": (v7/*: any*/),
         "me.lotStandings.saleArtwork.sale.isLiveOpen": (v7/*: any*/),
+        "me.lotStandings.saleArtwork.sale.isLiveOpenHappened": (v7/*: any*/),
         "me.lotStandings.saleArtwork.sale.slug": (v6/*: any*/),
         "me.lotStandings.saleArtwork.saleID": (v8/*: any*/),
         "me.lotStandings.saleArtwork.slug": (v6/*: any*/)
@@ -502,7 +510,7 @@ return {
     },
     "name": "AuctionActiveBidsQuery",
     "operationKind": "query",
-    "text": "query AuctionActiveBidsQuery(\n  $slug: String!\n) {\n  me {\n    ...AuctionActiveBids_me_96HcF\n    id\n  }\n}\n\nfragment AuctionActiveBids_me_96HcF on Me {\n  internalID\n  lotStandings(saleID: $slug, live: true) {\n    isHighestBidder\n    saleArtwork {\n      ...AuctionLotInfo_saleArtwork_4oTW5x\n      counts {\n        bidderPositions\n      }\n      currentBid {\n        display\n      }\n      slug\n      lotLabel\n      reserveStatus\n      saleID\n      highestBid {\n        display\n      }\n      endedAt\n      sale {\n        slug\n        endAt\n        isLiveOpen\n        isClosed\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment AuctionLotInfo_saleArtwork_4oTW5x on SaleArtwork {\n  counts {\n    bidderPositions\n  }\n  lotLabel\n  currentBid {\n    display\n  }\n  formattedEndDateTime\n  artwork {\n    internalID\n    date\n    title\n    image {\n      resized(width: 100, height: 100, version: \"medium\") {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n    imageUrl\n    artistNames\n    slug\n    id\n  }\n}\n"
+    "text": "query AuctionActiveBidsQuery(\n  $slug: String!\n) {\n  me {\n    ...AuctionActiveBids_me_96HcF\n    id\n  }\n}\n\nfragment AuctionActiveBids_me_96HcF on Me {\n  internalID\n  lotStandings(saleID: $slug, live: true) {\n    isHighestBidder\n    saleArtwork {\n      ...AuctionLotInfo_saleArtwork_4oTW5x\n      counts {\n        bidderPositions\n      }\n      currentBid {\n        display\n      }\n      slug\n      lotLabel\n      reserveStatus\n      saleID\n      highestBid {\n        display\n      }\n      endedAt\n      sale {\n        slug\n        endAt\n        isLiveOpen\n        isLiveOpenHappened\n        isClosed\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment AuctionLotInfo_saleArtwork_4oTW5x on SaleArtwork {\n  counts {\n    bidderPositions\n  }\n  lotLabel\n  currentBid {\n    display\n  }\n  formattedEndDateTime\n  artwork {\n    internalID\n    date\n    title\n    image {\n      resized(width: 100, height: 100, version: \"medium\") {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n    imageUrl\n    artistNames\n    slug\n    id\n  }\n}\n"
   }
 };
 })();

@@ -90,7 +90,7 @@ export const MyBidsBidItem: React.FC<
               </>
             ) : (
               <>
-                {!saleArtwork.sale?.isLiveOpen && (
+                {!saleArtwork.sale?.isLiveOpenHappened && (
                   <Text variant="xs" overflowEllipsis>
                     {saleArtwork.currentBid?.display || saleArtwork.estimate}{" "}
                     <Box as="span" color="mono60">
@@ -103,14 +103,16 @@ export const MyBidsBidItem: React.FC<
                   </Text>
                 )}
 
-                {saleArtwork.sale?.isLiveOpen ? (
+                {saleArtwork.sale?.isLiveOpenHappened ? (
                   <Text
                     variant="xs"
-                    color="blue100"
+                    color={saleArtwork.sale?.isLiveOpen ? "blue100" : "mono60"}
                     overflowEllipsis
                     display="flex"
                   >
-                    &nbsp; Bidding live now
+                    {saleArtwork.sale?.isLiveOpen
+                      ? "Bidding live now"
+                      : "Live auction"}
                   </Text>
                 ) : saleArtwork.isHighestBidder ? (
                   <Text
@@ -122,6 +124,7 @@ export const MyBidsBidItem: React.FC<
                     <ChevronCircleUpIcon
                       height={15}
                       width={15}
+                      mt={"2px"}
                       fill="green100"
                     />
                     &nbsp; Highest bid
@@ -136,6 +139,7 @@ export const MyBidsBidItem: React.FC<
                     <ChevronCircleDownIcon
                       height={15}
                       width={15}
+                      mt={"2px"}
                       fill="red100"
                     />
                     &nbsp; Outbid
@@ -189,6 +193,7 @@ export const MyBidsBidItemFragmentContainer = createFragmentContainer(
         slug
         sale {
           isLiveOpen
+          isLiveOpenHappened
           slug
         }
       }

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<aaa8aba69949d2f53391edd36f9e9bb7>>
+ * @generated SignedSource<<02ad13cde2e732407cd3d1f558db9eb4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -323,6 +323,13 @@ return {
                 "name": "isLiveOpen",
                 "storageKey": null
               },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "isLiveOpenHappened",
+                "storageKey": null
+              },
               (v4/*: any*/),
               (v2/*: any*/)
             ],
@@ -335,7 +342,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e9163f82e1e7137662f04669267778fd",
+    "cacheID": "cd243158556462a9fcc53ff3fb1a4c50",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -423,13 +430,14 @@ return {
         },
         "saleArtwork.sale.id": (v7/*: any*/),
         "saleArtwork.sale.isLiveOpen": (v9/*: any*/),
+        "saleArtwork.sale.isLiveOpenHappened": (v9/*: any*/),
         "saleArtwork.sale.slug": (v7/*: any*/),
         "saleArtwork.slug": (v7/*: any*/)
       }
     },
     "name": "MyBidsBidItemTestQuery",
     "operationKind": "query",
-    "text": "query MyBidsBidItemTestQuery {\n  saleArtwork(id: \"foo\") {\n    ...MyBidsBidItem_saleArtwork\n    id\n  }\n}\n\nfragment MyBidsBidItem_saleArtwork on SaleArtwork {\n  artwork {\n    artistNames\n    image {\n      cropped(width: 55, height: 55) {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n    collectorSignals {\n      auction {\n        bidCount\n        lotWatcherCount\n      }\n    }\n    id\n  }\n  estimate\n  currentBid {\n    display\n  }\n  internalID\n  isHighestBidder\n  isWatching\n  lotState {\n    bidCount\n    sellingPrice {\n      display\n    }\n  }\n  lotLabel\n  slug\n  sale {\n    isLiveOpen\n    slug\n    id\n  }\n}\n"
+    "text": "query MyBidsBidItemTestQuery {\n  saleArtwork(id: \"foo\") {\n    ...MyBidsBidItem_saleArtwork\n    id\n  }\n}\n\nfragment MyBidsBidItem_saleArtwork on SaleArtwork {\n  artwork {\n    artistNames\n    image {\n      cropped(width: 55, height: 55) {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n    collectorSignals {\n      auction {\n        bidCount\n        lotWatcherCount\n      }\n    }\n    id\n  }\n  estimate\n  currentBid {\n    display\n  }\n  internalID\n  isHighestBidder\n  isWatching\n  lotState {\n    bidCount\n    sellingPrice {\n      display\n    }\n  }\n  lotLabel\n  slug\n  sale {\n    isLiveOpen\n    isLiveOpenHappened\n    slug\n    id\n  }\n}\n"
   }
 };
 })();

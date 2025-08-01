@@ -8,7 +8,7 @@ export const ClosedAuctionArtwork: ArtworkSidebarCurrentBidInfoTestQuery$rawResp
       internalID: "asdf1234",
       is_with_buyers_premium: false,
       is_closed: true,
-      is_live_open: false,
+      isLiveOpenHappened: false,
     },
     sale_artwork: {
       id: "salearwtork124",
@@ -43,7 +43,7 @@ export const ClosedLotArtwork: ArtworkSidebarCurrentBidInfoTestQuery$rawResponse
       internalID: "asdf1234",
       is_with_buyers_premium: false,
       is_closed: false,
-      is_live_open: false,
+      isLiveOpenHappened: false,
     },
     sale_artwork: {
       id: "salearwtork124",
@@ -78,7 +78,7 @@ export const AuctionPreview: ArtworkSidebarCurrentBidInfoTestQuery$rawResponse["
       internalID: "asdf1234",
       is_with_buyers_premium: false,
       is_closed: false,
-      is_live_open: false,
+      isLiveOpenHappened: false,
     },
     sale_artwork: {
       id: "salearwtork124",
@@ -113,7 +113,7 @@ export const AuctionPreviewNoStartingBid: ArtworkSidebarCurrentBidInfoTestQuery$
       internalID: "asdf1234",
       is_with_buyers_premium: false,
       is_closed: false,
-      is_live_open: false,
+      isLiveOpenHappened: false,
     },
     sale_artwork: {
       id: "salearwtork124",
@@ -146,7 +146,7 @@ export const OpenAuctionNoReserveNoBids: ArtworkSidebarCurrentBidInfoTestQuery$r
       internalID: "asdf1234",
       is_with_buyers_premium: false,
       is_closed: false,
-      is_live_open: false,
+      isLiveOpenHappened: false,
     },
     sale_artwork: {
       id: "salearwtork124",
@@ -181,7 +181,7 @@ export const OpenAuctionNoReserveWithBids: ArtworkSidebarCurrentBidInfoTestQuery
       internalID: "asdf1234",
       is_with_buyers_premium: false,
       is_closed: false,
-      is_live_open: false,
+      isLiveOpenHappened: false,
     },
     sale_artwork: {
       id: "salearwtork124",
@@ -216,7 +216,7 @@ export const OpenAuctionReserveNoBids: ArtworkSidebarCurrentBidInfoTestQuery$raw
       internalID: "asdf1234",
       is_with_buyers_premium: false,
       is_closed: false,
-      is_live_open: false,
+      isLiveOpenHappened: false,
     },
     sale_artwork: {
       id: "salearwtork124",
@@ -250,7 +250,7 @@ export const OpenAuctionReserveNotMetWithBids: ArtworkSidebarCurrentBidInfoTestQ
       id: "salessale",
       internalID: "asdf1234",
       is_closed: false,
-      is_live_open: false,
+      isLiveOpenHappened: false,
       is_with_buyers_premium: false,
     },
     sale_artwork: {
@@ -285,7 +285,7 @@ export const OpenAuctionReserveMetWithBids: ArtworkSidebarCurrentBidInfoTestQuer
       id: "salessale",
       internalID: "asdf1234",
       is_closed: false,
-      is_live_open: false,
+      isLiveOpenHappened: false,
       is_with_buyers_premium: true,
     },
     sale_artwork: {
@@ -366,7 +366,7 @@ export const LiveAuctionInProgress: ArtworkSidebarCurrentBidInfoTestQuery$rawRes
       internalID: "asdf1234",
       is_with_buyers_premium: false,
       is_closed: false,
-      is_live_open: true,
+      isLiveOpenHappened: true,
     },
     sale_artwork: {
       id: "salearwtork124",
