@@ -224,7 +224,9 @@ describe("ExpressCheckoutUI", () => {
       }),
     })
 
-    expect(paymentMethodUpdate.operationName).toBe("useUpdateOrderMutation")
+    expect(paymentMethodUpdate.operationName).toBe(
+      "useOrder2ExpressCheckoutUpdateOrderMutation",
+    )
     expect(paymentMethodUpdate.operationVariables.input).toEqual({
       id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
       paymentMethod: "CREDIT_CARD",
@@ -242,7 +244,7 @@ describe("ExpressCheckoutUI", () => {
     })
 
     expect(shippingAddressUpdate.operationName).toBe(
-      "useUpdateOrderShippingAddressMutation",
+      "useOrder2ExpressCheckoutUpdateOrderShippingAddressMutation",
     )
     expect(shippingAddressUpdate.operationVariables.input).toEqual({
       id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
@@ -270,7 +272,9 @@ describe("ExpressCheckoutUI", () => {
       }),
     })
 
-    expect(orderSubmission.operationName).toBe("useSubmitOrderMutation")
+    expect(orderSubmission.operationName).toBe(
+      "useOrder2ExpressCheckoutSubmitOrderMutation",
+    )
     expect(orderSubmission.operationVariables.input).toEqual({
       id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
       confirmationToken: "ctoken_123",
@@ -311,7 +315,9 @@ describe("ExpressCheckoutUI", () => {
       }),
     })
 
-    expect(paymentMethodUpdate.operationName).toBe("useUpdateOrderMutation")
+    expect(paymentMethodUpdate.operationName).toBe(
+      "useOrder2ExpressCheckoutUpdateOrderMutation",
+    )
     expect(paymentMethodUpdate.operationVariables.input).toEqual({
       id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
       paymentMethod: "CREDIT_CARD",
@@ -327,7 +333,9 @@ describe("ExpressCheckoutUI", () => {
           },
         }),
       })
-    expect(operationName).toBe("useUpdateOrderShippingAddressMutation")
+    expect(operationName).toBe(
+      "useOrder2ExpressCheckoutUpdateOrderShippingAddressMutation",
+    )
     expect(operationVariables.input).toEqual({
       id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
       buyerPhoneNumber: "1234567890",
@@ -368,7 +376,9 @@ describe("ExpressCheckoutUI", () => {
         },
       }),
     })
-    expect(mutation.operationName).toBe("useSubmitOrderMutation")
+    expect(mutation.operationName).toBe(
+      "useOrder2ExpressCheckoutSubmitOrderMutation",
+    )
     expect(mutation.operationVariables.input).toEqual({
       id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
       confirmationToken: "ctoken_123",
@@ -636,10 +646,10 @@ describe("ExpressCheckoutUI", () => {
     })
 
     expect(unsetPaymentMutation.operationName).toBe(
-      "useUnsetOrderPaymentMethodMutation",
+      "useOrder2ExpressCheckoutUnsetOrderPaymentMethodMutation",
     )
     expect(unsetFulfillmentMutation.operationName).toBe(
-      "useUnsetOrderFulfillmentOptionMutation",
+      "useOrder2ExpressCheckoutUnsetOrderFulfillmentOptionMutation",
     )
 
     expect(unsetPaymentMutation.operationVariables.input).toEqual({

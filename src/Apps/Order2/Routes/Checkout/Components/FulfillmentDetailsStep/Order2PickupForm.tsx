@@ -9,8 +9,8 @@ import {
 } from "@artsy/palette"
 import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
-import { useSetOrderFulfillmentOptionMutation } from "Apps/Order2/Routes/Checkout/Mutations/useSetOrderFulfillmentOptionMutation"
-import { useSetOrderPickupDetailsMutation } from "Apps/Order2/Routes/Checkout/Mutations/useSetOrderPickupDetailsMutation"
+import { useOrder2SetOrderFulfillmentOptionMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderFulfillmentOptionMutation"
+import { useOrder2SetOrderPickupDetailsMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderPickupDetailsMutation"
 import { richPhoneValidators } from "Components/Address/utils"
 import { countries as phoneCountryOptions } from "Utils/countries"
 import createLogger from "Utils/logger"
@@ -45,8 +45,8 @@ export const Order2PickupForm: React.FC<Order2PickupFormProps> = ({
     option => option.type === "PICKUP",
   )
 
-  const setOrderPickupDetails = useSetOrderPickupDetailsMutation()
-  const setOrderFulfillmentOption = useSetOrderFulfillmentOptionMutation()
+  const setOrderPickupDetails = useOrder2SetOrderPickupDetailsMutation()
+  const setOrderFulfillmentOption = useOrder2SetOrderFulfillmentOptionMutation()
 
   const handleSubmit = useCallback(
     async (

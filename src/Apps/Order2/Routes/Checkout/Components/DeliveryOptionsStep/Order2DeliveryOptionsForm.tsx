@@ -6,7 +6,7 @@ import {
   deliveryOptionTimeEstimate,
 } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/utils"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
-import { useOrder2SetFulfillmentOptionMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetFulfillmentOptionMutation"
+import { useOrder2SetOrderFulfillmentOptionMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderFulfillmentOptionMutation"
 import { BUYER_GUARANTEE_URL } from "Apps/Order2/constants"
 import { RouterLink } from "System/Components/RouterLink"
 import type {
@@ -33,7 +33,8 @@ export const Order2DeliveryOptionsForm: React.FC<
 > = ({ order }) => {
   const orderData = useFragment(FRAGMENT, order)
   const { checkoutTracking, setDeliveryOptionComplete } = useCheckoutContext()
-  const setFulfillmentOptionMutation = useOrder2SetFulfillmentOptionMutation()
+  const setFulfillmentOptionMutation =
+    useOrder2SetOrderFulfillmentOptionMutation()
 
   const { fulfillmentOptions } = orderData
   const deliveryOptions = fulfillmentOptions.filter(

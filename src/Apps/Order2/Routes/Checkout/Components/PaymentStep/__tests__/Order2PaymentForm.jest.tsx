@@ -95,9 +95,9 @@ const mockCreateBankDebitSetupForOrder = {
 }
 
 jest.mock(
-  "Apps/Order/Components/ExpressCheckout/Mutations/useUpdateOrderMutation",
+  "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderPaymentMutation",
   () => ({
-    useUpdateOrderMutation: () => mockUpdateOrderMutation,
+    useOrder2SetOrderPaymentMutation: () => mockUpdateOrderMutation,
   }),
 )
 
