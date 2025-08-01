@@ -30,6 +30,7 @@ import type { ArtistAuctionResults_artist$data } from "__generated__/ArtistAucti
 import { isEqual } from "lodash"
 import type * as React from "react"
 import { useContext, useState } from "react"
+import { Meta, Title } from "react-head"
 import {
   type RelayRefetchProp,
   createRefetchContainer,
@@ -221,9 +222,15 @@ const AuctionResultsContainer: React.FC<
     )
   }
 
+  const { title, description } = artist.meta
+
   if (!artist.statuses?.auctionLots) {
     return (
       <>
+        <Title>{title}</Title>
+        <Meta name="title" content={title} />
+        <Meta name="description" content={description} />
+
         <Spacer y={[2, 0]} />
 
         <ArtistAuctionResultsEmptyState />
@@ -233,6 +240,10 @@ const AuctionResultsContainer: React.FC<
 
   return (
     <>
+      <Title>{title}</Title>
+      <Meta name="title" content={title} />
+      <Meta name="description" content={description} />
+
       <Jump id="marketSignalsTop" />
 
       <Spacer y={[2, 0]} />
