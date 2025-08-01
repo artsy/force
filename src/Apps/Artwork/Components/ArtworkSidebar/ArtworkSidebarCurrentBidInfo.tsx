@@ -60,8 +60,8 @@ export const ArtworkSidebarCurrentBidInfo: React.FC<
     },
   })
 
-  // We do not have reliable Bid info for artworks in Live sales in progress
-  if (artwork.sale?.is_live_open) {
+  // We do not have reliable Bid info for works in Live sales after sale start
+  if (artwork.sale?.isLiveOpenHappened) {
     return null
   }
 
@@ -89,12 +89,12 @@ export const ArtworkSidebarCurrentBidInfo: React.FC<
   let reserveMessage = artwork.sale_artwork.reserve_message
 
   if (bidsPresent) {
-    bidTextParts.push(bidsCount === 1 ? "1 bid" : bidsCount + " bids")
+    bidTextParts.push(bidsCount === 1 ? "1 bid" : `${bidsCount} bids`)
     if (reserveMessage) reserveMessage = reserveMessage.toLocaleLowerCase()
   }
 
   if (reserveMessage) {
-    reserveMessage = reserveMessage + "."
+    reserveMessage = `${reserveMessage}.`
     bidTextParts.push(reserveMessage)
   }
 
@@ -135,9 +135,13 @@ export const ArtworkSidebarCurrentBidInfo: React.FC<
           {myBidPresent && (
             <Box pt={0.5}>
               {myBidWinning ? (
-                <CheckmarkStrokeIcon fill="green100" title="Winning Bid" />
+                <CheckmarkStrokeIcon
+                  fill="green100"
+                  title="Winning Bid"
+                  mt={0.5}
+                />
               ) : (
-                <CloseStrokeIcon fill="red100" title="Losing Bid" />
+                <CloseStrokeIcon fill="red100" title="Losing Bid" mt={0.5} />
               )}
             </Box>
           )}
@@ -197,7 +201,7 @@ export const ArtworkSidebarCurrentBidInfoFragmentContainer =
       fragment ArtworkSidebarCurrentBidInfo_artwork on Artwork {
         sale {
           is_closed: isClosed
-          is_live_open: isLiveOpen
+          isLiveOpenHappened
           internalID
           is_with_buyers_premium: isWithBuyersPremium
         }
