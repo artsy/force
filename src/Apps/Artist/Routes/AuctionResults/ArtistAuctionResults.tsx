@@ -30,7 +30,6 @@ import type { ArtistAuctionResults_artist$data } from "__generated__/ArtistAucti
 import { isEqual } from "lodash"
 import type * as React from "react"
 import { useContext, useState } from "react"
-import { PaginatedMetaTags } from "Components/PaginatedMetaTags"
 import {
   type RelayRefetchProp,
   createRefetchContainer,
@@ -227,8 +226,6 @@ const AuctionResultsContainer: React.FC<
   if (!artist.statuses?.auctionLots) {
     return (
       <>
-        <PaginatedMetaTags title={title} description={description} />
-
         <Spacer y={[2, 0]} />
 
         <ArtistAuctionResultsEmptyState />
@@ -238,8 +235,6 @@ const AuctionResultsContainer: React.FC<
 
   return (
     <>
-      <PaginatedMetaTags title={title} description={description} />
-
       <Jump id="marketSignalsTop" />
 
       <Spacer y={[2, 0]} />
