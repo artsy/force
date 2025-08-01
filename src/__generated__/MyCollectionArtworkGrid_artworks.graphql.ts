@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3a52d842486ab6c060159abbfc890368>>
+ * @generated SignedSource<<d2c8690e99d86b215d7981ea8572b8f8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,6 @@
 
 import { ReaderFragment } from 'relay-runtime';
 export type ArtistTargetSupplyPriority = "FALSE" | "TRUE" | "%future added value";
-export type ArtworkConsignmentSubmissionState = "APPROVED" | "CLOSED" | "DRAFT" | "HOLD" | "PUBLISHED" | "REJECTED" | "RESUBMITTED" | "SUBMITTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type MyCollectionArtworkGrid_artworks$data = {
   readonly edges: ReadonlyArray<{
@@ -19,9 +18,6 @@ export type MyCollectionArtworkGrid_artworks$data = {
         readonly targetSupply: {
           readonly priority: ArtistTargetSupplyPriority | null | undefined;
         };
-      } | null | undefined;
-      readonly consignmentSubmission: {
-        readonly state: ArtworkConsignmentSubmissionState;
       } | null | undefined;
       readonly href: string | null | undefined;
       readonly id: string;
@@ -158,24 +154,6 @@ return {
               "storageKey": "artist(shallow:true)"
             },
             {
-              "alias": null,
-              "args": null,
-              "concreteType": "ArtworkConsignmentSubmission",
-              "kind": "LinkedField",
-              "name": "consignmentSubmission",
-              "plural": false,
-              "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "state",
-                  "storageKey": null
-                }
-              ],
-              "storageKey": null
-            },
-            {
               "args": (v0/*: any*/),
               "kind": "FragmentSpread",
               "name": "GridItem_artwork"
@@ -197,6 +175,6 @@ return {
 };
 })();
 
-(node as any).hash = "fded4aabad6f71c55dbfcb47a2c55c9f";
+(node as any).hash = "ea2c48b3c5b3b81ad3fbde9a19d2cbbf";
 
 export default node;

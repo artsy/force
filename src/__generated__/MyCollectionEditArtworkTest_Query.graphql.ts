@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f13d94f04987fba4299ace90864dae65>>
+ * @generated SignedSource<<0ebf701ae8f14fc9976ac81927eed505>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -221,24 +221,6 @@ return {
               (v6/*: any*/)
             ],
             "storageKey": "artist(shallow:true)"
-          },
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "ArtworkConsignmentSubmission",
-            "kind": "LinkedField",
-            "name": "consignmentSubmission",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "inProgress",
-                "storageKey": null
-              }
-            ],
-            "storageKey": null
           },
           {
             "alias": null,
@@ -479,12 +461,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "4af954009f838b127b6ff33a3b614d15",
+    "cacheID": "fcc1eee030fdbb7579f09e46ec6faa7a",
     "id": null,
     "metadata": {},
     "name": "MyCollectionEditArtworkTest_Query",
     "operationKind": "query",
-    "text": "query MyCollectionEditArtworkTest_Query(\n  $slug: String!\n) {\n  artwork(id: $slug) {\n    ...MyCollectionEditArtwork_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkFormMain_artwork on Artwork {\n  internalID\n  slug\n}\n\nfragment MyCollectionEditArtwork_artwork on Artwork {\n  artist(shallow: true) {\n    internalID\n    initials\n    name\n    formattedNationalityAndBirthday\n    targetSupply {\n      isP1\n    }\n    isPersonalArtist\n    image {\n      cropped(width: 44, height: 44) {\n        height\n        src\n        srcSet\n        width\n      }\n    }\n    id\n  }\n  consignmentSubmission {\n    inProgress\n  }\n  artistNames\n  category\n  pricePaid {\n    display\n    minor\n    currencyCode\n  }\n  date\n  depth\n  dimensions {\n    in\n    cm\n  }\n  editionSize\n  editionNumber\n  height\n  attributionClass {\n    name\n    id\n  }\n  id\n  images {\n    internalID\n    isDefault\n    imageURL\n    width\n    height\n  }\n  internalID\n  isEdition\n  medium\n  metric\n  provenance\n  slug\n  title\n  width\n  confidentialNotes\n  collectorLocation {\n    city\n    state\n    country\n    countryCode\n    id\n  }\n  ...MyCollectionArtworkFormMain_artwork\n}\n"
+    "text": "query MyCollectionEditArtworkTest_Query(\n  $slug: String!\n) {\n  artwork(id: $slug) {\n    ...MyCollectionEditArtwork_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkFormMain_artwork on Artwork {\n  internalID\n  slug\n}\n\nfragment MyCollectionEditArtwork_artwork on Artwork {\n  artist(shallow: true) {\n    internalID\n    initials\n    name\n    formattedNationalityAndBirthday\n    targetSupply {\n      isP1\n    }\n    isPersonalArtist\n    image {\n      cropped(width: 44, height: 44) {\n        height\n        src\n        srcSet\n        width\n      }\n    }\n    id\n  }\n  artistNames\n  category\n  pricePaid {\n    display\n    minor\n    currencyCode\n  }\n  date\n  depth\n  dimensions {\n    in\n    cm\n  }\n  editionSize\n  editionNumber\n  height\n  attributionClass {\n    name\n    id\n  }\n  id\n  images {\n    internalID\n    isDefault\n    imageURL\n    width\n    height\n  }\n  internalID\n  isEdition\n  medium\n  metric\n  provenance\n  slug\n  title\n  width\n  confidentialNotes\n  collectorLocation {\n    city\n    state\n    country\n    countryCode\n    id\n  }\n  ...MyCollectionArtworkFormMain_artwork\n}\n"
   }
 };
 })();

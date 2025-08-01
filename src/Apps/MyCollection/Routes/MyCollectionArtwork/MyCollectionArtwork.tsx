@@ -101,16 +101,9 @@ export const MyCollectionArtworkFragmentContainer = createFragmentContainer(
         comparables: comparableAuctionResults {
           totalCount
         }
-        hasPriceEstimateRequest
         hasMarketPriceInsights
-        submissionId
         internalID
         slug
-        consignmentSubmission {
-          state
-          internalID
-        }
-        submissionId
         artist(shallow: true) {
           slug
           targetSupply {

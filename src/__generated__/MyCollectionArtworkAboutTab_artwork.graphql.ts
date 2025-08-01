@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b5c6e237b34b5f9f054c2fb65069305b>>
+ * @generated SignedSource<<9027237fe1a560345385561eda07744a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,10 +18,6 @@ export type MyCollectionArtworkAboutTab_artwork$data = {
       readonly priority: ArtistTargetSupplyPriority | null | undefined;
     };
   } | null | undefined;
-  readonly consignmentSubmission: {
-    readonly internalID: string | null | undefined;
-  } | null | undefined;
-  readonly hasPriceEstimateRequest: boolean | null | undefined;
   readonly internalID: string;
   readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkDetails_artwork">;
   readonly " $fragmentType": "MyCollectionArtworkAboutTab_artwork";
@@ -31,15 +27,7 @@ export type MyCollectionArtworkAboutTab_artwork$key = {
   readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkAboutTab_artwork">;
 };
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "internalID",
-  "storageKey": null
-};
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -95,29 +83,15 @@ return {
     {
       "alias": null,
       "args": null,
-      "concreteType": "ArtworkConsignmentSubmission",
-      "kind": "LinkedField",
-      "name": "consignmentSubmission",
-      "plural": false,
-      "selections": [
-        (v0/*: any*/)
-      ],
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
       "kind": "ScalarField",
-      "name": "hasPriceEstimateRequest",
+      "name": "internalID",
       "storageKey": null
-    },
-    (v0/*: any*/)
+    }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
-})();
 
-(node as any).hash = "c75bd82cf83b0a8c4c7c7f02f7e9f8d8";
+(node as any).hash = "25c1bb462770d91e42a8ed7b8df69b23";
 
 export default node;

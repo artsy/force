@@ -154,9 +154,6 @@ export const MyCollectionEditArtworkFragmentContainer = createFragmentContainer(
             }
           }
         }
-        consignmentSubmission {
-          inProgress
-        }
         artistNames
         category
         pricePaid {

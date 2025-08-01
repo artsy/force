@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e93f4c78f13ccf07956642973d0b6201>>
+ * @generated SignedSource<<f7103c8729730d22f2455af2f6c2b951>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -41,9 +41,6 @@ export type MyCollectionEditArtwork_artwork$data = {
     readonly state: string | null | undefined;
   } | null | undefined;
   readonly confidentialNotes: string | null | undefined;
-  readonly consignmentSubmission: {
-    readonly inProgress: boolean | null | undefined;
-  } | null | undefined;
   readonly date: string | null | undefined;
   readonly depth: string | null | undefined;
   readonly dimensions: {
@@ -223,24 +220,6 @@ return {
         }
       ],
       "storageKey": "artist(shallow:true)"
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "ArtworkConsignmentSubmission",
-      "kind": "LinkedField",
-      "name": "consignmentSubmission",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "inProgress",
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
     },
     {
       "alias": null,
@@ -490,6 +469,6 @@ return {
 };
 })();
 
-(node as any).hash = "3650fa1235e00c7c57a37daf63cebef3";
+(node as any).hash = "8bb4a89b9881fd0e114f83c472a70b66";
 
 export default node;
