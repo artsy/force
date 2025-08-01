@@ -221,8 +221,6 @@ const AuctionResultsContainer: React.FC<
     )
   }
 
-  const { title, description } = artist.meta
-
   if (!artist.statuses?.auctionLots) {
     return (
       <>
