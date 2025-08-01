@@ -1,6 +1,8 @@
 import { ContextModule } from "@artsy/cohesion"
 import { Box, Spacer } from "@artsy/palette"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { getENV } from "Utils/getENV"
+import type { ArtworkImageBrowserQueryRendererQuery } from "__generated__/ArtworkImageBrowserQueryRendererQuery.graphql"
 import type { ArtworkImageBrowser_artwork$data } from "__generated__/ArtworkImageBrowser_artwork.graphql"
 import { scale } from "proportional-scale"
 import type * as React from "react"
@@ -156,3 +158,34 @@ export const ArtworkImageBrowserFragmentContainer = createFragmentContainer(
     `,
   },
 )
+
+export const ArtworkImageBrowserQueryRenderer = ({
+  artworkID,
+  isMyCollectionArtwork,
+}) => {
+  return (
+    <SystemQueryRenderer<ArtworkImageBrowserQueryRendererQuery>
+      query={graphql`
+        query ArtworkImageBrowserQueryRendererQuery($artworkID: String!)
+        @cacheable {
+          artwork(id: $artworkID) {
+            ...ArtworkImageBrowser_artwork
+          }
+        }
+      `}
+      variables={{ artworkID }}
+      render={({ props }) => {
+        if (props?.artwork) {
+          return (
+            <ArtworkImageBrowserFragmentContainer
+              artwork={props.artwork}
+              isMyCollectionArtwork={isMyCollectionArtwork}
+            />
+          )
+        }
+
+        return null
+      }}
+    />
+  )
+}
