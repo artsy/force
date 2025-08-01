@@ -180,6 +180,7 @@ describe("ExpressCheckoutUI", () => {
       paymentMethods: {
         applePay: "always",
         googlePay: "always",
+        link: "never",
       },
       buttonType: {
         googlePay: "plain",
