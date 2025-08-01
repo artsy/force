@@ -1,11 +1,11 @@
 import { useMutation } from "Utils/Hooks/useMutation"
-import type { useSetFulfillmentOptionMutation as useSetFulfillmentOptionMutationType } from "__generated__/useSetFulfillmentOptionMutation.graphql"
+import type { useOrder2ExpressCheckoutSetFulfillmentOptionMutation as useOrder2ExpressCheckoutSetFulfillmentOptionMutationType } from "__generated__/useOrder2ExpressCheckoutSetFulfillmentOptionMutation.graphql"
 import { graphql } from "react-relay"
 
-export const useSetFulfillmentOptionMutation = () => {
-  return useMutation<useSetFulfillmentOptionMutationType>({
+export const useOrder2ExpressCheckoutSetFulfillmentOptionMutation = () => {
+  return useMutation<useOrder2ExpressCheckoutSetFulfillmentOptionMutationType>({
     mutation: graphql`
-      mutation useSetFulfillmentOptionMutation(
+      mutation useOrder2ExpressCheckoutSetFulfillmentOptionMutation(
         $input: setOrderFulfillmentOptionInput!
       ) {
         setOrderFulfillmentOption(input: $input) {
@@ -13,7 +13,7 @@ export const useSetFulfillmentOptionMutation = () => {
             __typename
             ... on OrderMutationSuccess {
               order {
-                internalID
+                ...Order2ExpressCheckoutUI_order
                 fulfillmentOptions {
                   amount {
                     minor
@@ -35,7 +35,6 @@ export const useSetFulfillmentOptionMutation = () => {
                   minor
                 }
                 availableShippingCountries
-                ...ExpressCheckoutUI_order
               }
             }
             ... on OrderMutationError {

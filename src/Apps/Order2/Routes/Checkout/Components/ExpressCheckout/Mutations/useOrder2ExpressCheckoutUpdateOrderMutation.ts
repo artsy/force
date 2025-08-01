@@ -1,25 +1,27 @@
 import { useMutation } from "Utils/Hooks/useMutation"
-import type { useSetFulfillmentOptionMutation as useSetFulfillmentOptionMutationType } from "__generated__/useSetFulfillmentOptionMutation.graphql"
+import type { useOrder2ExpressCheckoutUpdateOrderMutation as useOrder2ExpressCheckoutUpdateOrderMutationType } from "__generated__/useOrder2ExpressCheckoutUpdateOrderMutation.graphql"
 import { graphql } from "react-relay"
 
-export const useSetFulfillmentOptionMutation = () => {
-  return useMutation<useSetFulfillmentOptionMutationType>({
+export const useOrder2ExpressCheckoutUpdateOrderMutation = () => {
+  return useMutation<useOrder2ExpressCheckoutUpdateOrderMutationType>({
     mutation: graphql`
-      mutation useSetFulfillmentOptionMutation(
-        $input: setOrderFulfillmentOptionInput!
+      mutation useOrder2ExpressCheckoutUpdateOrderMutation(
+        $input: updateOrderInput!
       ) {
-        setOrderFulfillmentOption(input: $input) {
+        updateOrder(input: $input) {
           orderOrError {
             __typename
             ... on OrderMutationSuccess {
               order {
+                ...Order2ExpressCheckoutUI_order
                 internalID
                 fulfillmentOptions {
+                  type
                   amount {
                     minor
+                    currencyCode
                   }
                   selected
-                  type
                 }
                 buyerTotal {
                   minor
@@ -35,7 +37,7 @@ export const useSetFulfillmentOptionMutation = () => {
                   minor
                 }
                 availableShippingCountries
-                ...ExpressCheckoutUI_order
+                stripeConfirmationToken
               }
             }
             ... on OrderMutationError {
