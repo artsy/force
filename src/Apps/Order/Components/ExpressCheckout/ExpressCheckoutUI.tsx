@@ -104,6 +104,7 @@ export const ExpressCheckoutUI = ({
     paymentMethods: {
       applePay: "always",
       googlePay: "always",
+      link: "never",
     },
     layout: {
       overflow: "never",
