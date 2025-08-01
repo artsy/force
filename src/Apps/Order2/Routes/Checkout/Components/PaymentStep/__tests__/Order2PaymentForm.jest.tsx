@@ -66,6 +66,17 @@ jest.mock("@stripe/react-stripe-js", () => {
   }
 })
 
+// Mock fetchQuery for the confirmation token query
+const mockFetchQuery = jest.fn()
+
+jest.mock("react-relay", () => {
+  const originalModule = jest.requireActual("react-relay")
+  return {
+    ...originalModule,
+    fetchQuery: (...args) => mockFetchQuery(...args),
+  }
+})
+
 const mockCheckoutContext = {
   setConfirmationToken: jest.fn(),
   checkoutTracking: {
@@ -112,6 +123,22 @@ beforeEach(() => {
   jest.clearAllMocks()
   ;(useTracking as jest.Mock).mockImplementation(() => ({
     trackEvent: jest.fn(),
+  }))
+
+  // Set up default mock response for confirmation token query
+  mockFetchQuery.mockImplementation(() => ({
+    toPromise: () =>
+      Promise.resolve({
+        me: {
+          confirmationToken: {
+            paymentMethodPreview: {
+              __typename: "Card",
+              displayBrand: "Visa",
+              last4: "1234",
+            },
+          },
+        },
+      }),
   }))
 })
 
@@ -322,21 +349,116 @@ describe("Order2PaymentForm", () => {
      *
      * Credit Card:
      * 1. elements.submit() -> createConfirmationToken()
-     * 2. Fetch confirmation token details from Gravity
+     * 2. Fetch confirmation token details from Exchange
      * 3. updateOrderMutation with CREDIT_CARD payment method
      * 4. setConfirmationToken with saveCreditCard option
      *
      * ACH (US Bank Account):
      * 1. elements.submit() -> createConfirmationToken()
-     * 2. createBankDebitSetupForOrder mutation
-     * 3. updateOrderMutation with US_BANK_ACCOUNT payment method
-     * 4. setConfirmationToken without saveCreditCard option
+     * 2. Fetch confirmation token details from Exchange
+     * 3. createBankDebitSetupForOrder mutation
+     * 4. updateOrderMutation with US_BANK_ACCOUNT payment method
+     * 5. setConfirmationToken without saveCreditCard option
      *
      * Saved Credit Card:
      * 1. No Stripe interaction needed
      * 2. setPaymentMutation with selected card ID
      * 3. setSavedCreditCard in context
      */
+
+    it("successfully submits a credit card order", async () => {
+      renderWithRelay({
+        Me: () => ({
+          ...baseMeProps,
+        }),
+      })
+
+      await waitFor(() => {
+        expect(screen.getByTestId("payment-element")).toBeInTheDocument()
+      })
+
+      await userEvent.click(screen.getByTestId("mock-credit-card"))
+
+      mockElements.submit.mockResolvedValueOnce({ error: null })
+      mockStripe.createConfirmationToken.mockResolvedValueOnce({
+        error: null,
+        confirmationToken: {
+          id: "credit-card-confirmation-token-id",
+        },
+      })
+
+      // Mock the confirmation token query response for credit card
+      mockFetchQuery.mockImplementationOnce(() => ({
+        toPromise: () =>
+          Promise.resolve({
+            me: {
+              confirmationToken: {
+                paymentMethodPreview: {
+                  __typename: "Card",
+                  displayBrand: "Visa",
+                  last4: "1234",
+                },
+              },
+            },
+          }),
+      }))
+
+      mockUpdateOrderMutation.submitMutation.mockResolvedValueOnce({
+        updateOrder: {
+          orderOrError: {
+            __typename: "OrderMutationSuccess",
+            order: {
+              ...baseMeProps,
+              paymentMethod: "CREDIT_CARD",
+              stripeConfirmationToken: "credit-card-confirmation-token-id",
+            },
+          },
+        },
+      })
+
+      await userEvent.click(screen.getByText("Continue to Review"))
+
+      expect(mockElements.submit).toHaveBeenCalled()
+      expect(mockStripe.createConfirmationToken).toHaveBeenCalledWith({
+        elements: mockElements,
+      })
+
+      expect(
+        mockCheckoutContext.checkoutTracking.clickedOrderProgression,
+      ).toHaveBeenCalledWith("ordersPayment")
+
+      // Expect the confirmation token query to be called
+      await waitFor(() => {
+        expect(mockFetchQuery).toHaveBeenCalledWith(
+          expect.anything(), // environment
+          expect.anything(), // graphql query
+          { id: "credit-card-confirmation-token-id" },
+          { fetchPolicy: "store-or-network" },
+        )
+      })
+
+      expect(mockUpdateOrderMutation.submitMutation).toHaveBeenCalledWith({
+        variables: {
+          input: {
+            id: "order-id",
+            paymentMethod: "CREDIT_CARD",
+            stripeConfirmationToken: "credit-card-confirmation-token-id",
+          },
+        },
+      })
+
+      expect(mockCheckoutContext.setConfirmationToken).toHaveBeenCalledWith({
+        confirmationToken: {
+          id: "credit-card-confirmation-token-id",
+          paymentMethodPreview: {
+            __typename: "Card",
+            displayBrand: "Visa",
+            last4: "1234",
+          },
+        },
+        saveCreditCard: true,
+      })
+    })
     it("successfully submits an ACH order", async () => {
       renderWithRelay({
         Me: () => ({
@@ -357,6 +479,22 @@ describe("Order2PaymentForm", () => {
           id: "ach-confirmation-token-id",
         },
       })
+
+      // Mock the confirmation token query response for ACH
+      mockFetchQuery.mockImplementationOnce(() => ({
+        toPromise: () =>
+          Promise.resolve({
+            me: {
+              confirmationToken: {
+                paymentMethodPreview: {
+                  __typename: "USBankAccount",
+                  bankName: "Test Bank",
+                  last4: "5678",
+                },
+              },
+            },
+          }),
+      }))
 
       mockCreateBankDebitSetupForOrder.submitMutation.mockResolvedValueOnce({})
       mockUpdateOrderMutation.submitMutation.mockResolvedValueOnce({
@@ -383,6 +521,16 @@ describe("Order2PaymentForm", () => {
         mockCheckoutContext.checkoutTracking.clickedOrderProgression,
       ).toHaveBeenCalledWith("ordersPayment")
 
+      // Expect the confirmation token query to be called
+      await waitFor(() => {
+        expect(mockFetchQuery).toHaveBeenCalledWith(
+          expect.anything(), // environment
+          expect.anything(), // graphql query
+          { id: "ach-confirmation-token-id" },
+          { fetchPolicy: "store-or-network" },
+        )
+      })
+
       await waitFor(() => {
         expect(
           mockCreateBankDebitSetupForOrder.submitMutation,
@@ -402,7 +550,14 @@ describe("Order2PaymentForm", () => {
       })
 
       expect(mockCheckoutContext.setConfirmationToken).toHaveBeenCalledWith({
-        confirmationToken: { id: "ach-confirmation-token-id" },
+        confirmationToken: {
+          id: "ach-confirmation-token-id",
+          paymentMethodPreview: {
+            __typename: "USBankAccount",
+            bankName: "Test Bank",
+            last4: "5678",
+          },
+        },
         saveCreditCard: false,
       })
     })
@@ -429,12 +584,33 @@ describe("Order2PaymentForm", () => {
         },
       })
 
+      // Mock confirmation token query (will be called before bank setup)
+      mockFetchQuery.mockImplementationOnce(() => ({
+        toPromise: () =>
+          Promise.resolve({
+            me: {
+              confirmationToken: {
+                paymentMethodPreview: {
+                  __typename: "USBankAccount",
+                  bankName: "Test Bank",
+                  last4: "5678",
+                },
+              },
+            },
+          }),
+      }))
+
       // Mock bank debit setup failure
       mockCreateBankDebitSetupForOrder.submitMutation.mockRejectedValueOnce(
         new Error("Bank setup failed"),
       )
 
       await userEvent.click(screen.getByText("Continue to Review"))
+
+      await waitFor(() => {
+        // Should call confirmation token query
+        expect(mockFetchQuery).toHaveBeenCalled()
+      })
 
       await waitFor(() => {
         // Should call bank debit setup but it will fail
@@ -472,6 +648,22 @@ describe("Order2PaymentForm", () => {
         },
       })
 
+      // Mock confirmation token query (will be called before mutations)
+      mockFetchQuery.mockImplementationOnce(() => ({
+        toPromise: () =>
+          Promise.resolve({
+            me: {
+              confirmationToken: {
+                paymentMethodPreview: {
+                  __typename: "USBankAccount",
+                  bankName: "Test Bank",
+                  last4: "5678",
+                },
+              },
+            },
+          }),
+      }))
+
       // Mock successful bank debit setup but failed order update
       mockCreateBankDebitSetupForOrder.submitMutation.mockResolvedValueOnce({})
       mockUpdateOrderMutation.submitMutation.mockRejectedValueOnce(
@@ -479,6 +671,11 @@ describe("Order2PaymentForm", () => {
       )
 
       await userEvent.click(screen.getByText("Continue to Review"))
+
+      await waitFor(() => {
+        // Should call confirmation token query
+        expect(mockFetchQuery).toHaveBeenCalled()
+      })
 
       await waitFor(() => {
         // Should call both mutations, second one fails

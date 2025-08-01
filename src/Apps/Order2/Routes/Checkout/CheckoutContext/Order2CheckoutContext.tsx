@@ -38,6 +38,11 @@ type ConfirmationTokenState = {
         readonly last4: string
       }
     | {
+        readonly __typename: "USBankAccount"
+        readonly bankName: string
+        readonly last4: string
+      }
+    | {
         readonly __typename: "%other"
       }
     | null
