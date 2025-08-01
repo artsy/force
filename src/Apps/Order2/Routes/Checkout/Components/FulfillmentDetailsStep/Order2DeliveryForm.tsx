@@ -9,6 +9,7 @@ import { handleError } from "Apps/Order2/Routes/Checkout/Components/FulfillmentD
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 
 import { useOrder2SetOrderDeliveryAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderDeliveryAddressMutation"
+import { useOrder2UnsetOrderFulfillmentOptionMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2UnsetOrderFulfillmentOptionMutation"
 import { getShippableCountries } from "Apps/Order2/Utils/getShippableCountries"
 import {
   AddressFormFields,
@@ -55,6 +56,8 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
     checkoutContext
   const updateShippingAddressMutation =
     useOrder2SetOrderDeliveryAddressMutation()
+  const unsetOrderFulfillmentOption =
+    useOrder2UnsetOrderFulfillmentOptionMutation()
 
   const fulfillmentDetails = orderData.fulfillmentDetails || {
     addressLine1: "",
@@ -101,6 +104,22 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
           ContextModule.ordersFulfillment,
         )
 
+        if (orderData.selectedFulfillmentOption?.type) {
+          // Unset the current fulfillment option if it exists
+          const unsetFulfillmentOptionResult =
+            await unsetOrderFulfillmentOption.submitMutation({
+              variables: {
+                input: {
+                  id: orderData.internalID,
+                },
+              },
+            })
+          validateAndExtractOrderResponse(
+            unsetFulfillmentOptionResult.unsetOrderFulfillmentOption
+              ?.orderOrError,
+          )
+        }
+
         const input = {
           id: orderData.internalID,
           buyerPhoneNumber: values.phoneNumber,
@@ -144,6 +163,8 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
       orderData.internalID,
       updateShippingAddressMutation,
       setFulfillmentDetailsComplete,
+      unsetOrderFulfillmentOption,
+      orderData.selectedFulfillmentOption?.type,
       setCheckoutMode,
     ],
   )
