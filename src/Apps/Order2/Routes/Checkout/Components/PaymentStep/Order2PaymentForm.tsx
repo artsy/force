@@ -407,6 +407,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
             input: {
               id: order.internalID,
               paymentMethod: "CREDIT_CARD",
+              paymentMethodId: selectedCreditCard?.internalID, // TODO: Allow this param
               // Note: paymentMethodId is not supported in updateOrder mutation
               // Saved credit card functionality may need a different approach
             },
