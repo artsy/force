@@ -192,6 +192,8 @@ describe("ExpressCheckoutUI", () => {
         applePay: "always",
         googlePay: "always",
         link: "never",
+        amazonPay: "never",
+        paypal: "never",
       },
       buttonType: {
         googlePay: "plain",
