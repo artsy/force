@@ -9,7 +9,7 @@ const DEFAULT_DESCRIPTION =
 const DEFAULT_IMAGE_URL = "https://files.artsy.net/images/og_image.jpeg"
 const DEFAULT_PATHNAME = "/"
 
-interface MetaTagsProps {
+export interface MetaTagsProps {
   title?: string | null
   /** Optionally override the title for social media */
   socialTitle?: string | null

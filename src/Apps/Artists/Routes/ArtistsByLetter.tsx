@@ -9,7 +9,7 @@ import {
   media,
   space,
 } from "@artsy/palette"
-import { ArtistsByLetterMeta } from "Apps/Artists/Components/ArtistsByLetterMeta"
+import { PaginatedMetaTags } from "Components/PaginatedMetaTags"
 import { ArtistsLetterNav } from "Apps/Artists/Components/ArtistsLetterNav"
 import { LoadingArea } from "Components/LoadingArea"
 import { PaginationFragmentContainer } from "Components/Pagination"
@@ -88,9 +88,12 @@ export const ArtistsByLetter: React.FC<
     })
   }
 
+  const title = `Artists Starting with ${params.letter.toUpperCase()} | Modern and Contemporary Artists`
+  const description = `Research and discover artists starting with ${params.letter.toUpperCase()} on Artsy. Find works for sale, biographies, CVs, and auction results.`
+
   return (
     <>
-      <ArtistsByLetterMeta />
+      <PaginatedMetaTags title={title} description={description} />
 
       <GridColumns mt={4}>
         <Column span={6}>

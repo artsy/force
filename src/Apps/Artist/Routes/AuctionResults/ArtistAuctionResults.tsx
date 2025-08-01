@@ -360,7 +360,6 @@ const AuctionResultsContainer: React.FC<
           </LoadingArea>
 
           <Pagination
-            getHref={() => ""}
             hasNextPage={Boolean(pageInfo?.hasNextPage)}
             pageCursors={artist.auctionResultsConnection?.pageCursors}
             onClick={loadPage}

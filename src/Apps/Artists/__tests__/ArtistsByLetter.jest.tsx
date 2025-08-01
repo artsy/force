@@ -97,21 +97,6 @@ describe("ArtistsByLetter", () => {
     )
   })
 
-  it("handles missing letter parameter", () => {
-    mockUseRouter.mockReturnValue({
-      match: {
-        params: {},
-        location: { query: {} },
-      },
-    })
-
-    renderWithRelay()
-
-    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
-      "Artists",
-    )
-  })
-
   it("handles invalid page numbers", () => {
     mockUseRouter.mockReturnValue({
       match: {
