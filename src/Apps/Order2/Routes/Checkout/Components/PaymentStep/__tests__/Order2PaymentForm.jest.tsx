@@ -66,6 +66,17 @@ jest.mock("@stripe/react-stripe-js", () => {
   }
 })
 
+// Mock fetchQuery for the confirmation token query
+const mockFetchQuery = jest.fn()
+
+jest.mock("react-relay", () => {
+  const originalModule = jest.requireActual("react-relay")
+  return {
+    ...originalModule,
+    fetchQuery: (...args) => mockFetchQuery(...args),
+  }
+})
+
 const mockCheckoutContext = {
   setConfirmationToken: jest.fn(),
   checkoutTracking: {
@@ -108,11 +119,86 @@ jest.mock(
   }),
 )
 
+// Mock response factories
+const createConfirmationTokenResponse = paymentMethodPreview => ({
+  toPromise: () =>
+    Promise.resolve({
+      me: {
+        confirmationToken: {
+          paymentMethodPreview,
+        },
+      },
+    }),
+})
+
+const MOCK_CARD_PREVIEW = {
+  __typename: "Card" as const,
+  displayBrand: "Visa",
+  last4: "1234",
+}
+
+const MOCK_ACH_PREVIEW = {
+  __typename: "USBankAccount" as const,
+  bankName: "Test Bank",
+  last4: "5678",
+}
+
+const MOCK_ORDER_SUCCESS = (paymentMethod: string, tokenId: string) => ({
+  updateOrder: {
+    orderOrError: {
+      __typename: "OrderMutationSuccess",
+      order: {
+        paymentMethod,
+        stripeConfirmationToken: tokenId,
+      },
+    },
+  },
+})
+
+// Test helpers
+const setupStripeSubmission = (tokenId: string) => {
+  mockElements.submit.mockResolvedValueOnce({ error: null })
+  mockStripe.createConfirmationToken.mockResolvedValueOnce({
+    error: null,
+    confirmationToken: { id: tokenId },
+  })
+}
+
+const expectCommonSubmissionFlow = async (tokenId: string) => {
+  expect(mockElements.submit).toHaveBeenCalled()
+  expect(mockStripe.createConfirmationToken).toHaveBeenCalledWith({
+    elements: mockElements,
+  })
+  expect(
+    mockCheckoutContext.checkoutTracking.clickedOrderProgression,
+  ).toHaveBeenCalledWith("ordersPayment")
+
+  await waitFor(() => {
+    expect(mockFetchQuery).toHaveBeenCalledWith(
+      expect.anything(),
+      expect.anything(),
+      { id: tokenId },
+      { fetchPolicy: "store-or-network" },
+    )
+  })
+}
+
+const waitForPaymentElement = async () => {
+  await waitFor(() => {
+    expect(screen.getByTestId("payment-element")).toBeInTheDocument()
+  })
+}
+
 beforeEach(() => {
   jest.clearAllMocks()
   ;(useTracking as jest.Mock).mockImplementation(() => ({
     trackEvent: jest.fn(),
   }))
+
+  // Set up default mock response for confirmation token query
+  mockFetchQuery.mockImplementation(() =>
+    createConfirmationTokenResponse(MOCK_CARD_PREVIEW),
+  )
 })
 
 const { renderWithRelay } = setupTestWrapperTL<Order2PaymentFormTestQuery>({
@@ -152,12 +238,16 @@ describe("Order2PaymentForm", () => {
     },
   }
 
-  it("renders the payment form", async () => {
-    renderWithRelay({
+  const renderPaymentForm = () => {
+    return renderWithRelay({
       Me: () => ({
         ...baseMeProps,
       }),
     })
+  }
+
+  it("renders the payment form", async () => {
+    renderPaymentForm()
 
     await waitFor(() => {
       expect(screen.getByText("Continue to Review")).toBeInTheDocument()
@@ -168,15 +258,8 @@ describe("Order2PaymentForm", () => {
 
   describe("payment method switching behavior", () => {
     it("updates Stripe's captureMethod and setupFutureUsage when selecting credit card", async () => {
-      renderWithRelay({
-        Me: () => ({
-          ...baseMeProps,
-        }),
-      })
-
-      await waitFor(() => {
-        expect(screen.getByTestId("payment-element")).toBeInTheDocument()
-      })
+      renderPaymentForm()
+      await waitForPaymentElement()
 
       // Select credit card
       await userEvent.click(screen.getByTestId("mock-credit-card"))
@@ -198,15 +281,8 @@ describe("Order2PaymentForm", () => {
     })
 
     it("updates Stripe's captureMethod and setupFutureUsage when selecting ACH", async () => {
-      renderWithRelay({
-        Me: () => ({
-          ...baseMeProps,
-        }),
-      })
-
-      await waitFor(() => {
-        expect(screen.getByTestId("payment-element")).toBeInTheDocument()
-      })
+      renderPaymentForm()
+      await waitForPaymentElement()
 
       // Select ACH
       await userEvent.click(screen.getByTestId("mock-ach"))
@@ -219,15 +295,8 @@ describe("Order2PaymentForm", () => {
     })
 
     it("switching from credit card to ACH updates Stripe settings correctly", async () => {
-      renderWithRelay({
-        Me: () => ({
-          ...baseMeProps,
-        }),
-      })
-
-      await waitFor(() => {
-        expect(screen.getByTestId("payment-element")).toBeInTheDocument()
-      })
+      renderPaymentForm()
+      await waitForPaymentElement()
 
       // First select credit card
       await userEvent.click(screen.getByTestId("mock-credit-card"))
@@ -250,15 +319,8 @@ describe("Order2PaymentForm", () => {
     })
 
     it("switching from ACH to credit card updates Stripe settings correctly", async () => {
-      renderWithRelay({
-        Me: () => ({
-          ...baseMeProps,
-        }),
-      })
-
-      await waitFor(() => {
-        expect(screen.getByTestId("payment-element")).toBeInTheDocument()
-      })
+      renderPaymentForm()
+      await waitForPaymentElement()
 
       // First select ACH
       await userEvent.click(screen.getByTestId("mock-ach"))
@@ -322,66 +384,81 @@ describe("Order2PaymentForm", () => {
      *
      * Credit Card:
      * 1. elements.submit() -> createConfirmationToken()
-     * 2. Fetch confirmation token details from Gravity
+     * 2. Fetch confirmation token details from Exchange
      * 3. updateOrderMutation with CREDIT_CARD payment method
      * 4. setConfirmationToken with saveCreditCard option
      *
      * ACH (US Bank Account):
      * 1. elements.submit() -> createConfirmationToken()
-     * 2. createBankDebitSetupForOrder mutation
-     * 3. updateOrderMutation with US_BANK_ACCOUNT payment method
-     * 4. setConfirmationToken without saveCreditCard option
+     * 2. Fetch confirmation token details from Exchange
+     * 3. createBankDebitSetupForOrder mutation
+     * 4. updateOrderMutation with US_BANK_ACCOUNT payment method
+     * 5. setConfirmationToken without saveCreditCard option
      *
      * Saved Credit Card:
      * 1. No Stripe interaction needed
      * 2. setPaymentMutation with selected card ID
      * 3. setSavedCreditCard in context
      */
-    it("successfully submits an ACH order", async () => {
-      renderWithRelay({
-        Me: () => ({
-          ...baseMeProps,
-        }),
-      })
 
-      await waitFor(() => {
-        expect(screen.getByTestId("payment-element")).toBeInTheDocument()
-      })
+    it("successfully submits a credit card order", async () => {
+      const tokenId = "credit-card-confirmation-token-id"
 
-      await userEvent.click(screen.getByTestId("mock-ach"))
+      renderPaymentForm()
+      await waitForPaymentElement()
 
-      mockElements.submit.mockResolvedValueOnce({ error: null })
-      mockStripe.createConfirmationToken.mockResolvedValueOnce({
-        error: null,
-        confirmationToken: {
-          id: "ach-confirmation-token-id",
-        },
-      })
+      await userEvent.click(screen.getByTestId("mock-credit-card"))
 
-      mockCreateBankDebitSetupForOrder.submitMutation.mockResolvedValueOnce({})
-      mockUpdateOrderMutation.submitMutation.mockResolvedValueOnce({
-        updateOrder: {
-          orderOrError: {
-            __typename: "OrderMutationSuccess",
-            order: {
-              ...baseMeProps,
-              paymentMethod: "US_BANK_ACCOUNT",
-              stripeConfirmationToken: "ach-confirmation-token-id",
-            },
+      setupStripeSubmission(tokenId)
+      mockFetchQuery.mockImplementationOnce(() =>
+        createConfirmationTokenResponse(MOCK_CARD_PREVIEW),
+      )
+      mockUpdateOrderMutation.submitMutation.mockResolvedValueOnce(
+        MOCK_ORDER_SUCCESS("CREDIT_CARD", tokenId),
+      )
+
+      await userEvent.click(screen.getByText("Continue to Review"))
+
+      await expectCommonSubmissionFlow(tokenId)
+
+      expect(mockUpdateOrderMutation.submitMutation).toHaveBeenCalledWith({
+        variables: {
+          input: {
+            id: "order-id",
+            paymentMethod: "CREDIT_CARD",
+            stripeConfirmationToken: tokenId,
           },
         },
       })
 
+      expect(mockCheckoutContext.setConfirmationToken).toHaveBeenCalledWith({
+        confirmationToken: {
+          id: tokenId,
+          paymentMethodPreview: MOCK_CARD_PREVIEW,
+        },
+        saveCreditCard: true,
+      })
+    })
+    it("successfully submits an ACH order", async () => {
+      const tokenId = "ach-confirmation-token-id"
+
+      renderPaymentForm()
+      await waitForPaymentElement()
+
+      await userEvent.click(screen.getByTestId("mock-ach"))
+
+      setupStripeSubmission(tokenId)
+      mockFetchQuery.mockImplementationOnce(() =>
+        createConfirmationTokenResponse(MOCK_ACH_PREVIEW),
+      )
+      mockCreateBankDebitSetupForOrder.submitMutation.mockResolvedValueOnce({})
+      mockUpdateOrderMutation.submitMutation.mockResolvedValueOnce(
+        MOCK_ORDER_SUCCESS("US_BANK_ACCOUNT", tokenId),
+      )
+
       await userEvent.click(screen.getByText("Continue to Review"))
 
-      expect(mockElements.submit).toHaveBeenCalled()
-      expect(mockStripe.createConfirmationToken).toHaveBeenCalledWith({
-        elements: mockElements,
-      })
-
-      expect(
-        mockCheckoutContext.checkoutTracking.clickedOrderProgression,
-      ).toHaveBeenCalledWith("ordersPayment")
+      await expectCommonSubmissionFlow(tokenId)
 
       await waitFor(() => {
         expect(
@@ -396,40 +473,32 @@ describe("Order2PaymentForm", () => {
           input: {
             id: "order-id",
             paymentMethod: "US_BANK_ACCOUNT",
-            stripeConfirmationToken: "ach-confirmation-token-id",
+            stripeConfirmationToken: tokenId,
           },
         },
       })
 
       expect(mockCheckoutContext.setConfirmationToken).toHaveBeenCalledWith({
-        confirmationToken: { id: "ach-confirmation-token-id" },
+        confirmationToken: {
+          id: tokenId,
+          paymentMethodPreview: MOCK_ACH_PREVIEW,
+        },
         saveCreditCard: false,
       })
     })
 
     it("handles createBankDebitSetupForOrder error", async () => {
-      renderWithRelay({
-        Me: () => ({
-          ...baseMeProps,
-        }),
-      })
+      const tokenId = "ach-confirmation-token-id"
 
-      await waitFor(() => {
-        expect(screen.getByTestId("payment-element")).toBeInTheDocument()
-      })
+      renderPaymentForm()
+      await waitForPaymentElement()
 
       await userEvent.click(screen.getByTestId("mock-ach"))
 
-      // Mock successful Stripe responses
-      mockElements.submit.mockResolvedValueOnce({ error: null })
-      mockStripe.createConfirmationToken.mockResolvedValueOnce({
-        error: null,
-        confirmationToken: {
-          id: "ach-confirmation-token-id",
-        },
-      })
-
-      // Mock bank debit setup failure
+      setupStripeSubmission(tokenId)
+      mockFetchQuery.mockImplementationOnce(() =>
+        createConfirmationTokenResponse(MOCK_ACH_PREVIEW),
+      )
       mockCreateBankDebitSetupForOrder.submitMutation.mockRejectedValueOnce(
         new Error("Bank setup failed"),
       )
@@ -437,7 +506,10 @@ describe("Order2PaymentForm", () => {
       await userEvent.click(screen.getByText("Continue to Review"))
 
       await waitFor(() => {
-        // Should call bank debit setup but it will fail
+        expect(mockFetchQuery).toHaveBeenCalled()
+      })
+
+      await waitFor(() => {
         expect(
           mockCreateBankDebitSetupForOrder.submitMutation,
         ).toHaveBeenCalled()
@@ -451,28 +523,17 @@ describe("Order2PaymentForm", () => {
     })
 
     it("handles updateOrderMutation error", async () => {
-      renderWithRelay({
-        Me: () => ({
-          ...baseMeProps,
-        }),
-      })
+      const tokenId = "ach-confirmation-token-id"
 
-      await waitFor(() => {
-        expect(screen.getByTestId("payment-element")).toBeInTheDocument()
-      })
+      renderPaymentForm()
+      await waitForPaymentElement()
 
       await userEvent.click(screen.getByTestId("mock-ach"))
 
-      // Mock successful Stripe responses
-      mockElements.submit.mockResolvedValueOnce({ error: null })
-      mockStripe.createConfirmationToken.mockResolvedValueOnce({
-        error: null,
-        confirmationToken: {
-          id: "ach-confirmation-token-id",
-        },
-      })
-
-      // Mock successful bank debit setup but failed order update
+      setupStripeSubmission(tokenId)
+      mockFetchQuery.mockImplementationOnce(() =>
+        createConfirmationTokenResponse(MOCK_ACH_PREVIEW),
+      )
       mockCreateBankDebitSetupForOrder.submitMutation.mockResolvedValueOnce({})
       mockUpdateOrderMutation.submitMutation.mockRejectedValueOnce(
         new Error("Order update failed"),
@@ -481,7 +542,10 @@ describe("Order2PaymentForm", () => {
       await userEvent.click(screen.getByText("Continue to Review"))
 
       await waitFor(() => {
-        // Should call both mutations, second one fails
+        expect(mockFetchQuery).toHaveBeenCalled()
+      })
+
+      await waitFor(() => {
         expect(
           mockCreateBankDebitSetupForOrder.submitMutation,
         ).toHaveBeenCalled()
