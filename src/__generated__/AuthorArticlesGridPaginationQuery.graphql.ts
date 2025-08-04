@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<70249735cc73f76160065ba80ed23c84>>
+ * @generated SignedSource<<348119456ed8e50dc28496471c3abf27>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,69 +10,71 @@
 
 import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type AuthorArticlesGridQuery$variables = {
+export type AuthorArticlesGridPaginationQuery$variables = {
   after?: string | null | undefined;
-  first: number;
+  first?: number | null | undefined;
   id: string;
 };
-export type AuthorArticlesGridQuery$data = {
+export type AuthorArticlesGridPaginationQuery$data = {
   readonly " $fragmentSpreads": FragmentRefs<"AuthorArticlesGrid_query">;
 };
-export type AuthorArticlesGridQuery = {
-  response: AuthorArticlesGridQuery$data;
-  variables: AuthorArticlesGridQuery$variables;
+export type AuthorArticlesGridPaginationQuery = {
+  response: AuthorArticlesGridPaginationQuery$data;
+  variables: AuthorArticlesGridPaginationQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
-var v0 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "after"
-},
+var v0 = [
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "after"
+  },
+  {
+    "defaultValue": 20,
+    "kind": "LocalArgument",
+    "name": "first"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "id"
+  }
+],
 v1 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "first"
-},
-v2 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "id"
-},
-v3 = {
   "kind": "Variable",
   "name": "after",
   "variableName": "after"
 },
-v4 = {
+v2 = {
   "kind": "Variable",
   "name": "first",
   "variableName": "first"
 },
-v5 = {
+v3 = {
   "kind": "Variable",
   "name": "id",
   "variableName": "id"
 },
-v6 = [
-  (v3/*: any*/),
-  (v4/*: any*/)
+v4 = [
+  (v1/*: any*/),
+  (v2/*: any*/)
 ],
-v7 = {
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "src",
   "storageKey": null
 },
-v8 = {
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "srcSet",
   "storageKey": null
 },
-v9 = {
+v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -81,20 +83,16 @@ v9 = {
 };
 return {
   "fragment": {
-    "argumentDefinitions": [
-      (v0/*: any*/),
-      (v1/*: any*/),
-      (v2/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "AuthorArticlesGridQuery",
+    "name": "AuthorArticlesGridPaginationQuery",
     "selections": [
       {
         "args": [
-          (v3/*: any*/),
-          (v4/*: any*/),
-          (v5/*: any*/)
+          (v1/*: any*/),
+          (v2/*: any*/),
+          (v3/*: any*/)
         ],
         "kind": "FragmentSpread",
         "name": "AuthorArticlesGrid_query"
@@ -105,18 +103,14 @@ return {
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [
-      (v2/*: any*/),
-      (v1/*: any*/),
-      (v0/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "AuthorArticlesGridQuery",
+    "name": "AuthorArticlesGridPaginationQuery",
     "selections": [
       {
         "alias": null,
         "args": [
-          (v5/*: any*/)
+          (v3/*: any*/)
         ],
         "concreteType": "Author",
         "kind": "LinkedField",
@@ -125,7 +119,7 @@ return {
         "selections": [
           {
             "alias": null,
-            "args": (v6/*: any*/),
+            "args": (v4/*: any*/),
             "concreteType": "AuthorArticlesConnectionConnection",
             "kind": "LinkedField",
             "name": "articlesConnection",
@@ -236,8 +230,8 @@ return {
                                 "name": "height",
                                 "storageKey": null
                               },
-                              (v7/*: any*/),
-                              (v8/*: any*/)
+                              (v5/*: any*/),
+                              (v6/*: any*/)
                             ],
                             "storageKey": "cropped(height:334,width:445)"
                           },
@@ -260,8 +254,8 @@ return {
                             "name": "cropped",
                             "plural": false,
                             "selections": [
-                              (v7/*: any*/),
-                              (v8/*: any*/)
+                              (v5/*: any*/),
+                              (v6/*: any*/)
                             ],
                             "storageKey": "cropped(height:600,width:600)"
                           }
@@ -275,7 +269,7 @@ return {
                         "name": "internalID",
                         "storageKey": null
                       },
-                      (v9/*: any*/),
+                      (v7/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -326,30 +320,30 @@ return {
           },
           {
             "alias": null,
-            "args": (v6/*: any*/),
+            "args": (v4/*: any*/),
             "filters": null,
             "handle": "connection",
             "key": "AuthorArticlesGrid_articlesConnection",
             "kind": "LinkedHandle",
             "name": "articlesConnection"
           },
-          (v9/*: any*/)
+          (v7/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "a1023e25c4941ea97f5c60c32417fb64",
+    "cacheID": "8955dd31878ed9af902a722739e6e03d",
     "id": null,
     "metadata": {},
-    "name": "AuthorArticlesGridQuery",
+    "name": "AuthorArticlesGridPaginationQuery",
     "operationKind": "query",
-    "text": "query AuthorArticlesGridQuery(\n  $id: String!\n  $first: Int!\n  $after: String\n) {\n  ...AuthorArticlesGrid_query_XKRaI\n}\n\nfragment AuthorArticlesGrid_query_XKRaI on Query {\n  author(id: $id) {\n    articlesConnection(first: $first, after: $after) {\n      edges {\n        node {\n          ...CellArticle_article\n          internalID\n          href\n          vertical\n          thumbnailTitle\n          title\n          byline\n          publishedAt(format: \"MMM D, YYYY\")\n          thumbnailImage {\n            large: cropped(width: 600, height: 600) {\n              src\n              srcSet\n            }\n          }\n          id\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n    id\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  thumbnailTitle\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query AuthorArticlesGridPaginationQuery(\n  $after: String\n  $first: Int = 20\n  $id: String!\n) {\n  ...AuthorArticlesGrid_query_XKRaI\n}\n\nfragment AuthorArticlesGrid_query_XKRaI on Query {\n  author(id: $id) {\n    articlesConnection(first: $first, after: $after) {\n      edges {\n        node {\n          ...CellArticle_article\n          internalID\n          href\n          vertical\n          thumbnailTitle\n          title\n          byline\n          publishedAt(format: \"MMM D, YYYY\")\n          thumbnailImage {\n            large: cropped(width: 600, height: 600) {\n              src\n              srcSet\n            }\n          }\n          id\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n    id\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  thumbnailTitle\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "2d0e5eb46d90ef5f3eda6f0a24f4d111";
+(node as any).hash = "20e73fd64853f4c502aac64d98c31c25";
 
 export default node;
