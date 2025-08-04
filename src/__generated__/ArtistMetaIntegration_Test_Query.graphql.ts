@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<86d90201bd55e58738047bcc3a20cc49>>
+ * @generated SignedSource<<bb8b6b96bd8fec80a28b24c373255523>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,15 +10,15 @@
 
 import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistAppTestQuery$variables = Record<PropertyKey, never>;
-export type ArtistAppTestQuery$data = {
+export type ArtistMetaIntegration_Test_Query$variables = Record<PropertyKey, never>;
+export type ArtistMetaIntegration_Test_Query$data = {
   readonly artist: {
     readonly " $fragmentSpreads": FragmentRefs<"ArtistApp_artist">;
   } | null | undefined;
 };
-export type ArtistAppTestQuery = {
-  response: ArtistAppTestQuery$data;
-  variables: ArtistAppTestQuery$variables;
+export type ArtistMetaIntegration_Test_Query = {
+  response: ArtistMetaIntegration_Test_Query$data;
+  variables: ArtistMetaIntegration_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -26,7 +26,7 @@ var v0 = [
   {
     "kind": "Literal",
     "name": "id",
-    "value": "example"
+    "value": "andy-warhol"
   }
 ],
 v1 = {
@@ -114,7 +114,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "ArtistAppTestQuery",
+    "name": "ArtistMetaIntegration_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -130,7 +130,7 @@ return {
             "name": "ArtistApp_artist"
           }
         ],
-        "storageKey": "artist(id:\"example\")"
+        "storageKey": "artist(id:\"andy-warhol\")"
       }
     ],
     "type": "Query",
@@ -140,7 +140,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "ArtistAppTestQuery",
+    "name": "ArtistMetaIntegration_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -410,12 +410,12 @@ return {
           },
           (v6/*: any*/)
         ],
-        "storageKey": "artist(id:\"example\")"
+        "storageKey": "artist(id:\"andy-warhol\")"
       }
     ]
   },
   "params": {
-    "cacheID": "8519a443dda1607f934e92273155c550",
+    "cacheID": "af9207b1d7e684f77bdb4e740b70494a",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -533,13 +533,13 @@ return {
         "artist.verifiedRepresentatives.partner.profile.id": (v8/*: any*/)
       }
     },
-    "name": "ArtistAppTestQuery",
+    "name": "ArtistMetaIntegration_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistAppTestQuery {\n  artist(id: \"example\") {\n    ...ArtistApp_artist\n    id\n  }\n}\n\nfragment ArtistApp_artist on Artist {\n  ...ArtistHeader_artist\n  internalID\n  slug\n  name\n}\n\nfragment ArtistCareerHighlight_insight on ArtistInsight {\n  label\n  entities\n  description(format: HTML)\n}\n\nfragment ArtistHeader_artist on Artist {\n  internalID\n  slug\n  name\n  formattedNationalityAndBirthday\n  counts {\n    follows\n  }\n  biographyBlurb(format: HTML) {\n    text\n    credit\n  }\n  insights {\n    kind\n    ...ArtistCareerHighlight_insight\n  }\n  verifiedRepresentatives {\n    partner {\n      internalID\n      name\n      href\n      profile {\n        icon {\n          src1x: cropped(width: 30, height: 30) {\n            src\n          }\n          src2x: cropped(width: 60, height: 60) {\n            src\n          }\n        }\n        id\n      }\n      id\n    }\n    id\n  }\n  coverArtwork {\n    title\n    imageTitle\n    href\n    image {\n      src: url(version: [\"larger\", \"larger\"])\n      width\n      height\n    }\n    id\n  }\n}\n"
+    "text": "query ArtistMetaIntegration_Test_Query {\n  artist(id: \"andy-warhol\") {\n    ...ArtistApp_artist\n    id\n  }\n}\n\nfragment ArtistApp_artist on Artist {\n  ...ArtistHeader_artist\n  internalID\n  slug\n  name\n}\n\nfragment ArtistCareerHighlight_insight on ArtistInsight {\n  label\n  entities\n  description(format: HTML)\n}\n\nfragment ArtistHeader_artist on Artist {\n  internalID\n  slug\n  name\n  formattedNationalityAndBirthday\n  counts {\n    follows\n  }\n  biographyBlurb(format: HTML) {\n    text\n    credit\n  }\n  insights {\n    kind\n    ...ArtistCareerHighlight_insight\n  }\n  verifiedRepresentatives {\n    partner {\n      internalID\n      name\n      href\n      profile {\n        icon {\n          src1x: cropped(width: 30, height: 30) {\n            src\n          }\n          src2x: cropped(width: 60, height: 60) {\n            src\n          }\n        }\n        id\n      }\n      id\n    }\n    id\n  }\n  coverArtwork {\n    title\n    imageTitle\n    href\n    image {\n      src: url(version: [\"larger\", \"larger\"])\n      width\n      height\n    }\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "b8a70a61d5c6efbc518d02d4254c50f4";
+(node as any).hash = "8fe72bf0fe07da536dc0e89e4d41518f";
 
 export default node;
