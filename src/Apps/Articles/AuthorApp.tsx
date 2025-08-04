@@ -77,27 +77,33 @@ export const AuthorApp: FC<React.PropsWithChildren<AuthorAppProps>> = ({
                       {author.name}
                     </Text>
 
-                    <Text variant="lg-display" as="h2" color="mono60">
-                      TODO: Need to add author#role
-                    </Text>
+                    {author.role && (
+                      <Text variant="lg-display" as="h2" color="mono60">
+                        {author.role}
+                      </Text>
+                    )}
                   </Stack>
 
                   <Stack gap={0.5}>
-                    <Stack gap={0.5} flexDirection="row" alignItems="center">
-                      <XIcon />
+                    {author.twitterHandle && (
+                      <Stack gap={0.5} flexDirection="row" alignItems="center">
+                        <XIcon />
 
-                      <Text variant="xs" color="mono60">
-                        TODO: Add X
-                      </Text>
-                    </Stack>
+                        <Text variant="xs" color="mono60">
+                          {author.twitterHandle}
+                        </Text>
+                      </Stack>
+                    )}
 
-                    <Stack gap={0.5} flexDirection="row" alignItems="center">
-                      <InstagramIcon />
+                    {author.instagramHandle && (
+                      <Stack gap={0.5} flexDirection="row" alignItems="center">
+                        <InstagramIcon />
 
-                      <Text variant="xs" color="mono60">
-                        TODO: Add Instagram
-                      </Text>
-                    </Stack>
+                        <Text variant="xs" color="mono60">
+                          {author.instagramHandle}
+                        </Text>
+                      </Stack>
+                    )}
                   </Stack>
                 </Stack>
               </Box>
@@ -138,6 +144,9 @@ const FRAGMENT = graphql`
     name
     bio
     initials
+    role
+    twitterHandle
+    instagramHandle
     image {
       cropped(width: 100, height: 100) {
         src
