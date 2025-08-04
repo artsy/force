@@ -6,7 +6,6 @@ import { ArtistRelatedGeneCategoriesQueryRenderer } from "Apps/Artist/Routes/Ove
 import { ArtistSeriesRailQueryRenderer } from "Components/ArtistSeriesRail/ArtistSeriesRail"
 import type { ArtistOverviewRoute_artist$data } from "__generated__/ArtistOverviewRoute_artist.graphql"
 import type * as React from "react"
-import { Meta, Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistCareerHighlightsQueryRenderer } from "./Components/ArtistCareerHighlights"
 import { ArtistCurrentShowsRailQueryRenderer } from "./Components/ArtistCurrentShowsRail"
@@ -19,8 +18,6 @@ interface ArtistOverviewRouteProps {
 const ArtistOverviewRoute: React.FC<
   React.PropsWithChildren<ArtistOverviewRouteProps>
 > = ({ artist }) => {
-  const { title, description } = artist.meta
-
   const hasCareerHighlights = artist.insights.length > 0
   const hasArtistSeries = artist.artistSeriesConnection?.totalCount ?? 0 > 0
   const hasEditorial = artist.counts?.articles ?? 0 > 0
@@ -39,9 +36,6 @@ const ArtistOverviewRoute: React.FC<
     return (
       <>
         <ArtistMetaFragmentContainer artist={artist} />
-        <Title>{title}</Title>
-        <Meta name="title" content={title} />
-        <Meta name="description" content={description} />
 
         <Spacer y={[2, 0]} />
 
@@ -53,9 +47,6 @@ const ArtistOverviewRoute: React.FC<
   return (
     <>
       <ArtistMetaFragmentContainer artist={artist} />
-      <Title>{title}</Title>
-      <Meta name="title" content={title} />
-      <Meta name="description" content={description} />
 
       <Spacer y={[2, 0]} />
 

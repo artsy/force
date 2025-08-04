@@ -18,7 +18,6 @@ import { ArtworkGridEmptyState } from "Components/ArtworkGrid/ArtworkGridEmptySt
 import { useAuthDialog } from "Components/AuthDialog"
 import { LoadingArea } from "Components/LoadingArea"
 import { PaginationFragmentContainer as Pagination } from "Components/Pagination"
-import { PaginatedMetaTags } from "Components/PaginatedMetaTags"
 import { SystemContext } from "System/Contexts/SystemContext"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
@@ -228,8 +227,12 @@ const AuctionResultsContainer: React.FC<
   if (!artist.statuses?.auctionLots) {
     return (
       <>
-        <ArtistMetaFragmentContainer artist={artist} />
-        <PaginatedMetaTags title={title} description={description} />
+        <ArtistMetaFragmentContainer
+          artist={artist}
+          title={title}
+          description={description}
+          isPaginated={true}
+        />
 
         <Spacer y={[2, 0]} />
 
@@ -240,8 +243,12 @@ const AuctionResultsContainer: React.FC<
 
   return (
     <>
-      <ArtistMetaFragmentContainer artist={artist} />
-      <PaginatedMetaTags title={title} description={description} />
+      <ArtistMetaFragmentContainer
+        artist={artist}
+        title={title}
+        description={description}
+        isPaginated={true}
+      />
 
       <Jump id="marketSignalsTop" />
 

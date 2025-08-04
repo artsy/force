@@ -2,7 +2,6 @@ import { ArtistMediumsTitle } from "Apps/Artist/Routes/WorksForSale/Components/A
 import { ArtistMetaFragmentContainer } from "Apps/Artist/Components/ArtistMeta/ArtistMeta"
 import { ArtistWorksForSaleEmptyFragmentContainer } from "Apps/Artist/Routes/WorksForSale/Components/ArtistWorksForSaleEmpty"
 import { getWorksForSaleRouteVariables } from "Apps/Artist/Routes/WorksForSale/Utils/getWorksForSaleRouteVariables"
-import { PaginatedMetaTags } from "Components/PaginatedMetaTags"
 import type { SharedArtworkFilterContextProps } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { ArtworkFilterPlaceholder } from "Components/ArtworkFilter/ArtworkFilterPlaceholder"
 import { useRouter } from "System/Hooks/useRouter"
@@ -25,8 +24,12 @@ const ArtistWorksForSaleRoute: React.FC<
 
   return (
     <>
-      <ArtistMetaFragmentContainer artist={artist} />
-      <PaginatedMetaTags title={title} description={description} />
+      <ArtistMetaFragmentContainer
+        artist={artist}
+        title={title}
+        description={description}
+        isPaginated={true}
+      />
       <ArtistMediumsTitle
         defaultTitle={title}
         name={artist.name ?? "Unknown Artist"}
