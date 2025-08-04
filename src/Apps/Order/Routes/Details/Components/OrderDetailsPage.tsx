@@ -8,6 +8,8 @@ import type { OrderDetailsPage_order$key } from "__generated__/OrderDetailsPage_
 import { graphql, useFragment } from "react-relay"
 import { OrderDetailsHeader } from "./OrderDetailsHeader"
 import { OrderDetailsMessage } from "./OrderDetailsMessage"
+import { useEffect } from "react"
+import { useOrder2Tracking } from "Apps/Order2/Hooks/useOrder2Tracking"
 
 interface OrderDetailsPageProps {
   order: OrderDetailsPage_order$key
@@ -15,6 +17,16 @@ interface OrderDetailsPageProps {
 
 export const OrderDetailsPage = ({ order }: OrderDetailsPageProps) => {
   const orderData = useFragment(FRAGMENT, order)
+  const tracking = useOrder2Tracking(orderData.source, orderData.mode)
+
+  useEffect(() => {
+    if (!!orderData) {
+      tracking.orderDetailsViewed(
+        ContextModule.ordersDetail,
+        orderData.displayTexts.messageType,
+      )
+    }
+  }, [])
 
   const artworkSlug = orderData.lineItems[0]?.artwork?.slug
 
@@ -69,6 +81,11 @@ const FRAGMENT = graphql`
       artwork {
         slug
       }
+    }
+    mode
+    source
+    displayTexts {
+      messageType
     }
     ...OrderDetailsHeader_order
     ...OrderDetailsMessage_order
