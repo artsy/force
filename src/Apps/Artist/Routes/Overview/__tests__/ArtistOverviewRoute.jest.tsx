@@ -52,6 +52,16 @@ describe("ArtistOverviewRoute", () => {
       Artist: () => ({
         name: "artistName",
         slug: "artistSlug",
+        nationality: "American",
+        birthday: "1990-01-01",
+        deathday: null,
+        alternateNames: ["Alt Name"],
+        href: "/artist/artistslug",
+        isInSeoExperiment: false,
+        meta: { title: "Artist Name", description: "Artist description" },
+        coverArtwork: {
+          image: { large: "https://example.com/image.jpg" },
+        },
         filterArtworksConnection: {
           edges: [
             {
@@ -72,6 +82,8 @@ describe("ArtistOverviewRoute", () => {
         artistSeriesConnection: { totalCount: 1 },
         articlesConnection: { totalCount: 1 },
         showsConnection: { totalCount: 1 },
+        counts: { artworks: "100", relatedArtists: 5, articles: 3 },
+        related: { genes: { edges: [{ node: { __typename: "Gene" } }] } },
       }),
     })
 
@@ -88,12 +100,19 @@ describe("ArtistOverviewRoute", () => {
       Artist: () => ({
         name: "artistName",
         slug: "artistSlug",
+        nationality: null,
+        birthday: null,
+        deathday: null,
+        alternateNames: [],
+        href: "/artist/artistslug",
+        isInSeoExperiment: false,
         meta: { title: "title", description: "description" },
+        coverArtwork: null,
         filterArtworksConnection: { edges: [] },
         insights: [],
         artistSeriesConnection: { totalCount: 0 },
         showsConnection: { totalCount: 0 },
-        counts: { articles: 0, relatedArtists: 0 },
+        counts: { articles: 0, relatedArtists: 0, artworks: null },
         related: { genes: { edges: [] } },
       }),
     })
