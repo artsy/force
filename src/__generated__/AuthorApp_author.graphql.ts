@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<35a5f3969b3fe2ced8d22e41a1e2d077>>
+ * @generated SignedSource<<7937a7ac51d9e0d626f3fe31889699ef>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,8 +20,11 @@ export type AuthorApp_author$data = {
     } | null | undefined;
   } | null | undefined;
   readonly initials: string | null | undefined;
+  readonly instagramHandle: string | null | undefined;
   readonly internalID: string;
   readonly name: string;
+  readonly role: string | null | undefined;
+  readonly twitterHandle: string | null | undefined;
   readonly " $fragmentType": "AuthorApp_author";
 };
 export type AuthorApp_author$key = {
@@ -68,6 +71,27 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "initials",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "role",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "twitterHandle",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "instagramHandle",
       "storageKey": null
     },
     {
@@ -122,6 +146,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "2527ac5064a0e8ee0e62afa59044d890";
+(node as any).hash = "37da9cb7c3fb6b7c24e82e3655da3744";
 
 export default node;

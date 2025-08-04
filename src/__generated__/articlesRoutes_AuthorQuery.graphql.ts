@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5a5a72a87cf976314250606b32d10520>>
+ * @generated SignedSource<<1cb3151527d9af647814ec532784b899>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -117,6 +117,27 @@ return {
           {
             "alias": null,
             "args": null,
+            "kind": "ScalarField",
+            "name": "role",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "twitterHandle",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "instagramHandle",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": "Image",
             "kind": "LinkedField",
             "name": "image",
@@ -174,12 +195,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "4e6988eac6f51fdaccef143173fd12b3",
+    "cacheID": "0cfe4998eec6eb8ebcc886469e456a89",
     "id": null,
     "metadata": {},
     "name": "articlesRoutes_AuthorQuery",
     "operationKind": "query",
-    "text": "query articlesRoutes_AuthorQuery(\n  $id: String!\n) {\n  author(id: $id) @principalField {\n    ...AuthorApp_author\n    id\n  }\n}\n\nfragment AuthorApp_author on Author {\n  __typename\n  internalID\n  name\n  bio\n  initials\n  image {\n    cropped(width: 100, height: 100) {\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query articlesRoutes_AuthorQuery(\n  $id: String!\n) {\n  author(id: $id) @principalField {\n    ...AuthorApp_author\n    id\n  }\n}\n\nfragment AuthorApp_author on Author {\n  __typename\n  internalID\n  name\n  bio\n  initials\n  role\n  twitterHandle\n  instagramHandle\n  image {\n    cropped(width: 100, height: 100) {\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();
