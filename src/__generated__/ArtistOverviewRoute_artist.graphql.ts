@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e1532e68e7f5097650b196fdce041ca2>>
+ * @generated SignedSource<<2851b5d5d6d8f74e9dcb34c395e371d6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -40,6 +40,7 @@ export type ArtistOverviewRoute_artist$data = {
   readonly showsConnection: {
     readonly totalCount: number | null | undefined;
   } | null | undefined;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistMeta_artist">;
   readonly " $fragmentType": "ArtistOverviewRoute_artist";
 };
 export type ArtistOverviewRoute_artist$key = {
@@ -77,6 +78,11 @@ return {
   "metadata": null,
   "name": "ArtistOverviewRoute_artist",
   "selections": [
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtistMeta_artist"
+    },
     {
       "alias": null,
       "args": null,
@@ -248,6 +254,6 @@ return {
 };
 })();
 
-(node as any).hash = "d98b6054e2b4bd57cfac9cd348ad9da1";
+(node as any).hash = "8a0d159df4cbc4daecd08e79d328c1cf";
 
 export default node;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e0839057497f61489b966df6cb29af03>>
+ * @generated SignedSource<<24f9907c5eddd9076fdc60e03cb6ab83>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,13 +11,13 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistWorksForSaleRoute_artist$data = {
-  readonly meta: {
+  readonly artworksMeta: {
     readonly description: string;
     readonly title: string;
   };
   readonly name: string | null | undefined;
   readonly slug: string;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtistWorksForSaleEmpty_artist">;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistMeta_artist" | "ArtistWorksForSaleEmpty_artist">;
   readonly " $fragmentType": "ArtistWorksForSaleRoute_artist";
 };
 export type ArtistWorksForSaleRoute_artist$key = {
@@ -31,6 +31,11 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "ArtistWorksForSaleRoute_artist",
   "selections": [
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtistMeta_artist"
+    },
     {
       "args": null,
       "kind": "FragmentSpread",
@@ -51,7 +56,7 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
-      "alias": null,
+      "alias": "artworksMeta",
       "args": [
         {
           "kind": "Literal",
@@ -86,6 +91,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "3f3df19a6ee2a905d86136f0d1af61eb";
+(node as any).hash = "1792f7ad610782faa696afb45ded2e4a";
 
 export default node;

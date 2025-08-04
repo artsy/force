@@ -1,5 +1,6 @@
 import { Join, Spacer } from "@artsy/palette"
 import { ArtistEditorialNewsGridQueryRenderer } from "Apps/Artist/Routes/Overview/Components/ArtistEditorialNewsGrid"
+import { ArtistMetaFragmentContainer } from "Apps/Artist/Components/ArtistMeta/ArtistMeta"
 import { ArtistOverviewEmpty } from "Apps/Artist/Routes/Overview/Components/ArtistOverviewEmpty"
 import { ArtistRelatedGeneCategoriesQueryRenderer } from "Apps/Artist/Routes/Overview/Components/ArtistRelatedGeneCategories"
 import { ArtistSeriesRailQueryRenderer } from "Components/ArtistSeriesRail/ArtistSeriesRail"
@@ -37,6 +38,7 @@ const ArtistOverviewRoute: React.FC<
   ) {
     return (
       <>
+        <ArtistMetaFragmentContainer artist={artist} />
         <Title>{title}</Title>
         <Meta name="title" content={title} />
         <Meta name="description" content={description} />
@@ -50,6 +52,7 @@ const ArtistOverviewRoute: React.FC<
 
   return (
     <>
+      <ArtistMetaFragmentContainer artist={artist} />
       <Title>{title}</Title>
       <Meta name="title" content={title} />
       <Meta name="description" content={description} />
@@ -93,6 +96,7 @@ export const ArtistOverviewRouteFragmentContainer = createFragmentContainer(
   {
     artist: graphql`
       fragment ArtistOverviewRoute_artist on Artist {
+        ...ArtistMeta_artist
         internalID
         name
         meta(page: ABOUT) {

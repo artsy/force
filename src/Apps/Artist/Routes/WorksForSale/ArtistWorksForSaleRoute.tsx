@@ -1,4 +1,5 @@
 import { ArtistMediumsTitle } from "Apps/Artist/Routes/WorksForSale/Components/ArtistMediumsTitle"
+import { ArtistMetaFragmentContainer } from "Apps/Artist/Components/ArtistMeta/ArtistMeta"
 import { ArtistWorksForSaleEmptyFragmentContainer } from "Apps/Artist/Routes/WorksForSale/Components/ArtistWorksForSaleEmpty"
 import { getWorksForSaleRouteVariables } from "Apps/Artist/Routes/WorksForSale/Utils/getWorksForSaleRouteVariables"
 import type { SharedArtworkFilterContextProps } from "Components/ArtworkFilter/ArtworkFilterContext"
@@ -19,11 +20,12 @@ interface ArtistWorksForSaleRouteProps {
 const ArtistWorksForSaleRoute: React.FC<
   React.PropsWithChildren<ArtistWorksForSaleRouteProps>
 > = ({ artist }) => {
-  const { title, description } = artist.meta
+  const { title, description } = artist.artworksMeta
   const { match } = useRouter()
 
   return (
     <>
+      <ArtistMetaFragmentContainer artist={artist} />
       <ArtistMediumsTitle
         defaultTitle={title}
         name={artist.name ?? "Unknown Artist"}
@@ -104,10 +106,11 @@ export const ArtistWorksForSaleRouteFragmentContainer = createFragmentContainer(
   {
     artist: graphql`
       fragment ArtistWorksForSaleRoute_artist on Artist {
+        ...ArtistMeta_artist
         ...ArtistWorksForSaleEmpty_artist
         slug
         name
-        meta(page: ARTWORKS) {
+        artworksMeta: meta(page: ARTWORKS) {
           description
           title
         }

@@ -10,6 +10,7 @@ import {
   Text,
 } from "@artsy/palette"
 import { initialAuctionResultsFilterState } from "Apps/Artist/Routes/AuctionResults/initialAuctionResultsFilterState"
+import { ArtistMetaFragmentContainer } from "Apps/Artist/Components/ArtistMeta/ArtistMeta"
 import { allowedAuctionResultFilters } from "Apps/Artist/Utils/allowedAuctionResultFilters"
 import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/paramsCasing"
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
@@ -222,11 +223,12 @@ const AuctionResultsContainer: React.FC<
     )
   }
 
-  const { title, description } = artist.meta
+  const { title, description } = artist.auctionResultsMeta
 
   if (!artist.statuses?.auctionLots) {
     return (
       <>
+        <ArtistMetaFragmentContainer artist={artist} />
         <Title>{title}</Title>
         <Meta name="title" content={title} />
         <Meta name="description" content={description} />
@@ -240,6 +242,7 @@ const AuctionResultsContainer: React.FC<
 
   return (
     <>
+      <ArtistMetaFragmentContainer artist={artist} />
       <Title>{title}</Title>
       <Meta name="title" content={title} />
       <Meta name="description" content={description} />
@@ -428,10 +431,11 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
         allowEmptyCreatedDates: { type: "Boolean" }
         state: { type: "AuctionResultsState", defaultValue: ALL }
       ) {
+        ...ArtistMeta_artist
         slug
         internalID
         name
-        meta(page: AUCTION_RESULTS) {
+        auctionResultsMeta: meta(page: AUCTION_RESULTS) {
           description
           title
         }
