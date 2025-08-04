@@ -488,10 +488,43 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
     id: "QXJ0aXN0OnBhYmxvLXBpY2Fzc28=",
     slug: "pablo-picasso",
     name: "Pablo Picasso",
+    nationality: "Spanish",
+    birthday: "October 25, 1881",
+    deathday: "April 8, 1973",
+    alternateNames: [
+      "Pablo Diego José Francisco de Paula Juan Nepomuceno María de los Remedios Cipriano de la Santísima Trinidad Ruiz y Picasso",
+    ],
+    href: "/artist/pablo-picasso",
+    isInSeoExperiment: false,
+    gender: "male",
     meta: {
       description:
-        "Find out about Pablo Picasso’s auction history, past sales, and current market value. Browse Artsy’s Price Database for recent auction results from the artist.`",
+        "Find out about Pablo Picasso's auction history, past sales, and current market value. Browse Artsy's Price Database for recent auction results from the artist.`",
       title: "Pablo Picasso - Auction Results and Sales Data | Artsy",
+    },
+    auctionResultsMeta: {
+      description:
+        "Find out about Pablo Picasso's auction history, past sales, and current market value. Browse Artsy's Price Database for recent auction results from the artist.`",
+      title: "Pablo Picasso - Auction Results and Sales Data | Artsy",
+    },
+    coverArtwork: {
+      id: "QXJ0d29yazo1ZTJkNWU0NGU1YzNkNjMxYWI2OTYzMDk=", // pragma: allowlist secret
+      image: {
+        url: "https://d32dm0rphc51dk.cloudfront.net/Vxf2MR1HwxqDwNovE9O4rg/large.jpg",
+        large:
+          "https://d32dm0rphc51dk.cloudfront.net/Vxf2MR1HwxqDwNovE9O4rg/large.jpg",
+      },
+    },
+    partnersConnection: {
+      edges: [
+        {
+          id: "UGFydG5lckFydGlzdEVkZ2U6NWIyZGE5YWE4YjNiODE1N2MzZjdkZDZh", // pragma: allowlist secret
+          node: {
+            id: "UGFydG5lcjo1YjJkYTlhYThiM2I4MTU3YzNmN2RkNmE=", // pragma: allowlist secret
+            href: "/gagosian-gallery",
+          },
+        },
+      ],
     },
     statuses: {
       auctionLots: true,
