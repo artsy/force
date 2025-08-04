@@ -2,6 +2,7 @@ import { ArtistMediumsTitle } from "Apps/Artist/Routes/WorksForSale/Components/A
 import { ArtistMetaFragmentContainer } from "Apps/Artist/Components/ArtistMeta/ArtistMeta"
 import { ArtistWorksForSaleEmptyFragmentContainer } from "Apps/Artist/Routes/WorksForSale/Components/ArtistWorksForSaleEmpty"
 import { getWorksForSaleRouteVariables } from "Apps/Artist/Routes/WorksForSale/Utils/getWorksForSaleRouteVariables"
+import { PaginatedMetaTags } from "Components/PaginatedMetaTags"
 import type { SharedArtworkFilterContextProps } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { ArtworkFilterPlaceholder } from "Components/ArtworkFilter/ArtworkFilterPlaceholder"
 import { useRouter } from "System/Hooks/useRouter"
@@ -9,7 +10,6 @@ import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import type { ArtistWorksForSaleRouteArtworksQuery } from "__generated__/ArtistWorksForSaleRouteArtworksQuery.graphql"
 import type { ArtistWorksForSaleRoute_artist$data } from "__generated__/ArtistWorksForSaleRoute_artist.graphql"
 import type React from "react"
-import { Meta } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistArtworkFilterRefetchContainer } from "./Components/ArtistArtworkFilter"
 
@@ -26,11 +26,11 @@ const ArtistWorksForSaleRoute: React.FC<
   return (
     <>
       <ArtistMetaFragmentContainer artist={artist} />
+      <PaginatedMetaTags title={title} description={description} />
       <ArtistMediumsTitle
         defaultTitle={title}
         name={artist.name ?? "Unknown Artist"}
       />
-      <Meta name="description" content={description} />
       <SystemQueryRenderer<ArtistWorksForSaleRouteArtworksQuery>
         query={graphql`
           query ArtistWorksForSaleRouteArtworksQuery(
