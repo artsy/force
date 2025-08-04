@@ -20,7 +20,7 @@ import { compact } from "lodash"
 import type { FC } from "react"
 import { graphql, useLazyLoadQuery, usePaginationFragment } from "react-relay"
 
-const PAGE_SIZE = 20
+const PAGE_SIZE = 21
 
 interface AuthorArticlesGridProps {
   id: string
@@ -108,7 +108,7 @@ export const AuthorArticlesGrid: FC<
           </Column>
 
           {/* Grid with the next four */}
-          <Column span={[6]}>
+          <Column span={[12, 6]}>
             <GridColumns gridRowGap={4} gridColumnGap={2}>
               {nextFourNodes.map(article => (
                 <Column span={[12, 6]} key={article!.internalID}>
