@@ -26,6 +26,7 @@ import type {
 } from "@stripe/stripe-js"
 import { Collapse } from "Apps/Order/Components/Collapse"
 import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
+import { useSetPayment } from "Apps/Order/Mutations/useSetPayment"
 import {
   CheckoutStepName,
   CheckoutStepState,
@@ -141,6 +142,8 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
   const elements = useElements()
   const environment = useRelayEnvironment()
   const setPaymentMutation = useOrder2SetOrderPaymentMutation()
+  // TODO: Update from legacy commerceSetPayment mutation
+  const legacySetPaymentMutation = useSetPayment()
   const createBankDebitSetupForOrder = CreateBankDebitSetupForOrder()
   const { setConfirmationToken, checkoutTracking, setSavedCreditCard, steps } =
     useCheckoutContext()
@@ -402,20 +405,27 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       setIsSubmittingToStripe(true)
 
       try {
-        const result = await setPaymentMutation.submitMutation({
+        const result = await legacySetPaymentMutation.submitMutation({
           variables: {
             input: {
               id: order.internalID,
               paymentMethod: "CREDIT_CARD",
-              paymentMethodId: selectedCreditCard?.internalID, // TODO: Allow this param
+              paymentMethodId: selectedCreditCard?.internalID,
               // Note: paymentMethodId is not supported in updateOrder mutation
               // Saved credit card functionality may need a different approach
             },
           },
         })
 
-        // Use validateAndExtractOrderResponse for consistent error handling
-        validateAndExtractOrderResponse(result.updateOrder?.orderOrError)
+        if (
+          result?.commerceSetPayment?.orderOrError?.error ||
+          !result?.commerceSetPayment?.orderOrError?.order
+        ) {
+          throw (
+            result?.commerceSetPayment?.orderOrError.error ||
+            new Error("Failed to set payment method")
+          )
+        }
       } catch (error) {
         logger.error("Error while updating order payment method", error)
         handleError({ message: defaultErrorMessage })
