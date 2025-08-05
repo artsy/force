@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<22592e2457f721276e44c27d36eba95d>>
+ * @generated SignedSource<<ee10726ed8f3f7a3bf440cb81c718c9e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,6 +9,7 @@
 // @ts-nocheck
 
 import { ReaderFragment } from 'relay-runtime';
+export type FulfillmentOptionTypeEnum = "DOMESTIC_FLAT" | "INTERNATIONAL_FLAT" | "PICKUP" | "SHIPPING_TBD" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type Order2DeliveryForm_order$data = {
   readonly availableShippingCountries: ReadonlyArray<string>;
@@ -26,6 +27,9 @@ export type Order2DeliveryForm_order$data = {
     readonly region: string | null | undefined;
   } | null | undefined;
   readonly internalID: string;
+  readonly selectedFulfillmentOption: {
+    readonly type: FulfillmentOptionTypeEnum;
+  } | null | undefined;
   readonly " $fragmentType": "Order2DeliveryForm_order";
 };
 export type Order2DeliveryForm_order$key = {
@@ -44,6 +48,24 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "internalID",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "FulfillmentOption",
+      "kind": "LinkedField",
+      "name": "selectedFulfillmentOption",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "type",
+          "storageKey": null
+        }
+      ],
       "storageKey": null
     },
     {
@@ -143,6 +165,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "e8a94274b503c0d2ae6b7041496656e4";
+(node as any).hash = "b09bac1947b2dd913b378e98028e07c9";
 
 export default node;

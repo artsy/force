@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fbf429d822cf385b10f1c4ac6827066a>>
+ * @generated SignedSource<<055aa0bbddd5d0e436978507586e08c8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -27,7 +27,7 @@ export type useUnsetOrderPaymentMethodMutation$data = {
     } | {
       readonly __typename: "OrderMutationSuccess";
       readonly order: {
-        readonly " $fragmentSpreads": FragmentRefs<"ExpressCheckoutUI_order" | "Order2ExpressCheckoutUI_order">;
+        readonly " $fragmentSpreads": FragmentRefs<"ExpressCheckoutUI_order">;
       };
     } | {
       // This will never be '%other', but we need some
@@ -161,11 +161,6 @@ return {
                         "args": null,
                         "kind": "FragmentSpread",
                         "name": "ExpressCheckoutUI_order"
-                      },
-                      {
-                        "args": null,
-                        "kind": "FragmentSpread",
-                        "name": "Order2ExpressCheckoutUI_order"
                       }
                     ],
                     "storageKey": null
@@ -426,16 +421,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "70aae35f7edd49fd9697e0c7ac01400e",
+    "cacheID": "aa18f1bd3121bdcddb69a725b9226b4b",
     "id": null,
     "metadata": {},
     "name": "useUnsetOrderPaymentMethodMutation",
     "operationKind": "mutation",
-    "text": "mutation useUnsetOrderPaymentMethodMutation(\n  $input: unsetOrderPaymentMethodInput!\n) {\n  unsetOrderPaymentMethod(input: $input) {\n    orderOrError {\n      __typename\n      ... on OrderMutationSuccess {\n        order {\n          ...ExpressCheckoutUI_order\n          ...Order2ExpressCheckoutUI_order\n          id\n        }\n      }\n      ... on OrderMutationError {\n        mutationError {\n          message\n        }\n      }\n    }\n  }\n}\n\nfragment ExpressCheckoutUI_order on Order {\n  internalID\n  source\n  mode\n  buyerTotal {\n    minor\n    currencyCode\n  }\n  itemsTotal {\n    minor\n  }\n  shippingTotal {\n    minor\n  }\n  taxTotal {\n    minor\n  }\n  availableShippingCountries\n  fulfillmentOptions {\n    type\n    amount {\n      minor\n      currencyCode\n    }\n    selected\n  }\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    postalCode\n    region\n    country\n    name\n  }\n  lineItems {\n    artwork {\n      internalID\n      slug\n      id\n    }\n    id\n  }\n}\n\nfragment Order2ExpressCheckoutUI_order on Order {\n  internalID\n  source\n  mode\n  buyerTotal {\n    minor\n    currencyCode\n  }\n  itemsTotal {\n    minor\n  }\n  shippingTotal {\n    minor\n  }\n  taxTotal {\n    minor\n  }\n  availableShippingCountries\n  fulfillmentOptions {\n    type\n    amount {\n      minor\n      currencyCode\n    }\n    selected\n  }\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    postalCode\n    region\n    country\n    name\n  }\n  lineItems {\n    artwork {\n      internalID\n      slug\n      id\n    }\n    id\n  }\n}\n"
+    "text": "mutation useUnsetOrderPaymentMethodMutation(\n  $input: unsetOrderPaymentMethodInput!\n) {\n  unsetOrderPaymentMethod(input: $input) {\n    orderOrError {\n      __typename\n      ... on OrderMutationSuccess {\n        order {\n          ...ExpressCheckoutUI_order\n          id\n        }\n      }\n      ... on OrderMutationError {\n        mutationError {\n          message\n        }\n      }\n    }\n  }\n}\n\nfragment ExpressCheckoutUI_order on Order {\n  internalID\n  source\n  mode\n  buyerTotal {\n    minor\n    currencyCode\n  }\n  itemsTotal {\n    minor\n  }\n  shippingTotal {\n    minor\n  }\n  taxTotal {\n    minor\n  }\n  availableShippingCountries\n  fulfillmentOptions {\n    type\n    amount {\n      minor\n      currencyCode\n    }\n    selected\n  }\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    postalCode\n    region\n    country\n    name\n  }\n  lineItems {\n    artwork {\n      internalID\n      slug\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "15e2ac930a2d79aea95ecf4913983e7d";
+(node as any).hash = "120e4b3b7b35174cbf27dcf647c97e61";
 
 export default node;

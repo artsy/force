@@ -16,12 +16,12 @@ import type {
   StripeExpressCheckoutElementShippingAddressChangeEvent,
   StripeExpressCheckoutElementShippingRateChangeEvent,
 } from "@stripe/stripe-js"
-import { useSetFulfillmentOptionMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useSetFulfillmentOptionMutation"
-import { useSubmitOrderMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useSubmitOrderMutation"
-import { useUnsetOrderFulfillmentOptionMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useUnsetOrderFulfillmentOptionMutation"
-import { useUnsetOrderPaymentMethodMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useUnsetOrderPaymentMethodMutation"
-import { useUpdateOrderMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useUpdateOrderMutation"
-import { useUpdateOrderShippingAddressMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useUpdateOrderShippingAddressMutation"
+import { useOrder2ExpressCheckoutSetFulfillmentOptionMutation } from "./Mutations/useOrder2ExpressCheckoutSetFulfillmentOptionMutation"
+import { useOrder2ExpressCheckoutSubmitOrderMutation } from "./Mutations/useOrder2ExpressCheckoutSubmitOrderMutation"
+import { useOrder2ExpressCheckoutUnsetOrderFulfillmentOptionMutation } from "./Mutations/useOrder2ExpressCheckoutUnsetOrderFulfillmentOptionMutation"
+import { useOrder2ExpressCheckoutUnsetOrderPaymentMethodMutation } from "./Mutations/useOrder2ExpressCheckoutUnsetOrderPaymentMethodMutation"
+import { useOrder2ExpressCheckoutUpdateOrderMutation } from "./Mutations/useOrder2ExpressCheckoutUpdateOrderMutation"
+import { useOrder2ExpressCheckoutUpdateOrderShippingAddressMutation } from "./Mutations/useOrder2ExpressCheckoutUpdateOrderShippingAddressMutation"
 import {
   type OrderMutationSuccess,
   validateAndExtractOrderResponse,
@@ -38,12 +38,12 @@ import type {
 } from "__generated__/Order2ExpressCheckoutUI_order.graphql"
 import type {
   FulfillmentOptionInputEnum,
-  useSetFulfillmentOptionMutation$data,
-} from "__generated__/useSetFulfillmentOptionMutation.graphql"
+  useOrder2ExpressCheckoutSetFulfillmentOptionMutation$data,
+} from "__generated__/useOrder2ExpressCheckoutSetFulfillmentOptionMutation.graphql"
 import type {
   OrderCreditCardWalletTypeEnum,
-  useUpdateOrderMutation$data,
-} from "__generated__/useUpdateOrderMutation.graphql"
+  useOrder2ExpressCheckoutUpdateOrderMutation$data,
+} from "__generated__/useOrder2ExpressCheckoutUpdateOrderMutation.graphql"
 import type React from "react"
 import { useEffect, useRef, useState } from "react"
 import { graphql, useFragment } from "react-relay"
@@ -67,14 +67,16 @@ export const Order2ExpressCheckoutUI: React.FC<
   const elements = useElements()
   const stripe = useStripe()
 
-  const setFulfillmentOptionMutation = useSetFulfillmentOptionMutation()
-  const updateOrderMutation = useUpdateOrderMutation()
+  const setFulfillmentOptionMutation =
+    useOrder2ExpressCheckoutSetFulfillmentOptionMutation()
+  const updateOrderMutation = useOrder2ExpressCheckoutUpdateOrderMutation()
   const updateOrderShippingAddressMutation =
-    useUpdateOrderShippingAddressMutation()
-  const submitOrderMutation = useSubmitOrderMutation()
+    useOrder2ExpressCheckoutUpdateOrderShippingAddressMutation()
+  const submitOrderMutation = useOrder2ExpressCheckoutSubmitOrderMutation()
   const unsetFulfillmentOptionMutation =
-    useUnsetOrderFulfillmentOptionMutation()
-  const unsetPaymentMethodMutation = useUnsetOrderPaymentMethodMutation()
+    useOrder2ExpressCheckoutUnsetOrderFulfillmentOptionMutation()
+  const unsetPaymentMethodMutation =
+    useOrder2ExpressCheckoutUnsetOrderPaymentMethodMutation()
 
   const [expressCheckoutType, setExpressCheckoutType] =
     useState<ExpressPaymentType | null>(null)
@@ -595,12 +597,14 @@ const FRAGMENT = graphql`
 
 type SetFulfillmentOrderResult = OrderMutationSuccess<
   NonNullable<
-    useSetFulfillmentOptionMutation$data["setOrderFulfillmentOption"]
+    useOrder2ExpressCheckoutSetFulfillmentOptionMutation$data["setOrderFulfillmentOption"]
   >["orderOrError"]
 >["order"]
 
 type UpdateOrderResult = OrderMutationSuccess<
-  NonNullable<useUpdateOrderMutation$data["updateOrder"]>["orderOrError"]
+  NonNullable<
+    useOrder2ExpressCheckoutUpdateOrderMutation$data["updateOrder"]
+  >["orderOrError"]
 >["order"]
 
 type ParseableOrder =

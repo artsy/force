@@ -8,6 +8,7 @@ import { Order2FulfillmentDetailsCompletedView } from "Apps/Order2/Routes/Checko
 import { Order2PickupForm } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/Order2PickupForm"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import type { Order2FulfillmentDetailsStep_order$key } from "__generated__/Order2FulfillmentDetailsStep_order.graphql"
+import { useMemo } from "react"
 
 import { graphql, useFragment } from "react-relay"
 
@@ -32,6 +33,11 @@ export const Order2FulfillmentDetailsStep: React.FC<
     option => option.type === "PICKUP",
   )
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: we don't want this to update
+  const initialPickupSelected = useMemo(() => {
+    return pickupOption?.selected ?? false
+  }, [])
+
   return (
     <Flex
       data-testid="FulfillmentDetailsStep"
@@ -50,7 +56,7 @@ export const Order2FulfillmentDetailsStep: React.FC<
             fill
             data-testid="FulfillmentDetailsStepTabs"
             justifyContent="space-between"
-            initialTabIndex={pickupOption.selected ? 1 : 0}
+            initialTabIndex={initialPickupSelected ? 1 : 0}
             onChange={tabInfo => {
               const { tabIndex } = tabInfo ?? {}
               if (tabIndex === 1) {
