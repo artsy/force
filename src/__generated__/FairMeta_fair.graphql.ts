@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<049b337e4196de723c3f31cbb1efe2a9>>
+ * @generated SignedSource<<22cf0cb2b3a076cea9c2bb9c3081d8cd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,6 +12,7 @@ import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FairMeta_fair$data = {
   readonly metaDescription: string | null | undefined;
+  readonly metaDescriptionFallback: string | null | undefined;
   readonly metaImage: {
     readonly src: string | null | undefined;
   } | null | undefined;
@@ -52,6 +53,19 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
+      "alias": "metaDescriptionFallback",
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "format",
+          "value": "PLAIN"
+        }
+      ],
+      "kind": "ScalarField",
+      "name": "about",
+      "storageKey": "about(format:\"PLAIN\")"
+    },
+    {
       "alias": "metaImage",
       "args": null,
       "concreteType": "Image",
@@ -80,6 +94,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "df70e523e990f462efe34ddf4770162c";
+(node as any).hash = "2dfd7b01e78a134ec59b8456958e9b9b";
 
 export default node;
