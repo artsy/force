@@ -6,10 +6,12 @@ import {
   type ClickedImportFees,
   type ClickedVisitHelpCenter,
   type ContextModule,
+  OrderDetailsViewed,
   OwnerType,
   type PageOwnerType,
 } from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { DisplayTextsMessageTypeEnum } from "__generated__/OrderDetailsMessage_order.graphql"
 import { useMemo } from "react"
 import { useTracking } from "react-tracking"
 
@@ -91,6 +93,20 @@ export const useOrder2Tracking = (
           context_owner_type: OwnerType.ordersDetail,
           context_owner_id: orderId,
         }
+        trackEvent(payload)
+      },
+      orderDetailsViewed: (
+        contextModule: ContextModule,
+        messageType: DisplayTextsMessageTypeEnum,
+      ) => {
+        const payload: OrderDetailsViewed = {
+          action: ActionType.orderDetailsViewed,
+          context_module: contextModule,
+          context_owner_id: contextPageOwnerId,
+          context_owner_type: contextPageOwnerType,
+          message_type: messageType,
+        }
+
         trackEvent(payload)
       },
     }

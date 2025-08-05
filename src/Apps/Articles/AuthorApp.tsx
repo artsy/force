@@ -3,22 +3,22 @@ import XIcon from "@artsy/icons/XIcon"
 import {
   Avatar,
   Box,
-  Button,
   Column,
   GridColumns,
-  Image,
-  ResponsiveBox,
   Spacer,
   Stack,
   Text,
 } from "@artsy/palette"
-import { CellArticleFragmentContainer } from "Components/Cells/CellArticle"
+import { ClientSuspense } from "Components/ClientSuspense"
 import { MetaTags } from "Components/MetaTags"
-import { RouterLink } from "System/Components/RouterLink"
 import { useScrollToOpenEditorialAuthModal } from "Utils/Hooks/useScrollToOpenEditorialAuthModal"
 import type { AuthorApp_author$key } from "__generated__/AuthorApp_author.graphql"
 import type { FC } from "react"
 import { graphql, useFragment } from "react-relay"
+import {
+  AuthorArticlesGrid,
+  AuthorArticlesGridPlaceholder,
+} from "./Components/AuthorArticlesGrid"
 
 interface AuthorAppProps {
   author: AuthorApp_author$key
@@ -31,14 +31,12 @@ export const AuthorApp: FC<React.PropsWithChildren<AuthorAppProps>> = ({
 
   const author = useFragment(FRAGMENT, _author)
 
-  const [firstArticle, ...restOfArticles] = author.articles.slice(0, 5)
-
   return (
     <>
       <MetaTags
         title={`${author.name} | Artsy`}
         description={author.bio}
-        pathname={`/articles/author/${author.id}`}
+        pathname={`/articles/author/${author.internalID}`}
       />
 
       <Spacer y={[2, 4]} />
@@ -79,27 +77,33 @@ export const AuthorApp: FC<React.PropsWithChildren<AuthorAppProps>> = ({
                       {author.name}
                     </Text>
 
-                    <Text variant="lg-display" as="h2" color="mono60">
-                      TODO: Need to add author#role
-                    </Text>
+                    {author.role && (
+                      <Text variant="lg-display" as="h2" color="mono60">
+                        {author.role}
+                      </Text>
+                    )}
                   </Stack>
 
                   <Stack gap={0.5}>
-                    <Stack gap={0.5} flexDirection="row" alignItems="center">
-                      <XIcon />
+                    {author.twitterHandle && (
+                      <Stack gap={0.5} flexDirection="row" alignItems="center">
+                        <XIcon />
 
-                      <Text variant="xs" color="mono60">
-                        TODO: Add X
-                      </Text>
-                    </Stack>
+                        <Text variant="xs" color="mono60">
+                          {author.twitterHandle}
+                        </Text>
+                      </Stack>
+                    )}
 
-                    <Stack gap={0.5} flexDirection="row" alignItems="center">
-                      <InstagramIcon />
+                    {author.instagramHandle && (
+                      <Stack gap={0.5} flexDirection="row" alignItems="center">
+                        <InstagramIcon />
 
-                      <Text variant="xs" color="mono60">
-                        TODO: Add Instagram
-                      </Text>
-                    </Stack>
+                        <Text variant="xs" color="mono60">
+                          {author.instagramHandle}
+                        </Text>
+                      </Stack>
+                    )}
                   </Stack>
                 </Stack>
               </Box>
@@ -124,67 +128,9 @@ export const AuthorApp: FC<React.PropsWithChildren<AuthorAppProps>> = ({
             Articles by {author.name}
           </Text>
 
-          <GridColumns>
-            <Column span={[6]}>
-              <RouterLink
-                to={firstArticle.href}
-                display="block"
-                textDecoration="none"
-                width="100%"
-              >
-                <Stack gap={2}>
-                  <ResponsiveBox
-                    aspectWidth={1}
-                    aspectHeight={1}
-                    maxWidth="100%"
-                    bg="mono10"
-                  >
-                    {firstArticle.thumbnailImage?.large && (
-                      <Image
-                        src={firstArticle.thumbnailImage.large.src}
-                        srcSet={firstArticle.thumbnailImage.large.srcSet}
-                        width="100%"
-                        height="100%"
-                        alt=""
-                        lazyLoad
-                      />
-                    )}
-                  </ResponsiveBox>
-
-                  <Stack gap={1}>
-                    <Text variant="xs" fontWeight="bold">
-                      {firstArticle.vertical}
-                    </Text>
-
-                    <Text variant="xl" lineClamp={3}>
-                      {firstArticle.thumbnailTitle ?? firstArticle.title}
-                    </Text>
-
-                    <Text variant="lg-display" lineClamp={1}>
-                      By {firstArticle.byline}
-                    </Text>
-                  </Stack>
-                </Stack>
-              </RouterLink>
-            </Column>
-
-            <Column span={[6]}>
-              <GridColumns gridRowGap={4} gridColumnGap={2}>
-                {restOfArticles.map(article => {
-                  return (
-                    <Column span={[12, 6]} key={article.internalID}>
-                      <CellArticleFragmentContainer
-                        article={article}
-                        mode="GRID"
-                      />
-                    </Column>
-                  )
-                })}
-              </GridColumns>
-            </Column>
-          </GridColumns>
-
-          <Button alignSelf="center">Show more</Button>
+          <ClientSuspense fallback={<AuthorArticlesGridPlaceholder />}>
+            <AuthorArticlesGrid id={author.internalID} />
+          </ClientSuspense>
         </Stack>
       </Stack>
     </>
@@ -194,30 +140,17 @@ export const AuthorApp: FC<React.PropsWithChildren<AuthorAppProps>> = ({
 const FRAGMENT = graphql`
   fragment AuthorApp_author on Author {
     __typename
-    id
+    internalID
     name
     bio
     initials
+    role
+    twitterHandle
+    instagramHandle
     image {
       cropped(width: 100, height: 100) {
         src
         srcSet
-      }
-    }
-    articles {
-      ...CellArticle_article
-      internalID
-      href
-      vertical
-      thumbnailTitle
-      title
-      byline
-      publishedAt(format: "MMM D, YYYY")
-      thumbnailImage {
-        large: cropped(width: 600, height: 600) {
-          src
-          srcSet
-        }
       }
     }
   }

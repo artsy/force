@@ -44,7 +44,7 @@ export const AuthDialogTitle: FC<
         </Clickable>
       </Box>
 
-      <Text variant="lg-display" lineClamp={6} hyphenate>
+      <Text as="h1" variant="lg-display" lineClamp={6} hyphenate>
         {title}
       </Text>
     </Stack>

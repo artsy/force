@@ -299,35 +299,39 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         return
       }
 
-      if (selectedPaymentMethod === "stripe-card") {
-        const response =
-          await fetchQuery<Order2PaymentFormConfirmationTokenQuery>(
-            environment,
-            graphql`
-              query Order2PaymentFormConfirmationTokenQuery($id: String!) {
-                me {
-                  confirmationToken(id: $id) {
-                    paymentMethodPreview {
-                      __typename
-                      ... on Card {
-                        displayBrand
-                        last4
-                      }
+      const response =
+        await fetchQuery<Order2PaymentFormConfirmationTokenQuery>(
+          environment,
+          graphql`
+            query Order2PaymentFormConfirmationTokenQuery($id: String!) {
+              me {
+                confirmationToken(id: $id) {
+                  paymentMethodPreview {
+                    __typename
+                    ... on Card {
+                      displayBrand
+                      last4
+                    }
+                    ... on USBankAccount {
+                      bankName
+                      last4
                     }
                   }
                 }
               }
-            `,
-            { id: confirmationToken.id },
-            { fetchPolicy: "store-or-network" },
-          ).toPromise()
+            }
+          `,
+          { id: confirmationToken.id },
+          { fetchPolicy: "store-or-network" },
+        ).toPromise()
 
-        if (!response) {
-          logger.error("Failed to fetch confirmation token from Exchange")
-          handleError({ message: defaultErrorMessage })
-          return
-        }
+      if (!response) {
+        logger.error("Failed to fetch confirmation token from Exchange")
+        handleError({ message: defaultErrorMessage })
+        return
+      }
 
+      if (selectedPaymentMethod === "stripe-card") {
         try {
           const updateOrderPaymentMethodResult =
             await updateOrderMutation.submitMutation({
@@ -380,7 +384,10 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
           )
 
           setConfirmationToken({
-            confirmationToken: { id: confirmationToken.id },
+            confirmationToken: {
+              id: confirmationToken.id,
+              ...response?.me?.confirmationToken,
+            },
             saveCreditCard: false,
           })
         } catch (error) {

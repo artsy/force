@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9b4db816c6b0355f510ad2ea765fdeb4>>
+ * @generated SignedSource<<7937a7ac51d9e0d626f3fe31889699ef>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,24 +12,7 @@ import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AuthorApp_author$data = {
   readonly __typename: "Author";
-  readonly articles: ReadonlyArray<{
-    readonly byline: string | null | undefined;
-    readonly href: string | null | undefined;
-    readonly internalID: string;
-    readonly publishedAt: string | null | undefined;
-    readonly thumbnailImage: {
-      readonly large: {
-        readonly src: string;
-        readonly srcSet: string;
-      } | null | undefined;
-    } | null | undefined;
-    readonly thumbnailTitle: string | null | undefined;
-    readonly title: string | null | undefined;
-    readonly vertical: string | null | undefined;
-    readonly " $fragmentSpreads": FragmentRefs<"CellArticle_article">;
-  }>;
   readonly bio: string | null | undefined;
-  readonly id: string;
   readonly image: {
     readonly cropped: {
       readonly src: string;
@@ -37,7 +20,11 @@ export type AuthorApp_author$data = {
     } | null | undefined;
   } | null | undefined;
   readonly initials: string | null | undefined;
+  readonly instagramHandle: string | null | undefined;
+  readonly internalID: string;
   readonly name: string;
+  readonly role: string | null | undefined;
+  readonly twitterHandle: string | null | undefined;
   readonly " $fragmentType": "AuthorApp_author";
 };
 export type AuthorApp_author$key = {
@@ -45,24 +32,7 @@ export type AuthorApp_author$key = {
   readonly " $fragmentSpreads": FragmentRefs<"AuthorApp_author">;
 };
 
-const node: ReaderFragment = (function(){
-var v0 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "src",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "srcSet",
-    "storageKey": null
-  }
-];
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -79,7 +49,7 @@ return {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "id",
+      "name": "internalID",
       "storageKey": null
     },
     {
@@ -101,6 +71,27 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "initials",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "role",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "twitterHandle",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "instagramHandle",
       "storageKey": null
     },
     {
@@ -129,111 +120,23 @@ return {
           "kind": "LinkedField",
           "name": "cropped",
           "plural": false,
-          "selections": (v0/*: any*/),
-          "storageKey": "cropped(height:100,width:100)"
-        }
-      ],
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "Article",
-      "kind": "LinkedField",
-      "name": "articles",
-      "plural": true,
-      "selections": [
-        {
-          "args": null,
-          "kind": "FragmentSpread",
-          "name": "CellArticle_article"
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "internalID",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "href",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "vertical",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "thumbnailTitle",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "title",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "byline",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": [
-            {
-              "kind": "Literal",
-              "name": "format",
-              "value": "MMM D, YYYY"
-            }
-          ],
-          "kind": "ScalarField",
-          "name": "publishedAt",
-          "storageKey": "publishedAt(format:\"MMM D, YYYY\")"
-        },
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "Image",
-          "kind": "LinkedField",
-          "name": "thumbnailImage",
-          "plural": false,
           "selections": [
             {
-              "alias": "large",
-              "args": [
-                {
-                  "kind": "Literal",
-                  "name": "height",
-                  "value": 600
-                },
-                {
-                  "kind": "Literal",
-                  "name": "width",
-                  "value": 600
-                }
-              ],
-              "concreteType": "CroppedImageUrl",
-              "kind": "LinkedField",
-              "name": "cropped",
-              "plural": false,
-              "selections": (v0/*: any*/),
-              "storageKey": "cropped(height:600,width:600)"
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "src",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "srcSet",
+              "storageKey": null
             }
           ],
-          "storageKey": null
+          "storageKey": "cropped(height:100,width:100)"
         }
       ],
       "storageKey": null
@@ -242,8 +145,7 @@ return {
   "type": "Author",
   "abstractKey": null
 };
-})();
 
-(node as any).hash = "63768b15c3998db9d5efeb4509c5bc28";
+(node as any).hash = "37da9cb7c3fb6b7c24e82e3655da3744";
 
 export default node;
