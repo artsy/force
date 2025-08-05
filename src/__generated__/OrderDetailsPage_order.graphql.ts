@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<69fdaed6130599ad961cc3d55cede0e2>>
+ * @generated SignedSource<<4e4ba56142eb8dd542c53c86300abbee>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,13 +9,21 @@
 // @ts-nocheck
 
 import { ReaderFragment } from 'relay-runtime';
+export type DisplayTextsMessageTypeEnum = "APPROVED_PICKUP" | "APPROVED_SHIP" | "APPROVED_SHIP_EXPRESS" | "APPROVED_SHIP_STANDARD" | "APPROVED_SHIP_WHITE_GLOVE" | "CANCELED" | "COMPLETED_PICKUP" | "COMPLETED_SHIP" | "DECLINED_BY_BUYER" | "DECLINED_BY_SELLER" | "PAYMENT_FAILED" | "PROCESSING_PAYMENT_PICKUP" | "PROCESSING_PAYMENT_SHIP" | "PROCESSING_WIRE" | "REFUNDED" | "SHIPPED" | "SUBMITTED_OFFER" | "SUBMITTED_ORDER" | "UNKNOWN" | "%future added value";
+export type OrderModeEnum = "BUY" | "OFFER" | "%future added value";
+export type OrderSourceEnum = "ARTWORK_PAGE" | "INQUIRY" | "PARTNER_OFFER" | "PRIVATE_SALE" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type OrderDetailsPage_order$data = {
+  readonly displayTexts: {
+    readonly messageType: DisplayTextsMessageTypeEnum;
+  };
   readonly lineItems: ReadonlyArray<{
     readonly artwork: {
       readonly slug: string;
     } | null | undefined;
   } | null | undefined>;
+  readonly mode: OrderModeEnum;
+  readonly source: OrderSourceEnum;
   readonly " $fragmentSpreads": FragmentRefs<"Order2HelpLinks_order" | "OrderDetailsFulfillmentInfo_order" | "OrderDetailsHeader_order" | "OrderDetailsMessage_order" | "OrderDetailsOrderSummary_order" | "OrderDetailsPaymentInfo_order" | "OrderDetailsPricingBreakdown_order">;
   readonly " $fragmentType": "OrderDetailsPage_order";
 };
@@ -54,6 +62,38 @@ const node: ReaderFragment = {
               "storageKey": null
             }
           ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "mode",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "source",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "DisplayTexts",
+      "kind": "LinkedField",
+      "name": "displayTexts",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "messageType",
           "storageKey": null
         }
       ],
@@ -99,6 +139,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "d7d2d748011a620af04b554bd3b88ebd";
+(node as any).hash = "3c3294c95f195bc84077b2314e37da85";
 
 export default node;
