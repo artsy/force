@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9d5bd680baa05894daebff22f8611075>>
+ * @generated SignedSource<<385490947552b22461fbb7f6d242066f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -111,6 +111,19 @@ return {
             "storageKey": null
           },
           {
+            "alias": "metaDescriptionFallback",
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "format",
+                "value": "PLAIN"
+              }
+            ],
+            "kind": "ScalarField",
+            "name": "about",
+            "storageKey": "about(format:\"PLAIN\")"
+          },
+          {
             "alias": "metaImage",
             "args": null,
             "concreteType": "Image",
@@ -167,7 +180,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b0942285c49bddd85f183a99a3d7867d",
+    "cacheID": "37474f07285d4bf2d4058ae6c539a6d6",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -180,6 +193,7 @@ return {
         "fair.href": (v2/*: any*/),
         "fair.id": (v3/*: any*/),
         "fair.metaDescription": (v2/*: any*/),
+        "fair.metaDescriptionFallback": (v2/*: any*/),
         "fair.metaImage": {
           "enumValues": null,
           "nullable": true,
@@ -206,7 +220,7 @@ return {
     },
     "name": "FairSubApp_Query",
     "operationKind": "query",
-    "text": "query FairSubApp_Query {\n  fair(id: \"example\") {\n    ...FairSubApp_fair\n    id\n  }\n}\n\nfragment FairMeta_fair on Fair {\n  name\n  slug\n  metaDescription: summary\n  metaImage: image {\n    src: url(version: \"large_rectangle\")\n  }\n}\n\nfragment FairSubApp_fair on Fair {\n  ...FairMeta_fair\n  id\n  name\n  href\n  profile {\n    __typename\n    id\n  }\n}\n"
+    "text": "query FairSubApp_Query {\n  fair(id: \"example\") {\n    ...FairSubApp_fair\n    id\n  }\n}\n\nfragment FairMeta_fair on Fair {\n  name\n  slug\n  metaDescription: summary\n  metaDescriptionFallback: about(format: PLAIN)\n  metaImage: image {\n    src: url(version: \"large_rectangle\")\n  }\n}\n\nfragment FairSubApp_fair on Fair {\n  ...FairMeta_fair\n  id\n  name\n  href\n  profile {\n    __typename\n    id\n  }\n}\n"
   }
 };
 })();
