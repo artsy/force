@@ -278,9 +278,9 @@ If you're attempting to write a test that relies on time-related code, it can be
 
 ### Add smoke tests for new routes
 
-We use [Cypress.io](https://docs.cypress.io/guides/overview/why-cypress.html#In-a-nutshell) to ensure that whole sections of the app (e.g., a route like `/artist/:id`) work as expected. If adding a new route or feature that might benefit from a higher level of testing, check out [this folder](https://github.com/artsy/force/tree/main/cypress/e2e) for some patterns. We generally add a simple check just to ensure the route doesn't error out.
+We use [Playwright](https://playwright.dev/) to ensure that whole sections of the app (e.g., a route like `/artist/:id`) work as expected. If adding a new route or feature that might benefit from a higher level of testing, check out [this folder](https://github.com/artsy/force/tree/main/playwright/e2e) for some patterns. We generally add a simple check just to ensure the route doesn't error out.
 
-> Related: For more comprehensive end-to-end testing we use [Integrity](https://github.com/artsy/integrity), also built on Cypress. Check out [the repo](https://github.com/artsy/integrity) for more information.
+> Related: For more comprehensive end-to-end testing we use [Integrity](https://github.com/artsy/integrity). Check out [the repo](https://github.com/artsy/integrity) for more information.
 
 ### Adding global script tags
 
