@@ -60,9 +60,7 @@ export const Order2DeliveryOptionsCompletedView: React.FC<
         </Clickable>
       </Flex>
       <Spacer y={1} />
-      <Box>
-        <Spacer y={0.5} />
-
+      <Box ml="30px" mt={1}>
         <Text variant="sm-display" color="mono100">
           {label}
         </Text>

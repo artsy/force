@@ -83,9 +83,8 @@ export const Order2FulfillmentDetailsCompletedView: React.FC<
           </Text>
         </Clickable>
       </Flex>
-      <Spacer y={0.5} />
 
-      <Box>
+      <Box ml="30px" mt={1}>
         <ShippingContent fulfillmentDetails={fulfillmentDetails} />
       </Box>
     </Flex>
@@ -143,14 +142,10 @@ const ShippingContent = ({ fulfillmentDetails }) => {
       )}
       {(city || region || postalCode) && (
         <Text variant={["xs", "sm-display"]} color="mono100">
-          {[city, region, postalCode].filter(Boolean).join(", ")}
+          {[city, region, country, postalCode].filter(Boolean).join(", ")}
         </Text>
       )}
-      {country && (
-        <Text variant={["xs", "sm-display"]} color="mono100">
-          {country}
-        </Text>
-      )}
+
       {phoneNumber && (
         <Text variant={["xs", "sm-display"]} color="mono100">
           {phoneNumber.display}
