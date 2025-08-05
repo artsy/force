@@ -401,6 +401,129 @@ describe("Order2DeliveryForm", () => {
       ).toHaveBeenCalledWith({})
     })
 
+    it("unsets existing fulfillment option before setting address when fulfillment exists", async () => {
+      const { mockResolveLastOperation } = renderWithRelay({
+        Me: () => ({
+          order: {
+            ...baseOrderProps,
+            selectedFulfillmentOption: {
+              type: "SHIPPING_TBD",
+            },
+            fulfillmentDetails: {
+              name: "",
+              addressLine1: "",
+              addressLine2: "",
+              city: "",
+              region: "",
+              postalCode: "",
+              country: "US",
+              phoneNumber: {
+                countryCode: "us",
+                originalNumber: "",
+              },
+            },
+          },
+        }),
+      })
+
+      await waitFor(() => {
+        expect(screen.getByText("Delivery address")).toBeInTheDocument()
+      })
+
+      // Fill out the form with valid data
+      await userEvent.type(
+        screen.getByPlaceholderText("Add full name"),
+        "Jane Smith",
+      )
+      await userEvent.type(
+        screen.getByLabelText("Street address"),
+        "456 Oak Ave",
+      )
+      await userEvent.type(screen.getByLabelText("City"), "Los Angeles")
+      await userEvent.type(
+        screen.getByLabelText("State, region or province"),
+        "CA",
+      )
+      await userEvent.type(screen.getByLabelText("ZIP/Postal code"), "90210")
+      await userEvent.type(
+        screen.getByTestId("addressFormFields.phoneNumber"),
+        "5559876543",
+      )
+
+      // Submit the form
+      act(() => {
+        userEvent.click(screen.getByText("See Shipping Methods"))
+      })
+
+      // First mutation: unset existing fulfillment option
+      let unsetMutation
+      await act(async () => {
+        await waitFor(() => {
+          unsetMutation = mockResolveLastOperation({
+            unsetOrderFulfillmentOptionPayload: () =>
+              orderMutationSuccess(baseOrderProps, {
+                selectedFulfillmentOption: null,
+              }),
+          })
+        })
+        await flushPromiseQueue()
+      })
+
+      expect(unsetMutation.operationName).toBe(
+        "useOrder2UnsetOrderFulfillmentOptionMutation",
+      )
+      expect(unsetMutation.operationVariables.input).toEqual({
+        id: "order-id",
+      })
+
+      // Second mutation: set delivery address
+      let addressMutation
+      await act(async () => {
+        await waitFor(() => {
+          addressMutation = mockResolveLastOperation({
+            updateOrderShippingAddressPayload: () =>
+              orderMutationSuccess(baseOrderProps, {
+                selectedFulfillmentOption: null,
+                fulfillmentDetails: {
+                  name: "Jane Smith",
+                  addressLine1: "456 Oak Ave",
+                  city: "Los Angeles",
+                  region: "CA",
+                  postalCode: "90210",
+                  country: "US",
+                  phoneNumber: {
+                    countryCode: "us",
+                    originalNumber: "5559876543",
+                  },
+                },
+              }),
+          })
+        })
+        await flushPromiseQueue()
+      })
+
+      expect(addressMutation.operationName).toBe(
+        "useOrder2SetOrderDeliveryAddressMutation",
+      )
+      expect(addressMutation.operationVariables.input).toEqual({
+        id: "order-id",
+        buyerPhoneNumber: "5559876543",
+        buyerPhoneNumberCountryCode: "us",
+        shippingAddressLine1: "456 Oak Ave",
+        shippingAddressLine2: "",
+        shippingCity: "Los Angeles",
+        shippingRegion: "CA",
+        shippingPostalCode: "90210",
+        shippingCountry: "US",
+        shippingName: "Jane Smith",
+      })
+
+      // Should trigger context updates after both mutations complete
+      expect(
+        mockCheckoutContext.setFulfillmentDetailsComplete,
+      ).toHaveBeenCalledWith({})
+    })
+
     it("handles mutation errors gracefully", async () => {
       const { mockResolveLastOperation } = renderWithRelay({
         Me: () => ({
