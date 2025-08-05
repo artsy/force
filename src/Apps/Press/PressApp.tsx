@@ -25,7 +25,9 @@ const PressApp: FC<React.PropsWithChildren<PressAppProps>> = ({ page }) => {
 
       <Spacer y={4} />
 
-      <Text variant="xl">Artsy Press</Text>
+      <Text as="h1" variant="xl">
+        Artsy Press
+      </Text>
 
       <Text variant="xl" color="mono60">
         Contact{" "}
