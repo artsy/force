@@ -1927,6 +1927,7 @@ type Artist implements EntityWithFilterArtworksConnectionInterface & Node & Sear
   # The most recent show for an artist
   recentShow: String
   related: ArtistRelatedData
+  residencies: String
 
   # publications that have reviewed the artist
   reviewSources: String
@@ -22850,6 +22851,7 @@ input UpdateArtistMutationInput {
   deathday: String
   displayName: String
   first: String
+  foundations: String
   gender: String
   groupIndicator: ArtistGroupIndicator
   hometown: String
@@ -22860,6 +22862,7 @@ input UpdateArtistMutationInput {
   nationality: String
   public: Boolean
   recentShow: String
+  residencies: String
   reviewSources: String
   targetSupplyPriority: ArtistTargetSupplyPriority
   targetSupplyType: ArtistTargetSupplyType
