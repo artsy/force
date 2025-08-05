@@ -47,9 +47,10 @@ describe("ShowsCity", () => {
       ShowConnection: () => ({ totalCount: 44 }),
     })
 
-    const headings = container.querySelectorAll("h2")
-    expect(headings).toHaveLength(3)
+    expect(container.querySelectorAll("h1").length).toBe(1)
+    expect(container.querySelectorAll("h2").length).toBe(2)
 
+    const headings = container.querySelectorAll("h1, h2")
     const headingTexts = Array.from(headings).map(node =>
       node.textContent?.trim().replace(/\u00A0/g, " "),
     )

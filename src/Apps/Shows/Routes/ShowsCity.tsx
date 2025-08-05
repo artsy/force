@@ -116,7 +116,7 @@ export const ShowsCity: React.FC<React.PropsWithChildren<ShowsCityProps>> = ({
 
         {showOpeningThisWeek && (
           <>
-            <Text as="h2" variant="xl">
+            <Text as="h1" variant="xl">
               Opening This Week in {city.name}
               <>
                 &nbsp;
@@ -141,7 +141,7 @@ export const ShowsCity: React.FC<React.PropsWithChildren<ShowsCityProps>> = ({
 
         <Jump id={CURRENT_SHOWS_JUMP_ID} />
 
-        <Text as="h2" variant="xl">
+        <Text as={showOpeningThisWeek ? "h2" : "h1"} variant="xl">
           {isOnlinePage ? "Current Shows" : `Current Shows in ${city.name}`}
 
           {(city.currentShows?.totalCount ?? 0) > 0 && (
