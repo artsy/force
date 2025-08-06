@@ -4,12 +4,14 @@ import { setupAnalytics } from "Server/analytics/helpers"
 import { getOrInitUnleashClient } from "System/FeatureFlags/unleashClient"
 import { setupClientRouter } from "System/Router/clientRouter"
 import { setupSentryClient } from "System/Utils/setupSentryClient"
+import { setupGlobalErrorHandlers } from "System/Utils/setupGlobalErrorHandlers"
 import { setupWebVitals } from "System/Utils/setupWebVitals"
 import { hydrateRoot } from "react-dom/client"
 import { getAppRoutes } from "routes"
 
 setupAnalytics()
 setupSentryClient()
+setupGlobalErrorHandlers()
 setupWebVitals()
 
 // Rehydrate app
