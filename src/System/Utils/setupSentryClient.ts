@@ -9,7 +9,11 @@ import {
   startBrowserTracingNavigationSpan,
   startBrowserTracingPageLoadSpan,
 } from "@sentry/browser"
-import { ALLOWED_URLS, IGNORED_ERRORS } from "Server/analytics/sentryFilters"
+import {
+  ALLOWED_URLS,
+  DENIED_URLS,
+  IGNORED_ERRORS,
+} from "Server/analytics/sentryFilters"
 import { findRoutesByPath } from "System/Router/Utils/routeUtils"
 import { getENV } from "Utils/getENV"
 import type { Match } from "found"
@@ -26,7 +30,7 @@ export function setupSentryClient() {
 
   const sentryClient = init({
     allowUrls: ALLOWED_URLS,
-    // denyUrls: DENIED_URLS, // Temporarily disabled to debug "Load failed" errors
+    denyUrls: DENIED_URLS,
     dsn: getENV("SENTRY_PUBLIC_DSN"),
     ignoreErrors: IGNORED_ERRORS,
     tracesSampleRate: 0.08,
