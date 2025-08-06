@@ -1,4 +1,3 @@
-import { captureException } from "@sentry/browser"
 import { useEffect } from "react"
 
 type UseLoadScript = {
@@ -24,12 +23,6 @@ export const useLoadScript = ({
     script.id = id
     script.async = true
     script.onload = () => onReady?.()
-    script.onerror = () => {
-      captureException(new Error(`Script load failed: ${id}`), {
-        tags: { source: "script_load_failure" },
-        extra: { scriptId: id, src: script.src },
-      })
-    }
 
     if ("src" in rest) {
       script.src = rest.src
