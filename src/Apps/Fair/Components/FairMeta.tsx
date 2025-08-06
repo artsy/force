@@ -1,7 +1,7 @@
+import { MetaTags } from "Components/MetaTags"
 import { getENV } from "Utils/getENV"
 import type { FairMeta_fair$data } from "__generated__/FairMeta_fair.graphql"
 import type * as React from "react"
-import { Link, Meta, Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 
 interface FairMetaProps {
@@ -9,28 +9,15 @@ interface FairMetaProps {
 }
 
 const FairMeta: React.FC<React.PropsWithChildren<FairMetaProps>> = ({
-  fair: { name, slug, metaDescription, metaImage },
+  fair: { name, slug, metaDescription, metaDescriptionFallback, metaImage },
 }) => {
-  const title = `${name} | Artsy`
-  const href = `${getENV("APP_URL")}/fair/${slug}`
-
   return (
-    <>
-      <Title>{title}</Title>
-      <Meta property="og:title" content={title} />
-      {metaDescription && (
-        <>
-          <Meta name="description" content={metaDescription} />
-          <Meta property="og:description" content={metaDescription} />
-          <Meta property="twitter:description" content={metaDescription} />
-        </>
-      )}
-      <Link rel="canonical" href={href} />
-      <Meta property="og:url" content={href} />
-      <Meta property="og:type" content="website" />
-      <Meta property="twitter:card" content="summary" />
-      {metaImage && <Meta property="og:image" content={metaImage.src} />}
-    </>
+    <MetaTags
+      title={`${name} | Artsy`}
+      description={metaDescription || metaDescriptionFallback}
+      pathname={`${getENV("APP_URL")}/fair/${slug}`}
+      imageURL={metaImage?.src}
+    />
   )
 }
 
@@ -40,6 +27,7 @@ export const FairMetaFragmentContainer = createFragmentContainer(FairMeta, {
       name
       slug
       metaDescription: summary
+      metaDescriptionFallback: about(format: PLAIN)
       metaImage: image {
         src: url(version: "large_rectangle")
       }

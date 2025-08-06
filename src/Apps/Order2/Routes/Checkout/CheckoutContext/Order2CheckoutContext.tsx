@@ -528,13 +528,6 @@ const CheckoutLoadingManager: React.FC<{
   const isPartnerOfferLoadingComplete =
     !partnerOffer || !partnerOffer.timer.isLoading
 
-  const checks = [
-    minimumLoadingPassed,
-    orderValidated,
-    isExpressCheckoutLoaded,
-    isPartnerOfferLoadingComplete,
-  ]
-
   // Validate order and get into good initial checkout state on load
   // - artwork version match
   // - any resetting
@@ -559,16 +552,31 @@ const CheckoutLoadingManager: React.FC<{
     return () => clearTimeout(timeout)
   }, [])
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: one-time effect
   useEffect(() => {
     if (!isLoading) {
       return
     }
 
-    if (checks.every(Boolean)) {
+    if (
+      [
+        minimumLoadingPassed,
+        orderValidated,
+        isExpressCheckoutLoaded,
+        isPartnerOfferLoadingComplete,
+        isLoading,
+        setLoadingComplete,
+      ].every(Boolean)
+    ) {
       setLoadingComplete()
     }
-  }, [...checks])
+  }, [
+    minimumLoadingPassed,
+    orderValidated,
+    isExpressCheckoutLoaded,
+    isPartnerOfferLoadingComplete,
+    isLoading,
+    setLoadingComplete,
+  ])
 
   return <>{children}</>
 }

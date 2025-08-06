@@ -1,0 +1,636 @@
+import { act, screen, waitFor } from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
+import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import type { Order2DeliveryFormTestQuery } from "__generated__/Order2DeliveryFormTestQuery.graphql"
+import { graphql } from "react-relay"
+import {
+  orderMutationError,
+  orderMutationSuccess,
+} from "../../../__tests__/utils"
+import { Order2DeliveryForm } from "../Order2DeliveryForm"
+
+jest.unmock("react-relay")
+jest.useFakeTimers()
+
+const mockCheckoutContext = {
+  setCheckoutMode: jest.fn(),
+  checkoutTracking: {
+    clickedOrderProgression: jest.fn(),
+  },
+  setFulfillmentDetailsComplete: jest.fn(),
+}
+
+jest.mock("Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext", () => ({
+  useCheckoutContext: () => mockCheckoutContext,
+}))
+
+beforeEach(() => {
+  jest.clearAllMocks()
+  jest.runAllTimers()
+})
+
+const { renderWithRelay } = setupTestWrapperTL<Order2DeliveryFormTestQuery>({
+  Component: (props: any) => <Order2DeliveryForm order={props.me.order} />,
+  query: graphql`
+    query Order2DeliveryFormTestQuery @relay_test_operation {
+      me {
+        order(id: "order-id") {
+          ...Order2DeliveryForm_order
+        }
+      }
+    }
+  `,
+})
+
+describe("Order2DeliveryForm", () => {
+  const baseOrderProps = {
+    internalID: "order-id",
+    selectedFulfillmentOption: null,
+    availableShippingCountries: ["US", "CA", "GB"],
+    fulfillmentDetails: null,
+  }
+
+  it("renders the delivery form", async () => {
+    renderWithRelay({
+      Me: () => ({
+        order: {
+          ...baseOrderProps,
+        },
+      }),
+    })
+
+    await waitFor(() => {
+      expect(screen.getByText("Delivery address")).toBeInTheDocument()
+    })
+
+    expect(screen.getByText("See Shipping Methods")).toBeInTheDocument()
+    expect(screen.getByPlaceholderText("Add full name")).toBeInTheDocument()
+    expect(screen.getByLabelText("Street address")).toBeInTheDocument()
+    expect(screen.getByLabelText("City")).toBeInTheDocument()
+  })
+
+  it("pre-fills form with existing fulfillment details", async () => {
+    const fulfillmentDetails = {
+      name: "John Doe",
+      addressLine1: "123 Main St",
+      addressLine2: "Apt 4",
+      city: "New York",
+      region: "NY",
+      postalCode: "10001",
+      country: "US",
+      phoneNumber: {
+        countryCode: "us",
+        originalNumber: "5551234567",
+      },
+    }
+
+    renderWithRelay({
+      Me: () => ({
+        order: {
+          ...baseOrderProps,
+          fulfillmentDetails,
+        },
+      }),
+    })
+
+    await waitFor(() => {
+      expect(screen.getByDisplayValue("John Doe")).toBeInTheDocument()
+    })
+
+    expect(screen.getByDisplayValue("123 Main St")).toBeInTheDocument()
+    expect(screen.getByDisplayValue("Apt 4")).toBeInTheDocument()
+    expect(screen.getByDisplayValue("New York")).toBeInTheDocument()
+    expect(screen.getByDisplayValue("NY")).toBeInTheDocument()
+    expect(screen.getByDisplayValue("10001")).toBeInTheDocument()
+    expect(screen.getByDisplayValue("5551234567")).toBeInTheDocument()
+  })
+
+  describe("form submission", () => {
+    it("calls setCheckoutMode during form submission", async () => {
+      const { mockResolveLastOperation } = renderWithRelay({
+        Me: () => ({
+          order: {
+            ...baseOrderProps,
+            fulfillmentDetails: {
+              name: "",
+              addressLine1: "",
+              addressLine2: "",
+              city: "",
+              region: "",
+              postalCode: "",
+              country: "US",
+              phoneNumber: {
+                countryCode: "us",
+                originalNumber: "",
+              },
+            },
+          },
+        }),
+      })
+
+      await waitFor(() => {
+        expect(screen.getByText("Delivery address")).toBeInTheDocument()
+      })
+
+      // Fill out the form with valid data
+      await userEvent.type(
+        screen.getByPlaceholderText("Add full name"),
+        "Jane Smith",
+      )
+      await userEvent.type(
+        screen.getByLabelText("Street address"),
+        "456 Oak Ave",
+      )
+      await userEvent.type(screen.getByLabelText("City"), "Los Angeles")
+      await userEvent.selectOptions(screen.getByLabelText("Country"), "US")
+      await userEvent.type(
+        screen.getByLabelText("State, region or province"),
+        "CA",
+      )
+      await userEvent.type(screen.getByLabelText("ZIP/Postal code"), "90210")
+      await userEvent.type(
+        screen.getByTestId("addressFormFields.phoneNumber"),
+        "5559876543",
+      )
+
+      // Click the button to submit the form
+      act(() => {
+        userEvent.click(screen.getByText("See Shipping Methods"))
+      })
+
+      // Wait for the form submission to start and resolve the mutation
+      await act(async () => {
+        await waitFor(() => {
+          mockResolveLastOperation({
+            updateOrderShippingAddressPayload: () =>
+              orderMutationSuccess(baseOrderProps, {
+                fulfillmentDetails: {
+                  name: "Jane Smith",
+                  addressLine1: "456 Oak Ave",
+                  addressLine2: "",
+                  city: "Los Angeles",
+                  region: "CA",
+                  postalCode: "90210",
+                  country: "US",
+                  phoneNumber: {
+                    countryCode: "us",
+                    originalNumber: "5559876543",
+                  },
+                },
+              }),
+          })
+        })
+        await flushPromiseQueue()
+      })
+
+      // setCheckoutMode should be called during form submission
+      expect(mockCheckoutContext.setCheckoutMode).toHaveBeenCalledWith(
+        "standard",
+      )
+    })
+
+    it("triggers tracking when form is submitted with valid data", async () => {
+      const { mockResolveLastOperation } = renderWithRelay({
+        Me: () => ({
+          order: {
+            ...baseOrderProps,
+            fulfillmentDetails: {
+              name: "",
+              addressLine1: "",
+              addressLine2: "",
+              city: "",
+              region: "",
+              postalCode: "",
+              country: "US",
+              phoneNumber: {
+                countryCode: "us",
+                originalNumber: "",
+              },
+            },
+          },
+        }),
+      })
+
+      await waitFor(() => {
+        expect(screen.getByText("Delivery address")).toBeInTheDocument()
+      })
+
+      // Fill out the form with valid data
+      await userEvent.type(
+        screen.getByPlaceholderText("Add full name"),
+        "Jane Smith",
+      )
+      await userEvent.type(
+        screen.getByLabelText("Street address"),
+        "456 Oak Ave",
+      )
+      await userEvent.type(screen.getByLabelText("City"), "Los Angeles")
+      await userEvent.selectOptions(screen.getByLabelText("Country"), "US")
+      await userEvent.type(
+        screen.getByLabelText("State, region or province"),
+        "CA",
+      )
+      await userEvent.type(screen.getByLabelText("ZIP/Postal code"), "90210")
+      await userEvent.type(
+        screen.getByTestId("addressFormFields.phoneNumber"),
+        "5559876543",
+      )
+
+      // Click submit button
+      act(() => {
+        userEvent.click(screen.getByText("See Shipping Methods"))
+      })
+
+      // Wait for the form submission to start and resolve the mutation
+      await act(async () => {
+        await waitFor(() => {
+          mockResolveLastOperation({
+            updateOrderShippingAddressPayload: () =>
+              orderMutationSuccess(baseOrderProps, {
+                fulfillmentDetails: {
+                  name: "Jane Smith",
+                  addressLine1: "456 Oak Ave",
+                  addressLine2: "",
+                  city: "Los Angeles",
+                  region: "CA",
+                  postalCode: "90210",
+                  country: "US",
+                  phoneNumber: {
+                    countryCode: "us",
+                    originalNumber: "5559876543",
+                  },
+                },
+              }),
+          })
+        })
+        await flushPromiseQueue()
+      })
+
+      // Should trigger tracking during form submission
+      expect(mockCheckoutContext.setCheckoutMode).toHaveBeenCalledWith(
+        "standard",
+      )
+      expect(
+        mockCheckoutContext.checkoutTracking.clickedOrderProgression,
+      ).toHaveBeenCalled()
+    })
+
+    it("does not trigger tracking for invalid form data", async () => {
+      renderWithRelay({
+        Me: () => ({
+          order: {
+            ...baseOrderProps,
+          },
+        }),
+      })
+
+      await waitFor(() => {
+        expect(screen.getByText("Delivery address")).toBeInTheDocument()
+      })
+
+      // Try to submit without filling required fields
+      await userEvent.click(screen.getByText("See Shipping Methods"))
+
+      // Should not trigger tracking because form validation should prevent submission
+      expect(
+        mockCheckoutContext.checkoutTracking.clickedOrderProgression,
+      ).not.toHaveBeenCalled()
+      expect(
+        mockCheckoutContext.setFulfillmentDetailsComplete,
+      ).not.toHaveBeenCalled()
+    })
+
+    it("successfully submits form with valid data and triggers correct mutation", async () => {
+      const { mockResolveLastOperation } = renderWithRelay({
+        Me: () => ({
+          order: {
+            ...baseOrderProps,
+            fulfillmentDetails: {
+              name: "",
+              addressLine1: "",
+              addressLine2: "",
+              city: "",
+              region: "",
+              postalCode: "",
+              country: "US",
+              phoneNumber: {
+                countryCode: "us",
+                originalNumber: "",
+              },
+            },
+          },
+        }),
+      })
+
+      await waitFor(() => {
+        expect(screen.getByText("Delivery address")).toBeInTheDocument()
+      })
+
+      // Fill out the form with valid data
+      await userEvent.type(
+        screen.getByPlaceholderText("Add full name"),
+        "Jane Smith",
+      )
+      await userEvent.type(
+        screen.getByLabelText("Street address"),
+        "456 Oak Ave",
+      )
+      await userEvent.type(screen.getByLabelText("City"), "Los Angeles")
+      await userEvent.type(
+        screen.getByLabelText("State, region or province"),
+        "CA",
+      )
+      await userEvent.type(screen.getByLabelText("ZIP/Postal code"), "90210")
+      await userEvent.type(
+        screen.getByTestId("addressFormFields.phoneNumber"),
+        "5559876543",
+      )
+
+      act(() => {
+        userEvent.click(screen.getByText("See Shipping Methods"))
+      })
+
+      let mutation
+      await act(async () => {
+        await waitFor(() => {
+          mutation = mockResolveLastOperation({
+            updateOrderShippingAddressPayload: () =>
+              orderMutationSuccess(baseOrderProps, {
+                fulfillmentDetails: {
+                  name: "Jane Smith",
+                  addressLine1: "456 Oak Ave",
+                  addressLine2: "",
+                  city: "Los Angeles",
+                  region: "CA",
+                  postalCode: "90210",
+                  country: "US",
+                  phoneNumber: {
+                    countryCode: "us",
+                    originalNumber: "5559876543",
+                  },
+                },
+              }),
+          })
+        })
+        await flushPromiseQueue()
+      })
+
+      expect(mutation.operationName).toBe(
+        "useOrder2SetOrderDeliveryAddressMutation",
+      )
+      expect(mutation.operationVariables.input).toEqual({
+        id: "order-id",
+        buyerPhoneNumber: "5559876543",
+        buyerPhoneNumberCountryCode: "us",
+        shippingAddressLine1: "456 Oak Ave",
+        shippingAddressLine2: "",
+        shippingCity: "Los Angeles",
+        shippingRegion: "CA",
+        shippingPostalCode: "90210",
+        shippingCountry: "US",
+        shippingName: "Jane Smith",
+      })
+
+      // Should trigger tracking and context updates
+      expect(mockCheckoutContext.setCheckoutMode).toHaveBeenCalledWith(
+        "standard",
+      )
+      expect(
+        mockCheckoutContext.setFulfillmentDetailsComplete,
+      ).toHaveBeenCalledWith({})
+    })
+
+    it("unsets existing fulfillment option before setting address when fulfillment exists", async () => {
+      const { mockResolveLastOperation } = renderWithRelay({
+        Me: () => ({
+          order: {
+            ...baseOrderProps,
+            selectedFulfillmentOption: {
+              type: "SHIPPING_TBD",
+            },
+            fulfillmentDetails: {
+              name: "",
+              addressLine1: "",
+              addressLine2: "",
+              city: "",
+              region: "",
+              postalCode: "",
+              country: "US",
+              phoneNumber: {
+                countryCode: "us",
+                originalNumber: "",
+              },
+            },
+          },
+        }),
+      })
+
+      await waitFor(() => {
+        expect(screen.getByText("Delivery address")).toBeInTheDocument()
+      })
+
+      // Fill out the form with valid data
+      await userEvent.type(
+        screen.getByPlaceholderText("Add full name"),
+        "Jane Smith",
+      )
+      await userEvent.type(
+        screen.getByLabelText("Street address"),
+        "456 Oak Ave",
+      )
+      await userEvent.type(screen.getByLabelText("City"), "Los Angeles")
+      await userEvent.type(
+        screen.getByLabelText("State, region or province"),
+        "CA",
+      )
+      await userEvent.type(screen.getByLabelText("ZIP/Postal code"), "90210")
+      await userEvent.type(
+        screen.getByTestId("addressFormFields.phoneNumber"),
+        "5559876543",
+      )
+
+      // Submit the form
+      act(() => {
+        userEvent.click(screen.getByText("See Shipping Methods"))
+      })
+
+      // First mutation: unset existing fulfillment option
+      let unsetMutation
+      await act(async () => {
+        await waitFor(() => {
+          unsetMutation = mockResolveLastOperation({
+            unsetOrderFulfillmentOptionPayload: () =>
+              orderMutationSuccess(baseOrderProps, {
+                selectedFulfillmentOption: null,
+              }),
+          })
+        })
+        await flushPromiseQueue()
+      })
+
+      expect(unsetMutation.operationName).toBe(
+        "useOrder2UnsetOrderFulfillmentOptionMutation",
+      )
+      expect(unsetMutation.operationVariables.input).toEqual({
+        id: "order-id",
+      })
+
+      // Second mutation: set delivery address
+      let addressMutation
+      await act(async () => {
+        await waitFor(() => {
+          addressMutation = mockResolveLastOperation({
+            updateOrderShippingAddressPayload: () =>
+              orderMutationSuccess(baseOrderProps, {
+                selectedFulfillmentOption: null,
+                fulfillmentDetails: {
+                  name: "Jane Smith",
+                  addressLine1: "456 Oak Ave",
+                  city: "Los Angeles",
+                  region: "CA",
+                  postalCode: "90210",
+                  country: "US",
+                  phoneNumber: {
+                    countryCode: "us",
+                    originalNumber: "5559876543",
+                  },
+                },
+              }),
+          })
+        })
+        await flushPromiseQueue()
+      })
+
+      expect(addressMutation.operationName).toBe(
+        "useOrder2SetOrderDeliveryAddressMutation",
+      )
+      expect(addressMutation.operationVariables.input).toEqual({
+        id: "order-id",
+        buyerPhoneNumber: "5559876543",
+        buyerPhoneNumberCountryCode: "us",
+        shippingAddressLine1: "456 Oak Ave",
+        shippingAddressLine2: "",
+        shippingCity: "Los Angeles",
+        shippingRegion: "CA",
+        shippingPostalCode: "90210",
+        shippingCountry: "US",
+        shippingName: "Jane Smith",
+      })
+
+      // Should trigger context updates after both mutations complete
+      expect(
+        mockCheckoutContext.setFulfillmentDetailsComplete,
+      ).toHaveBeenCalledWith({})
+    })
+
+    it("handles mutation errors gracefully", async () => {
+      const { mockResolveLastOperation } = renderWithRelay({
+        Me: () => ({
+          order: {
+            ...baseOrderProps,
+            fulfillmentDetails: {
+              name: "",
+              addressLine1: "",
+              addressLine2: "",
+              city: "",
+              region: "",
+              postalCode: "",
+              country: "US",
+              phoneNumber: {
+                countryCode: "us",
+                originalNumber: "",
+              },
+            },
+          },
+        }),
+      })
+
+      await waitFor(() => {
+        expect(screen.getByText("Delivery address")).toBeInTheDocument()
+      })
+
+      // Fill out the form with valid data, will trigger server error via mock
+      await userEvent.type(
+        screen.getByPlaceholderText("Add full name"),
+        "Jane Smith",
+      )
+      await userEvent.type(
+        screen.getByLabelText("Street address"),
+        "456 Oak Ave",
+      )
+      await userEvent.type(screen.getByLabelText("City"), "Los Angeles")
+      await userEvent.type(
+        screen.getByLabelText("State, region or province"),
+        "CA",
+      )
+      await userEvent.type(screen.getByLabelText("ZIP/Postal code"), "90210")
+      await userEvent.type(
+        screen.getByTestId("addressFormFields.phoneNumber"),
+        "5559876543",
+      )
+
+      // Submit the form
+      act(() => {
+        userEvent.click(screen.getByText("See Shipping Methods"))
+      })
+
+      let mutation
+      await act(async () => {
+        await waitFor(() => {
+          mutation = mockResolveLastOperation({
+            updateOrderShippingAddressPayload: () =>
+              orderMutationError({ code: "missing_postal_code" }),
+          })
+        })
+        await flushPromiseQueue()
+      })
+
+      expect(mutation.operationName).toBe(
+        "useOrder2SetOrderDeliveryAddressMutation",
+      )
+
+      // Should display error message
+      await waitFor(() => {
+        expect(screen.getByText("Postal code is required")).toBeInTheDocument()
+      })
+
+      // Should not trigger context updates when mutation fails
+      expect(
+        mockCheckoutContext.setFulfillmentDetailsComplete,
+      ).not.toHaveBeenCalled()
+    })
+  })
+
+  describe("form validation", () => {
+    it("shows validation errors for required fields", async () => {
+      renderWithRelay({
+        Me: () => ({
+          order: {
+            ...baseOrderProps,
+            fulfillmentDetails: null, // Ensure clean state
+          },
+        }),
+      })
+
+      await waitFor(() => {
+        expect(screen.getByText("Delivery address")).toBeInTheDocument()
+      })
+
+      // Try to submit without filling required fields
+      act(() => {
+        userEvent.click(screen.getByText("See Shipping Methods"))
+      })
+
+      // Advance timers to trigger validation
+      act(() => {
+        jest.advanceTimersByTime(250)
+      })
+
+      await waitFor(() => {
+        expect(screen.getByText("Full name is required")).toBeInTheDocument()
+        expect(screen.getByText("Phone number is required")).toBeInTheDocument()
+      })
+    })
+  })
+})

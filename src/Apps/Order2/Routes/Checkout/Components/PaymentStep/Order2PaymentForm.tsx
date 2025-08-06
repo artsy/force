@@ -25,7 +25,6 @@ import type {
   StripePaymentElementOptions,
 } from "@stripe/stripe-js"
 import { Collapse } from "Apps/Order/Components/Collapse"
-import { useUpdateOrderMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useUpdateOrderMutation"
 import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
 import { useSetPayment } from "Apps/Order/Mutations/useSetPayment"
 import {
@@ -37,6 +36,7 @@ import {
   MailtoOrderSupport,
 } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import { useOrder2SetOrderPaymentMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderPaymentMutation"
 
 import { CreateBankDebitSetupForOrder } from "Components/BankDebitForm/Mutations/CreateBankDebitSetupForOrder"
 import { type Brand, BrandCreditCardIcon } from "Components/BrandCreditCardIcon"
@@ -141,8 +141,9 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
   const stripe = useStripe()
   const elements = useElements()
   const environment = useRelayEnvironment()
-  const updateOrderMutation = useUpdateOrderMutation()
-  const setPaymentMutation = useSetPayment()
+  const setPaymentMutation = useOrder2SetOrderPaymentMutation()
+  // TODO: Update from legacy commerceSetPayment mutation
+  const legacySetPaymentMutation = useSetPayment()
   const createBankDebitSetupForOrder = CreateBankDebitSetupForOrder()
   const { setConfirmationToken, checkoutTracking, setSavedCreditCard, steps } =
     useCheckoutContext()
@@ -334,7 +335,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       if (selectedPaymentMethod === "stripe-card") {
         try {
           const updateOrderPaymentMethodResult =
-            await updateOrderMutation.submitMutation({
+            await setPaymentMutation.submitMutation({
               variables: {
                 input: {
                   id: order.internalID,
@@ -369,7 +370,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
           })
 
           const updateOrderPaymentMethodResult =
-            await updateOrderMutation.submitMutation({
+            await setPaymentMutation.submitMutation({
               variables: {
                 input: {
                   id: order.internalID,
@@ -411,20 +412,26 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       setIsSubmittingToStripe(true)
 
       try {
-        const orderOrError = (
-          await setPaymentMutation.submitMutation({
-            variables: {
-              input: {
-                id: order.internalID,
-                paymentMethod: "CREDIT_CARD",
-                paymentMethodId: selectedCreditCard?.internalID,
-              },
+        const result = await legacySetPaymentMutation.submitMutation({
+          variables: {
+            input: {
+              id: order.internalID,
+              paymentMethod: "CREDIT_CARD",
+              paymentMethodId: selectedCreditCard?.internalID,
+              // Note: paymentMethodId is not supported in updateOrder mutation
+              // Saved credit card functionality may need a different approach
             },
-          })
-        ).commerceSetPayment?.orderOrError
+          },
+        })
 
-        if (orderOrError?.error) {
-          throw orderOrError.error
+        if (
+          result?.commerceSetPayment?.orderOrError?.error ||
+          !result?.commerceSetPayment?.orderOrError?.order
+        ) {
+          throw (
+            result?.commerceSetPayment?.orderOrError.error ||
+            new Error("Failed to set payment method")
+          )
         }
       } catch (error) {
         logger.error("Error while updating order payment method", error)

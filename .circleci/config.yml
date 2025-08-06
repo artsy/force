@@ -2,7 +2,6 @@ version: 2.1
 
 orbs:
   artsy-remote-docker: artsy/remote-docker@volatile
-  cypress: cypress-io/cypress@3.4.3
   hokusai: artsy/hokusai@volatile
   horizon: artsy/release@volatile
   slack: circleci/slack@4.15.0
@@ -75,54 +74,6 @@ jobs:
           path: ./reports/junit/
 
   smoke-tests:
-    executor:
-      name: cypress/default
-      node-version: 22.14.0
-    working_directory: ~/app
-    parallelism: 6
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "yarn.lock" }}
-            - v1-dependencies-
-      - node/install-packages:
-          pkg-manager: yarn
-      - restore_cache:
-          keys:
-            - cypress-cache-{{ .Branch }}-{{ checksum "package.json" }}
-            - cypress-cache-
-      - run:
-          name: Install Cypress
-          command: |
-            npx cypress install
-      - save_cache:
-          paths:
-            - ~/.cache/Cypress
-          key: cypress-cache-{{ .Branch }}-{{ checksum "package.json" }}
-      - run:
-          name: Run Smoke Tests
-          command: |
-            if [ ! -f ".env" ]; then
-              echo "Using .env.oss as .env"
-              cp .env.oss .env
-            fi
-
-            # Remove `nohup` to diagnose server start issues
-            nohup yarn start &
-
-            while ! curl --output /dev/null --silent --head --fail http://localhost:4000; do
-              sleep 1
-            done
-
-            TESTS=$(circleci tests glob "cypress/e2e/**/*" | circleci tests split | paste -sd ',')
-            npx cypress run --spec $TESTS
-      - store_artifacts:
-          path: cypress/videos
-      - store_artifacts:
-          path: cypress/screenshots
-
-  playwright-smoke-tests:
     docker:
       - image: mcr.microsoft.com/playwright:v1.54.2-noble
     working_directory: ~/app
@@ -218,21 +169,23 @@ jobs:
 
   smoke-test-on-live-env:
     docker:
-      - image: cypress/included:14.5.3
-        environment:
-          TERM: xterm
-    working_directory: /usr/src/app
+      - image: mcr.microsoft.com/playwright:v1.54.1-noble
+    working_directory: ~/app
     parallelism: 6
     steps:
       - checkout
+      - node/install-packages:
+          pkg-manager: yarn
       - run:
-          name: Install Dependencies
-          command: yarn install
-      - run: |
-          TESTS=$(circleci tests glob "cypress/e2e/**/*" | circleci tests split | paste -sd ',')
-          ./node_modules/.bin/cypress run --config baseUrl=$SMOKE_TEST_TARGET --spec $TESTS
+          name: Run Playwright Smoke Tests on Live Environment
+          command: |
+            TESTS=$(circleci tests glob "playwright/e2e/**/*" | circleci tests split | paste -sd ' ')
+            PLAYWRIGHT_BASE_URL=$SMOKE_TEST_TARGET npx playwright test $TESTS --config playwright.config.ts
       - store_artifacts:
-          path: cypress/screenshots
+          path: playwright-report
+      - store_artifacts:
+          path: test-results
+
 
   create_or_update_review_app:
     executor: hokusai/beta
@@ -315,12 +268,8 @@ workflows:
           pkg-manager: yarn
           yarn-run: bundle-stats
 
-      # Cypress e2e tests
-      - smoke-tests:
-          <<: *not_staging_or_release
-
       # Playwright e2e tests
-      - playwright-smoke-tests:
+      - smoke-tests:
           <<: *not_staging_or_release
 
       - artsy-remote-docker/build:
@@ -341,7 +290,6 @@ workflows:
             - type-check
             - test
             - smoke-tests
-            - playwright-smoke-tests
           post-steps:
             - slack/notify:
                 event: fail

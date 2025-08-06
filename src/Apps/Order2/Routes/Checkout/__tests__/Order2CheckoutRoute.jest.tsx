@@ -9,12 +9,15 @@ import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import mockStripe from "DevTools/mockStripe"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { Order2CheckoutRouteTestQuery } from "__generated__/Order2CheckoutRouteTestQuery.graphql"
-import { merge } from "lodash"
 import { useEffect } from "react"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { Order2ExpressCheckout as MockExpressCheckout } from "../Components/ExpressCheckout/Order2ExpressCheckout"
 import { Order2CheckoutRoute } from "../Order2CheckoutRoute"
+import {
+  orderMutationSuccess,
+  orderMutationError,
+} from "Apps/Order2/Routes/Checkout/__tests__/utils"
 
 jest.unmock("react-relay")
 jest.useFakeTimers()
@@ -144,23 +147,6 @@ const { renderWithRelay } = setupTestWrapperTL<Order2CheckoutRouteTestQuery>({
     }
   `,
 })
-
-const orderMutationSuccess = (initialValues, newValues) => {
-  return {
-    orderOrError: {
-      __typename: "OrderMutationSuccess",
-      order: merge(initialValues, newValues),
-    },
-  }
-}
-const orderMutationError = error => {
-  return {
-    orderOrError: {
-      __typename: "OrderMutationError",
-      mutationError: error,
-    },
-  }
-}
 
 /**
  *  Assert that the given events were tracked in order.
@@ -306,7 +292,7 @@ const helpers = {
           }),
       })
       expect(updateOrderPaymentMethodMutation.operationName).toBe(
-        "useUpdateOrderMutation",
+        "useOrder2SetOrderPaymentMutation",
       )
       expect(updateOrderPaymentMethodMutation.operationVariables.input).toEqual(
         {
@@ -335,7 +321,9 @@ const helpers = {
         })
       })
 
-      expect(submitOrderMutation.operationName).toBe("useSubmitOrderMutation")
+      expect(submitOrderMutation.operationName).toBe(
+        "useOrder2SubmitOrderMutation",
+      )
       expect(submitOrderMutation.operationVariables.input).toEqual({
         id: "order-id",
         confirmationToken: "confirmation-token-id",
@@ -535,7 +523,7 @@ describe("Order2CheckoutRoute", () => {
           })
 
           expect(setFulfilmentTypeOperation.operationName).toBe(
-            "useSetOrderFulfillmentOptionMutation",
+            "useOrder2SetOrderFulfillmentOptionMutation",
           )
           expect(setFulfilmentTypeOperation.operationVariables.input).toEqual({
             fulfillmentOption: {
@@ -564,7 +552,7 @@ describe("Order2CheckoutRoute", () => {
           })
 
           expect(setPickupDetailsOperation.operationName).toBe(
-            "useSetOrderPickupDetailsMutation",
+            "useOrder2SetOrderPickupDetailsMutation",
           )
           expect(setPickupDetailsOperation.operationVariables.input).toEqual({
             id: "order-id",
@@ -640,7 +628,7 @@ describe("Order2CheckoutRoute", () => {
                 }),
             })
           expect(updateOrderPaymentMethodMutation.operationName).toBe(
-            "useUpdateOrderMutation",
+            "useOrder2SetOrderPaymentMutation",
           )
           expect(
             updateOrderPaymentMethodMutation.operationVariables.input,
@@ -668,7 +656,7 @@ describe("Order2CheckoutRoute", () => {
           })
 
           expect(submitOrderMutation.operationName).toBe(
-            "useSubmitOrderMutation",
+            "useOrder2SubmitOrderMutation",
           )
           expect(submitOrderMutation.operationVariables.input).toEqual({
             id: "order-id",
@@ -961,7 +949,7 @@ describe("Order2CheckoutRoute", () => {
       })
 
       expect(setShippingAddressOperation.operationName).toBe(
-        "useOrder2UpdateShippingAddressMutation",
+        "useOrder2SetOrderDeliveryAddressMutation",
       )
 
       // Complete shipping option step
@@ -987,7 +975,7 @@ describe("Order2CheckoutRoute", () => {
       })
 
       expect(setFulfillmentOptionOperation.operationName).toBe(
-        "useOrder2SetFulfillmentOptionMutation",
+        "useOrder2SetOrderFulfillmentOptionMutation",
       )
 
       await helpers.fillInMockCreditCard({
@@ -1157,7 +1145,7 @@ describe("Order2CheckoutRoute", () => {
       })
 
       expect(mutation.operationName).toBe(
-        "useOrder2UpdateShippingAddressMutation",
+        "useOrder2SetOrderDeliveryAddressMutation",
       )
 
       jest.advanceTimersByTime(250)
