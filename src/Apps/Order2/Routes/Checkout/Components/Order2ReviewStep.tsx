@@ -4,6 +4,7 @@ import { Box, Button, Flex, Image, Message, Spacer, Text } from "@artsy/palette"
 import { useStripe } from "@stripe/react-stripe-js"
 import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
 import { type Dialog, injectDialog } from "Apps/Order/Dialogs"
+import { useSetPaymentByStripeIntent } from "Apps/Order/Mutations/useSetPaymentByStripeIntentMutation"
 import {
   CheckoutStepName,
   CheckoutStepState,
@@ -34,11 +35,14 @@ const Order2ReviewStepComponent: React.FC<Order2ReviewStepProps> = ({
 }) => {
   const orderData = useFragment(FRAGMENT, order)
   const submitOrderMutation = useOrder2SubmitOrderMutation()
+  const { submitMutation: setPaymentByStripeIntentMutation } =
+    useSetPaymentByStripeIntent()
   const stripe = useStripe()
   const {
     steps,
     confirmationToken,
     saveCreditCard,
+    setupIntentId,
     redirectToOrderDetails,
     checkoutTracking,
   } = useCheckoutContext()
@@ -73,6 +77,25 @@ const Order2ReviewStepComponent: React.FC<Order2ReviewStepProps> = ({
     setLoading(true)
 
     try {
+      // Call setPaymentByStripeIntentMutation if setupIntentId exists (for bank accounts)
+      if (setupIntentId) {
+        console.log("===Setting payment by Stripe intent ID:", setupIntentId)
+        try {
+          await setPaymentByStripeIntentMutation({
+            variables: {
+              input: {
+                id: orderData.internalID,
+                oneTimeUse: !saveCreditCard,
+                setupIntentId,
+              },
+            },
+          })
+        } catch (error) {
+          logger.error("Error calling setPaymentByStripeIntentMutation", error)
+          // Continue with order submission even if this fails
+        }
+      }
+
       const submitOrderResult = await submitOrderMutation.submitMutation({
         variables: {
           input: {

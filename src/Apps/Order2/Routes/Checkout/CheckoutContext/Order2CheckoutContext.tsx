@@ -68,6 +68,7 @@ export interface Order2CheckoutModel {
   saveCreditCard: boolean
   savedCreditCard: SavedCreditCard | null
   checkoutMode: CheckoutMode
+  setupIntentId: string | null
 
   // External data - passed in as runtime props
   checkoutTracking: ReturnType<typeof useCheckoutTracking>
@@ -98,6 +99,7 @@ export interface Order2CheckoutModel {
   setSavedCreditCard: Action<this, { savedCreditCard: SavedCreditCard }>
   redirectToOrderDetails: Action<this>
   setCheckoutMode: Action<this, CheckoutMode>
+  setSetupIntentId: Action<this, string | null>
 }
 
 export const Order2CheckoutContext: ReturnType<
@@ -113,6 +115,7 @@ export const Order2CheckoutContext: ReturnType<
   saveCreditCard: true,
   savedCreditCard: null,
   checkoutMode: "standard",
+  setupIntentId: null,
   steps: [],
 
   // Required runtime props - will be provided by Provider
@@ -449,6 +452,10 @@ export const Order2CheckoutContext: ReturnType<
     const orderDetailsURL = `/orders/${orderID}/details`
     state.router.replace(orderDetailsURL)
   }),
+
+  setSetupIntentId: action((state, setupIntentId) => {
+    state.setupIntentId = setupIntentId
+  }),
 }))
 
 interface Order2CheckoutContextProviderProps {
@@ -481,6 +488,7 @@ export const Order2CheckoutContextProvider: React.FC<
     saveCreditCard: true,
     savedCreditCard: null,
     checkoutMode: "standard",
+    setupIntentId: null,
     steps: [],
 
     // Override with initialState values
@@ -701,6 +709,7 @@ const initialStateForOrder = (
       : null,
     saveCreditCard: true,
     savedCreditCard: null,
+    setupIntentId: null,
     steps,
     checkoutMode: (savedCheckoutMode === "express"
       ? "express"

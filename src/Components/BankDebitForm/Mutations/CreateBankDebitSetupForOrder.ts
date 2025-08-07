@@ -9,6 +9,7 @@ export const CreateBankDebitSetupForOrder = () => {
         $input: CommerceCreateBankDebitSetupForOrderInput!
       ) {
         commerceCreateBankDebitSetupForOrder(input: $input) {
+          setupIntentId
           actionOrError {
             __typename
             ... on CommerceOrderRequiresAction {

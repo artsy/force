@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6d73d0c9ed0c3d7e601f2290c1e72707>>
+ * @generated SignedSource<<a78de7c2297083d358b547948122ea43>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -35,6 +35,7 @@ export type CreateBankDebitSetupForOrderMutation$data = {
       // value in case none of the concrete values match.
       readonly __typename: "%other";
     };
+    readonly setupIntentId: string | null | undefined;
   } | null | undefined;
 };
 export type CreateBankDebitSetupForOrderMutation = {
@@ -65,6 +66,13 @@ v1 = [
     "name": "commerceCreateBankDebitSetupForOrder",
     "plural": false,
     "selections": [
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "setupIntentId",
+        "storageKey": null
+      },
       {
         "alias": null,
         "args": null,
@@ -169,16 +177,16 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "9cf855e663f6b932f59ad675bdfa6d22",
+    "cacheID": "8f34ffed44a9952755c0180888b405dd",
     "id": null,
     "metadata": {},
     "name": "CreateBankDebitSetupForOrderMutation",
     "operationKind": "mutation",
-    "text": "mutation CreateBankDebitSetupForOrderMutation(\n  $input: CommerceCreateBankDebitSetupForOrderInput!\n) {\n  commerceCreateBankDebitSetupForOrder(input: $input) {\n    actionOrError {\n      __typename\n      ... on CommerceOrderRequiresAction {\n        actionData {\n          clientSecret\n        }\n      }\n      ... on CommerceOrderWithMutationFailure {\n        error {\n          code\n          data\n          type\n        }\n      }\n    }\n  }\n}\n"
+    "text": "mutation CreateBankDebitSetupForOrderMutation(\n  $input: CommerceCreateBankDebitSetupForOrderInput!\n) {\n  commerceCreateBankDebitSetupForOrder(input: $input) {\n    setupIntentId\n    actionOrError {\n      __typename\n      ... on CommerceOrderRequiresAction {\n        actionData {\n          clientSecret\n        }\n      }\n      ... on CommerceOrderWithMutationFailure {\n        error {\n          code\n          data\n          type\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "88eeaa4f917c312fb836ede4caa58b0f";
+(node as any).hash = "fe44966327915fe7e91f2a05b2070c84";
 
 export default node;
