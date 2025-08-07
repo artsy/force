@@ -31,7 +31,6 @@ import type {
 import { Collapse } from "Apps/Order/Components/Collapse"
 import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
 import { useSetPayment } from "Apps/Order/Mutations/useSetPayment"
-import { useSetPaymentByStripeIntent } from "Apps/Order/Mutations/useSetPaymentByStripeIntentMutation"
 import {
   CheckoutStepName,
   CheckoutStepState,
@@ -48,6 +47,7 @@ import { CreateBankDebitSetupForOrder } from "Components/BankDebitForm/Mutations
 import { type Brand, BrandCreditCardIcon } from "Components/BrandCreditCardIcon"
 import { FadeInBox } from "Components/FadeInBox"
 import { RouterLink } from "System/Components/RouterLink"
+import { useRouter } from "System/Hooks/useRouter"
 import { extractNodes } from "Utils/extractNodes"
 import { getENV } from "Utils/getENV"
 import createLogger from "Utils/logger"
@@ -152,9 +152,8 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
   // TODO: Update from legacy commerceSetPayment mutation
   const legacySetPaymentMutation = useSetPayment()
   const createBankDebitSetupForOrder = CreateBankDebitSetupForOrder()
-  const { submitMutation: setPaymentByStripeIntentMutation } =
-    useSetPaymentByStripeIntent()
 
+  const { router } = useRouter()
   const {
     setConfirmationToken,
     checkoutTracking,
@@ -175,6 +174,93 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
   >(null)
   const [saveCreditCard, setSaveCreditCard] = useState(true)
   const [selectedCreditCard, setSelectedCreditCard] = useState<any | null>(null)
+
+  // Reusable function to fetch confirmation token and set it in context
+  const fetchAndSetConfirmationToken = async (tokenId: string) => {
+    try {
+      const response =
+        await fetchQuery<Order2PaymentFormConfirmationTokenQuery>(
+          environment,
+          graphql`
+            query Order2PaymentFormConfirmationTokenQuery($id: String!) {
+              me {
+                confirmationToken(id: $id) {
+                  paymentMethodPreview {
+                    __typename
+                    ... on Card {
+                      displayBrand
+                      last4
+                    }
+                    ... on USBankAccount {
+                      bankName
+                      last4
+                    }
+                  }
+                }
+              }
+            }
+          `,
+          { id: tokenId },
+          { fetchPolicy: "store-or-network" },
+        ).toPromise()
+
+      setConfirmationToken({
+        confirmationToken: {
+          id: tokenId,
+          ...response?.me?.confirmationToken,
+        },
+        saveCreditCard,
+      })
+
+      return response
+    } catch (error) {
+      logger.error("Failed to fetch confirmation token:", error)
+      // Set basic confirmation token even if fetch fails
+      setConfirmationToken({
+        confirmationToken: {
+          id: tokenId,
+        },
+        saveCreditCard,
+      })
+      throw error
+    }
+  }
+
+  // Check URL parameters for returning from Stripe setup
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search)
+    const setupIntentParam = urlParams.get("setup_intent")
+    const redirectStatus = urlParams.get("redirect_status")
+
+    if (setupIntentParam && redirectStatus === "succeeded") {
+      console.log(
+        "===Returning from Stripe with setup_intent:",
+        setupIntentParam,
+      )
+      setSetupIntentId(setupIntentParam)
+      setIsSubmittingToStripe(false)
+
+      // Get confirmation token from URL if available
+      const confirmationTokenParam = urlParams.get("confirmation_token")
+      if (confirmationTokenParam) {
+        // Fetch and set confirmation token
+        fetchAndSetConfirmationToken(confirmationTokenParam).catch(error => {
+          console.error(
+            "Failed to set confirmation token after redirect:",
+            error,
+          )
+        })
+      }
+
+      // Clean up URL parameters
+      const newUrl = new URL(window.location.href)
+      newUrl.searchParams.delete("setup_intent")
+      newUrl.searchParams.delete("setup_intent_client_secret")
+      newUrl.searchParams.delete("redirect_status")
+      newUrl.searchParams.delete("confirmation_token")
+      router.replace(newUrl.pathname + newUrl.search)
+    }
+  }, [setSetupIntentId, router])
 
   const isSelectedPaymentMethodStripe = selectedPaymentMethod?.match(/^stripe/)
   const savedCreditCards = extractNodes(me.creditCards)
@@ -325,34 +411,9 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         return
       }
 
-      const response =
-        await fetchQuery<Order2PaymentFormConfirmationTokenQuery>(
-          environment,
-          graphql`
-            query Order2PaymentFormConfirmationTokenQuery($id: String!) {
-              me {
-                confirmationToken(id: $id) {
-                  paymentMethodPreview {
-                    __typename
-                    ... on Card {
-                      displayBrand
-                      last4
-                    }
-                    ... on USBankAccount {
-                      bankName
-                      last4
-                    }
-                  }
-                }
-              }
-            }
-          `,
-          { id: confirmationToken.id },
-          { fetchPolicy: "store-or-network" },
-        ).toPromise()
+      const response = await fetchAndSetConfirmationToken(confirmationToken.id)
 
       if (!response) {
-        logger.error("Failed to fetch confirmation token from Exchange")
         handleError({ message: defaultErrorMessage })
         return
       }
@@ -374,13 +435,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
             updateOrderPaymentMethodResult.updateOrder?.orderOrError,
           )
 
-          setConfirmationToken({
-            confirmationToken: {
-              id: confirmationToken.id,
-              ...response?.me?.confirmationToken,
-            },
-            saveCreditCard,
-          })
+          // Confirmation token is already set by fetchAndSetConfirmationToken above
         } catch (error) {
           logger.error("Error while updating order payment method", error)
           handleError({ message: defaultErrorMessage })
@@ -433,7 +488,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
           ) {
             const return_url = `${getENV("APP_URL")}/orders2/${
               order.internalID
-            }/checkout`
+            }/checkout?setup_intent_id=${setupIntentId}&confirmation_token=${confirmationToken.id}`
             window.removeEventListener("beforeunload", preventHardReload)
 
             // This will redirect to Stripe for bank verification, no code after this will execute
@@ -454,17 +509,6 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
           }
         } catch (error) {
           handleError({ message: defaultErrorMessage })
-        } finally {
-          setIsSubmittingToStripe(false)
-          console.log("========= finally")
-
-          setConfirmationToken({
-            confirmationToken: {
-              id: confirmationToken.id,
-              ...response?.me?.confirmationToken,
-            },
-            saveCreditCard,
-          })
         }
       }
     }
