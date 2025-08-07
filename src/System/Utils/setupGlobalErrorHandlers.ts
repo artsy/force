@@ -1,66 +1,36 @@
 import { captureException } from "@sentry/browser"
 
 export function setupGlobalErrorHandlers() {
-  // Handle resource loading failures (scripts, images, stylesheets, etc.)
-  window.addEventListener(
-    "error",
-    event => {
-      const target = event.target as
-        | (HTMLElement & { src?: string; href?: string })
-        | null
-
-      // Only track resource loading errors, not JavaScript runtime errors
-      if (target && target !== (window as any)) {
-        const resourceUrl = target.src || target.href || "unknown"
-        const resourceType = target.tagName?.toLowerCase() || "unknown"
-
-        captureException(
-          new Error(`Resource load failed: ${event.message || "Load failed"}`),
-          {
-            tags: {
-              source: "resource_load_failure",
-              resource_type: resourceType,
-            },
-            extra: {
-              resourceUrl,
-              resourceType,
-              errorMessage: event.message,
-              filename: event.filename,
-              lineno: event.lineno,
-              colno: event.colno,
-              targetElement: target.outerHTML,
-            },
-          },
-        )
-      }
-    },
-    // Use capture phase to catch all resource errors
-    true,
-  )
-
-  // Handle unhandled promise rejections (network failures, etc.)
+  // Handle unhandled promise rejections (TEMPORARILY catch ALL to debug "Load failed")
   window.addEventListener("unhandledrejection", event => {
     const reason = event.reason
 
-    // Check if it's a network-related error
-    if (
-      reason instanceof Error &&
-      (reason.message.includes("Load failed") ||
-        reason.message.includes("Failed to fetch") ||
-        reason.message.includes("Network request failed") ||
-        reason.name === "NetworkError")
-    ) {
-      captureException(reason, {
+    // TEMPORARILY catch ALL unhandled rejections to identify "Load failed" source
+    // TODO: Remove this catch-all once we identify the root cause
+    captureException(
+      reason instanceof Error
+        ? reason
+        : new Error("Unhandled promise rejection"),
+      {
         tags: {
-          source: "network_failure",
-          error_type: "unhandled_rejection",
+          source: "all_unhandled_rejections",
+          error_type: "debug_catch_all",
+          reason_type: typeof reason,
+          is_error_instance: reason instanceof Error ? "yes" : "no",
         },
         extra: {
-          promiseRejectionReason: reason.message,
-          stack: reason.stack,
+          originalReason: reason,
+          reasonMessage: reason?.message || String(reason),
+          reasonName: reason?.name,
+          stack: reason?.stack,
+          reasonConstructor: reason?.constructor?.name,
+          reasonStringified: JSON.stringify(
+            reason,
+            Object.getOwnPropertyNames(reason),
+          ),
         },
-      })
-    }
+      },
+    )
   })
 
   // TODO: Consider adding additional error tracking in follow-up PRs:
