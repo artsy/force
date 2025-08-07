@@ -1,3 +1,5 @@
+import qs from "qs"
+
 /**
  * Filter parameters that should be included in canonical URLs and meta tags.
  * These represent meaningful filters that create distinct, indexable content.
@@ -64,32 +66,23 @@ export function getFilterParams(
   searchParams: URLSearchParams,
   allowedParams: readonly string[] = ALL_FILTER_PARAMS,
 ): Record<string, string> {
+  const queryString = searchParams.toString()
+  const parsed = qs.parse(queryString) as Record<string, any>
+
   const filteredParams: Record<string, string> = {}
-  const arrayParams: Record<string, string[]> = {}
 
-  for (const [key, value] of searchParams.entries()) {
-    if (!value || !value.trim()) continue
+  for (const [key, value] of Object.entries(parsed)) {
+    if (!allowedParams.includes(key as any)) continue
+    if (!value || (typeof value === "string" && !value.trim())) continue
 
-    // Check if it's an array parameter like "attribution_class[0]"
-    const arrayMatch = key.match(/^([^[]+)\[(\d+)\]$/)
-
-    if (arrayMatch) {
-      const [, baseKey] = arrayMatch
-
-      if (allowedParams.includes(baseKey as any)) {
-        if (!arrayParams[baseKey]) arrayParams[baseKey] = []
-        arrayParams[baseKey].push(value)
-      }
-    } else if (allowedParams.includes(key as any)) {
+    if (Array.isArray(value)) {
+      // Convert array params to normalized string representation
+      // (ex., key[0]=Foo&key[1]=Bar becomes key=Bar,Foo)
+      const sortedValues = [...value].sort()
+      filteredParams[key] = sortedValues.join(",")
+    } else if (typeof value === "string") {
       filteredParams[key] = value
     }
-  }
-
-  // Convert array params to normalized string representation
-  // (ex., key[0]=Foo&key[1]=Bar becomes key=Bar,Foo)
-  for (const [baseKey, values] of Object.entries(arrayParams)) {
-    const sortedValues = [...values].sort()
-    filteredParams[baseKey] = sortedValues.join(",")
   }
 
   // Sort keys alphabetically for consistent URLs
