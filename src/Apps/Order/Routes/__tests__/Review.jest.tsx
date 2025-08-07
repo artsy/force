@@ -338,6 +338,35 @@ describe("Review", () => {
 
       expect(_mockStripe().handleCardAction).toBeCalledWith("client-secret")
     })
+
+    describe("isEigen", () => {
+      beforeEach(() => {
+        isEigen = true
+      })
+
+      it("dispatches message given Eigen when the order is submitted", async () => {
+        mockCommitMutation.mockResolvedValue(submitOrderSuccess)
+        const { user } = renderWithRelay({
+          CommerceOrder: () => testOrder,
+        })
+        const page = new OrderAppTestPageRTL(screen, user)
+        await page.clickSubmit()
+
+        await waitFor(() => {
+          expect(window.ReactNativeWebView?.postMessage).toHaveBeenCalledWith(
+            JSON.stringify({
+              key: "orderSubmitted",
+              orderId: "1234",
+              isPurchase: true,
+            }),
+          )
+        })
+
+        await waitFor(() =>
+          expect(pushMock).toHaveBeenCalledWith("/orders/1234/details"),
+        )
+      })
+    })
   })
 
   describe("Offer-mode orders", () => {
@@ -419,7 +448,7 @@ describe("Review", () => {
     })
 
     describe("isEigen", () => {
-      beforeEach(async () => {
+      beforeEach(() => {
         isEigen = true
       })
 
@@ -433,7 +462,11 @@ describe("Review", () => {
 
         await waitFor(() => {
           expect(window.ReactNativeWebView?.postMessage).toHaveBeenCalledWith(
-            expect.stringContaining("goToInboxOnMakeOfferSubmission"),
+            JSON.stringify({
+              key: "orderSubmitted",
+              orderId: "offer-order-id",
+              isPurchase: false,
+            }),
           )
         })
 

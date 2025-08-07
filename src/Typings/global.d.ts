@@ -28,6 +28,13 @@ declare global {
     embeddedservice_bootstrap?: any
     grecaptcha: any
     ReactNativeWebView?: { postMessage: (message: string) => void }
+    webkit?: {
+      messageHandlers: {
+        ReactNativeWebView?: {
+          postMessage: (message: string) => void
+        }
+      }
+    }
     sd: any
     // Zendesk properties
     zEmbed: { show: () => void; hide: () => void }
