@@ -111,6 +111,7 @@ const OrderApp: FC<React.PropsWithChildren<OrderAppProps>> = props => {
 
   const stripePromise = loadStripe(getENV("STRIPE_PUBLISHABLE_KEY"))
   const isModal = !!props.match?.location.query.isModal
+  const isOrderDetails = !!props.match.location.pathname.includes("/details")
   const artwork = extractNodes(order.lineItems)[0].artwork
 
   return (
@@ -136,7 +137,7 @@ const OrderApp: FC<React.PropsWithChildren<OrderAppProps>> = props => {
           </OrderPaymentContextProvider>
         </SafeAreaContainer>
 
-        {!isModal && (
+        {!isOrderDetails && !isModal && (
           <StickyFooterWithInquiry
             orderType={order.mode}
             orderSource={order.source}
