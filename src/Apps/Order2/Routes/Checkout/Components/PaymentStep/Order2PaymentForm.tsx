@@ -47,7 +47,6 @@ import { CreateBankDebitSetupForOrder } from "Components/BankDebitForm/Mutations
 import { type Brand, BrandCreditCardIcon } from "Components/BrandCreditCardIcon"
 import { FadeInBox } from "Components/FadeInBox"
 import { RouterLink } from "System/Components/RouterLink"
-import { useRouter } from "System/Hooks/useRouter"
 import { extractNodes } from "Utils/extractNodes"
 import { getENV } from "Utils/getENV"
 import createLogger from "Utils/logger"
@@ -153,7 +152,6 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
   const legacySetPaymentMutation = useSetPayment()
   const createBankDebitSetupForOrder = CreateBankDebitSetupForOrder()
 
-  const { router } = useRouter()
   const {
     setConfirmationToken,
     checkoutTracking,
@@ -225,42 +223,6 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       throw error
     }
   }
-
-  // Check URL parameters for returning from Stripe setup
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search)
-    const setupIntentParam = urlParams.get("setup_intent")
-    const redirectStatus = urlParams.get("redirect_status")
-
-    if (setupIntentParam && redirectStatus === "succeeded") {
-      console.log(
-        "===Returning from Stripe with setup_intent:",
-        setupIntentParam,
-      )
-      setSetupIntentId(setupIntentParam)
-      setIsSubmittingToStripe(false)
-
-      // Get confirmation token from URL if available
-      const confirmationTokenParam = urlParams.get("confirmation_token")
-      if (confirmationTokenParam) {
-        // Fetch and set confirmation token
-        fetchAndSetConfirmationToken(confirmationTokenParam).catch(error => {
-          console.error(
-            "Failed to set confirmation token after redirect:",
-            error,
-          )
-        })
-      }
-
-      // Clean up URL parameters
-      const newUrl = new URL(window.location.href)
-      newUrl.searchParams.delete("setup_intent")
-      newUrl.searchParams.delete("setup_intent_client_secret")
-      newUrl.searchParams.delete("redirect_status")
-      newUrl.searchParams.delete("confirmation_token")
-      router.replace(newUrl.pathname + newUrl.search)
-    }
-  }, [setSetupIntentId, router])
 
   const isSelectedPaymentMethodStripe = selectedPaymentMethod?.match(/^stripe/)
   const savedCreditCards = extractNodes(me.creditCards)
@@ -488,7 +450,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
           ) {
             const return_url = `${getENV("APP_URL")}/orders2/${
               order.internalID
-            }/checkout?setup_intent_id=${setupIntentId}&confirmation_token=${confirmationToken.id}`
+            }/checkout?save_account=${saveCreditCard}&confirmation_token=${confirmationToken.id}`
             window.removeEventListener("beforeunload", preventHardReload)
 
             // This will redirect to Stripe for bank verification, no code after this will execute
