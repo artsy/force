@@ -3214,6 +3214,7 @@ type ArtworkImport implements Node {
 
   # A type-specific ID likely used as a database ID.
   internalID: ID!
+  locationID: String!
   rawDataMapping: JSON!
   rowsConnection(
     after: String
@@ -8898,6 +8899,7 @@ input CreateArtworkImportInput {
   async: Boolean
   clientMutationId: String
   fileName: String
+  locationID: String
   parseWithAI: Boolean
   parseWithAIModel: String
   partnerID: String!
@@ -16209,6 +16211,9 @@ type Mutation {
   updateArtwork(
     input: UpdateArtworkMutationInput!
   ): UpdateArtworkMutationPayload
+  updateArtworkImport(
+    input: UpdateArtworkImportInput!
+  ): UpdateArtworkImportPayload
   updateArtworkImportCurrency(
     input: UpdateArtworkImportCurrencyInput!
   ): UpdateArtworkImportCurrencyPayload
@@ -22971,6 +22976,25 @@ type UpdateArtworkImportDimensionMetricSuccess {
   artworkImport: ArtworkImport
 }
 
+type UpdateArtworkImportFailure {
+  mutationError: GravityMutationError
+}
+
+input UpdateArtworkImportInput {
+  artworkImportID: String!
+  clientMutationId: String
+  locationID: String
+}
+
+type UpdateArtworkImportPayload {
+  clientMutationId: String
+  updateArtworkImportOrError: UpdateArtworkImportResponseOrError
+}
+
+union UpdateArtworkImportResponseOrError =
+  | UpdateArtworkImportFailure
+  | UpdateArtworkImportSuccess
+
 type UpdateArtworkImportRowFailure {
   mutationError: GravityMutationError
 }
@@ -22995,6 +23019,10 @@ union UpdateArtworkImportRowResponseOrError =
 type UpdateArtworkImportRowSuccess {
   artworkImport: ArtworkImport
   success: Boolean!
+}
+
+type UpdateArtworkImportSuccess {
+  artworkImport: ArtworkImport
 }
 
 type UpdateArtworkImportWeightMetricFailure {
