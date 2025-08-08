@@ -6,7 +6,6 @@ import { useScrollToOpenArtistAuthModal } from "Utils/Hooks/useScrollToOpenArtis
 import type { ArtistApp_artist$data } from "__generated__/ArtistApp_artist.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistHeaderFragmentContainer } from "./Components/ArtistHeader/ArtistHeader"
-import { ArtistMetaFragmentContainer } from "./Components/ArtistMeta/ArtistMeta"
 
 interface ArtistAppProps {
   artist: ArtistApp_artist$data
@@ -20,8 +19,6 @@ const ArtistApp: React.FC<React.PropsWithChildren<ArtistAppProps>> = ({
 
   return (
     <>
-      <ArtistMetaFragmentContainer artist={artist} />
-
       <Analytics contextPageOwnerId={artist.internalID}>
         <Spacer y={[0, 4]} />
 
@@ -54,7 +51,6 @@ const ArtistApp: React.FC<React.PropsWithChildren<ArtistAppProps>> = ({
 export const ArtistAppFragmentContainer = createFragmentContainer(ArtistApp, {
   artist: graphql`
     fragment ArtistApp_artist on Artist {
-      ...ArtistMeta_artist
       ...ArtistHeader_artist
       internalID
       slug

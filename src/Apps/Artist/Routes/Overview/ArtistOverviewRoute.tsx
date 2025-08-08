@@ -1,11 +1,11 @@
 import { Join, Spacer } from "@artsy/palette"
 import { ArtistEditorialNewsGridQueryRenderer } from "Apps/Artist/Routes/Overview/Components/ArtistEditorialNewsGrid"
+import { ArtistMetaFragmentContainer } from "Apps/Artist/Components/ArtistMeta/ArtistMeta"
 import { ArtistOverviewEmpty } from "Apps/Artist/Routes/Overview/Components/ArtistOverviewEmpty"
 import { ArtistRelatedGeneCategoriesQueryRenderer } from "Apps/Artist/Routes/Overview/Components/ArtistRelatedGeneCategories"
 import { ArtistSeriesRailQueryRenderer } from "Components/ArtistSeriesRail/ArtistSeriesRail"
 import type { ArtistOverviewRoute_artist$data } from "__generated__/ArtistOverviewRoute_artist.graphql"
 import type * as React from "react"
-import { Meta, Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistCareerHighlightsQueryRenderer } from "./Components/ArtistCareerHighlights"
 import { ArtistCurrentShowsRailQueryRenderer } from "./Components/ArtistCurrentShowsRail"
@@ -18,8 +18,6 @@ interface ArtistOverviewRouteProps {
 const ArtistOverviewRoute: React.FC<
   React.PropsWithChildren<ArtistOverviewRouteProps>
 > = ({ artist }) => {
-  const { title, description } = artist.meta
-
   const hasCareerHighlights = artist.insights.length > 0
   const hasArtistSeries = artist.artistSeriesConnection?.totalCount ?? 0 > 0
   const hasEditorial = artist.counts?.articles ?? 0 > 0
@@ -37,9 +35,7 @@ const ArtistOverviewRoute: React.FC<
   ) {
     return (
       <>
-        <Title>{title}</Title>
-        <Meta name="title" content={title} />
-        <Meta name="description" content={description} />
+        <ArtistMetaFragmentContainer artist={artist} />
 
         <Spacer y={[2, 0]} />
 
@@ -50,9 +46,7 @@ const ArtistOverviewRoute: React.FC<
 
   return (
     <>
-      <Title>{title}</Title>
-      <Meta name="title" content={title} />
-      <Meta name="description" content={description} />
+      <ArtistMetaFragmentContainer artist={artist} />
 
       <Spacer y={[2, 0]} />
 
@@ -93,6 +87,7 @@ export const ArtistOverviewRouteFragmentContainer = createFragmentContainer(
   {
     artist: graphql`
       fragment ArtistOverviewRoute_artist on Artist {
+        ...ArtistMeta_artist
         internalID
         name
         meta(page: ABOUT) {

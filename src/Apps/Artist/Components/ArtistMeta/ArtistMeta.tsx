@@ -1,33 +1,42 @@
-import { MetaTags } from "Components/MetaTags"
 import { ArtistStructuredData } from "Components/Seo/ArtistStructuredData"
+import { MetaTags } from "Components/MetaTags"
+import { PaginatedMetaTags } from "Components/PaginatedMetaTags"
 import { getENV } from "Utils/getENV"
 import type { ArtistMeta_artist$data } from "__generated__/ArtistMeta_artist.graphql"
 import { Meta } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useCanonicalHref } from "./useCanonicalHref"
 
 interface Props {
   artist: ArtistMeta_artist$data
+  title?: string | null
+  description?: string | null
+  isPaginated?: boolean
 }
 
 export const ArtistMeta: React.FC<React.PropsWithChildren<Props>> = ({
   artist,
+  title,
+  description,
+  isPaginated = false,
 }) => {
   const alternateNames = artist?.alternateNames || []
 
-  const pathname = useCanonicalHref({
-    isInSeoExperiment: !!artist.isInSeoExperiment,
-    href: artist.href ?? "/",
-  })
+  const finalTitle = title || artist.meta?.title
+  const finalDescription = description || artist.meta?.description
+  const imageURL = artist.coverArtwork?.image?.large
 
   return (
     <>
-      <MetaTags
-        title={artist.meta.title}
-        description={artist.meta.description}
-        imageURL={artist.coverArtwork?.image?.large}
-        pathname={pathname}
-      />
+      {isPaginated ? (
+        <PaginatedMetaTags title={finalTitle} description={finalDescription} />
+      ) : (
+        <MetaTags
+          title={finalTitle}
+          description={finalDescription}
+          imageURL={imageURL}
+          pathname={artist.href}
+        />
+      )}
 
       <Meta
         property="og:url"
