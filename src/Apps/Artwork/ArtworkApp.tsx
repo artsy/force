@@ -241,6 +241,9 @@ export const ArtworkApp: React.FC<React.PropsWithChildren<Props>> = props => {
       <ArtworkMeta artwork={artwork} />
       <ArtworkTopContextBarFragmentContainer artwork={artwork} />
       <ArtworkAuctionCreateAlertHeaderFragmentContainer artwork={artwork} />
+
+      <Spacer y={2} />
+
       <GridColumns>
         <Column
           span={8}
@@ -267,7 +270,8 @@ export const ArtworkApp: React.FC<React.PropsWithChildren<Props>> = props => {
             </Media>
           )}
         </Column>
-        <Column span={4} pt={[0, 2]}>
+
+        <Column span={4}>
           {isMobile ? (
             <ArtworkSidebarQueryRenderer artworkID={artwork.internalID} />
           ) : (
