@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<85617503c91ce44ec677efe0bc45cced>>
+ * @generated SignedSource<<e08762de4f4ffa9a2a63f9a9a0909955>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,10 +9,10 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from 'relay-runtime';
-export type Order2PaymentFormConfirmationTokenQuery$variables = {
+export type confirmationTokenUtilsQuery$variables = {
   id: string;
 };
-export type Order2PaymentFormConfirmationTokenQuery$data = {
+export type confirmationTokenUtilsQuery$data = {
   readonly me: {
     readonly confirmationToken: {
       readonly paymentMethodPreview: {
@@ -31,9 +31,9 @@ export type Order2PaymentFormConfirmationTokenQuery$data = {
     } | null | undefined;
   } | null | undefined;
 };
-export type Order2PaymentFormConfirmationTokenQuery = {
-  response: Order2PaymentFormConfirmationTokenQuery$data;
-  variables: Order2PaymentFormConfirmationTokenQuery$variables;
+export type confirmationTokenUtilsQuery = {
+  response: confirmationTokenUtilsQuery$data;
+  variables: confirmationTokenUtilsQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -121,7 +121,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "Order2PaymentFormConfirmationTokenQuery",
+    "name": "confirmationTokenUtilsQuery",
     "selections": [
       {
         "alias": null,
@@ -143,7 +143,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "Order2PaymentFormConfirmationTokenQuery",
+    "name": "confirmationTokenUtilsQuery",
     "selections": [
       {
         "alias": null,
@@ -167,16 +167,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "9c17470e7dad56ed793a4ba13e664c6a",
+    "cacheID": "7d67e528f4f52208c0460141ec1558bc",
     "id": null,
     "metadata": {},
-    "name": "Order2PaymentFormConfirmationTokenQuery",
+    "name": "confirmationTokenUtilsQuery",
     "operationKind": "query",
-    "text": "query Order2PaymentFormConfirmationTokenQuery(\n  $id: String!\n) {\n  me {\n    confirmationToken(id: $id) {\n      paymentMethodPreview {\n        __typename\n        ... on Card {\n          displayBrand\n          last4\n        }\n        ... on USBankAccount {\n          bankName\n          last4\n        }\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query confirmationTokenUtilsQuery(\n  $id: String!\n) {\n  me {\n    confirmationToken(id: $id) {\n      paymentMethodPreview {\n        __typename\n        ... on Card {\n          displayBrand\n          last4\n        }\n        ... on USBankAccount {\n          bankName\n          last4\n        }\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "994035499519134f6a987402ffff7607";
+(node as any).hash = "7d8bbaaf9d63595431765b294e9e60a0";
 
 export default node;

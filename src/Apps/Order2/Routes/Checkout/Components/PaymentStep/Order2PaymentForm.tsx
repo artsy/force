@@ -1,15 +1,18 @@
 import { ContextModule } from "@artsy/cohesion"
+import InfoIcon from "@artsy/icons/InfoIcon"
 import LockIcon from "@artsy/icons/LockIcon"
 import ReceiptIcon from "@artsy/icons/ReceiptIcon"
 import {
   Box,
   Button,
   Checkbox,
+  Clickable,
   Flex,
   Radio,
   RadioGroup,
   Spacer,
   Text,
+  Tooltip,
   useTheme,
 } from "@artsy/palette"
 import {
@@ -37,14 +40,15 @@ import {
 } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useOrder2SetOrderPaymentMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderPaymentMutation"
-
+import { preventHardReload } from "Apps/Order2/Utils/navigationGuards"
+import { fetchAndSetConfirmationToken } from "Apps/Order2/Utils/confirmationTokenUtils"
 import { CreateBankDebitSetupForOrder } from "Components/BankDebitForm/Mutations/CreateBankDebitSetupForOrder"
 import { type Brand, BrandCreditCardIcon } from "Components/BrandCreditCardIcon"
 import { FadeInBox } from "Components/FadeInBox"
 import { RouterLink } from "System/Components/RouterLink"
 import { extractNodes } from "Utils/extractNodes"
+import { getENV } from "Utils/getENV"
 import createLogger from "Utils/logger"
-import type { Order2PaymentFormConfirmationTokenQuery } from "__generated__/Order2PaymentFormConfirmationTokenQuery.graphql"
 import type {
   Order2PaymentForm_me$data,
   Order2PaymentForm_me$key,
@@ -55,12 +59,7 @@ import type {
 } from "__generated__/Order2PaymentForm_order.graphql"
 import type React from "react"
 import { useEffect, useState } from "react"
-import {
-  fetchQuery,
-  graphql,
-  useFragment,
-  useRelayEnvironment,
-} from "react-relay"
+import { graphql, useFragment, useRelayEnvironment } from "react-relay"
 
 const logger = createLogger("Order2PaymentForm")
 const defaultErrorMessage = (
@@ -145,6 +144,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
   // TODO: Update from legacy commerceSetPayment mutation
   const legacySetPaymentMutation = useSetPayment()
   const createBankDebitSetupForOrder = CreateBankDebitSetupForOrder()
+
   const { setConfirmationToken, checkoutTracking, setSavedCreditCard, steps } =
     useCheckoutContext()
 
@@ -222,6 +222,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         elements.update({
           captureMethod: "manual",
           setupFutureUsage: "off_session",
+          mode: "payment",
         })
         // Only track this the first time it happens
         if (selectedPaymentMethod !== "stripe-card") {
@@ -233,11 +234,20 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         }
         setSelectedPaymentMethod("stripe-card")
       } else {
-        elements.update({ captureMethod: "automatic", setupFutureUsage: null })
+        elements.update({
+          captureMethod: "automatic",
+          setupFutureUsage: null,
+          mode: "setup",
+          payment_method_types: ["us_bank_account"],
+        })
         setSelectedPaymentMethod("stripe-other")
       }
     } else {
-      elements.update({ captureMethod: "automatic", setupFutureUsage: null })
+      elements.update({
+        captureMethod: "automatic",
+        setupFutureUsage: null,
+        mode: "setup",
+      })
     }
   }
 
@@ -300,34 +310,14 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         return
       }
 
-      const response =
-        await fetchQuery<Order2PaymentFormConfirmationTokenQuery>(
-          environment,
-          graphql`
-            query Order2PaymentFormConfirmationTokenQuery($id: String!) {
-              me {
-                confirmationToken(id: $id) {
-                  paymentMethodPreview {
-                    __typename
-                    ... on Card {
-                      displayBrand
-                      last4
-                    }
-                    ... on USBankAccount {
-                      bankName
-                      last4
-                    }
-                  }
-                }
-              }
-            }
-          `,
-          { id: confirmationToken.id },
-          { fetchPolicy: "store-or-network" },
-        ).toPromise()
+      const response = await fetchAndSetConfirmationToken(
+        confirmationToken.id,
+        environment,
+        setConfirmationToken,
+        saveCreditCard,
+      )
 
       if (!response) {
-        logger.error("Failed to fetch confirmation token from Exchange")
         handleError({ message: defaultErrorMessage })
         return
       }
@@ -348,14 +338,6 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
           validateAndExtractOrderResponse(
             updateOrderPaymentMethodResult.updateOrder?.orderOrError,
           )
-
-          setConfirmationToken({
-            confirmationToken: {
-              id: confirmationToken.id,
-              ...response?.me?.confirmationToken,
-            },
-            saveCreditCard,
-          })
         } catch (error) {
           logger.error("Error while updating order payment method", error)
           handleError({ message: defaultErrorMessage })
@@ -365,10 +347,6 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       } else {
         // For now, only ACH is supported as a non-card payment method
         try {
-          await createBankDebitSetupForOrder.submitMutation({
-            variables: { input: { id: order.internalID } },
-          })
-
           const updateOrderPaymentMethodResult =
             await setPaymentMutation.submitMutation({
               variables: {
@@ -384,17 +362,38 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
             updateOrderPaymentMethodResult.updateOrder?.orderOrError,
           )
 
-          setConfirmationToken({
-            confirmationToken: {
-              id: confirmationToken.id,
-              ...response?.me?.confirmationToken,
-            },
-            saveCreditCard: false,
-          })
+          // Creating a SetupIntent
+          const bankDebitSetupResult =
+            await createBankDebitSetupForOrder.submitMutation({
+              variables: { input: { id: order.internalID } },
+            })
+
+          if (
+            bankDebitSetupResult.commerceCreateBankDebitSetupForOrder
+              ?.actionOrError.__typename === "CommerceOrderRequiresAction"
+          ) {
+            const return_url = `${getENV("APP_URL")}/orders2/${
+              order.internalID
+            }/checkout?save_account=${saveCreditCard}&confirmation_token=${confirmationToken.id}`
+            window.removeEventListener("beforeunload", preventHardReload)
+
+            // This will redirect to Stripe for bank verification, no code after this will execute
+            const { error } = await stripe.confirmSetup({
+              elements,
+              clientSecret:
+                bankDebitSetupResult.commerceCreateBankDebitSetupForOrder
+                  ?.actionOrError?.actionData?.clientSecret,
+              confirmParams: {
+                return_url,
+              },
+            })
+
+            if (error) {
+              handleError({ message: defaultErrorMessage })
+            }
+          }
         } catch (error) {
           handleError({ message: defaultErrorMessage })
-        } finally {
-          setIsSubmittingToStripe(false)
         }
       }
     }
@@ -568,6 +567,34 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
           <Checkbox selected={saveCreditCard} onSelect={setSaveCreditCard}>
             Save credit card for later use
           </Checkbox>
+        </Box>
+      </Collapse>
+
+      <Collapse open={selectedPaymentMethod === "stripe-other"}>
+        <Box p={2}>
+          <Flex>
+            <Checkbox selected={saveCreditCard} onSelect={setSaveCreditCard}>
+              Save bank account for later use.
+            </Checkbox>
+
+            <Tooltip
+              placement="top-start"
+              width={400}
+              content={`Thank you for signing up for direct debits from Artsy. You
+                    have authorized Artsy and, if applicable, its affiliated
+                    entities to debit the bank account specified above, on behalf
+                    of sellers that use the Artsy website, for any amount owed for
+                    your purchase of artworks from such sellers, according to
+                    Artsy’s website and terms. You can change or cancel this
+                    authorization at any time by providing Artsy with 30 (thirty)
+                    days’ notice. By clicking “Save bank account for later use”,
+                    you authorize Artsy to save the bank account specified above.`}
+            >
+              <Clickable ml={0.5} style={{ lineHeight: 0 }}>
+                <InfoIcon />
+              </Clickable>
+            </Tooltip>
+          </Flex>
         </Box>
       </Collapse>
 
