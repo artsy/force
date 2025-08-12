@@ -6,11 +6,11 @@ import { type Brand, BrandCreditCardIcon } from "Components/BrandCreditCardIcon"
 
 interface Order2PaymentCompletedViewProps {
   confirmationToken: any
-  savedCreditCard: any
+  savedPaymentMethod: any
 }
 export const Order2PaymentCompletedView: React.FC<
   Order2PaymentCompletedViewProps
-> = ({ confirmationToken, savedCreditCard }) => {
+> = ({ confirmationToken, savedPaymentMethod }) => {
   const { editPayment, checkoutTracking } = useCheckoutContext()
 
   const onClickEdit = () => {
@@ -18,8 +18,13 @@ export const Order2PaymentCompletedView: React.FC<
     editPayment()
   }
 
+  console.log("==========", savedPaymentMethod)
+
   const isBankAccount =
-    confirmationToken?.paymentMethodPreview?.__typename === "USBankAccount"
+    confirmationToken?.paymentMethodPreview?.__typename === "USBankAccount" ||
+    savedPaymentMethod?.__typename === "BankAccount"
+
+  console.log("==========", isBankAccount)
   return (
     <Flex flexDirection="column" backgroundColor="mono0">
       <Flex justifyContent="space-between">
@@ -55,7 +60,9 @@ export const Order2PaymentCompletedView: React.FC<
               mr={1}
             />
             <Text variant={["xs", "sm-display"]}>
-              •••• {confirmationToken?.paymentMethodPreview?.last4}
+              ••••{" "}
+              {confirmationToken?.paymentMethodPreview?.last4 ||
+                savedPaymentMethod?.last4}
             </Text>
           </>
         ) : (
@@ -64,7 +71,7 @@ export const Order2PaymentCompletedView: React.FC<
               mr={1}
               type={
                 (confirmationToken?.paymentMethodPreview?.displayBrand ||
-                  savedCreditCard?.brand) as Brand
+                  savedPaymentMethod?.brand) as Brand
               }
               width={["18px", "26px"]}
               height={["18px", "26px"]}
@@ -72,7 +79,7 @@ export const Order2PaymentCompletedView: React.FC<
             <Text variant={["xs", "sm-display"]}>
               ••••{" "}
               {confirmationToken?.paymentMethodPreview?.last4 ||
-                savedCreditCard?.lastDigits}
+                savedPaymentMethod?.lastDigits}
             </Text>
           </>
         )}

@@ -50,9 +50,16 @@ type ConfirmationTokenState = {
 } | null
 
 type SavedCreditCard = {
+  __typename: "CreditCard"
   internalID: string
   brand: string
   lastDigits: string
+}
+
+type SavedBankAccount = {
+  __typename: "Bank Account"
+  internalID: string
+  last4: string
 }
 
 export interface Order2CheckoutModel {
@@ -66,7 +73,7 @@ export interface Order2CheckoutModel {
   activeFulfillmentDetailsTab: FulfillmentDetailsTab | null
   confirmationToken: ConfirmationTokenState
   savePaymentMethod: boolean
-  savedCreditCard: SavedCreditCard | null
+  savedPaymentMethod: SavedCreditCard | SavedBankAccount | null
   checkoutMode: CheckoutMode
 
   // External data - passed in as runtime props
@@ -97,7 +104,10 @@ export interface Order2CheckoutModel {
     { confirmationToken: ConfirmationTokenState }
   >
   setSavePaymentMethod: Action<this, boolean>
-  setSavedCreditCard: Action<this, { savedCreditCard: SavedCreditCard }>
+  setSavedPaymentMethod: Action<
+    this,
+    { savedPaymentMethod: SavedCreditCard | SavedBankAccount }
+  >
   redirectToOrderDetails: Action<this>
   setCheckoutMode: Action<this, CheckoutMode>
 }
@@ -113,7 +123,7 @@ export const Order2CheckoutContext: ReturnType<
   activeFulfillmentDetailsTab: null,
   confirmationToken: null,
   savePaymentMethod: true,
-  savedCreditCard: null,
+  savedPaymentMethod: null,
   checkoutMode: "standard",
   steps: [],
 
@@ -318,52 +328,10 @@ export const Order2CheckoutContext: ReturnType<
     state.savePaymentMethod = savePaymentMethod
   }),
 
-  setSavedCreditCard: action((state, { savedCreditCard }) => {
-    // Update payment completion logic similar to setConfirmationToken
-    const newSteps: CheckoutStep[] = []
-    let hasActivatedNext = false
-
-    for (const step of state.steps) {
-      if (step.name === CheckoutStepName.PAYMENT) {
-        newSteps.push({
-          ...step,
-          state: CheckoutStepState.COMPLETED,
-        })
-      } else {
-        const shouldBeHidden = step.state === CheckoutStepState.HIDDEN
-        if (shouldBeHidden) {
-          newSteps.push(step)
-          continue
-        }
-
-        if (step.state === CheckoutStepState.COMPLETED) {
-          newSteps.push(step)
-          continue
-        }
-
-        const hasCompletedStep = newSteps.find(
-          s => s.state === CheckoutStepState.COMPLETED,
-        )
-        const hasUpcomingStep = newSteps.find(
-          s => s.state === CheckoutStepState.UPCOMING,
-        )
-
-        if (hasCompletedStep && !hasUpcomingStep && !hasActivatedNext) {
-          hasActivatedNext = true
-          newSteps.push({
-            ...step,
-            state: CheckoutStepState.ACTIVE,
-          })
-        } else {
-          newSteps.push(step)
-        }
-      }
-    }
-
-    state.savedCreditCard = savedCreditCard
+  setSavedPaymentMethod: action((state, { savedPaymentMethod }) => {
+    state.savedPaymentMethod = savedPaymentMethod
     state.savePaymentMethod = false
     state.confirmationToken = null
-    state.steps = newSteps
   }),
 
   editFulfillmentDetails: action(state => {
@@ -485,7 +453,7 @@ export const Order2CheckoutContextProvider: React.FC<
     activeFulfillmentDetailsTab: null,
     confirmationToken: null,
     savePaymentMethod: true,
-    savedCreditCard: null,
+    savedPaymentMethod: null,
     checkoutMode: "standard",
     steps: [],
 
@@ -706,7 +674,7 @@ const initialStateForOrder = (
       ? { id: order.stripeConfirmationToken }
       : null,
     savePaymentMethod: true,
-    savedCreditCard: null,
+    savedPaymentMethod: null,
     steps,
     checkoutMode: (savedCheckoutMode === "express"
       ? "express"

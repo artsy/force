@@ -60,6 +60,7 @@ import type {
 import type React from "react"
 import { useEffect, useState } from "react"
 import { graphql, useFragment, useRelayEnvironment } from "react-relay"
+import HomeIcon from "@artsy/icons/HomeIcon"
 
 const logger = createLogger("Order2PaymentForm")
 const defaultErrorMessage = (
@@ -148,7 +149,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
   const {
     setConfirmationToken,
     checkoutTracking,
-    setSavedCreditCard,
+    setSavedPaymentMethod,
     setPaymentComplete,
     setSavePaymentMethod,
     savePaymentMethod,
@@ -165,11 +166,15 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
     null | "saved" | "stripe-card" | "wire" | "stripe-other"
   >(null)
-  const [selectedCreditCard, setSelectedCreditCard] = useState<any | null>(null)
+  const [selectedSavedPaymentMethod, setSelectedSavedPaymentMethod] = useState<
+    any | null
+  >(null)
 
   const isSelectedPaymentMethodStripe = selectedPaymentMethod?.match(/^stripe/)
   const savedCreditCards = extractNodes(me.creditCards)
   const hasSavedCreditCards = savedCreditCards.length > 0
+  const savedBankAccounts = extractNodes(me.bankAccounts)
+  const hasSavedBankAccounts = savedBankAccounts.length > 0
 
   const stepIsActive =
     steps?.find(step => step.name === CheckoutStepName.PAYMENT)?.state ===
@@ -194,7 +199,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: one-time effect to default to saved payment method if available
   useEffect(() => {
-    if (hasSavedCreditCards) {
+    if (hasSavedCreditCards || hasSavedBankAccounts) {
       setSelectedPaymentMethod("saved")
       return
     }
@@ -412,7 +417,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
     }
 
     if (selectedPaymentMethod === "saved") {
-      if (!selectedCreditCard) {
+      if (!selectedSavedPaymentMethod) {
         setSubtitleErrorMessage("Select a saved payment method")
         return
       }
@@ -420,12 +425,16 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       setIsSubmittingToStripe(true)
 
       try {
+        const paymentMethod =
+          selectedSavedPaymentMethod?.__typename === "CreditCard"
+            ? "CREDIT_CARD"
+            : "US_BANK_ACCOUNT"
         const result = await legacySetPaymentMutation.submitMutation({
           variables: {
             input: {
               id: order.internalID,
-              paymentMethod: "CREDIT_CARD",
-              paymentMethodId: selectedCreditCard?.internalID,
+              paymentMethod: paymentMethod,
+              paymentMethodId: selectedSavedPaymentMethod?.internalID,
               // Note: paymentMethodId is not supported in updateOrder mutation
               // Saved credit card functionality may need a different approach
             },
@@ -446,7 +455,10 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         handleError({ message: defaultErrorMessage })
       } finally {
         setIsSubmittingToStripe(false)
-        setSavedCreditCard({ savedCreditCard: selectedCreditCard })
+        setSavedPaymentMethod({
+          savedPaymentMethod: selectedSavedPaymentMethod,
+        })
+        setPaymentComplete()
       }
     }
   }
@@ -467,7 +479,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         </>
       )}
       <Spacer y={2} />
-      {hasSavedCreditCards && (
+      {(hasSavedCreditCards || hasSavedBankAccounts) && (
         <FadeInBox>
           <Box
             backgroundColor="mono5"
@@ -497,30 +509,50 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
               </Text>
               <Box ml="50px">
                 <RadioGroup
-                  defaultValue={selectedCreditCard}
+                  defaultValue={selectedSavedPaymentMethod}
                   onSelect={val => {
-                    setSelectedCreditCard(val)
+                    setSelectedSavedPaymentMethod(val)
                   }}
                 >
-                  {savedCreditCards.map(card => (
-                    <Radio
-                      key={card.internalID}
-                      value={card}
-                      pb="15px"
-                      pt="15px"
-                      label={
-                        <Flex>
-                          <BrandCreditCardIcon
-                            type={card.brand as Brand}
-                            width="24px"
-                            height="24px"
-                            mr={1}
-                          />
-                          <Text variant="sm">•••• {card.lastDigits}</Text>
-                        </Flex>
-                      }
-                    />
-                  ))}
+                  {[...savedCreditCards, ...savedBankAccounts].map(
+                    paymentMethod => (
+                      <Radio
+                        key={paymentMethod.internalID}
+                        value={paymentMethod}
+                        pb="15px"
+                        pt="15px"
+                        label={
+                          <Flex>
+                            {paymentMethod.__typename === "CreditCard" ? (
+                              <>
+                                <BrandCreditCardIcon
+                                  type={paymentMethod.brand as Brand}
+                                  width="24px"
+                                  height="24px"
+                                  mr={1}
+                                />
+                                <Text variant="sm">
+                                  •••• {paymentMethod.lastDigits}
+                                </Text>
+                              </>
+                            ) : (
+                              <>
+                                <HomeIcon
+                                  fill="mono100"
+                                  width={["18px", "26px"]}
+                                  height={["18px", "26px"]}
+                                  mr={1}
+                                />
+                                <Text variant={["xs", "sm-display"]}>
+                                  Bank account •••• {paymentMethod.last4}
+                                </Text>
+                              </>
+                            )}
+                          </Flex>
+                        }
+                      />
+                    ),
+                  )}
                 </RadioGroup>
               </Box>
             </Collapse>
@@ -638,9 +670,19 @@ const ME_FRAGMENT = graphql`
     creditCards(first: 10) {
       edges {
         node {
+          __typename
           internalID
           brand
           lastDigits
+        }
+      }
+    }
+    bankAccounts(first: 10) {
+      edges {
+        node {
+          __typename
+          internalID
+          last4
         }
       }
     }
