@@ -1,8 +1,9 @@
-import { Flex, ResponsiveBox } from "@artsy/palette"
+import AddStrokeIcon from "@artsy/icons/AddStrokeIcon"
+import { Button, ResponsiveBox } from "@artsy/palette"
 import { ArtworkImageBrowserFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkImageBrowser"
+import { RouterLink } from "System/Components/RouterLink"
 import type { MyCollectionArtworkImageBrowser_artwork$key } from "__generated__/MyCollectionArtworkImageBrowser_artwork.graphql"
 import { graphql, useFragment } from "react-relay"
-import { MyCollectionArtworkNoImageComponent } from "./MyCollectionArtworkNoImageComponent"
 
 interface MyCollectionArtworkImageBrowserProps {
   artwork: MyCollectionArtworkImageBrowser_artwork$key
@@ -13,30 +14,39 @@ export const MyCollectionArtworkImageBrowser: React.FC<
 > = props => {
   const artwork = useFragment(FRAGMENT, props.artwork)
 
-  if (artwork?.figures?.length === 0) {
+  if (artwork.figures.length === 0) {
     return (
-      <Flex maxWidth={["100%", 600]} mx="auto" my={[2, 2]}>
-        <ResponsiveBox
-          data-testid="artwork-browser-no-image-box"
-          bg="mono10"
-          mx={[0, 2, 4]}
-          maxWidth="100%"
-          aspectWidth={1}
-          aspectHeight={1}
+      <ResponsiveBox
+        data-testid="artwork-browser-no-image-box"
+        bg="mono10"
+        maxWidth={600}
+        mx="auto"
+        aspectWidth={1}
+        aspectHeight={1}
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+      >
+        <Button
+          data-testid="uploadPhotosButton"
+          // @ts-ignore
+          as={RouterLink}
+          to={`/collector-profile/my-collection/artworks/${artwork.internalID}/edit?step=photos`}
+          variant="secondaryNeutral"
+          size="large"
+          Icon={AddStrokeIcon}
         >
-          <MyCollectionArtworkNoImageComponent artworkID={artwork.internalID} />
-        </ResponsiveBox>
-      </Flex>
+          Upload Photos
+        </Button>
+      </ResponsiveBox>
     )
   }
 
   return (
-    <Flex mb={[1, 0]}>
-      <ArtworkImageBrowserFragmentContainer
-        artwork={artwork}
-        isMyCollectionArtwork
-      />
-    </Flex>
+    <ArtworkImageBrowserFragmentContainer
+      artwork={artwork}
+      isMyCollectionArtwork
+    />
   )
 }
 

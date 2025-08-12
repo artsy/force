@@ -32,13 +32,15 @@ const MyCollectionArtwork: React.FC<
 
       <MyCollectionArtworkHeader artwork={artwork} />
 
+      <Spacer y={2} />
+
       <Media greaterThanOrEqual="sm">
-        <GridColumns gap={2} mb={4}>
+        <GridColumns gap={2}>
           <Column span={8}>
             <MyCollectionArtworkImageBrowser artwork={artwork} />
           </Column>
 
-          <Column span={4} mt={2}>
+          <Column span={4}>
             <MyCollectionArtworkTitle artwork={artwork} />
 
             <MyCollectionArtworkDetails artwork={artwork} />
@@ -63,6 +65,8 @@ const MyCollectionArtwork: React.FC<
 
       <Media lessThan="sm">
         <MyCollectionArtworkImageBrowser artwork={artwork} />
+
+        <Spacer y={2} />
 
         <MyCollectionArtworkTitle artwork={artwork} />
 
