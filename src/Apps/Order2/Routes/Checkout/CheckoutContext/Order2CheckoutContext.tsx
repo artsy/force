@@ -295,9 +295,6 @@ export const Order2CheckoutContext: ReturnType<
           continue
         }
 
-        // We've already returned if it is completed or hidden, so this
-        // must be an upcoming step. If it is the first one, then
-        // we activate it, otherwise we leave it as upcoming.
         const hasCompletedStep = newSteps.find(
           s => s.state === CheckoutStepState.COMPLETED,
         )
