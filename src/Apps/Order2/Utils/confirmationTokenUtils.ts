@@ -8,7 +8,6 @@ export const fetchAndSetConfirmationToken = async (
   tokenId: string,
   environment: Environment,
   setConfirmationToken: (data: any) => void,
-  saveCreditCard: boolean,
 ) => {
   try {
     const response = await fetchQuery<confirmationTokenUtilsQuery>(
@@ -41,7 +40,6 @@ export const fetchAndSetConfirmationToken = async (
         id: tokenId,
         ...response?.me?.confirmationToken,
       },
-      saveCreditCard,
     })
 
     return response
@@ -52,7 +50,6 @@ export const fetchAndSetConfirmationToken = async (
       confirmationToken: {
         id: tokenId,
       },
-      saveCreditCard,
     })
     throw error
   }

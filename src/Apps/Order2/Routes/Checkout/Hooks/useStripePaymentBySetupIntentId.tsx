@@ -20,8 +20,11 @@ export function useStripePaymentBySetupIntentId(
     useSetPaymentByStripeIntent()
   const { router } = useRouter()
   const environment = useRelayEnvironment()
-  const { setFulfillmentDetailsComplete, setConfirmationToken } =
-    useCheckoutContext()
+  const {
+    setFulfillmentDetailsComplete,
+    setConfirmationToken,
+    setPaymentComplete,
+  } = useCheckoutContext()
   const [isProcessingRedirect, setIsProcessingRedirect] = useState(false)
   const [isPaymentSetupSuccessful, setIsPaymentSetupSuccessful] =
     useState(false)
@@ -34,10 +37,12 @@ export function useStripePaymentBySetupIntentId(
     const urlParams = new URLSearchParams(window.location.search)
     const setup_intent = urlParams.get("setup_intent")
     const redirect_status = urlParams.get("redirect_status")
-    const save_account = urlParams.get("save_account")
+    const save_bank_account = urlParams.get("save_bank_account")
     const confirmation_token = urlParams.get("confirmation_token")
 
-    let oneTimeUse = !save_account
+    // Convert string to boolean - URLSearchParams returns string "false" or "true"
+    const shouldSaveBankAccount = save_bank_account === "true"
+    let oneTimeUse = !shouldSaveBankAccount
 
     if (setup_intent && redirect_status === "succeeded") {
       setIsProcessingRedirect(true)
@@ -54,7 +59,6 @@ export function useStripePaymentBySetupIntentId(
           confirmation_token,
           environment,
           setConfirmationToken,
-          oneTimeUse,
         )
       }
 
@@ -68,9 +72,11 @@ export function useStripePaymentBySetupIntentId(
       newUrl.searchParams.delete("setup_intent")
       newUrl.searchParams.delete("setup_intent_client_secret")
       newUrl.searchParams.delete("redirect_status")
-      newUrl.searchParams.delete("save_account")
+      newUrl.searchParams.delete("save_bank_account")
       newUrl.searchParams.delete("confirmation_token")
       router.replace(newUrl.pathname + newUrl.search)
+
+      setPaymentComplete()
     }
   }, [
     orderId,

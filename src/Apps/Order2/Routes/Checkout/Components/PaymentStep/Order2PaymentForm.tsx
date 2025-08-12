@@ -145,8 +145,15 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
   const legacySetPaymentMutation = useSetPayment()
   const createBankDebitSetupForOrder = CreateBankDebitSetupForOrder()
 
-  const { setConfirmationToken, checkoutTracking, setSavedCreditCard, steps } =
-    useCheckoutContext()
+  const {
+    setConfirmationToken,
+    checkoutTracking,
+    setSavedCreditCard,
+    setPaymentComplete,
+    setSavePaymentMethod,
+    savePaymentMethod,
+    steps,
+  } = useCheckoutContext()
 
   const [isSubmittingToStripe, setIsSubmittingToStripe] = useState(false)
   const [errorMessage, setErrorMessage] = useState<JSX.Element | string | null>(
@@ -158,7 +165,6 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
     null | "saved" | "stripe-card" | "wire" | "stripe-other"
   >(null)
-  const [saveCreditCard, setSaveCreditCard] = useState(true)
   const [selectedCreditCard, setSelectedCreditCard] = useState<any | null>(null)
 
   const isSelectedPaymentMethodStripe = selectedPaymentMethod?.match(/^stripe/)
@@ -314,8 +320,9 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         confirmationToken.id,
         environment,
         setConfirmationToken,
-        saveCreditCard,
       )
+
+      setSavePaymentMethod(savePaymentMethod)
 
       if (!response) {
         handleError({ message: defaultErrorMessage })
@@ -342,6 +349,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
           logger.error("Error while updating order payment method", error)
           handleError({ message: defaultErrorMessage })
         } finally {
+          setPaymentComplete()
           setIsSubmittingToStripe(false)
         }
       } else {
@@ -374,10 +382,11 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
           ) {
             const return_url = `${getENV("APP_URL")}/orders2/${
               order.internalID
-            }/checkout?save_account=${saveCreditCard}&confirmation_token=${confirmationToken.id}`
+            }/checkout?save_bank_account=${savePaymentMethod}&confirmation_token=${confirmationToken.id}`
             window.removeEventListener("beforeunload", preventHardReload)
 
             // This will redirect to Stripe for bank verification, no code after this will execute
+            // src/Apps/Order2/Routes/Checkout/Hooks/useStripePaymentBySetupIntentId.tsx will handle the post redirect logic
             const { error } = await stripe.confirmSetup({
               elements,
               clientSecret:
@@ -564,7 +573,10 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
 
       <Collapse open={selectedPaymentMethod === "stripe-card"}>
         <Box p={2}>
-          <Checkbox selected={saveCreditCard} onSelect={setSaveCreditCard}>
+          <Checkbox
+            selected={savePaymentMethod}
+            onSelect={setSavePaymentMethod}
+          >
             Save credit card for later use
           </Checkbox>
         </Box>
@@ -573,7 +585,10 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       <Collapse open={selectedPaymentMethod === "stripe-other"}>
         <Box p={2}>
           <Flex>
-            <Checkbox selected={saveCreditCard} onSelect={setSaveCreditCard}>
+            <Checkbox
+              selected={savePaymentMethod}
+              onSelect={setSavePaymentMethod}
+            >
               Save bank account for later use.
             </Checkbox>
 

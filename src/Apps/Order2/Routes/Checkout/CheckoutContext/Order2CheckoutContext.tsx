@@ -65,7 +65,7 @@ export interface Order2CheckoutModel {
   steps: CheckoutStep[]
   activeFulfillmentDetailsTab: FulfillmentDetailsTab | null
   confirmationToken: ConfirmationTokenState
-  saveCreditCard: boolean
+  savePaymentMethod: boolean
   savedCreditCard: SavedCreditCard | null
   checkoutMode: CheckoutMode
 
@@ -91,10 +91,12 @@ export interface Order2CheckoutModel {
   editPayment: Action<this>
   setLoadingError: Action<this, CheckoutLoadingError | null>
   setLoadingComplete: Action<this>
+  setPaymentComplete: Action<this>
   setConfirmationToken: Action<
     this,
-    { confirmationToken: ConfirmationTokenState; saveCreditCard: boolean }
+    { confirmationToken: ConfirmationTokenState }
   >
+  setSavePaymentMethod: Action<this, boolean>
   setSavedCreditCard: Action<this, { savedCreditCard: SavedCreditCard }>
   redirectToOrderDetails: Action<this>
   setCheckoutMode: Action<this, CheckoutMode>
@@ -110,7 +112,7 @@ export const Order2CheckoutContext: ReturnType<
   expressCheckoutPaymentMethods: null,
   activeFulfillmentDetailsTab: null,
   confirmationToken: null,
-  saveCreditCard: true,
+  savePaymentMethod: true,
   savedCreditCard: null,
   checkoutMode: "standard",
   steps: [],
@@ -261,56 +263,60 @@ export const Order2CheckoutContext: ReturnType<
     state.steps = newSteps
   }),
 
-  setConfirmationToken: action(
-    (state, { confirmationToken, saveCreditCard }) => {
-      const newSteps: CheckoutStep[] = []
-      let hasActivatedNext = false
+  setPaymentComplete: action((state: Order2CheckoutModel) => {
+    const newSteps: CheckoutStep[] = []
+    let hasActivatedNext = false
 
-      for (const step of state.steps) {
-        if (step.name === CheckoutStepName.PAYMENT) {
+    for (const step of state.steps) {
+      if (step.name === CheckoutStepName.PAYMENT) {
+        newSteps.push({
+          ...step,
+          state: CheckoutStepState.COMPLETED,
+        })
+      } else {
+        const shouldBeHidden = step.state === CheckoutStepState.HIDDEN
+        if (shouldBeHidden) {
+          newSteps.push(step)
+          continue
+        }
+
+        if (step.state === CheckoutStepState.COMPLETED) {
+          newSteps.push(step)
+          continue
+        }
+
+        // We've already returned if it is completed or hidden, so this
+        // must be an upcoming step. If it is the first one, then
+        // we activate it, otherwise we leave it as upcoming.
+        const hasCompletedStep = newSteps.find(
+          s => s.state === CheckoutStepState.COMPLETED,
+        )
+        const hasUpcomingStep = newSteps.find(
+          s => s.state === CheckoutStepState.UPCOMING,
+        )
+
+        if (hasCompletedStep && !hasUpcomingStep && !hasActivatedNext) {
+          hasActivatedNext = true
           newSteps.push({
             ...step,
-            state: CheckoutStepState.COMPLETED,
+            state: CheckoutStepState.ACTIVE,
           })
         } else {
-          const shouldBeHidden = step.state === CheckoutStepState.HIDDEN
-          if (shouldBeHidden) {
-            newSteps.push(step)
-            continue
-          }
-
-          if (step.state === CheckoutStepState.COMPLETED) {
-            newSteps.push(step)
-            continue
-          }
-
-          // We've already returned if it is completed or hidden, so this
-          // must be an upcoming step. If it is the first one, then
-          // we activate it, otherwise we leave it as upcoming.
-          const hasCompletedStep = newSteps.find(
-            s => s.state === CheckoutStepState.COMPLETED,
-          )
-          const hasUpcomingStep = newSteps.find(
-            s => s.state === CheckoutStepState.UPCOMING,
-          )
-
-          if (hasCompletedStep && !hasUpcomingStep && !hasActivatedNext) {
-            hasActivatedNext = true
-            newSteps.push({
-              ...step,
-              state: CheckoutStepState.ACTIVE,
-            })
-          } else {
-            newSteps.push(step)
-          }
+          newSteps.push(step)
         }
       }
+    }
 
-      state.confirmationToken = confirmationToken
-      state.saveCreditCard = saveCreditCard
-      state.steps = newSteps
-    },
-  ),
+    state.steps = newSteps
+  }),
+
+  setConfirmationToken: action((state, { confirmationToken }) => {
+    state.confirmationToken = confirmationToken
+  }),
+
+  setSavePaymentMethod: action((state, savePaymentMethod) => {
+    state.savePaymentMethod = savePaymentMethod
+  }),
 
   setSavedCreditCard: action((state, { savedCreditCard }) => {
     // Update payment completion logic similar to setConfirmationToken
@@ -355,7 +361,7 @@ export const Order2CheckoutContext: ReturnType<
     }
 
     state.savedCreditCard = savedCreditCard
-    state.saveCreditCard = false
+    state.savePaymentMethod = false
     state.confirmationToken = null
     state.steps = newSteps
   }),
@@ -478,7 +484,7 @@ export const Order2CheckoutContextProvider: React.FC<
     expressCheckoutPaymentMethods: null,
     activeFulfillmentDetailsTab: null,
     confirmationToken: null,
-    saveCreditCard: true,
+    savePaymentMethod: true,
     savedCreditCard: null,
     checkoutMode: "standard",
     steps: [],
@@ -699,7 +705,7 @@ const initialStateForOrder = (
     confirmationToken: hasStripeConfirmationToken
       ? { id: order.stripeConfirmationToken }
       : null,
-    saveCreditCard: true,
+    savePaymentMethod: true,
     savedCreditCard: null,
     steps,
     checkoutMode: (savedCheckoutMode === "express"

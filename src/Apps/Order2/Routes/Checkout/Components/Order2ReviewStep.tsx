@@ -38,7 +38,7 @@ const Order2ReviewStepComponent: React.FC<Order2ReviewStepProps> = ({
   const {
     steps,
     confirmationToken,
-    saveCreditCard,
+    savePaymentMethod,
     redirectToOrderDetails,
     checkoutTracking,
   } = useCheckoutContext()
@@ -78,7 +78,7 @@ const Order2ReviewStepComponent: React.FC<Order2ReviewStepProps> = ({
           input: {
             id: orderData.internalID,
             confirmationToken: confirmationToken?.id,
-            oneTimeUse: !saveCreditCard,
+            oneTimeUse: !savePaymentMethod,
           },
         },
       })
