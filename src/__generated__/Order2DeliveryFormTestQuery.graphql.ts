@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a78969f1fea65105a6db097a25679ea5>>
+ * @generated SignedSource<<ae5433fd577e9e46d9ffeb61d06428c4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,6 +16,7 @@ export type Order2DeliveryFormTestQuery$data = {
     readonly order: {
       readonly " $fragmentSpreads": FragmentRefs<"Order2DeliveryForm_order">;
     } | null | undefined;
+    readonly " $fragmentSpreads": FragmentRefs<"Order2DeliveryForm_me">;
   } | null | undefined;
 };
 export type Order2DeliveryFormTestQuery = {
@@ -35,20 +36,82 @@ v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "internalID",
   "storageKey": null
 },
 v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "addressLine1",
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "addressLine2",
+  "storageKey": null
+},
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "city",
+  "storageKey": null
+},
+v5 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "region",
+  "storageKey": null
+},
+v6 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "postalCode",
+  "storageKey": null
+},
+v7 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "country",
+  "storageKey": null
+},
+v8 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+},
+v9 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v10 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
-  "type": "ID"
+  "type": "String"
 },
-v3 = {
+v11 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "String"
+},
+v12 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
 };
 return {
   "fragment": {
@@ -65,6 +128,11 @@ return {
         "name": "me",
         "plural": false,
         "selections": [
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "Order2DeliveryForm_me"
+          },
           {
             "alias": null,
             "args": (v0/*: any*/),
@@ -104,19 +172,75 @@ return {
         "selections": [
           {
             "alias": null,
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "first",
+                "value": 20
+              }
+            ],
+            "concreteType": "UserAddressConnection",
+            "kind": "LinkedField",
+            "name": "addressConnection",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "UserAddressEdge",
+                "kind": "LinkedField",
+                "name": "edges",
+                "plural": true,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "UserAddress",
+                    "kind": "LinkedField",
+                    "name": "node",
+                    "plural": false,
+                    "selections": [
+                      (v1/*: any*/),
+                      (v2/*: any*/),
+                      (v3/*: any*/),
+                      (v4/*: any*/),
+                      (v5/*: any*/),
+                      (v6/*: any*/),
+                      (v7/*: any*/),
+                      (v8/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "phoneNumber",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "phoneNumberCountryCode",
+                        "storageKey": null
+                      },
+                      (v9/*: any*/)
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": "addressConnection(first:20)"
+          },
+          {
+            "alias": null,
             "args": (v0/*: any*/),
             "concreteType": "Order",
             "kind": "LinkedField",
             "name": "order",
             "plural": false,
             "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "internalID",
-                "storageKey": null
-              },
+              (v1/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -150,55 +274,13 @@ return {
                 "name": "fulfillmentDetails",
                 "plural": false,
                 "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "addressLine1",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "addressLine2",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "city",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "region",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "postalCode",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "country",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "name",
-                    "storageKey": null
-                  },
+                  (v2/*: any*/),
+                  (v3/*: any*/),
+                  (v4/*: any*/),
+                  (v5/*: any*/),
+                  (v6/*: any*/),
+                  (v7/*: any*/),
+                  (v8/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -211,14 +293,14 @@ return {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "countryCode",
+                        "name": "originalNumber",
                         "storageKey": null
                       },
                       {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "originalNumber",
+                        "name": "regionCode",
                         "storageKey": null
                       }
                     ],
@@ -227,18 +309,18 @@ return {
                 ],
                 "storageKey": null
               },
-              (v1/*: any*/)
+              (v9/*: any*/)
             ],
             "storageKey": "order(id:\"order-id\")"
           },
-          (v1/*: any*/)
+          (v9/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "9a12672267c7d75dd9212653ea4b7c04",
+    "cacheID": "0823ca109272a925b03e11ad803c14a2",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -248,7 +330,36 @@ return {
           "plural": false,
           "type": "Me"
         },
-        "me.id": (v2/*: any*/),
+        "me.addressConnection": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "UserAddressConnection"
+        },
+        "me.addressConnection.edges": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "UserAddressEdge"
+        },
+        "me.addressConnection.edges.node": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "UserAddress"
+        },
+        "me.addressConnection.edges.node.addressLine1": (v10/*: any*/),
+        "me.addressConnection.edges.node.addressLine2": (v11/*: any*/),
+        "me.addressConnection.edges.node.city": (v10/*: any*/),
+        "me.addressConnection.edges.node.country": (v10/*: any*/),
+        "me.addressConnection.edges.node.id": (v12/*: any*/),
+        "me.addressConnection.edges.node.internalID": (v12/*: any*/),
+        "me.addressConnection.edges.node.name": (v11/*: any*/),
+        "me.addressConnection.edges.node.phoneNumber": (v11/*: any*/),
+        "me.addressConnection.edges.node.phoneNumberCountryCode": (v11/*: any*/),
+        "me.addressConnection.edges.node.postalCode": (v11/*: any*/),
+        "me.addressConnection.edges.node.region": (v11/*: any*/),
+        "me.id": (v12/*: any*/),
         "me.order": {
           "enumValues": null,
           "nullable": true,
@@ -267,23 +378,23 @@ return {
           "plural": false,
           "type": "FulfillmentDetails"
         },
-        "me.order.fulfillmentDetails.addressLine1": (v3/*: any*/),
-        "me.order.fulfillmentDetails.addressLine2": (v3/*: any*/),
-        "me.order.fulfillmentDetails.city": (v3/*: any*/),
-        "me.order.fulfillmentDetails.country": (v3/*: any*/),
-        "me.order.fulfillmentDetails.name": (v3/*: any*/),
+        "me.order.fulfillmentDetails.addressLine1": (v11/*: any*/),
+        "me.order.fulfillmentDetails.addressLine2": (v11/*: any*/),
+        "me.order.fulfillmentDetails.city": (v11/*: any*/),
+        "me.order.fulfillmentDetails.country": (v11/*: any*/),
+        "me.order.fulfillmentDetails.name": (v11/*: any*/),
         "me.order.fulfillmentDetails.phoneNumber": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "PhoneNumberType"
         },
-        "me.order.fulfillmentDetails.phoneNumber.countryCode": (v3/*: any*/),
-        "me.order.fulfillmentDetails.phoneNumber.originalNumber": (v3/*: any*/),
-        "me.order.fulfillmentDetails.postalCode": (v3/*: any*/),
-        "me.order.fulfillmentDetails.region": (v3/*: any*/),
-        "me.order.id": (v2/*: any*/),
-        "me.order.internalID": (v2/*: any*/),
+        "me.order.fulfillmentDetails.phoneNumber.originalNumber": (v11/*: any*/),
+        "me.order.fulfillmentDetails.phoneNumber.regionCode": (v11/*: any*/),
+        "me.order.fulfillmentDetails.postalCode": (v11/*: any*/),
+        "me.order.fulfillmentDetails.region": (v11/*: any*/),
+        "me.order.id": (v12/*: any*/),
+        "me.order.internalID": (v12/*: any*/),
         "me.order.selectedFulfillmentOption": {
           "enumValues": null,
           "nullable": true,
@@ -305,11 +416,11 @@ return {
     },
     "name": "Order2DeliveryFormTestQuery",
     "operationKind": "query",
-    "text": "query Order2DeliveryFormTestQuery {\n  me {\n    order(id: \"order-id\") {\n      ...Order2DeliveryForm_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DeliveryForm_order on Order {\n  internalID\n  selectedFulfillmentOption {\n    type\n  }\n  availableShippingCountries\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    region\n    postalCode\n    country\n    name\n    phoneNumber {\n      countryCode\n      originalNumber\n    }\n  }\n}\n"
+    "text": "query Order2DeliveryFormTestQuery {\n  me {\n    ...Order2DeliveryForm_me\n    order(id: \"order-id\") {\n      ...Order2DeliveryForm_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DeliveryForm_me on Me {\n  addressConnection(first: 20) {\n    edges {\n      node {\n        internalID\n        addressLine1\n        addressLine2\n        city\n        region\n        postalCode\n        country\n        name\n        phoneNumber\n        phoneNumberCountryCode\n        id\n      }\n    }\n  }\n}\n\nfragment Order2DeliveryForm_order on Order {\n  internalID\n  selectedFulfillmentOption {\n    type\n  }\n  availableShippingCountries\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    region\n    postalCode\n    country\n    name\n    phoneNumber {\n      originalNumber\n      regionCode\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "4eb997fe19cb6cfa6ee2fa5df4fc4839";
+(node as any).hash = "ccb5bcb21bcaa350ad3eda6f29d797c8";
 
 export default node;
