@@ -278,7 +278,7 @@ const helpers = {
       })
 
       expect(confirmationTokenQuery.operationName).toBe(
-        "Order2PaymentFormConfirmationTokenQuery",
+        "confirmationTokenUtilsQuery",
       )
       expect(confirmationTokenQuery.operation.request.variables).toEqual({
         id: "confirmation-token-id",
@@ -612,7 +612,7 @@ describe("Order2CheckoutRoute", () => {
           })
 
           expect(confirmationTokenQuery.operationName).toBe(
-            "Order2PaymentFormConfirmationTokenQuery",
+            "confirmationTokenUtilsQuery",
           )
           expect(confirmationTokenQuery.operation.request.variables).toEqual({
             id: "confirmation-token-id",
@@ -1186,6 +1186,9 @@ describe("Order2CheckoutRoute", () => {
               },
             },
             creditCards: {
+              edges: [],
+            },
+            bankAccounts: {
               edges: [],
             },
           },
