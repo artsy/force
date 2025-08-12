@@ -4683,11 +4683,23 @@ input BulkUpdateArtworksMetadataInput {
   # The category (medium type) to be assigned
   category: String
 
+  # The artwork condition to be assigned
+  conditionDescription: String
+
   # Flat fee for domestic shipping. It must be entered in cents.
   domesticShippingFeeCents: Int
 
   # Whether the artworks must be listed as Purchase
   ecommerce: Boolean
+
+  # The exhibition history to be assigned
+  exhibitionHistory: String
+
+  # The image rights to be assigned
+  imageRights: String
+
+  # The literature to be assigned
+  literature: String
 
   # The partner location ID to assign
   locationId: String
@@ -20572,6 +20584,9 @@ input RemoveArtworkImportImageInput {
   artworkImportID: String!
   clientMutationId: String
   imageID: String!
+
+  # The ID of the row containing the image
+  rowID: String!
 }
 
 type RemoveArtworkImportImagePayload {
@@ -23042,8 +23057,11 @@ input UpdateArtworkImportRowImagesInput {
   artworkImportID: String!
   clientMutationId: String
 
+  # The ID of the row to update images for
+  rowID: String!
+
   # Array of image IDs in desired position order
-  positions: [String!]!
+  sortedImageIDs: [String!]!
 }
 
 type UpdateArtworkImportRowImagesPayload {
