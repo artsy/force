@@ -96,8 +96,6 @@ const ArtworkImageBrowserLarge: React.FC<
           </nav>
         )}
 
-        <Spacer y={2} />
-
         {activeFigure.__typename === "Image" && (
           <ArtworkLightboxFragmentContainer
             maxHeight={maxHeight}

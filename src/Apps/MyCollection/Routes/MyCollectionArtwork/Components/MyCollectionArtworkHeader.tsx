@@ -1,8 +1,7 @@
-import { Button, Flex } from "@artsy/palette"
+import { Button } from "@artsy/palette"
 import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
-import { MyCollectionArtworkBackButton } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkBackButton"
+import { TopContextBar } from "Components/TopContextBar"
 import { RouterLink } from "System/Components/RouterLink"
-import { Media } from "Utils/Responsive"
 import type { MyCollectionArtworkHeader_artwork$key } from "__generated__/MyCollectionArtworkHeader_artwork.graphql"
 import { graphql, useFragment } from "react-relay"
 
@@ -19,23 +18,26 @@ export const MyCollectionArtworkHeader: React.FC<
   const artwork = useFragment(FRAGMENT, props.artwork)
 
   return (
-    <Flex pt={2} justifyContent="space-between" alignItems="center">
-      <MyCollectionArtworkBackButton />
-      <Button
-        // @ts-ignore
-        as={RouterLink}
-        variant="secondaryNeutral"
-        size="small"
-        to={`/collector-profile/my-collection/artworks/${artwork.internalID}/edit`}
-        onClick={() =>
-          trackEditCollectedArtwork(artwork.internalID, artwork.slug)
-        }
-        alignSelf="flex-end"
-      >
-        <Media greaterThanOrEqual="sm">Edit Artwork Details</Media>
-        <Media lessThan="sm">Edit</Media>
-      </Button>
-    </Flex>
+    <TopContextBar
+      displayBackArrow
+      href="/collector-profile/my-collection"
+      rightContent={
+        <Button
+          // @ts-ignore
+          as={RouterLink}
+          variant="secondaryNeutral"
+          size="small"
+          to={`/collector-profile/my-collection/artworks/${artwork.internalID}/edit`}
+          onClick={() =>
+            trackEditCollectedArtwork(artwork.internalID, artwork.slug)
+          }
+        >
+          Edit Artwork Details
+        </Button>
+      }
+    >
+      Back to My Collection
+    </TopContextBar>
   )
 }
 
