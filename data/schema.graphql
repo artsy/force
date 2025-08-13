@@ -4683,6 +4683,12 @@ input BulkUpdateArtworksMetadataInput {
   # The category (medium type) to be assigned
   category: String
 
+  # If COA is provided by a third-party authenticating body.
+  coaByAuthenticatingBody: Boolean
+
+  # If COA is provided by the gallery.
+  coaByGallery: Boolean
+
   # The artwork condition to be assigned
   conditionDescription: String
 
@@ -4694,6 +4700,9 @@ input BulkUpdateArtworksMetadataInput {
 
   # The exhibition history to be assigned
   exhibitionHistory: String
+
+  # Whether a certificate of authenticity is provided for these artworks.
+  hasCertificateOfAuthenticity: Boolean
 
   # The image rights to be assigned
   imageRights: String
