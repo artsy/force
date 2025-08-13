@@ -29,14 +29,10 @@ describe("MyCollectionArtworkHeader", () => {
 
     const editCTA = screen.getByText("Edit Artwork Details")
     expect(editCTA).toBeInTheDocument()
-
-    expect(
-      screen
-        .getAllByRole("link")
-        .find(c => c.textContent?.includes("Edit Artwork Details")),
-    ).toHaveAttribute(
+    // Get closest link
+    expect(editCTA.closest("a")).toHaveAttribute(
       "href",
-      `/collector-profile/my-collection/artworks/artwork-id/edit`,
+      "/collector-profile/my-collection/artworks/artwork-id/edit",
     )
   })
 

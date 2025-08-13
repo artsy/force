@@ -1,4 +1,5 @@
 import {
+  Button,
   Column,
   Flex,
   GridColumns,
@@ -22,20 +23,22 @@ interface JobsFilterProps {
 const JobsFilter: FC<React.PropsWithChildren<JobsFilterProps>> = ({
   viewer,
 }) => {
+  const jobs = viewer.jobs
+
   const locations = useMemo(
     () =>
       uniq(
-        viewer.jobs
+        jobs
           .flatMap(job => job.location.split(","))
           .map(location => location.trim())
           .filter(location => location !== LEADGEN_LOCATION),
       ).sort(),
-    [viewer.jobs],
+    [jobs],
   )
 
   const teams = useMemo(() => {
     // Jobs grouped by team
-    return viewer.jobs.reduce(
+    return jobs.reduce(
       (acc, job) => {
         acc[job.teamName] = acc[job.teamName] || []
         acc[job.teamName].push(job)
@@ -43,7 +46,7 @@ const JobsFilter: FC<React.PropsWithChildren<JobsFilterProps>> = ({
       },
       {} as Record<string, any[]>,
     )
-  }, [viewer.jobs])
+  }, [jobs])
 
   const [selection, setSelection] = useState<string[]>([])
 
@@ -57,30 +60,60 @@ const JobsFilter: FC<React.PropsWithChildren<JobsFilterProps>> = ({
     })
   }
 
+  if (jobs.length === 0) {
+    return (
+      <GridColumns>
+        <Column span={6} start={4} textAlign="center">
+          <Text variant="md">
+            We don’t have any open roles at the moment, but we’re always looking
+            for exceptional people who share our mission and vision.
+          </Text>
+
+          <Spacer y={2} />
+
+          <Button
+            // @ts-ignore
+            as="a"
+            target="_blank"
+            rel="noopener noreferrer"
+            alignSelf="center"
+            size="small"
+            variant="secondaryNeutral"
+            href="https://jobs.ashbyhq.com/artsy/form/join-our-talent-pool"
+          >
+            Join our talent pool
+          </Button>
+        </Column>
+      </GridColumns>
+    )
+  }
+
   return (
     <GridColumns gridRowGap={4}>
-      <Column span={12}>
-        <Flex mb={-1} flexWrap="wrap">
-          {locations.map(location => {
-            return (
-              <Pill
-                key={location}
-                mr={1}
-                mb={1}
-                selected={selection.includes(location)}
-                onClick={handleClick(location)}
-              >
-                {location}
-              </Pill>
-            )
-          })}
-        </Flex>
-      </Column>
+      {locations.length > 0 && (
+        <Column span={12}>
+          <Flex mb={-1} flexWrap="wrap">
+            {locations.map(location => {
+              return (
+                <Pill
+                  key={location}
+                  mr={1}
+                  mb={1}
+                  selected={selection.includes(location)}
+                  onClick={handleClick(location)}
+                >
+                  {location}
+                </Pill>
+              )
+            })}
+          </Flex>
+        </Column>
+      )}
 
       {/* Filtered results, grouped by location */}
       {selection.length > 0 &&
         selection.map(location => {
-          const filteredJobs = viewer.jobs.filter(job => {
+          const filteredJobs = jobs.filter(job => {
             return job.location
               .split(",")
               .map(location => location.trim())
