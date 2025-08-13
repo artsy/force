@@ -105,46 +105,48 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
       />
       {isLoading && <Order2CheckoutLoadingSkeleton order={orderData} />}
       {expressCheckoutSubmitting && <SubmittingOrderSpinner />}
-      <GridColumns py={[0, 4]} px={[0, 4]}>
-        <Column span={[12, 7, 6, 5]} start={[1, 1, 2, 3]}>
-          <Stack gap={1}>
+      {!isLoading && !expressCheckoutSubmitting && (
+        <GridColumns py={[0, 4]} px={[0, 4]}>
+          <Column span={[12, 7, 6, 5]} start={[1, 1, 2, 3]}>
+            <Stack gap={1}>
+              <Box display={["block", "none"]}>
+                <Order2CollapsibleOrderSummary order={orderData} />
+              </Box>
+              {isExpressCheckoutEligible && (
+                <Order2ExpressCheckout order={orderData} />
+              )}
+              <Order2FulfillmentDetailsStep order={orderData} />
+              <Order2DeliveryOptionsStep order={orderData} />
+              <Order2PaymentStep order={orderData} me={meData} />
+            </Stack>
             <Box display={["block", "none"]}>
-              <Order2CollapsibleOrderSummary order={orderData} />
+              <Spacer y={1} />
+              <Order2ReviewStep order={orderData} />
+              <Order2HelpLinksWithInquiry
+                order={orderData}
+                artworkID={artworkSlug as string}
+                contextModule={ContextModule.ordersCheckout}
+              />
             </Box>
-            {isExpressCheckoutEligible && (
-              <Order2ExpressCheckout order={orderData} />
-            )}
-            <Order2FulfillmentDetailsStep order={orderData} />
-            <Order2DeliveryOptionsStep order={orderData} />
-            <Order2PaymentStep order={orderData} me={meData} />
-          </Stack>
-          <Box display={["block", "none"]}>
-            <Spacer y={1} />
-            <Order2ReviewStep order={orderData} />
-            <Order2HelpLinksWithInquiry
-              order={orderData}
-              artworkID={artworkSlug as string}
-              contextModule={ContextModule.ordersCheckout}
-            />
-          </Box>
-        </Column>
+          </Column>
 
-        <Column
-          span={[12, 5, 4, 3]}
-          start={[1, 8, 8, 8]}
-          display={["none", "block"]}
-        >
-          <Box position={["initial", "sticky"]} top="100px">
-            <Order2ReviewStep order={orderData} />
-            <Separator as="hr" />
-            <Order2HelpLinksWithInquiry
-              order={orderData}
-              artworkID={artworkSlug as string}
-              contextModule={ContextModule.ordersCheckout}
-            />
-          </Box>
-        </Column>
-      </GridColumns>
+          <Column
+            span={[12, 5, 4, 3]}
+            start={[1, 8, 8, 8]}
+            display={["none", "block"]}
+          >
+            <Box position={["initial", "sticky"]} top="100px">
+              <Order2ReviewStep order={orderData} />
+              <Separator as="hr" />
+              <Order2HelpLinksWithInquiry
+                order={orderData}
+                artworkID={artworkSlug as string}
+                contextModule={ContextModule.ordersCheckout}
+              />
+            </Box>
+          </Column>
+        </GridColumns>
+      )}
       <ConnectedModalDialog />
     </Provider>
   )
