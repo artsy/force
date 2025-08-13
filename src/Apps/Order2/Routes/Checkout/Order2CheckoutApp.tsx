@@ -105,7 +105,7 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
       />
       {isLoading && <Order2CheckoutLoadingSkeleton order={orderData} />}
       {expressCheckoutSubmitting && <SubmittingOrderSpinner />}
-      {!isLoading && !expressCheckoutSubmitting && (
+      {!expressCheckoutSubmitting && (
         <GridColumns py={[0, 4]} px={[0, 4]}>
           <Column span={[12, 7, 6, 5]} start={[1, 1, 2, 3]}>
             <Stack gap={1}>
