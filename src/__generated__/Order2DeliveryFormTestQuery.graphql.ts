@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<38809faeb19838f44fd83afc4e7ad3ce>>
+ * @generated SignedSource<<ae5433fd577e9e46d9ffeb61d06428c4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -172,7 +172,13 @@ return {
         "selections": [
           {
             "alias": null,
-            "args": null,
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "first",
+                "value": 20
+              }
+            ],
             "concreteType": "UserAddressConnection",
             "kind": "LinkedField",
             "name": "addressConnection",
@@ -224,7 +230,7 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": null
+            "storageKey": "addressConnection(first:20)"
           },
           {
             "alias": null,
@@ -287,14 +293,14 @@ return {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "countryCode",
+                        "name": "originalNumber",
                         "storageKey": null
                       },
                       {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "originalNumber",
+                        "name": "regionCode",
                         "storageKey": null
                       }
                     ],
@@ -314,7 +320,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "64ec8fec47d63d35aaa18d29338ed414",
+    "cacheID": "0823ca109272a925b03e11ad803c14a2",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -383,8 +389,8 @@ return {
           "plural": false,
           "type": "PhoneNumberType"
         },
-        "me.order.fulfillmentDetails.phoneNumber.countryCode": (v11/*: any*/),
         "me.order.fulfillmentDetails.phoneNumber.originalNumber": (v11/*: any*/),
+        "me.order.fulfillmentDetails.phoneNumber.regionCode": (v11/*: any*/),
         "me.order.fulfillmentDetails.postalCode": (v11/*: any*/),
         "me.order.fulfillmentDetails.region": (v11/*: any*/),
         "me.order.id": (v12/*: any*/),
@@ -410,7 +416,7 @@ return {
     },
     "name": "Order2DeliveryFormTestQuery",
     "operationKind": "query",
-    "text": "query Order2DeliveryFormTestQuery {\n  me {\n    ...Order2DeliveryForm_me\n    order(id: \"order-id\") {\n      ...Order2DeliveryForm_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DeliveryForm_me on Me {\n  addressConnection {\n    edges {\n      node {\n        internalID\n        addressLine1\n        addressLine2\n        city\n        region\n        postalCode\n        country\n        name\n        phoneNumber\n        phoneNumberCountryCode\n        id\n      }\n    }\n  }\n}\n\nfragment Order2DeliveryForm_order on Order {\n  internalID\n  selectedFulfillmentOption {\n    type\n  }\n  availableShippingCountries\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    region\n    postalCode\n    country\n    name\n    phoneNumber {\n      countryCode\n      originalNumber\n    }\n  }\n}\n"
+    "text": "query Order2DeliveryFormTestQuery {\n  me {\n    ...Order2DeliveryForm_me\n    order(id: \"order-id\") {\n      ...Order2DeliveryForm_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DeliveryForm_me on Me {\n  addressConnection(first: 20) {\n    edges {\n      node {\n        internalID\n        addressLine1\n        addressLine2\n        city\n        region\n        postalCode\n        country\n        name\n        phoneNumber\n        phoneNumberCountryCode\n        id\n      }\n    }\n  }\n}\n\nfragment Order2DeliveryForm_order on Order {\n  internalID\n  selectedFulfillmentOption {\n    type\n  }\n  availableShippingCountries\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    region\n    postalCode\n    country\n    name\n    phoneNumber {\n      originalNumber\n      regionCode\n    }\n  }\n}\n"
   }
 };
 })();

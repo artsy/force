@@ -91,7 +91,7 @@ describe("Order2DeliveryForm", () => {
         postalCode: "10001",
         country: "US",
         phoneNumber: {
-          countryCode: "us",
+          regionCode: "us",
           originalNumber: "5551234567",
         },
       }
@@ -134,7 +134,7 @@ describe("Order2DeliveryForm", () => {
                 postalCode: "",
                 country: "US",
                 phoneNumber: {
-                  countryCode: "us",
+                  regionCode: "us",
                   originalNumber: "",
                 },
               },
@@ -187,7 +187,7 @@ describe("Order2DeliveryForm", () => {
                     postalCode: "90210",
                     country: "US",
                     phoneNumber: {
-                      countryCode: "us",
+                      regionCode: "us",
                       originalNumber: "5559876543",
                     },
                   },
@@ -218,7 +218,7 @@ describe("Order2DeliveryForm", () => {
                 postalCode: "",
                 country: "US",
                 phoneNumber: {
-                  countryCode: "us",
+                  regionCode: "us",
                   originalNumber: "",
                 },
               },
@@ -271,7 +271,7 @@ describe("Order2DeliveryForm", () => {
                     postalCode: "90210",
                     country: "US",
                     phoneNumber: {
-                      countryCode: "us",
+                      regionCode: "us",
                       originalNumber: "5559876543",
                     },
                   },
@@ -331,7 +331,7 @@ describe("Order2DeliveryForm", () => {
                 postalCode: "",
                 country: "US",
                 phoneNumber: {
-                  countryCode: "us",
+                  regionCode: "us",
                   originalNumber: "",
                 },
               },
@@ -382,7 +382,7 @@ describe("Order2DeliveryForm", () => {
                     postalCode: "90210",
                     country: "US",
                     phoneNumber: {
-                      countryCode: "us",
+                      regionCode: "us",
                       originalNumber: "5559876543",
                     },
                   },
@@ -435,7 +435,7 @@ describe("Order2DeliveryForm", () => {
                 postalCode: "",
                 country: "US",
                 phoneNumber: {
-                  countryCode: "us",
+                  regionCode: "us",
                   originalNumber: "",
                 },
               },
@@ -509,7 +509,7 @@ describe("Order2DeliveryForm", () => {
                     postalCode: "90210",
                     country: "US",
                     phoneNumber: {
-                      countryCode: "us",
+                      regionCode: "us",
                       originalNumber: "5559876543",
                     },
                   },
@@ -556,7 +556,7 @@ describe("Order2DeliveryForm", () => {
                 postalCode: "",
                 country: "US",
                 phoneNumber: {
-                  countryCode: "us",
+                  regionCode: "us",
                   originalNumber: "",
                 },
               },
@@ -726,7 +726,7 @@ describe("Order2DeliveryForm", () => {
               postalCode: "10001",
               country: "US",
               phoneNumber: {
-                countryCode: "us",
+                regionCode: "us",
                 originalNumber: "5551234567",
               },
             },
@@ -758,7 +758,7 @@ describe("Order2DeliveryForm", () => {
                   postalCode: "10001",
                   country: "US",
                   phoneNumber: {
-                    countryCode: "us",
+                    regionCode: "us",
                     originalNumber: "5551234567",
                   },
                 },
@@ -804,7 +804,7 @@ describe("Order2DeliveryForm", () => {
               postalCode: "10001",
               country: "US",
               phoneNumber: {
-                countryCode: "us",
+                regionCode: "us",
                 originalNumber: "5551234567",
               },
             },
@@ -832,7 +832,7 @@ describe("Order2DeliveryForm", () => {
                   postalCode: "56789",
                   country: "DE",
                   phoneNumber: {
-                    countryCode: "de",
+                    regionCode: "de",
                     originalNumber: "5559876543",
                   },
                 },

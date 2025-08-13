@@ -551,7 +551,7 @@ describe("Order2CheckoutRoute", () => {
                   fulfillmentDetails: {
                     phoneNumber: {
                       originalNumber: "03012345678",
-                      countryCode: "de",
+                      regionCode: "de",
                     },
                   },
                 }),
@@ -936,7 +936,7 @@ describe("Order2CheckoutRoute", () => {
                 fulfillmentDetails: {
                   phoneNumber: {
                     originalNumber: "1234567890",
-                    countryCode: "us",
+                    regionCode: "us",
                   },
                   address: {
                     name: "John Doe",
@@ -1237,7 +1237,7 @@ describe("Order2CheckoutRoute", () => {
                     postalCode: "10001",
                     country: "US",
                     phoneNumber: {
-                      countryCode: "us",
+                      regionCode: "us",
                       originalNumber: "5551234567",
                     },
                   },
@@ -1345,7 +1345,7 @@ describe("Order2CheckoutRoute", () => {
                   fulfillmentDetails: {
                     phoneNumber: {
                       originalNumber: "03012345678",
-                      countryCode: "de",
+                      regionCode: "de",
                     },
                   },
                 }),
