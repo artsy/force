@@ -105,13 +105,7 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
       />
       {isLoading && <Order2CheckoutLoadingSkeleton order={orderData} />}
       {expressCheckoutSubmitting && <SubmittingOrderSpinner />}
-      <GridColumns
-        py={[0, 4]}
-        px={[0, 4]}
-        style={{
-          display: isLoading || expressCheckoutSubmitting ? "none" : "grid",
-        }}
-      >
+      <GridColumns py={[0, 4]} px={[0, 4]}>
         <Column span={[12, 7, 6, 5]} start={[1, 1, 2, 3]}>
           <Stack gap={1}>
             <Box display={["block", "none"]}>
