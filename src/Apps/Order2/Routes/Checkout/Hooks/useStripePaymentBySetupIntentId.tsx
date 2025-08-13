@@ -22,6 +22,7 @@ export function useStripePaymentBySetupIntentId(
   const environment = useRelayEnvironment()
   const {
     setFulfillmentDetailsComplete,
+    setDeliveryOptionComplete,
     setConfirmationToken,
     setPaymentComplete,
   } = useCheckoutContext()
@@ -51,7 +52,10 @@ export function useStripePaymentBySetupIntentId(
       const isPickup = orderData.selectedFulfillmentOption?.type === "PICKUP"
       setFulfillmentDetailsComplete({ isPickup })
 
-      // TODO: set shipping as complete
+      // Set delivery option as complete for non-pickup orders
+      if (!isPickup) {
+        setDeliveryOptionComplete()
+      }
 
       // Set payment step as complete
       if (confirmation_token) {
@@ -82,6 +86,7 @@ export function useStripePaymentBySetupIntentId(
     orderId,
     router,
     setFulfillmentDetailsComplete,
+    setDeliveryOptionComplete,
     orderData.selectedFulfillmentOption?.type,
   ])
 
