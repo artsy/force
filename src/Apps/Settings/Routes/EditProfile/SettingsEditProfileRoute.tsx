@@ -1,5 +1,4 @@
-import InfoIcon from "@artsy/icons/InfoIcon"
-import { Column, GridColumns, Join, Separator, Text } from "@artsy/palette"
+import { Column, GridColumns, Join, Message, Separator } from "@artsy/palette"
 import { SettingsEditProfileFieldsFragmentContainer } from "Apps/Settings/Routes/EditProfile/Components/SettingsEditProfileFields"
 import type { SettingsEditProfileRoute_me$data } from "__generated__/SettingsEditProfileRoute_me.graphql"
 import type React from "react"
@@ -14,12 +13,14 @@ const SettingsEditProfileRoute: React.FC<
 > = ({ me }) => {
   return (
     <GridColumns>
-      <Column span={8} bg="mono5" p={2} display="flex" gap={1}>
-        <InfoIcon flexShrink={0} />
-        <Text variant="sm-display">
+      <Column span={8}>
+        <Message
+          variant="info"
+          title="Complete your profile and make a great impression"
+        >
           The information you provide here will be shared when you contact a
           gallery or make an offer.
-        </Text>
+        </Message>
       </Column>
 
       <Column span={8}>
