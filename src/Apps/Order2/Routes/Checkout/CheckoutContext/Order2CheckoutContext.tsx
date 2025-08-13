@@ -512,9 +512,6 @@ const CheckoutLoadingManager: React.FC<{
   const [minimumLoadingPassed, setMinimumLoadingPassed] = useState(false)
   const [orderValidated, setOrderValidated] = useState(false)
 
-  const isExpressCheckoutLoaded = Order2CheckoutContext.useStoreState(
-    state => state.expressCheckoutPaymentMethods !== null,
-  )
   const isLoading = Order2CheckoutContext.useStoreState(
     state => state.isLoading,
   )
@@ -561,7 +558,6 @@ const CheckoutLoadingManager: React.FC<{
       [
         minimumLoadingPassed,
         orderValidated,
-        isExpressCheckoutLoaded,
         isPartnerOfferLoadingComplete,
         isLoading,
         setLoadingComplete,
@@ -572,7 +568,6 @@ const CheckoutLoadingManager: React.FC<{
   }, [
     minimumLoadingPassed,
     orderValidated,
-    isExpressCheckoutLoaded,
     isPartnerOfferLoadingComplete,
     isLoading,
     setLoadingComplete,
