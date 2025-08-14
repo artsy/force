@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6f69ca99dedfc8283a489a9e7edc6d94>>
+ * @generated SignedSource<<37e7df4bb18375f38b4bbdab5714e0b9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,6 +12,7 @@ import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FairAbout_fair$data = {
   readonly about: string | null | undefined;
+  readonly slug: string;
   readonly " $fragmentSpreads": FragmentRefs<"FairTimer_fair">;
   readonly " $fragmentType": "FairAbout_fair";
 };
@@ -43,12 +44,19 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "about",
       "storageKey": "about(format:\"HTML\")"
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "slug",
+      "storageKey": null
     }
   ],
   "type": "Fair",
   "abstractKey": null
 };
 
-(node as any).hash = "648a39c0f14cfdc5bd31a80ef0b4d532";
+(node as any).hash = "2c5bcf4b58e3663c056142e833c01624";
 
 export default node;
