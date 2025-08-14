@@ -1,15 +1,18 @@
 import { ContextModule } from "@artsy/cohesion"
+import InfoIcon from "@artsy/icons/InfoIcon"
 import LockIcon from "@artsy/icons/LockIcon"
 import ReceiptIcon from "@artsy/icons/ReceiptIcon"
 import {
   Box,
   Button,
   Checkbox,
+  Clickable,
   Flex,
   Radio,
   RadioGroup,
   Spacer,
   Text,
+  Tooltip,
   useTheme,
 } from "@artsy/palette"
 import {
@@ -37,14 +40,15 @@ import {
 } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useOrder2SetOrderPaymentMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderPaymentMutation"
-
+import { preventHardReload } from "Apps/Order2/Utils/navigationGuards"
+import { fetchAndSetConfirmationToken } from "Apps/Order2/Utils/confirmationTokenUtils"
 import { CreateBankDebitSetupForOrder } from "Components/BankDebitForm/Mutations/CreateBankDebitSetupForOrder"
 import { type Brand, BrandCreditCardIcon } from "Components/BrandCreditCardIcon"
 import { FadeInBox } from "Components/FadeInBox"
 import { RouterLink } from "System/Components/RouterLink"
 import { extractNodes } from "Utils/extractNodes"
+import { getENV } from "Utils/getENV"
 import createLogger from "Utils/logger"
-import type { Order2PaymentFormConfirmationTokenQuery } from "__generated__/Order2PaymentFormConfirmationTokenQuery.graphql"
 import type {
   Order2PaymentForm_me$data,
   Order2PaymentForm_me$key,
@@ -55,12 +59,8 @@ import type {
 } from "__generated__/Order2PaymentForm_order.graphql"
 import type React from "react"
 import { useEffect, useState } from "react"
-import {
-  fetchQuery,
-  graphql,
-  useFragment,
-  useRelayEnvironment,
-} from "react-relay"
+import { graphql, useFragment, useRelayEnvironment } from "react-relay"
+import HomeIcon from "@artsy/icons/HomeIcon"
 
 const logger = createLogger("Order2PaymentForm")
 const defaultErrorMessage = (
@@ -145,8 +145,16 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
   // TODO: Update from legacy commerceSetPayment mutation
   const legacySetPaymentMutation = useSetPayment()
   const createBankDebitSetupForOrder = CreateBankDebitSetupForOrder()
-  const { setConfirmationToken, checkoutTracking, setSavedCreditCard, steps } =
-    useCheckoutContext()
+
+  const {
+    setConfirmationToken,
+    checkoutTracking,
+    setSavedPaymentMethod,
+    setPaymentComplete,
+    setSavePaymentMethod,
+    savePaymentMethod,
+    steps,
+  } = useCheckoutContext()
 
   const [isSubmittingToStripe, setIsSubmittingToStripe] = useState(false)
   const [errorMessage, setErrorMessage] = useState<JSX.Element | string | null>(
@@ -158,12 +166,15 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
     null | "saved" | "stripe-card" | "wire" | "stripe-other"
   >(null)
-  const [saveCreditCard, setSaveCreditCard] = useState(true)
-  const [selectedCreditCard, setSelectedCreditCard] = useState<any | null>(null)
+  const [selectedSavedPaymentMethod, setSelectedSavedPaymentMethod] = useState<
+    any | null
+  >(null)
 
   const isSelectedPaymentMethodStripe = selectedPaymentMethod?.match(/^stripe/)
   const savedCreditCards = extractNodes(me.creditCards)
   const hasSavedCreditCards = savedCreditCards.length > 0
+  const savedBankAccounts = extractNodes(me.bankAccounts)
+  const hasSavedBankAccounts = savedBankAccounts.length > 0
 
   const stepIsActive =
     steps?.find(step => step.name === CheckoutStepName.PAYMENT)?.state ===
@@ -188,7 +199,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: one-time effect to default to saved payment method if available
   useEffect(() => {
-    if (hasSavedCreditCards) {
+    if (hasSavedCreditCards || hasSavedBankAccounts) {
       setSelectedPaymentMethod("saved")
       return
     }
@@ -222,6 +233,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         elements.update({
           captureMethod: "manual",
           setupFutureUsage: "off_session",
+          mode: "payment",
         })
         // Only track this the first time it happens
         if (selectedPaymentMethod !== "stripe-card") {
@@ -233,11 +245,20 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         }
         setSelectedPaymentMethod("stripe-card")
       } else {
-        elements.update({ captureMethod: "automatic", setupFutureUsage: null })
+        elements.update({
+          captureMethod: "automatic",
+          setupFutureUsage: null,
+          mode: "setup",
+          payment_method_types: ["us_bank_account"],
+        })
         setSelectedPaymentMethod("stripe-other")
       }
     } else {
-      elements.update({ captureMethod: "automatic", setupFutureUsage: null })
+      elements.update({
+        captureMethod: "automatic",
+        setupFutureUsage: null,
+        mode: "setup",
+      })
     }
   }
 
@@ -300,34 +321,15 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         return
       }
 
-      const response =
-        await fetchQuery<Order2PaymentFormConfirmationTokenQuery>(
-          environment,
-          graphql`
-            query Order2PaymentFormConfirmationTokenQuery($id: String!) {
-              me {
-                confirmationToken(id: $id) {
-                  paymentMethodPreview {
-                    __typename
-                    ... on Card {
-                      displayBrand
-                      last4
-                    }
-                    ... on USBankAccount {
-                      bankName
-                      last4
-                    }
-                  }
-                }
-              }
-            }
-          `,
-          { id: confirmationToken.id },
-          { fetchPolicy: "store-or-network" },
-        ).toPromise()
+      const response = await fetchAndSetConfirmationToken(
+        confirmationToken.id,
+        environment,
+        setConfirmationToken,
+      )
+
+      setSavePaymentMethod(savePaymentMethod)
 
       if (!response) {
-        logger.error("Failed to fetch confirmation token from Exchange")
         handleError({ message: defaultErrorMessage })
         return
       }
@@ -348,27 +350,16 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
           validateAndExtractOrderResponse(
             updateOrderPaymentMethodResult.updateOrder?.orderOrError,
           )
-
-          setConfirmationToken({
-            confirmationToken: {
-              id: confirmationToken.id,
-              ...response?.me?.confirmationToken,
-            },
-            saveCreditCard,
-          })
         } catch (error) {
           logger.error("Error while updating order payment method", error)
           handleError({ message: defaultErrorMessage })
         } finally {
+          setPaymentComplete()
           setIsSubmittingToStripe(false)
         }
       } else {
         // For now, only ACH is supported as a non-card payment method
         try {
-          await createBankDebitSetupForOrder.submitMutation({
-            variables: { input: { id: order.internalID } },
-          })
-
           const updateOrderPaymentMethodResult =
             await setPaymentMutation.submitMutation({
               variables: {
@@ -384,17 +375,39 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
             updateOrderPaymentMethodResult.updateOrder?.orderOrError,
           )
 
-          setConfirmationToken({
-            confirmationToken: {
-              id: confirmationToken.id,
-              ...response?.me?.confirmationToken,
-            },
-            saveCreditCard: false,
-          })
+          // Creating a SetupIntent
+          const bankDebitSetupResult =
+            await createBankDebitSetupForOrder.submitMutation({
+              variables: { input: { id: order.internalID } },
+            })
+
+          if (
+            bankDebitSetupResult.commerceCreateBankDebitSetupForOrder
+              ?.actionOrError.__typename === "CommerceOrderRequiresAction"
+          ) {
+            const return_url = `${getENV("APP_URL")}/orders2/${
+              order.internalID
+            }/checkout?save_bank_account=${savePaymentMethod}&confirmation_token=${confirmationToken.id}`
+            window.removeEventListener("beforeunload", preventHardReload)
+
+            // This will redirect to Stripe for bank verification, no code after this will execute
+            // src/Apps/Order2/Routes/Checkout/Hooks/useStripePaymentBySetupIntentId.tsx will handle the post redirect logic
+            const { error } = await stripe.confirmSetup({
+              elements,
+              clientSecret:
+                bankDebitSetupResult.commerceCreateBankDebitSetupForOrder
+                  ?.actionOrError?.actionData?.clientSecret,
+              confirmParams: {
+                return_url,
+              },
+            })
+
+            if (error) {
+              handleError({ message: defaultErrorMessage })
+            }
+          }
         } catch (error) {
           handleError({ message: defaultErrorMessage })
-        } finally {
-          setIsSubmittingToStripe(false)
         }
       }
     }
@@ -404,7 +417,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
     }
 
     if (selectedPaymentMethod === "saved") {
-      if (!selectedCreditCard) {
+      if (!selectedSavedPaymentMethod) {
         setSubtitleErrorMessage("Select a saved payment method")
         return
       }
@@ -412,12 +425,16 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       setIsSubmittingToStripe(true)
 
       try {
+        const paymentMethod =
+          selectedSavedPaymentMethod?.__typename === "CreditCard"
+            ? "CREDIT_CARD"
+            : "US_BANK_ACCOUNT"
         const result = await legacySetPaymentMutation.submitMutation({
           variables: {
             input: {
               id: order.internalID,
-              paymentMethod: "CREDIT_CARD",
-              paymentMethodId: selectedCreditCard?.internalID,
+              paymentMethod: paymentMethod,
+              paymentMethodId: selectedSavedPaymentMethod?.internalID,
               // Note: paymentMethodId is not supported in updateOrder mutation
               // Saved credit card functionality may need a different approach
             },
@@ -438,7 +455,10 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         handleError({ message: defaultErrorMessage })
       } finally {
         setIsSubmittingToStripe(false)
-        setSavedCreditCard({ savedCreditCard: selectedCreditCard })
+        setSavedPaymentMethod({
+          savedPaymentMethod: selectedSavedPaymentMethod,
+        })
+        setPaymentComplete()
       }
     }
   }
@@ -459,7 +479,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         </>
       )}
       <Spacer y={2} />
-      {hasSavedCreditCards && (
+      {(hasSavedCreditCards || hasSavedBankAccounts) && (
         <FadeInBox>
           <Box
             backgroundColor="mono5"
@@ -489,30 +509,50 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
               </Text>
               <Box ml="50px">
                 <RadioGroup
-                  defaultValue={selectedCreditCard}
+                  defaultValue={selectedSavedPaymentMethod}
                   onSelect={val => {
-                    setSelectedCreditCard(val)
+                    setSelectedSavedPaymentMethod(val)
                   }}
                 >
-                  {savedCreditCards.map(card => (
-                    <Radio
-                      key={card.internalID}
-                      value={card}
-                      pb="15px"
-                      pt="15px"
-                      label={
-                        <Flex>
-                          <BrandCreditCardIcon
-                            type={card.brand as Brand}
-                            width="24px"
-                            height="24px"
-                            mr={1}
-                          />
-                          <Text variant="sm">•••• {card.lastDigits}</Text>
-                        </Flex>
-                      }
-                    />
-                  ))}
+                  {[...savedCreditCards, ...savedBankAccounts].map(
+                    paymentMethod => (
+                      <Radio
+                        key={paymentMethod.internalID}
+                        value={paymentMethod}
+                        pb="15px"
+                        pt="15px"
+                        label={
+                          <Flex>
+                            {paymentMethod.__typename === "CreditCard" ? (
+                              <>
+                                <BrandCreditCardIcon
+                                  type={paymentMethod.brand as Brand}
+                                  width="24px"
+                                  height="24px"
+                                  mr={1}
+                                />
+                                <Text variant="sm">
+                                  •••• {paymentMethod.lastDigits}
+                                </Text>
+                              </>
+                            ) : (
+                              <>
+                                <HomeIcon
+                                  fill="mono100"
+                                  width={["18px", "26px"]}
+                                  height={["18px", "26px"]}
+                                  mr={1}
+                                />
+                                <Text variant={["xs", "sm-display"]}>
+                                  Bank account •••• {paymentMethod.last4}
+                                </Text>
+                              </>
+                            )}
+                          </Flex>
+                        }
+                      />
+                    ),
+                  )}
                 </RadioGroup>
               </Box>
             </Collapse>
@@ -565,9 +605,43 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
 
       <Collapse open={selectedPaymentMethod === "stripe-card"}>
         <Box p={2}>
-          <Checkbox selected={saveCreditCard} onSelect={setSaveCreditCard}>
+          <Checkbox
+            selected={savePaymentMethod}
+            onSelect={setSavePaymentMethod}
+          >
             Save credit card for later use
           </Checkbox>
+        </Box>
+      </Collapse>
+
+      <Collapse open={selectedPaymentMethod === "stripe-other"}>
+        <Box p={2}>
+          <Flex>
+            <Checkbox
+              selected={savePaymentMethod}
+              onSelect={setSavePaymentMethod}
+            >
+              Save bank account for later use.
+            </Checkbox>
+
+            <Tooltip
+              placement="top-start"
+              width={400}
+              content={`Thank you for signing up for direct debits from Artsy. You
+                    have authorized Artsy and, if applicable, its affiliated
+                    entities to debit the bank account specified above, on behalf
+                    of sellers that use the Artsy website, for any amount owed for
+                    your purchase of artworks from such sellers, according to
+                    Artsy’s website and terms. You can change or cancel this
+                    authorization at any time by providing Artsy with 30 (thirty)
+                    days’ notice. By clicking “Save bank account for later use”,
+                    you authorize Artsy to save the bank account specified above.`}
+            >
+              <Clickable ml={0.5} style={{ lineHeight: 0 }}>
+                <InfoIcon />
+              </Clickable>
+            </Tooltip>
+          </Flex>
         </Box>
       </Collapse>
 
@@ -596,9 +670,19 @@ const ME_FRAGMENT = graphql`
     creditCards(first: 10) {
       edges {
         node {
+          __typename
           internalID
           brand
           lastDigits
+        }
+      }
+    }
+    bankAccounts(first: 10) {
+      edges {
+        node {
+          __typename
+          internalID
+          last4
         }
       }
     }

@@ -22,6 +22,7 @@ import { Order2CollapsibleOrderSummary } from "Apps/Order2/Routes/Checkout/Compo
 import { Order2ReviewStep } from "Apps/Order2/Routes/Checkout/Components/Order2ReviewStep"
 import { Order2PaymentStep } from "Apps/Order2/Routes/Checkout/Components/PaymentStep/Order2PaymentStep"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import { useStripePaymentBySetupIntentId } from "Apps/Order2/Routes/Checkout/Hooks/useStripePaymentBySetupIntentId"
 import { ErrorPage } from "Components/ErrorPage"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import type { Order2CheckoutApp_me$key } from "__generated__/Order2CheckoutApp_me.graphql"
@@ -53,6 +54,9 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
     steps,
     checkoutTracking,
   } = useCheckoutContext()
+
+  // Handle Stripe redirect for bank account setup
+  useStripePaymentBySetupIntentId(orderData.internalID, orderData)
   if (!order) {
     return <ErrorPage code={404} message="Order not found" />
   }
@@ -166,7 +170,11 @@ const ME_FRAGMENT = graphql`
 
 const ORDER_FRAGMENT = graphql`
   fragment Order2CheckoutApp_order on Order {
+    internalID
     mode
+    selectedFulfillmentOption {
+      type
+    }
     lineItems {
       artwork {
         slug
