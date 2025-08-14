@@ -112,16 +112,14 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
         py={[0, 4]}
         px={[0, 4]}
         style={{
-          opacity: isLoading ? 0 : 1,
-          pointerEvents: isLoading ? "none" : "auto",
+          display: isLoading ? "none" : "grid",
         }}
       >
         <Column span={[12, 7, 6, 5]} start={[1, 1, 2, 3]}>
           {expressCheckoutSubmitting && <SubmittingOrderSpinner />}
           <Box
             style={{
-              opacity: expressCheckoutSubmitting ? 0 : 1,
-              pointerEvents: expressCheckoutSubmitting ? "none" : "auto",
+              display: expressCheckoutSubmitting ? "none" : "grid",
             }}
           >
             <Stack gap={1}>
