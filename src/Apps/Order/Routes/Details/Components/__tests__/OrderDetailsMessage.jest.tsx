@@ -11,10 +11,12 @@ jest.unmock("react-relay")
 const trackEvent = jest.fn()
 
 const { renderWithRelay } = setupTestWrapperTL<OrderDetailsMessage_Test_Query>({
-  Component: ({ me }) => me?.order && <OrderDetailsMessage order={me.order} />,
+  Component: ({ me }) =>
+    me?.order && <OrderDetailsMessage order={me.order} me={me} />,
   query: graphql`
     query OrderDetailsMessage_Test_Query @raw_response_type {
       me {
+        ...OrderDetailsMessage_me
         order(id: "123") {
           ...OrderDetailsMessage_order
         }
@@ -72,6 +74,46 @@ describe("OrderDetailsMessage", () => {
     })
 
     expect(screen.getByText(new RegExp(expectedText))).toBeInTheDocument()
+  })
+
+  it("renders collector profile prompt for SUBMITTED_OFFER with incomplete profile", () => {
+    renderWithRelay({
+      Order: () => ({
+        buyerStateExpiresAt: mockDate,
+        code: "123",
+        internalID: "test-id",
+        displayTexts: {
+          messageType: "SUBMITTED_OFFER",
+        },
+        impulseConversationId: "conv-123",
+      }),
+      Me: () => ({
+        collectorProfile: { bio: "" },
+      }),
+    })
+    expect(
+      screen.getByRole("link", { name: "completing your profile" }),
+    ).toHaveAttribute("href", "/settings/edit-profile")
+  })
+
+  it("renders collector profile prompt for SUBMITTED_ORDER with incomplete profile", () => {
+    renderWithRelay({
+      Order: () => ({
+        buyerStateExpiresAt: mockDate,
+        code: "123",
+        internalID: "test-id",
+        displayTexts: {
+          messageType: "SUBMITTED_ORDER",
+        },
+        impulseConversationId: "conv-123",
+      }),
+      Me: () => ({
+        collectorProfile: { bio: "" },
+      }),
+    })
+    expect(
+      screen.getByRole("link", { name: "completing your profile" }),
+    ).toHaveAttribute("href", "/settings/edit-profile")
   })
 
   it("renders contact gallery link for SUBMITTED_OFFER", () => {
