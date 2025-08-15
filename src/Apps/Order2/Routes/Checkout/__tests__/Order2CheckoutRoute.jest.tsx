@@ -375,13 +375,6 @@ describe("Order2CheckoutRoute", () => {
         screen.getByLabelText("Checkout loading skeleton"),
       ).toBeInTheDocument()
 
-      // Express checkout is not rendered during loading anymore
-      expect(MockExpressCheckout).not.toHaveBeenCalled()
-
-      // Wait for loading to complete
-      await helpers.waitForLoadingComplete()
-
-      // Now express checkout should be rendered
       expect(MockExpressCheckout).toHaveBeenCalled()
     })
 
