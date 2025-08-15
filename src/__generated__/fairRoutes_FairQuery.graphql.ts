@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d3b0fff3edc2f3c236bb62812fbca62c>>
+ * @generated SignedSource<<77cebe0db1ebb2a9c3376752dbd9b106>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -272,12 +272,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "aa8cf734a7698b820444c7911a841841",
+    "cacheID": "5d218f86bd8303e494dc8146364d210a",
     "id": null,
     "metadata": {},
     "name": "fairRoutes_FairQuery",
     "operationKind": "query",
-    "text": "query fairRoutes_FairQuery(\n  $slug: String!\n) @cacheable {\n  fair(id: $slug) @principalField {\n    ...FairApp_fair\n    id\n  }\n}\n\nfragment ExhibitorsLetterNav_fair on Fair {\n  exhibitorsGroupedByName {\n    letter\n  }\n}\n\nfragment FairApp_fair on Fair {\n  ...FairTabs_fair\n  ...FairMeta_fair\n  ...FairHeader_fair\n  ...FairHeaderImage_fair\n  ...ExhibitorsLetterNav_fair\n  internalID\n  profile {\n    id\n  }\n}\n\nfragment FairHeaderImage_fair on Fair {\n  image {\n    url(version: \"wide\")\n  }\n}\n\nfragment FairHeader_fair on Fair {\n  name\n  exhibitionPeriod\n  profile {\n    icon {\n      url(version: [\"large\", \"square\", \"square140\"])\n    }\n    id\n  }\n}\n\nfragment FairMeta_fair on Fair {\n  name\n  slug\n  metaDescription: summary\n  metaDescriptionFallback: about(format: PLAIN)\n  metaImage: image {\n    src: url(version: \"large_rectangle\")\n  }\n}\n\nfragment FairTabs_fair on Fair {\n  href\n  counts {\n    artworks\n  }\n}\n"
+    "text": "query fairRoutes_FairQuery(\n  $slug: String!\n) @cacheable {\n  fair(id: $slug) @principalField {\n    ...FairApp_fair\n    id\n  }\n}\n\nfragment ExhibitorsLetterNav_fair on Fair {\n  exhibitorsGroupedByName {\n    letter\n  }\n}\n\nfragment FairApp_fair on Fair {\n  ...FairTabs_fair\n  ...FairMeta_fair\n  ...FairHeader_fair\n  ...FairHeaderImage_fair\n  ...ExhibitorsLetterNav_fair\n  internalID\n  profile {\n    id\n  }\n}\n\nfragment FairHeaderImage_fair on Fair {\n  image {\n    url(version: \"wide\")\n  }\n}\n\nfragment FairHeader_fair on Fair {\n  name\n  exhibitionPeriod\n  profile {\n    icon {\n      url(version: [\"large\", \"square\", \"square140\"])\n    }\n    id\n  }\n  slug\n}\n\nfragment FairMeta_fair on Fair {\n  name\n  slug\n  metaDescription: summary\n  metaDescriptionFallback: about(format: PLAIN)\n  metaImage: image {\n    src: url(version: \"large_rectangle\")\n  }\n}\n\nfragment FairTabs_fair on Fair {\n  href\n  counts {\n    artworks\n  }\n}\n"
   }
 };
 })();

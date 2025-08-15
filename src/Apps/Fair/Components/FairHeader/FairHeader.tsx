@@ -14,6 +14,7 @@ const FairHeader: React.FC<React.PropsWithChildren<FairHeaderProps>> = ({
   const { name, exhibitionPeriod, profile } = fair
 
   const avatar = profile?.icon?.url
+  const isArtsyEditionShop = fair.slug === "the-artsy-edition-shop"
 
   return (
     <GridColumns>
@@ -33,9 +34,15 @@ const FairHeader: React.FC<React.PropsWithChildren<FairHeaderProps>> = ({
           {name}
         </Text>
 
-        <Text variant={["lg-display", "xl"]} color="mono60">
-          {exhibitionPeriod}
-        </Text>
+        {isArtsyEditionShop ? (
+          <Text variant={["md", "lg-display"]} color="mono60">
+            Your Chance to Own an Icon
+          </Text>
+        ) : (
+          <Text variant={["lg-display", "xl"]} color="mono60">
+            {exhibitionPeriod}
+          </Text>
+        )}
       </Column>
     </GridColumns>
   )
@@ -51,6 +58,7 @@ export const FairHeaderFragmentContainer = createFragmentContainer(FairHeader, {
           url(version: ["large", "square", "square140"])
         }
       }
+      slug
     }
   `,
 })

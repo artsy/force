@@ -7,7 +7,7 @@ export const SubmittingOrderSpinner: React.FC = () => {
         <Spinner size="large" color="blue100" />
       </Box>
 
-      <Text variant="md" color="blue100">
+      <Text variant="md" color="mono100">
         Submitting your order
       </Text>
 

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<543c04d0df3699d912f21dbc28ed445f>>
+ * @generated SignedSource<<2d3052e21294d849c63c2335250001d1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -143,6 +143,13 @@ return {
             ],
             "storageKey": null
           },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "slug",
+            "storageKey": null
+          },
           (v1/*: any*/)
         ],
         "storageKey": "fair(id:\"example\")"
@@ -150,7 +157,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "cc1090aea89735da3b34f6e1af95c95e",
+    "cacheID": "f45dcb053f03724b9f38425e1262a4fd",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -176,12 +183,13 @@ return {
           "type": "Image"
         },
         "fair.profile.icon.url": (v2/*: any*/),
-        "fair.profile.id": (v3/*: any*/)
+        "fair.profile.id": (v3/*: any*/),
+        "fair.slug": (v3/*: any*/)
       }
     },
     "name": "FairHeaderTestQuery",
     "operationKind": "query",
-    "text": "query FairHeaderTestQuery {\n  fair(id: \"example\") {\n    ...FairHeader_fair\n    id\n  }\n}\n\nfragment FairHeader_fair on Fair {\n  name\n  exhibitionPeriod\n  profile {\n    icon {\n      url(version: [\"large\", \"square\", \"square140\"])\n    }\n    id\n  }\n}\n"
+    "text": "query FairHeaderTestQuery {\n  fair(id: \"example\") {\n    ...FairHeader_fair\n    id\n  }\n}\n\nfragment FairHeader_fair on Fair {\n  name\n  exhibitionPeriod\n  profile {\n    icon {\n      url(version: [\"large\", \"square\", \"square140\"])\n    }\n    id\n  }\n  slug\n}\n"
   }
 };
 })();

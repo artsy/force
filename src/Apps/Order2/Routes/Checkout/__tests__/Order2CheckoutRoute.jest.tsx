@@ -278,7 +278,7 @@ const helpers = {
       })
 
       expect(confirmationTokenQuery.operationName).toBe(
-        "Order2PaymentFormConfirmationTokenQuery",
+        "confirmationTokenUtilsQuery",
       )
       expect(confirmationTokenQuery.operation.request.variables).toEqual({
         id: "confirmation-token-id",
@@ -375,6 +375,13 @@ describe("Order2CheckoutRoute", () => {
         screen.getByLabelText("Checkout loading skeleton"),
       ).toBeInTheDocument()
 
+      // Express checkout is not rendered during loading anymore
+      expect(MockExpressCheckout).not.toHaveBeenCalled()
+
+      // Wait for loading to complete
+      await helpers.waitForLoadingComplete()
+
+      // Now express checkout should be rendered
       expect(MockExpressCheckout).toHaveBeenCalled()
     })
 
@@ -612,7 +619,7 @@ describe("Order2CheckoutRoute", () => {
           })
 
           expect(confirmationTokenQuery.operationName).toBe(
-            "Order2PaymentFormConfirmationTokenQuery",
+            "confirmationTokenUtilsQuery",
           )
           expect(confirmationTokenQuery.operation.request.variables).toEqual({
             id: "confirmation-token-id",
@@ -1186,6 +1193,9 @@ describe("Order2CheckoutRoute", () => {
               },
             },
             creditCards: {
+              edges: [],
+            },
+            bankAccounts: {
               edges: [],
             },
           },

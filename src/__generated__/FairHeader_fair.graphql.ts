@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<023c9cbc6818abec034513aada303bad>>
+ * @generated SignedSource<<14859199f709f0ca8149852499e8b72f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,6 +18,7 @@ export type FairHeader_fair$data = {
       readonly url: string | null | undefined;
     } | null | undefined;
   } | null | undefined;
+  readonly slug: string;
   readonly " $fragmentType": "FairHeader_fair";
 };
 export type FairHeader_fair$key = {
@@ -83,12 +84,19 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "slug",
+      "storageKey": null
     }
   ],
   "type": "Fair",
   "abstractKey": null
 };
 
-(node as any).hash = "f406737327f57215c5b236b25647ec44";
+(node as any).hash = "d76057730cc02d72a054ef7fc1e2def0";
 
 export default node;
