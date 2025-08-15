@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7049d80727b9e7a7a395a91f58d3cecd>>
+ * @generated SignedSource<<045d1853ab1e58b3bc527878fce02a50>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,68 +10,59 @@
 
 import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type artistRoutes_OverviewQuery$variables = {
-  artistID: string;
-};
-export type artistRoutes_OverviewQuery$data = {
+export type ArtistTabsMetaIntegration_AboutTab_Test_Query$variables = Record<PropertyKey, never>;
+export type ArtistTabsMetaIntegration_AboutTab_Test_Query$data = {
   readonly artist: {
     readonly " $fragmentSpreads": FragmentRefs<"ArtistOverviewRoute_artist">;
   } | null | undefined;
 };
-export type artistRoutes_OverviewQuery = {
-  response: artistRoutes_OverviewQuery$data;
-  variables: artistRoutes_OverviewQuery$variables;
+export type ArtistTabsMetaIntegration_AboutTab_Test_Query = {
+  response: ArtistTabsMetaIntegration_AboutTab_Test_Query$data;
+  variables: ArtistTabsMetaIntegration_AboutTab_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "artistID"
-  }
-],
-v1 = [
-  {
-    "kind": "Variable",
+    "kind": "Literal",
     "name": "id",
-    "variableName": "artistID"
+    "value": "andy-warhol"
   }
 ],
-v2 = {
+v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "href",
   "storageKey": null
 },
-v3 = [
+v2 = [
   {
     "kind": "Literal",
     "name": "version",
     "value": "large"
   }
 ],
-v4 = {
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v5 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "__typename",
   "storageKey": null
 },
-v6 = {
+v5 = {
   "kind": "Literal",
   "name": "first",
   "value": 0
 },
-v7 = [
+v6 = [
   {
     "alias": null,
     "args": null,
@@ -79,17 +70,41 @@ v7 = [
     "name": "totalCount",
     "storageKey": null
   }
-];
+],
+v7 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v8 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Int"
+},
+v9 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v10 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
+};
 return {
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "artistRoutes_OverviewQuery",
+    "name": "ArtistTabsMetaIntegration_AboutTab_Test_Query",
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v0/*: any*/),
         "concreteType": "Artist",
         "kind": "LinkedField",
         "name": "artist",
@@ -101,7 +116,7 @@ return {
             "name": "ArtistOverviewRoute_artist"
           }
         ],
-        "storageKey": null
+        "storageKey": "artist(id:\"andy-warhol\")"
       }
     ],
     "type": "Query",
@@ -109,13 +124,13 @@ return {
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "artistRoutes_OverviewQuery",
+    "name": "ArtistTabsMetaIntegration_AboutTab_Test_Query",
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v0/*: any*/),
         "concreteType": "Artist",
         "kind": "LinkedField",
         "name": "artist",
@@ -163,7 +178,7 @@ return {
             "name": "nationality",
             "storageKey": null
           },
-          (v2/*: any*/),
+          (v1/*: any*/),
           {
             "alias": null,
             "args": [
@@ -213,14 +228,14 @@ return {
                 "selections": [
                   {
                     "alias": null,
-                    "args": (v3/*: any*/),
+                    "args": (v2/*: any*/),
                     "kind": "ScalarField",
                     "name": "url",
                     "storageKey": "url(version:\"large\")"
                   },
                   {
                     "alias": "large",
-                    "args": (v3/*: any*/),
+                    "args": (v2/*: any*/),
                     "kind": "ScalarField",
                     "name": "url",
                     "storageKey": "url(version:\"large\")"
@@ -228,7 +243,7 @@ return {
                 ],
                 "storageKey": null
               },
-              (v4/*: any*/)
+              (v3/*: any*/)
             ],
             "storageKey": null
           },
@@ -262,12 +277,12 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      (v2/*: any*/),
-                      (v4/*: any*/)
+                      (v1/*: any*/),
+                      (v3/*: any*/)
                     ],
                     "storageKey": null
                   },
-                  (v4/*: any*/)
+                  (v3/*: any*/)
                 ],
                 "storageKey": null
               }
@@ -303,26 +318,26 @@ return {
             "name": "insights",
             "plural": true,
             "selections": [
-              (v5/*: any*/)
+              (v4/*: any*/)
             ],
             "storageKey": null
           },
           {
             "alias": null,
             "args": [
-              (v6/*: any*/)
+              (v5/*: any*/)
             ],
             "concreteType": "ArtistSeriesConnection",
             "kind": "LinkedField",
             "name": "artistSeriesConnection",
             "plural": false,
-            "selections": (v7/*: any*/),
+            "selections": (v6/*: any*/),
             "storageKey": "artistSeriesConnection(first:0)"
           },
           {
             "alias": null,
             "args": [
-              (v6/*: any*/),
+              (v5/*: any*/),
               {
                 "kind": "Literal",
                 "name": "status",
@@ -333,7 +348,7 @@ return {
             "kind": "LinkedField",
             "name": "showsConnection",
             "plural": false,
-            "selections": (v7/*: any*/),
+            "selections": (v6/*: any*/),
             "storageKey": "showsConnection(first:0,status:\"running\")"
           },
           {
@@ -406,8 +421,8 @@ return {
                         "name": "node",
                         "plural": false,
                         "selections": [
-                          (v5/*: any*/),
-                          (v4/*: any*/)
+                          (v4/*: any*/),
+                          (v3/*: any*/)
                         ],
                         "storageKey": null
                       }
@@ -420,23 +435,163 @@ return {
             ],
             "storageKey": null
           },
-          (v4/*: any*/)
+          (v3/*: any*/)
         ],
-        "storageKey": null
+        "storageKey": "artist(id:\"andy-warhol\")"
       }
     ]
   },
   "params": {
-    "cacheID": "449ad686a6f86d22338535925851748f",
+    "cacheID": "ace1dd39eb938bb405f2a5e8907c161e",
     "id": null,
-    "metadata": {},
-    "name": "artistRoutes_OverviewQuery",
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "artist": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Artist"
+        },
+        "artist.alternateNames": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "String"
+        },
+        "artist.artistSeriesConnection": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ArtistSeriesConnection"
+        },
+        "artist.artistSeriesConnection.totalCount": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "Int"
+        },
+        "artist.birthday": (v7/*: any*/),
+        "artist.counts": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ArtistCounts"
+        },
+        "artist.counts.articles": (v8/*: any*/),
+        "artist.counts.artworks": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "FormattedNumber"
+        },
+        "artist.counts.relatedArtists": (v8/*: any*/),
+        "artist.coverArtwork": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Artwork"
+        },
+        "artist.coverArtwork.id": (v9/*: any*/),
+        "artist.coverArtwork.image": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Image"
+        },
+        "artist.coverArtwork.image.large": (v7/*: any*/),
+        "artist.coverArtwork.image.url": (v7/*: any*/),
+        "artist.deathday": (v7/*: any*/),
+        "artist.gender": (v7/*: any*/),
+        "artist.href": (v7/*: any*/),
+        "artist.id": (v9/*: any*/),
+        "artist.insights": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": true,
+          "type": "ArtistInsight"
+        },
+        "artist.insights.__typename": (v10/*: any*/),
+        "artist.internalID": (v9/*: any*/),
+        "artist.isInSeoExperiment": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Boolean"
+        },
+        "artist.meta": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "ArtistMeta"
+        },
+        "artist.meta.description": (v10/*: any*/),
+        "artist.meta.title": (v10/*: any*/),
+        "artist.name": (v7/*: any*/),
+        "artist.nationality": (v7/*: any*/),
+        "artist.partnersConnection": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "PartnerArtistConnection"
+        },
+        "artist.partnersConnection.edges": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "PartnerArtistEdge"
+        },
+        "artist.partnersConnection.edges.id": (v9/*: any*/),
+        "artist.partnersConnection.edges.node": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Partner"
+        },
+        "artist.partnersConnection.edges.node.href": (v7/*: any*/),
+        "artist.partnersConnection.edges.node.id": (v9/*: any*/),
+        "artist.related": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ArtistRelatedData"
+        },
+        "artist.related.genes": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "GeneConnection"
+        },
+        "artist.related.genes.edges": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "GeneEdge"
+        },
+        "artist.related.genes.edges.node": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Gene"
+        },
+        "artist.related.genes.edges.node.__typename": (v10/*: any*/),
+        "artist.related.genes.edges.node.id": (v9/*: any*/),
+        "artist.showsConnection": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ShowConnection"
+        },
+        "artist.showsConnection.totalCount": (v8/*: any*/),
+        "artist.slug": (v9/*: any*/)
+      }
+    },
+    "name": "ArtistTabsMetaIntegration_AboutTab_Test_Query",
     "operationKind": "query",
-    "text": "query artistRoutes_OverviewQuery(\n  $artistID: String!\n) @cacheable {\n  artist(id: $artistID) @principalField {\n    ...ArtistOverviewRoute_artist\n    id\n  }\n}\n\nfragment ArtistMeta_artist on Artist {\n  ...ArtistStructuredData_artist\n  slug\n  name\n  nationality\n  birthday\n  deathday\n  href\n  isInSeoExperiment\n  meta(page: ABOUT) {\n    description\n    title\n  }\n  alternateNames\n  coverArtwork {\n    image {\n      large: url(version: \"large\")\n    }\n    id\n  }\n}\n\nfragment ArtistOverviewRoute_artist on Artist {\n  ...ArtistMeta_artist\n  internalID\n  name\n  meta(page: ABOUT) {\n    description\n    title\n  }\n  insights {\n    __typename\n  }\n  artistSeriesConnection(first: 0) {\n    totalCount\n  }\n  showsConnection(first: 0, status: \"running\") {\n    totalCount\n  }\n  counts {\n    artworks\n    relatedArtists\n    articles\n  }\n  related {\n    genes(first: 1) {\n      edges {\n        node {\n          __typename\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment ArtistStructuredData_artist on Artist {\n  slug\n  name\n  birthday\n  deathday\n  gender\n  nationality\n  href\n  meta(page: ABOUT) {\n    title\n    description\n  }\n  coverArtwork {\n    image {\n      url(version: \"large\")\n    }\n    id\n  }\n  partnersConnection(first: 10) {\n    edges {\n      node {\n        href\n        id\n      }\n      id\n    }\n  }\n}\n"
+    "text": "query ArtistTabsMetaIntegration_AboutTab_Test_Query {\n  artist(id: \"andy-warhol\") {\n    ...ArtistOverviewRoute_artist\n    id\n  }\n}\n\nfragment ArtistMeta_artist on Artist {\n  ...ArtistStructuredData_artist\n  slug\n  name\n  nationality\n  birthday\n  deathday\n  href\n  isInSeoExperiment\n  meta(page: ABOUT) {\n    description\n    title\n  }\n  alternateNames\n  coverArtwork {\n    image {\n      large: url(version: \"large\")\n    }\n    id\n  }\n}\n\nfragment ArtistOverviewRoute_artist on Artist {\n  ...ArtistMeta_artist\n  internalID\n  name\n  meta(page: ABOUT) {\n    description\n    title\n  }\n  insights {\n    __typename\n  }\n  artistSeriesConnection(first: 0) {\n    totalCount\n  }\n  showsConnection(first: 0, status: \"running\") {\n    totalCount\n  }\n  counts {\n    artworks\n    relatedArtists\n    articles\n  }\n  related {\n    genes(first: 1) {\n      edges {\n        node {\n          __typename\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment ArtistStructuredData_artist on Artist {\n  slug\n  name\n  birthday\n  deathday\n  gender\n  nationality\n  href\n  meta(page: ABOUT) {\n    title\n    description\n  }\n  coverArtwork {\n    image {\n      url(version: \"large\")\n    }\n    id\n  }\n  partnersConnection(first: 10) {\n    edges {\n      node {\n        href\n        id\n      }\n      id\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "9d22251dc4ee96e7bb0bbc7e32b0bc07";
+(node as any).hash = "a92c9606a6bdf3c4ee44f3073dcca261";
 
 export default node;

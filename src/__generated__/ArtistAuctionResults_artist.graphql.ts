@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cdfabe3cbf583e714b64bc0dd405b945>>
+ * @generated SignedSource<<6e24f2fac96bde17fd1fc507d5510369>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -27,11 +27,11 @@ export type ArtistAuctionResults_artist$data = {
     };
     readonly totalCount: number | null | undefined;
   } | null | undefined;
-  readonly internalID: string;
-  readonly meta: {
+  readonly auctionResultsMeta: {
     readonly description: string;
     readonly title: string;
   };
+  readonly internalID: string;
   readonly name: string | null | undefined;
   readonly pastAuctionResults: {
     readonly totalCount: number | null | undefined;
@@ -43,6 +43,7 @@ export type ArtistAuctionResults_artist$data = {
   readonly upcomingAuctionResults: {
     readonly totalCount: number | null | undefined;
   } | null | undefined;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistMeta_artist">;
   readonly " $fragmentType": "ArtistAuctionResults_artist";
 };
 export type ArtistAuctionResults_artist$key = {
@@ -244,6 +245,11 @@ return {
   "name": "ArtistAuctionResults_artist",
   "selections": [
     {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtistMeta_artist"
+    },
+    {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
@@ -265,7 +271,7 @@ return {
       "storageKey": null
     },
     {
-      "alias": null,
+      "alias": "auctionResultsMeta",
       "args": [
         {
           "kind": "Literal",
@@ -516,6 +522,6 @@ return {
 };
 })();
 
-(node as any).hash = "d67a990e35e7b52e0a04497b9b1a59f9";
+(node as any).hash = "f802a4cdb3a9580fcc89e3ab013a4354";
 
 export default node;
