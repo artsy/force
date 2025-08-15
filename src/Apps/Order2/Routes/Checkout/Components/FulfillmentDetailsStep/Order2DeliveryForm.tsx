@@ -8,6 +8,7 @@ import {
 import { SavedAddressOptions } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/Order2SavedAddressOptions"
 import { handleError } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/handleError"
 import {
+  deliveryAddressValidationSchema,
   findInitialSelectedAddress,
   processSavedAddresses,
 } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/utils"
@@ -19,7 +20,6 @@ import { getShippableCountries as getShippableCountryData } from "Apps/Order2/Ut
 import {
   AddressFormFields,
   type FormikContextWithAddress,
-  addressFormFieldsValidator,
 } from "Components/Address/AddressFormFields"
 import { sortCountriesForCountryInput } from "Components/Address/utils/sortCountriesForCountryInput"
 import { useInitialLocationValues } from "Components/Address/utils/useInitialLocationValues"
@@ -28,16 +28,11 @@ import type { Order2DeliveryForm_order$key } from "__generated__/Order2DeliveryF
 import { Formik, type FormikHelpers } from "formik"
 import { useCallback, useMemo } from "react"
 import { graphql, useFragment } from "react-relay"
-import * as yup from "yup"
 
 interface Order2DeliveryFormProps {
   order: Order2DeliveryForm_order$key
   me: Order2DeliveryForm_me$key
 }
-
-const validationSchema = yup
-  .object()
-  .shape(addressFormFieldsValidator({ withPhoneNumber: true }))
 
 export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
   order,
@@ -208,7 +203,7 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
       <Formik
         initialValues={initialSelectedAddress || initialBlankValues}
         enableReinitialize={true}
-        validationSchema={validationSchema}
+        validationSchema={deliveryAddressValidationSchema}
         onSubmit={onSubmit}
       >
         {formikContext => (
