@@ -134,6 +134,20 @@ describe("FairOverview", () => {
     expect(container.textContent).not.toContain("Closes in:")
   })
 
+  it("does not display the timer for the Artsy Edition Shop", () => {
+    const openTime = new Date()
+    openTime.setDate(openTime.getDate() + 1)
+
+    const { container } = renderWithRelay({
+      Fair: () => ({
+        endAt: openTime.toISOString(),
+        slug: "the-artsy-edition-shop",
+      }),
+    })
+
+    expect(container.textContent).not.toContain("Closes in:")
+  })
+
   it("scrollTo should be called if url contains `focused_boots` query param", async () => {
     mockUseRouter.mockImplementation(() => ({
       match: {
