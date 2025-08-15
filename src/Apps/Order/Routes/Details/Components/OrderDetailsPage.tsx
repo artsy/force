@@ -1,22 +1,25 @@
 import { ContextModule } from "@artsy/cohesion"
 import { Box, Column, GridColumns, Spacer } from "@artsy/palette"
-import { Order2HelpLinksWithInquiry } from "Apps/Order2/Components/Order2HelpLinks"
 import { OrderDetailsFulfillmentInfo } from "Apps/Order/Routes/Details/Components/OrderDetailsFulfillmentInfo"
 import { OrderDetailsOrderSummary } from "Apps/Order/Routes/Details/Components/OrderDetailsOrderSummary"
 import { OrderDetailsPaymentInfo } from "Apps/Order/Routes/Details/Components/OrderDetailsPaymentInfo"
+import { Order2HelpLinksWithInquiry } from "Apps/Order2/Components/Order2HelpLinks"
+import { useOrder2Tracking } from "Apps/Order2/Hooks/useOrder2Tracking"
+import type { OrderDetailsPage_me$key } from "__generated__/OrderDetailsPage_me.graphql"
 import type { OrderDetailsPage_order$key } from "__generated__/OrderDetailsPage_order.graphql"
+import { useEffect } from "react"
 import { graphql, useFragment } from "react-relay"
 import { OrderDetailsHeader } from "./OrderDetailsHeader"
 import { OrderDetailsMessage } from "./OrderDetailsMessage"
-import { useEffect } from "react"
-import { useOrder2Tracking } from "Apps/Order2/Hooks/useOrder2Tracking"
 
 interface OrderDetailsPageProps {
   order: OrderDetailsPage_order$key
+  me: OrderDetailsPage_me$key
 }
 
-export const OrderDetailsPage = ({ order }: OrderDetailsPageProps) => {
-  const orderData = useFragment(FRAGMENT, order)
+export const OrderDetailsPage = ({ order, me }: OrderDetailsPageProps) => {
+  const orderData = useFragment(ORDER_FRAGMENT, order)
+  const meData = useFragment(ME_FRAGMENT, me)
   const tracking = useOrder2Tracking(orderData.source, orderData.mode)
 
   useEffect(() => {
@@ -35,7 +38,7 @@ export const OrderDetailsPage = ({ order }: OrderDetailsPageProps) => {
       <Column span={[12, 7, 6, 5]} start={[1, 1, 2, 3]}>
         <OrderDetailsHeader order={orderData} />
 
-        <OrderDetailsMessage order={orderData} />
+        <OrderDetailsMessage order={orderData} me={meData} />
 
         <Box display={["block", "none"]}>
           <OrderDetailsOrderSummary order={orderData} />
@@ -75,7 +78,12 @@ export const OrderDetailsPage = ({ order }: OrderDetailsPageProps) => {
   )
 }
 
-const FRAGMENT = graphql`
+const ME_FRAGMENT = graphql`
+  fragment OrderDetailsPage_me on Me {
+    ...OrderDetailsMessage_me
+  }
+`
+const ORDER_FRAGMENT = graphql`
   fragment OrderDetailsPage_order on Order {
     lineItems {
       artwork {

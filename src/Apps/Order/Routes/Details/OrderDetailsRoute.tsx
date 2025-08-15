@@ -21,7 +21,7 @@ export const OrderDetailsRoute: React.FC<DetailsProps> = ({ viewer }) => {
   return (
     <Analytics contextPageOwnerId={order.internalID}>
       <Title>Order details | Artsy</Title>
-      <OrderDetailsPage order={data.me.order} />
+      <OrderDetailsPage order={data.me.order} me={data.me} />
     </Analytics>
   )
 }
@@ -30,6 +30,7 @@ const FRAGMENT = graphql`
   fragment OrderDetailsRoute_viewer on Viewer
   @argumentDefinitions(orderID: { type: "ID!" }) {
     me {
+      ...OrderDetailsPage_me
       order(id: $orderID) {
         internalID
         ...OrderDetailsPage_order
