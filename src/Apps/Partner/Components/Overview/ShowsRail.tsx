@@ -31,7 +31,7 @@ const ShowsRail: React.FC<React.PropsWithChildren<ShowsRailProps>> = ({
         alignItems="center"
         position="relative"
       >
-        <Text variant="lg-display">All Events</Text>
+        <Text variant="lg-display">All Shows & Fairs</Text>
 
         {displayFullPartnerPage && (
           <ViewAllButton to={`/partner/${slug}/shows`} />

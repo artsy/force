@@ -29,7 +29,7 @@ describe("ShowInfo", () => {
       expect(
         screen.getByRole("heading", { level: 1, name: "About" }),
       ).toBeInTheDocument()
-      expect(screen.queryByText("Events")).not.toBeInTheDocument()
+      expect(screen.queryByText("Shows & Fairs")).not.toBeInTheDocument()
       expect(
         screen.getByRole("heading", { level: 2, name: "Gallery" }),
       ).toBeInTheDocument()
@@ -51,7 +51,7 @@ describe("ShowInfo", () => {
         Partner: () => ({ type: "Gallery" }),
       })
 
-      expect(screen.getByText("Events")).toBeInTheDocument()
+      expect(screen.getByText("Shows & Fairs")).toBeInTheDocument()
       expect(
         screen.getByRole("heading", {
           level: 3,
@@ -96,7 +96,7 @@ describe("ShowInfo", () => {
         Partner: () => ({ type: "Gallery" }),
       })
 
-      expect(screen.getByText("Events")).toBeInTheDocument()
+      expect(screen.getByText("Shows & Fairs")).toBeInTheDocument()
       // No specific event headings should be present when event is null
       const headings = screen.getAllByRole("heading", { level: 3 })
       const eventHeadings = headings.filter(

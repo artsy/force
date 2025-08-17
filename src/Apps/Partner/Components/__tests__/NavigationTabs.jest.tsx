@@ -1,7 +1,7 @@
+import { screen } from "@testing-library/react"
 import { NavigationTabsFragmentContainer as NavigationTabs } from "Apps/Partner/Components/NavigationTabs"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { NavigationTabsTestPartnerQuery } from "__generated__/NavigationTabsTestPartnerQuery.graphql"
-import { screen } from "@testing-library/react"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
@@ -39,7 +39,7 @@ describe("PartnerNavigationTabs", () => {
     })
 
     expect(screen.getByText("Overview")).toBeInTheDocument()
-    expect(screen.getByText("Events")).toBeInTheDocument()
+    expect(screen.getByText("Shows & Fairs")).toBeInTheDocument()
     expect(screen.getByText("Viewing Rooms")).toBeInTheDocument()
     expect(screen.getByText("Works")).toBeInTheDocument()
     expect(screen.getByText("Artists")).toBeInTheDocument()

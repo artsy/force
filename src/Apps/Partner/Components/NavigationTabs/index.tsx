@@ -37,7 +37,7 @@ export const NavigationTabs: React.FC<
       exact: true,
     },
     {
-      name: "Events",
+      name: "Shows & Fairs",
       href: route("/shows"),
       exact: true,
       hidden: !counts?.displayableShows,

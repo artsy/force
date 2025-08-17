@@ -91,7 +91,7 @@ export const Shows: React.FC<React.PropsWithChildren<PartnerShowsProps>> = ({
         )}
 
         <ShowPaginatedEventsRenderer
-          eventTitle="Past Events"
+          eventTitle="Past Shows & Fairs"
           partnerId={partner.slug}
           status="CLOSED"
           first={40}
