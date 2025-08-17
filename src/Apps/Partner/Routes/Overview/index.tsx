@@ -29,13 +29,13 @@ const Overview: React.FC<React.PropsWithChildren<OverviewProps>> = ({
 
   return displayFullPartnerPage ? (
     <>
+      <AboutPartnerFragmentContainer partner={partner} />
+
       {profileBannerDisplay === "Artworks" ? (
         <ArtworksRailRenderer mt={4} mb={[4, 12]} partnerId={slug} />
       ) : (
         <ShowBannersRailRenderer mt={4} mb={[4, 12]} partnerId={slug} />
       )}
-
-      <AboutPartnerFragmentContainer partner={partner} />
 
       <ShowsRailFragmentContainer mt={4} mb={[4, 12]} partner={partner} />
 

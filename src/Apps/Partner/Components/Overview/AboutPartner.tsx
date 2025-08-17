@@ -36,11 +36,11 @@ export const AboutPartner: React.FC<
 
   return (
     <GridColumns mb={12} gridRowGap={2}>
-      <Column span={6}>
+      <Column span={12}>
         <Text variant="lg-display">About</Text>
       </Column>
 
-      <Column span={6}>
+      <Column span={8}>
         <Media at="xs">
           {bioDisplayable && (
             <Text mb={2} variant="sm">
