@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f0f945e468899fe1b7f2b3e79e4fb7d9>>
+ * @generated SignedSource<<1a0bd92967c77ebbe137005892550182>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,7 +13,13 @@ import { FragmentRefs } from "relay-runtime";
 export type OrderDetailsMessage_me$data = {
   readonly collectorProfile: {
     readonly bio: string | null | undefined;
-    readonly firstNameLastInitial: string | null | undefined;
+    readonly isEmailConfirmed: boolean | null | undefined;
+    readonly isIdentityVerified: boolean | null | undefined;
+    readonly location: {
+      readonly country: string | null | undefined;
+    } | null | undefined;
+    readonly otherRelevantPositions: string | null | undefined;
+    readonly profession: string | null | undefined;
   } | null | undefined;
   readonly " $fragmentType": "OrderDetailsMessage_me";
 };
@@ -40,14 +46,53 @@ const node: ReaderFragment = {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
-          "name": "bio",
+          "name": "isEmailConfirmed",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "MyLocation",
+          "kind": "LinkedField",
+          "name": "location",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "country",
+              "storageKey": null
+            }
+          ],
           "storageKey": null
         },
         {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
-          "name": "firstNameLastInitial",
+          "name": "profession",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "isIdentityVerified",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "otherRelevantPositions",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "bio",
           "storageKey": null
         }
       ],
@@ -58,6 +103,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "1e041edebc4faecdb0373c596c44a730";
+(node as any).hash = "5dfd9b11e8fe66d124e0f700e325f07f";
 
 export default node;

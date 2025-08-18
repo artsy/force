@@ -21,9 +21,14 @@ export const OrderDetailsMessage = ({
   const orderData = useFragment(ORDER_FRAGMENT, order)
   const meData = useFragment(ME_FRAGMENT, me)
 
+  const collectorProfile = meData?.collectorProfile
   const hasIncompleteProfile = !(
-    meData?.collectorProfile?.bio &&
-    meData?.collectorProfile?.firstNameLastInitial
+    collectorProfile?.location?.country &&
+    collectorProfile?.isEmailConfirmed &&
+    collectorProfile?.profession &&
+    collectorProfile?.isIdentityVerified &&
+    collectorProfile?.otherRelevantPositions &&
+    collectorProfile?.bio
   )
 
   return (
@@ -284,7 +289,7 @@ const MessageContent = ({
         trackingURL,
         estimatedDelivery,
         estimatedDeliveryWindow,
-      } = order.deliveryInfo
+      } = order.deliveryInfo || {}
 
       const isDeliveryInfoPresent =
         shipperName ||
@@ -353,7 +358,7 @@ const MessageContent = ({
           <YourCollectionNote />
         </>
       )
-    case "CANCELLED":
+    case "CANCELED":
       return (
         <Text variant="sm">
           Your order could not be processed. You can contact{" "}
@@ -418,8 +423,14 @@ const CompleteCollectorProfilePrompt: React.FC = () => (
 const ME_FRAGMENT = graphql`
   fragment OrderDetailsMessage_me on Me {
     collectorProfile {
+      isEmailConfirmed
+      location {
+        country
+      }
+      profession
+      isIdentityVerified
+      otherRelevantPositions
       bio
-      firstNameLastInitial
     }
   }
 `
