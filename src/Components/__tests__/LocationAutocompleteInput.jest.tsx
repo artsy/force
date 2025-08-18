@@ -1,11 +1,11 @@
-import { screen, fireEvent, waitFor } from "@testing-library/react"
+import { fireEvent, screen, waitFor } from "@testing-library/react"
+import { render } from "@testing-library/react"
 import {
   LocationAutocompleteInput,
   type Place,
   normalizePlace,
 } from "Components/LocationAutocompleteInput"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
-import { render } from "@testing-library/react"
 
 const mockGetPlacePredictions = jest.fn().mockResolvedValue({
   predictions: [
@@ -150,7 +150,9 @@ describe("LocationAutocompleteInput", () => {
       if (mockGeocode.mock.calls.length > 0) {
         expect(mockGeocode.mock.calls[0][0].placeId).toBe("111")
       }
-      expect(screen.queryAllByRole("option", { hidden: true })).toHaveLength(0)
+
+      const listbox = screen.getByRole("listbox", { hidden: true })
+      expect(listbox).not.toBeVisible()
 
       // Test completed - input was updated successfully
     })
@@ -165,9 +167,8 @@ describe("LocationAutocompleteInput", () => {
       await simulateSelectSuggestion(0)
 
       await waitFor(() => {
-        expect(screen.queryAllByRole("option", { hidden: true })).toHaveLength(
-          0,
-        )
+        const listbox = screen.getByRole("listbox", { hidden: true })
+        expect(listbox).not.toBeVisible()
       })
 
       const input = screen.getByTestId("autocomplete-location")
