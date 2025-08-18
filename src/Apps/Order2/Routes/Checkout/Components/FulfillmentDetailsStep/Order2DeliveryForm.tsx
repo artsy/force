@@ -285,6 +285,7 @@ const ORDER_FRAGMENT = graphql`
       phoneNumber {
         originalNumber
         regionCode
+        countryCode
       }
     }
   }

@@ -173,29 +173,27 @@ describe("Order2DeliveryForm", () => {
         })
 
         // Wait for the form submission to start and resolve the mutation
-        await act(async () => {
-          await waitFor(() => {
-            mockResolveLastOperation({
-              updateOrderShippingAddressPayload: () =>
-                orderMutationSuccess(baseOrderProps, {
-                  fulfillmentDetails: {
-                    name: "Jane Smith",
-                    addressLine1: "456 Oak Ave",
-                    addressLine2: "",
-                    city: "Los Angeles",
-                    region: "CA",
-                    postalCode: "90210",
-                    country: "US",
-                    phoneNumber: {
-                      regionCode: "us",
-                      originalNumber: "5559876543",
-                    },
+        await waitFor(() => {
+          mockResolveLastOperation({
+            updateOrderShippingAddressPayload: () =>
+              orderMutationSuccess(baseOrderProps, {
+                fulfillmentDetails: {
+                  name: "Jane Smith",
+                  addressLine1: "456 Oak Ave",
+                  addressLine2: "",
+                  city: "Los Angeles",
+                  region: "CA",
+                  postalCode: "90210",
+                  country: "US",
+                  phoneNumber: {
+                    regionCode: "us",
+                    originalNumber: "5559876543",
                   },
-                }),
-            })
+                },
+              }),
           })
-          await flushPromiseQueue()
         })
+        await flushPromiseQueue()
 
         // setCheckoutMode should be called during form submission
         expect(mockCheckoutContext.setCheckoutMode).toHaveBeenCalledWith(
@@ -257,29 +255,27 @@ describe("Order2DeliveryForm", () => {
         })
 
         // Wait for the form submission to start and resolve the mutation
-        await act(async () => {
-          await waitFor(() => {
-            mockResolveLastOperation({
-              updateOrderShippingAddressPayload: () =>
-                orderMutationSuccess(baseOrderProps, {
-                  fulfillmentDetails: {
-                    name: "Jane Smith",
-                    addressLine1: "456 Oak Ave",
-                    addressLine2: "",
-                    city: "Los Angeles",
-                    region: "CA",
-                    postalCode: "90210",
-                    country: "US",
-                    phoneNumber: {
-                      regionCode: "us",
-                      originalNumber: "5559876543",
-                    },
+        await waitFor(() => {
+          mockResolveLastOperation({
+            updateOrderShippingAddressPayload: () =>
+              orderMutationSuccess(baseOrderProps, {
+                fulfillmentDetails: {
+                  name: "Jane Smith",
+                  addressLine1: "456 Oak Ave",
+                  addressLine2: "",
+                  city: "Los Angeles",
+                  region: "CA",
+                  postalCode: "90210",
+                  country: "US",
+                  phoneNumber: {
+                    regionCode: "us",
+                    originalNumber: "5559876543",
                   },
-                }),
-            })
+                },
+              }),
           })
-          await flushPromiseQueue()
         })
+        await flushPromiseQueue()
 
         // Should trigger tracking during form submission
         expect(mockCheckoutContext.setCheckoutMode).toHaveBeenCalledWith(
@@ -368,29 +364,27 @@ describe("Order2DeliveryForm", () => {
         })
 
         let mutation
-        await act(async () => {
-          await waitFor(() => {
-            mutation = mockResolveLastOperation({
-              updateOrderShippingAddressPayload: () =>
-                orderMutationSuccess(baseOrderProps, {
-                  fulfillmentDetails: {
-                    name: "Jane Smith",
-                    addressLine1: "456 Oak Ave",
-                    addressLine2: "",
-                    city: "Los Angeles",
-                    region: "CA",
-                    postalCode: "90210",
-                    country: "US",
-                    phoneNumber: {
-                      regionCode: "us",
-                      originalNumber: "5559876543",
-                    },
+        await waitFor(() => {
+          mutation = mockResolveLastOperation({
+            updateOrderShippingAddressPayload: () =>
+              orderMutationSuccess(baseOrderProps, {
+                fulfillmentDetails: {
+                  name: "Jane Smith",
+                  addressLine1: "456 Oak Ave",
+                  addressLine2: "",
+                  city: "Los Angeles",
+                  region: "CA",
+                  postalCode: "90210",
+                  country: "US",
+                  phoneNumber: {
+                    regionCode: "us",
+                    originalNumber: "5559876543",
                   },
-                }),
-            })
+                },
+              }),
           })
-          await flushPromiseQueue()
         })
+        await flushPromiseQueue()
 
         expect(mutation.operationName).toBe(
           "useOrder2SetOrderDeliveryAddressMutation",
@@ -474,17 +468,15 @@ describe("Order2DeliveryForm", () => {
 
         // First mutation: unset existing fulfillment option
         let unsetMutation
-        await act(async () => {
-          await waitFor(() => {
-            unsetMutation = mockResolveLastOperation({
-              unsetOrderFulfillmentOptionPayload: () =>
-                orderMutationSuccess(baseOrderProps, {
-                  selectedFulfillmentOption: null,
-                }),
-            })
+        await waitFor(() => {
+          unsetMutation = mockResolveLastOperation({
+            unsetOrderFulfillmentOptionPayload: () =>
+              orderMutationSuccess(baseOrderProps, {
+                selectedFulfillmentOption: null,
+              }),
           })
-          await flushPromiseQueue()
         })
+        await flushPromiseQueue()
 
         expect(unsetMutation.operationName).toBe(
           "useOrder2UnsetOrderFulfillmentOptionMutation",
@@ -594,15 +586,13 @@ describe("Order2DeliveryForm", () => {
         })
 
         let mutation
-        await act(async () => {
-          await waitFor(() => {
-            mutation = mockResolveLastOperation({
-              updateOrderShippingAddressPayload: () =>
-                orderMutationError({ code: "missing_postal_code" }),
-            })
+        await waitFor(() => {
+          mutation = mockResolveLastOperation({
+            updateOrderShippingAddressPayload: () =>
+              orderMutationError({ code: "missing_postal_code" }),
           })
-          await flushPromiseQueue()
         })
+        await flushPromiseQueue()
 
         expect(mutation.operationName).toBe(
           "useOrder2SetOrderDeliveryAddressMutation",
@@ -744,29 +734,27 @@ describe("Order2DeliveryForm", () => {
       })
 
       let mutation
-      await act(async () => {
-        await waitFor(() => {
-          mutation = mockResolveLastOperation({
-            updateOrderShippingAddressPayload: () =>
-              orderMutationSuccess(baseOrderProps, {
-                fulfillmentDetails: {
-                  name: "John Doe",
-                  addressLine1: "123 Main St",
-                  addressLine2: "Apt 4",
-                  city: "New York",
-                  region: "NY",
-                  postalCode: "10001",
-                  country: "US",
-                  phoneNumber: {
-                    regionCode: "us",
-                    originalNumber: "5551234567",
-                  },
+      await waitFor(() => {
+        mutation = mockResolveLastOperation({
+          updateOrderShippingAddressPayload: () =>
+            orderMutationSuccess(baseOrderProps, {
+              fulfillmentDetails: {
+                name: "John Doe",
+                addressLine1: "123 Main St",
+                addressLine2: "Apt 4",
+                city: "New York",
+                region: "NY",
+                postalCode: "10001",
+                country: "US",
+                phoneNumber: {
+                  regionCode: "us",
+                  originalNumber: "5551234567",
                 },
-              }),
-          })
+              },
+            }),
         })
-        await flushPromiseQueue()
       })
+      await flushPromiseQueue()
 
       expect(mutation.operationName).toBe(
         "useOrder2SetOrderDeliveryAddressMutation",
@@ -818,29 +806,27 @@ describe("Order2DeliveryForm", () => {
       userEvent.click(screen.getByText("See Shipping Methods"))
 
       let mutation
-      await act(async () => {
-        await waitFor(() => {
-          mutation = mockResolveLastOperation({
-            updateOrderShippingAddressPayload: () =>
-              orderMutationSuccess(baseOrderProps, {
-                fulfillmentDetails: {
-                  name: "John Doe",
-                  addressLine1: "345 Marx Str",
-                  addressLine2: "Apt 4",
-                  city: "Berlin",
-                  region: "Berlin",
-                  postalCode: "56789",
-                  country: "DE",
-                  phoneNumber: {
-                    regionCode: "de",
-                    originalNumber: "5559876543",
-                  },
+      await waitFor(() => {
+        mutation = mockResolveLastOperation({
+          updateOrderShippingAddressPayload: () =>
+            orderMutationSuccess(baseOrderProps, {
+              fulfillmentDetails: {
+                name: "John Doe",
+                addressLine1: "345 Marx Str",
+                addressLine2: "Apt 4",
+                city: "Berlin",
+                region: "Berlin",
+                postalCode: "56789",
+                country: "DE",
+                phoneNumber: {
+                  regionCode: "de",
+                  originalNumber: "5559876543",
                 },
-              }),
-          })
+              },
+            }),
         })
-        await flushPromiseQueue()
       })
+      await flushPromiseQueue()
 
       expect(mutation.operationName).toBe(
         "useOrder2SetOrderDeliveryAddressMutation",
