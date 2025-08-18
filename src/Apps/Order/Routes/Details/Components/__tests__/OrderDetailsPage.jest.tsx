@@ -14,8 +14,7 @@ jest.mock("System/Hooks/useAnalyticsContext", () => ({
 }))
 
 const { renderWithRelay } = setupTestWrapperTL<OrderDetailsPage_Test_Query>({
-  Component: ({ me }) =>
-    me?.order && <OrderDetailsPage order={me.order!} me={me} />,
+  Component: ({ me }) => <OrderDetailsPage order={me!.order!} me={me!} />,
   query: graphql`
     query OrderDetailsPage_Test_Query @raw_response_type {
       me {

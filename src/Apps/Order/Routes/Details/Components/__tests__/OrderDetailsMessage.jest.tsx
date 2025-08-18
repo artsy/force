@@ -11,8 +11,7 @@ jest.unmock("react-relay")
 const trackEvent = jest.fn()
 
 const { renderWithRelay } = setupTestWrapperTL<OrderDetailsMessage_Test_Query>({
-  Component: ({ me }) =>
-    me?.order && <OrderDetailsMessage order={me.order} me={me} />,
+  Component: ({ me }) => <OrderDetailsMessage order={me!.order!} me={me!} />,
   query: graphql`
     query OrderDetailsMessage_Test_Query @raw_response_type {
       me {
