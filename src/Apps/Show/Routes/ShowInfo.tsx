@@ -107,7 +107,7 @@ const EventList: React.FC<
   return (
     <Box>
       <Text as="h2" variant="xl" mb="2">
-        Events
+        Shows & Fairs
       </Text>
 
       <Join separator={<Spacer y="2" />}>
