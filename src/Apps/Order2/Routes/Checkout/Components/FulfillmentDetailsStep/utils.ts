@@ -1,4 +1,5 @@
 import type { FormikContextWithAddress } from "Components/Address/AddressFormFields"
+import { COUNTRY_CODE_TO_COUNTRY_NAME } from "Components/CountrySelect"
 import { extractNodes } from "Utils/extractNodes"
 import type { ExtractNodeType } from "Utils/typeSupport"
 import type { Order2DeliveryForm_me$data } from "__generated__/Order2DeliveryForm_me.graphql"
@@ -29,6 +30,10 @@ export const normalizeAddress = (
       region: address.region || "",
     },
   }
+}
+
+export const countryNameFromAlpha2 = (country: string): string => {
+  return COUNTRY_CODE_TO_COUNTRY_NAME[country.toUpperCase()] || country
 }
 
 export const processSavedAddresses = (

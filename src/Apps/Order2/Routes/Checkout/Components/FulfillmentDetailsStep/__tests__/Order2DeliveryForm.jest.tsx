@@ -699,6 +699,7 @@ describe("Order2DeliveryForm", () => {
       })
       screen.getByText("Berlin, Berlin, 56789")
       screen.getByText("New York, NY, 10001")
+      screen.getByText("Germany")
     })
 
     it("pre-selects a matching saved address", async () => {

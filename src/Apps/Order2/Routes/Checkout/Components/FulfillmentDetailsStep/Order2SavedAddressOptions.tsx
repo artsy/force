@@ -5,7 +5,10 @@ import {
   RadioGroup,
   Text,
 } from "@artsy/palette"
-import type { ProcessedUserAddress } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/utils"
+import {
+  type ProcessedUserAddress,
+  countryNameFromAlpha2,
+} from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/utils"
 import { formatPhoneNumber } from "Apps/Order2/Utils/addressUtils"
 import type { FormikContextWithAddress } from "Components/Address/AddressFormFields"
 import { useFormikContext } from "formik"
@@ -83,7 +86,7 @@ export const SavedAddressOptions = ({
                   )}
                   {address.country && (
                     <Text variant="xs" fontWeight="normal" color={textColor}>
-                      {address.country.toLocaleUpperCase()}
+                      {countryNameFromAlpha2(address.country)}
                     </Text>
                   )}
 
