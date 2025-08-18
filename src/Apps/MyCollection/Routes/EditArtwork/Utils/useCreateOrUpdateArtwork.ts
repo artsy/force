@@ -84,8 +84,10 @@ const formValuesToMutationInput = (
     attributionClass: values.attributionClass
       ?.replace(" ", "_")
       ?.toUpperCase() as ArtworkAttributionClassType,
-    editionNumber: String(values.editionNumber),
-    editionSize: String(values.editionSize),
+    editionNumber: values.editionNumber
+      ? String(values.editionNumber)
+      : undefined,
+    editionSize: values.editionSize ? String(values.editionSize) : undefined,
     height: String(values.height),
     width: String(values.width),
     depth: String(values.depth),
