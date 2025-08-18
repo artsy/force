@@ -48,7 +48,7 @@ describe("OrderDetailsMessage", () => {
     ["SHIPPED", "Your work is on its way"],
     ["COMPLETED_PICKUP", "We hope you love your purchase"],
     ["COMPLETED_SHIP", "We hope you love your purchase"],
-    ["CANCELLED", "Your order could not be processed. You can contact"],
+    ["CANCELED", "Your order could not be processed. You can contact"],
     [
       "DECLINED_BY_BUYER",
       "Thank you for your response. The seller will be informed of your decision to decline the offer, ending the current negotiation.",
@@ -204,7 +204,7 @@ describe("OrderDetailsMessage", () => {
         code: "123",
         internalID: "test-id",
         displayTexts: {
-          messageType: "CANCELLED",
+          messageType: "CANCELED",
         },
       }),
     })
