@@ -11,10 +11,11 @@ jest.unmock("react-relay")
 const trackEvent = jest.fn()
 
 const { renderWithRelay } = setupTestWrapperTL<OrderDetailsMessage_Test_Query>({
-  Component: ({ me }) => me?.order && <OrderDetailsMessage order={me.order} />,
+  Component: ({ me }) => <OrderDetailsMessage order={me!.order!} me={me!} />,
   query: graphql`
     query OrderDetailsMessage_Test_Query @raw_response_type {
       me {
+        ...OrderDetailsMessage_me
         order(id: "123") {
           ...OrderDetailsMessage_order
         }
@@ -46,7 +47,7 @@ describe("OrderDetailsMessage", () => {
     ["SHIPPED", "Your work is on its way"],
     ["COMPLETED_PICKUP", "We hope you love your purchase"],
     ["COMPLETED_SHIP", "We hope you love your purchase"],
-    ["CANCELLED", "Your order could not be processed. You can contact"],
+    ["CANCELED", "Your order could not be processed. You can contact"],
     [
       "DECLINED_BY_BUYER",
       "Thank you for your response. The seller will be informed of your decision to decline the offer, ending the current negotiation.",
@@ -72,6 +73,46 @@ describe("OrderDetailsMessage", () => {
     })
 
     expect(screen.getByText(new RegExp(expectedText))).toBeInTheDocument()
+  })
+
+  it("renders collector profile prompt for SUBMITTED_OFFER with incomplete profile", () => {
+    renderWithRelay({
+      Order: () => ({
+        buyerStateExpiresAt: mockDate,
+        code: "123",
+        internalID: "test-id",
+        displayTexts: {
+          messageType: "SUBMITTED_OFFER",
+        },
+        impulseConversationId: "conv-123",
+      }),
+      Me: () => ({
+        collectorProfile: { bio: "" },
+      }),
+    })
+    expect(
+      screen.getByRole("link", { name: "completing your profile" }),
+    ).toHaveAttribute("href", "/settings/edit-profile")
+  })
+
+  it("renders collector profile prompt for SUBMITTED_ORDER with incomplete profile", () => {
+    renderWithRelay({
+      Order: () => ({
+        buyerStateExpiresAt: mockDate,
+        code: "123",
+        internalID: "test-id",
+        displayTexts: {
+          messageType: "SUBMITTED_ORDER",
+        },
+        impulseConversationId: "conv-123",
+      }),
+      Me: () => ({
+        collectorProfile: { bio: "" },
+      }),
+    })
+    expect(
+      screen.getByRole("link", { name: "completing your profile" }),
+    ).toHaveAttribute("href", "/settings/edit-profile")
   })
 
   it("renders contact gallery link for SUBMITTED_OFFER", () => {
@@ -162,7 +203,7 @@ describe("OrderDetailsMessage", () => {
         code: "123",
         internalID: "test-id",
         displayTexts: {
-          messageType: "CANCELLED",
+          messageType: "CANCELED",
         },
       }),
     })
