@@ -8,15 +8,14 @@ import {
 import {
   type ProcessedUserAddress,
   countryNameFromAlpha2,
-  deliveryAddressValidationSchema,
 } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/utils"
-import { useOrder2UpdateUserAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2UpdateUserAddressMutation"
+import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { formatPhoneNumber } from "Apps/Order2/Utils/addressUtils"
 import {
   AddressFormFields,
   type FormikContextWithAddress,
 } from "Components/Address/AddressFormFields"
-import { Formik, type FormikHelpers, useFormikContext } from "formik"
+import { useFormikContext } from "formik"
 import { useState } from "react"
 import styled from "styled-components"
 
@@ -28,54 +27,15 @@ export const SavedAddressOptions = ({
   savedAddresses,
   initialSelectedAddress,
 }: SavedAddressOptionsProps) => {
+  const { setUserAddressMode, userAddressMode } = useCheckoutContext()
   const formikContext = useFormikContext<FormikContextWithAddress>()
-  const useOrder2UpdateUerAddress = useOrder2UpdateUserAddressMutation()
 
   const [selectedAddressID, setSelectedAddressID] = useState(
     initialSelectedAddress?.internalID || "",
   )
 
-  const [addressFormMode, setAddressFormMode] = useState<{
-    mode: "edit"
-    address: ProcessedUserAddress
-  } | null>(null)
-
-  if (addressFormMode) {
-    if (addressFormMode.mode === "edit") {
-      return (
-        <Formik<FormikContextWithAddress>
-          initialValues={addressFormMode.address}
-          validationSchema={deliveryAddressValidationSchema}
-          onSubmit={async (
-            values: FormikContextWithAddress,
-            formikHelpers: FormikHelpers<FormikContextWithAddress>,
-          ) => {
-            console.log("Submitting edited address", values)
-
-            await useOrder2UpdateUerAddress.submitMutation({
-              variables: {
-                input: {
-                  userAddressID: addressFormMode.address.internalID,
-                  attributes: {
-                    name: values.address.name,
-                    addressLine1: values.address.addressLine1,
-                    addressLine2: values.address.addressLine2,
-                    city: values.address.city,
-                    region: values.address.region,
-                    postalCode: values.address.postalCode,
-                    country: values.address.country,
-                    phoneNumber: values.phoneNumber,
-                    phoneNumberCountryCode: values.phoneNumberCountryCode,
-                  },
-                },
-              },
-            })
-          }}
-        >
-          <AddressFormFields withPhoneNumber />
-        </Formik>
-      )
-    }
+  if (userAddressMode?.mode === "edit") {
+    return <AddressFormFields withPhoneNumber />
   }
 
   return (
@@ -113,7 +73,8 @@ export const SavedAddressOptions = ({
                     <Clickable
                       onClick={e => {
                         e.stopPropagation()
-                        setAddressFormMode({
+                        formikContext.setValues(processedAddress)
+                        setUserAddressMode({
                           mode: "edit",
                           address: processedAddress,
                         })

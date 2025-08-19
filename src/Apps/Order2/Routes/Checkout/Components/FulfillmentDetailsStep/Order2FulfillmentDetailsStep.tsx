@@ -24,8 +24,12 @@ export const Order2FulfillmentDetailsStep: React.FC<
   const orderData = useFragment(ORDER_FRAGMENT, order)
   const meData = useFragment(ME_FRAGMENT, me)
 
-  const { steps, setActiveFulfillmentDetailsTab, checkoutTracking } =
-    useCheckoutContext()
+  const {
+    steps,
+    setActiveFulfillmentDetailsTab,
+    checkoutTracking,
+    setUserAddressMode,
+  } = useCheckoutContext()
 
   const stepState = steps?.find(
     step => step.name === CheckoutStepName.FULFILLMENT_DETAILS,
@@ -65,6 +69,7 @@ export const Order2FulfillmentDetailsStep: React.FC<
               if (tabIndex === 1) {
                 checkoutTracking.clickedFulfillmentTab("Pickup")
                 setActiveFulfillmentDetailsTab("PICKUP")
+                setUserAddressMode(null)
               } else {
                 checkoutTracking.clickedFulfillmentTab("Delivery")
                 setActiveFulfillmentDetailsTab("DELIVERY")
