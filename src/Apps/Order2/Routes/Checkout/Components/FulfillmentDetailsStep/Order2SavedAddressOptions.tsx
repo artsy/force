@@ -1,8 +1,10 @@
 import {
   BorderedRadio,
+  Button,
   Clickable,
   Flex,
   RadioGroup,
+  Spacer,
   Text,
 } from "@artsy/palette"
 import {
@@ -35,7 +37,27 @@ export const SavedAddressOptions = ({
   )
 
   if (userAddressMode?.mode === "edit") {
-    return <AddressFormFields withPhoneNumber />
+    return (
+      <>
+        <AddressFormFields withPhoneNumber />
+        <Spacer y={4} />
+        <Button
+          type="submit"
+          loading={formikContext.isSubmitting}
+          onClick={() => formikContext.handleSubmit()}
+        >
+          {/* TODO: This would not apply for flat shipping */}
+          Save Address
+        </Button>
+        <Spacer y={1} />
+        <Button
+          variant="secondaryBlack"
+          onClick={() => setUserAddressMode(null)}
+        >
+          Cancel
+        </Button>
+      </>
+    )
   }
 
   return (
@@ -71,9 +93,12 @@ export const SavedAddressOptions = ({
                       </Text>
                     )}
                     <Clickable
-                      onClick={e => {
+                      border="1px solid pink"
+                      onClick={async e => {
                         e.stopPropagation()
-                        formikContext.setValues(processedAddress)
+                        e.preventDefault()
+                        console.log("**Edit address clicked")
+                        await formikContext.setValues(processedAddress)
                         setUserAddressMode({
                           mode: "edit",
                           address: processedAddress,
@@ -119,6 +144,15 @@ export const SavedAddressOptions = ({
           )
         })}
       </RadioGroup>
+      <Spacer y={4} />
+      <Button
+        type="submit"
+        loading={formikContext.isSubmitting}
+        onClick={() => formikContext.handleSubmit()}
+      >
+        {/* TODO: This would not apply for flat shipping */}
+        See Shipping Methods
+      </Button>
     </Flex>
   )
 }
