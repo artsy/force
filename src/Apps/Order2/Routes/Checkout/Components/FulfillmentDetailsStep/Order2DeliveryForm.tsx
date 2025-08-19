@@ -288,20 +288,23 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
                 initialSelectedAddress={initialSelectedAddress}
               />
             ) : (
-              <AddressFormFields
-                withPhoneNumber
-                shippableCountries={shippableCountries}
-              />
+              <>
+                <AddressFormFields
+                  withPhoneNumber
+                  shippableCountries={shippableCountries}
+                />
+                <Spacer y={4} />
+
+                <Button
+                  type="submit"
+                  loading={formikContext.isSubmitting}
+                  onClick={() => formikContext.handleSubmit()}
+                >
+                  {/* TODO: This would not apply for flat shipping */}
+                  See Shipping Methods
+                </Button>
+              </>
             )}
-            <Spacer y={4} />
-            <Button
-              type="submit"
-              loading={formikContext.isSubmitting}
-              onClick={() => formikContext.handleSubmit()}
-            >
-              {/* TODO: This would not apply for flat shipping */}
-              See Shipping Methods
-            </Button>
           </Flex>
         )}
       </Formik>
