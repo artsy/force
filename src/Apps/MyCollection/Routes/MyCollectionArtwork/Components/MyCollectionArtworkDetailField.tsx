@@ -19,7 +19,11 @@ export const MyCollectionArtworkDetailField = ({
         </Text>
       </Box>
 
-      <Text variant={["sm", "xs", "sm"]} color={value ? "mono100" : "mono60"}>
+      <Text
+        variant={["sm", "xs", "sm"]}
+        color={value ? "mono100" : "mono60"}
+        hyphenate
+      >
         {truncateLimit ? (
           <ReadMore maxChars={truncateLimit} content={value || EMPTY_VALUE} />
         ) : (
