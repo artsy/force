@@ -70,7 +70,7 @@ export const MyCollectionArtworkFormMain: React.FC<
         pathname: "/collector-profile/my-collection",
       })
     } catch (error) {
-      logger.error(`Artwork not deleted`, error)
+      logger.error("Artwork not deleted", error)
 
       sendToast({
         variant: "error",

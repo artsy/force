@@ -43,7 +43,7 @@ export const MyCollectionArtworkDetails: React.FC<
           label: "Location",
           value: buildLocationDisplay(collectorLocation),
         },
-        { label: "Provenance", value: provenance },
+        { label: "Provenance", value: provenance, truncateLimit: 200 },
         { label: "Price Paid", value: pricePaid?.display },
         ...(exhibitionHistory
           ? [{ label: "Exhibition History", value: exhibitionHistory }]

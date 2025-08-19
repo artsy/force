@@ -314,7 +314,6 @@ export const MyCollectionArtworkFormDetails: React.FC<
             title="Provenance"
             name="provenance"
             placeholder="Describe how you acquired the work"
-            maxLength={500}
             onBlur={handleBlur}
             onChange={handleChange}
             value={values.provenance}
@@ -345,7 +344,6 @@ export const MyCollectionArtworkFormDetails: React.FC<
           <TextArea
             title="Notes"
             name="confidentialNotes"
-            maxLength={500}
             onBlur={handleBlur}
             onChange={({ value }) => {
               setFieldValue("confidentialNotes", value)
