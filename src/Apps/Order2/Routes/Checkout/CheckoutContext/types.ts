@@ -1,3 +1,5 @@
+import type { ProcessedUserAddress } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/utils"
+
 export enum CheckoutStepName {
   OFFER_AMOUNT = "OFFER_AMOUNT",
   FULFILLMENT_DETAILS = "FULFILLMENT_DETAILS",
@@ -23,3 +25,16 @@ export type CheckoutLoadingError = "missing_line_item_data"
 export type ExpressCheckoutPaymentMethod = "applePay" | "googlePay"
 
 export type FulfillmentDetailsTab = "DELIVERY" | "PICKUP"
+
+export type UserAddressMode =
+  | {
+      mode: "add"
+    }
+  | {
+      mode: "edit"
+      address: ProcessedUserAddress
+    }
+  | {
+      mode: "delete"
+      address: ProcessedUserAddress
+    }
