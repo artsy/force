@@ -51,26 +51,27 @@ export const TopContextBar: React.FC<
 
   return (
     <>
-      <Flex
-        height={50}
-        alignItems="center"
-        {...(href
-          ? {
-              as: RouterLink,
-              to: href,
-              textDecoration: "none",
-              onClick: handleClick,
-            }
-          : {
-              ...(onClick || (preferHistoryBack && displayBackArrow)
-                ? {
-                    as: Clickable,
-                    onClick: handleClick,
-                  }
-                : {}),
-            })}
-      >
-        <Flex flex={1} flexDirection="row" alignItems="center">
+      <Flex height={50} alignItems="center">
+        <Flex
+          flex={1}
+          flexDirection="row"
+          alignItems="center"
+          {...(href
+            ? {
+                as: RouterLink,
+                to: href,
+                textDecoration: "none",
+                onClick: handleClick,
+              }
+            : {
+                ...(onClick || (preferHistoryBack && displayBackArrow)
+                  ? {
+                      as: Clickable,
+                      onClick: handleClick,
+                    }
+                  : {}),
+              })}
+        >
           {displayBackArrow && (
             <ChevronLeftIcon height={14} mr={1} title="" aria-hidden />
           )}
