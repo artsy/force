@@ -93,12 +93,7 @@
     d3-interpolate "^1.3.2"
     d3-shape "^1.3.5"
 
-"@artsy/palette-tokens@7.0.1":
-  version "7.0.1"
-  resolved "https://registry.yarnpkg.com/@artsy/palette-tokens/-/palette-tokens-7.0.1.tgz#05b76e4f480356caca427a1836dedf0e14bc6925"
-  integrity sha512-RplNRn4QByKdpz9ARQB/PdifyZKbzjXazTGn+PED3TeSDDWkXhcSAIXUit23B3P5m08Zeuk3YwSGdxAFHYuSKA==
-
-"@artsy/palette-tokens@^7.1.0":
+"@artsy/palette-tokens@7.1.0", "@artsy/palette-tokens@^7.1.0":
   version "7.1.0"
   resolved "https://registry.yarnpkg.com/@artsy/palette-tokens/-/palette-tokens-7.1.0.tgz#c94d12dbf9ab1a804112daceabf83f84889f48ec"
   integrity sha512-VRlX7hGDWBWxwDGMoZOHRjg6cYdKcCenxXgHrZaXUBeUTNmvZImQrAEkpzXLMUYuSfkmt9jpAjiX7fWWW01vQA==
