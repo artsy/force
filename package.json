@@ -77,7 +77,7 @@
     "@artsy/multienv": "^1.2.0",
     "@artsy/palette": "43.4.0",
     "@artsy/palette-charts": "42.4.0",
-    "@artsy/palette-tokens": "7.0.1",
+    "@artsy/palette-tokens": "7.1.0",
     "@artsy/react-html-parser": "^3.0.2",
     "@artsy/xapp": "2.0.0",
     "@loadable/component": "5.15.2",
