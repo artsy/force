@@ -1,8 +1,7 @@
-import { Box, Clickable, ModalDialog, THEME, Text } from "@artsy/palette"
+import { Box, ReadMore, Text } from "@artsy/palette"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
-import { useState } from "react"
-import styled from "styled-components"
 
+const EMPTY_VALUE = "----"
 export const MyCollectionArtworkDetailField = ({
   label,
   value,
@@ -12,47 +11,25 @@ export const MyCollectionArtworkDetailField = ({
   value?: string | null
   truncateLimit?: number
 }) => {
-  const emptyValue = "----"
-  const [expanded, setExpanded] = useState(false)
-  const [modalOpen, setModalOpen] = useState(false)
-  const isMobile = __internal__useMatchMedia(THEME.mediaQueries.xs)
-
-  const truncatedValue = truncateLimit ? value?.slice(0, truncateLimit) : value
-  const canExpand = (truncatedValue?.length ?? 0) < (value?.length ?? 0)
-
-  const toggle = () => {
-    if (isMobile) {
-      setExpanded(!expanded)
-      return
-    }
-    setModalOpen(true)
-  }
-
   return (
-    <Box mb={[1, 0.5]} display="flex">
-      <Text color="mono60" variant="sm" minWidth={[105, 105, 190]} mr={2}>
-        {label}
-      </Text>
-
-      <Box display="flex" flex={1} flexDirection="column">
-        <WrappedText variant="sm" color={value ? "mono100" : "mono60"}>
-          {expanded ? value || emptyValue : truncatedValue || emptyValue}
-        </WrappedText>
-        {canExpand && (
-          <Clickable mt={0.5} onClick={toggle} textDecoration="underline">
-            <Text variant="xs">{expanded ? "Read Less" : "Read More"}</Text>
-          </Clickable>
-        )}
+    <>
+      <Box>
+        <Text color="mono60" variant={["sm", "xs", "sm"]}>
+          {label}
+        </Text>
       </Box>
-      {modalOpen && (
-        <ModalDialog onClose={() => setModalOpen(false)} title={label}>
-          <WrappedText>{value}</WrappedText>
-        </ModalDialog>
-      )}
-    </Box>
+
+      <Text
+        variant={["sm", "xs", "sm"]}
+        color={value ? "mono100" : "mono60"}
+        hyphenate
+      >
+        {truncateLimit ? (
+          <ReadMore maxChars={truncateLimit} content={value || EMPTY_VALUE} />
+        ) : (
+          value || EMPTY_VALUE
+        )}
+      </Text>
+    </>
   )
 }
-
-const WrappedText = styled(Text)`
-  white-space: pre-line;
-`
