@@ -5,12 +5,17 @@ import {
   CheckoutErrorBanner,
   MailtoOrderSupport,
 } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
+import { SavedAddressOptions } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/Order2SavedAddressOptions"
 import { handleError } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/handleError"
+import {
+  findInitialSelectedAddress,
+  processSavedAddresses,
+} from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/utils"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 
 import { useOrder2SetOrderDeliveryAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderDeliveryAddressMutation"
 import { useOrder2UnsetOrderFulfillmentOptionMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2UnsetOrderFulfillmentOptionMutation"
-import { getShippableCountries } from "Apps/Order2/Utils/getShippableCountries"
+import { getShippableCountries as getShippableCountryData } from "Apps/Order2/Utils/addressUtils"
 import {
   AddressFormFields,
   type FormikContextWithAddress,
@@ -18,6 +23,7 @@ import {
 } from "Components/Address/AddressFormFields"
 import { sortCountriesForCountryInput } from "Components/Address/utils/sortCountriesForCountryInput"
 import { useInitialLocationValues } from "Components/Address/utils/useInitialLocationValues"
+import type { Order2DeliveryForm_me$key } from "__generated__/Order2DeliveryForm_me.graphql"
 import type { Order2DeliveryForm_order$key } from "__generated__/Order2DeliveryForm_order.graphql"
 import { Formik, type FormikHelpers } from "formik"
 import { useCallback, useMemo } from "react"
@@ -26,6 +32,7 @@ import * as yup from "yup"
 
 interface Order2DeliveryFormProps {
   order: Order2DeliveryForm_order$key
+  me: Order2DeliveryForm_me$key
 }
 
 const validationSchema = yup
@@ -34,10 +41,14 @@ const validationSchema = yup
 
 export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
   order,
+  me,
 }) => {
-  const orderData = useFragment(FRAGMENT, order)
+  const orderData = useFragment(ORDER_FRAGMENT, order)
+  const meData = useFragment(ME_FRAGMENT, me)
 
-  const shippableCountries = getShippableCountries(
+  const { addressConnection } = meData
+
+  const shippableCountries = getShippableCountryData(
     orderData.availableShippingCountries,
   )
 
@@ -68,31 +79,46 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
     country: "",
     name: "",
     phoneNumber: {
-      countryCode: "",
+      regionCode: "",
       originalNumber: "",
     },
   }
 
-  const initialValues: FormikContextWithAddress = {
-    address: {
-      name: fulfillmentDetails.name || "",
-      country:
-        fulfillmentDetails.country ||
-        locationBasedInitialValues.selectedCountry ||
+  const initialBlankValues: FormikContextWithAddress = useMemo(
+    () => ({
+      address: {
+        name: fulfillmentDetails.name || "",
+        country:
+          fulfillmentDetails.country ||
+          locationBasedInitialValues.selectedCountry ||
+          "",
+        postalCode: fulfillmentDetails.postalCode || "",
+        addressLine1: fulfillmentDetails.addressLine1 || "",
+        addressLine2: fulfillmentDetails.addressLine2 || "",
+        city: fulfillmentDetails.city || "",
+        region: fulfillmentDetails.region || "",
+      },
+      phoneNumber: fulfillmentDetails.phoneNumber?.originalNumber || "",
+      phoneNumberCountryCode:
+        fulfillmentDetails.phoneNumber?.regionCode ||
+        locationBasedInitialValues.phoneNumberCountryCode ||
         "",
-      postalCode: fulfillmentDetails.postalCode || "",
-      addressLine1: fulfillmentDetails.addressLine1 || "",
-      addressLine2: fulfillmentDetails.addressLine2 || "",
-      city: fulfillmentDetails.city || "",
-      region: fulfillmentDetails.region || "",
-    },
-    phoneNumber: fulfillmentDetails.phoneNumber?.originalNumber || "",
-    phoneNumberCountryCode:
-      fulfillmentDetails.phoneNumber?.countryCode ||
-      locationBasedInitialValues.phoneNumberCountryCode ||
-      "",
-  }
+    }),
+    [fulfillmentDetails, locationBasedInitialValues],
+  )
 
+  const processedAddresses = useMemo(() => {
+    return processSavedAddresses(
+      addressConnection,
+      orderData.availableShippingCountries,
+    )
+  }, [addressConnection, orderData.availableShippingCountries])
+
+  const hasSavedAddresses = processedAddresses.length > 0
+
+  const initialSelectedAddress = useMemo(() => {
+    return findInitialSelectedAddress(processedAddresses, initialBlankValues)
+  }, [initialBlankValues, processedAddresses])
   const onSubmit = useCallback(
     async (
       values: FormikContextWithAddress,
@@ -180,7 +206,7 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
       <Spacer y={2} />
 
       <Formik
-        initialValues={initialValues}
+        initialValues={initialSelectedAddress || initialBlankValues}
         enableReinitialize={true}
         validationSchema={validationSchema}
         onSubmit={onSubmit}
@@ -193,10 +219,17 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
                 <Spacer y={2} />
               </>
             )}
-            <AddressFormFields
-              withPhoneNumber
-              shippableCountries={shippableCountries}
-            />
+            {hasSavedAddresses ? (
+              <SavedAddressOptions
+                savedAddresses={processedAddresses}
+                initialSelectedAddress={initialSelectedAddress}
+              />
+            ) : (
+              <AddressFormFields
+                withPhoneNumber
+                shippableCountries={shippableCountries}
+              />
+            )}
             <Spacer y={4} />
             <Button
               type="submit"
@@ -213,7 +246,28 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
   )
 }
 
-const FRAGMENT = graphql`
+const ME_FRAGMENT = graphql`
+  fragment Order2DeliveryForm_me on Me {
+    addressConnection(first: 20) {
+      edges {
+        node {
+          internalID
+          addressLine1
+          addressLine2
+          city
+          region
+          postalCode
+          country
+          name
+          phoneNumber
+          phoneNumberCountryCode
+        }
+      }
+    }
+  }
+`
+
+const ORDER_FRAGMENT = graphql`
   fragment Order2DeliveryForm_order on Order {
     internalID
     selectedFulfillmentOption {
@@ -229,8 +283,9 @@ const FRAGMENT = graphql`
       country
       name
       phoneNumber {
-        countryCode
         originalNumber
+        regionCode
+        countryCode
       }
     }
   }

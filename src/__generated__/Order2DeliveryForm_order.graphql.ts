@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ee10726ed8f3f7a3bf440cb81c718c9e>>
+ * @generated SignedSource<<9a15eae88b39fc9aa385413e266661b5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -22,6 +22,7 @@ export type Order2DeliveryForm_order$data = {
     readonly phoneNumber: {
       readonly countryCode: string | null | undefined;
       readonly originalNumber: string | null | undefined;
+      readonly regionCode: string | null | undefined;
     } | null | undefined;
     readonly postalCode: string | null | undefined;
     readonly region: string | null | undefined;
@@ -144,14 +145,21 @@ const node: ReaderFragment = {
               "alias": null,
               "args": null,
               "kind": "ScalarField",
-              "name": "countryCode",
+              "name": "originalNumber",
               "storageKey": null
             },
             {
               "alias": null,
               "args": null,
               "kind": "ScalarField",
-              "name": "originalNumber",
+              "name": "regionCode",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "countryCode",
               "storageKey": null
             }
           ],
@@ -165,6 +173,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "b09bac1947b2dd913b378e98028e07c9";
+(node as any).hash = "f03d698c8ebcaaf6a4012b1c7ef644e3";
 
 export default node;
