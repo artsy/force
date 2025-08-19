@@ -93,18 +93,23 @@
     d3-interpolate "^1.3.2"
     d3-shape "^1.3.5"
 
-"@artsy/palette-tokens@7.0.1", "@artsy/palette-tokens@^7.0.1":
+"@artsy/palette-tokens@7.0.1":
   version "7.0.1"
   resolved "https://registry.yarnpkg.com/@artsy/palette-tokens/-/palette-tokens-7.0.1.tgz#05b76e4f480356caca427a1836dedf0e14bc6925"
   integrity sha512-RplNRn4QByKdpz9ARQB/PdifyZKbzjXazTGn+PED3TeSDDWkXhcSAIXUit23B3P5m08Zeuk3YwSGdxAFHYuSKA==
 
-"@artsy/palette@43.3.1":
-  version "43.3.1"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-43.3.1.tgz#c9ea607e7f03d8de3261a8e39bcfa79911f246e3"
-  integrity sha512-jYPYRglAEhtQrBvSkzp3BZueX+d1d8dFfr7aFQe7c/Qn8K2z2dtNabt5IFhgeMFI9otNZ70PT0pAereOHVOlZA==
+"@artsy/palette-tokens@^7.1.0":
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette-tokens/-/palette-tokens-7.1.0.tgz#c94d12dbf9ab1a804112daceabf83f84889f48ec"
+  integrity sha512-VRlX7hGDWBWxwDGMoZOHRjg6cYdKcCenxXgHrZaXUBeUTNmvZImQrAEkpzXLMUYuSfkmt9jpAjiX7fWWW01vQA==
+
+"@artsy/palette@43.4.0":
+  version "43.4.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-43.4.0.tgz#4f48facc8c538162086732c50e497ddc20db0b57"
+  integrity sha512-ASl2g+uwNPyFboDFgHXjtvlsJ5qyxn+IW6Tn0r/8sgE5jhgoAhzrauC8MlBjpr6KdpW78wD1Ta+Cf4r07BpCCA==
   dependencies:
     "@artsy/icons" "^3.2.2"
-    "@artsy/palette-tokens" "^7.0.1"
+    "@artsy/palette-tokens" "^7.1.0"
     "@seznam/compose-react-refs" "^1.0.6"
     "@storybook/react-webpack5" "^9.0.16"
     "@styled-system/theme-get" "^5.1.2"
