@@ -26,6 +26,9 @@ export const fetchAndSetConfirmationToken = async (
                   bankName
                   last4
                 }
+                ... on SEPADebit {
+                  last4
+                }
               }
             }
           }
