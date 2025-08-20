@@ -16,7 +16,6 @@ import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckou
 
 import { useOrder2SetOrderDeliveryAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderDeliveryAddressMutation"
 import { useOrder2UnsetOrderFulfillmentOptionMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2UnsetOrderFulfillmentOptionMutation"
-import { useOrder2UpdateUserAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2UpdateUserAddressMutation"
 import { getShippableCountries as getShippableCountryData } from "Apps/Order2/Utils/addressUtils"
 import {
   AddressFormFields,
@@ -63,7 +62,6 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
     setCheckoutMode,
     checkoutTracking,
     setFulfillmentDetailsComplete,
-    userAddressMode,
     setUserAddressMode,
   } = checkoutContext
 
@@ -72,90 +70,28 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
   const unsetOrderFulfillmentOption =
     useOrder2UnsetOrderFulfillmentOptionMutation()
 
-  const updateUserAddress = useOrder2UpdateUserAddressMutation()
-
-  const handleUserAddressMode = useCallback(
-    async (
-      values: FormikContextWithAddress,
-      helpers: FormikHelpers<FormikContextWithAddress>,
-    ) => {
-      try {
-        const { phoneNumber, phoneNumberCountryCode, address } = values
-        if (userAddressMode?.mode === "edit" && address) {
-          const mutationResult = await updateUserAddress.submitMutation({
-            variables: {
-              input: {
-                userAddressID: userAddressMode.address.internalID,
-                attributes: {
-                  name: address.name,
-                  country: address.country,
-                  postalCode: address.postalCode,
-                  addressLine1: address.addressLine1,
-                  addressLine2: address.addressLine2,
-                  city: address.city,
-                  region: address.region,
-                  phoneNumber: phoneNumber,
-                  phoneNumberCountryCode: phoneNumberCountryCode,
-                },
-              },
-            },
-          })
-          if (mutationResult.updateUserAddress?.userAddressOrErrors?.errors) {
-            const errors =
-              mutationResult.updateUserAddress.userAddressOrErrors.errors
-            throw new Error(errors.map(error => error.code).join(", "))
-          }
-        }
-      } catch (error) {
-        handleError(error, helpers, {
-          title: "An error occurred",
-          message: (
-            <>
-              Something went wrong while updating your address. Please try again
-              or contact <MailtoOrderSupport />.
-            </>
-          ),
-        })
-      }
-    },
-    [userAddressMode, updateUserAddress.submitMutation],
-  )
-
-  const fulfillmentDetails = orderData.fulfillmentDetails || {
-    addressLine1: "",
-    addressLine2: "",
-    city: "",
-    region: "",
-    postalCode: "",
-    country: "",
-    name: "",
-    phoneNumber: {
-      regionCode: "",
-      originalNumber: "",
-    },
-  }
-
   const initialBlankValues: FormikContextWithAddress = useMemo(
     () => ({
       address: {
-        name: fulfillmentDetails.name || "",
+        name: orderData.fulfillmentDetails?.name || "",
         country:
-          fulfillmentDetails.country ||
+          orderData.fulfillmentDetails?.country ||
           locationBasedInitialValues.selectedCountry ||
           "",
-        postalCode: fulfillmentDetails.postalCode || "",
-        addressLine1: fulfillmentDetails.addressLine1 || "",
-        addressLine2: fulfillmentDetails.addressLine2 || "",
-        city: fulfillmentDetails.city || "",
-        region: fulfillmentDetails.region || "",
+        postalCode: orderData.fulfillmentDetails?.postalCode || "",
+        addressLine1: orderData.fulfillmentDetails?.addressLine1 || "",
+        addressLine2: orderData.fulfillmentDetails?.addressLine2 || "",
+        city: orderData.fulfillmentDetails?.city || "",
+        region: orderData.fulfillmentDetails?.region || "",
       },
-      phoneNumber: fulfillmentDetails.phoneNumber?.originalNumber || "",
+      phoneNumber:
+        orderData.fulfillmentDetails?.phoneNumber?.originalNumber || "",
       phoneNumberCountryCode:
-        fulfillmentDetails.phoneNumber?.regionCode ||
+        orderData.fulfillmentDetails?.phoneNumber?.regionCode ||
         locationBasedInitialValues.phoneNumberCountryCode ||
         "",
     }),
-    [fulfillmentDetails, locationBasedInitialValues],
+    [orderData, locationBasedInitialValues],
   )
 
   const processedAddresses = useMemo(() => {
@@ -166,11 +102,6 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
   }, [addressConnection, orderData.availableShippingCountries])
 
   const hasSavedAddresses = processedAddresses.length > 0
-
-  console.log(
-    "** Order2DeliveryForm processedAddresses",
-    processedAddresses.length,
-  )
 
   const initialSelectedAddress = useMemo(() => {
     return findInitialSelectedAddress(processedAddresses, initialBlankValues)
@@ -202,9 +133,6 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
               ?.orderOrError,
           )
         }
-
-        // perform any saved address create/update actions
-        await handleUserAddressMode(values, formikHelpers)
 
         const input = {
           id: orderData.internalID,
@@ -253,7 +181,6 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
       unsetOrderFulfillmentOption,
       orderData.selectedFulfillmentOption?.type,
       setCheckoutMode,
-      handleUserAddressMode,
       setUserAddressMode,
     ],
   )
@@ -286,6 +213,9 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
               <SavedAddressOptions
                 savedAddresses={processedAddresses}
                 initialSelectedAddress={initialSelectedAddress}
+                onSelectAddress={async values => {
+                  await formikContext.setValues(values)
+                }}
               />
             ) : (
               <>
