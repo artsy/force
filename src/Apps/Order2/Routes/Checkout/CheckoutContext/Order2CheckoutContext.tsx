@@ -43,6 +43,10 @@ type ConfirmationTokenState = {
         readonly last4: string
       }
     | {
+        readonly __typename: "SEPADebit"
+        readonly last4: string
+      }
+    | {
         readonly __typename: "%other"
       }
     | null
@@ -57,7 +61,8 @@ type SavedCreditCard = {
 }
 
 type SavedBankAccount = {
-  __typename: "Bank Account"
+  __typename: "BankAccount"
+  type: "US_BANK_ACCOUNT" | "SEPA_DEBIT"
   internalID: string
   last4: string
 }

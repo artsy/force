@@ -20,7 +20,10 @@ export const Order2PaymentCompletedView: React.FC<
 
   const isBankAccount =
     confirmationToken?.paymentMethodPreview?.__typename === "USBankAccount" ||
-    savedPaymentMethod?.__typename === "BankAccount"
+    savedPaymentMethod?.type === "US_BANK_ACCOUNT"
+  const isSEPA =
+    confirmationToken?.paymentMethodPreview?.__typename === "SEPADebit" ||
+    savedPaymentMethod?.type === "SEPA_DEBIT"
 
   return (
     <Flex flexDirection="column" backgroundColor="mono0">
@@ -48,7 +51,7 @@ export const Order2PaymentCompletedView: React.FC<
         </Clickable>
       </Flex>
       <Flex alignItems="center" ml="30px" mt={1}>
-        {isBankAccount ? (
+        {isBankAccount || isSEPA ? (
           <>
             <HomeIcon
               fill="mono100"
