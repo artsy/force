@@ -84,6 +84,7 @@ describe("ArticleBody", () => {
               {
                 __typename: "Artwork",
                 formattedMetadata: "Example Artwork, 2025",
+                caption: null,
                 image: {
                   cropped: {
                     src: "https://example.com/image.jpg",

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0d05ec87d7ff4ce6d5690c5f4d62ad83>>
+ * @generated SignedSource<<39589be85de5220cbdd4e1801b734e71>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,7 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArticleSectionImageCollectionImage_figure$data = {
+  readonly caption?: string | null | undefined;
   readonly formattedMetadata?: string | null | undefined;
   readonly id?: string;
   readonly image?: {
@@ -103,6 +104,13 @@ return {
           "name": "formattedMetadata",
           "storageKey": null
         },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "caption",
+          "storageKey": null
+        },
         (v1/*: any*/)
       ],
       "type": "Artwork",
@@ -120,6 +128,6 @@ return {
 };
 })();
 
-(node as any).hash = "a0adfbaa26fa9727ad3addb1be35366c";
+(node as any).hash = "3fb8c4dd6a2407b6e0266ad809ee890e";
 
 export default node;
