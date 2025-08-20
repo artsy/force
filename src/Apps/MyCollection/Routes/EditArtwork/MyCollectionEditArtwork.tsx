@@ -91,7 +91,7 @@ export const MyCollectionEditArtwork: React.FC<
         pathname: `/collector-profile/my-collection/artwork/${updatedArtwork?.internalID}`,
       })
     } catch (error) {
-      logger.error(`Artwork not updated`, error)
+      logger.error("Artwork not updated", error)
 
       sendToast({
         variant: "error",

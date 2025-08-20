@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e08762de4f4ffa9a2a63f9a9a0909955>>
+ * @generated SignedSource<<38f26a84a2b1635a70a389410674df2d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,6 +18,9 @@ export type confirmationTokenUtilsQuery$data = {
       readonly paymentMethodPreview: {
         readonly __typename: "Card";
         readonly displayBrand: string;
+        readonly last4: string;
+      } | {
+        readonly __typename: "SEPADebit";
         readonly last4: string;
       } | {
         readonly __typename: "USBankAccount";
@@ -109,6 +112,14 @@ v2 = {
           ],
           "type": "USBankAccount",
           "abstractKey": null
+        },
+        {
+          "kind": "InlineFragment",
+          "selections": [
+            (v1/*: any*/)
+          ],
+          "type": "SEPADebit",
+          "abstractKey": null
         }
       ],
       "storageKey": null
@@ -167,16 +178,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "7d67e528f4f52208c0460141ec1558bc",
+    "cacheID": "124d56783c8bd7949569c29427146323",
     "id": null,
     "metadata": {},
     "name": "confirmationTokenUtilsQuery",
     "operationKind": "query",
-    "text": "query confirmationTokenUtilsQuery(\n  $id: String!\n) {\n  me {\n    confirmationToken(id: $id) {\n      paymentMethodPreview {\n        __typename\n        ... on Card {\n          displayBrand\n          last4\n        }\n        ... on USBankAccount {\n          bankName\n          last4\n        }\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query confirmationTokenUtilsQuery(\n  $id: String!\n) {\n  me {\n    confirmationToken(id: $id) {\n      paymentMethodPreview {\n        __typename\n        ... on Card {\n          displayBrand\n          last4\n        }\n        ... on USBankAccount {\n          bankName\n          last4\n        }\n        ... on SEPADebit {\n          last4\n        }\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "7d8bbaaf9d63595431765b294e9e60a0";
+(node as any).hash = "daed8edc36a5b03b2ac69ee236a0b6c2";
 
 export default node;

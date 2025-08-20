@@ -129,7 +129,7 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
               {isExpressCheckoutEligible && (
                 <Order2ExpressCheckout order={orderData} />
               )}
-              <Order2FulfillmentDetailsStep order={orderData} />
+              <Order2FulfillmentDetailsStep order={orderData} me={meData} />
               <Order2DeliveryOptionsStep order={orderData} />
               <Order2PaymentStep order={orderData} me={meData} />
             </Stack>
@@ -169,6 +169,7 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
 const ME_FRAGMENT = graphql`
   fragment Order2CheckoutApp_me on Me {
     ...Order2PaymentStep_me
+    ...Order2FulfillmentDetailsStep_me
   }
 `
 

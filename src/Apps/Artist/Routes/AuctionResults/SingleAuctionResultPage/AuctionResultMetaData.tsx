@@ -1,5 +1,5 @@
 import { Box, Flex, Join, Separator, Text } from "@artsy/palette"
-import { MyCollectionArtworkDetailField } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkDetailField"
+import { MyCollectionArtworkDetailFields } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkDetailFields"
 import { Media } from "Utils/Responsive"
 import type { AuctionResultMetaData_auctionResult$key } from "__generated__/AuctionResultMetaData_auctionResult.graphql"
 import { graphql, useFragment } from "react-relay"
@@ -28,31 +28,20 @@ export const AuctionResultMetaData: React.FC<
   return (
     <Box>
       <Media greaterThan="xs">
-        {!isUpcoming && (
-          <MyCollectionArtworkDetailField
-            label="Pre-sale estimate"
-            value={estimate?.display}
-          />
-        )}
-        <MyCollectionArtworkDetailField label="Medium" value={mediumText} />
-        <MyCollectionArtworkDetailField
-          label="Dimensions"
-          value={dimensionText}
+        <MyCollectionArtworkDetailFields
+          fields={[
+            ...(!isUpcoming
+              ? [{ label: "Pre-sale estimate", value: estimate?.display }]
+              : []),
+            { label: "Medium", value: mediumText },
+            { label: "Dimensions", value: dimensionText },
+            { label: "Sale Date", value: formattedSaleDate },
+            { label: "Auction house", value: organization },
+            { label: "Sale location", value: location },
+            { label: "Sale name", value: saleTitle },
+            { label: "Lot", value: lotNumber },
+          ]}
         />
-        <MyCollectionArtworkDetailField
-          label="Sale Date"
-          value={formattedSaleDate}
-        />
-        <MyCollectionArtworkDetailField
-          label="Auction house"
-          value={organization}
-        />
-        <MyCollectionArtworkDetailField
-          label="Sale location"
-          value={location}
-        />
-        <MyCollectionArtworkDetailField label="Sale name" value={saleTitle} />
-        <MyCollectionArtworkDetailField label="Lot" value={lotNumber} />
       </Media>
 
       <Media at="xs">

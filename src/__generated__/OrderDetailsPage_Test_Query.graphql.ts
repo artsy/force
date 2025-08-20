@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2dbd44121ff8ec5470d8873b5fd91c11>>
+ * @generated SignedSource<<c5196b7f1907dee8edda613b036dca7a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,10 +21,23 @@ export type OrderDetailsPage_Test_Query$data = {
     readonly order: {
       readonly " $fragmentSpreads": FragmentRefs<"OrderDetailsPage_order">;
     } | null | undefined;
+    readonly " $fragmentSpreads": FragmentRefs<"OrderDetailsPage_me">;
   } | null | undefined;
 };
 export type OrderDetailsPage_Test_Query$rawResponse = {
   readonly me: {
+    readonly collectorProfile: {
+      readonly bio: string | null | undefined;
+      readonly id: string;
+      readonly isEmailConfirmed: boolean | null | undefined;
+      readonly isIdentityVerified: boolean | null | undefined;
+      readonly location: {
+        readonly country: string | null | undefined;
+        readonly id: string;
+      } | null | undefined;
+      readonly otherRelevantPositions: string | null | undefined;
+      readonly profession: string | null | undefined;
+    } | null | undefined;
     readonly id: string;
     readonly order: {
       readonly buyerStateExpiresAt: string | null | undefined;
@@ -198,31 +211,38 @@ v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "country",
   "storageKey": null
 },
 v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "name",
+  "name": "id",
   "storageKey": null
 },
 v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "__typename",
+  "name": "name",
   "storageKey": null
 },
 v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "price",
+  "name": "__typename",
   "storageKey": null
 },
 v5 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "price",
+  "storageKey": null
+},
+v6 = {
   "alias": null,
   "args": null,
   "concreteType": "dimensions",
@@ -247,28 +267,28 @@ v5 = {
   ],
   "storageKey": null
 },
-v6 = {
+v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "title",
   "storageKey": null
 },
-v7 = {
+v8 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "displayName",
   "storageKey": null
 },
-v8 = {
+v9 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "amountFallbackText",
   "storageKey": null
 },
-v9 = {
+v10 = {
   "alias": null,
   "args": null,
   "concreteType": "Money",
@@ -293,12 +313,12 @@ v9 = {
   ],
   "storageKey": null
 },
-v10 = [
-  (v7/*: any*/),
-  (v8/*: any*/),
-  (v9/*: any*/)
-],
 v11 = [
+  (v8/*: any*/),
+  (v9/*: any*/),
+  (v10/*: any*/)
+],
+v12 = [
   {
     "alias": null,
     "args": null,
@@ -322,6 +342,11 @@ return {
         "name": "me",
         "plural": false,
         "selections": [
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "OrderDetailsPage_me"
+          },
           {
             "alias": null,
             "args": (v0/*: any*/),
@@ -361,6 +386,66 @@ return {
         "selections": [
           {
             "alias": null,
+            "args": null,
+            "concreteType": "CollectorProfileType",
+            "kind": "LinkedField",
+            "name": "collectorProfile",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "isEmailConfirmed",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "MyLocation",
+                "kind": "LinkedField",
+                "name": "location",
+                "plural": false,
+                "selections": [
+                  (v1/*: any*/),
+                  (v2/*: any*/)
+                ],
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "profession",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "isIdentityVerified",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "otherRelevantPositions",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "bio",
+                "storageKey": null
+              },
+              (v2/*: any*/)
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
             "args": (v0/*: any*/),
             "concreteType": "Order",
             "kind": "LinkedField",
@@ -390,7 +475,7 @@ return {
                         "name": "slug",
                         "storageKey": null
                       },
-                      (v1/*: any*/),
+                      (v2/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -406,15 +491,15 @@ return {
                         "name": "partner",
                         "plural": false,
                         "selections": [
-                          (v2/*: any*/),
-                          (v1/*: any*/)
+                          (v3/*: any*/),
+                          (v2/*: any*/)
                         ],
                         "storageKey": null
                       }
                     ],
                     "storageKey": null
                   },
-                  (v1/*: any*/),
+                  (v2/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -423,12 +508,12 @@ return {
                     "name": "artworkOrEditionSet",
                     "plural": false,
                     "selections": [
-                      (v3/*: any*/),
+                      (v4/*: any*/),
                       {
                         "kind": "InlineFragment",
                         "selections": [
-                          (v4/*: any*/),
-                          (v5/*: any*/)
+                          (v5/*: any*/),
+                          (v6/*: any*/)
                         ],
                         "type": "Artwork",
                         "abstractKey": null
@@ -436,9 +521,9 @@ return {
                       {
                         "kind": "InlineFragment",
                         "selections": [
-                          (v4/*: any*/),
                           (v5/*: any*/),
-                          (v1/*: any*/)
+                          (v6/*: any*/),
+                          (v2/*: any*/)
                         ],
                         "type": "EditionSet",
                         "abstractKey": null
@@ -446,7 +531,7 @@ return {
                       {
                         "kind": "InlineFragment",
                         "selections": [
-                          (v1/*: any*/)
+                          (v2/*: any*/)
                         ],
                         "type": "Node",
                         "abstractKey": "__isNode"
@@ -462,7 +547,7 @@ return {
                     "name": "artworkVersion",
                     "plural": false,
                     "selections": [
-                      (v6/*: any*/),
+                      (v7/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -492,7 +577,7 @@ return {
                             "name": "shortDescription",
                             "storageKey": null
                           },
-                          (v1/*: any*/)
+                          (v2/*: any*/)
                         ],
                         "storageKey": null
                       },
@@ -550,7 +635,7 @@ return {
                         ],
                         "storageKey": null
                       },
-                      (v1/*: any*/)
+                      (v2/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -586,7 +671,7 @@ return {
                     "name": "messageType",
                     "storageKey": null
                   },
-                  (v6/*: any*/)
+                  (v7/*: any*/)
                 ],
                 "storageKey": null
               },
@@ -679,24 +764,24 @@ return {
                 "name": "pricingBreakdownLines",
                 "plural": true,
                 "selections": [
-                  (v3/*: any*/),
+                  (v4/*: any*/),
                   {
                     "kind": "InlineFragment",
-                    "selections": (v10/*: any*/),
+                    "selections": (v11/*: any*/),
                     "type": "ShippingLine",
                     "abstractKey": null
                   },
                   {
                     "kind": "InlineFragment",
-                    "selections": (v10/*: any*/),
+                    "selections": (v11/*: any*/),
                     "type": "TaxLine",
                     "abstractKey": null
                   },
                   {
                     "kind": "InlineFragment",
                     "selections": [
-                      (v7/*: any*/),
-                      (v9/*: any*/)
+                      (v8/*: any*/),
+                      (v10/*: any*/)
                     ],
                     "type": "SubtotalLine",
                     "abstractKey": null
@@ -704,8 +789,8 @@ return {
                   {
                     "kind": "InlineFragment",
                     "selections": [
-                      (v7/*: any*/),
                       (v8/*: any*/),
+                      (v9/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -713,7 +798,7 @@ return {
                         "kind": "LinkedField",
                         "name": "amount",
                         "plural": false,
-                        "selections": (v11/*: any*/),
+                        "selections": (v12/*: any*/),
                         "storageKey": null
                       }
                     ],
@@ -730,7 +815,7 @@ return {
                 "kind": "LinkedField",
                 "name": "totalListPrice",
                 "plural": false,
-                "selections": (v11/*: any*/),
+                "selections": (v12/*: any*/),
                 "storageKey": null
               },
               {
@@ -740,7 +825,7 @@ return {
                 "kind": "LinkedField",
                 "name": "itemsTotal",
                 "plural": false,
-                "selections": (v11/*: any*/),
+                "selections": (v12/*: any*/),
                 "storageKey": null
               },
               {
@@ -750,7 +835,7 @@ return {
                 "kind": "LinkedField",
                 "name": "shippingTotal",
                 "plural": false,
-                "selections": (v11/*: any*/),
+                "selections": (v12/*: any*/),
                 "storageKey": null
               },
               {
@@ -760,7 +845,7 @@ return {
                 "kind": "LinkedField",
                 "name": "taxTotal",
                 "plural": false,
-                "selections": (v11/*: any*/),
+                "selections": (v12/*: any*/),
                 "storageKey": null
               },
               {
@@ -778,7 +863,7 @@ return {
                 "name": "paymentMethodDetails",
                 "plural": false,
                 "selections": [
-                  (v3/*: any*/),
+                  (v4/*: any*/),
                   {
                     "kind": "InlineFragment",
                     "selections": [
@@ -810,7 +895,7 @@ return {
                         "name": "expirationMonth",
                         "storageKey": null
                       },
-                      (v1/*: any*/)
+                      (v2/*: any*/)
                     ],
                     "type": "CreditCard",
                     "abstractKey": null
@@ -825,7 +910,7 @@ return {
                         "name": "last4",
                         "storageKey": null
                       },
-                      (v1/*: any*/)
+                      (v2/*: any*/)
                     ],
                     "type": "BankAccount",
                     "abstractKey": null
@@ -876,14 +961,8 @@ return {
                     "name": "city",
                     "storageKey": null
                   },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "country",
-                    "storageKey": null
-                  },
-                  (v2/*: any*/),
+                  (v1/*: any*/),
+                  (v3/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -950,27 +1029,27 @@ return {
                 "name": "shippingOrigin",
                 "storageKey": null
               },
-              (v1/*: any*/)
+              (v2/*: any*/)
             ],
             "storageKey": "order(id:\"123\")"
           },
-          (v1/*: any*/)
+          (v2/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "f5ad7ae571c3c328e6eb776bde28f388",
+    "cacheID": "261d0562f09ba303c7201a8fb7250907",
     "id": null,
     "metadata": {},
     "name": "OrderDetailsPage_Test_Query",
     "operationKind": "query",
-    "text": "query OrderDetailsPage_Test_Query {\n  me {\n    order(id: \"123\") {\n      ...OrderDetailsPage_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2HelpLinks_order on Order {\n  internalID\n  mode\n  source\n}\n\nfragment OrderDetailsFulfillmentInfo_order on Order {\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    country\n    name\n    postalCode\n    region\n    phoneNumber {\n      display(format: INTERNATIONAL)\n    }\n  }\n  selectedFulfillmentOption {\n    type\n  }\n  shippingOrigin\n}\n\nfragment OrderDetailsHeader_order on Order {\n  code\n  displayTexts {\n    title\n  }\n}\n\nfragment OrderDetailsMessage_order on Order {\n  buyerStateExpiresAt\n  code\n  currencyCode\n  internalID\n  impulseConversationId\n  displayTexts {\n    messageType\n  }\n  deliveryInfo {\n    shipperName\n    trackingNumber\n    trackingURL\n    estimatedDelivery\n    estimatedDeliveryWindow\n  }\n  source\n  mode\n}\n\nfragment OrderDetailsOrderSummary_order on Order {\n  ...OrderDetailsPricingBreakdown_order\n  source\n  mode\n  totalListPrice {\n    display\n  }\n  itemsTotal {\n    display\n  }\n  shippingTotal {\n    display\n  }\n  taxTotal {\n    display\n  }\n  lineItems {\n    artwork {\n      slug\n      published\n      partner {\n        name\n        id\n      }\n      id\n    }\n    artworkOrEditionSet {\n      __typename\n      ... on Artwork {\n        price\n        dimensions {\n          in\n          cm\n        }\n      }\n      ... on EditionSet {\n        price\n        dimensions {\n          in\n          cm\n        }\n        id\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n    artworkVersion {\n      title\n      artistNames\n      date\n      attributionClass {\n        shortDescription\n        id\n      }\n      image {\n        resized(height: 360, width: 700) {\n          url\n          width\n          height\n        }\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment OrderDetailsPage_order on Order {\n  lineItems {\n    artwork {\n      slug\n      id\n    }\n    id\n  }\n  mode\n  source\n  displayTexts {\n    messageType\n  }\n  ...OrderDetailsHeader_order\n  ...OrderDetailsMessage_order\n  ...OrderDetailsOrderSummary_order\n  ...OrderDetailsPricingBreakdown_order\n  ...OrderDetailsPaymentInfo_order\n  ...OrderDetailsFulfillmentInfo_order\n  ...Order2HelpLinks_order\n}\n\nfragment OrderDetailsPaymentInfo_order on Order {\n  creditCardWalletType\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      brand\n      lastDigits\n      expirationYear\n      expirationMonth\n      id\n    }\n    ... on BankAccount {\n      last4\n      id\n    }\n    ... on WireTransfer {\n      isManualPayment\n    }\n  }\n}\n\nfragment OrderDetailsPricingBreakdown_order on Order {\n  mode\n  source\n  pricingBreakdownLines {\n    __typename\n    ... on ShippingLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TaxLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on SubtotalLine {\n      displayName\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TotalLine {\n      displayName\n      amountFallbackText\n      amount {\n        display\n      }\n    }\n  }\n}\n"
+    "text": "query OrderDetailsPage_Test_Query {\n  me {\n    ...OrderDetailsPage_me\n    order(id: \"123\") {\n      ...OrderDetailsPage_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2HelpLinks_order on Order {\n  internalID\n  mode\n  source\n}\n\nfragment OrderDetailsFulfillmentInfo_order on Order {\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    country\n    name\n    postalCode\n    region\n    phoneNumber {\n      display(format: INTERNATIONAL)\n    }\n  }\n  selectedFulfillmentOption {\n    type\n  }\n  shippingOrigin\n}\n\nfragment OrderDetailsHeader_order on Order {\n  code\n  displayTexts {\n    title\n  }\n}\n\nfragment OrderDetailsMessage_me on Me {\n  collectorProfile {\n    isEmailConfirmed\n    location {\n      country\n      id\n    }\n    profession\n    isIdentityVerified\n    otherRelevantPositions\n    bio\n    id\n  }\n}\n\nfragment OrderDetailsMessage_order on Order {\n  buyerStateExpiresAt\n  code\n  currencyCode\n  internalID\n  impulseConversationId\n  displayTexts {\n    messageType\n  }\n  deliveryInfo {\n    shipperName\n    trackingNumber\n    trackingURL\n    estimatedDelivery\n    estimatedDeliveryWindow\n  }\n  source\n  mode\n}\n\nfragment OrderDetailsOrderSummary_order on Order {\n  ...OrderDetailsPricingBreakdown_order\n  source\n  mode\n  totalListPrice {\n    display\n  }\n  itemsTotal {\n    display\n  }\n  shippingTotal {\n    display\n  }\n  taxTotal {\n    display\n  }\n  lineItems {\n    artwork {\n      slug\n      published\n      partner {\n        name\n        id\n      }\n      id\n    }\n    artworkOrEditionSet {\n      __typename\n      ... on Artwork {\n        price\n        dimensions {\n          in\n          cm\n        }\n      }\n      ... on EditionSet {\n        price\n        dimensions {\n          in\n          cm\n        }\n        id\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n    artworkVersion {\n      title\n      artistNames\n      date\n      attributionClass {\n        shortDescription\n        id\n      }\n      image {\n        resized(height: 360, width: 700) {\n          url\n          width\n          height\n        }\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment OrderDetailsPage_me on Me {\n  ...OrderDetailsMessage_me\n}\n\nfragment OrderDetailsPage_order on Order {\n  lineItems {\n    artwork {\n      slug\n      id\n    }\n    id\n  }\n  mode\n  source\n  displayTexts {\n    messageType\n  }\n  ...OrderDetailsHeader_order\n  ...OrderDetailsMessage_order\n  ...OrderDetailsOrderSummary_order\n  ...OrderDetailsPricingBreakdown_order\n  ...OrderDetailsPaymentInfo_order\n  ...OrderDetailsFulfillmentInfo_order\n  ...Order2HelpLinks_order\n}\n\nfragment OrderDetailsPaymentInfo_order on Order {\n  creditCardWalletType\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      brand\n      lastDigits\n      expirationYear\n      expirationMonth\n      id\n    }\n    ... on BankAccount {\n      last4\n      id\n    }\n    ... on WireTransfer {\n      isManualPayment\n    }\n  }\n}\n\nfragment OrderDetailsPricingBreakdown_order on Order {\n  mode\n  source\n  pricingBreakdownLines {\n    __typename\n    ... on ShippingLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TaxLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on SubtotalLine {\n      displayName\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TotalLine {\n      displayName\n      amountFallbackText\n      amount {\n        display\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "225ca938ce761fe9ac495feca1666718";
+(node as any).hash = "d116dc001837d93993a2970a17fc9158";
 
 export default node;

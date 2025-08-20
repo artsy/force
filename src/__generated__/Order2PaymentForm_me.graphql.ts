@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<34b54e2cc6478822c77b23785d5ba0c3>>
+ * @generated SignedSource<<f15718fed2b27051227fa9e25d747d5b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,6 +9,7 @@
 // @ts-nocheck
 
 import { ReaderFragment } from 'relay-runtime';
+export type BankAccountTypes = "SEPA_DEBIT" | "US_BANK_ACCOUNT" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type Order2PaymentForm_me$data = {
   readonly bankAccounts: {
@@ -17,6 +18,7 @@ export type Order2PaymentForm_me$data = {
         readonly __typename: "BankAccount";
         readonly internalID: string;
         readonly last4: string;
+        readonly type: BankAccountTypes;
       } | null | undefined;
     } | null | undefined> | null | undefined;
   } | null | undefined;
@@ -139,6 +141,13 @@ return {
               "plural": false,
               "selections": [
                 (v1/*: any*/),
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "type",
+                  "storageKey": null
+                },
                 (v2/*: any*/),
                 {
                   "alias": null,
@@ -162,6 +171,6 @@ return {
 };
 })();
 
-(node as any).hash = "39f457d2145a1e974a0a72771c3d9f32";
+(node as any).hash = "4aec3fc1eecc8c3f7e9f9b60854b5077";
 
 export default node;

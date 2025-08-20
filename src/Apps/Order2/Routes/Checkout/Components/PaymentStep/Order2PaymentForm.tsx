@@ -164,7 +164,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
     string | null
   >(null)
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
-    null | "saved" | "stripe-card" | "wire" | "stripe-other"
+    null | "saved" | "stripe-card" | "wire" | "stripe-ach" | "stripe-sepa"
   >(null)
   const [selectedSavedPaymentMethod, setSelectedSavedPaymentMethod] = useState<
     any | null
@@ -244,21 +244,23 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
           })
         }
         setSelectedPaymentMethod("stripe-card")
-      } else {
+      } else if (value.type === "sepa_debit") {
+        elements.update({
+          captureMethod: "automatic",
+          setupFutureUsage: null,
+          mode: "setup",
+          payment_method_types: ["sepa_debit"],
+        })
+        setSelectedPaymentMethod("stripe-sepa")
+      } else if (value.type === "us_bank_account") {
         elements.update({
           captureMethod: "automatic",
           setupFutureUsage: null,
           mode: "setup",
           payment_method_types: ["us_bank_account"],
         })
-        setSelectedPaymentMethod("stripe-other")
+        setSelectedPaymentMethod("stripe-ach")
       }
-    } else {
-      elements.update({
-        captureMethod: "automatic",
-        setupFutureUsage: null,
-        mode: "setup",
-      })
     }
   }
 
@@ -282,6 +284,73 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
     setErrorMessage(null) // Clear any previous error messages
     setSelectedPaymentMethod("wire")
     elements?.getElement("payment")?.collapse()
+  }
+
+  const getPaymentMethodFromSavedPayment = (savedPaymentMethod: any) => {
+    if (savedPaymentMethod?.__typename === "CreditCard") {
+      return "CREDIT_CARD"
+    }
+    if (savedPaymentMethod?.type === "US_BANK_ACCOUNT") {
+      return "US_BANK_ACCOUNT"
+    }
+    if (savedPaymentMethod?.type === "SEPA") {
+      return "SEPA_DEBIT"
+    }
+    throw new Error(
+      "Could not determine mutation payment method from saved payment method chosen.",
+    )
+  }
+
+  const handleBankDebitSetup = async (
+    paymentMethod: "US_BANK_ACCOUNT" | "SEPA_DEBIT",
+    confirmationToken: { id: string },
+  ) => {
+    const updateOrderPaymentMethodResult =
+      await setPaymentMutation.submitMutation({
+        variables: {
+          input: {
+            id: order.internalID,
+            paymentMethod,
+            stripeConfirmationToken: confirmationToken.id,
+          },
+        },
+      })
+
+    validateAndExtractOrderResponse(
+      updateOrderPaymentMethodResult.updateOrder?.orderOrError,
+    )
+
+    // Creating a SetupIntent
+    const bankDebitSetupResult =
+      await createBankDebitSetupForOrder.submitMutation({
+        variables: { input: { id: order.internalID } },
+      })
+
+    if (
+      bankDebitSetupResult.commerceCreateBankDebitSetupForOrder?.actionOrError
+        .__typename === "CommerceOrderRequiresAction"
+    ) {
+      const return_url = `${getENV("APP_URL")}/orders2/${
+        order.internalID
+      }/checkout?save_bank_account=${savePaymentMethod}&confirmation_token=${confirmationToken.id}`
+      window.removeEventListener("beforeunload", preventHardReload)
+
+      // This will redirect to Stripe for bank verification, no code after this will execute
+      // src/Apps/Order2/Routes/Checkout/Hooks/useStripePaymentBySetupIntentId.tsx will handle the post redirect logic
+      const { error } = await stripe.confirmSetup({
+        elements,
+        clientSecret:
+          bankDebitSetupResult.commerceCreateBankDebitSetupForOrder
+            ?.actionOrError?.actionData?.clientSecret,
+        confirmParams: {
+          return_url,
+        },
+      })
+
+      if (error) {
+        handleError({ message: defaultErrorMessage })
+      }
+    }
   }
 
   const handleError = (error: { message?: string | JSX.Element }) => {
@@ -357,55 +426,15 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
           setPaymentComplete()
           setIsSubmittingToStripe(false)
         }
-      } else {
-        // For now, only ACH is supported as a non-card payment method
+      } else if (selectedPaymentMethod === "stripe-ach") {
         try {
-          const updateOrderPaymentMethodResult =
-            await setPaymentMutation.submitMutation({
-              variables: {
-                input: {
-                  id: order.internalID,
-                  paymentMethod: "US_BANK_ACCOUNT",
-                  stripeConfirmationToken: confirmationToken.id,
-                },
-              },
-            })
-
-          validateAndExtractOrderResponse(
-            updateOrderPaymentMethodResult.updateOrder?.orderOrError,
-          )
-
-          // Creating a SetupIntent
-          const bankDebitSetupResult =
-            await createBankDebitSetupForOrder.submitMutation({
-              variables: { input: { id: order.internalID } },
-            })
-
-          if (
-            bankDebitSetupResult.commerceCreateBankDebitSetupForOrder
-              ?.actionOrError.__typename === "CommerceOrderRequiresAction"
-          ) {
-            const return_url = `${getENV("APP_URL")}/orders2/${
-              order.internalID
-            }/checkout?save_bank_account=${savePaymentMethod}&confirmation_token=${confirmationToken.id}`
-            window.removeEventListener("beforeunload", preventHardReload)
-
-            // This will redirect to Stripe for bank verification, no code after this will execute
-            // src/Apps/Order2/Routes/Checkout/Hooks/useStripePaymentBySetupIntentId.tsx will handle the post redirect logic
-            const { error } = await stripe.confirmSetup({
-              elements,
-              clientSecret:
-                bankDebitSetupResult.commerceCreateBankDebitSetupForOrder
-                  ?.actionOrError?.actionData?.clientSecret,
-              confirmParams: {
-                return_url,
-              },
-            })
-
-            if (error) {
-              handleError({ message: defaultErrorMessage })
-            }
-          }
+          await handleBankDebitSetup("US_BANK_ACCOUNT", confirmationToken)
+        } catch (error) {
+          handleError({ message: defaultErrorMessage })
+        }
+      } else if (selectedPaymentMethod === "stripe-sepa") {
+        try {
+          await handleBankDebitSetup("SEPA_DEBIT", confirmationToken)
         } catch (error) {
           handleError({ message: defaultErrorMessage })
         }
@@ -425,10 +454,9 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       setIsSubmittingToStripe(true)
 
       try {
-        const paymentMethod =
-          selectedSavedPaymentMethod?.__typename === "CreditCard"
-            ? "CREDIT_CARD"
-            : "US_BANK_ACCOUNT"
+        const paymentMethod = getPaymentMethodFromSavedPayment(
+          selectedSavedPaymentMethod,
+        )
         const result = await legacySetPaymentMutation.submitMutation({
           variables: {
             input: {
@@ -614,7 +642,12 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         </Box>
       </Collapse>
 
-      <Collapse open={selectedPaymentMethod === "stripe-other"}>
+      <Collapse
+        open={
+          selectedPaymentMethod === "stripe-ach" ||
+          selectedPaymentMethod === "stripe-sepa"
+        }
+      >
         <Box p={2}>
           <Flex>
             <Checkbox
@@ -681,6 +714,7 @@ const ME_FRAGMENT = graphql`
       edges {
         node {
           __typename
+          type
           internalID
           last4
         }

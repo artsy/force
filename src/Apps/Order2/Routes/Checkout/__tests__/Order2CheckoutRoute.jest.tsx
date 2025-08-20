@@ -2,6 +2,10 @@ import { act, screen, waitFor, within } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import {
+  orderMutationError,
+  orderMutationSuccess,
+} from "Apps/Order2/Routes/Checkout/__tests__/utils"
+import {
   handleBackNavigation,
   preventHardReload,
 } from "Apps/Order2/Utils/navigationGuards"
@@ -14,10 +18,6 @@ import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { Order2ExpressCheckout as MockExpressCheckout } from "../Components/ExpressCheckout/Order2ExpressCheckout"
 import { Order2CheckoutRoute } from "../Order2CheckoutRoute"
-import {
-  orderMutationSuccess,
-  orderMutationError,
-} from "Apps/Order2/Routes/Checkout/__tests__/utils"
 
 jest.unmock("react-relay")
 jest.useFakeTimers()
@@ -544,7 +544,7 @@ describe("Order2CheckoutRoute", () => {
                   fulfillmentDetails: {
                     phoneNumber: {
                       originalNumber: "03012345678",
-                      countryCode: "de",
+                      regionCode: "de",
                     },
                   },
                 }),
@@ -929,7 +929,7 @@ describe("Order2CheckoutRoute", () => {
                 fulfillmentDetails: {
                   phoneNumber: {
                     originalNumber: "1234567890",
-                    countryCode: "us",
+                    regionCode: "us",
                   },
                   address: {
                     name: "John Doe",
@@ -1151,6 +1151,112 @@ describe("Order2CheckoutRoute", () => {
       jest.advanceTimersByTime(250)
       await screen.findByText("Postal code is required")
     })
+    describe("with saved address", () => {
+      it("allows the user to proceed with a saved address", async () => {
+        const props = {
+          ...baseProps,
+          me: {
+            ...baseProps.me,
+            order: {
+              ...baseProps.me.order,
+              availableShippingCountries: ["US", "DE"],
+              fulfillmentOptions: [
+                {
+                  type: "DOMESTIC_FLAT",
+                },
+              ],
+              fulfillmentDetails: null,
+              selectedFulfillmentOption: null,
+            },
+            creditCards: {
+              edges: [],
+            },
+            addressConnection: {
+              edges: [
+                {
+                  node: {
+                    internalID: "address-1",
+                    name: "John Doe",
+                    addressLine1: "123 Main St",
+                    addressLine2: "Apt 4",
+                    city: "New York",
+                    region: "NY",
+                    postalCode: "10001",
+                    country: "US",
+                    phoneNumber: "5551234567",
+                    phoneNumberCountryCode: "us",
+                  },
+                },
+                {
+                  node: {
+                    internalID: "address-2",
+                    name: "John Doe",
+                    addressLine1: "345 Marx Str",
+                    addressLine2: "Apt 4",
+                    city: "Berlin",
+                    region: "Berlin",
+                    postalCode: "56789",
+                    country: "DE",
+                    phoneNumber: "5559876543",
+                    phoneNumberCountryCode: "de",
+                  },
+                },
+              ],
+            },
+          },
+        }
+
+        const { mockResolveLastOperation } = renderWithRelay({
+          Viewer: () => props,
+        })
+        await helpers.waitForLoadingComplete()
+        await waitFor(() => {
+          expect(screen.getByText("Delivery address")).toBeInTheDocument()
+        })
+        await userEvent.click(screen.getByText("See Shipping Methods"))
+
+        let mutation
+        await act(async () => {
+          await waitFor(() => {
+            mutation = mockResolveLastOperation({
+              updateOrderShippingAddressPayload: () =>
+                orderMutationSuccess(props.me.order, {
+                  fulfillmentDetails: {
+                    name: "John Doe",
+                    addressLine1: "123 Main St",
+                    addressLine2: "Apt 4",
+                    city: "New York",
+                    region: "NY",
+                    postalCode: "10001",
+                    country: "US",
+                    phoneNumber: {
+                      regionCode: "us",
+                      originalNumber: "5551234567",
+                    },
+                  },
+                }),
+            })
+          })
+          await flushPromiseQueue()
+        })
+
+        expect(mutation.operationName).toBe(
+          "useOrder2SetOrderDeliveryAddressMutation",
+        )
+        expect(mutation.operationVariables.input).toEqual({
+          id: "order-id",
+          buyerPhoneNumber: "5551234567",
+          buyerPhoneNumberCountryCode: "us",
+          shippingAddressLine1: "123 Main St",
+          shippingAddressLine2: "Apt 4",
+          shippingCity: "New York",
+          shippingRegion: "NY",
+          shippingPostalCode: "10001",
+          shippingCountry: "US",
+          shippingName: "John Doe",
+        })
+      })
+    })
   })
 
   describe("within the payment section", () => {
@@ -1232,7 +1338,7 @@ describe("Order2CheckoutRoute", () => {
                   fulfillmentDetails: {
                     phoneNumber: {
                       originalNumber: "03012345678",
-                      countryCode: "de",
+                      regionCode: "de",
                     },
                   },
                 }),

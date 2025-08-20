@@ -6,12 +6,12 @@ import {
   type ClickedImportFees,
   type ClickedVisitHelpCenter,
   type ContextModule,
-  OrderDetailsViewed,
+  type OrderDetailsViewed,
   OwnerType,
   type PageOwnerType,
 } from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import { DisplayTextsMessageTypeEnum } from "__generated__/OrderDetailsMessage_order.graphql"
+import type { DisplayTextsMessageTypeEnum } from "__generated__/OrderDetailsMessage_order.graphql"
 import { useMemo } from "react"
 import { useTracking } from "react-tracking"
 

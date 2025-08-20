@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5104f509404b7cf67915363cf912703c>>
+ * @generated SignedSource<<bf5b6101fe986dd8528e2fcd797a9303>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -204,6 +204,13 @@ return {
                     "plural": false,
                     "selections": [
                       (v2/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "type",
+                        "storageKey": null
+                      },
                       (v3/*: any*/),
                       {
                         "alias": null,
@@ -326,7 +333,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "7e29814ce6b65f315cbc8fe2853debdf",
+    "cacheID": "eb925edfca074e08be1d9d02e235c5b1",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -358,6 +365,15 @@ return {
         "me.bankAccounts.edges.node.id": (v6/*: any*/),
         "me.bankAccounts.edges.node.internalID": (v6/*: any*/),
         "me.bankAccounts.edges.node.last4": (v5/*: any*/),
+        "me.bankAccounts.edges.node.type": {
+          "enumValues": [
+            "SEPA_DEBIT",
+            "US_BANK_ACCOUNT"
+          ],
+          "nullable": false,
+          "plural": false,
+          "type": "BankAccountTypes"
+        },
         "me.creditCards": {
           "enumValues": null,
           "nullable": true,
@@ -443,7 +459,7 @@ return {
     },
     "name": "Order2PaymentFormTestQuery",
     "operationKind": "query",
-    "text": "query Order2PaymentFormTestQuery {\n  me {\n    ...Order2PaymentForm_me\n    order(id: \"order-id\") {\n      ...Order2PaymentForm_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2PaymentForm_me on Me {\n  creditCards(first: 10) {\n    edges {\n      node {\n        __typename\n        internalID\n        brand\n        lastDigits\n        id\n      }\n    }\n  }\n  bankAccounts(first: 10) {\n    edges {\n      node {\n        __typename\n        internalID\n        last4\n        id\n      }\n    }\n  }\n}\n\nfragment Order2PaymentForm_order on Order {\n  mode\n  source\n  internalID\n  itemsTotal {\n    minor\n    currencyCode\n  }\n  seller {\n    __typename\n    ... on Partner {\n      merchantAccount {\n        externalId\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n"
+    "text": "query Order2PaymentFormTestQuery {\n  me {\n    ...Order2PaymentForm_me\n    order(id: \"order-id\") {\n      ...Order2PaymentForm_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2PaymentForm_me on Me {\n  creditCards(first: 10) {\n    edges {\n      node {\n        __typename\n        internalID\n        brand\n        lastDigits\n        id\n      }\n    }\n  }\n  bankAccounts(first: 10) {\n    edges {\n      node {\n        __typename\n        type\n        internalID\n        last4\n        id\n      }\n    }\n  }\n}\n\nfragment Order2PaymentForm_order on Order {\n  mode\n  source\n  internalID\n  itemsTotal {\n    minor\n    currencyCode\n  }\n  seller {\n    __typename\n    ... on Partner {\n      merchantAccount {\n        externalId\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n"
   }
 };
 })();

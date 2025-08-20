@@ -1,20 +1,42 @@
 import { Box, Flex, Spacer, Text } from "@artsy/palette"
 import { useOrder2Tracking } from "Apps/Order2/Hooks/useOrder2Tracking"
 import { RouterLink } from "System/Components/RouterLink"
-import type { OrderDetailsMessage_order$key } from "__generated__/OrderDetailsMessage_order.graphql"
+import type { OrderDetailsMessage_me$key } from "__generated__/OrderDetailsMessage_me.graphql"
+import type {
+  OrderDetailsMessage_order$data,
+  OrderDetailsMessage_order$key,
+} from "__generated__/OrderDetailsMessage_order.graphql"
 import { graphql, useFragment } from "react-relay"
 import { WireTransferInfo } from "./WireTransferInfo"
 
 interface OrderDetailsMessageProps {
   order: OrderDetailsMessage_order$key
+  me: OrderDetailsMessage_me$key
 }
 
-export const OrderDetailsMessage = ({ order }: OrderDetailsMessageProps) => {
-  const orderData = useFragment(FRAGMENT, order)
+export const OrderDetailsMessage = ({
+  order,
+  me,
+}: OrderDetailsMessageProps) => {
+  const orderData = useFragment(ORDER_FRAGMENT, order)
+  const meData = useFragment(ME_FRAGMENT, me)
+
+  const collectorProfile = meData?.collectorProfile
+  const hasIncompleteProfile = !(
+    collectorProfile?.location?.country &&
+    collectorProfile?.isEmailConfirmed &&
+    collectorProfile?.profession &&
+    collectorProfile?.isIdentityVerified &&
+    collectorProfile?.otherRelevantPositions &&
+    collectorProfile?.bio
+  )
 
   return (
     <Box backgroundColor="mono0" px={[2, 4]} py={2}>
-      {getMessageContent(orderData)}
+      <MessageContent
+        order={orderData}
+        hasIncompleteProfile={hasIncompleteProfile}
+      />
     </Box>
   )
 }
@@ -47,7 +69,14 @@ const ContactOrdersLink: React.FC = () => (
   </RouterLink>
 )
 
-const getMessageContent = (order): React.ReactNode => {
+interface MessageContentProps {
+  order: OrderDetailsMessage_order$data
+  hasIncompleteProfile: boolean
+}
+const MessageContent = ({
+  order,
+  hasIncompleteProfile,
+}: MessageContentProps): React.ReactNode => {
   const tracking = useOrder2Tracking(order.source, order.mode)
 
   const messageType = order.displayTexts.messageType
@@ -74,6 +103,7 @@ const getMessageContent = (order): React.ReactNode => {
           <Spacer y={2} />
           <Text variant="sm">
             The gallery will confirm by <b>{formattedStateExpireTime}</b>.
+            {hasIncompleteProfile && <CompleteCollectorProfilePrompt />}
           </Text>
           <Spacer y={2} />
           <Text variant="sm">
@@ -93,6 +123,7 @@ const getMessageContent = (order): React.ReactNode => {
           <Text variant="sm">
             The gallery will respond to your offer by{" "}
             <b>{formattedStateExpireTime}</b>.
+            {hasIncompleteProfile && <CompleteCollectorProfilePrompt />}
           </Text>
           <Spacer y={2} />
           <Text variant="sm">
@@ -258,7 +289,7 @@ const getMessageContent = (order): React.ReactNode => {
         trackingURL,
         estimatedDelivery,
         estimatedDeliveryWindow,
-      } = order.deliveryInfo
+      } = order.deliveryInfo || {}
 
       const isDeliveryInfoPresent =
         shipperName ||
@@ -327,7 +358,7 @@ const getMessageContent = (order): React.ReactNode => {
           <YourCollectionNote />
         </>
       )
-    case "CANCELLED":
+    case "CANCELED":
       return (
         <Text variant="sm">
           Your order could not be processed. You can contact{" "}
@@ -378,7 +409,33 @@ const getMessageContent = (order): React.ReactNode => {
   }
 }
 
-const FRAGMENT = graphql`
+const CompleteCollectorProfilePrompt: React.FC = () => (
+  <>
+    {" "}
+    You're more likely to receive quick responses from galleries by{" "}
+    <RouterLink to="/settings/edit-profile" target="_blank" display="inline">
+      completing your profile
+    </RouterLink>
+    .
+  </>
+)
+
+const ME_FRAGMENT = graphql`
+  fragment OrderDetailsMessage_me on Me {
+    collectorProfile {
+      isEmailConfirmed
+      location {
+        country
+      }
+      profession
+      isIdentityVerified
+      otherRelevantPositions
+      bio
+    }
+  }
+`
+
+const ORDER_FRAGMENT = graphql`
   fragment OrderDetailsMessage_order on Order {
     buyerStateExpiresAt
     code

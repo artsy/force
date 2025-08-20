@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7047e2dfc575ef67af0c3398ce9e620c>>
+ * @generated SignedSource<<9609dcae6cdbb6992e8a611b50d0db3d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,10 +19,23 @@ export type OrderDetailsMessage_Test_Query$data = {
     readonly order: {
       readonly " $fragmentSpreads": FragmentRefs<"OrderDetailsMessage_order">;
     } | null | undefined;
+    readonly " $fragmentSpreads": FragmentRefs<"OrderDetailsMessage_me">;
   } | null | undefined;
 };
 export type OrderDetailsMessage_Test_Query$rawResponse = {
   readonly me: {
+    readonly collectorProfile: {
+      readonly bio: string | null | undefined;
+      readonly id: string;
+      readonly isEmailConfirmed: boolean | null | undefined;
+      readonly isIdentityVerified: boolean | null | undefined;
+      readonly location: {
+        readonly country: string | null | undefined;
+        readonly id: string;
+      } | null | undefined;
+      readonly otherRelevantPositions: string | null | undefined;
+      readonly profession: string | null | undefined;
+    } | null | undefined;
     readonly id: string;
     readonly order: {
       readonly buyerStateExpiresAt: string | null | undefined;
@@ -83,6 +96,11 @@ return {
         "plural": false,
         "selections": [
           {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "OrderDetailsMessage_me"
+          },
+          {
             "alias": null,
             "args": (v0/*: any*/),
             "concreteType": "Order",
@@ -119,6 +137,72 @@ return {
         "name": "me",
         "plural": false,
         "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "CollectorProfileType",
+            "kind": "LinkedField",
+            "name": "collectorProfile",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "isEmailConfirmed",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "MyLocation",
+                "kind": "LinkedField",
+                "name": "location",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "country",
+                    "storageKey": null
+                  },
+                  (v1/*: any*/)
+                ],
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "profession",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "isIdentityVerified",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "otherRelevantPositions",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "bio",
+                "storageKey": null
+              },
+              (v1/*: any*/)
+            ],
+            "storageKey": null
+          },
           {
             "alias": null,
             "args": (v0/*: any*/),
@@ -251,16 +335,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "17dcfd3f52807eb11baff2aaeb14948b",
+    "cacheID": "aee1889e76b6518c6183211df95ecd92",
     "id": null,
     "metadata": {},
     "name": "OrderDetailsMessage_Test_Query",
     "operationKind": "query",
-    "text": "query OrderDetailsMessage_Test_Query {\n  me {\n    order(id: \"123\") {\n      ...OrderDetailsMessage_order\n      id\n    }\n    id\n  }\n}\n\nfragment OrderDetailsMessage_order on Order {\n  buyerStateExpiresAt\n  code\n  currencyCode\n  internalID\n  impulseConversationId\n  displayTexts {\n    messageType\n  }\n  deliveryInfo {\n    shipperName\n    trackingNumber\n    trackingURL\n    estimatedDelivery\n    estimatedDeliveryWindow\n  }\n  source\n  mode\n}\n"
+    "text": "query OrderDetailsMessage_Test_Query {\n  me {\n    ...OrderDetailsMessage_me\n    order(id: \"123\") {\n      ...OrderDetailsMessage_order\n      id\n    }\n    id\n  }\n}\n\nfragment OrderDetailsMessage_me on Me {\n  collectorProfile {\n    isEmailConfirmed\n    location {\n      country\n      id\n    }\n    profession\n    isIdentityVerified\n    otherRelevantPositions\n    bio\n    id\n  }\n}\n\nfragment OrderDetailsMessage_order on Order {\n  buyerStateExpiresAt\n  code\n  currencyCode\n  internalID\n  impulseConversationId\n  displayTexts {\n    messageType\n  }\n  deliveryInfo {\n    shipperName\n    trackingNumber\n    trackingURL\n    estimatedDelivery\n    estimatedDeliveryWindow\n  }\n  source\n  mode\n}\n"
   }
 };
 })();
 
-(node as any).hash = "3879b532a58c08ce6ca29e42c604e0eb";
+(node as any).hash = "0a14ae201f82b56b120730a0afa9f4f8";
 
 export default node;
