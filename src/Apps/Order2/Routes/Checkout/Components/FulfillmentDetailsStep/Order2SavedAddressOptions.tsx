@@ -107,7 +107,7 @@ export const SavedAddressOptions = ({
               loading={isSubmitting}
               onClick={() => handleSubmit()}
             >
-              Add Address
+              Save Address
             </Button>
             <Spacer y={1} />
             <Button
@@ -273,7 +273,7 @@ export const SavedAddressOptions = ({
       <Spacer y={2} />
       <Clickable onClick={() => setUserAddressMode({ mode: "add" })}>
         <Text>
-          <AddIcon display="inline-block" py="4px" />
+          <AddIcon display="inline-block" top="2px" height="18px" />
           Add new address
         </Text>
       </Clickable>
