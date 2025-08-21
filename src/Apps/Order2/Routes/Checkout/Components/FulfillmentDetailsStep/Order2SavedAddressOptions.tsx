@@ -178,7 +178,7 @@ export const SavedAddressOptions = ({
               position="absolute"
               top={2}
               right={2}
-              onClick={async e => {
+              onClick={async () => {
                 setUserAddressMode({
                   mode: "edit",
                   address: processedAddress,
