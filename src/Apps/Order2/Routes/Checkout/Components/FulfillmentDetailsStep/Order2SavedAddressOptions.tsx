@@ -70,6 +70,16 @@ export const SavedAddressOptions = ({
                 },
               },
             })
+
+            if (result.updateUserAddress?.userAddressOrErrors?.internalID) {
+              await onSelectAddress(values)
+              setSelectedAddressID(
+                result.updateUserAddress?.userAddressOrErrors.internalID,
+              )
+              setUserAddressMode(null)
+              return
+            }
+
             if (result.updateUserAddress?.userAddressOrErrors?.errors) {
               throw new Error(
                 `Failed to update address: ${JSON.stringify(
@@ -77,12 +87,7 @@ export const SavedAddressOptions = ({
                 )}`,
               )
             }
-
-            await onSelectAddress(values)
-            setSelectedAddressID(
-              result.updateUserAddress?.userAddressOrErrors.internalID!,
-            )
-            setUserAddressMode(null)
+            throw new Error("Failed to update address: Unknown error")
           } catch (error) {
             logger.error("Error updating address:", error)
           }

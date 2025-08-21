@@ -1,11 +1,11 @@
-import {
-  normalizeAddress,
-  countryNameFromAlpha2,
-  processSavedAddresses,
-  findInitialSelectedAddress,
-  type ProcessedUserAddress,
-} from "../utils"
 import type { FormikContextWithAddress } from "Components/Address/AddressFormFields"
+import {
+  type ProcessedUserAddress,
+  countryNameFromAlpha2,
+  findInitialSelectedAddress,
+  normalizeAddress,
+  processSavedAddresses,
+} from "../utils"
 
 describe("FulfillmentDetailsStep utils", () => {
   describe("normalizeAddress", () => {
@@ -52,7 +52,7 @@ describe("FulfillmentDetailsStep utils", () => {
         country: "US",
         phoneNumber: null,
         phoneNumberCountryCode: null,
-      } as any
+      }
 
       const result = normalizeAddress(gravityAddress)
 
