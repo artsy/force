@@ -94,6 +94,25 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
     [orderData, locationBasedInitialValues],
   )
 
+  // Initial values for creating a new address - only location defaults, no saved order data
+  const newAddressInitialValues: FormikContextWithAddress = useMemo(
+    () => ({
+      address: {
+        name: "",
+        country: locationBasedInitialValues.selectedCountry || "",
+        postalCode: "",
+        addressLine1: "",
+        addressLine2: "",
+        city: "",
+        region: "",
+      },
+      phoneNumber: "",
+      phoneNumberCountryCode:
+        locationBasedInitialValues.phoneNumberCountryCode || "",
+    }),
+    [locationBasedInitialValues],
+  )
+
   const processedAddresses = useMemo(() => {
     return processSavedAddresses(
       addressConnection,
@@ -213,6 +232,7 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
               <SavedAddressOptions
                 savedAddresses={processedAddresses}
                 initialSelectedAddress={initialSelectedAddress}
+                newAddressInitialValues={newAddressInitialValues}
                 onSelectAddress={async values => {
                   await formikContext.setValues(values)
                 }}

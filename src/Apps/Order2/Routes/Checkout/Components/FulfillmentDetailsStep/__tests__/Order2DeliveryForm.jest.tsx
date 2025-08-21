@@ -1025,5 +1025,158 @@ describe("Order2DeliveryForm", () => {
       expect(screen.getByDisplayValue("10001")).toBeInTheDocument()
       expect(screen.getByDisplayValue("5551234567")).toBeInTheDocument()
     })
+
+    it("shows add new address button", async () => {
+      renderWithRelay({
+        Me: () => ({
+          ...baseMeProps,
+          order: {
+            ...baseOrderProps,
+          },
+        }),
+      })
+
+      await waitFor(() => {
+        expect(screen.getByText("Delivery address")).toBeInTheDocument()
+      })
+
+      expect(screen.getByText("Add new address")).toBeInTheDocument()
+    })
+
+    it("switches to add mode when add new address button is clicked", async () => {
+      const mockSetUserAddressMode = jest.fn()
+      mockCheckoutContext.setUserAddressMode = mockSetUserAddressMode
+
+      renderWithRelay({
+        Me: () => ({
+          ...baseMeProps,
+          order: {
+            ...baseOrderProps,
+          },
+        }),
+      })
+
+      await waitFor(() => {
+        expect(screen.getByText("Delivery address")).toBeInTheDocument()
+      })
+
+      await userEvent.click(screen.getByText("Add new address"))
+
+      expect(mockSetUserAddressMode).toHaveBeenCalledWith({
+        mode: "add",
+      })
+    })
+
+    it("shows add address form when in add mode", async () => {
+      mockCheckoutContext.userAddressMode = {
+        mode: "add",
+      }
+
+      renderWithRelay({
+        Me: () => ({
+          ...baseMeProps,
+          order: {
+            ...baseOrderProps,
+          },
+        }),
+      })
+
+      await waitFor(() => {
+        expect(screen.getByText("Delivery address")).toBeInTheDocument()
+      })
+
+      expect(screen.getByText("Add Address")).toBeInTheDocument()
+      expect(screen.getByText("Cancel")).toBeInTheDocument()
+
+      // Verify form fields are present with empty values (except potential location defaults)
+      expect(screen.getByPlaceholderText("Add full name")).toBeInTheDocument()
+      expect(screen.getByLabelText("Street address")).toBeInTheDocument()
+      expect(screen.getByLabelText("City")).toBeInTheDocument()
+      expect(
+        screen.getByLabelText("State, region or province"),
+      ).toBeInTheDocument()
+      expect(screen.getByLabelText("ZIP/Postal code")).toBeInTheDocument()
+      expect(
+        screen.getByTestId("addressFormFields.country"),
+      ).toBeInTheDocument()
+    })
+
+    it("cancels add mode when cancel button is clicked", async () => {
+      const mockSetUserAddressMode = jest.fn()
+      mockCheckoutContext.setUserAddressMode = mockSetUserAddressMode
+      mockCheckoutContext.userAddressMode = {
+        mode: "add",
+      }
+
+      renderWithRelay({
+        Me: () => ({
+          ...baseMeProps,
+          order: {
+            ...baseOrderProps,
+          },
+        }),
+      })
+
+      await waitFor(() => {
+        expect(screen.getByText("Add Address")).toBeInTheDocument()
+      })
+
+      await userEvent.click(screen.getByText("Cancel"))
+
+      expect(mockSetUserAddressMode).toHaveBeenCalledWith(null)
+    })
+
+    it("shows appropriate button text for add vs edit modes", async () => {
+      // Test add mode
+      mockCheckoutContext.userAddressMode = {
+        mode: "add",
+      }
+
+      renderWithRelay({
+        Me: () => ({
+          ...baseMeProps,
+          order: {
+            ...baseOrderProps,
+          },
+        }),
+      })
+
+      await waitFor(() => {
+        expect(screen.getByText("Add Address")).toBeInTheDocument()
+      })
+
+      // Clean up and test edit mode separately
+      mockCheckoutContext.userAddressMode = {
+        mode: "edit",
+        address: {
+          internalID: "address-1",
+          isValid: true,
+          phoneNumber: "5551234567",
+          phoneNumberCountryCode: "us",
+          address: {
+            name: "John Doe",
+            addressLine1: "123 Main St",
+            addressLine2: "Apt 4",
+            city: "New York",
+            region: "NY",
+            postalCode: "10001",
+            country: "US",
+          },
+        },
+      }
+
+      renderWithRelay({
+        Me: () => ({
+          ...baseMeProps,
+          order: {
+            ...baseOrderProps,
+          },
+        }),
+      })
+
+      await waitFor(() => {
+        expect(screen.getByText("Save Address")).toBeInTheDocument()
+      })
+    })
   })
 })
