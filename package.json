@@ -75,7 +75,7 @@
     "@artsy/icons": "3.49.0",
     "@artsy/img": "1.0.3",
     "@artsy/multienv": "^1.2.0",
-    "@artsy/palette": "^44.0.0",
+    "@artsy/palette": "^44.0.1",
     "@artsy/palette-charts": "42.4.0",
     "@artsy/palette-tokens": "7.1.0",
     "@artsy/react-html-parser": "^3.0.2",
