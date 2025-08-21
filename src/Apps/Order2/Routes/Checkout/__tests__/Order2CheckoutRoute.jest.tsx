@@ -1256,6 +1256,110 @@ describe("Order2CheckoutRoute", () => {
           shippingName: "John Doe",
         })
       })
+
+      it("allows the user to edit a saved address", async () => {
+        const props = {
+          ...baseProps,
+          me: {
+            ...baseProps.me,
+            order: {
+              ...baseProps.me.order,
+              availableShippingCountries: ["US", "DE"],
+              fulfillmentOptions: [
+                {
+                  type: "DOMESTIC_FLAT",
+                },
+              ],
+              fulfillmentDetails: null,
+              selectedFulfillmentOption: null,
+            },
+            creditCards: {
+              edges: [],
+            },
+            addressConnection: {
+              edges: [
+                {
+                  node: {
+                    internalID: "address-1",
+                    name: "John Doe",
+                    addressLine1: "123 Main St",
+                    addressLine2: "Apt 4",
+                    city: "New York",
+                    region: "NY",
+                    postalCode: "10001",
+                    country: "US",
+                    phoneNumber: "5551234567",
+                    phoneNumberCountryCode: "us",
+                  },
+                },
+              ],
+            },
+          },
+        }
+
+        const { mockResolveLastOperation } = renderWithRelay({
+          Viewer: () => props,
+        })
+        await helpers.waitForLoadingComplete()
+        await waitFor(() => {
+          expect(screen.getByText("Delivery address")).toBeInTheDocument()
+        })
+
+        // Click edit button on saved address
+        const editButtons = screen.getAllByText("Edit")
+        await userEvent.click(editButtons[0])
+
+        // Verify edit form is shown
+        await waitFor(() => {
+          expect(screen.getByText("Save Address")).toBeInTheDocument()
+          expect(screen.getByText("Cancel")).toBeInTheDocument()
+        })
+
+        // Verify form fields are pre-populated
+        expect(screen.getByDisplayValue("John Doe")).toBeInTheDocument()
+        expect(screen.getByDisplayValue("123 Main St")).toBeInTheDocument()
+        expect(screen.getByDisplayValue("Apt 4")).toBeInTheDocument()
+        expect(screen.getByDisplayValue("New York")).toBeInTheDocument()
+        expect(screen.getByDisplayValue("NY")).toBeInTheDocument()
+        expect(screen.getByDisplayValue("10001")).toBeInTheDocument()
+        expect(screen.getByDisplayValue("5551234567")).toBeInTheDocument()
+
+        // Modify the name field
+        const nameField = screen.getByDisplayValue("John Doe")
+        await userEvent.clear(nameField)
+        await userEvent.type(nameField, "John Smith")
+
+        // Save the address
+        await userEvent.click(screen.getByText("Save Address"))
+
+        // Mock the address update mutation
+        await act(async () => {
+          await waitFor(() => {
+            mockResolveLastOperation({
+              UpdateUserAddressPayload: () => ({
+                userAddressOrErrors: {
+                  internalID: "address-1",
+                  name: "John Smith",
+                  addressLine1: "123 Main St",
+                  addressLine2: "Apt 4",
+                  city: "New York",
+                  region: "NY",
+                  postalCode: "10001",
+                  country: "US",
+                  phoneNumber: "5551234567",
+                  phoneNumberCountryCode: "us",
+                },
+              }),
+            })
+          })
+          await flushPromiseQueue()
+        })
+
+        // Verify we're back to the address selection view
+        await waitFor(() => {
+          expect(screen.getByText("See Shipping Methods")).toBeInTheDocument()
+        })
+      })
     })
   })
 

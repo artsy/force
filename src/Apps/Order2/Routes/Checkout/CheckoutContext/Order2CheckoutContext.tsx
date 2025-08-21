@@ -3,6 +3,7 @@ import type {
   CheckoutStep,
   ExpressCheckoutPaymentMethod,
   FulfillmentDetailsTab,
+  UserAddressMode,
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import {
   CheckoutStepName,
@@ -80,6 +81,7 @@ export interface Order2CheckoutModel {
   savePaymentMethod: boolean
   savedPaymentMethod: SavedCreditCard | SavedBankAccount | null
   checkoutMode: CheckoutMode
+  userAddressMode: UserAddressMode | null
 
   // External data - passed in as runtime props
   checkoutTracking: ReturnType<typeof useCheckoutTracking>
@@ -115,6 +117,7 @@ export interface Order2CheckoutModel {
   >
   redirectToOrderDetails: Action<this>
   setCheckoutMode: Action<this, CheckoutMode>
+  setUserAddressMode: Action<this, UserAddressMode | null>
 }
 
 export const Order2CheckoutContext: ReturnType<
@@ -131,6 +134,7 @@ export const Order2CheckoutContext: ReturnType<
   savedPaymentMethod: null,
   checkoutMode: "standard",
   steps: [],
+  userAddressMode: null,
 
   // Required runtime props - will be provided by Provider
   // These will be overridden by the Provider with actual values
@@ -189,6 +193,10 @@ export const Order2CheckoutContext: ReturnType<
   setCheckoutMode: action((state, mode) => {
     setStorageValue(CHECKOUT_MODE_STORAGE_KEY, mode)
     state.checkoutMode = mode
+  }),
+
+  setUserAddressMode: action((state, userAddressMode) => {
+    state.userAddressMode = userAddressMode
   }),
 
   setFulfillmentDetailsComplete: action((state, args) => {

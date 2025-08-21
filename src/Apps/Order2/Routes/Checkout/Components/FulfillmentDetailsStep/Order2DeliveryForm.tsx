@@ -8,6 +8,7 @@ import {
 import { SavedAddressOptions } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/Order2SavedAddressOptions"
 import { handleError } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/handleError"
 import {
+  deliveryAddressValidationSchema,
   findInitialSelectedAddress,
   processSavedAddresses,
 } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/utils"
@@ -19,7 +20,6 @@ import { getShippableCountries as getShippableCountryData } from "Apps/Order2/Ut
 import {
   AddressFormFields,
   type FormikContextWithAddress,
-  addressFormFieldsValidator,
 } from "Components/Address/AddressFormFields"
 import { sortCountriesForCountryInput } from "Components/Address/utils/sortCountriesForCountryInput"
 import { useInitialLocationValues } from "Components/Address/utils/useInitialLocationValues"
@@ -28,16 +28,11 @@ import type { Order2DeliveryForm_order$key } from "__generated__/Order2DeliveryF
 import { Formik, type FormikHelpers } from "formik"
 import { useCallback, useMemo } from "react"
 import { graphql, useFragment } from "react-relay"
-import * as yup from "yup"
 
 interface Order2DeliveryFormProps {
   order: Order2DeliveryForm_order$key
   me: Order2DeliveryForm_me$key
 }
-
-const validationSchema = yup
-  .object()
-  .shape(addressFormFieldsValidator({ withPhoneNumber: true }))
 
 export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
   order,
@@ -63,48 +58,40 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
 
   const checkoutContext = useCheckoutContext()
 
-  const { setCheckoutMode, checkoutTracking, setFulfillmentDetailsComplete } =
-    checkoutContext
+  const {
+    setCheckoutMode,
+    checkoutTracking,
+    setFulfillmentDetailsComplete,
+    setUserAddressMode,
+  } = checkoutContext
+
   const updateShippingAddressMutation =
     useOrder2SetOrderDeliveryAddressMutation()
   const unsetOrderFulfillmentOption =
     useOrder2UnsetOrderFulfillmentOptionMutation()
 
-  const fulfillmentDetails = orderData.fulfillmentDetails || {
-    addressLine1: "",
-    addressLine2: "",
-    city: "",
-    region: "",
-    postalCode: "",
-    country: "",
-    name: "",
-    phoneNumber: {
-      regionCode: "",
-      originalNumber: "",
-    },
-  }
-
   const initialBlankValues: FormikContextWithAddress = useMemo(
     () => ({
       address: {
-        name: fulfillmentDetails.name || "",
+        name: orderData.fulfillmentDetails?.name || "",
         country:
-          fulfillmentDetails.country ||
+          orderData.fulfillmentDetails?.country ||
           locationBasedInitialValues.selectedCountry ||
           "",
-        postalCode: fulfillmentDetails.postalCode || "",
-        addressLine1: fulfillmentDetails.addressLine1 || "",
-        addressLine2: fulfillmentDetails.addressLine2 || "",
-        city: fulfillmentDetails.city || "",
-        region: fulfillmentDetails.region || "",
+        postalCode: orderData.fulfillmentDetails?.postalCode || "",
+        addressLine1: orderData.fulfillmentDetails?.addressLine1 || "",
+        addressLine2: orderData.fulfillmentDetails?.addressLine2 || "",
+        city: orderData.fulfillmentDetails?.city || "",
+        region: orderData.fulfillmentDetails?.region || "",
       },
-      phoneNumber: fulfillmentDetails.phoneNumber?.originalNumber || "",
+      phoneNumber:
+        orderData.fulfillmentDetails?.phoneNumber?.originalNumber || "",
       phoneNumberCountryCode:
-        fulfillmentDetails.phoneNumber?.regionCode ||
+        orderData.fulfillmentDetails?.phoneNumber?.regionCode ||
         locationBasedInitialValues.phoneNumberCountryCode ||
         "",
     }),
-    [fulfillmentDetails, locationBasedInitialValues],
+    [orderData, locationBasedInitialValues],
   )
 
   const processedAddresses = useMemo(() => {
@@ -119,6 +106,7 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
   const initialSelectedAddress = useMemo(() => {
     return findInitialSelectedAddress(processedAddresses, initialBlankValues)
   }, [initialBlankValues, processedAddresses])
+
   const onSubmit = useCallback(
     async (
       values: FormikContextWithAddress,
@@ -172,6 +160,7 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
 
         formikHelpers.setStatus({ errorBanner: null })
         setFulfillmentDetailsComplete({}) // TODO: Clean up signature
+        setUserAddressMode(null)
       } catch (error) {
         handleError(error, formikHelpers, {
           title: "An error occurred",
@@ -192,6 +181,7 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
       unsetOrderFulfillmentOption,
       orderData.selectedFulfillmentOption?.type,
       setCheckoutMode,
+      setUserAddressMode,
     ],
   )
   return (
@@ -208,7 +198,7 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
       <Formik
         initialValues={initialSelectedAddress || initialBlankValues}
         enableReinitialize={true}
-        validationSchema={validationSchema}
+        validationSchema={deliveryAddressValidationSchema}
         onSubmit={onSubmit}
       >
         {formikContext => (
@@ -223,22 +213,28 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
               <SavedAddressOptions
                 savedAddresses={processedAddresses}
                 initialSelectedAddress={initialSelectedAddress}
+                onSelectAddress={async values => {
+                  await formikContext.setValues(values)
+                }}
               />
             ) : (
-              <AddressFormFields
-                withPhoneNumber
-                shippableCountries={shippableCountries}
-              />
+              <>
+                <AddressFormFields
+                  withPhoneNumber
+                  shippableCountries={shippableCountries}
+                />
+                <Spacer y={4} />
+
+                <Button
+                  type="submit"
+                  loading={formikContext.isSubmitting}
+                  onClick={() => formikContext.handleSubmit()}
+                >
+                  {/* TODO: This would not apply for flat shipping */}
+                  See Shipping Methods
+                </Button>
+              </>
             )}
-            <Spacer y={4} />
-            <Button
-              type="submit"
-              loading={formikContext.isSubmitting}
-              onClick={() => formikContext.handleSubmit()}
-            >
-              {/* TODO: This would not apply for flat shipping */}
-              See Shipping Methods
-            </Button>
           </Flex>
         )}
       </Formik>
