@@ -1,5 +1,5 @@
 import { ContextModule } from "@artsy/cohesion"
-import { Column, GridColumns, Input, PhoneInput, Select } from "@artsy/palette"
+import { Column, GridColumns, Input, Select, SelectInput } from "@artsy/palette"
 import { AddressAutocompleteInput } from "Components/Address/AddressAutocompleteInput"
 import {
   type Address,
@@ -289,8 +289,9 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
       )}
       {phoneInputType === "rich" && (
         <Column span={12}>
-          <PhoneInput
+          <SelectInput
             key={`phone-input-${values.phoneNumberCountryCode || "empty"}`}
+            label="Phone number"
             // mt required to match spacing for other text inputs
             mt={1}
             name="phoneNumber"
@@ -310,6 +311,7 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
               (touched.phoneNumberCountryCode &&
                 (errors.phoneNumberCountryCode as string | undefined))
             }
+            enableSearch
             required
           />
         </Column>

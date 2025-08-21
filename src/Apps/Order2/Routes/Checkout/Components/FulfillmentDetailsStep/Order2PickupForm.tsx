@@ -3,7 +3,7 @@ import {
   Button,
   Column,
   GridColumns,
-  PhoneInput,
+  SelectInput,
   Spacer,
   Text,
 } from "@artsy/palette"
@@ -159,7 +159,8 @@ export const Order2PickupForm: React.FC<Order2PickupFormProps> = ({
         {formikContext => (
           <GridColumns data-testid={"PickupDetailsForm"}>
             <Column span={12}>
-              <PhoneInput
+              <SelectInput
+                label="Phone number"
                 mt={1}
                 name="phoneNumber"
                 onChange={formikContext.handleChange}
@@ -185,6 +186,7 @@ export const Order2PickupForm: React.FC<Order2PickupFormProps> = ({
                   (formikContext.touched.phoneNumber &&
                     (formikContext.errors.phoneNumber as string | undefined))
                 }
+                enableSearch
                 required
               />
               <Spacer y={4} />
