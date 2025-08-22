@@ -1,4 +1,4 @@
-import { Box, type BoxProps, Input, PhoneInput } from "@artsy/palette"
+import { Box, type BoxProps, Input, SelectInput } from "@artsy/palette"
 import { countries } from "Utils/countries"
 import type { ContactInformationForm_me$data } from "__generated__/ContactInformationForm_me.graphql"
 import { useFormikContext } from "formik"
@@ -44,7 +44,8 @@ export const ContactInformationForm: React.FC<
         onBlur={handleBlur}
         error={touched.email && errors.email}
       />
-      <PhoneInput
+      <SelectInput
+        label="Phone number"
         options={countries}
         onSelect={option => {
           setFieldValue("phoneNumberCountryCode", option.value)
@@ -56,6 +57,7 @@ export const ContactInformationForm: React.FC<
         dropdownValue={values.phoneNumberCountryCode}
         inputValue={values.phoneNumber}
         placeholder="(000) 000 0000"
+        enableSearch
         required
         error={
           (touched.phoneNumberCountryCode && errors.phoneNumberCountryCode) ||

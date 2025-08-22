@@ -172,6 +172,7 @@ export const SettingsEditSettingsInformation: React.FC<
                 autoComplete="email"
               />
 
+              {/* FIXME: Replace with SelectInput from palette and delete 1-off component */}
               <PhoneNumberInput
                 title="Mobile Number"
                 mt={4}

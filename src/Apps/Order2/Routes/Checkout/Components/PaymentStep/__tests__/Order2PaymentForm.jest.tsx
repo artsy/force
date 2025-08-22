@@ -54,6 +54,20 @@ jest.mock("@stripe/react-stripe-js", () => {
         >
           Mock ACH
         </button>
+        <button
+          type="button"
+          data-testid="mock-sepa"
+          onClick={() => {
+            const changeEvent = {
+              elementType: "payment",
+              collapsed: false,
+              value: { type: "sepa_debit" },
+            }
+            onChange(changeEvent)
+          }}
+        >
+          Mock SEPA
+        </button>
       </div>
     )
   })
@@ -282,15 +296,6 @@ describe("Order2PaymentForm", () => {
         setupFutureUsage: "off_session",
         mode: "payment",
       })
-
-      // Should track payment method selection
-      expect(
-        mockCheckoutContext.checkoutTracking.clickedPaymentMethod,
-      ).toHaveBeenCalledWith({
-        paymentMethod: "CREDIT_CARD",
-        amountMinor: 100000,
-        currency: "USD",
-      })
     })
 
     it("updates Stripe's captureMethod and setupFutureUsage when selecting ACH", async () => {
@@ -361,12 +366,65 @@ describe("Order2PaymentForm", () => {
         setupFutureUsage: "off_session",
         mode: "payment",
       })
+    })
+  })
 
-      // Should track payment method selection for credit card
+  describe("payment method tracking", () => {
+    it("tracks payment method selection for credit card", async () => {
+      renderPaymentForm()
+      await waitForPaymentElement()
+
+      await userEvent.click(screen.getByTestId("mock-credit-card"))
+
       expect(
         mockCheckoutContext.checkoutTracking.clickedPaymentMethod,
       ).toHaveBeenCalledWith({
         paymentMethod: "CREDIT_CARD",
+        amountMinor: 100000,
+        currency: "USD",
+      })
+    })
+
+    it("tracks payment method selection for ACH", async () => {
+      renderPaymentForm()
+      await waitForPaymentElement()
+
+      await userEvent.click(screen.getByTestId("mock-ach"))
+
+      expect(
+        mockCheckoutContext.checkoutTracking.clickedPaymentMethod,
+      ).toHaveBeenCalledWith({
+        paymentMethod: "US_BANK_ACCOUNT",
+        amountMinor: 100000,
+        currency: "USD",
+      })
+    })
+
+    it("tracks payment method selection for wire transfer", async () => {
+      renderPaymentForm()
+      await waitForPaymentElement()
+
+      await userEvent.click(screen.getByTestId("PaymentFormWire"))
+
+      expect(
+        mockCheckoutContext.checkoutTracking.clickedPaymentMethod,
+      ).toHaveBeenCalledWith({
+        paymentMethod: "WIRE_TRANSFER",
+        amountMinor: 100000,
+        currency: "USD",
+      })
+    })
+
+    it("tracks payment method selection for SEPA", async () => {
+      renderPaymentForm()
+      await waitForPaymentElement()
+
+      await userEvent.click(screen.getByTestId("mock-sepa"))
+
+      expect(
+        mockCheckoutContext.checkoutTracking.clickedPaymentMethod,
+      ).toHaveBeenCalledWith({
+        paymentMethod: "SEPA_DEBIT",
         amountMinor: 100000,
         currency: "USD",
       })
@@ -396,6 +454,99 @@ describe("Order2PaymentForm", () => {
       expect(
         mockCheckoutContext.checkoutTracking.savedPaymentMethodViewed,
       ).toHaveBeenCalledWith(["CREDIT_CARD"])
+    })
+
+    it("tracks payment method selection for saved credit card", async () => {
+      const savedCards = [
+        {
+          id: "card-1",
+          internalID: "card-1",
+          brand: "Visa",
+          last4: "1234",
+          lastDigits: "1234",
+        },
+      ]
+
+      renderWithRelay({
+        Me: () => ({
+          ...baseMeProps,
+          creditCards: { edges: savedCards.map(card => ({ node: card })) },
+        }),
+      })
+
+      await waitFor(() => {
+        expect(screen.getByTestId("payment-element")).toBeInTheDocument()
+      })
+
+      const savedPaymentsText = screen.getByText("Saved payments")
+      await userEvent.click(savedPaymentsText)
+
+      expect(
+        mockCheckoutContext.checkoutTracking.clickedPaymentMethod,
+      ).toHaveBeenCalledWith({
+        paymentMethod: "SAVED_CREDIT_CARD",
+        amountMinor: 100000,
+        currency: "USD",
+      })
+    })
+
+    it("tracks initial saved payment method viewed with both credit cards and bank accounts", async () => {
+      const savedCards = [
+        {
+          id: "card-1",
+          brand: "Visa",
+          last4: "1234",
+        },
+      ]
+
+      const savedBankAccounts = [
+        {
+          id: "bank-1",
+          last4: "5678",
+          bankName: "Test Bank",
+        },
+      ]
+
+      renderWithRelay({
+        Me: () => ({
+          ...baseMeProps,
+          creditCards: { edges: savedCards.map(card => ({ node: card })) },
+          bankAccounts: {
+            edges: savedBankAccounts.map(bank => ({ node: bank })),
+          },
+        }),
+      })
+
+      await waitFor(() => {
+        expect(screen.getByTestId("payment-element")).toBeInTheDocument()
+      })
+
+      expect(
+        mockCheckoutContext.checkoutTracking.savedPaymentMethodViewed,
+      ).toHaveBeenCalledWith(["CREDIT_CARD"])
+    })
+
+    it("tracks order progression when submitting payment", async () => {
+      const tokenId = "test-token-id"
+
+      renderPaymentForm()
+      await waitForPaymentElement()
+
+      await userEvent.click(screen.getByTestId("mock-credit-card"))
+
+      setupStripeSubmission(tokenId)
+      mockFetchQuery.mockImplementationOnce(() =>
+        createConfirmationTokenResponse(MOCK_CARD_PREVIEW),
+      )
+      mockSetPaymentMutation.submitMutation.mockResolvedValueOnce(
+        MOCK_ORDER_SUCCESS("CREDIT_CARD", tokenId),
+      )
+
+      await userEvent.click(screen.getByText("Continue to Review"))
+
+      expect(
+        mockCheckoutContext.checkoutTracking.clickedOrderProgression,
+      ).toHaveBeenCalledWith("ordersPayment")
     })
   })
 

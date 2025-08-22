@@ -1,8 +1,12 @@
-import type { FormikContextWithAddress } from "Components/Address/AddressFormFields"
+import {
+  type FormikContextWithAddress,
+  addressFormFieldsValidator,
+} from "Components/Address/AddressFormFields"
 import { COUNTRY_CODE_TO_COUNTRY_NAME } from "Components/CountrySelect"
 import { extractNodes } from "Utils/extractNodes"
 import type { ExtractNodeType } from "Utils/typeSupport"
 import type { Order2DeliveryForm_me$data } from "__generated__/Order2DeliveryForm_me.graphql"
+import * as yup from "yup"
 
 type MeAddresses = ExtractNodeType<
   NonNullable<Order2DeliveryForm_me$data>["addressConnection"]
@@ -75,3 +79,7 @@ export const findInitialSelectedAddress = (
     }) || processedAddresses.find(processedAddress => processedAddress.isValid)
   )
 }
+
+export const deliveryAddressValidationSchema = yup
+  .object()
+  .shape(addressFormFieldsValidator({ withPhoneNumber: true }))

@@ -6,7 +6,7 @@ import {
   Input,
   Message,
   ModalDialog,
-  PhoneInput,
+  SelectInput,
   VisuallyHidden,
   useToasts,
 } from "@artsy/palette"
@@ -303,7 +303,8 @@ export const SettingsShippingAddressForm: FC<
                 </Column>
 
                 <Column span={12}>
-                  <PhoneInput
+                  <SelectInput
+                    label="Phone number"
                     options={countries}
                     onSelect={option => {
                       setFieldValue(
@@ -317,6 +318,7 @@ export const SettingsShippingAddressForm: FC<
                     dropdownValue={values.attributes.phoneNumberCountryCode}
                     inputValue={values.attributes.phoneNumber}
                     placeholder="(000) 000 0000"
+                    enableSearch
                     required
                     error={
                       (touched.attributes?.phoneNumberCountryCode &&
