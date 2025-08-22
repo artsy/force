@@ -1,4 +1,5 @@
 import { ContextModule } from "@artsy/cohesion"
+import HomeIcon from "@artsy/icons/HomeIcon"
 import InfoIcon from "@artsy/icons/InfoIcon"
 import LockIcon from "@artsy/icons/LockIcon"
 import ReceiptIcon from "@artsy/icons/ReceiptIcon"
@@ -40,8 +41,8 @@ import {
 } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useOrder2SetOrderPaymentMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderPaymentMutation"
-import { preventHardReload } from "Apps/Order2/Utils/navigationGuards"
 import { fetchAndSetConfirmationToken } from "Apps/Order2/Utils/confirmationTokenUtils"
+import { preventHardReload } from "Apps/Order2/Utils/navigationGuards"
 import { CreateBankDebitSetupForOrder } from "Components/BankDebitForm/Mutations/CreateBankDebitSetupForOrder"
 import { type Brand, BrandCreditCardIcon } from "Components/BrandCreditCardIcon"
 import { FadeInBox } from "Components/FadeInBox"
@@ -60,7 +61,6 @@ import type {
 import type React from "react"
 import { useEffect, useState } from "react"
 import { graphql, useFragment, useRelayEnvironment } from "react-relay"
-import HomeIcon from "@artsy/icons/HomeIcon"
 
 const logger = createLogger("Order2PaymentForm")
 const defaultErrorMessage = (
@@ -225,63 +225,84 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
 
   const onChange = (event: StripePaymentElementChangeEvent) => {
     const { elementType, collapsed, value } = event
-    logger.warn("PaymentElement onChange event", {
-      event,
-    })
-    if (elementType === "payment" && !collapsed) {
-      if (value.type === "card") {
-        elements.update({
-          captureMethod: "manual",
-          setupFutureUsage: "off_session",
-          mode: "payment",
-        })
-        // Only track this the first time it happens
-        if (selectedPaymentMethod !== "stripe-card") {
-          checkoutTracking.clickedPaymentMethod({
-            paymentMethod: "CREDIT_CARD",
-            amountMinor: order.itemsTotal?.minor,
-            currency: order.itemsTotal?.currencyCode ?? "",
-          })
-        }
-        setSelectedPaymentMethod("stripe-card")
-      } else if (value.type === "sepa_debit") {
-        elements.update({
-          captureMethod: "automatic",
-          setupFutureUsage: null,
-          mode: "setup",
-          payment_method_types: ["sepa_debit"],
-        })
-        setSelectedPaymentMethod("stripe-sepa")
-      } else if (value.type === "us_bank_account") {
-        elements.update({
-          captureMethod: "automatic",
-          setupFutureUsage: null,
-          mode: "setup",
-          payment_method_types: ["us_bank_account"],
-        })
-        setSelectedPaymentMethod("stripe-ach")
-      }
+    logger.warn("PaymentElement onChange event", { event })
+
+    if (elementType !== "payment" || collapsed) {
+      return
+    }
+
+    switch (value.type) {
+      case "card":
+        handleCardPaymentSelect()
+        break
+      case "sepa_debit":
+        handleBankDebitSelect("sepa_debit", "stripe-sepa")
+        break
+      case "us_bank_account":
+        handleBankDebitSelect("us_bank_account", "stripe-ach")
+        break
     }
   }
 
-  const onClickSavedPaymentMethods = () => {
+  const handleCardPaymentSelect = () => {
+    elements.update({
+      captureMethod: "manual",
+      setupFutureUsage: "off_session",
+      mode: "payment",
+    })
+
+    if (selectedPaymentMethod !== "stripe-card") {
+      trackPaymentMethodSelection("CREDIT_CARD")
+    }
+
+    setSelectedPaymentMethod("stripe-card")
+  }
+
+  const handleBankDebitSelect = (
+    paymentType: "sepa_debit" | "us_bank_account",
+    methodType: "stripe-sepa" | "stripe-ach",
+  ) => {
+    elements.update({
+      captureMethod: "automatic",
+      setupFutureUsage: null,
+      mode: "setup",
+      payment_method_types: [paymentType],
+    })
+
+    if (selectedPaymentMethod !== methodType) {
+      const trackingMethod =
+        paymentType === "sepa_debit" ? "SEPA_DEBIT" : "US_BANK_ACCOUNT"
+      trackPaymentMethodSelection(trackingMethod)
+    }
+
+    setSelectedPaymentMethod(methodType)
+  }
+
+  const trackPaymentMethodSelection = (
+    paymentMethod:
+      | "CREDIT_CARD"
+      | "SAVED_CREDIT_CARD"
+      | "WIRE_TRANSFER"
+      | "US_BANK_ACCOUNT"
+      | "SEPA_DEBIT",
+  ) => {
     checkoutTracking.clickedPaymentMethod({
-      paymentMethod: "SAVED_CREDIT_CARD",
+      paymentMethod,
       amountMinor: order.itemsTotal?.minor,
       currency: order.itemsTotal?.currencyCode ?? "",
     })
-    setErrorMessage(null) // Clear any previous error messages
+  }
+
+  const onClickSavedPaymentMethods = () => {
+    trackPaymentMethodSelection("SAVED_CREDIT_CARD")
+    setErrorMessage(null)
     setSelectedPaymentMethod("saved")
     elements?.getElement("payment")?.collapse()
   }
 
   const onClickWirePaymentMethods = () => {
-    checkoutTracking.clickedPaymentMethod({
-      paymentMethod: "WIRE_TRANSFER",
-      amountMinor: order.itemsTotal?.minor,
-      currency: order.itemsTotal?.currencyCode ?? "",
-    })
-    setErrorMessage(null) // Clear any previous error messages
+    trackPaymentMethodSelection("WIRE_TRANSFER")
+    setErrorMessage(null)
     setSelectedPaymentMethod("wire")
     elements?.getElement("payment")?.collapse()
   }
