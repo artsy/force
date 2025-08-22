@@ -933,7 +933,7 @@ describe("Order2DeliveryForm", () => {
       })
 
       await waitFor(() => {
-        expect(screen.getByText("Delivery address")).toBeInTheDocument()
+        expect(screen.getByText("Edit address")).toBeInTheDocument()
       })
 
       expect(screen.getByText("Save Address")).toBeInTheDocument()
@@ -1082,10 +1082,9 @@ describe("Order2DeliveryForm", () => {
       })
 
       await waitFor(() => {
-        expect(screen.getByText("Delivery address")).toBeInTheDocument()
+        expect(screen.getByText("Add address")).toBeInTheDocument()
       })
 
-      expect(screen.getByText("Add new address")).toBeInTheDocument()
       expect(screen.getByText("Cancel")).toBeInTheDocument()
 
       // Verify form fields are present with empty values (except potential location defaults)

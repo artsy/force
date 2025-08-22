@@ -1,7 +1,10 @@
 import { Button, Spacer, Text } from "@artsy/palette"
-import { deliveryAddressValidationSchema } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/utils"
+import {
+  type ProcessedUserAddress,
+  deliveryAddressValidationSchema,
+} from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/utils"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
-import { useOrder2CreateUserAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2CreateUserAddressMutation"
+import { useOrder2UpdateUserAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2UpdateUserAddressMutation"
 import {
   AddressFormFields,
   type FormikContextWithAddress,
@@ -9,32 +12,33 @@ import {
 import createLogger from "Utils/logger"
 import { Formik } from "formik"
 
-const logger = createLogger("AddAddressForm")
+const logger = createLogger("UpdateAddressForm")
 
-interface AddAddressFormProps {
-  initialValues: FormikContextWithAddress
+interface UpdateAddressFormProps {
+  address: ProcessedUserAddress
   onSaveAddress: (
     values: FormikContextWithAddress,
     addressID: string,
   ) => Promise<void>
 }
-export const AddAddressForm = ({
+export const UpdateAddressForm = ({
   onSaveAddress,
 
-  initialValues,
-}: AddAddressFormProps) => {
-  const createUserAddress = useOrder2CreateUserAddressMutation()
+  address,
+}: UpdateAddressFormProps) => {
+  const updateUserAddress = useOrder2UpdateUserAddressMutation()
   const { setUserAddressMode } = useCheckoutContext()
 
   return (
     <Formik
-      initialValues={initialValues}
+      initialValues={address}
       validationSchema={deliveryAddressValidationSchema}
       onSubmit={async (values: FormikContextWithAddress) => {
         try {
-          const result = await createUserAddress.submitMutation({
+          const result = await updateUserAddress.submitMutation({
             variables: {
               input: {
+                userAddressID: address.internalID,
                 attributes: {
                   name: values.address.name,
                   addressLine1: values.address.addressLine1,
@@ -50,39 +54,44 @@ export const AddAddressForm = ({
             },
           })
 
-          if (result.createUserAddress?.userAddressOrErrors?.internalID) {
+          if (result.updateUserAddress?.userAddressOrErrors?.internalID) {
             await onSaveAddress(
               values,
-              result.createUserAddress?.userAddressOrErrors.internalID,
+              result.updateUserAddress?.userAddressOrErrors.internalID,
             )
             return
           }
 
-          if (result.createUserAddress?.userAddressOrErrors?.errors) {
+          if (result.updateUserAddress?.userAddressOrErrors?.errors) {
             throw new Error(
-              `Failed to create address: ${JSON.stringify(
-                result.createUserAddress.userAddressOrErrors.errors,
+              `Failed to update address: ${JSON.stringify(
+                result.updateUserAddress.userAddressOrErrors.errors,
               )}`,
             )
           }
-          throw new Error("Failed to create address: Unknown error")
+          throw new Error("Failed to update address: Unknown error")
         } catch (error) {
-          logger.error("Error creating address:", error)
+          logger.error("Error updating address:", error)
         }
       }}
     >
-      {({ isSubmitting }) => (
+      {({ isSubmitting, handleSubmit }) => (
         <>
           <Text
             fontWeight={["bold", "normal"]}
             color="mono100"
             variant={["sm-display", "md"]}
           >
-            Add address
+            Edit address
           </Text>
           <AddressFormFields withPhoneNumber />
           <Spacer y={4} />
-          <Button width="100%" type="submit" loading={isSubmitting}>
+          <Button
+            width="100%"
+            type="submit"
+            loading={isSubmitting}
+            onClick={() => handleSubmit()}
+          >
             Save Address
           </Button>
           <Spacer y={1} />

@@ -5,7 +5,7 @@ import {
   CheckoutErrorBanner,
   MailtoOrderSupport,
 } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
-import { SavedAddressOptions } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/Order2SavedAddressOptions"
+import { SavedAddressOptions } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/SavedAddressOptions/Order2SavedAddressOptions"
 import { handleError } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/handleError"
 import {
   deliveryAddressValidationSchema,

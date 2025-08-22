@@ -1,10 +1,7 @@
 import { Button, Spacer, Text } from "@artsy/palette"
-import {
-  type ProcessedUserAddress,
-  deliveryAddressValidationSchema,
-} from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/utils"
+import { deliveryAddressValidationSchema } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/utils"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
-import { useOrder2UpdateUserAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2UpdateUserAddressMutation"
+import { useOrder2CreateUserAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2CreateUserAddressMutation"
 import {
   AddressFormFields,
   type FormikContextWithAddress,
@@ -12,33 +9,32 @@ import {
 import createLogger from "Utils/logger"
 import { Formik } from "formik"
 
-const logger = createLogger("UpdateAddressForm")
+const logger = createLogger("AddAddressForm")
 
-interface UpdateAddressFormProps {
-  address: ProcessedUserAddress
+interface AddAddressFormProps {
+  initialValues: FormikContextWithAddress
   onSaveAddress: (
     values: FormikContextWithAddress,
     addressID: string,
   ) => Promise<void>
 }
-export const UpdateAddressForm = ({
+export const AddAddressForm = ({
   onSaveAddress,
 
-  address,
-}: UpdateAddressFormProps) => {
-  const updateUserAddress = useOrder2UpdateUserAddressMutation()
+  initialValues,
+}: AddAddressFormProps) => {
+  const createUserAddress = useOrder2CreateUserAddressMutation()
   const { setUserAddressMode } = useCheckoutContext()
 
   return (
     <Formik
-      initialValues={address}
+      initialValues={initialValues}
       validationSchema={deliveryAddressValidationSchema}
       onSubmit={async (values: FormikContextWithAddress) => {
         try {
-          const result = await updateUserAddress.submitMutation({
+          const result = await createUserAddress.submitMutation({
             variables: {
               input: {
-                userAddressID: address.internalID,
                 attributes: {
                   name: values.address.name,
                   addressLine1: values.address.addressLine1,
@@ -54,24 +50,24 @@ export const UpdateAddressForm = ({
             },
           })
 
-          if (result.updateUserAddress?.userAddressOrErrors?.internalID) {
+          if (result.createUserAddress?.userAddressOrErrors?.internalID) {
             await onSaveAddress(
               values,
-              result.updateUserAddress?.userAddressOrErrors.internalID,
+              result.createUserAddress?.userAddressOrErrors.internalID,
             )
             return
           }
 
-          if (result.updateUserAddress?.userAddressOrErrors?.errors) {
+          if (result.createUserAddress?.userAddressOrErrors?.errors) {
             throw new Error(
-              `Failed to update address: ${JSON.stringify(
-                result.updateUserAddress.userAddressOrErrors.errors,
+              `Failed to create address: ${JSON.stringify(
+                result.createUserAddress.userAddressOrErrors.errors,
               )}`,
             )
           }
-          throw new Error("Failed to update address: Unknown error")
+          throw new Error("Failed to create address: Unknown error")
         } catch (error) {
-          logger.error("Error updating address:", error)
+          logger.error("Error creating address:", error)
         }
       }}
     >
@@ -82,11 +78,16 @@ export const UpdateAddressForm = ({
             color="mono100"
             variant={["sm-display", "md"]}
           >
-            Edit address
+            Add address
           </Text>
           <AddressFormFields withPhoneNumber />
           <Spacer y={4} />
-          <Button width="100%" type="submit" loading={isSubmitting}>
+          <Button
+            width="100%"
+            type="submit"
+            loading={isSubmitting}
+            onClick={() => handleSubmit()}
+          >
             Save Address
           </Button>
           <Spacer y={1} />
