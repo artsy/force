@@ -84,6 +84,7 @@ export const UpdateAddressForm = ({
           >
             Edit address
           </Text>
+          <Spacer y={2} />
           <AddressFormFields withPhoneNumber />
           <Spacer y={4} />
           <Button

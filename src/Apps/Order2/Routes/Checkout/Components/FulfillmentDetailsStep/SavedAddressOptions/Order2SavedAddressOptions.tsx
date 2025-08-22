@@ -75,7 +75,8 @@ export const SavedAddressOptions = ({
         variant={["sm-display", "md"]}
       >
         Delivery address
-      </Text>
+      </Text>{" "}
+      <Spacer y={2} />
       {savedAddresses.map(processedAddress => {
         const { address, isValid, internalID } = processedAddress
         const isSelected = selectedAddressID === internalID

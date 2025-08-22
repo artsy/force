@@ -79,7 +79,8 @@ export const AddAddressForm = ({
             variant={["sm-display", "md"]}
           >
             Add address
-          </Text>
+          </Text>{" "}
+          <Spacer y={2} />
           <AddressFormFields withPhoneNumber />
           <Spacer y={4} />
           <Button

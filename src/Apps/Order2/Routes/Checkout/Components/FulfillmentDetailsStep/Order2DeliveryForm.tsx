@@ -215,8 +215,6 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
   )
   return (
     <>
-      <Spacer y={2} />
-
       <Formik
         initialValues={initialSelectedAddress || initialValues}
         enableReinitialize={true}
@@ -249,6 +247,7 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
                 >
                   Delivery address
                 </Text>
+                <Spacer y={2} />
                 <AddressFormFields
                   withPhoneNumber
                   shippableCountries={shippableCountries}
