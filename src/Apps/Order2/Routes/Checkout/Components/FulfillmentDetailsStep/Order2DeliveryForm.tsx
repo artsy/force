@@ -235,19 +235,25 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
               <SavedAddressOptions
                 savedAddresses={processedAddresses}
                 initialSelectedAddress={initialSelectedAddress}
-                newAddressInitialValues={newAddressInitialValues}
+                newAddressInitialValues={blankAddressValuesForUser}
                 onSelectAddress={async values => {
                   await formikContext.setValues(values)
                 }}
               />
             ) : (
               <>
+                <Text
+                  fontWeight={["bold", "normal"]}
+                  color="mono100"
+                  variant={["sm-display", "md"]}
+                >
+                  Delivery address
+                </Text>
                 <AddressFormFields
                   withPhoneNumber
                   shippableCountries={shippableCountries}
                 />
                 <Spacer y={4} />
-
                 <Button
                   type="submit"
                   loading={formikContext.isSubmitting}

@@ -8,25 +8,20 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
+import { AddAddressForm } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/AddAddressForm"
+import { UpdateAddressForm } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/UpdateAddressForm"
 import {
   type ProcessedUserAddress,
   countryNameFromAlpha2,
-  deliveryAddressValidationSchema,
 } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/utils"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useOrder2CreateUserAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2CreateUserAddressMutation"
 import { useOrder2UpdateUserAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2UpdateUserAddressMutation"
 import { formatPhoneNumber } from "Apps/Order2/Utils/addressUtils"
-import {
-  AddressFormFields,
-  type FormikContextWithAddress,
-} from "Components/Address/AddressFormFields"
-import createLogger from "Utils/logger"
-import { Formik, useFormikContext } from "formik"
-import { useState } from "react"
+import type { FormikContextWithAddress } from "Components/Address/AddressFormFields"
+import { useFormikContext } from "formik"
+import { useCallback, useState } from "react"
 import styled from "styled-components"
-
-const logger = createLogger("Order2SavedAddressOptions")
 
 interface SavedAddressOptionsProps {
   savedAddresses: ProcessedUserAddress[]
@@ -43,162 +38,46 @@ export const SavedAddressOptions = ({
   const { setUserAddressMode, userAddressMode } = useCheckoutContext()
   const parentFormikContext = useFormikContext<FormikContextWithAddress>()
 
-  const updateUserAddress = useOrder2UpdateUserAddressMutation()
-  const createUserAddress = useOrder2CreateUserAddressMutation()
-
   const [selectedAddressID, setSelectedAddressID] = useState(
     initialSelectedAddress?.internalID || "",
   )
 
+  const onSaveAddress = useCallback(
+    async (values, addressID) => {
+      await onSelectAddress(values)
+      setSelectedAddressID(addressID)
+      setUserAddressMode(null)
+    },
+    [onSelectAddress, setUserAddressMode],
+  )
+
   if (userAddressMode?.mode === "add") {
     return (
-      <Formik
+      <AddAddressForm
         initialValues={newAddressInitialValues}
-        validationSchema={deliveryAddressValidationSchema}
-        onSubmit={async (values: FormikContextWithAddress) => {
-          try {
-            const result = await createUserAddress.submitMutation({
-              variables: {
-                input: {
-                  attributes: {
-                    name: values.address.name,
-                    addressLine1: values.address.addressLine1,
-                    addressLine2: values.address.addressLine2,
-                    city: values.address.city,
-                    region: values.address.region,
-                    postalCode: values.address.postalCode,
-                    country: values.address.country,
-                    phoneNumber: values.phoneNumber,
-                    phoneNumberCountryCode: values.phoneNumberCountryCode,
-                  },
-                },
-              },
-            })
-
-            if (result.createUserAddress?.userAddressOrErrors?.internalID) {
-              await onSelectAddress(values)
-              setSelectedAddressID(
-                result.createUserAddress?.userAddressOrErrors.internalID,
-              )
-              setUserAddressMode(null)
-              return
-            }
-
-            if (result.createUserAddress?.userAddressOrErrors?.errors) {
-              throw new Error(
-                `Failed to create address: ${JSON.stringify(
-                  result.createUserAddress.userAddressOrErrors.errors,
-                )}`,
-              )
-            }
-            throw new Error("Failed to create address: Unknown error")
-          } catch (error) {
-            logger.error("Error creating address:", error)
-          }
-        }}
-      >
-        {({ isSubmitting, handleSubmit }) => (
-          <>
-            <AddressFormFields withPhoneNumber />
-            <Spacer y={4} />
-            <Button
-              width="100%"
-              type="submit"
-              loading={isSubmitting}
-              onClick={() => handleSubmit()}
-            >
-              Save Address
-            </Button>
-            <Spacer y={1} />
-            <Button
-              width="100%"
-              variant="secondaryBlack"
-              onClick={() => setUserAddressMode(null)}
-            >
-              Cancel
-            </Button>
-          </>
-        )}
-      </Formik>
+        onSaveAddress={onSaveAddress}
+      />
     )
   }
 
   if (userAddressMode?.mode === "edit") {
     return (
-      <Formik
-        initialValues={userAddressMode.address}
-        validationSchema={deliveryAddressValidationSchema}
-        onSubmit={async (values: FormikContextWithAddress) => {
-          try {
-            const result = await updateUserAddress.submitMutation({
-              variables: {
-                input: {
-                  userAddressID: userAddressMode.address.internalID,
-                  attributes: {
-                    name: values.address.name,
-                    addressLine1: values.address.addressLine1,
-                    addressLine2: values.address.addressLine2,
-                    city: values.address.city,
-                    region: values.address.region,
-                    postalCode: values.address.postalCode,
-                    country: values.address.country,
-                    phoneNumber: values.phoneNumber,
-                    phoneNumberCountryCode: values.phoneNumberCountryCode,
-                  },
-                },
-              },
-            })
-
-            if (result.updateUserAddress?.userAddressOrErrors?.internalID) {
-              await onSelectAddress(values)
-              setSelectedAddressID(
-                result.updateUserAddress?.userAddressOrErrors.internalID,
-              )
-              setUserAddressMode(null)
-              return
-            }
-
-            if (result.updateUserAddress?.userAddressOrErrors?.errors) {
-              throw new Error(
-                `Failed to update address: ${JSON.stringify(
-                  result.updateUserAddress.userAddressOrErrors.errors,
-                )}`,
-              )
-            }
-            throw new Error("Failed to update address: Unknown error")
-          } catch (error) {
-            logger.error("Error updating address:", error)
-          }
-        }}
-      >
-        {({ isSubmitting, handleSubmit }) => (
-          <>
-            <AddressFormFields withPhoneNumber />
-            <Spacer y={4} />
-            <Button
-              width="100%"
-              type="submit"
-              loading={isSubmitting}
-              onClick={() => handleSubmit()}
-            >
-              Save Address
-            </Button>
-            <Spacer y={1} />
-            <Button
-              width="100%"
-              variant="secondaryBlack"
-              onClick={() => setUserAddressMode(null)}
-            >
-              Cancel
-            </Button>
-          </>
-        )}
-      </Formik>
+      <UpdateAddressForm
+        address={userAddressMode.address}
+        onSaveAddress={onSaveAddress}
+      />
     )
   }
 
   return (
     <Flex flexDirection="column">
+      <Text
+        fontWeight={["bold", "normal"]}
+        color="mono100"
+        variant={["sm-display", "md"]}
+      >
+        Delivery address
+      </Text>
       {savedAddresses.map(processedAddress => {
         const { address, isValid, internalID } = processedAddress
         const isSelected = selectedAddressID === internalID

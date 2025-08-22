@@ -1118,7 +1118,7 @@ describe("Order2DeliveryForm", () => {
       })
 
       await waitFor(() => {
-        expect(screen.getByText("Add Address")).toBeInTheDocument()
+        expect(screen.getByText("Add address")).toBeInTheDocument()
       })
 
       await userEvent.click(screen.getByText("Cancel"))
@@ -1142,7 +1142,7 @@ describe("Order2DeliveryForm", () => {
       })
 
       await waitFor(() => {
-        expect(screen.getByText("Add Address")).toBeInTheDocument()
+        expect(screen.getByText("Add address")).toBeInTheDocument()
       })
 
       // Clean up and test edit mode separately
@@ -1175,7 +1175,7 @@ describe("Order2DeliveryForm", () => {
       })
 
       await waitFor(() => {
-        expect(screen.getByText("Save Address")).toBeInTheDocument()
+        expect(screen.getByText("Edit address")).toBeInTheDocument()
       })
     })
   })
