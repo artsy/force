@@ -70,32 +70,7 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
   const unsetOrderFulfillmentOption =
     useOrder2UnsetOrderFulfillmentOptionMutation()
 
-  const initialBlankValues: FormikContextWithAddress = useMemo(
-    () => ({
-      address: {
-        name: orderData.fulfillmentDetails?.name || "",
-        country:
-          orderData.fulfillmentDetails?.country ||
-          locationBasedInitialValues.selectedCountry ||
-          "",
-        postalCode: orderData.fulfillmentDetails?.postalCode || "",
-        addressLine1: orderData.fulfillmentDetails?.addressLine1 || "",
-        addressLine2: orderData.fulfillmentDetails?.addressLine2 || "",
-        city: orderData.fulfillmentDetails?.city || "",
-        region: orderData.fulfillmentDetails?.region || "",
-      },
-      phoneNumber:
-        orderData.fulfillmentDetails?.phoneNumber?.originalNumber || "",
-      phoneNumberCountryCode:
-        orderData.fulfillmentDetails?.phoneNumber?.regionCode ||
-        locationBasedInitialValues.phoneNumberCountryCode ||
-        "",
-    }),
-    [orderData, locationBasedInitialValues],
-  )
-
-  // Initial values for creating a new address - only location defaults, no saved order data
-  const newAddressInitialValues: FormikContextWithAddress = useMemo(
+  const blankAddressValuesForUser: FormikContextWithAddress = useMemo(
     () => ({
       address: {
         name: "",
@@ -113,6 +88,41 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
     [locationBasedInitialValues],
   )
 
+  const initialValues: FormikContextWithAddress = useMemo(
+    () => ({
+      address: {
+        name:
+          orderData.fulfillmentDetails?.name ||
+          blankAddressValuesForUser.address.name,
+        country:
+          orderData.fulfillmentDetails?.country ||
+          blankAddressValuesForUser.address.country,
+        postalCode:
+          orderData.fulfillmentDetails?.postalCode ||
+          blankAddressValuesForUser.address.postalCode,
+        addressLine1:
+          orderData.fulfillmentDetails?.addressLine1 ||
+          blankAddressValuesForUser.address.addressLine1,
+        addressLine2:
+          orderData.fulfillmentDetails?.addressLine2 ||
+          blankAddressValuesForUser.address.addressLine2,
+        city:
+          orderData.fulfillmentDetails?.city ||
+          blankAddressValuesForUser.address.city,
+        region:
+          orderData.fulfillmentDetails?.region ||
+          blankAddressValuesForUser.address.region,
+      },
+      phoneNumber:
+        orderData.fulfillmentDetails?.phoneNumber?.originalNumber ||
+        blankAddressValuesForUser.phoneNumber,
+      phoneNumberCountryCode:
+        orderData.fulfillmentDetails?.phoneNumber?.regionCode ||
+        blankAddressValuesForUser.phoneNumberCountryCode,
+    }),
+    [orderData, blankAddressValuesForUser],
+  )
+
   const processedAddresses = useMemo(() => {
     return processSavedAddresses(
       addressConnection,
@@ -123,8 +133,8 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
   const hasSavedAddresses = processedAddresses.length > 0
 
   const initialSelectedAddress = useMemo(() => {
-    return findInitialSelectedAddress(processedAddresses, initialBlankValues)
-  }, [initialBlankValues, processedAddresses])
+    return findInitialSelectedAddress(processedAddresses, initialValues)
+  }, [initialValues, processedAddresses])
 
   const onSubmit = useCallback(
     async (
@@ -205,17 +215,10 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
   )
   return (
     <>
-      <Text
-        fontWeight={["bold", "normal"]}
-        color="mono100"
-        variant={["sm-display", "md"]}
-      >
-        Delivery address
-      </Text>
       <Spacer y={2} />
 
       <Formik
-        initialValues={initialSelectedAddress || initialBlankValues}
+        initialValues={initialSelectedAddress || initialValues}
         enableReinitialize={true}
         validationSchema={deliveryAddressValidationSchema}
         onSubmit={onSubmit}

@@ -1085,7 +1085,7 @@ describe("Order2DeliveryForm", () => {
         expect(screen.getByText("Delivery address")).toBeInTheDocument()
       })
 
-      expect(screen.getByText("Add Address")).toBeInTheDocument()
+      expect(screen.getByText("Add new address")).toBeInTheDocument()
       expect(screen.getByText("Cancel")).toBeInTheDocument()
 
       // Verify form fields are present with empty values (except potential location defaults)
