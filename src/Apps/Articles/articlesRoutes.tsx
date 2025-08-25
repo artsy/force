@@ -23,6 +23,11 @@ const AuthorApp = loadable(
   { resolveComponent: component => component.AuthorApp },
 )
 
+const AuthorsApp = loadable(
+  () => import(/* webpackChunkName: "articlesBundle" */ "./AuthorsApp"),
+  { resolveComponent: component => component.AuthorsApp },
+)
+
 export const articlesRoutes: RouteProps[] = [
   {
     path: "/articles",
@@ -83,5 +88,12 @@ export const articlesRoutes: RouteProps[] = [
       }
     `,
     serverCacheTTL: serverCacheTTLs.articles,
+  },
+  {
+    path: "/articles/authors",
+    Component: AuthorsApp,
+    onPreloadJS: () => {
+      AuthorsApp.preload()
+    },
   },
 ]
