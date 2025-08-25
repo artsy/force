@@ -94,7 +94,7 @@ export const ArticlesAuthorsPlaceholder = () => {
     <Stack gap={2}>
       <Columns>
         {Array.from({ length: 100 }).map((_, index) => (
-          <SkeletonText key={index} variant="sm">
+          <SkeletonText key={index} variant="sm" my={1}>
             {
               [
                 "First Last",
