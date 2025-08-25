@@ -7,15 +7,15 @@ import {
   Text,
   VisuallyHidden,
   media,
-  space,
 } from "@artsy/palette"
-import { PaginatedMetaTags } from "Components/PaginatedMetaTags"
+import { themeGet } from "@styled-system/theme-get"
 import { ArtistsLetterNav } from "Apps/Artists/Components/ArtistsLetterNav"
 import { LoadingArea } from "Components/LoadingArea"
+import { PaginatedMetaTags } from "Components/PaginatedMetaTags"
 import { PaginationFragmentContainer } from "Components/Pagination"
 import { RouterLink } from "System/Components/RouterLink"
 import { useRouter } from "System/Hooks/useRouter"
-import { getPageNumber, buildPageQuery } from "Utils/url"
+import { buildPageQuery, getPageNumber } from "Utils/url"
 import type { ArtistsByLetter_viewer$data } from "__generated__/ArtistsByLetter_viewer.graphql"
 import { useState } from "react"
 import type * as React from "react"
@@ -35,7 +35,7 @@ const Columns = styled(Box)`
 const Name = styled(RouterLink)`
   display: block;
   text-decoration: none;
-  padding: ${space(0.5)}px 0;
+  padding: ${themeGet("space.half")} 0;
 `
 
 interface ArtistsByLetterProps {

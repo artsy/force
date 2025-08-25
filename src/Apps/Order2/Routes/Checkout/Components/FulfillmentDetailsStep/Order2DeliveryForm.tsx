@@ -5,7 +5,7 @@ import {
   CheckoutErrorBanner,
   MailtoOrderSupport,
 } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
-import { SavedAddressOptions } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/Order2SavedAddressOptions"
+import { SavedAddressOptions } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/SavedAddressOptions/Order2SavedAddressOptions"
 import { handleError } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/handleError"
 import {
   deliveryAddressValidationSchema,
@@ -70,28 +70,57 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
   const unsetOrderFulfillmentOption =
     useOrder2UnsetOrderFulfillmentOptionMutation()
 
-  const initialBlankValues: FormikContextWithAddress = useMemo(
+  const blankAddressValuesForUser: FormikContextWithAddress = useMemo(
     () => ({
       address: {
-        name: orderData.fulfillmentDetails?.name || "",
+        name: "",
+        country: locationBasedInitialValues.selectedCountry || "",
+        postalCode: "",
+        addressLine1: "",
+        addressLine2: "",
+        city: "",
+        region: "",
+      },
+      phoneNumber: "",
+      phoneNumberCountryCode:
+        locationBasedInitialValues.phoneNumberCountryCode || "",
+    }),
+    [locationBasedInitialValues],
+  )
+
+  const initialValues: FormikContextWithAddress = useMemo(
+    () => ({
+      address: {
+        name:
+          orderData.fulfillmentDetails?.name ||
+          blankAddressValuesForUser.address.name,
         country:
           orderData.fulfillmentDetails?.country ||
-          locationBasedInitialValues.selectedCountry ||
-          "",
-        postalCode: orderData.fulfillmentDetails?.postalCode || "",
-        addressLine1: orderData.fulfillmentDetails?.addressLine1 || "",
-        addressLine2: orderData.fulfillmentDetails?.addressLine2 || "",
-        city: orderData.fulfillmentDetails?.city || "",
-        region: orderData.fulfillmentDetails?.region || "",
+          blankAddressValuesForUser.address.country,
+        postalCode:
+          orderData.fulfillmentDetails?.postalCode ||
+          blankAddressValuesForUser.address.postalCode,
+        addressLine1:
+          orderData.fulfillmentDetails?.addressLine1 ||
+          blankAddressValuesForUser.address.addressLine1,
+        addressLine2:
+          orderData.fulfillmentDetails?.addressLine2 ||
+          blankAddressValuesForUser.address.addressLine2,
+        city:
+          orderData.fulfillmentDetails?.city ||
+          blankAddressValuesForUser.address.city,
+        region:
+          orderData.fulfillmentDetails?.region ||
+          blankAddressValuesForUser.address.region,
       },
       phoneNumber:
-        orderData.fulfillmentDetails?.phoneNumber?.originalNumber || "",
+        orderData.fulfillmentDetails?.phoneNumber?.originalNumber ||
+        blankAddressValuesForUser.phoneNumber,
       phoneNumberCountryCode:
         orderData.fulfillmentDetails?.phoneNumber?.regionCode ||
-        locationBasedInitialValues.phoneNumberCountryCode ||
-        "",
+        blankAddressValuesForUser.phoneNumberCountryCode,
     }),
-    [orderData, locationBasedInitialValues],
+    [orderData, blankAddressValuesForUser],
   )
 
   const processedAddresses = useMemo(() => {
@@ -104,8 +133,8 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
   const hasSavedAddresses = processedAddresses.length > 0
 
   const initialSelectedAddress = useMemo(() => {
-    return findInitialSelectedAddress(processedAddresses, initialBlankValues)
-  }, [initialBlankValues, processedAddresses])
+    return findInitialSelectedAddress(processedAddresses, initialValues)
+  }, [initialValues, processedAddresses])
 
   const onSubmit = useCallback(
     async (
@@ -186,17 +215,8 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
   )
   return (
     <>
-      <Text
-        fontWeight={["bold", "normal"]}
-        color="mono100"
-        variant={["sm-display", "md"]}
-      >
-        Delivery address
-      </Text>
-      <Spacer y={2} />
-
       <Formik
-        initialValues={initialSelectedAddress || initialBlankValues}
+        initialValues={initialSelectedAddress || initialValues}
         enableReinitialize={true}
         validationSchema={deliveryAddressValidationSchema}
         onSubmit={onSubmit}
@@ -213,18 +233,26 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
               <SavedAddressOptions
                 savedAddresses={processedAddresses}
                 initialSelectedAddress={initialSelectedAddress}
+                newAddressInitialValues={blankAddressValuesForUser}
                 onSelectAddress={async values => {
                   await formikContext.setValues(values)
                 }}
               />
             ) : (
               <>
+                <Text
+                  fontWeight={["bold", "normal"]}
+                  color="mono100"
+                  variant={["sm-display", "md"]}
+                >
+                  Delivery address
+                </Text>
+                <Spacer y={2} />
                 <AddressFormFields
                   withPhoneNumber
                   shippableCountries={shippableCountries}
                 />
                 <Spacer y={4} />
-
                 <Button
                   type="submit"
                   loading={formikContext.isSubmitting}
