@@ -314,7 +314,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
     if (savedPaymentMethod?.type === "US_BANK_ACCOUNT") {
       return "US_BANK_ACCOUNT"
     }
-    if (savedPaymentMethod?.type === "SEPA") {
+    if (savedPaymentMethod?.type === "SEPA_DEBIT") {
       return "SEPA_DEBIT"
     }
     throw new Error(
