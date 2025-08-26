@@ -80,7 +80,6 @@ export const Order2PaymentForm: React.FC<Order2PaymentFormProps> = ({
   me,
 }) => {
   const orderData = useFragment(ORDER_FRAGMENT, order)
-  console.log(">>>>>>>", orderData)
   const meData = useFragment(ME_FRAGMENT, me)
   const stripe = useStripe()
   const { itemsTotal, seller } = orderData

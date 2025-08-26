@@ -18,9 +18,6 @@ export const Order2PaymentCompletedView: React.FC<
     editPayment()
   }
 
-  console.log(">>> conf", confirmationToken)
-  console.log(">>> saved", savedPaymentMethod)
-
   const isCreditCard =
     confirmationToken?.paymentMethodPreview?.__typename === "Card" ||
     savedPaymentMethod?.__typename === "CreditCard"
@@ -31,11 +28,6 @@ export const Order2PaymentCompletedView: React.FC<
     confirmationToken?.paymentMethodPreview?.__typename === "SEPADebit" ||
     savedPaymentMethod?.type === "SEPA_DEBIT"
   const isWireTransfer = !isCreditCard && !isBankAccount && !isSEPA
-
-  console.log(">>> wire", isWireTransfer)
-  console.log(">>> card", isCreditCard)
-  console.log(">>> bank", isBankAccount)
-  console.log(">>> sepa", isSEPA)
 
   return (
     <Flex flexDirection="column" backgroundColor="mono0">
