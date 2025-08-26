@@ -4764,6 +4764,9 @@ input BulkUpdateArtworksMetadataInput {
   # The artwork condition to be assigned
   conditionDescription: String
 
+  # Array of dates as numbers to be assigned
+  dates: [Int]
+
   # Show/Hide the price range of an artwork
   displayPriceRange: Boolean
 
