@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7937a7ac51d9e0d626f3fe31889699ef>>
+ * @generated SignedSource<<3ea81492c34bb2c091f11e05d73eaeca>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,11 +20,19 @@ export type AuthorApp_author$data = {
     } | null | undefined;
   } | null | undefined;
   readonly initials: string | null | undefined;
-  readonly instagramHandle: string | null | undefined;
   readonly internalID: string;
   readonly name: string;
   readonly role: string | null | undefined;
-  readonly twitterHandle: string | null | undefined;
+  readonly socials: {
+    readonly instagram: {
+      readonly handle: string;
+      readonly url: string;
+    } | null | undefined;
+    readonly x: {
+      readonly handle: string;
+      readonly url: string;
+    } | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "AuthorApp_author";
 };
 export type AuthorApp_author$key = {
@@ -32,7 +40,24 @@ export type AuthorApp_author$key = {
   readonly " $fragmentSpreads": FragmentRefs<"AuthorApp_author">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "handle",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "url",
+    "storageKey": null
+  }
+];
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -83,15 +108,32 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
-      "kind": "ScalarField",
-      "name": "twitterHandle",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "instagramHandle",
+      "concreteType": "AuthorSocials",
+      "kind": "LinkedField",
+      "name": "socials",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "AuthorSocialsX",
+          "kind": "LinkedField",
+          "name": "x",
+          "plural": false,
+          "selections": (v0/*: any*/),
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "AuthorSocialsInstagram",
+          "kind": "LinkedField",
+          "name": "instagram",
+          "plural": false,
+          "selections": (v0/*: any*/),
+          "storageKey": null
+        }
+      ],
       "storageKey": null
     },
     {
@@ -145,7 +187,8 @@ const node: ReaderFragment = {
   "type": "Author",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "37da9cb7c3fb6b7c24e82e3655da3744";
+(node as any).hash = "e312c9d1ba26561b8e62bf0837e5e3f2";
 
 export default node;
