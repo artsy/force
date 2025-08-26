@@ -246,11 +246,15 @@ const { renderWithRelay } = setupTestWrapperTL<Order2PaymentFormTestQuery>({
 describe("Order2PaymentForm", () => {
   const baseMeProps = {
     creditCards: { edges: [] },
+    bankAccounts: { edges: [] },
+    email: "test@example.com",
     order: {
       id: "T3JkZXI6b3JkZXItaWQ=", // Relay ID
       internalID: "order-id",
+      code: "TEST-ORDER-123",
       mode: "BUY",
       source: "ARTWORK_PAGE",
+      availablePaymentMethods: ["CREDIT_CARD", "WIRE_TRANSFER"],
       itemsTotal: {
         minor: 100000,
         currencyCode: "USD",
@@ -261,6 +265,16 @@ describe("Order2PaymentForm", () => {
           externalId: "merchant-123",
         },
       },
+      lineItems: [
+        {
+          artwork: {
+            href: "/artwork/test-artwork",
+            artworkMeta: {
+              share: "Check out Test Artwork by Test Artist",
+            },
+          },
+        },
+      ],
     },
   }
 
@@ -734,6 +748,81 @@ describe("Order2PaymentForm", () => {
           id: tokenId,
           paymentMethodPreview: MOCK_ACH_PREVIEW,
         },
+      })
+
+      // Button should be available again (not in loading state)
+      expect(screen.getByText("Continue to Review")).toBeInTheDocument()
+    })
+
+    it("successfully submits a wire transfer order", async () => {
+      renderPaymentForm()
+      await waitForPaymentElement()
+
+      await userEvent.click(screen.getByTestId("PaymentFormWire"))
+
+      const mockWireTransferSuccess = {
+        commerceSetPayment: {
+          orderOrError: {
+            __typename: "OrderMutationSuccess",
+            order: {
+              paymentMethod: "WIRE_TRANSFER",
+            },
+          },
+        },
+      }
+
+      mockLegacySetPaymentMutation.submitMutation.mockResolvedValueOnce(
+        mockWireTransferSuccess,
+      )
+
+      await userEvent.click(screen.getByText("Continue to Review"))
+
+      expect(
+        mockCheckoutContext.checkoutTracking.clickedOrderProgression,
+      ).toHaveBeenCalledWith("ordersPayment")
+
+      await waitFor(() => {
+        expect(
+          mockLegacySetPaymentMutation.submitMutation,
+        ).toHaveBeenCalledWith({
+          variables: {
+            input: {
+              id: "order-id",
+              paymentMethod: "WIRE_TRANSFER",
+            },
+          },
+        })
+      })
+
+      expect(mockCheckoutContext.setSavedPaymentMethod).toHaveBeenCalledWith({
+        savedPaymentMethod: null,
+      })
+      expect(mockCheckoutContext.setPaymentComplete).toHaveBeenCalled()
+    })
+
+    it("handles wire transfer submission error", async () => {
+      renderPaymentForm()
+      await waitForPaymentElement()
+
+      await userEvent.click(screen.getByTestId("PaymentFormWire"))
+
+      mockLegacySetPaymentMutation.submitMutation.mockRejectedValueOnce(
+        new Error("Wire transfer setup failed"),
+      )
+
+      await userEvent.click(screen.getByText("Continue to Review"))
+
+      await waitFor(() => {
+        expect(
+          mockLegacySetPaymentMutation.submitMutation,
+        ).toHaveBeenCalledWith({
+          variables: {
+            input: {
+              id: "order-id",
+              paymentMethod: "WIRE_TRANSFER",
+            },
+          },
+        })
       })
 
       // Button should be available again (not in loading state)
