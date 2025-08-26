@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1cb3151527d9af647814ec532784b899>>
+ * @generated SignedSource<<a0fbfd57736fea98c3212876b922346a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -36,6 +36,22 @@ v1 = [
     "kind": "Variable",
     "name": "id",
     "variableName": "id"
+  }
+],
+v2 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "handle",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "url",
+    "storageKey": null
   }
 ];
 return {
@@ -124,15 +140,32 @@ return {
           {
             "alias": null,
             "args": null,
-            "kind": "ScalarField",
-            "name": "twitterHandle",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "instagramHandle",
+            "concreteType": "AuthorSocials",
+            "kind": "LinkedField",
+            "name": "socials",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "AuthorSocialsX",
+                "kind": "LinkedField",
+                "name": "x",
+                "plural": false,
+                "selections": (v2/*: any*/),
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "AuthorSocialsInstagram",
+                "kind": "LinkedField",
+                "name": "instagram",
+                "plural": false,
+                "selections": (v2/*: any*/),
+                "storageKey": null
+              }
+            ],
             "storageKey": null
           },
           {
@@ -195,12 +228,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0cfe4998eec6eb8ebcc886469e456a89",
+    "cacheID": "a66b4cac7368b8d02143db03e58362c9",
     "id": null,
     "metadata": {},
     "name": "articlesRoutes_AuthorQuery",
     "operationKind": "query",
-    "text": "query articlesRoutes_AuthorQuery(\n  $id: String!\n) {\n  author(id: $id) @principalField {\n    ...AuthorApp_author\n    id\n  }\n}\n\nfragment AuthorApp_author on Author {\n  __typename\n  internalID\n  name\n  bio\n  initials\n  role\n  twitterHandle\n  instagramHandle\n  image {\n    cropped(width: 100, height: 100) {\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query articlesRoutes_AuthorQuery(\n  $id: String!\n) {\n  author(id: $id) @principalField {\n    ...AuthorApp_author\n    id\n  }\n}\n\nfragment AuthorApp_author on Author {\n  __typename\n  internalID\n  name\n  bio\n  initials\n  role\n  socials {\n    x {\n      handle\n      url\n    }\n    instagram {\n      handle\n      url\n    }\n  }\n  image {\n    cropped(width: 100, height: 100) {\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();

@@ -9,12 +9,14 @@ import {
   Stack,
   Text,
 } from "@artsy/palette"
+import { themeGet } from "@styled-system/theme-get"
 import { ClientSuspense } from "Components/ClientSuspense"
 import { MetaTags } from "Components/MetaTags"
 import { useScrollToOpenEditorialAuthModal } from "Utils/Hooks/useScrollToOpenEditorialAuthModal"
 import type { AuthorApp_author$key } from "__generated__/AuthorApp_author.graphql"
 import type { FC } from "react"
 import { graphql, useFragment } from "react-relay"
+import styled from "styled-components"
 import {
   AuthorArticlesGrid,
   AuthorArticlesGridPlaceholder,
@@ -84,27 +86,37 @@ export const AuthorApp: FC<React.PropsWithChildren<AuthorAppProps>> = ({
                     )}
                   </Stack>
 
-                  <Stack gap={0.5}>
-                    {author.twitterHandle && (
-                      <Stack gap={0.5} flexDirection="row" alignItems="center">
-                        <XIcon />
+                  {author.socials && (
+                    <Stack gap={0.5}>
+                      {author.socials.x && (
+                        <AuthorSocialLink
+                          as="a"
+                          href={author.socials.x.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <XIcon />
 
-                        <Text variant="xs" color="mono60">
-                          {author.twitterHandle}
-                        </Text>
-                      </Stack>
-                    )}
+                          <Text variant="xs">{author.socials.x.handle}</Text>
+                        </AuthorSocialLink>
+                      )}
 
-                    {author.instagramHandle && (
-                      <Stack gap={0.5} flexDirection="row" alignItems="center">
-                        <InstagramIcon />
+                      {author.socials.instagram && (
+                        <AuthorSocialLink
+                          as="a"
+                          href={author.socials.instagram.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <InstagramIcon />
 
-                        <Text variant="xs" color="mono60">
-                          {author.instagramHandle}
-                        </Text>
-                      </Stack>
-                    )}
-                  </Stack>
+                          <Text variant="xs">
+                            {author.socials.instagram.handle}
+                          </Text>
+                        </AuthorSocialLink>
+                      )}
+                    </Stack>
+                  )}
                 </Stack>
               </Box>
             </Stack>
@@ -145,13 +157,37 @@ const FRAGMENT = graphql`
     bio
     initials
     role
-    twitterHandle
-    instagramHandle
+    socials {
+      x {
+        handle
+        url
+      }
+      instagram {
+        handle
+        url
+      }
+    }
     image {
       cropped(width: 100, height: 100) {
         src
         srcSet
       }
     }
+  }
+`
+
+const AuthorSocialLink = styled.a`
+  display: flex;
+  align-items: center;
+  gap: ${themeGet("space.half")};
+  text-decoration: none;
+  color: ${themeGet("colors.mono60")};
+
+  svg {
+    color: ${themeGet("colors.mono100")};
+  }
+
+  &:hover {
+    color: ${themeGet("colors.mono100")};
   }
 `
