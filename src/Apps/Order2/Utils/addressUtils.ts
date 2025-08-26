@@ -36,18 +36,19 @@ export const countryCodePrefix = (alpha2Code: string): string => {
   return country?.countryCode ? `+${country.countryCode}` : ""
 }
 
-export const formatPhoneNumber = (address: {
-  phoneNumber?: string | null
-  phoneNumberCountryCode?: string | null
-}) => {
-  const { phoneNumber, phoneNumberCountryCode } = address
-  if (!phoneNumber || !phoneNumberCountryCode) {
+export const formatPhoneNumber = (
+  phoneNumber?: string | null,
+  phoneNumberCountryCode?: string | null,
+) => {
+  if (!phoneNumber) {
     return ""
   }
 
-  const prefix = countryCodePrefix(phoneNumberCountryCode)
-  if (prefix) {
-    return `${prefix} ${phoneNumber}`
+  if (!phoneNumberCountryCode) {
+    return phoneNumber
   }
-  return phoneNumber
+
+  const prefix = countryCodePrefix(phoneNumberCountryCode)
+
+  return prefix ? `${prefix} ${phoneNumber}` : phoneNumber
 }

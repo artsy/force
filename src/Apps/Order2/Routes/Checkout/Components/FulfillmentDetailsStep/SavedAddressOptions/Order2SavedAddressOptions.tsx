@@ -78,7 +78,13 @@ export const SavedAddressOptions = ({
       </Text>{" "}
       <Spacer y={2} />
       {savedAddresses.map(processedAddress => {
-        const { address, isValid, internalID } = processedAddress
+        const {
+          address,
+          isValid,
+          internalID,
+          phoneNumber,
+          phoneNumberCountryCode,
+        } = processedAddress
         const isSelected = selectedAddressID === internalID
         const backgroundColor = isSelected ? "mono5" : "mono0"
         const textColor = isSelected ? "mono100" : "mono60"
@@ -123,9 +129,9 @@ export const SavedAddressOptions = ({
                   </Text>
                 )}
 
-                {address.phoneNumber && (
+                {phoneNumber && (
                   <Text variant="xs" fontWeight="normal" color={textColor}>
-                    {formatPhoneNumber(address)}
+                    {formatPhoneNumber(phoneNumber, phoneNumberCountryCode)}
                   </Text>
                 )}
               </Flex>
