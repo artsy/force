@@ -18,12 +18,24 @@ export const Order2PaymentCompletedView: React.FC<
     editPayment()
   }
 
+  console.log(">>> conf", confirmationToken)
+  console.log(">>> saved", savedPaymentMethod)
+
+  const isCreditCard =
+    confirmationToken?.paymentMethodPreview?.__typename === "Card" ||
+    savedPaymentMethod?.__typename === "CreditCard"
   const isBankAccount =
     confirmationToken?.paymentMethodPreview?.__typename === "USBankAccount" ||
     savedPaymentMethod?.type === "US_BANK_ACCOUNT"
   const isSEPA =
     confirmationToken?.paymentMethodPreview?.__typename === "SEPADebit" ||
     savedPaymentMethod?.type === "SEPA_DEBIT"
+  const isWireTransfer = !isCreditCard && !isBankAccount && !isSEPA
+
+  console.log(">>> wire", isWireTransfer)
+  console.log(">>> card", isCreditCard)
+  console.log(">>> bank", isBankAccount)
+  console.log(">>> sepa", isSEPA)
 
   return (
     <Flex flexDirection="column" backgroundColor="mono0">
@@ -51,7 +63,7 @@ export const Order2PaymentCompletedView: React.FC<
         </Clickable>
       </Flex>
       <Flex alignItems="center" ml="30px" mt={1}>
-        {isBankAccount || isSEPA ? (
+        {(isBankAccount || isSEPA) && (
           <>
             <HomeIcon
               fill="mono100"
@@ -65,7 +77,8 @@ export const Order2PaymentCompletedView: React.FC<
                 savedPaymentMethod?.last4}
             </Text>
           </>
-        ) : (
+        )}
+        {isCreditCard && (
           <>
             <BrandCreditCardIcon
               mr={1}
@@ -81,6 +94,17 @@ export const Order2PaymentCompletedView: React.FC<
               {confirmationToken?.paymentMethodPreview?.last4 ||
                 savedPaymentMethod?.lastDigits}
             </Text>
+          </>
+        )}
+        {isWireTransfer && (
+          <>
+            <HomeIcon
+              fill="mono100"
+              width={["18px", "26px"]}
+              height={["18px", "26px"]}
+              mr={1}
+            />
+            <Text variant={["xs", "sm-display"]}>Wire Transfer</Text>
           </>
         )}
       </Flex>

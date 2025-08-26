@@ -61,6 +61,7 @@ import type {
 import type React from "react"
 import { useEffect, useState } from "react"
 import { graphql, useFragment, useRelayEnvironment } from "react-relay"
+import { data as sd } from "sharify"
 
 const logger = createLogger("Order2PaymentForm")
 const defaultErrorMessage = (
@@ -79,6 +80,7 @@ export const Order2PaymentForm: React.FC<Order2PaymentFormProps> = ({
   me,
 }) => {
   const orderData = useFragment(ORDER_FRAGMENT, order)
+  console.log(">>>>>>>", orderData)
   const meData = useFragment(ME_FRAGMENT, me)
   const stripe = useStripe()
   const { itemsTotal, seller } = orderData
@@ -180,6 +182,8 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
     steps?.find(step => step.name === CheckoutStepName.PAYMENT)?.state ===
     CheckoutStepState.ACTIVE
   const [hasActivatedPaymentStep, setHasActivatedPaymentStep] = useState(false)
+  const [wireEmailSubject, setWireEmailSubject] = useState<string | null>(null)
+  const [wireEmailBody, setWireEmailBody] = useState<string | null>(null)
 
   // one-time event after step becomes active and credit cards have loaded if
   // the user has any saved credit cards available
@@ -304,6 +308,13 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
     trackPaymentMethodSelection("WIRE_TRANSFER")
     setErrorMessage(null)
     setSelectedPaymentMethod("wire")
+    setWireEmailSubject(`Wire transfer inquiry (CODE #${order.code})`)
+    const artworkInfo =
+      order.lineItems[0]?.artwork?.artworkMeta?.share?.slice(10) // Removing "Check out " from the share metadata
+    const artworkUrl = sd.APP_URL + order.lineItems[0]?.artwork?.href
+    setWireEmailBody(
+      `Hello%2C%0D%0AI'm interested in paying by wire transfer and would like some assistance.%0D%0A${artworkInfo} on Artsy: ${artworkUrl}`,
+    )
     elements?.getElement("payment")?.collapse()
   }
 
@@ -463,7 +474,37 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
     }
 
     if (selectedPaymentMethod === "wire") {
-      handleError(new Error("Wire transfer not supported yet"))
+      setIsSubmittingToStripe(true)
+
+      try {
+        const result = await legacySetPaymentMutation.submitMutation({
+          variables: {
+            input: {
+              id: order.internalID,
+              paymentMethod: "WIRE_TRANSFER",
+            },
+          },
+        })
+
+        if (
+          result?.commerceSetPayment?.orderOrError?.error ||
+          !result?.commerceSetPayment?.orderOrError?.order
+        ) {
+          throw (
+            result?.commerceSetPayment?.orderOrError.error ||
+            new Error("Failed to set payment method")
+          )
+        }
+      } catch (error) {
+        logger.error("Error while updating order payment method", error)
+        handleError({ message: defaultErrorMessage })
+      } finally {
+        setIsSubmittingToStripe(false)
+        // Resets for the PaymentCompletedView
+        setSavedPaymentMethod({ savedPaymentMethod: null })
+        setConfirmationToken({ confirmationToken: null })
+        setPaymentComplete()
+      }
     }
 
     if (selectedPaymentMethod === "saved") {
@@ -610,47 +651,54 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       )}
       <PaymentElement options={paymentElementOptions} onChange={onChange} />
       <Spacer y={1} />
-      <FadeInBox>
-        <Box
-          backgroundColor="mono5"
-          borderRadius="5px"
-          padding="1rem"
-          marginBottom="10px"
-          style={{ cursor: "pointer" }}
-          onClick={onClickWirePaymentMethods}
-          data-testid={"PaymentFormWire"}
-        >
-          <Flex alignItems="center">
-            <ReceiptIcon fill="mono100" />
-            {/* Spacer has to be 31px to match Stripe's spacing */}
-            <Spacer x="31px" />
-            <Text
-              variant="sm"
-              color="mono100"
-              fontWeight={selectedPaymentMethod === "wire" ? "bold" : "normal"}
-            >
-              Wire Transfer
-            </Text>
-          </Flex>
-          <Collapse open={selectedPaymentMethod === "wire"}>
-            <Text color="mono100" variant="sm" ml="50px" mb={1}>
-              To pay by wire transfer, complete checkout and a member of the
-              Artsy team will contact you with next steps by email.
-            </Text>
-            <Text color="mono100" variant="sm" ml="50px" mb={1}>
-              Please inform your bank that you will be responsible for all wire
-              transfer fees.
-            </Text>
-            <Text color="mono100" variant="sm" ml="50px">
-              You can contact{" "}
-              <RouterLink inline to="mailto:orders@artsy.net">
-                orders@artsy.net
-              </RouterLink>{" "}
-              with any questions.
-            </Text>
-          </Collapse>
-        </Box>
-      </FadeInBox>
+      {order.availablePaymentMethods?.includes("WIRE_TRANSFER") && (
+        <FadeInBox>
+          <Box
+            backgroundColor="mono5"
+            borderRadius="5px"
+            padding="1rem"
+            marginBottom="10px"
+            style={{ cursor: "pointer" }}
+            onClick={onClickWirePaymentMethods}
+            data-testid={"PaymentFormWire"}
+          >
+            <Flex alignItems="center">
+              <ReceiptIcon fill="mono100" />
+              {/* Spacer has to be 31px to match Stripe's spacing */}
+              <Spacer x="31px" />
+              <Text
+                variant="sm"
+                color="mono100"
+                fontWeight={
+                  selectedPaymentMethod === "wire" ? "bold" : "normal"
+                }
+              >
+                Wire Transfer
+              </Text>
+            </Flex>
+            <Collapse open={selectedPaymentMethod === "wire"}>
+              <Text color="mono100" variant="sm" ml="50px" mb={1}>
+                To pay by wire transfer, complete checkout and a member of the
+                Artsy team will contact you with next steps by email.
+              </Text>
+              <Text color="mono100" variant="sm" ml="50px" mb={1}>
+                Please inform your bank that you will be responsible for all
+                wire transfer fees.
+              </Text>
+              <Text color="mono100" variant="sm" ml="50px">
+                You can contact{" "}
+                <RouterLink
+                  inline
+                  to={`mailto:orders@artsy.net?subject=${wireEmailSubject}&body=${wireEmailBody}`}
+                >
+                  orders@artsy.net
+                </RouterLink>{" "}
+                with any questions.
+              </Text>
+            </Collapse>
+          </Box>
+        </FadeInBox>
+      )}
 
       <Collapse open={selectedPaymentMethod === "stripe-card"}>
         <Box p={2}>
@@ -746,9 +794,11 @@ const ME_FRAGMENT = graphql`
 
 const ORDER_FRAGMENT = graphql`
   fragment Order2PaymentForm_order on Order {
+    code
     mode
     source
     internalID
+    availablePaymentMethods
     itemsTotal {
       minor
       currencyCode
@@ -757,6 +807,14 @@ const ORDER_FRAGMENT = graphql`
       ... on Partner {
         merchantAccount {
           externalId
+        }
+      }
+    }
+    lineItems {
+      artwork {
+        href
+        artworkMeta: meta {
+          share
         }
       }
     }

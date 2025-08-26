@@ -113,7 +113,7 @@ export interface Order2CheckoutModel {
   setSavePaymentMethod: Action<this, boolean>
   setSavedPaymentMethod: Action<
     this,
-    { savedPaymentMethod: SavedCreditCard | SavedBankAccount }
+    { savedPaymentMethod: SavedCreditCard | SavedBankAccount | null }
   >
   redirectToOrderDetails: Action<this>
   setCheckoutMode: Action<this, CheckoutMode>
