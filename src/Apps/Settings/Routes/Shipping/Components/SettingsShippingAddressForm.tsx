@@ -14,7 +14,7 @@ import { useAddAddress } from "Apps/Settings/Routes/Shipping/useAddAddress"
 import { useEditAddress } from "Apps/Settings/Routes/Shipping/useEditAddress"
 import { useSetDefaultAddress } from "Apps/Settings/Routes/Shipping/useSetDefaultAddress"
 import { CountrySelect } from "Components/CountrySelect"
-import { validatePhoneNumber } from "Components/PhoneNumberInput"
+import { richPhoneValidators } from "Components/Address/utils"
 import { countries } from "Utils/countries"
 import { Form, Formik } from "formik"
 import type { FC } from "react"
@@ -47,21 +47,7 @@ const VALIDATION_SCHEMA = Yup.object().shape({
     city: Yup.string().required("City is required"),
     region: Yup.string().required("Region is required"),
     postalCode: Yup.string().required("Postal Code is required"),
-    phoneNumber: Yup.string()
-      .required("Phone Number is required")
-      .test({
-        name: "phone-number-is-valid",
-        message: "Please enter a valid phone number",
-        test: (national, context) => {
-          return validatePhoneNumber({
-            national: `${national}`,
-            regionCode: `${context.parent.phoneNumberCountryCode}`,
-          })
-        },
-      }),
-    phoneNumberCountryCode: Yup.string().required(
-      "Phone Number Country Code is required",
-    ),
+    ...richPhoneValidators,
   }),
   isDefault: Yup.boolean().optional(),
 })
@@ -318,6 +304,7 @@ export const SettingsShippingAddressForm: FC<
                     dropdownValue={values.attributes.phoneNumberCountryCode}
                     inputValue={values.attributes.phoneNumber}
                     placeholder="(000) 000 0000"
+                    autoComplete="tel-national"
                     enableSearch
                     required
                     error={

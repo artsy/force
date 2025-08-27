@@ -178,6 +178,7 @@ export const Order2PickupForm: React.FC<Order2PickupFormProps> = ({
                 dropdownValue={formikContext.values.phoneNumberCountryCode}
                 inputValue={formikContext.values.phoneNumber}
                 placeholder="(000) 000 0000"
+                autoComplete="tel-national"
                 error={
                   (formikContext.touched.phoneNumberCountryCode &&
                     (formikContext.errors.phoneNumberCountryCode as
