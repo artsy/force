@@ -1,4 +1,5 @@
 import { ArtistMediumsTitle } from "Apps/Artist/Routes/WorksForSale/Components/ArtistMediumsTitle"
+import { ArtistMetaFragmentContainer } from "Apps/Artist/Components/ArtistMeta/ArtistMeta"
 import { ArtistWorksForSaleEmptyFragmentContainer } from "Apps/Artist/Routes/WorksForSale/Components/ArtistWorksForSaleEmpty"
 import { getWorksForSaleRouteVariables } from "Apps/Artist/Routes/WorksForSale/Utils/getWorksForSaleRouteVariables"
 import type { SharedArtworkFilterContextProps } from "Components/ArtworkFilter/ArtworkFilterContext"
@@ -8,7 +9,6 @@ import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import type { ArtistWorksForSaleRouteArtworksQuery } from "__generated__/ArtistWorksForSaleRouteArtworksQuery.graphql"
 import type { ArtistWorksForSaleRoute_artist$data } from "__generated__/ArtistWorksForSaleRoute_artist.graphql"
 import type React from "react"
-import { Meta } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistArtworkFilterRefetchContainer } from "./Components/ArtistArtworkFilter"
 
@@ -19,16 +19,21 @@ interface ArtistWorksForSaleRouteProps {
 const ArtistWorksForSaleRoute: React.FC<
   React.PropsWithChildren<ArtistWorksForSaleRouteProps>
 > = ({ artist }) => {
-  const { title, description } = artist.meta
+  const { title, description } = artist.artworksMeta
   const { match } = useRouter()
 
   return (
     <>
+      <ArtistMetaFragmentContainer
+        artist={artist}
+        title={title}
+        description={description}
+        isPaginated={true}
+      />
       <ArtistMediumsTitle
         defaultTitle={title}
         name={artist.name ?? "Unknown Artist"}
       />
-      <Meta name="description" content={description} />
       <SystemQueryRenderer<ArtistWorksForSaleRouteArtworksQuery>
         query={graphql`
           query ArtistWorksForSaleRouteArtworksQuery(
@@ -104,10 +109,11 @@ export const ArtistWorksForSaleRouteFragmentContainer = createFragmentContainer(
   {
     artist: graphql`
       fragment ArtistWorksForSaleRoute_artist on Artist {
+        ...ArtistMeta_artist
         ...ArtistWorksForSaleEmpty_artist
         slug
         name
-        meta(page: ARTWORKS) {
+        artworksMeta: meta(page: ARTWORKS) {
           description
           title
         }

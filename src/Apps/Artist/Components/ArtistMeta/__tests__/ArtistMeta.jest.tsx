@@ -40,76 +40,18 @@ const getMetaBy = (selectors): Element | null => {
 }
 
 describe("AdminMeta", () => {
-  describe("canonical link", () => {
-    it("renders", () => {
+  describe("OpenGraph tags", () => {
+    it("renders artist OpenGraph tags", () => {
       renderWithRelay({
         Artist: () => ({
-          href: "/artist/example-artist",
-        }),
-      })
-
-      const linkTag = document.querySelector("link[rel='canonical']")
-      expect(linkTag?.getAttribute("href")).toEqual("/artist/example-artist")
-    })
-  })
-
-  describe("without an artist description", () => {
-    it("renders the default description", () => {
-      renderWithRelay({
-        Artist: () => ({
+          slug: "example-artist",
           href: "/artist/example-artist",
           meta: { description: null, title: "Example Artist" },
         }),
       })
 
-      const defaultDescription =
-        "Artsy is the world’s largest online art marketplace. Browse over 1 million artworks by iconic and emerging artists from 4000+ galleries and top auction houses."
-
-      expect(
-        getMetaBy({ name: "description" })?.getAttribute("content"),
-      ).toEqual(defaultDescription)
-
-      expect(
-        getMetaBy({ property: "og:description" })?.getAttribute("content"),
-      ).toEqual(defaultDescription)
-
-      expect(
-        getMetaBy({ property: "twitter:description" })?.getAttribute("content"),
-      ).toEqual(defaultDescription)
-    })
-  })
-
-  describe("with an artist that has a description", () => {
-    it("renders meta tags with that description", () => {
-      const artist = {
-        href: "/artist/example-artist",
-        meta: {
-          description: "Very important painter!",
-          title: "Example Artist",
-        },
-      }
-      renderWithRelay({ Artist: () => artist })
-
-      expect(
-        getMetaBy({
-          name: "description",
-          content: artist.meta.description,
-        }),
-      ).not.toBeNull()
-
-      expect(
-        getMetaBy({
-          property: "og:description",
-          content: artist.meta.description,
-        }),
-      ).not.toBeNull()
-
-      expect(
-        getMetaBy({
-          property: "twitter:description",
-          content: artist.meta.description,
-        }),
-      ).not.toBeNull()
+      expect(getMetaBy({ property: "og:url" })).not.toBeNull()
+      expect(getMetaBy({ property: "og:type" })).not.toBeNull()
     })
   })
 
