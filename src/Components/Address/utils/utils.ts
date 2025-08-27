@@ -95,7 +95,7 @@ export const validatePhoneNumber = (
  * @param regionCode The region/country code
  * @returns Boolean indicating if phone number is valid
  */
-export const useValidatePhoneNumber = ({ national, regionCode }) => {
+export const useValidatePhoneNumber = ({ national, regionCode }: PhoneNumber) => {
   const [isPhoneNumberValid, setIsPhoneNumberValid] = useState(true)
 
   const validate = useCallback(async () => {
