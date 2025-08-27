@@ -169,6 +169,7 @@ export const SettingsEditSettingsInformation: React.FC<
               <SelectInput
                 key={`phone-input-${values.phoneNumberCountryCode || "empty"}`}
                 label="Mobile Number"
+                mt={4}
                 name="phoneNumber"
                 onChange={handleChange}
                 onBlur={handleBlur}
