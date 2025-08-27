@@ -11,7 +11,7 @@ import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCh
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useOrder2SetOrderFulfillmentOptionMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderFulfillmentOptionMutation"
 import { useOrder2SetOrderPickupDetailsMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderPickupDetailsMutation"
-import { richPhoneValidators } from "Components/Address/utils"
+import { richRequiredPhoneValidators } from "Components/Address/utils"
 import { countries as phoneCountryOptions } from "Utils/countries"
 import createLogger from "Utils/logger"
 import type { Order2PickupForm_order$key } from "__generated__/Order2PickupForm_order.graphql"
@@ -213,7 +213,7 @@ export const Order2PickupForm: React.FC<Order2PickupFormProps> = ({
 }
 
 const VALIDATION_SCHEMA = Yup.object().shape({
-  ...richPhoneValidators,
+  ...richRequiredPhoneValidators,
 })
 
 const FRAGMENT = graphql`

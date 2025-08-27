@@ -6,7 +6,7 @@ import {
   basicPhoneValidator,
   isPostalCodeRequired,
   isRegionRequired,
-  richPhoneValidators,
+  richRequiredPhoneValidators,
   yupAddressValidator,
 } from "Components/Address/utils"
 import { sortCountriesForCountryInput } from "Components/Address/utils/sortCountriesForCountryInput"
@@ -54,7 +54,7 @@ interface Props {
 export const addressFormFieldsValidator = (args: Props = {}) => ({
   address: yupAddressValidator,
   ...(args.withLegacyPhoneInput && basicPhoneValidator),
-  ...(args.withPhoneNumber && richPhoneValidators),
+  ...(args.withPhoneNumber && richRequiredPhoneValidators),
 })
 
 /**

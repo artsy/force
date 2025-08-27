@@ -14,7 +14,7 @@ import { useAddAddress } from "Apps/Settings/Routes/Shipping/useAddAddress"
 import { useEditAddress } from "Apps/Settings/Routes/Shipping/useEditAddress"
 import { useSetDefaultAddress } from "Apps/Settings/Routes/Shipping/useSetDefaultAddress"
 import { CountrySelect } from "Components/CountrySelect"
-import { richPhoneValidators } from "Components/Address/utils"
+import { richRequiredPhoneValidators } from "Components/Address/utils"
 import { countries } from "Utils/countries"
 import { Form, Formik } from "formik"
 import type { FC } from "react"
@@ -47,7 +47,7 @@ const VALIDATION_SCHEMA = Yup.object().shape({
     city: Yup.string().required("City is required"),
     region: Yup.string().required("Region is required"),
     postalCode: Yup.string().required("Postal Code is required"),
-    ...richPhoneValidators,
+    ...richRequiredPhoneValidators,
   }),
   isDefault: Yup.boolean().optional(),
 })
