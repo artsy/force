@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4bea2ef6f0d94ccb64b90a7d440dbb6f>>
+ * @generated SignedSource<<ec6b1c55962a84bde1e66ad2a99fc52c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,18 +9,18 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from 'relay-runtime';
-export type validatePhoneNumberQuery$variables = {
+export type utilsValidatePhoneNumberQuery$variables = {
   phoneNumber: string;
   regionCode?: string | null | undefined;
 };
-export type validatePhoneNumberQuery$data = {
+export type utilsValidatePhoneNumberQuery$data = {
   readonly phoneNumber: {
     readonly isValid: boolean | null | undefined;
   } | null | undefined;
 };
-export type validatePhoneNumberQuery = {
-  response: validatePhoneNumberQuery$data;
-  variables: validatePhoneNumberQuery$variables;
+export type utilsValidatePhoneNumberQuery = {
+  response: utilsValidatePhoneNumberQuery$data;
+  variables: utilsValidatePhoneNumberQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -72,7 +72,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "validatePhoneNumberQuery",
+    "name": "utilsValidatePhoneNumberQuery",
     "selections": (v1/*: any*/),
     "type": "Query",
     "abstractKey": null
@@ -81,20 +81,20 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "validatePhoneNumberQuery",
+    "name": "utilsValidatePhoneNumberQuery",
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "5298c68273523cdfe3b81c9da74d45be",
+    "cacheID": "3960b36ff3d8a9e19b71c6a48c89e31e",
     "id": null,
     "metadata": {},
-    "name": "validatePhoneNumberQuery",
+    "name": "utilsValidatePhoneNumberQuery",
     "operationKind": "query",
-    "text": "query validatePhoneNumberQuery(\n  $phoneNumber: String!\n  $regionCode: String\n) {\n  phoneNumber(phoneNumber: $phoneNumber, regionCode: $regionCode) {\n    isValid\n  }\n}\n"
+    "text": "query utilsValidatePhoneNumberQuery(\n  $phoneNumber: String!\n  $regionCode: String\n) {\n  phoneNumber(phoneNumber: $phoneNumber, regionCode: $regionCode) {\n    isValid\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "bb3e30d3c2cf10506fe7aaa92221e898";
+(node as any).hash = "b9094176d23738b257ba4bd207497a24";
 
 export default node;

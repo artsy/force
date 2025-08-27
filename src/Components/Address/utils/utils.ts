@@ -1,6 +1,6 @@
 import type { CreateTokenCardData } from "@stripe/stripe-js"
 import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
-import type { validatePhoneNumberQuery } from "__generated__/validatePhoneNumberQuery.graphql"
+import type { utilsValidatePhoneNumberQuery } from "__generated__/utilsValidatePhoneNumberQuery.graphql"
 import { debounce } from "lodash"
 import { useCallback, useEffect, useState } from "react"
 import { fetchQuery, graphql } from "react-relay"
@@ -45,10 +45,10 @@ const phoneValidator = debounce(
     }
 
     try {
-      const response = await fetchQuery<validatePhoneNumberQuery>(
+      const response = await fetchQuery<utilsValidatePhoneNumberQuery>(
         relayEnvironment,
         graphql`
-          query validatePhoneNumberQuery(
+          query utilsValidatePhoneNumberQuery(
             $phoneNumber: String!
             $regionCode: String
           ) {
