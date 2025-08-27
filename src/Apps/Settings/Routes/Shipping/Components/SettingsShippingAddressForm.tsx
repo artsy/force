@@ -3,19 +3,19 @@ import {
   Checkbox,
   Column,
   GridColumns,
-  Input,
   Message,
   ModalDialog,
-  SelectInput,
   VisuallyHidden,
   useToasts,
 } from "@artsy/palette"
 import { useAddAddress } from "Apps/Settings/Routes/Shipping/useAddAddress"
 import { useEditAddress } from "Apps/Settings/Routes/Shipping/useEditAddress"
 import { useSetDefaultAddress } from "Apps/Settings/Routes/Shipping/useSetDefaultAddress"
-import { CountrySelect } from "Components/CountrySelect"
-import { richRequiredPhoneValidators } from "Components/Address/utils"
-import { countries } from "Utils/countries"
+import { AddressFormFields } from "Components/Address/AddressFormFields"
+import {
+  richRequiredPhoneValidators,
+  yupAddressValidator,
+} from "Components/Address/utils"
 import { Form, Formik } from "formik"
 import type { FC } from "react"
 import * as Yup from "yup"
@@ -26,29 +26,32 @@ export const INITIAL_ADDRESS = {
   addressLine1: "",
   addressLine2: "",
   city: "",
-  phoneNumber: "",
-  phoneNumberCountryCode: "us",
   postalCode: "",
   region: "",
+  phoneNumber: "",
+  phoneNumberCountryCode: "us",
 }
 
 const INITIAL_VALUES = {
-  attributes: INITIAL_ADDRESS,
+  address: {
+    name: INITIAL_ADDRESS.name,
+    country: INITIAL_ADDRESS.country,
+    addressLine1: INITIAL_ADDRESS.addressLine1,
+    addressLine2: INITIAL_ADDRESS.addressLine2,
+    city: INITIAL_ADDRESS.city,
+    postalCode: INITIAL_ADDRESS.postalCode,
+    region: INITIAL_ADDRESS.region,
+  },
+  phoneNumber: INITIAL_ADDRESS.phoneNumber,
+  phoneNumberCountryCode: INITIAL_ADDRESS.phoneNumberCountryCode,
   isDefault: false,
 }
 
-type Address = typeof INITIAL_ADDRESS
+type AddressAttributes = typeof INITIAL_ADDRESS
 
 const VALIDATION_SCHEMA = Yup.object().shape({
-  attributes: Yup.object().shape({
-    name: Yup.string().required("Name is required"),
-    country: Yup.string().required("Country is required"),
-    addressLine1: Yup.string().required("Address is required"),
-    city: Yup.string().required("City is required"),
-    region: Yup.string().required("Region is required"),
-    postalCode: Yup.string().required("Postal Code is required"),
-    ...richRequiredPhoneValidators,
-  }),
+  address: yupAddressValidator,
+  ...richRequiredPhoneValidators,
   isDefault: Yup.boolean().optional(),
 })
 
@@ -57,7 +60,7 @@ interface SettingsShippingAddressFormProps {
   address?: {
     internalID: string
     isDefault: boolean
-    attributes: Address
+    attributes: AddressAttributes
   }
 }
 
@@ -77,15 +80,20 @@ export const SettingsShippingAddressForm: FC<
       return INITIAL_VALUES
     }
 
+    // For existing addresses, phone fields might not be present in attributes
+    // Extract them if they exist, otherwise use empty defaults
+    const { phoneNumber, phoneNumberCountryCode, ...addressWithoutPhone } =
+      address.attributes
+
     return {
-      ...address,
-      attributes: {
-        ...address.attributes,
-        // In case address has no phone code, use country as phone code
-        phoneNumberCountryCode: address.attributes?.phoneNumberCountryCode
-          ? address.attributes.phoneNumberCountryCode
-          : address?.attributes.country.toLowerCase(),
-      },
+      isDefault: address.isDefault,
+      address: addressWithoutPhone,
+      phoneNumber: phoneNumber || "",
+      // If no phone country code, default to the address country or 'us'
+      phoneNumberCountryCode:
+        phoneNumberCountryCode ||
+        addressWithoutPhone.country?.toLowerCase() ||
+        "us",
     }
   }
 
@@ -94,8 +102,22 @@ export const SettingsShippingAddressForm: FC<
       validateOnMount
       validationSchema={VALIDATION_SCHEMA}
       initialValues={getInitialValues()}
-      onSubmit={async ({ isDefault, attributes }, { setStatus, resetForm }) => {
+      onSubmit={async (
+        {
+          isDefault,
+          address: addressData,
+          phoneNumber,
+          phoneNumberCountryCode,
+        },
+        { setStatus, resetForm },
+      ) => {
         try {
+          const attributes = {
+            ...addressData,
+            phoneNumber,
+            phoneNumberCountryCode,
+          }
+
           if (isEditing) {
             await submitEditAddress({
               variables: {
@@ -148,11 +170,7 @@ export const SettingsShippingAddressForm: FC<
     >
       {({
         values,
-        errors,
-        touched,
         status,
-        handleChange,
-        handleBlur,
         setFieldValue,
         isValid,
         isSubmitting,
@@ -176,148 +194,11 @@ export const SettingsShippingAddressForm: FC<
             }
           >
             <Form>
+              <AddressFormFields withPhoneNumber />
               <GridColumns>
                 <Column span={12}>
-                  <Input
-                    name="attributes.name"
-                    title="Full Name"
-                    placeholder="Enter name"
-                    autoComplete="name"
-                    autoFocus
-                    value={values.attributes.name}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    error={touched.attributes?.name && errors.attributes?.name}
-                    required
-                  />
-                </Column>
-
-                <Column span={6}>
-                  <CountrySelect
-                    title="Country"
-                    name="attributes.country"
-                    // TODO: Accept a value prop in Select
-                    // @ts-ignore
-                    value={values.attributes.country}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    error={
-                      touched.attributes?.country && errors.attributes?.country
-                    }
-                    required
-                  />
-                </Column>
-
-                <Column span={6}>
-                  <Input
-                    name="attributes.postalCode"
-                    title="Postal Code"
-                    placeholder="Add postal code"
-                    autoComplete="postal-code"
-                    value={values.attributes.postalCode}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    error={
-                      touched.attributes?.postalCode &&
-                      errors.attributes?.postalCode
-                    }
-                    required
-                  />
-                </Column>
-
-                <Column span={6}>
-                  <Input
-                    name="attributes.addressLine1"
-                    title="Street address"
-                    placeholder="Add address"
-                    autoComplete="address-line1"
-                    value={values.attributes.addressLine1}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    error={
-                      touched.attributes?.addressLine1 &&
-                      errors.attributes?.addressLine1
-                    }
-                    required
-                  />
-                </Column>
-
-                <Column span={6}>
-                  <Input
-                    name="attributes.addressLine2"
-                    title="Address Line 2"
-                    placeholder="Add address line 2"
-                    autoComplete="address-line2"
-                    value={values.attributes.addressLine2}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    error={
-                      touched.attributes?.addressLine2 &&
-                      errors.attributes?.addressLine2
-                    }
-                  />
-                </Column>
-
-                <Column span={6}>
-                  <Input
-                    name="attributes.city"
-                    title="City"
-                    placeholder="Enter city"
-                    autoComplete="address-level2"
-                    value={values.attributes.city}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    error={touched.attributes?.city && errors.attributes?.city}
-                    required
-                  />
-                </Column>
-
-                <Column span={6}>
-                  <Input
-                    name="attributes.region"
-                    title="State, Province, or Region"
-                    placeholder="Add state, province, or region"
-                    autoComplete="address-level1"
-                    value={values.attributes.region}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    error={
-                      touched.attributes?.region && errors.attributes?.region
-                    }
-                    required
-                  />
-                </Column>
-
-                <Column span={12}>
-                  <SelectInput
-                    label="Phone number"
-                    options={countries}
-                    onSelect={option => {
-                      setFieldValue(
-                        "attributes.phoneNumberCountryCode",
-                        option.value,
-                      )
-                    }}
-                    name="attributes.phoneNumber"
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    dropdownValue={values.attributes.phoneNumberCountryCode}
-                    inputValue={values.attributes.phoneNumber}
-                    placeholder="(000) 000 0000"
-                    autoComplete="tel-national"
-                    enableSearch
-                    required
-                    error={
-                      (touched.attributes?.phoneNumberCountryCode &&
-                        errors.attributes?.phoneNumberCountryCode) ||
-                      (touched.attributes?.phoneNumber &&
-                        errors.attributes?.phoneNumber)
-                    }
-                  />
-                </Column>
-
-                <Column span={12}>
                   <Checkbox
+                    mt={2}
                     selected={values.isDefault}
                     onSelect={value => {
                       setFieldValue("isDefault", value)
