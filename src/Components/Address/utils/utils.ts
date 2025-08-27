@@ -95,7 +95,10 @@ export const validatePhoneNumber = (
  * @param regionCode The region/country code
  * @returns Boolean indicating if phone number is valid
  */
-export const useValidatePhoneNumber = ({ national, regionCode }: PhoneNumber) => {
+export const useValidatePhoneNumber = ({
+  national,
+  regionCode,
+}: PhoneNumber) => {
   const [isPhoneNumberValid, setIsPhoneNumberValid] = useState(true)
 
   const validate = useCallback(async () => {
@@ -133,20 +136,28 @@ export const basicPhoneValidator = {
 }
 
 export const richPhoneValidators = {
-  phoneNumber: Yup.string()
-    .required("Phone number is required")
-    .test({
-      name: "phone-number-is-valid",
-      message: "Please enter a valid phone number",
-      test: (national, context) => {
-        return validatePhoneNumber({
-          national: `${national}`,
-          regionCode: `${context.parent.phoneNumberCountryCode}`,
-        })
-      },
-    }),
-  phoneNumberCountryCode: Yup.string().required(
-    "Phone number country code is required",
+  phoneNumber: Yup.string().test({
+    name: "phone-number-is-valid",
+    message: "Please enter a valid phone number",
+    test: (national, context) => {
+      if (!national || national.length === 0) {
+        return true
+      }
+      return validatePhoneNumber({
+        national: `${national}`,
+        regionCode: `${context.parent.phoneNumberCountryCode}`,
+      })
+    },
+  }),
+  phoneNumberCountryCode: Yup.string(),
+}
+
+export const richRequiredPhoneValidators = {
+  phoneNumber: richPhoneValidators.phoneNumber.required(
+    "Phone number is required",
+  ),
+  phoneNumberCountryCode: richPhoneValidators.phoneNumberCountryCode.required(
+    "Country code is required",
   ),
 }
 
