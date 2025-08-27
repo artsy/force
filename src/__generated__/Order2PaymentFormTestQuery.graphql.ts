@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bf5b6101fe986dd8528e2fcd797a9303>>
+ * @generated SignedSource<<ca96d72591b90706cf835c8040c3ff4f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -71,6 +71,12 @@ v6 = {
   "nullable": false,
   "plural": false,
   "type": "ID"
+},
+v7 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
 };
 return {
   "fragment": {
@@ -241,6 +247,13 @@ return {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
+                "name": "code",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
                 "name": "mode",
                 "storageKey": null
               },
@@ -252,6 +265,13 @@ return {
                 "storageKey": null
               },
               (v3/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "availablePaymentMethods",
+                "storageKey": null
+              },
               {
                 "alias": null,
                 "args": null,
@@ -322,6 +342,55 @@ return {
                 ],
                 "storageKey": null
               },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "LineItem",
+                "kind": "LinkedField",
+                "name": "lineItems",
+                "plural": true,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Artwork",
+                    "kind": "LinkedField",
+                    "name": "artwork",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "href",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": "artworkMeta",
+                        "args": null,
+                        "concreteType": "ArtworkMeta",
+                        "kind": "LinkedField",
+                        "name": "meta",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "share",
+                            "storageKey": null
+                          }
+                        ],
+                        "storageKey": null
+                      },
+                      (v4/*: any*/)
+                    ],
+                    "storageKey": null
+                  },
+                  (v4/*: any*/)
+                ],
+                "storageKey": null
+              },
               (v4/*: any*/)
             ],
             "storageKey": "order(id:\"order-id\")"
@@ -333,7 +402,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "eb925edfca074e08be1d9d02e235c5b1",
+    "cacheID": "1ededfba3e14338529ea22924e86ccb5",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -404,6 +473,18 @@ return {
           "plural": false,
           "type": "Order"
         },
+        "me.order.availablePaymentMethods": {
+          "enumValues": [
+            "CREDIT_CARD",
+            "SEPA_DEBIT",
+            "US_BANK_ACCOUNT",
+            "WIRE_TRANSFER"
+          ],
+          "nullable": false,
+          "plural": true,
+          "type": "OrderPaymentMethodEnum"
+        },
+        "me.order.code": (v5/*: any*/),
         "me.order.id": (v6/*: any*/),
         "me.order.internalID": (v6/*: any*/),
         "me.order.itemsTotal": {
@@ -419,6 +500,28 @@ return {
           "plural": false,
           "type": "Long"
         },
+        "me.order.lineItems": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": true,
+          "type": "LineItem"
+        },
+        "me.order.lineItems.artwork": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Artwork"
+        },
+        "me.order.lineItems.artwork.artworkMeta": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ArtworkMeta"
+        },
+        "me.order.lineItems.artwork.artworkMeta.share": (v7/*: any*/),
+        "me.order.lineItems.artwork.href": (v7/*: any*/),
+        "me.order.lineItems.artwork.id": (v6/*: any*/),
+        "me.order.lineItems.id": (v6/*: any*/),
         "me.order.mode": {
           "enumValues": [
             "BUY",
@@ -459,7 +562,7 @@ return {
     },
     "name": "Order2PaymentFormTestQuery",
     "operationKind": "query",
-    "text": "query Order2PaymentFormTestQuery {\n  me {\n    ...Order2PaymentForm_me\n    order(id: \"order-id\") {\n      ...Order2PaymentForm_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2PaymentForm_me on Me {\n  creditCards(first: 10) {\n    edges {\n      node {\n        __typename\n        internalID\n        brand\n        lastDigits\n        id\n      }\n    }\n  }\n  bankAccounts(first: 10) {\n    edges {\n      node {\n        __typename\n        type\n        internalID\n        last4\n        id\n      }\n    }\n  }\n}\n\nfragment Order2PaymentForm_order on Order {\n  mode\n  source\n  internalID\n  itemsTotal {\n    minor\n    currencyCode\n  }\n  seller {\n    __typename\n    ... on Partner {\n      merchantAccount {\n        externalId\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n"
+    "text": "query Order2PaymentFormTestQuery {\n  me {\n    ...Order2PaymentForm_me\n    order(id: \"order-id\") {\n      ...Order2PaymentForm_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2PaymentForm_me on Me {\n  creditCards(first: 10) {\n    edges {\n      node {\n        __typename\n        internalID\n        brand\n        lastDigits\n        id\n      }\n    }\n  }\n  bankAccounts(first: 10) {\n    edges {\n      node {\n        __typename\n        type\n        internalID\n        last4\n        id\n      }\n    }\n  }\n}\n\nfragment Order2PaymentForm_order on Order {\n  code\n  mode\n  source\n  internalID\n  availablePaymentMethods\n  itemsTotal {\n    minor\n    currencyCode\n  }\n  seller {\n    __typename\n    ... on Partner {\n      merchantAccount {\n        externalId\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  lineItems {\n    artwork {\n      href\n      artworkMeta: meta {\n        share\n      }\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();

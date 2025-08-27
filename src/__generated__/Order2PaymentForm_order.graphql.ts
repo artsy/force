@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8b3c6848961f37cf8bb4049f62966111>>
+ * @generated SignedSource<<bd1b8d9121bc09a321c59fbc9955b319>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,14 +10,25 @@
 
 import { ReaderFragment } from 'relay-runtime';
 export type OrderModeEnum = "BUY" | "OFFER" | "%future added value";
+export type OrderPaymentMethodEnum = "CREDIT_CARD" | "SEPA_DEBIT" | "US_BANK_ACCOUNT" | "WIRE_TRANSFER" | "%future added value";
 export type OrderSourceEnum = "ARTWORK_PAGE" | "INQUIRY" | "PARTNER_OFFER" | "PRIVATE_SALE" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type Order2PaymentForm_order$data = {
+  readonly availablePaymentMethods: ReadonlyArray<OrderPaymentMethodEnum>;
+  readonly code: string;
   readonly internalID: string;
   readonly itemsTotal: {
     readonly currencyCode: string;
     readonly minor: any;
   } | null | undefined;
+  readonly lineItems: ReadonlyArray<{
+    readonly artwork: {
+      readonly artworkMeta: {
+        readonly share: string | null | undefined;
+      } | null | undefined;
+      readonly href: string | null | undefined;
+    } | null | undefined;
+  } | null | undefined>;
   readonly mode: OrderModeEnum;
   readonly seller: {
     readonly merchantAccount?: {
@@ -42,6 +53,13 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
+      "name": "code",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "mode",
       "storageKey": null
     },
@@ -57,6 +75,13 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "internalID",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "availablePaymentMethods",
       "storageKey": null
     },
     {
@@ -119,12 +144,59 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "LineItem",
+      "kind": "LinkedField",
+      "name": "lineItems",
+      "plural": true,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Artwork",
+          "kind": "LinkedField",
+          "name": "artwork",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "href",
+              "storageKey": null
+            },
+            {
+              "alias": "artworkMeta",
+              "args": null,
+              "concreteType": "ArtworkMeta",
+              "kind": "LinkedField",
+              "name": "meta",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "share",
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
     }
   ],
   "type": "Order",
   "abstractKey": null
 };
 
-(node as any).hash = "2d6d53da45804e96e0844d959f212c9e";
+(node as any).hash = "44fa2db387b66b66bc2c24f5e14543cb";
 
 export default node;

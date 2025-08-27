@@ -310,7 +310,40 @@ const helpers = {
     expect(creditCardPreviewText).toBeInTheDocument()
   },
 
-  async submitOrder({ mockResolveLastOperation, initialOrder }) {
+  async fillInWireTransfer({ mockResolveLastOperation, initialOrder }) {
+    await userEvent.click(screen.getByTestId(testIDs.paymentFormWire))
+    await userEvent.click(screen.getByText("Continue to Review"))
+
+    await act(async () => {
+      const wireTransferMutation = await waitFor(() => {
+        return mockResolveLastOperation({
+          commerceSetPaymentPayload: () =>
+            orderMutationSuccess(initialOrder, {
+              paymentMethod: "WIRE_TRANSFER",
+            }),
+        })
+      })
+
+      expect(wireTransferMutation.operationName).toBe("useSetPaymentMutation")
+      expect(wireTransferMutation.operationVariables.input).toEqual({
+        id: "order-id",
+        paymentMethod: "WIRE_TRANSFER",
+      })
+
+      await flushPromiseQueue()
+    })
+
+    // Verify that the payment step is complete by checking for the payment completed view
+    await waitFor(() => {
+      expect(screen.getByText("Continue to Review")).toBeInTheDocument()
+    })
+  },
+
+  async submitOrder({
+    mockResolveLastOperation,
+    initialOrder,
+    isWireTransfer = false,
+  }) {
     const reviewOrderSubmitButton = screen.getAllByText("Submit")[0]
     await userEvent.click(reviewOrderSubmitButton)
 
@@ -324,11 +357,16 @@ const helpers = {
       expect(submitOrderMutation.operationName).toBe(
         "useOrder2SubmitOrderMutation",
       )
-      expect(submitOrderMutation.operationVariables.input).toEqual({
+
+      const expectedInput = {
         id: "order-id",
-        confirmationToken: "confirmation-token-id",
-        oneTimeUse: false,
-      })
+        confirmationToken: isWireTransfer ? undefined : "confirmation-token-id",
+        oneTimeUse: isWireTransfer ? true : false,
+      }
+
+      expect(submitOrderMutation.operationVariables.input).toEqual(
+        expectedInput,
+      )
 
       await flushPromiseQueue()
     })
@@ -1363,6 +1401,161 @@ describe("Order2CheckoutRoute", () => {
     })
   })
 
+  describe("Checkout with wire transfer", () => {
+    it("allows the user to progress through order submission with pickup + wire transfer", async () => {
+      const props = {
+        ...baseProps,
+        me: {
+          ...baseProps.me,
+          order: {
+            ...baseProps.me.order,
+            fulfillmentOptions: [
+              {
+                type: "PICKUP",
+                __typename: "PickupFulfillmentOption",
+                selected: true,
+              },
+              { type: "DOMESTIC_FLAT" },
+            ],
+            fulfillmentDetails: {
+              phoneNumber: {
+                originalNumber: "03012345678",
+                regionCode: "de",
+              },
+            },
+            selectedFulfillmentOption: {
+              type: "PICKUP",
+            },
+            stripeConfirmationToken: null,
+          },
+          creditCards: {
+            edges: [],
+          },
+          bankAccounts: {
+            edges: [],
+          },
+        },
+      }
+      const initialOrder = props.me.order
+
+      const { mockResolveLastOperation } = renderWithRelay({
+        Viewer: () => props,
+      })
+
+      await helpers.waitForLoadingComplete()
+
+      // Skip to payment step since pickup is pre-configured
+      await waitFor(() => {
+        act(() => {
+          userEvent.click(screen.getByText("Continue to Payment"))
+        })
+      })
+
+      // PICKUP MUTATIONS
+      await act(async () => {
+        await waitFor(() => {
+          return mockResolveLastOperation({
+            setOrderFulfillmentOptionPayload: () =>
+              orderMutationSuccess(initialOrder, {
+                selectedFulfillmentOption: {
+                  type: "PICKUP",
+                },
+              }),
+          })
+        })
+        await flushPromiseQueue()
+      })
+
+      await act(async () => {
+        await waitFor(() => {
+          return mockResolveLastOperation({
+            updateOrderShippingAddressPayload: () =>
+              orderMutationSuccess(initialOrder, {
+                selectedFulfillmentOption: {
+                  type: "PICKUP",
+                },
+                fulfillmentDetails: {
+                  phoneNumber: {
+                    originalNumber: "03012345678",
+                    regionCode: "de",
+                  },
+                },
+              }),
+          })
+        })
+        await flushPromiseQueue()
+      })
+
+      await helpers.fillInWireTransfer({
+        mockResolveLastOperation,
+        initialOrder,
+      })
+
+      await helpers.submitOrder({
+        mockResolveLastOperation,
+        initialOrder,
+        isWireTransfer: true,
+      })
+
+      expectTrackedEvents({ mockTrackEvent }, [
+        {
+          action: "orderProgressionViewed",
+          context_module: "ordersFulfillment",
+          context_page_owner_id: "order-id",
+          flow: "Buy now",
+        },
+        {
+          action: "clickedOrderProgression",
+          context_module: "ordersFulfillment",
+          context_page_owner_id: "order-id",
+          flow: "Buy now",
+        },
+        {
+          action: "orderProgressionViewed",
+          context_module: "ordersPayment",
+          context_page_owner_id: "order-id",
+          flow: "Buy now",
+        },
+        {
+          action: "clickedPaymentMethod",
+          amount: '<mock-value-for-field-"minor">',
+          currency: '<mock-value-for-field-"currencyCode">',
+          flow: "Buy now",
+          order_id: "order-id",
+          payment_method: "WIRE_TRANSFER",
+          subject: "click payment method",
+        },
+        {
+          action: "clickedOrderProgression",
+          context_module: "ordersPayment",
+          context_page_owner_id: "order-id",
+          flow: "Buy now",
+        },
+        {
+          action: "orderProgressionViewed",
+          context_module: "ordersReview",
+          context_page_owner_id: "order-id",
+          flow: "Buy now",
+        },
+        {
+          action: "clickedOrderProgression",
+          context_module: "ordersReview",
+          context_page_owner_id: "order-id",
+          flow: "Buy now",
+        },
+        {
+          action: "submittedOrder",
+          flow: "Buy now",
+          order_id: "order-id",
+        },
+      ])
+
+      expect(mockRouter.replace).toHaveBeenCalledWith(
+        "/orders/order-id/details",
+      )
+    })
+  })
+
   describe("within the payment section", () => {
     it.todo(
       // TODO: Example of this assertion is above for clickedChangeShippingAddress
@@ -1529,6 +1722,7 @@ const baseProps = {
       id: "ORDER:RELAY-ID-MAKES-TEST-WORK",
 
       availableShippingCountries: ["US", "DE"],
+      availablePaymentMethods: ["CREDIT_CARD", "WIRE_TRANSFER"],
       internalID: "order-id",
       mode: "BUY",
       source: "ARTWORK_PAGE",
