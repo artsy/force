@@ -14895,6 +14895,7 @@ type Me implements Node {
   conversationsConnection(
     after: String
     artistId: String
+    artworkId: String
     before: String
     conversationType: ConversationType
     dismissed: Boolean
@@ -19697,6 +19698,7 @@ type Query {
   conversationsConnection(
     after: String
     artistId: String
+    artworkId: String
     before: String
     conversationType: ConversationType
     dismissed: Boolean
@@ -25756,6 +25758,7 @@ type Viewer {
   conversationsConnection(
     after: String
     artistId: String
+    artworkId: String
     before: String
     conversationType: ConversationType
     dismissed: Boolean
