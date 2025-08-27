@@ -140,7 +140,6 @@ export const richPhoneValidators = {
     name: "phone-number-is-valid",
     message: "Please enter a valid phone number",
     test: (national, context) => {
-      // If no value provided, it's valid (will be caught by .required() if needed)
       if (!national || national.length === 0) {
         return true
       }
