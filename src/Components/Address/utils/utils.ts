@@ -1,5 +1,9 @@
 import type { CreateTokenCardData } from "@stripe/stripe-js"
-import { validatePhoneNumber } from "Components/PhoneNumberInput"
+import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
+import type { utilsValidatePhoneNumberQuery } from "__generated__/utilsValidatePhoneNumberQuery.graphql"
+import { debounce } from "lodash"
+import { useCallback, useEffect, useState } from "react"
+import { fetchQuery, graphql } from "react-relay"
 import * as Yup from "yup"
 
 export interface Address {
@@ -22,6 +26,92 @@ export const emptyAddress: Address = {
   city: "",
   region: "",
   phoneNumber: "",
+}
+
+const relayEnvironment = createRelaySSREnvironment()
+
+type PhoneNumber = {
+  national: string
+  regionCode: string
+}
+
+const phoneValidator = debounce(
+  async (
+    { national, regionCode }: PhoneNumber,
+    resolve: (value: boolean) => void,
+  ) => {
+    if (!national || national.length < 5 || !regionCode) {
+      return resolve(false)
+    }
+
+    try {
+      const response = await fetchQuery<utilsValidatePhoneNumberQuery>(
+        relayEnvironment,
+        graphql`
+          query utilsValidatePhoneNumberQuery(
+            $phoneNumber: String!
+            $regionCode: String
+          ) {
+            phoneNumber(phoneNumber: $phoneNumber, regionCode: $regionCode) {
+              isValid
+            }
+          }
+        `,
+        { phoneNumber: national, regionCode },
+      ).toPromise()
+
+      if (!response?.phoneNumber) {
+        // Assume the phone number is valid if we can't validate it
+        return resolve(true)
+      }
+
+      return resolve(!!response.phoneNumber.isValid)
+    } catch (err) {
+      console.error(err)
+
+      // Assume the phone number is valid if we can't validate it
+      return resolve(true)
+    }
+  },
+  200,
+)
+
+/**
+ * Validates a phone number using GraphQL API
+ * @param phoneNumber Object with national number and region code
+ * @returns Promise that resolves to boolean indicating if phone number is valid
+ */
+export const validatePhoneNumber = (
+  phoneNumber: PhoneNumber,
+): Promise<boolean> => {
+  return new Promise(resolve => {
+    phoneValidator(phoneNumber, resolve)
+  })
+}
+
+/**
+ * React hook for phone number validation
+ * @param national The national phone number
+ * @param regionCode The region/country code
+ * @returns Boolean indicating if phone number is valid
+ */
+export const useValidatePhoneNumber = ({ national, regionCode }: PhoneNumber) => {
+  const [isPhoneNumberValid, setIsPhoneNumberValid] = useState(true)
+
+  const validate = useCallback(async () => {
+    const isValid = await validatePhoneNumber({
+      national,
+      regionCode,
+    })
+
+    setIsPhoneNumberValid(isValid)
+  }, [national, regionCode])
+
+  useEffect(() => {
+    validate()
+  }, [validate])
+
+  return isPhoneNumberValid
 }
 
 export const toStripeAddress = (address: Address): CreateTokenCardData => {

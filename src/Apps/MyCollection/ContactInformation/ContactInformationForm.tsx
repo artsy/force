@@ -57,6 +57,7 @@ export const ContactInformationForm: React.FC<
         dropdownValue={values.phoneNumberCountryCode}
         inputValue={values.phoneNumber}
         placeholder="(000) 000 0000"
+        autoComplete="tel-national"
         enableSearch
         required
         error={
