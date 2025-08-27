@@ -4,16 +4,17 @@ import {
   Join,
   PasswordInput,
   Select,
+  SelectInput,
   Spacer,
   Text,
   useToasts,
 } from "@artsy/palette"
 import { PRICE_BUCKETS } from "Apps/Settings/Routes/EditProfile/Components/SettingsEditProfileAboutYou"
+import { sortCountriesForCountryInput } from "Components/Address/utils/sortCountriesForCountryInput"
+import { useInitialLocationValues } from "Components/Address/utils/useInitialLocationValues"
+import { richPhoneValidators } from "Components/Address/utils/utils"
 import { passwordValidator } from "Components/AuthDialog/Views/AuthDialogSignUp"
-import {
-  PhoneNumberInput,
-  validatePhoneNumber,
-} from "Components/PhoneNumberInput"
+import { countries as countryPhoneOptions } from "Utils/countries"
 import type { SettingsEditSettingsInformation_me$data } from "__generated__/SettingsEditSettingsInformation_me.graphql"
 import { Form, Formik } from "formik"
 import type * as React from "react"
@@ -31,7 +32,14 @@ export const SettingsEditSettingsInformation: React.FC<
   const { sendToast } = useToasts()
   const { submitMutation } = useUpdateSettingsInformation()
   const phoneNumber = me.phoneNumber?.display ?? me.phoneNumber?.originalNumber
-  const phoneCountryCode = me.phoneNumber?.regionCode ?? "us"
+  const phoneCountryCode = me.phoneNumber?.regionCode
+
+  const countryInputOptions = sortCountriesForCountryInput(countryPhoneOptions)
+  const locationBasedInitialValues =
+    useInitialLocationValues(countryInputOptions)
+  const defaultPhoneCountryCode = phoneCountryCode
+    ? phoneCountryCode
+    : locationBasedInitialValues.phoneNumberCountryCode || "us"
 
   return (
     <>
@@ -39,10 +47,11 @@ export const SettingsEditSettingsInformation: React.FC<
         Information
       </Text>
       <Formik
+        key={`formik-${defaultPhoneCountryCode}`}
         initialValues={{
           email: me.email ?? "",
           phoneNumber: phoneNumber ?? "",
-          phoneCountryCode,
+          phoneNumberCountryCode: defaultPhoneCountryCode,
           priceRange: me.priceRange ?? "",
           priceRangeMax: me.priceRangeMax,
           priceRangeMin: me.priceRangeMin,
@@ -57,31 +66,16 @@ export const SettingsEditSettingsInformation: React.FC<
             is: email => email !== me.email,
             otherwise: field => field.notRequired(),
           }),
-          phoneNumber: Yup.string()
-            .test({
-              name: "phone-number-is-valid",
-              message: "Please enter a valid phone number",
-              test: (national, context) => {
-                // Phone number not required so allow blank
-                if (!national || !national.length) {
-                  return true
-                }
-
-                return validatePhoneNumber({
-                  national: `${national}`,
-                  regionCode: `${context.parent.phoneCountryCode}`,
-                })
-              },
-            })
-            .notRequired(),
-          phoneNumberCountryCode: Yup.string().notRequired(),
+          phoneNumber: richPhoneValidators.phoneNumber.notRequired(),
+          phoneNumberCountryCode:
+            richPhoneValidators.phoneNumberCountryCode.notRequired(),
         })}
         onSubmit={async (
           {
             email,
             password,
             phoneNumber,
-            phoneCountryCode,
+            phoneNumberCountryCode,
             priceRangeMin,
             priceRangeMax,
           },
@@ -94,7 +88,7 @@ export const SettingsEditSettingsInformation: React.FC<
                   email,
                   password,
                   phoneNumber,
-                  phoneCountryCode,
+                  phoneCountryCode: phoneNumberCountryCode,
                   priceRangeMin,
                   priceRangeMax,
                 },
@@ -129,8 +123,8 @@ export const SettingsEditSettingsInformation: React.FC<
             const updatedPhoneCountryCode = updatedMe?.phoneNumber?.regionCode
             setFieldValue("phoneNumber", updatedPhoneNumber ?? phoneNumber)
             setFieldValue(
-              "phoneCountryCode",
-              updatedPhoneCountryCode ?? phoneCountryCode,
+              "phoneNumberCountryCode",
+              updatedPhoneCountryCode ?? phoneNumberCountryCode,
             )
 
             setFieldValue("password", "")
@@ -172,29 +166,21 @@ export const SettingsEditSettingsInformation: React.FC<
                 autoComplete="email"
               />
 
-              {/* FIXME: Replace with SelectInput from palette and delete 1-off component */}
-              <PhoneNumberInput
-                title="Mobile Number"
-                mt={4}
-                inputProps={{
-                  name: "phoneNumber",
-                  onBlur: handleBlur,
-                  onChange: handleChange,
-                  placeholder: "Enter your mobile phone number",
-                  value: values.phoneNumber,
+              <SelectInput
+                key={`phone-input-${values.phoneNumberCountryCode || "empty"}`}
+                label="Mobile Number"
+                name="phoneNumber"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                options={countryPhoneOptions}
+                onSelect={option => {
+                  setFieldValue("phoneNumberCountryCode", option.value)
                 }}
-                selectProps={{
-                  name: "phoneCountryCode",
-                  onBlur: handleBlur,
-                  selected: values.phoneCountryCode,
-                  onSelect: value => {
-                    setFieldValue("phoneCountryCode", value)
-                  },
-                }}
-                error={
-                  (touched.phoneCountryCode && errors.phoneCountryCode) ||
-                  (touched.phoneNumber && errors.phoneNumber)
-                }
+                dropdownValue={values.phoneNumberCountryCode}
+                inputValue={values.phoneNumber}
+                placeholder="(000) 000 0000"
+                autoComplete="tel-national"
+                enableSearch
               />
 
               <Select

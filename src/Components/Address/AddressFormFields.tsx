@@ -305,6 +305,7 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
             dropdownValue={values.phoneNumberCountryCode}
             inputValue={values.phoneNumber}
             placeholder="(000) 000 0000"
+            autoComplete="tel-national"
             error={
               (touched.phoneNumber &&
                 (errors.phoneNumber as string | undefined)) ||
