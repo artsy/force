@@ -16,8 +16,12 @@ import {
   richRequiredPhoneValidators,
   yupAddressValidator,
 } from "Components/Address/utils"
+import { sortCountriesForCountryInput } from "Components/Address/utils/sortCountriesForCountryInput"
+import { useInitialLocationValues } from "Components/Address/utils/useInitialLocationValues"
+import { countries as countryPhoneOptions } from "Utils/countries"
 import { Form, Formik } from "formik"
 import type { FC } from "react"
+import { useEffect } from "react"
 import * as Yup from "yup"
 
 export const INITIAL_ADDRESS = {
@@ -75,9 +79,20 @@ export const SettingsShippingAddressForm: FC<
   // If an address is passed in, we are editing an existing address
   const isEditing = !!address
 
+  // Get location-based initial values for phone country code
+  const countryInputOptions = sortCountriesForCountryInput(countryPhoneOptions)
+  const locationBasedInitialValues =
+    useInitialLocationValues(countryInputOptions)
+
   const getInitialValues = () => {
     if (!address) {
-      return INITIAL_VALUES
+      // For new addresses, use location-based phone country code if available
+      const defaultPhoneCountryCode =
+        locationBasedInitialValues.phoneNumberCountryCode || "us"
+      return {
+        ...INITIAL_VALUES,
+        phoneNumberCountryCode: defaultPhoneCountryCode,
+      }
     }
 
     // For existing addresses, phone fields might not be present in attributes
@@ -89,9 +104,10 @@ export const SettingsShippingAddressForm: FC<
       isDefault: address.isDefault,
       address: addressWithoutPhone,
       phoneNumber: phoneNumber || "",
-      // If no phone country code, default to the address country or 'us'
+      // Use existing phone country code, or fall back to location-based, address country, or 'us'
       phoneNumberCountryCode:
         phoneNumberCountryCode ||
+        locationBasedInitialValues.phoneNumberCountryCode ||
         addressWithoutPhone.country?.toLowerCase() ||
         "us",
     }
@@ -176,6 +192,27 @@ export const SettingsShippingAddressForm: FC<
         isSubmitting,
         submitForm,
       }) => {
+        // Update phone country code when location changes for new addresses
+        useEffect(() => {
+          if (
+            !isEditing &&
+            locationBasedInitialValues.phoneNumberCountryCode &&
+            values.phoneNumberCountryCode === "us" &&
+            !values.phoneNumber
+          ) {
+            setFieldValue(
+              "phoneNumberCountryCode",
+              locationBasedInitialValues.phoneNumberCountryCode,
+            )
+          }
+        }, [
+          locationBasedInitialValues.phoneNumberCountryCode,
+          isEditing,
+          values.phoneNumberCountryCode,
+          values.phoneNumber,
+          setFieldValue,
+        ])
+
         return (
           <ModalDialog
             title={isEditing ? "Edit Address" : "Add New Address"}
