@@ -4,6 +4,11 @@ import type {
   StripeElementsOptions,
   StripeElementsUpdateOptions,
 } from "@stripe/stripe-js"
+import { Collapse } from "Apps/Order/Components/Collapse"
+import {
+  CheckoutStepName,
+  CheckoutStepState,
+} from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { Order2ExpressCheckoutUI } from "Apps/Order2/Routes/Checkout/Components/ExpressCheckout/Order2ExpressCheckoutUI"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
@@ -31,9 +36,11 @@ export const Order2ExpressCheckout: React.FC<Order2ExpressCheckoutProps> = ({
 }) => {
   const orderData = useFragment(FRAGMENT, order)
   const stripe = useStripe()
-  const { expressCheckoutPaymentMethods } = useCheckoutContext()
+  const { expressCheckoutPaymentMethods, steps } = useCheckoutContext()
 
   const expressCheckoutLoadedEmpty = expressCheckoutPaymentMethods?.length === 0
+
+  const activeStep = steps.find(step => step.state === CheckoutStepState.ACTIVE)
 
   if (expressCheckoutLoadedEmpty) {
     return null
@@ -73,11 +80,13 @@ export const Order2ExpressCheckout: React.FC<Order2ExpressCheckoutProps> = ({
   }
 
   return (
-    <Flex flexDirection="column" backgroundColor="mono0" py={2} px={[2, 4]}>
-      <Elements stripe={stripe} options={options}>
-        <Order2ExpressCheckoutUI order={orderData} />
-      </Elements>
-    </Flex>
+    <Collapse open={activeStep?.name !== CheckoutStepName.CONFIRMATION}>
+      <Flex flexDirection="column" backgroundColor="mono0" py={2} px={[2, 4]}>
+        <Elements stripe={stripe} options={options}>
+          <Order2ExpressCheckoutUI order={orderData} />
+        </Elements>
+      </Flex>
+    </Collapse>
   )
 }
 
