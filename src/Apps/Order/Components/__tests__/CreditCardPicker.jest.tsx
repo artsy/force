@@ -4,7 +4,6 @@ import { creatingCreditCardSuccess } from "Apps/Order/Routes/__fixtures__/Mutati
 import {
   BuyOrderPickup,
   BuyOrderWithShippingDetails,
-  OfferOrderWithShippingDetails,
   ShippingDetails,
 } from "Apps/__tests__/Fixtures/Order"
 import type { Address } from "Components/Address/utils"
@@ -678,7 +677,7 @@ describe("CreditCardPickerFragmentContainer", () => {
     it("doesn't track clicks on the address checkbox when order status is not pending", async () => {
       const { user } = renderWithRelay({
         CommerceOrder: () => ({
-          ...OfferOrderWithShippingDetails,
+          ...defaultData.order,
           state: "SUBMITTED",
         }),
         Me: () => defaultData.me,
