@@ -76,17 +76,13 @@ export const SettingsShippingAddressForm: FC<
   const { submitMutation: submitSetDefaultAddress } = useSetDefaultAddress()
   const { sendToast } = useToasts()
 
-  // If an address is passed in, we are editing an existing address
   const isEditing = !!address
-
-  // Get location-based initial values for phone country code
   const countryInputOptions = sortCountriesForCountryInput(countryPhoneOptions)
   const locationBasedInitialValues =
     useInitialLocationValues(countryInputOptions)
 
   const getInitialValues = () => {
     if (!address) {
-      // For new addresses, use location-based phone country code if available
       const defaultPhoneCountryCode =
         locationBasedInitialValues.phoneNumberCountryCode || "us"
       return {
@@ -95,8 +91,6 @@ export const SettingsShippingAddressForm: FC<
       }
     }
 
-    // For existing addresses, phone fields might not be present in attributes
-    // Extract them if they exist, otherwise use empty defaults
     const { phoneNumber, phoneNumberCountryCode, ...addressWithoutPhone } =
       address.attributes
 
@@ -104,7 +98,6 @@ export const SettingsShippingAddressForm: FC<
       isDefault: address.isDefault,
       address: addressWithoutPhone,
       phoneNumber: phoneNumber || "",
-      // Use existing phone country code, or fall back to location-based, address country, or 'us'
       phoneNumberCountryCode:
         phoneNumberCountryCode ||
         locationBasedInitialValues.phoneNumberCountryCode ||
@@ -192,7 +185,6 @@ export const SettingsShippingAddressForm: FC<
         isSubmitting,
         submitForm,
       }) => {
-        // Update phone country code when location changes for new addresses
         useEffect(() => {
           if (
             !isEditing &&
