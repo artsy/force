@@ -24,16 +24,18 @@ import type { FC } from "react"
 import { useEffect } from "react"
 import * as Yup from "yup"
 
+const DEFAULT_PHONE_COUNTRY_CODE = "us"
+
 export const INITIAL_ADDRESS = {
   name: "",
-  country: "US",
+  country: DEFAULT_PHONE_COUNTRY_CODE.toUpperCase(),
   addressLine1: "",
   addressLine2: "",
   city: "",
   postalCode: "",
   region: "",
   phoneNumber: "",
-  phoneNumberCountryCode: "us",
+  phoneNumberCountryCode: DEFAULT_PHONE_COUNTRY_CODE,
 }
 
 const INITIAL_VALUES = {
@@ -84,7 +86,8 @@ export const SettingsShippingAddressForm: FC<
   const getInitialValues = () => {
     if (!address) {
       const defaultPhoneCountryCode =
-        locationBasedInitialValues.phoneNumberCountryCode || "us"
+        locationBasedInitialValues.phoneNumberCountryCode ||
+        DEFAULT_PHONE_COUNTRY_CODE
       return {
         ...INITIAL_VALUES,
         phoneNumberCountryCode: defaultPhoneCountryCode,
@@ -102,7 +105,7 @@ export const SettingsShippingAddressForm: FC<
         phoneNumberCountryCode ||
         locationBasedInitialValues.phoneNumberCountryCode ||
         addressWithoutPhone.country?.toLowerCase() ||
-        "us",
+        DEFAULT_PHONE_COUNTRY_CODE,
     }
   }
 
@@ -189,7 +192,7 @@ export const SettingsShippingAddressForm: FC<
           if (
             !isEditing &&
             locationBasedInitialValues.phoneNumberCountryCode &&
-            values.phoneNumberCountryCode === "us" &&
+            values.phoneNumberCountryCode === DEFAULT_PHONE_COUNTRY_CODE &&
             !values.phoneNumber
           ) {
             setFieldValue(
