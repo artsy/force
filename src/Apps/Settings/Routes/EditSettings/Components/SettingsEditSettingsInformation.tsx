@@ -182,6 +182,7 @@ export const SettingsEditSettingsInformation: React.FC<
                 placeholder="(000) 000 0000"
                 autoComplete="tel-national"
                 enableSearch
+                error={touched.phoneNumber && errors.phoneNumber}
               />
 
               <Select
