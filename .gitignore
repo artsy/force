@@ -3,7 +3,6 @@
 .cache
 .cache-loader
 .claude/settings.local.json
-.claude.local.md
 .DS_Store
 .env
 .env.*
@@ -19,6 +18,7 @@
 *.pid
 *.projectile
 *.seed
+claude.local.md
 dump.rdb
 lib-cov
 logs
