@@ -248,8 +248,6 @@ describe("FulfillmentDetailsForm", () => {
     })
 
     it("user can select shipping and see shipping fields", async () => {
-      mockShippingContext.state.shippingFormMode = "new_address"
-
       renderTree(testProps)
       await userEvent.click(screen.getByRole("radio", { name: "Shipping" }))
 
@@ -260,8 +258,6 @@ describe("FulfillmentDetailsForm", () => {
     })
 
     it("user can select shipping if pickup fulfillment is already saved to order", async () => {
-      mockShippingContext.state.shippingFormMode = "new_address"
-
       testProps.initialValues!.fulfillmentType = FulfillmentType.PICKUP
       testProps.initialValues!.attributes = {
         name: "John Doe",

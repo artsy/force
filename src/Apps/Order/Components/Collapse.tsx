@@ -21,8 +21,6 @@ export class Collapse extends React.Component<
     // so that if the content of the wrapper changes it's height will change too
     if (ev.propertyName === "height") {
       this.wrapperRef.style.height = this.props.open ? "auto" : "0px"
-      // Set visibility for accessibility - hidden when closed, visible when open
-      this.wrapperRef.style.visibility = this.props.open ? "visible" : "hidden"
     }
   }
 
@@ -40,8 +38,6 @@ export class Collapse extends React.Component<
     }
     if (this.props.open && this.wrapperRef.style.height !== "auto") {
       // animate opening
-      // make content visible immediately when opening
-      this.wrapperRef.style.visibility = "visible"
       // measure goal height
       const prevHeight = this.wrapperRef.style.height || "0px"
       this.wrapperRef.style.height = "auto"
@@ -103,7 +99,6 @@ export class Collapse extends React.Component<
         style={{
           transition: "height 0.3s ease",
           overflow: "hidden",
-          visibility: open ? "visible" : "hidden",
           ...heightProps,
         }}
       >
