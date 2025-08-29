@@ -1,5 +1,6 @@
 import { useRouter } from "System/Hooks/useRouter"
 import { compact } from "lodash"
+import { getPageNumber } from "Utils/url"
 
 // Allowlist of valid medium filters for SEO
 export const VALID_MEDIUM_FILTERS = [
@@ -23,6 +24,7 @@ export const useCanonicalHref = ({
 }: UseCanonicalHrefParams): string => {
   const { match } = useRouter()
   const additionalGeneIds = compact(match.location.query.additional_gene_ids)
+  const page = getPageNumber(match?.location)
 
   const mediumFilter = additionalGeneIds[0]
 
@@ -33,7 +35,15 @@ export const useCanonicalHref = ({
     // Only consider it valid if there's exactly one medium filter
     additionalGeneIds.length === 1
 
-  return isInSeoExperiment && hasValidMediumFilter
-    ? `${href}?additional_gene_ids[0]=${mediumFilter}`
-    : href
+  const params: string[] = []
+
+  if (isInSeoExperiment && hasValidMediumFilter) {
+    params.push(`additional_gene_ids[0]=${mediumFilter}`)
+  }
+
+  if (page > 1) {
+    params.push(`page=${page}`)
+  }
+
+  return params.length > 0 ? `${href}?${params.join("&")}` : href
 }
