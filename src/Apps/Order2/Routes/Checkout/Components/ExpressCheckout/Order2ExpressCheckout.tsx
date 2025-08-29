@@ -4,7 +4,6 @@ import type {
   StripeElementsOptions,
   StripeElementsUpdateOptions,
 } from "@stripe/stripe-js"
-import { Collapse } from "Apps/Order/Components/Collapse"
 import {
   CheckoutStepName,
   CheckoutStepState,
@@ -42,7 +41,10 @@ export const Order2ExpressCheckout: React.FC<Order2ExpressCheckoutProps> = ({
 
   const activeStep = steps.find(step => step.state === CheckoutStepState.ACTIVE)
 
-  if (expressCheckoutLoadedEmpty) {
+  if (
+    expressCheckoutLoadedEmpty ||
+    activeStep?.name === CheckoutStepName.CONFIRMATION
+  ) {
     return null
   }
 
@@ -80,13 +82,11 @@ export const Order2ExpressCheckout: React.FC<Order2ExpressCheckoutProps> = ({
   }
 
   return (
-    <Collapse open={activeStep?.name !== CheckoutStepName.CONFIRMATION}>
-      <Flex flexDirection="column" backgroundColor="mono0" py={2} px={[2, 4]}>
-        <Elements stripe={stripe} options={options}>
-          <Order2ExpressCheckoutUI order={orderData} />
-        </Elements>
-      </Flex>
-    </Collapse>
+    <Flex flexDirection="column" backgroundColor="mono0" py={2} px={[2, 4]}>
+      <Elements stripe={stripe} options={options}>
+        <Order2ExpressCheckoutUI order={orderData} />
+      </Elements>
+    </Flex>
   )
 }
 
