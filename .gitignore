@@ -3,6 +3,7 @@
 .cache
 .cache-loader
 .claude/settings.local.json
+.claude.local.md
 .DS_Store
 .env
 .env.*
