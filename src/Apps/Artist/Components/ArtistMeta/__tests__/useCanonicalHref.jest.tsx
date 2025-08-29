@@ -1,25 +1,24 @@
 import { renderHook } from "@testing-library/react-hooks"
 import { VALID_MEDIUM_FILTERS, useCanonicalHref } from "../useCanonicalHref"
 
+const mockLocation = { query: {}, search: "" }
+
 jest.mock("System/Hooks/useRouter", () => ({
   useRouter: () => ({
     match: {
-      location: {
-        query: mockQuery,
-      },
+      location: mockLocation,
     },
   }),
 }))
 
-let mockQuery = {}
-
 describe("useCanonicalHref", () => {
   beforeEach(() => {
-    mockQuery = {}
+    mockLocation.query = {}
+    mockLocation.search = ""
   })
 
   it("returns base href when not in SEO experiment", () => {
-    mockQuery = { additional_gene_ids: ["prints"] }
+    mockLocation.query = { additional_gene_ids: ["prints"] }
     const { result } = renderHook(() =>
       useCanonicalHref({
         isInSeoExperiment: false,
@@ -30,7 +29,7 @@ describe("useCanonicalHref", () => {
   })
 
   it("returns base href when no medium filter", () => {
-    mockQuery = {}
+    mockLocation.query = {}
     const { result } = renderHook(() =>
       useCanonicalHref({
         isInSeoExperiment: true,
@@ -41,7 +40,7 @@ describe("useCanonicalHref", () => {
   })
 
   it("returns base href when medium filter is invalid", () => {
-    mockQuery = { additional_gene_ids: ["invalid-medium"] }
+    mockLocation.query = { additional_gene_ids: ["invalid-medium"] }
     const { result } = renderHook(() =>
       useCanonicalHref({
         isInSeoExperiment: true,
@@ -52,7 +51,7 @@ describe("useCanonicalHref", () => {
   })
 
   it("returns base href when multiple medium filters", () => {
-    mockQuery = { additional_gene_ids: ["prints", "sculpture"] }
+    mockLocation.query = { additional_gene_ids: ["prints", "sculpture"] }
     const { result } = renderHook(() =>
       useCanonicalHref({
         isInSeoExperiment: true,
@@ -65,7 +64,7 @@ describe("useCanonicalHref", () => {
   it.each(VALID_MEDIUM_FILTERS)(
     "returns URL with medium filter for valid medium: %s",
     medium => {
-      mockQuery = { additional_gene_ids: [medium] }
+      mockLocation.query = { additional_gene_ids: [medium] }
       const { result } = renderHook(() =>
         useCanonicalHref({
           isInSeoExperiment: true,
@@ -79,7 +78,7 @@ describe("useCanonicalHref", () => {
   )
 
   it("handles empty array of medium filters", () => {
-    mockQuery = { additional_gene_ids: [] }
+    mockLocation.query = { additional_gene_ids: [] }
     const { result } = renderHook(() =>
       useCanonicalHref({
         isInSeoExperiment: true,
@@ -90,7 +89,7 @@ describe("useCanonicalHref", () => {
   })
 
   it("handles null/undefined medium filters", () => {
-    mockQuery = { additional_gene_ids: null }
+    mockLocation.query = { additional_gene_ids: null }
     const { result } = renderHook(() =>
       useCanonicalHref({
         isInSeoExperiment: true,
@@ -98,5 +97,74 @@ describe("useCanonicalHref", () => {
       }),
     )
     expect(result.current).toBe("/artist/picasso")
+  })
+
+  describe("page parameter handling", () => {
+    it("includes page parameter when page > 1", () => {
+      mockLocation.query = { page: "3" }
+      mockLocation.search = "?page=3"
+
+      const { result } = renderHook(() =>
+        useCanonicalHref({
+          isInSeoExperiment: false,
+          href: "/artist/picasso",
+        }),
+      )
+      expect(result.current).toBe("/artist/picasso?page=3")
+    })
+
+    it("does not include page parameter when page = 1", () => {
+      mockLocation.query = { page: "1" }
+      mockLocation.search = "?page=1"
+
+      const { result } = renderHook(() =>
+        useCanonicalHref({
+          isInSeoExperiment: false,
+          href: "/artist/picasso",
+        }),
+      )
+      expect(result.current).toBe("/artist/picasso")
+    })
+
+    it("includes both medium filter and page parameter", () => {
+      mockLocation.query = { additional_gene_ids: ["prints"], page: "2" }
+      mockLocation.search = "?additional_gene_ids[0]=prints&page=2"
+
+      const { result } = renderHook(() =>
+        useCanonicalHref({
+          isInSeoExperiment: true,
+          href: "/artist/picasso",
+        }),
+      )
+      expect(result.current).toBe(
+        "/artist/picasso?additional_gene_ids[0]=prints&page=2",
+      )
+    })
+
+    it("includes page parameter but not invalid medium filter", () => {
+      mockLocation.query = { additional_gene_ids: ["invalid"], page: "2" }
+      mockLocation.search = "?additional_gene_ids[0]=invalid&page=2"
+
+      const { result } = renderHook(() =>
+        useCanonicalHref({
+          isInSeoExperiment: true,
+          href: "/artist/picasso",
+        }),
+      )
+      expect(result.current).toBe("/artist/picasso?page=2")
+    })
+
+    it("includes page parameter but not medium filter when not in SEO experiment", () => {
+      mockLocation.query = { additional_gene_ids: ["prints"], page: "2" }
+      mockLocation.search = "?additional_gene_ids[0]=prints&page=2"
+
+      const { result } = renderHook(() =>
+        useCanonicalHref({
+          isInSeoExperiment: false,
+          href: "/artist/picasso",
+        }),
+      )
+      expect(result.current).toBe("/artist/picasso?page=2")
+    })
   })
 })

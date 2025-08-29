@@ -41,7 +41,11 @@ const getMetaBy = (selectors): Element | null => {
 
 describe("AdminMeta", () => {
   describe("canonical link", () => {
-    it("renders", () => {
+    beforeEach(() => {
+      mockLocation.query = {}
+    })
+
+    it("renders basic canonical URL", () => {
       renderWithRelay({
         Artist: () => ({
           href: "/artist/example-artist",
@@ -50,6 +54,72 @@ describe("AdminMeta", () => {
 
       const linkTag = document.querySelector("link[rel='canonical']")
       expect(linkTag?.getAttribute("href")).toEqual("/artist/example-artist")
+    })
+
+    it("strips query parameters from canonical URL", () => {
+      mockLocation.query = {
+        sort: "recently_updated",
+        price_range: "1000-5000",
+        additional_gene_ids: ["prints"],
+      }
+
+      renderWithRelay({
+        Artist: () => ({
+          href: "/artist/picasso",
+        }),
+      })
+
+      const linkTag = document.querySelector("link[rel='canonical']")
+      expect(linkTag?.getAttribute("href")).toEqual("/artist/picasso")
+    })
+
+    it("includes page parameter in canonical URL when page > 1", () => {
+      mockLocation.query = {
+        page: "3",
+      }
+
+      renderWithRelay({
+        Artist: () => ({
+          href: "/artist/picasso",
+        }),
+      })
+
+      const linkTag = document.querySelector("link[rel='canonical']")
+      expect(linkTag?.getAttribute("href")).toEqual("/artist/picasso?page=3")
+    })
+
+    it("includes page parameter but strips other query parameters", () => {
+      mockLocation.query = {
+        page: "2",
+        sort: "recently_updated",
+        additional_gene_ids: ["prints"],
+        price_range: "1000-5000",
+      }
+
+      renderWithRelay({
+        Artist: () => ({
+          href: "/artist/picasso",
+        }),
+      })
+
+      const linkTag = document.querySelector("link[rel='canonical']")
+      expect(linkTag?.getAttribute("href")).toEqual("/artist/picasso?page=2")
+    })
+
+    it("uses base URL when page is 1", () => {
+      mockLocation.query = {
+        page: "1",
+        sort: "recently_updated",
+      }
+
+      renderWithRelay({
+        Artist: () => ({
+          href: "/artist/picasso",
+        }),
+      })
+
+      const linkTag = document.querySelector("link[rel='canonical']")
+      expect(linkTag?.getAttribute("href")).toEqual("/artist/picasso")
     })
   })
 

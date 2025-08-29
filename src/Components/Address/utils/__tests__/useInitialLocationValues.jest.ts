@@ -86,4 +86,19 @@ describe("useInitialLocationValues", () => {
       phoneNumberCountryCode: "us", // phone options use lowercase
     })
   })
+
+  describe("when no countryInputOptions are provided", () => {
+    it("returns only phoneNumberCountryCode when location matches by country name", () => {
+      mockUseUserLocation.mockReturnValue({
+        location: { country: "United States" },
+        loading: false,
+      })
+
+      const { result } = renderHook(() => useInitialLocationValues())
+
+      expect(result.current).toEqual({
+        phoneNumberCountryCode: "us",
+      })
+    })
+  })
 })

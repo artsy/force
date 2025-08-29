@@ -123,7 +123,7 @@ jest.mock(
 )
 jest.mock("Utils/Hooks/useUserLocation", () => ({
   useUserLocation: jest.fn(() => ({
-    location: { country: "United States" },
+    location: { country: "Mexico" },
     loading: false,
   })),
 }))
@@ -824,6 +824,47 @@ describe("Order2CheckoutRoute", () => {
       expect(screen.getByTestId("PickupPhoneNumberInput")).toHaveValue(
         "03012345678",
       )
+    })
+
+    it("shows location-based phone country code when no existing pickup details exist", async () => {
+      const props = {
+        ...baseProps,
+        me: {
+          ...baseProps.me,
+          order: {
+            ...baseProps.me.order,
+            fulfillmentOptions: [
+              {
+                type: "PICKUP",
+                __typename: "PickupFulfillmentOption",
+              },
+              { type: "DOMESTIC_FLAT" },
+            ],
+            fulfillmentDetails: null,
+            selectedFulfillmentOption: null,
+          },
+        },
+      }
+
+      renderWithRelay({
+        Viewer: () => props,
+      })
+
+      await helpers.waitForLoadingComplete()
+
+      act(() => {
+        userEvent.click(screen.getByText("Pickup"))
+      })
+
+      expect(screen.getByText("Free pickup")).toBeInTheDocument()
+
+      await waitFor(() => {
+        const phoneCountryPicker = screen.getByTestId(
+          testIDs.phoneCountryPicker,
+        )
+
+        expect(phoneCountryPicker).toHaveTextContent("+ 52")
+      })
     })
   })
 

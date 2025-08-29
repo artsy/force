@@ -18,6 +18,7 @@
 *.pid
 *.projectile
 *.seed
+claude.local.md
 dump.rdb
 lib-cov
 logs

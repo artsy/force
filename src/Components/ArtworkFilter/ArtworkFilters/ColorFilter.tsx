@@ -124,7 +124,7 @@ export const ColorFilter: React.FC<
   const hasColorFilter = colors.length > 0
   const resultsSorted = sortResults(
     colors,
-    COLOR_OPTIONS.map(({ name, value }) => ({ name, value })),
+    COLOR_OPTIONS.map(({ name, value, hex }) => ({ name, value, hex })),
   )
 
   return (

@@ -17,6 +17,7 @@ import { ArtworkGridEmptyState } from "Components/ArtworkGrid/ArtworkGridEmptySt
 import { useAuthDialog } from "Components/AuthDialog"
 import { LoadingArea } from "Components/LoadingArea"
 import { PaginationFragmentContainer as Pagination } from "Components/Pagination"
+import { PaginatedMetaTags } from "Components/PaginatedMetaTags"
 import { SystemContext } from "System/Contexts/SystemContext"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
@@ -30,7 +31,6 @@ import type { ArtistAuctionResults_artist$data } from "__generated__/ArtistAucti
 import { isEqual } from "lodash"
 import type * as React from "react"
 import { useContext, useState } from "react"
-import { Meta, Title } from "react-head"
 import {
   type RelayRefetchProp,
   createRefetchContainer,
@@ -227,9 +227,7 @@ const AuctionResultsContainer: React.FC<
   if (!artist.statuses?.auctionLots) {
     return (
       <>
-        <Title>{title}</Title>
-        <Meta name="title" content={title} />
-        <Meta name="description" content={description} />
+        <PaginatedMetaTags title={title} description={description} />
 
         <Spacer y={[2, 0]} />
 
@@ -240,9 +238,7 @@ const AuctionResultsContainer: React.FC<
 
   return (
     <>
-      <Title>{title}</Title>
-      <Meta name="title" content={title} />
-      <Meta name="description" content={description} />
+      <PaginatedMetaTags title={title} description={description} />
 
       <Jump id="marketSignalsTop" />
 

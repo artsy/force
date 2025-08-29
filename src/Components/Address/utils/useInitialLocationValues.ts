@@ -16,13 +16,29 @@ interface InitialAddressValues {
  */
 
 export const useInitialLocationValues = (
-  countryInputOptions: Array<{ text: string; value: string }>,
+  countryInputOptions?: Array<{ text: string; value: string }>,
 ): InitialAddressValues => {
   const { location, loading } = useUserLocation()
 
   return useMemo(() => {
     if (loading || !location?.country) {
       return {}
+    }
+
+    // If no countryInputOptions provided, only return phoneNumberCountryCode
+    if (!countryInputOptions) {
+      const matchingPhoneCountry = countryPhoneOptions.find(
+        country =>
+          location.country &&
+          (country.value.toLowerCase() === location.country.toLowerCase() ||
+            country.name
+              .toLowerCase()
+              .includes(location.country.toLowerCase())),
+      )
+
+      return {
+        phoneNumberCountryCode: matchingPhoneCountry?.value,
+      }
     }
 
     let selectedCountry = countryInputOptions[1]?.value
