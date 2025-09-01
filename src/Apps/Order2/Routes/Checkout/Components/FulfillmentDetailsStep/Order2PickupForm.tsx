@@ -11,12 +11,15 @@ import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCh
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useOrder2SetOrderFulfillmentOptionMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderFulfillmentOptionMutation"
 import { useOrder2SetOrderPickupDetailsMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderPickupDetailsMutation"
-import { richRequiredPhoneValidators } from "Components/Address/utils"
+import {
+  richRequiredPhoneValidators,
+  useInitialLocationValues,
+} from "Components/Address/utils"
 import { countries as phoneCountryOptions } from "Utils/countries"
 import createLogger from "Utils/logger"
 import type { Order2PickupForm_order$key } from "__generated__/Order2PickupForm_order.graphql"
 import { Formik, type FormikHelpers, type FormikValues } from "formik"
-import { useCallback } from "react"
+import { useCallback, useMemo } from "react"
 import { graphql, useFragment } from "react-relay"
 import * as Yup from "yup"
 
@@ -117,25 +120,36 @@ export const Order2PickupForm: React.FC<Order2PickupFormProps> = ({
 
   const existingRegionCode = existingPickupValues?.phoneNumber?.regionCode
 
-  const initialCountryOptionFromExisting =
-    existingRegionCode &&
-    phoneCountryOptions.find(
-      option =>
-        option.value.toLowerCase() === existingRegionCode?.toLowerCase(),
-    )?.value
+  const locationBasedInitialValues = useInitialLocationValues()
 
-  const initialValues = !!(
-    initialCountryOptionFromExisting &&
-    existingPickupValues?.phoneNumber?.originalNumber
-  )
-    ? {
-        phoneNumber: existingPickupValues?.phoneNumber?.originalNumber,
-        phoneNumberCountryCode: initialCountryOptionFromExisting,
+  const initialValues = useMemo(() => {
+    const hasExistingPickupData =
+      existingPickupValues?.phoneNumber?.originalNumber && existingRegionCode
+
+    if (hasExistingPickupData) {
+      const matchingCountryOption = phoneCountryOptions.find(
+        option =>
+          option.value.toLowerCase() === existingRegionCode.toLowerCase(),
+      )
+
+      if (matchingCountryOption) {
+        return {
+          phoneNumber: existingPickupValues.phoneNumber.originalNumber,
+          phoneNumberCountryCode: matchingCountryOption.value,
+        }
       }
-    : {
-        phoneNumber: "",
-        phoneNumberCountryCode: phoneCountryOptions[0].value,
-      }
+    }
+
+    return {
+      phoneNumber: "",
+      phoneNumberCountryCode:
+        locationBasedInitialValues.phoneNumberCountryCode || "",
+    }
+  }, [
+    existingPickupValues?.phoneNumber?.originalNumber,
+    existingRegionCode,
+    locationBasedInitialValues.phoneNumberCountryCode,
+  ])
 
   return (
     <>
@@ -155,11 +169,13 @@ export const Order2PickupForm: React.FC<Order2PickupFormProps> = ({
         initialValues={initialValues}
         validationSchema={VALIDATION_SCHEMA}
         onSubmit={handleSubmit}
+        enableReinitialize={true}
       >
         {formikContext => (
           <GridColumns data-testid={"PickupDetailsForm"}>
             <Column span={12}>
               <SelectInput
+                key={`phone-input-${formikContext.values.phoneNumberCountryCode || "empty"}`}
                 label="Phone number"
                 mt={1}
                 name="phoneNumber"
