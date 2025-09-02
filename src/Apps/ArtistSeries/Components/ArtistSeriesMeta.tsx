@@ -1,4 +1,4 @@
-import { MetaTags } from "Components/MetaTags"
+import { PaginatedMetaTags } from "Components/PaginatedMetaTags"
 import type { ArtistSeriesMeta_artistSeries$data } from "__generated__/ArtistSeriesMeta_artistSeries.graphql"
 import { truncate } from "lodash"
 import type * as React from "react"
@@ -21,13 +21,7 @@ export const ArtistSeriesMeta: React.FC<
     { length: 160, separator: " " },
   )
 
-  return (
-    <MetaTags
-      title={title}
-      description={description}
-      pathname={`/artist-series/${artistSeries.slug}`}
-    />
-  )
+  return <PaginatedMetaTags title={title} description={description} />
 }
 
 export const ArtistSeriesMetaFragmentContainer = createFragmentContainer(

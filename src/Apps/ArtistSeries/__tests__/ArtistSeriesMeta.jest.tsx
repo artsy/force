@@ -6,6 +6,19 @@ import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 
+const mockRouter = {
+  match: {
+    location: {
+      pathname: "/artist-series/pumpkins",
+      query: {},
+    },
+  },
+}
+
+jest.mock("System/Hooks/useRouter", () => ({
+  useRouter: () => mockRouter,
+}))
+
 const { renderWithRelay } = setupTestWrapperTL({
   Component: (props: any) => (
     <MockBoot breakpoint="lg" user={{ lab_features: ["Artist Series"] }}>
@@ -80,6 +93,83 @@ describe("ArtistSeriesMeta", () => {
       "href",
       expect.stringContaining("/artist-series/"),
     )
+  })
+
+  describe("canonical URL", () => {
+    it("renders basic canonical URL for artist series", () => {
+      renderWithRelay({
+        ArtistSeries: () => ArtistSeriesMetaFixture.artistSeries,
+      })
+
+      const canonicalLink = document.querySelector('link[rel="canonical"]')
+      expect(canonicalLink).toHaveAttribute("href", "/artist-series/pumpkins")
+    })
+
+    it("strips filter query parameters from canonical URL (cursor-based pagination)", () => {
+      mockRouter.match.location.query = {
+        sort: "recently_updated",
+        price_range: "1000-5000",
+      }
+
+      renderWithRelay({
+        ArtistSeries: () => ArtistSeriesMetaFixture.artistSeries,
+      })
+
+      const canonicalLink = document.querySelector('link[rel="canonical"]')
+      expect(canonicalLink).toHaveAttribute("href", "/artist-series/pumpkins")
+      expect(canonicalLink?.getAttribute("href")).not.toContain("sort=")
+      expect(canonicalLink?.getAttribute("href")).not.toContain("price_range=")
+    })
+
+    it("preserves page parameter in canonical URL (page-based pagination)", () => {
+      mockRouter.match.location.query = { page: "2" }
+
+      renderWithRelay({
+        ArtistSeries: () => ArtistSeriesMetaFixture.artistSeries,
+      })
+
+      const canonicalLink = document.querySelector('link[rel="canonical"]')
+      expect(canonicalLink).toHaveAttribute(
+        "href",
+        "/artist-series/pumpkins?page=2",
+      )
+    })
+
+    it("strips filter parameters but preserves page parameter", () => {
+      mockRouter.match.location.query = {
+        sort: "recently_updated",
+        category: "painting",
+        page: "2",
+        medium: "prints",
+      }
+
+      renderWithRelay({
+        ArtistSeries: () => ArtistSeriesMetaFixture.artistSeries,
+      })
+
+      const canonicalLink = document.querySelector('link[rel="canonical"]')
+      expect(canonicalLink).toHaveAttribute(
+        "href",
+        "/artist-series/pumpkins?page=2",
+      )
+      expect(canonicalLink?.getAttribute("href")).not.toContain("sort=")
+      expect(canonicalLink?.getAttribute("href")).not.toContain("category=")
+      expect(canonicalLink?.getAttribute("href")).not.toContain("medium=")
+      expect(canonicalLink?.getAttribute("href")).toContain("page=2")
+    })
+
+    it("includes page number in title for paginated pages", () => {
+      mockRouter.match.location.query = { page: "3" }
+
+      renderWithRelay({
+        ArtistSeries: () => ArtistSeriesMetaFixture.artistSeries,
+      })
+
+      const titleElement = document.querySelector("title")
+      expect(titleElement?.textContent).toContain(
+        "Pumpkins - For Sale on Artsy - Page 3",
+      )
+    })
   })
 })
 
