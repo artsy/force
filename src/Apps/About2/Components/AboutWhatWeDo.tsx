@@ -1,5 +1,6 @@
 import { Column, GridColumns, Stack, Text, useTheme } from "@artsy/palette"
 import { AboutSection } from "Apps/About2/Components/AboutSection"
+import { RouterLink } from "System/Components/RouterLink"
 
 export const AboutWhatWeDo = () => {
   return (
@@ -46,7 +47,15 @@ export const AboutWhatWeDo = () => {
 
             <AboutWhatWeDoItem
               title="Seamless, Secure Transactions"
-              description="Buy art with ease through a trusted, secure checkout experience. No wire transfers or guesswork—just art, delivered to your door."
+              description={
+                <>
+                  Buy art with ease with a trusted, secure checkout experience
+                  on our platform. No guesswork—just art, delivered to your
+                  door. Learn more about the{" "}
+                  <RouterLink to="/buyer-guarantee">Artsy Guarantee</RouterLink>
+                  .
+                </>
+              }
             />
 
             <AboutWhatWeDoItem
@@ -62,7 +71,7 @@ export const AboutWhatWeDo = () => {
 
 interface AboutWhatWeDoItemProps {
   title: string
-  description: string
+  description: React.ReactNode
 }
 
 const AboutWhatWeDoItem = ({ title, description }: AboutWhatWeDoItemProps) => {
