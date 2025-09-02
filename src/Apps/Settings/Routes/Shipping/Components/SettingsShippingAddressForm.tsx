@@ -21,7 +21,6 @@ import { useInitialLocationValues } from "Components/Address/utils/useInitialLoc
 import { countries as countryPhoneOptions } from "Utils/countries"
 import { Form, Formik } from "formik"
 import type { FC } from "react"
-import { useEffect } from "react"
 import * as Yup from "yup"
 
 const DEFAULT_PHONE_COUNTRY_CODE = "us"
@@ -112,6 +111,7 @@ export const SettingsShippingAddressForm: FC<
   return (
     <Formik
       validateOnMount
+      enableReinitialize={true}
       validationSchema={VALIDATION_SCHEMA}
       initialValues={getInitialValues()}
       onSubmit={async (
@@ -188,26 +188,6 @@ export const SettingsShippingAddressForm: FC<
         isSubmitting,
         submitForm,
       }) => {
-        useEffect(() => {
-          if (
-            !isEditing &&
-            locationBasedInitialValues.phoneNumberCountryCode &&
-            values.phoneNumberCountryCode === DEFAULT_PHONE_COUNTRY_CODE &&
-            !values.phoneNumber
-          ) {
-            setFieldValue(
-              "phoneNumberCountryCode",
-              locationBasedInitialValues.phoneNumberCountryCode,
-            )
-          }
-        }, [
-          locationBasedInitialValues.phoneNumberCountryCode,
-          isEditing,
-          values.phoneNumberCountryCode,
-          values.phoneNumber,
-          setFieldValue,
-        ])
-
         return (
           <ModalDialog
             title={isEditing ? "Edit Address" : "Add New Address"}
