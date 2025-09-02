@@ -5,5 +5,8 @@ on:
     types: [opened, synchronize, edited, review_requested, review_request_removed, labeled, unlabeled, milestoned, demilestoned]
 
 jobs:
-  dangermattic:
+  danger-yarn:
     uses: artsy/duchamp/.github/workflows/run-yarn.yml@main
+    with:
+      github-token: ${{ secrets.GITHUB_TOKEN }}
+  
