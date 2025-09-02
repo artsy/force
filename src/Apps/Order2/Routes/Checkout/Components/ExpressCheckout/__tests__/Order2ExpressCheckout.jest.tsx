@@ -15,6 +15,7 @@ jest.mock("Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext", () => {
     useCheckoutContext: () => ({
       expressCheckoutPaymentMethods: null,
       setExpressCheckoutLoaded: jest.fn(),
+      steps: [],
     }),
   }
 })
