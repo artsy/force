@@ -1,0 +1,9 @@
+name: ☢️ Yarn
+
+on:
+  pull_request:
+    types: [opened, synchronize, edited, review_requested, review_request_removed, labeled, unlabeled, milestoned, demilestoned]
+
+jobs:
+  dangermattic:
+    uses: artsy/duchamp/.github/workflows/run-yarn.yml@main
