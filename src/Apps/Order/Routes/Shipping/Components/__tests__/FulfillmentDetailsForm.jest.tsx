@@ -7,6 +7,7 @@ import {
   within,
 } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
+import { useFlag } from "@unleash/proxy-client-react"
 import {
   FulfillmentDetailsForm,
   type FulfillmentDetailsFormProps,
@@ -18,7 +19,6 @@ import {
 } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
 import { fillAddressForm } from "Components/__tests__/Utils/addressForm2"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
-import { useFlag } from "@unleash/proxy-client-react"
 import type { DeepPartial } from "Utils/typeSupport"
 import { useTracking } from "react-tracking"
 
@@ -160,9 +160,7 @@ describe("FulfillmentDetailsForm", () => {
       )
 
       expect(phoneNumberField).toBeVisible()
-      expect(
-        screen.getByText("Required for pickup logistics"),
-      ).toBeInTheDocument()
+      expect(screen.getByText("*Required")).toBeInTheDocument()
     })
 
     it("tries to go back to fulfillment details when the user clicks pickup", async () => {
