@@ -1,7 +1,10 @@
-import { render } from "@testing-library/react"
-import { ArtworkImageBrowser } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkImageBrowser"
+import { ArtworkImageBrowserFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkImageBrowser"
 import { MockBoot } from "DevTools/MockBoot"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import type { ArtworkImageBrowserTestQuery } from "__generated__/ArtworkImageBrowserTestQuery.graphql"
+import { graphql } from "react-relay"
 
+jest.unmock("react-relay")
 jest.mock("react-tracking", () => ({
   useTracking: () => ({ trackEvent: jest.fn() }),
 }))
@@ -10,6 +13,25 @@ const mockUseCursor = jest.fn()
 jest.mock("use-cursor", () => ({
   useCursor: (...args: any[]) => mockUseCursor(...args),
 }))
+
+const { renderWithRelay } = setupTestWrapperTL<ArtworkImageBrowserTestQuery>({
+  Component: props => {
+    if (!props.artwork) return null
+
+    return (
+      <MockBoot>
+        <ArtworkImageBrowserFragmentContainer artwork={props.artwork} />
+      </MockBoot>
+    )
+  },
+  query: graphql`
+    query ArtworkImageBrowserTestQuery @relay_test_operation {
+      artwork(id: "example") {
+        ...ArtworkImageBrowser_artwork
+      }
+    }
+  `,
+})
 
 describe("ArtworkImageBrowser", () => {
   beforeEach(() => {
@@ -24,41 +46,47 @@ describe("ArtworkImageBrowser", () => {
 
   describe("default image selection", () => {
     it("should initialize cursor with index of image marked isDefault: true", () => {
-      const artwork = {
-        internalID: "test-artwork-id",
-        figures: [
-          {
-            __typename: "Image" as const,
-            isDefault: false,
-            width: 800,
-            height: 600,
-          },
-          {
-            __typename: "Image" as const,
-            isDefault: false,
-            width: 800,
-            height: 600,
-          },
-          {
-            __typename: "Image" as const,
-            isDefault: true,
-            width: 800,
-            height: 600,
-          },
-          {
-            __typename: "Image" as const,
-            isDefault: false,
-            width: 800,
-            height: 600,
-          },
-        ],
-      } as any
-
-      render(
-        <MockBoot>
-          <ArtworkImageBrowser artwork={artwork} />
-        </MockBoot>,
-      )
+      renderWithRelay({
+        Artwork: () => ({
+          internalID: "test-artwork-id",
+          figures: [
+            {
+              __typename: "Image",
+              width: 800,
+              height: 600,
+              isDefault: false,
+              aspectRatio: 1.33,
+            },
+            {
+              __typename: "Image",
+              width: 800,
+              height: 600,
+              isDefault: false,
+              aspectRatio: 1.33,
+            },
+            {
+              __typename: "Image",
+              width: 800,
+              height: 600,
+              isDefault: true,
+              aspectRatio: 1.33,
+            },
+            {
+              __typename: "Image",
+              width: 800,
+              height: 600,
+              isDefault: false,
+              aspectRatio: 1.33,
+            },
+          ],
+        }),
+        ResizedImageUrl: () => ({
+          width: 800,
+          height: 600,
+          src: "example.jpg",
+          srcSet: "example.jpg 1x",
+        }),
+      })
 
       expect(mockUseCursor).toHaveBeenCalledWith({
         max: 4,
@@ -67,35 +95,40 @@ describe("ArtworkImageBrowser", () => {
     })
 
     it("should fallback to index 0 when no image has isDefault: true", () => {
-      const artwork = {
-        internalID: "test-artwork-id",
-        figures: [
-          {
-            __typename: "Image" as const,
-            isDefault: false,
-            width: 800,
-            height: 600,
-          },
-          {
-            __typename: "Image" as const,
-            isDefault: false,
-            width: 800,
-            height: 600,
-          },
-          {
-            __typename: "Image" as const,
-            isDefault: false,
-            width: 800,
-            height: 600,
-          },
-        ],
-      } as any
-
-      render(
-        <MockBoot>
-          <ArtworkImageBrowser artwork={artwork} />
-        </MockBoot>,
-      )
+      renderWithRelay({
+        Artwork: () => ({
+          internalID: "test-artwork-id",
+          figures: [
+            {
+              __typename: "Image",
+              width: 800,
+              height: 600,
+              isDefault: false,
+              aspectRatio: 1.33,
+            },
+            {
+              __typename: "Image",
+              width: 800,
+              height: 600,
+              isDefault: false,
+              aspectRatio: 1.33,
+            },
+            {
+              __typename: "Image",
+              width: 800,
+              height: 600,
+              isDefault: false,
+              aspectRatio: 1.33,
+            },
+          ],
+        }),
+        ResizedImageUrl: () => ({
+          width: 800,
+          height: 600,
+          src: "example.jpg",
+          srcSet: "example.jpg 1x",
+        }),
+      })
 
       expect(mockUseCursor).toHaveBeenCalledWith({
         max: 3,
@@ -104,35 +137,40 @@ describe("ArtworkImageBrowser", () => {
     })
 
     it("should fallback to index 0 when all images have isDefault: null", () => {
-      const artwork = {
-        internalID: "test-artwork-id",
-        figures: [
-          {
-            __typename: "Image" as const,
-            isDefault: null,
-            width: 800,
-            height: 600,
-          },
-          {
-            __typename: "Image" as const,
-            isDefault: null,
-            width: 800,
-            height: 600,
-          },
-          {
-            __typename: "Image" as const,
-            isDefault: null,
-            width: 800,
-            height: 600,
-          },
-        ],
-      } as any
-
-      render(
-        <MockBoot>
-          <ArtworkImageBrowser artwork={artwork} />
-        </MockBoot>,
-      )
+      renderWithRelay({
+        Artwork: () => ({
+          internalID: "test-artwork-id",
+          figures: [
+            {
+              __typename: "Image",
+              width: 800,
+              height: 600,
+              isDefault: null,
+              aspectRatio: 1.33,
+            },
+            {
+              __typename: "Image",
+              width: 800,
+              height: 600,
+              isDefault: null,
+              aspectRatio: 1.33,
+            },
+            {
+              __typename: "Image",
+              width: 800,
+              height: 600,
+              isDefault: null,
+              aspectRatio: 1.33,
+            },
+          ],
+        }),
+        ResizedImageUrl: () => ({
+          width: 800,
+          height: 600,
+          src: "example.jpg",
+          srcSet: "example.jpg 1x",
+        }),
+      })
 
       expect(mockUseCursor).toHaveBeenCalledWith({
         max: 3,
@@ -141,30 +179,39 @@ describe("ArtworkImageBrowser", () => {
     })
 
     it("should handle mixed figure types and find default image", () => {
-      const artwork = {
-        internalID: "test-artwork-id",
-        figures: [
-          {
-            __typename: "Image" as const,
-            isDefault: false,
-            width: 800,
-            height: 600,
-          },
-          { __typename: "Video" as const, videoWidth: 800, videoHeight: 600 },
-          {
-            __typename: "Image" as const,
-            isDefault: true,
-            width: 800,
-            height: 600,
-          },
-        ],
-      } as any
-
-      render(
-        <MockBoot>
-          <ArtworkImageBrowser artwork={artwork} />
-        </MockBoot>,
-      )
+      renderWithRelay({
+        Artwork: () => ({
+          internalID: "test-artwork-id",
+          figures: [
+            {
+              __typename: "Image",
+              width: 800,
+              height: 600,
+              isDefault: false,
+              aspectRatio: 1.33,
+            },
+            {
+              __typename: "Video",
+              videoWidth: 800,
+              videoHeight: 600,
+              id: "video-id",
+            },
+            {
+              __typename: "Image",
+              width: 800,
+              height: 600,
+              isDefault: true,
+              aspectRatio: 1.33,
+            },
+          ],
+        }),
+        ResizedImageUrl: () => ({
+          width: 800,
+          height: 600,
+          src: "example.jpg",
+          srcSet: "example.jpg 1x",
+        }),
+      })
 
       expect(mockUseCursor).toHaveBeenCalledWith({
         max: 3,
@@ -173,16 +220,12 @@ describe("ArtworkImageBrowser", () => {
     })
 
     it("should handle empty figures array", () => {
-      const artwork = {
-        internalID: "test-artwork-id",
-        figures: [],
-      } as any
-
-      const { container } = render(
-        <MockBoot>
-          <ArtworkImageBrowser artwork={artwork} />
-        </MockBoot>,
-      )
+      const { container } = renderWithRelay({
+        Artwork: () => ({
+          internalID: "test-artwork-id",
+          figures: [],
+        }),
+      })
 
       expect(container.innerHTML).toBe("")
       expect(mockUseCursor).toHaveBeenCalledWith({
@@ -192,35 +235,40 @@ describe("ArtworkImageBrowser", () => {
     })
 
     it("should select isDefault image when it is not the first image", () => {
-      const artwork = {
-        internalID: "68b82b6a4b9eaf000fe97212",
-        figures: [
-          {
-            __typename: "Image" as const,
-            isDefault: null,
-            width: 2300,
-            height: 1732,
-          },
-          {
-            __typename: "Image" as const,
-            isDefault: null,
-            width: 1304,
-            height: 1732,
-          },
-          {
-            __typename: "Image" as const,
-            isDefault: true,
-            width: 148,
-            height: 196,
-          },
-        ],
-      } as any
-
-      render(
-        <MockBoot>
-          <ArtworkImageBrowser artwork={artwork} />
-        </MockBoot>,
-      )
+      renderWithRelay({
+        Artwork: () => ({
+          internalID: "68b82b6a4b9eaf000fe97212",
+          figures: [
+            {
+              __typename: "Image",
+              width: 2300,
+              height: 1732,
+              isDefault: null,
+              aspectRatio: 1.33,
+            },
+            {
+              __typename: "Image",
+              width: 1304,
+              height: 1732,
+              isDefault: null,
+              aspectRatio: 1.33,
+            },
+            {
+              __typename: "Image",
+              width: 148,
+              height: 196,
+              isDefault: true,
+              aspectRatio: 1.33,
+            },
+          ],
+        }),
+        ResizedImageUrl: () => ({
+          width: 800,
+          height: 600,
+          src: "example.jpg",
+          srcSet: "example.jpg 1x",
+        }),
+      })
 
       expect(mockUseCursor).toHaveBeenCalledWith({
         max: 3,
