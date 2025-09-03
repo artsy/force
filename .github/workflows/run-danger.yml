@@ -5,4 +5,4 @@ on:
 
 jobs: # comment
   danger-yarn: #comment
-    uses: artsy/duchamp/.github/workflows/run-yarn-2.yml@main
+    uses: artsy/duchamp/.github/workflows/run-yarn-2.yml@main # comment
