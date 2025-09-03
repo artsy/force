@@ -23,6 +23,7 @@ export const useOrder2DeleteUserAddressMutation = () => {
                   country
                   phoneNumber
                   phoneNumberCountryCode
+                  isDefault
                 }
               }
             }

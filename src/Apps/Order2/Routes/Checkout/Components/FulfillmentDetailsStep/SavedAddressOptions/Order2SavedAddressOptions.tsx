@@ -13,6 +13,7 @@ import { UpdateAddressForm } from "Apps/Order2/Routes/Checkout/Components/Fulfil
 import {
   type ProcessedUserAddress,
   countryNameFromAlpha2,
+  findDefaultAddress,
 } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/utils"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { formatPhoneNumber } from "Apps/Order2/Utils/addressUtils"
@@ -49,6 +50,27 @@ export const SavedAddressOptions = ({
     [onSelectAddress, setUserAddressMode],
   )
 
+  const onDeleteAddress = useCallback(
+    async (deletedAddressID: string) => {
+      const remainingAddresses = savedAddresses.filter(
+        address => address.internalID !== deletedAddressID,
+      )
+
+      if (remainingAddresses.length > 0) {
+        // Use same logic as initial selection: default address, then first valid
+        const addressToSelect =
+          findDefaultAddress(remainingAddresses) ||
+          remainingAddresses.find(address => address.isValid)
+
+        if (addressToSelect) {
+          setSelectedAddressID(addressToSelect.internalID)
+          await onSelectAddress(addressToSelect)
+        }
+      }
+    },
+    [savedAddresses, onSelectAddress],
+  )
+
   if (userAddressMode?.mode === "add") {
     return (
       <AddAddressForm
@@ -63,6 +85,7 @@ export const SavedAddressOptions = ({
       <UpdateAddressForm
         address={userAddressMode.address}
         onSaveAddress={onSaveAddress}
+        onDeleteAddress={onDeleteAddress}
       />
     )
   }

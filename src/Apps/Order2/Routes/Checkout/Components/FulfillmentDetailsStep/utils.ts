@@ -16,6 +16,7 @@ type GravityAddress = ReturnType<typeof extractNodes<MeAddresses>>[number]
 export type ProcessedUserAddress = FormikContextWithAddress & {
   isValid: boolean
   internalID: string
+  isDefault: boolean
 }
 
 export const normalizeAddress = (
@@ -50,7 +51,12 @@ export const processSavedAddresses = (
     const isValid = availableShippingCountries.includes(
       normalizedAddress.address.country,
     )
-    return { ...normalizedAddress, isValid, internalID: address.internalID }
+    return {
+      ...normalizedAddress,
+      isValid,
+      internalID: address.internalID,
+      isDefault: address.isDefault,
+    }
   })
   return processedAddresses
 }
@@ -59,24 +65,43 @@ export const findInitialSelectedAddress = (
   processedAddresses: ProcessedUserAddress[],
   initialValues: FormikContextWithAddress,
 ): ProcessedUserAddress | undefined => {
-  return (
-    processedAddresses.find(processedAddress => {
-      return (
-        initialValues.address.name === processedAddress.address.name &&
-        initialValues.address.country === processedAddress.address.country &&
-        initialValues.address.postalCode ===
-          processedAddress.address.postalCode &&
-        initialValues.address.addressLine1 ===
-          processedAddress.address.addressLine1 &&
-        initialValues.address.addressLine2 ===
-          processedAddress.address.addressLine2 &&
-        initialValues.address.city === processedAddress.address.city &&
-        initialValues.address.region === processedAddress.address.region &&
-        initialValues.phoneNumber === processedAddress.phoneNumber &&
-        initialValues.phoneNumberCountryCode ===
-          processedAddress.phoneNumberCountryCode
-      )
-    }) || processedAddresses.find(processedAddress => processedAddress.isValid)
+  // First priority: exact match with initial values
+  const exactMatch = processedAddresses.find(processedAddress => {
+    return (
+      initialValues.address.name === processedAddress.address.name &&
+      initialValues.address.country === processedAddress.address.country &&
+      initialValues.address.postalCode ===
+        processedAddress.address.postalCode &&
+      initialValues.address.addressLine1 ===
+        processedAddress.address.addressLine1 &&
+      initialValues.address.addressLine2 ===
+        processedAddress.address.addressLine2 &&
+      initialValues.address.city === processedAddress.address.city &&
+      initialValues.address.region === processedAddress.address.region &&
+      initialValues.phoneNumber === processedAddress.phoneNumber &&
+      initialValues.phoneNumberCountryCode ===
+        processedAddress.phoneNumberCountryCode
+    )
+  })
+  if (exactMatch) {
+    return exactMatch
+  }
+
+  // Second priority: default address if it's valid
+  const defaultAddress = findDefaultAddress(processedAddresses)
+  if (defaultAddress) {
+    return defaultAddress
+  }
+
+  // Third priority: first valid address
+  return processedAddresses.find(processedAddress => processedAddress.isValid)
+}
+
+export const findDefaultAddress = (
+  processedAddresses: ProcessedUserAddress[],
+): ProcessedUserAddress | undefined => {
+  return processedAddresses.find(
+    address => address.isDefault && address.isValid,
   )
 }
 

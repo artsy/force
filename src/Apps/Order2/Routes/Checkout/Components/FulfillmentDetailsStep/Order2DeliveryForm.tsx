@@ -285,6 +285,7 @@ const ME_FRAGMENT = graphql`
           name
           phoneNumber
           phoneNumberCountryCode
+          isDefault
         }
       }
     }

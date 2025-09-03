@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<069f28476a58717dfb06e8895e4f0859>>
+ * @generated SignedSource<<ef265995ef8aa9f78573bd67aadd82a5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -27,6 +27,7 @@ export type useOrder2DeleteUserAddressMutation$data = {
             readonly city: string;
             readonly country: string;
             readonly internalID: string;
+            readonly isDefault: boolean;
             readonly name: string | null | undefined;
             readonly phoneNumber: string | null | undefined;
             readonly phoneNumberCountryCode: string | null | undefined;
@@ -149,10 +150,17 @@ v13 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "__typename",
+  "name": "isDefault",
   "storageKey": null
 },
 v14 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "__typename",
+  "storageKey": null
+},
+v15 = {
   "kind": "InlineFragment",
   "selections": [
     {
@@ -177,7 +185,7 @@ v14 = {
   "type": "Errors",
   "abstractKey": null
 },
-v15 = {
+v16 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -240,7 +248,8 @@ return {
                           (v9/*: any*/),
                           (v10/*: any*/),
                           (v11/*: any*/),
-                          (v12/*: any*/)
+                          (v12/*: any*/),
+                          (v13/*: any*/)
                         ],
                         "storageKey": null
                       }
@@ -261,8 +270,8 @@ return {
             "name": "userAddressOrErrors",
             "plural": false,
             "selections": [
-              (v13/*: any*/),
-              (v14/*: any*/)
+              (v14/*: any*/),
+              (v15/*: any*/)
             ],
             "storageKey": null
           }
@@ -329,7 +338,8 @@ return {
                           (v10/*: any*/),
                           (v11/*: any*/),
                           (v12/*: any*/),
-                          (v15/*: any*/)
+                          (v13/*: any*/),
+                          (v16/*: any*/)
                         ],
                         "storageKey": null
                       }
@@ -339,7 +349,7 @@ return {
                 ],
                 "storageKey": "addressConnection(first:20)"
               },
-              (v15/*: any*/)
+              (v16/*: any*/)
             ],
             "storageKey": null
           },
@@ -351,12 +361,12 @@ return {
             "name": "userAddressOrErrors",
             "plural": false,
             "selections": [
-              (v13/*: any*/),
               (v14/*: any*/),
+              (v15/*: any*/),
               {
                 "kind": "InlineFragment",
                 "selections": [
-                  (v15/*: any*/)
+                  (v16/*: any*/)
                 ],
                 "type": "UserAddress",
                 "abstractKey": null
@@ -370,16 +380,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0abd9fd649ee8e852ff0356d25c07fa1",
+    "cacheID": "8b53c2683b99209038f2694f2a0f7441",
     "id": null,
     "metadata": {},
     "name": "useOrder2DeleteUserAddressMutation",
     "operationKind": "mutation",
-    "text": "mutation useOrder2DeleteUserAddressMutation(\n  $input: DeleteUserAddressInput!\n) {\n  deleteUserAddress(input: $input) {\n    me {\n      addressConnection(first: 20) {\n        edges {\n          node {\n            internalID\n            name\n            addressLine1\n            addressLine2\n            city\n            region\n            postalCode\n            country\n            phoneNumber\n            phoneNumberCountryCode\n            id\n          }\n        }\n      }\n      id\n    }\n    userAddressOrErrors {\n      __typename\n      ... on Errors {\n        errors {\n          message\n        }\n      }\n      ... on UserAddress {\n        id\n      }\n    }\n  }\n}\n"
+    "text": "mutation useOrder2DeleteUserAddressMutation(\n  $input: DeleteUserAddressInput!\n) {\n  deleteUserAddress(input: $input) {\n    me {\n      addressConnection(first: 20) {\n        edges {\n          node {\n            internalID\n            name\n            addressLine1\n            addressLine2\n            city\n            region\n            postalCode\n            country\n            phoneNumber\n            phoneNumberCountryCode\n            isDefault\n            id\n          }\n        }\n      }\n      id\n    }\n    userAddressOrErrors {\n      __typename\n      ... on Errors {\n        errors {\n          message\n        }\n      }\n      ... on UserAddress {\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "3335d7ced0badd041aa0fbcd5e09f06c";
+(node as any).hash = "f46f17403fec02c2a47ba93536a632e9";
 
 export default node;

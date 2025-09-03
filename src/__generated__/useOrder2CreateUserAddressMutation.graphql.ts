@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c2f74537eef74ba5c24cee90c45dd482>>
+ * @generated SignedSource<<162165f9df2b71bf9ca13664cc47201c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -302,6 +302,13 @@ return {
                           (v3/*: any*/),
                           (v10/*: any*/),
                           (v11/*: any*/),
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "isDefault",
+                            "storageKey": null
+                          },
                           (v13/*: any*/)
                         ],
                         "storageKey": null
@@ -359,12 +366,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e61854d5f399106370f1ac3eaadfdaee",
+    "cacheID": "406c9bd926e0d9c7e134adadd13a7601",
     "id": null,
     "metadata": {},
     "name": "useOrder2CreateUserAddressMutation",
     "operationKind": "mutation",
-    "text": "mutation useOrder2CreateUserAddressMutation(\n  $input: CreateUserAddressInput!\n) {\n  createUserAddress(input: $input) {\n    me {\n      ...Order2DeliveryForm_me\n      id\n    }\n    userAddressOrErrors {\n      __typename\n      ... on UserAddress {\n        internalID\n        name\n        addressLine1\n        addressLine2\n        city\n        region\n        postalCode\n        country\n        phoneNumber\n        phoneNumberCountryCode\n        id\n      }\n      ... on Errors {\n        errors {\n          code\n        }\n      }\n    }\n  }\n}\n\nfragment Order2DeliveryForm_me on Me {\n  addressConnection(first: 20) {\n    edges {\n      node {\n        internalID\n        addressLine1\n        addressLine2\n        city\n        region\n        postalCode\n        country\n        name\n        phoneNumber\n        phoneNumberCountryCode\n        id\n      }\n    }\n  }\n}\n"
+    "text": "mutation useOrder2CreateUserAddressMutation(\n  $input: CreateUserAddressInput!\n) {\n  createUserAddress(input: $input) {\n    me {\n      ...Order2DeliveryForm_me\n      id\n    }\n    userAddressOrErrors {\n      __typename\n      ... on UserAddress {\n        internalID\n        name\n        addressLine1\n        addressLine2\n        city\n        region\n        postalCode\n        country\n        phoneNumber\n        phoneNumberCountryCode\n        id\n      }\n      ... on Errors {\n        errors {\n          code\n        }\n      }\n    }\n  }\n}\n\nfragment Order2DeliveryForm_me on Me {\n  addressConnection(first: 20) {\n    edges {\n      node {\n        internalID\n        addressLine1\n        addressLine2\n        city\n        region\n        postalCode\n        country\n        name\n        phoneNumber\n        phoneNumberCountryCode\n        isDefault\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
