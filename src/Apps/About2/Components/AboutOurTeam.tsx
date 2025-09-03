@@ -4,7 +4,6 @@ import {
   FullBleed,
   GridColumns,
   Image,
-  ResponsiveBox,
   Stack,
   Text,
   useTheme,
@@ -13,7 +12,7 @@ import { AboutSection } from "Apps/About2/Components/AboutSection"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { RouterLink } from "System/Components/RouterLink"
-import { cropped, resized } from "Utils/resized"
+import { resized } from "Utils/resized"
 import styled from "styled-components"
 
 export const AboutOurTeam = () => {
@@ -37,96 +36,12 @@ export const AboutOurTeam = () => {
                       belief that art should be part of everyday life.
                     </Text>
                   </Stack>
-
-                  <Stack gap={2} display={["flex", "none"]}>
-                    <ResponsiveBox
-                      aspectWidth={1}
-                      aspectHeight={1}
-                      bg="mono60"
-                      maxWidth="100%"
-                    >
-                      <Image
-                        {...cropped(
-                          "https://files.artsy.net/images/about2-jeffrey-yin.jpg",
-                          { width: 700, height: 700 },
-                        )}
-                        width="100%"
-                        height="100%"
-                        alt=""
-                      />
-                    </ResponsiveBox>
-
-                    <Stack gap={1}>
-                      <Text variant="sm-display">Chief Executive Officer</Text>
-
-                      <Text variant="xl">Jeffrey Yin</Text>
-                    </Stack>
-                  </Stack>
-
-                  <Stack gap={2}>
-                    <ResponsiveBox
-                      aspectWidth={1}
-                      aspectHeight={1}
-                      bg="mono60"
-                      maxWidth="100%"
-                    >
-                      <Image
-                        {...resized(
-                          "https://files.artsy.net/images/about2-carter-cleveland.jpg",
-                          { width: 700 },
-                        )}
-                        width="100%"
-                        height="100%"
-                        alt=""
-                      />
-                    </ResponsiveBox>
-
-                    <Stack gap={1}>
-                      <Text variant={["sm-display", "lg-display"]}>
-                        Founder of Artsy
-                      </Text>
-
-                      <Text variant="xl">Carter Cleveland</Text>
-                    </Stack>
-                  </Stack>
-                </Stack>
-              </Column>
-
-              <Column span={5} display={["none", "block"]}>
-                <Stack
-                  gap={2}
-                  flexDirection="column"
-                  justifyContent="flex-end"
-                  height="100%"
-                >
-                  <ResponsiveBox
-                    aspectWidth={1200}
-                    aspectHeight={1532}
-                    bg="mono60"
-                    maxWidth="100%"
-                  >
-                    <Image
-                      {...resized(
-                        "https://files.artsy.net/images/about2-jeffrey-yin.jpg",
-                        { width: 700 },
-                      )}
-                      width="100%"
-                      height="100%"
-                      alt=""
-                    />
-                  </ResponsiveBox>
-
-                  <Stack gap={1}>
-                    <Text variant="lg-display">Chief Executive Officer</Text>
-
-                    <Text variant="xl">Jeffrey Yin</Text>
-                  </Stack>
                 </Stack>
               </Column>
 
               <Column span={10} start={2}>
                 <GridColumns>
-                  {MORE_TEAM_MEMBERS.map(member => (
+                  {TEAM_MEMBERS.map(member => (
                     <AboutOurTeamItem key={member.name} {...member} />
                   ))}
                 </GridColumns>
@@ -151,21 +66,46 @@ export const AboutOurTeam = () => {
   )
 }
 
-const MORE_TEAM_MEMBERS = [
+const TEAM_MEMBERS = [
+  {
+    name: "Jeffrey Yin",
+    title: "CEO",
+    src: "https://files.artsy.net/images/about-our-team-jeffrey-yin.png",
+  },
   {
     name: "Dustyn Kim",
     title: "President",
-    src: "https://files.artsy.net/images/about2-dustyn-kim-c.jpg",
+    src: "https://files.artsy.net/images/about-our-team-dustyn-kim.png",
+  },
+  {
+    name: "Elisa Colombani",
+    title: "Chief HR Officer",
+    src: "https://files.artsy.net/images/about-our-team-elisa-colombani.png",
+  },
+  {
+    name: "Angela Vinci",
+    title: "Chief Product Officer",
+    src: "https://files.artsy.net/images/about-our-team-angela-vinci.png",
+  },
+  {
+    name: "Joey Aghion",
+    title: "VP, Engineering",
+    src: "https://files.artsy.net/images/about-our-team-joey-aghion.png",
   },
   {
     name: "Alex Forbes",
     title: "VP, Global Partnerships",
-    src: "https://files.artsy.net/images/about2-alex-forbes-c.jpg",
+    src: "https://files.artsy.net/images/about-our-team-alex-forbes.png",
   },
   {
-    name: "Casey Lesser",
-    title: "Editor in Chief & Director of Content",
-    src: "https://files.artsy.net/images/about2-casey-lesser-c.jpg",
+    name: "Ani Petrov",
+    title: "VP, Marketing & Data Analytics",
+    src: "https://files.artsy.net/images/about-our-team-ani-petrov.png",
+  },
+  {
+    name: "Christopher Young",
+    title: "VP, Finance & Corporate Development",
+    src: "https://files.artsy.net/images/about-our-team-christopher-young.png",
   },
 ]
 
@@ -185,7 +125,7 @@ const AboutOurTeamItem = ({ name, title, src }: AboutOurTeamItemProps) => {
 
   return (
     <Column
-      span={4}
+      span={3}
       borderRadius={10}
       overflow="hidden"
       bg={bg}
@@ -194,20 +134,41 @@ const AboutOurTeamItem = ({ name, title, src }: AboutOurTeamItemProps) => {
       pb={[2, 4]}
     >
       <Stack gap={2} alignItems="center" flexDirection={["row", "column"]}>
-        <Box
-          bg="mono60"
-          width={[100, "60%", "50%"]}
-          style={{ aspectRatio: 1 }}
-          borderRadius="50%"
-          overflow="hidden"
-        >
-          <Image
-            {...cropped(src, { width: 300, height: 300 })}
+        <>
+          {/* Mobile */}
+          <Box
+            bg="mono60"
+            width={100}
+            height={100}
+            borderRadius="50%"
+            overflow="hidden"
+            display={["block", "none"]}
+            flexShrink={0}
+          >
+            <Image
+              {...resized(src, { width: 300 })}
+              width="100%"
+              height="100%"
+              alt={`${name}, ${title}`}
+              style={{ objectFit: "cover", objectPosition: "center 10%" }}
+            />
+          </Box>
+          {/* Desktop */}
+          <Box
+            bg="mono60"
             width="100%"
-            height="100%"
-            alt=""
-          />
-        </Box>
+            borderRadius={10}
+            overflow="hidden"
+            display={["none", "block"]}
+          >
+            <Image
+              {...resized(src, { width: 400 })}
+              width="100%"
+              height="auto"
+              alt={`${name}, ${title}`}
+            />
+          </Box>
+        </>
 
         <Stack gap={1} textAlign={["left", "center"]}>
           <Text variant="lg-display">{name}</Text>
