@@ -3,6 +3,6 @@ on:
   pull_request:
     types: [opened, synchronize, edited, review_requested, review_request_removed, labeled, unlabeled, milestoned, demilestoned]
 
-jobs: # comment
-  danger-yarn: #comment
-    uses: artsy/duchamp/.github/workflows/run-yarn-2.yml@main # comment
+jobs:
+  danger-yarn:
+    uses: artsy/duchamp/.github/workflows/run-yarn-2.yml@main
