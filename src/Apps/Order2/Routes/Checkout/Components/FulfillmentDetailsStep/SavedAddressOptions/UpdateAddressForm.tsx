@@ -1,8 +1,8 @@
 import {
-  Banner,
   Button,
   Clickable,
   Flex,
+  Message,
   ModalDialog,
   Spacer,
   Text,
@@ -24,6 +24,21 @@ import { useState } from "react"
 
 const logger = createLogger("UpdateAddressForm")
 
+const getDeleteErrorMessage = (
+  backendError: string,
+): { title: string; message: string } => {
+  if (
+    backendError.includes("Couldn't find Address") ||
+    backendError.includes("Cannot return null for non-nullable field")
+  ) {
+    return {
+      title: "Address already deleted",
+      message: "Please refresh the page.",
+    }
+  }
+  return { title: "An error occurred", message: "Please try again later." }
+}
+
 interface UpdateAddressFormProps {
   address: ProcessedUserAddress
   onSaveAddress: (
@@ -42,7 +57,10 @@ export const UpdateAddressForm = ({
   const { setUserAddressMode } = useCheckoutContext()
   const [showDeleteDialog, setShowDeleteDialog] = useState(false)
   const [isDeleting, setIsDeleting] = useState(false)
-  const [deleteError, setDeleteError] = useState<string | null>(null)
+  const [deleteError, setDeleteError] = useState<{
+    title: string
+    message: string
+  } | null>(null)
 
   const handleDeleteAddress = async () => {
     setIsDeleting(true)
@@ -59,11 +77,10 @@ export const UpdateAddressForm = ({
       const addressOrErrors = result.deleteUserAddress?.userAddressOrErrors
 
       if (addressOrErrors?.__typename === "Errors") {
-        const errorMessages = addressOrErrors.errors
-          .map(error => error.message)
-          .join(", ")
-        setDeleteError(errorMessages)
-        logger.error("Error deleting address:", errorMessages)
+        const firstError = addressOrErrors.errors?.[0]?.message || ""
+        const errorInfo = getDeleteErrorMessage(firstError)
+        setDeleteError(errorInfo)
+        logger.error("Error deleting address:", addressOrErrors.errors)
         return
       }
 
@@ -74,9 +91,9 @@ export const UpdateAddressForm = ({
       setUserAddressMode(null)
     } catch (error) {
       logger.error("Error deleting address:", error)
-      setDeleteError(
-        "Sorry, there has been an issue deleting your address. Please try again.",
-      )
+      const errorMessage =
+        error?.[0]?.message || error?.message || String(error)
+      setDeleteError(getDeleteErrorMessage(errorMessage))
     } finally {
       setIsDeleting(false)
     }
@@ -171,13 +188,14 @@ export const UpdateAddressForm = ({
                 setShowDeleteDialog(false)
                 setDeleteError(null)
               }}
-              width="350px"
+              width="450px"
             >
               {deleteError && (
                 <>
-                  <Banner variant="error" mb={2}>
-                    {deleteError}
-                  </Banner>
+                  <Message variant="error" title={deleteError.title}>
+                    {deleteError.message}
+                  </Message>
+                  <Spacer y={2} />
                 </>
               )}
               <Text variant="xs">
