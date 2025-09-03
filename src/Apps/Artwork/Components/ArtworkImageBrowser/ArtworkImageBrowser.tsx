@@ -24,6 +24,15 @@ export const ArtworkImageBrowser: React.FC<
 > = ({ artwork, isMyCollectionArtwork }) => {
   const { figures } = artwork
 
+  // Calculate the default index first so it can be used to initialize the cursor
+  const defaultIndex = useMemo(() => {
+    const index = figures.findIndex(figure => {
+      return figure.__typename === "Image" && !!figure.isDefault
+    })
+
+    return index === -1 ? 0 : index
+  }, [figures])
+
   const {
     index: activeIndex,
     handleNext,
@@ -31,6 +40,7 @@ export const ArtworkImageBrowser: React.FC<
     setCursor,
   } = useCursor({
     max: figures.length,
+    initialCursor: defaultIndex,
   })
 
   // Here we pre-emptively scale the figures to figure out which is going
@@ -65,15 +75,6 @@ export const ArtworkImageBrowser: React.FC<
           }
         }
       }),
-    )
-  }, [figures])
-
-  const defaultIndex = useMemo(() => {
-    return (
-      figures.findIndex(figure => {
-        if (!("isDefault" in figure)) return false
-        return !!figure.isDefault
-      }) ?? 0
     )
   }, [figures])
 
