@@ -157,11 +157,13 @@ export const UpdateAddressForm = ({
             Cancel
           </Button>
           <Spacer y={2} />
-          <Clickable onClick={() => setShowDeleteDialog(true)}>
-            <Text variant="xs" color="red100">
-              Delete address
-            </Text>
-          </Clickable>
+          <Flex justifyContent="center">
+            <Clickable onClick={() => setShowDeleteDialog(true)}>
+              <Text variant="xs" color="red100">
+                Delete address
+              </Text>
+            </Clickable>
+          </Flex>
           {showDeleteDialog && (
             <ModalDialog
               title="Delete address?"
