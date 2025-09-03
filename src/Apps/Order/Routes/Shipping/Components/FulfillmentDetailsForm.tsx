@@ -553,7 +553,6 @@ const FulfillmentDetailsFormLayout = (
               name="attributes.phoneNumber"
               title="Phone number"
               type="tel"
-              description={"Required for pickup logistics"}
               placeholder="Add phone number including country code"
               pattern="[^a-z]+"
               value={values.attributes.phoneNumber}
@@ -564,6 +563,7 @@ const FulfillmentDetailsFormLayout = (
                 errors.attributes?.phoneNumber
               }
               data-testid="AddressForm_pickupPhoneNumber"
+              required
             />
             <Spacer y={4} />
           </>
