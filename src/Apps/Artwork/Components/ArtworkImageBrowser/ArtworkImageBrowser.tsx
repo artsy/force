@@ -27,8 +27,7 @@ export const ArtworkImageBrowser: React.FC<
   // Calculate the default index first so it can be used to initialize the cursor
   const defaultIndex = useMemo(() => {
     const index = figures.findIndex(figure => {
-      if (!("isDefault" in figure)) return false
-      return !!figure.isDefault
+      return figure.__typename === "Image" && !!figure.isDefault
     })
 
     return index === -1 ? 0 : index
