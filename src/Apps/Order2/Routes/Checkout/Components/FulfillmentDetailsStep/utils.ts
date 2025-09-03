@@ -77,28 +77,25 @@ export const findInitialSelectedAddress = (
   processedAddresses: ProcessedUserAddress[],
   initialValues: FormikContextWithAddress,
 ): ProcessedUserAddress | undefined => {
-  const exactMatch = processedAddresses.find(processedAddress => {
-    return (
-      initialValues.address.name === processedAddress.address.name &&
-      initialValues.address.country === processedAddress.address.country &&
-      initialValues.address.postalCode ===
-        processedAddress.address.postalCode &&
-      initialValues.address.addressLine1 ===
-        processedAddress.address.addressLine1 &&
-      initialValues.address.addressLine2 ===
-        processedAddress.address.addressLine2 &&
-      initialValues.address.city === processedAddress.address.city &&
-      initialValues.address.region === processedAddress.address.region &&
-      initialValues.phoneNumber === processedAddress.phoneNumber &&
-      initialValues.phoneNumberCountryCode ===
-        processedAddress.phoneNumberCountryCode
-    )
-  })
-  if (exactMatch) {
-    return exactMatch
-  }
-
-  return processedAddresses.find(processedAddress => processedAddress.isValid)
+  return (
+    processedAddresses.find(processedAddress => {
+      return (
+        initialValues.address.name === processedAddress.address.name &&
+        initialValues.address.country === processedAddress.address.country &&
+        initialValues.address.postalCode ===
+          processedAddress.address.postalCode &&
+        initialValues.address.addressLine1 ===
+          processedAddress.address.addressLine1 &&
+        initialValues.address.addressLine2 ===
+          processedAddress.address.addressLine2 &&
+        initialValues.address.city === processedAddress.address.city &&
+        initialValues.address.region === processedAddress.address.region &&
+        initialValues.phoneNumber === processedAddress.phoneNumber &&
+        initialValues.phoneNumberCountryCode ===
+          processedAddress.phoneNumberCountryCode
+      )
+    }) || processedAddresses.find(processedAddress => processedAddress.isValid)
+  )
 }
 
 export const deliveryAddressValidationSchema = yup
