@@ -22,6 +22,7 @@ describe("FulfillmentDetailsStep utils", () => {
         country: "us",
         phoneNumber: "1234567890",
         phoneNumberCountryCode: "us",
+        isDefault: false,
       }
 
       const result = normalizeAddress(gravityAddress)
@@ -53,6 +54,7 @@ describe("FulfillmentDetailsStep utils", () => {
         country: "US",
         phoneNumber: null,
         phoneNumberCountryCode: null,
+        isDefault: true,
       }
 
       const result = normalizeAddress(gravityAddress)
@@ -84,6 +86,7 @@ describe("FulfillmentDetailsStep utils", () => {
         country: "ca",
         phoneNumber: "1234567890",
         phoneNumberCountryCode: "ca",
+        isDefault: false,
       }
 
       const result = normalizeAddress(gravityAddress)
