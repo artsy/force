@@ -3,9 +3,9 @@ import {
   type ProcessedUserAddress,
   countryNameFromAlpha2,
   findInitialSelectedAddress,
-  findDefaultAddress,
   normalizeAddress,
   processSavedAddresses,
+  sortAddressesByPriority,
 } from "../utils"
 
 describe("FulfillmentDetailsStep utils", () => {
@@ -157,6 +157,7 @@ describe("FulfillmentDetailsStep utils", () => {
       )
 
       expect(result).toHaveLength(2)
+      // After sorting: valid addresses come first (invalid default comes after valid)
       expect(result[0]).toMatchObject({
         internalID: "address1",
         isValid: true, // US is in available countries
@@ -508,7 +509,7 @@ describe("FulfillmentDetailsStep utils", () => {
         addressesWithDefault,
         initialValues,
       )
-      expect(result?.internalID).toBe("address2") // Default address selected
+      expect(result?.internalID).toBe("address1") // Valid address selected over invalid default
     })
 
     it("ignores invalid default address", () => {
@@ -569,8 +570,8 @@ describe("FulfillmentDetailsStep utils", () => {
     })
   })
 
-  describe("findDefaultAddress", () => {
-    it("finds valid default address", () => {
+  describe("sortAddressesByPriority", () => {
+    it("sorts default address first", () => {
       const addresses: ProcessedUserAddress[] = [
         {
           internalID: "address1",
@@ -606,22 +607,64 @@ describe("FulfillmentDetailsStep utils", () => {
         },
       ]
 
-      const result = findDefaultAddress(addresses)
-      expect(result?.internalID).toBe("address2")
+      const result = sortAddressesByPriority(addresses)
+      expect(result[0].internalID).toBe("address2") // Default address first
+      expect(result[1].internalID).toBe("address1")
     })
 
-    it("returns undefined when default address is invalid", () => {
+    it("sorts valid addresses before invalid ones", () => {
       const addresses: ProcessedUserAddress[] = [
         {
-          internalID: "address1",
+          internalID: "invalid1",
+          isValid: false,
+          isDefault: false,
+          phoneNumber: "1234567890",
+          phoneNumberCountryCode: "XX",
+          address: {
+            name: "Invalid Address",
+            addressLine1: "123 Invalid St",
+            addressLine2: "",
+            city: "Invalid City",
+            region: "XX",
+            postalCode: "12345",
+            country: "XX",
+          },
+        },
+        {
+          internalID: "valid1",
+          isValid: true,
+          isDefault: false,
+          phoneNumber: "9876543210",
+          phoneNumberCountryCode: "US",
+          address: {
+            name: "Valid Address",
+            addressLine1: "456 Valid Ave",
+            addressLine2: "",
+            city: "Valid City",
+            region: "NY",
+            postalCode: "10001",
+            country: "US",
+          },
+        },
+      ]
+
+      const result = sortAddressesByPriority(addresses)
+      expect(result[0].internalID).toBe("valid1") // Valid address first
+      expect(result[1].internalID).toBe("invalid1")
+    })
+
+    it("prioritizes valid over invalid default", () => {
+      const addresses: ProcessedUserAddress[] = [
+        {
+          internalID: "valid1",
           isValid: true,
           isDefault: false,
           phoneNumber: "1234567890",
           phoneNumberCountryCode: "US",
           address: {
-            name: "John Doe",
+            name: "Valid Address",
             addressLine1: "123 Main St",
-            addressLine2: "Apt 4B",
+            addressLine2: "",
             city: "New York",
             region: "NY",
             postalCode: "10001",
@@ -629,54 +672,72 @@ describe("FulfillmentDetailsStep utils", () => {
           },
         },
         {
-          internalID: "address2",
+          internalID: "defaultInvalid",
           isValid: false,
           isDefault: true,
           phoneNumber: "9876543210",
           phoneNumberCountryCode: "XX",
           address: {
-            name: "Jane Smith",
-            addressLine1: "456 Oak Ave",
+            name: "Default Invalid",
+            addressLine1: "456 Invalid Ave",
             addressLine2: "",
             city: "Invalid City",
             region: "XX",
-            postalCode: "M5V 3A8",
+            postalCode: "12345",
             country: "XX",
           },
         },
       ]
 
-      const result = findDefaultAddress(addresses)
-      expect(result).toBeUndefined()
+      const result = sortAddressesByPriority(addresses)
+      expect(result[0].internalID).toBe("valid1") // Valid comes before invalid default
+      expect(result[1].internalID).toBe("defaultInvalid")
     })
 
-    it("returns undefined when no default address exists", () => {
+    it("prioritizes valid default over valid non-default", () => {
       const addresses: ProcessedUserAddress[] = [
         {
-          internalID: "address1",
+          internalID: "valid1",
           isValid: true,
           isDefault: false,
           phoneNumber: "1234567890",
           phoneNumberCountryCode: "US",
           address: {
-            name: "John Doe",
+            name: "Valid Address",
             addressLine1: "123 Main St",
-            addressLine2: "Apt 4B",
+            addressLine2: "",
             city: "New York",
             region: "NY",
             postalCode: "10001",
             country: "US",
           },
         },
+        {
+          internalID: "defaultValid",
+          isValid: true,
+          isDefault: true,
+          phoneNumber: "9876543210",
+          phoneNumberCountryCode: "CA",
+          address: {
+            name: "Default Valid",
+            addressLine1: "456 Valid Ave",
+            addressLine2: "",
+            city: "Valid City",
+            region: "ON",
+            postalCode: "M5V 3A8",
+            country: "CA",
+          },
+        },
       ]
 
-      const result = findDefaultAddress(addresses)
-      expect(result).toBeUndefined()
+      const result = sortAddressesByPriority(addresses)
+      expect(result[0].internalID).toBe("defaultValid") // Valid default comes first
+      expect(result[1].internalID).toBe("valid1")
     })
 
     it("handles empty address list", () => {
-      const result = findDefaultAddress([])
-      expect(result).toBeUndefined()
+      const result = sortAddressesByPriority([])
+      expect(result).toEqual([])
     })
   })
 })

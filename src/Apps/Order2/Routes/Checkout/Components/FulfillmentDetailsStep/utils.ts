@@ -58,14 +58,25 @@ export const processSavedAddresses = (
       isDefault: address.isDefault,
     }
   })
-  return processedAddresses
+  return sortAddressesByPriority(processedAddresses)
+}
+
+export const sortAddressesByPriority = (addresses: ProcessedUserAddress[]) => {
+  return [...addresses].sort((a, b) => {
+    if (a.isDefault && a.isValid && !(b.isDefault && b.isValid)) return -1
+    if (b.isDefault && b.isValid && !(a.isDefault && a.isValid)) return 1
+
+    if (a.isValid && !b.isValid) return -1
+    if (!a.isValid && b.isValid) return 1
+
+    return 0
+  })
 }
 
 export const findInitialSelectedAddress = (
   processedAddresses: ProcessedUserAddress[],
   initialValues: FormikContextWithAddress,
 ): ProcessedUserAddress | undefined => {
-  // First priority: exact match with initial values
   const exactMatch = processedAddresses.find(processedAddress => {
     return (
       initialValues.address.name === processedAddress.address.name &&
@@ -87,22 +98,7 @@ export const findInitialSelectedAddress = (
     return exactMatch
   }
 
-  // Second priority: default address if it's valid
-  const defaultAddress = findDefaultAddress(processedAddresses)
-  if (defaultAddress) {
-    return defaultAddress
-  }
-
-  // Third priority: first valid address
   return processedAddresses.find(processedAddress => processedAddress.isValid)
-}
-
-export const findDefaultAddress = (
-  processedAddresses: ProcessedUserAddress[],
-): ProcessedUserAddress | undefined => {
-  return processedAddresses.find(
-    address => address.isDefault && address.isValid,
-  )
 }
 
 export const deliveryAddressValidationSchema = yup

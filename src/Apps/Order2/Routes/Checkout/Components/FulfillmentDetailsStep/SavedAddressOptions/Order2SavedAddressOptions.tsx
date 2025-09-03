@@ -13,7 +13,6 @@ import { UpdateAddressForm } from "Apps/Order2/Routes/Checkout/Components/Fulfil
 import {
   type ProcessedUserAddress,
   countryNameFromAlpha2,
-  findDefaultAddress,
 } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/utils"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { formatPhoneNumber } from "Apps/Order2/Utils/addressUtils"
@@ -57,10 +56,9 @@ export const SavedAddressOptions = ({
       )
 
       if (remainingAddresses.length > 0) {
-        // Use same logic as initial selection: default address, then first valid
-        const addressToSelect =
-          findDefaultAddress(remainingAddresses) ||
-          remainingAddresses.find(address => address.isValid)
+        const addressToSelect = remainingAddresses.find(
+          address => address.isValid,
+        )
 
         if (addressToSelect) {
           setSelectedAddressID(addressToSelect.internalID)
