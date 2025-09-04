@@ -270,6 +270,13 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       setupFutureUsage: null,
       mode: "setup",
       payment_method_types: [paymentType],
+      payment_method_options: {
+        us_bank_account: {
+          financial_connections: {
+            permissions: ["payment_method", "balances", "ownership"],
+          },
+        },
+      },
     })
 
     if (selectedPaymentMethod !== methodType) {
