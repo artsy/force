@@ -75,5 +75,62 @@ describe("ShowContextualLink", () => {
       expect(screen.queryByRole("link")).not.toBeInTheDocument()
       expect(screen.getByText(/Presented by Catty Partner/)).toBeInTheDocument()
     })
+
+    it("displays location when show has location and is not a fair booth", () => {
+      renderWithRelay({
+        Show: () => ({
+          isFairBooth: false,
+          hasLocation: true,
+          location: { display: "123 Art Street, New York" },
+        }),
+        Partner: () => ({
+          name: "Catty Gallery",
+          href: "/catty-gallery",
+          isLinkable: true,
+        }),
+      })
+
+      expect(screen.getByText("Presented by")).toBeInTheDocument()
+      expect(screen.getByText("Catty Gallery")).toBeInTheDocument()
+      expect(screen.getByText("123 Art Street, New York")).toBeInTheDocument()
+    })
+
+    it("does not display location when show has no location", () => {
+      renderWithRelay({
+        Show: () => ({
+          isFairBooth: false,
+          hasLocation: false,
+          location: null,
+        }),
+        Partner: () => ({
+          name: "Catty Gallery",
+          href: "/catty-gallery",
+          isLinkable: true,
+        }),
+      })
+
+      expect(screen.getByText("Presented by")).toBeInTheDocument()
+      expect(screen.getByText("Catty Gallery")).toBeInTheDocument()
+      expect(
+        screen.queryByText("123 Art Street, New York"),
+      ).not.toBeInTheDocument()
+    })
+
+    it("does not display location when show is a fair booth", () => {
+      renderWithRelay({
+        Show: () => ({
+          isFairBooth: true,
+          hasLocation: true,
+          location: { display: "123 Art Street, New York" },
+        }),
+        Fair: () => ({ name: "Art Fair", isActive: true }),
+      })
+
+      expect(screen.getByText("Part of")).toBeInTheDocument()
+      expect(screen.getByText("Art Fair")).toBeInTheDocument()
+      expect(
+        screen.queryByText("123 Art Street, New York"),
+      ).not.toBeInTheDocument()
+    })
   })
 })

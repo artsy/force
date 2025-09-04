@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b2939fa2fe12541ab977c3c1816e0618>>
+ * @generated SignedSource<<7bb813bded9249ef9f780b8f2ad868f7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -33,25 +33,25 @@ v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "href",
+  "name": "id",
   "storageKey": null
 },
 v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "name",
+  "name": "href",
   "storageKey": null
 },
 v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "name",
   "storageKey": null
 },
 v4 = [
-  (v3/*: any*/)
+  (v1/*: any*/)
 ],
 v5 = {
   "enumValues": null,
@@ -128,12 +128,38 @@ return {
           {
             "alias": null,
             "args": null,
+            "kind": "ScalarField",
+            "name": "hasLocation",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Location",
+            "kind": "LinkedField",
+            "name": "location",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "display",
+                "storageKey": null
+              },
+              (v1/*: any*/)
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": "Fair",
             "kind": "LinkedField",
             "name": "fair",
             "plural": false,
             "selections": [
-              (v1/*: any*/),
+              (v2/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -141,8 +167,8 @@ return {
                 "name": "isActive",
                 "storageKey": null
               },
-              (v2/*: any*/),
-              (v3/*: any*/)
+              (v3/*: any*/),
+              (v1/*: any*/)
             ],
             "storageKey": null
           },
@@ -171,8 +197,8 @@ return {
                     "name": "isLinkable",
                     "storageKey": null
                   },
-                  (v2/*: any*/),
-                  (v1/*: any*/)
+                  (v3/*: any*/),
+                  (v2/*: any*/)
                 ],
                 "type": "Partner",
                 "abstractKey": null
@@ -192,14 +218,14 @@ return {
             ],
             "storageKey": null
           },
-          (v3/*: any*/)
+          (v1/*: any*/)
         ],
         "storageKey": "show(id:\"catty-show\")"
       }
     ]
   },
   "params": {
-    "cacheID": "e9c756dc55fdf3cf54132502ad7893b1",
+    "cacheID": "df2029c9d446d172df2ab1e88e147f0f",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -219,8 +245,17 @@ return {
         "show.fair.id": (v6/*: any*/),
         "show.fair.isActive": (v7/*: any*/),
         "show.fair.name": (v5/*: any*/),
+        "show.hasLocation": (v7/*: any*/),
         "show.id": (v6/*: any*/),
         "show.isFairBooth": (v7/*: any*/),
+        "show.location": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Location"
+        },
+        "show.location.display": (v5/*: any*/),
+        "show.location.id": (v6/*: any*/),
         "show.partner": {
           "enumValues": null,
           "nullable": true,
@@ -237,7 +272,7 @@ return {
     },
     "name": "ShowContextualLinkTestQuery",
     "operationKind": "query",
-    "text": "query ShowContextualLinkTestQuery {\n  show(id: \"catty-show\") {\n    ...ShowContextualLink_show\n    id\n  }\n}\n\nfragment ShowContextualLink_show on Show {\n  isFairBooth\n  fair {\n    href\n    isActive\n    name\n    id\n  }\n  partner {\n    __typename\n    ... on Partner {\n      isLinkable\n      name\n      href\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on ExternalPartner {\n      id\n    }\n  }\n}\n"
+    "text": "query ShowContextualLinkTestQuery {\n  show(id: \"catty-show\") {\n    ...ShowContextualLink_show\n    id\n  }\n}\n\nfragment ShowContextualLink_show on Show {\n  isFairBooth\n  hasLocation\n  location {\n    display\n    id\n  }\n  fair {\n    href\n    isActive\n    name\n    id\n  }\n  partner {\n    __typename\n    ... on Partner {\n      isLinkable\n      name\n      href\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on ExternalPartner {\n      id\n    }\n  }\n}\n"
   }
 };
 })();
