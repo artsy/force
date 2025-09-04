@@ -14,6 +14,7 @@ import {
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useOrder2DeleteUserAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2DeleteUserAddressMutation"
 import { useOrder2UpdateUserAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2UpdateUserAddressMutation"
+import { useOrder2UpdateUserDefaultAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2UpdateUserDefaultAddressMutation"
 import {
   AddressFormFields,
   type FormikContextWithAddress,
@@ -23,6 +24,10 @@ import { Formik } from "formik"
 import { useState } from "react"
 
 const logger = createLogger("UpdateAddressForm")
+
+interface UpdateAddressFormValues extends FormikContextWithAddress {
+  setAsDefault: boolean
+}
 
 const getDeleteErrorMessage = (
   backendError: string,
@@ -53,6 +58,7 @@ export const UpdateAddressForm = ({
   address,
 }: UpdateAddressFormProps) => {
   const updateUserAddress = useOrder2UpdateUserAddressMutation()
+  const updateUserDefaultAddress = useOrder2UpdateUserDefaultAddressMutation()
   const deleteUserAddress = useOrder2DeleteUserAddressMutation()
   const { setUserAddressMode } = useCheckoutContext()
   const [showDeleteDialog, setShowDeleteDialog] = useState(false)
@@ -99,11 +105,16 @@ export const UpdateAddressForm = ({
     }
   }
 
+  const initialValues: UpdateAddressFormValues = {
+    ...address,
+    setAsDefault: false,
+  }
+
   return (
     <Formik
-      initialValues={address}
+      initialValues={initialValues}
       validationSchema={deliveryAddressValidationSchema}
-      onSubmit={async (values: FormikContextWithAddress) => {
+      onSubmit={async (values: UpdateAddressFormValues) => {
         try {
           const result = await updateUserAddress.submitMutation({
             variables: {
@@ -125,10 +136,20 @@ export const UpdateAddressForm = ({
           })
 
           if (result.updateUserAddress?.userAddressOrErrors?.internalID) {
-            await onSaveAddress(
-              values,
-              result.updateUserAddress?.userAddressOrErrors.internalID,
-            )
+            const updatedAddressID =
+              result.updateUserAddress.userAddressOrErrors.internalID
+
+            if (values.setAsDefault) {
+              await updateUserDefaultAddress.submitMutation({
+                variables: {
+                  input: {
+                    userAddressID: updatedAddressID,
+                  },
+                },
+              })
+            }
+
+            await onSaveAddress(values, updatedAddressID)
             return
           }
 
@@ -155,7 +176,10 @@ export const UpdateAddressForm = ({
             Edit address
           </Text>
           <Spacer y={2} />
-          <AddressFormFields withPhoneNumber />
+          <AddressFormFields
+            withPhoneNumber
+            withSetAsDefault={!address.isDefault}
+          />
           <Spacer y={4} />
           <Button
             width="100%"

@@ -1,5 +1,13 @@
 import { ContextModule } from "@artsy/cohesion"
-import { Column, GridColumns, Input, Select, SelectInput } from "@artsy/palette"
+import {
+  Checkbox,
+  Column,
+  GridColumns,
+  Input,
+  Select,
+  SelectInput,
+  Spacer,
+} from "@artsy/palette"
 import { AddressAutocompleteInput } from "Components/Address/AddressAutocompleteInput"
 import {
   type Address,
@@ -19,6 +27,7 @@ export interface FormikContextWithAddress {
   address: Address
   phoneNumber?: string
   phoneNumberCountryCode?: string
+  setAsDefault?: boolean
 }
 
 type CountryData = (typeof countryPhoneOptions)[number]
@@ -30,6 +39,8 @@ interface Props {
   withLegacyPhoneInput?: boolean
   /** Whether to only include shippable countries */
   shippableCountries?: CountryData[]
+  /** Whether to show the "Set as default address" checkbox */
+  withSetAsDefault?: boolean
 }
 
 /**
@@ -315,6 +326,20 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
             enableSearch
             required
           />
+        </Column>
+      )}
+      {props.withSetAsDefault && (
+        <Column span={12}>
+          <Spacer y={1} />
+          <Checkbox
+            onSelect={selected => {
+              setFieldValue("setAsDefault", selected)
+            }}
+            selected={values.setAsDefault || false}
+            data-testid="setAsDefault"
+          >
+            Set as default address
+          </Checkbox>
         </Column>
       )}
     </GridColumns>
