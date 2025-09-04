@@ -8,7 +8,7 @@ import {
   Text,
   useTheme,
 } from "@artsy/palette"
-import { AboutSection } from "Apps/About2/Components/AboutSection"
+import { AboutSection } from "Apps/About/Components/AboutSection"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { RouterLink } from "System/Components/RouterLink"

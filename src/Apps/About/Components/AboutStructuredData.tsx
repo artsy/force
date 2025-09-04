@@ -1,4 +1,4 @@
-import { DESCRIPTION } from "Apps/About2/About2App"
+import { DESCRIPTION } from "Apps/About/AboutApp"
 import { StructuredData } from "Components/Seo/StructuredData"
 import { DOWNLOAD_APP_URLS, Device } from "Utils/Hooks/useDeviceDetection"
 import { FACTS_AND_FIGURES } from "Utils/factsAndFigures"
