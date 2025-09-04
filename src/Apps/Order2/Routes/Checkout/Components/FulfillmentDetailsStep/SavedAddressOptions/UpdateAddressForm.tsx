@@ -14,6 +14,7 @@ import {
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useOrder2DeleteUserAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2DeleteUserAddressMutation"
 import { useOrder2UpdateUserAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2UpdateUserAddressMutation"
+import { useOrder2UpdateUserDefaultAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2UpdateUserDefaultAddressMutation"
 import {
   AddressFormFields,
   type FormikContextWithAddress,
@@ -53,6 +54,7 @@ export const UpdateAddressForm = ({
   address,
 }: UpdateAddressFormProps) => {
   const updateUserAddress = useOrder2UpdateUserAddressMutation()
+  const updateUserDefaultAddress = useOrder2UpdateUserDefaultAddressMutation()
   const deleteUserAddress = useOrder2DeleteUserAddressMutation()
   const { setUserAddressMode } = useCheckoutContext()
   const [showDeleteDialog, setShowDeleteDialog] = useState(false)
@@ -99,51 +101,75 @@ export const UpdateAddressForm = ({
     }
   }
 
+  const initialValues: FormikContextWithAddress = {
+    ...address,
+    setAsDefault: false,
+  }
+
+  const handleSetAsDefault = async (addressID: string) => {
+    await updateUserDefaultAddress.submitMutation({
+      variables: {
+        input: {
+          userAddressID: addressID,
+        },
+      },
+    })
+  }
+
+  const handleUpdateAddress = async (values: FormikContextWithAddress) => {
+    const result = await updateUserAddress.submitMutation({
+      variables: {
+        input: {
+          userAddressID: address.internalID,
+          attributes: {
+            name: values.address.name,
+            addressLine1: values.address.addressLine1,
+            addressLine2: values.address.addressLine2,
+            city: values.address.city,
+            region: values.address.region,
+            postalCode: values.address.postalCode,
+            country: values.address.country,
+            phoneNumber: values.phoneNumber,
+            phoneNumberCountryCode: values.phoneNumberCountryCode,
+          },
+        },
+      },
+    })
+
+    if (result.updateUserAddress?.userAddressOrErrors?.internalID) {
+      return result.updateUserAddress.userAddressOrErrors.internalID
+    }
+
+    if (result.updateUserAddress?.userAddressOrErrors?.errors) {
+      throw new Error(
+        `Failed to update address: ${JSON.stringify(
+          result.updateUserAddress.userAddressOrErrors.errors,
+        )}`,
+      )
+    }
+
+    throw new Error("Failed to update address: Unknown error")
+  }
+
+  const handleSubmitAddress = async (values: FormikContextWithAddress) => {
+    try {
+      const updatedAddressID = await handleUpdateAddress(values)
+
+      if (values.setAsDefault) {
+        await handleSetAsDefault(updatedAddressID)
+      }
+
+      await onSaveAddress(values, updatedAddressID)
+    } catch (error) {
+      logger.error("Error updating address:", error)
+    }
+  }
+
   return (
     <Formik
-      initialValues={address}
+      initialValues={initialValues}
       validationSchema={deliveryAddressValidationSchema}
-      onSubmit={async (values: FormikContextWithAddress) => {
-        try {
-          const result = await updateUserAddress.submitMutation({
-            variables: {
-              input: {
-                userAddressID: address.internalID,
-                attributes: {
-                  name: values.address.name,
-                  addressLine1: values.address.addressLine1,
-                  addressLine2: values.address.addressLine2,
-                  city: values.address.city,
-                  region: values.address.region,
-                  postalCode: values.address.postalCode,
-                  country: values.address.country,
-                  phoneNumber: values.phoneNumber,
-                  phoneNumberCountryCode: values.phoneNumberCountryCode,
-                },
-              },
-            },
-          })
-
-          if (result.updateUserAddress?.userAddressOrErrors?.internalID) {
-            await onSaveAddress(
-              values,
-              result.updateUserAddress?.userAddressOrErrors.internalID,
-            )
-            return
-          }
-
-          if (result.updateUserAddress?.userAddressOrErrors?.errors) {
-            throw new Error(
-              `Failed to update address: ${JSON.stringify(
-                result.updateUserAddress.userAddressOrErrors.errors,
-              )}`,
-            )
-          }
-          throw new Error("Failed to update address: Unknown error")
-        } catch (error) {
-          logger.error("Error updating address:", error)
-        }
-      }}
+      onSubmit={handleSubmitAddress}
     >
       {({ isSubmitting, handleSubmit }) => (
         <>
@@ -155,7 +181,10 @@ export const UpdateAddressForm = ({
             Edit address
           </Text>
           <Spacer y={2} />
-          <AddressFormFields withPhoneNumber />
+          <AddressFormFields
+            withPhoneNumber
+            withSetAsDefault={!address.isDefault}
+          />
           <Spacer y={4} />
           <Button
             width="100%"

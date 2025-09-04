@@ -3,6 +3,7 @@ import userEvent from "@testing-library/user-event"
 import { UpdateAddressForm } from "../UpdateAddressForm"
 import { useOrder2UpdateUserAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2UpdateUserAddressMutation"
 import { useOrder2DeleteUserAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2DeleteUserAddressMutation"
+import { useOrder2UpdateUserDefaultAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2UpdateUserDefaultAddressMutation"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import type { ProcessedUserAddress } from "../../utils"
 
@@ -12,11 +13,15 @@ jest.mock(
 jest.mock(
   "Apps/Order2/Routes/Checkout/Mutations/useOrder2DeleteUserAddressMutation",
 )
+jest.mock(
+  "Apps/Order2/Routes/Checkout/Mutations/useOrder2UpdateUserDefaultAddressMutation",
+)
 jest.mock("Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext")
 jest.mock("Utils/logger")
 
 const mockUpdateUserAddress = jest.fn()
 const mockDeleteUserAddress = jest.fn()
+const mockUpdateUserDefaultAddress = jest.fn()
 const mockSetUserAddressMode = jest.fn()
 
 const mockUseOrder2UpdateUserAddressMutation =
@@ -26,6 +31,10 @@ const mockUseOrder2UpdateUserAddressMutation =
 const mockUseOrder2DeleteUserAddressMutation =
   useOrder2DeleteUserAddressMutation as jest.MockedFunction<
     typeof useOrder2DeleteUserAddressMutation
+  >
+const mockUseOrder2UpdateUserDefaultAddressMutation =
+  useOrder2UpdateUserDefaultAddressMutation as jest.MockedFunction<
+    typeof useOrder2UpdateUserDefaultAddressMutation
   >
 const mockUseCheckoutContext = useCheckoutContext as jest.MockedFunction<
   typeof useCheckoutContext
@@ -53,7 +62,7 @@ const mockDEAddress: ProcessedUserAddress = {
   phoneNumber: "030 12345678",
   phoneNumberCountryCode: "+49",
   isValid: true,
-  isDefault: false,
+  isDefault: true,
   address: {
     name: "Hans Mueller",
     addressLine1: "Unter den Linden 1",
@@ -87,6 +96,10 @@ describe("UpdateAddressForm", () => {
 
     mockUseOrder2DeleteUserAddressMutation.mockReturnValue({
       submitMutation: mockDeleteUserAddress,
+    } as any)
+
+    mockUseOrder2UpdateUserDefaultAddressMutation.mockReturnValue({
+      submitMutation: mockUpdateUserDefaultAddress,
     } as any)
 
     mockUseCheckoutContext.mockReturnValue({
@@ -398,6 +411,133 @@ describe("UpdateAddressForm", () => {
       await userEvent.click(deleteButtonAgain)
 
       expect(screen.queryByText("An error occurred")).not.toBeInTheDocument()
+    })
+  })
+
+  describe("Set as default functionality", () => {
+    it("shows setAsDefault checkbox for non-default addresses", () => {
+      render(<UpdateAddressForm {...mockUSProps} />)
+
+      const checkbox = screen.getByTestId("setAsDefault")
+      expect(checkbox).toBeInTheDocument()
+      expect(checkbox).not.toBeChecked()
+    })
+
+    it("does not show setAsDefault checkbox for default addresses", () => {
+      render(<UpdateAddressForm {...mockDEProps} />)
+
+      const checkbox = screen.queryByTestId("setAsDefault")
+      expect(checkbox).not.toBeInTheDocument()
+    })
+
+    it("allows checking and unchecking the setAsDefault checkbox", async () => {
+      render(<UpdateAddressForm {...mockUSProps} />)
+
+      const checkbox = screen.getByTestId("setAsDefault")
+      expect(checkbox).not.toBeChecked()
+
+      await userEvent.click(checkbox)
+      expect(checkbox).toBeChecked()
+
+      await userEvent.click(checkbox)
+      expect(checkbox).not.toBeChecked()
+    })
+
+    it("calls updateUserDefaultAddress when setAsDefault is checked and form is submitted", async () => {
+      mockUpdateUserAddress.mockResolvedValue({
+        updateUserAddress: {
+          userAddressOrErrors: {
+            __typename: "UserAddress",
+            internalID: "address-id-123",
+          },
+        },
+      })
+
+      mockUpdateUserDefaultAddress.mockResolvedValue({
+        updateUserDefaultAddress: {
+          userAddressOrErrors: {
+            __typename: "UserAddress",
+            internalID: "address-id-123",
+          },
+        },
+      })
+
+      render(<UpdateAddressForm {...mockUSProps} />)
+
+      const checkbox = screen.getByTestId("setAsDefault")
+      await userEvent.click(checkbox)
+
+      const saveButton = screen.getByText("Save Address")
+      await userEvent.click(saveButton)
+
+      await waitFor(() => {
+        expect(mockUpdateUserAddress).toHaveBeenCalled()
+      })
+
+      await waitFor(() => {
+        expect(mockUpdateUserDefaultAddress).toHaveBeenCalledWith({
+          variables: {
+            input: {
+              userAddressID: "address-id-123",
+            },
+          },
+        })
+      })
+    })
+
+    it("does not call updateUserDefaultAddress when setAsDefault is not checked", async () => {
+      mockUpdateUserAddress.mockResolvedValue({
+        updateUserAddress: {
+          userAddressOrErrors: {
+            __typename: "UserAddress",
+            internalID: "address-id-123",
+          },
+        },
+      })
+
+      render(<UpdateAddressForm {...mockUSProps} />)
+
+      const saveButton = screen.getByText("Save Address")
+      await userEvent.click(saveButton)
+
+      await waitFor(() => {
+        expect(mockUpdateUserAddress).toHaveBeenCalled()
+      })
+
+      expect(mockUpdateUserDefaultAddress).not.toHaveBeenCalled()
+    })
+
+    it("handles updateUserDefaultAddress errors gracefully", async () => {
+      mockUpdateUserAddress.mockResolvedValue({
+        updateUserAddress: {
+          userAddressOrErrors: {
+            __typename: "UserAddress",
+            internalID: "address-id-123",
+          },
+        },
+      })
+
+      mockUpdateUserDefaultAddress.mockRejectedValue(new Error("Network error"))
+
+      render(<UpdateAddressForm {...mockUSProps} />)
+
+      const checkbox = screen.getByTestId("setAsDefault")
+      await userEvent.click(checkbox)
+
+      const saveButton = screen.getByText("Save Address")
+      await userEvent.click(saveButton)
+
+      await waitFor(() => {
+        expect(mockUpdateUserAddress).toHaveBeenCalled()
+      })
+
+      await waitFor(() => {
+        expect(mockUpdateUserDefaultAddress).toHaveBeenCalled()
+      })
+
+      // Currently, if default address update fails, onSaveAddress is not called
+      // This could be improved in the future to handle the error more gracefully
+      expect(mockUSProps.onSaveAddress).not.toHaveBeenCalled()
     })
   })
 })
