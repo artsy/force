@@ -49,6 +49,26 @@ export const SavedAddressOptions = ({
     [onSelectAddress, setUserAddressMode],
   )
 
+  const onDeleteAddress = useCallback(
+    async (deletedAddressID: string) => {
+      const remainingAddresses = savedAddresses.filter(
+        address => address.internalID !== deletedAddressID,
+      )
+
+      if (remainingAddresses.length > 0) {
+        const addressToSelect = remainingAddresses.find(
+          address => address.isValid,
+        )
+
+        if (addressToSelect) {
+          setSelectedAddressID(addressToSelect.internalID)
+          await onSelectAddress(addressToSelect)
+        }
+      }
+    },
+    [savedAddresses, onSelectAddress],
+  )
+
   if (userAddressMode?.mode === "add") {
     return (
       <AddAddressForm
@@ -63,6 +83,7 @@ export const SavedAddressOptions = ({
       <UpdateAddressForm
         address={userAddressMode.address}
         onSaveAddress={onSaveAddress}
+        onDeleteAddress={onDeleteAddress}
       />
     )
   }

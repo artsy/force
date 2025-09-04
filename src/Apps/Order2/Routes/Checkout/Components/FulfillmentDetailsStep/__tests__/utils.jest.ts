@@ -5,6 +5,7 @@ import {
   findInitialSelectedAddress,
   normalizeAddress,
   processSavedAddresses,
+  sortAddressesByPriority,
 } from "../utils"
 
 describe("FulfillmentDetailsStep utils", () => {
@@ -21,6 +22,7 @@ describe("FulfillmentDetailsStep utils", () => {
         country: "us",
         phoneNumber: "1234567890",
         phoneNumberCountryCode: "us",
+        isDefault: false,
       }
 
       const result = normalizeAddress(gravityAddress)
@@ -52,6 +54,7 @@ describe("FulfillmentDetailsStep utils", () => {
         country: "US",
         phoneNumber: null,
         phoneNumberCountryCode: null,
+        isDefault: true,
       }
 
       const result = normalizeAddress(gravityAddress)
@@ -83,6 +86,7 @@ describe("FulfillmentDetailsStep utils", () => {
         country: "ca",
         phoneNumber: "1234567890",
         phoneNumberCountryCode: "ca",
+        isDefault: false,
       }
 
       const result = normalizeAddress(gravityAddress)
@@ -124,6 +128,7 @@ describe("FulfillmentDetailsStep utils", () => {
             country: "US",
             phoneNumber: "1234567890",
             phoneNumberCountryCode: "US",
+            isDefault: false,
           },
         },
         {
@@ -138,6 +143,7 @@ describe("FulfillmentDetailsStep utils", () => {
             country: "CA",
             phoneNumber: "9876543210",
             phoneNumberCountryCode: "CA",
+            isDefault: true,
           },
         },
       ],
@@ -151,9 +157,11 @@ describe("FulfillmentDetailsStep utils", () => {
       )
 
       expect(result).toHaveLength(2)
+      // After sorting: valid addresses come first (invalid default comes after valid)
       expect(result[0]).toMatchObject({
         internalID: "address1",
         isValid: true, // US is in available countries
+        isDefault: false,
         phoneNumber: "1234567890",
         phoneNumberCountryCode: "US",
         address: {
@@ -165,6 +173,7 @@ describe("FulfillmentDetailsStep utils", () => {
       expect(result[1]).toMatchObject({
         internalID: "address2",
         isValid: false, // CA is not in available countries
+        isDefault: true,
         phoneNumber: "9876543210",
         phoneNumberCountryCode: "CA",
         address: {
@@ -194,6 +203,7 @@ describe("FulfillmentDetailsStep utils", () => {
       {
         internalID: "address1",
         isValid: true,
+        isDefault: false,
         phoneNumber: "1234567890",
         phoneNumberCountryCode: "US",
         address: {
@@ -209,6 +219,7 @@ describe("FulfillmentDetailsStep utils", () => {
       {
         internalID: "address2",
         isValid: false,
+        isDefault: true,
         phoneNumber: "9876543210",
         phoneNumberCountryCode: "CA",
         address: {
@@ -224,6 +235,7 @@ describe("FulfillmentDetailsStep utils", () => {
       {
         internalID: "address3",
         isValid: true,
+        isDefault: false,
         phoneNumber: "5551234567",
         phoneNumberCountryCode: "GB",
         address: {
@@ -309,6 +321,7 @@ describe("FulfillmentDetailsStep utils", () => {
         {
           internalID: "invalid1",
           isValid: false,
+          isDefault: false,
           phoneNumber: "",
           phoneNumberCountryCode: "",
           address: {
@@ -362,6 +375,7 @@ describe("FulfillmentDetailsStep utils", () => {
         {
           internalID: "address1",
           isValid: true,
+          isDefault: false,
           phoneNumber: "1234567890",
           phoneNumberCountryCode: "US",
           address: {
@@ -382,6 +396,348 @@ describe("FulfillmentDetailsStep utils", () => {
       )
 
       expect(result?.internalID).toBe("address1")
+    })
+
+    it("prioritizes exact match over default address", () => {
+      const addressesWithDefault: ProcessedUserAddress[] = [
+        {
+          internalID: "address1",
+          isValid: true,
+          isDefault: false,
+          phoneNumber: "1234567890",
+          phoneNumberCountryCode: "US",
+          address: {
+            name: "John Doe",
+            addressLine1: "123 Main St",
+            addressLine2: "Apt 4B",
+            city: "New York",
+            region: "NY",
+            postalCode: "10001",
+            country: "US",
+          },
+        },
+        {
+          internalID: "address2",
+          isValid: true,
+          isDefault: true,
+          phoneNumber: "9876543210",
+          phoneNumberCountryCode: "CA",
+          address: {
+            name: "Jane Smith",
+            addressLine1: "456 Oak Ave",
+            addressLine2: "",
+            city: "Toronto",
+            region: "ON",
+            postalCode: "M5V 3A8",
+            country: "CA",
+          },
+        },
+      ]
+
+      const initialValues: FormikContextWithAddress = {
+        phoneNumber: "1234567890",
+        phoneNumberCountryCode: "US",
+        address: {
+          name: "John Doe",
+          addressLine1: "123 Main St",
+          addressLine2: "Apt 4B",
+          city: "New York",
+          region: "NY",
+          postalCode: "10001",
+          country: "US",
+        },
+      }
+
+      const result = findInitialSelectedAddress(
+        addressesWithDefault,
+        initialValues,
+      )
+      expect(result?.internalID).toBe("address1") // Exact match wins over default
+    })
+
+    it("selects default address when no exact match exists", () => {
+      const addressesWithDefault: ProcessedUserAddress[] = [
+        {
+          internalID: "address1",
+          isValid: true,
+          isDefault: false,
+          phoneNumber: "1234567890",
+          phoneNumberCountryCode: "US",
+          address: {
+            name: "John Doe",
+            addressLine1: "123 Main St",
+            addressLine2: "Apt 4B",
+            city: "New York",
+            region: "NY",
+            postalCode: "10001",
+            country: "US",
+          },
+        },
+        {
+          internalID: "address2",
+          isValid: true,
+          isDefault: true,
+          phoneNumber: "9876543210",
+          phoneNumberCountryCode: "CA",
+          address: {
+            name: "Jane Smith",
+            addressLine1: "456 Oak Ave",
+            addressLine2: "",
+            city: "Toronto",
+            region: "ON",
+            postalCode: "M5V 3A8",
+            country: "CA",
+          },
+        },
+      ]
+
+      const initialValues: FormikContextWithAddress = {
+        phoneNumber: "0000000000",
+        phoneNumberCountryCode: "XX",
+        address: {
+          name: "No Match",
+          addressLine1: "No Match St",
+          addressLine2: "",
+          city: "No Match City",
+          region: "XX",
+          postalCode: "00000",
+          country: "XX",
+        },
+      }
+
+      const result = findInitialSelectedAddress(
+        addressesWithDefault,
+        initialValues,
+      )
+      expect(result?.internalID).toBe("address1") // Valid address selected over invalid default
+    })
+
+    it("ignores invalid default address", () => {
+      const addressesWithInvalidDefault: ProcessedUserAddress[] = [
+        {
+          internalID: "address1",
+          isValid: true,
+          isDefault: false,
+          phoneNumber: "1234567890",
+          phoneNumberCountryCode: "US",
+          address: {
+            name: "John Doe",
+            addressLine1: "123 Main St",
+            addressLine2: "Apt 4B",
+            city: "New York",
+            region: "NY",
+            postalCode: "10001",
+            country: "US",
+          },
+        },
+        {
+          internalID: "address2",
+          isValid: false,
+          isDefault: true,
+          phoneNumber: "9876543210",
+          phoneNumberCountryCode: "XX",
+          address: {
+            name: "Jane Smith",
+            addressLine1: "456 Oak Ave",
+            addressLine2: "",
+            city: "Invalid City",
+            region: "XX",
+            postalCode: "M5V 3A8",
+            country: "XX",
+          },
+        },
+      ]
+
+      const initialValues: FormikContextWithAddress = {
+        phoneNumber: "0000000000",
+        phoneNumberCountryCode: "YY",
+        address: {
+          name: "No Match",
+          addressLine1: "No Match St",
+          addressLine2: "",
+          city: "No Match City",
+          region: "YY",
+          postalCode: "00000",
+          country: "YY",
+        },
+      }
+
+      const result = findInitialSelectedAddress(
+        addressesWithInvalidDefault,
+        initialValues,
+      )
+      expect(result?.internalID).toBe("address1") // Falls back to first valid address
+    })
+  })
+
+  describe("sortAddressesByPriority", () => {
+    it("sorts default address first", () => {
+      const addresses: ProcessedUserAddress[] = [
+        {
+          internalID: "address1",
+          isValid: true,
+          isDefault: false,
+          phoneNumber: "1234567890",
+          phoneNumberCountryCode: "US",
+          address: {
+            name: "John Doe",
+            addressLine1: "123 Main St",
+            addressLine2: "Apt 4B",
+            city: "New York",
+            region: "NY",
+            postalCode: "10001",
+            country: "US",
+          },
+        },
+        {
+          internalID: "address2",
+          isValid: true,
+          isDefault: true,
+          phoneNumber: "9876543210",
+          phoneNumberCountryCode: "CA",
+          address: {
+            name: "Jane Smith",
+            addressLine1: "456 Oak Ave",
+            addressLine2: "",
+            city: "Toronto",
+            region: "ON",
+            postalCode: "M5V 3A8",
+            country: "CA",
+          },
+        },
+      ]
+
+      const result = sortAddressesByPriority(addresses)
+      expect(result[0].internalID).toBe("address2") // Default address first
+      expect(result[1].internalID).toBe("address1")
+    })
+
+    it("sorts valid addresses before invalid ones", () => {
+      const addresses: ProcessedUserAddress[] = [
+        {
+          internalID: "invalid1",
+          isValid: false,
+          isDefault: false,
+          phoneNumber: "1234567890",
+          phoneNumberCountryCode: "XX",
+          address: {
+            name: "Invalid Address",
+            addressLine1: "123 Invalid St",
+            addressLine2: "",
+            city: "Invalid City",
+            region: "XX",
+            postalCode: "12345",
+            country: "XX",
+          },
+        },
+        {
+          internalID: "valid1",
+          isValid: true,
+          isDefault: false,
+          phoneNumber: "9876543210",
+          phoneNumberCountryCode: "US",
+          address: {
+            name: "Valid Address",
+            addressLine1: "456 Valid Ave",
+            addressLine2: "",
+            city: "Valid City",
+            region: "NY",
+            postalCode: "10001",
+            country: "US",
+          },
+        },
+      ]
+
+      const result = sortAddressesByPriority(addresses)
+      expect(result[0].internalID).toBe("valid1") // Valid address first
+      expect(result[1].internalID).toBe("invalid1")
+    })
+
+    it("prioritizes valid over invalid default", () => {
+      const addresses: ProcessedUserAddress[] = [
+        {
+          internalID: "valid1",
+          isValid: true,
+          isDefault: false,
+          phoneNumber: "1234567890",
+          phoneNumberCountryCode: "US",
+          address: {
+            name: "Valid Address",
+            addressLine1: "123 Main St",
+            addressLine2: "",
+            city: "New York",
+            region: "NY",
+            postalCode: "10001",
+            country: "US",
+          },
+        },
+        {
+          internalID: "defaultInvalid",
+          isValid: false,
+          isDefault: true,
+          phoneNumber: "9876543210",
+          phoneNumberCountryCode: "XX",
+          address: {
+            name: "Default Invalid",
+            addressLine1: "456 Invalid Ave",
+            addressLine2: "",
+            city: "Invalid City",
+            region: "XX",
+            postalCode: "12345",
+            country: "XX",
+          },
+        },
+      ]
+
+      const result = sortAddressesByPriority(addresses)
+      expect(result[0].internalID).toBe("valid1") // Valid comes before invalid default
+      expect(result[1].internalID).toBe("defaultInvalid")
+    })
+
+    it("prioritizes valid default over valid non-default", () => {
+      const addresses: ProcessedUserAddress[] = [
+        {
+          internalID: "valid1",
+          isValid: true,
+          isDefault: false,
+          phoneNumber: "1234567890",
+          phoneNumberCountryCode: "US",
+          address: {
+            name: "Valid Address",
+            addressLine1: "123 Main St",
+            addressLine2: "",
+            city: "New York",
+            region: "NY",
+            postalCode: "10001",
+            country: "US",
+          },
+        },
+        {
+          internalID: "defaultValid",
+          isValid: true,
+          isDefault: true,
+          phoneNumber: "9876543210",
+          phoneNumberCountryCode: "CA",
+          address: {
+            name: "Default Valid",
+            addressLine1: "456 Valid Ave",
+            addressLine2: "",
+            city: "Valid City",
+            region: "ON",
+            postalCode: "M5V 3A8",
+            country: "CA",
+          },
+        },
+      ]
+
+      const result = sortAddressesByPriority(addresses)
+      expect(result[0].internalID).toBe("defaultValid") // Valid default comes first
+      expect(result[1].internalID).toBe("valid1")
+    })
+
+    it("handles empty address list", () => {
+      const result = sortAddressesByPriority([])
+      expect(result).toEqual([])
     })
   })
 })

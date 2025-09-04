@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<162165f9df2b71bf9ca13664cc47201c>>
+ * @generated SignedSource<<ef265995ef8aa9f78573bd67aadd82a5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,51 +9,49 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from 'relay-runtime';
-import { FragmentRefs } from "relay-runtime";
-export type CreateUserAddressInput = {
-  attributes: UserAddressAttributes;
+export type DeleteUserAddressInput = {
   clientMutationId?: string | null | undefined;
+  userAddressID: string;
 };
-export type UserAddressAttributes = {
-  addressLine1: string;
-  addressLine2?: string | null | undefined;
-  addressLine3?: string | null | undefined;
-  city: string;
-  country: string;
-  name: string;
-  phoneNumber?: string | null | undefined;
-  phoneNumberCountryCode?: string | null | undefined;
-  postalCode?: string | null | undefined;
-  region?: string | null | undefined;
+export type useOrder2DeleteUserAddressMutation$variables = {
+  input: DeleteUserAddressInput;
 };
-export type useOrder2CreateUserAddressMutation$variables = {
-  input: CreateUserAddressInput;
-};
-export type useOrder2CreateUserAddressMutation$data = {
-  readonly createUserAddress: {
+export type useOrder2DeleteUserAddressMutation$data = {
+  readonly deleteUserAddress: {
     readonly me: {
-      readonly " $fragmentSpreads": FragmentRefs<"Order2DeliveryForm_me">;
+      readonly addressConnection: {
+        readonly edges: ReadonlyArray<{
+          readonly node: {
+            readonly addressLine1: string;
+            readonly addressLine2: string | null | undefined;
+            readonly city: string;
+            readonly country: string;
+            readonly internalID: string;
+            readonly isDefault: boolean;
+            readonly name: string | null | undefined;
+            readonly phoneNumber: string | null | undefined;
+            readonly phoneNumberCountryCode: string | null | undefined;
+            readonly postalCode: string | null | undefined;
+            readonly region: string | null | undefined;
+          } | null | undefined;
+        } | null | undefined> | null | undefined;
+      } | null | undefined;
     } | null | undefined;
     readonly userAddressOrErrors: {
-      readonly addressLine1?: string;
-      readonly addressLine2?: string | null | undefined;
-      readonly city?: string;
-      readonly country?: string;
-      readonly errors?: ReadonlyArray<{
-        readonly code: string;
+      readonly __typename: "Errors";
+      readonly errors: ReadonlyArray<{
+        readonly message: string;
       }>;
-      readonly internalID?: string;
-      readonly name?: string | null | undefined;
-      readonly phoneNumber?: string | null | undefined;
-      readonly phoneNumberCountryCode?: string | null | undefined;
-      readonly postalCode?: string | null | undefined;
-      readonly region?: string | null | undefined;
+    } | {
+      // This will never be '%other', but we need some
+      // value in case none of the concrete values match.
+      readonly __typename: "%other";
     };
   } | null | undefined;
 };
-export type useOrder2CreateUserAddressMutation = {
-  response: useOrder2CreateUserAddressMutation$data;
-  variables: useOrder2CreateUserAddressMutation$variables;
+export type useOrder2DeleteUserAddressMutation = {
+  response: useOrder2DeleteUserAddressMutation$data;
+  variables: useOrder2DeleteUserAddressMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -71,77 +69,98 @@ v1 = [
     "variableName": "input"
   }
 ],
-v2 = {
+v2 = [
+  {
+    "kind": "Literal",
+    "name": "first",
+    "value": 20
+  }
+],
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "internalID",
   "storageKey": null
 },
-v3 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "name",
   "storageKey": null
 },
-v4 = {
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "addressLine1",
   "storageKey": null
 },
-v5 = {
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "addressLine2",
   "storageKey": null
 },
-v6 = {
+v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "city",
   "storageKey": null
 },
-v7 = {
+v8 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "region",
   "storageKey": null
 },
-v8 = {
+v9 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "postalCode",
   "storageKey": null
 },
-v9 = {
+v10 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "country",
   "storageKey": null
 },
-v10 = {
+v11 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "phoneNumber",
   "storageKey": null
 },
-v11 = {
+v12 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "phoneNumberCountryCode",
   "storageKey": null
 },
-v12 = {
+v13 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "isDefault",
+  "storageKey": null
+},
+v14 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "__typename",
+  "storageKey": null
+},
+v15 = {
   "kind": "InlineFragment",
   "selections": [
     {
@@ -156,7 +175,7 @@ v12 = {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
-          "name": "code",
+          "name": "message",
           "storageKey": null
         }
       ],
@@ -166,7 +185,7 @@ v12 = {
   "type": "Errors",
   "abstractKey": null
 },
-v13 = {
+v16 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -178,80 +197,14 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "useOrder2CreateUserAddressMutation",
+    "name": "useOrder2DeleteUserAddressMutation",
     "selections": [
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "CreateUserAddressPayload",
+        "concreteType": "DeleteUserAddressPayload",
         "kind": "LinkedField",
-        "name": "createUserAddress",
-        "plural": false,
-        "selections": [
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "Me",
-            "kind": "LinkedField",
-            "name": "me",
-            "plural": false,
-            "selections": [
-              {
-                "args": null,
-                "kind": "FragmentSpread",
-                "name": "Order2DeliveryForm_me"
-              }
-            ],
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": null,
-            "kind": "LinkedField",
-            "name": "userAddressOrErrors",
-            "plural": false,
-            "selections": [
-              {
-                "kind": "InlineFragment",
-                "selections": [
-                  (v2/*: any*/),
-                  (v3/*: any*/),
-                  (v4/*: any*/),
-                  (v5/*: any*/),
-                  (v6/*: any*/),
-                  (v7/*: any*/),
-                  (v8/*: any*/),
-                  (v9/*: any*/),
-                  (v10/*: any*/),
-                  (v11/*: any*/)
-                ],
-                "type": "UserAddress",
-                "abstractKey": null
-              },
-              (v12/*: any*/)
-            ],
-            "storageKey": null
-          }
-        ],
-        "storageKey": null
-      }
-    ],
-    "type": "Mutation",
-    "abstractKey": null
-  },
-  "kind": "Request",
-  "operation": {
-    "argumentDefinitions": (v0/*: any*/),
-    "kind": "Operation",
-    "name": "useOrder2CreateUserAddressMutation",
-    "selections": [
-      {
-        "alias": null,
-        "args": (v1/*: any*/),
-        "concreteType": "CreateUserAddressPayload",
-        "kind": "LinkedField",
-        "name": "createUserAddress",
+        "name": "deleteUserAddress",
         "plural": false,
         "selections": [
           {
@@ -264,13 +217,7 @@ return {
             "selections": [
               {
                 "alias": null,
-                "args": [
-                  {
-                    "kind": "Literal",
-                    "name": "first",
-                    "value": 20
-                  }
-                ],
+                "args": (v2/*: any*/),
                 "concreteType": "UserAddressConnection",
                 "kind": "LinkedField",
                 "name": "addressConnection",
@@ -292,23 +239,16 @@ return {
                         "name": "node",
                         "plural": false,
                         "selections": [
-                          (v2/*: any*/),
+                          (v3/*: any*/),
                           (v4/*: any*/),
                           (v5/*: any*/),
                           (v6/*: any*/),
                           (v7/*: any*/),
                           (v8/*: any*/),
                           (v9/*: any*/),
-                          (v3/*: any*/),
                           (v10/*: any*/),
                           (v11/*: any*/),
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "isDefault",
-                            "storageKey": null
-                          },
+                          (v12/*: any*/),
                           (v13/*: any*/)
                         ],
                         "storageKey": null
@@ -318,8 +258,7 @@ return {
                   }
                 ],
                 "storageKey": "addressConnection(first:20)"
-              },
-              (v13/*: any*/)
+              }
             ],
             "storageKey": null
           },
@@ -331,32 +270,107 @@ return {
             "name": "userAddressOrErrors",
             "plural": false,
             "selections": [
+              (v14/*: any*/),
+              (v15/*: any*/)
+            ],
+            "storageKey": null
+          }
+        ],
+        "storageKey": null
+      }
+    ],
+    "type": "Mutation",
+    "abstractKey": null
+  },
+  "kind": "Request",
+  "operation": {
+    "argumentDefinitions": (v0/*: any*/),
+    "kind": "Operation",
+    "name": "useOrder2DeleteUserAddressMutation",
+    "selections": [
+      {
+        "alias": null,
+        "args": (v1/*: any*/),
+        "concreteType": "DeleteUserAddressPayload",
+        "kind": "LinkedField",
+        "name": "deleteUserAddress",
+        "plural": false,
+        "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Me",
+            "kind": "LinkedField",
+            "name": "me",
+            "plural": false,
+            "selections": [
               {
                 "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "__typename",
-                "storageKey": null
+                "args": (v2/*: any*/),
+                "concreteType": "UserAddressConnection",
+                "kind": "LinkedField",
+                "name": "addressConnection",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "UserAddressEdge",
+                    "kind": "LinkedField",
+                    "name": "edges",
+                    "plural": true,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "UserAddress",
+                        "kind": "LinkedField",
+                        "name": "node",
+                        "plural": false,
+                        "selections": [
+                          (v3/*: any*/),
+                          (v4/*: any*/),
+                          (v5/*: any*/),
+                          (v6/*: any*/),
+                          (v7/*: any*/),
+                          (v8/*: any*/),
+                          (v9/*: any*/),
+                          (v10/*: any*/),
+                          (v11/*: any*/),
+                          (v12/*: any*/),
+                          (v13/*: any*/),
+                          (v16/*: any*/)
+                        ],
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": "addressConnection(first:20)"
               },
+              (v16/*: any*/)
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": null,
+            "kind": "LinkedField",
+            "name": "userAddressOrErrors",
+            "plural": false,
+            "selections": [
+              (v14/*: any*/),
+              (v15/*: any*/),
               {
                 "kind": "InlineFragment",
                 "selections": [
-                  (v2/*: any*/),
-                  (v3/*: any*/),
-                  (v4/*: any*/),
-                  (v5/*: any*/),
-                  (v6/*: any*/),
-                  (v7/*: any*/),
-                  (v8/*: any*/),
-                  (v9/*: any*/),
-                  (v10/*: any*/),
-                  (v11/*: any*/),
-                  (v13/*: any*/)
+                  (v16/*: any*/)
                 ],
                 "type": "UserAddress",
                 "abstractKey": null
-              },
-              (v12/*: any*/)
+              }
             ],
             "storageKey": null
           }
@@ -366,16 +380,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "406c9bd926e0d9c7e134adadd13a7601",
+    "cacheID": "8b53c2683b99209038f2694f2a0f7441",
     "id": null,
     "metadata": {},
-    "name": "useOrder2CreateUserAddressMutation",
+    "name": "useOrder2DeleteUserAddressMutation",
     "operationKind": "mutation",
-    "text": "mutation useOrder2CreateUserAddressMutation(\n  $input: CreateUserAddressInput!\n) {\n  createUserAddress(input: $input) {\n    me {\n      ...Order2DeliveryForm_me\n      id\n    }\n    userAddressOrErrors {\n      __typename\n      ... on UserAddress {\n        internalID\n        name\n        addressLine1\n        addressLine2\n        city\n        region\n        postalCode\n        country\n        phoneNumber\n        phoneNumberCountryCode\n        id\n      }\n      ... on Errors {\n        errors {\n          code\n        }\n      }\n    }\n  }\n}\n\nfragment Order2DeliveryForm_me on Me {\n  addressConnection(first: 20) {\n    edges {\n      node {\n        internalID\n        addressLine1\n        addressLine2\n        city\n        region\n        postalCode\n        country\n        name\n        phoneNumber\n        phoneNumberCountryCode\n        isDefault\n        id\n      }\n    }\n  }\n}\n"
+    "text": "mutation useOrder2DeleteUserAddressMutation(\n  $input: DeleteUserAddressInput!\n) {\n  deleteUserAddress(input: $input) {\n    me {\n      addressConnection(first: 20) {\n        edges {\n          node {\n            internalID\n            name\n            addressLine1\n            addressLine2\n            city\n            region\n            postalCode\n            country\n            phoneNumber\n            phoneNumberCountryCode\n            isDefault\n            id\n          }\n        }\n      }\n      id\n    }\n    userAddressOrErrors {\n      __typename\n      ... on Errors {\n        errors {\n          message\n        }\n      }\n      ... on UserAddress {\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "d7c5bce7bb6135a212cd8bbd390a5e98";
+(node as any).hash = "f46f17403fec02c2a47ba93536a632e9";
 
 export default node;
