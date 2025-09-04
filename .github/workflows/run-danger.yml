@@ -6,4 +6,5 @@ on:
 jobs:
   danger-yarn:
     uses: artsy/duchamp/.github/workflows/run-yarn.yml@test-danger-token
-    secrets: inherit
+    secrets:
+      DANGER_TOKEN: ${{ secrets.DANGER_TOKEN }}
