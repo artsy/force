@@ -25,17 +25,22 @@ import { useState } from "react"
 const logger = createLogger("UpdateAddressForm")
 
 const getDeleteErrorMessage = (
-  backendError: string,
+  error: { code?: string; message: string } | string,
 ): { title: string; message: string } => {
+  const errorCode = typeof error === "object" ? error?.code : undefined
+  const errorMessage = typeof error === "object" ? error.message : error
+
   if (
-    backendError.includes("Couldn't find Address") ||
-    backendError.includes("Cannot return null for non-nullable field")
+    errorCode === "address_not_found" ||
+    errorCode === "not_found" ||
+    errorMessage.includes("Cannot return null for non-nullable field")
   ) {
     return {
       title: "Address already deleted",
       message: "Please refresh the page.",
     }
   }
+
   return { title: "An error occurred", message: "Please try again later." }
 }
 
@@ -77,8 +82,12 @@ export const UpdateAddressForm = ({
       const addressOrErrors = result.deleteUserAddress?.userAddressOrErrors
 
       if (addressOrErrors?.__typename === "Errors") {
-        const firstError = addressOrErrors.errors?.[0]?.message || ""
-        const errorInfo = getDeleteErrorMessage(firstError)
+        const firstError = addressOrErrors.errors?.[0]
+        const errorInfo = getDeleteErrorMessage(
+          firstError
+            ? { code: firstError.code, message: firstError.message }
+            : "",
+        )
         setDeleteError(errorInfo)
         logger.error("Error deleting address:", addressOrErrors.errors)
         return

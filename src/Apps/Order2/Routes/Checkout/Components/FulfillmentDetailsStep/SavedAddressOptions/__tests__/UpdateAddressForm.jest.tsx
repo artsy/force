@@ -279,12 +279,17 @@ describe("UpdateAddressForm", () => {
   })
 
   describe("Delete error handling", () => {
-    it("shows 'Address already deleted' error for missing address", async () => {
+    it("shows 'Address already deleted' error for missing address using error code", async () => {
       mockDeleteUserAddress.mockResolvedValue({
         deleteUserAddress: {
           userAddressOrErrors: {
             __typename: "Errors",
-            errors: [{ message: "Couldn't find Address with id=123" }],
+            errors: [
+              {
+                code: "address_not_found",
+                message: "Couldn't find Address with id=123",
+              },
+            ],
           },
         },
       })
@@ -308,7 +313,12 @@ describe("UpdateAddressForm", () => {
         deleteUserAddress: {
           userAddressOrErrors: {
             __typename: "Errors",
-            errors: [{ message: "Cannot return null for non-nullable field" }],
+            errors: [
+              {
+                code: "null_field_error",
+                message: "Cannot return null for non-nullable field",
+              },
+            ],
           },
         },
       })
