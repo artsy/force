@@ -29,12 +29,14 @@ export const ShowContextualLink: React.FC<React.PropsWithChildren<Props>> = ({
 export const ContextualLink: React.FC<React.PropsWithChildren<Props>> = ({
   show,
 }) => {
-  const { isFairBooth, partner, fair } = show
+  const { isFairBooth, partner, fair, hasLocation } = show
 
   if (!partner && !fair) return null
 
   const partnerHref = partner?.isLinkable && partner?.href
   const partnerName = partner?.name
+  const shouldShowLocation =
+    hasLocation && !isFairBooth && show.location?.display
   const fairName = fair?.name
   const fairHref = fair?.href || ""
 
@@ -67,6 +69,11 @@ export const ContextualLink: React.FC<React.PropsWithChildren<Props>> = ({
           partnerName
         )}
       </Text>
+      {shouldShowLocation && (
+        <Text variant="sm" color="mono60">
+          {show.location?.display}
+        </Text>
+      )}
     </Box>
   )
 }
@@ -77,6 +84,10 @@ export const ShowContextualLinkFragmentContainer = createFragmentContainer(
     show: graphql`
       fragment ShowContextualLink_show on Show {
         isFairBooth
+        hasLocation
+        location {
+          display
+        }
         fair {
           href
           isActive

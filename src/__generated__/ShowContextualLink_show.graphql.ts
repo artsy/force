@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e59f81d71a8fcdcea16f7c4657196f6a>>
+ * @generated SignedSource<<6ac324c03aa7832da14524799f726af9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,11 @@ export type ShowContextualLink_show$data = {
     readonly isActive: boolean | null | undefined;
     readonly name: string | null | undefined;
   } | null | undefined;
+  readonly hasLocation: boolean | null | undefined;
   readonly isFairBooth: boolean | null | undefined;
+  readonly location: {
+    readonly display: string | null | undefined;
+  } | null | undefined;
   readonly partner: {
     readonly href?: string | null | undefined;
     readonly isLinkable?: boolean | null | undefined;
@@ -55,6 +59,31 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "isFairBooth",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "hasLocation",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Location",
+      "kind": "LinkedField",
+      "name": "location",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "display",
+          "storageKey": null
+        }
+      ],
       "storageKey": null
     },
     {
@@ -110,6 +139,6 @@ return {
 };
 })();
 
-(node as any).hash = "650b5a3e83cb5f0cd65c87b33c8db18e";
+(node as any).hash = "e33b9a4754faf11bd76e96024f0941ff";
 
 export default node;
