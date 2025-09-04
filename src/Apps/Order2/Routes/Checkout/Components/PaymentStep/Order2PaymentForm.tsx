@@ -168,6 +168,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
     setSavePaymentMethod,
     savePaymentMethod,
     steps,
+    activeFulfillmentDetailsTab,
   } = useCheckoutContext()
 
   const [isSubmittingToStripe, setIsSubmittingToStripe] = useState(false)
@@ -337,12 +338,18 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
   }
 
   const needsBillingAddress = () => {
-    return (
-      selectedPaymentMethod === "stripe-card" && !billingAddressSameAsShipping
-    )
+    if (selectedPaymentMethod !== "stripe-card") return false
+    if (activeFulfillmentDetailsTab === "PICKUP") return true
+    return !billingAddressSameAsShipping
   }
 
   const getBillingAddress = (): Address => {
+    // For pickup orders, always use the billing form values
+    if (activeFulfillmentDetailsTab === "PICKUP") {
+      return billingFormValues.address
+    }
+
+    // For shipping orders, use shipping address if same as shipping is selected
     if (billingAddressSameAsShipping && order.fulfillmentDetails) {
       return {
         name: order.fulfillmentDetails.name ?? "",
@@ -354,6 +361,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         country: order.fulfillmentDetails.country ?? "",
       }
     }
+
     return billingFormValues.address
   }
 
@@ -444,6 +452,16 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
     if (!selectedPaymentMethod) {
       setSubtitleErrorMessage("Select a payment method")
       return
+    }
+
+    if (needsBillingAddress()) {
+      const billingAddr = getBillingAddress()
+      if (!billingAddr.name || !billingAddr.addressLine1 || !billingAddr.city) {
+        setSubtitleErrorMessage(
+          "Please fill in required billing address fields",
+        )
+        return
+      }
     }
 
     checkoutTracking.clickedOrderProgression(ContextModule.ordersPayment)
@@ -766,15 +784,20 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
 
       {selectedPaymentMethod === "stripe-card" && (
         <Box p={2}>
-          <Checkbox
-            selected={billingAddressSameAsShipping}
-            onSelect={handleBillingAddressSameAsShippingChange}
-            data-testid="billing-address-same-as-shipping"
-          >
-            Billing address same as shipping
-          </Checkbox>
+          {activeFulfillmentDetailsTab !== "PICKUP" && (
+            <>
+              <Checkbox
+                selected={billingAddressSameAsShipping}
+                onSelect={handleBillingAddressSameAsShippingChange}
+                data-testid="billing-address-same-as-shipping"
+              >
+                Billing address same as shipping
+              </Checkbox>
 
-          <Spacer y={2} />
+              <Spacer y={2} />
+            </>
+          )}
+
           <Checkbox
             selected={savePaymentMethod}
             onSelect={setSavePaymentMethod}
@@ -782,30 +805,32 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
             Save credit card for later use
           </Checkbox>
 
-          <Collapse open={needsBillingAddress()}>
-            <Spacer y={4} />
-            <Text variant="sm" fontWeight="bold" mb={2}>
-              Billing address
-            </Text>
-            <Formik
-              initialValues={billingFormValues}
-              validationSchema={yup
-                .object()
-                .shape(addressFormFieldsValidator())}
-              onSubmit={(values: FormikContextWithAddress) => {
-                setBillingFormValues(values)
-              }}
-              enableReinitialize
-            >
-              {({ values }) => {
-                // Update parent state when values change
-                if (values !== billingFormValues) {
+          {needsBillingAddress() && (
+            <>
+              <Spacer y={4} />
+              <Text variant="sm" fontWeight="bold" mb={2}>
+                Billing address
+              </Text>
+              <Formik
+                initialValues={billingFormValues}
+                validationSchema={yup
+                  .object()
+                  .shape(addressFormFieldsValidator())}
+                onSubmit={(values: FormikContextWithAddress) => {
                   setBillingFormValues(values)
-                }
-                return <AddressFormFields />
-              }}
-            </Formik>
-          </Collapse>
+                }}
+                enableReinitialize
+              >
+                {({ values }) => {
+                  // Update parent state when values change
+                  if (values !== billingFormValues) {
+                    setBillingFormValues(values)
+                  }
+                  return <AddressFormFields />
+                }}
+              </Formik>
+            </>
+          )}
         </Box>
       )}
 
