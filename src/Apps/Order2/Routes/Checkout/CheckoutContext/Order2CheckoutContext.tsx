@@ -496,9 +496,19 @@ const CheckoutLoadingManager: React.FC<{
   const [minimumLoadingPassed, setMinimumLoadingPassed] = useState(false)
   const [orderValidated, setOrderValidated] = useState(false)
 
-  const isExpressCheckoutLoaded = Order2CheckoutContext.useStoreState(
-    state => state.expressCheckoutPaymentMethods !== null,
-  )
+  const isExpressCheckoutLoaded = Order2CheckoutContext.useStoreState(state => {
+    // Express Checkout is considered "loaded" if:
+    // 1. It's actually loaded (not null), OR
+    // 2. We're in post-payment state where Express Checkout should be hidden
+    const isActuallyLoaded = state.expressCheckoutPaymentMethods !== null
+    const activeStep = state.steps.find(
+      step => step.state === CheckoutStepState.ACTIVE,
+    )
+    const isInPostPaymentState =
+      activeStep?.name === CheckoutStepName.CONFIRMATION
+
+    return isActuallyLoaded || isInPostPaymentState
+  })
 
   const isLoading = Order2CheckoutContext.useStoreState(
     state => state.isLoading,
