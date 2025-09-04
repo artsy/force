@@ -32,7 +32,6 @@ export const useOrder2DeleteUserAddressMutation = () => {
             __typename
             ... on Errors {
               errors {
-                code
                 message
               }
             }

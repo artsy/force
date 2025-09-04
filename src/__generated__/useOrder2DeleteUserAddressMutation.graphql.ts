@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9b9c3fe0b9c5d269425b62b1a8b27b33>>
+ * @generated SignedSource<<ef265995ef8aa9f78573bd67aadd82a5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -40,7 +40,6 @@ export type useOrder2DeleteUserAddressMutation$data = {
     readonly userAddressOrErrors: {
       readonly __typename: "Errors";
       readonly errors: ReadonlyArray<{
-        readonly code: string;
         readonly message: string;
       }>;
     } | {
@@ -172,13 +171,6 @@ v15 = {
       "name": "errors",
       "plural": true,
       "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "code",
-          "storageKey": null
-        },
         {
           "alias": null,
           "args": null,
@@ -388,16 +380,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d95889ef5bad097c0cd585f5cb6f58a8",
+    "cacheID": "8b53c2683b99209038f2694f2a0f7441",
     "id": null,
     "metadata": {},
     "name": "useOrder2DeleteUserAddressMutation",
     "operationKind": "mutation",
-    "text": "mutation useOrder2DeleteUserAddressMutation(\n  $input: DeleteUserAddressInput!\n) {\n  deleteUserAddress(input: $input) {\n    me {\n      addressConnection(first: 20) {\n        edges {\n          node {\n            internalID\n            name\n            addressLine1\n            addressLine2\n            city\n            region\n            postalCode\n            country\n            phoneNumber\n            phoneNumberCountryCode\n            isDefault\n            id\n          }\n        }\n      }\n      id\n    }\n    userAddressOrErrors {\n      __typename\n      ... on Errors {\n        errors {\n          code\n          message\n        }\n      }\n      ... on UserAddress {\n        id\n      }\n    }\n  }\n}\n"
+    "text": "mutation useOrder2DeleteUserAddressMutation(\n  $input: DeleteUserAddressInput!\n) {\n  deleteUserAddress(input: $input) {\n    me {\n      addressConnection(first: 20) {\n        edges {\n          node {\n            internalID\n            name\n            addressLine1\n            addressLine2\n            city\n            region\n            postalCode\n            country\n            phoneNumber\n            phoneNumberCountryCode\n            isDefault\n            id\n          }\n        }\n      }\n      id\n    }\n    userAddressOrErrors {\n      __typename\n      ... on Errors {\n        errors {\n          message\n        }\n      }\n      ... on UserAddress {\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "8575f8c1d1954448fb53a7be82cfaf6f";
+(node as any).hash = "f46f17403fec02c2a47ba93536a632e9";
 
 export default node;
