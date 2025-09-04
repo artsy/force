@@ -43,6 +43,12 @@ import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckou
 import { useOrder2SetOrderPaymentMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderPaymentMutation"
 import { fetchAndSetConfirmationToken } from "Apps/Order2/Utils/confirmationTokenUtils"
 import { preventHardReload } from "Apps/Order2/Utils/navigationGuards"
+import {
+  AddressFormFields,
+  type FormikContextWithAddress,
+  addressFormFieldsValidator,
+} from "Components/Address/AddressFormFields"
+import { type Address, emptyAddress } from "Components/Address/utils"
 import { CreateBankDebitSetupForOrder } from "Components/BankDebitForm/Mutations/CreateBankDebitSetupForOrder"
 import { type Brand, BrandCreditCardIcon } from "Components/BrandCreditCardIcon"
 import { FadeInBox } from "Components/FadeInBox"
@@ -58,10 +64,12 @@ import type {
   Order2PaymentForm_order$data,
   Order2PaymentForm_order$key,
 } from "__generated__/Order2PaymentForm_order.graphql"
+import { Formik } from "formik"
 import type React from "react"
 import { useEffect, useState } from "react"
 import { graphql, useFragment, useRelayEnvironment } from "react-relay"
 import { data as sd } from "sharify"
+import * as yup from "yup"
 
 const logger = createLogger("Order2PaymentForm")
 const defaultErrorMessage = (
@@ -69,6 +77,11 @@ const defaultErrorMessage = (
     Something went wrong. Please try again or contact <MailtoOrderSupport />.
   </>
 )
+
+const defaultBillingAddress = {
+  ...emptyAddress,
+  country: "US",
+}
 
 interface Order2PaymentFormProps {
   order: Order2PaymentForm_order$key
@@ -170,6 +183,12 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
   const [selectedSavedPaymentMethod, setSelectedSavedPaymentMethod] = useState<
     any | null
   >(null)
+  const [billingAddressSameAsShipping, setBillingAddressSameAsShipping] =
+    useState(true)
+  const [billingFormValues, setBillingFormValues] =
+    useState<FormikContextWithAddress>(() => ({
+      address: defaultBillingAddress,
+    }))
 
   const isSelectedPaymentMethodStripe = selectedPaymentMethod?.match(/^stripe/)
   const savedCreditCards = extractNodes(me.creditCards)
@@ -317,6 +336,36 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
     elements?.getElement("payment")?.collapse()
   }
 
+  const needsBillingAddress = () => {
+    return (
+      selectedPaymentMethod === "stripe-card" && !billingAddressSameAsShipping
+    )
+  }
+
+  const getBillingAddress = (): Address => {
+    if (billingAddressSameAsShipping && order.fulfillmentDetails) {
+      return {
+        name: order.fulfillmentDetails.name ?? "",
+        addressLine1: order.fulfillmentDetails.addressLine1 ?? "",
+        addressLine2: order.fulfillmentDetails.addressLine2 ?? "",
+        city: order.fulfillmentDetails.city ?? "",
+        region: order.fulfillmentDetails.region ?? "",
+        postalCode: order.fulfillmentDetails.postalCode ?? "",
+        country: order.fulfillmentDetails.country ?? "",
+      }
+    }
+    return billingFormValues.address
+  }
+
+  const handleBillingAddressSameAsShippingChange = (selected: boolean) => {
+    setBillingAddressSameAsShipping(selected)
+    if (!selected) {
+      setBillingFormValues({
+        address: defaultBillingAddress,
+      })
+    }
+  }
+
   const getPaymentMethodFromSavedPayment = (savedPaymentMethod: any) => {
     if (savedPaymentMethod?.__typename === "CreditCard") {
       return "CREDIT_CARD"
@@ -409,9 +458,25 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         return
       }
 
+      const billingAddress = getBillingAddress()
       const { error, confirmationToken } = await stripe.createConfirmationToken(
         {
           elements,
+          params: {
+            payment_method_data: {
+              billing_details: {
+                name: billingAddress.name,
+                address: {
+                  line1: billingAddress.addressLine1,
+                  line2: billingAddress.addressLine2,
+                  city: billingAddress.city,
+                  state: billingAddress.region,
+                  postal_code: billingAddress.postalCode,
+                  country: billingAddress.country,
+                },
+              },
+            },
+          },
         },
       )
 
@@ -699,16 +764,50 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         </FadeInBox>
       )}
 
-      <Collapse open={selectedPaymentMethod === "stripe-card"}>
+      {selectedPaymentMethod === "stripe-card" && (
         <Box p={2}>
+          <Checkbox
+            selected={billingAddressSameAsShipping}
+            onSelect={handleBillingAddressSameAsShippingChange}
+            data-testid="billing-address-same-as-shipping"
+          >
+            Billing address same as shipping
+          </Checkbox>
+
+          <Spacer y={2} />
           <Checkbox
             selected={savePaymentMethod}
             onSelect={setSavePaymentMethod}
           >
             Save credit card for later use
           </Checkbox>
+
+          <Collapse open={needsBillingAddress()}>
+            <Spacer y={4} />
+            <Text variant="sm" fontWeight="bold" mb={2}>
+              Billing address
+            </Text>
+            <Formik
+              initialValues={billingFormValues}
+              validationSchema={yup
+                .object()
+                .shape(addressFormFieldsValidator())}
+              onSubmit={(values: FormikContextWithAddress) => {
+                setBillingFormValues(values)
+              }}
+              enableReinitialize
+            >
+              {({ values }) => {
+                // Update parent state when values change
+                if (values !== billingFormValues) {
+                  setBillingFormValues(values)
+                }
+                return <AddressFormFields />
+              }}
+            </Formik>
+          </Collapse>
         </Box>
-      </Collapse>
+      )}
 
       <Collapse
         open={
@@ -808,6 +907,15 @@ const ORDER_FRAGMENT = graphql`
           externalId
         }
       }
+    }
+    fulfillmentDetails {
+      name
+      addressLine1
+      addressLine2
+      city
+      region
+      postalCode
+      country
     }
     lineItems {
       artwork {

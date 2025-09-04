@@ -829,4 +829,67 @@ describe("Order2PaymentForm", () => {
       expect(screen.getByText("Continue to Review")).toBeInTheDocument()
     })
   })
+
+  describe("billing address functionality", () => {
+    it("shows billing address same as shipping checkbox when credit card is selected", async () => {
+      renderPaymentForm()
+      await waitForPaymentElement()
+
+      // Select credit card
+      await userEvent.click(screen.getByTestId("mock-credit-card"))
+
+      await waitFor(() => {
+        expect(
+          screen.getByTestId("billing-address-same-as-shipping"),
+        ).toBeInTheDocument()
+      })
+
+      // Should be checked by default
+      expect(
+        screen.getByTestId("billing-address-same-as-shipping"),
+      ).toBeChecked()
+    })
+
+    it("shows billing address form when billing address same as shipping is unchecked", async () => {
+      renderPaymentForm()
+      await waitForPaymentElement()
+
+      // Select credit card
+      await userEvent.click(screen.getByTestId("mock-credit-card"))
+
+      await waitFor(() => {
+        expect(
+          screen.getByTestId("billing-address-same-as-shipping"),
+        ).toBeInTheDocument()
+      })
+
+      // Uncheck the billing address same as shipping
+      await userEvent.click(
+        screen.getByTestId("billing-address-same-as-shipping"),
+      )
+
+      await waitFor(() => {
+        expect(screen.getByText("Billing address")).toBeInTheDocument()
+        expect(screen.getByTestId("addressFormFields.name")).toBeInTheDocument()
+      })
+    })
+
+    it("hides billing address form when not using credit card", async () => {
+      renderPaymentForm()
+      await waitForPaymentElement()
+
+      // Initially billing address checkbox should not be visible since no payment method is selected
+      expect(
+        screen.queryByTestId("billing-address-same-as-shipping"),
+      ).not.toBeInTheDocument()
+
+      // Select ACH
+      await userEvent.click(screen.getByTestId("mock-ach"))
+
+      // Should still not show billing address checkbox
+      expect(
+        screen.queryByTestId("billing-address-same-as-shipping"),
+      ).not.toBeInTheDocument()
+    })
+  })
 })
