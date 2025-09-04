@@ -5,6 +5,6 @@ on:
 
 jobs:
   danger-yarn:
-    uses: artsy/duchamp/.github/workflows/run-yarn.yml@test-danger-token
+    uses: artsy/duchamp/.github/workflows/run-yarn.yml@main
     secrets:
-      DANGER_TOKEN: ${{ secrets.DANGER_TOKEN }}
+      danger-token: ${{ secrets.DANGER_TOKEN }}
