@@ -106,61 +106,70 @@ export const UpdateAddressForm = ({
     setAsDefault: false,
   }
 
+  const handleSetAsDefault = async (addressID: string) => {
+    await updateUserDefaultAddress.submitMutation({
+      variables: {
+        input: {
+          userAddressID: addressID,
+        },
+      },
+    })
+  }
+
+  const handleUpdateAddress = async (values: FormikContextWithAddress) => {
+    const result = await updateUserAddress.submitMutation({
+      variables: {
+        input: {
+          userAddressID: address.internalID,
+          attributes: {
+            name: values.address.name,
+            addressLine1: values.address.addressLine1,
+            addressLine2: values.address.addressLine2,
+            city: values.address.city,
+            region: values.address.region,
+            postalCode: values.address.postalCode,
+            country: values.address.country,
+            phoneNumber: values.phoneNumber,
+            phoneNumberCountryCode: values.phoneNumberCountryCode,
+          },
+        },
+      },
+    })
+
+    if (result.updateUserAddress?.userAddressOrErrors?.internalID) {
+      return result.updateUserAddress.userAddressOrErrors.internalID
+    }
+
+    if (result.updateUserAddress?.userAddressOrErrors?.errors) {
+      throw new Error(
+        `Failed to update address: ${JSON.stringify(
+          result.updateUserAddress.userAddressOrErrors.errors,
+        )}`,
+      )
+    }
+
+    throw new Error("Failed to update address: Unknown error")
+  }
+
+  const handleSubmitAddress = async (values: FormikContextWithAddress) => {
+    try {
+      const updatedAddressID = await handleUpdateAddress(values)
+
+      if (values.setAsDefault) {
+        await handleSetAsDefault(updatedAddressID)
+      }
+
+      await onSaveAddress(values, updatedAddressID)
+    } catch (error) {
+      logger.error("Error updating address:", error)
+    }
+  }
+
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={deliveryAddressValidationSchema}
-      onSubmit={async (values: FormikContextWithAddress) => {
-        try {
-          const result = await updateUserAddress.submitMutation({
-            variables: {
-              input: {
-                userAddressID: address.internalID,
-                attributes: {
-                  name: values.address.name,
-                  addressLine1: values.address.addressLine1,
-                  addressLine2: values.address.addressLine2,
-                  city: values.address.city,
-                  region: values.address.region,
-                  postalCode: values.address.postalCode,
-                  country: values.address.country,
-                  phoneNumber: values.phoneNumber,
-                  phoneNumberCountryCode: values.phoneNumberCountryCode,
-                },
-              },
-            },
-          })
-
-          if (result.updateUserAddress?.userAddressOrErrors?.internalID) {
-            const updatedAddressID =
-              result.updateUserAddress.userAddressOrErrors.internalID
-
-            if (values.setAsDefault) {
-              await updateUserDefaultAddress.submitMutation({
-                variables: {
-                  input: {
-                    userAddressID: updatedAddressID,
-                  },
-                },
-              })
-            }
-
-            await onSaveAddress(values, updatedAddressID)
-            return
-          }
-
-          if (result.updateUserAddress?.userAddressOrErrors?.errors) {
-            throw new Error(
-              `Failed to update address: ${JSON.stringify(
-                result.updateUserAddress.userAddressOrErrors.errors,
-              )}`,
-            )
-          }
-          throw new Error("Failed to update address: Unknown error")
-        } catch (error) {
-          logger.error("Error updating address:", error)
-        }
-      }}
+      onSubmit={handleSubmitAddress}
     >
       {({ isSubmitting, handleSubmit }) => (
         <>
