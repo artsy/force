@@ -7,4 +7,4 @@ jobs:
   danger-yarn:
     uses: artsy/duchamp/.github/workflows/run-yarn.yml@main
     secrets:
-      github-token: ${{ secrets.DANGERMATTIC_GITHUB_TOKEN }}
+      danger-token: ${{ secrets.DANGERMATTIC_GITHUB_TOKEN }}
