@@ -128,12 +128,16 @@ const AboutOurTeamItem = ({ name, title, src }: AboutOurTeamItemProps) => {
       span={3}
       borderRadius={10}
       overflow="hidden"
-      bg={bg}
-      px={2}
-      pt={2}
-      pb={[2, 4]}
+      bg={[bg || "transparent", "transparent"]}
+      px={[2, 0]}
+      pt={[2, 0]}
+      pb={[2, 0]}
     >
-      <Stack gap={2} alignItems="center" flexDirection={["row", "column"]}>
+      <Stack
+        gap={2}
+        alignItems={["center", "flex-start"]}
+        flexDirection={["row", "column"]}
+      >
         <>
           {/* Mobile */}
           <Box
@@ -170,7 +174,7 @@ const AboutOurTeamItem = ({ name, title, src }: AboutOurTeamItemProps) => {
           </Box>
         </>
 
-        <Stack gap={1} textAlign={["left", "center"]}>
+        <Stack gap={1} textAlign={"left"}>
           <Text variant="lg-display">{name}</Text>
 
           <Text variant="sm-display">{title}</Text>
