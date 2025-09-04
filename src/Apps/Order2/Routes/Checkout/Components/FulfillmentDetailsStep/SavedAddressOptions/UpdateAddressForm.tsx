@@ -25,10 +25,6 @@ import { useState } from "react"
 
 const logger = createLogger("UpdateAddressForm")
 
-interface UpdateAddressFormValues extends FormikContextWithAddress {
-  setAsDefault: boolean
-}
-
 const getDeleteErrorMessage = (
   backendError: string,
 ): { title: string; message: string } => {
@@ -105,7 +101,7 @@ export const UpdateAddressForm = ({
     }
   }
 
-  const initialValues: UpdateAddressFormValues = {
+  const initialValues: FormikContextWithAddress = {
     ...address,
     setAsDefault: false,
   }
@@ -114,7 +110,7 @@ export const UpdateAddressForm = ({
     <Formik
       initialValues={initialValues}
       validationSchema={deliveryAddressValidationSchema}
-      onSubmit={async (values: UpdateAddressFormValues) => {
+      onSubmit={async (values: FormikContextWithAddress) => {
         try {
           const result = await updateUserAddress.submitMutation({
             variables: {
