@@ -696,18 +696,12 @@ describe("Order2PaymentForm", () => {
 
       await userEvent.click(screen.getByTestId("mock-credit-card"))
 
-      // For delivery orders with fulfillment details, "same as shipping" checkbox should be shown and checked by default
       await waitFor(() => {
-        expect(
-          screen.getByTestId("billing-address-same-as-shipping"),
-        ).toBeInTheDocument()
+        const checkbox = screen.getByTestId("billing-address-same-as-shipping")
+        expect(checkbox).toBeInTheDocument()
+        expect(checkbox).toBeChecked()
+        expect(screen.queryByText("Billing address")).not.toBeInTheDocument()
       })
-      expect(
-        screen.getByTestId("billing-address-same-as-shipping"),
-      ).toBeChecked()
-
-      // No billing address form should be shown since "same as shipping" is checked
-      expect(screen.queryByText("Billing address")).not.toBeInTheDocument()
 
       setupStripeSubmission(tokenId)
       mockFetchQuery.mockImplementationOnce(() =>
@@ -721,7 +715,6 @@ describe("Order2PaymentForm", () => {
 
       await expectCommonSubmissionFlow(tokenId)
 
-      // Verify that createConfirmationToken was called with shipping address as billing
       expect(mockStripe.createConfirmationToken).toHaveBeenCalledWith({
         elements: mockElements,
         params: {
