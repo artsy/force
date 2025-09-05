@@ -612,6 +612,7 @@ describe("Order2PaymentForm", () => {
       // Now billing address form should be shown
       await waitFor(() => {
         expect(screen.getByText("Billing address")).toBeInTheDocument()
+        expect(screen.getByTestId("addressFormFields.name")).toBeInTheDocument()
       })
 
       // Fill in required billing address fields
@@ -1100,6 +1101,7 @@ describe("Order2PaymentForm", () => {
 
       await waitFor(() => {
         expect(screen.getByText("Billing address")).toBeInTheDocument()
+        expect(screen.getByTestId("addressFormFields.name")).toBeInTheDocument()
       })
 
       // Fill in required billing address fields
