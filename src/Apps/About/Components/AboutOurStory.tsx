@@ -1,5 +1,5 @@
 import { Column, GridColumns, Image, ResponsiveBox, Text } from "@artsy/palette"
-import { AboutSection } from "Apps/About2/Components/AboutSection"
+import { AboutSection } from "Apps/About/Components/AboutSection"
 import { resized } from "Utils/resized"
 
 export const AboutOurStory = () => {

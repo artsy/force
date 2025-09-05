@@ -1,4 +1,4 @@
-import { type Section, useAboutNav } from "Apps/About2/Components/AboutNav"
+import { type Section, useAboutNav } from "Apps/About/Components/AboutNav"
 import { useIntersectionObserver } from "Utils/Hooks/useIntersectionObserver"
 import { Jump } from "Utils/Hooks/useJump"
 

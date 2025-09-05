@@ -15,7 +15,7 @@ import {
   Text,
 } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
-import { AboutDownloadQRCode } from "Apps/About2/Components/AboutDownloadQRCode"
+import { AboutDownloadQRCode } from "Apps/About/Components/AboutDownloadQRCode"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { useDeviceDetection } from "Utils/Hooks/useDeviceDetection"
