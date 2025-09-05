@@ -16,6 +16,7 @@ type GravityAddress = ReturnType<typeof extractNodes<MeAddresses>>[number]
 export type ProcessedUserAddress = FormikContextWithAddress & {
   isValid: boolean
   internalID: string
+  isDefault: boolean
 }
 
 export const normalizeAddress = (
@@ -50,9 +51,26 @@ export const processSavedAddresses = (
     const isValid = availableShippingCountries.includes(
       normalizedAddress.address.country,
     )
-    return { ...normalizedAddress, isValid, internalID: address.internalID }
+    return {
+      ...normalizedAddress,
+      isValid,
+      internalID: address.internalID,
+      isDefault: address.isDefault,
+    }
   })
-  return processedAddresses
+  return sortAddressesByPriority(processedAddresses)
+}
+
+export const sortAddressesByPriority = (addresses: ProcessedUserAddress[]) => {
+  return [...addresses].sort((a, b) => {
+    if (a.isDefault && a.isValid && !(b.isDefault && b.isValid)) return -1
+    if (b.isDefault && b.isValid && !(a.isDefault && a.isValid)) return 1
+
+    if (a.isValid && !b.isValid) return -1
+    if (!a.isValid && b.isValid) return 1
+
+    return 0
+  })
 }
 
 export const findInitialSelectedAddress = (

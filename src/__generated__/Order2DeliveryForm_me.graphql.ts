@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<95e3eb5f783f6d3aa50bfe431d1b53ef>>
+ * @generated SignedSource<<83f7cca7fbc7fd01b32558a4ce266ecb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,6 +19,7 @@ export type Order2DeliveryForm_me$data = {
         readonly city: string;
         readonly country: string;
         readonly internalID: string;
+        readonly isDefault: boolean;
         readonly name: string | null | undefined;
         readonly phoneNumber: string | null | undefined;
         readonly phoneNumberCountryCode: string | null | undefined;
@@ -139,6 +140,13 @@ const node: ReaderFragment = {
                   "kind": "ScalarField",
                   "name": "phoneNumberCountryCode",
                   "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "isDefault",
+                  "storageKey": null
                 }
               ],
               "storageKey": null
@@ -154,6 +162,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "164c3ca0707909f911cbb95e92de5fbb";
+(node as any).hash = "fb2497a6855fd1682173535ed3fb5410";
 
 export default node;

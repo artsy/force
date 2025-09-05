@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<162165f9df2b71bf9ca13664cc47201c>>
+ * @generated SignedSource<<ef63dadfe33f76e2a91185c6dbf278cc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,27 +10,15 @@
 
 import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type CreateUserAddressInput = {
-  attributes: UserAddressAttributes;
+export type UpdateUserDefaultAddressInput = {
   clientMutationId?: string | null | undefined;
+  userAddressID: string;
 };
-export type UserAddressAttributes = {
-  addressLine1: string;
-  addressLine2?: string | null | undefined;
-  addressLine3?: string | null | undefined;
-  city: string;
-  country: string;
-  name: string;
-  phoneNumber?: string | null | undefined;
-  phoneNumberCountryCode?: string | null | undefined;
-  postalCode?: string | null | undefined;
-  region?: string | null | undefined;
+export type useOrder2UpdateUserDefaultAddressMutation$variables = {
+  input: UpdateUserDefaultAddressInput;
 };
-export type useOrder2CreateUserAddressMutation$variables = {
-  input: CreateUserAddressInput;
-};
-export type useOrder2CreateUserAddressMutation$data = {
-  readonly createUserAddress: {
+export type useOrder2UpdateUserDefaultAddressMutation$data = {
+  readonly updateUserDefaultAddress: {
     readonly me: {
       readonly " $fragmentSpreads": FragmentRefs<"Order2DeliveryForm_me">;
     } | null | undefined;
@@ -41,8 +29,10 @@ export type useOrder2CreateUserAddressMutation$data = {
       readonly country?: string;
       readonly errors?: ReadonlyArray<{
         readonly code: string;
+        readonly message: string;
       }>;
       readonly internalID?: string;
+      readonly isDefault?: boolean;
       readonly name?: string | null | undefined;
       readonly phoneNumber?: string | null | undefined;
       readonly phoneNumberCountryCode?: string | null | undefined;
@@ -51,9 +41,9 @@ export type useOrder2CreateUserAddressMutation$data = {
     };
   } | null | undefined;
 };
-export type useOrder2CreateUserAddressMutation = {
-  response: useOrder2CreateUserAddressMutation$data;
-  variables: useOrder2CreateUserAddressMutation$variables;
+export type useOrder2UpdateUserDefaultAddressMutation = {
+  response: useOrder2UpdateUserDefaultAddressMutation$data;
+  variables: useOrder2UpdateUserDefaultAddressMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -142,6 +132,13 @@ v11 = {
   "storageKey": null
 },
 v12 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "isDefault",
+  "storageKey": null
+},
+v13 = {
   "kind": "InlineFragment",
   "selections": [
     {
@@ -158,6 +155,13 @@ v12 = {
           "kind": "ScalarField",
           "name": "code",
           "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "message",
+          "storageKey": null
         }
       ],
       "storageKey": null
@@ -166,7 +170,7 @@ v12 = {
   "type": "Errors",
   "abstractKey": null
 },
-v13 = {
+v14 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -178,14 +182,14 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "useOrder2CreateUserAddressMutation",
+    "name": "useOrder2UpdateUserDefaultAddressMutation",
     "selections": [
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "CreateUserAddressPayload",
+        "concreteType": "UpdateUserDefaultAddressPayload",
         "kind": "LinkedField",
-        "name": "createUserAddress",
+        "name": "updateUserDefaultAddress",
         "plural": false,
         "selections": [
           {
@@ -224,12 +228,13 @@ return {
                   (v8/*: any*/),
                   (v9/*: any*/),
                   (v10/*: any*/),
-                  (v11/*: any*/)
+                  (v11/*: any*/),
+                  (v12/*: any*/)
                 ],
                 "type": "UserAddress",
                 "abstractKey": null
               },
-              (v12/*: any*/)
+              (v13/*: any*/)
             ],
             "storageKey": null
           }
@@ -244,14 +249,14 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "useOrder2CreateUserAddressMutation",
+    "name": "useOrder2UpdateUserDefaultAddressMutation",
     "selections": [
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "CreateUserAddressPayload",
+        "concreteType": "UpdateUserDefaultAddressPayload",
         "kind": "LinkedField",
-        "name": "createUserAddress",
+        "name": "updateUserDefaultAddress",
         "plural": false,
         "selections": [
           {
@@ -302,14 +307,8 @@ return {
                           (v3/*: any*/),
                           (v10/*: any*/),
                           (v11/*: any*/),
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "isDefault",
-                            "storageKey": null
-                          },
-                          (v13/*: any*/)
+                          (v12/*: any*/),
+                          (v14/*: any*/)
                         ],
                         "storageKey": null
                       }
@@ -319,7 +318,7 @@ return {
                 ],
                 "storageKey": "addressConnection(first:20)"
               },
-              (v13/*: any*/)
+              (v14/*: any*/)
             ],
             "storageKey": null
           },
@@ -351,12 +350,13 @@ return {
                   (v9/*: any*/),
                   (v10/*: any*/),
                   (v11/*: any*/),
-                  (v13/*: any*/)
+                  (v12/*: any*/),
+                  (v14/*: any*/)
                 ],
                 "type": "UserAddress",
                 "abstractKey": null
               },
-              (v12/*: any*/)
+              (v13/*: any*/)
             ],
             "storageKey": null
           }
@@ -366,16 +366,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "406c9bd926e0d9c7e134adadd13a7601",
+    "cacheID": "1dda61d2bf5de46a2110c714a1778fb7",
     "id": null,
     "metadata": {},
-    "name": "useOrder2CreateUserAddressMutation",
+    "name": "useOrder2UpdateUserDefaultAddressMutation",
     "operationKind": "mutation",
-    "text": "mutation useOrder2CreateUserAddressMutation(\n  $input: CreateUserAddressInput!\n) {\n  createUserAddress(input: $input) {\n    me {\n      ...Order2DeliveryForm_me\n      id\n    }\n    userAddressOrErrors {\n      __typename\n      ... on UserAddress {\n        internalID\n        name\n        addressLine1\n        addressLine2\n        city\n        region\n        postalCode\n        country\n        phoneNumber\n        phoneNumberCountryCode\n        id\n      }\n      ... on Errors {\n        errors {\n          code\n        }\n      }\n    }\n  }\n}\n\nfragment Order2DeliveryForm_me on Me {\n  addressConnection(first: 20) {\n    edges {\n      node {\n        internalID\n        addressLine1\n        addressLine2\n        city\n        region\n        postalCode\n        country\n        name\n        phoneNumber\n        phoneNumberCountryCode\n        isDefault\n        id\n      }\n    }\n  }\n}\n"
+    "text": "mutation useOrder2UpdateUserDefaultAddressMutation(\n  $input: UpdateUserDefaultAddressInput!\n) {\n  updateUserDefaultAddress(input: $input) {\n    me {\n      ...Order2DeliveryForm_me\n      id\n    }\n    userAddressOrErrors {\n      __typename\n      ... on UserAddress {\n        internalID\n        name\n        addressLine1\n        addressLine2\n        city\n        region\n        postalCode\n        country\n        phoneNumber\n        phoneNumberCountryCode\n        isDefault\n        id\n      }\n      ... on Errors {\n        errors {\n          code\n          message\n        }\n      }\n    }\n  }\n}\n\nfragment Order2DeliveryForm_me on Me {\n  addressConnection(first: 20) {\n    edges {\n      node {\n        internalID\n        addressLine1\n        addressLine2\n        city\n        region\n        postalCode\n        country\n        name\n        phoneNumber\n        phoneNumberCountryCode\n        isDefault\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "d7c5bce7bb6135a212cd8bbd390a5e98";
+(node as any).hash = "94b0faea1eab0ebb7529ac2856bef1c4";
 
 export default node;

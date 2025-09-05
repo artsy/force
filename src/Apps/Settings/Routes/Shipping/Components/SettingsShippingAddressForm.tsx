@@ -1,6 +1,5 @@
 import {
   Button,
-  Checkbox,
   Column,
   GridColumns,
   Message,
@@ -49,7 +48,7 @@ const INITIAL_VALUES = {
   },
   phoneNumber: INITIAL_ADDRESS.phoneNumber,
   phoneNumberCountryCode: INITIAL_ADDRESS.phoneNumberCountryCode,
-  isDefault: false,
+  setAsDefault: false,
 }
 
 type AddressAttributes = typeof INITIAL_ADDRESS
@@ -57,7 +56,7 @@ type AddressAttributes = typeof INITIAL_ADDRESS
 const VALIDATION_SCHEMA = Yup.object().shape({
   address: yupAddressValidator,
   ...richRequiredPhoneValidators,
-  isDefault: Yup.boolean().optional(),
+  setAsDefault: Yup.boolean().optional(),
 })
 
 interface SettingsShippingAddressFormProps {
@@ -97,7 +96,7 @@ export const SettingsShippingAddressForm: FC<
       address.attributes
 
     return {
-      isDefault: address.isDefault,
+      setAsDefault: address.isDefault,
       address: addressWithoutPhone,
       phoneNumber: phoneNumber || "",
       phoneNumberCountryCode:
@@ -116,7 +115,7 @@ export const SettingsShippingAddressForm: FC<
       initialValues={getInitialValues()}
       onSubmit={async (
         {
-          isDefault,
+          setAsDefault,
           address: addressData,
           phoneNumber,
           phoneNumberCountryCode,
@@ -137,7 +136,7 @@ export const SettingsShippingAddressForm: FC<
               },
             })
 
-            if (isDefault) {
+            if (setAsDefault) {
               await submitSetDefaultAddress({
                 variables: {
                   input: { userAddressID: address!.internalID },
@@ -157,7 +156,7 @@ export const SettingsShippingAddressForm: FC<
             const id =
               response.createUserAddress?.userAddressOrErrors.internalID
 
-            if (isDefault && id) {
+            if (setAsDefault && id) {
               await submitSetDefaultAddress({
                 variables: { input: { userAddressID: id } },
               })
@@ -180,14 +179,7 @@ export const SettingsShippingAddressForm: FC<
         }
       }}
     >
-      {({
-        values,
-        status,
-        setFieldValue,
-        isValid,
-        isSubmitting,
-        submitForm,
-      }) => {
+      {({ status, isValid, isSubmitting, submitForm }) => {
         return (
           <ModalDialog
             title={isEditing ? "Edit Address" : "Add New Address"}
@@ -206,36 +198,27 @@ export const SettingsShippingAddressForm: FC<
             }
           >
             <Form>
-              <AddressFormFields withPhoneNumber />
-              <GridColumns>
-                <Column span={12}>
-                  <Checkbox
-                    mt={2}
-                    selected={values.isDefault}
-                    onSelect={value => {
-                      setFieldValue("isDefault", value)
-                    }}
-                  >
-                    Set as Default
-                  </Checkbox>
-                </Column>
-
-                {status?.error && (
+              <AddressFormFields
+                withPhoneNumber
+                withSetAsDefault={!address?.isDefault}
+              />
+              {status?.error && (
+                <GridColumns>
                   <Column span={12}>
                     <Message variant="error">
                       {status.message ||
                         "Something went wrong. Please try again."}
                     </Message>
                   </Column>
-                )}
+                </GridColumns>
+              )}
 
-                {/* Modal footer button is outside the form element. Hidden button supports <enter> */}
-                <VisuallyHidden>
-                  <button type="submit" tabIndex={-1} disabled={!isValid}>
-                    Save
-                  </button>
-                </VisuallyHidden>
-              </GridColumns>
+              {/* Modal footer button is outside the form element. Hidden button supports <enter> */}
+              <VisuallyHidden>
+                <button type="submit" tabIndex={-1} disabled={!isValid}>
+                  Save
+                </button>
+              </VisuallyHidden>
             </Form>
           </ModalDialog>
         )
