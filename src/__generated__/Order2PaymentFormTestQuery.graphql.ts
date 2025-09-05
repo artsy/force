@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ca96d72591b90706cf835c8040c3ff4f>>
+ * @generated SignedSource<<b49fa203bdd2d2571c412c8d05749632>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -345,6 +345,66 @@ return {
               {
                 "alias": null,
                 "args": null,
+                "concreteType": "FulfillmentDetails",
+                "kind": "LinkedField",
+                "name": "fulfillmentDetails",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "name",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "addressLine1",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "addressLine2",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "city",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "region",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "postalCode",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "country",
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
                 "concreteType": "LineItem",
                 "kind": "LinkedField",
                 "name": "lineItems",
@@ -402,7 +462,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "1ededfba3e14338529ea22924e86ccb5",
+    "cacheID": "e21a1ec2428929e97f4a59cf93533f42",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -485,6 +545,19 @@ return {
           "type": "OrderPaymentMethodEnum"
         },
         "me.order.code": (v5/*: any*/),
+        "me.order.fulfillmentDetails": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "FulfillmentDetails"
+        },
+        "me.order.fulfillmentDetails.addressLine1": (v7/*: any*/),
+        "me.order.fulfillmentDetails.addressLine2": (v7/*: any*/),
+        "me.order.fulfillmentDetails.city": (v7/*: any*/),
+        "me.order.fulfillmentDetails.country": (v7/*: any*/),
+        "me.order.fulfillmentDetails.name": (v7/*: any*/),
+        "me.order.fulfillmentDetails.postalCode": (v7/*: any*/),
+        "me.order.fulfillmentDetails.region": (v7/*: any*/),
         "me.order.id": (v6/*: any*/),
         "me.order.internalID": (v6/*: any*/),
         "me.order.itemsTotal": {
@@ -562,7 +635,7 @@ return {
     },
     "name": "Order2PaymentFormTestQuery",
     "operationKind": "query",
-    "text": "query Order2PaymentFormTestQuery {\n  me {\n    ...Order2PaymentForm_me\n    order(id: \"order-id\") {\n      ...Order2PaymentForm_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2PaymentForm_me on Me {\n  creditCards(first: 10) {\n    edges {\n      node {\n        __typename\n        internalID\n        brand\n        lastDigits\n        id\n      }\n    }\n  }\n  bankAccounts(first: 10) {\n    edges {\n      node {\n        __typename\n        type\n        internalID\n        last4\n        id\n      }\n    }\n  }\n}\n\nfragment Order2PaymentForm_order on Order {\n  code\n  mode\n  source\n  internalID\n  availablePaymentMethods\n  itemsTotal {\n    minor\n    currencyCode\n  }\n  seller {\n    __typename\n    ... on Partner {\n      merchantAccount {\n        externalId\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  lineItems {\n    artwork {\n      href\n      artworkMeta: meta {\n        share\n      }\n      id\n    }\n    id\n  }\n}\n"
+    "text": "query Order2PaymentFormTestQuery {\n  me {\n    ...Order2PaymentForm_me\n    order(id: \"order-id\") {\n      ...Order2PaymentForm_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2PaymentForm_me on Me {\n  creditCards(first: 10) {\n    edges {\n      node {\n        __typename\n        internalID\n        brand\n        lastDigits\n        id\n      }\n    }\n  }\n  bankAccounts(first: 10) {\n    edges {\n      node {\n        __typename\n        type\n        internalID\n        last4\n        id\n      }\n    }\n  }\n}\n\nfragment Order2PaymentForm_order on Order {\n  code\n  mode\n  source\n  internalID\n  availablePaymentMethods\n  itemsTotal {\n    minor\n    currencyCode\n  }\n  seller {\n    __typename\n    ... on Partner {\n      merchantAccount {\n        externalId\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  fulfillmentDetails {\n    name\n    addressLine1\n    addressLine2\n    city\n    region\n    postalCode\n    country\n  }\n  lineItems {\n    artwork {\n      href\n      artworkMeta: meta {\n        share\n      }\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();
