@@ -175,7 +175,7 @@ describe("Order2DeliveryForm", () => {
           userEvent.click(screen.getByText("See Shipping Methods"))
         })
 
-        // Wait for the form submission to start and resolve the mutation
+        // Wait for the form submission to start and resolve the mutations
         await waitFor(() => {
           mockResolveLastOperation({
             updateOrderShippingAddressPayload: () =>
@@ -194,6 +194,18 @@ describe("Order2DeliveryForm", () => {
                   },
                 },
               }),
+          })
+        })
+        await flushPromiseQueue()
+
+        await waitFor(() => {
+          mockResolveLastOperation({
+            CreateUserAddressPayload: () => ({
+              userAddressOrErrors: {
+                __typename: "UserAddress",
+                internalID: "new-address-id",
+              },
+            }),
           })
         })
         await flushPromiseQueue()
@@ -257,7 +269,6 @@ describe("Order2DeliveryForm", () => {
           userEvent.click(screen.getByText("See Shipping Methods"))
         })
 
-        // Wait for the form submission to start and resolve the mutation
         await waitFor(() => {
           mockResolveLastOperation({
             updateOrderShippingAddressPayload: () =>
@@ -276,6 +287,18 @@ describe("Order2DeliveryForm", () => {
                   },
                 },
               }),
+          })
+        })
+        await flushPromiseQueue()
+
+        await waitFor(() => {
+          mockResolveLastOperation({
+            CreateUserAddressPayload: () => ({
+              userAddressOrErrors: {
+                __typename: "UserAddress",
+                internalID: "new-address-id",
+              },
+            }),
           })
         })
         await flushPromiseQueue()
@@ -315,7 +338,7 @@ describe("Order2DeliveryForm", () => {
         ).not.toHaveBeenCalled()
       })
 
-      it("successfully submits form with valid data and triggers correct mutation", async () => {
+      it("successfully submits form with valid data and triggers correct mutations", async () => {
         const { mockResolveLastOperation } = renderWithRelay({
           Me: () => ({
             ...baseMeProps,
@@ -366,9 +389,9 @@ describe("Order2DeliveryForm", () => {
           userEvent.click(screen.getByText("See Shipping Methods"))
         })
 
-        let mutation
+        let shippingAddressMutation
         await waitFor(() => {
-          mutation = mockResolveLastOperation({
+          shippingAddressMutation = mockResolveLastOperation({
             updateOrderShippingAddressPayload: () =>
               orderMutationSuccess(baseOrderProps, {
                 fulfillmentDetails: {
@@ -389,10 +412,10 @@ describe("Order2DeliveryForm", () => {
         })
         await flushPromiseQueue()
 
-        expect(mutation.operationName).toBe(
+        expect(shippingAddressMutation.operationName).toBe(
           "useOrder2SetOrderDeliveryAddressMutation",
         )
-        expect(mutation.operationVariables.input).toEqual({
+        expect(shippingAddressMutation.operationVariables.input).toEqual({
           id: "order-id",
           buyerPhoneNumber: "5559876543",
           buyerPhoneNumberCountryCode: "us",
@@ -405,7 +428,143 @@ describe("Order2DeliveryForm", () => {
           shippingName: "Jane Smith",
         })
 
+        let createAddressMutation
+        await waitFor(() => {
+          createAddressMutation = mockResolveLastOperation({
+            CreateUserAddressPayload: () => ({
+              userAddressOrErrors: {
+                __typename: "UserAddress",
+                internalID: "new-address-id",
+                name: "Jane Smith",
+                addressLine1: "456 Oak Ave",
+                addressLine2: "",
+                city: "Los Angeles",
+                region: "CA",
+                postalCode: "90210",
+                country: "US",
+                phoneNumber: "5559876543",
+                phoneNumberCountryCode: "us",
+              },
+            }),
+          })
+        })
+        await flushPromiseQueue()
+
+        expect(createAddressMutation.operationName).toBe(
+          "useOrder2CreateUserAddressMutation",
+        )
+        expect(createAddressMutation.operationVariables.input).toEqual({
+          attributes: {
+            name: "Jane Smith",
+            addressLine1: "456 Oak Ave",
+            addressLine2: "",
+            city: "Los Angeles",
+            region: "CA",
+            postalCode: "90210",
+            country: "US",
+            phoneNumber: "5559876543",
+            phoneNumberCountryCode: "us",
+          },
+        })
+
         // Should trigger tracking and context updates
+        expect(mockCheckoutContext.setCheckoutMode).toHaveBeenCalledWith(
+          "standard",
+        )
+        expect(
+          mockCheckoutContext.setFulfillmentDetailsComplete,
+        ).toHaveBeenCalledWith({})
+      })
+
+      it("continues checkout even if saving address to user profile fails", async () => {
+        const { mockResolveLastOperation } = renderWithRelay({
+          Me: () => ({
+            ...baseMeProps,
+            order: {
+              ...baseOrderProps,
+              fulfillmentDetails: {
+                name: "",
+                addressLine1: "",
+                addressLine2: "",
+                city: "",
+                region: "",
+                postalCode: "",
+                country: "US",
+                phoneNumber: {
+                  regionCode: "us",
+                  originalNumber: "",
+                },
+              },
+            },
+          }),
+        })
+
+        await waitFor(() => {
+          expect(screen.getByText("Delivery address")).toBeInTheDocument()
+        })
+
+        await userEvent.type(
+          screen.getByPlaceholderText("Add full name"),
+          "Jane Smith",
+        )
+        await userEvent.type(
+          screen.getByLabelText("Street address"),
+          "456 Oak Ave",
+        )
+        await userEvent.type(screen.getByLabelText("City"), "Los Angeles")
+        await userEvent.type(
+          screen.getByLabelText("State, region or province"),
+          "CA",
+        )
+        await userEvent.type(screen.getByLabelText("ZIP/Postal code"), "90210")
+        await userEvent.type(
+          screen.getByTestId("addressFormFields.phoneNumber"),
+          "5559876543",
+        )
+
+        act(() => {
+          userEvent.click(screen.getByText("See Shipping Methods"))
+        })
+
+        await waitFor(() => {
+          mockResolveLastOperation({
+            updateOrderShippingAddressPayload: () =>
+              orderMutationSuccess(baseOrderProps, {
+                fulfillmentDetails: {
+                  name: "Jane Smith",
+                  addressLine1: "456 Oak Ave",
+                  addressLine2: "",
+                  city: "Los Angeles",
+                  region: "CA",
+                  postalCode: "90210",
+                  country: "US",
+                  phoneNumber: {
+                    regionCode: "us",
+                    originalNumber: "5559876543",
+                  },
+                },
+              }),
+          })
+        })
+        await flushPromiseQueue()
+
+        let createAddressMutation
+        await waitFor(() => {
+          createAddressMutation = mockResolveLastOperation({
+            CreateUserAddressPayload: () => ({
+              userAddressOrErrors: {
+                __typename: "Errors",
+                errors: [{ message: "Address creation failed" }],
+              },
+            }),
+          })
+        })
+        await flushPromiseQueue()
+
+        expect(createAddressMutation.operationName).toBe(
+          "useOrder2CreateUserAddressMutation",
+        )
+
         expect(mockCheckoutContext.setCheckoutMode).toHaveBeenCalledWith(
           "standard",
         )
@@ -530,7 +689,21 @@ describe("Order2DeliveryForm", () => {
           shippingName: "Jane Smith",
         })
 
-        // Should trigger context updates after both mutations complete
+        await act(async () => {
+          await waitFor(() => {
+            mockResolveLastOperation({
+              CreateUserAddressPayload: () => ({
+                userAddressOrErrors: {
+                  __typename: "UserAddress",
+                  internalID: "new-address-id",
+                },
+              }),
+            })
+          })
+          await flushPromiseQueue()
+        })
+
+        // Should trigger context updates after all mutations complete
         expect(
           mockCheckoutContext.setFulfillmentDetailsComplete,
         ).toHaveBeenCalledWith({})
@@ -776,6 +949,18 @@ describe("Order2DeliveryForm", () => {
         shippingName: "John Doe",
       })
 
+      await waitFor(() => {
+        mockResolveLastOperation({
+          CreateUserAddressPayload: () => ({
+            userAddressOrErrors: {
+              __typename: "UserAddress",
+              internalID: "new-address-id",
+            },
+          }),
+        })
+      })
+      await flushPromiseQueue()
+
       expect(
         mockCheckoutContext.setFulfillmentDetailsComplete,
       ).toHaveBeenCalledWith({})
@@ -847,6 +1032,18 @@ describe("Order2DeliveryForm", () => {
         shippingCountry: "DE",
         shippingName: "John Doe",
       })
+
+      await waitFor(() => {
+        mockResolveLastOperation({
+          CreateUserAddressPayload: () => ({
+            userAddressOrErrors: {
+              __typename: "UserAddress",
+              internalID: "new-address-id",
+            },
+          }),
+        })
+      })
+      await flushPromiseQueue()
 
       expect(
         mockCheckoutContext.setFulfillmentDetailsComplete,

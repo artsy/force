@@ -13,6 +13,7 @@ import {
   processSavedAddresses,
 } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/utils"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import { useOrder2CreateUserAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2CreateUserAddressMutation"
 
 import { useOrder2SetOrderDeliveryAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderDeliveryAddressMutation"
 import { useOrder2UnsetOrderFulfillmentOptionMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2UnsetOrderFulfillmentOptionMutation"
@@ -23,6 +24,7 @@ import {
 } from "Components/Address/AddressFormFields"
 import { sortCountriesForCountryInput } from "Components/Address/utils/sortCountriesForCountryInput"
 import { useInitialLocationValues } from "Components/Address/utils/useInitialLocationValues"
+import createLogger from "Utils/logger"
 import type { Order2DeliveryForm_me$key } from "__generated__/Order2DeliveryForm_me.graphql"
 import type { Order2DeliveryForm_order$key } from "__generated__/Order2DeliveryForm_order.graphql"
 import { Formik, type FormikHelpers } from "formik"
@@ -40,6 +42,8 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
 }) => {
   const orderData = useFragment(ORDER_FRAGMENT, order)
   const meData = useFragment(ME_FRAGMENT, me)
+  const createUserAddress = useOrder2CreateUserAddressMutation()
+  const logger = createLogger("Order2DeliveryForm")
 
   const { addressConnection } = meData
 
@@ -136,6 +140,33 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
     return findInitialSelectedAddress(processedAddresses, initialValues)
   }, [initialValues, processedAddresses])
 
+  const saveAddressToUser = useCallback(
+    async (values: FormikContextWithAddress) => {
+      try {
+        await createUserAddress.submitMutation({
+          variables: {
+            input: {
+              attributes: {
+                name: values.address.name,
+                addressLine1: values.address.addressLine1,
+                addressLine2: values.address.addressLine2,
+                city: values.address.city,
+                region: values.address.region,
+                postalCode: values.address.postalCode,
+                country: values.address.country,
+                phoneNumber: values.phoneNumber,
+                phoneNumberCountryCode: values.phoneNumberCountryCode,
+              },
+            },
+          },
+        })
+      } catch (error) {
+        logger.error("Error saving address to user profile:", error)
+      }
+    },
+    [createUserAddress, logger],
+  )
+
   const onSubmit = useCallback(
     async (
       values: FormikContextWithAddress,
@@ -147,8 +178,8 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
           ContextModule.ordersFulfillment,
         )
 
+        // Unset the current fulfillment option if it exists
         if (orderData.selectedFulfillmentOption?.type) {
-          // Unset the current fulfillment option if it exists
           const unsetFulfillmentOptionResult =
             await unsetOrderFulfillmentOption.submitMutation({
               variables: {
@@ -187,6 +218,8 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
           updateShippingAddressResult.updateOrderShippingAddress?.orderOrError,
         ).order
 
+        await saveAddressToUser(values)
+
         formikHelpers.setStatus({ errorBanner: null })
         setFulfillmentDetailsComplete({}) // TODO: Clean up signature
         setUserAddressMode(null)
@@ -205,12 +238,13 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
     [
       checkoutTracking,
       orderData.internalID,
-      updateShippingAddressMutation,
-      setFulfillmentDetailsComplete,
-      unsetOrderFulfillmentOption,
       orderData.selectedFulfillmentOption?.type,
+      saveAddressToUser,
       setCheckoutMode,
+      setFulfillmentDetailsComplete,
       setUserAddressMode,
+      unsetOrderFulfillmentOption,
+      updateShippingAddressMutation,
     ],
   )
   return (
