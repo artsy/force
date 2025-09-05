@@ -3227,8 +3227,6 @@ type ArtworkImport implements Node {
     hasErrors: Boolean
     last: Int
   ): ArtworkImportRowConnection
-  s3Bucket: String!
-  s3Key: String!
   state: ArtworkImportState
   summary: ArtworkImportSummary
   unmatchedArtistNames: [String!]!
@@ -3287,6 +3285,7 @@ enum ArtworkImportError {
   MISSING_TITLE
   UNMATCHED_ARTIST
   UNMATCHED_IMAGE
+  UNSUPPORTED_IMAGE_SEPERATOR
 }
 
 type ArtworkImportRow {
@@ -4771,6 +4770,9 @@ input BulkUpdateArtworksMetadataInput {
   # The artist IDs to be assigned
   artistIds: [String]
 
+  # The attribution class to be assigned, E.g. unique, open edition, limited edition
+  attributionClass: String
+
   # The availaiblity to be assigned
   availability: Availability
 
@@ -4797,6 +4799,9 @@ input BulkUpdateArtworksMetadataInput {
 
   # Whether the artworks must be listed as Purchase
   ecommerce: Boolean
+
+  # Number of additional edition sets to be created for each artwork
+  editionSetsCount: Int
 
   # Set artwork price visibility to exact price
   exactPrice: Boolean
