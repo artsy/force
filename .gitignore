@@ -43,7 +43,9 @@ server.dist.js.map
 coverage*
 cypress/screenshots
 .nyc_output
+playwright-report
 reports*
+test-results
 junit.xml
 cypress/videos
 .last-run.json
