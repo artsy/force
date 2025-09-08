@@ -81,7 +81,7 @@ export const ConversationMessage: React.FC<
         fromViewer={data.isFromUser}
         simplified={simplified}
         name={data.isFromUser && data.from.name ? data.from.name : undefined}
-        time={!simplified ? data.createdAtTime : undefined}
+        time={!simplified ? data.createdAt : undefined}
         seenBy={data.attachments?.length === 0 ? seenBy : undefined}
         isMessageSentOnPlatform={!!data.isMessageSentOnPlatform}
       >
@@ -136,9 +136,8 @@ const FRAGMENT = graphql`
       fileName
     }
     body
-    createdAt
+    createdAt @required(action: NONE)
     isMessageSentOnPlatform
-    createdAtTime: createdAt(format: "h:mmA") @required(action: NONE)
     deliveries @required(action: NONE) {
       openedAt
       fullTransformedEmail
