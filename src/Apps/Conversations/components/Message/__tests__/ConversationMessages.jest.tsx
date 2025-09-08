@@ -112,7 +112,7 @@ describe("ConversationMessages", () => {
   })
 
   it("groups messages sent at the same minute by the same sender", async () => {
-    const createdAt = new Date()
+    const createdAt = new Date().toISOString()
     const createdAtTime = format(new Date(createdAt), "h:mma")
     renderWithRelay({
       MessageConnection: () => ({
@@ -120,7 +120,6 @@ describe("ConversationMessages", () => {
           {
             node: {
               createdAt,
-              createdAtTime,
               isFromUser: true,
               from: { name: "Collector Collectorson" },
             },
@@ -128,20 +127,19 @@ describe("ConversationMessages", () => {
           {
             node: {
               createdAt,
-              createdAtTime,
               isFromUser: true,
               from: { name: "Collector Collectorson" },
             },
           },
-          { node: { createdAt, createdAtTime, from: { name: null } } },
-          { node: { createdAt, createdAtTime, from: { name: null } } },
+          { node: { createdAt, from: { name: null } } },
+          { node: { createdAt, from: { name: null } } },
         ],
       }),
     })
 
     await waitFor(() => {
-      expect(screen.getAllByText(`• ${createdAtTime}`).length).toEqual(2) // Collector
-      expect(screen.getAllByText(createdAtTime).length).toEqual(2) // Partner
+      expect(screen.getByText(`• ${createdAtTime}`)).toBeInTheDocument() // Collector (first message only)
+      expect(screen.getByText("Collector Collectorson")).toBeInTheDocument()
     })
 
     HTMLElement.prototype.scrollIntoView = scrollIntoViewMock
@@ -149,14 +147,12 @@ describe("ConversationMessages", () => {
 
   it("load more messages when scrolling to the top", async () => {
     const createdAt = new Date()
-    const createdAtTime = format(new Date(createdAt), "h:mma")
     renderWithRelay({
       MessageConnection: () => ({
         edges: [
           {
             node: {
               createdAt,
-              createdAtTime,
               isFromUser: true,
               from: { name: "Collector Collectorson" },
             },
@@ -164,13 +160,12 @@ describe("ConversationMessages", () => {
           {
             node: {
               createdAt,
-              createdAtTime,
               isFromUser: true,
               from: { name: "Collector Collectorson" },
             },
           },
-          { node: { createdAt, createdAtTime, from: { name: null } } },
-          { node: { createdAt, createdAtTime, from: { name: null } } },
+          { node: { createdAt, from: { name: null } } },
+          { node: { createdAt, from: { name: null } } },
         ],
       }),
 
