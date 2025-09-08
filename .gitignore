@@ -8,6 +8,10 @@
 .env.*
 !.env.development
 .swc
+
+# Yarn 4
+.yarn/cache
+.yarn/install-state.gz
 .yalc
 *.csv
 *.dat
