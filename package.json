@@ -84,7 +84,7 @@
     "@loadable/server": "5.15.2",
     "@segment/consent-manager": "5.7.0",
     "@sentry/browser": "^8.33.0",
-    "@sentry/node": "^8.32.0",
+    "@sentry/node": "^8.49.0",
     "@sentry/profiling-node": "^8.32.0",
     "@stripe/react-stripe-js": "^3.1.1",
     "@stripe/stripe-js": "^5.5.0",
