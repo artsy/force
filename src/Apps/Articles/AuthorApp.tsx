@@ -12,6 +12,7 @@ import {
 import { themeGet } from "@styled-system/theme-get"
 import { ClientSuspense } from "Components/ClientSuspense"
 import { MetaTags } from "Components/MetaTags"
+import { TopContextBar } from "Components/TopContextBar"
 import { useScrollToOpenEditorialAuthModal } from "Utils/Hooks/useScrollToOpenEditorialAuthModal"
 import type { AuthorApp_author$key } from "__generated__/AuthorApp_author.graphql"
 import type { FC } from "react"
@@ -41,12 +42,16 @@ export const AuthorApp: FC<React.PropsWithChildren<AuthorAppProps>> = ({
         pathname={`/articles/author/${author.internalID}`}
       />
 
+      <TopContextBar displayBackArrow href="/articles/authors">
+        All Authors
+      </TopContextBar>
+
       <Spacer y={[2, 4]} />
 
       <Stack gap={6}>
         <GridColumns gridRowGap={4} gridColumnGap={4}>
           <Column span={12}>
-            <Text as="h1" variant="xl">
+            <Text as="h2" variant="xl">
               Editorial
             </Text>
           </Column>

@@ -361,7 +361,7 @@ const helpers = {
       const expectedInput = {
         id: "order-id",
         confirmationToken: isWireTransfer ? undefined : "confirmation-token-id",
-        oneTimeUse: isWireTransfer ? true : false,
+        oneTimeUse: !!isWireTransfer,
       }
 
       expect(submitOrderMutation.operationVariables.input).toEqual(
@@ -1030,6 +1030,20 @@ describe("Order2CheckoutRoute", () => {
       expect(setShippingAddressOperation.operationName).toBe(
         "useOrder2SetOrderDeliveryAddressMutation",
       )
+
+      await act(async () => {
+        await waitFor(() => {
+          return mockResolveLastOperation({
+            CreateUserAddressPayload: () => ({
+              userAddressOrErrors: {
+                __typename: "UserAddress",
+                internalID: "new-address-id",
+              },
+            }),
+          })
+        })
+        await flushPromiseQueue()
+      })
 
       // Complete shipping option step
       const submitPaymentButton = await screen.findByText("Continue to Payment")
