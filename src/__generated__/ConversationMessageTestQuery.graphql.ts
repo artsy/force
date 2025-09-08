@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c0971e51ed14589130d39bb372201fdf>>
+ * @generated SignedSource<<5c4c60eae2ab6859bfd2c0781672a022>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -261,19 +261,6 @@ return {
                         "storageKey": null
                       },
                       {
-                        "alias": "createdAtTime",
-                        "args": [
-                          {
-                            "kind": "Literal",
-                            "name": "format",
-                            "value": "h:mmA"
-                          }
-                        ],
-                        "kind": "ScalarField",
-                        "name": "createdAt",
-                        "storageKey": "createdAt(format:\"h:mmA\")"
-                      },
-                      {
                         "alias": null,
                         "args": null,
                         "concreteType": "Delivery",
@@ -361,7 +348,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "fab2f3ffc55f6b67ea106ea284ea0433",
+    "cacheID": "2aff577f7daf46292db19ac505791438",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -405,7 +392,6 @@ return {
         "conversation.messagesConnection.edges.node.body": (v6/*: any*/),
         "conversation.messagesConnection.edges.node.cc": (v7/*: any*/),
         "conversation.messagesConnection.edges.node.createdAt": (v6/*: any*/),
-        "conversation.messagesConnection.edges.node.createdAtTime": (v6/*: any*/),
         "conversation.messagesConnection.edges.node.deliveries": {
           "enumValues": null,
           "nullable": true,
@@ -432,7 +418,7 @@ return {
     },
     "name": "ConversationMessageTestQuery",
     "operationKind": "query",
-    "text": "query ConversationMessageTestQuery {\n  conversation(id: \"123\") {\n    messagesConnection(first: 1) {\n      edges {\n        node {\n          ...ConversationMessage_message\n          id\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment ConversationMessage_message on Message {\n  __typename\n  id\n  internalID\n  attachments {\n    internalID\n    contentType\n    downloadURL\n    fileName\n    id\n  }\n  body\n  createdAt\n  isMessageSentOnPlatform\n  createdAtTime: createdAt(format: \"h:mmA\")\n  deliveries {\n    openedAt\n    fullTransformedEmail\n    id\n  }\n  isFromUser\n  isFirstMessage\n  from {\n    name\n  }\n  to\n  cc\n}\n"
+    "text": "query ConversationMessageTestQuery {\n  conversation(id: \"123\") {\n    messagesConnection(first: 1) {\n      edges {\n        node {\n          ...ConversationMessage_message\n          id\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment ConversationMessage_message on Message {\n  __typename\n  id\n  internalID\n  attachments {\n    internalID\n    contentType\n    downloadURL\n    fileName\n    id\n  }\n  body\n  createdAt\n  isMessageSentOnPlatform\n  deliveries {\n    openedAt\n    fullTransformedEmail\n    id\n  }\n  isFromUser\n  isFirstMessage\n  from {\n    name\n  }\n  to\n  cc\n}\n"
   }
 };
 })();

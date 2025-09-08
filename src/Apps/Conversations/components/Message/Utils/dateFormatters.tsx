@@ -56,7 +56,7 @@ export const relativeDate = (time: string) => {
     const numberOfWeeksAgo = Math.floor(Math.abs(minutesSince / 10080))
 
     const formattedDate =
-      numberOfWeeksAgo == 1
+      numberOfWeeksAgo === 1
         ? `${numberOfWeeksAgo} week ago`
         : `${numberOfWeeksAgo} weeks ago`
 
@@ -64,4 +64,11 @@ export const relativeDate = (time: string) => {
   } else {
     return date.toFormat("D")
   }
+}
+
+export const messageTime = (time: string) => {
+  if (!time) return ""
+
+  const date = DateTime.fromISO(time)
+  return date.toFormat("h:mma").toUpperCase()
 }
