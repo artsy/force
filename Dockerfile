@@ -17,7 +17,7 @@ COPY patches ./patches
 RUN yarn install --immutable && \
   mv node_modules /opt/node_modules.prod && \
   yarn install --immutable && \
-  yarn cache clean --force
+  yarn cache clean
 
 # Copy application code
 COPY  . ./
