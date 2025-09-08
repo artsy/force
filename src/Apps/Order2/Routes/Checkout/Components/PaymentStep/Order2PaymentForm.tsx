@@ -784,7 +784,10 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         </FadeInBox>
       )}
 
-      {selectedPaymentMethod === "stripe-card" && (
+      <Collapse
+        open={selectedPaymentMethod === "stripe-card"}
+        data-testid="stripe-card-collapse"
+      >
         <Box p={2}>
           {activeFulfillmentDetailsTab !== "PICKUP" && (
             <>
@@ -834,7 +837,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
             </>
           )}
         </Box>
-      )}
+      </Collapse>
 
       <Collapse
         open={

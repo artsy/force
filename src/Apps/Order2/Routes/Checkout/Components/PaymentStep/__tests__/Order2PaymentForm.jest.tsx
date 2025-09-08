@@ -1005,18 +1005,18 @@ describe("Order2PaymentForm", () => {
       renderPaymentForm()
       await waitForPaymentElement()
 
-      // Initially billing address checkbox should not be visible since no payment method is selected
-      expect(
-        screen.queryByTestId("billing-address-same-as-shipping"),
-      ).not.toBeInTheDocument()
+      // Initially stripe-card section should be collapsed since no payment method is selected
+      expect(screen.getByTestId("stripe-card-collapse")).toHaveStyle({
+        height: "0px",
+      })
 
       // Select ACH
       await userEvent.click(screen.getByTestId("mock-ach"))
 
-      // Should still not show billing address checkbox
-      expect(
-        screen.queryByTestId("billing-address-same-as-shipping"),
-      ).not.toBeInTheDocument()
+      // Should still be collapsed since ACH is not a credit card
+      expect(screen.getByTestId("stripe-card-collapse")).toHaveStyle({
+        height: "0px",
+      })
     })
   })
 
