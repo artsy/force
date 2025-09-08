@@ -4,11 +4,12 @@ import {
   FullBleed,
   GridColumns,
   Image,
+  Spacer,
   Stack,
   Text,
   useTheme,
 } from "@artsy/palette"
-import { AboutSection } from "Apps/About2/Components/AboutSection"
+import { AboutSection } from "Apps/About/Components/AboutSection"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { RouterLink } from "System/Components/RouterLink"
@@ -40,7 +41,7 @@ export const AboutOurTeam = () => {
               </Column>
 
               <Column span={10} start={2}>
-                <GridColumns>
+                <GridColumns gridColumnGap={1}>
                   {TEAM_MEMBERS.map(member => (
                     <AboutOurTeamItem key={member.name} {...member} />
                   ))}
@@ -134,7 +135,7 @@ const AboutOurTeamItem = ({ name, title, src }: AboutOurTeamItemProps) => {
       pb={[2, 0]}
     >
       <Stack
-        gap={2}
+        gap={1}
         alignItems={["center", "flex-start"]}
         flexDirection={["row", "column"]}
       >
@@ -174,10 +175,11 @@ const AboutOurTeamItem = ({ name, title, src }: AboutOurTeamItemProps) => {
           </Box>
         </>
 
-        <Stack gap={1} textAlign={"left"}>
-          <Text variant="lg-display">{name}</Text>
+        <Stack gap={0} textAlign={"left"}>
+          <Text variant={["lg", "lg-display"]}>{name}</Text>
 
           <Text variant="sm-display">{title}</Text>
+          <Spacer y={[0, 4]} />
         </Stack>
       </Stack>
     </Column>

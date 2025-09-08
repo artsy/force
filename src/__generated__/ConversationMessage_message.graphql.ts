@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<be47c5d1bd0d9bac67f9b92a2aaedde3>>
+ * @generated SignedSource<<e5f90c1a8cb12a875be9945ac078b3c1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,8 +20,7 @@ export type ConversationMessage_message$data = {
   } | null | undefined> | null | undefined;
   readonly body: string | null | undefined;
   readonly cc: ReadonlyArray<string>;
-  readonly createdAt: string | null | undefined;
-  readonly createdAtTime: string;
+  readonly createdAt: string;
   readonly deliveries: ReadonlyArray<{
     readonly fullTransformedEmail: string;
     readonly openedAt: string | null | undefined;
@@ -112,11 +111,15 @@ return {
       "storageKey": null
     },
     {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "createdAt",
-      "storageKey": null
+      "kind": "RequiredField",
+      "field": {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "createdAt",
+        "storageKey": null
+      },
+      "action": "NONE"
     },
     {
       "alias": null,
@@ -124,23 +127,6 @@ return {
       "kind": "ScalarField",
       "name": "isMessageSentOnPlatform",
       "storageKey": null
-    },
-    {
-      "kind": "RequiredField",
-      "field": {
-        "alias": "createdAtTime",
-        "args": [
-          {
-            "kind": "Literal",
-            "name": "format",
-            "value": "h:mmA"
-          }
-        ],
-        "kind": "ScalarField",
-        "name": "createdAt",
-        "storageKey": "createdAt(format:\"h:mmA\")"
-      },
-      "action": "NONE"
     },
     {
       "kind": "RequiredField",
@@ -239,6 +225,6 @@ return {
 };
 })();
 
-(node as any).hash = "66741623e6ad41a86c6a8762a24f59ec";
+(node as any).hash = "ef142e13019aff13be722a729ce693e3";
 
 export default node;

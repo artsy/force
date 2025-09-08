@@ -1,5 +1,5 @@
 import { Box, Column, GridColumns, Stack, Text } from "@artsy/palette"
-import { AboutSection } from "Apps/About2/Components/AboutSection"
+import { AboutSection } from "Apps/About/Components/AboutSection"
 import type { ReactNode } from "react"
 
 export const AboutContact = () => {
