@@ -480,21 +480,23 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       const { error, confirmationToken } = await stripe.createConfirmationToken(
         {
           elements,
-          params: {
-            payment_method_data: {
-              billing_details: {
-                name: billingAddress.name,
-                address: {
-                  line1: billingAddress.addressLine1,
-                  line2: billingAddress.addressLine2,
-                  city: billingAddress.city,
-                  state: billingAddress.region,
-                  postal_code: billingAddress.postalCode,
-                  country: billingAddress.country,
+          ...(selectedPaymentMethod === "stripe-card" && {
+            params: {
+              payment_method_data: {
+                billing_details: {
+                  name: billingAddress.name,
+                  address: {
+                    line1: billingAddress.addressLine1,
+                    line2: billingAddress.addressLine2,
+                    city: billingAddress.city,
+                    state: billingAddress.region,
+                    postal_code: billingAddress.postalCode,
+                    country: billingAddress.country,
+                  },
                 },
               },
             },
-          },
+          }),
         },
       )
 
