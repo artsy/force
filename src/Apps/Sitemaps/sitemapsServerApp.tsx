@@ -134,6 +134,8 @@ sitemapsServerApp
       "/sitemap-tags.xml",
       "/sitemap-videos-:timestamp.xml",
       "/sitemap-videos.xml",
+      "/sitemap-viewing-rooms-:timestamp.xml",
+      "/sitemap-viewing-rooms.xml",
     ],
     (req, res) => {
       req.headers.host = new URL(SITEMAP_BASE_URL).host
@@ -165,7 +167,8 @@ Sitemap: ${APP_URL}/sitemap-misc.xml
 Sitemap: ${APP_URL}/sitemap-partners.xml
 Sitemap: ${APP_URL}/sitemap-shows.xml
 Sitemap: ${APP_URL}/sitemap-tags.xml
-Sitemap: ${APP_URL}/sitemap-videos.xml`
+Sitemap: ${APP_URL}/sitemap-videos.xml
+Sitemap: ${APP_URL}/sitemap-viewing-rooms.xml`
 
 const DISABLED_ROBOTS_TXT = `User-agent: *
 Disallow: /`

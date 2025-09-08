@@ -53,7 +53,6 @@ const ViewingRoomMeta: React.FC<
 
       <Meta property="twitter:site" content="@artsy" />
       <Meta property="og:type" content="website" />
-      <Meta name="robots" content="noindex, nofollow" />
     </>
   )
 }
