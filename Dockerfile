@@ -9,13 +9,14 @@ RUN apk --no-cache --quiet add \
   git
 
 # Copy files required to install application dependencies
-COPY package.json yarn.lock ./
+COPY package.json yarn.lock .yarnrc.yml ./
+COPY .yarn ./.yarn
 COPY patches ./patches
 
 # Install packages
-RUN yarn install --production --frozen-lockfile --quiet && \
+RUN yarn install --immutable && \
   mv node_modules /opt/node_modules.prod && \
-  yarn install --frozen-lockfile --quiet && \
+  yarn install --immutable && \
   yarn cache clean --force
 
 # Copy application code
@@ -52,6 +53,8 @@ COPY --chown=deploy:deploy --from=builder-base /app/src ./src
 COPY --chown=deploy:deploy --from=builder-base /app/scripts ./scripts
 COPY --chown=deploy:deploy --from=builder-base /app/package.json .
 COPY --chown=deploy:deploy --from=builder-base /app/yarn.lock .
+COPY --chown=deploy:deploy --from=builder-base /app/.yarnrc.yml .
+COPY --chown=deploy:deploy --from=builder-base /app/.yarn ./.yarn
 
 
 ENTRYPOINT ["/usr/bin/dumb-init", "./scripts/load_secrets_and_run.sh"]

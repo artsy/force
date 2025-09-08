@@ -10,7 +10,8 @@
 .swc
 
 # Yarn 4
-.yarn
+.yarn/cache
+.yarn/install-state.gz
 .yalc
 *.csv
 *.dat
