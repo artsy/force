@@ -8,6 +8,9 @@
 .env.*
 !.env.development
 .swc
+
+# Yarn 4
+.yarn
 .yalc
 *.csv
 *.dat

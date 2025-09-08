@@ -5,7 +5,7 @@
   "license": "MIT",
   "engines": {
     "node": ">=22.14.0",
-    "yarn": "1.x.x"
+    "yarn": "4.9.4"
   },
   "scripts": {
     "build": "yarn rsbuild build -m production",
@@ -309,5 +309,6 @@
   },
   "pull-lock": {
     "yarn.lock": "yarn install"
-  }
+  },
+  "packageManager": "yarn@4.9.4"
 }
