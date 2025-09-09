@@ -31,7 +31,9 @@ describe("ArticleBody", () => {
       }),
     })
 
-    expect(screen.getByText("Example Author")).toBeInTheDocument()
+    expect(
+      screen.getByRole("link", { name: "Example Author" }),
+    ).toBeInTheDocument()
   })
 
   it("renders a video embed", () => {

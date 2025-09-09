@@ -13,6 +13,7 @@ import {
   Text,
 } from "@artsy/palette"
 import { ArticleShare } from "Components/ArticleShare"
+import { CommaList } from "Components/CommaList"
 import { Sticky } from "Components/Sticky"
 import { TopContextBar } from "Components/TopContextBar"
 import { RouterLink } from "System/Components/RouterLink"
@@ -75,11 +76,25 @@ const ArticleBody: FC<React.PropsWithChildren<ArticleBodyProps>> = ({
                   <Text as="h1" variant={["lg-display", "xl", "xxl"]}>
                     {article.title}
                   </Text>
-
-                  <Text variant={["md", "lg-display"]} color="mono60">
-                    {article.byline}
-                  </Text>
                 </RouterLink>
+
+                <Text variant={["md", "lg-display"]} color="mono60">
+                  {article.authors.length === 0 ? (
+                    "Artsy Editors"
+                  ) : (
+                    <CommaList>
+                      {article.authors.map(author => (
+                        <RouterLink
+                          key={author.internalID}
+                          to={`/articles/author/${author.internalID}`}
+                          textDecoration="none"
+                        >
+                          {author.name}
+                        </RouterLink>
+                      ))}
+                    </CommaList>
+                  )}
+                </Text>
 
                 <Spacer y={2} />
               </>
@@ -263,7 +278,10 @@ export const ArticleBodyFragmentContainer = createFragmentContainer(
           href
         }
         vertical
-        byline
+        authors {
+          internalID
+          name
+        }
         internalID
         slug
         layout

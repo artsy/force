@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ee9b8c3d1aa077ce7e13cbbe5b6b4dd5>>
+ * @generated SignedSource<<3427eca4a162a544ef666ce4a1fe65db>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -38,7 +38,14 @@ v1 = [
     "variableName": "id"
   }
 ],
-v2 = [
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v3 = [
   {
     "alias": null,
     "args": null,
@@ -119,8 +126,27 @@ return {
           {
             "alias": null,
             "args": null,
-            "kind": "ScalarField",
-            "name": "byline",
+            "concreteType": "Author",
+            "kind": "LinkedField",
+            "name": "authors",
+            "plural": true,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "internalID",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "name",
+                "storageKey": null
+              },
+              (v2/*: any*/)
+            ],
             "storageKey": null
           },
           {
@@ -190,7 +216,7 @@ return {
                         "kind": "LinkedField",
                         "name": "resized",
                         "plural": false,
-                        "selections": (v2/*: any*/),
+                        "selections": (v3/*: any*/),
                         "storageKey": "resized(width:900)"
                       },
                       {
@@ -211,7 +237,7 @@ return {
                         "kind": "LinkedField",
                         "name": "cropped",
                         "plural": false,
-                        "selections": (v2/*: any*/),
+                        "selections": (v3/*: any*/),
                         "storageKey": "cropped(height:900,width:1600)"
                       }
                     ],
@@ -224,25 +250,19 @@ return {
             ],
             "storageKey": null
           },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "id",
-            "storageKey": null
-          }
+          (v2/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "60e3da8ae3195ca7eb125870da7efae8",
+    "cacheID": "f04926997ecafbb537bfe93df1313770",
     "id": null,
     "metadata": {},
     "name": "ArticleHeroStoryQuery",
     "operationKind": "query",
-    "text": "query ArticleHeroStoryQuery(\n  $id: String!\n) {\n  article(id: $id) {\n    ...ArticleHero_article\n    id\n  }\n}\n\nfragment ArticleHero_article on Article {\n  title\n  href\n  vertical\n  byline\n  hero {\n    __typename\n    ... on ArticleFeatureSection {\n      layout\n      embed\n      media\n      image {\n        url\n        split: resized(width: 900) {\n          src\n          srcSet\n        }\n        text: cropped(width: 1600, height: 900) {\n          src\n          srcSet\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query ArticleHeroStoryQuery(\n  $id: String!\n) {\n  article(id: $id) {\n    ...ArticleHero_article\n    id\n  }\n}\n\nfragment ArticleHero_article on Article {\n  title\n  href\n  vertical\n  authors {\n    internalID\n    name\n    id\n  }\n  hero {\n    __typename\n    ... on ArticleFeatureSection {\n      layout\n      embed\n      media\n      image {\n        url\n        split: resized(width: 900) {\n          src\n          srcSet\n        }\n        text: cropped(width: 1600, height: 900) {\n          src\n          srcSet\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
