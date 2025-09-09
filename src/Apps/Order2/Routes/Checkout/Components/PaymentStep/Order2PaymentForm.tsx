@@ -1,5 +1,5 @@
 import { ContextModule } from "@artsy/cohesion"
-import HomeIcon from "@artsy/icons/HomeIcon"
+import InstitutionIcon from "@artsy/icons/InstitutionIcon"
 import InfoIcon from "@artsy/icons/InfoIcon"
 import LockIcon from "@artsy/icons/LockIcon"
 import ReceiptIcon from "@artsy/icons/ReceiptIcon"
@@ -626,13 +626,16 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
                               </>
                             ) : (
                               <>
-                                <HomeIcon
+                                <InstitutionIcon
                                   fill="mono100"
                                   width={["18px", "26px"]}
                                   height={["18px", "26px"]}
                                   mr={1}
                                 />
-                                <Text variant={["xs", "sm-display"]}>
+                                <Text
+                                  variant={["xs", "sm-display"]}
+                                  mt={["0px", "3px"]}
+                                >
                                   Bank account •••• {paymentMethod.last4}
                                 </Text>
                               </>
