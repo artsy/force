@@ -196,7 +196,10 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
   const savedCreditCards = extractNodes(me.creditCards)
   const hasSavedCreditCards = savedCreditCards.length > 0
   const savedBankAccounts = extractNodes(me.bankAccounts)
-  const hasSavedBankAccounts = savedBankAccounts.length > 0
+  const allowedSavedBankAccounts = savedBankAccounts.filter(bankAccount =>
+    order.availablePaymentMethods?.includes(bankAccount.type),
+  )
+  const hasSavedBankAccounts = allowedSavedBankAccounts.length > 0
 
   const stepIsActive =
     steps?.find(step => step.name === CheckoutStepName.PAYMENT)?.state ===
@@ -689,7 +692,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
                     setSelectedSavedPaymentMethod(val)
                   }}
                 >
-                  {[...savedCreditCards, ...savedBankAccounts].map(
+                  {[...savedCreditCards, ...allowedSavedBankAccounts].map(
                     paymentMethod => (
                       <Radio
                         key={paymentMethod.internalID}
