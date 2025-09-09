@@ -65,6 +65,7 @@ import type {
   Order2PaymentForm_order$key,
 } from "__generated__/Order2PaymentForm_order.graphql"
 import { Formik } from "formik"
+import { isEqual } from "lodash"
 import type React from "react"
 import { useEffect, useState } from "react"
 import { graphql, useFragment, useRelayEnvironment } from "react-relay"
@@ -827,10 +828,10 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
                 enableReinitialize
               >
                 {({ values }) => {
-                  // Update parent state when values change
-                  if (values !== billingFormValues) {
+                  if (!isEqual(values, billingFormValues)) {
                     setBillingFormValues(values)
                   }
+
                   return <AddressFormFields />
                 }}
               </Formik>
