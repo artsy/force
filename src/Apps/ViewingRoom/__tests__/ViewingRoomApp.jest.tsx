@@ -34,6 +34,12 @@ describe("ViewingRoomApp", () => {
     window.history.pushState({}, "Viewing Room Title", slug)
   })
 
+  afterEach(() => {
+    // Clean up document head between tests since react-head components
+    // render meta tags to <head>, not to the component's DOM container
+    document.getElementsByTagName("html")[0].innerHTML = ""
+  })
+
   // DRAFT viewing room
   describe("for draft viewing room when viewed by user that has access to viewing rooms partner", () => {
     // encoded through https://jwt.io with data of "partner_ids": ["00001", "12345"]
@@ -76,6 +82,18 @@ describe("ViewingRoomApp", () => {
         screen.getByText("This is a preview of your viewing room."),
       ).toBeInTheDocument()
     })
+
+    it("renders noindex meta tag for draft viewing room", async () => {
+      renderWithRelay({
+        ViewingRoom: () => DraftViewingRoomAppFixture.viewingRoom,
+      })
+
+      const robotsMeta = [...document.getElementsByTagName("meta")].find(
+        tag => tag.getAttribute("name") === "robots",
+      )
+      expect(robotsMeta).toBeTruthy()
+      expect(robotsMeta?.getAttribute("content")).toBe("noindex, follow")
+    })
   })
 
   // SCHEDULED viewing room
@@ -111,6 +129,18 @@ describe("ViewingRoomApp", () => {
         ViewingRoom: () => ScheduledViewingRoomAppFixture.viewingRoom,
       })
       expect(container).toBeInTheDocument()
+    })
+
+    it("renders noindex meta tag for scheduled viewing room", async () => {
+      renderWithRelay({
+        ViewingRoom: () => ScheduledViewingRoomAppFixture.viewingRoom,
+      })
+
+      const robotsMeta = [...document.getElementsByTagName("meta")].find(
+        tag => tag.getAttribute("name") === "robots",
+      )
+      expect(robotsMeta).toBeTruthy()
+      expect(robotsMeta?.getAttribute("content")).toBe("noindex, follow")
     })
 
     describe("ViewingRoomHeader", () => {
@@ -170,6 +200,17 @@ describe("ViewingRoomApp", () => {
         ViewingRoom: () => OpenViewingRoomAppFixture.viewingRoom,
       })
       expect(container).toBeInTheDocument()
+    })
+
+    it("does not render noindex meta tag for live viewing room", async () => {
+      renderWithRelay({
+        ViewingRoom: () => OpenViewingRoomAppFixture.viewingRoom,
+      })
+
+      const robotsMeta = [...document.getElementsByTagName("meta")].find(
+        tag => tag.getAttribute("name") === "robots",
+      )
+      expect(robotsMeta).toBeUndefined()
     })
 
     describe("ViewingRoomHeader", () => {
@@ -244,6 +285,18 @@ describe("ViewingRoomApp", () => {
       expect(container.innerHTML).not.toContain("some child")
     })
 
+    it("renders noindex meta tag for closed viewing room", async () => {
+      renderWithRelay({
+        ViewingRoom: () => ClosedViewingRoomAppFixture.viewingRoom,
+      })
+
+      const robotsMeta = [...document.getElementsByTagName("meta")].find(
+        tag => tag.getAttribute("name") === "robots",
+      )
+      expect(robotsMeta).toBeTruthy()
+      expect(robotsMeta?.getAttribute("content")).toBe("noindex, follow")
+    })
+
     describe("ViewingRoomHeader", () => {
       describe("desktop", () => {
         it("renders correctly", async () => {
@@ -300,6 +353,17 @@ describe("ViewingRoomApp", () => {
       expect(container).toBeInTheDocument()
       expect(container.innerHTML).toContain("some child")
       jest.runAllTimers()
+    })
+
+    it("does not render noindex meta tag for live viewing room when logged out", async () => {
+      renderWithRelay({
+        ViewingRoom: () => LoggedOutViewingRoomAppFixture.viewingRoom,
+      })
+
+      const robotsMeta = [...document.getElementsByTagName("meta")].find(
+        tag => tag.getAttribute("name") === "robots",
+      )
+      expect(robotsMeta).toBeUndefined()
     })
   })
 })
