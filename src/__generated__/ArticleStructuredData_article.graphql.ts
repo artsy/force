@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cd78ab0ec2d70fae9ee0f2ecbc7b9a42>>
+ * @generated SignedSource<<f6cf8c73ca94ddba8018e4e7b07f68f6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,13 +9,19 @@
 // @ts-nocheck
 
 import { ReaderFragment } from 'relay-runtime';
+export type ArticleLayout = "CLASSIC" | "FEATURE" | "NEWS" | "SERIES" | "STANDARD" | "VIDEO" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ArticleStructuredData_article$data = {
   readonly authors: ReadonlyArray<{
+    readonly internalID: string;
     readonly name: string;
   }>;
+  readonly description: string | null | undefined;
   readonly href: string | null | undefined;
+  readonly keywords: ReadonlyArray<string>;
+  readonly layout: ArticleLayout;
   readonly publishedAt: string | null | undefined;
+  readonly searchDescription: string | null | undefined;
   readonly thumbnailImage: {
     readonly _16x9: {
       readonly src: string;
@@ -29,6 +35,7 @@ export type ArticleStructuredData_article$data = {
   } | null | undefined;
   readonly title: string | null | undefined;
   readonly updatedAt: string | null | undefined;
+  readonly vertical: string | null | undefined;
   readonly " $fragmentType": "ArticleStructuredData_article";
 };
 export type ArticleStructuredData_article$key = {
@@ -75,6 +82,20 @@ return {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
+      "name": "vertical",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "layout",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "publishedAt",
       "storageKey": null
     },
@@ -88,11 +109,39 @@ return {
     {
       "alias": null,
       "args": null,
+      "kind": "ScalarField",
+      "name": "searchDescription",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "description",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "keywords",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": "Author",
       "kind": "LinkedField",
       "name": "authors",
       "plural": true,
       "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "internalID",
+          "storageKey": null
+        },
         {
           "alias": null,
           "args": null,
@@ -171,6 +220,6 @@ return {
 };
 })();
 
-(node as any).hash = "e1c13ea7cca9a2f4f99975f9694195a3";
+(node as any).hash = "0a0a559261eeb7febdaac9aba56e553a";
 
 export default node;

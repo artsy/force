@@ -1,3 +1,4 @@
+import { ORGANIZATION_STUB_SCHEMA } from "Apps/About/Components/AboutStructuredData"
 import { StructuredData } from "Components/Seo/StructuredData"
 import { getENV } from "Utils/getENV"
 import type { ArticleStructuredData_article$key } from "__generated__/ArticleStructuredData_article.graphql"
@@ -13,13 +14,18 @@ export const ArticleStructuredData: React.FC<
   React.PropsWithChildren<ArticleStructuredDataProps>
 > = props => {
   const article = useFragment(ARTICLE_STRUCTURD_DATA_FRAGMENT, props.article)
+  const url = `${getENV("APP_URL")}${article.href}`
 
   return (
     <StructuredData
       schemaData={{
         "@context": "https://schema.org",
-        "@type": "NewsArticle",
+        "@type": article.layout === "NEWS" ? "NewsArticle" : "Article",
+        "@id": `${getENV("APP_URL")}${article.href}#article`,
+        url: `${getENV("APP_URL")}${article.href}`,
         headline: article.title ?? undefined,
+        description:
+          article.description ?? article.searchDescription ?? undefined,
         image: compact([
           article.thumbnailImage?._1x1?.src,
           article.thumbnailImage?._4x3?.src,
@@ -27,6 +33,7 @@ export const ArticleStructuredData: React.FC<
         ]),
         datePublished: article.publishedAt ?? undefined,
         dateModified: article.updatedAt ?? undefined,
+        isAccessibleForFree: true,
         author: compact(
           article.authors.map(author => {
             if (!author.name) return null
@@ -34,15 +41,28 @@ export const ArticleStructuredData: React.FC<
             return {
               "@type": "Person",
               name: author.name,
+              href: `${getENV("APP_URL")}/articles/author/${author.internalID}`,
             }
           }),
         ),
-        publisher: {
-          "@type": "Organization",
-          name: "Artsy",
-          url: "https://www.artsy.net",
+        publisher: ORGANIZATION_STUB_SCHEMA,
+        sourceOrganization: {
+          "@id": "https://www.artsy.net/#organization",
         },
-        url: `${getENV("APP_URL")}${article.href}`,
+        inLanguage: "en",
+        mainEntityOfPage: {
+          "@type": "WebPage",
+          "@id": url,
+        },
+        potentialAction: {
+          "@type": "ReadAction",
+          target: url,
+        },
+        keywords: article.keywords ?? undefined,
+        articleSection: article.vertical ?? undefined,
+        // about: TODO: Expose `featuring` / `additionalAppearances` fields
+        // wordCount: TODO: Expose `wordCount` field
+        // timeRequired: TODO: Expose `timeRequired` field
       }}
     />
   )
@@ -52,9 +72,15 @@ const ARTICLE_STRUCTURD_DATA_FRAGMENT = graphql`
   fragment ArticleStructuredData_article on Article {
     title
     href
+    vertical
+    layout
     publishedAt
     updatedAt
+    searchDescription
+    description
+    keywords
     authors {
+      internalID
       name
     }
     thumbnailImage {
