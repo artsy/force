@@ -218,7 +218,9 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
           updateShippingAddressResult.updateOrderShippingAddress?.orderOrError,
         ).order
 
-        await saveAddressToUser(values)
+        if (!hasSavedAddresses) {
+          await saveAddressToUser(values)
+        }
 
         formikHelpers.setStatus({ errorBanner: null })
         setFulfillmentDetailsComplete({}) // TODO: Clean up signature
@@ -237,6 +239,7 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
     },
     [
       checkoutTracking,
+      hasSavedAddresses,
       orderData.internalID,
       orderData.selectedFulfillmentOption?.type,
       saveAddressToUser,
