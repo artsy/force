@@ -1,4 +1,4 @@
-import { Button, Flex, Image, Separator, Spacer, Text } from "@artsy/palette"
+import { Flex, Image, Separator, Spacer, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
 import type { ConversationArtwork_conversation$key } from "__generated__/ConversationArtwork_conversation.graphql"
 import { graphql, useFragment } from "react-relay"
@@ -55,12 +55,24 @@ export const ConversationArtwork: React.FC<
       <Spacer y={2} />
 
       <Flex>
-        <Image
-          src={item?.image?.url as string}
-          height={40}
-          width={40}
-          alt={`Artwork image of ${item?.title}`}
-        />
+        <RouterLink
+          to={`/artwork/${item?.slug}`}
+          onClick={() => {
+            trackEvent({
+              action: "Click",
+              label: "View artwork",
+              context_module: "conversations",
+              artwork_id: item?.id,
+            })
+          }}
+        >
+          <Image
+            src={item?.image?.url as string}
+            height={40}
+            width={40}
+            alt={`Artwork image of ${item?.title}`}
+          />
+        </RouterLink>
 
         <Spacer x={1} />
 
@@ -68,12 +80,24 @@ export const ConversationArtwork: React.FC<
           <RouterLink to={`/artist/${item?.artist?.slug}`}>
             <Text variant="xs">{item?.artist?.name}</Text>
           </RouterLink>
-          <Text variant="xs" color="mono60">
-            <Text fontStyle="italic" display="inline" variant="xs">
-              {item?.title}
+          <RouterLink
+            to={`/artwork/${item?.slug}`}
+            onClick={() => {
+              trackEvent({
+                action: "Click",
+                label: "View artwork",
+                context_module: "conversations",
+                artwork_id: item?.id,
+              })
+            }}
+          >
+            <Text variant="xs" color="mono60">
+              <Text fontStyle="italic" display="inline" variant="xs">
+                {item?.title}
+              </Text>
+              {item?.date && `, ${item?.date}`}
             </Text>
-            {item?.date && `, ${item?.date}`}
-          </Text>
+          </RouterLink>
 
           {item.isUnlisted && (
             <Text display="inline" variant="xs">
@@ -84,22 +108,6 @@ export const ConversationArtwork: React.FC<
       </Flex>
 
       <Spacer y={2} />
-
-      <RouterLink
-        to={`/artwork/${item?.slug}`}
-        onClick={() => {
-          trackEvent({
-            action: "Click",
-            label: "View artwork",
-            context_module: "conversations",
-            artwork_id: item?.id,
-          })
-        }}
-      >
-        <Button variant="secondaryBlack" size="small">
-          View Artwork
-        </Button>
-      </RouterLink>
 
       <Separator borderWidth={1} my={4} />
     </>
