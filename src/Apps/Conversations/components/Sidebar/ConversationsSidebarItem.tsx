@@ -88,21 +88,33 @@ export const ConversationsSidebarItem: React.FC<
 
           <Flex flexDirection="column" mx={1} flex={1} overflow="hidden">
             <Box display="inherit">
-              <Text variant="xs" overflowEllipsis>
+              <Text
+                variant="xs"
+                overflowEllipsis
+                fontWeight={isSelected ? "bold" : "regular"}
+              >
                 {data?.to?.name}
               </Text>
             </Box>
 
-            <Text variant="xs" overflowEllipsis>
-              {item.artist.name}
+            <Text
+              variant="xs"
+              overflowEllipsis
+              fontWeight={isSelected ? "bold" : "regular"}
+            >
+              {item.artist.name},{" "}
+              <Text
+                fontStyle="italic"
+                display="inline"
+                variant="xs"
+                fontWeight={isSelected ? "bold" : "regular"}
+              >
+                {item.title}
+              </Text>
             </Text>
 
             <Text variant="xs" color="mono60" overflowEllipsis>
-              <Text fontStyle="italic" display="inline" variant="xs">
-                {item.title}
-              </Text>
-
-              {item.date && `, ${item.date}`}
+              {conversationType}
             </Text>
 
             {item.isUnlisted && (
@@ -113,10 +125,12 @@ export const ConversationsSidebarItem: React.FC<
           </Flex>
 
           <Flex flexDirection="column" alignSelf="flex-start">
-            <Text variant="xs">{conversationType}</Text>
-
             <Flex flexDirection="row" alignItems="center">
-              <Text variant="xs" color="mono60">
+              <Text
+                variant="xs"
+                color={isSelected ? "mono100" : "mono60"}
+                fontWeight={isSelected ? "bold" : "regular"}
+              >
                 {data?.lastMessageAt}
               </Text>
             </Flex>

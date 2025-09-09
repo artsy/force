@@ -75,9 +75,8 @@ describe("ConversationSidebarItem", () => {
       "src",
       "https://imamges.com/img.png",
     )
-    expect(screen.getByText("Edgar the doggo")).toBeInTheDocument()
+    expect(screen.getByText("Edgar the doggo,")).toBeInTheDocument()
     expect(screen.getByText("Demo title")).toBeInTheDocument()
-    expect(screen.getByText(", 2022")).toBeInTheDocument()
     expect(screen.getByText("Dec 07")).toBeInTheDocument()
     expect(screen.getByText("Inquiry")).toBeInTheDocument()
     expect(screen.getByRole("link")).toHaveAttribute(
