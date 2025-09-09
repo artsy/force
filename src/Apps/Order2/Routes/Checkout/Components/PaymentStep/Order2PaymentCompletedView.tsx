@@ -1,5 +1,5 @@
 import CheckmarkIcon from "@artsy/icons/CheckmarkIcon"
-import HomeIcon from "@artsy/icons/HomeIcon"
+import InstitutionIcon from "@artsy/icons/InstitutionIcon"
 import { Clickable, Flex, Spacer, Text } from "@artsy/palette"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { type Brand, BrandCreditCardIcon } from "Components/BrandCreditCardIcon"
@@ -57,7 +57,7 @@ export const Order2PaymentCompletedView: React.FC<
       <Flex alignItems="center" ml="30px" mt={1}>
         {(isBankAccount || isSEPA) && (
           <>
-            <HomeIcon
+            <InstitutionIcon
               fill="mono100"
               width={["18px", "26px"]}
               height={["18px", "26px"]}
@@ -90,7 +90,7 @@ export const Order2PaymentCompletedView: React.FC<
         )}
         {isWireTransfer && (
           <>
-            <HomeIcon
+            <InstitutionIcon
               fill="mono100"
               width={["18px", "26px"]}
               height={["18px", "26px"]}

@@ -1,6 +1,6 @@
 import ApplePayMarkIcon from "@artsy/icons/ApplePayMarkIcon"
 import GooglePayIcon from "@artsy/icons/GooglePayIcon"
-import HomeIcon from "@artsy/icons/HomeIcon"
+import InstitutionIcon from "@artsy/icons/InstitutionIcon"
 import { Box, Flex, Spacer, Text } from "@artsy/palette"
 import { type Brand, BrandCreditCardIcon } from "Components/BrandCreditCardIcon"
 import type {
@@ -74,13 +74,13 @@ const getPaymentMethodContent = (
 
     case "BankAccount":
       return {
-        Icon: HomeIcon,
+        Icon: InstitutionIcon,
         text: `Bank transfer •••• ${paymentMethodDetails.last4}`,
       }
 
     case "WireTransfer":
       return {
-        Icon: HomeIcon,
+        Icon: InstitutionIcon,
         text: "Wire transfer",
       }
 
