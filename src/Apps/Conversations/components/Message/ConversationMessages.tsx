@@ -9,7 +9,9 @@ import {
   useGroupedMessages,
 } from "Apps/Conversations/hooks/useGroupedMessages"
 import { useRefetchLatestMessagesPoll } from "Apps/Conversations/hooks/useRefetchLatestMessagesPoll"
+import { useUpdateConversation } from "Apps/Conversations/mutations/useUpdateConversationMutation"
 import { Sentinel } from "Components/Sentinal"
+import { useRouter } from "System/Hooks/useRouter"
 import { extractNodes } from "Utils/extractNodes"
 import type { ConversationMessages_conversation$data } from "__generated__/ConversationMessages_conversation.graphql"
 import type React from "react"
@@ -45,6 +47,8 @@ export const ConversationMessages: FC<
     useState(false)
 
   const autoScrollToBottomRef = useRef<HTMLDivElement>(null)
+  const { submitMutation: updateConversation } = useUpdateConversation()
+  const { match } = useRouter()
 
   const groupedMessagesAndEvents = useGroupedMessages({
     messagesConnection: conversation.messagesConnection,
@@ -79,6 +83,34 @@ export const ConversationMessages: FC<
       })
     },
   })
+
+  useEffect(() => {
+    const conversationId = match?.params?.conversationId
+
+    // Only mark as read if we have messages and the user is viewing them
+    // (i.e., not scrolled away from the bottom)
+    if (messages.length > 0 && !showLatestMessagesFlyOut && conversationId) {
+      const latestMessageId = messages[0]?.internalID
+      const currentLastViewedId = conversation.fromLastViewedMessageID
+
+      if (latestMessageId && latestMessageId !== currentLastViewedId) {
+        updateConversation({
+          variables: {
+            input: {
+              conversationId,
+              fromLastViewedMessageId: latestMessageId,
+            },
+          },
+        })
+      }
+    }
+  }, [
+    messages,
+    showLatestMessagesFlyOut,
+    conversation.fromLastViewedMessageID,
+    match?.params?.conversationId,
+    updateConversation,
+  ])
 
   const refetchMessages = ({ showPreloader = true }) => {
     if (messages.length === 0) {
