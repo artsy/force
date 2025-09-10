@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<334c2167bbf830f75097032ca168c4a1>>
+ * @generated SignedSource<<d00a327832217f69ffc01b2d78a0fc1b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,7 +12,10 @@ import { ReaderFragment } from 'relay-runtime';
 export type ArticleFeatureSectionType = "BASIC" | "FULLSCREEN" | "SPLIT" | "TEXT" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ArticleHero_article$data = {
-  readonly byline: string | null | undefined;
+  readonly authors: ReadonlyArray<{
+    readonly internalID: string;
+    readonly name: string;
+  }>;
   readonly hero: {
     readonly embed?: string | null | undefined;
     readonly image?: {
@@ -86,8 +89,26 @@ return {
     {
       "alias": null,
       "args": null,
-      "kind": "ScalarField",
-      "name": "byline",
+      "concreteType": "Author",
+      "kind": "LinkedField",
+      "name": "authors",
+      "plural": true,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "internalID",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "name",
+          "storageKey": null
+        }
+      ],
       "storageKey": null
     },
     {
@@ -190,6 +211,6 @@ return {
 };
 })();
 
-(node as any).hash = "45805b6be826c1703e38be65c93b2225";
+(node as any).hash = "bbfe503aa2a77da5557370ef948cfc7f";
 
 export default node;

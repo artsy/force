@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bd1b8d9121bc09a321c59fbc9955b319>>
+ * @generated SignedSource<<b0fa706bda8eebbd17203fd70ca32905>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,6 +16,15 @@ import { FragmentRefs } from "relay-runtime";
 export type Order2PaymentForm_order$data = {
   readonly availablePaymentMethods: ReadonlyArray<OrderPaymentMethodEnum>;
   readonly code: string;
+  readonly fulfillmentDetails: {
+    readonly addressLine1: string | null | undefined;
+    readonly addressLine2: string | null | undefined;
+    readonly city: string | null | undefined;
+    readonly country: string | null | undefined;
+    readonly name: string | null | undefined;
+    readonly postalCode: string | null | undefined;
+    readonly region: string | null | undefined;
+  } | null | undefined;
   readonly internalID: string;
   readonly itemsTotal: {
     readonly currencyCode: string;
@@ -148,6 +157,66 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
+      "concreteType": "FulfillmentDetails",
+      "kind": "LinkedField",
+      "name": "fulfillmentDetails",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "name",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "addressLine1",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "addressLine2",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "city",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "region",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "postalCode",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "country",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": "LineItem",
       "kind": "LinkedField",
       "name": "lineItems",
@@ -197,6 +266,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "44fa2db387b66b66bc2c24f5e14543cb";
+(node as any).hash = "a33fc129a552fc32fd1feac6c43dafcc";
 
 export default node;

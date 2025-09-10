@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5bf0d4d6f6324db4add8d506ea9b2b8c>>
+ * @generated SignedSource<<954bc701f72534aadd27ca1cd35d536b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,7 +12,10 @@ import { ReaderFragment } from 'relay-runtime';
 export type ArticleLayout = "CLASSIC" | "FEATURE" | "NEWS" | "SERIES" | "STANDARD" | "VIDEO" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ArticleBody_article$data = {
-  readonly byline: string | null | undefined;
+  readonly authors: ReadonlyArray<{
+    readonly internalID: string;
+    readonly name: string;
+  }>;
   readonly hero: {
     readonly __typename: string;
   } | null | undefined;
@@ -64,17 +67,10 @@ v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "byline",
-  "storageKey": null
-},
-v2 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
   "name": "internalID",
   "storageKey": null
 },
-v3 = {
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -151,8 +147,26 @@ return {
       "name": "vertical",
       "storageKey": null
     },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Author",
+      "kind": "LinkedField",
+      "name": "authors",
+      "plural": true,
+      "selections": [
+        (v1/*: any*/),
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "name",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
     (v1/*: any*/),
-    (v2/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -174,7 +188,7 @@ return {
       "name": "leadParagraph",
       "storageKey": null
     },
-    (v3/*: any*/),
+    (v2/*: any*/),
     (v0/*: any*/),
     {
       "alias": null,
@@ -214,10 +228,16 @@ return {
       "name": "relatedArticles",
       "plural": true,
       "selections": [
-        (v2/*: any*/),
-        (v3/*: any*/),
-        (v0/*: any*/),
         (v1/*: any*/),
+        (v2/*: any*/),
+        (v0/*: any*/),
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "byline",
+          "storageKey": null
+        },
         {
           "alias": null,
           "args": null,
@@ -274,6 +294,6 @@ return {
 };
 })();
 
-(node as any).hash = "fd9c26b60c08d0ed7a2088d777fbbeba";
+(node as any).hash = "69eee48100d1831d1945482cc2025425";
 
 export default node;

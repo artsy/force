@@ -10,13 +10,15 @@ import {
   Text,
   useTheme,
 } from "@artsy/palette"
+import { CommaList } from "Components/CommaList"
 import {
   FullBleedHeader,
   FullBleedHeaderOverlay,
   useFullBleedHeaderHeight,
 } from "Components/FullBleedHeader/FullBleedHeader"
+import { RouterLink } from "System/Components/RouterLink"
 import type { ArticleHero_article$data } from "__generated__/ArticleHero_article.graphql"
-import type { FC } from "react"
+import { type FC, useMemo } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { CENTERED_LAYOUT_COLUMNS } from "./ArticleBody"
@@ -34,6 +36,29 @@ const ArticleHero: FC<React.PropsWithChildren<ArticleHeroProps>> = ({
 
   const { theme } = useTheme()
   const rgb = theme.name === "light" ? "255, 255, 255" : "0, 0, 0"
+
+  const byline = useMemo(() => {
+    return (
+      <>
+        {" "}
+        {article.authors.length === 0 ? (
+          "Artsy Editors"
+        ) : (
+          <CommaList>
+            {article.authors.map(author => (
+              <RouterLink
+                key={author.internalID}
+                to={`/articles/author/${author.internalID}`}
+                textDecoration="none"
+              >
+                {author.name}
+              </RouterLink>
+            ))}
+          </CommaList>
+        )}
+      </>
+    )
+  }, [article.authors])
 
   if (!article.hero) return null
 
@@ -61,7 +86,7 @@ const ArticleHero: FC<React.PropsWithChildren<ArticleHeroProps>> = ({
             </Text>
 
             <Text variant={["md", "lg-display"]} color={`rgba(${rgb}, 0.8)`}>
-              {article.byline}
+              {byline}
             </Text>
           </FullBleedHeaderOverlay>
         </FullBleedHeader>
@@ -89,7 +114,7 @@ const ArticleHero: FC<React.PropsWithChildren<ArticleHeroProps>> = ({
               </Text>
 
               <Text variant={["md", "lg-display"]} color="mono60">
-                {article.byline}
+                {byline}
               </Text>
             </Box>
           </Flex>
@@ -169,7 +194,7 @@ const ArticleHero: FC<React.PropsWithChildren<ArticleHeroProps>> = ({
               </Text>
 
               <Text variant={["md", "lg-display"]} color="mono60" mb={2}>
-                {article.byline}
+                {byline}
               </Text>
             </Column>
           </GridColumns>
@@ -195,7 +220,7 @@ const ArticleHero: FC<React.PropsWithChildren<ArticleHeroProps>> = ({
               </Text>
 
               <Text variant={["md", "lg-display"]} color="mono60">
-                {article.byline}
+                {byline}
               </Text>
             </Column>
           </GridColumns>
@@ -241,7 +266,10 @@ export const ArticleHeroFragmentContainer = createFragmentContainer(
         title
         href
         vertical
-        byline
+        authors {
+          internalID
+          name
+        }
         hero {
           ... on ArticleFeatureSection {
             layout

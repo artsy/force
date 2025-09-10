@@ -108,6 +108,7 @@ const mockCheckoutContext = {
       state: "ACTIVE",
     },
   ],
+  activeFulfillmentDetailsTab: "DELIVERY" as "PICKUP" | "DELIVERY" | null,
 }
 
 jest.mock("Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext", () => ({
@@ -192,9 +193,11 @@ const setupStripeSubmission = (tokenId: string) => {
 
 const expectCommonSubmissionFlow = async (tokenId: string) => {
   expect(mockElements.submit).toHaveBeenCalled()
-  expect(mockStripe.createConfirmationToken).toHaveBeenCalledWith({
-    elements: mockElements,
-  })
+  expect(mockStripe.createConfirmationToken).toHaveBeenCalledWith(
+    expect.objectContaining({
+      elements: mockElements,
+    }),
+  )
   expect(
     mockCheckoutContext.checkoutTracking.clickedOrderProgression,
   ).toHaveBeenCalledWith("ordersPayment")
@@ -275,6 +278,16 @@ describe("Order2PaymentForm", () => {
           },
         },
       ],
+      fulfillmentDetails: {
+        name: "Jane Smith",
+        addressLine1: "123 Main St",
+        addressLine2: "Apt 4B",
+        city: "New York",
+        region: "NY",
+        postalCode: "10001",
+        country: "US",
+        phoneNumber: "555-123-4567",
+      },
     },
   }
 
@@ -544,9 +557,23 @@ describe("Order2PaymentForm", () => {
       const tokenId = "test-token-id"
 
       renderPaymentForm()
+
       await waitForPaymentElement()
 
       await userEvent.click(screen.getByTestId("mock-credit-card"))
+
+      // For delivery orders, "same as shipping" checkbox should be shown and checked by default
+      await waitFor(() => {
+        expect(
+          screen.getByTestId("billing-address-same-as-shipping"),
+        ).toBeInTheDocument()
+      })
+      expect(
+        screen.getByTestId("billing-address-same-as-shipping"),
+      ).toBeChecked()
+
+      // No billing address form should be shown since "same as shipping" is checked
+      expect(screen.queryByText("Billing address")).not.toBeInTheDocument()
 
       setupStripeSubmission(tokenId)
       mockFetchQuery.mockImplementationOnce(() =>
@@ -561,6 +588,80 @@ describe("Order2PaymentForm", () => {
       expect(
         mockCheckoutContext.checkoutTracking.clickedOrderProgression,
       ).toHaveBeenCalledWith("ordersPayment")
+    })
+
+    it("successfully submits a credit card order with separate billing address", async () => {
+      const tokenId = "credit-card-separate-billing-token-id"
+
+      renderPaymentForm()
+      await waitForPaymentElement()
+
+      await userEvent.click(screen.getByTestId("mock-credit-card"))
+
+      // Wait for and uncheck "same as shipping" checkbox
+      await waitFor(() => {
+        expect(
+          screen.getByTestId("billing-address-same-as-shipping"),
+        ).toBeInTheDocument()
+      })
+
+      await userEvent.click(
+        screen.getByTestId("billing-address-same-as-shipping"),
+      )
+
+      // Now billing address form should be shown
+      await waitFor(() => {
+        expect(screen.getByText("Billing address")).toBeInTheDocument()
+        expect(screen.getByTestId("addressFormFields.name")).toBeInTheDocument()
+      })
+
+      // Fill in required billing address fields
+      const nameInput = screen.getByTestId("addressFormFields.name")
+      await userEvent.type(nameInput, "John Doe")
+
+      const addressInput = screen.getByTestId("addressFormFields.addressLine1")
+      await userEvent.type(addressInput, "456 Oak St")
+
+      const cityInput = screen.getByTestId("addressFormFields.city")
+      await userEvent.type(cityInput, "Boston")
+
+      const regionInput = screen.getByTestId("addressFormFields.region")
+      await userEvent.type(regionInput, "MA")
+
+      const postalCodeInput = screen.getByTestId("addressFormFields.postalCode")
+      await userEvent.type(postalCodeInput, "02101")
+
+      setupStripeSubmission(tokenId)
+      mockFetchQuery.mockImplementationOnce(() =>
+        createConfirmationTokenResponse(MOCK_CARD_PREVIEW),
+      )
+      mockSetPaymentMutation.submitMutation.mockResolvedValueOnce(
+        MOCK_ORDER_SUCCESS("CREDIT_CARD", tokenId),
+      )
+
+      await userEvent.click(screen.getByText("Continue to Review"))
+
+      await expectCommonSubmissionFlow(tokenId)
+
+      // Verify that createConfirmationToken was called with separate billing address
+      expect(mockStripe.createConfirmationToken).toHaveBeenCalledWith({
+        elements: mockElements,
+        params: {
+          payment_method_data: {
+            billing_details: {
+              name: "John Doe",
+              address: {
+                line1: "456 Oak St",
+                line2: "",
+                city: "Boston",
+                state: "MA",
+                postal_code: "02101",
+                country: "US",
+              },
+            },
+          },
+        },
+      })
     })
   })
 
@@ -595,6 +696,13 @@ describe("Order2PaymentForm", () => {
 
       await userEvent.click(screen.getByTestId("mock-credit-card"))
 
+      await waitFor(() => {
+        const checkbox = screen.getByTestId("billing-address-same-as-shipping")
+        expect(checkbox).toBeInTheDocument()
+        expect(checkbox).toBeChecked()
+        expect(screen.queryByText("Billing address")).not.toBeInTheDocument()
+      })
+
       setupStripeSubmission(tokenId)
       mockFetchQuery.mockImplementationOnce(() =>
         createConfirmationTokenResponse(MOCK_CARD_PREVIEW),
@@ -606,6 +714,25 @@ describe("Order2PaymentForm", () => {
       await userEvent.click(screen.getByText("Continue to Review"))
 
       await expectCommonSubmissionFlow(tokenId)
+
+      expect(mockStripe.createConfirmationToken).toHaveBeenCalledWith({
+        elements: mockElements,
+        params: {
+          payment_method_data: {
+            billing_details: {
+              name: "Jane Smith",
+              address: {
+                line1: "123 Main St",
+                line2: "Apt 4B",
+                city: "New York",
+                state: "NY",
+                postal_code: "10001",
+                country: "US",
+              },
+            },
+          },
+        },
+      })
 
       expect(mockSetPaymentMutation.submitMutation).toHaveBeenCalledWith({
         variables: {
@@ -827,6 +954,296 @@ describe("Order2PaymentForm", () => {
 
       // Button should be available again (not in loading state)
       expect(screen.getByText("Continue to Review")).toBeInTheDocument()
+    })
+  })
+
+  describe("billing address functionality", () => {
+    it("shows billing address same as shipping checkbox when credit card is selected", async () => {
+      renderPaymentForm()
+      await waitForPaymentElement()
+
+      // Select credit card
+      await userEvent.click(screen.getByTestId("mock-credit-card"))
+
+      await waitFor(() => {
+        expect(
+          screen.getByTestId("billing-address-same-as-shipping"),
+        ).toBeInTheDocument()
+      })
+
+      // Should be checked by default
+      expect(
+        screen.getByTestId("billing-address-same-as-shipping"),
+      ).toBeChecked()
+    })
+
+    it("shows billing address form when billing address same as shipping is unchecked", async () => {
+      renderPaymentForm()
+      await waitForPaymentElement()
+
+      // Select credit card
+      await userEvent.click(screen.getByTestId("mock-credit-card"))
+
+      await waitFor(() => {
+        expect(
+          screen.getByTestId("billing-address-same-as-shipping"),
+        ).toBeInTheDocument()
+      })
+
+      // Uncheck the billing address same as shipping
+      await userEvent.click(
+        screen.getByTestId("billing-address-same-as-shipping"),
+      )
+
+      await waitFor(() => {
+        expect(screen.getByText("Billing address")).toBeInTheDocument()
+        expect(screen.getByTestId("addressFormFields.name")).toBeInTheDocument()
+      })
+    })
+
+    it("hides billing address form when not using credit card", async () => {
+      renderPaymentForm()
+      await waitForPaymentElement()
+
+      // Initially stripe-card section should be collapsed since no payment method is selected
+      expect(screen.getByTestId("stripe-card-collapse")).toHaveStyle({
+        height: "0px",
+      })
+
+      // Select ACH
+      await userEvent.click(screen.getByTestId("mock-ach"))
+
+      // Should still be collapsed since ACH is not a credit card
+      expect(screen.getByTestId("stripe-card-collapse")).toHaveStyle({
+        height: "0px",
+      })
+    })
+  })
+
+  describe("pickup orders billing address functionality", () => {
+    beforeEach(() => {
+      // Set up pickup context for these tests
+      mockCheckoutContext.activeFulfillmentDetailsTab = "PICKUP"
+    })
+
+    afterEach(() => {
+      // Reset to default after each test
+      mockCheckoutContext.activeFulfillmentDetailsTab = "DELIVERY"
+    })
+
+    it("hides billing address same as shipping checkbox for pickup orders", async () => {
+      renderPaymentForm()
+      await waitForPaymentElement()
+
+      // Select credit card
+      await userEvent.click(screen.getByTestId("mock-credit-card"))
+
+      // Should not show the billing address same as shipping checkbox for pickup orders
+      expect(
+        screen.queryByTestId("billing-address-same-as-shipping"),
+      ).not.toBeInTheDocument()
+    })
+
+    it("always shows billing address form for pickup orders with credit card", async () => {
+      renderPaymentForm()
+      await waitForPaymentElement()
+
+      // Select credit card
+      await userEvent.click(screen.getByTestId("mock-credit-card"))
+
+      await waitFor(() => {
+        // Should always show billing address form for pickup orders
+        expect(screen.getByText("Billing address")).toBeInTheDocument()
+        expect(screen.getByTestId("addressFormFields.name")).toBeInTheDocument()
+      })
+    })
+
+    it("does not show billing address form for pickup orders with non-credit card payment", async () => {
+      renderPaymentForm()
+      await waitForPaymentElement()
+
+      // Select ACH
+      await userEvent.click(screen.getByTestId("mock-ach"))
+
+      // Should not show billing address form for non-credit card payments
+      expect(screen.queryByText("Billing address")).not.toBeInTheDocument()
+    })
+
+    it("submits pickup order with billing address for credit card payment", async () => {
+      const tokenId = "pickup-credit-card-token-id"
+
+      // Create order with pickup fulfillment details
+      const pickupOrder = {
+        ...baseMeProps,
+        order: {
+          ...baseMeProps.order,
+          fulfillmentDetails: {
+            phoneNumber: "555-123-4567",
+          },
+        },
+      }
+
+      renderWithRelay({
+        Me: () => pickupOrder,
+      })
+
+      await waitForPaymentElement()
+
+      // Select credit card
+      await userEvent.click(screen.getByTestId("mock-credit-card"))
+
+      await waitFor(() => {
+        expect(screen.getByText("Billing address")).toBeInTheDocument()
+        expect(screen.getByTestId("addressFormFields.name")).toBeInTheDocument()
+      })
+
+      // Fill in required billing address fields
+      const nameInput = screen.getByTestId("addressFormFields.name")
+      await userEvent.type(nameInput, "John Doe")
+
+      const addressInput = screen.getByTestId("addressFormFields.addressLine1")
+      await userEvent.type(addressInput, "123 Main St")
+
+      const cityInput = screen.getByTestId("addressFormFields.city")
+      await userEvent.type(cityInput, "New York")
+
+      const regionInput = screen.getByTestId("addressFormFields.region")
+      await userEvent.type(regionInput, "NY")
+
+      const postalCodeInput = screen.getByTestId("addressFormFields.postalCode")
+      await userEvent.type(postalCodeInput, "10001")
+
+      setupStripeSubmission(tokenId)
+      mockFetchQuery.mockImplementationOnce(() =>
+        createConfirmationTokenResponse(MOCK_CARD_PREVIEW),
+      )
+      mockSetPaymentMutation.submitMutation.mockResolvedValueOnce(
+        MOCK_ORDER_SUCCESS("CREDIT_CARD", tokenId),
+      )
+
+      await userEvent.click(screen.getByText("Continue to Review"))
+
+      await expectCommonSubmissionFlow(tokenId)
+
+      // Verify that createConfirmationToken was called with billing details
+      expect(mockStripe.createConfirmationToken).toHaveBeenCalledWith({
+        elements: mockElements,
+        params: {
+          payment_method_data: {
+            billing_details: {
+              name: "John Doe",
+              address: {
+                line1: "123 Main St",
+                line2: "",
+                city: "New York",
+                state: "NY",
+                postal_code: "10001",
+                country: "US", // Default country
+              },
+            },
+          },
+        },
+      })
+    })
+  })
+
+  describe("shipping orders billing address functionality", () => {
+    beforeEach(() => {
+      // Set up shipping context for these tests
+      mockCheckoutContext.activeFulfillmentDetailsTab = "DELIVERY"
+    })
+
+    afterEach(() => {
+      // Reset to default after each test
+      mockCheckoutContext.activeFulfillmentDetailsTab = "DELIVERY"
+    })
+
+    it("shows billing address same as shipping checkbox for shipping orders", async () => {
+      renderPaymentForm()
+      await waitForPaymentElement()
+
+      // Select credit card
+      await userEvent.click(screen.getByTestId("mock-credit-card"))
+
+      await waitFor(() => {
+        expect(
+          screen.getByTestId("billing-address-same-as-shipping"),
+        ).toBeInTheDocument()
+      })
+
+      // Should be checked by default
+      expect(
+        screen.getByTestId("billing-address-same-as-shipping"),
+      ).toBeChecked()
+    })
+
+    it("uses shipping address as billing address when same as shipping is checked", async () => {
+      const tokenId = "shipping-same-billing-token-id"
+
+      // Add fulfillment details to the order
+      const orderWithFulfillment = {
+        ...baseMeProps,
+        order: {
+          ...baseMeProps.order,
+          fulfillmentDetails: {
+            name: "Jane Smith",
+            addressLine1: "123 Main St",
+            addressLine2: "Apt 4B",
+            city: "New York",
+            region: "NY",
+            postalCode: "10001",
+            country: "US",
+          },
+        },
+      }
+
+      renderWithRelay({
+        Me: () => orderWithFulfillment,
+      })
+
+      await waitForPaymentElement()
+
+      // Select credit card
+      await userEvent.click(screen.getByTestId("mock-credit-card"))
+
+      await waitFor(() => {
+        expect(
+          screen.getByTestId("billing-address-same-as-shipping"),
+        ).toBeInTheDocument()
+      })
+
+      // Keep same as shipping checked (default)
+      setupStripeSubmission(tokenId)
+      mockFetchQuery.mockImplementationOnce(() =>
+        createConfirmationTokenResponse(MOCK_CARD_PREVIEW),
+      )
+      mockSetPaymentMutation.submitMutation.mockResolvedValueOnce(
+        MOCK_ORDER_SUCCESS("CREDIT_CARD", tokenId),
+      )
+
+      await userEvent.click(screen.getByText("Continue to Review"))
+
+      await expectCommonSubmissionFlow(tokenId)
+
+      // Verify that createConfirmationToken was called with shipping address as billing
+      expect(mockStripe.createConfirmationToken).toHaveBeenCalledWith({
+        elements: mockElements,
+        params: {
+          payment_method_data: {
+            billing_details: {
+              name: "Jane Smith",
+              address: {
+                line1: "123 Main St",
+                line2: "Apt 4B",
+                city: "New York",
+                state: "NY",
+                postal_code: "10001",
+                country: "US",
+              },
+            },
+          },
+        },
+      })
     })
   })
 })

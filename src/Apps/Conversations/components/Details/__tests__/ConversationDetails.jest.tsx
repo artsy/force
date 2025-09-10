@@ -101,12 +101,15 @@ describe("ConversationDetails", () => {
       expect(screen.getByText("Support")).toBeInTheDocument()
     })
 
-    it("tracks click on View Artwork", () => {
+    it("tracks click on artwork title", () => {
       renderWithRelay({
-        ConversationItemType: () => ({ id: "mocked-artwork-id" }),
+        ConversationItemType: () => ({
+          id: "mocked-artwork-id",
+          title: "Test Artwork Title",
+        }),
       })
 
-      fireEvent.click(screen.getByText("View Artwork"))
+      fireEvent.click(screen.getByText("Test Artwork Title"))
 
       expect(trackEvent).toHaveBeenCalledTimes(1)
       expect(trackEvent.mock.calls[0][0]).toMatchObject({

@@ -19,6 +19,8 @@ import { useTracking } from "react-tracking"
 import { Order2ExpressCheckout as MockExpressCheckout } from "../Components/ExpressCheckout/Order2ExpressCheckout"
 import { Order2CheckoutRoute } from "../Order2CheckoutRoute"
 
+jest.setTimeout(10000)
+
 jest.unmock("react-relay")
 jest.useFakeTimers()
 jest.mock("react-tracking")
@@ -605,6 +607,35 @@ describe("Order2CheckoutRoute", () => {
         expect(screen.queryByText("Shipping method")).not.toBeInTheDocument()
 
         await userEvent.click(screen.getByText("Mock enter credit card"))
+
+        // For pickup orders, billing address form is required - fill it in
+        await waitFor(() => {
+          expect(screen.getByText("Billing address")).toBeInTheDocument()
+          expect(
+            screen.getByTestId("addressFormFields.name"),
+          ).toBeInTheDocument()
+        })
+
+        await userEvent.type(
+          screen.getByTestId("addressFormFields.name"),
+          "John Doe",
+        )
+        await userEvent.type(
+          screen.getByTestId("addressFormFields.addressLine1"),
+          "123 Main St",
+        )
+        await userEvent.type(
+          screen.getByTestId("addressFormFields.city"),
+          "New York",
+        )
+        await userEvent.type(
+          screen.getByTestId("addressFormFields.region"),
+          "NY",
+        )
+        await userEvent.type(
+          screen.getByTestId("addressFormFields.postalCode"),
+          "10001",
+        )
 
         mockElements.submit.mockResolvedValueOnce({
           error: null,

@@ -75,7 +75,7 @@ jobs:
 
   smoke-tests:
     docker:
-      - image: mcr.microsoft.com/playwright:v1.54.2-noble
+      - image: mcr.microsoft.com/playwright:v1.55.0-noble
     working_directory: ~/app
     parallelism: 6
     steps:
@@ -169,7 +169,7 @@ jobs:
 
   smoke-test-on-live-env:
     docker:
-      - image: mcr.microsoft.com/playwright:v1.54.1-noble
+      - image: mcr.microsoft.com/playwright:v1.55.0-noble
     working_directory: ~/app
     parallelism: 6
     steps:

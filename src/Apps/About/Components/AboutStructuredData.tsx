@@ -2,6 +2,30 @@ import { DESCRIPTION } from "Apps/About/AboutApp"
 import { StructuredData } from "Components/Seo/StructuredData"
 import { DOWNLOAD_APP_URLS, Device } from "Utils/Hooks/useDeviceDetection"
 import { FACTS_AND_FIGURES } from "Utils/factsAndFigures"
+import type { Organization } from "schema-dts"
+
+export const ORGANIZATION_STUB_SCHEMA: Organization = {
+  "@id": "https://www.artsy.net/#organization",
+  "@type": "Organization",
+  name: "Artsy",
+  alternateName: "Artsy.net",
+  url: "https://www.artsy.net",
+  description: DESCRIPTION,
+  logo: {
+    "@type": "ImageObject",
+    url: "https://files.artsy.net/images/artsymark-800x800.png",
+    width: {
+      "@type": "QuantitativeValue",
+      value: 800,
+      unitCode: "E37",
+    },
+    height: {
+      "@type": "QuantitativeValue",
+      value: 800,
+      unitCode: "E37",
+    },
+  },
+}
 
 export const AboutStructuredData = () => {
   return (
@@ -27,11 +51,7 @@ export const AboutStructuredData = () => {
             category: "free",
           },
           inLanguage: "en",
-          author: {
-            "@type": "Organization",
-            name: "Artsy",
-            url: "https://www.artsy.net",
-          },
+          author: ORGANIZATION_STUB_SCHEMA,
           hasPart: [
             {
               "@type": "MobileApplication",
@@ -84,12 +104,7 @@ export const AboutStructuredData = () => {
       <StructuredData
         schemaData={{
           "@context": "https://schema.org",
-          "@type": "Organization",
-          name: "Artsy",
-          alternateName: "Artsy.net",
-          url: "https://www.artsy.net",
-          description: DESCRIPTION,
-          logo: "https://files.artsy.net/images/og_image.jpeg",
+          ...ORGANIZATION_STUB_SCHEMA,
           foundingDate: "2009",
           foundingLocation: {
             "@type": "Place",
