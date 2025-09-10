@@ -24,16 +24,18 @@ export const ArtworkMeta: React.FC<
   return (
     <>
       <Title>{data.meta?.title}</Title>
-      <Meta name="description" content={data.meta?.description} />
+      {data.meta?.description && <Meta name="description" content={data.meta.description} />}
       <Link rel="canonical" href={`${getENV("APP_URL")}${data.href}`} />
 
-      <Meta
-        property="twitter:description"
-        content={data.meta?.longDescription}
-      />
+      {data.meta?.longDescription && (
+        <Meta
+          property="twitter:description"
+          content={data.meta.longDescription}
+        />
+      )}
 
-      <Meta property="og:title" content={data.meta?.title} />
-      <Meta property="og:description" content={data.meta?.description} />
+      {data.meta?.title && <Meta property="og:title" content={data.meta.title} />}
+      {data.meta?.description && <Meta property="og:description" content={data.meta.description} />}
       <Meta property="og:url" content={`${getENV("APP_URL")}${data.href}`} />
       <Meta
         property="og:type"
@@ -48,11 +50,11 @@ export const ArtworkMeta: React.FC<
           <Meta property="og:image" content={imageURL} />
           <Meta
             property="og:image:width"
-            content={data.metaImage?.resized?.width}
+            content={data.metaImage?.resized?.width?.toString()}
           />
           <Meta
             property="og:image:height"
-            content={data.metaImage?.resized?.height}
+            content={data.metaImage?.resized?.height?.toString()}
           />
         </>
       ) : (

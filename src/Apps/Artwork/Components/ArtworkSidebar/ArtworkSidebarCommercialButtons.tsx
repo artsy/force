@@ -19,7 +19,7 @@ import {
   useTheme,
   useToasts,
 } from "@artsy/palette"
-import { logger } from "@sentry/utils"
+import { logger } from "@sentry/core"
 import { useInquiry } from "Components/Inquiry/useInquiry"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { ErrorWithMetadata } from "Utils/errors"

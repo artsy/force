@@ -31,11 +31,11 @@ export const ArtistMeta: React.FC<React.PropsWithChildren<Props>> = ({
 
       <Meta
         property="og:url"
-        href={`${getENV("APP_URL")}/artist/${artist.slug}`}
+        content={`${getENV("APP_URL")}/artist/${artist.slug}`}
       />
       <Meta
         property="og:type"
-        href={`${getENV("FACEBOOK_APP_NAMESPACE")}:artist`}
+        content={`${getENV("FACEBOOK_APP_NAMESPACE")}:artist`}
       />
 
       {artist.nationality && (

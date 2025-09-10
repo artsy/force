@@ -15,8 +15,8 @@ export const ExampleAppMeta = () => {
         property="twitter:description"
         content="Fill this with a proper description"
       />
-      <Meta property="og:url" href={`${sd.APP_URL}/example`} />
-      <Meta property="og:type" href={`${sd.FACEBOOK_APP_NAMESPACE}:example`} />
+      <Meta property="og:url" content={`${sd.APP_URL}/example`} />
+      <Meta property="og:type" content={`${sd.FACEBOOK_APP_NAMESPACE}:example`} />
     </>
   )
 }

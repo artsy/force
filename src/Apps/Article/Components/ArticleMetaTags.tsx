@@ -23,16 +23,18 @@ const ArticleMetaTags: FC<React.PropsWithChildren<ArticleMetaTagsProps>> = ({
 
       <Meta property="og:type" content="article" />
 
-      <Meta name="author" content={article.byline} />
+      {article.byline && <Meta name="author" content={article.byline} />}
 
-      <Meta name="keywords" content={article.keywords} />
+      {article.keywords && <Meta name="keywords" content={article.keywords.join(", ")} />}
 
-      <Meta property="article:tag" content={article.keywords} />
+      {article.keywords && <Meta property="article:tag" content={article.keywords.join(", ")} />}
 
-      <Meta
-        property="article:published_time"
-        content={article.metaPublishedAt}
-      />
+      {article.metaPublishedAt && (
+        <Meta
+          property="article:published_time"
+          content={article.metaPublishedAt}
+        />
+      )}
 
       <Meta
         property="article:publisher"

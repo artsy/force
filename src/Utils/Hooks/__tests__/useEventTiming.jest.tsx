@@ -23,15 +23,15 @@ const Wrapper = ({ currentTime, startAt, endAt }: WrapperProps) => {
           currentTime: DateTime.fromObject({
             year: 2000,
             ...currentTime,
-          }).toISO(),
+          }).toISO() || "",
           startAt: DateTime.fromObject({
             year: 2000,
             ...startAt,
-          }).toISO(),
+          }).toISO() || "",
           endAt: DateTime.fromObject({
             year: 2000,
             ...endAt,
-          }).toISO(),
+          }).toISO() || "",
         }),
       )}
     </>

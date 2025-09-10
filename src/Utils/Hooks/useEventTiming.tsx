@@ -9,14 +9,14 @@ const padWithZero = (n: number) => {
 }
 
 interface UseEventTiming {
-  startAt: string
+  startAt: string | null
   /**
    * Live sales don't have a formal endTime, but rather start at "liveStartAt".
    * So toggling this flag adjusts the language from "closed" to "opens".
    */
   isLiveSale?: boolean //
-  endAt: string
-  currentTime: string
+  endAt: string | null
+  currentTime: string | null
 }
 
 export const useEventTiming = ({
@@ -25,6 +25,15 @@ export const useEventTiming = ({
   isLiveSale = false,
   endAt,
 }: UseEventTiming) => {
+  if (!endAt || !currentTime || !startAt) {
+    return {
+      daysTilEnd: 0,
+      secondsTilEnd: 0,
+      hasEnded: true,
+      hasStarted: true,
+    }
+  }
+
   const durationTilEnd = Duration.fromISO(
     DateTime.fromISO(endAt).diff(DateTime.fromISO(currentTime)).toString(),
   )
