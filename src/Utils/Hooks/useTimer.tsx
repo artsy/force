@@ -27,10 +27,12 @@ export const useTimer = (endDate: string, startAt = ""): Timer => {
 
   if (!currentTime || !endDate) {
     return {
-      days: "00",
-      hours: "00",
-      minutes: "00", 
-      seconds: "00",
+      time: {
+        days: "00",
+        hours: "00",
+        minutes: "00", 
+        seconds: "00",
+      },
       hasEnded: false,
       hasStarted: true,
     }
@@ -41,10 +43,12 @@ export const useTimer = (endDate: string, startAt = ""): Timer => {
 
   if (!endDateTime.isValid || !currentDateTime.isValid) {
     return {
-      days: "00",
-      hours: "00",
-      minutes: "00", 
-      seconds: "00",
+      time: {
+        days: "00",
+        hours: "00",
+        minutes: "00", 
+        seconds: "00",
+      },
       hasEnded: false,
       hasStarted: true,
     }
@@ -61,10 +65,14 @@ export const useTimer = (endDate: string, startAt = ""): Timer => {
   if (startAt) {
     const startDateTime = DateTime.fromISO(startAt)
     if (startDateTime.isValid) {
-      timeBeforeStart = Duration.fromISO(
-        startDateTime.diff(currentDateTime).toString(),
-      )
-      hasStarted = Math.floor(timeBeforeStart.seconds) <= 0
+      const diffString = startDateTime.diff(currentDateTime).toString()
+      if (diffString) {
+        const candidateDuration = Duration.fromISO(diffString)
+        if (candidateDuration.isValid) {
+          timeBeforeStart = candidateDuration
+          hasStarted = Math.floor(timeBeforeStart.seconds) <= 0
+        }
+      }
     }
   }
 

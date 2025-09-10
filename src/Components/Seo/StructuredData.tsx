@@ -1,4 +1,3 @@
-import { Meta } from "react-head"
 import type { Graph, Thing, WithContext } from "schema-dts"
 
 type SchemaData = WithContext<Thing> | Graph

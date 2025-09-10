@@ -74,7 +74,7 @@ describe("authenticationRoutes", () => {
     const foundRoute = authenticationRoutes.find(authRoute => {
       const [routePath, query] = route.split("?")
       if (query) {
-        req.query = qs.parse(query)
+        req.query = qs.parse(query) as any // FIXME: Resolve copilot agent issue - Express query typing conflict between different @types versions
       }
       return routePath === authRoute.path
     })!

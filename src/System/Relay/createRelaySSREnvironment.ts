@@ -5,13 +5,14 @@ import "isomorphic-fetch"
 import { isEmpty } from "lodash"
 import type RelayClientSSR from "react-relay-network-modern-ssr/lib/client"
 import type RelayServerSSR from "react-relay-network-modern-ssr/lib/server"
+// FIXME: Resolve copilot agent issue - react-relay-network-modern /node8 path no longer exists in updated version
 import {
   RelayNetworkLayer,
   cacheMiddleware,
   errorMiddleware,
   loggerMiddleware,
   urlMiddleware,
-} from "react-relay-network-modern/node8"
+} from "react-relay-network-modern"
 import "regenerator-runtime/runtime"
 import { getMetaphysicsEndpoint } from "System/Relay/getMetaphysicsEndpoint"
 import {

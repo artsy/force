@@ -29,11 +29,19 @@ export const TimeRemaining: React.FC<
     return null
   }
   
-  const duration = Duration.fromISO(
-    DateTime.fromISO(countdownEnd)
-      .diff(DateTime.fromISO(currentTime))
-      .toString(),
-  )
+  const currentDateTime = DateTime.fromISO(currentTime)
+  const endDateTime = DateTime.fromISO(countdownEnd)
+  
+  if (!currentDateTime.isValid || !endDateTime.isValid) {
+    return null
+  }
+  
+  const diffString = endDateTime.diff(currentDateTime).toString()
+  if (!diffString) {
+    return null
+  }
+  
+  const duration = Duration.fromISO(diffString)
 
   const hasEnded = Math.floor(duration.seconds) <= 0
 

@@ -84,9 +84,17 @@ export const CookieConsentManager: FC<
             const handleAccept = () => {
               saveConsent(ALLOW_ALL_PREFERENCES)
 
+              // Filter preferences to only include boolean/null/undefined values as expected by cohesion
+              const filteredPreferences: Record<string, boolean | null | undefined> = {}
+              for (const [key, value] of Object.entries(ALLOW_ALL_PREFERENCES)) {
+                if (typeof value === 'boolean' || value === null || value === undefined) {
+                  filteredPreferences[key] = value
+                }
+              }
+
               const payload: SavedCookieConsentPreferences = {
                 action: ActionType.savedCookieConsentPreferences,
-                value: ALLOW_ALL_PREFERENCES,
+                value: filteredPreferences,
               }
 
               trackEvent(payload)

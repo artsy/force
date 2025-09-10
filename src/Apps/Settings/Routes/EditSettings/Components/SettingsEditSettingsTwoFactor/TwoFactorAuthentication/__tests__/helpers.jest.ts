@@ -8,7 +8,8 @@ describe("afterUpdateRedirect", () => {
     delete window.location
   })
   afterEach(() => {
-    window.location = originalLocation
+    // FIXME: Resolve copilot agent issue - Location type conflicts with string & Location intersection
+    window.location = originalLocation as any
   })
 
   it("returns host for trusted domain", () => {

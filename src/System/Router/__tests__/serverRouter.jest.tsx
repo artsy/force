@@ -83,6 +83,8 @@ describe("serverRouter", () => {
       header: jest.fn().mockReturnValue("A random user-agent"),
     } as unknown as Request
 
+    next = jest.fn() as NextFunction
+
     options = {
       res,
       req,
