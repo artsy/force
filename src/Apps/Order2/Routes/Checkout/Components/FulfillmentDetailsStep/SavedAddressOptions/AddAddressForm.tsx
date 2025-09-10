@@ -2,6 +2,7 @@ import { Button, Spacer, Text } from "@artsy/palette"
 import { deliveryAddressValidationSchema } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/utils"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useOrder2CreateUserAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2CreateUserAddressMutation"
+import { useOrder2UpdateUserDefaultAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2UpdateUserDefaultAddressMutation"
 import {
   AddressFormFields,
   type FormikContextWithAddress,
@@ -24,7 +25,18 @@ export const AddAddressForm = ({
   initialValues,
 }: AddAddressFormProps) => {
   const createUserAddress = useOrder2CreateUserAddressMutation()
+  const updateUserDefaultAddress = useOrder2UpdateUserDefaultAddressMutation()
   const { setUserAddressMode } = useCheckoutContext()
+
+  const handleSetAsDefault = async (addressID: string) => {
+    await updateUserDefaultAddress.submitMutation({
+      variables: {
+        input: {
+          userAddressID: addressID,
+        },
+      },
+    })
+  }
 
   return (
     <Formik
@@ -50,11 +62,15 @@ export const AddAddressForm = ({
             },
           })
 
-          if (result.createUserAddress?.userAddressOrErrors?.internalID) {
-            await onSaveAddress(
-              values,
-              result.createUserAddress?.userAddressOrErrors.internalID,
-            )
+          const newAddressID =
+            result.createUserAddress?.userAddressOrErrors?.internalID
+
+          if (newAddressID) {
+            if (values.setAsDefault) {
+              await handleSetAsDefault(newAddressID)
+            }
+
+            await onSaveAddress(values, newAddressID)
             return
           }
 
@@ -81,7 +97,7 @@ export const AddAddressForm = ({
             Add address
           </Text>{" "}
           <Spacer y={2} />
-          <AddressFormFields withPhoneNumber />
+          <AddressFormFields withPhoneNumber withSetAsDefault />
           <Spacer y={4} />
           <Button
             width="100%"
