@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<45d5bacc566b88e829ab0915c120385a>>
+ * @generated SignedSource<<7bde2cf93a87b2b6152f56c4185055c7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -85,6 +85,13 @@ return {
             "kind": "ScalarField",
             "name": "id",
             "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "internalID",
+            "storageKey": null
           }
         ],
         "storageKey": null
@@ -92,12 +99,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0d0f38c247f1a3d560fa6dd5c2007e7d",
+    "cacheID": "9aac9594b3c0ff5042386b1d2baef871",
     "id": null,
     "metadata": {},
     "name": "artistRoutes_CombinedQuery",
     "operationKind": "query",
-    "text": "query artistRoutes_CombinedQuery(\n  $artistID: String!\n) @cacheable {\n  artist(id: $artistID) @principalField {\n    ...ArtistCombinedRoute_artist\n    id\n  }\n}\n\nfragment ArtistCombinedRoute_artist on Artist {\n  id\n}\n"
+    "text": "query artistRoutes_CombinedQuery(\n  $artistID: String!\n) @cacheable {\n  artist(id: $artistID) @principalField {\n    ...ArtistCombinedRoute_artist\n    id\n  }\n}\n\nfragment ArtistCombinedRoute_artist on Artist {\n  id\n  internalID\n}\n"
   }
 };
 })();
