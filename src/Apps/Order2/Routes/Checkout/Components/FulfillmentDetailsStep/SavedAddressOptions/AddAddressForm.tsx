@@ -62,10 +62,10 @@ export const AddAddressForm = ({
             },
           })
 
-          if (result.createUserAddress?.userAddressOrErrors?.internalID) {
-            const newAddressID =
-              result.createUserAddress.userAddressOrErrors.internalID
+          const newAddressID =
+            result.createUserAddress?.userAddressOrErrors?.internalID
 
+          if (newAddressID) {
             if (values.setAsDefault) {
               await handleSetAsDefault(newAddressID)
             }
