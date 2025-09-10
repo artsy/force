@@ -47,6 +47,47 @@ describe("OrderDetailsOrderSummary", () => {
     expect(screen.getByText("20 × 30 in | 50 × 76 cm")).toBeInTheDocument()
   })
 
+  it("renders single dimension without pipe character", () => {
+    renderWithRelay({
+      Order: () => ({
+        ...orderData,
+        lineItems: [
+          {
+            ...orderData.lineItems[0],
+            artworkOrEditionSet: {
+              ...orderData.lineItems[0].artworkOrEditionSet,
+              dimensions: { in: "20 × 30 in", cm: null },
+            },
+          },
+        ],
+      }),
+    })
+
+    expect(screen.getByText("20 × 30 in")).toBeInTheDocument()
+    expect(screen.queryByText(/\|/)).not.toBeInTheDocument()
+  })
+
+  it("does not render dimensions when both in and cm are null", () => {
+    renderWithRelay({
+      Order: () => ({
+        ...orderData,
+        lineItems: [
+          {
+            ...orderData.lineItems[0],
+            artworkOrEditionSet: {
+              ...orderData.lineItems[0].artworkOrEditionSet,
+              dimensions: { in: null, cm: null },
+            },
+          },
+        ],
+      }),
+    })
+
+    expect(screen.queryByText(/\|/)).not.toBeInTheDocument()
+    expect(screen.queryByText(/cm/)).not.toBeInTheDocument()
+    expect(screen.queryByText(/in/)).not.toBeInTheDocument()
+  })
+
   it("renders buyer guarantee message", () => {
     renderWithRelay({
       Order: () => ({

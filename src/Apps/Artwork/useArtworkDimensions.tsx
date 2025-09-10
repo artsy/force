@@ -20,6 +20,6 @@ export const useArtworkDimensions = (
   return {
     hasCmDimensions,
     hasInDimensions,
-    dimensionsLabel: dimensions?.in ?? dimensions?.cm,
+    dimensionsLabel: dimensions?.in ?? dimensions?.cm ?? "",
   }
 }
