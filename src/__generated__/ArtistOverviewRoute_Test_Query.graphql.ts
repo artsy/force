@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c0e13029b880189e3c04b0beb1533e21>>
+ * @generated SignedSource<<90db4c25b26ee56a974d95aeb468d6b0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -114,37 +114,6 @@ return {
           },
           {
             "alias": null,
-            "args": [
-              {
-                "kind": "Literal",
-                "name": "page",
-                "value": "ABOUT"
-              }
-            ],
-            "concreteType": "ArtistMeta",
-            "kind": "LinkedField",
-            "name": "meta",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "description",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "title",
-                "storageKey": null
-              }
-            ],
-            "storageKey": "meta(page:\"ABOUT\")"
-          },
-          {
-            "alias": null,
             "args": null,
             "concreteType": "ArtistInsight",
             "kind": "LinkedField",
@@ -192,13 +161,6 @@ return {
             "name": "counts",
             "plural": false,
             "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "artworks",
-                "storageKey": null
-              },
               {
                 "alias": null,
                 "args": null,
@@ -268,6 +230,37 @@ return {
             ],
             "storageKey": null
           },
+          {
+            "alias": null,
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "page",
+                "value": "ABOUT"
+              }
+            ],
+            "concreteType": "ArtistMeta",
+            "kind": "LinkedField",
+            "name": "meta",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "description",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "title",
+                "storageKey": null
+              }
+            ],
+            "storageKey": "meta(page:\"ABOUT\")"
+          },
           (v4/*: any*/)
         ],
         "storageKey": "artist(id:\"test\")"
@@ -275,12 +268,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3f45a29daa79c5a58f06602bd5b18113",
+    "cacheID": "f4a539a4cb90e61ea701ff0cf3fa23ca",
     "id": null,
     "metadata": {},
     "name": "ArtistOverviewRoute_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistOverviewRoute_Test_Query {\n  artist(id: \"test\") {\n    ...ArtistOverviewRoute_artist\n    id\n  }\n}\n\nfragment ArtistOverviewRoute_artist on Artist {\n  internalID\n  name\n  meta(page: ABOUT) {\n    description\n    title\n  }\n  insights {\n    __typename\n  }\n  artistSeriesConnection(first: 0) {\n    totalCount\n  }\n  showsConnection(first: 0, status: \"running\") {\n    totalCount\n  }\n  counts {\n    artworks\n    relatedArtists\n    articles\n  }\n  related {\n    genes(first: 1) {\n      edges {\n        node {\n          __typename\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query ArtistOverviewRoute_Test_Query {\n  artist(id: \"test\") {\n    ...ArtistOverviewRoute_artist\n    id\n  }\n}\n\nfragment ArtistOverviewRoute_artist on Artist {\n  ...ArtistOverview_artist\n  internalID\n  meta(page: ABOUT) {\n    description\n    title\n  }\n}\n\nfragment ArtistOverview_artist on Artist {\n  internalID\n  name\n  insights {\n    __typename\n  }\n  artistSeriesConnection(first: 0) {\n    totalCount\n  }\n  showsConnection(first: 0, status: \"running\") {\n    totalCount\n  }\n  counts {\n    relatedArtists\n    articles\n  }\n  related {\n    genes(first: 1) {\n      edges {\n        node {\n          __typename\n          id\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
