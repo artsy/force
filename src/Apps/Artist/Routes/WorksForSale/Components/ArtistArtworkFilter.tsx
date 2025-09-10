@@ -1,5 +1,7 @@
 import { OwnerType } from "@artsy/cohesion"
 import { ArtistMediumsTitle } from "Apps/Artist/Routes/WorksForSale/Components/ArtistMediumsTitle"
+import { ArtistWorksForSaleEmptyFragmentContainer } from "Apps/Artist/Routes/WorksForSale/Components/ArtistWorksForSaleEmpty"
+import { getWorksForSaleRouteVariables } from "Apps/Artist/Routes/WorksForSale/Utils/getWorksForSaleRouteVariables"
 import { BaseArtworkFilter } from "Components/ArtworkFilter"
 import { ArtworkFilterAlertContextProvider } from "Components/ArtworkFilter/ArtworkFilterAlertContextProvider"
 import {
@@ -7,13 +9,17 @@ import {
   type Counts,
   type SharedArtworkFilterContextProps,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
+import { ArtworkFilterPlaceholder } from "Components/ArtworkFilter/ArtworkFilterPlaceholder"
 import { ArtworkFilterSavedSearchAlertContextProvider } from "Components/ArtworkFilter/ArtworkFilterSavedSearchAlertContextProvider"
 import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
 import type { SavedSearchEntity } from "Components/SavedSearchAlert/types"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import type { ArtistArtworkFilterQueryRendererQuery } from "__generated__/ArtistArtworkFilterQueryRendererQuery.graphql"
 import type { ArtistArtworkFilter_artist$data } from "__generated__/ArtistArtworkFilter_artist.graphql"
 import type { Match } from "found"
+import type { FC } from "react"
 import {
   type RelayRefetchProp,
   createRefetchContainer,
@@ -147,3 +153,86 @@ export const ArtistArtworkFilterRefetchContainer = createRefetchContainer(
     }
   `,
 )
+
+type ArtistArtworkFilterQueryRendererProps = {
+  id: string
+}
+
+export const ArtistArtworkFilterQueryRenderer: FC<
+  ArtistArtworkFilterQueryRendererProps
+> = ({ id }) => {
+  const { match } = useRouter()
+
+  return (
+    <SystemQueryRenderer<ArtistArtworkFilterQueryRendererQuery>
+      query={graphql`
+        query ArtistArtworkFilterQueryRendererQuery(
+          $artistID: String!
+          $aggregations: [ArtworkAggregation]
+          $input: FilterArtworksInput!
+        ) @cacheable {
+          artist(id: $artistID) {
+            ...ArtistWorksForSaleEmpty_artist
+            ...ArtistArtworkFilter_artist @arguments(input: $input)
+            sidebarAggregations: filterArtworksConnection(
+              aggregations: $aggregations
+              first: 1
+            ) {
+              counts {
+                total
+              }
+              aggregations {
+                slice
+                counts {
+                  name
+                  value
+                  count
+                }
+              }
+            }
+          }
+        }
+      `}
+      variables={{
+        ...getWorksForSaleRouteVariables(
+          match.params as { artistID: string },
+          match,
+        ),
+        artistID: id,
+      }}
+      placeholder={<ArtworkFilterPlaceholder showCreateAlert />}
+      render={({ error, props }) => {
+        if (error) {
+          console.error(
+            "[ArtistWorksForSaleRoute]: Error loading artwork grid",
+            error,
+          )
+
+          return null
+        }
+
+        if (!props || !props.artist) {
+          return <ArtworkFilterPlaceholder showCreateAlert />
+        }
+
+        const { artist } = props
+
+        return (
+          <>
+            {artist.sidebarAggregations?.counts?.total === 0 ? (
+              <ArtistWorksForSaleEmptyFragmentContainer artist={artist} />
+            ) : (
+              <ArtistArtworkFilterRefetchContainer
+                artist={artist}
+                aggregations={
+                  artist.sidebarAggregations
+                    ?.aggregations as SharedArtworkFilterContextProps["aggregations"]
+                }
+              />
+            )}
+          </>
+        )
+      }}
+    />
+  )
+}
