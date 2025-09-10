@@ -19,7 +19,8 @@ import {
   useTheme,
   useToasts,
 } from "@artsy/palette"
-import { logger } from "@sentry/core"
+// FIXME: TypeScript error after dependency update - @sentry/utils is deprecated, should use @sentry/core
+import { logger } from "@sentry/utils"
 import { useInquiry } from "Components/Inquiry/useInquiry"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { ErrorWithMetadata } from "Utils/errors"

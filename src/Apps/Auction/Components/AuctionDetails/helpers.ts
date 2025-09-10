@@ -74,7 +74,7 @@ export const generateIcsCalendarUrl = ({
 
 /** @returns dates to be consumed by external calendar services iCal & Google Calendar */
 const formatCalendarDate = (date, offsetHours = 0) => {
-  if (!date) return ""
+  // FIXME: TypeScript error after dependency update - date parameter could be null, needs null check
   // Strip punctuation: 2020-11-12T20:00:00.000Z => 20201113T200000Z
   return formatIsoDateNoZoneOffset(date, offsetHours).replace(/-|:|\.\d+/g, "")
 }
@@ -97,5 +97,6 @@ export const formatIsoDateNoZoneOffset = (date: string, offsetHours = 0) => {
     .plus({
       hours: offsetHours,
     })
-    .toISO() || ""
+    // FIXME: TypeScript error after dependency update - toISO() could return null, needs null handling
+    .toISO()
 }

@@ -39,8 +39,8 @@ describe("getTimeZone", () => {
         zone: "Asia/Seoul",
       })
 
-      // FIXME: Resolve copilot agent issue - DateTime typing conflicts in mock
-      DateTime.local = jest.fn(() => fakeLocal) as any
+      // FIXME: TypeScript error after dependency update - DateTime typing conflicts in mock
+      DateTime.local = jest.fn(() => fakeLocal)
     })
     afterAll(() => {
       jest.restoreAllMocks()

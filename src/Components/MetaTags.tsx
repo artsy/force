@@ -63,7 +63,8 @@ export const MetaTags: React.FC<React.PropsWithChildren<MetaTagsProps>> = ({
       <Meta property="og:title" content={socialTitle} />
       <Meta property="og:site_name" content="Artsy" />
       <Meta property="og:description" content={description} />
-      {src && <Meta property="og:image" content={src} />}
+      {/* FIXME: TypeScript error after dependency update - src could be null/undefined, causing React to render invalid attributes */}
+      <Meta property="og:image" content={src} />
       <Meta property="fb:app_id" content="308278682573501" />
 
       {/* Twitter */}
@@ -72,7 +73,7 @@ export const MetaTags: React.FC<React.PropsWithChildren<MetaTagsProps>> = ({
       <Meta property="twitter:url" content={href} />
       <Meta property="twitter:site" content="@artsy" />
       <Meta property="twitter:description" content={description} />
-      {src && <Meta property="twitter:image" content={src} />}
+      <Meta property="twitter:image" content={src} />
 
       {/* Other */}
       {blockRobots && <Meta name="robots" content="noindex, nofollow" />}

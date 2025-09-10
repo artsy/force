@@ -62,6 +62,7 @@ describe("serverRouter", () => {
   const mockFindRoutesByPath = findRoutesByPath as jest.Mock
   let res: ArtsyResponse
   let req: Request
+  // FIXME: TypeScript error after dependency update - next function needs proper initialization for tests
   let next: NextFunction
   // @ts-ignore
   let options: any = { req, res, next }
@@ -82,8 +83,6 @@ describe("serverRouter", () => {
       url: "/",
       header: jest.fn().mockReturnValue("A random user-agent"),
     } as unknown as Request
-
-    next = jest.fn() as NextFunction
 
     options = {
       res,

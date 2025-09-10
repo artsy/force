@@ -1,15 +1,17 @@
 import type { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes"
 import { isEqual, isObject, transform } from "lodash"
 
-const difference = (initial: {}, next: {}): {} => {
+// FIXME: TypeScript error after dependency update - lodash transform function typing issues need proper type annotations
+const difference = (initial: {}, next: {}) => {
   return transform(next, (result, value, key) => {
     if (!isEqual(value, initial[key])) {
-      ;(result as any)[key] =
+      result[key] =
         isObject(value) && isObject(initial[key])
-          ? difference(value, initial[key])
+          ? // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+            difference(value, initial[key])
           : value
     }
-  }) as {}
+  })
 }
 
 export const countChangedFilters = (
@@ -29,5 +31,5 @@ export const countChangedFilters = (
 
   // We take the difference but just look at the number of keys changed,
   // which is equivalent to the number of filters changing.
-  return Object.keys(difference(filtersInitial, filtersAfter) as {}).length
+  return Object.keys(difference(filtersInitial, filtersAfter)).length
 }

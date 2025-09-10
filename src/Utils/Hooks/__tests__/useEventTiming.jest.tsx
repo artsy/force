@@ -20,18 +20,19 @@ const Wrapper = ({ currentTime, startAt, endAt }: WrapperProps) => {
     <>
       {JSON.stringify(
         useEventTiming({
+          // FIXME: TypeScript error after dependency update - toISO() could return null, needs null handling
           currentTime: DateTime.fromObject({
             year: 2000,
             ...currentTime,
-          }).toISO() || "",
+          }).toISO(),
           startAt: DateTime.fromObject({
             year: 2000,
             ...startAt,
-          }).toISO() || "",
+          }).toISO(),
           endAt: DateTime.fromObject({
             year: 2000,
             ...endAt,
-          }).toISO() || "",
+          }).toISO(),
         }),
       )}
     </>

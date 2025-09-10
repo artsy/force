@@ -30,14 +30,15 @@ const PartnerMeta: React.FC<React.PropsWithChildren<PartnerMetaProps>> = ({
   return (
     <>
       <Title>{meta?.title}</Title>
-      {meta?.description && <Meta name="description" content={meta.description} />}
+      {/* FIXME: TypeScript error after dependency update - these meta properties could be null/undefined, causing React to render invalid attributes */}
+      <Meta name="description" content={meta?.description} />
 
-      {meta?.title && <Meta property="og:title" content={meta.title} />}
-      {meta?.description && <Meta property="og:description" content={meta.description} />}
+      <Meta property="og:title" content={meta?.title} />
+      <Meta property="og:description" content={meta?.description} />
       <Meta property="og:url" content={href} />
       <Meta property="og:type" content="profile" />
 
-      {meta?.description && <Meta property="twitter:description" content={meta.description} />}
+      <Meta property="twitter:description" content={meta?.description} />
       <Meta property="twitter:card" content="summary" />
 
       <Link rel="canonical" href={canonicalHref} />
