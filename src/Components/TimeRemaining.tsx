@@ -25,6 +25,10 @@ export const TimeRemaining: React.FC<
   timeEndedDisplayText,
   trailingText,
 }) => {
+  if (!currentTime || !countdownEnd) {
+    return null
+  }
+  
   const duration = Duration.fromISO(
     DateTime.fromISO(countdownEnd)
       .diff(DateTime.fromISO(currentTime))

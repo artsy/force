@@ -63,7 +63,7 @@ export const MetaTags: React.FC<React.PropsWithChildren<MetaTagsProps>> = ({
       <Meta property="og:title" content={socialTitle} />
       <Meta property="og:site_name" content="Artsy" />
       <Meta property="og:description" content={description} />
-      <Meta property="og:image" content={src} />
+      {src && <Meta property="og:image" content={src} />}
       <Meta property="fb:app_id" content="308278682573501" />
 
       {/* Twitter */}
@@ -72,7 +72,7 @@ export const MetaTags: React.FC<React.PropsWithChildren<MetaTagsProps>> = ({
       <Meta property="twitter:url" content={href} />
       <Meta property="twitter:site" content="@artsy" />
       <Meta property="twitter:description" content={description} />
-      <Meta property="twitter:image" content={src} />
+      {src && <Meta property="twitter:image" content={src} />}
 
       {/* Other */}
       {blockRobots && <Meta name="robots" content="noindex, nofollow" />}

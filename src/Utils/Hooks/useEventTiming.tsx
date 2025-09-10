@@ -34,8 +34,21 @@ export const useEventTiming = ({
     }
   }
 
+  const endDateTime = DateTime.fromISO(endAt)
+  const currentDateTime = DateTime.fromISO(currentTime)
+  const startDateTime = DateTime.fromISO(startAt)
+
+  if (!endDateTime.isValid || !currentDateTime.isValid || !startDateTime.isValid) {
+    return {
+      daysTilEnd: 0,
+      secondsTilEnd: 0,
+      hasEnded: true,
+      hasStarted: true,
+    }
+  }
+
   const durationTilEnd = Duration.fromISO(
-    DateTime.fromISO(endAt).diff(DateTime.fromISO(currentTime)).toString(),
+    endDateTime.diff(currentDateTime).toString(),
   )
   const daysTilEnd = durationTilEnd.as("days")
   const hoursTillEnd = durationTilEnd.as("hours")
@@ -43,7 +56,7 @@ export const useEventTiming = ({
 
   const hasStarted =
     Duration.fromISO(
-      DateTime.fromISO(startAt).diff(DateTime.fromISO(currentTime)).toString(),
+      startDateTime.diff(currentDateTime).toString(),
     ).seconds < 0
 
   const hasEnded = Math.floor(secondsTilEnd) <= 0

@@ -36,15 +36,37 @@ export const useTimer = (endDate: string, startAt = ""): Timer => {
     }
   }
 
+  const endDateTime = DateTime.fromISO(endDate)
+  const currentDateTime = DateTime.fromISO(currentTime)
+
+  if (!endDateTime.isValid || !currentDateTime.isValid) {
+    return {
+      days: "00",
+      hours: "00",
+      minutes: "00", 
+      seconds: "00",
+      hasEnded: false,
+      hasStarted: true,
+    }
+  }
+
   const timeBeforeEnd = Duration.fromISO(
-    DateTime.fromISO(endDate).diff(DateTime.fromISO(currentTime)).toString(),
+    endDateTime.diff(currentDateTime).toString(),
   )
   const hasEnded = Math.floor(timeBeforeEnd.seconds) <= 0
 
-  const timeBeforeStart = startAt ? Duration.fromISO(
-    DateTime.fromISO(startAt).diff(DateTime.fromISO(currentTime)).toString(),
-  ) : Duration.fromMillis(0)
-  const hasStarted = Math.floor(timeBeforeStart.seconds) <= 0
+  let timeBeforeStart = Duration.fromMillis(0)
+  let hasStarted = true
+
+  if (startAt) {
+    const startDateTime = DateTime.fromISO(startAt)
+    if (startDateTime.isValid) {
+      timeBeforeStart = Duration.fromISO(
+        startDateTime.diff(currentDateTime).toString(),
+      )
+      hasStarted = Math.floor(timeBeforeStart.seconds) <= 0
+    }
+  }
 
   // If startAt is passed into this hook and it is in the future,
   // show the time before start. Otherwise show the time before end.

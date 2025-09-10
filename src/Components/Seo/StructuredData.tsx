@@ -12,9 +12,8 @@ export const StructuredData = ({ schemaData }: StructuredDataProps) => {
   const dangerousHtml = { __html: schemaContent }
 
   return (
-    <Meta
+    <script
       dangerouslySetInnerHTML={dangerousHtml}
-      tag="script"
       type="application/ld+json"
     />
   )

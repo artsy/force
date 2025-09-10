@@ -55,7 +55,7 @@ export const CookieConsentManagerDialog: FC<
 
     const payload: SavedCookieConsentPreferences = {
       action: ActionType.savedCookieConsentPreferences,
-      value: ALLOW_ALL_PREFERENCES,
+      value: ALLOW_ALL_PREFERENCES as Record<string, boolean | null | undefined>,
     }
 
     trackEvent(payload)
@@ -69,7 +69,7 @@ export const CookieConsentManagerDialog: FC<
 
     const payload: SavedCookieConsentPreferences = {
       action: ActionType.savedCookieConsentPreferences,
-      value: REJECT_ALL_PREFERENCES,
+      value: REJECT_ALL_PREFERENCES as Record<string, boolean | null | undefined>,
     }
 
     trackEvent(payload)
@@ -83,7 +83,7 @@ export const CookieConsentManagerDialog: FC<
 
     const payload: SavedCookieConsentPreferences = {
       action: ActionType.savedCookieConsentPreferences,
-      value: preferences,
+      value: preferences as Record<string, boolean | null | undefined>,
     }
 
     trackEvent(payload)
