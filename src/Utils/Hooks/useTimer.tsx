@@ -25,56 +25,16 @@ const extractTime = (time: number) => {
 export const useTimer = (endDate: string, startAt = ""): Timer => {
   const currentTime = useCurrentTime({ syncWithServer: true })
 
-  if (!currentTime || !endDate) {
-    return {
-      time: {
-        days: "00",
-        hours: "00",
-        minutes: "00", 
-        seconds: "00",
-      },
-      hasEnded: false,
-      hasStarted: true,
-    }
-  }
-
-  const endDateTime = DateTime.fromISO(endDate)
-  const currentDateTime = DateTime.fromISO(currentTime)
-
-  if (!endDateTime.isValid || !currentDateTime.isValid) {
-    return {
-      time: {
-        days: "00",
-        hours: "00",
-        minutes: "00", 
-        seconds: "00",
-      },
-      hasEnded: false,
-      hasStarted: true,
-    }
-  }
-
+  // FIXME: TypeScript error after dependency update - endDate, currentTime, startAt could be null, need null checks before calling DateTime.fromISO
   const timeBeforeEnd = Duration.fromISO(
-    endDateTime.diff(currentDateTime).toString(),
+    DateTime.fromISO(endDate).diff(DateTime.fromISO(currentTime)).toString(),
   )
   const hasEnded = Math.floor(timeBeforeEnd.seconds) <= 0
 
-  let timeBeforeStart = Duration.fromMillis(0)
-  let hasStarted = true
-
-  if (startAt) {
-    const startDateTime = DateTime.fromISO(startAt)
-    if (startDateTime.isValid) {
-      const diffString = startDateTime.diff(currentDateTime).toString()
-      if (diffString) {
-        const candidateDuration = Duration.fromISO(diffString)
-        if (candidateDuration.isValid) {
-          timeBeforeStart = candidateDuration
-          hasStarted = Math.floor(timeBeforeStart.seconds) <= 0
-        }
-      }
-    }
-  }
+  const timeBeforeStart = Duration.fromISO(
+    DateTime.fromISO(startAt).diff(DateTime.fromISO(currentTime)).toString(),
+  )
+  const hasStarted = Math.floor(timeBeforeStart.seconds) <= 0
 
   // If startAt is passed into this hook and it is in the future,
   // show the time before start. Otherwise show the time before end.

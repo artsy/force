@@ -25,23 +25,12 @@ export const TimeRemaining: React.FC<
   timeEndedDisplayText,
   trailingText,
 }) => {
-  if (!currentTime || !countdownEnd) {
-    return null
-  }
-  
-  const currentDateTime = DateTime.fromISO(currentTime)
-  const endDateTime = DateTime.fromISO(countdownEnd)
-  
-  if (!currentDateTime.isValid || !endDateTime.isValid) {
-    return null
-  }
-  
-  const diffString = endDateTime.diff(currentDateTime).toString()
-  if (!diffString) {
-    return null
-  }
-  
-  const duration = Duration.fromISO(diffString)
+  // FIXME: TypeScript error after dependency update - countdownEnd and currentTime could be null, need null checks before calling DateTime.fromISO
+  const duration = Duration.fromISO(
+    DateTime.fromISO(countdownEnd)
+      .diff(DateTime.fromISO(currentTime))
+      .toString(),
+  )
 
   const hasEnded = Math.floor(duration.seconds) <= 0
 

@@ -2,13 +2,8 @@ import type { AuctionCard_sale$data } from "__generated__/AuctionCard_sale.graph
 import { DateTime } from "luxon"
 import { relativeTime, upcomingLabel } from "../AuctionCard"
 
-const now = () => {
-  const dateTime = DateTime.fromISO("2019-04-16T12:00:00.000-04:00") // EST timezone offset
-  if (!dateTime.isValid) {
-    throw new Error("Invalid test DateTime")
-  }
-  return dateTime
-}
+// FIXME: TypeScript error after dependency update - DateTime.fromISO with setZone could return DateTime<false>, functions expect DateTime<true>
+const now = () => DateTime.fromISO("2019-04-16").setZone("America/New_York")
 
 describe("relativeTime", () => {
   it("formats properly when >= 1 day", () => {

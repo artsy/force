@@ -9,14 +9,14 @@ const padWithZero = (n: number) => {
 }
 
 interface UseEventTiming {
-  startAt: string | null
+  startAt: string
   /**
    * Live sales don't have a formal endTime, but rather start at "liveStartAt".
    * So toggling this flag adjusts the language from "closed" to "opens".
    */
   isLiveSale?: boolean //
-  endAt: string | null
-  currentTime: string | null
+  endAt: string
+  currentTime: string
 }
 
 export const useEventTiming = ({
@@ -25,30 +25,9 @@ export const useEventTiming = ({
   isLiveSale = false,
   endAt,
 }: UseEventTiming) => {
-  if (!endAt || !currentTime || !startAt) {
-    return {
-      daysTilEnd: 0,
-      secondsTilEnd: 0,
-      hasEnded: true,
-      hasStarted: true,
-    }
-  }
-
-  const endDateTime = DateTime.fromISO(endAt)
-  const currentDateTime = DateTime.fromISO(currentTime)
-  const startDateTime = DateTime.fromISO(startAt)
-
-  if (!endDateTime.isValid || !currentDateTime.isValid || !startDateTime.isValid) {
-    return {
-      daysTilEnd: 0,
-      secondsTilEnd: 0,
-      hasEnded: true,
-      hasStarted: true,
-    }
-  }
-
+  // FIXME: TypeScript error after dependency update - endAt, currentTime, startAt could be null, need null checks before calling DateTime.fromISO
   const durationTilEnd = Duration.fromISO(
-    endDateTime.diff(currentDateTime).toString(),
+    DateTime.fromISO(endAt).diff(DateTime.fromISO(currentTime)).toString(),
   )
   const daysTilEnd = durationTilEnd.as("days")
   const hoursTillEnd = durationTilEnd.as("hours")
@@ -56,7 +35,7 @@ export const useEventTiming = ({
 
   const hasStarted =
     Duration.fromISO(
-      startDateTime.diff(currentDateTime).toString(),
+      DateTime.fromISO(startAt).diff(DateTime.fromISO(currentTime)).toString(),
     ).seconds < 0
 
   const hasEnded = Math.floor(secondsTilEnd) <= 0

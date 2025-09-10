@@ -29,13 +29,14 @@ export const ArtistMeta: React.FC<React.PropsWithChildren<Props>> = ({
         pathname={pathname}
       />
 
+      {/* FIXME: TypeScript error after dependency update - 'href' prop doesn't exist on Meta component, should use 'content' */}
       <Meta
         property="og:url"
-        content={`${getENV("APP_URL")}/artist/${artist.slug}`}
+        href={`${getENV("APP_URL")}/artist/${artist.slug}`}
       />
       <Meta
         property="og:type"
-        content={`${getENV("FACEBOOK_APP_NAMESPACE")}:artist`}
+        href={`${getENV("FACEBOOK_APP_NAMESPACE")}:artist`}
       />
 
       {artist.nationality && (

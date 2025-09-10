@@ -84,17 +84,10 @@ export const CookieConsentManager: FC<
             const handleAccept = () => {
               saveConsent(ALLOW_ALL_PREFERENCES)
 
-              // Filter preferences to only include boolean/null/undefined values as expected by cohesion
-              const filteredPreferences: Record<string, boolean | null | undefined> = {}
-              for (const [key, value] of Object.entries(ALLOW_ALL_PREFERENCES)) {
-                if (typeof value === 'boolean' || value === null || value === undefined) {
-                  filteredPreferences[key] = value
-                }
-              }
-
               const payload: SavedCookieConsentPreferences = {
                 action: ActionType.savedCookieConsentPreferences,
-                value: filteredPreferences,
+                // FIXME: TypeScript error after dependency update - CategoryPreferences includes string type but SavedCookieConsentPreferences expects only boolean|null|undefined
+                value: ALLOW_ALL_PREFERENCES,
               }
 
               trackEvent(payload)
