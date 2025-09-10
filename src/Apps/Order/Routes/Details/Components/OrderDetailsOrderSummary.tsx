@@ -12,6 +12,7 @@ import {
 import { useOrder2Tracking } from "Apps/Order2/Hooks/useOrder2Tracking"
 import { OrderDetailsPricingBreakdown } from "Apps/Order/Routes/Details/Components/OrderDetailsPricingBreakdown"
 import { BUYER_GUARANTEE_URL } from "Apps/Order2/constants"
+import { useArtworkDimensions } from "Apps/Artwork/useArtworkDimensions"
 import { RouterLink } from "System/Components/RouterLink"
 import type { OrderDetailsOrderSummary_order$key } from "__generated__/OrderDetailsOrderSummary_order.graphql"
 import type * as React from "react"
@@ -39,6 +40,7 @@ export const OrderDetailsOrderSummary: React.FC<
     ? artworkOrEditionSet.dimensions
     : undefined
   const price = isArtworkOrEdition ? artworkOrEditionSet.price : undefined
+  const { dimensionsLabel } = useArtworkDimensions(dimensions)
 
   return (
     <Box backgroundColor="mono0" px={[2, 4]} py={2}>
@@ -105,9 +107,9 @@ export const OrderDetailsOrderSummary: React.FC<
           {artworkVersion.attributionClass.shortDescription}
         </Text>
       )}
-      {dimensions && (
+      {dimensionsLabel && (
         <Text variant="sm" color="mono60">
-          {dimensions.in} | {dimensions.cm}
+          {dimensionsLabel}
         </Text>
       )}
       <Spacer y={2} />
