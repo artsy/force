@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<031f9c2957d3afac408bd59b28d2a6f0>>
+ * @generated SignedSource<<c2458332ec51309dd839af259480d151>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,6 +18,7 @@ export type ConversationMessages_conversation$data = {
   readonly inquiryRequest: {
     readonly formattedFirstMessage: string | null | undefined;
   } | null | undefined;
+  readonly internalID: string | null | undefined;
   readonly items: ReadonlyArray<{
     readonly item: {
       readonly __typename: string;
@@ -75,6 +76,7 @@ export type ConversationMessages_conversation$data = {
     readonly initials: string | null | undefined;
     readonly name: string;
   };
+  readonly unreadByCollector: boolean | null | undefined;
   readonly " $fragmentType": "ConversationMessages_conversation";
 } | null | undefined;
 export type ConversationMessages_conversation$key = {
@@ -87,14 +89,14 @@ var v0 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "internalID",
   "storageKey": null
 },
 v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "internalID",
+  "name": "id",
   "storageKey": null
 },
 v2 = {
@@ -146,11 +148,19 @@ return {
   },
   "name": "ConversationMessages_conversation",
   "selections": [
+    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
       "name": "fromLastViewedMessageID",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "unreadByCollector",
       "storageKey": null
     },
     {
@@ -262,8 +272,8 @@ return {
                 "name": "node",
                 "plural": false,
                 "selections": [
-                  (v0/*: any*/),
                   (v1/*: any*/),
+                  (v0/*: any*/),
                   (v2/*: any*/),
                   {
                     "alias": null,
@@ -334,7 +344,7 @@ return {
             {
               "kind": "InlineFragment",
               "selections": [
-                (v0/*: any*/),
+                (v1/*: any*/),
                 {
                   "alias": null,
                   "args": null,
@@ -349,7 +359,7 @@ return {
                   "name": "isOfferableFromInquiry",
                   "storageKey": null
                 },
-                (v1/*: any*/)
+                (v0/*: any*/)
               ],
               "type": "Artwork",
               "abstractKey": null
@@ -414,7 +424,7 @@ return {
                 "name": "node",
                 "plural": false,
                 "selections": [
-                  (v1/*: any*/),
+                  (v0/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -552,6 +562,6 @@ return {
 };
 })();
 
-(node as any).hash = "a9e09c2b87aa5c0b2cee7297ef67f658";
+(node as any).hash = "4a137cec946409e933656d832a84af4e";
 
 export default node;

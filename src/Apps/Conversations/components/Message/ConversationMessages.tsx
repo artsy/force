@@ -9,6 +9,7 @@ import {
   useGroupedMessages,
 } from "Apps/Conversations/hooks/useGroupedMessages"
 import { useRefetchLatestMessagesPoll } from "Apps/Conversations/hooks/useRefetchLatestMessagesPoll"
+import { useUpdateConversation } from "Apps/Conversations/mutations/useUpdateConversationMutation"
 import { Sentinel } from "Components/Sentinal"
 import { extractNodes } from "Utils/extractNodes"
 import type { ConversationMessages_conversation$data } from "__generated__/ConversationMessages_conversation.graphql"
@@ -47,6 +48,7 @@ export const ConversationMessages: FC<
   const autoScrollToBottomRef = useRef<HTMLDivElement>(null)
   const toInitials = (conversation?.to as any)?.initials
   const toName = conversation?.to?.name
+  const { submitMutation: updateConversation } = useUpdateConversation()
 
   const groupedMessagesAndEvents = useGroupedMessages({
     messagesConnection: conversation.messagesConnection,
@@ -81,6 +83,32 @@ export const ConversationMessages: FC<
       })
     },
   })
+
+  useEffect(() => {
+    if (
+      conversation.unreadByCollector &&
+      conversation.internalID &&
+      messages.length > 0
+    ) {
+      const latestMessageId = messages[0]?.internalID
+
+      if (latestMessageId) {
+        updateConversation({
+          variables: {
+            input: {
+              conversationId: conversation.internalID,
+              fromLastViewedMessageId: latestMessageId,
+            },
+          },
+        })
+      }
+    }
+  }, [
+    conversation.unreadByCollector,
+    conversation.internalID,
+    messages,
+    updateConversation,
+  ])
 
   const refetchMessages = ({ showPreloader = true }) => {
     if (messages.length === 0) {
@@ -227,7 +255,9 @@ export const ConversationMessagesPaginationContainer =
           first: { type: "Int", defaultValue: 15 }
           after: { type: "String" }
         ) {
+          internalID
           fromLastViewedMessageID
+          unreadByCollector
           to {
             name
             initials(length: 2)

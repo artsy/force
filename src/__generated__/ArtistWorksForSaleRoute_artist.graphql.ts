@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e0839057497f61489b966df6cb29af03>>
+ * @generated SignedSource<<196c761382e6df7218ea31716b336a76>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,13 +11,13 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistWorksForSaleRoute_artist$data = {
+  readonly internalID: string;
   readonly meta: {
     readonly description: string;
     readonly title: string;
   };
   readonly name: string | null | undefined;
   readonly slug: string;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtistWorksForSaleEmpty_artist">;
   readonly " $fragmentType": "ArtistWorksForSaleRoute_artist";
 };
 export type ArtistWorksForSaleRoute_artist$key = {
@@ -32,9 +32,11 @@ const node: ReaderFragment = {
   "name": "ArtistWorksForSaleRoute_artist",
   "selections": [
     {
+      "alias": null,
       "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArtistWorksForSaleEmpty_artist"
+      "kind": "ScalarField",
+      "name": "internalID",
+      "storageKey": null
     },
     {
       "alias": null,
@@ -86,6 +88,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "3f3df19a6ee2a905d86136f0d1af61eb";
+(node as any).hash = "953c0fa75759d3c09009173892b8b77f";
 
 export default node;

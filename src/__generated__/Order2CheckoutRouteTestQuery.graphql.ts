@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5a9a8d14fd757e822b97252aad8c7536>>
+ * @generated SignedSource<<74ce7000baa9a9ad5bcc72146b1e8553>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -278,6 +278,9 @@ v30 = {
 },
 v31 = {
   "enumValues": [
+    "ARTSY_EXPRESS",
+    "ARTSY_STANDARD",
+    "ARTSY_WHITE_GLOVE",
     "DOMESTIC_FLAT",
     "INTERNATIONAL_FLAT",
     "PICKUP",

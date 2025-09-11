@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6086ca80e5cdcc8aab6092808d8fb8ab>>
+ * @generated SignedSource<<797e15cbdb65f612f01fa236d277f2ad>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -276,6 +276,9 @@ return {
         },
         "me.order.selectedFulfillmentOption.type": {
           "enumValues": [
+            "ARTSY_EXPRESS",
+            "ARTSY_STANDARD",
+            "ARTSY_WHITE_GLOVE",
             "DOMESTIC_FLAT",
             "INTERNATIONAL_FLAT",
             "PICKUP",

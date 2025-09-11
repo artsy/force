@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5445e5291d1bcbd7c5d20df67ba0a12d>>
+ * @generated SignedSource<<f2e90ae4a02ddb22ed567630efd73bf1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,7 +9,7 @@
 // @ts-nocheck
 
 import { ReaderFragment } from 'relay-runtime';
-export type FulfillmentOptionTypeEnum = "DOMESTIC_FLAT" | "INTERNATIONAL_FLAT" | "PICKUP" | "SHIPPING_TBD" | "%future added value";
+export type FulfillmentOptionTypeEnum = "ARTSY_EXPRESS" | "ARTSY_STANDARD" | "ARTSY_WHITE_GLOVE" | "DOMESTIC_FLAT" | "INTERNATIONAL_FLAT" | "PICKUP" | "SHIPPING_TBD" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type Order2PickupForm_order$data = {
   readonly fulfillmentDetails: {

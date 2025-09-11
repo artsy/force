@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<278042032d84cfd3b11f40f10be2956c>>
+ * @generated SignedSource<<9537670206a8aa79cca50af74db32750>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FulfillmentOptionTypeEnum = "DOMESTIC_FLAT" | "INTERNATIONAL_FLAT" | "PICKUP" | "SHIPPING_TBD" | "%future added value";
+export type FulfillmentOptionTypeEnum = "ARTSY_EXPRESS" | "ARTSY_STANDARD" | "ARTSY_WHITE_GLOVE" | "DOMESTIC_FLAT" | "INTERNATIONAL_FLAT" | "PICKUP" | "SHIPPING_TBD" | "%future added value";
 export type unsetOrderFulfillmentOptionInput = {
   clientMutationId?: string | null | undefined;
   id: string;
