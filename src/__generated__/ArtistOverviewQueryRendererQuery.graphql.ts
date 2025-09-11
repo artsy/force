@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<33105235179cf93cd4c660c38c41f632>>
+ * @generated SignedSource<<6c3ee55baa507e1e6c3fc7a26c15d5f9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,17 +10,17 @@
 
 import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type artistRoutes_OverviewQuery$variables = {
+export type ArtistOverviewQueryRendererQuery$variables = {
   artistID: string;
 };
-export type artistRoutes_OverviewQuery$data = {
+export type ArtistOverviewQueryRendererQuery$data = {
   readonly artist: {
-    readonly " $fragmentSpreads": FragmentRefs<"ArtistOverviewRoute_artist">;
+    readonly " $fragmentSpreads": FragmentRefs<"ArtistOverview_artist">;
   } | null | undefined;
 };
-export type artistRoutes_OverviewQuery = {
-  response: artistRoutes_OverviewQuery$data;
-  variables: artistRoutes_OverviewQuery$variables;
+export type ArtistOverviewQueryRendererQuery = {
+  response: ArtistOverviewQueryRendererQuery$data;
+  variables: ArtistOverviewQueryRendererQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -71,7 +71,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "artistRoutes_OverviewQuery",
+    "name": "ArtistOverviewQueryRendererQuery",
     "selections": [
       {
         "alias": null,
@@ -84,7 +84,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "ArtistOverviewRoute_artist"
+            "name": "ArtistOverview_artist"
           }
         ],
         "storageKey": null
@@ -97,7 +97,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "artistRoutes_OverviewQuery",
+    "name": "ArtistOverviewQueryRendererQuery",
     "selections": [
       {
         "alias": null,
@@ -239,37 +239,6 @@ return {
             ],
             "storageKey": null
           },
-          {
-            "alias": null,
-            "args": [
-              {
-                "kind": "Literal",
-                "name": "page",
-                "value": "ABOUT"
-              }
-            ],
-            "concreteType": "ArtistMeta",
-            "kind": "LinkedField",
-            "name": "meta",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "description",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "title",
-                "storageKey": null
-              }
-            ],
-            "storageKey": "meta(page:\"ABOUT\")"
-          },
           (v5/*: any*/)
         ],
         "storageKey": null
@@ -277,16 +246,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a940870d90ea5d64efc3a5a6a9801a2d",
+    "cacheID": "86d1a368945e64c4e5bfa0a9a2803d70",
     "id": null,
     "metadata": {},
-    "name": "artistRoutes_OverviewQuery",
+    "name": "ArtistOverviewQueryRendererQuery",
     "operationKind": "query",
-    "text": "query artistRoutes_OverviewQuery(\n  $artistID: String!\n) @cacheable {\n  artist(id: $artistID) @principalField {\n    ...ArtistOverviewRoute_artist\n    id\n  }\n}\n\nfragment ArtistOverviewRoute_artist on Artist {\n  ...ArtistOverview_artist\n  internalID\n  meta(page: ABOUT) {\n    description\n    title\n  }\n}\n\nfragment ArtistOverview_artist on Artist {\n  internalID\n  name\n  insights {\n    __typename\n  }\n  artistSeriesConnection(first: 0) {\n    totalCount\n  }\n  showsConnection(first: 0, status: \"running\") {\n    totalCount\n  }\n  counts {\n    relatedArtists\n    articles\n  }\n  related {\n    genes(first: 1) {\n      edges {\n        node {\n          __typename\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query ArtistOverviewQueryRendererQuery(\n  $artistID: String!\n) @cacheable {\n  artist(id: $artistID) {\n    ...ArtistOverview_artist\n    id\n  }\n}\n\nfragment ArtistOverview_artist on Artist {\n  internalID\n  name\n  insights {\n    __typename\n  }\n  artistSeriesConnection(first: 0) {\n    totalCount\n  }\n  showsConnection(first: 0, status: \"running\") {\n    totalCount\n  }\n  counts {\n    relatedArtists\n    articles\n  }\n  related {\n    genes(first: 1) {\n      edges {\n        node {\n          __typename\n          id\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "9d22251dc4ee96e7bb0bbc7e32b0bc07";
+(node as any).hash = "6b2f703df3e6ecee17f75b5ee14d1e2b";
 
 export default node;

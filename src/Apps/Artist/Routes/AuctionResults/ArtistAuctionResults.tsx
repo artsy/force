@@ -16,16 +16,18 @@ import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
 import { ArtworkGridEmptyState } from "Components/ArtworkGrid/ArtworkGridEmptyState"
 import { useAuthDialog } from "Components/AuthDialog"
 import { LoadingArea } from "Components/LoadingArea"
-import { PaginationFragmentContainer as Pagination } from "Components/Pagination"
 import { PaginatedMetaTags } from "Components/PaginatedMetaTags"
+import { PaginationFragmentContainer as Pagination } from "Components/Pagination"
 import { SystemContext } from "System/Contexts/SystemContext"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { Jump, useJump } from "Utils/Hooks/useJump"
 import { usePrevious } from "Utils/Hooks/usePrevious"
 import { Media } from "Utils/Responsive"
 import { extractNodes } from "Utils/extractNodes"
 import createLogger from "Utils/logger"
+import type { ArtistAuctionResultsQueryRendererQuery } from "__generated__/ArtistAuctionResultsQueryRendererQuery.graphql"
 import type { ArtistAuctionResultsRoute_artist$data } from "__generated__/ArtistAuctionResultsRoute_artist.graphql"
 import type { ArtistAuctionResults_artist$data } from "__generated__/ArtistAuctionResults_artist.graphql"
 import { isEqual } from "lodash"
@@ -567,3 +569,124 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
     }
   `,
 )
+
+type ArtistAuctionResultsQueryRendererProps = {
+  id: string
+  lazyLoad?: boolean
+}
+
+export const ArtistAuctionResultsQueryRenderer: React.FC<
+  ArtistAuctionResultsQueryRendererProps
+> = ({ id, lazyLoad }) => {
+  const { match } = useRouter()
+
+  const urlFilterState = paramsToCamelCase(match?.location.query ?? {})
+  const initialInput = {
+    ...initialAuctionResultsFilterState({}),
+    ...allowedAuctionResultFilters(urlFilterState),
+  }
+
+  return (
+    <SystemQueryRenderer<ArtistAuctionResultsQueryRendererQuery>
+      lazyLoad={lazyLoad}
+      query={graphql`
+        query ArtistAuctionResultsQueryRendererQuery(
+          $page: Int
+          $state: AuctionResultsState
+          $artistID: String!
+          $organizations: [String]
+          $categories: [String]
+          $sizes: [ArtworkSizes]
+          $priceRange: String
+          $currency: String
+          $includeEstimateRange: Boolean
+          $includeUnknownPrices: Boolean
+          $createdAfterYear: Int
+          $createdBeforeYear: Int
+          $allowEmptyCreatedDates: Boolean
+          $saleStartYear: Int
+          $saleEndYear: Int
+          $allowUnspecifiedSaleDates: Boolean
+        ) @cacheable {
+          artist(id: $artistID) {
+            ...ArtistAuctionResults_artist
+              @arguments(
+                page: $page
+                state: $state
+                organizations: $organizations
+                categories: $categories
+                sizes: $sizes
+                priceRange: $priceRange
+                currency: $currency
+                includeEstimateRange: $includeEstimateRange
+                includeUnknownPrices: $includeUnknownPrices
+                createdAfterYear: $createdAfterYear
+                createdBeforeYear: $createdBeforeYear
+                allowEmptyCreatedDates: $allowEmptyCreatedDates
+                saleStartYear: $saleStartYear
+                saleEndYear: $saleEndYear
+                allowUnspecifiedSaleDates: $allowUnspecifiedSaleDates
+              )
+            sidebarAggregations: auctionResultsConnection(
+              aggregations: [
+                SIMPLE_PRICE_HISTOGRAM
+                CURRENCIES_COUNT
+                LOTS_BY_SALE_YEAR
+                LOTS_BY_CREATED_YEAR
+              ]
+            ) {
+              aggregations {
+                slice
+                counts {
+                  name
+                  value
+                  count
+                }
+              }
+            }
+          }
+        }
+      `}
+      variables={{
+        artistID: id,
+        page: initialInput.page,
+        state: initialInput.hideUpcoming ? "PAST" : "ALL",
+        organizations: initialInput.organizations,
+        categories: initialInput.categories,
+        sizes: initialInput.sizes,
+        priceRange: initialInput.priceRange,
+        currency: initialInput.currency,
+        includeEstimateRange: initialInput.includeEstimateRange,
+        includeUnknownPrices: initialInput.includeUnknownPrices,
+        createdAfterYear: initialInput.createdAfterYear,
+        createdBeforeYear: initialInput.createdBeforeYear,
+        allowEmptyCreatedDates: initialInput.allowEmptyCreatedDates,
+        saleStartYear: initialInput.saleStartYear,
+        saleEndYear: initialInput.saleEndYear,
+        allowUnspecifiedSaleDates: initialInput.allowUnspecifiedSaleDates,
+      }}
+      render={({ error, props }) => {
+        if (error) {
+          console.error(
+            "[ArtistAuctionResults]: Error loading auction results",
+            error,
+          )
+          return null
+        }
+
+        if (!props || !props.artist) {
+          return null
+        }
+
+        const { artist } = props
+
+        return (
+          <ArtistAuctionResultsRefetchContainer
+            artist={artist}
+            aggregations={artist.sidebarAggregations?.aggregations}
+          />
+        )
+      }}
+    />
+  )
+}

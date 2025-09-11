@@ -71,6 +71,7 @@ describe("ArtistOverviewRoute", () => {
         ],
         artistSeriesConnection: { totalCount: 1 },
         articlesConnection: { totalCount: 1 },
+        counts: { articles: 1, relatedArtists: 1 },
         showsConnection: { totalCount: 1 },
       }),
     })
