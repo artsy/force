@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<11a7e1248e812c1072048793f2c3ebfc>>
+ * @generated SignedSource<<70d5d357e97ab7dadcaafd3b66621bde>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -159,6 +159,13 @@ return {
                         "args": null,
                         "kind": "ScalarField",
                         "name": "internalID",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "unreadByCollector",
                         "storageKey": null
                       },
                       {
@@ -386,7 +393,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "13e484a73b3ee4bd325cc4b4475cb179",
+    "cacheID": "5191924ab0f4f148487bd403e62c30a1",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -485,6 +492,12 @@ return {
         },
         "viewer.conversationsConnection.edges.node.to.id": (v5/*: any*/),
         "viewer.conversationsConnection.edges.node.to.name": (v4/*: any*/),
+        "viewer.conversationsConnection.edges.node.unreadByCollector": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Boolean"
+        },
         "viewer.conversationsConnection.pageInfo": {
           "enumValues": null,
           "nullable": false,
@@ -497,7 +510,7 @@ return {
     },
     "name": "ConversationsSidebarTestQuery",
     "operationKind": "query",
-    "text": "query ConversationsSidebarTestQuery {\n  viewer {\n    ...ConversationsSidebar_viewer\n  }\n}\n\nfragment ConversationsSidebarItem_conversation on Conversation {\n  internalID\n  to {\n    name\n    id\n  }\n  lastMessageAt(format: \"MMM D\")\n  orderConnection(last: 1, states: [APPROVED, FULFILLED, SUBMITTED, PROCESSING_APPROVAL, REFUNDED]) {\n    edges {\n      node {\n        __typename\n        id\n      }\n    }\n  }\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        id\n        title\n        date\n        isUnlisted\n        artist {\n          name\n          id\n        }\n        image {\n          url(version: [\"small\", \"square\"])\n        }\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n}\n\nfragment ConversationsSidebar_viewer on Viewer {\n  conversationsConnection(first: 10, type: USER) {\n    edges {\n      cursor\n      node {\n        internalID\n        ...ConversationsSidebarItem_conversation\n        id\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query ConversationsSidebarTestQuery {\n  viewer {\n    ...ConversationsSidebar_viewer\n  }\n}\n\nfragment ConversationsSidebarItem_conversation on Conversation {\n  internalID\n  unreadByCollector\n  to {\n    name\n    id\n  }\n  lastMessageAt(format: \"MMM D\")\n  orderConnection(last: 1, states: [APPROVED, FULFILLED, SUBMITTED, PROCESSING_APPROVAL, REFUNDED]) {\n    edges {\n      node {\n        __typename\n        id\n      }\n    }\n  }\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        id\n        title\n        date\n        isUnlisted\n        artist {\n          name\n          id\n        }\n        image {\n          url(version: [\"small\", \"square\"])\n        }\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n}\n\nfragment ConversationsSidebar_viewer on Viewer {\n  conversationsConnection(first: 10, type: USER) {\n    edges {\n      cursor\n      node {\n        internalID\n        ...ConversationsSidebarItem_conversation\n        id\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
