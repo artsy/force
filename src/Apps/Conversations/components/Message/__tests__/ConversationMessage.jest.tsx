@@ -15,6 +15,8 @@ describe("ConversationMessage", () => {
         messageIndex={1}
         // Serves to the tests related to "Seen by"
         isLastGroupedPartnerMessage={true}
+        toName="Test Gallery"
+        toInitials="TG"
       />
     ),
     query: graphql`
@@ -46,7 +48,7 @@ describe("ConversationMessage", () => {
     })
 
     expect(screen.getByText("Hello collector")).toBeInTheDocument()
-    expect(screen.queryByText("Shared Partner")).not.toBeInTheDocument()
+    expect(screen.getByText("Test Gallery")).toBeInTheDocument()
   })
 
   it("renders collector message", () => {
@@ -60,7 +62,6 @@ describe("ConversationMessage", () => {
     })
 
     expect(screen.getByText("Hello gallery")).toBeInTheDocument()
-    expect(screen.getByText("Collector Collectorson")).toBeInTheDocument()
   })
 
   it("renders default message for non-available messages", () => {
@@ -76,7 +77,6 @@ describe("ConversationMessage", () => {
     expect(
       screen.getByText("This message is no longer available."),
     ).toBeInTheDocument()
-    expect(screen.getByText("Collector Collectorson")).toBeInTheDocument()
   })
 
   it("renders attached images", () => {

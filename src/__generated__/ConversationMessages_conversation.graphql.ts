@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0cbc5089e498a361d0abc3d87e5e9f81>>
+ * @generated SignedSource<<c2458332ec51309dd839af259480d151>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -71,6 +71,10 @@ export type ConversationMessages_conversation$data = {
         readonly updatedAt: string;
       } | null | undefined;
     } | null | undefined> | null | undefined;
+  };
+  readonly to: {
+    readonly initials: string | null | undefined;
+    readonly name: string;
   };
   readonly unreadByCollector: boolean | null | undefined;
   readonly " $fragmentType": "ConversationMessages_conversation";
@@ -157,6 +161,37 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "unreadByCollector",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "ConversationResponder",
+      "kind": "LinkedField",
+      "name": "to",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "name",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": [
+            {
+              "kind": "Literal",
+              "name": "length",
+              "value": 2
+            }
+          ],
+          "kind": "ScalarField",
+          "name": "initials",
+          "storageKey": "initials(length:2)"
+        }
+      ],
       "storageKey": null
     },
     {
@@ -527,6 +562,6 @@ return {
 };
 })();
 
-(node as any).hash = "bb8d42eeea61fce69961103a6b9ea744";
+(node as any).hash = "4a137cec946409e933656d832a84af4e";
 
 export default node;
