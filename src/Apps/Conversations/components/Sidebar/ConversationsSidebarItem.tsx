@@ -23,10 +23,13 @@ export const ConversationsSidebarItem: React.FC<
   const scrollRef = useRef<HTMLDivElement>(null)
 
   const isSelected = match.params.conversationId === data.internalID
+  const isUnread = data.unreadByCollector
 
   // On mobile, the list item never gets a select state, since tapping instantly
   // sends the user to the messages view.
   const isHighlighted = isSelected && !getENV("IS_MOBILE")
+
+  const shouldHighlight = isSelected || isUnread
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
@@ -91,7 +94,7 @@ export const ConversationsSidebarItem: React.FC<
               <Text
                 variant="xs"
                 overflowEllipsis
-                fontWeight={isSelected ? "bold" : "regular"}
+                fontWeight={shouldHighlight ? "bold" : "regular"}
               >
                 {data?.to?.name}
               </Text>
@@ -100,14 +103,14 @@ export const ConversationsSidebarItem: React.FC<
             <Text
               variant="xs"
               overflowEllipsis
-              fontWeight={isSelected ? "bold" : "regular"}
+              fontWeight={shouldHighlight ? "bold" : "regular"}
             >
               {item.artist.name},{" "}
               <Text
                 fontStyle="italic"
                 display="inline"
                 variant="xs"
-                fontWeight={isSelected ? "bold" : "regular"}
+                fontWeight={shouldHighlight ? "bold" : "regular"}
               >
                 {item.title}
               </Text>
@@ -128,8 +131,8 @@ export const ConversationsSidebarItem: React.FC<
             <Flex flexDirection="row" alignItems="center">
               <Text
                 variant="xs"
-                color={isSelected ? "mono100" : "mono60"}
-                fontWeight={isSelected ? "bold" : "regular"}
+                color={shouldHighlight ? "mono100" : "mono60"}
+                fontWeight={shouldHighlight ? "bold" : "regular"}
               >
                 {data?.lastMessageAt}
               </Text>
@@ -144,6 +147,7 @@ export const ConversationsSidebarItem: React.FC<
 const FRAGMENT = graphql`
   fragment ConversationsSidebarItem_conversation on Conversation {
     internalID
+    unreadByCollector
     to {
       name
     }
