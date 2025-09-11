@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fbc1f3eaea6dba1d4c4cd6abbce75523>>
+ * @generated SignedSource<<ef9c1770a0b467a43a431b956557d57c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -90,14 +90,14 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "name",
+            "name": "slug",
             "storageKey": null
           },
           {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "slug",
+            "name": "name",
             "storageKey": null
           },
           {
@@ -144,12 +144,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2250cc00d4af643cbb49f405f6d8e890",
+    "cacheID": "e55b42f31c8ab85da11ee31d413f4332",
     "id": null,
     "metadata": {},
     "name": "artistRoutes_WorksForSaleQuery",
     "operationKind": "query",
-    "text": "query artistRoutes_WorksForSaleQuery(\n  $artistID: String!\n) @cacheable {\n  artist(id: $artistID) @principalField {\n    ...ArtistWorksForSaleRoute_artist\n    id\n  }\n}\n\nfragment ArtistWorksForSaleEmpty_artist on Artist {\n  internalID\n  name\n}\n\nfragment ArtistWorksForSaleRoute_artist on Artist {\n  ...ArtistWorksForSaleEmpty_artist\n  slug\n  name\n  meta(page: ARTWORKS) {\n    description\n    title\n  }\n}\n"
+    "text": "query artistRoutes_WorksForSaleQuery(\n  $artistID: String!\n) @cacheable {\n  artist(id: $artistID) @principalField {\n    ...ArtistWorksForSaleRoute_artist\n    id\n  }\n}\n\nfragment ArtistWorksForSaleRoute_artist on Artist {\n  internalID\n  slug\n  name\n  meta(page: ARTWORKS) {\n    description\n    title\n  }\n}\n"
   }
 };
 })();

@@ -12,6 +12,7 @@ import { Order2CheckoutPricingBreakdown } from "Apps/Order2/Routes/Checkout/Comp
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useOrder2SubmitOrderMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SubmitOrderMutation"
 import { BUYER_GUARANTEE_URL } from "Apps/Order2/constants"
+import { useArtworkDimensions } from "Apps/Artwork/useArtworkDimensions"
 import { RouterLink } from "System/Components/RouterLink"
 import createLogger from "Utils/logger"
 import type {
@@ -44,6 +45,7 @@ const Order2ReviewStepComponent: React.FC<Order2ReviewStepProps> = ({
   } = useCheckoutContext()
 
   const artworkData = extractLineItemMetadata(orderData.lineItems[0]!)
+  const { dimensionsLabel } = useArtworkDimensions(artworkData.dimensions)
 
   const stepState = steps?.find(
     step => step.name === CheckoutStepName.CONFIRMATION,
@@ -151,11 +153,9 @@ const Order2ReviewStepComponent: React.FC<Order2ReviewStepProps> = ({
               {artworkData.attributionClass.shortDescription}
             </Text>
           )}
-          {artworkData.dimensions && (
+          {dimensionsLabel && (
             <Text overflowEllipsis variant="xs" color="mono60" textAlign="left">
-              {[artworkData.dimensions.in, artworkData.dimensions.cm].join(
-                " | ",
-              )}
+              {dimensionsLabel}
             </Text>
           )}
         </Box>

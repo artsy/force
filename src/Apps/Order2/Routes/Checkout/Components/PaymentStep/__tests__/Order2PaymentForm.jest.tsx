@@ -338,6 +338,9 @@ describe("Order2PaymentForm", () => {
         setupFutureUsage: null,
         mode: "setup",
         payment_method_types: ["us_bank_account"],
+        paymentMethodOptions: {
+          us_bank_account: { verification_method: "instant" },
+        },
       })
     })
 
@@ -365,6 +368,9 @@ describe("Order2PaymentForm", () => {
         setupFutureUsage: null,
         mode: "setup",
         payment_method_types: ["us_bank_account"],
+        paymentMethodOptions: {
+          us_bank_account: { verification_method: "instant" },
+        },
       })
     })
 
@@ -380,6 +386,9 @@ describe("Order2PaymentForm", () => {
         setupFutureUsage: null,
         mode: "setup",
         payment_method_types: ["us_bank_account"],
+        paymentMethodOptions: {
+          us_bank_account: { verification_method: "instant" },
+        },
       })
 
       // Clear the mock to check the next call

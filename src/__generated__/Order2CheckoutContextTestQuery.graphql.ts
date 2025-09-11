@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c79414b4f36ddedb291261967d648357>>
+ * @generated SignedSource<<18f9f1ae092140d8a5de3941b8f29be3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -282,6 +282,9 @@ return {
         },
         "viewer.me.order.selectedFulfillmentOption.type": {
           "enumValues": [
+            "ARTSY_EXPRESS",
+            "ARTSY_STANDARD",
+            "ARTSY_WHITE_GLOVE",
             "DOMESTIC_FLAT",
             "INTERNATIONAL_FLAT",
             "PICKUP",

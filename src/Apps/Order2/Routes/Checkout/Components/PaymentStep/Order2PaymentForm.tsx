@@ -294,6 +294,10 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       setupFutureUsage: null,
       mode: "setup",
       payment_method_types: [paymentType],
+      // @ts-ignore Stripe type issue
+      paymentMethodOptions: {
+        us_bank_account: { verification_method: "instant" },
+      },
     })
 
     if (selectedPaymentMethod !== methodType) {

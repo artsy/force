@@ -88,6 +88,7 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
       phoneNumber: "",
       phoneNumberCountryCode:
         locationBasedInitialValues.phoneNumberCountryCode || "",
+      setAsDefault: false,
     }),
     [locationBasedInitialValues],
   )

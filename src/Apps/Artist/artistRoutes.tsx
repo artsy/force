@@ -30,6 +30,17 @@ const OverviewRoute = loadable(
   },
 )
 
+const CombinedRoute = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "artistBundle" */ "./Routes/Combined/ArtistCombinedRoute"
+    ),
+  {
+    resolveComponent: component =>
+      component.ArtistCombinedRouteFragmentContainer,
+  },
+)
+
 const WorksForSaleRoute = loadable(
   () =>
     import(
@@ -117,6 +128,20 @@ export const artistRoutes: RouteProps[] = [
       }
     `,
     children: [
+      {
+        path: "combined",
+        getComponent: () => CombinedRoute,
+        onPreloadJS: () => {
+          CombinedRoute.preload()
+        },
+        query: graphql`
+          query artistRoutes_CombinedQuery($artistID: String!) @cacheable {
+            artist(id: $artistID) @principalField {
+              ...ArtistCombinedRoute_artist
+            }
+          }
+        `,
+      },
       {
         path: "",
         getComponent: () => WorksForSaleRoute,

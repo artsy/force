@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e9c5f92e078080345fcb8d0336c932b1>>
+ * @generated SignedSource<<5fdf9de5150a2580f8191e373f8af7dd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -42,6 +42,7 @@ export type ConversationsSidebarItem_conversation$data = {
   readonly to: {
     readonly name: string;
   };
+  readonly unreadByCollector: boolean | null | undefined;
   readonly " $fragmentType": "ConversationsSidebarItem_conversation";
 };
 export type ConversationsSidebarItem_conversation$key = {
@@ -75,6 +76,13 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "internalID",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "unreadByCollector",
       "storageKey": null
     },
     {
@@ -280,6 +288,6 @@ return {
 };
 })();
 
-(node as any).hash = "ab5ad7b876566aa73e0834e682f1529d";
+(node as any).hash = "6cf22d1354fe8278113464e349098e28";
 
 export default node;
