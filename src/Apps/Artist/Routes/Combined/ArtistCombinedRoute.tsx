@@ -1,8 +1,10 @@
 import { Join, Separator } from "@artsy/palette"
 import { ArtistAuctionResultsQueryRenderer } from "Apps/Artist/Routes/AuctionResults/ArtistAuctionResults"
+import { ArtistOverviewQueryRenderer } from "Apps/Artist/Routes/Overview/Components/ArtistOverview"
 import { ArtistArtworkFilterQueryRenderer } from "Apps/Artist/Routes/WorksForSale/Components/ArtistArtworkFilter"
 import type { ArtistCombinedRoute_artist$data } from "__generated__/ArtistCombinedRoute_artist.graphql"
 import type * as React from "react"
+import { Meta } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 
 interface ArtistCombinedRouteProps {
@@ -13,11 +15,18 @@ const ArtistCombinedRoute: React.FC<
   React.PropsWithChildren<ArtistCombinedRouteProps>
 > = ({ artist }) => {
   return (
-    <Join separator={<Separator my={6} />}>
-      <ArtistArtworkFilterQueryRenderer id={artist.internalID} />
+    <>
+      {/* Temporarily hide from search engines */}
+      <Meta name="robots" content="noindex, nofollow" />
 
-      <ArtistAuctionResultsQueryRenderer id={artist.internalID} lazyLoad />
-    </Join>
+      <Join separator={<Separator my={6} />}>
+        <ArtistArtworkFilterQueryRenderer id={artist.internalID} lazyLoad />
+
+        <ArtistAuctionResultsQueryRenderer id={artist.internalID} lazyLoad />
+
+        <ArtistOverviewQueryRenderer id={artist.internalID} lazyLoad />
+      </Join>
+    </>
   )
 }
 

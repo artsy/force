@@ -156,15 +156,17 @@ export const ArtistArtworkFilterRefetchContainer = createRefetchContainer(
 
 type ArtistArtworkFilterQueryRendererProps = {
   id: string
+  lazyLoad?: boolean
 }
 
 export const ArtistArtworkFilterQueryRenderer: FC<
   ArtistArtworkFilterQueryRendererProps
-> = ({ id }) => {
+> = ({ id, lazyLoad }) => {
   const { match } = useRouter()
 
   return (
     <SystemQueryRenderer<ArtistArtworkFilterQueryRendererQuery>
+      lazyLoad={lazyLoad}
       query={graphql`
         query ArtistArtworkFilterQueryRendererQuery(
           $artistID: String!
