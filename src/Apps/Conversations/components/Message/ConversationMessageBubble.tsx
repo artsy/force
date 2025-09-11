@@ -16,6 +16,7 @@ import { ConversationMessageImage } from "./ConversationMessageImage"
 type ConversationMessageBubbleProps = {
   avatarUrl?: string
   fromViewer?: boolean
+  initials?: string
   isMessageSentOnPlatform?: boolean
   name?: string
   seenBy?: string
@@ -29,6 +30,7 @@ export const ConversationMessageBubble: FC<
   avatarUrl,
   children,
   fromViewer,
+  initials,
   isMessageSentOnPlatform,
   name,
   seenBy,
@@ -69,6 +71,8 @@ export const ConversationMessageBubble: FC<
         >
           {avatarUrl ? (
             <Avatar src={avatarUrl} size="xxs" />
+          ) : initials ? (
+            <Avatar initials={initials} size="xxs" />
           ) : (
             <PersonIcon size={21} />
           )}

@@ -45,6 +45,8 @@ export const ConversationMessages: FC<
     useState(false)
 
   const autoScrollToBottomRef = useRef<HTMLDivElement>(null)
+  const toInitials = (conversation?.to as any)?.initials
+  const toName = conversation?.to?.name
 
   const groupedMessagesAndEvents = useGroupedMessages({
     messagesConnection: conversation.messagesConnection,
@@ -178,6 +180,8 @@ export const ConversationMessages: FC<
                         formattedFirstMessage={
                           conversation?.inquiryRequest?.formattedFirstMessage
                         }
+                        toInitials={toInitials}
+                        toName={toName}
                       />
                     </Fragment>
                   )
@@ -224,6 +228,10 @@ export const ConversationMessagesPaginationContainer =
           after: { type: "String" }
         ) {
           fromLastViewedMessageID
+          to {
+            name
+            initials(length: 2)
+          }
 
           messagesConnection(first: $first, after: $after, sort: DESC)
             @required(action: NONE)
