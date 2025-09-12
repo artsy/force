@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ef131ab9f6a2ef5fff16fb40b01dc512>>
+ * @generated SignedSource<<1da58f876049d867a8afe28d699c4774>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,6 +18,7 @@ export type ViewingRoomMeta_viewingRoom$data = {
     } | null | undefined;
   } | null | undefined;
   readonly pullQuote: string | null | undefined;
+  readonly status: string;
   readonly title: string;
   readonly " $fragmentType": "ViewingRoomMeta_viewingRoom";
 };
@@ -56,6 +57,13 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
+      "kind": "ScalarField",
+      "name": "status",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": "GravityARImage",
       "kind": "LinkedField",
       "name": "image",
@@ -87,6 +95,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "37a939c41eb1dbd9fbfee32fcb7b73fd";
+(node as any).hash = "b237dcb7784ce0afbca069eae4efd361";
 
 export default node;

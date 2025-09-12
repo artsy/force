@@ -6,16 +6,10 @@ import { type FC, isValidElement } from "react"
 import Linkify from "react-linkify"
 import { ConversationMessageImage } from "./ConversationMessageImage"
 
-/**
- * The following props can be used together, details:
- *  - simplified -> cannot accept name and time when it is true
- *  - seenBy -> only when it is fromViewer
- *  - avatarUrl -> only when it is not fromViewer
- * See use cases https://www.figma.com/file/oXwV4SeYmsAuXgP3bFwiH6/Conversations-CMS?node-id=675%3A10844&t=AjHgDGzZ5Tkhi5fr-4
- */
 type ConversationMessageBubbleProps = {
   avatarUrl?: string
   fromViewer?: boolean
+  initials?: string
   isMessageSentOnPlatform?: boolean
   name?: string
   seenBy?: string
@@ -29,6 +23,7 @@ export const ConversationMessageBubble: FC<
   avatarUrl,
   children,
   fromViewer,
+  initials,
   isMessageSentOnPlatform,
   name,
   seenBy,
@@ -69,6 +64,8 @@ export const ConversationMessageBubble: FC<
         >
           {avatarUrl ? (
             <Avatar src={avatarUrl} size="xxs" />
+          ) : initials ? (
+            <Avatar initials={initials} size="xxs" />
           ) : (
             <PersonIcon size={21} />
           )}
