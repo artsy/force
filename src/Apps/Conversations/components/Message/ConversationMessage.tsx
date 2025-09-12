@@ -110,7 +110,7 @@ export const ConversationMessage: React.FC<
             <Spacer y={2} />
 
             <ConversationMessageBubble
-              fromViewer={!data.isFromUser}
+              fromViewer={data.isFromUser}
               simplified
               seenBy={index === attachmentLength - 1 ? seenBy : undefined}
             >
