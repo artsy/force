@@ -210,6 +210,7 @@ export const ConversationMessages: FC<
                         }
                         toInitials={toInitials}
                         toName={toName}
+                        onImageLoad={triggerAutoScroll}
                       />
                     </Fragment>
                   )

@@ -29,6 +29,7 @@ interface ConversationMessageProps {
   >["formattedFirstMessage"]
   toInitials?: string
   toName?: string
+  onImageLoad?: () => void
 }
 
 export const ConversationMessage: React.FC<
@@ -40,6 +41,7 @@ export const ConversationMessage: React.FC<
   formattedFirstMessage,
   toInitials,
   toName,
+  onImageLoad,
 }) => {
   const { appendElementRef } = useScrollPagination()
 
@@ -118,6 +120,7 @@ export const ConversationMessage: React.FC<
                 <ConversationMessageImage
                   src={attachment.downloadURL}
                   alt="Attached image"
+                  onImageLoad={messageIndex === 0 ? onImageLoad : undefined}
                 />
               ) : (
                 <ConversationMessageFile
