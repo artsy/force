@@ -27,6 +27,10 @@ const ViewingRoomMeta: React.FC<
       <Title>{title}</Title>
       <Meta property="og:title" content={title} />
 
+      {viewingRoom.status !== "live" && (
+        <Meta name="robots" content="noindex, follow" />
+      )}
+
       {description && (
         <>
           <Meta name="description" content={description} />
@@ -53,7 +57,6 @@ const ViewingRoomMeta: React.FC<
 
       <Meta property="twitter:site" content="@artsy" />
       <Meta property="og:type" content="website" />
-      <Meta name="robots" content="noindex, nofollow" />
     </>
   )
 }
@@ -66,6 +69,7 @@ export const ViewingRoomMetaFragmentContainer = createFragmentContainer(
         title
         href
         pullQuote
+        status
         image {
           imageURLs {
             normalized
