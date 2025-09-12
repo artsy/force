@@ -151,6 +151,13 @@ jobs:
                   }
                 },
                 {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "📚 For more details about this process, see the <https://github.com/artsy/force/blob/main/docs/schema_validation.md|Force-Metaphysics Schema Validation documentation>."
+                  }
+                },
+                {
                   "type": "context",
                   "elements": [
                     {
