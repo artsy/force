@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d60ae9de888aa753a7c664a0bf3c771a>>
+ * @generated SignedSource<<4aaaa530208db9f23987a2e7324c77dd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -155,6 +155,13 @@ return {
           {
             "alias": null,
             "args": null,
+            "kind": "ScalarField",
+            "name": "status",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": "GravityARImage",
             "kind": "LinkedField",
             "name": "image",
@@ -226,13 +233,6 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "status",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
             "name": "introStatement",
             "storageKey": null
           },
@@ -257,7 +257,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b91e7f8408b857fcf2dbaccf3afa8f1f",
+    "cacheID": "1930d16c62a1aaeb2b784048e062c0d1",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -304,7 +304,7 @@ return {
     },
     "name": "ViewingRoomAppLoggedOutTestQuery",
     "operationKind": "query",
-    "text": "query ViewingRoomAppLoggedOutTestQuery(\n  $slug: ID!\n) {\n  viewingRoom(id: $slug) {\n    ...ViewingRoomApp_viewingRoom\n  }\n}\n\nfragment ViewingRoomApp_viewingRoom on ViewingRoom {\n  ...ViewingRoomMeta_viewingRoom\n  ...ViewingRoomHeader_viewingRoom\n  ...ViewingRoomContentNotAccessible_viewingRoom\n  ...ViewingRoomStructuredData_viewingRoom\n  internalID\n  status\n  partner {\n    internalID\n    id\n  }\n}\n\nfragment ViewingRoomContentNotAccessible_viewingRoom on ViewingRoom {\n  status\n  partner {\n    href\n    id\n  }\n}\n\nfragment ViewingRoomHeader_viewingRoom on ViewingRoom {\n  image {\n    imageURLs {\n      normalized\n    }\n  }\n  title\n  partner {\n    name\n    href\n    id\n  }\n  distanceToOpen\n  distanceToClose\n  status\n}\n\nfragment ViewingRoomMeta_viewingRoom on ViewingRoom {\n  title\n  href\n  pullQuote\n  image {\n    imageURLs {\n      normalized\n    }\n  }\n}\n\nfragment ViewingRoomStructuredData_viewingRoom on ViewingRoom {\n  title\n  href\n  introStatement\n  startAt\n  endAt\n  status\n  image {\n    imageURLs {\n      normalized\n    }\n  }\n  partner {\n    name\n    href\n    id\n  }\n}\n"
+    "text": "query ViewingRoomAppLoggedOutTestQuery(\n  $slug: ID!\n) {\n  viewingRoom(id: $slug) {\n    ...ViewingRoomApp_viewingRoom\n  }\n}\n\nfragment ViewingRoomApp_viewingRoom on ViewingRoom {\n  ...ViewingRoomMeta_viewingRoom\n  ...ViewingRoomHeader_viewingRoom\n  ...ViewingRoomContentNotAccessible_viewingRoom\n  ...ViewingRoomStructuredData_viewingRoom\n  internalID\n  status\n  partner {\n    internalID\n    id\n  }\n}\n\nfragment ViewingRoomContentNotAccessible_viewingRoom on ViewingRoom {\n  status\n  partner {\n    href\n    id\n  }\n}\n\nfragment ViewingRoomHeader_viewingRoom on ViewingRoom {\n  image {\n    imageURLs {\n      normalized\n    }\n  }\n  title\n  partner {\n    name\n    href\n    id\n  }\n  distanceToOpen\n  distanceToClose\n  status\n}\n\nfragment ViewingRoomMeta_viewingRoom on ViewingRoom {\n  title\n  href\n  pullQuote\n  status\n  image {\n    imageURLs {\n      normalized\n    }\n  }\n}\n\nfragment ViewingRoomStructuredData_viewingRoom on ViewingRoom {\n  title\n  href\n  introStatement\n  startAt\n  endAt\n  status\n  image {\n    imageURLs {\n      normalized\n    }\n  }\n  partner {\n    name\n    href\n    id\n  }\n}\n"
   }
 };
 })();
