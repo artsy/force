@@ -6,6 +6,7 @@ import {
   Text,
   useToasts,
 } from "@artsy/palette"
+import { formatPhoneNumber } from "Apps/Order2/Utils/addressUtils"
 import { useDeleteAddress } from "Apps/Settings/Routes/Shipping/useDeleteAddress"
 import { useMode } from "Utils/Hooks/useMode"
 import { compactObject } from "Utils/compactObject"
@@ -37,7 +38,7 @@ const SettingsShippingAddress: FC<
     [address.city, address.region, address.country, address.postalCode]
       .filter(Boolean)
       .join(", "),
-    address.phoneNumber,
+    formatPhoneNumber(address.phoneNumber, address.phoneNumberCountryCode),
   ].filter(Boolean)
 
   const handleEdit = () => {
