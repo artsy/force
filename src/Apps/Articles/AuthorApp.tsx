@@ -10,6 +10,7 @@ import {
   Text,
 } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
+import { AuthorStructuredData } from "Apps/Articles/Components/AuthorStructuredData"
 import { ClientSuspense } from "Components/ClientSuspense"
 import { MetaTags } from "Components/MetaTags"
 import { TopContextBar } from "Components/TopContextBar"
@@ -41,6 +42,8 @@ export const AuthorApp: FC<React.PropsWithChildren<AuthorAppProps>> = ({
         description={author.bio}
         pathname={`/articles/author/${author.internalID}`}
       />
+
+      <AuthorStructuredData author={author} />
 
       <TopContextBar displayBackArrow href="/articles/authors">
         All Authors
@@ -156,6 +159,7 @@ export const AuthorApp: FC<React.PropsWithChildren<AuthorAppProps>> = ({
 
 const FRAGMENT = graphql`
   fragment AuthorApp_author on Author {
+    ...AuthorStructuredData_author
     __typename
     internalID
     name
