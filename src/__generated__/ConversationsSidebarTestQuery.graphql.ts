@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<70d5d357e97ab7dadcaafd3b66621bde>>
+ * @generated SignedSource<<bc2488e8bf4023dab5a0fbb42163aa6f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -131,6 +131,13 @@ return {
             "name": "conversationsConnection",
             "plural": false,
             "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "totalUnreadCount",
+                "storageKey": null
+              },
               {
                 "alias": null,
                 "args": null,
@@ -393,7 +400,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5191924ab0f4f148487bd403e62c30a1",
+    "cacheID": "4567cb2c6fe7a39435ae50f3d909dc35",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -505,12 +512,18 @@ return {
           "type": "PageInfo"
         },
         "viewer.conversationsConnection.pageInfo.endCursor": (v6/*: any*/),
-        "viewer.conversationsConnection.pageInfo.hasNextPage": (v7/*: any*/)
+        "viewer.conversationsConnection.pageInfo.hasNextPage": (v7/*: any*/),
+        "viewer.conversationsConnection.totalUnreadCount": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Int"
+        }
       }
     },
     "name": "ConversationsSidebarTestQuery",
     "operationKind": "query",
-    "text": "query ConversationsSidebarTestQuery {\n  viewer {\n    ...ConversationsSidebar_viewer\n  }\n}\n\nfragment ConversationsSidebarItem_conversation on Conversation {\n  internalID\n  unreadByCollector\n  to {\n    name\n    id\n  }\n  lastMessageAt(format: \"MMM D\")\n  orderConnection(last: 1, states: [APPROVED, FULFILLED, SUBMITTED, PROCESSING_APPROVAL, REFUNDED]) {\n    edges {\n      node {\n        __typename\n        id\n      }\n    }\n  }\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        id\n        title\n        date\n        isUnlisted\n        artist {\n          name\n          id\n        }\n        image {\n          url(version: [\"small\", \"square\"])\n        }\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n}\n\nfragment ConversationsSidebar_viewer on Viewer {\n  conversationsConnection(first: 10, type: USER) {\n    edges {\n      cursor\n      node {\n        internalID\n        ...ConversationsSidebarItem_conversation\n        id\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query ConversationsSidebarTestQuery {\n  viewer {\n    ...ConversationsSidebar_viewer\n  }\n}\n\nfragment ConversationsSidebarItem_conversation on Conversation {\n  internalID\n  unreadByCollector\n  to {\n    name\n    id\n  }\n  lastMessageAt(format: \"MMM D\")\n  orderConnection(last: 1, states: [APPROVED, FULFILLED, SUBMITTED, PROCESSING_APPROVAL, REFUNDED]) {\n    edges {\n      node {\n        __typename\n        id\n      }\n    }\n  }\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        id\n        title\n        date\n        isUnlisted\n        artist {\n          name\n          id\n        }\n        image {\n          url(version: [\"small\", \"square\"])\n        }\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n}\n\nfragment ConversationsSidebar_viewer on Viewer {\n  conversationsConnection(first: 10, type: USER) {\n    totalUnreadCount\n    edges {\n      cursor\n      node {\n        internalID\n        ...ConversationsSidebarItem_conversation\n        id\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
