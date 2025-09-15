@@ -49,14 +49,14 @@ export const AuthorApp: FC<React.PropsWithChildren<AuthorAppProps>> = ({
       <Spacer y={[2, 4]} />
 
       <Stack gap={6}>
-        <GridColumns gridRowGap={4} gridColumnGap={4}>
+        <GridColumns gridRowGap={[2, 4]} gridColumnGap={[0, 4]}>
           <Column span={12}>
             <Text as="h2" variant="xl">
               Editorial
             </Text>
           </Column>
 
-          <Column span={[6]}>
+          <Column span={6}>
             <Stack
               gap={2}
               flexDirection="row"
@@ -128,7 +128,7 @@ export const AuthorApp: FC<React.PropsWithChildren<AuthorAppProps>> = ({
           </Column>
 
           {author.bio && (
-            <Column span={[6]}>
+            <Column span={6}>
               <Text variant="sm-display" as="h3" fontWeight="bold">
                 About {author.name}
               </Text>
