@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a17934f26f8835bd37eddd46e6c5368c>>
+ * @generated SignedSource<<bbabd119fb80169206027a91f1cabac5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -132,6 +132,13 @@ return {
             "name": "conversationsConnection",
             "plural": false,
             "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "totalUnreadCount",
+                "storageKey": null
+              },
               {
                 "alias": null,
                 "args": null,
@@ -394,16 +401,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "1e8558cd1e4d8c98eb60ff03bb364966",
+    "cacheID": "77194bc39b77c0c80b4cbe1ff7395018",
     "id": null,
     "metadata": {},
     "name": "ConversationsSidebar2PaginationQuery",
     "operationKind": "query",
-    "text": "query ConversationsSidebar2PaginationQuery(\n  $after: String\n  $first: Int = 10\n) {\n  viewer {\n    ...ConversationsSidebar_viewer_2HEEH6\n  }\n}\n\nfragment ConversationsSidebarItem_conversation on Conversation {\n  internalID\n  unreadByCollector\n  to {\n    name\n    id\n  }\n  lastMessageAt(format: \"MMM D\")\n  orderConnection(last: 1, states: [APPROVED, FULFILLED, SUBMITTED, PROCESSING_APPROVAL, REFUNDED]) {\n    edges {\n      node {\n        __typename\n        id\n      }\n    }\n  }\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        id\n        title\n        date\n        isUnlisted\n        artist {\n          name\n          id\n        }\n        image {\n          url(version: [\"small\", \"square\"])\n        }\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n}\n\nfragment ConversationsSidebar_viewer_2HEEH6 on Viewer {\n  conversationsConnection(first: $first, after: $after, type: USER) {\n    edges {\n      cursor\n      node {\n        internalID\n        ...ConversationsSidebarItem_conversation\n        id\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query ConversationsSidebar2PaginationQuery(\n  $after: String\n  $first: Int = 10\n) {\n  viewer {\n    ...ConversationsSidebar_viewer_2HEEH6\n  }\n}\n\nfragment ConversationsSidebarItem_conversation on Conversation {\n  internalID\n  unreadByCollector\n  to {\n    name\n    id\n  }\n  lastMessageAt(format: \"MMM D\")\n  orderConnection(last: 1, states: [APPROVED, FULFILLED, SUBMITTED, PROCESSING_APPROVAL, REFUNDED]) {\n    edges {\n      node {\n        __typename\n        id\n      }\n    }\n  }\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        id\n        title\n        date\n        isUnlisted\n        artist {\n          name\n          id\n        }\n        image {\n          url(version: [\"small\", \"square\"])\n        }\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n}\n\nfragment ConversationsSidebar_viewer_2HEEH6 on Viewer {\n  conversationsConnection(first: $first, after: $after, type: USER) {\n    totalUnreadCount\n    edges {\n      cursor\n      node {\n        internalID\n        ...ConversationsSidebarItem_conversation\n        id\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "6bd7f914ba655c2a0630a99fb48a5365";
+(node as any).hash = "05547018d59b307201411489ba48c59d";
 
 export default node;

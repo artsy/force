@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9b8e669900f51a68caa3af5b7f3971da>>
+ * @generated SignedSource<<2ab0a8393550246349546e7400d9e4cf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,6 +19,7 @@ export type ConversationsSidebar_viewer$data = {
         readonly " $fragmentSpreads": FragmentRefs<"ConversationsSidebarItem_conversation">;
       } | null | undefined;
     } | null | undefined> | null | undefined;
+    readonly totalUnreadCount: number | null | undefined;
   } | null | undefined;
   readonly " $fragmentType": "ConversationsSidebar_viewer";
 };
@@ -85,6 +86,13 @@ return {
       "name": "__ConversationsSidebar_viewer_conversationsConnection_connection",
       "plural": false,
       "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "totalUnreadCount",
+          "storageKey": null
+        },
         {
           "alias": null,
           "args": null,
@@ -167,6 +175,6 @@ return {
 };
 })();
 
-(node as any).hash = "6bd7f914ba655c2a0630a99fb48a5365";
+(node as any).hash = "05547018d59b307201411489ba48c59d";
 
 export default node;
