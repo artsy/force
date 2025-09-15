@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a0fbfd57736fea98c3212876b922346a>>
+ * @generated SignedSource<<e6b2096bd4d929e25bd026809a01537d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -43,14 +43,14 @@ v2 = [
     "alias": null,
     "args": null,
     "kind": "ScalarField",
-    "name": "handle",
+    "name": "url",
     "storageKey": null
   },
   {
     "alias": null,
     "args": null,
     "kind": "ScalarField",
-    "name": "url",
+    "name": "handle",
     "storageKey": null
   }
 ];
@@ -99,7 +99,14 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "__typename",
+            "name": "name",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "role",
             "storageKey": null
           },
           {
@@ -110,32 +117,17 @@ return {
             "storageKey": null
           },
           {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "name",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
+            "alias": "description",
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "format",
+                "value": "PLAIN"
+              }
+            ],
             "kind": "ScalarField",
             "name": "bio",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "initials",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "role",
-            "storageKey": null
+            "storageKey": "bio(format:\"PLAIN\")"
           },
           {
             "alias": null,
@@ -166,6 +158,27 @@ return {
                 "storageKey": null
               }
             ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "__typename",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "bio",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "initials",
             "storageKey": null
           },
           {
@@ -228,12 +241,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a66b4cac7368b8d02143db03e58362c9",
+    "cacheID": "199873bbdad906cb95b9a5747e7b9dd7",
     "id": null,
     "metadata": {},
     "name": "articlesRoutes_AuthorQuery",
     "operationKind": "query",
-    "text": "query articlesRoutes_AuthorQuery(\n  $id: String!\n) {\n  author(id: $id) @principalField {\n    ...AuthorApp_author\n    id\n  }\n}\n\nfragment AuthorApp_author on Author {\n  __typename\n  internalID\n  name\n  bio\n  initials\n  role\n  socials {\n    x {\n      handle\n      url\n    }\n    instagram {\n      handle\n      url\n    }\n  }\n  image {\n    cropped(width: 100, height: 100) {\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query articlesRoutes_AuthorQuery(\n  $id: String!\n) {\n  author(id: $id) @principalField {\n    ...AuthorApp_author\n    id\n  }\n}\n\nfragment AuthorApp_author on Author {\n  ...AuthorStructuredData_author\n  __typename\n  internalID\n  name\n  bio\n  initials\n  role\n  socials {\n    x {\n      handle\n      url\n    }\n    instagram {\n      handle\n      url\n    }\n  }\n  image {\n    cropped(width: 100, height: 100) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment AuthorStructuredData_author on Author {\n  name\n  role\n  internalID\n  description: bio(format: PLAIN)\n  socials {\n    x {\n      url\n    }\n    instagram {\n      url\n    }\n  }\n}\n"
   }
 };
 })();
