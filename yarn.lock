@@ -31,12 +31,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@artsy/cohesion@npm:4.299.0":
-  version: 4.299.0
-  resolution: "@artsy/cohesion@npm:4.299.0"
+"@artsy/cohesion@npm:4.301.0":
+  version: 4.301.0
+  resolution: "@artsy/cohesion@npm:4.301.0"
   dependencies:
     core-js: "npm:3"
-  checksum: 10c0/27b0e5c4ecacb0eaed30645e8b66c4874f9d132abd9ce80ec362ff899787b07399b369686c839af4891ff4ede2839b1992d30a2422e874ceda825e1034ee9b75
+  checksum: 10c0/b81af7618a145b0ee1b01f08afd6c7907eda3fbd9a33ea12a0719a32e190a0271e24a21e9b961b0d08a0580e171c4277a4c26a3584c095806ea80859a3207380
   languageName: node
   linkType: hard
 
@@ -9329,7 +9329,7 @@ __metadata:
   resolution: "force@workspace:."
   dependencies:
     "@artaio/arta-browser": "npm:^2.16.1"
-    "@artsy/cohesion": "npm:4.299.0"
+    "@artsy/cohesion": "npm:4.301.0"
     "@artsy/commerce_helpers": artsy/commerce_helpers
     "@artsy/detect-responsive-traits": "npm:^0.1.0"
     "@artsy/dismissible": "npm:^0.4.1"
