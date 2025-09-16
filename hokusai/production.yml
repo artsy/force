@@ -295,11 +295,11 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: force
+  name: force-2025
   annotations:
     nginx.ingress.kubernetes.io/whitelist-source-range: {{ externalIngressAllowSourceIP|join(',') }}
 spec:
-  ingressClassName: nginx
+  ingressClassName: external-nginx
   rules:
   - host: www.artsy.net
     http:
