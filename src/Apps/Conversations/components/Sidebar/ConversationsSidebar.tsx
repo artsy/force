@@ -36,6 +36,7 @@ export const ConversationsSidebar: React.FC<
   })
 
   const conversations = extractNodes(viewer.conversationsConnection)
+  const totalUnreadCount = viewer.conversationsConnection?.totalUnreadCount ?? 0
 
   let totalDisplayedCount =
     viewer.conversationsConnection?.edges?.length ?? SIDEBAR_FETCH_PAGE_SIZE
@@ -112,7 +113,9 @@ export const ConversationsSidebar: React.FC<
         borderBottomColor="mono15"
         zIndex={1}
       >
-        <Text variant="lg">Inbox</Text>
+        <Text variant="lg">
+          Inbox{totalUnreadCount > 0 ? ` (${totalUnreadCount})` : ""}
+        </Text>
       </Box>
 
       {conversations.length === 0 && <ConversationsSidebarEmpty />}
@@ -158,6 +161,7 @@ export const ConversationsSidebarPaginationContainer =
             @connection(
               key: "ConversationsSidebar_viewer_conversationsConnection"
             ) {
+            totalUnreadCount
             edges {
               cursor
               node {

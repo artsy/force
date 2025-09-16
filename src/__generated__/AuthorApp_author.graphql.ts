@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3ea81492c34bb2c091f11e05d73eaeca>>
+ * @generated SignedSource<<62c75f1e892e613daa1b0912e4847313>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -33,6 +33,7 @@ export type AuthorApp_author$data = {
       readonly url: string;
     } | null | undefined;
   } | null | undefined;
+  readonly " $fragmentSpreads": FragmentRefs<"AuthorStructuredData_author">;
   readonly " $fragmentType": "AuthorApp_author";
 };
 export type AuthorApp_author$key = {
@@ -63,6 +64,11 @@ return {
   "metadata": null,
   "name": "AuthorApp_author",
   "selections": [
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "AuthorStructuredData_author"
+    },
     {
       "alias": null,
       "args": null,
@@ -189,6 +195,6 @@ return {
 };
 })();
 
-(node as any).hash = "e312c9d1ba26561b8e62bf0837e5e3f2";
+(node as any).hash = "fba95761881befffe6e24702f6715266";
 
 export default node;
