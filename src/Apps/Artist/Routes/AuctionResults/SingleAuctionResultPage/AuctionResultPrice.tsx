@@ -1,6 +1,9 @@
+import { ContextModule, Intent } from "@artsy/cohesion"
 import InfoIcon from "@artsy/icons/InfoIcon"
 import StopwatchIcon from "@artsy/icons/StopwatchIcon"
-import { Box, Clickable, Flex, Text, Tooltip } from "@artsy/palette"
+import { Box, Button, Clickable, Flex, Text, Tooltip } from "@artsy/palette"
+import { useAuthDialog } from "Components/AuthDialog"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import type { AuctionResultPrice_auctionResult$key } from "__generated__/AuctionResultPrice_auctionResult.graphql"
 import { DateTime } from "luxon"
 import { graphql, useFragment } from "react-relay"
@@ -12,6 +15,10 @@ interface AuctionResultPriceProps {
 export const AuctionResultPrice: React.FC<
   React.PropsWithChildren<AuctionResultPriceProps>
 > = ({ auctionResult }) => {
+  const { user } = useSystemContext()
+
+  const { showAuthDialog } = useAuthDialog()
+
   const data = useFragment(auctionResultPriceFragment, auctionResult)
 
   const {
@@ -23,6 +30,28 @@ export const AuctionResultPrice: React.FC<
     performance,
     saleDate,
   } = data
+
+  if (!user) {
+    return (
+      <Clickable
+        onClick={() => {
+          showAuthDialog({
+            options: {
+              title: "Sign up or log in to see price",
+            },
+            analytics: {
+              contextModule: ContextModule.auctionResults,
+              intent: Intent.viewAuctionResults,
+            },
+          })
+        }}
+      >
+        <Button size="small" variant="secondaryBlack">
+          Sign up to see price
+        </Button>
+      </Clickable>
+    )
+  }
 
   if (isUpcoming) {
     return (
