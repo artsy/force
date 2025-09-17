@@ -56,6 +56,8 @@ export type AuthDialogOptions = {
   title?: string | ((mode: AuthDialogMode) => string)
   onClose?: () => void
   onSuccess?: () => void
+  /** Controls whether the modal can be closed by user (X button, ESC, backdrop). Defaults to true. */
+  isCloseable?: boolean
 }
 
 export type AuthDialogAnalytics = {
