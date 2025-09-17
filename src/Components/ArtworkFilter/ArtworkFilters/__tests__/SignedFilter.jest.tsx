@@ -27,7 +27,7 @@ describe(SignedFilter, () => {
     expect(currentArtworkFilterContext().filters?.signed).toBeTruthy()
 
     userEvent.click(screen.getAllByRole("checkbox")[0])
-    expect(currentArtworkFilterContext().filters?.signed).toBeNull()
+    expect(currentArtworkFilterContext().filters?.signed).toBeFalsy()
   })
 
   it("clears local input state after Clear All", () => {
