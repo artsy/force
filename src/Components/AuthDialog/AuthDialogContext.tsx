@@ -14,7 +14,13 @@ import {
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import type { AfterAuthAction } from "Utils/Hooks/useAuthIntent"
 import { merge } from "lodash"
-import { type FC, createContext, useContext, useReducer } from "react"
+import {
+  type FC,
+  createContext,
+  useCallback,
+  useContext,
+  useReducer,
+} from "react"
 
 export const AUTH_DIALOG_MODES = [
   "Welcome",
@@ -50,6 +56,8 @@ export type AuthDialogOptions = {
   title?: string | ((mode: AuthDialogMode) => string)
   onClose?: () => void
   onSuccess?: () => void
+  /** Controls whether the modal can be closed by user (X button, ESC, backdrop). Defaults to true. */
+  isCloseable?: boolean
 }
 
 export type AuthDialogAnalytics = {
@@ -145,38 +153,41 @@ export const AuthDialogProvider: FC<
     dispatch({ type: "HIDE" })
   }
 
-  const showAuthDialog = ({
-    analytics,
-    mode = "Welcome",
-    options,
-  }: {
-    analytics: AuthDialogAnalytics
-    mode?: AuthDialogMode
-    options?: AuthDialogOptions
-  }) => {
-    if (isLoggedIn) {
-      sendToast({
-        variant: "message",
-        message: "You are already logged in.",
-      })
+  const showAuthDialog = useCallback(
+    ({
+      analytics,
+      mode = "Welcome",
+      options,
+    }: {
+      analytics: AuthDialogAnalytics
+      mode?: AuthDialogMode
+      options?: AuthDialogOptions
+    }) => {
+      if (isLoggedIn) {
+        sendToast({
+          variant: "message",
+          message: "You are already logged in.",
+        })
 
-      return
-    }
+        return
+      }
 
-    dispatch({
-      type: "SET",
-      payload: {
-        analytics: {
-          // Set a default intent based on the view mode
-          intent: DEFAULT_AUTH_MODAL_INTENTS[mode],
-          ...analytics,
+      dispatch({
+        type: "SET",
+        payload: {
+          analytics: {
+            // Set a default intent based on the view mode
+            intent: DEFAULT_AUTH_MODAL_INTENTS[mode],
+            ...analytics,
+          },
+          isVisible: true,
+          mode,
+          options,
         },
-        isVisible: true,
-        mode,
-        options,
-      },
-    })
-  }
+      })
+    },
+    [isLoggedIn, sendToast],
+  )
 
   return (
     <AuthDialogContext.Provider
