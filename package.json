@@ -17,6 +17,7 @@
     "bundle-report:client": "BUNDLE_ANALYZE=true yarn build:client:prod",
     "bundle-report:server": "BUNDLE_ANALYZE=true yarn build:server:prod",
     "bundle-stats": "GENERATE_STATS_FILE=true yarn bundle-report:client && npx relative-ci-agent",
+    "check-npm-vulnerabilities": "yarn npm audit --severity critical --recursive",
     "clean": "scripts/clean.sh",
     "clean:relay": "rm -rf '$TMPDIR'/RelayFindGraphQLTags-*",
     "danger:ci": "yarn danger ci --verbose",
@@ -63,7 +64,11 @@
     "@types/relay-runtime": "18.1.1",
     "graceful-fs": "4.x.x",
     "styled-components": "^6.1.13",
-    "strip-ansi": "6.0.1"
+    "strip-ansi": "6.0.1",
+    "cipher-base": "^1.0.5",
+    "form-data": "^4.0.4",
+    "lodash": "^4.17.21",
+    "sha.js": "^2.4.12"
   },
   "dependencies": {
     "@artsy/cohesion": "4.302.0",
@@ -115,7 +120,7 @@
     "ejs": "3.1.10",
     "eventemitter3": "4.0.7",
     "express": "4.19.2",
-    "express-ipfilter": "0.2.1",
+    "express-ipfilter": "0.2.6",
     "express-request-id": "1.4.0",
     "farce": "0.4.5",
     "formik": "^2.2.9",
@@ -129,7 +134,7 @@
     "http-shutdown": "1.2.1",
     "ip": "^1.1.9",
     "isomorphic-fetch": "^2.2.1",
-    "jsdom": "20.0.0",
+    "jsdom": "20.0.3",
     "jwt-decode": "2.2.0",
     "localforage": "^1.10.0",
     "lodash": "^4.17.21",
