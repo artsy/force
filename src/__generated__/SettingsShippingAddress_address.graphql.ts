@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8f3273e1e1d1184f7d91cd625dd66c02>>
+ * @generated SignedSource<<fa07be38e234ca568913b12a5db73fd0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,6 +20,9 @@ export type SettingsShippingAddress_address$data = {
   readonly name: string | null | undefined;
   readonly phoneNumber: string | null | undefined;
   readonly phoneNumberCountryCode: string | null | undefined;
+  readonly phoneNumberParsed: {
+    readonly display: string | null | undefined;
+  } | null | undefined;
   readonly postalCode: string | null | undefined;
   readonly region: string | null | undefined;
   readonly " $fragmentType": "SettingsShippingAddress_address";
@@ -101,6 +104,30 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
+      "concreteType": "PhoneNumberType",
+      "kind": "LinkedField",
+      "name": "phoneNumberParsed",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": [
+            {
+              "kind": "Literal",
+              "name": "format",
+              "value": "INTERNATIONAL"
+            }
+          ],
+          "kind": "ScalarField",
+          "name": "display",
+          "storageKey": "display(format:\"INTERNATIONAL\")"
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "kind": "ScalarField",
       "name": "postalCode",
       "storageKey": null
@@ -117,6 +144,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "8fed58260fe2f239eeb73dee64288d40";
+(node as any).hash = "090935ae9d1a7ad0a017baa83a555196";
 
 export default node;

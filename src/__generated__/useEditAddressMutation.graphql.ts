@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c7696c242cf18777aaff6816be01c16e>>
+ * @generated SignedSource<<fd2b167721832e0f0fe4568f5feab003>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -159,6 +159,30 @@ v5 = [
     "args": null,
     "kind": "ScalarField",
     "name": "phoneNumberCountryCode",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "concreteType": "PhoneNumberType",
+    "kind": "LinkedField",
+    "name": "phoneNumberParsed",
+    "plural": false,
+    "selections": [
+      {
+        "alias": null,
+        "args": [
+          {
+            "kind": "Literal",
+            "name": "format",
+            "value": "INTERNATIONAL"
+          }
+        ],
+        "kind": "ScalarField",
+        "name": "display",
+        "storageKey": "display(format:\"INTERNATIONAL\")"
+      }
+    ],
     "storageKey": null
   },
   {
@@ -329,12 +353,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3e907257fd567408d787084798e921ff",
+    "cacheID": "f1b8dfc1cddfc3fe6ea12e5a1d8d1700",
     "id": null,
     "metadata": {},
     "name": "useEditAddressMutation",
     "operationKind": "mutation",
-    "text": "mutation useEditAddressMutation(\n  $input: UpdateUserAddressInput!\n) {\n  updateUserAddress(input: $input) {\n    me {\n      ...SettingsShippingAddresses_me\n      id\n    }\n    userAddressOrErrors {\n      __typename\n      ... on UserAddress {\n        internalID\n        ...SettingsShippingAddress_address\n        id\n      }\n      ... on Errors {\n        errors {\n          message\n        }\n      }\n    }\n  }\n}\n\nfragment SettingsShippingAddress_address on UserAddress {\n  internalID\n  addressLine1\n  addressLine2\n  city\n  country\n  isDefault\n  name\n  phoneNumber\n  phoneNumberCountryCode\n  postalCode\n  region\n}\n\nfragment SettingsShippingAddresses_me on Me {\n  addresses: addressConnection {\n    edges {\n      node {\n        internalID\n        ...SettingsShippingAddress_address\n        id\n      }\n    }\n  }\n}\n"
+    "text": "mutation useEditAddressMutation(\n  $input: UpdateUserAddressInput!\n) {\n  updateUserAddress(input: $input) {\n    me {\n      ...SettingsShippingAddresses_me\n      id\n    }\n    userAddressOrErrors {\n      __typename\n      ... on UserAddress {\n        internalID\n        ...SettingsShippingAddress_address\n        id\n      }\n      ... on Errors {\n        errors {\n          message\n        }\n      }\n    }\n  }\n}\n\nfragment SettingsShippingAddress_address on UserAddress {\n  internalID\n  addressLine1\n  addressLine2\n  city\n  country\n  isDefault\n  name\n  phoneNumber\n  phoneNumberCountryCode\n  phoneNumberParsed {\n    display(format: INTERNATIONAL)\n  }\n  postalCode\n  region\n}\n\nfragment SettingsShippingAddresses_me on Me {\n  addresses: addressConnection {\n    edges {\n      node {\n        internalID\n        ...SettingsShippingAddress_address\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
