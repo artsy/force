@@ -224,11 +224,24 @@ jobs:
           name: Create Cloudflare DNS namespace
           command: node scripts/create-review-app-subdomain.js
 
+  check-npm-vulnerabilities:
+    executor: node-executor
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn
+      - run:
+          name: Check for critical npm vulnerabilities
+          command: yarn npm audit --severity critical --recursive
+
 workflows:
   default:
     jobs:
       - detect-secrets:
           <<: *not_main_or_staging_or_release
+
+      - check-npm-vulnerabilities:
+          <<: *not_staging_or_release
 
       # Danger
       - node/run:
