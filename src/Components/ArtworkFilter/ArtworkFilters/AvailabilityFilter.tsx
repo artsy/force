@@ -24,19 +24,11 @@ export const AvailabilityFilter: React.FC<AvailabilityFilterProps> = ({
 
   const isSelected = currentSelectedFilters?.forSale
 
-  const handleOnSelect = (selected: boolean) => {
-    if (selected) {
-      setFilter("forSale", true)
-    } else {
-      setFilter("forSale", false)
-    }
-  }
-
   return (
     <FilterExpandable label={label} expanded={isSelected || expanded}>
       <Checkbox
         selected={!!currentSelectedFilters?.forSale}
-        onSelect={handleOnSelect}
+        onSelect={value => setFilter("forSale", value)}
         my={1}
       >
         Only works for sale

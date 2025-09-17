@@ -22,14 +22,6 @@ export const SignedFilter: React.FC<SignedFilterProps> = ({ expanded }) => {
 
   const isSelected = currentSelectedFilters?.signed
 
-  const handleOnSelect = (selected: boolean) => {
-    if (selected) {
-      setFilter("signed", true)
-    } else {
-      setFilter("signed", false)
-    }
-  }
-
   return (
     <FilterExpandable
       label={label}
@@ -38,7 +30,7 @@ export const SignedFilter: React.FC<SignedFilterProps> = ({ expanded }) => {
     >
       <Checkbox
         selected={!!currentSelectedFilters?.signed}
-        onSelect={handleOnSelect}
+        onSelect={value => setFilter("signed", value)}
         my={1}
       >
         Show only signed works

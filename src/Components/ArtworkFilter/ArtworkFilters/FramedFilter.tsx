@@ -22,19 +22,11 @@ export const FramedFilter: React.FC<FramedFilterProps> = ({ expanded }) => {
 
   const isSelected = currentSelectedFilters?.framed
 
-  const handleOnSelect = (selected: boolean) => {
-    if (selected) {
-      setFilter("framed", true)
-    } else {
-      setFilter("framed", false)
-    }
-  }
-
   return (
     <FilterExpandable label={label} expanded={isSelected || expanded}>
       <Checkbox
         selected={!!currentSelectedFilters?.framed}
-        onSelect={handleOnSelect}
+        onSelect={value => setFilter("framed", value)}
         my={1}
       >
         Show only framed works
