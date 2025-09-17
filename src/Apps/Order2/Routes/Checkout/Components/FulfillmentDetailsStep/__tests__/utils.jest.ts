@@ -22,6 +22,7 @@ describe("FulfillmentDetailsStep utils", () => {
         country: "us",
         phoneNumber: "1234567890",
         phoneNumberCountryCode: "us",
+        phoneNumberParsed: { display: "+1 1234567890" },
         isDefault: false,
       }
 
@@ -54,6 +55,7 @@ describe("FulfillmentDetailsStep utils", () => {
         country: "US",
         phoneNumber: null,
         phoneNumberCountryCode: null,
+        phoneNumberParsed: null,
         isDefault: true,
       }
 
@@ -86,6 +88,7 @@ describe("FulfillmentDetailsStep utils", () => {
         country: "ca",
         phoneNumber: "1234567890",
         phoneNumberCountryCode: "ca",
+        phoneNumberParsed: { display: "+1 1234567890" },
         isDefault: false,
       }
 
@@ -128,6 +131,7 @@ describe("FulfillmentDetailsStep utils", () => {
             country: "US",
             phoneNumber: "1234567890",
             phoneNumberCountryCode: "US",
+            phoneNumberParsed: { display: "+1 1234567890" },
             isDefault: false,
           },
         },
@@ -143,6 +147,7 @@ describe("FulfillmentDetailsStep utils", () => {
             country: "CA",
             phoneNumber: "9876543210",
             phoneNumberCountryCode: "CA",
+            phoneNumberParsed: { display: "+1 9876543210" },
             isDefault: true,
           },
         },
@@ -206,6 +211,7 @@ describe("FulfillmentDetailsStep utils", () => {
         isDefault: false,
         phoneNumber: "1234567890",
         phoneNumberCountryCode: "US",
+        phoneNumberParsed: { display: "+1 1234567890" },
         address: {
           name: "John Doe",
           addressLine1: "123 Main St",
@@ -222,6 +228,7 @@ describe("FulfillmentDetailsStep utils", () => {
         isDefault: true,
         phoneNumber: "9876543210",
         phoneNumberCountryCode: "CA",
+        phoneNumberParsed: { display: "+1 9876543210" },
         address: {
           name: "Jane Smith",
           addressLine1: "456 Oak Ave",
@@ -238,6 +245,7 @@ describe("FulfillmentDetailsStep utils", () => {
         isDefault: false,
         phoneNumber: "5551234567",
         phoneNumberCountryCode: "GB",
+        phoneNumberParsed: { display: "+44 5551234567" },
         address: {
           name: "Bob Johnson",
           addressLine1: "789 Pine St",
@@ -324,6 +332,7 @@ describe("FulfillmentDetailsStep utils", () => {
           isDefault: false,
           phoneNumber: "",
           phoneNumberCountryCode: "",
+          phoneNumberParsed: null,
           address: {
             name: "Invalid Address",
             addressLine1: "123 Invalid St",
@@ -378,6 +387,7 @@ describe("FulfillmentDetailsStep utils", () => {
           isDefault: false,
           phoneNumber: "1234567890",
           phoneNumberCountryCode: "US",
+          phoneNumberParsed: { display: "+1 1234567890" },
           address: {
             name: "John Doe",
             addressLine1: "123 Main St",
@@ -406,6 +416,7 @@ describe("FulfillmentDetailsStep utils", () => {
           isDefault: false,
           phoneNumber: "1234567890",
           phoneNumberCountryCode: "US",
+          phoneNumberParsed: { display: "+1 1234567890" },
           address: {
             name: "John Doe",
             addressLine1: "123 Main St",
@@ -422,6 +433,7 @@ describe("FulfillmentDetailsStep utils", () => {
           isDefault: true,
           phoneNumber: "9876543210",
           phoneNumberCountryCode: "CA",
+          phoneNumberParsed: { display: "+1 9876543210" },
           address: {
             name: "Jane Smith",
             addressLine1: "456 Oak Ave",
@@ -463,6 +475,7 @@ describe("FulfillmentDetailsStep utils", () => {
           isDefault: false,
           phoneNumber: "1234567890",
           phoneNumberCountryCode: "US",
+          phoneNumberParsed: { display: "+1 1234567890" },
           address: {
             name: "John Doe",
             addressLine1: "123 Main St",
@@ -479,6 +492,7 @@ describe("FulfillmentDetailsStep utils", () => {
           isDefault: true,
           phoneNumber: "9876543210",
           phoneNumberCountryCode: "CA",
+          phoneNumberParsed: { display: "+1 9876543210" },
           address: {
             name: "Jane Smith",
             addressLine1: "456 Oak Ave",
@@ -520,6 +534,7 @@ describe("FulfillmentDetailsStep utils", () => {
           isDefault: false,
           phoneNumber: "1234567890",
           phoneNumberCountryCode: "US",
+          phoneNumberParsed: { display: "+1 1234567890" },
           address: {
             name: "John Doe",
             addressLine1: "123 Main St",
@@ -536,6 +551,7 @@ describe("FulfillmentDetailsStep utils", () => {
           isDefault: true,
           phoneNumber: "9876543210",
           phoneNumberCountryCode: "XX",
+          phoneNumberParsed: null,
           address: {
             name: "Jane Smith",
             addressLine1: "456 Oak Ave",
@@ -579,6 +595,7 @@ describe("FulfillmentDetailsStep utils", () => {
           isDefault: false,
           phoneNumber: "1234567890",
           phoneNumberCountryCode: "US",
+          phoneNumberParsed: { display: "+1 1234567890" },
           address: {
             name: "John Doe",
             addressLine1: "123 Main St",
@@ -595,6 +612,7 @@ describe("FulfillmentDetailsStep utils", () => {
           isDefault: true,
           phoneNumber: "9876543210",
           phoneNumberCountryCode: "CA",
+          phoneNumberParsed: { display: "+1 9876543210" },
           address: {
             name: "Jane Smith",
             addressLine1: "456 Oak Ave",
@@ -620,6 +638,7 @@ describe("FulfillmentDetailsStep utils", () => {
           isDefault: false,
           phoneNumber: "1234567890",
           phoneNumberCountryCode: "XX",
+          phoneNumberParsed: null,
           address: {
             name: "Invalid Address",
             addressLine1: "123 Invalid St",
@@ -636,6 +655,7 @@ describe("FulfillmentDetailsStep utils", () => {
           isDefault: false,
           phoneNumber: "9876543210",
           phoneNumberCountryCode: "US",
+          phoneNumberParsed: { display: "+1 9876543210" },
           address: {
             name: "Valid Address",
             addressLine1: "456 Valid Ave",
@@ -661,6 +681,7 @@ describe("FulfillmentDetailsStep utils", () => {
           isDefault: false,
           phoneNumber: "1234567890",
           phoneNumberCountryCode: "US",
+          phoneNumberParsed: { display: "+1 1234567890" },
           address: {
             name: "Valid Address",
             addressLine1: "123 Main St",
@@ -677,6 +698,7 @@ describe("FulfillmentDetailsStep utils", () => {
           isDefault: true,
           phoneNumber: "9876543210",
           phoneNumberCountryCode: "XX",
+          phoneNumberParsed: null,
           address: {
             name: "Default Invalid",
             addressLine1: "456 Invalid Ave",
@@ -702,6 +724,7 @@ describe("FulfillmentDetailsStep utils", () => {
           isDefault: false,
           phoneNumber: "1234567890",
           phoneNumberCountryCode: "US",
+          phoneNumberParsed: { display: "+1 1234567890" },
           address: {
             name: "Valid Address",
             addressLine1: "123 Main St",
@@ -718,6 +741,7 @@ describe("FulfillmentDetailsStep utils", () => {
           isDefault: true,
           phoneNumber: "9876543210",
           phoneNumberCountryCode: "CA",
+          phoneNumberParsed: { display: "+1 9876543210" },
           address: {
             name: "Default Valid",
             addressLine1: "456 Valid Ave",

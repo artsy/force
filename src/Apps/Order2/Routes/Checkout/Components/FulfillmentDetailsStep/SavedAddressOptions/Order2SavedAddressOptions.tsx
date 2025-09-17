@@ -15,7 +15,6 @@ import {
   countryNameFromAlpha2,
 } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/utils"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
-import { formatPhoneNumber } from "Apps/Order2/Utils/addressUtils"
 import type { FormikContextWithAddress } from "Components/Address/AddressFormFields"
 import { useFormikContext } from "formik"
 import { useCallback, useState } from "react"
@@ -99,13 +98,8 @@ export const SavedAddressOptions = ({
       </Text>{" "}
       <Spacer y={2} />
       {savedAddresses.map(processedAddress => {
-        const {
-          address,
-          isValid,
-          internalID,
-          phoneNumber,
-          phoneNumberCountryCode,
-        } = processedAddress
+        const { address, isValid, internalID, phoneNumberParsed } =
+          processedAddress
         const isSelected = selectedAddressID === internalID
         const backgroundColor = isSelected ? "mono5" : "mono0"
         const textColor = isSelected ? "mono100" : "mono60"
@@ -150,9 +144,9 @@ export const SavedAddressOptions = ({
                   </Text>
                 )}
 
-                {phoneNumber && (
+                {phoneNumberParsed?.display && (
                   <Text variant="xs" fontWeight="normal" color={textColor}>
-                    {formatPhoneNumber(phoneNumber, phoneNumberCountryCode)}
+                    {phoneNumberParsed.display}
                   </Text>
                 )}
               </Flex>
