@@ -2,7 +2,7 @@
 
 ## Package Resolutions for Security Vulnerabilities
 
-Run `yarn npm audit --severity critical --recursive` to audit, adjusting the `severity` as needed. The `--recursive` will also check transitive deps, which is increasingly becoming necessary due to supply chain attacks.
+Run `yarn npm audit --severity critical --recursive` to audit, adjusting the `severity` as needed. The `--recursive` flag will also check transitive deps, which is increasingly becoming necessary due to supply chain attacks.
 
 The following resolutions in `package.json` are specifically added to address critical security vulnerabilities:
 

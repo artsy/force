@@ -8843,7 +8843,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"express-ipfilter@npm:~0.2":
+"express-ipfilter@npm:0.2.6":
   version: 0.2.6
   resolution: "express-ipfilter@npm:0.2.6"
   dependencies:
@@ -9417,7 +9417,7 @@ __metadata:
     ejs: "npm:3.1.10"
     eventemitter3: "npm:4.0.7"
     express: "npm:4.19.2"
-    express-ipfilter: "npm:~0.2"
+    express-ipfilter: "npm:0.2.6"
     express-request-id: "npm:1.4.0"
     farce: "npm:0.4.5"
     formik: "npm:^2.2.9"
@@ -9438,7 +9438,7 @@ __metadata:
     jest-junit: "npm:^15.0.0"
     jest-styled-components: "npm:7.2.0"
     jest-watch-typeahead: "npm:^2.2.2"
-    jsdom: "npm:~20.0"
+    jsdom: "npm:20.0.3"
     jwt-decode: "npm:2.2.0"
     lint-staged: "npm:10.2.6"
     localforage: "npm:^1.10.0"
@@ -9498,7 +9498,7 @@ __metadata:
     storybook-states: "npm:1.2.0"
     styled-components: "npm:^6.1.13"
     styled-system: "npm:5.1.5"
-    superagent: "npm:~3.8"
+    superagent: "npm:3.8.3"
     tti-polyfill: "npm:0.2.2"
     typescript: "npm:^5.6.3"
     typescript-styled-plugin: "npm:0.15.0"
@@ -12082,7 +12082,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jsdom@npm:^20.0.0, jsdom@npm:~20.0":
+"jsdom@npm:20.0.3, jsdom@npm:^20.0.0":
   version: 20.0.3
   resolution: "jsdom@npm:20.0.3"
   dependencies:
@@ -17519,7 +17519,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"superagent@npm:^3.5.0, superagent@npm:~3.8":
+"superagent@npm:3.8.3, superagent@npm:^3.5.0":
   version: 3.8.3
   resolution: "superagent@npm:3.8.3"
   dependencies:
