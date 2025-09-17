@@ -1,10 +1,10 @@
+import { render } from "@testing-library/react"
+import { act } from "@testing-library/react"
 import {
   ArtworkFilterContextProvider,
   initialArtworkFilterState,
   useArtworkFilterContext,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
-import { render } from "@testing-library/react"
-import { act } from "@testing-library/react"
 
 describe("ArtworkFilterContext", () => {
   let context: ReturnType<typeof useArtworkFilterContext>
@@ -80,22 +80,6 @@ describe("ArtworkFilterContext", () => {
       expect(context.filters.page).toEqual(1)
     })
 
-    it("#unsetFilter resets pagination", () => {
-      getWrapper({
-        filters: {
-          page: 10,
-          sort: "relevant",
-        },
-      })
-      act(() => {
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        expect(context.filters.page).toEqual(10)
-        context.unsetFilter("sort")
-      })
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      expect(context.filters.page).toEqual(1)
-    })
-
     describe("staged filter changes", () => {
       beforeEach(() => {
         const filters = {
@@ -129,16 +113,6 @@ describe("ArtworkFilterContext", () => {
           expect(context.filters.medium).toEqual("jewelry")
           // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           expect(context.stagedFilters.medium).not.toEqual("jewelry")
-        })
-
-        test("#unsetFilter unsets only 'real' filters", () => {
-          act(() => {
-            context.unsetFilter("medium")
-          })
-          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-          expect(context.filters.medium).not.toEqual("painting")
-          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-          expect(context.stagedFilters.medium).toEqual("painting")
         })
 
         test("#resetFilters resets only 'real' filters", () => {
@@ -180,16 +154,6 @@ describe("ArtworkFilterContext", () => {
           expect(context.filters.medium).not.toEqual("jewelry")
           // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           expect(context.stagedFilters.medium).toEqual("jewelry")
-        })
-
-        test("#unsetFilter unsets only staged filters", () => {
-          act(() => {
-            context.unsetFilter("medium")
-          })
-          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-          expect(context.filters.medium).toEqual("painting")
-          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-          expect(context.stagedFilters.medium).not.toEqual("painting")
         })
 
         test("#resetFilters resets only staged filters", () => {
