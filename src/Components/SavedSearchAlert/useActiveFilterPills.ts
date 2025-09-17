@@ -3,10 +3,10 @@ import {
   useArtworkFilterContext,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import type { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes"
+import { allowedFilters } from "Components/ArtworkFilter/Utils/allowedFilters"
 import { DEFAULT_METRIC } from "Utils/metrics"
 import { isArray } from "lodash"
 import { extractPillsFromCriteria } from "./Utils/extractPills"
-import { allowedFilters } from "Components/ArtworkFilter/Utils/allowedFilters"
 import type { FilterPill } from "./types"
 
 export const useActiveFilterPills = (defaultPills: FilterPill[] = []) => {

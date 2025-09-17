@@ -12,7 +12,7 @@ interface SignedFilterProps {
 }
 
 export const SignedFilter: React.FC<SignedFilterProps> = ({ expanded }) => {
-  const { unsetFilter, setFilter } = useArtworkFilterContext()
+  const { setFilter } = useArtworkFilterContext()
   const currentSelectedFilters = useCurrentlySelectedFilters()
 
   const filtersCount = useFilterLabelCountByKey(
@@ -26,7 +26,7 @@ export const SignedFilter: React.FC<SignedFilterProps> = ({ expanded }) => {
     if (selected) {
       setFilter("signed", true)
     } else {
-      unsetFilter("signed")
+      setFilter("signed", false)
     }
   }
 

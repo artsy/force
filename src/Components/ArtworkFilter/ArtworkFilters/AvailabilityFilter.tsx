@@ -14,7 +14,7 @@ interface AvailabilityFilterProps {
 export const AvailabilityFilter: React.FC<AvailabilityFilterProps> = ({
   expanded,
 }) => {
-  const { unsetFilter, setFilter } = useArtworkFilterContext()
+  const { setFilter } = useArtworkFilterContext()
   const currentSelectedFilters = useCurrentlySelectedFilters()
 
   const filtersCount = useFilterLabelCountByKey(
@@ -28,7 +28,7 @@ export const AvailabilityFilter: React.FC<AvailabilityFilterProps> = ({
     if (selected) {
       setFilter("forSale", true)
     } else {
-      unsetFilter("forSale")
+      setFilter("forSale", false)
     }
   }
 

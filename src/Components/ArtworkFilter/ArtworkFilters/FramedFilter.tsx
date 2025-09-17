@@ -12,7 +12,7 @@ interface FramedFilterProps {
 }
 
 export const FramedFilter: React.FC<FramedFilterProps> = ({ expanded }) => {
-  const { unsetFilter, setFilter } = useArtworkFilterContext()
+  const { setFilter } = useArtworkFilterContext()
   const currentSelectedFilters = useCurrentlySelectedFilters()
 
   const filtersCount = useFilterLabelCountByKey(
@@ -26,7 +26,7 @@ export const FramedFilter: React.FC<FramedFilterProps> = ({ expanded }) => {
     if (selected) {
       setFilter("framed", true)
     } else {
-      unsetFilter("framed")
+      setFilter("framed", false)
     }
   }
 

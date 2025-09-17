@@ -197,7 +197,6 @@ export interface ArtworkFilterContextProps {
   rangeToTuple: (name: keyof ArtworkFilters) => [number, number]
   resetFilters: () => void
   setFilter: (name: keyof ArtworkFilters, value: any) => void
-  unsetFilter: (name: keyof ArtworkFilters) => void
 
   // Staging filter changes
   shouldStageFilterChanges?: boolean
@@ -227,8 +226,6 @@ export const ArtworkFilterContext =
     // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     setFilter: null,
     sortOptions: [],
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    unsetFilter: null,
     // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     ZeroState: null,
     mountedContext: false,
@@ -378,16 +375,6 @@ export const ArtworkFilterContextProvider: React.FC<
       dispatchOrStage(action)
     },
 
-    unsetFilter: name => {
-      const action: ArtworkFiltersAction = {
-        type: "UNSET",
-        payload: {
-          name,
-        },
-      }
-      dispatchOrStage(action)
-    },
-
     resetFilters: () => {
       const action: ArtworkFiltersAction = {
         type: "RESET",
@@ -427,7 +414,7 @@ export const ArtworkFilterContextProvider: React.FC<
 
 type ArtworkFiltersAction =
   | {
-      type: "SET" | "UNSET" | "SET_FILTERS" | "SET_STAGED_FILTERS"
+      type: "SET" | "SET_FILTERS" | "SET_STAGED_FILTERS"
       payload: { name: keyof ArtworkFilters; value?: any }
     }
   | {
@@ -509,57 +496,6 @@ const artworkFilterReducer = (
       })
 
       delete state.reset
-
-      return {
-        ...state,
-        ...filterState,
-      }
-    }
-
-    /**
-     * Unsetting a filter
-     */
-    case "UNSET": {
-      const { name } = action.payload as { name: keyof ArtworkFilters }
-
-      let filterState: ArtworkFilters = {
-        page: 1,
-      }
-
-      if (name === "medium") {
-        filterState = {
-          medium: "*",
-        }
-      }
-      if (name === "page") {
-        filterState = {
-          page: 1,
-        }
-      }
-
-      arrayFilterTypes.forEach(filter => {
-        if (name === filter) {
-          filterState[name as string] = []
-        }
-      })
-
-      const filters: Array<keyof ArtworkFilters> = [
-        "acquireable",
-        "atAuction",
-        "color",
-        "forSale",
-        "framed",
-        "includeArtworksByFollowedArtists",
-        "inquireableOnly",
-        "offerable",
-        "partnerID",
-        "signed",
-      ]
-      filters.forEach(filter => {
-        if (name === filter) {
-          filterState[name as string] = null
-        }
-      })
 
       return {
         ...state,
