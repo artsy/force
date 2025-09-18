@@ -47,9 +47,6 @@ export const CollectionArtworksFilter: React.FC<
   const enableShowOnlyFramedArtworksFilter = useFlag(
     "onyx_only_framed_artworks_filter",
   )
-  const enableShowOnlySignedArtworksFilter = useFlag(
-    "onyx_only_signed_artworks_filter",
-  )
 
   const { relay, collection, aggregations, counts } = props
   const { slug, query } = collection
@@ -75,7 +72,7 @@ export const CollectionArtworksFilter: React.FC<
       <ColorFilter expanded />
       <PartnersFilter expanded />
       {enableShowOnlyFramedArtworksFilter && <FramedFilter expanded />}
-      {enableShowOnlySignedArtworksFilter && <SignedFilter expanded />}
+      <SignedFilter expanded />
     </Join>
   )
 

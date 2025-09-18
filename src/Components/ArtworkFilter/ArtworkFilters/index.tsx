@@ -29,9 +29,6 @@ export const ArtworkFilters: React.FC<
   const enableShowOnlyFramedArtworksFilter = useFlag(
     "onyx_only_framed_artworks_filter",
   )
-  const enableShowOnlySignedArtworksFilter = useFlag(
-    "onyx_only_signed_artworks_filter",
-  )
   const { user } = props
 
   return (
@@ -51,7 +48,7 @@ export const ArtworkFilters: React.FC<
       <ColorFilter expanded />
       <PartnersFilter expanded />
       {enableShowOnlyFramedArtworksFilter && <FramedFilter expanded />}
-      {enableShowOnlySignedArtworksFilter && <SignedFilter expanded />}
+      <SignedFilter expanded />
     </Join>
   )
 }

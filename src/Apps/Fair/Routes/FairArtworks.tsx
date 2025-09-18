@@ -54,9 +54,6 @@ const FairArtworksFilter: React.FC<
   const enableShowOnlyFramedArtworksFilter = useFlag(
     "onyx_only_framed_artworks_filter",
   )
-  const enableShowOnlySignedArtworksFilter = useFlag(
-    "onyx_only_signed_artworks_filter",
-  )
 
   const { filtered_artworks, sidebarAggregations } = fair
 
@@ -89,7 +86,7 @@ const FairArtworksFilter: React.FC<
       <TimePeriodFilter expanded />
       <ColorFilter expanded />
       {enableShowOnlyFramedArtworksFilter && <FramedFilter expanded />}
-      {enableShowOnlySignedArtworksFilter && <SignedFilter expanded />}
+      <SignedFilter expanded />
     </Join>
   )
 

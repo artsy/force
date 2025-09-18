@@ -20,10 +20,6 @@ export const SearchResultsArtworksFilters = () => {
   const enableShowOnlyFramedArtworksFilter = useFlag(
     "onyx_only_framed_artworks_filter",
   )
-
-  const enableShowOnlySignedArtworksFilter = useFlag(
-    "onyx_only_signed_artworks_filter",
-  )
   return (
     <Join separator={<Spacer y={4} />}>
       <ArtistsFilter expanded />
@@ -40,7 +36,7 @@ export const SearchResultsArtworksFilters = () => {
       <ColorFilter expanded />
       <PartnersFilter expanded />
       {enableShowOnlyFramedArtworksFilter && <FramedFilter expanded />}
-      {enableShowOnlySignedArtworksFilter && <SignedFilter expanded />}
+      <SignedFilter expanded />
     </Join>
   )
 }

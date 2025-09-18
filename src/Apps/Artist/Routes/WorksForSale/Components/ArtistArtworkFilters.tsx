@@ -28,9 +28,6 @@ export const ArtistArtworkFilters: React.FC<
     "onyx_only_framed_artworks_filter",
   )
   const { user } = useSystemContext()
-  const enableShowOnlySignedArtworksFilter = useFlag(
-    "onyx_only_signed_artworks_filter",
-  )
 
   return (
     <Join separator={<Spacer y={4} />}>
@@ -50,7 +47,7 @@ export const ArtistArtworkFilters: React.FC<
       <ColorFilter />
       <PartnersFilter />
       {enableShowOnlyFramedArtworksFilter && <FramedFilter />}
-      {enableShowOnlySignedArtworksFilter && <SignedFilter />}
+      <SignedFilter />
     </Join>
   )
 }
