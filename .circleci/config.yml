@@ -235,6 +235,14 @@ jobs:
     executor: node-executor
     steps:
       - checkout
+      - run:
+          name: Check if yarn.lock changed
+          command: |
+            if git diff HEAD~1 --name-only | grep -q "yarn.lock"; then
+              echo "yarn.lock changed, checking vulnerabilities"
+            else
+              circleci-agent step halt
+            fi
       - node/install-packages:
           pkg-manager: yarn
       - run:
