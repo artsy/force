@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<170b862f74dcbb4aa784de96886da136>>
+ * @generated SignedSource<<e3bd9115664c4cfad4bfc3ad568c0cb9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -88,6 +88,13 @@ return {
         "name": "artwork",
         "plural": false,
         "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "diameterCm",
+            "storageKey": null
+          },
           {
             "alias": null,
             "args": null,
@@ -186,7 +193,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "bde4254c50dd5f6eb8696628926e0325",
+    "cacheID": "6c66572ea9e9e302c8783b3948135b4c",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -196,6 +203,7 @@ return {
           "plural": false,
           "type": "Artwork"
         },
+        "artwork.diameterCm": (v1/*: any*/),
         "artwork.heightCm": (v1/*: any*/),
         "artwork.id": {
           "enumValues": null,
@@ -224,7 +232,7 @@ return {
     },
     "name": "ViewInRoomTestQuery",
     "operationKind": "query",
-    "text": "query ViewInRoomTestQuery {\n  artwork(id: \"example\") {\n    ...ViewInRoom_artwork\n    id\n  }\n}\n\nfragment ViewInRoomArtwork_artwork on Artwork {\n  widthCm\n  heightCm\n  image {\n    resized(width: 800, height: 800, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n\nfragment ViewInRoom_artwork on Artwork {\n  ...ViewInRoomArtwork_artwork\n}\n"
+    "text": "query ViewInRoomTestQuery {\n  artwork(id: \"example\") {\n    ...ViewInRoom_artwork\n    id\n  }\n}\n\nfragment ViewInRoomArtwork_artwork on Artwork {\n  diameterCm\n  widthCm\n  heightCm\n  image {\n    resized(width: 800, height: 800, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n\nfragment ViewInRoom_artwork on Artwork {\n  ...ViewInRoomArtwork_artwork\n}\n"
   }
 };
 })();

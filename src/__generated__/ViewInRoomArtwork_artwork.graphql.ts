@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<239770042dd44af51697b2300b1dba37>>
+ * @generated SignedSource<<8ede9ac78c452c148468f791eef6e361>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,7 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ViewInRoomArtwork_artwork$data = {
+  readonly diameterCm: number | null | undefined;
   readonly heightCm: number | null | undefined;
   readonly image: {
     readonly resized: {
@@ -34,6 +35,13 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "ViewInRoomArtwork_artwork",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "diameterCm",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -124,6 +132,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "a57caaf479f5d272ebb820fe66a7add8";
+(node as any).hash = "b62ef21ab731634003ef82bbd9c739d0";
 
 export default node;
