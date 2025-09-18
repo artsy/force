@@ -27,7 +27,7 @@ describe(FramedFilter, () => {
     expect(currentArtworkFilterContext().filters?.framed).toBeTruthy()
 
     userEvent.click(screen.getAllByRole("checkbox")[0])
-    expect(currentArtworkFilterContext().filters?.framed).toBeNull()
+    expect(currentArtworkFilterContext().filters?.framed).toBeFalsy()
   })
 
   it("clears local input state after Clear All", () => {

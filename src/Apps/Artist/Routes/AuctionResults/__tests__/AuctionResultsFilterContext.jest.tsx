@@ -164,44 +164,6 @@ describe("AuctionResultsFilterContext", () => {
         })
       })
 
-      it("#unsetFilter", () => {
-        return new Promise<void>(done => {
-          getWrapper()
-          act(() => {
-            context.setFilter?.("page", 10)
-            setTimeout(() => {
-              expect(context.filters?.page).toEqual(10)
-              act(() => {
-                context.unsetFilter?.("page")
-                setTimeout(() => {
-                  expect(context.filters?.page).toEqual(1)
-                  done()
-                })
-              })
-            })
-          })
-        })
-      })
-
-      it("#unsetFilter resets pagination", () => {
-        return new Promise<void>(done => {
-          getWrapper({
-            filters: {
-              page: 10,
-              sort: "relevant",
-            },
-          })
-          act(() => {
-            expect(context.filters?.page).toEqual(10)
-            context.unsetFilter?.("sort")
-            setTimeout(() => {
-              expect(context.filters?.page).toEqual(1)
-              done()
-            })
-          })
-        })
-      })
-
       it("#resetFilters", () => {
         getWrapper({
           filters: {
@@ -251,14 +213,6 @@ describe("AuctionResultsFilterContext", () => {
         })
         expect(context.filters?.categories).not.toEqual("sculpture")
         expect(context.stagedFilters?.categories).toEqual("sculpture")
-      })
-
-      test("#unsetFilter unsets only staged filters", () => {
-        act(() => {
-          context.unsetFilter?.("categories")
-        })
-        expect(context.filters?.categories).toEqual(["painting"])
-        expect(context.stagedFilters?.categories).not.toEqual(["painting"])
       })
 
       test("#resetFilters resets only staged filters", () => {

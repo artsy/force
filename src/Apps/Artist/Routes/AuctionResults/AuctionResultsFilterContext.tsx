@@ -45,7 +45,7 @@ interface AuctionResultsFiltersActionPayload {
 }
 
 interface AuctionResultsFiltersAction {
-  type: "SET" | "UNSET" | "RESET" | "SET_FILTERS" | "SET_STAGED_FILTERS"
+  type: "SET" | "RESET" | "SET_FILTERS" | "SET_STAGED_FILTERS"
   payload: AuctionResultsFiltersActionPayload | null
 }
 
@@ -57,7 +57,6 @@ export interface AuctionResultsFilterContextProps {
   onChange?: (filterState) => void
   resetFilters?: (() => void) | null
   setFilter?: ((name: ChangableFilter, value: any) => void) | null
-  unsetFilter?: ((name: ChangableFilter) => void) | null
   onFilterClick?: (
     key: ChangableFilter,
     value: string,
@@ -86,7 +85,6 @@ export const AuctionResultsFilterContext =
     }),
     setFilter: null,
     resetFilters: null,
-    unsetFilter: null,
     ZeroState: null,
   })
 
@@ -197,16 +195,6 @@ export const AuctionResultsFilterContextProvider: React.FC<
         },
       }
 
-      dispatchOrStage(action)
-    },
-
-    unsetFilter: name => {
-      const action: AuctionResultsFiltersAction = {
-        type: "UNSET",
-        payload: {
-          name,
-        },
-      }
       dispatchOrStage(action)
     },
 
@@ -321,35 +309,6 @@ const AuctionResultsFilterReducer = (
       }
 
       delete state.reset
-
-      return {
-        ...state,
-        ...filterState,
-      }
-    }
-
-    /**
-     * Unsetting a filter
-     */
-    case "UNSET": {
-      const { name } = action.payload || {}
-
-      const filterState: AuctionResultsFilters = {
-        page: 1,
-      }
-
-      const filters: Array<keyof AuctionResultsFilters> = ["sort"]
-      filters.forEach(filter => {
-        if (name === filter) {
-          filterState[name as string] = null
-        }
-      })
-
-      arrayFilterTypes.forEach(filter => {
-        if (name === filter) {
-          filterState[name as string] = []
-        }
-      })
 
       return {
         ...state,

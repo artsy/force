@@ -7,6 +7,14 @@ import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 
+jest.mock("System/Hooks/useSystemContext", () => ({
+  useSystemContext: () => ({
+    user: {
+      id: "logged-in-user",
+    },
+  }),
+}))
+
 describe("AuctionResult", () => {
   const { renderWithRelay } = setupTestWrapperTL<AuctionResultTestQuery>({
     Component: (props: any) => {

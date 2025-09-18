@@ -12,7 +12,7 @@ interface FramedFilterProps {
 }
 
 export const FramedFilter: React.FC<FramedFilterProps> = ({ expanded }) => {
-  const { unsetFilter, setFilter } = useArtworkFilterContext()
+  const { setFilter } = useArtworkFilterContext()
   const currentSelectedFilters = useCurrentlySelectedFilters()
 
   const filtersCount = useFilterLabelCountByKey(
@@ -22,19 +22,11 @@ export const FramedFilter: React.FC<FramedFilterProps> = ({ expanded }) => {
 
   const isSelected = currentSelectedFilters?.framed
 
-  const handleOnSelect = (selected: boolean) => {
-    if (selected) {
-      setFilter("framed", true)
-    } else {
-      unsetFilter("framed")
-    }
-  }
-
   return (
     <FilterExpandable label={label} expanded={isSelected || expanded}>
       <Checkbox
         selected={!!currentSelectedFilters?.framed}
-        onSelect={handleOnSelect}
+        onSelect={value => setFilter("framed", value)}
         my={1}
       >
         Show only framed works

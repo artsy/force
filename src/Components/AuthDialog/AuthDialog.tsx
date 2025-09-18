@@ -42,10 +42,18 @@ export const AuthDialog: FC<React.PropsWithChildren<AuthDialogProps>> = ({
     options.onClose?.()
   }
 
+  const isCloseable = options.isCloseable ?? true
+
   return (
     <ModalDialog
-      onClose={handleClose}
-      title={<AuthDialogTitle title={title} onClose={handleClose} p={2} />}
+      onClose={isCloseable ? handleClose : () => {}}
+      title={
+        <AuthDialogTitle
+          title={title}
+          onClose={isCloseable ? handleClose : undefined}
+          p={2}
+        />
+      }
       hasLogo
       m={[1, 2]}
       {...(options.image

@@ -1,13 +1,17 @@
+import { ContextModule, Intent } from "@artsy/cohesion"
 import { Column, GridColumns, Join, Spacer, Text } from "@artsy/palette"
 import { ArtistAuctionResultItemFragmentContainer } from "Apps/Artist/Routes/AuctionResults/ArtistAuctionResultItem"
 import { AuctionResultImage } from "Apps/Artist/Routes/AuctionResults/SingleAuctionResultPage/AuctionResultImage"
 import { AuctionResultMetaData } from "Apps/Artist/Routes/AuctionResults/SingleAuctionResultPage/AuctionResultMetaData"
 import { AuctionResultPrice } from "Apps/Artist/Routes/AuctionResults/SingleAuctionResultPage/AuctionResultPrice"
 import { AuctionResultTitleInfo } from "Apps/Artist/Routes/AuctionResults/SingleAuctionResultPage/AuctionResultTitleInfo"
+import { useAuthDialog } from "Components/AuthDialog"
 import { MetaTags } from "Components/MetaTags"
 import { TopContextBar } from "Components/TopContextBar"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { extractNodes } from "Utils/extractNodes"
 import type { AuctionResult_auctionResult$data } from "__generated__/AuctionResult_auctionResult.graphql"
+import { useEffect, useRef } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
 interface AuctionResultProps {
@@ -18,10 +22,34 @@ export const AuctionResult: React.FC<
   React.PropsWithChildren<AuctionResultProps>
 > = ({ auctionResult }) => {
   const { comparableAuctionResults, title, artist, internalID } = auctionResult
+  const { user } = useSystemContext()
+  const { showAuthDialog } = useAuthDialog()
 
   const results = extractNodes(comparableAuctionResults)
 
   if (!artist) return null
+
+  const isMounted = useRef(false)
+
+  useEffect(() => {
+    if (isMounted.current) return
+    if (!artist) return
+
+    isMounted.current = true
+
+    if (!user) {
+      showAuthDialog({
+        options: {
+          isCloseable: false,
+          title: `Sign up or log in to see auction results for ${artist.name}`,
+        },
+        analytics: {
+          contextModule: ContextModule.auctionResults,
+          intent: Intent.viewAuctionResults,
+        },
+      })
+    }
+  }, [artist, user, showAuthDialog])
 
   return (
     <>
