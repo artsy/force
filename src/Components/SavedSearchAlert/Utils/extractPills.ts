@@ -180,34 +180,42 @@ export const extractPillsFromCriteria = ({
         break
       }
       case "includeArtworksByFollowedArtists": {
-        result = {
-          field: paramName,
-          value: paramValue,
-          displayValue: "Artists You Follow",
+        if (paramValue) {
+          result = {
+            field: paramName,
+            value: paramValue,
+            displayValue: "Artists You Follow",
+          }
         }
         break
       }
       case "forSale": {
-        result = {
-          field: paramName,
-          value: paramValue,
-          displayValue: "For sale",
+        if (paramValue) {
+          result = {
+            field: paramName,
+            value: paramValue,
+            displayValue: "For sale",
+          }
         }
         break
       }
       case "framed": {
-        result = {
-          field: paramName,
-          value: paramValue,
-          displayValue: "Framed",
+        if (paramValue) {
+          result = {
+            field: paramName,
+            value: paramValue,
+            displayValue: "Framed",
+          }
         }
         break
       }
       case "signed": {
-        result = {
-          field: paramName,
-          value: paramValue,
-          displayValue: "Signed",
+        if (paramValue) {
+          result = {
+            field: paramName,
+            value: paramValue,
+            displayValue: "Signed",
+          }
         }
         break
       }

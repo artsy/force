@@ -27,7 +27,7 @@ describe(AvailabilityFilter, () => {
     expect(currentArtworkFilterContext().filters?.forSale).toBeTruthy()
 
     userEvent.click(screen.getAllByRole("checkbox")[0])
-    expect(currentArtworkFilterContext().filters?.forSale).toBeNull()
+    expect(currentArtworkFilterContext().filters?.forSale).toBeFalsy()
   })
 
   it("clears local input state after Clear All", () => {
