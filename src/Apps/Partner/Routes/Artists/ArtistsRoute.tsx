@@ -24,12 +24,16 @@ export const ArtistsRoute: React.FC<
 
   const { jumpTo } = useJump()
 
+  const artistId = match.location.hash
+    ? match.location.hash.replace(/^#/, "")
+    : undefined
+
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    if (match.params.artistId && isLoaded && isMobile !== null) {
+    if (artistId && isLoaded && isMobile !== null) {
       jumpTo("PartnerArtistDetails")
     }
-  }, [isLoaded, isMobile, match.params.artistId])
+  }, [isLoaded, isMobile, artistId])
 
   return (
     <Box mt={4}>
@@ -42,10 +46,10 @@ export const ArtistsRoute: React.FC<
           <Separator />
         </Jump>
 
-        {match.params.artistId ? (
+        {artistId ? (
           <PartnerArtistDetailsRenderer
             partnerId={match.params.partnerId}
-            artistId={match.params.artistId}
+            artistId={artistId}
           />
         ) : (
           <PartnerArtistDetailsListRenderer
