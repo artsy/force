@@ -73,7 +73,7 @@ export const PartnerArtistList: React.FC<
                     key={artist.internalID}
                     to={
                       partner.displayFullPartnerPage
-                        ? `${partner.href}/artists/${artist.slug}`
+                        ? `${partner.href}/artists#${artist.slug}`
                         : `${artist.href}`
                     }
                     display="block"
