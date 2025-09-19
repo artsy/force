@@ -17,6 +17,7 @@ export type ProcessedUserAddress = FormikContextWithAddress & {
   isValid: boolean
   internalID: string
   isDefault: boolean
+  phoneNumberParsed?: { display: string | null | undefined } | null
 }
 
 export const normalizeAddress = (
@@ -56,6 +57,7 @@ export const processSavedAddresses = (
       isValid,
       internalID: address.internalID,
       isDefault: address.isDefault,
+      phoneNumberParsed: address.phoneNumberParsed,
     }
   })
   return sortAddressesByPriority(processedAddresses)

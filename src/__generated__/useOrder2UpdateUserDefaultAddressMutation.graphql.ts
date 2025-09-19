@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ef63dadfe33f76e2a91185c6dbf278cc>>
+ * @generated SignedSource<<59d361ce462399b78f3827d5481a41dd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -307,6 +307,30 @@ return {
                           (v3/*: any*/),
                           (v10/*: any*/),
                           (v11/*: any*/),
+                          {
+                            "alias": null,
+                            "args": null,
+                            "concreteType": "PhoneNumberType",
+                            "kind": "LinkedField",
+                            "name": "phoneNumberParsed",
+                            "plural": false,
+                            "selections": [
+                              {
+                                "alias": null,
+                                "args": [
+                                  {
+                                    "kind": "Literal",
+                                    "name": "format",
+                                    "value": "INTERNATIONAL"
+                                  }
+                                ],
+                                "kind": "ScalarField",
+                                "name": "display",
+                                "storageKey": "display(format:\"INTERNATIONAL\")"
+                              }
+                            ],
+                            "storageKey": null
+                          },
                           (v12/*: any*/),
                           (v14/*: any*/)
                         ],
@@ -366,12 +390,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "1dda61d2bf5de46a2110c714a1778fb7",
+    "cacheID": "f4bb75d1d01d54fe070b37097b99a45e",
     "id": null,
     "metadata": {},
     "name": "useOrder2UpdateUserDefaultAddressMutation",
     "operationKind": "mutation",
-    "text": "mutation useOrder2UpdateUserDefaultAddressMutation(\n  $input: UpdateUserDefaultAddressInput!\n) {\n  updateUserDefaultAddress(input: $input) {\n    me {\n      ...Order2DeliveryForm_me\n      id\n    }\n    userAddressOrErrors {\n      __typename\n      ... on UserAddress {\n        internalID\n        name\n        addressLine1\n        addressLine2\n        city\n        region\n        postalCode\n        country\n        phoneNumber\n        phoneNumberCountryCode\n        isDefault\n        id\n      }\n      ... on Errors {\n        errors {\n          code\n          message\n        }\n      }\n    }\n  }\n}\n\nfragment Order2DeliveryForm_me on Me {\n  addressConnection(first: 20) {\n    edges {\n      node {\n        internalID\n        addressLine1\n        addressLine2\n        city\n        region\n        postalCode\n        country\n        name\n        phoneNumber\n        phoneNumberCountryCode\n        isDefault\n        id\n      }\n    }\n  }\n}\n"
+    "text": "mutation useOrder2UpdateUserDefaultAddressMutation(\n  $input: UpdateUserDefaultAddressInput!\n) {\n  updateUserDefaultAddress(input: $input) {\n    me {\n      ...Order2DeliveryForm_me\n      id\n    }\n    userAddressOrErrors {\n      __typename\n      ... on UserAddress {\n        internalID\n        name\n        addressLine1\n        addressLine2\n        city\n        region\n        postalCode\n        country\n        phoneNumber\n        phoneNumberCountryCode\n        isDefault\n        id\n      }\n      ... on Errors {\n        errors {\n          code\n          message\n        }\n      }\n    }\n  }\n}\n\nfragment Order2DeliveryForm_me on Me {\n  addressConnection(first: 20) {\n    edges {\n      node {\n        internalID\n        addressLine1\n        addressLine2\n        city\n        region\n        postalCode\n        country\n        name\n        phoneNumber\n        phoneNumberCountryCode\n        phoneNumberParsed {\n          display(format: INTERNATIONAL)\n        }\n        isDefault\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

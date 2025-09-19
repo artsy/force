@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<83f7cca7fbc7fd01b32558a4ce266ecb>>
+ * @generated SignedSource<<c0eeec3e8e13c829816daa43cf9d9d67>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,6 +23,9 @@ export type Order2DeliveryForm_me$data = {
         readonly name: string | null | undefined;
         readonly phoneNumber: string | null | undefined;
         readonly phoneNumberCountryCode: string | null | undefined;
+        readonly phoneNumberParsed: {
+          readonly display: string | null | undefined;
+        } | null | undefined;
         readonly postalCode: string | null | undefined;
         readonly region: string | null | undefined;
       } | null | undefined;
@@ -144,6 +147,30 @@ const node: ReaderFragment = {
                 {
                   "alias": null,
                   "args": null,
+                  "concreteType": "PhoneNumberType",
+                  "kind": "LinkedField",
+                  "name": "phoneNumberParsed",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": [
+                        {
+                          "kind": "Literal",
+                          "name": "format",
+                          "value": "INTERNATIONAL"
+                        }
+                      ],
+                      "kind": "ScalarField",
+                      "name": "display",
+                      "storageKey": "display(format:\"INTERNATIONAL\")"
+                    }
+                  ],
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
                   "kind": "ScalarField",
                   "name": "isDefault",
                   "storageKey": null
@@ -162,6 +189,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "fb2497a6855fd1682173535ed3fb5410";
+(node as any).hash = "3e32ab95ddaf2511e2fc7afcb94c6243";
 
 export default node;
