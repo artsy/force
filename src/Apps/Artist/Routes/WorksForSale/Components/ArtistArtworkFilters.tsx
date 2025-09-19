@@ -16,7 +16,6 @@ import { SignedFilter } from "Components/ArtworkFilter/ArtworkFilters/SignedFilt
 import { SizeFilter } from "Components/ArtworkFilter/ArtworkFilters/SizeFilter"
 import { TimePeriodFilter } from "Components/ArtworkFilter/ArtworkFilters/TimePeriodFilter"
 import { WaysToBuyFilter } from "Components/ArtworkFilter/ArtworkFilters/WaysToBuyFilter"
-import { useFlag } from "@unleash/proxy-client-react"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 
 type ArtistArtworkFiltersProps = {}
@@ -24,9 +23,6 @@ type ArtistArtworkFiltersProps = {}
 export const ArtistArtworkFilters: React.FC<
   React.PropsWithChildren<ArtistArtworkFiltersProps>
 > = props => {
-  const enableShowOnlyFramedArtworksFilter = useFlag(
-    "onyx_only_framed_artworks_filter",
-  )
   const { user } = useSystemContext()
 
   return (
@@ -46,7 +42,7 @@ export const ArtistArtworkFilters: React.FC<
       <TimePeriodFilter />
       <ColorFilter />
       <PartnersFilter />
-      {enableShowOnlyFramedArtworksFilter && <FramedFilter />}
+      <FramedFilter />
       <SignedFilter />
     </Join>
   )
