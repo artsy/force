@@ -89,7 +89,7 @@ jobs:
               echo "Using .env.oss as .env"
               cp .env.oss .env
             fi
-            
+
             TESTS=$(circleci tests glob "playwright/e2e/**/*" | circleci tests split | paste -sd ' ')
             npx playwright test $TESTS
       - store_artifacts:
@@ -238,7 +238,8 @@ jobs:
       - run:
           name: Check if yarn.lock changed
           command: |
-            if git diff HEAD~1 --name-only | grep -q "yarn.lock"; then
+            MERGE_BASE=$(git merge-base HEAD origin/main)
+            if git diff --name-only $MERGE_BASE..HEAD | grep -q "yarn.lock"; then
               echo "yarn.lock changed, checking vulnerabilities"
             else
               circleci-agent step halt
