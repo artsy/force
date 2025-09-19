@@ -1,6 +1,5 @@
 import {
   countryCodePrefix,
-  formatPhoneNumber,
   getShippableCountries,
   isShippableAddress,
 } from "../addressUtils"
@@ -89,36 +88,6 @@ describe("addressUtils", () => {
     it("returns empty string for invalid country codes", () => {
       expect(countryCodePrefix("XX")).toBe("")
       expect(countryCodePrefix("")).toBe("")
-    })
-  })
-
-  describe("formatPhoneNumber", () => {
-    it("formats phone number with country code", () => {
-      expect(formatPhoneNumber("1234567890", "US")).toBe("+1 1234567890")
-    })
-
-    it("handles different country codes", () => {
-      expect(formatPhoneNumber("1234567890", "GB")).toBe("+44 1234567890")
-    })
-
-    it("returns empty string when phone number is missing", () => {
-      expect(formatPhoneNumber(null, "US")).toBe("")
-    })
-
-    it("returns phone number when country code is missing", () => {
-      expect(formatPhoneNumber("1234567890", null)).toBe("1234567890")
-    })
-
-    it("returns phone number without prefix for invalid country codes", () => {
-      expect(formatPhoneNumber("1234567890", "XX")).toBe("1234567890")
-    })
-
-    it("handles empty strings", () => {
-      expect(formatPhoneNumber("", "")).toBe("")
-    })
-
-    it("handles case-insensitive country codes", () => {
-      expect(formatPhoneNumber("1234567890", "us")).toBe("+1 1234567890")
     })
   })
 })

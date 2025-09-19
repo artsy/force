@@ -27,4 +27,17 @@ describe("ViewInRoomArtwork", () => {
     // Check that the component renders with some styling - the specific values may vary
     expect(container.innerHTML).toMatch(/width.*height.*margin/)
   })
+
+  it("works with diameter", () => {
+    const { container } = renderWithRelay({
+      Artwork: () => ({
+        widthCm: null,
+        heightCm: null,
+        diameterCm: 40,
+      }),
+    })
+
+    // Check that the component renders with some styling - the specific values may vary
+    expect(container.innerHTML).toMatch(/width.*height.*margin/)
+  })
 })

@@ -38,16 +38,17 @@ export const PartnerArtistDetails: React.FC<
 
   const {
     match: {
-      location: { pathname },
+      location: { pathname, hash },
     },
   } = useRouter()
 
   const artist = partnerArtist.node
-  const partnerArtistHref = `${partner.href}/artists/${artist.slug}`
+  const isArtistDetailsPath =
+    pathname === `${partner.href}/artists` && hash === `#${artist.slug}`
 
   return (
     <>
-      {pathname === partnerArtistHref && (
+      {isArtistDetailsPath && (
         <Meta
           name="description"
           content={`Discover and buy artworks by ${name}, available through ${partner.name} on Artsy. Browse paintings, prints, and more offered by the gallery.`}

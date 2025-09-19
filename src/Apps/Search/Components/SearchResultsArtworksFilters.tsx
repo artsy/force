@@ -14,16 +14,8 @@ import { SignedFilter } from "Components/ArtworkFilter/ArtworkFilters/SignedFilt
 import { SizeFilter } from "Components/ArtworkFilter/ArtworkFilters/SizeFilter"
 import { TimePeriodFilter } from "Components/ArtworkFilter/ArtworkFilters/TimePeriodFilter"
 import { WaysToBuyFilter } from "Components/ArtworkFilter/ArtworkFilters/WaysToBuyFilter"
-import { useFlag } from "@unleash/proxy-client-react"
 
 export const SearchResultsArtworksFilters = () => {
-  const enableShowOnlyFramedArtworksFilter = useFlag(
-    "onyx_only_framed_artworks_filter",
-  )
-
-  const enableShowOnlySignedArtworksFilter = useFlag(
-    "onyx_only_signed_artworks_filter",
-  )
   return (
     <Join separator={<Spacer y={4} />}>
       <ArtistsFilter expanded />
@@ -39,8 +31,8 @@ export const SearchResultsArtworksFilters = () => {
       <TimePeriodFilter expanded />
       <ColorFilter expanded />
       <PartnersFilter expanded />
-      {enableShowOnlyFramedArtworksFilter && <FramedFilter expanded />}
-      {enableShowOnlySignedArtworksFilter && <SignedFilter expanded />}
+      <FramedFilter expanded />
+      <SignedFilter expanded />
     </Join>
   )
 }

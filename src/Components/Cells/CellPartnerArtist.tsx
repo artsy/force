@@ -34,7 +34,7 @@ const CellPartnerArtist: FC<
 
   return (
     <RouterLink
-      to={`/partner/${partnerSlug}/artists/${artistSlug}`}
+      to={`/partner/${partnerSlug}/artists#${artistSlug}`}
       display="block"
       textDecoration="none"
       width={width}

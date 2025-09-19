@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<88b4ec92369a075c607a46a1b1c466b8>>
+ * @generated SignedSource<<761e5e7b0c0b6d049d28626e4ee4c50e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -158,6 +158,30 @@ v5 = [
     "args": null,
     "kind": "ScalarField",
     "name": "phoneNumberCountryCode",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "concreteType": "PhoneNumberType",
+    "kind": "LinkedField",
+    "name": "phoneNumberParsed",
+    "plural": false,
+    "selections": [
+      {
+        "alias": null,
+        "args": [
+          {
+            "kind": "Literal",
+            "name": "format",
+            "value": "INTERNATIONAL"
+          }
+        ],
+        "kind": "ScalarField",
+        "name": "display",
+        "storageKey": "display(format:\"INTERNATIONAL\")"
+      }
+    ],
     "storageKey": null
   },
   {
@@ -328,12 +352,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "46e915f99af0ce22e1b6a7ac90bee0a1",
+    "cacheID": "3bc2faa1861d0f520c56c8bdf3166492",
     "id": null,
     "metadata": {},
     "name": "useAddAddressMutation",
     "operationKind": "mutation",
-    "text": "mutation useAddAddressMutation(\n  $input: CreateUserAddressInput!\n) {\n  createUserAddress(input: $input) {\n    me {\n      ...SettingsShippingAddresses_me\n      id\n    }\n    userAddressOrErrors {\n      __typename\n      ... on UserAddress {\n        internalID\n        ...SettingsShippingAddress_address\n        id\n      }\n      ... on Errors {\n        errors {\n          message\n        }\n      }\n    }\n  }\n}\n\nfragment SettingsShippingAddress_address on UserAddress {\n  internalID\n  addressLine1\n  addressLine2\n  city\n  country\n  isDefault\n  name\n  phoneNumber\n  phoneNumberCountryCode\n  postalCode\n  region\n}\n\nfragment SettingsShippingAddresses_me on Me {\n  addresses: addressConnection {\n    edges {\n      node {\n        internalID\n        ...SettingsShippingAddress_address\n        id\n      }\n    }\n  }\n}\n"
+    "text": "mutation useAddAddressMutation(\n  $input: CreateUserAddressInput!\n) {\n  createUserAddress(input: $input) {\n    me {\n      ...SettingsShippingAddresses_me\n      id\n    }\n    userAddressOrErrors {\n      __typename\n      ... on UserAddress {\n        internalID\n        ...SettingsShippingAddress_address\n        id\n      }\n      ... on Errors {\n        errors {\n          message\n        }\n      }\n    }\n  }\n}\n\nfragment SettingsShippingAddress_address on UserAddress {\n  internalID\n  addressLine1\n  addressLine2\n  city\n  country\n  isDefault\n  name\n  phoneNumber\n  phoneNumberCountryCode\n  phoneNumberParsed {\n    display(format: INTERNATIONAL)\n  }\n  postalCode\n  region\n}\n\nfragment SettingsShippingAddresses_me on Me {\n  addresses: addressConnection {\n    edges {\n      node {\n        internalID\n        ...SettingsShippingAddress_address\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

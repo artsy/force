@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<087d004ee434d358f91911ab770a6b05>>
+ * @generated SignedSource<<76abb63b2d2335e29e4457e19bdc1887>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -160,6 +160,30 @@ return {
                       {
                         "alias": null,
                         "args": null,
+                        "concreteType": "PhoneNumberType",
+                        "kind": "LinkedField",
+                        "name": "phoneNumberParsed",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": [
+                              {
+                                "kind": "Literal",
+                                "name": "format",
+                                "value": "INTERNATIONAL"
+                              }
+                            ],
+                            "kind": "ScalarField",
+                            "name": "display",
+                            "storageKey": "display(format:\"INTERNATIONAL\")"
+                          }
+                        ],
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
                         "kind": "ScalarField",
                         "name": "postalCode",
                         "storageKey": null
@@ -188,12 +212,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "13ccce52168ae01cd11e504221862395",
+    "cacheID": "873bc54a5ddb8b278cceb2253d9694cb",
     "id": null,
     "metadata": {},
     "name": "settingsRoutes_ShippingRouteQuery",
     "operationKind": "query",
-    "text": "query settingsRoutes_ShippingRouteQuery {\n  me {\n    ...SettingsShippingRoute_me\n    id\n  }\n}\n\nfragment SettingsShippingAddress_address on UserAddress {\n  internalID\n  addressLine1\n  addressLine2\n  city\n  country\n  isDefault\n  name\n  phoneNumber\n  phoneNumberCountryCode\n  postalCode\n  region\n}\n\nfragment SettingsShippingAddresses_me on Me {\n  addresses: addressConnection {\n    edges {\n      node {\n        internalID\n        ...SettingsShippingAddress_address\n        id\n      }\n    }\n  }\n}\n\nfragment SettingsShippingRoute_me on Me {\n  ...SettingsShippingAddresses_me\n}\n"
+    "text": "query settingsRoutes_ShippingRouteQuery {\n  me {\n    ...SettingsShippingRoute_me\n    id\n  }\n}\n\nfragment SettingsShippingAddress_address on UserAddress {\n  internalID\n  addressLine1\n  addressLine2\n  city\n  country\n  isDefault\n  name\n  phoneNumber\n  phoneNumberCountryCode\n  phoneNumberParsed {\n    display(format: INTERNATIONAL)\n  }\n  postalCode\n  region\n}\n\nfragment SettingsShippingAddresses_me on Me {\n  addresses: addressConnection {\n    edges {\n      node {\n        internalID\n        ...SettingsShippingAddress_address\n        id\n      }\n    }\n  }\n}\n\nfragment SettingsShippingRoute_me on Me {\n  ...SettingsShippingAddresses_me\n}\n"
   }
 };
 })();

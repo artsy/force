@@ -26,7 +26,6 @@ import { getInitialFilterState } from "Components/ArtworkFilter/Utils/getInitial
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
 import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
 import { LazyArtworkGrid } from "Components/ArtworkGrid/LazyArtworkGrid"
-import { useFlag } from "@unleash/proxy-client-react"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
@@ -50,13 +49,6 @@ const FairArtworksFilter: React.FC<
   const { relay, fair } = props
   const { match } = useRouter()
   const { userPreferences } = useSystemContext()
-
-  const enableShowOnlyFramedArtworksFilter = useFlag(
-    "onyx_only_framed_artworks_filter",
-  )
-  const enableShowOnlySignedArtworksFilter = useFlag(
-    "onyx_only_signed_artworks_filter",
-  )
 
   const { filtered_artworks, sidebarAggregations } = fair
 
@@ -88,8 +80,8 @@ const FairArtworksFilter: React.FC<
       <ArtworkLocationFilter expanded />
       <TimePeriodFilter expanded />
       <ColorFilter expanded />
-      {enableShowOnlyFramedArtworksFilter && <FramedFilter expanded />}
-      {enableShowOnlySignedArtworksFilter && <SignedFilter expanded />}
+      <FramedFilter expanded />
+      <SignedFilter expanded />
     </Join>
   )
 

@@ -15055,6 +15055,7 @@ type Me implements Node {
     partnerId: String
     toBeReplied: Boolean
     type: ConversationsInputMode = USER
+    unreadByPartner: Boolean
   ): ConversationConnection
   counts: MeCounts
   createdAt(
@@ -19846,6 +19847,7 @@ type Query {
     partnerId: String
     toBeReplied: Boolean
     type: ConversationsInputMode = USER
+    unreadByPartner: Boolean
   ): ConversationConnection
 
   # A user's credit card
@@ -25813,6 +25815,7 @@ type Viewer {
     partnerId: String
     toBeReplied: Boolean
     type: ConversationsInputMode = USER
+    unreadByPartner: Boolean
   ): ConversationConnection
 
   # A user's credit card

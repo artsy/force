@@ -21,8 +21,7 @@ const ViewInRoomArtwork: React.FC<
   const image = artwork.image?.resized
 
   if (
-    !artwork.widthCm ||
-    !artwork.heightCm ||
+    !((artwork.widthCm && artwork.heightCm) || artwork.diameterCm) ||
     !image ||
     !image.src ||
     !image.width ||
@@ -31,11 +30,13 @@ const ViewInRoomArtwork: React.FC<
     return null
   }
 
-  const width = cmToPx(artwork.widthCm)
-  const height = cmToPx(artwork.heightCm)
+  const artworkWidth = (artwork.widthCm || artwork.diameterCm) as number
+  const artworkHeight = (artwork.heightCm || artwork.diameterCm) as number
+  const width = cmToPx(artworkWidth)
+  const height = cmToPx(artworkHeight)
   const hangHeight =
     // If too big to hang at eye-level
-    artwork.heightCm > eyeLevelSizeLimit
+    artworkHeight > eyeLevelSizeLimit
       ? // Bottom edge rests at ground level
         groundLevelPx
       : // Centered on eye-level
@@ -75,6 +76,7 @@ export const ViewInRoomArtworkFragmentContainer = createFragmentContainer(
   {
     artwork: graphql`
       fragment ViewInRoomArtwork_artwork on Artwork {
+        diameterCm
         widthCm
         heightCm
         image {

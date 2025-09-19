@@ -81,7 +81,7 @@ export const ConversationsSidebarItem: React.FC<
           })
         }}
       >
-        <Flex alignItems="center" px={[0, 2]}>
+        <Flex alignItems="center">
           <Image
             src={item.image?.url}
             height={50}
@@ -136,6 +136,16 @@ export const ConversationsSidebarItem: React.FC<
               >
                 {data?.lastMessageAt}
               </Text>
+              <Box ml={1} width={8} height={8}>
+                {isUnread && (
+                  <Box
+                    width={8}
+                    height={8}
+                    backgroundColor="blue100"
+                    borderRadius="50%"
+                  />
+                )}
+              </Box>
             </Flex>
           </Flex>
         </Flex>

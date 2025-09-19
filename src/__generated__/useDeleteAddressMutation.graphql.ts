@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<929e0494c7e95f0f6e378cb71a758ec3>>
+ * @generated SignedSource<<d5112e41d3fd7c8034014c543a8385f5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -144,6 +144,30 @@ v4 = [
     "args": null,
     "kind": "ScalarField",
     "name": "phoneNumberCountryCode",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "concreteType": "PhoneNumberType",
+    "kind": "LinkedField",
+    "name": "phoneNumberParsed",
+    "plural": false,
+    "selections": [
+      {
+        "alias": null,
+        "args": [
+          {
+            "kind": "Literal",
+            "name": "format",
+            "value": "INTERNATIONAL"
+          }
+        ],
+        "kind": "ScalarField",
+        "name": "display",
+        "storageKey": "display(format:\"INTERNATIONAL\")"
+      }
+    ],
     "storageKey": null
   },
   {
@@ -313,12 +337,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "11501358d443cae5078e9a503e6210c3",
+    "cacheID": "f77c81af38ce7809669579769ab56332",
     "id": null,
     "metadata": {},
     "name": "useDeleteAddressMutation",
     "operationKind": "mutation",
-    "text": "mutation useDeleteAddressMutation(\n  $input: DeleteUserAddressInput!\n) {\n  deleteUserAddress(input: $input) {\n    me {\n      ...SettingsShippingAddresses_me\n      id\n    }\n    userAddressOrErrors {\n      __typename\n      ... on UserAddress {\n        ...SettingsShippingAddress_address\n        id\n      }\n      ... on Errors {\n        errors {\n          message\n        }\n      }\n    }\n  }\n}\n\nfragment SettingsShippingAddress_address on UserAddress {\n  internalID\n  addressLine1\n  addressLine2\n  city\n  country\n  isDefault\n  name\n  phoneNumber\n  phoneNumberCountryCode\n  postalCode\n  region\n}\n\nfragment SettingsShippingAddresses_me on Me {\n  addresses: addressConnection {\n    edges {\n      node {\n        internalID\n        ...SettingsShippingAddress_address\n        id\n      }\n    }\n  }\n}\n"
+    "text": "mutation useDeleteAddressMutation(\n  $input: DeleteUserAddressInput!\n) {\n  deleteUserAddress(input: $input) {\n    me {\n      ...SettingsShippingAddresses_me\n      id\n    }\n    userAddressOrErrors {\n      __typename\n      ... on UserAddress {\n        ...SettingsShippingAddress_address\n        id\n      }\n      ... on Errors {\n        errors {\n          message\n        }\n      }\n    }\n  }\n}\n\nfragment SettingsShippingAddress_address on UserAddress {\n  internalID\n  addressLine1\n  addressLine2\n  city\n  country\n  isDefault\n  name\n  phoneNumber\n  phoneNumberCountryCode\n  phoneNumberParsed {\n    display(format: INTERNATIONAL)\n  }\n  postalCode\n  region\n}\n\nfragment SettingsShippingAddresses_me on Me {\n  addresses: addressConnection {\n    edges {\n      node {\n        internalID\n        ...SettingsShippingAddress_address\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

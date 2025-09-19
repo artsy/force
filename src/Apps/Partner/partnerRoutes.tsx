@@ -232,7 +232,17 @@ export const partnerRoutes: RouteProps[] = [
         },
       },
       {
-        path: "artists/:artistId?",
+        path: "artists/:artistId",
+        render: ({ match }) => {
+          // Legacy path: redirect to hash-based anchor
+          throw new RedirectException(
+            `/partner/${match.params.partnerId}/artists#${match.params.artistId}`,
+            301,
+          )
+        },
+      },
+      {
+        path: "artists",
         ignoreScrollBehavior: true,
         getComponent: () => ArtistsRoute,
         onPreloadJS: () => {

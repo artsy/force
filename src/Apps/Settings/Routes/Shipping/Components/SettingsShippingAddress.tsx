@@ -37,7 +37,7 @@ const SettingsShippingAddress: FC<
     [address.city, address.region, address.country, address.postalCode]
       .filter(Boolean)
       .join(", "),
-    address.phoneNumber,
+    address.phoneNumberParsed?.display,
   ].filter(Boolean)
 
   const handleEdit = () => {
@@ -152,6 +152,9 @@ export const SettingsShippingAddressFragmentContainer = createFragmentContainer(
         name
         phoneNumber
         phoneNumberCountryCode
+        phoneNumberParsed {
+          display(format: INTERNATIONAL)
+        }
         postalCode
         region
       }
