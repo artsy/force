@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fc4084e5af486a3d023f2edd66ed2198>>
+ * @generated SignedSource<<5417c3a522845657c047799a96959a86>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -42,7 +42,7 @@ export type ShippingTestQuery$rawResponse = {
           readonly region: string | null | undefined;
         } | null | undefined;
       } | null | undefined> | null | undefined;
-      readonly totalCount: number;
+      readonly totalCount: number | null | undefined;
     } | null | undefined;
     readonly email: string | null | undefined;
     readonly id: string;
@@ -570,7 +570,7 @@ v27 = {
 },
 v28 = {
   "enumValues": null,
-  "nullable": false,
+  "nullable": true,
   "plural": false,
   "type": "Int"
 },
@@ -582,7 +582,7 @@ v29 = {
 },
 v30 = {
   "enumValues": null,
-  "nullable": true,
+  "nullable": false,
   "plural": false,
   "type": "Int"
 },
@@ -1321,17 +1321,17 @@ return {
         "order.itemsTotal": (v25/*: any*/),
         "order.lastOffer": (v29/*: any*/),
         "order.lastOffer.amount": (v25/*: any*/),
-        "order.lastOffer.amountCents": (v28/*: any*/),
+        "order.lastOffer.amountCents": (v30/*: any*/),
         "order.lastOffer.buyerTotal": (v25/*: any*/),
-        "order.lastOffer.buyerTotalCents": (v30/*: any*/),
+        "order.lastOffer.buyerTotalCents": (v28/*: any*/),
         "order.lastOffer.fromParticipant": (v31/*: any*/),
         "order.lastOffer.id": (v26/*: any*/),
         "order.lastOffer.internalID": (v26/*: any*/),
         "order.lastOffer.note": (v25/*: any*/),
         "order.lastOffer.shippingTotal": (v25/*: any*/),
-        "order.lastOffer.shippingTotalCents": (v30/*: any*/),
+        "order.lastOffer.shippingTotalCents": (v28/*: any*/),
         "order.lastOffer.taxTotal": (v25/*: any*/),
-        "order.lastOffer.taxTotalCents": (v30/*: any*/),
+        "order.lastOffer.taxTotalCents": (v28/*: any*/),
         "order.lineItems": {
           "enumValues": null,
           "nullable": true,
@@ -1420,7 +1420,7 @@ return {
         "order.lineItems.edges.node.shippingQuoteOptions.edges.node.id": (v26/*: any*/),
         "order.lineItems.edges.node.shippingQuoteOptions.edges.node.isSelected": (v27/*: any*/),
         "order.lineItems.edges.node.shippingQuoteOptions.edges.node.price": (v25/*: any*/),
-        "order.lineItems.edges.node.shippingQuoteOptions.edges.node.priceCents": (v28/*: any*/),
+        "order.lineItems.edges.node.shippingQuoteOptions.edges.node.priceCents": (v30/*: any*/),
         "order.lineItems.edges.node.shippingQuoteOptions.edges.node.typeName": (v24/*: any*/),
         "order.mode": {
           "enumValues": [
@@ -1433,17 +1433,17 @@ return {
         },
         "order.myLastOffer": (v29/*: any*/),
         "order.myLastOffer.amount": (v25/*: any*/),
-        "order.myLastOffer.amountCents": (v28/*: any*/),
+        "order.myLastOffer.amountCents": (v30/*: any*/),
         "order.myLastOffer.buyerTotal": (v25/*: any*/),
-        "order.myLastOffer.buyerTotalCents": (v30/*: any*/),
+        "order.myLastOffer.buyerTotalCents": (v28/*: any*/),
         "order.myLastOffer.fromParticipant": (v31/*: any*/),
         "order.myLastOffer.id": (v26/*: any*/),
         "order.myLastOffer.internalID": (v26/*: any*/),
         "order.myLastOffer.note": (v25/*: any*/),
         "order.myLastOffer.shippingTotal": (v25/*: any*/),
-        "order.myLastOffer.shippingTotalCents": (v30/*: any*/),
+        "order.myLastOffer.shippingTotalCents": (v28/*: any*/),
         "order.myLastOffer.taxTotal": (v25/*: any*/),
-        "order.myLastOffer.taxTotalCents": (v30/*: any*/),
+        "order.myLastOffer.taxTotalCents": (v28/*: any*/),
         "order.paymentMethodDetails": {
           "enumValues": null,
           "nullable": true,
@@ -1480,7 +1480,7 @@ return {
         "order.sellerDetails.id": (v26/*: any*/),
         "order.sellerDetails.name": (v25/*: any*/),
         "order.shippingTotal": (v25/*: any*/),
-        "order.shippingTotalCents": (v30/*: any*/),
+        "order.shippingTotalCents": (v28/*: any*/),
         "order.source": {
           "enumValues": [
             "artwork_page",
@@ -1493,7 +1493,7 @@ return {
           "type": "CommerceOrderSourceEnum"
         },
         "order.taxTotal": (v25/*: any*/),
-        "order.taxTotalCents": (v30/*: any*/)
+        "order.taxTotalCents": (v28/*: any*/)
       }
     },
     "name": "ShippingTestQuery",
