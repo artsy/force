@@ -8,6 +8,7 @@ import {
 } from "@artsy/palette"
 import { ShowArtworkFilterQueryRenderer } from "Apps/Show/Components/ShowArtworks"
 import { ShowMetaFragmentContainer as ShowMeta } from "Apps/Show/Components/ShowMeta"
+import { ShowStructuredData } from "Apps/Show/Components/ShowStructuredData"
 import { RouterLink } from "System/Components/RouterLink"
 import { Analytics } from "System/Contexts/AnalyticsContext"
 import type { ShowApp_show$data } from "__generated__/ShowApp_show.graphql"
@@ -37,6 +38,7 @@ export const ShowApp: React.FC<React.PropsWithChildren<ShowAppProps>> = ({
   return (
     <>
       <ShowMeta show={show} />
+      <ShowStructuredData show={show} />
 
       <>
         <Analytics contextPageOwnerId={show.internalID}>
@@ -116,6 +118,15 @@ export const ShowApp: React.FC<React.PropsWithChildren<ShowAppProps>> = ({
 export const ShowAppFragmentContainer = createFragmentContainer(ShowApp, {
   show: graphql`
     fragment ShowApp_show on Show {
+      ...BackToFairBanner_show
+      ...ShowAbout_show
+      ...ShowArtworksEmptyState_show
+      ...ShowContextCard_show
+      ...ShowHeader_show
+      ...ShowInstallShots_show
+      ...ShowMeta_show
+      ...ShowStructuredData_show
+      ...ShowViewingRoom_show
       name
       href
       internalID
@@ -136,14 +147,6 @@ export const ShowAppFragmentContainer = createFragmentContainer(ShowApp, {
       images(default: false, size: 100) {
         url
       }
-      ...BackToFairBanner_show
-      ...ShowHeader_show
-      ...ShowAbout_show
-      ...ShowMeta_show
-      ...ShowInstallShots_show
-      ...ShowViewingRoom_show
-      ...ShowArtworksEmptyState_show
-      ...ShowContextCard_show
     }
   `,
 })
