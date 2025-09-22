@@ -1,5 +1,4 @@
 import { MetaTags } from "Components/MetaTags"
-import { getENV } from "Utils/getENV"
 import type { FairMeta_fair$data } from "__generated__/FairMeta_fair.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -15,7 +14,7 @@ const FairMeta: React.FC<React.PropsWithChildren<FairMetaProps>> = ({
     <MetaTags
       title={`${name} | Artsy`}
       description={metaDescription || metaDescriptionFallback}
-      pathname={`${getENV("APP_URL")}/fair/${slug}`}
+      pathname={`/fair/${slug}`}
       imageURL={metaImage?.src}
     />
   )
