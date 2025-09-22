@@ -34,6 +34,7 @@ const Order2ReviewStepComponent: React.FC<Order2ReviewStepProps> = ({
   dialog,
 }) => {
   const orderData = useFragment(FRAGMENT, order)
+  const isOffer = orderData.mode === "OFFER"
   const submitOrderMutation = useOrder2SubmitOrderMutation()
   const stripe = useStripe()
   const {
@@ -122,7 +123,7 @@ const Order2ReviewStepComponent: React.FC<Order2ReviewStepProps> = ({
         fontWeight={["bold", "normal"]}
         color="mono100"
       >
-        Order summary
+        {isOffer ? "Offer" : "Order"} summary
       </Text>
       <Flex py={1} justifyContent="space-between" alignItems="flex-start">
         <RouterLink

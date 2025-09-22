@@ -52,6 +52,20 @@ export const Order2FulfillmentDetailsStep: React.FC<
       backgroundColor="mono0"
       py={2}
     >
+      <Box px={[2, 4]} hidden={stepState !== CheckoutStepState.UPCOMING}>
+        <Flex flexDirection="column">
+          <Text
+            variant={["sm-display", "md"]}
+            fontWeight={["bold", "normal"]}
+            color="mono100"
+          >
+            Delivery
+          </Text>
+          <Text variant={["xs", "xs", "sm"]} color="mono60">
+            Pickup availability and shipping costs vary by location
+          </Text>
+        </Flex>
+      </Box>
       {stepState === CheckoutStepState.COMPLETED && (
         <Box px={[2, 4]}>
           <Order2FulfillmentDetailsCompletedView order={orderData} />

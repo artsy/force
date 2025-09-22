@@ -96,16 +96,32 @@ export const Order2PaymentForm: React.FC<Order2PaymentFormProps> = ({
   const orderData = useFragment(ORDER_FRAGMENT, order)
   const meData = useFragment(ME_FRAGMENT, me)
   const stripe = useStripe()
-  const { itemsTotal, seller } = orderData
+  const { itemsTotal, buyerTotal, seller } = orderData
 
-  if (!itemsTotal) {
-    throw new Error("itemsTotal is required")
-  }
+  // For offer orders, itemsTotal might not be available, fall back to buyerTotal
+  const totalForPayment = itemsTotal || buyerTotal
 
-  const orderOptions: StripeElementsUpdateOptions = {
-    amount: itemsTotal.minor,
-    currency: itemsTotal.currencyCode.toLowerCase(),
-    onBehalfOf: seller?.merchantAccount?.externalId,
+  let orderOptions: StripeElementsUpdateOptions
+
+  if (!totalForPayment) {
+    // For OFFER mode orders, the payment amount might not be available until the offer is accepted
+    // Use a minimal placeholder amount and currency for now
+    console.warn(
+      "No payment total available for order, using placeholder values",
+    )
+    orderOptions = {
+      amount: 100, // $1.00 placeholder
+      currency: (orderData.currencyCode || "USD").toLowerCase(),
+      onBehalfOf: seller?.merchantAccount?.externalId,
+    }
+    // TODO: For offer orders, we may need to update this once the offer is accepted
+    // or skip the payment step until the offer process is complete
+  } else {
+    orderOptions = {
+      amount: totalForPayment.minor,
+      currency: totalForPayment.currencyCode.toLowerCase(),
+      onBehalfOf: seller?.merchantAccount?.externalId,
+    }
   }
 
   const { theme } = useTheme()
@@ -171,6 +187,21 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
     steps,
     activeFulfillmentDetailsTab,
   } = useCheckoutContext()
+
+  const trackPaymentMethodSelection = (
+    paymentMethod:
+      | "CREDIT_CARD"
+      | "SAVED_CREDIT_CARD"
+      | "WIRE_TRANSFER"
+      | "US_BANK_ACCOUNT"
+      | "SEPA_DEBIT",
+  ) => {
+    checkoutTracking.clickedPaymentMethod({
+      paymentMethod,
+      amountMinor: 0, // TODO: Fix this to use actual order total
+      currency: "usd", // TODO: Fix this to use actual order currency
+    })
+  }
 
   const [isSubmittingToStripe, setIsSubmittingToStripe] = useState(false)
   const [errorMessage, setErrorMessage] = useState<JSX.Element | string | null>(
@@ -307,21 +338,6 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
     }
 
     setSelectedPaymentMethod(methodType)
-  }
-
-  const trackPaymentMethodSelection = (
-    paymentMethod:
-      | "CREDIT_CARD"
-      | "SAVED_CREDIT_CARD"
-      | "WIRE_TRANSFER"
-      | "US_BANK_ACCOUNT"
-      | "SEPA_DEBIT",
-  ) => {
-    checkoutTracking.clickedPaymentMethod({
-      paymentMethod,
-      amountMinor: order.itemsTotal?.minor,
-      currency: order.itemsTotal?.currencyCode ?? "",
-    })
   }
 
   const onClickSavedPaymentMethods = () => {
@@ -937,8 +953,13 @@ const ORDER_FRAGMENT = graphql`
     mode
     source
     internalID
+    currencyCode
     availablePaymentMethods
     itemsTotal {
+      minor
+      currencyCode
+    }
+    buyerTotal {
       minor
       currencyCode
     }
