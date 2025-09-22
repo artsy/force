@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fed9f4ddd029b907ed04f2b388325bca>>
+ * @generated SignedSource<<c763d5da52305e4d6fc0a7090ad8e0fd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,7 +12,7 @@ import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FulfillmentDetailsForm_me$data = {
   readonly addressConnection: {
-    readonly totalCount: number;
+    readonly totalCount: number | null | undefined;
   } | null | undefined;
   readonly email: string | null | undefined;
   readonly id: string;
