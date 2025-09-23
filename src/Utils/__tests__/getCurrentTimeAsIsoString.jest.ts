@@ -16,10 +16,10 @@ describe("getCurrentTimeAsIsoString", () => {
     jest.setSystemTime(fixedDate)
 
     const result = getCurrentTimeAsIsoString()
-    const parsedResult = DateTime.fromISO(result)
+    const parsedResult = DateTime.fromISO(result, { zone: "utc" })
 
     expect(parsedResult.zoneName).toBe("UTC")
-    expect(parsedResult.toISO()).toBe("2023-10-15T14:30:00.000Z")
+    expect(result).toBe("2023-10-15T14:30:00.000Z")
   })
 
   it("returns UTC time regardless of system timezone", () => {
@@ -31,10 +31,9 @@ describe("getCurrentTimeAsIsoString", () => {
     process.env.TZ = "America/New_York"
 
     const result = getCurrentTimeAsIsoString()
-    const parsedResult = DateTime.fromISO(result)
 
-    expect(parsedResult.zoneName).toBe("UTC")
-    expect(parsedResult.toISO()).toBe("2023-10-15T14:30:00.000Z")
+    expect(result).toBe("2023-10-15T14:30:00.000Z")
+    expect(result.endsWith("Z")).toBe(true)
 
     process.env.TZ = originalTimeZone
   })
@@ -58,11 +57,8 @@ describe("getCurrentTimeAsIsoString", () => {
     const call1 = getCurrentTimeAsIsoString()
     const call2 = getCurrentTimeAsIsoString()
 
-    const time1 = DateTime.fromISO(call1)
-    const time2 = DateTime.fromISO(call2)
-
-    expect(time1.zoneName).toBe("UTC")
-    expect(time2.zoneName).toBe("UTC")
-    expect(Math.abs(time2.toMillis() - time1.toMillis())).toBeLessThan(10)
+    expect(call1).toBe("2023-10-15T14:30:00.000Z")
+    expect(call2).toBe("2023-10-15T14:30:00.000Z")
+    expect(call1).toBe(call2)
   })
 })
