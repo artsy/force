@@ -1,2 +1,2 @@
 import { DateTime } from "luxon"
-export const getCurrentTimeAsIsoString = () => DateTime.local().toString()
+export const getCurrentTimeAsIsoString = () => DateTime.utc().toString()
