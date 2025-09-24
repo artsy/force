@@ -116,6 +116,7 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
         // Success! Store the submitted data for completed view
         setSubmittedOfferAmount(offerValue)
         setSubmittedOfferNote(note)
+
         // Mark step as completed and move to next step
         setOfferAmountComplete()
         return
