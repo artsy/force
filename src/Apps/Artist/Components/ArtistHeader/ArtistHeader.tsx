@@ -163,7 +163,7 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
 
         {biographyContent && (
           <Bio variant="sm">
-            <ReadMore maxChars={250} content={biographyContent} />
+            <ReadMore maxLines={4} content={biographyContent} />
           </Bio>
         )}
 

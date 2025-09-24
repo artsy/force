@@ -52,7 +52,7 @@ export const ArtQuizRecommendedArtist: FC<
         {artist.biographyBlurb?.text && (
           <Column span={6}>
             <HTML variant="sm">
-              <ReadMore maxChars={250} content={artist.biographyBlurb.text} />
+              <ReadMore maxLines={4} content={artist.biographyBlurb.text} />
             </HTML>
           </Column>
         )}
