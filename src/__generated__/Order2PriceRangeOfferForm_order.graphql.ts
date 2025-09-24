@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<160848cc35e9fe12394e3f4766bd69db>>
+ * @generated SignedSource<<033a36e7115f8c64c7a645f5ae777e78>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,21 +9,13 @@
 // @ts-nocheck
 
 import { ReaderFragment } from 'relay-runtime';
-export type OrderModeEnum = "BUY" | "OFFER" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
-export type Order2OfferStep_order$data = {
+export type Order2PriceRangeOfferForm_order$data = {
   readonly currencyCode: string;
-  readonly internalID: string;
   readonly lineItems: ReadonlyArray<{
     readonly artwork: {
-      readonly editionSets: ReadonlyArray<{
-        readonly internalID: string;
-      } | null | undefined> | null | undefined;
       readonly isPriceRange: boolean | null | undefined;
       readonly listPrice: {
-        readonly __typename: "Money";
-        readonly major: number;
-      } | {
         readonly __typename: "PriceRange";
         readonly maxPrice: {
           readonly major: number;
@@ -36,27 +28,18 @@ export type Order2OfferStep_order$data = {
         // value in case none of the concrete values match.
         readonly __typename: "%other";
       } | null | undefined;
-      readonly slug: string;
+      readonly price: string | null | undefined;
     } | null | undefined;
   } | null | undefined>;
-  readonly mode: OrderModeEnum;
-  readonly " $fragmentSpreads": FragmentRefs<"Order2ExactPriceOfferForm_order" | "Order2OfferCompletedView_order" | "Order2PriceRangeOfferForm_order">;
-  readonly " $fragmentType": "Order2OfferStep_order";
+  readonly " $fragmentType": "Order2PriceRangeOfferForm_order";
 };
-export type Order2OfferStep_order$key = {
-  readonly " $data"?: Order2OfferStep_order$data;
-  readonly " $fragmentSpreads": FragmentRefs<"Order2OfferStep_order">;
+export type Order2PriceRangeOfferForm_order$key = {
+  readonly " $data"?: Order2PriceRangeOfferForm_order$data;
+  readonly " $fragmentSpreads": FragmentRefs<"Order2PriceRangeOfferForm_order">;
 };
 
 const node: ReaderFragment = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "internalID",
-  "storageKey": null
-},
-v1 = [
+var v0 = [
   {
     "alias": null,
     "args": null,
@@ -69,16 +52,8 @@ return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "Order2OfferStep_order",
+  "name": "Order2PriceRangeOfferForm_order",
   "selections": [
-    (v0/*: any*/),
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "mode",
-      "storageKey": null
-    },
     {
       "alias": null,
       "args": null,
@@ -106,7 +81,7 @@ return {
               "alias": null,
               "args": null,
               "kind": "ScalarField",
-              "name": "slug",
+              "name": "price",
               "storageKey": null
             },
             {
@@ -133,12 +108,6 @@ return {
                 },
                 {
                   "kind": "InlineFragment",
-                  "selections": (v1/*: any*/),
-                  "type": "Money",
-                  "abstractKey": null
-                },
-                {
-                  "kind": "InlineFragment",
                   "selections": [
                     {
                       "alias": null,
@@ -147,7 +116,7 @@ return {
                       "kind": "LinkedField",
                       "name": "maxPrice",
                       "plural": false,
-                      "selections": (v1/*: any*/),
+                      "selections": (v0/*: any*/),
                       "storageKey": null
                     },
                     {
@@ -157,7 +126,7 @@ return {
                       "kind": "LinkedField",
                       "name": "minPrice",
                       "plural": false,
-                      "selections": (v1/*: any*/),
+                      "selections": (v0/*: any*/),
                       "storageKey": null
                     }
                   ],
@@ -166,39 +135,12 @@ return {
                 }
               ],
               "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "concreteType": "EditionSet",
-              "kind": "LinkedField",
-              "name": "editionSets",
-              "plural": true,
-              "selections": [
-                (v0/*: any*/)
-              ],
-              "storageKey": null
             }
           ],
           "storageKey": null
         }
       ],
       "storageKey": null
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "Order2ExactPriceOfferForm_order"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "Order2PriceRangeOfferForm_order"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "Order2OfferCompletedView_order"
     }
   ],
   "type": "Order",
@@ -206,6 +148,6 @@ return {
 };
 })();
 
-(node as any).hash = "a632b5f6d4caf27edaf13d036b006d95";
+(node as any).hash = "7fd628d963b66c8e92e9ae8b1e76bd5b";
 
 export default node;

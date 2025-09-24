@@ -16,6 +16,7 @@ import { graphql, useFragment } from "react-relay"
 import { useTracking } from "react-tracking"
 import { Order2OfferCompletedView } from "Apps/Order2/Routes/Checkout/Components/OfferStep/Order2OfferCompletedView"
 import { Order2ExactPriceOfferForm } from "Apps/Order2/Routes/Checkout/Components/OfferStep/Forms/Order2ExactPriceOfferForm"
+import { Order2PriceRangeOfferForm } from "Apps/Order2/Routes/Checkout/Components/OfferStep/Forms/Order2PriceRangeOfferForm"
 import type { OfferNoteValue } from "Apps/Order2/Routes/Checkout/Components/OfferStep/types"
 
 const logger = createLogger(
@@ -132,12 +133,21 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
     }
   }
 
-  // Determine which offer form scenario to use
-  // For now, we only have the "exact price" scenario
-  // Future scenarios can be determined based on order/artwork properties
+  // Determine which offer form scenario to use based on artwork properties
   const getOfferFormComponent = () => {
-    // This is where scenario logic will go in the future
-    // For now, always use ExactPriceOfferForm
+    const artwork = orderData.lineItems?.[0]?.artwork
+
+    // Check if artwork has a price range
+    const isPriceRange =
+      artwork?.listPrice?.__typename === "PriceRange" &&
+      artwork?.listPrice?.maxPrice?.major &&
+      artwork?.listPrice?.minPrice?.major
+
+    if (isPriceRange) {
+      return Order2PriceRangeOfferForm
+    }
+
+    // Default to exact price form for single prices
     return Order2ExactPriceOfferForm
   }
 
@@ -222,12 +232,28 @@ const FRAGMENT = graphql`
     lineItems {
       artwork {
         slug
+        isPriceRange
+        listPrice {
+          __typename
+          ... on Money {
+            major
+          }
+          ... on PriceRange {
+            maxPrice {
+              major
+            }
+            minPrice {
+              major
+            }
+          }
+        }
         editionSets {
           internalID
         }
       }
     }
     ...Order2ExactPriceOfferForm_order
+    ...Order2PriceRangeOfferForm_order
     ...Order2OfferCompletedView_order
   }
 `
