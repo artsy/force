@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0aa94854e1859e0bb3bc6e4e40f1e154>>
+ * @generated SignedSource<<84186627ec847c25019508e1eeb39521>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -31,7 +31,7 @@ export type ShowApp_show$data = {
       readonly __typename: "ViewingRoomsEdge";
     } | null | undefined> | null | undefined;
   } | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"BackToFairBanner_show" | "ShowAbout_show" | "ShowArtworksEmptyState_show" | "ShowContextCard_show" | "ShowHeader_show" | "ShowInstallShots_show" | "ShowMeta_show" | "ShowViewingRoom_show">;
+  readonly " $fragmentSpreads": FragmentRefs<"BackToFairBanner_show" | "ShowAbout_show" | "ShowArtworksEmptyState_show" | "ShowContextCard_show" | "ShowHeader_show" | "ShowInstallShots_show" | "ShowMeta_show" | "ShowStructuredData_show" | "ShowViewingRoom_show">;
   readonly " $fragmentType": "ShowApp_show";
 };
 export type ShowApp_show$key = {
@@ -45,6 +45,51 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "ShowApp_show",
   "selections": [
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "BackToFairBanner_show"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ShowAbout_show"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ShowArtworksEmptyState_show"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ShowContextCard_show"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ShowHeader_show"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ShowInstallShots_show"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ShowMeta_show"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ShowStructuredData_show"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ShowViewingRoom_show"
+    },
     {
       "alias": null,
       "args": null,
@@ -180,52 +225,12 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": "images(default:false,size:100)"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "BackToFairBanner_show"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ShowHeader_show"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ShowAbout_show"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ShowMeta_show"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ShowInstallShots_show"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ShowViewingRoom_show"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ShowArtworksEmptyState_show"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ShowContextCard_show"
     }
   ],
   "type": "Show",
   "abstractKey": null
 };
 
-(node as any).hash = "cec5d442355edb1e98a8aa7c081f375f";
+(node as any).hash = "8d46c026ca07202cb2f89f7ae403aa8d";
 
 export default node;
