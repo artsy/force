@@ -10,11 +10,11 @@ export const deliveryOptionLabel = (type?: string | null) => {
     case "INTERNATIONAL_FLAT":
       return "Flat rate"
     case "ARTSY_STANDARD":
-      return "Standard Delivery"
+      return "Standard"
     case "ARTSY_EXPRESS":
-      return "Express Delivery"
+      return "Express"
     case "ARTSY_WHITE_GLOVE":
-      return "White Glove Delivery"
+      return "White Glove"
     default:
       return `(TODO) ${type?.replace(/_/g, " ").toLocaleLowerCase()}`
   }

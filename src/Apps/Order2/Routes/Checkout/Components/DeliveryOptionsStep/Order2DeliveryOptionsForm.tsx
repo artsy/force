@@ -196,15 +196,26 @@ const MultipleShippingOptionsForm = ({
           const [prefix, timeRange] = timeEstimate || []
 
           return (
-            <Radio key={`${option.type}:${i}`} value={option} mt={2}>
+            <Radio
+              label={label}
+              key={`${option.type}:${i}`}
+              value={option}
+              mt={2}
+            >
               <Flex justifyContent="space-between" width="100%">
                 <Flex flexDirection="column">
-                  <Text>{label}</Text>
                   {timeEstimate && (
                     <Text variant="xs" color="mono60">
                       {prefix} <strong>{timeRange}</strong>
                     </Text>
                   )}
+                  {option.type === "ARTSY_WHITE_GLOVE" &&
+                    selectedOption === option && (
+                      <Text variant="xs" color="mono60" mt={0.5}>
+                        This service includes custom packing, transportation on
+                        a fine art shuttle, and in-home delivery.
+                      </Text>
+                    )}
                 </Flex>
                 <Text>{option.amount?.display}</Text>
               </Flex>
