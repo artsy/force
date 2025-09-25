@@ -211,7 +211,7 @@ const MultipleShippingOptionsForm = ({
                   )}
                   {option.type === "ARTSY_WHITE_GLOVE" &&
                     selectedOption === option && (
-                      <Text variant="xs" color="mono60" mt={0.5}>
+                      <Text variant="xs" color="mono60">
                         This service includes custom packing, transportation on
                         a fine art shuttle, and in-home delivery.
                       </Text>
