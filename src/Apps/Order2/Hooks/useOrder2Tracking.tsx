@@ -2,10 +2,11 @@ import {
   ActionType,
   type ClickedAskSpecialist,
   type ClickedBuyerProtection,
+  type ClickedCompleteYourProfile,
   type ClickedContactGallery,
   type ClickedImportFees,
   type ClickedVisitHelpCenter,
-  type ContextModule,
+  ContextModule,
   type OrderDetailsViewed,
   OwnerType,
   type PageOwnerType,
@@ -105,6 +106,16 @@ export const useOrder2Tracking = (
           context_owner_id: contextPageOwnerId,
           context_owner_type: contextPageOwnerType,
           message_type: messageType,
+        }
+
+        trackEvent(payload)
+      },
+      clickedCompleteYourProfile: () => {
+        const payload: ClickedCompleteYourProfile = {
+          action: ActionType.clickedCompleteYourProfile,
+          context_module: ContextModule.ordersDetail,
+          context_page_owner_type: contextPageOwnerType,
+          context_page_owner_id: contextPageOwnerId,
         }
 
         trackEvent(payload)
