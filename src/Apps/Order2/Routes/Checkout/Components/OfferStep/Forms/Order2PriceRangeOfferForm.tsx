@@ -40,12 +40,9 @@ export const Order2PriceRangeOfferForm: React.FC<
   onContinueButtonPressed,
 }) => {
   const orderData = useFragment(FRAGMENT, order)
-
-  // Get the price range from the artwork
   const artwork = orderData.lineItems?.[0]?.artwork
   const listPrice = artwork?.listPrice
 
-  // Generate price range options (top-end, midpoint, low-end)
   const getRangeOptions = (): PriceOption[] => {
     if (listPrice?.__typename !== "PriceRange") {
       return []

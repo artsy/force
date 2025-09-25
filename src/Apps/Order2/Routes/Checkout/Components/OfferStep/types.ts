@@ -4,7 +4,7 @@ export interface OfferNoteValue {
 }
 
 export interface OfferFormProps {
-  order: any // Will be typed with specific GraphQL fragment
+  order: any
   offerValue: number
   offerNoteValue: OfferNoteValue
   formIsDirty: boolean

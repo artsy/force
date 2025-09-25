@@ -44,7 +44,6 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
   })
   const [offerValue, setOfferValue] = useState(0)
 
-  // Store submitted offer data for completed view
   const [submittedOfferAmount, setSubmittedOfferAmount] = useState<number>(0)
   const [submittedOfferNote, setSubmittedOfferNote] = useState<string>("")
   const { jumpTo } = useJump()
@@ -94,7 +93,6 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
             orderData.currencyCode,
           )}`
 
-      // Submit the offer mutation
       const response: useOrder2AddInitialOfferMutation$data =
         await submitOfferMutation({
           variables: {
@@ -114,16 +112,13 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
       }
 
       if (orderOrError && "order" in orderOrError) {
-        // Success! Store the submitted data for completed view
         setSubmittedOfferAmount(offerValue)
         setSubmittedOfferNote(note)
 
-        // Mark step as completed and move to next step
         setOfferAmountComplete()
         return
       }
 
-      // Fallback error case
       throw new Error("Unexpected response from offer mutation")
     } catch (error) {
       logger.error(error)
@@ -137,7 +132,6 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
   const getOfferFormComponent = () => {
     const artwork = orderData.lineItems?.[0]?.artwork
 
-    // Check if artwork has a price range
     const isPriceRange =
       artwork?.listPrice?.__typename === "PriceRange" &&
       artwork?.listPrice?.maxPrice?.major &&
@@ -147,7 +141,6 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
       return Order2PriceRangeOfferForm
     }
 
-    // Default to exact price form for single prices
     return Order2ExactPriceOfferForm
   }
 

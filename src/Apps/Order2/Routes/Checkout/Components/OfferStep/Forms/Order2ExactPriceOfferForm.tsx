@@ -40,8 +40,6 @@ export const Order2ExactPriceOfferForm: React.FC<
   onContinueButtonPressed,
 }) => {
   const orderData = useFragment(FRAGMENT, order)
-
-  // Get the list price from the artwork
   const artwork = orderData.lineItems?.[0]?.artwork
   const listPriceMajor =
     artwork?.listPrice?.__typename === "Money"
@@ -50,7 +48,6 @@ export const Order2ExactPriceOfferForm: React.FC<
         ? artwork.listPrice.maxPrice?.major
         : null
 
-  // Generate price options based on list price
   const priceOptions: PriceOption[] = listPriceMajor
     ? [
         {
@@ -71,13 +68,11 @@ export const Order2ExactPriceOfferForm: React.FC<
       ]
     : []
 
-  // Find initial selected option based on current value
   const getInitialState = () => {
     if (!offerValue)
       return {
         selectedRadio: undefined,
         customValue: undefined,
-        showCustomInput: false,
       }
 
     const matchingOption = priceOptions.find(
@@ -87,13 +82,11 @@ export const Order2ExactPriceOfferForm: React.FC<
       return {
         selectedRadio: matchingOption.key,
         customValue: undefined,
-        showCustomInput: false,
       }
     } else {
       return {
         selectedRadio: "price-option-custom",
         customValue: offerValue,
-        showCustomInput: true,
       }
     }
   }
@@ -104,9 +97,6 @@ export const Order2ExactPriceOfferForm: React.FC<
   )
   const [customValue, setCustomValue] = useState<number | undefined>(
     initialState.customValue,
-  )
-  const [showCustomInput, setShowCustomInput] = useState(
-    initialState.showCustomInput,
   )
 
   // Update parent component when custom values change
@@ -136,6 +126,15 @@ export const Order2ExactPriceOfferForm: React.FC<
     </Text>
   )
 
+  const allPriceOptions = [
+    ...priceOptions,
+    {
+      key: "price-option-custom",
+      value: customValue || 0,
+      description: "Other amount",
+    },
+  ]
+
   return (
     <>
       {/* Offer Amount Section */}
@@ -146,45 +145,34 @@ export const Order2ExactPriceOfferForm: React.FC<
               onSelect={setSelectedRadio}
               defaultValue={selectedRadio}
             >
-              {compact(priceOptions)
-                .map(({ value: optionValue, description, key }) => (
+              {allPriceOptions.map(({ key, value, description }) => {
+                const isCustom = key === "price-option-custom"
+                const showCustomInput = isCustom && selectedRadio === key
+
+                return (
                   <Radio
-                    value={key}
-                    label={formatCurrency(optionValue)}
-                    onSelect={() => {
-                      onOfferValueChange(optionValue)
-                      setShowCustomInput(false)
-                      setCustomValue(undefined)
-                      onOfferInputFocus?.()
-                    }}
-                    error={
-                      formIsDirty &&
-                      (offerValue <= 0 || offerValue === undefined)
-                    }
                     key={key}
-                  >
-                    <Spacer y={1} />
-                    <Text variant="sm" color="mono60">
-                      {description}
-                    </Text>
-                    <Spacer y={4} />
-                  </Radio>
-                ))
-                .concat([
-                  <Radio
-                    value="price-option-custom"
-                    label="Other amount"
-                    error={
-                      formIsDirty &&
-                      (offerValue <= 0 || offerValue === undefined)
-                    }
+                    value={key}
+                    label={isCustom ? description : formatCurrency(value)}
                     onSelect={() => {
-                      onOfferValueChange(customValue || 0)
-                      !showCustomInput && setShowCustomInput(true)
+                      setSelectedRadio(key)
+                      onOfferValueChange(value)
+                      if (!isCustom) {
+                        setCustomValue(undefined)
+                      }
                       onOfferInputFocus?.()
                     }}
-                    key="price-option-custom"
                   >
+                    {!isCustom && (
+                      <>
+                        <Spacer y={1} />
+                        <Text variant="sm" color="mono60">
+                          {description}
+                        </Text>
+                        <Spacer y={4} />
+                      </>
+                    )}
+
                     {showCustomInput && (
                       <Flex flexDirection="column" mt={2}>
                         <OfferInput
@@ -199,8 +187,9 @@ export const Order2ExactPriceOfferForm: React.FC<
                         />
                       </Flex>
                     )}
-                  </Radio>,
-                ])}
+                  </Radio>
+                )
+              })}
             </RadioGroup>
           </Box>
         ) : (

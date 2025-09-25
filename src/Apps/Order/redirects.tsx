@@ -204,7 +204,6 @@ export const newCheckoutEnabled = ({
   order,
   featureFlags,
 }: Order2RedirectArgs): boolean => {
-  // Enable for BUY mode when feature flag is on
   if (
     order.mode === "BUY" &&
     featureFlags?.isEnabled("emerald_checkout-redesign")
@@ -212,8 +211,10 @@ export const newCheckoutEnabled = ({
     return true
   }
 
-  // Enable for OFFER mode orders (for new offer flow)
-  if (order.mode === "OFFER") {
+  if (
+    order.mode === "OFFER" &&
+    featureFlags?.isEnabled("emerald_checkout-redesign")
+  ) {
     return true
   }
 
