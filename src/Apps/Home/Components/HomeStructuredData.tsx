@@ -1,4 +1,5 @@
 import { StructuredData } from "Components/Seo/StructuredData"
+import { DOWNLOAD_APP_URLS, Device } from "Utils/Hooks/useDeviceDetection"
 
 export const HomeStructuredData = () => {
   return (
@@ -25,6 +26,80 @@ export const HomeStructuredData = () => {
             unitCode: "E37",
           },
         },
+        foundingDate: "2009",
+        foundingLocation: {
+          "@type": "Place",
+          address: {
+            "@type": "PostalAddress",
+            addressLocality: "New York",
+            addressRegion: "NY",
+            addressCountry: "US",
+          },
+        },
+        founders: [
+          {
+            "@type": "Person",
+            name: "Carter Cleveland",
+            jobTitle: "Founder",
+            sameAs: "https://www.linkedin.com/in/cartercleveland",
+          },
+        ],
+        employees: [
+          {
+            "@type": "Person",
+            name: "Jeffrey Yin",
+            jobTitle: "Chief Executive Officer",
+            sameAs: "https://www.linkedin.com/in/jeffreyjyin/",
+          },
+        ],
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: "401 Broadway",
+          addressLocality: "New York",
+          addressRegion: "NY",
+          postalCode: "10013",
+          addressCountry: "US",
+        },
+        contactPoint: [
+          {
+            "@type": "ContactPoint",
+            email: "support@artsy.net",
+            contactType: "customer support",
+          },
+        ],
+        brand: {
+          "@type": "Brand",
+          name: "Artsy",
+          logo: "https://files.artsy.net/images/og_image.jpeg",
+          slogan: "Discover and Buy Fine Art",
+        },
+        sameAs: [
+          "https://www.instagram.com/artsy",
+          "https://x.com/artsy",
+          "https://www.linkedin.com/company/artsyinc/",
+          "https://www.facebook.com/artsy",
+          "https://www.youtube.com/artsy",
+          "https://www.threads.com/@artsy",
+          "https://www.tiktok.com/@artsy",
+          "https://www.pinterest.com/artsy/",
+          "https://soundcloud.com/artsypodcast",
+          "https://podcasts.apple.com/us/podcast/the-artsy-podcast/id1096194516",
+          "https://open.spotify.com/show/3Wc2AVcebdEf0yC7NoFQgt",
+          DOWNLOAD_APP_URLS[Device.iPhone],
+          DOWNLOAD_APP_URLS[Device.Android],
+          "https://en.wikipedia.org/wiki/Artsy_(website)",
+          "https://github.com/artsy",
+          "https://artsy.github.io/",
+        ],
+        keywords:
+          "online art, art marketplace, buy art, art auctions, contemporary art, art galleries, emerging artists",
+        knowsAbout: [
+          "Contemporary Art",
+          "Fine Art Auctions",
+          "Art Galleries",
+          "Emerging Artists",
+          "Art Market Trends",
+        ],
       }}
     />
   )
