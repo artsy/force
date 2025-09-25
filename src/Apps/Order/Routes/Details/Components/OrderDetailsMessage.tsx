@@ -103,7 +103,9 @@ const MessageContent = ({
           <Spacer y={2} />
           <Text variant="sm">
             The gallery will confirm by <b>{formattedStateExpireTime}</b>.
-            {hasIncompleteProfile && <CompleteCollectorProfilePrompt />}
+            {hasIncompleteProfile && (
+              <CompleteCollectorProfilePrompt tracking={tracking} />
+            )}
           </Text>
           <Spacer y={2} />
           <Text variant="sm">
@@ -123,7 +125,9 @@ const MessageContent = ({
           <Text variant="sm">
             The gallery will respond to your offer by{" "}
             <b>{formattedStateExpireTime}</b>.
-            {hasIncompleteProfile && <CompleteCollectorProfilePrompt />}
+            {hasIncompleteProfile && (
+              <CompleteCollectorProfilePrompt tracking={tracking} />
+            )}
           </Text>
           <Spacer y={2} />
           <Text variant="sm">
@@ -409,11 +413,24 @@ const MessageContent = ({
   }
 }
 
-const CompleteCollectorProfilePrompt: React.FC = () => (
+interface CompleteCollectorProfilePromptProps {
+  tracking: ReturnType<typeof useOrder2Tracking>
+}
+
+const CompleteCollectorProfilePrompt: React.FC<
+  CompleteCollectorProfilePromptProps
+> = ({ tracking }) => (
   <>
     {" "}
     You're more likely to receive quick responses from galleries by{" "}
-    <RouterLink to="/settings/edit-profile" target="_blank" display="inline">
+    <RouterLink
+      onClick={() => {
+        tracking.clickedCompleteYourProfile()
+      }}
+      to="/settings/edit-profile"
+      target="_blank"
+      display="inline"
+    >
       completing your profile
     </RouterLink>
     .

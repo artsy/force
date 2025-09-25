@@ -7,6 +7,13 @@ import { OrderDetailsMessage } from "../OrderDetailsMessage"
 
 jest.mock("react-tracking")
 
+jest.mock("System/Hooks/useAnalyticsContext", () => ({
+  useAnalyticsContext: jest.fn(() => ({
+    contextPageOwnerId: "test-id",
+    contextPageOwnerType: "orders-detail",
+  })),
+}))
+
 jest.unmock("react-relay")
 const trackEvent = jest.fn()
 
@@ -93,6 +100,36 @@ describe("OrderDetailsMessage", () => {
     expect(
       screen.getByRole("link", { name: "completing your profile" }),
     ).toHaveAttribute("href", "/settings/edit-profile")
+  })
+
+  it("tracks complete your profile click", () => {
+    renderWithRelay({
+      Order: () => ({
+        buyerStateExpiresAt: mockDate,
+        code: "123",
+        internalID: "test-id",
+        displayTexts: {
+          messageType: "SUBMITTED_OFFER",
+        },
+        impulseConversationId: "conv-123",
+      }),
+      Me: () => ({
+        collectorProfile: { bio: "" },
+      }),
+    })
+
+    const profileLink = screen.getByRole("link", {
+      name: "completing your profile",
+    })
+
+    profileLink.click()
+
+    expect(trackEvent).toBeCalledWith({
+      action: "clickedCompleteYourProfile",
+      context_module: "ordersDetail",
+      context_page_owner_type: "orders-detail",
+      context_page_owner_id: "test-id",
+    })
   })
 
   it("renders collector profile prompt for SUBMITTED_ORDER with incomplete profile", () => {
