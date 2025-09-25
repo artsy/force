@@ -29,6 +29,7 @@ EOF
 
 echo "Installing dependencies..."
 yarn install || (npm install --global yarn@latest && yarn install)
+yarn patch-package
 
 # For more info on shared configuration see:
 # https://github.com/artsy/force/blob/main/docs/env_configuration.md
