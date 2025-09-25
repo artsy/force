@@ -96,26 +96,18 @@ export const Order2PaymentForm: React.FC<Order2PaymentFormProps> = ({
   const orderData = useFragment(ORDER_FRAGMENT, order)
   const meData = useFragment(ME_FRAGMENT, me)
   const stripe = useStripe()
-  const { itemsTotal, buyerTotal, seller } = orderData
-
-  // For offer orders, itemsTotal might not be available, fall back to buyerTotal
-  const totalForPayment = itemsTotal || buyerTotal
+  const { itemsTotal, buyerTotal, seller, mode } = orderData
+  const totalForPayment = mode === "BUY" ? itemsTotal : buyerTotal
 
   let orderOptions: StripeElementsUpdateOptions
 
   if (!totalForPayment) {
-    // For OFFER mode orders, the payment amount might not be available until the offer is accepted
-    // Use a minimal placeholder amount and currency for now
-    console.warn(
-      "No payment total available for order, using placeholder values",
-    )
+    // Make Offer order first loading state
     orderOptions = {
-      amount: 100, // $1.00 placeholder
-      currency: (orderData.currencyCode || "USD").toLowerCase(),
+      amount: 100,
+      currency: "usd",
       onBehalfOf: seller?.merchantAccount?.externalId,
     }
-    // TODO: For offer orders, we may need to update this once the offer is accepted
-    // or skip the payment step until the offer process is complete
   } else {
     orderOptions = {
       amount: totalForPayment.minor,
@@ -198,8 +190,8 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
   ) => {
     checkoutTracking.clickedPaymentMethod({
       paymentMethod,
-      amountMinor: 0, // TODO: Fix this to use actual order total
-      currency: "usd", // TODO: Fix this to use actual order currency
+      amountMinor: order.itemsTotal?.minor,
+      currency: order.itemsTotal?.currencyCode ?? "",
     })
   }
 
