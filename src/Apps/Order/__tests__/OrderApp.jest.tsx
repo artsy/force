@@ -126,24 +126,17 @@ describe("OrderApp routing redirects", () => {
       expect(res.redirect.url).toBe("/orders2/2939023/checkout")
     })
 
-    it("does not redirect to the new checkout flow if feature flag is enabled and order is OFFER mode", async () => {
+    it("redirects from the legacy review step to the new checkout flow if feature flag is enabled and order is OFFER mode", async () => {
       featureFlags.isEnabled.mockReturnValue(true)
-      let threw = false
-      try {
-        await render(
-          "/orders/2939023/offer",
-          mockResolver({
-            ...BuyOrderPickup,
-            state: "PENDING",
-            mode: "OFFER",
-          }),
-        )
-      } catch (error) {
-        threw = true
-        // eslint-disable-next-line jest/no-conditional-expect, jest/no-try-expect
-        expect(error.message).toBe("No redirect found for order")
-      }
-      expect(threw).toBe(true)
+      const res = await render(
+        "/orders/2939023/offer",
+        mockResolver({
+          ...BuyOrderPickup,
+          state: "PENDING",
+          mode: "OFFER",
+        }),
+      )
+      expect(res.redirect.url).toBe("/orders2/2939023/checkout")
     })
 
     it("redirects from the legacy status page to the new details page for a submitted order if the order is BUY mode", async () => {

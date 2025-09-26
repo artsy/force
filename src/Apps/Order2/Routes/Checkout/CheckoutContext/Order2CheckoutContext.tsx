@@ -103,6 +103,8 @@ export interface Order2CheckoutModel {
   setDeliveryOptionComplete: Action<this>
   editDeliveryOption: Action<this>
   editPayment: Action<this>
+  setOfferAmountComplete: Action<this>
+  editOfferAmount: Action<this>
   setLoadingError: Action<this, CheckoutLoadingError | null>
   setLoadingComplete: Action<this>
   setPaymentComplete: Action<this>
@@ -416,6 +418,61 @@ export const Order2CheckoutContext: ReturnType<
           state: CheckoutStepState.UPCOMING,
         })
       } else if (step.name === CheckoutStepName.PAYMENT) {
+        newSteps.push({
+          ...step,
+          state: CheckoutStepState.ACTIVE,
+        })
+      } else {
+        newSteps.push(step)
+      }
+    }
+
+    state.steps = newSteps
+  }),
+
+  setOfferAmountComplete: action(state => {
+    const currentStepName = state.steps.find(
+      step => step.state === CheckoutStepState.ACTIVE,
+    )?.name
+
+    if (currentStepName !== CheckoutStepName.OFFER_AMOUNT) {
+      logger.error(
+        `setOfferAmountComplete called when current step is not OFFER_AMOUNT but ${currentStepName}`,
+      )
+      return
+    }
+
+    let hasActivatedNext = false
+    state.steps = state.steps.map(step => {
+      // Mark offer amount as completed
+      if (step.name === CheckoutStepName.OFFER_AMOUNT) {
+        return { ...step, state: CheckoutStepState.COMPLETED }
+      }
+
+      // Activate the first upcoming step
+      if (!hasActivatedNext && step.state === CheckoutStepState.UPCOMING) {
+        hasActivatedNext = true
+        return { ...step, state: CheckoutStepState.ACTIVE }
+      }
+
+      return step
+    })
+  }),
+
+  editOfferAmount: action(state => {
+    const newSteps: CheckoutStep[] = []
+
+    for (const step of state.steps) {
+      const isAfterOfferAmountStep = newSteps
+        .map(s => s.name)
+        .includes(CheckoutStepName.OFFER_AMOUNT)
+
+      if (isAfterOfferAmountStep && step.state !== CheckoutStepState.HIDDEN) {
+        newSteps.push({
+          ...step,
+          state: CheckoutStepState.UPCOMING,
+        })
+      } else if (step.name === CheckoutStepName.OFFER_AMOUNT) {
         newSteps.push({
           ...step,
           state: CheckoutStepState.ACTIVE,
