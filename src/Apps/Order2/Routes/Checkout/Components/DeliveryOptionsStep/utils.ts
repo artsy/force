@@ -9,6 +9,12 @@ export const deliveryOptionLabel = (type?: string | null) => {
       return "Flat rate"
     case "INTERNATIONAL_FLAT":
       return "Flat rate"
+    case "ARTSY_STANDARD":
+      return "Standard"
+    case "ARTSY_EXPRESS":
+      return "Express"
+    case "ARTSY_WHITE_GLOVE":
+      return "White Glove"
     default:
       return `(TODO) ${type?.replace(/_/g, " ").toLocaleLowerCase()}`
   }
@@ -56,6 +62,33 @@ export const deliveryOptionTimeEstimate = (
           from,
           startOffsetDays: 8,
           endOffsetDays: 10,
+        }),
+      ]
+    case "ARTSY_STANDARD":
+      return [
+        "Estimated to deliver between",
+        dateRangeString({
+          from,
+          startOffsetDays: 8,
+          endOffsetDays: 11,
+        }),
+      ]
+    case "ARTSY_EXPRESS":
+      return [
+        "Estimated to deliver between",
+        dateRangeString({
+          from,
+          startOffsetDays: 8,
+          endOffsetDays: 9,
+        }),
+      ]
+    case "ARTSY_WHITE_GLOVE":
+      return [
+        "Estimated to deliver between",
+        dateRangeString({
+          from,
+          startOffsetDays: 14,
+          endOffsetDays: 56,
         }),
       ]
     default:

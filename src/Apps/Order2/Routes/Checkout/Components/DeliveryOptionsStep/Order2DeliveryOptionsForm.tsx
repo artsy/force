@@ -190,11 +190,38 @@ const MultipleShippingOptionsForm = ({
           setFieldValue("deliveryOption", selected)
         }}
       >
-        {options.map((option, i) => (
-          <Radio key={`${option.type}:${i}`} value={option}>
-            {option.type} - {option.amount?.display}
-          </Radio>
-        ))}
+        {options.map((option, i) => {
+          const label = deliveryOptionLabel(option.type)
+          const timeEstimate = deliveryOptionTimeEstimate(option.type)
+          const [prefix, timeRange] = timeEstimate || []
+
+          return (
+            <Radio
+              label={label}
+              key={`${option.type}:${i}`}
+              value={option}
+              mt={2}
+            >
+              <Flex justifyContent="space-between" width="100%">
+                <Flex flexDirection="column">
+                  {timeEstimate && (
+                    <Text variant="xs" color="mono60">
+                      {prefix} <strong>{timeRange}</strong>
+                    </Text>
+                  )}
+                  {option.type === "ARTSY_WHITE_GLOVE" &&
+                    selectedOption === option && (
+                      <Text variant="xs" color="mono60">
+                        This service includes custom packing, transportation on
+                        a fine art shuttle, and in-home delivery.
+                      </Text>
+                    )}
+                </Flex>
+                <Text>{option.amount?.display}</Text>
+              </Flex>
+            </Radio>
+          )
+        })}
       </RadioGroup>
     </Flex>
   )
