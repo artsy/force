@@ -4,6 +4,7 @@ import { FairCollectionsFragmentContainer } from "Apps/Fair/Components/FairColle
 import { FairEditorialRailArticlesFragmentContainer } from "Apps/Fair/Components/FairEditorial/FairEditorialRailArticles"
 import { FairAboutFragmentContainer as FairAbout } from "Apps/Fair/Components/FairOverview/FairAbout"
 import { FairFollowedArtistsQueryRenderer } from "Apps/Fair/Components/FairOverview/FairFollowedArtists"
+import { FairStructuredData } from "Apps/Fair/Components/FairStructuredData"
 import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
@@ -42,6 +43,8 @@ const FairOverview: FC<React.PropsWithChildren<FairOverviewProps>> = ({
 
   return (
     <>
+      <FairStructuredData fair={fair} />
+
       <Join separator={<Spacer y={6} />}>
         <FairAbout fair={fair} />
 
@@ -70,6 +73,7 @@ export const FairOverviewFragmentContainer = createFragmentContainer(
   {
     fair: graphql`
       fragment FairOverview_fair on Fair {
+        ...FairStructuredData_fair
         ...FairEditorialRailArticles_fair
         ...FairCollections_fair
         ...FairAbout_fair
