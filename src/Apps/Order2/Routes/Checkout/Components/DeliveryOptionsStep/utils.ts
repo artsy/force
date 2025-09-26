@@ -69,8 +69,8 @@ export const deliveryOptionTimeEstimate = (
         "Estimated to deliver between",
         dateRangeString({
           from,
-          startOffsetDays: 5,
-          endOffsetDays: 7,
+          startOffsetDays: 8,
+          endOffsetDays: 11,
         }),
       ]
     case "ARTSY_EXPRESS":
@@ -78,8 +78,8 @@ export const deliveryOptionTimeEstimate = (
         "Estimated to deliver between",
         dateRangeString({
           from,
-          startOffsetDays: 2,
-          endOffsetDays: 4,
+          startOffsetDays: 8,
+          endOffsetDays: 9,
         }),
       ]
     case "ARTSY_WHITE_GLOVE":
@@ -87,8 +87,8 @@ export const deliveryOptionTimeEstimate = (
         "Estimated to deliver between",
         dateRangeString({
           from,
-          startOffsetDays: 7,
-          endOffsetDays: 10,
+          startOffsetDays: 14,
+          endOffsetDays: 56,
         }),
       ]
     default:
