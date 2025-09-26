@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b0fa706bda8eebbd17203fd70ca32905>>
+ * @generated SignedSource<<a6bbee9c42ee35a201406dd15bd321e2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,7 +15,12 @@ export type OrderSourceEnum = "ARTWORK_PAGE" | "INQUIRY" | "PARTNER_OFFER" | "PR
 import { FragmentRefs } from "relay-runtime";
 export type Order2PaymentForm_order$data = {
   readonly availablePaymentMethods: ReadonlyArray<OrderPaymentMethodEnum>;
+  readonly buyerTotal: {
+    readonly currencyCode: string;
+    readonly minor: any;
+  } | null | undefined;
   readonly code: string;
+  readonly currencyCode: string;
   readonly fulfillmentDetails: {
     readonly addressLine1: string | null | undefined;
     readonly addressLine2: string | null | undefined;
@@ -52,7 +57,25 @@ export type Order2PaymentForm_order$key = {
   readonly " $fragmentSpreads": FragmentRefs<"Order2PaymentForm_order">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "currencyCode",
+  "storageKey": null
+},
+v1 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "minor",
+    "storageKey": null
+  },
+  (v0/*: any*/)
+];
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -86,6 +109,7 @@ const node: ReaderFragment = {
       "name": "internalID",
       "storageKey": null
     },
+    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -100,22 +124,17 @@ const node: ReaderFragment = {
       "kind": "LinkedField",
       "name": "itemsTotal",
       "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "minor",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "currencyCode",
-          "storageKey": null
-        }
-      ],
+      "selections": (v1/*: any*/),
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Money",
+      "kind": "LinkedField",
+      "name": "buyerTotal",
+      "plural": false,
+      "selections": (v1/*: any*/),
       "storageKey": null
     },
     {
@@ -265,7 +284,8 @@ const node: ReaderFragment = {
   "type": "Order",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "a33fc129a552fc32fd1feac6c43dafcc";
+(node as any).hash = "3979f8117293496f0e31ef87c4a7e100";
 
 export default node;

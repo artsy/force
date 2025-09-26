@@ -204,9 +204,21 @@ export const newCheckoutEnabled = ({
   order,
   featureFlags,
 }: Order2RedirectArgs): boolean => {
-  return !!(
-    order.mode === "BUY" && featureFlags?.isEnabled("emerald_checkout-redesign")
-  )
+  if (
+    order.mode === "BUY" &&
+    featureFlags?.isEnabled("emerald_checkout-redesign")
+  ) {
+    return true
+  }
+
+  if (
+    order.mode === "OFFER" &&
+    featureFlags?.isEnabled("emerald_checkout-redesign")
+  ) {
+    return true
+  }
+
+  return false
 }
 
 export const redirects: RedirectRecord<OrderQuery> = {
@@ -227,6 +239,7 @@ export const redirects: RedirectRecord<OrderQuery> = {
       rules: [
         goToDetailsIfOrderIsNotPending,
         goToShippingIfOrderIsNotOfferOrder,
+        goToOrder2CheckoutIfEnabled,
       ],
     },
     {
