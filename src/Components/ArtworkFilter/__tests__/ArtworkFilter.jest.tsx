@@ -163,6 +163,48 @@ describe("ArtworkFilter", () => {
         }),
       )
     })
+
+    it("on immersive view option viewed", () => {
+      ;(useFlag as jest.Mock).mockImplementation(
+        flag => flag === "onyx_enable-immersive-view",
+      )
+
+      renderWithRelay({
+        Viewer: () => ({
+          ...ArtworkFilterFixture.viewer,
+        }),
+      })
+
+      expect(trackEvent).toHaveBeenCalledWith(
+        expect.objectContaining({
+          action: "immersiveViewOptionViewed",
+          context_module: "artworkGrid",
+          context_page_owner_type: "example-owner-type",
+        }),
+      )
+    })
+
+    it("on immersive view button click", () => {
+      ;(useFlag as jest.Mock).mockImplementation(
+        flag => flag === "onyx_enable-immersive-view",
+      )
+
+      renderWithRelay({
+        Viewer: () => ({
+          ...ArtworkFilterFixture.viewer,
+        }),
+      })
+
+      fireEvent.click(screen.getByRole("button", { name: "Immersive" }))
+
+      expect(trackEvent).toHaveBeenCalledWith(
+        expect.objectContaining({
+          action: "clickedImmersiveView",
+          context_module: "artworkGrid",
+          context_page_owner_type: "example-owner-type",
+        }),
+      )
+    })
   })
 
   describe("desktop", () => {
