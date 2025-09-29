@@ -19,6 +19,15 @@ import type {
 } from "__generated__/ImmersiveView_filtered_artworks.graphql"
 import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { FocusOn } from "react-focus-on"
+import { useTracking } from "react-tracking"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import {
+  ActionType,
+  ClickedMainArtworkGrid,
+  ContextModule,
+  ImmersiveViewArtworkDisplayed,
+  OwnerType,
+} from "@artsy/cohesion"
 
 const ITEMS_PER_PAGE = 30
 
@@ -115,6 +124,37 @@ export const ImmersiveView: React.FC<ImmersiveViewProps> = props => {
     ],
   )
 
+  const tracking = useTracking()
+  const { contextPageOwnerType } = useAnalyticsContext()
+
+  const trackImmersiveViewArtworkDisplayed = () => {
+    const params: ImmersiveViewArtworkDisplayed = {
+      action: ActionType.immersiveViewArtworkDisplayed,
+      context_module: ContextModule.artworkGrid,
+      context_page_owner_type: contextPageOwnerType,
+      context_screen_owner_id: currentArtwork?.internalID ?? "Unknown",
+    }
+    tracking.trackEvent(params)
+  }
+
+  const trackImmersiveViewArtworkClicked = () => {
+    const params: ClickedMainArtworkGrid = {
+      action: ActionType.clickedMainArtworkGrid,
+      context_module: ContextModule.artworkGrid,
+      context_page_owner_type: contextPageOwnerType,
+      destination_page_owner_id: currentArtwork?.internalID ?? "Unknown",
+      destination_page_owner_type: OwnerType.artwork,
+      destination_page_owner_slug: currentArtwork?.slug ?? "Unknown",
+      label: "immersiveView",
+      type: "thumbnail",
+    }
+    tracking.trackEvent(params)
+  }
+
+  useEffect(() => {
+    trackImmersiveViewArtworkDisplayed()
+  }, [currentArtwork?.internalID])
+
   useEffect(() => {
     document.body.style.overflow = "hidden"
     document.addEventListener("keydown", handleKeyDown)
@@ -161,7 +201,10 @@ export const ImmersiveView: React.FC<ImmersiveViewProps> = props => {
                 href={`/artwork/${currentArtwork.slug}`}
                 target="_new"
                 style={{ textDecoration: "none" }}
-                onClick={e => e.currentTarget.blur()}
+                onClick={e => {
+                  e.currentTarget.blur()
+                  trackImmersiveViewArtworkClicked()
+                }}
               >
                 <Flex flexDirection={"column"} alignItems={"center"} gap={2}>
                   {isImageLoading && (
@@ -204,6 +247,7 @@ const FRAGMENT = graphql`
     }
     edges {
       immersiveArtworkNode: node {
+        internalID
         slug
         formattedMetadata
         image {

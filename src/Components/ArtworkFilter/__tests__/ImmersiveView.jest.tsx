@@ -4,8 +4,13 @@ import { ImmersiveView } from "Components/ArtworkFilter/ImmersiveView"
 import type { ImmersiveViewTestQuery } from "__generated__/ImmersiveViewTestQuery.graphql"
 import { graphql } from "react-relay"
 import { ImmersiveView_filtered_artworks$data } from "__generated__/ImmersiveView_filtered_artworks.graphql"
+import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
+
+const trackEvent = jest.fn()
+
+jest.mock("react-tracking")
 
 // Mock Blurhash to avoid canvas-related errors in tests
 jest.mock("react-blurhash", () => ({
@@ -34,6 +39,8 @@ const { renderWithRelay } = setupTestWrapperTL<ImmersiveViewTestQuery>({
 describe("ImmersiveView", () => {
   beforeEach(() => {
     jest.clearAllMocks()
+    trackEvent.mockClear()
+    ;(useTracking as jest.Mock).mockImplementation(() => ({ trackEvent }))
   })
 
   it("renders correctly", async () => {
@@ -143,6 +150,83 @@ describe("ImmersiveView", () => {
 
     expect(screen.getByText("Loading more artworks…")).toBeInTheDocument()
   })
+
+  describe("tracking", () => {
+    it("tracks immersiveViewArtworkDisplayed on mount", () => {
+      renderWithRelay({
+        FilterArtworksConnection: () => filterArtworksConnectionData,
+      })
+
+      expect(trackEvent).toHaveBeenCalledWith(
+        expect.objectContaining({
+          action: "immersiveViewArtworkDisplayed",
+          context_module: "artworkGrid",
+          context_screen_owner_id: "artwork-id-1",
+        }),
+      )
+    })
+
+    it("tracks immersiveViewArtworkDisplayed when navigating to next artwork", () => {
+      renderWithRelay({
+        FilterArtworksConnection: () => filterArtworksConnectionData,
+      })
+
+      trackEvent.mockClear()
+
+      fireEvent.keyDown(document, { key: "ArrowRight" })
+
+      expect(trackEvent).toHaveBeenCalledWith(
+        expect.objectContaining({
+          action: "immersiveViewArtworkDisplayed",
+          context_module: "artworkGrid",
+          context_screen_owner_id: "artwork-id-2",
+        }),
+      )
+    })
+
+    it("tracks immersiveViewArtworkDisplayed when navigating to previous artwork", () => {
+      renderWithRelay({
+        FilterArtworksConnection: () => filterArtworksConnectionData,
+      })
+
+      // Navigate to second artwork first
+      fireEvent.keyDown(document, { key: "ArrowRight" })
+
+      trackEvent.mockClear()
+
+      // Navigate back to first artwork
+      fireEvent.keyDown(document, { key: "ArrowLeft" })
+
+      expect(trackEvent).toHaveBeenCalledWith(
+        expect.objectContaining({
+          action: "immersiveViewArtworkDisplayed",
+          context_module: "artworkGrid",
+          context_screen_owner_id: "artwork-id-1",
+        }),
+      )
+    })
+
+    it("tracks clickedMainArtworkGrid when clicking on artwork", () => {
+      renderWithRelay({
+        FilterArtworksConnection: () => filterArtworksConnectionData,
+      })
+
+      const artworkLink = screen.getByRole("link")
+      fireEvent.click(artworkLink)
+
+      expect(trackEvent).toHaveBeenCalledWith(
+        expect.objectContaining({
+          action: "clickedMainArtworkGrid",
+          context_module: "artworkGrid",
+          destination_page_owner_id: "artwork-id-1",
+          destination_page_owner_type: "artwork",
+          destination_page_owner_slug: "artwork-1",
+          label: "immersiveView",
+          type: "thumbnail",
+        }),
+      )
+    })
+  })
 })
 
 const filterArtworksConnectionData: Pick<
@@ -153,6 +237,7 @@ const filterArtworksConnectionData: Pick<
   edges: [
     {
       immersiveArtworkNode: {
+        internalID: "artwork-id-1",
         slug: "artwork-1",
         formattedMetadata: "Artwork 1",
         image: {
@@ -164,6 +249,7 @@ const filterArtworksConnectionData: Pick<
     },
     {
       immersiveArtworkNode: {
+        internalID: "artwork-id-2",
         slug: "artwork-2",
         formattedMetadata: "Artwork 2",
         image: {
@@ -175,6 +261,7 @@ const filterArtworksConnectionData: Pick<
     },
     {
       immersiveArtworkNode: {
+        internalID: "artwork-id-3",
         slug: "artwork-3",
         formattedMetadata: "Artwork 3",
         image: {
