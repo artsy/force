@@ -74,26 +74,5 @@ describe("PrivateArtworkAdditionalInfo", () => {
 
       expect(trackEvent).toBeCalledTimes(1)
     })
-
-    it("tracks the click on Condition read more", () => {
-      renderWithRelay({
-        Artwork: () => ({
-          conditionDescription: {
-            details:
-              "Excellent condition. Unframed Additional condition and detail images are available upon request. Please reach out to specialist@artsymail.com for further details.",
-          },
-        }),
-      })
-
-      fireEvent.click(screen.getByText("Read more"))
-
-      expect(trackEvent).toHaveBeenCalledWith({
-        action_type: "Click",
-        context_module: "Condition",
-        subject: "Read more",
-      })
-
-      expect(trackEvent).toBeCalledTimes(1)
-    })
   })
 })

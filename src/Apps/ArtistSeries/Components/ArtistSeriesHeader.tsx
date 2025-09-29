@@ -62,7 +62,7 @@ const ArtistSeriesHeader: React.FC<
 
           {descriptionFormatted && (
             <HTML variant="sm">
-              <ReadMore content={descriptionFormatted} maxChars={1000} />
+              <ReadMore content={descriptionFormatted} maxLines={12} />
             </HTML>
           )}
         </Column>

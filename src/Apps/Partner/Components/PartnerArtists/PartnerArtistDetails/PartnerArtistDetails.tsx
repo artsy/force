@@ -83,14 +83,14 @@ export const PartnerArtistDetails: React.FC<
             <Join separator={<Spacer y={2} />}>
               {biographyBlurb.text && (
                 <HTML variant="sm">
-                  <ReadMore maxChars={320} content={biographyBlurb.text} />
+                  <ReadMore maxLines={6} content={biographyBlurb.text} />
                 </HTML>
               )}
 
               {biographyBlurb.credit && (
                 <HTML color="mono60" variant="sm">
                   <ReadMore
-                    maxChars={320}
+                    maxLines={6}
                     content={`— ${biographyBlurb.credit}`}
                   />
                 </HTML>

@@ -80,7 +80,7 @@ export const FeaturedCollectionRailEntity: FC<
             <Text variant="xs">
               <Spacer y={1} />
 
-              <ReadMore maxChars={100} content={description} disabled />
+              <ReadMore maxLines={2} content={description} disabled />
             </Text>
           )}
         </Box>

@@ -5,11 +5,11 @@ const EMPTY_VALUE = "----"
 export const MyCollectionArtworkDetailField = ({
   label,
   value,
-  truncateLimit = 0,
+  maxLines = 0,
 }: {
   label: string
   value?: string | null
-  truncateLimit?: number
+  maxLines?: number
 }) => {
   return (
     <>
@@ -24,8 +24,8 @@ export const MyCollectionArtworkDetailField = ({
         color={value ? "mono100" : "mono60"}
         hyphenate
       >
-        {truncateLimit ? (
-          <ReadMore maxChars={truncateLimit} content={value || EMPTY_VALUE} />
+        {maxLines ? (
+          <ReadMore maxLines={maxLines} content={value || EMPTY_VALUE} />
         ) : (
           value || EMPTY_VALUE
         )}

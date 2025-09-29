@@ -102,7 +102,7 @@ const ShowBanner: React.FC<React.PropsWithChildren<ShowBannerProps>> = ({
 
             {description && (
               <Text variant="sm" mt={1}>
-                <ReadMore maxChars={280} content={description} />
+                <ReadMore maxLines={4} content={description} disabled />
               </Text>
             )}
           </RouterLink>

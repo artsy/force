@@ -11,7 +11,6 @@ import {
 import { ShowHoursFragmentContainer } from "Apps/Show/Components/ShowHours"
 import { ShowInfoLocationFragmentContainer as ShowInfoLocation } from "Apps/Show/Components/ShowInfoLocation"
 import { EntityHeaderPartnerFragmentContainer } from "Components/EntityHeaders/EntityHeaderPartner"
-import { Media } from "Utils/Responsive"
 import type { ShowInfo_show$data } from "__generated__/ShowInfo_show.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -54,13 +53,11 @@ export const ShowInfo: React.FC<React.PropsWithChildren<ShowInfoProps>> = ({
                 </Text>
 
                 <HTML variant="sm" mr={2}>
-                  <Media lessThan="sm">
-                    <ReadMore content={pressRelease} maxChars={400} />
-                  </Media>
-
-                  <Media greaterThanOrEqual="sm">
-                    <ReadMore content={pressRelease} maxChars={600} />
-                  </Media>
+                  {events.length > 0 ? (
+                    <ReadMore content={pressRelease} maxLines={6} />
+                  ) : (
+                    <div dangerouslySetInnerHTML={{ __html: pressRelease }} />
+                  )}
                 </HTML>
               </Box>
             )}

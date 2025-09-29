@@ -1,14 +1,8 @@
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { HTML, ReadMore, Spacer, StackableBorderBox } from "@artsy/palette"
-import { Media } from "Utils/Responsive"
+import { HTML, ReadMore, Stack, StackableBorderBox } from "@artsy/palette"
 import type { ArtworkDetailsAboutTheWorkFromArtsy_artwork$data } from "__generated__/ArtworkDetailsAboutTheWorkFromArtsy_artwork.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-
-export const READ_MORE_MAX_CHARS = {
-  xs: 100,
-  default: 320,
-}
 
 export interface ArtworkDetailsAboutTheWorkFromArtsyProps {
   artwork: ArtworkDetailsAboutTheWorkFromArtsy_artwork$data
@@ -28,34 +22,6 @@ const ArtworkDetailsAboutTheWorkFromArtsy: React.FC<
     })
   }
 
-  const renderDescriptionReadMore = (breakpoint?: string) => {
-    const { description } = artwork
-    const xs = breakpoint === "xs"
-    const maxChars = xs ? READ_MORE_MAX_CHARS.xs : READ_MORE_MAX_CHARS.default
-
-    return (
-      <ReadMore
-        maxChars={maxChars}
-        content={description as string}
-        onReadMoreClicked={trackReadMoreClick}
-      />
-    )
-  }
-
-  const renderAdditionalInformationReadMore = (breakpoint?: string) => {
-    const { additionalInformation } = artwork
-    const xs = breakpoint === "xs"
-    const maxChars = xs ? READ_MORE_MAX_CHARS.xs : READ_MORE_MAX_CHARS.default
-
-    return (
-      <ReadMore
-        maxChars={maxChars}
-        content={additionalInformation as string}
-        onReadMoreClicked={trackReadMoreClick}
-      />
-    )
-  }
-
   const { description, additionalInformation } = artwork
 
   if (!description && !additionalInformation) {
@@ -65,22 +31,23 @@ const ArtworkDetailsAboutTheWorkFromArtsy: React.FC<
   return (
     <StackableBorderBox>
       <HTML variant="sm">
-        {description && (
-          <>
-            <Media at="xs">{renderDescriptionReadMore("xs")}</Media>
-            <Media greaterThan="xs">{renderDescriptionReadMore()}</Media>
-            <Spacer y={2} />
-          </>
-        )}
+        <Stack gap={2}>
+          {description && (
+            <ReadMore
+              maxLines={3}
+              content={description}
+              onReadMoreClicked={trackReadMoreClick}
+            />
+          )}
 
-        {additionalInformation && (
-          <>
-            <Media at="xs">{renderAdditionalInformationReadMore("xs")}</Media>
-            <Media greaterThan="xs">
-              {renderAdditionalInformationReadMore()}
-            </Media>
-          </>
-        )}
+          {additionalInformation && (
+            <ReadMore
+              maxLines={3}
+              content={additionalInformation}
+              onReadMoreClicked={trackReadMoreClick}
+            />
+          )}
+        </Stack>
       </HTML>
     </StackableBorderBox>
   )

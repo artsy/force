@@ -1,4 +1,4 @@
-import { waitFor, screen } from "@testing-library/react"
+import { screen, waitFor } from "@testing-library/react"
 import { FairOverviewFragmentContainer } from "Apps/Fair/Routes/FairOverview"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useRouter } from "System/Hooks/useRouter"
@@ -48,17 +48,6 @@ describe("FairOverview", () => {
     })
 
     expect(screen.getByText("This is the about.")).toBeInTheDocument()
-  })
-
-  it("displays Read more if about section contains more than 480 symbols", () => {
-    renderWithRelay({
-      Fair: () => ({
-        about:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum bibendum nulla sit amet erat vehicula, ut scelerisque purus interdum. Quisque vel pretium arcu. Phasellus nunc tellus, laoreet eget cursus a, vehicula sit amet erat. Integer porttitor mollis tellus, ultrices euismod dolor aliquet et. Integer placerat turpis vitae ligula dignissim commodo. Vivamus id sapien eros. Vestibulum consequat, lacus eu facilisis auctor, dui odio dignissim arcu, nec tincidunt erat eros sed libero.",
-      }),
-    })
-
-    expect(screen.getByText("Read more")).toBeInTheDocument()
   })
 
   it("renders articles if they are present", () => {

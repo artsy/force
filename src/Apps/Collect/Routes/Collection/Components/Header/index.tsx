@@ -42,7 +42,7 @@ export const CollectionHeader: React.FC<
         {collection.description && (
           <Column span={6}>
             <HTML variant="sm">
-              <ReadMore maxChars={750} content={collection.description} />
+              <ReadMore maxLines={9} content={collection.description} />
             </HTML>
           </Column>
         )}
