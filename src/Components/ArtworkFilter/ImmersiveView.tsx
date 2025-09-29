@@ -46,6 +46,9 @@ export const ImmersiveView: React.FC<ImmersiveViewProps> = props => {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isImageLoading, setIsImageLoading] = useState(true)
 
+  // Tracking debounce threshold in milliseconds
+  const TRACKING_DEBOUNCE_MS = 500
+
   const currentArtwork = artworks[currentIndex]
   const nextArtwork = artworks[currentIndex + 1]
   const prevArtwork = artworks[currentIndex - 1]
@@ -152,7 +155,14 @@ export const ImmersiveView: React.FC<ImmersiveViewProps> = props => {
   }
 
   useEffect(() => {
-    trackImmersiveViewArtworkDisplayed()
+    // Debounce tracking to only fire if artwork remains in view for the threshold duration
+    const timeoutId = setTimeout(() => {
+      trackImmersiveViewArtworkDisplayed()
+    }, TRACKING_DEBOUNCE_MS)
+
+    return () => {
+      clearTimeout(timeoutId)
+    }
   }, [currentArtwork?.internalID])
 
   useEffect(() => {

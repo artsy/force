@@ -152,56 +152,140 @@ describe("ImmersiveView", () => {
   })
 
   describe("tracking", () => {
-    it("tracks immersiveViewArtworkDisplayed on mount", () => {
+    it("tracks immersiveViewArtworkDisplayed on mount after debounce delay", async () => {
       renderWithRelay({
         FilterArtworksConnection: () => filterArtworksConnectionData,
       })
 
-      expect(trackEvent).toHaveBeenCalledWith(
-        expect.objectContaining({
-          action: "immersiveViewArtworkDisplayed",
-          context_module: "artworkGrid",
-          context_screen_owner_id: "artwork-id-1",
-        }),
+      // Should not track immediately
+      expect(trackEvent).not.toHaveBeenCalled()
+
+      // Wait for debounce delay (e.g. 500ms)
+      await waitFor(
+        () => {
+          expect(trackEvent).toHaveBeenCalledWith(
+            expect.objectContaining({
+              action: "immersiveViewArtworkDisplayed",
+              context_module: "artworkGrid",
+              context_screen_owner_id: "artwork-id-1",
+            }),
+          )
+        },
+        { timeout: 1000 },
       )
     })
 
-    it("tracks immersiveViewArtworkDisplayed when navigating to next artwork", () => {
+    it("tracks immersiveViewArtworkDisplayed when navigating to next artwork after debounce", async () => {
       renderWithRelay({
         FilterArtworksConnection: () => filterArtworksConnectionData,
       })
+
+      // Wait for initial tracking
+      await waitFor(
+        () => {
+          expect(trackEvent).toHaveBeenCalled()
+        },
+        { timeout: 1000 },
+      )
 
       trackEvent.mockClear()
 
       fireEvent.keyDown(document, { key: "ArrowRight" })
 
-      expect(trackEvent).toHaveBeenCalledWith(
-        expect.objectContaining({
-          action: "immersiveViewArtworkDisplayed",
-          context_module: "artworkGrid",
-          context_screen_owner_id: "artwork-id-2",
-        }),
+      // Wait for debounced tracking
+      await waitFor(
+        () => {
+          expect(trackEvent).toHaveBeenCalledWith(
+            expect.objectContaining({
+              action: "immersiveViewArtworkDisplayed",
+              context_module: "artworkGrid",
+              context_screen_owner_id: "artwork-id-2",
+            }),
+          )
+        },
+        { timeout: 1000 },
       )
     })
 
-    it("tracks immersiveViewArtworkDisplayed when navigating to previous artwork", () => {
+    it("tracks immersiveViewArtworkDisplayed when navigating to previous artwork after debounce", async () => {
       renderWithRelay({
         FilterArtworksConnection: () => filterArtworksConnectionData,
       })
 
+      // Wait for initial tracking
+      await waitFor(
+        () => {
+          expect(trackEvent).toHaveBeenCalled()
+        },
+        { timeout: 1000 },
+      )
+
       // Navigate to second artwork first
       fireEvent.keyDown(document, { key: "ArrowRight" })
+
+      // Wait for second artwork tracking
+      await waitFor(
+        () => {
+          expect(trackEvent).toHaveBeenCalledWith(
+            expect.objectContaining({
+              context_screen_owner_id: "artwork-id-2",
+            }),
+          )
+        },
+        { timeout: 1000 },
+      )
 
       trackEvent.mockClear()
 
       // Navigate back to first artwork
       fireEvent.keyDown(document, { key: "ArrowLeft" })
 
+      // Wait for debounced tracking
+      await waitFor(
+        () => {
+          expect(trackEvent).toHaveBeenCalledWith(
+            expect.objectContaining({
+              action: "immersiveViewArtworkDisplayed",
+              context_module: "artworkGrid",
+              context_screen_owner_id: "artwork-id-1",
+            }),
+          )
+        },
+        { timeout: 1000 },
+      )
+    })
+
+    it("does not track immersiveViewArtworkDisplayed if navigating away quickly", async () => {
+      renderWithRelay({
+        FilterArtworksConnection: () => filterArtworksConnectionData,
+      })
+
+      // Wait for initial tracking
+      await waitFor(
+        () => {
+          expect(trackEvent).toHaveBeenCalled()
+        },
+        { timeout: 1000 },
+      )
+
+      trackEvent.mockClear()
+
+      // Navigate to next artwork
+      fireEvent.keyDown(document, { key: "ArrowRight" })
+
+      // Immediately navigate to another artwork before debounce completes
+      fireEvent.keyDown(document, { key: "ArrowRight" })
+
+      // Wait just past the debounce delay
+      await new Promise(resolve => setTimeout(resolve, 600))
+
+      // Should only have tracked the final artwork (artwork-id-3)
+      expect(trackEvent).toHaveBeenCalledTimes(1)
       expect(trackEvent).toHaveBeenCalledWith(
         expect.objectContaining({
           action: "immersiveViewArtworkDisplayed",
           context_module: "artworkGrid",
-          context_screen_owner_id: "artwork-id-1",
+          context_screen_owner_id: "artwork-id-3",
         }),
       )
     })
