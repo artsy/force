@@ -19,6 +19,7 @@ import { Order2ExpressCheckout } from "Apps/Order2/Routes/Checkout/Components/Ex
 import { Order2FulfillmentDetailsStep } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/Order2FulfillmentDetailsStep"
 import { Order2CheckoutLoadingSkeleton } from "Apps/Order2/Routes/Checkout/Components/Order2CheckoutLoadingSkeleton"
 import { Order2CollapsibleOrderSummary } from "Apps/Order2/Routes/Checkout/Components/Order2CollapsibleOrderSummary"
+import { Order2OfferStep } from "Apps/Order2/Routes/Checkout/Components/OfferStep/Order2OfferStep"
 import { Order2ReviewStep } from "Apps/Order2/Routes/Checkout/Components/Order2ReviewStep"
 import { Order2PaymentStep } from "Apps/Order2/Routes/Checkout/Components/PaymentStep/Order2PaymentStep"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
@@ -129,6 +130,7 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
               {isExpressCheckoutEligible && (
                 <Order2ExpressCheckout order={orderData} />
               )}
+              {isOffer && <Order2OfferStep order={orderData} />}
               <Order2FulfillmentDetailsStep order={orderData} me={meData} />
               <Order2DeliveryOptionsStep order={orderData} />
               <Order2PaymentStep order={orderData} me={meData} />
@@ -188,6 +190,7 @@ const ORDER_FRAGMENT = graphql`
     }
     ...Order2ExpressCheckout_order
     ...Order2CollapsibleOrderSummary_order
+    ...Order2OfferStep_order
     ...Order2FulfillmentDetailsStep_order
     ...Order2DeliveryOptionsStep_order
     ...Order2PaymentStep_order

@@ -96,16 +96,24 @@ export const Order2PaymentForm: React.FC<Order2PaymentFormProps> = ({
   const orderData = useFragment(ORDER_FRAGMENT, order)
   const meData = useFragment(ME_FRAGMENT, me)
   const stripe = useStripe()
-  const { itemsTotal, seller } = orderData
+  const { itemsTotal, buyerTotal, seller, mode } = orderData
+  const totalForPayment = mode === "BUY" ? itemsTotal : buyerTotal
 
-  if (!itemsTotal) {
-    throw new Error("itemsTotal is required")
-  }
+  let orderOptions: StripeElementsUpdateOptions
 
-  const orderOptions: StripeElementsUpdateOptions = {
-    amount: itemsTotal.minor,
-    currency: itemsTotal.currencyCode.toLowerCase(),
-    onBehalfOf: seller?.merchantAccount?.externalId,
+  if (!totalForPayment) {
+    // Make Offer order first loading state
+    orderOptions = {
+      amount: 100,
+      currency: "usd",
+      onBehalfOf: seller?.merchantAccount?.externalId,
+    }
+  } else {
+    orderOptions = {
+      amount: totalForPayment.minor,
+      currency: totalForPayment.currencyCode.toLowerCase(),
+      onBehalfOf: seller?.merchantAccount?.externalId,
+    }
   }
 
   const { theme } = useTheme()
@@ -171,6 +179,21 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
     steps,
     activeFulfillmentDetailsTab,
   } = useCheckoutContext()
+
+  const trackPaymentMethodSelection = (
+    paymentMethod:
+      | "CREDIT_CARD"
+      | "SAVED_CREDIT_CARD"
+      | "WIRE_TRANSFER"
+      | "US_BANK_ACCOUNT"
+      | "SEPA_DEBIT",
+  ) => {
+    checkoutTracking.clickedPaymentMethod({
+      paymentMethod,
+      amountMinor: order.itemsTotal?.minor,
+      currency: order.itemsTotal?.currencyCode ?? "",
+    })
+  }
 
   const [isSubmittingToStripe, setIsSubmittingToStripe] = useState(false)
   const [errorMessage, setErrorMessage] = useState<JSX.Element | string | null>(
@@ -307,21 +330,6 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
     }
 
     setSelectedPaymentMethod(methodType)
-  }
-
-  const trackPaymentMethodSelection = (
-    paymentMethod:
-      | "CREDIT_CARD"
-      | "SAVED_CREDIT_CARD"
-      | "WIRE_TRANSFER"
-      | "US_BANK_ACCOUNT"
-      | "SEPA_DEBIT",
-  ) => {
-    checkoutTracking.clickedPaymentMethod({
-      paymentMethod,
-      amountMinor: order.itemsTotal?.minor,
-      currency: order.itemsTotal?.currencyCode ?? "",
-    })
   }
 
   const onClickSavedPaymentMethods = () => {
@@ -937,8 +945,13 @@ const ORDER_FRAGMENT = graphql`
     mode
     source
     internalID
+    currencyCode
     availablePaymentMethods
     itemsTotal {
+      minor
+      currencyCode
+    }
+    buyerTotal {
       minor
       currencyCode
     }

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b49fa203bdd2d2571c412c8d05749632>>
+ * @generated SignedSource<<c096f90d5cdb17879ebc7233f9e85f33>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -61,18 +61,47 @@ v4 = {
   "storageKey": null
 },
 v5 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "currencyCode",
+  "storageKey": null
+},
+v6 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "minor",
+    "storageKey": null
+  },
+  (v5/*: any*/)
+],
+v7 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "String"
 },
-v6 = {
+v8 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v7 = {
+v9 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Money"
+},
+v10 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "Long"
+},
+v11 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
@@ -265,6 +294,7 @@ return {
                 "storageKey": null
               },
               (v3/*: any*/),
+              (v5/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -279,22 +309,17 @@ return {
                 "kind": "LinkedField",
                 "name": "itemsTotal",
                 "plural": false,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "minor",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "currencyCode",
-                    "storageKey": null
-                  }
-                ],
+                "selections": (v6/*: any*/),
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Money",
+                "kind": "LinkedField",
+                "name": "buyerTotal",
+                "plural": false,
+                "selections": (v6/*: any*/),
                 "storageKey": null
               },
               {
@@ -462,7 +487,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e21a1ec2428929e97f4a59cf93533f42",
+    "cacheID": "b65e3cba30d663909fed7767ef1f3dd9",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -490,10 +515,10 @@ return {
           "plural": false,
           "type": "BankAccount"
         },
-        "me.bankAccounts.edges.node.__typename": (v5/*: any*/),
-        "me.bankAccounts.edges.node.id": (v6/*: any*/),
-        "me.bankAccounts.edges.node.internalID": (v6/*: any*/),
-        "me.bankAccounts.edges.node.last4": (v5/*: any*/),
+        "me.bankAccounts.edges.node.__typename": (v7/*: any*/),
+        "me.bankAccounts.edges.node.id": (v8/*: any*/),
+        "me.bankAccounts.edges.node.internalID": (v8/*: any*/),
+        "me.bankAccounts.edges.node.last4": (v7/*: any*/),
         "me.bankAccounts.edges.node.type": {
           "enumValues": [
             "SEPA_DEBIT",
@@ -521,12 +546,12 @@ return {
           "plural": false,
           "type": "CreditCard"
         },
-        "me.creditCards.edges.node.__typename": (v5/*: any*/),
-        "me.creditCards.edges.node.brand": (v5/*: any*/),
-        "me.creditCards.edges.node.id": (v6/*: any*/),
-        "me.creditCards.edges.node.internalID": (v6/*: any*/),
-        "me.creditCards.edges.node.lastDigits": (v5/*: any*/),
-        "me.id": (v6/*: any*/),
+        "me.creditCards.edges.node.__typename": (v7/*: any*/),
+        "me.creditCards.edges.node.brand": (v7/*: any*/),
+        "me.creditCards.edges.node.id": (v8/*: any*/),
+        "me.creditCards.edges.node.internalID": (v8/*: any*/),
+        "me.creditCards.edges.node.lastDigits": (v7/*: any*/),
+        "me.id": (v8/*: any*/),
         "me.order": {
           "enumValues": null,
           "nullable": true,
@@ -544,35 +569,29 @@ return {
           "plural": true,
           "type": "OrderPaymentMethodEnum"
         },
-        "me.order.code": (v5/*: any*/),
+        "me.order.buyerTotal": (v9/*: any*/),
+        "me.order.buyerTotal.currencyCode": (v7/*: any*/),
+        "me.order.buyerTotal.minor": (v10/*: any*/),
+        "me.order.code": (v7/*: any*/),
+        "me.order.currencyCode": (v7/*: any*/),
         "me.order.fulfillmentDetails": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "FulfillmentDetails"
         },
-        "me.order.fulfillmentDetails.addressLine1": (v7/*: any*/),
-        "me.order.fulfillmentDetails.addressLine2": (v7/*: any*/),
-        "me.order.fulfillmentDetails.city": (v7/*: any*/),
-        "me.order.fulfillmentDetails.country": (v7/*: any*/),
-        "me.order.fulfillmentDetails.name": (v7/*: any*/),
-        "me.order.fulfillmentDetails.postalCode": (v7/*: any*/),
-        "me.order.fulfillmentDetails.region": (v7/*: any*/),
-        "me.order.id": (v6/*: any*/),
-        "me.order.internalID": (v6/*: any*/),
-        "me.order.itemsTotal": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Money"
-        },
-        "me.order.itemsTotal.currencyCode": (v5/*: any*/),
-        "me.order.itemsTotal.minor": {
-          "enumValues": null,
-          "nullable": false,
-          "plural": false,
-          "type": "Long"
-        },
+        "me.order.fulfillmentDetails.addressLine1": (v11/*: any*/),
+        "me.order.fulfillmentDetails.addressLine2": (v11/*: any*/),
+        "me.order.fulfillmentDetails.city": (v11/*: any*/),
+        "me.order.fulfillmentDetails.country": (v11/*: any*/),
+        "me.order.fulfillmentDetails.name": (v11/*: any*/),
+        "me.order.fulfillmentDetails.postalCode": (v11/*: any*/),
+        "me.order.fulfillmentDetails.region": (v11/*: any*/),
+        "me.order.id": (v8/*: any*/),
+        "me.order.internalID": (v8/*: any*/),
+        "me.order.itemsTotal": (v9/*: any*/),
+        "me.order.itemsTotal.currencyCode": (v7/*: any*/),
+        "me.order.itemsTotal.minor": (v10/*: any*/),
         "me.order.lineItems": {
           "enumValues": null,
           "nullable": false,
@@ -591,10 +610,10 @@ return {
           "plural": false,
           "type": "ArtworkMeta"
         },
-        "me.order.lineItems.artwork.artworkMeta.share": (v7/*: any*/),
-        "me.order.lineItems.artwork.href": (v7/*: any*/),
-        "me.order.lineItems.artwork.id": (v6/*: any*/),
-        "me.order.lineItems.id": (v6/*: any*/),
+        "me.order.lineItems.artwork.artworkMeta.share": (v11/*: any*/),
+        "me.order.lineItems.artwork.href": (v11/*: any*/),
+        "me.order.lineItems.artwork.id": (v8/*: any*/),
+        "me.order.lineItems.id": (v8/*: any*/),
         "me.order.mode": {
           "enumValues": [
             "BUY",
@@ -610,16 +629,16 @@ return {
           "plural": false,
           "type": "SellerType"
         },
-        "me.order.seller.__isNode": (v5/*: any*/),
-        "me.order.seller.__typename": (v5/*: any*/),
-        "me.order.seller.id": (v6/*: any*/),
+        "me.order.seller.__isNode": (v7/*: any*/),
+        "me.order.seller.__typename": (v7/*: any*/),
+        "me.order.seller.id": (v8/*: any*/),
         "me.order.seller.merchantAccount": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "PartnerMerchantAccount"
         },
-        "me.order.seller.merchantAccount.externalId": (v5/*: any*/),
+        "me.order.seller.merchantAccount.externalId": (v7/*: any*/),
         "me.order.source": {
           "enumValues": [
             "ARTWORK_PAGE",
@@ -635,7 +654,7 @@ return {
     },
     "name": "Order2PaymentFormTestQuery",
     "operationKind": "query",
-    "text": "query Order2PaymentFormTestQuery {\n  me {\n    ...Order2PaymentForm_me\n    order(id: \"order-id\") {\n      ...Order2PaymentForm_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2PaymentForm_me on Me {\n  creditCards(first: 10) {\n    edges {\n      node {\n        __typename\n        internalID\n        brand\n        lastDigits\n        id\n      }\n    }\n  }\n  bankAccounts(first: 10) {\n    edges {\n      node {\n        __typename\n        type\n        internalID\n        last4\n        id\n      }\n    }\n  }\n}\n\nfragment Order2PaymentForm_order on Order {\n  code\n  mode\n  source\n  internalID\n  availablePaymentMethods\n  itemsTotal {\n    minor\n    currencyCode\n  }\n  seller {\n    __typename\n    ... on Partner {\n      merchantAccount {\n        externalId\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  fulfillmentDetails {\n    name\n    addressLine1\n    addressLine2\n    city\n    region\n    postalCode\n    country\n  }\n  lineItems {\n    artwork {\n      href\n      artworkMeta: meta {\n        share\n      }\n      id\n    }\n    id\n  }\n}\n"
+    "text": "query Order2PaymentFormTestQuery {\n  me {\n    ...Order2PaymentForm_me\n    order(id: \"order-id\") {\n      ...Order2PaymentForm_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2PaymentForm_me on Me {\n  creditCards(first: 10) {\n    edges {\n      node {\n        __typename\n        internalID\n        brand\n        lastDigits\n        id\n      }\n    }\n  }\n  bankAccounts(first: 10) {\n    edges {\n      node {\n        __typename\n        type\n        internalID\n        last4\n        id\n      }\n    }\n  }\n}\n\nfragment Order2PaymentForm_order on Order {\n  code\n  mode\n  source\n  internalID\n  currencyCode\n  availablePaymentMethods\n  itemsTotal {\n    minor\n    currencyCode\n  }\n  buyerTotal {\n    minor\n    currencyCode\n  }\n  seller {\n    __typename\n    ... on Partner {\n      merchantAccount {\n        externalId\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  fulfillmentDetails {\n    name\n    addressLine1\n    addressLine2\n    city\n    region\n    postalCode\n    country\n  }\n  lineItems {\n    artwork {\n      href\n      artworkMeta: meta {\n        share\n      }\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();
