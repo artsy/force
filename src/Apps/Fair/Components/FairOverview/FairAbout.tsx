@@ -33,7 +33,7 @@ const FairAbout: React.FC<React.PropsWithChildren<FairAboutProps>> = ({
             )}
 
             <HTML variant="sm">
-              <ReadMore maxChars={480} content={about} />
+              <ReadMore maxLines={7} content={about} />
             </HTML>
           </Column>
         )}

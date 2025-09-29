@@ -4,7 +4,7 @@ import { MyCollectionArtworkDetailField } from "Apps/MyCollection/Routes/MyColle
 export interface MyCollectionArtworkDetailFieldSpec {
   label: string
   value?: string | null
-  truncateLimit?: number
+  maxLines?: number
 }
 
 export const MyCollectionArtworkDetailFields: React.FC<{
@@ -16,12 +16,12 @@ export const MyCollectionArtworkDetailFields: React.FC<{
       gridColumnGap={4}
       gridRowGap={0.5}
     >
-      {fields.map(({ label, value, truncateLimit }, index) => (
+      {fields.map(({ label, value, maxLines }, index) => (
         <MyCollectionArtworkDetailField
           key={`${label}-${index}`}
           label={label}
           value={value}
-          truncateLimit={truncateLimit}
+          maxLines={maxLines}
         />
       ))}
     </CSSGrid>

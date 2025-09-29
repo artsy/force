@@ -84,15 +84,14 @@ export const PrivateArtworkAdditionalInfo: React.FC<
                 onTitleClick={onTitleClick}
               >
                 <HTML variant="xs" color="mono100">
-                  {/* TODO: not sure why this check is here */}
-                  {React.isValidElement(value) ? (
-                    value
-                  ) : (
+                  {typeof value === "string" ? (
                     <ReadMore
                       onReadMoreClicked={onReadMoreClicked}
-                      maxChars={140}
-                      content={value as string}
+                      maxLines={3}
+                      content={value}
                     />
+                  ) : (
+                    value
                   )}
                 </HTML>
               </PrivateArtworkDefinitionList>
@@ -101,7 +100,6 @@ export const PrivateArtworkAdditionalInfo: React.FC<
         </Join>
         {!!isCollapsed && (
           <Flex flexDirection="row" justifyContent="flex-start">
-            {/* <Box width={150}></Box> */}
             <Spacer x={150} />
             <Clickable
               mt={1}

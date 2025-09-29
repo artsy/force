@@ -39,7 +39,7 @@ export const PrivateArtworkAboutWork: React.FC<
             <ReadMore
               inlineReadMoreLink={false}
               content={`${data.additionalInformationHTML}`}
-              maxChars={200}
+              maxLines={3}
               onReadMoreClicked={() => {
                 const payload: ClickedOnReadMore = {
                   action: ActionType.clickedOnReadMore,
