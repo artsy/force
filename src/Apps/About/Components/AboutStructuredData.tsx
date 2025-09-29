@@ -3,13 +3,17 @@ import { DOWNLOAD_APP_URLS, Device } from "Utils/Hooks/useDeviceDetection"
 import { FACTS_AND_FIGURES } from "Utils/factsAndFigures"
 import type { Organization } from "schema-dts"
 
+const DESCRIPTION = "Artsy is the leading global online art marketplace."
+
+export { DESCRIPTION }
+
 export const ORGANIZATION_STUB_SCHEMA: Organization = {
   "@id": "https://www.artsy.net/#organization",
   "@type": "Organization",
   name: "Artsy",
   alternateName: "Artsy.net",
   url: "https://www.artsy.net",
-  description: "Artsy is the leading global online art marketplace.",
+  description: DESCRIPTION,
   logo: {
     "@type": "ImageObject",
     url: "https://files.artsy.net/images/artsymark-800x800.png",
@@ -38,7 +42,7 @@ export const AboutStructuredData = () => {
           applicationCategory: ["LifestyleApplication", "ShoppingApplication"],
           operatingSystem: "Web",
           browserRequirements: "Requires JavaScript",
-          description: "Artsy is the leading global online art marketplace.",
+          description: DESCRIPTION,
           downloadUrl: [
             DOWNLOAD_APP_URLS[Device.iPhone],
             DOWNLOAD_APP_URLS[Device.Android],

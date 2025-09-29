@@ -10,12 +10,13 @@ import { AboutOurStory } from "Apps/About/Components/AboutOurStory"
 import { AboutOurTeam } from "Apps/About/Components/AboutOurTeam"
 import { AboutPress } from "Apps/About/Components/AboutPress"
 import { AboutStats } from "Apps/About/Components/AboutStats"
-import { AboutStructuredData } from "Apps/About/Components/AboutStructuredData"
+import {
+  AboutStructuredData,
+  DESCRIPTION,
+} from "Apps/About/Components/AboutStructuredData"
 import { AboutTagline } from "Apps/About/Components/AboutTagline"
 import { AboutWhatWeDo } from "Apps/About/Components/AboutWhatWeDo"
 import { MetaTags } from "Components/MetaTags"
-
-export const DESCRIPTION = "Artsy is the leading global online art marketplace."
 
 export const AboutApp: React.FC<React.PropsWithChildren<unknown>> = () => {
   return (
