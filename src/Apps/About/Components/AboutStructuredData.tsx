@@ -1,8 +1,11 @@
-import { DESCRIPTION } from "Apps/About/AboutApp"
 import { StructuredData } from "Components/Seo/StructuredData"
 import { DOWNLOAD_APP_URLS, Device } from "Utils/Hooks/useDeviceDetection"
 import { FACTS_AND_FIGURES } from "Utils/factsAndFigures"
 import type { Organization } from "schema-dts"
+
+const DESCRIPTION = "Artsy is the leading global online art marketplace."
+
+export { DESCRIPTION }
 
 export const ORGANIZATION_STUB_SCHEMA: Organization = {
   "@id": "https://www.artsy.net/#organization",
