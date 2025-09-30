@@ -167,7 +167,7 @@ describe("ImmersiveView", () => {
             expect.objectContaining({
               action: "immersiveViewArtworkDisplayed",
               context_module: "artworkGrid",
-              context_screen_owner_id: "artwork-id-1",
+              artwork_id: "artwork-id-1",
             }),
           )
         },
@@ -199,7 +199,7 @@ describe("ImmersiveView", () => {
             expect.objectContaining({
               action: "immersiveViewArtworkDisplayed",
               context_module: "artworkGrid",
-              context_screen_owner_id: "artwork-id-2",
+              artwork_id: "artwork-id-2",
             }),
           )
         },
@@ -228,7 +228,7 @@ describe("ImmersiveView", () => {
         () => {
           expect(trackEvent).toHaveBeenCalledWith(
             expect.objectContaining({
-              context_screen_owner_id: "artwork-id-2",
+              artwork_id: "artwork-id-2",
             }),
           )
         },
@@ -247,7 +247,7 @@ describe("ImmersiveView", () => {
             expect.objectContaining({
               action: "immersiveViewArtworkDisplayed",
               context_module: "artworkGrid",
-              context_screen_owner_id: "artwork-id-1",
+              artwork_id: "artwork-id-1",
             }),
           )
         },
@@ -285,7 +285,7 @@ describe("ImmersiveView", () => {
         expect.objectContaining({
           action: "immersiveViewArtworkDisplayed",
           context_module: "artworkGrid",
-          context_screen_owner_id: "artwork-id-3",
+          artwork_id: "artwork-id-3",
         }),
       )
     })

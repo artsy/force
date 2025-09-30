@@ -180,6 +180,7 @@ describe("ArtworkFilter", () => {
           action: "immersiveViewOptionViewed",
           context_module: "artworkGrid",
           context_page_owner_type: "example-owner-type",
+          context_page_owner_id: "example-order-id",
         }),
       )
     })
@@ -202,6 +203,7 @@ describe("ArtworkFilter", () => {
           action: "clickedImmersiveView",
           context_module: "artworkGrid",
           context_page_owner_type: "example-owner-type",
+          context_page_owner_id: "example-order-id",
         }),
       )
     })

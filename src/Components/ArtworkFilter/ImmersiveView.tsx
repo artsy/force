@@ -128,14 +128,15 @@ export const ImmersiveView: React.FC<ImmersiveViewProps> = props => {
   )
 
   const tracking = useTracking()
-  const { contextPageOwnerType } = useAnalyticsContext()
+  const { contextPageOwnerType, contextPageOwnerId } = useAnalyticsContext()
 
   const trackImmersiveViewArtworkDisplayed = () => {
     const params: ImmersiveViewArtworkDisplayed = {
       action: ActionType.immersiveViewArtworkDisplayed,
       context_module: ContextModule.artworkGrid,
       context_page_owner_type: contextPageOwnerType,
-      context_screen_owner_id: currentArtwork?.internalID ?? "Unknown",
+      context_page_owner_id: contextPageOwnerId,
+      artwork_id: currentArtwork?.internalID ?? "Unknown",
     }
     tracking.trackEvent(params)
   }

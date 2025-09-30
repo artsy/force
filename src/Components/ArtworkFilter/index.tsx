@@ -147,6 +147,7 @@ export const BaseArtworkFilter: React.FC<
       action: ActionType.immersiveViewOptionViewed,
       context_module: ContextModule.artworkGrid,
       context_page_owner_type: contextPageOwnerType,
+      context_page_owner_id: contextPageOwnerId,
     }
     tracking.trackEvent(params)
   }
@@ -156,6 +157,7 @@ export const BaseArtworkFilter: React.FC<
       action: ActionType.clickedImmersiveView,
       context_module: ContextModule.artworkGrid,
       context_page_owner_type: contextPageOwnerType,
+      context_page_owner_id: contextPageOwnerId,
     }
     tracking.trackEvent(params)
   }
