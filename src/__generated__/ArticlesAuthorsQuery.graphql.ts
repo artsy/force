@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0f31d515ef28b1b06167d65a27f29b75>>
+ * @generated SignedSource<<be60cbd1a7abaa267b348ccb351a0ebe>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,6 +20,7 @@ export type ArticlesAuthorsQuery$data = {
       readonly node: {
         readonly internalID: string;
         readonly name: string;
+        readonly slug: string | null | undefined;
       } | null | undefined;
     } | null | undefined> | null | undefined;
     readonly pageCursors: {
@@ -65,24 +66,31 @@ v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "name",
+  "name": "slug",
   "storageKey": null
 },
 v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "__typename",
+  "name": "name",
   "storageKey": null
 },
 v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "cursor",
+  "name": "__typename",
   "storageKey": null
 },
 v6 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "cursor",
+  "storageKey": null
+},
+v7 = {
   "alias": null,
   "args": null,
   "concreteType": "PageInfo",
@@ -107,7 +115,7 @@ v6 = {
   ],
   "storageKey": null
 },
-v7 = [
+v8 = [
   {
     "kind": "Variable",
     "name": "first",
@@ -115,16 +123,16 @@ v7 = [
   },
   (v1/*: any*/)
 ],
-v8 = {
+v9 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "page",
   "storageKey": null
 },
-v9 = [
-  (v5/*: any*/),
-  (v8/*: any*/),
+v10 = [
+  (v6/*: any*/),
+  (v9/*: any*/),
   {
     "alias": null,
     "args": null,
@@ -168,11 +176,12 @@ return {
                 "selections": [
                   (v2/*: any*/),
                   (v3/*: any*/),
-                  (v4/*: any*/)
+                  (v4/*: any*/),
+                  (v5/*: any*/)
                 ],
                 "storageKey": null
               },
-              (v5/*: any*/)
+              (v6/*: any*/)
             ],
             "storageKey": null
           },
@@ -192,7 +201,7 @@ return {
             ],
             "storageKey": null
           },
-          (v6/*: any*/)
+          (v7/*: any*/)
         ],
         "storageKey": null
       }
@@ -208,7 +217,7 @@ return {
     "selections": [
       {
         "alias": null,
-        "args": (v7/*: any*/),
+        "args": (v8/*: any*/),
         "concreteType": "AuthorConnection",
         "kind": "LinkedField",
         "name": "authorsConnection",
@@ -232,6 +241,7 @@ return {
                 "selections": [
                   (v2/*: any*/),
                   (v3/*: any*/),
+                  (v4/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -239,11 +249,11 @@ return {
                     "name": "id",
                     "storageKey": null
                   },
-                  (v4/*: any*/)
+                  (v5/*: any*/)
                 ],
                 "storageKey": null
               },
-              (v5/*: any*/)
+              (v6/*: any*/)
             ],
             "storageKey": null
           },
@@ -262,7 +272,7 @@ return {
                 "kind": "LinkedField",
                 "name": "around",
                 "plural": true,
-                "selections": (v9/*: any*/),
+                "selections": (v10/*: any*/),
                 "storageKey": null
               },
               {
@@ -272,7 +282,7 @@ return {
                 "kind": "LinkedField",
                 "name": "first",
                 "plural": false,
-                "selections": (v9/*: any*/),
+                "selections": (v10/*: any*/),
                 "storageKey": null
               },
               {
@@ -282,7 +292,7 @@ return {
                 "kind": "LinkedField",
                 "name": "last",
                 "plural": false,
-                "selections": (v9/*: any*/),
+                "selections": (v10/*: any*/),
                 "storageKey": null
               },
               {
@@ -293,21 +303,21 @@ return {
                 "name": "previous",
                 "plural": false,
                 "selections": [
-                  (v5/*: any*/),
-                  (v8/*: any*/)
+                  (v6/*: any*/),
+                  (v9/*: any*/)
                 ],
                 "storageKey": null
               }
             ],
             "storageKey": null
           },
-          (v6/*: any*/)
+          (v7/*: any*/)
         ],
         "storageKey": null
       },
       {
         "alias": null,
-        "args": (v7/*: any*/),
+        "args": (v8/*: any*/),
         "filters": [
           "page"
         ],
@@ -319,7 +329,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0f9aef820131ccd4102226f296174b3e",
+    "cacheID": "5d5b6296ee55f65071884f1ce6e41193",
     "id": null,
     "metadata": {
       "connection": [
@@ -335,11 +345,11 @@ return {
     },
     "name": "ArticlesAuthorsQuery",
     "operationKind": "query",
-    "text": "query ArticlesAuthorsQuery(\n  $page: Int\n  $size: Int\n) {\n  authorsConnection(first: $size, page: $page) {\n    edges {\n      node {\n        internalID\n        name\n        id\n        __typename\n      }\n      cursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
+    "text": "query ArticlesAuthorsQuery(\n  $page: Int\n  $size: Int\n) {\n  authorsConnection(first: $size, page: $page) {\n    edges {\n      node {\n        internalID\n        slug\n        name\n        id\n        __typename\n      }\n      cursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "e874957d4b8d8a9530a09b385f3bbb0a";
+(node as any).hash = "37e9451cce3b4ed638604807727ff7ef";
 
 export default node;
