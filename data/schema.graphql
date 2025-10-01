@@ -13315,6 +13315,7 @@ type HomeViewCard {
   entityType: String
   href: String
   image: Image
+  images: [Image]
   subtitle: String
   title: String!
 }
