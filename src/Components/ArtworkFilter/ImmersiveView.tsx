@@ -149,8 +149,7 @@ export const ImmersiveView: React.FC<ImmersiveViewProps> = props => {
       destination_page_owner_id: currentArtwork?.internalID ?? "Unknown",
       destination_page_owner_type: OwnerType.artwork,
       destination_page_owner_slug: currentArtwork?.slug ?? "Unknown",
-      label: "immersiveView",
-      type: "thumbnail",
+      type: "immersive",
     }
     tracking.trackEvent(params)
   }

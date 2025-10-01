@@ -305,8 +305,7 @@ describe("ImmersiveView", () => {
           destination_page_owner_id: "artwork-id-1",
           destination_page_owner_type: "artwork",
           destination_page_owner_slug: "artwork-1",
-          label: "immersiveView",
-          type: "thumbnail",
+          type: "immersive",
         }),
       )
     })
