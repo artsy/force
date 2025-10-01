@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<440d46d7a3f747cda230bdebfab81e6e>>
+ * @generated SignedSource<<2fee1fbfc9db24414a58a148477da5eb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,6 +19,7 @@ export type ImmersiveView_filtered_artworks$data = {
         readonly blurhash: string | null | undefined;
         readonly url: string | null | undefined;
       } | null | undefined;
+      readonly internalID: string;
       readonly slug: string;
     } | null | undefined;
   } | null | undefined> | null | undefined;
@@ -72,6 +73,13 @@ const node: ReaderFragment = {
           "name": "node",
           "plural": false,
           "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "internalID",
+              "storageKey": null
+            },
             {
               "alias": null,
               "args": null,
@@ -138,6 +146,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "bb652e4dc65e00f3f99776d5f1126c54";
+(node as any).hash = "82fa60e370c94111c53d43a4a56bf0dd";
 
 export default node;

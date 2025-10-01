@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b879b871f684c7adb0cb0b60cda1142e>>
+ * @generated SignedSource<<677272a2da530e811768475401b44666>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -120,6 +120,13 @@ return {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
+                    "name": "internalID",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
                     "name": "slug",
                     "storageKey": null
                   },
@@ -185,7 +192,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "44ef43307ab572d42a9324fabd2ca40d",
+    "cacheID": "0d771373f1122d9744da7707ea22e97f",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -223,6 +230,7 @@ return {
         },
         "filtered_artworks.edges.immersiveArtworkNode.image.blurhash": (v1/*: any*/),
         "filtered_artworks.edges.immersiveArtworkNode.image.url": (v1/*: any*/),
+        "filtered_artworks.edges.immersiveArtworkNode.internalID": (v2/*: any*/),
         "filtered_artworks.edges.immersiveArtworkNode.slug": (v2/*: any*/),
         "filtered_artworks.id": (v2/*: any*/),
         "filtered_artworks.pageInfo": {
@@ -241,7 +249,7 @@ return {
     },
     "name": "ImmersiveViewTestQuery",
     "operationKind": "query",
-    "text": "query ImmersiveViewTestQuery {\n  filtered_artworks: artworksConnection {\n    ...ImmersiveView_filtered_artworks\n    id\n  }\n}\n\nfragment ImmersiveView_filtered_artworks on FilterArtworksConnection {\n  pageInfo {\n    hasNextPage\n  }\n  edges {\n    immersiveArtworkNode: node {\n      slug\n      formattedMetadata\n      image {\n        aspectRatio\n        blurhash\n        url(version: [\"larger\", \"large\"])\n      }\n      id\n    }\n  }\n}\n"
+    "text": "query ImmersiveViewTestQuery {\n  filtered_artworks: artworksConnection {\n    ...ImmersiveView_filtered_artworks\n    id\n  }\n}\n\nfragment ImmersiveView_filtered_artworks on FilterArtworksConnection {\n  pageInfo {\n    hasNextPage\n  }\n  edges {\n    immersiveArtworkNode: node {\n      internalID\n      slug\n      formattedMetadata\n      image {\n        aspectRatio\n        blurhash\n        url(version: [\"larger\", \"large\"])\n      }\n      id\n    }\n  }\n}\n"
   }
 };
 })();

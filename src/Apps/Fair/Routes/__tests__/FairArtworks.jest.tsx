@@ -118,6 +118,7 @@ const FAIR_ARTWORKS_FIXTURE: FairArtworksQuery$rawResponse = {
               url: "https://test.artsy.net/image",
             },
             slug: "yayoi-kusama-pumpkin-2222222222222222",
+            internalID: "yyy123",
           },
           node: {
             id: "ggg123",
@@ -205,6 +206,7 @@ const FAIR_ARTWORKS_FIXTURE: FairArtworksQuery$rawResponse = {
               url: "https://test.artsy.net/image2",
             },
             slug: "yayoi-kusama-pumpkin-33333333333333333",
+            internalID: "xxx123",
           },
           node: {
             id: "abc123",

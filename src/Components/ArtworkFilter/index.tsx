@@ -3,6 +3,8 @@ import {
   type ClickedChangePage,
   ContextModule,
   commercialFilterParamsChanged,
+  ImmersiveViewOptionViewed,
+  ClickedImmersiveView,
 } from "@artsy/cohesion"
 import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
 import FilterIcon from "@artsy/icons/FilterIcon"
@@ -39,7 +41,7 @@ import { usePrevious } from "Utils/Hooks/usePrevious"
 import { Media } from "Utils/Responsive"
 import { isEqual } from "lodash"
 import type React from "react"
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import {
   type RelayRefetchProp,
   createRefetchContainer,
@@ -140,6 +142,26 @@ export const BaseArtworkFilter: React.FC<
   const [isImmersed, setIsImmersed] = useState(false)
   const enableImmersiveView = useFlag("onyx_enable-immersive-view")
 
+  const trackImmersiveViewOptionViewed = () => {
+    const params: ImmersiveViewOptionViewed = {
+      action: ActionType.immersiveViewOptionViewed,
+      context_module: ContextModule.artworkGrid,
+      context_page_owner_type: contextPageOwnerType,
+      context_page_owner_id: contextPageOwnerId,
+    }
+    tracking.trackEvent(params)
+  }
+
+  const trackClickedImmersiveView = () => {
+    const params: ClickedImmersiveView = {
+      action: ActionType.clickedImmersiveView,
+      context_module: ContextModule.artworkGrid,
+      context_page_owner_type: contextPageOwnerType,
+      context_page_owner_id: contextPageOwnerId,
+    }
+    tracking.trackEvent(params)
+  }
+
   const handleOpen = () => {
     setIsOpen(true)
   }
@@ -235,6 +257,10 @@ export const BaseArtworkFilter: React.FC<
       },
     )
   }, [filterContext.filters])
+
+  useEffect(() => {
+    if (enableImmersiveView) trackImmersiveViewOptionViewed()
+  }, [enableImmersiveView])
 
   const { jumpTo } = useJump()
 
@@ -416,7 +442,10 @@ export const BaseArtworkFilter: React.FC<
                           <Button
                             variant={"tertiary"}
                             size={"small"}
-                            onClick={() => setIsImmersed(true)}
+                            onClick={() => {
+                              setIsImmersed(true)
+                              trackClickedImmersiveView()
+                            }}
                             disabled={Number(total) === 0}
                           >
                             <ExpandIcon mr={0.5} />

@@ -4,8 +4,13 @@ import { ImmersiveView } from "Components/ArtworkFilter/ImmersiveView"
 import type { ImmersiveViewTestQuery } from "__generated__/ImmersiveViewTestQuery.graphql"
 import { graphql } from "react-relay"
 import { ImmersiveView_filtered_artworks$data } from "__generated__/ImmersiveView_filtered_artworks.graphql"
+import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
+
+const trackEvent = jest.fn()
+
+jest.mock("react-tracking")
 
 // Mock Blurhash to avoid canvas-related errors in tests
 jest.mock("react-blurhash", () => ({
@@ -34,6 +39,8 @@ const { renderWithRelay } = setupTestWrapperTL<ImmersiveViewTestQuery>({
 describe("ImmersiveView", () => {
   beforeEach(() => {
     jest.clearAllMocks()
+    trackEvent.mockClear()
+    ;(useTracking as jest.Mock).mockImplementation(() => ({ trackEvent }))
   })
 
   it("renders correctly", async () => {
@@ -143,6 +150,166 @@ describe("ImmersiveView", () => {
 
     expect(screen.getByText("Loading more artworks…")).toBeInTheDocument()
   })
+
+  describe("tracking", () => {
+    it("tracks immersiveViewArtworkDisplayed on mount after debounce delay", async () => {
+      renderWithRelay({
+        FilterArtworksConnection: () => filterArtworksConnectionData,
+      })
+
+      // Should not track immediately
+      expect(trackEvent).not.toHaveBeenCalled()
+
+      // Wait for debounce delay (e.g. 500ms)
+      await waitFor(
+        () => {
+          expect(trackEvent).toHaveBeenCalledWith(
+            expect.objectContaining({
+              action: "immersiveViewArtworkDisplayed",
+              context_module: "artworkGrid",
+              artwork_id: "artwork-id-1",
+            }),
+          )
+        },
+        { timeout: 1000 },
+      )
+    })
+
+    it("tracks immersiveViewArtworkDisplayed when navigating to next artwork after debounce", async () => {
+      renderWithRelay({
+        FilterArtworksConnection: () => filterArtworksConnectionData,
+      })
+
+      // Wait for initial tracking
+      await waitFor(
+        () => {
+          expect(trackEvent).toHaveBeenCalled()
+        },
+        { timeout: 1000 },
+      )
+
+      trackEvent.mockClear()
+
+      fireEvent.keyDown(document, { key: "ArrowRight" })
+
+      // Wait for debounced tracking
+      await waitFor(
+        () => {
+          expect(trackEvent).toHaveBeenCalledWith(
+            expect.objectContaining({
+              action: "immersiveViewArtworkDisplayed",
+              context_module: "artworkGrid",
+              artwork_id: "artwork-id-2",
+            }),
+          )
+        },
+        { timeout: 1000 },
+      )
+    })
+
+    it("tracks immersiveViewArtworkDisplayed when navigating to previous artwork after debounce", async () => {
+      renderWithRelay({
+        FilterArtworksConnection: () => filterArtworksConnectionData,
+      })
+
+      // Wait for initial tracking
+      await waitFor(
+        () => {
+          expect(trackEvent).toHaveBeenCalled()
+        },
+        { timeout: 1000 },
+      )
+
+      // Navigate to second artwork first
+      fireEvent.keyDown(document, { key: "ArrowRight" })
+
+      // Wait for second artwork tracking
+      await waitFor(
+        () => {
+          expect(trackEvent).toHaveBeenCalledWith(
+            expect.objectContaining({
+              artwork_id: "artwork-id-2",
+            }),
+          )
+        },
+        { timeout: 1000 },
+      )
+
+      trackEvent.mockClear()
+
+      // Navigate back to first artwork
+      fireEvent.keyDown(document, { key: "ArrowLeft" })
+
+      // Wait for debounced tracking
+      await waitFor(
+        () => {
+          expect(trackEvent).toHaveBeenCalledWith(
+            expect.objectContaining({
+              action: "immersiveViewArtworkDisplayed",
+              context_module: "artworkGrid",
+              artwork_id: "artwork-id-1",
+            }),
+          )
+        },
+        { timeout: 1000 },
+      )
+    })
+
+    it("does not track immersiveViewArtworkDisplayed if navigating away quickly", async () => {
+      renderWithRelay({
+        FilterArtworksConnection: () => filterArtworksConnectionData,
+      })
+
+      // Wait for initial tracking
+      await waitFor(
+        () => {
+          expect(trackEvent).toHaveBeenCalled()
+        },
+        { timeout: 1000 },
+      )
+
+      trackEvent.mockClear()
+
+      // Navigate to next artwork
+      fireEvent.keyDown(document, { key: "ArrowRight" })
+
+      // Immediately navigate to another artwork before debounce completes
+      fireEvent.keyDown(document, { key: "ArrowRight" })
+
+      // Wait just past the debounce delay
+      await new Promise(resolve => setTimeout(resolve, 600))
+
+      // Should only have tracked the final artwork (artwork-id-3)
+      expect(trackEvent).toHaveBeenCalledTimes(1)
+      expect(trackEvent).toHaveBeenCalledWith(
+        expect.objectContaining({
+          action: "immersiveViewArtworkDisplayed",
+          context_module: "artworkGrid",
+          artwork_id: "artwork-id-3",
+        }),
+      )
+    })
+
+    it("tracks clickedMainArtworkGrid when clicking on artwork", () => {
+      renderWithRelay({
+        FilterArtworksConnection: () => filterArtworksConnectionData,
+      })
+
+      const artworkLink = screen.getByRole("link")
+      fireEvent.click(artworkLink)
+
+      expect(trackEvent).toHaveBeenCalledWith(
+        expect.objectContaining({
+          action: "clickedMainArtworkGrid",
+          context_module: "artworkGrid",
+          destination_page_owner_id: "artwork-id-1",
+          destination_page_owner_type: "artwork",
+          destination_page_owner_slug: "artwork-1",
+          type: "immersive",
+        }),
+      )
+    })
+  })
 })
 
 const filterArtworksConnectionData: Pick<
@@ -153,6 +320,7 @@ const filterArtworksConnectionData: Pick<
   edges: [
     {
       immersiveArtworkNode: {
+        internalID: "artwork-id-1",
         slug: "artwork-1",
         formattedMetadata: "Artwork 1",
         image: {
@@ -164,6 +332,7 @@ const filterArtworksConnectionData: Pick<
     },
     {
       immersiveArtworkNode: {
+        internalID: "artwork-id-2",
         slug: "artwork-2",
         formattedMetadata: "Artwork 2",
         image: {
@@ -175,6 +344,7 @@ const filterArtworksConnectionData: Pick<
     },
     {
       immersiveArtworkNode: {
+        internalID: "artwork-id-3",
         slug: "artwork-3",
         formattedMetadata: "Artwork 3",
         image: {
