@@ -21,7 +21,7 @@ import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import type { ArtworkDetailsAdditionalInfo_artwork$data } from "__generated__/ArtworkDetailsAdditionalInfo_artwork.graphql"
 import type { PrivateArtworkAdditionalInfo_artwork$data } from "__generated__/PrivateArtworkAdditionalInfo_artwork.graphql"
 import { useState } from "react"
-import * as React from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { RequestConditionReportQueryRenderer } from "./RequestConditionReport"
@@ -59,15 +59,14 @@ export const ArtworkDetailsAdditionalInfo: React.FC<
                 onTitleClick={onTitleClick}
               >
                 <HTML variant="xs" color="mono60">
-                  {/* TODO: not sure why this check is here */}
-                  {React.isValidElement(value) ? (
-                    value
-                  ) : (
+                  {typeof value === "string" ? (
                     <ReadMore
                       onReadMoreClicked={onReadMoreClicked}
-                      maxChars={140}
-                      content={value as string}
+                      maxLines={2}
+                      content={value}
                     />
+                  ) : (
+                    value
                   )}
                 </HTML>
               </ArtworkDefinitionList>

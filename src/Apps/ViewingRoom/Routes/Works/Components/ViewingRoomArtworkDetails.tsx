@@ -1,5 +1,5 @@
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { Button, Column, GridColumns, HTML, ReadMore } from "@artsy/palette"
+import { Button, Column, GridColumns, HTML } from "@artsy/palette"
 import { DetailsFragmentContainer } from "Components/Artwork/Details/Details"
 import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
 import { RouterLink } from "System/Components/RouterLink"
@@ -58,7 +58,7 @@ export const ViewingRoomArtworkDetails: React.FC<
 
       {additionalInformation && (
         <HTML variant="md" mt={4}>
-          <ReadMore content={additionalInformation} maxChars={100000} />
+          <div dangerouslySetInnerHTML={{ __html: additionalInformation }} />
         </HTML>
       )}
     </ManageArtworkForSavesProvider>

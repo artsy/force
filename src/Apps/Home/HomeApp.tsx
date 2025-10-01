@@ -16,6 +16,7 @@ import { HomeFeaturedMarketNewsQueryRenderer } from "./Components/HomeFeaturedMa
 import { HomeFeaturedShowsRailQueryRenderer } from "./Components/HomeFeaturedShowsRail"
 import { HomeHeroUnitsFragmentContainer } from "./Components/HomeHeroUnits"
 import { HomeMeta } from "./Components/HomeMeta"
+import { HomeStructuredData } from "./Components/HomeStructuredData"
 import { HomeTrendingArtistsRailQueryRenderer } from "./Components/HomeTrendingArtistsRail"
 import { HomeWorksForYouTabBar } from "./Components/HomeWorksForYouTabBar"
 import { HomeRecommendedArtistsRailQueryRenderer } from "Apps/Home/Components/HomeRecommendedArtistsRail"
@@ -33,6 +34,8 @@ export const HomeApp: React.FC<React.PropsWithChildren<HomeAppProps>> = ({
   return (
     <>
       <HomeMeta />
+
+      <HomeStructuredData />
 
       <FlashBannerQueryRenderer />
 
