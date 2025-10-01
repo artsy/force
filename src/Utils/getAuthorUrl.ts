@@ -1,7 +1,7 @@
 import { slugify } from "underscore.string"
 
 export interface AuthorUrlData {
-  slug?: string
+  slug?: string | null
   name: string
   internalID: string
 }
