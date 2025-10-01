@@ -161,7 +161,7 @@ export const PrivateArtworkAboutArtist: React.FC<
                     <TextWrapper>
                       <HTML variant="md" color="mono0">
                         <ReadMore
-                          maxChars={190}
+                          maxLines={3}
                           content={`${biographyBlurb(artist)}`}
                           inlineReadMoreLink={false}
                           onReadMoreClicked={() => {

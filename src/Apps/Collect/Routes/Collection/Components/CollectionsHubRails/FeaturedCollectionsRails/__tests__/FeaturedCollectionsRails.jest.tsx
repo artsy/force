@@ -1,5 +1,5 @@
+import { fireEvent, render, screen } from "@testing-library/react"
 import { CollectionHubFixture } from "Apps/__tests__/Fixtures/Collections"
-import { render, screen, fireEvent } from "@testing-library/react"
 import { useTracking } from "react-tracking"
 import "jest-styled-components"
 import { paginateCarousel } from "@artsy/palette"
@@ -58,7 +58,7 @@ describe("FeaturedCollectionsRails", () => {
     it("tracks rails clicks", () => {
       renderComponent()
       const links = screen.getAllByRole("link")
-      fireEvent.click(links[2])
+      fireEvent.click(links[0])
 
       expect(trackEvent).toBeCalledWith({
         action: "clickedCollectionGroup",
@@ -66,10 +66,10 @@ describe("FeaturedCollectionsRails", () => {
         context_page_owner_id: "1234",
         context_page_owner_slug: "slug",
         context_page_owner_type: "collection",
-        destination_page_owner_id: "123452",
-        destination_page_owner_slug: "street-art-superheroes-and-villains",
+        destination_page_owner_id: "123450",
+        destination_page_owner_slug: "art-inspired-by-cartoons",
         destination_page_owner_type: "collection",
-        horizontal_slide_position: 2,
+        horizontal_slide_position: 0,
         type: "thumbnail",
       })
     })

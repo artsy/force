@@ -43,7 +43,7 @@ export const MyCollectionArtworkDetails: React.FC<
           label: "Location",
           value: buildLocationDisplay(collectorLocation),
         },
-        { label: "Provenance", value: provenance, truncateLimit: 200 },
+        { label: "Provenance", value: provenance, maxLines: 5 },
         { label: "Price Paid", value: pricePaid?.display },
         ...(exhibitionHistory
           ? [{ label: "Exhibition History", value: exhibitionHistory }]
@@ -52,7 +52,7 @@ export const MyCollectionArtworkDetails: React.FC<
           ? [{ label: "Additional Information", value: additionalInformation }]
           : []),
         ...(confidentialNotes
-          ? [{ label: "Notes", value: confidentialNotes, truncateLimit: 200 }]
+          ? [{ label: "Notes", value: confidentialNotes, maxLines: 5 }]
           : []),
       ]}
     />
