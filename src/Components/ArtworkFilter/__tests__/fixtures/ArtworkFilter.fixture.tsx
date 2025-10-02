@@ -89,6 +89,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
           immersiveArtworkNode: {
             id: "id-1",
             slug: "artwork-1",
+            internalID: "yyy123",
             formattedMetadata: "Artwork 1",
             image: {
               aspectRatio: 1,
@@ -142,6 +143,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
           immersiveArtworkNode: {
             id: "id-1",
             slug: "artwork-2",
+            internalID: "zzz123",
             formattedMetadata: "Artwork 2",
             image: {
               aspectRatio: 1,
@@ -195,6 +197,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
           immersiveArtworkNode: {
             id: "id-1",
             slug: "artwork-3",
+            internalID: "xxx123",
             formattedMetadata: "Artwork 3",
             image: {
               aspectRatio: 1,

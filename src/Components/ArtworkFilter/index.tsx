@@ -3,8 +3,11 @@ import {
   type ClickedChangePage,
   ContextModule,
   commercialFilterParamsChanged,
+  ImmersiveViewOptionViewed,
+  ClickedImmersiveView,
 } from "@artsy/cohesion"
 import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
+import ExpandIcon from "@artsy/icons/ExpandIcon"
 import FilterIcon from "@artsy/icons/FilterIcon"
 import {
   Box,
@@ -18,6 +21,7 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
+import { useFlag } from "@unleash/proxy-client-react"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { ArtworkFilterActiveFilters } from "Components/ArtworkFilter/ArtworkFilterActiveFilters"
@@ -29,8 +33,10 @@ import {
   ARTWORK_FILTERS_QUICK_FIELDS,
   ArtworkFiltersQuick,
 } from "Components/ArtworkFilter/ArtworkFiltersQuick"
+import { ImmersiveView } from "Components/ArtworkFilter/ImmersiveView"
 import type { ArtworkGridLayout } from "Components/ArtworkGrid/ArtworkGrid"
 import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
+import { ArtworkGridEmptyState } from "Components/ArtworkGrid/ArtworkGridEmptyState"
 import { Sticky } from "Components/Sticky"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useSystemContext } from "System/Hooks/useSystemContext"
@@ -39,7 +45,7 @@ import { usePrevious } from "Utils/Hooks/usePrevious"
 import { Media } from "Utils/Responsive"
 import { isEqual } from "lodash"
 import type React from "react"
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import {
   type RelayRefetchProp,
   createRefetchContainer,
@@ -58,9 +64,6 @@ import { ArtworkFilters } from "./ArtworkFilters"
 import { ArtworkQueryFilter } from "./ArtworkQueryFilter"
 import { allowedFilters } from "./Utils/allowedFilters"
 import { getTotalSelectedFiltersCount } from "./Utils/getTotalSelectedFiltersCount"
-import ExpandIcon from "@artsy/icons/ExpandIcon"
-import { ImmersiveView } from "Components/ArtworkFilter/ImmersiveView"
-import { useFlag } from "@unleash/proxy-client-react"
 
 interface ArtworkFilterProps extends SharedArtworkFilterContextProps, BoxProps {
   Filters?: JSX.Element
@@ -139,6 +142,26 @@ export const BaseArtworkFilter: React.FC<
 
   const [isImmersed, setIsImmersed] = useState(false)
   const enableImmersiveView = useFlag("onyx_enable-immersive-view")
+
+  const trackImmersiveViewOptionViewed = () => {
+    const params: ImmersiveViewOptionViewed = {
+      action: ActionType.immersiveViewOptionViewed,
+      context_module: ContextModule.artworkGrid,
+      context_page_owner_type: contextPageOwnerType,
+      context_page_owner_id: contextPageOwnerId,
+    }
+    tracking.trackEvent(params)
+  }
+
+  const trackClickedImmersiveView = () => {
+    const params: ClickedImmersiveView = {
+      action: ActionType.clickedImmersiveView,
+      context_module: ContextModule.artworkGrid,
+      context_page_owner_type: contextPageOwnerType,
+      context_page_owner_id: contextPageOwnerId,
+    }
+    tracking.trackEvent(params)
+  }
 
   const handleOpen = () => {
     setIsOpen(true)
@@ -236,6 +259,10 @@ export const BaseArtworkFilter: React.FC<
     )
   }, [filterContext.filters])
 
+  useEffect(() => {
+    if (enableImmersiveView) trackImmersiveViewOptionViewed()
+  }, [enableImmersiveView])
+
   const { jumpTo } = useJump()
 
   const fetchResults = () => {
@@ -260,10 +287,6 @@ export const BaseArtworkFilter: React.FC<
       if (error) console.error(error)
       setIsLoading(false)
     })
-  }
-
-  if (!viewer?.filtered_artworks) {
-    return null
   }
 
   return (
@@ -338,13 +361,17 @@ export const BaseArtworkFilter: React.FC<
 
         <Spacer y={2} />
 
-        <ArtworkFilterArtworkGridRefetchContainer
-          filtered_artworks={viewer.filtered_artworks}
-          isLoading={isLoading}
-          offset={offset}
-          columnCount={[2, 3]}
-          layout={layout}
-        />
+        {viewer.filtered_artworks ? (
+          <ArtworkFilterArtworkGridRefetchContainer
+            filtered_artworks={viewer.filtered_artworks}
+            isLoading={isLoading}
+            offset={offset}
+            columnCount={[2, 3]}
+            layout={layout}
+          />
+        ) : (
+          <ArtworkGridEmptyState onClearFilters={filterContext.resetFilters} />
+        )}
       </Media>
 
       {/* Desktop Artwork Filter */}
@@ -416,7 +443,10 @@ export const BaseArtworkFilter: React.FC<
                           <Button
                             variant={"tertiary"}
                             size={"small"}
-                            onClick={() => setIsImmersed(true)}
+                            onClick={() => {
+                              setIsImmersed(true)
+                              trackClickedImmersiveView()
+                            }}
                             disabled={Number(total) === 0}
                           >
                             <ExpandIcon mr={0.5} />
@@ -438,7 +468,7 @@ export const BaseArtworkFilter: React.FC<
           }}
         </Sticky>
 
-        {isImmersed && (
+        {isImmersed && viewer.filtered_artworks && (
           <ImmersiveView
             artworks={viewer.filtered_artworks}
             isPageLoading={isLoading}
@@ -458,15 +488,20 @@ export const BaseArtworkFilter: React.FC<
 
         <Spacer y={2} />
 
-        {children || (
-          <ArtworkFilterArtworkGridRefetchContainer
-            filtered_artworks={viewer.filtered_artworks}
-            isLoading={isLoading}
-            offset={offset}
-            columnCount={[2, 3, 4]}
-            layout={layout}
-          />
-        )}
+        {children ||
+          (viewer.filtered_artworks ? (
+            <ArtworkFilterArtworkGridRefetchContainer
+              filtered_artworks={viewer.filtered_artworks}
+              isLoading={isLoading}
+              offset={offset}
+              columnCount={[2, 3, 4]}
+              layout={layout}
+            />
+          ) : (
+            <ArtworkGridEmptyState
+              onClearFilters={filterContext.resetFilters}
+            />
+          ))}
       </Media>
     </Box>
   )

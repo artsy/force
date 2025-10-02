@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e5ed23b4ac7175b71d61b566de8387e6>>
+ * @generated SignedSource<<ee8a516b71dafa8e6aa05f202604ca93>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { ConcreteRequest } from 'relay-runtime';
 export type ArtworkAttributionClassType = "LIMITED_EDITION" | "OPEN_EDITION" | "UNIQUE" | "UNKNOWN_EDITION" | "%future added value";
 export type ArtworkConditionEnumType = "EXCELLENT" | "FAIR" | "GOOD" | "VERY_GOOD" | "%future added value";
-export type ArtworkImportSource = "CONVECTION" | "MY_COLLECTION" | "%future added value";
+export type ArtworkImportSource = "ARTCLOUD" | "ARTLOGIC" | "BATCH_UPLOAD" | "CONVECTION" | "MY_COLLECTION" | "%future added value";
 export type ArtworkSignatureTypeEnum = "HAND_SIGNED_BY_ARTIST" | "NOT_SIGNED" | "OTHER" | "SIGNED_IN_PLATE" | "STAMPED_BY_ARTIST_ESTATE" | "STICKER_LABEL" | "%future added value";
 export type MyCollectionCreateArtworkInput = {
   additionalInformation?: string | null | undefined;
