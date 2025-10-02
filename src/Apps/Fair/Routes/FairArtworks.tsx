@@ -46,20 +46,11 @@ interface FairArtworksFilterProps {
 const FairArtworksFilter: React.FC<
   React.PropsWithChildren<FairArtworksFilterProps>
 > = props => {
-  const { relay, fair } = props
   const { match } = useRouter()
   const { userPreferences } = useSystemContext()
 
+  const { relay, fair } = props
   const { filtered_artworks, sidebarAggregations } = fair
-
-  const hasFilter = filtered_artworks && filtered_artworks.id
-
-  // If there was an error fetching the filter,
-  // we still want to render the rest of the page.
-  if (!hasFilter) return null
-
-  // @ts-ignore
-  const { counts } = filtered_artworks
 
   // TODO: You shouldn't have to pass `relayEnvironment` and `user` through below.
   // For some reason, they are undefined when `useSystemContext()` is referenced
@@ -89,7 +80,7 @@ const FairArtworksFilter: React.FC<
     <ArtworkGridContextProvider>
       <ArtworkFilterContextProvider
         filters={match && match.location.query}
-        counts={counts as Counts}
+        counts={filtered_artworks?.counts as Counts}
         sortOptions={[
           { text: "Recommended", value: "-decayed_merch" },
           { text: "Price (High to Low)", value: "-has_price,-prices" },
