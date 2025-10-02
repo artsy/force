@@ -61,6 +61,10 @@ export const ImmersiveView: React.FC<ImmersiveViewProps> = props => {
 
   const { filters, setFilter } = useArtworkFilterContext()
 
+  const isFirstPage = (filters?.page ?? 1) === 1
+  const isFirstArtwork = currentIndex === 0
+  const isVeryFirstArtwork = isFirstPage && isFirstArtwork
+
   const navigateToPreviousPage = useCallback(() => {
     const page = filters?.page ?? 1
     if (page > 1) {
@@ -197,6 +201,7 @@ export const ImmersiveView: React.FC<ImmersiveViewProps> = props => {
             <Previous
               onClick={handlePreviousArtwork}
               aria-label="Previous artwork"
+              disabled={isVeryFirstArtwork}
             />
 
             <Next onClick={handleNextArtwork} aria-label="Next artwork" />
@@ -227,6 +232,7 @@ export const ImmersiveView: React.FC<ImmersiveViewProps> = props => {
                     alt={currentArtwork.formattedMetadata ?? "…"}
                     style={{
                       height: "85vh",
+                      width: "85vw",
                       objectFit: "contain",
                     }}
                     display={isImageLoading ? "none" : "block"}
