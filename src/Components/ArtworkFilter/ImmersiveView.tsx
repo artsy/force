@@ -227,6 +227,7 @@ export const ImmersiveView: React.FC<ImmersiveViewProps> = props => {
                     alt={currentArtwork.formattedMetadata ?? "…"}
                     style={{
                       height: "85vh",
+                      width: "85vw",
                       objectFit: "contain",
                     }}
                     display={isImageLoading ? "none" : "block"}
