@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<66d2303544897fbf0107c80086f76644>>
+ * @generated SignedSource<<3b0389a7d1eace723fe7accc3aa45f38>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,6 +15,7 @@ export type AuthorStructuredData_author$data = {
   readonly internalID: string;
   readonly name: string;
   readonly role: string | null | undefined;
+  readonly slug: string | null | undefined;
   readonly socials: {
     readonly instagram: {
       readonly url: string;
@@ -68,6 +69,13 @@ return {
       "storageKey": null
     },
     {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "slug",
+      "storageKey": null
+    },
+    {
       "alias": "description",
       "args": [
         {
@@ -117,6 +125,6 @@ return {
 };
 })();
 
-(node as any).hash = "df11f0343d80d2193a27dae99c057c79";
+(node as any).hash = "4bc525fb4e4966344ff1f63ada59c524";
 
 export default node;

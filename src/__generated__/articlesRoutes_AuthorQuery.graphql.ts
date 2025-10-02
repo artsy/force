@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e6b2096bd4d929e25bd026809a01537d>>
+ * @generated SignedSource<<dabb525ff3988717f2e7ec8458ff38f5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -114,6 +114,13 @@ return {
             "args": null,
             "kind": "ScalarField",
             "name": "internalID",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "slug",
             "storageKey": null
           },
           {
@@ -241,12 +248,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "199873bbdad906cb95b9a5747e7b9dd7",
+    "cacheID": "e9bb89563f83382da940f31e23c3cd0e",
     "id": null,
     "metadata": {},
     "name": "articlesRoutes_AuthorQuery",
     "operationKind": "query",
-    "text": "query articlesRoutes_AuthorQuery(\n  $id: String!\n) {\n  author(id: $id) @principalField {\n    ...AuthorApp_author\n    id\n  }\n}\n\nfragment AuthorApp_author on Author {\n  ...AuthorStructuredData_author\n  __typename\n  internalID\n  name\n  bio\n  initials\n  role\n  socials {\n    x {\n      handle\n      url\n    }\n    instagram {\n      handle\n      url\n    }\n  }\n  image {\n    cropped(width: 100, height: 100) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment AuthorStructuredData_author on Author {\n  name\n  role\n  internalID\n  description: bio(format: PLAIN)\n  socials {\n    x {\n      url\n    }\n    instagram {\n      url\n    }\n  }\n}\n"
+    "text": "query articlesRoutes_AuthorQuery(\n  $id: String!\n) {\n  author(id: $id) @principalField {\n    ...AuthorApp_author\n    id\n  }\n}\n\nfragment AuthorApp_author on Author {\n  ...AuthorStructuredData_author\n  __typename\n  internalID\n  slug\n  name\n  bio\n  initials\n  role\n  socials {\n    x {\n      handle\n      url\n    }\n    instagram {\n      handle\n      url\n    }\n  }\n  image {\n    cropped(width: 100, height: 100) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment AuthorStructuredData_author on Author {\n  name\n  role\n  internalID\n  slug\n  description: bio(format: PLAIN)\n  socials {\n    x {\n      url\n    }\n    instagram {\n      url\n    }\n  }\n}\n"
   }
 };
 })();
