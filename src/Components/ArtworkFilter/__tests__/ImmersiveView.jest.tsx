@@ -135,6 +135,21 @@ describe("ImmersiveView", () => {
     })
   })
 
+  it("disables previous button on the very first artwork", async () => {
+    renderWithRelay({
+      FilterArtworksConnection: () => filterArtworksConnectionData,
+    })
+
+    const prevButton = screen.getByRole("button", { name: "Previous artwork" })
+    expect(prevButton).toBeDisabled()
+
+    screen.getByRole("button", { name: "Next artwork" }).click()
+
+    await waitFor(() => {
+      expect(prevButton).not.toBeDisabled()
+    })
+  })
+
   it("navigates to prev/next pages via keyboard", async () => {
     renderWithRelay(
       { FilterArtworksConnection: () => filterArtworksConnectionData },
