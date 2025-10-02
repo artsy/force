@@ -5,6 +5,7 @@ import {
   commercialFilterParamsChanged,
 } from "@artsy/cohesion"
 import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
+import ExpandIcon from "@artsy/icons/ExpandIcon"
 import FilterIcon from "@artsy/icons/FilterIcon"
 import {
   Box,
@@ -18,6 +19,7 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
+import { useFlag } from "@unleash/proxy-client-react"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { ArtworkFilterActiveFilters } from "Components/ArtworkFilter/ArtworkFilterActiveFilters"
@@ -29,8 +31,10 @@ import {
   ARTWORK_FILTERS_QUICK_FIELDS,
   ArtworkFiltersQuick,
 } from "Components/ArtworkFilter/ArtworkFiltersQuick"
+import { ImmersiveView } from "Components/ArtworkFilter/ImmersiveView"
 import type { ArtworkGridLayout } from "Components/ArtworkGrid/ArtworkGrid"
 import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
+import { ArtworkGridEmptyState } from "Components/ArtworkGrid/ArtworkGridEmptyState"
 import { Sticky } from "Components/Sticky"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useSystemContext } from "System/Hooks/useSystemContext"
@@ -58,9 +62,6 @@ import { ArtworkFilters } from "./ArtworkFilters"
 import { ArtworkQueryFilter } from "./ArtworkQueryFilter"
 import { allowedFilters } from "./Utils/allowedFilters"
 import { getTotalSelectedFiltersCount } from "./Utils/getTotalSelectedFiltersCount"
-import ExpandIcon from "@artsy/icons/ExpandIcon"
-import { ImmersiveView } from "Components/ArtworkFilter/ImmersiveView"
-import { useFlag } from "@unleash/proxy-client-react"
 
 interface ArtworkFilterProps extends SharedArtworkFilterContextProps, BoxProps {
   Filters?: JSX.Element
@@ -262,10 +263,6 @@ export const BaseArtworkFilter: React.FC<
     })
   }
 
-  if (!viewer?.filtered_artworks) {
-    return null
-  }
-
   return (
     <Box id="Sticky__ArtworkFilter" {...rest} key={viewer.internalID}>
       <Jump id="artworkFilter" />
@@ -338,13 +335,17 @@ export const BaseArtworkFilter: React.FC<
 
         <Spacer y={2} />
 
-        <ArtworkFilterArtworkGridRefetchContainer
-          filtered_artworks={viewer.filtered_artworks}
-          isLoading={isLoading}
-          offset={offset}
-          columnCount={[2, 3]}
-          layout={layout}
-        />
+        {viewer.filtered_artworks ? (
+          <ArtworkFilterArtworkGridRefetchContainer
+            filtered_artworks={viewer.filtered_artworks}
+            isLoading={isLoading}
+            offset={offset}
+            columnCount={[2, 3]}
+            layout={layout}
+          />
+        ) : (
+          <ArtworkGridEmptyState onClearFilters={filterContext.resetFilters} />
+        )}
       </Media>
 
       {/* Desktop Artwork Filter */}
@@ -438,7 +439,7 @@ export const BaseArtworkFilter: React.FC<
           }}
         </Sticky>
 
-        {isImmersed && (
+        {isImmersed && viewer.filtered_artworks && (
           <ImmersiveView
             artworks={viewer.filtered_artworks}
             isPageLoading={isLoading}
@@ -458,15 +459,20 @@ export const BaseArtworkFilter: React.FC<
 
         <Spacer y={2} />
 
-        {children || (
-          <ArtworkFilterArtworkGridRefetchContainer
-            filtered_artworks={viewer.filtered_artworks}
-            isLoading={isLoading}
-            offset={offset}
-            columnCount={[2, 3, 4]}
-            layout={layout}
-          />
-        )}
+        {children ||
+          (viewer.filtered_artworks ? (
+            <ArtworkFilterArtworkGridRefetchContainer
+              filtered_artworks={viewer.filtered_artworks}
+              isLoading={isLoading}
+              offset={offset}
+              columnCount={[2, 3, 4]}
+              layout={layout}
+            />
+          ) : (
+            <ArtworkGridEmptyState
+              onClearFilters={filterContext.resetFilters}
+            />
+          ))}
       </Media>
     </Box>
   )
