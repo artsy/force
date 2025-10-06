@@ -37,7 +37,6 @@ export const PrivateArtworkAboutWork: React.FC<
 
           <HTML variant="lg">
             <ReadMore
-              inlineReadMoreLink={false}
               content={`${data.additionalInformationHTML}`}
               maxLines={3}
               onReadMoreClicked={() => {
