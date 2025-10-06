@@ -323,10 +323,11 @@ const ThemeSelect: React.FC<React.PropsWithChildren<unknown>> = () => {
     <>
       <Dropdown
         openDropdownByClick
+        placement="top"
         // eslint-disable-next-line react/no-unstable-nested-components
         dropdown={({ onHide }) => {
           return (
-            <>
+            <Box>
               <ThemeSelectOption
                 as={Clickable}
                 onClick={() => {
@@ -356,7 +357,7 @@ const ThemeSelect: React.FC<React.PropsWithChildren<unknown>> = () => {
                 )}
                 Dark
               </ThemeSelectOption>
-            </>
+            </Box>
           )
         }}
       >
