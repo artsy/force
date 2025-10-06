@@ -163,7 +163,6 @@ export const PrivateArtworkAboutArtist: React.FC<
                         <ReadMore
                           maxLines={3}
                           content={`${biographyBlurb(artist)}`}
-                          inlineReadMoreLink={false}
                           onReadMoreClicked={() => {
                             const payload: ClickedOnReadMore = {
                               action: ActionType.clickedOnReadMore,
