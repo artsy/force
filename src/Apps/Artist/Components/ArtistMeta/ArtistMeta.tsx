@@ -1,10 +1,11 @@
 import { MetaTags } from "Components/MetaTags"
 import { ArtistStructuredData } from "Components/Seo/ArtistStructuredData"
+import { useRouter } from "System/Hooks/useRouter"
 import { getENV } from "Utils/getENV"
+import { getPageNumber } from "Utils/url"
 import type { ArtistMeta_artist$data } from "__generated__/ArtistMeta_artist.graphql"
 import { Meta } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useCanonicalHref } from "./useCanonicalHref"
 
 interface Props {
   artist: ArtistMeta_artist$data
@@ -13,12 +14,11 @@ interface Props {
 export const ArtistMeta: React.FC<React.PropsWithChildren<Props>> = ({
   artist,
 }) => {
-  const alternateNames = artist?.alternateNames || []
+  const { match } = useRouter()
 
-  const pathname = useCanonicalHref({
-    isInSeoExperiment: !!artist.isInSeoExperiment,
-    href: artist.href ?? "/",
-  })
+  const alternateNames = artist?.alternateNames || []
+  const page = getPageNumber(match?.location)
+  const pathname = page > 1 ? `${artist.href}?page=${page}` : artist.href
 
   return (
     <>
@@ -69,7 +69,6 @@ export const ArtistMetaFragmentContainer = createFragmentContainer(ArtistMeta, {
       birthday
       deathday
       href
-      isInSeoExperiment
       meta(page: ABOUT) {
         description
         title

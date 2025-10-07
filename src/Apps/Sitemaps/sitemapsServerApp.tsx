@@ -1,11 +1,8 @@
 import { LLMS_TXT } from "Apps/Sitemaps/templates/llms"
 import { SITEMAP_BASE_URL } from "Server/config"
-import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
 import { getENV } from "Utils/getENV"
-import type { sitemapsServerAppQuery } from "__generated__/sitemapsServerAppQuery.graphql"
 import express from "express"
 import httpProxy from "http-proxy"
-import { fetchQuery, graphql } from "react-relay"
 
 const sitemapsServerApp = express()
 
@@ -18,22 +15,6 @@ const sitemapProxy = httpProxy.createProxyServer({
   target: SITEMAP_BASE_URL,
 })
 
-const SITEMAP_EXPERIMENT_MEDIUMS = [
-  "prints",
-  "sculpture",
-  "painting",
-  "work-on-paper",
-  "design",
-  "photography",
-  "drawing",
-]
-
-const SITEMAP_EXPERIMENT_QUERY = graphql`
-  query sitemapsServerAppQuery {
-    seoExperimentArtists
-  }
-`
-
 sitemapsServerApp
   .get("/robots.txt", (_req, res) => {
     res.type("text/plain")
@@ -44,29 +25,6 @@ sitemapsServerApp
   .get("/llms.txt", (_req, res) => {
     res.type("text/plain")
     res.send(LLMS_TXT)
-  })
-  .get("/sitemap-experiment.xml", async (req, res) => {
-    res.set("Content-Type", "text/xml")
-
-    const relayEnvironment = createRelaySSREnvironment({
-      userAgent: req.header("User-Agent"),
-    })
-
-    const data = await fetchQuery<sitemapsServerAppQuery>(
-      relayEnvironment,
-      SITEMAP_EXPERIMENT_QUERY,
-      {},
-    ).toPromise()
-
-    const artistSlugs = data?.seoExperimentArtists ?? []
-
-    const urls = artistSlugs.flatMap(slug =>
-      SITEMAP_EXPERIMENT_MEDIUMS.map(medium => ({
-        loc: `${APP_URL}/artist/${slug}?additional_gene_ids%5B0%5D=${medium}`,
-      })),
-    )
-
-    res.render("misc", { urls })
   })
   .get("/sitemap-misc.xml", (req, res) => {
     res.set("Content-Type", "text/xml")
@@ -158,7 +116,6 @@ Sitemap: ${APP_URL}/sitemap-artworks.xml
 Sitemap: ${APP_URL}/sitemap-auctions.xml
 Sitemap: ${APP_URL}/sitemap-cities.xml
 Sitemap: ${APP_URL}/sitemap-collect.xml
-Sitemap: ${APP_URL}/sitemap-experiment.xml
 Sitemap: ${APP_URL}/sitemap-fairs.xml
 Sitemap: ${APP_URL}/sitemap-features.xml
 Sitemap: ${APP_URL}/sitemap-genes.xml

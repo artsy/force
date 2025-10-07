@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3f39dbe3797f2237e83660676a0c5d38>>
+ * @generated SignedSource<<8fe5dc58afc26be2efb5280ad734340f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -266,13 +266,6 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "isInSeoExperiment",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
             "name": "alternateNames",
             "storageKey": null
           },
@@ -283,7 +276,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d3a1aac397f21cd460ad4409e5b79b07",
+    "cacheID": "10111641935b0261eea8b33dd36aaf11",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -319,12 +312,6 @@ return {
         "artist.gender": (v4/*: any*/),
         "artist.href": (v4/*: any*/),
         "artist.id": (v5/*: any*/),
-        "artist.isInSeoExperiment": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Boolean"
-        },
         "artist.meta": {
           "enumValues": null,
           "nullable": false,
@@ -361,7 +348,7 @@ return {
     },
     "name": "ArtistMeta_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistMeta_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistMeta_artist\n    id\n  }\n}\n\nfragment ArtistMeta_artist on Artist {\n  ...ArtistStructuredData_artist\n  slug\n  name\n  nationality\n  birthday\n  deathday\n  href\n  isInSeoExperiment\n  meta(page: ABOUT) {\n    description\n    title\n  }\n  alternateNames\n  coverArtwork {\n    image {\n      large: url(version: \"large\")\n    }\n    id\n  }\n}\n\nfragment ArtistStructuredData_artist on Artist {\n  slug\n  name\n  birthday\n  deathday\n  gender\n  nationality\n  href\n  meta(page: ABOUT) {\n    title\n    description\n  }\n  coverArtwork {\n    image {\n      url(version: \"large\")\n    }\n    id\n  }\n  partnersConnection(first: 10) {\n    edges {\n      node {\n        href\n        id\n      }\n      id\n    }\n  }\n}\n"
+    "text": "query ArtistMeta_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistMeta_artist\n    id\n  }\n}\n\nfragment ArtistMeta_artist on Artist {\n  ...ArtistStructuredData_artist\n  slug\n  name\n  nationality\n  birthday\n  deathday\n  href\n  meta(page: ABOUT) {\n    description\n    title\n  }\n  alternateNames\n  coverArtwork {\n    image {\n      large: url(version: \"large\")\n    }\n    id\n  }\n}\n\nfragment ArtistStructuredData_artist on Artist {\n  slug\n  name\n  birthday\n  deathday\n  gender\n  nationality\n  href\n  meta(page: ABOUT) {\n    title\n    description\n  }\n  coverArtwork {\n    image {\n      url(version: \"large\")\n    }\n    id\n  }\n  partnersConnection(first: 10) {\n    edges {\n      node {\n        href\n        id\n      }\n      id\n    }\n  }\n}\n"
   }
 };
 })();
