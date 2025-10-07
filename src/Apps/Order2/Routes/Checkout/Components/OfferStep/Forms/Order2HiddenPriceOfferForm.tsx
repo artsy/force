@@ -2,11 +2,7 @@ import { Box, Button, Flex, Spacer, Text, TextArea } from "@artsy/palette"
 import { OfferInput } from "Apps/Order/Components/OfferInput"
 import type { OfferFormComponentProps } from "Apps/Order2/Routes/Checkout/Components/OfferStep/types"
 
-interface Order2HiddenPriceOfferFormProps extends OfferFormComponentProps {}
-
-export const Order2HiddenPriceOfferForm: React.FC<
-  Order2HiddenPriceOfferFormProps
-> = ({
+export const Order2HiddenPriceOfferForm: React.FC<OfferFormComponentProps> = ({
   offerValue,
   offerNoteValue,
   formIsDirty,

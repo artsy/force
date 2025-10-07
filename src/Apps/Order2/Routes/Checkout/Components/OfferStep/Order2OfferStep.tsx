@@ -189,7 +189,7 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
         />
       </Box>
 
-      <Box py={2} px={[2, 4]} hidden={currentStep !== CheckoutStepState.ACTIVE}>
+      <Box pt={2} px={[2, 4]} hidden={currentStep !== CheckoutStepState.ACTIVE}>
         <Flex flexDirection="column">
           <Text
             variant={["sm-display", "md"]}
