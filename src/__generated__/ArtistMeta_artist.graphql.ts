@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<decef44ab76bbca9fd5253e1f708c9a1>>
+ * @generated SignedSource<<978d7fc5910b8e1a7af2ed72e6edcd42>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,7 +20,6 @@ export type ArtistMeta_artist$data = {
   } | null | undefined;
   readonly deathday: string | null | undefined;
   readonly href: string | null | undefined;
-  readonly isInSeoExperiment: boolean | null | undefined;
   readonly meta: {
     readonly description: string;
     readonly title: string;
@@ -87,13 +86,6 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "href",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "isInSeoExperiment",
       "storageKey": null
     },
     {
@@ -174,6 +166,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "6362fb84ac7dd4732057b0688b549fdb";
+(node as any).hash = "5aa43fd9a383be550bef0deb31b3591a";
 
 export default node;
