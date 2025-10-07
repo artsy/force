@@ -1,11 +1,11 @@
 import {
-  Radio,
   Box,
+  Button,
   Flex,
+  Radio,
   RadioGroup,
   Spacer,
   Text,
-  Button,
   TextArea,
 } from "@artsy/palette"
 import { OfferInput } from "Apps/Order/Components/OfferInput"
@@ -116,15 +116,6 @@ export const Order2ExactPriceOfferForm: React.FC<
     )
   }
 
-  const hasPrice = !!listPriceMajor
-  const shouldShowPriceOptions = hasPrice
-
-  const priceNote = Boolean(artwork?.price) && (
-    <Text my={1} variant="sm" color="mono60">
-      List price: {appendCurrencySymbol(artwork?.price, orderData.currencyCode)}
-    </Text>
-  )
-
   const allPriceOptions = [
     ...priceOptions,
     {
@@ -138,73 +129,55 @@ export const Order2ExactPriceOfferForm: React.FC<
     <>
       {/* Offer Amount Section */}
       <Box>
-        {shouldShowPriceOptions ? (
-          <Box py={2} px={[2, 4]}>
-            <RadioGroup
-              onSelect={setSelectedRadio}
-              defaultValue={selectedRadio}
-            >
-              {allPriceOptions.map(({ key, value, description }) => {
-                const isCustom = key === "price-option-custom"
-                const showCustomInput = isCustom && selectedRadio === key
+        <Box py={2} px={[2, 4]}>
+          <RadioGroup onSelect={setSelectedRadio} defaultValue={selectedRadio}>
+            {allPriceOptions.map(({ key, value, description }) => {
+              const isCustom = key === "price-option-custom"
+              const showCustomInput = isCustom && selectedRadio === key
 
-                return (
-                  <Radio
-                    key={key}
-                    value={key}
-                    label={isCustom ? description : formatCurrency(value)}
-                    onSelect={() => {
-                      setSelectedRadio(key)
-                      onOfferValueChange(value)
-                      if (!isCustom) {
-                        setCustomValue(undefined)
-                      }
-                      onOfferInputFocus?.()
-                    }}
-                  >
-                    {!isCustom && (
-                      <>
-                        <Spacer y={1} />
-                        <Text variant="sm" color="mono60">
-                          {description}
-                        </Text>
-                        <Spacer y={4} />
-                      </>
-                    )}
+              return (
+                <Radio
+                  key={key}
+                  value={key}
+                  label={isCustom ? description : formatCurrency(value)}
+                  onSelect={() => {
+                    setSelectedRadio(key)
+                    onOfferValueChange(value)
+                    if (!isCustom) {
+                      setCustomValue(undefined)
+                    }
+                    onOfferInputFocus?.()
+                  }}
+                >
+                  {!isCustom && (
+                    <>
+                      <Spacer y={1} />
+                      <Text variant="xs" color="mono60">
+                        {description}
+                      </Text>
+                      <Spacer y={4} />
+                    </>
+                  )}
 
-                    {showCustomInput && (
-                      <Flex flexDirection="column" mt={2}>
-                        <OfferInput
-                          id="OfferForm_customOfferValue"
-                          showError={formIsDirty && offerValue <= 0}
-                          onChange={value => {
-                            setCustomValue(value)
-                            onOfferValueChange(value)
-                          }}
-                          onFocus={onOfferInputFocus}
-                          value={customValue || 0}
-                        />
-                      </Flex>
-                    )}
-                  </Radio>
-                )
-              })}
-            </RadioGroup>
-          </Box>
-        ) : (
-          <>
-            <Flex flexDirection="column">
-              <OfferInput
-                id="OfferForm_offerValue"
-                showError={formIsDirty && offerValue <= 0}
-                onChange={onOfferValueChange}
-                onFocus={onOfferInputFocus}
-                value={offerValue}
-              />
-            </Flex>
-            {priceNote}
-          </>
-        )}
+                  {showCustomInput && (
+                    <Flex flexDirection="column" mt={2}>
+                      <OfferInput
+                        id="OfferForm_customOfferValue"
+                        showError={formIsDirty && offerValue <= 0}
+                        onChange={value => {
+                          setCustomValue(value)
+                          onOfferValueChange(value)
+                        }}
+                        onFocus={onOfferInputFocus}
+                        value={customValue || 0}
+                      />
+                    </Flex>
+                  )}
+                </Radio>
+              )
+            })}
+          </RadioGroup>
+        </Box>
       </Box>
 
       <Spacer y={2} />
@@ -219,7 +192,7 @@ export const Order2ExactPriceOfferForm: React.FC<
           >
             Offer note
           </Text>
-          <Text variant={["xs", "xs", "sm"]} color="mono60">
+          <Text variant={["xs", "xs", "sm"]} color="mono100">
             Additional context to help the gallery evaluate your offer.
           </Text>
 

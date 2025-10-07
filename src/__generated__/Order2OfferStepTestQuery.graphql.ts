@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3b20bc255fda3a9b4b8938f42af028e6>>
+ * @generated SignedSource<<d6e9cfbd3a22d4f2d874cdf052002f6f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -70,11 +70,17 @@ v5 = {
 },
 v6 = {
   "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Boolean"
+},
+v7 = {
+  "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "Float"
 },
-v7 = {
+v8 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
@@ -207,6 +213,13 @@ return {
                           {
                             "alias": null,
                             "args": null,
+                            "kind": "ScalarField",
+                            "name": "isPriceHidden",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
                             "concreteType": null,
                             "kind": "LinkedField",
                             "name": "listPrice",
@@ -297,7 +310,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "34e9ccf3c841d28db8f5e8101dbc1f8f",
+    "cacheID": "7ab7ebccb769c0b0d07b228f89b492c4",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -344,12 +357,8 @@ return {
         "viewer.me.order.lineItems.artwork.editionSets.id": (v4/*: any*/),
         "viewer.me.order.lineItems.artwork.editionSets.internalID": (v4/*: any*/),
         "viewer.me.order.lineItems.artwork.id": (v4/*: any*/),
-        "viewer.me.order.lineItems.artwork.isPriceRange": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Boolean"
-        },
+        "viewer.me.order.lineItems.artwork.isPriceHidden": (v6/*: any*/),
+        "viewer.me.order.lineItems.artwork.isPriceRange": (v6/*: any*/),
         "viewer.me.order.lineItems.artwork.listPrice": {
           "enumValues": null,
           "nullable": true,
@@ -357,11 +366,11 @@ return {
           "type": "ListPrice"
         },
         "viewer.me.order.lineItems.artwork.listPrice.__typename": (v5/*: any*/),
-        "viewer.me.order.lineItems.artwork.listPrice.major": (v6/*: any*/),
-        "viewer.me.order.lineItems.artwork.listPrice.maxPrice": (v7/*: any*/),
-        "viewer.me.order.lineItems.artwork.listPrice.maxPrice.major": (v6/*: any*/),
-        "viewer.me.order.lineItems.artwork.listPrice.minPrice": (v7/*: any*/),
-        "viewer.me.order.lineItems.artwork.listPrice.minPrice.major": (v6/*: any*/),
+        "viewer.me.order.lineItems.artwork.listPrice.major": (v7/*: any*/),
+        "viewer.me.order.lineItems.artwork.listPrice.maxPrice": (v8/*: any*/),
+        "viewer.me.order.lineItems.artwork.listPrice.maxPrice.major": (v7/*: any*/),
+        "viewer.me.order.lineItems.artwork.listPrice.minPrice": (v8/*: any*/),
+        "viewer.me.order.lineItems.artwork.listPrice.minPrice.major": (v7/*: any*/),
         "viewer.me.order.lineItems.artwork.price": {
           "enumValues": null,
           "nullable": true,
@@ -383,7 +392,7 @@ return {
     },
     "name": "Order2OfferStepTestQuery",
     "operationKind": "query",
-    "text": "query Order2OfferStepTestQuery {\n  viewer {\n    me {\n      order(id: \"order-id\") {\n        ...Order2OfferStep_order\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment Order2ExactPriceOfferForm_order on Order {\n  currencyCode\n  lineItems {\n    artwork {\n      price\n      listPrice {\n        __typename\n        ... on Money {\n          major\n        }\n        ... on PriceRange {\n          maxPrice {\n            major\n          }\n        }\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment Order2OfferCompletedView_order on Order {\n  currencyCode\n}\n\nfragment Order2OfferStep_order on Order {\n  internalID\n  mode\n  currencyCode\n  lineItems {\n    artwork {\n      slug\n      isPriceRange\n      listPrice {\n        __typename\n        ... on Money {\n          major\n        }\n        ... on PriceRange {\n          maxPrice {\n            major\n          }\n          minPrice {\n            major\n          }\n        }\n      }\n      editionSets {\n        internalID\n        id\n      }\n      id\n    }\n    id\n  }\n  ...Order2ExactPriceOfferForm_order\n  ...Order2PriceRangeOfferForm_order\n  ...Order2OfferCompletedView_order\n}\n\nfragment Order2PriceRangeOfferForm_order on Order {\n  currencyCode\n  lineItems {\n    artwork {\n      price\n      isPriceRange\n      listPrice {\n        __typename\n        ... on PriceRange {\n          maxPrice {\n            major\n          }\n          minPrice {\n            major\n          }\n        }\n      }\n      id\n    }\n    id\n  }\n}\n"
+    "text": "query Order2OfferStepTestQuery {\n  viewer {\n    me {\n      order(id: \"order-id\") {\n        ...Order2OfferStep_order\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment Order2ExactPriceOfferForm_order on Order {\n  currencyCode\n  lineItems {\n    artwork {\n      price\n      listPrice {\n        __typename\n        ... on Money {\n          major\n        }\n        ... on PriceRange {\n          maxPrice {\n            major\n          }\n        }\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment Order2OfferCompletedView_order on Order {\n  currencyCode\n}\n\nfragment Order2OfferStep_order on Order {\n  internalID\n  mode\n  currencyCode\n  lineItems {\n    artwork {\n      slug\n      isPriceRange\n      isPriceHidden\n      listPrice {\n        __typename\n        ... on Money {\n          major\n        }\n        ... on PriceRange {\n          maxPrice {\n            major\n          }\n          minPrice {\n            major\n          }\n        }\n      }\n      editionSets {\n        internalID\n        id\n      }\n      id\n    }\n    id\n  }\n  ...Order2ExactPriceOfferForm_order\n  ...Order2PriceRangeOfferForm_order\n  ...Order2OfferCompletedView_order\n}\n\nfragment Order2PriceRangeOfferForm_order on Order {\n  currencyCode\n  lineItems {\n    artwork {\n      price\n      isPriceRange\n      listPrice {\n        __typename\n        ... on PriceRange {\n          maxPrice {\n            major\n          }\n          minPrice {\n            major\n          }\n        }\n      }\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();

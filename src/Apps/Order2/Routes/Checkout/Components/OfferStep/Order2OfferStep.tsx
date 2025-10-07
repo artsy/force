@@ -5,6 +5,11 @@ import {
   CheckoutStepName,
   CheckoutStepState,
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
+import { Order2ExactPriceOfferForm } from "Apps/Order2/Routes/Checkout/Components/OfferStep/Forms/Order2ExactPriceOfferForm"
+import { Order2HiddenPriceOfferForm } from "Apps/Order2/Routes/Checkout/Components/OfferStep/Forms/Order2HiddenPriceOfferForm"
+import { Order2PriceRangeOfferForm } from "Apps/Order2/Routes/Checkout/Components/OfferStep/Forms/Order2PriceRangeOfferForm"
+import { Order2OfferCompletedView } from "Apps/Order2/Routes/Checkout/Components/OfferStep/Order2OfferCompletedView"
+import type { OfferNoteValue } from "Apps/Order2/Routes/Checkout/Components/OfferStep/types"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useOrder2AddInitialOfferMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2AddInitialOfferMutation"
 import { useJump } from "Utils/Hooks/useJump"
@@ -14,10 +19,6 @@ import type { useOrder2AddInitialOfferMutation$data } from "__generated__/useOrd
 import { useState } from "react"
 import { graphql, useFragment } from "react-relay"
 import { useTracking } from "react-tracking"
-import { Order2OfferCompletedView } from "Apps/Order2/Routes/Checkout/Components/OfferStep/Order2OfferCompletedView"
-import { Order2ExactPriceOfferForm } from "Apps/Order2/Routes/Checkout/Components/OfferStep/Forms/Order2ExactPriceOfferForm"
-import { Order2PriceRangeOfferForm } from "Apps/Order2/Routes/Checkout/Components/OfferStep/Forms/Order2PriceRangeOfferForm"
-import type { OfferNoteValue } from "Apps/Order2/Routes/Checkout/Components/OfferStep/types"
 
 const logger = createLogger(
   "Order2/Routes/Checkout/Components/OfferStep/Order2OfferStep.tsx",
@@ -132,6 +133,10 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
   const getOfferFormComponent = () => {
     const artwork = orderData.lineItems?.[0]?.artwork
 
+    if (artwork?.isPriceHidden) {
+      return Order2HiddenPriceOfferForm
+    }
+
     const isPriceRange =
       artwork?.listPrice?.__typename === "PriceRange" &&
       artwork?.listPrice?.maxPrice?.major &&
@@ -165,7 +170,7 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
           >
             Offer
           </Text>
-          <Text variant={["xs", "xs", "sm"]} color="mono60">
+          <Text variant={["xs", "xs", "sm"]} color="mono100">
             If accepted, your payment will be processed. All offers are binding
             once submitted.
           </Text>
@@ -193,7 +198,7 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
           >
             Offer
           </Text>
-          <Text variant={["xs", "xs", "sm"]} color="mono60">
+          <Text variant={["xs", "xs", "sm"]} color="mono100">
             If accepted, your payment will be processed. All offers are binding
             once submitted.
           </Text>
@@ -226,6 +231,7 @@ const FRAGMENT = graphql`
       artwork {
         slug
         isPriceRange
+        isPriceHidden
         listPrice {
           __typename
           ... on Money {
