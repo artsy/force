@@ -15,7 +15,6 @@ export const Order2HiddenPriceOfferForm: React.FC<OfferFormComponentProps> = ({
   return (
     <Box pb={2} px={[2, 4]}>
       {/* Offer Amount Section */}
-
       <Flex flexDirection="column">
         <OfferInput
           id="OfferForm_offerValue"
@@ -26,7 +25,8 @@ export const Order2HiddenPriceOfferForm: React.FC<OfferFormComponentProps> = ({
         />
       </Flex>
 
-      <Spacer y={2} />
+      <Spacer y={4} />
+
       {/* Offer Note Section */}
       <Flex flexDirection="column">
         <Text
