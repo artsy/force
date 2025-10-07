@@ -1,17 +1,11 @@
-import { slugify } from "underscore.string"
-
 export interface AuthorUrlData {
   slug?: string | null
   name: string
   internalID: string
 }
 
-export const getAuthorSlug = (name: string): string => {
-  return slugify(name.toLowerCase())
-}
-
 export const getAuthorUrl = (author: AuthorUrlData): string => {
-  const slug = author.slug || getAuthorSlug(author.name)
+  const slug = author.slug || author.internalID
   return `/articles/author/${slug}`
 }
 
