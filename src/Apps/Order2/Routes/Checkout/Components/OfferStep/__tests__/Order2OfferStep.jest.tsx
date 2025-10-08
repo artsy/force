@@ -2,10 +2,10 @@ import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { Order2OfferStep } from "Apps/Order2/Routes/Checkout/Components/OfferStep/Order2OfferStep"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useOrder2AddInitialOfferMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2AddInitialOfferMutation"
-import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useJump } from "Utils/Hooks/useJump"
-import { Order2OfferStepTestQuery } from "__generated__/Order2OfferStepTestQuery.graphql"
+import type { Order2OfferStepTestQuery } from "__generated__/Order2OfferStepTestQuery.graphql"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 jest.mock("Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext")
@@ -55,6 +55,24 @@ const MOCK_EXACT_PRICE_ORDER = {
         },
         editionSets: [],
         price: "$5,000",
+      },
+    },
+  ],
+}
+
+const MOCK_HIDDEN_PRICE_ORDER = {
+  internalID: "order-id",
+  mode: "OFFER",
+  currencyCode: "USD",
+  lineItems: [
+    {
+      artwork: {
+        slug: "artwork-slug",
+        isPriceRange: false,
+        isPriceHidden: true,
+        listPrice: null,
+        editionSets: [],
+        price: null,
       },
     },
   ],
@@ -264,6 +282,161 @@ describe("Order2OfferStep", () => {
             note: "I really love this artwork!",
           },
         },
+      })
+    })
+  })
+
+  describe("Order2HiddenPriceOfferForm", () => {
+    it("renders the hidden price form with offer input", () => {
+      renderWithRelay({
+        Viewer: () => ({
+          me: {
+            order: MOCK_HIDDEN_PRICE_ORDER,
+          },
+        }),
+      })
+
+      // Check that the offer input is rendered
+      expect(screen.getByTitle("Your offer")).toBeInTheDocument()
+
+      // Check for note section
+      expect(screen.getByText("Offer note")).toBeInTheDocument()
+      expect(
+        screen.getByText(
+          "Additional context to help the gallery evaluate your offer.",
+        ),
+      ).toBeInTheDocument()
+
+      // Check for note textarea
+      expect(screen.getByTitle("Note (recommended)")).toBeInTheDocument()
+
+      // Check for continue button
+      expect(
+        screen.getByRole("button", { name: "Save and Continue" }),
+      ).toBeInTheDocument()
+    })
+
+    it("allows entering a custom offer amount and submitting", async () => {
+      renderWithRelay({
+        Viewer: () => ({
+          me: {
+            order: MOCK_HIDDEN_PRICE_ORDER,
+          },
+        }),
+      })
+
+      // Enter offer amount
+      const offerInput = screen.getByTitle("Your offer")
+      fireEvent.change(offerInput, { target: { value: "3000" } })
+
+      // Click continue
+      const continueButton = screen.getByRole("button", {
+        name: "Save and Continue",
+      })
+      fireEvent.click(continueButton)
+
+      await waitFor(() => {
+        expect(mockSubmitMutation).toHaveBeenCalledWith({
+          variables: {
+            input: {
+              orderId: "order-id",
+              amountCents: 300000,
+              note: "I sent an offer for US$3,000.00",
+            },
+          },
+        })
+      })
+
+      // Check that the context was updated
+      expect(mockSetOfferAmountComplete).toHaveBeenCalled()
+    })
+
+    it("allows custom note input for hidden price offers", async () => {
+      renderWithRelay({
+        Viewer: () => ({
+          me: {
+            order: MOCK_HIDDEN_PRICE_ORDER,
+          },
+        }),
+      })
+
+      // Enter offer amount
+      const offerInput = screen.getByTitle("Your offer")
+      fireEvent.change(offerInput, { target: { value: "2500" } })
+
+      // Enter custom note
+      const noteTextArea = screen.getByTitle("Note (recommended)")
+      fireEvent.change(noteTextArea, {
+        target: { value: "This piece would be perfect for my collection!" },
+      })
+
+      // Submit the offer
+      const continueButton = screen.getByRole("button", {
+        name: "Save and Continue",
+      })
+      fireEvent.click(continueButton)
+
+      await waitFor(() => {
+        expect(mockSubmitMutation).toHaveBeenCalledWith({
+          variables: {
+            input: {
+              orderId: "order-id",
+              amountCents: 250000,
+              note: "This piece would be perfect for my collection!",
+            },
+          },
+        })
+      })
+    })
+
+    it("shows error when submitting without entering an offer amount", async () => {
+      renderWithRelay({
+        Viewer: () => ({
+          me: {
+            order: MOCK_HIDDEN_PRICE_ORDER,
+          },
+        }),
+      })
+
+      // Click continue without entering an offer
+      const continueButton = screen.getByRole("button", {
+        name: "Save and Continue",
+      })
+      fireEvent.click(continueButton)
+
+      // Mutation should not be called
+      await waitFor(() => {
+        expect(mockSubmitMutation).not.toHaveBeenCalled()
+      })
+
+      // Form should mark as dirty to show validation
+      expect(mockSetOfferAmountComplete).not.toHaveBeenCalled()
+    })
+
+    it("disables submit button while submitting", async () => {
+      renderWithRelay({
+        Viewer: () => ({
+          me: {
+            order: MOCK_HIDDEN_PRICE_ORDER,
+          },
+        }),
+      })
+
+      // Enter offer amount
+      const offerInput = screen.getByTitle("Your offer")
+      fireEvent.change(offerInput, { target: { value: "4000" } })
+
+      // Click continue
+      const continueButton = screen.getByRole("button", {
+        name: "Save and Continue",
+      })
+      fireEvent.click(continueButton)
+
+      // Button should be disabled during submission
+      expect(continueButton).toBeDisabled()
+
+      await waitFor(() => {
+        expect(mockSubmitMutation).toHaveBeenCalled()
       })
     })
   })
