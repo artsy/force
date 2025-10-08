@@ -51,6 +51,7 @@ interface OrderActionButtonProps {
 }
 
 // Map OrderBuyerStateEnum to display labels
+// TODO: need to revisit those. Confirm new names and add offer states proper
 const ORDER_LABELS: Record<string, string> = {
   APPROVED: "Confirmed",
   CANCELLED: "Canceled",
@@ -99,6 +100,8 @@ const ORDER_COLORS: Record<string, string> = {
   UNKNOWN: "mono60",
 } as const
 
+// TODO: verify how payment method be displayed.
+// Could/should we reuse details page display?
 const getPaymentMethodText = (
   paymentMethodDetails: SettingsOrdersRow_order$data["paymentMethodDetails"],
   creditCardWalletType: SettingsOrdersRow_order$data["creditCardWalletType"],
@@ -125,6 +128,8 @@ const getPaymentMethodText = (
   }
 }
 
+// #TODO: details has it's own redirects if order. Maybe be specific with those?
+// Can redirect here more proper once states are verified.
 const OrderLink: FC<OrderLinkProps> = ({
   order,
   trackChangePaymentMethodClick,
@@ -157,6 +162,7 @@ const OrderLink: FC<OrderLinkProps> = ({
   return <>{order.code}</>
 }
 
+// TODO: need to add OFFER_RECEIVED state and do proper button for that one.
 const OrderActionButton: FC<OrderActionButtonProps> = ({
   displayState,
   orderId,
