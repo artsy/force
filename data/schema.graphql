@@ -1884,9 +1884,6 @@ type Artist implements EntityWithFilterArtworksConnectionInterface & Node & Sear
   isDisplayAuctionLink: Boolean
   isFollowed: Boolean
 
-  # Temporary field to test SEO experiment
-  isInSeoExperiment: Boolean
-
   # Whether the artist has been created by a user.
   isPersonalArtist: Boolean
   isPublic: Boolean!
@@ -20576,9 +20573,6 @@ type Query {
     # Search query to perform. Required.
     query: String!
   ): SearchableConnection
-
-  # A list of artists that are part of the SEO experiment
-  seoExperimentArtists: [String]
   shortcut(id: ID!): Shortcut
 
   # A Show
@@ -26480,9 +26474,6 @@ type Viewer {
     # Search query to perform. Required.
     query: String!
   ): SearchableConnection
-
-  # A list of artists that are part of the SEO experiment
-  seoExperimentArtists: [String]
   shortcut(id: ID!): Shortcut
 
   # A Show
