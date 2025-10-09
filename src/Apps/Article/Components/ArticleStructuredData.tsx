@@ -1,6 +1,7 @@
 import { ORGANIZATION_STUB_SCHEMA } from "Apps/About/Components/AboutStructuredData"
 import { StructuredData } from "Components/Seo/StructuredData"
 import { getENV } from "Utils/getENV"
+import { getAuthorPath } from "Utils/getAuthorPath"
 import type { ArticleStructuredData_article$key } from "__generated__/ArticleStructuredData_article.graphql"
 import { compact } from "lodash"
 import { graphql } from "react-relay"
@@ -38,10 +39,15 @@ export const ArticleStructuredData: React.FC<
           article.authors.map(author => {
             if (!author.name) return null
 
+            const path = getAuthorPath({
+              slug: author.slug,
+              name: author.name,
+              internalID: author.internalID,
+            })
             return {
               "@type": "Person",
               name: author.name,
-              href: `${getENV("APP_URL")}/articles/author/${author.internalID}`,
+              href: `${getENV("APP_URL")}${path}`,
             }
           }),
         ),
@@ -81,6 +87,7 @@ const ARTICLE_STRUCTURD_DATA_FRAGMENT = graphql`
     keywords
     authors {
       internalID
+      slug
       name
     }
     thumbnailImage {

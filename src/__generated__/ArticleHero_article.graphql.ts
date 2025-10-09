@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d00a327832217f69ffc01b2d78a0fc1b>>
+ * @generated SignedSource<<74684c14f8661198f7fcd085211a4cff>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,6 +15,7 @@ export type ArticleHero_article$data = {
   readonly authors: ReadonlyArray<{
     readonly internalID: string;
     readonly name: string;
+    readonly slug: string | null | undefined;
   }>;
   readonly hero: {
     readonly embed?: string | null | undefined;
@@ -99,6 +100,13 @@ return {
           "args": null,
           "kind": "ScalarField",
           "name": "internalID",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "slug",
           "storageKey": null
         },
         {
@@ -211,6 +219,6 @@ return {
 };
 })();
 
-(node as any).hash = "bbfe503aa2a77da5557370ef948cfc7f";
+(node as any).hash = "eb83db72c5b3b06579c545065dafc5e8";
 
 export default node;

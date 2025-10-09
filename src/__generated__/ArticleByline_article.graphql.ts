@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<da1f15f3a0adb8329e1cbfd6ad215cdf>>
+ * @generated SignedSource<<d07869c24a3c0e0fcbb44f57d6650c9d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -22,6 +22,7 @@ export type ArticleByline_article$data = {
     readonly initials: string | null | undefined;
     readonly internalID: string;
     readonly name: string;
+    readonly slug: string | null | undefined;
   }>;
   readonly byline: string | null | undefined;
   readonly " $fragmentType": "ArticleByline_article";
@@ -57,6 +58,13 @@ const node: ReaderFragment = {
           "args": null,
           "kind": "ScalarField",
           "name": "internalID",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "slug",
           "storageKey": null
         },
         {
@@ -135,6 +143,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "7912933fb6c0dfbc773088b871fbe621";
+(node as any).hash = "72169a7a4eebd62db4323c033fb1fcae";
 
 export default node;

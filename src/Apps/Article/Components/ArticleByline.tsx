@@ -68,6 +68,7 @@ export const ArticleBylineFragmentContainer = createFragmentContainer(
         byline
         authors {
           internalID
+          slug
           name
           initials
           bio
