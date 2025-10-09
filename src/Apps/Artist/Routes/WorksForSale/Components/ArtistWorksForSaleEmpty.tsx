@@ -1,6 +1,6 @@
-import { Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import { CreateAlertButton } from "Components/Alert/Components/CreateAlertButton"
 import { ArtworkFilterAlertContextProvider } from "Components/ArtworkFilter/ArtworkFilterAlertContextProvider"
+import { EmptyState } from "Components/EmptyState"
 import type { ArtistWorksForSaleEmpty_artist$data } from "__generated__/ArtistWorksForSaleEmpty_artist.graphql"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -13,28 +13,17 @@ const ArtistWorksForSaleEmpty: FC<
   React.PropsWithChildren<ArtistWorksForSaleEmptyProps>
 > = ({ artist }) => {
   return (
-    <>
-      <Spacer y={[2, 0]} />
-
-      <GridColumns>
-        <Column span={6} start={4} textAlign="center">
-          <Text variant="md">Get notified when new works are available</Text>
-
-          <Text variant="md" color="mono60">
-            There are currently no works for sale for this artist. Create an
-            alert, and we’ll let you know when new works are added.
-          </Text>
-
-          <Spacer y={2} />
-
-          <ArtworkFilterAlertContextProvider
-            initialCriteria={{ artistIDs: [artist.internalID] }}
-          >
-            <CreateAlertButton />
-          </ArtworkFilterAlertContextProvider>
-        </Column>
-      </GridColumns>
-    </>
+    <EmptyState
+      title="Get notified when new works are available"
+      description="There are currently no works for sale for this artist. Create an alert, and we’ll let you know when new works are added."
+      action={
+        <ArtworkFilterAlertContextProvider
+          initialCriteria={{ artistIDs: [artist.internalID] }}
+        >
+          <CreateAlertButton variant="secondaryNeutral" size="large" />
+        </ArtworkFilterAlertContextProvider>
+      }
+    />
   )
 }
 

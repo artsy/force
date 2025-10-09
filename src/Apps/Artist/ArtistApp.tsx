@@ -43,7 +43,7 @@ const ArtistApp: React.FC<React.PropsWithChildren<ArtistAppProps>> = ({
           <RouteTab to={`/artist/${artist.slug}/about`}>About</RouteTab>
         </RouteTabs>
 
-        <Spacer y={[0, 4]} />
+        <Spacer y={[2, 4]} />
 
         {children}
       </Analytics>

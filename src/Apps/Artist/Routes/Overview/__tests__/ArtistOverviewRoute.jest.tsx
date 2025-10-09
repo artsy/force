@@ -101,7 +101,7 @@ describe("ArtistOverviewRoute", () => {
 
     expect(
       screen.getByText(
-        "We‘ll update this page when more information is available.",
+        "We’ll update this page when more information is available.",
       ),
     ).toBeInTheDocument()
   })
