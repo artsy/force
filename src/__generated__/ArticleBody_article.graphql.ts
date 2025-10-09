@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<954bc701f72534aadd27ca1cd35d536b>>
+ * @generated SignedSource<<061325c0432beb877d1713e554f835cb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,6 +15,7 @@ export type ArticleBody_article$data = {
   readonly authors: ReadonlyArray<{
     readonly internalID: string;
     readonly name: string;
+    readonly slug: string | null | undefined;
   }>;
   readonly hero: {
     readonly __typename: string;
@@ -71,6 +72,13 @@ v1 = {
   "storageKey": null
 },
 v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "slug",
+  "storageKey": null
+},
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -156,6 +164,7 @@ return {
       "plural": true,
       "selections": [
         (v1/*: any*/),
+        (v2/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -167,13 +176,7 @@ return {
       "storageKey": null
     },
     (v1/*: any*/),
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "slug",
-      "storageKey": null
-    },
+    (v2/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -188,7 +191,7 @@ return {
       "name": "leadParagraph",
       "storageKey": null
     },
-    (v2/*: any*/),
+    (v3/*: any*/),
     (v0/*: any*/),
     {
       "alias": null,
@@ -229,7 +232,7 @@ return {
       "plural": true,
       "selections": [
         (v1/*: any*/),
-        (v2/*: any*/),
+        (v3/*: any*/),
         (v0/*: any*/),
         {
           "alias": null,
@@ -294,6 +297,6 @@ return {
 };
 })();
 
-(node as any).hash = "69eee48100d1831d1945482cc2025425";
+(node as any).hash = "7c0e7606c87df78d0e7188463194dd41";
 
 export default node;

@@ -13,6 +13,7 @@ import { themeGet } from "@styled-system/theme-get"
 import { AuthorStructuredData } from "Apps/Articles/Components/AuthorStructuredData"
 import { ClientSuspense } from "Components/ClientSuspense"
 import { MetaTags } from "Components/MetaTags"
+import { getAuthorPath } from "Utils/getAuthorPath"
 import { TopContextBar } from "Components/TopContextBar"
 import { useScrollToOpenEditorialAuthModal } from "Utils/Hooks/useScrollToOpenEditorialAuthModal"
 import type { AuthorApp_author$key } from "__generated__/AuthorApp_author.graphql"
@@ -40,7 +41,11 @@ export const AuthorApp: FC<React.PropsWithChildren<AuthorAppProps>> = ({
       <MetaTags
         title={`${author.name} | Artsy`}
         description={author.bio}
-        pathname={`/articles/author/${author.internalID}`}
+        pathname={getAuthorPath({
+          slug: author.slug,
+          name: author.name,
+          internalID: author.internalID,
+        })}
       />
 
       <AuthorStructuredData author={author} />
@@ -162,6 +167,7 @@ const FRAGMENT = graphql`
     ...AuthorStructuredData_author
     __typename
     internalID
+    slug
     name
     bio
     initials
