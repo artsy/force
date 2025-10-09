@@ -1,14 +1,14 @@
-export interface AuthorUrlData {
+export interface AuthorPathData {
   slug?: string | null
   name: string
   internalID: string
 }
 
-export const getAuthorUrl = (author: AuthorUrlData): string => {
+export const getAuthorPath = (author: AuthorPathData): string => {
   const slug = author.slug || author.internalID
   return `/articles/author/${slug}`
 }
 
-export const getLegacyAuthorUrl = (internalID: string): string => {
+export const getLegacyAuthorPath = (internalID: string): string => {
   return `/articles/author/${internalID}`
 }

@@ -4,7 +4,7 @@ import { PaginationFragmentContainer } from "Components/Pagination"
 import { RouterLink } from "System/Components/RouterLink"
 import { useRouter } from "System/Hooks/useRouter"
 import { extractNodes } from "Utils/extractNodes"
-import { getAuthorUrl } from "Utils/getAuthorUrl"
+import { getAuthorPath } from "Utils/getAuthorPath"
 import type { ArticlesAuthorsQuery } from "__generated__/ArticlesAuthorsQuery.graphql"
 import { useState } from "react"
 import { graphql, useLazyLoadQuery } from "react-relay"
@@ -38,7 +38,7 @@ export const ArticlesAuthors = () => {
           return (
             <Name
               key={author.internalID}
-              to={getAuthorUrl({
+              to={getAuthorPath({
                 slug: author.slug,
                 name: author.name,
                 internalID: author.internalID,

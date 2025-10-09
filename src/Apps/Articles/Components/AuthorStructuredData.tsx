@@ -1,7 +1,7 @@
 import { ORGANIZATION_STUB_SCHEMA } from "Apps/About/Components/AboutStructuredData"
 import { StructuredData } from "Components/Seo/StructuredData"
 import { getENV } from "Utils/getENV"
-import { getAuthorUrl } from "Utils/getAuthorUrl"
+import { getAuthorPath } from "Utils/getAuthorPath"
 import type { AuthorStructuredData_author$key } from "__generated__/AuthorStructuredData_author.graphql"
 import { compact } from "lodash"
 import { graphql } from "react-relay"
@@ -15,7 +15,12 @@ export const AuthorStructuredData: React.FC<
   React.PropsWithChildren<AuthorStructuredDataProps>
 > = props => {
   const author = useFragment(AUTHOR_STRUCTURD_DATA_FRAGMENT, props.author)
-  const url = `${getENV("APP_URL")}${getAuthorUrl({ slug: author.slug, name: author.name, internalID: author.internalID })}`
+  const path = getAuthorPath({
+    slug: author.slug,
+    name: author.name,
+    internalID: author.internalID,
+  })
+  const url = `${getENV("APP_URL")}${path}`
 
   return (
     <StructuredData

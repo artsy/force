@@ -17,7 +17,7 @@ import {
   useFullBleedHeaderHeight,
 } from "Components/FullBleedHeader/FullBleedHeader"
 import { RouterLink } from "System/Components/RouterLink"
-import { getAuthorUrl } from "Utils/getAuthorUrl"
+import { getAuthorPath } from "Utils/getAuthorPath"
 import type { ArticleHero_article$data } from "__generated__/ArticleHero_article.graphql"
 import { type FC, useMemo } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -49,7 +49,7 @@ const ArticleHero: FC<React.PropsWithChildren<ArticleHeroProps>> = ({
             {article.authors.map(author => (
               <RouterLink
                 key={author.internalID}
-                to={getAuthorUrl({
+                to={getAuthorPath({
                   slug: author.slug,
                   name: author.name,
                   internalID: author.internalID,

@@ -17,7 +17,7 @@ import { CommaList } from "Components/CommaList"
 import { Sticky } from "Components/Sticky"
 import { TopContextBar } from "Components/TopContextBar"
 import { RouterLink } from "System/Components/RouterLink"
-import { getAuthorUrl } from "Utils/getAuthorUrl"
+import { getAuthorPath } from "Utils/getAuthorPath"
 import { Analytics } from "System/Contexts/AnalyticsContext"
 import type { ArticleBody_article$data } from "__generated__/ArticleBody_article.graphql"
 import { DateTime } from "luxon"
@@ -87,7 +87,7 @@ const ArticleBody: FC<React.PropsWithChildren<ArticleBodyProps>> = ({
                       {article.authors.map(author => (
                         <RouterLink
                           key={author.internalID}
-                          to={getAuthorUrl({
+                          to={getAuthorPath({
                             slug: author.slug,
                             name: author.name,
                             internalID: author.internalID,
