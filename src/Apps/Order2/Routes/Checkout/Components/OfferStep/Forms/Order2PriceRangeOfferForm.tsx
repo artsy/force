@@ -1,11 +1,11 @@
 import {
-  Radio,
   Box,
+  Button,
   Flex,
+  Radio,
   RadioGroup,
   Spacer,
   Text,
-  Button,
   TextArea,
 } from "@artsy/palette"
 import { OfferInput } from "Apps/Order/Components/OfferInput"
@@ -171,7 +171,7 @@ export const Order2PriceRangeOfferForm: React.FC<
                     key={key}
                   >
                     <Spacer y={1} />
-                    <Text variant="sm" color="mono60">
+                    <Text variant="xs" color="mono60">
                       {description}
                     </Text>
                     <Spacer y={4} />

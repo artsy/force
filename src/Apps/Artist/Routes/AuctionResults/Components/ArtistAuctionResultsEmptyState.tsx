@@ -1,34 +1,17 @@
-import { Button, Column, GridColumns, Text } from "@artsy/palette"
-import { RouterLink } from "System/Components/RouterLink"
+import { EmptyState } from "Components/EmptyState"
+import { FACTS_AND_FIGURES } from "Utils/factsAndFigures"
 
 export const ArtistAuctionResultsEmptyState: React.FC<
   React.PropsWithChildren<unknown>
 > = () => {
   return (
-    <GridColumns gridRowGap={2}>
-      <Column span={6} start={4}>
-        <Text variant="md" textAlign="center">
-          There are currently no auction results for this artist.
-        </Text>
-
-        <Text variant="md" color="mono60" textAlign="center">
-          We'll update this page when results become available. Meanwhile, you
-          can check out free auction results and art market data for over
-          300,000 artists.
-        </Text>
-      </Column>
-
-      <Column span={12} alignItems="center" display="flex">
-        <Button
-          variant="secondaryNeutral"
-          // @ts-ignore
-          as={RouterLink}
-          to="/price-database"
-          mx="auto"
-        >
-          View the Artsy Price Database
-        </Button>
-      </Column>
-    </GridColumns>
+    <EmptyState
+      title="There are currently no auction results for this artist."
+      description={`We’ll update this page when results become available. Meanwhile, you can check out free auction results and art market data for over ${FACTS_AND_FIGURES.auctionRecordsCount} artists.`}
+      action={{
+        href: "/price-database",
+        label: "View the Artsy Database",
+      }}
+    />
   )
 }
