@@ -12,6 +12,7 @@ import {
   ARTIST_RAIL_PLACEHOLDER,
   ArtistRailFragmentContainer,
 } from "Components/ArtistRail"
+import { EmptyState } from "Components/EmptyState"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
 import type { SettingsSavesArtistsQuery } from "__generated__/SettingsSavesArtistsQuery.graphql"
@@ -75,9 +76,7 @@ const SettingsSavesArtists: FC<
           )}
         </>
       ) : (
-        <Text variant={["md", "lg"]} color="mono60">
-          Nothing yet.
-        </Text>
+        <EmptyState title="Nothing yet." />
       )}
     </>
   )

@@ -1,5 +1,3 @@
-import styled from "styled-components"
-import { themeGet } from "@styled-system/theme-get"
 import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
 import ChevronDownIcon from "@artsy/icons/ChevronDownIcon"
 import ExpandIcon from "@artsy/icons/ExpandIcon"
@@ -9,7 +7,6 @@ import {
   Box,
   type BoxProps,
   Button,
-  Clickable,
   Dropdown,
   Flex,
   FullBleed,
@@ -20,7 +17,6 @@ import {
   Skeleton,
   SkeletonText,
   Spacer,
-  Text,
 } from "@artsy/palette"
 import { useFlag } from "@unleash/proxy-client-react"
 import { AppContainer } from "Apps/Components/AppContainer"
@@ -180,11 +176,17 @@ export const ArtworkFilterPlaceholder: React.FC<
                           openDropdownByClick
                           placement="bottom-end"
                         >
-                          {({ anchorRef, anchorProps, onHide }) => (
-                            <SortButton ref={anchorRef as any} {...anchorProps}>
-                              <SortIcon />
-                              <Text variant="xs">Sort: Recommended</Text>
-                            </SortButton>
+                          {({ anchorRef, anchorProps }) => (
+                            <Button
+                              ref={anchorRef as any}
+                              {...anchorProps}
+                              Icon={SortIcon}
+                              variant="tertiary"
+                              size="small"
+                              disabled
+                            >
+                              Sort: Recommended
+                            </Button>
                           )}
                         </Dropdown>
                       </Flex>
@@ -215,15 +217,3 @@ export const ArtworkFilterPlaceholder: React.FC<
     </Skeleton>
   )
 }
-
-const SortButton = styled(Clickable).attrs({
-  gap: 0.5,
-  px: 2,
-  py: 0.5,
-  disabled: true,
-})`
-  display: flex;
-  align-items: center;
-  white-space: nowrap;
-  color: ${themeGet("colors.mono30")};
-`

@@ -1,5 +1,6 @@
-import { Column, GridColumns, Message, Spacer, Text } from "@artsy/palette"
+import { Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import { CellArticleFragmentContainer } from "Components/Cells/CellArticle"
+import { EmptyState } from "Components/EmptyState"
 import { LoadingArea } from "Components/LoadingArea"
 import { PaginationFragmentContainer } from "Components/Pagination"
 import { Jump } from "Utils/Hooks/useJump"
@@ -43,7 +44,7 @@ const FairArticles: React.FC<React.PropsWithChildren<FairArticlesProps>> = ({
   }
 
   if (articles.length === 0) {
-    return <Message>There aren’t any articles at this time.</Message>
+    return <EmptyState title="There aren’t any articles at this time." />
   }
 
   return (
