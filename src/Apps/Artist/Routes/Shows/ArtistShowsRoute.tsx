@@ -1,4 +1,5 @@
-import { Join, Message, Spacer } from "@artsy/palette"
+import { Join, Spacer } from "@artsy/palette"
+import { EmptyState } from "Components/EmptyState"
 import type { ArtistShowsRoute_viewer$data } from "__generated__/ArtistShowsRoute_viewer.graphql"
 import type * as React from "react"
 import { Title } from "react-head"
@@ -14,15 +15,16 @@ const ArtistShowsRoute: React.FC<
 > = ({ viewer }) => {
   if (!viewer.artist) return null
 
-  const hasCurrentShows = viewer.artist.currentShowsCount?.totalCount ?? 0 > 0
-  const hasUpcomingShows = viewer.artist.upcomingShowsCount?.totalCount ?? 0 > 0
+  const hasCurrentShows = (viewer.artist.currentShowsCount?.totalCount ?? 0) > 0
+  const hasUpcomingShows =
+    (viewer.artist.upcomingShowsCount?.totalCount ?? 0) > 0
 
   return (
     <>
       <Title>{viewer.artist.name} - Shows</Title>
 
       {!hasCurrentShows && !hasUpcomingShows && (
-        <Message>There aren’t any shows at this time.</Message>
+        <EmptyState title="There aren’t any shows at this time." />
       )}
 
       <Join separator={<Spacer y={4} />}>

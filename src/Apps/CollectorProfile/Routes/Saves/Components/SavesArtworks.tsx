@@ -23,7 +23,7 @@ interface SavesArtworksProps {
   id: string
 }
 
-const DEFAULT_FILTERS: {
+export const DEFAULT_FILTERS: {
   page: number
   priceMin: CustomRangeSegment
   priceMax: CustomRangeSegment

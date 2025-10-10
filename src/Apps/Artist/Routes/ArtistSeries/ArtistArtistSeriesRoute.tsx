@@ -1,5 +1,6 @@
-import { Column, GridColumns, Message, Spacer, Text } from "@artsy/palette"
+import { Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import { CellArtistSeriesFragmentContainer } from "Components/Cells/CellArtistSeries"
+import { EmptyState } from "Components/EmptyState"
 import { Jump } from "Utils/Hooks/useJump"
 import { extractNodes } from "Utils/extractNodes"
 import type { ArtistArtistSeriesRoute_artist$data } from "__generated__/ArtistArtistSeriesRoute_artist.graphql"
@@ -17,7 +18,9 @@ const ArtistArtistSeriesRoute: FC<
   const artistSeries = extractNodes(artist.artistSeriesConnection)
 
   if (artistSeries.length === 0) {
-    return <Message>There aren’t any series available at this time.</Message>
+    return (
+      <EmptyState title="There aren’t any series available at this time." />
+    )
   }
 
   return (

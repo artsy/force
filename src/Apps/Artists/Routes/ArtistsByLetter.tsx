@@ -53,7 +53,8 @@ export const ArtistsByLetter: React.FC<
   const [isLoading, setLoading] = useState(false)
 
   const page = getPageNumber(location)
-  const h1Text = getH1Text(params.letter, page)
+  const letter = params.letter || "-"
+  const h1Text = getH1Text(letter, page)
 
   if (!viewer?.artistsConnection?.artists) {
     return null
@@ -88,8 +89,8 @@ export const ArtistsByLetter: React.FC<
     })
   }
 
-  const title = `Artists Starting with ${params.letter.toUpperCase()} | Modern and Contemporary Artists`
-  const description = `Research and discover artists starting with ${params.letter.toUpperCase()} on Artsy. Find works for sale, biographies, CVs, and auction results.`
+  const title = `Artists Starting with ${letter.toUpperCase()} | Modern and Contemporary Artists`
+  const description = `Research and discover artists starting with ${letter.toUpperCase()} on Artsy. Find works for sale, biographies, CVs, and auction results.`
 
   return (
     <>

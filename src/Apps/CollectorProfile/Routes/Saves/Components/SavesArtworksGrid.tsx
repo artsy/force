@@ -1,13 +1,11 @@
+import { PaginationSkeleton, Spacer, Stack } from "@artsy/palette"
 import {
-  Clickable,
-  Message,
-  PaginationSkeleton,
-  Spacer,
-  Stack,
-} from "@artsy/palette"
-import { SAVES_ARTWORKS_SECTION_ID } from "Apps/CollectorProfile/Routes/Saves/Components/SavesArtworks"
+  DEFAULT_FILTERS,
+  SAVES_ARTWORKS_SECTION_ID,
+} from "Apps/CollectorProfile/Routes/Saves/Components/SavesArtworks"
 import ArtworkGridItemFragmentContainer from "Components/Artwork/GridItem"
 import { ArtworkGridPlaceholder } from "Components/ArtworkGrid/ArtworkGrid"
+import { EmptyState } from "Components/EmptyState"
 import { Masonry } from "Components/Masonry"
 import { PaginationFragmentContainer } from "Components/Pagination"
 import type { CustomRangeSegment } from "Components/PriceRange/constants"
@@ -16,7 +14,8 @@ import type {
   CollectionArtworkSorts,
   SavesArtworksGridQuery,
 } from "__generated__/SavesArtworksGridQuery.graphql"
-import { type FC, Fragment } from "react"
+import { isEqual } from "lodash"
+import { type FC, Fragment, useMemo } from "react"
 import { graphql, useLazyLoadQuery } from "react-relay"
 
 interface SavesArtworksGridProps {
@@ -42,6 +41,15 @@ export const SavesArtworksGrid: FC<
   })
 
   const artworks = extractNodes(me?.collection?.artworksConnection)
+  const isDefaultFilters = useMemo(
+    () =>
+      isEqual(DEFAULT_FILTERS, {
+        page,
+        priceMax,
+        priceMin,
+      }),
+    [page, priceMax, priceMin],
+  )
 
   return (
     <Stack gap={4}>
@@ -58,7 +66,9 @@ export const SavesArtworksGrid: FC<
           })}
         </Masonry>
       ) : (
-        <SavesArtworksGridEmptyState onClearFilters={onClearFilters} />
+        <SavesArtworksGridEmptyState
+          onClearFilters={isDefaultFilters ? undefined : onClearFilters}
+        />
       )}
 
       <PaginationFragmentContainer
@@ -128,20 +138,29 @@ export const SavesArtworksGridPlaceholder: FC<
 }
 
 interface SavesArtworksGridEmptyStateProps {
-  onClearFilters: () => void
+  onClearFilters?: () => void
 }
 
 export const SavesArtworksGridEmptyState: FC<
   React.PropsWithChildren<SavesArtworksGridEmptyStateProps>
 > = ({ onClearFilters }) => {
   return (
-    <Message>
-      There aren‘t any works available that meet the following criteria at this
-      time. Change your filter criteria to view more works.{" "}
-      <Clickable textDecoration="underline" onClick={onClearFilters}>
-        Clear all filters
-      </Clickable>
-      .
-    </Message>
+    <>
+      {onClearFilters ? (
+        <EmptyState
+          title="There aren’t any works available that meet the following criteria at this time."
+          description="Change your filter criteria to view more works."
+          action={{
+            label: "Clear all filters",
+            onClick: onClearFilters,
+          }}
+        />
+      ) : (
+        <EmptyState
+          title="Nothing yet."
+          description="Save works to your collection to view them here."
+        />
+      )}
+    </>
   )
 }

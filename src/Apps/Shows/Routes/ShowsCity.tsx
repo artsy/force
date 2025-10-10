@@ -1,15 +1,8 @@
-import {
-  Column,
-  GridColumns,
-  Join,
-  Message,
-  Spacer,
-  Sup,
-  Text,
-} from "@artsy/palette"
+import { Column, GridColumns, Join, Spacer, Sup, Text } from "@artsy/palette"
 import { ShowsFeaturedShowFragmentContainer } from "Apps/Shows/Components/ShowsFeaturedShow"
 import { ShowsHeaderFragmentContainer } from "Apps/Shows/Components/ShowsHeader"
 import { ShowsMeta } from "Apps/Shows/Components/ShowsMeta"
+import { EmptyState } from "Components/EmptyState"
 import { PaginationFragmentContainer } from "Components/Pagination"
 import { useRouter } from "System/Hooks/useRouter"
 import { Jump, useJump } from "Utils/Hooks/useJump"
@@ -153,9 +146,9 @@ export const ShowsCity: React.FC<React.PropsWithChildren<ShowsCityProps>> = ({
         </Text>
 
         {currentShows.length === 0 && (
-          <Message>
-            There are currently no shows in {city.name} on Artsy
-          </Message>
+          <EmptyState
+            title={`There are currently no shows in ${city.name} on Artsy`}
+          />
         )}
 
         {currentShows.length > 0 && (

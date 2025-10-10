@@ -1,6 +1,7 @@
-import { Message, Spacer } from "@artsy/palette"
+import { Spacer } from "@artsy/palette"
 import ArtworkGridItemFragmentContainer from "Components/Artwork/GridItem"
 import { ArtworkGridPlaceholder } from "Components/ArtworkGrid/ArtworkGrid"
+import { EmptyState } from "Components/EmptyState"
 import { Masonry } from "Components/Masonry"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { useStableShuffle } from "Utils/Hooks/useStableShuffle"
@@ -20,7 +21,7 @@ const ArtQuizResultsRecommendedArtworks: FC<
 
   if (artworks.shuffled.length === 0) {
     return (
-      <Message>We don't have any recommendations for you at this time.</Message>
+      <EmptyState title="We don't have any recommendations for you at this time." />
     )
   }
 

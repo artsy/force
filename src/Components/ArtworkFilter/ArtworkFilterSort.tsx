@@ -1,16 +1,13 @@
 import SortIcon from "@artsy/icons/SortIcon"
 import {
-  Clickable,
+  Button,
   Dropdown,
   type DropdownProps,
   Radio,
   RadioGroup,
-  Text,
 } from "@artsy/palette"
-import { themeGet } from "@styled-system/theme-get"
 import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
 import type { FC } from "react"
-import styled from "styled-components"
 
 interface ArtworkFilterSortProps
   extends Omit<DropdownProps, "dropdown" | "children"> {}
@@ -55,26 +52,17 @@ export const ArtworkFilterSort: FC<
         hideDropdown = onHide
 
         return (
-          <Button ref={anchorRef as any} {...anchorProps}>
-            <SortIcon />
-            <Text variant="xs">Sort: {activeSort.text}</Text>
+          <Button
+            ref={anchorRef as any}
+            {...anchorProps}
+            Icon={SortIcon}
+            size="small"
+            variant="tertiary"
+          >
+            Sort: {activeSort.text}
           </Button>
         )
       }}
     </Dropdown>
   )
 }
-
-const Button = styled(Clickable).attrs({
-  gap: 0.5,
-  px: 2,
-  py: 0.5,
-})`
-  display: flex;
-  align-items: center;
-  white-space: nowrap;
-
-  &:hover {
-    color: ${themeGet("colors.blue100")};
-  }
-`

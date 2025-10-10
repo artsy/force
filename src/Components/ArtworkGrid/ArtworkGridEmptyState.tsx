@@ -1,4 +1,5 @@
-import { Box, type BoxProps, Clickable, Message } from "@artsy/palette"
+import { Box, type BoxProps, Clickable } from "@artsy/palette"
+import { EmptyState } from "Components/EmptyState"
 import type * as React from "react"
 import styled from "styled-components"
 
@@ -10,19 +11,18 @@ export const ArtworkGridEmptyState: React.FC<
   React.PropsWithChildren<ArtworkGridEmptyStateProps>
 > = ({ onClearFilters, ...rest }) => (
   <Box width="100%" {...rest}>
-    <Message width="100%">
-      There aren‘t any works available that meet the following criteria at this
-      time.{" "}
-      {onClearFilters && (
-        <>
-          Change your filter criteria to view more works.{" "}
-          <ResetFilterLink textDecoration="underline" onClick={onClearFilters}>
-            Clear all filters
-          </ResetFilterLink>
-          .
-        </>
-      )}
-    </Message>
+    <EmptyState
+      title="There aren’t any works available that meet the following criteria at this time."
+      description={
+        onClearFilters && "Change your filter criteria to view more works."
+      }
+      action={
+        onClearFilters && {
+          label: "Clear all filters",
+          onClick: onClearFilters,
+        }
+      }
+    />
   </Box>
 )
 

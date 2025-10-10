@@ -8,6 +8,7 @@ import {
   Sup,
   Text,
 } from "@artsy/palette"
+import { EmptyState } from "Components/EmptyState"
 import { EntityHeaderFairFragmentContainer } from "Components/EntityHeaders/EntityHeaderFair"
 import { EntityHeaderFairOrganizerFragmentContainer } from "Components/EntityHeaders/EntityHeaderFairOrganizer"
 import { EntityHeaderPartnerFragmentContainer } from "Components/EntityHeaders/EntityHeaderPartner"
@@ -104,9 +105,7 @@ const SettingsSavesProfiles: FC<
           )}
         </>
       ) : (
-        <Text variant={["md", "lg"]} color="mono60">
-          Nothing yet.
-        </Text>
+        <EmptyState title="Nothing yet." />
       )}
     </>
   )
