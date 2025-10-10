@@ -1,4 +1,5 @@
-import { Join, Message, Spacer } from "@artsy/palette"
+import { Join, Spacer } from "@artsy/palette"
+import { EmptyState } from "Components/EmptyState"
 import { CommercePaginationFragmentContainer } from "Components/Pagination/CommercePagination"
 import { extractNodes } from "Utils/extractNodes"
 import type { SettingsPurchases_me$data } from "__generated__/SettingsPurchases_me.graphql"
@@ -26,7 +27,7 @@ const SettingsPurchases: FC<
   const orders = extractNodes(me.orders)
 
   if (orders.length === 0) {
-    return <Message>Orders can not be loaded at this time.</Message>
+    return <EmptyState title="Orders can not be loaded at this time." />
   }
 
   const hasNextPage = me.orders?.pageInfo.hasNextPage ?? false
@@ -67,7 +68,7 @@ const SettingsPurchases: FC<
   }
 
   if (orders.length === 0) {
-    return <Message>No Orders</Message>
+    return <EmptyState title="No orders found." />
   }
 
   return !loading ? (
