@@ -536,40 +536,10 @@ export const COUNTRIES: CountryData[] = [
     text: "🇨🇳 + 86",
   },
   {
-    name: "Christmas Island",
-    countryCode: "61",
-    text: "🇨🇽 + 61",
-    value: "cx",
-  },
-  {
-    name: "Cocos (Keeling) Islands",
-    countryCode: "61",
-    value: "cc",
-    text: "🇨🇨 + 61",
-  },
-  {
     name: "Colombia",
     countryCode: "57",
     value: "co",
     text: "🇨🇴 + 57",
-  },
-  {
-    name: "Comoros (‫جزر القمر‬‎)",
-    countryCode: "269",
-    value: "km",
-    text: "🇰🇲 + 269",
-  },
-  {
-    name: "Congo (DRC) (Jamhuri ya Kidemokrasia ya Kongo)",
-    countryCode: "243",
-    value: "cd",
-    text: "🇨🇩 + 243",
-  },
-  {
-    name: "Congo (Republic) (Congo-Brazzaville)",
-    value: "cg",
-    countryCode: "242",
-    text: "🇨🇬 + 242",
   },
   {
     name: "Cook Islands",
@@ -594,12 +564,6 @@ export const COUNTRIES: CountryData[] = [
     countryCode: "385",
     value: "hr",
     text: "🇭🇷 + 385",
-  },
-  {
-    name: "Cuba",
-    countryCode: "53",
-    value: "cu",
-    text: "🇨🇺 + 53",
   },
   {
     name: "Curaçao",
@@ -684,18 +648,6 @@ export const COUNTRIES: CountryData[] = [
     value: "et",
     countryCode: "251",
     text: "🇪🇹 + 251",
-  },
-  {
-    name: "Falkland Islands (Islas Malvinas)",
-    value: "fk",
-    countryCode: "500",
-    text: "🇫🇰 + 500",
-  },
-  {
-    name: "Faroe Islands (Føroyar)",
-    value: "fo",
-    countryCode: "298",
-    text: "🇫🇴 + 298",
   },
   {
     name: "Fiji",
@@ -866,18 +818,6 @@ export const COUNTRIES: CountryData[] = [
     text: "🇮🇩 + 62",
   },
   {
-    name: "Iran (‫ایران‬‎)",
-    countryCode: "98",
-    value: "ir",
-    text: "🇮🇷 + 98",
-  },
-  {
-    name: "Iraq (‫العراق‬‎)",
-    value: "iq",
-    countryCode: "964",
-    text: "🇮🇶 + 964",
-  },
-  {
     name: "Ireland",
     value: "ie",
     countryCode: "353",
@@ -936,12 +876,6 @@ export const COUNTRIES: CountryData[] = [
     countryCode: "254",
     value: "ke",
     text: "🇰🇪 + 254",
-  },
-  {
-    name: "Kiribati",
-    value: "ki",
-    countryCode: "686",
-    text: "🇰🇮 + 686",
   },
   {
     name: "Kuwait (‫الكويت‬‎)",
@@ -1058,12 +992,6 @@ export const COUNTRIES: CountryData[] = [
     text: "🇲🇹 + 356",
   },
   {
-    name: "Marshall Islands",
-    countryCode: "692",
-    value: "mh",
-    text: "🇲🇭 + 692",
-  },
-  {
     name: "Martinique",
     countryCode: "596",
     value: "mq",
@@ -1082,22 +1010,10 @@ export const COUNTRIES: CountryData[] = [
     text: "🇲🇺 + 230",
   },
   {
-    name: "Mayotte",
-    countryCode: "262",
-    value: "yt",
-    text: "🇾🇹 + 262",
-  },
-  {
     name: "Mexico (México)",
     value: "mx",
     countryCode: "52",
     text: "🇲🇽 + 52",
-  },
-  {
-    name: "Micronesia",
-    countryCode: "691",
-    value: "fm",
-    text: "🇫🇲 + 691",
   },
   {
     name: "Moldova (Republica Moldova)",
@@ -1154,12 +1070,6 @@ export const COUNTRIES: CountryData[] = [
     text: "🇳🇦 + 264",
   },
   {
-    name: "Nauru",
-    value: "nr",
-    countryCode: "674",
-    text: "🇳🇷 + 674",
-  },
-  {
     name: "Nepal (नेपाल)",
     value: "np",
     countryCode: "977",
@@ -1202,30 +1112,6 @@ export const COUNTRIES: CountryData[] = [
     text: "🇳🇬 + 234",
   },
   {
-    name: "Niue",
-    countryCode: "683",
-    value: "nu",
-    text: "🇳🇺 + 683",
-  },
-  {
-    name: "Norfolk Island",
-    value: "nf",
-    countryCode: "672",
-    text: "🇳🇫 + 672",
-  },
-  {
-    name: "North Korea (조선 민주주의 인민 공화국)",
-    countryCode: "850",
-    value: "kp",
-    text: "🇰🇵 + 850",
-  },
-  {
-    name: "Northern Mariana Islands",
-    value: "mp",
-    countryCode: "1670",
-    text: "🇲🇵 + 1670",
-  },
-  {
     name: "Norway (Norge)",
     value: "no",
     countryCode: "47",
@@ -1242,12 +1128,6 @@ export const COUNTRIES: CountryData[] = [
     value: "pk",
     countryCode: "92",
     text: "🇵🇰 + 92",
-  },
-  {
-    name: "Palau",
-    value: "pw",
-    countryCode: "680",
-    text: "🇵🇼 + 680",
   },
   {
     name: "Palestine (‫فلسطين‬‎)",
@@ -1310,22 +1190,10 @@ export const COUNTRIES: CountryData[] = [
     text: "🇶🇦 + 974",
   },
   {
-    name: "Réunion (La Réunion)",
-    countryCode: "262",
-    value: "re",
-    text: "🇷🇪 + 262",
-  },
-  {
     name: "Romania (România)",
     value: "ro",
     countryCode: "40",
     text: "🇷🇴 + 40",
-  },
-  {
-    name: "Russia (Россия)",
-    countryCode: "7",
-    value: "ru",
-    text: "🇷🇺 + 7",
   },
   {
     name: "Rwanda",
@@ -1338,12 +1206,6 @@ export const COUNTRIES: CountryData[] = [
     value: "bl",
     countryCode: "590",
     text: "🇧🇱 + 590",
-  },
-  {
-    name: "Saint Helena",
-    value: "sh",
-    countryCode: "290",
-    text: "🇸🇭 + 290",
   },
   {
     name: "Saint Kitts and Nevis",
@@ -1364,12 +1226,6 @@ export const COUNTRIES: CountryData[] = [
     text: "🇲🇫 + 590",
   },
   {
-    name: "Saint Pierre and Miquelon (Saint-Pierre-et-Miquelon)",
-    value: "pm",
-    countryCode: "508",
-    text: "🇵🇲 + 508",
-  },
-  {
     name: "Saint Vincent and the Grenadines",
     countryCode: "1784",
     value: "vc",
@@ -1386,12 +1242,6 @@ export const COUNTRIES: CountryData[] = [
     countryCode: "378",
     value: "sm",
     text: "🇸🇲 + 378",
-  },
-  {
-    name: "São Tomé and Príncipe (São Tomé e Príncipe)",
-    countryCode: "239",
-    value: "st",
-    text: "🇸🇹 + 239",
   },
   {
     name: "Saudi Arabia (‫المملكة العربية السعودية‬‎)",
@@ -1454,12 +1304,6 @@ export const COUNTRIES: CountryData[] = [
     text: "🇸🇧 + 677",
   },
   {
-    name: "Somalia (Soomaaliya)",
-    countryCode: "252",
-    value: "so",
-    text: "🇸🇴 + 252",
-  },
-  {
     name: "South Africa",
     value: "za",
     countryCode: "27",
@@ -1470,12 +1314,6 @@ export const COUNTRIES: CountryData[] = [
     countryCode: "82",
     value: "kr",
     text: "🇰🇷 + 82",
-  },
-  {
-    name: "South Sudan (‫جنوب السودان‬‎)",
-    value: "ss",
-    countryCode: "211",
-    text: "🇸🇸 + 211",
   },
   {
     name: "Spain (España)",
@@ -1490,22 +1328,10 @@ export const COUNTRIES: CountryData[] = [
     text: "🇱🇰 + 94",
   },
   {
-    name: "Sudan (‫السودان‬‎)",
-    value: "sd",
-    countryCode: "249",
-    text: "🇸🇩 + 249",
-  },
-  {
     name: "Suriname",
     value: "sr",
     countryCode: "597",
     text: "🇸🇷 + 597",
-  },
-  {
-    name: "Svalbard and Jan Mayen",
-    countryCode: "47",
-    value: "sj",
-    text: "🇸🇯 + 47",
   },
   {
     name: "Swaziland",
@@ -1524,12 +1350,6 @@ export const COUNTRIES: CountryData[] = [
     countryCode: "41",
     value: "ch",
     text: "🇨🇭 + 41",
-  },
-  {
-    name: "Syria (‫سوريا‬‎)",
-    countryCode: "963",
-    text: "🇸🇾 + 963",
-    value: "sy",
   },
   {
     name: "Taiwan (台灣)",
@@ -1568,12 +1388,6 @@ export const COUNTRIES: CountryData[] = [
     text: "🇹🇬 + 228",
   },
   {
-    name: "Tokelau",
-    value: "tk",
-    countryCode: "690",
-    text: "🇹🇰 + 690",
-  },
-  {
     name: "Tonga",
     value: "to",
     countryCode: "676",
@@ -1610,22 +1424,10 @@ export const COUNTRIES: CountryData[] = [
     text: "🇹🇨 + 1649",
   },
   {
-    name: "Tuvalu",
-    value: "tv",
-    countryCode: "688",
-    text: "🇹🇻 + 688",
-  },
-  {
     name: "Uganda",
     value: "ug",
     countryCode: "256",
     text: "🇺🇬 + 256",
-  },
-  {
-    name: "Ukraine (Україна)",
-    countryCode: "380",
-    value: "ua",
-    text: "🇺🇦 + 380",
   },
   {
     name: "United Arab Emirates (‫الإمارات العربية المتحدة‬‎)",
@@ -1658,12 +1460,6 @@ export const COUNTRIES: CountryData[] = [
     text: "🇺🇿 + 998",
   },
   {
-    name: "Vanuatu",
-    countryCode: "678",
-    value: "vu",
-    text: "🇻🇺 + 678",
-  },
-  {
     name: "Vatican City (Città del Vaticano)",
     countryCode: "39",
     value: "va",
@@ -1682,12 +1478,6 @@ export const COUNTRIES: CountryData[] = [
     text: "🇻🇳 + 84",
   },
   {
-    name: "Wallis and Futuna",
-    countryCode: "681",
-    value: "wf",
-    text: "🇼🇫 + 681",
-  },
-  {
     name: "Western Sahara (‫الصحراء الغربية‬‎)",
     value: "eh",
     text: "🇪🇭 + 212",
@@ -1704,12 +1494,6 @@ export const COUNTRIES: CountryData[] = [
     value: "zm",
     countryCode: "260",
     text: "🇿🇲 + 260",
-  },
-  {
-    name: "Zimbabwe",
-    countryCode: "263",
-    value: "zw",
-    text: "🇿🇼 + 263",
   },
 ]
 
