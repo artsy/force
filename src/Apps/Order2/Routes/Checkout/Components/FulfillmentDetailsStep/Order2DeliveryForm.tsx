@@ -267,6 +267,13 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
                 <Spacer y={2} />
               </>
             )}
+            {console.log(formikContext)}
+            {formikContext.errors && (
+              <>
+                <CheckoutErrorBanner error={formikContext.status.errorBanner} />
+                <Spacer y={2} />
+              </>
+            )}
             {hasSavedAddresses ? (
               <SavedAddressOptions
                 savedAddresses={processedAddresses}
