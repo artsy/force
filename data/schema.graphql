@@ -9158,6 +9158,7 @@ type CreateArtworkImportArtworksFailure {
 
 input CreateArtworkImportArtworksInput {
   artworkImportID: String!
+  async: Boolean
   clientMutationId: String
 }
 
@@ -9174,6 +9175,7 @@ type CreateArtworkImportArtworksSuccess {
   artworkImport: ArtworkImport
   artworkImportID: String!
   createdArtworksCount: Int!
+  queued: Boolean
 }
 
 type CreateArtworkImportCellFlagFailure {
@@ -17241,6 +17243,9 @@ type Order {
 
   # Order code
   code: String!
+
+  # Order creation time
+  createdAt: String
 
   # Express Checkout wallet type
   creditCardWalletType: OrderCreditCardWalletTypeEnum
