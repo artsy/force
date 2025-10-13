@@ -1,7 +1,9 @@
 import { ContextModule, Intent } from "@artsy/cohesion"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import FilterIcon from "@artsy/icons/FilterIcon"
 import {
   Box,
+  Button,
   Column,
   Flex,
   GridColumns,
@@ -50,9 +52,8 @@ import {
 import { ArtistAuctionResultsEmptyState } from "./Components/ArtistAuctionResultsEmptyState"
 import { AuctionFilterMobileActionSheet } from "./Components/AuctionFilterMobileActionSheet"
 import { AuctionFilters } from "./Components/AuctionFilters"
-import { AuctionResultsControls } from "./Components/AuctionResultsControls"
 import { MarketStatsQueryRenderer } from "./Components/MarketStats"
-import { SortSelect } from "./Components/SortSelect"
+import { ArtistAuctionResultsSortSelect } from "./Components/ArtistAuctionResultsSortSelect"
 import { TableSidebar } from "./Components/TableSidebar"
 
 const logger = createLogger("ArtistAuctionResults.tsx")
@@ -275,8 +276,8 @@ const AuctionResultsContainer: React.FC<
             <Text variant="xs">Filter by</Text>
           </Column>
 
-          <Column span={3}>
-            <SortSelect />
+          <Column span={3} display="flex" justifyContent="flex-end">
+            <ArtistAuctionResultsSortSelect />
           </Column>
         </GridColumns>
 
@@ -293,9 +294,23 @@ const AuctionResultsContainer: React.FC<
         </Column>
 
         <Column span={9} data-test={ContextModule.auctionResults}>
-          <AuctionResultsControls
-            toggleMobileActionSheet={toggleMobileActionSheet}
-          />
+          <Media at="xs">
+            <Flex
+              justifyContent="space-between"
+              alignItems="center"
+              width="100%"
+            >
+              <Button
+                size="small"
+                onClick={() => toggleMobileActionSheet(true)}
+                Icon={FilterIcon}
+              >
+                Filter
+              </Button>
+
+              <ArtistAuctionResultsSortSelect />
+            </Flex>
+          </Media>
 
           <Spacer y={[2, 0]} />
 
