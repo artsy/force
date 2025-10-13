@@ -50,13 +50,13 @@ interface AuctionResultsFiltersAction {
 }
 
 export interface AuctionResultsFilterContextProps {
-  filters?: AuctionResultsFilters
+  filters: AuctionResultsFilters
   stagedFilters?: AuctionResultsFiltersState
   currentlySelectedFilters?: () => AuctionResultsFiltersState
   ZeroState?: React.FC<React.PropsWithChildren<unknown>> | null
   onChange?: (filterState) => void
   resetFilters?: (() => void) | null
-  setFilter?: ((name: ChangableFilter, value: any) => void) | null
+  setFilter: (name: ChangableFilter, value: any) => void
   onFilterClick?: (
     key: ChangableFilter,
     value: string,
@@ -83,7 +83,7 @@ export const AuctionResultsFilterContext =
       startDate: null,
       endDate: null,
     }),
-    setFilter: null,
+    setFilter: () => {},
     resetFilters: null,
     ZeroState: null,
   })
