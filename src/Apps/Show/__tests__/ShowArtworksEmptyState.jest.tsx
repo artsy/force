@@ -25,8 +25,12 @@ describe("ShowArtworksEmptyState", () => {
       renderWithRelay({ Show: () => ({ isFairBooth: true }) })
 
       expect(
-        screen.getByText(
-          "This fair booth is currently unavailable. Please check back closer to the fair for artworks.",
+        screen.getByText("This fair booth is currently unavailable."),
+      ).toBeInTheDocument()
+
+      expect(
+        screen.queryByText(
+          "Please check back closer to the fair for artworks.",
         ),
       ).toBeInTheDocument()
     })
@@ -52,8 +56,12 @@ describe("ShowArtworksEmptyState", () => {
       renderWithRelay({ Show: () => ({ isFairBooth: false }) })
 
       expect(
-        screen.getByText(
-          "This show is currently unavailable. Please check back closer to the show for artworks.",
+        screen.getByText("This show is currently unavailable."),
+      ).toBeInTheDocument()
+
+      expect(
+        screen.queryByText(
+          "Please check back closer to the show for artworks.",
         ),
       ).toBeInTheDocument()
     })

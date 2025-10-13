@@ -12,6 +12,7 @@ import {
   CATEGORY_RAIL_PLACEHOLDER,
   CategoryRailFragmentContainer,
 } from "Components/CategoryRail"
+import { EmptyState } from "Components/EmptyState"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
 import type { SettingsSavesCategoriesQuery } from "__generated__/SettingsSavesCategoriesQuery.graphql"
@@ -80,9 +81,7 @@ const SettingsSavesCategories: FC<
           )}
         </>
       ) : (
-        <Text variant={["md", "lg"]} color="mono60">
-          Nothing yet.
-        </Text>
+        <EmptyState title="Nothing yet." />
       )}
     </>
   )

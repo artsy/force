@@ -1,4 +1,4 @@
-import { Message } from "@artsy/palette"
+import { EmptyState } from "Components/EmptyState"
 import type { ShowArtworksEmptyState_show$data } from "__generated__/ShowArtworksEmptyState_show.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -10,21 +10,20 @@ interface ShowArtworksEmptyStateProps {
 export const ShowArtworksEmptyState: React.FC<
   React.PropsWithChildren<ShowArtworksEmptyStateProps>
 > = ({ show }) => {
-  const message = [
-    `This ${
-      show.isFairBooth ? "fair booth" : "show"
-    } is currently unavailable.`,
-
-    ...(show.status !== "closed"
-      ? [
-          `Please check back closer to the ${
-            show.isFairBooth ? "fair" : "show"
-          } for artworks.`,
-        ]
-      : []),
-  ].join(" ")
-
-  return <Message>{message}</Message>
+  return (
+    <EmptyState
+      title={`This ${
+        show.isFairBooth ? "fair booth" : "show"
+      } is currently unavailable.`}
+      description={
+        show.status !== "closed"
+          ? `Please check back closer to the ${
+              show.isFairBooth ? "fair" : "show"
+            } for artworks.`
+          : undefined
+      }
+    />
+  )
 }
 
 export const ShowArtworksEmptyStateFragmentContainer = createFragmentContainer(
