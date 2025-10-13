@@ -45,7 +45,7 @@ interface OrderLinkProps {
 }
 
 interface OrderActionButtonProps {
-  displayState: OrderBuyerStateEnum | null | undefined
+  state: OrderBuyerStateEnum | null | undefined
   orderId: string
   trackChangePaymentMethodClick: (orderId: string) => () => void
 }
@@ -164,11 +164,11 @@ const OrderLink: FC<OrderLinkProps> = ({
 
 // TODO: need to add OFFER_RECEIVED state and do proper button for that one.
 const OrderActionButton: FC<OrderActionButtonProps> = ({
-  displayState,
+  state,
   orderId,
   trackChangePaymentMethodClick,
 }) => {
-  switch (displayState) {
+  switch (state) {
     case "PAYMENT_FAILED":
       return (
         <Button
@@ -200,10 +200,9 @@ const SettingsOrdersRow: FC<
 
   const isPrivateSale = order.source === "PRIVATE_SALE"
 
-  const buyerDisplayState = order.buyerState || "UNKNOWN"
+  const buyerState = order.buyerState || "UNKNOWN"
 
-  // TODO: Order type doesn't have createdAt - needs to be added or use different date
-  const orderCreatedAt = DateTime.now()
+  const orderCreatedAt = DateTime.fromISO(order.createdAt || "")
 
   // TODO: Order type doesn't have tracking info structured the same way
   const trackingUrl = null
@@ -228,14 +227,10 @@ const SettingsOrdersRow: FC<
         </Text>
 
         <Flex alignItems="center">
-          {ORDER_ICONS[buyerDisplayState]}
+          {ORDER_ICONS[buyerState]}
 
-          <Text
-            ml={0.5}
-            variant="sm-display"
-            color={ORDER_COLORS[buyerDisplayState]}
-          >
-            {ORDER_LABELS[buyerDisplayState]}
+          <Text ml={0.5} variant="sm-display" color={ORDER_COLORS[buyerState]}>
+            {ORDER_LABELS[buyerState]}
           </Text>
 
           {trackingUrl && (
@@ -317,7 +312,7 @@ const SettingsOrdersRow: FC<
             />
 
             <OrderActionButton
-              displayState={buyerDisplayState}
+              state={buyerState}
               orderId={order.internalID}
               trackChangePaymentMethodClick={trackChangePaymentMethodClick}
             />
@@ -396,6 +391,7 @@ export const SettingsOrdersRowFragmentContainer = createFragmentContainer(
         internalID
         code
         buyerState
+        createdAt
         creditCardWalletType
         paymentMethodDetails {
           __typename

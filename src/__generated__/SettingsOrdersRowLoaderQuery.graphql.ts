@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<19ac890db744115307be9dbae8cdc3ca>>
+ * @generated SignedSource<<f781ad6fea109d4b99b6d9cbde9b0930>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -178,6 +178,13 @@ return {
                 "args": null,
                 "kind": "ScalarField",
                 "name": "buyerState",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "createdAt",
                 "storageKey": null
               },
               {
@@ -421,12 +428,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "91ab96b7ecc86fc1731e53d67de3d683",
+    "cacheID": "1306dbfdd86bf6ae0b167b0908b5c250",
     "id": null,
     "metadata": {},
     "name": "SettingsOrdersRowLoaderQuery",
     "operationKind": "query",
-    "text": "query SettingsOrdersRowLoaderQuery(\n  $orderID: ID!\n) {\n  me {\n    order(id: $orderID) {\n      ...SettingsOrdersRow_order\n      id\n    }\n    id\n  }\n}\n\nfragment SettingsOrdersRow_order on Order {\n  source\n  internalID\n  code\n  buyerState\n  creditCardWalletType\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      lastDigits\n      id\n    }\n    ... on BankAccount {\n      last4\n      id\n    }\n    ... on WireTransfer {\n      isManualPayment\n    }\n  }\n  buyerTotal {\n    display\n  }\n  currencyCode\n  lineItems {\n    artwork {\n      href\n      partner {\n        href\n        initials\n        name\n        profile {\n          icon {\n            cropped(width: 45, height: 45) {\n              src\n              srcSet\n            }\n          }\n          id\n        }\n        id\n      }\n      shippingOrigin\n      title\n      artistNames\n      artists(shallow: true) {\n        href\n        id\n      }\n      id\n    }\n    artworkVersion {\n      image {\n        cropped(width: 45, height: 45) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    id\n  }\n}\n"
+    "text": "query SettingsOrdersRowLoaderQuery(\n  $orderID: ID!\n) {\n  me {\n    order(id: $orderID) {\n      ...SettingsOrdersRow_order\n      id\n    }\n    id\n  }\n}\n\nfragment SettingsOrdersRow_order on Order {\n  source\n  internalID\n  code\n  buyerState\n  createdAt\n  creditCardWalletType\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      lastDigits\n      id\n    }\n    ... on BankAccount {\n      last4\n      id\n    }\n    ... on WireTransfer {\n      isManualPayment\n    }\n  }\n  buyerTotal {\n    display\n  }\n  currencyCode\n  lineItems {\n    artwork {\n      href\n      partner {\n        href\n        initials\n        name\n        profile {\n          icon {\n            cropped(width: 45, height: 45) {\n              src\n              srcSet\n            }\n          }\n          id\n        }\n        id\n      }\n      shippingOrigin\n      title\n      artistNames\n      artists(shallow: true) {\n        href\n        id\n      }\n      id\n    }\n    artworkVersion {\n      image {\n        cropped(width: 45, height: 45) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();
