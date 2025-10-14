@@ -268,25 +268,21 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
               </>
             )}
             {console.log(formikContext)}
-            {formikContext.errors && (
+            {Object.keys(formikContext.errors).length > 0 && (
               <>
-                {/* <CheckoutErrorBanner error={formikContext.status.errorBanner} /> */}
                 <CheckoutErrorBanner
                   error={{
                     title: "Please fix the following errors",
                     message: Object.entries(formikContext.errors)
-                      .map(([field, error]) => {
+                      .map(([_field, error]) => {
                         if (typeof error === "object" && error !== null) {
                           return Object.entries(error)
-                            .map(
-                              ([subField, subError]) =>
-                                `${subField}: ${subError}`,
-                            )
+                            .map(([_subField, subError]) => `${subError}`)
                             .join(", ")
                         }
-                        return `${field}: ${error}`
+                        return `${error}.`
                       })
-                      .join(", "),
+                      .join(" "),
                   }}
                 />
                 <Spacer y={2} />
