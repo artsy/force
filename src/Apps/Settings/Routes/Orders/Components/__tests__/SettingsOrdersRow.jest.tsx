@@ -120,7 +120,7 @@ describe("SettingsOrdersRow", () => {
       expect(screen.getByText("Counteroffer received")).toBeInTheDocument()
     })
 
-    it("renders the order number with a link to details", () => {
+    it("renders the order number with a link to respond", () => {
       renderWithRelay({
         Order: () => ({
           code: "123",
@@ -135,7 +135,7 @@ describe("SettingsOrdersRow", () => {
 
       const link = screen.getByRole("link", { name: /123/i })
       expect(link).toBeInTheDocument()
-      expect(link).toHaveAttribute("href", "/orders/123/details")
+      expect(link).toHaveAttribute("href", "/orders/123/respond")
     })
 
     it("renders a button to respond to the offer", () => {

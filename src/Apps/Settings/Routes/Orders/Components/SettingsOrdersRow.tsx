@@ -40,7 +40,9 @@ interface SettingsOrdersRowProps {
 }
 
 interface OrderLinkProps {
-  order: SettingsOrdersRow_order$data
+  code: string
+  state: OrderBuyerStateEnum | null | undefined
+  orderId: string
   trackChangePaymentMethodClick: (orderId: string) => () => void
 }
 
@@ -57,14 +59,13 @@ const ORDER_ICONS: Record<string, React.ReactElement> = {
   COMPLETED: <CheckmarkFillIcon fill="green100" />,
   DECLINED_BY_BUYER: <CloseStrokeIcon fill="red100" />,
   DECLINED_BY_SELLER: <CloseStrokeIcon fill="red100" />,
-  INCOMPLETE: <PendingIcon fill="mono60" />,
+  OFFER_RECEIVED: <PendingIcon fill="blue100" />,
   PAYMENT_FAILED: <AlertStrokeIcon fill="red100" />,
-  PROCESSING_OFFLINE_PAYMENT: <PendingIcon fill="mono60" />,
+  PROCESSING_OFFLINE_PAYMENT: <PendingIcon fill="blue100" />,
   PROCESSING_PAYMENT: <PendingIcon fill="mono60" />,
   REFUNDED: <CloseStrokeIcon fill="red100" />,
   SHIPPED: <PendingIcon fill="mono60" />,
   SUBMITTED: <PendingIcon fill="mono60" />,
-  UNKNOWN: <PendingIcon fill="mono60" />,
 } as const
 
 const ORDER_COLORS: Record<string, string> = {
@@ -73,9 +74,9 @@ const ORDER_COLORS: Record<string, string> = {
   COMPLETED: "green100",
   DECLINED_BY_BUYER: "red100",
   DECLINED_BY_SELLER: "red100",
-  INCOMPLETE: "mono60",
+  OFFER_RECEIVED: "blue100",
   PAYMENT_FAILED: "red100",
-  PROCESSING_OFFLINE_PAYMENT: "mono60",
+  PROCESSING_OFFLINE_PAYMENT: "blue100",
   PROCESSING_PAYMENT: "mono60",
   REFUNDED: "red100",
   SHIPPED: "mono60",
@@ -114,42 +115,41 @@ const getPaymentMethodText = (
 // #TODO: details has it's own redirects if order. Maybe be specific with those?
 // Can redirect here more proper once states are verified.
 const OrderLink: FC<OrderLinkProps> = ({
-  order,
+  code,
+  orderId,
+  state,
   trackChangePaymentMethodClick,
 }) => {
-  const isOrderActive = !["CANCELLED", "REFUNDED"].includes(
-    order.buyerState || "",
+  const isOrderActive = !["CANCELLED", "REFUNDED"].includes(state || "UNKNOWN")
+
+  if (!isOrderActive) {
+    return <>{code}</>
+  }
+
+  let route = `/orders/${orderId}/details`
+  let onClick: (() => void) | undefined
+
+  switch (state) {
+    case "PAYMENT_FAILED":
+      route = `/orders/${orderId}/payment/new`
+      onClick = trackChangePaymentMethodClick(orderId)
+      break
+    case "OFFER_RECEIVED":
+      route = `/orders/${orderId}/respond`
+      break
+  }
+
+  return (
+    <RouterLink inline to={route} onClick={onClick}>
+      {code}
+    </RouterLink>
   )
-
-  const isOrderPaymentFailed = order.buyerState === "PAYMENT_FAILED"
-
-  if (isOrderPaymentFailed) {
-    return (
-      <RouterLink
-        inline
-        to={`/orders/${order.internalID}/payment/new`}
-        onClick={trackChangePaymentMethodClick(order.internalID)}
-      >
-        {order.code}
-      </RouterLink>
-    )
-  }
-
-  if (isOrderActive) {
-    return (
-      <RouterLink inline to={`/orders/${order.internalID}/details`}>
-        {order.code}
-      </RouterLink>
-    )
-  }
-
-  return <>{order.code}</>
 }
 
 const OrderActionButton: FC<OrderActionButtonProps> = ({
-  state,
   actionPrompt,
   orderId,
+  state,
   trackChangePaymentMethodClick,
 }) => {
   if (!actionPrompt) {
@@ -157,10 +157,12 @@ const OrderActionButton: FC<OrderActionButtonProps> = ({
   }
 
   let route = `/orders/${orderId}/details`
+  let onClick: (() => void) | undefined
 
   switch (state) {
     case "PAYMENT_FAILED":
       route = `/orders/${orderId}/payment/new`
+      onClick = trackChangePaymentMethodClick(orderId)
       break
     case "OFFER_RECEIVED":
       route = `/orders/${orderId}/respond`
@@ -177,7 +179,7 @@ const OrderActionButton: FC<OrderActionButtonProps> = ({
       width="50%"
       minWidth={["240px", "200px"]}
       my={[1, 0]}
-      onClick={trackChangePaymentMethodClick(orderId)}
+      onClick={onClick}
     >
       {actionPrompt}
     </Button>
@@ -323,7 +325,9 @@ const SettingsOrdersRow: FC<
 
           <Text variant="sm-display" color="mono60">
             <OrderLink
-              order={order}
+              code={order.code}
+              state={buyerState}
+              orderId={order.internalID}
               trackChangePaymentMethodClick={trackChangePaymentMethodClick}
             />
           </Text>
