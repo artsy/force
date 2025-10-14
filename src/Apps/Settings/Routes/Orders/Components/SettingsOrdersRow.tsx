@@ -84,8 +84,8 @@ const ORDER_COLORS: Record<string, string> = {
   UNKNOWN: "mono60",
 } as const
 
-// TODO: verify how payment method be displayed.
-// Could/should we reuse details page display?
+// TODO: verify how payment method be displayed on Details page.
+// Should we display more info similar to details page?
 const getPaymentMethodText = (
   paymentMethodDetails: SettingsOrdersRow_order$data["paymentMethodDetails"],
   creditCardWalletType: SettingsOrdersRow_order$data["creditCardWalletType"],
@@ -203,8 +203,7 @@ const SettingsOrdersRow: FC<
 
   const orderCreatedAt = DateTime.fromISO(order.createdAt || "")
 
-  // TODO: Order type doesn't have tracking info structured the same way
-  const trackingUrl = null
+  const trackingUrl = order.deliveryInfo?.trackingURL || null
 
   const { trackEvent } = useTracking()
   const trackChangePaymentMethodClick = (orderID: string) => () => {
@@ -400,6 +399,9 @@ export const SettingsOrdersRowFragmentContainer = createFragmentContainer(
           stateName
           actionPrompt
         }
+        deliveryInfo {
+          trackingURL
+        }
         selectedFulfillmentOption {
           type
         }
@@ -418,7 +420,6 @@ export const SettingsOrdersRowFragmentContainer = createFragmentContainer(
         buyerTotal {
           display
         }
-        currencyCode
         lineItems {
           artwork {
             href

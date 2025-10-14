@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c1f451da3c2f5fc3ea2c14652f34e00d>>
+ * @generated SignedSource<<55a248ca85ee8f82a165b2b41220b357>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -243,6 +243,24 @@ return {
               {
                 "alias": null,
                 "args": null,
+                "concreteType": "DeliveryInfo",
+                "kind": "LinkedField",
+                "name": "deliveryInfo",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "trackingURL",
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
                 "concreteType": "FulfillmentOption",
                 "kind": "LinkedField",
                 "name": "selectedFulfillmentOption",
@@ -336,13 +354,6 @@ return {
                     "storageKey": null
                   }
                 ],
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "currencyCode",
                 "storageKey": null
               },
               {
@@ -492,7 +503,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "84ff2901c3285b2651ad18dcf0196579",
+    "cacheID": "eff629be63877369d866df4eca2ecc57",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -548,7 +559,13 @@ return {
           "plural": false,
           "type": "OrderCreditCardWalletTypeEnum"
         },
-        "me.order.currencyCode": (v6/*: any*/),
+        "me.order.deliveryInfo": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "DeliveryInfo"
+        },
+        "me.order.deliveryInfo.trackingURL": (v5/*: any*/),
         "me.order.displayTexts": {
           "enumValues": null,
           "nullable": false,
@@ -668,7 +685,7 @@ return {
     },
     "name": "SettingsOrdersRow_Test_Query",
     "operationKind": "query",
-    "text": "query SettingsOrdersRow_Test_Query {\n  me {\n    order(id: \"test-id\") {\n      ...SettingsOrdersRow_order\n      id\n    }\n    id\n  }\n}\n\nfragment SettingsOrdersRow_order on Order {\n  source\n  internalID\n  code\n  buyerState\n  createdAt\n  creditCardWalletType\n  displayTexts {\n    stateName\n    actionPrompt\n  }\n  selectedFulfillmentOption {\n    type\n  }\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      lastDigits\n      id\n    }\n    ... on BankAccount {\n      last4\n      id\n    }\n    ... on WireTransfer {\n      isManualPayment\n    }\n  }\n  buyerTotal {\n    display\n  }\n  currencyCode\n  lineItems {\n    artwork {\n      href\n      partner {\n        href\n        initials\n        name\n        profile {\n          icon {\n            cropped(width: 45, height: 45) {\n              src\n              srcSet\n            }\n          }\n          id\n        }\n        id\n      }\n      shippingOrigin\n      title\n      artistNames\n      artists(shallow: true) {\n        href\n        id\n      }\n      id\n    }\n    artworkVersion {\n      image {\n        cropped(width: 45, height: 45) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    id\n  }\n}\n"
+    "text": "query SettingsOrdersRow_Test_Query {\n  me {\n    order(id: \"test-id\") {\n      ...SettingsOrdersRow_order\n      id\n    }\n    id\n  }\n}\n\nfragment SettingsOrdersRow_order on Order {\n  source\n  internalID\n  code\n  buyerState\n  createdAt\n  creditCardWalletType\n  displayTexts {\n    stateName\n    actionPrompt\n  }\n  deliveryInfo {\n    trackingURL\n  }\n  selectedFulfillmentOption {\n    type\n  }\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      lastDigits\n      id\n    }\n    ... on BankAccount {\n      last4\n      id\n    }\n    ... on WireTransfer {\n      isManualPayment\n    }\n  }\n  buyerTotal {\n    display\n  }\n  lineItems {\n    artwork {\n      href\n      partner {\n        href\n        initials\n        name\n        profile {\n          icon {\n            cropped(width: 45, height: 45) {\n              src\n              srcSet\n            }\n          }\n          id\n        }\n        id\n      }\n      shippingOrigin\n      title\n      artistNames\n      artists(shallow: true) {\n        href\n        id\n      }\n      id\n    }\n    artworkVersion {\n      image {\n        cropped(width: 45, height: 45) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();

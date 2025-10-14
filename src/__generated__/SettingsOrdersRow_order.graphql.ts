@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9c1725cdf7101df79a2d1030056418e7>>
+ * @generated SignedSource<<3b63acfe5757059be7fa680a4882f321>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -22,7 +22,9 @@ export type SettingsOrdersRow_order$data = {
   readonly code: string;
   readonly createdAt: string | null | undefined;
   readonly creditCardWalletType: OrderCreditCardWalletTypeEnum | null | undefined;
-  readonly currencyCode: string;
+  readonly deliveryInfo: {
+    readonly trackingURL: string | null | undefined;
+  } | null | undefined;
   readonly displayTexts: {
     readonly actionPrompt: string | null | undefined;
     readonly stateName: string;
@@ -207,6 +209,24 @@ return {
     {
       "alias": null,
       "args": null,
+      "concreteType": "DeliveryInfo",
+      "kind": "LinkedField",
+      "name": "deliveryInfo",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "trackingURL",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": "FulfillmentOption",
       "kind": "LinkedField",
       "name": "selectedFulfillmentOption",
@@ -298,13 +318,6 @@ return {
           "storageKey": null
         }
       ],
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "currencyCode",
       "storageKey": null
     },
     {
@@ -443,6 +456,6 @@ return {
 };
 })();
 
-(node as any).hash = "35baf152646726fcea340e5328825035";
+(node as any).hash = "b733d74496301e8d965894934ae4a90c";
 
 export default node;
