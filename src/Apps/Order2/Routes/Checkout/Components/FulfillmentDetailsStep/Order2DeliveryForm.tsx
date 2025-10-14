@@ -12,6 +12,7 @@ import {
   findInitialSelectedAddress,
   processSavedAddresses,
 } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/utils"
+import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useOrder2CreateUserAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2CreateUserAddressMutation"
 
@@ -67,7 +68,12 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
     checkoutTracking,
     setFulfillmentDetailsComplete,
     setUserAddressMode,
+    setStepErrorBanner,
+    stepErrorBanners,
   } = checkoutContext
+
+  const fulfillmentDetailsError =
+    stepErrorBanners[CheckoutStepName.FULFILLMENT_DETAILS]
 
   const updateShippingAddressMutation =
     useOrder2SetOrderDeliveryAddressMutation()
@@ -223,19 +229,31 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
           await saveAddressToUser(values)
         }
 
-        formikHelpers.setStatus({ errorBanner: null })
+        setStepErrorBanner({
+          step: CheckoutStepName.FULFILLMENT_DETAILS,
+          error: null,
+        })
         setFulfillmentDetailsComplete({}) // TODO: Clean up signature
         setUserAddressMode(null)
       } catch (error) {
-        handleError(error, formikHelpers, {
-          title: "An error occurred",
-          message: (
-            <>
-              Something went wrong while updating your delivery address. Please
-              try again or contact <MailtoOrderSupport />.
-            </>
-          ),
-        })
+        handleError(
+          error,
+          formikHelpers,
+          {
+            title: "An error occurred",
+            message: (
+              <>
+                Something went wrong while updating your delivery address.
+                Please try again or contact <MailtoOrderSupport />.
+              </>
+            ),
+          },
+          error =>
+            setStepErrorBanner({
+              step: CheckoutStepName.FULFILLMENT_DETAILS,
+              error,
+            }),
+        )
       }
     },
     [
@@ -246,6 +264,7 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
       saveAddressToUser,
       setCheckoutMode,
       setFulfillmentDetailsComplete,
+      setStepErrorBanner,
       setUserAddressMode,
       unsetOrderFulfillmentOption,
       updateShippingAddressMutation,
@@ -261,9 +280,9 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
       >
         {formikContext => (
           <Flex flexDirection={"column"} mb={2}>
-            {formikContext.status?.errorBanner && (
+            {fulfillmentDetailsError && (
               <>
-                <CheckoutErrorBanner error={formikContext.status.errorBanner} />
+                <CheckoutErrorBanner error={fulfillmentDetailsError} />
                 <Spacer y={2} />
               </>
             )}

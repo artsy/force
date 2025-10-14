@@ -3,6 +3,7 @@ import { handleError } from "Apps/Order2/Routes/Checkout/Components/FulfillmentD
 import type { FormikHelpers } from "formik"
 
 let formikHelpers: Partial<FormikHelpers<any>>
+let setErrorBanner: jest.Mock
 
 const defaultErrorBannerArgs = {}
 
@@ -11,6 +12,7 @@ beforeEach(() => {
     setFieldError: jest.fn(),
     setStatus: jest.fn(),
   }
+  setErrorBanner = jest.fn()
 })
 
 describe("fulfillment details error handling", () => {
@@ -24,15 +26,14 @@ describe("fulfillment details error handling", () => {
       error,
       formikHelpers as FormikHelpers<any>,
       defaultErrorBannerArgs,
+      setErrorBanner,
     )
 
     expect(formikHelpers.setFieldError).toHaveBeenCalledWith(
       "address.postalCode",
       "Postal code is required",
     )
-    expect(formikHelpers.setStatus).toHaveBeenCalledWith({
-      errorBanner: null,
-    })
+    expect(setErrorBanner).toHaveBeenCalledWith(null)
   })
 
   it("handles missing region error", () => {
@@ -45,15 +46,14 @@ describe("fulfillment details error handling", () => {
       error,
       formikHelpers as FormikHelpers<any>,
       defaultErrorBannerArgs,
+      setErrorBanner,
     )
 
     expect(formikHelpers.setFieldError).toHaveBeenCalledWith(
       "address.region",
       "Region is required",
     )
-    expect(formikHelpers.setStatus).toHaveBeenCalledWith({
-      errorBanner: null,
-    })
+    expect(setErrorBanner).toHaveBeenCalledWith(null)
   })
 
   it("handles missing country error", () => {
@@ -66,15 +66,14 @@ describe("fulfillment details error handling", () => {
       error,
       formikHelpers as FormikHelpers<any>,
       defaultErrorBannerArgs,
+      setErrorBanner,
     )
 
     expect(formikHelpers.setFieldError).toHaveBeenCalledWith(
       "address.country",
       "Country is required",
     )
-    expect(formikHelpers.setStatus).toHaveBeenCalledWith({
-      errorBanner: null,
-    })
+    expect(setErrorBanner).toHaveBeenCalledWith(null)
   })
 
   it("handles destination could not be geocoded error", () => {
@@ -87,13 +86,14 @@ describe("fulfillment details error handling", () => {
       error,
       formikHelpers as FormikHelpers<any>,
       defaultErrorBannerArgs,
+      setErrorBanner,
     )
 
     expect(formikHelpers.setFieldError).not.toHaveBeenCalled()
-    expect(formikHelpers.setStatus).toHaveBeenCalledWith({
-      errorBanner: expect.objectContaining({
+    expect(setErrorBanner).toHaveBeenCalledWith(
+      expect.objectContaining({
         title: "Cannot calculate shipping",
       }),
-    })
+    )
   })
 })

@@ -5,6 +5,7 @@ import type {
   FulfillmentDetailsTab,
   UserAddressMode,
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
+import type { CheckoutErrorBannerProps } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import {
   CheckoutStepName,
   CheckoutStepState,
@@ -82,6 +83,9 @@ export interface Order2CheckoutModel {
   savedPaymentMethod: SavedCreditCard | SavedBankAccount | null
   checkoutMode: CheckoutMode
   userAddressMode: UserAddressMode | null
+  stepErrorBanners: Partial<
+    Record<CheckoutStepName, CheckoutErrorBannerProps["error"]>
+  >
 
   // External data - passed in as runtime props
   checkoutTracking: ReturnType<typeof useCheckoutTracking>
@@ -120,6 +124,10 @@ export interface Order2CheckoutModel {
   redirectToOrderDetails: Action<this>
   setCheckoutMode: Action<this, CheckoutMode>
   setUserAddressMode: Action<this, UserAddressMode | null>
+  setStepErrorBanner: Action<
+    this,
+    { step: CheckoutStepName; error: CheckoutErrorBannerProps["error"] }
+  >
 }
 
 export const Order2CheckoutContext: ReturnType<
@@ -137,6 +145,7 @@ export const Order2CheckoutContext: ReturnType<
   checkoutMode: "standard",
   steps: [],
   userAddressMode: null,
+  stepErrorBanners: {},
 
   // Required runtime props - will be provided by Provider
   // These will be overridden by the Provider with actual values
@@ -490,6 +499,13 @@ export const Order2CheckoutContext: ReturnType<
     const orderDetailsURL = `/orders/${orderID}/details`
     state.router.replace(orderDetailsURL)
   }),
+
+  setStepErrorBanner: action((state, { step, error }) => {
+    state.stepErrorBanners = {
+      ...state.stepErrorBanners,
+      [step]: error,
+    }
+  }),
 }))
 
 interface Order2CheckoutContextProviderProps {
@@ -523,6 +539,7 @@ export const Order2CheckoutContextProvider: React.FC<
     savedPaymentMethod: null,
     checkoutMode: "standard",
     steps: [],
+    stepErrorBanners: {},
 
     // Override with initialState values
     ...initialState,
@@ -757,6 +774,7 @@ const initialStateForOrder = (
     checkoutMode: (savedCheckoutMode === "express"
       ? "express"
       : "standard") as CheckoutMode,
+    stepErrorBanners: {},
   }
 }
 

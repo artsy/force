@@ -2,9 +2,14 @@ import { ContextModule } from "@artsy/cohesion"
 import { Button, Flex, Radio, RadioGroup, Spacer, Text } from "@artsy/palette"
 import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
 import {
+  CheckoutErrorBanner,
+  MailtoOrderSupport,
+} from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
+import {
   deliveryOptionLabel,
   deliveryOptionTimeEstimate,
 } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/utils"
+import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useOrder2SetOrderFulfillmentOptionMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderFulfillmentOptionMutation"
 import { BUYER_GUARANTEE_URL } from "Apps/Order2/constants"
@@ -32,9 +37,16 @@ export const Order2DeliveryOptionsForm: React.FC<
   Order2DeliveryOptionsFormProps
 > = ({ order }) => {
   const orderData = useFragment(FRAGMENT, order)
-  const { checkoutTracking, setDeliveryOptionComplete } = useCheckoutContext()
+  const {
+    checkoutTracking,
+    setDeliveryOptionComplete,
+    setStepErrorBanner,
+    stepErrorBanners,
+  } = useCheckoutContext()
   const setFulfillmentOptionMutation =
     useOrder2SetOrderFulfillmentOptionMutation()
+
+  const deliveryOptionError = stepErrorBanners[CheckoutStepName.DELIVERY_OPTION]
 
   const { fulfillmentOptions } = orderData
   const deliveryOptions = fulfillmentOptions.filter(
@@ -69,9 +81,25 @@ export const Order2DeliveryOptionsForm: React.FC<
         setFulfillmentOptionResult.setOrderFulfillmentOption?.orderOrError,
       ).order
 
+      setStepErrorBanner({
+        step: CheckoutStepName.DELIVERY_OPTION,
+        error: null,
+      })
       setDeliveryOptionComplete()
     } catch (error) {
-      console.error("Error tracking order progression:", error)
+      console.error("Error setting delivery option:", error)
+      setStepErrorBanner({
+        step: CheckoutStepName.DELIVERY_OPTION,
+        error: {
+          title: "An error occurred",
+          message: (
+            <>
+              Something went wrong while selecting your shipping method. Please
+              try again or contact <MailtoOrderSupport />.
+            </>
+          ),
+        },
+      })
     }
   }
 
@@ -82,6 +110,12 @@ export const Order2DeliveryOptionsForm: React.FC<
     >
       {({ handleSubmit, isSubmitting }) => (
         <Flex flexDirection="column" backgroundColor="mono0" py={2} px={[2, 4]}>
+          {deliveryOptionError && (
+            <>
+              <CheckoutErrorBanner error={deliveryOptionError} />
+              <Spacer y={2} />
+            </>
+          )}
           <Flex flexDirection="column">
             <Text
               variant={["sm-display", "md"]}

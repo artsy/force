@@ -10,6 +10,7 @@ export const handleError = (
   error: CheckoutError | Error,
   formikHelpers: FormikHelpers<FormikContextWithAddress>,
   defaultErrorBanner: CheckoutErrorBannerProps["error"],
+  setErrorBanner: (error: CheckoutErrorBannerProps["error"]) => void,
 ) => {
   const isCheckoutError = error instanceof CheckoutError
   const errorMatchField = (isCheckoutError && error.code) || error.message
@@ -60,7 +61,5 @@ export const handleError = (
     formikHelpers.setFieldError(field, message)
   })
 
-  formikHelpers.setStatus({
-    errorBanner: errorHandler.errorBanner,
-  })
+  setErrorBanner(errorHandler.errorBanner)
 }
