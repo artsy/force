@@ -23361,6 +23361,9 @@ input UpdateArtworkEditionSetInput {
 
   # The availability of the artwork
   availability: String
+
+  # The ID of the image to set as the default for this artwork
+  defaultImageID: String
   delete: Boolean
 
   # Show/Hide the price range of an artwork
@@ -23502,6 +23505,9 @@ input UpdateArtworkMutationInput {
   # The availability of the artwork
   availability: String
   clientMutationId: String
+
+  # The ID of the image to set as the default for this artwork
+  defaultImageID: String
   delete: Boolean
 
   # Show/Hide the price range of an artwork
