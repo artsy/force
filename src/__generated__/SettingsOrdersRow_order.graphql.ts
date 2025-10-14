@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3b63acfe5757059be7fa680a4882f321>>
+ * @generated SignedSource<<e56e2aab6d3d7734b6d6048b79d8d6af>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -70,7 +70,7 @@ export type SettingsOrdersRow_order$data = {
     readonly lastDigits: string;
   } | {
     readonly __typename: "WireTransfer";
-    readonly isManualPayment: boolean;
+    readonly __typename: "WireTransfer";
   } | {
     // This will never be '%other', but we need some
     // value in case none of the concrete values match.
@@ -284,20 +284,6 @@ return {
           ],
           "type": "BankAccount",
           "abstractKey": null
-        },
-        {
-          "kind": "InlineFragment",
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "isManualPayment",
-              "storageKey": null
-            }
-          ],
-          "type": "WireTransfer",
-          "abstractKey": null
         }
       ],
       "storageKey": null
@@ -456,6 +442,6 @@ return {
 };
 })();
 
-(node as any).hash = "b733d74496301e8d965894934ae4a90c";
+(node as any).hash = "32318031c913b715b38685d391e86f18";
 
 export default node;

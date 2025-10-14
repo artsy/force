@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<55a248ca85ee8f82a165b2b41220b357>>
+ * @generated SignedSource<<af68be8833abba0ddf0cdbde30d8d116>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -320,20 +320,6 @@ return {
                     ],
                     "type": "BankAccount",
                     "abstractKey": null
-                  },
-                  {
-                    "kind": "InlineFragment",
-                    "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "isManualPayment",
-                        "storageKey": null
-                      }
-                    ],
-                    "type": "WireTransfer",
-                    "abstractKey": null
                   }
                 ],
                 "storageKey": null
@@ -503,7 +489,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "eff629be63877369d866df4eca2ecc57",
+    "cacheID": "e534de5810c35af2181609263076cd2d",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -642,12 +628,6 @@ return {
         },
         "me.order.paymentMethodDetails.__typename": (v6/*: any*/),
         "me.order.paymentMethodDetails.id": (v4/*: any*/),
-        "me.order.paymentMethodDetails.isManualPayment": {
-          "enumValues": null,
-          "nullable": false,
-          "plural": false,
-          "type": "Boolean"
-        },
         "me.order.paymentMethodDetails.last4": (v6/*: any*/),
         "me.order.paymentMethodDetails.lastDigits": (v6/*: any*/),
         "me.order.selectedFulfillmentOption": {
@@ -685,7 +665,7 @@ return {
     },
     "name": "SettingsOrdersRow_Test_Query",
     "operationKind": "query",
-    "text": "query SettingsOrdersRow_Test_Query {\n  me {\n    order(id: \"test-id\") {\n      ...SettingsOrdersRow_order\n      id\n    }\n    id\n  }\n}\n\nfragment SettingsOrdersRow_order on Order {\n  source\n  internalID\n  code\n  buyerState\n  createdAt\n  creditCardWalletType\n  displayTexts {\n    stateName\n    actionPrompt\n  }\n  deliveryInfo {\n    trackingURL\n  }\n  selectedFulfillmentOption {\n    type\n  }\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      lastDigits\n      id\n    }\n    ... on BankAccount {\n      last4\n      id\n    }\n    ... on WireTransfer {\n      isManualPayment\n    }\n  }\n  buyerTotal {\n    display\n  }\n  lineItems {\n    artwork {\n      href\n      partner {\n        href\n        initials\n        name\n        profile {\n          icon {\n            cropped(width: 45, height: 45) {\n              src\n              srcSet\n            }\n          }\n          id\n        }\n        id\n      }\n      shippingOrigin\n      title\n      artistNames\n      artists(shallow: true) {\n        href\n        id\n      }\n      id\n    }\n    artworkVersion {\n      image {\n        cropped(width: 45, height: 45) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    id\n  }\n}\n"
+    "text": "query SettingsOrdersRow_Test_Query {\n  me {\n    order(id: \"test-id\") {\n      ...SettingsOrdersRow_order\n      id\n    }\n    id\n  }\n}\n\nfragment SettingsOrdersRow_order on Order {\n  source\n  internalID\n  code\n  buyerState\n  createdAt\n  creditCardWalletType\n  displayTexts {\n    stateName\n    actionPrompt\n  }\n  deliveryInfo {\n    trackingURL\n  }\n  selectedFulfillmentOption {\n    type\n  }\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      lastDigits\n      id\n    }\n    ... on BankAccount {\n      last4\n      id\n    }\n    ... on WireTransfer {\n      __typename\n    }\n  }\n  buyerTotal {\n    display\n  }\n  lineItems {\n    artwork {\n      href\n      partner {\n        href\n        initials\n        name\n        profile {\n          icon {\n            cropped(width: 45, height: 45) {\n              src\n              srcSet\n            }\n          }\n          id\n        }\n        id\n      }\n      shippingOrigin\n      title\n      artistNames\n      artists(shallow: true) {\n        href\n        id\n      }\n      id\n    }\n    artworkVersion {\n      image {\n        cropped(width: 45, height: 45) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();

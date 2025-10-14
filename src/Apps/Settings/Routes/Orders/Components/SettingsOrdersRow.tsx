@@ -414,7 +414,7 @@ export const SettingsOrdersRowFragmentContainer = createFragmentContainer(
             last4
           }
           ... on WireTransfer {
-            isManualPayment
+            __typename
           }
         }
         buyerTotal {
