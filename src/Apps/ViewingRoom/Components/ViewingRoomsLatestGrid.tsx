@@ -1,4 +1,13 @@
-import { Box, Button, Card, Column, GridColumns } from "@artsy/palette"
+import {
+  Box,
+  Button,
+  Card,
+  Column,
+  GridColumns,
+  Join,
+  Spacer,
+  Text,
+} from "@artsy/palette"
 import { getStatus } from "Apps/ViewingRoom/Utils/getStatus"
 import { RouterLink } from "System/Components/RouterLink"
 import { extractNodes } from "Utils/extractNodes"
@@ -48,7 +57,9 @@ export const ViewingRoomsLatestGrid: React.FC<
   }
 
   return (
-    <>
+    <Join separator={<Spacer y={6} />}>
+      <Text variant="lg-display">Latest</Text>
+
       <GridColumns>
         {viewingRooms.map(viewingRoom => {
           const image = cropped(
@@ -96,7 +107,7 @@ export const ViewingRoomsLatestGrid: React.FC<
           </Button>
         </Box>
       )}
-    </>
+    </Join>
   )
 }
 
