@@ -4,8 +4,7 @@ import {
   Card,
   Column,
   GridColumns,
-  Join,
-  Spacer,
+  Stack,
   Text,
 } from "@artsy/palette"
 import { getStatus } from "Apps/ViewingRoom/Utils/getStatus"
@@ -57,7 +56,7 @@ export const ViewingRoomsLatestGrid: React.FC<
   }
 
   return (
-    <Join separator={<Spacer y={6} />}>
+    <Stack gap={6}>
       <Text variant="lg-display">Latest</Text>
 
       <GridColumns>
@@ -107,7 +106,7 @@ export const ViewingRoomsLatestGrid: React.FC<
           </Button>
         </Box>
       )}
-    </Join>
+    </Stack>
   )
 }
 

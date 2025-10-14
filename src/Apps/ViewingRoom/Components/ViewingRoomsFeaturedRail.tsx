@@ -1,4 +1,4 @@
-import { Card, Join, Shelf, Spacer, Text } from "@artsy/palette"
+import { Card, Shelf, Stack, Text } from "@artsy/palette"
 import { getStatus } from "Apps/ViewingRoom/Utils/getStatus"
 import { RouterLink } from "System/Components/RouterLink"
 import { useStableShuffle } from "Utils/Hooks/useStableShuffle"
@@ -17,14 +17,14 @@ export const ViewingRoomsFeaturedRail: React.FC<
 > = ({ featuredViewingRooms }) => {
   const viewingRooms = extractNodes(featuredViewingRooms)
 
-  if (viewingRooms.length === 0) {
+  const { shuffled } = useStableShuffle({ items: viewingRooms })
+
+  if (shuffled.length === 0) {
     return null
   }
 
-  const { shuffled } = useStableShuffle({ items: viewingRooms })
-
   return (
-    <Join separator={<Spacer y={6} />}>
+    <Stack gap={6}>
       <Text variant="lg-display">Featured</Text>
 
       <Shelf>
@@ -63,7 +63,7 @@ export const ViewingRoomsFeaturedRail: React.FC<
           )
         })}
       </Shelf>
-    </Join>
+    </Stack>
   )
 }
 export const ViewingRoomsFeaturedRailFragmentContainer =
