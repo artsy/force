@@ -46,27 +46,10 @@ interface OrderLinkProps {
 
 interface OrderActionButtonProps {
   state: OrderBuyerStateEnum | null | undefined
+  actionPrompt: string | null | undefined
   orderId: string
   trackChangePaymentMethodClick: (orderId: string) => () => void
 }
-
-// Map OrderBuyerStateEnum to display labels
-// TODO: need to revisit those. Confirm new names and add offer states proper
-const ORDER_LABELS: Record<string, string> = {
-  APPROVED: "Confirmed",
-  CANCELLED: "Canceled",
-  COMPLETED: "Delivered",
-  DECLINED_BY_BUYER: "Declined",
-  DECLINED_BY_SELLER: "Declined",
-  INCOMPLETE: "Incomplete",
-  PAYMENT_FAILED: "Payment failed",
-  PROCESSING_OFFLINE_PAYMENT: "Processing",
-  PROCESSING_PAYMENT: "Processing payment",
-  REFUNDED: "Refunded",
-  SHIPPED: "Shipped",
-  SUBMITTED: "Pending",
-  UNKNOWN: "Unknown",
-} as const
 
 const ORDER_ICONS: Record<string, React.ReactElement> = {
   APPROVED: <PendingIcon fill="mono100" />,
@@ -137,6 +120,7 @@ const OrderLink: FC<OrderLinkProps> = ({
   const isOrderActive = !["CANCELLED", "REFUNDED"].includes(
     order.buyerState || "",
   )
+
   const isOrderPaymentFailed = order.buyerState === "PAYMENT_FAILED"
 
   if (isOrderPaymentFailed) {
@@ -162,32 +146,42 @@ const OrderLink: FC<OrderLinkProps> = ({
   return <>{order.code}</>
 }
 
-// TODO: need to add OFFER_RECEIVED state and do proper button for that one.
 const OrderActionButton: FC<OrderActionButtonProps> = ({
   state,
+  actionPrompt,
   orderId,
   trackChangePaymentMethodClick,
 }) => {
+  if (!actionPrompt) {
+    return null
+  }
+
+  let route = `/orders/${orderId}/details`
+
   switch (state) {
     case "PAYMENT_FAILED":
-      return (
-        <Button
-          // @ts-ignore
-          as={RouterLink}
-          to={`/orders/${orderId}/payment/new`}
-          variant="primaryBlack"
-          size="large"
-          width="50%"
-          minWidth={["240px", "200px"]}
-          my={[1, 0]}
-          onClick={trackChangePaymentMethodClick(orderId)}
-        >
-          Update Payment Method
-        </Button>
-      )
-    default:
-      return null
+      route = `/orders/${orderId}/payment/new`
+      break
+    case "OFFER_RECEIVED":
+      route = `/orders/${orderId}/respond`
+      break
   }
+
+  return (
+    <Button
+      // @ts-ignore
+      as={RouterLink}
+      to={route}
+      variant="primaryBlack"
+      size="large"
+      width="50%"
+      minWidth={["240px", "200px"]}
+      my={[1, 0]}
+      onClick={trackChangePaymentMethodClick(orderId)}
+    >
+      {actionPrompt}
+    </Button>
+  )
 }
 
 const SettingsOrdersRow: FC<
@@ -230,7 +224,7 @@ const SettingsOrdersRow: FC<
           {ORDER_ICONS[buyerState]}
 
           <Text ml={0.5} variant="sm-display" color={ORDER_COLORS[buyerState]}>
-            {ORDER_LABELS[buyerState]}
+            {order.displayTexts.stateName}
           </Text>
 
           {trackingUrl && (
@@ -313,6 +307,7 @@ const SettingsOrdersRow: FC<
 
             <OrderActionButton
               state={buyerState}
+              actionPrompt={order.displayTexts.actionPrompt}
               orderId={order.internalID}
               trackChangePaymentMethodClick={trackChangePaymentMethodClick}
             />
@@ -393,6 +388,10 @@ export const SettingsOrdersRowFragmentContainer = createFragmentContainer(
         buyerState
         createdAt
         creditCardWalletType
+        displayTexts {
+          stateName
+          actionPrompt
+        }
         paymentMethodDetails {
           __typename
           ... on CreditCard {

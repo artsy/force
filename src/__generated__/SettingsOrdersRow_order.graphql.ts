@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bea4a84560ba4c84406882a0d5e3a0e2>>
+ * @generated SignedSource<<9cef7c0e7f85e5e2e52487c662233a34>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -22,6 +22,10 @@ export type SettingsOrdersRow_order$data = {
   readonly createdAt: string | null | undefined;
   readonly creditCardWalletType: OrderCreditCardWalletTypeEnum | null | undefined;
   readonly currencyCode: string;
+  readonly displayTexts: {
+    readonly actionPrompt: string | null | undefined;
+    readonly stateName: string;
+  };
   readonly internalID: string;
   readonly lineItems: ReadonlyArray<{
     readonly artwork: {
@@ -169,6 +173,31 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "creditCardWalletType",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "DisplayTexts",
+      "kind": "LinkedField",
+      "name": "displayTexts",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "stateName",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "actionPrompt",
+          "storageKey": null
+        }
+      ],
       "storageKey": null
     },
     {
@@ -392,6 +421,6 @@ return {
 };
 })();
 
-(node as any).hash = "88c3bff01ede9fa25c63422cac008709";
+(node as any).hash = "2f4bcda0fa76753379ca30a75904c76a";
 
 export default node;
