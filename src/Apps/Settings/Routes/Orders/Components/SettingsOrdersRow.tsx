@@ -41,15 +41,15 @@ interface SettingsOrdersRowProps {
 
 interface OrderLinkProps {
   code: string
-  state: OrderBuyerStateEnum | null | undefined
   orderId: string
+  state: OrderBuyerStateEnum
   trackChangePaymentMethodClick: (orderId: string) => () => void
 }
 
 interface OrderActionButtonProps {
-  state: OrderBuyerStateEnum | null | undefined
-  actionPrompt: string | null | undefined
+  actionPrompt: string | null
   orderId: string
+  state: OrderBuyerStateEnum
   trackChangePaymentMethodClick: (orderId: string) => () => void
 }
 
@@ -112,15 +112,18 @@ const getPaymentMethodText = (
   }
 }
 
-// #TODO: details has it's own redirects if order. Maybe be specific with those?
-// Can redirect here more proper once states are verified.
 const OrderLink: FC<OrderLinkProps> = ({
   code,
   orderId,
   state,
   trackChangePaymentMethodClick,
 }) => {
-  const isOrderActive = !["CANCELLED", "REFUNDED"].includes(state || "UNKNOWN")
+  const isOrderActive = ![
+    "CANCELLED",
+    "DECLINED_BY_BUYER",
+    "DECLINED_BY_SELLER",
+    "REFUNDED",
+  ].includes(state)
 
   if (!isOrderActive) {
     return <>{code}</>
@@ -309,7 +312,7 @@ const SettingsOrdersRow: FC<
 
             <OrderActionButton
               state={buyerState}
-              actionPrompt={order.displayTexts.actionPrompt}
+              actionPrompt={order.displayTexts.actionPrompt || null}
               orderId={order.internalID}
               trackChangePaymentMethodClick={trackChangePaymentMethodClick}
             />
@@ -356,8 +359,9 @@ const SettingsOrdersRow: FC<
           <Text variant="sm-display">Delivery method</Text>
 
           <Text variant="sm-display" color="mono60">
-            {/* TODO: Need to determine fulfillment type from Order.fulfillmentDetails */}
-            Delivery
+            {order.selectedFulfillmentOption?.type === "PICKUP"
+              ? "Pickup"
+              : "Delivery"}
           </Text>
         </Column>
       </GridColumns>
@@ -395,6 +399,9 @@ export const SettingsOrdersRowFragmentContainer = createFragmentContainer(
         displayTexts {
           stateName
           actionPrompt
+        }
+        selectedFulfillmentOption {
+          type
         }
         paymentMethodDetails {
           __typename

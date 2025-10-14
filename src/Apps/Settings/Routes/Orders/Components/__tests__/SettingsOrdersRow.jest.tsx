@@ -179,4 +179,52 @@ describe("SettingsOrdersRow", () => {
     // Note: Payment method detail testing is complex due to relay mock limitations
     // Payment methods are tested manually and through integration tests
   })
+
+  describe("Fulfillment Options", () => {
+    it("renders Delivery when selectedFulfillmentOption type is ARTSY_STANDARD", () => {
+      renderWithRelay({
+        Order: () => ({
+          selectedFulfillmentOption: {
+            type: "ARTSY_STANDARD",
+          },
+          displayTexts: {
+            stateName: "Confirmed",
+            actionPrompt: null,
+          },
+        }),
+      })
+
+      expect(screen.getByText("Delivery")).toBeInTheDocument()
+    })
+
+    it("renders Pickup when selectedFulfillmentOption type is PICKUP", () => {
+      renderWithRelay({
+        Order: () => ({
+          selectedFulfillmentOption: {
+            type: "PICKUP",
+          },
+          displayTexts: {
+            stateName: "Confirmed",
+            actionPrompt: null,
+          },
+        }),
+      })
+
+      expect(screen.getByText("Pickup")).toBeInTheDocument()
+    })
+
+    it("renders Delivery as default when selectedFulfillmentOption is null", () => {
+      renderWithRelay({
+        Order: () => ({
+          selectedFulfillmentOption: null,
+          displayTexts: {
+            stateName: "Confirmed",
+            actionPrompt: null,
+          },
+        }),
+      })
+
+      expect(screen.getByText("Delivery")).toBeInTheDocument()
+    })
+  })
 })

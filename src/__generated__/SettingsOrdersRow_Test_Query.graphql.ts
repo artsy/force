@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b60b02e9c190d6dce5a58c66a2d05061>>
+ * @generated SignedSource<<c1f451da3c2f5fc3ea2c14652f34e00d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -243,6 +243,24 @@ return {
               {
                 "alias": null,
                 "args": null,
+                "concreteType": "FulfillmentOption",
+                "kind": "LinkedField",
+                "name": "selectedFulfillmentOption",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "type",
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
                 "concreteType": null,
                 "kind": "LinkedField",
                 "name": "paymentMethodDetails",
@@ -474,7 +492,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0d3d6caaca96a63d9c9cd3dd2039a2a6",
+    "cacheID": "84ff2901c3285b2651ad18dcf0196579",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -615,6 +633,26 @@ return {
         },
         "me.order.paymentMethodDetails.last4": (v6/*: any*/),
         "me.order.paymentMethodDetails.lastDigits": (v6/*: any*/),
+        "me.order.selectedFulfillmentOption": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "FulfillmentOption"
+        },
+        "me.order.selectedFulfillmentOption.type": {
+          "enumValues": [
+            "ARTSY_EXPRESS",
+            "ARTSY_STANDARD",
+            "ARTSY_WHITE_GLOVE",
+            "DOMESTIC_FLAT",
+            "INTERNATIONAL_FLAT",
+            "PICKUP",
+            "SHIPPING_TBD"
+          ],
+          "nullable": false,
+          "plural": false,
+          "type": "FulfillmentOptionTypeEnum"
+        },
         "me.order.source": {
           "enumValues": [
             "ARTWORK_PAGE",
@@ -630,7 +668,7 @@ return {
     },
     "name": "SettingsOrdersRow_Test_Query",
     "operationKind": "query",
-    "text": "query SettingsOrdersRow_Test_Query {\n  me {\n    order(id: \"test-id\") {\n      ...SettingsOrdersRow_order\n      id\n    }\n    id\n  }\n}\n\nfragment SettingsOrdersRow_order on Order {\n  source\n  internalID\n  code\n  buyerState\n  createdAt\n  creditCardWalletType\n  displayTexts {\n    stateName\n    actionPrompt\n  }\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      lastDigits\n      id\n    }\n    ... on BankAccount {\n      last4\n      id\n    }\n    ... on WireTransfer {\n      isManualPayment\n    }\n  }\n  buyerTotal {\n    display\n  }\n  currencyCode\n  lineItems {\n    artwork {\n      href\n      partner {\n        href\n        initials\n        name\n        profile {\n          icon {\n            cropped(width: 45, height: 45) {\n              src\n              srcSet\n            }\n          }\n          id\n        }\n        id\n      }\n      shippingOrigin\n      title\n      artistNames\n      artists(shallow: true) {\n        href\n        id\n      }\n      id\n    }\n    artworkVersion {\n      image {\n        cropped(width: 45, height: 45) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    id\n  }\n}\n"
+    "text": "query SettingsOrdersRow_Test_Query {\n  me {\n    order(id: \"test-id\") {\n      ...SettingsOrdersRow_order\n      id\n    }\n    id\n  }\n}\n\nfragment SettingsOrdersRow_order on Order {\n  source\n  internalID\n  code\n  buyerState\n  createdAt\n  creditCardWalletType\n  displayTexts {\n    stateName\n    actionPrompt\n  }\n  selectedFulfillmentOption {\n    type\n  }\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      lastDigits\n      id\n    }\n    ... on BankAccount {\n      last4\n      id\n    }\n    ... on WireTransfer {\n      isManualPayment\n    }\n  }\n  buyerTotal {\n    display\n  }\n  currencyCode\n  lineItems {\n    artwork {\n      href\n      partner {\n        href\n        initials\n        name\n        profile {\n          icon {\n            cropped(width: 45, height: 45) {\n              src\n              srcSet\n            }\n          }\n          id\n        }\n        id\n      }\n      shippingOrigin\n      title\n      artistNames\n      artists(shallow: true) {\n        href\n        id\n      }\n      id\n    }\n    artworkVersion {\n      image {\n        cropped(width: 45, height: 45) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();

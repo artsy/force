@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9cef7c0e7f85e5e2e52487c662233a34>>
+ * @generated SignedSource<<9c1725cdf7101df79a2d1030056418e7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,6 +9,7 @@
 // @ts-nocheck
 
 import { ReaderFragment } from 'relay-runtime';
+export type FulfillmentOptionTypeEnum = "ARTSY_EXPRESS" | "ARTSY_STANDARD" | "ARTSY_WHITE_GLOVE" | "DOMESTIC_FLAT" | "INTERNATIONAL_FLAT" | "PICKUP" | "SHIPPING_TBD" | "%future added value";
 export type OrderBuyerStateEnum = "APPROVED" | "CANCELLED" | "COMPLETED" | "DECLINED_BY_BUYER" | "DECLINED_BY_SELLER" | "INCOMPLETE" | "OFFER_RECEIVED" | "PAYMENT_FAILED" | "PROCESSING_OFFLINE_PAYMENT" | "PROCESSING_PAYMENT" | "REFUNDED" | "SHIPPED" | "SUBMITTED" | "UNKNOWN" | "%future added value";
 export type OrderCreditCardWalletTypeEnum = "APPLE_PAY" | "GOOGLE_PAY" | "%future added value";
 export type OrderSourceEnum = "ARTWORK_PAGE" | "INQUIRY" | "PARTNER_OFFER" | "PRIVATE_SALE" | "%future added value";
@@ -72,6 +73,9 @@ export type SettingsOrdersRow_order$data = {
     // This will never be '%other', but we need some
     // value in case none of the concrete values match.
     readonly __typename: "%other";
+  } | null | undefined;
+  readonly selectedFulfillmentOption: {
+    readonly type: FulfillmentOptionTypeEnum;
   } | null | undefined;
   readonly source: OrderSourceEnum;
   readonly " $fragmentType": "SettingsOrdersRow_order";
@@ -195,6 +199,24 @@ return {
           "args": null,
           "kind": "ScalarField",
           "name": "actionPrompt",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "FulfillmentOption",
+      "kind": "LinkedField",
+      "name": "selectedFulfillmentOption",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "type",
           "storageKey": null
         }
       ],
@@ -421,6 +443,6 @@ return {
 };
 })();
 
-(node as any).hash = "2f4bcda0fa76753379ca30a75904c76a";
+(node as any).hash = "35baf152646726fcea340e5328825035";
 
 export default node;
