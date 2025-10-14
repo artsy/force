@@ -136,6 +136,17 @@ describe("ViewingRoomsApp", () => {
         expect(hrefs).not.toContain("/viewing-room/test-closed")
         expect(hrefs).toContain("/viewing-room/test-featured-live")
       })
+
+      it("does not render the featured section if there are no featured viewing rooms", async () => {
+        renderWithRelay({
+          Viewer: () => ViewingRoomsAppFixture.allViewingRooms,
+          ViewingRoomsConnection: () => ({
+            edges: [],
+          }),
+        })
+
+        expect(screen.queryByText("Featured")).not.toBeInTheDocument()
+      })
     })
   })
 })

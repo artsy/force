@@ -27,13 +27,9 @@ const ViewingRoomsApp: React.FC<
           Viewing Rooms
         </Text>
 
-        <Text variant="lg-display">Featured</Text>
-
         <ViewingRoomsFeaturedRailFragmentContainer
           featuredViewingRooms={featuredViewingRooms}
         />
-
-        <Text variant="lg-display">Latest</Text>
 
         <ViewingRoomsLatestGridFragmentContainer
           viewingRooms={allViewingRooms}
