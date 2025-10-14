@@ -11291,8 +11291,14 @@ type DismissTaskSuccess {
 
 # Display texts for the order based on its state and order shipping/payment states
 type DisplayTexts {
+  # Text prompt for the buyer to take action
+  actionPrompt: String
+
   # Granular order states specific type that should be directly interpreted by clients
   messageType: DisplayTextsMessageTypeEnum!
+
+  # Collector facing name for buyer state
+  stateName: String!
 
   # Text to display as a first message on the page (header)
   title: String!
@@ -11309,6 +11315,7 @@ enum DisplayTextsMessageTypeEnum {
   COMPLETED_SHIP
   DECLINED_BY_BUYER
   DECLINED_BY_SELLER
+  OFFER_RECEIVED
   PAYMENT_FAILED
   PROCESSING_PAYMENT_PICKUP
   PROCESSING_PAYMENT_SHIP
@@ -17341,6 +17348,9 @@ enum OrderBuyerStateEnum {
 
   # Order is incomplete (pending or abandoned)
   INCOMPLETE
+
+  # Order is an offer avaiting responce from the buyer
+  OFFER_RECEIVED
 
   # Payment has failed
   PAYMENT_FAILED
