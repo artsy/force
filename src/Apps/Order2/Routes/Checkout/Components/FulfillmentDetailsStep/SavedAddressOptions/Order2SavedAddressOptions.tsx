@@ -182,6 +182,10 @@ export const SavedAddressOptions = ({
         type="submit"
         loading={parentFormikContext.isSubmitting}
         onClick={() => parentFormikContext.handleSubmit()}
+        disabled={
+          Object.keys(parentFormikContext.errors).length > 0 ||
+          !!parentFormikContext.status?.errorBanner
+        }
       >
         See Shipping Methods
       </Button>
