@@ -157,7 +157,7 @@ export const richRequiredPhoneValidators = {
     "Phone number is required",
   ),
   phoneNumberCountryCode: richPhoneValidators.phoneNumberCountryCode.required(
-    "Country code is required",
+    "Phone number country code is required",
   ),
 }
 

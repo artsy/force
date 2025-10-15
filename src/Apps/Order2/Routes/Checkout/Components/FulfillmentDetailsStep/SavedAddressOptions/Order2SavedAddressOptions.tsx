@@ -83,6 +83,7 @@ export const SavedAddressOptions = ({
         address={userAddressMode.address}
         onSaveAddress={onSaveAddress}
         onDeleteAddress={onDeleteAddress}
+        defaultInitialValues={newAddressInitialValues}
       />
     )
   }
