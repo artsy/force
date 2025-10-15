@@ -19,7 +19,7 @@ import type {
   Order2DeliveryOptionsForm_order$key,
 } from "__generated__/Order2DeliveryOptionsForm_order.graphql"
 import { Formik, type FormikConfig, useFormikContext } from "formik"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { graphql, useFragment } from "react-relay"
 
 interface Order2DeliveryOptionsFormProps {
