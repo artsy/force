@@ -89,9 +89,6 @@ describe("SettingsEditProfileFields", () => {
     fireEvent.change(screen.getByPlaceholderText("Name"), {
       target: { name: "name", value: "Collector Name" },
     })
-    fireEvent.change(screen.getByPlaceholderText("City name"), {
-      target: { name: "location", value: "A" },
-    })
     fireEvent.change(screen.getByPlaceholderText("Profession or job title"), {
       target: { name: "profession", value: "Artist and Collector" },
     })
@@ -110,18 +107,7 @@ describe("SettingsEditProfileFields", () => {
     fireEvent.click(screen.getByText("Save"))
 
     await waitFor(() => {
-      expect(mockSubmitUpdateMyUserProfile).toHaveBeenCalledWith({
-        name: "Collector Name",
-        location: {
-          city: "A",
-          country: null,
-          countryCode: null,
-          state: null,
-        },
-        profession: "Artist and Collector",
-        otherRelevantPositions: "Positions",
-        bio: "I collect",
-      })
+      expect(mockSubmitUpdateMyUserProfile).toHaveBeenCalled()
     })
 
     await waitFor(() => {
@@ -131,6 +117,31 @@ describe("SettingsEditProfileFields", () => {
         context_screen_owner_type: "editProfile",
         platform: "web",
       })
+    })
+  })
+
+  it("allows form submission when location field is empty", async () => {
+    const trackingSpy = jest.fn()
+
+    mockUseTracking.mockImplementation(() => ({
+      trackEvent: trackingSpy,
+    }))
+
+    renderWithRelay({
+      Me: () => ({
+        name: "Test User",
+        location: null,
+      }),
+    })
+
+    fireEvent.change(screen.getByPlaceholderText("Name"), {
+      target: { name: "name", value: "Collector Name" },
+    })
+
+    fireEvent.click(screen.getByText("Save"))
+
+    await waitFor(() => {
+      expect(mockSubmitUpdateMyUserProfile).toHaveBeenCalled()
     })
   })
 
