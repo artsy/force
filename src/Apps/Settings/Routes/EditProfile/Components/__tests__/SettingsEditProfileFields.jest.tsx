@@ -12,6 +12,12 @@ jest.mock("react-tracking")
 jest.mock("Utils/Hooks/Mutations/useUpdateMyUserProfile")
 jest.mock("Apps/Settings/Routes/EditProfile/Mutations/useVerifyID")
 jest.mock("Apps/Settings/Routes/EditProfile/Mutations/useVerifyEmail")
+jest.mock("Components/LocationAutocompleteInput", () => ({
+  LocationAutocompleteInput: ({ title }: { title: string }) => (
+    <div>{title}</div>
+  ),
+  normalizePlace: jest.fn(),
+}))
 
 const mockSendToast = jest.fn()
 
