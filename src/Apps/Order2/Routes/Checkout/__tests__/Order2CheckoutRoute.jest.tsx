@@ -942,10 +942,8 @@ describe("Order2CheckoutRoute", () => {
       // Check for phone number error separately (not in the array)
       expect(screen.getByText("Phone number is required")).toBeInTheDocument()
 
-      let requiredMessages = screen
-        .getAllByText("required", {
-          exact: false,
-        })
+      const requiredMessages = screen
+        .getAllByText("required", { exact: false })
         .map(el => el.textContent)
 
       expect(requiredMessages).toContainEqual("Full name is required")
@@ -1017,12 +1015,14 @@ describe("Order2CheckoutRoute", () => {
       })
 
       await waitFor(() => {
-        requiredMessages = screen.getAllByText("required", {
+        const fulfillmentRequiredMessages = screen.getAllByText("required", {
           exact: false,
         })
 
         expect(
-          requiredMessages.filter(el => el.textContent !== "*Required").length,
+          fulfillmentRequiredMessages.filter(
+            el => el.textContent !== "*Required",
+          ).length,
         ).toEqual(0)
       })
 
