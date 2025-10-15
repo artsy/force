@@ -114,9 +114,9 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
 
       if (orderOrError && "order" in orderOrError) {
         setSubmittedOfferAmount(offerValue)
-        setSubmittedOfferNote(note)
-
+        setSubmittedOfferNote(hasNote ? note : "")
         setOfferAmountComplete()
+
         return
       }
 
