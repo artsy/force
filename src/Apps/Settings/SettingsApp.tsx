@@ -2,7 +2,7 @@ import { Spacer, Text, useToasts } from "@artsy/palette"
 import { MetaTags } from "Components/MetaTags"
 import { RouteTab, RouteTabs } from "Components/RouteTabs"
 import { TopContextBar } from "Components/TopContextBar"
-import { useRouter } from "System/Hooks/useRouter"
+import { useRouter, useIsRouteActive } from "System/Hooks/useRouter"
 import type { SettingsApp_me$data } from "__generated__/SettingsApp_me.graphql"
 import type React from "react"
 import { useEffect } from "react"
@@ -21,6 +21,11 @@ const SettingsApp: React.FC<React.PropsWithChildren<SettingsAppProps>> = ({
   const {
     match: { location },
   } = useRouter()
+
+  // Check if either purchases or orders route is active for Order History tab
+  const isOrderHistoryActive =
+    useIsRouteActive("/settings/purchases") ||
+    useIsRouteActive("/settings/orders")
 
   // Errors might come back from 3rd party authentication
   // as a string in an `error` query param, so display them if present.
@@ -55,7 +60,9 @@ const SettingsApp: React.FC<React.PropsWithChildren<SettingsAppProps>> = ({
 
         <RouteTab to="/settings/auctions">Bids</RouteTab>
 
-        <RouteTab to="/settings/purchases">Order History</RouteTab>
+        <RouteTab to="/settings/purchases" active={isOrderHistoryActive}>
+          Order History
+        </RouteTab>
 
         <RouteTab to="/settings/payments">Payments</RouteTab>
 
