@@ -159,7 +159,7 @@ const SingleShippingOption = ({ option }: SingleShippingOptionProps) => {
           </Text>
         </Flex>
         {timeEstimate && (
-          <Text variant="xs" color="mono60">
+          <Text variant="xs" color="mono60" mt={1}>
             {prefix} <strong>{timeRange}</strong>
           </Text>
         )}
@@ -197,7 +197,12 @@ const MultipleShippingOptionsForm = ({
 
           return (
             <Radio
-              label={label}
+              label={
+                <Flex justifyContent="space-between" width="100%">
+                  <Text variant="sm-display">{label}</Text>
+                  <Text variant="sm-display">{option.amount?.display}</Text>
+                </Flex>
+              }
               key={`${option.type}:${i}`}
               value={option}
               mt={2}
@@ -205,7 +210,7 @@ const MultipleShippingOptionsForm = ({
               <Flex justifyContent="space-between" width="100%">
                 <Flex flexDirection="column">
                   {timeEstimate && (
-                    <Text variant="xs" color="mono60">
+                    <Text variant="xs" color="mono60" mt={1}>
                       {prefix} <strong>{timeRange}</strong>
                     </Text>
                   )}
@@ -217,7 +222,6 @@ const MultipleShippingOptionsForm = ({
                       </Text>
                     )}
                 </Flex>
-                <Text>{option.amount?.display}</Text>
               </Flex>
             </Radio>
           )
