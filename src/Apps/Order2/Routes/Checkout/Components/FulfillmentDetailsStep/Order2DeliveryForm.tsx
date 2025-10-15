@@ -296,28 +296,7 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
                   type="submit"
                   loading={formikContext.isSubmitting}
                   disabled={!!formikContext.status?.errorBanner}
-                  onClick={async () => {
-                    const errors = await formikContext.validateForm()
-                    formikContext.setTouched(
-                      setNestedObjectValues(errors, true),
-                    )
-
-                    if (Object.keys(errors).length === 0) {
-                      formikContext.handleSubmit()
-                    } else {
-                      console.log(errors)
-                      const errorMessages = Object.values(errors).flatMap(v =>
-                        typeof v === "object" ? Object.values(v) : v,
-                      )
-
-                      formikContext.setStatus({
-                        errorBanner: {
-                          title: "Please fix the following errors",
-                          message: `${errorMessages.join(". ")}.`,
-                        },
-                      })
-                    }
-                  }}
+                  onClick={() => formikContext.handleSubmit()}
                 >
                   {/* TODO: This would not apply for flat shipping */}
                   See Shipping Methods
