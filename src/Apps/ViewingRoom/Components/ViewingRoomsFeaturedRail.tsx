@@ -1,4 +1,4 @@
-import { Card, Shelf } from "@artsy/palette"
+import { Card, Shelf, Stack, Text } from "@artsy/palette"
 import { getStatus } from "Apps/ViewingRoom/Utils/getStatus"
 import { RouterLink } from "System/Components/RouterLink"
 import { useStableShuffle } from "Utils/Hooks/useStableShuffle"
@@ -16,6 +16,7 @@ export const ViewingRoomsFeaturedRail: React.FC<
   React.PropsWithChildren<ViewingRoomsFeaturedRailProps>
 > = ({ featuredViewingRooms }) => {
   const viewingRooms = extractNodes(featuredViewingRooms)
+
   const { shuffled } = useStableShuffle({ items: viewingRooms })
 
   if (shuffled.length === 0) {
@@ -23,42 +24,46 @@ export const ViewingRoomsFeaturedRail: React.FC<
   }
 
   return (
-    <Shelf>
-      {shuffled.map(viewingRoom => {
-        const imageURL = viewingRoom.image?.imageURLs?.normalized
+    <Stack gap={6}>
+      <Text variant="lg-display">Featured</Text>
 
-        const image = !!imageURL
-          ? cropped(imageURL, {
-              width: 280,
-              height: 370,
-            })
-          : undefined
+      <Shelf>
+        {shuffled.map(viewingRoom => {
+          const imageURL = viewingRoom.image?.imageURLs?.normalized
 
-        const status = getStatus({
-          status: viewingRoom.status,
-          distanceToOpen: viewingRoom.distanceToOpen,
-          distanceToClose: viewingRoom.distanceToClose,
-        })
+          const image = !!imageURL
+            ? cropped(imageURL, {
+                width: 280,
+                height: 370,
+              })
+            : undefined
 
-        return (
-          <RouterLink
-            key={viewingRoom.slug}
-            display="block"
-            to={`/viewing-room/${viewingRoom.slug}`}
-          >
-            <Card
-              width={280}
-              // TODO: Fix Palette type so that `undefined` is valid for `image`
-              // @ts-ignore
-              image={image}
-              title={viewingRoom.title}
-              subtitle={viewingRoom.partner?.name}
-              status={status}
-            />
-          </RouterLink>
-        )
-      })}
-    </Shelf>
+          const status = getStatus({
+            status: viewingRoom.status,
+            distanceToOpen: viewingRoom.distanceToOpen,
+            distanceToClose: viewingRoom.distanceToClose,
+          })
+
+          return (
+            <RouterLink
+              key={viewingRoom.slug}
+              display="block"
+              to={`/viewing-room/${viewingRoom.slug}`}
+            >
+              <Card
+                width={280}
+                // TODO: Fix Palette type so that `undefined` is valid for `image`
+                // @ts-ignore
+                image={image}
+                title={viewingRoom.title}
+                subtitle={viewingRoom.partner?.name}
+                status={status}
+              />
+            </RouterLink>
+          )
+        })}
+      </Shelf>
+    </Stack>
   )
 }
 export const ViewingRoomsFeaturedRailFragmentContainer =

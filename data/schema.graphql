@@ -9158,6 +9158,7 @@ type CreateArtworkImportArtworksFailure {
 
 input CreateArtworkImportArtworksInput {
   artworkImportID: String!
+  async: Boolean
   clientMutationId: String
 }
 
@@ -9174,6 +9175,7 @@ type CreateArtworkImportArtworksSuccess {
   artworkImport: ArtworkImport
   artworkImportID: String!
   createdArtworksCount: Int!
+  queued: Boolean
 }
 
 type CreateArtworkImportCellFlagFailure {
@@ -11289,8 +11291,14 @@ type DismissTaskSuccess {
 
 # Display texts for the order based on its state and order shipping/payment states
 type DisplayTexts {
+  # Text prompt for the buyer to take action
+  actionPrompt: String
+
   # Granular order states specific type that should be directly interpreted by clients
   messageType: DisplayTextsMessageTypeEnum!
+
+  # Collector facing name for buyer state
+  stateName: String!
 
   # Text to display as a first message on the page (header)
   title: String!
@@ -11307,6 +11315,7 @@ enum DisplayTextsMessageTypeEnum {
   COMPLETED_SHIP
   DECLINED_BY_BUYER
   DECLINED_BY_SELLER
+  OFFER_RECEIVED
   PAYMENT_FAILED
   PROCESSING_PAYMENT_PICKUP
   PROCESSING_PAYMENT_SHIP
@@ -15057,6 +15066,14 @@ type Me implements Node {
     type: BankAccountTypes
   ): BankAccountConnection
 
+  # A connection of artwork recommendations, based on user saves
+  basedOnUserSaves(
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): ArtworkConnection
+
   # Returns a single bidder position
   bidderPosition(id: String!): BidderPositionResult
 
@@ -17242,6 +17259,9 @@ type Order {
   # Order code
   code: String!
 
+  # Order creation time
+  createdAt: String
+
   # Express Checkout wallet type
   creditCardWalletType: OrderCreditCardWalletTypeEnum
 
@@ -17328,6 +17348,9 @@ enum OrderBuyerStateEnum {
 
   # Order is incomplete (pending or abandoned)
   INCOMPLETE
+
+  # Order is an offer avaiting responce from the buyer
+  OFFER_RECEIVED
 
   # Payment has failed
   PAYMENT_FAILED
@@ -19715,15 +19738,6 @@ type Query {
     # The ID of the bank account
     id: String!
   ): BankAccount
-
-  # A connection of artwork recommendations, based on user saves
-  basedOnUserSaves(
-    after: String
-    before: String
-    first: Int
-    last: Int
-    userId: String
-  ): ArtworkConnection
   channel(id: ID!): Channel!
 
   # A list of cities
@@ -23357,6 +23371,9 @@ input UpdateArtworkEditionSetInput {
 
   # The availability of the artwork
   availability: String
+
+  # The ID of the image to set as the default for this artwork
+  defaultImageID: String
   delete: Boolean
 
   # Show/Hide the price range of an artwork
@@ -23498,6 +23515,9 @@ input UpdateArtworkMutationInput {
   # The availability of the artwork
   availability: String
   clientMutationId: String
+
+  # The ID of the image to set as the default for this artwork
+  defaultImageID: String
   delete: Boolean
 
   # Show/Hide the price range of an artwork
@@ -25880,15 +25900,6 @@ type Viewer {
     # The ID of the bank account
     id: String!
   ): BankAccount
-
-  # A connection of artwork recommendations, based on user saves
-  basedOnUserSaves(
-    after: String
-    before: String
-    first: Int
-    last: Int
-    userId: String
-  ): ArtworkConnection
   channel(id: ID!): Channel!
 
   # A list of cities
