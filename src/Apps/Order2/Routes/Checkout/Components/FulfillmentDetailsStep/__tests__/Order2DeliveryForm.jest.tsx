@@ -13,15 +13,7 @@ import { Order2DeliveryForm } from "../Order2DeliveryForm"
 jest.unmock("react-relay")
 jest.useFakeTimers()
 
-const mockCheckoutContext: any = {
-  setCheckoutMode: jest.fn(),
-  checkoutTracking: {
-    clickedOrderProgression: jest.fn(),
-  },
-  setFulfillmentDetailsComplete: jest.fn(),
-  setUserAddressMode: jest.fn(),
-  userAddressMode: null,
-}
+let mockCheckoutContext
 
 jest.mock("Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext", () => ({
   useCheckoutContext: () => mockCheckoutContext,
@@ -30,7 +22,18 @@ jest.mock("Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext", () => ({
 beforeEach(() => {
   jest.clearAllMocks()
   jest.runAllTimers()
-  mockCheckoutContext.userAddressMode = null
+
+  mockCheckoutContext = {
+    setCheckoutMode: jest.fn(),
+    checkoutTracking: {
+      clickedOrderProgression: jest.fn(),
+    },
+    setFulfillmentDetailsComplete: jest.fn(),
+    setUserAddressMode: jest.fn(),
+    setStepErrorMessage: jest.fn(),
+    userAddressMode: null,
+    messages: {},
+  }
 })
 
 const { renderWithRelay } = setupTestWrapperTL<Order2DeliveryFormTestQuery>({
@@ -471,6 +474,12 @@ describe("Order2DeliveryForm", () => {
         expect(mockCheckoutContext.setCheckoutMode).toHaveBeenCalledWith(
           "standard",
         )
+
+        expect(mockCheckoutContext.setStepErrorMessage).toHaveBeenCalledWith({
+          error: null,
+          step: "FULFILLMENT_DETAILS",
+        })
+
         expect(
           mockCheckoutContext.setFulfillmentDetailsComplete,
         ).toHaveBeenCalledWith({})

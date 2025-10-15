@@ -1,6 +1,7 @@
 import { ContextModule } from "@artsy/cohesion"
 import { Button, Flex, Spacer, Text } from "@artsy/palette"
 import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
+import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import {
   CheckoutErrorBanner,
   MailtoOrderSupport,
@@ -12,7 +13,6 @@ import {
   findInitialSelectedAddress,
   processSavedAddresses,
 } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/utils"
-import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useOrder2CreateUserAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2CreateUserAddressMutation"
 
@@ -68,12 +68,11 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
     checkoutTracking,
     setFulfillmentDetailsComplete,
     setUserAddressMode,
-    setStepErrorBanner,
-    stepErrorBanners,
+    setStepErrorMessage,
+    messages,
   } = checkoutContext
 
-  const fulfillmentDetailsError =
-    stepErrorBanners[CheckoutStepName.FULFILLMENT_DETAILS]
+  const fulfillmentDetailsError = messages[CheckoutStepName.FULFILLMENT_DETAILS]
 
   const updateShippingAddressMutation =
     useOrder2SetOrderDeliveryAddressMutation()
@@ -229,7 +228,7 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
           await saveAddressToUser(values)
         }
 
-        setStepErrorBanner({
+        setStepErrorMessage({
           step: CheckoutStepName.FULFILLMENT_DETAILS,
           error: null,
         })
@@ -249,7 +248,7 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
             ),
           },
           error =>
-            setStepErrorBanner({
+            setStepErrorMessage({
               step: CheckoutStepName.FULFILLMENT_DETAILS,
               error,
             }),
@@ -264,7 +263,7 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
       saveAddressToUser,
       setCheckoutMode,
       setFulfillmentDetailsComplete,
-      setStepErrorBanner,
+      setStepErrorMessage,
       setUserAddressMode,
       unsetOrderFulfillmentOption,
       updateShippingAddressMutation,

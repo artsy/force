@@ -1,6 +1,7 @@
 import { ContextModule } from "@artsy/cohesion"
 import { Button, Flex, Radio, RadioGroup, Spacer, Text } from "@artsy/palette"
 import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
+import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import {
   CheckoutErrorBanner,
   MailtoOrderSupport,
@@ -9,7 +10,6 @@ import {
   deliveryOptionLabel,
   deliveryOptionTimeEstimate,
 } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/utils"
-import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useOrder2SetOrderFulfillmentOptionMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderFulfillmentOptionMutation"
 import { BUYER_GUARANTEE_URL } from "Apps/Order2/constants"
@@ -40,13 +40,13 @@ export const Order2DeliveryOptionsForm: React.FC<
   const {
     checkoutTracking,
     setDeliveryOptionComplete,
-    setStepErrorBanner,
-    stepErrorBanners,
+    setStepErrorMessage,
+    messages,
   } = useCheckoutContext()
   const setFulfillmentOptionMutation =
     useOrder2SetOrderFulfillmentOptionMutation()
 
-  const deliveryOptionError = stepErrorBanners[CheckoutStepName.DELIVERY_OPTION]
+  const deliveryOptionError = messages[CheckoutStepName.DELIVERY_OPTION]
 
   const { fulfillmentOptions } = orderData
   const deliveryOptions = fulfillmentOptions.filter(
@@ -81,14 +81,14 @@ export const Order2DeliveryOptionsForm: React.FC<
         setFulfillmentOptionResult.setOrderFulfillmentOption?.orderOrError,
       ).order
 
-      setStepErrorBanner({
+      setStepErrorMessage({
         step: CheckoutStepName.DELIVERY_OPTION,
         error: null,
       })
       setDeliveryOptionComplete()
     } catch (error) {
       console.error("Error setting delivery option:", error)
-      setStepErrorBanner({
+      setStepErrorMessage({
         step: CheckoutStepName.DELIVERY_OPTION,
         error: {
           title: "An error occurred",

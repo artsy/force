@@ -5,11 +5,11 @@ import type {
   FulfillmentDetailsTab,
   UserAddressMode,
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
-import type { CheckoutErrorBannerProps } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import {
   CheckoutStepName,
   CheckoutStepState,
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
+import type { CheckoutErrorBannerProps } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { useCheckoutTracking } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutTracking"
 import { useRouter } from "System/Hooks/useRouter"
 import { useCountdownTimer } from "Utils/Hooks/useCountdownTimer"
@@ -69,6 +69,10 @@ type SavedBankAccount = {
   last4: string
 }
 
+type Messages = Partial<
+  Record<CheckoutStepName, { error: CheckoutErrorBannerProps["error"] }>
+>
+
 export interface Order2CheckoutModel {
   // State
   isLoading: boolean
@@ -83,9 +87,7 @@ export interface Order2CheckoutModel {
   savedPaymentMethod: SavedCreditCard | SavedBankAccount | null
   checkoutMode: CheckoutMode
   userAddressMode: UserAddressMode | null
-  stepErrorBanners: Partial<
-    Record<CheckoutStepName, CheckoutErrorBannerProps["error"]>
-  >
+  messages: Messages
 
   // External data - passed in as runtime props
   checkoutTracking: ReturnType<typeof useCheckoutTracking>
@@ -124,7 +126,7 @@ export interface Order2CheckoutModel {
   redirectToOrderDetails: Action<this>
   setCheckoutMode: Action<this, CheckoutMode>
   setUserAddressMode: Action<this, UserAddressMode | null>
-  setStepErrorBanner: Action<
+  setStepErrorMessage: Action<
     this,
     { step: CheckoutStepName; error: CheckoutErrorBannerProps["error"] }
   >
@@ -145,7 +147,7 @@ export const Order2CheckoutContext: ReturnType<
   checkoutMode: "standard",
   steps: [],
   userAddressMode: null,
-  stepErrorBanners: {},
+  messages: {},
 
   // Required runtime props - will be provided by Provider
   // These will be overridden by the Provider with actual values
@@ -500,10 +502,10 @@ export const Order2CheckoutContext: ReturnType<
     state.router.replace(orderDetailsURL)
   }),
 
-  setStepErrorBanner: action((state, { step, error }) => {
-    state.stepErrorBanners = {
-      ...state.stepErrorBanners,
-      [step]: error,
+  setStepErrorMessage: action((state, { step, error }) => {
+    state.messages = {
+      ...state.messages,
+      [step]: { error },
     }
   }),
 }))
@@ -539,7 +541,7 @@ export const Order2CheckoutContextProvider: React.FC<
     savedPaymentMethod: null,
     checkoutMode: "standard",
     steps: [],
-    stepErrorBanners: {},
+    messages: {},
 
     // Override with initialState values
     ...initialState,
@@ -774,7 +776,7 @@ const initialStateForOrder = (
     checkoutMode: (savedCheckoutMode === "express"
       ? "express"
       : "standard") as CheckoutMode,
-    stepErrorBanners: {},
+    messages: {},
   }
 }
 
