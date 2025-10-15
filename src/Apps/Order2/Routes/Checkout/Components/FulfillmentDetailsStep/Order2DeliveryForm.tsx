@@ -27,7 +27,7 @@ import { useInitialLocationValues } from "Components/Address/utils/useInitialLoc
 import createLogger from "Utils/logger"
 import type { Order2DeliveryForm_me$key } from "__generated__/Order2DeliveryForm_me.graphql"
 import type { Order2DeliveryForm_order$key } from "__generated__/Order2DeliveryForm_order.graphql"
-import { Formik, type FormikHelpers, setNestedObjectValues } from "formik"
+import { Formik, type FormikHelpers } from "formik"
 import { useCallback, useMemo } from "react"
 import { graphql, useFragment } from "react-relay"
 
@@ -295,7 +295,10 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
                 <Button
                   type="submit"
                   loading={formikContext.isSubmitting}
-                  disabled={!!formikContext.status?.errorBanner}
+                  disabled={
+                    !!formikContext.status?.errorBanner ||
+                    Object.keys(formikContext.errors).length > 0
+                  }
                   onClick={() => formikContext.handleSubmit()}
                 >
                   {/* TODO: This would not apply for flat shipping */}
