@@ -16,7 +16,7 @@ import {
 } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/utils"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import type { FormikContextWithAddress } from "Components/Address/AddressFormFields"
-import { useFormikContext } from "formik"
+import { setNestedObjectValues, useFormikContext } from "formik"
 import { useCallback, useState } from "react"
 import styled from "styled-components"
 
@@ -181,7 +181,27 @@ export const SavedAddressOptions = ({
       <Button
         type="submit"
         loading={parentFormikContext.isSubmitting}
-        onClick={() => parentFormikContext.handleSubmit()}
+        // onClick={() => parentFormikContext.handleSubmit()}
+        onClick={async () => {
+          const errors = await parentFormikContext.validateForm()
+          parentFormikContext.setTouched(setNestedObjectValues(errors, true))
+
+          if (Object.keys(errors).length === 0) {
+            parentFormikContext.handleSubmit()
+          } else {
+            console.log(errors)
+            const errorMessages = Object.values(errors).flatMap(v =>
+              typeof v === "object" ? Object.values(v) : v,
+            )
+
+            parentFormikContext.setStatus({
+              errorBanner: {
+                title: "Please fix the following errors",
+                message: `${errorMessages.join(". ")}.`,
+              },
+            })
+          }
+        }}
         disabled={
           Object.keys(parentFormikContext.errors).length > 0 ||
           !!parentFormikContext.status?.errorBanner

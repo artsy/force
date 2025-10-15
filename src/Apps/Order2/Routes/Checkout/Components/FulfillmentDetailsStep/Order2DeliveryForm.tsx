@@ -27,7 +27,7 @@ import { useInitialLocationValues } from "Components/Address/utils/useInitialLoc
 import createLogger from "Utils/logger"
 import type { Order2DeliveryForm_me$key } from "__generated__/Order2DeliveryForm_me.graphql"
 import type { Order2DeliveryForm_order$key } from "__generated__/Order2DeliveryForm_order.graphql"
-import { Formik, type FormikHelpers } from "formik"
+import { Formik, type FormikHelpers, setNestedObjectValues } from "formik"
 import { useCallback, useMemo } from "react"
 import { graphql, useFragment } from "react-relay"
 
@@ -259,24 +259,12 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
         validationSchema={deliveryAddressValidationSchema}
         onSubmit={onSubmit}
       >
+        {/* TODO: refactor with useFormikContext */}
         {formikContext => (
           <Flex flexDirection={"column"} mb={2}>
             {formikContext.status?.errorBanner && (
               <>
                 <CheckoutErrorBanner error={formikContext.status.errorBanner} />
-                <Spacer y={2} />
-              </>
-            )}
-            {Object.keys(formikContext.errors).length > 0 && (
-              <>
-                <CheckoutErrorBanner
-                  error={{
-                    title: "Please fix the following errors",
-                    message: Object.values(formikContext?.errors)
-                      .map(str => `${str}.`)
-                      .join(" "),
-                  }}
-                />
                 <Spacer y={2} />
               </>
             )}
@@ -307,7 +295,29 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
                 <Button
                   type="submit"
                   loading={formikContext.isSubmitting}
-                  onClick={() => formikContext.handleSubmit()}
+                  disabled={!!formikContext.status?.errorBanner}
+                  onClick={async () => {
+                    const errors = await formikContext.validateForm()
+                    formikContext.setTouched(
+                      setNestedObjectValues(errors, true),
+                    )
+
+                    if (Object.keys(errors).length === 0) {
+                      formikContext.handleSubmit()
+                    } else {
+                      console.log(errors)
+                      const errorMessages = Object.values(errors).flatMap(v =>
+                        typeof v === "object" ? Object.values(v) : v,
+                      )
+
+                      formikContext.setStatus({
+                        errorBanner: {
+                          title: "Please fix the following errors",
+                          message: `${errorMessages.join(". ")}.`,
+                        },
+                      })
+                    }
+                  }}
                 >
                   {/* TODO: This would not apply for flat shipping */}
                   See Shipping Methods
