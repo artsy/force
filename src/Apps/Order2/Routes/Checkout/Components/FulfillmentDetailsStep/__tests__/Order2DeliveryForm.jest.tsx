@@ -796,6 +796,157 @@ describe("Order2DeliveryForm", () => {
         ).not.toHaveBeenCalled()
       })
 
+      it("handles a mutation result with no shipping option by setting an error banner", async () => {
+        const { mockResolveLastOperation } = renderWithRelay({
+          Me: () => ({
+            ...baseMeProps,
+            order: {
+              ...baseOrderProps,
+              fulfillmentDetails: {
+                name: "",
+                addressLine1: "",
+                addressLine2: "",
+                city: "",
+                region: "",
+                postalCode: "",
+                country: "US",
+                phoneNumber: {
+                  regionCode: "us",
+                  originalNumber: "",
+                },
+              },
+            },
+          }),
+        })
+
+        await waitFor(() => {
+          expect(screen.getByText("Delivery address")).toBeInTheDocument()
+        })
+
+        // Fill out the form with valid data
+        await userEvent.type(
+          screen.getByPlaceholderText("Add full name"),
+          "Jane Smith",
+        )
+        await userEvent.type(
+          screen.getByLabelText("Street address"),
+          "456 Oak Ave",
+        )
+        await userEvent.type(screen.getByLabelText("City"), "Los Angeles")
+        await userEvent.type(
+          screen.getByLabelText("State, region or province"),
+          "CA",
+        )
+        await userEvent.type(screen.getByLabelText("ZIP/Postal code"), "90210")
+        await userEvent.type(
+          screen.getByTestId("addressFormFields.phoneNumber"),
+          "5559876543",
+        )
+
+        act(() => {
+          userEvent.click(screen.getByText("See Shipping Methods"))
+        })
+
+        let shippingAddressMutation
+        await waitFor(() => {
+          shippingAddressMutation = mockResolveLastOperation({
+            updateOrderShippingAddressPayload: () =>
+              orderMutationSuccess(baseOrderProps, {
+                fulfillmentDetails: {
+                  name: "Jane Smith",
+                  addressLine1: "456 Oak Ave",
+                  addressLine2: "",
+                  city: "Los Angeles",
+                  region: "CA",
+                  postalCode: "90210",
+                  country: "US",
+                  phoneNumber: {
+                    regionCode: "us",
+                    originalNumber: "5559876543",
+                  },
+                },
+                fulfillmentOptions: [
+                  {
+                    type: "PICKUP",
+                  },
+                ],
+              }),
+          })
+        })
+        await flushPromiseQueue()
+
+        expect(shippingAddressMutation.operationName).toBe(
+          "useOrder2SetOrderDeliveryAddressMutation",
+        )
+        expect(shippingAddressMutation.operationVariables.input).toEqual({
+          id: "order-id",
+          buyerPhoneNumber: "5559876543",
+          buyerPhoneNumberCountryCode: "us",
+          shippingAddressLine1: "456 Oak Ave",
+          shippingAddressLine2: "",
+          shippingCity: "Los Angeles",
+          shippingRegion: "CA",
+          shippingPostalCode: "90210",
+          shippingCountry: "US",
+          shippingName: "Jane Smith",
+        })
+
+        let createAddressMutation
+        await waitFor(() => {
+          createAddressMutation = mockResolveLastOperation({
+            CreateUserAddressPayload: () => ({
+              userAddressOrErrors: {
+                __typename: "UserAddress",
+                internalID: "new-address-id",
+                name: "Jane Smith",
+                addressLine1: "456 Oak Ave",
+                addressLine2: "",
+                city: "Los Angeles",
+                region: "CA",
+                postalCode: "90210",
+                country: "US",
+                phoneNumber: "5559876543",
+                phoneNumberCountryCode: "us",
+              },
+            }),
+          })
+        })
+        await flushPromiseQueue()
+
+        expect(createAddressMutation.operationName).toBe(
+          "useOrder2CreateUserAddressMutation",
+        )
+        expect(createAddressMutation.operationVariables.input).toEqual({
+          attributes: {
+            name: "Jane Smith",
+            addressLine1: "456 Oak Ave",
+            addressLine2: "",
+            city: "Los Angeles",
+            region: "CA",
+            postalCode: "90210",
+            country: "US",
+            phoneNumber: "5559876543",
+            phoneNumberCountryCode: "us",
+          },
+        })
+
+        // Should trigger tracking and context updates
+        expect(mockCheckoutContext.setCheckoutMode).toHaveBeenCalledWith(
+          "standard",
+        )
+
+        expect(mockCheckoutContext.setStepErrorMessage).toHaveBeenCalledWith({
+          error: expect.objectContaining({
+            title: "Unable to provide shipping quote",
+          }),
+          step: "FULFILLMENT_DETAILS",
+        })
+
+        expect(
+          mockCheckoutContext.setFulfillmentDetailsComplete,
+        ).not.toHaveBeenCalled()
+      })
+
       it("saves address to user profile when user has no saved addresses", async () => {
         const { mockResolveLastOperation } = renderWithRelay({
           Me: () => ({
@@ -852,6 +1003,14 @@ describe("Order2DeliveryForm", () => {
           mockResolveLastOperation({
             updateOrderShippingAddressPayload: () =>
               orderMutationSuccess(baseOrderProps, {
+                fulfillmentOptions: [
+                  {
+                    type: "PICKUP",
+                  },
+                  {
+                    type: "DOMESTIC_FLAT",
+                  },
+                ],
                 fulfillmentDetails: {
                   name: "Jane Smith",
                   addressLine1: "456 Oak Ave",

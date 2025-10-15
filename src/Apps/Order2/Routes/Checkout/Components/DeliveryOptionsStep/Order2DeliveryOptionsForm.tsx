@@ -19,7 +19,7 @@ import type {
   Order2DeliveryOptionsForm_order$key,
 } from "__generated__/Order2DeliveryOptionsForm_order.graphql"
 import { Formik, type FormikConfig, useFormikContext } from "formik"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { graphql, useFragment } from "react-relay"
 
 interface Order2DeliveryOptionsFormProps {
@@ -46,7 +46,7 @@ export const Order2DeliveryOptionsForm: React.FC<
   const setFulfillmentOptionMutation =
     useOrder2SetOrderFulfillmentOptionMutation()
 
-  const deliveryOptionError = messages[CheckoutStepName.DELIVERY_OPTION]
+  const deliveryOptionError = messages[CheckoutStepName.DELIVERY_OPTION]?.error
 
   const { fulfillmentOptions } = orderData
   const deliveryOptions = fulfillmentOptions.filter(

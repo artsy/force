@@ -19,6 +19,7 @@ import { useOrder2CreateUserAddressMutation } from "Apps/Order2/Routes/Checkout/
 import { useOrder2SetOrderDeliveryAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderDeliveryAddressMutation"
 import { useOrder2UnsetOrderFulfillmentOptionMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2UnsetOrderFulfillmentOptionMutation"
 import { getShippableCountries as getShippableCountryData } from "Apps/Order2/Utils/addressUtils"
+import { LocalCheckoutError } from "Apps/Order2/Utils/errors"
 import {
   AddressFormFields,
   type FormikContextWithAddress,
@@ -72,9 +73,10 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
     messages,
   } = checkoutContext
 
-  const fulfillmentDetailsError = messages[CheckoutStepName.FULFILLMENT_DETAILS]
+  const fulfillmentDetailsError =
+    messages[CheckoutStepName.FULFILLMENT_DETAILS]?.error
 
-  const updateShippingAddressMutation =
+  const setOrderDeliveryAddressMutation =
     useOrder2SetOrderDeliveryAddressMutation()
   const unsetOrderFulfillmentOption =
     useOrder2UnsetOrderFulfillmentOptionMutation()
@@ -213,25 +215,35 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
           shippingName: values.address.name,
         }
 
-        const updateShippingAddressResult =
-          await updateShippingAddressMutation.submitMutation({
+        const setOrderDeliveryAddressResult =
+          await setOrderDeliveryAddressMutation.submitMutation({
             variables: {
               input,
             },
           })
 
-        validateAndExtractOrderResponse(
-          updateShippingAddressResult.updateOrderShippingAddress?.orderOrError,
+        const newOrder = validateAndExtractOrderResponse(
+          setOrderDeliveryAddressResult.updateOrderShippingAddress
+            ?.orderOrError,
         ).order
+
+        const isMissingShippingOption = !newOrder.fulfillmentOptions.some(
+          option => !["PICKUP", "SHIPPING_TBD"].includes(option.type),
+        )
 
         if (!hasSavedAddresses) {
           await saveAddressToUser(values)
+        }
+
+        if (isMissingShippingOption) {
+          throw new LocalCheckoutError("no_shipping_options")
         }
 
         setStepErrorMessage({
           step: CheckoutStepName.FULFILLMENT_DETAILS,
           error: null,
         })
+
         setFulfillmentDetailsComplete({}) // TODO: Clean up signature
         setUserAddressMode(null)
       } catch (error) {
@@ -266,7 +278,7 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
       setStepErrorMessage,
       setUserAddressMode,
       unsetOrderFulfillmentOption,
-      updateShippingAddressMutation,
+      setOrderDeliveryAddressMutation,
     ],
   )
   return (

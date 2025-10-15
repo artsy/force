@@ -1,4 +1,4 @@
-import { CheckoutError } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
+import { CheckoutMutationError } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
 import { handleError } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/handleError"
 import type { FormikHelpers } from "formik"
 
@@ -17,7 +17,7 @@ beforeEach(() => {
 
 describe("fulfillment details error handling", () => {
   it("handles missing postal code error", () => {
-    const error = new CheckoutError(
+    const error = new CheckoutMutationError(
       "this is an error `message`",
       "missing_postal_code",
     )
@@ -37,7 +37,7 @@ describe("fulfillment details error handling", () => {
   })
 
   it("handles missing region error", () => {
-    const error = new CheckoutError(
+    const error = new CheckoutMutationError(
       "this is an error `message`",
       "missing_region",
     )
@@ -57,7 +57,7 @@ describe("fulfillment details error handling", () => {
   })
 
   it("handles missing country error", () => {
-    const error = new CheckoutError(
+    const error = new CheckoutMutationError(
       "this is an error `message`",
       "missing_country",
     )
@@ -77,7 +77,7 @@ describe("fulfillment details error handling", () => {
   })
 
   it("handles destination could not be geocoded error", () => {
-    const error = new CheckoutError(
+    const error = new CheckoutMutationError(
       "this is an error `message`",
       "destination_could_not_be_geocoded",
     )
