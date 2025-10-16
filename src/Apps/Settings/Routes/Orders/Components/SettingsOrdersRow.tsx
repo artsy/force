@@ -40,33 +40,18 @@ interface SettingsOrdersRowProps {
 }
 
 interface OrderLinkProps {
-  order: SettingsOrdersRow_order$data
+  code: string
+  orderId: string
+  state: OrderBuyerStateEnum
   trackChangePaymentMethodClick: (orderId: string) => () => void
 }
 
 interface OrderActionButtonProps {
-  state: OrderBuyerStateEnum | null | undefined
+  actionPrompt: string | null
   orderId: string
+  state: OrderBuyerStateEnum
   trackChangePaymentMethodClick: (orderId: string) => () => void
 }
-
-// Map OrderBuyerStateEnum to display labels
-// TODO: need to revisit those. Confirm new names and add offer states proper
-const ORDER_LABELS: Record<string, string> = {
-  APPROVED: "Confirmed",
-  CANCELLED: "Canceled",
-  COMPLETED: "Delivered",
-  DECLINED_BY_BUYER: "Declined",
-  DECLINED_BY_SELLER: "Declined",
-  INCOMPLETE: "Incomplete",
-  PAYMENT_FAILED: "Payment failed",
-  PROCESSING_OFFLINE_PAYMENT: "Processing",
-  PROCESSING_PAYMENT: "Processing payment",
-  REFUNDED: "Refunded",
-  SHIPPED: "Shipped",
-  SUBMITTED: "Pending",
-  UNKNOWN: "Unknown",
-} as const
 
 const ORDER_ICONS: Record<string, React.ReactElement> = {
   APPROVED: <PendingIcon fill="mono100" />,
@@ -74,14 +59,13 @@ const ORDER_ICONS: Record<string, React.ReactElement> = {
   COMPLETED: <CheckmarkFillIcon fill="green100" />,
   DECLINED_BY_BUYER: <CloseStrokeIcon fill="red100" />,
   DECLINED_BY_SELLER: <CloseStrokeIcon fill="red100" />,
-  INCOMPLETE: <PendingIcon fill="mono60" />,
+  OFFER_RECEIVED: <PendingIcon fill="blue100" />,
   PAYMENT_FAILED: <AlertStrokeIcon fill="red100" />,
-  PROCESSING_OFFLINE_PAYMENT: <PendingIcon fill="mono60" />,
+  PROCESSING_OFFLINE_PAYMENT: <PendingIcon fill="mono100" />,
   PROCESSING_PAYMENT: <PendingIcon fill="mono60" />,
   REFUNDED: <CloseStrokeIcon fill="red100" />,
   SHIPPED: <PendingIcon fill="mono60" />,
   SUBMITTED: <PendingIcon fill="mono60" />,
-  UNKNOWN: <PendingIcon fill="mono60" />,
 } as const
 
 const ORDER_COLORS: Record<string, string> = {
@@ -90,9 +74,9 @@ const ORDER_COLORS: Record<string, string> = {
   COMPLETED: "green100",
   DECLINED_BY_BUYER: "red100",
   DECLINED_BY_SELLER: "red100",
-  INCOMPLETE: "mono60",
+  OFFER_RECEIVED: "blue100",
   PAYMENT_FAILED: "red100",
-  PROCESSING_OFFLINE_PAYMENT: "mono60",
+  PROCESSING_OFFLINE_PAYMENT: "mono100",
   PROCESSING_PAYMENT: "mono60",
   REFUNDED: "red100",
   SHIPPED: "mono60",
@@ -100,8 +84,8 @@ const ORDER_COLORS: Record<string, string> = {
   UNKNOWN: "mono60",
 } as const
 
-// TODO: verify how payment method be displayed.
-// Could/should we reuse details page display?
+// TODO: verify how payment method be displayed on Details page.
+// Should we display more info similar to details page?
 const getPaymentMethodText = (
   paymentMethodDetails: SettingsOrdersRow_order$data["paymentMethodDetails"],
   creditCardWalletType: SettingsOrdersRow_order$data["creditCardWalletType"],
@@ -128,66 +112,81 @@ const getPaymentMethodText = (
   }
 }
 
-// #TODO: details has it's own redirects if order. Maybe be specific with those?
-// Can redirect here more proper once states are verified.
 const OrderLink: FC<OrderLinkProps> = ({
-  order,
-  trackChangePaymentMethodClick,
-}) => {
-  const isOrderActive = !["CANCELLED", "REFUNDED"].includes(
-    order.buyerState || "",
-  )
-  const isOrderPaymentFailed = order.buyerState === "PAYMENT_FAILED"
-
-  if (isOrderPaymentFailed) {
-    return (
-      <RouterLink
-        inline
-        to={`/orders/${order.internalID}/payment/new`}
-        onClick={trackChangePaymentMethodClick(order.internalID)}
-      >
-        {order.code}
-      </RouterLink>
-    )
-  }
-
-  if (isOrderActive) {
-    return (
-      <RouterLink inline to={`/orders/${order.internalID}/details`}>
-        {order.code}
-      </RouterLink>
-    )
-  }
-
-  return <>{order.code}</>
-}
-
-// TODO: need to add OFFER_RECEIVED state and do proper button for that one.
-const OrderActionButton: FC<OrderActionButtonProps> = ({
-  state,
+  code,
   orderId,
+  state,
   trackChangePaymentMethodClick,
 }) => {
+  const isOrderActive = ![
+    "CANCELLED",
+    "DECLINED_BY_BUYER",
+    "DECLINED_BY_SELLER",
+    "REFUNDED",
+  ].includes(state)
+
+  if (!isOrderActive) {
+    return <>{code}</>
+  }
+
+  let route = `/orders/${orderId}/details`
+  let onClick: (() => void) | undefined
+
   switch (state) {
     case "PAYMENT_FAILED":
-      return (
-        <Button
-          // @ts-ignore
-          as={RouterLink}
-          to={`/orders/${orderId}/payment/new`}
-          variant="primaryBlack"
-          size="large"
-          width="50%"
-          minWidth={["240px", "200px"]}
-          my={[1, 0]}
-          onClick={trackChangePaymentMethodClick(orderId)}
-        >
-          Update Payment Method
-        </Button>
-      )
-    default:
-      return null
+      route = `/orders/${orderId}/payment/new`
+      onClick = trackChangePaymentMethodClick(orderId)
+      break
+    case "OFFER_RECEIVED":
+      route = `/orders/${orderId}/respond`
+      break
   }
+
+  return (
+    <RouterLink inline to={route} onClick={onClick}>
+      {code}
+    </RouterLink>
+  )
+}
+
+const OrderActionButton: FC<OrderActionButtonProps> = ({
+  actionPrompt,
+  orderId,
+  state,
+  trackChangePaymentMethodClick,
+}) => {
+  if (!actionPrompt) {
+    return null
+  }
+
+  let route = `/orders/${orderId}/details`
+  let onClick: (() => void) | undefined
+
+  switch (state) {
+    case "PAYMENT_FAILED":
+      route = `/orders/${orderId}/payment/new`
+      onClick = trackChangePaymentMethodClick(orderId)
+      break
+    case "OFFER_RECEIVED":
+      route = `/orders/${orderId}/respond`
+      break
+  }
+
+  return (
+    <Button
+      // @ts-ignore
+      as={RouterLink}
+      to={route}
+      variant="primaryBlack"
+      size="large"
+      width="50%"
+      minWidth={["240px", "200px"]}
+      my={[1, 0]}
+      onClick={onClick}
+    >
+      {actionPrompt}
+    </Button>
+  )
 }
 
 const SettingsOrdersRow: FC<
@@ -204,8 +203,7 @@ const SettingsOrdersRow: FC<
 
   const orderCreatedAt = DateTime.fromISO(order.createdAt || "")
 
-  // TODO: Order type doesn't have tracking info structured the same way
-  const trackingUrl = null
+  const trackingUrl = order.deliveryInfo?.trackingURL || null
 
   const { trackEvent } = useTracking()
   const trackChangePaymentMethodClick = (orderID: string) => () => {
@@ -230,7 +228,7 @@ const SettingsOrdersRow: FC<
           {ORDER_ICONS[buyerState]}
 
           <Text ml={0.5} variant="sm-display" color={ORDER_COLORS[buyerState]}>
-            {ORDER_LABELS[buyerState]}
+            {order.displayTexts.stateName}
           </Text>
 
           {trackingUrl && (
@@ -313,6 +311,7 @@ const SettingsOrdersRow: FC<
 
             <OrderActionButton
               state={buyerState}
+              actionPrompt={order.displayTexts.actionPrompt || null}
               orderId={order.internalID}
               trackChangePaymentMethodClick={trackChangePaymentMethodClick}
             />
@@ -328,7 +327,9 @@ const SettingsOrdersRow: FC<
 
           <Text variant="sm-display" color="mono60">
             <OrderLink
-              order={order}
+              code={order.code}
+              state={buyerState}
+              orderId={order.internalID}
               trackChangePaymentMethodClick={trackChangePaymentMethodClick}
             />
           </Text>
@@ -357,8 +358,9 @@ const SettingsOrdersRow: FC<
           <Text variant="sm-display">Delivery method</Text>
 
           <Text variant="sm-display" color="mono60">
-            {/* TODO: Need to determine fulfillment type from Order.fulfillmentDetails */}
-            Delivery
+            {order.selectedFulfillmentOption?.type === "PICKUP"
+              ? "Pickup"
+              : "Delivery"}
           </Text>
         </Column>
       </GridColumns>
@@ -393,6 +395,16 @@ export const SettingsOrdersRowFragmentContainer = createFragmentContainer(
         buyerState
         createdAt
         creditCardWalletType
+        displayTexts {
+          stateName
+          actionPrompt
+        }
+        deliveryInfo {
+          trackingURL
+        }
+        selectedFulfillmentOption {
+          type
+        }
         paymentMethodDetails {
           __typename
           ... on CreditCard {
@@ -402,13 +414,12 @@ export const SettingsOrdersRowFragmentContainer = createFragmentContainer(
             last4
           }
           ... on WireTransfer {
-            isManualPayment
+            __typename
           }
         }
         buyerTotal {
           display
         }
-        currencyCode
         lineItems {
           artwork {
             href

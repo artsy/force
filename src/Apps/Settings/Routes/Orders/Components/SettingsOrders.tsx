@@ -25,7 +25,7 @@ const SettingsOrders: FC<React.PropsWithChildren<SettingsOrdersProps>> = ({
   const orders = extractNodes(me.orders)
 
   if (orders.length === 0) {
-    return <Message>Orders can not be loaded at this time.</Message>
+    return <Message>No Orders.</Message>
   }
 
   const hasNextPage = me.orders?.pageInfo.hasNextPage ?? false
@@ -63,10 +63,6 @@ const SettingsOrders: FC<React.PropsWithChildren<SettingsOrdersProps>> = ({
         setLoading(false)
       },
     )
-  }
-
-  if (orders.length === 0) {
-    return <Message>No Orders</Message>
   }
 
   return !loading ? (
