@@ -3,10 +3,10 @@ import { Button, Dropdown, Radio, RadioGroup } from "@artsy/palette"
 import { useAuctionResultsFilterContext } from "Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
 import { useMemo } from "react"
 
-const SORTS = [
-  { value: "DATE_DESC", text: "Sale Date (Most recent)" },
+export const SORTS = [
+  { value: "DATE_DESC", text: "Sale Date (Most Recent)" },
   { value: "ESTIMATE_AND_DATE_DESC", text: "Estimate" },
-  { value: "PRICE_AND_DATE_DESC", text: "Sale price" },
+  { value: "PRICE_AND_DATE_DESC", text: "Sale Price" },
 ]
 
 export const ArtistAuctionResultsSortSelect = () => {

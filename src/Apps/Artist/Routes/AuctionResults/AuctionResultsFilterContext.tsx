@@ -101,12 +101,15 @@ export type SharedAuctionResultsFilterContextProps = Pick<
   onChange?: (filterState) => void
 }
 
+type AuctionResultsFilterContextProviderProps = React.PropsWithChildren<
+  Omit<SharedAuctionResultsFilterContextProps, "filters"> & {
+    children: React.ReactNode
+    filters?: AuctionResultsFilters
+  }
+>
+
 export const AuctionResultsFilterContextProvider: React.FC<
-  React.PropsWithChildren<
-    SharedAuctionResultsFilterContextProps & {
-      children: React.ReactNode
-    }
-  >
+  AuctionResultsFilterContextProviderProps
 > = ({
   aggregations = [],
   children,

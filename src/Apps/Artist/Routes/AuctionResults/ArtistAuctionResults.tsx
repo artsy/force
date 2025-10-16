@@ -3,16 +3,20 @@ import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchem
 import FilterIcon from "@artsy/icons/FilterIcon"
 import {
   Box,
-  Button,
-  Column,
+  Clickable,
   Flex,
-  GridColumns,
+  FullBleed,
   Join,
   Spacer,
+  Stack,
   Text,
 } from "@artsy/palette"
+import { ArtistAuctionResultsExpandableSort } from "Apps/Artist/Routes/AuctionResults/Components/ArtistAuctionResultsExpandableSort"
+import { ArtistAuctionResultsFilters } from "Apps/Artist/Routes/AuctionResults/Components/ArtistAuctionResultsFilters"
 import { initialAuctionResultsFilterState } from "Apps/Artist/Routes/AuctionResults/initialAuctionResultsFilterState"
 import { allowedAuctionResultFilters } from "Apps/Artist/Utils/allowedAuctionResultFilters"
+import { AppContainer } from "Apps/Components/AppContainer"
+import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/paramsCasing"
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
 import { ArtworkGridEmptyState } from "Components/ArtworkGrid/ArtworkGridEmptyState"
@@ -20,6 +24,7 @@ import { useAuthDialog } from "Components/AuthDialog"
 import { LoadingArea } from "Components/LoadingArea"
 import { PaginatedMetaTags } from "Components/PaginatedMetaTags"
 import { PaginationFragmentContainer as Pagination } from "Components/Pagination"
+import { Sticky } from "Components/Sticky"
 import { SystemContext } from "System/Contexts/SystemContext"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
@@ -34,7 +39,7 @@ import type { ArtistAuctionResultsRoute_artist$data } from "__generated__/Artist
 import type { ArtistAuctionResults_artist$data } from "__generated__/ArtistAuctionResults_artist.graphql"
 import { isEqual } from "lodash"
 import type * as React from "react"
-import { useContext, useState } from "react"
+import { useContext, useRef, useState } from "react"
 import {
   type RelayRefetchProp,
   createRefetchContainer,
@@ -50,11 +55,10 @@ import {
   useCurrentlySelectedFiltersForAuctionResults,
 } from "./AuctionResultsFilterContext"
 import { ArtistAuctionResultsEmptyState } from "./Components/ArtistAuctionResultsEmptyState"
+import { ArtistAuctionResultsSortSelect } from "./Components/ArtistAuctionResultsSortSelect"
 import { AuctionFilterMobileActionSheet } from "./Components/AuctionFilterMobileActionSheet"
 import { AuctionFilters } from "./Components/AuctionFilters"
 import { MarketStatsQueryRenderer } from "./Components/MarketStats"
-import { ArtistAuctionResultsSortSelect } from "./Components/ArtistAuctionResultsSortSelect"
-import { TableSidebar } from "./Components/TableSidebar"
 
 const logger = createLogger("ArtistAuctionResults.tsx")
 
@@ -118,9 +122,11 @@ const AuctionResultsContainer: React.FC<
     setFilter?.("page", pageNum)
   }
 
-  const [isLoading, setIsLoading] = useState(false)
-  const [showMobileActionSheet, toggleMobileActionSheet] = useState(false)
-  const [authShownForFiltering, toggleAuthShowForFiltering] = useState(false)
+  const [mode, setMode] = useState<
+    "Idle" | "Loading" | "MobileActionSheet" | "Drawer"
+  >("Idle")
+
+  const hasShownAuthDialog = useRef(false)
 
   const tracking = useTracking()
 
@@ -156,7 +162,7 @@ const AuctionResultsContainer: React.FC<
         fetchResults()
 
         // If user is not logged-in, show auth modal, but only if it was never shown before.
-        if (!user && !authShownForFiltering) {
+        if (!user && !hasShownAuthDialog.current) {
           showAuthDialog({
             options: {
               title: `Sign up or log in to see auction results for ${artist.name}`,
@@ -168,7 +174,7 @@ const AuctionResultsContainer: React.FC<
           })
 
           // Remember to not show auth modal again for this activity.
-          toggleAuthShowForFiltering(true)
+          hasShownAuthDialog.current = true
         }
 
         tracking.trackEvent({
@@ -187,7 +193,7 @@ const AuctionResultsContainer: React.FC<
 
   // TODO: move this and artwork copy to util? (pass loading state setter)
   function fetchResults() {
-    setIsLoading(true)
+    setMode("Loading")
 
     const relayParams = {
       page: filters?.page,
@@ -210,7 +216,7 @@ const AuctionResultsContainer: React.FC<
         logger.error(error)
       }
 
-      setIsLoading(false)
+      setMode("Idle")
     })
   }
 
@@ -256,130 +262,153 @@ const AuctionResultsContainer: React.FC<
 
       <Jump id="artistAuctionResultsTop" />
 
-      <Text variant={["sm-display", "lg-display"]}>Auction Results</Text>
+      <Text variant="lg-display">Auction Results</Text>
 
       <Spacer y={4} />
 
-      {showMobileActionSheet && (
-        <AuctionFilterMobileActionSheet
-          onClose={() => toggleMobileActionSheet(false)}
-        >
-          <AuctionFilters
-            showUpcomingAuctionResults={showUpcomingAuctionResults}
-          />
+      {mode === "MobileActionSheet" && (
+        <AuctionFilterMobileActionSheet onClose={() => setMode("Idle")}>
+          <Stack gap={4}>
+            <ArtistAuctionResultsExpandableSort />
+
+            <Box>
+              <AuctionFilters
+                showUpcomingAuctionResults={showUpcomingAuctionResults}
+              />
+            </Box>
+          </Stack>
         </AuctionFilterMobileActionSheet>
       )}
 
-      <Media greaterThan="xs">
-        <GridColumns>
-          <Column span={9}>
-            <Text variant="xs">Filter by</Text>
-          </Column>
+      <Box
+        id="Sticky__ArtistAuctionResultsFilter"
+        data-test={ContextModule.auctionResults}
+      >
+        <Media at="xs">
+          <Sticky bottomBoundary="#Sticky__ArtistAuctionResultsFilter">
+            {({ stuck }) => {
+              return (
+                <FullBleed backgroundColor="mono0">
+                  <Flex
+                    justifyContent="flex-end"
+                    alignItems="center"
+                    width="100%"
+                    {...(stuck
+                      ? {
+                          borderBottom: "1px solid",
+                          borderColor: "mono10",
+                        }
+                      : {})}
+                  >
+                    <Clickable
+                      onClick={() => setMode("MobileActionSheet")}
+                      display="flex"
+                      alignItems="center"
+                      gap={0.5}
+                      p={2}
+                    >
+                      <FilterIcon />
 
-          <Column span={3} display="flex" justifyContent="flex-end">
-            <ArtistAuctionResultsSortSelect />
-          </Column>
-        </GridColumns>
+                      <Text variant="xs">Sort & Filter</Text>
+                    </Clickable>
+                  </Flex>
+                </FullBleed>
+              )
+            }}
+          </Sticky>
+        </Media>
 
-        <Spacer y={2} />
-      </Media>
+        <Media greaterThan="xs">
+          <Sticky bottomBoundary="#Sticky__ArtistAuctionResultsFilter">
+            <FullBleed backgroundColor="mono0">
+              <AppContainer>
+                <HorizontalPadding>
+                  <Flex
+                    alignItems="center"
+                    justifyContent="space-between"
+                    gap={2}
+                    py={1}
+                    bg="mono0"
+                  >
+                    <ArtistAuctionResultsFilters
+                      showUpcomingAuctionResults={showUpcomingAuctionResults}
+                    />
 
-      <GridColumns>
-        <Column span={3}>
-          <Media greaterThan="xs">
-            <TableSidebar
-              showUpcomingAuctionResults={showUpcomingAuctionResults}
-            />
-          </Media>
-        </Column>
+                    <ArtistAuctionResultsSortSelect />
+                  </Flex>
+                </HorizontalPadding>
+              </AppContainer>
+            </FullBleed>
+          </Sticky>
+        </Media>
 
-        <Column span={9} data-test={ContextModule.auctionResults}>
-          <Media at="xs">
-            <Flex
-              justifyContent="space-between"
-              alignItems="center"
-              width="100%"
-            >
-              <Button
-                size="small"
-                onClick={() => toggleMobileActionSheet(true)}
-                Icon={FilterIcon}
-              >
-                Filter
-              </Button>
+        <Spacer y={[2, 4]} />
 
-              <ArtistAuctionResultsSortSelect />
-            </Flex>
-          </Media>
-
-          <Spacer y={[2, 0]} />
-
-          {results.length === 0 && (
-            <ArtworkGridEmptyState
-              onClearFilters={() => {
-                resetFilters?.()
-              }}
-            />
-          )}
-
-          <LoadingArea isLoading={isLoading}>
-            <Flex flexDirection="column" gap={4}>
-              {upcomingAuctionResults.length > 0 && (
-                <Box>
-                  <Text variant="md">Upcoming Auctions</Text>
-
-                  <Text variant="xs" mb={2} color="mono60">
-                    {upcomingAuctionResultsCount}{" "}
-                    {upcomingAuctionResultsCount === 1 ? "result" : "results"}
-                  </Text>
-
-                  <Join separator={<Spacer y={2} />}>
-                    {upcomingAuctionResults.map((result, index) => {
-                      return (
-                        <ArtistAuctionResultItemFragmentContainer
-                          key={index}
-                          auctionResult={result}
-                          filtersAtDefault={filtersAtDefault}
-                        />
-                      )
-                    })}
-                  </Join>
-                </Box>
-              )}
-
-              {pastAuctionResults.length > 0 && (
-                <Box>
-                  <Text variant="md">Past Auctions</Text>
-
-                  <Text variant="xs" mb={2} color="mono60">
-                    {pastAuctionResultsCount}{" "}
-                    {pastAuctionResultsCount === 1 ? "result" : "results"}
-                  </Text>
-
-                  <Join separator={<Spacer y={2} />}>
-                    {pastAuctionResults.map((result, index) => {
-                      return (
-                        <ArtistAuctionResultItemFragmentContainer
-                          key={index}
-                          auctionResult={result}
-                          filtersAtDefault={filtersAtDefault}
-                        />
-                      )
-                    })}
-                  </Join>
-                </Box>
-              )}
-            </Flex>
-          </LoadingArea>
-
-          <Pagination
-            hasNextPage={Boolean(pageInfo?.hasNextPage)}
-            pageCursors={artist.auctionResultsConnection?.pageCursors}
-            onClick={loadPage}
-            onNext={loadNext}
+        {results.length === 0 && (
+          <ArtworkGridEmptyState
+            onClearFilters={() => {
+              resetFilters?.()
+            }}
           />
-        </Column>
-      </GridColumns>
+        )}
+
+        <LoadingArea isLoading={mode === "Loading"}>
+          <Flex flexDirection="column" gap={4}>
+            {upcomingAuctionResults.length > 0 && (
+              <Box>
+                <Text variant="md">Upcoming Auctions</Text>
+
+                <Text variant="xs" mb={2} color="mono60">
+                  {upcomingAuctionResultsCount}{" "}
+                  {upcomingAuctionResultsCount === 1 ? "result" : "results"}
+                </Text>
+
+                <Join separator={<Spacer y={2} />}>
+                  {upcomingAuctionResults.map((result, index) => {
+                    return (
+                      <ArtistAuctionResultItemFragmentContainer
+                        key={index}
+                        auctionResult={result}
+                        filtersAtDefault={filtersAtDefault}
+                      />
+                    )
+                  })}
+                </Join>
+              </Box>
+            )}
+
+            {pastAuctionResults.length > 0 && (
+              <Box>
+                <Text variant="md">Past Auctions</Text>
+
+                <Text variant="xs" mb={2} color="mono60">
+                  {pastAuctionResultsCount}{" "}
+                  {pastAuctionResultsCount === 1 ? "result" : "results"}
+                </Text>
+
+                <Join separator={<Spacer y={2} />}>
+                  {pastAuctionResults.map((result, index) => {
+                    return (
+                      <ArtistAuctionResultItemFragmentContainer
+                        key={index}
+                        auctionResult={result}
+                        filtersAtDefault={filtersAtDefault}
+                      />
+                    )
+                  })}
+                </Join>
+              </Box>
+            )}
+          </Flex>
+        </LoadingArea>
+
+        <Pagination
+          hasNextPage={Boolean(pageInfo?.hasNextPage)}
+          pageCursors={artist.auctionResultsConnection?.pageCursors}
+          onClick={loadPage}
+          onNext={loadNext}
+        />
+      </Box>
     </>
   )
 }
