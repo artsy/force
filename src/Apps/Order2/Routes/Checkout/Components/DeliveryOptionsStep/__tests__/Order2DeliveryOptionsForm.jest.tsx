@@ -144,7 +144,7 @@ describe("Order2DeliveryOptionsForm", () => {
     it("displays time estimates for delivery options", () => {
       renderWithRelay(multipleOptionsData)
 
-      const timeEstimates = screen.getAllByText(/Estimated to deliver between/)
+      const timeEstimates = screen.getAllByText(/Estimated delivery between/)
       expect(timeEstimates.length).toBeGreaterThan(0)
     })
 
