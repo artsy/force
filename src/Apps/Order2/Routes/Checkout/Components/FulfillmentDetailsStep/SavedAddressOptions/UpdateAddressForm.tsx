@@ -47,11 +47,13 @@ interface UpdateAddressFormProps {
     addressID: string,
   ) => Promise<void>
   onDeleteAddress?: (addressID: string) => Promise<void>
+  defaultInitialValues?: FormikContextWithAddress
 }
 export const UpdateAddressForm = ({
   onSaveAddress,
   onDeleteAddress,
   address,
+  defaultInitialValues,
 }: UpdateAddressFormProps) => {
   const updateUserAddress = useOrder2UpdateUserAddressMutation()
   const updateUserDefaultAddress = useOrder2UpdateUserDefaultAddressMutation()
@@ -99,6 +101,15 @@ export const UpdateAddressForm = ({
     } finally {
       setIsDeleting(false)
     }
+  }
+
+  // Pre-fill phone number and country from defaultInitialValues if not present
+  // since we show form inputs with default value. phoneNumberCountryCode and
+  // address.country are the only non-"" default values
+  address.phoneNumberCountryCode ||=
+    defaultInitialValues?.phoneNumberCountryCode
+  if (defaultInitialValues?.address?.country) {
+    address.address.country ||= defaultInitialValues.address.country
   }
 
   const initialValues: FormikContextWithAddress = {

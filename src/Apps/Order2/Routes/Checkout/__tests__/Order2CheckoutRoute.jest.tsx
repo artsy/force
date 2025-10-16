@@ -938,19 +938,20 @@ describe("Order2CheckoutRoute", () => {
       })
 
       await screen.findByText("Phone number is required")
-      let requiredMessages = screen.getAllByText("required", {
-        exact: false,
-      })
 
-      expect(requiredMessages.map(el => el.textContent)).toEqual([
-        "Full name is required",
-        "*Required",
-        "Street address is required",
-        "City is required",
-        "State is required",
-        "ZIP code is required",
-        "Phone number is required",
-      ])
+      // Check for phone number error separately (not in the array)
+      expect(screen.getByText("Phone number is required")).toBeInTheDocument()
+
+      const requiredMessages = screen
+        .getAllByText("required", { exact: false })
+        .map(el => el.textContent)
+
+      expect(requiredMessages).toContainEqual("Full name is required")
+      expect(requiredMessages).toContainEqual("*Required")
+      expect(requiredMessages).toContainEqual("Street address is required")
+      expect(requiredMessages).toContainEqual("City is required")
+      expect(requiredMessages).toContainEqual("State is required")
+      expect(requiredMessages).toContainEqual("ZIP code is required")
 
       const addressInputValue = {
         name: "John Doe",
@@ -1014,12 +1015,14 @@ describe("Order2CheckoutRoute", () => {
       })
 
       await waitFor(() => {
-        requiredMessages = screen.getAllByText("required", {
+        const fulfillmentRequiredMessages = screen.getAllByText("required", {
           exact: false,
         })
 
         expect(
-          requiredMessages.filter(el => el.textContent !== "*Required").length,
+          fulfillmentRequiredMessages.filter(
+            el => el.textContent !== "*Required",
+          ).length,
         ).toEqual(0)
       })
 
