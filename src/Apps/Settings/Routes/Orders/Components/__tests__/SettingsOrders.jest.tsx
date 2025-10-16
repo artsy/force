@@ -60,9 +60,7 @@ describe("SettingsOrders", () => {
       }),
     })
 
-    expect(
-      screen.getByText("Orders can not be loaded at this time."),
-    ).toBeInTheDocument()
+    expect(screen.getByText("No Orders.")).toBeInTheDocument()
   })
 
   it("handles pagination data correctly", () => {
