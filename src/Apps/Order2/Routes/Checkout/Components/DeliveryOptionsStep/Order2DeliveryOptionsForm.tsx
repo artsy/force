@@ -187,7 +187,7 @@ const SingleShippingOption = ({ option }: SingleShippingOptionProps) => {
           </Text>
         </Flex>
         {timeEstimate && (
-          <Text variant="xs" color="mono60" mt={1}>
+          <Text variant="sm" color="mono60" mt={1}>
             {prefix} <strong>{timeRange}</strong>
           </Text>
         )}
@@ -238,13 +238,13 @@ const MultipleShippingOptionsForm = ({
               <Flex justifyContent="space-between" width="100%">
                 <Flex flexDirection="column">
                   {timeEstimate && (
-                    <Text variant="xs" color="mono60" mt={1}>
+                    <Text variant="sm" color="mono60" mt={1}>
                       {prefix} <strong>{timeRange}</strong>
                     </Text>
                   )}
                   {option.type === "ARTSY_WHITE_GLOVE" &&
                     selectedOption === option && (
-                      <Text variant="xs" color="mono60">
+                      <Text variant="sm" color="mono60">
                         This service includes custom packing, transportation on
                         a fine art shuttle, and in-home delivery.
                       </Text>

@@ -46,7 +46,7 @@ export const Order2DeliveryOptionsStep: React.FC<
           >
             Shipping method
           </Text>
-          <Text variant={["xs", "xs", "sm"]} color="mono60">
+          <Text variant="sm" color="mono60">
             Methods vary based on location and artwork size
           </Text>
         </Flex>
