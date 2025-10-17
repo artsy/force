@@ -1,6 +1,7 @@
 import { ContextModule } from "@artsy/cohesion"
 import { Button, Flex, Spacer, Text } from "@artsy/palette"
 import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
+import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import {
   CheckoutErrorBanner,
   MailtoOrderSupport,
@@ -18,6 +19,7 @@ import { useOrder2CreateUserAddressMutation } from "Apps/Order2/Routes/Checkout/
 import { useOrder2SetOrderDeliveryAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderDeliveryAddressMutation"
 import { useOrder2UnsetOrderFulfillmentOptionMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2UnsetOrderFulfillmentOptionMutation"
 import { getShippableCountries as getShippableCountryData } from "Apps/Order2/Utils/addressUtils"
+import { LocalCheckoutError } from "Apps/Order2/Utils/errors"
 import {
   AddressFormFields,
   type FormikContextWithAddress,
@@ -67,9 +69,14 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
     checkoutTracking,
     setFulfillmentDetailsComplete,
     setUserAddressMode,
+    setStepErrorMessage,
+    messages,
   } = checkoutContext
 
-  const updateShippingAddressMutation =
+  const fulfillmentDetailsError =
+    messages[CheckoutStepName.FULFILLMENT_DETAILS]?.error
+
+  const setOrderDeliveryAddressMutation =
     useOrder2SetOrderDeliveryAddressMutation()
   const unsetOrderFulfillmentOption =
     useOrder2UnsetOrderFulfillmentOptionMutation()
@@ -208,34 +215,56 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
           shippingName: values.address.name,
         }
 
-        const updateShippingAddressResult =
-          await updateShippingAddressMutation.submitMutation({
+        const setOrderDeliveryAddressResult =
+          await setOrderDeliveryAddressMutation.submitMutation({
             variables: {
               input,
             },
           })
 
-        validateAndExtractOrderResponse(
-          updateShippingAddressResult.updateOrderShippingAddress?.orderOrError,
+        const newOrder = validateAndExtractOrderResponse(
+          setOrderDeliveryAddressResult.updateOrderShippingAddress
+            ?.orderOrError,
         ).order
+
+        const isMissingShippingOption = !newOrder.fulfillmentOptions.some(
+          option => !["PICKUP", "SHIPPING_TBD"].includes(option.type),
+        )
 
         if (!hasSavedAddresses) {
           await saveAddressToUser(values)
         }
 
-        formikHelpers.setStatus({ errorBanner: null })
+        if (isMissingShippingOption) {
+          throw new LocalCheckoutError("no_shipping_options")
+        }
+
+        setStepErrorMessage({
+          step: CheckoutStepName.FULFILLMENT_DETAILS,
+          error: null,
+        })
+
         setFulfillmentDetailsComplete({}) // TODO: Clean up signature
         setUserAddressMode(null)
       } catch (error) {
-        handleError(error, formikHelpers, {
-          title: "An error occurred",
-          message: (
-            <>
-              Something went wrong while updating your delivery address. Please
-              try again or contact <MailtoOrderSupport />.
-            </>
-          ),
-        })
+        handleError(
+          error,
+          formikHelpers,
+          {
+            title: "An error occurred",
+            message: (
+              <>
+                Something went wrong while updating your delivery address.
+                Please try again or contact <MailtoOrderSupport />.
+              </>
+            ),
+          },
+          error =>
+            setStepErrorMessage({
+              step: CheckoutStepName.FULFILLMENT_DETAILS,
+              error,
+            }),
+        )
       }
     },
     [
@@ -246,9 +275,10 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
       saveAddressToUser,
       setCheckoutMode,
       setFulfillmentDetailsComplete,
+      setStepErrorMessage,
       setUserAddressMode,
       unsetOrderFulfillmentOption,
-      updateShippingAddressMutation,
+      setOrderDeliveryAddressMutation,
     ],
   )
   return (
@@ -261,9 +291,9 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
       >
         {formikContext => (
           <Flex flexDirection={"column"} mb={2}>
-            {formikContext.status?.errorBanner && (
+            {fulfillmentDetailsError && (
               <>
-                <CheckoutErrorBanner error={formikContext.status.errorBanner} />
+                <CheckoutErrorBanner error={fulfillmentDetailsError} />
                 <Spacer y={2} />
               </>
             )}

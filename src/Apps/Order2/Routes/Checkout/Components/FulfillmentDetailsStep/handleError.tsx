@@ -1,26 +1,24 @@
-import { CheckoutError } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
 import {
   type CheckoutErrorBannerProps,
   MailtoOrderSupport,
 } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
+import type {
+  CheckoutMutationError,
+  KnownErrorCodes,
+  LocalCheckoutError,
+} from "Apps/Order2/Utils/errors"
 import type { FormikContextWithAddress } from "Components/Address/AddressFormFields"
 import type { FormikHelpers } from "formik"
 
 export const handleError = (
-  error: CheckoutError | Error,
+  error: CheckoutMutationError | LocalCheckoutError | Error,
   formikHelpers: FormikHelpers<FormikContextWithAddress>,
   defaultErrorBanner: CheckoutErrorBannerProps["error"],
+  setErrorBanner: (error: CheckoutErrorBannerProps["error"]) => void,
 ) => {
-  const isCheckoutError = error instanceof CheckoutError
-  const errorMatchField = (isCheckoutError && error.code) || error.message
+  const errorMatchField = ("code" in error && error.code) || error.message
 
-  const errorHandlers: Record<
-    string,
-    {
-      errorBanner?: CheckoutErrorBannerProps["error"]
-      fieldErrors?: Record<string, string>
-    }
-  > = {
+  const errorHandlers: Record<KnownErrorCodes, ErrorHandlerConfig> = {
     missing_postal_code: {
       errorBanner: null,
       fieldErrors: {
@@ -39,6 +37,18 @@ export const handleError = (
         "address.country": "Country is required",
       },
     },
+    no_shipping_options: {
+      errorBanner: {
+        title: "Unable to provide shipping quote",
+        message: (
+          <>
+            Please contact <MailtoOrderSupport /> so we can assist you with your
+            purchase.
+          </>
+        ),
+      },
+    },
+
     destination_could_not_be_geocoded: {
       errorBanner: {
         title: "Cannot calculate shipping",
@@ -52,15 +62,20 @@ export const handleError = (
     },
   }
 
-  const errorHandler = errorHandlers[errorMatchField] || {
-    errorBanner: defaultErrorBanner || {},
-  }
+  const errorHandler =
+    errorHandlers[errorMatchField as KnownErrorCodes] ||
+    ({
+      errorBanner: defaultErrorBanner || {},
+    } as ErrorHandlerConfig)
 
   Object.entries(errorHandler.fieldErrors || {}).forEach(([field, message]) => {
     formikHelpers.setFieldError(field, message)
   })
 
-  formikHelpers.setStatus({
-    errorBanner: errorHandler.errorBanner,
-  })
+  setErrorBanner(errorHandler.errorBanner)
+}
+
+interface ErrorHandlerConfig {
+  errorBanner?: CheckoutErrorBannerProps["error"]
+  fieldErrors?: Record<string, string>
 }

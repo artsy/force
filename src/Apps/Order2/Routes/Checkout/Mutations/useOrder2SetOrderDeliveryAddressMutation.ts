@@ -16,6 +16,9 @@ export const useOrder2SetOrderDeliveryAddressMutation = () => {
                 internalID
                 ...Order2CheckoutContext_order
                 ...Order2CheckoutApp_order
+                fulfillmentOptions {
+                  type
+                }
               }
             }
             ... on OrderMutationError {
