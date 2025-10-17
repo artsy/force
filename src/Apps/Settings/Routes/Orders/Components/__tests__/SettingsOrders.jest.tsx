@@ -60,7 +60,28 @@ describe("SettingsOrders", () => {
       }),
     })
 
-    expect(screen.getByText("No Orders.")).toBeInTheDocument()
+    expect(
+      screen.getByText("You have no orders to display."),
+    ).toBeInTheDocument()
+  })
+
+  it("renders blank state with info variant and explore artworks button", () => {
+    renderWithRelay({
+      Me: () => ({
+        orders: {
+          edges: [],
+        },
+      }),
+    })
+
+    // Check for the message text
+    const message = screen.getByText("You have no orders to display.")
+    expect(message).toBeInTheDocument()
+
+    // Check for the button
+    const exploreButton = screen.getByRole("link", { name: "Explore Artworks" })
+    expect(exploreButton).toBeInTheDocument()
+    expect(exploreButton).toHaveAttribute("href", "/artworks")
   })
 
   it("handles pagination data correctly", () => {
