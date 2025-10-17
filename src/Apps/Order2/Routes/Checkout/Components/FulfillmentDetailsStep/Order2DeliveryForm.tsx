@@ -289,24 +289,12 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
         validationSchema={deliveryAddressValidationSchema}
         onSubmit={onSubmit}
       >
+        {/* TODO: refactor with useFormikContext */}
         {formikContext => (
           <Flex flexDirection={"column"} mb={2}>
             {fulfillmentDetailsError && (
               <>
                 <CheckoutErrorBanner error={fulfillmentDetailsError} />
-                <Spacer y={2} />
-              </>
-            )}
-            {Object.keys(formikContext.errors).length > 0 && (
-              <>
-                <CheckoutErrorBanner
-                  error={{
-                    title: "Please fix the following errors",
-                    message: Object.values(formikContext?.errors)
-                      .map(str => `${str}.`)
-                      .join(" "),
-                  }}
-                />
                 <Spacer y={2} />
               </>
             )}
@@ -337,6 +325,10 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
                 <Button
                   type="submit"
                   loading={formikContext.isSubmitting}
+                  disabled={
+                    !!formikContext.status?.errorBanner ||
+                    Object.keys(formikContext.errors).length > 0
+                  }
                   onClick={() => formikContext.handleSubmit()}
                 >
                   {/* TODO: This would not apply for flat shipping */}
