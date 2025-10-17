@@ -1,10 +1,10 @@
 import {
   ActionType,
   type ClickedChangePage,
+  type ClickedImmersiveView,
   ContextModule,
+  type ImmersiveViewOptionViewed,
   commercialFilterParamsChanged,
-  ImmersiveViewOptionViewed,
-  ClickedImmersiveView,
 } from "@artsy/cohesion"
 import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
 import ExpandIcon from "@artsy/icons/ExpandIcon"
@@ -37,6 +37,7 @@ import { ImmersiveView } from "Components/ArtworkFilter/ImmersiveView"
 import type { ArtworkGridLayout } from "Components/ArtworkGrid/ArtworkGrid"
 import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
 import { ArtworkGridEmptyState } from "Components/ArtworkGrid/ArtworkGridEmptyState"
+import { ProgressiveOnboardingImmersiveView } from "Components/ProgressiveOnboarding/ProgressiveOnboardingImmersiveView"
 import { Sticky } from "Components/Sticky"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useSystemContext } from "System/Hooks/useSystemContext"
@@ -259,6 +260,7 @@ export const BaseArtworkFilter: React.FC<
     )
   }, [filterContext.filters])
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: "trackImmersiveViewOptionViewed changes on every re-render and should not be used as a hook dependency"
   useEffect(() => {
     if (enableImmersiveView) trackImmersiveViewOptionViewed()
   }, [enableImmersiveView])
@@ -440,18 +442,20 @@ export const BaseArtworkFilter: React.FC<
 
                       <Flex gap={1}>
                         {enableImmersiveView && (
-                          <Button
-                            variant={"tertiary"}
-                            size={"small"}
-                            onClick={() => {
-                              setIsImmersed(true)
-                              trackClickedImmersiveView()
-                            }}
-                            disabled={Number(total) === 0}
-                          >
-                            <ExpandIcon mr={0.5} />
-                            Immersive
-                          </Button>
+                          <ProgressiveOnboardingImmersiveView>
+                            <Button
+                              variant={"tertiary"}
+                              size={"small"}
+                              onClick={() => {
+                                setIsImmersed(true)
+                                trackClickedImmersiveView()
+                              }}
+                              disabled={Number(total) === 0}
+                            >
+                              <ExpandIcon mr={0.5} />
+                              Immersive View
+                            </Button>
+                          </ProgressiveOnboardingImmersiveView>
                         )}
 
                         <ArtworkFilterSort {...(stuck ? { offset: 20 } : {})} />

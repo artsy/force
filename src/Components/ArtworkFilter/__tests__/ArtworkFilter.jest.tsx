@@ -1,4 +1,5 @@
 import { fireEvent, screen } from "@testing-library/react"
+import { useFlag } from "@unleash/proxy-client-react"
 import { ArtworkFilter, getTotalCountLabel } from "Components/ArtworkFilter"
 import { initialArtworkFilterState } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { ArtworkQueryFilter } from "Components/ArtworkFilter/ArtworkQueryFilter"
@@ -7,7 +8,6 @@ import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { omit } from "lodash"
 import { useTracking } from "react-tracking"
 import { ArtworkFilterFixture } from "./fixtures/ArtworkFilter.fixture"
-import { useFlag } from "@unleash/proxy-client-react"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -196,7 +196,7 @@ describe("ArtworkFilter", () => {
         }),
       })
 
-      fireEvent.click(screen.getByRole("button", { name: "Immersive" }))
+      fireEvent.click(screen.getByRole("button", { name: "Immersive View" }))
 
       expect(trackEvent).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -228,7 +228,7 @@ describe("ArtworkFilter", () => {
       expect(screen.getAllByText("Yellow")).toHaveLength(2)
       expect(screen.getByText("All Filters")).toBeInTheDocument()
       expect(
-        screen.getByRole("button", { name: "Immersive" }),
+        screen.getByRole("button", { name: "Immersive View" }),
       ).toBeInTheDocument()
     })
 
@@ -295,7 +295,7 @@ describe("ArtworkFilter", () => {
           }),
         })
 
-        fireEvent.click(screen.getByRole("button", { name: "Immersive" }))
+        fireEvent.click(screen.getByRole("button", { name: "Immersive View" }))
         expect(screen.getByTestId("immersive-view")).toBeInTheDocument()
       })
 
@@ -309,7 +309,7 @@ describe("ArtworkFilter", () => {
           }),
         })
 
-        const button = screen.getByRole("button", { name: "Immersive" })
+        const button = screen.getByRole("button", { name: "Immersive View" })
         expect(button).toBeDisabled()
         fireEvent.click(button)
         expect(screen.queryByTestId("immersive-view")).not.toBeInTheDocument()
@@ -354,7 +354,7 @@ describe("ArtworkFilter", () => {
 
       expect(screen.getAllByRole("button")[0]).toHaveTextContent("Filter")
       expect(
-        screen.queryByRole("button", { name: "Immersive" }),
+        screen.queryByRole("button", { name: "Immersive View" }),
       ).not.toBeInTheDocument()
     })
 
