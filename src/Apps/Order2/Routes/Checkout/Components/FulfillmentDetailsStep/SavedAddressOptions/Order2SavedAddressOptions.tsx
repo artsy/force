@@ -192,7 +192,6 @@ export const SavedAddressOptions = ({
           if (Object.keys(errors).length === 0) {
             parentFormikContext.handleSubmit()
           } else {
-            console.log(errors)
             const errorMessages = Object.values(errors).flatMap(v =>
               typeof v === "object" ? Object.values(v) : v,
             )
