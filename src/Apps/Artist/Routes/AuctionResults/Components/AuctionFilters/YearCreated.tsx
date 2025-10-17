@@ -3,19 +3,28 @@ import {
   useAuctionResultsFilterContext,
   useCurrentlySelectedFiltersForAuctionResults,
 } from "Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
+import type { Aggregations } from "Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
 import { FilterExpandable } from "Components/ArtworkFilter/ArtworkFilters/FilterExpandable"
 import { ShowMore } from "Components/ArtworkFilter/ArtworkFilters/ShowMore"
 import type * as React from "react"
 
-export const YearCreated: React.FC<React.PropsWithChildren<unknown>> = () => {
+interface YearCreatedProps {
+  isExpandable?: boolean
+}
+
+export const YearCreated: React.FC<
+  React.PropsWithChildren<YearCreatedProps>
+> = ({ isExpandable = true }) => {
   const { setFilter, aggregations } = useAuctionResultsFilterContext()
   const { createdAfterYear, createdBeforeYear, allowEmptyCreatedDates } =
     useCurrentlySelectedFiltersForAuctionResults()
 
+  const { minYear, maxYear } = getCreatedYearBounds(aggregations)
+
   const options = (
     aggregations
       ?.find(aggregation => aggregation.slice === "LOTS_BY_CREATED_YEAR")
-      ?.counts.filter(c => c !== null) || []
+      ?.counts?.filter(c => c !== null) || []
   ).map(c => ({
     text: c?.name,
     value: c?.name,
@@ -25,21 +34,23 @@ export const YearCreated: React.FC<React.PropsWithChildren<unknown>> = () => {
     return null
   }
 
-  const startOptions = options.filter(
-    option =>
-      Number.parseInt(option.value) <=
-      (createdBeforeYear ||
-        Number.parseInt(options[options.length - 1]?.value)),
-  )
+  const upperBound = createdBeforeYear ?? maxYear
+  const startOptions = options.filter(option => {
+    const v = Number.parseInt(option.value, 10)
+    return upperBound == null ? true : v <= upperBound
+  })
 
-  const endOptions = options.filter(
-    option =>
-      Number.parseInt(option.value) >=
-      (createdAfterYear || Number.parseInt(options[0]?.value)),
-  )
+  const lowerBound = createdAfterYear ?? minYear
+  const endOptions = options.filter(option => {
+    const v = Number.parseInt(option.value, 10)
+    return lowerBound == null ? true : v >= lowerBound
+  })
+
+  const selectedStart = String(createdAfterYear ?? minYear ?? "")
+  const selectedEnd = String(createdBeforeYear ?? maxYear ?? "")
 
   return (
-    <FilterExpandable label="Year Created" expanded>
+    <FilterExpandable label="Year Created" expanded enabled={isExpandable}>
       <Flex flexDirection="column" alignItems="left">
         <ShowMore>
           <Flex>
@@ -47,9 +58,9 @@ export const YearCreated: React.FC<React.PropsWithChildren<unknown>> = () => {
               title="Earliest"
               options={startOptions}
               onSelect={year =>
-                setFilter?.("createdAfterYear", Number.parseInt(year))
+                setFilter("createdAfterYear", Number.parseInt(year))
               }
-              selected={(createdAfterYear || startOptions[0]?.value).toString()}
+              selected={selectedStart}
             />
             <Spacer x={1} />
 
@@ -57,11 +68,9 @@ export const YearCreated: React.FC<React.PropsWithChildren<unknown>> = () => {
               title="Latest"
               options={endOptions}
               onSelect={year => {
-                setFilter?.("createdBeforeYear", Number.parseInt(year))
+                setFilter("createdBeforeYear", Number.parseInt(year))
               }}
-              selected={(
-                createdBeforeYear || endOptions[endOptions.length - 1]?.value
-              ).toString()}
+              selected={selectedEnd}
             />
           </Flex>
 
@@ -70,7 +79,7 @@ export const YearCreated: React.FC<React.PropsWithChildren<unknown>> = () => {
           <Checkbox
             selected={allowEmptyCreatedDates}
             onSelect={allowEmpty => {
-              setFilter?.("allowEmptyCreatedDates", allowEmpty)
+              setFilter("allowEmptyCreatedDates", allowEmpty)
             }}
           >
             Include unspecified dates
@@ -79,4 +88,26 @@ export const YearCreated: React.FC<React.PropsWithChildren<unknown>> = () => {
       </Flex>
     </FilterExpandable>
   )
+}
+
+export const getCreatedYearBounds = (
+  aggregations?: Aggregations,
+): { minYear: number | null; maxYear: number | null } => {
+  const aggregation = aggregations?.find(
+    a => a.slice === "LOTS_BY_CREATED_YEAR",
+  )
+
+  const numericYears =
+    aggregation?.counts
+      ?.map(c => Number.parseInt(c.name, 10))
+      .filter(y => Number.isFinite(y)) ?? []
+
+  if (numericYears.length === 0) {
+    return { minYear: null, maxYear: null }
+  }
+
+  return {
+    minYear: Math.min(...numericYears),
+    maxYear: Math.max(...numericYears),
+  }
 }

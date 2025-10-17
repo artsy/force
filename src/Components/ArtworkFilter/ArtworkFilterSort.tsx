@@ -21,36 +21,30 @@ export const ArtworkFilterSort: FC<
     return value === (filters?.sort ?? "-decayed_merch")
   }) || { text: "Default", value: "-decayed_merch" }
 
-  let hideDropdown
-
   return (
     <Dropdown
-      dropdown={
-        <RadioGroup
-          defaultValue={filters?.sort}
-          onSelect={option => {
-            setFilter("sort", option)
-            hideDropdown?.()
-          }}
-          p={2}
-          gap={2}
-        >
-          {(sortOptions || []).map(({ value, text }) => {
-            return <Radio key={value} value={value} label={text} />
-          })}
-        </RadioGroup>
-      }
+      dropdown={({ onHide }) => {
+        return (
+          <RadioGroup
+            defaultValue={filters?.sort}
+            onSelect={option => {
+              setFilter("sort", option)
+              onHide()
+            }}
+            p={2}
+            gap={2}
+          >
+            {(sortOptions || []).map(({ value, text }) => {
+              return <Radio key={value} value={value} label={text} />
+            })}
+          </RadioGroup>
+        )
+      }}
       openDropdownByClick
       placement="bottom-end"
       {...props}
     >
-      {/*
-        FIXME: REACT_18_UPGRADE
-        @ts-ignore */}
-      {({ anchorRef, anchorProps, onHide }) => {
-        // Store ref to hide action to access up above
-        hideDropdown = onHide
-
+      {({ anchorRef, anchorProps }) => {
         return (
           <Button
             ref={anchorRef as any}

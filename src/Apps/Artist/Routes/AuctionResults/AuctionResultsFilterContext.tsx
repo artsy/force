@@ -50,13 +50,13 @@ interface AuctionResultsFiltersAction {
 }
 
 export interface AuctionResultsFilterContextProps {
-  filters?: AuctionResultsFilters
+  filters: AuctionResultsFilters
   stagedFilters?: AuctionResultsFiltersState
   currentlySelectedFilters?: () => AuctionResultsFiltersState
   ZeroState?: React.FC<React.PropsWithChildren<unknown>> | null
   onChange?: (filterState) => void
   resetFilters?: (() => void) | null
-  setFilter?: ((name: ChangableFilter, value: any) => void) | null
+  setFilter: (name: ChangableFilter, value: any) => void
   onFilterClick?: (
     key: ChangableFilter,
     value: string,
@@ -83,7 +83,7 @@ export const AuctionResultsFilterContext =
       startDate: null,
       endDate: null,
     }),
-    setFilter: null,
+    setFilter: () => {},
     resetFilters: null,
     ZeroState: null,
   })
@@ -101,12 +101,15 @@ export type SharedAuctionResultsFilterContextProps = Pick<
   onChange?: (filterState) => void
 }
 
+type AuctionResultsFilterContextProviderProps = React.PropsWithChildren<
+  Omit<SharedAuctionResultsFilterContextProps, "filters"> & {
+    children: React.ReactNode
+    filters?: AuctionResultsFilters
+  }
+>
+
 export const AuctionResultsFilterContextProvider: React.FC<
-  React.PropsWithChildren<
-    SharedAuctionResultsFilterContextProps & {
-      children: React.ReactNode
-    }
-  >
+  AuctionResultsFilterContextProviderProps
 > = ({
   aggregations = [],
   children,
