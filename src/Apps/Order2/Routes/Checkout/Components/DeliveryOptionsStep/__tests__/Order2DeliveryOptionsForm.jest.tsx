@@ -6,13 +6,7 @@ import { Order2DeliveryOptionsForm } from "../Order2DeliveryOptionsForm"
 
 jest.unmock("react-relay")
 
-const mockCheckoutContext: any = {
-  checkoutTracking: {
-    clickedOrderProgression: jest.fn(),
-    clickedBuyerProtection: jest.fn(),
-  },
-  setDeliveryOptionComplete: jest.fn(),
-}
+let mockCheckoutContext
 
 jest.mock("Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext", () => ({
   useCheckoutContext: () => mockCheckoutContext,
@@ -31,6 +25,14 @@ jest.mock(
 
 beforeEach(() => {
   jest.clearAllMocks()
+  mockCheckoutContext = {
+    checkoutTracking: {
+      clickedOrderProgression: jest.fn(),
+      clickedBuyerProtection: jest.fn(),
+    },
+    setDeliveryOptionComplete: jest.fn(),
+    messages: {},
+  }
 })
 
 const { renderWithRelay } = setupTestWrapperTL({

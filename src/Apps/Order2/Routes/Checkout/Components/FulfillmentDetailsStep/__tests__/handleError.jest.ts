@@ -1,8 +1,9 @@
-import { CheckoutError } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
+import { CheckoutMutationError } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
 import { handleError } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/handleError"
 import type { FormikHelpers } from "formik"
 
 let formikHelpers: Partial<FormikHelpers<any>>
+let setErrorBanner: jest.Mock
 
 const defaultErrorBannerArgs = {}
 
@@ -11,11 +12,12 @@ beforeEach(() => {
     setFieldError: jest.fn(),
     setStatus: jest.fn(),
   }
+  setErrorBanner = jest.fn()
 })
 
 describe("fulfillment details error handling", () => {
   it("handles missing postal code error", () => {
-    const error = new CheckoutError(
+    const error = new CheckoutMutationError(
       "this is an error `message`",
       "missing_postal_code",
     )
@@ -24,19 +26,18 @@ describe("fulfillment details error handling", () => {
       error,
       formikHelpers as FormikHelpers<any>,
       defaultErrorBannerArgs,
+      setErrorBanner,
     )
 
     expect(formikHelpers.setFieldError).toHaveBeenCalledWith(
       "address.postalCode",
       "Postal code is required",
     )
-    expect(formikHelpers.setStatus).toHaveBeenCalledWith({
-      errorBanner: null,
-    })
+    expect(setErrorBanner).toHaveBeenCalledWith(null)
   })
 
   it("handles missing region error", () => {
-    const error = new CheckoutError(
+    const error = new CheckoutMutationError(
       "this is an error `message`",
       "missing_region",
     )
@@ -45,19 +46,18 @@ describe("fulfillment details error handling", () => {
       error,
       formikHelpers as FormikHelpers<any>,
       defaultErrorBannerArgs,
+      setErrorBanner,
     )
 
     expect(formikHelpers.setFieldError).toHaveBeenCalledWith(
       "address.region",
       "Region is required",
     )
-    expect(formikHelpers.setStatus).toHaveBeenCalledWith({
-      errorBanner: null,
-    })
+    expect(setErrorBanner).toHaveBeenCalledWith(null)
   })
 
   it("handles missing country error", () => {
-    const error = new CheckoutError(
+    const error = new CheckoutMutationError(
       "this is an error `message`",
       "missing_country",
     )
@@ -66,19 +66,18 @@ describe("fulfillment details error handling", () => {
       error,
       formikHelpers as FormikHelpers<any>,
       defaultErrorBannerArgs,
+      setErrorBanner,
     )
 
     expect(formikHelpers.setFieldError).toHaveBeenCalledWith(
       "address.country",
       "Country is required",
     )
-    expect(formikHelpers.setStatus).toHaveBeenCalledWith({
-      errorBanner: null,
-    })
+    expect(setErrorBanner).toHaveBeenCalledWith(null)
   })
 
   it("handles destination could not be geocoded error", () => {
-    const error = new CheckoutError(
+    const error = new CheckoutMutationError(
       "this is an error `message`",
       "destination_could_not_be_geocoded",
     )
@@ -87,13 +86,14 @@ describe("fulfillment details error handling", () => {
       error,
       formikHelpers as FormikHelpers<any>,
       defaultErrorBannerArgs,
+      setErrorBanner,
     )
 
     expect(formikHelpers.setFieldError).not.toHaveBeenCalled()
-    expect(formikHelpers.setStatus).toHaveBeenCalledWith({
-      errorBanner: expect.objectContaining({
+    expect(setErrorBanner).toHaveBeenCalledWith(
+      expect.objectContaining({
         title: "Cannot calculate shipping",
       }),
-    })
+    )
   })
 })
