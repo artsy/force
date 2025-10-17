@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<89872dee1a7459755cb4c19cce588809>>
+ * @generated SignedSource<<af68be8833abba0ddf0cdbde30d8d116>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,51 +10,42 @@
 
 import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SettingsOrdersRowLoaderQuery$variables = {
-  orderID: string;
-};
-export type SettingsOrdersRowLoaderQuery$data = {
+export type SettingsOrdersRow_Test_Query$variables = Record<PropertyKey, never>;
+export type SettingsOrdersRow_Test_Query$data = {
   readonly me: {
     readonly order: {
       readonly " $fragmentSpreads": FragmentRefs<"SettingsOrdersRow_order">;
     } | null | undefined;
   } | null | undefined;
 };
-export type SettingsOrdersRowLoaderQuery = {
-  response: SettingsOrdersRowLoaderQuery$data;
-  variables: SettingsOrdersRowLoaderQuery$variables;
+export type SettingsOrdersRow_Test_Query = {
+  response: SettingsOrdersRow_Test_Query$data;
+  variables: SettingsOrdersRow_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "orderID"
-  }
-],
-v1 = [
-  {
-    "kind": "Variable",
+    "kind": "Literal",
     "name": "id",
-    "variableName": "orderID"
+    "value": "test-id"
   }
 ],
-v2 = {
+v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v3 = {
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "href",
   "storageKey": null
 },
-v4 = [
+v3 = [
   {
     "alias": null,
     "args": [
@@ -91,13 +82,43 @@ v4 = [
     ],
     "storageKey": "cropped(height:45,width:45)"
   }
-];
+],
+v4 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v5 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v6 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
+},
+v7 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Image"
+},
+v8 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "CroppedImageUrl"
+};
 return {
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "SettingsOrdersRowLoaderQuery",
+    "name": "SettingsOrdersRow_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -109,7 +130,7 @@ return {
         "selections": [
           {
             "alias": null,
-            "args": (v1/*: any*/),
+            "args": (v0/*: any*/),
             "concreteType": "Order",
             "kind": "LinkedField",
             "name": "order",
@@ -121,7 +142,7 @@ return {
                 "name": "SettingsOrdersRow_order"
               }
             ],
-            "storageKey": null
+            "storageKey": "order(id:\"test-id\")"
           }
         ],
         "storageKey": null
@@ -132,9 +153,9 @@ return {
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "SettingsOrdersRowLoaderQuery",
+    "name": "SettingsOrdersRow_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -146,7 +167,7 @@ return {
         "selections": [
           {
             "alias": null,
-            "args": (v1/*: any*/),
+            "args": (v0/*: any*/),
             "concreteType": "Order",
             "kind": "LinkedField",
             "name": "order",
@@ -280,7 +301,7 @@ return {
                         "name": "lastDigits",
                         "storageKey": null
                       },
-                      (v2/*: any*/)
+                      (v1/*: any*/)
                     ],
                     "type": "CreditCard",
                     "abstractKey": null
@@ -295,7 +316,7 @@ return {
                         "name": "last4",
                         "storageKey": null
                       },
-                      (v2/*: any*/)
+                      (v1/*: any*/)
                     ],
                     "type": "BankAccount",
                     "abstractKey": null
@@ -337,7 +358,7 @@ return {
                     "name": "artwork",
                     "plural": false,
                     "selections": [
-                      (v3/*: any*/),
+                      (v2/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -346,7 +367,7 @@ return {
                         "name": "partner",
                         "plural": false,
                         "selections": [
-                          (v3/*: any*/),
+                          (v2/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -376,14 +397,14 @@ return {
                                 "kind": "LinkedField",
                                 "name": "icon",
                                 "plural": false,
-                                "selections": (v4/*: any*/),
+                                "selections": (v3/*: any*/),
                                 "storageKey": null
                               },
-                              (v2/*: any*/)
+                              (v1/*: any*/)
                             ],
                             "storageKey": null
                           },
-                          (v2/*: any*/)
+                          (v1/*: any*/)
                         ],
                         "storageKey": null
                       },
@@ -422,12 +443,12 @@ return {
                         "name": "artists",
                         "plural": true,
                         "selections": [
-                          (v3/*: any*/),
-                          (v2/*: any*/)
+                          (v2/*: any*/),
+                          (v1/*: any*/)
                         ],
                         "storageKey": "artists(shallow:true)"
                       },
-                      (v2/*: any*/)
+                      (v1/*: any*/)
                     ],
                     "storageKey": null
                   },
@@ -446,38 +467,209 @@ return {
                         "kind": "LinkedField",
                         "name": "image",
                         "plural": false,
-                        "selections": (v4/*: any*/),
+                        "selections": (v3/*: any*/),
                         "storageKey": null
                       },
-                      (v2/*: any*/)
+                      (v1/*: any*/)
                     ],
                     "storageKey": null
                   },
-                  (v2/*: any*/)
+                  (v1/*: any*/)
                 ],
                 "storageKey": null
               },
-              (v2/*: any*/)
+              (v1/*: any*/)
             ],
-            "storageKey": null
+            "storageKey": "order(id:\"test-id\")"
           },
-          (v2/*: any*/)
+          (v1/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "f4e993a58802c5d22103b73a93e4dd07",
+    "cacheID": "e534de5810c35af2181609263076cd2d",
     "id": null,
-    "metadata": {},
-    "name": "SettingsOrdersRowLoaderQuery",
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "me": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Me"
+        },
+        "me.id": (v4/*: any*/),
+        "me.order": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Order"
+        },
+        "me.order.buyerState": {
+          "enumValues": [
+            "APPROVED",
+            "CANCELLED",
+            "COMPLETED",
+            "DECLINED_BY_BUYER",
+            "DECLINED_BY_SELLER",
+            "INCOMPLETE",
+            "OFFER_RECEIVED",
+            "PAYMENT_FAILED",
+            "PROCESSING_OFFLINE_PAYMENT",
+            "PROCESSING_PAYMENT",
+            "REFUNDED",
+            "SHIPPED",
+            "SUBMITTED",
+            "UNKNOWN"
+          ],
+          "nullable": true,
+          "plural": false,
+          "type": "OrderBuyerStateEnum"
+        },
+        "me.order.buyerTotal": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Money"
+        },
+        "me.order.buyerTotal.display": (v5/*: any*/),
+        "me.order.code": (v6/*: any*/),
+        "me.order.createdAt": (v5/*: any*/),
+        "me.order.creditCardWalletType": {
+          "enumValues": [
+            "APPLE_PAY",
+            "GOOGLE_PAY"
+          ],
+          "nullable": true,
+          "plural": false,
+          "type": "OrderCreditCardWalletTypeEnum"
+        },
+        "me.order.deliveryInfo": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "DeliveryInfo"
+        },
+        "me.order.deliveryInfo.trackingURL": (v5/*: any*/),
+        "me.order.displayTexts": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "DisplayTexts"
+        },
+        "me.order.displayTexts.actionPrompt": (v5/*: any*/),
+        "me.order.displayTexts.stateName": (v6/*: any*/),
+        "me.order.id": (v4/*: any*/),
+        "me.order.internalID": (v4/*: any*/),
+        "me.order.lineItems": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": true,
+          "type": "LineItem"
+        },
+        "me.order.lineItems.artwork": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Artwork"
+        },
+        "me.order.lineItems.artwork.artistNames": (v5/*: any*/),
+        "me.order.lineItems.artwork.artists": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "Artist"
+        },
+        "me.order.lineItems.artwork.artists.href": (v5/*: any*/),
+        "me.order.lineItems.artwork.artists.id": (v4/*: any*/),
+        "me.order.lineItems.artwork.href": (v5/*: any*/),
+        "me.order.lineItems.artwork.id": (v4/*: any*/),
+        "me.order.lineItems.artwork.partner": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Partner"
+        },
+        "me.order.lineItems.artwork.partner.href": (v5/*: any*/),
+        "me.order.lineItems.artwork.partner.id": (v4/*: any*/),
+        "me.order.lineItems.artwork.partner.initials": (v5/*: any*/),
+        "me.order.lineItems.artwork.partner.name": (v5/*: any*/),
+        "me.order.lineItems.artwork.partner.profile": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Profile"
+        },
+        "me.order.lineItems.artwork.partner.profile.icon": (v7/*: any*/),
+        "me.order.lineItems.artwork.partner.profile.icon.cropped": (v8/*: any*/),
+        "me.order.lineItems.artwork.partner.profile.icon.cropped.src": (v6/*: any*/),
+        "me.order.lineItems.artwork.partner.profile.icon.cropped.srcSet": (v6/*: any*/),
+        "me.order.lineItems.artwork.partner.profile.id": (v4/*: any*/),
+        "me.order.lineItems.artwork.shippingOrigin": (v5/*: any*/),
+        "me.order.lineItems.artwork.title": (v5/*: any*/),
+        "me.order.lineItems.artworkVersion": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ArtworkVersion"
+        },
+        "me.order.lineItems.artworkVersion.id": (v4/*: any*/),
+        "me.order.lineItems.artworkVersion.image": (v7/*: any*/),
+        "me.order.lineItems.artworkVersion.image.cropped": (v8/*: any*/),
+        "me.order.lineItems.artworkVersion.image.cropped.src": (v6/*: any*/),
+        "me.order.lineItems.artworkVersion.image.cropped.srcSet": (v6/*: any*/),
+        "me.order.lineItems.id": (v4/*: any*/),
+        "me.order.paymentMethodDetails": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "PaymentMethodUnion"
+        },
+        "me.order.paymentMethodDetails.__typename": (v6/*: any*/),
+        "me.order.paymentMethodDetails.id": (v4/*: any*/),
+        "me.order.paymentMethodDetails.last4": (v6/*: any*/),
+        "me.order.paymentMethodDetails.lastDigits": (v6/*: any*/),
+        "me.order.selectedFulfillmentOption": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "FulfillmentOption"
+        },
+        "me.order.selectedFulfillmentOption.type": {
+          "enumValues": [
+            "ARTSY_EXPRESS",
+            "ARTSY_STANDARD",
+            "ARTSY_WHITE_GLOVE",
+            "DOMESTIC_FLAT",
+            "INTERNATIONAL_FLAT",
+            "PICKUP",
+            "SHIPPING_TBD"
+          ],
+          "nullable": false,
+          "plural": false,
+          "type": "FulfillmentOptionTypeEnum"
+        },
+        "me.order.source": {
+          "enumValues": [
+            "ARTWORK_PAGE",
+            "INQUIRY",
+            "PARTNER_OFFER",
+            "PRIVATE_SALE"
+          ],
+          "nullable": false,
+          "plural": false,
+          "type": "OrderSourceEnum"
+        }
+      }
+    },
+    "name": "SettingsOrdersRow_Test_Query",
     "operationKind": "query",
-    "text": "query SettingsOrdersRowLoaderQuery(\n  $orderID: ID!\n) {\n  me {\n    order(id: $orderID) {\n      ...SettingsOrdersRow_order\n      id\n    }\n    id\n  }\n}\n\nfragment SettingsOrdersRow_order on Order {\n  source\n  internalID\n  code\n  buyerState\n  createdAt\n  creditCardWalletType\n  displayTexts {\n    stateName\n    actionPrompt\n  }\n  deliveryInfo {\n    trackingURL\n  }\n  selectedFulfillmentOption {\n    type\n  }\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      lastDigits\n      id\n    }\n    ... on BankAccount {\n      last4\n      id\n    }\n    ... on WireTransfer {\n      __typename\n    }\n  }\n  buyerTotal {\n    display\n  }\n  lineItems {\n    artwork {\n      href\n      partner {\n        href\n        initials\n        name\n        profile {\n          icon {\n            cropped(width: 45, height: 45) {\n              src\n              srcSet\n            }\n          }\n          id\n        }\n        id\n      }\n      shippingOrigin\n      title\n      artistNames\n      artists(shallow: true) {\n        href\n        id\n      }\n      id\n    }\n    artworkVersion {\n      image {\n        cropped(width: 45, height: 45) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    id\n  }\n}\n"
+    "text": "query SettingsOrdersRow_Test_Query {\n  me {\n    order(id: \"test-id\") {\n      ...SettingsOrdersRow_order\n      id\n    }\n    id\n  }\n}\n\nfragment SettingsOrdersRow_order on Order {\n  source\n  internalID\n  code\n  buyerState\n  createdAt\n  creditCardWalletType\n  displayTexts {\n    stateName\n    actionPrompt\n  }\n  deliveryInfo {\n    trackingURL\n  }\n  selectedFulfillmentOption {\n    type\n  }\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      lastDigits\n      id\n    }\n    ... on BankAccount {\n      last4\n      id\n    }\n    ... on WireTransfer {\n      __typename\n    }\n  }\n  buyerTotal {\n    display\n  }\n  lineItems {\n    artwork {\n      href\n      partner {\n        href\n        initials\n        name\n        profile {\n          icon {\n            cropped(width: 45, height: 45) {\n              src\n              srcSet\n            }\n          }\n          id\n        }\n        id\n      }\n      shippingOrigin\n      title\n      artistNames\n      artists(shallow: true) {\n        href\n        id\n      }\n      id\n    }\n    artworkVersion {\n      image {\n        cropped(width: 45, height: 45) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "2889a77da0af670f2c96f58bf57e456f";
+(node as any).hash = "b78a04ba1b5f325994246a33b5a84497";
 
 export default node;

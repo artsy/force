@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bea4a84560ba4c84406882a0d5e3a0e2>>
+ * @generated SignedSource<<e56e2aab6d3d7734b6d6048b79d8d6af>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,6 +9,7 @@
 // @ts-nocheck
 
 import { ReaderFragment } from 'relay-runtime';
+export type FulfillmentOptionTypeEnum = "ARTSY_EXPRESS" | "ARTSY_STANDARD" | "ARTSY_WHITE_GLOVE" | "DOMESTIC_FLAT" | "INTERNATIONAL_FLAT" | "PICKUP" | "SHIPPING_TBD" | "%future added value";
 export type OrderBuyerStateEnum = "APPROVED" | "CANCELLED" | "COMPLETED" | "DECLINED_BY_BUYER" | "DECLINED_BY_SELLER" | "INCOMPLETE" | "OFFER_RECEIVED" | "PAYMENT_FAILED" | "PROCESSING_OFFLINE_PAYMENT" | "PROCESSING_PAYMENT" | "REFUNDED" | "SHIPPED" | "SUBMITTED" | "UNKNOWN" | "%future added value";
 export type OrderCreditCardWalletTypeEnum = "APPLE_PAY" | "GOOGLE_PAY" | "%future added value";
 export type OrderSourceEnum = "ARTWORK_PAGE" | "INQUIRY" | "PARTNER_OFFER" | "PRIVATE_SALE" | "%future added value";
@@ -21,7 +22,13 @@ export type SettingsOrdersRow_order$data = {
   readonly code: string;
   readonly createdAt: string | null | undefined;
   readonly creditCardWalletType: OrderCreditCardWalletTypeEnum | null | undefined;
-  readonly currencyCode: string;
+  readonly deliveryInfo: {
+    readonly trackingURL: string | null | undefined;
+  } | null | undefined;
+  readonly displayTexts: {
+    readonly actionPrompt: string | null | undefined;
+    readonly stateName: string;
+  };
   readonly internalID: string;
   readonly lineItems: ReadonlyArray<{
     readonly artwork: {
@@ -63,11 +70,14 @@ export type SettingsOrdersRow_order$data = {
     readonly lastDigits: string;
   } | {
     readonly __typename: "WireTransfer";
-    readonly isManualPayment: boolean;
+    readonly __typename: "WireTransfer";
   } | {
     // This will never be '%other', but we need some
     // value in case none of the concrete values match.
     readonly __typename: "%other";
+  } | null | undefined;
+  readonly selectedFulfillmentOption: {
+    readonly type: FulfillmentOptionTypeEnum;
   } | null | undefined;
   readonly source: OrderSourceEnum;
   readonly " $fragmentType": "SettingsOrdersRow_order";
@@ -174,6 +184,67 @@ return {
     {
       "alias": null,
       "args": null,
+      "concreteType": "DisplayTexts",
+      "kind": "LinkedField",
+      "name": "displayTexts",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "stateName",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "actionPrompt",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "DeliveryInfo",
+      "kind": "LinkedField",
+      "name": "deliveryInfo",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "trackingURL",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "FulfillmentOption",
+      "kind": "LinkedField",
+      "name": "selectedFulfillmentOption",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "type",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": null,
       "kind": "LinkedField",
       "name": "paymentMethodDetails",
@@ -213,20 +284,6 @@ return {
           ],
           "type": "BankAccount",
           "abstractKey": null
-        },
-        {
-          "kind": "InlineFragment",
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "isManualPayment",
-              "storageKey": null
-            }
-          ],
-          "type": "WireTransfer",
-          "abstractKey": null
         }
       ],
       "storageKey": null
@@ -247,13 +304,6 @@ return {
           "storageKey": null
         }
       ],
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "currencyCode",
       "storageKey": null
     },
     {
@@ -392,6 +442,6 @@ return {
 };
 })();
 
-(node as any).hash = "88c3bff01ede9fa25c63422cac008709";
+(node as any).hash = "32318031c913b715b38685d391e86f18";
 
 export default node;
