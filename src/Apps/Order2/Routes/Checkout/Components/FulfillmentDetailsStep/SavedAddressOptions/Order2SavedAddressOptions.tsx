@@ -8,6 +8,7 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
+import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { AddAddressForm } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/SavedAddressOptions/AddAddressForm"
 import { UpdateAddressForm } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/SavedAddressOptions/UpdateAddressForm"
 import {
@@ -32,7 +33,8 @@ export const SavedAddressOptions = ({
   onSelectAddress,
   newAddressInitialValues,
 }: SavedAddressOptionsProps) => {
-  const { setUserAddressMode, userAddressMode } = useCheckoutContext()
+  const { setUserAddressMode, userAddressMode, setStepErrorMessage } =
+    useCheckoutContext()
   const parentFormikContext = useFormikContext<FormikContextWithAddress>()
 
   const [selectedAddressID, setSelectedAddressID] = useState(
@@ -195,12 +197,13 @@ export const SavedAddressOptions = ({
             const errorMessages = Object.values(errors).flatMap(v =>
               typeof v === "object" ? Object.values(v) : v,
             )
-
-            parentFormikContext.setStatus({
-              errorBanner: {
-                title: "Please fix the following errors",
-                message: `${errorMessages.join(". ")}.`,
-              },
+            const error = {
+              title: "Please fix the following errors",
+              message: `${errorMessages.join(". ")}.`,
+            }
+            setStepErrorMessage({
+              step: CheckoutStepName.FULFILLMENT_DETAILS,
+              error,
             })
           }
         }}
