@@ -4,11 +4,18 @@ import React from "react"
 interface SectionContainerProps {
   title: string
   children?: React.ReactNode
+  emptyStateNote?: string
+  emptyStateAction?: React.ReactNode
 }
 
 export const SectionContainer: React.FC<
   React.PropsWithChildren<SectionContainerProps>
-> = ({ children, title }) => {
+> = ({
+  children,
+  title,
+  emptyStateNote = "Nothing to Show",
+  emptyStateAction,
+}) => {
   const hasChildren = !!React.Children.count(children)
 
   return (
@@ -20,7 +27,10 @@ export const SectionContainer: React.FC<
       {hasChildren ? (
         <GridColumns>{children}</GridColumns>
       ) : (
-        <Message variant="info">Nothing to Show</Message>
+        <>
+          <Message variant="info">{emptyStateNote}</Message>
+          {emptyStateAction}
+        </>
       )}
     </>
   )

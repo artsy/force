@@ -28,7 +28,7 @@ describe("UserActiveBids", () => {
     expect(screen.getByText("Monk By The Sea")).toBeInTheDocument()
   })
 
-  it("renders -Nothing to Show- message when no sale found", () => {
+  it("renders empty state message and button when no active bids", () => {
     renderWithRelay({
       Me: () => ({
         activeLotStandings: [],
@@ -36,7 +36,11 @@ describe("UserActiveBids", () => {
     })
 
     expect(screen.getByText("Active Bids")).toBeInTheDocument()
-    expect(screen.getByText("Nothing to Show")).toBeInTheDocument()
+    expect(screen.getByText("You have no active bids.")).toBeInTheDocument()
+
+    const exploreButton = screen.getByRole("link", { name: "Explore Auctions" })
+    expect(exploreButton).toBeInTheDocument()
+    expect(exploreButton).toHaveAttribute("href", "/auctions")
   })
 
   it("when user is the highest bidder, renders -Highest bid- text", () => {
