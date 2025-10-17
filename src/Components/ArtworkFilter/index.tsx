@@ -1,10 +1,10 @@
 import {
   ActionType,
   type ClickedChangePage,
+  type ClickedImmersiveView,
   ContextModule,
+  type ImmersiveViewOptionViewed,
   commercialFilterParamsChanged,
-  ImmersiveViewOptionViewed,
-  ClickedImmersiveView,
 } from "@artsy/cohesion"
 import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
 import ExpandIcon from "@artsy/icons/ExpandIcon"
@@ -259,6 +259,7 @@ export const BaseArtworkFilter: React.FC<
     )
   }, [filterContext.filters])
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: "trackImmersiveViewOptionViewed changes on every re-render and should not be used as a hook dependency"
   useEffect(() => {
     if (enableImmersiveView) trackImmersiveViewOptionViewed()
   }, [enableImmersiveView])

@@ -1,8 +1,11 @@
-import { useCallback, useEffect, useState } from "react"
-import { graphql, useFragment } from "react-relay"
-import styled from "styled-components"
-import { Link } from "react-head"
-import { Blurhash } from "react-blurhash"
+import {
+  ActionType,
+  type ClickedMainArtworkGrid,
+  ContextModule,
+  type ImmersiveViewArtworkDisplayed,
+  OwnerType,
+} from "@artsy/cohesion"
+import CollapseIcon from "@artsy/icons/CollapseIcon"
 import {
   Box,
   Button,
@@ -12,22 +15,19 @@ import {
   ShelfPrevious,
   Text,
 } from "@artsy/palette"
-import CollapseIcon from "@artsy/icons/CollapseIcon"
+import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import type {
   ImmersiveView_filtered_artworks$data,
   ImmersiveView_filtered_artworks$key,
 } from "__generated__/ImmersiveView_filtered_artworks.graphql"
-import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
+import { useCallback, useEffect, useState } from "react"
+import { Blurhash } from "react-blurhash"
 import { FocusOn } from "react-focus-on"
+import { Link } from "react-head"
+import { graphql, useFragment } from "react-relay"
 import { useTracking } from "react-tracking"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import {
-  ActionType,
-  ClickedMainArtworkGrid,
-  ContextModule,
-  ImmersiveViewArtworkDisplayed,
-  OwnerType,
-} from "@artsy/cohesion"
+import styled from "styled-components"
 
 const ITEMS_PER_PAGE = 30
 
@@ -91,7 +91,7 @@ export const ImmersiveView: React.FC<ImmersiveViewProps> = props => {
     } else {
       navigateToPreviousPage()
     }
-  }, [currentIndex])
+  }, [currentIndex, navigateToPreviousPage])
 
   const handleNextArtwork = useCallback(() => {
     const newIndex = Math.min(artworks.length - 1, currentIndex + 1)
@@ -101,7 +101,7 @@ export const ImmersiveView: React.FC<ImmersiveViewProps> = props => {
     } else {
       navigateToNextPage()
     }
-  }, [currentIndex])
+  }, [artworks.length, currentIndex, navigateToNextPage])
 
   const handleKeyDown = useCallback(
     (event: KeyboardEvent) => {
@@ -122,13 +122,7 @@ export const ImmersiveView: React.FC<ImmersiveViewProps> = props => {
           break
       }
     },
-    [
-      artworks.length,
-      currentIndex,
-      onClose,
-      handleNextArtwork,
-      handlePreviousArtwork,
-    ],
+    [onClose, handleNextArtwork, handlePreviousArtwork],
   )
 
   const tracking = useTracking()
@@ -158,6 +152,7 @@ export const ImmersiveView: React.FC<ImmersiveViewProps> = props => {
     tracking.trackEvent(params)
   }
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: "trackImmersiveViewArtworkDisplayed changes on every re-render and should not be used as a hook dependency"
   useEffect(() => {
     // Debounce tracking to only fire if artwork remains in view for the threshold duration
     const timeoutId = setTimeout(() => {
