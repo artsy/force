@@ -73,12 +73,9 @@ describe("SettingsOrders", () => {
         },
       }),
     })
-
-    // Check for the message text
     const message = screen.getByText("You have no orders to display.")
     expect(message).toBeInTheDocument()
 
-    // Check for the button
     const exploreButton = screen.getByRole("link", { name: "Explore Artworks" })
     expect(exploreButton).toBeInTheDocument()
     expect(exploreButton).toHaveAttribute("href", "/artworks")
