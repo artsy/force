@@ -43,13 +43,13 @@ export const Order2FulfillmentDetailsCompletedView: React.FC<
             type="button"
             onClick={onClickEdit}
           >
-            <Text variant="xs" fontWeight="normal" color="mono100">
+            <Text variant="sm" fontWeight="normal" color="mono100">
               Edit
             </Text>
           </Clickable>
         </Flex>
         <Flex alignItems="center" ml="30px" mt={1}>
-          <Text variant="xs" fontWeight="normal" color="mono100">
+          <Text variant="sm" fontWeight="normal" color="mono100">
             After your order is confirmed, a specialist will contact you within
             2 business days to coordinate pickup.
           </Text>
@@ -78,7 +78,7 @@ export const Order2FulfillmentDetailsCompletedView: React.FC<
           type="button"
           onClick={onClickEdit}
         >
-          <Text variant="xs" fontWeight="normal" color="mono100">
+          <Text variant="sm" fontWeight="normal" color="mono100">
             Edit
           </Text>
         </Clickable>
@@ -126,28 +126,28 @@ const ShippingContent = ({ fulfillmentDetails }) => {
   return (
     <>
       {name && (
-        <Text variant={["xs", "sm-display"]} color="mono100">
+        <Text variant="sm" color="mono100">
           {name}
         </Text>
       )}
       {addressLine1 && (
-        <Text variant={["xs", "sm-display"]} color="mono100">
+        <Text variant="sm" color="mono100">
           {addressLine1}
         </Text>
       )}
       {addressLine2 && (
-        <Text variant={["xs", "sm-display"]} color="mono100">
+        <Text variant="sm" color="mono100">
           {addressLine2}
         </Text>
       )}
       {(city || region || postalCode) && (
-        <Text variant={["xs", "sm-display"]} color="mono100">
+        <Text variant="sm" color="mono100">
           {[city, region, country, postalCode].filter(Boolean).join(", ")}
         </Text>
       )}
 
       {phoneNumber && (
-        <Text variant={["xs", "sm-display"]} color="mono100">
+        <Text variant="sm" color="mono100">
           {phoneNumber.display}
         </Text>
       )}

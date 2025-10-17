@@ -40,15 +40,15 @@ export const Order2CollapsibleOrderSummary: React.FC<
           />
         </RouterLink>
         <Box overflow="hidden" flex={1} mr={2}>
-          <Text overflowEllipsis variant="xs" color="mono100">
+          <Text overflowEllipsis variant="sm" color="mono100">
             {artworkVersion?.artistNames}
           </Text>
-          <Text overflowEllipsis variant="xs" color="mono60">
+          <Text overflowEllipsis variant="sm" color="mono60">
             {[artworkVersion?.title, artworkVersion?.date].join(", ")}
           </Text>
         </Box>
         <Clickable display="flex" onClick={handleToggle} flexShrink={0}>
-          <Text variant="xs" color="mono100" mr={0.5}>
+          <Text variant="sm" color="mono100" mr={0.5}>
             {orderData.buyerTotal?.display || orderData.itemsTotal?.display}
           </Text>
 

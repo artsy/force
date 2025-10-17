@@ -42,7 +42,7 @@ export const Order2OfferCompletedView: React.FC<
           type="button"
           onClick={onClickEdit}
         >
-          <Text variant="xs" fontWeight="normal" color="mono100">
+          <Text variant="sm" fontWeight="normal" color="mono100">
             Edit
           </Text>
         </Clickable>

@@ -54,18 +54,17 @@ export const Order2DeliveryOptionsCompletedView: React.FC<
           type="button"
           onClick={onClickEdit}
         >
-          <Text variant="xs" fontWeight="normal" color="mono100">
+          <Text variant="sm" fontWeight="normal" color="mono100">
             Edit
           </Text>
         </Clickable>
       </Flex>
-      <Spacer y={1} />
       <Box ml="30px" mt={1}>
         <Text variant="sm-display" color="mono100">
           {label}
         </Text>
         {timeEstimate && (
-          <Text variant="xs" color="mono60">
+          <Text variant="sm" color="mono60">
             {prefix} <strong>{timeRange}</strong>
           </Text>
         )}

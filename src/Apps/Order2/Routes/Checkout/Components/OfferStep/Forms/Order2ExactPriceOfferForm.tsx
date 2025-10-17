@@ -151,7 +151,7 @@ export const Order2ExactPriceOfferForm: React.FC<
                 {!isCustom && (
                   <>
                     <Spacer y={1} />
-                    <Text variant="xs" color="mono60">
+                    <Text variant="sm-display" color="mono60">
                       {description}
                     </Text>
                     <Spacer y={4} />
@@ -190,7 +190,7 @@ export const Order2ExactPriceOfferForm: React.FC<
           >
             Offer note
           </Text>
-          <Text variant={["xs", "xs", "sm"]} color="mono100">
+          <Text variant="sm" color="mono100">
             Additional context to help the gallery evaluate your offer.
           </Text>
 

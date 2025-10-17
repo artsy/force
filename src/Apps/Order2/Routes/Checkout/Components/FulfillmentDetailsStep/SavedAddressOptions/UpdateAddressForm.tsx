@@ -216,7 +216,7 @@ export const UpdateAddressForm = ({
           <Spacer y={2} />
           <Flex justifyContent="center">
             <Clickable onClick={() => setShowDeleteDialog(true)}>
-              <Text variant="xs" color="red100">
+              <Text variant="sm" color="red100">
                 Delete address
               </Text>
             </Clickable>

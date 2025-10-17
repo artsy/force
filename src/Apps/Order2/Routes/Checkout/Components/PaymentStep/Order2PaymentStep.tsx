@@ -39,7 +39,7 @@ export const Order2PaymentStep: React.FC<Order2PaymentStepProps> = ({
           >
             Payment
           </Text>
-          <Text variant={["xs", "xs", "sm"]} color="mono60">
+          <Text variant="sm" color="mono60">
             Options vary based on price, gallery, and location
           </Text>
         </Flex>

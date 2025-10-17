@@ -61,7 +61,7 @@ export const Order2FulfillmentDetailsStep: React.FC<
           >
             Delivery
           </Text>
-          <Text variant={["xs", "xs", "sm"]} color="mono60">
+          <Text variant="sm" color="mono60">
             Pickup availability and shipping costs vary by location
           </Text>
         </Flex>

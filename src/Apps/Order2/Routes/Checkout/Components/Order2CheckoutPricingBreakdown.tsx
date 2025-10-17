@@ -49,7 +49,7 @@ export const Order2CheckoutPricingBreakdown: React.FC<
 
               secondLine = (
                 <>
-                  <Text variant="xs" color="blue100">
+                  <Text variant="sm" color="blue100">
                     <Flex alignItems="center">
                       <StopwatchIcon height={18} />
                       <Spacer x={0.5} />
