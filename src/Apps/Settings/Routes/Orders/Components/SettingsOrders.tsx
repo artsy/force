@@ -1,5 +1,6 @@
-import { Join, Message, Spacer } from "@artsy/palette"
+import { Button, Join, Message, Spacer } from "@artsy/palette"
 import { CommercePaginationFragmentContainer } from "Components/Pagination/CommercePagination"
+import { RouterLink } from "System/Components/RouterLink"
 import { extractNodes } from "Utils/extractNodes"
 import type { SettingsOrders_me$data } from "__generated__/SettingsOrders_me.graphql"
 import { type FC, useState, Suspense } from "react"
@@ -25,7 +26,16 @@ const SettingsOrders: FC<React.PropsWithChildren<SettingsOrdersProps>> = ({
   const orders = extractNodes(me.orders)
 
   if (orders.length === 0) {
-    return <Message>No Orders.</Message>
+    return (
+      <>
+        <Message variant="info">You have no orders to display.</Message>
+        <RouterLink to="/artworks">
+          <Button mt={4} variant="primaryBlack">
+            Explore Artworks
+          </Button>
+        </RouterLink>
+      </>
+    )
   }
 
   const hasNextPage = me.orders?.pageInfo.hasNextPage ?? false

@@ -65,7 +65,7 @@ const SettingsPaymentsMethods: FC<
         </GridColumns>
       )}
 
-      <Button mt={4} onClick={handleClick}>
+      <Button mt={4} onClick={handleClick} variant="primaryBlack">
         Add New Card
       </Button>
 
