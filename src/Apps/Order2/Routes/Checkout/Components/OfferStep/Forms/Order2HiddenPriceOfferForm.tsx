@@ -8,8 +8,8 @@ export const Order2HiddenPriceOfferForm: React.FC<OfferFormComponentProps> = ({
   formIsDirty,
   isSubmittingOffer,
   onOfferValueChange,
+  onOfferOptionSelected,
   onOfferNoteChange,
-  onOfferInputFocus,
   onContinueButtonPressed,
 }) => {
   return (
@@ -20,7 +20,11 @@ export const Order2HiddenPriceOfferForm: React.FC<OfferFormComponentProps> = ({
           id="OfferForm_offerValue"
           showError={formIsDirty && offerValue <= 0}
           onChange={onOfferValueChange}
-          onFocus={onOfferInputFocus}
+          onBlur={() => {
+            if (offerValue !== undefined) {
+              onOfferOptionSelected(offerValue)
+            }
+          }}
           value={offerValue}
         />
       </Flex>

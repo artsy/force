@@ -1,6 +1,6 @@
-import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { Box, Flex, Text } from "@artsy/palette"
 import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
+import { useOrder2Tracking } from "Apps/Order2/Hooks/useOrder2Tracking"
 import {
   CheckoutStepName,
   CheckoutStepState,
@@ -18,7 +18,6 @@ import type { Order2OfferStep_order$key } from "__generated__/Order2OfferStep_or
 import type { useOrder2AddInitialOfferMutation$data } from "__generated__/useOrder2AddInitialOfferMutation.graphql"
 import { useState } from "react"
 import { graphql, useFragment } from "react-relay"
-import { useTracking } from "react-tracking"
 
 const logger = createLogger(
   "Order2/Routes/Checkout/Components/OfferStep/Order2OfferStep.tsx",
@@ -32,7 +31,10 @@ interface Order2OfferStepProps {
 
 export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
   const orderData = useFragment(FRAGMENT, order)
-  const { trackEvent } = useTracking()
+  const { clickedOfferOption } = useOrder2Tracking(
+    orderData.source,
+    orderData.mode,
+  )
   const { steps, setOfferAmountComplete } = useCheckoutContext()
   const { submitMutation: submitOfferMutation } =
     useOrder2AddInitialOfferMutation()
@@ -53,12 +55,13 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
     step => step.name === CheckoutStepName.OFFER_AMOUNT,
   )?.state
 
-  const onOfferInputFocus = () => {
-    trackEvent({
-      action_type: DeprecatedAnalyticsSchema.ActionType.FocusedOnOfferInput,
-      flow: DeprecatedAnalyticsSchema.Flow.MakeOffer,
-      order_id: orderData.internalID,
-    })
+  const onOfferOptionSelected = (value: number, description?: string) => {
+    clickedOfferOption(
+      orderData.currencyCode,
+      orderData.internalID,
+      value,
+      description,
+    )
   }
 
   const handleSubmitError = (error: { code: string }) => {
@@ -213,8 +216,8 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
           formIsDirty={formIsDirty}
           isSubmittingOffer={isSubmittingOffer}
           onOfferValueChange={setOfferValue}
+          onOfferOptionSelected={onOfferOptionSelected}
           onOfferNoteChange={setOfferNoteValue}
-          onOfferInputFocus={onOfferInputFocus}
           onContinueButtonPressed={onContinueButtonPressed}
         />
       </Box>
@@ -226,6 +229,7 @@ const FRAGMENT = graphql`
   fragment Order2OfferStep_order on Order {
     internalID
     mode
+    source
     currencyCode
     lineItems {
       artwork {

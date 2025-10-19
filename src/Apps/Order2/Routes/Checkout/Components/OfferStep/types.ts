@@ -10,8 +10,8 @@ export interface OfferFormProps {
   formIsDirty: boolean
   isSubmittingOffer: boolean
   onOfferValueChange: (value: number) => void
+  onOfferOptionSelected: (value: number, description?: string) => void
   onOfferNoteChange: (note: OfferNoteValue) => void
-  onOfferInputFocus: () => void
   onSubmit: () => Promise<void>
 }
 
