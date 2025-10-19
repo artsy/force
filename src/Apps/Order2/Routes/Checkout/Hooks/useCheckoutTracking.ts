@@ -6,6 +6,7 @@ import {
   type ClickedChangeShippingMethod,
   type ClickedExpressCheckout,
   type ClickedFulfillmentTab,
+  type ClickedOfferOption,
   type ClickedOrderProgression,
   type ClickedPaymentMethod,
   ContextModule,
@@ -257,6 +258,25 @@ export const useCheckoutTracking = ({
           expanded,
           flow,
         }
+        trackEvent(payload)
+      },
+      clickedOfferOption: (
+        currencyCode: string,
+        orderId: string,
+        offerAmount: number,
+        offerDescription?: string,
+      ) => {
+        const payload: ClickedOfferOption = {
+          action: ActionType.clickedOfferOption,
+          context_page_owner_id: contextPageOwnerId,
+          context_page_owner_type: contextPageOwnerType,
+          currency: currencyCode,
+          order_id: orderId,
+          flow: flow,
+          offer: offerDescription || "Other amount",
+          amount: offerAmount,
+        }
+
         trackEvent(payload)
       },
     }

@@ -5,7 +5,6 @@ import {
   type ClickedCompleteYourProfile,
   type ClickedContactGallery,
   type ClickedImportFees,
-  type ClickedOfferOption,
   type ClickedVisitHelpCenter,
   ContextModule,
   type OrderDetailsViewed,
@@ -117,25 +116,6 @@ export const useOrder2Tracking = (
           context_module: ContextModule.ordersDetail,
           context_page_owner_type: contextPageOwnerType,
           context_page_owner_id: contextPageOwnerId,
-        }
-
-        trackEvent(payload)
-      },
-      clickedOfferOption: (
-        currencyCode: string,
-        orderId: string,
-        offerAmount: number,
-        offerDescription?: string,
-      ) => {
-        const payload: ClickedOfferOption = {
-          action: ActionType.clickedOfferOption,
-          context_page_owner_id: contextPageOwnerId,
-          context_page_owner_type: contextPageOwnerType,
-          currency: currencyCode,
-          order_id: orderId,
-          flow: flow,
-          offer: offerDescription || "Other amount",
-          amount: offerAmount,
         }
 
         trackEvent(payload)

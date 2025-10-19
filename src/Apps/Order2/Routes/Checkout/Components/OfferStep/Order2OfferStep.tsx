@@ -1,6 +1,5 @@
 import { Box, Flex, Text } from "@artsy/palette"
 import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
-import { useOrder2Tracking } from "Apps/Order2/Hooks/useOrder2Tracking"
 import {
   CheckoutStepName,
   CheckoutStepState,
@@ -31,11 +30,8 @@ interface Order2OfferStepProps {
 
 export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
   const orderData = useFragment(FRAGMENT, order)
-  const { clickedOfferOption } = useOrder2Tracking(
-    orderData.source,
-    orderData.mode,
-  )
-  const { steps, setOfferAmountComplete } = useCheckoutContext()
+  const { steps, setOfferAmountComplete, checkoutTracking } =
+    useCheckoutContext()
   const { submitMutation: submitOfferMutation } =
     useOrder2AddInitialOfferMutation()
 
@@ -56,7 +52,7 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
   )?.state
 
   const onOfferOptionSelected = (value: number, description?: string) => {
-    clickedOfferOption(
+    checkoutTracking.clickedOfferOption(
       orderData.currencyCode,
       orderData.internalID,
       value,
