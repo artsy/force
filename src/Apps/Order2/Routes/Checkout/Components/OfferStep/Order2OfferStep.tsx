@@ -1,3 +1,4 @@
+import { ContextModule } from "@artsy/cohesion"
 import { Box, Flex, Text } from "@artsy/palette"
 import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
 import {
@@ -52,6 +53,8 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
   )?.state
 
   const onOfferOptionSelected = (value: number, description?: string) => {
+    setOfferValue(value)
+
     checkoutTracking.clickedOfferOption(
       orderData.currencyCode,
       orderData.internalID,
@@ -79,6 +82,8 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
 
     try {
       setIsSubmittingOffer(true)
+
+      checkoutTracking.clickedOrderProgression(ContextModule.ordersOffer)
 
       const hasNote = offerNoteValue && offerNoteValue.value.trim() !== ""
 
