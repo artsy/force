@@ -103,8 +103,9 @@ export const Order2DeliveryOptionsForm: React.FC<
               </Text>
               <Tooltip
                 variant="defaultDark"
-                placement="top-start"
+                placement="top"
                 width={250}
+                pointer={true}
                 content={
                   <Text variant="xs">
                     Shipping methods depend on location and artwork size. If
