@@ -41,7 +41,7 @@ const isOrderMutationError = <T extends { __typename?: string }>(
 export const validateAndExtractOrderResponse = <
   T extends { __typename?: string },
 >(
-  orderOrError?: T | null | undefined,
+  orderOrError?: T | null,
 ): OrderMutationSuccess<T> | OrderMutationActionRequired<T> => {
   if (isOrderMutationSuccess(orderOrError)) {
     return orderOrError
@@ -52,23 +52,23 @@ export const validateAndExtractOrderResponse = <
   }
 
   if (isOrderMutationError(orderOrError)) {
-    throw new CheckoutError(
+    throw new CheckoutMutationError(
       orderOrError.mutationError.message,
       orderOrError.mutationError.code,
     )
   }
 
-  throw new CheckoutError(
+  throw new CheckoutMutationError(
     `Unhandled orderOrError response type: ${JSON.stringify(orderOrError)}`,
   )
 }
 
-export class CheckoutError extends Error {
+export class CheckoutMutationError extends Error {
   code?: string
 
   constructor(message: string, code?: string) {
     super(message)
-    this.name = "CheckoutError"
+    this.name = "CheckoutMutationError"
     this.code = code
   }
 }
