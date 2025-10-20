@@ -85,8 +85,11 @@ export const getOffsetTopForSticky = ({
   id: string
   stickies: TSticky[]
 }) => {
-  const relevant = stickies.filter(sticky => sticky.status !== "RELEASED")
+  const relevant = stickies.filter(sticky => sticky.status === "FIXED")
   const index = relevant.findIndex(sticky => sticky.id === id)
+
+  // If sticky is not FIXED, return 0 (no offset needed)
+  if (index === -1) return 0
 
   return compound([0, ...relevant.map(({ height }) => height).slice(0, -1)])[
     index

@@ -167,7 +167,7 @@
     "react-relay": "^18.2.0",
     "react-relay-network-modern": "6.2.1",
     "react-relay-network-modern-ssr": "1.4.0",
-    "react-stickynode": "^4.0.0",
+    "react-stickynode": "^5.0.2",
     "react-streaming": "^0.3.43",
     "react-tracking": "^7.0.1",
     "react-waypoint": "8.0.0",
