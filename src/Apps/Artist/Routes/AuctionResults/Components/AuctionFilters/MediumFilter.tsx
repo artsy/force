@@ -16,24 +16,26 @@ export const categoryMap = [
   { displayName: "Textile arts", name: "Textile Arts" },
 ]
 
-export const MediumFilter: React.FC<React.PropsWithChildren<unknown>> = () => {
+interface MediumFilterProps {
+  isExpandable?: boolean
+}
+
+export const MediumFilter: React.FC<
+  React.PropsWithChildren<MediumFilterProps>
+> = ({ isExpandable = true }) => {
   const { setFilter } = useAuctionResultsFilterContext()
   const { categories = [] } = useCurrentlySelectedFiltersForAuctionResults()
 
   const toggleSelection = (selected: boolean, name: string) => {
-    let updatedValues = categories
+    const nextValues = selected
+      ? [...categories, name]
+      : categories.filter(item => item !== name)
 
-    if (selected) {
-      updatedValues = [...updatedValues, name]
-    } else {
-      updatedValues = updatedValues.filter(item => item !== name)
-    }
-
-    setFilter?.("categories", updatedValues)
+    setFilter("categories", nextValues)
   }
 
   return (
-    <FilterExpandable label="Medium" expanded>
+    <FilterExpandable label="Medium" expanded enabled={isExpandable}>
       <Flex flexDirection="column" alignItems="left">
         <ShowMore>
           {categoryMap.map((checkbox, index) => {

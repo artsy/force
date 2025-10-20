@@ -4,9 +4,15 @@ import type React from "react"
 import { useRef } from "react"
 
 export const FilterExpandable: React.FC<
-  React.PropsWithChildren<ExpandableProps & { ignoreBounds?: boolean }>
-> = ({ expanded, ignoreBounds = false, ...rest }) => {
+  React.PropsWithChildren<
+    ExpandableProps & { ignoreBounds?: boolean; enabled?: boolean }
+  >
+> = ({ expanded, ignoreBounds = false, enabled = true, children, ...rest }) => {
   const ref = useRef<HTMLDivElement | null>(null)
+
+  if (!enabled) {
+    return <Box>{children}</Box>
+  }
 
   // Note: `IS_MOBILE` requires a full page load
   const isExpanded = !getENV("IS_MOBILE") && Boolean(expanded)
@@ -32,9 +38,11 @@ export const FilterExpandable: React.FC<
         expanded={isExpanded}
         onToggle={handleToggle}
         {...rest}
-      />
+      >
+        {children}
+      </Expandable>
 
-      <div ref={ref}></div>
+      <div ref={ref} />
     </Box>
   )
 }
