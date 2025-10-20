@@ -22,6 +22,7 @@ const mockUseJump = useJump as jest.Mock
 const MOCK_PRICE_RANGE_ORDER = {
   internalID: "order-id",
   mode: "OFFER",
+  source: "artwork_page",
   currencyCode: "USD",
   lineItems: [
     {
@@ -43,6 +44,7 @@ const MOCK_PRICE_RANGE_ORDER = {
 const MOCK_EXACT_PRICE_ORDER = {
   internalID: "order-id",
   mode: "OFFER",
+  source: "artwork_page",
   currencyCode: "USD",
   lineItems: [
     {
@@ -64,6 +66,7 @@ const MOCK_HIDDEN_PRICE_ORDER = {
   internalID: "order-id",
   mode: "OFFER",
   currencyCode: "USD",
+  source: "artwork_page",
   lineItems: [
     {
       artwork: {
@@ -82,6 +85,10 @@ describe("Order2OfferStep", () => {
   let mockSetOfferAmountComplete: jest.Mock
   let mockSubmitMutation: jest.Mock
   let mockJumpTo: jest.Mock
+  let mockCheckoutTracking: {
+    clickedOfferOption: jest.Mock
+    clickedOrderProgression: jest.Mock
+  }
 
   beforeEach(() => {
     mockSetOfferAmountComplete = jest.fn()
@@ -91,10 +98,15 @@ describe("Order2OfferStep", () => {
       },
     }))
     mockJumpTo = jest.fn()
+    mockCheckoutTracking = {
+      clickedOfferOption: jest.fn(),
+      clickedOrderProgression: jest.fn(),
+    }
 
     mockUseCheckoutContext.mockReturnValue({
       steps: [{ name: "OFFER_AMOUNT", state: "ACTIVE" }],
       setOfferAmountComplete: mockSetOfferAmountComplete,
+      checkoutTracking: mockCheckoutTracking,
     })
     mockUseOrder2AddInitialOfferMutation.mockReturnValue({
       submitMutation: mockSubmitMutation,
@@ -433,7 +445,9 @@ describe("Order2OfferStep", () => {
       fireEvent.click(continueButton)
 
       // Button should be disabled during submission
-      expect(continueButton).toBeDisabled()
+      await waitFor(() => {
+        expect(continueButton).toBeDisabled()
+      })
 
       await waitFor(() => {
         expect(mockSubmitMutation).toHaveBeenCalled()
