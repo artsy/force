@@ -6962,7 +6962,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"core-js@npm:^3.0.0, core-js@npm:^3.3.2, core-js@npm:^3.6.5":
+"core-js@npm:^3.0.0, core-js@npm:^3.3.2":
   version: 3.39.0
   resolution: "core-js@npm:3.39.0"
   checksum: 10c0/f7602069b6afb2e3298eec612a5c1e0c3e6a458930fbfc7a4c5f9ac03426507f49ce395eecdd2d9bae9024f820e44582b67ffe16f2272395af26964f174eeb6b
@@ -8688,10 +8688,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eventemitter3@npm:^3.0.0":
-  version: 3.1.2
-  resolution: "eventemitter3@npm:3.1.2"
-  checksum: 10c0/c67262eccbf85848b7cc6d4abb6c6e34155e15686db2a01c57669fd0d44441a574a19d44d25948b442929e065774cbe5003d8e77eed47674fbf876ac77887793
+"eventemitter3@npm:^5.0.0":
+  version: 5.0.1
+  resolution: "eventemitter3@npm:5.0.1"
+  checksum: 10c0/4ba5c00c506e6c786b4d6262cfbce90ddc14c10d4667e5c83ae993c9de88aa856033994dd2b35b83e8dc1170e224e66a319fa80adc4c32adcd2379bbc75da814
   languageName: node
   linkType: hard
 
@@ -9477,7 +9477,7 @@ __metadata:
     react-relay: "npm:^18.2.0"
     react-relay-network-modern: "npm:6.2.1"
     react-relay-network-modern-ssr: "npm:1.4.0"
-    react-stickynode: "npm:^4.0.0"
+    react-stickynode: "npm:^5.0.2"
     react-streaming: "npm:^0.3.43"
     react-test-renderer: "npm:16.8.6"
     react-tracking: "npm:^7.0.1"
@@ -15738,19 +15738,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-stickynode@npm:^4.0.0":
-  version: 4.0.0
-  resolution: "react-stickynode@npm:4.0.0"
+"react-stickynode@npm:^5.0.2":
+  version: 5.0.2
+  resolution: "react-stickynode@npm:5.0.2"
   dependencies:
     classnames: "npm:^2.0.0"
-    core-js: "npm:^3.6.5"
     prop-types: "npm:^15.6.0"
     shallowequal: "npm:^1.0.0"
-    subscribe-ui-event: "npm:^2.0.6"
+    subscribe-ui-event: "npm:^3.0.0"
   peerDependencies:
-    react: ^0.14.2 || ^15.0.0 || ^16.0.0 || ^17.0.0
-    react-dom: ^0.14.2 || ^15.0.0 || ^16.0.0 || ^17.0.0
-  checksum: 10c0/9612b79ad1f9d4fcad9e016f8d711bbb93ae7a019d1475b256a640a5b753efe75709dfbc529ccdf9078e6d7c7d0e0abce5f001beb01f052040ac71b2a4af2cf3
+    react: ^0.14.2 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+    react-dom: ^0.14.2 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+  checksum: 10c0/ae7d650a1e1552ea04faaccd56d51cbb661313822ae879c317029881a1637fb4e585436f6cd72bfaac9deb0ce5fb6e85610e3d6dd2d74c9a8f96c552673f0bbd
   languageName: node
   linkType: hard
 
@@ -17499,14 +17498,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"subscribe-ui-event@npm:^2.0.6":
-  version: 2.0.7
-  resolution: "subscribe-ui-event@npm:2.0.7"
+"subscribe-ui-event@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "subscribe-ui-event@npm:3.0.0"
   dependencies:
-    eventemitter3: "npm:^3.0.0"
-    lodash: "npm:^4.17.15"
+    eventemitter3: "npm:^5.0.0"
     raf: "npm:^3.0.0"
-  checksum: 10c0/c907cf69ececf0bc0b37544cd82058427c4e2d93df414815c736a6c7381736bd25076075187217704d76b45fa16995de3bf849b944cce8bb7f97735ad61b7eaf
+  checksum: 10c0/177c7fd4cf56a6bbbfa693f4f12798e2a1745f995a7c7cdd815be7bf8ae9a90280ea7306eeeee559df56233863e04c86353cb908ee0cd91fbe5a5e00a0116a2c
   languageName: node
   linkType: hard
 
