@@ -94,7 +94,6 @@ sitemapsServerApp
       "/sitemap-videos.xml",
       "/sitemap-viewing-rooms-:timestamp.xml",
       "/sitemap-viewing-rooms.xml",
-      "/sitemap-fair-organizers-:timestamp.xml",
       "/sitemap-fair-organizers.xml",
     ],
     (req, res) => {
