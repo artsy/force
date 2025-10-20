@@ -2,6 +2,7 @@ import { ContextModule } from "@artsy/cohesion"
 import ShieldIcon from "@artsy/icons/ShieldIcon"
 import { Box, Button, Flex, Image, Message, Spacer, Text } from "@artsy/palette"
 import { useStripe } from "@stripe/react-stripe-js"
+import { useArtworkDimensions } from "Apps/Artwork/useArtworkDimensions"
 import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
 import { type Dialog, injectDialog } from "Apps/Order/Dialogs"
 import {
@@ -10,11 +11,10 @@ import {
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { Order2CheckoutPricingBreakdown } from "Apps/Order2/Routes/Checkout/Components/Order2CheckoutPricingBreakdown"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
-import { useOrder2SubmitOrderMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SubmitOrderMutation"
-import { useOrder2SubmitOfferMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SubmitOfferMutation"
 import { useOfferIdQuery } from "Apps/Order2/Routes/Checkout/Hooks/useOfferIdQuery"
+import { useOrder2SubmitOfferMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SubmitOfferMutation"
+import { useOrder2SubmitOrderMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SubmitOrderMutation"
 import { BUYER_GUARANTEE_URL } from "Apps/Order2/constants"
-import { useArtworkDimensions } from "Apps/Artwork/useArtworkDimensions"
 import { RouterLink } from "System/Components/RouterLink"
 import createLogger from "Utils/logger"
 import type {
@@ -192,12 +192,12 @@ const Order2ReviewStepComponent: React.FC<Order2ReviewStepProps> = ({
           </Text>
           <Spacer y={0.5} />
           {artworkData.attributionClass?.shortDescription && (
-            <Text overflowEllipsis variant="xs" color="mono60" textAlign="left">
+            <Text overflowEllipsis variant="sm" color="mono60" textAlign="left">
               {artworkData.attributionClass.shortDescription}
             </Text>
           )}
           {dimensionsLabel && (
-            <Text overflowEllipsis variant="xs" color="mono60" textAlign="left">
+            <Text overflowEllipsis variant="sm" color="mono60" textAlign="left">
               {dimensionsLabel}
             </Text>
           )}

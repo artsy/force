@@ -114,9 +114,9 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
 
       if (orderOrError && "order" in orderOrError) {
         setSubmittedOfferAmount(offerValue)
-        setSubmittedOfferNote(note)
-
+        setSubmittedOfferNote(hasNote ? note : "")
         setOfferAmountComplete()
+
         return
       }
 
@@ -170,7 +170,7 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
           >
             Offer
           </Text>
-          <Text variant={["xs", "xs", "sm"]} color="mono60">
+          <Text variant="sm" color="mono60">
             If accepted, your payment will be processed. All offers are binding
             once submitted.
           </Text>
@@ -198,7 +198,7 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
           >
             Offer
           </Text>
-          <Text variant={["xs", "xs", "sm"]} color="mono100">
+          <Text variant="sm" color="mono100">
             If accepted, your payment will be processed. All offers are binding
             once submitted.
           </Text>
