@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<30037a367d68e76e2e419c8e7e53301c>>
+ * @generated SignedSource<<c880a90e4f13aff888cc81319b4bbe1f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,6 +17,7 @@ export type FairOrganizerApp_fairOrganizer$data = {
     readonly image: {
       readonly url: string | null | undefined;
     } | null | undefined;
+    readonly isPublished: boolean | null | undefined;
   } | null | undefined;
   readonly slug: string;
   readonly " $fragmentSpreads": FragmentRefs<"FairOrganizerHeaderImage_fairOrganizer" | "FairOrganizerHeader_fairOrganizer" | "FairOrganizerLatestArticles_fairOrganizer" | "FairOrganizerPastEventsRail_fairOrganizer">;
@@ -91,6 +92,13 @@ const node: ReaderFragment = {
             }
           ],
           "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "isPublished",
+          "storageKey": null
         }
       ],
       "storageKey": null
@@ -120,6 +128,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "bd849d7afe3472495fb15da8a2be9710";
+(node as any).hash = "431a373867e0c3009778ef3955bee7b0";
 
 export default node;

@@ -18,6 +18,8 @@ const FairOrganizerApp: React.FC<
 > = ({ fairOrganizer }) => {
   const { name, profile, slug, description } = fairOrganizer
 
+  const shouldBlockRobots = !profile?.isPublished
+
   return (
     <>
       <MetaTags
@@ -27,6 +29,7 @@ const FairOrganizerApp: React.FC<
         imageURL={profile?.image?.url}
         pathname={`fair-organizer/${slug}`}
         title={`${name} | Artsy`}
+        blockRobots={shouldBlockRobots}
       />
 
       <FairOrganizerHeaderImage fairOrganizer={fairOrganizer} />
@@ -58,6 +61,7 @@ export const FairOrganizerAppFragmentContainer = createFragmentContainer(
           image {
             url(version: "wide")
           }
+          isPublished
         }
         ...FairOrganizerPastEventsRail_fairOrganizer
         ...FairOrganizerHeaderImage_fairOrganizer
