@@ -297,6 +297,7 @@
       "yarn format --parser markdown"
     ],
     "*.@(js|jsx|ts|tsx)": [
+      "yarn lint",
       "yarn format"
     ]
   },
