@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f0231f61995a5e46639d5b212df9611a>>
+ * @generated SignedSource<<ba7c346651aef46d48c84528a0b4839a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -75,6 +75,11 @@ const node: ReaderFragment = {
           "kind": "Literal",
           "name": "hasLocation",
           "value": true
+        },
+        {
+          "kind": "Literal",
+          "name": "maxPerPartner",
+          "value": 1
         },
         {
           "kind": "Literal",
@@ -166,13 +171,13 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
-      "storageKey": "__ShowsCurrentShowsQuery_showsConnection_connection(atAFair:false,displayable:true,hasLocation:true,sort:\"END_AT_ASC\",status:\"CURRENT\")"
+      "storageKey": "__ShowsCurrentShowsQuery_showsConnection_connection(atAFair:false,displayable:true,hasLocation:true,maxPerPartner:1,sort:\"END_AT_ASC\",status:\"CURRENT\")"
     }
   ],
   "type": "Viewer",
   "abstractKey": null
 };
 
-(node as any).hash = "27eb9c124f73cb8b1c78a477638a38a3";
+(node as any).hash = "81412c2af6c8fc51c71e2e7ded99e205";
 
 export default node;
