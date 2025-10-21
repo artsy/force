@@ -2,7 +2,6 @@ import { Join, Separator } from "@artsy/palette"
 import { ArtistAuctionResultsQueryRenderer } from "Apps/Artist/Routes/AuctionResults/ArtistAuctionResults"
 import { ArtistOverviewQueryRenderer } from "Apps/Artist/Routes/Overview/Components/ArtistOverview"
 import { ArtistArtworkFilterQueryRenderer } from "Apps/Artist/Routes/WorksForSale/Components/ArtistArtworkFilter"
-import { TruncateComponent } from "Components/TruncateComponent"
 import type { ArtistCombinedRoute_artist$data } from "__generated__/ArtistCombinedRoute_artist.graphql"
 import type * as React from "react"
 import { Meta } from "react-head"
@@ -21,13 +20,13 @@ const ArtistCombinedRoute: React.FC<
       <Meta name="robots" content="noindex, nofollow" />
 
       <Join separator={<Separator my={6} />}>
-        <TruncateComponent label="View All Artworks">
-          <ArtistArtworkFilterQueryRenderer id={artist.internalID} lazyLoad />
-        </TruncateComponent>
+        <ArtistArtworkFilterQueryRenderer id={artist.internalID} lazyLoad />
 
-        <TruncateComponent label="View All Auction Results">
-          <ArtistAuctionResultsQueryRenderer id={artist.internalID} lazyLoad />
-        </TruncateComponent>
+        <ArtistAuctionResultsQueryRenderer
+          id={artist.internalID}
+          lazyLoad
+          truncate
+        />
 
         <ArtistOverviewQueryRenderer id={artist.internalID} lazyLoad />
       </Join>

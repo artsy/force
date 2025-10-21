@@ -5,16 +5,22 @@ import styled, { css } from "styled-components"
 interface TruncateComponentProps {
   children: React.ReactNode
   label?: string
+  enabled?: boolean
 }
 
 export const TruncateComponent: FC<TruncateComponentProps> = ({
   children,
   label = "View All",
+  enabled = true,
 }) => {
   const [mode, setMode] = useState<"Collapsed" | "Expanded">("Collapsed")
 
   const handleClick = () => {
     setMode("Expanded")
+  }
+
+  if (!enabled) {
+    return children
   }
 
   return (

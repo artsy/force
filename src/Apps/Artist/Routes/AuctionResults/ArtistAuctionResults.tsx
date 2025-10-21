@@ -25,6 +25,7 @@ import { LoadingArea } from "Components/LoadingArea"
 import { PaginatedMetaTags } from "Components/PaginatedMetaTags"
 import { PaginationFragmentContainer as Pagination } from "Components/Pagination"
 import { Sticky } from "Components/Sticky"
+import { TruncateComponent } from "Components/TruncateComponent"
 import { SystemContext } from "System/Contexts/SystemContext"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
@@ -70,11 +71,12 @@ interface AuctionResultsProps {
   aggregations?: NonNullable<
     ArtistAuctionResultsRoute_artist$data["sidebarAggregations"]
   >["aggregations"]
+  truncate?: boolean
 }
 
 const AuctionResultsContainer: React.FC<
   React.PropsWithChildren<AuctionResultsProps>
-> = ({ artist, relay, aggregations }) => {
+> = ({ artist, relay, aggregations, truncate = false }) => {
   const { user } = useContext(SystemContext)
 
   const { filters, setFilter, resetFilters } = useAuctionResultsFilterContext()
@@ -344,70 +346,75 @@ const AuctionResultsContainer: React.FC<
 
         <Spacer y={[2, 4]} />
 
-        {results.length === 0 && (
+        {results.length === 0 ? (
           <ArtworkGridEmptyState
             onClearFilters={() => {
               resetFilters?.()
             }}
           />
+        ) : (
+          <TruncateComponent
+            label="View All Auction Results"
+            enabled={truncate}
+          >
+            <LoadingArea isLoading={mode === "Loading"}>
+              <Flex flexDirection="column" gap={4}>
+                {upcomingAuctionResults.length > 0 && (
+                  <Box>
+                    <Text variant="md">Upcoming Auctions</Text>
+
+                    <Text variant="xs" mb={2} color="mono60">
+                      {upcomingAuctionResultsCount}{" "}
+                      {upcomingAuctionResultsCount === 1 ? "result" : "results"}
+                    </Text>
+
+                    <Join separator={<Spacer y={2} />}>
+                      {upcomingAuctionResults.map((result, index) => {
+                        return (
+                          <ArtistAuctionResultItemFragmentContainer
+                            key={index}
+                            auctionResult={result}
+                            filtersAtDefault={filtersAtDefault}
+                          />
+                        )
+                      })}
+                    </Join>
+                  </Box>
+                )}
+
+                {pastAuctionResults.length > 0 && (
+                  <Box>
+                    <Text variant="md">Past Auctions</Text>
+
+                    <Text variant="xs" mb={2} color="mono60">
+                      {pastAuctionResultsCount}{" "}
+                      {pastAuctionResultsCount === 1 ? "result" : "results"}
+                    </Text>
+
+                    <Join separator={<Spacer y={2} />}>
+                      {pastAuctionResults.map((result, index) => {
+                        return (
+                          <ArtistAuctionResultItemFragmentContainer
+                            key={index}
+                            auctionResult={result}
+                            filtersAtDefault={filtersAtDefault}
+                          />
+                        )
+                      })}
+                    </Join>
+                  </Box>
+                )}
+              </Flex>
+            </LoadingArea>
+
+            <Pagination
+              hasNextPage={Boolean(pageInfo?.hasNextPage)}
+              pageCursors={artist.auctionResultsConnection?.pageCursors}
+              onClick={loadPage}
+              onNext={loadNext}
+            />
+          </TruncateComponent>
         )}
-
-        <LoadingArea isLoading={mode === "Loading"}>
-          <Flex flexDirection="column" gap={4}>
-            {upcomingAuctionResults.length > 0 && (
-              <Box>
-                <Text variant="md">Upcoming Auctions</Text>
-
-                <Text variant="xs" mb={2} color="mono60">
-                  {upcomingAuctionResultsCount}{" "}
-                  {upcomingAuctionResultsCount === 1 ? "result" : "results"}
-                </Text>
-
-                <Join separator={<Spacer y={2} />}>
-                  {upcomingAuctionResults.map((result, index) => {
-                    return (
-                      <ArtistAuctionResultItemFragmentContainer
-                        key={index}
-                        auctionResult={result}
-                        filtersAtDefault={filtersAtDefault}
-                      />
-                    )
-                  })}
-                </Join>
-              </Box>
-            )}
-
-            {pastAuctionResults.length > 0 && (
-              <Box>
-                <Text variant="md">Past Auctions</Text>
-
-                <Text variant="xs" mb={2} color="mono60">
-                  {pastAuctionResultsCount}{" "}
-                  {pastAuctionResultsCount === 1 ? "result" : "results"}
-                </Text>
-
-                <Join separator={<Spacer y={2} />}>
-                  {pastAuctionResults.map((result, index) => {
-                    return (
-                      <ArtistAuctionResultItemFragmentContainer
-                        key={index}
-                        auctionResult={result}
-                        filtersAtDefault={filtersAtDefault}
-                      />
-                    )
-                  })}
-                </Join>
-              </Box>
-            )}
-          </Flex>
-        </LoadingArea>
-
-        <Pagination
-          hasNextPage={Boolean(pageInfo?.hasNextPage)}
-          pageCursors={artist.auctionResultsConnection?.pageCursors}
-          onClick={loadPage}
-          onNext={loadNext}
-        />
       </Box>
     </>
   )
@@ -617,11 +624,12 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
 type ArtistAuctionResultsQueryRendererProps = {
   id: string
   lazyLoad?: boolean
+  truncate?: boolean
 }
 
 export const ArtistAuctionResultsQueryRenderer: React.FC<
   ArtistAuctionResultsQueryRendererProps
-> = ({ id, lazyLoad }) => {
+> = ({ id, lazyLoad, truncate = false }) => {
   const { match } = useRouter()
 
   const urlFilterState = paramsToCamelCase(match?.location.query ?? {})
@@ -633,6 +641,7 @@ export const ArtistAuctionResultsQueryRenderer: React.FC<
   return (
     <SystemQueryRenderer<ArtistAuctionResultsQueryRendererQuery>
       lazyLoad={lazyLoad}
+      // placeholder={TODO}
       query={graphql`
         query ArtistAuctionResultsQueryRendererQuery(
           $page: Int
@@ -728,6 +737,7 @@ export const ArtistAuctionResultsQueryRenderer: React.FC<
           <ArtistAuctionResultsRefetchContainer
             artist={artist}
             aggregations={artist.sidebarAggregations?.aggregations}
+            truncate={truncate}
           />
         )
       }}
