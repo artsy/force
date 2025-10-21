@@ -22,6 +22,10 @@ const { renderWithRelay } = setupTestWrapperTL<FairOrganizerAppTestQuery>({
 })
 
 describe("FairOrganizerApp", () => {
+  afterEach(() => {
+    document.getElementsByTagName("html")[0].innerHTML = ""
+  })
+
   it("sets a title tag", () => {
     renderWithRelay({
       FairOrganizer: () => ({ name: "Art Paris", slug: "art-paris" }),
@@ -32,8 +36,39 @@ describe("FairOrganizerApp", () => {
 
   it("renders correctly", () => {
     const { container } = renderWithRelay()
-
-    // Just test that the component renders without error
     expect(container).toBeInTheDocument()
+  })
+
+  it("adds `noindex, nofollow` when profile.isPublished is false", () => {
+    renderWithRelay({
+      FairOrganizer: () => ({
+        name: "Art Dusseldorf",
+        slug: "art-dusseldorf",
+        profile: {
+          image: { url: "https://example/image.jpg" },
+          isPublished: false,
+        },
+      }),
+    })
+
+    const robots = document.head.querySelector('meta[name="robots"]')
+    expect(robots).toBeInTheDocument()
+    expect(robots!.getAttribute("content")).toBe("noindex, nofollow")
+  })
+
+  it("does not add robots meta when profile.isPublished is true", () => {
+    renderWithRelay({
+      FairOrganizer: () => ({
+        name: "Art Dusseldorf",
+        slug: "art-dusseldorf",
+        profile: {
+          image: { url: "https://example/image.jpg" },
+          isPublished: true,
+        },
+      }),
+    })
+
+    const robots = document.head.querySelector('meta[name="robots"]')
+    expect(robots).toBeNull()
   })
 })

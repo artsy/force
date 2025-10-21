@@ -125,30 +125,30 @@ export const SavedAddressOptions = ({
             >
               <Flex flexDirection="column" width="100%" ml={0.4}>
                 {address.addressLine1 && (
-                  <Text variant="xs" fontWeight="normal" color={textColor}>
+                  <Text variant="sm" fontWeight="normal" color={textColor}>
                     {address.addressLine1}
                   </Text>
                 )}
                 {address.addressLine2 && (
-                  <Text variant="xs" fontWeight="normal" color={textColor}>
+                  <Text variant="sm" fontWeight="normal" color={textColor}>
                     {address.addressLine2}
                   </Text>
                 )}
                 {(address.city || address.region || address.postalCode) && (
-                  <Text variant="xs" fontWeight="normal" color={textColor}>
+                  <Text variant="sm" fontWeight="normal" color={textColor}>
                     {[address.city, address.region, address.postalCode]
                       .filter(Boolean)
                       .join(", ")}
                   </Text>
                 )}
                 {address.country && (
-                  <Text variant="xs" fontWeight="normal" color={textColor}>
+                  <Text variant="sm" fontWeight="normal" color={textColor}>
                     {countryNameFromAlpha2(address.country)}
                   </Text>
                 )}
 
                 {phoneNumberParsed?.display && (
-                  <Text variant="xs" fontWeight="normal" color={textColor}>
+                  <Text variant="sm" fontWeight="normal" color={textColor}>
                     {phoneNumberParsed.display}
                   </Text>
                 )}
@@ -165,7 +165,7 @@ export const SavedAddressOptions = ({
                 })
               }}
             >
-              <Text variant="xs" fontWeight="normal" color={textColor}>
+              <Text variant="sm" fontWeight="normal" color={textColor}>
                 Edit
               </Text>
             </Clickable>

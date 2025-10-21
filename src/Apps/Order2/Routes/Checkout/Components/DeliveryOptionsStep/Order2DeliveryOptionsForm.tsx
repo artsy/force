@@ -1,5 +1,15 @@
 import { ContextModule } from "@artsy/cohesion"
-import { Button, Flex, Radio, RadioGroup, Spacer, Text } from "@artsy/palette"
+import InfoIcon from "@artsy/icons/InfoIcon"
+import {
+  Button,
+  Clickable,
+  Flex,
+  Radio,
+  RadioGroup,
+  Spacer,
+  Text,
+  Tooltip,
+} from "@artsy/palette"
 import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
 import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import {
@@ -117,13 +127,32 @@ export const Order2DeliveryOptionsForm: React.FC<
             </>
           )}
           <Flex flexDirection="column">
-            <Text
-              variant={["sm-display", "md"]}
-              fontWeight="bold"
-              color="mono100"
-            >
-              Shipping method
-            </Text>
+            <Flex>
+              <Text
+                variant={["sm-display", "md"]}
+                fontWeight="bold"
+                color="mono100"
+              >
+                Shipping method
+              </Text>
+              <Tooltip
+                variant="defaultDark"
+                placement="top"
+                width={250}
+                pointer={true}
+                content={
+                  <Text variant="xs">
+                    Shipping methods depend on location and artwork size. If
+                    shipped internationally or part of a show, delivery may take
+                    longer.
+                  </Text>
+                }
+              >
+                <Clickable ml={0.5} style={{ lineHeight: 0 }}>
+                  <InfoIcon />
+                </Clickable>
+              </Tooltip>
+            </Flex>
             <Text variant="xs" color="mono60">
               All options are protected against damage and loss with{" "}
               <RouterLink
@@ -193,7 +222,7 @@ const SingleShippingOption = ({ option }: SingleShippingOptionProps) => {
           </Text>
         </Flex>
         {timeEstimate && (
-          <Text variant="xs" color="mono60">
+          <Text variant="sm" color="mono60" mt={1}>
             {prefix} <strong>{timeRange}</strong>
           </Text>
         )}
@@ -231,7 +260,12 @@ const MultipleShippingOptionsForm = ({
 
           return (
             <Radio
-              label={label}
+              label={
+                <Flex justifyContent="space-between" width="100%">
+                  <Text variant="sm-display">{label}</Text>
+                  <Text variant="sm-display">{option.amount?.display}</Text>
+                </Flex>
+              }
               key={`${option.type}:${i}`}
               value={option}
               mt={2}
@@ -239,19 +273,18 @@ const MultipleShippingOptionsForm = ({
               <Flex justifyContent="space-between" width="100%">
                 <Flex flexDirection="column">
                   {timeEstimate && (
-                    <Text variant="xs" color="mono60">
+                    <Text variant="sm" color="mono60" mt={1}>
                       {prefix} <strong>{timeRange}</strong>
                     </Text>
                   )}
                   {option.type === "ARTSY_WHITE_GLOVE" &&
                     selectedOption === option && (
-                      <Text variant="xs" color="mono60">
+                      <Text variant="sm" color="mono60">
                         This service includes custom packing, transportation on
                         a fine art shuttle, and in-home delivery.
                       </Text>
                     )}
                 </Flex>
-                <Text>{option.amount?.display}</Text>
               </Flex>
             </Radio>
           )

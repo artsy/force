@@ -65,12 +65,7 @@ export const MarketStats: FC<React.PropsWithChildren<MarketStatsProps>> = ({
 
   return (
     <>
-      <Text
-        variant={["sm-display", "lg-display"]}
-        display="flex"
-        alignItems="center"
-        gap={0.5}
-      >
+      <Text variant="lg-display" display="flex" alignItems="center" gap={0.5}>
         Market Signals
         <MarketStatsInfoButton
           onClick={() => {

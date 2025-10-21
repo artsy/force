@@ -54,7 +54,7 @@ export const SettingsShippingAddresses: FC<
         </GridColumns>
       )}
 
-      <Button mt={4} onClick={handleClick}>
+      <Button mt={4} onClick={handleClick} variant="primaryBlack">
         Add a New Address
       </Button>
     </>

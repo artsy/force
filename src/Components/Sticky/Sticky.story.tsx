@@ -110,6 +110,12 @@ export const Example = () => {
   )
 }
 
+Example.story = {
+  parameters: {
+    layout: "fullscreen",
+  },
+}
+
 export const GridExample = () => {
   return (
     <AppContainer>

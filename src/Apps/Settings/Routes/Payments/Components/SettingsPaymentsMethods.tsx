@@ -45,27 +45,31 @@ const SettingsPaymentsMethods: FC<
         Saved Payment Details
       </Text>
 
-      <Text variant="sm-display" mb={1}>
-        Credit cards
-      </Text>
-
       {creditCards.length === 0 ? (
         <Message variant="info">
           Please add a payment method for faster checkout in the future.
         </Message>
       ) : (
-        <GridColumns gridRowGap={0}>
-          {creditCards.map(creditCard => {
-            return (
-              <BorderedCell key={creditCard.internalID} span={8} wrap>
-                <SettingsCreditCardFragmentContainer creditCard={creditCard} />
-              </BorderedCell>
-            )
-          })}
-        </GridColumns>
+        <>
+          <Text variant="sm-display" mb={1}>
+            Credit cards
+          </Text>
+
+          <GridColumns gridRowGap={0}>
+            {creditCards.map(creditCard => {
+              return (
+                <BorderedCell key={creditCard.internalID} span={8} wrap>
+                  <SettingsCreditCardFragmentContainer
+                    creditCard={creditCard}
+                  />
+                </BorderedCell>
+              )
+            })}
+          </GridColumns>
+        </>
       )}
 
-      <Button mt={4} onClick={handleClick}>
+      <Button mt={4} onClick={handleClick} variant="primaryBlack">
         Add New Card
       </Button>
 

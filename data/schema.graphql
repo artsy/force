@@ -9158,7 +9158,6 @@ type CreateArtworkImportArtworksFailure {
 
 input CreateArtworkImportArtworksInput {
   artworkImportID: String!
-  async: Boolean
   clientMutationId: String
 }
 
@@ -9172,10 +9171,7 @@ union CreateArtworkImportArtworksResponseOrError =
   | CreateArtworkImportArtworksSuccess
 
 type CreateArtworkImportArtworksSuccess {
-  artworkImport: ArtworkImport
-  artworkImportID: String!
-  createdArtworksCount: Int!
-  queued: Boolean
+  queued: Boolean!
 }
 
 type CreateArtworkImportCellFlagFailure {
@@ -13561,6 +13557,7 @@ type HomeViewSectionArtworks implements HomeViewSectionGeneric & Node {
 
   # [Analytics] `owner type` analytics value for this scetion when displayed in a standalone UI, as defined in our schema (artsy/cohesion)
   ownerType: String
+  showArtworksCardView: Boolean!
   trackItemImpressions: Boolean!
 }
 
@@ -16505,6 +16502,11 @@ type Mutation {
   removeInstallShotFromPartnerShow(
     input: RemoveInstallShotFromPartnerShowMutationInput!
   ): RemoveInstallShotFromPartnerShowMutationPayload
+
+  # Reposition artwork images, determining their display order.
+  repositionArtworkImages(
+    input: RepositionArtworkImagesMutationInput!
+  ): RepositionArtworkImagesMutationPayload
 
   # Reposition artworks in a partner show, determining their display order.
   repositionArtworksInPartnerShow(
@@ -20780,6 +20782,9 @@ type Query {
     hasLocation: Boolean
     ids: [String]
     last: Int
+
+    # Caps number of shows per partner (may result in uneven page sizes)
+    maxPerPartner: Int
     sort: ShowSorts
     status: EventStatus
 
@@ -21126,6 +21131,33 @@ union RemoveInstallShotFromPartnerShowResponseOrError =
 
 type RemoveInstallShotFromPartnerShowSuccess {
   show: Show
+}
+
+type RepositionArtworkImagesFailure {
+  mutationError: GravityMutationError
+}
+
+input RepositionArtworkImagesMutationInput {
+  # The ID of the artwork.
+  artworkId: String!
+  clientMutationId: String
+
+  # An ordered array of image IDs representing the new display order.
+  imageIds: [String!]!
+}
+
+type RepositionArtworkImagesMutationPayload {
+  # On success: the artwork with repositioned images. On error: the error that occurred.
+  artworkOrError: RepositionArtworkImagesResponseOrError
+  clientMutationId: String
+}
+
+union RepositionArtworkImagesResponseOrError =
+  | RepositionArtworkImagesFailure
+  | RepositionArtworkImagesSuccess
+
+type RepositionArtworkImagesSuccess {
+  artwork: Artwork
 }
 
 type RepositionArtworksInPartnerShowFailure {
@@ -26778,6 +26810,9 @@ type Viewer {
     hasLocation: Boolean
     ids: [String]
     last: Int
+
+    # Caps number of shows per partner (may result in uneven page sizes)
+    maxPerPartner: Int
     sort: ShowSorts
     status: EventStatus
 
