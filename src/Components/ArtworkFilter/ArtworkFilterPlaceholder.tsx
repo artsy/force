@@ -44,7 +44,7 @@ export const ArtworkFilterPlaceholder: React.FC<
       <Skeleton>
         {/* Mobile Artwork Filter Placeholder */}
         <Media at="xs">
-          <Sticky>
+          <Sticky bottomBoundary="#Sticky__ArtworkFilter">
             <FullBleed backgroundColor="mono0">
               <Flex
                 justifyContent="space-between"
