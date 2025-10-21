@@ -40,180 +40,178 @@ export const ArtworkFilterPlaceholder: React.FC<
   const enableImmersiveView = useFlag("onyx_enable-immersive-view")
 
   return (
-    <Skeleton {...rest}>
-      {/* Mobile Artwork Filter Placeholder */}
-      <Media at="xs">
-        <Sticky>
-          <FullBleed backgroundColor="mono0">
-            <Flex
-              justifyContent="space-between"
-              alignItems="center"
-              p={2}
-              gap={2}
-              borderBottom="1px solid"
-              borderColor="mono10"
-            >
-              <Box display="flex" alignItems="center" gap={0.5}>
-                <FilterIcon />
-
-                <SkeletonText variant="xs">Sort & Filter</SkeletonText>
-              </Box>
-
-              {showCreateAlert && (
+    <Box id="Sticky__ArtworkFilter" {...rest}>
+      <Skeleton>
+        {/* Mobile Artwork Filter Placeholder */}
+        <Media at="xs">
+          <Sticky>
+            <FullBleed backgroundColor="mono0">
+              <Flex
+                justifyContent="space-between"
+                alignItems="center"
+                p={2}
+                gap={2}
+                borderBottom="1px solid"
+                borderColor="mono10"
+              >
                 <Box display="flex" alignItems="center" gap={0.5}>
-                  <BellStrokeIcon />
+                  <FilterIcon />
 
-                  <SkeletonText variant="xs">Create Alert</SkeletonText>
+                  <SkeletonText variant="xs">Sort & Filter</SkeletonText>
                 </Box>
-              )}
-            </Flex>
-          </FullBleed>
-        </Sticky>
 
-        <Spacer y={4} />
+                {showCreateAlert && (
+                  <Box display="flex" alignItems="center" gap={0.5}>
+                    <BellStrokeIcon />
 
-        <SkeletonText variant="sm" fontWeight="bold">
-          100
-        </SkeletonText>
+                    <SkeletonText variant="xs">Create Alert</SkeletonText>
+                  </Box>
+                )}
+              </Flex>
+            </FullBleed>
+          </Sticky>
 
-        <Spacer y={2} />
+          <Spacer y={4} />
 
-        <ArtworkGridPlaceholder columnCount={2} layout={layout} />
-      </Media>
+          <SkeletonText variant="sm" fontWeight="bold">
+            100
+          </SkeletonText>
 
-      {/* Desktop Artwork Filter Placeholder */}
-      <Media greaterThan="xs">
-        {/* Negative offset for positive sticky padding */}
-        <Spacer y={-1} />
+          <Spacer y={2} />
 
-        <Sticky bottomBoundary="#Sticky__ArtworkFilter">
-          {({ stuck }) => {
-            return (
-              <FullBleed backgroundColor="mono0">
-                <AppContainer>
-                  <HorizontalPadding>
-                    <Flex
-                      alignItems="center"
-                      justifyContent="space-between"
-                      gap={2}
-                      py={1}
-                      bg="mono0"
-                    >
-                      <HorizontalOverflow minWidth={0}>
-                        <Flex gap={1}>
-                          {showCreateAlert && (
-                            <Flex gap={2}>
-                              <Button
-                                variant="secondaryBlack"
-                                size="small"
-                                Icon={BellStrokeIcon}
-                                disabled
-                              >
-                                Create Alert
-                              </Button>
+          <ArtworkGridPlaceholder columnCount={2} layout={layout} />
+        </Media>
 
-                              <Box width="1px" bg="mono30" />
+        {/* Desktop Artwork Filter Placeholder */}
+        <Media greaterThan="xs">
+          {/* Negative offset for positive sticky padding */}
+          <Spacer y={-1} />
 
-                              <Pill Icon={FilterIcon} size="small" disabled>
-                                All Filters
-                              </Pill>
-                            </Flex>
-                          )}
-                          <Flex gap={1}>
-                            {!showCreateAlert && (
-                              <Pill Icon={FilterIcon} size="small" disabled>
-                                All Filters
-                              </Pill>
-                            )}
-                            <Pill
-                              Icon={ChevronDownIcon}
+          <Sticky bottomBoundary="#Sticky__ArtworkFilter">
+            <FullBleed backgroundColor="mono0">
+              <AppContainer>
+                <HorizontalPadding>
+                  <Flex
+                    alignItems="center"
+                    justifyContent="space-between"
+                    gap={2}
+                    py={1}
+                    bg="mono0"
+                  >
+                    <HorizontalOverflow minWidth={0}>
+                      <Flex gap={1}>
+                        {showCreateAlert && (
+                          <Flex gap={2}>
+                            <Button
+                              variant="secondaryBlack"
                               size="small"
-                              iconPosition="right"
+                              Icon={BellStrokeIcon}
                               disabled
                             >
-                              Rarity
-                            </Pill>
+                              Create Alert
+                            </Button>
 
-                            <Pill
-                              Icon={ChevronDownIcon}
-                              size="small"
-                              iconPosition="right"
-                              disabled
-                            >
-                              Medium
-                            </Pill>
+                            <Box width="1px" bg="mono30" />
 
-                            <Pill
-                              Icon={ChevronDownIcon}
-                              size="small"
-                              iconPosition="right"
-                              disabled
-                            >
-                              Price Range
+                            <Pill Icon={FilterIcon} size="small" disabled>
+                              All Filters
                             </Pill>
                           </Flex>
-                        </Flex>
-                      </HorizontalOverflow>
+                        )}
+                        <Flex gap={1}>
+                          {!showCreateAlert && (
+                            <Pill Icon={FilterIcon} size="small" disabled>
+                              All Filters
+                            </Pill>
+                          )}
+                          <Pill
+                            Icon={ChevronDownIcon}
+                            size="small"
+                            iconPosition="right"
+                            disabled
+                          >
+                            Rarity
+                          </Pill>
 
-                      <Flex gap={1}>
-                        {enableImmersiveView && (
-                          <Button variant={"tertiary"} size={"small"} disabled>
-                            <ExpandIcon mr={0.5} />
-                            Immersive View
+                          <Pill
+                            Icon={ChevronDownIcon}
+                            size="small"
+                            iconPosition="right"
+                            disabled
+                          >
+                            Medium
+                          </Pill>
+
+                          <Pill
+                            Icon={ChevronDownIcon}
+                            size="small"
+                            iconPosition="right"
+                            disabled
+                          >
+                            Price Range
+                          </Pill>
+                        </Flex>
+                      </Flex>
+                    </HorizontalOverflow>
+
+                    <Flex gap={1}>
+                      {enableImmersiveView && (
+                        <Button variant={"tertiary"} size={"small"} disabled>
+                          <ExpandIcon mr={0.5} />
+                          Immersive View
+                        </Button>
+                      )}
+
+                      <Dropdown
+                        dropdown={
+                          <RadioGroup>
+                            <Radio
+                              key={1}
+                              value={"-decayed_merch"}
+                              label={"Recommended"}
+                            />
+                          </RadioGroup>
+                        }
+                        openDropdownByClick
+                        placement="bottom-end"
+                      >
+                        {({ anchorRef, anchorProps }) => (
+                          <Button
+                            ref={anchorRef as any}
+                            {...anchorProps}
+                            Icon={SortIcon}
+                            variant="tertiary"
+                            size="small"
+                            disabled
+                          >
+                            Sort: Recommended
                           </Button>
                         )}
-
-                        <Dropdown
-                          dropdown={
-                            <RadioGroup>
-                              <Radio
-                                key={1}
-                                value={"-decayed_merch"}
-                                label={"Recommended"}
-                              />
-                            </RadioGroup>
-                          }
-                          openDropdownByClick
-                          placement="bottom-end"
-                        >
-                          {({ anchorRef, anchorProps }) => (
-                            <Button
-                              ref={anchorRef as any}
-                              {...anchorProps}
-                              Icon={SortIcon}
-                              variant="tertiary"
-                              size="small"
-                              disabled
-                            >
-                              Sort: Recommended
-                            </Button>
-                          )}
-                        </Dropdown>
-                      </Flex>
+                      </Dropdown>
                     </Flex>
-                  </HorizontalPadding>
-                </AppContainer>
-              </FullBleed>
-            )
-          }}
-        </Sticky>
+                  </Flex>
+                </HorizontalPadding>
+              </AppContainer>
+            </FullBleed>
+          </Sticky>
 
-        <Spacer y={2} />
+          <Spacer y={2} />
 
-        <ArtworkFilterActiveFilters />
+          <ArtworkFilterActiveFilters />
 
-        <Spacer y={4} />
+          <Spacer y={4} />
 
-        <SkeletonText variant="xs" flexShrink={0}>
-          000 Artworks:
-        </SkeletonText>
+          <SkeletonText variant="xs" flexShrink={0}>
+            000 Artworks:
+          </SkeletonText>
 
-        <Spacer y={2} />
+          <Spacer y={2} />
 
-        {/* FIXME: The breakpoints that the artwork grid uses are completely different from Palette's */}
-        {/* So this placeholder does not accurately reflect column count at certain widths */}
-        <ArtworkGridPlaceholder columnCount={[2, 3, 4]} layout={layout} />
-      </Media>
-    </Skeleton>
+          {/* FIXME: The breakpoints that the artwork grid uses are completely different from Palette's */}
+          {/* So this placeholder does not accurately reflect column count at certain widths */}
+          <ArtworkGridPlaceholder columnCount={[2, 3, 4]} layout={layout} />
+        </Media>
+      </Skeleton>
+    </Box>
   )
 }
