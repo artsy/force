@@ -36,7 +36,7 @@ describe("UserBidHistory", () => {
     expect(screen.getByText("Bid")).toBeInTheDocument()
   })
 
-  it("renders -Nothing to Show- message when no sale found", () => {
+  it("renders empty state message when no bid history", () => {
     renderWithRelay({
       Me: () => ({
         inactiveLotStandings: [],
@@ -44,6 +44,6 @@ describe("UserBidHistory", () => {
     })
 
     expect(screen.getByText("Bid History")).toBeInTheDocument()
-    expect(screen.getByText("Nothing to Show")).toBeInTheDocument()
+    expect(screen.getByText("You have no bidding history.")).toBeInTheDocument()
   })
 })

@@ -1,4 +1,5 @@
-import { Column, Separator } from "@artsy/palette"
+import { Button, Column, Separator } from "@artsy/palette"
+import { RouterLink } from "System/Components/RouterLink"
 import type { UserActiveBids_me$data } from "__generated__/UserActiveBids_me.graphql"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -13,7 +14,19 @@ export const UserActiveBids: React.FC<
   React.PropsWithChildren<UserActiveBidsProps>
 > = ({ me: { activeLotStandings: lotStandings } }) => {
   if (!lotStandings || lotStandings.length === 0) {
-    return <SectionContainer title="Active Bids" />
+    return (
+      <SectionContainer
+        title="Active Bids"
+        emptyStateNote="You have no active bids."
+        emptyStateAction={
+          <RouterLink to="/auctions">
+            <Button mt={4} variant="primaryBlack">
+              Explore Auctions
+            </Button>
+          </RouterLink>
+        }
+      />
+    )
   }
 
   return (
