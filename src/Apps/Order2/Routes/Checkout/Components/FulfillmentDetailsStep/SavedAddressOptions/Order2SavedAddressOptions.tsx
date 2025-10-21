@@ -33,8 +33,12 @@ export const SavedAddressOptions = ({
   onSelectAddress,
   newAddressInitialValues,
 }: SavedAddressOptionsProps) => {
-  const { setUserAddressMode, userAddressMode, setStepErrorMessage } =
-    useCheckoutContext()
+  const {
+    setUserAddressMode,
+    userAddressMode,
+    setStepErrorMessage,
+    checkoutTracking,
+  } = useCheckoutContext()
   const parentFormikContext = useFormikContext<FormikContextWithAddress>()
 
   const [selectedAddressID, setSelectedAddressID] = useState(
@@ -118,6 +122,7 @@ export const SavedAddressOptions = ({
               alignSelf="center"
               selected={isSelected}
               onClick={async () => {
+                checkoutTracking.clickedShippingAddress()
                 setSelectedAddressID(internalID)
                 await onSelectAddress(processedAddress)
               }}
