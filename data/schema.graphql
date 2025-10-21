@@ -8970,6 +8970,46 @@ input ConversationMessageAttachmentInput {
   url: String!
 }
 
+type ConversationMessageTemplate {
+  body: String!
+  currentVersionId: String!
+  description: String
+
+  # A globally unique ID.
+  id: ID!
+
+  # A type-specific ID.
+  internalID: ID!
+  title: String!
+}
+
+# A connection to a list of items.
+type ConversationMessageTemplateConnection {
+  # A list of edges.
+  edges: [ConversationMessageTemplateEdge]
+  pageCursors: PageCursors!
+
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+# An edge in a connection.
+type ConversationMessageTemplateEdge {
+  # A cursor for use in pagination
+  cursor: String!
+
+  # The item at the end of the edge
+  node: ConversationMessageTemplate
+}
+
+# A static example template to help users get started
+type ConversationMessageTemplateExample {
+  body: String!
+  description: String
+  title: String!
+}
+
 # The participant responding to the conversation, currently always a Partner
 type ConversationResponder {
   # A globally unique ID.
@@ -9436,6 +9476,39 @@ type CreateConsignmentInquiryMutationPayload {
 union CreateConsignmentInquiryMutationType =
   | ConsignmentInquiryMutationFailure
   | ConsignmentInquiryMutationSuccess
+
+type CreateConversationMessageTemplateFailure {
+  mutationError: GravityMutationError
+}
+
+input CreateConversationMessageTemplateInput {
+  # The body of the template
+  body: String!
+  clientMutationId: String
+
+  # Optional description of the template
+  description: String
+
+  # The ID of the partner
+  partnerId: String!
+
+  # The title of the template
+  title: String!
+}
+
+type CreateConversationMessageTemplatePayload {
+  clientMutationId: String
+  responseOrError: CreateConversationMessageTemplateResponseOrError
+}
+
+union CreateConversationMessageTemplateResponseOrError =
+  | CreateConversationMessageTemplateFailure
+  | CreateConversationMessageTemplateSuccess
+
+type CreateConversationMessageTemplateSuccess {
+  conversationMessageTemplate: ConversationMessageTemplate
+  partner: Partner!
+}
 
 type CreateFeatureFailure {
   mutationError: GravityMutationError
@@ -10585,6 +10658,31 @@ type DeleteCollectionSuccess {
 
 type DeleteConversationFailure {
   mutationError: GravityMutationError
+}
+
+type DeleteConversationMessageTemplateFailure {
+  mutationError: GravityMutationError
+}
+
+input DeleteConversationMessageTemplateInput {
+  clientMutationId: String
+
+  # The ID of the template to delete
+  id: String!
+}
+
+type DeleteConversationMessageTemplatePayload {
+  clientMutationId: String
+  responseOrError: DeleteConversationMessageTemplateResponseOrError
+}
+
+union DeleteConversationMessageTemplateResponseOrError =
+  | DeleteConversationMessageTemplateFailure
+  | DeleteConversationMessageTemplateSuccess
+
+type DeleteConversationMessageTemplateSuccess {
+  conversationMessageTemplate: ConversationMessageTemplate
+  partner: Partner!
 }
 
 input DeleteConversationMutationInput {
@@ -16136,6 +16234,11 @@ type Mutation {
     input: CreateSubmissionMutationInput!
   ): CreateSubmissionMutationPayload
 
+  # Creates a new conversation message template
+  createConversationMessageTemplate(
+    input: CreateConversationMessageTemplateInput!
+  ): CreateConversationMessageTemplatePayload
+
   # Create a credit card
   createCreditCard(input: CreditCardInput!): CreditCardPayload
 
@@ -16304,6 +16407,11 @@ type Mutation {
   deleteConversation(
     input: DeleteConversationMutationInput!
   ): DeleteConversationMutationPayload
+
+  # Deletes a conversation message template
+  deleteConversationMessageTemplate(
+    input: DeleteConversationMessageTemplateInput!
+  ): DeleteConversationMessageTemplatePayload
 
   # Remove a credit card
   deleteCreditCard(input: DeleteCreditCardInput!): DeleteCreditCardPayload
@@ -16673,6 +16781,11 @@ type Mutation {
   updateConversation(
     input: UpdateConversationMutationInput!
   ): UpdateConversationMutationPayload
+
+  # Updates an existing conversation message template
+  updateConversationMessageTemplate(
+    input: UpdateConversationMessageTemplateInput!
+  ): UpdateConversationMessageTemplatePayload
 
   # updates a feature.
   updateFeature(
@@ -17778,6 +17891,18 @@ type Partner implements Node {
     first: Int
     last: Int
   ): ContactConnection
+
+  # Static example templates to help users get started
+  conversationMessageTemplateExamples: [ConversationMessageTemplateExample!]!
+
+  # A connection of conversation message templates for this partner
+  conversationMessageTemplatesConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+    page: Int
+  ): ConversationMessageTemplateConnection
   counts: PartnerCounts
   defaultProfileID: String
   displayArtistsSection: Boolean
@@ -22250,6 +22375,9 @@ input SendConversationMessageMutationInput {
   bodyText: String!
   clientMutationId: String
 
+  # Optional ID of the template version used to send this message
+  conversationMessageTemplateVersionId: String
+
   # Sender email, optionally including display string (like 'Jane Doe <jane@doe.com>').
   from: String!
 
@@ -23751,6 +23879,39 @@ union UpdateCollectorProfileWithIDResponseOrError =
 
 type UpdateCollectorProfileWithIDSuccess {
   collectorProfile: CollectorProfileType
+}
+
+type UpdateConversationMessageTemplateFailure {
+  mutationError: GravityMutationError
+}
+
+input UpdateConversationMessageTemplateInput {
+  # The body of the template
+  body: String
+  clientMutationId: String
+
+  # Optional description of the template
+  description: String
+
+  # The ID of the template to update
+  id: String!
+
+  # The title of the template
+  title: String
+}
+
+type UpdateConversationMessageTemplatePayload {
+  clientMutationId: String
+  responseOrError: UpdateConversationMessageTemplateResponseOrError
+}
+
+union UpdateConversationMessageTemplateResponseOrError =
+  | UpdateConversationMessageTemplateFailure
+  | UpdateConversationMessageTemplateSuccess
+
+type UpdateConversationMessageTemplateSuccess {
+  conversationMessageTemplate: ConversationMessageTemplate
+  partner: Partner!
 }
 
 input UpdateConversationMutationInput {
