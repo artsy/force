@@ -225,7 +225,7 @@ export const Order2PriceRangeOfferForm: React.FC<
                 showError={formIsDirty && offerValue <= 0}
                 onChange={onOfferValueChange}
                 onBlur={() => {
-                  if (offerValue !== undefined) {
+                  if (offerValue > 0) {
                     onOfferOptionSelected(offerValue)
                   }
                 }}

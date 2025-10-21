@@ -21,7 +21,7 @@ export const Order2HiddenPriceOfferForm: React.FC<OfferFormComponentProps> = ({
           showError={formIsDirty && offerValue <= 0}
           onChange={onOfferValueChange}
           onBlur={() => {
-            if (offerValue !== undefined) {
+            if (offerValue > 0) {
               onOfferOptionSelected(offerValue)
             }
           }}
