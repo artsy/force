@@ -454,4 +454,107 @@ describe("Order2OfferStep", () => {
       })
     })
   })
+
+  describe("Tracking", () => {
+    it("tracks clickedOfferOption when selecting a price range offer", () => {
+      renderWithRelay({
+        Viewer: () => ({
+          me: {
+            order: MOCK_PRICE_RANGE_ORDER,
+          },
+        }),
+      })
+
+      // Select the midpoint option
+      const midPointRadio = screen.getByText("Midpoint")
+      fireEvent.click(midPointRadio)
+
+      expect(mockCheckoutTracking.clickedOfferOption).toHaveBeenCalledWith(
+        "USD",
+        "order-id",
+        1500,
+        "Midpoint",
+      )
+    })
+
+    it("tracks clickedOfferOption when selecting an exact price offer", () => {
+      renderWithRelay({
+        Viewer: () => ({
+          me: {
+            order: MOCK_EXACT_PRICE_ORDER,
+          },
+        }),
+      })
+
+      // Select the list price option
+      const listPriceRadio = screen.getByText("List price")
+      fireEvent.click(listPriceRadio)
+
+      expect(mockCheckoutTracking.clickedOfferOption).toHaveBeenCalledWith(
+        "USD",
+        "order-id",
+        5000,
+        "List price",
+      )
+    })
+
+    it("tracks clickedOfferOption for custom offers", async () => {
+      renderWithRelay({
+        Viewer: () => ({
+          me: {
+            order: MOCK_PRICE_RANGE_ORDER,
+          },
+        }),
+      })
+
+      // Click on "Other amount" radio button
+      const otherAmountRadio = screen.getByText("Other amount")
+      fireEvent.click(otherAmountRadio)
+
+      // Custom input should appear
+      await waitFor(() => {
+        expect(screen.getByTitle("Your offer")).toBeInTheDocument()
+      })
+
+      // Enter custom amount
+      const customInput = screen.getByTitle("Your offer")
+      fireEvent.change(customInput, { target: { value: "1800" } })
+
+      // Blur the input to trigger the tracking
+      fireEvent.blur(customInput)
+
+      expect(mockCheckoutTracking.clickedOfferOption).toHaveBeenCalledWith(
+        "USD",
+        "order-id",
+        1800,
+        undefined,
+      )
+    })
+
+    it("tracks clickedOrderProgression when submitting an offer", async () => {
+      renderWithRelay({
+        Viewer: () => ({
+          me: {
+            order: MOCK_PRICE_RANGE_ORDER,
+          },
+        }),
+      })
+
+      // Select an offer
+      const midPointRadio = screen.getByText("Midpoint")
+      fireEvent.click(midPointRadio)
+
+      // Click continue
+      const continueButton = screen.getByRole("button", {
+        name: "Save and Continue",
+      })
+      fireEvent.click(continueButton)
+
+      await waitFor(() => {
+        expect(
+          mockCheckoutTracking.clickedOrderProgression,
+        ).toHaveBeenCalledWith("ordersOffer")
+      })
+    })
+  })
 })
