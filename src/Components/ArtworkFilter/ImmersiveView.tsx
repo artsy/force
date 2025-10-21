@@ -11,9 +11,11 @@ import {
   Button,
   Flex,
   Image,
+  ModalBase,
   ShelfNext,
   ShelfPrevious,
   Text,
+  useTheme,
 } from "@artsy/palette"
 import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
@@ -23,7 +25,6 @@ import type {
 } from "__generated__/ImmersiveView_filtered_artworks.graphql"
 import { useCallback, useEffect, useState } from "react"
 import { Blurhash } from "react-blurhash"
-import { FocusOn } from "react-focus-on"
 import { Link } from "react-head"
 import { graphql, useFragment } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -106,9 +107,6 @@ export const ImmersiveView: React.FC<ImmersiveViewProps> = props => {
   const handleKeyDown = useCallback(
     (event: KeyboardEvent) => {
       switch (event.key) {
-        case "Escape":
-          onClose()
-          break
         case "ArrowLeft": {
           handlePreviousArtwork()
           break
@@ -122,7 +120,7 @@ export const ImmersiveView: React.FC<ImmersiveViewProps> = props => {
           break
       }
     },
-    [onClose, handleNextArtwork, handlePreviousArtwork],
+    [handleNextArtwork, handlePreviousArtwork],
   )
 
   const tracking = useTracking()
@@ -174,79 +172,94 @@ export const ImmersiveView: React.FC<ImmersiveViewProps> = props => {
     }
   }, [handleKeyDown])
 
+  const { theme } = useTheme()
+
   return (
-    <>
-      {/* Prefetch prev/next image using link tags */}
-      {nextImageSrc && <Link rel="prefetch" href={nextImageSrc} as="image" />}
-      {prevImageSrc && <Link rel="prefetch" href={prevImageSrc} as="image" />}
+    <ModalBase
+      onClose={onClose}
+      dialogProps={{
+        width: "100%",
+        height: "100%",
+        bg:
+          theme.name === "light"
+            ? "rgba(255, 255, 255, 0.9)"
+            : "rgba(0, 0, 0, 0.9)",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+      style={{ backdropFilter: "blur(20px)" }}
+    >
+      <>
+        {/* Prefetch prev/next image using link tags */}
+        {nextImageSrc && <Link rel="prefetch" href={nextImageSrc} as="image" />}
+        {prevImageSrc && <Link rel="prefetch" href={prevImageSrc} as="image" />}
 
-      <div className="immersive-view" data-testid="immersive-view">
-        <FocusOn>
-          <Container>
-            <Button
-              onClick={onClose}
-              variant={"tertiary"}
-              position="fixed"
-              top={20}
-              right={20}
+        <div className="immersive-view" data-testid="immersive-view">
+          <Button
+            onClick={onClose}
+            variant={"tertiary"}
+            position="fixed"
+            top={20}
+            right={20}
+          >
+            <CollapseIcon mr={0.5} /> Close
+          </Button>
+
+          <Previous
+            onClick={handlePreviousArtwork}
+            aria-label="Previous artwork"
+            disabled={isVeryFirstArtwork}
+          />
+
+          <Next onClick={handleNextArtwork} aria-label="Next artwork" />
+
+          {isPageLoading ? (
+            <Text>Loading more artworks…</Text>
+          ) : isArtworkMissing ? (
+            <Text>No artwork to display</Text>
+          ) : (
+            <a
+              key={currentArtwork.slug}
+              href={`/artwork/${currentArtwork.slug}`}
+              target="_new"
+              style={{ textDecoration: "none" }}
+              onClick={e => {
+                e.currentTarget.blur()
+                trackImmersiveViewArtworkClicked()
+              }}
             >
-              <CollapseIcon mr={0.5} /> Close
-            </Button>
+              <Flex flexDirection={"column"} alignItems={"center"} gap={2}>
+                {isImageLoading && (
+                  <ImagePlaceholder currentArtwork={currentArtwork} />
+                )}
 
-            <Previous
-              onClick={handlePreviousArtwork}
-              aria-label="Previous artwork"
-              disabled={isVeryFirstArtwork}
-            />
+                <Image
+                  data-testid="immersive-view-image"
+                  src={currentImageSrc}
+                  alt={currentArtwork.formattedMetadata ?? "…"}
+                  style={{
+                    height: "85vh",
+                    width: "85vw",
+                    objectFit: "contain",
+                  }}
+                  display={isImageLoading ? "none" : "block"}
+                  onLoad={() => {
+                    setIsImageLoading(false)
+                  }}
+                  onError={() => setIsImageLoading(false)}
+                />
 
-            <Next onClick={handleNextArtwork} aria-label="Next artwork" />
-
-            {isPageLoading ? (
-              <Text>Loading more artworks…</Text>
-            ) : isArtworkMissing ? (
-              <Text>No artwork to display</Text>
-            ) : (
-              <a
-                key={currentArtwork.slug}
-                href={`/artwork/${currentArtwork.slug}`}
-                target="_new"
-                style={{ textDecoration: "none" }}
-                onClick={e => {
-                  e.currentTarget.blur()
-                  trackImmersiveViewArtworkClicked()
-                }}
-              >
-                <Flex flexDirection={"column"} alignItems={"center"} gap={2}>
-                  {isImageLoading && (
-                    <ImagePlaceholder currentArtwork={currentArtwork} />
-                  )}
-
-                  <Image
-                    data-testid="immersive-view-image"
-                    src={currentImageSrc}
-                    alt={currentArtwork.formattedMetadata ?? "…"}
-                    style={{
-                      height: "85vh",
-                      width: "85vw",
-                      objectFit: "contain",
-                    }}
-                    display={isImageLoading ? "none" : "block"}
-                    onLoad={() => {
-                      setIsImageLoading(false)
-                    }}
-                    onError={() => setIsImageLoading(false)}
-                  />
-
-                  <Text color="mono60">
-                    {currentArtwork.formattedMetadata ?? "…"}
-                  </Text>
-                </Flex>
-              </a>
-            )}
-          </Container>
-        </FocusOn>
-      </div>
-    </>
+                <Text color="mono60">
+                  {currentArtwork.formattedMetadata ?? "…"}
+                </Text>
+              </Flex>
+            </a>
+          )}
+        </div>
+      </>
+    </ModalBase>
   )
 }
 
@@ -269,23 +282,6 @@ const FRAGMENT = graphql`
       }
     }
   }
-`
-
-const Container = styled.div`
-  position: fixed;
-  top: 0px;
-  left: 0px;
-  right: 0px;
-  bottom: 0px;
-  background-color: ${({ theme }) =>
-    theme.name === "light" ? "rgba(255, 255, 255, 0.9)" : "rgba(0, 0, 0, 0.9)"};
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px); /* Safari */
 `
 
 const Next = styled(ShelfNext)`
