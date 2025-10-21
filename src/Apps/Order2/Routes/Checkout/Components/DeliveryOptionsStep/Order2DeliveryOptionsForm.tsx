@@ -243,6 +243,7 @@ const MultipleShippingOptionsForm = ({
   const defaultOption = options.find(option => option.selected) || options[0]
   const [selectedOption, setSelectedOption] = useState(defaultOption)
   const { setFieldValue } = useFormikContext<FormValues>()
+  const { checkoutTracking } = useCheckoutContext()
 
   return (
     <Flex flexDirection="column">
@@ -251,6 +252,7 @@ const MultipleShippingOptionsForm = ({
         onSelect={selected => {
           setSelectedOption(selected)
           setFieldValue("deliveryOption", selected)
+          checkoutTracking.clickedSelectShippingOption(selected.type)
         }}
       >
         {options.map((option, i) => {
