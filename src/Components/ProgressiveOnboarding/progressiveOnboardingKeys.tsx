@@ -18,6 +18,9 @@ export const PROGRESSIVE_ONBOARDING = {
   alertCreate: "alert-create",
   alertFind: "alert-find",
   alertHighlight: "alert-highlight",
+
+  // Immersive View
+  immersiveView: "immersive-view",
 }
 
 export const PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST_CHAIN = [

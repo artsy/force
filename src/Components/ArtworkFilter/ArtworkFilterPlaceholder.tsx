@@ -159,7 +159,7 @@ export const ArtworkFilterPlaceholder: React.FC<
                         {enableImmersiveView && (
                           <Button variant={"tertiary"} size={"small"} disabled>
                             <ExpandIcon mr={0.5} />
-                            Immersive
+                            Immersive View
                           </Button>
                         )}
 

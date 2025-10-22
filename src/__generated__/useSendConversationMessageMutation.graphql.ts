@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5b16bab9462c561972363750eab269c6>>
+ * @generated SignedSource<<479e65e1181afe34ced0078300672308>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,6 +15,7 @@ export type SendConversationMessageMutationInput = {
   bodyHTML?: string | null | undefined;
   bodyText: string;
   clientMutationId?: string | null | undefined;
+  conversationMessageTemplateVersionId?: string | null | undefined;
   from: string;
   fromId?: string | null | undefined;
   id: string;
