@@ -101,6 +101,7 @@ const PERMANENT_REDIRECTS = {
   "/user/edit": "/settings/edit-profile",
   "/user/payments": "/settings/payments",
   "/user/purchases": "/settings/orders",
+  "/user/orders": "/settings/orders",
   "/user/saves": "/favorites/saves",
   "/user/shipping": "/settings/shipping",
   "/viewing-room": "/viewing-rooms",
