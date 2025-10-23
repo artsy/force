@@ -8,6 +8,8 @@ import {
   type ClickedFulfillmentTab,
   type ClickedOrderProgression,
   type ClickedPaymentMethod,
+  type ClickedSelectShippingOption,
+  type ClickedShippingAddress,
   ContextModule,
   type ErrorMessageViewed,
   type ExpressCheckoutViewed,
@@ -162,6 +164,29 @@ export const useCheckoutTracking = ({
           context_page_owner_type: contextPageOwnerType,
           context_page_owner_id: contextPageOwnerId,
         }
+        trackEvent(payload)
+      },
+
+      clickedShippingAddress: () => {
+        const payload: ClickedShippingAddress = {
+          action: ActionType.clickedShippingAddress,
+          context_module: ContextModule.ordersShipping,
+          context_page_owner_type: contextPageOwnerType,
+          context_page_owner_id: contextPageOwnerId,
+        }
+
+        trackEvent(payload)
+      },
+
+      clickedSelectShippingOption: (option: string) => {
+        const payload: ClickedSelectShippingOption = {
+          action: ActionType.clickedSelectShippingOption,
+          context_module: ContextModule.ordersShipping,
+          context_page_owner_type: contextPageOwnerType,
+          context_page_owner_id: contextPageOwnerId,
+          subject: option,
+        }
+
         trackEvent(payload)
       },
 
