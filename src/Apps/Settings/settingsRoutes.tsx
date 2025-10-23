@@ -2,8 +2,6 @@ import loadable from "@loadable/component"
 import type { RouteProps } from "System/Router/Route"
 import { RedirectException } from "found"
 import { graphql } from "react-relay"
-import type { Match } from "found"
-import type { SystemContextProps } from "System/Contexts/SystemContext"
 
 const SettingsApp = loadable(
   () => import(/* webpackChunkName: "settingsBundle" */ "./SettingsApp"),
@@ -42,17 +40,6 @@ const PaymentsRoute = loadable(
   {
     resolveComponent: component =>
       component.SettingsPaymentsRouteFragmentContainer,
-  },
-)
-
-const PurchasesRoute = loadable(
-  () =>
-    import(
-      /* webpackChunkName: "settingsBundle" */ "./Routes/Purchases/SettingsPurchasesRoute"
-    ),
-  {
-    resolveComponent: component =>
-      component.SettingsPurchasesRouteFragmentContainer,
   },
 )
 
@@ -167,20 +154,6 @@ export const settingsRoutes: RouteProps[] = [
         `,
       },
       {
-        path: "purchases",
-        getComponent: () => PurchasesRoute,
-        onPreloadJS: () => {
-          PurchasesRoute.preload()
-        },
-        query: graphql`
-          query settingsRoutes_PurchasesRouteQuery {
-            me {
-              ...SettingsPurchasesRoute_me
-            }
-          }
-        `,
-      },
-      {
         path: "orders",
         getComponent: () => OrdersRoute,
         onPreloadJS: () => {
@@ -193,20 +166,6 @@ export const settingsRoutes: RouteProps[] = [
             }
           }
         `,
-        render: ({ props, Component, match }) => {
-          if (!(Component && props)) {
-            return
-          }
-
-          const typedMatch = match as Match<SystemContextProps>
-          const featureFlags = typedMatch.context.featureFlags
-
-          if (!featureFlags?.isEnabled("emerald_settings-orders")) {
-            throw new RedirectException("/settings/purchases", 302)
-          }
-
-          return <Component {...props} />
-        },
       },
       {
         path: "saves",
