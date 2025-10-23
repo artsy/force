@@ -1871,6 +1871,7 @@ const baseProps = {
         },
       ],
       shippingOrigin: "Eagle, CO, US",
+      offers: [],
     },
     addressConnection: {
       edges: [],
