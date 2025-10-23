@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e52c3bbbd7bee116c336802fc2bd1d37>>
+ * @generated SignedSource<<477a5a49672548d899187cd801a831ae>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,6 +10,7 @@
 
 import { ReaderFragment } from 'relay-runtime';
 export type OrderModeEnum = "BUY" | "OFFER" | "%future added value";
+export type OrderSourceEnum = "ARTWORK_PAGE" | "INQUIRY" | "PARTNER_OFFER" | "PRIVATE_SALE" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type Order2OfferStep_order$data = {
   readonly currencyCode: string;
@@ -41,6 +42,7 @@ export type Order2OfferStep_order$data = {
     } | null | undefined;
   } | null | undefined>;
   readonly mode: OrderModeEnum;
+  readonly source: OrderSourceEnum;
   readonly " $fragmentSpreads": FragmentRefs<"Order2ExactPriceOfferForm_order" | "Order2OfferCompletedView_order" | "Order2PriceRangeOfferForm_order">;
   readonly " $fragmentType": "Order2OfferStep_order";
 };
@@ -78,6 +80,13 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "mode",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "source",
       "storageKey": null
     },
     {
@@ -214,6 +223,6 @@ return {
 };
 })();
 
-(node as any).hash = "e3deadf4e8c64673c005a0944c4f2f7b";
+(node as any).hash = "abed7f3dafaa58d919ab732d9042de68";
 
 export default node;
