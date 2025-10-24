@@ -1,22 +1,13 @@
 import { ContextModule, Intent } from "@artsy/cohesion"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import FilterIcon from "@artsy/icons/FilterIcon"
+import { Box, Flex, Skeleton, Spacer, Stack, Text } from "@artsy/palette"
 import {
-  Box,
-  Clickable,
-  Flex,
-  FullBleed,
-  Join,
-  Spacer,
-  Stack,
-  Text,
-} from "@artsy/palette"
+  ArtistAuctionResultsFilterNav,
+  ArtistAuctionResultsFilterNavPlaceholder,
+} from "Apps/Artist/Routes/AuctionResults/ArtistAuctionResultsFilterNav"
 import { ArtistAuctionResultsExpandableSort } from "Apps/Artist/Routes/AuctionResults/Components/ArtistAuctionResultsExpandableSort"
-import { ArtistAuctionResultsFilters } from "Apps/Artist/Routes/AuctionResults/Components/ArtistAuctionResultsFilters"
 import { initialAuctionResultsFilterState } from "Apps/Artist/Routes/AuctionResults/initialAuctionResultsFilterState"
 import { allowedAuctionResultFilters } from "Apps/Artist/Utils/allowedAuctionResultFilters"
-import { AppContainer } from "Apps/Components/AppContainer"
-import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/paramsCasing"
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
 import { ArtworkGridEmptyState } from "Components/ArtworkGrid/ArtworkGridEmptyState"
@@ -24,14 +15,13 @@ import { useAuthDialog } from "Components/AuthDialog"
 import { LoadingArea } from "Components/LoadingArea"
 import { PaginatedMetaTags } from "Components/PaginatedMetaTags"
 import { PaginationFragmentContainer as Pagination } from "Components/Pagination"
-import { Sticky } from "Components/Sticky"
+import { TruncateComponent } from "Components/TruncateComponent"
 import { SystemContext } from "System/Contexts/SystemContext"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { Jump, useJump } from "Utils/Hooks/useJump"
+import { useJump } from "Utils/Hooks/useJump"
 import { usePrevious } from "Utils/Hooks/usePrevious"
-import { Media } from "Utils/Responsive"
 import { extractNodes } from "Utils/extractNodes"
 import createLogger from "Utils/logger"
 import type { ArtistAuctionResultsQueryRendererQuery } from "__generated__/ArtistAuctionResultsQueryRendererQuery.graphql"
@@ -47,7 +37,10 @@ import {
 } from "react-relay"
 import { useTracking } from "react-tracking"
 import useDeepCompareEffect from "use-deep-compare-effect"
-import { ArtistAuctionResultItemFragmentContainer } from "./ArtistAuctionResultItem"
+import {
+  ArtistAuctionResultItemFragmentContainer,
+  ArtistAuctionResultItemPlaceholder,
+} from "./ArtistAuctionResultItem"
 import {
   AuctionResultsFilterContextProvider,
   type SharedAuctionResultsFilterContextProps,
@@ -55,10 +48,8 @@ import {
   useCurrentlySelectedFiltersForAuctionResults,
 } from "./AuctionResultsFilterContext"
 import { ArtistAuctionResultsEmptyState } from "./Components/ArtistAuctionResultsEmptyState"
-import { ArtistAuctionResultsSortSelect } from "./Components/ArtistAuctionResultsSortSelect"
 import { AuctionFilterMobileActionSheet } from "./Components/AuctionFilterMobileActionSheet"
 import { AuctionFilters } from "./Components/AuctionFilters"
-import { MarketStatsQueryRenderer } from "./Components/MarketStats"
 
 const logger = createLogger("ArtistAuctionResults.tsx")
 
@@ -70,11 +61,12 @@ interface AuctionResultsProps {
   aggregations?: NonNullable<
     ArtistAuctionResultsRoute_artist$data["sidebarAggregations"]
   >["aggregations"]
+  truncate?: boolean
 }
 
 const AuctionResultsContainer: React.FC<
   React.PropsWithChildren<AuctionResultsProps>
-> = ({ artist, relay, aggregations }) => {
+> = ({ artist, relay, aggregations, truncate = false }) => {
   const { user } = useContext(SystemContext)
 
   const { filters, setFilter, resetFilters } = useAuctionResultsFilterContext()
@@ -92,20 +84,10 @@ const AuctionResultsContainer: React.FC<
   const pastAuctionResultsCount = artist.pastAuctionResults?.totalCount || 0
   const showUpcomingAuctionResults = upcomingAuctionResultsCount > 0
 
-  const { match } = useRouter()
-
-  const { scrollToMarketSignals } = paramsToCamelCase(
-    match?.location.query,
-  ) as { scrollToMarketSignals?: boolean }
-
   const { jumpTo } = useJump()
 
   const scrollToAuctionResultsTop = () => {
     jumpTo("artistAuctionResultsTop", { offset: 20 })
-  }
-
-  const scrollToMarketSignalsTop = () => {
-    jumpTo("marketSignalsTop")
   }
 
   const loadNext = () => {
@@ -220,17 +202,6 @@ const AuctionResultsContainer: React.FC<
     })
   }
 
-  const handleMarketStatsRendered = (visible: boolean) => {
-    // Scroll to auction results if param flag is present
-    if (!scrollToMarketSignals) return
-
-    // Scroll to auction results if the market signals section is not visible
-    setTimeout(
-      visible ? scrollToMarketSignalsTop : scrollToAuctionResultsTop,
-      0,
-    )
-  }
-
   const { title, description } = artist.meta
 
   if (!artist.statuses?.auctionLots) {
@@ -249,23 +220,6 @@ const AuctionResultsContainer: React.FC<
     <>
       <PaginatedMetaTags title={title} description={description} />
 
-      <Jump id="marketSignalsTop" />
-
-      <Spacer y={[2, 0]} />
-
-      <MarketStatsQueryRenderer
-        id={artist.internalID}
-        onRendered={handleMarketStatsRendered}
-      />
-
-      <Spacer y={6} />
-
-      <Jump id="artistAuctionResultsTop" />
-
-      <Text variant="lg-display">Auction Results</Text>
-
-      <Spacer y={4} />
-
       {mode === "MobileActionSheet" && (
         <AuctionFilterMobileActionSheet onClose={() => setMode("Idle")}>
           <Stack gap={4}>
@@ -280,136 +234,105 @@ const AuctionResultsContainer: React.FC<
         </AuctionFilterMobileActionSheet>
       )}
 
-      <Box
-        id="Sticky__ArtistAuctionResultsFilter"
-        data-test={ContextModule.auctionResults}
+      <ArtistAuctionResultsFilterNav
+        showUpcomingAuctionResults={showUpcomingAuctionResults}
+        onMobileFilterClick={() => setMode("MobileActionSheet")}
       >
-        <Media at="xs">
-          <Sticky bottomBoundary="#Sticky__ArtistAuctionResultsFilter">
-            {({ stuck }) => {
-              return (
-                <FullBleed backgroundColor="mono0">
-                  <Flex
-                    justifyContent="flex-end"
-                    alignItems="center"
-                    width="100%"
-                    {...(stuck
-                      ? {
-                          borderBottom: "1px solid",
-                          borderColor: "mono10",
-                        }
-                      : {})}
-                  >
-                    <Clickable
-                      onClick={() => setMode("MobileActionSheet")}
-                      display="flex"
-                      alignItems="center"
-                      gap={0.5}
-                      p={2}
-                    >
-                      <FilterIcon />
-
-                      <Text variant="xs">Sort & Filter</Text>
-                    </Clickable>
-                  </Flex>
-                </FullBleed>
-              )
-            }}
-          </Sticky>
-        </Media>
-
-        <Media greaterThan="xs">
-          <Sticky bottomBoundary="#Sticky__ArtistAuctionResultsFilter">
-            <FullBleed backgroundColor="mono0">
-              <AppContainer>
-                <HorizontalPadding>
-                  <Flex
-                    alignItems="center"
-                    justifyContent="space-between"
-                    gap={2}
-                    py={1}
-                    bg="mono0"
-                  >
-                    <ArtistAuctionResultsFilters
-                      showUpcomingAuctionResults={showUpcomingAuctionResults}
-                    />
-
-                    <ArtistAuctionResultsSortSelect />
-                  </Flex>
-                </HorizontalPadding>
-              </AppContainer>
-            </FullBleed>
-          </Sticky>
-        </Media>
-
         <Spacer y={[2, 4]} />
 
-        {results.length === 0 && (
+        {results.length === 0 ? (
           <ArtworkGridEmptyState
             onClearFilters={() => {
               resetFilters?.()
             }}
           />
+        ) : (
+          <TruncateComponent label="Load More" enabled={truncate}>
+            <LoadingArea isLoading={mode === "Loading"}>
+              <Flex flexDirection="column" gap={4}>
+                {upcomingAuctionResults.length > 0 && (
+                  <Box>
+                    <Text variant="md">Upcoming Auctions</Text>
+
+                    <Text variant="xs" mb={2} color="mono60">
+                      {upcomingAuctionResultsCount}{" "}
+                      {upcomingAuctionResultsCount === 1 ? "result" : "results"}
+                    </Text>
+
+                    <Stack gap={2}>
+                      {upcomingAuctionResults.map((result, index) => {
+                        return (
+                          <ArtistAuctionResultItemFragmentContainer
+                            key={index}
+                            auctionResult={result}
+                            filtersAtDefault={filtersAtDefault}
+                          />
+                        )
+                      })}
+                    </Stack>
+                  </Box>
+                )}
+
+                {pastAuctionResults.length > 0 && (
+                  <Box>
+                    <Text variant="md">Past Auctions</Text>
+
+                    <Text variant="xs" mb={2} color="mono60">
+                      {pastAuctionResultsCount}{" "}
+                      {pastAuctionResultsCount === 1 ? "result" : "results"}
+                    </Text>
+
+                    <Stack gap={2}>
+                      {pastAuctionResults.map((result, index) => {
+                        return (
+                          <ArtistAuctionResultItemFragmentContainer
+                            key={index}
+                            auctionResult={result}
+                            filtersAtDefault={filtersAtDefault}
+                          />
+                        )
+                      })}
+                    </Stack>
+                  </Box>
+                )}
+              </Flex>
+            </LoadingArea>
+
+            <Pagination
+              hasNextPage={Boolean(pageInfo?.hasNextPage)}
+              pageCursors={artist.auctionResultsConnection?.pageCursors}
+              onClick={loadPage}
+              onNext={loadNext}
+            />
+          </TruncateComponent>
         )}
-
-        <LoadingArea isLoading={mode === "Loading"}>
-          <Flex flexDirection="column" gap={4}>
-            {upcomingAuctionResults.length > 0 && (
-              <Box>
-                <Text variant="md">Upcoming Auctions</Text>
-
-                <Text variant="xs" mb={2} color="mono60">
-                  {upcomingAuctionResultsCount}{" "}
-                  {upcomingAuctionResultsCount === 1 ? "result" : "results"}
-                </Text>
-
-                <Join separator={<Spacer y={2} />}>
-                  {upcomingAuctionResults.map((result, index) => {
-                    return (
-                      <ArtistAuctionResultItemFragmentContainer
-                        key={index}
-                        auctionResult={result}
-                        filtersAtDefault={filtersAtDefault}
-                      />
-                    )
-                  })}
-                </Join>
-              </Box>
-            )}
-
-            {pastAuctionResults.length > 0 && (
-              <Box>
-                <Text variant="md">Past Auctions</Text>
-
-                <Text variant="xs" mb={2} color="mono60">
-                  {pastAuctionResultsCount}{" "}
-                  {pastAuctionResultsCount === 1 ? "result" : "results"}
-                </Text>
-
-                <Join separator={<Spacer y={2} />}>
-                  {pastAuctionResults.map((result, index) => {
-                    return (
-                      <ArtistAuctionResultItemFragmentContainer
-                        key={index}
-                        auctionResult={result}
-                        filtersAtDefault={filtersAtDefault}
-                      />
-                    )
-                  })}
-                </Join>
-              </Box>
-            )}
-          </Flex>
-        </LoadingArea>
-
-        <Pagination
-          hasNextPage={Boolean(pageInfo?.hasNextPage)}
-          pageCursors={artist.auctionResultsConnection?.pageCursors}
-          onClick={loadPage}
-          onNext={loadNext}
-        />
-      </Box>
+      </ArtistAuctionResultsFilterNav>
     </>
+  )
+}
+
+export const ArtistAuctionResultsPlaceholder: React.FC<
+  React.PropsWithChildren<{
+    truncate?: boolean
+  }>
+> = ({ truncate }) => {
+  return (
+    <Skeleton>
+      <ArtistAuctionResultsFilterNavPlaceholder>
+        <Spacer y={[2, 4]} />
+
+        <TruncateComponent label="Load More" enabled={truncate} disabled>
+          <Stack gap={2}>
+            {Array.from({ length: 10 }).map((_, index) => (
+              <ArtistAuctionResultItemPlaceholder
+                key={index}
+                showArtistName={false}
+              />
+            ))}
+          </Stack>
+        </TruncateComponent>
+      </ArtistAuctionResultsFilterNavPlaceholder>
+    </Skeleton>
   )
 }
 
@@ -617,11 +540,12 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
 type ArtistAuctionResultsQueryRendererProps = {
   id: string
   lazyLoad?: boolean
+  truncate?: boolean
 }
 
 export const ArtistAuctionResultsQueryRenderer: React.FC<
   ArtistAuctionResultsQueryRendererProps
-> = ({ id, lazyLoad }) => {
+> = ({ id, lazyLoad, truncate = false }) => {
   const { match } = useRouter()
 
   const urlFilterState = paramsToCamelCase(match?.location.query ?? {})
@@ -633,6 +557,7 @@ export const ArtistAuctionResultsQueryRenderer: React.FC<
   return (
     <SystemQueryRenderer<ArtistAuctionResultsQueryRendererQuery>
       lazyLoad={lazyLoad}
+      placeholder={<ArtistAuctionResultsPlaceholder truncate={truncate} />}
       query={graphql`
         query ArtistAuctionResultsQueryRendererQuery(
           $page: Int
@@ -728,9 +653,40 @@ export const ArtistAuctionResultsQueryRenderer: React.FC<
           <ArtistAuctionResultsRefetchContainer
             artist={artist}
             aggregations={artist.sidebarAggregations?.aggregations}
+            truncate={truncate}
           />
         )
       }}
     />
   )
+}
+
+export const useScrollToTopOfAuctionResults = () => {
+  const { match } = useRouter()
+
+  const { scrollToMarketSignals } = paramsToCamelCase(
+    match?.location.query,
+  ) as { scrollToMarketSignals?: boolean }
+
+  const { jumpTo } = useJump()
+
+  const scrollToAuctionResultsTop = () => {
+    jumpTo("artistAuctionResultsTop", { offset: 20 })
+  }
+
+  const scrollToMarketSignalsTop = () => {
+    jumpTo("marketSignalsTop")
+  }
+
+  const handleScrollToTop = (visible: boolean) => {
+    // Scroll to auction results if param flag is present
+    if (!scrollToMarketSignals) return
+
+    // Scroll to auction results if the market signals section is not visible
+    requestAnimationFrame(
+      visible ? scrollToMarketSignalsTop : scrollToAuctionResultsTop,
+    )
+  }
+
+  return { handleScrollToTop }
 }

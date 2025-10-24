@@ -6,7 +6,7 @@ export const ArtistOverviewEmpty: React.FC<
 > = () => {
   return (
     <EmptyState
-      title="We’ll update this page when more information is available."
+      title="We’ll update this area when more information is available."
       description={
         <>
           Do you represent this artist?{" "}

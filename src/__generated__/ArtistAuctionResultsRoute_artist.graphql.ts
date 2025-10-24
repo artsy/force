@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1f84a4d93128bdf7f650229654fb2779>>
+ * @generated SignedSource<<dbd234352a85b3b91e7077f185278fba>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,6 +12,7 @@ import { ReaderFragment } from 'relay-runtime';
 export type AuctionResultsAggregation = "CURRENCIES_COUNT" | "LOTS_BY_CREATED_YEAR" | "LOTS_BY_SALE_YEAR" | "SIMPLE_PRICE_HISTOGRAM" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ArtistAuctionResultsRoute_artist$data = {
+  readonly internalID: string;
   readonly sidebarAggregations: {
     readonly aggregations: ReadonlyArray<{
       readonly counts: ReadonlyArray<{
@@ -21,6 +22,7 @@ export type ArtistAuctionResultsRoute_artist$data = {
       } | null | undefined> | null | undefined;
       readonly slice: AuctionResultsAggregation | null | undefined;
     } | null | undefined> | null | undefined;
+    readonly totalCount: number | null | undefined;
   } | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"ArtistAuctionResults_artist">;
   readonly " $fragmentType": "ArtistAuctionResultsRoute_artist";
@@ -194,6 +196,13 @@ const node: ReaderFragment = {
       "name": "ArtistAuctionResults_artist"
     },
     {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "internalID",
+      "storageKey": null
+    },
+    {
       "alias": "sidebarAggregations",
       "args": [
         {
@@ -212,6 +221,13 @@ const node: ReaderFragment = {
       "name": "auctionResultsConnection",
       "plural": false,
       "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "totalCount",
+          "storageKey": null
+        },
         {
           "alias": null,
           "args": null,
@@ -270,6 +286,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "71527fc9d349617b8b0edff424f1e8a2";
+(node as any).hash = "a4c1113a1149ead15919983b81991996";
 
 export default node;

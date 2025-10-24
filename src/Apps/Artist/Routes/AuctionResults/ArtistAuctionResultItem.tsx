@@ -9,6 +9,7 @@ import {
   GridColumns,
   Image,
   ResponsiveBox,
+  SkeletonText,
   Spacer,
   Text,
 } from "@artsy/palette"
@@ -144,7 +145,7 @@ export const ArtistAuctionResultItem: React.FC<
             <i>{title?.trim()}</i>
             {date_text &&
               date_text.replace(/\s+/g, "").length > 0 &&
-              ", " + date_text}
+              `, ${date_text}`}
           </Text>
 
           {mediumText !== "Unknown" && (
@@ -182,6 +183,80 @@ export const ArtistAuctionResultItem: React.FC<
         </Column>
       </GridColumns>
     </RouterLink>
+  )
+}
+
+export const ArtistAuctionResultItemPlaceholder: React.FC<
+  React.PropsWithChildren<{ showArtistName: boolean }>
+> = ({ showArtistName }) => {
+  return (
+    <GridColumns>
+      <Column span={[4, 2]}>
+        <ResponsiveBox
+          aspectWidth={1}
+          aspectHeight={1}
+          maxWidth={130}
+          bg="mono10"
+        />
+      </Column>
+
+      {/* Mobile */}
+      <Column span={[8, 1]} display={["block", "none"]}>
+        {showArtistName && (
+          <SkeletonText variant="xs" lineClamp={1}>
+            Artist Name
+          </SkeletonText>
+        )}
+
+        <SkeletonText variant="xs" lineClamp={1}>
+          Title, 0000
+        </SkeletonText>
+
+        <SkeletonText variant="xs">Example medium on canvas</SkeletonText>
+
+        <SkeletonText variant="xs">00 x 00 in (00 x 00 cm)</SkeletonText>
+
+        <Spacer y={1} />
+
+        <SkeletonText variant="xs">Jan 00, 0000 • Organization</SkeletonText>
+
+        <SkeletonText variant="xs">US$00,000 (+25% est)</SkeletonText>
+      </Column>
+
+      {/* Desktop */}
+      <Column span={4} display={["none", "block"]}>
+        {showArtistName && (
+          <SkeletonText variant="sm-display">Artist Name</SkeletonText>
+        )}
+
+        <SkeletonText variant="sm-display">Title, 0000</SkeletonText>
+
+        <SkeletonText variant="xs">Example medium on canvas</SkeletonText>
+
+        <SkeletonText variant="xs">00 x 00 in (00 x 00 cm)</SkeletonText>
+      </Column>
+
+      <Column span={3} display={["none", "block"]}>
+        <SkeletonText variant="sm-display">Jan 00, 0000</SkeletonText>
+
+        <SkeletonText variant="xs">Example London</SkeletonText>
+
+        <SkeletonText variant="xs">The Sale Title Example</SkeletonText>
+
+        <SkeletonText variant="xs">Lot 000</SkeletonText>
+      </Column>
+
+      <Column
+        span={3}
+        display={["none", "flex"]}
+        alignItems="flex-end"
+        flexDirection="column"
+      >
+        <SkeletonText variant="sm-display">US$00,000</SkeletonText>
+        <SkeletonText variant="xs">US$00,000–US$00,000 (est)</SkeletonText>
+        <SkeletonText variant="xs">-25% (est)</SkeletonText>
+      </Column>
+    </GridColumns>
   )
 }
 

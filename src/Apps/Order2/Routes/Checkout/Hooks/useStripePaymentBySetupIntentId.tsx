@@ -1,10 +1,10 @@
 import { useSetPaymentByStripeIntent } from "Apps/Order/Mutations/useSetPaymentByStripeIntentMutation"
+import { fetchAndSetConfirmationToken } from "Apps/Order2/Utils/confirmationTokenUtils"
 import { useRouter } from "System/Hooks/useRouter"
-import { useCheckoutContext } from "./useCheckoutContext"
 import createLogger from "Utils/logger"
 import { useEffect, useState } from "react"
 import { useRelayEnvironment } from "react-relay"
-import { fetchAndSetConfirmationToken } from "Apps/Order2/Utils/confirmationTokenUtils"
+import { useCheckoutContext } from "./useCheckoutContext"
 
 const logger = createLogger("useStripePaymentBySetupIntentId")
 
@@ -14,7 +14,10 @@ const logger = createLogger("useStripePaymentBySetupIntentId")
  */
 export function useStripePaymentBySetupIntentId(
   orderId: string,
-  orderData: any,
+  orderData: {
+    mode: any
+    selectedFulfillmentOption?: { type: any } | null
+  },
 ) {
   const { submitMutation: setPaymentByStripeIntentMutation } =
     useSetPaymentByStripeIntent()
@@ -25,6 +28,7 @@ export function useStripePaymentBySetupIntentId(
     setDeliveryOptionComplete,
     setConfirmationToken,
     setPaymentComplete,
+    setOfferAmountComplete,
   } = useCheckoutContext()
   const [isProcessingRedirect, setIsProcessingRedirect] = useState(false)
   const [isPaymentSetupSuccessful, setIsPaymentSetupSuccessful] =
@@ -43,10 +47,15 @@ export function useStripePaymentBySetupIntentId(
 
     // Convert string to boolean - URLSearchParams returns string "false" or "true"
     const shouldSaveBankAccount = save_bank_account === "true"
-    let oneTimeUse = !shouldSaveBankAccount
+    const oneTimeUse = !shouldSaveBankAccount
 
     if (setup_intent && redirect_status === "succeeded") {
       setIsProcessingRedirect(true)
+
+      const isOffer = orderData.mode === "OFFER"
+      if (isOffer) {
+        setOfferAmountComplete()
+      }
 
       // Set fulfillment details as complete based on order data
       const isPickup = orderData.selectedFulfillmentOption?.type === "PICKUP"
@@ -83,10 +92,14 @@ export function useStripePaymentBySetupIntentId(
       setPaymentComplete()
     }
   }, [
-    orderId,
     router,
     setFulfillmentDetailsComplete,
     setDeliveryOptionComplete,
+    setOfferAmountComplete,
+    setConfirmationToken,
+    setPaymentComplete,
+    environment,
+    orderData.mode,
     orderData.selectedFulfillmentOption?.type,
   ])
 
