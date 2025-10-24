@@ -67,11 +67,11 @@ describe("userRequiredMiddleware", () => {
       expect(next).not.toHaveBeenCalled()
     })
 
-    it("performs redirect on a /purchases route", () => {
+    it("performs redirect on a /orders route in settings", () => {
       const spy = jest.fn()
       const req = {
-        originalUrl: "/settings/purchases/",
-        path: "/settings/purchases/",
+        originalUrl: "/settings/orders/",
+        path: "/settings/orders/",
         query: {
           "accepted-conditions": false,
         },
@@ -88,7 +88,7 @@ describe("userRequiredMiddleware", () => {
 
       userRequiredMiddleware(req, res, next)
       expect(res.redirect).toHaveBeenCalledWith(
-        "/login?redirectTo=%2Fsettings%2Fpurchases%2F",
+        "/login?redirectTo=%2Fsettings%2Forders%2F",
       )
       expect(next).not.toHaveBeenCalled()
     })
