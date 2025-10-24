@@ -1,7 +1,7 @@
 import SortIcon from "@artsy/icons/SortIcon"
 import { Button, Dropdown, Radio, RadioGroup } from "@artsy/palette"
 import { useAuctionResultsFilterContext } from "Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
-import { useMemo } from "react"
+import { type FC, useMemo } from "react"
 
 export const SORTS = [
   { value: "DATE_DESC", text: "Sale Date (Most Recent)" },
@@ -9,7 +9,13 @@ export const SORTS = [
   { value: "PRICE_AND_DATE_DESC", text: "Sale Price" },
 ]
 
-export const ArtistAuctionResultsSortSelect = () => {
+interface ArtistAuctionResultsSortSelectProps {
+  disabled?: boolean
+}
+
+export const ArtistAuctionResultsSortSelect: FC<
+  ArtistAuctionResultsSortSelectProps
+> = ({ disabled }) => {
   const { filters, setFilter } = useAuctionResultsFilterContext()
 
   const activeSort = useMemo(
@@ -51,6 +57,7 @@ export const ArtistAuctionResultsSortSelect = () => {
             Icon={SortIcon}
             variant="tertiary"
             size="small"
+            disabled={disabled}
           >
             Sort: {activeSort.text}
           </Button>

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<90db4c25b26ee56a974d95aeb468d6b0>>
+ * @generated SignedSource<<947119c336e26ffc8455bd945d6fb61a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -103,6 +103,13 @@ return {
             "args": null,
             "kind": "ScalarField",
             "name": "internalID",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "href",
             "storageKey": null
           },
           {
@@ -268,12 +275,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f4a539a4cb90e61ea701ff0cf3fa23ca",
+    "cacheID": "a17b0ade98422d9d3c6b699e68d7d993",
     "id": null,
     "metadata": {},
     "name": "ArtistOverviewRoute_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistOverviewRoute_Test_Query {\n  artist(id: \"test\") {\n    ...ArtistOverviewRoute_artist\n    id\n  }\n}\n\nfragment ArtistOverviewRoute_artist on Artist {\n  ...ArtistOverview_artist\n  internalID\n  meta(page: ABOUT) {\n    description\n    title\n  }\n}\n\nfragment ArtistOverview_artist on Artist {\n  internalID\n  name\n  insights {\n    __typename\n  }\n  artistSeriesConnection(first: 0) {\n    totalCount\n  }\n  showsConnection(first: 0, status: \"running\") {\n    totalCount\n  }\n  counts {\n    relatedArtists\n    articles\n  }\n  related {\n    genes(first: 1) {\n      edges {\n        node {\n          __typename\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query ArtistOverviewRoute_Test_Query {\n  artist(id: \"test\") {\n    ...ArtistOverviewRoute_artist\n    id\n  }\n}\n\nfragment ArtistOverviewRoute_artist on Artist {\n  ...ArtistOverview_artist\n  internalID\n  href\n  meta(page: ABOUT) {\n    description\n    title\n  }\n}\n\nfragment ArtistOverview_artist on Artist {\n  internalID\n  href\n  name\n  insights {\n    __typename\n  }\n  artistSeriesConnection(first: 0) {\n    totalCount\n  }\n  showsConnection(first: 0, status: \"running\") {\n    totalCount\n  }\n  counts {\n    relatedArtists\n    articles\n  }\n  related {\n    genes(first: 1) {\n      edges {\n        node {\n          __typename\n          id\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
