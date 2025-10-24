@@ -6,12 +6,14 @@ interface TruncateComponentProps {
   children: React.ReactNode
   label?: string
   enabled?: boolean
+  disabled?: boolean
 }
 
 export const TruncateComponent: FC<TruncateComponentProps> = ({
   children,
   label = "View All",
   enabled = true,
+  disabled = false,
 }) => {
   const [mode, setMode] = useState<"Collapsed" | "Expanded">("Collapsed")
 
@@ -38,7 +40,9 @@ export const TruncateComponent: FC<TruncateComponentProps> = ({
           justifyContent="center"
           alignItems="center"
         >
-          <Button onClick={handleClick}>{label}</Button>
+          <Button onClick={handleClick} disabled={disabled}>
+            {label}
+          </Button>
         </Box>
       )}
     </Box>
