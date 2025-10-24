@@ -13516,7 +13516,6 @@ type HomeViewCard {
   href: String
   image: Image
   images: [Image]
-  ownerType: String
   subtitle: String
   title: String!
 }
