@@ -34,8 +34,8 @@ export const Order2ExactPriceOfferForm: React.FC<
   formIsDirty,
   isSubmittingOffer,
   onOfferValueChange,
+  onOfferOptionSelected,
   onOfferNoteChange,
-  onOfferInputFocus,
   onContinueButtonPressed,
 }) => {
   const orderData = useFragment(FRAGMENT, order)
@@ -98,7 +98,7 @@ export const Order2ExactPriceOfferForm: React.FC<
     initialState.customValue,
   )
 
-  // Update parent component when custom values change
+  // Update parent component state when custom values change
   useEffect(() => {
     if (selectedRadio === "price-option-custom") {
       onOfferValueChange(customValue || 0)
@@ -141,11 +141,10 @@ export const Order2ExactPriceOfferForm: React.FC<
                 label={isCustom ? description : formatCurrency(value)}
                 onSelect={() => {
                   setSelectedRadio(key)
-                  onOfferValueChange(value)
                   if (!isCustom) {
                     setCustomValue(undefined)
+                    onOfferOptionSelected(value, description)
                   }
-                  onOfferInputFocus?.()
                 }}
               >
                 {!isCustom && (
@@ -165,9 +164,12 @@ export const Order2ExactPriceOfferForm: React.FC<
                       showError={formIsDirty && offerValue <= 0}
                       onChange={value => {
                         setCustomValue(value)
-                        onOfferValueChange(value)
                       }}
-                      onFocus={onOfferInputFocus}
+                      onBlur={() => {
+                        if (customValue !== undefined) {
+                          onOfferOptionSelected(customValue, description)
+                        }
+                      }}
                       value={customValue || 0}
                     />
                   </Flex>

@@ -29,6 +29,7 @@ beforeEach(() => {
     checkoutTracking: {
       clickedOrderProgression: jest.fn(),
       clickedBuyerProtection: jest.fn(),
+      clickedSelectShippingOption: jest.fn(),
     },
     setDeliveryOptionComplete: jest.fn(),
     messages: {},
@@ -181,6 +182,24 @@ describe("Order2DeliveryOptionsForm", () => {
 
       expect(expressRadio).toBeChecked()
       expect(standardRadio).not.toBeChecked()
+    })
+
+    it("calls clickedSelectShippingOption tracking when selecting a shipping option", async () => {
+      renderWithRelay(multipleOptionsData)
+
+      const expressRadio = screen.getByRole("radio", { name: /Express/ })
+      await userEvent.click(expressRadio)
+
+      expect(
+        mockCheckoutContext.checkoutTracking.clickedSelectShippingOption,
+      ).toHaveBeenCalledWith("ARTSY_EXPRESS")
+
+      const whiteGloveRadio = screen.getByRole("radio", { name: /White Glove/ })
+      await userEvent.click(whiteGloveRadio)
+
+      expect(
+        mockCheckoutContext.checkoutTracking.clickedSelectShippingOption,
+      ).toHaveBeenCalledWith("ARTSY_WHITE_GLOVE")
     })
   })
 

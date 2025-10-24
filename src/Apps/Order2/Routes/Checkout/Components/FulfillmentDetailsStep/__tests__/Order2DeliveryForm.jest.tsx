@@ -27,6 +27,7 @@ beforeEach(() => {
     setCheckoutMode: jest.fn(),
     checkoutTracking: {
       clickedOrderProgression: jest.fn(),
+      clickedShippingAddress: jest.fn(),
     },
     setFulfillmentDetailsComplete: jest.fn(),
     setUserAddressMode: jest.fn(),

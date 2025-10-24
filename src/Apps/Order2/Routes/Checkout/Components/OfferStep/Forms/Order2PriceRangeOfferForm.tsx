@@ -35,8 +35,8 @@ export const Order2PriceRangeOfferForm: React.FC<
   formIsDirty,
   isSubmittingOffer,
   onOfferValueChange,
+  onOfferOptionSelected,
   onOfferNoteChange,
-  onOfferInputFocus,
   onContinueButtonPressed,
 }) => {
   const orderData = useFragment(FRAGMENT, order)
@@ -116,7 +116,7 @@ export const Order2PriceRangeOfferForm: React.FC<
     initialState.showCustomInput,
   )
 
-  // Update parent component when custom values change
+  // Update parent component state when custom values change
   useEffect(() => {
     if (selectedRadio === "price-option-custom") {
       onOfferValueChange(customValue || 0)
@@ -159,10 +159,9 @@ export const Order2PriceRangeOfferForm: React.FC<
                     value={key}
                     label={formatCurrency(optionValue)}
                     onSelect={() => {
-                      onOfferValueChange(optionValue)
+                      onOfferOptionSelected(optionValue, description)
                       setShowCustomInput(false)
                       setCustomValue(undefined)
-                      onOfferInputFocus?.()
                     }}
                     error={
                       formIsDirty &&
@@ -186,9 +185,7 @@ export const Order2PriceRangeOfferForm: React.FC<
                       (offerValue <= 0 || offerValue === undefined)
                     }
                     onSelect={() => {
-                      onOfferValueChange(customValue || 0)
                       !showCustomInput && setShowCustomInput(true)
-                      onOfferInputFocus?.()
                     }}
                     key="price-option-custom"
                   >
@@ -199,9 +196,12 @@ export const Order2PriceRangeOfferForm: React.FC<
                           showError={formIsDirty && offerValue <= 0}
                           onChange={value => {
                             setCustomValue(value)
-                            onOfferValueChange(value)
                           }}
-                          onFocus={onOfferInputFocus}
+                          onBlur={() => {
+                            if (customValue !== undefined) {
+                              onOfferOptionSelected(customValue)
+                            }
+                          }}
                           value={customValue || 0}
                         />
                       </Flex>
@@ -224,7 +224,11 @@ export const Order2PriceRangeOfferForm: React.FC<
                 id="OfferForm_priceRangeOfferValue"
                 showError={formIsDirty && offerValue <= 0}
                 onChange={onOfferValueChange}
-                onFocus={onOfferInputFocus}
+                onBlur={() => {
+                  if (offerValue > 0) {
+                    onOfferOptionSelected(offerValue)
+                  }
+                }}
                 value={offerValue}
               />
             </Flex>
