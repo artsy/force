@@ -71,7 +71,7 @@
     "sha.js": "^2.4.12"
   },
   "dependencies": {
-    "@artsy/cohesion": "4.309.0",
+    "@artsy/cohesion": "4.310.0",
     "@artsy/commerce_helpers": "artsy/commerce_helpers",
     "@artsy/detect-responsive-traits": "^0.1.0",
     "@artsy/dismissible": "^0.4.1",
