@@ -1,7 +1,6 @@
 import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 import ShareIcon from "@artsy/icons/ShareIcon"
 import { Box, Button, Flex, Stack } from "@artsy/palette"
-import { useFlag } from "@unleash/proxy-client-react"
 import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
 import { MyCollectionArtworkGrid } from "Apps/Settings/Routes/MyCollection/Components/MyCollectionArtworkGrid"
 import { MetaTags } from "Components/MetaTags"
@@ -26,8 +25,6 @@ export interface MyCollectionRouteProps {
 const MyCollectionRoute: FC<
   React.PropsWithChildren<MyCollectionRouteProps>
 > = ({ me, relay }) => {
-  const enableShare = useFlag("onyx_shareable-my-collection")
-
   const { addCollectedArtwork: trackAddCollectedArtwork } =
     useMyCollectionTracking()
   const [isLoading, setLoading] = useState(false)
@@ -70,20 +67,17 @@ const MyCollectionRoute: FC<
         title="My Collection | Artsy"
         pathname="/collector-profile/my-collection"
       />
-
       {total > 0 ? (
         <Stack gap={2}>
           <Flex backgroundColor="mono0" justifyContent="flex-end" gap={1}>
-            {enableShare && (
-              <Button
-                size={["small", "large"]}
-                variant="secondaryBlack"
-                Icon={ShareIcon}
-                onClick={handleShare}
-              >
-                Share
-              </Button>
-            )}
+            <Button
+              size={["small", "large"]}
+              variant="secondaryBlack"
+              Icon={ShareIcon}
+              onClick={handleShare}
+            >
+              Share
+            </Button>
 
             <Button
               // @ts-ignore
@@ -113,7 +107,6 @@ const MyCollectionRoute: FC<
       ) : (
         <EmptyMyCollectionPage />
       )}
-
       {mode === "Share" && myCollection && (
         <ShareCollectionDialog
           onClose={() => setMode("Idle")}
