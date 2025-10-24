@@ -11,7 +11,6 @@ import {
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { Order2CheckoutPricingBreakdown } from "Apps/Order2/Routes/Checkout/Components/Order2CheckoutPricingBreakdown"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
-import { useOfferIdQuery } from "Apps/Order2/Routes/Checkout/Hooks/useOfferIdQuery"
 import { useOrder2SubmitOfferMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SubmitOfferMutation"
 import { useOrder2SubmitOrderMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SubmitOrderMutation"
 import { BUYER_GUARANTEE_URL } from "Apps/Order2/constants"
@@ -42,7 +41,7 @@ const Order2ReviewStepComponent: React.FC<Order2ReviewStepProps> = ({
   const stripe = useStripe()
 
   // Get the offer ID for offer orders (only call the hook when needed)
-  const offerId = isOffer ? useOfferIdQuery(orderData.internalID) : null
+  const offerId = orderData.offers[0]?.internalID ?? null
   const {
     steps,
     confirmationToken,
@@ -311,6 +310,7 @@ const FRAGMENT = graphql`
           }
         }
       }
+
       artworkVersion {
         title
         artistNames
@@ -324,6 +324,9 @@ const FRAGMENT = graphql`
           }
         }
       }
+    }
+    offers {
+      internalID
     }
   }
 `
