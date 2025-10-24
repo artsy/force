@@ -1,10 +1,11 @@
-import { HTML, Join, Spacer } from "@artsy/palette"
+import { FullBleed, HTML, Join, Spacer } from "@artsy/palette"
 import type { FeatureApp_feature$data } from "__generated__/FeatureApp_feature.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FeatureHeaderFragmentContainer as FeatureHeader } from "./Components/FeatureHeader/FeatureHeader"
 import { FeatureMetaFragmentContainer as FeatureMeta } from "./Components/FeatureMeta"
 import { FeatureSetFragmentContainer as FeatureSet } from "./Components/FeatureSet/FeatureSet"
+import { FeatureVideoFragmentContainer as FeatureVideo } from "./Components/FeatureVideo"
 
 interface FeatureAppProps {
   feature: FeatureApp_feature$data
@@ -37,6 +38,12 @@ const FeatureApp: React.FC<React.PropsWithChildren<FeatureAppProps>> = ({
           </>
         )}
 
+        {feature.video && (
+          <FullBleed>
+            <FeatureVideo video={feature.video} />
+          </FullBleed>
+        )}
+
         <Join separator={<Spacer y={6} />}>
           {feature.sets?.edges &&
             feature.sets.edges.length > 0 &&
@@ -58,6 +65,9 @@ export const FeatureAppFragmentContainer = createFragmentContainer(FeatureApp, {
       ...FeatureHeader_feature
       description(format: HTML)
       callout(format: HTML)
+      video {
+        ...FeatureVideo_video
+      }
       sets: setsConnection(first: 20) {
         edges {
           node {

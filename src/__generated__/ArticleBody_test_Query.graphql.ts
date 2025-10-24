@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8fc09a36ecb44dd7b66f1693c26aa7f9>>
+ * @generated SignedSource<<9fce66f55c4ba49b6229ecc5cf8dcc16>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -285,57 +285,58 @@ v29 = {
   ],
   "storageKey": null
 },
-v30 = {
+v30 = [
+  {
+    "kind": "Literal",
+    "name": "autoPlay",
+    "value": true
+  }
+],
+v31 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "Article"
 },
-v31 = {
+v32 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "String"
 },
-v32 = {
+v33 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v33 = {
+v34 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "Image"
 },
-v34 = {
+v35 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "CroppedImageUrl"
 },
-v35 = {
+v36 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "String"
 },
-v36 = {
+v37 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "ResizedImageUrl"
 },
-v37 = {
-  "enumValues": null,
-  "nullable": false,
-  "plural": false,
-  "type": "Int"
-},
 v38 = {
   "enumValues": null,
-  "nullable": true,
+  "nullable": false,
   "plural": false,
   "type": "Int"
 },
@@ -343,15 +344,21 @@ v39 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "Boolean"
+  "type": "Int"
 },
 v40 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Boolean"
+},
+v41 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "Boolean"
 },
-v41 = {
+v42 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
@@ -1086,29 +1093,17 @@ return {
                 "selections": [
                   {
                     "alias": null,
-                    "args": [
-                      {
-                        "kind": "Literal",
-                        "name": "autoPlay",
-                        "value": true
-                      }
-                    ],
+                    "args": (v30/*: any*/),
                     "kind": "ScalarField",
                     "name": "embed",
                     "storageKey": "embed(autoPlay:true)"
                   },
                   {
                     "alias": "fallbackEmbed",
-                    "args": [
-                      {
-                        "kind": "Literal",
-                        "name": "autoPlay",
-                        "value": false
-                      }
-                    ],
+                    "args": (v30/*: any*/),
                     "kind": "ScalarField",
                     "name": "embed",
-                    "storageKey": "embed(autoPlay:false)"
+                    "storageKey": "embed(autoPlay:true)"
                   },
                   {
                     "alias": null,
@@ -1292,49 +1287,49 @@ return {
     ]
   },
   "params": {
-    "cacheID": "28657931d6926d95ecca1bcd5a1b4f1e",
+    "cacheID": "a113a78b75928545bf78a5adb03610d0",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
-        "article": (v30/*: any*/),
+        "article": (v31/*: any*/),
         "article.authors": {
           "enumValues": null,
           "nullable": false,
           "plural": true,
           "type": "Author"
         },
-        "article.authors.bio": (v31/*: any*/),
-        "article.authors.id": (v32/*: any*/),
-        "article.authors.image": (v33/*: any*/),
-        "article.authors.image.cropped": (v34/*: any*/),
-        "article.authors.image.cropped.src": (v35/*: any*/),
-        "article.authors.image.cropped.srcSet": (v35/*: any*/),
-        "article.authors.initials": (v31/*: any*/),
-        "article.authors.internalID": (v32/*: any*/),
-        "article.authors.name": (v35/*: any*/),
+        "article.authors.bio": (v32/*: any*/),
+        "article.authors.id": (v33/*: any*/),
+        "article.authors.image": (v34/*: any*/),
+        "article.authors.image.cropped": (v35/*: any*/),
+        "article.authors.image.cropped.src": (v36/*: any*/),
+        "article.authors.image.cropped.srcSet": (v36/*: any*/),
+        "article.authors.initials": (v32/*: any*/),
+        "article.authors.internalID": (v33/*: any*/),
+        "article.authors.name": (v36/*: any*/),
         "article.authors.slug": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "ID"
         },
-        "article.byline": (v31/*: any*/),
+        "article.byline": (v32/*: any*/),
         "article.hero": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "ArticleHero"
         },
-        "article.hero.__typename": (v35/*: any*/),
-        "article.hero.embed": (v31/*: any*/),
-        "article.hero.image": (v33/*: any*/),
-        "article.hero.image.split": (v36/*: any*/),
-        "article.hero.image.split.src": (v35/*: any*/),
-        "article.hero.image.split.srcSet": (v35/*: any*/),
-        "article.hero.image.text": (v34/*: any*/),
-        "article.hero.image.text.src": (v35/*: any*/),
-        "article.hero.image.text.srcSet": (v35/*: any*/),
-        "article.hero.image.url": (v31/*: any*/),
+        "article.hero.__typename": (v36/*: any*/),
+        "article.hero.embed": (v32/*: any*/),
+        "article.hero.image": (v34/*: any*/),
+        "article.hero.image.split": (v37/*: any*/),
+        "article.hero.image.split.src": (v36/*: any*/),
+        "article.hero.image.split.srcSet": (v36/*: any*/),
+        "article.hero.image.text": (v35/*: any*/),
+        "article.hero.image.text.src": (v36/*: any*/),
+        "article.hero.image.text.srcSet": (v36/*: any*/),
+        "article.hero.image.url": (v32/*: any*/),
         "article.hero.layout": {
           "enumValues": [
             "BASIC",
@@ -1346,10 +1341,10 @@ return {
           "plural": false,
           "type": "ArticleFeatureSectionType"
         },
-        "article.hero.media": (v31/*: any*/),
-        "article.href": (v31/*: any*/),
-        "article.id": (v32/*: any*/),
-        "article.internalID": (v32/*: any*/),
+        "article.hero.media": (v32/*: any*/),
+        "article.href": (v32/*: any*/),
+        "article.id": (v33/*: any*/),
+        "article.internalID": (v33/*: any*/),
         "article.layout": {
           "enumValues": [
             "CLASSIC",
@@ -1363,40 +1358,40 @@ return {
           "plural": false,
           "type": "ArticleLayout"
         },
-        "article.leadParagraph": (v31/*: any*/),
+        "article.leadParagraph": (v32/*: any*/),
         "article.newsSource": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "ArticleNewsSource"
         },
-        "article.newsSource.title": (v31/*: any*/),
-        "article.newsSource.url": (v31/*: any*/),
-        "article.postscript": (v31/*: any*/),
-        "article.publishedAt": (v31/*: any*/),
+        "article.newsSource.title": (v32/*: any*/),
+        "article.newsSource.url": (v32/*: any*/),
+        "article.postscript": (v32/*: any*/),
+        "article.publishedAt": (v32/*: any*/),
         "article.relatedArticles": {
           "enumValues": null,
           "nullable": false,
           "plural": true,
           "type": "Article"
         },
-        "article.relatedArticles.byline": (v31/*: any*/),
-        "article.relatedArticles.href": (v31/*: any*/),
-        "article.relatedArticles.id": (v32/*: any*/),
-        "article.relatedArticles.internalID": (v32/*: any*/),
-        "article.relatedArticles.thumbnailImage": (v33/*: any*/),
-        "article.relatedArticles.thumbnailImage.cropped": (v34/*: any*/),
-        "article.relatedArticles.thumbnailImage.cropped.src": (v35/*: any*/),
-        "article.relatedArticles.thumbnailImage.cropped.srcSet": (v35/*: any*/),
-        "article.relatedArticles.title": (v31/*: any*/),
+        "article.relatedArticles.byline": (v32/*: any*/),
+        "article.relatedArticles.href": (v32/*: any*/),
+        "article.relatedArticles.id": (v33/*: any*/),
+        "article.relatedArticles.internalID": (v33/*: any*/),
+        "article.relatedArticles.thumbnailImage": (v34/*: any*/),
+        "article.relatedArticles.thumbnailImage.cropped": (v35/*: any*/),
+        "article.relatedArticles.thumbnailImage.cropped.src": (v36/*: any*/),
+        "article.relatedArticles.thumbnailImage.cropped.srcSet": (v36/*: any*/),
+        "article.relatedArticles.title": (v32/*: any*/),
         "article.sections": {
           "enumValues": null,
           "nullable": false,
           "plural": true,
           "type": "ArticleSections"
         },
-        "article.sections.__isArticleSections": (v35/*: any*/),
-        "article.sections.__typename": (v35/*: any*/),
+        "article.sections.__isArticleSections": (v36/*: any*/),
+        "article.sections.__typename": (v36/*: any*/),
         "article.sections._layout": {
           "enumValues": [
             "COLUMN_WIDTH",
@@ -1408,80 +1403,80 @@ return {
           "plural": false,
           "type": "ArticleSectionEmbedLayout"
         },
-        "article.sections.body": (v31/*: any*/),
+        "article.sections.body": (v32/*: any*/),
         "article.sections.counts": {
           "enumValues": null,
           "nullable": false,
           "plural": false,
           "type": "ArticleSectionImageSetCounts"
         },
-        "article.sections.counts.figures": (v37/*: any*/),
+        "article.sections.counts.figures": (v38/*: any*/),
         "article.sections.cover": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "ArticleSectionImageSetFigure"
         },
-        "article.sections.cover.__isNode": (v35/*: any*/),
-        "article.sections.cover.__typename": (v35/*: any*/),
-        "article.sections.cover.formattedMetadata": (v31/*: any*/),
-        "article.sections.cover.id": (v32/*: any*/),
-        "article.sections.cover.image": (v33/*: any*/),
-        "article.sections.cover.image.large": (v36/*: any*/),
-        "article.sections.cover.image.large.height": (v38/*: any*/),
-        "article.sections.cover.image.large.src": (v35/*: any*/),
-        "article.sections.cover.image.large.srcSet": (v35/*: any*/),
-        "article.sections.cover.image.large.width": (v38/*: any*/),
-        "article.sections.cover.image.small": (v34/*: any*/),
-        "article.sections.cover.image.small.height": (v37/*: any*/),
-        "article.sections.cover.image.small.src": (v35/*: any*/),
-        "article.sections.cover.image.small.srcSet": (v35/*: any*/),
-        "article.sections.cover.image.small.width": (v37/*: any*/),
-        "article.sections.embed": (v31/*: any*/),
-        "article.sections.fallbackEmbed": (v31/*: any*/),
+        "article.sections.cover.__isNode": (v36/*: any*/),
+        "article.sections.cover.__typename": (v36/*: any*/),
+        "article.sections.cover.formattedMetadata": (v32/*: any*/),
+        "article.sections.cover.id": (v33/*: any*/),
+        "article.sections.cover.image": (v34/*: any*/),
+        "article.sections.cover.image.large": (v37/*: any*/),
+        "article.sections.cover.image.large.height": (v39/*: any*/),
+        "article.sections.cover.image.large.src": (v36/*: any*/),
+        "article.sections.cover.image.large.srcSet": (v36/*: any*/),
+        "article.sections.cover.image.large.width": (v39/*: any*/),
+        "article.sections.cover.image.small": (v35/*: any*/),
+        "article.sections.cover.image.small.height": (v38/*: any*/),
+        "article.sections.cover.image.small.src": (v36/*: any*/),
+        "article.sections.cover.image.small.srcSet": (v36/*: any*/),
+        "article.sections.cover.image.small.width": (v38/*: any*/),
+        "article.sections.embed": (v32/*: any*/),
+        "article.sections.fallbackEmbed": (v32/*: any*/),
         "article.sections.figures": {
           "enumValues": null,
           "nullable": false,
           "plural": true,
           "type": "ArticleSectionImageCollectionFigure"
         },
-        "article.sections.figures.__isArticleSectionImageCollectionFigure": (v35/*: any*/),
-        "article.sections.figures.__isNode": (v35/*: any*/),
-        "article.sections.figures.__typename": (v35/*: any*/),
+        "article.sections.figures.__isArticleSectionImageCollectionFigure": (v36/*: any*/),
+        "article.sections.figures.__isNode": (v36/*: any*/),
+        "article.sections.figures.__typename": (v36/*: any*/),
         "article.sections.figures.artist": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Artist"
         },
-        "article.sections.figures.artist.id": (v32/*: any*/),
-        "article.sections.figures.artist.name": (v31/*: any*/),
+        "article.sections.figures.artist.id": (v33/*: any*/),
+        "article.sections.figures.artist.name": (v32/*: any*/),
         "article.sections.figures.artist.targetSupply": {
           "enumValues": null,
           "nullable": false,
           "plural": false,
           "type": "ArtistTargetSupply"
         },
-        "article.sections.figures.artist.targetSupply.isP1": (v39/*: any*/),
+        "article.sections.figures.artist.targetSupply.isP1": (v40/*: any*/),
         "article.sections.figures.artists": {
           "enumValues": null,
           "nullable": true,
           "plural": true,
           "type": "Artist"
         },
-        "article.sections.figures.artists.href": (v31/*: any*/),
-        "article.sections.figures.artists.id": (v32/*: any*/),
-        "article.sections.figures.artists.name": (v31/*: any*/),
+        "article.sections.figures.artists.href": (v32/*: any*/),
+        "article.sections.figures.artists.id": (v33/*: any*/),
+        "article.sections.figures.artists.name": (v32/*: any*/),
         "article.sections.figures.attributionClass": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "AttributionClass"
         },
-        "article.sections.figures.attributionClass.id": (v32/*: any*/),
-        "article.sections.figures.attributionClass.name": (v31/*: any*/),
-        "article.sections.figures.caption": (v31/*: any*/),
-        "article.sections.figures.collecting_institution": (v31/*: any*/),
+        "article.sections.figures.attributionClass.id": (v33/*: any*/),
+        "article.sections.figures.attributionClass.name": (v32/*: any*/),
+        "article.sections.figures.caption": (v32/*: any*/),
+        "article.sections.figures.collecting_institution": (v32/*: any*/),
         "article.sections.figures.collectorSignals": {
           "enumValues": null,
           "nullable": true,
@@ -1494,26 +1489,26 @@ return {
           "plural": false,
           "type": "AuctionCollectorSignals"
         },
-        "article.sections.figures.collectorSignals.auction.bidCount": (v37/*: any*/),
-        "article.sections.figures.collectorSignals.auction.liveBiddingStarted": (v40/*: any*/),
-        "article.sections.figures.collectorSignals.auction.lotClosesAt": (v31/*: any*/),
-        "article.sections.figures.collectorSignals.auction.onlineBiddingExtended": (v40/*: any*/),
-        "article.sections.figures.collectorSignals.auction.registrationEndsAt": (v31/*: any*/),
+        "article.sections.figures.collectorSignals.auction.bidCount": (v38/*: any*/),
+        "article.sections.figures.collectorSignals.auction.liveBiddingStarted": (v41/*: any*/),
+        "article.sections.figures.collectorSignals.auction.lotClosesAt": (v32/*: any*/),
+        "article.sections.figures.collectorSignals.auction.onlineBiddingExtended": (v41/*: any*/),
+        "article.sections.figures.collectorSignals.auction.registrationEndsAt": (v32/*: any*/),
         "article.sections.figures.collectorSignals.partnerOffer": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "PartnerOfferToCollector"
         },
-        "article.sections.figures.collectorSignals.partnerOffer.endAt": (v31/*: any*/),
-        "article.sections.figures.collectorSignals.partnerOffer.id": (v32/*: any*/),
+        "article.sections.figures.collectorSignals.partnerOffer.endAt": (v32/*: any*/),
+        "article.sections.figures.collectorSignals.partnerOffer.id": (v33/*: any*/),
         "article.sections.figures.collectorSignals.partnerOffer.priceWithDiscount": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Money"
         },
-        "article.sections.figures.collectorSignals.partnerOffer.priceWithDiscount.display": (v31/*: any*/),
+        "article.sections.figures.collectorSignals.partnerOffer.priceWithDiscount.display": (v32/*: any*/),
         "article.sections.figures.collectorSignals.primaryLabel": {
           "enumValues": [
             "CURATORS_PICK",
@@ -1524,16 +1519,16 @@ return {
           "plural": false,
           "type": "LabelSignalEnum"
         },
-        "article.sections.figures.cultural_maker": (v31/*: any*/),
-        "article.sections.figures.date": (v31/*: any*/),
-        "article.sections.figures.formattedMetadata": (v31/*: any*/),
-        "article.sections.figures.href": (v31/*: any*/),
-        "article.sections.figures.id": (v32/*: any*/),
-        "article.sections.figures.image": (v33/*: any*/),
-        "article.sections.figures.image.height": (v38/*: any*/),
-        "article.sections.figures.image.url": (v31/*: any*/),
-        "article.sections.figures.image.width": (v38/*: any*/),
-        "article.sections.figures.internalID": (v32/*: any*/),
+        "article.sections.figures.cultural_maker": (v32/*: any*/),
+        "article.sections.figures.date": (v32/*: any*/),
+        "article.sections.figures.formattedMetadata": (v32/*: any*/),
+        "article.sections.figures.href": (v32/*: any*/),
+        "article.sections.figures.id": (v33/*: any*/),
+        "article.sections.figures.image": (v34/*: any*/),
+        "article.sections.figures.image.height": (v39/*: any*/),
+        "article.sections.figures.image.url": (v32/*: any*/),
+        "article.sections.figures.image.width": (v39/*: any*/),
+        "article.sections.figures.internalID": (v33/*: any*/),
         "article.sections.figures.marketPriceInsights": {
           "enumValues": null,
           "nullable": true,
@@ -1558,35 +1553,35 @@ return {
           "plural": false,
           "type": "Gene"
         },
-        "article.sections.figures.mediumType.filterGene.id": (v32/*: any*/),
-        "article.sections.figures.mediumType.filterGene.name": (v31/*: any*/),
+        "article.sections.figures.mediumType.filterGene.id": (v33/*: any*/),
+        "article.sections.figures.mediumType.filterGene.name": (v32/*: any*/),
         "article.sections.figures.partner": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Partner"
         },
-        "article.sections.figures.partner.href": (v31/*: any*/),
-        "article.sections.figures.partner.id": (v32/*: any*/),
-        "article.sections.figures.partner.name": (v31/*: any*/),
+        "article.sections.figures.partner.href": (v32/*: any*/),
+        "article.sections.figures.partner.id": (v33/*: any*/),
+        "article.sections.figures.partner.name": (v32/*: any*/),
         "article.sections.figures.sale": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Sale"
         },
-        "article.sections.figures.sale.cascadingEndTimeIntervalMinutes": (v38/*: any*/),
-        "article.sections.figures.sale.endAt": (v31/*: any*/),
-        "article.sections.figures.sale.extendedBiddingIntervalMinutes": (v38/*: any*/),
-        "article.sections.figures.sale.id": (v32/*: any*/),
-        "article.sections.figures.sale.isOpen": (v39/*: any*/),
-        "article.sections.figures.sale.is_auction": (v39/*: any*/),
-        "article.sections.figures.sale.is_closed": (v39/*: any*/),
-        "article.sections.figures.sale.startAt": (v31/*: any*/),
-        "article.sections.figures.saleArtwork": (v41/*: any*/),
-        "article.sections.figures.saleArtwork.id": (v32/*: any*/),
-        "article.sections.figures.saleArtwork.lotID": (v31/*: any*/),
-        "article.sections.figures.sale_artwork": (v41/*: any*/),
+        "article.sections.figures.sale.cascadingEndTimeIntervalMinutes": (v39/*: any*/),
+        "article.sections.figures.sale.endAt": (v32/*: any*/),
+        "article.sections.figures.sale.extendedBiddingIntervalMinutes": (v39/*: any*/),
+        "article.sections.figures.sale.id": (v33/*: any*/),
+        "article.sections.figures.sale.isOpen": (v40/*: any*/),
+        "article.sections.figures.sale.is_auction": (v40/*: any*/),
+        "article.sections.figures.sale.is_closed": (v40/*: any*/),
+        "article.sections.figures.sale.startAt": (v32/*: any*/),
+        "article.sections.figures.saleArtwork": (v42/*: any*/),
+        "article.sections.figures.saleArtwork.id": (v33/*: any*/),
+        "article.sections.figures.saleArtwork.lotID": (v32/*: any*/),
+        "article.sections.figures.sale_artwork": (v42/*: any*/),
         "article.sections.figures.sale_artwork.counts": {
           "enumValues": null,
           "nullable": true,
@@ -1599,33 +1594,33 @@ return {
           "plural": false,
           "type": "FormattedNumber"
         },
-        "article.sections.figures.sale_artwork.endAt": (v31/*: any*/),
-        "article.sections.figures.sale_artwork.extendedBiddingEndAt": (v31/*: any*/),
-        "article.sections.figures.sale_artwork.formattedEndDateTime": (v31/*: any*/),
+        "article.sections.figures.sale_artwork.endAt": (v32/*: any*/),
+        "article.sections.figures.sale_artwork.extendedBiddingEndAt": (v32/*: any*/),
+        "article.sections.figures.sale_artwork.formattedEndDateTime": (v32/*: any*/),
         "article.sections.figures.sale_artwork.highest_bid": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "SaleArtworkHighestBid"
         },
-        "article.sections.figures.sale_artwork.highest_bid.display": (v31/*: any*/),
-        "article.sections.figures.sale_artwork.id": (v32/*: any*/),
-        "article.sections.figures.sale_artwork.lotID": (v31/*: any*/),
-        "article.sections.figures.sale_artwork.lotLabel": (v31/*: any*/),
+        "article.sections.figures.sale_artwork.highest_bid.display": (v32/*: any*/),
+        "article.sections.figures.sale_artwork.id": (v33/*: any*/),
+        "article.sections.figures.sale_artwork.lotID": (v32/*: any*/),
+        "article.sections.figures.sale_artwork.lotLabel": (v32/*: any*/),
         "article.sections.figures.sale_artwork.opening_bid": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "SaleArtworkOpeningBid"
         },
-        "article.sections.figures.sale_artwork.opening_bid.display": (v31/*: any*/),
-        "article.sections.figures.sale_message": (v31/*: any*/),
-        "article.sections.figures.title": (v31/*: any*/),
-        "article.sections.height": (v38/*: any*/),
-        "article.sections.image": (v33/*: any*/),
-        "article.sections.image.cropped": (v34/*: any*/),
-        "article.sections.image.cropped.src": (v35/*: any*/),
-        "article.sections.image.cropped.srcSet": (v35/*: any*/),
+        "article.sections.figures.sale_artwork.opening_bid.display": (v32/*: any*/),
+        "article.sections.figures.sale_message": (v32/*: any*/),
+        "article.sections.figures.title": (v32/*: any*/),
+        "article.sections.height": (v39/*: any*/),
+        "article.sections.image": (v34/*: any*/),
+        "article.sections.image.cropped": (v35/*: any*/),
+        "article.sections.image.cropped.src": (v36/*: any*/),
+        "article.sections.image.cropped.srcSet": (v36/*: any*/),
         "article.sections.layout": {
           "enumValues": [
             "COLUMN_WIDTH",
@@ -1636,7 +1631,7 @@ return {
           "plural": false,
           "type": "ArticleSectionImageCollectionLayout"
         },
-        "article.sections.mobileHeight": (v38/*: any*/),
+        "article.sections.mobileHeight": (v39/*: any*/),
         "article.sections.setLayout": {
           "enumValues": [
             "FULL",
@@ -1646,20 +1641,20 @@ return {
           "plural": false,
           "type": "ArticleSectionImageSetLayout"
         },
-        "article.sections.title": (v31/*: any*/),
-        "article.sections.url": (v31/*: any*/),
-        "article.seriesArticle": (v30/*: any*/),
-        "article.seriesArticle.href": (v31/*: any*/),
-        "article.seriesArticle.id": (v32/*: any*/),
-        "article.seriesArticle.thumbnailTitle": (v31/*: any*/),
-        "article.slug": (v31/*: any*/),
-        "article.title": (v31/*: any*/),
-        "article.vertical": (v31/*: any*/)
+        "article.sections.title": (v32/*: any*/),
+        "article.sections.url": (v32/*: any*/),
+        "article.seriesArticle": (v31/*: any*/),
+        "article.seriesArticle.href": (v32/*: any*/),
+        "article.seriesArticle.id": (v33/*: any*/),
+        "article.seriesArticle.thumbnailTitle": (v32/*: any*/),
+        "article.slug": (v32/*: any*/),
+        "article.title": (v32/*: any*/),
+        "article.vertical": (v32/*: any*/)
       }
     },
     "name": "ArticleBody_test_Query",
     "operationKind": "query",
-    "text": "query ArticleBody_test_Query {\n  article(id: \"example\") {\n    ...ArticleBody_article\n    id\n  }\n}\n\nfragment ArticleBody_article on Article {\n  ...ArticleHero_article\n  ...ArticleByline_article\n  ...ArticleSectionAd_article\n  ...ArticleNewsSource_article\n  hero {\n    __typename\n  }\n  seriesArticle {\n    thumbnailTitle\n    href\n    id\n  }\n  vertical\n  authors {\n    internalID\n    slug\n    name\n    id\n  }\n  internalID\n  slug\n  layout\n  leadParagraph\n  title\n  href\n  publishedAt\n  sections {\n    __typename\n    ...ArticleSection_section\n  }\n  postscript\n  relatedArticles {\n    internalID\n    title\n    href\n    byline\n    thumbnailImage {\n      cropped(width: 100, height: 100) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment ArticleByline_article on Article {\n  byline\n  authors {\n    internalID\n    slug\n    name\n    initials\n    bio\n    image {\n      cropped(width: 60, height: 60) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment ArticleHero_article on Article {\n  title\n  href\n  vertical\n  authors {\n    internalID\n    slug\n    name\n    id\n  }\n  hero {\n    __typename\n    ... on ArticleFeatureSection {\n      layout\n      embed\n      media\n      image {\n        url\n        split: resized(width: 900) {\n          src\n          srcSet\n        }\n        text: cropped(width: 1600, height: 900) {\n          src\n          srcSet\n        }\n      }\n    }\n  }\n}\n\nfragment ArticleNewsSource_article on Article {\n  newsSource {\n    title\n    url\n  }\n}\n\nfragment ArticleSectionAd_article on Article {\n  layout\n  sections {\n    __typename\n  }\n}\n\nfragment ArticleSectionEmbed_section on ArticleSectionEmbed {\n  url\n  height\n  mobileHeight\n  _layout: layout\n}\n\nfragment ArticleSectionImageCollectionCaption_figure on ArticleSectionImageCollectionFigure {\n  __isArticleSectionImageCollectionFigure: __typename\n  __typename\n  ...Metadata_artwork\n  ... on ArticleImageSection {\n    caption\n  }\n  ... on ArticleUnpublishedArtwork {\n    title\n    date\n    artist {\n      name\n    }\n    partner {\n      name\n    }\n  }\n}\n\nfragment ArticleSectionImageCollectionImage_figure on ArticleSectionImageCollectionFigure {\n  __isArticleSectionImageCollectionFigure: __typename\n  ... on ArticleImageSection {\n    id\n    image {\n      url(version: [\"main\", \"normalized\", \"larger\", \"large\"])\n      width\n      height\n    }\n  }\n  ... on Artwork {\n    id\n    formattedMetadata\n    image {\n      url(version: [\"main\", \"normalized\", \"larger\", \"large\"])\n      width\n      height\n    }\n  }\n  ... on ArticleUnpublishedArtwork {\n    id\n    image {\n      url(version: [\"main\", \"normalized\", \"larger\", \"large\"])\n      width\n      height\n    }\n  }\n}\n\nfragment ArticleSectionImageCollection_section on ArticleSectionImageCollection {\n  layout\n  figures {\n    __typename\n    ...ArticleSectionImageCollectionImage_figure\n    ...ArticleSectionImageCollectionCaption_figure\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on ArticleImageSection {\n      id\n    }\n    ... on ArticleUnpublishedArtwork {\n      id\n    }\n  }\n}\n\nfragment ArticleSectionImageSet_section on ArticleSectionImageSet {\n  setLayout: layout\n  title\n  counts {\n    figures\n  }\n  cover {\n    __typename\n    ... on ArticleImageSection {\n      id\n      image {\n        small: cropped(width: 80, height: 80, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n          src\n          srcSet\n          height\n          width\n        }\n        large: resized(width: 1220, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n          src\n          srcSet\n          height\n          width\n        }\n      }\n    }\n    ... on Artwork {\n      formattedMetadata\n      id\n      image {\n        small: cropped(width: 80, height: 80, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n          src\n          srcSet\n          height\n          width\n        }\n        large: resized(width: 1220, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n          src\n          srcSet\n          height\n          width\n        }\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment ArticleSectionSocialEmbed_section on ArticleSectionSocialEmbed {\n  url\n  embed\n}\n\nfragment ArticleSectionText_section on ArticleSectionText {\n  body\n}\n\nfragment ArticleSectionVideo_section on ArticleSectionVideo {\n  embed(autoPlay: true)\n  fallbackEmbed: embed(autoPlay: false)\n  image {\n    cropped(width: 910, height: 512) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArticleSection_section on ArticleSections {\n  __isArticleSections: __typename\n  __typename\n  ...ArticleSectionText_section\n  ...ArticleSectionImageCollection_section\n  ...ArticleSectionImageSet_section\n  ...ArticleSectionVideo_section\n  ...ArticleSectionSocialEmbed_section\n  ...ArticleSectionEmbed_section\n}\n\nfragment BidTimerLine_artwork on Artwork {\n  saleArtwork {\n    lotID\n    id\n  }\n  collectorSignals {\n    auction {\n      lotClosesAt\n      registrationEndsAt\n      onlineBiddingExtended\n    }\n  }\n}\n\nfragment Details_artwork on Artwork {\n  internalID\n  href\n  title\n  date\n  collectorSignals {\n    primaryLabel\n    auction {\n      bidCount\n      lotClosesAt\n      liveBiddingStarted\n      registrationEndsAt\n      onlineBiddingExtended\n    }\n  }\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artist(shallow: true) {\n    targetSupply {\n      isP1\n    }\n    id\n  }\n  marketPriceInsights {\n    demandRank\n  }\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...PrimaryLabelLine_artwork\n  ...BidTimerLine_artwork\n  ...HoverDetails_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  internalID\n  href\n  sale {\n    isOpen\n    id\n  }\n}\n\nfragment PrimaryLabelLine_artwork on Artwork {\n  internalID\n  collectorSignals {\n    primaryLabel\n    partnerOffer {\n      endAt\n      priceWithDiscount {\n        display\n      }\n      id\n    }\n  }\n}\n"
+    "text": "query ArticleBody_test_Query {\n  article(id: \"example\") {\n    ...ArticleBody_article\n    id\n  }\n}\n\nfragment ArticleBody_article on Article {\n  ...ArticleHero_article\n  ...ArticleByline_article\n  ...ArticleSectionAd_article\n  ...ArticleNewsSource_article\n  hero {\n    __typename\n  }\n  seriesArticle {\n    thumbnailTitle\n    href\n    id\n  }\n  vertical\n  authors {\n    internalID\n    slug\n    name\n    id\n  }\n  internalID\n  slug\n  layout\n  leadParagraph\n  title\n  href\n  publishedAt\n  sections {\n    __typename\n    ...ArticleSection_section\n  }\n  postscript\n  relatedArticles {\n    internalID\n    title\n    href\n    byline\n    thumbnailImage {\n      cropped(width: 100, height: 100) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment ArticleByline_article on Article {\n  byline\n  authors {\n    internalID\n    slug\n    name\n    initials\n    bio\n    image {\n      cropped(width: 60, height: 60) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment ArticleHero_article on Article {\n  title\n  href\n  vertical\n  authors {\n    internalID\n    slug\n    name\n    id\n  }\n  hero {\n    __typename\n    ... on ArticleFeatureSection {\n      layout\n      embed\n      media\n      image {\n        url\n        split: resized(width: 900) {\n          src\n          srcSet\n        }\n        text: cropped(width: 1600, height: 900) {\n          src\n          srcSet\n        }\n      }\n    }\n  }\n}\n\nfragment ArticleNewsSource_article on Article {\n  newsSource {\n    title\n    url\n  }\n}\n\nfragment ArticleSectionAd_article on Article {\n  layout\n  sections {\n    __typename\n  }\n}\n\nfragment ArticleSectionEmbed_section on ArticleSectionEmbed {\n  url\n  height\n  mobileHeight\n  _layout: layout\n}\n\nfragment ArticleSectionImageCollectionCaption_figure on ArticleSectionImageCollectionFigure {\n  __isArticleSectionImageCollectionFigure: __typename\n  __typename\n  ...Metadata_artwork\n  ... on ArticleImageSection {\n    caption\n  }\n  ... on ArticleUnpublishedArtwork {\n    title\n    date\n    artist {\n      name\n    }\n    partner {\n      name\n    }\n  }\n}\n\nfragment ArticleSectionImageCollectionImage_figure on ArticleSectionImageCollectionFigure {\n  __isArticleSectionImageCollectionFigure: __typename\n  ... on ArticleImageSection {\n    id\n    image {\n      url(version: [\"main\", \"normalized\", \"larger\", \"large\"])\n      width\n      height\n    }\n  }\n  ... on Artwork {\n    id\n    formattedMetadata\n    image {\n      url(version: [\"main\", \"normalized\", \"larger\", \"large\"])\n      width\n      height\n    }\n  }\n  ... on ArticleUnpublishedArtwork {\n    id\n    image {\n      url(version: [\"main\", \"normalized\", \"larger\", \"large\"])\n      width\n      height\n    }\n  }\n}\n\nfragment ArticleSectionImageCollection_section on ArticleSectionImageCollection {\n  layout\n  figures {\n    __typename\n    ...ArticleSectionImageCollectionImage_figure\n    ...ArticleSectionImageCollectionCaption_figure\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on ArticleImageSection {\n      id\n    }\n    ... on ArticleUnpublishedArtwork {\n      id\n    }\n  }\n}\n\nfragment ArticleSectionImageSet_section on ArticleSectionImageSet {\n  setLayout: layout\n  title\n  counts {\n    figures\n  }\n  cover {\n    __typename\n    ... on ArticleImageSection {\n      id\n      image {\n        small: cropped(width: 80, height: 80, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n          src\n          srcSet\n          height\n          width\n        }\n        large: resized(width: 1220, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n          src\n          srcSet\n          height\n          width\n        }\n      }\n    }\n    ... on Artwork {\n      formattedMetadata\n      id\n      image {\n        small: cropped(width: 80, height: 80, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n          src\n          srcSet\n          height\n          width\n        }\n        large: resized(width: 1220, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n          src\n          srcSet\n          height\n          width\n        }\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment ArticleSectionSocialEmbed_section on ArticleSectionSocialEmbed {\n  url\n  embed\n}\n\nfragment ArticleSectionText_section on ArticleSectionText {\n  body\n}\n\nfragment ArticleSectionVideo_section on ArticleSectionVideo {\n  embed(autoPlay: true)\n  fallbackEmbed: embed(autoPlay: true)\n  image {\n    cropped(width: 910, height: 512) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArticleSection_section on ArticleSections {\n  __isArticleSections: __typename\n  __typename\n  ...ArticleSectionText_section\n  ...ArticleSectionImageCollection_section\n  ...ArticleSectionImageSet_section\n  ...ArticleSectionVideo_section\n  ...ArticleSectionSocialEmbed_section\n  ...ArticleSectionEmbed_section\n}\n\nfragment BidTimerLine_artwork on Artwork {\n  saleArtwork {\n    lotID\n    id\n  }\n  collectorSignals {\n    auction {\n      lotClosesAt\n      registrationEndsAt\n      onlineBiddingExtended\n    }\n  }\n}\n\nfragment Details_artwork on Artwork {\n  internalID\n  href\n  title\n  date\n  collectorSignals {\n    primaryLabel\n    auction {\n      bidCount\n      lotClosesAt\n      liveBiddingStarted\n      registrationEndsAt\n      onlineBiddingExtended\n    }\n  }\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artist(shallow: true) {\n    targetSupply {\n      isP1\n    }\n    id\n  }\n  marketPriceInsights {\n    demandRank\n  }\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...PrimaryLabelLine_artwork\n  ...BidTimerLine_artwork\n  ...HoverDetails_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  internalID\n  href\n  sale {\n    isOpen\n    id\n  }\n}\n\nfragment PrimaryLabelLine_artwork on Artwork {\n  internalID\n  collectorSignals {\n    primaryLabel\n    partnerOffer {\n      endAt\n      priceWithDiscount {\n        display\n      }\n      id\n    }\n  }\n}\n"
   }
 };
 })();

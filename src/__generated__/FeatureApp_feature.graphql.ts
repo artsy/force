@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7947d70b53ffe5eae74ba0c8f7c5adf7>>
+ * @generated SignedSource<<623f0bd5001f79470a7a39253f55ba83>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,6 +20,9 @@ export type FeatureApp_feature$data = {
         readonly " $fragmentSpreads": FragmentRefs<"FeatureSet_set">;
       } | null | undefined;
     } | null | undefined> | null | undefined;
+  } | null | undefined;
+  readonly video: {
+    readonly " $fragmentSpreads": FragmentRefs<"FeatureVideo_video">;
   } | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"FeatureHeader_feature" | "FeatureMeta_feature">;
   readonly " $fragmentType": "FeatureApp_feature";
@@ -66,6 +69,22 @@ return {
       "kind": "ScalarField",
       "name": "callout",
       "storageKey": "callout(format:\"HTML\")"
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "FeatureVideo",
+      "kind": "LinkedField",
+      "name": "video",
+      "plural": false,
+      "selections": [
+        {
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "FeatureVideo_video"
+        }
+      ],
+      "storageKey": null
     },
     {
       "alias": "sets",
@@ -124,6 +143,6 @@ return {
 };
 })();
 
-(node as any).hash = "a03892745f198465e63df7420b7e1d3d";
+(node as any).hash = "58954a810e9394da85d3cd2b302dce41";
 
 export default node;

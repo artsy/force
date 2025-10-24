@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bfcdeea3172a8a3ac951682e795c6512>>
+ * @generated SignedSource<<c6e287fc31b353afa0c45b12480a2c8c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -26,7 +26,15 @@ export type ArticleSectionVideo_section$key = {
   readonly " $fragmentSpreads": FragmentRefs<"ArticleSectionVideo_section">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = [
+  {
+    "kind": "Literal",
+    "name": "autoPlay",
+    "value": true
+  }
+];
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -34,29 +42,17 @@ const node: ReaderFragment = {
   "selections": [
     {
       "alias": null,
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "autoPlay",
-          "value": true
-        }
-      ],
+      "args": (v0/*: any*/),
       "kind": "ScalarField",
       "name": "embed",
       "storageKey": "embed(autoPlay:true)"
     },
     {
       "alias": "fallbackEmbed",
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "autoPlay",
-          "value": false
-        }
-      ],
+      "args": (v0/*: any*/),
       "kind": "ScalarField",
       "name": "embed",
-      "storageKey": "embed(autoPlay:false)"
+      "storageKey": "embed(autoPlay:true)"
     },
     {
       "alias": null,
@@ -109,7 +105,8 @@ const node: ReaderFragment = {
   "type": "ArticleSectionVideo",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "efd503a2f10aa94d7d0d86d131a47e4f";
+(node as any).hash = "34292f9c333a2340fa8504ce4f0f0c06";
 
 export default node;
