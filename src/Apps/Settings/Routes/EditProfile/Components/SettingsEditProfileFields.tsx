@@ -48,6 +48,7 @@ export interface EditProfileFormModel {
   name: string
   displayLocation: { display: string | null | undefined }
   location: EditableLocationProps | null | undefined
+  locationSelected: boolean
   profession: string
   otherRelevantPositions: string
   bio: string
@@ -82,6 +83,7 @@ const SettingsEditProfileFields: React.FC<
     name: me.name ?? "",
     displayLocation: { display: me.location?.display ?? null },
     location: me.location ?? null,
+    locationSelected: true,
     profession: me.profession ?? "",
     otherRelevantPositions: me.otherRelevantPositions ?? "",
     bio: me.bio ?? "",
@@ -131,7 +133,16 @@ const SettingsEditProfileFields: React.FC<
         validationSchema={editProfileVerificationSchema}
         validateOnBlur
       >
-        {({ values, isSubmitting, isValid, setFieldValue, handleChange }) => (
+        {({
+          values,
+          isSubmitting,
+          isValid,
+          setFieldValue,
+          setFieldTouched,
+          handleChange,
+          errors,
+          touched,
+        }) => (
           <Form>
             <Join separator={<Spacer y={4} />}>
               <SettingsEditProfileImageRefetchContainer me={me} />
@@ -154,11 +165,18 @@ const SettingsEditProfileFields: React.FC<
                 maxLength={256}
                 spellCheck={false}
                 defaultValue={values.displayLocation.display ?? undefined}
+                error={touched.locationSelected && errors.locationSelected}
                 onSelect={(place?: Place) => {
-                  setFieldValue("location", normalizePlace(place, false))
+                  const normalized = normalizePlace(place, false)
+                  setFieldValue("location", normalized)
+                  setFieldValue("locationSelected", true)
+                  setFieldTouched("locationSelected", false)
                 }}
                 onChange={place => {
-                  setFieldValue("location", normalizePlace(place, false))
+                  setFieldValue("locationSelected", false)
+                }}
+                onBlur={() => {
+                  setFieldTouched("locationSelected", true, true)
                 }}
               />
 
