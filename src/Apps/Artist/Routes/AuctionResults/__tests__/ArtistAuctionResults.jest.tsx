@@ -552,6 +552,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
       totalCount: 5,
     },
     sidebarAggregations: {
+      totalCount: 1000,
       aggregations: [
         { slice: "SIMPLE_PRICE_HISTOGRAM", counts: [] },
         {

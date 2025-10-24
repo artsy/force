@@ -34,6 +34,7 @@ export const ArtistOverviewRouteFragmentContainer = createFragmentContainer(
       fragment ArtistOverviewRoute_artist on Artist {
         ...ArtistOverview_artist
         internalID
+        href
         meta(page: ABOUT) {
           description
           title

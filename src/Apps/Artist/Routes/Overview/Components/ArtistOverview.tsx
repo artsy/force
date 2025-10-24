@@ -1,5 +1,7 @@
 import { Stack } from "@artsy/palette"
 import { ArtistSeriesRailQueryRenderer } from "Components/ArtistSeriesRail/ArtistSeriesRail"
+import { RailHeader } from "Components/Rail/RailHeader"
+import { useIsRouteActive } from "System/Hooks/useRouter"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import type { ArtistOverviewQueryRendererQuery } from "__generated__/ArtistOverviewQueryRendererQuery.graphql"
 import type { ArtistOverview_artist$data } from "__generated__/ArtistOverview_artist.graphql"
@@ -61,6 +63,8 @@ export const ArtistOverview: React.FC<
     Array.isArray(artist.related?.genes?.edges) &&
     artist.related.genes.edges.length > 0
 
+  const isCombinedPage = useIsRouteActive(`${artist.href}/combined`)
+
   if (
     !hasCareerHighlights &&
     !hasArtistSeries &&
@@ -69,7 +73,19 @@ export const ArtistOverview: React.FC<
     !hasRelatedArtists &&
     !hasRelatedCategories
   ) {
-    return <ArtistOverviewEmpty />
+    return (
+      <Stack gap={4}>
+        {isCombinedPage && (
+          <RailHeader
+            title="Highlights and Achievements"
+            viewAllHref={`${artist.href}/cv`}
+            viewAllLabel="View CV"
+          />
+        )}
+
+        <ArtistOverviewEmpty />
+      </Stack>
+    )
   }
 
   return (
@@ -110,6 +126,7 @@ export const ArtistOverviewFragmentContainer = createFragmentContainer(
     artist: graphql`
       fragment ArtistOverview_artist on Artist {
         internalID
+        href
         name
         insights {
           __typename
