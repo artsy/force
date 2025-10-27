@@ -201,8 +201,8 @@ export const NavBarUserMenu: React.FC<
       </NavBarMenuItemLink>
 
       <NavBarMenuItemLink
-        aria-label="View your purchases"
-        to="/settings/purchases"
+        aria-label="View your orders"
+        to="/settings/orders"
         onClick={trackClick}
         enablePrefetch={false}
       >
