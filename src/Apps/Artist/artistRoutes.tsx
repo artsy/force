@@ -9,6 +9,9 @@ import { enableArtistPageCTA } from "./Server/enableArtistPageCTA"
 import { redirectWithCanonicalParams } from "./Server/redirect"
 import { allowedAuctionResultFilters } from "./Utils/allowedAuctionResultFilters"
 
+// A/B Test: artist-combined-layout
+// When enabled, renders the combined layout for all artist page routes
+
 const ArtistApp = loadable(
   () => import(/* webpackChunkName: "artistBundle" */ "./ArtistApp"),
   { resolveComponent: component => component.ArtistAppFragmentContainer },
@@ -144,27 +147,60 @@ export const artistRoutes: RouteProps[] = [
       },
       {
         path: "",
-        getComponent: () => WorksForSaleRoute,
+        getComponent: ({ context }) => {
+          const isExperiment = context.featureFlags.isEnabled(
+            "artist-combined-layout",
+          )
+          return isExperiment ? CombinedRoute : WorksForSaleRoute
+        },
         onServerSideRender: redirectWithCanonicalParams,
         onPreloadJS: () => {
           WorksForSaleRoute.preload()
+          CombinedRoute.preload()
         },
-        prepareVariables: getWorksForSaleRouteVariables,
+        prepareVariables: (params, props) => {
+          const isExperiment = props.context.featureFlags.isEnabled(
+            "artist-combined-layout",
+          )
+          const worksForSaleVariables = getWorksForSaleRouteVariables(
+            params,
+            props,
+          )
+
+          return {
+            ...worksForSaleVariables,
+            includeCombinedFragment: isExperiment,
+          }
+        },
         query: graphql`
-          query artistRoutes_WorksForSaleQuery($artistID: String!) @cacheable {
+          query artistRoutes_WorksForSaleQuery(
+            $artistID: String!
+            $includeCombinedFragment: Boolean = false
+          ) @cacheable {
             artist(id: $artistID) @principalField {
               ...ArtistWorksForSaleRoute_artist
+              ...ArtistCombinedRoute_artist
+                @include(if: $includeCombinedFragment)
             }
           }
         `,
       },
       {
         path: "auction-results",
-        getComponent: () => AuctionResultsRoute,
+        getComponent: ({ context }) => {
+          const isExperiment = context.featureFlags.isEnabled(
+            "artist-combined-layout",
+          )
+          return isExperiment ? CombinedRoute : AuctionResultsRoute
+        },
         onPreloadJS: () => {
           AuctionResultsRoute.preload()
+          CombinedRoute.preload()
         },
         prepareVariables: ({ artistID }, props) => {
+          const isExperiment = props.context.featureFlags.isEnabled(
+            "artist-combined-layout",
+          )
           const urlFilterState = paramsToCamelCase(
             props.location ? props.location.query : {},
           )
@@ -178,6 +214,7 @@ export const artistRoutes: RouteProps[] = [
             artistID,
             ...initialInput,
             state: initialInput?.hideUpcoming ? "PAST" : "ALL",
+            includeCombinedFragment: isExperiment,
           }
         },
         query: graphql`
@@ -194,6 +231,7 @@ export const artistRoutes: RouteProps[] = [
             $createdAfterYear: Int
             $createdBeforeYear: Int
             $allowEmptyCreatedDates: Boolean
+            $includeCombinedFragment: Boolean = false
           ) @cacheable {
             artist(id: $artistID) @principalField {
               ...ArtistAuctionResultsRoute_artist
@@ -210,21 +248,43 @@ export const artistRoutes: RouteProps[] = [
                   createdBeforeYear: $createdBeforeYear
                   allowEmptyCreatedDates: $allowEmptyCreatedDates
                 )
+              ...ArtistCombinedRoute_artist
+                @include(if: $includeCombinedFragment)
             }
           }
         `,
       },
       {
         path: "about",
-        getComponent: () => OverviewRoute,
+        getComponent: ({ context }) => {
+          const isExperiment = context.featureFlags.isEnabled(
+            "artist-combined-layout",
+          )
+          return isExperiment ? CombinedRoute : OverviewRoute
+        },
         onServerSideRender: enableArtistPageCTA,
         onPreloadJS: () => {
           OverviewRoute.preload()
+          CombinedRoute.preload()
+        },
+        prepareVariables: ({ artistID }, props) => {
+          const isExperiment = props.context.featureFlags.isEnabled(
+            "artist-combined-layout",
+          )
+          return {
+            artistID,
+            includeCombinedFragment: isExperiment,
+          }
         },
         query: graphql`
-          query artistRoutes_OverviewQuery($artistID: String!) @cacheable {
+          query artistRoutes_OverviewQuery(
+            $artistID: String!
+            $includeCombinedFragment: Boolean = false
+          ) @cacheable {
             artist(id: $artistID) @principalField {
               ...ArtistOverviewRoute_artist
+              ...ArtistCombinedRoute_artist
+                @include(if: $includeCombinedFragment)
             }
           }
         `,

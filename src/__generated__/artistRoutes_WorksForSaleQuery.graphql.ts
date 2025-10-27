@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ef9c1770a0b467a43a431b956557d57c>>
+ * @generated SignedSource<<7c6f25b5c64fba14edfc626e9267ab05>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,10 +12,11 @@ import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type artistRoutes_WorksForSaleQuery$variables = {
   artistID: string;
+  includeCombinedFragment?: boolean | null | undefined;
 };
 export type artistRoutes_WorksForSaleQuery$data = {
   readonly artist: {
-    readonly " $fragmentSpreads": FragmentRefs<"ArtistWorksForSaleRoute_artist">;
+    readonly " $fragmentSpreads": FragmentRefs<"ArtistCombinedRoute_artist" | "ArtistWorksForSaleRoute_artist">;
   } | null | undefined;
 };
 export type artistRoutes_WorksForSaleQuery = {
@@ -29,6 +30,11 @@ var v0 = [
     "defaultValue": null,
     "kind": "LocalArgument",
     "name": "artistID"
+  },
+  {
+    "defaultValue": false,
+    "kind": "LocalArgument",
+    "name": "includeCombinedFragment"
   }
 ],
 v1 = [
@@ -57,6 +63,18 @@ return {
             "args": null,
             "kind": "FragmentSpread",
             "name": "ArtistWorksForSaleRoute_artist"
+          },
+          {
+            "condition": "includeCombinedFragment",
+            "kind": "Condition",
+            "passingValue": true,
+            "selections": [
+              {
+                "args": null,
+                "kind": "FragmentSpread",
+                "name": "ArtistCombinedRoute_artist"
+              }
+            ]
           }
         ],
         "storageKey": null
@@ -137,6 +155,20 @@ return {
             "kind": "ScalarField",
             "name": "id",
             "storageKey": null
+          },
+          {
+            "condition": "includeCombinedFragment",
+            "kind": "Condition",
+            "passingValue": true,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "href",
+                "storageKey": null
+              }
+            ]
           }
         ],
         "storageKey": null
@@ -144,16 +176,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e55b42f31c8ab85da11ee31d413f4332",
+    "cacheID": "005dd211588676950857ba80064ff189",
     "id": null,
     "metadata": {},
     "name": "artistRoutes_WorksForSaleQuery",
     "operationKind": "query",
-    "text": "query artistRoutes_WorksForSaleQuery(\n  $artistID: String!\n) @cacheable {\n  artist(id: $artistID) @principalField {\n    ...ArtistWorksForSaleRoute_artist\n    id\n  }\n}\n\nfragment ArtistWorksForSaleRoute_artist on Artist {\n  internalID\n  slug\n  name\n  meta(page: ARTWORKS) {\n    description\n    title\n  }\n}\n"
+    "text": "query artistRoutes_WorksForSaleQuery(\n  $artistID: String!\n  $includeCombinedFragment: Boolean = false\n) @cacheable {\n  artist(id: $artistID) @principalField {\n    ...ArtistWorksForSaleRoute_artist\n    ...ArtistCombinedRoute_artist @include(if: $includeCombinedFragment)\n    id\n  }\n}\n\nfragment ArtistCombinedRoute_artist on Artist {\n  id\n  internalID\n  href\n}\n\nfragment ArtistWorksForSaleRoute_artist on Artist {\n  internalID\n  slug\n  name\n  meta(page: ARTWORKS) {\n    description\n    title\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "ea4fa27cdfcc455a635e133e902f8532";
+(node as any).hash = "f16d3222c45c00806aab537c3dac0fd8";
 
 export default node;

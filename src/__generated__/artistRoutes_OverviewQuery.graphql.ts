@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<21357598a2f3c93f636f3431958da718>>
+ * @generated SignedSource<<0ed2fcd99b900abb9794cdc3e4f691eb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,10 +12,11 @@ import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type artistRoutes_OverviewQuery$variables = {
   artistID: string;
+  includeCombinedFragment?: boolean | null | undefined;
 };
 export type artistRoutes_OverviewQuery$data = {
   readonly artist: {
-    readonly " $fragmentSpreads": FragmentRefs<"ArtistOverviewRoute_artist">;
+    readonly " $fragmentSpreads": FragmentRefs<"ArtistCombinedRoute_artist" | "ArtistOverviewRoute_artist">;
   } | null | undefined;
 };
 export type artistRoutes_OverviewQuery = {
@@ -29,6 +30,11 @@ var v0 = [
     "defaultValue": null,
     "kind": "LocalArgument",
     "name": "artistID"
+  },
+  {
+    "defaultValue": false,
+    "kind": "LocalArgument",
+    "name": "includeCombinedFragment"
   }
 ],
 v1 = [
@@ -85,6 +91,18 @@ return {
             "args": null,
             "kind": "FragmentSpread",
             "name": "ArtistOverviewRoute_artist"
+          },
+          {
+            "condition": "includeCombinedFragment",
+            "kind": "Condition",
+            "passingValue": true,
+            "selections": [
+              {
+                "args": null,
+                "kind": "FragmentSpread",
+                "name": "ArtistCombinedRoute_artist"
+              }
+            ]
           }
         ],
         "storageKey": null
@@ -284,16 +302,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "81d133bb1712f714ad7263886fd3a354",
+    "cacheID": "399c54df40dd254f46e255478849a0a9",
     "id": null,
     "metadata": {},
     "name": "artistRoutes_OverviewQuery",
     "operationKind": "query",
-    "text": "query artistRoutes_OverviewQuery(\n  $artistID: String!\n) @cacheable {\n  artist(id: $artistID) @principalField {\n    ...ArtistOverviewRoute_artist\n    id\n  }\n}\n\nfragment ArtistOverviewRoute_artist on Artist {\n  ...ArtistOverview_artist\n  internalID\n  href\n  meta(page: ABOUT) {\n    description\n    title\n  }\n}\n\nfragment ArtistOverview_artist on Artist {\n  internalID\n  href\n  name\n  insights {\n    __typename\n  }\n  artistSeriesConnection(first: 0) {\n    totalCount\n  }\n  showsConnection(first: 0, status: \"running\") {\n    totalCount\n  }\n  counts {\n    relatedArtists\n    articles\n  }\n  related {\n    genes(first: 1) {\n      edges {\n        node {\n          __typename\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query artistRoutes_OverviewQuery(\n  $artistID: String!\n  $includeCombinedFragment: Boolean = false\n) @cacheable {\n  artist(id: $artistID) @principalField {\n    ...ArtistOverviewRoute_artist\n    ...ArtistCombinedRoute_artist @include(if: $includeCombinedFragment)\n    id\n  }\n}\n\nfragment ArtistCombinedRoute_artist on Artist {\n  id\n  internalID\n  href\n}\n\nfragment ArtistOverviewRoute_artist on Artist {\n  ...ArtistOverview_artist\n  internalID\n  href\n  meta(page: ABOUT) {\n    description\n    title\n  }\n}\n\nfragment ArtistOverview_artist on Artist {\n  internalID\n  href\n  name\n  insights {\n    __typename\n  }\n  artistSeriesConnection(first: 0) {\n    totalCount\n  }\n  showsConnection(first: 0, status: \"running\") {\n    totalCount\n  }\n  counts {\n    relatedArtists\n    articles\n  }\n  related {\n    genes(first: 1) {\n      edges {\n        node {\n          __typename\n          id\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "9d22251dc4ee96e7bb0bbc7e32b0bc07";
+(node as any).hash = "a4c938b758925f50f50d2a65f705e936";
 
 export default node;
