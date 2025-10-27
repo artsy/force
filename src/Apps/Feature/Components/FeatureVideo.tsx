@@ -59,7 +59,6 @@ export const FeatureVideoFragmentContainer = createFragmentContainer(
     video: graphql`
       fragment FeatureVideo_video on FeatureVideo {
         embed(autoPlay: true)
-        fallbackEmbed: embed(autoPlay: true)
       }
     `,
   },

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<eaeed1b226052f23ec1bcd3562848e1c>>
+ * @generated SignedSource<<36d6a5485fb73469dc285590bbb9f8ec>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,7 +12,6 @@ import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FeatureVideo_video$data = {
   readonly embed: string | null | undefined;
-  readonly fallbackEmbed: string | null | undefined;
   readonly " $fragmentType": "FeatureVideo_video";
 };
 export type FeatureVideo_video$key = {
@@ -20,15 +19,7 @@ export type FeatureVideo_video$key = {
   readonly " $fragmentSpreads": FragmentRefs<"FeatureVideo_video">;
 };
 
-const node: ReaderFragment = (function(){
-var v0 = [
-  {
-    "kind": "Literal",
-    "name": "autoPlay",
-    "value": true
-  }
-];
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -36,14 +27,13 @@ return {
   "selections": [
     {
       "alias": null,
-      "args": (v0/*: any*/),
-      "kind": "ScalarField",
-      "name": "embed",
-      "storageKey": "embed(autoPlay:true)"
-    },
-    {
-      "alias": "fallbackEmbed",
-      "args": (v0/*: any*/),
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "autoPlay",
+          "value": true
+        }
+      ],
       "kind": "ScalarField",
       "name": "embed",
       "storageKey": "embed(autoPlay:true)"
@@ -52,8 +42,7 @@ return {
   "type": "FeatureVideo",
   "abstractKey": null
 };
-})();
 
-(node as any).hash = "1f849676cc2086cc8050d4c6561791e4";
+(node as any).hash = "efee262e33f8b0ecc05304616f598aa6";
 
 export default node;
