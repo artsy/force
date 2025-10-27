@@ -1,7 +1,13 @@
+import { Spacer, Text } from "@artsy/palette"
+import { MarketStatsQueryRenderer } from "Apps/Artist/Routes/AuctionResults/Components/MarketStats"
+import { Jump } from "Utils/Hooks/useJump"
 import type { ArtistAuctionResultsRoute_artist$data } from "__generated__/ArtistAuctionResultsRoute_artist.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtistAuctionResultsRefetchContainer } from "./ArtistAuctionResults"
+import {
+  ArtistAuctionResultsRefetchContainer,
+  useScrollToTopOfAuctionResults,
+} from "./ArtistAuctionResults"
 
 export interface AuctionResultsRouteProps {
   artist: ArtistAuctionResultsRoute_artist$data
@@ -9,12 +15,39 @@ export interface AuctionResultsRouteProps {
 
 export const ArtistAuctionResultsRoute: React.FC<
   React.PropsWithChildren<AuctionResultsRouteProps>
-> = props => {
+> = ({ artist }) => {
+  const { handleScrollToTop } = useScrollToTopOfAuctionResults()
+
+  const totalCount = artist.sidebarAggregations?.totalCount ?? 0
+
   return (
-    <ArtistAuctionResultsRefetchContainer
-      artist={props.artist}
-      aggregations={props.artist.sidebarAggregations?.aggregations}
-    />
+    <>
+      <Jump id="marketSignalsTop" />
+
+      <MarketStatsQueryRenderer
+        id={artist.internalID}
+        onRendered={handleScrollToTop}
+      />
+
+      {totalCount > 0 && (
+        <>
+          <Spacer y={6} />
+
+          <Jump id="artistAuctionResultsTop" />
+
+          <Text variant="lg-display" as="h2">
+            Auction Results
+          </Text>
+
+          <Spacer y={1} />
+        </>
+      )}
+
+      <ArtistAuctionResultsRefetchContainer
+        artist={artist}
+        aggregations={artist.sidebarAggregations?.aggregations}
+      />
+    </>
   )
 }
 
@@ -58,6 +91,7 @@ export const AuctionResultsRouteFragmentContainer = createFragmentContainer(
             createdBeforeYear: $createdBeforeYear
             allowEmptyCreatedDates: $allowEmptyCreatedDates
           )
+        internalID
         sidebarAggregations: auctionResultsConnection(
           aggregations: [
             SIMPLE_PRICE_HISTOGRAM
@@ -66,6 +100,7 @@ export const AuctionResultsRouteFragmentContainer = createFragmentContainer(
             LOTS_BY_CREATED_YEAR
           ]
         ) {
+          totalCount
           aggregations {
             slice
             counts {

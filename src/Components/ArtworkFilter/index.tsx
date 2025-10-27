@@ -144,16 +144,6 @@ export const BaseArtworkFilter: React.FC<
   const [isImmersed, setIsImmersed] = useState(false)
   const enableImmersiveView = useFlag("onyx_enable-immersive-view")
 
-  const trackImmersiveViewOptionViewed = () => {
-    const params: ImmersiveViewOptionViewed = {
-      action: ActionType.immersiveViewOptionViewed,
-      context_module: ContextModule.artworkGrid,
-      context_page_owner_type: contextPageOwnerType,
-      context_page_owner_id: contextPageOwnerId,
-    }
-    tracking.trackEvent(params)
-  }
-
   const trackClickedImmersiveView = () => {
     const params: ClickedImmersiveView = {
       action: ActionType.clickedImmersiveView,
@@ -262,8 +252,17 @@ export const BaseArtworkFilter: React.FC<
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: "trackImmersiveViewOptionViewed changes on every re-render and should not be used as a hook dependency"
   useEffect(() => {
-    if (enableImmersiveView) trackImmersiveViewOptionViewed()
-  }, [enableImmersiveView])
+    if (!enableImmersiveView) return
+
+    const params: ImmersiveViewOptionViewed = {
+      action: ActionType.immersiveViewOptionViewed,
+      context_module: ContextModule.artworkGrid,
+      context_page_owner_type: contextPageOwnerType,
+      context_page_owner_id: contextPageOwnerId,
+    }
+
+    tracking.trackEvent(params)
+  }, [enableImmersiveView, contextPageOwnerType, contextPageOwnerId, tracking])
 
   const { jumpTo } = useJump()
 
@@ -297,7 +296,7 @@ export const BaseArtworkFilter: React.FC<
 
       {/* Mobile Artwork Filter */}
       <Media at="xs">
-        <Sticky>
+        <Sticky bottomBoundary="#Sticky__ArtworkFilter">
           <FullBleed backgroundColor="mono0">
             <Flex
               justifyContent="space-between"

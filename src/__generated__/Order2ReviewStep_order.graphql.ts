@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f1035e7b170df1634521d5aee844a475>>
+ * @generated SignedSource<<36bd86475f138be8d01a611b0de30522>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -58,6 +58,9 @@ export type Order2ReviewStep_order$data = {
     } | null | undefined;
   } | null | undefined>;
   readonly mode: OrderModeEnum;
+  readonly offers: ReadonlyArray<{
+    readonly internalID: string;
+  }>;
   readonly shippingTotal: {
     readonly display: string | null | undefined;
   } | null | undefined;
@@ -74,7 +77,14 @@ export type Order2ReviewStep_order$key = {
 };
 
 const node: ReaderFragment = (function(){
-var v0 = [
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v1 = [
   {
     "alias": null,
     "args": null,
@@ -83,7 +93,7 @@ var v0 = [
     "storageKey": null
   }
 ],
-v1 = [
+v2 = [
   {
     "alias": null,
     "args": null,
@@ -128,13 +138,7 @@ return {
       "kind": "FragmentSpread",
       "name": "Order2CheckoutPricingBreakdown_order"
     },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "internalID",
-      "storageKey": null
-    },
+    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -156,7 +160,7 @@ return {
       "kind": "LinkedField",
       "name": "buyerTotal",
       "plural": false,
-      "selections": (v0/*: any*/),
+      "selections": (v1/*: any*/),
       "storageKey": null
     },
     {
@@ -166,7 +170,7 @@ return {
       "kind": "LinkedField",
       "name": "itemsTotal",
       "plural": false,
-      "selections": (v0/*: any*/),
+      "selections": (v1/*: any*/),
       "storageKey": null
     },
     {
@@ -176,7 +180,7 @@ return {
       "kind": "LinkedField",
       "name": "shippingTotal",
       "plural": false,
-      "selections": (v0/*: any*/),
+      "selections": (v1/*: any*/),
       "storageKey": null
     },
     {
@@ -186,7 +190,7 @@ return {
       "kind": "LinkedField",
       "name": "taxTotal",
       "plural": false,
-      "selections": (v0/*: any*/),
+      "selections": (v1/*: any*/),
       "storageKey": null
     },
     {
@@ -232,13 +236,13 @@ return {
             },
             {
               "kind": "InlineFragment",
-              "selections": (v1/*: any*/),
+              "selections": (v2/*: any*/),
               "type": "Artwork",
               "abstractKey": null
             },
             {
               "kind": "InlineFragment",
-              "selections": (v1/*: any*/),
+              "selections": (v2/*: any*/),
               "type": "EditionSet",
               "abstractKey": null
             }
@@ -337,6 +341,18 @@ return {
         }
       ],
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Offer",
+      "kind": "LinkedField",
+      "name": "offers",
+      "plural": true,
+      "selections": [
+        (v0/*: any*/)
+      ],
+      "storageKey": null
     }
   ],
   "type": "Order",
@@ -344,6 +360,6 @@ return {
 };
 })();
 
-(node as any).hash = "2f7fc1d2c6cd64b2aa7233b44b1fe55d";
+(node as any).hash = "60ce7661d4dfc64919b5798f90605793";
 
 export default node;

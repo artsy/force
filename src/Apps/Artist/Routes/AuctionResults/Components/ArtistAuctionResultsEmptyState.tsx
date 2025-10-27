@@ -7,7 +7,7 @@ export const ArtistAuctionResultsEmptyState: React.FC<
   return (
     <EmptyState
       title="There are currently no auction results for this artist."
-      description={`We’ll update this page when results become available. Meanwhile, you can check out free auction results and art market data for over ${FACTS_AND_FIGURES.auctionRecordsCount} artists.`}
+      description={`We’ll update this area when results become available. Meanwhile, you can check out free auction results and art market data for over ${FACTS_AND_FIGURES.auctionRecordsCount} artists.`}
       action={{
         href: "/price-database",
         label: "View the Artsy Database",

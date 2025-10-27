@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6c3ee55baa507e1e6c3fc7a26c15d5f9>>
+ * @generated SignedSource<<c1c2f55e8ba0f3a2805eda7f50accf82>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -112,6 +112,13 @@ return {
             "args": null,
             "kind": "ScalarField",
             "name": "internalID",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "href",
             "storageKey": null
           },
           {
@@ -246,12 +253,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "86d1a368945e64c4e5bfa0a9a2803d70",
+    "cacheID": "bc41d443fb8e1a9fa11061c7b7af5228",
     "id": null,
     "metadata": {},
     "name": "ArtistOverviewQueryRendererQuery",
     "operationKind": "query",
-    "text": "query ArtistOverviewQueryRendererQuery(\n  $artistID: String!\n) @cacheable {\n  artist(id: $artistID) {\n    ...ArtistOverview_artist\n    id\n  }\n}\n\nfragment ArtistOverview_artist on Artist {\n  internalID\n  name\n  insights {\n    __typename\n  }\n  artistSeriesConnection(first: 0) {\n    totalCount\n  }\n  showsConnection(first: 0, status: \"running\") {\n    totalCount\n  }\n  counts {\n    relatedArtists\n    articles\n  }\n  related {\n    genes(first: 1) {\n      edges {\n        node {\n          __typename\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query ArtistOverviewQueryRendererQuery(\n  $artistID: String!\n) @cacheable {\n  artist(id: $artistID) {\n    ...ArtistOverview_artist\n    id\n  }\n}\n\nfragment ArtistOverview_artist on Artist {\n  internalID\n  href\n  name\n  insights {\n    __typename\n  }\n  artistSeriesConnection(first: 0) {\n    totalCount\n  }\n  showsConnection(first: 0, status: \"running\") {\n    totalCount\n  }\n  counts {\n    relatedArtists\n    articles\n  }\n  related {\n    genes(first: 1) {\n      edges {\n        node {\n          __typename\n          id\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();

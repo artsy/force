@@ -1342,6 +1342,8 @@ describe("Order2CheckoutRoute", () => {
         })
         await userEvent.click(screen.getByText("See Shipping Methods"))
 
+        await flushPromiseQueue()
+
         let mutation
         await act(async () => {
           await waitFor(() => {
@@ -1871,6 +1873,7 @@ const baseProps = {
         },
       ],
       shippingOrigin: "Eagle, CO, US",
+      offers: [],
     },
     addressConnection: {
       edges: [],

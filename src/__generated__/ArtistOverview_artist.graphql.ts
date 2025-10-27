@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<87d223e25e574ad2ecfd872ca9582505>>
+ * @generated SignedSource<<ad3f50e614716f36f216c81b79d21a9e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,6 +18,7 @@ export type ArtistOverview_artist$data = {
     readonly articles: number | null | undefined;
     readonly relatedArtists: number | null | undefined;
   } | null | undefined;
+  readonly href: string | null | undefined;
   readonly insights: ReadonlyArray<{
     readonly __typename: "ArtistInsight";
   }>;
@@ -77,6 +78,13 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "internalID",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "href",
       "storageKey": null
     },
     {
@@ -205,6 +213,6 @@ return {
 };
 })();
 
-(node as any).hash = "99902aa8d7e19dee527a55d51370230b";
+(node as any).hash = "d409e60c6d511fede7e6b68b24ac5567";
 
 export default node;
