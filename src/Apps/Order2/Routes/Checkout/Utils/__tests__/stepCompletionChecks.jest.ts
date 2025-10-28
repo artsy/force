@@ -219,20 +219,9 @@ describe("stepCompletionChecks", () => {
   })
 
   describe("isPaymentComplete", () => {
-    it("returns true when stripeConfirmationToken exists", () => {
+    it("returns false when no payment method or details exists", () => {
       expect(
         isPaymentComplete({
-          stripeConfirmationToken: "tok_123",
-          paymentMethod: null,
-          paymentMethodDetails: null,
-        }),
-      ).toBe(true)
-    })
-
-    it("returns false when no payment method or token exists", () => {
-      expect(
-        isPaymentComplete({
-          stripeConfirmationToken: null,
           paymentMethod: null,
           paymentMethodDetails: null,
         }),
@@ -242,7 +231,6 @@ describe("stepCompletionChecks", () => {
     it("returns false when paymentMethod exists but details is null", () => {
       expect(
         isPaymentComplete({
-          stripeConfirmationToken: null,
           paymentMethod: "CREDIT_CARD",
           paymentMethodDetails: null,
         }),
@@ -252,7 +240,6 @@ describe("stepCompletionChecks", () => {
     it("returns false when paymentMethod exists but details is empty object", () => {
       expect(
         isPaymentComplete({
-          stripeConfirmationToken: null,
           paymentMethod: "CREDIT_CARD",
           paymentMethodDetails: {},
         }),
@@ -262,19 +249,17 @@ describe("stepCompletionChecks", () => {
     it("returns true when paymentMethod and paymentMethodDetails exist", () => {
       expect(
         isPaymentComplete({
-          stripeConfirmationToken: null,
           paymentMethod: "CREDIT_CARD",
           paymentMethodDetails: { internalID: "card_123" },
         }),
       ).toBe(true)
     })
 
-    it("returns true when both token and payment method exist", () => {
+    it("returns true for wire transfer with manual payment", () => {
       expect(
         isPaymentComplete({
-          stripeConfirmationToken: "tok_123",
-          paymentMethod: "CREDIT_CARD",
-          paymentMethodDetails: { internalID: "card_123" },
+          paymentMethod: "WIRE_TRANSFER",
+          paymentMethodDetails: { isManualPayment: true },
         }),
       ).toBe(true)
     })
@@ -417,34 +402,7 @@ describe("stepCompletionChecks", () => {
     })
 
     describe("with payment complete", () => {
-      it("marks payment as COMPLETED when stripeConfirmationToken exists", () => {
-        const steps = buildInitialSteps({
-          mode: "BUY",
-          selectedFulfillmentOption: { type: "ARTSY_STANDARD" },
-          offers: [],
-          fulfillmentDetails: {
-            addressLine1: "123 Main St",
-            city: "New York",
-            postalCode: "10001",
-            country: "US",
-            name: "John Doe",
-            phoneNumber: { originalNumber: "1234567890" },
-          },
-          paymentMethod: null,
-          paymentMethodDetails: null,
-          stripeConfirmationToken: "tok_123",
-        })
-
-        const paymentStep = steps.find(s => s.name === CheckoutStepName.PAYMENT)
-        expect(paymentStep?.state).toBe(CheckoutStepState.COMPLETED)
-
-        const confirmationStep = steps.find(
-          s => s.name === CheckoutStepName.CONFIRMATION,
-        )
-        expect(confirmationStep?.state).toBe(CheckoutStepState.ACTIVE)
-      })
-
-      it("marks payment as COMPLETED when paymentMethod exists", () => {
+      it("marks payment as COMPLETED when paymentMethod and details exist", () => {
         const steps = buildInitialSteps({
           mode: "BUY",
           selectedFulfillmentOption: { type: "ARTSY_STANDARD" },
