@@ -57,34 +57,15 @@ export const isFulfillmentDetailsComplete = (order: {
     } | null
   } | null
 }): boolean => {
-  const details = order.fulfillmentDetails
-
-  // If no fulfillment details exist, not complete
-  if (!details) {
-    return false
-  }
-
-  // If fulfillment details is an empty object, not complete
-  if (typeof details === "object" && Object.keys(details).length === 0) {
-    return false
-  }
-
-  // If backend has saved fulfillment details, it's complete
-  return true
+  const details = order.fulfillmentDetails ?? {}
+  const hasMinimalDetails = ["addressLine1", "country"].every(field => {
+    return details[field as keyof typeof details] != null
+  })
+  return hasMinimalDetails
 }
 
 /**
  * Check if delivery option (shipping method) step is complete.
- *
- * Note: A fulfillment option cannot be complete if it includes multiple fulfillment
- * options - even if one is auto-selected, the user should have to proceed from there.
- *
- * This function checks if a specific shipping method is selected, not just auto-selected.
- * The actual completion logic for delivery option is handled separately when the user
- * explicitly selects and confirms their choice (via radio button click).
- *
- * This is primarily used for page load state initialization to determine if the step
- * was previously completed in a prior session.
  */
 export const isDeliveryOptionComplete = (order: {
   selectedFulfillmentOption?: { type?: string | null } | null
@@ -182,14 +163,29 @@ export const buildInitialSteps = (order: {
   const isPickup = order.selectedFulfillmentOption?.type === "PICKUP"
 
   // Build steps with states based on completion checks
-  let hasSetActive = false
-  const steps = stepNamesInOrder.map(stepName => {
+  const steps = stepNamesInOrder.reduce((acc, stepName) => {
+    const hasSetActive = acc.some(
+      step => step.state === CheckoutStepState.ACTIVE,
+    )
+
     // Delivery option is hidden for pickup orders
     if (stepName === CheckoutStepName.DELIVERY_OPTION && isPickup) {
-      return {
-        name: stepName,
-        state: CheckoutStepState.HIDDEN,
-      }
+      return [
+        ...acc,
+        {
+          name: stepName,
+          state: CheckoutStepState.HIDDEN,
+        },
+      ]
+    }
+    if (hasSetActive) {
+      return [
+        ...acc,
+        {
+          name: stepName,
+          state: CheckoutStepState.UPCOMING,
+        },
+      ]
     }
 
     // Determine if this step is complete
@@ -204,25 +200,16 @@ export const buildInitialSteps = (order: {
       stepComplete = paymentComplete
     }
 
-    // Set state based on completion and whether we've set an active step
-    if (stepComplete) {
-      return {
+    return [
+      ...acc,
+      {
         name: stepName,
-        state: CheckoutStepState.COMPLETED,
-      }
-    } else if (!hasSetActive) {
-      hasSetActive = true
-      return {
-        name: stepName,
-        state: CheckoutStepState.ACTIVE,
-      }
-    } else {
-      return {
-        name: stepName,
-        state: CheckoutStepState.UPCOMING,
-      }
-    }
-  })
+        state: stepComplete
+          ? CheckoutStepState.COMPLETED
+          : CheckoutStepState.ACTIVE,
+      },
+    ]
+  }, [] as CheckoutStep[])
 
   return steps
 }

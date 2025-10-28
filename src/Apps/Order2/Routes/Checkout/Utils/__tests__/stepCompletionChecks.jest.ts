@@ -109,7 +109,7 @@ describe("stepCompletionChecks", () => {
       ).toBe(false)
     })
 
-    it("returns true when fulfillment details has any data (phone number)", () => {
+    it("returns false when fulfillment details only has phone number", () => {
       expect(
         isFulfillmentDetailsComplete({
           fulfillmentDetails: {
@@ -118,10 +118,10 @@ describe("stepCompletionChecks", () => {
             },
           },
         }),
-      ).toBe(true)
+      ).toBe(false)
     })
 
-    it("returns true when fulfillment details has any data (address)", () => {
+    it("returns true when fulfillment details has required fields (address)", () => {
       expect(
         isFulfillmentDetailsComplete({
           fulfillmentDetails: {
@@ -135,11 +135,22 @@ describe("stepCompletionChecks", () => {
       ).toBe(true)
     })
 
-    it("returns true when fulfillment details has partial data", () => {
+    it("returns false when fulfillment details has addressLine1 but no country", () => {
       expect(
         isFulfillmentDetailsComplete({
           fulfillmentDetails: {
             addressLine1: "123 Main St",
+          },
+        }),
+      ).toBe(false)
+    })
+
+    it("returns true when fulfillment details has minimal required fields", () => {
+      expect(
+        isFulfillmentDetailsComplete({
+          fulfillmentDetails: {
+            addressLine1: "123 Main St",
+            country: "US",
           },
         }),
       ).toBe(true)
@@ -372,12 +383,14 @@ describe("stepCompletionChecks", () => {
         expect(deliveryStep?.state).toBe(CheckoutStepState.HIDDEN)
       })
 
-      it("marks fulfillment complete and payment active for pickup with phone", () => {
+      it("marks fulfillment complete and payment active for pickup with required fields", () => {
         const steps = buildInitialSteps({
           mode: "BUY",
           selectedFulfillmentOption: { type: "PICKUP" },
           offers: [],
           fulfillmentDetails: {
+            addressLine1: "401 Broadway",
+            country: "US",
             phoneNumber: { originalNumber: "1234567890" },
           },
           paymentMethod: null,
