@@ -12,24 +12,12 @@ const logger = createLogger("useStripePaymentBySetupIntentId")
  * Hook to handle Stripe redirect for newly-linked bank account in Order2
  * pulls necessary params from Stripe redirect URL and sets payment by intentId
  */
-export function useStripePaymentBySetupIntentId(
-  orderId: string,
-  orderData: {
-    mode: any
-    selectedFulfillmentOption?: { type: any } | null
-  },
-) {
+export function useStripePaymentBySetupIntentId(orderId: string) {
   const { submitMutation: setPaymentByStripeIntentMutation } =
     useSetPaymentByStripeIntent()
   const { router } = useRouter()
   const environment = useRelayEnvironment()
-  const {
-    setFulfillmentDetailsComplete,
-    setDeliveryOptionComplete,
-    setConfirmationToken,
-    setPaymentComplete,
-    setOfferAmountComplete,
-  } = useCheckoutContext()
+  const { setConfirmationToken, setPaymentComplete } = useCheckoutContext()
   const [isProcessingRedirect, setIsProcessingRedirect] = useState(false)
   const [isPaymentSetupSuccessful, setIsPaymentSetupSuccessful] =
     useState(false)
@@ -52,21 +40,7 @@ export function useStripePaymentBySetupIntentId(
     if (setup_intent && redirect_status === "succeeded") {
       setIsProcessingRedirect(true)
 
-      const isOffer = orderData.mode === "OFFER"
-      if (isOffer) {
-        setOfferAmountComplete()
-      }
-
-      // Set fulfillment details as complete based on order data
-      const isPickup = orderData.selectedFulfillmentOption?.type === "PICKUP"
-      setFulfillmentDetailsComplete({ isPickup })
-
-      // Set delivery option as complete for non-pickup orders
-      if (!isPickup) {
-        setDeliveryOptionComplete()
-      }
-
-      // Set payment step as complete
+      // Handle confirmation token from Stripe redirect
       if (confirmation_token) {
         fetchAndSetConfirmationToken(
           confirmation_token,
@@ -89,19 +63,12 @@ export function useStripePaymentBySetupIntentId(
       newUrl.searchParams.delete("confirmation_token")
       router.replace(newUrl.pathname + newUrl.search)
 
+      // Mark payment as complete after successful Stripe redirect
+      // Note: Prior steps (offer, fulfillment, delivery) are already marked complete
+      // by initialStateForOrder based on order data
       setPaymentComplete()
     }
-  }, [
-    router,
-    setFulfillmentDetailsComplete,
-    setDeliveryOptionComplete,
-    setOfferAmountComplete,
-    setConfirmationToken,
-    setPaymentComplete,
-    environment,
-    orderData.mode,
-    orderData.selectedFulfillmentOption?.type,
-  ])
+  }, [router, setConfirmationToken, setPaymentComplete, environment])
 
   const setPaymentBySetupIntentId = async (
     setupIntentId: string,
