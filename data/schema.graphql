@@ -17358,8 +17358,11 @@ enum NotificationTypesEnum {
 
 # An offer on an order
 type Offer {
-  # The buyer's total amount for this offer
+  # The amount for this offer
   amount: Money
+
+  # The buyer total for this offer, if a complete total is available
+  buyerTotal: Money
 
   # Offer creation time
   createdAt: String
@@ -17468,7 +17471,7 @@ type Order {
   mode: OrderModeEnum!
 
   # List of offers for this order
-  offers: [Offer!]!
+  offers: [Offer!]
 
   # Payment method used for the order
   paymentMethod: OrderPaymentMethodEnum
