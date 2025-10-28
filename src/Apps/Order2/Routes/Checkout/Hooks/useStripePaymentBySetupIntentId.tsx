@@ -6,13 +6,16 @@ import { useEffect, useState } from "react"
 import { useRelayEnvironment } from "react-relay"
 import { useCheckoutContext } from "./useCheckoutContext"
 
-const logger = createLogger("useStripePaymentBySetupIntentId")
+const logger = createLogger("useHandleStripeRedirect")
 
 /*
  * Hook to handle Stripe redirect for newly-linked bank account in Order2
  * pulls necessary params from Stripe redirect URL and sets payment by intentId
  */
-export function useStripePaymentBySetupIntentId(orderId: string) {
+export function useHandleStripeRedirect(
+  orderId: string,
+  onComplete?: () => void,
+) {
   const { submitMutation: setPaymentByStripeIntentMutation } =
     useSetPaymentByStripeIntent()
   const { router } = useRouter()
@@ -26,49 +29,66 @@ export function useStripePaymentBySetupIntentId(orderId: string) {
   )
 
   useEffect(() => {
-    // pull necessary params from Stripe redirect URL
-    const urlParams = new URLSearchParams(window.location.search)
-    const setup_intent = urlParams.get("setup_intent")
-    const redirect_status = urlParams.get("redirect_status")
-    const save_bank_account = urlParams.get("save_bank_account")
-    const confirmation_token = urlParams.get("confirmation_token")
+    const handleRedirect = async () => {
+      // pull necessary params from Stripe redirect URL
+      const urlParams = new URLSearchParams(window.location.search)
+      const setup_intent = urlParams.get("setup_intent")
+      const redirect_status = urlParams.get("redirect_status")
+      const save_bank_account = urlParams.get("save_bank_account")
+      const confirmation_token = urlParams.get("confirmation_token")
 
-    // Convert string to boolean - URLSearchParams returns string "false" or "true"
-    const shouldSaveBankAccount = save_bank_account === "true"
-    const oneTimeUse = !shouldSaveBankAccount
-
-    if (setup_intent && redirect_status === "succeeded") {
-      setIsProcessingRedirect(true)
-
-      // Handle confirmation token from Stripe redirect
-      if (confirmation_token) {
-        fetchAndSetConfirmationToken(
-          confirmation_token,
-          environment,
-          setConfirmationToken,
-        )
+      // If no Stripe redirect params, call onComplete immediately
+      if (!setup_intent || redirect_status !== "succeeded") {
+        onComplete?.()
+        return
       }
 
-      // Call Exchange to save the bank account and trigger emails
-      setPaymentBySetupIntentId(setup_intent, oneTimeUse).finally(() => {
+      // Convert string to boolean - URLSearchParams returns string "false" or "true"
+      const shouldSaveBankAccount = save_bank_account === "true"
+      const oneTimeUse = !shouldSaveBankAccount
+
+      setIsProcessingRedirect(true)
+
+      try {
+        // Handle confirmation token from Stripe redirect
+        if (confirmation_token) {
+          fetchAndSetConfirmationToken(
+            confirmation_token,
+            environment,
+            setConfirmationToken,
+          )
+        }
+
+        // Call Exchange to save the bank account and trigger emails
+        await setPaymentBySetupIntentId(setup_intent, oneTimeUse)
+
+        // Mark payment as complete after successful Stripe redirect
+        // Note: Prior steps (offer, fulfillment, delivery) are already marked complete
+        // by initialStateForOrder based on order data
+        setPaymentComplete()
+
+        // Clean up URL parameters
+        const newUrl = new URL(window.location.href)
+        newUrl.searchParams.delete("setup_intent")
+        newUrl.searchParams.delete("setup_intent_client_secret")
+        newUrl.searchParams.delete("redirect_status")
+        newUrl.searchParams.delete("save_bank_account")
+        newUrl.searchParams.delete("confirmation_token")
+        router.replace(newUrl.pathname + newUrl.search)
+      } finally {
         setIsProcessingRedirect(false)
-      })
-
-      // Clean up URL parameters
-      const newUrl = new URL(window.location.href)
-      newUrl.searchParams.delete("setup_intent")
-      newUrl.searchParams.delete("setup_intent_client_secret")
-      newUrl.searchParams.delete("redirect_status")
-      newUrl.searchParams.delete("save_bank_account")
-      newUrl.searchParams.delete("confirmation_token")
-      router.replace(newUrl.pathname + newUrl.search)
-
-      // Mark payment as complete after successful Stripe redirect
-      // Note: Prior steps (offer, fulfillment, delivery) are already marked complete
-      // by initialStateForOrder based on order data
-      setPaymentComplete()
+        onComplete?.()
+      }
     }
-  }, [router, setConfirmationToken, setPaymentComplete, environment])
+
+    handleRedirect()
+  }, [
+    router,
+    setConfirmationToken,
+    setPaymentComplete,
+    environment,
+    onComplete,
+  ])
 
   const setPaymentBySetupIntentId = async (
     setupIntentId: string,
@@ -103,3 +123,6 @@ export function useStripePaymentBySetupIntentId(orderId: string) {
     paymentSetupError,
   }
 }
+
+// Backwards-compatible export with old name
+export const useStripePaymentBySetupIntentId = useHandleStripeRedirect

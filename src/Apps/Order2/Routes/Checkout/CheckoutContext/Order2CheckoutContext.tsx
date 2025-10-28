@@ -12,10 +12,10 @@ import {
 import {
   buildInitialSteps,
   isFulfillmentDetailsComplete,
-  isPaymentComplete,
 } from "Apps/Order2/Routes/Checkout/Utils/stepCompletionChecks"
 import type { CheckoutErrorBannerProps } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { useCheckoutTracking } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutTracking"
+import { useHandleStripeRedirect } from "Apps/Order2/Routes/Checkout/Hooks/useStripePaymentBySetupIntentId"
 import { useRouter } from "System/Hooks/useRouter"
 import { useCountdownTimer } from "Utils/Hooks/useCountdownTimer"
 import createLogger from "Utils/logger"
@@ -576,6 +576,12 @@ const CheckoutLoadingManager: React.FC<{
 }> = ({ orderData, partnerOffer, children }) => {
   const [minimumLoadingPassed, setMinimumLoadingPassed] = useState(false)
   const [orderValidated, setOrderValidated] = useState(false)
+  const [isStripeRedirectHandled, setIsStripeRedirectHandled] = useState(false)
+
+  // Handle Stripe redirect and call onComplete when done
+  useHandleStripeRedirect(orderData.internalID, () => {
+    setIsStripeRedirectHandled(true)
+  })
 
   const isExpressCheckoutLoaded = Order2CheckoutContext.useStoreState(state => {
     // Express Checkout is considered "loaded" if:
@@ -639,6 +645,7 @@ const CheckoutLoadingManager: React.FC<{
         orderValidated,
         isExpressCheckoutLoaded,
         isPartnerOfferLoadingComplete,
+        isStripeRedirectHandled,
         isLoading,
         setLoadingComplete,
       ].every(Boolean)
@@ -650,6 +657,7 @@ const CheckoutLoadingManager: React.FC<{
     orderValidated,
     isExpressCheckoutLoaded,
     isPartnerOfferLoadingComplete,
+    isStripeRedirectHandled,
     isLoading,
     setLoadingComplete,
   ])
