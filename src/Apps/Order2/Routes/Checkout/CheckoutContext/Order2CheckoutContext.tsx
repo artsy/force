@@ -15,7 +15,7 @@ import {
 } from "Apps/Order2/Routes/Checkout/Utils/stepCompletionChecks"
 import type { CheckoutErrorBannerProps } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { useCheckoutTracking } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutTracking"
-import { useHandleStripeRedirect } from "Apps/Order2/Routes/Checkout/Hooks/useStripePaymentBySetupIntentId"
+import { useHandleStripeRedirect } from "Apps/Order2/Routes/Checkout/Hooks/useHandleStripeRedirect"
 import { useRouter } from "System/Hooks/useRouter"
 import { useCountdownTimer } from "Utils/Hooks/useCountdownTimer"
 import createLogger from "Utils/logger"
