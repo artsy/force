@@ -12,7 +12,7 @@ const logger = createLogger("useHandleStripeRedirect")
  * Hook to handle Stripe redirect for newly-linked bank account in Order2
  * pulls necessary params from Stripe redirect URL and sets payment by intentId
  */
-export function useHandleStripeRedirect(
+export function useStripePaymentBySetupIntentId(
   orderId: string,
   onComplete?: () => void,
 ) {
