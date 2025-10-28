@@ -96,7 +96,7 @@ export const ArticleSectionVideoFragmentContainer = createFragmentContainer(
     section: graphql`
       fragment ArticleSectionVideo_section on ArticleSectionVideo {
         embed(autoPlay: true)
-        fallbackEmbed: embed(autoPlay: false)
+        fallbackEmbed: embed(autoPlay: true)
         image {
           cropped(width: 910, height: 512) {
             src

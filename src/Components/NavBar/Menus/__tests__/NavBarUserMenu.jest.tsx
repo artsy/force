@@ -49,7 +49,7 @@ describe("NavBarUserMenu", () => {
       ["/favorites/follows", "Follows"],
       ["/favorites/alerts", "Alerts"],
       ["/settings/edit-profile", "Settings"],
-      ["/settings/purchases", "Order History"],
+      ["/settings/orders", "Order History"],
     ])
 
     const lastButton = buttons[buttons.length - 1]

@@ -71,7 +71,7 @@
     "sha.js": "^2.4.12"
   },
   "dependencies": {
-    "@artsy/cohesion": "4.311.0",
+    "@artsy/cohesion": "4.312.0",
     "@artsy/commerce_helpers": "artsy/commerce_helpers",
     "@artsy/detect-responsive-traits": "^0.1.0",
     "@artsy/dismissible": "^0.4.1",
@@ -80,8 +80,8 @@
     "@artsy/icons": "3.52.0",
     "@artsy/img": "1.0.3",
     "@artsy/multienv": "^1.2.0",
-    "@artsy/palette": "45.1.0",
-    "@artsy/palette-charts": "44.1.0",
+    "@artsy/palette": "45.2.0",
+    "@artsy/palette-charts": "44.2.0",
     "@artsy/palette-tokens": "7.1.0",
     "@artsy/react-html-parser": "^3.0.2",
     "@artsy/xapp": "2.0.0",
