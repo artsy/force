@@ -1,7 +1,7 @@
 import { Skeleton, Spacer } from "@artsy/palette"
 import { OrderStepperFragmentContainer } from "./OrderStepper"
 import { TwoColumnLayout } from "./TwoColumnLayout"
-import { useEffect, useState } from "react"
+import { useDidMount } from "Utils/Hooks/useDidMount"
 
 export const OrderRouteContainer = ({
   order,
@@ -10,17 +10,11 @@ export const OrderRouteContainer = ({
   content,
   sidebar,
 }) => {
-  const [isStepperReady, setIsStepperReady] = useState(false)
-
-  useEffect(() => {
-    // Let the stepper render and calculate its layout before showing it
-    const timer = setTimeout(() => setIsStepperReady(true), 0)
-    return () => clearTimeout(timer)
-  }, [])
+  const isMounted = useDidMount()
 
   return (
     <>
-      {isStepperReady ? (
+      {isMounted ? (
         <OrderStepperFragmentContainer
           order={order}
           currentStep={currentStep}
