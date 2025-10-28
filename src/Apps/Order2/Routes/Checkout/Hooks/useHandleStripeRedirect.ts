@@ -123,6 +123,3 @@ export function useHandleStripeRedirect(
     paymentSetupError,
   }
 }
-
-// Backwards-compatible export with old name
-export const useStripePaymentBySetupIntentId = useHandleStripeRedirect
