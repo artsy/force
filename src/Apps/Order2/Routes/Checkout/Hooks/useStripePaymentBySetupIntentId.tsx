@@ -1,8 +1,9 @@
 import { useSetPaymentByStripeIntent } from "Apps/Order/Mutations/useSetPaymentByStripeIntentMutation"
+import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { fetchAndSetConfirmationToken } from "Apps/Order2/Utils/confirmationTokenUtils"
 import { useRouter } from "System/Hooks/useRouter"
 import createLogger from "Utils/logger"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { useRelayEnvironment } from "react-relay"
 import { useCheckoutContext } from "./useCheckoutContext"
 
@@ -12,21 +13,16 @@ const logger = createLogger("useHandleStripeRedirect")
  * Hook to handle Stripe redirect for newly-linked bank account in Order2
  * pulls necessary params from Stripe redirect URL and sets payment by intentId
  */
-export function useHandleStripeRedirect(
+export function useStripePaymentBySetupIntentId(
   orderId: string,
-  onComplete?: () => void,
+  onComplete: () => void,
 ) {
   const { submitMutation: setPaymentByStripeIntentMutation } =
     useSetPaymentByStripeIntent()
   const { router } = useRouter()
   const environment = useRelayEnvironment()
-  const { setConfirmationToken, setPaymentComplete } = useCheckoutContext()
-  const [isProcessingRedirect, setIsProcessingRedirect] = useState(false)
-  const [isPaymentSetupSuccessful, setIsPaymentSetupSuccessful] =
-    useState(false)
-  const [paymentSetupError, setPaymentSetupError] = useState<null | object>(
-    null,
-  )
+  const { setConfirmationToken, setPaymentComplete, setStepErrorMessage } =
+    useCheckoutContext()
 
   useEffect(() => {
     const handleRedirect = async () => {
@@ -39,15 +35,13 @@ export function useHandleStripeRedirect(
 
       // If no Stripe redirect params, call onComplete immediately
       if (!setup_intent || redirect_status !== "succeeded") {
-        onComplete?.()
+        onComplete()
         return
       }
 
       // Convert string to boolean - URLSearchParams returns string "false" or "true"
       const shouldSaveBankAccount = save_bank_account === "true"
       const oneTimeUse = !shouldSaveBankAccount
-
-      setIsProcessingRedirect(true)
 
       try {
         // Handle confirmation token from Stripe redirect
@@ -76,7 +70,6 @@ export function useHandleStripeRedirect(
         newUrl.searchParams.delete("confirmation_token")
         router.replace(newUrl.pathname + newUrl.search)
       } finally {
-        setIsProcessingRedirect(false)
         onComplete?.()
       }
     }
@@ -108,18 +101,20 @@ export function useHandleStripeRedirect(
       ).commerceSetPaymentByStripeIntent?.orderOrError
 
       if (orderOrError?.error) throw orderOrError.error
-      setIsPaymentSetupSuccessful(true)
+
       logger.log("Successfully set payment by setup intent")
     } catch (error) {
-      setIsPaymentSetupSuccessful(false)
-      setPaymentSetupError(error)
       logger.error("Failed to set payment by setup intent:", error)
+      // TODO: placeholder message
+      setStepErrorMessage({
+        step: CheckoutStepName.PAYMENT,
+        error: {
+          title: "Payment could not be processed",
+          message:
+            "Please try again or use a different payment method to complete your purchase.",
+        },
+      })
+      onComplete()
     }
-  }
-
-  return {
-    isProcessingRedirect,
-    isPaymentSetupSuccessful,
-    paymentSetupError,
   }
 }

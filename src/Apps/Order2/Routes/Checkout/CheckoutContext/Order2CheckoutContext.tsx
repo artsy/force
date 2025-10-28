@@ -9,13 +9,13 @@ import {
   CheckoutStepName,
   CheckoutStepState,
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
+import type { CheckoutErrorBannerProps } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
+import { useCheckoutTracking } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutTracking"
+import { useStripePaymentBySetupIntentId } from "Apps/Order2/Routes/Checkout/Hooks/useStripePaymentBySetupIntentId"
 import {
   buildInitialSteps,
   isFulfillmentDetailsComplete,
 } from "Apps/Order2/Routes/Checkout/Utils/stepCompletionChecks"
-import type { CheckoutErrorBannerProps } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
-import { useCheckoutTracking } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutTracking"
-import { useHandleStripeRedirect } from "Apps/Order2/Routes/Checkout/Hooks/useHandleStripeRedirect"
 import { useRouter } from "System/Hooks/useRouter"
 import { useCountdownTimer } from "Utils/Hooks/useCountdownTimer"
 import createLogger from "Utils/logger"
@@ -579,7 +579,7 @@ const CheckoutLoadingManager: React.FC<{
   const [isStripeRedirectHandled, setIsStripeRedirectHandled] = useState(false)
 
   // Handle Stripe redirect and call onComplete when done
-  useHandleStripeRedirect(orderData.internalID, () => {
+  useStripePaymentBySetupIntentId(orderData.internalID, () => {
     setIsStripeRedirectHandled(true)
   })
 
