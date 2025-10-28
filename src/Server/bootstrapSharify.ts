@@ -99,6 +99,8 @@ export const bootstrapSharify = () => {
       "VOLLEY_ENDPOINT",
       "WEBFONT_URL",
       "X_THEME_HEADER",
+      "FEATURE_FLAGS",
+      "FEATURE_VARIANTS",
     ),
   )
 

@@ -152,9 +152,6 @@ export const artistRoutes: RouteProps[] = [
           const context = match.context
           const isExperiment =
             context.featureFlags.isEnabled(COMBINED_LAYOUT_FLAG)
-          console.log("-----")
-          console.log("Experiment enabled (getComponent):", isExperiment)
-          console.log("-----")
           return isExperiment ? CombinedRoute : WorksForSaleRoute
         },
         onServerSideRender: redirectWithCanonicalParams,
@@ -165,9 +162,6 @@ export const artistRoutes: RouteProps[] = [
         prepareVariables: (params, props) => {
           const isExperiment =
             props.context.featureFlags.isEnabled(COMBINED_LAYOUT_FLAG)
-          console.log("-----")
-          console.log("Experiment enabled (prepareVariables):", isExperiment)
-          console.log("-----")
 
           const worksForSaleVariables = getWorksForSaleRouteVariables(
             params,

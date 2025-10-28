@@ -45,6 +45,10 @@ app.get(
       sessionId: req.session.id, // res.locals.sd.SESSION_ID
     }
 
+    // Create a cache for feature flag evaluations to ensure consistency
+    const featureFlagCache = new Map<string, boolean>()
+    const variantCache = new Map<string, any>()
+
     try {
       const { status, redirect, ...rest } = await setupServerRouter({
         next,
@@ -53,10 +57,26 @@ app.get(
         routes,
         context: {
           featureFlags: {
-            isEnabled: (flag: string) =>
-              unleashClient.isEnabled(flag, unleashContext),
-            getVariant: (flag: string) =>
-              unleashClient.getVariant(flag, unleashContext),
+            isEnabled: (flag: string) => {
+              // Check cache first
+              if (featureFlagCache.has(flag)) {
+                return featureFlagCache.get(flag)!
+              }
+              // Evaluate and cache
+              const isEnabled = unleashClient.isEnabled(flag, unleashContext)
+              featureFlagCache.set(flag, isEnabled)
+              return isEnabled
+            },
+            getVariant: (flag: string) => {
+              // Check cache first
+              if (variantCache.has(flag)) {
+                return variantCache.get(flag)
+              }
+              // Evaluate and cache
+              const variant = unleashClient.getVariant(flag, unleashContext)
+              variantCache.set(flag, variant)
+              return variant
+            },
           },
         },
       })
@@ -65,6 +85,10 @@ app.get(
         res.redirect(status ?? 302, redirect.url)
         return
       }
+
+      // Pass feature flag evaluations to client via sharify
+      res.locals.sd.FEATURE_FLAGS = Object.fromEntries(featureFlagCache)
+      res.locals.sd.FEATURE_VARIANTS = Object.fromEntries(variantCache)
 
       renderServerApp({ req, res, ...rest })
     } catch (error) {
