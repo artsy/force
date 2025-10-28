@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<36bd86475f138be8d01a611b0de30522>>
+ * @generated SignedSource<<d0a23151377d42cfbf20a9c9376e112b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -60,7 +60,7 @@ export type Order2ReviewStep_order$data = {
   readonly mode: OrderModeEnum;
   readonly offers: ReadonlyArray<{
     readonly internalID: string;
-  }>;
+  }> | null | undefined;
   readonly shippingTotal: {
     readonly display: string | null | undefined;
   } | null | undefined;
