@@ -57,7 +57,7 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
   } = useCheckoutContext()
 
   // Handle Stripe redirect for bank account setup
-  useStripePaymentBySetupIntentId(orderData.internalID, orderData)
+  useStripePaymentBySetupIntentId(orderData.internalID)
   if (!order) {
     return <ErrorPage code={404} message="Order not found" />
   }
