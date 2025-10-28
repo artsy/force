@@ -88,7 +88,6 @@ describe("stepCompletionChecks", () => {
     it("returns false when fulfillment details is null", () => {
       expect(
         isFulfillmentDetailsComplete({
-          selectedFulfillmentOption: null,
           fulfillmentDetails: null,
         }),
       ).toBe(false)
@@ -97,7 +96,6 @@ describe("stepCompletionChecks", () => {
     it("returns false when fulfillment details is undefined", () => {
       expect(
         isFulfillmentDetailsComplete({
-          selectedFulfillmentOption: { type: "PICKUP" },
           fulfillmentDetails: undefined,
         }),
       ).toBe(false)
@@ -106,7 +104,6 @@ describe("stepCompletionChecks", () => {
     it("returns false when fulfillment details is empty object", () => {
       expect(
         isFulfillmentDetailsComplete({
-          selectedFulfillmentOption: { type: "PICKUP" },
           fulfillmentDetails: {},
         }),
       ).toBe(false)
@@ -115,7 +112,6 @@ describe("stepCompletionChecks", () => {
     it("returns true when fulfillment details has any data (phone number)", () => {
       expect(
         isFulfillmentDetailsComplete({
-          selectedFulfillmentOption: { type: "PICKUP" },
           fulfillmentDetails: {
             phoneNumber: {
               originalNumber: "1234567890",
@@ -128,7 +124,6 @@ describe("stepCompletionChecks", () => {
     it("returns true when fulfillment details has any data (address)", () => {
       expect(
         isFulfillmentDetailsComplete({
-          selectedFulfillmentOption: { type: "ARTSY_STANDARD" },
           fulfillmentDetails: {
             addressLine1: "123 Main St",
             city: "New York",
@@ -143,7 +138,6 @@ describe("stepCompletionChecks", () => {
     it("returns true when fulfillment details has partial data", () => {
       expect(
         isFulfillmentDetailsComplete({
-          selectedFulfillmentOption: { type: "ARTSY_STANDARD" },
           fulfillmentDetails: {
             addressLine1: "123 Main St",
           },
