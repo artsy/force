@@ -9,8 +9,9 @@ import { enableArtistPageCTA } from "./Server/enableArtistPageCTA"
 import { redirectWithCanonicalParams } from "./Server/redirect"
 import { allowedAuctionResultFilters } from "./Utils/allowedAuctionResultFilters"
 
-// A/B Test: artist-combined-layout
+// A/B Test: diamond_artist-combined-layout
 // When enabled, renders the combined layout for all artist page routes
+const COMBINED_LAYOUT_FLAG = "diamond_artist-combined-layout"
 
 const ArtistApp = loadable(
   () => import(/* webpackChunkName: "artistBundle" */ "./ArtistApp"),
@@ -147,10 +148,13 @@ export const artistRoutes: RouteProps[] = [
       },
       {
         path: "",
-        getComponent: ({ context }) => {
-          const isExperiment = context.featureFlags.isEnabled(
-            "artist-combined-layout",
-          )
+        getComponent: match => {
+          const context = match.context
+          const isExperiment =
+            context.featureFlags.isEnabled(COMBINED_LAYOUT_FLAG)
+          console.log("-----")
+          console.log("Experiment enabled (getComponent):", isExperiment)
+          console.log("-----")
           return isExperiment ? CombinedRoute : WorksForSaleRoute
         },
         onServerSideRender: redirectWithCanonicalParams,
@@ -159,9 +163,12 @@ export const artistRoutes: RouteProps[] = [
           CombinedRoute.preload()
         },
         prepareVariables: (params, props) => {
-          const isExperiment = props.context.featureFlags.isEnabled(
-            "artist-combined-layout",
-          )
+          const isExperiment =
+            props.context.featureFlags.isEnabled(COMBINED_LAYOUT_FLAG)
+          console.log("-----")
+          console.log("Experiment enabled (prepareVariables):", isExperiment)
+          console.log("-----")
+
           const worksForSaleVariables = getWorksForSaleRouteVariables(
             params,
             props,
@@ -188,9 +195,8 @@ export const artistRoutes: RouteProps[] = [
       {
         path: "auction-results",
         getComponent: ({ context }) => {
-          const isExperiment = context.featureFlags.isEnabled(
-            "artist-combined-layout",
-          )
+          const isExperiment =
+            context.featureFlags.isEnabled(COMBINED_LAYOUT_FLAG)
           return isExperiment ? CombinedRoute : AuctionResultsRoute
         },
         onPreloadJS: () => {
@@ -198,9 +204,8 @@ export const artistRoutes: RouteProps[] = [
           CombinedRoute.preload()
         },
         prepareVariables: ({ artistID }, props) => {
-          const isExperiment = props.context.featureFlags.isEnabled(
-            "artist-combined-layout",
-          )
+          const isExperiment =
+            props.context.featureFlags.isEnabled(COMBINED_LAYOUT_FLAG)
           const urlFilterState = paramsToCamelCase(
             props.location ? props.location.query : {},
           )
@@ -257,9 +262,8 @@ export const artistRoutes: RouteProps[] = [
       {
         path: "about",
         getComponent: ({ context }) => {
-          const isExperiment = context.featureFlags.isEnabled(
-            "artist-combined-layout",
-          )
+          const isExperiment =
+            context.featureFlags.isEnabled(COMBINED_LAYOUT_FLAG)
           return isExperiment ? CombinedRoute : OverviewRoute
         },
         onServerSideRender: enableArtistPageCTA,
@@ -268,9 +272,8 @@ export const artistRoutes: RouteProps[] = [
           CombinedRoute.preload()
         },
         prepareVariables: ({ artistID }, props) => {
-          const isExperiment = props.context.featureFlags.isEnabled(
-            "artist-combined-layout",
-          )
+          const isExperiment =
+            props.context.featureFlags.isEnabled(COMBINED_LAYOUT_FLAG)
           return {
             artistID,
             includeCombinedFragment: isExperiment,

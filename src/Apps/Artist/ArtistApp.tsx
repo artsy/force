@@ -1,4 +1,5 @@
 import { Spacer } from "@artsy/palette"
+import { useFlag } from "@unleash/proxy-client-react"
 import { RouteTab, RouteTabs } from "Components/RouteTabs"
 import { Analytics } from "System/Contexts/AnalyticsContext"
 import { useIsRouteActive } from "System/Hooks/useRouter"
@@ -19,7 +20,9 @@ const ArtistApp: React.FC<React.PropsWithChildren<ArtistAppProps>> = ({
 }) => {
   useScrollToOpenArtistAuthModal({ name: artist.name })
 
-  const isCombinedPage = useIsRouteActive(`/artist/${artist.slug}/combined`)
+  const isCombinedRoute = useIsRouteActive(`/artist/${artist.slug}/combined`)
+  const isExperimentEnabled = useFlag("diamond_artist-combined-layout")
+  const isCombinedPage = isCombinedRoute || isExperimentEnabled
 
   return (
     <>
