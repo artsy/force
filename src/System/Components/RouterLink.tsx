@@ -6,7 +6,7 @@ import { useRouter } from "System/Hooks/useRouter"
 import { useIntersectionObserver } from "Utils/Hooks/useIntersectionObserver"
 import { Link, type LinkPropsSimple } from "found"
 import * as React from "react"
-import { useMemo } from "react"
+import { useMemo, useState } from "react"
 import styled from "styled-components"
 import { type ResponsiveValue, compose, system } from "styled-system"
 
@@ -37,12 +37,35 @@ export const RouterLink: React.FC<
 > = React.forwardRef(({ inline, to, enablePrefetch = true, ...rest }, _ref) => {
   const { router } = useRouter()
 
-  // When a prefetch is completed, propagate that in the router state.
-  const [isPrefetched, setIsPrefetched] = React.useState(false)
+  const [isPrefetched, setIsPrefetched] = useState(false)
+
   const { prefetch } = usePrefetchRoute({
     initialPath: to as string,
-    onComplete: () => setIsPrefetched(true),
+    onComplete: () => {
+      // When a prefetch is completed, propagate that in the router state.
+      setIsPrefetched(true)
+    },
   })
+
+  const { ref: intersectionRef } = useIntersectionObserver({
+    once: true,
+    options: {
+      threshold: 0.2,
+    },
+    onIntersection: () => {
+      if (enablePrefetch) {
+        // Prefetch when link scrolls into viewport
+        prefetch()
+      }
+    },
+  })
+
+  const handleMouseOver = () => {
+    if (enablePrefetch) {
+      // Prefetch on hover
+      prefetch()
+    }
+  }
 
   const routes = router?.matcher?.routeConfig ?? []
   const matcher = router?.matcher
@@ -55,24 +78,6 @@ export const RouterLink: React.FC<
   // If displaying the linked URL in the same browsing context, e.g. browser tab.
   const isSameBrowsingContext = !rest.target || rest.target === "_self"
   const isRouterAware = isSupportedInRouter && isSameBrowsingContext
-
-  const { ref: intersectionRef } = useIntersectionObserver({
-    once: true,
-    options: {
-      threshold: 0.2,
-    },
-    onIntersection: () => {
-      if (enablePrefetch) {
-        prefetch()
-      }
-    },
-  })
-
-  const handleMouseOver = () => {
-    if (enablePrefetch) {
-      prefetch()
-    }
-  }
 
   const location = router?.createLocation?.((to as string) ?? "") ?? {
     pathname: to,
