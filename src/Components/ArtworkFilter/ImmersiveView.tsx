@@ -54,9 +54,28 @@ export const ImmersiveView: React.FC<ImmersiveViewProps> = props => {
   const nextArtwork = artworks[currentIndex + 1]
   const prevArtwork = artworks[currentIndex - 1]
 
-  const currentImageSrc = currentArtwork?.image?.url as string
-  const nextImageSrc = nextArtwork?.image?.url as string
-  const prevImageSrc = prevArtwork?.image?.url as string
+  const currentImageSrc = currentArtwork?.image?.resized?.url as string
+  const nextImageSrc = nextArtwork?.image?.resized?.url as string
+  const prevImageSrc = prevArtwork?.image?.resized?.url as string
+
+  const currentImageSrcSet = currentArtwork?.image?.resized?.srcSet as string
+  const nextImageSrcSet = nextArtwork?.image?.resized?.srcSet as string
+  const prevImageSrcSet = prevArtwork?.image?.resized?.srcSet as string
+
+  console.log(
+    JSON.stringify(
+      {
+        currentImageSrc,
+        nextImageSrc,
+        prevImageSrc,
+        currentImageSrcSet,
+        nextImageSrcSet,
+        prevImageSrcSet,
+      },
+      null,
+      4,
+    ),
+  )
 
   const isArtworkMissing = !currentArtwork || !currentImageSrc
 
@@ -195,6 +214,12 @@ export const ImmersiveView: React.FC<ImmersiveViewProps> = props => {
         {/* Prefetch prev/next image using link tags */}
         {nextImageSrc && <Link rel="prefetch" href={nextImageSrc} as="image" />}
         {prevImageSrc && <Link rel="prefetch" href={prevImageSrc} as="image" />}
+        {nextImageSrcSet && (
+          <Link rel="prefetch" href={nextImageSrcSet} as="image" />
+        )}
+        {prevImageSrcSet && (
+          <Link rel="prefetch" href={prevImageSrcSet} as="image" />
+        )}
 
         <div className="immersive-view" data-testid="immersive-view">
           <Button
@@ -237,7 +262,8 @@ export const ImmersiveView: React.FC<ImmersiveViewProps> = props => {
 
                 <Image
                   data-testid="immersive-view-image"
-                  src={currentImageSrc}
+                  // src={currentImageSrc}
+                  srcSet={currentImageSrcSet}
                   alt={currentArtwork.formattedMetadata ?? "…"}
                   style={{
                     height: "85vh",
@@ -278,6 +304,18 @@ const FRAGMENT = graphql`
           aspectRatio
           blurhash
           url(version: ["main", "larger", "large"])
+          resized(
+            width: 2000
+            height: 2000
+            version: ["main", "larger", "large"]
+            quality: 85
+          ) {
+            height
+            src
+            srcSet
+            url
+            width
+          }
         }
       }
     }
