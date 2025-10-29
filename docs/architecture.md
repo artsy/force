@@ -233,9 +233,10 @@ graph LR
     C --> C4[React Mount Point]
 ```
 
-## Streaming SSR
+<details>
+<summary>Streaming SSR (Disabled/Experimental)</summary>
 
-When enabled (`ENABLE_SSR_STREAMING`), the application supports streaming server-side rendering:
+When enabled (`ENABLE_SSR_STREAMING`), the application supports streaming server-side rendering. This feature is currently disabled and considered experimental.
 
 ```mermaid
 sequenceDiagram
@@ -253,6 +254,8 @@ sequenceDiagram
     React->>Stream: Complete rendering
     Stream->>Client: Send closing tags
 ```
+
+</details>
 
 ## Configuration & Environment
 
@@ -272,5 +275,9 @@ Error handling occurs at multiple layers:
 2. **Middleware level**: Error handler middleware
 3. **React level**: Error boundaries in Boot component
 4. **Relay level**: Network and GraphQL error middleware
+
+## Cache Flow Architecture
+
+For detailed information about Force's caching architecture, see [architecture-caching.md](./architecture-caching.md).
 
 This architecture ensures robust request processing from initial server boot through final HTML delivery to the client, with comprehensive caching, authentication, and rendering capabilities.
