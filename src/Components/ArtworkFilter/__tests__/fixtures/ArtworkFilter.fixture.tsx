@@ -91,6 +91,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             slug: "artwork-1",
             internalID: "yyy123",
             formattedMetadata: "Artwork 1",
+            // @ts-ignore
             image: {
               aspectRatio: 1,
               blurhash: "H4$#",
@@ -145,6 +146,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             slug: "artwork-2",
             internalID: "zzz123",
             formattedMetadata: "Artwork 2",
+            // @ts-ignore
             image: {
               aspectRatio: 1,
               blurhash: "H4$#",
@@ -199,6 +201,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             slug: "artwork-3",
             internalID: "xxx123",
             formattedMetadata: "Artwork 3",
+            // @ts-ignore
             image: {
               aspectRatio: 1,
               blurhash: "H4$#",
