@@ -14190,6 +14190,9 @@ type Image {
   # An optional type-specific ID.
   internalID: ID
   isDefault: Boolean
+
+  # Indicates whether the image is currently being processed.
+  isProcessing: Boolean!
   isZoomable: Boolean
   maxTiledHeight: Int
   maxTiledWidth: Int
@@ -14202,6 +14205,9 @@ type Image {
 
   # Order position of the image, within the images array of the artwork. (1-indexed)
   position: Int
+
+  # Indicates whether image processing has failed.
+  processingFailed: Boolean!
   resized(
     height: Int
 
