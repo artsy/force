@@ -22,6 +22,7 @@ jest.mock("Utils/Hooks/useMatchMedia", () => ({
 }))
 jest.mock("System/Hooks/useRouter", () => ({
   useRouter: jest.fn(),
+  useIsRouteActive: jest.fn(),
 }))
 jest.mock("Components/AuthDialog/useAuthDialog", () => ({
   useAuthDialog: jest.fn().mockReturnValue({ showAuthDialog: jest.fn() }),
@@ -89,7 +90,7 @@ describe("AuctionResults", () => {
       renderWithRelay(mockedResolver)
 
       const links = screen.getAllByRole("link")
-      expect(links).toHaveLength(10)
+      expect(links).toHaveLength(13)
 
       fireEvent.click(links[4])
       expect(showAuthDialog).toHaveBeenCalledTimes(1)
@@ -142,7 +143,7 @@ describe("AuctionResults", () => {
       expect(screen.getByText("5 results")).toBeInTheDocument()
 
       const links = screen.getAllByRole("link")
-      expect(links).toHaveLength(10)
+      expect(links).toHaveLength(13)
 
       // The sort is now a button with dropdown (not a combobox)
       expect(

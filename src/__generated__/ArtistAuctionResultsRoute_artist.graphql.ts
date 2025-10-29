@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<dbd234352a85b3b91e7077f185278fba>>
+ * @generated SignedSource<<69c42928d9109ac80b91bb40c0dd2e61>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -24,6 +24,7 @@ export type ArtistAuctionResultsRoute_artist$data = {
     } | null | undefined> | null | undefined;
     readonly totalCount: number | null | undefined;
   } | null | undefined;
+  readonly slug: string;
   readonly " $fragmentSpreads": FragmentRefs<"ArtistAuctionResults_artist">;
   readonly " $fragmentType": "ArtistAuctionResultsRoute_artist";
 };
@@ -203,6 +204,13 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "slug",
+      "storageKey": null
+    },
+    {
       "alias": "sidebarAggregations",
       "args": [
         {
@@ -286,6 +294,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "a4c1113a1149ead15919983b81991996";
+(node as any).hash = "1ea295cc5cc4a21b4a3e6a5e42aa2435";
 
 export default node;
