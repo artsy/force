@@ -20,6 +20,7 @@ import {
   type Location,
   LocationAutocompleteInput,
   normalizePlace,
+  type Place,
 } from "Components/LocationAutocompleteInput"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
@@ -30,11 +31,20 @@ import type { InquiryBasicInfo_me$data } from "__generated__/InquiryBasicInfo_me
 import { Form, Formik } from "formik"
 import { type Environment, createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
+import * as Yup from "yup"
 
 interface InquiryBasicInfoProps {
   artwork: InquiryBasicInfo_artwork$data
   me: InquiryBasicInfo_me$data | null | undefined
 }
+
+const inquiryBasicInfoValidationSchema = Yup.object().shape({
+  locationSelected: Yup.boolean().test(
+    "location-selected",
+    "Please select a city from the dropdown",
+    value => value === true,
+  ),
+})
 
 const InquiryBasicInfo: React.FC<
   React.PropsWithChildren<InquiryBasicInfoProps>
@@ -113,11 +123,23 @@ const InquiryBasicInfo: React.FC<
       initialValues={{
         name: me?.name ?? "",
         location: me?.location ?? {},
+        locationSelected: true,
         profession: me?.profession ?? "",
         otherRelevantPositions: me?.otherRelevantPositions ?? "",
       }}
+      validationSchema={inquiryBasicInfoValidationSchema}
+      validateOnBlur
     >
-      {({ values, setFieldValue, handleChange, handleBlur, isSubmitting }) => {
+      {({
+        values,
+        setFieldValue,
+        setFieldTouched,
+        handleChange,
+        handleBlur,
+        isSubmitting,
+        errors,
+        touched,
+      }) => {
         return (
           <Stack as={Form} gap={4}>
             <Stack gap={2}>
@@ -143,8 +165,18 @@ const InquiryBasicInfo: React.FC<
                 maxLength={256}
                 spellCheck={false}
                 defaultValue={me?.location?.display ?? ""}
+                error={touched.locationSelected && errors.locationSelected}
+                onSelect={(place?: Place) => {
+                  const normalized = normalizePlace(place, false)
+                  setFieldValue("location", normalized)
+                  setFieldValue("locationSelected", true)
+                  setFieldTouched("locationSelected", false)
+                }}
                 onChange={place => {
-                  setFieldValue("location", normalizePlace(place))
+                  setFieldValue("locationSelected", false)
+                }}
+                onBlur={() => {
+                  setFieldTouched("locationSelected", true, true)
                 }}
               />
 
@@ -273,6 +305,7 @@ export const InquiryBasicInfoQueryRenderer: React.FC<
 interface InquiryBasicInfoInput {
   name: string
   location: Location
+  locationSelected: boolean
   profession: string
   otherRelevantPositions: string
 }
