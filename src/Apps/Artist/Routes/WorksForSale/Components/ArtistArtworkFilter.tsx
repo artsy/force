@@ -2,6 +2,7 @@ import { OwnerType } from "@artsy/cohesion"
 import { ArtistMediumsTitle } from "Apps/Artist/Routes/WorksForSale/Components/ArtistMediumsTitle"
 import { ArtistWorksForSaleEmptyFragmentContainer } from "Apps/Artist/Routes/WorksForSale/Components/ArtistWorksForSaleEmpty"
 import { getWorksForSaleRouteVariables } from "Apps/Artist/Routes/WorksForSale/Utils/getWorksForSaleRouteVariables"
+import { useSectionReady } from "Apps/Artist/Routes/WorksForSale/Utils/useSectionReadiness"
 import { BaseArtworkFilter } from "Components/ArtworkFilter"
 import { ArtworkFilterAlertContextProvider } from "Components/ArtworkFilter/ArtworkFilterAlertContextProvider"
 import {
@@ -19,7 +20,7 @@ import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import type { ArtistArtworkFilterQueryRendererQuery } from "__generated__/ArtistArtworkFilterQueryRendererQuery.graphql"
 import type { ArtistArtworkFilter_artist$data } from "__generated__/ArtistArtworkFilter_artist.graphql"
 import type { Match } from "found"
-import type { FC } from "react"
+import { type FC, useRef } from "react"
 import {
   type RelayRefetchProp,
   createRefetchContainer,
@@ -157,12 +158,14 @@ export const ArtistArtworkFilterRefetchContainer = createRefetchContainer(
 type ArtistArtworkFilterQueryRendererProps = {
   id: string
   lazyLoad?: boolean
+  onReady?: () => void
 }
 
 export const ArtistArtworkFilterQueryRenderer: FC<
   ArtistArtworkFilterQueryRendererProps
-> = ({ id, lazyLoad }) => {
+> = ({ id, lazyLoad, onReady }) => {
   const { match } = useRouter()
+  const { handleReady } = useSectionReady({ onReady })
 
   return (
     <SystemQueryRenderer<ArtistArtworkFilterQueryRendererQuery>
@@ -216,6 +219,8 @@ export const ArtistArtworkFilterQueryRenderer: FC<
         if (!props || !props.artist) {
           return <ArtworkFilterPlaceholder showCreateAlert />
         }
+
+        handleReady()
 
         const { artist } = props
 

@@ -7,6 +7,7 @@ import {
 } from "Apps/Artist/Routes/AuctionResults/ArtistAuctionResultsFilterNav"
 import { ArtistAuctionResultsExpandableSort } from "Apps/Artist/Routes/AuctionResults/Components/ArtistAuctionResultsExpandableSort"
 import { initialAuctionResultsFilterState } from "Apps/Artist/Routes/AuctionResults/initialAuctionResultsFilterState"
+import { useSectionReady } from "Apps/Artist/Routes/WorksForSale/Utils/useSectionReadiness"
 import { allowedAuctionResultFilters } from "Apps/Artist/Utils/allowedAuctionResultFilters"
 import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/paramsCasing"
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
@@ -541,12 +542,14 @@ type ArtistAuctionResultsQueryRendererProps = {
   id: string
   lazyLoad?: boolean
   truncate?: boolean
+  onReady?: () => void
 }
 
 export const ArtistAuctionResultsQueryRenderer: React.FC<
   ArtistAuctionResultsQueryRendererProps
-> = ({ id, lazyLoad, truncate = false }) => {
+> = ({ id, lazyLoad, truncate = false, onReady }) => {
   const { match } = useRouter()
+  const { handleReady } = useSectionReady({ onReady })
 
   const urlFilterState = paramsToCamelCase(match?.location.query ?? {})
   const initialInput = {
@@ -646,6 +649,8 @@ export const ArtistAuctionResultsQueryRenderer: React.FC<
         if (!props || !props.artist) {
           return null
         }
+
+        handleReady()
 
         const { artist } = props
 

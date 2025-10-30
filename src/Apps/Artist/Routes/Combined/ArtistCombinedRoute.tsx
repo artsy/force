@@ -1,4 +1,4 @@
-import { BaseTab, Separator, Spacer, Text } from "@artsy/palette"
+import { BaseTab, Clickable, Separator, Spacer, Text } from "@artsy/palette"
 import {
   ArtistAuctionResultsQueryRenderer,
   useScrollToTopOfAuctionResults,
@@ -6,6 +6,7 @@ import {
 import { MarketStatsQueryRenderer } from "Apps/Artist/Routes/AuctionResults/Components/MarketStats"
 import { ArtistOverviewQueryRenderer } from "Apps/Artist/Routes/Overview/Components/ArtistOverview"
 import { ArtistArtworkFilterQueryRenderer } from "Apps/Artist/Routes/WorksForSale/Components/ArtistArtworkFilter"
+import { useSectionReadiness } from "Apps/Artist/Routes/WorksForSale/Utils/useSectionReadiness"
 import { RouteTabs } from "Components/RouteTabs"
 import { Jump, useJump } from "Utils/Hooks/useJump"
 import type { ArtistCombinedRoute_artist$data } from "__generated__/ArtistCombinedRoute_artist.graphql"
@@ -24,21 +25,49 @@ const ArtistCombinedRoute: React.FC<
 
   const { jumpTo } = useJump()
 
+  const { lazy, markReady, waitUntil, navigating } = useSectionReadiness([
+    "artworks",
+    "market",
+    "auction",
+    "about",
+  ])
+
   return (
     <>
       {/* Temporarily hide from search engines */}
       <Meta name="robots" content="noindex, nofollow" />
 
       <RouteTabs data-test="navigationTabs">
-        <BaseTab onClick={() => jumpTo("artistArtworksTop", { offset: 40 })}>
+        <BaseTab
+          as={Clickable}
+          disabled={navigating.artworks}
+          onClick={async () => {
+            // No prior sections; just jump.
+            jumpTo("artistArtworksTop", { offset: 40 })
+          }}
+        >
           Artworks
         </BaseTab>
 
-        <BaseTab onClick={() => jumpTo("marketSignalsTop", { offset: 40 })}>
+        <BaseTab
+          as={Clickable}
+          disabled={navigating.auction}
+          onClick={async () => {
+            await waitUntil("auction")
+            jumpTo("marketSignalsTop", { offset: 40 })
+          }}
+        >
           Auction Results
         </BaseTab>
 
-        <BaseTab onClick={() => jumpTo("artistAboutTop", { offset: 40 })}>
+        <BaseTab
+          as={Clickable}
+          disabled={navigating.about}
+          onClick={async () => {
+            await waitUntil("about")
+            jumpTo("artistAboutTop", { offset: 40 })
+          }}
+        >
           About
         </BaseTab>
       </RouteTabs>
@@ -53,7 +82,11 @@ const ArtistCombinedRoute: React.FC<
 
       <Spacer y={2} />
 
-      <ArtistArtworkFilterQueryRenderer id={artist.internalID} lazyLoad />
+      <ArtistArtworkFilterQueryRenderer
+        id={artist.internalID}
+        lazyLoad={lazy.artworks}
+        onReady={() => markReady("artworks")}
+      />
 
       <Separator my={4} />
 
@@ -62,6 +95,8 @@ const ArtistCombinedRoute: React.FC<
       <MarketStatsQueryRenderer
         id={artist.internalID}
         onRendered={handleScrollToTop}
+        onReady={() => markReady("market")}
+        lazyLoad={lazy.market}
       />
 
       <Spacer y={6} />
@@ -76,15 +111,20 @@ const ArtistCombinedRoute: React.FC<
 
       <ArtistAuctionResultsQueryRenderer
         id={artist.internalID}
-        lazyLoad
+        lazyLoad={lazy.auction}
         truncate
+        onReady={() => markReady("auction")}
       />
 
       <Separator my={4} />
 
       <Jump id="artistAboutTop" />
 
-      <ArtistOverviewQueryRenderer id={artist.internalID} lazyLoad />
+      <ArtistOverviewQueryRenderer
+        id={artist.internalID}
+        lazyLoad={lazy.about}
+        onReady={() => markReady("about")}
+      />
     </>
   )
 }

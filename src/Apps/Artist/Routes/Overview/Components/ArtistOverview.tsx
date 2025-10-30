@@ -1,4 +1,5 @@
 import { Stack } from "@artsy/palette"
+import { useSectionReady } from "Apps/Artist/Routes/WorksForSale/Utils/useSectionReadiness"
 import { ArtistSeriesRailQueryRenderer } from "Components/ArtistSeriesRail/ArtistSeriesRail"
 import { RailHeader } from "Components/Rail/RailHeader"
 import { useIsRouteActive } from "System/Hooks/useRouter"
@@ -17,11 +18,13 @@ import { ArtistRelatedGeneCategoriesQueryRenderer } from "./ArtistRelatedGeneCat
 type ArtistOverviewQueryRendererProps = {
   id: string
   lazyLoad?: boolean
+  onReady?: () => void
 }
 
 export const ArtistOverviewQueryRenderer: React.FC<
   ArtistOverviewQueryRendererProps
-> = ({ id, lazyLoad }) => {
+> = ({ id, lazyLoad, onReady }) => {
+  const { handleReady } = useSectionReady({ onReady })
   return (
     <SystemQueryRenderer<ArtistOverviewQueryRendererQuery>
       lazyLoad={lazyLoad}
@@ -40,6 +43,7 @@ export const ArtistOverviewQueryRenderer: React.FC<
         }
 
         if (!props || !props.artist) return null
+        handleReady()
         return <ArtistOverviewFragmentContainer artist={props.artist} />
       }}
     />
