@@ -155,61 +155,56 @@ export const buildInitialSteps = (order: {
     stepNamesInOrder.unshift(CheckoutStepName.OFFER_AMOUNT)
   }
 
-  // Run completion checks
-  const offerComplete = isOfferComplete(order)
-  const fulfillmentComplete = isFulfillmentDetailsComplete(order)
-  const deliveryComplete = isDeliveryOptionComplete(order)
-  const paymentComplete = isPaymentComplete(order)
+  const offerStep = order.mode === "OFFER" && {
+    name: CheckoutStepName.OFFER_AMOUNT,
+    state: isOfferComplete(order)
+      ? CheckoutStepState.COMPLETED
+      : CheckoutStepState.UPCOMING,
+  }
+  const fulfillmentDetailsStep = {
+    name: CheckoutStepName.FULFILLMENT_DETAILS,
+    state: isFulfillmentDetailsComplete(order)
+      ? CheckoutStepState.COMPLETED
+      : CheckoutStepState.UPCOMING,
+  }
+  const deliveryOptionStep = {
+    name: CheckoutStepName.DELIVERY_OPTION,
+    state: isDeliveryOptionComplete(order)
+      ? CheckoutStepState.COMPLETED
+      : CheckoutStepState.UPCOMING,
+  }
+  const paymentStep = {
+    name: CheckoutStepName.PAYMENT,
+    state: isPaymentComplete(order)
+      ? CheckoutStepState.COMPLETED
+      : CheckoutStepState.UPCOMING,
+  }
+  const confirmationStep = {
+    name: CheckoutStepName.CONFIRMATION,
+    state: CheckoutStepState.UPCOMING,
+  }
+
+  const steps: CheckoutStep[] = [
+    offerStep,
+    fulfillmentDetailsStep,
+    deliveryOptionStep,
+    paymentStep,
+    confirmationStep,
+  ].filter((step): step is CheckoutStep => step !== false)
+
+  // Delivery option is hidden for pickup orders
   const isPickup = order.selectedFulfillmentOption?.type === "PICKUP"
+  if (isPickup) {
+    deliveryOptionStep.state = CheckoutStepState.HIDDEN
+  }
 
-  // Build steps with states based on completion checks
-  const steps = stepNamesInOrder.reduce((acc, stepName) => {
-    const hasSetActive = acc.some(
-      step => step.state === CheckoutStepState.ACTIVE,
-    )
+  const firstUpcomingStep = steps.find(
+    step => step.state === CheckoutStepState.UPCOMING,
+  )
 
-    // Delivery option is hidden for pickup orders
-    if (stepName === CheckoutStepName.DELIVERY_OPTION && isPickup) {
-      return [
-        ...acc,
-        {
-          name: stepName,
-          state: CheckoutStepState.HIDDEN,
-        },
-      ]
-    }
-    if (hasSetActive) {
-      return [
-        ...acc,
-        {
-          name: stepName,
-          state: CheckoutStepState.UPCOMING,
-        },
-      ]
-    }
-
-    // Determine if this step is complete
-    let stepComplete = false
-    if (stepName === CheckoutStepName.OFFER_AMOUNT) {
-      stepComplete = offerComplete
-    } else if (stepName === CheckoutStepName.FULFILLMENT_DETAILS) {
-      stepComplete = fulfillmentComplete
-    } else if (stepName === CheckoutStepName.DELIVERY_OPTION) {
-      stepComplete = deliveryComplete
-    } else if (stepName === CheckoutStepName.PAYMENT) {
-      stepComplete = paymentComplete
-    }
-
-    return [
-      ...acc,
-      {
-        name: stepName,
-        state: stepComplete
-          ? CheckoutStepState.COMPLETED
-          : CheckoutStepState.ACTIVE,
-      },
-    ]
-  }, [] as CheckoutStep[])
+  if (firstUpcomingStep) {
+    firstUpcomingStep.state = CheckoutStepState.ACTIVE
+  }
 
   return steps
 }
