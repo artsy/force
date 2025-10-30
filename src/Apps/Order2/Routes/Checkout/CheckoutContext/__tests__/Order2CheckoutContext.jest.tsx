@@ -254,8 +254,6 @@ describe("Order2CheckoutContext", () => {
         id: "stripe-token-123",
       })
 
-      // Note: payment step is not marked complete just from token alone
-      // Payment completion requires paymentMethod and paymentMethodDetails
       expect(state.steps).toEqual([
         {
           name: CheckoutStepName.FULFILLMENT_DETAILS,
