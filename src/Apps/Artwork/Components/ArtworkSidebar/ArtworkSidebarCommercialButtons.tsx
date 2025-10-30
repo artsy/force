@@ -27,7 +27,7 @@ import type { ArtworkSidebarCommercialButtonsOfferOrderMutation } from "__genera
 import type { ArtworkSidebarCommercialButtonsOrderMutation } from "__generated__/ArtworkSidebarCommercialButtonsOrderMutation.graphql"
 import type { ArtworkSidebarCommercialButtons_artwork$key } from "__generated__/ArtworkSidebarCommercialButtons_artwork.graphql"
 import type { ArtworkSidebarCommercialButtons_me$key } from "__generated__/ArtworkSidebarCommercialButtons_me.graphql"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { graphql, useFragment } from "react-relay"
 import { useTracking } from "react-tracking"
 import {
@@ -571,10 +571,17 @@ const ErrorToast: React.FC<
   React.PropsWithChildren<{ onClose(): void; show: boolean }>
 > = ({ show, onClose }) => {
   const { sendToast } = useToasts()
+  const toastDisplayed = useRef(false)
 
   useEffect(() => {
-    if (!show) return
+    if (!show) {
+      toastDisplayed.current = false
+      return
+    }
 
+    if (toastDisplayed.current) return
+
+    toastDisplayed.current = true
     sendToast({
       variant: "error",
       message:
