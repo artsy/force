@@ -1,4 +1,13 @@
-import { BaseTab, Clickable, Separator, Spacer, Text } from "@artsy/palette"
+import {
+  BaseTab,
+  Box,
+  Clickable,
+  Separator,
+  Spacer,
+  Spinner,
+  Text,
+  useTheme,
+} from "@artsy/palette"
 import {
   ArtistAuctionResultsQueryRenderer,
   useScrollToTopOfAuctionResults,
@@ -7,10 +16,12 @@ import { MarketStatsQueryRenderer } from "Apps/Artist/Routes/AuctionResults/Comp
 import { ArtistOverviewQueryRenderer } from "Apps/Artist/Routes/Overview/Components/ArtistOverview"
 import { ArtistArtworkFilterQueryRenderer } from "Apps/Artist/Routes/WorksForSale/Components/ArtistArtworkFilter"
 import { useSectionReadiness } from "Apps/Artist/Routes/WorksForSale/Utils/useSectionReadiness"
+import { Z } from "Apps/Components/constants"
 import { RouteTabs } from "Components/RouteTabs"
 import { Jump, useJump } from "Utils/Hooks/useJump"
 import type { ArtistCombinedRoute_artist$data } from "__generated__/ArtistCombinedRoute_artist.graphql"
 import type * as React from "react"
+import { useMemo } from "react"
 import { Meta } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 
@@ -32,10 +43,34 @@ const ArtistCombinedRoute: React.FC<
     "about",
   ])
 
+  const { theme } = useTheme()
+
+  const loading = useMemo(() => {
+    return Object.values(navigating).some(Boolean)
+  }, [navigating])
+
   return (
     <>
       {/* Temporarily hide from search engines */}
       <Meta name="robots" content="noindex, nofollow" />
+
+      {loading && (
+        <Box
+          position="fixed"
+          top="50%"
+          left="50%"
+          bg={theme.effects.backdrop}
+          width={80}
+          height={80}
+          borderRadius={2}
+          justifyContent="center"
+          alignItems="center"
+          zIndex={Z.toasts}
+          style={{ transform: "translate(-50%, -50%)" }}
+        >
+          <Spinner />
+        </Box>
+      )}
 
       <RouteTabs data-test="navigationTabs">
         <BaseTab

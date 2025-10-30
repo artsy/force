@@ -20,7 +20,7 @@ import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import type { ArtistArtworkFilterQueryRendererQuery } from "__generated__/ArtistArtworkFilterQueryRendererQuery.graphql"
 import type { ArtistArtworkFilter_artist$data } from "__generated__/ArtistArtworkFilter_artist.graphql"
 import type { Match } from "found"
-import { type FC, useRef } from "react"
+import type { FC } from "react"
 import {
   type RelayRefetchProp,
   createRefetchContainer,
