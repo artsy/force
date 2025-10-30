@@ -1,4 +1,4 @@
-import { Separator, Spacer, Text } from "@artsy/palette"
+import { BaseTab, Separator, Spacer, Text } from "@artsy/palette"
 import {
   ArtistAuctionResultsQueryRenderer,
   useScrollToTopOfAuctionResults,
@@ -6,7 +6,8 @@ import {
 import { MarketStatsQueryRenderer } from "Apps/Artist/Routes/AuctionResults/Components/MarketStats"
 import { ArtistOverviewQueryRenderer } from "Apps/Artist/Routes/Overview/Components/ArtistOverview"
 import { ArtistArtworkFilterQueryRenderer } from "Apps/Artist/Routes/WorksForSale/Components/ArtistArtworkFilter"
-import { Jump } from "Utils/Hooks/useJump"
+import { RouteTabs } from "Components/RouteTabs"
+import { Jump, useJump } from "Utils/Hooks/useJump"
 import type { ArtistCombinedRoute_artist$data } from "__generated__/ArtistCombinedRoute_artist.graphql"
 import type * as React from "react"
 import { Meta } from "react-head"
@@ -21,12 +22,30 @@ const ArtistCombinedRoute: React.FC<
 > = ({ artist }) => {
   const { handleScrollToTop } = useScrollToTopOfAuctionResults()
 
+  const { jumpTo } = useJump()
+
   return (
     <>
       {/* Temporarily hide from search engines */}
       <Meta name="robots" content="noindex, nofollow" />
 
-      <Separator my={4} />
+      <RouteTabs data-test="navigationTabs">
+        <BaseTab onClick={() => jumpTo("artistArtworksTop", { offset: 40 })}>
+          Artworks
+        </BaseTab>
+
+        <BaseTab onClick={() => jumpTo("marketSignalsTop", { offset: 40 })}>
+          Auction Results
+        </BaseTab>
+
+        <BaseTab onClick={() => jumpTo("artistAboutTop", { offset: 40 })}>
+          About
+        </BaseTab>
+      </RouteTabs>
+
+      <Spacer y={[2, 4]} />
+
+      <Jump id="artistArtworksTop" />
 
       <Text variant="lg-display" as="h2">
         Artworks
@@ -63,6 +82,8 @@ const ArtistCombinedRoute: React.FC<
 
       <Separator my={4} />
 
+      <Jump id="artistAboutTop" />
+
       <ArtistOverviewQueryRenderer id={artist.internalID} lazyLoad />
     </>
   )
@@ -73,9 +94,7 @@ export const ArtistCombinedRouteFragmentContainer = createFragmentContainer(
   {
     artist: graphql`
       fragment ArtistCombinedRoute_artist on Artist {
-        id
         internalID
-        href
       }
     `,
   },
