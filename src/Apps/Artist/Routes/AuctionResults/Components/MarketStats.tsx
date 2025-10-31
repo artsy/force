@@ -11,9 +11,9 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { useSectionReady } from "Apps/Artist/Routes/WorksForSale/Utils/useSectionReadiness"
 import { formatSellThroughRate } from "Apps/Artwork/Utils/insightHelpers"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { useSectionReady } from "Utils/Hooks/useSectionReadiness"
 import { extractNodes } from "Utils/extractNodes"
 import { formatLargeNumber } from "Utils/formatLargeNumber"
 import type { MarketStatsQuery } from "__generated__/MarketStatsQuery.graphql"
