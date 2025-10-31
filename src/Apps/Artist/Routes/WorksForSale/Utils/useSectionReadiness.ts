@@ -82,9 +82,33 @@ const reducer = <TSectionKey extends string>(
   }
 }
 
+type UseSectionReadinessReturn<TSectionKey extends string> = {
+  /** Maps each section key to whether it should be lazily loaded (true) or eagerly loaded (false) */
+  lazy: SectionMap<TSectionKey, boolean>
+  /** Maps each section key to its current readiness state: "Idle", "Loading", or "Ready" */
+  mode: SectionMap<TSectionKey, SectionMode>
+  /** Maps each section key to whether navigation is currently targeting that section */
+  navigating: SectionMap<TSectionKey, boolean>
+  /** Callback function to mark a section as ready. Call this when a section finishes loading. */
+  markReady: (key: TSectionKey) => void
+  /** Wait for one or more sections to become ready. Returns a promise that resolves when all specified sections are ready. */
+  waitFor: (keys: TSectionKey[]) => Promise<void>
+  /** Get all section keys that come before the target section in the order */
+  priorTo: (target: TSectionKey) => TSectionKey[]
+  /** Wait for all sections up to (and optionally including) a target section to be ready. This will trigger eager loading of those sections. */
+  waitUntil: (
+    target: TSectionKey,
+    options?: { includeTarget?: boolean },
+  ) => Promise<void>
+  /** The original ordered array of section keys */
+  order: TSectionKey[]
+  /** Mark sections as needing to be eagerly loaded (sets lazy to false and mode to "Loading") */
+  eagerLoad: (keys: TSectionKey[]) => void
+}
+
 export const useSectionReadiness = <TSectionKey extends string>(
   orderedKeys: TSectionKey[],
-) => {
+): UseSectionReadinessReturn<TSectionKey> => {
   const [{ lazy, mode, isNavigating, navigationTarget }, dispatch] = useReducer(
     reducer<TSectionKey>,
     orderedKeys,
@@ -115,8 +139,8 @@ export const useSectionReadiness = <TSectionKey extends string>(
   )
 
   const waitFor = useCallback(
-    (keys: TSectionKey[]) => {
-      return Promise.all(
+    async (keys: TSectionKey[]) => {
+      await Promise.all(
         keys.map(key => {
           return new Promise<void>(resolve => {
             if (mode[key] === "Ready") return resolve()
