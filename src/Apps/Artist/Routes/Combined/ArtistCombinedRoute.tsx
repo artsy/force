@@ -1,4 +1,13 @@
-import { Separator, Spacer, Text } from "@artsy/palette"
+import {
+  BaseTab,
+  Box,
+  Clickable,
+  Separator,
+  Spacer,
+  Spinner,
+  Text,
+  useTheme,
+} from "@artsy/palette"
 import {
   ArtistAuctionResultsQueryRenderer,
   useScrollToTopOfAuctionResults,
@@ -6,9 +15,13 @@ import {
 import { MarketStatsQueryRenderer } from "Apps/Artist/Routes/AuctionResults/Components/MarketStats"
 import { ArtistOverviewQueryRenderer } from "Apps/Artist/Routes/Overview/Components/ArtistOverview"
 import { ArtistArtworkFilterQueryRenderer } from "Apps/Artist/Routes/WorksForSale/Components/ArtistArtworkFilter"
-import { Jump } from "Utils/Hooks/useJump"
+import { Z } from "Apps/Components/constants"
+import { RouteTabs } from "Components/RouteTabs"
+import { Jump, useJump } from "Utils/Hooks/useJump"
+import { useSectionReadiness } from "Utils/Hooks/useSectionReadiness"
 import type { ArtistCombinedRoute_artist$data } from "__generated__/ArtistCombinedRoute_artist.graphql"
 import type * as React from "react"
+import { useMemo } from "react"
 import { Meta } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 
@@ -21,12 +34,82 @@ const ArtistCombinedRoute: React.FC<
 > = ({ artist }) => {
   const { handleScrollToTop } = useScrollToTopOfAuctionResults()
 
+  const { jumpTo } = useJump()
+
+  const { lazy, markReady, waitUntil, navigating } = useSectionReadiness([
+    "artworks",
+    "market",
+    "auction",
+    "about",
+  ])
+
+  const { theme } = useTheme()
+
+  const loading = useMemo(() => {
+    return Object.values(navigating).some(Boolean)
+  }, [navigating])
+
   return (
     <>
       {/* Temporarily hide from search engines */}
       <Meta name="robots" content="noindex, nofollow" />
 
-      <Separator my={4} />
+      {loading && (
+        <Box
+          position="fixed"
+          top="50%"
+          left="50%"
+          bg={theme.effects.backdrop}
+          width={80}
+          height={80}
+          borderRadius={2}
+          justifyContent="center"
+          alignItems="center"
+          zIndex={Z.toasts}
+          style={{ transform: "translate(-50%, -50%)" }}
+        >
+          <Spinner />
+        </Box>
+      )}
+
+      <RouteTabs data-test="navigationTabs">
+        <BaseTab
+          as={Clickable}
+          disabled={navigating.artworks}
+          onClick={async () => {
+            // No prior sections; just jump.
+            jumpTo("artistArtworksTop", { offset: 40 })
+          }}
+        >
+          Artworks
+        </BaseTab>
+
+        <BaseTab
+          as={Clickable}
+          disabled={navigating.auction}
+          onClick={async () => {
+            await waitUntil("auction")
+            jumpTo("marketSignalsTop", { offset: 40 })
+          }}
+        >
+          Auction Results
+        </BaseTab>
+
+        <BaseTab
+          as={Clickable}
+          disabled={navigating.about}
+          onClick={async () => {
+            await waitUntil("about")
+            jumpTo("artistAboutTop", { offset: 40 })
+          }}
+        >
+          About
+        </BaseTab>
+      </RouteTabs>
+
+      <Spacer y={[2, 4]} />
+
+      <Jump id="artistArtworksTop" />
 
       <Text variant="lg-display" as="h2">
         Artworks
@@ -34,7 +117,11 @@ const ArtistCombinedRoute: React.FC<
 
       <Spacer y={2} />
 
-      <ArtistArtworkFilterQueryRenderer id={artist.internalID} lazyLoad />
+      <ArtistArtworkFilterQueryRenderer
+        id={artist.internalID}
+        lazyLoad={lazy.artworks}
+        onReady={() => markReady("artworks")}
+      />
 
       <Separator my={4} />
 
@@ -43,6 +130,8 @@ const ArtistCombinedRoute: React.FC<
       <MarketStatsQueryRenderer
         id={artist.internalID}
         onRendered={handleScrollToTop}
+        onReady={() => markReady("market")}
+        lazyLoad={lazy.market}
       />
 
       <Spacer y={6} />
@@ -57,13 +146,20 @@ const ArtistCombinedRoute: React.FC<
 
       <ArtistAuctionResultsQueryRenderer
         id={artist.internalID}
-        lazyLoad
+        lazyLoad={lazy.auction}
         truncate
+        onReady={() => markReady("auction")}
       />
 
       <Separator my={4} />
 
-      <ArtistOverviewQueryRenderer id={artist.internalID} lazyLoad />
+      <Jump id="artistAboutTop" />
+
+      <ArtistOverviewQueryRenderer
+        id={artist.internalID}
+        lazyLoad={lazy.about}
+        onReady={() => markReady("about")}
+      />
     </>
   )
 }
@@ -73,9 +169,7 @@ export const ArtistCombinedRouteFragmentContainer = createFragmentContainer(
   {
     artist: graphql`
       fragment ArtistCombinedRoute_artist on Artist {
-        id
         internalID
-        href
       }
     `,
   },

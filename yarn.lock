@@ -31,12 +31,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@artsy/cohesion@npm:4.312.0":
-  version: 4.312.0
-  resolution: "@artsy/cohesion@npm:4.312.0"
+"@artsy/cohesion@npm:4.315.0":
+  version: 4.315.0
+  resolution: "@artsy/cohesion@npm:4.315.0"
   dependencies:
     core-js: "npm:3"
-  checksum: 10c0/3b47557b31970498e99cc5d88f43b03be9728a63941aba07b3350222a7d208c0db6cd17b75a76d1078c62aef2b6e9f9a64ca4ea694841d2aaafb7f4f9ae6ef01
+  checksum: 10c0/405c98d13006fe333b36451698e1cb34644826e8267fbc07b71fb40894813d5d5ce1e8c877a66a91185b52902eb0d490ebc1b73b68dd10db2879c118b38d8a68
   languageName: node
   linkType: hard
 
@@ -54,13 +54,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@artsy/dismissible@npm:^0.4.1":
-  version: 0.4.1
-  resolution: "@artsy/dismissible@npm:0.4.1"
+"@artsy/dismissible@npm:^0.5.0":
+  version: 0.5.0
+  resolution: "@artsy/dismissible@npm:0.5.0"
   dependencies:
     lodash.uniqby: "npm:^4.7.0"
     yup: "npm:^1.3.3"
-  checksum: 10c0/7aff06a04687e2a7dafa0530f3a9ab7cbdaca405fdb478a336dc43fcbc2c2e5ea444c865fa490e2929cb32ccbe4eb86d82e7cc4d6ec7b7d582c5e95fe2421557
+  checksum: 10c0/81bdc36ee5a09f8d62a894e725efc2b1f79f1a0ed0b703cbc5a316482ae033ca8968cef42844c23fd6b9dd31f4c47cdefb8b8276d1e9ce741cbef943c771e488
   languageName: node
   linkType: hard
 
@@ -9308,10 +9308,10 @@ __metadata:
   resolution: "force@workspace:."
   dependencies:
     "@artaio/arta-browser": "npm:^2.16.1"
-    "@artsy/cohesion": "npm:4.312.0"
+    "@artsy/cohesion": "npm:4.315.0"
     "@artsy/commerce_helpers": artsy/commerce_helpers
     "@artsy/detect-responsive-traits": "npm:^0.1.0"
-    "@artsy/dismissible": "npm:^0.4.1"
+    "@artsy/dismissible": "npm:^0.5.0"
     "@artsy/express-reloadable": "npm:^1.7.0"
     "@artsy/fresnel": "npm:^8.1.0"
     "@artsy/icons": "npm:3.52.0"

@@ -4,6 +4,59 @@ directive @optionalField on FIELD
 
 directive @principalField on FIELD
 
+type AI {
+  prompt(
+    # The ID of the AI prompt template
+    id: String
+  ): AIPromptTemplate
+  promptConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+
+    # Filter by model (e.g., claude, gpt)
+    model: String
+
+    # Filter by template name
+    name: String
+    page: Int
+    size: Int
+  ): AIPromptTemplateConnection
+}
+
+type AIPromptTemplate {
+  # A globally unique ID.
+  id: ID!
+
+  # A type-specific ID.
+  internalID: ID!
+  model: String!
+  name: String!
+  systemPrompt: String
+  userPrompt: String
+}
+
+# A connection to a list of items.
+type AIPromptTemplateConnection {
+  # A list of edges.
+  edges: [AIPromptTemplateEdge]
+  pageCursors: PageCursors!
+
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+# An edge in a connection.
+type AIPromptTemplateEdge {
+  # A cursor for use in pagination
+  cursor: String!
+
+  # The item at the end of the edge
+  node: AIPromptTemplate
+}
+
 type ARImage {
   height: Int
   imageURLs: ImageURLs
@@ -2724,6 +2777,9 @@ type Artwork implements Node & Searchable & Sellable {
   # Flags if artwork located in one of EU local shipping countries.
   euShippingOrigin: Boolean
   exhibitionHistory(format: Format): String
+
+  # External provider identity.
+  externalID: String
   fair: Fair
 
   # Featured slot (if set, will boost the work to the top of the artwork grid. Should be set between 1 and 20).
@@ -3729,6 +3785,138 @@ enum ArtworkSorts {
   RECENT_SAVES_COUNT_DESC
   TITLE_ASC
   TITLE_DESC
+}
+
+type ArtworkTemplate {
+  artistIDs: [String]
+  artists(
+    # Use whatever is in the original response instead of making a request
+    shallow: Boolean = false
+  ): [Artist]
+  artsyShippingDomestic: Boolean
+  artsyShippingInternational: Boolean
+  attributionClass: AttributionClass
+  availability: String
+  category: String
+  certificateOfAuthenticity: Boolean
+  coaByAuthenticatingBody: Boolean
+  coaByGallery: Boolean
+  conditionDescription: String
+  createdAt(
+    format: String
+
+    # A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    timezone: String
+  ): String
+  date: String
+  depth: Float
+  diameter: Float
+  displayPriceRange: Boolean
+  domesticShippingFeeCents: Int
+  duration: Float
+  ecommerce: Boolean
+  framedDepth: Float
+  framedDiameter: Float
+  framedHeight: Float
+  framedMetric: String
+  framedWidth: Float
+  height: Float
+
+  # A globally unique ID.
+  id: ID!
+
+  # A type-specific ID.
+  internalID: ID!
+  internationalShippingFeeCents: Int
+  isFramed: Boolean
+  isNotSigned: Boolean
+  isOfferable: Boolean
+  isPickupAvailable: Boolean
+  isPriceHidden: Boolean
+  isSignedByArtist: Boolean
+  isSignedInPlate: Boolean
+  isSignedOther: Boolean
+  isStampedByArtistEstate: Boolean
+  isStickerLabel: Boolean
+  isUnique: Boolean
+  manufacturer(format: Format): String
+  medium: String
+  metric: String
+  partnerID: String!
+  priceCurrency: String
+
+  # A formatted price with various currency formatting options.
+  priceListed(
+    decimal: String = "."
+    disambiguate: Boolean = false
+
+    # Allows control of symbol position (%v = value, %s = symbol)
+    format: String = "%s%v"
+    precision: Int = 0
+    symbol: String
+    thousand: String = ","
+  ): String
+
+  # A formatted price with various currency formatting options.
+  priceMax(
+    decimal: String = "."
+    disambiguate: Boolean = false
+
+    # Allows control of symbol position (%v = value, %s = symbol)
+    format: String = "%s%v"
+    precision: Int = 0
+    symbol: String
+    thousand: String = ","
+  ): String
+
+  # A formatted price with various currency formatting options.
+  priceMin(
+    decimal: String = "."
+    disambiguate: Boolean = false
+
+    # Allows control of symbol position (%v = value, %s = symbol)
+    format: String = "%s%v"
+    precision: Int = 0
+    symbol: String
+    thousand: String = ","
+  ): String
+  publisher(format: Format): String
+  series(format: Format): String
+  shippingNotes: String
+  shippingWeight: Float
+  shippingWeightMetric: String
+  signature(format: Format): String
+  tags: [String]
+  title: String!
+  updatedAt(
+    format: String
+
+    # A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    timezone: String
+  ): String
+  visibilityLevel: Visibility
+  website: String
+  width: Float
+}
+
+# A connection to a list of items.
+type ArtworkTemplateConnection {
+  # A list of edges.
+  edges: [ArtworkTemplateEdge]
+  pageCursors: PageCursors!
+
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+# An edge in a connection.
+type ArtworkTemplateEdge {
+  # A cursor for use in pagination
+  cursor: String!
+
+  # The item at the end of the edge
+  node: ArtworkTemplate
 }
 
 type ArtworkVersion implements Node {
@@ -17900,6 +18088,15 @@ type Partner implements Node {
     last: Int
   ): ArtworkImportConnection
 
+  # A connection of artwork templates for this partner
+  artworkTemplatesConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+    page: Int
+  ): ArtworkTemplateConnection
+
   # A connection of artworks from a Partner.
   artworksConnection(
     after: String
@@ -19655,6 +19852,7 @@ type Query {
 
   # Find an agreement by ID
   agreement(id: ID!): Agreement
+  ai: AI
 
   # Get the year sparklines for the current artist.
   analyticsArtistSparklines(
@@ -25953,6 +26151,7 @@ type Viewer {
   # Do not use (only used internally for stitching)
   _do_not_use_image: Image
   admin: Admin
+  ai: AI
 
   # An Article
   article(

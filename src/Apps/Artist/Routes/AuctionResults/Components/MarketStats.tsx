@@ -13,6 +13,7 @@ import {
 } from "@artsy/palette"
 import { formatSellThroughRate } from "Apps/Artwork/Utils/insightHelpers"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { useSectionReady } from "Utils/Hooks/useSectionReadiness"
 import { extractNodes } from "Utils/extractNodes"
 import { formatLargeNumber } from "Utils/formatLargeNumber"
 import type { MarketStatsQuery } from "__generated__/MarketStatsQuery.graphql"
@@ -297,9 +298,12 @@ export const MarketStatsQueryRenderer: FC<
   React.PropsWithChildren<{
     id: string
     onRendered?: (visible: boolean) => void
+    onReady?: () => void
+    lazyLoad?: boolean
   }>
-> = ({ id, onRendered }) => {
+> = ({ id, onRendered, onReady, lazyLoad }) => {
   const [hasRendered, setHasRendered] = useState(false)
+  const { handleReady } = useSectionReady({ onReady })
 
   const onRender = (visible: boolean) => {
     if (hasRendered) return
@@ -310,7 +314,7 @@ export const MarketStatsQueryRenderer: FC<
 
   return (
     <SystemQueryRenderer<MarketStatsQuery>
-      lazyLoad
+      lazyLoad={lazyLoad ?? true}
       variables={{ id }}
       placeholder={<MarketStatsPlaceholder />}
       query={graphql`
@@ -333,6 +337,8 @@ export const MarketStatsQueryRenderer: FC<
         if (!props || !props.priceInsightsConnection) {
           return <MarketStatsPlaceholder />
         }
+
+        handleReady()
 
         return (
           <MarketStatsFragmentContainer

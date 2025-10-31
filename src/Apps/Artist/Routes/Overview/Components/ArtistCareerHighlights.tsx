@@ -112,41 +112,45 @@ export const ArtistCareerHighlightsFragmentContainer = createFragmentContainer(
   },
 )
 
-const PLACEHOLDER = (
-  <Box display="flex" gap={4} flexDirection="column">
-    <RailHeader
-      title="Highlights and Achievements"
-      viewAllHref="#"
-      viewAllLabel="View CV"
-      isLoading
-    />
+export const ArtistCareerHighlightsPlaceholder: FC<
+  React.PropsWithChildren<unknown>
+> = () => {
+  return (
+    <Box display="flex" gap={4} flexDirection="column">
+      <RailHeader
+        title="Highlights and Achievements"
+        viewAllHref="#"
+        viewAllLabel="View CV"
+        isLoading
+      />
 
-    <GridColumns gridRowGap={0}>
-      {[...new Array(2)].map((_, i) => {
-        return (
-          <Column span={6} key={i}>
-            {[...new Array(5)].map((_, j) => {
-              return (
-                <Expandable
-                  key={[i, j].join("-")}
-                  label={
-                    <SkeletonText variant="sm-display">
-                      Example Label
-                    </SkeletonText>
-                  }
-                  pb={1}
-                  disabled
-                >
-                  <></>
-                </Expandable>
-              )
-            })}
-          </Column>
-        )
-      })}
-    </GridColumns>
-  </Box>
-)
+      <GridColumns gridRowGap={0}>
+        {[...new Array(2)].map((_, i) => {
+          return (
+            <Column span={6} key={i}>
+              {[...new Array(5)].map((_, j) => {
+                return (
+                  <Expandable
+                    key={[i, j].join("-")}
+                    label={
+                      <SkeletonText variant="sm-display">
+                        Example Label
+                      </SkeletonText>
+                    }
+                    pb={1}
+                    disabled
+                  >
+                    <></>
+                  </Expandable>
+                )
+              })}
+            </Column>
+          )
+        })}
+      </GridColumns>
+    </Box>
+  )
+}
 
 export const ArtistCareerHighlightsQueryRenderer: FC<
   React.PropsWithChildren<{
@@ -157,7 +161,7 @@ export const ArtistCareerHighlightsQueryRenderer: FC<
     <SystemQueryRenderer<ArtistCareerHighlightsQuery>
       lazyLoad
       variables={{ id }}
-      placeholder={PLACEHOLDER}
+      placeholder={<ArtistCareerHighlightsPlaceholder />}
       query={graphql`
         query ArtistCareerHighlightsQuery($id: String!) {
           artist(id: $id) {
@@ -172,7 +176,7 @@ export const ArtistCareerHighlightsQueryRenderer: FC<
         }
 
         if (!props) {
-          return PLACEHOLDER
+          return <ArtistCareerHighlightsPlaceholder />
         }
 
         if (props.artist) {

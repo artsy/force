@@ -1,7 +1,5 @@
 import { Spacer } from "@artsy/palette"
-import { RouteTab, RouteTabs } from "Components/RouteTabs"
 import { Analytics } from "System/Contexts/AnalyticsContext"
-import { useIsRouteActive } from "System/Hooks/useRouter"
 import { Jump } from "Utils/Hooks/useJump"
 import { useScrollToOpenArtistAuthModal } from "Utils/Hooks/useScrollToOpenArtistAuthModal"
 import type { ArtistApp_artist$data } from "__generated__/ArtistApp_artist.graphql"
@@ -19,8 +17,6 @@ const ArtistApp: React.FC<React.PropsWithChildren<ArtistAppProps>> = ({
 }) => {
   useScrollToOpenArtistAuthModal({ name: artist.name })
 
-  const isCombinedPage = useIsRouteActive(`/artist/${artist.slug}/combined`)
-
   return (
     <>
       <ArtistMetaFragmentContainer artist={artist} />
@@ -33,24 +29,6 @@ const ArtistApp: React.FC<React.PropsWithChildren<ArtistAppProps>> = ({
         <Spacer y={4} />
 
         <Jump id="artistContentArea" />
-
-        {!isCombinedPage && (
-          <>
-            <RouteTabs data-test="navigationTabs">
-              <RouteTab exact to={`/artist/${artist.slug}`}>
-                Artworks
-              </RouteTab>
-
-              <RouteTab to={`/artist/${artist.slug}/auction-results`}>
-                Auction Results
-              </RouteTab>
-
-              <RouteTab to={`/artist/${artist.slug}/about`}>About</RouteTab>
-            </RouteTabs>
-
-            <Spacer y={[2, 4]} />
-          </>
-        )}
 
         {children}
       </Analytics>

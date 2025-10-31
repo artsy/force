@@ -98,7 +98,7 @@ export const ArtistSeriesRailFragmentContainer = createFragmentContainer(
   },
 )
 
-const ArtistSeriesRailPlaceholder = () => {
+export const ArtistSeriesRailPlaceholder = () => {
   return (
     <Skeleton>
       <Rail

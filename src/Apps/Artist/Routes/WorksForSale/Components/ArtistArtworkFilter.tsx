@@ -16,6 +16,7 @@ import type { SavedSearchEntity } from "Components/SavedSearchAlert/types"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { useSectionReady } from "Utils/Hooks/useSectionReadiness"
 import type { ArtistArtworkFilterQueryRendererQuery } from "__generated__/ArtistArtworkFilterQueryRendererQuery.graphql"
 import type { ArtistArtworkFilter_artist$data } from "__generated__/ArtistArtworkFilter_artist.graphql"
 import type { Match } from "found"
@@ -157,12 +158,14 @@ export const ArtistArtworkFilterRefetchContainer = createRefetchContainer(
 type ArtistArtworkFilterQueryRendererProps = {
   id: string
   lazyLoad?: boolean
+  onReady?: () => void
 }
 
 export const ArtistArtworkFilterQueryRenderer: FC<
   ArtistArtworkFilterQueryRendererProps
-> = ({ id, lazyLoad }) => {
+> = ({ id, lazyLoad, onReady }) => {
   const { match } = useRouter()
+  const { handleReady } = useSectionReady({ onReady })
 
   return (
     <SystemQueryRenderer<ArtistArtworkFilterQueryRendererQuery>
@@ -216,6 +219,8 @@ export const ArtistArtworkFilterQueryRenderer: FC<
         if (!props || !props.artist) {
           return <ArtworkFilterPlaceholder showCreateAlert />
         }
+
+        handleReady()
 
         const { artist } = props
 

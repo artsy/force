@@ -36,10 +36,10 @@ describe("ArtistApp", () => {
   })
 
   describe("for default routes", () => {
-    it("renders correct components", () => {
+    it("renders core layout elements", () => {
       mockfindCurrentRoute.mockImplementation(() => ({}))
 
-      renderWithRelay(
+      const { container } = renderWithRelay(
         {
           Artist: () => ({
             statuses: {
@@ -51,12 +51,13 @@ describe("ArtistApp", () => {
         { match: { params: { artworkId: undefined } } },
       )
 
-      expect(screen.getByText("Artworks")).toBeInTheDocument()
-      expect(screen.getByText("Auction Results")).toBeInTheDocument()
-      expect(screen.getByText("About")).toBeInTheDocument()
+      // The app-level shell renders a jump target for nested routes
+      expect(
+        container.querySelector("#JUMP--artistContentArea"),
+      ).toBeInTheDocument()
     })
 
-    it("tabs navigate to the correct urls", () => {
+    it("does not render navigation tabs at the app level", () => {
       mockfindCurrentRoute.mockImplementation(() => ({}))
       renderWithRelay(
         {
@@ -71,17 +72,15 @@ describe("ArtistApp", () => {
         { match: { params: { artworkId: undefined } } },
       )
 
-      expect(screen.getByRole("link", { name: "Artworks" })).toHaveAttribute(
-        "href",
-        "/artist/artist-slug",
-      )
       expect(
-        screen.getByRole("link", { name: "Auction Results" }),
-      ).toHaveAttribute("href", "/artist/artist-slug/auction-results")
-      expect(screen.getByRole("link", { name: "About" })).toHaveAttribute(
-        "href",
-        "/artist/artist-slug/about",
-      )
+        screen.queryByRole("link", { name: "Artworks" }),
+      ).not.toBeInTheDocument()
+      expect(
+        screen.queryByRole("link", { name: "Auction Results" }),
+      ).not.toBeInTheDocument()
+      expect(
+        screen.queryByRole("link", { name: "About" }),
+      ).not.toBeInTheDocument()
     })
   })
 })

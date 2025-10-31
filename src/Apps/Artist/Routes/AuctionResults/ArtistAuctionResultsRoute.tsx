@@ -1,4 +1,5 @@
 import { Spacer, Text } from "@artsy/palette"
+import { ArtistTabs } from "Apps/Artist/Components/ArtistTabs"
 import { MarketStatsQueryRenderer } from "Apps/Artist/Routes/AuctionResults/Components/MarketStats"
 import { Jump } from "Utils/Hooks/useJump"
 import type { ArtistAuctionResultsRoute_artist$data } from "__generated__/ArtistAuctionResultsRoute_artist.graphql"
@@ -22,6 +23,10 @@ export const ArtistAuctionResultsRoute: React.FC<
 
   return (
     <>
+      <ArtistTabs slug={artist.slug} />
+
+      <Spacer y={[2, 4]} />
+
       <Jump id="marketSignalsTop" />
 
       <MarketStatsQueryRenderer
@@ -92,6 +97,7 @@ export const AuctionResultsRouteFragmentContainer = createFragmentContainer(
             allowEmptyCreatedDates: $allowEmptyCreatedDates
           )
         internalID
+        slug
         sidebarAggregations: auctionResultsConnection(
           aggregations: [
             SIMPLE_PRICE_HISTOGRAM

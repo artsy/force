@@ -22,6 +22,7 @@ import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { useJump } from "Utils/Hooks/useJump"
 import { usePrevious } from "Utils/Hooks/usePrevious"
+import { useSectionReady } from "Utils/Hooks/useSectionReadiness"
 import { extractNodes } from "Utils/extractNodes"
 import createLogger from "Utils/logger"
 import type { ArtistAuctionResultsQueryRendererQuery } from "__generated__/ArtistAuctionResultsQueryRendererQuery.graphql"
@@ -541,12 +542,14 @@ type ArtistAuctionResultsQueryRendererProps = {
   id: string
   lazyLoad?: boolean
   truncate?: boolean
+  onReady?: () => void
 }
 
 export const ArtistAuctionResultsQueryRenderer: React.FC<
   ArtistAuctionResultsQueryRendererProps
-> = ({ id, lazyLoad, truncate = false }) => {
+> = ({ id, lazyLoad, truncate = false, onReady }) => {
   const { match } = useRouter()
+  const { handleReady } = useSectionReady({ onReady })
 
   const urlFilterState = paramsToCamelCase(match?.location.query ?? {})
   const initialInput = {
@@ -646,6 +649,8 @@ export const ArtistAuctionResultsQueryRenderer: React.FC<
         if (!props || !props.artist) {
           return null
         }
+
+        handleReady()
 
         const { artist } = props
 

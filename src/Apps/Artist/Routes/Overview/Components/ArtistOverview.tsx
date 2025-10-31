@@ -1,13 +1,21 @@
 import { Stack } from "@artsy/palette"
-import { ArtistSeriesRailQueryRenderer } from "Components/ArtistSeriesRail/ArtistSeriesRail"
+import {
+  ArtistSeriesRailPlaceholder,
+  ArtistSeriesRailQueryRenderer,
+} from "Components/ArtistSeriesRail/ArtistSeriesRail"
 import { RailHeader } from "Components/Rail/RailHeader"
 import { useIsRouteActive } from "System/Hooks/useRouter"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { useSectionReady } from "Utils/Hooks/useSectionReadiness"
 import type { ArtistOverviewQueryRendererQuery } from "__generated__/ArtistOverviewQueryRendererQuery.graphql"
 import type { ArtistOverview_artist$data } from "__generated__/ArtistOverview_artist.graphql"
 import type * as React from "react"
+import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtistCareerHighlightsQueryRenderer } from "./ArtistCareerHighlights"
+import {
+  ArtistCareerHighlightsPlaceholder,
+  ArtistCareerHighlightsQueryRenderer,
+} from "./ArtistCareerHighlights"
 import { ArtistCurrentShowsRailQueryRenderer } from "./ArtistCurrentShowsRail"
 import { ArtistEditorialNewsGridQueryRenderer } from "./ArtistEditorialNewsGrid"
 import { ArtistOverviewEmpty } from "./ArtistOverviewEmpty"
@@ -17,14 +25,18 @@ import { ArtistRelatedGeneCategoriesQueryRenderer } from "./ArtistRelatedGeneCat
 type ArtistOverviewQueryRendererProps = {
   id: string
   lazyLoad?: boolean
+  onReady?: () => void
 }
 
 export const ArtistOverviewQueryRenderer: React.FC<
   ArtistOverviewQueryRendererProps
-> = ({ id, lazyLoad }) => {
+> = ({ id, lazyLoad, onReady }) => {
+  const { handleReady } = useSectionReady({ onReady })
+
   return (
     <SystemQueryRenderer<ArtistOverviewQueryRendererQuery>
       lazyLoad={lazyLoad}
+      placeholder={<ArtistOverviewPlaceholder />}
       query={graphql`
         query ArtistOverviewQueryRendererQuery($artistID: String!) @cacheable {
           artist(id: $artistID) {
@@ -39,7 +51,12 @@ export const ArtistOverviewQueryRenderer: React.FC<
           return null
         }
 
-        if (!props || !props.artist) return null
+        if (!props || !props.artist) {
+          return <ArtistOverviewPlaceholder />
+        }
+
+        handleReady()
+
         return <ArtistOverviewFragmentContainer artist={props.artist} />
       }}
     />
@@ -154,3 +171,12 @@ export const ArtistOverviewFragmentContainer = createFragmentContainer(
     `,
   },
 )
+
+const ArtistOverviewPlaceholder: FC<React.PropsWithChildren<unknown>> = () => {
+  return (
+    <Stack gap={6}>
+      <ArtistCareerHighlightsPlaceholder />
+      <ArtistSeriesRailPlaceholder />
+    </Stack>
+  )
+}
