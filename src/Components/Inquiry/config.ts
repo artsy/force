@@ -43,6 +43,9 @@ export const useEngine = ({ context, onDone }: UseEngine) => {
     hasArtistsInCollection: () => {
       return (context.current?.userInterestsConnection?.totalCount ?? 0) > 0
     },
+    wasRecentlyPromptedForCollection: () => {
+      return !!context.current?.collectorProfile?.lastUpdatePromptAt
+    },
   }
 
   const engine = useRef(
@@ -60,7 +63,13 @@ export const useEngine = ({ context, onDone }: UseEngine) => {
               },
               {
                 hasArtistsInCollection: {
-                  false: ["ArtistsInCollection"],
+                  false: [
+                    {
+                      wasRecentlyPromptedForCollection: {
+                        false: ["ArtistsInCollection"],
+                      },
+                    },
+                  ],
                   true: [
                     {
                       hasBasicInfo: {
@@ -86,7 +95,7 @@ export const useEngine = ({ context, onDone }: UseEngine) => {
   // Log each step as it updates
   useEffect(() => {
     visited.current.log(current)
-  }, [current, visited])
+  }, [current])
 
   const next = () => {
     // At the end; closes the modal
