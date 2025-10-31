@@ -1,6 +1,7 @@
-import { Spacer } from "@artsy/palette"
+import { Skeleton, Spacer } from "@artsy/palette"
 import { OrderStepperFragmentContainer } from "./OrderStepper"
 import { TwoColumnLayout } from "./TwoColumnLayout"
+import { useDidMount } from "Utils/Hooks/useDidMount"
 
 export const OrderRouteContainer = ({
   order,
@@ -8,14 +9,22 @@ export const OrderRouteContainer = ({
   steps,
   content,
   sidebar,
-}) => (
-  <>
-    <OrderStepperFragmentContainer
-      order={order}
-      currentStep={currentStep}
-      steps={steps}
-    />
-    <Spacer y={4} />
-    <TwoColumnLayout Content={content} Sidebar={sidebar} />
-  </>
-)
+}) => {
+  const isMounted = useDidMount()
+
+  return (
+    <>
+      {isMounted ? (
+        <OrderStepperFragmentContainer
+          order={order}
+          currentStep={currentStep}
+          steps={steps}
+        />
+      ) : (
+        <Skeleton width="100%" height={40} />
+      )}
+      <Spacer y={4} />
+      <TwoColumnLayout Content={content} Sidebar={sidebar} />
+    </>
+  )
+}
