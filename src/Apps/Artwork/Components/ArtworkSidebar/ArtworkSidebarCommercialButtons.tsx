@@ -27,7 +27,7 @@ import type { ArtworkSidebarCommercialButtonsOfferOrderMutation } from "__genera
 import type { ArtworkSidebarCommercialButtonsOrderMutation } from "__generated__/ArtworkSidebarCommercialButtonsOrderMutation.graphql"
 import type { ArtworkSidebarCommercialButtons_artwork$key } from "__generated__/ArtworkSidebarCommercialButtons_artwork.graphql"
 import type { ArtworkSidebarCommercialButtons_me$key } from "__generated__/ArtworkSidebarCommercialButtons_me.graphql"
-import { useCallback, useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { graphql, useFragment } from "react-relay"
 import { useTracking } from "react-tracking"
 import {
@@ -85,7 +85,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<
 
   const { trackEvent } = useTracking()
 
-  const [isErrorModalVisible, setIsErrorModalVisible] = useState(false)
+  const { sendToast } = useToasts()
 
   const createPartnerOfferCheckout = usePartnerOfferCheckoutMutation()
 
@@ -106,14 +106,14 @@ export const ArtworkSidebarCommercialButtons: React.FC<
 
   const { showAuthDialog } = useAuthDialog()
 
-  const onCloseModal = () => {
-    setIsErrorModalVisible(false)
-  }
-
   const onMutationError = (error: ErrorWithMetadata) => {
     logger.error(error)
 
-    setIsErrorModalVisible(true)
+    sendToast({
+      variant: "error",
+      message:
+        "Something went wrong. Please try again or contact orders@artsy.net.",
+    })
   }
 
   const handleInquiry = () => {
@@ -489,8 +489,6 @@ export const ArtworkSidebarCommercialButtons: React.FC<
           <Spacer y={4} />
         </>
       )}
-
-      <ErrorToast onClose={onCloseModal} show={isErrorModalVisible} />
     </>
   )
 }
@@ -565,32 +563,6 @@ const OfferDisplay: React.FC<React.PropsWithChildren<OfferDisplayProps>> = ({
       <Spacer y={1} />
     </>
   )
-}
-
-const ErrorToast: React.FC<
-  React.PropsWithChildren<{ onClose(): void; show: boolean }>
-> = ({ show, onClose }) => {
-  const { sendToast } = useToasts()
-  const toastDisplayed = useRef(false)
-
-  useEffect(() => {
-    if (!show) {
-      toastDisplayed.current = false
-      return
-    }
-
-    if (toastDisplayed.current) return
-
-    toastDisplayed.current = true
-    sendToast({
-      variant: "error",
-      message:
-        "Something went wrong. Please try again or contact orders@artsy.net.",
-      onClose,
-    })
-  }, [onClose, sendToast, show])
-
-  return null
 }
 
 const useCreateOrderMutation = () => {
