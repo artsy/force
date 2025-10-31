@@ -3,6 +3,7 @@ import { ArtistSeriesRailQueryRenderer } from "Components/ArtistSeriesRail/Artis
 import { RailHeader } from "Components/Rail/RailHeader"
 import { useIsRouteActive } from "System/Hooks/useRouter"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { useSectionReady } from "Utils/Hooks/useSectionReadiness"
 import type { ArtistOverviewQueryRendererQuery } from "__generated__/ArtistOverviewQueryRendererQuery.graphql"
 import type { ArtistOverview_artist$data } from "__generated__/ArtistOverview_artist.graphql"
 import type * as React from "react"
@@ -17,11 +18,13 @@ import { ArtistRelatedGeneCategoriesQueryRenderer } from "./ArtistRelatedGeneCat
 type ArtistOverviewQueryRendererProps = {
   id: string
   lazyLoad?: boolean
+  onReady?: () => void
 }
 
 export const ArtistOverviewQueryRenderer: React.FC<
   ArtistOverviewQueryRendererProps
-> = ({ id, lazyLoad }) => {
+> = ({ id, lazyLoad, onReady }) => {
+  const { handleReady } = useSectionReady({ onReady })
   return (
     <SystemQueryRenderer<ArtistOverviewQueryRendererQuery>
       lazyLoad={lazyLoad}
@@ -40,6 +43,7 @@ export const ArtistOverviewQueryRenderer: React.FC<
         }
 
         if (!props || !props.artist) return null
+        handleReady()
         return <ArtistOverviewFragmentContainer artist={props.artist} />
       }}
     />

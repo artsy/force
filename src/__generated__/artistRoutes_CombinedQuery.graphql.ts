@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<39615cbc6fa564c0024824e7a84f2a72>>
+ * @generated SignedSource<<b27ebdc69144db54d053e2b988cddc56>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -83,13 +83,6 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "id",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
             "name": "internalID",
             "storageKey": null
           },
@@ -97,7 +90,7 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "href",
+            "name": "id",
             "storageKey": null
           }
         ],
@@ -106,12 +99,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "c40506a4d70d8e3e87779ae2707a13c2",
+    "cacheID": "a2bd1af8f0eb6f168398a438c93ee6ce",
     "id": null,
     "metadata": {},
     "name": "artistRoutes_CombinedQuery",
     "operationKind": "query",
-    "text": "query artistRoutes_CombinedQuery(\n  $artistID: String!\n) @cacheable {\n  artist(id: $artistID) @principalField {\n    ...ArtistCombinedRoute_artist\n    id\n  }\n}\n\nfragment ArtistCombinedRoute_artist on Artist {\n  id\n  internalID\n  href\n}\n"
+    "text": "query artistRoutes_CombinedQuery(\n  $artistID: String!\n) @cacheable {\n  artist(id: $artistID) @principalField {\n    ...ArtistCombinedRoute_artist\n    id\n  }\n}\n\nfragment ArtistCombinedRoute_artist on Artist {\n  internalID\n}\n"
   }
 };
 })();
