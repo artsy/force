@@ -11,6 +11,11 @@ import {
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import type { CheckoutErrorBannerProps } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { useCheckoutTracking } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutTracking"
+import { useStripePaymentBySetupIntentId } from "Apps/Order2/Routes/Checkout/Hooks/useStripePaymentBySetupIntentId"
+import {
+  buildInitialSteps,
+  isFulfillmentDetailsComplete,
+} from "Apps/Order2/Routes/Checkout/Utils/stepCompletionChecks"
 import { useRouter } from "System/Hooks/useRouter"
 import { useCountdownTimer } from "Utils/Hooks/useCountdownTimer"
 import createLogger from "Utils/logger"
@@ -571,6 +576,12 @@ const CheckoutLoadingManager: React.FC<{
 }> = ({ orderData, partnerOffer, children }) => {
   const [minimumLoadingPassed, setMinimumLoadingPassed] = useState(false)
   const [orderValidated, setOrderValidated] = useState(false)
+  const [isStripeRedirectHandled, setIsStripeRedirectHandled] = useState(false)
+
+  // Handle Stripe redirect and call onComplete when done
+  useStripePaymentBySetupIntentId(orderData.internalID, () => {
+    setIsStripeRedirectHandled(true)
+  })
 
   const isExpressCheckoutLoaded = Order2CheckoutContext.useStoreState(state => {
     // Express Checkout is considered "loaded" if:
@@ -634,6 +645,7 @@ const CheckoutLoadingManager: React.FC<{
         orderValidated,
         isExpressCheckoutLoaded,
         isPartnerOfferLoadingComplete,
+        isStripeRedirectHandled,
         isLoading,
         setLoadingComplete,
       ].every(Boolean)
@@ -645,6 +657,7 @@ const CheckoutLoadingManager: React.FC<{
     orderValidated,
     isExpressCheckoutLoaded,
     isPartnerOfferLoadingComplete,
+    isStripeRedirectHandled,
     isLoading,
     setLoadingComplete,
   ])
@@ -661,6 +674,36 @@ const ORDER_FRAGMENT = graphql`
     stripeConfirmationToken
     selectedFulfillmentOption {
       type
+    }
+    offers {
+      internalID
+      createdAt
+      amount {
+        minor
+      }
+    }
+    fulfillmentDetails {
+      addressLine1
+      city
+      postalCode
+      country
+      name
+      phoneNumber {
+        originalNumber
+      }
+    }
+    paymentMethod
+    paymentMethodDetails {
+      __typename
+      ... on CreditCard {
+        internalID
+      }
+      ... on BankAccount {
+        internalID
+      }
+      ... on WireTransfer {
+        isManualPayment
+      }
     }
     lineItems {
       artworkVersion {
@@ -716,58 +759,23 @@ const initialStateForOrder = (
     "standard",
   )
 
-  const stepNamesInOrder = [
-    CheckoutStepName.FULFILLMENT_DETAILS,
-    CheckoutStepName.DELIVERY_OPTION,
-    CheckoutStepName.PAYMENT,
-    CheckoutStepName.CONFIRMATION,
-  ]
+  // Build steps using completion check functions
+  const steps = buildInitialSteps(order)
 
-  if (order.mode === "OFFER") {
-    stepNamesInOrder.unshift(CheckoutStepName.OFFER_AMOUNT)
-  }
-
-  // For now, always start from step one, and hide the delivery option
-  // step immediately if the order is pickup
-  // TODO: We should probably either reset the order to step one on load
-  // or set the current step based on the order data at load time
-
-  // Check if payment is already complete based on stripeConfirmationToken
-  const hasStripeConfirmationToken = !!order.stripeConfirmationToken
-
-  const steps = stepNamesInOrder.map((stepName, index) => {
-    if (stepName === CheckoutStepName.DELIVERY_OPTION) {
-      return {
-        name: stepName,
-        state:
-          order.selectedFulfillmentOption?.type === "PICKUP"
-            ? CheckoutStepState.HIDDEN
-            : CheckoutStepState.UPCOMING,
-      }
-    }
-
-    // If payment is already complete, mark payment step as completed
-    if (stepName === CheckoutStepName.PAYMENT && hasStripeConfirmationToken) {
-      return {
-        name: stepName,
-        state: CheckoutStepState.COMPLETED,
-      }
-    }
-
-    return {
-      name: stepName,
-      state:
-        index === 0 ? CheckoutStepState.ACTIVE : CheckoutStepState.UPCOMING,
-    }
-  })
+  // Determine other initial state values
+  const fulfillmentComplete = isFulfillmentDetailsComplete(order)
+  const isPickup = order.selectedFulfillmentOption?.type === "PICKUP"
+  const activeFulfillmentDetailsTab = isPickup ? "PICKUP" : "DELIVERY"
 
   return {
     isLoading: true,
     expressCheckoutSubmitting: false,
     loadingError: null,
     expressCheckoutPaymentMethods: null,
-    activeFulfillmentDetailsTab: null,
-    confirmationToken: hasStripeConfirmationToken
+    activeFulfillmentDetailsTab: fulfillmentComplete
+      ? (activeFulfillmentDetailsTab as FulfillmentDetailsTab)
+      : null,
+    confirmationToken: order.stripeConfirmationToken
       ? { id: order.stripeConfirmationToken }
       : null,
     savePaymentMethod: true,
