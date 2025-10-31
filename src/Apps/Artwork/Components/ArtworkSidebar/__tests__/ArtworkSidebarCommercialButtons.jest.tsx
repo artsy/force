@@ -1,4 +1,4 @@
-import { Toasts, ToastsProvider } from "@artsy/palette"
+import { Toasts, ToastsProvider, useToasts } from "@artsy/palette"
 import { fireEvent, screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { ArtworkSidebarCommercialButtons } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarCommercialButtons"
@@ -10,6 +10,7 @@ import type { ArtworkSidebarCommercialButtons_Test_Query } from "__generated__/A
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { createMockEnvironment } from "relay-test-utils"
+import * as SentryUtils from "@sentry/utils"
 
 jest.unmock("react-relay")
 
@@ -17,6 +18,11 @@ jest.mock("System/Hooks/useRouter")
 
 jest.mock("Components/AuthDialog/useAuthDialog", () => ({
   useAuthDialog: jest.fn().mockReturnValue({ showAuthDialog: jest.fn() }),
+}))
+
+jest.mock("@artsy/palette", () => ({
+  ...jest.requireActual("@artsy/palette"),
+  useToasts: jest.fn(),
 }))
 
 describe("ArtworkSidebarCommercialButtons", () => {
@@ -59,6 +65,14 @@ describe("ArtworkSidebarCommercialButtons", () => {
       },
     }
     window.history.pushState({}, "Artwork Title", "/artwork/the-id")
+
+    // Mock useToasts
+    ;(useToasts as jest.Mock).mockReturnValue({
+      sendToast: jest.fn(),
+    })
+
+    // Clear mocks
+    jest.clearAllMocks()
   })
 
   afterEach(() => {
@@ -724,6 +738,61 @@ describe("ArtworkSidebarCommercialButtons", () => {
 
       const { operationName } = await mockResolveLastOperation({})
       expect(operationName).toBe("ArtworkSidebarCommercialButtonsOrderMutation")
+    })
+
+    it("shows error toast and logs error when order creation fails", async () => {
+      const sendToast = jest.fn()
+      ;(useToasts as jest.Mock).mockReturnValue({ sendToast })
+
+      const loggerErrorSpy = jest.spyOn(SentryUtils.logger, "error")
+
+      const { mockResolveLastOperation } = renderWithRelay(
+        {
+          Query: () => ({ me: meMock }),
+          Artwork: () => ({
+            internalID: "artwork-1",
+            isAcquireable: true,
+            editionSets: [
+              {
+                internalID: "edition-set-id",
+                isAcquireable: true,
+              },
+            ],
+          }),
+        },
+        null,
+        mockEnvironment,
+      )
+
+      await userEvent.click(screen.getByText("Purchase"))
+
+      // Resolve the mutation with an error
+      await waitFor(async () => {
+        await mockResolveLastOperation({
+          CommerceCreateOrderWithArtworkPayload: () => ({
+            orderOrError: {
+              __typename: "CommerceOrderWithMutationFailure",
+              error: {
+                type: "validation",
+                code: "artwork_unavailable",
+                data: null,
+              },
+            },
+          }),
+        })
+      })
+
+      // Wait for error handling
+      await waitFor(() => {
+        expect(loggerErrorSpy).toHaveBeenCalled()
+        expect(sendToast).toHaveBeenCalledWith({
+          variant: "error",
+          message:
+            "Something went wrong. Please try again or contact orders@artsy.net.",
+        })
+      })
+
+      loggerErrorSpy.mockRestore()
     })
   })
 
