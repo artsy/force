@@ -14,12 +14,10 @@ export const CollectorProfileArtistsAddDialog: FC<
 > = ({ onClose, onSuccess, title }) => {
   const { submitUpdateMyUserProfile } = useUpdateMyUserProfile()
 
-  const handleClose = async () => {
-    try {
-      await submitUpdateMyUserProfile({ promptedForUpdate: true })
-    } catch (err) {
+  const handleClose = () => {
+    submitUpdateMyUserProfile({ promptedForUpdate: true }).catch(err => {
       console.error(err)
-    }
+    })
 
     onClose()
   }
