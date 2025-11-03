@@ -137,6 +137,7 @@ const InquiryBasicInfo: React.FC<
         handleChange,
         handleBlur,
         isSubmitting,
+        isValid,
         errors,
         touched,
       }) => {
@@ -199,7 +200,12 @@ const InquiryBasicInfo: React.FC<
               />
             </Stack>
 
-            <Button type="submit" width="100%" loading={isSubmitting}>
+            <Button
+              type="submit"
+              width="100%"
+              loading={isSubmitting}
+              disabled={!isValid}
+            >
               Save & Continue
             </Button>
           </Stack>
