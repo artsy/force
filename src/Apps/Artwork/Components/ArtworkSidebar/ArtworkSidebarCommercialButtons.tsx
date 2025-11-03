@@ -85,7 +85,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<
 
   const { trackEvent } = useTracking()
 
-  const [isErrorModalVisible, setIsErrorModalVisible] = useState(false)
+  const { sendToast } = useToasts()
 
   const createPartnerOfferCheckout = usePartnerOfferCheckoutMutation()
 
@@ -106,14 +106,14 @@ export const ArtworkSidebarCommercialButtons: React.FC<
 
   const { showAuthDialog } = useAuthDialog()
 
-  const onCloseModal = () => {
-    setIsErrorModalVisible(false)
-  }
-
   const onMutationError = (error: ErrorWithMetadata) => {
     logger.error(error)
 
-    setIsErrorModalVisible(true)
+    sendToast({
+      variant: "error",
+      message:
+        "Something went wrong. Please try again or contact orders@artsy.net.",
+    })
   }
 
   const handleInquiry = () => {
@@ -489,8 +489,6 @@ export const ArtworkSidebarCommercialButtons: React.FC<
           <Spacer y={4} />
         </>
       )}
-
-      <ErrorToast onClose={onCloseModal} show={isErrorModalVisible} />
     </>
   )
 }
@@ -565,25 +563,6 @@ const OfferDisplay: React.FC<React.PropsWithChildren<OfferDisplayProps>> = ({
       <Spacer y={1} />
     </>
   )
-}
-
-const ErrorToast: React.FC<
-  React.PropsWithChildren<{ onClose(): void; show: boolean }>
-> = ({ show, onClose }) => {
-  const { sendToast } = useToasts()
-
-  useEffect(() => {
-    if (!show) return
-
-    sendToast({
-      variant: "error",
-      message:
-        "Something went wrong. Please try again or contact orders@artsy.net.",
-      onClose,
-    })
-  }, [onClose, sendToast, show])
-
-  return null
 }
 
 const useCreateOrderMutation = () => {
