@@ -109,6 +109,14 @@ const AuctionResultRoute = loadable(
   { resolveComponent: component => component.AuctionResultFragmentContainer },
 )
 
+const ArtistABTestRoute = loadable(
+  () =>
+    import(/* webpackChunkName: "artistBundle" */ "./Routes/ArtistABTestRoute"),
+  {
+    resolveComponent: component => component.ArtistABTestRouteFragmentContainer,
+  },
+)
+
 export const artistRoutes: RouteProps[] = [
   {
     path: "/artist/:artistID",
@@ -141,6 +149,56 @@ export const artistRoutes: RouteProps[] = [
             }
           }
         `,
+      },
+      {
+        path: "ab",
+        getComponent: () => ArtistABTestRoute,
+        onServerSideRender: redirectWithCanonicalParams,
+        onPreloadJS: () => {
+          ArtistABTestRoute.preload()
+        },
+        prepareVariables: getWorksForSaleRouteVariables,
+        query: graphql`
+          query artistRoutes_ArtistABTestQuery($artistID: String!) @cacheable {
+            artist(id: $artistID) @principalField {
+              ...ArtistABTestRoute_artist
+            }
+          }
+        `,
+        children: [
+          {
+            path: "auction-results",
+            getComponent: () => ArtistABTestRoute,
+            onPreloadJS: () => {
+              ArtistABTestRoute.preload()
+            },
+            query: graphql`
+              query artistRoutes_ArtistABTestAuctionResultsQuery(
+                $artistID: String!
+              ) @cacheable {
+                artist(id: $artistID) @principalField {
+                  ...ArtistABTestRoute_artist
+                }
+              }
+            `,
+          },
+          {
+            path: "about",
+            getComponent: () => ArtistABTestRoute,
+            onServerSideRender: enableArtistPageCTA,
+            onPreloadJS: () => {
+              ArtistABTestRoute.preload()
+            },
+            query: graphql`
+              query artistRoutes_ArtistABTestAboutQuery($artistID: String!)
+              @cacheable {
+                artist(id: $artistID) @principalField {
+                  ...ArtistABTestRoute_artist
+                }
+              }
+            `,
+          },
+        ],
       },
       {
         path: "",
