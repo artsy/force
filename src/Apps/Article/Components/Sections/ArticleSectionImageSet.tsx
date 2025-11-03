@@ -16,11 +16,12 @@ import { createFragmentContainer, graphql } from "react-relay"
 
 interface ArticleSectionImageSetProps {
   section: ArticleSectionImageSet_section$data
+  isFirst?: boolean
 }
 
 const ArticleSectionImageSet: FC<
   React.PropsWithChildren<ArticleSectionImageSetProps>
-> = ({ section }) => {
+> = ({ section, isFirst = false }) => {
   const { showArticleZoomGallery, articleZoomGalleryComponent } =
     useArticleZoomGallery()
 
@@ -78,7 +79,8 @@ const ArticleSectionImageSet: FC<
                     srcSet={image.small?.srcSet}
                     width={image.small?.width}
                     height={image.small?.height}
-                    lazyLoad
+                    lazyLoad={!isFirst}
+                    fetchPriority={isFirst ? "high" : undefined}
                     alt={imageTitle ?? ""}
                   />
 
@@ -121,7 +123,8 @@ const ArticleSectionImageSet: FC<
                     srcSet={image.large?.srcSet}
                     width="100%"
                     height="100%"
-                    lazyLoad
+                    lazyLoad={!isFirst}
+                    fetchPriority={isFirst ? "high" : undefined}
                     alt={imageTitle ?? ""}
                   />
 

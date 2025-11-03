@@ -32,12 +32,20 @@ const ArticleSection: FC<React.PropsWithChildren<ArticleSectionProps>> = ({
 
     case "ArticleSectionImageCollection": {
       return (
-        <ArticleSectionImageCollectionFragmentContainer section={section} />
+        <ArticleSectionImageCollectionFragmentContainer
+          section={section}
+          isFirst={isFirst}
+        />
       )
     }
 
     case "ArticleSectionImageSet": {
-      return <ArticleSectionImageSetFragmentContainer section={section} />
+      return (
+        <ArticleSectionImageSetFragmentContainer
+          section={section}
+          isFirst={isFirst}
+        />
+      )
     }
 
     case "ArticleSectionVideo": {
