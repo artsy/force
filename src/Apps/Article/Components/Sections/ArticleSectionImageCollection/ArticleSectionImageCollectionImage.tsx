@@ -38,17 +38,6 @@ const ArticleSectionImageCollectionImage: FC<
         bg="mono10"
         position="relative"
       >
-        {/* <ArticleZoomButton width="100%" height="100%" onClick={handleClick}>
-          <Image
-            src={img.src}
-            srcSet={img.srcSet}
-            width="100%"
-            height="100%"
-            alt={figure.formattedMetadata ?? ""}
-            fetchPriority={isFirst ? "high" : undefined}
-            lazyLoad={!isFirst}
-          />
-        </ArticleZoomButton> */}
         <ArticleZoomButton width="100%" height="100%" onClick={handleClick}>
           {isFirst ? (
             <img
