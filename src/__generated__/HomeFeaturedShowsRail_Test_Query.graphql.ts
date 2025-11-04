@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7da3c44bc583cf1dca686f65bfb31c60>>
+ * @generated SignedSource<<1dfc4c54b5b318002ff821753fa769e0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -278,6 +278,12 @@ return {
                 "selections": (v4/*: any*/),
                 "type": "Profile",
                 "abstractKey": null
+              },
+              {
+                "kind": "InlineFragment",
+                "selections": (v4/*: any*/),
+                "type": "Video",
+                "abstractKey": null
               }
             ],
             "storageKey": null
@@ -289,7 +295,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3dca8b4eb2fb2bf82ef845016da08138",
+    "cacheID": "ffb7c181530f7add34a78e04900e53f7",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -350,7 +356,7 @@ return {
     },
     "name": "HomeFeaturedShowsRail_Test_Query",
     "operationKind": "query",
-    "text": "query HomeFeaturedShowsRail_Test_Query {\n  orderedSet(id: \"example\") {\n    ...HomeFeaturedShowsRail_orderedSet\n    id\n  }\n}\n\nfragment CellShow_show on Show {\n  internalID\n  slug\n  name\n  href\n  startAt\n  endAt\n  isFairBooth\n  exhibitionPeriod\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on ExternalPartner {\n      id\n    }\n  }\n  coverImage {\n    cropped(width: 445, height: 334, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment HomeFeaturedShow_show on Show {\n  ...CellShow_show\n  internalID\n  slug\n}\n\nfragment HomeFeaturedShowsRail_orderedSet on OrderedSet {\n  items {\n    __typename\n    ... on Show {\n      ...HomeFeaturedShow_show\n      internalID\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on FeaturedLink {\n      id\n    }\n    ... on Profile {\n      id\n    }\n  }\n}\n"
+    "text": "query HomeFeaturedShowsRail_Test_Query {\n  orderedSet(id: \"example\") {\n    ...HomeFeaturedShowsRail_orderedSet\n    id\n  }\n}\n\nfragment CellShow_show on Show {\n  internalID\n  slug\n  name\n  href\n  startAt\n  endAt\n  isFairBooth\n  exhibitionPeriod\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on ExternalPartner {\n      id\n    }\n  }\n  coverImage {\n    cropped(width: 445, height: 334, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment HomeFeaturedShow_show on Show {\n  ...CellShow_show\n  internalID\n  slug\n}\n\nfragment HomeFeaturedShowsRail_orderedSet on OrderedSet {\n  items {\n    __typename\n    ... on Show {\n      ...HomeFeaturedShow_show\n      internalID\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on FeaturedLink {\n      id\n    }\n    ... on Profile {\n      id\n    }\n    ... on Video {\n      id\n    }\n  }\n}\n"
   }
 };
 })();

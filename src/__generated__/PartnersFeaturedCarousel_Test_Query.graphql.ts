@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<68ad08db5fa22028c799006b622a49f3>>
+ * @generated SignedSource<<fc428ed00476d1412eb798d0d116228f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -342,6 +342,12 @@ return {
                             "selections": (v7/*: any*/),
                             "type": "FeaturedLink",
                             "abstractKey": null
+                          },
+                          {
+                            "kind": "InlineFragment",
+                            "selections": (v7/*: any*/),
+                            "type": "Video",
+                            "abstractKey": null
                           }
                         ],
                         "storageKey": null
@@ -362,7 +368,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "77a224a96c31f0d00ef2ce1f8354fc4c",
+    "cacheID": "c083127e8bada2daade4f021d3995755",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -458,7 +464,7 @@ return {
     },
     "name": "PartnersFeaturedCarousel_Test_Query",
     "operationKind": "query",
-    "text": "query PartnersFeaturedCarousel_Test_Query {\n  viewer {\n    ...PartnersFeaturedCarousel_viewer_3GNcE2\n  }\n}\n\nfragment PartnersFeaturedCarouselCell_profile on Profile {\n  internalID\n  owner {\n    __typename\n    ... on Partner {\n      internalID\n      href\n      name\n      featuredShow {\n        href\n        name\n        status\n        statusUpdate\n        startAt(format: \"MMM D\")\n        endAt(format: \"MMM D\")\n        isOnlineExclusive\n        location {\n          city\n          id\n        }\n        coverImage {\n          resized(height: 500, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on FairOrganizer {\n      id\n    }\n  }\n}\n\nfragment PartnersFeaturedCarousel_viewer_3GNcE2 on Viewer {\n  orderedSet(id: \"example\") {\n    orderedItemsConnection(first: 50) {\n      edges {\n        node {\n          __typename\n          ... on Profile {\n            internalID\n            ...PartnersFeaturedCarouselCell_profile\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n          ... on FeaturedLink {\n            id\n          }\n        }\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query PartnersFeaturedCarousel_Test_Query {\n  viewer {\n    ...PartnersFeaturedCarousel_viewer_3GNcE2\n  }\n}\n\nfragment PartnersFeaturedCarouselCell_profile on Profile {\n  internalID\n  owner {\n    __typename\n    ... on Partner {\n      internalID\n      href\n      name\n      featuredShow {\n        href\n        name\n        status\n        statusUpdate\n        startAt(format: \"MMM D\")\n        endAt(format: \"MMM D\")\n        isOnlineExclusive\n        location {\n          city\n          id\n        }\n        coverImage {\n          resized(height: 500, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on FairOrganizer {\n      id\n    }\n  }\n}\n\nfragment PartnersFeaturedCarousel_viewer_3GNcE2 on Viewer {\n  orderedSet(id: \"example\") {\n    orderedItemsConnection(first: 50) {\n      edges {\n        node {\n          __typename\n          ... on Profile {\n            internalID\n            ...PartnersFeaturedCarouselCell_profile\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n          ... on FeaturedLink {\n            id\n          }\n          ... on Video {\n            id\n          }\n        }\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();
