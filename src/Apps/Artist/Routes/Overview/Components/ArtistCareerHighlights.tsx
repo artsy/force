@@ -13,6 +13,7 @@ import { Media } from "Utils/Responsive"
 import type { ArtistCareerHighlightsQuery } from "__generated__/ArtistCareerHighlightsQuery.graphql"
 import type { ArtistCareerHighlights_artist$data } from "__generated__/ArtistCareerHighlights_artist.graphql"
 import type { FC } from "react"
+import { forwardRef } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
 interface ArtistCareerHighlightsProps {
@@ -112,11 +113,17 @@ export const ArtistCareerHighlightsFragmentContainer = createFragmentContainer(
   },
 )
 
-export const ArtistCareerHighlightsPlaceholder: FC<
+export const ArtistCareerHighlightsPlaceholder = forwardRef<
+  HTMLDivElement,
   React.PropsWithChildren<unknown>
-> = () => {
+>((_, forwardedRef) => {
   return (
-    <Box display="flex" gap={4} flexDirection="column">
+    <Box
+      ref={forwardedRef as any}
+      display="flex"
+      gap={4}
+      flexDirection="column"
+    >
       <RailHeader
         title="Highlights and Achievements"
         viewAllHref="#"
@@ -150,7 +157,7 @@ export const ArtistCareerHighlightsPlaceholder: FC<
       </GridColumns>
     </Box>
   )
-}
+})
 
 export const ArtistCareerHighlightsQueryRenderer: FC<
   React.PropsWithChildren<{

@@ -2721,6 +2721,15 @@ type Artwork implements Node & Searchable & Sellable {
     first: Int
     last: Int
   ): AuctionResultConnection
+
+  # A checklist of items indicating how to improve the completeness score (ranked by importance)
+  completenessChecklist: [ArtworkCompletenessChecklistItem]
+
+  # A score representing the listing quality of the artwork
+  completenessScore: Int
+
+  # The tier classification of the completeness score (Incomplete, Good, or Excellent)
+  completenessTier: ArtworkCompletenessTier
   condition: ArtworkCondition
   conditionDescription: ArtworkInfoRow
 
@@ -3132,6 +3141,30 @@ enum ArtworkAttributionClassType {
   OPEN_EDITION
   UNIQUE
   UNKNOWN_EDITION
+}
+
+type ArtworkCompletenessChecklistItem {
+  # Whether this checklist item is completed
+  completed: Boolean!
+
+  # The key/identifier of the validation
+  key: ArtworkCompletenessChecklistItemKey!
+}
+
+enum ArtworkCompletenessChecklistItemKey {
+  CERTIFICATE
+  DESCRIPTION
+  HIGH_RES_IMAGE
+  MULTIPLE_IMAGES
+  PRICE_VISIBILITY
+  PUBLISHABLE
+  SIGNATURE
+}
+
+enum ArtworkCompletenessTier {
+  EXCELLENT
+  GOOD
+  INCOMPLETE
 }
 
 type ArtworkCondition {
@@ -9560,6 +9593,30 @@ type CreateArtworkSuccess {
   artwork: Artwork
 }
 
+type CreateArtworkTemplateFailure {
+  mutationError: GravityMutationError
+}
+
+input CreateArtworkTemplateInput {
+  artworkId: String!
+  clientMutationId: String
+  partnerId: String!
+  title: String!
+}
+
+type CreateArtworkTemplatePayload {
+  artworkTemplateOrError: CreateArtworkTemplateResponseOrError
+  clientMutationId: String
+}
+
+union CreateArtworkTemplateResponseOrError =
+  | CreateArtworkTemplateFailure
+  | CreateArtworkTemplateSuccess
+
+type CreateArtworkTemplateSuccess {
+  artworkTemplate: ArtworkTemplate
+}
+
 input CreateBackupSecondFactorsInput {
   clientMutationId: String
   password: String!
@@ -10821,6 +10878,17 @@ union DeleteArtworkResponseOrError = DeleteArtworkFailure | DeleteArtworkSuccess
 
 type DeleteArtworkSuccess {
   artwork: Artwork
+}
+
+input DeleteArtworkTemplateInput {
+  artworkTemplateID: ID!
+  clientMutationId: String
+  partnerID: ID!
+}
+
+type DeleteArtworkTemplatePayload {
+  artworkTemplate: ArtworkTemplate!
+  clientMutationId: String
 }
 
 input DeleteBankAccountInput {
@@ -16418,6 +16486,9 @@ type Mutation {
   createArtworkImportImageMatch(
     input: CreateArtworkImportImageMatchInput!
   ): CreateArtworkImportImageMatchPayload
+  createArtworkTemplate(
+    input: CreateArtworkTemplateInput!
+  ): CreateArtworkTemplatePayload
   createBackupSecondFactors(
     input: CreateBackupSecondFactorsInput!
   ): CreateBackupSecondFactorsPayload
@@ -16619,6 +16690,9 @@ type Mutation {
 
   # Deletes an image from an artwork in my collection
   deleteArtworkImage(input: DeleteArtworkImageInput!): DeleteArtworkImagePayload
+  deleteArtworkTemplate(
+    input: DeleteArtworkTemplateInput!
+  ): DeleteArtworkTemplatePayload
 
   # Remove a bank account
   deleteBankAccount(input: DeleteBankAccountInput!): DeleteBankAccountPayload
