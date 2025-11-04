@@ -31,7 +31,8 @@ export const ConversationOrderInformation: React.FC<
 
   const { code, lastOffer } = data
 
-  const showReviewOrderButton = data.state !== "CANCELED"
+  const showReviewOrderButton =
+    data.state !== "CANCELED" && data.state !== "ABANDONED"
 
   return (
     <>

@@ -49,4 +49,34 @@ describe("OrderInformation", () => {
     expect(screen.getByText("Order #123345")).toBeInTheDocument()
     expect(screen.getByText("122000")).toBeInTheDocument()
   })
+
+  it("does not render button for CANCELED state", async () => {
+    renderWithRelay({
+      CommerceOrder: () => ({
+        code: "123345",
+        state: "CANCELED",
+        mode: "OFFER",
+        lastOffer: {
+          amount: 122000,
+        },
+      }),
+    })
+    expect(screen.getByText("Order Information")).toBeInTheDocument()
+    expect(screen.queryByText("View Offer")).not.toBeInTheDocument()
+  })
+
+  it("does not render button for ABANDONED state", async () => {
+    renderWithRelay({
+      CommerceOrder: () => ({
+        code: "123345",
+        state: "ABANDONED",
+        mode: "OFFER",
+        lastOffer: {
+          amount: 122000,
+        },
+      }),
+    })
+    expect(screen.getByText("Order Information")).toBeInTheDocument()
+    expect(screen.queryByText("View Offer")).not.toBeInTheDocument()
+  })
 })
