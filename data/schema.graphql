@@ -10880,6 +10880,17 @@ type DeleteArtworkSuccess {
   artwork: Artwork
 }
 
+input DeleteArtworkTemplateInput {
+  artworkTemplateID: ID!
+  clientMutationId: String
+  partnerID: ID!
+}
+
+type DeleteArtworkTemplatePayload {
+  artworkTemplate: ArtworkTemplate!
+  clientMutationId: String
+}
+
 input DeleteBankAccountInput {
   clientMutationId: String
   id: String!
@@ -16679,6 +16690,9 @@ type Mutation {
 
   # Deletes an image from an artwork in my collection
   deleteArtworkImage(input: DeleteArtworkImageInput!): DeleteArtworkImagePayload
+  deleteArtworkTemplate(
+    input: DeleteArtworkTemplateInput!
+  ): DeleteArtworkTemplatePayload
 
   # Remove a bank account
   deleteBankAccount(input: DeleteBankAccountInput!): DeleteBankAccountPayload
