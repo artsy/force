@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6a64e91652985078c79f632168046c81>>
+ * @generated SignedSource<<f11c4ede3745474f95956910ac1ede46>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -281,6 +281,12 @@ return {
                 "selections": (v8/*: any*/),
                 "type": "Profile",
                 "abstractKey": null
+              },
+              {
+                "kind": "InlineFragment",
+                "selections": (v8/*: any*/),
+                "type": "Video",
+                "abstractKey": null
               }
             ],
             "storageKey": null
@@ -391,12 +397,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "4b82532ce0d79388f046c2e38642c667",
+    "cacheID": "3e719c55b0100fcee12de698be4dd6d5",
     "id": null,
     "metadata": {},
     "name": "homeRoutes_HomeQuery",
     "operationKind": "query",
-    "text": "query homeRoutes_HomeQuery(\n  $private: Boolean!\n) {\n  featuredEventsOrderedSet: orderedSet(id: \"529939e2275b245e290004a0\") {\n    ...HomeApp_featuredEventsOrderedSet\n    id\n  }\n  heroUnitsConnection(first: 10, private: $private) {\n    ...HomeApp_heroUnitsConnection\n  }\n}\n\nfragment HomeApp_featuredEventsOrderedSet on OrderedSet {\n  ...HomeFeaturedEventsRail_orderedSet\n}\n\nfragment HomeApp_heroUnitsConnection on HeroUnitConnection {\n  ...HomeHeroUnits_heroUnits\n}\n\nfragment HomeFeaturedEventsRail_orderedSet on OrderedSet {\n  items {\n    __typename\n    ... on FeaturedLink {\n      internalID\n      title\n      subtitle\n      href\n      image {\n        small: cropped(width: 80, height: 80, version: [\"main\", \"wide\", \"large_rectangle\"]) {\n          src\n          srcSet\n          width\n          height\n        }\n        large: cropped(width: 445, height: 297, version: [\"main\", \"wide\", \"large_rectangle\"]) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on Profile {\n      id\n    }\n  }\n}\n\nfragment HomeHeroUnit_heroUnit on HeroUnit {\n  body\n  credit\n  image {\n    imageURL\n  }\n  label\n  link {\n    text\n    url\n  }\n  title\n}\n\nfragment HomeHeroUnits_heroUnits on HeroUnitConnection {\n  edges {\n    node {\n      ...HomeHeroUnit_heroUnit\n      id\n    }\n  }\n}\n"
+    "text": "query homeRoutes_HomeQuery(\n  $private: Boolean!\n) {\n  featuredEventsOrderedSet: orderedSet(id: \"529939e2275b245e290004a0\") {\n    ...HomeApp_featuredEventsOrderedSet\n    id\n  }\n  heroUnitsConnection(first: 10, private: $private) {\n    ...HomeApp_heroUnitsConnection\n  }\n}\n\nfragment HomeApp_featuredEventsOrderedSet on OrderedSet {\n  ...HomeFeaturedEventsRail_orderedSet\n}\n\nfragment HomeApp_heroUnitsConnection on HeroUnitConnection {\n  ...HomeHeroUnits_heroUnits\n}\n\nfragment HomeFeaturedEventsRail_orderedSet on OrderedSet {\n  items {\n    __typename\n    ... on FeaturedLink {\n      internalID\n      title\n      subtitle\n      href\n      image {\n        small: cropped(width: 80, height: 80, version: [\"main\", \"wide\", \"large_rectangle\"]) {\n          src\n          srcSet\n          width\n          height\n        }\n        large: cropped(width: 445, height: 297, version: [\"main\", \"wide\", \"large_rectangle\"]) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on Profile {\n      id\n    }\n    ... on Video {\n      id\n    }\n  }\n}\n\nfragment HomeHeroUnit_heroUnit on HeroUnit {\n  body\n  credit\n  image {\n    imageURL\n  }\n  label\n  link {\n    text\n    url\n  }\n  title\n}\n\nfragment HomeHeroUnits_heroUnits on HeroUnitConnection {\n  edges {\n    node {\n      ...HomeHeroUnit_heroUnit\n      id\n    }\n  }\n}\n"
   }
 };
 })();

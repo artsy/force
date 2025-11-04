@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<eb449f397aeb46d328159cdc8f690703>>
+ * @generated SignedSource<<29d9a77eb7bbdfde2999e9b4b8eb9882>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -110,59 +110,65 @@ v12 = {
   "type": "Profile",
   "abstractKey": null
 },
-v13 = [
+v13 = {
+  "kind": "InlineFragment",
+  "selections": (v8/*: any*/),
+  "type": "Video",
+  "abstractKey": null
+},
+v14 = [
   (v10/*: any*/),
   (v11/*: any*/)
 ],
-v14 = {
+v15 = {
   "enumValues": null,
   "nullable": true,
   "plural": true,
   "type": "OrderedSet"
 },
-v15 = {
+v16 = {
   "enumValues": null,
   "nullable": true,
   "plural": true,
   "type": "OrderedSetItem"
 },
-v16 = {
-  "enumValues": null,
-  "nullable": false,
-  "plural": false,
-  "type": "String"
-},
 v17 = {
   "enumValues": null,
-  "nullable": true,
+  "nullable": false,
   "plural": false,
   "type": "String"
 },
 v18 = {
   "enumValues": null,
-  "nullable": false,
+  "nullable": true,
   "plural": false,
-  "type": "ID"
+  "type": "String"
 },
 v19 = {
   "enumValues": null,
-  "nullable": true,
+  "nullable": false,
   "plural": false,
-  "type": "Image"
+  "type": "ID"
 },
 v20 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "CroppedImageUrl"
+  "type": "Image"
 },
 v21 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "CroppedImageUrl"
+},
+v22 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "Int"
 },
-v22 = {
+v23 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
@@ -337,7 +343,8 @@ return {
                 "abstractKey": null
               },
               (v9/*: any*/),
-              (v12/*: any*/)
+              (v12/*: any*/),
+              (v13/*: any*/)
             ],
             "storageKey": null
           },
@@ -460,7 +467,7 @@ return {
                                 "kind": "LinkedField",
                                 "name": "cropped",
                                 "plural": false,
-                                "selections": (v13/*: any*/),
+                                "selections": (v14/*: any*/),
                                 "storageKey": "cropped(height:45,width:45)"
                               }
                             ],
@@ -501,7 +508,7 @@ return {
                                 "kind": "LinkedField",
                                 "name": "cropped",
                                 "plural": false,
-                                "selections": (v13/*: any*/),
+                                "selections": (v14/*: any*/),
                                 "storageKey": "cropped(height:334,version:[\"larger\",\"large\"],width:445)"
                               }
                             ],
@@ -525,7 +532,8 @@ return {
                 "type": "FeaturedLink",
                 "abstractKey": null
               },
-              (v12/*: any*/)
+              (v12/*: any*/),
+              (v13/*: any*/)
             ],
             "storageKey": null
           },
@@ -536,47 +544,47 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e32509ee99b297f9aa3f93fa7605f6cc",
+    "cacheID": "3f66f5e28b9c18fbccf12e29185abab6",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
-        "featuredArtists": (v14/*: any*/),
-        "featuredArtists.artists": (v15/*: any*/),
-        "featuredArtists.artists.__isNode": (v16/*: any*/),
-        "featuredArtists.artists.__typename": (v16/*: any*/),
+        "featuredArtists": (v15/*: any*/),
+        "featuredArtists.artists": (v16/*: any*/),
+        "featuredArtists.artists.__isNode": (v17/*: any*/),
+        "featuredArtists.artists.__typename": (v17/*: any*/),
         "featuredArtists.artists.entity": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "FeaturedLinkEntity"
         },
-        "featuredArtists.artists.entity.__isNode": (v16/*: any*/),
-        "featuredArtists.artists.entity.__typename": (v16/*: any*/),
-        "featuredArtists.artists.entity.formattedNationalityAndBirthday": (v17/*: any*/),
-        "featuredArtists.artists.entity.id": (v18/*: any*/),
-        "featuredArtists.artists.entity.internalID": (v18/*: any*/),
-        "featuredArtists.artists.entity.name": (v17/*: any*/),
-        "featuredArtists.artists.href": (v17/*: any*/),
-        "featuredArtists.artists.id": (v18/*: any*/),
-        "featuredArtists.artists.image": (v19/*: any*/),
-        "featuredArtists.artists.image.thumb": (v20/*: any*/),
-        "featuredArtists.artists.image.thumb.height": (v21/*: any*/),
-        "featuredArtists.artists.image.thumb.src": (v16/*: any*/),
-        "featuredArtists.artists.image.thumb.srcSet": (v16/*: any*/),
-        "featuredArtists.artists.image.thumb.width": (v21/*: any*/),
-        "featuredArtists.artists.internalID": (v18/*: any*/),
-        "featuredArtists.artists.subtitle": (v17/*: any*/),
-        "featuredArtists.artists.title": (v17/*: any*/),
-        "featuredArtists.id": (v18/*: any*/),
-        "featuredArtists.name": (v17/*: any*/),
-        "featuredGenes": (v14/*: any*/),
-        "featuredGenes.genes": (v15/*: any*/),
-        "featuredGenes.genes.__isNode": (v16/*: any*/),
-        "featuredGenes.genes.__typename": (v16/*: any*/),
-        "featuredGenes.genes.href": (v17/*: any*/),
-        "featuredGenes.genes.id": (v18/*: any*/),
-        "featuredGenes.genes.internalID": (v18/*: any*/),
-        "featuredGenes.genes.name": (v17/*: any*/),
+        "featuredArtists.artists.entity.__isNode": (v17/*: any*/),
+        "featuredArtists.artists.entity.__typename": (v17/*: any*/),
+        "featuredArtists.artists.entity.formattedNationalityAndBirthday": (v18/*: any*/),
+        "featuredArtists.artists.entity.id": (v19/*: any*/),
+        "featuredArtists.artists.entity.internalID": (v19/*: any*/),
+        "featuredArtists.artists.entity.name": (v18/*: any*/),
+        "featuredArtists.artists.href": (v18/*: any*/),
+        "featuredArtists.artists.id": (v19/*: any*/),
+        "featuredArtists.artists.image": (v20/*: any*/),
+        "featuredArtists.artists.image.thumb": (v21/*: any*/),
+        "featuredArtists.artists.image.thumb.height": (v22/*: any*/),
+        "featuredArtists.artists.image.thumb.src": (v17/*: any*/),
+        "featuredArtists.artists.image.thumb.srcSet": (v17/*: any*/),
+        "featuredArtists.artists.image.thumb.width": (v22/*: any*/),
+        "featuredArtists.artists.internalID": (v19/*: any*/),
+        "featuredArtists.artists.subtitle": (v18/*: any*/),
+        "featuredArtists.artists.title": (v18/*: any*/),
+        "featuredArtists.id": (v19/*: any*/),
+        "featuredArtists.name": (v18/*: any*/),
+        "featuredGenes": (v15/*: any*/),
+        "featuredGenes.genes": (v16/*: any*/),
+        "featuredGenes.genes.__isNode": (v17/*: any*/),
+        "featuredGenes.genes.__typename": (v17/*: any*/),
+        "featuredGenes.genes.href": (v18/*: any*/),
+        "featuredGenes.genes.id": (v19/*: any*/),
+        "featuredGenes.genes.internalID": (v19/*: any*/),
+        "featuredGenes.genes.name": (v18/*: any*/),
         "featuredGenes.genes.trendingArtists": {
           "enumValues": null,
           "nullable": true,
@@ -589,37 +597,37 @@ return {
           "plural": false,
           "type": "ArtistCounts"
         },
-        "featuredGenes.genes.trendingArtists.counts.artworks": (v22/*: any*/),
-        "featuredGenes.genes.trendingArtists.counts.forSaleArtworks": (v22/*: any*/),
+        "featuredGenes.genes.trendingArtists.counts.artworks": (v23/*: any*/),
+        "featuredGenes.genes.trendingArtists.counts.forSaleArtworks": (v23/*: any*/),
         "featuredGenes.genes.trendingArtists.coverArtwork": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Artwork"
         },
-        "featuredGenes.genes.trendingArtists.coverArtwork.avatar": (v19/*: any*/),
-        "featuredGenes.genes.trendingArtists.coverArtwork.avatar.cropped": (v20/*: any*/),
-        "featuredGenes.genes.trendingArtists.coverArtwork.avatar.cropped.src": (v16/*: any*/),
-        "featuredGenes.genes.trendingArtists.coverArtwork.avatar.cropped.srcSet": (v16/*: any*/),
-        "featuredGenes.genes.trendingArtists.coverArtwork.id": (v18/*: any*/),
-        "featuredGenes.genes.trendingArtists.coverArtwork.image": (v19/*: any*/),
-        "featuredGenes.genes.trendingArtists.coverArtwork.image.cropped": (v20/*: any*/),
-        "featuredGenes.genes.trendingArtists.coverArtwork.image.cropped.src": (v16/*: any*/),
-        "featuredGenes.genes.trendingArtists.coverArtwork.image.cropped.srcSet": (v16/*: any*/),
-        "featuredGenes.genes.trendingArtists.formattedNationalityAndBirthday": (v17/*: any*/),
-        "featuredGenes.genes.trendingArtists.href": (v17/*: any*/),
-        "featuredGenes.genes.trendingArtists.id": (v18/*: any*/),
-        "featuredGenes.genes.trendingArtists.initials": (v17/*: any*/),
-        "featuredGenes.genes.trendingArtists.internalID": (v18/*: any*/),
-        "featuredGenes.genes.trendingArtists.name": (v17/*: any*/),
-        "featuredGenes.genes.trendingArtists.slug": (v18/*: any*/),
-        "featuredGenes.id": (v18/*: any*/),
-        "featuredGenes.name": (v17/*: any*/)
+        "featuredGenes.genes.trendingArtists.coverArtwork.avatar": (v20/*: any*/),
+        "featuredGenes.genes.trendingArtists.coverArtwork.avatar.cropped": (v21/*: any*/),
+        "featuredGenes.genes.trendingArtists.coverArtwork.avatar.cropped.src": (v17/*: any*/),
+        "featuredGenes.genes.trendingArtists.coverArtwork.avatar.cropped.srcSet": (v17/*: any*/),
+        "featuredGenes.genes.trendingArtists.coverArtwork.id": (v19/*: any*/),
+        "featuredGenes.genes.trendingArtists.coverArtwork.image": (v20/*: any*/),
+        "featuredGenes.genes.trendingArtists.coverArtwork.image.cropped": (v21/*: any*/),
+        "featuredGenes.genes.trendingArtists.coverArtwork.image.cropped.src": (v17/*: any*/),
+        "featuredGenes.genes.trendingArtists.coverArtwork.image.cropped.srcSet": (v17/*: any*/),
+        "featuredGenes.genes.trendingArtists.formattedNationalityAndBirthday": (v18/*: any*/),
+        "featuredGenes.genes.trendingArtists.href": (v18/*: any*/),
+        "featuredGenes.genes.trendingArtists.id": (v19/*: any*/),
+        "featuredGenes.genes.trendingArtists.initials": (v18/*: any*/),
+        "featuredGenes.genes.trendingArtists.internalID": (v19/*: any*/),
+        "featuredGenes.genes.trendingArtists.name": (v18/*: any*/),
+        "featuredGenes.genes.trendingArtists.slug": (v19/*: any*/),
+        "featuredGenes.id": (v19/*: any*/),
+        "featuredGenes.name": (v18/*: any*/)
       }
     },
     "name": "ArtistsIndexFragmentContainerTestQuery",
     "operationKind": "query",
-    "text": "query ArtistsIndexFragmentContainerTestQuery {\n  featuredArtists: orderedSets(key: \"homepage:featured-artists\") {\n    ...ArtistsIndex_featuredArtists\n    id\n  }\n  featuredGenes: orderedSets(key: \"artists:featured-genes\") {\n    ...ArtistsIndex_featuredGenes\n    id\n  }\n}\n\nfragment ArtistsCarouselCell_featuredLink on FeaturedLink {\n  internalID\n  title\n  subtitle\n  href\n  entity {\n    __typename\n    ... on Artist {\n      internalID\n      name\n      formattedNationalityAndBirthday\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  image {\n    thumb: cropped(width: 600, height: 450, version: \"wide\") {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArtistsIndex_featuredArtists on OrderedSet {\n  name\n  artists: items {\n    __typename\n    ... on FeaturedLink {\n      internalID\n      id\n    }\n    ...ArtistsCarouselCell_featuredLink\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on Profile {\n      id\n    }\n  }\n}\n\nfragment ArtistsIndex_featuredGenes on OrderedSet {\n  name\n  genes: items {\n    __typename\n    ... on Gene {\n      internalID\n      name\n      href\n      trendingArtists(sample: 4) {\n        ...CellArtist_artist\n        internalID\n        id\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on FeaturedLink {\n      id\n    }\n    ... on Profile {\n      id\n    }\n  }\n}\n\nfragment CellArtist_artist on Artist {\n  ...EntityHeaderArtist_artist\n  internalID\n  slug\n  name\n  href\n  initials\n  coverArtwork {\n    image {\n      cropped(width: 445, height: 334, version: [\"larger\", \"large\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query ArtistsIndexFragmentContainerTestQuery {\n  featuredArtists: orderedSets(key: \"homepage:featured-artists\") {\n    ...ArtistsIndex_featuredArtists\n    id\n  }\n  featuredGenes: orderedSets(key: \"artists:featured-genes\") {\n    ...ArtistsIndex_featuredGenes\n    id\n  }\n}\n\nfragment ArtistsCarouselCell_featuredLink on FeaturedLink {\n  internalID\n  title\n  subtitle\n  href\n  entity {\n    __typename\n    ... on Artist {\n      internalID\n      name\n      formattedNationalityAndBirthday\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  image {\n    thumb: cropped(width: 600, height: 450, version: \"wide\") {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArtistsIndex_featuredArtists on OrderedSet {\n  name\n  artists: items {\n    __typename\n    ... on FeaturedLink {\n      internalID\n      id\n    }\n    ...ArtistsCarouselCell_featuredLink\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on Profile {\n      id\n    }\n    ... on Video {\n      id\n    }\n  }\n}\n\nfragment ArtistsIndex_featuredGenes on OrderedSet {\n  name\n  genes: items {\n    __typename\n    ... on Gene {\n      internalID\n      name\n      href\n      trendingArtists(sample: 4) {\n        ...CellArtist_artist\n        internalID\n        id\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on FeaturedLink {\n      id\n    }\n    ... on Profile {\n      id\n    }\n    ... on Video {\n      id\n    }\n  }\n}\n\nfragment CellArtist_artist on Artist {\n  ...EntityHeaderArtist_artist\n  internalID\n  slug\n  name\n  href\n  initials\n  coverArtwork {\n    image {\n      cropped(width: 445, height: 334, version: [\"larger\", \"large\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();
