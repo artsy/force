@@ -9379,6 +9379,32 @@ type CreateArtworkFailure {
   mutationError: GravityMutationError
 }
 
+type CreateArtworkFromTemplateFailure {
+  mutationError: GravityMutationError
+}
+
+input CreateArtworkFromTemplateInput {
+  # The ID of the artwork template.
+  artworkTemplateID: ID!
+  clientMutationId: String
+
+  # The ID of the partner.
+  partnerID: ID!
+}
+
+type CreateArtworkFromTemplatePayload {
+  artworkOrError: CreateArtworkFromTemplateResponseOrError
+  clientMutationId: String
+}
+
+union CreateArtworkFromTemplateResponseOrError =
+  | CreateArtworkFromTemplateFailure
+  | CreateArtworkFromTemplateSuccess
+
+type CreateArtworkFromTemplateSuccess {
+  artwork: Artwork
+}
+
 type CreateArtworkImportArtistAssignmentFailure {
   mutationError: GravityMutationError
 }
@@ -10880,15 +10906,31 @@ type DeleteArtworkSuccess {
   artwork: Artwork
 }
 
+type DeleteArtworkTemplateFailure {
+  mutationError: GravityMutationError
+}
+
 input DeleteArtworkTemplateInput {
+  # The ID of the artwork template to delete.
   artworkTemplateID: ID!
   clientMutationId: String
+
+  # The ID of the partner.
   partnerID: ID!
 }
 
 type DeleteArtworkTemplatePayload {
-  artworkTemplate: ArtworkTemplate!
+  # On success: the deleted artwork template. On failure: MutationError.
+  artworkTemplateOrError: DeleteArtworkTemplateResponseOrError
   clientMutationId: String
+}
+
+union DeleteArtworkTemplateResponseOrError =
+  | DeleteArtworkTemplateFailure
+  | DeleteArtworkTemplateSuccess
+
+type DeleteArtworkTemplateSuccess {
+  artworkTemplate: ArtworkTemplate
 }
 
 input DeleteBankAccountInput {
@@ -16468,6 +16510,11 @@ type Mutation {
   createArtwork(
     input: CreateArtworkMutationInput!
   ): CreateArtworkMutationPayload
+
+  # Create an artwork from an artwork template.
+  createArtworkFromTemplate(
+    input: CreateArtworkFromTemplateInput!
+  ): CreateArtworkFromTemplatePayload
   createArtworkImport(
     input: CreateArtworkImportInput!
   ): CreateArtworkImportPayload
@@ -16690,6 +16737,8 @@ type Mutation {
 
   # Deletes an image from an artwork in my collection
   deleteArtworkImage(input: DeleteArtworkImageInput!): DeleteArtworkImagePayload
+
+  # Delete an artwork template.
   deleteArtworkTemplate(
     input: DeleteArtworkTemplateInput!
   ): DeleteArtworkTemplatePayload
