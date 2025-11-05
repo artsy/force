@@ -160,6 +160,7 @@ const ArticleHero: FC<React.PropsWithChildren<ArticleHeroProps>> = ({
                     left: 0,
                   }}
                   alt=""
+                  fetchPriority="high"
                 />
               </Box>
             )}
@@ -247,7 +248,7 @@ const ArticleHero: FC<React.PropsWithChildren<ArticleHeroProps>> = ({
                       width="100%"
                       height="100%"
                       alt=""
-                      lazyLoad
+                      fetchPriority="high"
                     />
                   </ResponsiveBox>
                 </Box>

@@ -9,11 +9,12 @@ import { createFragmentContainer, graphql } from "react-relay"
 interface ArticleSectionImageCollectionImageProps {
   figure: ArticleSectionImageCollectionImage_figure$data
   targetWidth: number
+  isFirst?: boolean
 }
 
 const ArticleSectionImageCollectionImage: FC<
   React.PropsWithChildren<ArticleSectionImageCollectionImageProps>
-> = ({ figure, targetWidth }) => {
+> = ({ figure, targetWidth, isFirst = false }) => {
   const { articleZoomGalleryComponent, showArticleZoomGallery } =
     useArticleZoomGallery()
 
@@ -38,14 +39,32 @@ const ArticleSectionImageCollectionImage: FC<
         position="relative"
       >
         <ArticleZoomButton width="100%" height="100%" onClick={handleClick}>
-          <Image
-            src={img.src}
-            srcSet={img.srcSet}
-            width="100%"
-            height="100%"
-            alt={figure.formattedMetadata ?? ""}
-            lazyLoad
-          />
+          {isFirst ? (
+            <img
+              src={img.src}
+              srcSet={img.srcSet}
+              width="100%"
+              height="100%"
+              alt={figure.formattedMetadata ?? ""}
+              fetchPriority="high"
+              decoding="async"
+              style={{
+                display: "block",
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+              }}
+            />
+          ) : (
+            <Image
+              src={img.src}
+              srcSet={img.srcSet}
+              width="100%"
+              height="100%"
+              alt={figure.formattedMetadata ?? ""}
+              lazyLoad
+            />
+          )}
         </ArticleZoomButton>
       </ResponsiveBox>
     </>

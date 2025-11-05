@@ -142,7 +142,9 @@ const ArticleBody: FC<React.PropsWithChildren<ArticleBodyProps>> = ({
 
             <Join separator={<Spacer y={4} />}>
               {article.sections.map((section, i) => {
-                const isFirst = article.layout === "FEATURE" && i === 0
+                const isFirst =
+                  (article.layout === "FEATURE" && i === 0) ||
+                  (!article.hero && i === 0)
                 const isLast = i === article.sections.length - 1
 
                 return (
