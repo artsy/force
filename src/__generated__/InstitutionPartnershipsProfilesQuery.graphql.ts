@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3f9b2dfc3a03a55f109a68e630597156>>
+ * @generated SignedSource<<3e24122ae54674875670544513bde172>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -387,6 +387,12 @@ return {
                 "selections": (v9/*: any*/),
                 "type": "FeaturedLink",
                 "abstractKey": null
+              },
+              {
+                "kind": "InlineFragment",
+                "selections": (v9/*: any*/),
+                "type": "Video",
+                "abstractKey": null
               }
             ],
             "storageKey": null
@@ -398,12 +404,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f070677a5e86cad29e475bc85017ba4c",
+    "cacheID": "daa6f0f9ec5d5003b22fe9dce123f45c",
     "id": null,
     "metadata": {},
     "name": "InstitutionPartnershipsProfilesQuery",
     "operationKind": "query",
-    "text": "query InstitutionPartnershipsProfilesQuery {\n  orderedSet(id: \"62ace82dd1b5bd000b4e674e\") {\n    ...InstitutionPartnershipsProfiles_orderedSet\n    id\n  }\n}\n\nfragment CellPartner_partner on Partner {\n  ...EntityHeaderPartner_partner\n  internalID\n  slug\n  name\n  href\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    image {\n      cropped(width: 445, height: 334, version: [\"wide\", \"large\", \"featured\", \"larger\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment EntityHeaderPartner_partner on Partner {\n  internalID\n  type\n  slug\n  href\n  name\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    internalID\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    icon {\n      cropped(width: 45, height: 45, version: [\"untouched-png\", \"large\", \"square\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment InstitutionPartnershipsProfiles_orderedSet on OrderedSet {\n  items {\n    __typename\n    ... on Profile {\n      internalID\n      owner {\n        __typename\n        ... on Partner {\n          ...CellPartner_partner\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n        ... on FairOrganizer {\n          id\n        }\n      }\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on FeaturedLink {\n      id\n    }\n  }\n}\n"
+    "text": "query InstitutionPartnershipsProfilesQuery {\n  orderedSet(id: \"62ace82dd1b5bd000b4e674e\") {\n    ...InstitutionPartnershipsProfiles_orderedSet\n    id\n  }\n}\n\nfragment CellPartner_partner on Partner {\n  ...EntityHeaderPartner_partner\n  internalID\n  slug\n  name\n  href\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    image {\n      cropped(width: 445, height: 334, version: [\"wide\", \"large\", \"featured\", \"larger\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment EntityHeaderPartner_partner on Partner {\n  internalID\n  type\n  slug\n  href\n  name\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    internalID\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    icon {\n      cropped(width: 45, height: 45, version: [\"untouched-png\", \"large\", \"square\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment InstitutionPartnershipsProfiles_orderedSet on OrderedSet {\n  items {\n    __typename\n    ... on Profile {\n      internalID\n      owner {\n        __typename\n        ... on Partner {\n          ...CellPartner_partner\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n        ... on FairOrganizer {\n          id\n        }\n      }\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on FeaturedLink {\n      id\n    }\n    ... on Video {\n      id\n    }\n  }\n}\n"
   }
 };
 })();

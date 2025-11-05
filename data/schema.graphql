@@ -9379,6 +9379,32 @@ type CreateArtworkFailure {
   mutationError: GravityMutationError
 }
 
+type CreateArtworkFromTemplateFailure {
+  mutationError: GravityMutationError
+}
+
+input CreateArtworkFromTemplateInput {
+  # The ID of the artwork template.
+  artworkTemplateID: ID!
+  clientMutationId: String
+
+  # The ID of the partner.
+  partnerID: ID!
+}
+
+type CreateArtworkFromTemplatePayload {
+  artworkOrError: CreateArtworkFromTemplateResponseOrError
+  clientMutationId: String
+}
+
+union CreateArtworkFromTemplateResponseOrError =
+  | CreateArtworkFromTemplateFailure
+  | CreateArtworkFromTemplateSuccess
+
+type CreateArtworkFromTemplateSuccess {
+  artwork: Artwork
+}
+
 type CreateArtworkImportArtistAssignmentFailure {
   mutationError: GravityMutationError
 }
@@ -10880,15 +10906,31 @@ type DeleteArtworkSuccess {
   artwork: Artwork
 }
 
+type DeleteArtworkTemplateFailure {
+  mutationError: GravityMutationError
+}
+
 input DeleteArtworkTemplateInput {
+  # The ID of the artwork template to delete.
   artworkTemplateID: ID!
   clientMutationId: String
+
+  # The ID of the partner.
   partnerID: ID!
 }
 
 type DeleteArtworkTemplatePayload {
-  artworkTemplate: ArtworkTemplate!
+  # On success: the deleted artwork template. On failure: MutationError.
+  artworkTemplateOrError: DeleteArtworkTemplateResponseOrError
   clientMutationId: String
+}
+
+union DeleteArtworkTemplateResponseOrError =
+  | DeleteArtworkTemplateFailure
+  | DeleteArtworkTemplateSuccess
+
+type DeleteArtworkTemplateSuccess {
+  artworkTemplate: ArtworkTemplate
 }
 
 input DeleteBankAccountInput {
@@ -16468,6 +16510,11 @@ type Mutation {
   createArtwork(
     input: CreateArtworkMutationInput!
   ): CreateArtworkMutationPayload
+
+  # Create an artwork from an artwork template.
+  createArtworkFromTemplate(
+    input: CreateArtworkFromTemplateInput!
+  ): CreateArtworkFromTemplatePayload
   createArtworkImport(
     input: CreateArtworkImportInput!
   ): CreateArtworkImportPayload
@@ -16690,6 +16737,8 @@ type Mutation {
 
   # Deletes an image from an artwork in my collection
   deleteArtworkImage(input: DeleteArtworkImageInput!): DeleteArtworkImagePayload
+
+  # Delete an artwork template.
   deleteArtworkTemplate(
     input: DeleteArtworkTemplateInput!
   ): DeleteArtworkTemplatePayload
@@ -17943,6 +17992,7 @@ union OrderedSetItem =
   | Profile
   | Sale
   | Show
+  | Video
 
 # A connection to a list of items.
 type OrderedSetItemConnection {
@@ -21401,6 +21451,9 @@ type Query {
     recaptchaToken: String!
   ): VerifyUser
 
+  # Find a video by ID
+  video(id: ID!): Video
+
   # A wildcard used to support complex root queries in Relay
   viewer: Viewer
 
@@ -23964,6 +24017,7 @@ input UpdateArtworkEditionSetInput {
   published: Boolean
   shippingWeight: Float
   shippingWeightMetric: String
+  title: String
 }
 
 type UpdateArtworkImportFailure {
@@ -24114,6 +24168,7 @@ input UpdateArtworkMutationInput {
   published: Boolean
   shippingWeight: Float
   shippingWeightMetric: String
+  title: String
 }
 
 type UpdateArtworkMutationPayload {
@@ -26203,12 +26258,17 @@ type VerifyUser {
 
 # An object containing video metadata
 type Video {
+  description(format: Format): String
+
   # The height of the video
   height: Int!
   id: ID!
 
   # Returns a full-qualified url that can be embedded in an iframe player
   playerUrl: String!
+
+  # Title of the video
+  title: String
 
   # The width of the video
   width: Int!
@@ -27432,6 +27492,9 @@ type Viewer {
     # Recaptcha token.
     recaptchaToken: String!
   ): VerifyUser
+
+  # Find a video by ID
+  video(id: ID!): Video
 
   # Find a viewing room by ID
   viewingRoom(id: ID!): ViewingRoom
