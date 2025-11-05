@@ -47,20 +47,19 @@ export const FullBleedHeaderPicture = forwardRef(
         <source srcSet={sm.srcSet} media="(min-width: 767px)" />
         <source srcSet={xs.srcSet} media="(max-width: 766px)" />
 
-        <Image
+        <img
           ref={forwardedRef as any}
           src={sm.src}
           alt=""
           fetchPriority="high"
+          style={{
+            display: "block",
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+          }}
         />
       </picture>
     )
   },
 )
-
-const Image = styled.img`
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-`
