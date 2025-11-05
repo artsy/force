@@ -27,7 +27,13 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
   const order = me?.order
 
   if (!(order && me)) {
-    return <ErrorPage code={404} message="Order not found" />
+    return (
+      <ErrorPage
+        code={404}
+        message="Order not found"
+        headline="Sorry, something went wrong. Please verify your account details or check the URL."
+      />
+    )
   }
 
   useEffect(() => {

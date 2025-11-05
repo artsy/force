@@ -41,7 +41,7 @@ export const LayoutCheckout: FC<React.PropsWithChildren<BaseLayoutProps>> = ({
         justifyContent="center"
       >
         <AppContainer as="main" id="main" flex={1}>
-          {children}
+          <HorizontalPadding>{children}</HorizontalPadding>
         </AppContainer>
 
         {isEigen && <Spacer y={2} />}
