@@ -21,7 +21,7 @@ export const Order2CheckoutPricingBreakdown: React.FC<
   Order2CheckoutPricingBreakdownProps
 > = ({ order }) => {
   const { checkoutTracking, partnerOffer } = useCheckoutContext()
-  const { pricingBreakdownLines } = useFragment(FRAGMENT, order)
+  const { pricingBreakdownLines, mode } = useFragment(FRAGMENT, order)
 
   return (
     <>
@@ -37,12 +37,14 @@ export const Order2CheckoutPricingBreakdown: React.FC<
         let withAsterisk = false
         let secondLine: JSX.Element | null = null
 
-        let amountText: string
+        let amountText = ""
         switch (typename) {
           case "SubtotalLine":
-            amountText = line.amount
-              ? `${line.amount.currencySymbol}${line.amount.amount}`
-              : ""
+            if (line.amount) {
+              amountText = `${line.amount.currencySymbol}${line.amount.amount}`
+            } else if (mode === "OFFER") {
+              amountText = "Waiting for offer"
+            }
 
             if (isValidTimer(partnerOffer)) {
               color = "blue100"
@@ -119,6 +121,7 @@ export const Order2CheckoutPricingBreakdown: React.FC<
 const FRAGMENT = graphql`
   fragment Order2CheckoutPricingBreakdown_order on Order {
     source
+    mode
     buyerStateExpiresAt
     # BuyerState to make sure the timer applies only to pre-submission orders?
     pricingBreakdownLines {

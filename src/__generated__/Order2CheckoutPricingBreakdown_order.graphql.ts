@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2863f0bbb6f60bcf8094dbd678f5a625>>
+ * @generated SignedSource<<952ed0b74fdb0b291c70a7280a0cdf18>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,10 +9,12 @@
 // @ts-nocheck
 
 import { ReaderFragment } from 'relay-runtime';
+export type OrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type OrderSourceEnum = "ARTWORK_PAGE" | "INQUIRY" | "PARTNER_OFFER" | "PRIVATE_SALE" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type Order2CheckoutPricingBreakdown_order$data = {
   readonly buyerStateExpiresAt: string | null | undefined;
+  readonly mode: OrderModeEnum;
   readonly pricingBreakdownLines: ReadonlyArray<{
     readonly __typename: "ShippingLine";
     readonly amount: {
@@ -118,6 +120,13 @@ return {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
+      "name": "mode",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "buyerStateExpiresAt",
       "storageKey": null
     },
@@ -193,6 +202,6 @@ return {
 };
 })();
 
-(node as any).hash = "85bd35f0baa6502b0051eb9dc38d3944";
+(node as any).hash = "52a85a3df09af99f600d9b0a5570caaa";
 
 export default node;

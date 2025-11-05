@@ -6,30 +6,24 @@ export const useOrder2AddInitialOfferMutation = () => {
   return useMutation<useOrder2AddInitialOfferMutationType>({
     mutation: graphql`
       mutation useOrder2AddInitialOfferMutation(
-        $input: CommerceAddInitialOfferToOrderInput!
+        $input: createBuyerOfferInput!
       ) {
-        commerceAddInitialOfferToOrder(input: $input) {
-          orderOrError {
-            ... on CommerceOrderWithMutationSuccess {
+        createBuyerOffer(input: $input) {
+          offerOrError {
+            ... on OfferMutationSuccess {
               __typename
-              order {
+              offer {
                 internalID
-                mode
-                totalListPriceCents
-                ... on CommerceOfferOrder {
-                  myLastOffer {
-                    internalID
-                    amountCents
-                    note
-                  }
+                order {
+                  ...Order2CheckoutContext_order
+                  ...Order2CheckoutApp_order
                 }
               }
             }
-            ... on CommerceOrderWithMutationFailure {
-              error {
-                type
+            ... on OfferMutationError {
+              mutationError {
                 code
-                data
+                message
               }
             }
           }
