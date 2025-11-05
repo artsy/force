@@ -16550,6 +16550,9 @@ type Mutation {
   # Creates a bidder position
   createBidderPosition(input: BidderPositionInput!): BidderPositionPayload
 
+  # Create a buyer offer on an order
+  createBuyerOffer(input: createBuyerOfferInput!): createBuyerOfferPayload
+
   # Create a canonical artist
   createCanonicalArtist(
     input: CreateCanonicalArtistMutationInput!
@@ -17099,6 +17102,9 @@ type Mutation {
   updateArtworkImportRowImages(
     input: UpdateArtworkImportRowImagesInput!
   ): UpdateArtworkImportRowImagesPayload
+
+  # Update a buyer offer
+  updateBuyerOffer(input: updateBuyerOfferInput!): updateBuyerOfferPayload
 
   # Updates the flags on a partner.
   updateCMSLastAccessTimestamp(
@@ -17704,11 +17710,29 @@ type Offer {
   # Optional note for the offer
   note: String
 
+  # The order this offer belongs to
+  order: Order
+
   # The shipping total for this offer
   shippingTotal: Money
 
   # The tax total for this offer
   taxTotal: Money
+}
+
+type OfferExchangeError {
+  code: String!
+  message: String!
+}
+
+type OfferMutationError {
+  mutationError: OfferExchangeError!
+}
+
+union OfferMutationResponse = OfferMutationError | OfferMutationSuccess
+
+type OfferMutationSuccess {
+  offer: Offer!
 }
 
 # Consignment Offer Response
@@ -27808,6 +27832,23 @@ type createAlertPayload {
   responseOrError: CreateAlertResponseOrError
 }
 
+input createBuyerOfferInput {
+  # Offer amount in minor units (cents).
+  amountMinor: Long!
+  clientMutationId: String
+
+  # Optional note for the offer.
+  note: String
+
+  # Order id.
+  orderID: ID!
+}
+
+type createBuyerOfferPayload {
+  clientMutationId: String
+  offerOrError: OfferMutationResponse
+}
+
 input createCollectionInput {
   clientMutationId: String
   name: String!
@@ -28229,6 +28270,26 @@ union updateArtworkResponseOrError = updateArtworkFailure | updateArtworkSuccess
 
 type updateArtworkSuccess {
   artwork: Artwork
+}
+
+input updateBuyerOfferInput {
+  # Offer amount in minor units (cents).
+  amountMinor: Long
+  clientMutationId: String
+
+  # Optional note for the offer.
+  note: String
+
+  # Offer id.
+  offerID: ID!
+
+  # Order id.
+  orderID: ID!
+}
+
+type updateBuyerOfferPayload {
+  clientMutationId: String
+  offerOrError: OfferMutationResponse
 }
 
 input updateCollectionInput {
