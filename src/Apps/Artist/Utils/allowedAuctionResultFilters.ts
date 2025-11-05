@@ -9,7 +9,17 @@ export const allowedAuctionResultFilters = (
 
     // Coerce integers
     if (INTEGER_INPUT_ARGS.includes(key)) {
-      obj[key] = Number.parseInt(filterParams[key] as string, 10) || 1
+      const parsed = Number.parseInt(filterParams[key] as string, 10)
+
+      // Only default to 1 for page, year fields should be omitted if invalid
+      if (Number.isNaN(parsed)) {
+        if (key === "page") {
+          obj[key] = 1
+        }
+        // Year fields are omitted when invalid/empty
+      } else {
+        obj[key] = parsed
+      }
       return obj
     }
 
@@ -25,7 +35,13 @@ export const allowedAuctionResultFilters = (
   }, {})
 }
 
-const INTEGER_INPUT_ARGS = ["createdAfterYear", "createdBeforeYear", "page"]
+const INTEGER_INPUT_ARGS = [
+  "createdAfterYear",
+  "createdBeforeYear",
+  "saleStartYear",
+  "saleEndYear",
+  "page",
+]
 const BOOLEAN_INPUT_ARGS = [
   "allowEmptyCreatedDates",
   "hideUpcoming",
@@ -37,11 +53,17 @@ const SUPPORTED_INPUT_ARGS = [
   "organizations",
   "categories",
   "sizes",
+  "keyword",
+  "sort",
   "metric",
   "hideUpcoming",
   "page",
   "priceRange",
   "currency",
+  "createdAfterYear",
+  "createdBeforeYear",
+  "saleStartYear",
+  "saleEndYear",
   "allowEmptyCreatedDates",
   "includeEstimateRange",
   "includeUnknownPrices",
