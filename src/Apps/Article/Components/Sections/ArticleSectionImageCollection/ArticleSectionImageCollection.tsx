@@ -21,11 +21,12 @@ const FIGURE_GUTTER_WIDTH = 10
 
 interface ArticleSectionImageCollectionProps {
   section: ArticleSectionImageCollection_section$data
+  isFirst?: boolean
 }
 
 const ArticleSectionImageCollection: FC<
   React.PropsWithChildren<ArticleSectionImageCollectionProps>
-> = ({ section }) => {
+> = ({ section, isFirst: isFirstSection = false }) => {
   const { Container, Caption, targetWidth } = useMemo(() => {
     switch (section.layout) {
       case "FILLWIDTH":
@@ -54,11 +55,14 @@ const ArticleSectionImageCollection: FC<
       <Flex alignItems="flex-end">
         <Join separator={<Spacer x={FIGURE_GUTTER_WIDTH} />}>
           {section.figures.map((figure, i) => {
+            const isFirst = isFirstSection && i === 0
+
             return (
               <ArticleSectionImageCollectionImageFragmentContainer
                 key={i}
                 figure={figure}
                 targetWidth={targetWidth}
+                isFirst={isFirst}
               />
             )
           })}
