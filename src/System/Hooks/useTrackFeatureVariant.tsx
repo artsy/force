@@ -1,7 +1,7 @@
 import { ActionType } from "@artsy/cohesion"
 import { pathToOwnerType } from "System/Contexts/AnalyticsContext"
 import { useRouter } from "System/Hooks/useRouter"
-import { useRef } from "react"
+import { useEffect, useRef } from "react"
 
 interface VariantTrackingProperties {
   experimentName: string
@@ -46,4 +46,25 @@ export function useTrackFeatureVariant({
   }
 
   return { trackFeatureVariant }
+}
+
+export const useTrackFeatureVariantOnMount = (
+  props: Omit<VariantTrackingProperties, "variantName"> & {
+    variantName?: string
+  },
+) => {
+  const { trackFeatureVariant } = useTrackFeatureVariant({
+    ...props,
+    variantName: props.variantName ?? "",
+  })
+
+  const isTracked = useRef(false)
+
+  useEffect(() => {
+    if (isTracked.current) return
+    if (props.variantName === "disabled") return
+
+    isTracked.current = true
+    trackFeatureVariant()
+  }, [trackFeatureVariant, props.variantName])
 }
