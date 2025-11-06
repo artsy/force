@@ -51,6 +51,8 @@ By following these steps, you can safely manage feature rollouts and experiments
 
 ## Using Feature Flags in React (Client-side)
 
+IMPORTANT: `useFlag` is not isomorphic. Meaning you will not have access to the flag on the server side render. Design your UI accordingly.
+
 ### Basic Feature Flag Usage
 
 ```tsx
@@ -69,25 +71,22 @@ const MyComponent = () => {
 
 ### A/B Testing with Variants
 
+IMPORTANT: `useVariant` is not isomorphic. Meaning you will not have access to the variant on the server side render. `variant` will be `"disabled"` until Unleash mounts and fetches.
+
 ```tsx
 import { useVariant } from "@unleash/proxy-client-react"
-import { useTrackFeatureVariant } from "System/Hooks/useTrackFeatureVariant"
+import { useTrackFeatureVariantOnMount } from "System/Hooks/useTrackFeatureVariantOnMount"
 
 const MyExperiment = () => {
   // Get variant information
   const variant = useVariant("experiment_name")
 
   // Track experiment view for analytics
-  const { trackFeatureVariant } = useTrackFeatureVariant({
+  useTrackFeatureVariantOnMount({
     experimentName: "experiment_name",
     variantName: variant?.name, // usually will be either "experiment" or "control"
     payload: "payload_data", //  optional
   })
-
-  // / biome-ignore lint/correctness/useExhaustiveDependencies: Only track experiment viewed once
-  useEffect(() => {
-    trackFeatureVariant()
-  }, [])
 
   // Render different UI based on variant
   if (variant.enabled && variant.name === "experiment") {

@@ -1,6 +1,7 @@
 import { ContextModule, Intent } from "@artsy/cohesion"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { Box, Flex, Skeleton, Spacer, Stack, Text } from "@artsy/palette"
+import { ArtistAuctionResultsActiveFilters } from "Apps/Artist/Routes/AuctionResults/ArtistAuctionResultsActiveFilters"
 import {
   ArtistAuctionResultsFilterNav,
   ArtistAuctionResultsFilterNavPlaceholder,
@@ -239,6 +240,10 @@ const AuctionResultsContainer: React.FC<
         showUpcomingAuctionResults={showUpcomingAuctionResults}
         onMobileFilterClick={() => setMode("MobileActionSheet")}
       >
+        <Spacer y={2} />
+
+        <ArtistAuctionResultsActiveFilters />
+
         <Spacer y={[2, 4]} />
 
         {results.length === 0 ? (

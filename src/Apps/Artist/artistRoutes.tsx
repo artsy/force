@@ -167,6 +167,13 @@ export const artistRoutes: RouteProps[] = [
         `,
         children: [
           {
+            path: "combined",
+            getComponent: () => ArtistABTestRoute,
+            onPreloadJS: () => {
+              ArtistABTestRoute.preload()
+            },
+          },
+          {
             path: "auction-results",
             getComponent: () => ArtistABTestRoute,
             onPreloadJS: () => {

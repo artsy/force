@@ -14,6 +14,7 @@ import {
 import { CollectorProfileArtistsAddNewDialog } from "Components/CollectorProfile/CollectorProfileArtistsAddNewDialog"
 import { CollectorProfileArtistsAddResult } from "Components/CollectorProfile/CollectorProfileArtistsAddResult"
 import { EntityHeaderPlaceholder } from "Components/EntityHeaders/EntityHeaderPlaceholder"
+import { useUpdateMyUserProfile } from "Utils/Hooks/Mutations/useUpdateMyUserProfile"
 import { useClientQuery } from "Utils/Hooks/useClientQuery"
 import { useDebouncedValue } from "Utils/Hooks/useDebounce"
 import { useMutation } from "Utils/Hooks/useMutation"
@@ -72,6 +73,10 @@ export const CollectorProfileArtistsAdd: FC<
       relayEnvironment,
     })
 
+  const { submitUpdateMyUserProfile } = useUpdateMyUserProfile({
+    relayEnvironment: relayEnvironment ?? undefined,
+  })
+
   const handleAdd = async () => {
     setMode("Adding")
 
@@ -101,6 +106,16 @@ export const CollectorProfileArtistsAdd: FC<
     }
 
     setMode("Idle")
+  }
+
+  const handleCancel = async () => {
+    try {
+      await submitUpdateMyUserProfile({ promptedForUpdate: true })
+    } catch (err) {
+      console.error(err)
+    }
+
+    onCancel?.()
   }
 
   return (
@@ -214,8 +229,8 @@ export const CollectorProfileArtistsAdd: FC<
           </Button>
 
           {onCancel && (
-            <Button variant="tertiary" onClick={onCancel}>
-              I haven’t started a collection yet
+            <Button variant="tertiary" onClick={handleCancel}>
+              I haven't started a collection yet
             </Button>
           )}
         </Stack>
