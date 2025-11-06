@@ -36,6 +36,7 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
   const { submitMutation: submitOfferMutation } =
     useOrder2AddInitialOfferMutation()
 
+  // TODO: Pull into useCheckoutContext
   const [formIsDirty, setFormIsDirty] = useState(false)
   const [isSubmittingOffer, setIsSubmittingOffer] = useState(false)
   const [offerNoteValue, setOfferNoteValue] = useState<OfferNoteValue>({
@@ -102,21 +103,23 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
         await submitOfferMutation({
           variables: {
             input: {
-              amountCents: offerValue * 100,
+              amountMinor: offerValue * 100,
               note,
-              orderId: orderData.internalID,
+              orderID: orderData.internalID,
             },
           },
         })
 
-      const orderOrError = response.commerceAddInitialOfferToOrder?.orderOrError
+      const offerOrError = response.createBuyerOffer?.offerOrError
 
-      if (orderOrError && "error" in orderOrError) {
-        handleSubmitError({ code: orderOrError.error?.code || "unknown" })
+      if (offerOrError && "mutationError" in offerOrError) {
+        handleSubmitError({
+          code: offerOrError.mutationError?.code || "unknown",
+        })
         return
       }
 
-      if (orderOrError && "order" in orderOrError) {
+      if (offerOrError && "offer" in offerOrError) {
         setSubmittedOfferAmount(offerValue)
         setSubmittedOfferNote(hasNote ? note : "")
         setOfferAmountComplete()
