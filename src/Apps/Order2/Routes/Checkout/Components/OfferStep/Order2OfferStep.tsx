@@ -6,6 +6,10 @@ import {
   CheckoutStepName,
   CheckoutStepState,
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
+import {
+  CheckoutErrorBanner,
+  MailtoOrderSupport,
+} from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { Order2ExactPriceOfferForm } from "Apps/Order2/Routes/Checkout/Components/OfferStep/Forms/Order2ExactPriceOfferForm"
 import { Order2HiddenPriceOfferForm } from "Apps/Order2/Routes/Checkout/Components/OfferStep/Forms/Order2HiddenPriceOfferForm"
 import { Order2PriceRangeOfferForm } from "Apps/Order2/Routes/Checkout/Components/OfferStep/Forms/Order2PriceRangeOfferForm"
@@ -36,8 +40,16 @@ interface Order2OfferStepProps {
 export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
   const orderData = useFragment(FRAGMENT, order)
   const completedViewProps = useCompleteOfferData(orderData)
-  const { steps, setOfferAmountComplete, checkoutTracking } =
-    useCheckoutContext()
+  const {
+    steps,
+    setOfferAmountComplete,
+    checkoutTracking,
+    messages,
+    setStepErrorMessage,
+  } = useCheckoutContext()
+
+  const offerAmountError = messages[CheckoutStepName.OFFER_AMOUNT]?.error
+
   const { submitMutation: submitOfferMutation } =
     useOrder2AddInitialOfferMutation()
   const unsetOrderFulfillmentOption =
@@ -152,8 +164,19 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
 
       throw new Error("Unexpected response from offer mutation")
     } catch (error) {
-      logger.error(error)
       handleSubmitError({ code: "unknown" })
+      setStepErrorMessage({
+        step: CheckoutStepName.OFFER_AMOUNT,
+        error: {
+          title: "An error occurred",
+          message: (
+            <>
+              Something went wrong while selecting your offer amount. Please try
+              again or contact <MailtoOrderSupport />.
+            </>
+          ),
+        },
+      })
     } finally {
       setIsSubmittingOffer(false)
       setFormIsDirty(false)
@@ -224,6 +247,8 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
             If accepted, your payment will be processed. All offers are binding
             once submitted.
           </Text>
+          <Spacer y={1} />
+          {offerAmountError && <CheckoutErrorBanner error={offerAmountError} />}
         </Flex>
       </Box>
 
