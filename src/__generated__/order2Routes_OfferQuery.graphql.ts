@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2da7e0e36c6fcd0ed2a5aded72674072>>
+ * @generated SignedSource<<534470d3f83e52433336a2bb4ebbfcd2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type OrderBuyerStateEnum = "APPROVED" | "CANCELLED" | "COMPLETED" | "DECLINED_BY_BUYER" | "DECLINED_BY_SELLER" | "INCOMPLETE" | "OFFER_RECEIVED" | "PAYMENT_FAILED" | "PROCESSING_OFFLINE_PAYMENT" | "PROCESSING_PAYMENT" | "REFUNDED" | "SHIPPED" | "SUBMITTED" | "UNKNOWN" | "%future added value";
+export type OrderBuyerStateEnum = "APPROVED" | "CANCELED" | "COMPLETED" | "DECLINED_BY_BUYER" | "DECLINED_BY_SELLER" | "INCOMPLETE" | "OFFER_RECEIVED" | "PAYMENT_FAILED" | "PROCESSING_OFFLINE_PAYMENT" | "PROCESSING_PAYMENT" | "REFUNDED" | "SHIPPED" | "SUBMITTED" | "UNKNOWN" | "%future added value";
 export type OrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type order2Routes_OfferQuery$variables = {
   orderID: string;
