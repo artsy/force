@@ -8,6 +8,7 @@ import { ArtistOverviewQueryRenderer } from "Apps/Artist/Routes/Overview/Compone
 import { ArtistArtworkFilterQueryRenderer } from "Apps/Artist/Routes/WorksForSale/Components/ArtistArtworkFilter"
 import { RouteTabs } from "Components/RouteTabs"
 import { useRouter } from "System/Hooks/useRouter"
+import { useTrackFeatureVariantOnMount } from "System/Hooks/useTrackFeatureVariant"
 import type { ArtistABTestRoute_artist$data } from "__generated__/ArtistABTestRoute_artist.graphql"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -27,6 +28,11 @@ export const ArtistABTestRoute: FC<
 
   const page = location.pathname.split("/").pop()
   const variant = useVariant(ARTIST_COMBINED_LAYOUT_FLAG)
+
+  useTrackFeatureVariantOnMount({
+    experimentName: ARTIST_COMBINED_LAYOUT_FLAG,
+    variantName: variant.name,
+  })
 
   switch (variant.name) {
     case "experiment": {
