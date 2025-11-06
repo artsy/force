@@ -7,7 +7,7 @@ import { useEffect } from "react"
 import { useRelayEnvironment } from "react-relay"
 import { useCheckoutContext } from "./useCheckoutContext"
 
-const logger = createLogger("useHandleStripeRedirect")
+const logger = createLogger("useStripePaymentBySetupIntentId")
 
 /*
  * Hook to handle Stripe redirect for newly-linked bank account in Order2

@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * @generated SignedSource<<6d9689041a23fe291e1fd0c88c0fa696>>
+=======
+ * @generated SignedSource<<93d85551be2495425ec82511a1ca21bd>>
+>>>>>>> 7b867dfcae (consolidate some sorting logic, refactor offer step)
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -43,6 +47,13 @@ export type Order2OfferStep_order$data = {
     } | null | undefined;
   } | null | undefined>;
   readonly mode: OrderModeEnum;
+  readonly offers: ReadonlyArray<{
+    readonly amount: {
+      readonly minor: any;
+    } | null | undefined;
+    readonly createdAt: string | null | undefined;
+    readonly note: string | null | undefined;
+  }> | null | undefined;
   readonly source: OrderSourceEnum;
   readonly " $fragmentSpreads": FragmentRefs<"Order2ExactPriceOfferForm_order" | "Order2OfferCompletedView_order" | "Order2PriceRangeOfferForm_order">;
   readonly " $fragmentType": "Order2OfferStep_order";
@@ -95,6 +106,49 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "currencyCode",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Offer",
+      "kind": "LinkedField",
+      "name": "offers",
+      "plural": true,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "createdAt",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Money",
+          "kind": "LinkedField",
+          "name": "amount",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "minor",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "note",
+          "storageKey": null
+        }
+      ],
       "storageKey": null
     },
     {
@@ -231,6 +285,10 @@ return {
 };
 })();
 
+<<<<<<< HEAD
 (node as any).hash = "da3314c9f447e266129fd1f69559c904";
+=======
+(node as any).hash = "d0163d827cd4adbb96b9d74769c33ba8";
+>>>>>>> 7b867dfcae (consolidate some sorting logic, refactor offer step)
 
 export default node;
