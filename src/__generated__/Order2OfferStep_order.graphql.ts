@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<477a5a49672548d899187cd801a831ae>>
+ * @generated SignedSource<<93d85551be2495425ec82511a1ca21bd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -42,6 +42,13 @@ export type Order2OfferStep_order$data = {
     } | null | undefined;
   } | null | undefined>;
   readonly mode: OrderModeEnum;
+  readonly offers: ReadonlyArray<{
+    readonly amount: {
+      readonly minor: any;
+    } | null | undefined;
+    readonly createdAt: string | null | undefined;
+    readonly note: string | null | undefined;
+  }> | null | undefined;
   readonly source: OrderSourceEnum;
   readonly " $fragmentSpreads": FragmentRefs<"Order2ExactPriceOfferForm_order" | "Order2OfferCompletedView_order" | "Order2PriceRangeOfferForm_order">;
   readonly " $fragmentType": "Order2OfferStep_order";
@@ -94,6 +101,49 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "currencyCode",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Offer",
+      "kind": "LinkedField",
+      "name": "offers",
+      "plural": true,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "createdAt",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Money",
+          "kind": "LinkedField",
+          "name": "amount",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "minor",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "note",
+          "storageKey": null
+        }
+      ],
       "storageKey": null
     },
     {
@@ -223,6 +273,6 @@ return {
 };
 })();
 
-(node as any).hash = "abed7f3dafaa58d919ab732d9042de68";
+(node as any).hash = "d0163d827cd4adbb96b9d74769c33ba8";
 
 export default node;

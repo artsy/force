@@ -4,6 +4,7 @@
  * step components to determine their completion status.
  */
 
+import { mostRecentCreatedAt } from "Apps/Order2/Routes/Checkout/Utils/mostRecentCreatedAt"
 import {
   type CheckoutStep,
   CheckoutStepName,
@@ -27,16 +28,7 @@ export const isOfferComplete = (order: {
     return true
   }
 
-  // Get the most recent offer (sorted by createdAt, most recent first)
-  const sortedOffers = [...(order.offers || [])]
-    .filter((offer): offer is NonNullable<typeof offer> => offer !== null)
-    .sort((a, b) => {
-      const dateA = a.createdAt ? new Date(a.createdAt).getTime() : 0
-      const dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0
-      return dateB - dateA // Most recent first
-    })
-
-  const mostRecentOffer = sortedOffers[0]
+  const mostRecentOffer = mostRecentCreatedAt(order.offers)
   return !!(mostRecentOffer?.amount?.minor && mostRecentOffer.amount.minor > 0)
 }
 

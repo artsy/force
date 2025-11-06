@@ -1,21 +1,30 @@
 import CheckmarkIcon from "@artsy/icons/CheckmarkIcon"
 import { Clickable, Flex, Spacer, Text } from "@artsy/palette"
-import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import { mostRecentCreatedAt } from "Apps/Order2/Routes/Checkout/Utils/mostRecentCreatedAt"
+import createLogger from "Utils/logger"
 import type { Order2OfferCompletedView_order$key } from "__generated__/Order2OfferCompletedView_order.graphql"
 import { graphql, useFragment } from "react-relay"
 
+const logger = createLogger(
+  "Order2/Routes/Checkout/Components/OfferStep/Order2OfferCompletedView.tsx",
+)
+
 interface Order2OfferCompletedViewProps {
   order: Order2OfferCompletedView_order$key
-  offerAmount: number
-  offerNote?: string
 }
 
 export const Order2OfferCompletedView: React.FC<
   Order2OfferCompletedViewProps
-> = ({ order, offerAmount, offerNote }) => {
+> = ({ order }) => {
   const orderData = useFragment(FRAGMENT, order)
   const { editOfferAmount } = useCheckoutContext()
+
+  const lastOffer = mostRecentCreatedAt(orderData.offers)
+  if (!lastOffer?.amount?.display) {
+    logger.warn("No offers found for Order2OfferCompletedView")
+    return null
+  }
 
   const onClickEdit = () => {
     // TODO: Add tracking when available
@@ -55,18 +64,11 @@ export const Order2OfferCompletedView: React.FC<
         mt={1}
       >
         <Text variant="sm-display" color="mono100">
-          {appendCurrencySymbol(
-            offerAmount.toLocaleString("en-US", {
-              currency: orderData.currencyCode,
-              minimumFractionDigits: 2,
-              style: "currency",
-            }),
-            orderData.currencyCode,
-          )}
+          {lastOffer.amount?.display}
         </Text>
-        {offerNote && (
+        {lastOffer.note && (
           <Text variant="sm-display" color="mono100">
-            {offerNote}
+            {lastOffer.note}
           </Text>
         )}
       </Flex>
@@ -77,5 +79,12 @@ export const Order2OfferCompletedView: React.FC<
 const FRAGMENT = graphql`
   fragment Order2OfferCompletedView_order on Order {
     currencyCode
+    offers {
+      createdAt
+      note
+      amount {
+        display
+      }
+    }
   }
 `
