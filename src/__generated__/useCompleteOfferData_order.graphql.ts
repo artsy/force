@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5a41358f717f0c78d1798645e0e088f0>>
+ * @generated SignedSource<<0eab459fd71ce12c4f4bbddd28f481ad>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,34 +9,36 @@
 // @ts-nocheck
 
 import { ReaderFragment } from 'relay-runtime';
+export type OrderModeEnum = "BUY" | "OFFER" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
-export type Order2OfferCompletedView_order$data = {
-  readonly currencyCode: string;
+export type useCompleteOfferData_order$data = {
+  readonly mode: OrderModeEnum;
   readonly offers: ReadonlyArray<{
     readonly amount: {
       readonly display: string | null | undefined;
+      readonly minor: any;
     } | null | undefined;
     readonly createdAt: string | null | undefined;
     readonly note: string | null | undefined;
   }> | null | undefined;
-  readonly " $fragmentType": "Order2OfferCompletedView_order";
+  readonly " $fragmentType": "useCompleteOfferData_order";
 };
-export type Order2OfferCompletedView_order$key = {
-  readonly " $data"?: Order2OfferCompletedView_order$data;
-  readonly " $fragmentSpreads": FragmentRefs<"Order2OfferCompletedView_order">;
+export type useCompleteOfferData_order$key = {
+  readonly " $data"?: useCompleteOfferData_order$data;
+  readonly " $fragmentSpreads": FragmentRefs<"useCompleteOfferData_order">;
 };
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "Order2OfferCompletedView_order",
+  "name": "useCompleteOfferData_order",
   "selections": [
     {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "currencyCode",
+      "name": "mode",
       "storageKey": null
     },
     {
@@ -73,6 +75,13 @@ const node: ReaderFragment = {
               "alias": null,
               "args": null,
               "kind": "ScalarField",
+              "name": "minor",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
               "name": "display",
               "storageKey": null
             }
@@ -87,6 +96,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "7d445dddeb6f232816c4bff05d509af9";
+(node as any).hash = "945d12299d897e0875a3b92d7b6526ed";
 
 export default node;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<68f4ddc87df9e05ac1577c8d12d522f9>>
+ * @generated SignedSource<<ae1fe6b72d9538315251c9e458fb969b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,6 +9,7 @@
 // @ts-nocheck
 
 import { ReaderFragment } from 'relay-runtime';
+export type OrderPaymentMethodEnum = "CREDIT_CARD" | "SEPA_DEBIT" | "US_BANK_ACCOUNT" | "WIRE_TRANSFER" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type Order2PaymentStep_order$data = {
   readonly buyerTotal: {
@@ -19,6 +20,21 @@ export type Order2PaymentStep_order$data = {
   readonly itemsTotal: {
     readonly currencyCode: string;
     readonly minor: any;
+  } | null | undefined;
+  readonly paymentMethod: OrderPaymentMethodEnum | null | undefined;
+  readonly paymentMethodDetails: {
+    readonly __typename: "BankAccount";
+    readonly internalID: string;
+  } | {
+    readonly __typename: "CreditCard";
+    readonly internalID: string;
+  } | {
+    readonly __typename: "WireTransfer";
+    readonly isManualPayment: boolean;
+  } | {
+    // This will never be '%other', but we need some
+    // value in case none of the concrete values match.
+    readonly __typename: "%other";
   } | null | undefined;
   readonly seller: {
     readonly __typename: "Partner";
@@ -36,7 +52,7 @@ export type Order2PaymentStep_order$data = {
   readonly taxTotal: {
     readonly minor: any;
   } | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"Order2PaymentForm_order">;
+  readonly " $fragmentSpreads": FragmentRefs<"Order2PaymentForm_order" | "useCompletePaymentData_order">;
   readonly " $fragmentType": "Order2PaymentStep_order";
 };
 export type Order2PaymentStep_order$key = {
@@ -49,11 +65,28 @@ var v0 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "__typename",
+  "storageKey": null
+},
+v2 = [
+  (v0/*: any*/)
+],
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "minor",
   "storageKey": null
 },
-v1 = [
-  (v0/*: any*/),
+v4 = [
+  (v3/*: any*/),
   {
     "alias": null,
     "args": null,
@@ -62,8 +95,8 @@ v1 = [
     "storageKey": null
   }
 ],
-v2 = [
-  (v0/*: any*/)
+v5 = [
+  (v3/*: any*/)
 ];
 return {
   "argumentDefinitions": [],
@@ -74,13 +107,57 @@ return {
     {
       "args": null,
       "kind": "FragmentSpread",
+      "name": "useCompletePaymentData_order"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
       "name": "Order2PaymentForm_order"
     },
+    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "internalID",
+      "name": "paymentMethod",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": null,
+      "kind": "LinkedField",
+      "name": "paymentMethodDetails",
+      "plural": false,
+      "selections": [
+        (v1/*: any*/),
+        {
+          "kind": "InlineFragment",
+          "selections": (v2/*: any*/),
+          "type": "CreditCard",
+          "abstractKey": null
+        },
+        {
+          "kind": "InlineFragment",
+          "selections": (v2/*: any*/),
+          "type": "BankAccount",
+          "abstractKey": null
+        },
+        {
+          "kind": "InlineFragment",
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "isManualPayment",
+              "storageKey": null
+            }
+          ],
+          "type": "WireTransfer",
+          "abstractKey": null
+        }
+      ],
       "storageKey": null
     },
     {
@@ -90,7 +167,7 @@ return {
       "kind": "LinkedField",
       "name": "buyerTotal",
       "plural": false,
-      "selections": (v1/*: any*/),
+      "selections": (v4/*: any*/),
       "storageKey": null
     },
     {
@@ -100,7 +177,7 @@ return {
       "kind": "LinkedField",
       "name": "itemsTotal",
       "plural": false,
-      "selections": (v1/*: any*/),
+      "selections": (v4/*: any*/),
       "storageKey": null
     },
     {
@@ -110,7 +187,7 @@ return {
       "kind": "LinkedField",
       "name": "shippingTotal",
       "plural": false,
-      "selections": (v2/*: any*/),
+      "selections": (v5/*: any*/),
       "storageKey": null
     },
     {
@@ -120,7 +197,7 @@ return {
       "kind": "LinkedField",
       "name": "taxTotal",
       "plural": false,
-      "selections": (v2/*: any*/),
+      "selections": (v5/*: any*/),
       "storageKey": null
     },
     {
@@ -131,13 +208,7 @@ return {
       "name": "seller",
       "plural": false,
       "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "__typename",
-          "storageKey": null
-        },
+        (v1/*: any*/),
         {
           "kind": "InlineFragment",
           "selections": [
@@ -172,6 +243,6 @@ return {
 };
 })();
 
-(node as any).hash = "1604d31b7e888afafa559621aa65f620";
+(node as any).hash = "12b9572590ecb6e3ae9b0640eb58a322";
 
 export default node;

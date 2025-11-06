@@ -6,6 +6,7 @@ import {
 import { Order2DeliveryForm } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/Order2DeliveryForm"
 import { Order2FulfillmentDetailsCompletedView } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/Order2FulfillmentDetailsCompletedView"
 import { Order2PickupForm } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/Order2PickupForm"
+import { useCompleteFulfillmentDetailsData } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/useCompleteFulfillmentDetailsData"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import type { Order2FulfillmentDetailsStep_me$key } from "__generated__/Order2FulfillmentDetailsStep_me.graphql"
 import type { Order2FulfillmentDetailsStep_order$key } from "__generated__/Order2FulfillmentDetailsStep_order.graphql"
@@ -23,6 +24,7 @@ export const Order2FulfillmentDetailsStep: React.FC<
 > = ({ order, me }) => {
   const orderData = useFragment(ORDER_FRAGMENT, order)
   const meData = useFragment(ME_FRAGMENT, me)
+  const completedViewProps = useCompleteFulfillmentDetailsData(orderData)
 
   const {
     steps,
@@ -66,9 +68,9 @@ export const Order2FulfillmentDetailsStep: React.FC<
           </Text>
         </Flex>
       </Box>
-      {stepState === CheckoutStepState.COMPLETED && (
+      {stepState === CheckoutStepState.COMPLETED && completedViewProps && (
         <Box px={[2, 4]}>
-          <Order2FulfillmentDetailsCompletedView order={orderData} />
+          <Order2FulfillmentDetailsCompletedView {...completedViewProps} />
         </Box>
       )}
       <Box hidden={stepState !== CheckoutStepState.ACTIVE}>
@@ -119,15 +121,16 @@ const ME_FRAGMENT = graphql`
 
 const ORDER_FRAGMENT = graphql`
   fragment Order2FulfillmentDetailsStep_order on Order {
+    ...useCompleteFulfillmentDetailsData_order
     ...Order2PickupForm_order
     ...Order2DeliveryForm_order
-    ...Order2FulfillmentDetailsCompletedView_order
     id
     fulfillmentDetails {
       phoneNumber {
         countryCode
         regionCode
         originalNumber
+        display
       }
       addressLine1
       addressLine2

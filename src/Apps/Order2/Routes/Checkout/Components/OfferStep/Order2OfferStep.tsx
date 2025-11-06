@@ -10,6 +10,7 @@ import { Order2HiddenPriceOfferForm } from "Apps/Order2/Routes/Checkout/Componen
 import { Order2PriceRangeOfferForm } from "Apps/Order2/Routes/Checkout/Components/OfferStep/Forms/Order2PriceRangeOfferForm"
 import { Order2OfferCompletedView } from "Apps/Order2/Routes/Checkout/Components/OfferStep/Order2OfferCompletedView"
 import type { OfferNoteValue } from "Apps/Order2/Routes/Checkout/Components/OfferStep/types"
+import { useCompleteOfferData } from "Apps/Order2/Routes/Checkout/Components/OfferStep/useCompleteOfferData"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useOrder2AddInitialOfferMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2AddInitialOfferMutation"
 import { mostRecentCreatedAt } from "Apps/Order2/Routes/Checkout/Utils/mostRecentCreatedAt"
@@ -32,6 +33,7 @@ interface Order2OfferStepProps {
 
 export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
   const orderData = useFragment(FRAGMENT, order)
+  const completedViewProps = useCompleteOfferData(orderData)
   const { steps, setOfferAmountComplete, checkoutTracking } =
     useCheckoutContext()
   const { submitMutation: submitOfferMutation } =
@@ -41,7 +43,6 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
 
   const lastOffer = mostRecentCreatedAt(offers)
 
-  // TODO: Pull into useCheckoutContext
   const [formIsDirty, setFormIsDirty] = useState(false)
   const [isSubmittingOffer, setIsSubmittingOffer] = useState(false)
 
@@ -49,7 +50,7 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
     exceedsCharacterLimit: false,
     value: lastOffer?.note || "",
   })
-  const [offerValue, setOfferValue] = useState(lastOffer?.amount?.minor || 0)
+  const [offerValue, setOfferValue] = useState(lastOffer?.amount?.major || 0)
 
   const { jumpTo } = useJump()
 
@@ -185,7 +186,9 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
         px={[2, 4]}
         hidden={currentStep !== CheckoutStepState.COMPLETED}
       >
-        <Order2OfferCompletedView order={orderData} />
+        {completedViewProps && (
+          <Order2OfferCompletedView {...completedViewProps} />
+        )}
       </Box>
 
       <Box pt={2} px={[2, 4]} hidden={currentStep !== CheckoutStepState.ACTIVE}>
@@ -253,6 +256,9 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
 
 const FRAGMENT = graphql`
   fragment Order2OfferStep_order on Order {
+    ...useCompleteOfferData_order
+    ...Order2ExactPriceOfferForm_order
+    ...Order2PriceRangeOfferForm_order
     internalID
     mode
     source
@@ -260,7 +266,8 @@ const FRAGMENT = graphql`
     offers {
       createdAt
       amount {
-        minor
+        display
+        major
       }
       note
     }
@@ -289,8 +296,5 @@ const FRAGMENT = graphql`
         }
       }
     }
-    ...Order2ExactPriceOfferForm_order
-    ...Order2PriceRangeOfferForm_order
-    ...Order2OfferCompletedView_order
   }
 `

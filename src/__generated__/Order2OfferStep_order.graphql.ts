@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * @generated SignedSource<<6d9689041a23fe291e1fd0c88c0fa696>>
-=======
- * @generated SignedSource<<93d85551be2495425ec82511a1ca21bd>>
->>>>>>> 7b867dfcae (consolidate some sorting logic, refactor offer step)
+ * @generated SignedSource<<896919f4d72adbbecae817f1319cc02d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -49,13 +45,14 @@ export type Order2OfferStep_order$data = {
   readonly mode: OrderModeEnum;
   readonly offers: ReadonlyArray<{
     readonly amount: {
-      readonly minor: any;
+      readonly display: string | null | undefined;
+      readonly major: number;
     } | null | undefined;
     readonly createdAt: string | null | undefined;
     readonly note: string | null | undefined;
   }> | null | undefined;
   readonly source: OrderSourceEnum;
-  readonly " $fragmentSpreads": FragmentRefs<"Order2ExactPriceOfferForm_order" | "Order2OfferCompletedView_order" | "Order2PriceRangeOfferForm_order">;
+  readonly " $fragmentSpreads": FragmentRefs<"Order2ExactPriceOfferForm_order" | "Order2PriceRangeOfferForm_order" | "useCompleteOfferData_order">;
   readonly " $fragmentType": "Order2OfferStep_order";
 };
 export type Order2OfferStep_order$key = {
@@ -71,14 +68,15 @@ var v0 = {
   "name": "internalID",
   "storageKey": null
 },
-v1 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "major",
-    "storageKey": null
-  }
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "major",
+  "storageKey": null
+},
+v2 = [
+  (v1/*: any*/)
 ];
 return {
   "argumentDefinitions": [],
@@ -86,6 +84,21 @@ return {
   "metadata": null,
   "name": "Order2OfferStep_order",
   "selections": [
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "useCompleteOfferData_order"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "Order2ExactPriceOfferForm_order"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "Order2PriceRangeOfferForm_order"
+    },
     (v0/*: any*/),
     {
       "alias": null,
@@ -135,9 +148,10 @@ return {
               "alias": null,
               "args": null,
               "kind": "ScalarField",
-              "name": "minor",
+              "name": "display",
               "storageKey": null
-            }
+            },
+            (v1/*: any*/)
           ],
           "storageKey": null
         },
@@ -212,7 +226,7 @@ return {
                 },
                 {
                   "kind": "InlineFragment",
-                  "selections": (v1/*: any*/),
+                  "selections": (v2/*: any*/),
                   "type": "Money",
                   "abstractKey": null
                 },
@@ -226,7 +240,7 @@ return {
                       "kind": "LinkedField",
                       "name": "maxPrice",
                       "plural": false,
-                      "selections": (v1/*: any*/),
+                      "selections": (v2/*: any*/),
                       "storageKey": null
                     },
                     {
@@ -236,7 +250,7 @@ return {
                       "kind": "LinkedField",
                       "name": "minPrice",
                       "plural": false,
-                      "selections": (v1/*: any*/),
+                      "selections": (v2/*: any*/),
                       "storageKey": null
                     }
                   ],
@@ -263,21 +277,6 @@ return {
         }
       ],
       "storageKey": null
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "Order2ExactPriceOfferForm_order"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "Order2PriceRangeOfferForm_order"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "Order2OfferCompletedView_order"
     }
   ],
   "type": "Order",
@@ -285,10 +284,6 @@ return {
 };
 })();
 
-<<<<<<< HEAD
-(node as any).hash = "da3314c9f447e266129fd1f69559c904";
-=======
-(node as any).hash = "d0163d827cd4adbb96b9d74769c33ba8";
->>>>>>> 7b867dfcae (consolidate some sorting logic, refactor offer step)
+(node as any).hash = "bc31a24e73639f78e3ed9c62c6b4c2a9";
 
 export default node;

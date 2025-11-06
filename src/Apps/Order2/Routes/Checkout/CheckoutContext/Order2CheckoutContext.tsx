@@ -12,10 +12,7 @@ import {
 import type { CheckoutErrorBannerProps } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { useCheckoutTracking } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutTracking"
 import { useStripePaymentBySetupIntentId } from "Apps/Order2/Routes/Checkout/Hooks/useStripePaymentBySetupIntentId"
-import {
-  buildInitialSteps,
-  isFulfillmentDetailsComplete,
-} from "Apps/Order2/Routes/Checkout/Utils/stepCompletionChecks"
+import { useBuildInitialSteps } from "Apps/Order2/Routes/Checkout/Hooks/useBuildInitialSteps"
 import { useRouter } from "System/Hooks/useRouter"
 import { useCountdownTimer } from "Utils/Hooks/useCountdownTimer"
 import createLogger from "Utils/logger"
@@ -528,10 +525,13 @@ export const Order2CheckoutContextProvider: React.FC<
   const partnerOffer = usePartnerOfferOnOrder(orderData)
   const { router } = useRouter()
 
+  // Build initial steps using the hook
+  const initialSteps = useBuildInitialSteps(orderData)
+
   // Initialize the store with the initial state
   const initialState = useMemo(
-    () => initialStateForOrder(orderData),
-    [orderData],
+    () => initialStateForOrder(orderData, initialSteps),
+    [orderData, initialSteps],
   )
 
   const runtimeModel = {
@@ -667,6 +667,7 @@ const CheckoutLoadingManager: React.FC<{
 
 const ORDER_FRAGMENT = graphql`
   fragment Order2CheckoutContext_order on Order {
+    ...useBuildInitialSteps_order
     internalID
     mode
     source
@@ -674,36 +675,6 @@ const ORDER_FRAGMENT = graphql`
     stripeConfirmationToken
     selectedFulfillmentOption {
       type
-    }
-    offers {
-      internalID
-      createdAt
-      amount {
-        minor
-      }
-    }
-    fulfillmentDetails {
-      addressLine1
-      city
-      postalCode
-      country
-      name
-      phoneNumber {
-        originalNumber
-      }
-    }
-    paymentMethod
-    paymentMethodDetails {
-      __typename
-      ... on CreditCard {
-        internalID
-      }
-      ... on BankAccount {
-        internalID
-      }
-      ... on WireTransfer {
-        isManualPayment
-      }
     }
     lineItems {
       artworkVersion {
@@ -753,17 +724,20 @@ const usePartnerOfferOnOrder = (orderData: {
 
 const initialStateForOrder = (
   order: Order2CheckoutContext_order$data,
+  steps: CheckoutStep[],
 ): Partial<Order2CheckoutModel> => {
   const savedCheckoutMode = getStorageValue(
     CHECKOUT_MODE_STORAGE_KEY,
     "standard",
   )
 
-  // Build steps using completion check functions
-  const steps = buildInitialSteps(order)
+  // Check if fulfillment details step is complete
+  const fulfillmentDetailsStep = steps.find(
+    step => step.name === CheckoutStepName.FULFILLMENT_DETAILS,
+  )
+  const fulfillmentComplete =
+    fulfillmentDetailsStep?.state === CheckoutStepState.COMPLETED
 
-  // Determine other initial state values
-  const fulfillmentComplete = isFulfillmentDetailsComplete(order)
   const isPickup = order.selectedFulfillmentOption?.type === "PICKUP"
   const activeFulfillmentDetailsTab = isPickup ? "PICKUP" : "DELIVERY"
 
