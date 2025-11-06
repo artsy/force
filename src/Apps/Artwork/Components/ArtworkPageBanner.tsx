@@ -1,4 +1,4 @@
-import { type BannerVariant, Flex, Spacer, Text } from "@artsy/palette"
+import { type BannerVariant, Flex, Text } from "@artsy/palette"
 import { CascadingEndTimesBannerFragmentContainer } from "Components/CascadingEndTimesBanner"
 import { FullBleedBanner } from "Components/FullBleedBanner"
 import { RouterLink } from "System/Components/RouterLink"
@@ -9,7 +9,7 @@ import type { ArtworkPageBannerOrdersQuery } from "__generated__/ArtworkPageBann
 import type { ArtworkPageBanner_artwork$key } from "__generated__/ArtworkPageBanner_artwork.graphql"
 import type { ArtworkPageBanner_me$key } from "__generated__/ArtworkPageBanner_me.graphql"
 import type { FC } from "react"
-import { graphql, useFragment, useLazyLoadQuery } from "react-relay"
+import { graphql, useFragment } from "react-relay"
 
 interface ArtworkPageBannerProps {
   artwork: ArtworkPageBanner_artwork$key
