@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5ed5548537b7d1b0d8c6b302480a9f7e>>
+ * @generated SignedSource<<2a29c53ba8bcd8a84b34e74e88f92c20>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,6 +12,7 @@ import { ReaderFragment } from 'relay-runtime';
 export type Visibility = "LISTED" | "UNLISTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkPageBanner_artwork$data = {
+  readonly internalID: string;
   readonly isPurchasable: boolean | null | undefined;
   readonly published: boolean;
   readonly sale: {
@@ -32,6 +33,13 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "ArtworkPageBanner_artwork",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "internalID",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -81,6 +89,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "9697b56e2f0bc36b278313c4cb4f8c61";
+(node as any).hash = "2864c0d99c1baadd5131890236562ad6";
 
 export default node;
