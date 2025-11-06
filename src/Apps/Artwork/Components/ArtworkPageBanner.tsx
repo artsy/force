@@ -34,22 +34,14 @@ export const ArtworkPageBanner: FC<
     : null
 
   // Lazy load orders using the real artwork.internalID
-  const { loading, data: ordersData } =
-    useClientQuery<ArtworkPageBannerOrdersQuery>({
-      query: ORDERS_QUERY,
-      variables: {
-        artworkID: artwork.internalID,
-      },
-    })
-
-  const orders = extractNodes(ordersData?.me?.ordersConnection)
-  const order = orders[0]
+  const orderQuery = useClientQuery<ArtworkPageBannerOrdersQuery>({
+    query: ORDERS_QUERY,
+    variables: {
+      artworkID: artwork.internalID,
+    },
+  })
 
   const queryParams = match.location.query
-
-  if (loading) {
-    return null
-  }
 
   // First show banners requested imperatively from the query string
   if (!!queryParams.unavailable) {
@@ -68,6 +60,13 @@ export const ArtworkPageBanner: FC<
     return <UnpublishedArtworkBanner />
   }
 
+  const orders = extractNodes(orderQuery.data?.me?.ordersConnection)
+  const order = orders[0]
+
+  if (order) {
+    return <OrderBanner order={order} />
+  }
+
   if (expectedPartnerOfferID) {
     if (!artwork.isPurchasable) {
       return <ArtworkUnavailableBanner />
@@ -80,10 +79,6 @@ export const ArtworkPageBanner: FC<
     ) {
       return <ExpiredOfferBanner />
     }
-  }
-
-  if (order) {
-    return <OrderBanner order={order} />
   }
 
   return null
