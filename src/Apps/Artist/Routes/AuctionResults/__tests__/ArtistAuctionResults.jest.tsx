@@ -409,7 +409,9 @@ describe("AuctionResults", () => {
             const allFiltersButton = screen.getByText("All Filters")
             fireEvent.click(allFiltersButton)
 
-            fireEvent.click(screen.getByText("Medium (40 – 100cm)"))
+            // Use getAllByText and click the last one (the checkbox in the drawer, not the pill)
+            const mediumElements = screen.getAllByText("Medium (40 – 100cm)")
+            fireEvent.click(mediumElements[mediumElements.length - 1])
             act(() => {
               env.mock.resolveMostRecentOperation(operation => {
                 operationVariables = operation.request.variables
@@ -418,7 +420,8 @@ describe("AuctionResults", () => {
             })
             expect(operationVariables.sizes).toContain("MEDIUM")
 
-            fireEvent.click(screen.getByText("Large (over 100cm)"))
+            const largeElements = screen.getAllByText("Large (over 100cm)")
+            fireEvent.click(largeElements[largeElements.length - 1])
             act(() => {
               env.mock.resolveMostRecentOperation(operation => {
                 operationVariables = operation.request.variables
@@ -428,7 +431,9 @@ describe("AuctionResults", () => {
             expect(operationVariables.sizes).toContain("MEDIUM")
             expect(operationVariables.sizes).toContain("LARGE")
 
-            fireEvent.click(screen.getByText("Medium (40 – 100cm)"))
+            // Click again to deselect
+            const mediumElements2 = screen.getAllByText("Medium (40 – 100cm)")
+            fireEvent.click(mediumElements2[mediumElements2.length - 1])
             act(() => {
               env.mock.resolveMostRecentOperation(operation => {
                 operationVariables = operation.request.variables
