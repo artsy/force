@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e4147e7d2f3c0cda30ffc4ff325ac2a8>>
+ * @generated SignedSource<<1482ab7226d55205f9a34e8d9005d61e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,29 +10,37 @@
 
 import { ReaderFragment } from 'relay-runtime';
 export type FulfillmentOptionTypeEnum = "ARTSY_EXPRESS" | "ARTSY_STANDARD" | "ARTSY_WHITE_GLOVE" | "DOMESTIC_FLAT" | "INTERNATIONAL_FLAT" | "PICKUP" | "SHIPPING_TBD" | "%future added value";
+export type OrderModeEnum = "BUY" | "OFFER" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
-export type Order2DeliveryOptionsStep_order$data = {
-  readonly internalID: string;
+export type useBuildInitialSteps_order$data = {
+  readonly mode: OrderModeEnum;
   readonly selectedFulfillmentOption: {
-    readonly amount: {
-      readonly display: string | null | undefined;
-    } | null | undefined;
     readonly type: FulfillmentOptionTypeEnum;
   } | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"Order2DeliveryOptionsForm_order" | "useCompleteDeliveryOptionData_order">;
-  readonly " $fragmentType": "Order2DeliveryOptionsStep_order";
+  readonly " $fragmentSpreads": FragmentRefs<"useCompleteDeliveryOptionData_order" | "useCompleteFulfillmentDetailsData_order" | "useCompleteOfferData_order" | "useCompletePaymentData_order">;
+  readonly " $fragmentType": "useBuildInitialSteps_order";
 };
-export type Order2DeliveryOptionsStep_order$key = {
-  readonly " $data"?: Order2DeliveryOptionsStep_order$data;
-  readonly " $fragmentSpreads": FragmentRefs<"Order2DeliveryOptionsStep_order">;
+export type useBuildInitialSteps_order$key = {
+  readonly " $data"?: useBuildInitialSteps_order$data;
+  readonly " $fragmentSpreads": FragmentRefs<"useBuildInitialSteps_order">;
 };
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "Order2DeliveryOptionsStep_order",
+  "name": "useBuildInitialSteps_order",
   "selections": [
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "useCompleteOfferData_order"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "useCompleteFulfillmentDetailsData_order"
+    },
     {
       "args": null,
       "kind": "FragmentSpread",
@@ -41,13 +49,13 @@ const node: ReaderFragment = {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "Order2DeliveryOptionsForm_order"
+      "name": "useCompletePaymentData_order"
     },
     {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "internalID",
+      "name": "mode",
       "storageKey": null
     },
     {
@@ -64,24 +72,6 @@ const node: ReaderFragment = {
           "kind": "ScalarField",
           "name": "type",
           "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "Money",
-          "kind": "LinkedField",
-          "name": "amount",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "display",
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
         }
       ],
       "storageKey": null
@@ -91,6 +81,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "4e57194b7cf08815045412601739576b";
+(node as any).hash = "7e2e1202334435bb152c02562a652184";
 
 export default node;
