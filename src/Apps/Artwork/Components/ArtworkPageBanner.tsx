@@ -5,7 +5,10 @@ import { RouterLink } from "System/Components/RouterLink"
 import { useRouter } from "System/Hooks/useRouter"
 import { useClientQuery } from "Utils/Hooks/useClientQuery"
 import { extractNodes } from "Utils/extractNodes"
-import type { ArtworkPageBannerOrdersQuery } from "__generated__/ArtworkPageBannerOrdersQuery.graphql"
+import type {
+  ArtworkPageBannerOrdersQuery,
+  ArtworkPageBannerOrdersQuery$data,
+} from "__generated__/ArtworkPageBannerOrdersQuery.graphql"
 import type { ArtworkPageBanner_artwork$key } from "__generated__/ArtworkPageBanner_artwork.graphql"
 import type { ArtworkPageBanner_me$key } from "__generated__/ArtworkPageBanner_me.graphql"
 import type { FC } from "react"
@@ -111,13 +114,17 @@ const UnpublishedArtworkBanner = () => (
 )
 
 interface OrderBannerProps {
-  order: {
-    readonly internalID: string
-    readonly buyerState: string | null | undefined
-    readonly displayTexts: {
-      readonly title: string
-    }
-  }
+  order: NonNullable<
+    NonNullable<
+      NonNullable<
+        NonNullable<
+          NonNullable<
+            ArtworkPageBannerOrdersQuery$data["me"]
+          >["ordersConnection"]
+        >["edges"]
+      >[number]
+    >["node"]
+  >
 }
 
 const OrderBanner: FC<React.PropsWithChildren<OrderBannerProps>> = ({

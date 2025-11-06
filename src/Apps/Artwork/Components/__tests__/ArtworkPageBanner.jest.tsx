@@ -3,15 +3,19 @@ import { ArtworkPageBanner } from "Apps/Artwork/Components/ArtworkPageBanner"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useRouter } from "System/Hooks/useRouter"
+import { useClientQuery } from "Utils/Hooks/useClientQuery"
 import type { DeepPartial } from "Utils/typeSupport"
 import type { ArtworkPageBanner_Test_Query$rawResponse } from "__generated__/ArtworkPageBanner_Test_Query.graphql"
 import { graphql } from "react-relay"
 
 const mockUseRouter = useRouter as jest.Mock
+const mockUseClientQuery = useClientQuery as jest.Mock
 
 jest.mock("System/Hooks/useRouter", () => ({
   useRouter: jest.fn(() => ({ match: { location: { query: {} } } })),
 }))
+
+jest.mock("Utils/Hooks/useClientQuery")
 
 jest.unmock("react-relay")
 let artworkMock: DeepPartial<
@@ -21,6 +25,17 @@ let meMock: DeepPartial<ArtworkPageBanner_Test_Query$rawResponse["me"]>
 
 beforeEach(() => {
   mockUseRouter.mockClear()
+  mockUseClientQuery.mockClear()
+  mockUseClientQuery.mockReturnValue({
+    loading: false,
+    data: {
+      me: {
+        ordersConnection: {
+          edges: [],
+        },
+      },
+    },
+  })
   artworkMock = {
     sale: null,
     isPurchasable: true,
@@ -273,6 +288,344 @@ describe("ArtworkPageBanner", () => {
       ).not.toBeInTheDocument()
 
       expect(getAllBannerTexts()).toEqual([])
+    })
+  })
+
+  describe("OrderBanner", () => {
+    it("shows loading state when orders are loading", async () => {
+      mockUseClientQuery.mockReturnValue({
+        loading: true,
+        data: null,
+      })
+
+      renderWithRelay({
+        Artwork: () => artworkMock,
+        Me: () => meMock,
+      })
+
+      await flushPromiseQueue()
+      expect(screen.queryByText(/order/i)).not.toBeInTheDocument()
+    })
+
+    it("shows SUBMITTED order banner with default state", async () => {
+      mockUseClientQuery.mockReturnValue({
+        loading: false,
+        data: {
+          me: {
+            ordersConnection: {
+              edges: [
+                {
+                  node: {
+                    internalID: "order-123",
+                    buyerState: "SUBMITTED",
+                  },
+                },
+              ],
+            },
+          },
+        },
+      })
+
+      renderWithRelay({
+        Artwork: () => artworkMock,
+        Me: () => meMock,
+      })
+
+      await waitFor(() => {
+        expect(screen.getByText("You ordered this artwork")).toBeInTheDocument()
+        expect(screen.getByText("View order")).toBeInTheDocument()
+      })
+
+      const link = screen.getByRole("link", { name: "View order" })
+      expect(link).toHaveAttribute("href", "/orders/order-123/details")
+    })
+
+    it("shows APPROVED order banner", async () => {
+      mockUseClientQuery.mockReturnValue({
+        loading: false,
+        data: {
+          me: {
+            ordersConnection: {
+              edges: [
+                {
+                  node: {
+                    internalID: "order-123",
+                    buyerState: "APPROVED",
+                  },
+                },
+              ],
+            },
+          },
+        },
+      })
+
+      renderWithRelay({
+        Artwork: () => artworkMock,
+        Me: () => meMock,
+      })
+
+      await waitFor(() => {
+        expect(
+          screen.getByText("Your order has been approved!"),
+        ).toBeInTheDocument()
+        expect(screen.getByText("View order")).toBeInTheDocument()
+      })
+
+      const link = screen.getByRole("link", { name: "View order" })
+      expect(link).toHaveAttribute("href", "/orders/order-123/details")
+    })
+
+    it("shows COMPLETED order banner", async () => {
+      mockUseClientQuery.mockReturnValue({
+        loading: false,
+        data: {
+          me: {
+            ordersConnection: {
+              edges: [
+                {
+                  node: {
+                    internalID: "order-123",
+                    buyerState: "COMPLETED",
+                  },
+                },
+              ],
+            },
+          },
+        },
+      })
+
+      renderWithRelay({
+        Artwork: () => artworkMock,
+        Me: () => meMock,
+      })
+
+      await waitFor(() => {
+        expect(screen.getByText("Your order is complete!")).toBeInTheDocument()
+        expect(screen.getByText("View order")).toBeInTheDocument()
+      })
+    })
+
+    it("shows OFFER_RECEIVED order banner with custom link text", async () => {
+      mockUseClientQuery.mockReturnValue({
+        loading: false,
+        data: {
+          me: {
+            ordersConnection: {
+              edges: [
+                {
+                  node: {
+                    internalID: "order-123",
+                    buyerState: "OFFER_RECEIVED",
+                  },
+                },
+              ],
+            },
+          },
+        },
+      })
+
+      renderWithRelay({
+        Artwork: () => artworkMock,
+        Me: () => meMock,
+      })
+
+      await waitFor(() => {
+        expect(
+          screen.getByText("The gallery has responded to your offer."),
+        ).toBeInTheDocument()
+        expect(screen.getByText("View offer")).toBeInTheDocument()
+      })
+
+      const link = screen.getByRole("link", { name: "View offer" })
+      expect(link).toHaveAttribute("href", "/orders/order-123/details")
+    })
+
+    it("shows PAYMENT_FAILED order banner", async () => {
+      mockUseClientQuery.mockReturnValue({
+        loading: false,
+        data: {
+          me: {
+            ordersConnection: {
+              edges: [
+                {
+                  node: {
+                    internalID: "order-123",
+                    buyerState: "PAYMENT_FAILED",
+                  },
+                },
+              ],
+            },
+          },
+        },
+      })
+
+      renderWithRelay({
+        Artwork: () => artworkMock,
+        Me: () => meMock,
+      })
+
+      await waitFor(() => {
+        expect(screen.getByText("Your payment failed.")).toBeInTheDocument()
+        expect(
+          screen.getByText("Update payment information"),
+        ).toBeInTheDocument()
+      })
+
+      const link = screen.getByRole("link", {
+        name: "Update payment information",
+      })
+      expect(link).toHaveAttribute("href", "/orders/order-123/details")
+    })
+
+    it("shows PROCESSING_OFFLINE_PAYMENT order banner", async () => {
+      mockUseClientQuery.mockReturnValue({
+        loading: false,
+        data: {
+          me: {
+            ordersConnection: {
+              edges: [
+                {
+                  node: {
+                    internalID: "order-123",
+                    buyerState: "PROCESSING_OFFLINE_PAYMENT",
+                  },
+                },
+              ],
+            },
+          },
+        },
+      })
+
+      renderWithRelay({
+        Artwork: () => artworkMock,
+        Me: () => meMock,
+      })
+
+      await waitFor(() => {
+        expect(
+          screen.getByText("Your order is being processed."),
+        ).toBeInTheDocument()
+        expect(
+          screen.getByText("Please complete the payment."),
+        ).toBeInTheDocument()
+      })
+    })
+
+    it("shows REFUNDED order banner", async () => {
+      mockUseClientQuery.mockReturnValue({
+        loading: false,
+        data: {
+          me: {
+            ordersConnection: {
+              edges: [
+                {
+                  node: {
+                    internalID: "order-123",
+                    buyerState: "REFUNDED",
+                  },
+                },
+              ],
+            },
+          },
+        },
+      })
+
+      renderWithRelay({
+        Artwork: () => artworkMock,
+        Me: () => meMock,
+      })
+
+      await waitFor(() => {
+        expect(
+          screen.getByText("Your order has been refunded."),
+        ).toBeInTheDocument()
+        expect(screen.getByText("View order")).toBeInTheDocument()
+      })
+    })
+
+    it("shows SHIPPED order banner", async () => {
+      mockUseClientQuery.mockReturnValue({
+        loading: false,
+        data: {
+          me: {
+            ordersConnection: {
+              edges: [
+                {
+                  node: {
+                    internalID: "order-123",
+                    buyerState: "SHIPPED",
+                  },
+                },
+              ],
+            },
+          },
+        },
+      })
+
+      renderWithRelay({
+        Artwork: () => artworkMock,
+        Me: () => meMock,
+      })
+
+      await waitFor(() => {
+        expect(
+          screen.getByText("Your order has been shipped!"),
+        ).toBeInTheDocument()
+        expect(screen.getByText("View order")).toBeInTheDocument()
+      })
+    })
+
+    it("shows PROCESSING_PAYMENT order banner", async () => {
+      mockUseClientQuery.mockReturnValue({
+        loading: false,
+        data: {
+          me: {
+            ordersConnection: {
+              edges: [
+                {
+                  node: {
+                    internalID: "order-123",
+                    buyerState: "PROCESSING_PAYMENT",
+                  },
+                },
+              ],
+            },
+          },
+        },
+      })
+
+      renderWithRelay({
+        Artwork: () => artworkMock,
+        Me: () => meMock,
+      })
+
+      await waitFor(() => {
+        expect(
+          screen.getByText("Your payment is being processed."),
+        ).toBeInTheDocument()
+        expect(screen.getByText("View order")).toBeInTheDocument()
+      })
+    })
+
+    it("does not show order banner when there are no orders", async () => {
+      mockUseClientQuery.mockReturnValue({
+        loading: false,
+        data: {
+          me: {
+            ordersConnection: {
+              edges: [],
+            },
+          },
+        },
+      })
+
+      renderWithRelay({
+        Artwork: () => artworkMock,
+        Me: () => meMock,
+      })
+
+      await flushPromiseQueue()
+      expect(screen.queryByText(/order/i)).not.toBeInTheDocument()
     })
   })
 })
