@@ -24,6 +24,7 @@ const MOCK_PRICE_RANGE_ORDER = {
   mode: "OFFER",
   source: "artwork_page",
   currencyCode: "USD",
+  offers: [],
   lineItems: [
     {
       artwork: {
@@ -46,6 +47,7 @@ const MOCK_EXACT_PRICE_ORDER = {
   mode: "OFFER",
   source: "artwork_page",
   currencyCode: "USD",
+  offers: [],
   lineItems: [
     {
       artwork: {
@@ -67,6 +69,7 @@ const MOCK_HIDDEN_PRICE_ORDER = {
   mode: "OFFER",
   currencyCode: "USD",
   source: "artwork_page",
+  offers: [],
   lineItems: [
     {
       artwork: {
