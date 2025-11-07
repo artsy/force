@@ -12,10 +12,12 @@ export const useCompleteFulfillmentDetailsData = (
 ): Order2FulfillmentDetailsCompletedViewProps | null => {
   const orderData = useFragment(FRAGMENT, order)
 
-  const details = orderData.fulfillmentDetails ?? {}
-  const isComplete = ["addressLine1", "country"].every(field => {
-    return details[field as keyof typeof details] != null
-  })
+  const details = orderData.fulfillmentDetails
+  const isComplete =
+    details &&
+    ["addressLine1", "country"].every(field => {
+      return details[field as keyof typeof details] != null
+    })
 
   if (!isComplete) {
     return null
@@ -26,12 +28,12 @@ export const useCompleteFulfillmentDetailsData = (
   return {
     isPickup,
     fulfillmentDetails: {
-      name: orderData.fulfillmentDetails?.name || null,
-      addressLine1: orderData.fulfillmentDetails?.addressLine1 || null,
-      addressLine2: orderData.fulfillmentDetails?.addressLine2 || null,
-      city: orderData.fulfillmentDetails?.city || null,
-      region: orderData.fulfillmentDetails?.region || null,
-      postalCode: orderData.fulfillmentDetails?.postalCode || null,
+      name: details?.name || null,
+      addressLine1: details?.addressLine1 || null,
+      addressLine2: details?.addressLine2 || null,
+      city: details?.city || null,
+      region: details?.region || null,
+      postalCode: details?.postalCode || null,
       country: orderData.fulfillmentDetails?.country || null,
       phoneNumber: orderData.fulfillmentDetails?.phoneNumber?.display || null,
     },

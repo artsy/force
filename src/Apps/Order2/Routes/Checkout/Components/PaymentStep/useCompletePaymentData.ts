@@ -12,14 +12,8 @@ export const useCompletePaymentData = (
 ): true | null => {
   const orderData = useFragment(FRAGMENT, order)
 
-  if (!orderData.paymentMethod) {
-    return null
-  }
-
   if (
-    !orderData.paymentMethodDetails ||
-    (typeof orderData.paymentMethodDetails === "object" &&
-      Object.keys(orderData.paymentMethodDetails).length === 0)
+    !(orderData.paymentMethodDetails?.__typename && orderData.paymentMethod)
   ) {
     return null
   }

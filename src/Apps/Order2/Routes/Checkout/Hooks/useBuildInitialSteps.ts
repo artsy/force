@@ -28,43 +28,30 @@ export const useBuildInitialSteps = (
   const deliveryComplete = useCompleteDeliveryOptionData(orderData) !== null
   const paymentComplete = useCompletePaymentData(orderData) !== null
 
-  const stepNamesInOrder: CheckoutStepName[] = [
-    CheckoutStepName.FULFILLMENT_DETAILS,
-    CheckoutStepName.DELIVERY_OPTION,
-    CheckoutStepName.PAYMENT,
-    CheckoutStepName.CONFIRMATION,
-  ]
-
-  if (orderData.mode === "OFFER") {
-    stepNamesInOrder.unshift(CheckoutStepName.OFFER_AMOUNT)
-  }
+  const completeOrUpcoming = (isComplete: boolean) =>
+    isComplete ? CheckoutStepState.COMPLETED : CheckoutStepState.UPCOMING
 
   const offerStep = orderData.mode === "OFFER" && {
     name: CheckoutStepName.OFFER_AMOUNT,
-    state: offerComplete
-      ? CheckoutStepState.COMPLETED
-      : CheckoutStepState.UPCOMING,
+    state: completeOrUpcoming(offerComplete),
   }
 
   const fulfillmentDetailsStep = {
     name: CheckoutStepName.FULFILLMENT_DETAILS,
-    state: fulfillmentComplete
-      ? CheckoutStepState.COMPLETED
-      : CheckoutStepState.UPCOMING,
+    state: completeOrUpcoming(fulfillmentComplete),
   }
 
+  const isPickup = orderData.selectedFulfillmentOption?.type === "PICKUP"
   const deliveryOptionStep = {
     name: CheckoutStepName.DELIVERY_OPTION,
-    state: deliveryComplete
-      ? CheckoutStepState.COMPLETED
-      : CheckoutStepState.UPCOMING,
+    state: isPickup
+      ? CheckoutStepState.HIDDEN
+      : completeOrUpcoming(deliveryComplete),
   }
 
   const paymentStep = {
     name: CheckoutStepName.PAYMENT,
-    state: paymentComplete
-      ? CheckoutStepState.COMPLETED
-      : CheckoutStepState.UPCOMING,
+    state: completeOrUpcoming(paymentComplete),
   }
 
   const confirmationStep = {
@@ -79,12 +66,6 @@ export const useBuildInitialSteps = (
     paymentStep,
     confirmationStep,
   ].filter((step): step is CheckoutStep => step !== false)
-
-  // Delivery option is hidden for pickup orders
-  const isPickup = orderData.selectedFulfillmentOption?.type === "PICKUP"
-  if (isPickup) {
-    deliveryOptionStep.state = CheckoutStepState.HIDDEN
-  }
 
   const firstUpcomingStep = steps.find(
     step => step.state === CheckoutStepState.UPCOMING,
