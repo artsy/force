@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<af68be8833abba0ddf0cdbde30d8d116>>
+ * @generated SignedSource<<9692a008b6be0d27eed4acfac7530353>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -509,7 +509,7 @@ return {
         "me.order.buyerState": {
           "enumValues": [
             "APPROVED",
-            "CANCELLED",
+            "CANCELED",
             "COMPLETED",
             "DECLINED_BY_BUYER",
             "DECLINED_BY_SELLER",

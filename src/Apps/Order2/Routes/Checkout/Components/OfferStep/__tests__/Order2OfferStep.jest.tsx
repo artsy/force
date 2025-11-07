@@ -93,8 +93,8 @@ describe("Order2OfferStep", () => {
   beforeEach(() => {
     mockSetOfferAmountComplete = jest.fn()
     mockSubmitMutation = jest.fn(() => ({
-      commerceAddInitialOfferToOrder: {
-        orderOrError: { order: { internalID: "order-id" } },
+      createBuyerOffer: {
+        offerOrError: { offer: { internalID: "offer-id" } },
       },
     }))
     mockJumpTo = jest.fn()
@@ -180,8 +180,8 @@ describe("Order2OfferStep", () => {
       expect(mockSubmitMutation).toHaveBeenCalledWith({
         variables: {
           input: {
-            orderId: "order-id",
-            amountCents: 150000, // 1500 * 100
+            orderID: "order-id",
+            amountMinor: 150000, // 1500 * 100
             note: "I sent an offer for US$1,500.00",
           },
         },
@@ -251,8 +251,8 @@ describe("Order2OfferStep", () => {
       expect(mockSubmitMutation).toHaveBeenCalledWith({
         variables: {
           input: {
-            orderId: "order-id",
-            amountCents: 180000,
+            orderID: "order-id",
+            amountMinor: 180000,
             note: "I sent an offer for US$1,800.00",
           },
         },
@@ -289,8 +289,8 @@ describe("Order2OfferStep", () => {
       expect(mockSubmitMutation).toHaveBeenCalledWith({
         variables: {
           input: {
-            orderId: "order-id",
-            amountCents: 150000,
+            orderID: "order-id",
+            amountMinor: 150000,
             note: "I really love this artwork!",
           },
         },
@@ -351,8 +351,8 @@ describe("Order2OfferStep", () => {
         expect(mockSubmitMutation).toHaveBeenCalledWith({
           variables: {
             input: {
-              orderId: "order-id",
-              amountCents: 300000,
+              orderID: "order-id",
+              amountMinor: 300000,
               note: "I sent an offer for US$3,000.00",
             },
           },
@@ -392,8 +392,8 @@ describe("Order2OfferStep", () => {
         expect(mockSubmitMutation).toHaveBeenCalledWith({
           variables: {
             input: {
-              orderId: "order-id",
-              amountCents: 250000,
+              orderID: "order-id",
+              amountMinor: 250000,
               note: "This piece would be perfect for my collection!",
             },
           },

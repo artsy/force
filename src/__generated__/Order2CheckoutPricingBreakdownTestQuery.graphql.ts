@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<91d62d6f5c260a8bab43f7a7e493d282>>
+ * @generated SignedSource<<99ee5fde4290f53f1e325bd4666ed082>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -171,6 +171,13 @@ return {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
+                "name": "mode",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
                 "name": "buyerStateExpiresAt",
                 "storageKey": null
               },
@@ -251,7 +258,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3effa5bcb240ba4371f69b4f38eb7427",
+    "cacheID": "16e924b4639cb92f9534fecb4562f051",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -270,6 +277,15 @@ return {
         },
         "me.order.buyerStateExpiresAt": (v7/*: any*/),
         "me.order.id": (v6/*: any*/),
+        "me.order.mode": {
+          "enumValues": [
+            "BUY",
+            "OFFER"
+          ],
+          "nullable": false,
+          "plural": false,
+          "type": "OrderModeEnum"
+        },
         "me.order.pricingBreakdownLines": {
           "enumValues": null,
           "nullable": false,
@@ -303,7 +319,7 @@ return {
     },
     "name": "Order2CheckoutPricingBreakdownTestQuery",
     "operationKind": "query",
-    "text": "query Order2CheckoutPricingBreakdownTestQuery {\n  me {\n    order(id: \"test-order\") {\n      ...Order2CheckoutPricingBreakdown_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2CheckoutPricingBreakdown_order on Order {\n  source\n  buyerStateExpiresAt\n  pricingBreakdownLines {\n    __typename\n    ... on ShippingLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TaxLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on SubtotalLine {\n      displayName\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TotalLine {\n      displayName\n      amountFallbackText\n      amount {\n        display\n      }\n    }\n  }\n}\n"
+    "text": "query Order2CheckoutPricingBreakdownTestQuery {\n  me {\n    order(id: \"test-order\") {\n      ...Order2CheckoutPricingBreakdown_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2CheckoutPricingBreakdown_order on Order {\n  source\n  mode\n  buyerStateExpiresAt\n  pricingBreakdownLines {\n    __typename\n    ... on ShippingLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TaxLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on SubtotalLine {\n      displayName\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TotalLine {\n      displayName\n      amountFallbackText\n      amount {\n        display\n      }\n    }\n  }\n}\n"
   }
 };
 })();

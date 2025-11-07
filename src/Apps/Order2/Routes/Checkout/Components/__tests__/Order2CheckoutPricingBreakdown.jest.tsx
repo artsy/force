@@ -236,4 +236,50 @@ describe("Order2PricingBreakdown", () => {
 
     expect(screen.queryByText("Exp.", { exact: false })).not.toBeInTheDocument()
   })
+
+  it("shows 'Waiting for offer' for offer orders with no amount yet", () => {
+    renderWithRelay({
+      Me: () => ({
+        order: {
+          mode: "OFFER",
+          pricingBreakdownLines: [
+            {
+              __typename: "SubtotalLine",
+              displayName: "Your offer",
+              amount: null,
+            },
+            {
+              __typename: "ShippingLine",
+              displayName: "Shipping",
+              amountFallbackText: "Calculated at checkout",
+              amount: null,
+            },
+            {
+              __typename: "TaxLine",
+              displayName: "Tax",
+              amountFallbackText: "Calculated at checkout",
+              amount: null,
+            },
+            {
+              __typename: "TotalLine",
+              displayName: "Total",
+              amountFallbackText: "Waiting for final totals",
+              amount: null,
+            },
+          ],
+        },
+      }),
+    })
+
+    // Subtotal should show "Waiting for offer"
+    const subtotalRow = screen.getByText("Your offer").parentElement
+    expect(subtotalRow).toHaveTextContent("Waiting for offer")
+
+    // Other lines should still show their fallback text
+    const shippingRow = screen.getByText("Shipping").parentElement
+    expect(shippingRow).toHaveTextContent("Calculated at checkout")
+
+    const totalRow = screen.getByText("Total").parentElement
+    expect(totalRow).toHaveTextContent("Waiting for final totals")
+  })
 })

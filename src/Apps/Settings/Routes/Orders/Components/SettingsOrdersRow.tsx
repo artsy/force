@@ -55,7 +55,7 @@ interface OrderActionButtonProps {
 
 const ORDER_ICONS: Record<string, React.ReactElement> = {
   APPROVED: <PendingIcon fill="mono100" />,
-  CANCELLED: <CloseStrokeIcon fill="red100" />,
+  CANCELED: <CloseStrokeIcon fill="red100" />,
   COMPLETED: <CheckmarkFillIcon fill="green100" />,
   DECLINED_BY_BUYER: <CloseStrokeIcon fill="red100" />,
   DECLINED_BY_SELLER: <CloseStrokeIcon fill="red100" />,
@@ -70,7 +70,7 @@ const ORDER_ICONS: Record<string, React.ReactElement> = {
 
 const ORDER_COLORS: Record<string, string> = {
   APPROVED: "mono100",
-  CANCELLED: "red100",
+  CANCELED: "red100",
   COMPLETED: "green100",
   DECLINED_BY_BUYER: "red100",
   DECLINED_BY_SELLER: "red100",
@@ -119,7 +119,7 @@ const OrderLink: FC<OrderLinkProps> = ({
   trackChangePaymentMethodClick,
 }) => {
   const isOrderActive = ![
-    "CANCELLED",
+    "CANCELED",
     "DECLINED_BY_BUYER",
     "DECLINED_BY_SELLER",
     "REFUNDED",

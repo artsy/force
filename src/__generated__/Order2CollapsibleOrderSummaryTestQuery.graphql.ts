@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4d31e3da3a0e3cffe24b0390dad916b0>>
+ * @generated SignedSource<<5f9148223df7641fbcf2088ce9f315b8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -180,6 +180,13 @@ return {
                 "args": null,
                 "kind": "ScalarField",
                 "name": "source",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "mode",
                 "storageKey": null
               },
               {
@@ -404,7 +411,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "1a2a1a78dbf8959d033ff57f39ee4c41",
+    "cacheID": "2a220d9806bbfa6cbdd7a4e5eedb538a",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -465,6 +472,15 @@ return {
         "me.order.lineItems.artworkVersion.thumbnail.resized.url": (v10/*: any*/),
         "me.order.lineItems.artworkVersion.title": (v8/*: any*/),
         "me.order.lineItems.id": (v7/*: any*/),
+        "me.order.mode": {
+          "enumValues": [
+            "BUY",
+            "OFFER"
+          ],
+          "nullable": false,
+          "plural": false,
+          "type": "OrderModeEnum"
+        },
         "me.order.pricingBreakdownLines": {
           "enumValues": null,
           "nullable": false,
@@ -497,7 +513,7 @@ return {
     },
     "name": "Order2CollapsibleOrderSummaryTestQuery",
     "operationKind": "query",
-    "text": "query Order2CollapsibleOrderSummaryTestQuery {\n  me {\n    order(id: \"123\") {\n      ...Order2CollapsibleOrderSummary_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2CheckoutPricingBreakdown_order on Order {\n  source\n  buyerStateExpiresAt\n  pricingBreakdownLines {\n    __typename\n    ... on ShippingLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TaxLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on SubtotalLine {\n      displayName\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TotalLine {\n      displayName\n      amountFallbackText\n      amount {\n        display\n      }\n    }\n  }\n}\n\nfragment Order2CollapsibleOrderSummary_order on Order {\n  ...Order2CheckoutPricingBreakdown_order\n  source\n  buyerTotal {\n    display\n  }\n  itemsTotal {\n    display\n  }\n  shippingTotal {\n    display\n  }\n  taxTotal {\n    display\n  }\n  lineItems {\n    artwork {\n      slug\n      id\n    }\n    artworkVersion {\n      title\n      artistNames\n      date\n      thumbnail: image {\n        resized(height: 200, version: [\"square\"]) {\n          url\n        }\n      }\n      id\n    }\n    id\n  }\n}\n"
+    "text": "query Order2CollapsibleOrderSummaryTestQuery {\n  me {\n    order(id: \"123\") {\n      ...Order2CollapsibleOrderSummary_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2CheckoutPricingBreakdown_order on Order {\n  source\n  mode\n  buyerStateExpiresAt\n  pricingBreakdownLines {\n    __typename\n    ... on ShippingLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TaxLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on SubtotalLine {\n      displayName\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TotalLine {\n      displayName\n      amountFallbackText\n      amount {\n        display\n      }\n    }\n  }\n}\n\nfragment Order2CollapsibleOrderSummary_order on Order {\n  ...Order2CheckoutPricingBreakdown_order\n  source\n  buyerTotal {\n    display\n  }\n  itemsTotal {\n    display\n  }\n  shippingTotal {\n    display\n  }\n  taxTotal {\n    display\n  }\n  lineItems {\n    artwork {\n      slug\n      id\n    }\n    artworkVersion {\n      title\n      artistNames\n      date\n      thumbnail: image {\n        resized(height: 200, version: [\"square\"]) {\n          url\n        }\n      }\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();
