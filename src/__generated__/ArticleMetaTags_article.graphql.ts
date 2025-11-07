@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3b095345976f92c7fe2d9bf60c4b5bdf>>
+ * @generated SignedSource<<88c783470d46df38690d81ab2e4ee27b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,10 +9,18 @@
 // @ts-nocheck
 
 import { ReaderFragment } from 'relay-runtime';
-import { FragmentRefs } from "relay-runtime";
+export type ArticleFeatureSectionType = "BASIC" | "FULLSCREEN" | "SPLIT" | "TEXT" | "%future added value";
+import { FragmentRefs } from "relay-runtime"
+  hero: any;;
 export type ArticleMetaTags_article$data = {
   readonly byline: string | null | undefined;
   readonly description: string | null | undefined;
+  readonly hero: {
+    readonly image?: {
+      readonly url: string | null | undefined;
+    } | null | undefined;
+    readonly layout?: ArticleFeatureSectionType;
+  } | null | undefined;
   readonly href: string | null | undefined;
   readonly keywords: ReadonlyArray<string>;
   readonly metaPublishedAt: string | null | undefined;
@@ -29,7 +37,17 @@ export type ArticleMetaTags_article$key = {
   readonly " $fragmentSpreads": FragmentRefs<"ArticleMetaTags_article">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "url",
+    "storageKey": null
+  }
+];
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -98,13 +116,40 @@ const node: ReaderFragment = {
       "kind": "LinkedField",
       "name": "thumbnailImage",
       "plural": false,
+      "selections": (v0/*: any*/),
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": null,
+      "kind": "LinkedField",
+      "name": "hero",
+      "plural": false,
       "selections": [
         {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "url",
-          "storageKey": null
+          "kind": "InlineFragment",
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "layout",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "Image",
+              "kind": "LinkedField",
+              "name": "image",
+              "plural": false,
+              "selections": (v0/*: any*/),
+              "storageKey": null
+            }
+          ],
+          "type": "ArticleFeatureSection",
+          "abstractKey": null
         }
       ],
       "storageKey": null
@@ -113,7 +158,8 @@ const node: ReaderFragment = {
   "type": "Article",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "79c17ffae9985576d77cb87aad7750d9";
+(node as any).hash = "83f68b0ad83dbf18c5f8633af6e8774b";
 
 export default node;
