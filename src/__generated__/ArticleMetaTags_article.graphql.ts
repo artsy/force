@@ -10,8 +10,7 @@
 
 import { ReaderFragment } from 'relay-runtime';
 export type ArticleFeatureSectionType = "BASIC" | "FULLSCREEN" | "SPLIT" | "TEXT" | "%future added value";
-import { FragmentRefs } from "relay-runtime"
-  hero: any;;
+import { FragmentRefs } from "relay-runtime";
 export type ArticleMetaTags_article$data = {
   readonly byline: string | null | undefined;
   readonly description: string | null | undefined;
