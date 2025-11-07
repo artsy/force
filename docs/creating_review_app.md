@@ -54,7 +54,7 @@ To access the review app, you must create a DNS name for it. The name must match
 1. Click `+ Add Record`
 1. Change `Type` dropdown to `CNAME`
 1. Under `Name` enter `awesome-feature`
-1. Under `Target` say `nginx-staging.artsy.net`
+1. Under `Target` say `nginx-staging-2025.artsy.net.net`
 1. Under `Proxy status` toggle to `Proxied`
 1. Under `Record Attributes > Comment` add the PR that created the review app, e.g. https://github.com/artsy/force/pull/123
 1. Under `Record Attributes > Tags` add the prefix of your team, e.g. `FX`

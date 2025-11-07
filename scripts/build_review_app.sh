@@ -76,9 +76,9 @@ hokusai review_app refresh "$NAME"
 # ...
 # ...
 # yeah, I'm talking to you
-# you need to configure a CNAME record so that $NAME.artsy.net points to nginx-staging.artsy.net
+# you need to configure a CNAME record so that $NAME.artsy.net points to nginx-staging-2025.artsy.net.net
 #
-echo "Create a CNAME record of $NAME.artsy.net pointing to nginx-staging.artsy.net"
+echo "Create a CNAME record of $NAME.artsy.net pointing to nginx-staging-2025.artsy.net.net"
 #
 # you may do this in the Cloudflare interface. Credentials are in 1pass.
 #
