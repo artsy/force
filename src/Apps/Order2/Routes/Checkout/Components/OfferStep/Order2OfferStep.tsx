@@ -234,7 +234,6 @@ const FRAGMENT = graphql`
       artwork {
         slug
         priceDisplay
-        displayPriceRange
         isPriceRange
         isPriceHidden
         listPrice {

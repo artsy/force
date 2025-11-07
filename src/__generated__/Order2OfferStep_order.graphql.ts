@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8584a30986b4bdf203070f41e6036bc2>>
+ * @generated SignedSource<<6d9689041a23fe291e1fd0c88c0fa696>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,7 +17,6 @@ export type Order2OfferStep_order$data = {
   readonly internalID: string;
   readonly lineItems: ReadonlyArray<{
     readonly artwork: {
-      readonly displayPriceRange: boolean | null | undefined;
       readonly editionSets: ReadonlyArray<{
         readonly internalID: string;
       } | null | undefined> | null | undefined;
@@ -132,13 +131,6 @@ return {
               "alias": null,
               "args": null,
               "kind": "ScalarField",
-              "name": "displayPriceRange",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
               "name": "isPriceRange",
               "storageKey": null
             },
@@ -239,6 +231,6 @@ return {
 };
 })();
 
-(node as any).hash = "682c0bfa34b884ce7db45cf5fda3efc1";
+(node as any).hash = "da3314c9f447e266129fd1f69559c904";
 
 export default node;
