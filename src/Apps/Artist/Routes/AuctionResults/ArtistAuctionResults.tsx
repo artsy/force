@@ -253,7 +253,7 @@ const AuctionResultsContainer: React.FC<
             }}
           />
         ) : (
-          <TruncateComponent enabled={truncate}>
+          <TruncateComponent enabled={truncate && results.length > 7}>
             <LoadingArea isLoading={mode === "Loading"}>
               <Flex flexDirection="column" gap={4}>
                 {upcomingAuctionResults.length > 0 && (
