@@ -18,6 +18,7 @@ import {
   CellArticlePlaceholder,
 } from "Components/Cells/CellArticle"
 import { Masonry } from "Components/Masonry"
+import { useReturnTo } from "Components/Rail/RailHeader"
 import { RouterLink } from "System/Components/RouterLink"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
@@ -43,6 +44,8 @@ const ArtistEditorialNewsGrid: FC<
 
   const articles = extractNodes(artist.articlesConnection)
 
+  const viewAllHref = useReturnTo(`${artist.href}/articles`)
+
   if (articles.length === 0) {
     return null
   }
@@ -67,8 +70,7 @@ const ArtistEditorialNewsGrid: FC<
           variant="sm-display"
           flexShrink={0}
           as={RouterLink}
-          // @ts-ignore
-          to={`${artist.href}/articles`}
+          to={viewAllHref}
           onClick={() => {
             const trackingEvent: ClickedArticleGroup = {
               action: ActionType.clickedArticleGroup,
