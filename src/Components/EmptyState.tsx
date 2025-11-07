@@ -27,12 +27,12 @@ export const EmptyState: React.FC<React.PropsWithChildren<EmptyStateProps>> = ({
       alignItems={["flex-start", "center"]}
     >
       <Stack gap={[1, 0]} flex={1}>
-        <Text variant="md" color="mono100">
+        <Text variant="sm-display" color="mono100">
           {title}
         </Text>
 
         {description && (
-          <Text variant="md" color="mono60">
+          <Text variant="sm" color="mono60">
             {description}
           </Text>
         )}
