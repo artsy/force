@@ -253,7 +253,7 @@ const AuctionResultsContainer: React.FC<
             }}
           />
         ) : (
-          <TruncateComponent label="Load More" enabled={truncate}>
+          <TruncateComponent enabled={truncate}>
             <LoadingArea isLoading={mode === "Loading"}>
               <Flex flexDirection="column" gap={4}>
                 {upcomingAuctionResults.length > 0 && (
@@ -327,7 +327,7 @@ export const ArtistAuctionResultsPlaceholder: React.FC<
       <ArtistAuctionResultsFilterNavPlaceholder>
         <Spacer y={[2, 4]} />
 
-        <TruncateComponent label="Load More" enabled={truncate} disabled>
+        <TruncateComponent enabled={truncate} disabled>
           <Stack gap={2}>
             {Array.from({ length: 10 }).map((_, index) => (
               <ArtistAuctionResultItemPlaceholder

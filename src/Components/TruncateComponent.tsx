@@ -11,7 +11,7 @@ interface TruncateComponentProps {
 
 export const TruncateComponent: FC<TruncateComponentProps> = ({
   children,
-  label = "View All",
+  label = "View More",
   enabled = true,
   disabled = false,
 }) => {
