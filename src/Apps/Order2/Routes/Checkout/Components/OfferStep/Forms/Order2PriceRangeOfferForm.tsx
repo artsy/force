@@ -40,7 +40,7 @@ export const Order2PriceRangeOfferForm: React.FC<
   onContinueButtonPressed,
 }) => {
   const orderData = useFragment(FRAGMENT, order)
-  const artwork = orderData.lineItems?.[0]?.artwork
+  const artwork = orderData.lineItems?.[0]?.artworkOrEditionSet
   const listPrice = artwork?.listPrice
 
   const getRangeOptions = (): PriceOption[] => {
@@ -48,8 +48,8 @@ export const Order2PriceRangeOfferForm: React.FC<
       return []
     }
 
-    const minPriceRange = listPrice.minPrice?.major
-    const maxPriceRange = listPrice.maxPrice?.major
+    const minPriceRange = listPrice?.minPrice?.major
+    const maxPriceRange = listPrice?.maxPrice?.major
 
     if (!minPriceRange || !maxPriceRange) {
       return []
@@ -146,74 +146,68 @@ export const Order2PriceRangeOfferForm: React.FC<
   return (
     <>
       {/* Offer Amount Section */}
-      <Box>
+      <Box py={2} px={[2, 4]}>
         {hasPriceRange ? (
-          <Box py={2} px={[2, 4]}>
-            <RadioGroup
-              onSelect={setSelectedRadio}
-              defaultValue={selectedRadio}
-            >
-              {compact(priceOptions)
-                .map(({ value: optionValue, description, key }) => (
-                  <Radio
-                    value={key}
-                    label={formatCurrency(optionValue)}
-                    onSelect={() => {
-                      onOfferOptionSelected(optionValue, description)
-                      setShowCustomInput(false)
-                      setCustomValue(undefined)
-                    }}
-                    error={
-                      formIsDirty &&
-                      (offerValue <= 0 || offerValue === undefined)
-                    }
-                    key={key}
-                  >
-                    <Spacer y={1} />
-                    <Text variant="xs" color="mono60">
-                      {description}
-                    </Text>
-                    <Spacer y={4} />
-                  </Radio>
-                ))
-                .concat([
-                  <Radio
-                    value="price-option-custom"
-                    label="Other amount"
-                    error={
-                      formIsDirty &&
-                      (offerValue <= 0 || offerValue === undefined)
-                    }
-                    onSelect={() => {
-                      !showCustomInput && setShowCustomInput(true)
-                    }}
-                    key="price-option-custom"
-                  >
-                    {showCustomInput && (
-                      <Flex flexDirection="column" mt={2}>
-                        <OfferInput
-                          id="OfferForm_customOfferValue"
-                          showError={formIsDirty && offerValue <= 0}
-                          onChange={value => {
-                            setCustomValue(value)
-                          }}
-                          onBlur={() => {
-                            if (customValue !== undefined) {
-                              onOfferOptionSelected(customValue)
-                            }
-                          }}
-                          value={customValue || 0}
-                        />
-                      </Flex>
-                    )}
-                  </Radio>,
-                ])}
-            </RadioGroup>
-          </Box>
+          <RadioGroup onSelect={setSelectedRadio} defaultValue={selectedRadio}>
+            {compact(priceOptions)
+              .map(({ value: optionValue, description, key }) => (
+                <Radio
+                  value={key}
+                  label={formatCurrency(optionValue)}
+                  onSelect={() => {
+                    onOfferOptionSelected(optionValue, description)
+                    setShowCustomInput(false)
+                    setCustomValue(undefined)
+                  }}
+                  error={
+                    formIsDirty && (offerValue <= 0 || offerValue === undefined)
+                  }
+                  key={key}
+                >
+                  <Spacer y={1} />
+                  <Text variant="xs" color="mono60">
+                    {description}
+                  </Text>
+                  <Spacer y={4} />
+                </Radio>
+              ))
+              .concat([
+                <Radio
+                  value="price-option-custom"
+                  label="Other amount"
+                  error={
+                    formIsDirty && (offerValue <= 0 || offerValue === undefined)
+                  }
+                  onSelect={() => {
+                    !showCustomInput && setShowCustomInput(true)
+                  }}
+                  key="price-option-custom"
+                >
+                  {showCustomInput && (
+                    <Flex flexDirection="column" mt={2}>
+                      <OfferInput
+                        id="OfferForm_customOfferValue"
+                        showError={formIsDirty && offerValue <= 0}
+                        onChange={value => {
+                          setCustomValue(value)
+                        }}
+                        onBlur={() => {
+                          if (customValue !== undefined) {
+                            onOfferOptionSelected(customValue)
+                          }
+                        }}
+                        value={customValue || 0}
+                      />
+                    </Flex>
+                  )}
+                </Radio>,
+              ])}
+          </RadioGroup>
         ) : (
           <>
             <Text
-              variant="lg-display"
+              variant={["sm-display", "md"]}
+              fontWeight={["bold", "normal"]}
               color={formIsDirty && offerValue <= 0 ? "red100" : undefined}
             >
               Enter your offer
@@ -281,17 +275,40 @@ const FRAGMENT = graphql`
   fragment Order2PriceRangeOfferForm_order on Order {
     currencyCode
     lineItems {
-      artwork {
-        price
-        isPriceRange
-        listPrice {
-          __typename
-          ... on PriceRange {
-            maxPrice {
-              major
+      artworkOrEditionSet {
+        ... on Artwork {
+          price
+          listPrice {
+            __typename
+            ... on PriceRange {
+              maxPrice {
+                ... on Money {
+                  major
+                }
+              }
+              minPrice {
+                ... on Money {
+                  major
+                }
+              }
             }
-            minPrice {
-              major
+          }
+        }
+        ... on EditionSet {
+          price
+          listPrice {
+            __typename
+            ... on PriceRange {
+              maxPrice {
+                ... on Money {
+                  major
+                }
+              }
+              minPrice {
+                ... on Money {
+                  major
+                }
+              }
             }
           }
         }

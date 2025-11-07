@@ -138,18 +138,13 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
 
   // Determine which offer form scenario to use based on artwork properties
   const getOfferFormComponent = () => {
-    const artwork = orderData.lineItems?.[0]?.artwork
+    const priceDisplay = orderData.lineItems?.[0]?.artwork?.priceDisplay
 
-    if (artwork?.isPriceHidden) {
+    if (priceDisplay === "hidden") {
       return Order2HiddenPriceOfferForm
     }
 
-    const isPriceRange =
-      artwork?.listPrice?.__typename === "PriceRange" &&
-      artwork?.listPrice?.maxPrice?.major &&
-      artwork?.listPrice?.minPrice?.major
-
-    if (isPriceRange) {
+    if (priceDisplay === "range") {
       return Order2PriceRangeOfferForm
     }
 
@@ -238,6 +233,8 @@ const FRAGMENT = graphql`
     lineItems {
       artwork {
         slug
+        priceDisplay
+        displayPriceRange
         isPriceRange
         isPriceHidden
         listPrice {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<477a5a49672548d899187cd801a831ae>>
+ * @generated SignedSource<<8584a30986b4bdf203070f41e6036bc2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,6 +17,7 @@ export type Order2OfferStep_order$data = {
   readonly internalID: string;
   readonly lineItems: ReadonlyArray<{
     readonly artwork: {
+      readonly displayPriceRange: boolean | null | undefined;
       readonly editionSets: ReadonlyArray<{
         readonly internalID: string;
       } | null | undefined> | null | undefined;
@@ -38,6 +39,7 @@ export type Order2OfferStep_order$data = {
         // value in case none of the concrete values match.
         readonly __typename: "%other";
       } | null | undefined;
+      readonly priceDisplay: string | null | undefined;
       readonly slug: string;
     } | null | undefined;
   } | null | undefined>;
@@ -117,6 +119,20 @@ return {
               "args": null,
               "kind": "ScalarField",
               "name": "slug",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "priceDisplay",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "displayPriceRange",
               "storageKey": null
             },
             {
@@ -223,6 +239,6 @@ return {
 };
 })();
 
-(node as any).hash = "abed7f3dafaa58d919ab732d9042de68";
+(node as any).hash = "682c0bfa34b884ce7db45cf5fda3efc1";
 
 export default node;
