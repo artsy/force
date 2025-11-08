@@ -17,7 +17,7 @@ async function addCnameRecord() {
       body: JSON.stringify({
         type: "CNAME",
         name: dnsSubdomain,
-        content: "nginx-staging.artsy.net",
+        content: "nginx-staging-2025.artsy.net",
         ttl: 1, // Corresponds to "Auto" in CloudFlare UI
         proxied: true,
         tags: ["source:review-app"],
