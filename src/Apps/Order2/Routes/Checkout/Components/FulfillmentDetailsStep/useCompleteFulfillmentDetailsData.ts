@@ -12,31 +12,44 @@ export const useCompleteFulfillmentDetailsData = (
 ): Order2FulfillmentDetailsCompletedViewProps | null => {
   const orderData = useFragment(FRAGMENT, order)
 
-  const details = orderData.fulfillmentDetails
-  const isComplete =
-    details &&
-    ["addressLine1", "country"].every(field => {
-      return details[field as keyof typeof details] != null
-    })
-
-  if (!isComplete) {
+  const fulfillmentDetails = orderData.fulfillmentDetails
+  if (!fulfillmentDetails) {
     return null
   }
+  switch (orderData.selectedFulfillmentOption?.type) {
+    case "PICKUP":
+      return {
+        isPickup: true,
+        fulfillmentDetails: {
+          name: fulfillmentDetails?.name,
+          phoneNumber: orderData.fulfillmentDetails?.phoneNumber?.display,
+        },
+      }
+    default:
+      const isComplete = ["addressLine1", "country", "name"].every(field => {
+        return (
+          fulfillmentDetails[field as keyof typeof fulfillmentDetails] != null
+        )
+      })
 
-  const isPickup = orderData.selectedFulfillmentOption?.type === "PICKUP"
+      if (!isComplete) {
+        return null
+      }
 
-  return {
-    isPickup,
-    fulfillmentDetails: {
-      name: details?.name || null,
-      addressLine1: details?.addressLine1 || null,
-      addressLine2: details?.addressLine2 || null,
-      city: details?.city || null,
-      region: details?.region || null,
-      postalCode: details?.postalCode || null,
-      country: orderData.fulfillmentDetails?.country || null,
-      phoneNumber: orderData.fulfillmentDetails?.phoneNumber?.display || null,
-    },
+      return {
+        isPickup: false,
+        fulfillmentDetails: {
+          name: fulfillmentDetails?.name || null,
+          addressLine1: fulfillmentDetails?.addressLine1 || null,
+          addressLine2: fulfillmentDetails?.addressLine2 || null,
+          city: fulfillmentDetails?.city || null,
+          region: fulfillmentDetails?.region || null,
+          postalCode: fulfillmentDetails?.postalCode || null,
+          country: orderData.fulfillmentDetails?.country || null,
+          phoneNumber:
+            orderData.fulfillmentDetails?.phoneNumber?.display || null,
+        },
+      }
   }
 }
 

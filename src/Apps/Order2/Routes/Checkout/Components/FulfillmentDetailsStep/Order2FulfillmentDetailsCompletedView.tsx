@@ -3,14 +3,14 @@ import { Box, Clickable, Flex, Spacer, Text } from "@artsy/palette"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 
 export interface FulfillmentDetails {
-  name: string | null
-  addressLine1: string | null
-  addressLine2: string | null
-  city: string | null
-  region: string | null
-  postalCode: string | null
-  country: string | null
-  phoneNumber: string | null
+  name?: string | null
+  addressLine1?: string | null
+  addressLine2?: string | null
+  city?: string | null
+  region?: string | null
+  postalCode?: string | null
+  country?: string | null
+  phoneNumber?: string | null
 }
 
 export interface Order2FulfillmentDetailsCompletedViewProps {
