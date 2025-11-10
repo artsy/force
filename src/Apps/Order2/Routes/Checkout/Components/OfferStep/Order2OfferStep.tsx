@@ -1,5 +1,5 @@
 import { ContextModule } from "@artsy/cohesion"
-import { Box, Flex, Text } from "@artsy/palette"
+import { Box, Button, Flex, Spacer, Text, TextArea } from "@artsy/palette"
 import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
 import {
   CheckoutStepName,
@@ -207,18 +207,48 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
         </Flex>
       </Box>
 
-      <Box hidden={currentStep !== CheckoutStepState.ACTIVE}>
+      <Box py={2} px={[2, 4]} hidden={currentStep !== CheckoutStepState.ACTIVE}>
         <OfferFormComponent
           order={orderData}
           offerValue={offerValue}
-          offerNoteValue={offerNoteValue}
           formIsDirty={formIsDirty}
-          isSubmittingOffer={isSubmittingOffer}
           onOfferValueChange={setOfferValue}
           onOfferOptionSelected={onOfferOptionSelected}
-          onOfferNoteChange={setOfferNoteValue}
-          onContinueButtonPressed={onContinueButtonPressed}
         />
+
+        <Spacer y={4} />
+
+        <Flex flexDirection="column">
+          <Text
+            variant={["sm-display", "md"]}
+            fontWeight={["bold", "normal"]}
+            color="mono100"
+          >
+            Offer note
+          </Text>
+          <Text variant="sm" color="mono100">
+            Additional context to help the gallery evaluate your offer.
+          </Text>
+
+          <TextArea
+            title="Note (recommended)"
+            maxLength={1000}
+            placeholder="Share what draws you to this work or artist, or add any context about your offer"
+            onChange={setOfferNoteValue}
+            value={offerNoteValue.value}
+          />
+
+          <Spacer y={4} />
+          <Button
+            variant="primaryBlack"
+            width="100%"
+            onClick={onContinueButtonPressed}
+            loading={isSubmittingOffer}
+            disabled={isSubmittingOffer}
+          >
+            Save and Continue
+          </Button>
+        </Flex>
       </Box>
     </Flex>
   )

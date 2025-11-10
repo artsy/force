@@ -28,6 +28,7 @@ beforeEach(() => {
     checkoutTracking: {
       clickedOrderProgression: jest.fn(),
       clickedShippingAddress: jest.fn(),
+      clickedAddNewShippingAddress: jest.fn(),
     },
     setFulfillmentDetailsComplete: jest.fn(),
     setUserAddressMode: jest.fn(),
@@ -1560,7 +1561,7 @@ describe("Order2DeliveryForm", () => {
       ).toHaveBeenCalledWith({})
     })
 
-    it("switches to add mode when add new address button is clicked", async () => {
+    it("switches to add mode and calls tracking when add new address button is clicked", async () => {
       const mockSetUserAddressMode = jest.fn()
       mockCheckoutContext.setUserAddressMode = mockSetUserAddressMode
 
@@ -1582,6 +1583,10 @@ describe("Order2DeliveryForm", () => {
       expect(mockSetUserAddressMode).toHaveBeenCalledWith({
         mode: "add",
       })
+
+      expect(
+        mockCheckoutContext.checkoutTracking.clickedAddNewShippingAddress,
+      ).toHaveBeenCalled()
     })
 
     it("shows add address form when in add mode", async () => {

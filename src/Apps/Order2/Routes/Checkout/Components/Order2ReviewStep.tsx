@@ -189,7 +189,6 @@ const Order2ReviewStepComponent: React.FC<Order2ReviewStepProps> = ({
           <Text overflowEllipsis variant="sm" color="mono60" textAlign="left">
             List price: {artworkData.price}
           </Text>
-          <Spacer y={0.5} />
           {artworkData.attributionClass?.shortDescription && (
             <Text overflowEllipsis variant="sm" color="mono60" textAlign="left">
               {artworkData.attributionClass.shortDescription}

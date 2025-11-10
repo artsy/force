@@ -1,16 +1,7 @@
-import {
-  Box,
-  Button,
-  Flex,
-  Radio,
-  RadioGroup,
-  Spacer,
-  Text,
-  TextArea,
-} from "@artsy/palette"
+import { Flex, Radio, RadioGroup, Spacer, Text } from "@artsy/palette"
 import { OfferInput } from "Apps/Order/Components/OfferInput"
 import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
-import type { OfferFormComponentProps } from "Apps/Order2/Routes/Checkout/Components/OfferStep/types"
+import type { OfferFormProps } from "Apps/Order2/Routes/Checkout/Components/OfferStep/types"
 import type { Order2PriceRangeOfferForm_order$key } from "__generated__/Order2PriceRangeOfferForm_order.graphql"
 import { compact } from "lodash"
 import { useEffect, useState } from "react"
@@ -22,7 +13,7 @@ interface PriceOption {
   description: string
 }
 
-interface Order2PriceRangeOfferFormProps extends OfferFormComponentProps {
+interface Order2PriceRangeOfferFormProps extends OfferFormProps {
   order: Order2PriceRangeOfferForm_order$key
 }
 
@@ -31,13 +22,9 @@ export const Order2PriceRangeOfferForm: React.FC<
 > = ({
   order,
   offerValue,
-  offerNoteValue,
   formIsDirty,
-  isSubmittingOffer,
   onOfferValueChange,
   onOfferOptionSelected,
-  onOfferNoteChange,
-  onContinueButtonPressed,
 }) => {
   const orderData = useFragment(FRAGMENT, order)
   const artwork = orderData.lineItems?.[0]?.artworkOrEditionSet
@@ -134,140 +121,58 @@ export const Order2PriceRangeOfferForm: React.FC<
     )
   }
 
-  const hasPriceRange = priceOptions.length > 0
-
-  const priceNote = Boolean(artwork?.price) && (
-    <Text my={1} variant="sm" color="mono60">
-      Price range:{" "}
-      {appendCurrencySymbol(artwork?.price, orderData.currencyCode)}
-    </Text>
-  )
-
   return (
-    <>
-      {/* Offer Amount Section */}
-      <Box py={2} px={[2, 4]}>
-        {hasPriceRange ? (
-          <RadioGroup onSelect={setSelectedRadio} defaultValue={selectedRadio}>
-            {compact(priceOptions)
-              .map(({ value: optionValue, description, key }) => (
-                <Radio
-                  value={key}
-                  label={formatCurrency(optionValue)}
-                  onSelect={() => {
-                    onOfferOptionSelected(optionValue, description)
-                    setShowCustomInput(false)
-                    setCustomValue(undefined)
-                  }}
-                  error={
-                    formIsDirty && (offerValue <= 0 || offerValue === undefined)
-                  }
-                  key={key}
-                >
-                  <Spacer y={1} />
-                  <Text variant="xs" color="mono60">
-                    {description}
-                  </Text>
-                  <Spacer y={4} />
-                </Radio>
-              ))
-              .concat([
-                <Radio
-                  value="price-option-custom"
-                  label="Other amount"
-                  error={
-                    formIsDirty && (offerValue <= 0 || offerValue === undefined)
-                  }
-                  onSelect={() => {
-                    !showCustomInput && setShowCustomInput(true)
-                  }}
-                  key="price-option-custom"
-                >
-                  {showCustomInput && (
-                    <Flex flexDirection="column" mt={2}>
-                      <OfferInput
-                        id="OfferForm_customOfferValue"
-                        showError={formIsDirty && offerValue <= 0}
-                        onChange={value => {
-                          setCustomValue(value)
-                        }}
-                        onBlur={() => {
-                          if (customValue !== undefined) {
-                            onOfferOptionSelected(customValue)
-                          }
-                        }}
-                        value={customValue || 0}
-                      />
-                    </Flex>
-                  )}
-                </Radio>,
-              ])}
-          </RadioGroup>
-        ) : (
-          <>
-            <Text
-              variant={["sm-display", "md"]}
-              fontWeight={["bold", "normal"]}
-              color={formIsDirty && offerValue <= 0 ? "red100" : undefined}
-            >
-              Enter your offer
+    <RadioGroup onSelect={setSelectedRadio} defaultValue={selectedRadio}>
+      {compact(priceOptions)
+        .map(({ value: optionValue, description, key }) => (
+          <Radio
+            value={key}
+            label={formatCurrency(optionValue)}
+            onSelect={() => {
+              onOfferOptionSelected(optionValue, description)
+              setShowCustomInput(false)
+              setCustomValue(undefined)
+            }}
+            error={formIsDirty && (offerValue <= 0 || offerValue === undefined)}
+            key={key}
+          >
+            <Spacer y={1} />
+            <Text variant="sm-display" color="mono60">
+              {description}
             </Text>
-            <Spacer y={2} />
-            <Flex flexDirection="column">
-              <OfferInput
-                id="OfferForm_priceRangeOfferValue"
-                showError={formIsDirty && offerValue <= 0}
-                onChange={onOfferValueChange}
-                onBlur={() => {
-                  if (offerValue > 0) {
-                    onOfferOptionSelected(offerValue)
-                  }
-                }}
-                value={offerValue}
-              />
-            </Flex>
-            {priceNote}
-          </>
-        )}
-      </Box>
-
-      <Spacer y={2} />
-
-      {/* Offer Note Section */}
-      <Box py={2} px={[2, 4]}>
-        <Flex flexDirection="column">
-          <Text
-            variant={["sm-display", "md"]}
-            fontWeight={["bold", "normal"]}
-            color="mono100"
+            <Spacer y={4} />
+          </Radio>
+        ))
+        .concat([
+          <Radio
+            value="price-option-custom"
+            label="Other amount"
+            error={formIsDirty && (offerValue <= 0 || offerValue === undefined)}
+            onSelect={() => {
+              !showCustomInput && setShowCustomInput(true)
+            }}
+            key="price-option-custom"
           >
-            Offer note
-          </Text>
-          <Text variant={["xs", "xs", "sm"]} color="mono60">
-            Additional context to help the gallery evaluate your offer.
-          </Text>
-
-          <TextArea
-            title="Note (recommended)"
-            maxLength={1000}
-            placeholder="Share what draws you to this work or artist, or add any context about your offer"
-            onChange={onOfferNoteChange}
-            value={offerNoteValue.value}
-          />
-
-          <Spacer y={4} />
-          <Button
-            variant="primaryBlack"
-            width="100%"
-            onClick={onContinueButtonPressed}
-            loading={isSubmittingOffer}
-            disabled={isSubmittingOffer}
-          >
-            Save and Continue
-          </Button>
-        </Flex>
-      </Box>
-    </>
+            {showCustomInput && (
+              <Flex flexDirection="column" mt={2}>
+                <OfferInput
+                  id="OfferForm_customOfferValue"
+                  showError={formIsDirty && offerValue <= 0}
+                  onChange={value => {
+                    setCustomValue(value)
+                  }}
+                  onBlur={() => {
+                    if (customValue !== undefined) {
+                      onOfferOptionSelected(customValue)
+                    }
+                  }}
+                  value={customValue || 0}
+                />
+              </Flex>
+            )}
+          </Radio>,
+        ])}
+    </RadioGroup>
   )
 }
 
