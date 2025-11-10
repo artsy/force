@@ -1,5 +1,6 @@
 import {
   ActionType,
+  type ClickedAddNewShippingAddress,
   type ClickedCancelExpressCheckout,
   type ClickedChangePaymentMethod,
   type ClickedChangeShippingAddress,
@@ -174,6 +175,17 @@ export const useCheckoutTracking = ({
           context_module: ContextModule.ordersShipping,
           context_page_owner_type: contextPageOwnerType,
           context_page_owner_id: contextPageOwnerId,
+        }
+
+        trackEvent(payload)
+      },
+
+      clickedAddNewShippingAddress: () => {
+        const payload: ClickedAddNewShippingAddress = {
+          action: ActionType.clickedAddNewShippingAddress,
+          context_page_owner_type: contextPageOwnerType,
+          context_page_owner_id: contextPageOwnerId,
+          context_module: ContextModule.ordersShipping,
         }
 
         trackEvent(payload)

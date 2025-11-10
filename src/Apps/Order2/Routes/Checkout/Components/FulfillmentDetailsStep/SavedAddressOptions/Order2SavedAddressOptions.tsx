@@ -178,7 +178,12 @@ export const SavedAddressOptions = ({
         )
       })}
       <Spacer y={2} />
-      <Clickable onClick={() => setUserAddressMode({ mode: "add" })}>
+      <Clickable
+        onClick={() => {
+          checkoutTracking.clickedAddNewShippingAddress()
+          setUserAddressMode({ mode: "add" })
+        }}
+      >
         <Text>
           <AddIcon display="inline-block" top="2px" height="18px" />
           Add new address

@@ -54,7 +54,7 @@ export const Order2OfferCompletedView: React.FC<
         ml="30px"
         mt={1}
       >
-        <Text variant="sm-display" color="mono100">
+        <Text variant="sm" color="mono100">
           {appendCurrencySymbol(
             offerAmount.toLocaleString("en-US", {
               currency: orderData.currencyCode,
