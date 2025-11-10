@@ -104,6 +104,7 @@ const MOCK_EDITION_SET_PRICE_RANGE_ORDER = {
   mode: "OFFER",
   source: "artwork_page",
   currencyCode: "USD",
+  offers: [],
   lineItems: [
     {
       artwork: {
