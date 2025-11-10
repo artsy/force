@@ -77,7 +77,7 @@
     "@artsy/dismissible": "^0.7.0",
     "@artsy/express-reloadable": "^1.7.0",
     "@artsy/fresnel": "^8.1.0",
-    "@artsy/icons": "3.54.0",
+    "@artsy/icons": "3.56.0",
     "@artsy/img": "1.0.3",
     "@artsy/multienv": "^1.2.0",
     "@artsy/palette": "45.2.0",
