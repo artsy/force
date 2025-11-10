@@ -53,3 +53,30 @@ export const removeDefaultValues = (
     {},
   )
 }
+
+/**
+ * Update the URL with the given state nested under a namespace key.
+ * This is useful when multiple filter contexts share the same page and
+ * must not collide on top-level query param names like `page` or `sort`.
+ */
+export const updateUrlWithNamespace = <T extends Record<string, unknown>>(
+  state: T,
+  options: { namespace: string; pathname?: string },
+) => {
+  const namespaced = {
+    [options.namespace]: paramsToSnakeCase(state),
+  }
+
+  const queryString = qs.stringify(namespaced, { skipNulls: true })
+
+  let pathname = options?.pathname
+  if (!pathname && typeof window !== "undefined") {
+    pathname = window.location.pathname
+  }
+
+  const url = queryString ? `${pathname}?${queryString}` : pathname
+
+  if (typeof window !== "undefined") {
+    window.history.replaceState({}, "", url)
+  }
+}
