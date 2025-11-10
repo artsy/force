@@ -23,8 +23,29 @@ jest.mock("Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext", () => ({
   },
 }))
 
+let mockCountdownTimer = {
+  remainingTime: "Calculating time",
+  isImminent: false,
+  percentComplete: 0,
+  isLoading: true,
+  isExpired: false,
+  hasValidRemainingTime: false,
+}
+
+jest.mock("Utils/Hooks/useCountdownTimer", () => ({
+  useCountdownTimer: () => mockCountdownTimer,
+}))
+
 beforeEach(() => {
   mockCheckoutContext = {}
+  mockCountdownTimer = {
+    remainingTime: "Calculating time",
+    isImminent: false,
+    percentComplete: 0,
+    isLoading: true,
+    isExpired: false,
+    hasValidRemainingTime: false,
+  }
 })
 
 const { renderWithRelay } =
@@ -152,17 +173,20 @@ describe("Order2PricingBreakdown", () => {
   })
 
   it("renders the partner offer timer if present", () => {
-    mockCheckoutContext.partnerOffer = {
-      timer: {
-        remainingTime: "2d 3h",
-        isExpired: false,
-      },
+    mockCountdownTimer = {
+      remainingTime: "2d 3h",
+      isImminent: false,
+      percentComplete: 50,
+      isLoading: false,
+      isExpired: false,
+      hasValidRemainingTime: true,
     }
 
     renderWithRelay({
       Me: () => ({
         order: {
           source: "PARTNER_OFFER",
+          buyerStateExpiresAt: "2025-12-31T23:59:59Z",
           pricingBreakdownLines: [
             {
               __typename: "SubtotalLine",
@@ -181,17 +205,20 @@ describe("Order2PricingBreakdown", () => {
   })
 
   it("does not render a partner offer if the timer is somehow invalid", () => {
-    mockCheckoutContext.partnerOffer = {
-      timer: {
-        remainingTime: "NaNh NaNm",
-        isExpired: false,
-      },
+    mockCountdownTimer = {
+      remainingTime: "NaNh NaNm",
+      isImminent: false,
+      percentComplete: 0,
+      isLoading: false,
+      isExpired: false,
+      hasValidRemainingTime: false,
     }
 
     renderWithRelay({
       Me: () => ({
         order: {
           source: "PARTNER_OFFER",
+          buyerStateExpiresAt: "2025-12-31T23:59:59Z",
           pricingBreakdownLines: [
             {
               __typename: "SubtotalLine",
@@ -208,18 +235,54 @@ describe("Order2PricingBreakdown", () => {
 
     expect(screen.queryByText("Exp.", { exact: false })).not.toBeInTheDocument()
   })
+
   it("does not render a partner offer if the timer is somehow expired", () => {
-    mockCheckoutContext.partnerOffer = {
-      timer: {
-        remainingTime: "Expired",
-        isExpired: true,
-      },
+    mockCountdownTimer = {
+      remainingTime: "Expired",
+      isImminent: false,
+      percentComplete: 0,
+      isLoading: false,
+      isExpired: true,
+      hasValidRemainingTime: false,
     }
 
     renderWithRelay({
       Me: () => ({
         order: {
           source: "PARTNER_OFFER",
+          buyerStateExpiresAt: "2025-12-31T23:59:59Z",
+          pricingBreakdownLines: [
+            {
+              __typename: "SubtotalLine",
+              displayName: "Gallery offer",
+              amount: {
+                amount: "1000",
+                currencySymbol: "$",
+              },
+            },
+          ],
+        },
+      }),
+    })
+
+    expect(screen.queryByText("Exp.", { exact: false })).not.toBeInTheDocument()
+  })
+
+  it("does not render timer if it is still loading", () => {
+    mockCountdownTimer = {
+      remainingTime: "Calculating time",
+      isImminent: false,
+      percentComplete: 0,
+      isLoading: true,
+      isExpired: false,
+      hasValidRemainingTime: false,
+    }
+
+    renderWithRelay({
+      Me: () => ({
+        order: {
+          source: "PARTNER_OFFER",
+          buyerStateExpiresAt: "2025-12-31T23:59:59Z",
           pricingBreakdownLines: [
             {
               __typename: "SubtotalLine",
