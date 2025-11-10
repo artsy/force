@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<477a5a49672548d899187cd801a831ae>>
+ * @generated SignedSource<<6d9689041a23fe291e1fd0c88c0fa696>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -38,6 +38,7 @@ export type Order2OfferStep_order$data = {
         // value in case none of the concrete values match.
         readonly __typename: "%other";
       } | null | undefined;
+      readonly priceDisplay: string | null | undefined;
       readonly slug: string;
     } | null | undefined;
   } | null | undefined>;
@@ -117,6 +118,13 @@ return {
               "args": null,
               "kind": "ScalarField",
               "name": "slug",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "priceDisplay",
               "storageKey": null
             },
             {
@@ -223,6 +231,6 @@ return {
 };
 })();
 
-(node as any).hash = "abed7f3dafaa58d919ab732d9042de68";
+(node as any).hash = "da3314c9f447e266129fd1f69559c904";
 
 export default node;

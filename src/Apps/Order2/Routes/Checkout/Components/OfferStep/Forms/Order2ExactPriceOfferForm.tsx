@@ -39,13 +39,8 @@ export const Order2ExactPriceOfferForm: React.FC<
   onContinueButtonPressed,
 }) => {
   const orderData = useFragment(FRAGMENT, order)
-  const artwork = orderData.lineItems?.[0]?.artwork
-  const listPriceMajor =
-    artwork?.listPrice?.__typename === "Money"
-      ? artwork.listPrice.major
-      : artwork?.listPrice?.__typename === "PriceRange"
-        ? artwork.listPrice.maxPrice?.major
-        : null
+
+  const listPriceMajor = orderData.lineItems[0]?.listPrice?.major
 
   const priceOptions: PriceOption[] = listPriceMajor
     ? [
@@ -224,18 +219,9 @@ const FRAGMENT = graphql`
   fragment Order2ExactPriceOfferForm_order on Order {
     currencyCode
     lineItems {
-      artwork {
-        price
-        listPrice {
-          __typename
-          ... on Money {
-            major
-          }
-          ... on PriceRange {
-            maxPrice {
-              major
-            }
-          }
+      listPrice {
+        ... on Money {
+          major
         }
       }
     }
