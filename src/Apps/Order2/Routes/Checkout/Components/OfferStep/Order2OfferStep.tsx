@@ -77,6 +77,14 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
   const onOfferOptionSelected = (value: number, description?: string) => {
     setOfferValue(value)
 
+    // Clear error message when a valid offer is selected
+    if (value > 0) {
+      setStepErrorMessage({
+        step: CheckoutStepName.OFFER_AMOUNT,
+        error: null,
+      })
+    }
+
     checkoutTracking.clickedOfferOption(
       orderData.currencyCode,
       orderData.internalID,
@@ -87,16 +95,35 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
 
   const handleSubmitError = (error: { code: string }) => {
     logger.error(error)
-    console.error("Error submitting offer:", error)
+    setStepErrorMessage({
+      step: CheckoutStepName.OFFER_AMOUNT,
+      error: {
+        title: "An error occurred",
+        message: (
+          <>
+            Something went wrong while selecting your offer amount. Please try
+            again or contact <MailtoOrderSupport />.
+          </>
+        ),
+      },
+    })
   }
 
   const onContinueButtonPressed = async () => {
-    if (offerValue === undefined) {
+    if (offerValue === undefined || offerValue === 0) {
       setFormIsDirty(true)
+      setStepErrorMessage({
+        step: CheckoutStepName.OFFER_AMOUNT,
+        error: {
+          title: "Offer amount required",
+          message: "Select an offer amount or enter your own to continue.",
+        },
+      })
       jumpTo("offer-value-title", { behavior: "smooth" })
       return
     }
-    if (offerValue <= 0 || offerNoteValue.exceedsCharacterLimit) {
+
+    if (offerValue < 0 || offerNoteValue.exceedsCharacterLimit) {
       setFormIsDirty(true)
       jumpTo("price-option-custom", { behavior: "smooth" })
       return
@@ -165,18 +192,6 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
       throw new Error("Unexpected response from offer mutation")
     } catch (error) {
       handleSubmitError({ code: "unknown" })
-      setStepErrorMessage({
-        step: CheckoutStepName.OFFER_AMOUNT,
-        error: {
-          title: "An error occurred",
-          message: (
-            <>
-              Something went wrong while selecting your offer amount. Please try
-              again or contact <MailtoOrderSupport />.
-            </>
-          ),
-        },
-      })
     } finally {
       setIsSubmittingOffer(false)
       setFormIsDirty(false)
