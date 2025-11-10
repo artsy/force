@@ -64,8 +64,32 @@ describe("ArtistOverviewRoute", () => {
         insights: [
           {
             entities: ["example"],
-            description: "Description",
-            label: "Label",
+            description: "Description 1",
+            label: "Label 1",
+            kind: "KIND",
+          },
+          {
+            entities: ["example"],
+            description: "Description 2",
+            label: "Label 2",
+            kind: "KIND",
+          },
+          {
+            entities: ["example"],
+            description: "Description 3",
+            label: "Label 3",
+            kind: "KIND",
+          },
+          {
+            entities: ["example"],
+            description: "Description 4",
+            label: "Label 4",
+            kind: "KIND",
+          },
+          {
+            entities: ["example"],
+            description: "Description 5",
+            label: "Label 5",
             kind: "KIND",
           },
         ],
