@@ -79,6 +79,8 @@ export const useCountdownTimer = ({
 
   const isLoading = remainingTime === LOADING_MESSAGE
   const isExpired = remainingTime === EXPIRATION_MESSAGE
+  const hasValidRemainingTime =
+    !isLoading && !isExpired && !remainingTime.startsWith("NaN")
 
   useEffect(() => {
     const timeTillExpiration = calculateTime(endTime, includeSeconds)
@@ -101,5 +103,12 @@ export const useCountdownTimer = ({
     return () => clearInterval(interval)
   }, [startTime, endTime, remainingTime, includeSeconds, imminentTime])
 
-  return { remainingTime, isImminent, percentComplete, isLoading, isExpired }
+  return {
+    remainingTime,
+    isImminent,
+    percentComplete,
+    isLoading,
+    isExpired,
+    hasValidRemainingTime,
+  }
 }
