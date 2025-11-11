@@ -100,7 +100,7 @@ export const RailHeader: React.FC<React.PropsWithChildren<RailHeaderProps>> = ({
   )
 }
 
-const useReturnTo = (href?: string | null): string | null => {
+export const useReturnTo = (href?: string | null): string | null => {
   const router = useRouter()
 
   if (!href) return null
