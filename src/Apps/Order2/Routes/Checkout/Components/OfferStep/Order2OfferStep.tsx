@@ -1,5 +1,6 @@
 import { ContextModule } from "@artsy/cohesion"
 import { Box, Button, Flex, Spacer, Text, TextArea } from "@artsy/palette"
+import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
 import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
 import {
   CheckoutStepName,
@@ -13,6 +14,7 @@ import type { OfferNoteValue } from "Apps/Order2/Routes/Checkout/Components/Offe
 import { useCompleteOfferData } from "Apps/Order2/Routes/Checkout/Components/OfferStep/useCompleteOfferData"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useOrder2AddInitialOfferMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2AddInitialOfferMutation"
+import { useOrder2UnsetOrderFulfillmentOptionMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2UnsetOrderFulfillmentOptionMutation"
 import { mostRecentCreatedAt } from "Apps/Order2/Routes/Checkout/Utils/mostRecentCreatedAt"
 import { useJump } from "Utils/Hooks/useJump"
 import createLogger from "Utils/logger"
@@ -38,6 +40,8 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
     useCheckoutContext()
   const { submitMutation: submitOfferMutation } =
     useOrder2AddInitialOfferMutation()
+  const unsetOrderFulfillmentOption =
+    useOrder2UnsetOrderFulfillmentOptionMutation()
 
   const { offers } = orderData
 
@@ -103,6 +107,22 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
             }),
             orderData.currencyCode,
           )}`
+
+      // Unset the current fulfillment option if it exists
+      if (orderData.selectedFulfillmentOption?.type) {
+        const unsetFulfillmentOptionResult =
+          await unsetOrderFulfillmentOption.submitMutation({
+            variables: {
+              input: {
+                id: orderData.internalID,
+              },
+            },
+          })
+        validateAndExtractOrderResponse(
+          unsetFulfillmentOptionResult.unsetOrderFulfillmentOption
+            ?.orderOrError,
+        )
+      }
 
       const response: useOrder2AddInitialOfferMutation$data =
         await submitOfferMutation({
@@ -263,6 +283,9 @@ const FRAGMENT = graphql`
     mode
     source
     currencyCode
+    selectedFulfillmentOption {
+      type
+    }
     offers {
       createdAt
       amount {
