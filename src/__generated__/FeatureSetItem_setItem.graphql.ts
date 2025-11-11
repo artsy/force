@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6ae6534c97d12412f795d9f54ae1abfc>>
+ * @generated SignedSource<<b5fed0fa9ec8b9cb512daa2ab2239a7c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,7 +13,7 @@ import { FragmentRefs } from "relay-runtime";
 export type FeatureSetItem_setItem$data = {
   readonly __typename: string;
   readonly id?: string;
-  readonly " $fragmentSpreads": FragmentRefs<"FeatureFeaturedLink_featuredLink" | "GridItem_artwork">;
+  readonly " $fragmentSpreads": FragmentRefs<"FeatureFeaturedLink_featuredLink" | "FeatureSetVideo_video" | "GridItem_artwork">;
   readonly " $fragmentType": "FeatureSetItem_setItem";
 };
 export type FeatureSetItem_setItem$key = {
@@ -57,6 +57,12 @@ return {
       "abstractKey": null
     },
     {
+      "kind": "InlineFragment",
+      "selections": (v0/*: any*/),
+      "type": "Video",
+      "abstractKey": null
+    },
+    {
       "args": null,
       "kind": "FragmentSpread",
       "name": "GridItem_artwork"
@@ -65,6 +71,11 @@ return {
       "args": null,
       "kind": "FragmentSpread",
       "name": "FeatureFeaturedLink_featuredLink"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "FeatureSetVideo_video"
     }
   ],
   "type": "OrderedSetItem",
@@ -72,6 +83,6 @@ return {
 };
 })();
 
-(node as any).hash = "9181810fe57734f6a1198ccec3ae7114";
+(node as any).hash = "5b0202f7bda0088ea348911e564342c3";
 
 export default node;

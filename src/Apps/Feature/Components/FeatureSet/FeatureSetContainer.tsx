@@ -42,8 +42,14 @@ export const FeatureSetContainer: React.FC<
       )
     }
 
+    case "Video": {
+      return <Join separator={<Spacer y={4} />}>{children}</Join>
+    }
+
     default:
-      console.warn("Feature pages only support FeaturedLinks and Artworks")
+      console.warn(
+        "Feature pages only support FeaturedLinks, Artworks, and Videos",
+      )
       return null
   }
 }

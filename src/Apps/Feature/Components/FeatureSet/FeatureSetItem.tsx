@@ -3,6 +3,7 @@ import {
   FeatureFeaturedLinkFragmentContainer as FeatureFeaturedLink,
   type FeaturedLinkSize,
 } from "Apps/Feature/Components/FeatureFeaturedLink"
+import { FeatureSetVideoFragmentContainer as FeatureSetVideo } from "Apps/Feature/Components/FeatureSet/FeatureSetVideo"
 import GridItem from "Components/Artwork/GridItem"
 import type { FeatureSetItem_setItem$data } from "__generated__/FeatureSetItem_setItem.graphql"
 import type * as React from "react"
@@ -33,8 +34,13 @@ export const FeatureSetItem: React.FC<
         </Box>
       )
 
+    case "Video":
+      return <FeatureSetVideo video={setItem} />
+
     default:
-      console.warn("Feature pages only support FeaturedLinks and Artworks")
+      console.warn(
+        "Feature pages only support FeaturedLinks, Artworks, and Videos",
+      )
       return null
   }
 }
@@ -51,8 +57,12 @@ export const FeatureSetItemFragmentContainer = createFragmentContainer(
         ... on Artwork {
           id
         }
+        ... on Video {
+          id
+        }
         ...GridItem_artwork
         ...FeatureFeaturedLink_featuredLink
+        ...FeatureSetVideo_video
       }
     `,
   },
