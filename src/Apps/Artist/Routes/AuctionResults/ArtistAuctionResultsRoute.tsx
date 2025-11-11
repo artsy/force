@@ -1,5 +1,6 @@
 import { Spacer, Text } from "@artsy/palette"
 import { ArtistTabs } from "Apps/Artist/Components/ArtistTabs"
+import { ArtistAuctionResultsEmptyState } from "Apps/Artist/Routes/AuctionResults/Components/ArtistAuctionResultsEmptyState"
 import { MarketStatsQueryRenderer } from "Apps/Artist/Routes/AuctionResults/Components/MarketStats"
 import { Jump } from "Utils/Hooks/useJump"
 import type { ArtistAuctionResultsRoute_artist$data } from "__generated__/ArtistAuctionResultsRoute_artist.graphql"
@@ -27,15 +28,19 @@ export const ArtistAuctionResultsRoute: React.FC<
 
       <Spacer y={[2, 4]} />
 
-      <Jump id="marketSignalsTop" />
-
-      <MarketStatsQueryRenderer
-        id={artist.internalID}
-        onRendered={handleScrollToTop}
-      />
-
-      {totalCount > 0 && (
+      {totalCount === 0 ? (
         <>
+          <ArtistAuctionResultsEmptyState />
+        </>
+      ) : (
+        <>
+          <Jump id="marketSignalsTop" />
+
+          <MarketStatsQueryRenderer
+            id={artist.internalID}
+            onRendered={handleScrollToTop}
+          />
+
           <Spacer y={6} />
 
           <Jump id="artistAuctionResultsTop" />
@@ -45,13 +50,13 @@ export const ArtistAuctionResultsRoute: React.FC<
           </Text>
 
           <Spacer y={1} />
+
+          <ArtistAuctionResultsRefetchContainer
+            artist={artist}
+            aggregations={artist.sidebarAggregations?.aggregations}
+          />
         </>
       )}
-
-      <ArtistAuctionResultsRefetchContainer
-        artist={artist}
-        aggregations={artist.sidebarAggregations?.aggregations}
-      />
     </>
   )
 }
