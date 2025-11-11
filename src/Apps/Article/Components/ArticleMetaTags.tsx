@@ -1,5 +1,5 @@
 import { MetaTags } from "Components/MetaTags"
-import { cropped, resized } from "Utils/resized"
+import { cropped } from "Utils/resized"
 import type { ArticleMetaTags_article$data } from "__generated__/ArticleMetaTags_article.graphql"
 import type { FC } from "react"
 import { Link, Meta } from "react-head"
