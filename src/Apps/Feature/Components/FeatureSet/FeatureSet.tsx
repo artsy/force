@@ -23,6 +23,11 @@ export const FeatureSet: React.FC<React.PropsWithChildren<FeatureSetProps>> = ({
   // For Video sets, only show the first item
   const itemsToRender =
     set.itemType === "Video" ? orderedItems.slice(0, 1) : orderedItems
+
+  if (set.itemType === "Video" && orderedItems.length > 1) {
+    console.warn("Video sets only display the first item")
+  }
+
   const count = itemsToRender.length
   const size = useMemo(() => {
     if (set.layout === "FULL") {
