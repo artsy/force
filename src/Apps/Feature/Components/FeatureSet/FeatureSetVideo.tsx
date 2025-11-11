@@ -10,7 +10,7 @@ export interface FeatureSetVideoProps {
 export const FeatureSetVideo: React.FC<
   React.PropsWithChildren<FeatureSetVideoProps>
 > = ({ video }) => {
-  const { playerUrl, width, height, description } = video
+  const { playerUrl, width, height, description, videoTitle } = video
 
   if (!playerUrl || !width || !height) {
     return null
@@ -24,7 +24,7 @@ export const FeatureSetVideo: React.FC<
           width="100%"
           height="100%"
           frameBorder="0"
-          title="Video"
+          title={videoTitle ?? "Video"}
           style={{ display: "block" }}
         />
       </ResponsiveBox>
@@ -51,6 +51,7 @@ export const FeatureSetVideoFragmentContainer = createFragmentContainer(
         playerUrl
         width
         height
+        videoTitle: title
         description(format: HTML)
       }
     `,

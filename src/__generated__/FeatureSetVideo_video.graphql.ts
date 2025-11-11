@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<02e26eff6a79ddf79e720909198be2e9>>
+ * @generated SignedSource<<c6279533e46fd46e2113e0933e0fc21f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,6 +15,7 @@ export type FeatureSetVideo_video$data = {
   readonly height: number;
   readonly id: string;
   readonly playerUrl: string;
+  readonly videoTitle: string;
   readonly width: number;
   readonly " $fragmentType": "FeatureSetVideo_video";
 };
@@ -58,6 +59,13 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
+      "alias": "videoTitle",
+      "args": null,
+      "kind": "ScalarField",
+      "name": "title",
+      "storageKey": null
+    },
+    {
       "alias": null,
       "args": [
         {
@@ -75,6 +83,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "ca7a46eb44d5fe22dcfd223f96678c24";
+(node as any).hash = "bfc0b3f3e2e0b4897965370aa60527d1";
 
 export default node;
