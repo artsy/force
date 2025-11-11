@@ -1,8 +1,7 @@
 import { MetaTags } from "Components/MetaTags"
-import { cropped } from "Utils/resized"
 import type { ArticleMetaTags_article$data } from "__generated__/ArticleMetaTags_article.graphql"
 import type { FC } from "react"
-import { Link, Meta } from "react-head"
+import { Meta } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 
 interface ArticleMetaTagsProps {
@@ -12,41 +11,8 @@ interface ArticleMetaTagsProps {
 const ArticleMetaTags: FC<React.PropsWithChildren<ArticleMetaTagsProps>> = ({
   article,
 }) => {
-  const heroPreload = (() => {
-    const layout = article.hero?.layout
-    const imageUrl = article.hero?.image?.url
-
-    if (!layout || !imageUrl) return null
-
-    if (layout === "SPLIT" && article.hero.image?.split) {
-      return {
-        href: article.hero.image.split.src,
-        imagesrcset: article.hero.image.split.srcSet,
-      }
-    }
-
-    if (layout === "FULLSCREEN" && article.hero.image?.url) {
-      // FULLSCREEN uses the cropped image passed to FullBleedHeaderPicture
-      const xs = cropped(imageUrl, { width: 450, height: 320 })
-      return {
-        href: xs.src,
-        imagesrcset: xs.srcSet,
-      }
-    }
-
-    return null
-  })()
   return (
     <>
-      {heroPreload && (
-        <Link
-          rel="preload"
-          as="image"
-          href={heroPreload.href}
-          imageSrcSet={heroPreload.imagesrcset}
-          fetchPriority="high"
-        />
-      )}
       <MetaTags
         title={`${article.searchTitle || article.title} | Artsy`}
         socialTitle={article.title}
@@ -93,18 +59,6 @@ export const ArticleMetaTagsFragmentContainer = createFragmentContainer(
         searchDescription
         thumbnailImage {
           url
-        }
-        hero {
-          ... on ArticleFeatureSection {
-            layout
-            image {
-              url
-              split: resized(width: 900) {
-                src
-                srcSet
-              }
-            }
-          }
         }
       }
     `,

@@ -20,6 +20,7 @@ import { RouterLink } from "System/Components/RouterLink"
 import { getAuthorPath } from "Utils/getAuthorPath"
 import type { ArticleHero_article$data } from "__generated__/ArticleHero_article.graphql"
 import { type FC, useMemo } from "react"
+import { Link } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { CENTERED_LAYOUT_COLUMNS } from "./ArticleBody"
@@ -148,6 +149,13 @@ const ArticleHero: FC<React.PropsWithChildren<ArticleHeroProps>> = ({
                 height="100%"
                 bg="mono10"
               >
+                <Link
+                  rel="preload"
+                  as="image"
+                  href={image.src}
+                  imageSrcSet={image.srcSet}
+                  fetchPriority="high"
+                />
                 <Image
                   src={image.src}
                   srcSet={image.srcSet}

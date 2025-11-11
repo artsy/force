@@ -1,5 +1,6 @@
 import { cropped } from "Utils/resized"
 import { type Ref, forwardRef } from "react"
+import { Link } from "react-head"
 import type { FullBleedHeaderProps } from "./FullBleedHeader"
 
 type FullBleedHeaderPictureProps = Pick<
@@ -27,38 +28,47 @@ export const FullBleedHeaderPicture = forwardRef(
     const xl = cropped(src, { width: 2000, height: 600 })
 
     return (
-      <picture
-        style={
-          fixed
-            ? {
-                top: `${top}px`,
-                height: `${height}px`,
-                position: "fixed",
-                width: "100%",
-                left: 0,
-              }
-            : {}
-        }
-      >
-        <source srcSet={xl.srcSet} media="(min-width: 1720px)" />
-        <source srcSet={lg.srcSet} media="(min-width: 1232px)" />
-        <source srcSet={md.srcSet} media="(min-width: 896px)" />
-        <source srcSet={sm.srcSet} media="(min-width: 767px)" />
-        <source srcSet={xs.srcSet} media="(max-width: 766px)" />
-
-        <img
-          ref={forwardedRef as any}
-          src={sm.src}
-          alt=""
+      <>
+        <Link
+          rel="preload"
+          as="image"
+          href={xs.src}
+          imageSrcSet={xs.srcSet}
           fetchPriority="high"
-          style={{
-            display: "block",
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-          }}
         />
-      </picture>
+        <picture
+          style={
+            fixed
+              ? {
+                  top: `${top}px`,
+                  height: `${height}px`,
+                  position: "fixed",
+                  width: "100%",
+                  left: 0,
+                }
+              : {}
+          }
+        >
+          <source srcSet={xl.srcSet} media="(min-width: 1720px)" />
+          <source srcSet={lg.srcSet} media="(min-width: 1232px)" />
+          <source srcSet={md.srcSet} media="(min-width: 896px)" />
+          <source srcSet={sm.srcSet} media="(min-width: 767px)" />
+          <source srcSet={xs.srcSet} media="(max-width: 766px)" />
+
+          <img
+            ref={forwardedRef as any}
+            src={sm.src}
+            alt=""
+            fetchPriority="high"
+            style={{
+              display: "block",
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+            }}
+          />
+        </picture>
+      </>
     )
   },
 )
