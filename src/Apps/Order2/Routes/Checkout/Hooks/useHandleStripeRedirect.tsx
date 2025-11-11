@@ -1,4 +1,5 @@
-import { useSetPaymentByStripeIntent } from "Apps/Order/Mutations/useSetPaymentByStripeIntentMutation"
+import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
+import { useOrder2SetOrderPaymentByStripeSetupIntentMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderPaymentByStripeSetupIntentMutation"
 import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { fetchAndSetConfirmationToken } from "Apps/Order2/Utils/confirmationTokenUtils"
 import { useRouter } from "System/Hooks/useRouter"
@@ -7,18 +8,18 @@ import { useEffect } from "react"
 import { useRelayEnvironment } from "react-relay"
 import { useCheckoutContext } from "./useCheckoutContext"
 
-const logger = createLogger("useStripePaymentBySetupIntentId")
+const logger = createLogger("useHandleStripeRedirect")
 
 /*
  * Hook to handle Stripe redirect for newly-linked bank account in Order2
  * pulls necessary params from Stripe redirect URL and sets payment by intentId
  */
-export function useStripePaymentBySetupIntentId(
+export function useHandleStripeRedirect(
   orderId: string,
   onComplete: () => void,
 ) {
-  const { submitMutation: setPaymentByStripeIntentMutation } =
-    useSetPaymentByStripeIntent()
+  const { submitMutation: setPaymentByStripeSetupIntentMutation } =
+    useOrder2SetOrderPaymentByStripeSetupIntentMutation()
   const { router } = useRouter()
   const environment = useRelayEnvironment()
   const { setConfirmationToken, setPaymentComplete, setStepErrorMessage } =
@@ -88,19 +89,19 @@ export function useStripePaymentBySetupIntentId(
     oneTimeUse: boolean,
   ) => {
     try {
-      const orderOrError = (
-        await setPaymentByStripeIntentMutation({
-          variables: {
-            input: {
-              id: orderId,
-              oneTimeUse,
-              setupIntentId,
-            },
+      const response = await setPaymentByStripeSetupIntentMutation({
+        variables: {
+          input: {
+            id: orderId,
+            oneTimeUse,
+            setupIntentId,
           },
-        })
-      ).commerceSetPaymentByStripeIntent?.orderOrError
+        },
+      })
 
-      if (orderOrError?.error) throw orderOrError.error
+      validateAndExtractOrderResponse(
+        response.setOrderPaymentByStripeSetupIntent?.orderOrError,
+      )
 
       logger.log("Successfully set payment by setup intent")
     } catch (error) {

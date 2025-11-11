@@ -11,7 +11,7 @@ import {
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import type { CheckoutErrorBannerProps } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { useCheckoutTracking } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutTracking"
-import { useStripePaymentBySetupIntentId } from "Apps/Order2/Routes/Checkout/Hooks/useStripePaymentBySetupIntentId"
+import { useHandleStripeRedirect } from "Apps/Order2/Routes/Checkout/Hooks/useHandleStripeRedirect"
 import { useBuildInitialSteps } from "Apps/Order2/Routes/Checkout/Hooks/useBuildInitialSteps"
 import { useRouter } from "System/Hooks/useRouter"
 import { useCountdownTimer } from "Utils/Hooks/useCountdownTimer"
@@ -579,7 +579,7 @@ const CheckoutLoadingManager: React.FC<{
   const [isStripeRedirectHandled, setIsStripeRedirectHandled] = useState(false)
 
   // Handle Stripe redirect and call onComplete when done
-  useStripePaymentBySetupIntentId(orderData.internalID, () => {
+  useHandleStripeRedirect(orderData.internalID, () => {
     setIsStripeRedirectHandled(true)
   })
 
