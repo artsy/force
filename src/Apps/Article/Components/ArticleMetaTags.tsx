@@ -1,9 +1,9 @@
 import { MetaTags } from "Components/MetaTags"
+import { cropped, resized } from "Utils/resized"
 import type { ArticleMetaTags_article$data } from "__generated__/ArticleMetaTags_article.graphql"
 import type { FC } from "react"
 import { Link, Meta } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
-import { cropped, resized } from "Utils/resized"
 
 interface ArticleMetaTagsProps {
   article: ArticleMetaTags_article$data
@@ -12,42 +12,29 @@ interface ArticleMetaTagsProps {
 const ArticleMetaTags: FC<React.PropsWithChildren<ArticleMetaTagsProps>> = ({
   article,
 }) => {
-  // generate hero image preload for fullscreen and split layouts
   const heroPreload = (() => {
-    if (!article.hero?.image?.url || !article.hero?.layout) {
-      return null
-    }
+    const layout = article.hero?.layout
+    const imageUrl = article.hero?.image?.url
 
-    const { layout } = article.hero
-    const imageUrl = article.hero.image.url
+    if (!layout || !imageUrl) return null
 
-    // only preload for layouts that show hero images as lcp
-    if (layout !== "FULLSCREEN" && layout !== "SPLIT") {
-      return null
-    }
-
-    let preloadData: { href: string; imagesrcset: string }
-
-    if (layout === "FULLSCREEN") {
-      // match FullBleedHeaderPicture dimensions
-      // preload the small and medium sizes for mobile/tablet
-      const sm = cropped(imageUrl, { width: 767, height: 329 })
-      const md = cropped(imageUrl, { width: 1024, height: 600 })
-
-      preloadData = {
-        href: sm.src,
-        imagesrcset: `${sm.srcSet}, ${md.src} 1024w, ${md.quality2x} 2048w`,
-      }
-    } else {
-      // for split layout
-      const split = resized(imageUrl, { width: 900 })
-
-      preloadData = {
-        href: split.src,
-        imagesrcset: split.srcSet,
+    if (layout === "SPLIT" && article.hero.image?.split) {
+      return {
+        href: article.hero.image.split.src,
+        imagesrcset: article.hero.image.split.srcSet,
       }
     }
-    return preloadData
+
+    if (layout === "FULLSCREEN" && article.hero.image?.url) {
+      // FULLSCREEN uses the cropped image passed to FullBleedHeaderPicture
+      const xs = cropped(imageUrl, { width: 450, height: 320 })
+      return {
+        href: xs.src,
+        imagesrcset: xs.srcSet,
+      }
+    }
+
+    return null
   })()
   return (
     <>
@@ -112,6 +99,10 @@ export const ArticleMetaTagsFragmentContainer = createFragmentContainer(
             layout
             image {
               url
+              split: resized(width: 900) {
+                src
+                srcSet
+              }
             }
           }
         }

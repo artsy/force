@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<88c783470d46df38690d81ab2e4ee27b>>
+ * @generated SignedSource<<2a10d753917d562380fdc22eb8465a28>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,6 +16,10 @@ export type ArticleMetaTags_article$data = {
   readonly description: string | null | undefined;
   readonly hero: {
     readonly image?: {
+      readonly split: {
+        readonly src: string;
+        readonly srcSet: string;
+      } | null | undefined;
       readonly url: string | null | undefined;
     } | null | undefined;
     readonly layout?: ArticleFeatureSectionType;
@@ -37,15 +41,13 @@ export type ArticleMetaTags_article$key = {
 };
 
 const node: ReaderFragment = (function(){
-var v0 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "url",
-    "storageKey": null
-  }
-];
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "url",
+  "storageKey": null
+};
 return {
   "argumentDefinitions": [],
   "kind": "Fragment",
@@ -115,7 +117,9 @@ return {
       "kind": "LinkedField",
       "name": "thumbnailImage",
       "plural": false,
-      "selections": (v0/*: any*/),
+      "selections": [
+        (v0/*: any*/)
+      ],
       "storageKey": null
     },
     {
@@ -143,7 +147,40 @@ return {
               "kind": "LinkedField",
               "name": "image",
               "plural": false,
-              "selections": (v0/*: any*/),
+              "selections": [
+                (v0/*: any*/),
+                {
+                  "alias": "split",
+                  "args": [
+                    {
+                      "kind": "Literal",
+                      "name": "width",
+                      "value": 900
+                    }
+                  ],
+                  "concreteType": "ResizedImageUrl",
+                  "kind": "LinkedField",
+                  "name": "resized",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "src",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "srcSet",
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": "resized(width:900)"
+                }
+              ],
               "storageKey": null
             }
           ],
@@ -159,6 +196,6 @@ return {
 };
 })();
 
-(node as any).hash = "83f68b0ad83dbf18c5f8633af6e8774b";
+(node as any).hash = "20c1431e8e724312e2fe66bdb9a8b0d4";
 
 export default node;
