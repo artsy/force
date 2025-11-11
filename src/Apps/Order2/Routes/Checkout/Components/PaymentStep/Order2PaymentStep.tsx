@@ -5,6 +5,7 @@ import {
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { Order2PaymentCompletedView } from "Apps/Order2/Routes/Checkout/Components/PaymentStep/Order2PaymentCompletedView"
 import { Order2PaymentForm } from "Apps/Order2/Routes/Checkout/Components/PaymentStep/Order2PaymentForm"
+import { useCompletePaymentData } from "Apps/Order2/Routes/Checkout/Components/PaymentStep/useCompletePaymentData"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import type { Order2PaymentStep_me$key } from "__generated__/Order2PaymentStep_me.graphql"
 import type { Order2PaymentStep_order$key } from "__generated__/Order2PaymentStep_order.graphql"
@@ -21,6 +22,7 @@ export const Order2PaymentStep: React.FC<Order2PaymentStepProps> = ({
 }) => {
   const orderData = useFragment(ORDER_FRAGMENT, order)
   const meData = useFragment(ME_FRAGMENT, me)
+  useCompletePaymentData(orderData)
 
   const { confirmationToken, savedPaymentMethod, steps } = useCheckoutContext()
 
@@ -74,8 +76,22 @@ export const Order2PaymentStep: React.FC<Order2PaymentStepProps> = ({
 
 const ORDER_FRAGMENT = graphql`
   fragment Order2PaymentStep_order on Order {
+    ...useCompletePaymentData_order
     ...Order2PaymentForm_order
     internalID
+    paymentMethod
+    paymentMethodDetails {
+      __typename
+      ... on CreditCard {
+        internalID
+      }
+      ... on BankAccount {
+        internalID
+      }
+      ... on WireTransfer {
+        isManualPayment
+      }
+    }
     buyerTotal {
       minor
       currencyCode

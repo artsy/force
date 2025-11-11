@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<099fab441d6dc764f07cad4c137593ab>>
+ * @generated SignedSource<<ccbd757b183f1d2f95f531c8ae65f3fe>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { ReaderFragment } from 'relay-runtime';
 export type FulfillmentOptionTypeEnum = "ARTSY_EXPRESS" | "ARTSY_STANDARD" | "ARTSY_WHITE_GLOVE" | "DOMESTIC_FLAT" | "INTERNATIONAL_FLAT" | "PICKUP" | "SHIPPING_TBD" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
-export type Order2FulfillmentDetailsCompletedView_order$data = {
+export type useCompleteFulfillmentDetailsData_order$data = {
   readonly fulfillmentDetails: {
     readonly addressLine1: string | null | undefined;
     readonly addressLine2: string | null | undefined;
@@ -27,19 +27,18 @@ export type Order2FulfillmentDetailsCompletedView_order$data = {
   readonly selectedFulfillmentOption: {
     readonly type: FulfillmentOptionTypeEnum;
   } | null | undefined;
-  readonly shippingOrigin: string | null | undefined;
-  readonly " $fragmentType": "Order2FulfillmentDetailsCompletedView_order";
+  readonly " $fragmentType": "useCompleteFulfillmentDetailsData_order";
 };
-export type Order2FulfillmentDetailsCompletedView_order$key = {
-  readonly " $data"?: Order2FulfillmentDetailsCompletedView_order$data;
-  readonly " $fragmentSpreads": FragmentRefs<"Order2FulfillmentDetailsCompletedView_order">;
+export type useCompleteFulfillmentDetailsData_order$key = {
+  readonly " $data"?: useCompleteFulfillmentDetailsData_order$data;
+  readonly " $fragmentSpreads": FragmentRefs<"useCompleteFulfillmentDetailsData_order">;
 };
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "Order2FulfillmentDetailsCompletedView_order",
+  "name": "useCompleteFulfillmentDetailsData_order",
   "selections": [
     {
       "alias": null,
@@ -136,19 +135,12 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "shippingOrigin",
-      "storageKey": null
     }
   ],
   "type": "Order",
   "abstractKey": null
 };
 
-(node as any).hash = "834ecbb1d09dd2c4d811417f202823f1";
+(node as any).hash = "83dddcde6b68d3a8c9bcd6752fd993bd";
 
 export default node;

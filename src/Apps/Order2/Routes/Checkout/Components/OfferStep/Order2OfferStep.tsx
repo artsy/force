@@ -10,13 +10,15 @@ import { Order2HiddenPriceOfferForm } from "Apps/Order2/Routes/Checkout/Componen
 import { Order2PriceRangeOfferForm } from "Apps/Order2/Routes/Checkout/Components/OfferStep/Forms/Order2PriceRangeOfferForm"
 import { Order2OfferCompletedView } from "Apps/Order2/Routes/Checkout/Components/OfferStep/Order2OfferCompletedView"
 import type { OfferNoteValue } from "Apps/Order2/Routes/Checkout/Components/OfferStep/types"
+import { useCompleteOfferData } from "Apps/Order2/Routes/Checkout/Components/OfferStep/useCompleteOfferData"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useOrder2AddInitialOfferMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2AddInitialOfferMutation"
+import { mostRecentCreatedAt } from "Apps/Order2/Routes/Checkout/Utils/mostRecentCreatedAt"
 import { useJump } from "Utils/Hooks/useJump"
 import createLogger from "Utils/logger"
 import type { Order2OfferStep_order$key } from "__generated__/Order2OfferStep_order.graphql"
 import type { useOrder2AddInitialOfferMutation$data } from "__generated__/useOrder2AddInitialOfferMutation.graphql"
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import { graphql, useFragment } from "react-relay"
 
 const logger = createLogger(
@@ -31,22 +33,25 @@ interface Order2OfferStepProps {
 
 export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
   const orderData = useFragment(FRAGMENT, order)
+  const completedViewProps = useCompleteOfferData(orderData)
   const { steps, setOfferAmountComplete, checkoutTracking } =
     useCheckoutContext()
   const { submitMutation: submitOfferMutation } =
     useOrder2AddInitialOfferMutation()
 
-  // TODO: Pull into useCheckoutContext
+  const { offers } = orderData
+
+  const lastOffer = mostRecentCreatedAt(offers)
+
   const [formIsDirty, setFormIsDirty] = useState(false)
   const [isSubmittingOffer, setIsSubmittingOffer] = useState(false)
+
   const [offerNoteValue, setOfferNoteValue] = useState<OfferNoteValue>({
     exceedsCharacterLimit: false,
-    value: "",
+    value: lastOffer?.note || "",
   })
-  const [offerValue, setOfferValue] = useState(0)
+  const [offerValue, setOfferValue] = useState(lastOffer?.amount?.major || 0)
 
-  const [submittedOfferAmount, setSubmittedOfferAmount] = useState<number>(0)
-  const [submittedOfferNote, setSubmittedOfferNote] = useState<string>("")
   const { jumpTo } = useJump()
 
   const currentStep = steps?.find(
@@ -120,8 +125,6 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
       }
 
       if (offerOrError && "offer" in offerOrError) {
-        setSubmittedOfferAmount(offerValue)
-        setSubmittedOfferNote(hasNote ? note : "")
         setOfferAmountComplete()
 
         return
@@ -133,11 +136,12 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
       handleSubmitError({ code: "unknown" })
     } finally {
       setIsSubmittingOffer(false)
+      setFormIsDirty(false)
     }
   }
 
   // Determine which offer form scenario to use based on artwork properties
-  const getOfferFormComponent = () => {
+  const OfferFormComponent = useMemo(() => {
     const priceDisplay = orderData.lineItems?.[0]?.artwork?.priceDisplay
 
     if (priceDisplay === "hidden") {
@@ -149,9 +153,7 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
     }
 
     return Order2ExactPriceOfferForm
-  }
-
-  const OfferFormComponent = getOfferFormComponent()
+  }, [orderData])
 
   return (
     <Flex
@@ -184,11 +186,9 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
         px={[2, 4]}
         hidden={currentStep !== CheckoutStepState.COMPLETED}
       >
-        <Order2OfferCompletedView
-          order={orderData}
-          offerAmount={submittedOfferAmount}
-          offerNote={submittedOfferNote}
-        />
+        {completedViewProps && (
+          <Order2OfferCompletedView {...completedViewProps} />
+        )}
       </Box>
 
       <Box pt={2} px={[2, 4]} hidden={currentStep !== CheckoutStepState.ACTIVE}>
@@ -256,10 +256,21 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
 
 const FRAGMENT = graphql`
   fragment Order2OfferStep_order on Order {
+    ...useCompleteOfferData_order
+    ...Order2ExactPriceOfferForm_order
+    ...Order2PriceRangeOfferForm_order
     internalID
     mode
     source
     currencyCode
+    offers {
+      createdAt
+      amount {
+        display
+        major
+      }
+      note
+    }
     lineItems {
       artwork {
         slug
@@ -285,8 +296,5 @@ const FRAGMENT = graphql`
         }
       }
     }
-    ...Order2ExactPriceOfferForm_order
-    ...Order2PriceRangeOfferForm_order
-    ...Order2OfferCompletedView_order
   }
 `

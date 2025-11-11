@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9d977ee385041ba0938613f6b6371f3f>>
+ * @generated SignedSource<<da92e8a5529e012d30d2caaa26155f3c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -27,6 +27,7 @@ export type Order2CheckoutContext_order$data = {
   } | null | undefined;
   readonly source: OrderSourceEnum;
   readonly stripeConfirmationToken: string | null | undefined;
+  readonly " $fragmentSpreads": FragmentRefs<"useBuildInitialSteps_order">;
   readonly " $fragmentType": "Order2CheckoutContext_order";
 };
 export type Order2CheckoutContext_order$key = {
@@ -48,6 +49,11 @@ return {
   "metadata": null,
   "name": "Order2CheckoutContext_order",
   "selections": [
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "useBuildInitialSteps_order"
+    },
     (v0/*: any*/),
     {
       "alias": null,
@@ -124,6 +130,6 @@ return {
 };
 })();
 
-(node as any).hash = "aa8b5fec8c295d7234ec0a67f18d64af";
+(node as any).hash = "27c6acb428487cb6df9cba3ef259acf6";
 
 export default node;
