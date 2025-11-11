@@ -77,6 +77,10 @@ const baseOrderProps = {
   buyerStateExpiresAt: null,
   stripeConfirmationToken: null,
   selectedFulfillmentOption: null,
+  offers: [],
+  fulfillmentDetails: null,
+  paymentMethod: null,
+  paymentMethodDetails: null,
   lineItems: [
     {
       artworkVersion: {
@@ -259,7 +263,7 @@ describe("Order2CheckoutContext", () => {
           name: CheckoutStepName.DELIVERY_OPTION,
           state: CheckoutStepState.UPCOMING,
         },
-        { name: CheckoutStepName.PAYMENT, state: CheckoutStepState.COMPLETED },
+        { name: CheckoutStepName.PAYMENT, state: CheckoutStepState.UPCOMING },
         {
           name: CheckoutStepName.CONFIRMATION,
           state: CheckoutStepState.UPCOMING,

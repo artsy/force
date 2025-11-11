@@ -1,3 +1,4 @@
+import { ActionType, type ClickedHeader, ContextModule } from "@artsy/cohesion"
 import {
   BaseTab,
   Box,
@@ -17,6 +18,7 @@ import { ArtistOverviewQueryRenderer } from "Apps/Artist/Routes/Overview/Compone
 import { ArtistArtworkFilterQueryRenderer } from "Apps/Artist/Routes/WorksForSale/Components/ArtistArtworkFilter"
 import { Z } from "Apps/Components/constants"
 import { RouteTabs } from "Components/RouteTabs"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { Jump, useJump } from "Utils/Hooks/useJump"
 import { useSectionReadiness } from "Utils/Hooks/useSectionReadiness"
 import type { ArtistCombinedRoute_artist$data } from "__generated__/ArtistCombinedRoute_artist.graphql"
@@ -24,6 +26,7 @@ import type * as React from "react"
 import { useMemo } from "react"
 import { Meta } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 interface ArtistCombinedRouteProps {
   artist: ArtistCombinedRoute_artist$data
@@ -48,6 +51,20 @@ const ArtistCombinedRoute: React.FC<
   const loading = useMemo(() => {
     return Object.values(navigating).some(Boolean)
   }, [navigating])
+
+  const tracking = useTracking()
+  const { contextPageOwnerType } = useAnalyticsContext()
+
+  const handleClick = (subject: string) => {
+    const payload: ClickedHeader = {
+      action: ActionType.clickedHeader,
+      context_module: ContextModule.artistHeader,
+      context_page_owner_type: contextPageOwnerType,
+      subject,
+    }
+
+    tracking.trackEvent(payload)
+  }
 
   return (
     <>
@@ -79,6 +96,7 @@ const ArtistCombinedRoute: React.FC<
           onClick={async () => {
             // No prior sections; just jump.
             jumpTo("artistArtworksTop", { offset: 40 })
+            handleClick("artworks")
           }}
         >
           Artworks
@@ -90,6 +108,7 @@ const ArtistCombinedRoute: React.FC<
           onClick={async () => {
             await waitUntil("auction")
             jumpTo("marketSignalsTop", { offset: 40 })
+            handleClick("auction results")
           }}
         >
           Auction Results
@@ -101,6 +120,7 @@ const ArtistCombinedRoute: React.FC<
           onClick={async () => {
             await waitUntil("about")
             jumpTo("artistAboutTop", { offset: 40 })
+            handleClick("about")
           }}
         >
           About

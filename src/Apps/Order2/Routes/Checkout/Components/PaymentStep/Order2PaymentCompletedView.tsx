@@ -57,13 +57,8 @@ export const Order2PaymentCompletedView: React.FC<
       <Flex alignItems="center" ml="30px" mt={1}>
         {(isBankAccount || isSEPA) && (
           <>
-            <InstitutionIcon
-              fill="mono100"
-              width={["18px", "26px"]}
-              height={["18px", "26px"]}
-              mr={1}
-            />
-            <Text variant={["xs", "sm-display"]}>
+            <InstitutionIcon fill="mono100" width="24px" height="24px" mr={1} />
+            <Text variant="sm-display">
               ••••{" "}
               {confirmationToken?.paymentMethodPreview?.last4 ||
                 savedPaymentMethod?.last4}
@@ -78,10 +73,10 @@ export const Order2PaymentCompletedView: React.FC<
                 (confirmationToken?.paymentMethodPreview?.displayBrand ||
                   savedPaymentMethod?.brand) as Brand
               }
-              width={["18px", "26px"]}
-              height={["18px", "26px"]}
+              width="24px"
+              height="24px"
             />
-            <Text variant={["xs", "sm-display"]}>
+            <Text variant="sm-display">
               ••••{" "}
               {confirmationToken?.paymentMethodPreview?.last4 ||
                 savedPaymentMethod?.lastDigits}
@@ -90,13 +85,8 @@ export const Order2PaymentCompletedView: React.FC<
         )}
         {isWireTransfer && (
           <>
-            <InstitutionIcon
-              fill="mono100"
-              width={["18px", "26px"]}
-              height={["18px", "26px"]}
-              mr={1}
-            />
-            <Text variant={["xs", "sm-display"]}>Wire Transfer</Text>
+            <InstitutionIcon fill="mono100" width="24px" height="24px" mr={1} />
+            <Text variant="sm-display">Wire Transfer</Text>
           </>
         )}
       </Flex>

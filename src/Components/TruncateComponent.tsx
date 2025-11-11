@@ -11,7 +11,7 @@ interface TruncateComponentProps {
 
 export const TruncateComponent: FC<TruncateComponentProps> = ({
   children,
-  label = "View All",
+  label = "View More",
   enabled = true,
   disabled = false,
 }) => {
@@ -50,14 +50,14 @@ export const TruncateComponent: FC<TruncateComponentProps> = ({
 }
 
 const FadeOut = styled(Box)<{ mode: "Collapsed" | "Expanded" }>`
-  height: 1000px;
+  max-height: 1000px;
   overflow: hidden;
   mask-image: linear-gradient(to top, transparent 0%, #fff 33%);
 
   ${({ mode }) =>
     mode === "Expanded" &&
     css`
-      height: auto;
+      max-height: unset;
       mask-image: none;
       overflow: visible;
     `}

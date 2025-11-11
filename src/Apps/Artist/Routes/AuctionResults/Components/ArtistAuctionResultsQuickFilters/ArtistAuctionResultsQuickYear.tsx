@@ -21,6 +21,11 @@ export const ArtistAuctionResultsQuickYear = () => {
     (createdBeforeYear == null ||
       (maxYear != null && createdBeforeYear === maxYear))
 
+  // No aggregations means nothing to filter against
+  if (!minYear && !maxYear) {
+    return null
+  }
+
   return (
     <DropdownFilter
       label="Year Created"

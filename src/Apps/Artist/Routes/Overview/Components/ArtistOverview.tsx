@@ -1,4 +1,5 @@
 import { Stack } from "@artsy/palette"
+import { ARTIST_HEADER_NUMBER_OF_INSIGHTS } from "Apps/Artist/Components/ArtistHeader/ArtistHeader"
 import {
   ArtistSeriesRailPlaceholder,
   ArtistSeriesRailQueryRenderer,
@@ -71,7 +72,8 @@ export const ArtistOverview: React.FC<
   React.PropsWithChildren<ArtistOverviewProps>
 > = ({ artist }) => {
   const hasCareerHighlights =
-    Array.isArray(artist.insights) && artist.insights.length > 0
+    Array.isArray(artist.insights) &&
+    artist.insights.length > ARTIST_HEADER_NUMBER_OF_INSIGHTS
   const hasArtistSeries = (artist.artistSeriesConnection?.totalCount ?? 0) > 0
   const hasEditorial = (artist.counts?.articles ?? 0) > 0
   const hasCurrentShows = (artist.showsConnection?.totalCount ?? 0) > 0

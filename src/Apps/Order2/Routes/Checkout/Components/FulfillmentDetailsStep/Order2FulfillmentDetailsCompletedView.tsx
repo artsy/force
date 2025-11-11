@@ -1,28 +1,34 @@
 import CheckmarkIcon from "@artsy/icons/CheckmarkIcon"
 import { Box, Clickable, Flex, Spacer, Text } from "@artsy/palette"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
-import type { Order2FulfillmentDetailsCompletedView_order$key } from "__generated__/Order2FulfillmentDetailsCompletedView_order.graphql"
-import { graphql, useFragment } from "react-relay"
 
-interface Order2FulfillmentDetailsCompletedViewProps {
-  order: Order2FulfillmentDetailsCompletedView_order$key
+export interface FulfillmentDetails {
+  name?: string | null
+  addressLine1?: string | null
+  addressLine2?: string | null
+  city?: string | null
+  region?: string | null
+  postalCode?: string | null
+  country?: string | null
+  phoneNumber?: string | null
 }
+
+export interface Order2FulfillmentDetailsCompletedViewProps {
+  isPickup: boolean
+  fulfillmentDetails: FulfillmentDetails
+}
+
 export const Order2FulfillmentDetailsCompletedView: React.FC<
   Order2FulfillmentDetailsCompletedViewProps
-> = ({ order }) => {
+> = ({ isPickup, fulfillmentDetails }) => {
   const { editFulfillmentDetails, checkoutTracking } = useCheckoutContext()
-  const orderData = useFragment(FRAGMENT, order)
-
-  const fulfillmentDetails = orderData?.fulfillmentDetails || ({} as any)
-  const selectedFulfillmentOption =
-    orderData?.selectedFulfillmentOption || ({} as any)
 
   const onClickEdit = () => {
     checkoutTracking.clickedChangeShippingAddress()
     editFulfillmentDetails()
   }
 
-  if (selectedFulfillmentOption?.type === "PICKUP") {
+  if (isPickup) {
     return (
       <Flex flexDirection="column" backgroundColor="mono0">
         <Flex justifyContent="space-between">
@@ -91,28 +97,9 @@ export const Order2FulfillmentDetailsCompletedView: React.FC<
   )
 }
 
-const FRAGMENT = graphql`
-  fragment Order2FulfillmentDetailsCompletedView_order on Order {
-    fulfillmentDetails {
-      addressLine1
-      addressLine2
-      city
-      country
-      name
-      postalCode
-      region
-      phoneNumber {
-        display
-      }
-    }
-    selectedFulfillmentOption {
-      type
-    }
-    shippingOrigin
-  }
-`
-
-const ShippingContent = ({ fulfillmentDetails }) => {
+const ShippingContent: React.FC<{ fulfillmentDetails: FulfillmentDetails }> = ({
+  fulfillmentDetails,
+}) => {
   const {
     name,
     addressLine1,
@@ -148,7 +135,7 @@ const ShippingContent = ({ fulfillmentDetails }) => {
 
       {phoneNumber && (
         <Text variant="sm" color="mono100">
-          {phoneNumber.display}
+          {phoneNumber}
         </Text>
       )}
     </>

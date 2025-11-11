@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<033a36e7115f8c64c7a645f5ae777e78>>
+ * @generated SignedSource<<a1e0a1966cbca151ee0a0a6bc400284b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,9 +13,8 @@ import { FragmentRefs } from "relay-runtime";
 export type Order2PriceRangeOfferForm_order$data = {
   readonly currencyCode: string;
   readonly lineItems: ReadonlyArray<{
-    readonly artwork: {
-      readonly isPriceRange: boolean | null | undefined;
-      readonly listPrice: {
+    readonly artworkOrEditionSet: {
+      readonly listPrice?: {
         readonly __typename: "PriceRange";
         readonly maxPrice: {
           readonly major: number;
@@ -28,7 +27,7 @@ export type Order2PriceRangeOfferForm_order$data = {
         // value in case none of the concrete values match.
         readonly __typename: "%other";
       } | null | undefined;
-      readonly price: string | null | undefined;
+      readonly price?: string | null | undefined;
     } | null | undefined;
   } | null | undefined>;
   readonly " $fragmentType": "Order2PriceRangeOfferForm_order";
@@ -45,6 +44,60 @@ var v0 = [
     "args": null,
     "kind": "ScalarField",
     "name": "major",
+    "storageKey": null
+  }
+],
+v1 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "price",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "concreteType": null,
+    "kind": "LinkedField",
+    "name": "listPrice",
+    "plural": false,
+    "selections": [
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "__typename",
+        "storageKey": null
+      },
+      {
+        "kind": "InlineFragment",
+        "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Money",
+            "kind": "LinkedField",
+            "name": "maxPrice",
+            "plural": false,
+            "selections": (v0/*: any*/),
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Money",
+            "kind": "LinkedField",
+            "name": "minPrice",
+            "plural": false,
+            "selections": (v0/*: any*/),
+            "storageKey": null
+          }
+        ],
+        "type": "PriceRange",
+        "abstractKey": null
+      }
+    ],
     "storageKey": null
   }
 ];
@@ -72,69 +125,22 @@ return {
         {
           "alias": null,
           "args": null,
-          "concreteType": "Artwork",
+          "concreteType": null,
           "kind": "LinkedField",
-          "name": "artwork",
+          "name": "artworkOrEditionSet",
           "plural": false,
           "selections": [
             {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "price",
-              "storageKey": null
+              "kind": "InlineFragment",
+              "selections": (v1/*: any*/),
+              "type": "Artwork",
+              "abstractKey": null
             },
             {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "isPriceRange",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "concreteType": null,
-              "kind": "LinkedField",
-              "name": "listPrice",
-              "plural": false,
-              "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "__typename",
-                  "storageKey": null
-                },
-                {
-                  "kind": "InlineFragment",
-                  "selections": [
-                    {
-                      "alias": null,
-                      "args": null,
-                      "concreteType": "Money",
-                      "kind": "LinkedField",
-                      "name": "maxPrice",
-                      "plural": false,
-                      "selections": (v0/*: any*/),
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "concreteType": "Money",
-                      "kind": "LinkedField",
-                      "name": "minPrice",
-                      "plural": false,
-                      "selections": (v0/*: any*/),
-                      "storageKey": null
-                    }
-                  ],
-                  "type": "PriceRange",
-                  "abstractKey": null
-                }
-              ],
-              "storageKey": null
+              "kind": "InlineFragment",
+              "selections": (v1/*: any*/),
+              "type": "EditionSet",
+              "abstractKey": null
             }
           ],
           "storageKey": null
@@ -148,6 +154,6 @@ return {
 };
 })();
 
-(node as any).hash = "7fd628d963b66c8e92e9ae8b1e76bd5b";
+(node as any).hash = "8acf970b246994dd11a62a1fa862b8ea";
 
 export default node;

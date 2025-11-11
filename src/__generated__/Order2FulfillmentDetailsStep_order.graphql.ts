@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a90fb242f5db5a46563b09dbd15fb606>>
+ * @generated SignedSource<<f858e0d927bedafebaacc61a7122a9f2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,6 +21,7 @@ export type Order2FulfillmentDetailsStep_order$data = {
     readonly name: string | null | undefined;
     readonly phoneNumber: {
       readonly countryCode: string | null | undefined;
+      readonly display: string | null | undefined;
       readonly originalNumber: string | null | undefined;
       readonly regionCode: string | null | undefined;
     } | null | undefined;
@@ -35,7 +36,7 @@ export type Order2FulfillmentDetailsStep_order$data = {
   readonly selectedFulfillmentOption: {
     readonly type: FulfillmentOptionTypeEnum;
   } | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"Order2DeliveryForm_order" | "Order2FulfillmentDetailsCompletedView_order" | "Order2PickupForm_order">;
+  readonly " $fragmentSpreads": FragmentRefs<"Order2DeliveryForm_order" | "Order2PickupForm_order" | "useCompleteFulfillmentDetailsData_order">;
   readonly " $fragmentType": "Order2FulfillmentDetailsStep_order";
 };
 export type Order2FulfillmentDetailsStep_order$key = {
@@ -60,17 +61,17 @@ return {
     {
       "args": null,
       "kind": "FragmentSpread",
+      "name": "useCompleteFulfillmentDetailsData_order"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
       "name": "Order2PickupForm_order"
     },
     {
       "args": null,
       "kind": "FragmentSpread",
       "name": "Order2DeliveryForm_order"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "Order2FulfillmentDetailsCompletedView_order"
     },
     {
       "alias": null,
@@ -114,6 +115,13 @@ return {
               "args": null,
               "kind": "ScalarField",
               "name": "originalNumber",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "display",
               "storageKey": null
             }
           ],
@@ -215,6 +223,6 @@ return {
 };
 })();
 
-(node as any).hash = "ac66c2d1f7736340aa2ce0e4bdabaa4a";
+(node as any).hash = "b18f46851cb4c65f697e96cdf1e2f908";
 
 export default node;

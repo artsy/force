@@ -1,16 +1,7 @@
-import {
-  Box,
-  Button,
-  Flex,
-  Radio,
-  RadioGroup,
-  Spacer,
-  Text,
-  TextArea,
-} from "@artsy/palette"
+import { Flex, Radio, RadioGroup, Spacer, Text } from "@artsy/palette"
 import { OfferInput } from "Apps/Order/Components/OfferInput"
 import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
-import type { OfferFormComponentProps } from "Apps/Order2/Routes/Checkout/Components/OfferStep/types"
+import type { OfferFormProps } from "Apps/Order2/Routes/Checkout/Components/OfferStep/types"
 import type { Order2ExactPriceOfferForm_order$key } from "__generated__/Order2ExactPriceOfferForm_order.graphql"
 import { useEffect, useState } from "react"
 import { graphql, useFragment } from "react-relay"
@@ -21,7 +12,7 @@ interface PriceOption {
   description: string
 }
 
-interface Order2ExactPriceOfferFormProps extends OfferFormComponentProps {
+interface Order2ExactPriceOfferFormProps extends OfferFormProps {
   order: Order2ExactPriceOfferForm_order$key
 }
 
@@ -30,22 +21,13 @@ export const Order2ExactPriceOfferForm: React.FC<
 > = ({
   order,
   offerValue,
-  offerNoteValue,
   formIsDirty,
-  isSubmittingOffer,
   onOfferValueChange,
   onOfferOptionSelected,
-  onOfferNoteChange,
-  onContinueButtonPressed,
 }) => {
   const orderData = useFragment(FRAGMENT, order)
-  const artwork = orderData.lineItems?.[0]?.artwork
-  const listPriceMajor =
-    artwork?.listPrice?.__typename === "Money"
-      ? artwork.listPrice.major
-      : artwork?.listPrice?.__typename === "PriceRange"
-        ? artwork.listPrice.maxPrice?.major
-        : null
+
+  const listPriceMajor = orderData.lineItems[0]?.listPrice?.major
 
   const priceOptions: PriceOption[] = listPriceMajor
     ? [
@@ -126,97 +108,55 @@ export const Order2ExactPriceOfferForm: React.FC<
   ]
 
   return (
-    <>
-      {/* Offer Amount Section */}
-      <Box py={2} px={[2, 4]}>
-        <RadioGroup onSelect={setSelectedRadio} defaultValue={selectedRadio}>
-          {allPriceOptions.map(({ key, value, description }) => {
-            const isCustom = key === "price-option-custom"
-            const showCustomInput = isCustom && selectedRadio === key
+    <RadioGroup onSelect={setSelectedRadio} defaultValue={selectedRadio}>
+      {allPriceOptions.map(({ key, value, description }) => {
+        const isCustom = key === "price-option-custom"
+        const showCustomInput = isCustom && selectedRadio === key
 
-            return (
-              <Radio
-                key={key}
-                value={key}
-                label={isCustom ? description : formatCurrency(value)}
-                onSelect={() => {
-                  setSelectedRadio(key)
-                  if (!isCustom) {
-                    setCustomValue(undefined)
-                    onOfferOptionSelected(value, description)
-                  }
-                }}
-              >
-                {!isCustom && (
-                  <>
-                    <Spacer y={1} />
-                    <Text variant="sm-display" color="mono60">
-                      {description}
-                    </Text>
-                    <Spacer y={4} />
-                  </>
-                )}
-
-                {showCustomInput && (
-                  <Flex flexDirection="column" mt={2}>
-                    <OfferInput
-                      id="OfferForm_customOfferValue"
-                      showError={formIsDirty && offerValue <= 0}
-                      onChange={value => {
-                        setCustomValue(value)
-                      }}
-                      onBlur={() => {
-                        if (customValue !== undefined) {
-                          onOfferOptionSelected(customValue, description)
-                        }
-                      }}
-                      value={customValue || 0}
-                    />
-                  </Flex>
-                )}
-              </Radio>
-            )
-          })}
-        </RadioGroup>
-      </Box>
-
-      <Spacer y={2} />
-
-      {/* Offer Note Section */}
-      <Box py={2} px={[2, 4]}>
-        <Flex flexDirection="column">
-          <Text
-            variant={["sm-display", "md"]}
-            fontWeight={["bold", "normal"]}
-            color="mono100"
+        return (
+          <Radio
+            key={key}
+            value={key}
+            label={isCustom ? description : formatCurrency(value)}
+            onSelect={() => {
+              setSelectedRadio(key)
+              if (!isCustom) {
+                setCustomValue(undefined)
+                onOfferOptionSelected(value, description)
+              }
+            }}
           >
-            Offer note
-          </Text>
-          <Text variant="sm" color="mono100">
-            Additional context to help the gallery evaluate your offer.
-          </Text>
+            {!isCustom && (
+              <>
+                <Spacer y={1} />
+                <Text variant="sm-display" color="mono60">
+                  {description}
+                </Text>
+                <Spacer y={4} />
+              </>
+            )}
 
-          <TextArea
-            title="Note (recommended)"
-            maxLength={1000}
-            placeholder="Share what draws you to this work or artist, or add any context about your offer"
-            onChange={onOfferNoteChange}
-            value={offerNoteValue.value}
-          />
-
-          <Spacer y={4} />
-          <Button
-            variant="primaryBlack"
-            width="100%"
-            onClick={onContinueButtonPressed}
-            loading={isSubmittingOffer}
-            disabled={isSubmittingOffer}
-          >
-            Save and Continue
-          </Button>
-        </Flex>
-      </Box>
-    </>
+            {showCustomInput && (
+              <Flex flexDirection="column" mt={2}>
+                <OfferInput
+                  id="OfferForm_customOfferValue"
+                  showError={formIsDirty && offerValue <= 0}
+                  onChange={value => {
+                    setCustomValue(value)
+                  }}
+                  onBlur={() => {
+                    if (customValue !== undefined) {
+                      onOfferOptionSelected(customValue, description)
+                    }
+                  }}
+                  value={customValue || 0}
+                />
+              </Flex>
+            )}
+          </Radio>
+        )
+      })}
+    </RadioGroup>
   )
 }
 
@@ -224,18 +164,9 @@ const FRAGMENT = graphql`
   fragment Order2ExactPriceOfferForm_order on Order {
     currencyCode
     lineItems {
-      artwork {
-        price
-        listPrice {
-          __typename
-          ... on Money {
-            major
-          }
-          ... on PriceRange {
-            maxPrice {
-              major
-            }
-          }
+      listPrice {
+        ... on Money {
+          major
         }
       }
     }

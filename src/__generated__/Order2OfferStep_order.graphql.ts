@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<477a5a49672548d899187cd801a831ae>>
+ * @generated SignedSource<<896919f4d72adbbecae817f1319cc02d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -38,12 +38,21 @@ export type Order2OfferStep_order$data = {
         // value in case none of the concrete values match.
         readonly __typename: "%other";
       } | null | undefined;
+      readonly priceDisplay: string | null | undefined;
       readonly slug: string;
     } | null | undefined;
   } | null | undefined>;
   readonly mode: OrderModeEnum;
+  readonly offers: ReadonlyArray<{
+    readonly amount: {
+      readonly display: string | null | undefined;
+      readonly major: number;
+    } | null | undefined;
+    readonly createdAt: string | null | undefined;
+    readonly note: string | null | undefined;
+  }> | null | undefined;
   readonly source: OrderSourceEnum;
-  readonly " $fragmentSpreads": FragmentRefs<"Order2ExactPriceOfferForm_order" | "Order2OfferCompletedView_order" | "Order2PriceRangeOfferForm_order">;
+  readonly " $fragmentSpreads": FragmentRefs<"Order2ExactPriceOfferForm_order" | "Order2PriceRangeOfferForm_order" | "useCompleteOfferData_order">;
   readonly " $fragmentType": "Order2OfferStep_order";
 };
 export type Order2OfferStep_order$key = {
@@ -59,14 +68,15 @@ var v0 = {
   "name": "internalID",
   "storageKey": null
 },
-v1 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "major",
-    "storageKey": null
-  }
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "major",
+  "storageKey": null
+},
+v2 = [
+  (v1/*: any*/)
 ];
 return {
   "argumentDefinitions": [],
@@ -74,6 +84,21 @@ return {
   "metadata": null,
   "name": "Order2OfferStep_order",
   "selections": [
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "useCompleteOfferData_order"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "Order2ExactPriceOfferForm_order"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "Order2PriceRangeOfferForm_order"
+    },
     (v0/*: any*/),
     {
       "alias": null,
@@ -99,6 +124,50 @@ return {
     {
       "alias": null,
       "args": null,
+      "concreteType": "Offer",
+      "kind": "LinkedField",
+      "name": "offers",
+      "plural": true,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "createdAt",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Money",
+          "kind": "LinkedField",
+          "name": "amount",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "display",
+              "storageKey": null
+            },
+            (v1/*: any*/)
+          ],
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "note",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": "LineItem",
       "kind": "LinkedField",
       "name": "lineItems",
@@ -117,6 +186,13 @@ return {
               "args": null,
               "kind": "ScalarField",
               "name": "slug",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "priceDisplay",
               "storageKey": null
             },
             {
@@ -150,7 +226,7 @@ return {
                 },
                 {
                   "kind": "InlineFragment",
-                  "selections": (v1/*: any*/),
+                  "selections": (v2/*: any*/),
                   "type": "Money",
                   "abstractKey": null
                 },
@@ -164,7 +240,7 @@ return {
                       "kind": "LinkedField",
                       "name": "maxPrice",
                       "plural": false,
-                      "selections": (v1/*: any*/),
+                      "selections": (v2/*: any*/),
                       "storageKey": null
                     },
                     {
@@ -174,7 +250,7 @@ return {
                       "kind": "LinkedField",
                       "name": "minPrice",
                       "plural": false,
-                      "selections": (v1/*: any*/),
+                      "selections": (v2/*: any*/),
                       "storageKey": null
                     }
                   ],
@@ -201,21 +277,6 @@ return {
         }
       ],
       "storageKey": null
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "Order2ExactPriceOfferForm_order"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "Order2PriceRangeOfferForm_order"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "Order2OfferCompletedView_order"
     }
   ],
   "type": "Order",
@@ -223,6 +284,6 @@ return {
 };
 })();
 
-(node as any).hash = "abed7f3dafaa58d919ab732d9042de68";
+(node as any).hash = "bc31a24e73639f78e3ed9c62c6b4c2a9";
 
 export default node;

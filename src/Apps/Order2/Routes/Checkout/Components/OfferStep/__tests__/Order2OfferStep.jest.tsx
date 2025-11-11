@@ -24,10 +24,12 @@ const MOCK_PRICE_RANGE_ORDER = {
   mode: "OFFER",
   source: "artwork_page",
   currencyCode: "USD",
+  offers: [],
   lineItems: [
     {
       artwork: {
         slug: "artwork-slug",
+        priceDisplay: "range",
         isPriceRange: true,
         listPrice: {
           __typename: "PriceRange",
@@ -36,6 +38,15 @@ const MOCK_PRICE_RANGE_ORDER = {
         },
         editionSets: [],
         price: "$1,000 - $2,000",
+      },
+      artworkOrEditionSet: {
+        __typename: "Artwork",
+        price: "$1,000 - $2,000",
+        listPrice: {
+          __typename: "PriceRange",
+          maxPrice: { major: 2000 },
+          minPrice: { major: 1000 },
+        },
       },
     },
   ],
@@ -46,10 +57,12 @@ const MOCK_EXACT_PRICE_ORDER = {
   mode: "OFFER",
   source: "artwork_page",
   currencyCode: "USD",
+  offers: [],
   lineItems: [
     {
       artwork: {
         slug: "artwork-slug",
+        priceDisplay: "exact",
         isPriceRange: false,
         listPrice: {
           __typename: "Money",
@@ -57,6 +70,9 @@ const MOCK_EXACT_PRICE_ORDER = {
         },
         editionSets: [],
         price: "$5,000",
+      },
+      listPrice: {
+        major: 5000,
       },
     },
   ],
@@ -67,15 +83,50 @@ const MOCK_HIDDEN_PRICE_ORDER = {
   mode: "OFFER",
   currencyCode: "USD",
   source: "artwork_page",
+  offers: [],
   lineItems: [
     {
       artwork: {
         slug: "artwork-slug",
+        priceDisplay: "hidden",
         isPriceRange: false,
         isPriceHidden: true,
         listPrice: null,
         editionSets: [],
         price: null,
+      },
+    },
+  ],
+}
+
+const MOCK_EDITION_SET_PRICE_RANGE_ORDER = {
+  internalID: "order-id",
+  mode: "OFFER",
+  source: "artwork_page",
+  currencyCode: "USD",
+  offers: [],
+  lineItems: [
+    {
+      artwork: {
+        slug: "artwork-slug",
+        priceDisplay: "range",
+        isPriceRange: true,
+        listPrice: {
+          __typename: "PriceRange",
+          maxPrice: { major: 3000 },
+          minPrice: { major: 1500 },
+        },
+        editionSets: [],
+        price: "$1,500 - $3,000",
+      },
+      artworkOrEditionSet: {
+        __typename: "EditionSet",
+        price: "$1,500 - $3,000",
+        listPrice: {
+          __typename: "PriceRange",
+          maxPrice: { major: 3000 },
+          minPrice: { major: 1500 },
+        },
       },
     },
   ],
@@ -555,6 +606,76 @@ describe("Order2OfferStep", () => {
           mockCheckoutTracking.clickedOrderProgression,
         ).toHaveBeenCalledWith("ordersOffer")
       })
+    })
+  })
+
+  describe("Edition Sets", () => {
+    it("renders price range form for edition sets", async () => {
+      renderWithRelay({
+        Viewer: () => ({
+          me: {
+            order: MOCK_EDITION_SET_PRICE_RANGE_ORDER,
+          },
+        }),
+      })
+
+      // Check that the price range options are rendered
+      expect(screen.getByText("Top-end of range")).toBeInTheDocument()
+      expect(screen.getByText("Midpoint")).toBeInTheDocument()
+      expect(screen.getByText("Low-end of range")).toBeInTheDocument()
+
+      // Check for formatted currency text
+      expect(
+        screen.getByText((content, element) => {
+          return content.includes("3,000")
+        }),
+      ).toBeInTheDocument()
+      expect(
+        screen.getByText((content, element) => {
+          return content.includes("2,250")
+        }),
+      ).toBeInTheDocument()
+      expect(
+        screen.getByText((content, element) => {
+          return content.includes("1,500")
+        }),
+      ).toBeInTheDocument()
+    })
+
+    it("allows submitting an offer for edition sets", async () => {
+      renderWithRelay({
+        Viewer: () => ({
+          me: {
+            order: MOCK_EDITION_SET_PRICE_RANGE_ORDER,
+          },
+        }),
+      })
+
+      // Select an offer
+      const topEndRadio = screen.getByText("Top-end of range")
+      fireEvent.click(topEndRadio)
+
+      // Click continue
+      const continueButton = screen.getByRole("button", {
+        name: "Save and Continue",
+      })
+      fireEvent.click(continueButton)
+
+      await waitFor(() => {
+        // Check that the mutation was called with the correct values
+        expect(mockSubmitMutation).toHaveBeenCalledWith({
+          variables: {
+            input: {
+              orderID: "order-id",
+              amountMinor: 300000, // 3000 * 100
+              note: "I sent an offer for US$3,000.00",
+            },
+          },
+        })
+      })
+
+      // Check that the context was updated
+      expect(mockSetOfferAmountComplete).toHaveBeenCalled()
     })
   })
 })

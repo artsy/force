@@ -17,13 +17,12 @@ import {
 import { Order2DeliveryOptionsStep } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/Order2DeliveryOptionsStep"
 import { Order2ExpressCheckout } from "Apps/Order2/Routes/Checkout/Components/ExpressCheckout/Order2ExpressCheckout"
 import { Order2FulfillmentDetailsStep } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/Order2FulfillmentDetailsStep"
+import { Order2OfferStep } from "Apps/Order2/Routes/Checkout/Components/OfferStep/Order2OfferStep"
 import { Order2CheckoutLoadingSkeleton } from "Apps/Order2/Routes/Checkout/Components/Order2CheckoutLoadingSkeleton"
 import { Order2CollapsibleOrderSummary } from "Apps/Order2/Routes/Checkout/Components/Order2CollapsibleOrderSummary"
-import { Order2OfferStep } from "Apps/Order2/Routes/Checkout/Components/OfferStep/Order2OfferStep"
 import { Order2ReviewStep } from "Apps/Order2/Routes/Checkout/Components/Order2ReviewStep"
 import { Order2PaymentStep } from "Apps/Order2/Routes/Checkout/Components/PaymentStep/Order2PaymentStep"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
-import { useStripePaymentBySetupIntentId } from "Apps/Order2/Routes/Checkout/Hooks/useStripePaymentBySetupIntentId"
 import { ErrorPage } from "Components/ErrorPage"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import type { Order2CheckoutApp_me$key } from "__generated__/Order2CheckoutApp_me.graphql"
@@ -56,8 +55,6 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
     checkoutTracking,
   } = useCheckoutContext()
 
-  // Handle Stripe redirect for bank account setup
-  useStripePaymentBySetupIntentId(orderData.internalID, orderData)
   if (!order) {
     return <ErrorPage code={404} message="Order not found" />
   }
@@ -120,7 +117,7 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
           {expressCheckoutSubmitting && <SubmittingOrderSpinner />}
           <Box
             style={{
-              display: expressCheckoutSubmitting ? "none" : "grid",
+              display: expressCheckoutSubmitting ? "none" : "block",
             }}
           >
             <Stack gap={1}>

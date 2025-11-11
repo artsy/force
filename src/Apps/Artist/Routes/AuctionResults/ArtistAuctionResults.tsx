@@ -10,7 +10,7 @@ import { ArtistAuctionResultsExpandableSort } from "Apps/Artist/Routes/AuctionRe
 import { initialAuctionResultsFilterState } from "Apps/Artist/Routes/AuctionResults/initialAuctionResultsFilterState"
 import { allowedAuctionResultFilters } from "Apps/Artist/Utils/allowedAuctionResultFilters"
 import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/paramsCasing"
-import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
+import { updateUrlWithNamespace } from "Components/ArtworkFilter/Utils/urlBuilder"
 import { ArtworkGridEmptyState } from "Components/ArtworkGrid/ArtworkGridEmptyState"
 import { useAuthDialog } from "Components/AuthDialog"
 import { LoadingArea } from "Components/LoadingArea"
@@ -253,7 +253,7 @@ const AuctionResultsContainer: React.FC<
             }}
           />
         ) : (
-          <TruncateComponent label="Load More" enabled={truncate}>
+          <TruncateComponent enabled={truncate && results.length > 7}>
             <LoadingArea isLoading={mode === "Loading"}>
               <Flex flexDirection="column" gap={4}>
                 {upcomingAuctionResults.length > 0 && (
@@ -327,7 +327,7 @@ export const ArtistAuctionResultsPlaceholder: React.FC<
       <ArtistAuctionResultsFilterNavPlaceholder>
         <Spacer y={[2, 4]} />
 
-        <TruncateComponent label="Load More" enabled={truncate} disabled>
+        <TruncateComponent enabled={truncate} disabled>
           <Stack gap={2}>
             {Array.from({ length: 10 }).map((_, index) => (
               <ArtistAuctionResultItemPlaceholder
@@ -354,7 +354,10 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
 
     const { match } = useRouter()
     const { userPreferences } = useSystemContext()
-    const filters = paramsToCamelCase(match?.location.query)
+    const filters = paramsToCamelCase(
+      // Expect auction results params to be nested under `auction`
+      (match?.location.query?.auction as any) ?? {},
+    )
 
     return (
       <AuctionResultsFilterContextProvider
@@ -366,7 +369,9 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
         userPreferredMetric={userPreferences?.metric}
         filters={filters}
         onChange={filterState =>
-          updateUrl(allowedAuctionResultFilters(filterState))
+          updateUrlWithNamespace(allowedAuctionResultFilters(filterState), {
+            namespace: "auction",
+          })
         }
       >
         <AuctionResultsContainer {...props} />
@@ -556,7 +561,11 @@ export const ArtistAuctionResultsQueryRenderer: React.FC<
   const { match } = useRouter()
   const { handleReady } = useSectionReady({ onReady })
 
-  const urlFilterState = paramsToCamelCase(match?.location.query ?? {})
+  const urlFilterState = paramsToCamelCase(
+    // Expect auction results params to be nested under `auction`
+    // Default to empty object if not present (legacy URLs will be redirected).
+    (match?.location.query?.auction as any) ?? {},
+  )
   const initialInput = {
     ...initialAuctionResultsFilterState({}),
     ...allowedAuctionResultFilters(urlFilterState),

@@ -200,11 +200,13 @@ describe("AuctionResults", () => {
           match: {
             location: {
               query: {
-                hide_upcoming: true,
-                categories: ["Painting"],
-                sizes: ["SMALL", "LARGE"],
-                currency: "USD",
-                organizations: ["Phillips", "Bonhams", "Artsy Auction"],
+                auction: {
+                  hide_upcoming: true,
+                  categories: ["Painting"],
+                  sizes: ["SMALL", "LARGE"],
+                  currency: "USD",
+                  organizations: ["Phillips", "Bonhams", "Artsy Auction"],
+                },
               },
             },
           },

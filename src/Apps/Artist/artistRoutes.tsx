@@ -6,7 +6,10 @@ import { RedirectException } from "found"
 import { graphql } from "react-relay"
 import { getWorksForSaleRouteVariables } from "./Routes/WorksForSale/Utils/getWorksForSaleRouteVariables"
 import { enableArtistPageCTA } from "./Server/enableArtistPageCTA"
-import { redirectWithCanonicalParams } from "./Server/redirect"
+import {
+  redirectWithCanonicalParams,
+  redirectAuctionResultsParamsToNamespace,
+} from "./Server/redirect"
 import { allowedAuctionResultFilters } from "./Utils/allowedAuctionResultFilters"
 
 const ArtistApp = loadable(
@@ -226,12 +229,13 @@ export const artistRoutes: RouteProps[] = [
       {
         path: "auction-results",
         getComponent: () => AuctionResultsRoute,
+        onServerSideRender: redirectAuctionResultsParamsToNamespace,
         onPreloadJS: () => {
           AuctionResultsRoute.preload()
         },
         prepareVariables: ({ artistID }, props) => {
           const urlFilterState = paramsToCamelCase(
-            props.location ? props.location.query : {},
+            props.location?.query?.auction ?? {},
           )
 
           const initialInput = {

@@ -1591,19 +1591,13 @@ describe("Order2CheckoutRoute", () => {
       expectTrackedEvents({ mockTrackEvent }, [
         {
           action: "orderProgressionViewed",
-          context_module: "ordersFulfillment",
+          context_module: "ordersPayment",
           context_page_owner_id: "order-id",
           flow: "Buy now",
         },
         {
           action: "clickedOrderProgression",
           context_module: "ordersFulfillment",
-          context_page_owner_id: "order-id",
-          flow: "Buy now",
-        },
-        {
-          action: "orderProgressionViewed",
-          context_module: "ordersPayment",
           context_page_owner_id: "order-id",
           flow: "Buy now",
         },
@@ -1826,6 +1820,10 @@ const baseProps = {
       ],
       fulfillmentDetails: null,
       selectedFulfillmentOption: null,
+      offers: [],
+      paymentMethod: null,
+      paymentMethodDetails: null,
+      stripeConfirmationToken: null,
       pricingBreakdown: [
         {
           __typename: "SubtotalLine",
@@ -1873,7 +1871,6 @@ const baseProps = {
         },
       ],
       shippingOrigin: "Eagle, CO, US",
-      offers: [],
     },
     addressConnection: {
       edges: [],
