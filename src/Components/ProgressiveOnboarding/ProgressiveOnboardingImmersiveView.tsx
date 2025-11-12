@@ -28,8 +28,7 @@ export const ProgressiveOnboardingImmersiveView: FC<
       onClose={handleClose}
       popover={
         <Text variant="xs">
-          A new way to experience art without distractions, like you're walking
-          through a gallery.
+          A focused way to browse. See each artwork in detail, one at a time.
         </Text>
       }
     >
