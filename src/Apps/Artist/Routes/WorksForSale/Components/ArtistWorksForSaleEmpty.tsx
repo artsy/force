@@ -15,7 +15,13 @@ const ArtistWorksForSaleEmpty: FC<
   return (
     <EmptyState
       title="Get notified when new works are available"
-      description="There are currently no works for sale for this artist. Create an alert, and we’ll let you know when new works are added."
+      description={
+        <>
+          There are currently no works for sale for this artist.
+          <br />
+          Create an alert, and we’ll let you know when new works are added.
+        </>
+      }
       action={
         <ArtworkFilterAlertContextProvider
           initialCriteria={{ artistIDs: [artist.internalID] }}
