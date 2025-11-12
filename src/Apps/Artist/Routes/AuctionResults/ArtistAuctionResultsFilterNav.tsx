@@ -138,25 +138,15 @@ const ArtistAuctionResultsFilterNavBar: FC<
     >
       <Media at="xs">
         <Sticky bottomBoundary="#Sticky__ArtistAuctionResultsFilter">
-          {({ stuck }) => {
-            return (
-              <FullBleed backgroundColor="mono0">
-                <Flex
-                  justifyContent="flex-end"
-                  alignItems="center"
-                  width="100%"
-                  {...(stuck
-                    ? {
-                        borderBottom: "1px solid",
-                        borderColor: "mono10",
-                      }
-                    : {})}
-                >
-                  {mobile}
-                </Flex>
-              </FullBleed>
-            )
-          }}
+          <FullBleed
+            backgroundColor="mono0"
+            borderBottom="1px solid"
+            borderColor="mono10"
+          >
+            <Flex justifyContent="flex-end" alignItems="center" width="100%">
+              {mobile}
+            </Flex>
+          </FullBleed>
         </Sticky>
       </Media>
 
