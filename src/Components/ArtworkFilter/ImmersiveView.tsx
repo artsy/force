@@ -277,7 +277,7 @@ const FRAGMENT = graphql`
         image {
           aspectRatio
           blurhash
-          url(version: ["larger", "large"])
+          url(version: ["main", "larger", "large"])
         }
       }
     }
