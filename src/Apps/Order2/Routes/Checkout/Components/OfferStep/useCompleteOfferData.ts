@@ -10,6 +10,7 @@ import { graphql, useFragment } from "react-relay"
  */
 export const useCompleteOfferData = (
   order: useCompleteOfferData_order$key,
+  hasNote: boolean,
 ): Order2OfferCompletedViewProps | null => {
   const orderData = useFragment(FRAGMENT, order)
 
@@ -18,17 +19,14 @@ export const useCompleteOfferData = (
   }
 
   const mostRecentOffer = mostRecentCreatedAt(orderData.offers)
-  const isComplete = !!(
-    mostRecentOffer?.amount?.minor && mostRecentOffer.amount.minor > 0
-  )
 
-  if (!isComplete) {
+  if (!mostRecentOffer?.amount?.minor || mostRecentOffer.amount.minor <= 0) {
     return null
   }
 
   return {
-    lastOfferAmount: mostRecentOffer?.amount?.display || "",
-    lastOfferNote: mostRecentOffer?.note || null,
+    lastOfferAmount: mostRecentOffer.amount?.display || "",
+    lastOfferNote: hasNote ? (mostRecentOffer.note ?? null) : null,
   }
 }
 
