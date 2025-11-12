@@ -8,7 +8,9 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
+import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
 import type React from "react"
+import { useEffect, useState } from "react"
 
 interface InquiryQuestionOptionProps {
   id: string
@@ -29,22 +31,34 @@ export const InquiryQuestionOption: React.FC<InquiryQuestionOptionProps> = ({
   question,
 }) => {
   const isShipping = id === InquiryQuestionIDs.Shipping
+  const { questions, addQuestion, removeQuestion } = useInquiryContext()
 
-  const questionSelected = Boolean()
+  // let questionSelected = false
+  const [questionSelected, setQuestionSelected] = useState(false)
 
-  const setSelection = () => {}
+  const setSelection = () => {
+    const newSelection = !questionSelected
+    setQuestionSelected(newSelection)
+    if (newSelection) {
+      console.log("adding question", question)
+      addQuestion({ questionID: id, details: question })
+    } else {
+      console.log("removing question", question)
+      removeQuestion({ questionID: id, details: question })
+    }
+  }
   const shippingLocation = false
+
+  useEffect(() => {
+    console.log("questions updated", questions)
+  }, [questions])
 
   return (
     <>
       <Flex flexDirection="row" justifyContent="space-between">
         <Flex flexDirection="row">
           <Join separator={<Spacer x={4} />}>
-            <Checkbox
-              testID={`checkbox-${id}`}
-              checked={questionSelected}
-              onPress={setSelection}
-            />
+            <Checkbox selected={questionSelected} onSelect={setSelection} />
             <Text variant="sm">{question}</Text>
           </Join>
         </Flex>

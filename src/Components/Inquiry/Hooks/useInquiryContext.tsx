@@ -6,6 +6,7 @@ import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { setAfterAuthAction } from "Utils/Hooks/useAuthIntent"
 import { WorkflowEngine } from "Utils/WorkflowEngine"
+import type { InquiryQuestionInput } from "__generated__/useArtworkInquiryRequestMutation.graphql"
 import type { useInquiryContextQuery } from "__generated__/useInquiryContextQuery.graphql"
 import type { useInquiryContext_me$data } from "__generated__/useInquiryContext_me.graphql"
 import {
@@ -73,6 +74,9 @@ const InquiryContext = createContext<{
   ) => React.RefObject<Environment>
   View: React.FC
   visited: Visited
+  questions: InquiryQuestionInput[]
+  addQuestion: (question: InquiryQuestionInput) => void
+  removeQuestion: (question: InquiryQuestionInput) => void
 }>({
   artworkID: "",
   context: React.createRef<Context>(),
@@ -88,6 +92,9 @@ const InquiryContext = createContext<{
   setRelayEnvironment: () => React.createRef<Environment>(),
   View: () => <></>,
   visited: new Visited("empty"),
+  questions: [],
+  addQuestion: () => {},
+  removeQuestion: () => {},
 })
 
 interface InquiryProviderProps {
@@ -170,6 +177,21 @@ export const InquiryProvider: React.FC<
     return relayEnvironment
   }, [])
 
+  const [questions, setQuestions] = useState<InquiryQuestionInput[]>([])
+
+  const addQuestion = (question: InquiryQuestionInput) => {
+    setQuestions(prev => {
+      if (prev.find(q => q.questionID === question.questionID)) {
+        return prev
+      }
+      return [...prev, question]
+    })
+  }
+
+  const removeQuestion = (question: InquiryQuestionInput) => {
+    setQuestions(prev => prev.filter(q => q.questionID !== question.questionID))
+  }
+
   return (
     <InquiryContext.Provider
       value={{
@@ -187,6 +209,9 @@ export const InquiryProvider: React.FC<
         setRelayEnvironment,
         View,
         visited,
+        questions,
+        addQuestion,
+        removeQuestion,
       }}
     >
       {children}
