@@ -2,6 +2,7 @@ import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { Order2OfferStep } from "Apps/Order2/Routes/Checkout/Components/OfferStep/Order2OfferStep"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useOrder2AddInitialOfferMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2AddInitialOfferMutation"
+import { useOrder2UnsetOrderFulfillmentOptionMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2UnsetOrderFulfillmentOptionMutation"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useJump } from "Utils/Hooks/useJump"
 import type { Order2OfferStepTestQuery } from "__generated__/Order2OfferStepTestQuery.graphql"
@@ -12,11 +13,16 @@ jest.mock("Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext")
 jest.mock(
   "Apps/Order2/Routes/Checkout/Mutations/useOrder2AddInitialOfferMutation",
 )
+jest.mock(
+  "Apps/Order2/Routes/Checkout/Mutations/useOrder2UnsetOrderFulfillmentOptionMutation",
+)
 jest.mock("Utils/Hooks/useJump")
 
 const mockUseCheckoutContext = useCheckoutContext as jest.Mock
 const mockUseOrder2AddInitialOfferMutation =
   useOrder2AddInitialOfferMutation as jest.Mock
+const mockUseOrder2UnsetOrderFulfillmentOptionMutation =
+  useOrder2UnsetOrderFulfillmentOptionMutation as jest.Mock
 const mockUseJump = useJump as jest.Mock
 
 const MOCK_PRICE_RANGE_ORDER = {
@@ -24,6 +30,7 @@ const MOCK_PRICE_RANGE_ORDER = {
   mode: "OFFER",
   source: "artwork_page",
   currencyCode: "USD",
+  selectedFulfillmentOption: null,
   offers: [],
   lineItems: [
     {
@@ -57,6 +64,7 @@ const MOCK_EXACT_PRICE_ORDER = {
   mode: "OFFER",
   source: "artwork_page",
   currencyCode: "USD",
+  selectedFulfillmentOption: null,
   offers: [],
   lineItems: [
     {
@@ -83,6 +91,7 @@ const MOCK_HIDDEN_PRICE_ORDER = {
   mode: "OFFER",
   currencyCode: "USD",
   source: "artwork_page",
+  selectedFulfillmentOption: null,
   offers: [],
   lineItems: [
     {
@@ -104,6 +113,7 @@ const MOCK_EDITION_SET_PRICE_RANGE_ORDER = {
   mode: "OFFER",
   source: "artwork_page",
   currencyCode: "USD",
+  selectedFulfillmentOption: null,
   offers: [],
   lineItems: [
     {
@@ -135,6 +145,7 @@ const MOCK_EDITION_SET_PRICE_RANGE_ORDER = {
 describe("Order2OfferStep", () => {
   let mockSetOfferAmountComplete: jest.Mock
   let mockSubmitMutation: jest.Mock
+  let mockUnsetFulfillmentOptionMutation: jest.Mock
   let mockJumpTo: jest.Mock
   let mockCheckoutTracking: {
     clickedOfferOption: jest.Mock
@@ -143,9 +154,17 @@ describe("Order2OfferStep", () => {
 
   beforeEach(() => {
     mockSetOfferAmountComplete = jest.fn()
-    mockSubmitMutation = jest.fn(() => ({
+    mockSubmitMutation = jest.fn(async () => ({
       createBuyerOffer: {
         offerOrError: { offer: { internalID: "offer-id" } },
+      },
+    }))
+    mockUnsetFulfillmentOptionMutation = jest.fn(async () => ({
+      unsetOrderFulfillmentOption: {
+        orderOrError: {
+          __typename: "OrderMutationSuccess",
+          order: { internalID: "order-id" },
+        },
       },
     }))
     mockJumpTo = jest.fn()
@@ -161,6 +180,9 @@ describe("Order2OfferStep", () => {
     })
     mockUseOrder2AddInitialOfferMutation.mockReturnValue({
       submitMutation: mockSubmitMutation,
+    })
+    mockUseOrder2UnsetOrderFulfillmentOptionMutation.mockReturnValue({
+      submitMutation: mockUnsetFulfillmentOptionMutation,
     })
     mockUseJump.mockReturnValue({ jumpTo: mockJumpTo })
   })
@@ -676,6 +698,57 @@ describe("Order2OfferStep", () => {
 
       // Check that the context was updated
       expect(mockSetOfferAmountComplete).toHaveBeenCalled()
+    })
+  })
+
+  describe("Fulfillment Option Unsetting", () => {
+    it("unsets fulfillment option before submitting offer when one exists", async () => {
+      const orderWithFulfillmentOption = {
+        ...MOCK_PRICE_RANGE_ORDER,
+        selectedFulfillmentOption: {
+          type: "PICKUP",
+        },
+      }
+
+      renderWithRelay({
+        Viewer: () => ({
+          me: {
+            order: orderWithFulfillmentOption,
+          },
+        }),
+      })
+
+      // Select an offer
+      const midPointRadio = screen.getByText("Midpoint")
+      fireEvent.click(midPointRadio)
+
+      // Click continue
+      const continueButton = screen.getByRole("button", {
+        name: "Save and Continue",
+      })
+      fireEvent.click(continueButton)
+
+      await waitFor(() => {
+        // Verify unset was called
+        expect(mockUnsetFulfillmentOptionMutation).toHaveBeenCalledWith({
+          variables: {
+            input: {
+              id: "order-id",
+            },
+          },
+        })
+
+        // Verify offer mutation was also called
+        expect(mockSubmitMutation).toHaveBeenCalledWith({
+          variables: {
+            input: {
+              orderID: "order-id",
+              amountMinor: 150000,
+              note: "I sent an offer for US$1,500.00",
+            },
+          },
+        })
+      })
     })
   })
 })

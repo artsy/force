@@ -14,7 +14,6 @@ import { useCheckoutTracking } from "Apps/Order2/Routes/Checkout/Hooks/useChecko
 import { useStripePaymentBySetupIntentId } from "Apps/Order2/Routes/Checkout/Hooks/useStripePaymentBySetupIntentId"
 import { useBuildInitialSteps } from "Apps/Order2/Routes/Checkout/Hooks/useBuildInitialSteps"
 import { useRouter } from "System/Hooks/useRouter"
-import { useCountdownTimer } from "Utils/Hooks/useCountdownTimer"
 import createLogger from "Utils/logger"
 import type {
   Order2CheckoutContext_order$data,
@@ -22,7 +21,6 @@ import type {
 } from "__generated__/Order2CheckoutContext_order.graphql"
 import { type Action, action, createContextStore } from "easy-peasy"
 import { every } from "lodash"
-import { DateTime } from "luxon"
 import type React from "react"
 import { useEffect, useMemo, useState } from "react"
 import { graphql, useFragment } from "react-relay"
@@ -95,9 +93,6 @@ export interface Order2CheckoutModel {
   checkoutTracking: ReturnType<typeof useCheckoutTracking>
   router: ReturnType<typeof useRouter>["router"]
   orderData: Order2CheckoutContext_order$data
-  partnerOffer: {
-    timer: ReturnType<typeof useCountdownTimer>
-  } | null
 
   // Actions
   setExpressCheckoutLoaded: Action<this, ExpressCheckoutPaymentMethod[]>
@@ -156,7 +151,6 @@ export const Order2CheckoutContext: ReturnType<
   checkoutTracking: null as any,
   router: null as any,
   orderData: null as any,
-  partnerOffer: null,
 
   // Override with initialState values if provided
   ...initialState,
@@ -522,7 +516,6 @@ export const Order2CheckoutContextProvider: React.FC<
 > = ({ order, children }) => {
   const orderData = useFragment(ORDER_FRAGMENT, order)
   const checkoutTracking = useCheckoutTracking(orderData)
-  const partnerOffer = usePartnerOfferOnOrder(orderData)
   const { router } = useRouter()
 
   // Build initial steps using the hook
@@ -555,12 +548,11 @@ export const Order2CheckoutContextProvider: React.FC<
     checkoutTracking,
     router,
     orderData,
-    partnerOffer,
   } as Order2CheckoutModel
 
   return (
     <Order2CheckoutContext.Provider runtimeModel={runtimeModel}>
-      <CheckoutLoadingManager orderData={orderData} partnerOffer={partnerOffer}>
+      <CheckoutLoadingManager orderData={orderData}>
         {children}
       </CheckoutLoadingManager>
     </Order2CheckoutContext.Provider>
@@ -569,11 +561,8 @@ export const Order2CheckoutContextProvider: React.FC<
 
 const CheckoutLoadingManager: React.FC<{
   orderData: Order2CheckoutContext_order$data
-  partnerOffer: {
-    timer: ReturnType<typeof useCountdownTimer>
-  } | null
   children: React.ReactNode
-}> = ({ orderData, partnerOffer, children }) => {
+}> = ({ orderData, children }) => {
   const [minimumLoadingPassed, setMinimumLoadingPassed] = useState(false)
   const [orderValidated, setOrderValidated] = useState(false)
   const [isStripeRedirectHandled, setIsStripeRedirectHandled] = useState(false)
@@ -606,9 +595,6 @@ const CheckoutLoadingManager: React.FC<{
   const setLoadingComplete = Order2CheckoutContext.useStoreActions(
     actions => actions.setLoadingComplete,
   )
-
-  const isPartnerOfferLoadingComplete =
-    !partnerOffer || !partnerOffer.timer.isLoading
 
   // Validate order and get into good initial checkout state on load
   // - artwork version match
@@ -644,7 +630,6 @@ const CheckoutLoadingManager: React.FC<{
         minimumLoadingPassed,
         orderValidated,
         isExpressCheckoutLoaded,
-        isPartnerOfferLoadingComplete,
         isStripeRedirectHandled,
         isLoading,
         setLoadingComplete,
@@ -656,7 +641,6 @@ const CheckoutLoadingManager: React.FC<{
     minimumLoadingPassed,
     orderValidated,
     isExpressCheckoutLoaded,
-    isPartnerOfferLoadingComplete,
     isStripeRedirectHandled,
     isLoading,
     setLoadingComplete,
@@ -695,31 +679,6 @@ const validateOrder = (order: Order2CheckoutContext_order$data) => {
     throw new Error("missing_line_item_data")
   }
   return
-}
-
-const usePartnerOfferOnOrder = (orderData: {
-  source: "PARTNER_OFFER" | unknown
-  buyerStateExpiresAt?: string | null
-}) => {
-  const hasPartnerOffer = orderData.source === "PARTNER_OFFER"
-
-  const partnerOfferEndTime =
-    (hasPartnerOffer && orderData.buyerStateExpiresAt) || ""
-  const partnerOfferStartTime = hasPartnerOffer
-    ? DateTime.fromISO(partnerOfferEndTime).minus({ days: 3 }).toString()
-    : ""
-
-  const partnerOfferTimer = useCountdownTimer({
-    startTime: partnerOfferStartTime,
-    endTime: partnerOfferEndTime,
-    imminentTime: 1,
-  })
-
-  return hasPartnerOffer
-    ? {
-        timer: partnerOfferTimer,
-      }
-    : null
 }
 
 const initialStateForOrder = (

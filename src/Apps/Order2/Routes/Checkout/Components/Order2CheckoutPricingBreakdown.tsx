@@ -1,12 +1,13 @@
 import StopwatchIcon from "@artsy/icons/StopwatchIcon"
 import { Flex, Spacer, Text } from "@artsy/palette"
-import type { Order2CheckoutModel } from "Apps/Order2/Routes/Checkout/CheckoutContext/Order2CheckoutContext"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { RouterLink } from "System/Components/RouterLink"
+import { useCountdownTimer } from "Utils/Hooks/useCountdownTimer"
 import type {
   Order2CheckoutPricingBreakdown_order$data,
   Order2CheckoutPricingBreakdown_order$key,
 } from "__generated__/Order2CheckoutPricingBreakdown_order.graphql"
+import { DateTime } from "luxon"
 import { Fragment } from "react"
 import { graphql, useFragment } from "react-relay"
 
@@ -20,8 +21,22 @@ const TAX_CALCULATION_ARTICLE_URL =
 export const Order2CheckoutPricingBreakdown: React.FC<
   Order2CheckoutPricingBreakdownProps
 > = ({ order }) => {
-  const { checkoutTracking, partnerOffer } = useCheckoutContext()
-  const { pricingBreakdownLines, mode } = useFragment(FRAGMENT, order)
+  const { checkoutTracking } = useCheckoutContext()
+  const { pricingBreakdownLines, mode, buyerStateExpiresAt, source } =
+    useFragment(FRAGMENT, order)
+
+  const hasPartnerOffer = source === "PARTNER_OFFER"
+  // Calculate timer directly in this component to ensure re-renders
+  const partnerOfferEndTime = (hasPartnerOffer && buyerStateExpiresAt) || ""
+  const partnerOfferStartTime = hasPartnerOffer
+    ? DateTime.fromISO(partnerOfferEndTime).minus({ days: 3 }).toString()
+    : ""
+
+  const timer = useCountdownTimer({
+    startTime: partnerOfferStartTime,
+    endTime: partnerOfferEndTime,
+    imminentTime: 1,
+  })
 
   return (
     <>
@@ -46,7 +61,8 @@ export const Order2CheckoutPricingBreakdown: React.FC<
               amountText = "Waiting for offer"
             }
 
-            if (isValidTimer(partnerOffer)) {
+            // Show timer if we have a valid partner offer with time remaining
+            if (hasPartnerOffer && timer.hasValidRemainingTime) {
               color = "blue100"
 
               secondLine = (
@@ -55,7 +71,7 @@ export const Order2CheckoutPricingBreakdown: React.FC<
                     <Flex alignItems="center">
                       <StopwatchIcon height={18} />
                       <Spacer x={0.5} />
-                      Exp. {partnerOffer.timer.remainingTime}
+                      Exp. {timer.remainingTime}
                     </Flex>
                   </Text>
                   <Spacer y={0.5} />
@@ -123,7 +139,6 @@ const FRAGMENT = graphql`
     source
     mode
     buyerStateExpiresAt
-    # BuyerState to make sure the timer applies only to pre-submission orders?
     pricingBreakdownLines {
       __typename
       ... on ShippingLine {
@@ -179,16 +194,4 @@ const isKnownLineType = (
   line: Order2CheckoutPricingBreakdown_order$data["pricingBreakdownLines"][number],
 ): line is KnownLineType => {
   return !!line && knownLineTypes.includes(line.__typename as any)
-}
-
-const isValidTimer = (
-  partnerOffer?: Order2CheckoutModel["partnerOffer"],
-): partnerOffer is NonNullable<Order2CheckoutModel["partnerOffer"]> => {
-  if (!partnerOffer?.timer?.remainingTime?.length) {
-    return false
-  }
-  return (
-    !partnerOffer?.timer.remainingTime.startsWith("NaN") &&
-    !partnerOffer.timer.isExpired
-  )
 }

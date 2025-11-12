@@ -1,4 +1,4 @@
-import { Box, type BoxProps, Join, Spacer } from "@artsy/palette"
+import { Box, type BoxProps, FullBleed, Join, Spacer } from "@artsy/palette"
 import { extractNodes } from "Utils/extractNodes"
 import type { FeatureSet_set$data } from "__generated__/FeatureSet_set.graphql"
 import type * as React from "react"
@@ -12,29 +12,38 @@ interface FeatureSetProps extends Omit<BoxProps, "color"> {
   set: FeatureSet_set$data
 }
 
-const SUPPORTED_ITEM_TYPES = ["FeaturedLink", "Artwork"]
+const SUPPORTED_ITEM_TYPES = ["FeaturedLink", "Artwork", "Video"]
 
 export const FeatureSet: React.FC<React.PropsWithChildren<FeatureSetProps>> = ({
   set,
   ...rest
 }) => {
   const orderedItems = extractNodes(set.orderedItems)
-  const count = orderedItems.length
+
+  // For Video sets, only show the first item
+  const itemsToRender =
+    set.itemType === "Video" ? orderedItems.slice(0, 1) : orderedItems
+
+  if (set.itemType === "Video" && orderedItems.length > 1) {
+    console.warn("Video sets only display the first item")
+  }
+
+  const count = itemsToRender.length
   const size = useMemo(() => {
     if (set.layout === "FULL") {
       return "full"
     }
 
-    if (orderedItems.length === 1) {
+    if (itemsToRender.length === 1) {
       return "large"
     }
 
-    if (orderedItems.length === 2) {
+    if (itemsToRender.length === 2) {
       return "medium"
     }
 
     return "small"
-  }, [orderedItems.length, set.layout])
+  }, [itemsToRender.length, set.layout])
 
   if (
     // Nothing to render: it's possible to have a completely empty yet valid set
@@ -45,17 +54,31 @@ export const FeatureSet: React.FC<React.PropsWithChildren<FeatureSetProps>> = ({
     return null
   }
 
+  if (set.itemType === "Video") {
+    return (
+      <Box {...rest}>
+        <Join separator={<Spacer y={4} />}>
+          {(set.name || set.description) && <FeatureSetMeta set={set} />}
+
+          <FullBleed>
+            {itemsToRender.map(setItem => (
+              <FeatureSetItem key={setItem.id} setItem={setItem} size={size} />
+            ))}
+          </FullBleed>
+        </Join>
+      </Box>
+    )
+  }
+
   return (
     <Box {...rest}>
       <Join separator={<Spacer y={4} />}>
         {(set.name || set.description) && <FeatureSetMeta set={set} />}
 
         <FeatureSetContainer set={set}>
-          {orderedItems.map(setItem => {
-            return (
-              <FeatureSetItem key={setItem.id} setItem={setItem} size={size} />
-            )
-          })}
+          {itemsToRender.map(setItem => (
+            <FeatureSetItem key={setItem.id} setItem={setItem} size={size} />
+          ))}
         </FeatureSetContainer>
       </Join>
     </Box>
@@ -74,10 +97,14 @@ export const FeatureSetFragmentContainer = createFragmentContainer(FeatureSet, {
         edges {
           __typename
           node {
+            __typename
             ... on Artwork {
               id
             }
             ... on FeaturedLink {
+              id
+            }
+            ... on Video {
               id
             }
             ...FeatureSetItem_setItem

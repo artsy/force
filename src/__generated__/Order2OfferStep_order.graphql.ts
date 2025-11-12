@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<896919f4d72adbbecae817f1319cc02d>>
+ * @generated SignedSource<<1fb2f7e609de90bad6d3a7246c8c3d2c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,6 +9,7 @@
 // @ts-nocheck
 
 import { ReaderFragment } from 'relay-runtime';
+export type FulfillmentOptionTypeEnum = "ARTSY_EXPRESS" | "ARTSY_STANDARD" | "ARTSY_WHITE_GLOVE" | "DOMESTIC_FLAT" | "INTERNATIONAL_FLAT" | "PICKUP" | "SHIPPING_TBD" | "%future added value";
 export type OrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type OrderSourceEnum = "ARTWORK_PAGE" | "INQUIRY" | "PARTNER_OFFER" | "PRIVATE_SALE" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
@@ -51,6 +52,9 @@ export type Order2OfferStep_order$data = {
     readonly createdAt: string | null | undefined;
     readonly note: string | null | undefined;
   }> | null | undefined;
+  readonly selectedFulfillmentOption: {
+    readonly type: FulfillmentOptionTypeEnum;
+  } | null | undefined;
   readonly source: OrderSourceEnum;
   readonly " $fragmentSpreads": FragmentRefs<"Order2ExactPriceOfferForm_order" | "Order2PriceRangeOfferForm_order" | "useCompleteOfferData_order">;
   readonly " $fragmentType": "Order2OfferStep_order";
@@ -119,6 +123,24 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "currencyCode",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "FulfillmentOption",
+      "kind": "LinkedField",
+      "name": "selectedFulfillmentOption",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "type",
+          "storageKey": null
+        }
+      ],
       "storageKey": null
     },
     {
@@ -284,6 +306,6 @@ return {
 };
 })();
 
-(node as any).hash = "bc31a24e73639f78e3ed9c62c6b4c2a9";
+(node as any).hash = "ffa9777d79f8de79c699ed4773d11f75";
 
 export default node;

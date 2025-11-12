@@ -306,6 +306,23 @@ export const BaseArtworkFilter: React.FC<
               borderBottom="1px solid"
               borderColor="mono10"
             >
+              <ArtworkFilterCreateAlert
+                renderButton={props => {
+                  return (
+                    <Clickable
+                      display="flex"
+                      alignItems="center"
+                      gap={0.5}
+                      {...props}
+                    >
+                      <BellStrokeIcon />
+
+                      <Text variant="xs">Create Alert</Text>
+                    </Clickable>
+                  )
+                }}
+              />
+
               <Clickable
                 onClick={handleOpen}
                 display="flex"
@@ -333,23 +350,6 @@ export const BaseArtworkFilter: React.FC<
                   {Filters ? Filters : <ArtworkFilters user={user} />}
                 </ArtworkFilterMobileOverlay>
               )}
-
-              <ArtworkFilterCreateAlert
-                renderButton={props => {
-                  return (
-                    <Clickable
-                      display="flex"
-                      alignItems="center"
-                      gap={0.5}
-                      {...props}
-                    >
-                      <BellStrokeIcon />
-
-                      <Text variant="xs">Create Alert</Text>
-                    </Clickable>
-                  )
-                }}
-              />
             </Flex>
           </FullBleed>
         </Sticky>

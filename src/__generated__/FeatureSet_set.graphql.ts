@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3dd758b769be481084b5ab5ea839e4df>>
+ * @generated SignedSource<<6063fafe04a889ef5c78f66c364a7ef0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,6 +21,7 @@ export type FeatureSet_set$data = {
     readonly edges: ReadonlyArray<{
       readonly __typename: "OrderedSetItemEdge";
       readonly node: {
+        readonly __typename: string;
         readonly id?: string;
         readonly " $fragmentSpreads": FragmentRefs<"FeatureSetItem_setItem">;
       } | null | undefined;
@@ -42,7 +43,14 @@ var v0 = {
   "name": "id",
   "storageKey": null
 },
-v1 = [
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "__typename",
+  "storageKey": null
+},
+v2 = [
   (v0/*: any*/)
 ];
 return {
@@ -108,13 +116,7 @@ return {
           "name": "edges",
           "plural": true,
           "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "__typename",
-              "storageKey": null
-            },
+            (v1/*: any*/),
             {
               "alias": null,
               "args": null,
@@ -123,16 +125,23 @@ return {
               "name": "node",
               "plural": false,
               "selections": [
+                (v1/*: any*/),
                 {
                   "kind": "InlineFragment",
-                  "selections": (v1/*: any*/),
+                  "selections": (v2/*: any*/),
                   "type": "Artwork",
                   "abstractKey": null
                 },
                 {
                   "kind": "InlineFragment",
-                  "selections": (v1/*: any*/),
+                  "selections": (v2/*: any*/),
                   "type": "FeaturedLink",
+                  "abstractKey": null
+                },
+                {
+                  "kind": "InlineFragment",
+                  "selections": (v2/*: any*/),
+                  "type": "Video",
                   "abstractKey": null
                 },
                 {
@@ -165,6 +174,6 @@ return {
 };
 })();
 
-(node as any).hash = "6477bebfd7bcb4bb613c4f780af6c886";
+(node as any).hash = "4c4f2b108e3bf5fed441ce823e58eded";
 
 export default node;

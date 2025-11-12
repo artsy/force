@@ -84,12 +84,12 @@ export const MarketStats: FC<React.PropsWithChildren<MarketStatsProps>> = ({
         Averages over the last 36 months
       </Text>
 
-      <Spacer y={[2, 4]} />
+      <Spacer y={2} />
 
       <GridColumns gridRowGap={[2, 2]} gridColumnGap={[0, 2]}>
         <Column
           span={3}
-          justifyContent="flex-end"
+          justifyContent="center"
           display="flex"
           flexDirection="column"
         >
@@ -243,12 +243,12 @@ const MarketStatsPlaceholder: FC<React.PropsWithChildren<unknown>> = () => {
         Averages over the last 36 months
       </SkeletonText>
 
-      <Spacer y={[2, 4]} />
+      <Spacer y={2} />
 
       <GridColumns gridRowGap={[2, 2]} gridColumnGap={[0, 2]}>
         <Column
           span={3}
-          justifyContent="flex-end"
+          justifyContent="center"
           display="flex"
           flexDirection="column"
         >
