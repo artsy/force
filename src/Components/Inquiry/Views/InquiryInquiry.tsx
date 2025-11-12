@@ -13,6 +13,8 @@ import {
   Text,
   TextArea,
 } from "@artsy/palette"
+import { useFlag } from "@unleash/proxy-client-react"
+import { InquiryQuestionOption } from "Components/Inquiry/Components/InquiryQuestionOption"
 import { useArtworkInquiryRequest } from "Components/Inquiry/Hooks/useArtworkInquiryRequest"
 import {
   DEFAULT_MESSAGE,
@@ -46,6 +48,8 @@ const InquiryInquiry: React.FC<
   const [mode, setMode] = useState<Mode>("Pending")
 
   const { submitArtworkInquiryRequest } = useArtworkInquiryRequest()
+
+  const enableCheckboxes = useFlag("emerald_inquiry-checkboxes-on-web")
 
   const handleTextAreaChange = ({ value }: { value: string }) => {
     if (mode === "Confirm" && value !== DEFAULT_MESSAGE) {
@@ -153,6 +157,22 @@ const InquiryInquiry: React.FC<
 
       <Separator my={2} />
 
+      {!!artwork.inquiryQuestions &&
+        artwork.inquiryQuestions?.length > 0 &&
+        enableCheckboxes && (
+          <>
+            <Text variant="sm">What information are you looking for?</Text>
+            {artwork.inquiryQuestions.filter(Boolean).map(question => (
+              <InquiryQuestionOption
+                key={question.internalID}
+                id={question.internalID}
+                question={question.question}
+              />
+            ))}
+            <Separator my={2} />
+          </>
+        )}
+
       <TextArea
         placeholder="Provide the gallery with some details about your interest in this work."
         title="Your message"
@@ -224,6 +244,10 @@ const InquiryInquiryFragmentContainer = createFragmentContainer(
             src
             srcSet
           }
+        }
+        inquiryQuestions {
+          internalID
+          question
         }
       }
     `,
