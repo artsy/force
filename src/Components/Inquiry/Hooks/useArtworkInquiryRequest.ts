@@ -1,5 +1,6 @@
 import { ActionType, type SentArtworkInquiry } from "@artsy/cohesion"
 import type {
+  InquiryQuestionInput,
   SubmitInquiryRequestMutationInput,
   useArtworkInquiryRequestMutation,
   useArtworkInquiryRequestMutation$data,
@@ -28,6 +29,8 @@ export const useArtworkInquiryRequest = () => {
   const { relayEnvironment } = useInquiryContext()
 
   const { trackEvent } = useTracking()
+
+  const questions: InquiryQuestionInput[] = []
 
   const submitArtworkInquiryRequest = ({
     artworkID,
@@ -87,6 +90,7 @@ export const useArtworkInquiryRequest = () => {
             input: {
               inquireableID: artworkID,
               inquireableType: "Artwork",
+              questions: questions,
               ...rest,
             },
           },
