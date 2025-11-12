@@ -39,7 +39,6 @@ interface Order2OfferStepProps {
 
 export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
   const orderData = useFragment(FRAGMENT, order)
-  const completedViewProps = useCompleteOfferData(orderData)
   const {
     steps,
     setOfferAmountComplete,
@@ -67,6 +66,9 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
     value: lastOffer?.note || "",
   })
   const [offerValue, setOfferValue] = useState(lastOffer?.amount?.major || 0)
+
+  const hasNote = !!offerNoteValue.value.trim()
+  const completedViewProps = useCompleteOfferData(orderData, hasNote)
 
   const { jumpTo } = useJump()
 
@@ -133,8 +135,6 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
       setIsSubmittingOffer(true)
 
       checkoutTracking.clickedOrderProgression(ContextModule.ordersOffer)
-
-      const hasNote = offerNoteValue && offerNoteValue.value.trim() !== ""
 
       const note = hasNote
         ? offerNoteValue.value

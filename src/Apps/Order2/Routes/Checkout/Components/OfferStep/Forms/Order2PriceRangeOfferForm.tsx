@@ -133,7 +133,6 @@ export const Order2PriceRangeOfferForm: React.FC<
               setShowCustomInput(false)
               setCustomValue(undefined)
             }}
-            error={formIsDirty && (offerValue <= 0 || offerValue === undefined)}
             key={key}
           >
             <Spacer y={1} />
@@ -147,7 +146,6 @@ export const Order2PriceRangeOfferForm: React.FC<
           <Radio
             value="price-option-custom"
             label="Other amount"
-            error={formIsDirty && (offerValue <= 0 || offerValue === undefined)}
             onSelect={() => {
               !showCustomInput && setShowCustomInput(true)
             }}
