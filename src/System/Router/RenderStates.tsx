@@ -39,7 +39,12 @@ export const renderStates = {
    * If there is an error, render the error page
    */
   renderError: ({ error }) => {
+    console.log("Rendering error page due to error:")
+    console.log("error", error)
     const status = error.status || 500
+
+    console.log("Determined status code:")
+    console.log("status", status)
 
     const message =
       getENV("NODE_ENV") === "development"
