@@ -289,6 +289,7 @@ const Next = styled(ShelfNext)`
   top: 50%;
   transform: translateY(-50%);
   right: 2vw;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.1);
 `
 
 const Previous = styled(ShelfPrevious)`
@@ -296,6 +297,7 @@ const Previous = styled(ShelfPrevious)`
   top: 50%;
   transform: translateY(-50%);
   left: 2vw;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.1);
 `
 
 interface ImagePlaceholderProps {
