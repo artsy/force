@@ -1,10 +1,10 @@
 import InfoIcon from "@artsy/icons/InfoIcon"
 import {
-  Banner,
   Box,
   Button,
   Flex,
   Image,
+  Join,
   Separator,
   Skeleton,
   SkeletonBox,
@@ -13,11 +13,10 @@ import {
   Text,
   TextArea,
 } from "@artsy/palette"
+import { useFlag } from "@unleash/proxy-client-react"
+import { InquiryQuestionOption } from "Components/Inquiry/Components/InquiryQuestionOption"
 import { useArtworkInquiryRequest } from "Components/Inquiry/Hooks/useArtworkInquiryRequest"
-import {
-  DEFAULT_MESSAGE,
-  useInquiryContext,
-} from "Components/Inquiry/Hooks/useInquiryContext"
+import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
 import { logger } from "Components/Inquiry/util"
 import { RouterLink } from "System/Components/RouterLink"
 import { useSystemContext } from "System/Hooks/useSystemContext"
@@ -29,7 +28,7 @@ import type * as React from "react"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
-type Mode = "Pending" | "Confirm" | "Sending" | "Error" | "Success"
+type Mode = "Pending" | "Sending" | "Error" | "Success"
 
 interface InquiryInquiryProps {
   artwork: InquiryInquiry_artwork$data
@@ -47,21 +46,14 @@ const InquiryInquiry: React.FC<
 
   const { submitArtworkInquiryRequest } = useArtworkInquiryRequest()
 
-  const handleTextAreaChange = ({ value }: { value: string }) => {
-    if (mode === "Confirm" && value !== DEFAULT_MESSAGE) {
-      setMode("Pending")
-    }
+  const enableCheckboxes = useFlag("emerald_inquiry-checkboxes-on-web")
 
+  const handleTextAreaChange = ({ value }: { value: string }) => {
     setInquiry(prevState => ({ ...prevState, message: value }))
   }
 
   const handleSubmit = async (event: React.FormEvent<HTMLElement>) => {
     event.preventDefault()
-
-    if (inquiry.message === DEFAULT_MESSAGE && mode !== "Confirm") {
-      setMode("Confirm")
-      return
-    }
 
     // If the user is logged out we just go to the next view which should
     // be the authentication step. The inquiry gets sent after login or sign up.
@@ -95,7 +87,6 @@ const InquiryInquiry: React.FC<
 
   const label = {
     ["Pending"]: "Send",
-    ["Confirm"]: "Send Anyway?",
     ["Sending"]: "Send",
     ["Success"]: "Sent",
     ["Error"]: "Error",
@@ -153,6 +144,36 @@ const InquiryInquiry: React.FC<
 
       <Separator my={2} />
 
+      {!!artwork.inquiryQuestions &&
+        artwork.inquiryQuestions?.length > 0 &&
+        enableCheckboxes && (
+          <>
+            <Text variant="sm">What information are you looking for?</Text>
+            {/*TODO: clean this up later*/}
+            <Spacer y={1} />
+            <Join separator={<Spacer y={1} />}>
+              {artwork.inquiryQuestions.map(question => {
+                if (!question) return null
+
+                return (
+                  <InquiryQuestionOption
+                    key={question.internalID}
+                    id={question.internalID}
+                    question={question.question}
+                  />
+                )
+              })}
+            </Join>
+            <Spacer y={2} />
+          </>
+        )}
+
+      <Text variant="sm">
+        Personalize your message and include details for the best response.
+      </Text>
+
+      <Spacer y={2} />
+
       <TextArea
         placeholder="Provide the gallery with some details about your interest in this work."
         title="Your message"
@@ -178,15 +199,6 @@ const InquiryInquiry: React.FC<
           </RouterLink>
         </div>
       </Text>
-
-      <Spacer y={1} />
-
-      {mode === "Confirm" && (
-        <Banner variant="defaultLight">
-          We recommend personalizing your message to get a faster answer from
-          the gallery.
-        </Banner>
-      )}
 
       <Spacer y={2} />
 
@@ -224,6 +236,10 @@ const InquiryInquiryFragmentContainer = createFragmentContainer(
             src
             srcSet
           }
+        }
+        inquiryQuestions {
+          internalID
+          question
         }
       }
     `,

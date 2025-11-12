@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7f5f7df18f733adc62294f6b446f868e>>
+ * @generated SignedSource<<3675071a0655148fd05f5796a1584e07>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,49 +10,40 @@
 
 import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type InquiryInquiryQuery$variables = {
-  id: string;
-};
-export type InquiryInquiryQuery$data = {
+export type InquiryInquiry_Test_Query$variables = Record<PropertyKey, never>;
+export type InquiryInquiry_Test_Query$data = {
   readonly artwork: {
     readonly " $fragmentSpreads": FragmentRefs<"InquiryInquiry_artwork">;
   } | null | undefined;
 };
-export type InquiryInquiryQuery = {
-  response: InquiryInquiryQuery$data;
-  variables: InquiryInquiryQuery$variables;
+export type InquiryInquiry_Test_Query = {
+  response: InquiryInquiry_Test_Query$data;
+  variables: InquiryInquiry_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "id"
-  }
-],
-v1 = [
-  {
-    "kind": "Variable",
+    "kind": "Literal",
     "name": "id",
-    "variableName": "id"
+    "value": "example"
   }
 ],
-v2 = {
+v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "internalID",
   "storageKey": null
 },
-v3 = {
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v4 = [
+v3 = [
   {
     "alias": null,
     "args": null,
@@ -60,18 +51,42 @@ v4 = [
     "name": "name",
     "storageKey": null
   },
-  (v3/*: any*/)
-];
+  (v2/*: any*/)
+],
+v4 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v5 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v6 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Int"
+},
+v7 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
+};
 return {
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "InquiryInquiryQuery",
+    "name": "InquiryInquiry_Test_Query",
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v0/*: any*/),
         "concreteType": "Artwork",
         "kind": "LinkedField",
         "name": "artwork",
@@ -83,7 +98,7 @@ return {
             "name": "InquiryInquiry_artwork"
           }
         ],
-        "storageKey": null
+        "storageKey": "artwork(id:\"example\")"
       }
     ],
     "type": "Query",
@@ -91,19 +106,19 @@ return {
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "InquiryInquiryQuery",
+    "name": "InquiryInquiry_Test_Query",
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v0/*: any*/),
         "concreteType": "Artwork",
         "kind": "LinkedField",
         "name": "artwork",
         "plural": false,
         "selections": [
-          (v2/*: any*/),
+          (v1/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -131,7 +146,7 @@ return {
             "kind": "LinkedField",
             "name": "artist",
             "plural": false,
-            "selections": (v4/*: any*/),
+            "selections": (v3/*: any*/),
             "storageKey": "artist(shallow:true)"
           },
           {
@@ -141,7 +156,7 @@ return {
             "kind": "LinkedField",
             "name": "partner",
             "plural": false,
-            "selections": (v4/*: any*/),
+            "selections": (v3/*: any*/),
             "storageKey": null
           },
           {
@@ -213,7 +228,7 @@ return {
             "name": "inquiryQuestions",
             "plural": true,
             "selections": [
-              (v2/*: any*/),
+              (v1/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -221,27 +236,81 @@ return {
                 "name": "question",
                 "storageKey": null
               },
-              (v3/*: any*/)
+              (v2/*: any*/)
             ],
             "storageKey": null
           },
-          (v3/*: any*/)
+          (v2/*: any*/)
         ],
-        "storageKey": null
+        "storageKey": "artwork(id:\"example\")"
       }
     ]
   },
   "params": {
-    "cacheID": "f3aabd7177b69d63bebb7d21111d58ce",
+    "cacheID": "69fd4c0694561249ae09126a69a1a492",
     "id": null,
-    "metadata": {},
-    "name": "InquiryInquiryQuery",
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "artwork": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Artwork"
+        },
+        "artwork.artist": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Artist"
+        },
+        "artwork.artist.id": (v4/*: any*/),
+        "artwork.artist.name": (v5/*: any*/),
+        "artwork.date": (v5/*: any*/),
+        "artwork.id": (v4/*: any*/),
+        "artwork.image": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Image"
+        },
+        "artwork.image.resized": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ResizedImageUrl"
+        },
+        "artwork.image.resized.height": (v6/*: any*/),
+        "artwork.image.resized.src": (v7/*: any*/),
+        "artwork.image.resized.srcSet": (v7/*: any*/),
+        "artwork.image.resized.width": (v6/*: any*/),
+        "artwork.inquiryQuestions": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "InquiryQuestion"
+        },
+        "artwork.inquiryQuestions.id": (v4/*: any*/),
+        "artwork.inquiryQuestions.internalID": (v4/*: any*/),
+        "artwork.inquiryQuestions.question": (v7/*: any*/),
+        "artwork.internalID": (v4/*: any*/),
+        "artwork.partner": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Partner"
+        },
+        "artwork.partner.id": (v4/*: any*/),
+        "artwork.partner.name": (v5/*: any*/),
+        "artwork.title": (v5/*: any*/)
+      }
+    },
+    "name": "InquiryInquiry_Test_Query",
     "operationKind": "query",
-    "text": "query InquiryInquiryQuery(\n  $id: String!\n) {\n  artwork(id: $id) {\n    ...InquiryInquiry_artwork\n    id\n  }\n}\n\nfragment InquiryInquiry_artwork on Artwork {\n  internalID\n  title\n  date\n  artist(shallow: true) {\n    name\n    id\n  }\n  partner {\n    name\n    id\n  }\n  image {\n    resized(width: 60, height: 45) {\n      height\n      width\n      src\n      srcSet\n    }\n  }\n  inquiryQuestions {\n    internalID\n    question\n    id\n  }\n}\n"
+    "text": "query InquiryInquiry_Test_Query {\n  artwork(id: \"example\") {\n    ...InquiryInquiry_artwork\n    id\n  }\n}\n\nfragment InquiryInquiry_artwork on Artwork {\n  internalID\n  title\n  date\n  artist(shallow: true) {\n    name\n    id\n  }\n  partner {\n    name\n    id\n  }\n  image {\n    resized(width: 60, height: 45) {\n      height\n      width\n      src\n      srcSet\n    }\n  }\n  inquiryQuestions {\n    internalID\n    question\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "231704eaffd30963a3caa4c5c525fa0d";
+(node as any).hash = "5c7494b77e893e50085ef152848e45e4";
 
 export default node;
