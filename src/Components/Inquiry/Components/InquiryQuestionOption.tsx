@@ -1,4 +1,4 @@
-import { Checkbox, Flex, Join, Spacer, Text } from "@artsy/palette"
+import { Box, Checkbox, Flex, Join, Spacer, Text } from "@artsy/palette"
 import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
 import {
   LocationAutocompleteInput,
@@ -73,27 +73,32 @@ export const InquiryQuestionOption: React.FC<InquiryQuestionOptionProps> = ({
         </Join>
       </Flex>
 
-      {!!isShipping && !!questionSelected && (
-        <>
-          <Spacer y={1} />
-          <Flex flexDirection="row">
-            <Join separator={<Spacer x={1} />}>
-              {/*Better option to tab in?*/}
-              <Spacer x={4} />
-              <LocationAutocompleteInput
-                name="location"
-                placeholder="Add your location"
-                maxLength={256}
-                spellCheck={false}
-                onChange={place => {
-                  setShippingDetails(normalizePlace(place))
-                }}
-              />
-            </Join>
-          </Flex>
-          <Spacer y={1} />
-        </>
-      )}
+      <Box
+        style={{
+          maxHeight: isShipping && questionSelected ? "200px" : "0",
+          overflow: "hidden",
+          transition: "max-height 0.3s ease, opacity 0.3s ease",
+          opacity: isShipping && questionSelected ? 1 : 0,
+        }}
+      >
+        <Spacer y={1} />
+        <Flex flexDirection="row">
+          <Join separator={<Spacer x={1} />}>
+            {/*Better option to tab in?*/}
+            <Spacer x={4} />
+            <LocationAutocompleteInput
+              name="location"
+              placeholder="Add your location"
+              maxLength={256}
+              spellCheck={false}
+              onChange={place => {
+                setShippingDetails(normalizePlace(place))
+              }}
+            />
+          </Join>
+        </Flex>
+        <Spacer y={1} />
+      </Box>
     </Flex>
   )
 }
