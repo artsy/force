@@ -1,6 +1,6 @@
 import { Flex, Radio, RadioGroup, Spacer, Text } from "@artsy/palette"
 import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
-import { FormikOfferInput } from "Apps/Order2/Routes/Checkout/Components/OfferStep/Components/FormikOfferInput"
+import { OfferInput } from "Apps/Order2/Routes/Checkout/Components/OfferStep/Components/OfferInput"
 import type { OfferFormProps } from "Apps/Order2/Routes/Checkout/Components/OfferStep/types"
 import type { Order2OfferOptions_order$key } from "__generated__/Order2OfferOptions_order.graphql"
 import { useState } from "react"
@@ -130,7 +130,7 @@ export const Order2OfferOptions: React.FC<Order2OfferOptionsProps> = ({
     >
       {selectedRadio === "price-option-custom" && (
         <Flex flexDirection="column" mt={2}>
-          <FormikOfferInput name="offerValue" onBlur={onCustomOfferBlur} />
+          <OfferInput name="offerValue" onBlur={onCustomOfferBlur} />
         </Flex>
       )}
     </Radio>,

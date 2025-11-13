@@ -2,12 +2,12 @@ import { Input } from "@artsy/palette"
 import { useField } from "formik"
 import type { FC } from "react"
 
-export interface FormikOfferInputProps {
+export interface OfferInputProps {
   name: string
   onBlur?: (value: number | undefined) => void
 }
 
-export const FormikOfferInput: FC<FormikOfferInputProps> = ({ name, onBlur }) => {
+export const OfferInput: FC<OfferInputProps> = ({ name, onBlur }) => {
   const [field, meta, helpers] = useField<number>(name)
 
   const formatValueForDisplay = (val: number | undefined) => {
