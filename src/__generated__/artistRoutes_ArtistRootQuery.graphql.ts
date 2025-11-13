@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b27ebdc69144db54d053e2b988cddc56>>
+ * @generated SignedSource<<df57df26d983e68eaaa654572c4aa8e0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,17 +10,17 @@
 
 import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type artistRoutes_CombinedQuery$variables = {
+export type artistRoutes_ArtistRootQuery$variables = {
   artistID: string;
 };
-export type artistRoutes_CombinedQuery$data = {
+export type artistRoutes_ArtistRootQuery$data = {
   readonly artist: {
-    readonly " $fragmentSpreads": FragmentRefs<"ArtistCombinedRoute_artist">;
+    readonly " $fragmentSpreads": FragmentRefs<"ArtistABTestRoute_artist">;
   } | null | undefined;
 };
-export type artistRoutes_CombinedQuery = {
-  response: artistRoutes_CombinedQuery$data;
-  variables: artistRoutes_CombinedQuery$variables;
+export type artistRoutes_ArtistRootQuery = {
+  response: artistRoutes_ArtistRootQuery$data;
+  variables: artistRoutes_ArtistRootQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -43,7 +43,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "artistRoutes_CombinedQuery",
+    "name": "artistRoutes_ArtistRootQuery",
     "selections": [
       {
         "alias": null,
@@ -56,7 +56,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "ArtistCombinedRoute_artist"
+            "name": "ArtistABTestRoute_artist"
           }
         ],
         "storageKey": null
@@ -69,7 +69,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "artistRoutes_CombinedQuery",
+    "name": "artistRoutes_ArtistRootQuery",
     "selections": [
       {
         "alias": null,
@@ -90,6 +90,13 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
+            "name": "slug",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
             "name": "id",
             "storageKey": null
           }
@@ -99,16 +106,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a2bd1af8f0eb6f168398a438c93ee6ce",
+    "cacheID": "1299013208d529bfcfa98500ca22f275",
     "id": null,
     "metadata": {},
-    "name": "artistRoutes_CombinedQuery",
+    "name": "artistRoutes_ArtistRootQuery",
     "operationKind": "query",
-    "text": "query artistRoutes_CombinedQuery(\n  $artistID: String!\n) @cacheable {\n  artist(id: $artistID) @principalField {\n    ...ArtistCombinedRoute_artist\n    id\n  }\n}\n\nfragment ArtistCombinedRoute_artist on Artist {\n  internalID\n}\n"
+    "text": "query artistRoutes_ArtistRootQuery(\n  $artistID: String!\n) @cacheable {\n  artist(id: $artistID) @principalField {\n    ...ArtistABTestRoute_artist\n    id\n  }\n}\n\nfragment ArtistABTestRoute_artist on Artist {\n  ...ArtistCombinedRoute_artist\n  internalID\n  slug\n}\n\nfragment ArtistCombinedRoute_artist on Artist {\n  internalID\n}\n"
   }
 };
 })();
 
-(node as any).hash = "2c9fc65a80d1fb575b8bd67838040752";
+(node as any).hash = "fb30cafbd3bb010f274b9e79c9fb10e9";
 
 export default node;
