@@ -7,11 +7,15 @@ import {
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import {
   CheckoutErrorBanner,
+  type CheckoutErrorBannerProps,
   MailtoOrderSupport,
 } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
+import { OfferInput } from "Apps/Order2/Routes/Checkout/Components/OfferStep/Components/OfferInput"
 import { Order2OfferOptions } from "Apps/Order2/Routes/Checkout/Components/OfferStep/Components/Order2OfferOptions"
-import { Order2HiddenPriceOfferForm } from "Apps/Order2/Routes/Checkout/Components/OfferStep/Forms/Order2HiddenPriceOfferForm"
-import { Order2OfferCompletedView } from "Apps/Order2/Routes/Checkout/Components/OfferStep/Order2OfferCompletedView"
+import {
+  Order2OfferCompletedView,
+  type Order2OfferCompletedViewProps,
+} from "Apps/Order2/Routes/Checkout/Components/OfferStep/Order2OfferCompletedView"
 import type { OfferNoteValue } from "Apps/Order2/Routes/Checkout/Components/OfferStep/types"
 import { useCompleteOfferData } from "Apps/Order2/Routes/Checkout/Components/OfferStep/useCompleteOfferData"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
@@ -19,10 +23,13 @@ import { useOrder2AddInitialOfferMutation } from "Apps/Order2/Routes/Checkout/Mu
 import { useOrder2UnsetOrderFulfillmentOptionMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2UnsetOrderFulfillmentOptionMutation"
 import { mostRecentCreatedAt } from "Apps/Order2/Routes/Checkout/Utils/mostRecentCreatedAt"
 import createLogger from "Utils/logger"
-import type { Order2OfferStep_order$key } from "__generated__/Order2OfferStep_order.graphql"
+import type {
+  Order2OfferStep_order$data,
+  Order2OfferStep_order$key,
+} from "__generated__/Order2OfferStep_order.graphql"
 import type { useOrder2AddInitialOfferMutation$data } from "__generated__/useOrder2AddInitialOfferMutation.graphql"
 import { Formik, type FormikConfig, useFormikContext } from "formik"
-import { useMemo, useState } from "react"
+import { useState } from "react"
 import { graphql, useFragment } from "react-relay"
 import * as yup from "yup"
 
@@ -40,11 +47,10 @@ interface Order2OfferStepProps {
 }
 
 interface Order2OfferStepFormContentProps {
-  orderData: any
-  offerAmountError: any
+  orderData: Order2OfferStep_order$data
+  offerAmountError: CheckoutErrorBannerProps["error"]
   currentStep: CheckoutStepState | undefined
-  completedViewProps: any
-  OfferFormComponent: any
+  completedViewProps: Order2OfferCompletedViewProps | null
   isSubmittingOffer: boolean
 }
 
@@ -77,16 +83,6 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
 
   const completedViewProps = useCompleteOfferData(orderData)
 
-  // Determine which offer form scenario to use based on artwork properties
-  const OfferFormComponent = useMemo(() => {
-    const priceDisplay = orderData.lineItems?.[0]?.artwork?.priceDisplay
-
-    if (priceDisplay === "hidden") {
-      return Order2HiddenPriceOfferForm
-    }
-
-    return Order2OfferOptions
-  }, [orderData])
 
   const validationSchema = yup.object().shape({
     offerValue: yup
@@ -190,7 +186,6 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
         offerAmountError={offerAmountError}
         currentStep={currentStep}
         completedViewProps={completedViewProps}
-        OfferFormComponent={OfferFormComponent}
         isSubmittingOffer={isSubmittingOffer}
       />
     </Formik>
@@ -202,7 +197,6 @@ const Order2OfferStepFormContent: React.FC<Order2OfferStepFormContentProps> = ({
   offerAmountError,
   currentStep,
   completedViewProps,
-  OfferFormComponent,
   isSubmittingOffer,
 }) => {
   const { values, errors, setFieldValue, submitForm } =
@@ -262,6 +256,8 @@ const Order2OfferStepFormContent: React.FC<Order2OfferStepFormContentProps> = ({
     submitForm()
   }
 
+  const isPriceHidden = orderData.lineItems?.[0]?.artwork?.priceDisplay === "hidden"
+
   return (
     <Flex
       flexDirection="column"
@@ -317,11 +313,15 @@ const Order2OfferStepFormContent: React.FC<Order2OfferStepFormContentProps> = ({
       </Box>
 
       <Box py={2} px={[2, 4]} hidden={currentStep !== CheckoutStepState.ACTIVE}>
-        <OfferFormComponent
-          order={orderData}
-          onOfferOptionSelected={onOfferOptionSelected}
-          onCustomOfferBlur={onCustomOfferBlur}
-        />
+        {isPriceHidden ? (
+          <OfferInput name="offerValue" onBlur={onCustomOfferBlur} />
+        ) : (
+          <Order2OfferOptions
+            order={orderData}
+            onOfferOptionSelected={onOfferOptionSelected}
+            onCustomOfferBlur={onCustomOfferBlur}
+          />
+        )}
 
         <Spacer y={4} />
 
