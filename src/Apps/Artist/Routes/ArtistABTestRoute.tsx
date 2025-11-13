@@ -1,5 +1,6 @@
 import { BaseTab, Clickable, Skeleton, Spacer, Text } from "@artsy/palette"
 import { useVariant } from "@unleash/proxy-client-react"
+import { useFlagsStatus } from "@unleash/proxy-client-react"
 import { ArtistTabs } from "Apps/Artist/Components/ArtistTabs"
 import { ArtistAuctionResultsQueryRenderer } from "Apps/Artist/Routes/AuctionResults/ArtistAuctionResults"
 import { MarketStatsQueryRenderer } from "Apps/Artist/Routes/AuctionResults/Components/MarketStats"
@@ -22,90 +23,52 @@ interface ArtistABTestRouteProps {
 export const ArtistABTestRoute: FC<
   React.PropsWithChildren<ArtistABTestRouteProps>
 > = ({ artist }) => {
-  const {
-    match: { location },
-  } = useRouter()
-
-  const page = location.pathname.split("/").pop()
   const variant = useVariant(ARTIST_COMBINED_LAYOUT_FLAG)
+  const { flagsReady } = useFlagsStatus()
 
   useTrackFeatureVariantOnMount({
     experimentName: ARTIST_COMBINED_LAYOUT_FLAG,
     variantName: variant.name,
   })
 
-  switch (variant.name) {
-    case "experiment": {
-      return <ArtistCombinedRouteFragmentContainer artist={artist} />
-    }
+  if (!flagsReady) {
+    return (
+      <Skeleton>
+        <Spacer y={[2, 4]} />
 
-    case "control": {
-      return (
-        <>
-          <Spacer y={[2, 4]} />
+        <RouteTabs>
+          <BaseTab as={Clickable} disabled>
+            Artworks
+          </BaseTab>
 
-          <ArtistTabs slug={artist.slug} />
+          <BaseTab as={Clickable} disabled>
+            Auction Results
+          </BaseTab>
 
-          <Spacer y={[2, 4]} />
-
-          {page === "" && (
-            <>
-              <Text variant="lg-display" as="h2">
-                Artworks
-              </Text>
-
-              <Spacer y={2} />
-
-              <ArtistArtworkFilterQueryRenderer id={artist.internalID} />
-            </>
-          )}
-
-          {page === "auction-results" && (
-            <>
-              <MarketStatsQueryRenderer id={artist.internalID} />
-
-              <Spacer y={6} />
-
-              <Text variant="lg-display" as="h2">
-                Auction Results
-              </Text>
-
-              <Spacer y={2} />
-
-              <ArtistAuctionResultsQueryRenderer id={artist.internalID} />
-            </>
-          )}
-
-          {page === "about" && (
-            <ArtistOverviewQueryRenderer id={artist.internalID} />
-          )}
-        </>
-      )
-    }
-
-    default: {
-      // Loading state while we wait for the variant to be determined
-      return (
-        <Skeleton>
-          <Spacer y={[2, 4]} />
-
-          <RouteTabs>
-            <BaseTab as={Clickable} disabled>
-              Artworks
-            </BaseTab>
-
-            <BaseTab as={Clickable} disabled>
-              Auction Results
-            </BaseTab>
-
-            <BaseTab as={Clickable} disabled>
-              About
-            </BaseTab>
-          </RouteTabs>
-        </Skeleton>
-      )
-    }
+          <BaseTab as={Clickable} disabled>
+            About
+          </BaseTab>
+        </RouteTabs>
+      </Skeleton>
+    )
   }
+
+  if (variant.name === "experiment") {
+    return <ArtistCombinedRouteFragmentContainer artist={artist} />
+  }
+
+  // "control" or "disabled"
+  return (
+    <>
+      <Spacer y={[2, 4]} />
+
+      <ArtistTabs slug={artist.slug} />
+
+      <Spacer y={[2, 4]} />
+
+      <ArtistABTestRouteControl artist={artist} />
+    </>
+  )
 }
 
 export const ArtistABTestRouteFragmentContainer = createFragmentContainer(
@@ -120,3 +83,51 @@ export const ArtistABTestRouteFragmentContainer = createFragmentContainer(
     `,
   },
 )
+
+const ArtistABTestRouteControl: FC<
+  React.PropsWithChildren<ArtistABTestRouteProps>
+> = ({ artist }) => {
+  const {
+    match: { location },
+  } = useRouter()
+
+  const page = location.pathname.split("/").pop()
+
+  switch (page) {
+    case "auction-results": {
+      return (
+        <>
+          <MarketStatsQueryRenderer id={artist.internalID} />
+
+          <Spacer y={6} />
+
+          <Text variant="lg-display" as="h2">
+            Auction Results
+          </Text>
+
+          <Spacer y={2} />
+
+          <ArtistAuctionResultsQueryRenderer id={artist.internalID} />
+        </>
+      )
+    }
+
+    case "about": {
+      return <ArtistOverviewQueryRenderer id={artist.internalID} />
+    }
+
+    default: {
+      return (
+        <>
+          <Text variant="lg-display" as="h2">
+            Artworks
+          </Text>
+
+          <Spacer y={2} />
+
+          <ArtistArtworkFilterQueryRenderer id={artist.internalID} />
+        </>
+      )
+    }
+  }
+}

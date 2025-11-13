@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<137849091aac7458a894354d6608658f>>
+ * @generated SignedSource<<bf3b7a2e71e28b5c090d91131b9b76b7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,17 +10,17 @@
 
 import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type artistRoutes_ArtistABTestAboutQuery$variables = {
+export type artistRoutes_ArtistAuctionResultsQuery$variables = {
   artistID: string;
 };
-export type artistRoutes_ArtistABTestAboutQuery$data = {
+export type artistRoutes_ArtistAuctionResultsQuery$data = {
   readonly artist: {
     readonly " $fragmentSpreads": FragmentRefs<"ArtistABTestRoute_artist">;
   } | null | undefined;
 };
-export type artistRoutes_ArtistABTestAboutQuery = {
-  response: artistRoutes_ArtistABTestAboutQuery$data;
-  variables: artistRoutes_ArtistABTestAboutQuery$variables;
+export type artistRoutes_ArtistAuctionResultsQuery = {
+  response: artistRoutes_ArtistAuctionResultsQuery$data;
+  variables: artistRoutes_ArtistAuctionResultsQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -43,7 +43,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "artistRoutes_ArtistABTestAboutQuery",
+    "name": "artistRoutes_ArtistAuctionResultsQuery",
     "selections": [
       {
         "alias": null,
@@ -69,7 +69,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "artistRoutes_ArtistABTestAboutQuery",
+    "name": "artistRoutes_ArtistAuctionResultsQuery",
     "selections": [
       {
         "alias": null,
@@ -106,16 +106,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "92a3ac83f1593b28b045fbac33831867",
+    "cacheID": "dd6680b5f4b4176ca9a4d5ef7ff68430",
     "id": null,
     "metadata": {},
-    "name": "artistRoutes_ArtistABTestAboutQuery",
+    "name": "artistRoutes_ArtistAuctionResultsQuery",
     "operationKind": "query",
-    "text": "query artistRoutes_ArtistABTestAboutQuery(\n  $artistID: String!\n) @cacheable {\n  artist(id: $artistID) @principalField {\n    ...ArtistABTestRoute_artist\n    id\n  }\n}\n\nfragment ArtistABTestRoute_artist on Artist {\n  ...ArtistCombinedRoute_artist\n  internalID\n  slug\n}\n\nfragment ArtistCombinedRoute_artist on Artist {\n  internalID\n}\n"
+    "text": "query artistRoutes_ArtistAuctionResultsQuery(\n  $artistID: String!\n) @cacheable {\n  artist(id: $artistID) @principalField {\n    ...ArtistABTestRoute_artist\n    id\n  }\n}\n\nfragment ArtistABTestRoute_artist on Artist {\n  ...ArtistCombinedRoute_artist\n  internalID\n  slug\n}\n\nfragment ArtistCombinedRoute_artist on Artist {\n  internalID\n}\n"
   }
 };
 })();
 
-(node as any).hash = "dbfebf63e3970d6f73d94416d9019fd8";
+(node as any).hash = "46699fa61434b87fefd1601508ea5875";
 
 export default node;
