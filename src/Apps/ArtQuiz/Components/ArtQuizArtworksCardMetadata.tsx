@@ -1,10 +1,10 @@
-import { Box, type BoxProps, Text } from "@artsy/palette"
 import {
   adjustAlpha,
   getContrastTIQ,
   hexToRgba,
   stringifyRgba,
 } from "Utils/color"
+import { Box, type BoxProps, Text } from "@artsy/palette"
 import type { ArtQuizArtworksCardMetadata_artwork$data } from "__generated__/ArtQuizArtworksCardMetadata_artwork.graphql"
 import { compact } from "lodash"
 import type { FC } from "react"

@@ -1,9 +1,6 @@
-/* eslint-disable no-restricted-imports */
-const rewire = require("rewire")
+const _rewire = require("rewire")
 const cbs = require("../callbacks")
 
-import options from "Server/passport/lib/options"
-import passport from "passport"
 import request from "superagent"
 
 jest.mock("superagent")
@@ -35,12 +32,12 @@ describe("passport callbacks", () => {
 
   it("gets a user with an access token email/password/otp", done => {
     req.body = { otpRequired: true }
-    cbs.local(req, "craig", "foo", "123456", (err, user) => {
+    cbs.local(req, "craig", "foo", "123456", (_err, user) => {
       expect(user.accessToken).toEqual("access-token")
       done()
     })
     expect(request.post.mock.calls[0][0]).toEqual(
-      "http://apiz.artsy.net/oauth2/access_token",
+      "http://apiz.artsy.net/oauth2/access_token"
     )
     expect(request.send.mock.calls[0][0]).toHaveProperty("otp_attempt")
     const res = { body: { access_token: "access-token" }, status: 200 }
@@ -49,12 +46,12 @@ describe("passport callbacks", () => {
 
   it("gets a user with an access token email/password without otp", done => {
     req.body = { otpRequired: false }
-    cbs.local(req, "craig", "foo", null, (err, user) => {
+    cbs.local(req, "craig", "foo", null, (_err, user) => {
       expect(user.accessToken).toEqual("access-token")
       done()
     })
     expect(request.post.mock.calls[0][0]).toEqual(
-      "http://apiz.artsy.net/oauth2/access_token",
+      "http://apiz.artsy.net/oauth2/access_token"
     )
     expect(request.send.mock.calls[0][0]).not.toHaveProperty("otp_attempt")
     const res = { body: { access_token: "access-token" }, status: 200 }
@@ -62,12 +59,12 @@ describe("passport callbacks", () => {
   })
 
   it("gets a user with an access token facebook", done => {
-    cbs.facebook(req, "foo-token", "refresh-token", {}, (err, user) => {
+    cbs.facebook(req, "foo-token", "refresh-token", {}, (_err, user) => {
       expect(user.accessToken).toEqual("access-token")
       done()
     })
     expect(request.post.mock.calls[0][0]).toEqual(
-      "http://apiz.artsy.net/oauth2/access_token",
+      "http://apiz.artsy.net/oauth2/access_token"
     )
     const sendArgs = request.send.mock.calls[0][0]
     expect(sendArgs.oauth_provider).toEqual("facebook")
@@ -77,12 +74,12 @@ describe("passport callbacks", () => {
   })
 
   it("gets a user with an access token google", done => {
-    cbs.google(req, "foo-token", "refresh-token", {}, (err, user) => {
+    cbs.google(req, "foo-token", "refresh-token", {}, (_err, user) => {
       expect(user.accessToken).toEqual("access-token")
       done()
     })
     expect(request.post.mock.calls[0][0]).toEqual(
-      "http://apiz.artsy.net/oauth2/access_token",
+      "http://apiz.artsy.net/oauth2/access_token"
     )
     const sendArgs = request.send.mock.calls[0][0]
     expect(sendArgs.oauth_provider).toEqual("google")
@@ -102,13 +99,13 @@ describe("passport callbacks", () => {
       decodedIdToken,
       "access_token",
       "refresh-token",
-      (err, user) => {
+      (_err, user) => {
         expect(user.accessToken).toEqual("access-token")
         done()
-      },
+      }
     )
     expect(request.post.mock.calls[0][0]).toEqual(
-      "http://apiz.artsy.net/oauth2/access_token",
+      "http://apiz.artsy.net/oauth2/access_token"
     )
     const sendArgs = request.send.mock.calls[0][0]
     expect(sendArgs.grant_type).toEqual("apple_uid")

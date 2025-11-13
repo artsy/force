@@ -1,6 +1,6 @@
-import { screen } from "@testing-library/react"
 import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import type { EntityHeaderArtistFragmentContainer_Test_Query } from "__generated__/EntityHeaderArtistFragmentContainer_Test_Query.graphql"
 import { graphql } from "react-relay"
 

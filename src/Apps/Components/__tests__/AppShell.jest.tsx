@@ -1,7 +1,7 @@
-import { render, screen, waitFor } from "@testing-library/react"
 import { SystemContextProvider } from "System/Contexts/SystemContext"
-import { buildAppRoutes } from "System/Router/Utils/buildAppRoutes"
 import { setupClientRouter } from "System/Router/clientRouter"
+import { buildAppRoutes } from "System/Router/Utils/buildAppRoutes"
+import { render, screen, waitFor } from "@testing-library/react"
 
 jest.mock("Components/NavBar/NavBar", () => ({
   NavBar: () => <div />,
@@ -43,7 +43,7 @@ describe("AppShell", () => {
     render(
       <SystemContextProvider>
         <ClientRouter />
-      </SystemContextProvider>,
+      </SystemContextProvider>
     )
 
     await waitFor(() => {
@@ -75,7 +75,7 @@ describe("AppShell", () => {
     render(
       <SystemContextProvider>
         <ClientRouter />
-      </SystemContextProvider>,
+      </SystemContextProvider>
     )
 
     await waitFor(() => {
@@ -104,7 +104,7 @@ describe("AppShell", () => {
     render(
       <SystemContextProvider>
         <ClientRouter />
-      </SystemContextProvider>,
+      </SystemContextProvider>
     )
 
     await waitFor(() => {

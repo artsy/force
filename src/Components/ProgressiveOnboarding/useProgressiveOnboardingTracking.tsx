@@ -1,5 +1,5 @@
-import { ActionType, type TooltipViewed } from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { ActionType, type TooltipViewed } from "@artsy/cohesion"
 import { useCallback } from "react"
 import { useTracking } from "react-tracking"
 

@@ -1,7 +1,7 @@
-import { screen } from "@testing-library/react"
 import { EndingSoonAuctionsFragmentContainer } from "Apps/Auctions/EndingSoonAuctions/EndingSoonAuctions"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import { screen } from "@testing-library/react"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
@@ -37,7 +37,7 @@ describe("EndingSoonAuctions", () => {
 
     expect(screen.getByText("MetaTags")).toBeInTheDocument()
     expect(
-      screen.getByText("Auction Lots for You Ending Soon"),
+      screen.getByText("Auction Lots for You Ending Soon")
     ).toBeInTheDocument()
   })
 
@@ -47,7 +47,7 @@ describe("EndingSoonAuctions", () => {
 
     expect(screen.getByText(/(^Log in)/g)).toBeInTheDocument()
     expect(
-      screen.getByText(/(to see your personalized recommendations\.$)/g),
+      screen.getByText(/(to see your personalized recommendations\.$)/g)
     ).toBeInTheDocument()
   })
 
@@ -55,11 +55,11 @@ describe("EndingSoonAuctions", () => {
     renderWithRelay()
 
     expect(
-      screen.queryByText(/(^Already have an account\?)/g),
+      screen.queryByText(/(^Already have an account\?)/g)
     ).not.toBeInTheDocument()
     expect(screen.queryByText(/(^Log in)/g)).not.toBeInTheDocument()
     expect(
-      screen.queryByText(/(to see your personalized recommendations\.$)/g),
+      screen.queryByText(/(to see your personalized recommendations\.$)/g)
     ).not.toBeInTheDocument()
   })
 

@@ -1,13 +1,13 @@
-import { Box, Flex, Range, Spacer, Text, usePrevious } from "@artsy/palette"
 import { NumericInput } from "Components/NumericInput"
-import { convertToFilterFormatRange } from "Components/PriceRange/Utils/convertToFilterFormatRange"
-import { getPriceValue } from "Components/PriceRange/Utils/getPriceValue"
-import { parsePriceRange } from "Components/PriceRange/Utils/parsePriceRange"
-import { parseSliderPriceRange } from "Components/PriceRange/Utils/parseSliderPriceRange"
 import {
   type CustomRange,
   DEFAULT_RANGE,
 } from "Components/PriceRange/constants"
+import { convertToFilterFormatRange } from "Components/PriceRange/Utils/convertToFilterFormatRange"
+import { getPriceValue } from "Components/PriceRange/Utils/getPriceValue"
+import { parsePriceRange } from "Components/PriceRange/Utils/parsePriceRange"
+import { parseSliderPriceRange } from "Components/PriceRange/Utils/parseSliderPriceRange"
+import { Box, Flex, Range, Spacer, Text, usePrevious } from "@artsy/palette"
 import { type FC, type FormEvent, useEffect, useState } from "react"
 import { useDebouncedCallback } from "use-debounce"
 import { Histogram, type HistogramBarEntity } from "./Histogram"
@@ -39,13 +39,13 @@ export const PriceRange: FC<React.PropsWithChildren<PriceRangeProps>> = ({
     if (!shouldUpdate) return
     const nextRange = parsePriceRange(priceRange)
     setLocalRange(nextRange)
-  }, [localRange, previousPriceRange, priceRange])
+  }, [previousPriceRange, priceRange])
 
   const handleDebouncedUpdate = useDebouncedCallback(
     (nextRange: CustomRange) => {
       onDebouncedUpdate?.(nextRange)
     },
-    250,
+    250
   )
 
   const updateRange = (nextRange: CustomRange) => {

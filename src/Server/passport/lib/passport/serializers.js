@@ -38,13 +38,13 @@ module.exports.serialize = (req, user, done) =>
           accessToken: user.accessToken,
           authentications: authsData,
         },
-        ["accessToken", "authentications", ...opts.userKeys],
+        ["accessToken", "authentications", ...opts.userKeys]
       )
 
       req.user = data
 
       done(null, data)
-    },
+    }
   )
 
 module.exports.deserialize = (user, done) => {

@@ -1,4 +1,3 @@
-import { fireEvent, screen } from "@testing-library/react"
 import {
   CreateNewListModalWizard,
   type CreateNewListModalWizardProps,
@@ -6,6 +5,7 @@ import {
 import { render } from "DevTools/renderWithMockBoot"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useMutation } from "Utils/Hooks/useMutation"
+import { fireEvent, screen } from "@testing-library/react"
 
 jest.mock("System/Hooks/useSystemContext")
 jest.mock("Utils/Hooks/useMutation")
@@ -77,7 +77,7 @@ describe("CreateNewListModalWizard", () => {
     fireEvent.click(createButton)
 
     const title = await screen.findByText(
-      "Photography created. Add saved works to the list.",
+      "Photography created. Add saved works to the list."
     )
     expect(title).toBeInTheDocument()
   })

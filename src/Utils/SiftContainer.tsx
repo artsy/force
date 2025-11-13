@@ -1,5 +1,6 @@
 import { Component } from "react"
 import sharify from "sharify"
+
 const sd = sharify.data
 
 export class SiftContainer extends Component {

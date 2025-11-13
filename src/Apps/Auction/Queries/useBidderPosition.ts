@@ -3,8 +3,7 @@ import type {
   useBidderPositionQuery,
   useBidderPositionQuery$variables,
 } from "__generated__/useBidderPositionQuery.graphql"
-import { graphql } from "react-relay"
-import { fetchQuery } from "react-relay"
+import { fetchQuery, graphql } from "react-relay"
 
 export const useBidderPosition = () => {
   const { relayEnvironment } = useSystemContext()
@@ -43,7 +42,7 @@ export const useBidderPosition = () => {
       variables,
       {
         fetchPolicy: "network-only",
-      },
+      }
     ).toPromise()
   }
 

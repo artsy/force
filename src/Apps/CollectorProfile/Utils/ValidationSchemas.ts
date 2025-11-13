@@ -6,6 +6,6 @@ export const editProfileVerificationSchema = Yup.object().shape({
   locationSelected: Yup.boolean().test(
     "location-selected",
     "Please select a city from the dropdown",
-    value => value === true,
+    value => value === true
   ),
 })

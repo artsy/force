@@ -1,6 +1,6 @@
-import { screen } from "@testing-library/react"
 import { ShowArtworksEmptyStateFragmentContainer } from "Apps/Show/Components/ShowArtworksEmptyState"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import type { ShowArtworksEmptyStateTestQuery } from "__generated__/ShowArtworksEmptyStateTestQuery.graphql"
 import { graphql } from "react-relay"
 
@@ -16,7 +16,7 @@ const { renderWithRelay } = setupTestWrapperTL<ShowArtworksEmptyStateTestQuery>(
         }
       }
     `,
-  },
+  }
 )
 
 describe("ShowArtworksEmptyState", () => {
@@ -25,13 +25,11 @@ describe("ShowArtworksEmptyState", () => {
       renderWithRelay({ Show: () => ({ isFairBooth: true }) })
 
       expect(
-        screen.getByText("This fair booth is currently unavailable."),
+        screen.getByText("This fair booth is currently unavailable.")
       ).toBeInTheDocument()
 
       expect(
-        screen.queryByText(
-          "Please check back closer to the fair for artworks.",
-        ),
+        screen.queryByText("Please check back closer to the fair for artworks.")
       ).toBeInTheDocument()
     })
 
@@ -41,12 +39,10 @@ describe("ShowArtworksEmptyState", () => {
       })
 
       expect(
-        screen.getByText("This fair booth is currently unavailable."),
+        screen.getByText("This fair booth is currently unavailable.")
       ).toBeInTheDocument()
       expect(
-        screen.queryByText(
-          "Please check back closer to the fair for artworks.",
-        ),
+        screen.queryByText("Please check back closer to the fair for artworks.")
       ).not.toBeInTheDocument()
     })
   })
@@ -56,13 +52,11 @@ describe("ShowArtworksEmptyState", () => {
       renderWithRelay({ Show: () => ({ isFairBooth: false }) })
 
       expect(
-        screen.getByText("This show is currently unavailable."),
+        screen.getByText("This show is currently unavailable.")
       ).toBeInTheDocument()
 
       expect(
-        screen.queryByText(
-          "Please check back closer to the show for artworks.",
-        ),
+        screen.queryByText("Please check back closer to the show for artworks.")
       ).toBeInTheDocument()
     })
 
@@ -72,12 +66,10 @@ describe("ShowArtworksEmptyState", () => {
       })
 
       expect(
-        screen.getByText("This show is currently unavailable."),
+        screen.getByText("This show is currently unavailable.")
       ).toBeInTheDocument()
       expect(
-        screen.queryByText(
-          "Please check back closer to the show for artworks.",
-        ),
+        screen.queryByText("Please check back closer to the show for artworks.")
       ).not.toBeInTheDocument()
     })
   })

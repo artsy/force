@@ -1,12 +1,12 @@
+import { useMode } from "Utils/Hooks/useMode"
 import CloseIcon from "@artsy/icons/CloseIcon"
 import HeartFillIcon from "@artsy/icons/HeartFillIcon"
 import HeartStrokeIcon from "@artsy/icons/HeartStrokeIcon"
 import { Clickable, type ClickableProps } from "@artsy/palette"
-import { useMode } from "Utils/Hooks/useMode"
 import type React from "react"
 import {
-  type Ref,
   forwardRef,
+  type Ref,
   useCallback,
   useImperativeHandle,
   useRef,
@@ -38,7 +38,7 @@ export type ArtQuizButtonRef = { triggerAnimation(): void }
 export const ArtQuizButton = forwardRef(
   (
     { variant, children, onClick, ...rest }: ArtQuizButtonProps,
-    forwardedRef: Ref<ArtQuizButtonRef>,
+    forwardedRef: Ref<ArtQuizButtonRef>
   ) => {
     const [mode, setMode] = useMode<Mode>("Pending")
 
@@ -58,7 +58,7 @@ export const ArtQuizButton = forwardRef(
       // Animation plays on
       animationRef.current = nodeRef.current.animate(
         KEYFRAMES,
-        KEYFRAME_ANIMATION_OPTIONS,
+        KEYFRAME_ANIMATION_OPTIONS
       )
 
       await animationRef.current.finished
@@ -71,7 +71,7 @@ export const ArtQuizButton = forwardRef(
     }, [triggerAnimation])
 
     const handleClick = (
-      event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+      event: React.MouseEvent<HTMLButtonElement, MouseEvent>
     ) => {
       // Click executes immediately
       onClick(event)
@@ -99,5 +99,5 @@ export const ArtQuizButton = forwardRef(
         )}
       </Clickable>
     )
-  },
+  }
 )

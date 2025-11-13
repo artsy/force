@@ -1,8 +1,8 @@
-import { ContextModule, Intent } from "@artsy/cohesion"
-import { Button } from "@artsy/palette"
 import { fairOrganizerFollowMutation } from "Apps/FairOrginizer/Mutations/FairOrganizerFollowMutation"
 import { useAuthDialog } from "Components/AuthDialog"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import { ContextModule, Intent } from "@artsy/cohesion"
+import { Button } from "@artsy/palette"
 import type { FairOrganizerFollowButton_fairOrganizer$data } from "__generated__/FairOrganizerFollowButton_fairOrganizer.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -22,7 +22,7 @@ export const FairOrganizerFollowButton: React.FC<
   const { showAuthDialog } = useAuthDialog()
 
   const handleClick = async (
-    event: React.MouseEvent<HTMLElement, MouseEvent>,
+    event: React.MouseEvent<HTMLElement, MouseEvent>
   ) => {
     event.preventDefault()
 

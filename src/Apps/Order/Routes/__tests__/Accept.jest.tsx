@@ -1,5 +1,10 @@
+import {
+  Buyer,
+  OfferOrderWithShippingDetails,
+  Offers,
+  OfferWithTotals,
+} from "Apps/__tests__/Fixtures/Order"
 import { ConnectedModalDialog } from "Apps/Order/Dialogs"
-import { AcceptFragmentContainer } from "Apps/Order/Routes/Accept"
 import {
   acceptOfferFailed,
   acceptOfferInsufficientInventoryFailure,
@@ -8,21 +13,16 @@ import {
   acceptOfferSuccess,
   acceptOfferWithActionRequired,
 } from "Apps/Order/Routes/__fixtures__/MutationResults/acceptOffer"
-import {
-  Buyer,
-  OfferOrderWithShippingDetails,
-  OfferWithTotals,
-  Offers,
-} from "Apps/__tests__/Fixtures/Order"
+import { AcceptFragmentContainer } from "Apps/Order/Routes/Accept"
 import { MockBoot } from "DevTools/MockBoot"
 import { mockLocation } from "DevTools/mockLocation"
 import { mockStripe } from "DevTools/mockStripe"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { Router } from "found"
 import { DateTime } from "luxon"
-import { commitMutation as _commitMutation, graphql } from "react-relay"
+import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-// eslint-disable-next-line no-restricted-imports
+// biome-ignore lint/style/noRestrictedImports: Test file legacy dependency
 import { Provider } from "unstated"
 import { OrderAppTestPageRTL } from "./Utils/OrderAppTestPageRTL"
 
@@ -199,7 +199,7 @@ describe("Accept seller offer", () => {
 
       await page.clickSubmit()
       expect(pushMock).toHaveBeenCalledWith(
-        `/orders/${testOrder.internalID}/details`,
+        `/orders/${testOrder.internalID}/details`
       )
     })
 
@@ -212,7 +212,7 @@ describe("Accept seller offer", () => {
 
       // Check if loading state is detectable
       expect(
-        page.isLoading() || page.submitButton?.textContent?.includes("Submit"),
+        page.isLoading() || page.submitButton?.textContent?.includes("Submit")
       ).toBeTruthy()
     })
 
@@ -248,10 +248,10 @@ describe("Accept seller offer", () => {
       await page.clickSubmit()
       await page.expectAndDismissErrorDialogMatching(
         "Charge failed",
-        "Payment has been declined. Please contact your card provider or bank institution",
+        "Payment has been declined. Please contact your card provider or bank institution"
       )
       expect(pushMock).toHaveBeenCalledWith(
-        `/orders/${testOrder.internalID}/payment/new`,
+        `/orders/${testOrder.internalID}/payment/new`
       )
     })
 
@@ -265,10 +265,10 @@ describe("Accept seller offer", () => {
       await page.clickSubmit()
       await page.expectAndDismissErrorDialogMatching(
         "Insufficient funds",
-        "enough funds available",
+        "enough funds available"
       )
       expect(pushMock).toHaveBeenCalledWith(
-        `/orders/${testOrder.internalID}/payment/new`,
+        `/orders/${testOrder.internalID}/payment/new`
       )
     })
 
@@ -282,7 +282,7 @@ describe("Accept seller offer", () => {
       await page.clickSubmit()
       await page.expectAndDismissErrorDialogMatching(
         "Not available",
-        "Sorry, the work is no longer available.",
+        "Sorry, the work is no longer available."
       )
       const artworkId = testOrder.lineItems.edges[0].node.artwork.slug
       expect(pushMock).toHaveBeenCalledWith(`/artwork/${artworkId}`)

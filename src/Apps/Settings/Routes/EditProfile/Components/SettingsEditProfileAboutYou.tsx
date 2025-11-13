@@ -1,4 +1,9 @@
 import {
+  LocationAutocompleteInput,
+  normalizePlace,
+} from "Components/LocationAutocompleteInput"
+import { useUpdateMyUserProfile } from "Utils/Hooks/Mutations/useUpdateMyUserProfile"
+import {
   Button,
   Checkbox,
   Input,
@@ -8,11 +13,6 @@ import {
   Text,
   useToasts,
 } from "@artsy/palette"
-import {
-  LocationAutocompleteInput,
-  normalizePlace,
-} from "Components/LocationAutocompleteInput"
-import { useUpdateMyUserProfile } from "Utils/Hooks/Mutations/useUpdateMyUserProfile"
 import type { SettingsEditProfileAboutYou_me$data } from "__generated__/SettingsEditProfileAboutYou_me.graphql"
 import { Formik } from "formik"
 import { type FC, useState } from "react"

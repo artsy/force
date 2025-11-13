@@ -1,8 +1,7 @@
 import { NavBarUserMenu } from "Components/NavBar/Menus/NavBarUserMenu"
 import { SystemContextProvider } from "System/Contexts/SystemContext"
 import { logout } from "Utils/auth"
-import { render } from "@testing-library/react"
-import { fireEvent } from "@testing-library/react"
+import { fireEvent, render } from "@testing-library/react"
 
 jest.mock("react-tracking", () => ({
   useTracking: () => ({
@@ -27,7 +26,7 @@ describe("NavBarUserMenu", () => {
     return render(
       <SystemContextProvider user={{}} {...props}>
         <NavBarUserMenu />
-      </SystemContextProvider>,
+      </SystemContextProvider>
     )
   }
 
@@ -58,7 +57,7 @@ describe("NavBarUserMenu", () => {
 
   it("calls logout auth action on logout menu click", () => {
     mockLogout.mockImplementationOnce(() =>
-      jest.fn().mockResolvedValue(Promise.resolve()),
+      jest.fn().mockResolvedValue(Promise.resolve())
     )
 
     const { container } = getWrapper()

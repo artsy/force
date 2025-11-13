@@ -31,9 +31,9 @@ const JobsFilter: FC<React.PropsWithChildren<JobsFilterProps>> = ({
         jobs
           .flatMap(job => job.location.split(","))
           .map(location => location.trim())
-          .filter(location => location !== LEADGEN_LOCATION),
+          .filter(location => location !== LEADGEN_LOCATION)
       ).sort(),
-    [jobs],
+    [jobs]
   )
 
   const teams = useMemo(() => {
@@ -44,7 +44,7 @@ const JobsFilter: FC<React.PropsWithChildren<JobsFilterProps>> = ({
         acc[job.teamName].push(job)
         return acc
       },
-      {} as Record<string, any[]>,
+      {} as Record<string, any[]>
     )
   }, [jobs])
 
@@ -72,7 +72,7 @@ const JobsFilter: FC<React.PropsWithChildren<JobsFilterProps>> = ({
           <Spacer y={2} />
 
           <Button
-            // @ts-ignore
+            // @ts-expect-error
             as="a"
             target="_blank"
             rel="noopener noreferrer"

@@ -1,18 +1,18 @@
-import { useUpdateEffect } from "@artsy/palette"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import { useUpdateEffect } from "@artsy/palette"
 import { useEffect, useRef, useState } from "react"
 import {
   type Disposable,
   type Environment,
-  type GraphQLTaggedNode,
   fetchQuery,
+  type GraphQLTaggedNode,
 } from "react-relay"
 import {
   type CacheConfig,
-  type FetchQueryFetchPolicy,
-  type OperationType,
   createOperationDescriptor,
+  type FetchQueryFetchPolicy,
   getRequest,
+  type OperationType,
 } from "relay-runtime"
 
 export const useClientQuery = <T extends OperationType>({
@@ -53,7 +53,7 @@ export const useClientQuery = <T extends OperationType>({
         (environment || relayEnvironment) as unknown as Environment,
         query,
         newVariables,
-        cacheConfig,
+        cacheConfig
       ).toPromise()
 
       setData(res)
@@ -61,7 +61,7 @@ export const useClientQuery = <T extends OperationType>({
 
       const operation = createOperationDescriptor(
         getRequest(query),
-        variables ?? {},
+        variables ?? {}
       )
 
       // Retain the operation to prevent it from being garbage collected. Garbage collection can compromise type safety (e.g. non-nullable values being `null`), potentially leading to runtime errors.
@@ -74,7 +74,7 @@ export const useClientQuery = <T extends OperationType>({
     }
   }
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Complex query dependencies handled with key comparison
   useEffect(() => {
     if (key.current !== prevKey.current) {
       setData(null)

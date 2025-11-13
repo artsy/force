@@ -1,5 +1,3 @@
-import { screen } from "@testing-library/react"
-import { SaleArtworkFilterRefetchContainer } from "Apps/Sale/Components/SaleArtworks"
 import {
   artistAggregation,
   artistNationalityAggregation,
@@ -8,8 +6,10 @@ import {
   mediumAggregation,
   partnerAggregation,
 } from "Apps/__tests__/Fixtures/aggregations"
+import { SaleArtworkFilterRefetchContainer } from "Apps/Sale/Components/SaleArtworks"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import type { SaleArtworks_Test_Query } from "__generated__/SaleArtworks_Test_Query.graphql"
 import { graphql } from "react-relay"
 
@@ -78,7 +78,7 @@ describe("SaleArtworks", () => {
     expect(screen.getByText("Ways to Buy")).toBeInTheDocument()
     expect(screen.getByText("Material")).toBeInTheDocument()
     expect(
-      screen.getByText("Artist Nationality or Ethnicity"),
+      screen.getByText("Artist Nationality or Ethnicity")
     ).toBeInTheDocument()
     expect(screen.getByText("Artwork Location")).toBeInTheDocument()
     expect(screen.getByText("Time Period")).toBeInTheDocument()

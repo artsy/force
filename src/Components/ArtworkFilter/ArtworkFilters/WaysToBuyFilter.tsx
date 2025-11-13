@@ -1,4 +1,3 @@
-import { Checkbox, Flex } from "@artsy/palette"
 import {
   SelectedFiltersCountsLabels,
   useArtworkFilterContext,
@@ -6,6 +5,7 @@ import {
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import type { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes"
 import { useFilterLabelCountByKey } from "Components/ArtworkFilter/Utils/useFilterLabelCountByKey"
+import { Checkbox, Flex } from "@artsy/palette"
 import { entries, isEmpty } from "lodash"
 import type { FC } from "react"
 import { FilterExpandable } from "./FilterExpandable"
@@ -47,7 +47,7 @@ export const WaysToBuyFilter: FC<
   const currentSelectedFilters = useCurrentlySelectedFilters()
 
   const filtersCount = useFilterLabelCountByKey(
-    SelectedFiltersCountsLabels.waysToBuy,
+    SelectedFiltersCountsLabels.waysToBuy
   )
   const label = `Ways to Buy${filtersCount}`
 
@@ -72,7 +72,7 @@ export const WaysToBuyFilter: FC<
       })
       return acc
     },
-    [] as WayToBuy[],
+    [] as WayToBuy[]
   )
 
   const hasSelection = checkboxes.some(checkbox => checkbox.selected)

@@ -1,7 +1,7 @@
 import { PaginatedMetaTags } from "Components/PaginatedMetaTags"
 import { MockBoot } from "DevTools/MockBoot"
-import { render } from "@testing-library/react"
 import { useRouter } from "System/Hooks/useRouter"
+import { render } from "@testing-library/react"
 
 jest.mock("System/Hooks/useRouter")
 
@@ -55,14 +55,14 @@ describe("PaginatedMetaTags", () => {
           title="Artist Auction Results"
           description="View auction results"
         />
-      </MockBoot>,
+      </MockBoot>
     )
 
     const tags = getTags()
 
     expect(tags.title).toEqual("Artist Auction Results")
     expect(tags.links.find(tag => tag.rel === "canonical")?.href).toBe(
-      "https://www.artsy.net/artist/example/auction-results",
+      "https://www.artsy.net/artist/example/auction-results"
     )
   })
 
@@ -83,14 +83,14 @@ describe("PaginatedMetaTags", () => {
           title="Artist Auction Results"
           description="View auction results"
         />
-      </MockBoot>,
+      </MockBoot>
     )
 
     const tags = getTags()
 
     expect(tags.title).toEqual("Artist Auction Results")
     expect(tags.links.find(tag => tag.rel === "canonical")?.href).toBe(
-      "https://www.artsy.net/artist/example/auction-results",
+      "https://www.artsy.net/artist/example/auction-results"
     )
   })
 
@@ -111,29 +111,29 @@ describe("PaginatedMetaTags", () => {
           title="Artist Auction Results"
           description="View auction results"
         />
-      </MockBoot>,
+      </MockBoot>
     )
 
     const tags = getTags()
 
     expect(tags.title).toEqual("Artist Auction Results - Page 3")
     expect(tags.meta.find(tag => tag.name === "title")?.content).toBe(
-      "Artist Auction Results - Page 3",
+      "Artist Auction Results - Page 3"
     )
     expect(tags.meta.find(tag => tag.property === "og:title")?.content).toBe(
-      "Artist Auction Results - Page 3",
+      "Artist Auction Results - Page 3"
     )
     expect(
-      tags.meta.find(tag => tag.property === "twitter:title")?.content,
+      tags.meta.find(tag => tag.property === "twitter:title")?.content
     ).toBe("Artist Auction Results - Page 3")
     expect(tags.links.find(tag => tag.rel === "canonical")?.href).toBe(
-      "https://www.artsy.net/artist/example/auction-results?page=3",
+      "https://www.artsy.net/artist/example/auction-results?page=3"
     )
     expect(tags.meta.find(tag => tag.property === "og:url")?.content).toBe(
-      "https://www.artsy.net/artist/example/auction-results?page=3",
+      "https://www.artsy.net/artist/example/auction-results?page=3"
     )
     expect(tags.meta.find(tag => tag.property === "twitter:url")?.content).toBe(
-      "https://www.artsy.net/artist/example/auction-results?page=3",
+      "https://www.artsy.net/artist/example/auction-results?page=3"
     )
   })
 
@@ -155,20 +155,20 @@ describe("PaginatedMetaTags", () => {
           socialTitle="Custom Social Title"
           description="View auction results"
         />
-      </MockBoot>,
+      </MockBoot>
     )
 
     const tags = getTags()
 
     expect(tags.title).toEqual("Artist Auction Results - Page 2")
     expect(tags.meta.find(tag => tag.name === "title")?.content).toBe(
-      "Artist Auction Results - Page 2",
+      "Artist Auction Results - Page 2"
     )
     expect(tags.meta.find(tag => tag.property === "og:title")?.content).toBe(
-      "Custom Social Title",
+      "Custom Social Title"
     )
     expect(
-      tags.meta.find(tag => tag.property === "twitter:title")?.content,
+      tags.meta.find(tag => tag.property === "twitter:title")?.content
     ).toBe("Custom Social Title")
   })
 
@@ -189,14 +189,14 @@ describe("PaginatedMetaTags", () => {
           title="Artist Auction Results"
           description="View auction results"
         />
-      </MockBoot>,
+      </MockBoot>
     )
 
     const tags = getTags()
 
     expect(tags.title).toEqual("Artist Auction Results")
     expect(tags.links.find(tag => tag.rel === "canonical")?.href).toBe(
-      "https://www.artsy.net/artist/example/auction-results",
+      "https://www.artsy.net/artist/example/auction-results"
     )
   })
 })

@@ -1,11 +1,11 @@
-import AppleIcon from "@artsy/icons/AppleIcon"
-import FacebookIcon from "@artsy/icons/FacebookIcon"
-import GoogleIcon from "@artsy/icons/GoogleIcon"
-import { Button, Stack } from "@artsy/palette"
 import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
 import { useAfterAuthenticationRedirectUrl } from "Components/AuthDialog/Hooks/useAfterAuthenticationRedirectUrl"
 import { setSocialAuthTracking } from "Components/AuthDialog/Hooks/useSocialAuthTracking"
 import { getENV } from "Utils/getENV"
+import AppleIcon from "@artsy/icons/AppleIcon"
+import FacebookIcon from "@artsy/icons/FacebookIcon"
+import GoogleIcon from "@artsy/icons/GoogleIcon"
+import { Button, Stack } from "@artsy/palette"
 import { stringify } from "qs"
 import type { FC } from "react"
 
@@ -34,7 +34,7 @@ export const AuthDialogSocial: FC<React.PropsWithChildren<unknown>> = () => {
       accepted_terms_of_service: true,
       agreed_to_receive_emails: true,
     },
-    { skipNulls: true },
+    { skipNulls: true }
   )
 
   const handleClick = (service: "facebook" | "apple" | "google") => () => {
@@ -50,7 +50,7 @@ export const AuthDialogSocial: FC<React.PropsWithChildren<unknown>> = () => {
       <Button
         variant="secondaryBlack"
         width="100%"
-        // @ts-ignore
+        // @ts-expect-error
         as="a"
         href={`${applePath}?${query}`}
         onClick={handleClick("apple")}
@@ -63,7 +63,7 @@ export const AuthDialogSocial: FC<React.PropsWithChildren<unknown>> = () => {
       <Button
         variant="secondaryBlack"
         width="100%"
-        // @ts-ignore
+        // @ts-expect-error
         as="a"
         href={`${googlePath}?${query}`}
         onClick={handleClick("google")}
@@ -76,7 +76,7 @@ export const AuthDialogSocial: FC<React.PropsWithChildren<unknown>> = () => {
       <Button
         variant="secondaryBlack"
         width="100%"
-        // @ts-ignore
+        // @ts-expect-error
         as="a"
         href={`${facebookPath}?${query}`}
         onClick={handleClick("facebook")}

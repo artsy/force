@@ -1,4 +1,17 @@
-import { error } from "console"
+import { AlertNotification } from "Components/Notifications/AlertNotification"
+import { ArticleFeaturedArtistNotification } from "Components/Notifications/ArticleFeaturedArtistNotification"
+import { ArtworkPublishedNotification } from "Components/Notifications/ArtworkPublishedNotification"
+import { CARD_MAX_WIDTH } from "Components/Notifications/constants"
+import { useNotificationsContext } from "Components/Notifications/Hooks/useNotificationsContext"
+import { markNotificationAsRead } from "Components/Notifications/Mutations/markNotificationAsRead"
+import { NotificationErrorMessage } from "Components/Notifications/NotificationErrorMessage"
+import { PartnerOfferCreatedNotification } from "Components/Notifications/PartnerOfferCreatedNotification"
+import { PartnerShowOpenedNotification } from "Components/Notifications/PartnerShowOpenedNotification"
+import { ViewingRoomPublishedNotification } from "Components/Notifications/ViewingRoomPublishedNotification"
+import { ErrorBoundary } from "System/Components/ErrorBoundary"
+import { useRouter } from "System/Hooks/useRouter"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import createLogger from "Utils/logger"
 import {
   Box,
   Flex,
@@ -7,24 +20,11 @@ import {
   SkeletonText,
   Spacer,
 } from "@artsy/palette"
-import { AlertNotification } from "Components/Notifications/AlertNotification"
-import { ArticleFeaturedArtistNotification } from "Components/Notifications/ArticleFeaturedArtistNotification"
-import { ArtworkPublishedNotification } from "Components/Notifications/ArtworkPublishedNotification"
-import { useNotificationsContext } from "Components/Notifications/Hooks/useNotificationsContext"
-import { markNotificationAsRead } from "Components/Notifications/Mutations/markNotificationAsRead"
-import { NotificationErrorMessage } from "Components/Notifications/NotificationErrorMessage"
-import { PartnerOfferCreatedNotification } from "Components/Notifications/PartnerOfferCreatedNotification"
-import { PartnerShowOpenedNotification } from "Components/Notifications/PartnerShowOpenedNotification"
-import { ViewingRoomPublishedNotification } from "Components/Notifications/ViewingRoomPublishedNotification"
-import { CARD_MAX_WIDTH } from "Components/Notifications/constants"
-import { ErrorBoundary } from "System/Components/ErrorBoundary"
-import { useRouter } from "System/Hooks/useRouter"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import createLogger from "Utils/logger"
 import type {
   NotificationQuery,
   NotificationTypesEnum,
 } from "__generated__/NotificationQuery.graphql"
+import { error } from "console"
 import { Suspense, useEffect } from "react"
 import { graphql, useLazyLoadQuery } from "react-relay"
 
@@ -80,7 +80,7 @@ const Notification: React.FC<React.PropsWithChildren<NotificationProps>> = ({
         const response = await markNotificationAsRead(
           relayEnvironment,
           notification.id,
-          notification.internalID,
+          notification.internalID
         )
         const responseOrError = response.markNotificationAsRead?.responseOrError
         const errorMessage = responseOrError?.mutationError?.message

@@ -1,6 +1,6 @@
-import { render, screen } from "@testing-library/react"
 import { InsightsHeader } from "Apps/Settings/Routes/Insights/Components/InsightsHeader"
 import { MockBoot } from "DevTools/MockBoot"
+import { render, screen } from "@testing-library/react"
 
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => false,
@@ -15,7 +15,7 @@ describe("InsightsHeader", () => {
     render(
       <MockBoot>
         <InsightsHeader />
-      </MockBoot>,
+      </MockBoot>
     )
 
   it("renders the Upload artwork CTA and the textual content", () => {
@@ -25,7 +25,7 @@ describe("InsightsHeader", () => {
     expect(
       screen
         .getAllByRole("link")
-        .find(c => c.textContent?.includes("Upload Artwork")),
+        .find(c => c.textContent?.includes("Upload Artwork"))
     ).toHaveAttribute("href", "/collector-profile/my-collection/artworks/new")
   })
 })

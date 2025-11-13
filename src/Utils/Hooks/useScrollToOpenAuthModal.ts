@@ -34,7 +34,7 @@ export const useScrollToOpenAuthModal = ({
               onSuccess: dismiss,
             },
           },
-          options,
+          options
         )
 
         showAuthDialog(payload)

@@ -7,7 +7,7 @@ describe("isDefaultFilter", () => {
     Object.entries(initialArtworkFilterState).forEach(
       ([key, value]: [keyof ArtworkFilters, any]) => {
         expect(isDefaultFilter(key, value)).toEqual(true)
-      },
+      }
     )
   })
 
@@ -27,13 +27,13 @@ describe("isDefaultFilter", () => {
     expect(
       isDefaultFilter("artistIDs", ["id-1", "id-2"], {
         artistIDs: ["id-1", "id-2"],
-      }),
+      })
     ).toBe(false)
 
     expect(
       isDefaultFilter("artistIDs", [], {
         artistIDs: ["id-1", "id-2"],
-      }),
+      })
     ).toBe(true)
   })
 })

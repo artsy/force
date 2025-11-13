@@ -1,5 +1,3 @@
-import { useDismissibleContext } from "@artsy/dismissible"
-import { Text } from "@artsy/palette"
 import { ProgressiveOnboardingPopover } from "Components/ProgressiveOnboarding/ProgressiveOnboardingPopover"
 import {
   PROGRESSIVE_ONBOARDING,
@@ -12,6 +10,8 @@ import {
 } from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import { useDismissibleContext } from "@artsy/dismissible"
+import { Text } from "@artsy/palette"
 import { pathToRegexp } from "path-to-regexp"
 import { type FC, useCallback, useEffect } from "react"
 
@@ -36,7 +36,7 @@ export const __ProgressiveOnboardingFollowArtist__: FC<
     // If you've already dismissed the alerts onboarding OR you're logged out OR you're not on the artist page.
     (!isLoggedIn ||
       PROGRESSIVE_ONBOARDING_ALERT_CHAIN.every(
-        key => isDismissed(key).status,
+        key => isDismissed(key).status
       ) ||
       !pathToRegexp("/artist/:artistID").test(router.match.location.pathname))
 

@@ -1,11 +1,11 @@
-import loadable from "@loadable/component"
 import type { RouteProps } from "System/Router/Route"
+import loadable from "@loadable/component"
 
 const BuyerGuaranteeApp = loadable(
   () => import(/* webpackChunkName: "buyerBundle" */ "./BuyerGuaranteeApp"),
   {
     resolveComponent: component => component.BuyerGuaranteeApp,
-  },
+  }
 )
 
 const BuyerGuaranteeIndexRoute = loadable(
@@ -15,7 +15,7 @@ const BuyerGuaranteeIndexRoute = loadable(
     ),
   {
     resolveComponent: component => component.BuyerGuaranteeIndex,
-  },
+  }
 )
 
 export const buyerGuaranteeRoutes: RouteProps[] = [

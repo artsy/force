@@ -1,8 +1,8 @@
-import { renderHook } from "@testing-library/react-hooks"
 import { useStripePaymentBySetupIntentId } from "Apps/Order/Hooks/useStripePaymentBySetupIntentId"
 import { useSetPaymentByStripeIntent } from "Apps/Order/Mutations/useSetPaymentByStripeIntentMutation"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { useRouter } from "System/Hooks/useRouter"
+import { renderHook } from "@testing-library/react-hooks"
 
 jest.mock("System/Hooks/useRouter")
 jest.mock("Apps/Order/Mutations/useSetPaymentByStripeIntentMutation")
@@ -55,7 +55,7 @@ describe("useStripePaymentBySetupIntentId", () => {
 
     it("returns a result object", async () => {
       const { result } = renderHook(() =>
-        useStripePaymentBySetupIntentId("order-id"),
+        useStripePaymentBySetupIntentId("order-id")
       )
 
       await flushPromiseQueue()
@@ -80,7 +80,7 @@ describe("useStripePaymentBySetupIntentId", () => {
 
     it("returns a result object", async () => {
       const { result } = renderHook(() =>
-        useStripePaymentBySetupIntentId("order-id"),
+        useStripePaymentBySetupIntentId("order-id")
       )
 
       await flushPromiseQueue()

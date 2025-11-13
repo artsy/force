@@ -1,21 +1,4 @@
 import { Join, Spacer } from "@artsy/palette"
-
-import {
-  HeaderArtist,
-  HeaderGeneral,
-  HeaderImageLeft,
-  HeaderImageRight,
-  HeaderWithCarousel,
-  HeaderWithCoverImage,
-} from "./Headers.story"
-
-import {
-  Content2Up,
-  Content4Up,
-  ContentFixedLeftScrollRight,
-  ContentScrollLeftFixedRight,
-} from "./Content.story"
-
 import {
   CarouselArtists,
   CarouselArtworkLarge,
@@ -27,13 +10,26 @@ import {
   CarouselShows,
   CarouselViewingRoomsGrid,
 } from "./Carousels.story"
-
 import { Page } from "./Components/Page"
+import {
+  Content2Up,
+  Content4Up,
+  ContentFixedLeftScrollRight,
+  ContentScrollLeftFixedRight,
+} from "./Content.story"
 import {
   TextCentered,
   TextFixedLeftScrollRight,
   TextScrollLeftFixedRight,
 } from "./Editorial.story"
+import {
+  HeaderArtist,
+  HeaderGeneral,
+  HeaderImageLeft,
+  HeaderImageRight,
+  HeaderWithCarousel,
+  HeaderWithCoverImage,
+} from "./Headers.story"
 
 export default {
   title: "Molecules/Kitchen Sink",

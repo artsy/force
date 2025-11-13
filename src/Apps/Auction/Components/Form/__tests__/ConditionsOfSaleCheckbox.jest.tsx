@@ -1,8 +1,6 @@
-import { useAuctionFormContext } from "Apps/Auction/Hooks/useAuctionFormContext"
-import { render, screen } from "@testing-library/react"
-import { fireEvent } from "@testing-library/react"
-
 import { ConditionsOfSaleCheckbox } from "Apps/Auction/Components/Form/ConditionsOfSaleCheckbox"
+import { useAuctionFormContext } from "Apps/Auction/Hooks/useAuctionFormContext"
+import { fireEvent, render, screen } from "@testing-library/react"
 
 jest.mock("Apps/Auction/Hooks/useAuctionFormContext")
 

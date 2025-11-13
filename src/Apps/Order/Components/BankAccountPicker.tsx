@@ -1,18 +1,17 @@
-import type { StripeError } from "@stripe/stripe-js"
-import { type FC, useEffect } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-
-import { BorderedRadio, RadioGroup, Spacer } from "@artsy/palette"
 import { Collapse } from "Apps/Order/Components/Collapse"
 import { SaveAndContinueButton } from "Apps/Order/Components/SaveAndContinueButton"
 import { useSetPayment } from "Apps/Order/Mutations/useSetPayment"
 import { useOrderPaymentContext } from "Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext"
 import { BankDebitProvider } from "Components/BankDebitForm/BankDebitProvider"
 import { extractNodes } from "Utils/extractNodes"
+import { BorderedRadio, RadioGroup, Spacer } from "@artsy/palette"
+import type { StripeError } from "@stripe/stripe-js"
 import type { BankAccountPicker_me$data } from "__generated__/BankAccountPicker_me.graphql"
 import type { BankAccountPicker_order$data } from "__generated__/BankAccountPicker_order.graphql"
 import type { CommercePaymentMethodEnum } from "__generated__/Payment_order.graphql"
 import { camelCase, upperFirst } from "lodash"
+import { type FC, useEffect } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 import { BankDebitDetails } from "./BankDebitDetails"
 import { InsufficientFundsError } from "./InsufficientFundsError"
 
@@ -49,7 +48,7 @@ export const BankAccountPicker: FC<React.PropsWithChildren<Props>> = props => {
   if (order?.paymentMethodDetails?.internalID) {
     // if account on order is not saved on user's profile
     const isOrderBankSaved = bankAccountsArray.find(
-      bank => bank.internalID === order.paymentMethodDetails?.internalID,
+      bank => bank.internalID === order.paymentMethodDetails?.internalID
     )
 
     if (!isOrderBankSaved) {
@@ -205,7 +204,7 @@ export const BankAccountPicker: FC<React.PropsWithChildren<Props>> = props => {
           <Spacer y={4} />
           <SaveAndContinueButton
             testId={`saveExisting${upperFirst(
-              camelCase(selectedPaymentMethod),
+              camelCase(selectedPaymentMethod)
             )}`}
             onClick={handleContinue}
             disabled={!bankAccountSelection?.type}
@@ -245,5 +244,5 @@ export const BankAccountPickerFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  },
+  }
 )

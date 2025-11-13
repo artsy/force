@@ -1,5 +1,5 @@
-import { Box, type BoxProps, Image, Text } from "@artsy/palette"
 import { useArticleTracking } from "Apps/Article/useArticleTracking"
+import { Box, type BoxProps, Image, Text } from "@artsy/palette"
 import type { ArticleSponsor_sponsor$data } from "__generated__/ArticleSponsor_sponsor.graphql"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -33,7 +33,7 @@ const ArticleSponsor: FC<React.PropsWithChildren<ArticleSponsorProps>> = ({
         bg={scheme ? "mono100" : "mono0"}
         borderRadius="50%"
         as="a"
-        // @ts-ignore
+        // @ts-expect-error
         href={sponsor.partnerLogoLink as string}
         target="_blank"
         rel="noopener noreferrer"
@@ -64,5 +64,5 @@ export const ArticleSponsorFragmentContainer = createFragmentContainer(
         partnerLogoLink
       }
     `,
-  },
+  }
 )

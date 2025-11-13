@@ -1,10 +1,10 @@
+import { userIsForcingNavigation } from "System/Router/Utils/catchLinks"
+import { useJump } from "Utils/Hooks/useJump"
 import {
   type PaginationProps as BasePaginationProps,
   type BoxProps,
   Pagination as PaginationBase,
 } from "@artsy/palette"
-import { userIsForcingNavigation } from "System/Router/Utils/catchLinks"
-import { useJump } from "Utils/Hooks/useJump"
 import type { CommercePagination_pageCursors$data } from "__generated__/CommercePagination_pageCursors.graphql"
 import type { Pagination_pageCursors$data } from "__generated__/Pagination_pageCursors.graphql"
 import type * as React from "react"
@@ -37,7 +37,7 @@ export const Pagination: React.FC<React.PropsWithChildren<PaginationProps>> = ({
 }) => {
   const { jumpTo } = useJump({ offset })
 
-  // biome-ignore lint/correctness/useHookAtTopLevel: <explanation>
+  // biome-ignore lint/correctness/useHookAtTopLevel: Hook call optimization pattern for optional href computation
   const getHref = __getHref__ ?? useComputeHref()
 
   if (pageCursors?.around.length === 1) {
@@ -47,7 +47,7 @@ export const Pagination: React.FC<React.PropsWithChildren<PaginationProps>> = ({
   const handleClick = (
     cursor: string,
     page: number,
-    event: React.MouseEvent,
+    event: React.MouseEvent
   ) => {
     if (userIsForcingNavigation(event)) return
 

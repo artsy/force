@@ -26,7 +26,7 @@ describe("mapCustomPreferences", () => {
 
     it("maps Segment preferences to conform to our own", () => {
       expect(
-        mapCustomPreferences(segmentDestinations, segmentPreferences),
+        mapCustomPreferences(segmentDestinations, segmentPreferences)
       ).toEqual({
         destinationPreferences: {
           "Braze Web Mode (Actions)": true,
@@ -53,7 +53,7 @@ describe("mapCustomPreferences", () => {
 
     it("maps Segment preferences to conform to our own", () => {
       expect(
-        mapCustomPreferences(segmentDestinations, segmentPreferences),
+        mapCustomPreferences(segmentDestinations, segmentPreferences)
       ).toEqual({
         destinationPreferences: {
           "Braze Web Mode (Actions)": true,
@@ -83,23 +83,23 @@ describe("remapSegmentCategory", () => {
 
   it("re-maps Segment's categorization to our own", () => {
     expect(
-      remapSegmentCategory({ ...example, category: "Advertising" }),
+      remapSegmentCategory({ ...example, category: "Advertising" })
     ).toEqual("targeting")
 
     expect(
-      remapSegmentCategory({ ...example, category: "Heatmaps & Recordings" }),
+      remapSegmentCategory({ ...example, category: "Heatmaps & Recordings" })
     ).toEqual("performance")
 
     expect(
-      remapSegmentCategory({ ...example, category: "Deep Linking" }),
+      remapSegmentCategory({ ...example, category: "Deep Linking" })
     ).toEqual("functional")
 
     expect(remapSegmentCategory({ ...example, category: "Garbage" })).toEqual(
-      "functional",
+      "functional"
     )
 
     expect(
-      remapSegmentCategory({ ...example, id: "Braze Web Mode (Actions)" }),
+      remapSegmentCategory({ ...example, id: "Braze Web Mode (Actions)" })
     ).toEqual("necessary")
   })
 })

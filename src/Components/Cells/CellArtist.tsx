@@ -1,3 +1,6 @@
+import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
+import { EntityHeaderPlaceholder } from "Components/EntityHeaders/EntityHeaderPlaceholder"
+import { RouterLink, type RouterLinkProps } from "System/Components/RouterLink"
 import {
   Box,
   Image,
@@ -6,9 +9,6 @@ import {
   SkeletonText,
   Text,
 } from "@artsy/palette"
-import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
-import { EntityHeaderPlaceholder } from "Components/EntityHeaders/EntityHeaderPlaceholder"
-import { RouterLink, type RouterLinkProps } from "System/Components/RouterLink"
 import type { CellArtist_artist$data } from "__generated__/CellArtist_artist.graphql"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"

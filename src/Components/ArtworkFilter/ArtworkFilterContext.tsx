@@ -2,10 +2,10 @@ import type { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes
 import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/paramsCasing"
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
 import type { SortOptions } from "Components/SortFilter"
-import { DEFAULT_METRIC, type Metric, getSupportedMetric } from "Utils/metrics"
+import { DEFAULT_METRIC, getSupportedMetric, type Metric } from "Utils/metrics"
 import { isArray, omit } from "lodash"
-import { useContext, useReducer, useRef, useState } from "react"
 import * as React from "react"
+import { useContext, useReducer, useRef, useState } from "react"
 import useDeepCompareEffect from "use-deep-compare-effect"
 import { hasFilters } from "./Utils/hasFilters"
 import { isDefaultFilter } from "./Utils/isDefaultFilter"
@@ -188,7 +188,7 @@ export interface ArtworkFilterContextProps {
   onFilterClick?: (
     key: keyof ArtworkFilters,
     value: string,
-    filterState: ArtworkFilters,
+    filterState: ArtworkFilters
   ) => void
 
   // Filter manipulation
@@ -283,7 +283,7 @@ export const ArtworkFilterContextProvider: React.FC<
 
   const [artworkFilterState, dispatch] = useReducer(
     artworkFilterReducer,
-    initialFilterState,
+    initialFilterState
   )
 
   const [stagedArtworkFilterState, stage] = useReducer(artworkFilterReducer, {})
@@ -324,7 +324,7 @@ export const ArtworkFilterContextProvider: React.FC<
 
   const currentlySelectedFiltersCounts = getSelectedFiltersCounts(
     currentlySelectedFilters(),
-    defaultFilters,
+    defaultFilters
   )
 
   const artworkFilterContext = {
@@ -424,7 +424,7 @@ type ArtworkFiltersAction =
 
 const artworkFilterReducer = (
   state: ArtworkFiltersState,
-  action: ArtworkFiltersAction,
+  action: ArtworkFiltersAction
 ): ArtworkFiltersState => {
   const arrayFilterTypes: Array<keyof ArtworkFilters> = [
     "sizes",
@@ -534,7 +534,7 @@ const artworkFilterReducer = (
 
 export const getSelectedFiltersCounts = (
   selectedFilters: ArtworkFilters,
-  defaultFilters: ArtworkFilters,
+  defaultFilters: ArtworkFilters
 ) => {
   const counts: Partial<SelectedFiltersCounts> = {}
   const filtersParams = Object.values(FilterParamName)

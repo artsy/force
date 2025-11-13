@@ -1,15 +1,15 @@
-import { Text } from "@artsy/palette"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import type { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { aggregationsToHistogram } from "Components/ArtworkFilter/ArtworkFilters/PriceRangeFilter"
-import { PriceRange } from "Components/PriceRange/PriceRange"
 import {
   type CustomRange,
   DEFAULT_PRICE_RANGE,
 } from "Components/PriceRange/constants"
+import { PriceRange } from "Components/PriceRange/PriceRange"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import type { PriceAggregationsQuery } from "__generated__/PriceAggregationsQuery.graphql"
+import { Text } from "@artsy/palette"
 import type { Price_artworksConnection$data } from "__generated__/Price_artworksConnection.graphql"
+import type { PriceAggregationsQuery } from "__generated__/PriceAggregationsQuery.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 
 interface PriceProps {
@@ -22,7 +22,7 @@ export const Price: React.FC<React.PropsWithChildren<PriceProps>> = ({
   const { state, dispatch } = useAlertContext()
 
   const bars = aggregationsToHistogram(
-    artworksConnection?.aggregations as Aggregations,
+    artworksConnection?.aggregations as Aggregations
   )
 
   const handlePriceRangeUpdate = (updatedValues: CustomRange) => {

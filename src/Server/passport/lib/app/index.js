@@ -33,7 +33,7 @@ module.exports = () => {
     csrf({ cookie: true }),
     onLocalLogin,
     trackLogin,
-    ssoAndRedirectBack,
+    ssoAndRedirectBack
   )
   app.post(
     opts.signupPagePath,
@@ -41,7 +41,7 @@ module.exports = () => {
     onLocalSignup,
     onLocalLogin,
     trackSignup("email"),
-    ssoAndRedirectBack,
+    ssoAndRedirectBack
   )
 
   // Apple OAuth
@@ -50,7 +50,7 @@ module.exports = () => {
     opts.appleCallbackPath,
     afterSocialAuth("apple"),
     trackSignup("apple"),
-    ssoAndRedirectBack,
+    ssoAndRedirectBack
   )
 
   // Facebook OAuth
@@ -59,7 +59,7 @@ module.exports = () => {
     opts.facebookCallbackPath,
     afterSocialAuth("facebook"),
     trackSignup("facebook"),
-    ssoAndRedirectBack,
+    ssoAndRedirectBack
   )
 
   // Google OAuth
@@ -68,7 +68,7 @@ module.exports = () => {
     opts.googleCallbackPath,
     afterSocialAuth("google"),
     trackSignup("google"),
-    ssoAndRedirectBack,
+    ssoAndRedirectBack
   )
 
   // Logout middleware

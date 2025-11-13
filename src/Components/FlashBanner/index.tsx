@@ -3,8 +3,8 @@ import { FullBleedBanner } from "Components/FullBleedBanner"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import type { FlashBannerQuery } from "__generated__/FlashBannerQuery.graphql"
 import type { FlashBanner_me$data } from "__generated__/FlashBanner_me.graphql"
+import type { FlashBannerQuery } from "__generated__/FlashBannerQuery.graphql"
 import { type FC, useMemo } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { EmailConfirmationLinkExpired } from "./EmailConfirmationLinkExpired"
@@ -77,7 +77,7 @@ export const FlashBannerFragmentContainer = createFragmentContainer(
         canRequestEmailConfirmation
       }
     `,
-  },
+  }
 )
 
 export const FlashBannerQueryRenderer: FC<

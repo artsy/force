@@ -1,6 +1,6 @@
-import { Box } from "@artsy/palette"
 import { TopContextBar } from "Components/TopContextBar"
 import { Analytics } from "System/Contexts/AnalyticsContext"
+import { Box } from "@artsy/palette"
 import type { ShowSubApp_show$data } from "__generated__/ShowSubApp_show.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"

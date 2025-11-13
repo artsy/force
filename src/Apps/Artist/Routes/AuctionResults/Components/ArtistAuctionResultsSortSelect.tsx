@@ -1,6 +1,6 @@
+import { useAuctionResultsFilterContext } from "Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
 import SortIcon from "@artsy/icons/SortIcon"
 import { Button, Dropdown, Radio, RadioGroup } from "@artsy/palette"
-import { useAuctionResultsFilterContext } from "Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
 import { type FC, useMemo } from "react"
 
 export const SORTS = [
@@ -20,7 +20,7 @@ export const ArtistAuctionResultsSortSelect: FC<
 
   const activeSort = useMemo(
     () => SORTS.find(sort => sort.value === filters.sort),
-    [filters.sort],
+    [filters.sort]
   )
 
   if (!activeSort) return null

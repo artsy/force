@@ -1,4 +1,3 @@
-import { Checkbox } from "@artsy/palette"
 import {
   SelectedFiltersCountsLabels,
   useArtworkFilterContext,
@@ -6,6 +5,7 @@ import {
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { FilterExpandable } from "Components/ArtworkFilter/ArtworkFilters/FilterExpandable"
 import { useFilterLabelCountByKey } from "Components/ArtworkFilter/Utils/useFilterLabelCountByKey"
+import { Checkbox } from "@artsy/palette"
 
 interface AvailabilityFilterProps {
   expanded?: boolean
@@ -18,7 +18,7 @@ export const AvailabilityFilter: React.FC<AvailabilityFilterProps> = ({
   const currentSelectedFilters = useCurrentlySelectedFilters()
 
   const filtersCount = useFilterLabelCountByKey(
-    SelectedFiltersCountsLabels.forSale,
+    SelectedFiltersCountsLabels.forSale
   )
   const label = `Availability${filtersCount}`
 

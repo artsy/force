@@ -1,3 +1,8 @@
+import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
+import { RouterLink } from "System/Components/RouterLink"
+import { useRouter } from "System/Hooks/useRouter"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { ContextModule } from "@artsy/cohesion"
 import {
   Column,
@@ -8,14 +13,9 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
-import { RouterLink } from "System/Components/RouterLink"
-import { useRouter } from "System/Hooks/useRouter"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import type { PartnerArtistDetailsQuery } from "__generated__/PartnerArtistDetailsQuery.graphql"
 import type { PartnerArtistDetails_partner$data } from "__generated__/PartnerArtistDetails_partner.graphql"
 import type { PartnerArtistDetails_partnerArtist$data } from "__generated__/PartnerArtistDetails_partnerArtist.graphql"
+import type { PartnerArtistDetailsQuery } from "__generated__/PartnerArtistDetailsQuery.graphql"
 import { Meta } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 import { PartnerArtistArtworksFragmentContainer } from "./PartnerArtistArtworksRail"
@@ -137,7 +137,7 @@ export const PartnerArtistDetailsFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  },
+  }
 )
 
 export const PartnerArtistDetailsRenderer: React.FC<

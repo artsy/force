@@ -26,6 +26,6 @@ export const useOrder2ExpressCheckoutUnsetOrderPaymentMethodMutation = () => {
           }
         }
       `,
-    },
+    }
   )
 }

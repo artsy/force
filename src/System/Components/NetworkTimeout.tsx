@@ -1,8 +1,8 @@
-import { useToasts } from "@artsy/palette"
 import { ErrorWithMetadata } from "Utils/errors"
 import createLogger from "Utils/logger"
-import { useEffect } from "react"
+import { useToasts } from "@artsy/palette"
 import type * as React from "react"
+import { useEffect } from "react"
 
 const logger = createLogger("Artsy/Router/NetworkTimeout")
 
@@ -17,8 +17,8 @@ export const NetworkTimeout: React.FC<
     const timeout = setTimeout(() => {
       logger.error(
         new ErrorWithMetadata(
-          `[Router/NetworkTimeout] Error: Network request timed out after ${NETWORK_TIMEOUT_MS}ms`,
-        ),
+          `[Router/NetworkTimeout] Error: Network request timed out after ${NETWORK_TIMEOUT_MS}ms`
+        )
       )
 
       sendToast({

@@ -1,9 +1,9 @@
-import { fireEvent, screen, waitFor } from "@testing-library/react"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { ImmersiveView } from "Components/ArtworkFilter/ImmersiveView"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { fireEvent, screen, waitFor } from "@testing-library/react"
+import type { ImmersiveView_filtered_artworks$data } from "__generated__/ImmersiveView_filtered_artworks.graphql"
 import type { ImmersiveViewTestQuery } from "__generated__/ImmersiveViewTestQuery.graphql"
 import { graphql } from "react-relay"
-import { ImmersiveView_filtered_artworks$data } from "__generated__/ImmersiveView_filtered_artworks.graphql"
 import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
@@ -59,11 +59,11 @@ describe("ImmersiveView", () => {
     })
 
     expect(
-      screen.queryByRole("img", { name: "Artwork 1" }),
+      screen.queryByRole("img", { name: "Artwork 1" })
     ).not.toBeInTheDocument()
 
     expect(
-      screen.getByTestId("immersive-view-blurhash-mock"),
+      screen.getByTestId("immersive-view-blurhash-mock")
     ).toBeInTheDocument()
 
     const imageComponent = screen.getByTestId("immersive-view-image")
@@ -72,11 +72,11 @@ describe("ImmersiveView", () => {
     await waitFor(() => {
       expect(screen.getByRole("img", { name: "Artwork 1" })).toHaveAttribute(
         "src",
-        "https://example.com/artwork-1.jpg",
+        "https://example.com/artwork-1.jpg"
       )
 
       expect(
-        screen.queryByTestId("immersive-view-blurhash-mock"),
+        screen.queryByTestId("immersive-view-blurhash-mock")
       ).not.toBeInTheDocument()
     })
   })
@@ -153,14 +153,14 @@ describe("ImmersiveView", () => {
   it("navigates to prev/next pages via keyboard", async () => {
     renderWithRelay(
       { FilterArtworksConnection: () => filterArtworksConnectionData },
-      { isPageLoading: false },
+      { isPageLoading: false }
     )
 
     expect(screen.queryByText("Loading more artworks…")).not.toBeInTheDocument()
 
     renderWithRelay(
       { FilterArtworksConnection: () => filterArtworksConnectionData },
-      { isPageLoading: true },
+      { isPageLoading: true }
     )
 
     expect(screen.getByText("Loading more artworks…")).toBeInTheDocument()
@@ -183,10 +183,10 @@ describe("ImmersiveView", () => {
               action: "immersiveViewArtworkDisplayed",
               context_module: "artworkGrid",
               artwork_id: "artwork-id-1",
-            }),
+            })
           )
         },
-        { timeout: 1000 },
+        { timeout: 1000 }
       )
     })
 
@@ -200,7 +200,7 @@ describe("ImmersiveView", () => {
         () => {
           expect(trackEvent).toHaveBeenCalled()
         },
-        { timeout: 1000 },
+        { timeout: 1000 }
       )
 
       trackEvent.mockClear()
@@ -215,10 +215,10 @@ describe("ImmersiveView", () => {
               action: "immersiveViewArtworkDisplayed",
               context_module: "artworkGrid",
               artwork_id: "artwork-id-2",
-            }),
+            })
           )
         },
-        { timeout: 1000 },
+        { timeout: 1000 }
       )
     })
 
@@ -232,7 +232,7 @@ describe("ImmersiveView", () => {
         () => {
           expect(trackEvent).toHaveBeenCalled()
         },
-        { timeout: 1000 },
+        { timeout: 1000 }
       )
 
       // Navigate to second artwork first
@@ -244,10 +244,10 @@ describe("ImmersiveView", () => {
           expect(trackEvent).toHaveBeenCalledWith(
             expect.objectContaining({
               artwork_id: "artwork-id-2",
-            }),
+            })
           )
         },
-        { timeout: 1000 },
+        { timeout: 1000 }
       )
 
       trackEvent.mockClear()
@@ -263,10 +263,10 @@ describe("ImmersiveView", () => {
               action: "immersiveViewArtworkDisplayed",
               context_module: "artworkGrid",
               artwork_id: "artwork-id-1",
-            }),
+            })
           )
         },
-        { timeout: 1000 },
+        { timeout: 1000 }
       )
     })
 
@@ -280,7 +280,7 @@ describe("ImmersiveView", () => {
         () => {
           expect(trackEvent).toHaveBeenCalled()
         },
-        { timeout: 1000 },
+        { timeout: 1000 }
       )
 
       trackEvent.mockClear()
@@ -301,7 +301,7 @@ describe("ImmersiveView", () => {
           action: "immersiveViewArtworkDisplayed",
           context_module: "artworkGrid",
           artwork_id: "artwork-id-3",
-        }),
+        })
       )
     })
 
@@ -321,7 +321,7 @@ describe("ImmersiveView", () => {
           destination_page_owner_type: "artwork",
           destination_page_owner_slug: "artwork-1",
           type: "immersive",
-        }),
+        })
       )
     })
   })

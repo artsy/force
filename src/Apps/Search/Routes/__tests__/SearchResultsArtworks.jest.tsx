@@ -1,5 +1,3 @@
-import { screen } from "@testing-library/react"
-import { SearchResultsArtworksRouteFragmentContainer as SearchResultsArtworks } from "Apps/Search/Routes/SearchResultsArtworks"
 import {
   artistAggregation,
   artistNationalityAggregation,
@@ -8,8 +6,10 @@ import {
   mediumAggregation,
   partnerAggregation,
 } from "Apps/__tests__/Fixtures/aggregations"
+import { SearchResultsArtworksRouteFragmentContainer as SearchResultsArtworks } from "Apps/Search/Routes/SearchResultsArtworks"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import type { SearchResultsArtworks_Query } from "__generated__/SearchResultsArtworks_Query.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -91,7 +91,7 @@ describe("SearchResultsArtworks", () => {
     expect(screen.getByText("Ways to Buy")).toBeInTheDocument()
     expect(screen.getByText("Material")).toBeInTheDocument()
     expect(
-      screen.getByText("Artist Nationality or Ethnicity"),
+      screen.getByText("Artist Nationality or Ethnicity")
     ).toBeInTheDocument()
     expect(screen.getByText("Artwork Location")).toBeInTheDocument()
     expect(screen.getByText("Time Period")).toBeInTheDocument()

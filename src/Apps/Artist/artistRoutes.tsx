@@ -1,5 +1,5 @@
-import loadable from "@loadable/component"
 import type { RouteProps } from "System/Router/Route"
+import loadable from "@loadable/component"
 import { RedirectException } from "found"
 import { graphql } from "react-relay"
 import { enableArtistPageCTA } from "./Server/enableArtistPageCTA"
@@ -7,18 +7,18 @@ import { redirectAuctionResultsParamsToNamespace } from "./Server/redirect"
 
 const ArtistApp = loadable(
   () => import(/* webpackChunkName: "artistBundle" */ "./ArtistApp"),
-  { resolveComponent: component => component.ArtistAppFragmentContainer },
+  { resolveComponent: component => component.ArtistAppFragmentContainer }
 )
 
 const ArtistSubApp = loadable(
   () => import(/* webpackChunkName: "artistBundle" */ "./ArtistSubApp"),
-  { resolveComponent: component => component.ArtistSubAppFragmentContainer },
+  { resolveComponent: component => component.ArtistSubAppFragmentContainer }
 )
 
 const CVRoute = loadable(
   () =>
     import(/* webpackChunkName: "artistBundle" */ "./Routes/CV/ArtistCVRoute"),
-  { resolveComponent: component => component.ArtistCVRouteFragmentContainer },
+  { resolveComponent: component => component.ArtistCVRouteFragmentContainer }
 )
 
 const ArticlesRoute = loadable(
@@ -29,7 +29,7 @@ const ArticlesRoute = loadable(
   {
     resolveComponent: component =>
       component.ArtistArticlesRouteFragmentContainer,
-  },
+  }
 )
 
 const ArtistSeriesRoute = loadable(
@@ -40,7 +40,7 @@ const ArtistSeriesRoute = loadable(
   {
     resolveComponent: component =>
       component.ArtistArtistSeriesRouteFragmentContainer,
-  },
+  }
 )
 
 const ShowsRoute = loadable(
@@ -50,7 +50,7 @@ const ShowsRoute = loadable(
     ),
   {
     resolveComponent: component => component.ArtistShowsRouteFragmentContainer,
-  },
+  }
 )
 
 const AuctionResultRoute = loadable(
@@ -58,7 +58,7 @@ const AuctionResultRoute = loadable(
     import(
       /* webpackChunkName: "artistBundle" */ "./Routes/AuctionResults/SingleAuctionResultPage/AuctionResult"
     ),
-  { resolveComponent: component => component.AuctionResultFragmentContainer },
+  { resolveComponent: component => component.AuctionResultFragmentContainer }
 )
 
 const ArtistABTestRoute = loadable(
@@ -66,7 +66,7 @@ const ArtistABTestRoute = loadable(
     import(/* webpackChunkName: "artistBundle" */ "./Routes/ArtistABTestRoute"),
   {
     resolveComponent: component => component.ArtistABTestRouteFragmentContainer,
-  },
+  }
 )
 
 export const artistRoutes: RouteProps[] = [
@@ -200,7 +200,7 @@ export const artistRoutes: RouteProps[] = [
         render: ({ match }) => {
           throw new RedirectException(
             `/artist/${match.params.artistID}${match.location.search}`,
-            301,
+            301
           )
         },
       },

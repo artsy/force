@@ -40,7 +40,7 @@ describe("ArtistCVRoute", () => {
     })
 
     expect(container.textContent).toContain(
-      'Fair booths<mock-value-for-field-"startAt"><mock-value-for-field-"name">, <mock-value-for-field-"name">',
+      'Fair booths<mock-value-for-field-"startAt"><mock-value-for-field-"name">, <mock-value-for-field-"name">'
     )
   })
 })

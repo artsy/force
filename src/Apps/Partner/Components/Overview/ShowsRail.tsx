@@ -1,6 +1,6 @@
-import { Box, type BoxProps, Flex, Shelf, Text } from "@artsy/palette"
 import { CellShowFragmentContainer } from "Components/Cells/CellShow"
 import { extractNodes } from "Utils/extractNodes"
+import { Box, type BoxProps, Flex, Shelf, Text } from "@artsy/palette"
 import type { ShowsRail_partner$data } from "__generated__/ShowsRail_partner.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ViewAllButton } from "./ViewAllButton"

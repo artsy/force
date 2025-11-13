@@ -98,8 +98,8 @@ export const bootstrapSharify = () => {
       "USER_PREFERENCES",
       "VOLLEY_ENDPOINT",
       "WEBFONT_URL",
-      "X_THEME_HEADER",
-    ),
+      "X_THEME_HEADER"
+    )
   )
 
   // @ts-expect-error - sharify.data is "read only"

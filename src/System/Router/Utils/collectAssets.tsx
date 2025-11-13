@@ -1,11 +1,11 @@
-import path from "path"
-import { ChunkExtractor } from "@loadable/server"
 import { ENABLE_SSR_STREAMING } from "Server/config"
 import { loadAssetManifest } from "Server/manifest"
 import type { ArtsyRequest } from "Server/middleware/artsyExpress"
 import { renderToStream } from "System/Router/Utils/renderToStream"
 import { serializeRelayHydrationData } from "System/Router/Utils/serializeRelayHydrationData"
 import { getENV } from "Utils/getENV"
+import { ChunkExtractor } from "@loadable/server"
+import path from "path"
 import { renderToString } from "react-dom/server"
 import type { Environment } from "react-relay"
 import type RelayServerSSR from "react-relay-network-modern-ssr/lib/server"
@@ -29,10 +29,10 @@ export const collectAssets = async ({
   const statsFile = (() => {
     try {
       return path.resolve(process.cwd(), "dist", "loadable-stats.json")
-    } catch (error) {
+    } catch (_error) {
       console.error(
         "[system/router/serverRouter.tsx] Error:",
-        "Missing loadable-stats.json file",
+        "Missing loadable-stats.json file"
       )
     }
   })()
@@ -99,20 +99,20 @@ export const collectAssets = async ({
           if (getENV("CDN_URL")) {
             const scriptTagWithCDN = script.replace(
               /src="\/assets/g,
-              `src="${assetPublicPath}`,
+              `src="${assetPublicPath}`
             )
             return scriptTagWithCDN
           } else {
             return script
           }
         })
-        .join("\n"),
+        .join("\n")
     )
 
     initialScripts.push(`
       <script>
         var __RELAY_HYDRATION_DATA__ = ${serializeRelayHydrationData(
-          initialRelayData,
+          initialRelayData
         )};
       </script>
     `)

@@ -1,6 +1,14 @@
+import { useArticleTracking } from "Apps/Article/useArticleTracking"
+import { AppContainer } from "Apps/Components/AppContainer"
+import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
+import { ArticleShare } from "Components/ArticleShare"
+import { useFullBleedHeaderHeight } from "Components/FullBleedHeader/FullBleedHeader"
+import { RouterLink } from "System/Components/RouterLink"
+import { useMode } from "Utils/Hooks/useMode"
 import {
   Box,
   type BoxProps,
+  boxMixin,
   Clickable,
   Column,
   Flex,
@@ -10,16 +18,8 @@ import {
   Image,
   Spacer,
   Text,
-  boxMixin,
 } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
-import { useArticleTracking } from "Apps/Article/useArticleTracking"
-import { AppContainer } from "Apps/Components/AppContainer"
-import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
-import { ArticleShare } from "Components/ArticleShare"
-import { useFullBleedHeaderHeight } from "Components/FullBleedHeader/FullBleedHeader"
-import { RouterLink } from "System/Components/RouterLink"
-import { useMode } from "Utils/Hooks/useMode"
 import type { ArticleVideo_article$data } from "__generated__/ArticleVideo_article.graphql"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -261,7 +261,7 @@ export const ArticleVideoFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  },
+  }
 )
 
 const Cover = styled(Clickable)`

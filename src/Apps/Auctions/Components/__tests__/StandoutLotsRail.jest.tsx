@@ -1,6 +1,6 @@
-import { fireEvent, screen } from "@testing-library/react"
 import { StandoutLotsRailFragmentContainer } from "Apps/Auctions/Components/StandoutLotsRail"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { fireEvent, screen } from "@testing-library/react"
 import { graphql } from "react-relay"
 import { useTracking as baseUseTracking } from "react-tracking"
 
@@ -40,7 +40,7 @@ describe("StandoutLotsRail", () => {
     })
 
     expect(
-      screen.queryByText("Works that Artsy curators love"),
+      screen.queryByText("Works that Artsy curators love")
     ).not.toBeInTheDocument()
     expect(screen.getByText("No Works To Show")).toBeInTheDocument()
     expect(screen.queryByTestId("ShelfArtwork")).not.toBeInTheDocument()
@@ -54,7 +54,7 @@ describe("StandoutLotsRail", () => {
     })
 
     expect(
-      screen.queryByText("Works that Artsy Curators love"),
+      screen.queryByText("Works that Artsy Curators love")
     ).not.toBeInTheDocument()
     expect(screen.queryByText("No Works To Show")).toBeInTheDocument()
     expect(screen.queryByTestId("ShelfArtwork")).not.toBeInTheDocument()
@@ -67,7 +67,7 @@ describe("StandoutLotsRail", () => {
       }),
     })
     expect(
-      screen.getByText("Works that Artsy curators love"),
+      screen.getByText("Works that Artsy curators love")
     ).toBeInTheDocument()
     expect(screen.queryByText("No Works To Show")).not.toBeInTheDocument()
     expect(screen.queryByTestId("ShelfArtwork")).toBeInTheDocument()
@@ -87,7 +87,7 @@ describe("StandoutLotsRail", () => {
       new MouseEvent("click", {
         bubbles: true,
         cancelable: true,
-      }),
+      })
     )
 
     expect(trackEvent.mock.calls[0]).toMatchInlineSnapshot(`

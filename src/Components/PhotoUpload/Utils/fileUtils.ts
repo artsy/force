@@ -8,7 +8,7 @@ import { uploadFileToS3 } from "./uploadFileToS3"
 export const AUTOMATICALLY_ADDED_PHOTO_NAME = "Automatically added"
 
 export const KBSize = 1000
-export const MBSize = Math.pow(KBSize, 2)
+export const MBSize = KBSize ** 2
 const NO_SIZE = ""
 
 export function formatFileSize(photo: {
@@ -57,7 +57,7 @@ interface ExternalFile {
 export function normalizePhoto(
   file: File | ExternalFile,
   errorMessage?: string,
-  externalUrl?: string,
+  externalUrl?: string
 ): Photo {
   return {
     id: uuid(),
@@ -80,7 +80,7 @@ export enum CustomErrorCode {
 }
 
 export const getErrorMessage = (
-  fileRejection: FileRejection,
+  fileRejection: FileRejection
 ): string | undefined => {
   const errorCodes = fileRejection.errors.map(e => e.code)
   let errorMessage: string | undefined
@@ -100,7 +100,7 @@ export const uploadPhotoToS3 = async (
   relayEnvironment: Environment,
   photo: Photo,
   updateProgress: (progress: number) => void,
-  acl = "private",
+  acl = "private"
 ) => {
   // TODO: We shouldn't be using a convection-named key for general photo
   // uploads.
@@ -111,7 +111,7 @@ export const uploadPhotoToS3 = async (
     {
       acl,
       name: convectionKey || "",
-    },
+    }
   )
 
   if (!assetCredentials) {

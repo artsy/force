@@ -1,7 +1,7 @@
-import { screen } from "@testing-library/react"
 import { CategoriesAppFragmentContainer } from "Apps/Categories/CategoriesApp"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import type { CategoriesApp_Test_Query } from "__generated__/CategoriesApp_Test_Query.graphql"
 import { graphql } from "react-relay"
 
@@ -52,7 +52,7 @@ describe("CategoriesApp", () => {
     })
 
     expect(
-      screen.getByRole("heading", { name: "Styles and Movements" }),
+      screen.getByRole("heading", { name: "Styles and Movements" })
     ).toBeInTheDocument()
   })
 })

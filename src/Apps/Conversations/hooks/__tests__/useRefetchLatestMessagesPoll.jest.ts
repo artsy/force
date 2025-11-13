@@ -1,7 +1,7 @@
-import { renderHook } from "@testing-library/react-hooks"
 import { useRefetchLatestMessagesPoll } from "Apps/Conversations/hooks/useRefetchLatestMessagesPoll"
 import { usePoll } from "Utils/Hooks/usePoll"
 import { useTabVisible } from "Utils/Hooks/useTabVisible"
+import { renderHook } from "@testing-library/react-hooks"
 
 jest.mock("Utils/getENV", () => ({
   getENV: jest.fn().mockReturnValue(true),

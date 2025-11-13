@@ -1,8 +1,8 @@
-import { Join, Spacer } from "@artsy/palette"
 import { useFormContext } from "Apps/Invoice/Hooks/useFormContext"
 import { AddressFormFields } from "Components/Address/AddressFormFields"
 import type { Address } from "Components/Address/utils"
 import { CreditCardInput } from "Components/CreditCardInput"
+import { Join, Spacer } from "@artsy/palette"
 
 export interface AddressFormValues {
   address: Address

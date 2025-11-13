@@ -1,9 +1,9 @@
-import { screen } from "@testing-library/react"
-import userEvent from "@testing-library/user-event"
 import { InvoiceDetailRoute } from "Apps/Invoice/Routes/InvoiceDetailRoute"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useRouter } from "System/Hooks/useRouter"
+import { screen } from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
 import type { InvoiceDetailRoute_Test_Query } from "__generated__/InvoiceDetailRoute_Test_Query.graphql"
 import { graphql } from "react-relay"
 
@@ -83,7 +83,7 @@ describe("InvoiceDetailRoute", () => {
 
     expect(screen.getByRole("link", { name: "Make Payment" })).toHaveAttribute(
       "href",
-      "/invoice/cool-token/payment",
+      "/invoice/cool-token/payment"
     )
   })
 })

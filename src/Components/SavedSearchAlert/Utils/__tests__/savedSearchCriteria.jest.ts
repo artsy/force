@@ -1,11 +1,11 @@
-import { OwnerType } from "@artsy/cohesion"
 import type { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes"
+import type { SavedSearchEntity } from "Components/SavedSearchAlert/types"
 import {
   getSearchCriteriaFromFilters,
   isDefaultValue,
   parseDefaultCriteria,
 } from "Components/SavedSearchAlert/Utils/savedSearchCriteria"
-import type { SavedSearchEntity } from "Components/SavedSearchAlert/types"
+import { OwnerType } from "@artsy/cohesion"
 
 const mockedSavedSearchEntity: SavedSearchEntity = {
   defaultCriteria: {
@@ -46,7 +46,7 @@ describe("getSearchCriteriaFromFilters", () => {
   it("returns correct criteria", () => {
     const result = getSearchCriteriaFromFilters(
       mockedSavedSearchEntity,
-      mockedFilters,
+      mockedFilters
     )
 
     expect(result).toEqual(
@@ -56,7 +56,7 @@ describe("getSearchCriteriaFromFilters", () => {
         colors: ["black"],
         inquireableOnly: true,
         priceRange: "1000-5000",
-      }),
+      })
     )
   })
 
@@ -86,7 +86,7 @@ describe("getSearchCriteriaFromFilters", () => {
         colors: ["black"],
         inquireableOnly: true,
         priceRange: "1000-5000",
-      }),
+      })
     )
   })
 })

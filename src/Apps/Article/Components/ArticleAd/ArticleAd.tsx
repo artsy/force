@@ -1,3 +1,5 @@
+import { ArticleAdBaner } from "Apps/Article/Components/ArticleAd/ArticleAdBanner"
+import { useCookieConsentManager } from "Components/CookieConsentManager/CookieConsentManagerContext"
 import {
   Box,
   type BoxProps,
@@ -5,8 +7,6 @@ import {
   ResponsiveBox,
   Text,
 } from "@artsy/palette"
-import { ArticleAdBaner } from "Apps/Article/Components/ArticleAd/ArticleAdBanner"
-import { useCookieConsentManager } from "Components/CookieConsentManager/CookieConsentManagerContext"
 import { type FC, memo } from "react"
 import { DFPSlotsProvider } from "react-dfp"
 import type { AdSize, AdUnit } from "./types"
@@ -60,7 +60,7 @@ export const ArticleAd: FC<React.PropsWithChildren<ArticleAdProps>> = memo(
         </Text>
       </Box>
     )
-  },
+  }
 )
 
 ArticleAd.displayName = "ArticleAd"

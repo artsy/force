@@ -6,7 +6,7 @@ import type {
 export const getServerAppContext = (
   req: ArtsyRequest,
   res: ArtsyResponse,
-  context: { injectedData?: object } = {},
+  context: { injectedData?: object } = {}
 ) => {
   return {
     initialMatchingMediaQueries: res.locals.sd.IS_MOBILE ? ["xs"] : undefined,

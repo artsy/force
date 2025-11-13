@@ -1,4 +1,3 @@
-import type { BoxProps } from "@artsy/palette"
 import { BaseArtworkFilter } from "Components/ArtworkFilter"
 import {
   ArtworkFilterContextProvider,
@@ -12,14 +11,15 @@ import { LazyArtworkGrid } from "Components/ArtworkGrid/LazyArtworkGrid"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import type { ShowArtworksFilterQuery } from "__generated__/ShowArtworksFilterQuery.graphql"
+import type { BoxProps } from "@artsy/palette"
 import type { ShowArtworks_show$data } from "__generated__/ShowArtworks_show.graphql"
+import type { ShowArtworksFilterQuery } from "__generated__/ShowArtworksFilterQuery.graphql"
 import { omit } from "lodash"
 import type * as React from "react"
 import {
-  type RelayRefetchProp,
   createRefetchContainer,
   graphql,
+  type RelayRefetchProp,
 } from "react-relay"
 
 interface ShowArtworksFilterProps extends BoxProps {
@@ -46,7 +46,7 @@ const ShowArtworksFilter: React.FC<
       sort: "partner_show_position",
       ...(match && match.location.query),
     },
-    "from_show_guide", // TODO: Investigate if we need this param.
+    "from_show_guide" // TODO: Investigate if we need this param.
   )
 
   return (
@@ -128,7 +128,7 @@ export const ShowArtworksRefetchContainer = createRefetchContainer(
         ...ShowArtworks_show @arguments(input: $input)
       }
     }
-  `,
+  `
 )
 
 type ShowArtworkFilterQueryRendererProps = {}

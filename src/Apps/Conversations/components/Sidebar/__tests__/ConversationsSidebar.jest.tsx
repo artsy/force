@@ -1,6 +1,6 @@
-import { screen } from "@testing-library/react"
 import { ConversationsSidebarPaginationContainer } from "Apps/Conversations/components/Sidebar/ConversationsSidebar"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import type { ConversationsSidebarTestQuery } from "__generated__/ConversationsSidebarTestQuery.graphql"
 import { graphql } from "react-relay"
 
@@ -32,7 +32,7 @@ describe("ConversationDetails", () => {
           }
         }
       `,
-    },
+    }
   )
 
   beforeEach(() => {
@@ -67,7 +67,7 @@ describe("ConversationDetails", () => {
     })
 
     expect(
-      screen.getByText("All conversations with galleries will show here."),
+      screen.getByText("All conversations with galleries will show here.")
     ).toBeInTheDocument()
   })
 })

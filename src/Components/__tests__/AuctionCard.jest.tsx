@@ -7,25 +7,25 @@ const now = () => DateTime.fromISO("2019-04-16").setZone("America/New_York")
 describe("relativeTime", () => {
   it("formats properly when >= 1 day", () => {
     expect(
-      relativeTime(now().plus({ hours: 25 }), now()),
+      relativeTime(now().plus({ hours: 25 }), now())
     ).toMatchInlineSnapshot(`"1d"`)
   })
 
   it("formats properly when >= 1 hours", () => {
     expect(
-      relativeTime(now().plus({ minutes: 61 }), now()),
+      relativeTime(now().plus({ minutes: 61 }), now())
     ).toMatchInlineSnapshot(`"1h"`)
   })
 
   it("formats properly when >= 1 minutes", () => {
     expect(
-      relativeTime(now().plus({ seconds: 61 }), now()),
+      relativeTime(now().plus({ seconds: 61 }), now())
     ).toMatchInlineSnapshot(`"1m"`)
   })
 
   it("formats properly otherwise", () => {
     expect(
-      relativeTime(now().plus({ seconds: 1 }), now()),
+      relativeTime(now().plus({ seconds: 1 }), now())
     ).toMatchInlineSnapshot(`"1s"`)
   })
 })
@@ -65,8 +65,8 @@ describe("upcomingLabel", () => {
           isPreview: true,
           startAt: now().plus({ hours: 25 }).toISO(),
         },
-        now(),
-      ),
+        now()
+      )
     ).toMatchInlineSnapshot(`"Opens in 1d"`)
   })
 
@@ -75,7 +75,7 @@ describe("upcomingLabel", () => {
       upcomingLabel({
         ...sale,
         isClosed: true,
-      }),
+      })
     ).toMatchInlineSnapshot(`"Auction closed"`)
   })
 
@@ -88,8 +88,8 @@ describe("upcomingLabel", () => {
             isLiveOpen: true,
             liveStartAt: now().minus({ minutes: 1 }).toISO(),
           },
-          now(),
-        ),
+          now()
+        )
       ).toMatchInlineSnapshot(`"In progress"`)
     })
 
@@ -100,8 +100,8 @@ describe("upcomingLabel", () => {
             ...sale,
             liveStartAt: now().plus({ days: 1 }).toISO(),
           },
-          now(),
-        ),
+          now()
+        )
       ).toMatchInlineSnapshot(`"Register by Apr 17"`)
     })
 
@@ -113,8 +113,8 @@ describe("upcomingLabel", () => {
             isRegistrationClosed: true,
             liveStartAt: now().plus({ days: 1 }).toISO(),
           },
-          now(),
-        ),
+          now()
+        )
       ).toMatchInlineSnapshot(`"Live in 1d"`)
     })
 
@@ -126,8 +126,8 @@ describe("upcomingLabel", () => {
             registrationStatus: { internalID: "" },
             liveStartAt: now().plus({ days: 1 }).toISO(),
           },
-          now(),
-        ),
+          now()
+        )
       ).toMatchInlineSnapshot(`"Live in 1d"`)
     })
   })

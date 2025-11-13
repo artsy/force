@@ -1,5 +1,3 @@
-import { useDismissibleContext } from "@artsy/dismissible"
-import { Text } from "@artsy/palette"
 import { Z } from "Apps/Components/constants"
 import { ProgressiveOnboardingPopover } from "Components/ProgressiveOnboarding/ProgressiveOnboardingPopover"
 import { PROGRESSIVE_ONBOARDING } from "Components/ProgressiveOnboarding/progressiveOnboardingKeys"
@@ -7,6 +5,8 @@ import {
   type WithProgressiveOnboardingCountsProps,
   withProgressiveOnboardingCounts,
 } from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
+import { useDismissibleContext } from "@artsy/dismissible"
+import { Text } from "@artsy/palette"
 import type { FC } from "react"
 
 const ALERTS = {
@@ -54,5 +54,5 @@ export const __ProgressiveOnboardingSaveFind__: FC<
 }
 
 export const ProgressiveOnboardingSaveFind = withProgressiveOnboardingCounts(
-  __ProgressiveOnboardingSaveFind__,
+  __ProgressiveOnboardingSaveFind__
 )

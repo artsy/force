@@ -1,7 +1,7 @@
 import { CollectionsRailFixture } from "Apps/__tests__/Fixtures/Collections"
 import { RelatedCollectionEntity } from "Components/RelatedCollectionsRail/RelatedCollectionEntity"
 import { AnalyticsCombinedContextProvider } from "System/Contexts/AnalyticsContext"
-import { render, screen, fireEvent } from "@testing-library/react"
+import { fireEvent, render, screen } from "@testing-library/react"
 import { useTracking } from "react-tracking"
 
 jest.mock("react-tracking")
@@ -29,7 +29,7 @@ describe.skip("RelatedCollectionEntity", () => {
         path="/collection/slug"
       >
         <RelatedCollectionEntity {...passedProps} />
-      </AnalyticsCombinedContextProvider>,
+      </AnalyticsCombinedContextProvider>
     )
   }
 
@@ -45,7 +45,7 @@ describe.skip("RelatedCollectionEntity", () => {
 
     const artworkImage = images[0]
     expect(artworkImage.getAttribute("src")).toBe(
-      "https://d32dm0rphc51dk.cloudfront.net/4izTOpDv-ew-g1RFXeREcQ/small.jpg",
+      "https://d32dm0rphc51dk.cloudfront.net/4izTOpDv-ew-g1RFXeREcQ/small.jpg"
     )
     expect(artworkImage.getAttribute("alt")).toBe("Flag")
   })

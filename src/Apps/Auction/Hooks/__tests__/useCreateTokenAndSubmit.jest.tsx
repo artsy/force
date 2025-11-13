@@ -1,6 +1,3 @@
-import { useElements, useStripe } from "@stripe/react-stripe-js"
-/* eslint-disable react-hooks/rules-of-hooks */
-import { renderHook } from "@testing-library/react-hooks"
 import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
 import {
   type UseCreateTokenAndSubmitProps,
@@ -10,6 +7,9 @@ import { useAddCreditCardAndUpdateProfile } from "Apps/Auction/Queries/useAddCre
 import { useCreateBidder } from "Apps/Auction/Queries/useCreateBidder"
 import { useRefreshUserData } from "Apps/Auction/Queries/useRefreshUserData"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
+import { useElements, useStripe } from "@stripe/react-stripe-js"
+/* eslint-disable react-hooks/rules-of-hooks */
+import { renderHook } from "@testing-library/react-hooks"
 
 jest.mock("Components/Address/utils", () => {
   const actual = jest.requireActual("Components/Address/utils")
@@ -195,7 +195,7 @@ describe("useCreateTokenAndSubmit", () => {
               phone: values.phoneNumber,
             },
           },
-        }),
+        })
       )
     })
   })
@@ -223,7 +223,7 @@ describe("useCreateTokenAndSubmit", () => {
             saleID: props.sale.slug,
           },
         },
-      }),
+      })
     )
   })
 
@@ -242,7 +242,7 @@ describe("useCreateTokenAndSubmit", () => {
     expect(spy).toHaveBeenCalledWith(
       expect.objectContaining({
         bidderID: "bidderInternalID",
-      }),
+      })
     )
   })
 

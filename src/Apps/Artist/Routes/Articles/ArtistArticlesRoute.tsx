@@ -1,18 +1,18 @@
-import { Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import { CellArticleFragmentContainer } from "Components/Cells/CellArticle"
 import { EmptyState } from "Components/EmptyState"
 import { LoadingArea } from "Components/LoadingArea"
 import { PaginationFragmentContainer } from "Components/Pagination"
-import { Jump } from "Utils/Hooks/useJump"
 import { extractNodes } from "Utils/extractNodes"
+import { Jump } from "Utils/Hooks/useJump"
+import { Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import type { ArtistArticlesRoute_artist$data } from "__generated__/ArtistArticlesRoute_artist.graphql"
 import type * as React from "react"
 import { useState } from "react"
 import { Title } from "react-head"
 import {
-  type RelayRefetchProp,
   createRefetchContainer,
   graphql,
+  type RelayRefetchProp,
 } from "react-relay"
 
 interface ArtistArticlesRouteProps {
@@ -113,5 +113,5 @@ export const ArtistArticlesRouteFragmentContainer = createRefetchContainer(
         ...ArtistArticlesRoute_artist @arguments(page: $page)
       }
     }
-  `,
+  `
 )

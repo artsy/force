@@ -1,6 +1,6 @@
 import { DedicatedArticlesBreadcrumbsFragmentContainer } from "Apps/FairOrginizer/Components/DedicatedArticlesBreadcrumbs"
-import { screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import type { DedicatedArticlesBreadcrumbsTestQuery } from "__generated__/DedicatedArticlesBreadcrumbsTestQuery.graphql"
 import { graphql } from "react-relay"
 
@@ -59,7 +59,7 @@ describe("DedicatedArticlesBreadcrumbs", () => {
     expect(images.length).toBeGreaterThan(0)
     expect(images[0]).toHaveAttribute(
       "src",
-      expect.stringContaining("some-src"),
+      expect.stringContaining("some-src")
     )
   })
 

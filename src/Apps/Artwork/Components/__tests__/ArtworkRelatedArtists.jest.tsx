@@ -1,6 +1,6 @@
-import { fireEvent, render } from "@testing-library/react"
-import { ArtworkRelatedArtists } from "Apps/Artwork/Components/ArtworkRelatedArtists"
 import { ArtworkRelatedArtistsFixture } from "Apps/__tests__/Fixtures/Artwork/ArtworkRelatedArtists.fixture"
+import { ArtworkRelatedArtists } from "Apps/Artwork/Components/ArtworkRelatedArtists"
+import { fireEvent, render } from "@testing-library/react"
 import { useTracking } from "react-tracking"
 
 jest.mock("react-tracking")
@@ -8,7 +8,7 @@ jest.mock("react-tracking")
 describe("ArtworkRelatedArtists", () => {
   const getWrapper = props => {
     return render(
-      <ArtworkRelatedArtists relay={{ hasMore: () => true }} {...props} />,
+      <ArtworkRelatedArtists relay={{ hasMore: () => true }} {...props} />
     )
   }
 

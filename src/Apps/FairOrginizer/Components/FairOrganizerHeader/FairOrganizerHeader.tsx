@@ -1,10 +1,10 @@
-import { Box, Column, Flex, GridColumns, Spacer, Text } from "@artsy/palette"
 import { FairOrganizerFollowButtonFragmentContainer as FairOrganizerFollowButton } from "Apps/FairOrginizer/Components/FairOrganizerFollowButton"
 import { HeaderIcon } from "Components/HeaderIcon"
 import { Timer } from "Components/Timer"
 import { RouterLink } from "System/Components/RouterLink"
-import { useCurrentTime } from "Utils/Hooks/useCurrentTime"
 import { extractNodes } from "Utils/extractNodes"
+import { useCurrentTime } from "Utils/Hooks/useCurrentTime"
+import { Box, Column, Flex, GridColumns, Spacer, Text } from "@artsy/palette"
 import type { FairOrganizerHeader_fairOrganizer$data } from "__generated__/FairOrganizerHeader_fairOrganizer.graphql"
 import { DateTime } from "luxon"
 import type * as React from "react"
@@ -116,5 +116,5 @@ export const FairOrganizerHeaderFragmentContainer = createFragmentContainer(
         ...FairOrganizerInfo_fairOrganizer
       }
     `,
-  },
+  }
 )

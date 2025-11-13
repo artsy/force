@@ -1,3 +1,9 @@
+import { useCCPARequest } from "Components/CCPARequest"
+import { RouterLink, type RouterLinkProps } from "System/Components/RouterLink"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { useDarkModeToggle } from "Utils/Hooks/useDarkModeToggle"
+import { Device, DOWNLOAD_APP_URLS } from "Utils/Hooks/useDeviceDetection"
+import { Media } from "Utils/Responsive"
 import ArtsyMarkIcon from "@artsy/icons/ArtsyMarkIcon"
 import CheckmarkStrokeIcon from "@artsy/icons/CheckmarkStrokeIcon"
 import EmptyCheckCircleIcon from "@artsy/icons/EmptyCheckCircleIcon"
@@ -14,6 +20,7 @@ import YouTubeIcon from "@artsy/icons/YouTubeIcon"
 import {
   Box,
   type BoxProps,
+  boxMixin,
   Clickable,
   Column,
   Dropdown,
@@ -25,15 +32,8 @@ import {
   Spacer,
   Stack,
   Text,
-  boxMixin,
 } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
-import { useCCPARequest } from "Components/CCPARequest"
-import { RouterLink, type RouterLinkProps } from "System/Components/RouterLink"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { useDarkModeToggle } from "Utils/Hooks/useDarkModeToggle"
-import { DOWNLOAD_APP_URLS, Device } from "Utils/Hooks/useDeviceDetection"
-import { Media } from "Utils/Responsive"
 import type * as React from "react"
 import styled from "styled-components"
 import { FooterDownloadAppBanner } from "./FooterDownloadAppBanner"

@@ -1,13 +1,13 @@
-import AddIcon from "@artsy/icons/AddIcon"
-import CloseIcon from "@artsy/icons/CloseIcon"
-import SearchIcon from "@artsy/icons/SearchIcon"
-import { Box, Button, Clickable, LabeledInput, Stack } from "@artsy/palette"
 import { CollectorProfileArtistsList } from "Apps/CollectorProfile/Components/CollectorProfileArtists/CollectorProfileArtistsList"
 import { CollectorProfileArtistsListHeader } from "Apps/CollectorProfile/Components/CollectorProfileArtists/CollectorProfileArtistsListHeader"
 import { CollectorProfileArtistsSearchResults } from "Apps/CollectorProfile/Components/CollectorProfileArtists/CollectorProfileArtistsSearchResults"
 import { CollectorProfileArtistsAddDialog } from "Components/CollectorProfile/CollectorProfileArtistsAddDialog"
 import { MetaTags } from "Components/MetaTags"
 import { useRouter } from "System/Hooks/useRouter"
+import AddIcon from "@artsy/icons/AddIcon"
+import CloseIcon from "@artsy/icons/CloseIcon"
+import SearchIcon from "@artsy/icons/SearchIcon"
+import { Box, Button, Clickable, LabeledInput, Stack } from "@artsy/palette"
 import { type FC, useRef, useState } from "react"
 
 type CollectorProfileArtistsRouteProps = {}

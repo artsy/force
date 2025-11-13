@@ -6,8 +6,8 @@ const Strategy = require("../lib/strategy")
 // FIXME:
 describe.skip("Strategy", () => {
   describe("failing authentication", () => {
-    const strategy = new Strategy((username, password, otp, done) =>
-      done(null, false),
+    const strategy = new Strategy((_username, _password, _otp, done) =>
+      done(null, false)
     )
 
     let info
@@ -35,8 +35,8 @@ describe.skip("Strategy", () => {
   })
 
   describe("failing authentication with info", () => {
-    const strategy = new Strategy((username, password, otp, done) =>
-      done(null, false, { message: "authentication failed" }),
+    const strategy = new Strategy((_username, _password, _otp, done) =>
+      done(null, false, { message: "authentication failed" })
     )
 
     let info

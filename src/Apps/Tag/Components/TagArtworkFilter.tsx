@@ -1,8 +1,8 @@
 import { BaseArtworkFilter } from "Components/ArtworkFilter"
 import {
   ArtworkFilterContextProvider,
-  type SharedArtworkFilterContextProps,
   initialArtworkFilterState,
+  type SharedArtworkFilterContextProps,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { ArtworkFilterPlaceholder } from "Components/ArtworkFilter/ArtworkFilterPlaceholder"
 import { allowedFilters } from "Components/ArtworkFilter/Utils/allowedFilters"
@@ -12,13 +12,13 @@ import { LazyArtworkGrid } from "Components/ArtworkGrid/LazyArtworkGrid"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import type { TagArtworkFilterQuery } from "__generated__/TagArtworkFilterQuery.graphql"
 import type { TagArtworkFilter_tag$data } from "__generated__/TagArtworkFilter_tag.graphql"
+import type { TagArtworkFilterQuery } from "__generated__/TagArtworkFilterQuery.graphql"
 import type * as React from "react"
 import {
-  type RelayRefetchProp,
   createRefetchContainer,
   graphql,
+  type RelayRefetchProp,
 } from "react-relay"
 
 interface TagArtworkFilterProps {
@@ -100,7 +100,7 @@ export const TagArtworkFilterRefetchContainer = createRefetchContainer(
         ...TagArtworkFilter_tag @arguments(input: $input)
       }
     }
-  `,
+  `
 )
 
 type TagArtworkFilterQueryRendererProps = {}

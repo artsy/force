@@ -1,9 +1,9 @@
-import { Join, Spacer } from "@artsy/palette"
 import { InsightsCareerHighlightRailFragmentContainer } from "Apps/Settings/Routes/Insights/Components/CareerHighlights/InsightsCareerHighlightRail"
 import { InsightsMedianSalePriceFragmentContainer } from "Apps/Settings/Routes/Insights/Components/InsightsMedianSalePrice"
 import { MetaTags } from "Components/MetaTags"
 import { useFlag } from "System/FeatureFlags/useFlag"
 import { Media } from "Utils/Responsive"
+import { Join, Spacer } from "@artsy/palette"
 import type { InsightsRoute_me$data } from "__generated__/InsightsRoute_me.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { InsightsAuctionResultsFragmentContainer } from "./Components/InsightsAuctionResults"
@@ -19,10 +19,10 @@ const InsightsRoute: React.FC<React.PropsWithChildren<InsightsRouteProps>> = ({
   me,
 }) => {
   const isCareerHighlightEnabled = useFlag(
-    "my-collection-web-phase-7-career-highlights",
+    "my-collection-web-phase-7-career-highlights"
   )
   const isMedianSalePriceEnabled = useFlag(
-    "my-collection-web-phase-7-median-sale-price",
+    "my-collection-web-phase-7-median-sale-price"
   )
 
   if (!me.myCollectionInfo?.artworksCount) {
@@ -87,5 +87,5 @@ export const InsightsRouteFragmentContainer = createFragmentContainer(
         ...InsightsMedianSalePrice_me
       }
     `,
-  },
+  }
 )

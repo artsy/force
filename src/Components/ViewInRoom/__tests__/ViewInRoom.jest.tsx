@@ -34,7 +34,7 @@ describe("ViewInRoom", () => {
 
     // Check if component renders something (the exact content may vary due to mocks)
     expect(
-      container.innerHTML.length || document.body.innerHTML.length,
+      container.innerHTML.length || document.body.innerHTML.length
     ).toBeGreaterThan(0)
   })
 })

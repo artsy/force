@@ -1,6 +1,6 @@
+import { useDeleteBankAccount } from "Apps/Settings/Routes/Payments/useDeleteBankAccount"
 import InstitutionIcon from "@artsy/icons/InstitutionIcon"
 import { Text } from "@artsy/palette"
-import { useDeleteBankAccount } from "Apps/Settings/Routes/Payments/useDeleteBankAccount"
 import type { SettingsBankAccount_bankAccount$data } from "__generated__/SettingsBankAccount_bankAccount.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SettingsPaymentsMethod } from "./SettingsPaymentsMethod"
@@ -47,5 +47,5 @@ export const SettingsBankAccountFragmentContainer = createFragmentContainer(
         last4
       }
     `,
-  },
+  }
 )

@@ -1,8 +1,8 @@
-import { render, screen, fireEvent } from "@testing-library/react"
 import {
   OfferInput,
   type OfferInputProps,
 } from "Apps/Order/Components/OfferInput"
+import { fireEvent, render, screen } from "@testing-library/react"
 
 const setInputValue = (input: HTMLInputElement, value: string) => {
   fireEvent.change(input, { target: { value } })
@@ -16,7 +16,7 @@ describe("Offer input", () => {
         showError={false}
         onChange={() => undefined}
         {...props}
-      />,
+      />
     )
 
   it("calls onChange when the user enters values", () => {
@@ -54,7 +54,7 @@ describe("Offer input", () => {
     renderComponent({ showError: false })
 
     expect(
-      screen.queryByText("Offer amount missing or invalid."),
+      screen.queryByText("Offer amount missing or invalid.")
     ).not.toBeInTheDocument()
   })
 
@@ -62,7 +62,7 @@ describe("Offer input", () => {
     renderComponent({ showError: true })
 
     expect(
-      screen.getByText("Offer amount missing or invalid."),
+      screen.getByText("Offer amount missing or invalid.")
     ).toBeInTheDocument()
   })
 

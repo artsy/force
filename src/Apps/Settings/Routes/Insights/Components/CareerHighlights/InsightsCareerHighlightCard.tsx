@@ -1,9 +1,9 @@
-import { Clickable, type ClickableProps, Flex, Text } from "@artsy/palette"
-import { themeGet } from "@styled-system/theme-get"
 import {
   type CareerHighlightKind,
   getCareerHighlight,
 } from "Apps/Settings/Routes/Insights/Utils/getCareerHighlight"
+import { Clickable, type ClickableProps, Flex, Text } from "@artsy/palette"
+import { themeGet } from "@styled-system/theme-get"
 import styled from "styled-components"
 
 interface InsightsCareerHighlightCardProps {

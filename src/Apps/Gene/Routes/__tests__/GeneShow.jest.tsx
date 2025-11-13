@@ -64,11 +64,11 @@ describe("GeneShow", () => {
 
     expect(document.querySelector('meta[name="description"]')).toHaveAttribute(
       "content",
-      "Gene Meta Description",
+      "Gene Meta Description"
     )
     expect(document.querySelector('meta[name="title"]')).toHaveAttribute(
       "content",
-      "Display Name | Artsy",
+      "Display Name | Artsy"
     )
   })
 
@@ -83,11 +83,11 @@ describe("GeneShow", () => {
 
     expect(document.querySelector('meta[name="description"]')).toHaveAttribute(
       "content",
-      "Explore Design art on Artsy. Browse works by size, price, and medium.",
+      "Explore Design art on Artsy. Browse works by size, price, and medium."
     )
     expect(document.querySelector('meta[name="title"]')).toHaveAttribute(
       "content",
-      "Design | Artsy",
+      "Design | Artsy"
     )
   })
 })

@@ -1,3 +1,11 @@
+import { SuggestedArtworksModalFooter } from "Apps/Artwork/Components/ArtworkAuctionCreateAlertHeader/SuggestedArtworksModalFooter"
+import ArtworkGrid, {
+  ArtworkGridPlaceholder,
+} from "Components/ArtworkGrid/ArtworkGrid"
+import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
+import type { SearchCriteriaAttributes } from "Components/SavedSearchAlert/types"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { Media } from "Utils/Responsive"
 import {
   Column,
   Flex,
@@ -6,20 +14,11 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import ArtworkGrid, {
-  ArtworkGridPlaceholder,
-} from "Components/ArtworkGrid/ArtworkGrid"
-import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
-import type { SearchCriteriaAttributes } from "Components/SavedSearchAlert/types"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import type { FC } from "react"
-
-import { SuggestedArtworksModalFooter } from "Apps/Artwork/Components/ArtworkAuctionCreateAlertHeader/SuggestedArtworksModalFooter"
-import { Media } from "Utils/Responsive"
 import type {
   SuggestedArtworksModalGridQuery,
   SuggestedArtworksModalGridQuery$data,
 } from "__generated__/SuggestedArtworksModalGridQuery.graphql"
+import type { FC } from "react"
 import { graphql } from "react-relay"
 
 export const NUMBER_OF_ARTWORKS_TO_SHOW = 10

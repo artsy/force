@@ -29,7 +29,7 @@ export const useOnboardingTracking = () => {
 
       trackEvent(payload)
     },
-    [trackEvent],
+    [trackEvent]
   )
 
   const trackQuestionTwo = useCallback(
@@ -42,7 +42,7 @@ export const useOnboardingTracking = () => {
 
       trackEvent(payload)
     },
-    [trackEvent],
+    [trackEvent]
   )
 
   const trackQuestionThree = useCallback(
@@ -55,7 +55,7 @@ export const useOnboardingTracking = () => {
 
       trackEvent(payload)
     },
-    [trackEvent],
+    [trackEvent]
   )
 
   const userCompletedOnboarding = useCallback(() => {

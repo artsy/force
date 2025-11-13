@@ -17,7 +17,7 @@ export const PrivateArtworkAboutWork: React.FC<
         additionalInformationHTML: additionalInformation(format: HTML)
       }
     `,
-    artwork,
+    artwork
   )
   const { trackEvent } = useTracking()
 

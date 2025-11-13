@@ -15,7 +15,7 @@ export type CareerHighlightKind =
 
 export const getCareerHighlight = (
   type: CareerHighlightKind,
-  count: number,
+  count: number
 ) => {
   let label = ""
   let Icon: FC<React.PropsWithChildren<ComponentProps<typeof PersonIcon>>> =

@@ -1,16 +1,16 @@
 import {
-  ActionType,
-  ClickedArtistGroup,
-  ContextModule,
-  OwnerType,
-} from "@artsy/cohesion"
-import { Column, GridColumns, Text } from "@artsy/palette"
-import {
   CellArtistFragmentContainer,
   CellArtistPlaceholder,
 } from "Components/Cells/CellArtist"
 import { InfiniteScrollSentinel } from "Components/InfiniteScrollSentinel"
 import { extractNodes } from "Utils/extractNodes"
+import {
+  ActionType,
+  type ClickedArtistGroup,
+  ContextModule,
+  OwnerType,
+} from "@artsy/cohesion"
+import { Column, GridColumns, Text } from "@artsy/palette"
 import type { RecommendedArtistsGrid_me$key } from "__generated__/RecommendedArtistsGrid_me.graphql"
 import type { FC } from "react"
 import { graphql, usePaginationFragment } from "react-relay"
@@ -26,7 +26,7 @@ export const RecommendedArtistsGrid: FC<
   const { trackEvent } = useTracking()
   const { data, loadNext, hasNext, isLoadingNext } = usePaginationFragment(
     FRAGMENT,
-    me,
+    me
   )
 
   const handleNext = () => {

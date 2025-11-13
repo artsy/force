@@ -4,7 +4,7 @@ interface ArtworkDimensions {
 }
 
 export const useArtworkDimensions = (
-  dimensions: ArtworkDimensions | null | undefined,
+  dimensions: ArtworkDimensions | null | undefined
 ) => {
   const hasCmDimensions = !!dimensions?.cm
   const hasInDimensions = !!dimensions?.in

@@ -1,7 +1,7 @@
-import { act, fireEvent, screen } from "@testing-library/react"
 import { FlashBannerFragmentContainer } from "Components/FlashBanner"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useRouter } from "System/Hooks/useRouter"
+import { act, fireEvent, screen } from "@testing-library/react"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 
@@ -52,7 +52,7 @@ describe("FlashBanner", () => {
     renderWithRelay()
 
     expect(
-      screen.getByText("Your email has been confirmed."),
+      screen.getByText("Your email has been confirmed.")
     ).toBeInTheDocument()
   })
 
@@ -64,7 +64,7 @@ describe("FlashBanner", () => {
     renderWithRelay()
 
     expect(
-      screen.getByText("You have already confirmed your email."),
+      screen.getByText("You have already confirmed your email.")
     ).toBeInTheDocument()
   })
 
@@ -77,8 +77,8 @@ describe("FlashBanner", () => {
 
     expect(
       screen.getByText(
-        "An error has occurred. Please contact support@artsy.net.",
-      ),
+        "An error has occurred. Please contact support@artsy.net."
+      )
     ).toBeInTheDocument()
   })
 
@@ -91,8 +91,8 @@ describe("FlashBanner", () => {
 
     expect(
       screen.getByText(
-        "An error has occurred. Please contact support@artsy.net.",
-      ),
+        "An error has occurred. Please contact support@artsy.net."
+      )
     ).toBeInTheDocument()
   })
 
@@ -116,7 +116,7 @@ describe("FlashBanner", () => {
     })
 
     expect(
-      screen.getByText("Please verify your email address"),
+      screen.getByText("Please verify your email address")
     ).toBeInTheDocument()
   })
 
@@ -161,7 +161,7 @@ describe("FlashBanner", () => {
       })
 
       expect(
-        screen.getByText("Please verify your email address"),
+        screen.getByText("Please verify your email address")
       ).toBeInTheDocument()
 
       act(() => {

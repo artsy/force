@@ -1,5 +1,5 @@
-import { Box, Spacer, Text } from "@artsy/palette"
 import { COUNTRY_CODE_TO_COUNTRY_NAME } from "Components/CountrySelect"
+import { Box, Spacer, Text } from "@artsy/palette"
 import type { OrderDetailsFulfillmentInfo_order$key } from "__generated__/OrderDetailsFulfillmentInfo_order.graphql"
 import type React from "react"
 import { useFragment } from "react-relay"
@@ -23,7 +23,7 @@ export const OrderDetailsFulfillmentInfo: React.FC<
       part =>
         !part ||
         part === undefined ||
-        (typeof part === "string" && part.trim() === ""),
+        (typeof part === "string" && part.trim() === "")
     )
   const isPickup = selectedFulfillmentOption?.type === "PICKUP"
 

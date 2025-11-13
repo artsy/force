@@ -1,8 +1,8 @@
-import type { AuthContextModule } from "@artsy/cohesion"
-import { Box, Button, Image, ResponsiveBox, Spacer, Text } from "@artsy/palette"
 import { CellShowStatus } from "Components/Cells/CellShow"
 import { NOTIFICATION_MAX_WIDTH } from "Components/Notifications/Notification"
 import { RouterLink, type RouterLinkProps } from "System/Components/RouterLink"
+import type { AuthContextModule } from "@artsy/cohesion"
+import { Box, Button, Image, ResponsiveBox, Spacer, Text } from "@artsy/palette"
 import type { NotificationPartnerShow_show$key } from "__generated__/NotificationPartnerShow_show.graphql"
 import { compact, truncate } from "lodash"
 import type * as React from "react"
@@ -77,7 +77,7 @@ export const NotificationPartnerShow: React.FC<
 
       <Box mb={4} width="100%">
         <Button
-          // @ts-ignore
+          // @ts-expect-error
           as={RouterLink}
           to={show?.href}
           onClick={onClick}

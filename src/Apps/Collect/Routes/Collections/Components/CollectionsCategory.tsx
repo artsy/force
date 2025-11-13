@@ -1,4 +1,9 @@
 import {
+  DESKTOP_NAV_BAR_HEIGHT,
+  MOBILE_NAV_HEIGHT,
+} from "Components/NavBar/constants"
+import { crop } from "Utils/resizer"
+import {
   Box,
   Button,
   Column,
@@ -6,11 +11,6 @@ import {
   GridColumns,
   Text,
 } from "@artsy/palette"
-import {
-  DESKTOP_NAV_BAR_HEIGHT,
-  MOBILE_NAV_HEIGHT,
-} from "Components/NavBar/constants"
-import { crop } from "Utils/resizer"
 import type { CollectionsCategory_category$data } from "__generated__/CollectionsCategory_category.graphql"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -26,7 +26,7 @@ export const CollectionsCategory: React.FC<
   const [showAll, toggleShowAll] = useState(false)
 
   const sortedCollections = [...collections].sort((a, b) =>
-    a.title.localeCompare(b.title),
+    a.title.localeCompare(b.title)
   )
 
   return (
@@ -101,7 +101,7 @@ export const CollectionsCategoryFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  },
+  }
 )
 
 const TRUNCATED_AMOUNT = 16

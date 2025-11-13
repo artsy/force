@@ -23,7 +23,7 @@ describe("Ensure SSL middleware", () => {
     ensureSslMiddleware(testContext.req, testContext.res)
     expect(testContext.res.redirect).toHaveBeenCalledWith(
       301,
-      "https://foobart.sy/terms",
+      "https://foobart.sy/terms"
     )
   })
 
@@ -33,7 +33,7 @@ describe("Ensure SSL middleware", () => {
     ensureSslMiddleware(testContext.req, testContext.res, () => {})
     expect(testContext.res.redirect).toHaveBeenCalledWith(
       301,
-      "https://foobart.sy/terms",
+      "https://foobart.sy/terms"
     )
   })
 

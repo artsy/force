@@ -1,3 +1,5 @@
+import { useOrder2Tracking } from "Apps/Order2/Hooks/useOrder2Tracking"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import {
   ActionType,
   type ClickedAddNewShippingAddress,
@@ -22,8 +24,6 @@ import {
   type SubmittedOrder,
   type ToggledCollapsibleOrderSummary,
 } from "@artsy/cohesion"
-import { useOrder2Tracking } from "Apps/Order2/Hooks/useOrder2Tracking"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useMemo } from "react"
 import { useTracking } from "react-tracking"
 
@@ -43,7 +43,7 @@ export const useCheckoutTracking = ({
   const flow = buyOrOfferValue(
     mode,
     source === "PARTNER_OFFER" ? "Partner offer" : "Buy now",
-    "Make offer",
+    "Make offer"
   )
 
   const checkoutTracking = useMemo(() => {
@@ -111,7 +111,7 @@ export const useCheckoutTracking = ({
         const action = buyOrOfferValue(
           mode,
           ActionType.submittedOrder,
-          ActionType.submittedOffer,
+          ActionType.submittedOffer
         )
         const payload: SubmittedOrder | SubmittedOffer = {
           context_page_owner_type: contextPageOwnerType,
@@ -144,7 +144,7 @@ export const useCheckoutTracking = ({
         const flow = buyOrOfferValue(
           mode,
           source === "PARTNER_OFFER" ? "Partner offer" : "Buy now",
-          "Make offer",
+          "Make offer"
         )
         const payload: ClickedPaymentMethod = {
           context_page_owner_type: contextPageOwnerType,
@@ -240,7 +240,7 @@ export const useCheckoutTracking = ({
           | ContextModule.ordersFulfillment
           | ContextModule.ordersShippingMethods
           | ContextModule.ordersPayment
-          | ContextModule.ordersReview,
+          | ContextModule.ordersReview
       ) => {
         const payload: OrderProgressionViewed = {
           action: ActionType.orderProgressionViewed,
@@ -301,7 +301,7 @@ export const useCheckoutTracking = ({
         currencyCode: string,
         orderId: string,
         offerAmount: number,
-        offerDescription?: string,
+        offerDescription?: string
       ) => {
         const payload: ClickedOfferOption = {
           action: ActionType.clickedOfferOption,
@@ -335,5 +335,5 @@ export const useCheckoutTracking = ({
 const buyOrOfferValue = <B, O>(
   buyOrOffer: "BUY" | "OFFER" | unknown,
   ifBuy: B,
-  ifOffer: O,
+  ifOffer: O
 ) => (buyOrOffer === "OFFER" ? ifOffer : ifBuy)

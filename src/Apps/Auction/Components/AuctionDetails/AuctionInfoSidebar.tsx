@@ -1,6 +1,6 @@
-import { Box, Join, Spacer, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
 import { useSaleWebsocket } from "Utils/Hooks/useSaleWebsocket"
+import { Box, Join, Spacer, Text } from "@artsy/palette"
 import type { AuctionInfoSidebar_sale$data } from "__generated__/AuctionInfoSidebar_sale.graphql"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -81,5 +81,5 @@ export const AuctionInfoSidebarFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  },
+  }
 )

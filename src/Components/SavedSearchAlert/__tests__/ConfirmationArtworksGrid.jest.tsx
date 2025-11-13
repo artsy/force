@@ -1,9 +1,9 @@
-import { screen } from "@testing-library/react"
 import {
   ConfirmationArtworks,
   NUMBER_OF_ARTWORKS_TO_SHOW,
 } from "Components/SavedSearchAlert/ConfirmationArtworksGrid"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import type { ConfirmationArtworksGrid_Test_Query } from "__generated__/ConfirmationArtworksGrid_Test_Query.graphql"
 import { graphql } from "react-relay"
 
@@ -37,7 +37,7 @@ describe("ConfirmationArtworksGrid", () => {
     })
 
     expect(
-      screen.getByText("300 works currently on Artsy match your criteria."),
+      screen.getByText("300 works currently on Artsy match your criteria.")
     ).toBeInTheDocument()
     expect(screen.getByText("See our top picks for you:")).toBeInTheDocument()
   })
@@ -53,7 +53,7 @@ describe("ConfirmationArtworksGrid", () => {
     })
 
     expect(
-      screen.getByText("11 works currently on Artsy match your criteria."),
+      screen.getByText("11 works currently on Artsy match your criteria.")
     ).toBeInTheDocument()
     expect(screen.getByText("See our top picks for you:")).toBeInTheDocument()
   })
@@ -70,8 +70,8 @@ describe("ConfirmationArtworksGrid", () => {
 
     expect(
       screen.getByText(
-        "You might like these 9 works currently on Artsy that match your criteria:",
-      ),
+        "You might like these 9 works currently on Artsy that match your criteria:"
+      )
     ).toBeInTheDocument()
   })
 
@@ -87,8 +87,8 @@ describe("ConfirmationArtworksGrid", () => {
 
     expect(
       screen.getByText(
-        "You might like this 1 work currently on Artsy that matches your criteria:",
-      ),
+        "You might like this 1 work currently on Artsy that matches your criteria:"
+      )
     ).toBeInTheDocument()
   })
 
@@ -104,8 +104,8 @@ describe("ConfirmationArtworksGrid", () => {
 
     expect(
       screen.getByText(
-        "There aren’t any works available that meet the criteria at this time.",
-      ),
+        "There aren’t any works available that meet the criteria at this time."
+      )
     ).toBeInTheDocument()
   })
 })

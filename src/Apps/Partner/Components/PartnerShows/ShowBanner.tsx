@@ -1,3 +1,4 @@
+import { RouterLink } from "System/Components/RouterLink"
 import {
   Box,
   type BoxProps,
@@ -5,14 +6,13 @@ import {
   Column,
   GridColumns,
   Image,
+  media,
   ReadMore,
   Text,
-  media,
 } from "@artsy/palette"
-import { RouterLink } from "System/Components/RouterLink"
 import type { ShowBanner_show$data } from "__generated__/ShowBanner_show.graphql"
-import { useEffect, useState } from "react"
 import type * as React from "react"
+import { useEffect, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 
@@ -111,7 +111,7 @@ const ShowBanner: React.FC<React.PropsWithChildren<ShowBannerProps>> = ({
               <Column span={6}>
                 <Button
                   width="100%"
-                  // @ts-ignore
+                  // @ts-expect-error
                   as={RouterLink}
                   to={href}
                 >

@@ -46,7 +46,7 @@ describe("FairFollowedArtists", () => {
         path="/fair/example-fair-slug"
       >
         <FairFollowedArtists fair={FAIR_FOLLOWED_ARTISTS_FIXTURE as any} />
-      </AnalyticsCombinedContextProvider>,
+      </AnalyticsCombinedContextProvider>
     )
   }
 

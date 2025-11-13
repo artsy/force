@@ -1,8 +1,8 @@
-import { OwnerType } from "@artsy/cohesion"
-import { render, screen } from "@testing-library/react"
 import { ArtworkAuctionCreateAlertTooltip } from "Apps/Artwork/Components/ArtworkAuctionCreateAlertHeader/ArtworkAuctionCreateAlertTooltip"
 import { SavedSearchAlertContextProvider } from "Components/SavedSearchAlert/SavedSearchAlertContext"
 import type { SavedSearchEntity } from "Components/SavedSearchAlert/types"
+import { OwnerType } from "@artsy/cohesion"
+import { render, screen } from "@testing-library/react"
 
 describe("ArtworkAuctionCreateAlertTooltip", () => {
   const savedSearchEntity: SavedSearchEntity = {
@@ -36,7 +36,7 @@ describe("ArtworkAuctionCreateAlertTooltip", () => {
         aggregations={[]}
       >
         <ArtworkAuctionCreateAlertTooltip />
-      </SavedSearchAlertContextProvider>,
+      </SavedSearchAlertContextProvider>
     )
   }
 
@@ -45,8 +45,8 @@ describe("ArtworkAuctionCreateAlertTooltip", () => {
 
     expect(
       screen.getByText(
-        "You may be interested in these similar works by Andy Warhol.",
-      ),
+        "You may be interested in these similar works by Andy Warhol."
+      )
     ).toBeInTheDocument()
     expect(screen.getByText("Andy Warhol")).toBeInTheDocument()
     expect(screen.getByText("Prints")).toBeInTheDocument()

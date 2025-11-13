@@ -1,5 +1,5 @@
-import { render, screen } from "@testing-library/react"
 import { CountdownTimer } from "Apps/Conversations/components/Details/OrderInformation/CountdownTimer"
+import { render, screen } from "@testing-library/react"
 import { add } from "date-fns"
 
 describe("CountdownTimer", () => {
@@ -10,11 +10,11 @@ describe("CountdownTimer", () => {
         stateUpdatedAt={new Date().toISOString()}
         expiryText="until offer expires"
         respondByText={`Respond by Dec 5, 2021 12:00 PM`}
-      />,
+      />
     )
     expect(screen.queryByText("until offer expires")).not.toBeInTheDocument()
     expect(
-      screen.queryByText("Respond by Dec 5, 2021 12:00 PM"),
+      screen.queryByText("Respond by Dec 5, 2021 12:00 PM")
     ).not.toBeInTheDocument()
   })
   it("shows the right time until counterOffer expires", () => {
@@ -27,14 +27,14 @@ describe("CountdownTimer", () => {
         stateUpdatedAt={new Date().toISOString()}
         expiryText="until counteroffer expires"
         respondByText="Awaiting response by Dec 5, 2023 12:00 PM"
-      />,
+      />
     )
 
     expect(
-      screen.getByText("2d 5h until counteroffer expires"),
+      screen.getByText("2d 5h until counteroffer expires")
     ).toBeInTheDocument()
     expect(
-      screen.getByText("Awaiting response by Dec 5, 2023 12:00 PM"),
+      screen.getByText("Awaiting response by Dec 5, 2023 12:00 PM")
     ).toBeInTheDocument()
     expect(screen.getByRole("progressbar")).toHaveStyle({
       color: "green100",
@@ -51,12 +51,12 @@ describe("CountdownTimer", () => {
         stateUpdatedAt={dayAgo}
         expiryText="until counteroffer expires"
         respondByText="Awaiting response by Dec 5, 2023 12:00 PM"
-      />,
+      />
     )
 
     expect(screen.getByRole("progressbar")).toHaveAttribute(
       "aria-valuenow",
-      "50",
+      "50"
     )
   })
   it("displays as imminent if state expires in 5 hours or less", () => {
@@ -69,7 +69,7 @@ describe("CountdownTimer", () => {
         stateUpdatedAt={new Date().toISOString()}
         expiryText="until counteroffer expires"
         respondByText="Awaiting response by Dec 5, 2023 12:00 PM"
-      />,
+      />
     )
 
     expect(screen.getByRole("progressbar")).toHaveStyle({

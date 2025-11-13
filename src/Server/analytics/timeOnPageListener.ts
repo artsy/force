@@ -1,5 +1,5 @@
-import { timeOnPage } from "@artsy/cohesion"
 import { getContextPageFromClient } from "Server/getContextPage"
+import { timeOnPage } from "@artsy/cohesion"
 import { data as sd } from "sharify"
 import { trackEvent } from "./helpers"
 import { setAnalyticsClientReferrerOptions } from "./setAnalyticsClientReferrerOptions"
@@ -24,7 +24,7 @@ export const timeOnPageListener = (delay = 15000) => {
           contextPageOwnerSlug,
           contextPageOwnerType: pageType,
         }),
-        trackingOptions,
+        trackingOptions
       )
     }
   }, delay)

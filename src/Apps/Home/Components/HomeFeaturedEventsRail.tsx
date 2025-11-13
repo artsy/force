@@ -1,3 +1,6 @@
+import { RouterLink } from "System/Components/RouterLink"
+import { Media } from "Utils/Responsive"
+import { getInternalHref } from "Utils/url"
 import {
   ActionType,
   type ClickedPromoSpace,
@@ -13,9 +16,6 @@ import {
   Stack,
   Text,
 } from "@artsy/palette"
-import { RouterLink } from "System/Components/RouterLink"
-import { Media } from "Utils/Responsive"
-import { getInternalHref } from "Utils/url"
 import type { HomeFeaturedEventsRail_orderedSet$data } from "__generated__/HomeFeaturedEventsRail_orderedSet.graphql"
 import { compact, take } from "lodash"
 import type * as React from "react"
@@ -33,9 +33,9 @@ const HomeFeaturedEventsRail: React.FC<
 
   const events = take(
     compact(orderedSet.items).flatMap(item =>
-      item.__typename === "FeaturedLink" ? [item] : [],
+      item.__typename === "FeaturedLink" ? [item] : []
     ),
-    4,
+    4
   )
 
   if (events.length === 0) return null
@@ -166,5 +166,5 @@ export const HomeFeaturedEventsRailFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  },
+  }
 )

@@ -1,5 +1,5 @@
-import { render, screen } from "@testing-library/react"
 import { NotificationsEmptyStateByType } from "Components/Notifications/NotificationsEmptyStateByType"
+import { render, screen } from "@testing-library/react"
 
 describe("NotificationsEmptyStateByType", () => {
   it("should render correct state when type is 'All'", () => {

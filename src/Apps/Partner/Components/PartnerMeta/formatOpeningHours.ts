@@ -111,5 +111,5 @@ const processSchedule = ({
 }
 
 export const formatOpeningHours = (
-  schedules: Array<{ days: string; hours: string }>,
+  schedules: Array<{ days: string; hours: string }>
 ): string => schedules.map(processSchedule).filter(Boolean).join(" ")

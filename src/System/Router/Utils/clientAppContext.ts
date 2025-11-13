@@ -1,4 +1,4 @@
-// eslint-disable-next-line no-restricted-imports
+// biome-ignore lint/style/noRestrictedImports: Client context initialization
 import { data as sd } from "sharify"
 
 export interface ClientContext {
@@ -6,7 +6,7 @@ export interface ClientContext {
 }
 
 export const getClientAppContext = (
-  context: { injectedData?: object } = {},
+  context: { injectedData?: object } = {}
 ): ClientContext => {
   return {
     user: sd.CURRENT_USER,

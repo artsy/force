@@ -1,3 +1,10 @@
+import {
+  ALLOW_ALL_PREFERENCES,
+  CATEGORIES,
+  REJECT_ALL_PREFERENCES,
+} from "Components/CookieConsentManager/categories"
+import { RouterLink } from "System/Components/RouterLink"
+import { useMode } from "Utils/Hooks/useMode"
 import { ActionType } from "@artsy/cohesion"
 import type { SavedCookieConsentPreferences } from "@artsy/cohesion/dist/Schema/Events/CookieConsent"
 import {
@@ -18,13 +25,6 @@ import type {
   CategoryPreferences,
   Destination,
 } from "@segment/consent-manager/types/types"
-import {
-  ALLOW_ALL_PREFERENCES,
-  CATEGORIES,
-  REJECT_ALL_PREFERENCES,
-} from "Components/CookieConsentManager/categories"
-import { RouterLink } from "System/Components/RouterLink"
-import { useMode } from "Utils/Hooks/useMode"
 import type { FC } from "react"
 import { useTracking } from "react-tracking"
 
@@ -35,7 +35,7 @@ interface CookieConsentManagerDialogProps {
   setPreferences: (newPreferences: CategoryPreferences) => void
   saveConsent: (
     newPreferences?: boolean | CategoryPreferences,
-    shouldReload?: boolean,
+    shouldReload?: boolean
   ) => void
 }
 
@@ -45,7 +45,7 @@ export const CookieConsentManagerDialog: FC<
   const { trackEvent } = useTracking()
 
   const [mode, setMode] = useMode<"Idle" | "Allowing" | "Rejecting" | "Saving">(
-    "Idle",
+    "Idle"
   )
 
   const handleAllowAll = () => {

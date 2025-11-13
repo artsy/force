@@ -1,12 +1,12 @@
-import { Box, Button, Column, GridColumns, Text } from "@artsy/palette"
 import { CellArticleFragmentContainer } from "Components/Cells/CellArticle"
 import { extractNodes } from "Utils/extractNodes"
+import { Box, Button, Column, GridColumns, Text } from "@artsy/palette"
 import type { ChannelArticles_channel$data } from "__generated__/ChannelArticles_channel.graphql"
 import { type FC, useState } from "react"
 import {
-  type RelayPaginationProp,
   createPaginationContainer,
   graphql,
+  type RelayPaginationProp,
 } from "react-relay"
 
 interface ChannelArticlesProps {
@@ -94,5 +94,5 @@ export const ChannelArticlesPaginationContainer = createPaginationContainer(
       return { ...fragmentVariables, after }
     },
     query: CHANNEL_ARTICLES_QUERY,
-  },
+  }
 )

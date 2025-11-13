@@ -1,7 +1,7 @@
-import { OtherCollectionEntity } from "Apps/Collect/Routes/Collection/Components/CollectionsHubRails/OtherCollectionsRail/OtherCollectionEntity"
 import { CollectionHubFixture } from "Apps/__tests__/Fixtures/Collections"
+import { OtherCollectionEntity } from "Apps/Collect/Routes/Collection/Components/CollectionsHubRails/OtherCollectionsRail/OtherCollectionEntity"
 import { AnalyticsCombinedContextProvider } from "System/Contexts/AnalyticsContext"
-import { render, screen, fireEvent } from "@testing-library/react"
+import { fireEvent, render, screen } from "@testing-library/react"
 import { useTracking } from "react-tracking"
 
 jest.mock("react-tracking")
@@ -33,7 +33,7 @@ describe.skip("OtherCollectionEntity", () => {
         path="/collection/slug"
       >
         <OtherCollectionEntity {...passedProps} />
-      </AnalyticsCombinedContextProvider>,
+      </AnalyticsCombinedContextProvider>
     )
   }
 
@@ -46,14 +46,14 @@ describe.skip("OtherCollectionEntity", () => {
     expect(image).toHaveAttribute(
       "src",
       expect.stringContaining(
-        "posters_thumbnail.png&width=60&height=60&quality=80&convert_to=jpg",
-      ),
+        "posters_thumbnail.png&width=60&height=60&quality=80&convert_to=jpg"
+      )
     )
 
     const link = screen.getByRole("link")
     expect(link).toHaveAttribute(
       "href",
-      expect.stringContaining("artist-poster"),
+      expect.stringContaining("artist-poster")
     )
   })
 

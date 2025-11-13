@@ -1,9 +1,9 @@
-import { fireEvent, screen } from "@testing-library/react"
 import {
   PreferencesAppFragmentContainer,
   parseTokenFromRouter,
 } from "Apps/Preferences/PreferencesApp"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { fireEvent, screen } from "@testing-library/react"
 import type { PreferencesAppTestQuery } from "__generated__/PreferencesAppTestQuery.graphql"
 import { graphql } from "react-relay"
 
@@ -28,7 +28,7 @@ describe("PreferencesApp", () => {
 
     expect(screen.getByText("Email Preference Center")).toBeInTheDocument()
     expect(
-      screen.queryByText("Please sign in to update your email preferences"),
+      screen.queryByText("Please sign in to update your email preferences")
     ).not.toBeInTheDocument()
   })
 
@@ -38,7 +38,7 @@ describe("PreferencesApp", () => {
     })
 
     expect(
-      screen.getByText("Please sign in to update your email preferences"),
+      screen.getByText("Please sign in to update your email preferences")
     ).toBeInTheDocument()
   })
 

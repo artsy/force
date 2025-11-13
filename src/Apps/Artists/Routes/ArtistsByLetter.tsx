@@ -1,14 +1,3 @@
-import {
-  Box,
-  Breadcrumbs,
-  Column,
-  GridColumns,
-  Spacer,
-  Text,
-  VisuallyHidden,
-  media,
-} from "@artsy/palette"
-import { themeGet } from "@styled-system/theme-get"
 import { ArtistsLetterNav } from "Apps/Artists/Components/ArtistsLetterNav"
 import { LoadingArea } from "Components/LoadingArea"
 import { PaginatedMetaTags } from "Components/PaginatedMetaTags"
@@ -16,13 +5,24 @@ import { PaginationFragmentContainer } from "Components/Pagination"
 import { RouterLink } from "System/Components/RouterLink"
 import { useRouter } from "System/Hooks/useRouter"
 import { buildPageQuery, getPageNumber } from "Utils/url"
-import type { ArtistsByLetter_viewer$data } from "__generated__/ArtistsByLetter_viewer.graphql"
-import { useState } from "react"
-import type * as React from "react"
 import {
-  type RelayRefetchProp,
+  Box,
+  Breadcrumbs,
+  Column,
+  GridColumns,
+  media,
+  Spacer,
+  Text,
+  VisuallyHidden,
+} from "@artsy/palette"
+import { themeGet } from "@styled-system/theme-get"
+import type { ArtistsByLetter_viewer$data } from "__generated__/ArtistsByLetter_viewer.graphql"
+import type * as React from "react"
+import { useState } from "react"
+import {
   createRefetchContainer,
   graphql,
+  type RelayRefetchProp,
 } from "react-relay"
 import styled from "styled-components"
 
@@ -148,7 +148,7 @@ export const ArtistsByLetter: React.FC<
 
 const buildH1Title = (
   letter: string,
-  page: number,
+  page: number
 ): string | React.JSX.Element => {
   const baseTitle = `Artists - ${letter.toUpperCase()}`
   const isPagedContent = page > 1
@@ -165,7 +165,7 @@ const buildH1Title = (
 
 const getH1Text = (
   letter: string | undefined,
-  page: number,
+  page: number
 ): string | React.JSX.Element => {
   return letter ? buildH1Title(letter, page) : "Artists"
 }
@@ -208,5 +208,5 @@ export const ArtistsByLetterFragmentContainer = createRefetchContainer(
       }
     `,
   },
-  ARTISTS_BY_LETTER_QUERY,
+  ARTISTS_BY_LETTER_QUERY
 )

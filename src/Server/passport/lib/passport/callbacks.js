@@ -22,7 +22,7 @@ const resolveIPv4 = ipAddress => {
 const resolveProxies = req => {
   const ipAddress = resolveIPv4(req.connection.remoteAddress)
   if (req && req.headers && req.headers["x-forwarded-for"]) {
-    return req.headers["x-forwarded-for"] + ", " + ipAddress
+    return `${req.headers["x-forwarded-for"]}, ${ipAddress}`
   }
   return ipAddress
 }
@@ -52,7 +52,7 @@ module.exports.local = (req, username, password, otp, done) => {
   post.end(onAccessToken(req, done))
 }
 
-module.exports.facebook = (req, token, refreshToken, profile, done) => {
+module.exports.facebook = (req, token, _refreshToken, profile, done) => {
   if (profile && profile.emails && profile.emails[0]) {
     req.socialProfileEmail = profile.emails[0].value
   } else {
@@ -90,12 +90,12 @@ module.exports.facebook = (req, token, refreshToken, profile, done) => {
         oauth_token: token,
         provider: "facebook",
         name: profile != null ? profile.displayName : undefined,
-      }),
+      })
     )
   }
 }
 
-module.exports.google = (req, accessToken, refreshToken, profile, done) => {
+module.exports.google = (req, accessToken, _refreshToken, profile, done) => {
   // Link Google account
   if (req.user) {
     return request
@@ -128,7 +128,7 @@ module.exports.google = (req, accessToken, refreshToken, profile, done) => {
         oauth_token: accessToken,
         provider: "google",
         name: profile != null ? profile.displayName : undefined,
-      }),
+      })
     )
   }
 }
@@ -138,14 +138,14 @@ module.exports.apple = (
   idToken,
   decodedIdToken,
   accessToken,
-  refreshToken,
-  done,
+  _refreshToken,
+  done
 ) => {
   const user = req.appleProfile
 
   let displayName = null
   if (user && user.name && user.name.firstName && user.name.lastName) {
-    displayName = user.name.firstName + " " + user.name.lastName
+    displayName = `${user.name.firstName} ${user.name.lastName}`
   }
 
   // Link Apple account
@@ -187,7 +187,7 @@ module.exports.apple = (
         name: displayName,
         id_token: idToken,
         email: decodedIdToken.email,
-      }),
+      })
     )
   }
 }
@@ -244,7 +244,7 @@ const onAccessToken = (req, done, params) => (err, res) => {
 
     req.artsyPassportSignedUp = true
     return request
-      .post(opts.ARTSY_URL + "/api/v1/user")
+      .post(`${opts.ARTSY_URL}/api/v1/user`)
       .send(params)
       .set({ "User-Agent": req.get("user-agent") })
       .set({ "X-Xapp-Token": artsyXapp.token })
@@ -273,7 +273,7 @@ const onAccessToken = (req, done, params) => (err, res) => {
             extend(auth_params, {
               client_id: opts.ARTSY_ID,
               client_secret: opts.ARTSY_SECRET,
-            }),
+            })
           )
 
         if (req && req.connection && req.connection.remoteAddress) {

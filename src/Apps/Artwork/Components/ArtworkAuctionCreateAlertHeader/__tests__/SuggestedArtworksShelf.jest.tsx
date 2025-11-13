@@ -1,9 +1,9 @@
-import { OwnerType } from "@artsy/cohesion"
-import { screen } from "@testing-library/react"
 import { SuggestedArtworksShelf } from "Apps/Artwork/Components/ArtworkAuctionCreateAlertHeader/SuggestedArtworksShelf"
 import { SavedSearchAlertContextProvider } from "Components/SavedSearchAlert/SavedSearchAlertContext"
 import type { SavedSearchEntity } from "Components/SavedSearchAlert/types"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { OwnerType } from "@artsy/cohesion"
+import { screen } from "@testing-library/react"
 import type { SuggestedArtworksShelf_Test_Query } from "__generated__/SuggestedArtworksShelf_Test_Query.graphql"
 import { graphql } from "react-relay"
 
@@ -74,7 +74,7 @@ describe("SuggestedArtworksShelf", () => {
     })
     expect(screen.queryByTestId("ShelfSuggestedArtworks")).toBeInTheDocument()
     expect(
-      screen.queryByText(/You may be interested in these similar works/),
+      screen.queryByText(/You may be interested in these similar works/)
     ).toBeInTheDocument()
     expect(screen.getByText("See more")).toBeInTheDocument()
   })
@@ -86,11 +86,11 @@ describe("SuggestedArtworksShelf", () => {
       }),
     })
     expect(
-      screen.queryByTestId("ShelfSuggestedArtworks"),
+      screen.queryByTestId("ShelfSuggestedArtworks")
     ).not.toBeInTheDocument()
     expect(screen.queryByText("See more")).not.toBeInTheDocument()
     expect(
-      screen.queryByText(/You may be interested in these similar works/),
+      screen.queryByText(/You may be interested in these similar works/)
     ).not.toBeInTheDocument()
   })
 

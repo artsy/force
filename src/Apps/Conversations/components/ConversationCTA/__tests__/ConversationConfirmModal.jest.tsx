@@ -1,6 +1,6 @@
-import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { ConversationConfirmModal } from "Apps/Conversations/components/ConversationCTA/ConversationConfirmModal"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
@@ -148,7 +148,7 @@ describe("ConversationConfirmModal", () => {
       })
 
       expect(
-        await screen.findByText("27 3/5 × 9 4/5 × 13 4/5 in"),
+        await screen.findByText("27 3/5 × 9 4/5 × 13 4/5 in")
       ).toBeInTheDocument()
       expect(await screen.findByText("70 × 25 × 35 cm")).toBeInTheDocument()
       expect(await screen.findByText("Edition of 50")).toBeInTheDocument()

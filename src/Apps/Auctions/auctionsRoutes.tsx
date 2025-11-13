@@ -1,5 +1,5 @@
-import loadable from "@loadable/component"
 import type { RouteProps } from "System/Router/Route"
+import loadable from "@loadable/component"
 import { graphql } from "react-relay"
 
 const CurrentAuctionsPaginationContainer = loadable(
@@ -7,13 +7,13 @@ const CurrentAuctionsPaginationContainer = loadable(
     import(/* webpackChunkName: "auctionBundle" */ "./Routes/CurrentAuctions"),
   {
     resolveComponent: component => component.CurrentAuctionsPaginationContainer,
-  },
+  }
 )
 const PastAuctionsPaginationContainer = loadable(
   () => import(/* webpackChunkName: "auctionBundle" */ "./Routes/PastAuctions"),
   {
     resolveComponent: component => component.PastAuctionsPaginationContainer,
-  },
+  }
 )
 
 const UpcomingAuctionsPaginationContainer = loadable(
@@ -22,13 +22,13 @@ const UpcomingAuctionsPaginationContainer = loadable(
   {
     resolveComponent: component =>
       component.UpcomingAuctionsPaginationContainer,
-  },
+  }
 )
 const AuctionsApp = loadable(
   () => import(/* webpackChunkName: "auctionBundle" */ "./AuctionsApp"),
   {
     resolveComponent: component => component.AuctionsApp,
-  },
+  }
 )
 const AuctionsRoute = loadable(
   () =>
@@ -37,7 +37,7 @@ const AuctionsRoute = loadable(
     ),
   {
     resolveComponent: component => component.AuctionsRouteFragmentContainer,
-  },
+  }
 )
 const ArtworksRoute = loadable(
   () =>
@@ -46,7 +46,7 @@ const ArtworksRoute = loadable(
     ),
   {
     resolveComponent: component => component.ArtworksRouteFragmentContainer,
-  },
+  }
 )
 
 export const auctionsRoutes: RouteProps[] = [

@@ -1,11 +1,10 @@
 import { ORGANIZATION_STUB_SCHEMA } from "Apps/About/Components/AboutStructuredData"
 import { StructuredData } from "Components/Seo/StructuredData"
-import { getENV } from "Utils/getENV"
 import { getAuthorPath } from "Utils/getAuthorPath"
+import { getENV } from "Utils/getENV"
 import type { ArticleStructuredData_article$key } from "__generated__/ArticleStructuredData_article.graphql"
 import { compact } from "lodash"
-import { graphql } from "react-relay"
-import { useFragment } from "react-relay"
+import { graphql, useFragment } from "react-relay"
 
 interface ArticleStructuredDataProps {
   article: ArticleStructuredData_article$key
@@ -49,7 +48,7 @@ export const ArticleStructuredData: React.FC<
               name: author.name,
               href: `${getENV("APP_URL")}${path}`,
             }
-          }),
+          })
         ),
         publisher: ORGANIZATION_STUB_SCHEMA,
         sourceOrganization: {

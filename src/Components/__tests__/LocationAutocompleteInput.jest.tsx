@@ -1,11 +1,10 @@
-import { fireEvent, screen, waitFor } from "@testing-library/react"
-import { render } from "@testing-library/react"
 import {
   LocationAutocompleteInput,
-  type Place,
   normalizePlace,
+  type Place,
 } from "Components/LocationAutocompleteInput"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
+import { fireEvent, render, screen, waitFor } from "@testing-library/react"
 
 const mockGetPlacePredictions = jest.fn().mockResolvedValue({
   predictions: [
@@ -21,7 +20,7 @@ const Geocoder = jest.fn().mockImplementation(() => ({
   geocode: mockGeocode,
 }))
 const setupGoogleMapsMock = () => {
-  // @ts-ignore
+  // @ts-expect-error
   global.window.google = { maps: { Geocoder, places: { AutocompleteService } } }
 }
 
@@ -68,7 +67,7 @@ describe("LocationAutocompleteInput", () => {
         placeholder="Enter city where artwork is located"
         defaultValue={defaultValue}
         onChange={mockOnChange}
-      />,
+      />
     )
   })
 
@@ -81,7 +80,7 @@ describe("LocationAutocompleteInput", () => {
     expect(input).toBeInTheDocument()
     expect(input).toHaveAttribute(
       "placeholder",
-      "Enter city where artwork is located",
+      "Enter city where artwork is located"
     )
     expect(screen.getByText("Location")).toBeInTheDocument()
   })
@@ -105,7 +104,7 @@ describe("LocationAutocompleteInput", () => {
         () => {
           expect(mockGetPlacePredictions).toHaveBeenCalledTimes(0)
         },
-        { timeout: 1000 },
+        { timeout: 1000 }
       )
     })
   })
@@ -141,7 +140,7 @@ describe("LocationAutocompleteInput", () => {
 
       await waitFor(() => {
         const input = screen.getByTestId(
-          "autocomplete-location",
+          "autocomplete-location"
         ) as HTMLInputElement
         expect(input.value).toBe("New York, NY, USA")
       })

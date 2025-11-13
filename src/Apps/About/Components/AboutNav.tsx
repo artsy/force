@@ -1,9 +1,9 @@
-import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { Box, HorizontalOverflow, Pill, Stack, useTheme } from "@artsy/palette"
 import { Z } from "Apps/Components/constants"
 import { useIntersectionObserver } from "Utils/Hooks/useIntersectionObserver"
 import { useJump } from "Utils/Hooks/useJump"
 import { Media } from "Utils/Responsive"
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import { Box, HorizontalOverflow, Pill, Stack, useTheme } from "@artsy/palette"
 import {
   createContext,
   createRef,
@@ -29,7 +29,7 @@ export const INDEXED_SECTIONS = SECTIONS.reduce(
     acc[section.id] = section
     return acc
   },
-  {} as Record<string, (typeof SECTIONS)[number]>,
+  {} as Record<string, (typeof SECTIONS)[number]>
 )
 
 export type Section = (typeof SECTIONS)[number]["id"]
@@ -65,7 +65,7 @@ export const AboutNav = () => {
         subject: section.label,
       })
     },
-    [activate, jumpTo, trackEvent],
+    [activate, jumpTo, trackEvent]
   )
 
   const items = useMemo(() => {

@@ -1,6 +1,6 @@
-import { screen } from "@testing-library/react"
 import { ViewingRoomPublishedNotification } from "Components/Notifications/ViewingRoomPublishedNotification"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import type { ViewingRoomPublishedNotification_test_Query } from "__generated__/ViewingRoomPublishedNotification_test_Query.graphql"
 import { graphql } from "react-relay"
 
@@ -39,29 +39,29 @@ describe("ViewingRoomPublishedNotification", () => {
     // first viewing room
     expect(screen.getByText(viewingRooms[0].node.title)).toBeInTheDocument()
     expect(
-      screen.getByText(viewingRooms[0].node.introStatement),
+      screen.getByText(viewingRooms[0].node.introStatement)
     ).toBeInTheDocument()
     expect(screen.getAllByTestId("view-works-button")[0]).toHaveAttribute(
       "href",
-      viewingRooms[0].node.href,
+      viewingRooms[0].node.href
     )
     expect(screen.getAllByRole("presentation")[0]).toHaveAttribute(
       "src",
-      `undefined?quality=80&resize_to=width&src=${viewingRooms[0].node.image.imageURLs.normalized}&width=600`,
+      `undefined?quality=80&resize_to=width&src=${viewingRooms[0].node.image.imageURLs.normalized}&width=600`
     )
 
     // second viewing room
     expect(screen.getByText(viewingRooms[1].node.title)).toBeInTheDocument()
     expect(
-      screen.getByText(viewingRooms[1].node.introStatement),
+      screen.getByText(viewingRooms[1].node.introStatement)
     ).toBeInTheDocument()
     expect(screen.getAllByTestId("view-works-button")[1]).toHaveAttribute(
       "href",
-      viewingRooms[1].node.href,
+      viewingRooms[1].node.href
     )
     expect(screen.getAllByRole("presentation")[1]).toHaveAttribute(
       "src",
-      `undefined?quality=80&resize_to=width&src=${viewingRooms[1].node.image.imageURLs.normalized}&width=600`,
+      `undefined?quality=80&resize_to=width&src=${viewingRooms[1].node.image.imageURLs.normalized}&width=600`
     )
   })
 })

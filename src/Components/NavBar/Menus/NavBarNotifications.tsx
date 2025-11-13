@@ -7,7 +7,7 @@ const Notifications = loadable(
       /* webpackChunkName: "notificationsBundle" */
       "Components/Notifications/Notifications"
     ),
-  { resolveComponent: component => component.Notifications },
+  { resolveComponent: component => component.Notifications }
 )
 
 interface NavBarNotificationsProps {

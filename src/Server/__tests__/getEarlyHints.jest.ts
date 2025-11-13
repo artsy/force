@@ -1,6 +1,6 @@
+import { getEarlyHints } from "Server/getEarlyHints"
 import fs from "fs"
 import path from "path"
-import { getEarlyHints } from "Server/getEarlyHints"
 
 jest.mock("fs")
 jest.mock("Server/config", () => ({ CDN_URL: "https://cdn.example.com" }))

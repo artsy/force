@@ -1,11 +1,11 @@
-import { ActionType, type ClickedBuyNow, OwnerType } from "@artsy/cohesion"
-import { Box, type BoxProps, Button, useToasts } from "@artsy/palette"
 import { useConversationsContext } from "Apps/Conversations/ConversationsContext"
 import { useConversationPurchaseButtonData } from "Apps/Conversations/components/ConversationCTA/useConversationPurchaseButtonData"
 import { useMakeInquiryOrder } from "Apps/Conversations/mutations/useMakeInquiryOrderMutation"
 import { usePartnerOfferCheckoutMutation } from "Apps/PartnerOffer/Routes/Mutations/UsePartnerOfferCheckoutMutation"
 import { useRouter } from "System/Hooks/useRouter"
 import { ErrorWithMetadata } from "Utils/errors"
+import { ActionType, type ClickedBuyNow, OwnerType } from "@artsy/cohesion"
+import { Box, type BoxProps, Button, useToasts } from "@artsy/palette"
 import type { useConversationPurchaseButtonData_conversation$key } from "__generated__/useConversationPurchaseButtonData_conversation.graphql"
 import { useState } from "react"
 import { useTracking } from "react-tracking"
@@ -50,7 +50,7 @@ export const ConversationPurchaseButton: React.FC<
   const handleCreatePartnerOfferOrder = async () => {
     if (!partnerOffer?.internalID) {
       throw new ErrorWithMetadata(
-        "handleCreatePartnerOfferOrder (conversations): no active partner offer",
+        "handleCreatePartnerOfferOrder (conversations): no active partner offer"
       )
     }
 
@@ -77,7 +77,7 @@ export const ConversationPurchaseButton: React.FC<
       trackPurchaseEvent("Partner offer")
 
       router.push(
-        `/orders/${response.commerceCreatePartnerOfferOrder.orderOrError.order?.internalID}/shipping?backToConversationId=${data.conversation.internalID}`,
+        `/orders/${response.commerceCreatePartnerOfferOrder.orderOrError.order?.internalID}/shipping?backToConversationId=${data.conversation.internalID}`
       )
     }
   }
@@ -106,7 +106,7 @@ export const ConversationPurchaseButton: React.FC<
       "CommerceOrderWithMutationSuccess"
     ) {
       router.push(
-        `/orders/${response.createInquiryOrder.orderOrError.order.internalID}/shipping?backToConversationId=${data.conversation.internalID}`,
+        `/orders/${response.createInquiryOrder.orderOrError.order.internalID}/shipping?backToConversationId=${data.conversation.internalID}`
       )
     }
   }

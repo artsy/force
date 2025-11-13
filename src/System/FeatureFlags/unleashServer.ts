@@ -42,7 +42,7 @@ export async function getOrInitUnleashServer(): Promise<Unleash> {
 export const isFeatureFlagEnabled = (name: string) => {
   if (!unleashServer) {
     console.error(
-      "[unleashServer] Unleash server is not initialized. Please call getOrInitUnleashServer() first.",
+      "[unleashServer] Unleash server is not initialized. Please call getOrInitUnleashServer() first."
     )
 
     return false
@@ -59,7 +59,7 @@ export const isFeatureFlagEnabled = (name: string) => {
 export const getVariant = (name: string) => {
   if (!unleashServer) {
     console.error(
-      "[unleashServer] Unleash server is not initialized. Please call getOrInitUnleashServer() first.",
+      "[unleashServer] Unleash server is not initialized. Please call getOrInitUnleashServer() first."
     )
 
     return null

@@ -1,3 +1,7 @@
+import { useAuthDialog } from "Components/AuthDialog"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { useMutation } from "Utils/Hooks/useMutation"
 import {
   type AuthContextModule,
   ContextModule,
@@ -5,12 +9,8 @@ import {
   OwnerType,
 } from "@artsy/cohesion"
 import type { ButtonProps } from "@artsy/palette"
-import { useAuthDialog } from "Components/AuthDialog"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { useMutation } from "Utils/Hooks/useMutation"
-import type { FollowGeneButtonQuery } from "__generated__/FollowGeneButtonQuery.graphql"
 import type { FollowGeneButton_gene$data } from "__generated__/FollowGeneButton_gene.graphql"
+import type { FollowGeneButtonQuery } from "__generated__/FollowGeneButtonQuery.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FollowButton } from "./Button"
@@ -61,7 +61,7 @@ const FollowGeneButton: React.FC<
   const { showAuthDialog } = useAuthDialog()
 
   const handleClick = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     event.preventDefault()
 
@@ -124,7 +124,7 @@ export const FollowGeneButtonFragmentContainer = createFragmentContainer(
         isFollowed @include(if: $isLoggedIn)
       }
     `,
-  },
+  }
 )
 
 interface FollowGeneButtonQueryRendererProps

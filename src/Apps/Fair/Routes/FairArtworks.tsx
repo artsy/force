@@ -1,4 +1,3 @@
-import { Join, Spacer } from "@artsy/palette"
 import { BaseArtworkFilter } from "Components/ArtworkFilter"
 import {
   ArtworkFilterContextProvider,
@@ -29,13 +28,14 @@ import { LazyArtworkGrid } from "Components/ArtworkGrid/LazyArtworkGrid"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import type { FairArtworksFilterQuery } from "__generated__/FairArtworksFilterQuery.graphql"
+import { Join, Spacer } from "@artsy/palette"
 import type { FairArtworks_fair$data } from "__generated__/FairArtworks_fair.graphql"
+import type { FairArtworksFilterQuery } from "__generated__/FairArtworksFilterQuery.graphql"
 import type * as React from "react"
 import {
-  type RelayRefetchProp,
   createRefetchContainer,
   graphql,
+  type RelayRefetchProp,
 } from "react-relay"
 
 interface FairArtworksFilterProps {
@@ -155,7 +155,7 @@ export const FairArtworksRefetchContainer = createRefetchContainer(
         ...FairArtworks_fair @arguments(input: $input)
       }
     }
-  `,
+  `
 )
 
 type FairArtworkFilterQueryRendererProps = {}

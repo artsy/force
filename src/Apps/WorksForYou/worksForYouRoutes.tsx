@@ -1,12 +1,12 @@
-import loadable from "@loadable/component"
 import type { RouteProps } from "System/Router/Route"
+import loadable from "@loadable/component"
 import { graphql } from "react-relay"
 
 const WorksForYouApp = loadable(
   () => import(/* webpackChunkName: "worksForYouBundle" */ "./WorksForYouApp"),
   {
     resolveComponent: component => component.WorksForYouAppFragmentContainer,
-  },
+  }
 )
 
 export const worksForYouRoutes: RouteProps[] = [

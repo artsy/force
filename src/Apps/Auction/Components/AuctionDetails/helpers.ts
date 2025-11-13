@@ -29,7 +29,7 @@ export const generateGoogleCalendarUrl = ({
       `&dates=${start}/${end}`,
       `&details=${details}`,
       `&location=${address}`,
-    ].join(""),
+    ].join("")
   )
 }
 
@@ -49,7 +49,7 @@ export const generateIcsCalendarUrl = ({
     : formatCalendarDate(startDate, 1)
   const formattedDescription = stripTags(description || "").replace(
     /(\r\n|\n|\r)/gm,
-    "",
+    ""
   )
 
   const calendarData = [

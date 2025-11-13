@@ -1,3 +1,7 @@
+import { CellShowPlaceholder } from "Components/Cells/CellShow"
+import { Rail } from "Components/Rail/Rail"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import {
   ActionType,
   type ClickedShowGroup,
@@ -5,12 +9,8 @@ import {
   OwnerType,
 } from "@artsy/cohesion"
 import { Skeleton } from "@artsy/palette"
-import { CellShowPlaceholder } from "Components/Cells/CellShow"
-import { Rail } from "Components/Rail/Rail"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import type { HomeFeaturedShowsRailQuery } from "__generated__/HomeFeaturedShowsRailQuery.graphql"
 import type { HomeFeaturedShowsRail_orderedSet$data } from "__generated__/HomeFeaturedShowsRail_orderedSet.graphql"
+import type { HomeFeaturedShowsRailQuery } from "__generated__/HomeFeaturedShowsRailQuery.graphql"
 import { compact } from "lodash"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -27,7 +27,7 @@ const HomeFeaturedShowsRail: React.FC<
   const { trackEvent } = useTracking()
 
   const shows = compact(orderedSet.items).flatMap(item =>
-    item.__typename === "Show" ? [item] : [],
+    item.__typename === "Show" ? [item] : []
   )
 
   if (shows.length === 0) {
@@ -80,7 +80,7 @@ export const HomeFeaturedShowsRailFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  },
+  }
 )
 
 const PLACEHOLDER = (

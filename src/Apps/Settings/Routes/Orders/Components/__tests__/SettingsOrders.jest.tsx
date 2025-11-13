@@ -1,6 +1,6 @@
-import { screen } from "@testing-library/react"
 import { SettingsOrdersFragmentContainer } from "Apps/Settings/Routes/Orders/Components/SettingsOrders"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
@@ -61,7 +61,7 @@ describe("SettingsOrders", () => {
     })
 
     expect(
-      screen.getByText("You have no orders to display."),
+      screen.getByText("You have no orders to display.")
     ).toBeInTheDocument()
   })
 

@@ -1,10 +1,10 @@
 import type { ShippingContextProps } from "Apps/Order/Routes/Shipping/ShippingContext"
 import {
+  addressWithFallbackValues,
   FulfillmentType,
+  matchAddressFields,
   type PickupValues,
   type ShippingAddressFormValues,
-  addressWithFallbackValues,
-  matchAddressFields,
 } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
 import { ALL_COUNTRY_CODES, EU_COUNTRY_CODES } from "Components/CountrySelect"
 import { extractNodes } from "Utils/extractNodes"
@@ -46,7 +46,7 @@ type SavedShippingQuoteData = {
 
 export const computeOrderData = (
   order: ShippingContext_order$data,
-  meData: ShippingContextProps["meData"],
+  meData: ShippingContextProps["meData"]
 ): ComputedOrderData => {
   // FIXME: Non-null assertion
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -117,7 +117,7 @@ export const computeOrderData = (
 
 const getSavedFulfillmentDetails = (
   order: ShippingContext_order$data,
-  meData: ShippingContextProps["meData"],
+  meData: ShippingContextProps["meData"]
 ): SavedFulfillmentData => {
   const fulfillmentTypeName = order.requestedFulfillment?.__typename
 
@@ -142,13 +142,13 @@ const getSavedFulfillmentDetails = (
       ["CommerceShip", "CommerceShipArta"].includes(fulfillmentTypeName)
     ) {
       const fulfillmentDetails = addressWithFallbackValues(
-        order.requestedFulfillment,
+        order.requestedFulfillment
       )
       // TODO: can this logic be colocated with other areas, like FulfillmentDetails' getInitialValues?
       const selectedSavedAddressID =
         (fulfillmentDetails &&
           meData.addressList.find(node =>
-            matchAddressFields(node, fulfillmentDetails),
+            matchAddressFields(node, fulfillmentDetails)
           )?.internalID) ??
         null
 

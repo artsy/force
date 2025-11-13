@@ -1,5 +1,5 @@
-import { Column, Flex, GridColumns, Text } from "@artsy/palette"
 import { extractNodes } from "Utils/extractNodes"
+import { Column, Flex, GridColumns, Text } from "@artsy/palette"
 import type { AddToCollectionRoute_viewer$data } from "__generated__/AddToCollectionRoute_viewer.graphql"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -28,16 +28,16 @@ const AddToCollectionRoute: React.FC<
     setArtworksInCollection([...artworksInCollection, artwork])
     setAvailableArtworks(
       availableArtworks.filter(
-        availableArtwork => availableArtwork.internalID !== artwork.internalID,
-      ),
+        availableArtwork => availableArtwork.internalID !== artwork.internalID
+      )
     )
   }
 
   const handleRemoveArtwork = artwork => {
     setArtworksInCollection(
       artworksInCollection.filter(
-        availableArtwork => availableArtwork.internalID !== artwork.internalID,
-      ),
+        availableArtwork => availableArtwork.internalID !== artwork.internalID
+      )
     )
     setAvailableArtworks([artwork, ...availableArtworks])
   }
@@ -111,5 +111,5 @@ export const AddToCollectionRouteFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  },
+  }
 )

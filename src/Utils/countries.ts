@@ -1501,5 +1501,5 @@ export const countries: CountryData[] = COUNTRIES.sort(
   (a, b) =>
     Math.floor(Math.log10(Math.abs(Number(a.countryCode)))) -
       Math.floor(Math.log10(Math.abs(Number(b.countryCode)))) ||
-    Number(a.countryCode) - Number(b.countryCode),
+    Number(a.countryCode) - Number(b.countryCode)
 )

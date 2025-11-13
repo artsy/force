@@ -1,6 +1,6 @@
+import { getENV } from "Utils/getENV"
 import { useAppendStylesheet } from "Utils/Hooks/useAppendStylesheet"
 import { useLoadScript } from "Utils/Hooks/useLoadScript"
-import { getENV } from "Utils/getENV"
 import { useEffect } from "react"
 
 export const SalesforceWrapper: React.FC<{}> = _props => {
@@ -31,7 +31,7 @@ export const SalesforceWrapper: React.FC<{}> = _props => {
           getENV("SALESFORCE_MESSAGE_INSTANCE_URL"),
           {
             scrt2URL: getENV("SALESFORCE_MESSAGE_SCRT2_URL"),
-          },
+          }
         )
       }
     },

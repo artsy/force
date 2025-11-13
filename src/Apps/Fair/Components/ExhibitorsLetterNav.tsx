@@ -1,3 +1,6 @@
+import { getExhibitorSectionId } from "Apps/Fair/Utils/getExhibitorSectionId"
+import { useJump } from "Utils/Hooks/useJump"
+import { Media } from "Utils/Responsive"
 import {
   type BoxProps,
   Clickable,
@@ -5,9 +8,6 @@ import {
   HorizontalOverflow,
   Text,
 } from "@artsy/palette"
-import { getExhibitorSectionId } from "Apps/Fair/Utils/getExhibitorSectionId"
-import { useJump } from "Utils/Hooks/useJump"
-import { Media } from "Utils/Responsive"
 import type { ExhibitorsLetterNav_fair$data } from "__generated__/ExhibitorsLetterNav_fair.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -68,7 +68,7 @@ export const ExhibitorsLetterNavFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  },
+  }
 )
 
 interface LetterProps extends BoxProps {

@@ -1,3 +1,13 @@
+import { AppContainer } from "Apps/Components/AppContainer"
+import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
+import { ArtworkFilterActiveFilters } from "Components/ArtworkFilter/ArtworkFilterActiveFilters"
+import {
+  type ArtworkGridLayout,
+  ArtworkGridPlaceholder,
+} from "Components/ArtworkGrid/ArtworkGrid"
+import { Sticky } from "Components/Sticky"
+import { useFlag } from "System/FeatureFlags/useFlag"
+import { Media } from "Utils/Responsive"
 import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
 import ChevronDownIcon from "@artsy/icons/ChevronDownIcon"
 import ExpandIcon from "@artsy/icons/ExpandIcon"
@@ -18,16 +28,6 @@ import {
   SkeletonText,
   Spacer,
 } from "@artsy/palette"
-import { AppContainer } from "Apps/Components/AppContainer"
-import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
-import { ArtworkFilterActiveFilters } from "Components/ArtworkFilter/ArtworkFilterActiveFilters"
-import {
-  type ArtworkGridLayout,
-  ArtworkGridPlaceholder,
-} from "Components/ArtworkGrid/ArtworkGrid"
-import { Sticky } from "Components/Sticky"
-import { useFlag } from "System/FeatureFlags/useFlag"
-import { Media } from "Utils/Responsive"
 
 interface ArtworkFilterPlaceholderProps extends BoxProps {
   showCreateAlert?: boolean

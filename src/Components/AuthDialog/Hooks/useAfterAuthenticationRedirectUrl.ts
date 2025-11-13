@@ -21,7 +21,7 @@ export const useAfterAuthenticationRedirectUrl = () => {
 
     const redirectUri = new URL(
       redirect,
-      getENV("APP_URL") ?? "https://www.artsy.net",
+      getENV("APP_URL") ?? "https://www.artsy.net"
     )
 
     if (isElligibleForOnboarding) {

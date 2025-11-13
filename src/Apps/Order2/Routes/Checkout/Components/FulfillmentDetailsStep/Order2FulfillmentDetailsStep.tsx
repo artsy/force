@@ -1,4 +1,3 @@
-import { Box, Flex, Tab, Tabs, Text } from "@artsy/palette"
 import {
   CheckoutStepName,
   CheckoutStepState,
@@ -8,6 +7,7 @@ import { Order2FulfillmentDetailsCompletedView } from "Apps/Order2/Routes/Checko
 import { Order2PickupForm } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/Order2PickupForm"
 import { useCompleteFulfillmentDetailsData } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/useCompleteFulfillmentDetailsData"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import { Box, Flex, Tab, Tabs, Text } from "@artsy/palette"
 import type { Order2FulfillmentDetailsStep_me$key } from "__generated__/Order2FulfillmentDetailsStep_me.graphql"
 import type { Order2FulfillmentDetailsStep_order$key } from "__generated__/Order2FulfillmentDetailsStep_order.graphql"
 import { useMemo } from "react"
@@ -34,12 +34,12 @@ export const Order2FulfillmentDetailsStep: React.FC<
   } = useCheckoutContext()
 
   const stepState = steps?.find(
-    step => step.name === CheckoutStepName.FULFILLMENT_DETAILS,
+    step => step.name === CheckoutStepName.FULFILLMENT_DETAILS
   )?.state
 
   const fulfillmentOptions = orderData?.fulfillmentOptions
   const pickupOption = fulfillmentOptions.find(
-    option => option.type === "PICKUP",
+    option => option.type === "PICKUP"
   )
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: we don't want this to update

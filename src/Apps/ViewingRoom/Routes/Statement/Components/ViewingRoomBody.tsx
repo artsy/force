@@ -29,5 +29,5 @@ export const ViewingRoomBodyFragmentContainer = createFragmentContainer(
         body
       }
     `,
-  },
+  }
 )

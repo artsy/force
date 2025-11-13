@@ -21,7 +21,7 @@ describe("ArtworkSidebarAuctionProgressBar", () => {
       }
 
       const { container } = render(
-        <ArtworkSidebarAuctionProgressBar {...props} />,
+        <ArtworkSidebarAuctionProgressBar {...props} />
       )
       expect(container.firstChild).toBeNull()
     })

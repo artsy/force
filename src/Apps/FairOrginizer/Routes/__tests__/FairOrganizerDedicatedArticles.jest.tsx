@@ -36,9 +36,9 @@ const { renderWithRelay } =
       }
     `,
     variables: {
-      // @ts-ignore
+      // @ts-expect-error
       first: 10,
-      // @ts-ignore
+      // @ts-expect-error
       page: 1,
     },
   })
@@ -50,7 +50,7 @@ describe("FairOrganizerDedicatedArticles", () => {
     })
 
     expect(
-      screen.getByText(/All Articles for The Armory Show on Artsy/),
+      screen.getByText(/All Articles for The Armory Show on Artsy/)
     ).toBeInTheDocument()
   })
 

@@ -18,19 +18,19 @@ describe("rangeToTuple", () => {
 
   it("returns a min and max price", () => {
     expect(
-      rangeToTuple({ ...artworkFilterState, priceRange: "*-*" }, "priceRange"),
+      rangeToTuple({ ...artworkFilterState, priceRange: "*-*" }, "priceRange")
     ).toEqual([50, 50000])
   })
 
   it("returns a min and max height", () => {
     expect(
-      rangeToTuple({ ...artworkFilterState, height: "*-*" }, "height"),
+      rangeToTuple({ ...artworkFilterState, height: "*-*" }, "height")
     ).toEqual([1, 120])
   })
 
   it("returns a min and max width", () => {
     expect(
-      rangeToTuple({ ...artworkFilterState, width: "*-*" }, "width"),
+      rangeToTuple({ ...artworkFilterState, width: "*-*" }, "width")
     ).toEqual([1, 120])
   })
 })

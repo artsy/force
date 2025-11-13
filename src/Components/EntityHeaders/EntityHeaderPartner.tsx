@@ -1,8 +1,8 @@
-import { ContextModule } from "@artsy/cohesion"
-import { Avatar, type BoxProps, Flex, Label, Text } from "@artsy/palette"
 import { FollowProfileButtonQueryRenderer } from "Components/FollowButton/FollowProfileButton"
 import { RouterLink } from "System/Components/RouterLink"
 import { extractNodes } from "Utils/extractNodes"
+import { ContextModule } from "@artsy/cohesion"
+import { Avatar, type BoxProps, Flex, Label, Text } from "@artsy/palette"
 import type { EntityHeaderPartner_partner$data } from "__generated__/EntityHeaderPartner_partner.graphql"
 import { compact, uniq } from "lodash"
 import { type FC, Fragment } from "react"
@@ -39,8 +39,8 @@ const EntityHeaderPartner: FC<
   const initials = partner.initials ?? partner.name?.[0]
   const badges = compact(
     (partner.categories ?? []).filter(category =>
-      DISPLAYABLE_BADGES.includes(category?.slug ?? ""),
-    ),
+      DISPLAYABLE_BADGES.includes(category?.slug ?? "")
+    )
   )
   const isFollowable =
     partner && partner.type !== "Auction House" && !!partner.profile
@@ -143,5 +143,5 @@ export const EntityHeaderPartnerFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  },
+  }
 )

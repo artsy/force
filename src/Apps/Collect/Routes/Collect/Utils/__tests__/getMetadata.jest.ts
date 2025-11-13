@@ -10,7 +10,7 @@ describe("getMetadata", () => {
       expect(title).toBe("Paintings - For Sale on Artsy")
       expect(breadcrumbTitle).toBe("Paintings")
       expect(description).toBe(
-        "Buy, bid, and inquire on over 850,000+ paintings on Artsy, the world’s largest online marketplace for art and design.",
+        "Buy, bid, and inquire on over 850,000+ paintings on Artsy, the world’s largest online marketplace for art and design."
       )
     })
 
@@ -22,7 +22,7 @@ describe("getMetadata", () => {
       expect(title).toBe("Collect | Artsy")
       expect(breadcrumbTitle).toBe("Collect")
       expect(description).toBe(
-        "Find artworks by subject matter, style/technique, movement, price, and gallery/institution.",
+        "Find artworks by subject matter, style/technique, movement, price, and gallery/institution."
       )
     })
   })
@@ -37,7 +37,7 @@ describe("getMetadata", () => {
       expect(title).toBe("Red Art - For Sale on Artsy")
       expect(breadcrumbTitle).toBe("Red Art")
       expect(description).toBe(
-        "Discover and buy red art by the world’s leading artists on Artsy.",
+        "Discover and buy red art by the world’s leading artists on Artsy."
       )
     })
 
@@ -49,7 +49,7 @@ describe("getMetadata", () => {
       expect(title).toBe("Collect | Artsy")
       expect(breadcrumbTitle).toBe("Collect")
       expect(description).toBe(
-        "Find artworks by subject matter, style/technique, movement, price, and gallery/institution.",
+        "Find artworks by subject matter, style/technique, movement, price, and gallery/institution."
       )
     })
   })
@@ -63,7 +63,7 @@ describe("getMetadata", () => {
     expect(title).toBe("Collect | Artsy")
     expect(breadcrumbTitle).toBe("Collect")
     expect(description).toBe(
-      "Find artworks by subject matter, style/technique, movement, price, and gallery/institution.",
+      "Find artworks by subject matter, style/technique, movement, price, and gallery/institution."
     )
   })
 })

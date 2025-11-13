@@ -1,6 +1,6 @@
-import { screen } from "@testing-library/react"
 import { ConversationReviewOfferCTA } from "Apps/Conversations/components/ConversationCTA/ConversationReviewOfferCTA"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
@@ -40,13 +40,13 @@ describe("ConversationReviewOfferCTA", () => {
     expect(screen.getByText("Payment Failed")).toBeInTheDocument()
     expect(
       screen.getByText(
-        "Unable to process payment for accepted offer. Update payment method.",
-      ),
+        "Unable to process payment for accepted offer. Update payment method."
+      )
     ).toBeInTheDocument()
 
     expect(screen.getByTestId("orderActionLink")).toHaveAttribute(
       "href",
-      "/orders/orderID/payment/new",
+      "/orders/orderID/payment/new"
     )
   })
 
@@ -65,7 +65,7 @@ describe("ConversationReviewOfferCTA", () => {
 
     expect(screen.getByTestId("orderActionLink")).toHaveAttribute(
       "href",
-      "/orders/orderID/respond",
+      "/orders/orderID/respond"
     )
   })
 
@@ -81,12 +81,12 @@ describe("ConversationReviewOfferCTA", () => {
     })
 
     expect(
-      screen.getByText("Congratulations! Offer Accepted"),
+      screen.getByText("Congratulations! Offer Accepted")
     ).toBeInTheDocument()
     expect(screen.getByText("Tap to view")).toBeInTheDocument()
     expect(screen.getByTestId("orderActionLink")).toHaveAttribute(
       "href",
-      "/orders/orderID/details",
+      "/orders/orderID/details"
     )
   })
 
@@ -107,12 +107,12 @@ describe("ConversationReviewOfferCTA", () => {
     })
 
     expect(
-      screen.getByText("Offer Accepted - Confirm total"),
+      screen.getByText("Offer Accepted - Confirm total")
     ).toBeInTheDocument()
 
     expect(screen.getByTestId("orderActionLink")).toHaveAttribute(
       "href",
-      "/orders/orderID/respond",
+      "/orders/orderID/respond"
     )
   })
 
@@ -133,12 +133,12 @@ describe("ConversationReviewOfferCTA", () => {
     })
 
     expect(
-      screen.getByText("Counteroffer Received - Confirm Total"),
+      screen.getByText("Counteroffer Received - Confirm Total")
     ).toBeInTheDocument()
 
     expect(screen.getByTestId("orderActionLink")).toHaveAttribute(
       "href",
-      "/orders/orderID/respond",
+      "/orders/orderID/respond"
     )
   })
 
@@ -163,7 +163,7 @@ describe("ConversationReviewOfferCTA", () => {
 
     expect(screen.getByTestId("orderActionLink")).toHaveAttribute(
       "href",
-      "/orders/orderID/details",
+      "/orders/orderID/details"
     )
   })
 })

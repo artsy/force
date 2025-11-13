@@ -11,17 +11,17 @@ const resizeParams = { width: imageWidth, height: imageHeight, quality: 100 }
 export const HowMyCollectionWorks = () => {
   const howItWorksImage1 = resized(
     "https://files.artsy.net/images/my-coll-how-it-works-step-1.jpg",
-    resizeParams,
+    resizeParams
   )
 
   const howItWorksImage2 = resized(
     "https://files.artsy.net/images/my-coll-how-it-works-step-2.jpg",
-    resizeParams,
+    resizeParams
   )
 
   const howItWorksImage3 = resized(
     "https://files.artsy.net/images/my-coll-how-it-works-step-3.jpg",
-    resizeParams,
+    resizeParams
   )
 
   const data: StepsWithImageDataType[] = [

@@ -1,8 +1,8 @@
-import loadable from "@loadable/component"
 import { SIDEBAR_FETCH_PAGE_SIZE } from "Apps/Conversations/components/Sidebar/Utils/getSidebarTotal"
 import type { RouteProps } from "System/Router/Route"
 import { extractNodes } from "Utils/extractNodes"
 import { getENV } from "Utils/getENV"
+import loadable from "@loadable/component"
 import { RedirectException } from "found"
 import { graphql } from "react-relay"
 
@@ -11,7 +11,7 @@ const ConversationApp = loadable(
     import(/* webpackChunkName: "conversationsBundle" */ "./ConversationApp"),
   {
     resolveComponent: component => component.ConversationAppFragmentContainer,
-  },
+  }
 )
 
 export const conversationsRoutes: RouteProps[] = [
@@ -24,7 +24,7 @@ export const conversationsRoutes: RouteProps[] = [
       }
 
       const initialConversationID = extractNodes<any>(
-        props.conversationsConnection,
+        props.conversationsConnection
       )[0]?.internalID
 
       let conversationUrl = initialConversationID

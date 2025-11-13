@@ -1,6 +1,3 @@
-import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
-import { Button, Flex, Join, Spacer } from "@artsy/palette"
-import type { Stripe, StripeElements } from "@stripe/stripe-js"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
 import { BuyerGuarantee } from "Apps/Order/Components/BuyerGuarantee"
 import {
@@ -17,15 +14,18 @@ import {
 import { getErrorDialogCopy } from "Apps/Order/Utils/getErrorDialogCopy"
 import { CountdownTimer } from "Components/CountdownTimer"
 import type { RouteProps } from "System/Router/Route"
-import { Media } from "Utils/Responsive"
 import { createStripeWrapper } from "Utils/createStripeWrapper"
 import { get } from "Utils/get"
 import createLogger from "Utils/logger"
-import type { NewPaymentRouteSetOrderPaymentMutation } from "__generated__/NewPaymentRouteSetOrderPaymentMutation.graphql"
+import { Media } from "Utils/Responsive"
+import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
+import { Button, Flex, Join, Spacer } from "@artsy/palette"
+import type { Stripe, StripeElements } from "@stripe/stripe-js"
 import type { NewPayment_me$data } from "__generated__/NewPayment_me.graphql"
 import type { NewPayment_order$data } from "__generated__/NewPayment_order.graphql"
+import type { NewPaymentRouteSetOrderPaymentMutation } from "__generated__/NewPaymentRouteSetOrderPaymentMutation.graphql"
 import type { Router } from "found"
-import { type FC, createRef, useState } from "react"
+import { createRef, type FC, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 
@@ -82,7 +82,7 @@ export const NewPaymentRoute: FC<
   const trackErrorMessageEvent = (
     title: string,
     message: string | undefined,
-    code?: string,
+    code?: string
   ) => {
     return tracking.trackEvent({
       action: ActionType.errorMessageViewed,
@@ -157,7 +157,7 @@ export const NewPaymentRoute: FC<
 
         if (orderOrError.actionData && orderOrError.actionData.clientSecret) {
           const scaResult = await stripe.handleCardAction(
-            orderOrError.actionData.clientSecret,
+            orderOrError.actionData.clientSecret
           )
           if (scaResult.error) {
             dialog.showErrorDialog({
@@ -198,7 +198,7 @@ export const NewPaymentRoute: FC<
   }
 
   const fixFailedPayment = (
-    variables: NewPaymentRouteSetOrderPaymentMutation["variables"],
+    variables: NewPaymentRouteSetOrderPaymentMutation["variables"]
   ) => {
     return commitMutation<NewPaymentRouteSetOrderPaymentMutation>({
       variables,
@@ -251,7 +251,7 @@ export const NewPaymentRoute: FC<
         trackErrorMessageEvent(
           "Charge failed",
           "Payment has been declined. Please contact your card provider or bank institution, then press “Continue” again. Alternatively, use another payment method.",
-          code,
+          code
         )
 
         dialog.showErrorDialog({
@@ -265,7 +265,7 @@ export const NewPaymentRoute: FC<
         trackErrorMessageEvent(
           "Not available",
           "Sorry, the work is no longer available.",
-          code,
+          code
         )
 
         await dialog.showErrorDialog({
@@ -289,7 +289,7 @@ export const NewPaymentRoute: FC<
   const routeToArtworkPage = () => {
     const artworkId = get(
       order,
-      o => o.lineItems?.edges?.[0]?.node?.artwork?.slug,
+      o => o.lineItems?.edges?.[0]?.node?.artwork?.slug
     )
     router.push(`/artwork/${artworkId}`)
   }
@@ -360,7 +360,7 @@ export const NewPaymentRoute: FC<
 
 export const NewPaymentFragmentContainer = createFragmentContainer(
   createStripeWrapper<NewPaymentProps>(
-    injectCommitMutation(injectDialog(NewPaymentRoute)) as any,
+    injectCommitMutation(injectDialog(NewPaymentRoute)) as any
   ),
   {
     me: graphql`
@@ -398,5 +398,5 @@ export const NewPaymentFragmentContainer = createFragmentContainer(
         ...OrderStepper_order
       }
     `,
-  },
+  }
 )

@@ -4,7 +4,7 @@ import {
 } from "Apps/Order/Components/StickyFooter"
 import { MockBoot } from "DevTools/MockBoot"
 import { SystemContextProvider } from "System/Contexts/SystemContext"
-import { render, screen, fireEvent } from "@testing-library/react"
+import { fireEvent, render, screen } from "@testing-library/react"
 import { useTracking } from "react-tracking"
 
 jest.mock("react-tracking")
@@ -29,7 +29,7 @@ describe("Sticky footer", () => {
           artworkID="whatever"
           orderSource="artwork_page"
         />
-      </MockBoot>,
+      </MockBoot>
     )
 
     const helpCenterLink = screen.getByRole("button", {
@@ -39,7 +39,7 @@ describe("Sticky footer", () => {
 
     expect(window.open).toHaveBeenCalledWith(
       "https://support.artsy.net/s/topic/0TO3b000000UessGAC/buy",
-      "_blank",
+      "_blank"
     )
   })
 
@@ -59,7 +59,7 @@ describe("Sticky footer", () => {
             inquiryComponent={<></>}
           />
         </SystemContextProvider>
-      </MockBoot>,
+      </MockBoot>
     )
 
     const askQuestionLink = screen.getByRole("button", {
@@ -78,7 +78,7 @@ describe("Sticky footer", () => {
           orderType="OFFER"
           artworkID="whatever"
         />
-      </MockBoot>,
+      </MockBoot>
     )
     expect(screen.getByText(/Need help/)).toBeInTheDocument()
     expect(screen.getByText("Visit our help center")).toBeInTheDocument()
@@ -94,7 +94,7 @@ describe("Sticky footer", () => {
             orderType="BUY"
             artworkID="whatever"
           />
-        </MockBoot>,
+        </MockBoot>
       )
       const privateSalesEmail = screen.getByRole("button", {
         name: "privatesales@artsy.net",
@@ -114,7 +114,7 @@ describe("Sticky footer", () => {
               orderType="OFFER"
               artworkID="whatever"
             />
-          </MockBoot>,
+          </MockBoot>
         )
         const helpCenterLink = screen.getByRole("button", {
           name: "Visit our help center",
@@ -139,7 +139,7 @@ describe("Sticky footer", () => {
                 artworkID="whatever"
               />
             </SystemContextProvider>
-          </MockBoot>,
+          </MockBoot>
         )
         const askQuestionLink = screen.getByRole("button", {
           name: "ask a question.",
@@ -164,7 +164,7 @@ describe("Sticky footer", () => {
               orderType="BUY"
               artworkID="whatever"
             />
-          </MockBoot>,
+          </MockBoot>
         )
         const helpCenterLink = screen.getByRole("button", {
           name: "Visit our help center",
@@ -189,7 +189,7 @@ describe("Sticky footer", () => {
                 artworkID="whatever"
               />
             </SystemContextProvider>
-          </MockBoot>,
+          </MockBoot>
         )
         const askQuestionLink = screen.getByRole("button", {
           name: "ask a question.",

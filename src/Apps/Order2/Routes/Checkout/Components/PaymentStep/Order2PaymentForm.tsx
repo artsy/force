@@ -1,6 +1,34 @@
+import { Collapse } from "Apps/Order/Components/Collapse"
+import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
+import { useSetPayment } from "Apps/Order/Mutations/useSetPayment"
+import {
+  CheckoutStepName,
+  CheckoutStepState,
+} from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
+import {
+  CheckoutErrorBanner,
+  MailtoOrderSupport,
+} from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
+import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import { useOrder2SetOrderPaymentMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderPaymentMutation"
+import { fetchAndSetConfirmationToken } from "Apps/Order2/Utils/confirmationTokenUtils"
+import { preventHardReload } from "Apps/Order2/Utils/navigationGuards"
+import {
+  AddressFormFields,
+  addressFormFieldsValidator,
+  type FormikContextWithAddress,
+} from "Components/Address/AddressFormFields"
+import { type Address, emptyAddress } from "Components/Address/utils"
+import { CreateBankDebitSetupForOrder } from "Components/BankDebitForm/Mutations/CreateBankDebitSetupForOrder"
+import { type Brand, BrandCreditCardIcon } from "Components/BrandCreditCardIcon"
+import { FadeInBox } from "Components/FadeInBox"
+import { RouterLink } from "System/Components/RouterLink"
+import { extractNodes } from "Utils/extractNodes"
+import { getENV } from "Utils/getENV"
+import createLogger from "Utils/logger"
 import { ContextModule } from "@artsy/cohesion"
-import InstitutionIcon from "@artsy/icons/InstitutionIcon"
 import InfoIcon from "@artsy/icons/InfoIcon"
+import InstitutionIcon from "@artsy/icons/InstitutionIcon"
 import LockIcon from "@artsy/icons/LockIcon"
 import ReceiptIcon from "@artsy/icons/ReceiptIcon"
 import {
@@ -28,34 +56,6 @@ import type {
   StripePaymentElementChangeEvent,
   StripePaymentElementOptions,
 } from "@stripe/stripe-js"
-import { Collapse } from "Apps/Order/Components/Collapse"
-import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
-import { useSetPayment } from "Apps/Order/Mutations/useSetPayment"
-import {
-  CheckoutStepName,
-  CheckoutStepState,
-} from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
-import {
-  CheckoutErrorBanner,
-  MailtoOrderSupport,
-} from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
-import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
-import { useOrder2SetOrderPaymentMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderPaymentMutation"
-import { fetchAndSetConfirmationToken } from "Apps/Order2/Utils/confirmationTokenUtils"
-import { preventHardReload } from "Apps/Order2/Utils/navigationGuards"
-import {
-  AddressFormFields,
-  type FormikContextWithAddress,
-  addressFormFieldsValidator,
-} from "Components/Address/AddressFormFields"
-import { type Address, emptyAddress } from "Components/Address/utils"
-import { CreateBankDebitSetupForOrder } from "Components/BankDebitForm/Mutations/CreateBankDebitSetupForOrder"
-import { type Brand, BrandCreditCardIcon } from "Components/BrandCreditCardIcon"
-import { FadeInBox } from "Components/FadeInBox"
-import { RouterLink } from "System/Components/RouterLink"
-import { extractNodes } from "Utils/extractNodes"
-import { getENV } from "Utils/getENV"
-import createLogger from "Utils/logger"
 import type {
   Order2PaymentForm_me$data,
   Order2PaymentForm_me$key,
@@ -186,7 +186,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       | "SAVED_CREDIT_CARD"
       | "WIRE_TRANSFER"
       | "US_BANK_ACCOUNT"
-      | "SEPA_DEBIT",
+      | "SEPA_DEBIT"
   ) => {
     checkoutTracking.clickedPaymentMethod({
       paymentMethod,
@@ -197,7 +197,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
 
   const [isSubmittingToStripe, setIsSubmittingToStripe] = useState(false)
   const [errorMessage, setErrorMessage] = useState<JSX.Element | string | null>(
-    null,
+    null
   )
   const [subtitleErrorMessage, setSubtitleErrorMessage] = useState<
     string | null
@@ -220,7 +220,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
   const hasSavedCreditCards = savedCreditCards.length > 0
   const savedBankAccounts = extractNodes(me.bankAccounts)
   const allowedSavedBankAccounts = savedBankAccounts.filter(bankAccount =>
-    order.availablePaymentMethods?.includes(bankAccount.type),
+    order.availablePaymentMethods?.includes(bankAccount.type)
   )
   const hasSavedBankAccounts = allowedSavedBankAccounts.length > 0
 
@@ -310,14 +310,14 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
 
   const handleBankDebitSelect = (
     paymentType: "sepa_debit" | "us_bank_account",
-    methodType: "stripe-sepa" | "stripe-ach",
+    methodType: "stripe-sepa" | "stripe-ach"
   ) => {
     elements.update({
       captureMethod: "automatic",
       setupFutureUsage: null,
       mode: "setup",
       payment_method_types: [paymentType],
-      // @ts-ignore Stripe type issue
+      // @ts-expect-error Stripe type issue
       paymentMethodOptions: {
         us_bank_account: { verification_method: "instant" },
       },
@@ -348,7 +348,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       order.lineItems[0]?.artwork?.artworkMeta?.share?.slice(10) // Removing "Check out " from the share metadata
     const artworkUrl = sd.APP_URL + order.lineItems[0]?.artwork?.href
     setWireEmailBody(
-      `Hello%2C%0D%0AI'm interested in paying by wire transfer and would like some assistance.%0D%0A${artworkInfo} on Artsy: ${artworkUrl}`,
+      `Hello%2C%0D%0AI'm interested in paying by wire transfer and would like some assistance.%0D%0A${artworkInfo} on Artsy: ${artworkUrl}`
     )
     elements?.getElement("payment")?.collapse()
   }
@@ -401,13 +401,13 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       return "SEPA_DEBIT"
     }
     throw new Error(
-      "Could not determine mutation payment method from saved payment method chosen.",
+      "Could not determine mutation payment method from saved payment method chosen."
     )
   }
 
   const handleBankDebitSetup = async (
     paymentMethod: "US_BANK_ACCOUNT" | "SEPA_DEBIT",
-    confirmationToken: { id: string },
+    confirmationToken: { id: string }
   ) => {
     const updateOrderPaymentMethodResult =
       await setPaymentMutation.submitMutation({
@@ -421,7 +421,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       })
 
     validateAndExtractOrderResponse(
-      updateOrderPaymentMethodResult.updateOrder?.orderOrError,
+      updateOrderPaymentMethodResult.updateOrder?.orderOrError
     )
 
     // Creating a SetupIntent
@@ -474,7 +474,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       const billingAddr = getBillingAddress()
       if (!billingAddr.name || !billingAddr.addressLine1 || !billingAddr.city) {
         setSubtitleErrorMessage(
-          "Please fill in required billing address fields",
+          "Please fill in required billing address fields"
         )
         return
       }
@@ -513,7 +513,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
               },
             },
           }),
-        },
+        }
       )
 
       if (error) {
@@ -525,7 +525,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       const response = await fetchAndSetConfirmationToken(
         confirmationToken.id,
         environment,
-        setConfirmationToken,
+        setConfirmationToken
       )
 
       setSavePaymentMethod(savePaymentMethod)
@@ -549,7 +549,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
             })
 
           validateAndExtractOrderResponse(
-            updateOrderPaymentMethodResult.updateOrder?.orderOrError,
+            updateOrderPaymentMethodResult.updateOrder?.orderOrError
           )
         } catch (error) {
           logger.error("Error while updating order payment method", error)
@@ -561,13 +561,13 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       } else if (selectedPaymentMethod === "stripe-ach") {
         try {
           await handleBankDebitSetup("US_BANK_ACCOUNT", confirmationToken)
-        } catch (error) {
+        } catch (_error) {
           handleError({ message: defaultErrorMessage })
         }
       } else if (selectedPaymentMethod === "stripe-sepa") {
         try {
           await handleBankDebitSetup("SEPA_DEBIT", confirmationToken)
-        } catch (error) {
+        } catch (_error) {
           handleError({ message: defaultErrorMessage })
         }
       }
@@ -617,7 +617,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
 
       try {
         const paymentMethod = getPaymentMethodFromSavedPayment(
-          selectedSavedPaymentMethod,
+          selectedSavedPaymentMethod
         )
         const result = await legacySetPaymentMutation.submitMutation({
           variables: {
@@ -744,7 +744,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
                           </Flex>
                         }
                       />
-                    ),
+                    )
                   )}
                 </RadioGroup>
               </Box>

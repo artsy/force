@@ -1,9 +1,9 @@
 import { ArtistCurrentArticlesRailFragmentContainer } from "Components/ArtistCurrentArticlesRail"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { fireEvent } from "@testing-library/react"
 import type { ArtistCurrentArticlesRailTestQuery } from "__generated__/ArtistCurrentArticlesRailTestQuery.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { fireEvent } from "@testing-library/react"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -53,7 +53,7 @@ describe("ArtistCurrentArticlesRail", () => {
     const links = container.querySelectorAll("a")
     expect(links.length).toBe(3)
     expect(links[0].getAttribute("href")).toContain(
-      "/artist/artistSlug/articles",
+      "/artist/artistSlug/articles"
     )
 
     const image = container.querySelector("img")
@@ -82,7 +82,7 @@ describe("ArtistCurrentArticlesRail", () => {
         destination_page_owner_slug: "test-artist-slug",
         destination_page_owner_type: "artist",
         type: "viewAll",
-      }),
+      })
     )
   })
 
@@ -110,7 +110,7 @@ describe("ArtistCurrentArticlesRail", () => {
         horizontalSlidePosition: 1,
         subject: "showCarouselSlide",
         type: "thumbnail",
-      }),
+      })
     )
   })
 })

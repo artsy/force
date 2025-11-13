@@ -1,7 +1,7 @@
-import { Box, Image, ResponsiveBox, SkeletonBox, Text } from "@artsy/palette"
 import { EntityHeaderPartnerFragmentContainer } from "Components/EntityHeaders/EntityHeaderPartner"
 import { EntityHeaderPlaceholder } from "Components/EntityHeaders/EntityHeaderPlaceholder"
 import { RouterLink, type RouterLinkProps } from "System/Components/RouterLink"
+import { Box, Image, ResponsiveBox, SkeletonBox, Text } from "@artsy/palette"
 import type { CellPartner_partner$data } from "__generated__/CellPartner_partner.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -124,5 +124,5 @@ export const CellPartnerFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  },
+  }
 )

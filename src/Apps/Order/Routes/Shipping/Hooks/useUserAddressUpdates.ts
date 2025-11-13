@@ -5,13 +5,13 @@ import { useUpdateSavedAddress } from "Apps/Order/Routes/Shipping/Mutations/useU
 import { useUpdateUserDefaultAddress } from "Apps/Order/Routes/Shipping/Mutations/useUpdateUserDefaultAddress"
 import type { ShippingContextProps } from "Apps/Order/Routes/Shipping/ShippingContext"
 import {
+  addressWithFallbackValues,
   FulfillmentType,
   type FulfillmentValues,
-  type SavedAddressType,
-  type ShipValues,
-  addressWithFallbackValues,
   getAddressByID,
   matchAddressFields,
+  type SavedAddressType,
+  type ShipValues,
 } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
 import createLogger from "Utils/logger"
 import type { useCreateSavedAddressMutation$data } from "__generated__/useCreateSavedAddressMutation.graphql"
@@ -19,7 +19,7 @@ import type { useDeleteSavedAddressMutation$data } from "__generated__/useDelete
 import type { useUpdateSavedAddressMutation$data } from "__generated__/useUpdateSavedAddressMutation.graphql"
 
 const logger = createLogger(
-  "Order/Routes/Shipping/Hooks/useHandleUserAddressUpdates.tsx",
+  "Order/Routes/Shipping/Hooks/useHandleUserAddressUpdates.tsx"
 )
 
 type Result<Success extends { data: any }> =
@@ -71,7 +71,7 @@ export const useUserAddressUpdates = () => {
   const shippingContext = useShippingContext()
 
   const handleNewUserAddressUpdates = async (
-    values: FulfillmentValues,
+    values: FulfillmentValues
   ): Promise<SavedAddressResult | null> => {
     if (values.fulfillmentType !== FulfillmentType.SHIP) {
       return null
@@ -81,7 +81,7 @@ export const useUserAddressUpdates = () => {
 
     userAddressAction = getUserAddressActionForAddressFormValues(
       values,
-      shippingContext,
+      shippingContext
     )
 
     if (!userAddressAction) {
@@ -105,7 +105,7 @@ export const useUserAddressUpdates = () => {
   }
 
   const executeUserAddressAction = async (
-    userAddressAction: UserAddressAction,
+    userAddressAction: UserAddressAction
   ): Promise<SavedAddressResult> => {
     let processedPayload: Omit<SavedAddressResult, "actionType"> | null = null
     try {
@@ -117,7 +117,7 @@ export const useUserAddressUpdates = () => {
             variables: {
               input: {
                 attributes: addressWithFallbackValues(
-                  userAddressAction.address,
+                  userAddressAction.address
                 ),
               },
             },
@@ -184,7 +184,7 @@ export const useUserAddressUpdates = () => {
           },
         })
         setDefaultResult = handleMutationPayload(
-          setDefaultResponse.updateUserDefaultAddress,
+          setDefaultResponse.updateUserDefaultAddress
         )
         if (setDefaultResult.errors) {
           // Todo: Handle an error in setting the default address
@@ -208,7 +208,7 @@ export const useUserAddressUpdates = () => {
 
 const getUserAddressActionForAddressFormValues = (
   values: ShipValues,
-  shippingContext: ShippingContextProps,
+  shippingContext: ShippingContextProps
 ): UserAddressAction | null => {
   const savedFulfillmentDetails =
     shippingContext.orderData.savedFulfillmentDetails
@@ -223,12 +223,12 @@ const getUserAddressActionForAddressFormValues = (
       savedFulfillmentDetails?.fulfillmentType === FulfillmentType.SHIP &&
       !matchAddressFields(
         formAddressAttributes,
-        savedFulfillmentDetails.attributes,
+        savedFulfillmentDetails.attributes
       )
     ) {
       const newSavedAddress = getAddressByID(
         shippingContext.meData.addressList,
-        shippingContext.state.newSavedAddressID,
+        shippingContext.state.newSavedAddressID
       )
 
       if (!newSavedAddress) {
@@ -265,7 +265,7 @@ const handleMutationPayload = (
   payload:
     | useUpdateSavedAddressMutation$data["updateUserAddress"]
     | useCreateSavedAddressMutation$data["createUserAddress"]
-    | useDeleteSavedAddressMutation$data["deleteUserAddress"],
+    | useDeleteSavedAddressMutation$data["deleteUserAddress"]
 ): Omit<SavedAddressResult, "actionType"> => {
   const addressOrErrors = payload?.userAddressOrErrors
 

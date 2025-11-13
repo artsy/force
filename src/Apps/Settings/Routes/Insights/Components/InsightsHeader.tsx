@@ -1,10 +1,10 @@
-import { OwnerType } from "@artsy/cohesion"
-import { Box, Button, Flex, FullBleed, useTheme } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
 import { Sticky } from "Components/Sticky"
 import { RouterLink } from "System/Components/RouterLink"
+import { OwnerType } from "@artsy/cohesion"
+import { Box, Button, Flex, FullBleed, useTheme } from "@artsy/palette"
 
 export const InsightsHeader: React.FC<
   React.PropsWithChildren<unknown>
@@ -34,14 +34,14 @@ export const InsightsHeader: React.FC<
                   >
                     {stuck && (
                       <Button
-                        // @ts-ignore
+                        // @ts-expect-error
                         as={RouterLink}
                         size={["small", "large"]}
                         variant="primaryBlack"
                         to={"/collector-profile/my-collection/artworks/new"}
                         onClick={() =>
                           trackAddCollectedArtwork(
-                            OwnerType.myCollectionInsights,
+                            OwnerType.myCollectionInsights
                           )
                         }
                       >

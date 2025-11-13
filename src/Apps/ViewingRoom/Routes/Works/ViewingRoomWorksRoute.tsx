@@ -1,3 +1,5 @@
+import { extractNodes } from "Utils/extractNodes"
+import { Media } from "Utils/Responsive"
 import {
   Box,
   Column,
@@ -8,8 +10,6 @@ import {
   Shelf,
   Spacer,
 } from "@artsy/palette"
-import { Media } from "Utils/Responsive"
-import { extractNodes } from "Utils/extractNodes"
 import type { ViewingRoomWorksRoute_viewingRoom$data } from "__generated__/ViewingRoomWorksRoute_viewingRoom.graphql"
 import { compact } from "lodash"
 import * as React from "react"
@@ -131,5 +131,5 @@ export const ViewingRoomWorksRouteFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  },
+  }
 )

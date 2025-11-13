@@ -22,7 +22,7 @@ async function addCnameRecord() {
         proxied: true,
         tags: ["source:review-app"],
       }),
-    },
+    }
   )
   const data = await response.json()
 
@@ -30,7 +30,7 @@ async function addCnameRecord() {
     console.log("CNAME record created:", data.result)
   } else {
     throw new Error(
-      `Error creating CNAME record: ${JSON.stringify(data.errors)}`,
+      `Error creating CNAME record: ${JSON.stringify(data.errors)}`
     )
   }
 }

@@ -1,7 +1,7 @@
-import { screen } from "@testing-library/react"
 import { ConversationMessageBubble } from "Apps/Conversations/components/Message/ConversationMessageBubble"
 import { messageTime } from "Apps/Conversations/components/Message/Utils/dateFormatters"
 import { render } from "DevTools/renderWithMockBoot"
+import { screen } from "@testing-library/react"
 
 describe("ConversationMessageBubble", () => {
   it("renders given fromViewer", () => {
@@ -11,7 +11,7 @@ describe("ConversationMessageBubble", () => {
     render(
       <ConversationMessageBubble fromViewer time={isoDate} seenBy="Gumball">
         test message
-      </ConversationMessageBubble>,
+      </ConversationMessageBubble>
     )
 
     expect(screen.getByText("test message")).toBeInTheDocument()
@@ -23,7 +23,7 @@ describe("ConversationMessageBubble", () => {
     render(
       <ConversationMessageBubble fromViewer simplified seenBy="Gumball">
         test message
-      </ConversationMessageBubble>,
+      </ConversationMessageBubble>
     )
 
     expect(screen.getByText("test message")).toBeInTheDocument()
@@ -41,7 +41,7 @@ describe("ConversationMessageBubble", () => {
         avatarUrl="https://images.com/gumbal.webp"
       >
         test message
-      </ConversationMessageBubble>,
+      </ConversationMessageBubble>
     )
 
     expect(screen.getByText("test message")).toBeInTheDocument()
@@ -49,7 +49,7 @@ describe("ConversationMessageBubble", () => {
     expect(screen.getByText("Gumball")).toBeInTheDocument()
     expect(screen.getByRole("presentation")).toHaveAttribute(
       "src",
-      "https://images.com/gumbal.webp",
+      "https://images.com/gumbal.webp"
     )
   })
 
@@ -60,7 +60,7 @@ describe("ConversationMessageBubble", () => {
     render(
       <ConversationMessageBubble time={isoDate} name="Gumball">
         test message
-      </ConversationMessageBubble>,
+      </ConversationMessageBubble>
     )
 
     expect(screen.getByText("test message")).toBeInTheDocument()
@@ -73,7 +73,7 @@ describe("ConversationMessageBubble", () => {
     render(
       <ConversationMessageBubble simplified>
         test message
-      </ConversationMessageBubble>,
+      </ConversationMessageBubble>
     )
 
     expect(screen.getByText("test message")).toBeInTheDocument()
@@ -86,7 +86,7 @@ describe("ConversationMessageBubble", () => {
     render(
       <ConversationMessageBubble time={isoDate} name="Gumball">
         Link here: https://artsy.net
-      </ConversationMessageBubble>,
+      </ConversationMessageBubble>
     )
     const link = screen.getByRole("link")
     expect(link).toHaveAttribute("href", "https://artsy.net")

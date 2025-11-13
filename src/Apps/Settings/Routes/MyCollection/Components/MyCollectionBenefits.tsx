@@ -1,3 +1,5 @@
+import { Media } from "Utils/Responsive"
+import { resized } from "Utils/resized"
 import {
   Box,
   Column,
@@ -6,8 +8,6 @@ import {
   ResponsiveBox,
   Text,
 } from "@artsy/palette"
-import { Media } from "Utils/Responsive"
-import { resized } from "Utils/resized"
 
 export const MyCollectionBenefits: React.FC<
   React.PropsWithChildren<unknown>
@@ -33,7 +33,7 @@ export const MyCollectionBenefits: React.FC<
     {
       width: 910,
       height: 652,
-    },
+    }
   )
 
   const DesktopLayout = () => (

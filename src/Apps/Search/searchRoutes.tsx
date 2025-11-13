@@ -1,7 +1,7 @@
-import loadable from "@loadable/component"
 import { allowedFilters } from "Components/ArtworkFilter/Utils/allowedFilters"
 import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/paramsCasing"
 import type { RouteProps } from "System/Router/Route"
+import loadable from "@loadable/component"
 import { omit } from "lodash"
 import { graphql } from "react-relay"
 import { redirectQueryToTerm } from "./Server/redirectQueryToTerm"
@@ -14,7 +14,7 @@ const SearchResultsArtists = loadable(
   {
     resolveComponent: component =>
       component.SearchResultsArtistsRouteFragmentContainer,
-  },
+  }
 )
 const SearchResultsArtworks = loadable(
   () =>
@@ -24,7 +24,7 @@ const SearchResultsArtworks = loadable(
   {
     resolveComponent: component =>
       component.SearchResultsArtworksRouteFragmentContainer,
-  },
+  }
 )
 const SearchResultsEntity = loadable(
   () =>
@@ -34,13 +34,13 @@ const SearchResultsEntity = loadable(
   {
     resolveComponent: component =>
       component.SearchResultsEntityRouteFragmentContainer,
-  },
+  }
 )
 const SearchApp = loadable(
   () => import(/* webpackChunkName: "searchBundle" */ "./SearchApp"),
   {
     resolveComponent: component => component.SearchAppFragmentContainer,
-  },
+  }
 )
 
 const prepareVariables = (_params, { location }) => {

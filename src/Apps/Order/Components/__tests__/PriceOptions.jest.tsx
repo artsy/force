@@ -1,6 +1,6 @@
-import { fireEvent, screen, waitFor, within } from "@testing-library/react"
 import { PriceOptionsFragmentContainer } from "Apps/Order/Components/PriceOptions"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { fireEvent, screen, waitFor, within } from "@testing-library/react"
 import type { PriceOptions_Test_Query } from "__generated__/PriceOptions_Test_Query.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -45,7 +45,7 @@ let radios: HTMLElement[]
 const getTrackingObject = (
   offer: string,
   amount: number,
-  currency: string,
+  currency: string
 ) => ({
   action: "clickedOfferOption",
   flow: "Make offer",
@@ -117,38 +117,36 @@ describe("PriceOptions", () => {
       fireEvent.click(radios[0])
       expect(trackEvent).toHaveBeenLastCalledWith(
         expect.objectContaining(
-          getTrackingObject("Top-end of range", 200, "USD"),
-        ),
+          getTrackingObject("Top-end of range", 200, "USD")
+        )
       )
       fireEvent.click(radios[1])
       expect(trackEvent).toHaveBeenLastCalledWith(
-        expect.objectContaining(getTrackingObject("Midpoint", 150, "USD")),
+        expect.objectContaining(getTrackingObject("Midpoint", 150, "USD"))
       )
       fireEvent.click(radios[2])
       expect(trackEvent).toHaveBeenLastCalledWith(
         expect.objectContaining(
-          getTrackingObject("Low-end of range", 100, "USD"),
-        ),
+          getTrackingObject("Low-end of range", 100, "USD")
+        )
       )
       fireEvent.click(radios[3])
       expect(trackEvent).toHaveBeenCalledWith(
-        expect.objectContaining(
-          getTrackingObject("Different amount", 0, "USD"),
-        ),
+        expect.objectContaining(getTrackingObject("Different amount", 0, "USD"))
       )
     })
     it("correctly displays and tracks the offer too low notice", async () => {
       fireEvent.click(radios[3])
       const input = await within(radios[3]).findByRole("textbox")
       const notice = await screen.findByText(
-        "Offers lower than the displayed price range are often declined. We recommend increasing your offer to US$100.00.",
+        "Offers lower than the displayed price range are often declined. We recommend increasing your offer to US$100.00."
       )
       expect(notice).toBeInTheDocument()
       expect(trackEvent).toHaveBeenCalledWith(
         expect.objectContaining({
           action_type: "Viewed offer too low",
           flow: "Make offer",
-        }),
+        })
       )
       fireEvent.change(input, { target: { value: 200 } })
       expect(notice).not.toBeInTheDocument()
@@ -187,31 +185,29 @@ describe("PriceOptions", () => {
     it("correctly tracks the clicking of an option", async () => {
       fireEvent.click(radios[0])
       expect(trackEvent).toHaveBeenLastCalledWith(
-        expect.objectContaining(getTrackingObject("List price", 100, "EUR")),
+        expect.objectContaining(getTrackingObject("List price", 100, "EUR"))
       )
 
       fireEvent.click(radios[1])
       expect(trackEvent).toHaveBeenLastCalledWith(
         expect.objectContaining(
-          getTrackingObject("10% below the list price", 90, "EUR"),
-        ),
+          getTrackingObject("10% below the list price", 90, "EUR")
+        )
       )
 
       fireEvent.click(radios[2])
       expect(trackEvent).toHaveBeenLastCalledWith(
         expect.objectContaining(
-          getTrackingObject("20% below the list price", 80, "EUR"),
-        ),
+          getTrackingObject("20% below the list price", 80, "EUR")
+        )
       )
 
       fireEvent.click(radios[3])
       expect(trackEvent).toHaveBeenCalledWith(
-        expect.objectContaining(
-          getTrackingObject("Different amount", 0, "EUR"),
-        ),
+        expect.objectContaining(getTrackingObject("Different amount", 0, "EUR"))
       )
       const notice = await screen.findByText(
-        "Offers less than 20% off the list price are often declined. We recommend increasing your offer to €80.00.",
+        "Offers less than 20% off the list price are often declined. We recommend increasing your offer to €80.00."
       )
       expect(notice).toBeInTheDocument()
     })
@@ -240,7 +236,7 @@ describe("PriceOptions", () => {
 
     it("doesn't display an error when none is passed", () => {
       expect(
-        screen.queryByText("Offer amount missing or invalid."),
+        screen.queryByText("Offer amount missing or invalid.")
       ).not.toBeInTheDocument()
     })
     it("correctly rounds the values and displays the currency symbol", () => {

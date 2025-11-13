@@ -1,4 +1,3 @@
-import { GeneArtworkFilterRefetchContainer } from "Apps/Gene/Components/GeneArtworkFilter"
 import {
   artistAggregation,
   artistNationalityAggregation,
@@ -7,6 +6,7 @@ import {
   mediumAggregation,
   partnerAggregation,
 } from "Apps/__tests__/Fixtures/aggregations"
+import { GeneArtworkFilterRefetchContainer } from "Apps/Gene/Components/GeneArtworkFilter"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { screen } from "@testing-library/react"
@@ -58,7 +58,7 @@ describe("GeneArtworkFilter", () => {
     renderWithRelay()
     expect(screen.getByTestId("artwork-link")).toBeInTheDocument()
     expect(
-      screen.getByRole("button", { name: "All Filters" }),
+      screen.getByRole("button", { name: "All Filters" })
     ).toBeInTheDocument()
   })
 
@@ -80,7 +80,7 @@ describe("GeneArtworkFilter", () => {
     })
 
     expect(
-      screen.getByRole("button", { name: "All Filters" }),
+      screen.getByRole("button", { name: "All Filters" })
     ).toBeInTheDocument()
   })
 })

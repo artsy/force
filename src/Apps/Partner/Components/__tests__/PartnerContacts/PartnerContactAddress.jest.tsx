@@ -1,6 +1,6 @@
 import { PartnerContactAddress } from "Apps/Partner/Components/PartnerContacts/PartnerContactAddress"
-import type { PartnerContactAddress_location$data } from "__generated__/PartnerContactAddress_location.graphql"
 import { render, screen } from "@testing-library/react"
+import type { PartnerContactAddress_location$data } from "__generated__/PartnerContactAddress_location.graphql"
 
 describe("PartnerContactAddress", () => {
   it("displays partner contact address", () => {
@@ -12,7 +12,7 @@ describe("PartnerContactAddress", () => {
             phone: "123",
           } as PartnerContactAddress_location$data
         }
-      />,
+      />
     )
 
     expect(screen.getByText("address")).toBeInTheDocument()
@@ -27,7 +27,7 @@ describe("PartnerContactAddress", () => {
             address: "address",
           } as PartnerContactAddress_location$data
         }
-      />,
+      />
     )
 
     expect(screen.getByText("address")).toBeInTheDocument()

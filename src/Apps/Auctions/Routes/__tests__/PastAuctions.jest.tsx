@@ -43,7 +43,7 @@ describe("PastAuctions", () => {
         SaleConnection: () => ({
           edges: null,
         }),
-      }),
+      })
     ).not.toThrowError()
   })
 

@@ -1,10 +1,10 @@
+import { CellShowFragmentContainer } from "Components/Cells/CellShow"
 import {
   ActionType,
   type ClickedShowGroup,
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
-import { CellShowFragmentContainer } from "Components/Cells/CellShow"
 import type { HomeFeaturedShow_show$data } from "__generated__/HomeFeaturedShow_show.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -49,5 +49,5 @@ export const HomeFeaturedShowFragmentContainer = createFragmentContainer(
         slug
       }
     `,
-  },
+  }
 )

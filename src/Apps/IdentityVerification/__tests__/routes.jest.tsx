@@ -1,18 +1,16 @@
 import { IdentityVerificationAppQueryResponseFixture } from "Apps/IdentityVerification/__fixtures__/routes_IdentityVerificationAppQuery"
+import { identityVerificationRoutes } from "Apps/IdentityVerification/identityVerificationRoutes"
 import { createMockNetworkLayer } from "DevTools/createMockNetworkLayer"
+import type { identityVerificationRoutes_IdentityVerificationAppQuery$rawResponse } from "__generated__/identityVerificationRoutes_IdentityVerificationAppQuery.graphql"
+import { createRender } from "found"
 import {
   type FarceElementResult,
   type FarceRedirectResult,
   getFarceResult,
 } from "found/server"
+import { Resolver } from "found-relay"
 import type { Environment as IEnvironment } from "react-relay"
 import { Environment, RecordSource, Store } from "relay-runtime"
-
-import { identityVerificationRoutes } from "Apps/IdentityVerification/identityVerificationRoutes"
-
-import type { identityVerificationRoutes_IdentityVerificationAppQuery$rawResponse } from "__generated__/identityVerificationRoutes_IdentityVerificationAppQuery.graphql"
-import { createRender } from "found"
-import { Resolver } from "found-relay"
 
 describe("IdentityVerification/routes", () => {
   const idvID =
@@ -20,7 +18,7 @@ describe("IdentityVerification/routes", () => {
     IdentityVerificationAppQueryResponseFixture.identityVerification.internalID
   async function render(
     url,
-    mockData: identityVerificationRoutes_IdentityVerificationAppQuery$rawResponse,
+    mockData: identityVerificationRoutes_IdentityVerificationAppQuery$rawResponse
   ) {
     const network = createMockNetworkLayer({ mockData })
     const source = new RecordSource()
@@ -38,7 +36,7 @@ describe("IdentityVerification/routes", () => {
   it("renders the Identity Verification landing page", async () => {
     const { status } = await render(
       `/identity-verification/${idvID}`,
-      IdentityVerificationAppQueryResponseFixture,
+      IdentityVerificationAppQueryResponseFixture
     )
 
     expect(status).toBe(200)
@@ -47,7 +45,7 @@ describe("IdentityVerification/routes", () => {
   it("renders the Identity Verification processing page", async () => {
     const { status } = await render(
       "/identity-verification/processing",
-      IdentityVerificationAppQueryResponseFixture,
+      IdentityVerificationAppQueryResponseFixture
     )
 
     expect(status).toBe(200)
@@ -56,7 +54,7 @@ describe("IdentityVerification/routes", () => {
   it("renders the Identity Verification error page", async () => {
     const { status } = await render(
       "/identity-verification/error",
-      IdentityVerificationAppQueryResponseFixture,
+      IdentityVerificationAppQueryResponseFixture
     )
 
     expect(status).toBe(200)

@@ -1,6 +1,7 @@
 import { act, renderHook } from "@testing-library/react-hooks"
 import { useTracking } from "react-tracking"
 import { useCheckoutTracking } from "../useCheckoutTracking"
+
 jest.mock("react-tracking")
 const mockTrackEvent = jest.fn()
 
@@ -44,7 +45,7 @@ describe("useCheckoutTracking", () => {
         props => useCheckoutTracking(props),
         {
           initialProps: { source: "artwork", mode: "BUY" },
-        },
+        }
       )
 
       act(() => {
@@ -83,7 +84,7 @@ describe("useCheckoutTracking", () => {
           flow: "Partner offer",
           context_page_owner_type: "orders-checkout",
           order_id: "order-id",
-        },
+        }
       )
     })
   })
@@ -102,7 +103,7 @@ describe("useCheckoutTracking", () => {
         useCheckoutTracking({
           source: "artwork",
           mode: "BUY",
-        }),
+        })
       )
 
       act(() => {
@@ -122,7 +123,7 @@ describe("useCheckoutTracking", () => {
         useCheckoutTracking({
           source: "artwork",
           mode: "BUY",
-        }),
+        })
       )
 
       act(() => {
@@ -151,7 +152,7 @@ describe("useCheckoutTracking", () => {
         useCheckoutTracking({
           source: "artwork",
           mode: "BUY",
-        }),
+        })
       )
 
       act(() => {
@@ -181,7 +182,7 @@ describe("useCheckoutTracking", () => {
         useCheckoutTracking({
           source: "artwork",
           mode: "OFFER",
-        }),
+        })
       )
 
       act(() => {
@@ -199,7 +200,7 @@ describe("useCheckoutTracking", () => {
         useCheckoutTracking({
           source: "PARTNER_OFFER",
           mode: "BUY",
-        }),
+        })
       )
 
       act(() => {

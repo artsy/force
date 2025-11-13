@@ -1,9 +1,8 @@
+import type { OfferSettingsFormModel } from "Apps/CollectorProfile/Routes/Saves/Components/OfferSettingsModal/OfferSettingsModal"
+import { extractNodes } from "Utils/extractNodes"
 import HideIcon from "@artsy/icons/HideIcon"
 import NoArtIcon from "@artsy/icons/NoArtIcon"
 import { Flex, Image, Spacer, Text, Toggle } from "@artsy/palette"
-import type { OfferSettingsFormModel } from "Apps/CollectorProfile/Routes/Saves/Components/OfferSettingsModal/OfferSettingsModal"
-import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
-import { extractNodes } from "Utils/extractNodes"
 import type { OfferSettingsListItem_item$data } from "__generated__/OfferSettingsListItem_item.graphql"
 import { useFormikContext } from "formik"
 import type { FC } from "react"
@@ -98,7 +97,7 @@ export const OfferSettingsListItemFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  },
+  }
 )
 
 const ArtworkImagePlaceholder = () => {

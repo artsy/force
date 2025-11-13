@@ -39,7 +39,7 @@ export const useUpdateMyUserProfile = ({
             }
           `,
           variables: { input },
-        },
+        }
       )
     })
   }

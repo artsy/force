@@ -3,11 +3,11 @@ import type {
   DisableSecondFactorMutation,
   DisableSecondFactorMutation$data,
 } from "__generated__/DisableSecondFactorMutation.graphql"
-import { type Environment, commitMutation, graphql } from "react-relay"
+import { commitMutation, type Environment, graphql } from "react-relay"
 
 export const DisableSecondFactor = (
   environment: Environment,
-  input: DisableSecondFactorInput,
+  input: DisableSecondFactorInput
 ) => {
   return new Promise<DisableSecondFactorMutation$data>(
     async (resolve, reject) => {
@@ -60,6 +60,6 @@ export const DisableSecondFactor = (
           input,
         },
       })
-    },
+    }
   )
 }

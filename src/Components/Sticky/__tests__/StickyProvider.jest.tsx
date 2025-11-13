@@ -1,6 +1,6 @@
 import {
-  type TSticky,
   getOffsetTopForSticky,
+  type TSticky,
 } from "Components/Sticky/StickyProvider"
 
 describe("getOffsetTopForSticky", () => {
@@ -14,7 +14,7 @@ describe("getOffsetTopForSticky", () => {
     expect(
       ["example1", "example2", "example3"].map(id => {
         return getOffsetTopForSticky({ id, stickies })
-      }),
+      })
     ).toEqual([0, 0, 0])
   })
 
@@ -30,7 +30,7 @@ describe("getOffsetTopForSticky", () => {
     expect(
       ["example1", "example2", "example3", "example4", "example5"].map(id => {
         return getOffsetTopForSticky({ id, stickies })
-      }),
+      })
     ).toEqual([0, 80, 280, 295, 628])
   })
 
@@ -44,7 +44,7 @@ describe("getOffsetTopForSticky", () => {
     expect(
       ["example1", "example2", "example3"].map(id => {
         return getOffsetTopForSticky({ id, stickies })
-      }),
+      })
     ).toEqual([0, 0, 200])
   })
 
@@ -66,7 +66,7 @@ describe("getOffsetTopForSticky", () => {
     expect(
       ["example1", "example2", "example3", "example4", "example5"].map(id => {
         return getOffsetTopForSticky({ id, stickies })
-      }),
+      })
     ).toEqual([0, 0, 80, 0, 95])
   })
 

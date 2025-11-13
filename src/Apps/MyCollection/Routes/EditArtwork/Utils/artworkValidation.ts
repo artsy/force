@@ -8,7 +8,7 @@ export const MyCollectionArtworkDetailsValidationSchema = yup.object().shape({
     .test(
       "title",
       "Title should not be empty",
-      value => !!value && trim(value) !== "",
+      value => !!value && trim(value) !== ""
     ),
   artistName: yup
     .string()
@@ -16,7 +16,7 @@ export const MyCollectionArtworkDetailsValidationSchema = yup.object().shape({
     .test(
       "artist",
       "Artist name should not be empty",
-      value => !!value && trim(value) !== "",
+      value => !!value && trim(value) !== ""
     ),
   category: yup.string().required("Medium is required"),
   newPhotos: yup
@@ -30,7 +30,7 @@ export const MyCollectionArtworkDetailsValidationSchemaWithoutPersonalArtist =
     artistId: yup
       .string()
       .required(
-        "Please select from the list of artists in the Artsy database.",
+        "Please select from the list of artists in the Artsy database."
       ),
     title: yup
       .string()
@@ -38,7 +38,7 @@ export const MyCollectionArtworkDetailsValidationSchemaWithoutPersonalArtist =
       .test(
         "title",
         "Title should not be empty",
-        value => !!value && trim(value) !== "",
+        value => !!value && trim(value) !== ""
       ),
     category: yup.string().required("Medium is required"),
     newPhotos: yup

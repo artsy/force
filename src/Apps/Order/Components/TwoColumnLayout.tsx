@@ -1,5 +1,5 @@
-import { Box, Column, Flex, GridColumns, Spacer } from "@artsy/palette"
 import { Media } from "Utils/Responsive"
+import { Box, Column, Flex, GridColumns, Spacer } from "@artsy/palette"
 import { Children, type FC, type ReactNode } from "react"
 
 const CONTENT_SPAN = 7
@@ -7,7 +7,7 @@ const SIDEBAR_SPAN = 4
 const ROW_SPACE = 2
 const COL_SPACE = 2
 
-const columnRatioWidth = (spans, size) => Math.round((spans / size) * 100) + "%"
+const columnRatioWidth = (spans, size) => `${Math.round((spans / size) * 100)}%`
 
 export const TwoColumnSplit = ({ children, ...props }) => {
   const [firstColumn, secondColumn] = Children.toArray(children)

@@ -1,10 +1,10 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react"
 import {
   type DeleteArtworkListEntity,
   DeleteArtworkListModal,
 } from "Apps/CollectorProfile/Routes/Saves/Components/Actions/DeleteArtworkListModal"
 import { MockBoot } from "DevTools/MockBoot"
 import { useMutation } from "Utils/Hooks/useMutation"
+import { fireEvent, render, screen, waitFor } from "@testing-library/react"
 import { useTracking } from "react-tracking"
 
 jest.mock("Utils/Hooks/useMutation")
@@ -40,7 +40,7 @@ describe("DeleteArtworkListModal", () => {
           artworkList={artworkList}
           onClose={closeDeleteModal}
         />
-      </MockBoot>,
+      </MockBoot>
     )
 
     expect(screen.getByText("Delete Foo Bar list?")).toBeInTheDocument()
@@ -55,7 +55,7 @@ describe("DeleteArtworkListModal", () => {
           artworkList={artworkList}
           onClose={closeDeleteModal}
         />
-      </MockBoot>,
+      </MockBoot>
     )
 
     fireEvent.click(screen.getByRole("button", { name: /Cancel/ }))
@@ -70,7 +70,7 @@ describe("DeleteArtworkListModal", () => {
           artworkList={artworkList}
           onClose={closeDeleteModal}
         />
-      </MockBoot>,
+      </MockBoot>
     )
 
     fireEvent.click(screen.getByRole("button", { name: /Delete/ }))
@@ -80,7 +80,7 @@ describe("DeleteArtworkListModal", () => {
         variables: {
           input: { id: "foobar" },
         },
-      }),
+      })
     )
   })
 
@@ -102,7 +102,7 @@ describe("DeleteArtworkListModal", () => {
           artworkList={artworkList}
           onClose={closeDeleteModal}
         />
-      </MockBoot>,
+      </MockBoot>
     )
 
     fireEvent.click(screen.getByRole("button", { name: /Delete/ }))
@@ -112,7 +112,7 @@ describe("DeleteArtworkListModal", () => {
         action: "deletedArtworkList",
         context_owner_type: "saves",
         owner_id: artworkList.internalID,
-      }),
+      })
     )
   })
 })

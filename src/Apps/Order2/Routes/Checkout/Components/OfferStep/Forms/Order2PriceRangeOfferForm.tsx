@@ -1,7 +1,7 @@
-import { Flex, Radio, RadioGroup, Spacer, Text } from "@artsy/palette"
 import { OfferInput } from "Apps/Order/Components/OfferInput"
 import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
 import type { OfferFormProps } from "Apps/Order2/Routes/Checkout/Components/OfferStep/types"
+import { Flex, Radio, RadioGroup, Spacer, Text } from "@artsy/palette"
 import type { Order2PriceRangeOfferForm_order$key } from "__generated__/Order2PriceRangeOfferForm_order.graphql"
 import { compact } from "lodash"
 import { useEffect, useState } from "react"
@@ -75,7 +75,7 @@ export const Order2PriceRangeOfferForm: React.FC<
       }
 
     const matchingOption = priceOptions.find(
-      option => option.value === offerValue,
+      option => option.value === offerValue
     )
     if (matchingOption) {
       return {
@@ -94,13 +94,13 @@ export const Order2PriceRangeOfferForm: React.FC<
 
   const initialState = getInitialState()
   const [selectedRadio, setSelectedRadio] = useState<string | undefined>(
-    initialState.selectedRadio,
+    initialState.selectedRadio
   )
   const [customValue, setCustomValue] = useState<number | undefined>(
-    initialState.customValue,
+    initialState.customValue
   )
   const [showCustomInput, setShowCustomInput] = useState(
-    initialState.showCustomInput,
+    initialState.showCustomInput
   )
 
   // Update parent component state when custom values change
@@ -117,7 +117,7 @@ export const Order2PriceRangeOfferForm: React.FC<
         style: "currency",
         currency: orderData.currencyCode,
       }),
-      orderData.currencyCode,
+      orderData.currencyCode
     )
   }
 

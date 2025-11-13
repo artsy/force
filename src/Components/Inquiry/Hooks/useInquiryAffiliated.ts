@@ -26,7 +26,7 @@ export const useInquiryAffiliated = () => {
 
   const handleRemove = (option: Option) => {
     setSelection(prevSelection =>
-      prevSelection.filter(({ value }) => value !== option.value),
+      prevSelection.filter(({ value }) => value !== option.value)
     )
   }
 

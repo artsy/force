@@ -1,16 +1,16 @@
-import { screen } from "@testing-library/react"
-import { BankAccountPickerFragmentContainer } from "Apps/Order/Components/BankAccountPicker"
-import { useSetPayment } from "Apps/Order/Mutations/useSetPayment"
-import { useOrderPaymentContext } from "Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext"
-import type { BankAccountSelection } from "Apps/Order/Routes/Payment/index"
 import {
   BuyOrderPickup,
   UntouchedBuyOrder,
 } from "Apps/__tests__/Fixtures/Order"
+import { BankAccountPickerFragmentContainer } from "Apps/Order/Components/BankAccountPicker"
+import { useSetPayment } from "Apps/Order/Mutations/useSetPayment"
+import type { BankAccountSelection } from "Apps/Order/Routes/Payment/index"
+import { useOrderPaymentContext } from "Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import type { BankAccountPickerTestEQuery$rawResponse } from "__generated__/BankAccountPickerTestEQuery.graphql"
+import { screen } from "@testing-library/react"
 import type { BankAccountPicker_me$data } from "__generated__/BankAccountPicker_me.graphql"
+import type { BankAccountPickerTestEQuery$rawResponse } from "__generated__/BankAccountPickerTestEQuery.graphql"
 import { graphql } from "react-relay"
 
 jest.mock("Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext")
@@ -20,7 +20,7 @@ jest.unmock("react-tracking")
 
 jest.mock("../../Mutations/useSetPayment", () => {
   const originalUseSetPayment = jest.requireActual(
-    "../../Mutations/useSetPayment",
+    "../../Mutations/useSetPayment"
   )
 
   return {
@@ -123,7 +123,7 @@ describe("BankAccountFragmentContainer", () => {
 
       // Check that the bank form elements are visible
       expect(
-        document.querySelector('[data-test="paymentSectionUsBankAccount"]'),
+        document.querySelector('[data-test="paymentSectionUsBankAccount"]')
       ).toBeInTheDocument()
     })
   })
@@ -190,7 +190,7 @@ describe("BankAccountFragmentContainer", () => {
 
       // Check that the bank form section is now expanded
       expect(
-        document.querySelector('[data-test="paymentSectionUsBankAccount"]'),
+        document.querySelector('[data-test="paymentSectionUsBankAccount"]')
       ).toBeInTheDocument()
     })
 
@@ -232,7 +232,7 @@ describe("BankAccountFragmentContainer", () => {
 
       // Bank form should not be rendered when existing account selected
       const bankFormSection = document.querySelector(
-        '[data-test="paymentSectionUsBankAccount"]',
+        '[data-test="paymentSectionUsBankAccount"]'
       )
       expect(bankFormSection).not.toBeInTheDocument()
     })

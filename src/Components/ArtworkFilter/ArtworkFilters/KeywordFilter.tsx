@@ -1,9 +1,9 @@
-import SearchIcon from "@artsy/icons/SearchIcon"
-import { LabeledInput } from "@artsy/palette"
 import {
   useArtworkFilterContext,
   useCurrentlySelectedFilters,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
+import SearchIcon from "@artsy/icons/SearchIcon"
+import { LabeledInput } from "@artsy/palette"
 import { debounce } from "lodash"
 import type React from "react"
 import { useEffect, useMemo, useRef, useState } from "react"
@@ -26,10 +26,10 @@ export const KeywordFilter: React.FC<React.PropsWithChildren<unknown>> = () => {
     setFilterRef.current("keyword", textOrUndefined)
   }
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Debounce function should only be created on mount
   const handleDebounce = useMemo(
     () => debounce(updateKeywordFilter, DEBOUNCE_DELAY),
-    [],
+    []
   )
 
   const handleChangeText = text => {
@@ -38,12 +38,12 @@ export const KeywordFilter: React.FC<React.PropsWithChildren<unknown>> = () => {
   }
 
   // Stop the invocation of the debounced function after unmounting
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Cleanup should only run on unmount
   useEffect(() => {
     return () => handleDebounce.cancel?.()
   }, [])
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Keyword value sync managed by external state
   useEffect(() => {
     setValue(keyword ?? "")
   }, [keyword, setValue])

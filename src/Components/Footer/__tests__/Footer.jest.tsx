@@ -1,8 +1,8 @@
-import type { Breakpoint } from "@artsy/palette/dist/themes/types"
 import { Footer } from "Components/Footer/Footer"
-import { MockBoot } from "DevTools/MockBoot"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
+import { MockBoot } from "DevTools/MockBoot"
 import { useRouter } from "System/Hooks/useRouter"
+import type { Breakpoint } from "@artsy/palette/dist/themes/types"
 import { render, screen } from "@testing-library/react"
 import { fetchQuery } from "react-relay"
 
@@ -26,14 +26,14 @@ describe("Footer", () => {
     render(
       <MockBoot breakpoint={breakpoint}>
         <Footer />
-      </MockBoot>,
+      </MockBoot>
     )
 
   describe("large screen size", () => {
     it("renders prompts to download the app", () => {
       renderComponent("lg")
       expect(
-        screen.getByText("Discover and Buy Art that Moves You"),
+        screen.getByText("Discover and Buy Art that Moves You")
       ).toBeInTheDocument()
     })
 
@@ -51,7 +51,7 @@ describe("Footer", () => {
 
       expect(screen.getByText("Artsy for Fairs")).toBeInTheDocument()
       expect(container.innerHTML).toContain(
-        "https://partners.artsy.net/artsy-fair-partnerships/",
+        "https://partners.artsy.net/artsy-fair-partnerships/"
       )
     })
 
@@ -60,12 +60,12 @@ describe("Footer", () => {
 
       expect(screen.getByText("iOS App")).toBeInTheDocument()
       expect(container.innerHTML).toContain(
-        "https://apps.apple.com/us/app/artsy-buy-sell-original-art/id703796080",
+        "https://apps.apple.com/us/app/artsy-buy-sell-original-art/id703796080"
       )
 
       expect(screen.getByText("Android App")).toBeInTheDocument()
       expect(container.innerHTML).toContain(
-        "https://play.google.com/store/apps/details?id=net.artsy.app",
+        "https://play.google.com/store/apps/details?id=net.artsy.app"
       )
     })
 
@@ -74,14 +74,14 @@ describe("Footer", () => {
       expect(
         screen.getByRole("button", {
           name: "Do not sell my personal information",
-        }),
+        })
       ).toBeInTheDocument()
     })
 
     it("renders the app download banner", () => {
       renderComponent("lg")
       expect(
-        screen.getByText("Discover and Buy Art that Moves You"),
+        screen.getByText("Discover and Buy Art that Moves You")
       ).toBeInTheDocument()
     })
 
@@ -92,7 +92,7 @@ describe("Footer", () => {
 
       renderComponent("lg")
       expect(
-        screen.queryByText("Discover and Buy Art that Moves You"),
+        screen.queryByText("Discover and Buy Art that Moves You")
       ).not.toBeInTheDocument()
     })
 
@@ -112,7 +112,7 @@ describe("Footer", () => {
       renderComponent("lg")
       await flushPromiseQueue()
       expect(
-        screen.queryByText("Meet your new art advisor."),
+        screen.queryByText("Meet your new art advisor.")
       ).not.toBeInTheDocument()
     })
 
@@ -120,12 +120,12 @@ describe("Footer", () => {
       const { container } = renderComponent("lg")
 
       expect(
-        screen.getAllByText("Terms and Conditions").length,
+        screen.getAllByText("Terms and Conditions").length
       ).toBeGreaterThan(0)
       expect(container.innerHTML).toContain("/terms")
 
       expect(screen.getAllByText("Auction Supplement").length).toBeGreaterThan(
-        0,
+        0
       )
       expect(container.innerHTML).toContain("/supplemental-cos")
 
@@ -144,7 +144,7 @@ describe("Footer", () => {
     it("renders a download banner", () => {
       renderComponent("xs")
       expect(
-        screen.getByText("Discover and Buy Art that Moves You"),
+        screen.getByText("Discover and Buy Art that Moves You")
       ).toBeInTheDocument()
     })
 
@@ -153,7 +153,7 @@ describe("Footer", () => {
       expect(
         screen.getByRole("button", {
           name: "Do not sell my personal information",
-        }),
+        })
       ).toBeInTheDocument()
     })
 
@@ -161,12 +161,12 @@ describe("Footer", () => {
       const { container } = renderComponent("xs")
 
       expect(
-        screen.getAllByText("Terms and Conditions").length,
+        screen.getAllByText("Terms and Conditions").length
       ).toBeGreaterThan(0)
       expect(container.innerHTML).toContain("/terms")
 
       expect(screen.getAllByText("Auction Supplement").length).toBeGreaterThan(
-        0,
+        0
       )
       expect(container.innerHTML).toContain("/supplemental-cos")
 

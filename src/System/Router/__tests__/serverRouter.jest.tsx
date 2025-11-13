@@ -4,11 +4,11 @@
 
 import type { ArtsyResponse } from "Server/middleware/artsyExpress"
 import { SystemContextConsumer } from "System/Contexts/SystemContext"
-import { findRoutesByPath } from "System/Router/Utils/routeUtils"
 import {
   __TEST_INTERNAL_SERVER_APP__,
   setupServerRouter,
 } from "System/Router/serverRouter"
+import { findRoutesByPath } from "System/Router/Utils/routeUtils"
 import { Media } from "Utils/Responsive"
 import type { NextFunction, Request } from "express"
 import ReactDOMServer from "react-dom/server"
@@ -63,7 +63,7 @@ describe("serverRouter", () => {
   let res: ArtsyResponse
   let req: Request
   let next: NextFunction
-  // @ts-ignore
+  // @ts-expect-error
   let options: any = { req, res, next }
 
   mockFindRoutesByPath.mockImplementation(() => {
@@ -96,7 +96,7 @@ describe("serverRouter", () => {
 
   const getWrapper = async (
     Component = defaultComponent,
-    passedOptions = options,
+    passedOptions = options
   ) => {
     const result = await setupServerRouter({
       routes: [
@@ -121,7 +121,7 @@ describe("serverRouter", () => {
 
     const ServerRouter = Object.getOwnPropertyDescriptor(
       result,
-      __TEST_INTERNAL_SERVER_APP__ as any,
+      __TEST_INTERNAL_SERVER_APP__ as any
     )?.value
 
     // Since we're testing server-side rendering, we need to render to string
@@ -290,7 +290,6 @@ describe("serverRouter", () => {
     })
   })
 
-
   it("invokes onServerSideRender hook", async () => {
     const spy = jest.fn()
     const route = {
@@ -312,7 +311,7 @@ describe("serverRouter", () => {
       expect.objectContaining({
         ...options,
         route,
-      }),
+      })
     )
   })
 

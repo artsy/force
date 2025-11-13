@@ -34,7 +34,7 @@ describe("HomeWorksForYouTabBar", () => {
 
     expect(screen.getByTestId("new-works-rail")).toBeInTheDocument()
     expect(
-      screen.queryByTestId("works-by-artists-rail"),
+      screen.queryByTestId("works-by-artists-rail")
     ).not.toBeInTheDocument()
     expect(screen.queryByTestId("recently-viewed-rail")).not.toBeInTheDocument()
   })

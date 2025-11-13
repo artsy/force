@@ -37,7 +37,7 @@ describe("analytics", () => {
           user_id: "foo",
         },
         userId: "foo",
-      }),
+      })
     )
   })
 
@@ -48,7 +48,7 @@ describe("analytics", () => {
       expect.objectContaining({
         event: "Successfully logged in",
         userId: "foo",
-      }),
+      })
     )
   })
 
@@ -69,7 +69,7 @@ describe("analytics", () => {
           user_id: "foo",
         },
         userId: "foo",
-      }),
+      })
     )
   })
 
@@ -89,7 +89,7 @@ describe("analytics", () => {
           user_id: "foo",
         },
         userId: "foo",
-      }),
+      })
     )
   })
 

@@ -1,3 +1,7 @@
+import { CellArticleFragmentContainer } from "Components/Cells/CellArticle"
+import { RouterLink } from "System/Components/RouterLink"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { extractNodes } from "Utils/extractNodes"
 import {
   ActionType,
   type ClickedArticleGroup,
@@ -5,10 +9,6 @@ import {
   OwnerType,
 } from "@artsy/cohesion"
 import { Flex, Shelf, Spacer, Text } from "@artsy/palette"
-import { CellArticleFragmentContainer } from "Components/Cells/CellArticle"
-import { RouterLink } from "System/Components/RouterLink"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import { extractNodes } from "Utils/extractNodes"
 import type { FairEditorialRailArticles_fair$data } from "__generated__/FairEditorialRailArticles_fair.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"

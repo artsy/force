@@ -1,5 +1,5 @@
-import { Box, Stack } from "@artsy/palette"
 import { TopContextBar } from "Components/TopContextBar"
+import { Box, Stack } from "@artsy/palette"
 import type { ArtworkTopContextBarFairQuery } from "__generated__/ArtworkTopContextBarFairQuery.graphql"
 import type * as React from "react"
 import { graphql, useLazyLoadQuery } from "react-relay"
@@ -26,7 +26,7 @@ export const ArtworkTopContextBarFair: React.FC<
       }
     `,
     { id },
-    { fetchPolicy: "store-or-network" },
+    { fetchPolicy: "store-or-network" }
   )
 
   if (!data.fair) return null

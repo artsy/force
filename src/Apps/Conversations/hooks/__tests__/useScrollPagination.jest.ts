@@ -1,5 +1,5 @@
-import { renderHook } from "@testing-library/react-hooks"
 import { useScrollPagination } from "Apps/Conversations/hooks/useScrollPagination"
+import { renderHook } from "@testing-library/react-hooks"
 
 describe("useScrollPagination", () => {
   it("appending the 2nd ref triggers scrollIntoView of the 1st ref", () => {
@@ -9,7 +9,7 @@ describe("useScrollPagination", () => {
     result.current.appendElementRef({ scrollIntoView } as any, "key-1")
     result.current.appendElementRef(
       { scrollIntoView: jest.fn() } as any,
-      "key-2",
+      "key-2"
     )
 
     expect(scrollIntoView).toBeCalledTimes(1)
@@ -22,15 +22,15 @@ describe("useScrollPagination", () => {
 
     result.current.appendElementRef(
       { scrollIntoView: firstScrollIntoView } as any,
-      "key-1",
+      "key-1"
     )
     result.current.appendElementRef(
       { scrollIntoView: secondScrollIntoView } as any,
-      "key-2",
+      "key-2"
     )
     result.current.appendElementRef(
       { scrollIntoView: jest.fn() } as any,
-      "key-3",
+      "key-3"
     )
 
     expect(firstScrollIntoView).toBeCalledTimes(1)

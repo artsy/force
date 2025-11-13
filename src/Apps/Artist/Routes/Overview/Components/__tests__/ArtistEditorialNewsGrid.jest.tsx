@@ -1,6 +1,6 @@
-import { screen, fireEvent } from "@testing-library/react"
 import { ArtistEditorialNewsGridFragmentContainer } from "Apps/Artist/Routes/Overview/Components/ArtistEditorialNewsGrid"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { fireEvent, screen } from "@testing-library/react"
 import type { ArtistEditorialNewsGridTestQuery } from "__generated__/ArtistEditorialNewsGridTestQuery.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -50,12 +50,12 @@ describe("ArtistEditorialNewsGrid", () => {
     })
 
     expect(
-      screen.getByText("Artsy Editorial Featuring Test Artist"),
+      screen.getByText("Artsy Editorial Featuring Test Artist")
     ).toBeInTheDocument()
     expect(screen.getByText("View All")).toBeInTheDocument()
     expect(screen.getByRole("link", { name: /test article/i })).toHaveAttribute(
       "href",
-      "/article/test-article",
+      "/article/test-article"
     )
   })
 

@@ -2,14 +2,14 @@ import type {
   markAllNotificationsAsReadMutation,
   markAllNotificationsAsReadMutation$data,
 } from "__generated__/markAllNotificationsAsReadMutation.graphql"
-import { type Environment, commitMutation, graphql } from "react-relay"
+import { commitMutation, type Environment, graphql } from "react-relay"
 import {
   ConnectionHandler,
   type RecordSourceSelectorProxy,
 } from "relay-runtime"
 
 const updater = (
-  store: RecordSourceSelectorProxy<markAllNotificationsAsReadMutation$data>,
+  store: RecordSourceSelectorProxy<markAllNotificationsAsReadMutation$data>
 ) => {
   const root = store.getRoot()
   const me = root.getLinkedRecord("me")
@@ -34,7 +34,7 @@ const updater = (
 }
 
 export const markAllNotificationsAsRead = (
-  environment: Environment,
+  environment: Environment
 ): Promise<markAllNotificationsAsReadMutation$data> => {
   return new Promise((resolve, reject) => {
     commitMutation<markAllNotificationsAsReadMutation>(environment, {

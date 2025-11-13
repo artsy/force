@@ -1,6 +1,6 @@
-import { screen } from "@testing-library/react"
 import { PrivateArtworkMetadata } from "Apps/Artwork/Components/PrivateArtwork/PrivateArtworkMetadata"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import type { PrivateArtworkMetadataQuery } from "__generated__/PrivateArtworkMetadataQuery.graphql"
 import { graphql } from "react-relay"
 
@@ -29,7 +29,7 @@ describe("PrivateArtworkMetadata", () => {
       },
     })
     expect(
-      screen.queryByText("Test Condition Description Details"),
+      screen.queryByText("Test Condition Description Details")
     ).toBeInTheDocument()
   })
 
@@ -44,7 +44,7 @@ describe("PrivateArtworkMetadata", () => {
       },
     })
     expect(
-      screen.queryByText("Test Condition Description Details"),
+      screen.queryByText("Test Condition Description Details")
     ).not.toBeInTheDocument()
   })
 
@@ -71,7 +71,7 @@ describe("PrivateArtworkMetadata", () => {
       },
     })
     expect(
-      screen.queryByText("Test Provenance Details"),
+      screen.queryByText("Test Provenance Details")
     ).not.toBeInTheDocument()
   })
 
@@ -88,7 +88,7 @@ describe("PrivateArtworkMetadata", () => {
       },
     })
     expect(
-      screen.queryByText("Test Exhibition History Details"),
+      screen.queryByText("Test Exhibition History Details")
     ).toBeInTheDocument()
   })
 
@@ -101,7 +101,7 @@ describe("PrivateArtworkMetadata", () => {
       },
     })
     expect(
-      screen.queryByText("Test Exhibition History Details"),
+      screen.queryByText("Test Exhibition History Details")
     ).not.toBeInTheDocument()
   })
 })

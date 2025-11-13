@@ -1,6 +1,6 @@
-import { type AuthContextModule, Intent } from "@artsy/cohesion"
 import { useAuthDialog } from "Components/AuthDialog"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import { type AuthContextModule, Intent } from "@artsy/cohesion"
 import { SaveArtwork } from "./SaveArtworkMutation"
 
 type Artwork = {
@@ -60,7 +60,7 @@ export const useSaveArtwork = ({
                 },
               },
             },
-          },
+          }
         )
 
         onSave?.({

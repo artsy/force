@@ -1,9 +1,9 @@
-import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { SettingsEditProfileFieldsFragmentContainer } from "Apps/Settings/Routes/EditProfile/Components/SettingsEditProfileFields"
 import { useVerifyEmail } from "Apps/Settings/Routes/EditProfile/Mutations/useVerifyEmail"
 import { useVerifyID } from "Apps/Settings/Routes/EditProfile/Mutations/useVerifyID"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useUpdateMyUserProfile } from "Utils/Hooks/Mutations/useUpdateMyUserProfile"
+import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 
@@ -103,11 +103,11 @@ describe("SettingsEditProfileFields", () => {
     })
     fireEvent.change(
       screen.getByPlaceholderText(
-        "Add a brief bio, so galleries know which artists or genres you collect.",
+        "Add a brief bio, so galleries know which artists or genres you collect."
       ),
       {
         target: { name: "bio", value: "I collect" },
-      },
+      }
     )
 
     fireEvent.click(screen.getByText("Save"))
@@ -159,12 +159,12 @@ describe("SettingsEditProfileFields", () => {
       const faqLink = screen.getByText("FAQs")
       expect(faqLink).toHaveAttribute(
         "href",
-        expect.stringContaining("/identity-verification-faq"),
+        expect.stringContaining("/identity-verification-faq")
       )
       const mailLink = screen.getByText("verification@artsy.net")
       expect(mailLink).toHaveAttribute(
         "href",
-        expect.stringContaining("mailto:verification@artsy.net"),
+        expect.stringContaining("mailto:verification@artsy.net")
       )
     })
 
@@ -208,7 +208,7 @@ describe("SettingsEditProfileFields", () => {
               input: { initiatorID: "1234" },
             },
             rejectIf: expect.any(Function),
-          }),
+          })
         )
       })
 
@@ -241,7 +241,7 @@ describe("SettingsEditProfileFields", () => {
               input: { initiatorID: "1234" },
             },
             rejectIf: expect.any(Function),
-          }),
+          })
         )
       })
 
@@ -262,8 +262,8 @@ describe("SettingsEditProfileFields", () => {
       expect(screen.getByText("Verify Your Email")).toBeInTheDocument()
       expect(
         screen.getByText(
-          "Secure your account and receive updates about your transactions on Artsy.",
-        ),
+          "Secure your account and receive updates about your transactions on Artsy."
+        )
       ).toBeInTheDocument()
     })
 
@@ -298,7 +298,7 @@ describe("SettingsEditProfileFields", () => {
               input: {},
             },
             rejectIf: expect.any(Function),
-          }),
+          })
         )
       })
 
@@ -331,7 +331,7 @@ describe("SettingsEditProfileFields", () => {
               input: {},
             },
             rejectIf: expect.any(Function),
-          }),
+          })
         )
       })
 

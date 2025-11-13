@@ -42,7 +42,7 @@ export function mark(markName: string) {
 export function measure(
   measureName: string,
   startMarkName?: string,
-  endMarkName?: string,
+  endMarkName?: string
 ) {
   if (perf && perf.measure) {
     // If the start mark or end mark are specified but don't exist then then
@@ -138,7 +138,7 @@ export function getDomContentLoadedStart() {
   if (!timingAvailable) return null
   return sanitizedMetrics(
     perf.timing.requestStart,
-    perf.timing.domContentLoadedEventStart,
+    perf.timing.domContentLoadedEventStart
   )
 }
 
@@ -152,7 +152,7 @@ export function getDomContentLoadedEnd() {
   if (!timingAvailable) return null
   return sanitizedMetrics(
     perf.timing.requestStart,
-    perf.timing.domContentLoadedEventEnd,
+    perf.timing.domContentLoadedEventEnd
   )
 }
 

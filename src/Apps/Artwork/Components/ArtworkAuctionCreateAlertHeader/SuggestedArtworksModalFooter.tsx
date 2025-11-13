@@ -1,8 +1,7 @@
-import { Button } from "@artsy/palette"
-import type { FC } from "react"
-
 import { useSavedSearchAlertContext } from "Components/SavedSearchAlert/SavedSearchAlertContext"
 import { RouterLink } from "System/Components/RouterLink"
+import { Button } from "@artsy/palette"
+import type { FC } from "react"
 import { NUMBER_OF_ARTWORKS_TO_SHOW } from "./SuggestedArtworksModalGrid"
 
 interface SuggestedArtworksModalFooterProps {
@@ -20,7 +19,7 @@ export const SuggestedArtworksModalFooter: FC<
   return (
     <Button
       width="100%"
-      // @ts-ignore
+      // @ts-expect-error
       as={RouterLink}
       to={criteriaHref()}
       onClick={() => {

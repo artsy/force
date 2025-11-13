@@ -57,7 +57,7 @@ describe("PartnerApp", () => {
     })
     // Check for the presence of navigation tabs by looking for sub-page links
     const navLinks = container.querySelectorAll(
-      "a[href^='/partner/example-partner/']",
+      "a[href^='/partner/example-partner/']"
     )
     expect(navLinks.length).toBeGreaterThan(0)
   })
@@ -73,7 +73,7 @@ describe("PartnerApp", () => {
     })
     // Check for navigation tabs specifically - should not find multiple navigation links
     const navLinks = container.querySelectorAll(
-      "a[href^='/partner/example-partner/']",
+      "a[href^='/partner/example-partner/']"
     )
     expect(navLinks).toHaveLength(0)
   })
@@ -92,7 +92,7 @@ describe("PartnerApp", () => {
       }),
     })
     const navLinks = container.querySelectorAll(
-      "a[href^='/partner/brand-partner/']",
+      "a[href^='/partner/brand-partner/']"
     )
     expect(navLinks.length).toBeGreaterThan(0)
   })

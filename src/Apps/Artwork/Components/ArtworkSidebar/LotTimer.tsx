@@ -1,7 +1,7 @@
-import { Box, Spacer, Text } from "@artsy/palette"
+import { getSaleOrLotTimerInfo } from "Utils/getSaleOrLotTimerInfo"
 import { useAuctionWebsocket } from "Utils/Hooks/useAuctionWebsocket"
 import { useTimer } from "Utils/Hooks/useTimer"
-import { getSaleOrLotTimerInfo } from "Utils/getSaleOrLotTimerInfo"
+import { Box, Spacer, Text } from "@artsy/palette"
 import type { LotTimer_saleArtwork$data } from "__generated__/LotTimer_saleArtwork.graphql"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -38,7 +38,7 @@ export const LotTimer: React.FC<React.PropsWithChildren<LotTimerProps>> = ({
 
   const { hasEnded, time, hasStarted } = useTimer(
     updatedBiddingEndAt!,
-    startAt!,
+    startAt!
   )
 
   if (!endAt) {

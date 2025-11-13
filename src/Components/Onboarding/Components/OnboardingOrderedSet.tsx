@@ -1,5 +1,3 @@
-import { ContextModule } from "@artsy/cohesion"
-import { Join, Separator } from "@artsy/palette"
 import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
 import { EntityHeaderPartnerFragmentContainer } from "Components/EntityHeaders/EntityHeaderPartner"
 import { EntityHeaderPlaceholder } from "Components/EntityHeaders/EntityHeaderPlaceholder"
@@ -8,8 +6,10 @@ import { FollowProfileButtonQueryRenderer } from "Components/FollowButton/Follow
 import { useOnboardingContext } from "Components/Onboarding/Hooks/useOnboardingContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
-import type { OnboardingOrderedSetQuery } from "__generated__/OnboardingOrderedSetQuery.graphql"
+import { ContextModule } from "@artsy/cohesion"
+import { Join, Separator } from "@artsy/palette"
 import type { OnboardingOrderedSet_orderedSet$data } from "__generated__/OnboardingOrderedSet_orderedSet.graphql"
+import type { OnboardingOrderedSetQuery } from "__generated__/OnboardingOrderedSetQuery.graphql"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
@@ -103,7 +103,7 @@ export const OnboardingOrderedSetFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  },
+  }
 )
 
 const PLACEHOLDER = (

@@ -15,7 +15,7 @@ export const useDebounce = ({
   delay = 200,
   settings,
 }: UseDebounce) => {
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Lodash debounce settings not included in deps for performance
   return useCallback(debounce(callback, delay, settings), [callback, delay])
 }
 

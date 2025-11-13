@@ -1,3 +1,5 @@
+import { MetaTags } from "Components/MetaTags"
+import { useRouter } from "System/Hooks/useRouter"
 import {
   Button,
   Checkbox,
@@ -8,8 +10,6 @@ import {
   Text,
   useToasts,
 } from "@artsy/palette"
-import { MetaTags } from "Components/MetaTags"
-import { useRouter } from "System/Hooks/useRouter"
 import type {
   PreferencesApp_viewer$data,
   SubGroupStatus,
@@ -90,7 +90,7 @@ export const PreferencesApp: FC<
                     ? "SUBSCRIBED"
                     : "UNSUBSCRIBED") as SubGroupStatus,
                 }
-              },
+              }
             )
 
             await submitMutation({
@@ -292,11 +292,10 @@ export const PreferencesApp: FC<
 const getInitialValues = initialPreferences => {
   return initialPreferences
     .filter(preference =>
-      Object.keys(NOTIFICATION_FIELDS).includes(camelCase(preference.name)),
+      Object.keys(NOTIFICATION_FIELDS).includes(camelCase(preference.name))
     )
     .reduce((object, preference) => {
-      object[camelCase(preference.name)] =
-        preference.status === "SUBSCRIBED" ? true : false
+      object[camelCase(preference.name)] = preference.status === "SUBSCRIBED"
       return object
     }, {})
 }
@@ -313,5 +312,5 @@ export const PreferencesAppFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  },
+  }
 )

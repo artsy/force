@@ -1,5 +1,6 @@
 import { compound } from "@artsy/palette"
 import { uniqBy } from "lodash"
+import type * as React from "react"
 import {
   createContext,
   useCallback,
@@ -8,7 +9,6 @@ import {
   useRef,
   useState,
 } from "react"
-import type * as React from "react"
 
 export type TSticky = {
   id: string
@@ -44,7 +44,7 @@ export const StickyProvider: React.FC<React.PropsWithChildren<unknown>> = ({
 
   const deregisterSticky = useCallback((sticky: TSticky) => {
     setStickies(prevStickies =>
-      prevStickies.filter(({ id }) => id !== sticky.id),
+      prevStickies.filter(({ id }) => id !== sticky.id)
     )
   }, [])
 
@@ -57,10 +57,10 @@ export const StickyProvider: React.FC<React.PropsWithChildren<unknown>> = ({
             ...sticky,
             ...payload,
           }
-        }),
+        })
       )
     },
-    [],
+    []
   )
 
   return (
@@ -111,7 +111,7 @@ export const useSticky = ({ id: _id }: { id?: string } = {}) => {
       if (height === undefined) return
       __registerSticky__({ id: id.current, height, status: "ORIGINAL" })
     },
-    [__registerSticky__],
+    [__registerSticky__]
   )
 
   const deregisterSticky = useCallback(() => {
@@ -122,12 +122,12 @@ export const useSticky = ({ id: _id }: { id?: string } = {}) => {
     (payload: Partial<TSticky>) => {
       __updateSticky__({ id: id.current, payload })
     },
-    [__updateSticky__],
+    [__updateSticky__]
   )
 
   const offsetTop = useMemo(
     () => getOffsetTopForSticky({ id: id.current, stickies }) ?? 0,
-    [stickies],
+    [stickies]
   )
 
   return {

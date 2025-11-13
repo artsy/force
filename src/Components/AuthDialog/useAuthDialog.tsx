@@ -16,7 +16,7 @@ interface InjectedAuthDialogProps {
 }
 
 export const withAuthDialog = <T extends InjectedAuthDialogProps>(
-  Component: React.ComponentType<React.PropsWithChildren<T>>,
+  Component: React.ComponentType<React.PropsWithChildren<T>>
 ) => {
   return (props: Omit<T, "showAuthDialog">) => {
     const { showAuthDialog } = useAuthDialog()

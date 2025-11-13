@@ -1,6 +1,6 @@
-import { Text } from "@artsy/palette"
 import { ArtworkFilter } from "Components/ArtworkFilter"
 import { useRouter } from "System/Hooks/useRouter"
+import { Text } from "@artsy/palette"
 import type { ExampleArtworkFilterRoute_viewer$data } from "__generated__/ExampleArtworkFilterRoute_viewer.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -48,5 +48,5 @@ export const ExampleArtworkFilterFragmentContainer = createFragmentContainer(
         ...ArtworkFilter_viewer @arguments(input: $input)
       }
     `,
-  },
+  }
 )

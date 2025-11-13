@@ -1,4 +1,8 @@
-import { ContextModule, OwnerType, clickedEntityGroup } from "@artsy/cohesion"
+import { RouterLink } from "System/Components/RouterLink"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { ContextModule, clickedEntityGroup, OwnerType } from "@artsy/cohesion"
 import {
   Box,
   type BoxProps,
@@ -10,12 +14,8 @@ import {
   StackableBorderBox,
   Text,
 } from "@artsy/palette"
-import { RouterLink } from "System/Components/RouterLink"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import type { MyBidsQuery } from "__generated__/MyBidsQuery.graphql"
 import type { MyBids_me$data } from "__generated__/MyBids_me.graphql"
+import type { MyBidsQuery } from "__generated__/MyBidsQuery.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -89,7 +89,7 @@ const MyBids: React.FC<React.PropsWithChildren<MyBidsProps>> = props => {
                               contextPageOwnerType,
                               destinationPageOwnerType: OwnerType.sale,
                               type: "thumbnail",
-                            }),
+                            })
                           )
                         }}
                       >

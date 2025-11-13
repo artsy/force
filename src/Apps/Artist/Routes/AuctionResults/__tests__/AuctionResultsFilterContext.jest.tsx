@@ -1,9 +1,9 @@
-import { render } from "@testing-library/react"
 import {
   AuctionResultsFilterContextProvider,
   useAuctionResultsFilterContext,
 } from "Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
 import { initialAuctionResultsFilterState } from "Apps/Artist/Routes/AuctionResults/initialAuctionResultsFilterState"
+import { render } from "@testing-library/react"
 import { act } from "react-dom/test-utils"
 
 describe("AuctionResultsFilterContext", () => {
@@ -13,7 +13,7 @@ describe("AuctionResultsFilterContext", () => {
     return render(
       <AuctionResultsFilterContextProvider {...props}>
         <TestComponent />
-      </AuctionResultsFilterContextProvider>,
+      </AuctionResultsFilterContextProvider>
     )
   }
 
@@ -28,7 +28,7 @@ describe("AuctionResultsFilterContext", () => {
       initialAuctionResultsFilterState({
         startDate: null,
         endDate: null,
-      }),
+      })
     )
 
     // Sets year filters to a wide range in case the data is not provided
@@ -183,7 +183,7 @@ describe("AuctionResultsFilterContext", () => {
               initialAuctionResultsFilterState({
                 startDate: null,
                 endDate: null,
-              }),
+              })
             )
           })
         })
@@ -240,7 +240,7 @@ describe("AuctionResultsFilterContext", () => {
           context.setFilter?.("categories", "photography")
         })
         expect(context.currentlySelectedFilters?.()).toEqual(
-          context.stagedFilters,
+          context.stagedFilters
         )
       })
     })

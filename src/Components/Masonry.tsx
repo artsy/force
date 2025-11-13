@@ -1,8 +1,8 @@
 import { Box } from "@artsy/palette"
 import styled from "styled-components"
 import {
-  type GridColumnGapProps,
   compose,
+  type GridColumnGapProps,
   gridColumnGap,
   style,
 } from "styled-system"

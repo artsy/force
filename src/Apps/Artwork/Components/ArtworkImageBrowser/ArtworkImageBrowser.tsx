@@ -1,6 +1,6 @@
+import { getENV } from "Utils/getENV"
 import { ContextModule } from "@artsy/cohesion"
 import { Box, Spacer } from "@artsy/palette"
-import { getENV } from "Utils/getENV"
 import type { ArtworkImageBrowser_artwork$data } from "__generated__/ArtworkImageBrowser_artwork.graphql"
 import { scale } from "proportional-scale"
 import type * as React from "react"
@@ -74,7 +74,7 @@ export const ArtworkImageBrowser: React.FC<
             return MAX_DIMENSION
           }
         }
-      }),
+      })
     )
   }, [figures])
 
@@ -155,5 +155,5 @@ export const ArtworkImageBrowserFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  },
+  }
 )

@@ -1,6 +1,6 @@
-import { Text } from "@artsy/palette"
-import { useTimer } from "Utils/Hooks/useTimer"
 import { getSaleOrLotTimerInfo } from "Utils/getSaleOrLotTimerInfo"
+import { useTimer } from "Utils/Hooks/useTimer"
+import { Text } from "@artsy/palette"
 import type { SaleDetailTimer_sale$data } from "__generated__/SaleDetailTimer_sale.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -46,5 +46,5 @@ export const SaleDetailTimerFragmentContainer = createFragmentContainer(
         startAt
       }
     `,
-  },
+  }
 )

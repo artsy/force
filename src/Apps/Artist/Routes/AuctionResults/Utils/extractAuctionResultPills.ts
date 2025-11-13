@@ -7,8 +7,8 @@ import type { Metric } from "Utils/metrics"
 import { compact, isNil } from "lodash"
 import {
   BOOLEAN_FILTER_LABELS,
-  INVERTED_BOOLEAN_FILTERS,
   getFilterDisplayName,
+  INVERTED_BOOLEAN_FILTERS,
 } from "./filterDisplayNames"
 
 interface PillGeneratorContext {
@@ -21,61 +21,61 @@ interface PillGenerators {
   organizations: (
     values: string[],
     field: string,
-    context?: PillGeneratorContext,
+    context?: PillGeneratorContext
   ) => FilterPill[] | null
   categories: (
     values: string[],
     field: string,
-    context?: PillGeneratorContext,
+    context?: PillGeneratorContext
   ) => FilterPill[] | null
   sizes: (
     values: string[],
     field: string,
-    context?: PillGeneratorContext,
+    context?: PillGeneratorContext
   ) => FilterPill[] | null
 
   // Boolean filters
   hideUpcoming: (
     value: boolean,
     field: string,
-    context?: PillGeneratorContext,
+    context?: PillGeneratorContext
   ) => FilterPill | null
   includeEstimateRange: (
     value: boolean,
     field: string,
-    context?: PillGeneratorContext,
+    context?: PillGeneratorContext
   ) => FilterPill | null
   includeUnknownPrices: (
     value: boolean,
     field: string,
-    context?: PillGeneratorContext,
+    context?: PillGeneratorContext
   ) => FilterPill | null
   allowEmptyCreatedDates: (
     value: boolean,
     field: string,
-    context?: PillGeneratorContext,
+    context?: PillGeneratorContext
   ) => FilterPill | null
   allowUnspecifiedSaleDates: (
     value: boolean,
     field: string,
-    context?: PillGeneratorContext,
+    context?: PillGeneratorContext
   ) => FilterPill | null
 
   // String filters
   keyword: (
     value: string,
     field: string,
-    context?: PillGeneratorContext,
+    context?: PillGeneratorContext
   ) => FilterPill | null
   currency: (
     value: string,
     field: string,
-    context?: PillGeneratorContext,
+    context?: PillGeneratorContext
   ) => FilterPill | null
   priceRange: (
     value: string,
     field: string,
-    context?: PillGeneratorContext,
+    context?: PillGeneratorContext
   ) => FilterPill | null
 
   // Year filters (no-ops)
@@ -88,7 +88,7 @@ interface PillGenerators {
 const createPill = (
   field: string,
   value: string,
-  displayValue: string,
+  displayValue: string
 ): FilterPill => ({
   field,
   value,
@@ -103,8 +103,8 @@ const pillGenerators: PillGenerators = {
           createPill(
             "organizations",
             value,
-            getFilterDisplayName("organizations", value),
-          ),
+            getFilterDisplayName("organizations", value)
+          )
         )
       : null,
 
@@ -114,8 +114,8 @@ const pillGenerators: PillGenerators = {
           createPill(
             "categories",
             value,
-            getFilterDisplayName("categories", value),
-          ),
+            getFilterDisplayName("categories", value)
+          )
         )
       : null,
 
@@ -125,8 +125,8 @@ const pillGenerators: PillGenerators = {
           createPill(
             "sizes",
             value,
-            getFilterDisplayName("sizes", value, { metric: context.metric }),
-          ),
+            getFilterDisplayName("sizes", value, { metric: context.metric })
+          )
         )
       : null,
 
@@ -141,7 +141,7 @@ const pillGenerators: PillGenerators = {
       ? createPill(
           "includeEstimateRange",
           "true",
-          BOOLEAN_FILTER_LABELS.includeEstimateRange,
+          BOOLEAN_FILTER_LABELS.includeEstimateRange
         )
       : null,
 
@@ -150,7 +150,7 @@ const pillGenerators: PillGenerators = {
       ? createPill(
           "includeUnknownPrices",
           "false",
-          INVERTED_BOOLEAN_FILTERS.includeUnknownPrices,
+          INVERTED_BOOLEAN_FILTERS.includeUnknownPrices
         )
       : null,
 
@@ -159,7 +159,7 @@ const pillGenerators: PillGenerators = {
       ? createPill(
           "allowEmptyCreatedDates",
           "false",
-          INVERTED_BOOLEAN_FILTERS.allowEmptyCreatedDates,
+          INVERTED_BOOLEAN_FILTERS.allowEmptyCreatedDates
         )
       : null,
 
@@ -168,7 +168,7 @@ const pillGenerators: PillGenerators = {
       ? createPill(
           "allowUnspecifiedSaleDates",
           "false",
-          INVERTED_BOOLEAN_FILTERS.allowUnspecifiedSaleDates,
+          INVERTED_BOOLEAN_FILTERS.allowUnspecifiedSaleDates
         )
       : null,
 
@@ -199,7 +199,7 @@ const createYearRangePill = (
   startYear: number | null | undefined,
   endYear: number | null | undefined,
   prefix: string,
-  fieldPrefix: string,
+  fieldPrefix: string
 ): FilterPill | null => {
   const hasStart = !isNil(startYear)
   const hasEnd = !isNil(endYear)
@@ -212,7 +212,7 @@ const createYearRangePill = (
     return createPill(
       fieldPrefix,
       isSameYear ? `${startYear}` : `${startYear}-${endYear}`,
-      `${prefix}: ${isSameYear ? startYear : `${startYear}–${endYear}`}`,
+      `${prefix}: ${isSameYear ? startYear : `${startYear}–${endYear}`}`
     )
   }
 
@@ -220,21 +220,21 @@ const createYearRangePill = (
     return createPill(
       `${fieldPrefix}StartYear`,
       `${startYear}`,
-      `${prefix} after: ${startYear}`,
+      `${prefix} after: ${startYear}`
     )
   }
 
   return createPill(
     `${fieldPrefix}EndYear`,
     `${endYear}`,
-    `${prefix} before: ${endYear}`,
+    `${prefix} before: ${endYear}`
   )
 }
 
 // Check if year ranges have changed from initial state
 const hasYearRangeChanged = (
   current: { start?: number | null; end?: number | null },
-  initial: { start?: number | null; end?: number | null },
+  initial: { start?: number | null; end?: number | null }
 ): boolean => {
   return current.start !== initial.start || current.end !== initial.end
 }
@@ -272,14 +272,14 @@ export const extractAuctionResultPillsFromCriteria = ({
       {
         start: initialState.createdAfterYear,
         end: initialState.createdBeforeYear,
-      },
+      }
     )
   ) {
     const createdYearPill = createYearRangePill(
       criteria.createdAfterYear,
       criteria.createdBeforeYear,
       "Created",
-      "createdYear",
+      "createdYear"
     )
     if (createdYearPill) yearRangePills.push(createdYearPill)
   }
@@ -289,14 +289,14 @@ export const extractAuctionResultPillsFromCriteria = ({
     !initialState ||
     hasYearRangeChanged(
       { start: criteria.saleStartYear, end: criteria.saleEndYear },
-      { start: initialState.saleStartYear, end: initialState.saleEndYear },
+      { start: initialState.saleStartYear, end: initialState.saleEndYear }
     )
   ) {
     const saleYearPill = createYearRangePill(
       criteria.saleStartYear,
       criteria.saleEndYear,
       "Sale",
-      "saleYear",
+      "saleYear"
     )
     if (saleYearPill) yearRangePills.push(saleYearPill)
   }

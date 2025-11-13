@@ -1,7 +1,7 @@
-import { renderHook } from "@testing-library/react-hooks"
 import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
 import { useAfterAuthenticationRedirect } from "Components/AuthDialog/Hooks/useAfterAuthenticationRedirect"
 import { useElligibleForOnboarding } from "Components/AuthDialog/Hooks/useElligibleForOnboarding"
+import { renderHook } from "@testing-library/react-hooks"
 
 jest.mock("Utils/getENV", () => ({
   getENV: jest.fn().mockImplementation(key => {
@@ -49,7 +49,7 @@ describe("useAfterAuthenticationRedirect", () => {
     result.current.runRedirect()
 
     expect(locationAssignMock).toBeCalledWith(
-      "https://www.artsy.net/some/path?onboarding=true",
+      "https://www.artsy.net/some/path?onboarding=true"
     )
   })
 
@@ -62,7 +62,7 @@ describe("useAfterAuthenticationRedirect", () => {
     result.current.runRedirect()
 
     expect(locationAssignMock).toBeCalledWith(
-      "https://www.artsy.net/?onboarding=true",
+      "https://www.artsy.net/?onboarding=true"
     )
   })
 
@@ -76,7 +76,7 @@ describe("useAfterAuthenticationRedirect", () => {
 
     // TODO: Validate that afterAuthActions still execute correctly when they are serialized in the query params like this
     expect(locationAssignMock).toBeCalledWith(
-      "https://api.artsy.net/users/sign_in?trust_token=some-token&redirect_uri=https%3A%2F%2Fwww.artsy.net%2Fsome%2Fpath%3Fonboarding%3Dtrue",
+      "https://api.artsy.net/users/sign_in?trust_token=some-token&redirect_uri=https%3A%2F%2Fwww.artsy.net%2Fsome%2Fpath%3Fonboarding%3Dtrue"
     )
   })
 

@@ -1,9 +1,8 @@
-import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { NavBarUserMenu } from "Components/NavBar/Menus"
 import { NavBar } from "Components/NavBar/NavBar"
 import { SystemContextProvider } from "System/Contexts/SystemContext"
-import { render, screen } from "@testing-library/react"
-import { fireEvent } from "@testing-library/react"
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import { fireEvent, render, screen } from "@testing-library/react"
 import { useTracking } from "react-tracking"
 
 jest.mock("react-tracking")
@@ -42,7 +41,7 @@ describe("NavBarTracking", () => {
       const { container } = render(
         <Wrapper>
           <NavBarUserMenu />
-        </Wrapper>,
+        </Wrapper>
       )
 
       const firstLink = container.querySelector("a")
@@ -62,7 +61,7 @@ describe("NavBarTracking", () => {
       const { container } = render(
         <Wrapper>
           <NavBar />
-        </Wrapper>,
+        </Wrapper>
       )
 
       const fairsLink = container.querySelector('a[href="/art-fairs"]')
@@ -76,7 +75,7 @@ describe("NavBarTracking", () => {
 
       const collectLinks = container.querySelectorAll('a[href="/collect"]')
       const emptyCollectLink = Array.from(collectLinks).find(
-        link => link.textContent === "",
+        link => link.textContent === ""
       )
       if (emptyCollectLink) {
         fireEvent.click(emptyCollectLink)
@@ -96,7 +95,7 @@ describe("NavBarTracking", () => {
         // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         <Wrapper user={null}>
           <NavBar />
-        </Wrapper>,
+        </Wrapper>
       )
 
       const menuButton = screen.getByLabelText("Menu")

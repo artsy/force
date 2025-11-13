@@ -32,10 +32,10 @@ describe("login", () => {
       Promise.resolve({
         ok: true,
         json: () => Promise.resolve({ success: true, user: { id: "example" } }),
-      }),
+      })
     )
 
-    // @ts-ignore
+    // @ts-expect-error
     global.fetch = mockFetch
 
     const res = await login({
@@ -65,10 +65,10 @@ describe("forgotPassword", () => {
       Promise.resolve({
         ok: true,
         json: () => Promise.resolve({ success: true }),
-      }),
+      })
     )
 
-    // @ts-ignore
+    // @ts-expect-error
     global.fetch = mockFetch
 
     const res = await forgotPassword({ email: "example@example" })
@@ -85,7 +85,7 @@ describe("forgotPassword", () => {
           "X-XAPP-TOKEN": "artsy_xapp_token",
         },
         method: "POST",
-      },
+      }
     )
 
     expect(res).toEqual({ success: true })
@@ -96,14 +96,14 @@ describe("forgotPassword", () => {
       Promise.resolve({
         ok: false,
         text: () => Promise.resolve(JSON.stringify({ error: "error message" })),
-      }),
+      })
     )
 
-    // @ts-ignore
+    // @ts-expect-error
     global.fetch = mockFetch
 
     return expect(forgotPassword({ email: "example@example" })).rejects.toEqual(
-      new Error("error message"),
+      new Error("error message")
     )
   })
 })
@@ -114,10 +114,10 @@ describe("resetPassword", () => {
       Promise.resolve({
         ok: true,
         json: () => Promise.resolve({ success: true }),
-      }),
+      })
     )
 
-    // @ts-ignore
+    // @ts-expect-error
     global.fetch = mockFetch
 
     const res = await resetPassword({
@@ -138,7 +138,7 @@ describe("resetPassword", () => {
           "X-XAPP-TOKEN": "artsy_xapp_token",
         },
         method: "PUT",
-      },
+      }
     )
 
     expect(res).toEqual({ success: true })
@@ -151,10 +151,10 @@ describe("signUp", () => {
       Promise.resolve({
         ok: true,
         json: () => Promise.resolve({ success: true }),
-      }),
+      })
     )
 
-    // @ts-ignore
+    // @ts-expect-error
     global.fetch = mockFetch
 
     const res = await signUp({
@@ -184,10 +184,10 @@ describe("signUp", () => {
         Promise.resolve({
           ok: true,
           json: () => Promise.resolve({ msg: "success" }),
-        }),
+        })
       )
 
-      // @ts-ignore
+      // @ts-expect-error
       global.fetch = mockFetch
 
       await logout()

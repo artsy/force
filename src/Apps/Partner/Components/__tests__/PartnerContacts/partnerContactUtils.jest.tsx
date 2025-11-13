@@ -81,9 +81,9 @@ describe("PartnerContactUtils", () => {
     "getContactAddressLines returns correct value %s",
     (_, location, addressLines) => {
       expect(
-        getContactAddressLines(location as PartnerContactMap_location$data),
+        getContactAddressLines(location as PartnerContactMap_location$data)
       ).toEqual(addressLines)
-    },
+    }
   )
 
   it("getGoogleMapUrl returns correct result when coordinates not empty", () => {
@@ -98,7 +98,7 @@ describe("PartnerContactUtils", () => {
         displayCountry: "United States",
         address: "address",
         postalCode: "postalCode",
-      } as PartnerContactMap_location$data),
+      } as PartnerContactMap_location$data)
     ).toEqual("https://maps.google.com/maps?q=1%2C2")
   })
 
@@ -108,9 +108,9 @@ describe("PartnerContactUtils", () => {
         displayCountry: "United States",
         address: "address",
         postalCode: "postalCode",
-      } as PartnerContactMap_location$data),
+      } as PartnerContactMap_location$data)
     ).toEqual(
-      "https://maps.google.com/maps?q=address%2C%20postalCode%2C%20United%20States&hnear=address%2C%20postalCode%2C%20United%20States",
+      "https://maps.google.com/maps?q=address%2C%20postalCode%2C%20United%20States&hnear=address%2C%20postalCode%2C%20United%20States"
     )
   })
 
@@ -140,10 +140,10 @@ describe("PartnerContactUtils", () => {
     } as PartnerContactMap_location$data)
 
     expect(result).toContain(
-      "center=address%2C%20postalCode%2C%20United%20States",
+      "center=address%2C%20postalCode%2C%20United%20States"
     )
     expect(result).toContain(
-      "markers=color%3A0x873ff0%7Caddress%2C%20postalCode%2C%20United%20States",
+      "markers=color%3A0x873ff0%7Caddress%2C%20postalCode%2C%20United%20States"
     )
   })
 })

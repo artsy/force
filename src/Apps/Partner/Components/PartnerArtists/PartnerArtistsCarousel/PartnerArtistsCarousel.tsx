@@ -1,9 +1,9 @@
-import { Shelf } from "@artsy/palette"
 import { CellPartnerArtistFragmentContainer } from "Components/Cells/CellPartnerArtist"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import type { PartnerArtistsCarouselRendererQuery } from "__generated__/PartnerArtistsCarouselRendererQuery.graphql"
+import { Shelf } from "@artsy/palette"
 import type { PartnerArtistsCarousel_partner$data } from "__generated__/PartnerArtistsCarousel_partner.graphql"
+import type { PartnerArtistsCarouselRendererQuery } from "__generated__/PartnerArtistsCarouselRendererQuery.graphql"
 import { compact } from "lodash"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -60,7 +60,7 @@ export const PartnerArtistsCarouselFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  },
+  }
 )
 
 export const PartnerArtistsCarouselRenderer: React.FC<

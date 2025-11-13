@@ -1,5 +1,5 @@
-import loadable from "@loadable/component"
 import type { RouteProps } from "System/Router/Route"
+import loadable from "@loadable/component"
 import { RedirectException } from "found"
 import { graphql } from "react-relay"
 import { redirectGeneToCollection } from "./Server/redirectGeneToCollection"
@@ -8,14 +8,14 @@ const GeneApp = loadable(
   () => import(/* webpackChunkName: "geneBundle" */ "./GeneApp"),
   {
     resolveComponent: component => component.GeneApp,
-  },
+  }
 )
 
 const GeneShowRoute = loadable(
   () => import(/* webpackChunkName: "geneBundle" */ "./Routes/GeneShow"),
   {
     resolveComponent: component => component.GeneShowFragmentContainer,
-  },
+  }
 )
 
 export const geneRoutes: RouteProps[] = [

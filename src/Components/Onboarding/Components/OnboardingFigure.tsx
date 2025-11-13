@@ -1,5 +1,5 @@
-import { Flex, Image, ResponsiveBox, Text } from "@artsy/palette"
 import { resized } from "Utils/resized"
+import { Flex, Image, ResponsiveBox, Text } from "@artsy/palette"
 import { forwardRef } from "react"
 
 interface OnboardingFigureProps {
@@ -19,7 +19,7 @@ export const OnboardingFigure = forwardRef(
     }: OnboardingFigureProps & {
       ref?: React.Ref<HTMLDivElement>
     },
-    forwardedRef,
+    forwardedRef
   ) => {
     const img = resized(src, { width: 400 })
 
@@ -60,5 +60,5 @@ export const OnboardingFigure = forwardRef(
         </ResponsiveBox>
       </Flex>
     )
-  },
+  }
 )

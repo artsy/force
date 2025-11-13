@@ -20,7 +20,7 @@ export const InvoicePayments: React.FC<
       <Join separator={<Separator />}>
         {data.payments
           .filter(({ successful }) => successful)
-          .map(({ id, createdAt, amount, creditCard }, index) => {
+          .map(({ id, createdAt, amount, creditCard }, _index) => {
             const creditCardInfo = creditCard
               ? `${creditCard.brand} ending in ${creditCard.lastDigits}`
               : null

@@ -1,11 +1,4 @@
 import {
-  CardCvcElement,
-  CardExpiryElement,
-  CardNumberElement,
-  useElements,
-  useStripe,
-} from "@stripe/react-stripe-js"
-import {
   errorMessageForCard,
   stripeCardElementNotFound,
   stripeNotLoadedErrorMessage,
@@ -19,6 +12,13 @@ import { useCreateBidder } from "Apps/Auction/Queries/useCreateBidder"
 import { useRefreshUserData } from "Apps/Auction/Queries/useRefreshUserData"
 import { toStripeAddress } from "Components/Address/utils"
 import createLogger from "Utils/logger"
+import {
+  CardCvcElement,
+  CardExpiryElement,
+  CardNumberElement,
+  useElements,
+  useStripe,
+} from "@stripe/react-stripe-js"
 import type { AuctionBidRoute_me$data } from "__generated__/AuctionBidRoute_me.graphql"
 import type { AuctionBidRoute_sale$data } from "__generated__/AuctionBidRoute_sale.graphql"
 import type { AuctionRegistrationRoute_me$data } from "__generated__/AuctionRegistrationRoute_me.graphql"
@@ -59,7 +59,7 @@ export const useCreateTokenAndSubmit = ({
    */
   const createToken = async (
     values: AuctionFormValues,
-    helpers: AuctionFormHelpers,
+    helpers: AuctionFormHelpers
   ) => {
     if (!stripe || !elements) {
       logger.error(stripeNotLoadedErrorMessage)
@@ -87,7 +87,7 @@ export const useCreateTokenAndSubmit = ({
     try {
       const { error, token } = await stripe.createToken(
         cardNumberElement,
-        toStripeAddress(values.address),
+        toStripeAddress(values.address)
       )
 
       if (error) {
@@ -111,7 +111,7 @@ export const useCreateTokenAndSubmit = ({
 
             helpers.setFieldError(
               "creditCard",
-              errorMessageForCard(mutationErrorDetail),
+              errorMessageForCard(mutationErrorDetail)
             )
 
             return mutationErrorDetail

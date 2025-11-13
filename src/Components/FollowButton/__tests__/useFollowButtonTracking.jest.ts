@@ -1,6 +1,6 @@
+import { useFollowButtonTracking } from "Components/FollowButton/useFollowButtonTracking"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { act, renderHook } from "@testing-library/react-hooks"
-import { useFollowButtonTracking } from "Components/FollowButton/useFollowButtonTracking"
 import { useTracking } from "react-tracking"
 
 jest.mock("react-tracking")
@@ -25,7 +25,7 @@ describe("trackEvent", () => {
         ownerId: "artistId",
         ownerSlug: "artistSlug",
         contextModule: ContextModule.artistHeader,
-      }),
+      })
     )
 
     act(() => {
@@ -38,7 +38,7 @@ describe("trackEvent", () => {
         owner_id: "artistId",
         owner_slug: "artistSlug",
         owner_type: "artist",
-      }),
+      })
     )
 
     act(() => {
@@ -51,7 +51,7 @@ describe("trackEvent", () => {
         owner_id: "artistId",
         owner_slug: "artistSlug",
         owner_type: "artist",
-      }),
+      })
     )
   })
 
@@ -62,7 +62,7 @@ describe("trackEvent", () => {
         ownerId: "geneId",
         ownerSlug: "geneSlug",
         contextModule: ContextModule.geneHeader,
-      }),
+      })
     )
 
     act(() => {
@@ -75,7 +75,7 @@ describe("trackEvent", () => {
         owner_id: "geneId",
         owner_slug: "geneSlug",
         owner_type: "gene",
-      }),
+      })
     )
 
     act(() => {
@@ -88,7 +88,7 @@ describe("trackEvent", () => {
         owner_id: "geneId",
         owner_slug: "geneSlug",
         owner_type: "gene",
-      }),
+      })
     )
   })
 
@@ -99,7 +99,7 @@ describe("trackEvent", () => {
         ownerId: "profileId",
         ownerSlug: "profileSlug",
         contextModule: ContextModule.partnerHeader,
-      }),
+      })
     )
 
     act(() => {
@@ -112,7 +112,7 @@ describe("trackEvent", () => {
         owner_id: "profileId",
         owner_slug: "profileSlug",
         owner_type: "partner",
-      }),
+      })
     )
 
     act(() => {
@@ -125,7 +125,7 @@ describe("trackEvent", () => {
         owner_id: "profileId",
         owner_slug: "profileSlug",
         owner_type: "partner",
-      }),
+      })
     )
   })
 })

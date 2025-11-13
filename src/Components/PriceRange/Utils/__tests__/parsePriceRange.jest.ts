@@ -1,5 +1,5 @@
-import { parsePriceRange } from "Components/PriceRange/Utils/parsePriceRange"
 import { DEFAULT_CUSTOM_RANGE } from "Components/PriceRange/constants"
+import { parsePriceRange } from "Components/PriceRange/Utils/parsePriceRange"
 
 describe("parsePriceRange", () => {
   it("should correctly parse range when valid range is passed", () => {

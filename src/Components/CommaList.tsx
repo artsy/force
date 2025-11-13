@@ -2,8 +2,8 @@ import {
   Children,
   type FC,
   Fragment,
-  type ReactNode,
   isValidElement,
+  type ReactNode,
   useMemo,
 } from "react"
 
@@ -18,7 +18,7 @@ export const CommaList: FC<CommaListProps> = ({
 }) => {
   const items = useMemo(() => {
     return Children.toArray(children).filter(
-      child => isValidElement(child) || typeof child === "string",
+      child => isValidElement(child) || typeof child === "string"
     )
   }, [children])
 

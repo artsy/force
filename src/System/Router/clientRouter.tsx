@@ -11,10 +11,10 @@ import { shouldUpdateScroll } from "System/Router/Utils/shouldUpdateScroll"
 import { getUser } from "Utils/user"
 import {
   BrowserProtocol,
+  createQueryMiddleware,
   HashProtocol,
   type HistoryEnhancerOptions,
   MemoryProtocol,
-  createQueryMiddleware,
 } from "farce"
 import { createInitialFarceRouter, createRender } from "found"
 import { Resolver } from "found-relay"
@@ -34,7 +34,7 @@ export interface RouterConfig {
 }
 
 export const setupClientRouter = async (
-  config: RouterConfig,
+  config: RouterConfig
 ): Promise<{
   ClientRouter: React.ComponentType<any>
 }> => {
@@ -112,7 +112,7 @@ export const setupClientRouter = async (
           <BrowserRouter resolver={resolver} />
         </Boot>
       )
-    },
+    }
   )
 
   return { ClientRouter }

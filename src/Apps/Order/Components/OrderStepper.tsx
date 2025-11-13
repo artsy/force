@@ -1,6 +1,6 @@
-import { Clickable, Step, Stepper } from "@artsy/palette"
 import { useRouter } from "System/Hooks/useRouter"
 import { extractNodes } from "Utils/extractNodes"
+import { Clickable, Step, Stepper } from "@artsy/palette"
 import type { OrderStepper_order$data } from "__generated__/OrderStepper_order.graphql"
 import { type FC, useMemo } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -13,7 +13,7 @@ export const offerFlowSteps = typedArray(
   "Offer",
   "Shipping",
   "Payment",
-  "Review",
+  "Review"
 )
 export const buyNowFlowSteps = typedArray("Shipping", "Payment", "Review")
 export const privateFlowSteps = typedArray("Payment", "Review")
@@ -86,7 +86,7 @@ export const OrderStepper: FC<React.PropsWithChildren<OrderStepperProps>> = ({
     const hasShipping =
       order.requestedFulfillment ||
       extractNodes(
-        extractNodes(order.lineItems)?.[0].shippingQuoteOptions,
+        extractNodes(order.lineItems)?.[0].shippingQuoteOptions
       ).find(shippingQuote => shippingQuote.isSelected)
 
     if (hasShipping) {
@@ -119,8 +119,8 @@ export const OrderStepper: FC<React.PropsWithChildren<OrderStepperProps>> = ({
     router.push(
       window.location.pathname.replace(
         currentStep.toLowerCase(),
-        step.toLowerCase(),
-      ),
+        step.toLowerCase()
+      )
     )
   }
 
@@ -175,5 +175,5 @@ export const OrderStepperFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  },
+  }
 )

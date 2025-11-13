@@ -1,6 +1,6 @@
-import { type BoxProps, FullBleed, Image, ResponsiveBox } from "@artsy/palette"
 import { getENV } from "Utils/getENV"
 import { maxDimensionsByArea, resized } from "Utils/resized"
+import { type BoxProps, FullBleed, Image, ResponsiveBox } from "@artsy/palette"
 import type { FC } from "react"
 import { Link } from "react-head"
 
@@ -113,7 +113,7 @@ interface MaybeValidImage {
 }
 
 export const isValidImage = (
-  image?: MaybeValidImage | null,
+  image?: MaybeValidImage | null
 ): image is ValidImage => {
   return Boolean(image && image.src && image.width && image.height)
 }

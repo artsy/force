@@ -1,3 +1,6 @@
+import { useArtworkDetailsAdditionalInfoFields } from "Apps/Artwork/Components/ArtworkDetails/ArtworkDetailsAdditionalInfo"
+import { ConditionInfoModal } from "Apps/Artwork/Components/ArtworkDetails/ConditionInfoModal"
+import { PrivateArtworkDefinitionList } from "Apps/Artwork/Components/ArtworkSidebar/PrivateArtworkDefinitionList"
 import {
   Clickable,
   Flex,
@@ -9,9 +12,6 @@ import {
   StackableBorderBox,
   Text,
 } from "@artsy/palette"
-import { useArtworkDetailsAdditionalInfoFields } from "Apps/Artwork/Components/ArtworkDetails/ArtworkDetailsAdditionalInfo"
-import { ConditionInfoModal } from "Apps/Artwork/Components/ArtworkDetails/ConditionInfoModal"
-import { PrivateArtworkDefinitionList } from "Apps/Artwork/Components/ArtworkSidebar/PrivateArtworkDefinitionList"
 import type { PrivateArtworkAdditionalInfo_artwork$key } from "__generated__/PrivateArtworkAdditionalInfo_artwork.graphql"
 import * as React from "react"
 import { graphql, useFragment } from "react-relay"
@@ -41,11 +41,11 @@ export const PrivateArtworkAdditionalInfo: React.FC<
   const { trackEvent } = useTracking()
 
   const allDisplayItems = privateListItems.filter(
-    i => i.value != null && i.value !== "",
+    i => i.value != null && i.value !== ""
   )
 
   const [isCollapsed, setIsCollapsed] = React.useState(
-    allDisplayItems.length > COLLAPSED_COUNT,
+    allDisplayItems.length > COLLAPSED_COUNT
   )
 
   const displayItems = isCollapsed
@@ -95,7 +95,7 @@ export const PrivateArtworkAdditionalInfo: React.FC<
                   )}
                 </HTML>
               </PrivateArtworkDefinitionList>
-            ),
+            )
           )}
         </Join>
         {!!isCollapsed && (

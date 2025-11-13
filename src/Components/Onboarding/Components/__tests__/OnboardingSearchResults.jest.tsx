@@ -1,6 +1,6 @@
-import { screen } from "@testing-library/react"
 import { OnboardingSearchResultsFragmentContainer } from "Components/Onboarding/Components/OnboardingSearchResults"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
@@ -47,8 +47,8 @@ describe("OnboardingSearchResults", () => {
 
     expect(
       screen.getByText(
-        'Sorry, we couldn’t find anything for "abc". Please try searching again with a different spelling.',
-      ),
+        'Sorry, we couldn’t find anything for "abc". Please try searching again with a different spelling.'
+      )
     ).toBeInTheDocument()
   })
 

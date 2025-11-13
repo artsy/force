@@ -1,9 +1,9 @@
-import { fireEvent, screen } from "@testing-library/react"
 import { ArtworkDetailsAdditionalInfoFragmentContainer } from "Apps/Artwork/Components/ArtworkDetails/ArtworkDetailsAdditionalInfo"
 import { useSelectedEditionSetContext } from "Apps/Artwork/Components/SelectedEditionSetContext"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { AnalyticsCombinedContextProvider } from "System/Contexts/AnalyticsContext"
+import { fireEvent, screen } from "@testing-library/react"
 import type { ArtworkDetailsAdditionalInfo_Test_Query } from "__generated__/ArtworkDetailsAdditionalInfo_Test_Query.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -81,12 +81,12 @@ describe("ArtworkDetailsAdditionalInfo", () => {
 
     expect(
       screen.queryByText(
-        "Oil on cotton, hand-dyed silk organza, backed with vintage kantha quilt",
-      ),
+        "Oil on cotton, hand-dyed silk organza, backed with vintage kantha quilt"
+      )
     ).toBeInTheDocument()
     expect(screen.queryByText("Unique")).toBeInTheDocument()
     expect(
-      screen.queryByText("53 1/4 × 33 1/4 in | 135.3 × 84.5 cm"),
+      screen.queryByText("53 1/4 × 33 1/4 in | 135.3 × 84.5 cm")
     ).toBeInTheDocument()
   })
 

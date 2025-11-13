@@ -1,8 +1,8 @@
-import { Message } from "@artsy/palette"
 import {
   CollectorProfileArtistsListArtist,
   CollectorProfileArtistsListArtistSkeleton,
 } from "Apps/CollectorProfile/Components/CollectorProfileArtists/CollectorProfileArtistsListArtist"
+import { Message } from "@artsy/palette"
 import type { CollectorProfileArtistsSearchResultsQuery } from "__generated__/CollectorProfileArtistsSearchResultsQuery.graphql"
 import { compact } from "lodash"
 import { type FC, Suspense, useMemo } from "react"
@@ -30,7 +30,7 @@ const CollectorProfileArtistsSearchResultsArtists: FC<
 > = ({ term }) => {
   const { me } = useLazyLoadQuery<CollectorProfileArtistsSearchResultsQuery>(
     QUERY,
-    {},
+    {}
   )
 
   const results = useMemo(() => {
@@ -39,7 +39,7 @@ const CollectorProfileArtistsSearchResultsArtists: FC<
     return compact(
       me?.userInterestsConnection?.edges?.filter(edge => {
         return edge?.node?.name?.toLowerCase().includes(term.toLowerCase())
-      }),
+      })
     )
   }, [me, term])
 

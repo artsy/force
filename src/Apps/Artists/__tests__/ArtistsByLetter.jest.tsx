@@ -1,7 +1,7 @@
-import { screen } from "@testing-library/react"
 import { ArtistsByLetterFragmentContainer } from "Apps/Artists/Routes/ArtistsByLetter"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import type { ArtistsByLetterQuery } from "__generated__/ArtistsByLetterQuery.graphql"
 import { graphql } from "react-relay"
 
@@ -48,7 +48,7 @@ describe("ArtistsByLetter", () => {
     renderWithRelay()
 
     expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
-      "Artists - A",
+      "Artists - A"
     )
   })
 
@@ -63,7 +63,7 @@ describe("ArtistsByLetter", () => {
     renderWithRelay()
 
     expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
-      "Artists - D - Page 3",
+      "Artists - D - Page 3"
     )
   })
 
@@ -78,7 +78,7 @@ describe("ArtistsByLetter", () => {
     renderWithRelay()
 
     expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
-      "Artists - Z - Page 2",
+      "Artists - Z - Page 2"
     )
   })
 
@@ -93,7 +93,7 @@ describe("ArtistsByLetter", () => {
     renderWithRelay()
 
     expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
-      "Artists - A",
+      "Artists - A"
     )
   })
 
@@ -108,7 +108,7 @@ describe("ArtistsByLetter", () => {
     renderWithRelay()
 
     expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
-      "Artists - A",
+      "Artists - A"
     )
   })
 })

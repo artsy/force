@@ -1,22 +1,22 @@
-import { ActionType } from "@artsy/cohesion"
-import { Flex, Spinner } from "@artsy/palette"
 import { InfiniteScrollSentinel } from "Components/InfiniteScrollSentinel"
+import type { PillType } from "Components/Search/constants"
 import {
   SuggestionItem,
   type SuggestionItemOptionProps,
 } from "Components/Search/SuggestionItem/SuggestionItem"
-import type { PillType } from "Components/Search/constants"
 import {
-  type SearchNodeOption,
   formatOptions,
+  type SearchNodeOption,
 } from "Components/Search/utils/formatOptions"
 import { extractNodes } from "Utils/extractNodes"
+import { ActionType } from "@artsy/cohesion"
+import { Flex, Spinner } from "@artsy/palette"
 import type { SearchResultsList_viewer$data } from "__generated__/SearchResultsList_viewer.graphql"
 import { type FC, useEffect } from "react"
 import {
-  type RelayPaginationProp,
   createPaginationContainer,
   graphql,
+  type RelayPaginationProp,
 } from "react-relay"
 import { useTracking } from "react-tracking"
 import { ContentPlaceholder } from "./SearchResultsList/ContentPlaceholder"
@@ -38,7 +38,7 @@ const SearchResultsList: FC<
   const tracking = useTracking()
   const options = extractNodes(viewer.searchConnection)
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Search tracking should only trigger on connection changes
   useEffect(() => {
     if (viewer.searchConnection) {
       tracking.trackEvent({
@@ -59,7 +59,7 @@ const SearchResultsList: FC<
         ...option,
         imageUrl: option.coverArtwork?.image?.src || option.imageUrl,
       }
-    }) as SearchNodeOption[],
+    }) as SearchNodeOption[]
   )
 
   if (!viewer.searchConnection) {
@@ -84,7 +84,7 @@ const SearchResultsList: FC<
 
   const handleRedirect = (
     option: SuggestionItemOptionProps,
-    quickNavigation = false,
+    quickNavigation = false
   ) => {
     if (!quickNavigation) {
       tracking.trackEvent({
@@ -197,5 +197,5 @@ export const SearchResultsListPaginationContainer = createPaginationContainer(
         }
       }
     `,
-  },
+  }
 )

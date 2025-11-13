@@ -1,7 +1,7 @@
-import { screen } from "@testing-library/react"
 import { ArtworkImageBrowserSmallFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkImageBrowserSmall"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import type { ArtworkImageBrowserSmallTestQuery } from "__generated__/ArtworkImageBrowserSmallTestQuery.graphql"
 import { graphql } from "react-relay"
 
@@ -53,11 +53,11 @@ describe("ArtworkImageBrowserSmall", () => {
     expect(container.innerHTML).toContain("max-width: 800px")
     expect(screen.getByTestId("artwork-lightbox-image")).toHaveAttribute(
       "src",
-      "example.jpg",
+      "example.jpg"
     )
     expect(screen.getByTestId("artwork-lightbox-image")).toHaveAttribute(
       "srcset",
-      "example.jpg 1x",
+      "example.jpg 1x"
     )
   })
 })

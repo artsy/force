@@ -1,3 +1,6 @@
+import { ArtworkLightboxFragmentContainer } from "Apps/Artwork/Components/ArtworkLightbox"
+import { ArtworkVideoPlayerFragmentContainer } from "Apps/Artwork/Components/ArtworkVideoPlayer"
+import { DeepZoomFragmentContainer, useDeepZoom } from "Components/DeepZoom"
 import {
   ProgressDots,
   Swiper,
@@ -6,9 +9,6 @@ import {
   SwiperRail,
   type SwiperRailProps,
 } from "@artsy/palette"
-import { ArtworkLightboxFragmentContainer } from "Apps/Artwork/Components/ArtworkLightbox"
-import { ArtworkVideoPlayerFragmentContainer } from "Apps/Artwork/Components/ArtworkVideoPlayer"
-import { DeepZoomFragmentContainer, useDeepZoom } from "Components/DeepZoom"
 import type { ArtworkImageBrowserSmall_artwork$data } from "__generated__/ArtworkImageBrowserSmall_artwork.graphql"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -110,7 +110,7 @@ const Cell: React.ForwardRefExoticComponent<SwiperCellProps> = React.forwardRef(
         pr={0}
       />
     )
-  },
+  }
 )
 
 const Rail: React.FC<React.PropsWithChildren<SwiperRailProps>> = props => {

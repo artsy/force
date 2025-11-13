@@ -4,5 +4,5 @@ import type { Environment } from "react-relay"
 export type AuthIntentMutation = (
   relayEnvironment: Environment,
   id: string,
-  secondaryId?: string | null | undefined,
+  secondaryId?: string | null | undefined
 ) => Promise<unknown>

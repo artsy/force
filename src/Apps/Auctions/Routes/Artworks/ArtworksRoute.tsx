@@ -38,5 +38,5 @@ export const ArtworksRouteFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  },
+  }
 )

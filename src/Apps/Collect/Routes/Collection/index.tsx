@@ -1,7 +1,6 @@
-import { Spacer } from "@artsy/palette"
+import { initializeVariablesWithFilterState } from "Apps/Collect/collectRoutes"
 import { CollectionHeaderFragmentContainer } from "Apps/Collect/Routes/Collection/Components/Header"
 import { CollectionFeaturedArtistsQueryRenderer } from "Apps/Collect/Routes/Collection/Components/Header/CollectionFeaturedArtists"
-import { initializeVariablesWithFilterState } from "Apps/Collect/collectRoutes"
 import type {
   Counts,
   SharedArtworkFilterContextProps,
@@ -17,8 +16,9 @@ import { Analytics } from "System/Contexts/AnalyticsContext"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useRouter } from "System/Hooks/useRouter"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import type { CollectionArtworksQuery } from "__generated__/CollectionArtworksQuery.graphql"
+import { Spacer } from "@artsy/palette"
 import type { Collection_collection$data } from "__generated__/Collection_collection.graphql"
+import type { CollectionArtworksQuery } from "__generated__/CollectionArtworksQuery.graphql"
 import { truncate } from "lodash"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -119,7 +119,7 @@ export const CollectionApp: React.FC<
                   if (error) {
                     console.error(
                       "[collection]: Error loading artwork grid",
-                      error,
+                      error
                     )
                     return null
                   }
@@ -170,5 +170,5 @@ export const CollectionFragmentContainer = createFragmentContainer(
         showFeaturedArtists
       }
     `,
-  },
+  }
 )

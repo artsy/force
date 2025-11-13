@@ -1,5 +1,5 @@
-import { Separator, Spacer, Text } from "@artsy/palette"
 import { ConversationOrderState } from "Apps/Conversations/components/Details/OrderState/ConversationOrderState"
+import { Separator, Spacer, Text } from "@artsy/palette"
 import type { ConversationOrderInformation_order$key } from "__generated__/ConversationOrderInformation_order.graphql"
 import { graphql, useFragment } from "react-relay"
 import { ReviewOrderButton } from "./ReviewOrderButton"
@@ -24,7 +24,7 @@ export const ConversationOrderInformation: React.FC<
         }
       }
     `,
-    order,
+    order
   )
 
   if (!data) return null

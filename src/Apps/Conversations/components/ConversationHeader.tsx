@@ -1,3 +1,8 @@
+import { ReviewOrderButton } from "Apps/Conversations/components/Details/OrderInformation/ReviewOrderButton"
+import { useMobileLayoutActions } from "Apps/Conversations/hooks/useMobileLayoutActions"
+import { RouterLink } from "System/Components/RouterLink"
+import { extractNodes } from "Utils/extractNodes"
+import { Media } from "Utils/Responsive"
 import ChevronLeftIcon from "@artsy/icons/ChevronLeftIcon"
 import {
   Box,
@@ -9,11 +14,6 @@ import {
   Text,
   useTheme,
 } from "@artsy/palette"
-import { ReviewOrderButton } from "Apps/Conversations/components/Details/OrderInformation/ReviewOrderButton"
-import { useMobileLayoutActions } from "Apps/Conversations/hooks/useMobileLayoutActions"
-import { RouterLink } from "System/Components/RouterLink"
-import { Media } from "Utils/Responsive"
-import { extractNodes } from "Utils/extractNodes"
 import type { ConversationHeader_conversation$key } from "__generated__/ConversationHeader_conversation.graphql"
 import { graphql, useFragment } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -75,7 +75,7 @@ export const ConversationHeader: React.FC<
         }
       }
     `,
-    conversation,
+    conversation
   )
 
   const order = extractNodes(data.orderConnection)[0]

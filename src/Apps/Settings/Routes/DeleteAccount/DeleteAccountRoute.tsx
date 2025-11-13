@@ -1,3 +1,6 @@
+import { passwordValidator } from "Components/AuthDialog/Views/AuthDialogSignUp"
+import { RouterLink } from "System/Components/RouterLink"
+import { logout } from "Utils/auth"
 import {
   Button,
   Checkbox,
@@ -9,9 +12,6 @@ import {
   TextArea,
   useToasts,
 } from "@artsy/palette"
-import { passwordValidator } from "Components/AuthDialog/Views/AuthDialogSignUp"
-import { RouterLink } from "System/Components/RouterLink"
-import { logout } from "Utils/auth"
 import type { DeleteAccountRoute_me$data } from "__generated__/DeleteAccountRoute_me.graphql"
 import { Form, Formik } from "formik"
 import type { FC } from "react"
@@ -163,5 +163,5 @@ export const DeleteAccountRouteFragmentContainer = createFragmentContainer(
         hasPassword
       }
     `,
-  },
+  }
 )

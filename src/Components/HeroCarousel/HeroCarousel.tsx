@@ -2,8 +2,8 @@ import { Media } from "Utils/Responsive"
 import {
   Children,
   type FC,
-  type ReactNode,
   isValidElement,
+  type ReactNode,
   useMemo,
 } from "react"
 import { HeroCarouselLarge } from "./HeroCarouselLarge"
@@ -25,7 +25,7 @@ export const HeroCarousel: FC<React.PropsWithChildren<HeroCarouselProps>> = ({
 }) => {
   const cells = useMemo(
     () => Children.toArray(children).filter(isValidElement),
-    [children],
+    [children]
   )
 
   return (

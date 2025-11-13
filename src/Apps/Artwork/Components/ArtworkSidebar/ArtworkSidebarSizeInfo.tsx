@@ -1,6 +1,6 @@
-import { Box, Text } from "@artsy/palette"
 import { useArtworkDimensions } from "Apps/Artwork/useArtworkDimensions"
 import { Media } from "Utils/Responsive"
+import { Box, Text } from "@artsy/palette"
 import type { ArtworkSidebarSizeInfo_piece$data } from "__generated__/ArtworkSidebarSizeInfo_piece.graphql"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -67,5 +67,5 @@ export const ArtworkSidebarSizeInfoFragmentContainer = createFragmentContainer(
         editionOf
       }
     `,
-  },
+  }
 )

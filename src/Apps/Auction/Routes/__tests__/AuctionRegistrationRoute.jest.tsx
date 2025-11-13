@@ -1,10 +1,10 @@
-import { screen, waitFor } from "@testing-library/react"
 import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
 import { useCreateTokenAndSubmit } from "Apps/Auction/Hooks/useCreateTokenAndSubmit"
 import { AuctionRegistrationRouteFragmentContainer } from "Apps/Auction/Routes/AuctionRegistrationRoute"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useRouter } from "System/Hooks/useRouter"
+import { screen, waitFor } from "@testing-library/react"
 import type { AuctionRegistrationRouteRTLTestQuery } from "__generated__/AuctionRegistrationRouteRTLTestQuery.graphql"
 import { Formik } from "formik"
 import { graphql } from "react-relay"
@@ -237,7 +237,7 @@ describe("AuctionRegistrationRoute", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText("IdentityVerificationWarning"),
+        screen.getByText("IdentityVerificationWarning")
       ).toBeInTheDocument()
     })
   })
@@ -258,7 +258,7 @@ describe("AuctionRegistrationRoute", () => {
 
     await waitFor(() => {
       expect(
-        screen.queryByText("IdentityVerificationWarning"),
+        screen.queryByText("IdentityVerificationWarning")
       ).not.toBeInTheDocument()
     })
   })
@@ -285,7 +285,7 @@ describe("AuctionRegistrationRoute", () => {
       expect(screen.getAllByText("Register")).toHaveLength(2)
       expect(screen.getByText("AddressFormWithCreditCard")).toBeInTheDocument()
       expect(
-        screen.getByText("IdentityVerificationWarning"),
+        screen.getByText("IdentityVerificationWarning")
       ).toBeInTheDocument()
     })
   })

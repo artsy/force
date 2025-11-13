@@ -1,6 +1,6 @@
-import { screen } from "@testing-library/react"
 import { PrivateArtworkAboutWork } from "Apps/Artwork/Components/PrivateArtwork/PrivateArtworkAboutWork"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import type { PrivateArtworkAboutWorkQuery } from "__generated__/PrivateArtworkAboutWorkQuery.graphql"
 import { graphql } from "react-relay"
 
@@ -27,7 +27,7 @@ describe("PrivateArtworkAboutWork", () => {
       },
     })
     expect(
-      screen.getByText("Additional Artwork Information"),
+      screen.getByText("Additional Artwork Information")
     ).toBeInTheDocument()
   })
 
@@ -40,7 +40,7 @@ describe("PrivateArtworkAboutWork", () => {
       },
     })
     expect(
-      screen.queryByText("Additional Artwork Information"),
+      screen.queryByText("Additional Artwork Information")
     ).not.toBeInTheDocument()
   })
 })

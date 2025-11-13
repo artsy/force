@@ -1,3 +1,6 @@
+import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
+import { getOfferItemFromOrder } from "Apps/Order/Utils/offerUtils"
+import { get } from "Utils/get"
 import {
   Box,
   Flex,
@@ -7,9 +10,6 @@ import {
   StackableBorderBox,
   Text,
 } from "@artsy/palette"
-import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
-import { getOfferItemFromOrder } from "Apps/Order/Utils/offerUtils"
-import { get } from "Utils/get"
 import type { ArtworkSummaryItem_order$data } from "__generated__/ArtworkSummaryItem_order.graphql"
 import type { Omit } from "lodash"
 import type * as React from "react"
@@ -111,7 +111,7 @@ const ArtworkSummaryItem: React.FC<
           <Text variant="sm">
             {`${priceLabel}: ${appendCurrencySymbol(
               artworkPrice.price,
-              currencyCode,
+              currencyCode
             )}`}
           </Text>
         )}
@@ -173,5 +173,5 @@ export const ArtworkSummaryItemFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  },
+  }
 )

@@ -1,4 +1,8 @@
 import {
+  FullBleedHeader,
+  FullBleedHeaderOverlay,
+} from "Components/FullBleedHeader/FullBleedHeader"
+import {
   Box,
   type BoxProps,
   FullBleed,
@@ -7,10 +11,6 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import {
-  FullBleedHeader,
-  FullBleedHeaderOverlay,
-} from "Components/FullBleedHeader/FullBleedHeader"
 import type { FeatureHeaderFull_feature$data } from "__generated__/FeatureHeaderFull_feature.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -79,5 +79,5 @@ export const FeatureHeaderFullFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  },
+  }
 )

@@ -1,3 +1,9 @@
+import { hideGrid } from "Apps/Artwork/Components/OtherWorks"
+import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { extractNodes } from "Utils/extractNodes"
+import createLogger from "Utils/logger"
 import { ContextModule } from "@artsy/cohesion"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import {
@@ -11,20 +17,14 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { hideGrid } from "Apps/Artwork/Components/OtherWorks"
-import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { extractNodes } from "Utils/extractNodes"
-import createLogger from "Utils/logger"
-import type { ArtworkRelatedArtistsQuery } from "__generated__/ArtworkRelatedArtistsQuery.graphql"
 import type { ArtworkRelatedArtists_artwork$data } from "__generated__/ArtworkRelatedArtists_artwork.graphql"
-import { useState } from "react"
+import type { ArtworkRelatedArtistsQuery } from "__generated__/ArtworkRelatedArtistsQuery.graphql"
 import type * as React from "react"
+import { useState } from "react"
 import {
-  type RelayPaginationProp,
   createPaginationContainer,
   graphql,
+  type RelayPaginationProp,
 } from "react-relay"
 import track, { useTracking } from "react-tracking"
 
@@ -178,7 +178,7 @@ export const ArtworkRelatedArtistsPaginationContainer =
           }
         }
       `,
-    },
+    }
   )
 
 const PLACEHOLDER = (
@@ -188,7 +188,7 @@ const PLACEHOLDER = (
     <Spacer y={4} />
 
     <GridColumns>
-      {[...new Array(4)].map((node, index) => {
+      {[...new Array(4)].map((_node, index) => {
         return (
           <Column key={index} span={[12, 6, 3, 3]}>
             <Flex flexDirection="row">

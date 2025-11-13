@@ -1,6 +1,6 @@
-import { Flex, Spacer, Text } from "@artsy/palette"
 import { SavesEntityImage } from "Apps/CollectorProfile/Routes/Saves/Components/SavesEntityImage"
 import type { ArtworkEntity } from "Components/Artwork/ManageArtworkForSaves"
+import { Flex, Spacer, Text } from "@artsy/palette"
 import type { FC } from "react"
 
 export type ArtworkModalHeaderInfoEntity = Pick<

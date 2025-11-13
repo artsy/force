@@ -1,16 +1,16 @@
-import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { Box, Flex, Join, Popover, Spacer } from "@artsy/palette"
 import { ArtworkActionsSaveButtonFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkActionsSaveButton"
 import { ArtworkDownloadButtonFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkDownloadButton"
 import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
 import {
-  ViewInRoomFragmentContainer,
   useViewInRoom,
+  ViewInRoomFragmentContainer,
 } from "Components/ViewInRoom/ViewInRoom"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { Media } from "Utils/Responsive"
 import { getENV } from "Utils/getENV"
+import { Media } from "Utils/Responsive"
 import { userIsAdmin, userIsTeam } from "Utils/user"
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import { Box, Flex, Join, Popover, Spacer } from "@artsy/palette"
 import type { ArtworkActions_artwork$data } from "__generated__/ArtworkActions_artwork.graphql"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -230,7 +230,7 @@ export const ArtworkActionsFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  },
+  }
 )
 
 const Container = styled(Flex)`

@@ -13,7 +13,7 @@ describe("Meta tags", () => {
     return render(
       <MockBoot>
         <SearchMeta term="cats" />
-      </MockBoot>,
+      </MockBoot>
     )
   }
 
@@ -22,7 +22,7 @@ describe("Meta tags", () => {
     // react-head updates the document head directly
     const titleElement = document.querySelector("title")
     expect(titleElement?.textContent).toContain(
-      "Search Results for 'cats' | Artsy",
+      "Search Results for 'cats' | Artsy"
     )
   })
 

@@ -1,3 +1,4 @@
+import { useSelectedEditionSetContext } from "Apps/Artwork/Components/SelectedEditionSetContext"
 import {
   Box,
   Flex,
@@ -7,11 +8,9 @@ import {
   Separator,
   Text,
 } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
-
-import { useSelectedEditionSetContext } from "Apps/Artwork/Components/SelectedEditionSetContext"
 import type { ArtworkSidebarEditionSets_artwork$data } from "__generated__/ArtworkSidebarEditionSets_artwork.graphql"
 import React, { type Dispatch, type SetStateAction } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkSidebarSizeInfoFragmentContainer } from "./ArtworkSidebarSizeInfo"
 
 const Row: React.FC<React.PropsWithChildren<FlexProps>> = ({

@@ -1,6 +1,6 @@
-import ChevronLeftIcon from "@artsy/icons/ChevronLeftIcon"
-import { type BoxProps, Text, type TextProps, boxMixin } from "@artsy/palette"
 import type { RouterLinkProps } from "System/Components/RouterLink"
+import ChevronLeftIcon from "@artsy/icons/ChevronLeftIcon"
+import { type BoxProps, boxMixin, Text, type TextProps } from "@artsy/palette"
 import type * as React from "react"
 import styled from "styled-components"
 import { StyledLink } from "./StyledLink"
@@ -25,7 +25,7 @@ export const BackLink: React.FC<React.PropsWithChildren<BackLinkProps>> = ({
   return (
     // TODO: Anything using a `RouterLink` has issues with the typings.
     // These props are infact valid.
-    // @ts-ignore
+    // @ts-expect-error
     <Container to={to} {...rest}>
       <ChevronLeftIcon color="mono100" height={14} width={18} mr={0.5} />
       <Text

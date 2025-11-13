@@ -1,9 +1,9 @@
-import { Box, Spacer, Text } from "@artsy/palette"
 import { OtherWorksQueryRenderer } from "Apps/Artwork/Components/ArtworkErrorApp/ArtworkErrorAppOtherWorks"
 import { RelatedWorksQueryRenderer } from "Apps/Artwork/Components/ArtworkErrorApp/ArtworkErrorAppRelatedWorks"
 import { ERROR_MESSAGES } from "Components/ErrorPage"
 import { RecentlyViewed } from "Components/RecentlyViewed"
 import { getENV } from "Utils/getENV"
+import { Box, Spacer, Text } from "@artsy/palette"
 import type { ArtworkErrorApp_artworkError$key } from "__generated__/ArtworkErrorApp_artworkError.graphql"
 import { useCallback, useEffect } from "react"
 import { graphql, useFragment } from "react-relay"
@@ -46,7 +46,7 @@ export const ArtworkErrorApp: React.FC<
     }
   }, [])
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Error tracking should only run on mount
   useEffect(() => {
     trackPageview()
   }, [])

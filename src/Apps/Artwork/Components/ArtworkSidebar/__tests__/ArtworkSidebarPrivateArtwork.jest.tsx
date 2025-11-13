@@ -1,6 +1,6 @@
-import { screen } from "@testing-library/react"
 import { ArtworkSidebarPrivateArtwork } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarPrivateArtwork"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import type { ArtworkSidebarPrivateArtworkQuery } from "__generated__/ArtworkSidebarPrivateArtworkQuery.graphql"
 import { graphql } from "react-relay"
 

@@ -28,7 +28,7 @@ export const usePrefetchRoute = ({
   // If we're transitioning routes, we don't want to prefetch
   const prefetchDisabled = !prefetchFeatureFlagEnabled || !match?.elements
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Complex callback with external dependencies handled internally
   const prefetch = useCallback(
     (path = initialPath) => {
       if (prefetchDisabled) {
@@ -81,7 +81,7 @@ export const usePrefetchRoute = ({
                 maxAge: serverCacheTTL,
               },
             },
-          },
+          }
         ).subscribe({
           start: () => {
             if (isDevelopment) {
@@ -108,7 +108,7 @@ export const usePrefetchRoute = ({
 
       return querySubscriptions
     },
-    [initialPath, prefetchDisabled],
+    [initialPath, prefetchDisabled]
   )
 
   return { prefetch }

@@ -3,15 +3,15 @@ import { getTimeZone } from "Utils/getTimeZone"
 import createLogger from "Utils/logger"
 import "isomorphic-fetch"
 import { isEmpty } from "lodash"
-import type RelayClientSSR from "react-relay-network-modern-ssr/lib/client"
-import type RelayServerSSR from "react-relay-network-modern-ssr/lib/server"
 import {
-  RelayNetworkLayer,
   cacheMiddleware,
   errorMiddleware,
   loggerMiddleware,
+  RelayNetworkLayer,
   urlMiddleware,
 } from "react-relay-network-modern/node8"
+import type RelayClientSSR from "react-relay-network-modern-ssr/lib/client"
+import type RelayServerSSR from "react-relay-network-modern-ssr/lib/server"
 import "regenerator-runtime/runtime"
 import { getMetaphysicsEndpoint } from "System/Relay/getMetaphysicsEndpoint"
 import {
@@ -71,7 +71,7 @@ export function createRelaySSREnvironment(config: Config = {}) {
   const relaySSRMiddleware = isServer
     ? new (require("react-relay-network-modern-ssr/node8/server").default)()
     : new (require("react-relay-network-modern-ssr/node8/client").default)(
-        cache,
+        cache
       )
 
   relaySSRMiddleware.debug = false
@@ -94,7 +94,7 @@ export function createRelaySSREnvironment(config: Config = {}) {
   try {
     timeZone = getTimeZone()
     headers["X-TIMEZONE"] = timeZone
-  } catch (error) {
+  } catch (_error) {
     logger.warn("Browser does not support i18n API, not setting TZ header.")
   }
 

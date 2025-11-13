@@ -1,6 +1,6 @@
 import { FairsFairRowFragmentContainer } from "Apps/Fairs/Components/FairsFairRow"
-import { screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import type { FairsFairRowTestQuery } from "__generated__/FairsFairRowTestQuery.graphql"
 import { DateTime } from "luxon"
 import { graphql } from "react-relay"
@@ -48,7 +48,7 @@ describe("FairsFairRow", () => {
       expect(screen.getByText("Example Fair")).toBeInTheDocument()
       expect(screen.getByRole("link")).toHaveAttribute(
         "href",
-        "/organizer-example",
+        "/organizer-example"
       )
     })
   })

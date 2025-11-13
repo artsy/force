@@ -1,8 +1,8 @@
-import { Box, Flex } from "@artsy/palette"
 import { Resizer } from "Apps/Conversations/components/Resizer"
 import { useMobileLayoutActions } from "Apps/Conversations/hooks/useMobileLayoutActions"
 import { DESKTOP_NAV_BAR_HEIGHT } from "Components/NavBar/constants"
 import { Media } from "Utils/Responsive"
+import { Box, Flex } from "@artsy/palette"
 
 const DESKTOP_HEIGHT = `calc(100vh - ${DESKTOP_NAV_BAR_HEIGHT}px)`
 const MOBILE_HEIGHT = `calc(100dvh - 60px)` // 60 is the height of the reply box

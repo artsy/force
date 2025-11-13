@@ -1,11 +1,11 @@
-import React, { type ReactElement } from "react"
-
-import MoreIcon from "@artsy/icons/MoreIcon"
-import { Clickable, Dropdown } from "@artsy/palette"
 import {
   ContextualMenuDivider,
   ContextualMenuItem,
 } from "Components/ContextualMenu/ContextualMenuItem"
+
+import MoreIcon from "@artsy/icons/MoreIcon"
+import { Clickable, Dropdown } from "@artsy/palette"
+import React, { type ReactElement } from "react"
 
 interface ContextualMenuProps {
   /** Supply `ContextualMenuItem`s and `ContextualMenuDivider`s as needed  */
@@ -19,12 +19,12 @@ const validateChildren = (children: React.ReactNode) => {
     React.Children.map(children, (child: ReactElement) => child.type) || []
 
   const hasOnlyValidChildren = childTypes.every(
-    t => t === ContextualMenuItem || t === ContextualMenuDivider,
+    t => t === ContextualMenuItem || t === ContextualMenuDivider
   )
 
   if (!hasOnlyValidChildren)
     throw new Error(
-      "ContextualMenu accepts only ContextualMenuItem and ContextualMenuDivider as children.",
+      "ContextualMenu accepts only ContextualMenuItem and ContextualMenuDivider as children."
     )
 }
 

@@ -1,14 +1,3 @@
-import { ContextModule } from "@artsy/cohesion"
-import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import {
-  Column,
-  Flex,
-  GridColumns,
-  Join,
-  Spacer,
-  Spinner,
-  Text,
-} from "@artsy/palette"
 import { ArtworkAuctionCreateAlertHeaderFragmentContainer } from "Apps/Artwork/Components/ArtworkAuctionCreateAlertHeader/ArtworkAuctionCreateAlertHeader"
 import { ArtworkDetailsPartnerInfoQueryRenderer } from "Apps/Artwork/Components/ArtworkDetails/ArtworkDetailsPartnerInfo"
 import { ArtworkErrorApp } from "Apps/Artwork/Components/ArtworkErrorApp/ArtworkErrorApp"
@@ -22,8 +11,19 @@ import { Analytics } from "System/Contexts/AnalyticsContext"
 import { withSystemContext } from "System/Contexts/SystemContext"
 import { WebsocketContextProvider } from "System/Contexts/WebsocketContext"
 import { useRouter } from "System/Hooks/useRouter"
-import { Media } from "Utils/Responsive"
 import { getENV } from "Utils/getENV"
+import { Media } from "Utils/Responsive"
+import { ContextModule } from "@artsy/cohesion"
+import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import {
+  Column,
+  Flex,
+  GridColumns,
+  Join,
+  Spacer,
+  Spinner,
+  Text,
+} from "@artsy/palette"
 import type { ArtworkApp_artwork$data } from "__generated__/ArtworkApp_artwork.graphql"
 import type { ArtworkApp_artworkResult$data } from "__generated__/ArtworkApp_artworkResult.graphql"
 import type { ArtworkApp_me$data } from "__generated__/ArtworkApp_me.graphql"
@@ -101,7 +101,7 @@ export const ArtworkApp: React.FC<React.PropsWithChildren<Props>> = props => {
 
   // If the user is expecting a partner offer, require login and remove
   // the query param from the URL after login.
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Partner offer authentication flow managed by router state
   useEffect(() => {
     const expectingPartnerOffer = !!match?.location?.query?.partner_offer_id
     const isLoggedIn = !!me
@@ -437,7 +437,7 @@ const ArtworkAppFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  },
+  }
 )
 
 interface ArtworkResultProps extends RenderProps {
@@ -483,5 +483,5 @@ export const ArtworkResultFragmentContainer = createFragmentContainer(
         ...ArtworkPageBanner_me @arguments(artworkID: $artworkID)
       }
     `,
-  },
+  }
 )

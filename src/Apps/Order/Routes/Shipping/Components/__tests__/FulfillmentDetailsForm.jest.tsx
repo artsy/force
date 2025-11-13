@@ -1,14 +1,4 @@
 import {
-  cleanup,
-  fireEvent,
-  render,
-  screen,
-  waitFor,
-  within,
-} from "@testing-library/react"
-import userEvent from "@testing-library/user-event"
-import { useFlag } from "@unleash/proxy-client-react"
-import {
   FulfillmentDetailsForm,
   type FulfillmentDetailsFormProps,
 } from "Apps/Order/Routes/Shipping/Components/FulfillmentDetailsForm"
@@ -20,6 +10,16 @@ import {
 import { fillAddressForm } from "Components/__tests__/Utils/addressForm2"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import type { DeepPartial } from "Utils/typeSupport"
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+  within,
+} from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
+import { useFlag } from "@unleash/proxy-client-react"
 import { useTracking } from "react-tracking"
 
 jest.mock("Utils/getENV", () => ({
@@ -144,7 +144,7 @@ describe("FulfillmentDetailsForm", () => {
       expect(screen.getByText("Delivery method")).toBeVisible()
       expect(screen.getByRole("radio", { name: "Shipping" })).toBeVisible()
       expect(
-        screen.getByRole("radio", { name: /Arrange for pickup/ }),
+        screen.getByRole("radio", { name: /Arrange for pickup/ })
       ).toBeVisible()
     })
 
@@ -152,11 +152,11 @@ describe("FulfillmentDetailsForm", () => {
       renderTree(testProps)
 
       await userEvent.click(
-        screen.getByRole("radio", { name: /Arrange for pickup/ }),
+        screen.getByRole("radio", { name: /Arrange for pickup/ })
       )
 
       const phoneNumberField = await screen.findByTestId(
-        "AddressForm_pickupPhoneNumber",
+        "AddressForm_pickupPhoneNumber"
       )
 
       expect(phoneNumberField).toBeVisible()
@@ -167,11 +167,11 @@ describe("FulfillmentDetailsForm", () => {
       renderTree(testProps)
 
       await userEvent.click(
-        screen.getByRole("radio", { name: /Arrange for pickup/ }),
+        screen.getByRole("radio", { name: /Arrange for pickup/ })
       )
 
       expect(
-        mockShippingContext.actions.goBackToFulfillmentDetails,
+        mockShippingContext.actions.goBackToFulfillmentDetails
       ).toHaveBeenCalled()
     })
 
@@ -179,11 +179,11 @@ describe("FulfillmentDetailsForm", () => {
       renderTree(testProps)
 
       await userEvent.click(
-        screen.getByRole("radio", { name: /Arrange for pickup/ }),
+        screen.getByRole("radio", { name: /Arrange for pickup/ })
       )
 
       expect(
-        screen.getByRole("radio", { name: /Arrange for pickup/ }),
+        screen.getByRole("radio", { name: /Arrange for pickup/ })
       ).toBeChecked()
 
       await flushPromiseQueue()
@@ -202,10 +202,10 @@ describe("FulfillmentDetailsForm", () => {
     it("calls the submit handler when the user submits a valid form", async () => {
       renderTree(testProps)
       await userEvent.click(
-        screen.getByRole("radio", { name: /Arrange for pickup/ }),
+        screen.getByRole("radio", { name: /Arrange for pickup/ })
       )
       const phoneNumberField = await screen.findByTestId(
-        "AddressForm_pickupPhoneNumber",
+        "AddressForm_pickupPhoneNumber"
       )
 
       await userEvent.type(phoneNumberField, "1234567890")
@@ -228,7 +228,7 @@ describe("FulfillmentDetailsForm", () => {
             },
             meta: {},
           },
-          expect.anything(),
+          expect.anything()
         )
       })
     })
@@ -236,7 +236,7 @@ describe("FulfillmentDetailsForm", () => {
     it("does not submit an invalid form", async () => {
       renderTree(testProps)
       await userEvent.click(
-        screen.getByRole("radio", { name: /Arrange for pickup/ }),
+        screen.getByRole("radio", { name: /Arrange for pickup/ })
       )
 
       // we have to submit the form manually because its submit button is on the shipping route main screen
@@ -395,7 +395,7 @@ describe("FulfillmentDetailsForm", () => {
 
         await waitFor(() => {
           expect(
-            screen.queryByText(/[\w\s]is required/),
+            screen.queryByText(/[\w\s]is required/)
           ).not.toBeInTheDocument()
 
           expect(mockOnSubmit).toHaveBeenCalledWith(
@@ -412,7 +412,7 @@ describe("FulfillmentDetailsForm", () => {
               },
               meta: {},
             },
-            expect.anything(),
+            expect.anything()
           )
         })
       })
@@ -427,7 +427,7 @@ describe("FulfillmentDetailsForm", () => {
 
         await waitFor(async () => {
           expect(
-            screen.queryAllByText(/is required/).map(el => el.textContent),
+            screen.queryAllByText(/is required/).map(el => el.textContent)
           ).toEqual(["Full name is required"])
         })
       })
@@ -453,7 +453,7 @@ describe("FulfillmentDetailsForm", () => {
         screen.getByPlaceholderText("State")
         screen.getByPlaceholderText("ZIP code")
         screen.getAllByPlaceholderText(
-          "Add phone number including country code",
+          "Add phone number including country code"
         )[0]
       })
 
@@ -484,7 +484,7 @@ describe("FulfillmentDetailsForm", () => {
               },
               meta: {},
             },
-            expect.anything(),
+            expect.anything()
           )
         })
       })
@@ -496,7 +496,7 @@ describe("FulfillmentDetailsForm", () => {
 
     beforeAll(() => {
       ;(useFlag as jest.Mock).mockImplementation(
-        featureName => featureName === "address_autocomplete_us",
+        featureName => featureName === "address_autocomplete_us"
       )
     })
 
@@ -531,19 +531,19 @@ describe("FulfillmentDetailsForm", () => {
       })
       await userEvent.paste(
         screen.getByPlaceholderText("Street address"),
-        "401 Broadway",
+        "401 Broadway"
       )
 
       const dropdown = await screen.findByRole("listbox", { hidden: true })
       const option = within(dropdown).getByText(
-        "401 Broadway, New York NY 10013",
+        "401 Broadway, New York NY 10013"
       )
 
       await userEvent.click(option)
       await flushPromiseQueue()
 
       expect(
-        mockShippingContext.actions.goBackToFulfillmentDetails,
+        mockShippingContext.actions.goBackToFulfillmentDetails
       ).toHaveBeenCalled()
     })
 
@@ -555,12 +555,12 @@ describe("FulfillmentDetailsForm", () => {
       })
       await userEvent.paste(
         screen.getByPlaceholderText("Street address"),
-        "401 Broadway",
+        "401 Broadway"
       )
 
       const dropdown = await screen.findByRole("listbox", { hidden: true })
       const option = within(dropdown).getByText(
-        "401 Broadway, New York NY 10013",
+        "401 Broadway, New York NY 10013"
       )
 
       await userEvent.click(option)

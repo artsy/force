@@ -1,3 +1,4 @@
+import { MetaTags } from "Components/MetaTags"
 import {
   Box,
   Button,
@@ -7,7 +8,6 @@ import {
   Text,
   useToasts,
 } from "@artsy/palette"
-import { MetaTags } from "Components/MetaTags"
 import { type FC, useReducer, useState } from "react"
 
 export const AdminCacheManagementRoute: FC<
@@ -276,7 +276,7 @@ const reducer = (state: State, action: Action) => {
 
     case "deleteCacheKey": {
       const updatedCacheKeys = state.cacheKeys.filter(
-        cacheKey => JSON.stringify(cacheKey) !== JSON.stringify(action.payload),
+        cacheKey => JSON.stringify(cacheKey) !== JSON.stringify(action.payload)
       )
 
       return { ...state, cacheKeys: updatedCacheKeys }

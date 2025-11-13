@@ -1,11 +1,3 @@
-import { render, screen } from "@testing-library/react"
-import { OrderAppFragmentContainer } from "Apps/Order/OrderApp"
-import { orderRoutes } from "Apps/Order/orderRoutes"
-import { SystemContextProvider } from "System/Contexts/SystemContext"
-import { Resolver } from "found-relay"
-import { getFarceResult } from "found/server"
-import { HeadProvider } from "react-head"
-
 import {
   BuyOrderPickup,
   BuyOrderWithShippingDetails,
@@ -17,12 +9,19 @@ import {
   UntouchedBuyOrderWithShippingQuotes,
   UntouchedOfferOrder,
 } from "Apps/__tests__/Fixtures/Order"
+import { OrderAppFragmentContainer } from "Apps/Order/OrderApp"
+import { orderRoutes } from "Apps/Order/orderRoutes"
 import { MockBoot } from "DevTools/MockBoot"
+import { SystemContextProvider } from "System/Contexts/SystemContext"
 import { getENV } from "Utils/getENV"
+import { render, screen } from "@testing-library/react"
 import type { orderRoutes_OrderQuery$rawResponse } from "__generated__/orderRoutes_OrderQuery.graphql"
 import type { FarceRedirectResult } from "found/server"
+import { getFarceResult } from "found/server"
+import { Resolver } from "found-relay"
 import { DateTime } from "luxon"
-import { MockPayloadGenerator, createMockEnvironment } from "relay-test-utils"
+import { HeadProvider } from "react-head"
+import { createMockEnvironment, MockPayloadGenerator } from "relay-test-utils"
 
 jest.mock("Utils/getENV", () => ({
   getENV: jest.fn(),
@@ -40,7 +39,7 @@ jest.mock(
   // should just work without this extra argument
   () => {
     return jest.requireActual("../Components/__mocks__/BankDebitProvider")
-  },
+  }
 )
 
 const featureFlags = {
@@ -53,11 +52,11 @@ describe("OrderApp routing redirects", () => {
     const environment = createMockEnvironment()
 
     environment.mock.queueOperationResolver(operation =>
-      MockPayloadGenerator.generate(operation, mockData as any),
+      MockPayloadGenerator.generate(operation, mockData as any)
     )
 
     const result = await getFarceResult({
-      render: props => {
+      render: _props => {
         return <div>hello</div>
       },
       resolver: new Resolver(environment),
@@ -95,7 +94,7 @@ describe("OrderApp routing redirects", () => {
           ...BuyOrderPickup,
           state: "PENDING",
           mode: "BUY",
-        }),
+        })
       )
       expect(res.redirect.url).toBe("/orders2/2939023/checkout")
     })
@@ -108,7 +107,7 @@ describe("OrderApp routing redirects", () => {
           ...BuyOrderPickup,
           state: "PENDING",
           mode: "BUY",
-        }),
+        })
       )
       expect(res.redirect.url).toBe("/orders2/2939023/checkout")
     })
@@ -121,7 +120,7 @@ describe("OrderApp routing redirects", () => {
           ...BuyOrderPickup,
           state: "PENDING",
           mode: "BUY",
-        }),
+        })
       )
       expect(res.redirect.url).toBe("/orders2/2939023/checkout")
     })
@@ -134,7 +133,7 @@ describe("OrderApp routing redirects", () => {
           ...BuyOrderPickup,
           state: "PENDING",
           mode: "OFFER",
-        }),
+        })
       )
       expect(res.redirect.url).toBe("/orders2/2939023/checkout")
     })
@@ -146,7 +145,7 @@ describe("OrderApp routing redirects", () => {
         mockResolver({
           ...BuyOrderPickup,
           state: "SUBMITTED",
-        }),
+        })
       )
       expect(res.redirect.url).toBe("/orders/2939023/details")
     })
@@ -160,7 +159,7 @@ describe("OrderApp routing redirects", () => {
           mode: "OFFER",
           state: "SUBMITTED",
           displayState: "SUBMITTED",
-        }),
+        })
       )
       expect(res.redirect.url).toBe("/orders/2939023/details")
     })
@@ -173,7 +172,7 @@ describe("OrderApp routing redirects", () => {
         mockResolver({
           ...BuyOrderPickup,
           state: "PENDING",
-        }),
+        })
       )
     } catch (error) {
       // eslint-disable-next-line jest/no-conditional-expect, jest/no-try-expect
@@ -188,7 +187,7 @@ describe("OrderApp routing redirects", () => {
         ...BuyOrderPickup,
         state: "SUBMITTED",
         displayState: "SUBMITTED",
-      }),
+      })
     )
 
     expect(res.redirect.url).toBe("/orders/2939023/details")
@@ -199,7 +198,7 @@ describe("OrderApp routing redirects", () => {
       "/orders/2939023/shipping",
       mockResolver({
         ...PrivateSaleOrderWithShippingDetails,
-      }),
+      })
     )
 
     expect(res.redirect.url).toBe("/orders/2939023/payment")
@@ -228,7 +227,7 @@ describe("OrderApp routing redirects", () => {
           ],
         },
         state: "ABANDONED",
-      }),
+      })
     )
     expect(redirect.url).toBe("/artwork/artwork-id")
   })
@@ -240,7 +239,7 @@ describe("OrderApp routing redirects", () => {
         ...BuyOrderPickup,
         lineItems: null,
         state: "ABANDONED",
-      }),
+      })
     )
     expect(redirect.url).toBe("/")
   })
@@ -253,7 +252,7 @@ describe("OrderApp routing redirects", () => {
           ...UntouchedBuyOrder,
           requestedFulfillment: null,
           state: "PENDING",
-        }),
+        })
       )
     } catch (error) {
       // eslint-disable-next-line jest/no-conditional-expect, jest/no-try-expect
@@ -268,7 +267,7 @@ describe("OrderApp routing redirects", () => {
         ...UntouchedBuyOrder,
         requestedFulfillment: null,
         state: "PENDING",
-      }),
+      })
     )
     expect(redirect.url).toBe("/orders/2939023/shipping")
   })
@@ -279,7 +278,7 @@ describe("OrderApp routing redirects", () => {
       mockResolver({
         ...UntouchedBuyOrderWithShippingQuotes,
         state: "PENDING",
-      }),
+      })
     )
     expect(redirect.url).toBe("/orders/2939023/shipping")
   })
@@ -295,7 +294,7 @@ describe("OrderApp routing redirects", () => {
             __typename: "CommerceShip",
           },
           state: "PENDING",
-        }),
+        })
       )
     } catch (error) {
       // eslint-disable-next-line jest/no-conditional-expect, jest/no-try-expect
@@ -311,7 +310,7 @@ describe("OrderApp routing redirects", () => {
         creditCard: null,
         requestedFulfillment: null,
         state: "PENDING",
-      }),
+      })
     )
     expect(redirect.url).toBe("/orders/2939023/shipping")
   })
@@ -322,7 +321,7 @@ describe("OrderApp routing redirects", () => {
       mockResolver({
         ...UntouchedBuyOrderWithShippingQuotes,
         state: "PENDING",
-      }),
+      })
     )
     expect(redirect.url).toBe("/orders/2939023/shipping")
   })
@@ -338,7 +337,7 @@ describe("OrderApp routing redirects", () => {
           __typename: "CommerceShip",
         },
         state: "PENDING",
-      }),
+      })
     )
     expect(redirect.url).toBe("/orders/2939023/payment")
   })
@@ -354,7 +353,7 @@ describe("OrderApp routing redirects", () => {
           __typename: "CommerceShip",
         },
         state: "APPROVED",
-      }),
+      })
     )
     expect(redirect.url).toBe("/orders/2939023/details")
   })
@@ -370,7 +369,7 @@ describe("OrderApp routing redirects", () => {
             __typename: "CommerceShip",
           },
           state: "PENDING",
-        }),
+        })
       )
     } catch (error) {
       // eslint-disable-next-line jest/no-conditional-expect, jest/no-try-expect
@@ -391,7 +390,7 @@ describe("OrderApp routing redirects", () => {
           __typename: "CommerceShip",
         },
         state: "PENDING",
-      }),
+      })
     )
     expect(redirect.url).toBe("/orders/2939023/review")
   })
@@ -407,7 +406,7 @@ describe("OrderApp routing redirects", () => {
             __typename: "CommerceShip",
           },
           state: "SUBMITTED",
-        }),
+        })
       )
     } catch (error) {
       // eslint-disable-next-line jest/no-conditional-expect, jest/no-try-expect
@@ -423,7 +422,7 @@ describe("OrderApp routing redirects", () => {
           ...UntouchedOfferOrder,
 
           requestedFulfillment: null,
-        }),
+        })
       )
     } catch (error) {
       // eslint-disable-next-line jest/no-conditional-expect, jest/no-try-expect
@@ -438,7 +437,7 @@ describe("OrderApp routing redirects", () => {
         ...UntouchedBuyOrder,
 
         requestedFulfillment: null,
-      }),
+      })
     )
     expect(redirect.url).toBe("/orders/2939023/shipping")
   })
@@ -450,7 +449,7 @@ describe("OrderApp routing redirects", () => {
         ...BuyOrderWithShippingDetails,
 
         state: "SUBMITTED",
-      }),
+      })
     )
     expect(redirect.url).toBe("/orders/2939023/details")
   })
@@ -462,7 +461,7 @@ describe("OrderApp routing redirects", () => {
         ...BuyOrderWithShippingDetails,
 
         state: "SUBMITTED",
-      }),
+      })
     )
     expect(redirect.url).toBe("/orders/2939023/details")
   })
@@ -476,7 +475,7 @@ describe("OrderApp routing redirects", () => {
         awaitingResponseFrom: "BUYER",
         state: "PENDING",
         displayState: "PENDING",
-      }),
+      })
     )
     expect(redirect.url).toBe("/orders/2939023/details")
   })
@@ -489,7 +488,7 @@ describe("OrderApp routing redirects", () => {
         state: "SUBMITTED",
         awaitingResponseFrom: "BUYER",
         lastTransactionFailed: true,
-      }),
+      })
     )
     expect(res.redirect.url).toBe("/orders/2939023/payment/new")
   })
@@ -503,7 +502,7 @@ describe("OrderApp routing redirects", () => {
 
           awaitingResponseFrom: "BUYER",
           state: "SUBMITTED",
-        }),
+        })
       )
     } catch (error) {
       // eslint-disable-next-line jest/no-conditional-expect, jest/no-try-expect
@@ -518,7 +517,7 @@ describe("OrderApp routing redirects", () => {
         ...OfferOrderWithShippingDetails,
         awaitingResponseFrom: "BUYER",
         state: "SUBMITTED",
-      }),
+      })
     )
     expect(redirect.url).toBe("/orders/2939023/respond")
   })
@@ -546,7 +545,7 @@ describe("OrderApp routing redirects", () => {
       try {
         await render(
           "/orders/2939023/review/counter",
-          mockResolver(counterOfferOrder),
+          mockResolver(counterOfferOrder)
         )
       } catch (error) {
         // eslint-disable-next-line jest/no-conditional-expect, jest/no-try-expect
@@ -560,7 +559,7 @@ describe("OrderApp routing redirects", () => {
         mockResolver({
           ...counterOfferOrder,
           mode: "BUY",
-        }),
+        })
       )
       expect(redirect.url).toBe("/orders/2939023/details")
     })
@@ -571,7 +570,7 @@ describe("OrderApp routing redirects", () => {
         mockResolver({
           ...counterOfferOrder,
           awaitingResponseFrom: "SELLER",
-        }),
+        })
       )
       expect(redirect.url).toBe("/orders/2939023/details")
     })
@@ -583,7 +582,7 @@ describe("OrderApp routing redirects", () => {
           ...counterOfferOrder,
           state: "PENDING",
           displayState: "PENDING",
-        }),
+        })
       )
       expect(redirect.url).toBe("/orders/2939023/details")
     })
@@ -597,7 +596,7 @@ describe("OrderApp routing redirects", () => {
             ...counterOfferOrder.myLastOffer,
             createdAt: DateTime.local().minus({ days: 2 }).toString(),
           },
-        }),
+        })
       )
       expect(redirect.url).toBe("/orders/2939023/respond")
     })
@@ -627,7 +626,7 @@ describe("OrderApp routing redirects", () => {
       try {
         await render(
           "/orders/2939023/payment/new",
-          mockResolver(counterOfferOrder),
+          mockResolver(counterOfferOrder)
         )
       } catch (error) {
         // eslint-disable-next-line jest/no-conditional-expect, jest/no-try-expect
@@ -641,7 +640,7 @@ describe("OrderApp routing redirects", () => {
         mockResolver({
           ...counterOfferOrder,
           mode: "BUY",
-        }),
+        })
       )
       expect(redirect.url).toBe("/orders/2939023/details")
     })
@@ -653,7 +652,7 @@ describe("OrderApp routing redirects", () => {
           ...counterOfferOrder,
           state: "PENDING",
           displayState: "PENDING",
-        }),
+        })
       )
       expect(redirect.url).toBe("/orders/2939023/details")
     })
@@ -664,7 +663,7 @@ describe("OrderApp routing redirects", () => {
         mockResolver({
           ...counterOfferOrder,
           lastTransactionFailed: false,
-        }),
+        })
       )
       expect(redirect.url).toBe("/orders/2939023/details")
     })
@@ -686,7 +685,7 @@ describe("OrderApp", () => {
             <OrderAppFragmentContainer {...props} />
           </SystemContextProvider>
         </HeadProvider>
-      </MockBoot>,
+      </MockBoot>
     )
   }
 
@@ -716,7 +715,7 @@ describe("OrderApp", () => {
     getWrapper({ props })
     const viewportMetaTags = document.querySelectorAll('meta[name="viewport"]')
     expect(viewportMetaTags[0]?.getAttribute("content")).toMatch(
-      /viewport-fit=cover/,
+      /viewport-fit=cover/
     )
   })
 
@@ -732,7 +731,7 @@ describe("OrderApp", () => {
     getWrapper({ props })
 
     // Check for the sticky footer by finding elements with specific text content
-    const footerContainers = screen.getAllByText((content, element) => {
+    const footerContainers = screen.getAllByText((_content, element) => {
       const hasText =
         element?.textContent?.includes("Need help?") &&
         element?.textContent?.includes("Visit our help center") &&

@@ -1,13 +1,11 @@
-import { createContext } from "react"
-
 import type { CustomRange } from "Components/PriceRange/constants"
 import type {
   SearchCriteriaAttributeKeys,
   SearchCriteriaAttributes,
 } from "Components/SavedSearchAlert/types"
-
 import { DEFAULT_METRIC, type Metric } from "Utils/metrics"
 import type { AlertProviderPreviewQuery } from "__generated__/AlertProviderPreviewQuery.graphql"
+import { createContext } from "react"
 
 export type Settings = {
   details: string
@@ -113,7 +111,7 @@ export const reducer =
 
         if (Array.isArray(criteriaValue)) {
           criteriaValue = criteriaValue.filter(
-            currentValue => currentValue !== action.payload.value,
+            currentValue => currentValue !== action.payload.value
           )
         } else {
           criteriaValue = null
@@ -179,5 +177,5 @@ export interface AlertContextProps {
 }
 
 export const AlertContext = createContext<AlertContextProps>(
-  {} as unknown as AlertContextProps,
+  {} as unknown as AlertContextProps
 )

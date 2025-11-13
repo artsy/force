@@ -6,7 +6,7 @@ const Strategy = require("../lib/strategy")
 // FIXME:
 describe.skip("Strategy", () => {
   describe("handling a request without a body, but no username and password, with message option to authenticate", () => {
-    const strategy = new Strategy((username, password, otp, done) => {
+    const strategy = new Strategy((_username, _password, _otp, _done) => {
       throw new Error("should not be called")
     })
 

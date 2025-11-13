@@ -1,10 +1,9 @@
-import { render } from "@testing-library/react"
-import { act } from "@testing-library/react"
 import {
   ArtworkFilterContextProvider,
   initialArtworkFilterState,
   useArtworkFilterContext,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
+import { act, render } from "@testing-library/react"
 
 describe("ArtworkFilterContext", () => {
   let context: ReturnType<typeof useArtworkFilterContext>
@@ -13,7 +12,7 @@ describe("ArtworkFilterContext", () => {
     return render(
       <ArtworkFilterContextProvider {...props}>
         <TestComponent />
-      </ArtworkFilterContextProvider>,
+      </ArtworkFilterContextProvider>
     )
   }
 
@@ -42,7 +41,7 @@ describe("ArtworkFilterContext", () => {
       expect(spy).toHaveBeenCalledWith(
         "color",
         "purple",
-        initialArtworkFilterState,
+        initialArtworkFilterState
       )
     })
 
@@ -176,7 +175,7 @@ describe("ArtworkFilterContext", () => {
           })
           // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           expect(context.currentlySelectedFilters()).toEqual(
-            context.stagedFilters,
+            context.stagedFilters
           )
         })
       })

@@ -1,8 +1,8 @@
-import { Spacer, Text } from "@artsy/palette"
 import { ArtistTabs } from "Apps/Artist/Components/ArtistTabs"
 import { ArtistAuctionResultsEmptyState } from "Apps/Artist/Routes/AuctionResults/Components/ArtistAuctionResultsEmptyState"
 import { MarketStatsQueryRenderer } from "Apps/Artist/Routes/AuctionResults/Components/MarketStats"
 import { Jump } from "Utils/Hooks/useJump"
+import { Spacer, Text } from "@artsy/palette"
 import type { ArtistAuctionResultsRoute_artist$data } from "__generated__/ArtistAuctionResultsRoute_artist.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -123,5 +123,5 @@ export const AuctionResultsRouteFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  },
+  }
 )

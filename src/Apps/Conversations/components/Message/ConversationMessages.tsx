@@ -1,17 +1,17 @@
-import { Box, type BoxProps, Flex, Spinner } from "@artsy/palette"
 import { ConversationMessageArtwork } from "Apps/Conversations/components/Message/ConversationMessageArtwork"
 import { ConversationOrderUpdate } from "Apps/Conversations/components/Message/ConversationOrderUpdate"
 import { ConversationTimeSince } from "Apps/Conversations/components/Message/ConversationTimeSince"
 import { LatestMessagesFlyOut } from "Apps/Conversations/components/Message/LatestMessagesFlyOut"
 import {
-  type Message,
   isRelevantEvent,
+  type Message,
   useGroupedMessages,
 } from "Apps/Conversations/hooks/useGroupedMessages"
 import { useRefetchLatestMessagesPoll } from "Apps/Conversations/hooks/useRefetchLatestMessagesPoll"
 import { useUpdateConversation } from "Apps/Conversations/mutations/useUpdateConversationMutation"
 import { Sentinel } from "Components/Sentinal"
 import { extractNodes } from "Utils/extractNodes"
+import { Box, type BoxProps, Flex, Spinner } from "@artsy/palette"
 import type { ConversationMessages_conversation$data } from "__generated__/ConversationMessages_conversation.graphql"
 import type React from "react"
 import {
@@ -23,9 +23,9 @@ import {
   useState,
 } from "react"
 import {
-  type RelayPaginationProp,
   createPaginationContainer,
   graphql,
+  type RelayPaginationProp,
 } from "react-relay"
 import styled from "styled-components"
 import { ConversationMessage, type Messages } from "./ConversationMessage"
@@ -123,7 +123,7 @@ export const ConversationMessages: FC<
         },
         {
           first: PAGE_SIZE,
-        },
+        }
       )
     }
 
@@ -158,7 +158,7 @@ export const ConversationMessages: FC<
                 },
                 {
                   first: totalCount,
-                },
+                }
               )
             }}
           />
@@ -368,7 +368,7 @@ export const ConversationMessagesPaginationContainer =
           }
         }
       `,
-    },
+    }
   )
 
 interface UseAutoScrollToBottomProps {
@@ -392,7 +392,7 @@ const useAutoScrollToBottom = ({
         })
       }, 0)
     },
-    [autoScrollToBottomRef],
+    [autoScrollToBottomRef]
   )
 
   useEffect(() => {
@@ -406,7 +406,7 @@ const useAutoScrollToBottom = ({
   }, [lastMessageId, triggerAutoScroll])
 
   // Additional effect to ensure initial scroll after component mount
-  // biome-ignore lint/correctness/useExhaustiveDependencies:
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Initial scroll should only happen on mount
   useEffect(() => {
     if (lastMessageId) {
       const timeoutId = setTimeout(() => {

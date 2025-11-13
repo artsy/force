@@ -1,10 +1,10 @@
-import { fireEvent, render, screen } from "@testing-library/react"
 import { CollectionHubFixture } from "Apps/__tests__/Fixtures/Collections"
+import { fireEvent, render, screen } from "@testing-library/react"
 import { useTracking } from "react-tracking"
 import "jest-styled-components"
-import { paginateCarousel } from "@artsy/palette"
 import { FeaturedCollectionsRails } from "Apps/Collect/Routes/Collection/Components/CollectionsHubRails/FeaturedCollectionsRails/index"
 import { AnalyticsCombinedContextProvider } from "System/Contexts/AnalyticsContext"
+import { paginateCarousel } from "@artsy/palette"
 
 jest.mock("@artsy/palette/dist/elements/Carousel/paginate")
 jest.mock("react-tracking")
@@ -25,7 +25,7 @@ describe("FeaturedCollectionsRails", () => {
         path="/collection/slug"
       >
         <FeaturedCollectionsRails {...passedProps} />
-      </AnalyticsCombinedContextProvider>,
+      </AnalyticsCombinedContextProvider>
     )
   }
 
@@ -47,10 +47,10 @@ describe("FeaturedCollectionsRails", () => {
     expect(screen.getByText("Featured Collections")).toBeInTheDocument()
     expect(screen.getByText("Art Inspired by Cartoons")).toBeInTheDocument()
     expect(
-      screen.getByText("Street Art: Celebrity Portraits"),
+      screen.getByText("Street Art: Celebrity Portraits")
     ).toBeInTheDocument()
     expect(
-      screen.getByText("Street Art: Superheroes and Villains"),
+      screen.getByText("Street Art: Superheroes and Villains")
     ).toBeInTheDocument()
   })
 

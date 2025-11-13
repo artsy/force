@@ -11,7 +11,7 @@ describe("Visited", () => {
 
   beforeEach(() => {
     setMock.mockImplementation(
-      (name: string, value: any) => (store[name] = value),
+      (name: string, value: any) => (store[name] = value)
     )
 
     getMock.mockImplementation((name: string) => store[name])

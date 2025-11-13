@@ -1,10 +1,10 @@
+import { useRouter } from "System/Hooks/useRouter"
+import { getENV } from "Utils/getENV"
+import { useMode } from "Utils/Hooks/useMode"
 import AppleIcon from "@artsy/icons/AppleIcon"
 import FacebookIcon from "@artsy/icons/FacebookIcon"
 import GoogleIcon from "@artsy/icons/GoogleIcon"
 import { Button, Join, Spacer, Text, useToasts } from "@artsy/palette"
-import { useRouter } from "System/Hooks/useRouter"
-import { useMode } from "Utils/Hooks/useMode"
-import { getENV } from "Utils/getENV"
 import type {
   AuthenticationProvider,
   SettingsEditSettingsLinkedAccounts_me$data,
@@ -103,18 +103,18 @@ const SettingsEditSettingsLinkedAccountsButton: FC<
   React.PropsWithChildren<SettingsEditSettingsLinkedAccountsButtonProps>
 > = ({ Icon, me, href, provider }) => {
   const isConnected = me.authentications.find(
-    authentication => authentication.provider === provider,
+    authentication => authentication.provider === provider
   )
 
   const { sendToast } = useToasts()
   const { submitMutation } = useUnlinkSettingsLinkedAccount()
 
   const [mode, setMode] = useMode<Mode>(
-    isConnected ? "Connected" : "Disconnected",
+    isConnected ? "Connected" : "Disconnected"
   )
 
   const handleClick = async (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     if (mode === "Disconnected") {
       setMode("Connecting")

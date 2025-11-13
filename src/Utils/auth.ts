@@ -56,7 +56,7 @@ export const forgotPassword = async (args: { email: string }) => {
   recaptcha("forgot_submit")
 
   const forgotPasswordUrl = `${getENV(
-    "API_URL",
+    "API_URL"
   )}/api/v1/users/send_reset_password_instructions`
 
   const response = await fetch(forgotPasswordUrl, {

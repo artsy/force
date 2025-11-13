@@ -10,7 +10,7 @@ import { stringify } from "qs"
 const buildGenericPageUrl = (
   pathname: any,
   query: any,
-  page: number,
+  page: number
 ): string => {
   if (!pathname) return ""
 

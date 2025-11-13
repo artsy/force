@@ -1,5 +1,5 @@
-import { Flex, type FlexProps, Text } from "@artsy/palette"
 import { Highlight } from "Components/Search/SuggestionItem/Highlight"
+import { Flex, type FlexProps, Text } from "@artsy/palette"
 import type { FC } from "react"
 
 interface NoResultsProps extends FlexProps {

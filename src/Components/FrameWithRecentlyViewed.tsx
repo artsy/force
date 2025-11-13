@@ -1,5 +1,5 @@
-import { Flex, Spacer } from "@artsy/palette"
 import { RecentlyViewed } from "Components/RecentlyViewed"
+import { Flex, Spacer } from "@artsy/palette"
 import type * as React from "react"
 
 export interface FrameWithRecentlyViewedProps {

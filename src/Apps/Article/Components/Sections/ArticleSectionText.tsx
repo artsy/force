@@ -39,7 +39,7 @@ export const ArticleSectionTextFragmentContainer = createFragmentContainer(
         body
       }
     `,
-  },
+  }
 )
 
 /**

@@ -1,12 +1,12 @@
-import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { MyCollectionEditArtworkFragmentContainer } from "Apps/MyCollection/Routes/EditArtwork/MyCollectionEditArtwork"
 import { uploadPhotoToS3 } from "Components/PhotoUpload/Utils/fileUtils"
-import { MockBoot } from "DevTools/MockBoot"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
+import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import type { Breakpoint } from "Utils/Responsive"
 import type { CleanRelayFragment } from "Utils/typeSupport"
+import { fireEvent, screen, waitFor } from "@testing-library/react"
 import type { MyCollectionEditArtwork_artwork$data } from "__generated__/MyCollectionEditArtwork_artwork.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -112,7 +112,7 @@ describe("Edit artwork", () => {
       expect(screen.getByText("Edit Artwork Details")).toBeInTheDocument()
 
       expect(
-        screen.queryByPlaceholderText("Enter full name"),
+        screen.queryByPlaceholderText("Enter full name")
       ).not.toBeInTheDocument()
       expect(screen.getByText("Willem de Kooning")).toBeInTheDocument()
       expect(screen.getByText("Dutch-American, 1904–1997")).toBeInTheDocument()
@@ -120,48 +120,48 @@ describe("Edit artwork", () => {
       expect(screen.getByPlaceholderText("YYYY")).toHaveValue("1975")
       expect(screen.getByPlaceholderText("Title")).toHaveValue("Untitled")
       expect(
-        screen.getByPlaceholderText("Oil on Canvas, Mixed Media, Lithograph…"),
+        screen.getByPlaceholderText("Oil on Canvas, Mixed Media, Lithograph…")
       ).toHaveValue("Charcoal on paper")
       expect(
         screen
           .getAllByRole("combobox")
-          .find(c => c.getAttribute("name") == "category"),
+          .find(c => c.getAttribute("name") === "category")
       ).toHaveValue("Drawing, Collage or other Work on Paper")
       expect(
         screen
           .getAllByRole("combobox")
-          .find(c => c.getAttribute("name") == "attributionClass"),
+          .find(c => c.getAttribute("name") === "attributionClass")
       ).toHaveValue("LIMITED_EDITION")
       expect(screen.getByPlaceholderText("Your work's #")).toHaveValue(1)
       expect(screen.getByPlaceholderText("Total # in edition")).toHaveValue(2)
       expect(
         screen
           .getAllByRole("textbox")
-          .find(c => c.getAttribute("name") == "height"),
+          .find(c => c.getAttribute("name") === "height")
       ).toHaveValue(8.75)
       expect(
         screen
           .getAllByRole("textbox")
-          .find(c => c.getAttribute("name") == "width"),
+          .find(c => c.getAttribute("name") === "width")
       ).toHaveValue(11)
       expect(
         screen
           .getAllByRole("textbox")
-          .find(c => c.getAttribute("name") == "depth"),
+          .find(c => c.getAttribute("name") === "depth")
       ).toHaveValue(2)
       expect(
-        screen.getAllByRole("radio").find(c => c.textContent == "in"),
+        screen.getAllByRole("radio").find(c => c.textContent === "in")
       ).toBeChecked()
       expect(
-        screen.getByPlaceholderText("Describe how you acquired the work"),
+        screen.getByPlaceholderText("Describe how you acquired the work")
       ).toHaveValue("Fooo")
       expect(screen.getByTestId("autocomplete-location")).toHaveValue(
-        "Berlin, Berlin, Germany",
+        "Berlin, Berlin, Germany"
       )
       expect(
         screen
           .getAllByRole("textbox")
-          .find(c => c.getAttribute("name") == "confidentialNotes"),
+          .find(c => c.getAttribute("name") === "confidentialNotes")
       ).toHaveValue("Secret Notes here")
     })
   })
@@ -176,7 +176,7 @@ describe("Edit artwork", () => {
         screen.getByTestId("my-collection-artwork-details-title"),
         {
           target: { value: "Some new value" },
-        },
+        }
       )
 
       fireEvent.click(screen.getByText("Back"))
@@ -219,7 +219,7 @@ describe("Edit artwork", () => {
         screen.getByTestId("my-collection-artwork-details-title"),
         {
           target: { value: "Some new value" },
-        },
+        }
       )
       expect(screen.getByTestId("save-button")).toBeEnabled()
     })
@@ -247,7 +247,7 @@ describe("Edit artwork", () => {
         screen.getByTestId("my-collection-artwork-details-title"),
         {
           target: { value: "Some new value" },
-        },
+        }
       )
 
       fireEvent.click(screen.getByText("Save Changes"))
@@ -285,7 +285,7 @@ describe("Edit artwork", () => {
               confidentialNotes: "Secret Notes here",
             },
           },
-        }),
+        })
       )
 
       expect(mockRouterPush).toHaveBeenCalledWith({
@@ -296,7 +296,7 @@ describe("Edit artwork", () => {
 
   describe("Adding images", () => {
     beforeEach(() => {
-      //@ts-ignore
+      //@ts-expect-error
       jest.spyOn(global, "FileReader").mockImplementation(function () {
         this.readAsDataURL = jest.fn()
       })
@@ -359,7 +359,7 @@ describe("Edit artwork", () => {
           size: 20000,
           url: "image-url",
         },
-        expect.any(Function),
+        expect.any(Function)
       )
 
       fireEvent.click(screen.getByText("Save Changes"))
@@ -453,7 +453,7 @@ describe("Edit artwork", () => {
               artworkId: "62fc96c48d3ff8000b556c3a",
             },
           },
-        }),
+        })
       )
 
       expect(trackingSpy).toBeCalledTimes(1)

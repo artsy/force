@@ -1,12 +1,11 @@
-import { ModalDialog, useToasts } from "@artsy/palette"
-
-import { ActionType, type EditedArtworkList, OwnerType } from "@artsy/cohesion"
 import {
   ArtworkListForm,
   type ArtworkListFormikValues,
   validationSchema,
 } from "Apps/CollectorProfile/Routes/Saves/Components/ArtworkListForm/ArtworkListForm"
 import createLogger from "Utils/logger"
+import { ActionType, type EditedArtworkList, OwnerType } from "@artsy/cohesion"
+import { ModalDialog, useToasts } from "@artsy/palette"
 import { Formik, type FormikHelpers } from "formik"
 import { useTracking } from "react-tracking"
 import { useUpdateArtworkList } from "./Mutations/useUpdateArtworkList"
@@ -50,7 +49,7 @@ export const EditArtworkListModal: React.FC<
 
   const handleSubmit = async (
     formikValues: ArtworkListFormikValues,
-    helpers: FormikHelpers<ArtworkListFormikValues>,
+    helpers: FormikHelpers<ArtworkListFormikValues>
   ) => {
     try {
       await submitMutation({
@@ -85,7 +84,7 @@ export const EditArtworkListModal: React.FC<
 
       // if there is a specific error message for the name field, use that instead
       const nameErrorMessage = error?.fieldErrors?.find(
-        ({ name }) => name === "name",
+        ({ name }) => name === "name"
       )
       if (nameErrorMessage) {
         errorMessage = nameErrorMessage.message

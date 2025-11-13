@@ -1,12 +1,12 @@
-import { useElements, useStripe } from "@stripe/react-stripe-js"
-/* eslint-disable react-hooks/rules-of-hooks */
-import { renderHook } from "@testing-library/react-hooks"
 import {
   type UseCreateTokenAndSubmitProps,
   useCreateTokenAndSubmit,
 } from "Apps/Invoice/Hooks/useCreateTokenAndSubmit"
 import { useMakeInvoicePayment } from "Apps/Invoice/Hooks/useMakeInvoicePayment"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
+import { useElements, useStripe } from "@stripe/react-stripe-js"
+/* eslint-disable react-hooks/rules-of-hooks */
+import { renderHook } from "@testing-library/react-hooks"
 
 jest.mock("Components/Address/utils", () => {
   const actual = jest.requireActual("Components/Address/utils")
@@ -94,7 +94,7 @@ describe("useCreateTokenAndSubmit", () => {
               provider: "stripe",
             },
           },
-        }),
+        })
       )
     })
   })

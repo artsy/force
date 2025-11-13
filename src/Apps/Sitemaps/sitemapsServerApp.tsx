@@ -19,14 +19,14 @@ sitemapsServerApp
   .get("/robots.txt", (_req, res) => {
     res.type("text/plain")
     res.send(
-      getENV("ENABLE_WEB_CRAWLING") ? ENABLED_ROBOTS_TXT : DISABLED_ROBOTS_TXT,
+      getENV("ENABLE_WEB_CRAWLING") ? ENABLED_ROBOTS_TXT : DISABLED_ROBOTS_TXT
     )
   })
   .get("/llms.txt", (_req, res) => {
     res.type("text/plain")
     res.send(LLMS_TXT)
   })
-  .get("/sitemap-misc.xml", (req, res) => {
+  .get("/sitemap-misc.xml", (_req, res) => {
     res.set("Content-Type", "text/xml")
 
     const urls = [
@@ -99,7 +99,7 @@ sitemapsServerApp
     (req, res) => {
       req.headers.host = new URL(SITEMAP_BASE_URL).host
       sitemapProxy.web(req, res)
-    },
+    }
   )
 
 const ENABLED_ROBOTS_TXT = `User-agent: *

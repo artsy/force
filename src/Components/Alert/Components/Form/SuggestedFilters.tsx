@@ -1,3 +1,7 @@
+import { handleFieldsWithMultipleValues } from "Components/Alert/Helpers/handleFieldsWithMultipleValues"
+import { isValueSelected } from "Components/Alert/Helpers/isValueSelected"
+import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
+import type { SearchCriteriaAttributeKeys } from "Components/SavedSearchAlert/types"
 import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
 import {
   Box,
@@ -9,14 +13,11 @@ import {
   SkeletonText,
   Text,
 } from "@artsy/palette"
-import { handleFieldsWithMultipleValues } from "Components/Alert/Helpers/handleFieldsWithMultipleValues"
-import { isValueSelected } from "Components/Alert/Helpers/isValueSelected"
-import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
-import type { SearchCriteriaAttributeKeys } from "Components/SavedSearchAlert/types"
 import type { SuggestedFiltersFetchQuery } from "__generated__/SuggestedFiltersFetchQuery.graphql"
 import { times } from "lodash"
 import { Suspense } from "react"
 import { graphql, useLazyLoadQuery } from "react-relay"
+
 interface SuggestedFiltersProps {
   transitionToFiltersAndTrack: () => void
 }
@@ -35,7 +36,7 @@ export const SuggestedFilters: React.FC<
       source: currentArtworkID
         ? { type: "ARTWORK", id: currentArtworkID }
         : undefined,
-    },
+    }
   )
 
   if (!data.previewSavedSearch?.suggestedFilters.length) {
@@ -64,7 +65,7 @@ export const SuggestedFilters: React.FC<
         selectedCriteria: state.criteria[filter.field] || [],
         value: filter.value,
       })
-    },
+    }
   )
 
   return (

@@ -1,7 +1,7 @@
-import { Spacer } from "@artsy/palette"
 import { ArtistTabs } from "Apps/Artist/Components/ArtistTabs"
 import { ArtistArtworkFilterQueryRenderer } from "Apps/Artist/Routes/WorksForSale/Components/ArtistArtworkFilter"
 import { ArtistMediumsTitle } from "Apps/Artist/Routes/WorksForSale/Components/ArtistMediumsTitle"
+import { Spacer } from "@artsy/palette"
 import type { ArtistWorksForSaleRoute_artist$data } from "__generated__/ArtistWorksForSaleRoute_artist.graphql"
 import type React from "react"
 import { Meta } from "react-head"
@@ -48,5 +48,5 @@ export const ArtistWorksForSaleRouteFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  },
+  }
 )

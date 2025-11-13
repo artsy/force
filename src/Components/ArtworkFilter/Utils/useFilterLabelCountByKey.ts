@@ -1,9 +1,9 @@
-import { THEME } from "@artsy/palette"
 import {
   type SelectedFiltersCountsLabels,
   useArtworkFilterContext,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
+import { THEME } from "@artsy/palette"
 
 export const useFilterLabelCountByKey = (key: SelectedFiltersCountsLabels) => {
   const { selectedFiltersCounts } = useArtworkFilterContext()

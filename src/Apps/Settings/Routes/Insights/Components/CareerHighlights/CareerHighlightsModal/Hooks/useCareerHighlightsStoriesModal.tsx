@@ -1,12 +1,12 @@
-import { useCareerHighlightsStories } from "Apps/Settings/Routes/Insights/Components/CareerHighlights/CareerHighlightsModal/Hooks/useCareerHighlightsStories"
 import type { CareerHighlightKindWithPromo } from "Apps/Settings/Routes/Insights/Components/CareerHighlights/CareerHighlightsModal/config"
+import { useCareerHighlightsStories } from "Apps/Settings/Routes/Insights/Components/CareerHighlights/CareerHighlightsModal/Hooks/useCareerHighlightsStories"
 
 interface UseCareerHighlightsModalProps {
   careerHighlights: CareerHighlightKindWithPromo[]
 }
 
 export const useCareerHighlightsStoriesModal = (
-  props: UseCareerHighlightsModalProps,
+  props: UseCareerHighlightsModalProps
 ) => {
   const {
     careerHighlightsStoriesModalComponent,

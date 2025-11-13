@@ -1,5 +1,3 @@
-import { fireEvent, screen, waitFor, within } from "@testing-library/react"
-import userEvent from "@testing-library/user-event"
 import {
   SavedAddresses,
   type SavedAddressesProps,
@@ -10,10 +8,12 @@ import {
   type ShipValues,
 } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
 import { fillAddressFormFields } from "Components/Address/__tests__/utils"
-import { MockBoot } from "DevTools/MockBoot"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
+import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { Analytics } from "System/Contexts/AnalyticsContext"
+import { fireEvent, screen, waitFor, within } from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
 import type { SavedAddressesTestQuery } from "__generated__/SavedAddressesTestQuery.graphql"
 import { Formik } from "formik"
 import { graphql } from "react-relay"
@@ -74,7 +74,7 @@ const TestWrapper = ({ children }) => (
 )
 
 const { renderWithRelay } = setupTestWrapperTL<SavedAddressesTestQuery>({
-  Component: props => {
+  Component: _props => {
     return (
       <TestWrapper>
         <SavedAddresses {...testProps} />
@@ -255,13 +255,13 @@ describe("Saved Addresses", () => {
           userEvent.click(screen.getByText("Save"))
         },
         // Bottleneck waiting for form updates
-        { timeout: 4000 },
+        { timeout: 4000 }
       )
 
       await waitFor(() =>
         expect(testProps.onSelect).toHaveBeenCalledWith(
-          expect.objectContaining(validAddress),
-        ),
+          expect.objectContaining(validAddress)
+        )
       )
       expect(testProps.onSelect).toHaveBeenCalledTimes(1)
     })
@@ -286,7 +286,7 @@ describe("Saved Addresses", () => {
       expect(await screen.findByText("Edit address")).toBeInTheDocument()
       expect(screen.getByDisplayValue("Test Name")).toBeInTheDocument()
       expect(screen.getByPlaceholderText("Add street address")).toHaveValue(
-        "1 Main St",
+        "1 Main St"
       )
     })
   })

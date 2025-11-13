@@ -1,21 +1,21 @@
 import {
-  SEMANTIC_ATTRIBUTE_SENTRY_OP,
-  SEMANTIC_ATTRIBUTE_SENTRY_ORIGIN,
-  SEMANTIC_ATTRIBUTE_SENTRY_SOURCE,
-  type Span,
-  browserTracingIntegration,
-  dedupeIntegration,
-  init,
-  startBrowserTracingNavigationSpan,
-  startBrowserTracingPageLoadSpan,
-} from "@sentry/browser"
-import {
   ALLOWED_URLS,
   DENIED_URLS,
   IGNORED_ERRORS,
 } from "Server/analytics/sentryFilters"
 import { findRoutesByPath } from "System/Router/Utils/routeUtils"
 import { getENV } from "Utils/getENV"
+import {
+  browserTracingIntegration,
+  dedupeIntegration,
+  init,
+  SEMANTIC_ATTRIBUTE_SENTRY_OP,
+  SEMANTIC_ATTRIBUTE_SENTRY_ORIGIN,
+  SEMANTIC_ATTRIBUTE_SENTRY_SOURCE,
+  type Span,
+  startBrowserTracingNavigationSpan,
+  startBrowserTracingPageLoadSpan,
+} from "@sentry/browser"
 import type { Match } from "found"
 
 let initialPageLoadSpan: Span | undefined | null
@@ -68,7 +68,7 @@ export const setupSentryRouterTracing = sentryClient => {
       })
     },
 
-    initialPageloadComplete: (match: Match) => {
+    initialPageloadComplete: (_match: Match) => {
       if (initialPageLoadSpan) {
         const foundRoute = findRoutesByPath({ path: window.location.pathname })
         const routeId = foundRoute[0].route.path as string
@@ -76,7 +76,7 @@ export const setupSentryRouterTracing = sentryClient => {
         initialPageLoadSpan.updateName(routeId)
         initialPageLoadSpan.setAttribute(
           SEMANTIC_ATTRIBUTE_SENTRY_SOURCE,
-          "route",
+          "route"
         )
 
         initialPageLoadSpan = null
@@ -109,7 +109,7 @@ export const setupSentryRouterTracing = sentryClient => {
 }
 
 function routeMatchToParamSpanAttributes(
-  params: Match["params"],
+  params: Match["params"]
 ): Record<string, string> {
   if (!params) {
     return {}

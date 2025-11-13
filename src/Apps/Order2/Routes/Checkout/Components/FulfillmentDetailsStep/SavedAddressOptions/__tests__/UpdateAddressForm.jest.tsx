@@ -1,20 +1,20 @@
+import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import { useOrder2DeleteUserAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2DeleteUserAddressMutation"
+import { useOrder2UpdateUserAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2UpdateUserAddressMutation"
+import { useOrder2UpdateUserDefaultAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2UpdateUserDefaultAddressMutation"
 import { render, screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-import { UpdateAddressForm } from "../UpdateAddressForm"
-import { useOrder2UpdateUserAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2UpdateUserAddressMutation"
-import { useOrder2DeleteUserAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2DeleteUserAddressMutation"
-import { useOrder2UpdateUserDefaultAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2UpdateUserDefaultAddressMutation"
-import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import type { ProcessedUserAddress } from "../../utils"
+import { UpdateAddressForm } from "../UpdateAddressForm"
 
 jest.mock(
-  "Apps/Order2/Routes/Checkout/Mutations/useOrder2UpdateUserAddressMutation",
+  "Apps/Order2/Routes/Checkout/Mutations/useOrder2UpdateUserAddressMutation"
 )
 jest.mock(
-  "Apps/Order2/Routes/Checkout/Mutations/useOrder2DeleteUserAddressMutation",
+  "Apps/Order2/Routes/Checkout/Mutations/useOrder2DeleteUserAddressMutation"
 )
 jest.mock(
-  "Apps/Order2/Routes/Checkout/Mutations/useOrder2UpdateUserDefaultAddressMutation",
+  "Apps/Order2/Routes/Checkout/Mutations/useOrder2UpdateUserDefaultAddressMutation"
 )
 jest.mock("Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext")
 jest.mock("Utils/logger")
@@ -192,7 +192,7 @@ describe("UpdateAddressForm", () => {
               name: "Jane Smith",
             }),
           }),
-          "address-id-123",
+          "address-id-123"
         )
       })
     })
@@ -233,8 +233,8 @@ describe("UpdateAddressForm", () => {
       expect(screen.getByText("Delete address?")).toBeInTheDocument()
       expect(
         screen.getByText(
-          "This will remove this address from your saved addresses.",
-        ),
+          "This will remove this address from your saved addresses."
+        )
       ).toBeInTheDocument()
     })
 
@@ -258,7 +258,7 @@ describe("UpdateAddressForm", () => {
 
       await waitFor(() => {
         expect(mockUSProps.onDeleteAddress).toHaveBeenCalledWith(
-          "address-id-123",
+          "address-id-123"
         )
       })
     })

@@ -2,7 +2,7 @@ const observerMap = new Map()
 const instanceMap = new Map()
 
 beforeEach(() => {
-  // @ts-ignore
+  // @ts-expect-error
   global.IntersectionObserver = jest.fn((cb, options = {}) => {
     const instance = {
       thresholds: Array.isArray(options.threshold)
@@ -25,7 +25,7 @@ beforeEach(() => {
 })
 
 afterEach(() => {
-  // @ts-ignore
+  // @ts-expect-error
   global.IntersectionObserver.mockReset()
   instanceMap.clear()
   observerMap.clear()

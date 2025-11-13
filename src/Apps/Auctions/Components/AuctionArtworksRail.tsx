@@ -1,12 +1,3 @@
-import {
-  ActionType,
-  type AuthContextModule,
-  type ClickedArtworkGroup,
-  type ContextModule,
-  OwnerType,
-  type PageOwnerType,
-} from "@artsy/cohesion"
-import { type BoxProps, Skeleton } from "@artsy/palette"
 import { tabTypeToContextModuleMap } from "Apps/Auctions/Utils/tabTypeToContextModuleMap"
 import {
   ShelfArtworkFragmentContainer,
@@ -18,8 +9,17 @@ import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { trackHelpers } from "Utils/cohesionHelpers"
 import { extractNodes } from "Utils/extractNodes"
-import type { AuctionArtworksRailQuery } from "__generated__/AuctionArtworksRailQuery.graphql"
+import {
+  ActionType,
+  type AuthContextModule,
+  type ClickedArtworkGroup,
+  type ContextModule,
+  OwnerType,
+  type PageOwnerType,
+} from "@artsy/cohesion"
+import { type BoxProps, Skeleton } from "@artsy/palette"
 import type { AuctionArtworksRail_sale$data } from "__generated__/AuctionArtworksRail_sale.graphql"
+import type { AuctionArtworksRailQuery } from "__generated__/AuctionArtworksRailQuery.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -38,7 +38,7 @@ interface AuctionArtworksRailProps extends BoxProps {
 
 export const AuctionArtworksRail: React.FC<
   React.PropsWithChildren<AuctionArtworksRailProps>
-> = ({ sale, tabType, ...rest }) => {
+> = ({ sale, tabType }) => {
   const { trackEvent } = useTracking()
   const { contextPageOwnerType } = useAnalyticsContext()
   const contextModule = tabTypeToContextModuleMap[tabType] as AuthContextModule
@@ -56,8 +56,8 @@ export const AuctionArtworksRail: React.FC<
             contextModule,
             contextPageOwnerType,
             sale.internalID,
-            sale.slug,
-          ),
+            sale.slug
+          )
         )
       }}
       getItems={() => {
@@ -77,8 +77,8 @@ export const AuctionArtworksRail: React.FC<
                     node.slug,
                     index,
                     node.collectorSignals?.auction?.bidCount,
-                    node.collectorSignals?.auction?.lotWatcherCount,
-                  ),
+                    node.collectorSignals?.auction?.lotWatcherCount
+                  )
                 )
               }}
             />
@@ -131,7 +131,7 @@ export const AuctionArtworksRailFragmentContainer = createFragmentContainer(
         formattedStartDateTime
       }
     `,
-  },
+  }
 )
 
 export const AuctionArtworkRailQueryRenderer = ({ slug, tabType }) => {
@@ -182,7 +182,7 @@ const tracks = {
     contextModule: ContextModule,
     contextPageOwnerType: PageOwnerType,
     saleID: string,
-    saleSlug: string,
+    saleSlug: string
   ): ClickedArtworkGroup => ({
     action: ActionType.clickedArtworkGroup,
     context_module: contextModule,

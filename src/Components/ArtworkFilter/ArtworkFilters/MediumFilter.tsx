@@ -1,10 +1,10 @@
-import { Checkbox, Flex } from "@artsy/palette"
 import {
   SelectedFiltersCountsLabels,
   useArtworkFilterContext,
   useCurrentlySelectedFilters,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { useFilterLabelCountByKey } from "Components/ArtworkFilter/Utils/useFilterLabelCountByKey"
+import { Checkbox, Flex } from "@artsy/palette"
 import { intersection } from "lodash"
 import type { FC } from "react"
 import { FilterExpandable } from "./FilterExpandable"
@@ -22,7 +22,7 @@ export const MediumFilter: FC<React.PropsWithChildren<MediumFilterProps>> = ({
   const { additionalGeneIDs = [], medium } = useCurrentlySelectedFilters()
 
   const filtersCount = useFilterLabelCountByKey(
-    SelectedFiltersCountsLabels.additionalGeneIDs,
+    SelectedFiltersCountsLabels.additionalGeneIDs
   )
   const label = `Medium${filtersCount}`
 
@@ -48,7 +48,7 @@ export const MediumFilter: FC<React.PropsWithChildren<MediumFilterProps>> = ({
 
   const intersected = intersection(
     additionalGeneIDs,
-    allowedMediums.slice(INITIAL_ITEMS_TO_SHOW).map(({ value }) => value),
+    allowedMediums.slice(INITIAL_ITEMS_TO_SHOW).map(({ value }) => value)
   )
   const hasBelowTheFoldMediumFilter = intersected.length > 0
   const resultsSorted = sortResults(additionalGeneIDs, allowedMediums)

@@ -1,14 +1,3 @@
-import { ContextModule, OwnerType } from "@artsy/cohesion"
-import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import {
-  BorderedRadio,
-  Button,
-  Flex,
-  RadioGroup,
-  Spacer,
-  Text,
-  type TextAreaChange,
-} from "@artsy/palette"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
 import { BuyerGuarantee } from "Apps/Order/Components/BuyerGuarantee"
 import { Collapse } from "Apps/Order/Components/Collapse"
@@ -27,11 +16,22 @@ import {
   injectCommitMutation,
 } from "Apps/Order/Utils/commitMutation"
 import { CountdownTimer } from "Components/CountdownTimer"
-import { Media } from "Utils/Responsive"
 import { extractNodes } from "Utils/extractNodes"
 import createLogger from "Utils/logger"
-import type { RespondCounterOfferMutation } from "__generated__/RespondCounterOfferMutation.graphql"
+import { Media } from "Utils/Responsive"
+import { ContextModule, OwnerType } from "@artsy/cohesion"
+import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import {
+  BorderedRadio,
+  Button,
+  Flex,
+  RadioGroup,
+  Spacer,
+  Text,
+  type TextAreaChange,
+} from "@artsy/palette"
 import type { Respond_order$data } from "__generated__/Respond_order.graphql"
+import type { RespondCounterOfferMutation } from "__generated__/RespondCounterOfferMutation.graphql"
 import type { Match, Router, RouterState } from "found"
 import { isNil } from "lodash"
 import { type FC, useState } from "react"
@@ -177,7 +177,7 @@ export const RespondRoute: FC<React.PropsWithChildren<RespondProps>> = ({
   }
 
   const createCounterOffer = (
-    variables: RespondCounterOfferMutation["variables"],
+    variables: RespondCounterOfferMutation["variables"]
   ) => {
     return commitMutation<RespondCounterOfferMutation>({
       // TODO: Inputs to the mutation might have changed case of the keys!
@@ -379,5 +379,5 @@ export const RespondFragmentContainer = createFragmentContainer(
         ...OrderStepper_order
       }
     `,
-  },
+  }
 )

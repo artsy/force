@@ -1,14 +1,14 @@
-import { test, expect } from "@playwright/test"
+import { expect, test } from "@playwright/test"
 
 test.describe("Consign", () => {
   test.skip("/sell", async ({ page }) => {
     // pending until the redesign is no longer under a feature flag
     await page.goto("sell")
     await expect(page.locator("h1").first()).toContainText(
-      "Sell art from your collection",
+      "Sell art from your collection"
     )
     await expect(page).toHaveTitle(
-      "Sell Artwork with Artsy | Art Consignment | Artsy",
+      "Sell Artwork with Artsy | Art Consignment | Artsy"
     )
   })
 
@@ -17,10 +17,10 @@ test.describe("Consign", () => {
   test.skip("/sell/submission", async ({ page }) => {
     await page.goto("sell/submission")
     await expect(page.locator("h1").first()).toContainText(
-      "Tell us about your artwork",
+      "Tell us about your artwork"
     )
     await expect(page).toHaveTitle(
-      "Sell Art from Your Collection | Consignments | Artsy",
+      "Sell Art from Your Collection | Consignments | Artsy"
     )
   })
 })

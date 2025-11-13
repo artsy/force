@@ -15,7 +15,7 @@ const logger = createLogger("useStripePaymentBySetupIntentId")
  */
 export function useStripePaymentBySetupIntentId(
   orderId: string,
-  onComplete: () => void,
+  onComplete: () => void
 ) {
   const { submitMutation: setPaymentByStripeIntentMutation } =
     useSetPaymentByStripeIntent()
@@ -49,7 +49,7 @@ export function useStripePaymentBySetupIntentId(
           fetchAndSetConfirmationToken(
             confirmation_token,
             environment,
-            setConfirmationToken,
+            setConfirmationToken
           )
         }
 
@@ -81,11 +81,12 @@ export function useStripePaymentBySetupIntentId(
     setPaymentComplete,
     environment,
     onComplete,
+    setPaymentBySetupIntentId,
   ])
 
   const setPaymentBySetupIntentId = async (
     setupIntentId: string,
-    oneTimeUse: boolean,
+    oneTimeUse: boolean
   ) => {
     try {
       const orderOrError = (

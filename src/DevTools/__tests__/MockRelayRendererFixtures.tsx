@@ -1,12 +1,12 @@
-import { render } from "@testing-library/react"
 import { SystemContextConsumer } from "System/Contexts/SystemContext"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { renderWithLoadProgress } from "System/Relay/renderWithLoadProgress"
-import type { MockRelayRendererFixturesArtistQuery } from "__generated__/MockRelayRendererFixturesArtistQuery.graphql"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { render } from "@testing-library/react"
 /* eslint-disable jsx-a11y/alt-text */
 import type { MockRelayRendererFixtures_artist$data } from "__generated__/MockRelayRendererFixtures_artist.graphql"
 import type { MockRelayRendererFixtures_artwork$data } from "__generated__/MockRelayRendererFixtures_artwork.graphql"
 import type { MockRelayRendererFixtures_artworkMetadata$data } from "__generated__/MockRelayRendererFixtures_artworkMetadata.graphql"
+import type { MockRelayRendererFixturesArtistQuery } from "__generated__/MockRelayRendererFixturesArtistQuery.graphql"
 import cheerio from "cheerio"
 import { createFragmentContainer, graphql } from "react-relay"
 
@@ -20,7 +20,7 @@ const Metadata = createFragmentContainer(
         title
       }
     `,
-  },
+  }
 )
 
 export const Artwork = createFragmentContainer(
@@ -47,7 +47,7 @@ export const Artwork = createFragmentContainer(
         ...MockRelayRendererFixtures_artworkMetadata
       }
     `,
-  },
+  }
 )
 
 const Artist = createFragmentContainer(
@@ -60,7 +60,7 @@ const Artist = createFragmentContainer(
         name
       }
     `,
-  },
+  }
 )
 
 const ArtistQueryRenderer = (props: { id: string }) => (

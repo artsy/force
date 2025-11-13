@@ -1,7 +1,7 @@
-import { Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import { PageHTML } from "Apps/Page/Components/PageHTML"
 import { MetaTags } from "Components/MetaTags"
 import { TopContextBar } from "Components/TopContextBar"
+import { Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import type { SaleAgreementRoute_saleAgreement$key } from "__generated__/SaleAgreementRoute_saleAgreement.graphql"
 import type { FC } from "react"
 import { graphql, useFragment } from "react-relay"

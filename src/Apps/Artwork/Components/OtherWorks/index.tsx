@@ -1,6 +1,3 @@
-import { ContextModule } from "@artsy/cohesion"
-import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { Box, Join, Skeleton, Spacer } from "@artsy/palette"
 import { OtherAuctionsQueryRenderer } from "Apps/Artwork/Components/OtherAuctions"
 import {
   Header,
@@ -16,8 +13,11 @@ import {
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { get } from "Utils/get"
-import type { OtherWorksQuery } from "__generated__/OtherWorksQuery.graphql"
+import { ContextModule } from "@artsy/cohesion"
+import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import { Box, Join, Skeleton, Spacer } from "@artsy/palette"
 import type { OtherWorks_artwork$data } from "__generated__/OtherWorks_artwork.graphql"
+import type { OtherWorksQuery } from "__generated__/OtherWorksQuery.graphql"
 import { compact } from "lodash"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -67,74 +67,74 @@ const contextGridTypeToV2ContextModule = (contextGridType: string) => {
   }
 }
 
-export const OtherWorks = track()(({
-  artwork,
-}: { artwork: OtherWorks_artwork$data } & SystemContextProps) => {
-  const { context, contextGrids } = artwork
+export const OtherWorks = track()(
+  ({ artwork }: { artwork: OtherWorks_artwork$data } & SystemContextProps) => {
+    const { context, contextGrids } = artwork
 
-  const tracking = useTracking()
+    const tracking = useTracking()
 
-  const gridsToShow = compact(
-    (contextGrids ?? []).filter(grid => {
-      return !!grid && (grid.artworksConnection?.edges ?? []).length > 0
-    }),
-  )
+    const gridsToShow = compact(
+      (contextGrids ?? []).filter(grid => {
+        return !!grid && (grid.artworksConnection?.edges ?? []).length > 0
+      })
+    )
 
-  return (
-    <>
-      {gridsToShow && gridsToShow.length > 0 && (
-        <Join separator={<Spacer y={6} />}>
-          {gridsToShow.map((grid, index) => {
-            const contextModule = contextGridTypeToV2ContextModule(
-              grid.__typename,
-            )
+    return (
+      <>
+        {gridsToShow && gridsToShow.length > 0 && (
+          <Join separator={<Spacer y={6} />}>
+            {gridsToShow.map((grid, index) => {
+              const contextModule = contextGridTypeToV2ContextModule(
+                grid.__typename
+              )
 
-            return (
-              <Box key={`Grid-${index}`} data-test={contextModule}>
-                {grid.title && grid.ctaHref && (
-                  <Header title={grid.title} buttonHref={grid.ctaHref} />
-                )}
+              return (
+                <Box key={`Grid-${index}`} data-test={contextModule}>
+                  {grid.title && grid.ctaHref && (
+                    <Header title={grid.title} buttonHref={grid.ctaHref} />
+                  )}
 
-                {grid.artworksConnection && (
-                  <>
-                    <Spacer y={4} />
+                  {grid.artworksConnection && (
+                    <>
+                      <Spacer y={4} />
 
-                    <ArtworkGrid
-                      artworks={grid.artworksConnection}
-                      columnCount={[2, 3, 4]}
-                      contextModule={contextModule}
-                      onBrickClick={() =>
-                        tracking.trackEvent({
-                          type: DeprecatedSchema.Type.ArtworkBrick,
-                          action_type: DeprecatedSchema.ActionType.Click,
-                          context_module: contextGridTypeToContextModule(
-                            grid.__typename,
-                          ),
-                        })
-                      }
-                    />
-                  </>
-                )}
-              </Box>
-            )
-          })}
-        </Join>
-      )}
+                      <ArtworkGrid
+                        artworks={grid.artworksConnection}
+                        columnCount={[2, 3, 4]}
+                        contextModule={contextModule}
+                        onBrickClick={() =>
+                          tracking.trackEvent({
+                            type: DeprecatedSchema.Type.ArtworkBrick,
+                            action_type: DeprecatedSchema.ActionType.Click,
+                            context_module: contextGridTypeToContextModule(
+                              grid.__typename
+                            ),
+                          })
+                        }
+                      />
+                    </>
+                  )}
+                </Box>
+              )
+            })}
+          </Join>
+        )}
 
-      {/*
+        {/*
         TODO: Appears to never be true? Maybe this was supposed to match
         context.__typename === "Sale"
         or contextGrids[i] === "ArtworkContextAuction"
         */}
-      {context && context.__typename === "ArtworkContextAuction" && (
-        <>
-          <Spacer y={6} />
-          <OtherAuctionsQueryRenderer />
-        </>
-      )}
-    </>
-  )
-})
+        {context && context.__typename === "ArtworkContextAuction" && (
+          <>
+            <Spacer y={6} />
+            <OtherAuctionsQueryRenderer />
+          </>
+        )}
+      </>
+    )
+  }
+)
 
 export const OtherWorksFragmentContainer = createFragmentContainer(
   withSystemContext(OtherWorks),
@@ -161,7 +161,7 @@ export const OtherWorksFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  },
+  }
 )
 
 const PLACEHOLDER = (

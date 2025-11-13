@@ -1,13 +1,13 @@
 import type { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
+import type {
+  SavedSearchDefaultCriteria,
+  SearchCriteriaAttributes,
+} from "Components/SavedSearchAlert/types"
 import {
   excludeDefaultCriteria,
   extractPillFromAggregation,
   extractPillsFromDefaultCriteria,
 } from "Components/SavedSearchAlert/Utils/extractPills"
-import type {
-  SavedSearchDefaultCriteria,
-  SearchCriteriaAttributes,
-} from "Components/SavedSearchAlert/types"
 
 describe("extractPillFromAggregation", () => {
   it("returns pills", () => {
@@ -16,7 +16,7 @@ describe("extractPillFromAggregation", () => {
         paramName: "materialsTerms",
         paramValue: ["acrylic", "canvas"],
       },
-      mockedAggregations,
+      mockedAggregations
     )
 
     const pills = [
@@ -33,7 +33,7 @@ describe("extractPillFromAggregation", () => {
         paramName: "materialsTerms",
         paramValue: ["acrylic", "canvas"],
       },
-      [],
+      []
     )
 
     expect(result).toEqual([])
@@ -45,7 +45,7 @@ describe("extractPillFromAggregation", () => {
         paramName: "additionalGeneIDs",
         paramValue: ["painting", "sculpture", "nft"],
       },
-      [],
+      []
     )
 
     expect(result).toEqual([

@@ -1,15 +1,15 @@
-import { Box, Button, Join, Separator } from "@artsy/palette"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
-import type { ShowsCurrentShowsQuery } from "__generated__/ShowsCurrentShowsQuery.graphql"
+import { Box, Button, Join, Separator } from "@artsy/palette"
 import type { ShowsCurrentShows_viewer$data } from "__generated__/ShowsCurrentShows_viewer.graphql"
-import { useState } from "react"
+import type { ShowsCurrentShowsQuery } from "__generated__/ShowsCurrentShowsQuery.graphql"
 import type * as React from "react"
+import { useState } from "react"
 import {
-  type RelayPaginationProp,
   createPaginationContainer,
   graphql,
+  type RelayPaginationProp,
 } from "react-relay"
 import {
   ShowsCurrentShowFragmentContainer,
@@ -118,7 +118,7 @@ const ShowsCurrentShowsPaginationContainer = createPaginationContainer(
       return props.viewer.showsConnection
     },
     query: SHOWS_CURRENT_SHOWS_QUERY,
-  },
+  }
 )
 
 const SHOWS_CURRENT_SHOWS_PLACEHOLDER = (

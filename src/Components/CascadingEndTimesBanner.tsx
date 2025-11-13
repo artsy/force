@@ -45,5 +45,5 @@ export const CascadingEndTimesBannerFragmentContainer = createFragmentContainer(
         extendedBiddingIntervalMinutes
       }
     `,
-  },
+  }
 )

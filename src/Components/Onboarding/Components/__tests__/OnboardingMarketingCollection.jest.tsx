@@ -1,6 +1,6 @@
-import { screen } from "@testing-library/react"
 import { OnboardingMarketingCollectionFragmentContainer } from "Components/Onboarding/Components/OnboardingMarketingCollection"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
@@ -8,7 +8,7 @@ jest.unmock("react-relay")
 const { renderWithRelay } = setupTestWrapperTL({
   Component: props => {
     return (
-      // @ts-ignore
+      // @ts-expect-error
       <OnboardingMarketingCollectionFragmentContainer
         {...props}
         description={<>Example description</>}

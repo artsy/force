@@ -1,6 +1,6 @@
 import { SystemContext } from "System/Contexts/SystemContext"
-import { useContext } from "react"
 import * as React from "react"
+import { useContext } from "react"
 import {
   type Environment,
   commitMutation as relayCommitMutation,
@@ -19,7 +19,7 @@ type CommitMutationArgs = Omit<
 >
 
 export type CommitMutation = <MutationType extends OperationBase>(
-  args: CommitMutationArgs,
+  args: CommitMutationArgs
 ) => Promise<MutationType["response"]>
 
 export interface CommitMutationProps {
@@ -43,7 +43,7 @@ class ProvideMutationContext extends React.Component<
   commitMutation: CommitMutation = ({ variables, mutation, ...rest }) => {
     if (this.state.isCommittingMutation) {
       throw new Error(
-        "Mutliple simulataneous mutations is not currently supported",
+        "Mutliple simulataneous mutations is not currently supported"
       )
     }
     this.setState({ isCommittingMutation: true })
@@ -89,7 +89,7 @@ class ProvideMutationContext extends React.Component<
 }
 
 export function injectCommitMutation<Props extends CommitMutationProps>(
-  Component: React.ComponentType<React.PropsWithChildren<Props>>,
+  Component: React.ComponentType<React.PropsWithChildren<Props>>
 ): React.ComponentType<
   React.PropsWithChildren<Omit<Props, keyof CommitMutationProps>>
 > {

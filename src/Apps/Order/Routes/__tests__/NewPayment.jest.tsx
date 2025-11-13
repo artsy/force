@@ -1,14 +1,14 @@
-import { NewPaymentFragmentContainer } from "Apps/Order/Routes/NewPayment"
+import {
+  OfferOrderWithShippingDetails,
+  OfferWithTotals,
+} from "Apps/__tests__/Fixtures/Order"
 import {
   fixFailedPaymentFailure,
   fixFailedPaymentInsufficientInventoryFailure,
   fixFailedPaymentSuccess,
   fixFailedPaymentWithActionRequired,
 } from "Apps/Order/Routes/__fixtures__/MutationResults/fixFailedPayment"
-import {
-  OfferOrderWithShippingDetails,
-  OfferWithTotals,
-} from "Apps/__tests__/Fixtures/Order"
+import { NewPaymentFragmentContainer } from "Apps/Order/Routes/NewPayment"
 import { MockBoot } from "DevTools/MockBoot"
 import { mockLocation } from "DevTools/mockLocation"
 import { mockStripe } from "DevTools/mockStripe"
@@ -45,7 +45,7 @@ jest.mock("@stripe/stripe-js", () => {
 const { _mockStripe } = require("@stripe/stripe-js")
 
 const CreditCardPickerMock = jest.requireActual(
-  "../../Components/__mocks__/CreditCardPicker",
+  "../../Components/__mocks__/CreditCardPicker"
 )
 
 jest.mock(
@@ -54,7 +54,7 @@ jest.mock(
   // should just work without this extra argument
   () => {
     return jest.requireActual("../../Components/__mocks__/CreditCardPicker")
-  },
+  }
 )
 
 const realSetInterval = global.setInterval
@@ -106,7 +106,7 @@ describe("Payment", () => {
           router={{ push: pushMock } as any}
           route={{ onTransition: jest.fn() } as any}
           order={props.order}
-          // @ts-ignore
+          // @ts-expect-error
           isCommittingMutation={isCommittingMutation}
         />
       </MockBoot>
@@ -171,7 +171,7 @@ describe("Payment", () => {
             orderId: "1234",
           },
         },
-      }),
+      })
     )
   })
 
@@ -204,7 +204,7 @@ describe("Payment", () => {
 
   it("shows an error modal and redirects to artist page when not enough inventory", async () => {
     mockCommitMutation.mockResolvedValueOnce(
-      fixFailedPaymentInsufficientInventoryFailure,
+      fixFailedPaymentInsufficientInventoryFailure
     )
     const { user } = renderWithRelay({ CommerceOrder: () => testOrder })
     const page = new OrderAppTestPageRTL(screen, user)

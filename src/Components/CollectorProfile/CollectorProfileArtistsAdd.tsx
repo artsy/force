@@ -1,3 +1,11 @@
+import { CollectorProfileArtistsAddNewDialog } from "Components/CollectorProfile/CollectorProfileArtistsAddNewDialog"
+import { CollectorProfileArtistsAddResult } from "Components/CollectorProfile/CollectorProfileArtistsAddResult"
+import { EntityHeaderPlaceholder } from "Components/EntityHeaders/EntityHeaderPlaceholder"
+import { extractNodes } from "Utils/extractNodes"
+import { useUpdateMyUserProfile } from "Utils/Hooks/Mutations/useUpdateMyUserProfile"
+import { useClientQuery } from "Utils/Hooks/useClientQuery"
+import { useDebouncedValue } from "Utils/Hooks/useDebounce"
+import { useMutation } from "Utils/Hooks/useMutation"
 import CloseIcon from "@artsy/icons/CloseIcon"
 import SearchIcon from "@artsy/icons/SearchIcon"
 import {
@@ -11,14 +19,6 @@ import {
   Text,
   useToasts,
 } from "@artsy/palette"
-import { CollectorProfileArtistsAddNewDialog } from "Components/CollectorProfile/CollectorProfileArtistsAddNewDialog"
-import { CollectorProfileArtistsAddResult } from "Components/CollectorProfile/CollectorProfileArtistsAddResult"
-import { EntityHeaderPlaceholder } from "Components/EntityHeaders/EntityHeaderPlaceholder"
-import { useUpdateMyUserProfile } from "Utils/Hooks/Mutations/useUpdateMyUserProfile"
-import { useClientQuery } from "Utils/Hooks/useClientQuery"
-import { useDebouncedValue } from "Utils/Hooks/useDebounce"
-import { useMutation } from "Utils/Hooks/useMutation"
-import { extractNodes } from "Utils/extractNodes"
 import type {
   CollectorProfileArtistsAddCreateUserInterestsMutation,
   UserInterestCategory,
@@ -200,7 +200,7 @@ export const CollectorProfileArtistsAdd: FC<
                     }
 
                     return prevSelected.filter(
-                      id => id !== String(artist.internalID),
+                      id => id !== String(artist.internalID)
                     )
                   })
                 }}

@@ -1,7 +1,7 @@
-import { Flex, Radio, RadioGroup, Spacer, Text } from "@artsy/palette"
 import { OfferInput } from "Apps/Order/Components/OfferInput"
 import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
 import type { OfferFormProps } from "Apps/Order2/Routes/Checkout/Components/OfferStep/types"
+import { Flex, Radio, RadioGroup, Spacer, Text } from "@artsy/palette"
 import type { Order2ExactPriceOfferForm_order$key } from "__generated__/Order2ExactPriceOfferForm_order.graphql"
 import { useEffect, useState } from "react"
 import { graphql, useFragment } from "react-relay"
@@ -57,7 +57,7 @@ export const Order2ExactPriceOfferForm: React.FC<
       }
 
     const matchingOption = priceOptions.find(
-      option => option.value === offerValue,
+      option => option.value === offerValue
     )
     if (matchingOption) {
       return {
@@ -74,10 +74,10 @@ export const Order2ExactPriceOfferForm: React.FC<
 
   const initialState = getInitialState()
   const [selectedRadio, setSelectedRadio] = useState<string | undefined>(
-    initialState.selectedRadio,
+    initialState.selectedRadio
   )
   const [customValue, setCustomValue] = useState<number | undefined>(
-    initialState.customValue,
+    initialState.customValue
   )
 
   // Update parent component state when custom values change
@@ -94,7 +94,7 @@ export const Order2ExactPriceOfferForm: React.FC<
         style: "currency",
         currency: orderData.currencyCode,
       }),
-      orderData.currencyCode,
+      orderData.currencyCode
     )
   }
 

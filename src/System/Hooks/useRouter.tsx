@@ -32,7 +32,7 @@ export function useRouter(): {
 
 export function useIsRouteActive(
   to: string | null | undefined,
-  options = { exact: true },
+  options = { exact: true }
 ): boolean {
   const { match, router } = useRouter()
 

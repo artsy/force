@@ -2,7 +2,7 @@ import {
   type AuctionResultsFilters,
   initialAuctionResultsFilterState,
 } from "Apps/Artist/Routes/AuctionResults/initialAuctionResultsFilterState"
-import { type Metric, getSupportedMetric } from "Utils/metrics"
+import { getSupportedMetric, type Metric } from "Utils/metrics"
 import { omit } from "lodash"
 import * as React from "react"
 import { useContext, useReducer, useRef, useState } from "react"
@@ -60,7 +60,7 @@ export interface AuctionResultsFilterContextProps {
   onFilterClick?: (
     key: ChangableFilter,
     value: string,
-    filterState: AuctionResultsFilters,
+    filterState: AuctionResultsFilters
   ) => void
   shouldStageFilterChanges?: boolean
   setShouldStageFilterChanges?: (value: boolean) => void
@@ -137,11 +137,11 @@ export const AuctionResultsFilterContextProvider: React.FC<
 
   const [auctionResultsFilterState, dispatch] = useReducer(
     AuctionResultsFilterReducer,
-    initialFilterState,
+    initialFilterState
   )
   const [stagedAuctionResultsFilterState, stage] = useReducer(
     AuctionResultsFilterReducer,
-    {},
+    {}
   )
   const [shouldStageFilterChanges, setShouldStageFilterChanges] =
     useState(false)
@@ -246,7 +246,7 @@ export const AuctionResultsFilterContextProvider: React.FC<
 
 const AuctionResultsFilterReducer = (
   state: AuctionResultsFiltersState,
-  action: AuctionResultsFiltersAction,
+  action: AuctionResultsFiltersAction
 ): AuctionResultsFiltersState => {
   const arrayFilterTypes: Array<keyof AuctionResultsFilters> = [
     "organizations",

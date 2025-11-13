@@ -34,5 +34,5 @@ export const SettingsAuctionsRouteFragmentContainer = createFragmentContainer(
         ...UserRegistrationAuctions_me
       }
     `,
-  },
+  }
 )

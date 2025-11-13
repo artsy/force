@@ -1,6 +1,6 @@
-import { screen } from "@testing-library/react"
 import { ArtistInfoFragmentContainer } from "Apps/Artwork/Components/ArtistInfo"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
@@ -33,7 +33,7 @@ describe("ArtistInfo", () => {
     expect(screen.getByText("Example Artist")).toBeInTheDocument()
     expect(screen.getByText("American, b. 1980")).toBeInTheDocument()
     expect(
-      screen.getByText("ArtistMarketInsightsFragmentContainer"),
+      screen.getByText("ArtistMarketInsightsFragmentContainer")
     ).toBeInTheDocument()
   })
 })

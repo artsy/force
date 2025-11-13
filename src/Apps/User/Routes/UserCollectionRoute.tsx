@@ -1,11 +1,11 @@
-import { ActionType, OwnerType } from "@artsy/cohesion"
-import { Spacer, Stack, Text } from "@artsy/palette"
 import { UserCollectionArtworks } from "Apps/User/Components/UserCollectionArtworks"
 import { ArtworkGridPlaceholder } from "Components/ArtworkGrid/ArtworkGrid"
 import { ClientSuspense } from "Components/ClientSuspense"
 import { MetaTags } from "Components/MetaTags"
 import { useRouter } from "System/Hooks/useRouter"
 import { Jump } from "Utils/Hooks/useJump"
+import { ActionType, OwnerType } from "@artsy/cohesion"
+import { Spacer, Stack, Text } from "@artsy/palette"
 import type { UserCollectionRoute_collection$data } from "__generated__/UserCollectionRoute_collection.graphql"
 import { HttpError } from "found"
 import { useEffect } from "react"
@@ -77,7 +77,7 @@ export const UserCollectionRouteFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  },
+  }
 )
 
 const tracks = {

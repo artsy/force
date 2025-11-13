@@ -1,12 +1,3 @@
-import {
-  Button,
-  Column,
-  GridColumns,
-  Message,
-  ModalDialog,
-  VisuallyHidden,
-  useToasts,
-} from "@artsy/palette"
 import { useAddAddress } from "Apps/Settings/Routes/Shipping/useAddAddress"
 import { useEditAddress } from "Apps/Settings/Routes/Shipping/useEditAddress"
 import { useSetDefaultAddress } from "Apps/Settings/Routes/Shipping/useSetDefaultAddress"
@@ -18,6 +9,15 @@ import {
 import { sortCountriesForCountryInput } from "Components/Address/utils/sortCountriesForCountryInput"
 import { useInitialLocationValues } from "Components/Address/utils/useInitialLocationValues"
 import { countries as countryPhoneOptions } from "Utils/countries"
+import {
+  Button,
+  Column,
+  GridColumns,
+  Message,
+  ModalDialog,
+  useToasts,
+  VisuallyHidden,
+} from "@artsy/palette"
 import { Form, Formik } from "formik"
 import type { FC } from "react"
 import * as Yup from "yup"
@@ -120,7 +120,7 @@ export const SettingsShippingAddressForm: FC<
           phoneNumber,
           phoneNumberCountryCode,
         },
-        { setStatus, resetForm },
+        { setStatus, resetForm }
       ) => {
         try {
           const attributes = {

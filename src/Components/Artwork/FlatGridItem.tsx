@@ -1,5 +1,3 @@
-import { ContextModule } from "@artsy/cohesion"
-import { Flex, Image, ResponsiveBox } from "@artsy/palette"
 import { ArtworkSidebarAuctionProgressBar } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarAuctionProgressBar"
 import { DeprecatedSaveButtonQueryRenderer } from "Components/Artwork/SaveButton/DeprecatedSaveButton"
 import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
@@ -8,6 +6,8 @@ import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useAuctionWebsocket } from "Utils/Hooks/useAuctionWebsocket"
 import { useTimer } from "Utils/Hooks/useTimer"
 import { userIsTeam } from "Utils/user"
+import { ContextModule } from "@artsy/cohesion"
+import { Flex, Image, ResponsiveBox } from "@artsy/palette"
 import type { FlatGridItem_artwork$data } from "__generated__/FlatGridItem_artwork.graphql"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -156,7 +156,7 @@ export const FlatGridItemFragmentContainer = createFragmentContainer(
         href
       }
     `,
-  },
+  }
 )
 
 interface FlatGridItemPlaceholderProps {

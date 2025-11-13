@@ -1,3 +1,12 @@
+import { SavedSearchAlertEditFormQueryRenderer } from "Apps/Settings/Routes/SavedSearchAlerts/Components/SavedSearchAlertEditForm"
+import { SavedSearchAlertsArtworksQueryRenderer } from "Apps/Settings/Routes/SavedSearchAlerts/Components/SavedSearchAlertsArtworks"
+import { MetaTags } from "Components/MetaTags"
+import { useRouter } from "System/Hooks/useRouter"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { extractNodes } from "Utils/extractNodes"
+import { Jump } from "Utils/Hooks/useJump"
+import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
+import { Media } from "Utils/Responsive"
 import { ActionType } from "@artsy/cohesion"
 import {
   Box,
@@ -12,24 +21,15 @@ import {
   THEME,
   useToasts,
 } from "@artsy/palette"
-import { SavedSearchAlertEditFormQueryRenderer } from "Apps/Settings/Routes/SavedSearchAlerts/Components/SavedSearchAlertEditForm"
-import { SavedSearchAlertsArtworksQueryRenderer } from "Apps/Settings/Routes/SavedSearchAlerts/Components/SavedSearchAlertsArtworks"
-import { MetaTags } from "Components/MetaTags"
-import { useRouter } from "System/Hooks/useRouter"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { Jump } from "Utils/Hooks/useJump"
-import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
-import { Media } from "Utils/Responsive"
-import { extractNodes } from "Utils/extractNodes"
 import type { SavedSearchAlertsApp_Alert_Query } from "__generated__/SavedSearchAlertsApp_Alert_Query.graphql"
 import type { SavedSearchAlertsApp_me$data } from "__generated__/SavedSearchAlertsApp_me.graphql"
 import { useCallback, useEffect, useMemo, useState } from "react"
 import {
-  type Environment,
-  type RelayPaginationProp,
   createPaginationContainer,
+  type Environment,
   fetchQuery,
   graphql,
+  type RelayPaginationProp,
 } from "react-relay"
 import { useTracking } from "react-tracking"
 import { SavedSearchAlertDeleteModal } from "./Components/SavedSearchAlertDeleteModal"
@@ -71,7 +71,7 @@ export const SavedSearchAlertsApp: React.FC<
 
   const [viewOption, setViewOption] = useState<"EDIT" | "ARTWORKS" | null>(null)
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Effect dependencies managed by responsive state and routing
   useEffect(() => {
     if (!alerts || !alerts[0]) return
     if (match?.params?.alertID) return
@@ -202,7 +202,7 @@ export const SavedSearchAlertsApp: React.FC<
   const alertID = match?.params?.alertID ?? editAlertEntity?.id
   const path = match.location.pathname
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Relay query effect with complex routing dependencies
   useEffect(() => {
     if (!alertID) return
 
@@ -225,7 +225,7 @@ export const SavedSearchAlertsApp: React.FC<
           }
         }
       `,
-      { alertID },
+      { alertID }
     )
       ?.toPromise()
       .then(data => {
@@ -295,7 +295,7 @@ export const SavedSearchAlertsApp: React.FC<
         )}
       </>
     ),
-    [alerts, editAlertEntity, handleLoadMore, loading, relay, silentPush],
+    [alerts, editAlertEntity, handleLoadMore, loading, relay, silentPush]
   )
 
   return (
@@ -447,5 +447,5 @@ export const SavedSearchAlertsAppPaginationContainer =
           }
         }
       `,
-    },
+    }
   )

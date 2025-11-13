@@ -56,7 +56,7 @@ describe("getSelectedFiltersCounts helper", () => {
   it("returns empty object if it is initial filters", () => {
     const result = getSelectedFiltersCounts(
       initialArtworkFilterState,
-      initialArtworkFilterState,
+      initialArtworkFilterState
     )
     expect(result).toEqual({})
   })
@@ -64,7 +64,7 @@ describe("getSelectedFiltersCounts helper", () => {
   it("counts multiselect filters correctly", () => {
     const result = getSelectedFiltersCounts(
       multiSelectFilters,
-      initialArtworkFilterState,
+      initialArtworkFilterState
     )
     expect(result).toEqual(multiSelectFiltersExpectedResult)
   })
@@ -72,7 +72,7 @@ describe("getSelectedFiltersCounts helper", () => {
   it("counts single option filters correctly", () => {
     const result = getSelectedFiltersCounts(
       singleOptionFilters,
-      initialArtworkFilterState,
+      initialArtworkFilterState
     )
     expect(result).toEqual(singleOptionFiltersExpectedResult)
   })
@@ -80,7 +80,7 @@ describe("getSelectedFiltersCounts helper", () => {
   it("counts ways to buy options correctly", () => {
     const result = getSelectedFiltersCounts(
       waysToBuyFilters,
-      initialArtworkFilterState,
+      initialArtworkFilterState
     )
     expect(result).toEqual(waysToBuyFiltersExpectedResult)
   })
@@ -88,7 +88,7 @@ describe("getSelectedFiltersCounts helper", () => {
   it("counts artists options correctly", () => {
     const result = getSelectedFiltersCounts(
       artistsFilters,
-      initialArtworkFilterState,
+      initialArtworkFilterState
     )
     expect(result).toEqual(artistsFiltersExpectedResult)
   })
@@ -116,7 +116,7 @@ describe("getSelectedFiltersCounts helper", () => {
       }
       const result = getSelectedFiltersCounts(
         filters,
-        initialArtworkFilterState,
+        initialArtworkFilterState
       )
 
       expect(result).toEqual({})
@@ -128,7 +128,7 @@ describe("getSelectedFiltersCounts helper", () => {
       }
       const result = getSelectedFiltersCounts(
         filters,
-        initialArtworkFilterState,
+        initialArtworkFilterState
       )
 
       expect(result).toEqual({
@@ -142,7 +142,7 @@ describe("getSelectedFiltersCounts helper", () => {
       }
       const result = getSelectedFiltersCounts(
         filters,
-        initialArtworkFilterState,
+        initialArtworkFilterState
       )
 
       expect(result).toEqual({
@@ -156,7 +156,7 @@ describe("getSelectedFiltersCounts helper", () => {
       }
       const result = getSelectedFiltersCounts(
         singleOptionFilters,
-        defaultFilters,
+        defaultFilters
       )
 
       expect(result).toEqual({

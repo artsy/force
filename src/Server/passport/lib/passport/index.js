@@ -22,8 +22,8 @@ module.exports = () => {
         otpField: "otp_attempt",
         passReqToCallback: true,
       },
-      callbacks.local,
-    ),
+      callbacks.local
+    )
   )
 
   if (opts.FACEBOOK_ID && opts.FACEBOOK_SECRET) {
@@ -36,8 +36,8 @@ module.exports = () => {
           passReqToCallback: true,
           callbackURL: `${opts.APP_URL}${opts.facebookCallbackPath}`,
         },
-        callbacks.facebook,
-      ),
+        callbacks.facebook
+      )
     )
   }
 
@@ -52,8 +52,8 @@ module.exports = () => {
           callbackURL: `${opts.APP_URL}${opts.googleCallbackPath}`,
           scope: ["profile", "email"],
         },
-        callbacks.google,
-      ),
+        callbacks.google
+      )
     )
   }
 
@@ -74,8 +74,8 @@ module.exports = () => {
           callbackURL: `${opts.APP_URL}${opts.appleCallbackPath}`,
           scope: ["name", "email"],
         },
-        callbacks.apple,
-      ),
+        callbacks.apple
+      )
     )
   }
 }

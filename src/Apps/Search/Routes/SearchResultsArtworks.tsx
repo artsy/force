@@ -26,7 +26,7 @@ export const SearchResultsArtworksRoute: React.FC<
   const { match } = useRouter()
   const { userPreferences } = useSystemContext()
   const [searchFilterKey, setSearchFilterKey] = useState(
-    match.location.query.term,
+    match.location.query.term
   )
   const { viewer } = props
   const { sidebar } = viewer
@@ -39,7 +39,7 @@ export const SearchResultsArtworksRoute: React.FC<
 
     // refresh artwork filter on query change
     setSearchFilterKey(term)
-  }, [match.location.query.term])
+  }, [match.location.query.term, match.location.pathname])
 
   return (
     <ArtworkGridContextProvider>

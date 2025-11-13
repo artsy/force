@@ -1,14 +1,14 @@
 import { ArtworkResultFragmentContainer } from "Apps/Artwork/ArtworkApp"
-import { MockBoot } from "DevTools/MockBoot"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
+import { MockBoot } from "DevTools/MockBoot"
 import { mockLocation } from "DevTools/mockLocation"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useRouter } from "System/Hooks/useRouter"
 import type { ArtworkAppTestQuery } from "__generated__/ArtworkAppTestQuery.graphql"
 import { graphql } from "react-relay"
 import {
-  type RelayMockEnvironment,
   createMockEnvironment,
+  type RelayMockEnvironment,
 } from "relay-test-utils/lib/RelayModernMockEnvironment"
 
 let mockRelayEnv: RelayMockEnvironment
@@ -37,7 +37,7 @@ const { renderWithRelay } = setupTestWrapperTL<ArtworkAppTestQuery>({
         <ArtworkResultFragmentContainer
           artworkResult={props.artworkResult!}
           me={props.me!}
-          // @ts-ignore - Several more props
+          // @ts-expect-error - Several more props
           // TODO: We inject `match` here from useRouter, prob not necessary
           match={routerMock.match}
         />
@@ -118,7 +118,7 @@ describe("ArtworkApp", () => {
           }),
         },
         {},
-        mockRelayEnv,
+        mockRelayEnv
       )
 
       await flushPromiseQueue()
@@ -139,7 +139,7 @@ describe("ArtworkApp", () => {
 
       expect(mockShowAuthDialog).not.toHaveBeenCalled()
       expect(routerMock.silentReplace).toHaveBeenCalledWith(
-        "https://artsy.net/artwork/test-artwork",
+        "https://artsy.net/artwork/test-artwork"
       )
     })
   })

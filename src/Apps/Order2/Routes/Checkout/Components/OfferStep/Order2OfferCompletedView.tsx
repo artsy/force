@@ -1,10 +1,10 @@
-import CheckmarkIcon from "@artsy/icons/CheckmarkIcon"
-import { Clickable, Flex, Spacer, Text } from "@artsy/palette"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import createLogger from "Utils/logger"
+import CheckmarkIcon from "@artsy/icons/CheckmarkIcon"
+import { Clickable, Flex, Spacer, Text } from "@artsy/palette"
 
 const logger = createLogger(
-  "Order2/Routes/Checkout/Components/OfferStep/Order2OfferCompletedView.tsx",
+  "Order2/Routes/Checkout/Components/OfferStep/Order2OfferCompletedView.tsx"
 )
 
 export interface Order2OfferCompletedViewProps {

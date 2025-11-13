@@ -12,7 +12,7 @@ interface Options<T> {
 }
 
 export const getSelectedArtworkListIds = <T extends ArtworkListEntity>(
-  options: Options<T>,
+  options: Options<T>
 ) => {
   const { artworkLists, addToArtworkListIDs, removeFromArtworkListIDs } =
     options
@@ -20,7 +20,7 @@ export const getSelectedArtworkListIds = <T extends ArtworkListEntity>(
   const selectedIdsByDefault = selectedByDefault.map(node => node.internalID)
   const selectedArtworkListIds = difference(
     uniq([...selectedIdsByDefault, ...addToArtworkListIDs]),
-    removeFromArtworkListIDs,
+    removeFromArtworkListIDs
   )
 
   return selectedArtworkListIds

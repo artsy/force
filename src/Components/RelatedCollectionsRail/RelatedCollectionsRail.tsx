@@ -1,11 +1,11 @@
-import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { Spacer } from "@artsy/palette"
 import { Rail } from "Components/Rail/Rail"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { useIntersectionObserver } from "Utils/Hooks/useIntersectionObserver"
-import type { RelatedCollectionsRailQuery } from "__generated__/RelatedCollectionsRailQuery.graphql"
+import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import { Spacer } from "@artsy/palette"
 import type { RelatedCollectionsRail_collections$data } from "__generated__/RelatedCollectionsRail_collections.graphql"
+import type { RelatedCollectionsRailQuery } from "__generated__/RelatedCollectionsRailQuery.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -23,7 +23,7 @@ export const RelatedCollectionsRail: React.FC<
   const { trackEvent } = useTracking()
 
   const collectionsWithArtworks = collections.filter(collection =>
-    Boolean(collection.artworksConnection),
+    Boolean(collection.artworksConnection)
   )
   const { contextPageOwnerId, contextPageOwnerSlug } = useAnalyticsContext()
 
@@ -94,7 +94,7 @@ export const RelatedCollectionsRailFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  },
+  }
 )
 
 export const RelatedCollectionsRailQueryRenderer: React.FC<

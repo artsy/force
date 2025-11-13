@@ -1,11 +1,10 @@
-import { screen, waitFor } from "@testing-library/react"
-import userEvent from "@testing-library/user-event"
 import {
   createArtworkFilterTestRenderer,
   currentArtworkFilterContext,
 } from "Components/ArtworkFilter/ArtworkFilters/__tests__/Utils"
-
 import { SizeFilter } from "Components/ArtworkFilter/ArtworkFilters/SizeFilter"
+import { screen, waitFor } from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
 
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
@@ -66,10 +65,10 @@ describe("SizeFilter", () => {
     await waitFor(() => {
       expect(currentArtworkFilterContext().filters?.sizes).toEqual([])
       expect(currentArtworkFilterContext().filters?.height).toEqual(
-        "4.724409448818897-6.299212598425196",
+        "4.724409448818897-6.299212598425196"
       )
       expect(currentArtworkFilterContext().filters?.width).toEqual(
-        "4.724409448818897-6.299212598425196",
+        "4.724409448818897-6.299212598425196"
       )
     })
   })
@@ -84,7 +83,7 @@ describe("SizeFilter", () => {
 
     expect(currentArtworkFilterContext().filters?.sizes).toEqual([])
     expect(currentArtworkFilterContext().filters?.height).toEqual(
-      "4.724409448818897-9.448818897637794",
+      "4.724409448818897-9.448818897637794"
     )
     expect(currentArtworkFilterContext().filters?.width).toEqual("*-*")
   })
@@ -117,10 +116,10 @@ describe("SizeFilter", () => {
     await waitFor(() => {
       expect(currentArtworkFilterContext().filters?.sizes).toEqual([])
       expect(currentArtworkFilterContext().filters?.width).toEqual(
-        "0.39370078740157477-0.7874015748031495",
+        "0.39370078740157477-0.7874015748031495"
       )
       expect(currentArtworkFilterContext().filters?.height).toEqual(
-        "1.1811023622047243-1.574803149606299",
+        "1.1811023622047243-1.574803149606299"
       )
       expect(screen.queryByDisplayValue("1")).toBeInTheDocument()
       expect(screen.queryByDisplayValue("2")).toBeInTheDocument()

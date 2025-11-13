@@ -1,4 +1,11 @@
 import {
+  type AddressAutocompleteSuggestion,
+  useAddressAutocomplete,
+} from "Components/Address/useAddressAutocomplete"
+import { type Address, emptyAddress } from "Components/Address/utils"
+import { CountrySelect } from "Components/CountrySelect"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import {
   ActionType,
   ContextModule,
   type EditedAutocompletedAddress,
@@ -13,13 +20,6 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import {
-  type AddressAutocompleteSuggestion,
-  useAddressAutocomplete,
-} from "Components/Address/useAddressAutocomplete"
-import { type Address, emptyAddress } from "Components/Address/utils"
-import { CountrySelect } from "Components/CountrySelect"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { isEqual } from "lodash"
 import * as React from "react"
 import { useTracking } from "react-tracking"
@@ -30,7 +30,7 @@ export type AddressErrors = Partial<Address>
 export type AddressTouched = Partial<{ [T in keyof Address]: boolean }>
 export type AddressChangeHandler = (
   address: Address,
-  key: keyof Address,
+  key: keyof Address
 ) => void
 
 export interface AddressFormProps {
@@ -74,14 +74,10 @@ export const AddressForm: React.FC<
     edited: false,
   })
 
-  const {
-    autocompleteOptions,
-    fetchForAutocomplete,
-    fetchSecondarySuggestions,
-    ...autocomplete
-  } = useAddressAutocomplete(address, {
-    enableSecondarySuggestions: ENABLE_SECONDARY_SUGGESTIONS,
-  })
+  const { autocompleteOptions, fetchForAutocomplete, ...autocomplete } =
+    useAddressAutocomplete(address, {
+      enableSecondarySuggestions: ENABLE_SECONDARY_SUGGESTIONS,
+    })
 
   if (!isEqual(value, prevValue)) {
     setPrevValue(value)
@@ -115,7 +111,7 @@ export const AddressForm: React.FC<
     onChangeValue(key, value)
   }
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Address change handler managed by form state
   React.useEffect(() => {
     if (key) {
       onChange(address, key)
@@ -130,7 +126,7 @@ export const AddressForm: React.FC<
     (key: keyof Address) => {
       return (touched && touched[key] && errors && errors[key]) || ""
     },
-    [errors, touched],
+    [errors, touched]
   )
 
   const phoneNumberInputDescription = (): string | undefined => {

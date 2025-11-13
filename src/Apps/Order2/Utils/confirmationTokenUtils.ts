@@ -1,13 +1,13 @@
-import { fetchQuery, graphql, type Environment } from "react-relay"
 import createLogger from "Utils/logger"
 import type { confirmationTokenUtilsQuery } from "__generated__/confirmationTokenUtilsQuery.graphql"
+import { type Environment, fetchQuery, graphql } from "react-relay"
 
 const logger = createLogger("confirmationTokenUtils")
 
 export const fetchAndSetConfirmationToken = async (
   tokenId: string,
   environment: Environment,
-  setConfirmationToken: (data: any) => void,
+  setConfirmationToken: (data: any) => void
 ) => {
   try {
     const response = await fetchQuery<confirmationTokenUtilsQuery>(
@@ -35,7 +35,7 @@ export const fetchAndSetConfirmationToken = async (
         }
       `,
       { id: tokenId },
-      { fetchPolicy: "store-or-network" },
+      { fetchPolicy: "store-or-network" }
     ).toPromise()
 
     setConfirmationToken({

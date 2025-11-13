@@ -1,8 +1,8 @@
-import { THEME } from "@artsy/palette-tokens"
 import { useNavBarHeight } from "Components/NavBar/useNavBarHeight"
 import { getOffsetTopForSticky, useSticky } from "Components/Sticky"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 import { scrollToAwaitable } from "Utils/scrollToAwaitable"
+import { THEME } from "@artsy/palette-tokens"
 import { type FC, useCallback, useEffect } from "react"
 
 interface UseJump {
@@ -30,7 +30,7 @@ export const useJump = ({ behavior = "smooth", offset = 0 }: UseJump = {}) => {
         behavior?: ScrollBehavior
         offset?: number
         onComplete?: () => void
-      } = {},
+      } = {}
     ) => {
       const el = document.querySelector(`#${NAMESPACE}--${id}`)
 
@@ -54,7 +54,7 @@ export const useJump = ({ behavior = "smooth", offset = 0 }: UseJump = {}) => {
         onComplete: options.onComplete,
       })
     },
-    [behavior, desktop, isMobile, mobile, offset, stickies],
+    [behavior, desktop, isMobile, mobile, offset, stickies]
   )
 
   return { jumpTo }

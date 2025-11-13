@@ -1,17 +1,16 @@
-import { type FC, useState } from "react"
-import {
-  type RelayRefetchProp,
-  createRefetchContainer,
-  graphql,
-} from "react-relay"
-
 import { SavingPaymentSpinner } from "Apps/Order/Components/SavingPaymentSpinner"
 import { BalanceCheckResult } from "Apps/Order/Routes/Payment/index"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { usePoll } from "Utils/Hooks/usePoll"
-import type { PollAccountBalanceQuery } from "__generated__/PollAccountBalanceQuery.graphql"
 import type { PollAccountBalance_commerceBankAccountBalance$data } from "__generated__/PollAccountBalance_commerceBankAccountBalance.graphql"
+import type { PollAccountBalanceQuery } from "__generated__/PollAccountBalanceQuery.graphql"
+import { type FC, useState } from "react"
+import {
+  createRefetchContainer,
+  graphql,
+  type RelayRefetchProp,
+} from "react-relay"
 
 interface PollAccountBalanceProps {
   relay: RelayRefetchProp
@@ -23,7 +22,7 @@ interface PollAccountBalanceProps {
     | undefined
   onBalanceCheckComplete: (
     displayInsufficientFundsError: boolean,
-    checkResult: BalanceCheckResult,
+    checkResult: BalanceCheckResult
   ) => void
   buyerTotalCents: number
   orderCurrencyCode: string
@@ -79,7 +78,7 @@ const PollAccountBalance: FC<
 
     onBalanceCheckComplete(
       !enoughBalance,
-      enoughBalance ? BalanceCheckResult.success : BalanceCheckResult.failed,
+      enoughBalance ? BalanceCheckResult.success : BalanceCheckResult.failed
     )
     clearTimeout(timeoutID)
   }
@@ -108,7 +107,7 @@ export const PollAccountBalanceRefetchContainer = createRefetchContainer(
       }
     `,
   },
-  BALANCE_QUERY,
+  BALANCE_QUERY
 )
 
 interface PollAccountBalanceQueryRendererProps {
@@ -117,7 +116,7 @@ interface PollAccountBalanceQueryRendererProps {
   onError: (error: Error) => void
   onBalanceCheckComplete: (
     displayInsufficientFundsError: boolean,
-    checkResult: BalanceCheckResult,
+    checkResult: BalanceCheckResult
   ) => void
   buyerTotalCents: number
   orderCurrencyCode: string

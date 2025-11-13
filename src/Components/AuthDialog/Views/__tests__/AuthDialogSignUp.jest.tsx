@@ -1,7 +1,7 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react"
 import { useCountryCode } from "Components/AuthDialog/Hooks/useCountryCode"
 import { AuthDialogSignUp } from "Components/AuthDialog/Views/AuthDialogSignUp"
 import { signUp } from "Utils/auth"
+import { fireEvent, render, screen, waitFor } from "@testing-library/react"
 
 jest.mock("Utils/getENV", () => ({
   getENV: jest.fn().mockImplementation(key => {
@@ -60,13 +60,13 @@ describe("AuthDialogSignUp", () => {
     render(<AuthDialogSignUp />)
 
     expect(screen.getByTestId("disclaimer")).toHaveTextContent(
-      "By clicking Sign Up or Continue with Email, Apple, Google, or Facebook, you agree to Artsy’s Terms and Conditions and Privacy Policy and to receiving emails from Artsy.",
+      "By clicking Sign Up or Continue with Email, Apple, Google, or Facebook, you agree to Artsy’s Terms and Conditions and Privacy Policy and to receiving emails from Artsy."
     )
     expect(
-      screen.getByRole("link", { name: "Terms and Conditions" }),
+      screen.getByRole("link", { name: "Terms and Conditions" })
     ).toHaveAttribute("href", "/terms")
     expect(
-      screen.getByRole("link", { name: "Privacy Policy" }),
+      screen.getByRole("link", { name: "Privacy Policy" })
     ).toHaveAttribute("href", "/privacy")
   })
 
@@ -83,7 +83,7 @@ describe("AuthDialogSignUp", () => {
       render(<AuthDialogSignUp />)
 
       expect(screen.getByTestId("disclaimer")).toHaveTextContent(
-        "By tapping Sign Up or Continue with Email, Apple, Google, or Facebook, you agree to Artsy’s Terms and Conditions and Privacy Policy and to receiving emails from Artsy.",
+        "By tapping Sign Up or Continue with Email, Apple, Google, or Facebook, you agree to Artsy’s Terms and Conditions and Privacy Policy and to receiving emails from Artsy."
       )
     })
   })
@@ -107,7 +107,7 @@ describe("AuthDialogSignUp", () => {
       render(<AuthDialogSignUp />)
 
       expect(screen.getByTestId("disclaimer")).toHaveTextContent(
-        "By clicking Sign Up or Continue with Email, Apple, Google, or Facebook, you agree to Artsy’s Terms and Conditions and Privacy Policy.",
+        "By clicking Sign Up or Continue with Email, Apple, Google, or Facebook, you agree to Artsy’s Terms and Conditions and Privacy Policy."
       )
     })
   })
@@ -131,7 +131,7 @@ describe("AuthDialogSignUp", () => {
       render(<AuthDialogSignUp />)
 
       expect(screen.getByTestId("skeleton-disclaimer")).toHaveTextContent(
-        "By clicking Sign Up or Continue with Email, Apple, Google, or Facebook, you agree to Artsy’s Terms and Conditions and Privacy Policy and to receiving emails from Artsy.",
+        "By clicking Sign Up or Continue with Email, Apple, Google, or Facebook, you agree to Artsy’s Terms and Conditions and Privacy Policy and to receiving emails from Artsy."
       )
     })
   })

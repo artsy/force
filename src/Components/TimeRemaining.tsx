@@ -28,7 +28,7 @@ export const TimeRemaining: React.FC<
   const duration = Duration.fromISO(
     DateTime.fromISO(countdownEnd)
       .diff(DateTime.fromISO(currentTime))
-      .toString(),
+      .toString()
   )
 
   const hasEnded = Math.floor(duration.seconds) <= 0
@@ -36,15 +36,15 @@ export const TimeRemaining: React.FC<
   const days = `${padWithZero(Math.max(0, Math.floor(duration.as("days"))))}d `
 
   const hours = `${padWithZero(
-    Math.max(0, Math.floor(duration.as("hours") % 24)),
+    Math.max(0, Math.floor(duration.as("hours") % 24))
   )}h `
 
   const minutes = `${padWithZero(
-    Math.max(0, Math.floor(duration.as("minutes") % 60)),
+    Math.max(0, Math.floor(duration.as("minutes") % 60))
   )}m `
 
   const seconds = `${padWithZero(
-    Math.max(0, Math.floor(duration.as("seconds") % 60)),
+    Math.max(0, Math.floor(duration.as("seconds") % 60))
   )}s`
 
   return (

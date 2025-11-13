@@ -1,19 +1,18 @@
-import { Box, Clickable, Flex, Text, Tooltip } from "@artsy/palette"
-import type { FC } from "react"
-import { FourUpImageLayout } from "./Images/FourUpImageLayout"
-import { StackedImageLayout } from "./Images/StackedImageLayout"
-
-import HideIcon from "@artsy/icons/HideIcon"
-import { themeGet } from "@styled-system/theme-get"
+import { BASE_SAVES_PATH } from "Apps/CollectorProfile/constants"
 import { ARTWORK_LIST_SCROLL_TARGET_ID } from "Apps/CollectorProfile/Routes/Saves/CollectorProfileSavesRoute"
 import { SAVES_ARTWORKS_SECTION_ID } from "Apps/CollectorProfile/Routes/Saves/Components/SavesArtworks"
-import { BASE_SAVES_PATH } from "Apps/CollectorProfile/constants"
 import { RouterLink, type RouterLinkProps } from "System/Components/RouterLink"
-import { useJump } from "Utils/Hooks/useJump"
 import { extractNodes } from "Utils/extractNodes"
+import { useJump } from "Utils/Hooks/useJump"
+import HideIcon from "@artsy/icons/HideIcon"
+import { Box, Clickable, Flex, Text, Tooltip } from "@artsy/palette"
+import { themeGet } from "@styled-system/theme-get"
 import type { ArtworkListItem_item$data } from "__generated__/ArtworkListItem_item.graphql"
+import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled, { css } from "styled-components"
+import { FourUpImageLayout } from "./Images/FourUpImageLayout"
+import { StackedImageLayout } from "./Images/StackedImageLayout"
 
 interface ArtworkListItemProps {
   isSelected?: boolean
@@ -40,7 +39,7 @@ const ArtworkListItem: FC<
 
   const isContentOutOfView = () => {
     const element = document.getElementById(
-      `JUMP--${SAVES_ARTWORKS_SECTION_ID}`,
+      `JUMP--${SAVES_ARTWORKS_SECTION_ID}`
     )
 
     if (element === null) return false
@@ -138,7 +137,7 @@ export const ArtworkListItemFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  },
+  }
 )
 
 interface ArtworkListItemLinkProps extends RouterLinkProps {

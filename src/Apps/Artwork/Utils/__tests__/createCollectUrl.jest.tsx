@@ -1,6 +1,6 @@
 import {
-  type FilterCategory,
   createCollectUrl,
+  type FilterCategory,
 } from "Apps/Artwork/Utils/createCollectUrl"
 
 describe("createCollectUrl", () => {
@@ -12,7 +12,7 @@ describe("createCollectUrl", () => {
     })
 
     expect(result).toMatchInlineSnapshot(
-      `"/collect/painting?page=1&sort=-decayed_merch&acquireable=true&offerable=true&inquireable_only=true&dimension_range=27.6-%2A&artist_id=evelyn-walg"`,
+      `"/collect/painting?page=1&sort=-decayed_merch&acquireable=true&offerable=true&inquireable_only=true&dimension_range=27.6-%2A&artist_id=evelyn-walg"`
     )
   })
   it("formats the collect page url correctly (medium)", async () => {
@@ -23,7 +23,7 @@ describe("createCollectUrl", () => {
     })
 
     expect(result).toMatchInlineSnapshot(
-      `"/collect/film-slash-video?page=1&sort=-decayed_merch&acquireable=true&offerable=true&inquireable_only=true&dimension_range=15.7-27.6&artist_id=evelyn-walg"`,
+      `"/collect/film-slash-video?page=1&sort=-decayed_merch&acquireable=true&offerable=true&inquireable_only=true&dimension_range=15.7-27.6&artist_id=evelyn-walg"`
     )
   })
 
@@ -35,7 +35,7 @@ describe("createCollectUrl", () => {
     })
 
     expect(result).toMatchInlineSnapshot(
-      `"/collect/work-on-paper?page=1&sort=-decayed_merch&acquireable=true&offerable=true&inquireable_only=true&dimension_range=%2A-15.7&artist_id=banksy"`,
+      `"/collect/work-on-paper?page=1&sort=-decayed_merch&acquireable=true&offerable=true&inquireable_only=true&dimension_range=%2A-15.7&artist_id=banksy"`
     )
   })
 
@@ -47,7 +47,7 @@ describe("createCollectUrl", () => {
     })
 
     expect(result).toMatchInlineSnapshot(
-      `"/collect/work-on-paper?page=1&sort=-decayed_merch&acquireable=true&offerable=true&inquireable_only=true&dimension_range=%2A-%2A&artist_id=banksy"`,
+      `"/collect/work-on-paper?page=1&sort=-decayed_merch&acquireable=true&offerable=true&inquireable_only=true&dimension_range=%2A-%2A&artist_id=banksy"`
     )
   })
 
@@ -59,7 +59,7 @@ describe("createCollectUrl", () => {
     })
 
     expect(result).toMatchInlineSnapshot(
-      `"/collect?page=1&sort=-decayed_merch&acquireable=true&offerable=true&inquireable_only=true&dimension_range=%2A-15.7&artist_id=banksy"`,
+      `"/collect?page=1&sort=-decayed_merch&acquireable=true&offerable=true&inquireable_only=true&dimension_range=%2A-15.7&artist_id=banksy"`
     )
   })
 })

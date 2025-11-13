@@ -41,7 +41,7 @@ export const useConfig = ({ basis, onClose }: UseConfig) => {
           return basis.current?.questionThree!
         },
       },
-    }),
+    })
   )
 
   const [current, setCurrent] = useState(workflowEngine.current.current())

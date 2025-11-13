@@ -15,7 +15,7 @@ export const useAuctionResultsTracking = () => {
       context_page_owner_type:
         | OwnerType.artistAuctionResults
         | OwnerType.myCollectionArtworkInsights
-        | OwnerType.myCollectionInsights = OwnerType.artistAuctionResults,
+        | OwnerType.myCollectionInsights = OwnerType.artistAuctionResults
     ) => {
       const payload: Partial<ClickedAuctionResultItem> = {
         action: ActionType.clickedAuctionResultItem,

@@ -1,14 +1,14 @@
-import { ContextModule } from "@artsy/cohesion"
-import { Column, GridColumns, Skeleton, Text } from "@artsy/palette"
 import { initializeVariablesWithFilterState } from "Apps/Collect/collectRoutes"
 import { LazyArtworkGrid } from "Components/ArtworkGrid/LazyArtworkGrid"
 import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
 import { EntityHeaderPlaceholder } from "Components/EntityHeaders/EntityHeaderPlaceholder"
 import { useRouter } from "System/Hooks/useRouter"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import type { CollectionFeaturedArtistsQuery } from "__generated__/CollectionFeaturedArtistsQuery.graphql"
+import { ContextModule } from "@artsy/cohesion"
+import { Column, GridColumns, Skeleton, Text } from "@artsy/palette"
 import type { CollectionFeaturedArtists_artworks$data } from "__generated__/CollectionFeaturedArtists_artworks.graphql"
 import type { CollectionFeaturedArtists_collection$data } from "__generated__/CollectionFeaturedArtists_collection.graphql"
+import type { CollectionFeaturedArtistsQuery } from "__generated__/CollectionFeaturedArtistsQuery.graphql"
 import { compact, filter, take } from "lodash"
 import { createFragmentContainer, graphql } from "react-relay"
 
@@ -25,7 +25,7 @@ export const CollectionFeaturedArtists: React.FC<
   const featuredArtists = getFeaturedArtists(
     12,
     collection,
-    merchandisableArtists,
+    merchandisableArtists
   )
 
   if (!featuredArtists?.length) {
@@ -102,7 +102,7 @@ export const CollectionFeaturedArtistsQueryRenderer: React.FC<
 
   const { aggregations } = initializeVariablesWithFilterState(
     match.params,
-    match,
+    match
   )
 
   return (
@@ -136,7 +136,7 @@ export const CollectionFeaturedArtistsQueryRenderer: React.FC<
           if (error) {
             console.error(
               "[CollectionFeaturedArtists]: Error fetching featured artists",
-              error,
+              error
             )
             return null
           }
@@ -168,7 +168,7 @@ const PLACEHOLDER = (
     </Text>
 
     <GridColumns>
-      {[...Array(8)].map((artist, index) => {
+      {[...Array(8)].map((_artist, index) => {
         return (
           <Column
             span={[12, 6, 3, 3]}
@@ -187,15 +187,15 @@ const PLACEHOLDER = (
 export const getFeaturedArtists = (
   artistsCount: number,
   collection: CollectionFeaturedArtists_collection$data,
-  merchandisableArtists: CollectionFeaturedArtists_artworks$data["merchandisableArtists"],
+  merchandisableArtists: CollectionFeaturedArtists_artworks$data["merchandisableArtists"]
 ) => {
   if ((collection?.query?.artistIDs?.length ?? 0) > 0) {
     return compact(
       filter(merchandisableArtists, artist =>
         (collection?.query?.artistIDs ?? []).includes(
-          artist?.internalID as string,
-        ),
-      ),
+          artist?.internalID as string
+        )
+      )
     )
   }
 
@@ -203,9 +203,9 @@ export const getFeaturedArtists = (
     const filteredArtistsIds = compact(
       merchandisableArtists?.filter(artist => {
         return !collection?.featuredArtistExclusionIds?.includes(
-          artist?.internalID as string,
+          artist?.internalID as string
         )
-      }),
+      })
     )
 
     return take(filteredArtistsIds, artistsCount)

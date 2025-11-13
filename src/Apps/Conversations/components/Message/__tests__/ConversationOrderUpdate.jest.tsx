@@ -1,6 +1,6 @@
-import { screen } from "@testing-library/react"
 import { ConversationOrderUpdate } from "Apps/Conversations/components/Message/ConversationOrderUpdate"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import type { ConversationOrderUpdate_Test_Query } from "__generated__/ConversationOrderUpdate_Test_Query.graphql"
 import { graphql } from "react-relay"
 
@@ -91,7 +91,7 @@ describe("testing different statuses", () => {
     })
 
     expect(
-      screen.getByText("You sent a counteroffer for $40000"),
+      screen.getByText("You sent a counteroffer for $40000")
     ).toBeInTheDocument()
   })
 
@@ -123,7 +123,7 @@ describe("testing different statuses", () => {
     })
 
     expect(
-      screen.getByText("You received a counteroffer for $40000"),
+      screen.getByText("You received a counteroffer for $40000")
     ).toBeInTheDocument()
     expect(screen.queryByText("See details.")).not.toBeInTheDocument()
   })
@@ -156,7 +156,7 @@ describe("testing different statuses", () => {
     })
 
     expect(
-      screen.getByText("Offer Accepted - Pending Action"),
+      screen.getByText("Offer Accepted - Pending Action")
     ).toBeInTheDocument()
     expect(screen.queryByText("See details.")).not.toBeInTheDocument()
   })
@@ -206,7 +206,7 @@ describe("testing different statuses", () => {
       }),
     })
     expect(
-      screen.getByText("Offer accepted. Payment processing"),
+      screen.getByText("Offer accepted. Payment processing")
     ).toBeInTheDocument()
   })
 

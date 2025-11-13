@@ -1,3 +1,6 @@
+import { MetaTags } from "Components/MetaTags"
+import { RouterLink } from "System/Components/RouterLink"
+import { cropped, resized } from "Utils/resized"
 import {
   Avatar,
   Box,
@@ -11,9 +14,6 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { MetaTags } from "Components/MetaTags"
-import { RouterLink } from "System/Components/RouterLink"
-import { cropped, resized } from "Utils/resized"
 import type { FC } from "react"
 import { InstitutionPartnershipsHero } from "./Components/InstitutionPartnershipsHero"
 import { InstitutionPartnershipsProfilesQueryRenderer } from "./Components/InstitutionPartnershipsProfiles"
@@ -82,7 +82,7 @@ export const InstitutionPartnershipsApp: FC<
           <Column span={4} start={5}>
             <Button
               width="100%"
-              // @ts-ignore
+              // @ts-expect-error
               as={RouterLink}
               to="/institutions"
             >
@@ -128,7 +128,7 @@ export const InstitutionPartnershipsApp: FC<
               <Image
                 {...resized(
                   "https://files.artsy.net/images/institutions-density-map.png",
-                  { width: 910, height: 473 },
+                  { width: 910, height: 473 }
                 )}
                 width="100%"
                 height="100%"
@@ -154,7 +154,7 @@ export const InstitutionPartnershipsApp: FC<
               <Image
                 {...resized(
                   "https://files.artsy.net/images/institutions-page-screenshot.png",
-                  { width: 910, height: 543 },
+                  { width: 910, height: 543 }
                 )}
                 width="100%"
                 height="100%"
@@ -212,7 +212,7 @@ export const InstitutionPartnershipsApp: FC<
               <Image
                 {...resized(
                   "https://files.artsy.net/images/institutions-cms-screenshot.png",
-                  { width: 910, height: 543 },
+                  { width: 910, height: 543 }
                 )}
                 width="100%"
                 height="100%"

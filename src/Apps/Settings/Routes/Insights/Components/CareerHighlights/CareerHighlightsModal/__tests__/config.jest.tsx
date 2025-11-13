@@ -1,5 +1,5 @@
-import { act, renderHook } from "@testing-library/react-hooks"
 import { useCareerHighlightConfig } from "Apps/Settings/Routes/Insights/Components/CareerHighlights/CareerHighlightsModal/config"
+import { act, renderHook } from "@testing-library/react-hooks"
 
 describe("CareerHighlightsModalConfig", () => {
   it("should move through the list", async () => {

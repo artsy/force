@@ -3,8 +3,8 @@ import {
   useCurrentlySelectedFiltersForAuctionResults,
 } from "Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
 import {
-  YearCreated,
   getCreatedYearBounds,
+  YearCreated,
 } from "Apps/Artist/Routes/AuctionResults/Components/AuctionFilters/YearCreated"
 import { DropdownFilter } from "Components/DropdownFilter"
 

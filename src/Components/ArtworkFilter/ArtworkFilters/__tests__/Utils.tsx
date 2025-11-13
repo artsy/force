@@ -1,13 +1,13 @@
 import {
-  type RenderOptions,
-  render as originalRender,
-  screen,
-} from "@testing-library/react"
-import {
   type ArtworkFilterContextProps,
   ArtworkFilterContextProvider,
   useArtworkFilterContext,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
+import {
+  render as originalRender,
+  type RenderOptions,
+  screen,
+} from "@testing-library/react"
 import type { PropsWithChildren, ReactElement } from "react"
 
 /**
@@ -50,7 +50,7 @@ import type { PropsWithChildren, ReactElement } from "react"
  * @see currentArtworkFilterContext
  */
 export const createArtworkFilterTestRenderer = (
-  artworkFilterContext: Partial<ArtworkFilterContextProps> = {},
+  artworkFilterContext: Partial<ArtworkFilterContextProps> = {}
 ) => {
   return (ui: ReactElement, options: RenderOptions = {}) =>
     originalRender(ui, {
@@ -107,7 +107,7 @@ export const currentArtworkFilterContext = (): ArtworkFilterContextProps => {
   } catch (error) {
     if (error.name === "TestingLibraryElementError")
       throw new Error(
-        `The currentContext() helper function requires an <ArtworkFilterContextInspector /> to be mounted in the current DOM.`,
+        `The currentContext() helper function requires an <ArtworkFilterContextInspector /> to be mounted in the current DOM.`
       )
   }
 

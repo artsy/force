@@ -1,8 +1,8 @@
-import { fireEvent, screen } from "@testing-library/react"
 import { ConversationHeader } from "Apps/Conversations/components/ConversationHeader"
 import { useMobileLayoutActions } from "Apps/Conversations/hooks/useMobileLayoutActions"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { MediaContextProvider } from "Utils/Responsive"
+import { fireEvent, screen } from "@testing-library/react"
 import type { ConversationHeaderTestQuery } from "__generated__/ConversationHeaderTestQuery.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -90,7 +90,7 @@ describe("ConversationDetails", () => {
     expect(screen.getByText("From Lidiane Taquehara")).toBeInTheDocument()
     expect(screen.getByAltText("Artwork image of Demo title")).toHaveAttribute(
       "src",
-      "https://imamges.com/img.png",
+      "https://imamges.com/img.png"
     )
     expect(screen.getByText("Edgar the doggo")).toBeInTheDocument()
     expect(screen.getByText("Demo title")).toBeInTheDocument()
@@ -98,7 +98,7 @@ describe("ConversationDetails", () => {
     expect(screen.getByText("View Artwork")).toBeInTheDocument()
     expect(screen.getByRole("link")).toHaveAttribute(
       "href",
-      "/artwork/demo-slug-42",
+      "/artwork/demo-slug-42"
     )
   })
 
@@ -143,7 +143,7 @@ describe("ConversationDetails", () => {
       renderWithRelay()
 
       expect(screen.getAllByRole("button")[1]).toHaveStyle(
-        "background-color: transparent",
+        "background-color: transparent"
       )
     })
 
@@ -174,7 +174,7 @@ describe("ConversationDetails", () => {
       })
 
       expect(screen.getAllByRole("button")[1]).not.toHaveStyle(
-        "background-color: transparent",
+        "background-color: transparent"
       )
     })
 

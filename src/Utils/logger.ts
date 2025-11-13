@@ -16,7 +16,7 @@ export default function createLogger(namespace = "") {
     },
     error: (...errors) => {
       const error = errors.find(
-        e => e instanceof Error || e?.shouldLogErrorToSentry,
+        e => e instanceof Error || e?.shouldLogErrorToSentry
       )
 
       if (error && shouldCaptureError(process.env.NODE_ENV)) {

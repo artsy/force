@@ -1,5 +1,5 @@
-import { Box, type BoxProps, Input, SelectInput } from "@artsy/palette"
 import { countries } from "Utils/countries"
+import { Box, type BoxProps, Input, SelectInput } from "@artsy/palette"
 import type { ContactInformationForm_me$data } from "__generated__/ContactInformationForm_me.graphql"
 import { useFormikContext } from "formik"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -83,5 +83,5 @@ export const ContactInformationFormFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  },
+  }
 )

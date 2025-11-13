@@ -1,8 +1,8 @@
+import { useClientQuery } from "Utils/Hooks/useClientQuery"
 import { waitFor } from "@testing-library/react"
 import { renderHook } from "@testing-library/react-hooks"
-import { useClientQuery } from "Utils/Hooks/useClientQuery"
 import { graphql } from "react-relay"
-import { MockPayloadGenerator, createMockEnvironment } from "relay-test-utils"
+import { createMockEnvironment, MockPayloadGenerator } from "relay-test-utils"
 
 jest.unmock("react-relay")
 
@@ -19,7 +19,7 @@ describe("useClientQuery", () => {
     const environment = createMockEnvironment()
 
     const { result } = renderHook(() =>
-      useClientQuery({ environment, query: TEST_QUERY }),
+      useClientQuery({ environment, query: TEST_QUERY })
     )
 
     environment.mock.resolveMostRecentOperation(operation => {
@@ -38,7 +38,7 @@ describe("useClientQuery", () => {
 
   it('skips the query if "skip" is true', () => {
     const { result } = renderHook(() =>
-      useClientQuery({ query: TEST_QUERY, skip: true }),
+      useClientQuery({ query: TEST_QUERY, skip: true })
     )
 
     expect(result.current.data).toBeNull()

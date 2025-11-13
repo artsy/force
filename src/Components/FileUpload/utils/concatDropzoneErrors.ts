@@ -3,7 +3,7 @@ import type { FileRejection } from "react-dropzone"
 
 export const concatDropzoneErrors = (
   errors: FileRejection[],
-  customErrors: FileRejection[],
+  customErrors: FileRejection[]
 ) => {
   const result: FileRejection[] = errors.map(cloneDeep)
 

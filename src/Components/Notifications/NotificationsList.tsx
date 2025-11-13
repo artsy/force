@@ -1,4 +1,3 @@
-import { Flex, Join, Separator, Spinner, Text } from "@artsy/palette"
 import { useNotificationsContext } from "Components/Notifications/Hooks/useNotificationsContext"
 import { NotificationItemFragmentContainer } from "Components/Notifications/NotificationItem"
 import type { NotificationListMode } from "Components/Notifications/NotificationsWrapper"
@@ -7,16 +6,17 @@ import { useRouter } from "System/Hooks/useRouter"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
 import { getENV } from "Utils/getENV"
-import type {
-  NotificationTypesEnum,
-  NotificationsListQuery,
-} from "__generated__/NotificationsListQuery.graphql"
+import { Flex, Join, Separator, Spinner, Text } from "@artsy/palette"
 import type { NotificationsList_viewer$data } from "__generated__/NotificationsList_viewer.graphql"
+import type {
+  NotificationsListQuery,
+  NotificationTypesEnum,
+} from "__generated__/NotificationsListQuery.graphql"
 import { useContext, useEffect, useState } from "react"
 import {
-  type RelayPaginationProp,
   createPaginationContainer,
   graphql,
+  type RelayPaginationProp,
 } from "react-relay"
 import { NotificationsEmptyStateByType } from "./NotificationsEmptyStateByType"
 import { NotificationsListPlaceholder } from "./NotificationsListPlaceholder"
@@ -43,7 +43,7 @@ export const NotificationsList: React.FC<
   const [loading, setLoading] = useState(false)
 
   const nodes = extractNodes(viewer.notifications).filter(node =>
-    shouldDisplayNotification(node),
+    shouldDisplayNotification(node)
   )
 
   const { state } = useNotificationsContext()
@@ -181,7 +181,7 @@ export const NotificationsListFragmentContainer = createPaginationContainer(
         cursor,
       }
     },
-  },
+  }
 )
 
 export const NotificationsListQueryRenderer: React.FC<
@@ -235,7 +235,7 @@ export const NotificationsListQueryRenderer: React.FC<
 }
 
 const getNotificationTypes = (
-  type: NotificationType,
+  type: NotificationType
 ): NotificationTypesEnum[] | undefined => {
   if (type === "alerts") {
     return ["ARTWORK_ALERT"]

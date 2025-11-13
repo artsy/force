@@ -10,9 +10,9 @@ import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import type { SaleArtworksFilter_viewer$data } from "__generated__/SaleArtworksFilter_viewer.graphql"
 import {
-  type RelayRefetchProp,
   createRefetchContainer,
   graphql,
+  type RelayRefetchProp,
 } from "react-relay"
 
 interface SaleArtworkFilterProps {
@@ -100,5 +100,5 @@ export const SaleArtworkFilterRefetchContainer = createRefetchContainer(
         ...SaleArtworksFilter_viewer @arguments(input: $input)
       }
     }
-  `,
+  `
 )

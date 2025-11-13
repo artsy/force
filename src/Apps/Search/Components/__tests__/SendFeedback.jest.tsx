@@ -1,8 +1,8 @@
-import { fireEvent, render, screen } from "@testing-library/react"
 import { SendFeedback } from "Apps/Search/Components/SendFeedback"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { SystemContextProvider } from "System/Contexts/SystemContext"
 import { useMutation } from "Utils/Hooks/useMutation"
+import { fireEvent, render, screen } from "@testing-library/react"
 
 jest.mock("Utils/Hooks/useMutation")
 jest.mock("Utils/getENV", () => ({
@@ -42,8 +42,8 @@ describe("SendFeedback", () => {
 
     expect(
       screen.getByText(
-        "Your feedback is important to us. Tell us how we can improve and help you find what you are looking for.",
-      ),
+        "Your feedback is important to us. Tell us how we can improve and help you find what you are looking for."
+      )
     ).toBeInTheDocument()
   })
 
@@ -81,7 +81,7 @@ describe("SendFeedback", () => {
         user={{ id: "percy-z", email: "user@example.com", name: "Percy Z" }}
       >
         <SendFeedback />
-      </SystemContextProvider>,
+      </SystemContextProvider>
     )
 
     const message = screen.getByPlaceholderText("Your comments here")

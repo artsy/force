@@ -1,12 +1,3 @@
-import { ContextModule } from "@artsy/cohesion"
-import {
-  Box,
-  Column,
-  GridColumns,
-  Separator,
-  Spacer,
-  Stack,
-} from "@artsy/palette"
 import { SubmittingOrderSpinner } from "Apps/Order/Components/SubmittingOrderSpinner"
 import { ConnectedModalDialog } from "Apps/Order/Dialogs"
 import { Order2HelpLinksWithInquiry } from "Apps/Order2/Components/Order2HelpLinks"
@@ -25,13 +16,23 @@ import { Order2PaymentStep } from "Apps/Order2/Routes/Checkout/Components/Paymen
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { ErrorPage } from "Components/ErrorPage"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import { ContextModule } from "@artsy/cohesion"
+import {
+  Box,
+  Column,
+  GridColumns,
+  Separator,
+  Spacer,
+  Stack,
+} from "@artsy/palette"
 import type { Order2CheckoutApp_me$key } from "__generated__/Order2CheckoutApp_me.graphql"
 import type { Order2CheckoutApp_order$key } from "__generated__/Order2CheckoutApp_order.graphql"
 import { useEffect } from "react"
 import { Meta, Title } from "react-head"
 import { graphql, useFragment } from "react-relay"
-// eslint-disable-next-line no-restricted-imports
+// biome-ignore lint/style/noRestrictedImports: Legacy component dependency
 import { Provider } from "unstated"
+
 interface Order2CheckoutAppProps {
   order: Order2CheckoutApp_order$key
   me: Order2CheckoutApp_me$key
@@ -64,7 +65,7 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
     orderData.lineItems[0]?.artwork?.isFixedShippingFeeOnly
   const isExpressCheckoutEligible = !isOffer && isFixedShipping
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Express checkout initialization should only run on mount
   useEffect(() => {
     if (!isExpressCheckoutEligible) {
       setExpressCheckoutLoaded([])
@@ -88,7 +89,7 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
         break
       case CheckoutStepName.DELIVERY_OPTION:
         checkoutTracking.orderProgressionViewed(
-          ContextModule.ordersShippingMethods,
+          ContextModule.ordersShippingMethods
         )
         break
     }

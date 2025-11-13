@@ -1,6 +1,6 @@
-import { fireEvent, screen } from "@testing-library/react"
 import { SaleAgreementsApp } from "Apps/SaleAgreements/SaleAgreementsApp"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { fireEvent, screen } from "@testing-library/react"
 import type { SaleAgreementsApp_Test_Query } from "__generated__/SaleAgreementsApp_Test_Query.graphql"
 import { graphql } from "react-relay"
 
@@ -69,7 +69,7 @@ describe("SaleAgreementsApp", () => {
     fireEvent.click(tab)
     expect(screen.getByText("Partner Auctions: Benefit")).toBeInTheDocument()
     expect(
-      screen.queryByText("Partner Auctions: Commercial"),
+      screen.queryByText("Partner Auctions: Commercial")
     ).not.toBeInTheDocument()
     expect(screen.queryByText("Artsy Auctions")).not.toBeInTheDocument()
     expect(screen.getByText("Past Auction")).toBeInTheDocument()

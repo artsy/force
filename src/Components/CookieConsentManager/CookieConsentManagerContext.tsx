@@ -1,15 +1,15 @@
+import {
+  DEFAULT_OPT_IN_PREFERENCES,
+  type DestinationId,
+} from "Components/CookieConsentManager/categories"
 import type {
   CategoryPreferences,
   Destination,
 } from "@segment/consent-manager/types/types"
 import {
-  DEFAULT_OPT_IN_PREFERENCES,
-  type DestinationId,
-} from "Components/CookieConsentManager/categories"
-import {
+  createContext,
   type FC,
   type ReactNode,
-  createContext,
   useContext,
   useState,
 } from "react"
@@ -53,7 +53,7 @@ export const CookieConsentManagerProvider: FC<
 > = ({ children, openConsentManager }) => {
   const [destinations, setDestinations] = useState<Destination[]>([])
   const [preferences, setPreferences] = useState<CategoryPreferences>(
-    DEFAULT_OPT_IN_PREFERENCES,
+    DEFAULT_OPT_IN_PREFERENCES
   )
 
   const ready = destinations.length > 0

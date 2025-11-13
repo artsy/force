@@ -1,6 +1,6 @@
-import { graphql } from "react-relay"
 import { useMutation } from "Utils/Hooks/useMutation"
 import type { useOrder2AddInitialOfferMutation as useOrder2AddInitialOfferMutationType } from "__generated__/useOrder2AddInitialOfferMutation.graphql"
+import { graphql } from "react-relay"
 
 export const useOrder2AddInitialOfferMutation = () => {
   return useMutation<useOrder2AddInitialOfferMutationType>({

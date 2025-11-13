@@ -21,7 +21,7 @@ describe("ErrorBoundary", () => {
     const { container } = render(
       <ErrorBoundary>
         <div>found child</div>
-      </ErrorBoundary>,
+      </ErrorBoundary>
     )
 
     expect(container.textContent).toContain("found child")
@@ -39,7 +39,7 @@ describe("ErrorBoundary", () => {
       render(
         <ErrorBoundary>
           <ErrorComponent />
-        </ErrorBoundary>,
+        </ErrorBoundary>
       )
     } catch {
       // Ignore the error for testing purposes

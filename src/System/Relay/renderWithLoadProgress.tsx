@@ -1,5 +1,5 @@
-import { Spinner, type SpinnerProps } from "@artsy/palette"
 import createLogger from "Utils/logger"
+import { Spinner, type SpinnerProps } from "@artsy/palette"
 import type * as React from "react"
 import type { QueryRenderer, Container as RelayContainer } from "react-relay"
 import styled from "styled-components"
@@ -65,7 +65,7 @@ const handleError = error => {
 
 export type LoadProgressRenderer<P> = (
   // FIXME: https://github.com/DefinitelyTyped/DefinitelyTyped/issues/37950
-  readyState: ReadyState,
+  readyState: ReadyState
 ) => React.ReactElement<RelayContainer<P>> | null
 
 export function renderWithLoadProgress<P>(
@@ -74,11 +74,11 @@ export function renderWithLoadProgress<P>(
   wrapperProps: object = {},
   spinnerProps: SpinnerProps = {
     delay: 1000,
-  },
+  }
 ): LoadProgressRenderer<P> {
   // TODO: We need design for retrying or the approval to use the iOS design.
   // See also: https://artsyproduct.atlassian.net/browse/PLATFORM-1272
-  return ({ error, props, retry }) => {
+  return ({ error, props }) => {
     if (error) {
       // TODO: Should we add a callback here so that containers can gracefully
       //       handle an error state?

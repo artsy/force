@@ -49,5 +49,5 @@ export const InsightsOverviewFragmentContainer = createFragmentContainer(
         artistsCount
       }
     `,
-  },
+  }
 )

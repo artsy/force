@@ -1,6 +1,6 @@
-import { Box, Button, Join, Separator, Stack, Text } from "@artsy/palette"
 import { Z } from "Apps/Components/constants"
 import { useRouter } from "System/Hooks/useRouter"
+import { Box, Button, Join, Separator, Stack, Text } from "@artsy/palette"
 import { createContext, useContext, useEffect, useMemo, useState } from "react"
 
 export interface NavigationHistoryContextType {
@@ -88,7 +88,7 @@ export const useNavigationHistory = (): NavigationHistoryContextType => {
 
   if (context === undefined) {
     throw new Error(
-      "useNavigationHistory must be used within a NavigationHistoryProvider",
+      "useNavigationHistory must be used within a NavigationHistoryProvider"
     )
   }
 

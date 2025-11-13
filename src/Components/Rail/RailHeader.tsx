@@ -1,7 +1,7 @@
-import { Text as BaseText, Box, Flex, SkeletonText, Sup } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
 import { getENV } from "Utils/getENV"
 import { getInternalHref } from "Utils/url"
+import { Text as BaseText, Box, Flex, SkeletonText, Sup } from "@artsy/palette"
 import { useRouter } from "found"
 import type * as React from "react"
 
@@ -54,7 +54,7 @@ export const RailHeader: React.FC<React.PropsWithChildren<RailHeaderProps>> = ({
       <Box pr={2}>
         <Text
           variant="lg-display"
-          // @ts-ignore
+          // @ts-expect-error
           as="h3"
           lineClamp={2}
           mr={2}
@@ -72,7 +72,7 @@ export const RailHeader: React.FC<React.PropsWithChildren<RailHeaderProps>> = ({
         {subTitle && (
           <Text
             display={["none", "block"]}
-            // @ts-ignore
+            // @ts-expect-error
             as="h4"
             variant="lg-display"
             color="mono60"
@@ -88,7 +88,7 @@ export const RailHeader: React.FC<React.PropsWithChildren<RailHeaderProps>> = ({
           textAlign="right"
           variant={["xs", "sm-display"]}
           flexShrink={0}
-          // @ts-ignore
+          // @ts-expect-error
           as={RouterLink}
           to={viewAllHref}
           onClick={viewAllOnClick}

@@ -1,9 +1,9 @@
-import { OwnerType } from "@artsy/cohesion"
-import { screen } from "@testing-library/react"
 import { SuggestedArtworksModal } from "Apps/Artwork/Components/ArtworkAuctionCreateAlertHeader/SuggestedArtworksModal"
 import { SavedSearchAlertContextProvider } from "Components/SavedSearchAlert/SavedSearchAlertContext"
 import type { SavedSearchEntity } from "Components/SavedSearchAlert/types"
 import { render } from "DevTools/renderWithMockBoot"
+import { OwnerType } from "@artsy/cohesion"
+import { screen } from "@testing-library/react"
 
 describe("SuggestedArtworksModal", () => {
   const savedSearchEntity: SavedSearchEntity = {
@@ -37,7 +37,7 @@ describe("SuggestedArtworksModal", () => {
         aggregations={[]}
       >
         <SuggestedArtworksModal onClose={() => {}} />
-      </SavedSearchAlertContextProvider>,
+      </SavedSearchAlertContextProvider>
     )
   }
 
@@ -47,8 +47,8 @@ describe("SuggestedArtworksModal", () => {
     expect(screen.getByText("Works by Banksy")).toBeInTheDocument()
     expect(
       screen.getByText(
-        "Available works you may have missed based on similar filters listed below.",
-      ),
+        "Available works you may have missed based on similar filters listed below."
+      )
     ).toBeInTheDocument()
     expect(screen.getByText("Banksy")).toBeInTheDocument()
     expect(screen.getByText("Prints")).toBeInTheDocument()

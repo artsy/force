@@ -6,9 +6,9 @@ import type { ArtsyRequest, ArtsyResponse } from "./artsyExpress"
  * caching on the html.
  */
 export function csrfTokenMiddleware(
-  req: ArtsyRequest,
+  _req: ArtsyRequest,
   res: ArtsyResponse,
-  next: NextFunction,
+  next: NextFunction
 ) {
   if (res.cookie && res.locals) {
     res.cookie("CSRF_TOKEN", res.locals.sd.CSRF_TOKEN)

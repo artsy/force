@@ -43,7 +43,7 @@ describe("ShowsIndex", () => {
 
     expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1)
     expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
-      "Featured Shows",
+      "Featured Shows"
     )
     expect(screen.getByText("Example Show")).toBeInTheDocument()
   })

@@ -1,5 +1,3 @@
-import CloseIcon from "@artsy/icons/CloseIcon"
-import { Box, Clickable, Flex, Stack, Text } from "@artsy/palette"
 import type { MarkAllAsReadPanelProps } from "Components/Notifications/MarkAllAsReadPanel"
 import { NotificationsContextualMenu } from "Components/Notifications/NotificationsContextualMenu"
 import {
@@ -7,6 +5,8 @@ import {
   NotificationsPillsPlaceholder,
 } from "Components/Notifications/NotificationsPills"
 import type { NotificationListMode } from "Components/Notifications/NotificationsWrapper"
+import CloseIcon from "@artsy/icons/CloseIcon"
+import { Box, Clickable, Flex, Stack, Text } from "@artsy/palette"
 import type { FC } from "react"
 import styled from "styled-components"
 

@@ -3,11 +3,11 @@ import type {
   ConfirmPasswordMutation,
   ConfirmPasswordMutation$data,
 } from "__generated__/ConfirmPasswordMutation.graphql"
-import { type Environment, commitMutation, graphql } from "react-relay"
+import { commitMutation, type Environment, graphql } from "react-relay"
 
 export const ConfirmPassword = (
   environment: Environment,
-  input: ConfirmPasswordInput,
+  input: ConfirmPasswordInput
 ) => {
   return new Promise<ConfirmPasswordMutation$data>(async (resolve, reject) => {
     commitMutation<ConfirmPasswordMutation>(environment, {

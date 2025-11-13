@@ -1,15 +1,14 @@
-import { Popover, THEME } from "@artsy/palette"
 import { ArtworkAuctionRegistrationPanelFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkAuctionRegistrationPanel"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useAuthIntent } from "Utils/Hooks/useAuthIntent"
+import HeartFillIcon from "@artsy/icons/HeartFillIcon"
+import HeartStrokeIcon from "@artsy/icons/HeartStrokeIcon"
+import { Popover, THEME } from "@artsy/palette"
 import type { ArtworkActionsWatchLotButton_artwork$data } from "__generated__/ArtworkActionsWatchLotButton_artwork.graphql"
 import type React from "react"
 import { type FC, useCallback, useEffect, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { UtilButton } from "./UtilButton"
-
-import HeartFillIcon from "@artsy/icons/HeartFillIcon"
-import HeartStrokeIcon from "@artsy/icons/HeartStrokeIcon"
 
 interface ArtworkActionsWatchLotButtonProps {
   isSaved: boolean

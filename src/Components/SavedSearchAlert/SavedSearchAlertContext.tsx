@@ -3,16 +3,15 @@ import { paramsToSnakeCase } from "Components/ArtworkFilter/Utils/paramsCasing"
 import { allowedSearchCriteriaKeys } from "Components/SavedSearchAlert/constants"
 import type { Metric } from "Utils/metrics"
 import qs from "qs"
-import { useContext, useState } from "react"
-import { createContext } from "react"
-import { extractPills } from "./Utils/extractPills"
-import { getAllowedSearchCriteria } from "./Utils/savedSearchCriteria"
+import { createContext, useContext, useState } from "react"
 import type {
   FilterPill,
   SavedSearchEntity,
   SearchCriteriaAttributeKeys,
   SearchCriteriaAttributes,
 } from "./types"
+import { extractPills } from "./Utils/extractPills"
+import { getAllowedSearchCriteria } from "./Utils/savedSearchCriteria"
 
 interface SavedSearchAlertContextProps {
   pills: FilterPill[]
@@ -24,11 +23,11 @@ interface SavedSearchAlertContextProps {
 
   removeCriteriaValue: (
     key: SearchCriteriaAttributeKeys,
-    value: string | number | boolean,
+    value: string | number | boolean
   ) => void
   setCriteriaValue: (
     key: SearchCriteriaAttributeKeys,
-    value: string | string[] | number | boolean | null,
+    value: string | string[] | number | boolean | null
   ) => void
   removePill: (pill: FilterPill) => void
   criteriaHref: () => string | null
@@ -77,13 +76,13 @@ export const SavedSearchAlertContextProvider: React.FC<
 
   const removeCriteriaValue = (
     key: SearchCriteriaAttributeKeys,
-    value: string | number | boolean,
+    value: string | number | boolean
   ) => {
     let criteriaValue = criteria[key]
 
     if (Array.isArray(criteriaValue)) {
       criteriaValue = criteriaValue.filter(
-        currentValue => currentValue !== value,
+        currentValue => currentValue !== value
       )
     } else {
       criteriaValue = null
@@ -94,7 +93,7 @@ export const SavedSearchAlertContextProvider: React.FC<
 
   const setCriteriaValue = (
     key: SearchCriteriaAttributeKeys,
-    value: string | string[] | number | boolean | null,
+    value: string | string[] | number | boolean | null
   ) => {
     const updatedCriteria = getAllowedSearchCriteria({
       ...criteria,
@@ -121,7 +120,7 @@ export const SavedSearchAlertContextProvider: React.FC<
       Object.entries(criteria).filter(([key, _]) => {
         if (key === "artistIDs") return false
         return allowedSearchCriteriaKeys.includes(key)
-      }),
+      })
     )
     const queryParams = qs.stringify(paramsToSnakeCase(allowedCriteriaValues))
 

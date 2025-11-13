@@ -1,6 +1,6 @@
-import { fireEvent, screen } from "@testing-library/react"
 import { ReviewOrderButton } from "Apps/Conversations/components/Details/OrderInformation/ReviewOrderButton"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { fireEvent, screen } from "@testing-library/react"
 import type { ReviewOrderButtonTestQuery } from "__generated__/ReviewOrderButtonTestQuery.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -217,7 +217,7 @@ describe("ReviewOrderButton", () => {
 
     expect(screen.getByRole("link")).toHaveAttribute(
       "href",
-      "/orders/mocked-order-id/details",
+      "/orders/mocked-order-id/details"
     )
   })
 })

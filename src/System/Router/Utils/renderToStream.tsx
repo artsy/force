@@ -1,7 +1,7 @@
-import { PassThrough, Transform } from "stream"
 import type { ArtsyRequest } from "Server/middleware/artsyExpress"
 import type { ReactNode } from "react"
 import { renderToStream as baseRenderToStream } from "react-streaming/server"
+import { PassThrough, Transform } from "stream"
 import type { ServerStyleSheet } from "styled-components"
 
 interface RenderToStreamProps {
@@ -45,7 +45,7 @@ export const renderToStream = async ({
       if (/<\/head>/.test(renderedHtml)) {
         const replacedHtml = renderedHtml.replace(
           "</head>",
-          `${styledCSS}</head>`,
+          `${styledCSS}</head>`
         )
         this.push(replacedHtml)
       } else if (CLOSING_TAG_R.test(renderedHtml)) {

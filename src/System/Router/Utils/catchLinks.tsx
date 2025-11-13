@@ -149,7 +149,7 @@ export const routeThroughBrowserOrApp = hrefHandler => event => {
   hrefHandler(
     `${slashedPathname(destination.pathname)}${destination.search}${
       destination.hash
-    }`,
+    }`
   )
 
   return false

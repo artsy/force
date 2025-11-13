@@ -1,11 +1,11 @@
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import type { AuthContextModule } from "@artsy/cohesion"
 import CloseIcon from "@artsy/icons/CloseIcon"
 import HeartStrokeIcon from "@artsy/icons/HeartStrokeIcon"
 import { Clickable, Flex } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import type { DeprecatedSaveButtonQuery } from "__generated__/DeprecatedSaveButtonQuery.graphql"
 import type { DeprecatedSaveButton_artwork$data } from "__generated__/DeprecatedSaveButton_artwork.graphql"
+import type { DeprecatedSaveButtonQuery } from "__generated__/DeprecatedSaveButtonQuery.graphql"
 import type * as React from "react"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -41,7 +41,7 @@ export const DeprecatedSaveButton: React.FC<
     onSave: ({ action, artwork }) => {
       tracking.trackEvent({
         action,
-        // @ts-ignore TODO: Cohesion schema
+        // @ts-expect-error TODO: Cohesion schema
         entity_slug: artwork.slug,
         entity_id: artwork.internalID,
       })
@@ -49,7 +49,7 @@ export const DeprecatedSaveButton: React.FC<
   })
 
   const handleClick = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     event.preventDefault()
     handleSave()
@@ -126,7 +126,7 @@ export const DeprecatedSaveButtonFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  },
+  }
 )
 
 interface DeprecatedSaveButtonQueryRendererProps

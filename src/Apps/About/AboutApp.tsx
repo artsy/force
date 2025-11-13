@@ -1,4 +1,3 @@
-import { Box, Spacer, Stack } from "@artsy/palette"
 import { AboutContact } from "Apps/About/Components/AboutContact"
 import { AboutDownload } from "Apps/About/Components/AboutDownload"
 import { AboutHeader } from "Apps/About/Components/AboutHeader"
@@ -17,6 +16,7 @@ import {
 import { AboutTagline } from "Apps/About/Components/AboutTagline"
 import { AboutWhatWeDo } from "Apps/About/Components/AboutWhatWeDo"
 import { MetaTags } from "Components/MetaTags"
+import { Box, Spacer, Stack } from "@artsy/palette"
 
 export const AboutApp: React.FC<React.PropsWithChildren<unknown>> = () => {
   return (

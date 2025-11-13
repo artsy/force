@@ -1,10 +1,10 @@
-import { Spacer, Stack, Text } from "@artsy/palette"
 import {
   ArticlesAuthors,
   ArticlesAuthorsPlaceholder,
 } from "Apps/Articles/Components/ArticlesAuthors"
 import { ClientSuspense } from "Components/ClientSuspense"
 import { MetaTags } from "Components/MetaTags"
+import { Spacer, Stack, Text } from "@artsy/palette"
 import type { FC } from "react"
 
 export const AuthorsApp: FC<React.PropsWithChildren<unknown>> = () => {

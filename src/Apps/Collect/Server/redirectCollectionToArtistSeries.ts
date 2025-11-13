@@ -8,7 +8,7 @@ import type { NextFunction } from "express"
 export function redirectCollectionToArtistSeries(
   req: ArtsyRequest,
   res: ArtsyResponse,
-  next: NextFunction,
+  next: NextFunction
 ) {
   const collectionSlug: string = req.params.slug
   const seriesSlug: string = collectionToArtistSeriesSlugMap[collectionSlug]

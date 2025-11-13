@@ -1,6 +1,6 @@
-import { screen } from "@testing-library/react"
 import { SettingsSavesProfilesPaginationContainer } from "Apps/Favorites/Routes/FavoritesFollows/Components/SettingsSavesProfiles"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
@@ -25,7 +25,7 @@ describe("SettingsSavesProfiles", () => {
     })
 
     expect(
-      screen.getByText("Followed Galleries & Institutions"),
+      screen.getByText("Followed Galleries & Institutions")
     ).toBeInTheDocument()
     expect(screen.getByText("Example Profile")).toBeInTheDocument()
   })
@@ -38,7 +38,7 @@ describe("SettingsSavesProfiles", () => {
     })
 
     expect(
-      screen.getByText("Followed Galleries & Institutions"),
+      screen.getByText("Followed Galleries & Institutions")
     ).toBeInTheDocument()
     expect(screen.getByText("Nothing yet.")).toBeInTheDocument()
   })

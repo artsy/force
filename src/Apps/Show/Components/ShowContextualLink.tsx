@@ -1,6 +1,6 @@
-import { Box, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
 import { Media } from "Utils/Responsive"
+import { Box, Text } from "@artsy/palette"
 import type { ShowContextualLink_show$data } from "__generated__/ShowContextualLink_show.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -102,5 +102,5 @@ export const ShowContextualLinkFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  },
+  }
 )

@@ -1,13 +1,13 @@
-import { screen, waitFor, fireEvent } from "@testing-library/react"
-import { Toasts, ToastsProvider } from "@artsy/palette"
 import { IdentityVerificationAppFragmentContainer } from "Apps/IdentityVerification/IdentityVerificationApp"
 import { MockBoot } from "DevTools/MockBoot"
 import { mockLocation } from "DevTools/mockLocation"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { Toasts, ToastsProvider } from "@artsy/palette"
+import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { HttpError } from "found"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { MockPayloadGenerator, createMockEnvironment } from "relay-test-utils"
+import { createMockEnvironment, MockPayloadGenerator } from "relay-test-utils"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -67,13 +67,13 @@ describe("IdentityVerification route", () => {
         })
 
         expect(
-          screen.getByText("Identity verification complete"),
+          screen.getByText("Identity verification complete")
         ).toBeInTheDocument()
         expect(
-          screen.queryByRole("button", { name: /continue to verification/i }),
+          screen.queryByRole("button", { name: /continue to verification/i })
         ).not.toBeInTheDocument()
         expect(
-          screen.getByRole("link", { name: /finish/i }),
+          screen.getByRole("link", { name: /finish/i })
         ).toBeInTheDocument()
       })
 
@@ -85,13 +85,13 @@ describe("IdentityVerification route", () => {
         })
 
         expect(
-          screen.getByText("Identity verification failed"),
+          screen.getByText("Identity verification failed")
         ).toBeInTheDocument()
         expect(
-          screen.queryByRole("button", { name: /continue to verification/i }),
+          screen.queryByRole("button", { name: /continue to verification/i })
         ).not.toBeInTheDocument()
         expect(
-          screen.getByRole("link", { name: /contact support/i }),
+          screen.getByRole("link", { name: /contact support/i })
         ).toBeInTheDocument()
       })
 
@@ -103,13 +103,13 @@ describe("IdentityVerification route", () => {
         })
 
         expect(
-          screen.getByText("Artsy is reviewing your identity verification"),
+          screen.getByText("Artsy is reviewing your identity verification")
         ).toBeInTheDocument()
         expect(
-          screen.queryByRole("button", { name: /continue to verification/i }),
+          screen.queryByRole("button", { name: /continue to verification/i })
         ).not.toBeInTheDocument()
         expect(
-          screen.getByRole("link", { name: /return home/i }),
+          screen.getByRole("link", { name: /return home/i })
         ).toBeInTheDocument()
       })
     })
@@ -118,7 +118,7 @@ describe("IdentityVerification route", () => {
       renderWithRelay()
 
       expect(
-        screen.getByText("Artsy Identity Verification"),
+        screen.getByText("Artsy Identity Verification")
       ).toBeInTheDocument()
     })
 
@@ -161,12 +161,12 @@ describe("IdentityVerification route", () => {
                 mutationError: null,
               },
             }),
-          }),
+          })
         )
 
         await waitFor(() => {
           expect(window.location.assign).toHaveBeenCalledWith(
-            "www.identity.biz",
+            "www.identity.biz"
           )
         })
       })
@@ -192,14 +192,14 @@ describe("IdentityVerification route", () => {
                 },
               },
             }),
-          }),
+          })
         )
 
         await waitFor(() => {
           expect(
             screen.getByText(
-              "Something went wrong. Please try again or contact verification@artsy.net.",
-            ),
+              "Something went wrong. Please try again or contact verification@artsy.net."
+            )
           ).toBeInTheDocument()
         })
       })
@@ -218,8 +218,8 @@ describe("IdentityVerification route", () => {
         await waitFor(() => {
           expect(
             screen.getByText(
-              "Something went wrong. Please try again or contact verification@artsy.net.",
-            ),
+              "Something went wrong. Please try again or contact verification@artsy.net."
+            )
           ).toBeInTheDocument()
         })
       })

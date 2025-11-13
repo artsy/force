@@ -1,4 +1,4 @@
-import { type FC, createContext, useContext } from "react"
+import { createContext, type FC, useContext } from "react"
 
 const ArticleContext = createContext({
   articleId: "",

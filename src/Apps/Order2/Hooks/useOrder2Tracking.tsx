@@ -1,3 +1,4 @@
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import {
   ActionType,
   type ClickedAskSpecialist,
@@ -11,14 +12,13 @@ import {
   OwnerType,
   type PageOwnerType,
 } from "@artsy/cohesion"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import type { DisplayTextsMessageTypeEnum } from "__generated__/OrderDetailsMessage_order.graphql"
 import { useMemo } from "react"
 import { useTracking } from "react-tracking"
 
 export const useOrder2Tracking = (
   source: "PARTNER_OFFER" | unknown,
-  mode: "BUY" | "OFFER" | unknown,
+  mode: "BUY" | "OFFER" | unknown
 ) => {
   const { trackEvent } = useTracking()
 
@@ -98,7 +98,7 @@ export const useOrder2Tracking = (
       },
       orderDetailsViewed: (
         contextModule: ContextModule,
-        messageType: DisplayTextsMessageTypeEnum,
+        messageType: DisplayTextsMessageTypeEnum
       ) => {
         const payload: OrderDetailsViewed = {
           action: ActionType.orderDetailsViewed,

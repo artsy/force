@@ -1,7 +1,7 @@
-import { ContextModule, OwnerType, clickedEntityGroup } from "@artsy/cohesion"
-import { Box, Image, Spacer, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { ContextModule, clickedEntityGroup, OwnerType } from "@artsy/cohesion"
+import { Box, Image, Spacer, Text } from "@artsy/palette"
 import type { MyBidsBidHeader_sale$data } from "__generated__/MyBidsBidHeader_sale.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -32,7 +32,7 @@ export const MyBidsBidHeader: React.FC<
             contextPageOwnerType,
             destinationPageOwnerType: OwnerType.sale,
             type: "thumbnail",
-          }),
+          })
         )
       }}
     >
@@ -88,5 +88,5 @@ export const MyBidsBidHeaderFragmentContainer = createFragmentContainer(
         slug
       }
     `,
-  },
+  }
 )

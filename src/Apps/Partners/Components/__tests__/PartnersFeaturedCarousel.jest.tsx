@@ -1,7 +1,7 @@
-import { screen } from "@testing-library/react"
 import { PartnersFeaturedCarouselFragmentContainer } from "Apps/Partners/Components/PartnersFeaturedCarousel"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useRouter } from "System/Hooks/useRouter"
+import { screen } from "@testing-library/react"
 import type { PartnersFeaturedCarousel_Test_Query } from "__generated__/PartnersFeaturedCarousel_Test_Query.graphql"
 import { graphql } from "react-relay"
 

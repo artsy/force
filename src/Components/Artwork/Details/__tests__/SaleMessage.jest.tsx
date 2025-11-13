@@ -1,13 +1,13 @@
-import { act, render, screen } from "@testing-library/react"
 import { SaleMessageQueryRenderer } from "Components/Artwork/Details/SaleMessage"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useDidMount } from "Utils/Hooks/useDidMount"
 import { useIntersectionObserver } from "Utils/Hooks/useIntersectionObserver"
 import type { CleanRelayFragment } from "Utils/typeSupport"
+import { act, render, screen } from "@testing-library/react"
 import type { Details_artwork$data } from "__generated__/Details_artwork.graphql"
 import { DateTime } from "luxon"
 import { createRef } from "react"
-import { MockPayloadGenerator, createMockEnvironment } from "relay-test-utils"
+import { createMockEnvironment, MockPayloadGenerator } from "relay-test-utils"
 
 jest.unmock("react-relay")
 
@@ -48,7 +48,7 @@ describe("SaleMessage", () => {
           <SaleMessageQueryRenderer
             artwork={artwork}
             id={"opaque-internal-id"}
-          />,
+          />
         )
 
         act(() => {
@@ -59,7 +59,7 @@ describe("SaleMessage", () => {
                   partnerOffer: null,
                 },
               }),
-            }),
+            })
           )
         })
       }
@@ -130,7 +130,7 @@ describe("SaleMessage", () => {
           <SaleMessageQueryRenderer
             artwork={artworkNotInAuction as Details_artwork$data}
             id={"opaque-internal-id"}
-          />,
+          />
         )
 
         expect(screen.getByText("SALE MESSAGE")).toBeInTheDocument()
@@ -143,7 +143,7 @@ describe("SaleMessage", () => {
           <SaleMessageQueryRenderer
             artwork={artworkNotInAuction as Details_artwork$data}
             id={"opaque-internal-id"}
-          />,
+          />
         )
 
         act(() => {
@@ -154,7 +154,7 @@ describe("SaleMessage", () => {
                   partnerOffer: null,
                 },
               }),
-            }),
+            })
           )
         })
 
@@ -168,7 +168,7 @@ describe("SaleMessage", () => {
           <SaleMessageQueryRenderer
             artwork={artworkNotInAuction as Details_artwork$data}
             id={"opaque-internal-id"}
-          />,
+          />
         )
 
         act(() => {
@@ -186,7 +186,7 @@ describe("SaleMessage", () => {
                   },
                 },
               }),
-            }),
+            })
           )
         })
 

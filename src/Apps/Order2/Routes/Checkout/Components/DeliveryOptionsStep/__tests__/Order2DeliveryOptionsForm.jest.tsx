@@ -1,6 +1,6 @@
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
 import { Order2DeliveryOptionsForm } from "../Order2DeliveryOptionsForm"
 
@@ -20,7 +20,7 @@ jest.mock(
     useOrder2SetOrderFulfillmentOptionMutation: () => ({
       submitMutation: mockSetOrderFulfillmentOption,
     }),
-  }),
+  })
 )
 
 beforeEach(() => {
@@ -98,7 +98,7 @@ describe("Order2DeliveryOptionsForm", () => {
       expect(guaranteeLink).toHaveAttribute("target", "_blank")
       expect(guaranteeLink).toHaveAttribute(
         "href",
-        "https://support.artsy.net/s/article/The-Artsy-Guarantee",
+        "https://support.artsy.net/s/article/The-Artsy-Guarantee"
       )
     })
   })
@@ -156,17 +156,15 @@ describe("Order2DeliveryOptionsForm", () => {
 
       expect(
         screen.queryByText(
-          /custom packing, transportation on a fine art shuttle/,
-        ),
+          /custom packing, transportation on a fine art shuttle/
+        )
       ).not.toBeInTheDocument()
 
       const whiteGloveRadio = screen.getByRole("radio", { name: /White Glove/ })
       await userEvent.click(whiteGloveRadio)
 
       expect(
-        screen.getByText(
-          /custom packing, transportation on a fine art shuttle/,
-        ),
+        screen.getByText(/custom packing, transportation on a fine art shuttle/)
       ).toBeInTheDocument()
     })
 
@@ -191,14 +189,14 @@ describe("Order2DeliveryOptionsForm", () => {
       await userEvent.click(expressRadio)
 
       expect(
-        mockCheckoutContext.checkoutTracking.clickedSelectShippingOption,
+        mockCheckoutContext.checkoutTracking.clickedSelectShippingOption
       ).toHaveBeenCalledWith("ARTSY_EXPRESS")
 
       const whiteGloveRadio = screen.getByRole("radio", { name: /White Glove/ })
       await userEvent.click(whiteGloveRadio)
 
       expect(
-        mockCheckoutContext.checkoutTracking.clickedSelectShippingOption,
+        mockCheckoutContext.checkoutTracking.clickedSelectShippingOption
       ).toHaveBeenCalledWith("ARTSY_WHITE_GLOVE")
     })
   })

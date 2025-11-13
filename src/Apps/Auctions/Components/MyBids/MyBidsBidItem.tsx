@@ -1,10 +1,10 @@
-import ChevronCircleDownIcon from "@artsy/icons/ChevronCircleDownIcon"
-import ChevronCircleUpIcon from "@artsy/icons/ChevronCircleUpIcon"
-import { Box, Flex, Image, Spacer, Text } from "@artsy/palette"
 import { tabTypeToContextModuleMap } from "Apps/Auctions/Utils/tabTypeToContextModuleMap"
 import { RouterLink } from "System/Components/RouterLink"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { trackHelpers } from "Utils/cohesionHelpers"
+import ChevronCircleDownIcon from "@artsy/icons/ChevronCircleDownIcon"
+import ChevronCircleUpIcon from "@artsy/icons/ChevronCircleUpIcon"
+import { Box, Flex, Image, Spacer, Text } from "@artsy/palette"
 import type { MyBidsBidItem_saleArtwork$data } from "__generated__/MyBidsBidItem_saleArtwork.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -38,8 +38,8 @@ export const MyBidsBidItem: React.FC<
             saleArtwork.slug,
             horizontalSlidePosition,
             saleArtwork.artwork?.collectorSignals?.auction?.bidCount,
-            saleArtwork.artwork?.collectorSignals?.auction?.lotWatcherCount,
-          ),
+            saleArtwork.artwork?.collectorSignals?.auction?.lotWatcherCount
+          )
         )
       }}
     >
@@ -198,5 +198,5 @@ export const MyBidsBidItemFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  },
+  }
 )

@@ -2,8 +2,7 @@ import type { FollowedArtists } from "Components/ArtworkFilter/ArtworkFilterCont
 import type { fetchFollowedArtistsByFairIdQuery } from "__generated__/fetchFollowedArtistsByFairIdQuery.graphql"
 import type { fetchFollowedArtistsRawQuery } from "__generated__/fetchFollowedArtistsRawQuery.graphql"
 import { compact, isString } from "lodash"
-import { fetchQuery } from "react-relay"
-import { type Environment, graphql } from "react-relay"
+import { type Environment, fetchQuery, graphql } from "react-relay"
 
 graphql`
   fragment fetchFollowedArtists_response on FollowArtistConnection {
@@ -53,7 +52,7 @@ interface Args extends FetchFollowedArtistsArgs {
 }
 
 export async function fetchFollowedArtists(
-  args: Args,
+  args: Args
 ): Promise<FollowedArtists> {
   const { relayEnvironment, ...props } = args
 

@@ -62,5 +62,5 @@ export const ArticleMetaTagsFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  },
+  }
 )

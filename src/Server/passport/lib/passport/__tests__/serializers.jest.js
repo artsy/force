@@ -1,9 +1,6 @@
-/* eslint-disable no-restricted-imports */
 const serializers = require("../serializers")
 const { serialize, deserialize } = serializers
 
-import options from "Server/passport/lib/options"
-import passport from "passport"
 import request from "superagent"
 
 jest.mock("superagent")

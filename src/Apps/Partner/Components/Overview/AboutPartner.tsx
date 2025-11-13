@@ -1,6 +1,6 @@
+import { Media } from "Utils/Responsive"
 import { ActionType, type ClickedPartnerLink, OwnerType } from "@artsy/cohesion"
 import { Column, GridColumns, Text } from "@artsy/palette"
-import { Media } from "Utils/Responsive"
 import type { AboutPartner_partner$data } from "__generated__/AboutPartner_partner.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -61,7 +61,7 @@ export const AboutPartner: React.FC<
             as="a"
             mb={2}
             variant="sm"
-            // @ts-ignore
+            // @ts-expect-error
             href={website}
             target="_blank"
             onClick={() => tracking.trackEvent(tappedViewTrackingData)}
@@ -89,5 +89,5 @@ export const AboutPartnerFragmentContainer = createFragmentContainer(
         internalID
       }
     `,
-  },
+  }
 )

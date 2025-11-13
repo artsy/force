@@ -1,7 +1,7 @@
-import { ContextModule } from "@artsy/cohesion"
-import { Flex } from "@artsy/palette"
 import { NotificationViewingRoom } from "Components/Notifications/NotificationViewingRoom"
 import { extractNodes } from "Utils/extractNodes"
+import { ContextModule } from "@artsy/cohesion"
+import { Flex } from "@artsy/palette"
 import type { NotificationViewingRoomsList_viewingRoomsConnection$key } from "__generated__/NotificationViewingRoomsList_viewingRoomsConnection.graphql"
 import type { FC } from "react"
 import { graphql, useFragment } from "react-relay"
@@ -15,7 +15,7 @@ export const NotificationViewingRoomsList: FC<
 > = props => {
   const viewingRoomsConnection = useFragment(
     notificationViewingRoomsListFragment,
-    props.viewingRoomsConnection,
+    props.viewingRoomsConnection
   )
 
   const viewingRooms = extractNodes(viewingRoomsConnection)

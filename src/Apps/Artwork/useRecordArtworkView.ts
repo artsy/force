@@ -2,10 +2,9 @@ import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
 import type { useRecordArtworkViewMutation } from "__generated__/useRecordArtworkViewMutation.graphql"
-import { useCallback, useEffect } from "react"
 import type * as React from "react"
-import { graphql } from "react-relay"
-import { commitMutation } from "react-relay"
+import { useCallback, useEffect } from "react"
+import { commitMutation, graphql } from "react-relay"
 
 export const useRecordArtworkView = () => {
   const { user, isLoggedIn } = useSystemContext()
@@ -34,7 +33,7 @@ export const useRecordArtworkView = () => {
         `,
       })
     },
-    [relayEnvironment],
+    [relayEnvironment]
   )
 
   useEffect(() => {

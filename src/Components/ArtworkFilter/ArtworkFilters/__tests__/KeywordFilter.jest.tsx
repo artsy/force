@@ -1,11 +1,10 @@
-import { fireEvent, screen, waitFor } from "@testing-library/react"
-import userEvent from "@testing-library/user-event"
 import {
   createArtworkFilterTestRenderer,
   currentArtworkFilterContext,
 } from "Components/ArtworkFilter/ArtworkFilters/__tests__/Utils"
-
 import { KeywordFilter } from "Components/ArtworkFilter/ArtworkFilters/KeywordFilter"
+import { fireEvent, screen, waitFor } from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
 
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
@@ -43,7 +42,7 @@ describe("KeywordFilter", () => {
     })
 
     expect(
-      (screen.getByTestId("keywordSearchInput") as HTMLInputElement).value,
+      (screen.getByTestId("keywordSearchInput") as HTMLInputElement).value
     ).toEqual("Chopper")
 
     userEvent.click(screen.getByText("Clear all"))
@@ -51,7 +50,7 @@ describe("KeywordFilter", () => {
     await waitFor(() => {
       expect(currentArtworkFilterContext().filters?.keyword).toEqual(undefined)
       expect(
-        (screen.getByTestId("keywordSearchInput") as HTMLInputElement).value,
+        (screen.getByTestId("keywordSearchInput") as HTMLInputElement).value
       ).toEqual("")
     })
   })

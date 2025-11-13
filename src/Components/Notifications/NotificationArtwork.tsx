@@ -1,11 +1,11 @@
-import type { AuthContextModule } from "@artsy/cohesion"
-import { Box, Button, Image } from "@artsy/palette"
 import { ExclusiveAccessBadge } from "Components/Artwork/ExclusiveAccessBadge"
 import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
 import Metadata from "Components/Artwork/Metadata"
 import { CARD_MAX_WIDTH } from "Components/Notifications/constants"
 import { RouterLink, type RouterLinkProps } from "System/Components/RouterLink"
 import { resized } from "Utils/resized"
+import type { AuthContextModule } from "@artsy/cohesion"
+import { Box, Button, Image } from "@artsy/palette"
 import type { NotificationArtwork_artwork$key } from "__generated__/NotificationArtwork_artwork.graphql"
 import type * as React from "react"
 import { graphql, useFragment } from "react-relay"
@@ -80,7 +80,7 @@ export const NotificationArtwork: React.FC<
 
       <Box mb={4} width="100%" maxWidth={CARD_MAX_WIDTH}>
         <Button
-          // @ts-ignore
+          // @ts-expect-error
           as={RouterLink}
           to={artwork?.href}
           onClick={onClick}

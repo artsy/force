@@ -1,4 +1,3 @@
-import { useToasts } from "@artsy/palette"
 import {
   ResultAction,
   type SaveArtworkToListsOptions,
@@ -6,6 +5,7 @@ import {
 } from "Components/Artwork/SaveButton/useSaveArtworkToLists"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useAuthIntent } from "Utils/Hooks/useAuthIntent"
+import { useToasts } from "@artsy/palette"
 import type { useArtworkListsArtworkSaveStatesQuery } from "__generated__/useArtworkListsArtworkSaveStatesQuery.graphql"
 import { useEffect } from "react"
 import { fetchQuery, graphql } from "react-relay"
@@ -19,7 +19,7 @@ export const useArtworkLists = (options: SaveArtworkToListsOptions) => {
   const { saveArtworkToLists: saveToLists, openSelectListsForArtworkModal } =
     useSaveArtworkToLists(options)
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Auth intent handling with artwork-specific dependencies
   useEffect(() => {
     if (
       !value ||
@@ -40,7 +40,7 @@ export const useArtworkLists = (options: SaveArtworkToListsOptions) => {
             }
           }
         `,
-        { artworkID: artwork.internalID },
+        { artworkID: artwork.internalID }
       ).toPromise()
 
       // The user clicked the save button while logged out.

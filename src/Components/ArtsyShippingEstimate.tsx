@@ -1,10 +1,13 @@
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { getENV } from "Utils/getENV"
+import { useLoadScript } from "Utils/Hooks/useLoadScript"
 import type { EstimateBody, PartialEstimateConfig } from "@artaio/arta-browser"
+import type ArtaEstimate from "@artaio/arta-browser/dist/estimate"
 import type {
   ArtaLocation,
   ArtaObject,
   SupportedCurrency,
 } from "@artaio/arta-browser/dist/MetadataTypes"
-import type ArtaEstimate from "@artaio/arta-browser/dist/estimate"
 import {
   ActionType,
   type ClickedEstimateShippingCost,
@@ -12,9 +15,6 @@ import {
   type ShippingEstimateViewed,
 } from "@artsy/cohesion"
 import { Link, Spacer, Text } from "@artsy/palette"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import { useLoadScript } from "Utils/Hooks/useLoadScript"
-import { getENV } from "Utils/getENV"
 import type {
   ArtsyShippingEstimate_artwork$data,
   ArtsyShippingEstimate_artwork$key,
@@ -96,7 +96,7 @@ const ArtsyShippingEstimateLoader = ({
   const { connectWidgetObserver, disconnectWidgetObserver } = useWidgetObserver(
     {
       onViewEstimatedPrice: trackViewedEstimatedPrice,
-    },
+    }
   )
 
   const openWidget = useCallback(() => {
@@ -209,7 +209,7 @@ const useWidgetObserver = ({
 
   const extractEstimateFromDom = useCallback((): PriceEstimate | null => {
     const destinationEl = document.getElementsByClassName(
-      "artajs__modal__quotes__destination",
+      "artajs__modal__quotes__destination"
     )[0]
     // e.g. "Chicago, IL, US (destination)"
     const destination =
@@ -220,7 +220,7 @@ const useWidgetObserver = ({
     }
 
     const priceAmountEl = document.getElementsByClassName(
-      "artajs__modal__quotes__price__amount",
+      "artajs__modal__quotes__price__amount"
     )[0]
     const amountTextContent = priceAmountEl?.textContent
     // e.g. "$1,000"
@@ -241,7 +241,7 @@ const useWidgetObserver = ({
     }
 
     const priceCurrencyEl = document.getElementsByClassName(
-      "artajs__modal__quotes__price__currency_code",
+      "artajs__modal__quotes__price__currency_code"
     )[0]
     const currency = priceCurrencyEl?.textContent
 
@@ -428,7 +428,7 @@ type ArtaObjectDimensions = Pick<
   "height" | "width" | "depth" | "unit_of_measurement"
 >
 const artworkDimensions = (
-  artwork: ArtsyShippingEstimate_artwork$data,
+  artwork: ArtsyShippingEstimate_artwork$data
 ): ArtaObjectDimensions | null => {
   const {
     depthCm,
@@ -487,7 +487,7 @@ const artworkDimensions = (
 
 type ArtworkValue = Pick<ArtaObject, "value" | "value_currency">
 const artworkValue = (
-  artwork: ArtsyShippingEstimate_artwork$data,
+  artwork: ArtsyShippingEstimate_artwork$data
 ): ArtworkValue | null => {
   const priceCurrency = artwork.priceCurrency as SupportedCurrency
   if (!priceCurrency || !artwork.listPrice) {
@@ -514,7 +514,7 @@ const artworkValue = (
 }
 
 const artaObject = (
-  artwork: ArtsyShippingEstimate_artwork$data,
+  artwork: ArtsyShippingEstimate_artwork$data
 ): ArtaObject | null => {
   const { isFramed, mediumType, shippingWeight, shippingWeightMetric } = artwork
 
@@ -543,7 +543,7 @@ const artaObject = (
 }
 
 const artaLocation = (
-  artwork: ArtsyShippingEstimate_artwork$data,
+  artwork: ArtsyShippingEstimate_artwork$data
 ): ArtaLocation | null => {
   const shippingOrigin = artwork.shippingOrigin?.split(", ") ?? []
   const city = shippingOrigin[0]
@@ -559,7 +559,7 @@ const artaLocation = (
 }
 
 export const estimateRequestBodyForArtwork = (
-  artwork: ArtsyShippingEstimate_artwork$data,
+  artwork: ArtsyShippingEstimate_artwork$data
 ): EstimateBody | null => {
   try {
     const origin = artaLocation(artwork)

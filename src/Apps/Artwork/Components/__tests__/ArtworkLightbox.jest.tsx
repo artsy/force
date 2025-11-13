@@ -1,6 +1,6 @@
-import { screen } from "@testing-library/react"
 import { ArtworkLightboxFragmentContainer } from "Apps/Artwork/Components/ArtworkLightbox"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
@@ -13,7 +13,7 @@ describe("ArtworkLightbox", () => {
     } = {
       activeIndex: 0,
       enableArtworkCaption: false,
-    },
+    }
   ) => {
     const { renderWithRelay } = setupTestWrapperTL({
       Component: (props: any) => (

@@ -1,6 +1,6 @@
-import { fireEvent, screen } from "@testing-library/dom"
 import { Order2HelpLinks } from "Apps/Order2/Components/Order2HelpLinks"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { fireEvent, screen } from "@testing-library/dom"
 import type { Order2HelpLinks_Test_Query } from "__generated__/Order2HelpLinks_Test_Query.graphql"
 import { useTracking } from "react-tracking"
 import { graphql } from "relay-runtime"
@@ -67,7 +67,7 @@ describe("Order2HelpLinks", () => {
 
     expect(window.open).toHaveBeenCalledWith(
       "https://support.artsy.net/s/topic/0TO3b000000UessGAC/buy",
-      "_blank",
+      "_blank"
     )
   })
 

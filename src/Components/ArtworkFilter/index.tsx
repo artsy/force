@@ -1,26 +1,3 @@
-import {
-  ActionType,
-  type ClickedChangePage,
-  type ClickedImmersiveView,
-  ContextModule,
-  type ImmersiveViewOptionViewed,
-  commercialFilterParamsChanged,
-} from "@artsy/cohesion"
-import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
-import ExpandIcon from "@artsy/icons/ExpandIcon"
-import FilterIcon from "@artsy/icons/FilterIcon"
-import {
-  Box,
-  type BoxProps,
-  Button,
-  Clickable,
-  Flex,
-  FullBleed,
-  HorizontalOverflow,
-  Pill,
-  Spacer,
-  Text,
-} from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { ArtworkFilterActiveFilters } from "Components/ArtworkFilter/ArtworkFilterActiveFilters"
@@ -44,13 +21,36 @@ import { useSystemContext } from "System/Hooks/useSystemContext"
 import { Jump, useJump } from "Utils/Hooks/useJump"
 import { usePrevious } from "Utils/Hooks/usePrevious"
 import { Media } from "Utils/Responsive"
+import {
+  ActionType,
+  type ClickedChangePage,
+  type ClickedImmersiveView,
+  ContextModule,
+  commercialFilterParamsChanged,
+  type ImmersiveViewOptionViewed,
+} from "@artsy/cohesion"
+import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
+import ExpandIcon from "@artsy/icons/ExpandIcon"
+import FilterIcon from "@artsy/icons/FilterIcon"
+import {
+  Box,
+  type BoxProps,
+  Button,
+  Clickable,
+  Flex,
+  FullBleed,
+  HorizontalOverflow,
+  Pill,
+  Spacer,
+  Text,
+} from "@artsy/palette"
 import { isEqual } from "lodash"
 import type React from "react"
 import { useEffect, useMemo, useState } from "react"
 import {
-  type RelayRefetchProp,
   createRefetchContainer,
   graphql,
+  type RelayRefetchProp,
 } from "react-relay"
 import { useTracking } from "react-tracking"
 import useDeepCompareEffect from "use-deep-compare-effect"
@@ -171,7 +171,7 @@ export const BaseArtworkFilter: React.FC<
   const { isAuctionArtwork } = useArtworkGridContext()
 
   const appliedFiltersTotalCount = getTotalSelectedFiltersCount(
-    filterContext.selectedFiltersCounts,
+    filterContext.selectedFiltersCounts
   )
 
   const total = viewer.filtered_artworks?.counts?.total ?? 0
@@ -184,7 +184,7 @@ export const BaseArtworkFilter: React.FC<
         if (field === "sort") return acc
         return acc + count
       },
-      0,
+      0
     )
   }, [filterContext.selectedFiltersCounts])
 
@@ -195,7 +195,7 @@ export const BaseArtworkFilter: React.FC<
         if (!ARTWORK_FILTERS_QUICK_FIELDS.includes(field)) return acc
         return acc + count
       },
-      0,
+      0
     )
   }, [filterContext.selectedFiltersCounts])
 
@@ -242,11 +242,11 @@ export const BaseArtworkFilter: React.FC<
                   ...onlyAllowedFilters,
                   metric: filterContext?.filters?.metric,
                 }),
-              }),
+              })
             )
           }
         }
-      },
+      }
     )
   }, [filterContext.filters])
 
@@ -526,7 +526,7 @@ export const ArtworkFilterRefetchContainer = createRefetchContainer(
       }
     `,
   },
-  ArtworkQueryFilter,
+  ArtworkQueryFilter
 )
 
 export const getTotalCountLabel = ({

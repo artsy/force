@@ -15,7 +15,7 @@ const difference = (initial: {}, next: {}) => {
 
 export const countChangedFilters = (
   filtersBefore: ArtworkFilters,
-  filtersAfter: ArtworkFilters,
+  filtersAfter: ArtworkFilters
 ) => {
   // Backfill the boolean filters with `false` values.
   // Initially these are `undefined`.

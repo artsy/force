@@ -1,3 +1,6 @@
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import {
   ActionType,
   type ClickedCloseValidationAddressModal,
@@ -16,11 +19,8 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import type { AddressVerificationFlowQuery } from "__generated__/AddressVerificationFlowQuery.graphql"
 import type { AddressVerificationFlow_verifyAddress$data } from "__generated__/AddressVerificationFlow_verifyAddress.graphql"
+import type { AddressVerificationFlowQuery } from "__generated__/AddressVerificationFlowQuery.graphql"
 import { useCallback, useEffect, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -46,7 +46,7 @@ interface AddressVerificationFlowProps {
   verifyAddress: AddressVerificationFlow_verifyAddress$data
   onChosenAddress: (
     verifiedBy: AddressVerifiedBy,
-    address: AddressValues,
+    address: AddressValues
   ) => void
   onClose: () => void
   /* used only as a fallback if verification is unavailable */
@@ -151,7 +151,7 @@ const AddressVerificationFlow: React.FC<
   >(addressOptions[0]?.key)
 
   // perform only once when the flow first loads
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Address verification flow should only run on mount
   useEffect(() => {
     if (verificationPath === VerificationPath.ERROR_IMMEDIATE_CONFIRM) {
       const fallbackOption = fallbackFromFormValues(verificationInput)
@@ -175,7 +175,7 @@ const AddressVerificationFlow: React.FC<
     if (!selectedAddressKey) return
 
     const selectedAddress = addressOptions.find(
-      option => option.key === selectedAddressKey,
+      option => option.key === selectedAddressKey
     )
 
     const verifiedBy =
@@ -187,7 +187,7 @@ const AddressVerificationFlow: React.FC<
       setShowModal(false)
       onChosenAddress(verifiedBy, selectedAddress.address)
     }
-    // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+    // biome-ignore lint/correctness/useExhaustiveDependencies: Address selection callback dependencies managed by component state
   }, [addressOptions, onChosenAddress, selectedAddressKey])
 
   const handleCloseModal = ({
@@ -258,7 +258,7 @@ const AddressVerificationFlow: React.FC<
                       ))}
                     </Flex>
                   </BorderedRadio>
-                ),
+                )
             )}
           </RadioGroup>
           <Spacer y={4} />
@@ -400,7 +400,7 @@ export const AddressVerificationFlowFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  },
+  }
 )
 
 export const AddressVerificationFlowQueryRenderer: React.FC<
@@ -408,7 +408,7 @@ export const AddressVerificationFlowQueryRenderer: React.FC<
     address: AddressValues
     onChosenAddress: (
       verifiedBy: AddressVerifiedBy,
-      address: AddressValues,
+      address: AddressValues
     ) => void
     onClose: () => void
   }>
@@ -483,7 +483,7 @@ const useAddressVerificationTracking = () => {
           option,
         } as ValidationAddressViewed)
       },
-      [contextPageOwnerId, trackEvent, userId],
+      [contextPageOwnerId, trackEvent, userId]
     ),
 
     trackSelectedAddress: useCallback(
@@ -508,7 +508,7 @@ const useAddressVerificationTracking = () => {
         }
         trackEvent(event)
       },
-      [contextPageOwnerId, trackEvent, userId],
+      [contextPageOwnerId, trackEvent, userId]
     ),
 
     trackClosedModal: useCallback(
@@ -533,7 +533,7 @@ const useAddressVerificationTracking = () => {
         }
         trackEvent(event)
       },
-      [contextPageOwnerId, trackEvent],
+      [contextPageOwnerId, trackEvent]
     ),
   }
 }

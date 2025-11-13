@@ -10,7 +10,7 @@
 export function get<O, T>(
   obj: O,
   unsafeDataOperation: (x: O) => T,
-  valueIfFailOrUndefined?: T,
+  valueIfFailOrUndefined?: T
 ): T | undefined {
   try {
     const result = unsafeDataOperation(obj)

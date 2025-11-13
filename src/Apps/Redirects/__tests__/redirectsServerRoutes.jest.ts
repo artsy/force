@@ -1,12 +1,12 @@
 import type { NextFunction, Request } from "express"
 import {
-  type ResWithProfile,
   handleFair,
   handleFairArtworks,
   handlePartnerArtist,
   handlePartnerGenericRedirect,
   handlePartnerOverview,
   handlePartnerWorks,
+  type ResWithProfile,
 } from "../redirectsServerRoutes"
 
 describe("handlePartnerOverview", () => {
@@ -57,7 +57,7 @@ describe("handlePartnerOverview", () => {
       handlePartnerOverview(req, res, next)
 
       expect(res.redirect).toHaveBeenCalledWith(301, result)
-    },
+    }
   )
 })
 
@@ -109,7 +109,7 @@ describe("handlePartnerWorks", () => {
       handlePartnerWorks(req, res, next)
 
       expect(res.redirect).toHaveBeenCalledWith(301, result)
-    },
+    }
   )
 })
 
@@ -155,7 +155,7 @@ describe("handlePartnerArtist", () => {
       handlePartnerArtist(req, res, next)
 
       expect(res.redirect).toHaveBeenCalledWith(301, result)
-    },
+    }
   )
 })
 
@@ -232,7 +232,7 @@ describe("handlePartnerFallbackRedirect", () => {
       handlePartnerGenericRedirect(req, res, next)
 
       expect(res.redirect).toHaveBeenCalledWith(301, result)
-    },
+    }
   )
 
   it("does not redirect is not a partner", () => {
@@ -292,7 +292,7 @@ describe("handleFairArtworks", () => {
 
     expect(res.redirect).toHaveBeenCalledWith(
       301,
-      "/fair/big-expo-2020/artworks",
+      "/fair/big-expo-2020/artworks"
     )
   })
 })
@@ -338,7 +338,7 @@ describe("handleFair", () => {
     res.locals.profile = {
       owner: {
         __typename: "Fair",
-        // @ts-ignore
+        // @ts-expect-error
         slug: null,
       },
     }

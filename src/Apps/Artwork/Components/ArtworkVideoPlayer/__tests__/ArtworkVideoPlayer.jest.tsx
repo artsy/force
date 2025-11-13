@@ -1,6 +1,6 @@
-import { act, fireEvent, waitFor } from "@testing-library/react"
 import { ArtworkVideoPlayerFragmentContainer } from "Apps/Artwork/Components/ArtworkVideoPlayer/ArtworkVideoPlayer"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { act, fireEvent, waitFor } from "@testing-library/react"
 import type { ArtworkVideoPlayer_Test_Query } from "__generated__/ArtworkVideoPlayer_Test_Query.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -31,7 +31,7 @@ describe("ArtworkVideoPlayer", () => {
           }
         }
       `,
-    },
+    }
   )
 
   beforeEach(() => {

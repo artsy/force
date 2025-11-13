@@ -1,3 +1,13 @@
+import {
+  type OrderMutationSuccess,
+  validateAndExtractOrderResponse,
+} from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
+import type { ExpressCheckoutPaymentMethod } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
+import { CheckoutErrorBanner } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
+import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import { preventHardReload } from "Apps/Order2/Utils/navigationGuards"
+import { RouterLink } from "System/Components/RouterLink"
+import createLogger from "Utils/logger"
 import { Box, Spacer, Text } from "@artsy/palette"
 import {
   ExpressCheckoutElement,
@@ -16,22 +26,6 @@ import type {
   StripeExpressCheckoutElementShippingAddressChangeEvent,
   StripeExpressCheckoutElementShippingRateChangeEvent,
 } from "@stripe/stripe-js"
-import { useOrder2ExpressCheckoutSetFulfillmentOptionMutation } from "./Mutations/useOrder2ExpressCheckoutSetFulfillmentOptionMutation"
-import { useOrder2ExpressCheckoutSubmitOrderMutation } from "./Mutations/useOrder2ExpressCheckoutSubmitOrderMutation"
-import { useOrder2ExpressCheckoutUnsetOrderFulfillmentOptionMutation } from "./Mutations/useOrder2ExpressCheckoutUnsetOrderFulfillmentOptionMutation"
-import { useOrder2ExpressCheckoutUnsetOrderPaymentMethodMutation } from "./Mutations/useOrder2ExpressCheckoutUnsetOrderPaymentMethodMutation"
-import { useOrder2ExpressCheckoutUpdateOrderMutation } from "./Mutations/useOrder2ExpressCheckoutUpdateOrderMutation"
-import { useOrder2ExpressCheckoutUpdateOrderShippingAddressMutation } from "./Mutations/useOrder2ExpressCheckoutUpdateOrderShippingAddressMutation"
-import {
-  type OrderMutationSuccess,
-  validateAndExtractOrderResponse,
-} from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
-import type { ExpressCheckoutPaymentMethod } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
-import { CheckoutErrorBanner } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
-import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
-import { preventHardReload } from "Apps/Order2/Utils/navigationGuards"
-import { RouterLink } from "System/Components/RouterLink"
-import createLogger from "Utils/logger"
 import type {
   Order2ExpressCheckoutUI_order$data,
   Order2ExpressCheckoutUI_order$key,
@@ -47,6 +41,12 @@ import type {
 import type React from "react"
 import { useEffect, useRef, useState } from "react"
 import { graphql, useFragment } from "react-relay"
+import { useOrder2ExpressCheckoutSetFulfillmentOptionMutation } from "./Mutations/useOrder2ExpressCheckoutSetFulfillmentOptionMutation"
+import { useOrder2ExpressCheckoutSubmitOrderMutation } from "./Mutations/useOrder2ExpressCheckoutSubmitOrderMutation"
+import { useOrder2ExpressCheckoutUnsetOrderFulfillmentOptionMutation } from "./Mutations/useOrder2ExpressCheckoutUnsetOrderFulfillmentOptionMutation"
+import { useOrder2ExpressCheckoutUnsetOrderPaymentMethodMutation } from "./Mutations/useOrder2ExpressCheckoutUnsetOrderPaymentMethodMutation"
+import { useOrder2ExpressCheckoutUpdateOrderMutation } from "./Mutations/useOrder2ExpressCheckoutUpdateOrderMutation"
+import { useOrder2ExpressCheckoutUpdateOrderShippingAddressMutation } from "./Mutations/useOrder2ExpressCheckoutUpdateOrderShippingAddressMutation"
 
 interface Order2ExpressCheckoutUIProps {
   order: Order2ExpressCheckoutUI_order$key
@@ -225,7 +225,7 @@ export const Order2ExpressCheckoutUI: React.FC<
         "expressCheckoutError",
         JSON.stringify({
           title: "An error occurred",
-        }),
+        })
       )
 
       errorRef.current = null
@@ -268,7 +268,7 @@ export const Order2ExpressCheckoutUI: React.FC<
 
       const validatedResult = validateAndExtractOrderResponse(
         updateOrderShippingAddressResult.updateOrderShippingAddress
-          ?.orderOrError,
+          ?.orderOrError
       )
 
       const shippingRates = extractShippingRates(validatedResult.order)
@@ -301,7 +301,7 @@ export const Order2ExpressCheckoutUI: React.FC<
     if (shippingRate.id === CALCULATING_SHIPPING_RATE.id) {
       errorRef.current = "shipping_options_not_available"
       logger.error(
-        "Shipping options not available yet, skipping setting fulfillment option",
+        "Shipping options not available yet, skipping setting fulfillment option"
       )
       reject()
       return
@@ -342,7 +342,6 @@ export const Order2ExpressCheckoutUI: React.FC<
 
   // User confirms the payment
   const onConfirm = async ({
-    paymentFailed,
     billingDetails,
     shippingAddress,
     expressPaymentType,
@@ -383,7 +382,7 @@ export const Order2ExpressCheckoutUI: React.FC<
         })
 
       validateAndExtractOrderResponse(
-        updateOrderPaymentMethodResult.updateOrder?.orderOrError,
+        updateOrderPaymentMethodResult.updateOrder?.orderOrError
       )
 
       // Finally we have all fulfillment details
@@ -410,7 +409,7 @@ export const Order2ExpressCheckoutUI: React.FC<
 
       validateAndExtractOrderResponse(
         updateOrderShippingAddressResult.updateOrderShippingAddress
-          ?.orderOrError,
+          ?.orderOrError
       )
 
       // Trigger form validation and wallet collection
@@ -441,7 +440,7 @@ export const Order2ExpressCheckoutUI: React.FC<
                   },
                 }
               : undefined,
-        },
+        }
       )
 
       if (error) {
@@ -462,7 +461,7 @@ export const Order2ExpressCheckoutUI: React.FC<
       })
 
       validateAndExtractOrderResponse(
-        submitOrderResult.submitOrder?.orderOrError,
+        submitOrderResult.submitOrder?.orderOrError
       )
 
       // Redirect to status page after successful order submission
@@ -484,7 +483,7 @@ export const Order2ExpressCheckoutUI: React.FC<
         "expressCheckoutError",
         JSON.stringify({
           title: "Payment failed",
-        }),
+        })
       )
 
       resetOrder()
@@ -495,7 +494,7 @@ export const Order2ExpressCheckoutUI: React.FC<
     let enabledPaymentMethods: ExpressCheckoutPaymentMethod[] = []
     try {
       enabledPaymentMethods = extractEnabledPaymentMethods(
-        e.availablePaymentMethods,
+        e.availablePaymentMethods
       )
       if (enabledPaymentMethods) {
         checkoutTracking.expressCheckoutViewed({
@@ -628,12 +627,12 @@ const extractLineItems = (order: ParseableOrder): Array<LineItem> => {
   }
 
   const selectedFulfillmentOption = order.fulfillmentOptions.find(
-    option => option.selected,
+    option => option.selected
   )
 
   if (selectedFulfillmentOption && shippingTotal) {
     const shippingRate = shippingRateForFulfillmentOption(
-      selectedFulfillmentOption,
+      selectedFulfillmentOption
     )
     shippingLine = {
       name: shippingRate?.displayName || "Shipping",
@@ -657,10 +656,10 @@ const extractLineItems = (order: ParseableOrder): Array<LineItem> => {
 }
 
 const extractAllowedShippingCountries = (
-  order: ParseableOrder,
+  order: ParseableOrder
 ): ClickResolveDetails["allowedShippingCountries"] => {
   return order.availableShippingCountries.map(countryCode =>
-    countryCode.toUpperCase(),
+    countryCode.toUpperCase()
   )
 }
 
@@ -724,7 +723,7 @@ const extractShippingRates = (order: ParseableOrder): Array<ShippingRate> => {
       ? rates.concat(CALCULATING_SHIPPING_RATE)
       : rates
   const selectedFulfillmentOption = order.fulfillmentOptions.find(
-    option => option.selected,
+    option => option.selected
   )
   if (selectedFulfillmentOption!.type === "PICKUP") {
     // if pickup is selected, it should be the first option since Stripe auto
@@ -737,7 +736,7 @@ const extractShippingRates = (order: ParseableOrder): Array<ShippingRate> => {
 }
 
 function extractEnabledPaymentMethods(
-  paymentMethods: AvailablePaymentMethods,
+  paymentMethods: AvailablePaymentMethods
 ): ExpressCheckoutPaymentMethod[] {
   if (!paymentMethods) return []
   return Object.entries(paymentMethods)

@@ -11,7 +11,7 @@ export const NavBarUserMenuAvatar: FC<
   const { me } = useLazyLoadQuery<NavBarUserMenuAvatarQuery>(
     QUERY,
     {},
-    { fetchPolicy: "store-and-network" },
+    { fetchPolicy: "store-and-network" }
   )
 
   if (!me) return <Avatar size="xs" />

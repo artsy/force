@@ -1,5 +1,5 @@
-import loadable from "@loadable/component"
 import type { RouteProps } from "System/Router/Route"
+import loadable from "@loadable/component"
 import { RedirectException } from "found"
 import { graphql } from "react-relay"
 import { PLACE_REDIRECTS } from "./redirects"
@@ -8,28 +8,28 @@ const ShowsApp = loadable(
   () => import(/* webpackChunkName: "showsBundle" */ "./ShowsApp"),
   {
     resolveComponent: component => component.ShowsApp,
-  },
+  }
 )
 
 const ShowsIndexRoute = loadable(
   () => import(/* webpackChunkName: "showsBundle" */ "./Routes/ShowsIndex"),
   {
     resolveComponent: component => component.ShowsIndexFragmentContainer,
-  },
+  }
 )
 
 const ShowsCityRoute = loadable(
   () => import(/* webpackChunkName: "showsBundle" */ "./Routes/ShowsCity"),
   {
     resolveComponent: component => component.ShowsCityRefetchContainer,
-  },
+  }
 )
 
 const ShowsAllCities = loadable(
   () => import(/* webpackChunkName: "showsBundle" */ "./Routes/ShowsAllCities"),
   {
     resolveComponent: component => component.ShowsAllCitiesFragmentContainer,
-  },
+  }
 )
 
 export const showsRoutes: RouteProps[] = [

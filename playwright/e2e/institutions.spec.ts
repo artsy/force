@@ -1,10 +1,10 @@
-import { test, expect } from "@playwright/test"
+import { expect, test } from "@playwright/test"
 
 test.describe("Institutions", () => {
   test("/institutions", async ({ page }) => {
     await page.goto("institutions")
     await expect(page.locator("h1").first()).toContainText(
-      "Browse Museums and Institutions",
+      "Browse Museums and Institutions"
     )
     await expect(page).toHaveTitle("Institutions | Artsy")
   })

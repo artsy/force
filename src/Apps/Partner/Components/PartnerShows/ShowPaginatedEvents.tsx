@@ -1,20 +1,22 @@
-import { Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import { CellShowFragmentContainer } from "Components/Cells/CellShow"
 import { LoadingArea } from "Components/LoadingArea"
 import { PaginationFragmentContainer } from "Components/Pagination"
 import { useRouter } from "System/Hooks/useRouter"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { Jump } from "Utils/Hooks/useJump"
 import { extractNodes } from "Utils/extractNodes"
-import type { ShowPaginatedEventsRendererQuery } from "__generated__/ShowPaginatedEventsRendererQuery.graphql"
-import type { EventStatus } from "__generated__/ShowPaginatedEventsRendererQuery.graphql"
+import { Jump } from "Utils/Hooks/useJump"
+import { Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import type { ShowPaginatedEvents_partner$data } from "__generated__/ShowPaginatedEvents_partner.graphql"
-import { useState } from "react"
+import type {
+  EventStatus,
+  ShowPaginatedEventsRendererQuery,
+} from "__generated__/ShowPaginatedEventsRendererQuery.graphql"
 import type * as React from "react"
+import { useState } from "react"
 import {
-  type RelayRefetchProp,
   createRefetchContainer,
   graphql,
+  type RelayRefetchProp,
 } from "react-relay"
 
 interface ShowEventsProps {
@@ -69,7 +71,7 @@ const ShowPaginatedEvents: React.FC<
         router.push({ pathname: location.pathname, query })
 
         setIsLoading(false)
-      },
+      }
     )
   }
 
@@ -175,7 +177,7 @@ export const ShowEventsRefetchContainer = createRefetchContainer(
           )
       }
     }
-  `,
+  `
 )
 
 interface ShowPaginatedEventsRendererProps {

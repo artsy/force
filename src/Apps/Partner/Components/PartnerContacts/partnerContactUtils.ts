@@ -2,13 +2,13 @@ import type { PartnerContactAddress_location$data } from "__generated__/PartnerC
 import type { PartnerContactMap_location$data } from "__generated__/PartnerContactMap_location.graphql"
 import { compact } from "lodash"
 import qs from "qs"
-// eslint-disable-next-line no-restricted-imports
+// biome-ignore lint/style/noRestrictedImports: Legacy sharify usage for config data
 import { data as sd } from "sharify"
 
 export function getContactAddressLines(
   location:
     | PartnerContactMap_location$data
-    | PartnerContactAddress_location$data,
+    | PartnerContactAddress_location$data
 ) {
   if (!location) return []
 
@@ -43,7 +43,7 @@ export function getGoogleMapUrl(location: PartnerContactMap_location$data) {
 export function getGoogleStaticMapImageUrl(
   location: PartnerContactMap_location$data,
   width = 480,
-  height = 480,
+  height = 480
 ) {
   if (!location) return null
 
@@ -68,6 +68,6 @@ export function getGoogleStaticMapImageUrl(
   }
 
   return `https://maps.googleapis.com/maps/api/staticmap?${qs.stringify(
-    options,
+    options
   )}`
 }

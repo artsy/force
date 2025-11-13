@@ -1,3 +1,5 @@
+import { getENV } from "Utils/getENV"
+import { useLoadScript } from "Utils/Hooks/useLoadScript"
 import {
   AutocompleteInput,
   type AutocompleteInputOptionType,
@@ -5,8 +7,6 @@ import {
   Flex,
   Text,
 } from "@artsy/palette"
-import { useLoadScript } from "Utils/Hooks/useLoadScript"
-import { getENV } from "Utils/getENV"
 import { compact, debounce } from "lodash"
 import {
   type ChangeEvent,
@@ -22,9 +22,9 @@ import {
 const DEBOUNCE_DELAY = 300
 
 const GOOGLE_PLACES_API_SRC = `https://maps.googleapis.com/maps/api/js?key=${getENV(
-  "PUBLIC_GOOGLE_MAPS_API_KEY",
+  "PUBLIC_GOOGLE_MAPS_API_KEY"
 )}&libraries=places&v=weekly&language=en&sessiontoken=${getENV(
-  "SESSION_ID",
+  "SESSION_ID"
 )}&callback=__googleMapsCallback`
 
 interface LocationAutocompleteInputProps
@@ -77,30 +77,33 @@ export const LocationAutocompleteInput: FC<
     return res?.predictions
   }
 
-  const updateSuggestions = useCallback(async (value: string) => {
-    setSuggestions([])
-    if (!value.trim()) return
+  const updateSuggestions = useCallback(
+    async (value: string) => {
+      setSuggestions([])
+      if (!value.trim()) return
 
-    try {
-      setIsLoading(true)
-      const suggestions = await fetchSuggestions(value)
-      setIsLoading(false)
-      if (suggestions) {
-        setSuggestions(
-          suggestions.map(option => ({
-            text: option.description,
-            value: option.place_id,
-          })),
-        )
+      try {
+        setIsLoading(true)
+        const suggestions = await fetchSuggestions(value)
+        setIsLoading(false)
+        if (suggestions) {
+          setSuggestions(
+            suggestions.map(option => ({
+              text: option.description,
+              value: option.place_id,
+            }))
+          )
+        }
+      } catch {
+        setIsLoading(false)
       }
-    } catch {
-      setIsLoading(false)
-    }
-  }, [])
+    },
+    [fetchSuggestions]
+  )
 
   const handleSuggestionsFetchRequested = useMemo(
     () => debounce(updateSuggestions, DEBOUNCE_DELAY),
-    [updateSuggestions],
+    [updateSuggestions]
   )
 
   const handleSelect = async (option: AutocompleteInputOptionType) => {
@@ -173,7 +176,7 @@ export type Location = {
 
 export const normalizePlace = (
   place?: Place,
-  withCountryCode = false,
+  withCountryCode = false
 ): Location => {
   if (!place) return { city: "" }
 
@@ -191,7 +194,7 @@ export const normalizePlace = (
         postalCode?: google.maps.GeocoderAddressComponent
         country?: google.maps.GeocoderAddressComponent
       },
-      component,
+      component
     ) => {
       if (component.types.includes("locality")) {
         return { ...acc, city: component }
@@ -211,7 +214,7 @@ export const normalizePlace = (
 
       return { ...acc }
     },
-    {},
+    {}
   )
 
   return {
@@ -249,6 +252,6 @@ const PoweredByGoogleIcon: FC<React.PropsWithChildren<unknown>> = () => {
 }
 
 export const buildLocationDisplay = (
-  location: Location | null | undefined,
+  location: Location | null | undefined
 ): string =>
   compact([location?.city, location?.state, location?.country]).join(", ")

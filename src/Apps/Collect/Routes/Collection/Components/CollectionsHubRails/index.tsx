@@ -1,7 +1,7 @@
-import { Join, Spacer } from "@artsy/palette"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import type { CollectionsHubRailsQuery } from "__generated__/CollectionsHubRailsQuery.graphql"
+import { Join, Spacer } from "@artsy/palette"
 import type { CollectionsHubRails_linkedCollections$data } from "__generated__/CollectionsHubRails_linkedCollections.graphql"
+import type { CollectionsHubRailsQuery } from "__generated__/CollectionsHubRailsQuery.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistSeriesRailContainer as ArtistSeriesRail } from "./ArtistSeriesRail"
@@ -70,7 +70,7 @@ export const CollectionsHubRailsContainer = createFragmentContainer(
         ...ArtistSeriesRail_collectionGroup
       }
     `,
-  },
+  }
 )
 
 export const CollectionsHubRailsQueryRenderer: React.FC<
@@ -96,7 +96,7 @@ export const CollectionsHubRailsQueryRenderer: React.FC<
         if (error) {
           console.error(
             "[CollectionFeaturedArtists]: Error fetching featured artists",
-            error,
+            error
           )
           return null
         }

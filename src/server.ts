@@ -3,8 +3,8 @@ import "instrument"
 import { adminServerRoutes } from "Apps/Admin/adminServerRoutes"
 import { appPreferencesServerRoutes } from "Apps/AppPreferences/appPreferencesServerRoutes"
 import { redirectCollectionToArtistSeries } from "Apps/Collect/Server/redirectCollectionToArtistSeries"
-import { rssServerApp } from "Apps/RSS/rssServerApp"
 import { redirectsServerRoutes } from "Apps/Redirects/redirectsServerRoutes"
+import { rssServerApp } from "Apps/RSS/rssServerApp"
 import { sitemapsServerApp } from "Apps/Sitemaps/sitemapsServerApp"
 import { cookieConsentManagerServerRoutes } from "Components/CookieConsentManager/cookieConsentManagerServerRoutes"
 import type {
@@ -13,11 +13,11 @@ import type {
 } from "Server/middleware/artsyExpress"
 import { errorHandlerMiddleware } from "Server/middleware/errorHandler"
 import { getOrInitUnleashServer } from "System/FeatureFlags/unleashServer"
-import { getRoutes } from "System/Router/Utils/routeUtils"
 import { renderServerApp } from "System/Router/renderServerApp"
 import { setupServerRouter } from "System/Router/serverRouter"
-import express from "express"
+import { getRoutes } from "System/Router/Utils/routeUtils"
 import type { NextFunction } from "express"
+import express from "express"
 import { initializeMiddleware } from "middleware"
 import type { Unleash } from "unleash-client"
 import type { IToggle } from "unleash-proxy-client"
@@ -27,14 +27,14 @@ const app = express()
 // Initialize unleash server client and wait for it to be ready
 let unleashClient: Unleash | null = null
 
-app.use(async (req, res, next) => {
+app.use(async (_req, _res, next) => {
   if (!unleashClient) {
     try {
       unleashClient = await getOrInitUnleashServer()
     } catch (error) {
       console.warn(
         "[force] Failed to initialize Unleash, continuing without feature flags:",
-        error,
+        error
       )
     }
   }
@@ -89,7 +89,7 @@ app.get(
       console.error(error)
       next(error)
     }
-  },
+  }
 )
 
 // Common express routes
@@ -104,7 +104,7 @@ app
   // Final middleware. Errors and anything else should be last
   .use("*", (_req, _res, next) => {
     const err = new Error()
-    // @ts-ignore -- FIXME: status does not exist on err
+    // @ts-expect-error -- FIXME: status does not exist on err
     err.status = 404
     err.message = "Not Found"
     next(err)

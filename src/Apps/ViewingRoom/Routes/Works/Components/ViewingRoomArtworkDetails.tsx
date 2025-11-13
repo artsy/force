@@ -1,8 +1,8 @@
-import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { Button, Column, GridColumns, HTML } from "@artsy/palette"
 import { DetailsFragmentContainer } from "Components/Artwork/Details/Details"
 import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
 import { RouterLink } from "System/Components/RouterLink"
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import { Button, Column, GridColumns, HTML } from "@artsy/palette"
 import type { ViewingRoomArtworkDetails_artwork$data } from "__generated__/ViewingRoomArtworkDetails_artwork.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -35,7 +35,7 @@ export const ViewingRoomArtworkDetails: React.FC<
         <Column span={4}>
           <Button
             width="100%"
-            // @ts-ignore
+            // @ts-expect-error
             as={RouterLink}
             to={href}
             my={2}

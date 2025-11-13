@@ -1,6 +1,6 @@
-import { screen } from "@testing-library/react"
 import { ArtistRelatedArtistsRailFragmentContainer } from "Apps/Artist/Routes/Overview/Components/ArtistRelatedArtistsRail"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 

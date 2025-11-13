@@ -11,7 +11,7 @@ import type {
 
 export const isDefaultValue = (
   paramName: string,
-  paramValue: string | boolean | string[] | null,
+  paramValue: string | boolean | string[] | null
 ) => {
   if (Array.isArray(paramValue)) {
     return paramValue.length === 0
@@ -21,7 +21,7 @@ export const isDefaultValue = (
 }
 
 export const getAllowedSearchCriteria = (
-  criteria: SearchCriteriaAttributes,
+  criteria: SearchCriteriaAttributes
 ) => {
   const allowedCriteria: SearchCriteriaAttributes = {}
 
@@ -42,7 +42,7 @@ export const getAllowedSearchCriteria = (
 }
 
 export const parseDefaultCriteria = (
-  defaultCriteria: SavedSearchDefaultCriteria,
+  defaultCriteria: SavedSearchDefaultCriteria
 ) => {
   const criteria = {}
 
@@ -61,7 +61,7 @@ export const parseDefaultCriteria = (
 
 export const getSearchCriteriaFromFilters = (
   entity: SavedSearchEntity,
-  filters: ArtworkFiltersState,
+  filters: ArtworkFiltersState
 ): SearchCriteriaAttributes => {
   const allowedFilters = getAllowedSearchCriteria(filters)
   const defaultCriteria = parseDefaultCriteria(entity.defaultCriteria ?? {})

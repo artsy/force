@@ -1,3 +1,13 @@
+import { ExpiresInTimer } from "Components/Notifications/ExpiresInTimer"
+import { useNotificationsContext } from "Components/Notifications/Hooks/useNotificationsContext"
+import { useNotificationsTracking } from "Components/Notifications/Hooks/useNotificationsTracking"
+import { useMarkNotificationAsRead } from "Components/Notifications/Mutations/markNotificationAsRead"
+import { SUPPORTED_NOTIFICATION_TYPES } from "Components/Notifications/Notification"
+import { NotificationItemUnreadIndicator } from "Components/Notifications/NotificationItemUnreadIndicator"
+import type { NotificationListMode } from "Components/Notifications/NotificationsWrapper"
+import { RouterLink } from "System/Components/RouterLink"
+import createLogger from "Utils/logger"
+import { Media } from "Utils/Responsive"
 import {
   Flex,
   HorizontalOverflow,
@@ -7,16 +17,6 @@ import {
   Text,
 } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
-import { ExpiresInTimer } from "Components/Notifications/ExpiresInTimer"
-import { useNotificationsContext } from "Components/Notifications/Hooks/useNotificationsContext"
-import { useNotificationsTracking } from "Components/Notifications/Hooks/useNotificationsTracking"
-import { useMarkNotificationAsRead } from "Components/Notifications/Mutations/markNotificationAsRead"
-import { SUPPORTED_NOTIFICATION_TYPES } from "Components/Notifications/Notification"
-import { NotificationItemUnreadIndicator } from "Components/Notifications/NotificationItemUnreadIndicator"
-import type { NotificationListMode } from "Components/Notifications/NotificationsWrapper"
-import { RouterLink } from "System/Components/RouterLink"
-import { Media } from "Utils/Responsive"
-import createLogger from "Utils/logger"
 import type { NotificationItem_notification$data } from "__generated__/NotificationItem_notification.graphql"
 import { type FC, useCallback, useMemo } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -59,9 +59,9 @@ const NotificationItem: FC<React.PropsWithChildren<NotificationItemProps>> = ({
   const images = useMemo(
     () =>
       notification.previewImages.filter(
-        image => image.resized?.width && image.resized?.height,
+        image => image.resized?.width && image.resized?.height
       ),
-    [notification.previewImages],
+    [notification.previewImages]
   )
 
   return (
@@ -191,7 +191,7 @@ export const NotificationItemFragmentContainer = createFragmentContainer(
         ...NotificationTypeLabel_notification
       }
     `,
-  },
+  }
 )
 
 interface NotificationItemWrapperProps {
@@ -263,7 +263,7 @@ NotificationItemLink.defaultProps = {
  */
 const getNotificationUrl = (
   notification: NotificationItem_notification$data,
-  mode: NotificationListMode = "page",
+  mode: NotificationListMode = "page"
 ) => {
   // Notification response has targetHref field (computed on backend), which for
   // most notifications accounts for "objectsCount". If there is only one object,

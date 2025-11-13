@@ -1,6 +1,6 @@
-import { screen } from "@testing-library/react"
 import { PartnerShowOpenedNotification } from "Components/Notifications/PartnerShowOpenedNotification"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import type { PartnerShowOpenedNotification_test_Query } from "__generated__/PartnerShowOpenedNotification_test_Query.graphql"
 import { graphql } from "react-relay"
 
@@ -57,11 +57,11 @@ describe("PartnerShowOpenedNotification", () => {
 
     expect(screen.getByTestId("partner-link")).toHaveAttribute(
       "href",
-      "/partner/theo",
+      "/partner/theo"
     )
     expect(screen.getByTestId("view-show-button")).toHaveAttribute(
       "href",
-      "/show/theo-theo-at-art-ono",
+      "/show/theo-theo-at-art-ono"
     )
   })
 })

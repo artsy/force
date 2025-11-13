@@ -1,8 +1,7 @@
 import { NavBarMobileMenu } from "Components/NavBar/NavBarMobileMenu/NavBarMobileMenu"
 import { SystemContextProvider } from "System/Contexts/SystemContext"
 import { logout } from "Utils/auth"
-import { render } from "@testing-library/react"
-import { fireEvent } from "@testing-library/react"
+import { fireEvent, render } from "@testing-library/react"
 import { useTracking } from "react-tracking"
 
 jest.mock("react-tracking")
@@ -23,13 +22,13 @@ describe("NavBarMobileMenu", () => {
     return render(
       <SystemContextProvider user={props.user} isLoggedIn={!!props.user}>
         <NavBarMobileMenu isOpen onClose={noop} />
-      </SystemContextProvider>,
+      </SystemContextProvider>
     )
   }
 
   const getMobileMenuLinkContainer = (
     userType: string | null = null,
-    lab_features: string[] = [],
+    lab_features: string[] = []
   ) => {
     const { container } = getWrapper({
       user: userType ? { type: userType, lab_features } : null,
@@ -45,7 +44,7 @@ describe("NavBarMobileMenu", () => {
 
   it("calls logout auth action on logout menu click", () => {
     mockLogout.mockImplementationOnce(() =>
-      jest.fn().mockResolvedValue(Promise.resolve()),
+      jest.fn().mockResolvedValue(Promise.resolve())
     )
 
     const { container } = getWrapper({ user: { type: "NotAdmin" } })
@@ -98,7 +97,7 @@ describe("NavBarMobileMenu", () => {
       // Exclude submenu links
       const renderedMobileMenuLinks = Array.from(menuLinks)
         .map(
-          node => (node.getAttribute("href") || "") + (node.textContent || ""),
+          node => (node.getAttribute("href") || "") + (node.textContent || "")
         )
         .filter(link => defaultMobileMenuLinks.includes(link))
 
@@ -155,11 +154,11 @@ describe("NavBarMobileMenu", () => {
 
       // Use a more specific selector that works in jsdom
       const backButtons = Array.from(
-        container.querySelectorAll("button"),
+        container.querySelectorAll("button")
       ).filter(
         button =>
           button.getAttribute("aria-label")?.includes("Back") ||
-          button.textContent?.includes("Back"),
+          button.textContent?.includes("Back")
       )
 
       if (backButtons.length > 0) {

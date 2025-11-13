@@ -1,3 +1,14 @@
+import { BankAccountPickerFragmentContainer } from "Apps/Order/Components/BankAccountPicker"
+import { Collapse } from "Apps/Order/Components/Collapse"
+import {
+  type CreditCardPicker,
+  CreditCardPickerFragmentContainer,
+} from "Apps/Order/Components/CreditCardPicker"
+import { SaveAndContinueButton } from "Apps/Order/Components/SaveAndContinueButton"
+import type { CommitMutation } from "Apps/Order/Utils/commitMutation"
+import { RouterLink } from "System/Components/RouterLink"
+import { extractNodes } from "Utils/extractNodes"
+import { Jump } from "Utils/Hooks/useJump"
 import { ActionType, OwnerType } from "@artsy/cohesion"
 import InfoIcon from "@artsy/icons/InfoIcon"
 import InstitutionIcon from "@artsy/icons/InstitutionIcon"
@@ -12,17 +23,6 @@ import {
   Text,
   Tooltip,
 } from "@artsy/palette"
-import { BankAccountPickerFragmentContainer } from "Apps/Order/Components/BankAccountPicker"
-import { Collapse } from "Apps/Order/Components/Collapse"
-import {
-  type CreditCardPicker,
-  CreditCardPickerFragmentContainer,
-} from "Apps/Order/Components/CreditCardPicker"
-import { SaveAndContinueButton } from "Apps/Order/Components/SaveAndContinueButton"
-import type { CommitMutation } from "Apps/Order/Utils/commitMutation"
-import { RouterLink } from "System/Components/RouterLink"
-import { Jump } from "Utils/Hooks/useJump"
-import { extractNodes } from "Utils/extractNodes"
 import type { Payment_me$data } from "__generated__/Payment_me.graphql"
 import type {
   CommercePaymentMethodEnum,
@@ -80,7 +80,7 @@ export const PaymentContent: FC<React.PropsWithChildren<Props>> = props => {
             defaultValue={selectedPaymentMethod}
           >
             {getAvailablePaymentMethods(order.availablePaymentMethods).map(
-              method => method,
+              method => method
             )}
           </RadioGroup>
           <Spacer y={4} />
@@ -101,7 +101,7 @@ export const PaymentContent: FC<React.PropsWithChildren<Props>> = props => {
           getPaymentMethodInfo(
             selectedPaymentMethod,
             order.source,
-            order.availablePaymentMethods,
+            order.availablePaymentMethods
           )}
         <Spacer y={2} />
         <Flex
@@ -135,7 +135,7 @@ export const PaymentContent: FC<React.PropsWithChildren<Props>> = props => {
         {getPaymentMethodInfo(
           selectedPaymentMethod,
           order.source,
-          order.availablePaymentMethods,
+          order.availablePaymentMethods
         )}
         <Spacer y={2} />
         {selectedPaymentMethod === "US_BANK_ACCOUNT" && (
@@ -162,7 +162,7 @@ export const PaymentContent: FC<React.PropsWithChildren<Props>> = props => {
         {getPaymentMethodInfo(
           selectedPaymentMethod,
           order.source,
-          order.availablePaymentMethods,
+          order.availablePaymentMethods
         )}
         <Spacer y={2} />
         <Flex
@@ -185,7 +185,7 @@ export const PaymentContent: FC<React.PropsWithChildren<Props>> = props => {
         {getPaymentMethodInfo(
           selectedPaymentMethod,
           order.source,
-          order.availablePaymentMethods,
+          order.availablePaymentMethods
         )}
         <Spacer y={4} />
         <SaveAndContinueButton
@@ -204,7 +204,7 @@ export const PaymentContent: FC<React.PropsWithChildren<Props>> = props => {
  * by checking order's availablePaymentMethods
  */
 const getAvailablePaymentMethods = (
-  availablePaymentMethods: readonly CommercePaymentMethodEnum[],
+  availablePaymentMethods: readonly CommercePaymentMethodEnum[]
 ): ReactElement<RadioProps<string>>[] => {
   const paymentMethods: Array<ReactElement<RadioProps<string>>> = []
 
@@ -222,7 +222,7 @@ const getAvailablePaymentMethods = (
             </Text>
           </>
         }
-      />,
+      />
     )
   }
 
@@ -244,7 +244,7 @@ const getAvailablePaymentMethods = (
         <Text ml="24px" variant="xs" color="mono60">
           US bank account only
         </Text>
-      </BorderedRadio>,
+      </BorderedRadio>
     )
   }
 
@@ -266,7 +266,7 @@ const getAvailablePaymentMethods = (
         <Text ml="24px" variant="xs" color="mono60">
           Your bank account must be denominated in EUR
         </Text>
-      </BorderedRadio>,
+      </BorderedRadio>
     )
   }
 
@@ -284,7 +284,7 @@ const getAvailablePaymentMethods = (
             </Text>
           </>
         }
-      />,
+      />
     )
   }
 
@@ -294,7 +294,7 @@ const getAvailablePaymentMethods = (
 const getPaymentMethodInfo = (
   paymentMethod: CommercePaymentMethodEnum | string,
   orderSource?: string,
-  availablePaymentMethods?: readonly CommercePaymentMethodEnum[],
+  availablePaymentMethods?: readonly CommercePaymentMethodEnum[]
 ) => {
   switch (paymentMethod) {
     case "CREDIT_CARD":

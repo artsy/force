@@ -1,4 +1,3 @@
-import { TransactionDetailsSummaryItemFragmentContainer } from "Apps/Order/Components/TransactionDetailsSummaryItem"
 import {
   BuyOrderWithSelectedShippingQuote,
   OfferOrderWithOffers,
@@ -6,6 +5,7 @@ import {
   UntouchedBuyOrder,
   UntouchedMakeOfferWithArtsyShippingDomesticFromUS,
 } from "Apps/__tests__/Fixtures/Order"
+import { TransactionDetailsSummaryItemFragmentContainer } from "Apps/Order/Components/TransactionDetailsSummaryItem"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { screen } from "@testing-library/react"
 import type { TransactionDetailsSummaryItemTestQuery$rawResponse } from "__generated__/TransactionDetailsSummaryItemTestQuery.graphql"
@@ -140,7 +140,7 @@ describe("TransactionDetailsSummaryItem", () => {
       })
 
       expect(
-        screen.getAllByText("Waiting for final costs").length,
+        screen.getAllByText("Waiting for final costs").length
       ).toBeGreaterThan(0)
       expect(screen.getAllByText(/Shipping/)[0]).toBeInTheDocument()
       expect(screen.getAllByText(/Tax/)[0]).toBeInTheDocument()
@@ -166,8 +166,8 @@ describe("TransactionDetailsSummaryItem", () => {
 
       expect(
         screen.getByText(
-          "*Shipping costs to be confirmed by gallery. You will be able to review the total price before payment.",
-        ),
+          "*Shipping costs to be confirmed by gallery. You will be able to review the total price before payment."
+        )
       ).toBeInTheDocument()
     })
 
@@ -251,7 +251,7 @@ describe("TransactionDetailsSummaryItem", () => {
 
         expect(screen.getByText("Shipping")).toBeInTheDocument()
         expect(
-          screen.getAllByText("Waiting for final costs").length,
+          screen.getAllByText("Waiting for final costs").length
         ).toBeGreaterThan(0)
         expect(screen.getByText(/Tax/)).toBeInTheDocument()
         expect(screen.getByText(/may apply at import/)).toBeInTheDocument()
@@ -292,8 +292,8 @@ describe("TransactionDetailsSummaryItem", () => {
         expect(screen.getByText("US$120")).toBeInTheDocument()
         expect(
           screen.getByText(
-            "*Estimate only. Price may vary once offer is finalized.",
-          ),
+            "*Estimate only. Price may vary once offer is finalized."
+          )
         ).toBeInTheDocument()
         expect(screen.getByText(/may apply at import/)).toBeInTheDocument()
       })
@@ -307,13 +307,13 @@ describe("TransactionDetailsSummaryItem", () => {
 
       expect(
         screen.getByText(
-          "Congratulations! This artwork will be added to your Collection once the gallery confirms the order.",
-        ),
+          "Congratulations! This artwork will be added to your Collection once the gallery confirms the order."
+        )
       ).toBeInTheDocument()
       expect(
         screen.getByText(
-          "View and manage all artworks in your Collection on the Artsy app.",
-        ),
+          "View and manage all artworks in your Collection on the Artsy app."
+        )
       ).toBeInTheDocument()
     })
   })

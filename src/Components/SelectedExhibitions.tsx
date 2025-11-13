@@ -1,3 +1,5 @@
+import { ArtworkDefinitionList } from "Apps/Artwork/Components/ArtworkDefinitionList"
+import { Media } from "Utils/Responsive"
 import {
   BorderBox,
   Box,
@@ -7,8 +9,6 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { ArtworkDefinitionList } from "Apps/Artwork/Components/ArtworkDefinitionList"
-import { Media } from "Utils/Responsive"
 import type { SelectedExhibitions_exhibitions$data } from "__generated__/SelectedExhibitions_exhibitions.graphql"
 import { Link } from "found"
 import { groupBy, toPairs } from "lodash"
@@ -88,7 +88,7 @@ export const ExhibitionYearList: React.FC<
   return (
     <ArtworkDefinitionList term={year}>
       {exhibitions.map((exhibition, index) => (
-        <React.Fragment key={exhibition.name + "-" + index}>
+        <React.Fragment key={`${exhibition.name}-${index}`}>
           <Text variant="xs">
             {exhibition.name}
             {exhibition.partner && (
@@ -221,5 +221,5 @@ export const SelectedExhibitionFragmentContainer = createFragmentContainer(
         city
       }
     `,
-  },
+  }
 )

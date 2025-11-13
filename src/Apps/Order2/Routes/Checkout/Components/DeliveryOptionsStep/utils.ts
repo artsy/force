@@ -41,7 +41,7 @@ const dateRangeString = (args: {
 
 export const deliveryOptionTimeEstimate = (
   type?: string | null,
-  from: Date = today,
+  from: Date = today
 ): [string, string] | null => {
   switch (type) {
     case null:

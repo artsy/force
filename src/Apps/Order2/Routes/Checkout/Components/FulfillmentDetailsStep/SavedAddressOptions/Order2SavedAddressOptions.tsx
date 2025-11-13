@@ -1,3 +1,12 @@
+import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
+import { AddAddressForm } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/SavedAddressOptions/AddAddressForm"
+import { UpdateAddressForm } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/SavedAddressOptions/UpdateAddressForm"
+import {
+  countryNameFromAlpha2,
+  type ProcessedUserAddress,
+} from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/utils"
+import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import type { FormikContextWithAddress } from "Components/Address/AddressFormFields"
 import AddIcon from "@artsy/icons/AddIcon"
 import {
   BorderedRadio,
@@ -8,15 +17,6 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
-import { AddAddressForm } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/SavedAddressOptions/AddAddressForm"
-import { UpdateAddressForm } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/SavedAddressOptions/UpdateAddressForm"
-import {
-  type ProcessedUserAddress,
-  countryNameFromAlpha2,
-} from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/utils"
-import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
-import type { FormikContextWithAddress } from "Components/Address/AddressFormFields"
 import { setNestedObjectValues, useFormikContext } from "formik"
 import { useCallback, useState } from "react"
 import styled from "styled-components"
@@ -42,7 +42,7 @@ export const SavedAddressOptions = ({
   const parentFormikContext = useFormikContext<FormikContextWithAddress>()
 
   const [selectedAddressID, setSelectedAddressID] = useState(
-    initialSelectedAddress?.internalID || "",
+    initialSelectedAddress?.internalID || ""
   )
 
   const onSaveAddress = useCallback(
@@ -51,18 +51,18 @@ export const SavedAddressOptions = ({
       setSelectedAddressID(addressID)
       setUserAddressMode(null)
     },
-    [onSelectAddress, setUserAddressMode],
+    [onSelectAddress, setUserAddressMode]
   )
 
   const onDeleteAddress = useCallback(
     async (deletedAddressID: string) => {
       const remainingAddresses = savedAddresses.filter(
-        address => address.internalID !== deletedAddressID,
+        address => address.internalID !== deletedAddressID
       )
 
       if (remainingAddresses.length > 0) {
         const addressToSelect = remainingAddresses.find(
-          address => address.isValid,
+          address => address.isValid
         )
 
         if (addressToSelect) {
@@ -71,7 +71,7 @@ export const SavedAddressOptions = ({
         }
       }
     },
-    [savedAddresses, onSelectAddress],
+    [savedAddresses, onSelectAddress]
   )
 
   if (userAddressMode?.mode === "add") {
@@ -205,7 +205,7 @@ export const SavedAddressOptions = ({
             parentFormikContext.handleSubmit()
           } else {
             const errorMessages = Object.values(errors).flatMap(v =>
-              typeof v === "object" ? Object.values(v) : v,
+              typeof v === "object" ? Object.values(v) : v
             )
             const error = {
               title: "Please fix the following errors",

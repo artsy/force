@@ -1,4 +1,3 @@
-import { fireEvent, screen, waitFor } from "@testing-library/react"
 import {
   CreateNewListModalContainer,
   type CreateNewListModalContainerProps,
@@ -6,6 +5,7 @@ import {
 import { render } from "DevTools/renderWithMockBoot"
 import { AnalyticsCombinedContextProvider } from "System/Contexts/AnalyticsContext"
 import { useMutation } from "Utils/Hooks/useMutation"
+import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { useTracking } from "react-tracking"
 
 jest.mock("Utils/Hooks/useMutation")
@@ -61,7 +61,7 @@ describe("CreateNewListModal", () => {
     expect(screen.getByText("Name your list")).toBeInTheDocument()
     expect(screen.getByRole("textbox")).toHaveAttribute(
       "placeholder",
-      "E.g. Photography, Warhol, etc.",
+      "E.g. Photography, Warhol, etc."
     )
     expect(screen.getByText("0/40")).toBeInTheDocument()
   })
@@ -117,7 +117,7 @@ describe("CreateNewListModal", () => {
           artistNames: "Banksy",
           imageURL: null,
         }}
-      />,
+      />
     )
 
     expect(screen.getByText(/Banksy/)).toBeInTheDocument()
@@ -156,7 +156,7 @@ describe("CreateNewListModal", () => {
         context_owner_slug: "page-owner-slug",
         context_owner_type: "saves",
         owner_id: artworkList.internalID,
-      }),
+      })
     )
   })
 
@@ -180,8 +180,8 @@ describe("CreateNewListModal", () => {
               shareableWithPartners: true,
             },
           },
-        }),
-      ),
+        })
+      )
     )
   })
 
@@ -222,8 +222,8 @@ describe("CreateNewListModal", () => {
                 shareableWithPartners: true,
               },
             },
-          }),
-        ),
+          })
+        )
       )
     })
 
@@ -249,8 +249,8 @@ describe("CreateNewListModal", () => {
                 shareableWithPartners: false,
               },
             },
-          }),
-        ),
+          })
+        )
       )
     })
   })

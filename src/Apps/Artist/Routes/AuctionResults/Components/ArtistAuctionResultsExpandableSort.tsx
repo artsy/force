@@ -1,6 +1,6 @@
-import { Radio, RadioGroup, Spacer } from "@artsy/palette"
 import { useAuctionResultsFilterContext } from "Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
 import { FilterExpandable } from "Components/ArtworkFilter/ArtworkFilters/FilterExpandable"
+import { Radio, RadioGroup, Spacer } from "@artsy/palette"
 import type { FC } from "react"
 import { SORTS } from "./ArtistAuctionResultsSortSelect"
 

@@ -2,12 +2,12 @@ import { Column, GridColumns, Join, Separator, Spacer } from "@artsy/palette"
 import type { ViewingRoomStatementRoute_viewingRoom$data } from "__generated__/ViewingRoomStatementRoute_viewingRoom.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ViewWorksButton } from "./Components/ViewWorksButton"
 import { ViewingRoomBodyFragmentContainer as ViewingRoomBody } from "./Components/ViewingRoomBody"
 import { ViewingRoomIntroFragmentContainer as ViewingRoomIntro } from "./Components/ViewingRoomIntro"
 import { ViewingRoomPullQuoteFragmentContainer as ViewingRoomPullQuote } from "./Components/ViewingRoomPullQuote"
 import { ViewingRoomSubsectionsFragmentContainer as ViewingRoomSubsections } from "./Components/ViewingRoomSubsections"
 import { ViewingRoomWorksFragmentContainer as ViewingRoomWorks } from "./Components/ViewingRoomWorks"
+import { ViewWorksButton } from "./Components/ViewWorksButton"
 
 interface ViewingRoomStatementRouteProps {
   viewingRoom: ViewingRoomStatementRoute_viewingRoom$data

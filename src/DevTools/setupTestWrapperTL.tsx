@@ -1,6 +1,6 @@
-import { type RenderResult, act, render } from "@testing-library/react"
-import userEvent from "@testing-library/user-event"
 import { MockBoot } from "DevTools/MockBoot"
+import { act, type RenderResult, render } from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
 import type * as React from "react"
 import {
   type GraphQLTaggedNode,
@@ -10,9 +10,9 @@ import {
 } from "react-relay"
 import type { OperationDescriptor, OperationType } from "relay-runtime"
 import {
+  createMockEnvironment,
   type MockEnvironment,
   MockPayloadGenerator,
-  createMockEnvironment,
 } from "relay-test-utils"
 import type { MockResolvers } from "relay-test-utils/lib/RelayMockPayloadGenerator"
 
@@ -108,7 +108,7 @@ export const setupTestWrapperTL = <T extends OperationType>({
   const renderWithRelay = (
     mockResolvers: MockResolvers = {},
     componentProps?: any,
-    mockedEnv?: ReturnType<typeof createMockEnvironment>,
+    mockedEnv?: ReturnType<typeof createMockEnvironment>
   ): RenderWithRelay => {
     const env = mockedEnv ?? createMockEnvironment()
     const user = userEvent
@@ -143,7 +143,7 @@ export const setupTestWrapperTL = <T extends OperationType>({
       act(() => {
         env.mock.resolve(
           operation,
-          MockPayloadGenerator.generate(operation, mockResolvers),
+          MockPayloadGenerator.generate(operation, mockResolvers)
         )
       })
 

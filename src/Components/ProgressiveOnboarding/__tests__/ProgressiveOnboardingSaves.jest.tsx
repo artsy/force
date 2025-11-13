@@ -1,5 +1,3 @@
-import { DismissibleProvider, useDismissibleContext } from "@artsy/dismissible"
-import { render, screen } from "@testing-library/react"
 import { __ProgressiveOnboardingSaveArtwork__ } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveArtwork"
 import { __ProgressiveOnboardingSaveFind__ } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveFind"
 import { ProgressiveOnboardingSaveHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveHighlight"
@@ -9,6 +7,8 @@ import {
 } from "Components/ProgressiveOnboarding/progressiveOnboardingKeys"
 import { withProgressiveOnboardingCounts } from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
+import { DismissibleProvider, useDismissibleContext } from "@artsy/dismissible"
+import { render, screen } from "@testing-library/react"
 import { type FC, useEffect } from "react"
 
 jest.mock(
@@ -20,17 +20,17 @@ jest.mock(
         {children}
       </>
     ),
-  }),
+  })
 )
 
 jest.mock("Components/ProgressiveOnboarding/withProgressiveOnboardingCounts")
 
 const Example: FC<React.PropsWithChildren<unknown>> = () => {
   const ProgressiveOnboardingSaveFind = withProgressiveOnboardingCounts(
-    __ProgressiveOnboardingSaveFind__,
+    __ProgressiveOnboardingSaveFind__
   )
   const ProgressiveOnboardingSaveArtwork = withProgressiveOnboardingCounts(
-    __ProgressiveOnboardingSaveArtwork__,
+    __ProgressiveOnboardingSaveArtwork__
   )
 
   return (
@@ -138,7 +138,7 @@ describe("ProgressiveOnboardingSaveHighlight", () => {
         <ProgressiveOnboardingSaveHighlight position="center">
           <div>Example</div>
         </ProgressiveOnboardingSaveHighlight>
-      </DismissibleProvider>,
+      </DismissibleProvider>
     )
 
     expect(screen.getByText("Example")).toBeInTheDocument()

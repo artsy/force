@@ -1,3 +1,11 @@
+import { ProgressiveOnboardingPopover } from "Components/ProgressiveOnboarding/ProgressiveOnboardingPopover"
+import { PROGRESSIVE_ONBOARDING } from "Components/ProgressiveOnboarding/progressiveOnboardingKeys"
+import {
+  type WithProgressiveOnboardingCountsProps,
+  withProgressiveOnboardingCounts,
+} from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { resized } from "Utils/resized"
 import { useDismissibleContext } from "@artsy/dismissible"
 import {
   Box,
@@ -8,14 +16,6 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { ProgressiveOnboardingPopover } from "Components/ProgressiveOnboarding/ProgressiveOnboardingPopover"
-import { PROGRESSIVE_ONBOARDING } from "Components/ProgressiveOnboarding/progressiveOnboardingKeys"
-import {
-  type WithProgressiveOnboardingCountsProps,
-  withProgressiveOnboardingCounts,
-} from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { resized } from "Utils/resized"
 import type { FC, ReactNode } from "react"
 
 const KEY = PROGRESSIVE_ONBOARDING.alertCreate
@@ -100,7 +100,7 @@ export const __ProgressiveOnboardingAlertCreate__: FC<
 }
 
 export const ProgressiveOnboardingAlertCreate = withProgressiveOnboardingCounts(
-  __ProgressiveOnboardingAlertCreate__,
+  __ProgressiveOnboardingAlertCreate__
 )
 
 const IMAGE = {

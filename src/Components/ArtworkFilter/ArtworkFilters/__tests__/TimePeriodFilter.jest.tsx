@@ -1,14 +1,14 @@
-import { screen } from "@testing-library/react"
-import userEvent from "@testing-library/user-event"
 import type { ArtworkFilterContextProps } from "Components/ArtworkFilter/ArtworkFilterContext"
-import {
-  TimePeriodFilter,
-  getTimePeriodToDisplay,
-} from "Components/ArtworkFilter/ArtworkFilters/TimePeriodFilter"
 import {
   createArtworkFilterTestRenderer,
   currentArtworkFilterContext,
 } from "Components/ArtworkFilter/ArtworkFilters/__tests__/Utils"
+import {
+  getTimePeriodToDisplay,
+  TimePeriodFilter,
+} from "Components/ArtworkFilter/ArtworkFilters/TimePeriodFilter"
+import { screen } from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
 
 describe(TimePeriodFilter, () => {
   describe("with aggregations", () => {
@@ -126,10 +126,10 @@ describe(TimePeriodFilter, () => {
 
     it("leaves non-numeric periods unchanged", () => {
       expect(getTimePeriodToDisplay("Late 19th Century")).toBe(
-        "Late 19th Century",
+        "Late 19th Century"
       )
       expect(getTimePeriodToDisplay("18th Century & Earlier")).toBe(
-        "18th Century & Earlier",
+        "18th Century & Earlier"
       )
     })
   })

@@ -1,4 +1,11 @@
 import {
+  ARTIST_RAIL_PLACEHOLDER,
+  ArtistRailFragmentContainer,
+} from "Components/ArtistRail"
+import { EmptyState } from "Components/EmptyState"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { extractNodes } from "Utils/extractNodes"
+import {
   Box,
   Button,
   Join,
@@ -8,20 +15,13 @@ import {
   Sup,
   Text,
 } from "@artsy/palette"
-import {
-  ARTIST_RAIL_PLACEHOLDER,
-  ArtistRailFragmentContainer,
-} from "Components/ArtistRail"
-import { EmptyState } from "Components/EmptyState"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { extractNodes } from "Utils/extractNodes"
-import type { SettingsSavesArtistsQuery } from "__generated__/SettingsSavesArtistsQuery.graphql"
 import type { SettingsSavesArtists_me$data } from "__generated__/SettingsSavesArtists_me.graphql"
+import type { SettingsSavesArtistsQuery } from "__generated__/SettingsSavesArtistsQuery.graphql"
 import { type FC, Fragment, useState } from "react"
 import {
-  type RelayPaginationProp,
   createPaginationContainer,
   graphql,
+  type RelayPaginationProp,
 } from "react-relay"
 
 interface SettingsSavesArtistsProps {
@@ -123,7 +123,7 @@ export const SettingsSavesArtistsPaginationContainer =
         return { ...fragmentVariables, after }
       },
       query: SETTINGS_SAVES_ARTISTS_QUERY,
-    },
+    }
   )
 
 const SETTINGS_SAVES_ARTISTS_PLACEHOLDER = (

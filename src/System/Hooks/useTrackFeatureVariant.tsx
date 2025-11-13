@@ -1,6 +1,6 @@
-import { ActionType } from "@artsy/cohesion"
 import { pathToOwnerType } from "System/Contexts/AnalyticsContext"
 import { useRouter } from "System/Hooks/useRouter"
+import { ActionType } from "@artsy/cohesion"
 import { useEffect, useRef } from "react"
 
 interface VariantTrackingProperties {
@@ -51,7 +51,7 @@ export function useTrackFeatureVariant({
 export const useTrackFeatureVariantOnMount = (
   props: Omit<VariantTrackingProperties, "variantName"> & {
     variantName?: string
-  },
+  }
 ) => {
   const { trackFeatureVariant } = useTrackFeatureVariant({
     ...props,

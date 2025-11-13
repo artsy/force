@@ -1,8 +1,8 @@
+import { CreditCardInputProvider } from "Components/CreditCardInput"
+import { extractNodes } from "Utils/extractNodes"
+import { useMode } from "Utils/Hooks/useMode"
 import { Button, Column, GridColumns, Message, Text } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
-import { CreditCardInputProvider } from "Components/CreditCardInput"
-import { useMode } from "Utils/Hooks/useMode"
-import { extractNodes } from "Utils/extractNodes"
 import type { SettingsPaymentsMethods_me$data } from "__generated__/SettingsPaymentsMethods_me.graphql"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -127,5 +127,5 @@ export const SettingsPaymentsMethodsFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  },
+  }
 )

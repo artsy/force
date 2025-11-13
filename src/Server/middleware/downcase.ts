@@ -4,7 +4,7 @@ import type { ArtsyRequest, ArtsyResponse } from "./artsyExpress"
 export function downcaseMiddleware(
   req: ArtsyRequest,
   res: ArtsyResponse,
-  next: NextFunction,
+  next: NextFunction
 ) {
   const url = req._parsedUrl
 
@@ -14,7 +14,7 @@ export function downcaseMiddleware(
     // added a regex to replace all leading slashes with a simple slash to prevent open redirects
     res.redirect(
       301,
-      url.pathname.replace(/^\/*/, "/").toLowerCase() + (url.search || ""),
+      url.pathname.replace(/^\/*/, "/").toLowerCase() + (url.search || "")
     )
   } else {
     next()

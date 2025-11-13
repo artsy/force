@@ -1,3 +1,6 @@
+import { RouterLink } from "System/Components/RouterLink"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { crop } from "Utils/resizer"
 import {
   ActionType,
   type ClickedCollectionGroup,
@@ -5,9 +8,6 @@ import {
   OwnerType,
 } from "@artsy/cohesion"
 import { TriptychCard } from "@artsy/palette"
-import { RouterLink } from "System/Components/RouterLink"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import { crop } from "Utils/resizer"
 import type { FairCollection_collection$data } from "__generated__/FairCollection_collection.graphql"
 import { compact } from "lodash"
 import type * as React from "react"
@@ -52,7 +52,7 @@ export const FairCollection: React.FC<
 
   const imageUrls = compact(
     // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    collection.artworks.edges.map(({ node }) => node?.image?.url),
+    collection.artworks.edges.map(({ node }) => node?.image?.url)
   )
 
   const images = imageUrls.map((url, i) => {
@@ -114,5 +114,5 @@ export const FairCollectionFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  },
+  }
 )

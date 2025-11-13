@@ -1,13 +1,13 @@
-import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { Button } from "@artsy/palette"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import createLogger from "Utils/logger"
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import { Button } from "@artsy/palette"
 import * as React from "react"
 import { useTracking } from "react-tracking"
 import { requestEmailConfirmation } from "./requestEmailConfirmationMutation"
 
 const logger = createLogger(
-  "Components/FlashBanner/EmailConfirmationLinkExpired",
+  "Components/FlashBanner/EmailConfirmationLinkExpired"
 )
 
 // TODO: Rewrite

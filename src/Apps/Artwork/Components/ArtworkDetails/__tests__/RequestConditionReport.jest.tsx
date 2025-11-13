@@ -1,16 +1,16 @@
-import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { fireEvent, screen, waitFor } from "@testing-library/react"
-import { Toasts, ToastsProvider } from "@artsy/palette"
 import { RequestConditionReportFragmentContainer } from "Apps/Artwork/Components/ArtworkDetails/RequestConditionReport"
 import { useAuthDialog } from "Components/AuthDialog"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import { Toasts, ToastsProvider } from "@artsy/palette"
+import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import {
+  createMockEnvironment,
   type MockEnvironment,
   MockPayloadGenerator,
-  createMockEnvironment,
 } from "relay-test-utils"
 
 jest.unmock("react-relay")
@@ -93,7 +93,7 @@ describe("RequestConditionReport", () => {
         Artwork: () => artwork,
       },
       {},
-      relayEnv,
+      relayEnv
     )
 
     const requestButton = screen.getByText("Request condition report")
@@ -101,7 +101,7 @@ describe("RequestConditionReport", () => {
 
     await waitFor(() => {
       relayEnv.mock.resolveMostRecentOperation(operation =>
-        MockPayloadGenerator.generate(operation),
+        MockPayloadGenerator.generate(operation)
       )
     })
 
@@ -122,7 +122,7 @@ describe("RequestConditionReport", () => {
         Artwork: () => artwork,
       },
       {},
-      relayEnv,
+      relayEnv
     )
 
     const requestButton = screen.getByText("Request condition report")
@@ -135,8 +135,8 @@ describe("RequestConditionReport", () => {
     await waitFor(() => {
       expect(
         screen.getByText(
-          "Something went wrong. Please try again or contact support@artsy.net.",
-        ),
+          "Something went wrong. Please try again or contact support@artsy.net."
+        )
       ).toBeInTheDocument()
     })
   })
@@ -158,7 +158,7 @@ describe("RequestConditionReport", () => {
           Artwork: () => artwork,
         },
         {},
-        relayEnv,
+        relayEnv
       )
 
       const loginButton = screen.getByText("Log in to request")

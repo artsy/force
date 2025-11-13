@@ -1,8 +1,8 @@
-import StopwatchIcon from "@artsy/icons/StopwatchIcon"
-import { Flex, Spacer, Text } from "@artsy/palette"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { RouterLink } from "System/Components/RouterLink"
 import { useCountdownTimer } from "Utils/Hooks/useCountdownTimer"
+import StopwatchIcon from "@artsy/icons/StopwatchIcon"
+import { Flex, Spacer, Text } from "@artsy/palette"
 import type {
   Order2CheckoutPricingBreakdown_order$data,
   Order2CheckoutPricingBreakdown_order$key,
@@ -40,7 +40,7 @@ export const Order2CheckoutPricingBreakdown: React.FC<
 
   return (
     <>
-      {pricingBreakdownLines.map((line, index) => {
+      {pricingBreakdownLines.map((line, _index) => {
         if (!(line && isKnownLineType(line))) {
           return null
         }
@@ -191,7 +191,7 @@ type KnownLineType = Extract<
 >
 
 const isKnownLineType = (
-  line: Order2CheckoutPricingBreakdown_order$data["pricingBreakdownLines"][number],
+  line: Order2CheckoutPricingBreakdown_order$data["pricingBreakdownLines"][number]
 ): line is KnownLineType => {
   return !!line && knownLineTypes.includes(line.__typename as any)
 }

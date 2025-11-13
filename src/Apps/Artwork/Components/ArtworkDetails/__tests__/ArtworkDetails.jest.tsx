@@ -1,7 +1,7 @@
-import { screen } from "@testing-library/react"
 import { ArtworkDetailsFragmentContainer } from "Apps/Artwork/Components/ArtworkDetails"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import type { ArtworkDetailsTestQuery } from "__generated__/ArtworkDetailsTestQuery.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -49,7 +49,7 @@ describe("ArtworkDetails", () => {
 
       expect(screen.getByText("Condition")).toBeInTheDocument()
       expect(
-        screen.queryByText("Slight discoloration from sun exposure"),
+        screen.queryByText("Slight discoloration from sun exposure")
       ).not.toBeInTheDocument()
     })
 
@@ -66,7 +66,7 @@ describe("ArtworkDetails", () => {
 
       expect(screen.getByText("Condition")).toBeInTheDocument()
       expect(
-        screen.getByText("Slight discoloration from sun exposure"),
+        screen.getByText("Slight discoloration from sun exposure")
       ).toBeInTheDocument()
     })
 
@@ -98,7 +98,7 @@ describe("ArtworkDetails", () => {
       expect(screen.getByText("Signature")).toBeInTheDocument()
       expect(screen.getByText("Condition")).toBeInTheDocument()
       expect(
-        screen.getByText("Certificate of authenticity"),
+        screen.getByText("Certificate of authenticity")
       ).toBeInTheDocument()
       expect(screen.getByText("Rarity")).toBeInTheDocument()
       expect(screen.getByText("Size")).toBeInTheDocument()
@@ -151,7 +151,7 @@ describe("ArtworkDetails", () => {
       })
 
       expect(
-        screen.getByText("Here is some additional info for this work"),
+        screen.getByText("Here is some additional info for this work")
       ).toBeInTheDocument()
     })
 

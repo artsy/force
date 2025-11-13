@@ -1,4 +1,3 @@
-import { Box, Button, Flex, LabeledInput, Text } from "@artsy/palette"
 import { OnboardingFigure } from "Components/Onboarding/Components/OnboardingFigure"
 import { OnboardingOrderedSetQueryRenderer } from "Components/Onboarding/Components/OnboardingOrderedSet"
 import { OnboardingSearchResultsQueryRenderer } from "Components/Onboarding/Components/OnboardingSearchResults"
@@ -6,9 +5,9 @@ import { useOnboardingContext } from "Components/Onboarding/Hooks/useOnboardingC
 import { useOnboardingFadeTransition } from "Components/Onboarding/Hooks/useOnboardingFadeTransition"
 import { SplitLayout } from "Components/SplitLayout"
 import { useDebouncedValue } from "Utils/Hooks/useDebounce"
-import { type FC, useState } from "react"
-
 import SearchIcon from "@artsy/icons/SearchIcon"
+import { Box, Button, Flex, LabeledInput, Text } from "@artsy/palette"
+import { type FC, useState } from "react"
 
 interface OnboardingFollowsProps {
   kind: "artists" | "galleries"

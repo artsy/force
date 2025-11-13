@@ -6,7 +6,7 @@ export function principalFieldErrorHandlerMiddleware() {
     const res = await next(req)
     const statusCode = get(
       res,
-      r => r.json.extensions.principalField.httpStatusCode,
+      r => r.json.extensions.principalField.httpStatusCode
     )
 
     if (statusCode) {

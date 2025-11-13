@@ -1,18 +1,17 @@
-import { useToasts } from "@artsy/palette"
+import { BASE_SAVES_PATH } from "Apps/CollectorProfile/constants"
 import type { ArtworkList } from "Apps/CollectorProfile/Routes/Saves/Components/CreateNewListModal/CreateNewListModal"
 import { CreateNewListModalForManageArtwork } from "Apps/CollectorProfile/Routes/Saves/Components/CreateNewListModal/CreateNewListModalForManageArtwork"
 import { SelectArtworkListsModalQueryRender } from "Apps/CollectorProfile/Routes/Saves/Components/SelectArtworkListsModal/SelectArtworkListsModal"
-import { BASE_SAVES_PATH } from "Apps/CollectorProfile/constants"
+import { useRouter } from "System/Hooks/useRouter"
+import { useToasts } from "@artsy/palette"
 import {
+  createContext,
   type Dispatch,
   type FC,
-  createContext,
   useContext,
   useReducer,
   useState,
 } from "react"
-
-import { useRouter } from "System/Hooks/useRouter"
 
 export enum ModalKey {
   SelectListsForArtwork = 0,
@@ -87,7 +86,7 @@ export const INITIAL_STATE: State = {
 
 export const ManageArtworkForSaves =
   createContext<ManageArtworkForSavesContextState>(
-    null as unknown as ManageArtworkForSavesContextState,
+    null as unknown as ManageArtworkForSavesContextState
   )
 
 export const useManageArtworkForSavesContext = () => {

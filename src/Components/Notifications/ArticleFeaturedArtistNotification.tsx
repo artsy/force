@@ -1,3 +1,9 @@
+import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
+import { CARD_MAX_WIDTH } from "Components/Notifications/constants"
+import { NotificationErrorMessage } from "Components/Notifications/NotificationErrorMessage"
+import { NotificationTypeLabel } from "Components/Notifications/NotificationTypeLabel"
+import { RouterLink } from "System/Components/RouterLink"
+import { extractNodes } from "Utils/extractNodes"
 import {
   Box,
   Button,
@@ -7,12 +13,6 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
-import { NotificationErrorMessage } from "Components/Notifications/NotificationErrorMessage"
-import { NotificationTypeLabel } from "Components/Notifications/NotificationTypeLabel"
-import { CARD_MAX_WIDTH } from "Components/Notifications/constants"
-import { RouterLink } from "System/Components/RouterLink"
-import { extractNodes } from "Utils/extractNodes"
 import type { ArticleFeaturedArtistNotification_notification$key } from "__generated__/ArticleFeaturedArtistNotification_notification.graphql"
 import type { FC } from "react"
 import { graphql, useFragment } from "react-relay"
@@ -26,7 +26,7 @@ export const ArticleFeaturedArtistNotification: FC<
 > = ({ notification }) => {
   const notificationData = useFragment(
     ArticleFeaturedArtistNotificationFragment,
-    notification,
+    notification
   )
 
   const { headline, item } = notificationData
@@ -121,7 +121,7 @@ export const ArticleFeaturedArtistNotification: FC<
 
         <Box mb={4} width="100%" maxWidth={CARD_MAX_WIDTH}>
           <Button
-            // @ts-ignore
+            // @ts-expect-error
             as={RouterLink}
             to={article.href}
           >

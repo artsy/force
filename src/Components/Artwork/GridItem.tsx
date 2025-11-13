@@ -1,6 +1,3 @@
-import { type AuthContextModule, ContextModule } from "@artsy/cohesion"
-import NoArtIcon from "@artsy/icons/NoArtIcon"
-import { Box, Flex, Popover, ResponsiveBox, SkeletonBox } from "@artsy/palette"
 import { Z } from "Apps/Components/constants"
 import { ExclusiveAccessBadge } from "Components/Artwork/ExclusiveAccessBadge"
 import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
@@ -10,6 +7,9 @@ import { useSystemContext } from "System/Hooks/useSystemContext"
 import { type LocalImage, useLocalImage } from "Utils/localImageHelpers"
 import { cropped, resized } from "Utils/resized"
 import { userIsTeam } from "Utils/user"
+import { type AuthContextModule, ContextModule } from "@artsy/cohesion"
+import NoArtIcon from "@artsy/icons/NoArtIcon"
+import { Box, Flex, Popover, ResponsiveBox, SkeletonBox } from "@artsy/palette"
 import type { GridItem_artwork$data } from "__generated__/GridItem_artwork.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
@@ -64,14 +64,14 @@ export const ArtworkGridItem: React.FC<
   }
 
   const handleMouseEnter = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
     onMouseEnter()
     rest.onMouseEnter?.(event)
   }
 
   const handleMouseLeave = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
     onMouseLeave()
     rest.onMouseLeave?.(event)
@@ -318,7 +318,7 @@ export const ArtworkGridItemFragmentContainer = createFragmentContainer(
         ...ExclusiveAccessBadge_artwork
       }
     `,
-  },
+  }
 )
 
 export default ArtworkGridItemFragmentContainer

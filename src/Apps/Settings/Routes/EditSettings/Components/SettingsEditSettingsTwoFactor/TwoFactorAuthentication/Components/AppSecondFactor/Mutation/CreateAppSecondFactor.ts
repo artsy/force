@@ -3,11 +3,11 @@ import type {
   CreateAppSecondFactorMutation,
   CreateAppSecondFactorMutation$data,
 } from "__generated__/CreateAppSecondFactorMutation.graphql"
-import { type Environment, commitMutation, graphql } from "react-relay"
+import { commitMutation, type Environment, graphql } from "react-relay"
 
 export const CreateAppSecondFactor = (
   environment: Environment,
-  input: CreateAppSecondFactorInput,
+  input: CreateAppSecondFactorInput
 ) => {
   return new Promise<CreateAppSecondFactorMutation$data>(
     async (resolve, reject) => {
@@ -57,6 +57,6 @@ export const CreateAppSecondFactor = (
           input,
         },
       })
-    },
+    }
   )
 }

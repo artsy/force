@@ -1,5 +1,5 @@
-import loadable from "@loadable/component"
 import type { RouteProps } from "System/Router/Route"
+import loadable from "@loadable/component"
 import { RedirectException } from "found"
 import { graphql } from "react-relay"
 
@@ -7,7 +7,7 @@ const SettingsApp = loadable(
   () => import(/* webpackChunkName: "settingsBundle" */ "./SettingsApp"),
   {
     resolveComponent: component => component.SettingsAppFragmentContainer,
-  },
+  }
 )
 
 const AuctionsRoute = loadable(
@@ -18,7 +18,7 @@ const AuctionsRoute = loadable(
   {
     resolveComponent: component =>
       component.SettingsAuctionsRouteFragmentContainer,
-  },
+  }
 )
 
 const EditProfileRoute = loadable(
@@ -29,7 +29,7 @@ const EditProfileRoute = loadable(
   {
     resolveComponent: component =>
       component.SettingsEditProfileRouteFragmentContainer,
-  },
+  }
 )
 
 const PaymentsRoute = loadable(
@@ -40,7 +40,7 @@ const PaymentsRoute = loadable(
   {
     resolveComponent: component =>
       component.SettingsPaymentsRouteFragmentContainer,
-  },
+  }
 )
 
 const OrdersRoute = loadable(
@@ -51,7 +51,7 @@ const OrdersRoute = loadable(
   {
     resolveComponent: component =>
       component.SettingsOrdersRouteFragmentContainer,
-  },
+  }
 )
 
 const InsightsRoute = loadable(
@@ -61,7 +61,7 @@ const InsightsRoute = loadable(
     ),
   {
     resolveComponent: component => component.InsightsRouteFragmentContainer,
-  },
+  }
 )
 
 const EditSettingsRoute = loadable(
@@ -71,7 +71,7 @@ const EditSettingsRoute = loadable(
     ),
   {
     resolveComponent: component => component.SettingsEditRouteFragmentContainer,
-  },
+  }
 )
 
 const ShippingRoute = loadable(
@@ -82,7 +82,7 @@ const ShippingRoute = loadable(
   {
     resolveComponent: component =>
       component.SettingsShippingRouteFragmentContainer,
-  },
+  }
 )
 
 const DeleteAccountRoute = loadable(
@@ -93,7 +93,7 @@ const DeleteAccountRoute = loadable(
   {
     resolveComponent: component =>
       component.DeleteAccountRouteFragmentContainer,
-  },
+  }
 )
 
 export const settingsRoutes: RouteProps[] = [

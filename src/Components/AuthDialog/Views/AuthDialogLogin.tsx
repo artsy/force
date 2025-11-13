@@ -1,3 +1,8 @@
+import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
+import { useAfterAuthentication } from "Components/AuthDialog/Hooks/useAfterAuthentication"
+import { useAuthDialogTracking } from "Components/AuthDialog/Hooks/useAuthDialogTracking"
+import { formatErrorMessage } from "Components/AuthDialog/Utils/formatErrorMessage"
+import { login } from "Utils/auth"
 import {
   Box,
   Button,
@@ -10,11 +15,6 @@ import {
   Stack,
   Text,
 } from "@artsy/palette"
-import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
-import { useAfterAuthentication } from "Components/AuthDialog/Hooks/useAfterAuthentication"
-import { useAuthDialogTracking } from "Components/AuthDialog/Hooks/useAuthDialogTracking"
-import { formatErrorMessage } from "Components/AuthDialog/Utils/formatErrorMessage"
-import { login } from "Utils/auth"
 import { Form, Formik } from "formik"
 import type { FC } from "react"
 import * as Yup from "yup"
@@ -38,7 +38,7 @@ export const AuthDialogLogin: FC<React.PropsWithChildren<unknown>> = () => {
       }}
       onSubmit={async (
         { email, password, authenticationCode },
-        { setStatus, setFieldValue },
+        { setStatus, setFieldValue }
       ) => {
         setStatus({ error: null })
         setFieldValue("mode", "Loading")

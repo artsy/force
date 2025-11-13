@@ -1,4 +1,3 @@
-import { Box, Flex, Text } from "@artsy/palette"
 import {
   CheckoutStepName,
   CheckoutStepState,
@@ -7,6 +6,7 @@ import { Order2PaymentCompletedView } from "Apps/Order2/Routes/Checkout/Componen
 import { Order2PaymentForm } from "Apps/Order2/Routes/Checkout/Components/PaymentStep/Order2PaymentForm"
 import { useCompletePaymentData } from "Apps/Order2/Routes/Checkout/Components/PaymentStep/useCompletePaymentData"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import { Box, Flex, Text } from "@artsy/palette"
 import type { Order2PaymentStep_me$key } from "__generated__/Order2PaymentStep_me.graphql"
 import type { Order2PaymentStep_order$key } from "__generated__/Order2PaymentStep_order.graphql"
 import { graphql, useFragment } from "react-relay"
@@ -27,7 +27,7 @@ export const Order2PaymentStep: React.FC<Order2PaymentStepProps> = ({
   const { confirmationToken, savedPaymentMethod, steps } = useCheckoutContext()
 
   const stepState = steps?.find(
-    step => step.name === CheckoutStepName.PAYMENT,
+    step => step.name === CheckoutStepName.PAYMENT
   )?.state
 
   return (

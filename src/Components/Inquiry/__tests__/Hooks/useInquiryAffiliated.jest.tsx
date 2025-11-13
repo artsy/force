@@ -5,7 +5,7 @@ import {
 import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
 import { useUpdateCollectorProfile } from "Components/Inquiry/Hooks/useUpdateCollectorProfile"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
-import { render, screen, fireEvent } from "@testing-library/react"
+import { fireEvent, render, screen } from "@testing-library/react"
 
 jest.mock("../../Hooks/useUpdateCollectorProfile")
 jest.mock("../../Hooks/useInquiryContext")

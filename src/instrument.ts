@@ -1,7 +1,7 @@
-import * as Sentry from "@sentry/node"
-import { nodeProfilingIntegration } from "@sentry/profiling-node"
 import { IGNORED_ERRORS } from "Server/analytics/sentryFilters"
 import { SENTRY_PRIVATE_DSN, SENTRY_TRACING_ENABLED } from "Server/config"
+import * as Sentry from "@sentry/node"
+import { nodeProfilingIntegration } from "@sentry/profiling-node"
 
 const TRACING_CONFIG: Sentry.NodeOptions = {
   integrations: [nodeProfilingIntegration()],

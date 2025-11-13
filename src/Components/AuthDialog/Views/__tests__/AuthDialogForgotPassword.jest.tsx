@@ -1,6 +1,6 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react"
 import { AuthDialogForgotPassword } from "Components/AuthDialog/Views/AuthDialogForgotPassword"
 import { forgotPassword } from "Utils/auth"
+import { fireEvent, render, screen, waitFor } from "@testing-library/react"
 
 jest.mock("Utils/auth", () => ({
   forgotPassword: jest.fn(),
@@ -41,8 +41,8 @@ describe("AuthDialogForgotPassword", () => {
 
     expect(
       screen.queryByText(
-        "We've sent a link to reset your password if an account is associated with this email.",
-      ),
+        "We've sent a link to reset your password if an account is associated with this email."
+      )
     ).not.toBeInTheDocument()
 
     fireEvent.click(button)
@@ -54,8 +54,8 @@ describe("AuthDialogForgotPassword", () => {
 
       expect(
         screen.getByText(
-          "We've sent a link to reset your password if an account is associated with this email.",
-        ),
+          "We've sent a link to reset your password if an account is associated with this email."
+        )
       ).toBeInTheDocument()
     })
   })

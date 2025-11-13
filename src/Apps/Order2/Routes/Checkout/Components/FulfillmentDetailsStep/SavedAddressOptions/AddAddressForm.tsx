@@ -1,4 +1,3 @@
-import { Button, Spacer, Text } from "@artsy/palette"
 import { deliveryAddressValidationSchema } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/utils"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useOrder2CreateUserAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2CreateUserAddressMutation"
@@ -8,6 +7,7 @@ import {
   type FormikContextWithAddress,
 } from "Components/Address/AddressFormFields"
 import createLogger from "Utils/logger"
+import { Button, Spacer, Text } from "@artsy/palette"
 import { Formik } from "formik"
 
 const logger = createLogger("AddAddressForm")
@@ -16,7 +16,7 @@ interface AddAddressFormProps {
   initialValues: FormikContextWithAddress
   onSaveAddress: (
     values: FormikContextWithAddress,
-    addressID: string,
+    addressID: string
   ) => Promise<void>
 }
 export const AddAddressForm = ({
@@ -77,8 +77,8 @@ export const AddAddressForm = ({
           if (result.createUserAddress?.userAddressOrErrors?.errors) {
             throw new Error(
               `Failed to create address: ${JSON.stringify(
-                result.createUserAddress.userAddressOrErrors.errors,
-              )}`,
+                result.createUserAddress.userAddressOrErrors.errors
+              )}`
             )
           }
           throw new Error("Failed to create address: Unknown error")

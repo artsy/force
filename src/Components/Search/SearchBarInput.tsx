@@ -1,18 +1,18 @@
-import { AutocompleteInput, useDidMount, useUpdateEffect } from "@artsy/palette"
-import { type ChangeEvent, type FC, useEffect, useRef, useState } from "react"
-
-import { ActionType } from "@artsy/cohesion"
 import { DESKTOP_NAV_BAR_TOP_TIER_HEIGHT } from "Components/NavBar/constants"
 import { useRouter } from "System/Hooks/useRouter"
-import { useClientQuery } from "Utils/Hooks/useClientQuery"
 import { extractNodes } from "Utils/extractNodes"
+import { useClientQuery } from "Utils/Hooks/useClientQuery"
+import { ActionType } from "@artsy/cohesion"
+import { AutocompleteInput, useDidMount, useUpdateEffect } from "@artsy/palette"
 import type {
   SearchBarInputSuggestQuery,
   SearchEntity,
 } from "__generated__/SearchBarInputSuggestQuery.graphql"
+import { type ChangeEvent, type FC, useEffect, useRef, useState } from "react"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { useDebounce } from "use-debounce"
+import { type PillType, SEARCH_DEBOUNCE_DELAY, TOP_PILL } from "./constants"
 import { SearchBarFooter } from "./SearchBarFooter"
 import { SearchInputPillsFragmentContainer } from "./SearchInputPills"
 import { StaticSearchContainer } from "./StaticSearchContainer"
@@ -20,7 +20,6 @@ import {
   SuggestionItem,
   type SuggestionItemOptionProps,
 } from "./SuggestionItem/SuggestionItem"
-import { type PillType, SEARCH_DEBOUNCE_DELAY, TOP_PILL } from "./constants"
 import { getLabel } from "./utils/getLabel"
 import { shouldStartSearching } from "./utils/shouldStartSearching"
 
@@ -101,10 +100,10 @@ export const SearchBarInput: FC<
     if (shouldStartSearching(debouncedValue)) {
       searchRequest(
         debouncedValue,
-        selectedPill.searchEntityName as SearchEntity | undefined,
+        selectedPill.searchEntityName as SearchEntity | undefined
       )
     }
-  }, [debouncedValue, selectedPill.searchEntityName])
+  }, [debouncedValue, selectedPill.searchEntityName, searchRequest])
 
   const searchRequest = (value: string, entity?: SearchEntity) => {
     const entities = entity ? [entity] : []

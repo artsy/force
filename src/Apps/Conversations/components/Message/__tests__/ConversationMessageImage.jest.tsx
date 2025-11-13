@@ -1,5 +1,5 @@
-import { fireEvent, render, screen } from "@testing-library/react"
 import { ConversationMessageImage } from "Apps/Conversations/components/Message/ConversationMessageImage"
+import { fireEvent, render, screen } from "@testing-library/react"
 
 describe("ConversationMessageImage", () => {
   it("renders", () => {
@@ -18,7 +18,7 @@ describe("ConversationMessageImage", () => {
 
     expect(mockOpen).toHaveBeenCalledWith(
       "https://image.com/img.webp",
-      "_blank",
+      "_blank"
     )
   })
 })

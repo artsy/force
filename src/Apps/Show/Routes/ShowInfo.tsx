@@ -1,3 +1,6 @@
+import { ShowHoursFragmentContainer } from "Apps/Show/Components/ShowHours"
+import { ShowInfoLocationFragmentContainer as ShowInfoLocation } from "Apps/Show/Components/ShowInfoLocation"
+import { EntityHeaderPartnerFragmentContainer } from "Components/EntityHeaders/EntityHeaderPartner"
 import {
   Box,
   Column,
@@ -8,9 +11,6 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { ShowHoursFragmentContainer } from "Apps/Show/Components/ShowHours"
-import { ShowInfoLocationFragmentContainer as ShowInfoLocation } from "Apps/Show/Components/ShowInfoLocation"
-import { EntityHeaderPartnerFragmentContainer } from "Components/EntityHeaders/EntityHeaderPartner"
 import type { ShowInfo_show$data } from "__generated__/ShowInfo_show.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"

@@ -9,7 +9,7 @@ describe("CreativeWork", () => {
     return render(
       <HeadProvider>
         <CreativeWork {...defaultProps} {...props} />
-      </HeadProvider>,
+      </HeadProvider>
     )
   }
 

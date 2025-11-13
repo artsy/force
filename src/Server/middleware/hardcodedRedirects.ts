@@ -1,5 +1,5 @@
-import url from "url"
 import express from "express"
+import url from "url"
 import type { ArtsyRequest, ArtsyResponse } from "./artsyExpress"
 
 // Permanently (301) redirect a specific route or route pattern
@@ -177,7 +177,7 @@ const router = express.Router()
 
 export const getRedirectUrl = (
   req: ArtsyRequest,
-  redirects: Record<string, string>,
+  redirects: Record<string, string>
 ) => {
   const fromPath = req.route.path
   const toPath = redirects[fromPath]
@@ -185,7 +185,7 @@ export const getRedirectUrl = (
   const queryString = url.parse(req.url).search || ""
   const redirectUrl = toPath.replace(
     /:(\w+)/g,
-    (_, key) => req.params[key] || ":unknown",
+    (_, key) => req.params[key] || ":unknown"
   )
 
   return redirectUrl + queryString

@@ -6,11 +6,12 @@ import {
 import { createMockNetworkLayer } from "DevTools/createMockNetworkLayer"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { SystemContextProvider } from "System/Contexts/SystemContext"
+import { fireEvent, render, screen, waitFor } from "@testing-library/react"
 import type { commitMutationTest1Mutation } from "__generated__/commitMutationTest1Mutation.graphql"
-import { render, screen, fireEvent, waitFor } from "@testing-library/react"
-import { graphql } from "react-relay"
 import type { Environment as IEnvironment } from "react-relay"
+import { graphql } from "react-relay"
 import { Environment, RecordSource, Store } from "relay-runtime"
+
 jest.unmock("react-relay")
 
 describe("injectCommitMutation", () => {
@@ -42,7 +43,7 @@ describe("injectCommitMutation", () => {
     render(
       <Provider>
         <Injected />
-      </Provider>,
+      </Provider>
     )
 
     expect.assertions(2)
@@ -96,13 +97,13 @@ describe("injectCommitMutation", () => {
             {props.word}
           </div>
         )
-      },
+      }
     )
 
     render(
       <Provider>
         <Injected word="hello" />
-      </Provider>,
+      </Provider>
     )
 
     const clickableDiv = screen.getByText("hello")

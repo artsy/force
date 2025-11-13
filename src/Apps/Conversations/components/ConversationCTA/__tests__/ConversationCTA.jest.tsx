@@ -1,8 +1,8 @@
-import { screen } from "@testing-library/react"
 import { ConversationsProvider } from "Apps/Conversations/ConversationsContext"
 import { ConversationCTA } from "Apps/Conversations/components/ConversationCTA/ConversationCTA"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useSystemContext as baseUseSystemContext } from "System/Hooks/useSystemContext"
+import { screen } from "@testing-library/react"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 
@@ -88,7 +88,7 @@ describe("ConversationCTA", () => {
     })
 
     expect(
-      screen.getByText("Congratulations! Offer Accepted"),
+      screen.getByText("Congratulations! Offer Accepted")
     ).toBeInTheDocument()
   })
 
@@ -102,7 +102,7 @@ describe("ConversationCTA", () => {
     })
 
     expect(
-      screen.getByText("Offer Accepted - Confirm total"),
+      screen.getByText("Offer Accepted - Confirm total")
     ).toBeInTheDocument()
   })
 
@@ -116,7 +116,7 @@ describe("ConversationCTA", () => {
     })
 
     expect(
-      screen.getByText("Counteroffer Received - Confirm Total"),
+      screen.getByText("Counteroffer Received - Confirm Total")
     ).toBeInTheDocument()
   })
 

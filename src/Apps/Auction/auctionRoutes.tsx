@@ -1,6 +1,6 @@
-import loadable from "@loadable/component"
 import { serverCacheTTLs } from "Apps/serverCacheTTLs"
 import type { RouteProps } from "System/Router/Route"
+import loadable from "@loadable/component"
 import { Redirect } from "found"
 import { graphql } from "react-relay"
 
@@ -8,7 +8,7 @@ const AuctionApp = loadable(
   () => import(/* webpackChunkName: "auctionBundle" */ "./AuctionApp"),
   {
     resolveComponent: component => component.AuctionAppFragmentContainer,
-  },
+  }
 )
 const RegistrationRoute = loadable(
   () =>
@@ -18,7 +18,7 @@ const RegistrationRoute = loadable(
   {
     resolveComponent: component =>
       component.AuctionRegistrationRouteFragmentContainer,
-  },
+  }
 )
 const ConfirmBidRoute = loadable(
   () =>
@@ -27,7 +27,7 @@ const ConfirmBidRoute = loadable(
     ),
   {
     resolveComponent: component => component.AuctionBidRouteFragmentContainer,
-  },
+  }
 )
 const ConfirmRegistrationRoute = loadable(
   () =>
@@ -37,14 +37,14 @@ const ConfirmRegistrationRoute = loadable(
   {
     resolveComponent: component =>
       component.AuctionConfirmRegistrationRouteFragmentContainer,
-  },
+  }
 )
 const AuctionFAQRoute = loadable(
   () =>
     import(/* webpackChunkName: "auctionBundle" */ "./Routes/AuctionFAQRoute"),
   {
     resolveComponent: component => component.AuctionFAQRouteFragmentContainer,
-  },
+  }
 )
 
 export const auctionRoutes: RouteProps[] = [

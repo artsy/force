@@ -1,15 +1,14 @@
 import { exhibitions } from "Apps/__tests__/Fixtures/SelectedExhibitions"
 import { SelectedExhibitions } from "Components/SelectedExhibitions"
 import { MockBoot } from "DevTools/MockBoot"
-import { render, screen } from "@testing-library/react"
-import { fireEvent } from "@testing-library/react"
+import { fireEvent, render, screen } from "@testing-library/react"
 
 describe("SelectedExhibitions", () => {
   const props = {
     exhibitions: exhibitions as any,
     artistID: "andy-warhol",
     totalExhibitions: 100,
-    // biome-ignore lint/a11y/useValidAnchor: <explanation>
+    // biome-ignore lint/a11y/useValidAnchor: Test utility anchor element
     ViewAllLink: <a href="#">hi</a>,
   }
 
@@ -22,7 +21,7 @@ describe("SelectedExhibitions", () => {
     const { container: smallContainer } = render(
       <MockBoot breakpoint="xs">
         <SelectedExhibitions {...props} />
-      </MockBoot>,
+      </MockBoot>
     )
     // Check if collapsible behavior exists on small screens
     expect(smallContainer.innerHTML).toContain("Selected exhibitions (3)")
@@ -30,7 +29,7 @@ describe("SelectedExhibitions", () => {
     const { container: largeContainer } = render(
       <MockBoot>
         <SelectedExhibitions {...props} />
-      </MockBoot>,
+      </MockBoot>
     )
     // On large screens, all exhibitions should be visible without count
     expect(largeContainer.innerHTML).not.toContain("Selected exhibitions (3)")
@@ -40,7 +39,7 @@ describe("SelectedExhibitions", () => {
     const { container } = render(
       <MockBoot breakpoint="xs">
         <SelectedExhibitions {...props} />
-      </MockBoot>,
+      </MockBoot>
     )
 
     expect(container.innerHTML).toContain("Selected exhibitions (3)")
@@ -51,7 +50,7 @@ describe("SelectedExhibitions", () => {
     const { container } = render(
       <MockBoot breakpoint="xs">
         <SelectedExhibitions {...props} />
-      </MockBoot>,
+      </MockBoot>
     )
 
     expect(container.innerHTML).toContain("Selected exhibitions (3)")

@@ -1,6 +1,6 @@
-import { fireEvent, screen } from "@testing-library/react"
 import { HomeArtworkRecommendationsRail } from "Apps/Home/Components/HomeArtworkRecommendationsRail"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { fireEvent, screen } from "@testing-library/react"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 
@@ -52,7 +52,7 @@ describe("HomeArtworkRecommendationsRail", () => {
     expect(screen.getByText("We Think You’ll Love")).toBeInTheDocument()
     expect(screen.getByText("View All Works")).toBeInTheDocument()
     expect(
-      screen.getByRole("link", { name: "View All Works" }),
+      screen.getByRole("link", { name: "View All Works" })
     ).toHaveAttribute("href", "/recommendations/artworks")
   })
 

@@ -1,7 +1,7 @@
 import { FairBoothsFragmentContainer } from "Apps/Fair/Components/FairBooths"
 import { MockBoot } from "DevTools/MockBoot"
-import { fireEvent, screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { fireEvent, screen } from "@testing-library/react"
 import type { FairBoothsTestQuery } from "__generated__/FairBoothsTestQuery.graphql"
 import { graphql } from "react-relay"
 

@@ -7,7 +7,7 @@ export const handleBackNavigation = () => {
   window.history.pushState(null, "", window.location.pathname)
 
   const userConfirmedExit = window.confirm(
-    "Are you sure you want to leave? Your changes will not be saved.",
+    "Are you sure you want to leave? Your changes will not be saved."
   )
 
   if (userConfirmedExit) {

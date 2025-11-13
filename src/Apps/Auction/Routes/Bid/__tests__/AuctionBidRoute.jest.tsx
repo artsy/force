@@ -1,10 +1,10 @@
-import { screen, waitFor } from "@testing-library/react"
 import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
 import { AuctionBidRouteFragmentContainer } from "Apps/Auction/Routes/Bid/AuctionBidRoute"
 import { useSubmitBid } from "Apps/Auction/Routes/Bid/useSubmitBid"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useRouter } from "System/Hooks/useRouter"
+import { screen, waitFor } from "@testing-library/react"
 import type { AuctionBidRouteRTLTestQuery } from "__generated__/AuctionBidRouteRTLTestQuery.graphql"
 import { Formik } from "formik"
 import { graphql } from "react-relay"
@@ -211,12 +211,12 @@ describe("AuctionBidRoute", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText("AuctionLotInfoFragmentContainer"),
+        screen.getByText("AuctionLotInfoFragmentContainer")
       ).toBeInTheDocument()
       expect(screen.getAllByText("Set Your Max Bid")).toHaveLength(2)
       expect(screen.getByTestId("select")).toBeInTheDocument()
       expect(
-        screen.getByText("PricingTransparencyQueryRenderer"),
+        screen.getByText("PricingTransparencyQueryRenderer")
       ).toBeInTheDocument()
       expect(screen.getByText("AddressFormWithCreditCard")).toBeInTheDocument()
       expect(screen.getByText("ConditionsOfSaleCheckbox")).toBeInTheDocument()
@@ -241,7 +241,7 @@ describe("AuctionBidRoute", () => {
 
     await waitFor(() => {
       expect(
-        screen.queryByText("AddressFormWithCreditCard"),
+        screen.queryByText("AddressFormWithCreditCard")
       ).not.toBeInTheDocument()
       expect(screen.getByText("ConditionsOfSaleCheckbox")).toBeInTheDocument()
     })

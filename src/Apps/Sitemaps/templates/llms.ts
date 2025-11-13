@@ -1,6 +1,5 @@
-import { DOWNLOAD_APP_URLS } from "Utils/Hooks/useDeviceDetection"
-import { Device } from "Utils/Hooks/useDeviceDetection"
 import { FACTS_AND_FIGURES } from "Utils/factsAndFigures"
+import { Device, DOWNLOAD_APP_URLS } from "Utils/Hooks/useDeviceDetection"
 
 export const LLMS_TXT = `# Artsy
 

@@ -1,5 +1,5 @@
-import type { BoxProps } from "@artsy/palette"
 import { TopContextBar } from "Components/TopContextBar"
+import type { BoxProps } from "@artsy/palette"
 
 interface BackToConversationBannerProps {
   conversationId: string

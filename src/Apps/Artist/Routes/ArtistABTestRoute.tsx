@@ -1,5 +1,3 @@
-import { BaseTab, Clickable, Skeleton, Spacer, Text } from "@artsy/palette"
-import { useFlagsStatus } from "@unleash/proxy-client-react"
 import { ArtistTabs } from "Apps/Artist/Components/ArtistTabs"
 import { ArtistAuctionResultsQueryRenderer } from "Apps/Artist/Routes/AuctionResults/ArtistAuctionResults"
 import { MarketStatsQueryRenderer } from "Apps/Artist/Routes/AuctionResults/Components/MarketStats"
@@ -10,6 +8,8 @@ import { RouteTabs } from "Components/RouteTabs"
 import { useVariant } from "System/FeatureFlags/useVariant"
 import { useRouter } from "System/Hooks/useRouter"
 import { useTrackFeatureVariantOnMount } from "System/Hooks/useTrackFeatureVariant"
+import { BaseTab, Clickable, Skeleton, Spacer, Text } from "@artsy/palette"
+import { useFlagsStatus } from "@unleash/proxy-client-react"
 import type { ArtistABTestRoute_artist$data } from "__generated__/ArtistABTestRoute_artist.graphql"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -81,7 +81,7 @@ export const ArtistABTestRouteFragmentContainer = createFragmentContainer(
         slug
       }
     `,
-  },
+  }
 )
 
 const ArtistABTestRouteControl: FC<

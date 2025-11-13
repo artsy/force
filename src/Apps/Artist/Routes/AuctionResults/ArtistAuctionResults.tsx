@@ -1,6 +1,3 @@
-import { ContextModule, Intent } from "@artsy/cohesion"
-import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { Box, Flex, Skeleton, Spacer, Stack, Text } from "@artsy/palette"
 import { ArtistAuctionResultsActiveFilters } from "Apps/Artist/Routes/AuctionResults/ArtistAuctionResultsActiveFilters"
 import {
   ArtistAuctionResultsFilterNav,
@@ -21,21 +18,24 @@ import { SystemContext } from "System/Contexts/SystemContext"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { extractNodes } from "Utils/extractNodes"
 import { useJump } from "Utils/Hooks/useJump"
 import { usePrevious } from "Utils/Hooks/usePrevious"
 import { useSectionReady } from "Utils/Hooks/useSectionReadiness"
-import { extractNodes } from "Utils/extractNodes"
 import createLogger from "Utils/logger"
+import { ContextModule, Intent } from "@artsy/cohesion"
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import { Box, Flex, Skeleton, Spacer, Stack, Text } from "@artsy/palette"
+import type { ArtistAuctionResults_artist$data } from "__generated__/ArtistAuctionResults_artist.graphql"
 import type { ArtistAuctionResultsQueryRendererQuery } from "__generated__/ArtistAuctionResultsQueryRendererQuery.graphql"
 import type { ArtistAuctionResultsRoute_artist$data } from "__generated__/ArtistAuctionResultsRoute_artist.graphql"
-import type { ArtistAuctionResults_artist$data } from "__generated__/ArtistAuctionResults_artist.graphql"
 import { isEqual } from "lodash"
 import type * as React from "react"
 import { useContext, useRef, useState } from "react"
 import {
-  type RelayRefetchProp,
   createRefetchContainer,
   graphql,
+  type RelayRefetchProp,
 } from "react-relay"
 import { useTracking } from "react-tracking"
 import useDeepCompareEffect from "use-deep-compare-effect"
@@ -115,21 +115,21 @@ const AuctionResultsContainer: React.FC<
   const tracking = useTracking()
 
   const lotsByCreatedYear = aggregations?.find(
-    aggregation => aggregation?.slice === "LOTS_BY_CREATED_YEAR",
+    aggregation => aggregation?.slice === "LOTS_BY_CREATED_YEAR"
   )?.counts
 
   const startAt = lotsByCreatedYear?.[0]?.value || null
   const endAt = lotsByCreatedYear?.[lotsByCreatedYear.length - 1]?.value || null
 
   const auctionResultsFilterResetState = initialAuctionResultsFilterState({
-    startDate: startAt ? Number.parseInt(startAt) : null,
-    endDate: endAt ? Number.parseInt(endAt) : null,
+    startDate: startAt ? Number.parseInt(startAt, 10) : null,
+    endDate: endAt ? Number.parseInt(endAt, 10) : null,
   })
 
   // Is current filter state different from the default (reset) state?
   const filtersAtDefault = isEqual(
     selectedFilters,
-    auctionResultsFilterResetState,
+    auctionResultsFilterResetState
   )
 
   const previousFilters = usePrevious(filters) ?? {}
@@ -345,7 +345,7 @@ export const ArtistAuctionResultsPlaceholder: React.FC<
 export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
   (props: AuctionResultsProps) => {
     const lotsByCreatedYear = props.aggregations?.find(
-      aggregation => aggregation?.slice === "LOTS_BY_CREATED_YEAR",
+      aggregation => aggregation?.slice === "LOTS_BY_CREATED_YEAR"
     )?.counts
 
     const startAt = lotsByCreatedYear?.[0]?.value || null
@@ -356,7 +356,7 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
     const { userPreferences } = useSystemContext()
     const filters = paramsToCamelCase(
       // Expect auction results params to be nested under `auction`
-      (match?.location.query?.auction as any) ?? {},
+      (match?.location.query?.auction as any) ?? {}
     )
 
     return (
@@ -364,8 +364,8 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
         aggregations={
           props.aggregations as SharedAuctionResultsFilterContextProps["aggregations"]
         }
-        earliestCreatedYear={startAt ? Number.parseInt(startAt) : null}
-        latestCreatedYear={endAt ? Number.parseInt(endAt) : null}
+        earliestCreatedYear={startAt ? Number.parseInt(startAt, 10) : null}
+        latestCreatedYear={endAt ? Number.parseInt(endAt, 10) : null}
         userPreferredMetric={userPreferences?.metric}
         filters={filters}
         onChange={filterState =>
@@ -545,7 +545,7 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
           )
       }
     }
-  `,
+  `
 )
 
 type ArtistAuctionResultsQueryRendererProps = {
@@ -564,7 +564,7 @@ export const ArtistAuctionResultsQueryRenderer: React.FC<
   const urlFilterState = paramsToCamelCase(
     // Expect auction results params to be nested under `auction`
     // Default to empty object if not present (legacy URLs will be redirected).
-    (match?.location.query?.auction as any) ?? {},
+    (match?.location.query?.auction as any) ?? {}
   )
   const initialInput = {
     ...initialAuctionResultsFilterState({}),
@@ -655,7 +655,7 @@ export const ArtistAuctionResultsQueryRenderer: React.FC<
         if (error) {
           console.error(
             "[ArtistAuctionResults]: Error loading auction results",
-            error,
+            error
           )
           return null
         }
@@ -684,7 +684,7 @@ export const useScrollToTopOfAuctionResults = () => {
   const { match } = useRouter()
 
   const { scrollToMarketSignals } = paramsToCamelCase(
-    match?.location.query,
+    match?.location.query
   ) as { scrollToMarketSignals?: boolean }
 
   const { jumpTo } = useJump()
@@ -703,7 +703,7 @@ export const useScrollToTopOfAuctionResults = () => {
 
     // Scroll to auction results if the market signals section is not visible
     requestAnimationFrame(
-      visible ? scrollToMarketSignalsTop : scrollToAuctionResultsTop,
+      visible ? scrollToMarketSignalsTop : scrollToAuctionResultsTop
     )
   }
 

@@ -1,12 +1,12 @@
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { isTouch } from "Utils/device"
 import type { AuthContextModule } from "@artsy/cohesion"
 import HeartFillIcon from "@artsy/icons/HeartFillIcon"
 import HeartStrokeIcon from "@artsy/icons/HeartStrokeIcon"
 import { Clickable, Flex, Text } from "@artsy/palette"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { isTouch } from "Utils/device"
 import type { SaveArtworkToListsButton_artwork$data } from "__generated__/SaveArtworkToListsButton_artwork.graphql"
-import type { SaveButtonQuery } from "__generated__/SaveButtonQuery.graphql"
 import type { SaveButton_artwork$data } from "__generated__/SaveButton_artwork.graphql"
+import type { SaveButtonQuery } from "__generated__/SaveButtonQuery.graphql"
 import type * as React from "react"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -56,7 +56,7 @@ export const SaveButtonBase: React.FC<
   }
 
   const handleClick = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     event.preventDefault()
 
@@ -124,7 +124,7 @@ export const SaveButton: React.FC<React.PropsWithChildren<SaveButtonProps>> = ({
     onSave: ({ action, artwork }) => {
       tracking.trackEvent({
         action,
-        // @ts-ignore TODO: Cohesion schema
+        // @ts-expect-error TODO: Cohesion schema
         entity_slug: artwork.slug,
         entity_id: artwork.internalID,
       })
@@ -132,7 +132,7 @@ export const SaveButton: React.FC<React.PropsWithChildren<SaveButtonProps>> = ({
   })
 
   const handleClick = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     event.preventDefault()
     handleSave()

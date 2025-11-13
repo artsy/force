@@ -35,5 +35,5 @@ export const ShowArtworksEmptyStateFragmentContainer = createFragmentContainer(
         status
       }
     `,
-  },
+  }
 )

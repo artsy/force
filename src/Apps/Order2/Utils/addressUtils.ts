@@ -7,19 +7,19 @@
 import { COUNTRIES, type CountryData } from "Utils/countries"
 
 export function getShippableCountries(
-  availableShippingCountries: ReadonlyArray<string>,
+  availableShippingCountries: ReadonlyArray<string>
 ): CountryData[] {
   const lowercaseCountryCodes = availableShippingCountries.map(code =>
-    code.toLowerCase(),
+    code.toLowerCase()
   )
   return COUNTRIES.filter(country =>
-    lowercaseCountryCodes.includes(country.value),
+    lowercaseCountryCodes.includes(country.value)
   )
 }
 
 export const isShippableAddress = (
   address: { country: string },
-  availableShippingCountries: ReadonlyArray<string>,
+  availableShippingCountries: ReadonlyArray<string>
 ): boolean => {
   if (!address || !address.country) {
     return false
@@ -31,7 +31,7 @@ export const isShippableAddress = (
 
 export const countryCodePrefix = (alpha2Code: string): string => {
   const country = COUNTRIES.find(
-    country => country.value.toLowerCase() === alpha2Code.toLowerCase(),
+    country => country.value.toLowerCase() === alpha2Code.toLowerCase()
   )
   return country?.countryCode ? `+${country.countryCode}` : ""
 }

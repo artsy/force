@@ -1,8 +1,3 @@
-import { ModalDialog } from "@artsy/palette"
-import createLogger from "Utils/logger"
-import { Formik, type FormikHelpers } from "formik"
-
-import { ActionType, type CreatedArtworkList } from "@artsy/cohesion"
 import { useCreateCollection } from "Apps/CollectorProfile/Routes/Saves/Components/Actions/Mutations/useCreateCollection"
 import {
   ArtworkListForm,
@@ -14,6 +9,10 @@ import {
   type ArtworkModalHeaderInfoEntity,
 } from "Apps/CollectorProfile/Routes/Saves/Components/ArtworkModalHeaderInfo"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import createLogger from "Utils/logger"
+import { ActionType, type CreatedArtworkList } from "@artsy/cohesion"
+import { ModalDialog } from "@artsy/palette"
+import { Formik, type FormikHelpers } from "formik"
 import type { FC } from "react"
 import { useTracking } from "react-tracking"
 
@@ -35,7 +34,7 @@ export interface CreateNewListModalContainerProps
 }
 
 const logger = createLogger(
-  "CollectorProfile/Routes/Saves/Components/CreateNewListModal",
+  "CollectorProfile/Routes/Saves/Components/CreateNewListModal"
 )
 
 export const CreateNewListModal: React.FC<
@@ -62,7 +61,7 @@ export const CreateNewListModal: React.FC<
 
   const handleSubmit = async (
     values: ArtworkListFormikValues,
-    helpers: FormikHelpers<ArtworkListFormikValues>,
+    helpers: FormikHelpers<ArtworkListFormikValues>
   ) => {
     try {
       const { createCollection } = await submitMutation({
@@ -100,7 +99,7 @@ export const CreateNewListModal: React.FC<
 
       // if there is a specific error message for the name field, use that instead
       const nameErrorMessage = error?.fieldErrors?.find(
-        ({ name }) => name === "name",
+        ({ name }) => name === "name"
       )
       if (nameErrorMessage) {
         errorMessage = nameErrorMessage.message

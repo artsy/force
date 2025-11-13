@@ -1,9 +1,8 @@
-import { Button, Text } from "@artsy/palette"
-import { ModalDialog } from "@artsy/palette"
 import { getErrorDialogCopy } from "Apps/Order/Utils/getErrorDialogCopy"
+import { Button, ModalDialog, Text } from "@artsy/palette"
 import type * as React from "react"
 // TODO: Replace with normal React state
-// eslint-disable-next-line no-restricted-imports
+// biome-ignore lint/style/noRestrictedImports: Legacy state management with unstated
 import { Container, Subscribe } from "unstated"
 
 interface CtaProps {
@@ -184,7 +183,7 @@ export type Dialog = ReturnType<typeof extractDialogHelpers>
  * @param Component
  */
 export function injectDialog<R extends { dialog: Dialog }>(
-  Component: React.ComponentType<React.PropsWithChildren<R>>,
+  Component: React.ComponentType<React.PropsWithChildren<R>>
 ): React.ComponentType<React.PropsWithChildren<Omit<R, "dialog">>> {
   return props => (
     <Subscribe to={[DialogContainer]}>

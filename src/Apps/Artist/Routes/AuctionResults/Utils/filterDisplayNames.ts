@@ -23,7 +23,7 @@ export const INVERTED_BOOLEAN_FILTERS = {
 export const getFilterDisplayName = (
   filterType: string,
   value: string,
-  context?: { metric?: string },
+  context?: { metric?: string }
 ): string => {
   switch (filterType) {
     case "organizations":

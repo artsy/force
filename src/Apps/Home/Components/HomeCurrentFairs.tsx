@@ -1,3 +1,6 @@
+import { RouterLink } from "System/Components/RouterLink"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import {
   ActionType,
   type ClickedFairGroup,
@@ -16,11 +19,8 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { RouterLink } from "System/Components/RouterLink"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import type { HomeCurrentFairsQuery } from "__generated__/HomeCurrentFairsQuery.graphql"
 import type { HomeCurrentFairs_viewer$data } from "__generated__/HomeCurrentFairs_viewer.graphql"
+import type { HomeCurrentFairsQuery } from "__generated__/HomeCurrentFairsQuery.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -110,7 +110,7 @@ const HomeCurrentFairsContainer: React.FC<React.PropsWithChildren<unknown>> = ({
           variant="sm"
           textAlign="right"
           as={RouterLink}
-          // @ts-ignore
+          // @ts-expect-error
           to="/art-fairs"
           onClick={() => {
             const trackingEvent: ClickedFairGroup = {
@@ -201,7 +201,7 @@ export const HomeCurrentFairsFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  },
+  }
 )
 
 export const HomeCurrentFairsQueryRenderer: React.FC<

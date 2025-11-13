@@ -1,9 +1,9 @@
 import { ArtworkTopContextBarFragmentContainer } from "Apps/Artwork/Components/ArtworkTopContextBar/ArtworkTopContextBar"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { getENV } from "Utils/getENV"
+import { screen } from "@testing-library/react"
 import type { ArtworkTopContextBarTestQuery } from "__generated__/ArtworkTopContextBarTestQuery.graphql"
 import { graphql } from "react-relay"
-import { screen } from "@testing-library/react"
 
 jest.unmock("react-relay")
 jest.mock("Utils/getENV", () => ({
@@ -23,7 +23,7 @@ describe("ArtworkTopContextBar", () => {
           }
         }
       `,
-    },
+    }
   )
 
   beforeEach(() => {
@@ -59,7 +59,7 @@ describe("ArtworkTopContextBar", () => {
     expect(screen.getByText("Andy Warhol")).toBeInTheDocument()
     expect(screen.getByRole("link")).toHaveAttribute(
       "href",
-      "/artist/andy-warhol",
+      "/artist/andy-warhol"
     )
     // Note: Back arrow behavior needs to be tested through visual verification or data attributes
   })
@@ -79,13 +79,13 @@ describe("ArtworkTopContextBar", () => {
 
     // Look for the structured data script tag in the container or document
     let structuredDataScript = container.querySelector(
-      'script[type="application/ld+json"]',
+      'script[type="application/ld+json"]'
     )
 
     // If not found in container, check document head (StructuredData might add it there)
     if (!structuredDataScript) {
       structuredDataScript = document.querySelector(
-        'script[type="application/ld+json"]',
+        'script[type="application/ld+json"]'
       )
     }
 

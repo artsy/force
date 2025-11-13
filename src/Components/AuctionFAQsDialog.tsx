@@ -1,6 +1,6 @@
+import { RouterLink } from "System/Components/RouterLink"
 import CloseIcon from "@artsy/icons/CloseIcon"
 import { Box, Clickable, HTML, Tab, Tabs, Text, useTheme } from "@artsy/palette"
-import { RouterLink } from "System/Components/RouterLink"
 import type { AuctionFAQsDialog_viewer$data } from "__generated__/AuctionFAQsDialog_viewer.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -67,7 +67,7 @@ const AuctionFAQsDialog: React.FC<
                 <HTML variant="sm" html={page.content} />
               </Tab>
             )
-          },
+          }
         )}
       </Tabs>
     </Box>
@@ -105,5 +105,5 @@ export const AuctionFAQsDialogFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  },
+  }
 )

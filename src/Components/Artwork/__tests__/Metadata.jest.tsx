@@ -1,6 +1,6 @@
-import { screen } from "@testing-library/react"
 import Metadata from "Components/Artwork/Metadata"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import type { MetadataTestQuery } from "__generated__/MetadataTestQuery.graphql"
 import { graphql } from "react-relay"
 
@@ -30,7 +30,7 @@ describe("Metadata", () => {
 
     expect(screen.getByTestId("metadata-artwork-link")).toHaveAttribute(
       "href",
-      "artwork/artwork-id",
+      "artwork/artwork-id"
     )
   })
 
@@ -43,7 +43,7 @@ describe("Metadata", () => {
 
     expect(screen.getByTestId("metadata-artwork-link")).toHaveAttribute(
       "href",
-      "/my-collection/artwork/artwork-id",
+      "/my-collection/artwork/artwork-id"
     )
   })
 
@@ -56,7 +56,7 @@ describe("Metadata", () => {
 
     expect(screen.getByTestId("metadata-artwork-link")).toHaveAttribute(
       "href",
-      "/collector-profile/my-collection/artwork/artwork-id",
+      "/collector-profile/my-collection/artwork/artwork-id"
     )
   })
 })

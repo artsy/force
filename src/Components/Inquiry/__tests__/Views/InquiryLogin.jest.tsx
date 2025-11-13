@@ -3,7 +3,7 @@ import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
 import { InquiryLogin } from "Components/Inquiry/Views/InquiryLogin"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { login } from "Utils/auth"
-import { render, screen, fireEvent } from "@testing-library/react"
+import { fireEvent, render, screen } from "@testing-library/react"
 import { useTracking } from "react-tracking"
 
 jest.mock("Utils/auth")
@@ -59,7 +59,7 @@ describe("InquiryLogin", () => {
   describe("without two-factor auth", () => {
     beforeAll(() => {
       ;(login as jest.Mock).mockImplementation(() =>
-        Promise.resolve({ user: { id: "example-id", access_token: "token" } }),
+        Promise.resolve({ user: { id: "example-id", access_token: "token" } })
       )
     })
 
@@ -71,7 +71,7 @@ describe("InquiryLogin", () => {
 
       // Enter password
       const passwordInput = container.querySelector(
-        'input[name="password"]',
+        'input[name="password"]'
       ) as HTMLInputElement
       fireEvent.change(passwordInput, { target: { value: "secret" } })
 
@@ -108,13 +108,13 @@ describe("InquiryLogin", () => {
 
       // Enter password
       const passwordInput = container.querySelector(
-        'input[name="password"]',
+        'input[name="password"]'
       ) as HTMLInputElement
       fireEvent.change(passwordInput, { target: { value: "secret" } })
 
       // Login will error asking for 2fa code
       ;(login as jest.Mock).mockImplementation(() =>
-        Promise.reject(new Error("missing two-factor authentication code")),
+        Promise.reject(new Error("missing two-factor authentication code"))
       )
 
       // Submit form
@@ -123,13 +123,13 @@ describe("InquiryLogin", () => {
 
       // Input two factor auth code
       const authCodeInput = container.querySelector(
-        'input[name="authenticationCode"]',
+        'input[name="authenticationCode"]'
       ) as HTMLInputElement
       fireEvent.change(authCodeInput, { target: { value: "code" } })
 
       // Login works now
       ;(login as jest.Mock).mockImplementation(() =>
-        Promise.resolve({ user: { id: "id", access_token: "token" } }),
+        Promise.resolve({ user: { id: "id", access_token: "token" } })
       )
 
       // Submit form again
@@ -150,13 +150,13 @@ describe("InquiryLogin", () => {
 
       // Enter password
       const passwordInput = container.querySelector(
-        'input[name="password"]',
+        'input[name="password"]'
       ) as HTMLInputElement
       fireEvent.change(passwordInput, { target: { value: "secret" } })
 
       // Login will error asking for 2fa code
       ;(login as jest.Mock).mockImplementation(() =>
-        Promise.reject(new Error("missing on-demand authentication code")),
+        Promise.reject(new Error("missing on-demand authentication code"))
       )
 
       // Submit form
@@ -165,19 +165,19 @@ describe("InquiryLogin", () => {
 
       expect(
         screen.getByText(
-          "Your safety and security are important to us. Please check your email for a one-time authentication code to complete your login.",
-        ),
+          "Your safety and security are important to us. Please check your email for a one-time authentication code to complete your login."
+        )
       ).toBeInTheDocument()
 
       // Input two factor auth code
       const authCodeInput = container.querySelector(
-        'input[name="authenticationCode"]',
+        'input[name="authenticationCode"]'
       ) as HTMLInputElement
       fireEvent.change(authCodeInput, { target: { value: "code" } })
 
       // Login works now
       ;(login as jest.Mock).mockImplementation(() =>
-        Promise.resolve({ user: { id: "id", access_token: "token" } }),
+        Promise.resolve({ user: { id: "id", access_token: "token" } })
       )
 
       // Submit form again

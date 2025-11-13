@@ -1,5 +1,5 @@
-import loadable from "@loadable/component"
 import type { RouteProps } from "System/Router/Route"
+import loadable from "@loadable/component"
 import { graphql } from "react-relay"
 
 const RecommendedArtistsApp = loadable(
@@ -9,7 +9,7 @@ const RecommendedArtistsApp = loadable(
     ),
   {
     resolveComponent: component => component.RecommendedArtistsApp,
-  },
+  }
 )
 
 export const recommendedArtistsRoutes: RouteProps[] = [

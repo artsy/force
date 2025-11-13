@@ -1,3 +1,4 @@
+import { RouterLink } from "System/Components/RouterLink"
 import EnvelopeIcon from "@artsy/icons/EnvelopeIcon"
 import FacebookIcon from "@artsy/icons/FacebookIcon"
 import PinterestIcon from "@artsy/icons/PinterestIcon"
@@ -13,12 +14,11 @@ import {
   Separator,
   Text,
 } from "@artsy/palette"
-import { RouterLink } from "System/Components/RouterLink"
 import type { ArtworkSharePanel_artwork$data } from "__generated__/ArtworkSharePanel_artwork.graphql"
 import type * as React from "react"
 import { useRef, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-// eslint-disable-next-line no-restricted-imports
+// biome-ignore lint/style/noRestrictedImports: Legacy sharify usage in component
 import { data as sd } from "sharify"
 
 interface ArtworkSharePanelProps extends BoxProps {
@@ -184,31 +184,31 @@ export const ArtworkSharePanelFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  },
+  }
 )
 
 const ICONS = {
   facebook: (
     <FacebookIcon
-      // @ts-ignore
+      // @ts-expect-error
       fill="currentColor"
     />
   ),
   x: (
     <XIcon
-      // @ts-ignore
+      // @ts-expect-error
       fill="currentColor"
     />
   ),
   pinterest: (
     <PinterestIcon
-      // @ts-ignore
+      // @ts-expect-error
       fill="currentColor"
     />
   ),
   tumblr: (
     <TumblrIcon
-      // @ts-ignore
+      // @ts-expect-error
       fill="currentColor"
     />
   ),

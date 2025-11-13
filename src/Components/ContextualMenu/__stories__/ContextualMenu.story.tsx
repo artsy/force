@@ -1,4 +1,9 @@
 import {
+  ContextualMenu,
+  ContextualMenuDivider,
+  ContextualMenuItem,
+} from "Components/ContextualMenu"
+import {
   Avatar,
   Box,
   Flex,
@@ -7,12 +12,6 @@ import {
   ToastsProvider,
   useToasts,
 } from "@artsy/palette"
-
-import {
-  ContextualMenu,
-  ContextualMenuDivider,
-  ContextualMenuItem,
-} from "Components/ContextualMenu"
 
 export default {
   title: "Components/ContextualMenu",

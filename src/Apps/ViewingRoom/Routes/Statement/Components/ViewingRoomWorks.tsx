@@ -1,11 +1,11 @@
-import { Column, GridColumns } from "@artsy/palette"
 import { useRouter } from "System/Hooks/useRouter"
 import { extractNodes } from "Utils/extractNodes"
+import { Column, GridColumns } from "@artsy/palette"
 import type { ViewingRoomWorks_viewingRoom$data } from "__generated__/ViewingRoomWorks_viewingRoom.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ViewWorksButton } from "./ViewWorksButton"
 import { ViewingRoomWorksArtworkFragmentContainer } from "./ViewingRoomWorksArtwork"
+import { ViewWorksButton } from "./ViewWorksButton"
 
 interface ViewingRoomWorksProps {
   viewingRoom: ViewingRoomWorks_viewingRoom$data
@@ -65,5 +65,5 @@ export const ViewingRoomWorksFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  },
+  }
 )

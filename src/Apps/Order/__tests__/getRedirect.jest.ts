@@ -1,4 +1,4 @@
-import { type RedirectRecord, getRedirect } from "../getRedirect"
+import { getRedirect, type RedirectRecord } from "../getRedirect"
 
 describe("getRedirect", () => {
   const aNonMatchingPredicate = ({}) => null
@@ -6,7 +6,7 @@ describe("getRedirect", () => {
     return ({}) => ({ path: matchedValue, reason: "reason" })
   }
   function aRuleWithChildren(
-    children: Array<RedirectRecord<{}>>,
+    children: Array<RedirectRecord<{}>>
   ): RedirectRecord<{}> {
     return {
       path: "",
@@ -161,7 +161,7 @@ describe("getRedirect", () => {
       const result = getRedirect(
         rule,
         "///this-section/this-subsection/this-page",
-        {},
+        {}
       )
 
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION

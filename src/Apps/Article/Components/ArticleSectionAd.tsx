@@ -75,5 +75,5 @@ export const ArticleSectionAdFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  },
+  }
 )

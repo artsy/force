@@ -1,3 +1,10 @@
+import { ArticleShare } from "Components/ArticleShare"
+import { CommaList } from "Components/CommaList"
+import { Sticky } from "Components/Sticky"
+import { TopContextBar } from "Components/TopContextBar"
+import { RouterLink } from "System/Components/RouterLink"
+import { Analytics } from "System/Contexts/AnalyticsContext"
+import { getAuthorPath } from "Utils/getAuthorPath"
 import {
   Box,
   Column,
@@ -12,13 +19,6 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { ArticleShare } from "Components/ArticleShare"
-import { CommaList } from "Components/CommaList"
-import { Sticky } from "Components/Sticky"
-import { TopContextBar } from "Components/TopContextBar"
-import { RouterLink } from "System/Components/RouterLink"
-import { getAuthorPath } from "Utils/getAuthorPath"
-import { Analytics } from "System/Contexts/AnalyticsContext"
 import type { ArticleBody_article$data } from "__generated__/ArticleBody_article.graphql"
 import { DateTime } from "luxon"
 import { type FC, Fragment } from "react"
@@ -115,7 +115,7 @@ const ArticleBody: FC<React.PropsWithChildren<ArticleBodyProps>> = ({
               >
                 {!!article.publishedAt &&
                   DateTime.fromISO(article.publishedAt).toFormat(
-                    "MMM d, yyyy h:mma",
+                    "MMM d, yyyy h:mma"
                   )}
 
                 <ArticleNewsSourceFragmentContainer article={article} />
@@ -315,5 +315,5 @@ export const ArticleBodyFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  },
+  }
 )

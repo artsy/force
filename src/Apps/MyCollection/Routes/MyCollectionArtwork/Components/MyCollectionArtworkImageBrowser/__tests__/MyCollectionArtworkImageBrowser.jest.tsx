@@ -1,8 +1,8 @@
-import { screen } from "@testing-library/react"
 import { MyCollectionArtworkImageBrowser } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkImageBrowser/MyCollectionArtworkImageBrowser"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import { screen } from "@testing-library/react"
 import type { MyCollectionArtworkImageBrowserTestQuery } from "__generated__/MyCollectionArtworkImageBrowserTestQuery.graphql"
 import { graphql } from "react-relay"
 
@@ -50,16 +50,16 @@ describe("MyCollectionArtworkImageBrowser", () => {
       })
 
       expect(screen.getByTestId("artwork-lightbox-box")).toHaveStyle(
-        "max-width: 800px",
+        "max-width: 800px"
       )
 
       expect(screen.getByTestId("artwork-lightbox-image")).toHaveAttribute(
         "src",
-        "image.jpg",
+        "image.jpg"
       )
       expect(screen.getByTestId("artwork-lightbox-image")).toHaveAttribute(
         "srcset",
-        "image.jpg 1x",
+        "image.jpg 1x"
       )
     })
   })
@@ -75,13 +75,13 @@ describe("MyCollectionArtworkImageBrowser", () => {
               internalID: "artwork-x",
             }),
           },
-          { isMyCollectionArtwork: true },
+          { isMyCollectionArtwork: true }
         )
 
         expect(screen.getByText("Upload Photos")).toBeInTheDocument()
         expect(screen.getByTestId("uploadPhotosButton")).toHaveAttribute(
           "href",
-          "/collector-profile/my-collection/artworks/artwork-x/edit?step=photos",
+          "/collector-profile/my-collection/artworks/artwork-x/edit?step=photos"
         )
       })
     })
@@ -91,7 +91,7 @@ describe("MyCollectionArtworkImageBrowser", () => {
         renderWithRelay({ Artwork: () => ({ images: [], figures: [] }) })
 
         expect(
-          screen.getByTestId("artwork-browser-no-image-box"),
+          screen.getByTestId("artwork-browser-no-image-box")
         ).toBeInTheDocument()
       })
     })

@@ -1,7 +1,6 @@
+import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import { Box, Button, Flex, Select } from "@artsy/palette"
 import type { FC } from "react"
-
-import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 
 const ARTIST_OPTIONS = [
   {
@@ -26,7 +25,7 @@ export const Debug: FC<React.PropsWithChildren<unknown>> = () => {
             state,
           },
           null,
-          2,
+          2
         )}
       </Box>
 

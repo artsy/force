@@ -34,7 +34,7 @@ export const useLoadMore = ({
     return isFunction(isLoadingNext) ? isLoadingNext() : isLoadingNext
   }
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Load more logic managed by external state changes
   useEffect(() => {
     if (shouldLoadMore && hasMore() && !isLoading() && when !== false) {
       loadNext(pageSize, () => {

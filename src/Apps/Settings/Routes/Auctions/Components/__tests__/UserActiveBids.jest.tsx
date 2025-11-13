@@ -1,6 +1,6 @@
-import { screen } from "@testing-library/react"
 import { UserActiveBidsFragmentContainer } from "Apps/Settings/Routes/Auctions/Components/UserActiveBids"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import type { UserActiveBids_Test_Query } from "__generated__/UserActiveBids_Test_Query.graphql"
 import { graphql } from "react-relay"
 

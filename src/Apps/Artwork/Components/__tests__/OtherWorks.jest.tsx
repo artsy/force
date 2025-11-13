@@ -1,5 +1,5 @@
-import { render, screen } from "@testing-library/react"
 import { OtherWorksFragmentContainer as OtherWorks } from "Apps/Artwork/Components/OtherWorks/index"
+import { render, screen } from "@testing-library/react"
 import { useTracking } from "react-tracking"
 
 jest.mock("react-tracking")
@@ -84,7 +84,7 @@ describe("OtherWorks", () => {
     render(<OtherWorks artwork={genericOtherWorksData} />)
     expect(screen.getByText("Other works by Andy Warhol")).toBeInTheDocument()
     expect(
-      screen.getByText("Other works from Gagosian Gallery"),
+      screen.getByText("Other works from Gagosian Gallery")
     ).toBeInTheDocument()
   })
 
@@ -115,7 +115,7 @@ describe("OtherWorks", () => {
     render(<OtherWorks artwork={genericOtherWorksData} />)
     expect(screen.getByText("Other works by Andy Warhol")).toBeInTheDocument()
     expect(
-      screen.queryByText("Other works from Gagosian Gallery"),
+      screen.queryByText("Other works from Gagosian Gallery")
     ).not.toBeInTheDocument()
   })
 
@@ -124,7 +124,7 @@ describe("OtherWorks", () => {
       genericOtherWorksData.context.__typename = "ArtworkContextAuction"
       genericOtherWorksData.sale = { is_closed: false }
       const { container } = render(
-        <OtherWorks artwork={genericOtherWorksData} />,
+        <OtherWorks artwork={genericOtherWorksData} />
       )
       expect(container.firstChild).toBeTruthy()
     })

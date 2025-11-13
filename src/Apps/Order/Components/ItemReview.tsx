@@ -1,8 +1,7 @@
-import type * as React from "react"
-
 import { BorderBox, Flex, Image, Text } from "@artsy/palette"
 import type { ItemReview_lineItem$data } from "__generated__/ItemReview_lineItem.graphql"
 import type { CommerceOrderSourceEnum } from "__generated__/orderRoutes_OrderQuery.graphql"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
 interface ItemReviewProps {
@@ -50,7 +49,7 @@ export const ItemReview: React.FC<React.PropsWithChildren<ItemReviewProps>> = ({
             editionSetId &&
             editionSets &&
             dimensionsDisplay(
-              editionSets.find(e => e?.internalID === editionSetId)?.dimensions,
+              editionSets.find(e => e?.internalID === editionSetId)?.dimensions
             )}
           {!editionSetId &&
             artworkDimensions &&

@@ -1,5 +1,3 @@
-import type { RequestHandler } from "express"
-
 import {
   COOKIE_DOMAIN,
   NODE_ENV,
@@ -9,6 +7,7 @@ import {
   SESSION_SECRET,
 } from "Server/config"
 import session from "cookie-session"
+import type { RequestHandler } from "express"
 
 export function sessionMiddleware(): RequestHandler {
   return session({

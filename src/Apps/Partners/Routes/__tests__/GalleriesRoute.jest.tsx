@@ -1,8 +1,8 @@
-import { screen } from "@testing-library/react"
 import { GalleriesRouteFragmentContainer } from "Apps/Partners/Routes/GalleriesRoute"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useRouter } from "System/Hooks/useRouter"
+import { screen } from "@testing-library/react"
 import type { GalleriesRouteFragmentContainer_Test_Query } from "__generated__/GalleriesRouteFragmentContainer_Test_Query.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -67,7 +67,7 @@ describe("GalleriesRoute", () => {
     renderWithRelay()
 
     expect(
-      screen.getByText("Interested in Listing Your Gallery on Artsy?"),
+      screen.getByText("Interested in Listing Your Gallery on Artsy?")
     ).toBeInTheDocument()
 
     expect(screen.getByText("PartnersRailsQueryRenderer")).toBeInTheDocument()
@@ -84,11 +84,11 @@ describe("GalleriesRoute", () => {
       renderWithRelay()
 
       expect(
-        screen.getByText("Interested in Listing Your Gallery on Artsy?"),
+        screen.getByText("Interested in Listing Your Gallery on Artsy?")
       ).toBeInTheDocument()
 
       expect(
-        screen.getByText("PartnersFilteredCellsQueryRenderer"),
+        screen.getByText("PartnersFilteredCellsQueryRenderer")
       ).toBeInTheDocument()
     })
   })

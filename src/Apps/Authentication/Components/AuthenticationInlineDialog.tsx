@@ -1,4 +1,3 @@
-import { Box, Flex, Stack, Text, useToasts } from "@artsy/palette"
 import { AuthenticationInlineDialogProvider } from "Apps/Authentication/Components/AuthenticationInlineDialogProvider"
 import { useAuthDialogOptions } from "Apps/Authentication/Hooks/useAuthDialogOptions"
 import { AuthDialogView } from "Components/AuthDialog/AuthDialog"
@@ -7,6 +6,7 @@ import { AuthDialogTitle } from "Components/AuthDialog/AuthDialogTitle"
 import { MetaTags } from "Components/MetaTags"
 import { useRouter } from "System/Hooks/useRouter"
 import { useRecaptcha } from "Utils/EnableRecaptcha"
+import { Box, Flex, Stack, Text, useToasts } from "@artsy/palette"
 import { type FC, useEffect } from "react"
 
 const AuthenticationInlineDialogContents: FC<

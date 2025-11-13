@@ -1,6 +1,6 @@
-import { screen } from "@testing-library/react"
 import { ConversationMessage } from "Apps/Conversations/components/Message/ConversationMessage"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import type { ConversationMessageTestQuery } from "__generated__/ConversationMessageTestQuery.graphql"
 import { graphql } from "react-relay"
 
@@ -75,7 +75,7 @@ describe("ConversationMessage", () => {
     })
 
     expect(
-      screen.getByText("This message is no longer available."),
+      screen.getByText("This message is no longer available.")
     ).toBeInTheDocument()
   })
 
@@ -97,7 +97,7 @@ describe("ConversationMessage", () => {
     expect(screen.getByAltText("Attached image")).toBeInTheDocument()
     expect(screen.getByAltText("Attached image")).toHaveAttribute(
       "src",
-      "https://image.png",
+      "https://image.png"
     )
   })
 

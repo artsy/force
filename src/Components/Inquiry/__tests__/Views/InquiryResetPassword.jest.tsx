@@ -1,6 +1,6 @@
 import { InquiryResetPassword } from "Components/Inquiry/Views/InquiryResetPassword"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
-import { render, screen, fireEvent, waitFor } from "@testing-library/react"
+import { fireEvent, render, screen, waitFor } from "@testing-library/react"
 import { useTracking } from "react-tracking"
 
 jest.mock("../../Hooks/useInquiryContext", () => ({
@@ -36,8 +36,8 @@ describe("InquiryResetPassword", () => {
     await waitFor(() => {
       expect(
         screen.getByText(
-          "We've sent a link to reset your password if an account is associated with this email.",
-        ),
+          "We've sent a link to reset your password if an account is associated with this email."
+        )
       ).toBeInTheDocument()
     })
   })

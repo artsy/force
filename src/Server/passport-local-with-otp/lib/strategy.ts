@@ -40,7 +40,7 @@ const passport = require("passport-strategy"),
  * @api public
  */
 function Strategy(options, verify) {
-  if (typeof options == "function") {
+  if (typeof options === "function") {
     verify = options
     options = {}
   }
@@ -83,7 +83,7 @@ Strategy.prototype.authenticate = function (req, options) {
   if (!username || !password) {
     return this.fail(
       { message: options.badRequestMessage || "Missing credentials" },
-      400,
+      400
     )
   }
 

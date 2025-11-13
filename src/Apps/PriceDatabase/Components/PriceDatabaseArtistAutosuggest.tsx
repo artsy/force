@@ -1,6 +1,6 @@
-import { AutocompleteInput } from "@artsy/palette"
-import { useClientQuery } from "Utils/Hooks/useClientQuery"
 import { extractNodes } from "Utils/extractNodes"
+import { useClientQuery } from "Utils/Hooks/useClientQuery"
+import { AutocompleteInput } from "@artsy/palette"
 import type { PriceDatabaseArtistAutosuggestQuery } from "__generated__/PriceDatabaseArtistAutosuggestQuery.graphql"
 import { compact } from "lodash"
 import { useState } from "react"
@@ -16,14 +16,14 @@ export const PriceDatabaseArtistAutosuggest: React.FC<
   const [query, setQuery] = useState("")
 
   const { data, loading } = useClientQuery<PriceDatabaseArtistAutosuggestQuery>(
-    { query: QUERY, variables: { query } },
+    { query: QUERY, variables: { query } }
   )
 
   const options = compact(
     extractNodes(data?.searchConnection).map(node => {
       if (!node.value || !node.text) return null
       return { text: node.text, value: node.value }
-    }),
+    })
   )
 
   const handleChange = ({

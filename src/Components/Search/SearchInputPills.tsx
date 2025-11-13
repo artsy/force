@@ -98,14 +98,14 @@ const SearchInputPills: FC<React.PropsWithChildren<SearchInputPillsProps>> = ({
     if (pillsRef.current) {
       const pillsContainer = pillsRef.current
       setShowNextChevron(
-        pillsContainer.scrollWidth > pillsContainer.clientWidth,
+        pillsContainer.scrollWidth > pillsContainer.clientWidth
       )
     }
   }
 
   useEffect(() => {
     showNextChevronHandler()
-  }, [])
+  }, [showNextChevronHandler])
 
   useEffect(() => {
     const handleResize = () => {
@@ -114,7 +114,7 @@ const SearchInputPills: FC<React.PropsWithChildren<SearchInputPillsProps>> = ({
 
     window.addEventListener("resize", handleResize)
     return () => window.removeEventListener("resize", handleResize)
-  }, [])
+  }, [showNextChevronHandler])
 
   const scrollToLeft = () => {
     return scroll("left")
@@ -139,7 +139,7 @@ const SearchInputPills: FC<React.PropsWithChildren<SearchInputPillsProps>> = ({
     const currentPill = sortedPills.find((pill: HTMLElement) =>
       direction === "left"
         ? pill.offsetLeft + pill.offsetWidth <= currentScroll + visibleWidth
-        : pill.offsetLeft >= currentScroll,
+        : pill.offsetLeft >= currentScroll
     )
 
     if (currentPill) {
@@ -149,7 +149,7 @@ const SearchInputPills: FC<React.PropsWithChildren<SearchInputPillsProps>> = ({
           : currentPill.nextElementSibling
       ) as HTMLElement
       let scrollBy = nextPill.offsetWidth + GRADIENT_BG_WIDTH
-      scrollBy = direction == "left" ? -scrollBy : scrollBy
+      scrollBy = direction === "left" ? -scrollBy : scrollBy
 
       pillsContainer.scrollBy({
         left: scrollBy,
@@ -249,5 +249,5 @@ export const SearchInputPillsFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  },
+  }
 )

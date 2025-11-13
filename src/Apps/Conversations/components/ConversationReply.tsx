@@ -1,9 +1,9 @@
-import { sentConversationMessage } from "@artsy/cohesion"
-import { Button, Flex, TextArea, useToasts } from "@artsy/palette"
 import { ConversationCTA } from "Apps/Conversations/components/ConversationCTA/ConversationCTA"
 import { useSendConversationMessage } from "Apps/Conversations/mutations/useSendConversationMessage"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import { sentConversationMessage } from "@artsy/cohesion"
+import { Button, Flex, TextArea, useToasts } from "@artsy/palette"
 import type { ConversationReply_conversation$key } from "__generated__/ConversationReply_conversation.graphql"
 import type { useSendConversationMessageMutation$data } from "__generated__/useSendConversationMessageMutation.graphql"
 import { type FormikHelpers, useFormik } from "formik"
@@ -62,7 +62,7 @@ export const ConversationReply: FC<
         lastMessageID
       }
     `,
-    conversation,
+    conversation
   )
 
   const handleError = (error?: unknown) => {
@@ -78,7 +78,7 @@ export const ConversationReply: FC<
 
   const handleReply = (
     values: ConversationReplyFormValues,
-    helpers: FormikHelpers<ConversationReplyFormValues>,
+    helpers: FormikHelpers<ConversationReplyFormValues>
   ) => {
     if (!data || !user) {
       sendToast({
@@ -114,7 +114,7 @@ export const ConversationReply: FC<
             impulseMessageId:
               response.sendConversationMessage?.conversation?.lastMessageID ??
               "",
-          }),
+          })
         )
 
         setIsLoading(false)
@@ -134,10 +134,10 @@ export const ConversationReply: FC<
       }),
       onSubmit: handleReply,
       isInitialValid: false,
-    },
+    }
   )
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Form reset should only run when conversation changes
   useEffect(() => {
     resetForm()
   }, [data?.internalID, resetForm])

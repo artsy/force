@@ -79,5 +79,5 @@ export const ConversationAppFragmentContainer = createFragmentContainer(
         ...ConversationMessages_conversation
       }
     `,
-  },
+  }
 )

@@ -1,4 +1,3 @@
-import { act, renderHook } from "@testing-library/react-hooks"
 import {
   type UserAddressAction,
   useUserAddressUpdates,
@@ -9,10 +8,11 @@ import {
   type FulfillmentValues,
 } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
+import { act, renderHook } from "@testing-library/react-hooks"
 import {
+  createMockEnvironment,
   type MockEnvironment,
   MockPayloadGenerator,
-  createMockEnvironment,
 } from "relay-test-utils"
 
 let mockRelayEnv: MockEnvironment
@@ -72,7 +72,7 @@ const resolveMostRecentOperation = async (resolvers: any) => {
   act(() => {
     mockRelayEnv.mock.resolve(
       operation,
-      MockPayloadGenerator.generate(operation, resolvers),
+      MockPayloadGenerator.generate(operation, resolvers)
     )
   })
 
@@ -89,7 +89,7 @@ describe("useUserAddressUpdates", () => {
     it("returns a function", () => {
       const { result } = setupHook()
       expect(result.current.handleNewUserAddressUpdates).toBeInstanceOf(
-        Function,
+        Function
       )
     })
 
@@ -330,7 +330,7 @@ describe("useUserAddressUpdates", () => {
           })
 
           expect(secondOperation.operationName).toBe(
-            "useUpdateUserDefaultAddressMutation",
+            "useUpdateUserDefaultAddressMutation"
           )
           const response = await request
 

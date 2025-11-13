@@ -1,4 +1,3 @@
-import { ArtworkSidebarCurrentBidInfoFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarCurrentBidInfo"
 import {
   AuctionPreview,
   AuctionPreviewNoStartingBid,
@@ -14,11 +13,11 @@ import {
   OpenAuctionReserveNotMetIncreasingOwnBid,
   OpenAuctionReserveNotMetWithBids,
 } from "Apps/__tests__/Fixtures/Artwork/ArtworkSidebar/ArtworkSidebarCurrentBidInfo"
+import { ArtworkSidebarCurrentBidInfoFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarCurrentBidInfo"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { fireEvent, screen } from "@testing-library/react"
 import { graphql } from "react-relay"
-import { screen } from "@testing-library/react"
 import { useTracking } from "react-tracking"
-import { fireEvent } from "@testing-library/react"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -178,7 +177,7 @@ describe("ArtworkSidebarCurrentBidInfo", () => {
       expect(screen.getByText(/This auction has a/)).toBeInTheDocument()
       expect(screen.getByRole("button")).toBeInTheDocument() // The buyer's premium button
       expect(
-        screen.getByText(/Shipping, taxes, and additional fees may apply/),
+        screen.getByText(/Shipping, taxes, and additional fees may apply/)
       ).toBeInTheDocument()
     })
   })

@@ -1,6 +1,6 @@
+import { RouterLink } from "System/Components/RouterLink"
 import { ShowMore, Text, VisuallyHidden } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
-import { RouterLink } from "System/Components/RouterLink"
 import type { ArtworkSidebarArtists_artwork$data } from "__generated__/ArtworkSidebarArtists_artwork.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
@@ -87,5 +87,5 @@ export const ArtworkSidebarArtistsFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  },
+  }
 )

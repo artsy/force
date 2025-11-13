@@ -1,6 +1,6 @@
-import { screen } from "@testing-library/react"
 import { ArticleBodyFragmentContainer } from "Apps/Article/Components/ArticleBody"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
@@ -32,7 +32,7 @@ describe("ArticleBody", () => {
     })
 
     expect(
-      screen.getByRole("link", { name: "Example Author" }),
+      screen.getByRole("link", { name: "Example Author" })
     ).toBeInTheDocument()
   })
 

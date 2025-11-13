@@ -1,9 +1,9 @@
-import { Box, Flex, FullBleed, Image, Text, useTheme } from "@artsy/palette"
 import { getStatus } from "Apps/ViewingRoom/Utils/getStatus"
 import { useNavBarHeight } from "Components/NavBar/useNavBarHeight"
 import { RouterLink } from "System/Components/RouterLink"
 import { Media } from "Utils/Responsive"
 import { resized } from "Utils/resized"
+import { Box, Flex, FullBleed, Image, Text, useTheme } from "@artsy/palette"
 import type { ViewingRoomHeader_viewingRoom$data } from "__generated__/ViewingRoomHeader_viewingRoom.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -48,7 +48,7 @@ export const ViewingRoomHeaderFragmentContainer = createFragmentContainer(
         status
       }
     `,
-  },
+  }
 )
 
 const ViewingRoomHeaderLarge: React.FC<

@@ -1,4 +1,3 @@
-import { FullBleed, Spacer, useTheme } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { FairTabsFragmentContainer } from "Apps/Fair/Components/FairTabs"
@@ -9,6 +8,7 @@ import { useSystemContext } from "System/Hooks/useSystemContext"
 import { Jump } from "Utils/Hooks/useJump"
 import { Media } from "Utils/Responsive"
 import { userIsAdmin } from "Utils/user"
+import { FullBleed, Spacer, useTheme } from "@artsy/palette"
 import type { FairApp_fair$data } from "__generated__/FairApp_fair.graphql"
 import { HttpError } from "found"
 import type * as React from "react"
@@ -118,7 +118,7 @@ export const FairAppFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  },
+  }
 )
 
 const Stuck: React.FC<React.PropsWithChildren<{ stuck: boolean }>> = ({

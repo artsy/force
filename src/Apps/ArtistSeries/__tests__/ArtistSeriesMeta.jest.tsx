@@ -46,13 +46,13 @@ describe("ArtistSeriesMeta", () => {
     })
     // Check that title tag exists with mock data
     expect(document.querySelector("title")).toHaveTextContent(
-      /For Sale on Artsy/,
+      /For Sale on Artsy/
     )
     expect(
-      document.querySelector('meta[property="og:title"]'),
+      document.querySelector('meta[property="og:title"]')
     ).toBeInTheDocument()
     expect(
-      document.querySelector('meta[property="twitter:title"]'),
+      document.querySelector('meta[property="twitter:title"]')
     ).toBeInTheDocument()
   })
 
@@ -62,13 +62,13 @@ describe("ArtistSeriesMeta", () => {
     })
     // Check that description meta tags exist
     expect(
-      document.querySelector('meta[name="description"]'),
+      document.querySelector('meta[name="description"]')
     ).toBeInTheDocument()
     expect(
-      document.querySelector('meta[property="og:description"]'),
+      document.querySelector('meta[property="og:description"]')
     ).toBeInTheDocument()
     expect(
-      document.querySelector('meta[property="twitter:description"]'),
+      document.querySelector('meta[property="twitter:description"]')
     ).toBeInTheDocument()
   })
 
@@ -78,10 +78,10 @@ describe("ArtistSeriesMeta", () => {
     })
     // Check that title tag exists
     expect(document.querySelector("title")).toHaveTextContent(
-      /For Sale on Artsy/,
+      /For Sale on Artsy/
     )
     expect(
-      document.querySelector('meta[name="description"]'),
+      document.querySelector('meta[name="description"]')
     ).toBeInTheDocument()
   })
 
@@ -91,7 +91,7 @@ describe("ArtistSeriesMeta", () => {
     })
     expect(document.querySelector('link[rel="canonical"]')).toHaveAttribute(
       "href",
-      expect.stringContaining("/artist-series/"),
+      expect.stringContaining("/artist-series/")
     )
   })
 
@@ -131,7 +131,7 @@ describe("ArtistSeriesMeta", () => {
       const canonicalLink = document.querySelector('link[rel="canonical"]')
       expect(canonicalLink).toHaveAttribute(
         "href",
-        "/artist-series/pumpkins?page=2",
+        "/artist-series/pumpkins?page=2"
       )
     })
 
@@ -150,7 +150,7 @@ describe("ArtistSeriesMeta", () => {
       const canonicalLink = document.querySelector('link[rel="canonical"]')
       expect(canonicalLink).toHaveAttribute(
         "href",
-        "/artist-series/pumpkins?page=2",
+        "/artist-series/pumpkins?page=2"
       )
       expect(canonicalLink?.getAttribute("href")).not.toContain("sort=")
       expect(canonicalLink?.getAttribute("href")).not.toContain("category=")
@@ -167,7 +167,7 @@ describe("ArtistSeriesMeta", () => {
 
       const titleElement = document.querySelector("title")
       expect(titleElement?.textContent).toContain(
-        "Pumpkins - For Sale on Artsy - Page 3",
+        "Pumpkins - For Sale on Artsy - Page 3"
       )
     })
   })

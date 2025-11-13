@@ -1,3 +1,8 @@
+import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
+import { useAuthDialog } from "Components/AuthDialog"
+import { RouterLink } from "System/Components/RouterLink"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { resized } from "Utils/resized"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import {
   Button,
@@ -10,11 +15,6 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
-import { useAuthDialog } from "Components/AuthDialog"
-import { RouterLink } from "System/Components/RouterLink"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { resized } from "Utils/resized"
 
 export const MyCollectionEmptyState: React.FC<
   React.PropsWithChildren<unknown>
@@ -26,7 +26,7 @@ export const MyCollectionEmptyState: React.FC<
 
   const image = resized(
     "https://files.artsy.net/images/my-coll-get-app-img.jpg",
-    { width: 910, height: 770 }, // TODO: Source image should be 4:3, ideally. Is currently 709:600
+    { width: 910, height: 770 } // TODO: Source image should be 4:3, ideally. Is currently 709:600
   )
 
   const { showAuthDialog } = useAuthDialog()
@@ -48,7 +48,7 @@ export const MyCollectionEmptyState: React.FC<
           <Column span={6}>
             <Button
               width="100%"
-              // @ts-ignore
+              // @ts-expect-error
               as={RouterLink}
               variant="primaryBlack"
               to={"/collector-profile/my-collection/artworks/new"}

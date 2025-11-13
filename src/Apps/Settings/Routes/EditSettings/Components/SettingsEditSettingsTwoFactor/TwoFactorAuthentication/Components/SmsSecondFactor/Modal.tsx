@@ -1,3 +1,11 @@
+import type { ApiError } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/ApiError"
+import { BackupSecondFactorReminder } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/Components/BackupSecondFactorReminder"
+import { EnableSecondFactor } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/Components/Mutation/EnableSecondFactor"
+import { redirectMessage } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/helpers"
+import { CountrySelect } from "Components/CountrySelect"
+import { Step, Wizard } from "Components/Wizard"
+import type { FormValues, StepElement } from "Components/Wizard/types"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import {
   Banner,
   Button,
@@ -7,18 +15,10 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import type { ApiError } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/ApiError"
-import { BackupSecondFactorReminder } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/Components/BackupSecondFactorReminder"
-import { EnableSecondFactor } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/Components/Mutation/EnableSecondFactor"
-import { redirectMessage } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/helpers"
-import { CountrySelect } from "Components/CountrySelect"
-import { Step, Wizard } from "Components/Wizard"
-import type { FormValues, StepElement } from "Components/Wizard/types"
-import { useSystemContext } from "System/Hooks/useSystemContext"
 import type { CreateSmsSecondFactorMutation$data } from "__generated__/CreateSmsSecondFactorMutation.graphql"
 import type { FormikHelpers as FormikActions } from "formik"
-import { useState } from "react"
 import type * as React from "react"
+import { useState } from "react"
 import * as Yup from "yup"
 import { DeliverSecondFactor } from "./Mutation/DeliverSecondFactor"
 import { UpdateSmsSecondFactor } from "./Mutation/UpdateSmsSecondFactor"
@@ -49,7 +49,7 @@ export const SmsSecondFactorModal: React.FC<
 
   const handleOnComplete = async (
     values: FormValues,
-    actions: FormikActions<object>,
+    actions: FormikActions<object>
   ) => {
     setSubmitting(true)
 
@@ -73,7 +73,7 @@ export const SmsSecondFactorModal: React.FC<
 
   const handleMutationError = (
     actions: FormikActions<FormValues>,
-    errors: ApiError[],
+    errors: ApiError[]
   ) => {
     if (!Array.isArray(errors)) {
       throw errors
@@ -102,7 +102,7 @@ export const SmsSecondFactorModal: React.FC<
 
   const handleDeliverStepSubmit = async (
     values: FormValues,
-    actions: FormikActions<FormValues>,
+    actions: FormikActions<FormValues>
   ) => {
     return new Promise<boolean>(async (resolve, _reject) => {
       setDelivering(true)
@@ -127,7 +127,7 @@ export const SmsSecondFactorModal: React.FC<
         if (factor.__typename === "SmsSecondFactor") {
           actions.setFieldValue(
             "formattedPhoneNumber",
-            factor.formattedPhoneNumber,
+            factor.formattedPhoneNumber
           )
         }
 

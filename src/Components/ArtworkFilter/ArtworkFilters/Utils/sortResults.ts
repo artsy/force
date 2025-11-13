@@ -5,7 +5,7 @@ export type Result = {
 
 export const sortResults = (
   selectedValues: Array<string>,
-  allResults: Array<Result>,
+  allResults: Array<Result>
 ) => {
   const selectedFacets = allResults.filter(({ value }) => {
     return selectedValues.includes(value)
@@ -14,6 +14,6 @@ export const sortResults = (
   return selectedFacets.concat(
     allResults.filter(({ value }) => {
       return !selectedValues.includes(value)
-    }),
+    })
   )
 }

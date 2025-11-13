@@ -4,9 +4,9 @@ import type { ArtsyRequest, ArtsyResponse } from "./artsyExpress"
 
 // Installs an async local store into the callback chain.
 export function asyncLocalsMiddleware(
-  req: ArtsyRequest,
-  res: ArtsyResponse,
-  next: NextFunction,
+  _req: ArtsyRequest,
+  _res: ArtsyResponse,
+  next: NextFunction
 ): void {
   const asyncLocalStorage = getAsyncLocalStorage()
   asyncLocalStorage.run(new Map(), () => {

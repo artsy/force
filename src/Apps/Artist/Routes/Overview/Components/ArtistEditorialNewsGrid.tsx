@@ -1,19 +1,4 @@
 import {
-  ActionType,
-  type ClickedArticleGroup,
-  ContextModule,
-  OwnerType,
-} from "@artsy/cohesion"
-import {
-  Column,
-  Image,
-  Skeleton,
-  SkeletonBox,
-  SkeletonText,
-  Text,
-} from "@artsy/palette"
-import { GridColumns, ResponsiveBox } from "@artsy/palette"
-import {
   CellArticleFragmentContainer,
   CellArticlePlaceholder,
 } from "Components/Cells/CellArticle"
@@ -22,10 +7,26 @@ import { useReturnTo } from "Components/Rail/RailHeader"
 import { RouterLink } from "System/Components/RouterLink"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { Media } from "Utils/Responsive"
 import { extractNodes } from "Utils/extractNodes"
-import type { ArtistEditorialNewsGridQuery } from "__generated__/ArtistEditorialNewsGridQuery.graphql"
+import { Media } from "Utils/Responsive"
+import {
+  ActionType,
+  type ClickedArticleGroup,
+  ContextModule,
+  OwnerType,
+} from "@artsy/cohesion"
+import {
+  Column,
+  GridColumns,
+  Image,
+  ResponsiveBox,
+  Skeleton,
+  SkeletonBox,
+  SkeletonText,
+  Text,
+} from "@artsy/palette"
 import type { ArtistEditorialNewsGrid_artist$data } from "__generated__/ArtistEditorialNewsGrid_artist.graphql"
+import type { ArtistEditorialNewsGridQuery } from "__generated__/ArtistEditorialNewsGridQuery.graphql"
 import { take } from "lodash"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -194,7 +195,7 @@ export const ArtistEditorialNewsGridFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  },
+  }
 )
 
 const PLACEHOLDER = (

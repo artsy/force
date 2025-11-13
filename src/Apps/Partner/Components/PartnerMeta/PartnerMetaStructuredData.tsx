@@ -80,7 +80,7 @@ export const PartnerMetaStructuredData: React.FC<
         schedule => ({
           days: schedule.days ?? "",
           hours: schedule.hours ?? "",
-        }),
+        })
       )
 
       return formatOpeningHours(schedules) || undefined
@@ -101,7 +101,7 @@ export const PartnerMetaStructuredData: React.FC<
           sameAs: url,
         }
       }),
-    [partner.allArtistsConnection],
+    [partner.allArtistsConnection]
   )
 
   return (

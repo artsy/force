@@ -1,14 +1,14 @@
-import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { SelectArtworkListsModalFragmentContainer } from "Apps/CollectorProfile/Routes/Saves/Components/SelectArtworkListsModal/SelectArtworkListsModal"
 import {
   ManageArtworkForSavesProvider,
   useManageArtworkForSavesContext,
 } from "Components/Artwork/ManageArtworkForSaves"
-import { MockBoot } from "DevTools/MockBoot"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
+import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { AnalyticsCombinedContextProvider } from "System/Contexts/AnalyticsContext"
 import { useMutation } from "Utils/Hooks/useMutation"
+import { fireEvent, screen, waitFor } from "@testing-library/react"
 import type {
   SelectArtworkListsModal_Test_Query,
   SelectArtworkListsModal_Test_Query$data,
@@ -278,7 +278,7 @@ describe("SelectArtworkListsModal", () => {
           context_owner_type: "artist",
           artwork_ids: [artwork.internalID],
           owner_ids: ["collection-one"],
-        }),
+        })
       )
     })
 
@@ -301,7 +301,7 @@ describe("SelectArtworkListsModal", () => {
           context_owner_type: "artist",
           artwork_ids: [artwork.internalID],
           owner_ids: ["collection-one", "collection-two"],
-        }),
+        })
       )
     })
   })

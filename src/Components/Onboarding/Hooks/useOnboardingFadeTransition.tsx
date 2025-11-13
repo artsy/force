@@ -13,7 +13,7 @@ export const useOnboardingFadeTransition = ({
     initialStatus: "Out",
   })
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Effect should only run on mount for initialization
   useEffect(() => {
     const init = async () => {
       await wait(100)

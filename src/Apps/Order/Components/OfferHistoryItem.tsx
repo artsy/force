@@ -1,10 +1,10 @@
-import { Flex, type FlexProps, Spacer, Text } from "@artsy/palette"
 import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
 import { getOfferItemFromOrder } from "Apps/Order/Utils/offerUtils"
 import {
   StepSummaryItem,
   type StepSummaryItemProps,
 } from "Components/StepSummaryItem"
+import { Flex, type FlexProps, Spacer, Text } from "@artsy/palette"
 import type { OfferHistoryItem_order$data } from "__generated__/OfferHistoryItem_order.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -20,7 +20,7 @@ const OfferHistoryItem: React.FC<
   const offerItem = getOfferItemFromOrder(lineItems)
   const previousOffers = offers?.edges?.filter(
     // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    ({ node: { internalID } }) => internalID !== lastOffer.internalID,
+    ({ node: { internalID } }) => internalID !== lastOffer.internalID
   )
   const currency = currencyCode!
 
@@ -142,5 +142,5 @@ export const OfferHistoryItemFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  },
+  }
 )

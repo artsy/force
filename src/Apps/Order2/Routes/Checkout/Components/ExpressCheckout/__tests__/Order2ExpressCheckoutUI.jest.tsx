@@ -1,12 +1,10 @@
-import { ExpressCheckoutElement } from "@stripe/react-stripe-js"
-import { fireEvent, waitFor } from "@testing-library/react"
-import { screen } from "@testing-library/react"
 import { useCheckoutTracking } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutTracking"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { ExpressCheckoutElement } from "@stripe/react-stripe-js"
+import { fireEvent, screen, waitFor } from "@testing-library/react"
 import type { Order2ExpressCheckoutUI_Test_Query } from "__generated__/Order2ExpressCheckoutUI_Test_Query.graphql"
-import { useEffect } from "react"
-import React from "react"
+import React, { useEffect } from "react"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { Order2ExpressCheckoutUI } from "../Order2ExpressCheckoutUI"
@@ -133,7 +131,7 @@ jest.mock("@stripe/react-stripe-js", () => {
             </button>
           </div>
         )
-      },
+      }
     ),
   }
 })
@@ -225,7 +223,7 @@ describe("ExpressCheckoutUI", () => {
     })
 
     expect(paymentMethodUpdate.operationName).toBe(
-      "useOrder2ExpressCheckoutUpdateOrderMutation",
+      "useOrder2ExpressCheckoutUpdateOrderMutation"
     )
     expect(paymentMethodUpdate.operationVariables.input).toEqual({
       id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
@@ -244,7 +242,7 @@ describe("ExpressCheckoutUI", () => {
     })
 
     expect(shippingAddressUpdate.operationName).toBe(
-      "useOrder2ExpressCheckoutUpdateOrderShippingAddressMutation",
+      "useOrder2ExpressCheckoutUpdateOrderShippingAddressMutation"
     )
     expect(shippingAddressUpdate.operationVariables.input).toEqual({
       id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
@@ -273,7 +271,7 @@ describe("ExpressCheckoutUI", () => {
     })
 
     expect(orderSubmission.operationName).toBe(
-      "useOrder2ExpressCheckoutSubmitOrderMutation",
+      "useOrder2ExpressCheckoutSubmitOrderMutation"
     )
     expect(orderSubmission.operationVariables.input).toEqual({
       id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
@@ -316,7 +314,7 @@ describe("ExpressCheckoutUI", () => {
     })
 
     expect(paymentMethodUpdate.operationName).toBe(
-      "useOrder2ExpressCheckoutUpdateOrderMutation",
+      "useOrder2ExpressCheckoutUpdateOrderMutation"
     )
     expect(paymentMethodUpdate.operationVariables.input).toEqual({
       id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
@@ -334,7 +332,7 @@ describe("ExpressCheckoutUI", () => {
         }),
       })
     expect(operationName).toBe(
-      "useOrder2ExpressCheckoutUpdateOrderShippingAddressMutation",
+      "useOrder2ExpressCheckoutUpdateOrderShippingAddressMutation"
     )
     expect(operationVariables.input).toEqual({
       id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
@@ -365,7 +363,7 @@ describe("ExpressCheckoutUI", () => {
             name: null,
           },
         },
-      }),
+      })
     )
 
     const mutation = await mockResolveLastOperation({
@@ -377,7 +375,7 @@ describe("ExpressCheckoutUI", () => {
       }),
     })
     expect(mutation.operationName).toBe(
-      "useOrder2ExpressCheckoutSubmitOrderMutation",
+      "useOrder2ExpressCheckoutSubmitOrderMutation"
     )
     expect(mutation.operationVariables.input).toEqual({
       id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
@@ -621,7 +619,7 @@ describe("ExpressCheckoutUI", () => {
         "expressCheckoutError",
         JSON.stringify({
           title: "An error occurred",
-        }),
+        })
       )
     })
   })
@@ -646,10 +644,10 @@ describe("ExpressCheckoutUI", () => {
     })
 
     expect(unsetPaymentMutation.operationName).toBe(
-      "useOrder2ExpressCheckoutUnsetOrderPaymentMethodMutation",
+      "useOrder2ExpressCheckoutUnsetOrderPaymentMethodMutation"
     )
     expect(unsetFulfillmentMutation.operationName).toBe(
-      "useOrder2ExpressCheckoutUnsetOrderFulfillmentOptionMutation",
+      "useOrder2ExpressCheckoutUnsetOrderFulfillmentOptionMutation"
     )
 
     expect(unsetPaymentMutation.operationVariables.input).toEqual({

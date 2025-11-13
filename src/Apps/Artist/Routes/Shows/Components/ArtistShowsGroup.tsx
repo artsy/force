@@ -1,16 +1,16 @@
-import { Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import { CellShowFragmentContainer } from "Components/Cells/CellShow"
 import { LoadingArea } from "Components/LoadingArea"
 import { PaginationFragmentContainer } from "Components/Pagination"
-import { Jump } from "Utils/Hooks/useJump"
 import { extractNodes } from "Utils/extractNodes"
+import { Jump } from "Utils/Hooks/useJump"
+import { Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import type { ArtistShowsGroup_artist$data } from "__generated__/ArtistShowsGroup_artist.graphql"
 import type * as React from "react"
 import { useState } from "react"
 import {
-  type RelayRefetchProp,
   createRefetchContainer,
   graphql,
+  type RelayRefetchProp,
 } from "react-relay"
 
 interface ArtistShowsGroupProps {
@@ -42,7 +42,7 @@ const ArtistShowsGroup: React.FC<
         }
 
         setIsLoading(false)
-      },
+      }
     )
   }
 
@@ -126,5 +126,5 @@ export const ArtistShowsGroupRefetchContainer = createRefetchContainer(
           @arguments(page: $page, sort: $sort, status: $status)
       }
     }
-  `,
+  `
 )

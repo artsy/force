@@ -1,8 +1,8 @@
-import { Box } from "@artsy/palette"
 import { Z } from "Apps/Components/constants"
+import { Box } from "@artsy/palette"
 import type React from "react"
 import { useEffect, useRef, useState } from "react"
-import styled, { keyframes, css } from "styled-components"
+import styled, { css, keyframes } from "styled-components"
 
 interface PageLoadingBarProps {
   loadingState: "resting" | "loading" | "complete"
@@ -29,7 +29,7 @@ export const PageLoadingBar: React.FC<
       setLoading(loadingState)
       setScaleX(loadingState === "loading" ? 0.3 : 0)
     }
-  }, [loadingState, firstMount])
+  }, [loadingState])
 
   if (firstMount.current) {
     return null

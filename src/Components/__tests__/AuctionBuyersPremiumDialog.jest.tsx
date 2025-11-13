@@ -1,6 +1,6 @@
-import { screen } from "@testing-library/react"
 import { AuctionBuyersPremiumDialogFragmentContainer } from "Components/AuctionBuyersPremiumDialog"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import type { AuctionBuyersPremiumDialog_Test_Query } from "__generated__/AuctionBuyersPremiumDialog_Test_Query.graphql"
 import { graphql } from "react-relay"
 
@@ -44,13 +44,13 @@ describe("AuctionBuyersPremiumDialog", () => {
 
       expect(
         screen.getByText(
-          "On the hammer price up to and including $500,000: 25%",
-        ),
+          "On the hammer price up to and including $500,000: 25%"
+        )
       ).toBeInTheDocument()
       expect(
         screen.getByText(
-          "On the portion of the hammer price in excess of $500,000: 20%",
-        ),
+          "On the portion of the hammer price in excess of $500,000: 20%"
+        )
       ).toBeInTheDocument()
     })
   })
@@ -69,20 +69,20 @@ describe("AuctionBuyersPremiumDialog", () => {
 
       expect(
         screen.getByText(
-          "On the hammer price up to and including $250,000: 25%",
-        ),
+          "On the hammer price up to and including $250,000: 25%"
+        )
       ).toBeInTheDocument()
 
       expect(
         screen.getByText(
-          "On the hammer price in excess of $250,000 up to and including $2,500,000: 20%",
-        ),
+          "On the hammer price in excess of $250,000 up to and including $2,500,000: 20%"
+        )
       ).toBeInTheDocument()
 
       expect(
         screen.getByText(
-          "On the portion of the hammer price in excess of $2,500,000: 12%",
-        ),
+          "On the portion of the hammer price in excess of $2,500,000: 12%"
+        )
       ).toBeInTheDocument()
     })
 
@@ -95,7 +95,7 @@ describe("AuctionBuyersPremiumDialog", () => {
         })
 
         expect(
-          screen.getByText("22.5% on the hammer price"),
+          screen.getByText("22.5% on the hammer price")
         ).toBeInTheDocument()
       })
     })

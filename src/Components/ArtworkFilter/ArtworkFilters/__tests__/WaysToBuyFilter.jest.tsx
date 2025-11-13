@@ -1,14 +1,14 @@
-import { screen } from "@testing-library/react"
-import userEvent from "@testing-library/user-event"
 import type { ArtworkFilterContextProps } from "Components/ArtworkFilter/ArtworkFilterContext"
-import {
-  WaysToBuyFilter,
-  WAYS_TO_BUY_OPTIONS,
-} from "Components/ArtworkFilter/ArtworkFilters/WaysToBuyFilter"
 import {
   createArtworkFilterTestRenderer,
   currentArtworkFilterContext,
 } from "Components/ArtworkFilter/ArtworkFilters/__tests__/Utils"
+import {
+  WAYS_TO_BUY_OPTIONS,
+  WaysToBuyFilter,
+} from "Components/ArtworkFilter/ArtworkFilters/WaysToBuyFilter"
+import { screen } from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
 
 const artworkFilterContext: Partial<ArtworkFilterContextProps> = {}
 
@@ -62,7 +62,7 @@ describe(WaysToBuyFilter, () => {
 
     render(<WaysToBuyFilter expanded={true} />)
     expect(screen.getAllByRole("checkbox")).toHaveLength(
-      Object.keys(WAYS_TO_BUY_OPTIONS).length,
+      Object.keys(WAYS_TO_BUY_OPTIONS).length
     )
   })
 })

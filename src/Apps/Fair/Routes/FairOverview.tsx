@@ -1,4 +1,3 @@
-import { type BoxProps, Join, Spacer } from "@artsy/palette"
 import { FairBoothsQueryRenderer as FairBooths } from "Apps/Fair/Components/FairBooths"
 import { FairCollectionsFragmentContainer } from "Apps/Fair/Components/FairCollections/FairCollections"
 import { FairEditorialRailArticlesFragmentContainer } from "Apps/Fair/Components/FairEditorial/FairEditorialRailArticles"
@@ -9,6 +8,7 @@ import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridCo
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { Jump, useJump } from "Utils/Hooks/useJump"
+import { type BoxProps, Join, Spacer } from "@artsy/palette"
 import type { FairOverview_fair$data } from "__generated__/FairOverview_fair.graphql"
 import { type FC, useEffect, useRef } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -89,5 +89,5 @@ export const FairOverviewFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  },
+  }
 )

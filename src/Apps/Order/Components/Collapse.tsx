@@ -46,14 +46,14 @@ export class Collapse extends React.Component<
       // wait for a tick before setting goal height to allow transition
       this.wrapperModifyTimeout = setTimeout(() => {
         if (this.wrapperRef) {
-          this.wrapperRef.style.height = goalheight + "px"
+          this.wrapperRef.style.height = `${goalheight}px`
         }
       }, 10)
     } else if (!this.props.open && this.wrapperRef.style.height !== "0px") {
       // animate closing
       // set the wrapper's current height explicitly
       const currentHeight = this.wrapperRef.offsetHeight
-      this.wrapperRef.style.height = currentHeight + "px"
+      this.wrapperRef.style.height = `${currentHeight}px`
       // wait for a tick before setting it to 0 to allow transition
       this.wrapperModifyTimeout = setTimeout(() => {
         if (this.wrapperRef) {

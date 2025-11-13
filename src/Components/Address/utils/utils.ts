@@ -1,5 +1,5 @@
-import type { CreateTokenCardData } from "@stripe/stripe-js"
 import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
+import type { CreateTokenCardData } from "@stripe/stripe-js"
 import type { utilsValidatePhoneNumberQuery } from "__generated__/utilsValidatePhoneNumberQuery.graphql"
 import { debounce } from "lodash"
 import { useCallback, useEffect, useState } from "react"
@@ -38,7 +38,7 @@ type PhoneNumber = {
 const phoneValidator = debounce(
   async (
     { national, regionCode }: PhoneNumber,
-    resolve: (value: boolean) => void,
+    resolve: (value: boolean) => void
   ) => {
     if (!national || national.length < 5 || !regionCode) {
       return resolve(false)
@@ -57,7 +57,7 @@ const phoneValidator = debounce(
             }
           }
         `,
-        { phoneNumber: national, regionCode },
+        { phoneNumber: national, regionCode }
       ).toPromise()
 
       if (!response?.phoneNumber) {
@@ -73,7 +73,7 @@ const phoneValidator = debounce(
       return resolve(true)
     }
   },
-  200,
+  200
 )
 
 /**
@@ -82,7 +82,7 @@ const phoneValidator = debounce(
  * @returns Promise that resolves to boolean indicating if phone number is valid
  */
 export const validatePhoneNumber = (
-  phoneNumber: PhoneNumber,
+  phoneNumber: PhoneNumber
 ): Promise<boolean> => {
   return new Promise(resolve => {
     phoneValidator(phoneNumber, resolve)
@@ -132,7 +132,7 @@ export const toStripeAddress = (address: Address): CreateTokenCardData => {
 export const basicPhoneValidator = {
   phoneNumber: Yup.string()
     .required("Phone number is required")
-    .matches(/^[+\-\(\)\d\s]+$/, "Please enter a valid phone number"),
+    .matches(/^[+\-()\d\s]+$/, "Please enter a valid phone number"),
 }
 
 export const richPhoneValidators = {
@@ -154,10 +154,10 @@ export const richPhoneValidators = {
 
 export const richRequiredPhoneValidators = {
   phoneNumber: richPhoneValidators.phoneNumber.required(
-    "Phone number is required",
+    "Phone number is required"
   ),
   phoneNumberCountryCode: richPhoneValidators.phoneNumberCountryCode.required(
-    "Phone number country code is required",
+    "Phone number country code is required"
   ),
 }
 

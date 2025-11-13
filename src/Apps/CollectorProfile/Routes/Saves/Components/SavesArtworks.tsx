@@ -1,4 +1,3 @@
-import { Box, Dropdown, Pill, Select, Stack } from "@artsy/palette"
 import {
   SavesArtworksGrid,
   SavesArtworksGridEmptyState,
@@ -6,14 +5,15 @@ import {
 } from "Apps/CollectorProfile/Routes/Saves/Components/SavesArtworksGrid"
 import { FilterQuickDropdownAnchor } from "Components/ArtworkFilter/ArtworkFiltersQuick/FilterQuick"
 import { ClientSuspense } from "Components/ClientSuspense"
+import type { CustomRangeSegment } from "Components/PriceRange/constants"
 import { PriceRange } from "Components/PriceRange/PriceRange"
 import { priceRangeToLabel } from "Components/PriceRange/Utils/priceRangeToLabel"
-import type { CustomRangeSegment } from "Components/PriceRange/constants"
 import {
   type ErrorFallbackProps,
   FallbackErrorBoundary,
 } from "System/Components/FallbackErrorBoundary"
 import { Jump } from "Utils/Hooks/useJump"
+import { Box, Dropdown, Pill, Select, Stack } from "@artsy/palette"
 import type { CollectionArtworkSorts } from "__generated__/SavesArtworksGridQuery.graphql"
 import { type FC, useMemo, useState } from "react"
 
@@ -75,7 +75,7 @@ export const SavesArtworks: FC<React.PropsWithChildren<SavesArtworksProps>> = ({
         />
       )
     }
-  }, [])
+  }, [handleClearFilters])
 
   const handleClearFilters = () => {
     setState(prevState => ({ ...prevState, ...DEFAULT_FILTERS }))

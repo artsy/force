@@ -3,7 +3,12 @@
   "vcs": { "enabled": false, "clientKind": "git", "useIgnoreFile": false },
   "files": {
     "ignoreUnknown": false,
-    "includes": ["**", "!**/src/__generated__/**/*"]
+    "includes": [
+      "src/**/*",
+      "scripts/**/*",
+      "playwright/**/*",
+      "!**/src/__generated__/**/*"
+    ]
   },
   "formatter": {
     "enabled": true,
@@ -70,7 +75,10 @@
         "noArrayIndexKey": "off",
         "noAsyncPromiseExecutor": "off",
         "noExplicitAny": "off",
-        "noImplicitAnyLet": "off"
+        "noImplicitAnyLet": "off",
+        "noShadowRestrictedNames": "off",
+        "noGlobalIsNan": "off",
+        "noTsIgnore": "off"
       }
     },
     "includes": ["**", "!**/src/__generated__/**/*"]
@@ -108,12 +116,12 @@
         "**/System/FeatureFlags/useFlag.ts",
         "**/System/FeatureFlags/useVariant.ts"
       ],
-      "linter": { 
-        "rules": { 
-          "style": { 
-            "noRestrictedImports": "off" 
-          } 
-        } 
+      "linter": {
+        "rules": {
+          "style": {
+            "noRestrictedImports": "off"
+          }
+        }
       }
     }
   ]

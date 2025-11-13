@@ -1,3 +1,4 @@
+import { useArticleZoomGallery } from "Apps/Article/Components/ArticleZoomGallery/ArticleZoomGallery"
 import ImageSetIcon from "@artsy/icons/ImageSetIcon"
 import {
   Box,
@@ -9,7 +10,6 @@ import {
   Text,
   useTheme,
 } from "@artsy/palette"
-import { useArticleZoomGallery } from "Apps/Article/Components/ArticleZoomGallery/ArticleZoomGallery"
 import type { ArticleSectionImageSet_section$data } from "__generated__/ArticleSectionImageSet_section.graphql"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -236,5 +236,5 @@ export const ArticleSectionImageSetFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  },
+  }
 )

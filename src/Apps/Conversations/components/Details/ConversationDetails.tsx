@@ -1,9 +1,9 @@
-import CloseIcon from "@artsy/icons/CloseIcon"
-import { Clickable, Flex } from "@artsy/palette"
 import { ConversationAttachments } from "Apps/Conversations/components/Details/ConversationAttachments"
 import { ConversationSupport } from "Apps/Conversations/components/Details/ConversationSupport"
-import { Media } from "Utils/Responsive"
 import { extractNodes } from "Utils/extractNodes"
+import { Media } from "Utils/Responsive"
+import CloseIcon from "@artsy/icons/CloseIcon"
+import { Clickable, Flex } from "@artsy/palette"
 import type { ConversationDetails_conversation$key } from "__generated__/ConversationDetails_conversation.graphql"
 import { graphql, useFragment } from "react-relay"
 import styled from "styled-components"
@@ -43,7 +43,7 @@ export const ConversationDetails: React.FC<
         ...ConversationAttachments_conversation
       }
     `,
-    conversation,
+    conversation
   )
 
   if (!data) {

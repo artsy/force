@@ -1,25 +1,25 @@
-import loadable from "@loadable/component"
 import { getInitialFilterState } from "Components/ArtworkFilter/Utils/getInitialFilterState"
 import type { RouteProps } from "System/Router/Route"
+import loadable from "@loadable/component"
 import { graphql } from "react-relay"
 
 const CollectApp = loadable(
   () => import(/* webpackChunkName: "collectBundle" */ "./Routes/Collect"),
   {
     resolveComponent: component => component.CollectAppFragmentContainer,
-  },
+  }
 )
 const CollectionsApp = loadable(
   () => import(/* webpackChunkName: "collectBundle" */ "./Routes/Collections"),
   {
     resolveComponent: component => component.CollectionsAppFragmentContainer,
-  },
+  }
 )
 const CollectionApp = loadable(
   () => import(/* webpackChunkName: "collectBundle" */ "./Routes/Collection"),
   {
     resolveComponent: component => component.CollectionFragmentContainer,
-  },
+  }
 )
 
 export const collectRoutes: RouteProps[] = [

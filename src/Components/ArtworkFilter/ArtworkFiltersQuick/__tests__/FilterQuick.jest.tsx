@@ -1,7 +1,7 @@
-import { render, screen } from "@testing-library/react"
 import { ArtworkFilterContextProvider } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { ATTRIBUTION_CLASS_OPTIONS } from "Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
 import { FilterQuick } from "Components/ArtworkFilter/ArtworkFiltersQuick/FilterQuick"
+import { render, screen } from "@testing-library/react"
 
 describe("FilterQuick", () => {
   it("renders correctly", async () => {
@@ -13,7 +13,7 @@ describe("FilterQuick", () => {
           options={ATTRIBUTION_CLASS_OPTIONS}
           visible
         />
-      </ArtworkFilterContextProvider>,
+      </ArtworkFilterContextProvider>
     )
 
     expect(screen.getByText("Rarity")).toBeInTheDocument()
@@ -43,7 +43,7 @@ describe("FilterQuick", () => {
             options={[]}
             visible
           />
-        </ArtworkFilterContextProvider>,
+        </ArtworkFilterContextProvider>
       )
 
       expect(screen.getByText("Example Medium")).toBeInTheDocument()

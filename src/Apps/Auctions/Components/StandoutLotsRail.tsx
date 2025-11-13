@@ -1,5 +1,3 @@
-import type { AuthContextModule } from "@artsy/cohesion"
-import { Skeleton } from "@artsy/palette"
 import { CuratorialRailsZeroState } from "Apps/Auctions/Components/CuritorialRailsTabBar"
 import { tabTypeToContextModuleMap } from "Apps/Auctions/Utils/tabTypeToContextModuleMap"
 import {
@@ -12,8 +10,10 @@ import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { trackHelpers } from "Utils/cohesionHelpers"
 import { extractNodes } from "Utils/extractNodes"
-import type { StandoutLotsRailQuery } from "__generated__/StandoutLotsRailQuery.graphql"
+import type { AuthContextModule } from "@artsy/cohesion"
+import { Skeleton } from "@artsy/palette"
 import type { StandoutLotsRail_viewer$data } from "__generated__/StandoutLotsRail_viewer.graphql"
+import type { StandoutLotsRailQuery } from "__generated__/StandoutLotsRailQuery.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -55,8 +55,8 @@ export const StandoutLotsRail: React.FC<
                       artwork.slug,
                       index,
                       artwork.collectorSignals?.auction?.bidCount,
-                      artwork.collectorSignals?.auction?.lotWatcherCount,
-                    ),
+                      artwork.collectorSignals?.auction?.lotWatcherCount
+                    )
                   )
                 }}
               />
@@ -94,7 +94,7 @@ export const StandoutLotsRailFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  },
+  }
 )
 
 export const StandoutLotsRailQueryRenderer: React.FC<

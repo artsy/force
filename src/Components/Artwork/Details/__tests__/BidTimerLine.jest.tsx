@@ -1,8 +1,8 @@
-import { screen } from "@testing-library/react"
 import { BidTimerLine } from "Components/Artwork/Details/BidTimerLine"
 import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useTimer } from "Utils/Hooks/useTimer"
+import { screen } from "@testing-library/react"
 import type { BidTimerLineTestQuery } from "__generated__/BidTimerLineTestQuery.graphql"
 import { DateTime } from "luxon"
 import { graphql } from "react-relay"
@@ -18,7 +18,7 @@ const mockTimer = (
   days: string,
   hours: string,
   minutes: string,
-  seconds: string,
+  seconds: string
 ) => {
   mockUseTimer.mockReturnValue({
     time: { days, hours, minutes, seconds },

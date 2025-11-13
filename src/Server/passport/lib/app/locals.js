@@ -31,7 +31,7 @@ module.exports = (req, res, next) => {
       "signupPagePath",
       "settingsPagePath",
       "afterSignupPagePath",
-      "logoutPath",
+      "logoutPath"
     )
     res.locals.sd.AP = res.locals.ap
   }

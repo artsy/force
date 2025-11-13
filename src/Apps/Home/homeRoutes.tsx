@@ -1,10 +1,10 @@
-import loadable from "@loadable/component"
 import type { RouteProps } from "System/Router/Route"
+import loadable from "@loadable/component"
 import { graphql } from "react-relay"
 
 const HomeApp = loadable(
   () => import(/* webpackChunkName: "homeBundle" */ "./HomeApp"),
-  { resolveComponent: component => component.HomeAppFragmentContainer },
+  { resolveComponent: component => component.HomeAppFragmentContainer }
 )
 
 export const homeRoutes: RouteProps[] = [

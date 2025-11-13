@@ -5,17 +5,18 @@ import type { createMockNetworkLayerTestQuery } from "__generated__/createMockNe
 import { type GraphQLTaggedNode, graphql } from "react-relay"
 import {
   Environment,
+  fetchQuery,
   type OperationType,
   RecordSource,
   Store,
-  fetchQuery,
 } from "relay-runtime"
+
 jest.unmock("react-relay")
 
 describe("createMockNetworkLayer", () => {
   async function _fetchQueryWithResolvers<T extends OperationType>(
     options: Parameters<typeof createMockNetworkLayer>[0],
-    query: GraphQLTaggedNode,
+    query: GraphQLTaggedNode
   ) {
     const network = createMockNetworkLayer(options)
 
@@ -27,7 +28,7 @@ describe("createMockNetworkLayer", () => {
   }
 
   function fetchArtworkQueryWithResolvers(
-    options: Parameters<typeof createMockNetworkLayer>[0],
+    options: Parameters<typeof createMockNetworkLayer>[0]
   ) {
     return _fetchQueryWithResolvers<createMockNetworkLayerTestQuery>(
       options,
@@ -38,10 +39,9 @@ describe("createMockNetworkLayer", () => {
             title
           }
         }
-      `,
+      `
     )
   }
-
 
   describe("preserves the upstream behaviour", () => {
     it("returns the data if present", async () => {
@@ -62,7 +62,6 @@ describe("createMockNetworkLayer", () => {
       expect(data?.artwork?.title).toEqual(null)
     })
   })
-
 
   it("Does not complain when non-leaf nullable field type is null", async () => {
     const data = await fetchArtworkQueryWithResolvers({
@@ -107,7 +106,7 @@ describe("createMockNetworkLayer", () => {
               }
             }
           }
-        `,
+        `
       )
     expect(data?.artist?.forSaleArtworks?.edges?.[0]?.node).toEqual({
       id: "for-sale-work",
@@ -141,11 +140,10 @@ describe("createMockNetworkLayer", () => {
               }
             }
           }
-        `,
+        `
       )
     expect(data?.artist?.forSaleArtworks?.edges?.[0]?.node!).toEqual({
       id: "for-sale-work",
     })
   })
-
 })

@@ -3,8 +3,8 @@ import { BaseArtworkFilter } from "Components/ArtworkFilter"
 import {
   ArtworkFilterContextProvider,
   type Counts,
-  type SharedArtworkFilterContextProps,
   initialArtworkFilterState,
+  type SharedArtworkFilterContextProps,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { ArtworkFilterPlaceholder } from "Components/ArtworkFilter/ArtworkFilterPlaceholder"
 import { allowedFilters } from "Components/ArtworkFilter/Utils/allowedFilters"
@@ -14,11 +14,14 @@ import { LazyArtworkGrid } from "Components/ArtworkGrid/LazyArtworkGrid"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import type { WorksFilterQuery } from "__generated__/WorksFilterQuery.graphql"
 import type { Works_partner$data } from "__generated__/Works_partner.graphql"
+import type { WorksFilterQuery } from "__generated__/WorksFilterQuery.graphql"
 import type * as React from "react"
-import { type RelayRefetchProp, createRefetchContainer } from "react-relay"
-import { graphql } from "react-relay"
+import {
+  createRefetchContainer,
+  graphql,
+  type RelayRefetchProp,
+} from "react-relay"
 
 interface PartnerArtworkFilterProps {
   partner: Works_partner$data
@@ -116,7 +119,7 @@ export const ArtworksRefetchContainer = createRefetchContainer(
         ...Works_partner @arguments(input: $input)
       }
     }
-  `,
+  `
 )
 
 type PartnerArtworkFilterQueryRendererProps = {}

@@ -1,10 +1,10 @@
-import { Box } from "@artsy/palette"
 import {
-  FeatureFeaturedLinkFragmentContainer as FeatureFeaturedLink,
   type FeaturedLinkSize,
+  FeatureFeaturedLinkFragmentContainer as FeatureFeaturedLink,
 } from "Apps/Feature/Components/FeatureFeaturedLink"
 import { FeatureSetVideoFragmentContainer as FeatureSetVideo } from "Apps/Feature/Components/FeatureSet/FeatureSetVideo"
 import GridItem from "Components/Artwork/GridItem"
+import { Box } from "@artsy/palette"
 import type { FeatureSetItem_setItem$data } from "__generated__/FeatureSetItem_setItem.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -39,7 +39,7 @@ export const FeatureSetItem: React.FC<
 
     default:
       console.warn(
-        "Feature pages only support FeaturedLinks, Artworks, and Videos",
+        "Feature pages only support FeaturedLinks, Artworks, and Videos"
       )
       return null
   }
@@ -65,5 +65,5 @@ export const FeatureSetItemFragmentContainer = createFragmentContainer(
         ...FeatureSetVideo_video
       }
     `,
-  },
+  }
 )

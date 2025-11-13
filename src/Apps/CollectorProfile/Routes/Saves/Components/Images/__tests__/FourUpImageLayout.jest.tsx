@@ -1,10 +1,10 @@
-import { render, screen } from "@testing-library/react"
 import { FourUpImageLayout } from "Apps/CollectorProfile/Routes/Saves/Components/Images/FourUpImageLayout"
+import { render, screen } from "@testing-library/react"
 
 describe("FourUpImageLayout", () => {
   it("should render all passed images", () => {
     render(
-      <FourUpImageLayout imageURLs={["url-1", "url-2", "url-3", "url-4"]} />,
+      <FourUpImageLayout imageURLs={["url-1", "url-2", "url-3", "url-4"]} />
     )
 
     expect(screen.getAllByAltText("")).toHaveLength(4)

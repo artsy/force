@@ -1,4 +1,3 @@
-import { ArtworkSidebarBidActionFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarBidAction"
 import {
   ArtworkFromAuctionPreview,
   ArtworkFromClosedAuction,
@@ -8,18 +7,19 @@ import {
   ArtworkFromTimedAuctionRegistrationOpen,
   BidderPendingApproval,
   IDVedUser,
-  NoUser,
   NotIDVedUser,
   NotRegisteredToBid,
+  NoUser,
   RegistedBidderWithBids,
   RegisteredBidder,
   SaleRequiringIDV,
   UserPendingIDV,
 } from "Apps/__tests__/Fixtures/Artwork/ArtworkSidebar/ArtworkSidebarBidAction"
+import { ArtworkSidebarBidActionFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarBidAction"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import { merge } from "lodash"
 import { graphql } from "react-relay"
-import { screen } from "@testing-library/react"
 
 jest.unmock("react-relay")
 
@@ -109,7 +109,7 @@ describe("ArtworkSidebarBidAction", () => {
           })
 
           expect(
-            screen.getByText("Identity verification required to bid."),
+            screen.getByText("Identity verification required to bid.")
           ).toBeInTheDocument()
         })
       })
@@ -129,7 +129,7 @@ describe("ArtworkSidebarBidAction", () => {
               })
 
               expect(
-                screen.queryByText("Identity verification required to bid."),
+                screen.queryByText("Identity verification required to bid.")
               ).not.toBeInTheDocument()
             })
           })
@@ -141,7 +141,7 @@ describe("ArtworkSidebarBidAction", () => {
                 NotRegisteredToBid,
                 {
                   sale: SaleRequiringIDV,
-                },
+                }
               )
               const me = NotIDVedUser
               getWrapper({
@@ -150,7 +150,7 @@ describe("ArtworkSidebarBidAction", () => {
               })
 
               expect(
-                screen.getByText("Identity verification required to bid."),
+                screen.getByText("Identity verification required to bid.")
               ).toBeInTheDocument()
             })
 
@@ -160,7 +160,7 @@ describe("ArtworkSidebarBidAction", () => {
                 NotRegisteredToBid,
                 {
                   sale: SaleRequiringIDV,
-                },
+                }
               )
               const me = NotIDVedUser
               getWrapper({
@@ -187,7 +187,7 @@ describe("ArtworkSidebarBidAction", () => {
               })
 
               expect(
-                screen.queryByText("Identity verification required to bid."),
+                screen.queryByText("Identity verification required to bid.")
               ).not.toBeInTheDocument()
             })
           })
@@ -198,7 +198,7 @@ describe("ArtworkSidebarBidAction", () => {
                 {},
                 ArtworkFromAuctionPreview,
                 BidderPendingApproval,
-                { sale: SaleRequiringIDV },
+                { sale: SaleRequiringIDV }
               )
 
               getWrapper({
@@ -217,13 +217,13 @@ describe("ArtworkSidebarBidAction", () => {
               })
               expect(button).toHaveAttribute(
                 "href",
-                "/identity-verification/idv-id",
+                "/identity-verification/idv-id"
               )
               expect(
-                screen.queryByText("Registration pending"),
+                screen.queryByText("Registration pending")
               ).not.toBeInTheDocument()
               expect(
-                screen.getByText("Identity verification required to bid."),
+                screen.getByText("Identity verification required to bid.")
               ).toBeInTheDocument()
             })
 
@@ -231,7 +231,7 @@ describe("ArtworkSidebarBidAction", () => {
               const artwork = merge(
                 ArtworkFromAuctionPreview,
                 BidderPendingApproval,
-                { sale: SaleRequiringIDV },
+                { sale: SaleRequiringIDV }
               )
 
               getWrapper({
@@ -243,10 +243,10 @@ describe("ArtworkSidebarBidAction", () => {
               })
 
               expect(
-                screen.getByRole("button", { name: "Registration pending" }),
+                screen.getByRole("button", { name: "Registration pending" })
               ).toBeInTheDocument()
               expect(
-                screen.getByText("Identity verification required to bid."),
+                screen.getByText("Identity verification required to bid.")
               ).toBeInTheDocument()
             })
           })
@@ -260,7 +260,7 @@ describe("ArtworkSidebarBidAction", () => {
       it("allows the user to place a max bid when the user has not tried to register", () => {
         const artwork = merge(
           ArtworkFromTimedAuctionRegistrationOpen,
-          NotRegisteredToBid,
+          NotRegisteredToBid
         )
         getWrapper({
           Artwork: () => artwork,
@@ -275,7 +275,7 @@ describe("ArtworkSidebarBidAction", () => {
       it("allows the user to place a max bid when the user is a registered bidder", () => {
         const artwork = merge(
           ArtworkFromTimedAuctionRegistrationOpen,
-          RegisteredBidder,
+          RegisteredBidder
         )
         getWrapper({
           Artwork: () => artwork,
@@ -290,7 +290,7 @@ describe("ArtworkSidebarBidAction", () => {
       it("allows the user to increase their max bid after an initial max bid", () => {
         const artwork = merge(
           ArtworkFromTimedAuctionRegistrationOpen,
-          RegistedBidderWithBids,
+          RegistedBidderWithBids
         )
         getWrapper({
           Artwork: () => artwork,
@@ -305,7 +305,7 @@ describe("ArtworkSidebarBidAction", () => {
       it("displays 'Registration Pending' when the user is a pending bidder", () => {
         const artwork = merge(
           ArtworkFromTimedAuctionRegistrationOpen,
-          BidderPendingApproval,
+          BidderPendingApproval
         )
         getWrapper({
           Artwork: () => artwork,
@@ -322,7 +322,7 @@ describe("ArtworkSidebarBidAction", () => {
               const artwork = merge(
                 ArtworkFromTimedAuctionRegistrationOpen,
                 NotRegisteredToBid,
-                { sale: SaleRequiringIDV },
+                { sale: SaleRequiringIDV }
               )
 
               getWrapper({
@@ -332,7 +332,7 @@ describe("ArtworkSidebarBidAction", () => {
 
               expect(screen.getByText("Register to bid")).toBeInTheDocument()
               expect(
-                screen.queryByText("Place max bid"),
+                screen.queryByText("Place max bid")
               ).not.toBeInTheDocument()
             })
 
@@ -340,7 +340,7 @@ describe("ArtworkSidebarBidAction", () => {
               const artwork = merge(
                 ArtworkFromTimedAuctionRegistrationOpen,
                 NotRegisteredToBid,
-                { sale: SaleRequiringIDV },
+                { sale: SaleRequiringIDV }
               )
 
               getWrapper({
@@ -349,7 +349,7 @@ describe("ArtworkSidebarBidAction", () => {
               })
 
               expect(
-                screen.getByText("Identity verification required to bid."),
+                screen.getByText("Identity verification required to bid.")
               ).toBeInTheDocument()
             })
           })
@@ -359,7 +359,7 @@ describe("ArtworkSidebarBidAction", () => {
               const artwork = merge(
                 ArtworkFromTimedAuctionRegistrationOpen,
                 BidderPendingApproval,
-                { sale: SaleRequiringIDV },
+                { sale: SaleRequiringIDV }
               )
 
               getWrapper({
@@ -372,13 +372,13 @@ describe("ArtworkSidebarBidAction", () => {
               })
               expect(button).toHaveAttribute(
                 "href",
-                "/identity-verification/idv-id",
+                "/identity-verification/idv-id"
               )
               expect(
-                screen.queryByText("Registration pending"),
+                screen.queryByText("Registration pending")
               ).not.toBeInTheDocument()
               expect(
-                screen.getByText("Identity verification required to bid."),
+                screen.getByText("Identity verification required to bid.")
               ).toBeInTheDocument()
             })
 
@@ -386,7 +386,7 @@ describe("ArtworkSidebarBidAction", () => {
               const artwork = merge(
                 ArtworkFromTimedAuctionRegistrationOpen,
                 BidderPendingApproval,
-                { sale: SaleRequiringIDV },
+                { sale: SaleRequiringIDV }
               )
 
               getWrapper({
@@ -397,7 +397,7 @@ describe("ArtworkSidebarBidAction", () => {
               // The component shows an IDV button when sale requires IDV, even for NotIDVedUser
               expect(screen.getByText("Verify identity")).toBeInTheDocument()
               expect(
-                screen.getByText("Identity verification required to bid."),
+                screen.getByText("Identity verification required to bid.")
               ).toBeInTheDocument()
             })
           })
@@ -406,7 +406,7 @@ describe("ArtworkSidebarBidAction", () => {
             const artwork = merge(
               ArtworkFromTimedAuctionRegistrationOpen,
               BidderPendingApproval,
-              { sale: SaleRequiringIDV },
+              { sale: SaleRequiringIDV }
             )
 
             getWrapper({
@@ -415,7 +415,7 @@ describe("ArtworkSidebarBidAction", () => {
             })
 
             expect(
-              screen.getByText("Identity verification required to bid."),
+              screen.getByText("Identity verification required to bid.")
             ).toBeInTheDocument()
           })
 
@@ -424,7 +424,7 @@ describe("ArtworkSidebarBidAction", () => {
               const artwork = merge(
                 ArtworkFromTimedAuctionRegistrationOpen,
                 RegisteredBidder,
-                { sale: SaleRequiringIDV },
+                { sale: SaleRequiringIDV }
               )
 
               getWrapper({
@@ -440,7 +440,7 @@ describe("ArtworkSidebarBidAction", () => {
               const artwork = merge(
                 ArtworkFromTimedAuctionRegistrationOpen,
                 RegisteredBidder,
-                { sale: SaleRequiringIDV },
+                { sale: SaleRequiringIDV }
               )
 
               getWrapper({
@@ -449,7 +449,7 @@ describe("ArtworkSidebarBidAction", () => {
               })
 
               expect(
-                screen.queryByText("Identity verification required to bid."),
+                screen.queryByText("Identity verification required to bid.")
               ).not.toBeInTheDocument()
             })
           })
@@ -460,7 +460,7 @@ describe("ArtworkSidebarBidAction", () => {
             const artwork = merge(
               ArtworkFromTimedAuctionRegistrationOpen,
               NotRegisteredToBid,
-              { sale: SaleRequiringIDV },
+              { sale: SaleRequiringIDV }
             )
 
             getWrapper({
@@ -469,7 +469,7 @@ describe("ArtworkSidebarBidAction", () => {
             })
 
             expect(
-              screen.queryByText("Identity verification required to bid."),
+              screen.queryByText("Identity verification required to bid.")
             ).not.toBeInTheDocument()
           })
         })
@@ -480,7 +480,7 @@ describe("ArtworkSidebarBidAction", () => {
       it("displays 'Registration Closed' and doesn't allow the user to bid unless already registered", () => {
         const artwork = merge(
           ArtworkFromTimedAuctionRegistrationClosed,
-          NotRegisteredToBid,
+          NotRegisteredToBid
         )
         getWrapper({
           Artwork: () => artwork,
@@ -493,7 +493,7 @@ describe("ArtworkSidebarBidAction", () => {
       it("displays registration pending if the user is a pending bidder", () => {
         const artwork = merge(
           ArtworkFromTimedAuctionRegistrationClosed,
-          BidderPendingApproval,
+          BidderPendingApproval
         )
         getWrapper({
           Artwork: () => artwork,
@@ -506,7 +506,7 @@ describe("ArtworkSidebarBidAction", () => {
       it("allows users to place bids if they are already a registered bidder", () => {
         const artwork = merge(
           ArtworkFromTimedAuctionRegistrationClosed,
-          RegisteredBidder,
+          RegisteredBidder
         )
         getWrapper({
           Artwork: () => artwork,
@@ -524,7 +524,7 @@ describe("ArtworkSidebarBidAction", () => {
             const artwork = merge(
               ArtworkFromTimedAuctionRegistrationClosed,
               NotRegisteredToBid,
-              { sale: SaleRequiringIDV },
+              { sale: SaleRequiringIDV }
             )
 
             getWrapper({
@@ -534,7 +534,7 @@ describe("ArtworkSidebarBidAction", () => {
 
             expect(screen.getByText("Registration closed")).toBeInTheDocument()
             expect(
-              screen.queryByText("Identity verification required to bid."),
+              screen.queryByText("Identity verification required to bid.")
             ).not.toBeInTheDocument()
           })
         })
@@ -545,7 +545,7 @@ describe("ArtworkSidebarBidAction", () => {
               const artwork = merge(
                 ArtworkFromTimedAuctionRegistrationClosed,
                 BidderPendingApproval,
-                { sale: SaleRequiringIDV },
+                { sale: SaleRequiringIDV }
               )
 
               getWrapper({
@@ -556,7 +556,7 @@ describe("ArtworkSidebarBidAction", () => {
               // Component shows IDV button instead of "Registration pending" when IDV is required
               expect(screen.getByText("Verify identity")).toBeInTheDocument()
               expect(
-                screen.getByText("Identity verification required to bid."),
+                screen.getByText("Identity verification required to bid.")
               ).toBeInTheDocument()
             })
           })
@@ -566,7 +566,7 @@ describe("ArtworkSidebarBidAction", () => {
               const artwork = merge(
                 ArtworkFromTimedAuctionRegistrationClosed,
                 BidderPendingApproval,
-                { sale: SaleRequiringIDV },
+                { sale: SaleRequiringIDV }
               )
 
               getWrapper({
@@ -575,10 +575,10 @@ describe("ArtworkSidebarBidAction", () => {
               })
 
               expect(
-                screen.getByText("Registration pending"),
+                screen.getByText("Registration pending")
               ).toBeInTheDocument()
               expect(
-                screen.queryByText("Identity verification required to bid."),
+                screen.queryByText("Identity verification required to bid.")
               ).not.toBeInTheDocument()
             })
           })
@@ -593,7 +593,7 @@ describe("ArtworkSidebarBidAction", () => {
         it("displays that the user can enter live bidding", () => {
           const artwork = merge(
             ArtworkFromLiveAuctionRegistrationOpen,
-            NotRegisteredToBid,
+            NotRegisteredToBid
           )
           getWrapper({
             Artwork: () => artwork,
@@ -608,7 +608,7 @@ describe("ArtworkSidebarBidAction", () => {
         it("displays that the user can enter live bidding", () => {
           const artwork = merge(
             ArtworkFromLiveAuctionRegistrationOpen,
-            BidderPendingApproval,
+            BidderPendingApproval
           )
 
           getWrapper({
@@ -624,7 +624,7 @@ describe("ArtworkSidebarBidAction", () => {
         it("displays that the user can enter live bidding", () => {
           const artwork = merge(
             ArtworkFromLiveAuctionRegistrationOpen,
-            RegisteredBidder,
+            RegisteredBidder
           )
           getWrapper({
             Artwork: () => artwork,
@@ -641,7 +641,7 @@ describe("ArtworkSidebarBidAction", () => {
         it("displays that registration is closed, but user can watch live bidding", () => {
           const artwork = merge(
             ArtworkFromLiveAuctionRegistrationClosed,
-            NotRegisteredToBid,
+            NotRegisteredToBid
           )
 
           getWrapper({
@@ -658,7 +658,7 @@ describe("ArtworkSidebarBidAction", () => {
         it("displays that registration is closed, but user can watch live bidding", () => {
           const artwork = merge(
             ArtworkFromLiveAuctionRegistrationClosed,
-            BidderPendingApproval,
+            BidderPendingApproval
           )
 
           getWrapper({
@@ -675,7 +675,7 @@ describe("ArtworkSidebarBidAction", () => {
         it("displays that the user can enter live bidding", () => {
           const artwork = merge(
             ArtworkFromLiveAuctionRegistrationClosed,
-            RegisteredBidder,
+            RegisteredBidder
           )
           getWrapper({
             Artwork: () => artwork,
@@ -684,7 +684,7 @@ describe("ArtworkSidebarBidAction", () => {
 
           expect(screen.getByText("Enter live bidding")).toBeInTheDocument()
           expect(
-            screen.queryByText("Registration closed"),
+            screen.queryByText("Registration closed")
           ).not.toBeInTheDocument()
         })
       })
@@ -697,7 +697,7 @@ describe("ArtworkSidebarBidAction", () => {
             const artwork = merge(
               ArtworkFromLiveAuctionRegistrationOpen,
               { sale: SaleRequiringIDV },
-              NotRegisteredToBid,
+              NotRegisteredToBid
             )
 
             getWrapper({
@@ -707,7 +707,7 @@ describe("ArtworkSidebarBidAction", () => {
 
             expect(screen.getByText("Enter live bidding")).toBeInTheDocument()
             expect(
-              screen.getByText("Identity verification required to bid."),
+              screen.getByText("Identity verification required to bid.")
             ).toBeInTheDocument()
           })
         })
@@ -717,7 +717,7 @@ describe("ArtworkSidebarBidAction", () => {
             const artwork = merge(
               ArtworkFromLiveAuctionRegistrationOpen,
               { sale: SaleRequiringIDV },
-              NotRegisteredToBid,
+              NotRegisteredToBid
             )
 
             getWrapper({
@@ -727,7 +727,7 @@ describe("ArtworkSidebarBidAction", () => {
 
             expect(screen.getByText("Enter live bidding")).toBeInTheDocument()
             expect(
-              screen.queryByText("Identity verification required to bid."),
+              screen.queryByText("Identity verification required to bid.")
             ).not.toBeInTheDocument()
           })
         })
@@ -739,7 +739,7 @@ describe("ArtworkSidebarBidAction", () => {
             const artwork = merge(
               ArtworkFromLiveAuctionRegistrationClosed,
               { sale: SaleRequiringIDV },
-              NotRegisteredToBid,
+              NotRegisteredToBid
             )
 
             getWrapper({
@@ -749,7 +749,7 @@ describe("ArtworkSidebarBidAction", () => {
 
             expect(screen.getByText("Watch live bidding")).toBeInTheDocument()
             expect(
-              screen.queryByText("Identity verification required to bid."),
+              screen.queryByText("Identity verification required to bid.")
             ).not.toBeInTheDocument()
           })
         })
@@ -759,7 +759,7 @@ describe("ArtworkSidebarBidAction", () => {
             const artwork = merge(
               ArtworkFromLiveAuctionRegistrationClosed,
               { sale: SaleRequiringIDV },
-              NotRegisteredToBid,
+              NotRegisteredToBid
             )
 
             getWrapper({
@@ -769,7 +769,7 @@ describe("ArtworkSidebarBidAction", () => {
 
             expect(screen.getByText("Watch live bidding")).toBeInTheDocument()
             expect(
-              screen.queryByText("Identity verification required to bid."),
+              screen.queryByText("Identity verification required to bid.")
             ).not.toBeInTheDocument()
           })
         })

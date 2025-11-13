@@ -22,12 +22,12 @@ export class Step extends Component<StepProps> {
 
   render() {
     // FIXME: REACT_18_UPGRADE
-    // @ts-ignore
+    // @ts-expect-error
     if (!this.context.wizard) {
       return null
     }
     // FIXME: REACT_18_UPGRADE
-    // @ts-ignore
+    // @ts-expect-error
     const { wizard, form } = this.context
     return createElement(this.props.children, { wizard, form })
   }

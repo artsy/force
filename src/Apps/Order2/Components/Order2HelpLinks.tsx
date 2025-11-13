@@ -1,11 +1,11 @@
-import type { ContextModule } from "@artsy/cohesion"
-import MessageIcon from "@artsy/icons/MessageIcon"
-import { Box, Clickable, Flex, Spacer, Text } from "@artsy/palette"
 import { useOrder2Tracking } from "Apps/Order2/Hooks/useOrder2Tracking"
 import {
   type WithInquiryProps,
   withInquiry,
 } from "Components/Inquiry/useInquiry"
+import type { ContextModule } from "@artsy/cohesion"
+import MessageIcon from "@artsy/icons/MessageIcon"
+import { Box, Clickable, Flex, Spacer, Text } from "@artsy/palette"
 import type { Order2HelpLinks_order$key } from "__generated__/Order2HelpLinks_order.graphql"
 import type React from "react"
 import { useFragment } from "react-relay"
@@ -26,7 +26,7 @@ export const Order2HelpLinks: React.FC<
     tracking.clickedVisitHelpCenter(contextModule)
     window.open(
       "https://support.artsy.net/s/topic/0TO3b000000UessGAC/buy",
-      "_blank",
+      "_blank"
     )
   }
 

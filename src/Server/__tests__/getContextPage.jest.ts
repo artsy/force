@@ -10,7 +10,7 @@ describe("getContextPageFromClient", () => {
   it("returns correct props", () => {
     // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     delete window.location
-    // @ts-ignore
+    // @ts-expect-error
     window.location = new URL("https://artsy.net/artist/test-artist")
     const page = getContextPageFromClient()
 
@@ -26,9 +26,9 @@ describe("getContextPageFromClient", () => {
   it("handles camelcasing", () => {
     // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     delete window.location
-    // @ts-ignore
+    // @ts-expect-error
     window.location = new URL(
-      "https://artsy.net/artist-series/test-artist-series",
+      "https://artsy.net/artist-series/test-artist-series"
     )
     const page = getContextPageFromClient()
 

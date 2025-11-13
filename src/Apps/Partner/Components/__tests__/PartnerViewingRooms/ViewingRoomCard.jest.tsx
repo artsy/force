@@ -1,6 +1,6 @@
-import { screen } from "@testing-library/react"
 import { ViewingRoomCardFragmentContainer } from "Apps/Partner/Components/PartnerViewingRooms/ViewingRoomCard"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
@@ -53,28 +53,28 @@ describe("ViewingRoomCard", () => {
 
     expect(screen.getByRole("link")).toHaveAttribute(
       "href",
-      "/viewing-room/antonio-colombo-ceramic-girl-s",
+      "/viewing-room/antonio-colombo-ceramic-girl-s"
     )
 
     const image = screen.getByRole("img")
     expect(image).toHaveAttribute(
       "src",
-      "?height=222&quality=80&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FCTSbMK5RHzG9k8wJDp2jdw%2Fnormalized.jpg&width=263",
+      "?height=222&quality=80&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FCTSbMK5RHzG9k8wJDp2jdw%2Fnormalized.jpg&width=263"
     )
     expect(image).toHaveAttribute(
       "srcSet",
-      "?height=222&quality=80&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FCTSbMK5RHzG9k8wJDp2jdw%2Fnormalized.jpg&width=263 1x, ?height=444&quality=80&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FCTSbMK5RHzG9k8wJDp2jdw%2Fnormalized.jpg&width=526 2x",
+      "?height=222&quality=80&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FCTSbMK5RHzG9k8wJDp2jdw%2Fnormalized.jpg&width=263 1x, ?height=444&quality=80&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FCTSbMK5RHzG9k8wJDp2jdw%2Fnormalized.jpg&width=526 2x"
     )
     expect(image).toHaveAttribute("alt", "Ceramic Girl(s)")
 
     expect(screen.getByRole("heading", { level: 5 })).toHaveTextContent(
-      "Viewing Room",
+      "Viewing Room"
     )
     expect(screen.getByRole("heading", { level: 4 })).toHaveTextContent(
-      "Ceramic Girl(s)",
+      "Ceramic Girl(s)"
     )
     expect(screen.getByRole("heading", { level: 6 })).toHaveTextContent(
-      "Aug 20 – Sep 20",
+      "Aug 20 – Sep 20"
     )
   })
 

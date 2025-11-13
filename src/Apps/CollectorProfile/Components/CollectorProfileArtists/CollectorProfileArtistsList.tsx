@@ -1,18 +1,18 @@
 import {
+  CollectorProfileArtistsListArtist,
+  CollectorProfileArtistsListArtistSkeleton,
+} from "Apps/CollectorProfile/Components/CollectorProfileArtists/CollectorProfileArtistsListArtist"
+import { PaginationFragmentContainer } from "Components/Pagination"
+import { useRouter } from "System/Hooks/useRouter"
+import {
   Box,
   Message,
   PaginationSkeleton,
   Stack,
   useDidMount,
 } from "@artsy/palette"
-import {
-  CollectorProfileArtistsListArtist,
-  CollectorProfileArtistsListArtistSkeleton,
-} from "Apps/CollectorProfile/Components/CollectorProfileArtists/CollectorProfileArtistsListArtist"
-import { PaginationFragmentContainer } from "Components/Pagination"
-import { useRouter } from "System/Hooks/useRouter"
-import type { CollectorProfileArtistsListArtistsQuery } from "__generated__/CollectorProfileArtistsListArtistsQuery.graphql"
 import type { CollectorProfileArtistsList_me$key } from "__generated__/CollectorProfileArtistsList_me.graphql"
+import type { CollectorProfileArtistsListArtistsQuery } from "__generated__/CollectorProfileArtistsListArtistsQuery.graphql"
 import { compact } from "lodash"
 import { type FC, Suspense } from "react"
 import { graphql, useFragment, useLazyLoadQuery } from "react-relay"
@@ -23,7 +23,7 @@ type CollectorProfileArtistsListProps = {}
 
 export const CollectorProfileArtistsList: FC<
   React.PropsWithChildren<CollectorProfileArtistsListProps>
-> = ({ children }) => {
+> = ({}) => {
   const isMounted = useDidMount()
 
   return (
@@ -61,7 +61,9 @@ const CollectorProfileArtistsListArtists: FC<
   const {
     router,
     match,
-    match: { location: { query } } = {
+    match: {
+      location: { query },
+    } = {
       location: { query: { page: "1" } },
     },
   } = useRouter()
@@ -71,12 +73,12 @@ const CollectorProfileArtistsListArtists: FC<
   const data = useLazyLoadQuery<CollectorProfileArtistsListArtistsQuery>(
     QUERY,
     { page, size: PAGE_SIZE },
-    { fetchPolicy: "network-only" },
+    { fetchPolicy: "network-only" }
   )
 
   const me = useFragment(
     FRAGMENT,
-    data.me as CollectorProfileArtistsList_me$key,
+    data.me as CollectorProfileArtistsList_me$key
   )
 
   const userInterestEdges = compact(me?.userInterestsConnection?.edges)

@@ -10,9 +10,9 @@ import {
   CheckoutStepState,
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import type { CheckoutErrorBannerProps } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
+import { useBuildInitialSteps } from "Apps/Order2/Routes/Checkout/Hooks/useBuildInitialSteps"
 import { useCheckoutTracking } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutTracking"
 import { useStripePaymentBySetupIntentId } from "Apps/Order2/Routes/Checkout/Hooks/useStripePaymentBySetupIntentId"
-import { useBuildInitialSteps } from "Apps/Order2/Routes/Checkout/Hooks/useBuildInitialSteps"
 import { useRouter } from "System/Hooks/useRouter"
 import createLogger from "Utils/logger"
 import type {
@@ -188,7 +188,7 @@ export const Order2CheckoutContext: ReturnType<
         }
         return step
       })
-    },
+    }
   ),
 
   setLoadingError: action((state, error) => {
@@ -212,12 +212,12 @@ export const Order2CheckoutContext: ReturnType<
     const isPickup = args?.isPickup ?? false
 
     const currentStepName = state.steps.find(
-      step => step.state === CheckoutStepState.ACTIVE,
+      step => step.state === CheckoutStepState.ACTIVE
     )?.name
 
     if (currentStepName !== CheckoutStepName.FULFILLMENT_DETAILS) {
       logger.error(
-        `setFulfillmentDetailsComplete called when current step is not FULFILLMENT_DETAILS but ${currentStepName}`,
+        `setFulfillmentDetailsComplete called when current step is not FULFILLMENT_DETAILS but ${currentStepName}`
       )
       return
     }
@@ -246,12 +246,12 @@ export const Order2CheckoutContext: ReturnType<
 
   setDeliveryOptionComplete: action(state => {
     const currentStepName = state.steps.find(
-      step => step.state === CheckoutStepState.ACTIVE,
+      step => step.state === CheckoutStepState.ACTIVE
     )?.name
 
     if (currentStepName !== CheckoutStepName.DELIVERY_OPTION) {
       logger.error(
-        `setDeliveryOptionComplete called when current step is not DELIVERY_OPTION but ${currentStepName}`,
+        `setDeliveryOptionComplete called when current step is not DELIVERY_OPTION but ${currentStepName}`
       )
       return
     }
@@ -318,10 +318,10 @@ export const Order2CheckoutContext: ReturnType<
         }
 
         const hasCompletedStep = newSteps.find(
-          s => s.state === CheckoutStepState.COMPLETED,
+          s => s.state === CheckoutStepState.COMPLETED
         )
         const hasUpcomingStep = newSteps.find(
-          s => s.state === CheckoutStepState.UPCOMING,
+          s => s.state === CheckoutStepState.UPCOMING
         )
 
         if (hasCompletedStep && !hasUpcomingStep && !hasActivatedNext) {
@@ -439,12 +439,12 @@ export const Order2CheckoutContext: ReturnType<
 
   setOfferAmountComplete: action(state => {
     const currentStepName = state.steps.find(
-      step => step.state === CheckoutStepState.ACTIVE,
+      step => step.state === CheckoutStepState.ACTIVE
     )?.name
 
     if (currentStepName !== CheckoutStepName.OFFER_AMOUNT) {
       logger.error(
-        `setOfferAmountComplete called when current step is not OFFER_AMOUNT but ${currentStepName}`,
+        `setOfferAmountComplete called when current step is not OFFER_AMOUNT but ${currentStepName}`
       )
       return
     }
@@ -524,7 +524,7 @@ export const Order2CheckoutContextProvider: React.FC<
   // Initialize the store with the initial state
   const initialState = useMemo(
     () => initialStateForOrder(orderData, initialSteps),
-    [orderData, initialSteps],
+    [orderData, initialSteps]
   )
 
   const runtimeModel = {
@@ -578,7 +578,7 @@ const CheckoutLoadingManager: React.FC<{
     // 2. We're in post-payment state where Express Checkout should be hidden
     const isActuallyLoaded = state.expressCheckoutPaymentMethods !== null
     const activeStep = state.steps.find(
-      step => step.state === CheckoutStepState.ACTIVE,
+      step => step.state === CheckoutStepState.ACTIVE
     )
     const isInPostPaymentState =
       activeStep?.name === CheckoutStepName.CONFIRMATION
@@ -587,13 +587,13 @@ const CheckoutLoadingManager: React.FC<{
   })
 
   const isLoading = Order2CheckoutContext.useStoreState(
-    state => state.isLoading,
+    state => state.isLoading
   )
   const setLoadingError = Order2CheckoutContext.useStoreActions(
-    actions => actions.setLoadingError,
+    actions => actions.setLoadingError
   )
   const setLoadingComplete = Order2CheckoutContext.useStoreActions(
-    actions => actions.setLoadingComplete,
+    actions => actions.setLoadingComplete
   )
 
   // Validate order and get into good initial checkout state on load
@@ -683,16 +683,16 @@ const validateOrder = (order: Order2CheckoutContext_order$data) => {
 
 const initialStateForOrder = (
   order: Order2CheckoutContext_order$data,
-  steps: CheckoutStep[],
+  steps: CheckoutStep[]
 ): Partial<Order2CheckoutModel> => {
   const savedCheckoutMode = getStorageValue(
     CHECKOUT_MODE_STORAGE_KEY,
-    "standard",
+    "standard"
   )
 
   // Check if fulfillment details step is complete
   const fulfillmentDetailsStep = steps.find(
-    step => step.name === CheckoutStepName.FULFILLMENT_DETAILS,
+    step => step.name === CheckoutStepName.FULFILLMENT_DETAILS
   )
   const fulfillmentComplete =
     fulfillmentDetailsStep?.state === CheckoutStepState.COMPLETED

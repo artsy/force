@@ -5,11 +5,11 @@ import { useShippingContext } from "Apps/Order/Routes/Shipping/Hooks/useShipping
 import { useUserAddressUpdates } from "Apps/Order/Routes/Shipping/Hooks/useUserAddressUpdates"
 import type { ShippingContextProps } from "Apps/Order/Routes/Shipping/ShippingContext"
 import {
+  addressWithFallbackValues,
   FulfillmentType,
   type FulfillmentValues,
-  type ShipValues,
-  addressWithFallbackValues,
   getInitialShippingValues,
+  type ShipValues,
 } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
 import { useFlag } from "System/FeatureFlags/useFlag"
 import { useRouter } from "System/Hooks/useRouter"
@@ -50,7 +50,7 @@ export const FulfillmentDetails: FC<
 
   const initialValues = getInitialValues(
     shippingContext.meData,
-    shippingContext.orderData,
+    shippingContext.orderData
   )
 
   const availableFulfillmentTypes: FulfillmentType[] =
@@ -67,7 +67,7 @@ export const FulfillmentDetails: FC<
    * the rest of its life and reset values
    */
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Effect should trigger when saved addresses availability changes
   useEffect(() => {
     const formLoaded =
       typeof shippingContext.state.fulfillmentDetailsFormikContext.setValues ===
@@ -81,11 +81,11 @@ export const FulfillmentDetails: FC<
         shippingContext.meData.addressList,
         shippingContext.orderData.shipsFrom,
         shippingContext.meData.name,
-        shippingContext.orderData.availableShippingCountries,
+        shippingContext.orderData.availableShippingCountries
       )
 
       shippingContext.state.fulfillmentDetailsFormikContext.setValues(
-        emptyFormValues,
+        emptyFormValues
       )
       shippingContext.actions.setShippingFormMode("new_address")
     }
@@ -96,7 +96,7 @@ export const FulfillmentDetails: FC<
    * require artsy shipping
    */
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Shipping quotes refresh should only run on mount
   useEffect(() => {
     const { savedFulfillmentDetails } = shippingContext.orderData
 
@@ -155,7 +155,7 @@ export const FulfillmentDetails: FC<
    */
   const handleSubmit = async (
     values: FulfillmentValues,
-    _helpers: FormikHelpers<FulfillmentValues>,
+    _helpers: FormikHelpers<FulfillmentValues>
   ) => {
     // Trigger address verification and return early if appropriate
     if (shouldVerifyAddressOnSubmit(values)) {
@@ -169,7 +169,7 @@ export const FulfillmentDetails: FC<
         shippingContext.state.newSavedAddressID
       ) {
         shippingContext.actions.setSelectedSavedAddressID(
-          shippingContext.state.selectedSavedAddressID,
+          shippingContext.state.selectedSavedAddressID
         )
       }
     }
@@ -193,7 +193,7 @@ export const FulfillmentDetails: FC<
           } else {
             if (userAddressUpdateResult.actionType === "create") {
               shippingContext.actions.setNewSavedAddressID(
-                userAddressUpdateResult.data.internalID,
+                userAddressUpdateResult.data.internalID
               )
             } else if (userAddressUpdateResult.actionType === "delete") {
               shippingContext.actions.setNewSavedAddressID(null)
@@ -203,7 +203,7 @@ export const FulfillmentDetails: FC<
               shippingContext.state.shippingFormMode === "new_address"
             ) {
               shippingContext.actions.setNewSavedAddressID(
-                userAddressUpdateResult.data.internalID,
+                userAddressUpdateResult.data.internalID
               )
             }
           }
@@ -233,10 +233,10 @@ export const FulfillmentDetails: FC<
       } else {
         resetSelectedSavedAddress()
         logger.error(
-          "No request for saveFulfillmentDetails - this should not happen",
+          "No request for saveFulfillmentDetails - this should not happen"
         )
       }
-    } catch (error) {
+    } catch (_error) {
       orderTracking.errorMessageViewed({
         error_code: null,
         title: "An error occurred",
@@ -312,14 +312,14 @@ const ME_FRAGMENT = graphql`
  */
 const getInitialValues = (
   meData: ShippingContextProps["meData"],
-  orderData: ShippingContextProps["orderData"],
+  orderData: ShippingContextProps["orderData"]
 ): FulfillmentValues => {
   if (orderData.savedFulfillmentDetails) {
     return {
       fulfillmentType: orderData.savedFulfillmentDetails.fulfillmentType,
       attributes: {
         ...addressWithFallbackValues(
-          orderData.savedFulfillmentDetails.attributes,
+          orderData.savedFulfillmentDetails.attributes
         ),
       },
       meta: {
@@ -336,6 +336,6 @@ const getInitialValues = (
     savedAddresses,
     orderData.shipsFrom,
     meData.name,
-    orderData.availableShippingCountries,
+    orderData.availableShippingCountries
   )
 }

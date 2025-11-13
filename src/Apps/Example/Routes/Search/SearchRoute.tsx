@@ -1,7 +1,7 @@
-import { AutocompleteInput } from "@artsy/palette"
 import { SearchRouteOptionFragmentContainer } from "Apps/Example/Routes/Search/SearchRouteOption"
-import { useClientQuery } from "Utils/Hooks/useClientQuery"
 import { extractNodes } from "Utils/extractNodes"
+import { useClientQuery } from "Utils/Hooks/useClientQuery"
+import { AutocompleteInput } from "@artsy/palette"
 import type { SearchRouteQuery } from "__generated__/SearchRouteQuery.graphql"
 import { compact, debounce } from "lodash"
 import { type FC, useMemo, useState } from "react"
@@ -26,7 +26,7 @@ export const SearchRoute: FC<React.PropsWithChildren<unknown>> = () => {
         // Pass on the node for the fragment container
         artist: node,
       }
-    }),
+    })
   )
 
   const handleChange = useMemo(
@@ -35,7 +35,7 @@ export const SearchRoute: FC<React.PropsWithChildren<unknown>> = () => {
         console.log("setting value", value)
         setQuery(value)
       }, 250),
-    [],
+    []
   )
 
   return (

@@ -23,7 +23,7 @@ rssServerApp.get("/rss/news", async (req, res) => {
   const data = await fetchQuery<RssArticlesQuery>(
     relayEnvironment,
     RSS_ARTICLES_QUERY,
-    { channelId: ARTSY_EDITORIAL_CHANNEL },
+    { channelId: ARTSY_EDITORIAL_CHANNEL }
   ).toPromise()
 
   const articles = extractNodes(data?.articlesConnection)
@@ -43,7 +43,7 @@ rssServerApp.get("/rss/partner-updates", async (req, res) => {
   const data = await fetchQuery<RssArticlesQuery>(
     relayEnvironment,
     RSS_ARTICLES_QUERY,
-    { channelId: GALLERY_PARTNER_UPDATES_CHANNEL },
+    { channelId: GALLERY_PARTNER_UPDATES_CHANNEL }
   ).toPromise()
 
   const articles = extractNodes(data?.articlesConnection)

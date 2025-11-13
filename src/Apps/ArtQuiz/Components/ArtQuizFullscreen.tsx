@@ -1,5 +1,5 @@
-import { Box, Spinner } from "@artsy/palette"
 import { useNavBarHeight } from "Components/NavBar/useNavBarHeight"
+import { Box, Spinner } from "@artsy/palette"
 import { type FC, useEffect, useRef, useState } from "react"
 
 export const ArtQuizFullScreen: FC<React.PropsWithChildren<unknown>> = ({

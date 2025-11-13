@@ -1,11 +1,11 @@
-import { act, fireEvent, screen, waitFor } from "@testing-library/react"
 import { AddArtworksModal } from "Apps/CollectorProfile/Routes/Saves/Components/CreateNewListModal/AddArtworksModal"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { render } from "DevTools/renderWithMockBoot"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useMutation } from "Utils/Hooks/useMutation"
+import { act, fireEvent, screen, waitFor } from "@testing-library/react"
 import { useTracking } from "react-tracking"
-import { MockPayloadGenerator, createMockEnvironment } from "relay-test-utils"
+import { createMockEnvironment, MockPayloadGenerator } from "relay-test-utils"
 
 jest.mock("Utils/Hooks/useMutation")
 jest.mock("System/Hooks/useSystemContext")
@@ -52,11 +52,11 @@ describe("AddArtworksModal", () => {
 
   it("renders the modal content", async () => {
     render(
-      <AddArtworksModal artworkList={artworkList} onComplete={onComplete} />,
+      <AddArtworksModal artworkList={artworkList} onComplete={onComplete} />
     )
 
     const title = screen.getByText(
-      "Sculpture created. Add saved works to the list.",
+      "Sculpture created. Add saved works to the list."
     )
     expect(title).toBeInTheDocument()
     expect(screen.getByRole("button", { name: /Save/ })).toBeInTheDocument()
@@ -64,7 +64,7 @@ describe("AddArtworksModal", () => {
 
   it("closes the modal without executing mutation if no artworks were selected", async () => {
     render(
-      <AddArtworksModal artworkList={artworkList} onComplete={onComplete} />,
+      <AddArtworksModal artworkList={artworkList} onComplete={onComplete} />
     )
 
     const saveButton = screen.getByRole("button", { name: /Save/ })
@@ -75,7 +75,7 @@ describe("AddArtworksModal", () => {
 
   it("executes mutation if artworks were selected", async () => {
     render(
-      <AddArtworksModal artworkList={artworkList} onComplete={onComplete} />,
+      <AddArtworksModal artworkList={artworkList} onComplete={onComplete} />
     )
 
     resolveMostRecentOperation()
@@ -93,7 +93,7 @@ describe("AddArtworksModal", () => {
             addToCollectionIDs: [artworkList.internalID],
           },
         },
-      }),
+      })
     )
   })
 
@@ -108,7 +108,7 @@ describe("AddArtworksModal", () => {
       }))
 
       render(
-        <AddArtworksModal artworkList={artworkList} onComplete={onComplete} />,
+        <AddArtworksModal artworkList={artworkList} onComplete={onComplete} />
       )
 
       resolveMostRecentOperation()
@@ -129,7 +129,7 @@ describe("AddArtworksModal", () => {
       }))
 
       render(
-        <AddArtworksModal artworkList={artworkList} onComplete={onComplete} />,
+        <AddArtworksModal artworkList={artworkList} onComplete={onComplete} />
       )
 
       resolveMostRecentOperation()
@@ -143,7 +143,7 @@ describe("AddArtworksModal", () => {
           context_owner_type: "saves",
           artwork_ids: ["artwork-id-one"],
           owner_ids: [artworkList.internalID],
-        }),
+        })
       )
     })
 
@@ -157,7 +157,7 @@ describe("AddArtworksModal", () => {
       }))
 
       render(
-        <AddArtworksModal artworkList={artworkList} onComplete={onComplete} />,
+        <AddArtworksModal artworkList={artworkList} onComplete={onComplete} />
       )
 
       resolveMostRecentOperation()
@@ -172,7 +172,7 @@ describe("AddArtworksModal", () => {
           context_owner_type: "saves",
           artwork_ids: ["artwork-id-one", "artwork-id-two"],
           owner_ids: [artworkList.internalID],
-        }),
+        })
       )
     })
   })

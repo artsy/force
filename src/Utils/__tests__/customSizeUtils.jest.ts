@@ -1,10 +1,10 @@
 import {
   type CustomSize,
-  SIZES_IN_CENTIMETERS,
-  SIZES_IN_INCHES,
   getCustomSizeRangeInInches,
   getPredefinedSizesByMetric,
   parseSizeRange,
+  SIZES_IN_CENTIMETERS,
+  SIZES_IN_INCHES,
 } from "Utils/customSizeUtils"
 
 describe("getPredefinedSizesByMetric", () => {

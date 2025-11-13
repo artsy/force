@@ -1,3 +1,5 @@
+import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import {
   ActionType,
   type ClickedMainArtworkGrid,
@@ -17,8 +19,6 @@ import {
   Text,
   useTheme,
 } from "@artsy/palette"
-import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import type {
   ImmersiveView_filtered_artworks$data,
   ImmersiveView_filtered_artworks$key,
@@ -120,7 +120,7 @@ export const ImmersiveView: React.FC<ImmersiveViewProps> = props => {
           break
       }
     },
-    [handleNextArtwork, handlePreviousArtwork],
+    [handleNextArtwork, handlePreviousArtwork]
   )
 
   const tracking = useTracking()

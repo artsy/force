@@ -1,5 +1,5 @@
-import { Column, GridColumns, Join, Message, Separator } from "@artsy/palette"
 import { SettingsEditProfileFieldsFragmentContainer } from "Apps/Settings/Routes/EditProfile/Components/SettingsEditProfileFields"
+import { Column, GridColumns, Join, Message, Separator } from "@artsy/palette"
 import type { SettingsEditProfileRoute_me$data } from "__generated__/SettingsEditProfileRoute_me.graphql"
 import type React from "react"
 import { createFragmentContainer, graphql } from "react-relay"

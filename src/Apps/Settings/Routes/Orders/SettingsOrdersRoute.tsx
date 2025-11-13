@@ -21,5 +21,5 @@ export const SettingsOrdersRouteFragmentContainer = createFragmentContainer(
         ...SettingsOrders_me
       }
     `,
-  },
+  }
 )

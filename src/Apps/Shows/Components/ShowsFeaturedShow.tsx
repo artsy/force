@@ -1,3 +1,4 @@
+import { RouterLink } from "System/Components/RouterLink"
 import {
   Box,
   Image,
@@ -6,7 +7,6 @@ import {
   Text,
   type TextVariant,
 } from "@artsy/palette"
-import { RouterLink } from "System/Components/RouterLink"
 import type { ShowsFeaturedShow_show$data } from "__generated__/ShowsFeaturedShow_show.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -116,7 +116,7 @@ export const ShowsFeaturedShowFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  },
+  }
 )
 
 const Overlay = styled(Box)`

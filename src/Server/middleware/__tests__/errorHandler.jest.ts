@@ -51,7 +51,7 @@ describe("errorHandler", () => {
       testContext.err,
       testContext.req,
       testContext.res,
-      testContext.next,
+      testContext.next
     )
 
     expect(testContext.res.status).toBeCalledWith(500)
@@ -68,7 +68,7 @@ describe("errorHandler", () => {
       testContext.err,
       testContext.req,
       testContext.res,
-      testContext.next,
+      testContext.next
     )
 
     expect(testContext.res.status).toBeCalledWith(500)
@@ -85,7 +85,7 @@ describe("errorHandler", () => {
       err,
       testContext.req,
       testContext.res,
-      testContext.next,
+      testContext.next
     )
 
     expect(testContext.res.status).toBeCalledWith(401)

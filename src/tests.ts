@@ -20,7 +20,9 @@ if (process.env.CIRCLECI === "true") {
 }
 
 jest.mock("react-tracking")
+
 import _track, { useTracking as _useTracking } from "react-tracking"
+
 const track = _track as jest.Mock<typeof _track>
 const useTracking = _useTracking as jest.Mock
 track.mockImplementation(() => x => x as any)
@@ -113,7 +115,7 @@ if (process.env.ALLOW_CONSOLE_LOGS !== "true") {
       return err
     } else {
       const err = new Error(
-        explanation + chalk.red(format(args[0], ...args.slice(1))),
+        explanation + chalk.red(format(args[0], ...args.slice(1)))
       )
       Error.captureStackTrace(err, constructorOpt)
       return err
@@ -138,36 +140,36 @@ if (process.env.ALLOW_CONSOLE_LOGS !== "true") {
               args[0] &&
               args[0].includes &&
               !args[0].includes(
-                "Warning: An update to %s inside a test was not wrapped in act",
+                "Warning: An update to %s inside a test was not wrapped in act"
               ) &&
               !args[0].includes(
-                "Warning: RelayResponseNormalizer: Payload did not contain a value for field `id: id`. Check that you are parsing with the same query that was used to fetch the payload.",
+                "Warning: RelayResponseNormalizer: Payload did not contain a value for field `id: id`. Check that you are parsing with the same query that was used to fetch the payload."
               ) &&
               !/Warning: Received.+?for a non-boolean attribute/.test(
-                args[0],
+                args[0]
               ) &&
               // FIXME: Ignore unknown props warnings until we can filter out styled-system props
               !args[0].includes("Warning: React does not recognize the") &&
               // FIXME: Ignore this warning which stems from using refs on RouterLinks
               !args[0].includes(
-                "Warning: Function components cannot be given refs.",
+                "Warning: Function components cannot be given refs."
               ) &&
               !args[0].includes(
-                "Warning: componentWillReceiveProps has been renamed",
+                "Warning: componentWillReceiveProps has been renamed"
               ) &&
               !args[0].includes(
-                "Warning: componentWillMount has been renamed",
+                "Warning: componentWillMount has been renamed"
               ) &&
               !args[0].includes(
-                "Warning: unstable_flushDiscreteUpdates: Cannot flush updates when React is already rendering",
+                "Warning: unstable_flushDiscreteUpdates: Cannot flush updates when React is already rendering"
               ) &&
               // Relay 13 warning
               !args[0].includes(
-                "has missing data and would suspend. When using features such as @defer or @module, use `useFragment` instead of a Relay Container",
+                "has missing data and would suspend. When using features such as @defer or @module, use `useFragment` instead of a Relay Container"
               ) &&
               !args[0].includes(
                 // Styled-components 5 warning
-                "You may see this warning because you've called styled inside another component",
+                "You may see this warning because you've called styled inside another component"
               )
             ) {
               reject(logToError(type, args, handler))

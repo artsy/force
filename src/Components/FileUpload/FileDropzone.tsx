@@ -1,7 +1,7 @@
-import { Box, type BoxProps, Button, Text } from "@artsy/palette"
 import { concatDropzoneErrors } from "Components/FileUpload/utils/concatDropzoneErrors"
 import { validateTotalMaxSize } from "Components/FileUpload/utils/validateTotalMaxSize"
 import { Media } from "Utils/Responsive"
+import { Box, type BoxProps, Button, Text } from "@artsy/palette"
 import type React from "react"
 import { useEffect, useRef, useState } from "react"
 import { type FileRejection, useDropzone } from "react-dropzone"
@@ -39,7 +39,7 @@ export const FileDropzone: React.FC<
       const [acceptedFiles, errors] = validateTotalMaxSize(
         allFiles,
         files,
-        maxTotalSize,
+        maxTotalSize
       )
 
       if (acceptedFiles.length) {

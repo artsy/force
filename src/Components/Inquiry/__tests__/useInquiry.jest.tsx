@@ -1,9 +1,9 @@
 import {
-  type WithInquiryProps,
   useInquiry,
+  type WithInquiryProps,
   withInquiry,
 } from "Components/Inquiry/useInquiry"
-import { render, screen, fireEvent } from "@testing-library/react"
+import { fireEvent, render, screen } from "@testing-library/react"
 import type * as React from "react"
 
 jest.mock("../Inquiry", () => ({
@@ -42,7 +42,7 @@ describe("useInquiry", () => {
     expect(container.innerHTML).not.toContain("Artwork Inquiry")
 
     fireEvent.click(
-      screen.getByRole("button", { name: "show artwork inquiry" }),
+      screen.getByRole("button", { name: "show artwork inquiry" })
     )
 
     expect(container.innerHTML).toContain("Artwork Inquiry")
@@ -54,7 +54,7 @@ describe("useInquiry", () => {
     expect(container.innerHTML).not.toContain("Specialist Inquiry")
 
     fireEvent.click(
-      screen.getByRole("button", { name: "show specialist inquiry" }),
+      screen.getByRole("button", { name: "show specialist inquiry" })
     )
 
     expect(container.innerHTML).toContain("Specialist Inquiry")
@@ -92,7 +92,7 @@ describe("withInquiry", () => {
     expect(container.innerHTML).not.toContain("Artwork Inquiry")
 
     fireEvent.click(
-      screen.getByRole("button", { name: "show artwork inquiry" }),
+      screen.getByRole("button", { name: "show artwork inquiry" })
     )
 
     expect(container.innerHTML).toContain("Artwork Inquiry")
@@ -104,7 +104,7 @@ describe("withInquiry", () => {
     expect(container.innerHTML).not.toContain("Specialist Inquiry")
 
     fireEvent.click(
-      screen.getByRole("button", { name: "show specialist inquiry" }),
+      screen.getByRole("button", { name: "show specialist inquiry" })
     )
 
     expect(container.innerHTML).toContain("Specialist Inquiry")

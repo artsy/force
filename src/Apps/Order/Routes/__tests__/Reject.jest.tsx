@@ -1,12 +1,12 @@
-import { fireEvent, screen } from "@testing-library/react"
-import { RejectFragmentContainer } from "Apps/Order/Routes/Reject"
+import { OfferOrderWithShippingDetails } from "Apps/__tests__/Fixtures/Order"
 import {
   rejectOfferFailed,
   rejectOfferSuccess,
 } from "Apps/Order/Routes/__fixtures__/MutationResults/rejectOffer"
-import { OfferOrderWithShippingDetails } from "Apps/__tests__/Fixtures/Order"
+import { RejectFragmentContainer } from "Apps/Order/Routes/Reject"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { fireEvent, screen } from "@testing-library/react"
 import type { RejectTestEQuery$rawResponse } from "__generated__/RejectTestEQuery.graphql"
 import { DateTime } from "luxon"
 import { graphql } from "react-relay"
@@ -74,7 +74,7 @@ describe("Buyer rejects seller offer", () => {
         <RejectFragmentContainer
           order={props.order}
           router={{ push: pushMock } as any}
-          // @ts-ignore
+          // @ts-expect-error
           isCommittingMutation={isCommittingMutation}
         />
       </MockBoot>
@@ -122,8 +122,8 @@ describe("Buyer rejects seller offer", () => {
       expect(
         screen.getByText(
           "Declining an offer permanently ends the negotiation process.",
-          { exact: false },
-        ),
+          { exact: false }
+        )
       ).toBeInTheDocument()
     })
 
@@ -133,7 +133,7 @@ describe("Buyer rejects seller offer", () => {
       })
       fireEvent.click(screen.getByRole("button", { name: /change/i }))
       expect(pushMock).toHaveBeenCalledWith(
-        `/orders/${testOrder?.internalID}/respond`,
+        `/orders/${testOrder?.internalID}/respond`
       )
     })
   })
@@ -156,7 +156,7 @@ describe("Buyer rejects seller offer", () => {
 
       await page.clickSubmit()
       expect(pushMock).toHaveBeenCalledWith(
-        `/orders/${testOrder?.internalID}/details`,
+        `/orders/${testOrder?.internalID}/details`
       )
     })
 
@@ -169,7 +169,7 @@ describe("Buyer rejects seller offer", () => {
 
       // Check if loading state is detectable
       expect(
-        page.isLoading() || page.submitButton?.textContent?.includes("Submit"),
+        page.isLoading() || page.submitButton?.textContent?.includes("Submit")
       ).toBeTruthy()
     })
 

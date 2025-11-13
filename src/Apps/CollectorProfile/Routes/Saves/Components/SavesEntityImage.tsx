@@ -1,5 +1,5 @@
-import { Image } from "@artsy/palette"
 import { cropped } from "Utils/resized"
+import { Image } from "@artsy/palette"
 import type { FC } from "react"
 import { ArtworkListNoImage } from "./Images/ArtworkListNoImage"
 

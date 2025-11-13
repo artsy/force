@@ -1,15 +1,14 @@
-import { ContextModule } from "@artsy/cohesion"
-import { fireEvent, screen } from "@testing-library/react"
 import { AppToasts } from "Apps/Components/AppToasts"
 import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
 import { SaveArtwork } from "Components/Artwork/SaveButton/SaveArtworkMutation"
 import { SaveArtworkToListsButtonFragmentContainer } from "Components/Artwork/SaveButton/SaveArtworkToListsButton"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { ContextModule } from "@artsy/cohesion"
+import { fireEvent, screen } from "@testing-library/react"
 import type { SaveArtworkToListsButton_Test_Query } from "__generated__/SaveArtworkToListsButton_Test_Query.graphql"
 import { act } from "react-dom/test-utils"
-import { graphql } from "react-relay"
-import { fetchQuery } from "react-relay"
+import { fetchQuery, graphql } from "react-relay"
 
 jest.unmock("react-relay")
 jest.mock("Components/Artwork/SaveButton/SaveArtworkMutation")
@@ -72,7 +71,7 @@ describe("SaveArtworkToListsButton", () => {
 
   describe("Save flow for non auction artwork", () => {
     beforeEach(() => {
-      mockSaveArtwork.mockImplementation(args => ({
+      mockSaveArtwork.mockImplementation(_args => ({
         saveArtwork: {
           artwork: {
             isSavedToAnyList: true,
@@ -92,8 +91,8 @@ describe("SaveArtworkToListsButton", () => {
       expect(await screen.findByText("Artwork saved")).toBeInTheDocument()
       expect(
         await screen.findByText(
-          "Saving an artwork signals interest to galleries.",
-        ),
+          "Saving an artwork signals interest to galleries."
+        )
       ).toBeInTheDocument()
       expect(await screen.findByText("Add to a List")).toBeInTheDocument()
     })
@@ -113,7 +112,7 @@ describe("SaveArtworkToListsButton", () => {
 
   describe("Save flow for auction artwork", () => {
     beforeEach(() => {
-      mockSaveArtwork.mockImplementation(args => ({
+      mockSaveArtwork.mockImplementation(_args => ({
         saveArtwork: {
           artwork: {
             isSavedToAnyList: true,
@@ -132,7 +131,7 @@ describe("SaveArtworkToListsButton", () => {
 
       expect(await screen.findByText("Artwork saved")).toBeInTheDocument()
       expect(
-        screen.queryByText("Saving an artwork signals interest to galleries."),
+        screen.queryByText("Saving an artwork signals interest to galleries.")
       ).not.toBeInTheDocument()
       expect(await screen.findByText("Add to a List")).toBeInTheDocument()
     })
@@ -154,7 +153,7 @@ describe("SaveArtworkToListsButton", () => {
     const mockFetchQuery = fetchQuery as jest.Mock
 
     beforeEach(() => {
-      mockSaveArtwork.mockImplementation(args => ({
+      mockSaveArtwork.mockImplementation(_args => ({
         saveArtwork: {
           artwork: {
             isSavedToAnyList: false,

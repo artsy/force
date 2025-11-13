@@ -1,8 +1,7 @@
 import { useAuthDialog } from "Components/AuthDialog"
 import { NavBar } from "Components/NavBar/NavBar"
 import { SystemContextProvider } from "System/Contexts/SystemContext"
-import { render, screen } from "@testing-library/react"
-import { fireEvent } from "@testing-library/react"
+import { fireEvent, render, screen } from "@testing-library/react"
 import { useTracking } from "react-tracking"
 
 jest.mock("Components/Search/SearchBar", () => {
@@ -37,21 +36,21 @@ jest.mock(
   "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowFind",
   () => ({
     ProgressiveOnboardingFollowFind: ({ children }) => children,
-  }),
+  })
 )
 
 jest.mock(
   "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveFind",
   () => ({
     ProgressiveOnboardingSaveFind: ({ children }) => children,
-  }),
+  })
 )
 
 jest.mock(
   "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertFind",
   () => ({
     ProgressiveOnboardingAlertFind: ({ children }) => children,
-  }),
+  })
 )
 
 describe("NavBar", () => {
@@ -61,7 +60,7 @@ describe("NavBar", () => {
     return render(
       <SystemContextProvider user={user} isEigen={isEigen}>
         <NavBar />
-      </SystemContextProvider>,
+      </SystemContextProvider>
     )
   }
 
@@ -96,7 +95,7 @@ describe("NavBar", () => {
 
       expect(screen.getAllByLabelText("Conversations")).toHaveLength(1)
       expect(
-        screen.getAllByLabelText("Notifications").length,
+        screen.getAllByLabelText("Notifications").length
       ).toBeGreaterThanOrEqual(1)
     })
 

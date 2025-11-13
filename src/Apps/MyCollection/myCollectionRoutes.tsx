@@ -1,5 +1,5 @@
-import loadable from "@loadable/component"
 import type { RouteProps } from "System/Router/Route"
+import loadable from "@loadable/component"
 import { graphql } from "react-relay"
 
 const MyCollectionArtwork = loadable(
@@ -10,7 +10,7 @@ const MyCollectionArtwork = loadable(
   {
     resolveComponent: component =>
       component.MyCollectionArtworkFragmentContainer,
-  },
+  }
 )
 
 const MyCollectionCreateArtwork = loadable(
@@ -21,7 +21,7 @@ const MyCollectionCreateArtwork = loadable(
   {
     resolveComponent: component =>
       component.MyCollectionCreateArtworkFragmentContainer,
-  },
+  }
 )
 
 const MyCollectionEditArtwork = loadable(
@@ -32,7 +32,7 @@ const MyCollectionEditArtwork = loadable(
   {
     resolveComponent: component =>
       component.MyCollectionEditArtworkFragmentContainer,
-  },
+  }
 )
 
 export const myCollectionRoutes: RouteProps[] = [

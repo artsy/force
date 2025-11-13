@@ -6,7 +6,7 @@ import type { Artist, ArtworkModel, MyCollectionPhoto } from "./artworkModel"
 import { getAttributionClassByName } from "./rarityOptions"
 
 export const getMyCollectionArtworkFormInitialValues = (
-  artwork?: MyCollectionEditArtwork_artwork$data,
+  artwork?: MyCollectionEditArtwork_artwork$data
 ): ArtworkModel => ({
   artistId: artwork?.artist?.internalID ?? "",
   artistName: artwork?.artist?.name ?? "",

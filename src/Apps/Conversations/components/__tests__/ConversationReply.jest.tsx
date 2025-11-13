@@ -1,8 +1,8 @@
+import { ConversationReply } from "Apps/Conversations/components/ConversationReply"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { sentConversationMessage } from "@artsy/cohesion"
 import { useToasts } from "@artsy/palette"
 import { act, fireEvent, screen } from "@testing-library/react"
-import { ConversationReply } from "Apps/Conversations/components/ConversationReply"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { ConversationReplyTestQuery } from "__generated__/ConversationReplyTestQuery.graphql"
 import * as formik from "formik"
 import { graphql } from "react-relay"
@@ -17,7 +17,7 @@ jest.mock(
     return {
       ConversationCTA: () => <div>ConversationCTA</div>,
     }
-  },
+  }
 )
 
 jest.mock("@artsy/palette", () => ({
@@ -125,7 +125,7 @@ describe("ConversationReply", () => {
       sentConversationMessage({
         impulseConversationId: conversation.internalID,
         impulseMessageId: "000",
-      }),
+      })
     )
     expect(resetFormMock).toHaveBeenCalledTimes(2)
   })

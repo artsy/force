@@ -1,5 +1,3 @@
-import { useToasts } from "@artsy/palette"
-import { renderHook } from "@testing-library/react-hooks"
 import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
 import { useCreateTokenAndSubmit } from "Apps/Auction/Hooks/useCreateTokenAndSubmit"
 import { useBidderPosition } from "Apps/Auction/Queries/useBidderPosition"
@@ -9,6 +7,8 @@ import {
   useSubmitBid,
 } from "Apps/Auction/Routes/Bid/useSubmitBid"
 import { useRouter } from "System/Hooks/useRouter"
+import { useToasts } from "@artsy/palette"
+import { renderHook } from "@testing-library/react-hooks"
 
 jest.mock("@artsy/palette")
 jest.mock("Apps/Auction/Hooks/useAuctionTracking")
@@ -69,7 +69,7 @@ describe("useSubmitBid", () => {
       useSubmitBid({
         ...defaultProps,
         ...props,
-      }),
+      })
     )
 
     if (result.error) {
@@ -77,13 +77,7 @@ describe("useSubmitBid", () => {
     }
 
     const submitBid = result.current.submitBid as any
-
-    // eslint-disable-next-line no-useless-catch
-    try {
-      await submitBid(values, helpers)
-    } catch (error) {
-      throw error
-    }
+    await submitBid(values, helpers)
   }
 
   beforeEach(() => {
@@ -228,7 +222,7 @@ describe("useSubmitBid", () => {
         isRegistrationTracked: { current: false },
         result: { position: { internalID: "positionID" }, status: "WINNING" },
         sale: defaultProps.sale,
-      }),
+      })
     )
   })
 
@@ -325,7 +319,7 @@ describe("useSubmitBid", () => {
             expect.objectContaining({
               bidderID: "bidderID",
               positionID: "positionID",
-            }),
+            })
           )
 
           expect(pushSpy).toHaveBeenCalledWith("/artwork/artwork-slug")
@@ -386,7 +380,7 @@ describe("useSubmitBid", () => {
 
           expect(helpers.setFieldError).toHaveBeenCalledWith(
             "selectedBid",
-            "OUTBID",
+            "OUTBID"
           )
           expect(helpers.setSubmitting).toHaveBeenCalledWith(false)
         })
@@ -409,7 +403,7 @@ describe("useSubmitBid", () => {
 
           expect(helpers.setFieldError).toHaveBeenCalledWith(
             "selectedBid",
-            "RESERVE_NOT_MET",
+            "RESERVE_NOT_MET"
           )
           expect(helpers.setSubmitting).toHaveBeenCalledWith(false)
         })
@@ -446,7 +440,7 @@ describe("useSubmitBid", () => {
           await setupHook()
 
           expect(pushSpy).toHaveBeenCalledWith(
-            "/auction/test-sale/confirm-registration",
+            "/auction/test-sale/confirm-registration"
           )
         })
       })
@@ -483,7 +477,7 @@ describe("useSubmitBid", () => {
           await setupHook()
 
           expect(pushSpy).toHaveBeenCalledWith(
-            "/auction/test-sale/confirm-registration",
+            "/auction/test-sale/confirm-registration"
           )
         })
 

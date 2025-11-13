@@ -1,12 +1,12 @@
-import { Join, Skeleton, Spacer } from "@artsy/palette"
 import {
   ArtQuizRecommendedArtistFragmentContainer,
   ArtQuizRecommendedArtistPlaceholder,
 } from "Apps/ArtQuiz/Components/ArtQuizRecommendedArtist"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
-import type { ArtQuizTrendingArtistsQuery } from "__generated__/ArtQuizTrendingArtistsQuery.graphql"
+import { Join, Skeleton, Spacer } from "@artsy/palette"
 import type { ArtQuizTrendingArtists_viewer$data } from "__generated__/ArtQuizTrendingArtists_viewer.graphql"
+import type { ArtQuizTrendingArtistsQuery } from "__generated__/ArtQuizTrendingArtistsQuery.graphql"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
@@ -48,7 +48,7 @@ const ArtQuizTrendingArtistsFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  },
+  }
 )
 
 const ArtQuizTrendingArtistsPlaceholder = () => {

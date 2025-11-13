@@ -1,7 +1,7 @@
-import { screen } from "@testing-library/react"
 import { SUPPORTED_NOTIFICATION_TYPES } from "Components/Notifications/Notification"
 import { NotificationItemFragmentContainer } from "Components/Notifications/NotificationItem"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import type { NotificationItem_test_Query } from "__generated__/NotificationItem_test_Query.graphql"
 import { graphql } from "react-relay"
 
@@ -162,12 +162,12 @@ describe("NotificationItem", () => {
                 targetHref: "/partner-offer-url",
               }),
             },
-            { mode: "dropdown" },
+            { mode: "dropdown" }
           )
 
           expect(screen.getByRole("link")).toHaveAttribute(
             "href",
-            "/notification/notification-internal-id",
+            "/notification/notification-internal-id"
           )
         })
       })
@@ -175,8 +175,8 @@ describe("NotificationItem", () => {
       describe("other notifications", () => {
         it.each(
           SUPPORTED_NOTIFICATION_TYPES.filter(
-            type => type !== "PARTNER_OFFER_CREATED",
-          ),
+            type => type !== "PARTNER_OFFER_CREATED"
+          )
         )("navigates to targetHref for %s", notificationType => {
           renderWithRelay(
             {
@@ -187,12 +187,12 @@ describe("NotificationItem", () => {
                 targetHref: "/target-href",
               }),
             },
-            { mode: "dropdown" },
+            { mode: "dropdown" }
           )
 
           expect(screen.getByRole("link")).toHaveAttribute(
             "href",
-            "/target-href",
+            "/target-href"
           )
         })
       })
@@ -213,9 +213,9 @@ describe("NotificationItem", () => {
 
           expect(screen.getByRole("link")).toHaveAttribute(
             "href",
-            "/notification/notification-internal-id",
+            "/notification/notification-internal-id"
           )
-        },
+        }
       )
     })
   })

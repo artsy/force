@@ -1,5 +1,5 @@
-import { renderHook } from "@testing-library/react-hooks"
 import { useAuctionWebsocket } from "Utils/Hooks/useAuctionWebsocket"
+import { renderHook } from "@testing-library/react-hooks"
 
 jest.mock("System/Hooks/useWebsocketContext", () => ({
   useWebsocketContext: () => {
@@ -20,7 +20,7 @@ describe("useAuctionWebsocket", () => {
       useAuctionWebsocket({
         lotID: "catty-lot-id",
         onChange,
-      }),
+      })
     )
 
     expect(onChange).toBeCalledWith({
@@ -36,7 +36,7 @@ describe("useAuctionWebsocket", () => {
       useAuctionWebsocket({
         lotID: "doggy-lot-id",
         onChange,
-      }),
+      })
     )
 
     expect(onChange).not.toBeCalled()

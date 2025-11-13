@@ -1,4 +1,3 @@
-import { Join, Spacer } from "@artsy/palette"
 import { ArtistNationalityFilter } from "Components/ArtworkFilter/ArtworkFilters/ArtistNationalityFilter"
 import { ArtistSeriesFilter } from "Components/ArtworkFilter/ArtworkFilters/ArtistSeriesFilter"
 import { ArtistsFilter } from "Components/ArtworkFilter/ArtworkFilters/ArtistsFilter"
@@ -17,12 +16,13 @@ import { SizeFilter } from "Components/ArtworkFilter/ArtworkFilters/SizeFilter"
 import { TimePeriodFilter } from "Components/ArtworkFilter/ArtworkFilters/TimePeriodFilter"
 import { WaysToBuyFilter } from "Components/ArtworkFilter/ArtworkFilters/WaysToBuyFilter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import { Join, Spacer } from "@artsy/palette"
 
 type ArtistArtworkFiltersProps = {}
 
 export const ArtistArtworkFilters: React.FC<
   React.PropsWithChildren<ArtistArtworkFiltersProps>
-> = props => {
+> = _props => {
   const { user } = useSystemContext()
 
   return (

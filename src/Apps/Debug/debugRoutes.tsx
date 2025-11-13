@@ -1,27 +1,27 @@
-import loadable from "@loadable/component"
 import type { RouteProps } from "System/Router/Route"
+import loadable from "@loadable/component"
 import { HttpError } from "found"
 
 const DebugBaselineRoute = loadable(
   () => import(/* webpackChunkName: "debugBundle" */ "./DebugBaselineRoute"),
-  { resolveComponent: component => component.DebugBaselineRoute },
+  { resolveComponent: component => component.DebugBaselineRoute }
 )
 
 const DebugAuthRoute = loadable(
   () => import(/* webpackChunkName: "debugBundle" */ "./DebugAuthRoute"),
-  { resolveComponent: component => component.DebugAuthRoute },
+  { resolveComponent: component => component.DebugAuthRoute }
 )
 
 const DebugClientError404Route = loadable(
   () =>
     import(/* webpackChunkName: "debugBundle" */ "./DebugClientError404Route"),
-  { resolveComponent: component => component.DebugClientError404Route },
+  { resolveComponent: component => component.DebugClientError404Route }
 )
 
 const DebugClientError500Route = loadable(
   () =>
     import(/* webpackChunkName: "debugBundle" */ "./DebugClientError500Route"),
-  { resolveComponent: component => component.DebugClientError500Route },
+  { resolveComponent: component => component.DebugClientError500Route }
 )
 
 /**

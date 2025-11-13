@@ -1,6 +1,6 @@
-import { screen } from "@testing-library/react"
 import { ConversationOrderState } from "Apps/Conversations/components/Details/OrderState/ConversationOrderState"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import type { OrderStateTestQuery } from "__generated__/OrderStateTestQuery.graphql"
 import { graphql } from "react-relay"
 
@@ -164,7 +164,7 @@ describe("OrderState", () => {
 
       expect(screen.getByText("Received counteroffer")).toBeInTheDocument()
       expect(
-        screen.getByText("Awaiting response by MMMM DD, HH:mm"),
+        screen.getByText("Awaiting response by MMMM DD, HH:mm")
       ).toBeInTheDocument()
     })
 
@@ -183,7 +183,7 @@ describe("OrderState", () => {
 
       expect(screen.getByText("Review counteroffer")).toBeInTheDocument()
       expect(
-        screen.getByText("Seller will respond by MMM D, h:mm A zz"),
+        screen.getByText("Seller will respond by MMM D, h:mm A zz")
       ).toBeInTheDocument()
     })
 

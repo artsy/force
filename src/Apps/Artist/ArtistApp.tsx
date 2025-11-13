@@ -1,7 +1,7 @@
-import { Spacer } from "@artsy/palette"
 import { Analytics } from "System/Contexts/AnalyticsContext"
 import { Jump } from "Utils/Hooks/useJump"
 import { useScrollToOpenArtistAuthModal } from "Utils/Hooks/useScrollToOpenArtistAuthModal"
+import { Spacer } from "@artsy/palette"
 import type { ArtistApp_artist$data } from "__generated__/ArtistApp_artist.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistHeaderFragmentContainer } from "./Components/ArtistHeader/ArtistHeader"

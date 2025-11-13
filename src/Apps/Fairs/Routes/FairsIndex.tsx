@@ -1,3 +1,13 @@
+import { FairsFairBannerFragmentContainer } from "Apps/Fairs/Components/FairsFairBanner"
+import { FairsFairRowFragmentContainer } from "Apps/Fairs/Components/FairsFairRow"
+import { FairsMeta } from "Apps/Fairs/Components/FairsMeta"
+import { FairsPastFairsPaginationContainer } from "Apps/Fairs/Components/FairsPastFairs"
+import { FairsPromoCarousel } from "Apps/Fairs/Components/FairsPromoCarousel"
+import { useAuthDialog } from "Components/AuthDialog"
+import { RouterLink } from "System/Components/RouterLink"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { Media } from "Utils/Responsive"
+import { cropped } from "Utils/resized"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import {
   Box,
@@ -13,16 +23,6 @@ import {
   Text,
   useTheme,
 } from "@artsy/palette"
-import { FairsFairBannerFragmentContainer } from "Apps/Fairs/Components/FairsFairBanner"
-import { FairsFairRowFragmentContainer } from "Apps/Fairs/Components/FairsFairRow"
-import { FairsMeta } from "Apps/Fairs/Components/FairsMeta"
-import { FairsPastFairsPaginationContainer } from "Apps/Fairs/Components/FairsPastFairs"
-import { FairsPromoCarousel } from "Apps/Fairs/Components/FairsPromoCarousel"
-import { useAuthDialog } from "Components/AuthDialog"
-import { RouterLink } from "System/Components/RouterLink"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { Media } from "Utils/Responsive"
-import { cropped } from "Utils/resized"
 import type { FairsIndex_featuredFairs$data } from "__generated__/FairsIndex_featuredFairs.graphql"
 import type { FairsIndex_viewer$data } from "__generated__/FairsIndex_viewer.graphql"
 import { compact } from "lodash"
@@ -53,19 +53,19 @@ export const FairsIndex: React.FC<React.PropsWithChildren<FairsIndexProps>> = ({
       fair =>
         fair.isPublished &&
         fair.profile?.isPublished &&
-        fair.bannerSize === "x-large",
+        fair.bannerSize === "x-large"
     ),
     ...runningFairs.filter(
       fair =>
         fair.isPublished &&
         fair.profile?.isPublished &&
-        fair.bannerSize !== "x-large",
+        fair.bannerSize !== "x-large"
     ),
   ]
 
   const mobileHeaderBg = cropped(
     "https://files.artsy.net/images/fairs-header-img.jpg",
-    { width: 767, height: 431 },
+    { width: 767, height: 431 }
   )
 
   const { showAuthDialog } = useAuthDialog()

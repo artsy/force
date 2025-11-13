@@ -1,5 +1,5 @@
-import { CSSGrid } from "@artsy/palette"
 import { MyCollectionArtworkDetailField } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkDetailField"
+import { CSSGrid } from "@artsy/palette"
 
 export interface MyCollectionArtworkDetailFieldSpec {
   label: string

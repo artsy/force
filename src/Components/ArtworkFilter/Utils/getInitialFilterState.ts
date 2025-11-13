@@ -4,7 +4,7 @@ import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/paramsCasing"
 import type { Location } from "found"
 
 export const getInitialFilterState = (
-  query: Location["query"],
+  query: Location["query"]
 ): ArtworkFilters => {
   const initialFilterState = allowedFilters(paramsToCamelCase(query))
   return initialFilterState

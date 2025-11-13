@@ -1,12 +1,12 @@
 import type { AuthIntentCreateOrderMutation } from "__generated__/AuthIntentCreateOrderMutation.graphql"
-import { commitMutation, graphql } from "react-relay"
 import type { Environment } from "react-relay"
+import { commitMutation, graphql } from "react-relay"
 import type { AuthIntentMutation } from "./types"
 
 export const createOrderMutation: AuthIntentMutation = (
   relayEnvironment: Environment,
   id: string,
-  secondaryId: string | null | undefined,
+  secondaryId: string | null | undefined
 ) => {
   return new Promise((resolve, reject) => {
     commitMutation<AuthIntentCreateOrderMutation>(relayEnvironment, {

@@ -1,10 +1,10 @@
-import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { Clickable, Flex, Spacer, Text } from "@artsy/palette"
-import { themeGet } from "@styled-system/theme-get"
 import {
   type WithInquiryProps,
   withInquiry,
 } from "Components/Inquiry/useInquiry"
+import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import { Clickable, Flex, Spacer, Text } from "@artsy/palette"
+import { themeGet } from "@styled-system/theme-get"
 import type { FC } from "react"
 import { useTracking } from "react-tracking"
 import styled from "styled-components"
@@ -33,7 +33,7 @@ export const StickyFooter: FC<React.PropsWithChildren<StickyFooterProps>> = ({
 
     window.open(
       "https://support.artsy.net/s/topic/0TO3b000000UessGAC/buy",
-      "_blank",
+      "_blank"
     )
   }
 

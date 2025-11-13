@@ -1,8 +1,8 @@
+import { APP_URL } from "Server/config"
 import type { NextFunction } from "express"
-import type { ArtsyRequest, ArtsyResponse } from "./artsyExpress"
 
 import { parse } from "url"
-import { APP_URL } from "Server/config"
+import type { ArtsyRequest, ArtsyResponse } from "./artsyExpress"
 
 /**
  * HSTS allows for a more effective implementation of TLS by ensuring
@@ -12,7 +12,7 @@ import { APP_URL } from "Server/config"
 export function hstsMiddleware(
   req: ArtsyRequest,
   res: ArtsyResponse,
-  next: NextFunction,
+  next: NextFunction
 ) {
   const protocol = req.get("X-Forwarded-Proto") || req.protocol
   if (protocol === "https" && parse(APP_URL).protocol === "https:") {

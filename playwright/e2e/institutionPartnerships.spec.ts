@@ -1,5 +1,5 @@
 /* eslint-disable jest/expect-expect */
-import { test, expect } from "@playwright/test"
+import { expect, test } from "@playwright/test"
 
 test("/institution-partnerships", async ({ page }) => {
   await page.goto("institution-partnerships")

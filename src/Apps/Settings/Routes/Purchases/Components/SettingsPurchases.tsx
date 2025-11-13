@@ -1,13 +1,13 @@
-import { Join, Spacer } from "@artsy/palette"
 import { EmptyState } from "Components/EmptyState"
 import { CommercePaginationFragmentContainer } from "Components/Pagination/CommercePagination"
 import { extractNodes } from "Utils/extractNodes"
+import { Join, Spacer } from "@artsy/palette"
 import type { SettingsPurchases_me$data } from "__generated__/SettingsPurchases_me.graphql"
 import { type FC, useState } from "react"
 import {
-  type RelayRefetchProp,
   createRefetchContainer,
   graphql,
+  type RelayRefetchProp,
 } from "react-relay"
 import {
   SettingsPurchasesRowFragmentContainer,
@@ -63,7 +63,7 @@ const SettingsPurchases: FC<
         }
 
         setLoading(false)
-      },
+      }
     )
   }
 
@@ -151,5 +151,5 @@ export const SettingsPurchasesFragmentContainer = createRefetchContainer(
           @arguments(states: $states, first: $first, after: $after)
       }
     }
-  `,
+  `
 )

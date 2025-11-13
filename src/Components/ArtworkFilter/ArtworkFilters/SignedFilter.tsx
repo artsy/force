@@ -1,4 +1,3 @@
-import { Checkbox } from "@artsy/palette"
 import {
   SelectedFiltersCountsLabels,
   useArtworkFilterContext,
@@ -6,6 +5,7 @@ import {
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { FilterExpandable } from "Components/ArtworkFilter/ArtworkFilters/FilterExpandable"
 import { useFilterLabelCountByKey } from "Components/ArtworkFilter/Utils/useFilterLabelCountByKey"
+import { Checkbox } from "@artsy/palette"
 
 interface SignedFilterProps {
   expanded?: boolean
@@ -16,7 +16,7 @@ export const SignedFilter: React.FC<SignedFilterProps> = ({ expanded }) => {
   const currentSelectedFilters = useCurrentlySelectedFilters()
 
   const filtersCount = useFilterLabelCountByKey(
-    SelectedFiltersCountsLabels.signed,
+    SelectedFiltersCountsLabels.signed
   )
   const label = `Signed${filtersCount}`
 

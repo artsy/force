@@ -1,11 +1,11 @@
-import { ContextModule, OwnerType } from "@artsy/cohesion"
-import { render, screen, waitFor, within } from "@testing-library/react"
-import userEvent from "@testing-library/user-event"
 import {
   AddressAutocompleteInput,
   type AddressAutocompleteInputProps,
 } from "Components/Address/AddressAutocompleteInput"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
+import { ContextModule, OwnerType } from "@artsy/cohesion"
+import { render, screen, waitFor, within } from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
 import compact from "lodash/compact"
 import { type FC, useState } from "react"
 import { useTracking } from "react-tracking"
@@ -230,7 +230,7 @@ describe("AddressAutocompleteInput", () => {
       expect(mockOnChange).toHaveBeenCalledWith(
         expect.objectContaining({
           target: expect.objectContaining({ value: "401 Broadway" }),
-        }),
+        })
       )
     })
 
@@ -254,7 +254,7 @@ describe("AddressAutocompleteInput", () => {
 
       const dropdown = await screen.findByRole("listbox", { hidden: true })
       const option = within(dropdown).getByText(
-        "401 Broadway, New York NY 10013",
+        "401 Broadway, New York NY 10013"
       )
 
       await userEvent.click(option)
@@ -275,7 +275,7 @@ describe("AddressAutocompleteInput", () => {
           text: "401 Broadway, New York NY 10013",
           value: "401 Broadway, New York NY 10013",
         },
-        0,
+        0
       )
     })
 
@@ -350,7 +350,7 @@ describe("AddressAutocompleteInput", () => {
 
         const dropdown = await screen.findByRole("listbox", { hidden: true })
         const option = within(dropdown).getByText(
-          "401 Broadway, New York NY 10013",
+          "401 Broadway, New York NY 10013"
         )
 
         await userEvent.click(option)

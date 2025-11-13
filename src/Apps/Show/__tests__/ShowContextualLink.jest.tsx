@@ -1,7 +1,7 @@
-import { screen } from "@testing-library/react"
 import { ShowContextualLinkFragmentContainer } from "Apps/Show/Components/ShowContextualLink"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import type { ShowContextualLinkTestQuery } from "__generated__/ShowContextualLinkTestQuery.graphql"
 import { graphql } from "react-relay"
 
@@ -112,7 +112,7 @@ describe("ShowContextualLink", () => {
       expect(screen.getByText("Presented by")).toBeInTheDocument()
       expect(screen.getByText("Catty Gallery")).toBeInTheDocument()
       expect(
-        screen.queryByText("123 Art Street, New York"),
+        screen.queryByText("123 Art Street, New York")
       ).not.toBeInTheDocument()
     })
 
@@ -129,7 +129,7 @@ describe("ShowContextualLink", () => {
       expect(screen.getByText("Part of")).toBeInTheDocument()
       expect(screen.getByText("Art Fair")).toBeInTheDocument()
       expect(
-        screen.queryByText("123 Art Street, New York"),
+        screen.queryByText("123 Art Street, New York")
       ).not.toBeInTheDocument()
     })
   })

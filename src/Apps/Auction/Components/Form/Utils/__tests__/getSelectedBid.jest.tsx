@@ -15,7 +15,7 @@ describe("getSelectedBid", () => {
             text: "2,000",
           },
         ],
-      }),
+      })
     ).toBe("1000")
   })
 
@@ -33,7 +33,7 @@ describe("getSelectedBid", () => {
             text: "2,000",
           },
         ],
-      }),
+      })
     ).toBe("2000")
   })
 })

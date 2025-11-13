@@ -15,7 +15,7 @@ export function interceptLinks({ router, routes }: InterceptLinksProps) {
   catchLinks(window, href => {
     const [pathname, _search] = href.split("?")
     // FIXME: PR upstream; `matchRoutes` is missing from type definition
-    // @ts-ignore
+    // @ts-expect-error
     const foundUrl = router.matcher.matchRoutes(routes, pathname)
 
     if (foundUrl) {

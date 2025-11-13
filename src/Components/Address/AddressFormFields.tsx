@@ -1,13 +1,3 @@
-import { ContextModule } from "@artsy/cohesion"
-import {
-  Checkbox,
-  Column,
-  GridColumns,
-  Input,
-  Select,
-  SelectInput,
-  Spacer,
-} from "@artsy/palette"
 import { AddressAutocompleteInput } from "Components/Address/AddressAutocompleteInput"
 import {
   type Address,
@@ -20,6 +10,16 @@ import {
 import { sortCountriesForCountryInput } from "Components/Address/utils/sortCountriesForCountryInput"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { countries as countryPhoneOptions } from "Utils/countries"
+import { ContextModule } from "@artsy/cohesion"
+import {
+  Checkbox,
+  Column,
+  GridColumns,
+  Input,
+  Select,
+  SelectInput,
+  Spacer,
+} from "@artsy/palette"
 import { useFormikContext } from "formik"
 import { useMemo } from "react"
 
@@ -90,7 +90,7 @@ export const addressFormFieldsValidator = (args: Props = {}) => ({
  *
  */
 export const AddressFormFields = <V extends FormikContextWithAddress>(
-  props: Props,
+  props: Props
 ) => {
   const {
     handleChange,
@@ -107,7 +107,7 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
 
   const countryInputOptions = useMemo(() => {
     return sortCountriesForCountryInput(
-      shippableCountries || countryPhoneOptions,
+      shippableCountries || countryPhoneOptions
     )
   }, [shippableCountries])
 

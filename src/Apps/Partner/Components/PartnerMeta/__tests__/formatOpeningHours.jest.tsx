@@ -4,7 +4,7 @@ describe("formatOpeningHours", () => {
   describe("closed hours", () => {
     it("should return empty string when hours indicate closed", () => {
       expect(
-        formatOpeningHours([{ days: "Monday, Sunday", hours: "Closed" }]),
+        formatOpeningHours([{ days: "Monday, Sunday", hours: "Closed" }])
       ).toBe("")
       expect(formatOpeningHours([{ days: "Monday", hours: "closed" }])).toBe("")
       expect(formatOpeningHours([{ days: "Monday", hours: "CLOSED" }])).toBe("")
@@ -68,31 +68,31 @@ describe("formatOpeningHours", () => {
   describe("time formatting", () => {
     it("should convert 12-hour to 24-hour format", () => {
       expect(formatOpeningHours([{ days: "Monday", hours: "9am-5pm" }])).toBe(
-        "Mo 09:00-17:00",
+        "Mo 09:00-17:00"
       )
       expect(formatOpeningHours([{ days: "Tuesday", hours: "10am-6pm" }])).toBe(
-        "Tu 10:00-18:00",
+        "Tu 10:00-18:00"
       )
       expect(
-        formatOpeningHours([{ days: "Wednesday", hours: "1pm-9pm" }]),
+        formatOpeningHours([{ days: "Wednesday", hours: "1pm-9pm" }])
       ).toBe("We 13:00-21:00")
     })
 
     it("should handle noon and midnight correctly", () => {
       expect(formatOpeningHours([{ days: "Monday", hours: "12am-12pm" }])).toBe(
-        "Mo 00:00-12:00",
+        "Mo 00:00-12:00"
       )
       expect(
-        formatOpeningHours([{ days: "Tuesday", hours: "12pm-11pm" }]),
+        formatOpeningHours([{ days: "Tuesday", hours: "12pm-11pm" }])
       ).toBe("Tu 12:00-23:00")
     })
 
     it("should handle times with minutes", () => {
       expect(
-        formatOpeningHours([{ days: "Monday", hours: "9:30am-5:30pm" }]),
+        formatOpeningHours([{ days: "Monday", hours: "9:30am-5:30pm" }])
       ).toBe("Mo 09:30-17:30")
       expect(
-        formatOpeningHours([{ days: "Tuesday", hours: "10:15am-6:45pm" }]),
+        formatOpeningHours([{ days: "Tuesday", hours: "10:15am-6:45pm" }])
       ).toBe("Tu 10:15-18:45")
     })
   })

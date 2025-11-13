@@ -1,7 +1,7 @@
-import { screen } from "@testing-library/react"
 import { TagAppFragmentContainer } from "Apps/Tag/TagApp"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import type { TagApp_Test_Query } from "__generated__/TagApp_Test_Query.graphql"
 import { graphql } from "react-relay"
 

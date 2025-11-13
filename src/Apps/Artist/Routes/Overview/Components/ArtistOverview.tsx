@@ -1,4 +1,3 @@
-import { Stack } from "@artsy/palette"
 import { ARTIST_HEADER_NUMBER_OF_INSIGHTS } from "Apps/Artist/Components/ArtistHeader/ArtistHeader"
 import {
   ArtistSeriesRailPlaceholder,
@@ -8,8 +7,9 @@ import { RailHeader } from "Components/Rail/RailHeader"
 import { useIsRouteActive } from "System/Hooks/useRouter"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { useSectionReady } from "Utils/Hooks/useSectionReadiness"
-import type { ArtistOverviewQueryRendererQuery } from "__generated__/ArtistOverviewQueryRendererQuery.graphql"
+import { Stack } from "@artsy/palette"
 import type { ArtistOverview_artist$data } from "__generated__/ArtistOverview_artist.graphql"
+import type { ArtistOverviewQueryRendererQuery } from "__generated__/ArtistOverviewQueryRendererQuery.graphql"
 import type * as React from "react"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -171,7 +171,7 @@ export const ArtistOverviewFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  },
+  }
 )
 
 const ArtistOverviewPlaceholder: FC<React.PropsWithChildren<unknown>> = () => {

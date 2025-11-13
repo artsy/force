@@ -31,13 +31,11 @@ export function userHasLabFeature(user: User, featureName: string): boolean {
 }
 
 export function userIsAdmin(user?: User): boolean {
-  const isAdmin = Boolean(user && user.type === "Admin" ? true : false)
+  const isAdmin = Boolean(!!(user && user.type === "Admin"))
   return isAdmin
 }
 
 export function userIsTeam(user?: User): boolean {
-  const isTeam = Boolean(
-    user && user.roles && user.roles.includes("team") ? true : false,
-  )
+  const isTeam = Boolean(!!(user && user.roles && user.roles.includes("team")))
   return isTeam
 }

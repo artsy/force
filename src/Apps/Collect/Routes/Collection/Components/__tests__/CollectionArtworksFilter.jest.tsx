@@ -1,4 +1,3 @@
-import { CollectionArtworksFilterRefetchContainer as CollectionArtworksFilter } from "Apps/Collect/Routes/Collection/Components/CollectionArtworksFilter"
 import {
   artistAggregation,
   artistNationalityAggregation,
@@ -7,6 +6,7 @@ import {
   mediumAggregation,
   partnerAggregation,
 } from "Apps/__tests__/Fixtures/aggregations"
+import { CollectionArtworksFilterRefetchContainer as CollectionArtworksFilter } from "Apps/Collect/Routes/Collection/Components/CollectionArtworksFilter"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { screen } from "@testing-library/react"
@@ -71,7 +71,7 @@ describe("CollectionArtworksFilter", () => {
     renderWithRelay({})
     expect(screen.getByTestId("artwork-link")).toBeInTheDocument()
     expect(
-      screen.getByRole("button", { name: "All Filters" }),
+      screen.getByRole("button", { name: "All Filters" })
     ).toBeInTheDocument()
   })
 
@@ -83,7 +83,7 @@ describe("CollectionArtworksFilter", () => {
     })
 
     expect(
-      screen.getByRole("button", { name: "All Filters" }),
+      screen.getByRole("button", { name: "All Filters" })
     ).toBeInTheDocument()
   })
 
@@ -95,7 +95,7 @@ describe("CollectionArtworksFilter", () => {
     })
 
     expect(
-      screen.getByRole("button", { name: "All Filters" }),
+      screen.getByRole("button", { name: "All Filters" })
     ).toBeInTheDocument()
   })
 })

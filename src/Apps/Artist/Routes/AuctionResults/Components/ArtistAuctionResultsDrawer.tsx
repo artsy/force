@@ -1,6 +1,6 @@
-import { Box, Drawer, Flex, ModalClose, Spacer, Text } from "@artsy/palette"
 import { AuctionFilters } from "Apps/Artist/Routes/AuctionResults/Components/AuctionFilters"
 import { Z } from "Apps/Components/constants"
+import { Box, Drawer, Flex, ModalClose, Spacer, Text } from "@artsy/palette"
 import type { FC } from "react"
 
 interface ArtistAuctionResultsDrawerProps {

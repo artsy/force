@@ -14,7 +14,7 @@ export const AuctionResultImage: React.FC<
 > = ({ auctionResult }) => {
   const { images, title } = useFragment(
     auctionResultImageFragment,
-    auctionResult,
+    auctionResult
   )
 
   const image = images?.larger?.resized

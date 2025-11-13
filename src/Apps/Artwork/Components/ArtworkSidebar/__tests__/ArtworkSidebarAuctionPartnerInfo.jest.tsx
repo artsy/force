@@ -1,6 +1,6 @@
-import { screen } from "@testing-library/react"
 import { ArtworkSidebarAuctionPartnerInfoFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarAuctionPartnerInfo"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import type { ArtworkSidebarAuctionPartnerInfoTestQuery$rawResponse } from "__generated__/ArtworkSidebarAuctionPartnerInfoTestQuery.graphql"
 import { graphql } from "react-relay"
 
@@ -32,7 +32,7 @@ describe("ArtworkSidebarAuctionPartnerInfo", () => {
 
       expect(screen.getByText("Bruun Rasmussen")).toBeInTheDocument()
       expect(
-        screen.getByText("Estimated value: DKK 100,000–DKK 125,000"),
+        screen.getByText("Estimated value: DKK 100,000–DKK 125,000")
       ).toBeInTheDocument()
     })
 

@@ -1,6 +1,6 @@
-import { screen } from "@testing-library/react"
 import { ArtworkDetailsMediumModalFragmentContainer } from "Apps/Artwork/Components/ArtworkDetailsMediumModal"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import type { ArtworkDetailsMediumModalTestQuery } from "__generated__/ArtworkDetailsMediumModalTestQuery.graphql"
 import { graphql } from "react-relay"
 
@@ -48,8 +48,8 @@ describe("ArtworkDetailsMediumModal", () => {
 
     expect(
       screen.getByText(
-        "Includes collages; drawings; figure drawing; pen and ink; sketch.",
-      ),
+        "Includes collages; drawings; figure drawing; pen and ink; sketch."
+      )
     ).toBeInTheDocument()
   })
 })

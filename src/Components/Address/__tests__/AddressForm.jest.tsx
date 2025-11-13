@@ -1,5 +1,5 @@
-import { act, fireEvent, render, screen, waitFor } from "@testing-library/react"
 import { AddressForm } from "Components/Address/AddressForm"
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react"
 import { type FC, useState } from "react"
 
 jest.mock("Utils/getENV", () => ({
@@ -47,7 +47,7 @@ describe("AddressForm", () => {
     render(<Page />)
 
     const line1 = screen.getByPlaceholderText(
-      "Street address",
+      "Street address"
     ) as HTMLInputElement
     expect(line1.value).toBe("Before update")
 
@@ -76,7 +76,7 @@ describe("AddressForm", () => {
         }),
       })
 
-      // @ts-ignore
+      // @ts-expect-error
       global.fetch = mockFetch
     })
 
@@ -112,7 +112,7 @@ describe("AddressForm", () => {
             errors={{}}
             touched={{}}
             value={{}}
-          />,
+          />
         )
 
         const countryInput = screen.getByLabelText("Country")
@@ -128,7 +128,7 @@ describe("AddressForm", () => {
         const listbox = await screen.findByRole("listbox", { hidden: true })
 
         expect(listbox).toHaveTextContent(
-          "401 Broadway Fl 25, New York NY 10013",
+          "401 Broadway Fl 25, New York NY 10013"
         )
         fireEvent.click(listbox)
         expect(line1Input).toHaveValue("401 Broadway")

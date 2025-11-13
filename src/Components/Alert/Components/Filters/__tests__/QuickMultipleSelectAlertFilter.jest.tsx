@@ -1,9 +1,9 @@
-import { render, screen } from "@testing-library/react"
-import userEvent from "@testing-library/user-event"
 import type { AlertContextProps } from "Components/Alert/AlertContext"
 import { AlertProvider } from "Components/Alert/AlertProvider"
 import { QuickMultipleSelectAlertFilter } from "Components/Alert/Components/Filters/QuickMultipleSelectAlertFilter"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
+import { render, screen } from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
 
 describe(QuickMultipleSelectAlertFilter, () => {
   it("renders a label, description and options", () => {
@@ -13,7 +13,7 @@ describe(QuickMultipleSelectAlertFilter, () => {
         description="Custom description text"
         criteriaKey="colors"
         options={someOptions}
-      />,
+      />
     )
 
     expect(screen.getByText("Custom Label")).toBeInTheDocument()
@@ -28,7 +28,7 @@ describe(QuickMultipleSelectAlertFilter, () => {
         label="Custom Label"
         criteriaKey="colors"
         options={someOptions}
-      />,
+      />
     )
 
     expect(screen.getByText("Custom Label")).toBeInTheDocument()
@@ -51,7 +51,7 @@ describe(QuickMultipleSelectAlertFilter, () => {
         criteriaKey="colors"
         options={someOptions}
         truncate={4}
-      />,
+      />
     )
 
     // truncate initially
@@ -114,7 +114,7 @@ function currentAlertContext(): AlertContextProps {
   } catch (error) {
     if (error.name === "TestingLibraryElementError")
       throw new Error(
-        `The currentAlertContext() helper function requires an <AlertStateInspector /> to be mounted in the current DOM.`,
+        `The currentAlertContext() helper function requires an <AlertStateInspector /> to be mounted in the current DOM.`
       )
   }
   return JSON.parse(contextInspector!.textContent!)

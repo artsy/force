@@ -10,7 +10,7 @@ describe("hasFilters", () => {
         priceRange: "*-*",
         sort: "-decayed_merch",
         width: "*-*",
-      }),
+      })
     ).toEqual(false)
   })
 
@@ -24,7 +24,7 @@ describe("hasFilters", () => {
         priceRange: "*-*",
         sort: "-decayed_merch",
         width: "*-*",
-      }),
+      })
     ).toEqual(true)
   })
 })

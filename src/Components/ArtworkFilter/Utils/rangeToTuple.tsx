@@ -9,7 +9,7 @@ export const MAX_WIDTH = 120
 
 export const rangeToTuple: (
   state: ArtworkFilters,
-  range: keyof ArtworkFilters,
+  range: keyof ArtworkFilters
 ) => [number, number] = (state, range) => {
   let minStr: string
   let maxStr: string

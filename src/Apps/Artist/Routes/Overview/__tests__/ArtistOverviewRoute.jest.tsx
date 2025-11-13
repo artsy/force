@@ -1,6 +1,6 @@
-import { screen } from "@testing-library/react"
 import { ArtistOverviewRouteFragmentContainer } from "Apps/Artist/Routes/Overview/ArtistOverviewRoute"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
@@ -125,8 +125,8 @@ describe("ArtistOverviewRoute", () => {
 
     expect(
       screen.getByText(
-        "We’ll update this area when more information is available.",
-      ),
+        "We’ll update this area when more information is available."
+      )
     ).toBeInTheDocument()
   })
 })

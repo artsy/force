@@ -1,3 +1,14 @@
+import { useAlertTracking } from "Components/Alert/Hooks/useAlertTracking"
+import ArtworkGrid, {
+  ArtworkGridPlaceholder,
+} from "Components/ArtworkGrid/ArtworkGrid"
+import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
+import {
+  ConfirmationStepFooterContentPlaceholder,
+  ConfirmationStepFooterQueryRenderer,
+} from "Components/SavedSearchAlert/Components/ConfirmationStepFooter"
+import type { SearchCriteriaAttributes } from "Components/SavedSearchAlert/types"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import {
   Column,
   Flex,
@@ -6,24 +17,12 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import ArtworkGrid, {
-  ArtworkGridPlaceholder,
-} from "Components/ArtworkGrid/ArtworkGrid"
-import type { SearchCriteriaAttributes } from "Components/SavedSearchAlert/types"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import type {
   ConfirmationArtworksGridQuery,
   ConfirmationArtworksGridQuery$data,
 } from "__generated__/ConfirmationArtworksGridQuery.graphql"
 import type { FC } from "react"
 import { graphql } from "react-relay"
-
-import { useAlertTracking } from "Components/Alert/Hooks/useAlertTracking"
-import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
-import {
-  ConfirmationStepFooterContentPlaceholder,
-  ConfirmationStepFooterQueryRenderer,
-} from "Components/SavedSearchAlert/Components/ConfirmationStepFooter"
 
 export const NUMBER_OF_ARTWORKS_TO_SHOW = 10
 
@@ -113,7 +112,7 @@ interface ConfirmationArtworksGridQueryRendererProps
 export const ConfirmationArtworksGridQueryRenderer: FC<
   React.PropsWithChildren<ConfirmationArtworksGridQueryRendererProps>
 > = props => {
-  const { onClose, excludeArtworkIDs, alertID, ...inputProps } = props
+  const { excludeArtworkIDs, ...inputProps } = props
 
   return (
     <SystemQueryRenderer<ConfirmationArtworksGridQuery>

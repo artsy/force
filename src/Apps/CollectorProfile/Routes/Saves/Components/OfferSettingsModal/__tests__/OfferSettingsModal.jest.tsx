@@ -1,9 +1,9 @@
-import { fireEvent, screen } from "@testing-library/react"
 import { OfferSettingsModal } from "Apps/CollectorProfile/Routes/Saves/Components/OfferSettingsModal/OfferSettingsModal"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { render } from "DevTools/renderWithMockBoot"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useMutation } from "Utils/Hooks/useMutation"
+import { fireEvent, screen } from "@testing-library/react"
 import type { CollectorProfileSavesRoute_me$data } from "__generated__/CollectorProfileSavesRoute_me.graphql"
 import { createMockEnvironment } from "relay-test-utils"
 
@@ -13,7 +13,7 @@ jest.mock(
   "Apps/CollectorProfile/Routes/Saves/Components/OfferSettingsModal/OfferSettingsListItem",
   () => {
     return { OfferSettingsListItemFragmentContainer: () => <div /> }
-  },
+  }
 )
 jest.unmock("react-relay")
 
@@ -46,13 +46,13 @@ describe("OfferSettingsModal", () => {
 
     const title = screen.getByText("Offer settings")
     const description = screen.getByText(
-      "Shared lists are eligible to receive offers from galleries. Switching sharing off will make them visible only to you, and you won't receive offers.",
+      "Shared lists are eligible to receive offers from galleries. Switching sharing off will make them visible only to you, and you won't receive offers."
     )
 
     expect(title).toBeInTheDocument()
     expect(description).toBeInTheDocument()
     expect(
-      screen.getByRole("button", { name: /Save Changes/ }),
+      screen.getByRole("button", { name: /Save Changes/ })
     ).toBeInTheDocument()
   })
 
@@ -61,7 +61,7 @@ describe("OfferSettingsModal", () => {
       <OfferSettingsModal
         me={mockedMe as unknown as CollectorProfileSavesRoute_me$data}
         onClose={onClose}
-      />,
+      />
     )
 
     const saveButton = screen.getByRole("button", { name: /Save/ })
@@ -81,7 +81,7 @@ describe("OfferSettingsModal", () => {
             ],
           },
         },
-      }),
+      })
     )
   })
 })

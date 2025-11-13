@@ -1,7 +1,7 @@
-import { renderHook } from "@testing-library/react-hooks"
 import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
 import { useAfterAuthenticationRedirectUrl } from "Components/AuthDialog/Hooks/useAfterAuthenticationRedirectUrl"
 import { useElligibleForOnboarding } from "Components/AuthDialog/Hooks/useElligibleForOnboarding"
+import { renderHook } from "@testing-library/react-hooks"
 
 jest.mock("Utils/getENV", () => ({
   getENV: jest.fn().mockImplementation(key => {
@@ -47,7 +47,7 @@ describe("useAfterAuthenticationRedirectUrl", () => {
     const { result } = renderHook(() => useAfterAuthenticationRedirectUrl())
 
     expect(result.current.redirectUrl).toEqual(
-      "https://www.artsy.net/some/path?onboarding=true",
+      "https://www.artsy.net/some/path?onboarding=true"
     )
   })
 
@@ -59,7 +59,7 @@ describe("useAfterAuthenticationRedirectUrl", () => {
     const { result } = renderHook(() => useAfterAuthenticationRedirectUrl())
 
     expect(result.current.redirectUrl).toEqual(
-      "https://www.artsy.net/some/path?foo=bar&onboarding=true",
+      "https://www.artsy.net/some/path?foo=bar&onboarding=true"
     )
   })
 
@@ -70,7 +70,7 @@ describe("useAfterAuthenticationRedirectUrl", () => {
     const { result } = renderHook(() => useAfterAuthenticationRedirectUrl())
 
     expect(result.current.redirectUrl).toEqual(
-      "https://www.artsy.net/?onboarding=true",
+      "https://www.artsy.net/?onboarding=true"
     )
   })
 
@@ -85,7 +85,7 @@ describe("useAfterAuthenticationRedirectUrl", () => {
     const { result } = renderHook(() => useAfterAuthenticationRedirectUrl())
 
     expect(result.current.redirectUrl).toEqual(
-      "https://www.artsy.net/some/path",
+      "https://www.artsy.net/some/path"
     )
   })
 

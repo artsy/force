@@ -1,5 +1,5 @@
 import { cropped } from "Utils/resized"
-import { type Ref, forwardRef } from "react"
+import { forwardRef, type Ref } from "react"
 import { Link } from "react-head"
 import type { FullBleedHeaderProps } from "./FullBleedHeader"
 
@@ -19,7 +19,7 @@ export const FullBleedHeaderPicture = forwardRef(
       height,
       fixed,
     }: FullBleedHeaderPictureProps & { ref?: Ref<HTMLImageElement> },
-    forwardedRef,
+    forwardedRef
   ) => {
     const xs = cropped(src, { width: 450, height: 320 })
     const sm = cropped(src, { width: 767, height: 320 })
@@ -70,5 +70,5 @@ export const FullBleedHeaderPicture = forwardRef(
         </picture>
       </>
     )
-  },
+  }
 )

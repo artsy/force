@@ -1,10 +1,10 @@
-import { Checkbox, Flex } from "@artsy/palette"
 import {
   SelectedFiltersCountsLabels,
   useArtworkFilterContext,
   useCurrentlySelectedFilters,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { useFilterLabelCountByKey } from "Components/ArtworkFilter/Utils/useFilterLabelCountByKey"
+import { Checkbox, Flex } from "@artsy/palette"
 import { intersection } from "lodash"
 import type { FC } from "react"
 import { FilterExpandable } from "./FilterExpandable"
@@ -21,13 +21,12 @@ export const getTimePeriodToDisplay = period =>
 export const TimePeriodFilter: FC<
   React.PropsWithChildren<TimePeriodFilterProps>
 > = ({ expanded }) => {
-  const { aggregations, selectedFiltersCounts, ...filterContext } =
-    useArtworkFilterContext()
+  const { aggregations, ...filterContext } = useArtworkFilterContext()
   const { majorPeriods = [] } = useCurrentlySelectedFilters()
   const timePeriods = aggregations?.find(agg => agg.slice === "MAJOR_PERIOD")
 
   const filtersCount = useFilterLabelCountByKey(
-    SelectedFiltersCountsLabels.timePeriod,
+    SelectedFiltersCountsLabels.timePeriod
   )
   const label = `Time Period${filtersCount}`
 

@@ -1,3 +1,8 @@
+import { getStatus } from "Apps/ViewingRoom/Utils/getStatus"
+import { RouterLink } from "System/Components/RouterLink"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { extractNodes } from "Utils/extractNodes"
+import { cropped } from "Utils/resized"
 import {
   ActionType,
   type ClickedViewingRoomCard,
@@ -5,11 +10,6 @@ import {
   OwnerType,
 } from "@artsy/cohesion"
 import { Box, type BoxProps, Card, ResponsiveBox, Text } from "@artsy/palette"
-import { getStatus } from "Apps/ViewingRoom/Utils/getStatus"
-import { RouterLink } from "System/Components/RouterLink"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import { extractNodes } from "Utils/extractNodes"
-import { cropped } from "Utils/resized"
 import type { ShowViewingRoom_show$data } from "__generated__/ShowViewingRoom_show.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -107,5 +107,5 @@ export const ShowViewingRoomFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  },
+  }
 )

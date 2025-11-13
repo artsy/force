@@ -1,10 +1,10 @@
-import SearchIcon from "@artsy/icons/SearchIcon"
-import { LabeledInput } from "@artsy/palette"
 import { useAuctionResultsFilterContext } from "Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
 import { FilterExpandable } from "Components/ArtworkFilter/ArtworkFilters/FilterExpandable"
+import SearchIcon from "@artsy/icons/SearchIcon"
+import { LabeledInput } from "@artsy/palette"
 import { debounce } from "lodash"
-import { useEffect, useMemo } from "react"
 import type * as React from "react"
+import { useEffect, useMemo } from "react"
 
 const DEBOUNCE_DELAY = 300
 
@@ -15,15 +15,15 @@ export const KeywordFilter: React.FC<React.PropsWithChildren<unknown>> = () => {
     filterContext.setFilter?.("keyword", text)
   }
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Debounced function should recreate when filter context changes
   const handleChangeText = useMemo(
     () => debounce(updateKeywordFilter, DEBOUNCE_DELAY),
     // FIXME:
-    [filterContext],
+    [filterContext]
   )
 
   // Stop the invocation of the debounced function after unmounting
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Cleanup effect should only run on unmount
   useEffect(() => {
     return () => handleChangeText?.cancel?.()
     // FIXME:

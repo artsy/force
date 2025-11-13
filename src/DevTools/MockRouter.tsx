@@ -1,11 +1,11 @@
 import { AppShell } from "Apps/Components/AppShell"
 import { createMockNetworkLayer } from "DevTools/createMockNetworkLayer"
 import type { SystemContextProps } from "System/Contexts/SystemContext"
-import type { RouteProps } from "System/Router/Route"
 import {
   type RouterConfig,
   setupClientRouter,
 } from "System/Router/clientRouter"
+import type { RouteProps } from "System/Router/Route"
 import { getUser } from "Utils/user"
 import type { HistoryEnhancerOptions } from "farce"
 import type React from "react"
@@ -32,15 +32,16 @@ export const MockRouter: React.FC<React.PropsWithChildren<MockRouterProps>> = ({
   const [MockRouterApp, setMockRouterApp] =
     useState<React.ReactElement<any> | null>(null)
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Router initialization should only run once on mount
   useEffect(() => {
     const initRouter = async () => {
       try {
         const user = getUser(context?.user)
 
-        const relayEnvironment = (mockData || mockMutationResults)
-          ? createMockNetworkLayer({ mockData, mockMutationResults })
-          : null
+        const relayEnvironment =
+          mockData || mockMutationResults
+            ? createMockNetworkLayer({ mockData, mockMutationResults })
+            : null
 
         const { ClientRouter } = await setupClientRouter({
           routes: [

@@ -10,8 +10,8 @@ import { useProductionEnvironmentWarning } from "Utils/Hooks/useProductionEnviro
 import { useSetupAuth } from "Utils/Hooks/useSetupAuth"
 import createLogger from "Utils/logger"
 import type { Match } from "found"
-import { useEffect } from "react"
 import type * as React from "react"
+import { useEffect } from "react"
 
 const logger = createLogger("Apps/Components/AppShell")
 interface AppShellProps {
@@ -32,7 +32,7 @@ export const AppShell: React.FC<
   // Check to see if a route has a onServerSideRender key; if so call it. Used
   // typically to preload bundle-split components (import()) while the route is
   // fetching data in the background.
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Route preloading should only run when match changes
   useEffect(() => {
     try {
       if (match) {

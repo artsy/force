@@ -85,7 +85,7 @@ export const useEngine = ({ context, onDone }: UseEngine) => {
         },
       ],
       conditions,
-    }),
+    })
   )
 
   const [current, setCurrent] = useState(engine.current.current())

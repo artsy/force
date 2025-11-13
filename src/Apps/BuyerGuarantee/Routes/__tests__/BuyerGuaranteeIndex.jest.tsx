@@ -11,7 +11,7 @@ describe("BuyerGuaranteeIndex", () => {
     const { container } = render(
       <MockBoot>
         <BuyerGuaranteeIndex />
-      </MockBoot>,
+      </MockBoot>
     )
 
     expect(screen.getByRole("heading", { level: 1 })).toBeInTheDocument()

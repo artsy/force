@@ -1,5 +1,5 @@
-import { Image, ResponsiveBox, Spacer, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
+import { Image, ResponsiveBox, Spacer, Text } from "@artsy/palette"
 import type { AuctionCard_sale$data } from "__generated__/AuctionCard_sale.graphql"
 import { DateTime } from "luxon"
 import type * as React from "react"
@@ -21,7 +21,7 @@ export const relativeTime = (timeIn, now) => {
 // now defaults to DateTime.local() but can be overriden for unit testing
 export const upcomingLabel = (
   sale: AuctionCard_sale$data,
-  now = DateTime.local(),
+  now = DateTime.local()
 ) => {
   const {
     startAt,
@@ -47,7 +47,7 @@ export const upcomingLabel = (
       return `Live in ${relativeTime(liveStartAt, now)}`
     } else {
       const dateTime = DateTime.fromISO(liveStartAt ?? "").setZone(
-        "America/New_York",
+        "America/New_York"
       )
       return `Register by ${dateTime.monthShort} ${dateTime.day}`
     }
@@ -149,5 +149,5 @@ export const AuctionCardFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  },
+  }
 )

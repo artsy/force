@@ -1,8 +1,8 @@
-import { Join, Spacer, Text } from "@artsy/palette"
 import type { AuctionFormValues } from "Apps/Auction/Components/Form/Utils/initialValues"
 import { useAuctionFormContext } from "Apps/Auction/Hooks/useAuctionFormContext"
 import { AddressFormFields } from "Components/Address/AddressFormFields"
 import { CreditCardInput } from "Components/CreditCardInput"
+import { Join, Spacer, Text } from "@artsy/palette"
 
 export const AddressFormWithCreditCard: React.FC<
   React.PropsWithChildren<unknown>

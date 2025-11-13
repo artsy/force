@@ -1,8 +1,8 @@
+import { RouterLink } from "System/Components/RouterLink"
 import FairIcon from "@artsy/icons/FairIcon"
 import TrendingIcon from "@artsy/icons/TrendingIcon"
 import VerifiedIcon from "@artsy/icons/VerifiedIcon"
 import { Flex, Stack, Text } from "@artsy/palette"
-import { RouterLink } from "System/Components/RouterLink"
 import type { ArtworkSidebarCollectorSignal_artwork$key } from "__generated__/ArtworkSidebarCollectorSignal_artwork.graphql"
 import { graphql, useFragment } from "react-relay"
 
@@ -63,7 +63,7 @@ export const ArtworkSidebarCollectorSignal: React.FC<
     }
 
     const startAt = formatDate(
-      data.collectorSignals?.runningShow?.startAt ?? "",
+      data.collectorSignals?.runningShow?.startAt ?? ""
     )
     const endAt = formatDate(data.collectorSignals?.runningShow?.endAt ?? "")
 

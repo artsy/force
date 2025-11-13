@@ -1,7 +1,7 @@
-import { Box, Column, GridColumns, Join, Spacer, Text } from "@artsy/palette"
 import { FrameWithRecentlyViewed } from "Components/FrameWithRecentlyViewed"
 import { MetaTags } from "Components/MetaTags"
 import { RouterLink } from "System/Components/RouterLink"
+import { Box, Column, GridColumns, Join, Spacer, Text } from "@artsy/palette"
 import type { Collections_marketingCategories$data } from "__generated__/Collections_marketingCategories.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { CollectionsCategoryFragmentContainer } from "./Components/CollectionsCategory"
@@ -14,7 +14,7 @@ export const CollectionsApp: React.FC<
   React.PropsWithChildren<CollectionsAppProps>
 > = ({ marketingCategories }) => {
   const sorted = [...(marketingCategories ?? [])].sort((a, b) =>
-    a.name.localeCompare(b.name),
+    a.name.localeCompare(b.name)
   )
 
   return (
@@ -67,7 +67,7 @@ export const CollectionsAppFragmentContainer = createFragmentContainer(
         ...CollectionsCategory_category
       }
     `,
-  },
+  }
 )
 
 const META_DESCRIPTION =

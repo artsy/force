@@ -1,3 +1,17 @@
+import { formatErrorMessage } from "Components/AuthDialog/Utils/formatErrorMessage"
+import { useArtworkInquiryRequest } from "Components/Inquiry/Hooks/useArtworkInquiryRequest"
+import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
+import { logger } from "Components/Inquiry/util"
+import {
+  Screen,
+  useInquiryAccountContext,
+} from "Components/Inquiry/Views/InquiryAccount"
+import { RouterLink } from "System/Components/RouterLink"
+import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
+import { signUp } from "Utils/auth"
+import { EnableRecaptcha } from "Utils/EnableRecaptcha"
+import { useMode } from "Utils/Hooks/useMode"
+import { wait } from "Utils/wait"
 import {
   ActionType,
   AuthModalType,
@@ -15,20 +29,6 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { formatErrorMessage } from "Components/AuthDialog/Utils/formatErrorMessage"
-import { useArtworkInquiryRequest } from "Components/Inquiry/Hooks/useArtworkInquiryRequest"
-import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
-import {
-  Screen,
-  useInquiryAccountContext,
-} from "Components/Inquiry/Views/InquiryAccount"
-import { logger } from "Components/Inquiry/util"
-import { RouterLink } from "System/Components/RouterLink"
-import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
-import { EnableRecaptcha } from "Utils/EnableRecaptcha"
-import { useMode } from "Utils/Hooks/useMode"
-import { signUp } from "Utils/auth"
-import { wait } from "Utils/wait"
 import type * as React from "react"
 import { useState } from "react"
 import { useTracking } from "react-tracking"

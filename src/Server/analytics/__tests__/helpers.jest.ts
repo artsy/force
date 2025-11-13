@@ -29,7 +29,7 @@ describe("#trackEvent", () => {
         context_page_owner_slug: "andy-warhol",
         context_page_owner_type: "artist",
       },
-      {},
+      {}
     )
   })
 
@@ -39,7 +39,7 @@ describe("#trackEvent", () => {
         contextPageOwnerId: "4d8b92b34eb68a1b2c0003f4",
         contextPageOwnerSlug: "andy-warhol",
         contextPageOwnerType: OwnerType.artist,
-      }),
+      })
     )
 
     expect(window.analytics?.track).toBeCalledWith(
@@ -50,7 +50,7 @@ describe("#trackEvent", () => {
         context_page_owner_slug: "andy-warhol",
         context_page_owner_type: "artist",
       },
-      {},
+      {}
     )
   })
 
@@ -64,7 +64,7 @@ describe("#trackEvent", () => {
     expect(window.analytics?.track).not.toBeCalled()
     expect(window.analytics?.page).toBeCalledWith(
       { path: "/" },
-      { integrations: { Marketo: false } },
+      { integrations: { Marketo: false } }
     )
   })
 
@@ -77,7 +77,7 @@ describe("#trackEvent", () => {
       context_page_owner_type: OwnerType.artist,
     })
     expect(console.error).toBeCalledWith(
-      'Unknown analytics schema being used: {"action_name":"Time on page","category":"15 seconds","context_page_owner_id":"4d8b92b34eb68a1b2c0003f4","context_page_owner_slug":"andy-warhol","context_page_owner_type":"artist"}',
+      'Unknown analytics schema being used: {"action_name":"Time on page","category":"15 seconds","context_page_owner_id":"4d8b92b34eb68a1b2c0003f4","context_page_owner_slug":"andy-warhol","context_page_owner_type":"artist"}'
     )
   })
 })

@@ -3,7 +3,7 @@ import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
 import { InquirySignUp } from "Components/Inquiry/Views/InquirySignUp"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { signUp } from "Utils/auth"
-import { render, screen, fireEvent } from "@testing-library/react"
+import { fireEvent, render, screen } from "@testing-library/react"
 import { useTracking } from "react-tracking"
 
 jest.mock("Utils/auth")
@@ -58,7 +58,7 @@ describe("InquirySignUp", () => {
   describe("success", () => {
     beforeAll(() => {
       ;(signUp as jest.Mock).mockImplementation(() =>
-        Promise.resolve({ user: { id: "example-id", access_token: "token" } }),
+        Promise.resolve({ user: { id: "example-id", access_token: "token" } })
       )
     })
 
@@ -113,7 +113,7 @@ describe("InquirySignUp", () => {
   describe("error", () => {
     beforeAll(() => {
       ;(signUp as jest.Mock).mockImplementation(() =>
-        Promise.reject(new Error("something went wrong")),
+        Promise.reject(new Error("something went wrong"))
       )
     })
 

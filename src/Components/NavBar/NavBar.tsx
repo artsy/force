@@ -1,41 +1,40 @@
-import { ActionType } from "@artsy/cohesion"
-import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
-import CloseIcon from "@artsy/icons/CloseIcon"
-import PersonIcon from "@artsy/icons/PersonIcon"
-import { Box, Clickable, Flex, Spacer, THEME, Text } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
-import { NavBarLoggedOutActions } from "Components/NavBar/NavBarLoggedOutActions"
+import { AppDownloadBanner } from "Components/AppDownloadBanner"
 import {
   ARTISTS_SUBMENU_DATA,
   ARTWORKS_SUBMENU_DATA,
   WHATS_NEW_SUBMENU_DATA,
 } from "Components/NavBar/menuData"
-import { useRouter } from "System/Hooks/useRouter"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import Events from "Utils/Events"
-import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
-import type * as React from "react"
-import { useEffect, useState } from "react"
-import {
-  NavBarMobileMenu,
-  NavBarMobileMenuIcon,
-} from "./NavBarMobileMenu/NavBarMobileMenu"
-
-import { AppDownloadBanner } from "Components/AppDownloadBanner"
+import { NavBarLoggedOutActions } from "Components/NavBar/NavBarLoggedOutActions"
 import { NavBarMobileMenuProfile } from "Components/NavBar/NavBarMobileMenu/NavBarMobileMenuProfile"
 import { ProgressiveOnboardingAlertFind } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertFind"
 import { ProgressiveOnboardingFollowFind } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowFind"
 import { ProgressiveOnboardingSaveFind } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveFind"
 import { SearchBar } from "Components/Search/SearchBar"
 import { usePrefetchRoute } from "System/Hooks/usePrefetchRoute"
+import { useRouter } from "System/Hooks/useRouter"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import Events from "Utils/Events"
+import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 import { Media } from "Utils/Responsive"
+import { ActionType } from "@artsy/cohesion"
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
+import CloseIcon from "@artsy/icons/CloseIcon"
+import PersonIcon from "@artsy/icons/PersonIcon"
+import { Box, Clickable, Flex, Spacer, Text, THEME } from "@artsy/palette"
+import type * as React from "react"
+import { useEffect, useState } from "react"
 import { track, useTracking } from "react-tracking"
 import styled from "styled-components"
 import { NavBarDropdownPanel } from "./NavBarDropdownPanel"
 import { NavBarItemButton, NavBarItemLink } from "./NavBarItem"
 import { NavBarLoggedInActionsQueryRenderer } from "./NavBarLoggedInActions"
+import {
+  NavBarMobileMenu,
+  NavBarMobileMenuIcon,
+} from "./NavBarMobileMenu/NavBarMobileMenu"
 import { NavBarMobileMenuNotificationsIndicatorQueryRenderer } from "./NavBarMobileMenu/NavBarMobileMenuNotificationsIndicator"
 import { NavBarPrimaryLogo } from "./NavBarPrimaryLogo"
 import { NavBarSkipLink } from "./NavBarSkipLink"
@@ -54,7 +53,7 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
   },
   {
     dispatch: data => Events.postEvent(data),
-  },
+  }
 )(() => {
   const { user, isEigen } = useSystemContext()
 
@@ -65,7 +64,7 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
   const { router } = useRouter()
 
   const [mode, setMode] = useState<"Idle" | "Search" | "Profile" | "More">(
-    "Idle",
+    "Idle"
   )
 
   const xs = __internal__useMatchMedia(THEME.mediaQueries.xs)
@@ -91,7 +90,7 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
 
   // Prefetch most clicked links.
   // See: https://artsy.slack.com/archives/C05EEBNEF71/p1726074422149369?thread_ts=1726073316.088559&cid=C05EEBNEF71
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Link prefetching should only run on mount
   useEffect(() => {
     const PREFETCH_NAVBAR_LINKS = ["/artists", "/collect"]
 
@@ -99,7 +98,7 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
   }, [])
 
   const handleMobileNavClick = (
-    event: React.MouseEvent<HTMLElement, MouseEvent>,
+    event: React.MouseEvent<HTMLElement, MouseEvent>
   ) => {
     let target = event.target as HTMLElement
 
@@ -117,7 +116,7 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
   }
 
   const handleClick = (
-    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
+    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
   ) => {
     const link = event.currentTarget
     const text = (link.getAttribute("data-label") || link.textContent) ?? ""

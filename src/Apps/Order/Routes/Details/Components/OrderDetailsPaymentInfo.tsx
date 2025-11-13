@@ -1,8 +1,8 @@
+import { type Brand, BrandCreditCardIcon } from "Components/BrandCreditCardIcon"
 import ApplePayMarkIcon from "@artsy/icons/ApplePayMarkIcon"
 import GooglePayIcon from "@artsy/icons/GooglePayIcon"
 import InstitutionIcon from "@artsy/icons/InstitutionIcon"
 import { Box, Flex, Spacer, Text } from "@artsy/palette"
-import { type Brand, BrandCreditCardIcon } from "Components/BrandCreditCardIcon"
 import type {
   OrderDetailsPaymentInfo_order$data,
   OrderDetailsPaymentInfo_order$key,
@@ -46,7 +46,7 @@ export const OrderDetailsPaymentInfo: React.FC<
 }
 
 const getPaymentMethodContent = (
-  order: NonNullable<OrderDetailsPaymentInfo_order$data>,
+  order: NonNullable<OrderDetailsPaymentInfo_order$data>
 ) => {
   const { creditCardWalletType, paymentMethodDetails } = order
 

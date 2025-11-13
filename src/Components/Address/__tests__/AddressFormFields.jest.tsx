@@ -1,17 +1,17 @@
-import { Button } from "@artsy/palette"
-import { render, screen, waitFor } from "@testing-library/react"
-import userEvent from "@testing-library/user-event"
-import {
-  AddressFormFields,
-  addressFormFieldsValidator,
-} from "Components/Address/AddressFormFields"
 import {
   ADDRESS_FORM_INPUTS,
   fillAddressFormFields,
   hasCorrectAddressFormFields,
 } from "Components/Address/__tests__/utils"
+import {
+  AddressFormFields,
+  addressFormFieldsValidator,
+} from "Components/Address/AddressFormFields"
 import { type Address, emptyAddress } from "Components/Address/utils"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
+import { Button } from "@artsy/palette"
+import { render, screen, waitFor } from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
 import { Formik } from "formik"
 import * as Yup from "yup"
 
@@ -41,13 +41,13 @@ describe("AddressFormFields", () => {
               </Button>
             </>
           )}
-        </Formik>,
+        </Formik>
       )
     })
 
     it("renders the correct components with label & placeholder copy", () => {
       expect(hasCorrectAddressFormFields({ withLegacyPhoneInput: false })).toBe(
-        true,
+        true
       )
     })
 
@@ -80,7 +80,7 @@ describe("AddressFormFields", () => {
             region: "NY",
           },
         },
-        expect.anything(),
+        expect.anything()
       )
     })
 
@@ -95,7 +95,7 @@ describe("AddressFormFields", () => {
       screen.getByText("Street address is required")
       screen.getByText("City is required")
       expect(
-        screen.queryByText("Phone number is required"),
+        screen.queryByText("Phone number is required")
       ).not.toBeInTheDocument()
       expect(screen.queryByText("State is required")).not.toBeInTheDocument()
     })
@@ -122,20 +122,20 @@ describe("AddressFormFields", () => {
               </Button>
             </>
           )}
-        </Formik>,
+        </Formik>
       )
     })
 
     it("renders the correct components with label & placeholder copy", () => {
       expect(hasCorrectAddressFormFields({ withLegacyPhoneInput: false })).toBe(
-        true,
+        true
       )
 
       const countryCodeInput = screen.getByTestId("country-picker")
       expect(countryCodeInput).toBeInTheDocument()
 
       const phoneNumberInput = screen.getByTestId(
-        "addressFormFields.phoneNumber",
+        "addressFormFields.phoneNumber"
       )
       expect(phoneNumberInput).toBeInTheDocument()
 
@@ -177,13 +177,13 @@ describe("AddressFormFields", () => {
               </Button>
             </>
           )}
-        </Formik>,
+        </Formik>
       )
     })
 
     it("renders the correct components with label & placeholder copy", () => {
       expect(hasCorrectAddressFormFields({ withLegacyPhoneInput: true })).toBe(
-        true,
+        true
       )
       Object.values(ADDRESS_FORM_INPUTS).forEach(({ label, placeholder }) => {
         const input = screen.getByLabelText(label)
@@ -229,7 +229,7 @@ describe("AddressFormFields", () => {
           },
           phoneNumber: "5555937743",
         },
-        expect.anything(),
+        expect.anything()
       )
     })
 
@@ -252,7 +252,7 @@ describe("AddressFormFields", () => {
 
       await waitFor(() => {
         expect(
-          screen.queryByText("Country is required"),
+          screen.queryByText("Country is required")
         ).not.toBeInTheDocument()
         expect(mockOnSubmit).not.toHaveBeenCalled()
       })

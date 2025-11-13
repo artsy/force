@@ -1,3 +1,6 @@
+import { RouterLink, type RouterLinkProps } from "System/Components/RouterLink"
+import { useCurrentTime } from "Utils/Hooks/useCurrentTime"
+import { useEventTiming } from "Utils/Hooks/useEventTiming"
 import {
   Box,
   Image,
@@ -6,9 +9,6 @@ import {
   SkeletonText,
   Text,
 } from "@artsy/palette"
-import { RouterLink, type RouterLinkProps } from "System/Components/RouterLink"
-import { useCurrentTime } from "Utils/Hooks/useCurrentTime"
-import { useEventTiming } from "Utils/Hooks/useEventTiming"
 import type { CellShow_show$data } from "__generated__/CellShow_show.graphql"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"

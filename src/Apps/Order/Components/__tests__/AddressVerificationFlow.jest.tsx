@@ -1,7 +1,7 @@
-import { screen, waitFor } from "@testing-library/react"
 import { AddressVerificationFlowFragmentContainer } from "Apps/Order/Components/AddressVerificationFlow"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import { screen, waitFor } from "@testing-library/react"
 import type { AddressVerificationFlow_Test_Query } from "__generated__/AddressVerificationFlow_Test_Query.graphql"
 import type { AddressVerificationFlow_verifyAddress$data } from "__generated__/AddressVerificationFlow_verifyAddress.graphql"
 import { graphql } from "react-relay"
@@ -90,7 +90,7 @@ describe("AddressVerificationFlow", () => {
       {
         VerifyAddressMutationType: () => result,
       },
-      componentProps,
+      componentProps
     )
   }
 
@@ -199,7 +199,7 @@ describe("AddressVerificationFlow", () => {
       expect(mockOnChosenAddress).toHaveBeenCalledTimes(1)
       expect(mockOnChosenAddress).toHaveBeenCalledWith(
         "USER",
-        mockResult.inputAddress.address,
+        mockResult.inputAddress.address
       )
 
       expect(trackEvent).toHaveBeenCalledTimes(2)
@@ -226,7 +226,7 @@ describe("AddressVerificationFlow", () => {
       expect(mockOnChosenAddress).toHaveBeenCalledTimes(1)
       expect(mockOnChosenAddress).toHaveBeenCalledWith(
         "ARTSY",
-        mockInputAddress,
+        mockInputAddress
       )
       expect(trackEvent).not.toHaveBeenCalled()
     })
@@ -310,7 +310,7 @@ describe("AddressVerificationFlow", () => {
       expect(mockOnChosenAddress).toHaveBeenCalledTimes(1)
       expect(mockOnChosenAddress).toHaveBeenCalledWith(
         "ARTSY",
-        mockResult.suggestedAddresses[0].address,
+        mockResult.suggestedAddresses[0].address
       )
     })
 
@@ -345,7 +345,7 @@ describe("AddressVerificationFlow", () => {
         expect(mockOnChosenAddress).toHaveBeenCalledTimes(1)
         expect(mockOnChosenAddress).toHaveBeenCalledWith(
           "USER",
-          mockInputAddress,
+          mockInputAddress
         )
       })
     })

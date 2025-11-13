@@ -1,7 +1,7 @@
-import { renderHook } from "@testing-library/react-hooks"
 import { useAuthDialogTracking } from "Components/AuthDialog/Hooks/useAuthDialogTracking"
 import { useSocialAuthTracking } from "Components/AuthDialog/Hooks/useSocialAuthTracking"
 import { useRouter } from "System/Hooks/useRouter"
+import { renderHook } from "@testing-library/react-hooks"
 import Cookies from "cookies-js"
 
 jest.mock("System/Hooks/useRouter", () => ({
@@ -43,7 +43,7 @@ describe("useSocialAuthTracking", () => {
         analytics: {
           contextModule: "header",
         },
-      }),
+      })
     )
 
     renderHook(useSocialAuthTracking)
@@ -63,7 +63,7 @@ describe("useSocialAuthTracking", () => {
     mockCookiesExpire.mockImplementation(jest.fn())
 
     mockCookiesGet.mockImplementation(() =>
-      JSON.stringify({ action: "invalid" }),
+      JSON.stringify({ action: "invalid" })
     )
 
     renderHook(useSocialAuthTracking)
@@ -84,7 +84,7 @@ describe("useSocialAuthTracking", () => {
         analytics: {
           contextModule: "header",
         },
-      }),
+      })
     )
 
     mockUseRouter.mockImplementation(() => ({

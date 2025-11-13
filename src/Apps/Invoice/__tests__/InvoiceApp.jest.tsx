@@ -1,7 +1,7 @@
-import { screen } from "@testing-library/react"
 import { InvoiceApp } from "Apps/Invoice/InvoiceApp"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import type { InvoiceApp_Test_Query } from "__generated__/InvoiceApp_Test_Query.graphql"
 import { graphql } from "react-relay"
 
@@ -33,12 +33,12 @@ describe("InvoiceApp", () => {
         number: "123",
         readyAt: "Oct 17, 2024",
       }),
-    }),
+    })
   )
 
   it("renders correctly", () => {
     expect(
-      screen.getByTestId("invoice-info").textContent,
+      screen.getByTestId("invoice-info").textContent
     ).toMatchInlineSnapshot(`"Oct 17, 2024"`)
   })
 })

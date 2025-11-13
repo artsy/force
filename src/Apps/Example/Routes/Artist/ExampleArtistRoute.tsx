@@ -1,7 +1,7 @@
-import { ContextModule } from "@artsy/cohesion"
-import { Box, Text } from "@artsy/palette"
 import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
 import { Analytics } from "System/Contexts/AnalyticsContext"
+import { ContextModule } from "@artsy/cohesion"
+import { Box, Text } from "@artsy/palette"
 import type { ExampleArtistRoute_artist$data } from "__generated__/ExampleArtistRoute_artist.graphql"
 import type * as React from "react"
 import { Title } from "react-head"
@@ -61,5 +61,5 @@ export const ExampleArtistRouteFragmentContainer = createFragmentContainer(
         internalID
       }
     `,
-  },
+  }
 )

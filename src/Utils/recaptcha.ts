@@ -10,7 +10,7 @@ export const recaptcha = async (action: RecaptchaAction): Promise<string> => {
         try {
           const token = await window.grecaptcha.execute(
             getENV("RECAPTCHA_KEY"),
-            { action },
+            { action }
           )
 
           return resolve(token)

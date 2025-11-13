@@ -1,6 +1,6 @@
-import { Box, Button, Flex, HTML, Text } from "@artsy/palette"
 import Metadata from "Components/Artwork/Metadata"
 import { RouterLink } from "System/Components/RouterLink"
+import { Box, Button, Flex, HTML, Text } from "@artsy/palette"
 import type { ArticleZoomGalleryCaption_figure$data } from "__generated__/ArticleZoomGalleryCaption_figure.graphql"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -28,7 +28,7 @@ const ArticleZoomGalleryCaption: FC<
             mt={[1, 0]}
             size="small"
             variant="secondaryBlack"
-            // @ts-ignore
+            // @ts-expect-error
             as={RouterLink}
             to={figure.href}
           >

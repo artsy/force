@@ -9,7 +9,7 @@ interface UseDetectActivity {
  * Detect when user is idle within a component
  */
 export const useDetectActivity = (
-  { waitTime }: UseDetectActivity = { waitTime: 2500 },
+  { waitTime }: UseDetectActivity = { waitTime: 2500 }
 ) => {
   const [isActive, setIsActive] = useState(true)
 
@@ -23,7 +23,7 @@ export const useDetectActivity = (
         timeoutRef.current && clearTimeout(timeoutRef.current)
         timeoutRef.current = setTimeout(() => setIsActive(false), waitTime)
       }, 500),
-    [waitTime],
+    [waitTime]
   )
 
   useEffect(() => {

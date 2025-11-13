@@ -1,12 +1,18 @@
-import { Box, Button, Flex, Join, Spacer, Text } from "@artsy/palette"
-import { useToasts } from "@artsy/palette"
-import { type FC, useState } from "react"
-
 import { OfferSettingsModal } from "Apps/CollectorProfile/Routes/Saves/Components/OfferSettingsModal/OfferSettingsModal"
 import { ProgressiveOnboardingSaveOfferSettings } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveOfferSettings"
 import { ProgressiveOnboardingSaveTitle } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveTitle"
 import { RouterLink } from "System/Components/RouterLink"
+import {
+  Box,
+  Button,
+  Flex,
+  Join,
+  Spacer,
+  Text,
+  useToasts,
+} from "@artsy/palette"
 import type { CollectorProfileSavesRoute_me$data } from "__generated__/CollectorProfileSavesRoute_me.graphql"
+import { type FC, useState } from "react"
 import type { ArtworkList } from "./CreateNewListModal/CreateNewListModal"
 import { CreateNewListModalWizard } from "./CreateNewListModal/CreateNewListModalWizard"
 

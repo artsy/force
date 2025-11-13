@@ -25,7 +25,7 @@ export const NavBarSearchInputContainer = React.forwardRef(
     props: Omit<LabeledInputProps, "label"> & {
       ref?: React.Ref<HTMLInputElement>
     },
-    ref,
+    ref
   ) => {
     return (
       <LabeledInput
@@ -50,5 +50,5 @@ export const NavBarSearchInputContainer = React.forwardRef(
         {...props}
       />
     )
-  },
+  }
 )

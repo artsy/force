@@ -1,7 +1,7 @@
-import { Box, Button, Clickable, Spacer, Text } from "@artsy/palette"
 import ArtworkGridItemFragmentContainer from "Components/Artwork/GridItem"
 import { Masonry } from "Components/Masonry"
 import { extractNodes } from "Utils/extractNodes"
+import { Box, Button, Clickable, Spacer, Text } from "@artsy/palette"
 import type { MyCollectionArworkSearchQuery } from "__generated__/MyCollectionArworkSearchQuery.graphql"
 import { Fragment } from "react"
 import { graphql, useLazyLoadQuery } from "react-relay"
@@ -64,7 +64,7 @@ export const MyCollectionArworkSearch: React.FC<
         }
       }
     `,
-    { artistID: artistId, input },
+    { artistID: artistId, input }
   )
 
   const artworks = extractNodes(data.artist?.filterArtworksConnection)

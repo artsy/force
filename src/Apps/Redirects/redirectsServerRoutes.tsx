@@ -18,7 +18,7 @@ export interface ResWithProfile extends Response {
 export const handleShort = async (
   req: Request,
   res: Response,
-  next: NextFunction,
+  next: NextFunction
 ) => {
   const short = req.params.short.toLowerCase()
 
@@ -30,7 +30,7 @@ export const handleShort = async (
     const data = await fetchQuery<RedirectsShortcutsQuery>(
       relayEnvironment,
       REDIRECTS_SHORTCUTS_QUERY,
-      { id: short },
+      { id: short }
     ).toPromise()
 
     if (data?.shortcut) return res.redirect(301, data?.shortcut.long)
@@ -44,7 +44,7 @@ export const handleShort = async (
 export const handleProfile = async (
   req: Request,
   res: Response,
-  next: NextFunction,
+  next: NextFunction
 ) => {
   const relayEnvironment = createRelaySSREnvironment({
     userAgent: req.header("User-Agent"),
@@ -54,7 +54,7 @@ export const handleProfile = async (
     const data = await fetchQuery<RedirectsProfileQuery>(
       relayEnvironment,
       REDIRECTS_PROFILE_QUERY,
-      { id: req.params.id },
+      { id: req.params.id }
     ).toPromise()
 
     res.locals.profile = data?.profile
@@ -69,7 +69,7 @@ export const handleProfile = async (
 export const handlePartnerOverview = (
   req: Request,
   res: ResWithProfile,
-  next: NextFunction,
+  next: NextFunction
 ) => {
   if (res.locals.profile?.owner.__typename !== "Partner") return next()
 
@@ -85,7 +85,7 @@ export const handlePartnerOverview = (
 export const handlePartnerWorks = (
   req: Request,
   res: ResWithProfile,
-  next: NextFunction,
+  next: NextFunction
 ) => {
   if (res.locals.profile?.owner.__typename !== "Partner") return next()
 
@@ -99,7 +99,7 @@ export const handlePartnerWorks = (
 export const handlePartnerArtist = (
   req: Request,
   res: ResWithProfile,
-  next: NextFunction,
+  next: NextFunction
 ) => {
   if (res.locals.profile?.owner.__typename !== "Partner") return next()
 
@@ -109,14 +109,14 @@ export const handlePartnerArtist = (
 
   return res.redirect(
     301,
-    `/partner/${partnerSlug}/artists/${req.params.artistId}`,
+    `/partner/${partnerSlug}/artists/${req.params.artistId}`
   )
 }
 
 export const handlePartnerGenericRedirect = (
   req: Request,
   res: ResWithProfile,
-  next: NextFunction,
+  next: NextFunction
 ) => {
   if (res.locals.profile?.owner.__typename !== "Partner") return next()
 
@@ -129,9 +129,9 @@ export const handlePartnerGenericRedirect = (
 }
 
 export const handleFairArtworks = (
-  req: Request,
+  _req: Request,
   res: ResWithProfile,
-  next: NextFunction,
+  next: NextFunction
 ) => {
   if (res.locals.profile?.owner.__typename !== "Fair") return next()
 
@@ -145,9 +145,9 @@ export const handleFairArtworks = (
 }
 
 export const handleFair = (
-  req: Request,
+  _req: Request,
   res: ResWithProfile,
-  next: NextFunction,
+  next: NextFunction
 ) => {
   if (res.locals.profile?.owner.__typename !== "Fair") return next()
 
@@ -164,7 +164,7 @@ export const handleFair = (
 export const handleFairOrganizer = (
   _req: Request,
   res: ResWithProfile,
-  next: NextFunction,
+  next: NextFunction
 ) => {
   if (res.locals.profile?.owner.__typename !== "FairOrganizer") return next()
 
@@ -205,7 +205,7 @@ redirectsServerRoutes
       "/:id/articles",
       "/:id/contact",
     ],
-    handlePartnerGenericRedirect,
+    handlePartnerGenericRedirect
   )
 
   // Fairs
@@ -245,7 +245,7 @@ redirectsServerRoutes
       "/:id/feed",
       "/:id/live",
     ],
-    handleFair,
+    handleFair
   )
 
   // Fair Organziers

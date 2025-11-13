@@ -1,3 +1,5 @@
+import { EntityHeaderPlaceholder } from "Components/EntityHeaders/EntityHeaderPlaceholder"
+import { RouterLink } from "System/Components/RouterLink"
 import {
   ActionType,
   type ClickedChangePaymentMethod,
@@ -23,14 +25,12 @@ import {
   SkeletonText,
   Text,
 } from "@artsy/palette"
-import { EntityHeaderPlaceholder } from "Components/EntityHeaders/EntityHeaderPlaceholder"
-import { RouterLink } from "System/Components/RouterLink"
 import type {
   OrderBuyerStateEnum,
   SettingsOrdersRow_order$data,
 } from "__generated__/SettingsOrdersRow_order.graphql"
-import { DateTime } from "luxon"
 import type { LocaleOptions } from "luxon"
+import { DateTime } from "luxon"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -88,7 +88,7 @@ const ORDER_COLORS: Record<string, string> = {
 // Should we display more info similar to details page?
 const getPaymentMethodText = (
   paymentMethodDetails: SettingsOrdersRow_order$data["paymentMethodDetails"],
-  creditCardWalletType: SettingsOrdersRow_order$data["creditCardWalletType"],
+  creditCardWalletType: SettingsOrdersRow_order$data["creditCardWalletType"]
 ) => {
   if (!!creditCardWalletType) {
     switch (creditCardWalletType) {
@@ -174,7 +174,7 @@ const OrderActionButton: FC<OrderActionButtonProps> = ({
 
   return (
     <Button
-      // @ts-ignore
+      // @ts-expect-error
       as={RouterLink}
       to={route}
       variant="primaryBlack"
@@ -349,7 +349,7 @@ const SettingsOrdersRow: FC<
           <Text variant="sm-display" color="mono60">
             {getPaymentMethodText(
               order.paymentMethodDetails,
-              order.creditCardWalletType,
+              order.creditCardWalletType
             )}
           </Text>
         </Column>
@@ -454,7 +454,7 @@ export const SettingsOrdersRowFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  },
+  }
 )
 
 export const SettingsOrdersRowPlaceholder: FC<

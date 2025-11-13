@@ -1,8 +1,8 @@
-import StopwatchIcon from "@artsy/icons/StopwatchIcon"
-import { Flex, Spacer, StackableBorderBox, Text } from "@artsy/palette"
 import { ProgressBarTimer } from "Components/ProgressBarTimer"
 import { TimeRemaining } from "Components/TimeRemaining"
 import { useCurrentTime } from "Utils/Hooks/useCurrentTime"
+import StopwatchIcon from "@artsy/icons/StopwatchIcon"
+import { Flex, Spacer, StackableBorderBox, Text } from "@artsy/palette"
 import { DateTime } from "luxon"
 import type React from "react"
 
@@ -26,7 +26,7 @@ export const CountdownTimer: React.FC<
   const endDateTime = DateTime.fromISO(countdownEnd).toLocal()
 
   const minutes =
-    endDateTime.minute < 10 ? "0" + endDateTime.minute : endDateTime.minute
+    endDateTime.minute < 10 ? `0${endDateTime.minute}` : endDateTime.minute
 
   const amPm = endDateTime.hour >= 12 ? "pm" : "am"
 

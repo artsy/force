@@ -62,7 +62,7 @@ export interface ShippingAddressFormValues {
 export const BASIC_PHONE_VALIDATION_SHAPE = {
   phoneNumber: Yup.string()
     .required("Phone number is required")
-    .matches(/^[+\-\(\)\d\s]+$/, "Please enter a valid phone number"),
+    .matches(/^[+\-()\d\s]+$/, "Please enter a valid phone number"),
 }
 
 export const ADDRESS_VALIDATION_SHAPE = {
@@ -94,7 +94,7 @@ const ORDER_EMPTY_ADDRESS: ShippingAddressFormValues = {
 export const onlyAddressValues = (values: any) => {
   return pick<ShippingAddressFormValues>(
     values,
-    Object.keys(ORDER_EMPTY_ADDRESS),
+    Object.keys(ORDER_EMPTY_ADDRESS)
   )
 }
 
@@ -104,7 +104,7 @@ export const onlyAddressValues = (values: any) => {
  * a SavedAddress from relay to a ShippingAddressFormValues object.
  */
 export const addressWithFallbackValues = (
-  address: any,
+  address: any
 ): ShippingAddressFormValues => ({
   ...ORDER_EMPTY_ADDRESS,
   ...omitBy<ShippingAddressFormValues>(onlyAddressValues(address), isNil),
@@ -120,7 +120,7 @@ export type SavedAddressType = NonNullable<
 
 export const getAddressByID = (
   addressList: SavedAddressType[],
-  addressID: string,
+  addressID: string
 ) => {
   return addressList.find(node => node.internalID === addressID)
 }
@@ -128,7 +128,7 @@ export const getAddressByID = (
 // Get the user's default address, optionally filtering by a list of countries.
 export const getDefaultUserAddress = (
   savedAddresses: SavedAddressType[],
-  filterCountries?: string[],
+  filterCountries?: string[]
 ) => {
   const shippableAddresses = savedAddresses.filter(node => {
     if (!Boolean(node)) return false
@@ -149,11 +149,11 @@ export const getInitialShippingValues = (
   savedAddresses: SavedAddressType[],
   defaultCountry,
   defaultName,
-  filterCountries?: string[],
+  filterCountries?: string[]
 ): ShipValues => {
   const defaultUserAddress = getDefaultUserAddress(
     savedAddresses,
-    filterCountries,
+    filterCountries
   )
 
   // The default ship-to address should be the first one that

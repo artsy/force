@@ -1,9 +1,9 @@
+import { RouterLink } from "System/Components/RouterLink"
 import ArtworkIcon from "@artsy/icons/ArtworkIcon"
 import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
 import FilterIcon from "@artsy/icons/FilterIcon"
 import SearchIcon from "@artsy/icons/SearchIcon"
 import { Box, Button, Flex, Join, Spacer, Text } from "@artsy/palette"
-import { RouterLink } from "System/Components/RouterLink"
 
 interface InfoSectionProps {
   title: string
@@ -62,7 +62,7 @@ export const SavedSearchAlertsEmptyResults = () => {
         </Join>
         <Spacer y={4} />
         <Button
-          // @ts-ignore
+          // @ts-expect-error
           as={RouterLink}
           to="/artists"
           width="100%"

@@ -57,5 +57,5 @@ export const ShowLocationHoursFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  },
+  }
 )

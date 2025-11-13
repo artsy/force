@@ -1,6 +1,6 @@
-import { fireEvent, screen } from "@testing-library/react"
 import { AuctionArtworksRailFragmentContainer } from "Apps/Auctions/Components/AuctionArtworksRail"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { fireEvent, screen } from "@testing-library/react"
 import { graphql } from "react-relay"
 import { useTracking as baseUseTracking } from "react-tracking"
 
@@ -67,7 +67,7 @@ describe("AuctionArtworksRail", () => {
       new MouseEvent("click", {
         bubbles: true,
         cancelable: true,
-      }),
+      })
     )
 
     expect(trackEvent.mock.calls[0]).toMatchInlineSnapshot(`

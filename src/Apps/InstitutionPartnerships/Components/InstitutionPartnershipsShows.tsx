@@ -1,11 +1,11 @@
-import { Column, GridColumns } from "@artsy/palette"
 import {
   CellShowFragmentContainer,
   CellShowPlaceholder,
 } from "Components/Cells/CellShow"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import type { InstitutionPartnershipsShowsQuery } from "__generated__/InstitutionPartnershipsShowsQuery.graphql"
+import { Column, GridColumns } from "@artsy/palette"
 import type { InstitutionPartnershipsShows_orderedSet$data } from "__generated__/InstitutionPartnershipsShows_orderedSet.graphql"
+import type { InstitutionPartnershipsShowsQuery } from "__generated__/InstitutionPartnershipsShowsQuery.graphql"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
@@ -48,7 +48,7 @@ const InstitutionPartnershipsShowsFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  },
+  }
 )
 
 const InstitutionPartnershipsShowsPlaceholder: FC<

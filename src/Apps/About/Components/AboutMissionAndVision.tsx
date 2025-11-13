@@ -1,3 +1,5 @@
+import { AboutSection } from "Apps/About/Components/AboutSection"
+import { resized } from "Utils/resized"
 import {
   Column,
   GridColumns,
@@ -6,8 +8,6 @@ import {
   Stack,
   Text,
 } from "@artsy/palette"
-import { AboutSection } from "Apps/About/Components/AboutSection"
-import { resized } from "Utils/resized"
 
 export const AboutMissionAndVision = () => {
   return (
@@ -55,7 +55,7 @@ export const AboutMissionAndVision = () => {
               <Image
                 {...resized(
                   "https://files.artsy.net/images/about2-mission-1.jpg",
-                  { width: 650 },
+                  { width: 650 }
                 )}
                 width="100%"
                 height="100%"
@@ -82,7 +82,7 @@ export const AboutMissionAndVision = () => {
               <Image
                 {...resized(
                   "https://files.artsy.net/images/about2-mission-2.jpg",
-                  { width: 650 },
+                  { width: 650 }
                 )}
                 width="100%"
                 height="100%"

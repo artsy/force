@@ -41,13 +41,13 @@ export const useInternalErrorResult = () => {
 
 export const useThrownError = () => {
   CreditCardPickerMock.getCreditCardId.mockRejectedValue(
-    new Error("Actual error"),
+    new Error("Actual error")
   )
 }
 
 const CreditCardPickerMock = {
   getCreditCardId: jest.fn(
-    () => Promise.resolve(goodResult) as Promise<CreditCardIdResult>,
+    () => Promise.resolve(goodResult) as Promise<CreditCardIdResult>
   ),
 }
 

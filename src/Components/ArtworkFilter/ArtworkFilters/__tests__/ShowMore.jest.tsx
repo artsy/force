@@ -1,5 +1,5 @@
 import { ShowMore } from "Components/ArtworkFilter/ArtworkFilters/ShowMore"
-import { render, screen, fireEvent } from "@testing-library/react"
+import { fireEvent, render, screen } from "@testing-library/react"
 
 describe("ShowMore", () => {
   it("shows more when clicked", () => {
@@ -8,7 +8,7 @@ describe("ShowMore", () => {
         <div>is visible</div>
         <div>is visible</div>
         <div>is hidden</div>
-      </ShowMore>,
+      </ShowMore>
     )
 
     expect(screen.getAllByText("is visible")).toHaveLength(2)
@@ -26,7 +26,7 @@ describe("ShowMore", () => {
         <div>is visible</div>
         <div>is visible</div>
         <div>is hidden</div>
-      </ShowMore>,
+      </ShowMore>
     )
 
     expect(screen.getAllByText("is visible")).toHaveLength(2)

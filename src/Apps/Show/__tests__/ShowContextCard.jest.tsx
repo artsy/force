@@ -1,8 +1,8 @@
 import { ShowContextCardFragmentContainer } from "Apps/Show/Components/ShowContextCard"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { AnalyticsCombinedContextProvider } from "System/Contexts/AnalyticsContext"
+import { fireEvent, screen } from "@testing-library/react"
 import type { ShowContextCardTestQuery } from "__generated__/ShowContextCardTestQuery.graphql"
-import { screen, fireEvent } from "@testing-library/react"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 
@@ -48,7 +48,7 @@ describe("ShowContextCard", () => {
       },
     })
     expect(container.innerHTML).toContain(
-      'Presented by &lt;mock-value-for-field-"name"&gt;',
+      'Presented by &lt;mock-value-for-field-"name"&gt;'
     )
   })
 

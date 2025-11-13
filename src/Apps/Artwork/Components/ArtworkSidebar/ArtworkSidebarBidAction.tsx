@@ -1,3 +1,8 @@
+import { lotIsClosed } from "Apps/Artwork/Utils/lotIsClosed"
+import { type ShowAuthDialog, withAuthDialog } from "Components/AuthDialog"
+import { useRouter } from "System/Hooks/useRouter"
+import { getENV } from "Utils/getENV"
+import { bidderQualifications } from "Utils/identityVerificationRequirements"
 import { ActionType, ContextModule, Intent, OwnerType } from "@artsy/cohesion"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import HelpIcon from "@artsy/icons/HelpIcon"
@@ -13,11 +18,6 @@ import {
   Text,
   Tooltip,
 } from "@artsy/palette"
-import { lotIsClosed } from "Apps/Artwork/Utils/lotIsClosed"
-import { type ShowAuthDialog, withAuthDialog } from "Components/AuthDialog"
-import { useRouter } from "System/Hooks/useRouter"
-import { getENV } from "Utils/getENV"
-import { bidderQualifications } from "Utils/identityVerificationRequirements"
 import type { ArtworkSidebarBidAction_artwork$data } from "__generated__/ArtworkSidebarBidAction_artwork.graphql"
 import type { ArtworkSidebarBidAction_me$data } from "__generated__/ArtworkSidebarBidAction_me.graphql"
 import type { Router } from "found"
@@ -178,7 +178,7 @@ export class ArtworkSidebarBidAction extends React.Component<
       sale.registrationStatus &&
         ({
           qualifiedForBidding: sale.registrationStatus.qualified_for_bidding,
-        } as any),
+        } as any)
     )
 
     if (sale.is_preview) {
@@ -302,8 +302,8 @@ export class ArtworkSidebarBidAction extends React.Component<
 
       const increments = compact(
         artwork.sale_artwork?.increments?.filter(
-          increment => (increment?.cents ?? 0) > (myLastMaxBid || 0),
-        ),
+          increment => (increment?.cents ?? 0) > (myLastMaxBid || 0)
+        )
       )
 
       const firstIncrement = increments[0]
@@ -432,6 +432,6 @@ export const ArtworkSidebarBidActionFragmentContainer = withAuthDialog(
           }
         }
       `,
-    },
-  ),
+    }
+  )
 )

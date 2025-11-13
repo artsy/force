@@ -1,3 +1,7 @@
+import { AppContainer } from "Apps/Components/AppContainer"
+import { Z } from "Apps/Components/constants"
+import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
+import { RouterLink } from "System/Components/RouterLink"
 import {
   Box,
   Button,
@@ -8,10 +12,6 @@ import {
   Text,
   useTheme,
 } from "@artsy/palette"
-import { AppContainer } from "Apps/Components/AppContainer"
-import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
-import { Z } from "Apps/Components/constants"
-import { RouterLink } from "System/Components/RouterLink"
 import type { FC } from "react"
 
 interface CookieConsentBannerProps {

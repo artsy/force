@@ -1,10 +1,10 @@
-import { Checkbox, Flex } from "@artsy/palette"
 import {
   SelectedFiltersCountsLabels,
   useArtworkFilterContext,
   useCurrentlySelectedFilters,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { useFilterLabelCountByKey } from "Components/ArtworkFilter/Utils/useFilterLabelCountByKey"
+import { Checkbox, Flex } from "@artsy/palette"
 import type * as React from "react"
 import { FilterExpandable } from "./FilterExpandable"
 
@@ -26,7 +26,7 @@ export const AttributionClassFilter: React.FC<
   const { attributionClass = [] } = useCurrentlySelectedFilters()
 
   const filtersCount = useFilterLabelCountByKey(
-    SelectedFiltersCountsLabels.attributionClass,
+    SelectedFiltersCountsLabels.attributionClass
   )
   const label = `Rarity${filtersCount}`
 

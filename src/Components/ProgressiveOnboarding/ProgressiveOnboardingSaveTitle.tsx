@@ -1,11 +1,11 @@
-import { useDismissibleContext } from "@artsy/dismissible"
-import { Text } from "@artsy/palette"
 import { ProgressiveOnboardingPopover } from "Components/ProgressiveOnboarding/ProgressiveOnboardingPopover"
 import { PROGRESSIVE_ONBOARDING } from "Components/ProgressiveOnboarding/progressiveOnboardingKeys"
 import {
   type WithProgressiveOnboardingCountsProps,
   withProgressiveOnboardingCounts,
 } from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
+import { useDismissibleContext } from "@artsy/dismissible"
+import { Text } from "@artsy/palette"
 import { type FC, useCallback } from "react"
 
 const KEY = PROGRESSIVE_ONBOARDING.saveTitle
@@ -45,5 +45,5 @@ export const __ProgressiveOnboardingSaveTitle__: FC<
 }
 
 export const ProgressiveOnboardingSaveTitle = withProgressiveOnboardingCounts(
-  __ProgressiveOnboardingSaveTitle__,
+  __ProgressiveOnboardingSaveTitle__
 )

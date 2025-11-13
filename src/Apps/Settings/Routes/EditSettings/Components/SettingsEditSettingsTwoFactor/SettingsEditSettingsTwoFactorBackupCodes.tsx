@@ -1,3 +1,5 @@
+import { ConfirmPasswordModal } from "Components/ConfirmPasswordModal"
+import { useMode } from "Utils/Hooks/useMode"
 import {
   Box,
   Button,
@@ -8,8 +10,6 @@ import {
   Text,
   useToasts,
 } from "@artsy/palette"
-import { ConfirmPasswordModal } from "Components/ConfirmPasswordModal"
-import { useMode } from "Utils/Hooks/useMode"
 import type { SettingsEditSettingsTwoFactorBackupCodes_me$data } from "__generated__/SettingsEditSettingsTwoFactorBackupCodes_me.graphql"
 import type { CreateBackupSecondFactorsInput } from "__generated__/useCreateSettingsBackupSecondFactorsMutation.graphql"
 import { type FC, useState } from "react"
@@ -35,7 +35,7 @@ export const SettingsEditSettingsTwoFactorBackupCodes: FC<
     useCreateSettingsBackupSecondFactors()
 
   const handleGenerate = async (
-    password: CreateBackupSecondFactorsInput["password"],
+    password: CreateBackupSecondFactorsInput["password"]
   ) => {
     setMode("Creating")
 

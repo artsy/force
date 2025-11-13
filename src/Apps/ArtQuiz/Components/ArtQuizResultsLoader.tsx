@@ -1,9 +1,8 @@
-import { Box, Flex, FullBleed, Spacer, Spinner, Text } from "@artsy/palette"
 import { ArtQuizFullScreen } from "Apps/ArtQuiz/Components/ArtQuizFullscreen"
 import { SplitLayout } from "Components/SplitLayout"
-import { type FC, useEffect, useState } from "react"
-
 import ArtsyMarkIcon from "@artsy/icons/ArtsyMarkIcon"
+import { Box, Flex, FullBleed, Spacer, Spinner, Text } from "@artsy/palette"
+import { type FC, useEffect, useState } from "react"
 
 interface ArtQuizResultsLoaderProps {
   onReady(): void
@@ -22,7 +21,7 @@ export const ArtQuizResultsLoader: FC<
       setTimeout(() => {
         setLoading(false)
         timeouts.push(setTimeout(onReady, 1000))
-      }, 2000),
+      }, 2000)
     )
 
     return () => {

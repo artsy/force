@@ -1,5 +1,5 @@
-import { render, screen } from "@testing-library/react"
 import { ConversationsSidebarEmpty } from "Apps/Conversations/components/Sidebar/ConversationsSidebarEmpty"
+import { render, screen } from "@testing-library/react"
 
 jest.mock("System/Hooks/useRouter", () => ({
   useRouter: () => ({
@@ -19,7 +19,7 @@ describe("ConversationsSidebarEmpty", () => {
     render(<ConversationsSidebarEmpty />)
 
     expect(
-      screen.getByText("All conversations with galleries will show here."),
+      screen.getByText("All conversations with galleries will show here.")
     ).toBeInTheDocument()
   })
 })

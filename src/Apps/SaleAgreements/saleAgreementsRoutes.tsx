@@ -1,12 +1,12 @@
-import loadable from "@loadable/component"
 import type { RouteProps } from "System/Router/Route"
+import loadable from "@loadable/component"
 import { graphql } from "react-relay"
 
 const SaleAgreementsApp = loadable(
   () => import(/* webpackChunkName: "jobsBundle" */ "./SaleAgreementsApp"),
   {
     resolveComponent: component => component.SaleAgreementsApp,
-  },
+  }
 )
 
 const SaleAgreementRoute = loadable(
@@ -14,7 +14,7 @@ const SaleAgreementRoute = loadable(
     import(/* webpackChunkName: "jobsBundle" */ "./Routes/SaleAgreementRoute"),
   {
     resolveComponent: component => component.SaleAgreementRoute,
-  },
+  }
 )
 
 export const saleAgreementsRoutes: RouteProps[] = [

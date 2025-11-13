@@ -1,7 +1,6 @@
-import { Box, Image } from "@artsy/palette"
 import { wait } from "Utils/wait"
-import { useLayoutEffect } from "react"
-import { useState } from "react"
+import { Box, Image } from "@artsy/palette"
+import { useLayoutEffect, useState } from "react"
 
 const transitionDelayMs = 100
 const transitionDurationMs = 500
@@ -28,18 +27,18 @@ export const ViewInRoomTransition = ({
   }>({})
 
   const [transitionStage, setTransitionStage] = useState<TransitionStage>(
-    TransitionStage.Pending,
+    TransitionStage.Pending
   )
   const [isMounted, setMounted] = useState(false)
 
   useLayoutEffect(() => {
     const run = async () => {
       const imgFrom = document.getElementById(
-        "transitionFrom--ViewInRoom",
+        "transitionFrom--ViewInRoom"
       ) as HTMLImageElement | null
 
       const imgTo = document.getElementById(
-        "transitionTo--ViewInRoom",
+        "transitionTo--ViewInRoom"
       ) as HTMLImageElement | null
 
       if (!imgFrom || !imgTo) {

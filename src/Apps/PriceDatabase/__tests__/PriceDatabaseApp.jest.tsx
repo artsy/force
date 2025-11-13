@@ -1,5 +1,5 @@
-import { render, screen, fireEvent } from "@testing-library/react"
 import { MockBoot } from "DevTools/MockBoot"
+import { fireEvent, render, screen } from "@testing-library/react"
 import { HeadProvider } from "react-head"
 import { useTracking } from "react-tracking"
 import { createMockEnvironment } from "relay-test-utils"
@@ -33,7 +33,7 @@ describe("PriceDatabaseApp", () => {
         <HeadProvider>
           <PriceDatabase />
         </HeadProvider>
-      </MockBoot>,
+      </MockBoot>
     )
   })
 
@@ -44,7 +44,7 @@ describe("PriceDatabaseApp", () => {
   it("renders correct components", () => {
     expect(screen.getByText("Artsy Price Database")).toBeInTheDocument()
     expect(
-      screen.getByPlaceholderText("Search by Artist Name"),
+      screen.getByPlaceholderText("Search by Artist Name")
     ).toBeInTheDocument()
     expect(screen.getByText(/Auction records from/)).toBeInTheDocument()
 

@@ -1,3 +1,6 @@
+import { RouterLink } from "System/Components/RouterLink"
+import { cropped } from "Utils/resized"
+import { sanitizeRedirect } from "Utils/sanitizeRedirect"
 import ChevronLeftIcon from "@artsy/icons/ChevronLeftIcon"
 import {
   Box,
@@ -8,9 +11,6 @@ import {
   Separator,
   Text,
 } from "@artsy/palette"
-import { RouterLink } from "System/Components/RouterLink"
-import { cropped } from "Utils/resized"
-import { sanitizeRedirect } from "Utils/sanitizeRedirect"
 import type * as React from "react"
 
 export interface TopContextBarProps {

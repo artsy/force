@@ -1,10 +1,10 @@
-import { Box, type BoxProps } from "@artsy/palette"
 import { ShowBannerFragmentContainer } from "Apps/Partner/Components/PartnerShows"
 import { HeroCarousel } from "Components/HeroCarousel/HeroCarousel"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import type { ShowBannersRailRendererQuery } from "__generated__/ShowBannersRailRendererQuery.graphql"
+import { Box, type BoxProps } from "@artsy/palette"
 import type { ShowBannersRail_partner$data } from "__generated__/ShowBannersRail_partner.graphql"
+import type { ShowBannersRailRendererQuery } from "__generated__/ShowBannersRailRendererQuery.graphql"
 import { compact, take, uniqBy } from "lodash"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -26,7 +26,7 @@ const ShowBannersRail: React.FC<
 
   let shows = take(
     uniqBy([...featured, ...current, ...upcoming], "node.id"),
-    10,
+    10
   )
 
   // Display past shows only if no Featured, Current, or Upcoming shows.
@@ -117,7 +117,7 @@ const ShowBannersRailFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  },
+  }
 )
 
 export const ShowBannersRailRenderer: React.FC<

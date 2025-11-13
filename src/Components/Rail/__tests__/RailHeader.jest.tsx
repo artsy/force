@@ -12,7 +12,7 @@ describe("RailHeaderTitle", () => {
       <RailHeaderTitle
         title="Awesome Auction"
         viewAllHref="/auction/awesome-auction"
-      />,
+      />
     )
     expect(container.innerHTML).toContain('<a href="/auction/awesome-auction"')
     expect(container.innerHTML).toContain("Awesome Auction")

@@ -1,7 +1,7 @@
-import { Checkbox, Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import { WAYS_TO_BUY_OPTIONS } from "Components/ArtworkFilter/ArtworkFilters/WaysToBuyFilter"
 import type { SearchCriteriaAttributeKeys } from "Components/SavedSearchAlert/types"
+import { Checkbox, Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import { entries } from "lodash"
 import type { FC } from "react"
 
@@ -19,7 +19,7 @@ export const WaysToBuy: FC<React.PropsWithChildren<unknown>> = () => {
       key: key as SearchCriteriaAttributeKeys,
       name: value.name,
       selected: state.criteria[key],
-    }),
+    })
   )
 
   return (

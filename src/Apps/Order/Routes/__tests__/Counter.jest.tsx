@@ -1,19 +1,19 @@
-import { CounterFragmentContainer } from "Apps/Order/Routes/Counter"
+import {
+  OfferOrderWithShippingDetails,
+  Offers,
+  OfferWithTotals,
+} from "Apps/__tests__/Fixtures/Order"
 import {
   insufficientInventoryResponse,
   submitPendingOfferFailed,
   submitPendingOfferSuccess,
 } from "Apps/Order/Routes/__fixtures__/MutationResults/submitPendingOffer"
-import {
-  OfferOrderWithShippingDetails,
-  OfferWithTotals,
-  Offers,
-} from "Apps/__tests__/Fixtures/Order"
+import { CounterFragmentContainer } from "Apps/Order/Routes/Counter"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { CounterTestEQuery$rawResponse } from "__generated__/CounterTestEQuery.graphql"
 import { DateTime } from "luxon"
-import { commitMutation as _commitMutation, graphql } from "react-relay"
+import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { OrderAppTestPageRTL } from "./Utils/OrderAppTestPageRTL"
 
@@ -90,7 +90,7 @@ describe("Submit Pending Counter Offer", () => {
         <CounterFragmentContainer
           router={{ push: pushMock } as any}
           order={props.order}
-          // @ts-ignore
+          // @ts-expect-error
           isCommittingMutation={isCommittingMutation}
         />
       </MockBoot>
@@ -126,16 +126,16 @@ describe("Submit Pending Counter Offer", () => {
       expect(
         page.transactionSummary
           ?.find?.("TransactionDetailsSummaryItem")
-          ?.text?.(),
+          ?.text?.()
       ).toMatch("Your counterofferChange")
       expect(page.transactionSummary.text()).toMatch(
-        "Seller's offerUS$sellers.offer",
+        "Seller's offerUS$sellers.offer"
       )
       expect(page.artworkSummary.text()).toMatch(
-        "Lisa BreslowGramercy Park South",
+        "Lisa BreslowGramercy Park South"
       )
       expect(page.shippingSummary.text()).toMatch(
-        "Ship toJoelle Van Dyne401 Broadway",
+        "Ship toJoelle Van Dyne401 Broadway"
       )
       expect(page.paymentSummary.text()).toMatch(/•••• 4444.*Exp 03\/21/)
       expect(page.buyerGuarantee.length).toBe(1)
@@ -171,7 +171,7 @@ describe("Submit Pending Counter Offer", () => {
 
       await page.clickSubmit()
       expect(pushMock).toHaveBeenCalledWith(
-        `/orders/${testOrder?.internalID}/details`,
+        `/orders/${testOrder?.internalID}/details`
       )
     })
 

@@ -1,6 +1,6 @@
-import { screen } from "@testing-library/react"
 import { CellPartnerArtistFragmentContainer } from "Components/Cells/CellPartnerArtist"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import type { CellPartnerArtistFragmentContainer_Test_Query } from "__generated__/CellPartnerArtistFragmentContainer_Test_Query.graphql"
 import { graphql } from "react-relay"
 
@@ -49,7 +49,7 @@ describe("CellPartnerArtist", () => {
     const displayedImage = screen.getByRole("presentation") as HTMLImageElement
     expect(displayedImage.src).toContain("https://example.com/right_image.jpg")
     expect(displayedImage.src).not.toContain(
-      "https://example.com/wrong_image.jpg",
+      "https://example.com/wrong_image.jpg"
     )
   })
 })

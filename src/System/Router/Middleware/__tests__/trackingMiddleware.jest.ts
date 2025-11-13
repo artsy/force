@@ -41,7 +41,7 @@ describe("trackingMiddleware", () => {
         path: "/foo",
         url: "http://testing.com/foo",
       },
-      { integrations: { Marketo: false } },
+      { integrations: { Marketo: false } }
     )
   })
 
@@ -136,11 +136,11 @@ describe("trackingMiddleware", () => {
             referrer: `http://testing.com/referrer?with=queryparams`,
             url: `http://testing.com${pathToTest}`,
           },
-          { integrations: { Marketo: false } },
+          { integrations: { Marketo: false } }
         )
 
         expect(window.analytics!.__artsyClientSideRoutingReferrer).toEqual(
-          "http://testing.com/referrer?with=queryparams",
+          "http://testing.com/referrer?with=queryparams"
         )
       })
     })

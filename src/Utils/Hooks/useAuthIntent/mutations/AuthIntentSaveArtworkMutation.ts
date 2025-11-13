@@ -1,11 +1,11 @@
 import type { AuthIntentSaveArtworkMutation } from "__generated__/AuthIntentSaveArtworkMutation.graphql"
-import { commitMutation, graphql } from "react-relay"
 import type { Environment } from "react-relay"
+import { commitMutation, graphql } from "react-relay"
 import type { AuthIntentMutation } from "./types"
 
 export const saveArtworkMutation: AuthIntentMutation = (
   relayEnvironment: Environment,
-  id: string,
+  id: string
 ) => {
   return new Promise((resolve, reject) => {
     commitMutation<AuthIntentSaveArtworkMutation>(relayEnvironment, {

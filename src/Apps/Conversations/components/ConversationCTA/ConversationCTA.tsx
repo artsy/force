@@ -1,14 +1,14 @@
-import VerifiedIcon from "@artsy/icons/VerifiedIcon"
-import { Box, Flex, type FlexProps, Spacer, Text } from "@artsy/palette"
-import { themeGet } from "@styled-system/theme-get"
 import { useConversationsContext } from "Apps/Conversations/ConversationsContext"
 import { ConversationConfirmModal } from "Apps/Conversations/components/ConversationCTA/ConversationConfirmModal"
 import { ConversationMakeOfferButton } from "Apps/Conversations/components/ConversationCTA/ConversationMakeOfferButton"
 import { ConversationPurchaseButton } from "Apps/Conversations/components/ConversationCTA/ConversationPurchaseButton"
 import { ConversationReviewOfferCTA } from "Apps/Conversations/components/ConversationCTA/ConversationReviewOfferCTA"
 import { RouterLink } from "System/Components/RouterLink"
-import { useTimer } from "Utils/Hooks/useTimer"
 import { extractNodes } from "Utils/extractNodes"
+import { useTimer } from "Utils/Hooks/useTimer"
+import VerifiedIcon from "@artsy/icons/VerifiedIcon"
+import { Box, Flex, type FlexProps, Spacer, Text } from "@artsy/palette"
+import { themeGet } from "@styled-system/theme-get"
 import type { ConversationCTA_conversation$key } from "__generated__/ConversationCTA_conversation.graphql"
 import { graphql, useFragment } from "react-relay"
 import styled from "styled-components"
@@ -28,7 +28,7 @@ export const ConversationCTA: React.FC<
 
   const partnerOffer = artwork && findPartnerOffer(artwork.internalID)
   const partnerOfferTimer = useTimer(
-    partnerOffer?.endAt ?? new Date(0).toISOString(),
+    partnerOffer?.endAt ?? new Date(0).toISOString()
   )
 
   const activeOrder = extractNodes(data.activeOrderCTA)[0]
@@ -43,7 +43,7 @@ export const ConversationCTA: React.FC<
 
   // Active order. Shows status of the transaction, with various actions and modal triggers
   const showActiveOrderReviewOfferCTA = Boolean(
-    activeOrder && activeOrder.buyerAction,
+    activeOrder && activeOrder.buyerAction
   )
 
   // Inactive order waiting for commercial actions

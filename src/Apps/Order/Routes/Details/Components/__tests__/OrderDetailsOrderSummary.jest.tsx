@@ -1,5 +1,5 @@
-import { screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import type { OrderDetailsOrderSummary_Test_Query } from "__generated__/OrderDetailsOrderSummary_Test_Query.graphql"
 import { graphql } from "react-relay"
 import { OrderDetailsOrderSummary } from "../OrderDetailsOrderSummary"
@@ -96,7 +96,7 @@ describe("OrderDetailsOrderSummary", () => {
     })
 
     expect(
-      screen.getByText(/Your purchase is protected with/),
+      screen.getByText(/Your purchase is protected with/)
     ).toBeInTheDocument()
     expect(screen.getByText(/Artsy’s Buyer Guarantee/)).toBeInTheDocument()
   })

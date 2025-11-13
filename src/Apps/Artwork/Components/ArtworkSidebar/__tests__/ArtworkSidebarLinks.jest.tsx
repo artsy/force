@@ -1,6 +1,6 @@
-import { screen } from "@testing-library/react"
 import { ArtworkSidebarLinksFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarLinks"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import type { ArtworkSidebarLinks_Test_Query } from "__generated__/ArtworkSidebarLinks_Test_Query.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -51,12 +51,12 @@ describe("ArtworkSidebarLinks", () => {
 
       it("shows conditions of sale link", () => {
         expect(
-          screen.queryByText("By placing your bid you agree to Artsy's"),
+          screen.queryByText("By placing your bid you agree to Artsy's")
         ).toBeInTheDocument()
         expect(
           screen.getByRole("link", {
             name: "General Terms and Conditions of Sale",
-          }),
+          })
         ).toHaveAttribute("href", "/terms")
       })
 
@@ -65,7 +65,7 @@ describe("ArtworkSidebarLinks", () => {
           expect(
             screen.getByRole("link", {
               name: "General Terms and Conditions of Sale",
-            }),
+            })
           ).toHaveAttribute("href", "/terms")
         })
       })
@@ -81,7 +81,7 @@ describe("ArtworkSidebarLinks", () => {
       })
 
       expect(
-        screen.queryByText(/By placing your bid you agree to Artsy's/i),
+        screen.queryByText(/By placing your bid you agree to Artsy's/i)
       ).not.toBeInTheDocument()
       expect(screen.queryByText(/Conditions of Sale/i)).not.toBeInTheDocument()
     })
@@ -97,7 +97,7 @@ describe("ArtworkSidebarLinks", () => {
       })
 
       expect(
-        screen.queryByText(/By placing your bid you agree to Artsy's/i),
+        screen.queryByText(/By placing your bid you agree to Artsy's/i)
       ).not.toBeInTheDocument()
       expect(screen.queryByText(/Conditions of Sale/i)).not.toBeInTheDocument()
     })

@@ -1,11 +1,11 @@
 import type { AuthIntentFollowArtistMutation } from "__generated__/AuthIntentFollowArtistMutation.graphql"
-import { commitMutation, graphql } from "react-relay"
 import type { Environment } from "react-relay"
+import { commitMutation, graphql } from "react-relay"
 import type { AuthIntentMutation } from "./types"
 
 export const followArtistMutation: AuthIntentMutation = (
   relayEnvironment: Environment,
-  id: string,
+  id: string
 ) => {
   return new Promise((resolve, reject) => {
     commitMutation<AuthIntentFollowArtistMutation>(relayEnvironment, {

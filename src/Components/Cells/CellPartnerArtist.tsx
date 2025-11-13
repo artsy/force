@@ -1,7 +1,7 @@
-import { Image, ResponsiveBox, Text } from "@artsy/palette"
 import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
 import { RouterLink, type RouterLinkProps } from "System/Components/RouterLink"
 import { extractNodes } from "Utils/extractNodes"
+import { Image, ResponsiveBox, Text } from "@artsy/palette"
 import type { CellPartnerArtist_partnerArtist$data } from "__generated__/CellPartnerArtist_partnerArtist.graphql"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -109,5 +109,5 @@ export const CellPartnerArtistFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  },
+  }
 )

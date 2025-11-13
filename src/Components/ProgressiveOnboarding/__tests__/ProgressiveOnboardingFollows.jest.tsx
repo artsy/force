@@ -1,5 +1,3 @@
-import { DismissibleProvider, useDismissibleContext } from "@artsy/dismissible"
-import { render, screen } from "@testing-library/react"
 import { __ProgressiveOnboardingFollowArtist__ } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowArtist"
 import { __ProgressiveOnboardingFollowFind__ } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowFind"
 import { ProgressiveOnboardingFollowHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowHighlight"
@@ -9,6 +7,8 @@ import {
 } from "Components/ProgressiveOnboarding/progressiveOnboardingKeys"
 import { withProgressiveOnboardingCounts } from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
+import { DismissibleProvider, useDismissibleContext } from "@artsy/dismissible"
+import { render, screen } from "@testing-library/react"
 import { type FC, useEffect } from "react"
 
 jest.mock("System/Hooks/useSystemContext", () => ({
@@ -24,7 +24,7 @@ jest.mock(
         {children}
       </>
     ),
-  }),
+  })
 )
 
 jest.mock("Components/ProgressiveOnboarding/withProgressiveOnboardingCounts")
@@ -41,10 +41,10 @@ jest.mock("System/Hooks/useRouter", () => ({
 
 const Example: FC<React.PropsWithChildren<unknown>> = () => {
   const ProgressiveOnboardingFollowFind = withProgressiveOnboardingCounts(
-    __ProgressiveOnboardingFollowFind__,
+    __ProgressiveOnboardingFollowFind__
   )
   const ProgressiveOnboardingFollowArtist = withProgressiveOnboardingCounts(
-    __ProgressiveOnboardingFollowArtist__,
+    __ProgressiveOnboardingFollowArtist__
   )
 
   return (
@@ -166,7 +166,7 @@ describe("ProgressiveOnboardingFollowHighlight", () => {
         <ProgressiveOnboardingFollowHighlight position="center">
           <div>Example</div>
         </ProgressiveOnboardingFollowHighlight>
-      </DismissibleProvider>,
+      </DismissibleProvider>
     )
 
     expect(screen.getByText("Example")).toBeInTheDocument()

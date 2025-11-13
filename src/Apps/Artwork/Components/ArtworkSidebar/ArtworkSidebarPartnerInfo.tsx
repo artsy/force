@@ -1,15 +1,14 @@
-import { Box, Button, Flex, Text } from "@artsy/palette"
 import { limitWithCount } from "Apps/Artwork/Utils/limitWithCount"
 import { useInquiry } from "Components/Inquiry/useInquiry"
-
+import { RouterLink } from "System/Components/RouterLink"
+import { getSignalLabel, signalsToArray } from "Utils/getSignalLabel"
 import {
   ActionType,
   type ClickedContactGallery,
   OwnerType,
 } from "@artsy/cohesion"
+import { Box, Button, Flex, Text } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
-import { RouterLink } from "System/Components/RouterLink"
-import { getSignalLabel, signalsToArray } from "Utils/getSignalLabel"
 import type { ArtworkSidebarPartnerInfo_artwork$data } from "__generated__/ArtworkSidebarPartnerInfo_artwork.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"

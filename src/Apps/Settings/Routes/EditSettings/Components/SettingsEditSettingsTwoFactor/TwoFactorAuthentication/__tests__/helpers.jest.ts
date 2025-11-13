@@ -52,13 +52,13 @@ describe("redirectMessage", () => {
   it("returns redir message for host", () => {
     const url = "https://cms.artsy.net"
     expect(redirectMessage(url)).toEqual(
-      "You will be redirected to: cms.artsy.net",
+      "You will be redirected to: cms.artsy.net"
     )
   })
   it("returns redir message for host and path", () => {
     const url = "https://cms.artsy.net/auth/artsy"
     expect(redirectMessage(url)).toEqual(
-      "You will be redirected to: cms.artsy.net",
+      "You will be redirected to: cms.artsy.net"
     )
   })
   it("returns empty string for relative /", () => {

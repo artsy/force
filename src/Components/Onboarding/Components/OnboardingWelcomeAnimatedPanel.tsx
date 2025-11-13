@@ -1,5 +1,5 @@
-import { Box, Flex, Image, ResponsiveBox } from "@artsy/palette"
 import { cropped } from "Utils/resized"
+import { Box, Flex, Image, ResponsiveBox } from "@artsy/palette"
 import { type FC, forwardRef } from "react"
 import styled, { keyframes } from "styled-components"
 
@@ -59,7 +59,7 @@ export const OnboardingWelcomeAnimatedPanel = forwardRef(
         </Flex>
       </Box>
     )
-  },
+  }
 )
 
 const DURATION = "120s"

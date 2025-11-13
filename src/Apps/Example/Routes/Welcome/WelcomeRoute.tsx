@@ -1,8 +1,8 @@
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { ContextModule, clickedShowMore } from "@artsy/cohesion"
 import { Button, Flex, ModalDialog, Text } from "@artsy/palette"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import { useState } from "react"
 import type * as React from "react"
+import { useState } from "react"
 import { useTracking } from "react-tracking"
 
 export const WelcomeRoute: React.FC<React.PropsWithChildren<unknown>> = () => {
@@ -22,7 +22,7 @@ export const WelcomeRoute: React.FC<React.PropsWithChildren<unknown>> = () => {
         context_page_owner_slug: contextPageOwnerSlug,
         context_page_owner_id: contextPageOwnerId,
         subject: e.currentTarget.textContent,
-      }),
+      })
     )
   }
 

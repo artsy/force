@@ -1,5 +1,6 @@
 import { type BoxProps, Clickable, Flex, Text } from "@artsy/palette"
 import type * as React from "react"
+
 interface PrivateArtworkDefinitionListProps extends BoxProps {
   term: string
   children: React.ReactNode

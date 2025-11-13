@@ -1,9 +1,9 @@
-import { fireEvent, screen } from "@testing-library/react"
 import { BoothFilterContextProvider } from "Apps/Fair/Components/BoothFilterContext"
 import { FairBoothRailFragmentContainer } from "Apps/Fair/Components/FairBoothRail"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { AnalyticsCombinedContextProvider } from "System/Contexts/AnalyticsContext"
 import { useRouter } from "System/Hooks/useRouter"
+import { fireEvent, screen } from "@testing-library/react"
 import type { FairBoothRail_Test_Query } from "__generated__/FairBoothRail_Test_Query.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -79,12 +79,12 @@ describe("FairBoothRail", () => {
 
     const link = screen.getAllByRole("link")[0]
     const endcodedUrl = encodeURIComponent(
-      "/fair/slug?sort=NAME_ASC&page=2&focused_booths=true",
+      "/fair/slug?sort=NAME_ASC&page=2&focused_booths=true"
     )
 
     expect(link).toHaveAttribute(
       "href",
-      `/show/slug?back_to_fair_href=${endcodedUrl}`,
+      `/show/slug?back_to_fair_href=${endcodedUrl}`
     )
   })
 

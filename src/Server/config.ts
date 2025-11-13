@@ -13,7 +13,7 @@ import { tryParse } from "../Utils/tryParse"
 if (process.env.NODE_ENV !== "test") {
   if (typeof window !== "undefined" && window !== null) {
     alert(
-      "WARNING: Do not require config, please require('sharify').data instead.",
+      "WARNING: Do not require config, please require('sharify').data instead."
     )
   }
 }

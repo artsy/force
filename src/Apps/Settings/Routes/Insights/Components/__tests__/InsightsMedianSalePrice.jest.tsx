@@ -1,6 +1,6 @@
-import { fireEvent, screen } from "@testing-library/react"
 import { InsightsMedianSalePriceFragmentContainer } from "Apps/Settings/Routes/Insights/Components/InsightsMedianSalePrice"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { fireEvent, screen } from "@testing-library/react"
 import type { InsightsMedianSalePriceTestQuery } from "__generated__/InsightsMedianSalePriceTestQuery.graphql"
 import { graphql } from "react-relay"
 
@@ -18,7 +18,7 @@ jest.mock("System/Hooks/useRouter", () => ({
 
 jest.mock("@unleash/proxy-client-react", () => ({
   useFlag: jest.fn(
-    flag => flag === "my-collection-web-phase-7-median-sale-price-graph",
+    flag => flag === "my-collection-web-phase-7-median-sale-price-graph"
   ),
 }))
 
@@ -41,7 +41,7 @@ describe("InsightsMedianSalePrice", () => {
         renderWithRelay(mockResolver)
 
         expect(
-          screen.getByText("Median Auction Price in the Last 3 Years"),
+          screen.getByText("Median Auction Price in the Last 3 Years")
         ).toBeInTheDocument()
 
         expect(screen.getByText("Takashi Murakami")).toBeInTheDocument()
@@ -64,7 +64,7 @@ describe("InsightsMedianSalePrice", () => {
       fireEvent.click(artistRow)
 
       expect(mockPush).toHaveBeenCalledWith(
-        "/collector-profile/my-collection/median-sale-price-at-auction/takashi-murakami-id?medium=Print",
+        "/collector-profile/my-collection/median-sale-price-at-auction/takashi-murakami-id?medium=Print"
       )
     })
 
@@ -76,7 +76,7 @@ describe("InsightsMedianSalePrice", () => {
       fireEvent.click(artistRow)
 
       expect(mockPush).toHaveBeenCalledWith(
-        "/collector-profile/my-collection/median-sale-price-at-auction/takashi-murakami-id?medium=Print",
+        "/collector-profile/my-collection/median-sale-price-at-auction/takashi-murakami-id?medium=Print"
       )
     })
   })
@@ -86,7 +86,7 @@ describe("InsightsMedianSalePrice", () => {
       renderWithRelay(mockEmptyResolver)
 
       expect(
-        screen.queryByText("Median Auction Price in the Last 3 Years"),
+        screen.queryByText("Median Auction Price in the Last 3 Years")
       ).not.toBeInTheDocument()
     })
   })

@@ -28,7 +28,7 @@ import { useEffect, useState } from "react"
  */
 export function __internal__useMatchMedia(
   mediaQueryString: string,
-  { initialMatches = null } = {},
+  { initialMatches = null } = {}
 ) {
   const [matches, setMatches] = useState<boolean | null>(initialMatches)
 

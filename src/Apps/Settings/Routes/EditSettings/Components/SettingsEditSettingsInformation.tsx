@@ -1,3 +1,9 @@
+import { PRICE_BUCKETS } from "Apps/Settings/Routes/EditProfile/Components/SettingsEditProfileAboutYou"
+import { richPhoneValidators } from "Components/Address/utils"
+import { sortCountriesForCountryInput } from "Components/Address/utils/sortCountriesForCountryInput"
+import { useInitialLocationValues } from "Components/Address/utils/useInitialLocationValues"
+import { passwordValidator } from "Components/AuthDialog/Views/AuthDialogSignUp"
+import { countries as countryPhoneOptions } from "Utils/countries"
 import {
   Button,
   Input,
@@ -9,12 +15,6 @@ import {
   Text,
   useToasts,
 } from "@artsy/palette"
-import { PRICE_BUCKETS } from "Apps/Settings/Routes/EditProfile/Components/SettingsEditProfileAboutYou"
-import { richPhoneValidators } from "Components/Address/utils"
-import { sortCountriesForCountryInput } from "Components/Address/utils/sortCountriesForCountryInput"
-import { useInitialLocationValues } from "Components/Address/utils/useInitialLocationValues"
-import { passwordValidator } from "Components/AuthDialog/Views/AuthDialogSignUp"
-import { countries as countryPhoneOptions } from "Utils/countries"
 import type { SettingsEditSettingsInformation_me$data } from "__generated__/SettingsEditSettingsInformation_me.graphql"
 import { Form, Formik } from "formik"
 import type * as React from "react"
@@ -79,7 +79,7 @@ export const SettingsEditSettingsInformation: React.FC<
             priceRangeMin,
             priceRangeMax,
           },
-          { setFieldValue },
+          { setFieldValue }
         ) => {
           try {
             const { updateMyUserProfile } = await submitMutation({
@@ -124,7 +124,7 @@ export const SettingsEditSettingsInformation: React.FC<
             setFieldValue("phoneNumber", updatedPhoneNumber ?? phoneNumber)
             setFieldValue(
               "phoneNumberCountryCode",
-              updatedPhoneCountryCode ?? phoneNumberCountryCode,
+              updatedPhoneCountryCode ?? phoneNumberCountryCode
             )
 
             setFieldValue("password", "")

@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test"
+import { expect, test } from "@playwright/test"
 
 test.describe("/sale/:id", () => {
   test.beforeEach(async ({ page }) => {
@@ -11,7 +11,7 @@ test.describe("/sale/:id", () => {
 
   test("renders page content", async ({ page }) => {
     await expect(page.locator("h1").first()).toContainText(
-      "Featured works for sale",
+      "Featured works for sale"
     )
     expect(page.url()).toContain("/sale/")
   })

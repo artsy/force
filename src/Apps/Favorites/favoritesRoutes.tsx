@@ -1,11 +1,11 @@
-import loadable from "@loadable/component"
 import type { RouteProps } from "System/Router/Route"
+import loadable from "@loadable/component"
 import { graphql } from "react-relay"
 
 const FavoritesApp = loadable(
   () =>
     import(/* webpackChunkName: "collectorProfileBundle" */ "./FavoritesApp"),
-  { resolveComponent: component => component.FavoritesApp },
+  { resolveComponent: component => component.FavoritesApp }
 )
 
 const Saves = loadable(
@@ -13,7 +13,7 @@ const Saves = loadable(
     import(
       /* webpackChunkName: "collectorProfileBundle" */ "./Routes/FavoritesSaves"
     ),
-  { resolveComponent: component => component.FavoritesSavesFragmentContainer },
+  { resolveComponent: component => component.FavoritesSavesFragmentContainer }
 )
 
 const Follows = loadable(
@@ -21,7 +21,7 @@ const Follows = loadable(
     import(
       /* webpackChunkName: "collectorProfileBundle" */ "./Routes/FavoritesFollows/FavoritesFollows"
     ),
-  { resolveComponent: component => component.FavoritesFollows },
+  { resolveComponent: component => component.FavoritesFollows }
 )
 
 const Alerts = loadable(
@@ -31,7 +31,7 @@ const Alerts = loadable(
     ),
   {
     resolveComponent: component => component.FavoritesAlertsPaginationContainer,
-  },
+  }
 )
 
 export const favoritesRoutes: RouteProps[] = [

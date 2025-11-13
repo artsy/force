@@ -1,8 +1,8 @@
-import { screen } from "@testing-library/react"
 import { InstitutionsRouteFragmentContainer } from "Apps/Partners/Routes/InstitutionsRoute"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useRouter } from "System/Hooks/useRouter"
+import { screen } from "@testing-library/react"
 import type { InstitutionsRouteFragmentContainer_Test_Query } from "__generated__/InstitutionsRouteFragmentContainer_Test_Query.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -68,7 +68,7 @@ describe("InstitutionsRoute", () => {
     renderWithRelay()
 
     expect(
-      screen.getByText("Interested in Listing Your Museum on Artsy?"),
+      screen.getByText("Interested in Listing Your Museum on Artsy?")
     ).toBeInTheDocument()
 
     expect(screen.getByText("PartnersRailsQueryRenderer")).toBeInTheDocument()
@@ -85,11 +85,11 @@ describe("InstitutionsRoute", () => {
       renderWithRelay()
 
       expect(
-        screen.getByText("Interested in Listing Your Museum on Artsy?"),
+        screen.getByText("Interested in Listing Your Museum on Artsy?")
       ).toBeInTheDocument()
 
       expect(
-        screen.getByText("PartnersFilteredCellsQueryRenderer"),
+        screen.getByText("PartnersFilteredCellsQueryRenderer")
       ).toBeInTheDocument()
     })
   })

@@ -1,6 +1,6 @@
 import type { FairOrganizerFollowMutation } from "__generated__/FairOrganizerFollowMutation.graphql"
-import { commitMutation, graphql } from "react-relay"
 import type { Environment } from "react-relay"
+import { commitMutation, graphql } from "react-relay"
 
 export type FollowFairOrganizerMutationProps = (
   relayEnvironment: Environment,
@@ -8,12 +8,12 @@ export type FollowFairOrganizerMutationProps = (
     id: string
     profileID: string
     isFollowed?: boolean
-  },
+  }
 ) => Promise<unknown>
 
 export const fairOrganizerFollowMutation: FollowFairOrganizerMutationProps = (
   relayEnvironment: Environment,
-  values,
+  values
 ) => {
   return new Promise((resolve, reject) => {
     commitMutation<FairOrganizerFollowMutation>(relayEnvironment, {

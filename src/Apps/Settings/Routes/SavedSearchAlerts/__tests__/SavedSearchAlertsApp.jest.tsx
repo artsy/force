@@ -1,13 +1,13 @@
-import { fireEvent, screen } from "@testing-library/react"
 import { SavedSearchAlertsAppPaginationContainer } from "Apps/Settings/Routes/SavedSearchAlerts/SavedSearchAlertsApp"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { MediaContextProvider } from "Utils/Responsive"
+import { fireEvent, screen } from "@testing-library/react"
 import type { SavedSearchAlertsApp_Test_Query } from "__generated__/SavedSearchAlertsApp_Test_Query.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { type MockEnvironment, createMockEnvironment } from "relay-test-utils"
+import { createMockEnvironment, type MockEnvironment } from "relay-test-utils"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -106,7 +106,7 @@ describe("SavedSearchAlertsApp", () => {
       })
 
       expect(
-        screen.getByText("Get notifications when there’s a match."),
+        screen.getByText("Get notifications when there’s a match.")
       ).toBeInTheDocument()
     })
   })
@@ -125,7 +125,7 @@ describe("SavedSearchAlertsApp", () => {
             }),
           },
           {},
-          relayEnv,
+          relayEnv
         )
 
         await flushPromiseQueue()
@@ -147,7 +147,7 @@ describe("SavedSearchAlertsApp", () => {
         await flushPromiseQueue()
 
         expect(mockSilentPush).toHaveBeenCalledWith(
-          "/favorites/alerts/example-id-1/edit",
+          "/favorites/alerts/example-id-1/edit"
         )
 
         expect(screen.getAllByText("Edit Alert")[0]).toBeInTheDocument()
@@ -161,7 +161,7 @@ describe("SavedSearchAlertsApp", () => {
             }),
           },
           {},
-          relayEnv,
+          relayEnv
         )
 
         await flushPromiseQueue()
@@ -182,7 +182,7 @@ describe("SavedSearchAlertsApp", () => {
         await flushPromiseQueue()
 
         expect(mockSilentPush).toHaveBeenCalledWith(
-          "/favorites/alerts/example-id-1/edit",
+          "/favorites/alerts/example-id-1/edit"
         )
 
         expect(screen.getAllByText("Edit Alert")[0]).toBeInTheDocument()
@@ -190,7 +190,7 @@ describe("SavedSearchAlertsApp", () => {
         fireEvent.click(screen.getAllByText("Edit")[1])
 
         expect(mockSilentPush).toHaveBeenCalledWith(
-          "/favorites/alerts/example-id-2/edit",
+          "/favorites/alerts/example-id-2/edit"
         )
       })
     })
@@ -208,7 +208,7 @@ describe("SavedSearchAlertsApp", () => {
             }),
           },
           {},
-          relayEnv,
+          relayEnv
         )
 
         await flushPromiseQueue()
@@ -232,7 +232,7 @@ describe("SavedSearchAlertsApp", () => {
         fireEvent.click(screen.getAllByText("Edit")[0])
 
         expect(mockSilentPush).toHaveBeenCalledWith(
-          "/favorites/alerts/example-id-1/edit",
+          "/favorites/alerts/example-id-1/edit"
         )
 
         expect(screen.getAllByText("Edit Alert")[0]).toBeInTheDocument()
@@ -258,7 +258,7 @@ describe("SavedSearchAlertsApp", () => {
             }),
           },
           {},
-          relayEnv,
+          relayEnv
         )
 
         await flushPromiseQueue()
@@ -282,7 +282,7 @@ describe("SavedSearchAlertsApp", () => {
         fireEvent.click(screen.getAllByText("View Artworks")[0])
 
         expect(mockSilentPush).toHaveBeenCalledWith(
-          "/favorites/alerts/example-id-1/artworks",
+          "/favorites/alerts/example-id-1/artworks"
         )
 
         expect(screen.getAllByText("View Artworks")[0]).toBeInTheDocument()
@@ -290,7 +290,7 @@ describe("SavedSearchAlertsApp", () => {
         fireEvent.click(screen.getAllByText("View Artworks")[1])
 
         expect(mockSilentPush).toHaveBeenCalledWith(
-          "/favorites/alerts/example-id-2/artworks",
+          "/favorites/alerts/example-id-2/artworks"
         )
       })
     })
@@ -308,7 +308,7 @@ describe("SavedSearchAlertsApp", () => {
             }),
           },
           {},
-          relayEnv,
+          relayEnv
         )
         await flushPromiseQueue()
 
@@ -331,7 +331,7 @@ describe("SavedSearchAlertsApp", () => {
         fireEvent.click(screen.getAllByText("View Artworks")[0])
 
         expect(mockSilentPush).toHaveBeenCalledWith(
-          "/favorites/alerts/example-id-1/artworks",
+          "/favorites/alerts/example-id-1/artworks"
         )
 
         expect(screen.getAllByText("View Artworks")[0]).toBeInTheDocument()

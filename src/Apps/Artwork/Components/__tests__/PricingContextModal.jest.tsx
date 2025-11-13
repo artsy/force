@@ -1,8 +1,8 @@
-import { fireEvent, screen } from "@testing-library/react"
 import { PricingContextModal } from "Apps/Artwork/Components/PricingContextModal"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { mockTracking } from "DevTools/mockTracking"
 import { render } from "DevTools/renderWithMockBoot"
+import { fireEvent, screen } from "@testing-library/react"
 
 jest.unmock("react-relay")
 jest.unmock("react-tracking")
@@ -15,8 +15,8 @@ describe("PricingContextModal", () => {
 
     expect(
       screen.queryByText(
-        "This feature aims to provide insight into the range of prices for an artist's works and allow buyers to discover other available works by the artist at different price points.",
-      ),
+        "This feature aims to provide insight into the range of prices for an artist's works and allow buyers to discover other available works by the artist at different price points."
+      )
     ).not.toBeInTheDocument()
   })
 
@@ -33,7 +33,7 @@ describe("PricingContextModal", () => {
 
     expect(links[0]).toHaveAttribute(
       "href",
-      "/article/artsy-editorial-artworks-prices",
+      "/article/artsy-editorial-artworks-prices"
     )
   })
 
@@ -59,8 +59,8 @@ describe("PricingContextModal", () => {
 
     expect(
       screen.getByText(
-        "This feature aims to provide insight into the range of prices for an artist's works and allow buyers to discover other available works by the artist at different price points.",
-      ),
+        "This feature aims to provide insight into the range of prices for an artist's works and allow buyers to discover other available works by the artist at different price points."
+      )
     ).toBeInTheDocument()
   })
 
@@ -74,8 +74,8 @@ describe("PricingContextModal", () => {
 
     expect(
       screen.getByText(
-        "This feature aims to provide insight into the range of prices for an artist's works and allow buyers to discover other available works by the artist at different price points.",
-      ),
+        "This feature aims to provide insight into the range of prices for an artist's works and allow buyers to discover other available works by the artist at different price points."
+      )
     ).toBeInTheDocument()
 
     const gotItButton = screen.getByText("Got it")

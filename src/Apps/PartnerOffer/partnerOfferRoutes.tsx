@@ -1,5 +1,5 @@
-import loadable from "@loadable/component"
 import type { RouteProps } from "System/Router/Route"
+import loadable from "@loadable/component"
 
 const PartnerOfferCheckoutRoute = loadable(
   () =>
@@ -8,7 +8,7 @@ const PartnerOfferCheckoutRoute = loadable(
     ),
   {
     resolveComponent: component => component.PartnerOfferCheckout,
-  },
+  }
 )
 
 export const partnerOfferRoutes: RouteProps[] = [

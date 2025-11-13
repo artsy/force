@@ -1,14 +1,14 @@
+import type { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
 import {
   SelectedFiltersCountsLabels,
   useArtworkFilterContext,
   useCurrentlySelectedFilters,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
-import type { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { useFilterLabelCountByKey } from "Components/ArtworkFilter/Utils/useFilterLabelCountByKey"
+import type { CustomRange } from "Components/PriceRange/constants"
 import type { HistogramBarEntity } from "Components/PriceRange/Histogram"
 import { PriceRange } from "Components/PriceRange/PriceRange"
 import { parsePriceRange } from "Components/PriceRange/Utils/parsePriceRange"
-import type { CustomRange } from "Components/PriceRange/constants"
 import { sortBy } from "lodash"
 import { type FC, useMemo } from "react"
 import { FilterExpandable } from "./FilterExpandable"
@@ -24,7 +24,7 @@ export const PriceRangeFilter: FC<
   const { field, range, histogram, onPriceRangeUpdate } = usePriceRangeFilter()
 
   const countLabel = useFilterLabelCountByKey(
-    SelectedFiltersCountsLabels.priceRange,
+    SelectedFiltersCountsLabels.priceRange
   )
 
   const label = `Price${countLabel}`
@@ -42,7 +42,7 @@ export const PriceRangeFilter: FC<
 }
 
 export const aggregationsToHistogram = (
-  aggregations?: Aggregations | null,
+  aggregations?: Aggregations | null
 ): HistogramBarEntity[] => {
   if (!aggregations) return []
 
@@ -53,7 +53,7 @@ export const aggregationsToHistogram = (
   if (!aggregation) return []
 
   const bars: HistogramBarEntity[] = aggregation.counts.map(
-    ({ count, value }) => ({ count, value: Number(value) }),
+    ({ count, value }) => ({ count, value: Number(value) })
   )
 
   return sortBy(bars, "value")
@@ -68,7 +68,7 @@ export const usePriceRangeFilter = () => {
 
   const histogram = useMemo(
     () => aggregationsToHistogram(filters.aggregations),
-    [filters.aggregations],
+    [filters.aggregations]
   )
 
   const onPriceRangeUpdate = (nextRange: CustomRange) => {

@@ -1,5 +1,3 @@
-import { ContextModule } from "@artsy/cohesion"
-import { Flex, Message, Spacer, Stack, Sup, Text } from "@artsy/palette"
 import { shippingQuoteDisplayNames } from "Apps/Order/Routes/Shipping/Components/ShippingQuotes"
 import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
 import { DownloadAppBadges } from "Components/DownloadAppBadges/DownloadAppBadges"
@@ -9,8 +7,10 @@ import {
 } from "Components/StepSummaryItem"
 import { RouterLink } from "System/Components/RouterLink"
 import { withSystemContext } from "System/Contexts/SystemContext"
-import { Device, useDeviceDetection } from "Utils/Hooks/useDeviceDetection"
 import { extractNodes } from "Utils/extractNodes"
+import { Device, useDeviceDetection } from "Utils/Hooks/useDeviceDetection"
+import { ContextModule } from "@artsy/cohesion"
+import { Flex, Message, Spacer, Stack, Sup, Text } from "@artsy/palette"
 import type { TransactionDetailsSummaryItem_order$data } from "__generated__/TransactionDetailsSummaryItem_order.graphql"
 import type { Omit } from "lodash"
 import type { FC } from "react"
@@ -101,8 +101,7 @@ export const TransactionDetailsSummaryItem: FC<
   }
 
   const getShippingLabel = shippingQuoteType => {
-    const artsyShippingLabel =
-      shippingQuoteDisplayNames[shippingQuoteType] + " delivery"
+    const artsyShippingLabel = `${shippingQuoteDisplayNames[shippingQuoteType]} delivery`
     const suffix = offerShippingCostSubjectToChange() ? "*" : ""
     return artsyShippingLabel + suffix
   }

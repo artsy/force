@@ -11,7 +11,7 @@ export const setServerSideCookie = () => {
     const trackingPreferences = encodeURIComponent(cookie)
 
     fetch(
-      `/set-tracking-preferences?${COOKIE_CONSENT_MANAGER_COOKIE_NAME}=${trackingPreferences}`,
+      `/set-tracking-preferences?${COOKIE_CONSENT_MANAGER_COOKIE_NAME}=${trackingPreferences}`
     )
   }, 0)
 }

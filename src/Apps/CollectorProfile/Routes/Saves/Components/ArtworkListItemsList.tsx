@@ -1,7 +1,7 @@
-import { Shelf, SkeletonBox } from "@artsy/palette"
 import { ArtworkListItemFragmentContainer } from "Apps/CollectorProfile/Routes/Saves/Components/ArtworkListItem"
 import { useRouter } from "System/Hooks/useRouter"
 import { extractNodes } from "Utils/extractNodes"
+import { Shelf, SkeletonBox } from "@artsy/palette"
 import type { ArtworkListItemsListQuery } from "__generated__/ArtworkListItemsListQuery.graphql"
 import { times } from "lodash"
 import { type FC, useRef } from "react"
@@ -31,7 +31,7 @@ export const ArtworkListItemsList: FC<
 
   if (initialArtworkListId.current !== undefined) {
     const index = customArtworkLists.findIndex(
-      artworkList => artworkList.internalID === initialArtworkListId.current,
+      artworkList => artworkList.internalID === initialArtworkListId.current
     )
 
     if (index !== -1) {

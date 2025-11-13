@@ -1,5 +1,5 @@
-import { Spacer, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
+import { Spacer, Text } from "@artsy/palette"
 
 interface StatusPageConfig {
   title?: React.ReactNode
@@ -71,12 +71,12 @@ export const getStatusCopy = (order, logger?): StatusPageConfig => {
         title: `${processingApprovalTitle(
           isOfferFlow,
           isWireTransfer,
-          isPrivateSaleOrder,
+          isPrivateSaleOrder
         )}`,
         description: processingApprovalDescription(
           order,
           isWireTransfer,
-          isPrivateSaleOrder,
+          isPrivateSaleOrder
         ),
         alertMessageTitle: isWireTransfer
           ? "Please proceed with the wire transfer within 7 days to complete your purchase."
@@ -271,7 +271,7 @@ export const getShipmentInfo = (order): ShipmentData | null => {
 export const shipmentDescription = (
   isArtaShipped: boolean,
   isDelivered: boolean,
-  order,
+  order
 ): React.ReactNode => {
   const shipmentData: ShipmentData | null = getShipmentInfo(order)
 
@@ -318,7 +318,7 @@ export const continueToInboxText =
 
 export const approvedTitle = (
   isOfferFlow: boolean,
-  isPrivateSaleOrder: boolean,
+  isPrivateSaleOrder: boolean
 ): string => {
   if (isOfferFlow) {
     return "Offer accepted"
@@ -331,7 +331,7 @@ export const approvedTitle = (
 
 export const approvedDescription = (
   isPickup: boolean,
-  isPrivateSaleOrder: boolean,
+  isPrivateSaleOrder: boolean
 ) => {
   if (isPrivateSaleOrder) {
     return (
@@ -355,7 +355,7 @@ export const approvedDescription = (
 export const processingApprovalTitle = (
   isOfferFlow,
   isWireTransfer,
-  isPrivateSaleOrder,
+  isPrivateSaleOrder
 ): string => {
   if (isPrivateSaleOrder) {
     return "Thank you for your purchase with Artsy Private Sales."
@@ -377,7 +377,7 @@ export const processingApprovalTitle = (
 export const processingApprovalDescription = (
   order,
   isWireTransfer,
-  isPrivateSaleOrder,
+  isPrivateSaleOrder
 ): string | JSX.Element | null => {
   // if wire, return null regardless of isPrivateSaleOrder
   if (isWireTransfer) {
@@ -399,7 +399,7 @@ export const processingApprovalDescription = (
 
   // non-private sale orders
   return `Thank you for your purchase. ${deliverText(
-    order,
+    order
   )}More delivery information will be available once your order ships.`
 }
 
@@ -552,7 +552,7 @@ export const deliverText = (order): React.ReactNode => {
 
 export const trackingInfo = (
   trackingId,
-  trackingUrl,
+  trackingUrl
 ): React.ReactNode | null => {
   const node = trackingUrl ? (
     <RouterLink to={trackingUrl} target="_blank">

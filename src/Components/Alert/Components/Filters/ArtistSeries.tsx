@@ -1,3 +1,5 @@
+import { QuickMultipleSelectAlertFilter } from "Components/Alert/Components/Filters/QuickMultipleSelectAlertFilter"
+import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import {
   Flex,
   Separator,
@@ -5,8 +7,6 @@ import {
   SkeletonBox,
   SkeletonText,
 } from "@artsy/palette"
-import { QuickMultipleSelectAlertFilter } from "Components/Alert/Components/Filters/QuickMultipleSelectAlertFilter"
-import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import type { ArtistSeriesOptionsQuery } from "__generated__/ArtistSeriesOptionsQuery.graphql"
 import { compact, times } from "lodash"
 import { type FC, Suspense } from "react"
@@ -35,10 +35,10 @@ export const ArtistSeries: FC<React.PropsWithChildren<unknown>> = () => {
     artistSeriesOptionsQuery,
     {
       input: { artistIDs, aggregations: ["ARTIST_SERIES"] },
-    },
+    }
   )
   const artistSeries = (data.artworksConnection?.aggregations || []).find(
-    aggs => aggs?.slice === "ARTIST_SERIES",
+    aggs => aggs?.slice === "ARTIST_SERIES"
   )
 
   const options = compact(
@@ -49,7 +49,7 @@ export const ArtistSeries: FC<React.PropsWithChildren<unknown>> = () => {
         name: count.name,
         value: count.value,
       }
-    }),
+    })
   )
 
   if (!options.length) return null

@@ -1,8 +1,8 @@
-import { render, screen, fireEvent } from "@testing-library/react"
 import { OfferNote } from "Apps/Order/Components/OfferNote"
 import { useInquiry } from "Components/Inquiry/useInquiry"
 import { SystemContextProvider } from "System/Contexts/SystemContext"
 import type { ExtractProps } from "Utils/ExtractProps"
+import { fireEvent, render, screen } from "@testing-library/react"
 
 const simulateTyping = (text: string) => {
   const textArea = screen.getByRole("textbox")
@@ -25,12 +25,12 @@ describe("OfferNote", () => {
   })
 
   const renderComponent = (
-    props: Partial<ExtractProps<typeof OfferNote>> = {},
+    props: Partial<ExtractProps<typeof OfferNote>> = {}
   ) => {
     return render(
       <SystemContextProvider>
         <OfferNote onChange={onChange} artworkId="artwork-id" {...props} />
-      </SystemContextProvider>,
+      </SystemContextProvider>
     )
   }
 
@@ -50,8 +50,8 @@ describe("OfferNote", () => {
     expect(screen.getByText("Note (recommended)")).toBeInTheDocument()
     expect(
       screen.getByText(
-        "Add additional information to help the gallery to evaluate your offer.",
-      ),
+        "Add additional information to help the gallery to evaluate your offer."
+      )
     ).toBeInTheDocument()
   })
 })

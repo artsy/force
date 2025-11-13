@@ -1,4 +1,10 @@
 import {
+  AUTH_MODAL_TYPES,
+  useAuthDialogContext,
+} from "Components/AuthDialog/AuthDialogContext"
+import { useAfterAuthenticationRedirectUrl } from "Components/AuthDialog/Hooks/useAfterAuthenticationRedirectUrl"
+import { useElligibleForOnboarding } from "Components/AuthDialog/Hooks/useElligibleForOnboarding"
+import {
   ActionType,
   type AuthImpression,
   AuthModalType,
@@ -7,12 +13,6 @@ import {
   type ResetYourPassword,
   type SuccessfullyLoggedIn,
 } from "@artsy/cohesion"
-import {
-  AUTH_MODAL_TYPES,
-  useAuthDialogContext,
-} from "Components/AuthDialog/AuthDialogContext"
-import { useAfterAuthenticationRedirectUrl } from "Components/AuthDialog/Hooks/useAfterAuthenticationRedirectUrl"
-import { useElligibleForOnboarding } from "Components/AuthDialog/Hooks/useElligibleForOnboarding"
 import { useMemo } from "react"
 import { useTracking } from "react-tracking"
 
@@ -122,7 +122,7 @@ export const useAuthDialogTracking = () => {
       mode,
       redirectUrl,
       trackEvent,
-    ],
+    ]
   )
 
   return track

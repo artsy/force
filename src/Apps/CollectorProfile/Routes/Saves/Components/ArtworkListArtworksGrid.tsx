@@ -1,12 +1,3 @@
-import {
-  ActionType,
-  type ClickedChangePage,
-  type ClickedMainArtworkGrid,
-  ContextModule,
-  OwnerType,
-  commercialFilterParamsChanged,
-} from "@artsy/cohesion"
-import { Spacer } from "@artsy/palette"
 import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { allowedFilters } from "Components/ArtworkFilter/Utils/allowedFilters"
 import ArtworkGrid from "Components/ArtworkGrid/ArtworkGrid"
@@ -15,13 +6,22 @@ import { PaginationFragmentContainer as Pagination } from "Components/Pagination
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { Jump } from "Utils/Hooks/useJump"
 import { usePrevious } from "Utils/Hooks/usePrevious"
+import {
+  ActionType,
+  type ClickedChangePage,
+  type ClickedMainArtworkGrid,
+  ContextModule,
+  commercialFilterParamsChanged,
+  OwnerType,
+} from "@artsy/cohesion"
+import { Spacer } from "@artsy/palette"
 import type { ArtworkListArtworksGrid_me$data } from "__generated__/ArtworkListArtworksGrid_me.graphql"
 import { isEqual } from "lodash"
 import { type FC, useState } from "react"
 import {
-  type RelayRefetchProp,
   createFragmentContainer,
   graphql,
+  type RelayRefetchProp,
 } from "react-relay"
 import { useTracking } from "react-tracking"
 import useDeepCompareEffect from "use-deep-compare-effect"
@@ -76,7 +76,7 @@ const ArtworkListArtworksGrid: FC<
     context.setFilter("page", page)
   }
 
-  const fetchResults = (changedFilterKey: string) => {
+  const fetchResults = (_changedFilterKey: string) => {
     setFetching(true)
 
     const variables = {
@@ -135,7 +135,7 @@ const ArtworkListArtworksGrid: FC<
         const isChanged = !isEqual(currentFilter, previousFilter)
 
         return isChanged
-      },
+      }
     )
     const filtersHaveUpdated = !!changedFilterEntity
 
@@ -227,5 +227,5 @@ export const ArtworkListArtworksGridFragmentContainer = createFragmentContainer(
         ...ArtworkListEmptyState_me @arguments(listID: $listID)
       }
     `,
-  },
+  }
 )

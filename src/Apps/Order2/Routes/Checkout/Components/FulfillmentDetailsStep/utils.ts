@@ -1,6 +1,6 @@
 import {
-  type FormikContextWithAddress,
   addressFormFieldsValidator,
+  type FormikContextWithAddress,
 } from "Components/Address/AddressFormFields"
 import { COUNTRY_CODE_TO_COUNTRY_NAME } from "Components/CountrySelect"
 import { extractNodes } from "Utils/extractNodes"
@@ -21,7 +21,7 @@ export type ProcessedUserAddress = FormikContextWithAddress & {
 }
 
 export const normalizeAddress = (
-  address: GravityAddress,
+  address: GravityAddress
 ): FormikContextWithAddress => {
   return {
     phoneNumber: address.phoneNumber || "",
@@ -44,13 +44,13 @@ export const countryNameFromAlpha2 = (country: string): string => {
 
 export const processSavedAddresses = (
   addresses: Order2DeliveryForm_me$data["addressConnection"],
-  availableShippingCountries: readonly string[],
+  availableShippingCountries: readonly string[]
 ): ProcessedUserAddress[] => {
   const meAddresses = extractNodes(addresses)
   const processedAddresses = meAddresses.map(address => {
     const normalizedAddress = normalizeAddress(address)
     const isValid = availableShippingCountries.includes(
-      normalizedAddress.address.country,
+      normalizedAddress.address.country
     )
     return {
       ...normalizedAddress,
@@ -77,7 +77,7 @@ export const sortAddressesByPriority = (addresses: ProcessedUserAddress[]) => {
 
 export const findInitialSelectedAddress = (
   processedAddresses: ProcessedUserAddress[],
-  initialValues: FormikContextWithAddress,
+  initialValues: FormikContextWithAddress
 ): ProcessedUserAddress | undefined => {
   return (
     processedAddresses.find(processedAddress => {

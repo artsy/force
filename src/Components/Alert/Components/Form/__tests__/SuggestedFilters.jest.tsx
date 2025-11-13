@@ -1,8 +1,8 @@
-import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { AlertProvider } from "Components/Alert/AlertProvider"
 import { SugggestedFiltersQueryRenderer } from "Components/Alert/Components/Form/SuggestedFilters"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { fireEvent, screen, waitFor } from "@testing-library/react"
 
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),

@@ -1,4 +1,3 @@
-import { Button, Input, Join, ModalDialog, Spacer, Text } from "@artsy/palette"
 import { ConditionsOfSaleCheckbox } from "Apps/Auction/Components/Form/ConditionsOfSaleCheckbox"
 import { IdentityVerificationWarning } from "Apps/Auction/Components/Form/IdentityVerificationWarning"
 import { formatError } from "Apps/Auction/Components/Form/Utils/formatError"
@@ -8,6 +7,7 @@ import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
 import { useCreateBidder } from "Apps/Auction/Queries/useCreateBidder"
 import { useRouter } from "System/Hooks/useRouter"
 import { useUpdateMyUserProfile } from "Utils/Hooks/Mutations/useUpdateMyUserProfile"
+import { Button, Input, Join, ModalDialog, Spacer, Text } from "@artsy/palette"
 import type { AuctionConfirmRegistrationRoute_me$data } from "__generated__/AuctionConfirmRegistrationRoute_me.graphql"
 import type { AuctionConfirmRegistrationRoute_sale$data } from "__generated__/AuctionConfirmRegistrationRoute_sale.graphql"
 import { Form, Formik } from "formik"
@@ -68,7 +68,7 @@ const AuctionConfirmRegistrationRoute: React.FC<
   }
 
   // Track page view or redirect
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Registration redirect check should only run on mount
   useEffect(() => {
     if (redirectToSaleHome(sale)) {
       router.replace(`/auction/${sale.slug}`)

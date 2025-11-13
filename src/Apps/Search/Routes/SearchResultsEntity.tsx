@@ -1,16 +1,16 @@
-import { Box, Separator } from "@artsy/palette"
 import { GenericSearchResultItem } from "Apps/Search/Components/GenericSearchResultItem"
 import { ZeroState } from "Apps/Search/Components/ZeroState"
 import { LoadingArea } from "Components/LoadingArea"
 import { PaginationFragmentContainer as Pagination } from "Components/Pagination"
+import { Box, Separator } from "@artsy/palette"
 import type { SearchResultsEntity_viewer$data } from "__generated__/SearchResultsEntity_viewer.graphql"
 import { type RouterState, withRouter } from "found"
 import qs from "qs"
 import * as React from "react"
 import {
-  type RelayRefetchProp,
   createRefetchContainer,
   graphql,
+  type RelayRefetchProp,
 } from "react-relay"
 
 export interface Props extends RouterState {
@@ -99,7 +99,7 @@ export class SearchResultsEntityRoute extends React.Component<Props, State> {
         // TODO: use silentPush from useRouter if this class component is
         // converted to a function component
         window.history.pushState({}, "", `${location.pathname}?${urlParams}`)
-      },
+      }
     )
   }
 
@@ -252,5 +252,5 @@ export const SearchResultsEntityRouteFragmentContainer = createRefetchContainer(
           )
       }
     }
-  `,
+  `
 )

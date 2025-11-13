@@ -1,5 +1,5 @@
-import { BorderBox, Box, Join, Spacer } from "@artsy/palette"
 import { ArtworkDefinitionList } from "Apps/Artwork/Components/ArtworkDefinitionList"
+import { BorderBox, Box, Join, Spacer } from "@artsy/palette"
 import type { ArtistMarketInsights_artist$data } from "__generated__/ArtistMarketInsights_artist.graphql"
 import { groupBy } from "lodash"
 import { Component } from "react"
@@ -168,7 +168,7 @@ export const ArtistMarketInsightsFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  },
+  }
 )
 
 export const hasSections = ({
@@ -213,7 +213,7 @@ const orderedCategories = ["blue-chip", "top-established", "top-emerging"]
 export const highestCategory = edges => {
   const groups = groupedByCategories(edges)
   return orderedCategories.filter(
-    category => groups[category] && groups[category].length > 0,
+    category => groups[category] && groups[category].length > 0
   )[0]
 }
 

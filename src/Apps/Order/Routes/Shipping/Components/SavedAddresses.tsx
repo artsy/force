@@ -1,23 +1,22 @@
-import { BorderedRadio, Clickable, RadioGroup, Spacer } from "@artsy/palette"
-import { themeGet } from "@styled-system/theme-get"
+import { useOrderTracking } from "Apps/Order/Hooks/useOrderTracking"
 import {
   AddressModal,
   type AddressModalAction,
 } from "Apps/Order/Routes/Shipping/Components/AddressModal"
 import { SavedAddressItem } from "Apps/Order/Routes/Shipping/Components/SavedAddressItem"
-import createLogger from "Utils/logger"
-import { type FC, useEffect, useState } from "react"
-import styled from "styled-components"
-
-import { useOrderTracking } from "Apps/Order/Hooks/useOrderTracking"
 import { useShippingContext } from "Apps/Order/Routes/Shipping/Hooks/useShippingContext"
 import {
   type FulfillmentValues,
-  type SavedAddressType,
   getAddressByID,
   getDefaultUserAddress,
+  type SavedAddressType,
 } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
+import createLogger from "Utils/logger"
+import { BorderedRadio, Clickable, RadioGroup, Spacer } from "@artsy/palette"
+import { themeGet } from "@styled-system/theme-get"
 import { useFormikContext } from "formik"
+import { type FC, useEffect, useState } from "react"
+import styled from "styled-components"
 
 export interface SavedAddressesProps {
   active: boolean
@@ -43,7 +42,7 @@ export const SavedAddresses: FC<
     ? (getAddressByID(
         addressList,
         shippingContext.orderData.savedFulfillmentDetails
-          ?.selectedSavedAddressID,
+          ?.selectedSavedAddressID
       ) ?? null)
     : null
 
@@ -55,7 +54,7 @@ export const SavedAddresses: FC<
   const addressSavedToOrderID = savedAddressOnOrder?.internalID
 
   // Automatically select (save) best available address ID if it isn't present
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Address selection logic managed by component state
   useEffect(() => {
     const activeAndNoAddressSaved =
       props.active &&
@@ -71,7 +70,7 @@ export const SavedAddresses: FC<
     const bestAddress = getBestAvailableAddress(
       addressList,
       addressSavedToOrderID,
-      shippingContext.orderData.availableShippingCountries,
+      shippingContext.orderData.availableShippingCountries
     )
     if (bestAddress) {
       selectAndSubmitAddress(bestAddress)
@@ -177,7 +176,7 @@ const AddAddressButton = styled(Clickable)`
 const getBestAvailableAddress = (
   addressList: SavedAddressType[],
   addressID?: string | null,
-  availableShippingCountries?: string[],
+  availableShippingCountries?: string[]
 ) => {
   return (
     (addressID && getAddressByID(addressList, addressID)) ||

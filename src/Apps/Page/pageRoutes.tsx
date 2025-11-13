@@ -1,12 +1,12 @@
-import loadable from "@loadable/component"
 import type { RouteProps } from "System/Router/Route"
+import loadable from "@loadable/component"
 import { graphql } from "react-relay"
 
 const PageApp = loadable(
   () => import(/* webpackChunkName: "pageBundle" */ "./PageApp"),
   {
     resolveComponent: component => component.PageAppFragmentContainer,
-  },
+  }
 )
 
 export const TOP_LEVEL_PAGE_SLUG_ALLOWLIST = [

@@ -37,7 +37,7 @@ describe("repcaptcha", () => {
 
     try {
       await recaptcha("signup_submit")
-    } catch (err) {
+    } catch (_err) {
       action()
     }
 

@@ -3,11 +3,11 @@
  * with improvements like state select
  */
 
+import type { Address } from "Components/Address/utils"
+import { CountrySelect } from "Components/CountrySelect"
 import { Input } from "@artsy/palette"
 import { screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-import type { Address } from "Components/Address/utils"
-import { CountrySelect } from "Components/CountrySelect"
 
 export const validAddress: Address = {
   name: "Joelle Van Dyne",
@@ -22,7 +22,7 @@ export const validAddress: Address = {
 
 export const fillIn = (
   component: any,
-  inputData: { title: string; value: string },
+  inputData: { title: string; value: string }
 ) => {
   const input = component
     .find(Input)
@@ -32,7 +32,7 @@ export const fillIn = (
 
 export const fillInPhoneNumber = (
   component: any,
-  inputData: { isPickup?: boolean; value: string },
+  inputData: { isPickup?: boolean; value: string }
 ) => {
   const index = inputData.isPickup ? 0 : 1
   const input = component
@@ -49,7 +49,7 @@ export const fillCountrySelect = (component, value) => {
 
 export const clickSaveAddress = async () => {
   await userEvent.click(
-    screen.getByRole("checkbox", { name: /Save shipping address/ }),
+    screen.getByRole("checkbox", { name: /Save shipping address/ })
   )
 }
 
@@ -78,11 +78,11 @@ export const fillAddressForm = async (address: Partial<Address>) => {
     screen.findByPlaceholderText("Apt, floor, suite, etc."),
     screen.findByPlaceholderText("City"),
     screen.findByPlaceholderText(
-      address.country === "US" ? "State" : "State, province, or region",
+      address.country === "US" ? "State" : "State, province, or region"
     ),
     screen.findByPlaceholderText(
       address.country === "US" ? "ZIP code" : /ZIP\/Postal code/,
-      { exact: false },
+      { exact: false }
     ),
     screen
       .findAllByPlaceholderText("Add phone number including country code")

@@ -1,8 +1,8 @@
-import { Box, Spacer, Text } from "@artsy/palette"
 import { ConversationMessageBubble } from "Apps/Conversations/components/Message/ConversationMessageBubble"
 import { ConversationMessageFile } from "Apps/Conversations/components/Message/ConversationMessageFile"
 import { ConversationMessageImage } from "Apps/Conversations/components/Message/ConversationMessageImage"
 import { useScrollPagination } from "Apps/Conversations/hooks/useScrollPagination"
+import { Box, Spacer, Text } from "@artsy/palette"
 import type {
   ConversationMessage_message$data,
   ConversationMessage_message$key,
@@ -211,7 +211,7 @@ export const defineSeenBy = (
   message: Pick<
     NonNullable<ConversationMessage_message$data>,
     "deliveries" | "to" | "cc"
-  >,
+  >
 ): string | undefined => {
   // FIXME: Disabling this feature for now. NX will redefine how it should work.
   return undefined

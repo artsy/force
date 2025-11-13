@@ -1,9 +1,9 @@
-import { fireEvent, screen } from "@testing-library/react"
 import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
 import { useUpdateMyUserProfile } from "Components/Inquiry/Hooks/useUpdateMyUserProfile"
 import { InquiryBasicInfoFragmentContainer } from "Components/Inquiry/Views/InquiryBasicInfo"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { fireEvent, screen } from "@testing-library/react"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
@@ -57,7 +57,7 @@ describe("InquiryBasicInfo", () => {
     })
 
     expect(
-      screen.getByText("Tell Example Partner a little bit about yourself."),
+      screen.getByText("Tell Example Partner a little bit about yourself.")
     ).toBeInTheDocument()
   })
 
@@ -78,7 +78,7 @@ describe("InquiryBasicInfo", () => {
     expect(mockNext).not.toBeCalled()
 
     const input = screen.getByPlaceholderText(
-      "Memberships, institutions, positions",
+      "Memberships, institutions, positions"
     )
     fireEvent.change(input, { target: { value: "Collector" } })
 
@@ -125,7 +125,7 @@ describe("InquiryBasicInfo", () => {
     fireEvent.change(professionInput, { target: { value: "Carpenter" } })
 
     const otherRelevantPositionsInput = screen.getByPlaceholderText(
-      "Memberships, institutions, positions",
+      "Memberships, institutions, positions"
     )
     fireEvent.change(otherRelevantPositionsInput, {
       target: { value: "Artist" },

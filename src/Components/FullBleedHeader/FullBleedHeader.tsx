@@ -1,7 +1,7 @@
-import { Box, type BoxProps, Flex, FullBleed, HTML } from "@artsy/palette"
-import { themeGet } from "@styled-system/theme-get"
 import { useNavBarHeight } from "Components/NavBar/useNavBarHeight"
 import { useSizeAndPosition } from "Utils/Hooks/useSizeAndPosition"
+import { Box, type BoxProps, Flex, FullBleed, HTML } from "@artsy/palette"
+import { themeGet } from "@styled-system/theme-get"
 import {
   type FC,
   type HTMLAttributes,
@@ -77,7 +77,7 @@ export const FullBleedHeader: FC<
               : { objectFit: "cover" }
           }
           as="video"
-          // @ts-ignore
+          // @ts-expect-error
           src={src}
           autoPlay
           loop

@@ -1,7 +1,7 @@
-import { screen } from "@testing-library/react"
 import { ArtistAppFragmentContainer } from "Apps/Artist/ArtistApp"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { findCurrentRoute } from "System/Router/Utils/routeUtils"
+import { screen } from "@testing-library/react"
 import type { ArtistAppTestQuery } from "__generated__/ArtistAppTestQuery.graphql"
 import { graphql } from "react-relay"
 
@@ -48,12 +48,12 @@ describe("ArtistApp", () => {
             },
           }),
         },
-        { match: { params: { artworkId: undefined } } },
+        { match: { params: { artworkId: undefined } } }
       )
 
       // The app-level shell renders a jump target for nested routes
       expect(
-        container.querySelector("#JUMP--artistContentArea"),
+        container.querySelector("#JUMP--artistContentArea")
       ).toBeInTheDocument()
     })
 
@@ -69,17 +69,17 @@ describe("ArtistApp", () => {
             },
           }),
         },
-        { match: { params: { artworkId: undefined } } },
+        { match: { params: { artworkId: undefined } } }
       )
 
       expect(
-        screen.queryByRole("link", { name: "Artworks" }),
+        screen.queryByRole("link", { name: "Artworks" })
       ).not.toBeInTheDocument()
       expect(
-        screen.queryByRole("link", { name: "Auction Results" }),
+        screen.queryByRole("link", { name: "Auction Results" })
       ).not.toBeInTheDocument()
       expect(
-        screen.queryByRole("link", { name: "About" }),
+        screen.queryByRole("link", { name: "About" })
       ).not.toBeInTheDocument()
     })
   })

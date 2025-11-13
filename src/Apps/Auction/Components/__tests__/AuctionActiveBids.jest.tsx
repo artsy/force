@@ -1,10 +1,10 @@
-import type { Breakpoint } from "@artsy/palette"
 import { AuctionActiveBidsRefetchContainer } from "Apps/Auction/Components/AuctionActiveBids"
 import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { screen, fireEvent } from "@testing-library/react"
 import { useRouter } from "System/Hooks/useRouter"
+import type { Breakpoint } from "@artsy/palette"
+import { fireEvent, screen } from "@testing-library/react"
 import type { AuctionActiveBidsQuery } from "__generated__/AuctionActiveBidsQuery.graphql"
 import { graphql } from "react-relay"
 
@@ -84,7 +84,7 @@ describe("AuctionActiveBids", () => {
       })
       expect(screen.getByText("Your Active Bids")).toBeInTheDocument()
       expect(
-        screen.getByText("AuctionLotInfoFragmentContainer"),
+        screen.getByText("AuctionLotInfoFragmentContainer")
       ).toBeInTheDocument()
       expect(screen.getByText("Increase Bid")).toBeInTheDocument()
     })
@@ -97,7 +97,7 @@ describe("AuctionActiveBids", () => {
       renderWithRelay()
       expect(screen.getByText("Your Active Bids")).toBeInTheDocument()
       expect(
-        screen.getByText("AuctionLotInfoFragmentContainer"),
+        screen.getByText("AuctionLotInfoFragmentContainer")
       ).toBeInTheDocument()
     })
 
@@ -249,7 +249,7 @@ describe("AuctionActiveBids", () => {
     fireEvent.click(screen.getByText("Increase Bid"))
 
     expect(spy).toBeCalledWith(
-      "/auction/saleID/bid/sale-artwork-slug?redirectTo=/auction/saleID",
+      "/auction/saleID/bid/sale-artwork-slug?redirectTo=/auction/saleID"
     )
   })
 

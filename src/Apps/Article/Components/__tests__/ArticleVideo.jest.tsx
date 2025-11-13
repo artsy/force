@@ -1,6 +1,6 @@
-import { screen } from "@testing-library/react"
 import { ArticleVideoFragmentContainer } from "Apps/Article/Components/ArticleVideo"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
@@ -33,7 +33,7 @@ describe("ArticleVideo", () => {
     expect(screen.getByText("About the Film")).toBeInTheDocument()
     expect(screen.getByText("Example description")).toBeInTheDocument()
     expect(
-      screen.getByText("Presented in Partnership with"),
+      screen.getByText("Presented in Partnership with")
     ).toBeInTheDocument()
   })
 })

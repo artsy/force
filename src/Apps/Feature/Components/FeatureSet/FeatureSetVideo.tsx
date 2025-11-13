@@ -55,5 +55,5 @@ export const FeatureSetVideoFragmentContainer = createFragmentContainer(
         description(format: HTML)
       }
     `,
-  },
+  }
 )

@@ -1,6 +1,6 @@
+import { RouterLink } from "System/Components/RouterLink"
 import { ActionType, type ClickedOnLearnMore } from "@artsy/cohesion"
 import { Spacer, Text } from "@artsy/palette"
-import { RouterLink } from "System/Components/RouterLink"
 import type { ArtworkSidebarShippingInformation_artwork$data } from "__generated__/ArtworkSidebarShippingInformation_artwork.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"

@@ -1,16 +1,16 @@
-import { Button, Join, Message, Spacer } from "@artsy/palette"
 import { CommercePaginationFragmentContainer } from "Components/Pagination/CommercePagination"
 import { RouterLink } from "System/Components/RouterLink"
 import { extractNodes } from "Utils/extractNodes"
+import { Button, Join, Message, Spacer } from "@artsy/palette"
 import type { SettingsOrders_me$data } from "__generated__/SettingsOrders_me.graphql"
-import { type FC, useState, Suspense } from "react"
+import { type FC, Suspense, useState } from "react"
 import {
-  type RelayRefetchProp,
   createRefetchContainer,
   graphql,
+  type RelayRefetchProp,
 } from "react-relay"
-import { SettingsOrdersRowLoader } from "./SettingsOrdersRowLoader"
 import { SettingsOrdersRowPlaceholder } from "./SettingsOrdersRow"
+import { SettingsOrdersRowLoader } from "./SettingsOrdersRowLoader"
 
 export interface SettingsOrdersProps {
   me: SettingsOrders_me$data
@@ -71,7 +71,7 @@ const SettingsOrders: FC<React.PropsWithChildren<SettingsOrdersProps>> = ({
         }
 
         setLoading(false)
-      },
+      }
     )
   }
 
@@ -156,5 +156,5 @@ export const SettingsOrdersFragmentContainer = createRefetchContainer(
           @arguments(states: $states, first: $first, after: $after)
       }
     }
-  `,
+  `
 )

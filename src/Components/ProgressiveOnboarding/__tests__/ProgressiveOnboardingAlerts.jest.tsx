@@ -1,10 +1,10 @@
-import { DismissibleProvider } from "@artsy/dismissible"
-import { render, screen } from "@testing-library/react"
 import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { __ProgressiveOnboardingAlertCreate__ } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertCreate"
 import { PROGRESSIVE_ONBOARDING_KEYS } from "Components/ProgressiveOnboarding/progressiveOnboardingKeys"
 import { withProgressiveOnboardingCounts } from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
+import { DismissibleProvider } from "@artsy/dismissible"
+import { render, screen } from "@testing-library/react"
 import type { FC } from "react"
 
 jest.mock("Components/ArtworkFilter/ArtworkFilterContext", () => ({
@@ -19,7 +19,7 @@ jest.mock("System/Hooks/useSystemContext", () => ({
 
 const Example: FC<React.PropsWithChildren<unknown>> = () => {
   const ProgressiveOnboardingAlertCreate = withProgressiveOnboardingCounts(
-    __ProgressiveOnboardingAlertCreate__,
+    __ProgressiveOnboardingAlertCreate__
   )
 
   return (

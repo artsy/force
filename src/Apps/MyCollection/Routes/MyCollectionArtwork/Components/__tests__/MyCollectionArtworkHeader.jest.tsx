@@ -1,6 +1,6 @@
-import { screen } from "@testing-library/react"
 import { MyCollectionArtworkHeader } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkHeader"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import type { MyCollectionArtworkHeaderTestQuery } from "__generated__/MyCollectionArtworkHeaderTestQuery.graphql"
 import { graphql } from "react-relay"
 
@@ -32,7 +32,7 @@ describe("MyCollectionArtworkHeader", () => {
     // Get closest link
     expect(editCTA.closest("a")).toHaveAttribute(
       "href",
-      "/collector-profile/my-collection/artworks/artwork-id/edit",
+      "/collector-profile/my-collection/artworks/artwork-id/edit"
     )
   })
 

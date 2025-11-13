@@ -8,7 +8,7 @@ const CURRENCIES = {
 
 export const exceedsChatSupportThreshold = (
   amount: number,
-  currencyCode: string,
+  currencyCode: string
 ) => {
   return (CURRENCIES[currencyCode] ?? 0) < amount
 }

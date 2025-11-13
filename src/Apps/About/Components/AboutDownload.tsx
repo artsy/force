@@ -1,3 +1,8 @@
+import { AboutDownloadQRCode } from "Apps/About/Components/AboutDownloadQRCode"
+import { AppContainer } from "Apps/Components/AppContainer"
+import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
+import { useDeviceDetection } from "Utils/Hooks/useDeviceDetection"
+import { cropped } from "Utils/resized"
 import {
   ActionType,
   type ClickedAppDownload,
@@ -15,11 +20,6 @@ import {
   Text,
 } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
-import { AboutDownloadQRCode } from "Apps/About/Components/AboutDownloadQRCode"
-import { AppContainer } from "Apps/Components/AppContainer"
-import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
-import { useDeviceDetection } from "Utils/Hooks/useDeviceDetection"
-import { cropped } from "Utils/resized"
 import { useTracking } from "react-tracking"
 import styled from "styled-components"
 

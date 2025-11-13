@@ -1,6 +1,3 @@
-import { ContextModule, OwnerType } from "@artsy/cohesion"
-import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { Button, Flex, Message, Spacer, Text } from "@artsy/palette"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
 import { BuyerGuarantee } from "Apps/Order/Components/BuyerGuarantee"
 import { OfferInput } from "Apps/Order/Components/OfferInput"
@@ -20,14 +17,17 @@ import {
   lastOfferNote,
 } from "Apps/Order/Utils/offerUtils"
 import { useJump } from "Utils/Hooks/useJump"
-import { Media } from "Utils/Responsive"
 import createLogger from "Utils/logger"
-import type { OfferMutation } from "__generated__/OfferMutation.graphql"
+import { Media } from "Utils/Responsive"
+import { ContextModule, OwnerType } from "@artsy/cohesion"
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import { Button, Flex, Message, Spacer, Text } from "@artsy/palette"
 import type { Offer_order$data } from "__generated__/Offer_order.graphql"
+import type { OfferMutation } from "__generated__/OfferMutation.graphql"
 import type { Router } from "found"
 import { isNil } from "lodash"
 import { type FC, useState } from "react"
-import { type RelayProp, createFragmentContainer, graphql } from "react-relay"
+import { createFragmentContainer, graphql, type RelayProp } from "react-relay"
 import { useTracking } from "react-tracking"
 
 const logger = createLogger("Order/Routes/Offer/index.tsx")
@@ -166,7 +166,7 @@ export const OfferRoute: FC<React.PropsWithChildren<OfferRouteProps>> = ({
       (artwork?.editionSets?.length ?? 0) < 2 && !!hasPrice
     const isPriceHidden = isNil(artworkPrice) || artworkPrice === ""
     const isRangeOffer = getOfferItemFromOrder(
-      order.lineItems,
+      order.lineItems
     )?.displayPriceRange
 
     if (
@@ -191,7 +191,7 @@ export const OfferRoute: FC<React.PropsWithChildren<OfferRouteProps>> = ({
               minimumFractionDigits: 2,
               style: "currency",
             }),
-            order.currencyCode,
+            order.currencyCode
           )}`
 
       const orderOrError = (
@@ -404,5 +404,5 @@ export const OfferFragmentContainer = createFragmentContainer(
         ...OrderStepper_order
       }
     `,
-  },
+  }
 )

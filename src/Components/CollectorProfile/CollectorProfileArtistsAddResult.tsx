@@ -1,6 +1,6 @@
+import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
 import CheckmarkIcon from "@artsy/icons/CheckmarkIcon"
 import { Button } from "@artsy/palette"
-import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
 import type { CollectorProfileArtistsAddResult_artist$key } from "__generated__/CollectorProfileArtistsAddResult_artist.graphql"
 import type { FC } from "react"
 import { graphql, useFragment } from "react-relay"

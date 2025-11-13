@@ -1,5 +1,5 @@
-import { Box, StackableBorderBox, Text } from "@artsy/palette"
 import { MetaTags } from "Components/MetaTags"
+import { Box, StackableBorderBox, Text } from "@artsy/palette"
 import type { InvoiceApp_invoice$key } from "__generated__/InvoiceApp_invoice.graphql"
 import { HttpError } from "found"
 import { graphql, useFragment } from "react-relay"

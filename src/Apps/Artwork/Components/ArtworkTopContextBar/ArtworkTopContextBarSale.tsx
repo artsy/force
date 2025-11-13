@@ -1,6 +1,6 @@
-import { Box, Stack } from "@artsy/palette"
 import { RegistrationAuctionTimerFragmentContainer } from "Apps/Artwork/Components/ArtworkTopContextBar/RegistrationAuctionTimer"
 import { TopContextBar } from "Components/TopContextBar"
+import { Box, Stack } from "@artsy/palette"
 import type { ArtworkTopContextBarSaleQuery } from "__generated__/ArtworkTopContextBarSaleQuery.graphql"
 import type * as React from "react"
 import { graphql, useLazyLoadQuery } from "react-relay"
@@ -32,7 +32,7 @@ export const ArtworkTopContextBarSale: React.FC<
       }
     `,
     { id },
-    { fetchPolicy: "store-or-network" },
+    { fetchPolicy: "store-or-network" }
   )
 
   if (!data.sale) return null

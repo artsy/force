@@ -32,5 +32,5 @@ export const FeatureSetMetaFragmentContainer = createFragmentContainer(
         description(format: HTML)
       }
     `,
-  },
+  }
 )

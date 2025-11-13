@@ -25,7 +25,7 @@ const handleInvalidFormat = (range: string): CustomRange => {
 }
 
 export const parsePriceRange = (
-  range: string = DEFAULT_PRICE_RANGE,
+  range: string = DEFAULT_PRICE_RANGE
 ): CustomRange => {
   const match = range.match(PRICE_RANGE_FORMAT)
 

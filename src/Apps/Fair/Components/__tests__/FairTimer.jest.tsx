@@ -1,6 +1,6 @@
 import { FairTimerFragmentContainer } from "Apps/Fair/Components/FairOverview/FairTimer"
-import { screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import type { FairTimerTestQuery } from "__generated__/FairTimerTestQuery.graphql"
 import { DateTime } from "luxon"
 import { graphql } from "react-relay"

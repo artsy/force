@@ -1,10 +1,7 @@
-import { ContextModule } from "@artsy/cohesion"
-import ShieldIcon from "@artsy/icons/ShieldIcon"
-import { Box, Button, Flex, Image, Message, Spacer, Text } from "@artsy/palette"
-import { useStripe } from "@stripe/react-stripe-js"
 import { useArtworkDimensions } from "Apps/Artwork/useArtworkDimensions"
 import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
 import { type Dialog, injectDialog } from "Apps/Order/Dialogs"
+import { BUYER_GUARANTEE_URL } from "Apps/Order2/constants"
 import {
   CheckoutStepName,
   CheckoutStepState,
@@ -13,9 +10,12 @@ import { Order2CheckoutPricingBreakdown } from "Apps/Order2/Routes/Checkout/Comp
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useOrder2SubmitOfferMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SubmitOfferMutation"
 import { useOrder2SubmitOrderMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SubmitOrderMutation"
-import { BUYER_GUARANTEE_URL } from "Apps/Order2/constants"
 import { RouterLink } from "System/Components/RouterLink"
 import createLogger from "Utils/logger"
+import { ContextModule } from "@artsy/cohesion"
+import ShieldIcon from "@artsy/icons/ShieldIcon"
+import { Box, Button, Flex, Image, Message, Spacer, Text } from "@artsy/palette"
+import { useStripe } from "@stripe/react-stripe-js"
 import type {
   Order2ReviewStep_order$data,
   Order2ReviewStep_order$key,
@@ -54,7 +54,7 @@ const Order2ReviewStepComponent: React.FC<Order2ReviewStepProps> = ({
   const { dimensionsLabel } = useArtworkDimensions(artworkData.dimensions)
 
   const stepState = steps?.find(
-    step => step.name === CheckoutStepName.CONFIRMATION,
+    step => step.name === CheckoutStepName.CONFIRMATION
   )?.state
 
   const [loading, setLoading] = useState(false)
@@ -129,7 +129,7 @@ const Order2ReviewStepComponent: React.FC<Order2ReviewStepProps> = ({
         })
 
         validateAndExtractOrderResponse(
-          submitOrderResult.submitOrder?.orderOrError,
+          submitOrderResult.submitOrder?.orderOrError
         )
 
         orderOrError = submitOrderResult.submitOrder?.orderOrError
@@ -244,7 +244,7 @@ const Order2ReviewStepComponent: React.FC<Order2ReviewStepProps> = ({
 export const Order2ReviewStep = injectDialog(Order2ReviewStepComponent)
 
 const extractLineItemMetadata = (
-  lineItem: NonNullable<Order2ReviewStep_order$data["lineItems"][number]>,
+  lineItem: NonNullable<Order2ReviewStep_order$data["lineItems"][number]>
 ) => {
   const { artwork, artworkVersion, artworkOrEditionSet } = lineItem
 

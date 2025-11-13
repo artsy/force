@@ -1,13 +1,13 @@
-import { screen } from "@testing-library/react"
-import userEvent from "@testing-library/user-event"
 import type { ArtworkFilterContextProps } from "Components/ArtworkFilter/ArtworkFilterContext"
-import { ArtworkLocationFilter } from "Components/ArtworkFilter/ArtworkFilters/ArtworkLocationFilter"
 import {
   createArtworkFilterTestRenderer,
   currentArtworkFilterContext,
 } from "Components/ArtworkFilter/ArtworkFilters/__tests__/Utils"
-import { useTracking } from "react-tracking"
+import { ArtworkLocationFilter } from "Components/ArtworkFilter/ArtworkFilters/ArtworkLocationFilter"
+import { screen } from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
 import { useFlag } from "@unleash/proxy-client-react"
+import { useTracking } from "react-tracking"
 
 jest.mock("System/Hooks/useAnalyticsContext", () => ({
   useAnalyticsContext: jest.fn(() => ({
@@ -93,7 +93,7 @@ describe(ArtworkLocationFilter, () => {
     describe("when onyx_enhanced-artwork-location-filtering is enabled", () => {
       beforeEach(() => {
         ;(useFlag as jest.Mock).mockImplementation(
-          flag => flag === "onyx_enhanced-artwork-location-filtering",
+          flag => flag === "onyx_enhanced-artwork-location-filtering"
         )
       })
 
@@ -101,7 +101,7 @@ describe(ArtworkLocationFilter, () => {
         render(<ArtworkLocationFilter expanded />)
         userEvent.type(
           screen.getByPlaceholderText("Enter a city, country, or region"),
-          "usa",
+          "usa"
         )
         expect(screen.getByText("Potwin, KS, USA")).toBeInTheDocument()
         expect(screen.queryByText("Fenny Drayton, UK")).not.toBeInTheDocument()
@@ -111,7 +111,7 @@ describe(ArtworkLocationFilter, () => {
         render(<ArtworkLocationFilter expanded />)
         userEvent.type(
           screen.getByPlaceholderText("Enter a city, country, or region"),
-          "america", // matches a region or synonym defined in custom mapping
+          "america" // matches a region or synonym defined in custom mapping
         )
         expect(screen.getByText("Potwin, KS, USA")).toBeInTheDocument()
         expect(screen.queryByText("Fenny Drayton, UK")).not.toBeInTheDocument()
@@ -121,7 +121,7 @@ describe(ArtworkLocationFilter, () => {
         render(<ArtworkLocationFilter expanded />)
         userEvent.type(
           screen.getByPlaceholderText("Enter a city, country, or region"),
-          "usa",
+          "usa"
         )
         expect(screen.getByText("Select all")).toBeInTheDocument()
         expect(screen.getByText("Clear")).toBeInTheDocument()
@@ -131,7 +131,7 @@ describe(ArtworkLocationFilter, () => {
         render(<ArtworkLocationFilter expanded />)
         userEvent.type(
           screen.getByPlaceholderText("Enter a city, country, or region"),
-          "usa",
+          "usa"
         )
         userEvent.click(screen.getByText("Select all"))
         expect(currentArtworkFilterContext().filters?.locationCities).toEqual([
@@ -140,7 +140,7 @@ describe(ArtworkLocationFilter, () => {
         ])
         userEvent.click(screen.getByText("Clear"))
         expect(currentArtworkFilterContext().filters?.locationCities).toEqual(
-          [],
+          []
         )
       })
 
@@ -153,7 +153,7 @@ describe(ArtworkLocationFilter, () => {
         render(<ArtworkLocationFilter expanded />)
         userEvent.type(
           screen.getByPlaceholderText("Enter a city, country, or region"),
-          "usa",
+          "usa"
         )
         userEvent.click(screen.getByText("Select all"))
 

@@ -1,4 +1,11 @@
 import {
+  CATEGORY_RAIL_PLACEHOLDER,
+  CategoryRailFragmentContainer,
+} from "Components/CategoryRail"
+import { EmptyState } from "Components/EmptyState"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { extractNodes } from "Utils/extractNodes"
+import {
   Box,
   Button,
   Join,
@@ -8,20 +15,13 @@ import {
   Sup,
   Text,
 } from "@artsy/palette"
-import {
-  CATEGORY_RAIL_PLACEHOLDER,
-  CategoryRailFragmentContainer,
-} from "Components/CategoryRail"
-import { EmptyState } from "Components/EmptyState"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { extractNodes } from "Utils/extractNodes"
-import type { SettingsSavesCategoriesQuery } from "__generated__/SettingsSavesCategoriesQuery.graphql"
 import type { SettingsSavesCategories_me$data } from "__generated__/SettingsSavesCategories_me.graphql"
+import type { SettingsSavesCategoriesQuery } from "__generated__/SettingsSavesCategoriesQuery.graphql"
 import { type FC, Fragment, useState } from "react"
 import {
-  type RelayPaginationProp,
   createPaginationContainer,
   graphql,
+  type RelayPaginationProp,
 } from "react-relay"
 
 interface SettingsSavesCategoriesProps {
@@ -36,7 +36,7 @@ const SettingsSavesCategories: FC<
 
   const connection = me.followsAndSaves?.categoriesConnection
   const followedCategories = extractNodes(
-    me.followsAndSaves?.categoriesConnection,
+    me.followsAndSaves?.categoriesConnection
   )
   const total = connection?.totalCount ?? 0
 
@@ -129,7 +129,7 @@ export const SettingsSavesCategoriesPaginationContainer =
         return { ...fragmentVariables, after }
       },
       query: SETTINGS_SAVES_CATEGORIES_QUERY,
-    },
+    }
   )
 
 const SETTINGS_SAVES_CATEGORIES_PLACEHOLDER = (

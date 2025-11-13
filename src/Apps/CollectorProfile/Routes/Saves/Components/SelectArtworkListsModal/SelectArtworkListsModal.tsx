@@ -1,18 +1,4 @@
-import { ModalDialog, useToasts } from "@artsy/palette"
 import { getSelectedArtworkListIds } from "Apps/CollectorProfile/Routes/Saves/Utils/getSelectedArtworkListIds"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { extractNodes } from "Utils/extractNodes"
-import createLogger from "Utils/logger"
-import type { SelectArtworkListsModalQuery } from "__generated__/SelectArtworkListsModalQuery.graphql"
-import type { SelectArtworkListsModal_me$data } from "__generated__/SelectArtworkListsModal_me.graphql"
-import type React from "react"
-import { type FC, useState } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-import { SelectArtworkListsFooter } from "./SelectArtworkListsFooter"
-import { SelectArtworkListsHeader } from "./SelectArtworkListsHeader"
-import { useSelectArtworkLists } from "./useSelectArtworkLists"
-
-import { ActionType, type AddedArtworkToArtworkList } from "@artsy/cohesion"
 import {
   ListKey,
   type OnSaveResultData,
@@ -20,8 +6,21 @@ import {
   useManageArtworkForSavesContext,
 } from "Components/Artwork/ManageArtworkForSaves"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { extractNodes } from "Utils/extractNodes"
+import createLogger from "Utils/logger"
+import { ActionType, type AddedArtworkToArtworkList } from "@artsy/cohesion"
+import { ModalDialog, useToasts } from "@artsy/palette"
+import type { SelectArtworkListsModal_me$data } from "__generated__/SelectArtworkListsModal_me.graphql"
+import type { SelectArtworkListsModalQuery } from "__generated__/SelectArtworkListsModalQuery.graphql"
+import type React from "react"
+import { type FC, useState } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { SelectArtworkListsContent } from "./SelectArtworkListsContent"
+import { SelectArtworkListsFooter } from "./SelectArtworkListsFooter"
+import { SelectArtworkListsHeader } from "./SelectArtworkListsHeader"
+import { useSelectArtworkLists } from "./useSelectArtworkLists"
 
 const logger = createLogger("SelectArtworkListsModal")
 
@@ -75,15 +74,15 @@ export const SelectArtworkListsModal: React.FC<
     const artworkListById = getArtworkListsById()
     const selectedLists = getResultEntitiesByIds(
       selectedArtworkListIds,
-      artworkListById,
+      artworkListById
     )
     const addedLists = getResultEntitiesByIds(
       state.addingListIDs,
-      artworkListById,
+      artworkListById
     )
     const removedLists = getResultEntitiesByIds(
       state.removingListIDs,
-      artworkListById,
+      artworkListById
     )
 
     return {
@@ -158,7 +157,7 @@ export const SelectArtworkListsModal: React.FC<
   }
 
   const checkIsArtworkListSelected = (
-    artworkList: (typeof artworkLists)[0],
+    artworkList: (typeof artworkLists)[0]
   ) => {
     /**
      * User added artwork to the previously unselected artwork list
@@ -241,7 +240,7 @@ export const SelectArtworkListsModalFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  },
+  }
 )
 
 export const SelectArtworkListsModalQueryRender: FC<
@@ -277,7 +276,7 @@ const query = graphql`
 
 const getResultEntitiesByIds = (
   ids: string[],
-  artworkListById: ArtworkListById,
+  artworkListById: ArtworkListById
 ) => {
   return ids.map(id => artworkListById[id])
 }

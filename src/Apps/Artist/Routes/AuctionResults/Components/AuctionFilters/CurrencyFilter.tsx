@@ -1,12 +1,11 @@
-import { Flex, Radio } from "@artsy/palette"
-import type * as React from "react"
-
 import {
   useAuctionResultsFilterContext,
   useCurrentlySelectedFiltersForAuctionResults,
 } from "Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
 import { FilterExpandable } from "Components/ArtworkFilter/ArtworkFilters/FilterExpandable"
 import { ShowMore } from "Components/ArtworkFilter/ArtworkFilters/ShowMore"
+import { Flex, Radio } from "@artsy/palette"
+import type * as React from "react"
 
 export const CurrencyFilter: React.FC<
   React.PropsWithChildren<unknown>
@@ -16,7 +15,7 @@ export const CurrencyFilter: React.FC<
     useCurrentlySelectedFiltersForAuctionResults()
 
   const currencies = aggregations?.find(
-    aggregation => aggregation.slice === "CURRENCIES_COUNT",
+    aggregation => aggregation.slice === "CURRENCIES_COUNT"
   ) || { counts: [] }
 
   const counts = currencies?.counts.filter(c => c !== null)

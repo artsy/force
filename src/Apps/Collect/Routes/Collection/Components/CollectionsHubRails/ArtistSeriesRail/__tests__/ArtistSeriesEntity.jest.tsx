@@ -1,7 +1,7 @@
-import { ArtistSeriesEntity } from "Apps/Collect/Routes/Collection/Components/CollectionsHubRails/ArtistSeriesRail/ArtistSeriesEntity"
 import { CollectionsHubLinkedCollections } from "Apps/__tests__/Fixtures/Collections"
+import { ArtistSeriesEntity } from "Apps/Collect/Routes/Collection/Components/CollectionsHubRails/ArtistSeriesRail/ArtistSeriesEntity"
 import { AnalyticsCombinedContextProvider } from "System/Contexts/AnalyticsContext"
-import { render, screen, fireEvent } from "@testing-library/react"
+import { fireEvent, render, screen } from "@testing-library/react"
 import { useTracking } from "react-tracking"
 
 jest.mock("react-tracking")
@@ -34,7 +34,7 @@ describe.skip("ArtistSeriesEntity", () => {
         path="/collection/slug"
       >
         <ArtistSeriesEntity {...passedProps} />
-      </AnalyticsCombinedContextProvider>,
+      </AnalyticsCombinedContextProvider>
     )
   }
 
@@ -46,7 +46,7 @@ describe.skip("ArtistSeriesEntity", () => {
     expect(images).toHaveLength(3)
     expect(images[0]).toHaveAttribute(
       "src",
-      "https://d32dm0rphc51dk.cloudfront.net/4izTOpDv-ew-g1RFXeREcQ/small.jpg",
+      "https://d32dm0rphc51dk.cloudfront.net/4izTOpDv-ew-g1RFXeREcQ/small.jpg"
     )
   })
 
@@ -78,7 +78,7 @@ describe.skip("ArtistSeriesEntity", () => {
     const images = screen.getAllByRole("img")
     expect(images[0]).toHaveAttribute(
       "alt",
-      expect.stringMatching(/A great flag from Jasper/),
+      expect.stringMatching(/A great flag from Jasper/)
     )
   })
 
@@ -88,7 +88,7 @@ describe.skip("ArtistSeriesEntity", () => {
     const images = screen.getAllByRole("img")
     expect(images[0]).toHaveAttribute(
       "alt",
-      expect.stringMatching(/Jasper Johns, A great flag from Jasper/),
+      expect.stringMatching(/Jasper Johns, A great flag from Jasper/)
     )
   })
 

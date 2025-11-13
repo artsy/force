@@ -1,8 +1,8 @@
-import { FullBleed, useTheme } from "@artsy/palette"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { RouteTab, RouteTabs } from "Components/RouteTabs"
 import { Sticky } from "Components/Sticky"
 import { useJump } from "Utils/Hooks/useJump"
+import { FullBleed, useTheme } from "@artsy/palette"
 import type { NavigationTabs_partner$data } from "__generated__/NavigationTabs_partner.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 
@@ -155,5 +155,5 @@ export const NavigationTabsFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  },
+  }
 )

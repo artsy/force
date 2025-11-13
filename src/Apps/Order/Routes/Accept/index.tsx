@@ -1,6 +1,3 @@
-import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
-import { Button, Flex, Spacer } from "@artsy/palette"
-import type { Stripe, StripeElements } from "@stripe/stripe-js"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
 import { BuyerGuarantee } from "Apps/Order/Components/BuyerGuarantee"
 import { ConditionsOfSaleDisclaimer } from "Apps/Order/Components/ConditionsOfSaleDisclaimer"
@@ -16,15 +13,18 @@ import {
 } from "Apps/Order/Utils/commitMutation"
 import { CountdownTimer } from "Components/CountdownTimer"
 import type { RouteProps } from "System/Router/Route"
-import { Media } from "Utils/Responsive"
 import { createStripeWrapper } from "Utils/createStripeWrapper"
 import { get } from "Utils/get"
 import createLogger from "Utils/logger"
-import type { AcceptOfferMutation } from "__generated__/AcceptOfferMutation.graphql"
+import { Media } from "Utils/Responsive"
+import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
+import { Button, Flex, Spacer } from "@artsy/palette"
+import type { Stripe, StripeElements } from "@stripe/stripe-js"
 import type { Accept_order$data } from "__generated__/Accept_order.graphql"
+import type { AcceptOfferMutation } from "__generated__/AcceptOfferMutation.graphql"
 import type { Router } from "found"
 import type { FC } from "react"
-import { type RelayProp, createFragmentContainer, graphql } from "react-relay"
+import { createFragmentContainer, graphql, type RelayProp } from "react-relay"
 import { useTracking } from "react-tracking"
 
 interface AcceptProps {
@@ -102,7 +102,7 @@ export const Accept: FC<
 
       if (orderOrError?.actionData?.clientSecret) {
         const scaResult = await stripe.handleCardAction(
-          orderOrError.actionData.clientSecret,
+          orderOrError.actionData.clientSecret
         )
 
         if (scaResult.error) {
@@ -211,7 +211,7 @@ export const Accept: FC<
   const routeToArtworkPage = () => {
     const artworkId = get(
       order,
-      o => o.lineItems?.edges?.[0]?.node?.artwork?.slug,
+      o => o.lineItems?.edges?.[0]?.node?.artwork?.slug
     )
     router.push(`/artwork/${artworkId}`)
   }
@@ -301,7 +301,7 @@ export const Accept: FC<
 
 export const AcceptFragmentContainer = createFragmentContainer(
   createStripeWrapper<AcceptProps>(
-    injectCommitMutation(injectDialog(Accept)) as any,
+    injectCommitMutation(injectDialog(Accept)) as any
   ),
   {
     order: graphql`
@@ -334,5 +334,5 @@ export const AcceptFragmentContainer = createFragmentContainer(
         ...OrderStepper_order
       }
     `,
-  },
+  }
 )

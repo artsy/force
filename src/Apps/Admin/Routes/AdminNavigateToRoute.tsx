@@ -1,3 +1,5 @@
+import { MetaTags } from "Components/MetaTags"
+import { useRouter } from "System/Hooks/useRouter"
 import {
   Button,
   Column,
@@ -7,8 +9,6 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { MetaTags } from "Components/MetaTags"
-import { useRouter } from "System/Hooks/useRouter"
 import { useEffect, useRef } from "react"
 
 export const AdminNavigateToRoute: React.FC<
@@ -27,7 +27,7 @@ export const AdminNavigateToRoute: React.FC<
     router.push(route)
   }
 
-  const handleClick = (event: React.MouseEvent) => {
+  const handleClick = (_event: React.MouseEvent) => {
     navigateToRoute()
   }
 

@@ -1,7 +1,6 @@
-import { Box, Clickable, Text } from "@artsy/palette"
-
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import createLogger from "Utils/logger"
+import { Box, Clickable, Text } from "@artsy/palette"
 import { markAllNotificationsAsRead } from "./Mutations/markAllNotificationsAsRead"
 
 export const MARK_ALL_AS_READ_PANEL_HEIGHT = 40

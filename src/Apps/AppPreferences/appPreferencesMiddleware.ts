@@ -10,7 +10,7 @@ import type { NextFunction } from "express"
 export const appPreferencesMiddleware = async (
   req: ArtsyRequest,
   res: ArtsyResponse,
-  next: NextFunction,
+  next: NextFunction
 ) => {
   const preferences = getAppPreferences(req)
   updateSharifyAndContext(res, APP_PREFERENCES_SHARIFY_KEY, preferences)
