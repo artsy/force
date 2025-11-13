@@ -1,7 +1,6 @@
 import { ContextModule } from "@artsy/cohesion"
 import { Box, Button, Flex, Spacer, Text, TextArea } from "@artsy/palette"
 import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
-import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
 import {
   CheckoutStepName,
   CheckoutStepState,
@@ -24,17 +23,31 @@ import { useJump } from "Utils/Hooks/useJump"
 import createLogger from "Utils/logger"
 import type { Order2OfferStep_order$key } from "__generated__/Order2OfferStep_order.graphql"
 import type { useOrder2AddInitialOfferMutation$data } from "__generated__/useOrder2AddInitialOfferMutation.graphql"
+import { Formik, type FormikConfig, useFormikContext } from "formik"
 import { useMemo, useState } from "react"
 import { graphql, useFragment } from "react-relay"
+import * as yup from "yup"
 
 const logger = createLogger(
   "Order2/Routes/Checkout/Components/OfferStep/Order2OfferStep.tsx",
 )
 
-export const DEFUALT_OFFER_NOTE_PREFIX = "I sent an offer for"
+interface OfferFormValues {
+  offerValue: number
+  offerNote: string
+}
 
 interface Order2OfferStepProps {
   order: Order2OfferStep_order$key
+}
+
+interface Order2OfferStepFormContentProps {
+  orderData: any
+  offerAmountError: any
+  currentStep: CheckoutStepState | undefined
+  completedViewProps: any
+  OfferFormComponent: any
+  isSubmittingOffer: boolean
 }
 
 export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
@@ -58,94 +71,61 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
 
   const lastOffer = mostRecentCreatedAt(offers)
 
-  const [formIsDirty, setFormIsDirty] = useState(false)
   const [isSubmittingOffer, setIsSubmittingOffer] = useState(false)
-
-  const [offerNoteValue, setOfferNoteValue] = useState<OfferNoteValue>({
-    exceedsCharacterLimit: false,
-    value: lastOffer?.note || "",
-  })
-  const [offerValue, setOfferValue] = useState(lastOffer?.amount?.major || 0)
-
-  const hasNote = !!offerNoteValue.value.trim()
-  const completedViewProps = useCompleteOfferData(orderData, hasNote)
-
-  const { jumpTo } = useJump()
 
   const currentStep = steps?.find(
     step => step.name === CheckoutStepName.OFFER_AMOUNT,
   )?.state
 
-  const onOfferOptionSelected = (value: number, description?: string) => {
-    setOfferValue(value)
+  const completedViewProps = useCompleteOfferData(orderData)
 
-    // Clear error message when a valid offer is selected
-    if (value > 0) {
-      setStepErrorMessage({
-        step: CheckoutStepName.OFFER_AMOUNT,
-        error: null,
-      })
+  // Determine which offer form scenario to use based on artwork properties
+  const OfferFormComponent = useMemo(() => {
+    const priceDisplay = orderData.lineItems?.[0]?.artwork?.priceDisplay
+
+    if (priceDisplay === "hidden") {
+      return Order2HiddenPriceOfferForm
     }
 
-    checkoutTracking.clickedOfferOption(
-      orderData.currencyCode,
-      orderData.internalID,
-      value,
-      description,
-    )
-  }
+    if (priceDisplay === "range") {
+      return Order2PriceRangeOfferForm
+    }
 
-  const handleSubmitError = (error: { code: string }) => {
-    logger.error(error)
-    setStepErrorMessage({
-      step: CheckoutStepName.OFFER_AMOUNT,
-      error: {
-        title: "An error occurred",
-        message: (
-          <>
-            Something went wrong while selecting your offer amount. Please try
-            again or contact <MailtoOrderSupport />.
-          </>
-        ),
-      },
-    })
-  }
+    return Order2ExactPriceOfferForm
+  }, [orderData])
 
-  const onContinueButtonPressed = async () => {
-    if (offerValue === undefined || offerValue === 0) {
-      setFormIsDirty(true)
+  const validationSchema = yup.object().shape({
+    offerValue: yup
+      .number()
+      .required("Offer amount is required")
+      .positive("Offer amount must be greater than 0"),
+    offerNote: yup.string().max(1000, "Note cannot exceed 1000 characters"),
+  })
+
+  const handleSubmit: FormikConfig<OfferFormValues>["onSubmit"] = async ({
+    offerValue,
+    offerNote,
+  }) => {
+    const handleSubmitError = (error: { code: string }) => {
+      logger.error(error)
       setStepErrorMessage({
         step: CheckoutStepName.OFFER_AMOUNT,
         error: {
-          title: "Offer amount required",
-          message: "Select an offer amount or enter your own to continue.",
+          title: "An error occurred",
+          message: (
+            <>
+              Something went wrong while selecting your offer amount. Please try
+              again or contact <MailtoOrderSupport />.
+            </>
+          ),
         },
       })
-      jumpTo("offer-value-title", { behavior: "smooth" })
-      return
-    }
-
-    if (offerValue < 0 || offerNoteValue.exceedsCharacterLimit) {
-      setFormIsDirty(true)
-      jumpTo("price-option-custom", { behavior: "smooth" })
-      return
     }
 
     try {
       setIsSubmittingOffer(true)
 
       checkoutTracking.clickedOrderProgression(ContextModule.ordersOffer)
-
-      const note = hasNote
-        ? offerNoteValue.value
-        : `${DEFUALT_OFFER_NOTE_PREFIX} ${appendCurrencySymbol(
-            offerValue.toLocaleString("en-US", {
-              currency: orderData.currencyCode,
-              minimumFractionDigits: 2,
-              style: "currency",
-            }),
-            orderData.currencyCode,
-          )}`
 
       // Unset the current fulfillment option if it exists
       if (orderData.selectedFulfillmentOption?.type) {
@@ -168,7 +148,7 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
           variables: {
             input: {
               amountMinor: offerValue * 100,
-              note,
+              note: offerNote,
               orderID: orderData.internalID,
             },
           },
@@ -194,24 +174,89 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
       handleSubmitError({ code: "unknown" })
     } finally {
       setIsSubmittingOffer(false)
-      setFormIsDirty(false)
     }
   }
 
-  // Determine which offer form scenario to use based on artwork properties
-  const OfferFormComponent = useMemo(() => {
-    const priceDisplay = orderData.lineItems?.[0]?.artwork?.priceDisplay
+  return (
+    <Formik<OfferFormValues>
+      initialValues={{
+        offerValue: lastOffer?.amount?.major || 0,
+        offerNote: lastOffer?.note || "",
+      }}
+      validationSchema={validationSchema}
+      onSubmit={handleSubmit}
+      validateOnChange={true}
+      validateOnBlur={true}
+    >
+      <Order2OfferStepFormContent
+        orderData={orderData}
+        offerAmountError={offerAmountError}
+        currentStep={currentStep}
+        completedViewProps={completedViewProps}
+        OfferFormComponent={OfferFormComponent}
+        isSubmittingOffer={isSubmittingOffer}
+      />
+    </Formik>
+  )
+}
 
-    if (priceDisplay === "hidden") {
-      return Order2HiddenPriceOfferForm
+const Order2OfferStepFormContent: React.FC<Order2OfferStepFormContentProps> = ({
+  orderData,
+  offerAmountError,
+  currentStep,
+  completedViewProps,
+  OfferFormComponent,
+  isSubmittingOffer,
+}) => {
+  const { values, errors, touched, setFieldValue, submitForm } =
+    useFormikContext<OfferFormValues>()
+  const { setStepErrorMessage, checkoutTracking } = useCheckoutContext()
+  const { jumpTo } = useJump()
+
+  const onOfferOptionSelected = (value: number, description?: string) => {
+    setFieldValue("offerValue", value)
+
+    // Clear error message when a valid offer is selected
+    if (value > 0) {
+      setStepErrorMessage({
+        step: CheckoutStepName.OFFER_AMOUNT,
+        error: null,
+      })
     }
 
-    if (priceDisplay === "range") {
-      return Order2PriceRangeOfferForm
+    checkoutTracking.clickedOfferOption(
+      orderData.currencyCode,
+      orderData.internalID,
+      value,
+      description,
+    )
+  }
+
+  const onOfferNoteChange = (noteValue: OfferNoteValue) => {
+    setFieldValue("offerNote", noteValue.value)
+  }
+
+  const onContinueButtonPressed = async () => {
+    if (values.offerValue === undefined || values.offerValue === 0) {
+      setFieldValue("offerValue", values.offerValue, true)
+      setStepErrorMessage({
+        step: CheckoutStepName.OFFER_AMOUNT,
+        error: {
+          title: "Offer amount required",
+          message: "Select an offer amount or enter your own to continue.",
+        },
+      })
+      jumpTo("offer-value-title", { behavior: "smooth" })
+      return
     }
 
-    return Order2ExactPriceOfferForm
-  }, [orderData])
+    if (values.offerValue < 0 || (errors.offerNote && touched.offerNote)) {
+      jumpTo("price-option-custom", { behavior: "smooth" })
+      return
+    }
+
+    submitForm()
+  }
 
   return (
     <Flex
@@ -270,9 +315,9 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
       <Box py={2} px={[2, 4]} hidden={currentStep !== CheckoutStepState.ACTIVE}>
         <OfferFormComponent
           order={orderData}
-          offerValue={offerValue}
-          formIsDirty={formIsDirty}
-          onOfferValueChange={setOfferValue}
+          offerValue={values.offerValue}
+          formIsDirty={touched.offerValue || false}
+          onOfferValueChange={value => setFieldValue("offerValue", value)}
           onOfferOptionSelected={onOfferOptionSelected}
         />
 
@@ -294,8 +339,8 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
             title="Note (recommended)"
             maxLength={1000}
             placeholder="Share what draws you to this work or artist, or add any context about your offer"
-            onChange={setOfferNoteValue}
-            value={offerNoteValue.value}
+            onChange={onOfferNoteChange}
+            value={values.offerNote}
           />
 
           <Spacer y={4} />
