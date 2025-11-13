@@ -71,7 +71,7 @@ const ShowPaginatedEvents: React.FC<
         router.push({ pathname: location.pathname, query })
 
         setIsLoading(false)
-      }
+      },
     )
   }
 
@@ -177,7 +177,7 @@ export const ShowEventsRefetchContainer = createRefetchContainer(
           )
       }
     }
-  `
+  `,
 )
 
 interface ShowPaginatedEventsRendererProps {
@@ -215,9 +215,7 @@ export const ShowPaginatedEventsRenderer: React.FC<
         return (
           <ShowEventsRefetchContainer
             {...rest}
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             partner={props.partner!}
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             paramsPage={page!}
           />
         )

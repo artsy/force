@@ -14,12 +14,12 @@ export function extractNodes<Node extends object, T = Node>(
       }
     | undefined
     | null,
-  mapper?: (node: Node) => T
+  mapper?: (node: Node) => T,
 ): T[] {
   return (
     connection?.edges?.map(edge =>
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      mapper ? (mapper(edge?.node!) as any) : edge?.node!
+      // biome-ignore lint/suspicious/noNonNullAssertedOptionalChain: legacy
+      mapper ? (mapper(edge?.node!) as any) : edge?.node!,
     ) ?? []
   )
 }

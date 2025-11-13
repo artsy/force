@@ -12,7 +12,7 @@ const { renderWithRelay } = setupTestWrapperTL({
     return (
       <HomeNewWorksFromGalleriesYouFollowRailFragmentContainer
         newWorksFromGalleriesYouFollowConnection={
-          props.me?.newWorksFromGalleriesYouFollowConnection!
+          props.me?.newWorksFromGalleriesYouFollowConnection
         }
       />
     )
@@ -45,10 +45,10 @@ describe("HomeNewWorksFromGalleriesYouFollowRail", () => {
 
     expect(screen.getAllByRole("link")[1]).toHaveAttribute(
       "href",
-      "/new-works-from-galleries-you-follow"
+      "/new-works-from-galleries-you-follow",
     )
     expect(
-      screen.getByText("New Works from Galleries You Follow")
+      screen.getByText("New Works from Galleries You Follow"),
     ).toBeInTheDocument()
   })
 

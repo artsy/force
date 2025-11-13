@@ -45,7 +45,7 @@ export const FulfillmentDetails: FC<
   const [verifyAddressNow, setVerifyAddressNow] = useState<boolean>(false)
 
   const hasSavedAddresses = shippingContext.meData.addressList.length !== 0
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  // biome-ignore lint/suspicious/noNonNullAssertedOptionalChain: legacy
   const firstArtwork = extractNodes(orderData.lineItems)[0]!.artwork!
 
   const initialValues = getInitialValues(

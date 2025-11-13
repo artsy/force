@@ -144,7 +144,7 @@ const AuctionBidRoute: React.FC<
                 />
 
                 <PricingTransparencyQueryRenderer
-                  saleId={artwork.saleArtwork?.sale?.slug!}
+                  saleId={artwork.saleArtwork?.sale?.slug as string}
                   artworkId={artworkSlug}
                 />
 
@@ -233,7 +233,7 @@ export const AuctionBidRouteFragmentContainer = createRefetchContainer(
         ...AuctionBidRoute_sale
       }
     }
-  `
+  `,
 )
 
 const computeProps = ({
@@ -253,8 +253,8 @@ const computeProps = ({
     artwork.saleArtwork?.increments,
     increment => {
       // @ts-expect-error
-      return increment.cents < artwork.saleArtwork?.minimumNextBid!.cents!
-    }
+      return increment.cents < artwork.saleArtwork?.minimumNextBid.cents
+    },
   ).map(increment => {
     return {
       value: increment!.cents!.toString(),

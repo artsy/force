@@ -11,7 +11,7 @@ describe("testing different statuses", () => {
     setupTestWrapperTL<ConversationOrderUpdate_Test_Query>({
       Component: props => {
         const event =
-          props.conversation?.orderConnection?.edges?.[0]?.node!.orderHistory[0]
+          props.conversation?.orderConnection?.edges?.[0]?.node?.orderHistory[0]
 
         return <ConversationOrderUpdate event={event!} />
       },
@@ -91,7 +91,7 @@ describe("testing different statuses", () => {
     })
 
     expect(
-      screen.getByText("You sent a counteroffer for $40000")
+      screen.getByText("You sent a counteroffer for $40000"),
     ).toBeInTheDocument()
   })
 
@@ -123,7 +123,7 @@ describe("testing different statuses", () => {
     })
 
     expect(
-      screen.getByText("You received a counteroffer for $40000")
+      screen.getByText("You received a counteroffer for $40000"),
     ).toBeInTheDocument()
     expect(screen.queryByText("See details.")).not.toBeInTheDocument()
   })
@@ -156,7 +156,7 @@ describe("testing different statuses", () => {
     })
 
     expect(
-      screen.getByText("Offer Accepted - Pending Action")
+      screen.getByText("Offer Accepted - Pending Action"),
     ).toBeInTheDocument()
     expect(screen.queryByText("See details.")).not.toBeInTheDocument()
   })
@@ -206,7 +206,7 @@ describe("testing different statuses", () => {
       }),
     })
     expect(
-      screen.getByText("Offer accepted. Payment processing")
+      screen.getByText("Offer accepted. Payment processing"),
     ).toBeInTheDocument()
   })
 

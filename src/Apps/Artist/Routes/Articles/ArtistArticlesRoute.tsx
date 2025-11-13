@@ -71,10 +71,10 @@ const ArtistArticlesRoute: React.FC<
 
       <PaginationFragmentContainer
         getHref={() => ""}
-        pageCursors={artist?.articlesConnection?.pageCursors!}
+        pageCursors={artist?.articlesConnection?.pageCursors}
         onClick={handleClick}
         onNext={handleNext}
-        hasNextPage={artist?.articlesConnection?.pageInfo.hasNextPage!}
+        hasNextPage={!!artist?.articlesConnection?.pageInfo.hasNextPage}
         scrollTo="top"
         offset={40}
       />
@@ -113,5 +113,5 @@ export const ArtistArticlesRouteFragmentContainer = createRefetchContainer(
         ...ArtistArticlesRoute_artist @arguments(page: $page)
       }
     }
-  `
+  `,
 )

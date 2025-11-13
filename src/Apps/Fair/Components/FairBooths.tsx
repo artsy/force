@@ -60,7 +60,7 @@ const FairBooths: React.FC<React.PropsWithChildren<FairBoothsProps>> = ({
       ([filterKey, currentFilter]) => {
         const previousFilter = previousFilters[filterKey]
         return !isEqual(currentFilter, previousFilter)
-      }
+      },
     )
 
     if (filtersHaveUpdated) {
@@ -95,7 +95,7 @@ const FairBooths: React.FC<React.PropsWithChildren<FairBoothsProps>> = ({
 
   const loadNext = () => {
     if (fair.exhibitors?.pageInfo.hasNextPage) {
-      loadPage(context?.filters?.page! + 1)
+      loadPage((context?.filters?.page as number) + 1)
     }
   }
 
@@ -237,7 +237,7 @@ export const FairBoothsFragmentContainer = createRefetchContainer(
         ...FairBooths_fair @arguments(first: $first, page: $page, sort: $sort)
       }
     }
-  `
+  `,
 )
 
 export const FairBoothsQueryRenderer: React.FC<

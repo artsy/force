@@ -160,7 +160,7 @@ export const RespondRoute: FC<React.PropsWithChildren<RespondProps>> = ({
           input: {
             amountCents: offerValue * 100,
             note: offerNoteValue && offerNoteValue.value,
-            offerId: order?.lastOffer?.internalID!,
+            offerId: order?.lastOffer?.internalID as string,
           },
         })
       ).commerceBuyerCounterOffer?.orderOrError
@@ -177,7 +177,7 @@ export const RespondRoute: FC<React.PropsWithChildren<RespondProps>> = ({
   }
 
   const createCounterOffer = (
-    variables: RespondCounterOfferMutation["variables"]
+    variables: RespondCounterOfferMutation["variables"],
   ) => {
     return commitMutation<RespondCounterOfferMutation>({
       // TODO: Inputs to the mutation might have changed case of the keys!
@@ -222,7 +222,7 @@ export const RespondRoute: FC<React.PropsWithChildren<RespondProps>> = ({
             <CountdownTimer
               action="Respond"
               note="Once this offer expires, negotiations will end. Note that the artwork could be sold to another buyer in the meantime."
-              countdownStart={order.lastOffer?.createdAt!}
+              countdownStart={order.lastOffer?.createdAt as string}
               countdownEnd={order.stateExpiresAt!}
             />
 
@@ -266,7 +266,7 @@ export const RespondRoute: FC<React.PropsWithChildren<RespondProps>> = ({
                       <Spacer y={1} />
                       <OfferNote
                         onChange={setOfferNoteValue}
-                        artworkId={artwork?.slug!}
+                        artworkId={artwork?.slug as string}
                         counteroffer
                       />
                     </RevealButton>
@@ -379,5 +379,5 @@ export const RespondFragmentContainer = createFragmentContainer(
         ...OrderStepper_order
       }
     `,
-  }
+  },
 )

@@ -69,7 +69,7 @@ export const Reject: FC<React.PropsWithChildren<RejectProps>> = ({
       const orderOrError = (
         await rejectOffer({
           input: {
-            offerId: order.lastOffer?.internalID!,
+            offerId: order.lastOffer?.internalID as string,
           },
         })
       ).commerceBuyerRejectOffer?.orderOrError
@@ -109,7 +109,7 @@ export const Reject: FC<React.PropsWithChildren<RejectProps>> = ({
             <CountdownTimer
               action="Respond"
               note="Expired offers end the negotiation process permanently."
-              countdownStart={order.lastOffer?.createdAt!}
+              countdownStart={order.lastOffer?.createdAt as string}
               countdownEnd={order.stateExpiresAt!}
             />
             <StepSummaryItem
@@ -191,5 +191,5 @@ export const RejectFragmentContainer = createFragmentContainer(
         ...OrderStepper_order
       }
     `,
-  }
+  },
 )

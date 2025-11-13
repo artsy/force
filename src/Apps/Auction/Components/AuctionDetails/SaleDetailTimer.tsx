@@ -16,7 +16,7 @@ export const SaleDetailTimer: React.FC<
   const startAt = sale?.startAt
   const endedAt = sale?.endedAt
 
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  // biome-ignore lint/suspicious/noNonNullAssertedOptionalChain: legacy
   const { hasEnded, time, hasStarted } = useTimer(endAt!, startAt!)
 
   if (!endAt || endedAt) {
@@ -46,5 +46,5 @@ export const SaleDetailTimerFragmentContainer = createFragmentContainer(
         startAt
       }
     `,
-  }
+  },
 )

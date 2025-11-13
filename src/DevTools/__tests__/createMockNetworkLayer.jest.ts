@@ -16,7 +16,7 @@ jest.unmock("react-relay")
 describe("createMockNetworkLayer", () => {
   async function _fetchQueryWithResolvers<T extends OperationType>(
     options: Parameters<typeof createMockNetworkLayer>[0],
-    query: GraphQLTaggedNode
+    query: GraphQLTaggedNode,
   ) {
     const network = createMockNetworkLayer(options)
 
@@ -28,7 +28,7 @@ describe("createMockNetworkLayer", () => {
   }
 
   function fetchArtworkQueryWithResolvers(
-    options: Parameters<typeof createMockNetworkLayer>[0]
+    options: Parameters<typeof createMockNetworkLayer>[0],
   ) {
     return _fetchQueryWithResolvers<createMockNetworkLayerTestQuery>(
       options,
@@ -39,7 +39,7 @@ describe("createMockNetworkLayer", () => {
             title
           }
         }
-      `
+      `,
     )
   }
 
@@ -106,7 +106,7 @@ describe("createMockNetworkLayer", () => {
               }
             }
           }
-        `
+        `,
       )
     expect(data?.artist?.forSaleArtworks?.edges?.[0]?.node).toEqual({
       id: "for-sale-work",
@@ -140,9 +140,9 @@ describe("createMockNetworkLayer", () => {
               }
             }
           }
-        `
+        `,
       )
-    expect(data?.artist?.forSaleArtworks?.edges?.[0]?.node!).toEqual({
+    expect(data?.artist?.forSaleArtworks?.edges?.[0]?.node).toEqual({
       id: "for-sale-work",
     })
   })

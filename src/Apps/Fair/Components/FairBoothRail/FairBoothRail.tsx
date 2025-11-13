@@ -51,7 +51,7 @@ export const FairBoothRail: React.FC<
   }
 
   if (show.href) {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    // biome-ignore lint/suspicious/noNonNullAssertedOptionalChain: legacy
     const params = removeDefaultValues(filters!, {
       defaultValues: initialBoothFilterState,
     })
@@ -128,5 +128,5 @@ export const FairBoothRailFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

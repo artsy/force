@@ -42,7 +42,7 @@ const ArtistShowsGroup: React.FC<
         }
 
         setIsLoading(false)
-      }
+      },
     )
   }
 
@@ -75,7 +75,7 @@ const ArtistShowsGroup: React.FC<
 
       <PaginationFragmentContainer
         getHref={() => ""}
-        pageCursors={artist.showsConnection?.pageCursors!}
+        pageCursors={artist.showsConnection?.pageCursors}
         onClick={handleClick}
         onNext={handleNext}
         hasNextPage={!!artist.showsConnection?.pageInfo.hasNextPage}
@@ -126,5 +126,5 @@ export const ArtistShowsGroupRefetchContainer = createRefetchContainer(
           @arguments(page: $page, sort: $sort, status: $status)
       }
     }
-  `
+  `,
 )

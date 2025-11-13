@@ -71,16 +71,12 @@ export const PriceOptions: React.FC<
     }
   }, [])
 
-  useEffect(() => {
-    if (toggle) trackClick("Different amount", 0)
-  }, [toggle, trackClick])
-
   const trackClick = (offer: string, amount: number) => {
     const trackingData: ClickedOfferOption = {
       action: ActionType.clickedOfferOption,
       context_page_owner_id: contextPageOwnerId!,
       context_page_owner_type: contextPageOwnerType as PageOwnerType,
-      currency: artwork?.priceCurrency!,
+      currency: artwork?.priceCurrency as string,
       order_id: order.internalID,
       flow: DeprecatedAnalyticsSchema.Flow.MakeOffer,
       offer,
@@ -89,17 +85,21 @@ export const PriceOptions: React.FC<
     tracking.trackEvent(trackingData)
   }
 
+  useEffect(() => {
+    if (toggle) trackClick("Different amount", 0)
+  }, [toggle, trackClick])
+
   const asCurrency = (value: number) =>
     appendCurrencySymbol(
       value?.toLocaleString("en-US", {
-        currency: artwork?.priceCurrency!,
+        currency: artwork?.priceCurrency as string,
         minimumFractionDigits: 2,
         style: "currency",
       }),
-      artwork?.priceCurrency!,
+      artwork?.priceCurrency as string,
     )
 
-  const minPrice = priceOptions[2]?.value!
+  const minPrice = priceOptions[2]?.value
 
   const { jumpTo } = useJump()
 

@@ -6,7 +6,7 @@ const getLocalTimestampInMilliSeconds = () => {
 }
 
 export async function getOffsetBetweenGravityClock(
-  relayEnvironment: Environment
+  relayEnvironment: Environment,
 ): Promise<number> {
   const query = graphql`
     query timeQuery {
@@ -25,7 +25,7 @@ export async function getOffsetBetweenGravityClock(
       {},
       {
         fetchPolicy: "network-only",
-      }
+      },
     ).toPromise()
   }
 
@@ -36,8 +36,8 @@ export async function getOffsetBetweenGravityClock(
     const possibleNetworkLatencyInMilliSeconds =
       (getLocalTimestampInMilliSeconds() - startTime) / 2
     const serverTimestampInMilliSeconds =
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      data?.system?.time?.unix! * 1e3 + possibleNetworkLatencyInMilliSeconds
+      (data?.system?.time?.unix as number) * 1e3 +
+      possibleNetworkLatencyInMilliSeconds
 
     return serverTimestampInMilliSeconds
   }

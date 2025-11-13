@@ -120,12 +120,12 @@ export class CreditCardPicker extends React.Component<
     try {
       this.setState({ isCreatingStripeToken: true })
       const stripeBillingAddress = this.getStripeBillingAddress()
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      // biome-ignore lint/suspicious/noNonNullAssertedOptionalChain: legacy
       const cardNumberElement =
         this.props.elements.getElement(CardNumberElement)!
       return await this.props.stripe.createToken(
         cardNumberElement,
-        stripeBillingAddress
+        stripeBillingAddress,
       )
     } finally {
       this.setState({ isCreatingStripeToken: false })
@@ -248,7 +248,7 @@ export class CreditCardPicker extends React.Component<
 
     const orderCard = this.props.order.creditCard
 
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    // biome-ignore lint/suspicious/noNonNullAssertedOptionalChain: legacy
     const creditCardsArray = creditCards?.edges?.map(e => e?.node)!
 
     // only add the unsaved card to the cards array if it exists and is not already there
@@ -374,7 +374,7 @@ export class CreditCardPicker extends React.Component<
       {},
       emptyAddress,
       this.props.order.requestedFulfillment,
-      (o, s) => (isNull(s) ? o : s)
+      (o, s) => (isNull(s) ? o : s),
     )
     const selectedBillingAddress = (
       this.needsAddress() ? this.state.address : shippingAddress
@@ -400,7 +400,7 @@ export class CreditCardPicker extends React.Component<
   }
 
   private createCreditCard(
-    variables: CreditCardPickerCreateCreditCardMutation["variables"]
+    variables: CreditCardPickerCreateCreditCardMutation["variables"],
   ) {
     return this.props.commitMutation<CreditCardPickerCreateCreditCardMutation>({
       variables,
@@ -573,5 +573,5 @@ export const CreditCardPickerFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

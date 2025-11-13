@@ -99,14 +99,14 @@ export const MyCollectionCreateArtwork: React.FC<
 
       trackSaveCollectedArtwork(
         values.artistId,
-        values.artist?.targetSupply?.isP1 ?? false
+        values.artist?.targetSupply?.isP1 ?? false,
       )
 
       // Store images locally
       localImages.forEach((image, index) => {
         if (!artwork?.images?.[index]?.internalID) return
 
-        storeLocalImage(artwork?.images?.[index]?.internalID!, image)
+        storeLocalImage(artwork?.images?.[index]?.internalID, image)
       })
 
       router.replace({

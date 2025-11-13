@@ -31,7 +31,7 @@ const SettingsPurchases: FC<
   }
 
   const hasNextPage = me.orders?.pageInfo.hasNextPage ?? false
-  const endCursor = me.orders?.pageInfo.endCursor!
+  const endCursor = me.orders?.pageInfo.endCursor as string
   const pageCursors = me.orders?.pageCursors
 
   const handleNext = () => {
@@ -63,7 +63,7 @@ const SettingsPurchases: FC<
         }
 
         setLoading(false)
-      }
+      },
     )
   }
 
@@ -151,5 +151,5 @@ export const SettingsPurchasesFragmentContainer = createRefetchContainer(
           @arguments(states: $states, first: $first, after: $after)
       }
     }
-  `
+  `,
 )

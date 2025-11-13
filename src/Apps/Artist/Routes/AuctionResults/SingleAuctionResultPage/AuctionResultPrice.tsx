@@ -95,7 +95,7 @@ export const AuctionResultPrice: React.FC<
           <Flex>
             <Text variant={["md", "lg-display"]}>{salePrice}</Text>
 
-            <AuctionResultPerformance value={performance?.mid!} />
+            <AuctionResultPerformance value={performance?.mid} />
           </Flex>
           {showPriceUSD && (
             <Text variant={["xs", "sm"]} color="mono60">

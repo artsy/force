@@ -86,7 +86,7 @@ const ArtworkSidebarEditionSets: React.FC<
             <Box py={2}>{renderEditionSet(editionSet)}</Box>
             {index !== editionSets.length - 1 && <Separator />}
           </React.Fragment>
-        ))!
+        )) as any
       }
     </RadioGroup>
   )

@@ -10,7 +10,7 @@ describe("ConversationMessage", () => {
   const { renderWithRelay } = setupTestWrapperTL<ConversationMessageTestQuery>({
     Component: ({ conversation }) => (
       <ConversationMessage
-        message={conversation.messagesConnection.edges[0]?.node!}
+        message={conversation.messagesConnection.edges[0]?.node as any}
         messages={[conversation.messagesConnection.edges[0]?.node as any]}
         messageIndex={1}
         // Serves to the tests related to "Seen by"
@@ -75,7 +75,7 @@ describe("ConversationMessage", () => {
     })
 
     expect(
-      screen.getByText("This message is no longer available.")
+      screen.getByText("This message is no longer available."),
     ).toBeInTheDocument()
   })
 
@@ -97,7 +97,7 @@ describe("ConversationMessage", () => {
     expect(screen.getByAltText("Attached image")).toBeInTheDocument()
     expect(screen.getByAltText("Attached image")).toHaveAttribute(
       "src",
-      "https://image.png"
+      "https://image.png",
     )
   })
 

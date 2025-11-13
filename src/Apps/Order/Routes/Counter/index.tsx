@@ -42,7 +42,7 @@ export const CounterRoute: FC<
   const { trackEvent } = useTracking()
 
   const submitPendingOffer = (
-    variables: CounterSubmitMutation["variables"]
+    variables: CounterSubmitMutation["variables"],
   ) => {
     return commitMutation<CounterSubmitMutation>({
       mutation: graphql`
@@ -79,7 +79,7 @@ export const CounterRoute: FC<
       const orderOrError = (
         await submitPendingOffer({
           input: {
-            offerId: order.myLastOffer?.internalID!,
+            offerId: order.myLastOffer?.internalID as string,
           },
         })
       ).commerceSubmitPendingOffer?.orderOrError
@@ -135,7 +135,7 @@ export const CounterRoute: FC<
             <CountdownTimer
               action="Respond"
               note="Expired offers end the negotiation process permanently."
-              countdownStart={order.lastOffer?.createdAt!}
+              countdownStart={order.lastOffer?.createdAt as string}
               countdownEnd={order.stateExpiresAt!}
             />
             <TransactionDetailsSummaryItem
@@ -230,5 +230,5 @@ export const CounterFragmentContainer = createFragmentContainer(
         ...OfferHistoryItem_order
       }
     `,
-  }
+  },
 )

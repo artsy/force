@@ -28,7 +28,7 @@ export const BidTimerLine: React.FC<
     useState(onlineBiddingExtended)
 
   useAuctionWebsocket({
-    lotID: saleArtwork?.lotID!,
+    lotID: saleArtwork?.lotID as string,
     onChange: ({ extended_bidding_end_at }) => {
       setUpdatedLotClosesAt(extended_bidding_end_at)
       setUpdatedOnlineBiddingExtended(true)

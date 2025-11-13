@@ -46,21 +46,13 @@ type SavedShippingQuoteData = {
 
 export const computeOrderData = (
   order: ShippingContext_order$data,
-  meData: ShippingContextProps["meData"]
+  meData: ShippingContextProps["meData"],
 ): ComputedOrderData => {
-  // FIXME: Non-null assertion
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const firstLineItem = extractNodes(order.lineItems)[0]!
-  // FIXME: Non-null assertion
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const firstArtwork = firstLineItem.artwork!
-  // FIXME: Non-null assertion
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const artworkCountry = firstArtwork?.shippingCountry!
+  const artworkCountry = firstArtwork?.shippingCountry
   const savedFulfillmentDetails = getSavedFulfillmentDetails(order, meData)
-  // FIXME: Non-null assertion
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const shipsFrom = firstArtwork.shippingCountry!
+  const shipsFrom = firstArtwork.shippingCountry
   const domesticOnly = !!firstArtwork.onlyShipsDomestically
   const euOrigin = !!firstArtwork.euShippingOrigin
   // The first artwork in the order has fixed shipping cost upfront
@@ -117,7 +109,7 @@ export const computeOrderData = (
 
 const getSavedFulfillmentDetails = (
   order: ShippingContext_order$data,
-  meData: ShippingContextProps["meData"]
+  meData: ShippingContextProps["meData"],
 ): SavedFulfillmentData => {
   const fulfillmentTypeName = order.requestedFulfillment?.__typename
 
@@ -142,13 +134,13 @@ const getSavedFulfillmentDetails = (
       ["CommerceShip", "CommerceShipArta"].includes(fulfillmentTypeName)
     ) {
       const fulfillmentDetails = addressWithFallbackValues(
-        order.requestedFulfillment
+        order.requestedFulfillment,
       )
       // TODO: can this logic be colocated with other areas, like FulfillmentDetails' getInitialValues?
       const selectedSavedAddressID =
         (fulfillmentDetails &&
           meData.addressList.find(node =>
-            matchAddressFields(node, fulfillmentDetails)
+            matchAddressFields(node, fulfillmentDetails),
           )?.internalID) ??
         null
 

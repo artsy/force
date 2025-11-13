@@ -42,7 +42,7 @@ export interface ArtworkSidebarProps {
 }
 
 const checkIfArtworkIsOnLoanOrPermanentCollection = (
-  saleMessage: string | null | undefined
+  saleMessage: string | null | undefined,
 ) => {
   switch (saleMessage) {
     case "On loan":
@@ -355,7 +355,7 @@ export const ArtworkSidebarFragmentContainer = createFragmentContainer(
         ...ArtworkSidebarCommercialButtons_me @arguments(artworkID: $artworkID)
       }
     `,
-  }
+  },
 )
 
 interface ArtworkSidebarQueryRendererProps {
@@ -402,7 +402,7 @@ export const ArtworkSidebarQueryRenderer: React.FC<
         return (
           <ArtworkSidebarFragmentContainer
             artwork={props.artwork}
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            // biome-ignore lint/suspicious/noNonNullAssertedOptionalChain: legacy
             me={props.me!}
             {...rest}
           />

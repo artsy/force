@@ -66,7 +66,7 @@ const AuctionActiveBids: React.FC<
               <Box my={4}>
                 <Join separator={<Spacer y={0.5} />}>
                   <AuctionLotInfoFragmentContainer
-                    saleArtwork={lotStanding?.saleArtwork!}
+                    saleArtwork={lotStanding?.saleArtwork as any}
                     hideLotInfo={!!lotStanding?.saleArtwork?.sale?.isLiveOpen}
                   />
                   {!lotStanding?.saleArtwork?.sale?.isLiveOpen ? (
@@ -176,7 +176,7 @@ export const AuctionActiveBidsRefetchContainer = createRefetchContainer(
         ...AuctionActiveBids_me @arguments(saleID: $saleID)
       }
     }
-  `
+  `,
 )
 
 const BidStatus: React.FC<

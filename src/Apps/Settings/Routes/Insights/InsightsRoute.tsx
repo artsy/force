@@ -19,10 +19,10 @@ const InsightsRoute: React.FC<React.PropsWithChildren<InsightsRouteProps>> = ({
   me,
 }) => {
   const isCareerHighlightEnabled = useFlag(
-    "my-collection-web-phase-7-career-highlights"
+    "my-collection-web-phase-7-career-highlights",
   )
   const isMedianSalePriceEnabled = useFlag(
-    "my-collection-web-phase-7-median-sale-price"
+    "my-collection-web-phase-7-median-sale-price",
   )
 
   if (!me.myCollectionInfo?.artworksCount) {
@@ -42,7 +42,7 @@ const InsightsRoute: React.FC<React.PropsWithChildren<InsightsRouteProps>> = ({
         </Media>
 
         <Join separator={<Spacer y={[4, 6]} />}>
-          <InsightsOverviewFragmentContainer info={me?.myCollectionInfo!} />
+          <InsightsOverviewFragmentContainer info={me?.myCollectionInfo} />
 
           {!!isCareerHighlightEnabled && (
             <>
@@ -87,5 +87,5 @@ export const InsightsRouteFragmentContainer = createFragmentContainer(
         ...InsightsMedianSalePrice_me
       }
     `,
-  }
+  },
 )

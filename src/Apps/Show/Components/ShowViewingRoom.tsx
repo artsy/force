@@ -24,7 +24,7 @@ export const ShowViewingRoom: React.FC<
 > = ({ show, ...rest }) => {
   const [viewingRoom] = extractNodes(show.viewingRoomsConnection)
 
-  const image = cropped(viewingRoom.image?.imageURLs?.normalized!, {
+  const image = cropped(viewingRoom.image?.imageURLs?.normalized as string, {
     width: 450,
     height: 600,
   })
@@ -107,5 +107,5 @@ export const ShowViewingRoomFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

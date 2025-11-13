@@ -49,7 +49,7 @@ const FlatGridItem: React.FC<React.PropsWithChildren<FlatGridItemProps>> = ({
   const [updatedBiddingEndAt, setUpdatedBiddingEndAt] = useState(biddingEndAt)
 
   useAuctionWebsocket({
-    lotID: saleArtwork?.lotID!,
+    lotID: saleArtwork?.lotID as string,
     onChange: ({ extended_bidding_end_at }) => {
       setUpdatedBiddingEndAt(extended_bidding_end_at)
     },
@@ -156,7 +156,7 @@ export const FlatGridItemFragmentContainer = createFragmentContainer(
         href
       }
     `,
-  }
+  },
 )
 
 interface FlatGridItemPlaceholderProps {

@@ -94,7 +94,7 @@ const SettingsEditProfileAboutYou: FC<
                 placeholder="Enter your city"
                 maxLength={256}
                 spellCheck={false}
-                defaultValue={formik.values.displayLocation?.display!}
+                defaultValue={formik.values.displayLocation?.display as string}
                 onChange={place => {
                   formik.setFieldValue("location", normalizePlace(place))
                 }}

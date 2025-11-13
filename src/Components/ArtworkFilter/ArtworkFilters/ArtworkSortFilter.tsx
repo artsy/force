@@ -11,7 +11,7 @@ export const ArtworkSortFilter: React.FC<
   return (
     <SortFilter
       sortOptions={sortOptions!}
-      selected={filters?.sort!}
+      selected={filters?.sort as string}
       onSort={sort => {
         context.setFilter("sort", sort)
       }}

@@ -39,7 +39,7 @@ const SettingsOrders: FC<React.PropsWithChildren<SettingsOrdersProps>> = ({
   }
 
   const hasNextPage = me.orders?.pageInfo.hasNextPage ?? false
-  const endCursor = me.orders?.pageInfo.endCursor!
+  const endCursor = me.orders?.pageInfo.endCursor as string
   const pageCursors = me.orders?.pageCursors
 
   const handleNext = () => {
@@ -71,7 +71,7 @@ const SettingsOrders: FC<React.PropsWithChildren<SettingsOrdersProps>> = ({
         }
 
         setLoading(false)
-      }
+      },
     )
   }
 
@@ -156,5 +156,5 @@ export const SettingsOrdersFragmentContainer = createRefetchContainer(
           @arguments(states: $states, first: $first, after: $after)
       }
     }
-  `
+  `,
 )

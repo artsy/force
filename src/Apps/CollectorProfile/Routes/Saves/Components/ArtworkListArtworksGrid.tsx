@@ -104,9 +104,9 @@ const ArtworkListArtworksGrid: FC<
         context_page_owner_type: contextPageOwnerType,
         context_page_owner_id: contextPageOwnerId,
         context_page_owner_slug: contextPageOwnerSlug,
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        // biome-ignore lint/suspicious/noNonNullAssertedOptionalChain: legacy
         page_current: prevFilterValue!,
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        // biome-ignore lint/suspicious/noNonNullAssertedOptionalChain: legacy
         page_changed: currentFilterValue!,
       }
 
@@ -135,7 +135,7 @@ const ArtworkListArtworksGrid: FC<
         const isChanged = !isEqual(currentFilter, previousFilter)
 
         return isChanged
-      }
+      },
     )
     const filtersHaveUpdated = !!changedFilterEntity
 
@@ -158,7 +158,7 @@ const ArtworkListArtworksGrid: FC<
       <Spacer y={2} />
       <LoadingArea isLoading={fetching}>
         <ArtworkGrid
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          // biome-ignore lint/suspicious/noNonNullAssertedOptionalChain: legacy
           artworks={artworks!}
           columnCount={[2, 3]}
           contextModule={ContextModule.artworkGrid}
@@ -185,7 +185,7 @@ const ArtworkListArtworksGrid: FC<
 
         <Pagination
           hasNextPage={hasNextPage}
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          // biome-ignore lint/suspicious/noNonNullAssertedOptionalChain: legacy
           pageCursors={pageCursors!}
           onClick={(_cursor, page) => loadPage(page)}
           onNext={() => loadNext()}
@@ -227,5 +227,5 @@ export const ArtworkListArtworksGridFragmentContainer = createFragmentContainer(
         ...ArtworkListEmptyState_me @arguments(listID: $listID)
       }
     `,
-  }
+  },
 )

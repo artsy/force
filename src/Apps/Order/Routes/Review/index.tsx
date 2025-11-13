@@ -83,7 +83,7 @@ export const ReviewRoute: FC<React.PropsWithChildren<ReviewProps>> = props => {
   const trackErrorMessageEvent = (
     title: string,
     message: string | undefined,
-    code?: string
+    code?: string,
   ) => {
     return trackEvent({
       action: ActionType.errorMessageViewed,
@@ -130,7 +130,7 @@ export const ReviewRoute: FC<React.PropsWithChildren<ReviewProps>> = props => {
               trackErrorMessageEvent(
                 "An error occurred",
                 result.error.message,
-                result.error.code
+                result.error.code,
               )
 
               props.dialog.showErrorDialog({
@@ -154,7 +154,7 @@ export const ReviewRoute: FC<React.PropsWithChildren<ReviewProps>> = props => {
               trackErrorMessageEvent(
                 "An error occurred",
                 result.error.message,
-                result.error.code
+                result.error.code,
               )
 
               props.dialog.showErrorDialog({
@@ -181,7 +181,7 @@ export const ReviewRoute: FC<React.PropsWithChildren<ReviewProps>> = props => {
           // iOS registers the ReactNativeWebView inside the webkit.messageHandlers
           if (window.webkit?.messageHandlers.ReactNativeWebView) {
             window.webkit?.messageHandlers.ReactNativeWebView.postMessage(
-              messagePayload
+              messagePayload,
             )
           } else {
             window.ReactNativeWebView?.postMessage(messagePayload)
@@ -255,7 +255,7 @@ export const ReviewRoute: FC<React.PropsWithChildren<ReviewProps>> = props => {
         },
         // TODO: Inputs to the mutation might have changed case of the keys!
         mutation: submitOfferOrderWithConversation,
-      }
+      },
     )
   }
 
@@ -329,7 +329,7 @@ export const ReviewRoute: FC<React.PropsWithChildren<ReviewProps>> = props => {
           })
         } else if (data.decline_code === "currency_not_supported") {
           const { title, message, formattedMessage } = getErrorDialogCopy(
-            ErrorDialogs.CurrencyNotSupported
+            ErrorDialogs.CurrencyNotSupported,
           )
 
           trackErrorMessageEvent(title, message, data.decline_code)
@@ -437,7 +437,7 @@ export const ReviewRoute: FC<React.PropsWithChildren<ReviewProps>> = props => {
   const routeToArtworkPage = () => {
     const artworkId = get(
       props.order,
-      o => o.lineItems?.edges?.[0]?.node?.artwork?.slug
+      o => o.lineItems?.edges?.[0]?.node?.artwork?.slug,
     )
     props.router.push(`/artwork/${artworkId}`)
   }
@@ -539,7 +539,7 @@ export const ReviewRoute: FC<React.PropsWithChildren<ReviewProps>> = props => {
             </Flex>
             <Media greaterThan="xs">
               <ItemReview
-                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                // biome-ignore lint/suspicious/noNonNullAssertedOptionalChain: legacy
                 lineItem={order?.lineItems?.edges?.[0]?.node!}
                 orderSource={order.source}
               />
@@ -594,7 +594,7 @@ export const ReviewRoute: FC<React.PropsWithChildren<ReviewProps>> = props => {
 
 export const ReviewFragmentContainer = createFragmentContainer(
   withSystemContext(
-    createStripeWrapper(injectCommitMutation(injectDialog(ReviewRoute)) as any)
+    createStripeWrapper(injectCommitMutation(injectDialog(ReviewRoute)) as any),
   ),
   {
     order: graphql`
@@ -645,7 +645,7 @@ export const ReviewFragmentContainer = createFragmentContainer(
         ...OrderStepper_order
       }
     `,
-  }
+  },
 )
 
 const submitOfferOrderWithConversation = graphql`

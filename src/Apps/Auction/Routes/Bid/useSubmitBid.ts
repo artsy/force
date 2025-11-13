@@ -61,7 +61,7 @@ export const useSubmitBid = ({
    */
   const submitBid = async (
     values: AuctionFormValues,
-    helpers: AuctionFormHelpers
+    helpers: AuctionFormHelpers,
   ) => {
     helpers.setStatus(null)
 
@@ -106,7 +106,7 @@ export const useSubmitBid = ({
       throw error
     }
 
-    const result = bidderPositionResponse?.createBidderPosition?.result!
+    const result = bidderPositionResponse?.createBidderPosition?.result
 
     tracking.maybeTrackNewBidder({
       bidderID,
@@ -200,7 +200,7 @@ const setupCheckBidStatus = (props: {
           pendingPollCount++
         } else {
           helpers.setStatus(
-            "Error fetching bid status. PENDING status timeout."
+            "Error fetching bid status. PENDING status timeout.",
           )
           helpers.setSubmitting(false)
         }
@@ -226,7 +226,7 @@ const setupCheckBidStatus = (props: {
       case "OUTBID": {
         helpers.setFieldError(
           "selectedBid",
-          errorMessageForBidding(result.status)
+          errorMessageForBidding(result.status),
         )
         helpers.setSubmitting(false)
 
@@ -236,7 +236,7 @@ const setupCheckBidStatus = (props: {
       case "RESERVE_NOT_MET": {
         helpers.setFieldError(
           "selectedBid",
-          errorMessageForBidding(result.status)
+          errorMessageForBidding(result.status),
         )
         helpers.setSubmitting(false)
 

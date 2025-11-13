@@ -22,7 +22,7 @@ export const FairOrganizerLatestArticles: React.FC<
   }
 
   const [latestArticle, ...otherArticles] = articles
-  const showReadAllButton = articlesConnection?.totalCount! > 7
+  const showReadAllButton = (articlesConnection?.totalCount as number) > 7
 
   return (
     <Box>
