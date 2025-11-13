@@ -18,7 +18,7 @@ interface Order2PriceRangeOfferFormProps extends OfferFormProps {
 
 export const Order2PriceRangeOfferForm: React.FC<
   Order2PriceRangeOfferFormProps
-> = ({ order, onOfferOptionSelected }) => {
+> = ({ order, onOfferOptionSelected, onCustomOfferBlur }) => {
   const orderData = useFragment(FRAGMENT, order)
   const [selectedRadio, setSelectedRadio] = useState<string>()
 
@@ -103,7 +103,7 @@ export const Order2PriceRangeOfferForm: React.FC<
     >
       {selectedRadio === "price-option-custom" && (
         <Flex flexDirection="column" mt={2}>
-          <FormikOfferInput name="offerValue" />
+          <FormikOfferInput name="offerValue" onBlur={onCustomOfferBlur} />
         </Flex>
       )}
     </Radio>,
