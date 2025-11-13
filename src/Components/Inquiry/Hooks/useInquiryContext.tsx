@@ -76,6 +76,7 @@ const InquiryContext = createContext<{
   visited: Visited
   questions: InquiryQuestionInput[]
   addQuestion: (question: InquiryQuestionInput) => void
+  addQuestionDetails: (question: InquiryQuestionInput) => void
   removeQuestion: (question: InquiryQuestionInput) => void
 }>({
   artworkID: "",
@@ -94,6 +95,7 @@ const InquiryContext = createContext<{
   visited: new Visited("empty"),
   questions: [],
   addQuestion: () => {},
+  addQuestionDetails: () => {},
   removeQuestion: () => {},
 })
 
@@ -188,6 +190,16 @@ export const InquiryProvider: React.FC<
     })
   }
 
+  const addQuestionDetails = (question: InquiryQuestionInput) => {
+    setQuestions(prev => {
+      return prev.map(q =>
+        q.questionID === question.questionID
+          ? { ...q, details: question.details }
+          : q,
+      )
+    })
+  }
+
   const removeQuestion = (question: InquiryQuestionInput) => {
     setQuestions(prev => prev.filter(q => q.questionID !== question.questionID))
   }
@@ -211,6 +223,7 @@ export const InquiryProvider: React.FC<
         visited,
         questions,
         addQuestion,
+        addQuestionDetails,
         removeQuestion,
       }}
     >

@@ -9,6 +9,10 @@ import {
   Text,
 } from "@artsy/palette"
 import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
+import {
+  LocationAutocompleteInput,
+  normalizePlace,
+} from "Components/LocationAutocompleteInput"
 import type React from "react"
 import { useEffect, useState } from "react"
 
@@ -31,7 +35,8 @@ export const InquiryQuestionOption: React.FC<InquiryQuestionOptionProps> = ({
   question,
 }) => {
   const isShipping = id === InquiryQuestionIDs.Shipping
-  const { questions, addQuestion, removeQuestion } = useInquiryContext()
+  const { questions, addQuestion, removeQuestion, addQuestionDetails } =
+    useInquiryContext()
 
   // let questionSelected = false
   const [questionSelected, setQuestionSelected] = useState(false)
@@ -47,7 +52,26 @@ export const InquiryQuestionOption: React.FC<InquiryQuestionOptionProps> = ({
       removeQuestion({ questionID: id, details: question })
     }
   }
-  const shippingLocation = false
+  const shippingLocation = questions?.find(
+    q => q.questionID === InquiryQuestionIDs.Shipping,
+  )?.details
+
+  const setShippingDetails = location => {
+    const shippingDetails = {
+      city: location.city,
+      coordinates: location.coordinates,
+      country: location.country,
+      postal_code: location.postalCode,
+      state: location.state,
+      state_code: location.stateCode,
+    }
+    addQuestionDetails({
+      questionID: InquiryQuestionIDs.Shipping,
+      details: JSON.stringify(shippingDetails),
+    })
+  }
+
+  console.log("shippingLocation", shippingLocation)
 
   useEffect(() => {
     console.log("questions updated", questions)
@@ -55,46 +79,34 @@ export const InquiryQuestionOption: React.FC<InquiryQuestionOptionProps> = ({
 
   return (
     <>
-      <Flex flexDirection="row" justifyContent="space-between">
-        <Flex flexDirection="row">
-          <Join separator={<Spacer x={4} />}>
-            <Checkbox selected={questionSelected} onSelect={setSelection} />
-            <Text variant="sm">{question}</Text>
-          </Join>
-        </Flex>
-      </Flex>
-
-      {!!isShipping && !!questionSelected && (
-        <>
-          <Separator my={2} />
-
-          <Flex
-            flexDirection="row"
-            justifyContent="space-between"
-            alignItems="center"
-          >
-            {shippingLocation ? (
-              <>
-                <Text variant="sm" color="mono60">
-                  Add your location
-                </Text>
-                <Box>
-                  <ChevronSmallRightIcon color="mono60" />
-                </Box>
-              </>
-            ) : (
-              <>
-                <Text variant="sm" color="mono100" style={{ width: "70%" }}>
-                  {shippingLocation}
-                </Text>
-                <Text variant="sm" color="blue100">
-                  Edit
-                </Text>
-              </>
-            )}
+      <Flex flexDirection="column" justifyContent="space-between">
+        <Join separator={<Spacer x={2} />}>
+          <Flex flexDirection="row">
+            <Join separator={<Spacer x={4} />}>
+              <Checkbox selected={questionSelected} onSelect={setSelection} />
+              <Text variant="sm">{question}</Text>
+            </Join>
           </Flex>
-        </>
-      )}
+
+          {!!isShipping && !!questionSelected && (
+            <Flex
+              flexDirection="row"
+              justifyContent="space-between"
+              alignItems="center"
+            >
+              <LocationAutocompleteInput
+                name="location"
+                placeholder="Add your location"
+                maxLength={256}
+                spellCheck={false}
+                onChange={place => {
+                  setShippingDetails(normalizePlace(place))
+                }}
+              />
+            </Flex>
+          )}
+        </Join>
+      </Flex>
     </>
   )
 }
