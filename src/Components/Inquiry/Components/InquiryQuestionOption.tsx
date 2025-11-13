@@ -79,34 +79,32 @@ export const InquiryQuestionOption: React.FC<InquiryQuestionOptionProps> = ({
 
   return (
     <>
-      <Flex flexDirection="column" justifyContent="space-between">
-        <Join separator={<Spacer x={2} />}>
-          <Flex flexDirection="row">
-            <Join separator={<Spacer x={4} />}>
-              <Checkbox selected={questionSelected} onSelect={setSelection} />
-              <Text variant="sm">{question}</Text>
-            </Join>
-          </Flex>
-
-          {!!isShipping && !!questionSelected && (
-            <Flex
-              flexDirection="row"
-              justifyContent="space-between"
-              alignItems="center"
-            >
-              <LocationAutocompleteInput
-                name="location"
-                placeholder="Add your location"
-                maxLength={256}
-                spellCheck={false}
-                onChange={place => {
-                  setShippingDetails(normalizePlace(place))
-                }}
-              />
-            </Flex>
-          )}
+      <Flex flexDirection="row">
+        <Join separator={<Spacer x={0} />}>
+          {/*Better option to tab in?*/}
+          <Spacer x={1} />
+          <Checkbox selected={questionSelected} onSelect={setSelection} />
+          <Text variant="sm">{question}</Text>
         </Join>
       </Flex>
+
+      {!!isShipping && !!questionSelected && (
+        <Flex
+          flexDirection="row"
+          justifyContent="space-between"
+          alignItems="center"
+        >
+          <LocationAutocompleteInput
+            name="location"
+            placeholder="Add your location"
+            maxLength={256}
+            spellCheck={false}
+            onChange={place => {
+              setShippingDetails(normalizePlace(place))
+            }}
+          />
+        </Flex>
+      )}
     </>
   )
 }

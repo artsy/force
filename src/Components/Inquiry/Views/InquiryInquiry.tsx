@@ -5,6 +5,7 @@ import {
   Button,
   Flex,
   Image,
+  Join,
   Separator,
   Skeleton,
   SkeletonBox,
@@ -162,14 +163,22 @@ const InquiryInquiry: React.FC<
         enableCheckboxes && (
           <>
             <Text variant="sm">What information are you looking for?</Text>
-            {artwork.inquiryQuestions.filter(Boolean).map(question => (
-              <InquiryQuestionOption
-                key={question.internalID}
-                id={question.internalID}
-                question={question.question}
-              />
-            ))}
-            <Separator my={2} />
+            {/*TODO: clean this up later*/}
+            <Spacer y={1} />
+            <Join separator={<Spacer y={1} />}>
+              {artwork.inquiryQuestions.map(question => {
+                if (!question) return null
+
+                return (
+                  <InquiryQuestionOption
+                    key={question.internalID}
+                    id={question.internalID}
+                    question={question.question}
+                  />
+                )
+              })}
+            </Join>
+            <Spacer y={2} />
           </>
         )}
 
