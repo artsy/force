@@ -1,9 +1,9 @@
 import { Flex, Radio, RadioGroup, Spacer, Text } from "@artsy/palette"
-import { OfferInput } from "Apps/Order/Components/OfferInput"
 import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
+import { FormikOfferInput } from "Apps/Order2/Routes/Checkout/Components/OfferStep/Components/FormikOfferInput"
 import type { OfferFormProps } from "Apps/Order2/Routes/Checkout/Components/OfferStep/types"
 import type { Order2ExactPriceOfferForm_order$key } from "__generated__/Order2ExactPriceOfferForm_order.graphql"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { graphql, useFragment } from "react-relay"
 
 interface PriceOption {
@@ -18,13 +18,7 @@ interface Order2ExactPriceOfferFormProps extends OfferFormProps {
 
 export const Order2ExactPriceOfferForm: React.FC<
   Order2ExactPriceOfferFormProps
-> = ({
-  order,
-  offerValue,
-  formIsDirty,
-  onOfferValueChange,
-  onOfferOptionSelected,
-}) => {
+> = ({ order, offerValue, onOfferValueChange, onOfferOptionSelected }) => {
   const orderData = useFragment(FRAGMENT, order)
 
   const listPriceMajor = orderData.lineItems[0]?.listPrice?.major
@@ -80,13 +74,6 @@ export const Order2ExactPriceOfferForm: React.FC<
     initialState.customValue,
   )
 
-  // Update parent component state when custom values change
-  useEffect(() => {
-    if (selectedRadio === "price-option-custom") {
-      onOfferValueChange(customValue || 0)
-    }
-  }, [customValue, selectedRadio, onOfferValueChange])
-
   const formatCurrency = (amount: number) => {
     return appendCurrencySymbol(
       amount.toLocaleString("en-US", {
@@ -123,6 +110,9 @@ export const Order2ExactPriceOfferForm: React.FC<
               if (!isCustom) {
                 setCustomValue(undefined)
                 onOfferOptionSelected(value, description)
+              } else {
+                // Clear the Formik field when switching to custom input
+                onOfferValueChange(0)
               }
             }}
           >
@@ -138,19 +128,7 @@ export const Order2ExactPriceOfferForm: React.FC<
 
             {showCustomInput && (
               <Flex flexDirection="column" mt={2}>
-                <OfferInput
-                  id="OfferForm_customOfferValue"
-                  showError={formIsDirty && offerValue <= 0}
-                  onChange={value => {
-                    setCustomValue(value)
-                  }}
-                  onBlur={() => {
-                    if (customValue !== undefined) {
-                      onOfferOptionSelected(customValue, description)
-                    }
-                  }}
-                  value={customValue || 0}
-                />
+                <FormikOfferInput name="offerValue" />
               </Flex>
             )}
           </Radio>

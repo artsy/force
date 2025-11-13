@@ -177,6 +177,8 @@ describe("Order2OfferStep", () => {
       steps: [{ name: "OFFER_AMOUNT", state: "ACTIVE" }],
       setOfferAmountComplete: mockSetOfferAmountComplete,
       checkoutTracking: mockCheckoutTracking,
+      messages: {},
+      setStepErrorMessage: jest.fn(),
     })
     mockUseOrder2AddInitialOfferMutation.mockReturnValue({
       submitMutation: mockSubmitMutation,
