@@ -168,6 +168,12 @@ const InquiryInquiry: React.FC<
           </>
         )}
 
+      <Text variant="xs" display="flex" gap={0.5} color="mono60">
+        Personalize your message and include details for the best response
+      </Text>
+
+      <Spacer y={2} />
+
       <TextArea
         placeholder="Provide the gallery with some details about your interest in this work."
         title="Your message"
