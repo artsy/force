@@ -1,6 +1,5 @@
 import { ActionType, type SentArtworkInquiry } from "@artsy/cohesion"
 import type {
-  InquiryQuestionInput,
   SubmitInquiryRequestMutationInput,
   useArtworkInquiryRequestMutation,
   useArtworkInquiryRequestMutation$data,
