@@ -17,8 +17,6 @@ export const OfferInput: FC<OfferInputProps> = ({ name, onBlur }) => {
     return ""
   }
 
-  const showError = !!meta.error
-
   const handleBlur = () => {
     if (onBlur) {
       onBlur(field.value)
@@ -30,13 +28,13 @@ export const OfferInput: FC<OfferInputProps> = ({ name, onBlur }) => {
       title="Your offer"
       type="text"
       pattern="[0-9]"
-      error={showError ? meta.error : false}
+      error={!!meta.error}
       inputMode={"numeric"}
       onBlur={handleBlur}
       value={formatValueForDisplay(field.value)}
-      data-testid={showError ? "offer-input-error" : "offer-input"}
-      onChange={ev => {
-        const currentValue = ev.currentTarget.value
+      data-testid="offer-input"
+      onChange={event => {
+        const currentValue = event.currentTarget.value
         const cleanedValue = currentValue.replace(/[^\d]/g, "") // Remove non-digits
         helpers.setValue(Number(cleanedValue))
       }}
