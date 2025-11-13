@@ -120,7 +120,7 @@ export const ImmersiveView: React.FC<ImmersiveViewProps> = props => {
           break
       }
     },
-    [handleNextArtwork, handlePreviousArtwork]
+    [handleNextArtwork, handlePreviousArtwork],
   )
 
   const tracking = useTracking()
@@ -150,7 +150,6 @@ export const ImmersiveView: React.FC<ImmersiveViewProps> = props => {
     tracking.trackEvent(params)
   }
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: "trackImmersiveViewArtworkDisplayed changes on every re-render and should not be used as a hook dependency"
   useEffect(() => {
     // Debounce tracking to only fire if artwork remains in view for the threshold duration
     const timeoutId = setTimeout(() => {

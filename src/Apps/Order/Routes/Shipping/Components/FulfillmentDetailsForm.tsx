@@ -78,7 +78,7 @@ export const FulfillmentDetailsForm = ({
 }
 
 const FulfillmentDetailsFormLayout = (
-  props: FulfillmentDetailsFormLayoutProps
+  props: FulfillmentDetailsFormLayoutProps,
 ) => {
   const { contextPageOwnerId } = useAnalyticsContext()
 
@@ -114,7 +114,6 @@ const FulfillmentDetailsFormLayout = (
    * via `shippingContext.state.fulfillmentDetailsCtx`
    */
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Formik context exposed to shipping route based on form state
   useEffect(() => {
     shippingContext.actions.setFulfillmentDetailsFormikContext(formikContext)
   }, [formikContext.values, formikContext.isValid])
@@ -157,7 +156,7 @@ const FulfillmentDetailsFormLayout = (
       formikContext.setValues,
       formikContext.values,
       shippingContext.actions.setStage,
-    ]
+    ],
   )
 
   // Use useEffect to submit the form after values are updated
@@ -170,7 +169,7 @@ const FulfillmentDetailsFormLayout = (
 
   const handleChooseAddressForVerification = async (
     verifiedBy,
-    chosenAddress
+    chosenAddress,
   ) => {
     const newValues = {
       ...values,
@@ -228,8 +227,8 @@ const FulfillmentDetailsFormLayout = (
           savedAddresses,
           shippingContext.orderData.shipsFrom,
           shippingContext.meData.name,
-          shippingContext.orderData.availableShippingCountries
-        )
+          shippingContext.orderData.availableShippingCountries,
+        ),
       )
     }
   }

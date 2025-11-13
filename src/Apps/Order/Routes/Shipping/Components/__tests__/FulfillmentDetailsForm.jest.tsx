@@ -19,6 +19,7 @@ import {
   within,
 } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
+// biome-ignore lint/style/noRestrictedImports: Test requires unleash feature flag dependency
 import { useFlag } from "@unleash/proxy-client-react"
 import { useTracking } from "react-tracking"
 

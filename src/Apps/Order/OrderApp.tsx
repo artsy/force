@@ -45,12 +45,10 @@ const OrderApp: FC<React.PropsWithChildren<OrderAppProps>> = props => {
 
   const removeNavigationListenerRef = useRef<null | (() => void)>(null)
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Navigation listener should only be set up once on mount
   useEffect(() => {
     if (!removeNavigationListenerRef.current) {
-      removeNavigationListenerRef.current = router.addNavigationListener(
-        handleTransition()
-      )
+      removeNavigationListenerRef.current =
+        router.addNavigationListener(handleTransition())
     }
 
     window.addEventListener("beforeunload", preventHardReload)

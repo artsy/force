@@ -25,7 +25,7 @@ export const storeLocalImage = async (key: string, image: LocalImage) => {
 }
 
 export const getLocalImage = async (
-  key: string
+  key: string,
 ): Promise<LocalImage | null> => {
   const storeKey = `${IMAGE_KEY_PREFIX}_${key}`
   const imageJSONString = await localforage.getItem(storeKey)
@@ -60,12 +60,12 @@ export const useLocalImage = (
     | { internalID: string | null | undefined; versions: any }
     | null
     | undefined,
-  requestedImageVersion?: string
+  requestedImageVersion?: string,
 ) => {
   return useLocalImageStorage(
     image?.internalID,
     image?.versions,
-    requestedImageVersion
+    requestedImageVersion,
   )
 }
 
@@ -75,7 +75,7 @@ export const useLocalImage = (
 export const useLocalImageStorage = (
   key: string | null | undefined,
   imageVersions?: any,
-  requestedImageVersion?: string
+  requestedImageVersion?: string,
 ) => {
   const [localImage, setLocalImage] = useState<LocalImage | null>(null)
 
@@ -83,7 +83,7 @@ export const useLocalImageStorage = (
     imageVersions &&
     isImageVersionAvailable(
       imageVersions,
-      requestedImageVersion || DEFAULT_IMAGE_VERSION
+      requestedImageVersion || DEFAULT_IMAGE_VERSION,
     )
 
   const changeLocalImage = async () => {
@@ -99,7 +99,6 @@ export const useLocalImageStorage = (
     }
   }
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Image availability check included in effect logic
   useEffect(() => {
     changeLocalImage()
   }, [key])

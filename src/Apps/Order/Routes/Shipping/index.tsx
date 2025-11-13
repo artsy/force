@@ -86,7 +86,6 @@ const ShippingRouteLayout: FC<
   const isExpressCheckoutLoading =
     shippingContext.state.isExpressCheckoutLoading
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Jump behavior should only react to stage changes
   useEffect(() => {
     if (shippingContext.state.stage === "shipping_quotes") {
       jumpTo("shippingOptionsTop", { behavior: "smooth" })

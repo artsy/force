@@ -14,7 +14,6 @@ const getFirstFieldErrorName = errors => {
 export const ScrollToFieldError = () => {
   const { submitCount, isValid, errors } = useFormikContext()
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Scroll effect should only trigger on form submission attempts
   useEffect(() => {
     if (isValid) return
 

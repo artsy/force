@@ -4,6 +4,7 @@ import { ArtworkQueryFilter } from "Components/ArtworkFilter/ArtworkQueryFilter"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { fireEvent, screen } from "@testing-library/react"
+// biome-ignore lint/style/noRestrictedImports: Test requires unleash feature flag dependency
 import { useFlag } from "@unleash/proxy-client-react"
 import { omit } from "lodash"
 import { useTracking } from "react-tracking"

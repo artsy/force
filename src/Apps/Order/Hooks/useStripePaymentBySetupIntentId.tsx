@@ -13,15 +13,14 @@ export function useStripePaymentBySetupIntentId(orderId: string) {
 
   const [isProcessingRedirect, setIsProcessingRedirect] = useState(false)
   const [stripeSetupIntentId, setStripeSetupIntentId] = useState<null | string>(
-    null
+    null,
   )
   const [isPaymentSetupSuccessful, setIsPaymentSetupSuccessful] =
     useState(false)
   const [paymentSetupError, setPaymentSetupError] = useState<null | object>(
-    null
+    null,
   )
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Stripe redirect handling should react to route changes
   useEffect(() => {
     // pull necessary params from Stripe redirect URL
     const {
@@ -56,7 +55,7 @@ export function useStripePaymentBySetupIntentId(orderId: string) {
 
   const setPaymentBySetupIntentId = async (
     setupIntentId: string,
-    oneTimeUse: boolean
+    oneTimeUse: boolean,
   ) => {
     try {
       const orderOrError = (

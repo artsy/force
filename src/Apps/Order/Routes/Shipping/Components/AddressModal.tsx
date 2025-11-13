@@ -80,7 +80,7 @@ export const AddressModal: FC<React.PropsWithChildren<AddressModalProps>> = ({
           ? addressModalAction.address
           : {
               country: shippingContext.orderData.shipsFrom,
-            }
+            },
       ),
       name: incomingAddress?.name || shippingContext.meData.name || "",
     },
@@ -89,7 +89,7 @@ export const AddressModal: FC<React.PropsWithChildren<AddressModalProps>> = ({
 
   const handleSubmit = async (
     values: FormValues,
-    helpers: FormikHelpers<FormValues>
+    helpers: FormikHelpers<FormValues>,
   ) => {
     if (!addressModalAction) {
       return
@@ -186,7 +186,6 @@ const AddressModalForm: FC<
     addressModalAction.type === "edit" ? Object.keys(errors.address || {}) : []
 
   // Touch fields that have errors on edit
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Effect depends on array length for performance
   useEffect(() => {
     if (attributeErrorFieldsForEdit.length > 0) {
       attributeErrorFieldsForEdit.forEach(field => {
@@ -327,7 +326,7 @@ const SERVER_ERROR_MAP: Record<string, Record<string, string>> = {
 }
 
 const validationSchema = Yup.object().shape(
-  addressFormFieldsValidator({ withLegacyPhoneInput: true })
+  addressFormFieldsValidator({ withLegacyPhoneInput: true }),
 )
 
 export const GENERIC_FAIL_MESSAGE =
@@ -338,7 +337,7 @@ const handleGravityErrors = (
   helpers: {
     setFieldError: (field: string, message: string) => void
     setStatus: (message: string) => void
-  }
+  },
 ) => {
   if (!errors?.length) return
 

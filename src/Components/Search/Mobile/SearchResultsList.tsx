@@ -38,7 +38,6 @@ const SearchResultsList: FC<
   const tracking = useTracking()
   const options = extractNodes(viewer.searchConnection)
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Search tracking should only trigger on connection changes
   useEffect(() => {
     if (viewer.searchConnection) {
       tracking.trackEvent({
@@ -59,7 +58,7 @@ const SearchResultsList: FC<
         ...option,
         imageUrl: option.coverArtwork?.image?.src || option.imageUrl,
       }
-    }) as SearchNodeOption[]
+    }) as SearchNodeOption[],
   )
 
   if (!viewer.searchConnection) {
@@ -84,7 +83,7 @@ const SearchResultsList: FC<
 
   const handleRedirect = (
     option: SuggestionItemOptionProps,
-    quickNavigation = false
+    quickNavigation = false,
   ) => {
     if (!quickNavigation) {
       tracking.trackEvent({
@@ -197,5 +196,5 @@ export const SearchResultsListPaginationContainer = createPaginationContainer(
         }
       }
     `,
-  }
+  },
 )

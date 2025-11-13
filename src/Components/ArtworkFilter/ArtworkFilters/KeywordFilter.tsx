@@ -26,10 +26,9 @@ export const KeywordFilter: React.FC<React.PropsWithChildren<unknown>> = () => {
     setFilterRef.current("keyword", textOrUndefined)
   }
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Debounce function should only be created on mount
   const handleDebounce = useMemo(
     () => debounce(updateKeywordFilter, DEBOUNCE_DELAY),
-    []
+    [],
   )
 
   const handleChangeText = text => {
@@ -38,12 +37,10 @@ export const KeywordFilter: React.FC<React.PropsWithChildren<unknown>> = () => {
   }
 
   // Stop the invocation of the debounced function after unmounting
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Cleanup should only run on unmount
   useEffect(() => {
     return () => handleDebounce.cancel?.()
   }, [])
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Keyword value sync managed by external state
   useEffect(() => {
     setValue(keyword ?? "")
   }, [keyword, setValue])

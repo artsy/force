@@ -54,7 +54,6 @@ export const AuctionApp: React.FC<React.PropsWithChildren<AuctionAppProps>> = ({
 
   const isFullBleedHeaderFixed = !cascadingEndTimeIntervalMinutes
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Auction page tracking should only run on mount
   useEffect(() => {
     tracking.auctionPageView({ sale, me })
   }, [])

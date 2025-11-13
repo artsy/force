@@ -68,7 +68,6 @@ const AuctionConfirmRegistrationRoute: React.FC<
   }
 
   // Track page view or redirect
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Registration redirect check should only run on mount
   useEffect(() => {
     if (redirectToSaleHome(sale)) {
       router.replace(`/auction/${sale.slug}`)

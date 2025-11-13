@@ -52,7 +52,6 @@ export const BankDebitProvider: FC<React.PropsWithChildren<Props>> = ({
   const [bankDebitSetupError, setBankDebitSetupError] = useState(false)
   const { submitMutation } = CreateBankDebitSetupForOrder()
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Bank debit setup should only run on mount
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -66,7 +65,7 @@ export const BankDebitProvider: FC<React.PropsWithChildren<Props>> = ({
         ) {
           setStripeClient(
             orderOrError.commerceCreateBankDebitSetupForOrder?.actionOrError
-              .actionData.clientSecret
+              .actionData.clientSecret,
           )
         }
 
@@ -157,7 +156,7 @@ export const BankDebitProvider: FC<React.PropsWithChildren<Props>> = ({
   return (
     <div
       data-test={`paymentSection${upperFirst(
-        camelCase(selectedPaymentMethod)
+        camelCase(selectedPaymentMethod),
       )}`}
     >
       <LoadingArea

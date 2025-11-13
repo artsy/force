@@ -90,11 +90,10 @@ export const ArtistsFilter: FC<React.PropsWithChildren<ArtistsFilterProps>> = ({
   const followedArtistSlugs = followedArtists.map(({ slug }) => slug)
 
   const filtersCount = useFilterLabelCountByKey(
-    SelectedFiltersCountsLabels.artistIDs
+    SelectedFiltersCountsLabels.artistIDs,
   )
   const label = `Artists${filtersCount}`
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Followed artists data should only be fetched on mount
   useEffect(() => {
     if (artists?.counts && relayEnvironment && user) {
       fetchFollowedArtists({ relayEnvironment, fairID }).then(data => {

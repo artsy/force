@@ -28,7 +28,6 @@ export const ArtistsRoute: React.FC<
     ? match.location.hash.replace(/^#/, "")
     : undefined
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Jump to artist navigation managed by URL hash state
   useEffect(() => {
     if (artistId && isLoaded && isMobile !== null) {
       jumpTo("PartnerArtistDetails")
@@ -69,5 +68,5 @@ export const ArtistsRouteFragmentContainer = createFragmentContainer(
         ...PartnerArtists_partner
       }
     `,
-  }
+  },
 )

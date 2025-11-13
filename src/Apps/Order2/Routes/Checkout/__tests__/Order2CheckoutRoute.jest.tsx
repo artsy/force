@@ -109,7 +109,6 @@ jest.mock(
     const MockExpressCheckout = jest.fn(() => {
       const { setExpressCheckoutLoaded, expressCheckoutPaymentMethods } =
         useCheckoutContext()
-      // biome-ignore lint/correctness/useExhaustiveDependencies: Test mock setup effect should only run on mount
       useEffect(() => {
         setExpressCheckoutLoaded([])
       }, [])
@@ -121,7 +120,7 @@ jest.mock(
     return {
       Order2ExpressCheckout: MockExpressCheckout,
     }
-  }
+  },
 )
 jest.mock("Utils/Hooks/useUserLocation", () => ({
   useUserLocation: jest.fn(() => ({
@@ -164,11 +163,11 @@ function expectTrackedEvents(
     standardValues?: any
     exact?: boolean
   },
-  expectedEvents
+  expectedEvents,
 ) {
   const mockTrackEventCalls = mockTrackEvent.mock.calls.map(call => call[0])
   expect(mockTrackEventCalls.map(call => call.action)).toEqual(
-    expectedEvents.map(event => event.action)
+    expectedEvents.map(event => event.action),
   )
 
   expectedEvents.forEach((event, index) => {
@@ -208,7 +207,7 @@ const helpers = {
 
     await waitFor(() => {
       expect(
-        screen.queryByLabelText("Checkout loading skeleton")
+        screen.queryByLabelText("Checkout loading skeleton"),
       ).not.toBeInTheDocument()
     })
   },
@@ -280,7 +279,7 @@ const helpers = {
       })
 
       expect(confirmationTokenQuery.operationName).toBe(
-        "confirmationTokenUtilsQuery"
+        "confirmationTokenUtilsQuery",
       )
       expect(confirmationTokenQuery.operation.request.variables).toEqual({
         id: "confirmation-token-id",
@@ -294,14 +293,14 @@ const helpers = {
           }),
       })
       expect(updateOrderPaymentMethodMutation.operationName).toBe(
-        "useOrder2SetOrderPaymentMutation"
+        "useOrder2SetOrderPaymentMutation",
       )
       expect(updateOrderPaymentMethodMutation.operationVariables.input).toEqual(
         {
           id: "order-id",
           paymentMethod: "CREDIT_CARD",
           stripeConfirmationToken: "confirmation-token-id",
-        }
+        },
       )
 
       await flushPromiseQueue()
@@ -357,7 +356,7 @@ const helpers = {
       })
 
       expect(submitOrderMutation.operationName).toBe(
-        "useOrder2SubmitOrderMutation"
+        "useOrder2SubmitOrderMutation",
       )
 
       const expectedInput = {
@@ -367,7 +366,7 @@ const helpers = {
       }
 
       expect(submitOrderMutation.operationVariables.input).toEqual(
-        expectedInput
+        expectedInput,
       )
 
       await flushPromiseQueue()
@@ -385,7 +384,7 @@ describe("Order2CheckoutRoute", () => {
       })
 
       expect(
-        screen.getByLabelText("Checkout loading skeleton")
+        screen.getByLabelText("Checkout loading skeleton"),
       ).toBeInTheDocument()
 
       act(() => {
@@ -395,7 +394,7 @@ describe("Order2CheckoutRoute", () => {
 
       await waitFor(() => {
         expect(
-          screen.queryByLabelText("Checkout loading skeleton")
+          screen.queryByLabelText("Checkout loading skeleton"),
         ).not.toBeInTheDocument()
       })
     })
@@ -412,7 +411,7 @@ describe("Order2CheckoutRoute", () => {
         Viewer: () => props,
       })
       expect(
-        screen.getByLabelText("Checkout loading skeleton")
+        screen.getByLabelText("Checkout loading skeleton"),
       ).toBeInTheDocument()
 
       expect(MockExpressCheckout).toHaveBeenCalled()
@@ -430,7 +429,7 @@ describe("Order2CheckoutRoute", () => {
       })
 
       expect(
-        screen.getByLabelText("Checkout loading skeleton")
+        screen.getByLabelText("Checkout loading skeleton"),
       ).toBeInTheDocument()
 
       expect(MockExpressCheckout).not.toHaveBeenCalled()
@@ -519,7 +518,7 @@ describe("Order2CheckoutRoute", () => {
 
         helpers.selectCountryCode(
           screen.getByTestId(testIDs.phoneCountryPicker),
-          "+ 49"
+          "+ 49",
         )
 
         // Type a phone number, error goes away
@@ -532,7 +531,7 @@ describe("Order2CheckoutRoute", () => {
 
         await waitFor(() => {
           expect(
-            screen.queryByText("Phone number is required")
+            screen.queryByText("Phone number is required"),
           ).not.toBeInTheDocument()
         })
         expect(submitButton).not.toBeDisabled()
@@ -541,7 +540,7 @@ describe("Order2CheckoutRoute", () => {
         const pickupCompleteMessage =
           "After your order is confirmed, a specialist will contact you within 2 business days to coordinate pickup."
         expect(
-          screen.queryByText(pickupCompleteMessage)
+          screen.queryByText(pickupCompleteMessage),
         ).not.toBeInTheDocument()
         await waitFor(() => {
           act(() => {
@@ -563,7 +562,7 @@ describe("Order2CheckoutRoute", () => {
           })
 
           expect(setFulfilmentTypeOperation.operationName).toBe(
-            "useOrder2SetOrderFulfillmentOptionMutation"
+            "useOrder2SetOrderFulfillmentOptionMutation",
           )
           expect(setFulfilmentTypeOperation.operationVariables.input).toEqual({
             fulfillmentOption: {
@@ -592,7 +591,7 @@ describe("Order2CheckoutRoute", () => {
           })
 
           expect(setPickupDetailsOperation.operationName).toBe(
-            "useOrder2SetOrderPickupDetailsMutation"
+            "useOrder2SetOrderPickupDetailsMutation",
           )
           expect(setPickupDetailsOperation.operationVariables.input).toEqual({
             id: "order-id",
@@ -612,29 +611,29 @@ describe("Order2CheckoutRoute", () => {
         await waitFor(() => {
           expect(screen.getByText("Billing address")).toBeInTheDocument()
           expect(
-            screen.getByTestId("addressFormFields.name")
+            screen.getByTestId("addressFormFields.name"),
           ).toBeInTheDocument()
         })
 
         await userEvent.type(
           screen.getByTestId("addressFormFields.name"),
-          "John Doe"
+          "John Doe",
         )
         await userEvent.type(
           screen.getByTestId("addressFormFields.addressLine1"),
-          "123 Main St"
+          "123 Main St",
         )
         await userEvent.type(
           screen.getByTestId("addressFormFields.city"),
-          "New York"
+          "New York",
         )
         await userEvent.type(
           screen.getByTestId("addressFormFields.region"),
-          "NY"
+          "NY",
         )
         await userEvent.type(
           screen.getByTestId("addressFormFields.postalCode"),
-          "10001"
+          "10001",
         )
 
         mockElements.submit.mockResolvedValueOnce({
@@ -654,7 +653,7 @@ describe("Order2CheckoutRoute", () => {
 
         if (oneTimeUse) {
           await userEvent.click(
-            screen.getByText("Save credit card for later use")
+            screen.getByText("Save credit card for later use"),
           )
         }
 
@@ -681,7 +680,7 @@ describe("Order2CheckoutRoute", () => {
           })
 
           expect(confirmationTokenQuery.operationName).toBe(
-            "confirmationTokenUtilsQuery"
+            "confirmationTokenUtilsQuery",
           )
           expect(confirmationTokenQuery.operation.request.variables).toEqual({
             id: "confirmation-token-id",
@@ -697,10 +696,10 @@ describe("Order2CheckoutRoute", () => {
                 }),
             })
           expect(updateOrderPaymentMethodMutation.operationName).toBe(
-            "useOrder2SetOrderPaymentMutation"
+            "useOrder2SetOrderPaymentMutation",
           )
           expect(
-            updateOrderPaymentMethodMutation.operationVariables.input
+            updateOrderPaymentMethodMutation.operationVariables.input,
           ).toEqual({
             id: "order-id",
             paymentMethod: "CREDIT_CARD",
@@ -725,7 +724,7 @@ describe("Order2CheckoutRoute", () => {
           })
 
           expect(submitOrderMutation.operationName).toBe(
-            "useOrder2SubmitOrderMutation"
+            "useOrder2SubmitOrderMutation",
           )
           expect(submitOrderMutation.operationVariables.input).toEqual({
             id: "order-id",
@@ -804,9 +803,9 @@ describe("Order2CheckoutRoute", () => {
         ])
 
         expect(mockRouter.replace).toHaveBeenCalledWith(
-          "/orders/order-id/details"
+          "/orders/order-id/details",
         )
-      }
+      },
     )
 
     it("shows the pickup details pre-filled if they exist", async () => {
@@ -842,7 +841,7 @@ describe("Order2CheckoutRoute", () => {
       await helpers.waitForLoadingComplete()
 
       const pickupTab = within(
-        screen.getByTestId(testIDs.fulfillmentDetailsStepTabs)
+        screen.getByTestId(testIDs.fulfillmentDetailsStepTabs),
       ).getByText("Pickup")
 
       act(() => {
@@ -853,7 +852,7 @@ describe("Order2CheckoutRoute", () => {
       const phoneCountryPicker = screen.getByTestId(testIDs.phoneCountryPicker)
       expect(phoneCountryPicker).toHaveTextContent("🇩🇪")
       expect(screen.getByTestId("PickupPhoneNumberInput")).toHaveValue(
-        "03012345678"
+        "03012345678",
       )
     })
 
@@ -891,7 +890,7 @@ describe("Order2CheckoutRoute", () => {
 
       await waitFor(() => {
         const phoneCountryPicker = screen.getByTestId(
-          testIDs.phoneCountryPicker
+          testIDs.phoneCountryPicker,
         )
 
         expect(phoneCountryPicker).toHaveTextContent("+ 52")
@@ -993,7 +992,7 @@ describe("Order2CheckoutRoute", () => {
 
       helpers.selectCountryCode(
         countryPicker,
-        addressInputValue.phoneNumberCountryCode
+        addressInputValue.phoneNumberCountryCode,
       )
 
       await act(async () => {
@@ -1021,8 +1020,8 @@ describe("Order2CheckoutRoute", () => {
 
         expect(
           fulfillmentRequiredMessages.filter(
-            el => el.textContent !== "*Required"
-          ).length
+            el => el.textContent !== "*Required",
+          ).length,
         ).toEqual(0)
       })
 
@@ -1062,7 +1061,7 @@ describe("Order2CheckoutRoute", () => {
       })
 
       expect(setShippingAddressOperation.operationName).toBe(
-        "useOrder2SetOrderDeliveryAddressMutation"
+        "useOrder2SetOrderDeliveryAddressMutation",
       )
 
       await act(async () => {
@@ -1102,7 +1101,7 @@ describe("Order2CheckoutRoute", () => {
       })
 
       expect(setFulfillmentOptionOperation.operationName).toBe(
-        "useOrder2SetOrderFulfillmentOptionMutation"
+        "useOrder2SetOrderFulfillmentOptionMutation",
       )
 
       await helpers.fillInMockCreditCard({
@@ -1227,7 +1226,7 @@ describe("Order2CheckoutRoute", () => {
 
       helpers.selectCountryCode(
         countryPicker,
-        addressInputValue.phoneNumberCountryCode
+        addressInputValue.phoneNumberCountryCode,
       )
 
       act(() => {
@@ -1251,7 +1250,7 @@ describe("Order2CheckoutRoute", () => {
         })
 
         expect(
-          requiredMessages.filter(el => el.textContent !== "*Required").length
+          requiredMessages.filter(el => el.textContent !== "*Required").length,
         ).toEqual(0)
       })
 
@@ -1272,7 +1271,7 @@ describe("Order2CheckoutRoute", () => {
       })
 
       expect(mutation.operationName).toBe(
-        "useOrder2SetOrderDeliveryAddressMutation"
+        "useOrder2SetOrderDeliveryAddressMutation",
       )
 
       jest.advanceTimersByTime(250)
@@ -1370,7 +1369,7 @@ describe("Order2CheckoutRoute", () => {
         })
 
         expect(mutation.operationName).toBe(
-          "useOrder2SetOrderDeliveryAddressMutation"
+          "useOrder2SetOrderDeliveryAddressMutation",
         )
         expect(mutation.operationVariables.input).toEqual({
           id: "order-id",
@@ -1636,7 +1635,7 @@ describe("Order2CheckoutRoute", () => {
       ])
 
       expect(mockRouter.replace).toHaveBeenCalledWith(
-        "/orders/order-id/details"
+        "/orders/order-id/details",
       )
     })
   })
@@ -1644,7 +1643,7 @@ describe("Order2CheckoutRoute", () => {
   describe("within the payment section", () => {
     it.todo(
       // TODO: Example of this assertion is above for clickedChangeShippingAddress
-      "Allows clicking the edit button to change payment method, but only tracks savedPaymentMethodViewed one time for a user with saved credit cards"
+      "Allows clicking the edit button to change payment method, but only tracks savedPaymentMethodViewed one time for a user with saved credit cards",
     )
 
     describe("error handling when saving and continuing", () => {
@@ -1739,7 +1738,7 @@ describe("Order2CheckoutRoute", () => {
         })
         await waitFor(() => {
           expect(
-            screen.queryByLabelText("Select a payment method")
+            screen.queryByLabelText("Select a payment method"),
           ).not.toBeInTheDocument()
         })
       })
@@ -1791,11 +1790,11 @@ describe("Order2CheckoutRoute", () => {
 
       expect(addEventListenerSpy).toHaveBeenCalledWith(
         "beforeunload",
-        preventHardReload
+        preventHardReload,
       )
       expect(addEventListenerSpy).toHaveBeenCalledWith(
         "popstate",
-        handleBackNavigation
+        handleBackNavigation,
       )
     })
   })

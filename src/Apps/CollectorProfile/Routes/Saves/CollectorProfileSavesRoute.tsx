@@ -56,7 +56,7 @@ const CollectorProfileSavesRoute: FC<
 
   if (initialArtworkListId.current !== undefined) {
     const index = customArtworkLists.findIndex(
-      artworkList => artworkList.internalID === initialArtworkListId.current
+      artworkList => artworkList.internalID === initialArtworkListId.current,
     )
 
     if (index !== -1) {
@@ -80,10 +80,9 @@ const CollectorProfileSavesRoute: FC<
    * To prevent this from happening, `useMemo` is used here
    */
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Artwork list memoization prevents 404 error after deletion
   const selectedArtworkList = useMemo(() => {
     return artworkLists.find(
-      artworkList => artworkList.internalID === selectedArtworkListId
+      artworkList => artworkList.internalID === selectedArtworkListId,
     )
   }, [selectedArtworkListId])
 

@@ -30,7 +30,7 @@ export type AddressErrors = Partial<Address>
 export type AddressTouched = Partial<{ [T in keyof Address]: boolean }>
 export type AddressChangeHandler = (
   address: Address,
-  key: keyof Address
+  key: keyof Address,
 ) => void
 
 export interface AddressFormProps {
@@ -111,7 +111,6 @@ export const AddressForm: React.FC<
     onChangeValue(key, value)
   }
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Address change handler managed by form state
   React.useEffect(() => {
     if (key) {
       onChange(address, key)
@@ -126,7 +125,7 @@ export const AddressForm: React.FC<
     (key: keyof Address) => {
       return (touched && touched[key] && errors && errors[key]) || ""
     },
-    [errors, touched]
+    [errors, touched],
   )
 
   const phoneNumberInputDescription = (): string | undefined => {

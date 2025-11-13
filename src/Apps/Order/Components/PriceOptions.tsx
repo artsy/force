@@ -38,7 +38,7 @@ export const PriceOptions: React.FC<
 
   const listPrice = artwork?.listPrice
   const orderPrice = Number.parseFloat(
-    order.lineItems?.edges?.[0]?.node?.listPrice || "0"
+    order.lineItems?.edges?.[0]?.node?.listPrice || "0",
   )
   const formattedOrderPrice: PriceOptions_artwork$data["listPrice"] = {
     major: orderPrice,
@@ -48,22 +48,21 @@ export const PriceOptions: React.FC<
   const priceOptions = getOfferPriceOptions(
     isPartnerOfferOrder ? formattedOrderPrice : listPrice,
     artwork?.isPriceRange,
-    isPartnerOfferOrder
+    isPartnerOfferOrder,
   )
   const { lastOffer, selectedPriceOption, selectedPriceValue } =
     getInitialOfferState(
       priceOptions,
-      Number(order?.myLastOffer?.amountCents || 0) / 100
+      Number(order?.myLastOffer?.amountCents || 0) / 100,
     )
   const { device } = useDeviceDetection()
 
   const [customValue, setCustomValue] = useState<number | undefined>(lastOffer)
   const [toggle, setToggle] = useState(!!lastOffer)
   const [selectedRadio, setSelectedRadio] = useState<string | undefined>(
-    selectedPriceOption
+    selectedPriceOption,
   )
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Price initialization should only run on mount
   useEffect(() => {
     if (lastOffer) {
       onChange(lastOffer)
@@ -97,7 +96,7 @@ export const PriceOptions: React.FC<
         minimumFractionDigits: 2,
         style: "currency",
       }),
-      artwork?.priceCurrency!
+      artwork?.priceCurrency!,
     )
 
   const minPrice = priceOptions[2]?.value!
@@ -173,7 +172,7 @@ export const PriceOptions: React.FC<
                   </Flex>
                 </Jump>
               )}
-            </BorderedRadio>
+            </BorderedRadio>,
           )}
       </RadioGroup>
     </>
@@ -220,5 +219,5 @@ export const PriceOptionsFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

@@ -71,7 +71,6 @@ export const SavedSearchAlertsApp: React.FC<
 
   const [viewOption, setViewOption] = useState<"EDIT" | "ARTWORKS" | null>(null)
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Effect dependencies managed by responsive state and routing
   useEffect(() => {
     if (!alerts || !alerts[0]) return
     if (match?.params?.alertID) return
@@ -202,7 +201,6 @@ export const SavedSearchAlertsApp: React.FC<
   const alertID = match?.params?.alertID ?? editAlertEntity?.id
   const path = match.location.pathname
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Relay query effect with complex routing dependencies
   useEffect(() => {
     if (!alertID) return
 
@@ -225,7 +223,7 @@ export const SavedSearchAlertsApp: React.FC<
           }
         }
       `,
-      { alertID }
+      { alertID },
     )
       ?.toPromise()
       .then(data => {
@@ -295,7 +293,7 @@ export const SavedSearchAlertsApp: React.FC<
         )}
       </>
     ),
-    [alerts, editAlertEntity, handleLoadMore, loading, relay, silentPush]
+    [alerts, editAlertEntity, handleLoadMore, loading, relay, silentPush],
   )
 
   return (
@@ -447,5 +445,5 @@ export const SavedSearchAlertsAppPaginationContainer =
           }
         }
       `,
-    }
+    },
   )

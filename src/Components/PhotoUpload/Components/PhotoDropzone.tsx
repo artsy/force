@@ -29,7 +29,7 @@ export const PhotoDropzone: React.FC<
       const [acceptedFiles, errors] = validateTotalMaxSize(
         allPhotos,
         files,
-        maxTotalSize
+        maxTotalSize,
       )
 
       if (acceptedFiles.length) {
@@ -50,7 +50,6 @@ export const PhotoDropzone: React.FC<
     multiple: true,
   })
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Effect tracks file rejection state changes
   useEffect(() => {
     const errors = concatDropzoneErrors(fileRejections, customErrors)
 

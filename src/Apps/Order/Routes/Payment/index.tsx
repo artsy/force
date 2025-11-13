@@ -100,7 +100,6 @@ export const PaymentRoute: FC<
 
   const artworkVersion = extractNodes(order.lineItems)[0]?.artworkVersion
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Bank account selection should react to order changes
   useEffect(() => {
     const bankAccountsArray =
       selectedPaymentMethod !== "SEPA_DEBIT"
@@ -108,7 +107,7 @@ export const PaymentRoute: FC<
         : []
 
     const bankAccountOnOrder = bankAccountsArray.find(
-      bank => bank.internalID === order.bankAccountId
+      bank => bank.internalID === order.bankAccountId,
     )
 
     if (bankAccountOnOrder?.internalID) {
@@ -119,7 +118,6 @@ export const PaymentRoute: FC<
     }
   }, [order])
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Payment method should be set when order changes
   useEffect(() => {
     setSelectedPaymentMethod(getInitialPaymentMethodValue(order))
   }, [order])
@@ -170,7 +168,7 @@ export const PaymentRoute: FC<
   // fired when balance check is done: either sets error state or moves to /review
   const handleBalanceCheckComplete = (
     displayInsufficientFundsError: boolean,
-    checkResult: BalanceCheckResult
+    checkResult: BalanceCheckResult,
   ) => {
     const event = {
       subject: "balance_account_check",
@@ -359,7 +357,6 @@ export const PaymentRoute: FC<
   }
 
   // complete payment when balance check is disabled and bank account is set
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Payment completion logic managed by state dependencies
   useEffect(() => {
     if (
       !balanceCheckEnabled &&
@@ -377,7 +374,6 @@ export const PaymentRoute: FC<
   ])
 
   // show error modal when payment setup error is set
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Error handling should react to setup error changes
   useEffect(() => {
     if (paymentSetupError) {
       let title = "An error occurred"
@@ -413,7 +409,7 @@ export const PaymentRoute: FC<
   }, [paymentSetupError])
 
   const setOrderPayment = (
-    variables: PaymentRouteSetOrderPaymentMutation["variables"]
+    variables: PaymentRouteSetOrderPaymentMutation["variables"],
   ) => {
     return props.commitMutation<PaymentRouteSetOrderPaymentMutation>({
       variables,
@@ -454,7 +450,6 @@ export const PaymentRoute: FC<
     })
   }
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Loading state should react to order and user data
   useEffect(() => {
     if (order && me) {
       setIsLoading(false)
@@ -630,5 +625,5 @@ export const PaymentFragmentContainer = createFragmentContainer(
         ...OrderStepper_order
       }
     `,
-  }
+  },
 )

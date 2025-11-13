@@ -46,7 +46,6 @@ export const ArtworkErrorApp: React.FC<
     }
   }, [])
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Error tracking should only run on mount
   useEffect(() => {
     trackPageview()
   }, [])

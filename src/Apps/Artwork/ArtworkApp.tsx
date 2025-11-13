@@ -101,7 +101,6 @@ export const ArtworkApp: React.FC<React.PropsWithChildren<Props>> = props => {
 
   // If the user is expecting a partner offer, require login and remove
   // the query param from the URL after login.
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Partner offer authentication flow managed by router state
   useEffect(() => {
     const expectingPartnerOffer = !!match?.location?.query?.partner_offer_id
     const isLoggedIn = !!me
@@ -437,7 +436,7 @@ const ArtworkAppFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 interface ArtworkResultProps extends RenderProps {
@@ -483,5 +482,5 @@ export const ArtworkResultFragmentContainer = createFragmentContainer(
         ...ArtworkPageBanner_me @arguments(artworkID: $artworkID)
       }
     `,
-  }
+  },
 )

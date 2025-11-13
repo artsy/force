@@ -50,7 +50,6 @@ export const Overlay: FC<React.PropsWithChildren<OverlayProps>> = ({
   const [debouncedValue] = useDebounce(inputValue, SEARCH_DEBOUNCE_DELAY)
   const disablePills = !shouldStartSearching(inputValue)
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Input focus and initial tracking should only happen on mount
   useEffect(() => {
     inputRef.current?.focus()
 
@@ -90,10 +89,10 @@ export const Overlay: FC<React.PropsWithChildren<OverlayProps>> = ({
           }
 
           scrollToTop()
-        }
+        },
       )
     },
-    [relay]
+    [relay],
   )
 
   const handlePillClick = (pill: PillType) => {
@@ -173,5 +172,5 @@ export const OverlayRefetchContainer = createRefetchContainer(
           @arguments(term: $term, hasTerm: $hasTerm, entities: $entities)
       }
     }
-  `
+  `,
 )

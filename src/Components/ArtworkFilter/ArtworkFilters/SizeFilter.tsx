@@ -58,12 +58,12 @@ export const SizeFilter: React.FC<React.PropsWithChildren<SizeFilterProps>> = ({
   } = selectedFilters
 
   const filtersCount = useFilterLabelCountByKey(
-    SelectedFiltersCountsLabels.sizes
+    SelectedFiltersCountsLabels.sizes,
   )
   const label = `Size${filtersCount}`
 
   const [showCustom, setShowCustom] = useState(
-    isCustomValue(width) || isCustomValue(height)
+    isCustomValue(width) || isCustomValue(height),
   )
   const [customSize, setCustomSize] = useState<CustomSize>({
     height: parseSizeRange(height, metric),
@@ -147,7 +147,7 @@ export const SizeFilter: React.FC<React.PropsWithChildren<SizeFilterProps>> = ({
     if (isCustomValue(width) || isCustomValue(height)) {
       const customSizeRanges = getCustomSizeRangeInInches(
         customSize,
-        nextMetric
+        nextMetric,
       )
 
       updatedFilters.width = customSizeRanges.width
@@ -157,7 +157,6 @@ export const SizeFilter: React.FC<React.PropsWithChildren<SizeFilterProps>> = ({
     setFilters?.(updatedFilters, { force: false })
   }
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Custom size update managed by width and height filter values
   useEffect(() => {
     if (width === "*-*" || height === "*-*") {
       setCustomSize({

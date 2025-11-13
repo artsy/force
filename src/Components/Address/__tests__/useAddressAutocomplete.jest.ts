@@ -5,6 +5,7 @@ import {
 import { getENV } from "Utils/getENV"
 import { waitFor } from "@testing-library/react"
 import { act, renderHook } from "@testing-library/react-hooks"
+// biome-ignore lint/style/noRestrictedImports: Test requires unleash feature flag dependency
 import { useFlag } from "@unleash/proxy-client-react"
 import { throttle } from "lodash"
 import { useTracking } from "react-tracking"

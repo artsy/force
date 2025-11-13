@@ -9,6 +9,7 @@ import type { OtherAuctionsQuery } from "__generated__/OtherAuctionsQuery.graphq
 import type * as React from "react"
 import { useContext } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+// biome-ignore lint/style/noRestrictedImports: Legacy sharify usage for configuration
 import { data as sd } from "sharify"
 import { Header } from "./OtherWorks/Header"
 

@@ -104,7 +104,7 @@ export const ArtistAutoComplete: React.FC<
               text: option.displayLabel,
               value: option.internalID,
               option,
-            }))
+            })),
           )
         } else {
           setArtistNotFoundMessage(errors.artistId as string)
@@ -117,10 +117,9 @@ export const ArtistAutoComplete: React.FC<
     }
   }
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Debounced function should only be created once
   const handleSuggestionsFetchRequested = useMemo(
     () => debounce(updateSuggestions, DEBOUNCE_DELAY),
-    []
+    [],
   )
 
   const handleChange = ({ target: { value } }) => {
@@ -213,7 +212,7 @@ export const ArtistAutoComplete: React.FC<
 
 const fetchSuggestions = async (
   searchQuery: string,
-  relayEnvironment: Environment
+  relayEnvironment: Environment,
 ) => {
   const response = await fetchQuery<ArtistAutocomplete_SearchConnection_Query>(
     relayEnvironment,
@@ -257,7 +256,7 @@ const fetchSuggestions = async (
         }
       }
     `,
-    { searchQuery }
+    { searchQuery },
   ).toPromise()
 
   return response?.searchConnection

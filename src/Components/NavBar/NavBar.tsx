@@ -53,7 +53,7 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
   },
   {
     dispatch: data => Events.postEvent(data),
-  }
+  },
 )(() => {
   const { user, isEigen } = useSystemContext()
 
@@ -64,7 +64,7 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
   const { router } = useRouter()
 
   const [mode, setMode] = useState<"Idle" | "Search" | "Profile" | "More">(
-    "Idle"
+    "Idle",
   )
 
   const xs = __internal__useMatchMedia(THEME.mediaQueries.xs)
@@ -90,7 +90,6 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
 
   // Prefetch most clicked links.
   // See: https://artsy.slack.com/archives/C05EEBNEF71/p1726074422149369?thread_ts=1726073316.088559&cid=C05EEBNEF71
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Link prefetching should only run on mount
   useEffect(() => {
     const PREFETCH_NAVBAR_LINKS = ["/artists", "/collect"]
 
@@ -98,7 +97,7 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
   }, [])
 
   const handleMobileNavClick = (
-    event: React.MouseEvent<HTMLElement, MouseEvent>
+    event: React.MouseEvent<HTMLElement, MouseEvent>,
   ) => {
     let target = event.target as HTMLElement
 
@@ -116,7 +115,7 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
   }
 
   const handleClick = (
-    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
   ) => {
     const link = event.currentTarget
     const text = (link.getAttribute("data-label") || link.textContent) ?? ""

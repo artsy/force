@@ -52,7 +52,6 @@ describe(AvailabilityFilter, () => {
       const MobileVersionOfAvailabilityFilter = () => {
         const filterContext = useArtworkFilterContext()
 
-        // biome-ignore lint/correctness/useExhaustiveDependencies: Test filter staging setup should only run on mount
         useEffect(() => {
           // on mount, initialize the staged filters
           filterContext.setShouldStageFilterChanges?.(true)

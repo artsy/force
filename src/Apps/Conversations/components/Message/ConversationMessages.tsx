@@ -123,7 +123,7 @@ export const ConversationMessages: FC<
         },
         {
           first: PAGE_SIZE,
-        }
+        },
       )
     }
 
@@ -158,7 +158,7 @@ export const ConversationMessages: FC<
                 },
                 {
                   first: totalCount,
-                }
+                },
               )
             }}
           />
@@ -368,7 +368,7 @@ export const ConversationMessagesPaginationContainer =
           }
         }
       `,
-    }
+    },
   )
 
 interface UseAutoScrollToBottomProps {
@@ -392,7 +392,7 @@ const useAutoScrollToBottom = ({
         })
       }, 0)
     },
-    [autoScrollToBottomRef]
+    [autoScrollToBottomRef],
   )
 
   useEffect(() => {
@@ -406,7 +406,6 @@ const useAutoScrollToBottom = ({
   }, [lastMessageId, triggerAutoScroll])
 
   // Additional effect to ensure initial scroll after component mount
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Initial scroll should only happen on mount
   useEffect(() => {
     if (lastMessageId) {
       const timeoutId = setTimeout(() => {

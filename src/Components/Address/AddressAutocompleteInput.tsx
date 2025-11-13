@@ -177,7 +177,7 @@ export const AddressAutocompleteInput = ({
 
   const trackReceivedAutocompleteResult = (
     input: string,
-    resultCount: number
+    resultCount: number,
   ) => {
     const event: AddressAutoCompletionResult = {
       action: ActionType.addressAutoCompletionResult,
@@ -193,7 +193,7 @@ export const AddressAutocompleteInput = ({
 
   const trackSelectedAutocompletedAddress = (
     option: AddressAutocompleteSuggestion,
-    input: string
+    input: string,
   ) => {
     const event: SelectedItemFromAddressAutoCompletion = {
       action: ActionType.selectedItemFromAddressAutoCompletion,
@@ -249,7 +249,7 @@ export const AddressAutocompleteInput = ({
 
         dispatch({ type: "FETCHING_COMPLETE" })
         const finalSuggestions = filterSecondarySuggestions(
-          response.suggestions
+          response.suggestions,
         )
 
         dispatch({
@@ -263,7 +263,7 @@ export const AddressAutocompleteInput = ({
         // Disable autocomplete into some error state?
       }
     },
-    [serviceAvailability]
+    [serviceAvailability],
   )
 
   const autocompleteOptions = providerSuggestions.map(
@@ -283,7 +283,7 @@ export const AddressAutocompleteInput = ({
           country: "US",
         },
       }
-    }
+    },
   )
 
   const definitelyDisabled =
@@ -293,7 +293,6 @@ export const AddressAutocompleteInput = ({
   const serializedOptions = JSON.stringify(autocompleteOptions)
   const serializedPreviousOptions = JSON.stringify(previousOptions)
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Tracking dependencies handled with serialized comparison
   useEffect(() => {
     if (
       serviceAvailability?.enabled &&
@@ -301,7 +300,7 @@ export const AddressAutocompleteInput = ({
     ) {
       trackReceivedAutocompleteResult(
         value as string,
-        providerSuggestions.length
+        providerSuggestions.length,
       )
     }
   }, [serviceAvailability, serializedOptions, serializedPreviousOptions])
@@ -381,7 +380,7 @@ const fetchSuggestionsWithThrottle = throttle(
   {
     leading: true,
     trailing: true,
-  }
+  },
 )
 
 const buildAddressText = (suggestion: ProviderSuggestion): string => {
@@ -401,6 +400,6 @@ const filterSecondarySuggestions = (suggestions: ProviderSuggestion[]) => {
     secondary: "",
   }))
   return uniqBy(noSecondaryData, (suggestion: ProviderSuggestion) =>
-    buildAddressText(suggestion)
+    buildAddressText(suggestion),
   )
 }

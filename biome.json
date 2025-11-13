@@ -28,7 +28,8 @@
     "rules": {
       "recommended": true,
       "correctness": {
-        "noSwitchDeclarations": "off"
+        "noSwitchDeclarations": "off",
+        "useExhaustiveDependencies": "off"
       },
       "complexity": {
         "noBannedTypes": "off",

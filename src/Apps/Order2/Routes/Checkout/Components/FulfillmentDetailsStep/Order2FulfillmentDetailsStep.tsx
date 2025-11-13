@@ -34,15 +34,14 @@ export const Order2FulfillmentDetailsStep: React.FC<
   } = useCheckoutContext()
 
   const stepState = steps?.find(
-    step => step.name === CheckoutStepName.FULFILLMENT_DETAILS
+    step => step.name === CheckoutStepName.FULFILLMENT_DETAILS,
   )?.state
 
   const fulfillmentOptions = orderData?.fulfillmentOptions
   const pickupOption = fulfillmentOptions.find(
-    option => option.type === "PICKUP"
+    option => option.type === "PICKUP",
   )
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: we don't want this to update
   const initialPickupSelected = useMemo(() => {
     return pickupOption?.selected ?? false
   }, [])

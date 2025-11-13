@@ -39,7 +39,7 @@ export const MyCollectionArtworkFormImages: React.FC<
         progress => {
           photo.progress = progress
           setFieldValue("newPhotos", values.newPhotos)
-        }
+        },
       )
 
       if (!photoURL) {
@@ -62,7 +62,6 @@ export const MyCollectionArtworkFormImages: React.FC<
     return photos.filter(c => !(c.geminiToken || c.url) && !c.loading)
   }
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Image upload state managed by form values
   useEffect(() => {
     const imagesToUpload = getImagesToUpload(values.newPhotos)
 
@@ -87,14 +86,14 @@ export const MyCollectionArtworkFormImages: React.FC<
     setErrors(rejections)
     setFieldValue(
       "newPhotos",
-      values.newPhotos.filter(p => !p.errorMessage)
+      values.newPhotos.filter(p => !p.errorMessage),
     )
   }
 
   const onImgLoad = (
     image: React.SyntheticEvent<HTMLImageElement, Event>,
     photoID: string,
-    index: number
+    index: number,
   ) => {
     const {
       naturalHeight: height,
@@ -111,7 +110,7 @@ export const MyCollectionArtworkFormImages: React.FC<
           height,
           photoID,
         },
-        index
+        index,
       )
     }
 
@@ -125,7 +124,7 @@ export const MyCollectionArtworkFormImages: React.FC<
           height,
           photoID,
         },
-        index
+        index,
       )
     }
   }
@@ -145,7 +144,7 @@ export const MyCollectionArtworkFormImages: React.FC<
       // Remove photo from newPhotos
       setFieldValue(
         "newPhotos",
-        values.newPhotos.filter(p => p.id !== photo.id)
+        values.newPhotos.filter(p => p.id !== photo.id),
       )
       // Remove images that have been removed from state
       removeLocalImage(photo.id)
@@ -194,7 +193,7 @@ export const MyCollectionArtworkFormImages: React.FC<
       {errors.map((error, _i) => {
         const normalizedPhoto = normalizePhoto(
           error.file,
-          getErrorMessage(error)
+          getErrorMessage(error),
         )
         return (
           <PhotoThumbnail

@@ -30,7 +30,7 @@ export const PartnerOfferCheckout: FC<
         if (orderOrError?.error) {
           const errorCode = orderOrError.error.code
           const errorData = JSON.parse(
-            orderOrError.error.data?.toString() ?? ""
+            orderOrError.error.data?.toString() ?? "",
           )
 
           switch (errorCode) {
@@ -51,7 +51,6 @@ export const PartnerOfferCheckout: FC<
     }
   }, [partnerCheckoutMutation, partnerOfferId, router])
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Redirect should only happen on mount
   useEffect(() => {
     handleRedirect()
   }, [])

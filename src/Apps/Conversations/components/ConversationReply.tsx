@@ -62,7 +62,7 @@ export const ConversationReply: FC<
         lastMessageID
       }
     `,
-    conversation
+    conversation,
   )
 
   const handleError = (error?: unknown) => {
@@ -78,7 +78,7 @@ export const ConversationReply: FC<
 
   const handleReply = (
     values: ConversationReplyFormValues,
-    helpers: FormikHelpers<ConversationReplyFormValues>
+    helpers: FormikHelpers<ConversationReplyFormValues>,
   ) => {
     if (!data || !user) {
       sendToast({
@@ -114,7 +114,7 @@ export const ConversationReply: FC<
             impulseMessageId:
               response.sendConversationMessage?.conversation?.lastMessageID ??
               "",
-          })
+          }),
         )
 
         setIsLoading(false)
@@ -134,10 +134,9 @@ export const ConversationReply: FC<
       }),
       onSubmit: handleReply,
       isInitialValid: false,
-    }
+    },
   )
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Form reset should only run when conversation changes
   useEffect(() => {
     resetForm()
   }, [data?.internalID, resetForm])

@@ -32,7 +32,6 @@ export const MockRouter: React.FC<React.PropsWithChildren<MockRouterProps>> = ({
   const [MockRouterApp, setMockRouterApp] =
     useState<React.ReactElement<any> | null>(null)
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Router initialization should only run once on mount
   useEffect(() => {
     const initRouter = async () => {
       try {

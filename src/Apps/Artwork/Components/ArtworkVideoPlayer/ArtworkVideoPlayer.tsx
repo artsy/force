@@ -59,7 +59,6 @@ const ArtworkVideoPlayer: FC<
     }, 0)
   }
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Video event handlers managed by component lifecycle
   useEffect(() => {
     window.addEventListener("blur", trackClickedPlayVideo)
 
@@ -128,5 +127,5 @@ export const ArtworkVideoPlayerFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

@@ -19,7 +19,6 @@ export const useArtworkLists = (options: SaveArtworkToListsOptions) => {
   const { saveArtworkToLists: saveToLists, openSelectListsForArtworkModal } =
     useSaveArtworkToLists(options)
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Auth intent handling with artwork-specific dependencies
   useEffect(() => {
     if (
       !value ||
@@ -40,7 +39,7 @@ export const useArtworkLists = (options: SaveArtworkToListsOptions) => {
             }
           }
         `,
-        { artworkID: artwork.internalID }
+        { artworkID: artwork.internalID },
       ).toPromise()
 
       // The user clicked the save button while logged out.

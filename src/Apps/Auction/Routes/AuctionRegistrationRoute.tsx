@@ -43,7 +43,6 @@ const AuctionRegistrationRoute: React.FC<
   }
 
   // Track page view or redirect
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Registration redirect check should only run on mount
   useEffect(() => {
     if (redirectToSaleHome(sale)) {
       router.replace(`/auction/${sale.slug}`)
@@ -133,7 +132,7 @@ export const AuctionRegistrationRouteFragmentContainer =
           }
         }
       `,
-    }
+    },
   )
 
 const computeProps = ({ sale, me }: AuctionRegistrationRouteProps) => {
@@ -150,7 +149,7 @@ const computeProps = ({ sale, me }: AuctionRegistrationRouteProps) => {
 export const redirectToSaleHome = (
   sale:
     | AuctionRegistrationRoute_sale$data
-    | AuctionConfirmRegistrationRoute_sale$data
+    | AuctionConfirmRegistrationRoute_sale$data,
 ) => {
   const redirectToSaleHome =
     sale?.bidder?.qualifiedForBidding || sale.isClosed || sale.isLiveOpen

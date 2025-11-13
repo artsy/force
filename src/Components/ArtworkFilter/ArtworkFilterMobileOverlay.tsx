@@ -20,7 +20,7 @@ export const ArtworkFilterMobileOverlay: React.FC<
   // This reflects our zero state for this UI which doesn't include the keyword
   const isReset = isEqual(
     omit(filterContext.stagedFilters, "reset", "keyword"),
-    filterContext.defaultFilters
+    filterContext.defaultFilters,
   )
 
   const handleScrollToTop = () => {
@@ -28,7 +28,6 @@ export const ArtworkFilterMobileOverlay: React.FC<
     contentRef.current.scrollTop = 0
   }
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Filter staging mode initialization should only run on mount
   useEffect(() => {
     // While mobile sheet is mounted, the effect of the user's filter selections
     // should be merely staged until the Apply button is pressed, rather than

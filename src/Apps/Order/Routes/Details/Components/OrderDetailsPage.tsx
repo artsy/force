@@ -22,12 +22,11 @@ export const OrderDetailsPage = ({ order, me }: OrderDetailsPageProps) => {
   const meData = useFragment(ME_FRAGMENT, me)
   const tracking = useOrder2Tracking(orderData.source, orderData.mode)
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: one-time effect
   useEffect(() => {
     if (!!orderData) {
       tracking.orderDetailsViewed(
         ContextModule.ordersDetail,
-        orderData.displayTexts.messageType
+        orderData.displayTexts.messageType,
       )
     }
   }, [])

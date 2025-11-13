@@ -42,7 +42,7 @@ export const SavedAddresses: FC<
     ? (getAddressByID(
         addressList,
         shippingContext.orderData.savedFulfillmentDetails
-          ?.selectedSavedAddressID
+          ?.selectedSavedAddressID,
       ) ?? null)
     : null
 
@@ -54,7 +54,6 @@ export const SavedAddresses: FC<
   const addressSavedToOrderID = savedAddressOnOrder?.internalID
 
   // Automatically select (save) best available address ID if it isn't present
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Address selection logic managed by component state
   useEffect(() => {
     const activeAndNoAddressSaved =
       props.active &&
@@ -70,7 +69,7 @@ export const SavedAddresses: FC<
     const bestAddress = getBestAvailableAddress(
       addressList,
       addressSavedToOrderID,
-      shippingContext.orderData.availableShippingCountries
+      shippingContext.orderData.availableShippingCountries,
     )
     if (bestAddress) {
       selectAndSubmitAddress(bestAddress)
@@ -176,7 +175,7 @@ const AddAddressButton = styled(Clickable)`
 const getBestAvailableAddress = (
   addressList: SavedAddressType[],
   addressID?: string | null,
-  availableShippingCountries?: string[]
+  availableShippingCountries?: string[],
 ) => {
   return (
     (addressID && getAddressByID(addressList, addressID)) ||

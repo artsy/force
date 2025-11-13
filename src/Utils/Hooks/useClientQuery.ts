@@ -53,7 +53,7 @@ export const useClientQuery = <T extends OperationType>({
         (environment || relayEnvironment) as unknown as Environment,
         query,
         newVariables,
-        cacheConfig
+        cacheConfig,
       ).toPromise()
 
       setData(res)
@@ -61,7 +61,7 @@ export const useClientQuery = <T extends OperationType>({
 
       const operation = createOperationDescriptor(
         getRequest(query),
-        variables ?? {}
+        variables ?? {},
       )
 
       // Retain the operation to prevent it from being garbage collected. Garbage collection can compromise type safety (e.g. non-nullable values being `null`), potentially leading to runtime errors.
@@ -74,7 +74,6 @@ export const useClientQuery = <T extends OperationType>({
     }
   }
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Complex query dependencies handled with key comparison
   useEffect(() => {
     if (key.current !== prevKey.current) {
       setData(null)

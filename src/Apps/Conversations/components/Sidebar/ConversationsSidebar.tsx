@@ -45,14 +45,13 @@ export const ConversationsSidebar: React.FC<
     totalDisplayedCount = SIDEBAR_FETCH_PAGE_SIZE
   }
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Conversation URL update managed by router params
   useEffect(() => {
     if (!match.params.conversationId) {
       return
     }
 
     const url = new URL(
-      `${window.location.origin}/user/conversations/${match.params.conversationId}`
+      `${window.location.origin}/user/conversations/${match.params.conversationId}`,
     )
 
     const existingParams = match.location.query
@@ -63,7 +62,7 @@ export const ConversationsSidebar: React.FC<
 
     url.searchParams.set(
       "sidebarTotal",
-      String(totalDisplayedCount ?? SIDEBAR_FETCH_PAGE_SIZE)
+      String(totalDisplayedCount ?? SIDEBAR_FETCH_PAGE_SIZE),
     )
 
     // TODO:
@@ -95,7 +94,7 @@ export const ConversationsSidebar: React.FC<
         {},
         {
           first: fetchSize,
-        }
+        },
       )
     },
   })
@@ -192,5 +191,5 @@ export const ConversationsSidebarPaginationContainer =
           }
         }
       `,
-    }
+    },
   )
