@@ -29,7 +29,6 @@ export const InquiryQuestionOption: React.FC<InquiryQuestionOptionProps> = ({
   const { questions, addQuestion, removeQuestion, addQuestionDetails } =
     useInquiryContext()
 
-  // let questionSelected = false
   const [questionSelected, setQuestionSelected] = useState(false)
 
   const setSelection = () => {
@@ -43,9 +42,6 @@ export const InquiryQuestionOption: React.FC<InquiryQuestionOptionProps> = ({
       removeQuestion({ questionID: id, details: question })
     }
   }
-  const shippingLocation = questions?.find(
-    q => q.questionID === InquiryQuestionIDs.Shipping,
-  )?.details
 
   const setShippingDetails = location => {
     const shippingDetails = {
@@ -61,8 +57,6 @@ export const InquiryQuestionOption: React.FC<InquiryQuestionOptionProps> = ({
       details: JSON.stringify(shippingDetails),
     })
   }
-
-  console.log("shippingLocation", shippingLocation)
 
   useEffect(() => {
     console.log("questions updated", questions)

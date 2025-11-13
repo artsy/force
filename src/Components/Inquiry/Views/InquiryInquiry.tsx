@@ -1,6 +1,5 @@
 import InfoIcon from "@artsy/icons/InfoIcon"
 import {
-  Banner,
   Box,
   Button,
   Flex,
@@ -17,10 +16,7 @@ import {
 import { useFlag } from "@unleash/proxy-client-react"
 import { InquiryQuestionOption } from "Components/Inquiry/Components/InquiryQuestionOption"
 import { useArtworkInquiryRequest } from "Components/Inquiry/Hooks/useArtworkInquiryRequest"
-import {
-  DEFAULT_MESSAGE,
-  useInquiryContext,
-} from "Components/Inquiry/Hooks/useInquiryContext"
+import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
 import { logger } from "Components/Inquiry/util"
 import { RouterLink } from "System/Components/RouterLink"
 import { useSystemContext } from "System/Hooks/useSystemContext"
@@ -32,7 +28,7 @@ import type * as React from "react"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
-type Mode = "Pending" | "Confirm" | "Sending" | "Error" | "Success"
+type Mode = "Pending" | "Sending" | "Error" | "Success"
 
 interface InquiryInquiryProps {
   artwork: InquiryInquiry_artwork$data
@@ -53,20 +49,11 @@ const InquiryInquiry: React.FC<
   const enableCheckboxes = useFlag("emerald_inquiry-checkboxes-on-web")
 
   const handleTextAreaChange = ({ value }: { value: string }) => {
-    if (mode === "Confirm" && value !== DEFAULT_MESSAGE) {
-      setMode("Pending")
-    }
-
     setInquiry(prevState => ({ ...prevState, message: value }))
   }
 
   const handleSubmit = async (event: React.FormEvent<HTMLElement>) => {
     event.preventDefault()
-
-    if (inquiry.message === DEFAULT_MESSAGE && mode !== "Confirm") {
-      setMode("Confirm")
-      return
-    }
 
     // If the user is logged out we just go to the next view which should
     // be the authentication step. The inquiry gets sent after login or sign up.
@@ -100,7 +87,6 @@ const InquiryInquiry: React.FC<
 
   const label = {
     ["Pending"]: "Send",
-    ["Confirm"]: "Send Anyway?",
     ["Sending"]: "Send",
     ["Success"]: "Sent",
     ["Error"]: "Error",
@@ -207,15 +193,6 @@ const InquiryInquiry: React.FC<
           </RouterLink>
         </div>
       </Text>
-
-      <Spacer y={1} />
-
-      {mode === "Confirm" && (
-        <Banner variant="defaultLight">
-          We recommend personalizing your message to get a faster answer from
-          the gallery.
-        </Banner>
-      )}
 
       <Spacer y={2} />
 
