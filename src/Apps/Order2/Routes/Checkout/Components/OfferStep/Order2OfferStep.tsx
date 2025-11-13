@@ -9,9 +9,8 @@ import {
   CheckoutErrorBanner,
   MailtoOrderSupport,
 } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
-import { Order2ExactPriceOfferForm } from "Apps/Order2/Routes/Checkout/Components/OfferStep/Forms/Order2ExactPriceOfferForm"
+import { Order2OfferOptions } from "Apps/Order2/Routes/Checkout/Components/OfferStep/Components/Order2OfferOptions"
 import { Order2HiddenPriceOfferForm } from "Apps/Order2/Routes/Checkout/Components/OfferStep/Forms/Order2HiddenPriceOfferForm"
-import { Order2PriceRangeOfferForm } from "Apps/Order2/Routes/Checkout/Components/OfferStep/Forms/Order2PriceRangeOfferForm"
 import { Order2OfferCompletedView } from "Apps/Order2/Routes/Checkout/Components/OfferStep/Order2OfferCompletedView"
 import type { OfferNoteValue } from "Apps/Order2/Routes/Checkout/Components/OfferStep/types"
 import { useCompleteOfferData } from "Apps/Order2/Routes/Checkout/Components/OfferStep/useCompleteOfferData"
@@ -86,11 +85,7 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
       return Order2HiddenPriceOfferForm
     }
 
-    if (priceDisplay === "range") {
-      return Order2PriceRangeOfferForm
-    }
-
-    return Order2ExactPriceOfferForm
+    return Order2OfferOptions
   }, [orderData])
 
   const validationSchema = yup.object().shape({
@@ -222,24 +217,25 @@ const Order2OfferStepFormContent: React.FC<Order2OfferStepFormContentProps> = ({
   }
 
   const trackOfferOption = (value: number, description?: string) => {
-    checkoutTracking.clickedOfferOption(
-      orderData.currencyCode,
-      orderData.internalID,
-      value,
-      description,
-    )
+    if (value !== undefined && value > 0) {
+      checkoutTracking.clickedOfferOption(
+        orderData.currencyCode,
+        orderData.internalID,
+        value,
+        description,
+      )
+    }
   }
 
-  const onOfferOptionSelected = (value: number, description?: string) => {
+  const onOfferOptionSelected = (value: number) => {
     setFieldValue("offerValue", value)
     clearOfferError()
-    trackOfferOption(value, description)
+
+    trackOfferOption(value, "Custom amount")
   }
 
-  const onCustomOfferBlur = (value: number | undefined) => {
-    if (value !== undefined && value > 0) {
-      trackOfferOption(value, "Custom amount")
-    }
+  const onCustomOfferBlur = (value: number) => {
+    trackOfferOption(value, "Custom amount")
   }
 
   const onOfferNoteChange = (noteValue: OfferNoteValue) => {
@@ -368,8 +364,7 @@ const Order2OfferStepFormContent: React.FC<Order2OfferStepFormContentProps> = ({
 const FRAGMENT = graphql`
   fragment Order2OfferStep_order on Order {
     ...useCompleteOfferData_order
-    ...Order2ExactPriceOfferForm_order
-    ...Order2PriceRangeOfferForm_order
+    ...Order2OfferOptions_order
     internalID
     mode
     source
