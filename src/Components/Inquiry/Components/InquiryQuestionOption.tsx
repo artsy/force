@@ -63,42 +63,51 @@ export const InquiryQuestionOption: React.FC<InquiryQuestionOptionProps> = ({
   }, [questions])
 
   return (
-    <Flex flexDirection="column">
-      <Flex flexDirection="row">
-        <Join separator={<Spacer x={1} />}>
-          {/*Better option to tab in?*/}
-          <Spacer x={1} />
-          <Checkbox selected={questionSelected} onSelect={setSelection} />
-          <Text variant="sm">{question}</Text>
-        </Join>
-      </Flex>
-
-      <Box
-        style={{
-          maxHeight: isShipping && questionSelected ? "200px" : "0",
-          overflow: "hidden",
-          transition: "max-height 0.3s ease, opacity 0.3s ease",
-          opacity: isShipping && questionSelected ? 1 : 0,
-        }}
-      >
-        <Spacer y={1} />
-        <Flex flexDirection="row">
-          <Join separator={<Spacer x={1} />}>
-            {/*Better option to tab in?*/}
-            <Spacer x={4} />
-            <LocationAutocompleteInput
-              name="location"
-              placeholder="Add your location"
-              maxLength={256}
-              spellCheck={false}
-              onChange={place => {
-                setShippingDetails(normalizePlace(place))
-              }}
-            />
-          </Join>
-        </Flex>
-        <Spacer y={1} />
+    <Box as="table" width="100%">
+      <Box as="tbody">
+        <Box as="tr">
+          <Box
+            as="td"
+            width={40}
+            verticalAlign="top"
+            pt="2px"
+            pl={2}
+            textAlign="right"
+          >
+            <Checkbox selected={questionSelected} onSelect={setSelection} />
+          </Box>
+          <Box as="td" verticalAlign="top" pl={1}>
+            <Text variant="sm">{question}</Text>
+          </Box>
+        </Box>
+        {isShipping && (
+          <Box as="tr">
+            <Box as="td" />
+            <Box as="td">
+              <Box
+                style={{
+                  maxHeight: questionSelected ? "200px" : "0",
+                  overflow: "hidden",
+                  transition: "max-height 0.3s ease, opacity 0.3s ease",
+                  opacity: questionSelected ? 1 : 0,
+                }}
+              >
+                <Spacer y={1} />
+                <LocationAutocompleteInput
+                  name="location"
+                  placeholder="Add your location"
+                  maxLength={256}
+                  spellCheck={false}
+                  onChange={place => {
+                    setShippingDetails(normalizePlace(place))
+                  }}
+                />
+                <Spacer y={1} />
+              </Box>
+            </Box>
+          </Box>
+        )}
       </Box>
-    </Flex>
+    </Box>
   )
 }
