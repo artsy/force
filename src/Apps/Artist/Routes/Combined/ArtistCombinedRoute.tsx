@@ -24,7 +24,6 @@ import { useSectionReadiness } from "Utils/Hooks/useSectionReadiness"
 import type { ArtistCombinedRoute_artist$data } from "__generated__/ArtistCombinedRoute_artist.graphql"
 import type * as React from "react"
 import { useMemo } from "react"
-import { Meta } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 
@@ -68,9 +67,6 @@ const ArtistCombinedRoute: React.FC<
 
   return (
     <>
-      {/* Temporarily hide from search engines */}
-      <Meta name="robots" content="noindex, nofollow" />
-
       {loading && (
         <Box
           position="fixed"
