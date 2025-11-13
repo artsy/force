@@ -1,4 +1,4 @@
-import { Box, Checkbox, Flex, Join, Spacer, Text } from "@artsy/palette"
+import { Box, Checkbox, Spacer, Text } from "@artsy/palette"
 import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
 import {
   LocationAutocompleteInput,
