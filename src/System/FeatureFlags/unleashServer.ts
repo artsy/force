@@ -9,7 +9,7 @@ import { Unleash } from "unleash-client"
 
 let unleashServer: Unleash | null = null
 
-export function getOrInitUnleashServer(): Unleash {
+export async function getOrInitUnleashServer(): Promise<Unleash> {
   if (unleashServer) {
     return unleashServer
   }
@@ -25,6 +25,16 @@ export function getOrInitUnleashServer(): Unleash {
   }
 
   unleashServer = new Unleash(config)
+
+  await new Promise<void>((resolve, reject) => {
+    if (unleashServer) {
+      unleashServer.on("ready", resolve)
+      unleashServer.on("error", reject)
+    } else {
+      console.error("[unleashServer] Failed to initialize Unleash server")
+      resolve()
+    }
+  })
 
   return unleashServer
 }

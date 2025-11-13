@@ -49,14 +49,14 @@ By following these steps, you can safely manage feature rollouts and experiments
 
 3. **Use the flag in your code**: Refer to the examples in this guide to implement the feature flag in your application.
 
-## Using Feature Flags in React (Client-side)
+## Using Feature Flags in React (Isomorphic)
 
-IMPORTANT: `useFlag` is not isomorphic. Meaning you will not have access to the flag on the server side render. Design your UI accordingly.
+Our feature flag hooks are **isomorphic** - they work on both server-side render (SSR) and client-side. This prevents hydration mismatches and enables consistent behavior.
 
 ### Basic Feature Flag Usage
 
 ```tsx
-import { useFlag } from "@unleash/proxy-client-react"
+import { useFlag } from "System/FeatureFlags/useFlag"
 
 const MyComponent = () => {
   const enabled = useFlag("demo-feature")
@@ -71,10 +71,8 @@ const MyComponent = () => {
 
 ### A/B Testing with Variants
 
-IMPORTANT: `useVariant` is not isomorphic. Meaning you will not have access to the variant on the server side render. `variant` will be `"disabled"` until Unleash mounts and fetches.
-
 ```tsx
-import { useVariant } from "@unleash/proxy-client-react"
+import { useVariant } from "System/FeatureFlags/useVariant"
 import { useTrackFeatureVariantOnMount } from "System/Hooks/useTrackFeatureVariantOnMount"
 
 const MyExperiment = () => {

@@ -11,7 +11,7 @@ import {
   addressWithFallbackValues,
   getInitialShippingValues,
 } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
-import { useFlag } from "@unleash/proxy-client-react"
+import { useFlag } from "System/FeatureFlags/useFlag"
 import { useRouter } from "System/Hooks/useRouter"
 import { extractNodes } from "Utils/extractNodes"
 import createLogger from "Utils/logger"
