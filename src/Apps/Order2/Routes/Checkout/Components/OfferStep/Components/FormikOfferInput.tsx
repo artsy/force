@@ -4,9 +4,10 @@ import type { FC } from "react"
 
 export interface FormikOfferInputProps {
   name: string
+  onBlur?: (value: number | undefined) => void
 }
 
-export const FormikOfferInput: FC<FormikOfferInputProps> = ({ name }) => {
+export const FormikOfferInput: FC<FormikOfferInputProps> = ({ name, onBlur }) => {
   const [field, meta, helpers] = useField<number>(name)
 
   const formatValueForDisplay = (val: number | undefined) => {
@@ -16,7 +17,13 @@ export const FormikOfferInput: FC<FormikOfferInputProps> = ({ name }) => {
     return ""
   }
 
-  const showError = meta.touched && !!meta.error
+  const showError = !!meta.error
+
+  const handleBlur = () => {
+    if (onBlur) {
+      onBlur(field.value)
+    }
+  }
 
   return (
     <Input
@@ -25,7 +32,7 @@ export const FormikOfferInput: FC<FormikOfferInputProps> = ({ name }) => {
       pattern="[0-9]"
       error={showError ? meta.error : false}
       inputMode={"numeric"}
-      onBlur={() => helpers.setTouched(true)}
+      onBlur={handleBlur}
       value={formatValueForDisplay(field.value)}
       data-testid={showError ? "offer-input-error" : "offer-input"}
       onChange={ev => {

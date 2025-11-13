@@ -5,10 +5,8 @@ export interface OfferNoteValue {
 
 export interface OfferFormProps {
   order: any
-  offerValue: number
-  formIsDirty: boolean
-  onOfferValueChange: (value: number) => void
   onOfferOptionSelected: (value: number, description?: string) => void
+  onCustomOfferBlur: (value: number | undefined) => void
 }
 
 export interface OfferSubmissionData {

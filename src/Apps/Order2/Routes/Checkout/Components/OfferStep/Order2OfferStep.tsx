@@ -19,7 +19,6 @@ import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckou
 import { useOrder2AddInitialOfferMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2AddInitialOfferMutation"
 import { useOrder2UnsetOrderFulfillmentOptionMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2UnsetOrderFulfillmentOptionMutation"
 import { mostRecentCreatedAt } from "Apps/Order2/Routes/Checkout/Utils/mostRecentCreatedAt"
-import { useJump } from "Utils/Hooks/useJump"
 import createLogger from "Utils/logger"
 import type { Order2OfferStep_order$key } from "__generated__/Order2OfferStep_order.graphql"
 import type { useOrder2AddInitialOfferMutation$data } from "__generated__/useOrder2AddInitialOfferMutation.graphql"
@@ -188,6 +187,8 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
       }}
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
+      validateOnChange={false}
+      validateOnBlur={false}
     >
       <Order2OfferStepFormContent
         orderData={orderData}
@@ -209,10 +210,9 @@ const Order2OfferStepFormContent: React.FC<Order2OfferStepFormContentProps> = ({
   OfferFormComponent,
   isSubmittingOffer,
 }) => {
-  const { values, errors, touched, setFieldValue, submitForm } =
+  const { values, errors, setFieldValue, submitForm } =
     useFormikContext<OfferFormValues>()
   const { setStepErrorMessage, checkoutTracking } = useCheckoutContext()
-  const { jumpTo } = useJump()
 
   const clearOfferError = () => {
     setStepErrorMessage({
@@ -236,6 +236,12 @@ const Order2OfferStepFormContent: React.FC<Order2OfferStepFormContentProps> = ({
     trackOfferOption(value, description)
   }
 
+  const onCustomOfferBlur = (value: number | undefined) => {
+    if (value !== undefined && value > 0) {
+      trackOfferOption(value, "Custom amount")
+    }
+  }
+
   const onOfferNoteChange = (noteValue: OfferNoteValue) => {
     setFieldValue("offerNote", noteValue.value)
   }
@@ -250,12 +256,10 @@ const Order2OfferStepFormContent: React.FC<Order2OfferStepFormContentProps> = ({
           message: "Select an offer amount or enter your own to continue.",
         },
       })
-      jumpTo("offer-value-title", { behavior: "smooth" })
       return
     }
 
-    if (errors.offerNote && touched.offerNote) {
-      jumpTo("price-option-custom", { behavior: "smooth" })
+    if (errors.offerNote) {
       return
     }
 
@@ -320,6 +324,7 @@ const Order2OfferStepFormContent: React.FC<Order2OfferStepFormContentProps> = ({
         <OfferFormComponent
           order={orderData}
           onOfferOptionSelected={onOfferOptionSelected}
+          onCustomOfferBlur={onCustomOfferBlur}
         />
 
         <Spacer y={4} />
