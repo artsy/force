@@ -18,8 +18,9 @@ interface Order2ExactPriceOfferFormProps extends OfferFormProps {
 
 export const Order2ExactPriceOfferForm: React.FC<
   Order2ExactPriceOfferFormProps
-> = ({ order, offerValue, onOfferValueChange, onOfferOptionSelected }) => {
+> = ({ order, onOfferOptionSelected }) => {
   const orderData = useFragment(FRAGMENT, order)
+  const [selectedRadio, setSelectedRadio] = useState<string>()
 
   const listPriceMajor = orderData.lineItems[0]?.listPrice?.major
 
@@ -43,37 +44,6 @@ export const Order2ExactPriceOfferForm: React.FC<
       ]
     : []
 
-  const getInitialState = () => {
-    if (!offerValue)
-      return {
-        selectedRadio: undefined,
-        customValue: undefined,
-      }
-
-    const matchingOption = priceOptions.find(
-      option => option.value === offerValue,
-    )
-    if (matchingOption) {
-      return {
-        selectedRadio: matchingOption.key,
-        customValue: undefined,
-      }
-    } else {
-      return {
-        selectedRadio: "price-option-custom",
-        customValue: offerValue,
-      }
-    }
-  }
-
-  const initialState = getInitialState()
-  const [selectedRadio, setSelectedRadio] = useState<string | undefined>(
-    initialState.selectedRadio,
-  )
-  const [customValue, setCustomValue] = useState<number | undefined>(
-    initialState.customValue,
-  )
-
   const formatCurrency = (amount: number) => {
     return appendCurrencySymbol(
       amount.toLocaleString("en-US", {
@@ -85,55 +55,47 @@ export const Order2ExactPriceOfferForm: React.FC<
     )
   }
 
-  const allPriceOptions = [
-    ...priceOptions,
-    {
-      key: "price-option-custom",
-      value: customValue || 0,
-      description: "Other amount",
-    },
+  const handleRadioSelect = (value: string) => {
+    const option = priceOptions.find(opt => opt.key === value)
+
+    if (option) {
+      onOfferOptionSelected(option.value, option.description)
+    } else if (
+      value === "price-option-custom" &&
+      selectedRadio !== "price-option-custom"
+    ) {
+      onOfferOptionSelected(0, "Custom amount")
+    }
+
+    setSelectedRadio(value)
+  }
+
+  const radioOptions = [
+    ...priceOptions.map(({ key, value, description }) => (
+      <Radio key={key} value={key} label={formatCurrency(value)}>
+        <Spacer y={1} />
+        <Text variant="sm-display" color="mono60">
+          {description}
+        </Text>
+        <Spacer y={4} />
+      </Radio>
+    )),
+    <Radio
+      key="price-option-custom"
+      value="price-option-custom"
+      label="Other amount"
+    >
+      {selectedRadio === "price-option-custom" && (
+        <Flex flexDirection="column" mt={2}>
+          <FormikOfferInput name="offerValue" />
+        </Flex>
+      )}
+    </Radio>,
   ]
 
   return (
-    <RadioGroup onSelect={setSelectedRadio} defaultValue={selectedRadio}>
-      {allPriceOptions.map(({ key, value, description }) => {
-        const isCustom = key === "price-option-custom"
-        const showCustomInput = isCustom && selectedRadio === key
-
-        return (
-          <Radio
-            key={key}
-            value={key}
-            label={isCustom ? description : formatCurrency(value)}
-            onSelect={() => {
-              setSelectedRadio(key)
-              if (!isCustom) {
-                setCustomValue(undefined)
-                onOfferOptionSelected(value, description)
-              } else {
-                // Clear the Formik field when switching to custom input
-                onOfferValueChange(0)
-              }
-            }}
-          >
-            {!isCustom && (
-              <>
-                <Spacer y={1} />
-                <Text variant="sm-display" color="mono60">
-                  {description}
-                </Text>
-                <Spacer y={4} />
-              </>
-            )}
-
-            {showCustomInput && (
-              <Flex flexDirection="column" mt={2}>
-                <FormikOfferInput name="offerValue" />
-              </Flex>
-            )}
-          </Radio>
-        )
-      })}
+    <RadioGroup onSelect={handleRadioSelect} defaultValue={selectedRadio}>
+      {radioOptions}
     </RadioGroup>
   )
 }

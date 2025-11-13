@@ -3,7 +3,6 @@ import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
 import { FormikOfferInput } from "Apps/Order2/Routes/Checkout/Components/OfferStep/Components/FormikOfferInput"
 import type { OfferFormProps } from "Apps/Order2/Routes/Checkout/Components/OfferStep/types"
 import type { Order2PriceRangeOfferForm_order$key } from "__generated__/Order2PriceRangeOfferForm_order.graphql"
-import { compact } from "lodash"
 import { useState } from "react"
 import { graphql, useFragment } from "react-relay"
 
@@ -19,8 +18,10 @@ interface Order2PriceRangeOfferFormProps extends OfferFormProps {
 
 export const Order2PriceRangeOfferForm: React.FC<
   Order2PriceRangeOfferFormProps
-> = ({ order, offerValue, onOfferValueChange, onOfferOptionSelected }) => {
+> = ({ order, onOfferOptionSelected }) => {
   const orderData = useFragment(FRAGMENT, order)
+  const [selectedRadio, setSelectedRadio] = useState<string>()
+
   const artwork = orderData.lineItems?.[0]?.artworkOrEditionSet
   const listPrice = artwork?.listPrice
 
@@ -59,38 +60,6 @@ export const Order2PriceRangeOfferForm: React.FC<
 
   const priceOptions = getRangeOptions()
 
-  // Find initial selected option based on current value
-  const getInitialState = () => {
-    if (!offerValue)
-      return {
-        selectedRadio: undefined,
-        showCustomInput: false,
-      }
-
-    const matchingOption = priceOptions.find(
-      option => option.value === offerValue,
-    )
-    if (matchingOption) {
-      return {
-        selectedRadio: matchingOption.key,
-        showCustomInput: false,
-      }
-    } else {
-      return {
-        selectedRadio: "price-option-custom",
-        showCustomInput: true,
-      }
-    }
-  }
-
-  const initialState = getInitialState()
-  const [selectedRadio, setSelectedRadio] = useState<string | undefined>(
-    initialState.selectedRadio,
-  )
-  const [showCustomInput, setShowCustomInput] = useState(
-    initialState.showCustomInput,
-  )
-
   const formatCurrency = (amount: number) => {
     return appendCurrencySymbol(
       amount.toLocaleString("en-US", {
@@ -102,48 +71,45 @@ export const Order2PriceRangeOfferForm: React.FC<
     )
   }
 
-  return (
-    <RadioGroup onSelect={setSelectedRadio} defaultValue={selectedRadio}>
-      {compact(priceOptions)
-        .map(({ value: optionValue, description, key }) => (
-          <Radio
-            value={key}
-            label={formatCurrency(optionValue)}
-            onSelect={() => {
-              onOfferOptionSelected(optionValue, description)
-              setShowCustomInput(false)
-            }}
-            key={key}
-          >
-            <Spacer y={1} />
-            <Text variant="sm-display" color="mono60">
-              {description}
-            </Text>
-            <Spacer y={4} />
-          </Radio>
-        ))
-        .concat([
-          <Radio
-            value="price-option-custom"
-            label="Other amount"
-            onSelect={() => {
-              if (!showCustomInput) {
-                setShowCustomInput(true)
-                // Clear the Formik field when switching to custom input
-                onOfferValueChange(0)
-              }
-            }}
-            key="price-option-custom"
-          >
-            {showCustomInput && (
-              <Flex flexDirection="column" mt={2}>
-                <FormikOfferInput name="offerValue" />
-              </Flex>
-            )}
-          </Radio>,
-        ])}
-    </RadioGroup>
-  )
+  const handleRadioSelect = (value: string) => {
+    const option = priceOptions.find(opt => opt.key === value)
+
+    if (option) {
+      onOfferOptionSelected(option.value, option.description)
+    } else if (
+      value === "price-option-custom" &&
+      selectedRadio !== "price-option-custom"
+    ) {
+      onOfferOptionSelected(0, "Custom amount")
+    }
+
+    setSelectedRadio(value)
+  }
+
+  const radioOptions = [
+    ...priceOptions.map(({ value: optionValue, description, key }) => (
+      <Radio value={key} label={formatCurrency(optionValue)} key={key}>
+        <Spacer y={1} />
+        <Text variant="sm-display" color="mono60">
+          {description}
+        </Text>
+        <Spacer y={4} />
+      </Radio>
+    )),
+    <Radio
+      key="price-option-custom"
+      value="price-option-custom"
+      label="Other amount"
+    >
+      {selectedRadio === "price-option-custom" && (
+        <Flex flexDirection="column" mt={2}>
+          <FormikOfferInput name="offerValue" />
+        </Flex>
+      )}
+    </Radio>,
+  ]
+
+  return <RadioGroup onSelect={handleRadioSelect}>{radioOptions}</RadioGroup>
 }
 
 const FRAGMENT = graphql`

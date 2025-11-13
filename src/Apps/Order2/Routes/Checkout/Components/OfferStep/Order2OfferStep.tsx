@@ -97,8 +97,11 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
   const validationSchema = yup.object().shape({
     offerValue: yup
       .number()
-      .required("Offer amount is required")
-      .positive("Offer amount must be greater than 0"),
+      .test(
+        "is-required",
+        "Offer amount is required",
+        value => value !== undefined && value !== 0,
+      ),
     offerNote: yup.string().max(1000, "Note cannot exceed 1000 characters"),
   })
 
@@ -185,8 +188,6 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
       }}
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
-      validateOnChange={true}
-      validateOnBlur={true}
     >
       <Order2OfferStepFormContent
         orderData={orderData}
@@ -213,23 +214,26 @@ const Order2OfferStepFormContent: React.FC<Order2OfferStepFormContentProps> = ({
   const { setStepErrorMessage, checkoutTracking } = useCheckoutContext()
   const { jumpTo } = useJump()
 
-  const onOfferOptionSelected = (value: number, description?: string) => {
-    setFieldValue("offerValue", value)
+  const clearOfferError = () => {
+    setStepErrorMessage({
+      step: CheckoutStepName.OFFER_AMOUNT,
+      error: null,
+    })
+  }
 
-    // Clear error message when a valid offer is selected
-    if (value > 0) {
-      setStepErrorMessage({
-        step: CheckoutStepName.OFFER_AMOUNT,
-        error: null,
-      })
-    }
-
+  const trackOfferOption = (value: number, description?: string) => {
     checkoutTracking.clickedOfferOption(
       orderData.currencyCode,
       orderData.internalID,
       value,
       description,
     )
+  }
+
+  const onOfferOptionSelected = (value: number, description?: string) => {
+    setFieldValue("offerValue", value)
+    clearOfferError()
+    trackOfferOption(value, description)
   }
 
   const onOfferNoteChange = (noteValue: OfferNoteValue) => {
@@ -250,7 +254,7 @@ const Order2OfferStepFormContent: React.FC<Order2OfferStepFormContentProps> = ({
       return
     }
 
-    if (values.offerValue < 0 || (errors.offerNote && touched.offerNote)) {
+    if (errors.offerNote && touched.offerNote) {
       jumpTo("price-option-custom", { behavior: "smooth" })
       return
     }
@@ -315,9 +319,6 @@ const Order2OfferStepFormContent: React.FC<Order2OfferStepFormContentProps> = ({
       <Box py={2} px={[2, 4]} hidden={currentStep !== CheckoutStepState.ACTIVE}>
         <OfferFormComponent
           order={orderData}
-          offerValue={values.offerValue}
-          formIsDirty={touched.offerValue || false}
-          onOfferValueChange={value => setFieldValue("offerValue", value)}
           onOfferOptionSelected={onOfferOptionSelected}
         />
 
