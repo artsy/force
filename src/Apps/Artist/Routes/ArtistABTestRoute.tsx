@@ -1,5 +1,4 @@
 import { BaseTab, Clickable, Skeleton, Spacer, Text } from "@artsy/palette"
-import { useVariant } from "@unleash/proxy-client-react"
 import { useFlagsStatus } from "@unleash/proxy-client-react"
 import { ArtistTabs } from "Apps/Artist/Components/ArtistTabs"
 import { ArtistAuctionResultsQueryRenderer } from "Apps/Artist/Routes/AuctionResults/ArtistAuctionResults"
@@ -8,6 +7,7 @@ import { ArtistCombinedRouteFragmentContainer } from "Apps/Artist/Routes/Combine
 import { ArtistOverviewQueryRenderer } from "Apps/Artist/Routes/Overview/Components/ArtistOverview"
 import { ArtistArtworkFilterQueryRenderer } from "Apps/Artist/Routes/WorksForSale/Components/ArtistArtworkFilter"
 import { RouteTabs } from "Components/RouteTabs"
+import { useVariant } from "System/FeatureFlags/useVariant"
 import { useRouter } from "System/Hooks/useRouter"
 import { useTrackFeatureVariantOnMount } from "System/Hooks/useTrackFeatureVariant"
 import type { ArtistABTestRoute_artist$data } from "__generated__/ArtistABTestRoute_artist.graphql"

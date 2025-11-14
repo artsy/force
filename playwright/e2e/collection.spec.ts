@@ -1,6 +1,8 @@
 import { test, expect } from "@playwright/test"
 
 const artworkGridRenders = async (page: any) => {
+  // Wait for network to be idle to ensure artwork data has loaded
+  await page.waitForLoadState("networkidle")
   await expect(page.locator("div[data-test='artworkGrid']")).toHaveCount(1)
   const gridItems = page.locator("div[data-test='artworkGridItem']")
   expect(await gridItems.count()).toBeGreaterThanOrEqual(1)

@@ -18,7 +18,6 @@ import {
   SkeletonText,
   Spacer,
 } from "@artsy/palette"
-import { useFlag } from "@unleash/proxy-client-react"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { ArtworkFilterActiveFilters } from "Components/ArtworkFilter/ArtworkFilterActiveFilters"
@@ -27,6 +26,7 @@ import {
   ArtworkGridPlaceholder,
 } from "Components/ArtworkGrid/ArtworkGrid"
 import { Sticky } from "Components/Sticky"
+import { useFlag } from "System/FeatureFlags/useFlag"
 import { Media } from "Utils/Responsive"
 
 interface ArtworkFilterPlaceholderProps extends BoxProps {
