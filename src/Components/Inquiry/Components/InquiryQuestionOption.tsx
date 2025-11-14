@@ -26,7 +26,7 @@ export const InquiryQuestionOption: React.FC<InquiryQuestionOptionProps> = ({
   question,
 }) => {
   const isShipping = id === InquiryQuestionIDs.Shipping
-  const { questions, addQuestion, removeQuestion, addQuestionDetails } =
+  const { addQuestion, removeQuestion, addQuestionDetails } =
     useInquiryContext()
 
   const [questionSelected, setQuestionSelected] = useState(false)
@@ -77,7 +77,7 @@ export const InquiryQuestionOption: React.FC<InquiryQuestionOptionProps> = ({
         {isShipping && (
           <Box as="tr">
             <Box as="td" />
-            <Box as="td">
+            <Box as="td" pl={1}>
               <Box
                 style={{
                   maxHeight: questionSelected ? "200px" : "0",
