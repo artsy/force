@@ -440,7 +440,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       window.removeEventListener("beforeunload", preventHardReload)
 
       // This will redirect to Stripe for bank verification, no code after this will execute
-      // src/Apps/Order2/Routes/Checkout/Hooks/useStripePaymentBySetupIntentId.tsx will handle the post redirect logic
+      // src/Apps/Order2/Routes/Checkout/Hooks/useHandleStripeRedirect.tsx will handle the post redirect logic
       const { error } = await stripe.confirmSetup({
         elements,
         clientSecret:
