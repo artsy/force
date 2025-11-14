@@ -3,7 +3,7 @@ import { UnleashClient } from "unleash-proxy-client"
 
 let unleashClient: UnleashClient | null = null
 
-export async function getOrInitUnleashClient(): Promise<UnleashClient> {
+export function getOrInitUnleashClient(): UnleashClient {
   if (unleashClient) {
     return unleashClient
   }
@@ -22,35 +22,6 @@ export async function getOrInitUnleashClient(): Promise<UnleashClient> {
 
   unleashClient = new UnleashClient(config)
   unleashClient.start()
-
-  await new Promise<void>(resolve => {
-    if (unleashClient) {
-      const fallbackTimeout = setTimeout(() => {
-        console.warn(
-          "[unleashClient] Unleash initialization timeout. Continuing...",
-        )
-        resolve()
-      }, 5000)
-
-      unleashClient.on("ready", () => {
-        clearInterval(fallbackTimeout)
-        resolve()
-      })
-
-      unleashClient.on("error", error => {
-        console.warn(
-          "[unleashClient] Failed to initialize Unleash, continuing without feature flags:",
-          error,
-        )
-
-        clearInterval(fallbackTimeout)
-        resolve()
-      })
-    } else {
-      console.error("[unleashClient] Failed to initialize Unleash client")
-      resolve()
-    }
-  })
 
   return unleashClient
 }

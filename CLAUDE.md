@@ -5,4 +5,3 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Imperative Instructions!
 
 - **ALWAYS reference `docs/best_practices.md`** as the primary source of truth for coding patterns and practices in this repository.
-- **NEVER** use `!` in typescript

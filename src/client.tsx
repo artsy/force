@@ -14,7 +14,7 @@ setupWebVitals()
 
 // Rehydrate app
 ;(async () => {
-  const unleashClient = await getOrInitUnleashClient()
+  const unleashClient = getOrInitUnleashClient()
 
   const { ClientRouter } = await setupClientRouter({
     routes: getAppRoutes(),
@@ -22,7 +22,6 @@ setupWebVitals()
       featureFlags: {
         isEnabled: unleashClient.isEnabled.bind(unleashClient),
         getVariant: unleashClient.getVariant.bind(unleashClient),
-        toggles: unleashClient.getAllToggles(),
       },
     },
   })

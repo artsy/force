@@ -19,28 +19,11 @@ import { setupServerRouter } from "System/Router/serverRouter"
 import express from "express"
 import type { NextFunction } from "express"
 import { initializeMiddleware } from "middleware"
-import type { Unleash } from "unleash-client"
-import type { IToggle } from "unleash-proxy-client"
 
 const app = express()
 
-// Initialize unleash server client and wait for it to be ready
-let unleashClient: Unleash | null = null
-
-app.use(async (req, res, next) => {
-  if (!unleashClient) {
-    try {
-      unleashClient = await getOrInitUnleashServer()
-    } catch (error) {
-      console.warn(
-        "[force] Failed to initialize Unleash, continuing without feature flags:",
-        error,
-      )
-    }
-  }
-
-  next()
-})
+// Initialize unleash server client
+const unleashClient = getOrInitUnleashServer()
 
 // Mount middleware
 initializeMiddleware(app)
@@ -71,10 +54,9 @@ app.get(
         context: {
           featureFlags: {
             isEnabled: (flag: string) =>
-              !!unleashClient?.isEnabled(flag, unleashContext),
+              unleashClient.isEnabled(flag, unleashContext),
             getVariant: (flag: string) =>
-              unleashClient?.getVariant(flag, unleashContext),
-            toggles: unleashClient?.getFeatureToggleDefinitions() as IToggle[],
+              unleashClient.getVariant(flag, unleashContext),
           },
         },
       })
@@ -102,7 +84,7 @@ app
   // Should be second to last
   .use(redirectsServerRoutes)
   // Final middleware. Errors and anything else should be last
-  .use("*", (_req, _res, next) => {
+  .use("*", (req, res, next) => {
     const err = new Error()
     // @ts-ignore -- FIXME: status does not exist on err
     err.status = 404

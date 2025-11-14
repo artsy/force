@@ -1,15 +1,15 @@
+import { SelectedFiltersCountsLabels } from "Components/ArtworkFilter/ArtworkFilterContext"
+import { ResultsFilter } from "./ResultsFilter"
+import { useFlag } from "@unleash/proxy-client-react"
+import { getArtworkLocationSearchableText } from "Components/ArtworkFilter/Utils/getArtworkLocationSearchableText"
+import { useTracking } from "react-tracking"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import type { FilterSelectChangeState } from "@artsy/palette"
 import {
   ActionType,
-  type CommercialFilterSelectedAll,
   ContextModule,
+  CommercialFilterSelectedAll,
 } from "@artsy/cohesion"
-import type { FilterSelectChangeState } from "@artsy/palette"
-import { SelectedFiltersCountsLabels } from "Components/ArtworkFilter/ArtworkFilterContext"
-import { getArtworkLocationSearchableText } from "Components/ArtworkFilter/Utils/getArtworkLocationSearchableText"
-import { useFlag } from "System/FeatureFlags/useFlag"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import { useTracking } from "react-tracking"
-import { ResultsFilter } from "./ResultsFilter"
 
 export interface ArtworkLocationFilterProps {
   expanded?: boolean

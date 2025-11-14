@@ -5,7 +5,6 @@ import { getUser } from "Utils/user"
 import type { Router } from "found"
 import { createContext, useState } from "react"
 import type { Environment } from "react-relay"
-import type { IToggle } from "unleash-proxy-client"
 
 export type UserPreferences = {
   metric: Metric
@@ -21,7 +20,6 @@ export interface SystemContextState {
 interface FeatureFlags {
   isEnabled: (flag: string) => boolean
   getVariant: (flag: string) => any
-  toggles: IToggle[]
 }
 
 export interface SystemContextProps extends SystemContextState {

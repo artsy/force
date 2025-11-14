@@ -19,7 +19,7 @@ import {
   injectCommitMutation,
 } from "Apps/Order/Utils/commitMutation"
 import { getInitialPaymentMethodValue } from "Apps/Order/Utils/orderUtils"
-import { useFlag } from "System/FeatureFlags/useFlag"
+import { useFlag } from "@unleash/proxy-client-react"
 import { useRouter } from "System/Hooks/useRouter"
 // utils, hooks, mutations and system tools
 import { extractNodes } from "Utils/extractNodes"
