@@ -1,5 +1,5 @@
-import express from "express"
 import url from "url"
+import express from "express"
 import type { ArtsyRequest, ArtsyResponse } from "./artsyExpress"
 
 // Permanently (301) redirect a specific route or route pattern

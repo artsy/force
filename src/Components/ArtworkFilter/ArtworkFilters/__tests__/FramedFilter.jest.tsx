@@ -1,12 +1,12 @@
+import { screen } from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
 import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
+import { FramedFilter } from "Components/ArtworkFilter/ArtworkFilters/FramedFilter"
 import {
   createArtworkFilterTestRenderer,
   currentArtworkFilterContext,
 } from "Components/ArtworkFilter/ArtworkFilters/__tests__/Utils"
-import { FramedFilter } from "Components/ArtworkFilter/ArtworkFilters/FramedFilter"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
-import { screen } from "@testing-library/react"
-import userEvent from "@testing-library/user-event"
 import { useEffect } from "react"
 
 jest.mock("Utils/Hooks/useMatchMedia")
@@ -52,6 +52,7 @@ describe(FramedFilter, () => {
       const MobileVersionOfFramedFilter = () => {
         const filterContext = useArtworkFilterContext()
 
+        // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
         useEffect(() => {
           // on mount, initialize the staged filters
           filterContext.setShouldStageFilterChanges?.(true)

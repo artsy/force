@@ -44,7 +44,7 @@ export const WebsocketContextProvider: React.FC<
         },
       },
     )
-  }, [channelInfo, enabled, xapp_token])
+  }, [])
 
   return (
     <WebsocketContext.Provider value={receivedData}>

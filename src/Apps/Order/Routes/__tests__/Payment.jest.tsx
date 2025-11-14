@@ -1,20 +1,20 @@
+import { useSetPayment } from "Apps/Order/Mutations/useSetPayment"
+import { PaymentFragmentContainer } from "Apps/Order/Routes/Payment"
+import { useOrderPaymentContext } from "Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext"
+import { settingOrderPaymentFailed } from "Apps/Order/Routes/__fixtures__/MutationResults/setOrderPayment"
 import {
   BuyOrderWithBankDebitDetails,
   BuyOrderWithShippingDetails,
   OfferOrderWithShippingDetails,
   PrivateSaleOrderWithShippingDetails,
 } from "Apps/__tests__/Fixtures/Order"
-import { useSetPayment } from "Apps/Order/Mutations/useSetPayment"
-import { settingOrderPaymentFailed } from "Apps/Order/Routes/__fixtures__/MutationResults/setOrderPayment"
-import { PaymentFragmentContainer } from "Apps/Order/Routes/Payment"
-import { useOrderPaymentContext } from "Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext"
-import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { MockBoot } from "DevTools/MockBoot"
+import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { useSystemContext } from "System/Hooks/useSystemContext"
 import { screen } from "@testing-library/react"
-import type { CommercePaymentMethodEnum } from "__generated__/Payment_order.graphql"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import type { PaymentTestQuery$rawResponse } from "__generated__/PaymentTestQuery.graphql"
+import type { CommercePaymentMethodEnum } from "__generated__/Payment_order.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { OrderAppTestPageRTL } from "./Utils/OrderAppTestPageRTL"
@@ -120,7 +120,7 @@ describe("Payment", () => {
           router={{ push: pushMock } as any}
           order={props.order}
           me={props.me}
-          // @ts-expect-error
+          // @ts-ignore
           isCommittingMutation={isCommittingMutation}
         />
       </MockBoot>

@@ -1,6 +1,6 @@
-import { CDN_URL } from "Server/config"
 import fs from "fs"
 import path from "path"
+import { CDN_URL } from "Server/config"
 
 const HINTS_PATH = path.join(process.cwd(), "dist", "early-hints.json")
 

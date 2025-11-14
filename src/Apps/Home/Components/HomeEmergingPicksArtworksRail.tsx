@@ -1,4 +1,11 @@
 import {
+  ActionType,
+  type ClickedArtworkGroup,
+  ContextModule,
+  OwnerType,
+} from "@artsy/cohesion"
+import { Skeleton } from "@artsy/palette"
+import {
   ShelfArtworkFragmentContainer,
   ShelfArtworkPlaceholder,
 } from "Components/Artwork/ShelfArtwork"
@@ -7,15 +14,8 @@ import { Rail } from "Components/Rail/Rail"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
 import { getSignalLabel } from "Utils/getSignalLabel"
-import {
-  ActionType,
-  type ClickedArtworkGroup,
-  ContextModule,
-  OwnerType,
-} from "@artsy/cohesion"
-import { Skeleton } from "@artsy/palette"
-import type { HomeEmergingPicksArtworksRail_viewer$data } from "__generated__/HomeEmergingPicksArtworksRail_viewer.graphql"
 import type { HomeEmergingPicksArtworksRailQuery } from "__generated__/HomeEmergingPicksArtworksRailQuery.graphql"
+import type { HomeEmergingPicksArtworksRail_viewer$data } from "__generated__/HomeEmergingPicksArtworksRail_viewer.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 

@@ -1,6 +1,6 @@
+import { Column, GridColumns, Join, Separator } from "@artsy/palette"
 import { SettingsEditSettingsInformationFragmentContainer } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsInformation"
 import { SettingsEditSettingsThemeSelect } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsThemeSelect"
-import { Column, GridColumns, Join, Separator } from "@artsy/palette"
 import type { SettingsEditSettingsRoute_me$data } from "__generated__/SettingsEditSettingsRoute_me.graphql"
 import type React from "react"
 import { createFragmentContainer, graphql } from "react-relay"

@@ -1,9 +1,9 @@
+import { Box, Join, Message, Spacer, Tab, Tabs, Text } from "@artsy/palette"
 import { AuctionArtworkFilterQueryRenderer } from "Apps/Auction/Components/AuctionArtworkFilter"
 import { CascadingEndTimesBannerFragmentContainer } from "Components/CascadingEndTimesBanner"
 import { FullBleedHeader } from "Components/FullBleedHeader/FullBleedHeader"
 import { Analytics } from "System/Contexts/AnalyticsContext"
 import { WebsocketContextProvider } from "System/Contexts/WebsocketContext"
-import { Box, Join, Message, Spacer, Tab, Tabs, Text } from "@artsy/palette"
 import type { AuctionApp_me$data } from "__generated__/AuctionApp_me.graphql"
 import type { AuctionApp_sale$data } from "__generated__/AuctionApp_sale.graphql"
 import type { AuctionApp_viewer$data } from "__generated__/AuctionApp_viewer.graphql"
@@ -54,6 +54,7 @@ export const AuctionApp: React.FC<React.PropsWithChildren<AuctionAppProps>> = ({
 
   const isFullBleedHeaderFixed = !cascadingEndTimeIntervalMinutes
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     tracking.auctionPageView({ sale, me })
   }, [])

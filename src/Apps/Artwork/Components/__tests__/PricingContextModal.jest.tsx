@@ -1,8 +1,8 @@
+import { fireEvent, screen } from "@testing-library/react"
 import { PricingContextModal } from "Apps/Artwork/Components/PricingContextModal"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { mockTracking } from "DevTools/mockTracking"
 import { render } from "DevTools/renderWithMockBoot"
-import { fireEvent, screen } from "@testing-library/react"
 
 jest.unmock("react-relay")
 jest.unmock("react-tracking")

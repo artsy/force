@@ -1,10 +1,10 @@
+import { Box, Join, Skeleton, Spacer } from "@artsy/palette"
 import { OtherWorks } from "Apps/Artwork/Components/OtherWorks"
 import { HeaderPlaceholder } from "Apps/Artwork/Components/OtherWorks/Header"
 import { ArtworkGridPlaceholder } from "Components/ArtworkGrid/ArtworkGrid"
 import { withSystemContext } from "System/Contexts/SystemContext"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { Box, Join, Skeleton, Spacer } from "@artsy/palette"
 import type { ArtworkErrorAppOtherWorksQuery } from "__generated__/ArtworkErrorAppOtherWorksQuery.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 

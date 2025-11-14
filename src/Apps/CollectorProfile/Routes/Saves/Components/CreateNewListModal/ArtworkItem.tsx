@@ -1,5 +1,5 @@
-import ArtworkGridItemFragmentContainer from "Components/Artwork/GridItem"
 import { Clickable } from "@artsy/palette"
+import ArtworkGridItemFragmentContainer from "Components/Artwork/GridItem"
 import type { FC } from "react"
 import { SelectArtworkItem } from "./SelectArtworkItem"
 

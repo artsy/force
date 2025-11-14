@@ -1,5 +1,5 @@
-import { Z } from "Apps/Components/constants"
 import { Box, Drawer, Flex, ModalClose, Spacer, Text } from "@artsy/palette"
+import { Z } from "Apps/Components/constants"
 import type { FC, ReactNode } from "react"
 
 interface ArtworkFilterDrawerProps {

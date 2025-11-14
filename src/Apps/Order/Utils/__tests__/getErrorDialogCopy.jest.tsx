@@ -1,9 +1,9 @@
+import { render, screen } from "@testing-library/react"
 import {
   ErrorDialogMessage,
   ErrorDialogs,
   getErrorDialogCopy,
 } from "Apps/Order/Utils/getErrorDialogCopy"
-import { render, screen } from "@testing-library/react"
 
 describe("getErrorDialogCopy", () => {
   describe("dialog is CurrencyNotSupported", () => {

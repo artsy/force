@@ -1,18 +1,18 @@
+import { Box } from "@artsy/palette"
 import { AppShell } from "Apps/Components/AppShell"
 import { ErrorPage } from "Components/ErrorPage"
 import { sentryRouterTracing } from "System/Utils/setupSentryClient"
 import { getENV } from "Utils/getENV"
-import { Box } from "@artsy/palette"
 import { HttpError, type Match } from "found"
-import ElementsRenderer from "found/cjs/ElementsRenderer"
 import StaticContainer from "found/StaticContainer"
+import ElementsRenderer from "found/cjs/ElementsRenderer"
 
 export const renderStates = {
   /**
    * This is the render state that is called when a route is matched and a
    * request is fired off to metaphysics.
    */
-  renderPending: (_match: Match) => {
+  renderPending: (match: Match) => {
     return (
       <>
         <Renderer>{null}</Renderer>

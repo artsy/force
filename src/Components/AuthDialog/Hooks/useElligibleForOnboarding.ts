@@ -1,5 +1,5 @@
-import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
 import { Intent } from "@artsy/cohesion"
+import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
 import { useMemo } from "react"
 
 export const COMMERCIAL_AUTH_INTENTS = [

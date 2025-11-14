@@ -1,3 +1,4 @@
+import { Box, Flex, Text } from "@artsy/palette"
 import {
   CheckoutStepName,
   CheckoutStepState,
@@ -6,7 +7,6 @@ import { Order2DeliveryOptionsCompletedView } from "Apps/Order2/Routes/Checkout/
 import { Order2DeliveryOptionsForm } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/Order2DeliveryOptionsForm"
 import { useCompleteDeliveryOptionData } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/useCompleteDeliveryOptionData"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
-import { Box, Flex, Text } from "@artsy/palette"
 import type { Order2DeliveryOptionsStep_order$key } from "__generated__/Order2DeliveryOptionsStep_order.graphql"
 import { graphql, useFragment } from "react-relay"
 

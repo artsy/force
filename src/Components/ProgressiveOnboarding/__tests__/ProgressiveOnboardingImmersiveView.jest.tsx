@@ -1,8 +1,8 @@
+import { DismissibleProvider } from "@artsy/dismissible"
+import { render, screen } from "@testing-library/react"
 import { ProgressiveOnboardingImmersiveView } from "Components/ProgressiveOnboarding/ProgressiveOnboardingImmersiveView"
 import { PROGRESSIVE_ONBOARDING_KEYS } from "Components/ProgressiveOnboarding/progressiveOnboardingKeys"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
-import { DismissibleProvider } from "@artsy/dismissible"
-import { render, screen } from "@testing-library/react"
 import type { FC } from "react"
 
 const Example: FC<React.PropsWithChildren<unknown>> = () => {

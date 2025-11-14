@@ -1,3 +1,14 @@
+import {
+  Box,
+  Breadcrumbs,
+  Column,
+  GridColumns,
+  Spacer,
+  Text,
+  VisuallyHidden,
+  media,
+} from "@artsy/palette"
+import { themeGet } from "@styled-system/theme-get"
 import { ArtistsLetterNav } from "Apps/Artists/Components/ArtistsLetterNav"
 import { LoadingArea } from "Components/LoadingArea"
 import { PaginatedMetaTags } from "Components/PaginatedMetaTags"
@@ -5,24 +16,13 @@ import { PaginationFragmentContainer } from "Components/Pagination"
 import { RouterLink } from "System/Components/RouterLink"
 import { useRouter } from "System/Hooks/useRouter"
 import { buildPageQuery, getPageNumber } from "Utils/url"
-import {
-  Box,
-  Breadcrumbs,
-  Column,
-  GridColumns,
-  media,
-  Spacer,
-  Text,
-  VisuallyHidden,
-} from "@artsy/palette"
-import { themeGet } from "@styled-system/theme-get"
 import type { ArtistsByLetter_viewer$data } from "__generated__/ArtistsByLetter_viewer.graphql"
-import type * as React from "react"
 import { useState } from "react"
+import type * as React from "react"
 import {
+  type RelayRefetchProp,
   createRefetchContainer,
   graphql,
-  type RelayRefetchProp,
 } from "react-relay"
 import styled from "styled-components"
 

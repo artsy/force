@@ -1,5 +1,3 @@
-import { getENV } from "Utils/getENV"
-import { useLoadScript } from "Utils/Hooks/useLoadScript"
 import {
   AutocompleteInput,
   type AutocompleteInputOptionType,
@@ -7,6 +5,8 @@ import {
   Flex,
   Text,
 } from "@artsy/palette"
+import { useLoadScript } from "Utils/Hooks/useLoadScript"
+import { getENV } from "Utils/getENV"
 import { compact, debounce } from "lodash"
 import {
   type ChangeEvent,
@@ -77,29 +77,26 @@ export const LocationAutocompleteInput: FC<
     return res?.predictions
   }
 
-  const updateSuggestions = useCallback(
-    async (value: string) => {
-      setSuggestions([])
-      if (!value.trim()) return
+  const updateSuggestions = useCallback(async (value: string) => {
+    setSuggestions([])
+    if (!value.trim()) return
 
-      try {
-        setIsLoading(true)
-        const suggestions = await fetchSuggestions(value)
-        setIsLoading(false)
-        if (suggestions) {
-          setSuggestions(
-            suggestions.map(option => ({
-              text: option.description,
-              value: option.place_id,
-            })),
-          )
-        }
-      } catch {
-        setIsLoading(false)
+    try {
+      setIsLoading(true)
+      const suggestions = await fetchSuggestions(value)
+      setIsLoading(false)
+      if (suggestions) {
+        setSuggestions(
+          suggestions.map(option => ({
+            text: option.description,
+            value: option.place_id,
+          })),
+        )
       }
-    },
-    [fetchSuggestions],
-  )
+    } catch {
+      setIsLoading(false)
+    }
+  }, [])
 
   const handleSuggestionsFetchRequested = useMemo(
     () => debounce(updateSuggestions, DEBOUNCE_DELAY),
@@ -230,7 +227,6 @@ export const normalizePlace = (
 
 const PoweredByGoogleIcon: FC<React.PropsWithChildren<unknown>> = () => {
   return (
-    // biome-ignore lint/a11y/noSvgWithoutTitle: thing
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="144"

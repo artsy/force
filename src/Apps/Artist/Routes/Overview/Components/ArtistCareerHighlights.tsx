@@ -1,8 +1,3 @@
-import { ARTIST_HEADER_NUMBER_OF_INSIGHTS } from "Apps/Artist/Components/ArtistHeader/ArtistHeader"
-import { ArtistCareerHighlightFragmentContainer } from "Apps/Artist/Routes/Overview/Components/ArtistCareerHighlight"
-import { RailHeader } from "Components/Rail/RailHeader"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { Media } from "Utils/Responsive"
 import {
   Box,
   Column,
@@ -10,8 +5,13 @@ import {
   GridColumns,
   SkeletonText,
 } from "@artsy/palette"
-import type { ArtistCareerHighlights_artist$data } from "__generated__/ArtistCareerHighlights_artist.graphql"
+import { ARTIST_HEADER_NUMBER_OF_INSIGHTS } from "Apps/Artist/Components/ArtistHeader/ArtistHeader"
+import { ArtistCareerHighlightFragmentContainer } from "Apps/Artist/Routes/Overview/Components/ArtistCareerHighlight"
+import { RailHeader } from "Components/Rail/RailHeader"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { Media } from "Utils/Responsive"
 import type { ArtistCareerHighlightsQuery } from "__generated__/ArtistCareerHighlightsQuery.graphql"
+import type { ArtistCareerHighlights_artist$data } from "__generated__/ArtistCareerHighlights_artist.graphql"
 import type { FC } from "react"
 import { forwardRef } from "react"
 import { createFragmentContainer, graphql } from "react-relay"

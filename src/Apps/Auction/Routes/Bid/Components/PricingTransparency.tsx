@@ -1,6 +1,14 @@
 import { useAuctionFormContext } from "Apps/Auction/Hooks/useAuctionFormContext"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import type {
+  PricingTransparencyQuery,
+  PricingTransparencyQuery$data,
+  PricingTransparencyQuery$variables,
+} from "__generated__/PricingTransparencyQuery.graphql"
+import type * as React from "react"
+import { graphql } from "react-relay"
+
 import {
   Flex,
   Join,
@@ -9,14 +17,7 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import type {
-  PricingTransparencyQuery,
-  PricingTransparencyQuery$data,
-  PricingTransparencyQuery$variables,
-} from "__generated__/PricingTransparencyQuery.graphql"
-import type * as React from "react"
 import { useMemo } from "react"
-import { graphql } from "react-relay"
 
 const PricingTransparency: React.FC<
   React.PropsWithChildren<PricingTransparencyQuery$data>
@@ -88,12 +89,13 @@ export const PricingTransparencyQueryRenderer = ({
 }: Omit<PricingTransparencyQuery$variables, "bidAmountMinor">) => {
   const { relayEnvironment } = useSystemContext()
   const { values } = useAuctionFormContext()
-  const bidAmountMinor = Number.parseInt(values.selectedBid || "0", 10)
+  const bidAmountMinor = Number.parseInt(values.selectedBid || "0")
 
   // Hack to prevent invalid refetch / preloader state during route transition
   // when the url changes after user places a successful bid and we redirect
   // back to artwork/id. If / when we remove the transition to the auction page
   // from artwork/id we can remove this hack.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const variables = useMemo(() => {
     return {
       saleId,

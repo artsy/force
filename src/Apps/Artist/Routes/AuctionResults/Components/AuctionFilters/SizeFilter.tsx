@@ -1,3 +1,4 @@
+import { Checkbox, Flex, Radio, RadioGroup, Text } from "@artsy/palette"
 import {
   useAuctionResultsFilterContext,
   useCurrentlySelectedFiltersForAuctionResults,
@@ -5,7 +6,6 @@ import {
 import { FilterExpandable } from "Components/ArtworkFilter/ArtworkFilters/FilterExpandable"
 import { ShowMore } from "Components/ArtworkFilter/ArtworkFilters/ShowMore"
 import type { Metric } from "Utils/metrics"
-import { Checkbox, Flex, Radio, RadioGroup, Text } from "@artsy/palette"
 import type * as React from "react"
 
 export const sizeMap = [

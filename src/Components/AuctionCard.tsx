@@ -1,5 +1,5 @@
-import { RouterLink } from "System/Components/RouterLink"
 import { Image, ResponsiveBox, Spacer, Text } from "@artsy/palette"
+import { RouterLink } from "System/Components/RouterLink"
 import type { AuctionCard_sale$data } from "__generated__/AuctionCard_sale.graphql"
 import { DateTime } from "luxon"
 import type * as React from "react"

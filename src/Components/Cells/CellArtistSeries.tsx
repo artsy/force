@@ -1,4 +1,3 @@
-import { RouterLink, type RouterLinkProps } from "System/Components/RouterLink"
 import {
   Box,
   Image,
@@ -8,6 +7,7 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
+import { RouterLink, type RouterLinkProps } from "System/Components/RouterLink"
 import type { CellArtistSeries_artistSeries$data } from "__generated__/CellArtistSeries_artistSeries.graphql"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"

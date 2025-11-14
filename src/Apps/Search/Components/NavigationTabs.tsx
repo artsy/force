@@ -1,12 +1,12 @@
-import { RouterLink } from "System/Components/RouterLink"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import { useIsRouteActive } from "System/Hooks/useRouter"
 import {
   ActionType,
   type ClickedNavigationTab,
   type ContextModule,
 } from "@artsy/cohesion"
 import { Pill, Stack } from "@artsy/palette"
+import { RouterLink } from "System/Components/RouterLink"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { useIsRouteActive } from "System/Hooks/useRouter"
 import type { NavigationTabs_searchableConnection$data } from "__generated__/NavigationTabs_searchableConnection.graphql"
 import { compact } from "lodash"
 import { type FC, useMemo } from "react"
@@ -147,7 +147,7 @@ const NavigationTab: FC<React.PropsWithChildren<NavigationTabProps>> = ({
 
         trackEvent(trackingData)
       }}
-      // @ts-expect-error
+      // @ts-ignore
       to={to}
     >
       {tab.label}
@@ -177,7 +177,6 @@ export const NavigationTabs: FC<
     () =>
       MORE_TABS.reduce((prev, key) => {
         const count = counts.find(count => count.name === key)?.count ?? 0
-        // biome-ignore lint/suspicious/noAssignInExpressions: thing
         return count ? (prev += count) : prev
       }, 0),
     [counts],

@@ -1,5 +1,5 @@
-import { AddressForm } from "Components/Address/AddressForm"
 import { act, fireEvent, render, screen, waitFor } from "@testing-library/react"
+import { AddressForm } from "Components/Address/AddressForm"
 import { type FC, useState } from "react"
 
 jest.mock("Utils/getENV", () => ({
@@ -39,9 +39,7 @@ describe("AddressForm", () => {
               setAddress(address)
             }}
           />
-          <button type="button" onClick={updateAddress}>
-            Update
-          </button>
+          <button onClick={updateAddress}>Update</button>
         </>
       )
     }
@@ -78,6 +76,7 @@ describe("AddressForm", () => {
         }),
       })
 
+      // @ts-ignore
       global.fetch = mockFetch
     })
 

@@ -1,7 +1,7 @@
+import { screen } from "@testing-library/react"
 import { ArtistSeriesArtworksFilterRefetchContainer } from "Apps/ArtistSeries/Components/ArtistSeriesArtworksFilter"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { screen } from "@testing-library/react"
 import type { ArtistSeriesArtworksFilterTestQuery } from "__generated__/ArtistSeriesArtworksFilterTestQuery.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"

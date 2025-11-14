@@ -1,8 +1,3 @@
-import { useArtworkDimensions } from "Apps/Artwork/useArtworkDimensions"
-import { OrderDetailsPricingBreakdown } from "Apps/Order/Routes/Details/Components/OrderDetailsPricingBreakdown"
-import { BUYER_GUARANTEE_URL } from "Apps/Order2/constants"
-import { useOrder2Tracking } from "Apps/Order2/Hooks/useOrder2Tracking"
-import { RouterLink } from "System/Components/RouterLink"
 import { ContextModule } from "@artsy/cohesion"
 import ShieldIcon from "@artsy/icons/ShieldIcon"
 import {
@@ -14,6 +9,11 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
+import { useOrder2Tracking } from "Apps/Order2/Hooks/useOrder2Tracking"
+import { OrderDetailsPricingBreakdown } from "Apps/Order/Routes/Details/Components/OrderDetailsPricingBreakdown"
+import { BUYER_GUARANTEE_URL } from "Apps/Order2/constants"
+import { useArtworkDimensions } from "Apps/Artwork/useArtworkDimensions"
+import { RouterLink } from "System/Components/RouterLink"
 import type { OrderDetailsOrderSummary_order$key } from "__generated__/OrderDetailsOrderSummary_order.graphql"
 import type * as React from "react"
 import { graphql, useFragment } from "react-relay"

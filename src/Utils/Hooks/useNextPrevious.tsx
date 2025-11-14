@@ -38,7 +38,7 @@ export const useNextPrevious = ({ onNext, onPrevious }: UseNextPrevious) => {
     return () => {
       document.removeEventListener("keydown", handleKeydown)
     }
-  }, [onNext, onPrevious])
+  }, [containerRef, onNext, onPrevious])
 
   return { containerRef }
 }

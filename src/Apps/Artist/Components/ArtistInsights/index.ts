@@ -1,2 +1,2 @@
-export { ArtistInsightAchievementsFragmentContainer } from "./ArtistInsightAchievements"
 export { ArtistInsightBadgesFragmentContainer } from "./ArtistInsightBadges"
+export { ArtistInsightAchievementsFragmentContainer } from "./ArtistInsightAchievements"

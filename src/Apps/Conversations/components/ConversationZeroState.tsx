@@ -1,5 +1,5 @@
-import { MetaTags } from "Components/MetaTags"
 import { Box, Button, Flex, Link, Spacer, Text } from "@artsy/palette"
+import { MetaTags } from "Components/MetaTags"
 
 export const ConversationZeroState: React.FC<
   React.PropsWithChildren<unknown>

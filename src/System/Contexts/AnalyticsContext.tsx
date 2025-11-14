@@ -1,7 +1,7 @@
-import { getENV } from "Utils/getENV"
 import { OwnerType, type PageOwnerType } from "@artsy/cohesion"
+import { getENV } from "Utils/getENV"
 import { camelCase } from "lodash"
-import { createContext, type FC, type ReactNode, useMemo } from "react"
+import { type FC, type ReactNode, createContext, useMemo } from "react"
 
 const SHOW_ANALYTICS_CALLS = getENV("SHOW_ANALYTICS_CALLS")
 

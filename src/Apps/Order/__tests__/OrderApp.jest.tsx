@@ -1,3 +1,11 @@
+import { render, screen } from "@testing-library/react"
+import { OrderAppFragmentContainer } from "Apps/Order/OrderApp"
+import { orderRoutes } from "Apps/Order/orderRoutes"
+import { SystemContextProvider } from "System/Contexts/SystemContext"
+import { Resolver } from "found-relay"
+import { getFarceResult } from "found/server"
+import { HeadProvider } from "react-head"
+
 import {
   BuyOrderPickup,
   BuyOrderWithShippingDetails,
@@ -9,19 +17,12 @@ import {
   UntouchedBuyOrderWithShippingQuotes,
   UntouchedOfferOrder,
 } from "Apps/__tests__/Fixtures/Order"
-import { OrderAppFragmentContainer } from "Apps/Order/OrderApp"
-import { orderRoutes } from "Apps/Order/orderRoutes"
 import { MockBoot } from "DevTools/MockBoot"
-import { SystemContextProvider } from "System/Contexts/SystemContext"
 import { getENV } from "Utils/getENV"
-import { render, screen } from "@testing-library/react"
 import type { orderRoutes_OrderQuery$rawResponse } from "__generated__/orderRoutes_OrderQuery.graphql"
 import type { FarceRedirectResult } from "found/server"
-import { getFarceResult } from "found/server"
-import { Resolver } from "found-relay"
 import { DateTime } from "luxon"
-import { HeadProvider } from "react-head"
-import { createMockEnvironment, MockPayloadGenerator } from "relay-test-utils"
+import { MockPayloadGenerator, createMockEnvironment } from "relay-test-utils"
 
 jest.mock("Utils/getENV", () => ({
   getENV: jest.fn(),
@@ -56,7 +57,7 @@ describe("OrderApp routing redirects", () => {
     )
 
     const result = await getFarceResult({
-      render: _props => {
+      render: props => {
         return <div>hello</div>
       },
       resolver: new Resolver(environment),
@@ -731,7 +732,7 @@ describe("OrderApp", () => {
     getWrapper({ props })
 
     // Check for the sticky footer by finding elements with specific text content
-    const footerContainers = screen.getAllByText((_content, element) => {
+    const footerContainers = screen.getAllByText((content, element) => {
       const hasText =
         element?.textContent?.includes("Need help?") &&
         element?.textContent?.includes("Visit our help center") &&

@@ -1,9 +1,9 @@
 import type { FormikContextWithAddress } from "Components/Address/AddressFormFields"
 import {
+  type ProcessedUserAddress,
   countryNameFromAlpha2,
   findInitialSelectedAddress,
   normalizeAddress,
-  type ProcessedUserAddress,
   processSavedAddresses,
   sortAddressesByPriority,
 } from "../utils"

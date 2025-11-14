@@ -1,8 +1,3 @@
-import { FullBleedHeader } from "Components/FullBleedHeader/FullBleedHeader"
-import { MetaTags } from "Components/MetaTags"
-import { RouterLink } from "System/Components/RouterLink"
-import { Media } from "Utils/Responsive"
-import { cropped, resized } from "Utils/resized"
 import {
   Avatar,
   Box,
@@ -16,6 +11,11 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
+import { FullBleedHeader } from "Components/FullBleedHeader/FullBleedHeader"
+import { MetaTags } from "Components/MetaTags"
+import { RouterLink } from "System/Components/RouterLink"
+import { Media } from "Utils/Responsive"
+import { cropped, resized } from "Utils/resized"
 
 export const ArtAppraisalsApp: React.FC<
   React.PropsWithChildren<unknown>
@@ -68,7 +68,7 @@ const Header: React.FC<React.PropsWithChildren<unknown>> = () => {
 
             <Media greaterThan="xs">
               <Button
-                // @ts-expect-error
+                // @ts-ignore
                 as="a"
                 href="mailto:appraisals@artsymail.com"
               >
@@ -77,7 +77,7 @@ const Header: React.FC<React.PropsWithChildren<unknown>> = () => {
             </Media>
             <Media at="xs">
               <Button
-                // @ts-expect-error
+                // @ts-ignore
                 as="a"
                 href="mailto:appraisals@artsymail.com"
                 size="small"

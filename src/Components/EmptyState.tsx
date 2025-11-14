@@ -1,5 +1,5 @@
-import { RouterLink } from "System/Components/RouterLink"
 import { Button, Column, GridColumns, Stack, Text } from "@artsy/palette"
+import { RouterLink } from "System/Components/RouterLink"
 import React from "react"
 
 interface EmptyStateProps {

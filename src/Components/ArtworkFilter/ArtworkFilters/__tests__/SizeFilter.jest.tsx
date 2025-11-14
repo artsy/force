@@ -1,10 +1,11 @@
+import { screen, waitFor } from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
 import {
   createArtworkFilterTestRenderer,
   currentArtworkFilterContext,
 } from "Components/ArtworkFilter/ArtworkFilters/__tests__/Utils"
+
 import { SizeFilter } from "Components/ArtworkFilter/ArtworkFilters/SizeFilter"
-import { screen, waitFor } from "@testing-library/react"
-import userEvent from "@testing-library/user-event"
 
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),

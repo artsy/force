@@ -3,7 +3,8 @@ import { StructuredData } from "Components/Seo/StructuredData"
 import { getENV } from "Utils/getENV"
 import type { FairStructuredData_fair$key } from "__generated__/FairStructuredData_fair.graphql"
 import { compact } from "lodash"
-import { graphql, useFragment } from "react-relay"
+import { graphql } from "react-relay"
+import { useFragment } from "react-relay"
 import type { ImageObject, Place } from "schema-dts"
 
 interface FairStructuredDataProps {

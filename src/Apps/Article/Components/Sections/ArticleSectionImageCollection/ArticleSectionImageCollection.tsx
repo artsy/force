@@ -1,5 +1,3 @@
-import { CENTERED_LAYOUT_COLUMNS } from "Apps/Article/Components/ArticleBody"
-import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import {
   Box,
   Column,
@@ -9,6 +7,8 @@ import {
   Join,
   Spacer,
 } from "@artsy/palette"
+import { CENTERED_LAYOUT_COLUMNS } from "Apps/Article/Components/ArticleBody"
+import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import type { ArticleSectionImageCollection_section$data } from "__generated__/ArticleSectionImageCollection_section.graphql"
 import { type FC, useMemo } from "react"
 import { createFragmentContainer, graphql } from "react-relay"

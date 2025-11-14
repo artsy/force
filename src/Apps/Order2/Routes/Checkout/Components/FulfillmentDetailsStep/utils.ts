@@ -1,6 +1,6 @@
 import {
-  addressFormFieldsValidator,
   type FormikContextWithAddress,
+  addressFormFieldsValidator,
 } from "Components/Address/AddressFormFields"
 import { COUNTRY_CODE_TO_COUNTRY_NAME } from "Components/CountrySelect"
 import { extractNodes } from "Utils/extractNodes"

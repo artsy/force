@@ -1,11 +1,11 @@
+import { screen, fireEvent } from "@testing-library/react"
+import { OfferHistoryItemFragmentContainer } from "Apps/Order/Components/OfferHistoryItem"
 import {
-  Offers,
   OfferWithTotals,
+  Offers,
   UntouchedOfferOrder,
 } from "Apps/__tests__/Fixtures/Order"
-import { OfferHistoryItemFragmentContainer } from "Apps/Order/Components/OfferHistoryItem"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { fireEvent, screen } from "@testing-library/react"
 import type { OfferHistoryItemTestQuery$rawResponse } from "__generated__/OfferHistoryItemTestQuery.graphql"
 import { graphql } from "react-relay"
 

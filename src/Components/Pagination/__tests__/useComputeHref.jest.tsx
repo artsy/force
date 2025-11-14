@@ -1,5 +1,5 @@
-import { useComputeHref } from "Components/Pagination/useComputeHref"
 import { renderHook } from "@testing-library/react"
+import { useComputeHref } from "Components/Pagination/useComputeHref"
 
 const mockUseRouter = jest.fn()
 const mockUseArtworkFilterContext = jest.fn()

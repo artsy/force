@@ -26,7 +26,7 @@ sitemapsServerApp
     res.type("text/plain")
     res.send(LLMS_TXT)
   })
-  .get("/sitemap-misc.xml", (_req, res) => {
+  .get("/sitemap-misc.xml", (req, res) => {
     res.set("Content-Type", "text/xml")
 
     const urls = [

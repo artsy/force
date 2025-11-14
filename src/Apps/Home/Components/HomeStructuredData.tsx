@@ -1,5 +1,5 @@
 import { StructuredData } from "Components/Seo/StructuredData"
-import { Device, DOWNLOAD_APP_URLS } from "Utils/Hooks/useDeviceDetection"
+import { DOWNLOAD_APP_URLS, Device } from "Utils/Hooks/useDeviceDetection"
 
 export const HomeStructuredData = () => {
   return (

@@ -1,8 +1,8 @@
 import { AuctionInfoSidebarFragmentContainer } from "Apps/Auction/Components/AuctionDetails/AuctionInfoSidebar"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { screen } from "@testing-library/react"
 import type { AuctionInfoSidebarQuery } from "__generated__/AuctionInfoSidebarQuery.graphql"
 import { graphql } from "react-relay"
+import { screen } from "@testing-library/react"
 
 jest.unmock("react-relay")
 

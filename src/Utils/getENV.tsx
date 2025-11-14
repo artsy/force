@@ -1,6 +1,6 @@
 import { getAsyncLocalStorage } from "Server/asyncLocalWrapper"
 import { tryParse } from "Utils/tryParse"
-// biome-ignore lint/style/noRestrictedImports: This is the wrapper that replaces sharify usage
+// eslint-disable-next-line no-restricted-imports
 import { type GlobalData, data as sd } from "sharify"
 
 export function getENV(ENV_VAR: keyof GlobalData) {

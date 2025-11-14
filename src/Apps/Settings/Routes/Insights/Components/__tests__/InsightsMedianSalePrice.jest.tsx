@@ -1,6 +1,6 @@
+import { fireEvent, screen } from "@testing-library/react"
 import { InsightsMedianSalePriceFragmentContainer } from "Apps/Settings/Routes/Insights/Components/InsightsMedianSalePrice"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { fireEvent, screen } from "@testing-library/react"
 import type { InsightsMedianSalePriceTestQuery } from "__generated__/InsightsMedianSalePriceTestQuery.graphql"
 import { graphql } from "react-relay"
 

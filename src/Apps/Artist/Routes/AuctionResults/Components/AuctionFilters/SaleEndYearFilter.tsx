@@ -1,10 +1,10 @@
+import { Checkbox, Flex, Select, Spacer } from "@artsy/palette"
 import {
   useAuctionResultsFilterContext,
   useCurrentlySelectedFiltersForAuctionResults,
 } from "Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
 import { FilterExpandable } from "Components/ArtworkFilter/ArtworkFilters/FilterExpandable"
 import { ShowMore } from "Components/ArtworkFilter/ArtworkFilters/ShowMore"
-import { Checkbox, Flex, Select, Spacer } from "@artsy/palette"
 import type * as React from "react"
 
 export const SaleEndYearFilter: React.FC<
@@ -29,14 +29,14 @@ export const SaleEndYearFilter: React.FC<
 
   const startOptions = options.filter(
     option =>
-      Number.parseInt(option.value, 10) <=
-      (saleEndYear || Number.parseInt(options[options.length - 1]?.value, 10)),
+      Number.parseInt(option.value) <=
+      (saleEndYear || Number.parseInt(options[options.length - 1]?.value)),
   )
 
   const endOptions = options.filter(
     option =>
-      Number.parseInt(option.value, 10) >=
-      (saleStartYear || Number.parseInt(options[0]?.value, 10)),
+      Number.parseInt(option.value) >=
+      (saleStartYear || Number.parseInt(options[0]?.value)),
   )
 
   return (
@@ -48,9 +48,8 @@ export const SaleEndYearFilter: React.FC<
               title="Start year"
               options={startOptions}
               onSelect={year =>
-                setFilter?.("saleStartYear", Number.parseInt(year, 10))
+                setFilter?.("saleStartYear", Number.parseInt(year))
               }
-              // biome-ignore lint/correctness/noUnsafeOptionalChaining: ugh
               selected={(saleStartYear || options[0]?.value).toString()}
             />
             <Spacer x={1} />
@@ -58,12 +57,11 @@ export const SaleEndYearFilter: React.FC<
               title="End year"
               options={endOptions}
               onSelect={year =>
-                setFilter?.("saleEndYear", Number.parseInt(year, 10))
+                setFilter?.("saleEndYear", Number.parseInt(year))
               }
-              selected={
-                // biome-ignore lint/correctness/noUnsafeOptionalChaining: ugh
-                (saleEndYear || options[options.length - 1]?.value).toString()
-              }
+              selected={(
+                saleEndYear || options[options.length - 1]?.value
+              ).toString()}
             />
           </Flex>
 

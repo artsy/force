@@ -1,8 +1,8 @@
+import type * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import { Dropdown } from "@artsy/palette"
 import { Z } from "Apps/Components/constants"
 import type { MenuData } from "Components/NavBar/menuData"
 import { usePrefetchRoute } from "System/Hooks/usePrefetchRoute"
-import type * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { Dropdown } from "@artsy/palette"
 import { NavBarSubMenu } from "./Menus"
 import { NavBarItemButton, NavBarItemUnfocusableAnchor } from "./NavBarItem"
 

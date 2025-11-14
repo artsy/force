@@ -9,11 +9,7 @@ describe.skip("Strategy", () => {
     const strategy = new Strategy(
       { usernameField: "userid", passwordField: "passwd", otpField: "otp" }, // pragma: allowlist secret
       (username, password, otp, done) => {
-        if (
-          username === "johndoe" &&
-          password === "secret" &&
-          otp === "123456"
-        ) {
+        if (username == "johndoe" && password == "secret" && otp == "123456") {
           return done(null, { id: "1234" }, { scope: "read" })
         }
         return done(null, false)
@@ -57,11 +53,7 @@ describe.skip("Strategy", () => {
         otpField: "user[otp]",
       },
       (username, password, otp, done) => {
-        if (
-          username === "johndoe" &&
-          password === "secret" &&
-          otp === "123456"
-        ) {
+        if (username == "johndoe" && password == "secret" && otp == "123456") {
           return done(null, { id: "1234" }, { scope: "read" })
         }
         return done(null, false)

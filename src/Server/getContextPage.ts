@@ -1,6 +1,6 @@
-import { pathToOwnerType } from "System/Contexts/AnalyticsContext"
 import type { PageOwnerType } from "@artsy/cohesion"
-// biome-ignore lint/style/noRestrictedImports: Server context initialization
+import { pathToOwnerType } from "System/Contexts/AnalyticsContext"
+// eslint-disable-next-line no-restricted-imports
 import { data as sd } from "sharify"
 
 interface ClientContextPage {

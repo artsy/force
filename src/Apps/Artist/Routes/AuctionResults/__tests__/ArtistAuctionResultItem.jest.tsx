@@ -1,7 +1,7 @@
+import { screen } from "@testing-library/react"
 import { ArtistAuctionResultItemFragmentContainer } from "Apps/Artist/Routes/AuctionResults/ArtistAuctionResultItem"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { screen } from "@testing-library/react"
 import type { ArtistAuctionResultItemTestQuery } from "__generated__/ArtistAuctionResultItemTestQuery.graphql"
 import { graphql } from "react-relay"
 

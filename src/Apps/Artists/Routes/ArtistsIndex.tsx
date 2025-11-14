@@ -1,10 +1,3 @@
-import { ArtistsCarouselCellFragmentContainer } from "Apps/Artists/Components/ArtistsCarouselCell"
-import { ArtistsIndexMeta } from "Apps/Artists/Components/ArtistsIndexMeta"
-import { ArtistsLetterNav } from "Apps/Artists/Components/ArtistsLetterNav"
-import { CellArtistFragmentContainer } from "Components/Cells/CellArtist"
-import { RouterLink } from "System/Components/RouterLink"
-import { getENV } from "Utils/getENV"
-import { Media } from "Utils/Responsive"
 import {
   Box,
   Breadcrumbs,
@@ -15,6 +8,13 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
+import { ArtistsCarouselCellFragmentContainer } from "Apps/Artists/Components/ArtistsCarouselCell"
+import { ArtistsIndexMeta } from "Apps/Artists/Components/ArtistsIndexMeta"
+import { ArtistsLetterNav } from "Apps/Artists/Components/ArtistsLetterNav"
+import { CellArtistFragmentContainer } from "Components/Cells/CellArtist"
+import { RouterLink } from "System/Components/RouterLink"
+import { Media } from "Utils/Responsive"
+import { getENV } from "Utils/getENV"
 import type { ArtistsIndex_featuredArtists$data } from "__generated__/ArtistsIndex_featuredArtists.graphql"
 import type { ArtistsIndex_featuredGenes$data } from "__generated__/ArtistsIndex_featuredGenes.graphql"
 import { compact } from "lodash"
@@ -73,7 +73,7 @@ export const ArtistsIndex: React.FC<
                     featuredLink={featuredLink}
                     index={index}
                     // Improves LCP for above the fold content
-                    lazyLoad={!!isMobile}
+                    lazyLoad={isMobile ? true : false}
                   />
                 )
               })}
@@ -131,11 +131,9 @@ export const ArtistsIndex: React.FC<
                             artist={artist}
                             // LCP above the fold optimization for mobile
                             lazyLoad={
-                              !(
-                                isMobile &&
-                                geneIndex === 0 &&
-                                artistsIndex === 0
-                              )
+                              isMobile && geneIndex === 0 && artistsIndex === 0
+                                ? false
+                                : true
                             }
                           />
                         </Column>

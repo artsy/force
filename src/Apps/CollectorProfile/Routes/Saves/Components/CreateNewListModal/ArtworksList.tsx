@@ -1,5 +1,5 @@
-import { extractNodes } from "Utils/extractNodes"
 import { Column, GridColumns } from "@artsy/palette"
+import { extractNodes } from "Utils/extractNodes"
 import type { ArtworksList_artworks$data } from "__generated__/ArtworksList_artworks.graphql"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"

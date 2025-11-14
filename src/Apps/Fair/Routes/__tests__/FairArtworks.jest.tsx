@@ -1,7 +1,7 @@
 import { FairArtworksRefetchContainer } from "Apps/Fair/Routes/FairArtworks"
 import { MockBoot } from "DevTools/MockBoot"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { screen } from "@testing-library/react"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type {
   FairArtworksQuery,
   FairArtworksQuery$rawResponse,

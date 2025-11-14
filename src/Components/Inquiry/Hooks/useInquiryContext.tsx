@@ -1,14 +1,13 @@
+import { Spinner } from "@artsy/palette"
+import { Visited } from "Components/Inquiry/Visited"
 import { useEngine } from "Components/Inquiry/config"
 import { logger } from "Components/Inquiry/util"
-import { Visited } from "Components/Inquiry/Visited"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { setAfterAuthAction } from "Utils/Hooks/useAuthIntent"
 import { WorkflowEngine } from "Utils/WorkflowEngine"
-import { Spinner } from "@artsy/palette"
-import type { useInquiryContext_me$data } from "__generated__/useInquiryContext_me.graphql"
 import type { useInquiryContextQuery } from "__generated__/useInquiryContextQuery.graphql"
-import * as React from "react"
+import type { useInquiryContext_me$data } from "__generated__/useInquiryContext_me.graphql"
 import {
   createContext,
   useCallback,
@@ -17,8 +16,9 @@ import {
   useRef,
   useState,
 } from "react"
+import * as React from "react"
+import { type Environment, createFragmentContainer, graphql } from "react-relay"
 import type { Environment as IEnvironment } from "react-relay"
-import { createFragmentContainer, type Environment, graphql } from "react-relay"
 
 export interface Context
   extends Omit<useInquiryContext_me$data, " $fragmentType"> {

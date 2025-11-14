@@ -4,7 +4,7 @@ const Strategy = require("../lib/strategy")
 // FIXME:
 describe.skip("Strategy", () => {
   describe("encountering an error during verification", () => {
-    const strategy = new Strategy((_username, _password, _otp, done) => {
+    const strategy = new Strategy((username, password, otp, done) => {
       done(new Error("something went wrong"))
     })
 
@@ -33,7 +33,7 @@ describe.skip("Strategy", () => {
   })
 
   describe("encountering an exception during verification", () => {
-    const strategy = new Strategy((_username, _password, _otp, _done) => {
+    const strategy = new Strategy((username, password, otp, done) => {
       throw new Error("something went horribly wrong")
     })
 

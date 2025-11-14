@@ -1,3 +1,4 @@
+import { OwnerType } from "@artsy/cohesion"
 import { BaseArtworkFilter } from "Components/ArtworkFilter"
 import { ArtworkFilterAlertContextProvider } from "Components/ArtworkFilter/ArtworkFilterAlertContextProvider"
 import {
@@ -13,15 +14,14 @@ import type { SavedSearchEntity } from "Components/SavedSearchAlert/types"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { OwnerType } from "@artsy/cohesion"
-import type { ArtistSeriesArtworksFilter_artistSeries$data } from "__generated__/ArtistSeriesArtworksFilter_artistSeries.graphql"
 import type { ArtistSeriesArtworksFilterQuery } from "__generated__/ArtistSeriesArtworksFilterQuery.graphql"
+import type { ArtistSeriesArtworksFilter_artistSeries$data } from "__generated__/ArtistSeriesArtworksFilter_artistSeries.graphql"
 import { type Match, type RouterState, withRouter } from "found"
 import type * as React from "react"
 import {
+  type RelayRefetchProp,
   createRefetchContainer,
   graphql,
-  type RelayRefetchProp,
 } from "react-relay"
 
 interface ArtistSeriesArtworksFilterProps {

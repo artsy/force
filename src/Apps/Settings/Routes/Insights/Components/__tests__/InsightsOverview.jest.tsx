@@ -1,6 +1,6 @@
+import { screen } from "@testing-library/react"
 import { InsightsOverviewFragmentContainer } from "Apps/Settings/Routes/Insights/Components/InsightsOverview"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { screen } from "@testing-library/react"
 import type { InsightsOverviewTestQuery } from "__generated__/InsightsOverviewTestQuery.graphql"
 import { graphql } from "react-relay"
 

@@ -1,5 +1,5 @@
-import { IdentityVerificationWarning } from "Apps/Auction/Components/Form/IdentityVerificationWarning"
 import { render, screen } from "@testing-library/react"
+import { IdentityVerificationWarning } from "Apps/Auction/Components/Form/IdentityVerificationWarning"
 
 describe("IdentityVerificationWarning", () => {
   it("renders correct components", () => {

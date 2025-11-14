@@ -1,14 +1,15 @@
-import { type Brand, BrandCreditCardIcon } from "Components/BrandCreditCardIcon"
 import ApplePayMarkIcon from "@artsy/icons/ApplePayMarkIcon"
 import GooglePayIcon from "@artsy/icons/GooglePayIcon"
 import InstitutionIcon from "@artsy/icons/InstitutionIcon"
 import { Box, Flex, Spacer, Text } from "@artsy/palette"
+import { type Brand, BrandCreditCardIcon } from "Components/BrandCreditCardIcon"
 import type {
   OrderDetailsPaymentInfo_order$data,
   OrderDetailsPaymentInfo_order$key,
 } from "__generated__/OrderDetailsPaymentInfo_order.graphql"
 import type React from "react"
-import { graphql, useFragment } from "react-relay"
+import { useFragment } from "react-relay"
+import { graphql } from "relay-runtime"
 
 interface OrderDetailsPaymentInfoProps {
   order: OrderDetailsPaymentInfo_order$key

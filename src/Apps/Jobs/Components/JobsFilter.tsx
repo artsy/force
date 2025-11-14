@@ -72,7 +72,7 @@ const JobsFilter: FC<React.PropsWithChildren<JobsFilterProps>> = ({
           <Spacer y={2} />
 
           <Button
-            // @ts-expect-error
+            // @ts-ignore
             as="a"
             target="_blank"
             rel="noopener noreferrer"

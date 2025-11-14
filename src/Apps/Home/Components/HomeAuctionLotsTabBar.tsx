@@ -1,8 +1,3 @@
-import { HomeAuctionLotsForYouRailQueryRenderer } from "Apps/Home/Components/HomeAuctionLotsForYouRail"
-import { HomeAuctionLotsRailQueryRenderer } from "Apps/Home/Components/HomeAuctionLotsRail"
-import { trackEvent } from "Server/analytics/helpers"
-import { RouterLink } from "System/Components/RouterLink"
-import { useSystemContext } from "System/Hooks/useSystemContext"
 import {
   ActionType,
   type ClickedArtworkGroup,
@@ -10,6 +5,11 @@ import {
   OwnerType,
 } from "@artsy/cohesion"
 import { Flex, Spacer, Tab, Tabs, Text } from "@artsy/palette"
+import { HomeAuctionLotsForYouRailQueryRenderer } from "Apps/Home/Components/HomeAuctionLotsForYouRail"
+import { HomeAuctionLotsRailQueryRenderer } from "Apps/Home/Components/HomeAuctionLotsRail"
+import { trackEvent } from "Server/analytics/helpers"
+import { RouterLink } from "System/Components/RouterLink"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import type * as React from "react"
 
 export const HomeAuctionLotsTabBar: React.FC<

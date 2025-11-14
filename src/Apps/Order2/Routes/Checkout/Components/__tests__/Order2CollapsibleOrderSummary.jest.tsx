@@ -1,6 +1,6 @@
+import { fireEvent, screen } from "@testing-library/react"
 import { useCheckoutTracking } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutTracking"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { fireEvent, screen } from "@testing-library/react"
 import type { Order2CollapsibleOrderSummaryTestQuery } from "__generated__/Order2CollapsibleOrderSummaryTestQuery.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"

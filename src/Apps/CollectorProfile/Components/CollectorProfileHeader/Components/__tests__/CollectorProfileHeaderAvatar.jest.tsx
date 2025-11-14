@@ -1,7 +1,7 @@
+import { screen } from "@testing-library/react"
 import { CollectorProfileHeaderAvatarFragmentContainer } from "Apps/CollectorProfile/Components/CollectorProfileHeader/Components/CollectorProfileHeaderAvatar"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { screen } from "@testing-library/react"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")

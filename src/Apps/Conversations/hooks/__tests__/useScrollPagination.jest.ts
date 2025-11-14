@@ -1,5 +1,5 @@
-import { useScrollPagination } from "Apps/Conversations/hooks/useScrollPagination"
 import { renderHook } from "@testing-library/react-hooks"
+import { useScrollPagination } from "Apps/Conversations/hooks/useScrollPagination"
 
 describe("useScrollPagination", () => {
   it("appending the 2nd ref triggers scrollIntoView of the 1st ref", () => {

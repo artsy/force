@@ -1,5 +1,5 @@
-import { RouterLink } from "System/Components/RouterLink"
 import { Message, Text } from "@artsy/palette"
+import { RouterLink } from "System/Components/RouterLink"
 import type { SubscriberBanner_partner$data } from "__generated__/SubscriberBanner_partner.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"

@@ -1,8 +1,8 @@
+import loadable from "@loadable/component"
 import { SIDEBAR_FETCH_PAGE_SIZE } from "Apps/Conversations/components/Sidebar/Utils/getSidebarTotal"
 import type { RouteProps } from "System/Router/Route"
 import { extractNodes } from "Utils/extractNodes"
 import { getENV } from "Utils/getENV"
-import loadable from "@loadable/component"
 import { RedirectException } from "found"
 import { graphql } from "react-relay"
 

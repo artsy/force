@@ -6,7 +6,7 @@ import { TriangleDownIcon } from "./TriangleDownIcon"
 export const DemandIndexBar: React.FC<
   React.PropsWithChildren<{ progress: number }>
 > = ({ progress }) => {
-  const progressPercent = `${progress}%`
+  const progressPercent = progress + "%"
 
   return (
     <Flex data-testid="demandIndexBar" flexDirection="column">

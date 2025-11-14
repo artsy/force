@@ -1,6 +1,5 @@
 export const TriangleDownIcon = () => {
   return (
-    // biome-ignore lint/a11y/noSvgWithoutTitle: ugh
     <svg width={11} height={6} viewBox="0 0 11 6" fill="none">
       <path
         fillRule="evenodd"

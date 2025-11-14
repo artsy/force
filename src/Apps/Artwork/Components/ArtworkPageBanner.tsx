@@ -1,8 +1,8 @@
+import { Text } from "@artsy/palette"
 import { CascadingEndTimesBannerFragmentContainer } from "Components/CascadingEndTimesBanner"
 import { FullBleedBanner } from "Components/FullBleedBanner"
 import { useRouter } from "System/Hooks/useRouter"
 import { extractNodes } from "Utils/extractNodes"
-import { Text } from "@artsy/palette"
 import type { ArtworkPageBanner_artwork$key } from "__generated__/ArtworkPageBanner_artwork.graphql"
 import type { ArtworkPageBanner_me$key } from "__generated__/ArtworkPageBanner_me.graphql"
 import type { FC } from "react"
@@ -12,9 +12,9 @@ interface ArtworkPageBannerProps {
   artwork: ArtworkPageBanner_artwork$key
   me: ArtworkPageBanner_me$key
 }
-export const ArtworkPageBanner: FC<
-  React.PropsWithChildren<ArtworkPageBannerProps>
-> = props => {
+export const ArtworkPageBanner: FC<React.PropsWithChildren<
+  ArtworkPageBannerProps
+>> = props => {
   const artwork = useFragment(ARTWORK_FRAGMENT, props.artwork)
   const me = useFragment(ME_FRAGMENT, props.me)
   const { match } = useRouter()
@@ -53,7 +53,7 @@ export const ArtworkPageBanner: FC<
 
     if (
       partnerOffer &&
-      partnerOffer.internalID === expectedPartnerOfferID &&
+      partnerOffer.internalID == expectedPartnerOfferID &&
       !partnerOffer.isActive
     ) {
       return <ExpiredOfferBanner />
@@ -89,7 +89,7 @@ const UnpublishedArtworkBanner = () => (
 
 const ME_FRAGMENT = graphql`
   fragment ArtworkPageBanner_me on Me
-  @argumentDefinitions(artworkID: { type: "String!" }) {
+    @argumentDefinitions(artworkID: { type: "String!" }) {
     partnerOffersConnection(artworkID: $artworkID, first: 1) {
       edges {
         node {

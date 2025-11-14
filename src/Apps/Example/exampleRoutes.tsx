@@ -1,6 +1,6 @@
+import loadable from "@loadable/component"
 import { isServer } from "Server/isServer"
 import type { RouteProps } from "System/Router/Route"
-import loadable from "@loadable/component"
 import { RedirectException } from "found"
 import { graphql } from "react-relay"
 

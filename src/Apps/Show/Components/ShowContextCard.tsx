@@ -1,10 +1,3 @@
-import { filterLocations } from "Apps/Artwork/Utils/filterLocations"
-import { limitWithCount } from "Apps/Artwork/Utils/limitWithCount"
-import { FairTimingFragmentContainer as FairTiming } from "Apps/Fair/Components/FairHeader/FairTiming"
-import { FairCardFragmentContainer as FairCard } from "Components/FairCard"
-import { StyledLink } from "Components/Links/StyledLink"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import { cropped } from "Utils/resized"
 import {
   ActionType,
   type ClickedFairCard,
@@ -20,6 +13,13 @@ import {
   Text,
   TriptychCard,
 } from "@artsy/palette"
+import { filterLocations } from "Apps/Artwork/Utils/filterLocations"
+import { limitWithCount } from "Apps/Artwork/Utils/limitWithCount"
+import { FairTimingFragmentContainer as FairTiming } from "Apps/Fair/Components/FairHeader/FairTiming"
+import { FairCardFragmentContainer as FairCard } from "Components/FairCard"
+import { StyledLink } from "Components/Links/StyledLink"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { cropped } from "Utils/resized"
 import type { ShowContextCard_show$data } from "__generated__/ShowContextCard_show.graphql"
 import { compact } from "lodash"
 import type * as React from "react"

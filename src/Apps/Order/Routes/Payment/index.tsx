@@ -1,3 +1,31 @@
+import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
+import { Box, Flex, Spacer } from "@artsy/palette"
+import type { Stripe, StripeElements, StripeError } from "@stripe/stripe-js"
+import type { Router } from "found"
+// libs
+import { type FC, createRef, useEffect } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import { useTracking } from "react-tracking"
+
+import type { PaymentRouteSetOrderPaymentMutation } from "__generated__/PaymentRouteSetOrderPaymentMutation.graphql"
+// relay generated
+import type { Payment_me$data } from "__generated__/Payment_me.graphql"
+import type { Payment_order$data } from "__generated__/Payment_order.graphql"
+
+import { useStripePaymentBySetupIntentId } from "Apps/Order/Hooks/useStripePaymentBySetupIntentId"
+import { useSetPayment } from "Apps/Order/Mutations/useSetPayment"
+import {
+  type CommitMutation,
+  injectCommitMutation,
+} from "Apps/Order/Utils/commitMutation"
+import { getInitialPaymentMethodValue } from "Apps/Order/Utils/orderUtils"
+import { useFlag } from "System/FeatureFlags/useFlag"
+import { useRouter } from "System/Hooks/useRouter"
+// utils, hooks, mutations and system tools
+import { extractNodes } from "Utils/extractNodes"
+import createLogger from "Utils/logger"
+import { useOrderPaymentContext } from "./PaymentContext/OrderPaymentContext"
+
 import { AdditionalArtworkDetailsFragmentContainer as AdditionalArtworkDetails } from "Apps/Order/Components/AdditionalArtworkDetails"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
 import { BuyerGuarantee } from "Apps/Order/Components/BuyerGuarantee"
@@ -15,33 +43,8 @@ import { SaveAndContinueButton } from "Apps/Order/Components/SaveAndContinueButt
 import { SavingPaymentSpinner } from "Apps/Order/Components/SavingPaymentSpinner"
 import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "Apps/Order/Components/TransactionDetailsSummaryItem"
 import { type Dialog, injectDialog } from "Apps/Order/Dialogs"
-import { useStripePaymentBySetupIntentId } from "Apps/Order/Hooks/useStripePaymentBySetupIntentId"
-import { useSetPayment } from "Apps/Order/Mutations/useSetPayment"
-import {
-  type CommitMutation,
-  injectCommitMutation,
-} from "Apps/Order/Utils/commitMutation"
-import { getInitialPaymentMethodValue } from "Apps/Order/Utils/orderUtils"
-import { useFlag } from "System/FeatureFlags/useFlag"
-import { useRouter } from "System/Hooks/useRouter"
-// utils, hooks, mutations and system tools
-import { extractNodes } from "Utils/extractNodes"
 import { useJump } from "Utils/Hooks/useJump"
-import createLogger from "Utils/logger"
-import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
-import { Box, Flex, Spacer } from "@artsy/palette"
-import type { Stripe, StripeElements, StripeError } from "@stripe/stripe-js"
-// relay generated
-import type { Payment_me$data } from "__generated__/Payment_me.graphql"
-import type { Payment_order$data } from "__generated__/Payment_order.graphql"
-import type { PaymentRouteSetOrderPaymentMutation } from "__generated__/PaymentRouteSetOrderPaymentMutation.graphql"
-import type { Router } from "found"
-// libs
-import { createRef, type FC, useEffect } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-import { useTracking } from "react-tracking"
 import { PaymentContent } from "./PaymentContent"
-import { useOrderPaymentContext } from "./PaymentContext/OrderPaymentContext"
 
 const logger = createLogger("Order/Routes/Payment/index.tsx")
 
@@ -100,6 +103,7 @@ export const PaymentRoute: FC<
 
   const artworkVersion = extractNodes(order.lineItems)[0]?.artworkVersion
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     const bankAccountsArray =
       selectedPaymentMethod !== "SEPA_DEBIT"
@@ -118,6 +122,7 @@ export const PaymentRoute: FC<
     }
   }, [order])
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     setSelectedPaymentMethod(getInitialPaymentMethodValue(order))
   }, [order])
@@ -299,7 +304,7 @@ export const PaymentRoute: FC<
       if (errorCode === "") {
         try {
           errorCode = error.toString()
-        } catch (_e) {
+        } catch (e) {
           // do nothing
         }
       }
@@ -357,6 +362,7 @@ export const PaymentRoute: FC<
   }
 
   // complete payment when balance check is disabled and bank account is set
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (
       !balanceCheckEnabled &&
@@ -374,12 +380,13 @@ export const PaymentRoute: FC<
   ])
 
   // show error modal when payment setup error is set
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (paymentSetupError) {
       let title = "An error occurred"
       let message =
         "Something went wrong. Please try again or contact orders@artsy.net"
-      let width: undefined | number
+      let width: undefined | number = undefined
 
       const errorCode = (paymentSetupError as any).code
 
@@ -450,6 +457,7 @@ export const PaymentRoute: FC<
     })
   }
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (order && me) {
       setIsLoading(false)

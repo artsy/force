@@ -1,6 +1,3 @@
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import {
   ActionType,
   type ClickedCloseValidationAddressModal,
@@ -19,8 +16,11 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import type { AddressVerificationFlow_verifyAddress$data } from "__generated__/AddressVerificationFlow_verifyAddress.graphql"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import type { AddressVerificationFlowQuery } from "__generated__/AddressVerificationFlowQuery.graphql"
+import type { AddressVerificationFlow_verifyAddress$data } from "__generated__/AddressVerificationFlow_verifyAddress.graphql"
 import { useCallback, useEffect, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -151,6 +151,7 @@ const AddressVerificationFlow: React.FC<
   >(addressOptions[0]?.key)
 
   // perform only once when the flow first loads
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (verificationPath === VerificationPath.ERROR_IMMEDIATE_CONFIRM) {
       const fallbackOption = fallbackFromFormValues(verificationInput)
@@ -186,6 +187,7 @@ const AddressVerificationFlow: React.FC<
       setShowModal(false)
       onChosenAddress(verifiedBy, selectedAddress.address)
     }
+    // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   }, [addressOptions, onChosenAddress, selectedAddressKey])
 
   const handleCloseModal = ({
@@ -279,7 +281,7 @@ const AddressVerificationFlow: React.FC<
             <Button
               disabled={!(selectedAddressKey && selectedAddressKey.length > 0)}
               onClick={e => {
-                // Because a <button type="button"> is treated as type="submit" by default, it
+                // Because a <button> is treated as type="submit" by default, it
                 // will trigger the formik submit handler if it is inside a formik
                 // <Form />. We want to make this behavior more explicitly handled
                 // by this component's `chooseAddress()` logic.

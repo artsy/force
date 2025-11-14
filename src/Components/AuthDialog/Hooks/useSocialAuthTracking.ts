@@ -87,7 +87,7 @@ const parse = (value: any): Payload | null => {
     if (!isValid(parsed)) return null
 
     return parsed
-  } catch (_err) {
+  } catch (err) {
     return null
   }
 }

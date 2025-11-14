@@ -1,8 +1,8 @@
 import { STEPS_PLACEHOLDER } from "Apps/Settings/Routes/Insights/Components/CareerHighlights/CareerHighlightsModal/Components/CareerHighlightModalStep"
 import { CareerHighlightModal } from "Apps/Settings/Routes/Insights/Components/CareerHighlights/CareerHighlightsModal/Components/CareerHighlightsModal"
 import { CareerHighlightSteps } from "Apps/Settings/Routes/Insights/Components/CareerHighlights/CareerHighlightsModal/Components/CareerHighlightsSteps"
-import type { CareerHighlightKindWithPromo } from "Apps/Settings/Routes/Insights/Components/CareerHighlights/CareerHighlightsModal/config"
 import { CareerHighlightsStoriesProvider } from "Apps/Settings/Routes/Insights/Components/CareerHighlights/CareerHighlightsModal/Hooks/useCareerHighlightsStoriesContext"
+import type { CareerHighlightKindWithPromo } from "Apps/Settings/Routes/Insights/Components/CareerHighlights/CareerHighlightsModal/config"
 import { useDialog } from "Utils/Hooks/useDialog"
 import { Suspense, useState } from "react"
 

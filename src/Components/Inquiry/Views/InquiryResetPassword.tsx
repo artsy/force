@@ -1,5 +1,3 @@
-import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
-import { forgotPassword } from "Utils/auth"
 import {
   ActionType,
   AuthModalType,
@@ -16,8 +14,10 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import type * as React from "react"
+import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
+import { forgotPassword } from "Utils/auth"
 import { useState } from "react"
+import type * as React from "react"
 import { useTracking } from "react-tracking"
 import { Screen, useInquiryAccountContext } from "./InquiryAccount"
 
@@ -54,7 +54,7 @@ export const InquiryResetPassword: React.FC<
       }
 
       trackEvent(options)
-    } catch (_err) {
+    } catch (err) {
       setMode("Error")
     }
   }

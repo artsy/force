@@ -1,6 +1,6 @@
 import { StructuredData } from "Components/Seo/StructuredData"
+import { DOWNLOAD_APP_URLS, Device } from "Utils/Hooks/useDeviceDetection"
 import { FACTS_AND_FIGURES } from "Utils/factsAndFigures"
-import { Device, DOWNLOAD_APP_URLS } from "Utils/Hooks/useDeviceDetection"
 import type { Organization } from "schema-dts"
 
 const DESCRIPTION = "Artsy is the leading global online art marketplace."

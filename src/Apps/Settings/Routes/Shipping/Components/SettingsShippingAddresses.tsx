@@ -1,6 +1,6 @@
-import { extractNodes } from "Utils/extractNodes"
-import { useMode } from "Utils/Hooks/useMode"
 import { Button, Column, GridColumns, Message, Text } from "@artsy/palette"
+import { useMode } from "Utils/Hooks/useMode"
+import { extractNodes } from "Utils/extractNodes"
 import type { SettingsShippingAddresses_me$data } from "__generated__/SettingsShippingAddresses_me.graphql"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"

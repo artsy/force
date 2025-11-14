@@ -1,11 +1,11 @@
+import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
+import { Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import { CuritorialRailsTabBar } from "Apps/Auctions/Components/CuritorialRailsTabBar"
 import { MyBidsQueryRenderer } from "Apps/Auctions/Components/MyBids/MyBids"
 import { RecentlyViewed } from "Components/RecentlyViewed"
 import { RouteTab, RouteTabs } from "Components/RouteTabs"
 import { RouterLink } from "System/Components/RouterLink"
 import { getENV } from "Utils/getENV"
-import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
-import { Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import type * as React from "react"
 import { AuctionsMeta } from "./Components/AuctionsMeta"
 

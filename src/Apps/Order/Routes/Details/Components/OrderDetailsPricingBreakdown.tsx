@@ -1,7 +1,7 @@
-import { useOrder2Tracking } from "Apps/Order2/Hooks/useOrder2Tracking"
-import { RouterLink } from "System/Components/RouterLink"
 import { ContextModule } from "@artsy/cohesion"
 import { Flex, Spacer, Text } from "@artsy/palette"
+import { useOrder2Tracking } from "Apps/Order2/Hooks/useOrder2Tracking"
+import { RouterLink } from "System/Components/RouterLink"
 import type {
   OrderDetailsPricingBreakdown_order$data,
   OrderDetailsPricingBreakdown_order$key,
@@ -43,7 +43,7 @@ export const OrderDetailsPricingBreakdown: React.FC<
   const orderTracking = useOrder2Tracking(source, mode)
   return (
     <>
-      {pricingBreakdownLines.map((line, _index) => {
+      {pricingBreakdownLines.map((line, index) => {
         if (!(line && isKnownLineType(line))) {
           return null
         }

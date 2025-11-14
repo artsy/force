@@ -1,5 +1,5 @@
-import { useMutation } from "Utils/Hooks/useMutation"
 import { Button, Input, ModalDialog, Stack, useToasts } from "@artsy/palette"
+import { useMutation } from "Utils/Hooks/useMutation"
 import type { CollectorProfileArtistsAddNewDialogCreateArtistMutation } from "__generated__/CollectorProfileArtistsAddNewDialogCreateArtistMutation.graphql"
 import { Form, Formik } from "formik"
 import type { FC } from "react"

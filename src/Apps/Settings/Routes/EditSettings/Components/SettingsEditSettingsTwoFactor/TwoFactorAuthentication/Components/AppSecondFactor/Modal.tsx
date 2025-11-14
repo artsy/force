@@ -1,8 +1,3 @@
-import type { ApiError } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/ApiError"
-import { BackupSecondFactorReminder } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/Components/BackupSecondFactorReminder"
-import { EnableSecondFactor } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/Components/Mutation/EnableSecondFactor"
-import { redirectMessage } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/helpers"
-import { useSystemContext } from "System/Hooks/useSystemContext"
 import {
   Box,
   Button,
@@ -12,6 +7,11 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
+import type { ApiError } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/ApiError"
+import { BackupSecondFactorReminder } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/Components/BackupSecondFactorReminder"
+import { EnableSecondFactor } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/Components/Mutation/EnableSecondFactor"
+import { redirectMessage } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/helpers"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import type { CreateAppSecondFactorMutation$data } from "__generated__/CreateAppSecondFactorMutation.graphql"
 import {
   Formik,
@@ -19,8 +19,8 @@ import {
   type FormikProps,
 } from "formik"
 import QRCode from "qrcode.react"
-import type * as React from "react"
 import { useState } from "react"
+import type * as React from "react"
 import * as Yup from "yup"
 import { UpdateAppSecondFactor } from "./Mutation/UpdateAppSecondFactor"
 

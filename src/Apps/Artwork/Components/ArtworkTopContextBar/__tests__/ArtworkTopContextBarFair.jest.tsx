@@ -1,5 +1,5 @@
-import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { screen } from "@testing-library/react"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
 import { ArtworkTopContextBarFair } from "../ArtworkTopContextBarFair"
 

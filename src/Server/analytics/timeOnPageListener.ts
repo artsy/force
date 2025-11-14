@@ -1,6 +1,5 @@
-import { getContextPageFromClient } from "Server/getContextPage"
 import { timeOnPage } from "@artsy/cohesion"
-// biome-ignore lint/style/noRestrictedImports: Server configuration requires sharify
+import { getContextPageFromClient } from "Server/getContextPage"
 import { data as sd } from "sharify"
 import { trackEvent } from "./helpers"
 import { setAnalyticsClientReferrerOptions } from "./setAnalyticsClientReferrerOptions"

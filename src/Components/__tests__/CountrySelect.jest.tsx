@@ -1,5 +1,6 @@
 import { CountrySelect } from "Components/CountrySelect"
-import { fireEvent, render } from "@testing-library/react"
+import { render } from "@testing-library/react"
+import { fireEvent } from "@testing-library/react"
 
 describe("CountrySelect", () => {
   // TODO: Chris, this test needs finishing.

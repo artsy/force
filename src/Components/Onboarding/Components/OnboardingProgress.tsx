@@ -1,7 +1,7 @@
+import { Box, ProgressBar } from "@artsy/palette"
 import { BackLink } from "Components/Links/BackLink"
 import { useOnboardingContext } from "Components/Onboarding/Hooks/useOnboardingContext"
 import { useDebouncedValue } from "Utils/Hooks/useDebounce"
-import { Box, ProgressBar } from "@artsy/palette"
 import type { FC } from "react"
 
 interface OnboardingProgressProps {

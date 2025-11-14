@@ -41,7 +41,7 @@ export const CellSale = () => {
 
         return (
           <CellSaleFragmentContainer
-            sale={props.viewer?.salesConnection?.edges?.[0]?.node as any}
+            sale={props.viewer?.salesConnection?.edges?.[0]?.node!}
           />
         )
       }}

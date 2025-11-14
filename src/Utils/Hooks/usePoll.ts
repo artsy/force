@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react"
 
-type IntervalFunction = () => unknown | undefined
+type IntervalFunction = () => unknown | void
 
 interface PollProps {
   callback: IntervalFunction
@@ -9,12 +9,17 @@ interface PollProps {
   clearWhen?: boolean
 }
 
-export const usePoll = ({ callback, intervalTime, clearWhen }: PollProps) => {
+export const usePoll = ({
+  callback,
+  intervalTime,
+  key,
+  clearWhen,
+}: PollProps) => {
   const savedCallback = useRef<IntervalFunction | null>(null)
 
   useEffect(() => {
     savedCallback.current = callback
-  }, [callback])
+  }, [callback, key])
 
   useEffect(() => {
     function tick() {

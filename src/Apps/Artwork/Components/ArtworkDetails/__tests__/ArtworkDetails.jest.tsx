@@ -1,7 +1,7 @@
+import { screen } from "@testing-library/react"
 import { ArtworkDetailsFragmentContainer } from "Apps/Artwork/Components/ArtworkDetails"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { screen } from "@testing-library/react"
 import type { ArtworkDetailsTestQuery } from "__generated__/ArtworkDetailsTestQuery.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"

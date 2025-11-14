@@ -1,3 +1,4 @@
+import { Box, Flex, Join, Spacer, Text, useTheme } from "@artsy/palette"
 import { ArticleAdProvider } from "Apps/Article/Components/ArticleAd/ArticleAd"
 import {
   FullBleedHeader,
@@ -5,7 +6,6 @@ import {
 } from "Components/FullBleedHeader/FullBleedHeader"
 import { MetaTags } from "Components/MetaTags"
 import { RouterLink } from "System/Components/RouterLink"
-import { Box, Flex, Join, Spacer, Text, useTheme } from "@artsy/palette"
 import type { ChannelApp_channel$data } from "__generated__/ChannelApp_channel.graphql"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"

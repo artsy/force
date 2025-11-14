@@ -1,4 +1,3 @@
-import { RouterLink } from "System/Components/RouterLink"
 import {
   Box,
   type BoxProps,
@@ -7,6 +6,7 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
+import { RouterLink } from "System/Components/RouterLink"
 import type * as React from "react"
 import styled from "styled-components"
 

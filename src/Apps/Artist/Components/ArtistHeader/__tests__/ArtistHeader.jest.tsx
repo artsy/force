@@ -1,9 +1,9 @@
-import { ArtistHeaderFragmentContainer } from "Apps/Artist/Components/ArtistHeader/ArtistHeader"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { useRouter } from "System/Hooks/useRouter"
 import { screen } from "@testing-library/react"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { ArtistHeaderFragmentContainer } from "Apps/Artist/Components/ArtistHeader/ArtistHeader"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
+import { useRouter } from "System/Hooks/useRouter"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -170,7 +170,8 @@ describe("ArtistHeaderFragmentContainer", () => {
     })
 
     it("renders bio with ReadMore functionality for long text", () => {
-      const longBio = `Pablo Picasso was a Spanish painter and sculptor. ${"A".repeat(250)}` // Text longer than 250 char limit
+      const longBio =
+        "Pablo Picasso was a Spanish painter and sculptor. " + "A".repeat(250) // Text longer than 250 char limit
 
       renderWithRelay({
         Artist: () => ({

@@ -1,6 +1,6 @@
+import { Button, Column, Separator, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
 import { extractNodes } from "Utils/extractNodes"
-import { Button, Column, Separator, Text } from "@artsy/palette"
 import type { UserRegistrationAuctions_me$data } from "__generated__/UserRegistrationAuctions_me.graphql"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -43,7 +43,7 @@ export const UserRegistrationAuctions: React.FC<
             <Column span={2}>
               <Button
                 width="100%"
-                // @ts-expect-error
+                // @ts-ignore
                 as={RouterLink}
                 to={sale.href}
                 disabled={!!isRegistered}

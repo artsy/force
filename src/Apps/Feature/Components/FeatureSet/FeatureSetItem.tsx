@@ -1,10 +1,10 @@
+import { Box } from "@artsy/palette"
 import {
-  type FeaturedLinkSize,
   FeatureFeaturedLinkFragmentContainer as FeatureFeaturedLink,
+  type FeaturedLinkSize,
 } from "Apps/Feature/Components/FeatureFeaturedLink"
 import { FeatureSetVideoFragmentContainer as FeatureSetVideo } from "Apps/Feature/Components/FeatureSet/FeatureSetVideo"
 import GridItem from "Components/Artwork/GridItem"
-import { Box } from "@artsy/palette"
 import type { FeatureSetItem_setItem$data } from "__generated__/FeatureSetItem_setItem.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"

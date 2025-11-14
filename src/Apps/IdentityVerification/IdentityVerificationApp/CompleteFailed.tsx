@@ -1,5 +1,5 @@
-import { RouterLink } from "System/Components/RouterLink"
 import { Button, Message, Spacer, Text } from "@artsy/palette"
+import { RouterLink } from "System/Components/RouterLink"
 import type * as React from "react"
 
 export const CompleteFailed: React.FC<
@@ -26,7 +26,7 @@ export const CompleteFailed: React.FC<
 
       <Button
         width="100%"
-        // @ts-expect-error
+        // @ts-ignore
         as="a"
         href="mailto:verification@artsy.net"
       >

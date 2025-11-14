@@ -1,5 +1,5 @@
-import { Media } from "Utils/Responsive"
 import { Text } from "@artsy/palette"
+import { Media } from "Utils/Responsive"
 
 export const AuctionResultPerformance = ({
   value,

@@ -1,7 +1,7 @@
 import InfoIcon from "@artsy/icons/InfoIcon"
 import { Box, Clickable, Join, ModalDialog, Spacer, Text } from "@artsy/palette"
-import type * as React from "react"
 import { useState } from "react"
+import type * as React from "react"
 
 interface MarketStatsInfoButtonProps {
   onClick?: () => void

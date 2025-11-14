@@ -1,8 +1,9 @@
+import { Box, Flex, FullBleed, Spacer, Spinner, Text } from "@artsy/palette"
 import { ArtQuizFullScreen } from "Apps/ArtQuiz/Components/ArtQuizFullscreen"
 import { SplitLayout } from "Components/SplitLayout"
-import ArtsyMarkIcon from "@artsy/icons/ArtsyMarkIcon"
-import { Box, Flex, FullBleed, Spacer, Spinner, Text } from "@artsy/palette"
 import { type FC, useEffect, useState } from "react"
+
+import ArtsyMarkIcon from "@artsy/icons/ArtsyMarkIcon"
 
 interface ArtQuizResultsLoaderProps {
   onReady(): void

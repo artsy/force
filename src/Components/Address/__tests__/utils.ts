@@ -1,7 +1,7 @@
-import type { Address } from "Components/Address/utils"
-import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { screen, within } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
+import type { Address } from "Components/Address/utils"
+import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { act } from "react"
 
 export const ADDRESS_FORM_INPUTS: Record<
@@ -35,9 +35,7 @@ export const ADDRESS_FORM_INPUTS: Record<
 
 export const hasCorrectAddressFormFields = ({
   withLegacyPhoneInput,
-}: {
-  withLegacyPhoneInput?: boolean
-} = {}): boolean => {
+}: { withLegacyPhoneInput?: boolean } = {}): boolean => {
   const expectedInputs = withLegacyPhoneInput
     ? Object.values(ADDRESS_FORM_INPUTS)
     : Object.entries(ADDRESS_FORM_INPUTS)

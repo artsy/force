@@ -1,8 +1,8 @@
+import { Button, Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { FullBleedHeaderOverlay } from "Components/FullBleedHeader/FullBleedHeader"
 import { FullBleedHeaderFader } from "Components/FullBleedHeader/FullBleedHeaderFader"
-import { Button, Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import type { FC } from "react"
 
 export const InstitutionPartnershipsHero: FC<
@@ -37,7 +37,7 @@ export const InstitutionPartnershipsHero: FC<
                 <Button
                   size={["small", "large"]}
                   variant="primaryWhite"
-                  // @ts-expect-error
+                  // @ts-ignore
                   as="a"
                   target="_blank"
                   href="https://partners.artsy.net/gallery-partnerships"

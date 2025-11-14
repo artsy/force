@@ -1,6 +1,3 @@
-import { RouterLink } from "System/Components/RouterLink"
-import { Media } from "Utils/Responsive"
-import { cropped } from "Utils/resized"
 import ArtsyLogoIcon from "@artsy/icons/ArtsyLogoIcon"
 import {
   Button,
@@ -10,6 +7,9 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
+import { RouterLink } from "System/Components/RouterLink"
+import { Media } from "Utils/Responsive"
+import { cropped } from "Utils/resized"
 
 const CareerHighlightModalPromoStepDesktop = () => {
   const { src: dSrc, srcSet: dSrcSet } = cropped(
@@ -55,7 +55,7 @@ const CareerHighlightModalPromoStepDesktop = () => {
           <Spacer y={4} />
 
           <Button
-            // @ts-expect-error
+            // @ts-ignore
             as={RouterLink}
             width="100%"
             variant="primaryBlack"
@@ -89,7 +89,7 @@ const CareerHighlightModalPromoStepMobile = () => {
       <Spacer y={6} />
 
       <Button
-        // @ts-expect-error
+        // @ts-ignore
         as={RouterLink}
         width="100%"
         variant="primaryBlack"

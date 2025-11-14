@@ -1,5 +1,5 @@
-import { useSavedSearchAlertContext } from "Components/SavedSearchAlert/SavedSearchAlertContext"
 import { Flex, Pill, Text } from "@artsy/palette"
+import { useSavedSearchAlertContext } from "Components/SavedSearchAlert/SavedSearchAlertContext"
 import type { FC } from "react"
 
 export const SuggestedArtworksModalHeader: FC<

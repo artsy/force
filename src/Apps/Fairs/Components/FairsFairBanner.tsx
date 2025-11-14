@@ -1,6 +1,6 @@
-import { RouterLink } from "System/Components/RouterLink"
 import { Box, type BoxProps, Image, ResponsiveBox, Text } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
+import { RouterLink } from "System/Components/RouterLink"
 import type { FairsFairBanner_fair$data } from "__generated__/FairsFairBanner_fair.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"

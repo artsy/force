@@ -12,7 +12,6 @@
 //
 import _ from "lodash"
 // eslint-disable-next-line
-// biome-ignore lint/style/noRestrictedImports: Server bootstrap requires sharify for configuration
 import sharify from "sharify"
 import * as config from "./config"
 

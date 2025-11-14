@@ -1,11 +1,11 @@
-import { useRouter } from "System/Hooks/useRouter"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import {
   AutocompleteInput,
   type AutocompleteInputOptionType,
   type AutocompleteInputProps,
 } from "@artsy/palette"
+import { useRouter } from "System/Hooks/useRouter"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import type { PartnersSearchQuery } from "__generated__/PartnersSearchQuery.graphql"
 import { compact } from "lodash"
 import type React from "react"

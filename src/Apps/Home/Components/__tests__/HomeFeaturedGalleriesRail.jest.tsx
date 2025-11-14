@@ -1,6 +1,6 @@
+import { fireEvent, screen } from "@testing-library/react"
 import { HomeFeaturedGalleriesRailFragmentContainer } from "Apps/Home/Components/HomeFeaturedGalleriesRail"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { fireEvent, screen } from "@testing-library/react"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 

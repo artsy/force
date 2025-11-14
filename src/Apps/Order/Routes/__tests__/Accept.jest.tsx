@@ -1,10 +1,5 @@
-import {
-  Buyer,
-  OfferOrderWithShippingDetails,
-  Offers,
-  OfferWithTotals,
-} from "Apps/__tests__/Fixtures/Order"
 import { ConnectedModalDialog } from "Apps/Order/Dialogs"
+import { AcceptFragmentContainer } from "Apps/Order/Routes/Accept"
 import {
   acceptOfferFailed,
   acceptOfferInsufficientInventoryFailure,
@@ -13,16 +8,21 @@ import {
   acceptOfferSuccess,
   acceptOfferWithActionRequired,
 } from "Apps/Order/Routes/__fixtures__/MutationResults/acceptOffer"
-import { AcceptFragmentContainer } from "Apps/Order/Routes/Accept"
+import {
+  Buyer,
+  OfferOrderWithShippingDetails,
+  OfferWithTotals,
+  Offers,
+} from "Apps/__tests__/Fixtures/Order"
 import { MockBoot } from "DevTools/MockBoot"
 import { mockLocation } from "DevTools/mockLocation"
 import { mockStripe } from "DevTools/mockStripe"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { Router } from "found"
 import { DateTime } from "luxon"
-import { graphql } from "react-relay"
+import { commitMutation as _commitMutation, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-// biome-ignore lint/style/noRestrictedImports: Test file legacy dependency
+// eslint-disable-next-line no-restricted-imports
 import { Provider } from "unstated"
 import { OrderAppTestPageRTL } from "./Utils/OrderAppTestPageRTL"
 
@@ -43,7 +43,6 @@ jest.mock("@stripe/stripe-js", () => {
       return mock
     },
     _mockStripe: () => mock,
-    // biome-ignore lint/suspicious/noAssignInExpressions: ugh
     _mockReset: () => (mock = mockStripe()),
   }
 })
@@ -56,9 +55,7 @@ jest.mock("@artsy/palette", () => {
     ModalDialog: ({ title, children, onClose, footer }) => {
       return (
         <div data-testid="ModalDialog">
-          <button type="button" onClick={onClose}>
-            close
-          </button>
+          <button onClick={onClose}>close</button>
           {title}
           {children}
           {footer}

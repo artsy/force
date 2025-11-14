@@ -1,5 +1,5 @@
-import { RouterLink } from "System/Components/RouterLink"
 import { Text } from "@artsy/palette"
+import { RouterLink } from "System/Components/RouterLink"
 
 export const DebugClientError404Route = () => {
   return (

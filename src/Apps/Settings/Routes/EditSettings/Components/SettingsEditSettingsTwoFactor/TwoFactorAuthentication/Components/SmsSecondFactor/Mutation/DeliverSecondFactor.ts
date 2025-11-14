@@ -3,7 +3,7 @@ import type {
   DeliverSecondFactorMutation,
   DeliverSecondFactorMutation$data,
 } from "__generated__/DeliverSecondFactorMutation.graphql"
-import { commitMutation, type Environment, graphql } from "react-relay"
+import { type Environment, commitMutation, graphql } from "react-relay"
 
 export const DeliverSecondFactor = (
   environment: Environment,

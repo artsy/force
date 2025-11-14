@@ -1,7 +1,7 @@
-import { RouterLink } from "System/Components/RouterLink"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { BorderBox, Box, Flex, Image, Text } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
+import { RouterLink } from "System/Components/RouterLink"
 import type React from "react"
 import { useTracking } from "react-tracking"
 import styled from "styled-components"

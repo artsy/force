@@ -1,10 +1,4 @@
 import {
-  AuthDialog,
-  type AuthDialogProps,
-} from "Components/AuthDialog/AuthDialog"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import type { AfterAuthAction } from "Utils/Hooks/useAuthIntent"
-import {
   type AuthContextModule,
   type AuthIntent,
   AuthModalType,
@@ -13,10 +7,16 @@ import {
   Intent,
 } from "@artsy/cohesion"
 import { useToasts } from "@artsy/palette"
+import {
+  AuthDialog,
+  type AuthDialogProps,
+} from "Components/AuthDialog/AuthDialog"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import type { AfterAuthAction } from "Utils/Hooks/useAuthIntent"
 import { merge } from "lodash"
 import {
-  createContext,
   type FC,
+  createContext,
   useCallback,
   useContext,
   useReducer,

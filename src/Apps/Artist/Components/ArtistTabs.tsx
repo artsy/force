@@ -1,6 +1,6 @@
+import { ActionType, type ClickedHeader, ContextModule } from "@artsy/cohesion"
 import { RouteTab, RouteTabs } from "Components/RouteTabs"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import { ActionType, type ClickedHeader, ContextModule } from "@artsy/cohesion"
 import { useTracking } from "react-tracking"
 
 export const ArtistTabs = ({ slug }: { slug: string }) => {

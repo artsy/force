@@ -1,3 +1,4 @@
+import { TagArtworkFilterRefetchContainer } from "Apps/Tag/Components/TagArtworkFilter"
 import {
   artistAggregation,
   artistNationalityAggregation,
@@ -6,7 +7,6 @@ import {
   mediumAggregation,
   partnerAggregation,
 } from "Apps/__tests__/Fixtures/aggregations"
-import { TagArtworkFilterRefetchContainer } from "Apps/Tag/Components/TagArtworkFilter"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { screen } from "@testing-library/react"

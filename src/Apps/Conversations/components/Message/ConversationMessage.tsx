@@ -1,8 +1,8 @@
+import { Box, Spacer, Text } from "@artsy/palette"
 import { ConversationMessageBubble } from "Apps/Conversations/components/Message/ConversationMessageBubble"
 import { ConversationMessageFile } from "Apps/Conversations/components/Message/ConversationMessageFile"
 import { ConversationMessageImage } from "Apps/Conversations/components/Message/ConversationMessageImage"
 import { useScrollPagination } from "Apps/Conversations/hooks/useScrollPagination"
-import { Box, Spacer, Text } from "@artsy/palette"
 import type {
   ConversationMessage_message$data,
   ConversationMessage_message$key,
@@ -208,11 +208,21 @@ const Message: React.FC<
 }
 
 export const defineSeenBy = (
-  _message: Pick<
+  message: Pick<
     NonNullable<ConversationMessage_message$data>,
     "deliveries" | "to" | "cc"
   >,
 ): string | undefined => {
   // FIXME: Disabling this feature for now. NX will redefine how it should work.
   return undefined
+
+  const opens = message.deliveries
+    .filter(delivery => !!delivery?.openedAt)
+    .map(delivery => delivery?.fullTransformedEmail)
+
+  if (!opens.length) return
+  // "Seen by all"
+  if (opens.length === message.to.concat(message.cc).length) return "all"
+  // "Seen by [n]"
+  return opens.length.toString()
 }

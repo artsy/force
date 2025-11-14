@@ -1,7 +1,3 @@
-import { ShowsCurrentShowsQueryRenderer } from "Apps/Shows/Components/ShowsCurrentShows"
-import { ShowsFeaturedShowFragmentContainer } from "Apps/Shows/Components/ShowsFeaturedShow"
-import { ShowsHeaderFragmentContainer } from "Apps/Shows/Components/ShowsHeader"
-import { ShowsMeta } from "Apps/Shows/Components/ShowsMeta"
 import {
   Column,
   GridColumns,
@@ -10,6 +6,10 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
+import { ShowsCurrentShowsQueryRenderer } from "Apps/Shows/Components/ShowsCurrentShows"
+import { ShowsFeaturedShowFragmentContainer } from "Apps/Shows/Components/ShowsFeaturedShow"
+import { ShowsHeaderFragmentContainer } from "Apps/Shows/Components/ShowsHeader"
+import { ShowsMeta } from "Apps/Shows/Components/ShowsMeta"
 import type { ShowsIndex_featuredShows$data } from "__generated__/ShowsIndex_featuredShows.graphql"
 import type { ShowsIndex_viewer$data } from "__generated__/ShowsIndex_viewer.graphql"
 import type * as React from "react"

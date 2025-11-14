@@ -1,3 +1,11 @@
+import { useToasts } from "@artsy/palette"
+import {
+  CardCvcElement,
+  CardExpiryElement,
+  CardNumberElement,
+  useElements,
+  useStripe,
+} from "@stripe/react-stripe-js"
 import {
   stripeCardElementNotFound,
   stripeNotLoadedErrorMessage,
@@ -7,14 +15,6 @@ import type { InvoicePaymentFormProps } from "Apps/Invoice/Components/InvoicePay
 import { useMakeInvoicePayment } from "Apps/Invoice/Hooks/useMakeInvoicePayment"
 import { toStripeAddress } from "Components/Address/utils"
 import createLogger from "Utils/logger"
-import { useToasts } from "@artsy/palette"
-import {
-  CardCvcElement,
-  CardExpiryElement,
-  CardNumberElement,
-  useElements,
-  useStripe,
-} from "@stripe/react-stripe-js"
 import type { FormikHelpers } from "formik"
 
 const logger = createLogger("useCreateTokenAndSubmit")
@@ -92,7 +92,7 @@ export const useCreateTokenAndSubmit = ({
       })
 
       onSuccess()
-    } catch (_error) {
+    } catch (error) {
       helpers.setStatus("SUBMISSION_FAILED")
     } finally {
       helpers.setSubmitting(false)

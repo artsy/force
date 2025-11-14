@@ -1,3 +1,5 @@
+import { ContextModule, Intent } from "@artsy/cohesion"
+import { Column, GridColumns, Join, Spacer, Text } from "@artsy/palette"
 import { ArtistAuctionResultItemFragmentContainer } from "Apps/Artist/Routes/AuctionResults/ArtistAuctionResultItem"
 import { AuctionResultImage } from "Apps/Artist/Routes/AuctionResults/SingleAuctionResultPage/AuctionResultImage"
 import { AuctionResultMetaData } from "Apps/Artist/Routes/AuctionResults/SingleAuctionResultPage/AuctionResultMetaData"
@@ -8,8 +10,6 @@ import { MetaTags } from "Components/MetaTags"
 import { TopContextBar } from "Components/TopContextBar"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { extractNodes } from "Utils/extractNodes"
-import { ContextModule, Intent } from "@artsy/cohesion"
-import { Column, GridColumns, Join, Spacer, Text } from "@artsy/palette"
 import type { AuctionResult_auctionResult$data } from "__generated__/AuctionResult_auctionResult.graphql"
 import { useEffect, useRef } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -26,6 +26,8 @@ export const AuctionResult: React.FC<
   const { showAuthDialog } = useAuthDialog()
 
   const results = extractNodes(comparableAuctionResults)
+
+  if (!artist) return null
 
   const isMounted = useRef(false)
 
@@ -48,8 +50,6 @@ export const AuctionResult: React.FC<
       })
     }
   }, [artist, user, showAuthDialog])
-
-  if (!artist) return null
 
   return (
     <>

@@ -1,6 +1,6 @@
+import { screen } from "@testing-library/react"
 import { ConversationReviewOfferCTA } from "Apps/Conversations/components/ConversationCTA/ConversationReviewOfferCTA"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { screen } from "@testing-library/react"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")

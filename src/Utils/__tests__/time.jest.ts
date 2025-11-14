@@ -1,9 +1,7 @@
 import { getOffsetBetweenGravityClock } from "Utils/time"
 
 jest.mock("relay-runtime", () => ({ fetchQuery: jest.fn() }))
-
 import { fetchQuery } from "react-relay"
-
 const mockFetchQuery = fetchQuery as jest.Mock<any>
 
 const SECONDS = 1000

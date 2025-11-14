@@ -1,6 +1,6 @@
+import url from "url"
 import ddTracer, { type Span } from "dd-trace"
 import type { Request } from "express"
-import url from "url"
 
 if (process.env.DD_APM_ENABLED) {
   ddTracer.init({
@@ -12,6 +12,7 @@ if (process.env.DD_APM_ENABLED) {
     // We want the root spans of MP to be labelled as just `service`
     service: "force",
     headers: ["User-Agent"],
+    // @ts-ignore
     hooks: {
       /**
        * Because of our wildcard routes in `apps/artsy-v2` we need to

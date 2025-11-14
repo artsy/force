@@ -1,6 +1,6 @@
+import { Flex, Pill, ShowMore, SkeletonBox } from "@artsy/palette"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import type { SearchCriteriaAttributeKeys } from "Components/SavedSearchAlert/types"
-import { Flex, Pill, ShowMore, SkeletonBox } from "@artsy/palette"
 import type { FC } from "react"
 
 interface CriteriaPillsProps {

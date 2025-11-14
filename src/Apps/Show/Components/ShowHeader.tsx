@@ -1,6 +1,6 @@
+import { Box, type BoxProps, Join, Spacer, Text } from "@artsy/palette"
 import { useCurrentTime } from "Utils/Hooks/useCurrentTime"
 import { useEventTiming } from "Utils/Hooks/useEventTiming"
-import { Box, type BoxProps, Join, Spacer, Text } from "@artsy/palette"
 import type { ShowHeader_show$data } from "__generated__/ShowHeader_show.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"

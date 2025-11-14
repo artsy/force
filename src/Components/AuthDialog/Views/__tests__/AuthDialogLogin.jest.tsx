@@ -1,6 +1,6 @@
+import { fireEvent, render, screen, waitFor } from "@testing-library/react"
 import { AuthDialogLogin } from "Components/AuthDialog/Views/AuthDialogLogin"
 import { login } from "Utils/auth"
-import { fireEvent, render, screen, waitFor } from "@testing-library/react"
 
 jest.mock("Utils/getENV", () => ({
   getENV: jest.fn().mockImplementation(key => {

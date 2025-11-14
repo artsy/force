@@ -1,8 +1,8 @@
+import { render, screen } from "@testing-library/react"
 import {
   ArtworkModalHeaderInfo,
   type ArtworkModalHeaderInfoEntity,
 } from "Apps/CollectorProfile/Routes/Saves/Components/ArtworkModalHeaderInfo"
-import { render, screen } from "@testing-library/react"
 
 describe("ArtworkModalHeaderInfo", () => {
   it("should render artist names, artwork title and year", () => {

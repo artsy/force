@@ -1,6 +1,3 @@
-import { RouterLink } from "System/Components/RouterLink"
-import { Media } from "Utils/Responsive"
-import { resized } from "Utils/resized"
 import {
   Button,
   Clickable,
@@ -11,6 +8,9 @@ import {
   Text,
 } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
+import { RouterLink } from "System/Components/RouterLink"
+import { Media } from "Utils/Responsive"
+import { resized } from "Utils/resized"
 import styled from "styled-components"
 
 export const InsightsCareerHighlightPromoCard: React.FC<
@@ -49,7 +49,7 @@ export const InsightsCareerHighlightPromoCard: React.FC<
         </Text>
 
         <Button
-          // @ts-expect-error
+          // @ts-ignore
           as={RouterLink}
           variant="primaryBlack"
           size="small"

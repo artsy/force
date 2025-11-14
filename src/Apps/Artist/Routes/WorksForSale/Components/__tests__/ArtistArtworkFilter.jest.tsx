@@ -1,9 +1,10 @@
+import { screen } from "@testing-library/react"
 import { ArtistArtworkFilterRefetchContainer } from "Apps/Artist/Routes/WorksForSale/Components/ArtistArtworkFilter"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { screen } from "@testing-library/react"
 import type { ArtistArtworkFilterTestQuery } from "__generated__/ArtistArtworkFilterTestQuery.graphql"
-import { fetchQuery, graphql } from "react-relay"
+import { graphql } from "react-relay"
+import { fetchQuery } from "react-relay"
 import { useTracking } from "react-tracking"
 
 interface Props {

@@ -3,7 +3,7 @@ import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
 import { InquiryLogin } from "Components/Inquiry/Views/InquiryLogin"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { login } from "Utils/auth"
-import { fireEvent, render, screen } from "@testing-library/react"
+import { render, screen, fireEvent } from "@testing-library/react"
 import { useTracking } from "react-tracking"
 
 jest.mock("Utils/auth")

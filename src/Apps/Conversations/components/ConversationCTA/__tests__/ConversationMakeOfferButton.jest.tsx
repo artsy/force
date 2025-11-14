@@ -1,8 +1,8 @@
+import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { useConversationsContext } from "Apps/Conversations/ConversationsContext"
 import { ConversationMakeOfferButton } from "Apps/Conversations/components/ConversationCTA/ConversationMakeOfferButton"
 import { useMakeInquiryOffer } from "Apps/Conversations/mutations/useMakeInquiryOfferMutation"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 

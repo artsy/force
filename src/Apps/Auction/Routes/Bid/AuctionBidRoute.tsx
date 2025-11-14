@@ -1,3 +1,12 @@
+import {
+  Button,
+  Join,
+  ModalDialog,
+  Select,
+  Spacer,
+  Text,
+  useDidMount,
+} from "@artsy/palette"
 import { ArtworkSidebarAuctionTimerFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarAuctionTimer"
 import { AddressFormWithCreditCard } from "Apps/Auction/Components/Form/AddressFormWithCreditCard"
 import { ConditionsOfSaleCheckbox } from "Apps/Auction/Components/Form/ConditionsOfSaleCheckbox"
@@ -8,15 +17,6 @@ import { biddingValidationSchemas } from "Apps/Auction/Components/Form/Utils/val
 import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
 import { CreditCardInputProvider } from "Components/CreditCardInput"
 import { useRouter } from "System/Hooks/useRouter"
-import {
-  Button,
-  Join,
-  ModalDialog,
-  Select,
-  Spacer,
-  Text,
-  useDidMount,
-} from "@artsy/palette"
 import type { AuctionBidRoute_artwork$data } from "__generated__/AuctionBidRoute_artwork.graphql"
 import type { AuctionBidRoute_me$data } from "__generated__/AuctionBidRoute_me.graphql"
 import type { AuctionBidRoute_sale$data } from "__generated__/AuctionBidRoute_sale.graphql"
@@ -25,9 +25,9 @@ import type { Match } from "found"
 import { dropWhile } from "lodash"
 import { useEffect } from "react"
 import {
+  type RelayRefetchProp,
   createRefetchContainer,
   graphql,
-  type RelayRefetchProp,
 } from "react-relay"
 import { AuctionLotInfoFragmentContainer } from "./Components/AuctionLotInfo"
 import { PricingTransparencyQueryRenderer } from "./Components/PricingTransparency"
@@ -98,8 +98,8 @@ const AuctionBidRoute: React.FC<
         validateOnMount
         initialValues={{
           ...initialValuesForBidding,
-          agreeToTerms: !requiresPaymentInformation,
-          creditCard: !requiresPaymentInformation,
+          agreeToTerms: requiresPaymentInformation ? false : true,
+          creditCard: requiresPaymentInformation ? false : true,
           selectedBid,
         }}
         validationSchema={validationSchema}
@@ -144,7 +144,7 @@ const AuctionBidRoute: React.FC<
                 />
 
                 <PricingTransparencyQueryRenderer
-                  saleId={artwork.saleArtwork?.sale?.slug as string}
+                  saleId={artwork.saleArtwork?.sale?.slug!}
                   artworkId={artworkSlug}
                 />
 
@@ -252,8 +252,8 @@ const computeProps = ({
   const displayIncrements = dropWhile(
     artwork.saleArtwork?.increments,
     increment => {
-      // @ts-expect-error
-      return increment.cents < artwork.saleArtwork?.minimumNextBid.cents
+      // @ts-ignore
+      return increment.cents < artwork.saleArtwork?.minimumNextBid!.cents!
     },
   ).map(increment => {
     return {

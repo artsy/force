@@ -1,7 +1,8 @@
+import { Banner, type BannerProps, Flex, Text } from "@artsy/palette"
 import { errorMessageForBidding } from "Apps/Auction/Components/Form/Utils/errorMessages"
 import { useAuctionFormContext } from "Apps/Auction/Hooks/useAuctionFormContext"
+
 import { RouterLink } from "System/Components/RouterLink"
-import { Banner, type BannerProps, Flex, Text } from "@artsy/palette"
 
 export const ErrorStatus = () => {
   const { status } = useAuctionFormContext()
@@ -61,6 +62,8 @@ export const ErrorStatus = () => {
           message,
         }
       }
+      case "ERROR":
+      case "SUBMISSION_FAILED":
       default: {
         console.error("[auction/ErrorStatus]", status)
 

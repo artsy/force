@@ -1,5 +1,3 @@
-import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import {
   ActionType,
   type ClickedMainArtworkGrid,
@@ -19,6 +17,8 @@ import {
   Text,
   useTheme,
 } from "@artsy/palette"
+import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import type {
   ImmersiveView_filtered_artworks$data,
   ImmersiveView_filtered_artworks$key,
@@ -150,6 +150,7 @@ export const ImmersiveView: React.FC<ImmersiveViewProps> = props => {
     tracking.trackEvent(params)
   }
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: "trackImmersiveViewArtworkDisplayed changes on every re-render and should not be used as a hook dependency"
   useEffect(() => {
     // Debounce tracking to only fire if artwork remains in view for the threshold duration
     const timeoutId = setTimeout(() => {

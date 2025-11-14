@@ -9,7 +9,7 @@ describe("Strategy", () => {
 
   it("should throw if constructed without a verify callback", () => {
     expect(() => {
-      const _s = new Strategy()
+      const s = new Strategy()
     }).toThrow(TypeError, "LocalWithOtpStrategy requires a verify callback")
   })
 })

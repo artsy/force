@@ -40,6 +40,7 @@ const ArticleSectionEmbed: FC<
             ] as any
           }
           borderWidth={0}
+          // @ts-ignore
           src={section.url}
         />
       </Container>
@@ -61,6 +62,7 @@ const ArticleSectionEmbed: FC<
           borderWidth={0}
           width="100%"
           height="100%"
+          // @ts-ignore
           src={section.url}
         />
       </ResponsiveBox>

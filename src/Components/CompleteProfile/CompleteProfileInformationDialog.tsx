@@ -1,11 +1,4 @@
 import {
-  type Location,
-  LocationAutocompleteInput,
-  normalizePlace,
-} from "Components/LocationAutocompleteInput"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import { useUpdateMyUserProfile } from "Utils/Hooks/Mutations/useUpdateMyUserProfile"
-import {
   ActionType,
   ContextModule,
   type EditedUserProfile,
@@ -19,6 +12,13 @@ import {
   Text,
   useToasts,
 } from "@artsy/palette"
+import {
+  type Location,
+  LocationAutocompleteInput,
+  normalizePlace,
+} from "Components/LocationAutocompleteInput"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { useUpdateMyUserProfile } from "Utils/Hooks/Mutations/useUpdateMyUserProfile"
 import type { CompleteProfileInformationDialogQuery } from "__generated__/CompleteProfileInformationDialogQuery.graphql"
 import { Form, Formik } from "formik"
 import { type FC, Suspense } from "react"

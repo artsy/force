@@ -1,6 +1,6 @@
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
-import type { RenderResult } from "@testing-library/react"
 import { screen, waitFor } from "@testing-library/react"
+import type { RenderResult } from "@testing-library/react"
 
 export class RootTestPageRTL {
   readonly root: RenderResult

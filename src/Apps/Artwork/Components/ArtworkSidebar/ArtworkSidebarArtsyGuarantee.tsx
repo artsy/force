@@ -1,10 +1,11 @@
-import { RouterLink } from "System/Components/RouterLink"
+import { Flex, Spacer, Text } from "@artsy/palette"
+import type { ArtworkSidebarArtsyGuarantee_artwork$key } from "__generated__/ArtworkSidebarArtsyGuarantee_artwork.graphql"
+
 import { ActionType, type ClickedOnLearnMore } from "@artsy/cohesion"
 import LockIcon from "@artsy/icons/LockIcon"
 import MoneyBackIcon from "@artsy/icons/MoneyBackIcon"
 import VerifiedIcon from "@artsy/icons/VerifiedIcon"
-import { Flex, Spacer, Text } from "@artsy/palette"
-import type { ArtworkSidebarArtsyGuarantee_artwork$key } from "__generated__/ArtworkSidebarArtsyGuarantee_artwork.graphql"
+import { RouterLink } from "System/Components/RouterLink"
 import { graphql, useFragment } from "react-relay"
 import { useTracking } from "react-tracking"
 

@@ -1,6 +1,6 @@
+import { Spacer, Tab, Tabs, Text } from "@artsy/palette"
 import { ArtQuizTrendingArtistsQueryRenderer } from "Apps/ArtQuiz/Components/ArtQuizTrendingArtists"
 import { ArtQuizTrendingCollectionsQueryRenderer } from "Apps/ArtQuiz/Components/ArtQuizTrendingCollections"
-import { Spacer, Tab, Tabs, Text } from "@artsy/palette"
 import type { FC } from "react"
 
 export const ArtQuizResultsEmpty: FC<React.PropsWithChildren<unknown>> = () => {

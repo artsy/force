@@ -1,6 +1,6 @@
+import { ModalDialog } from "@artsy/palette"
 import { CollectorProfileArtistsAdd } from "Components/CollectorProfile/CollectorProfileArtistsAdd"
 import { useUpdateMyUserProfile } from "Utils/Hooks/Mutations/useUpdateMyUserProfile"
-import { ModalDialog } from "@artsy/palette"
 import type { FC } from "react"
 
 interface CollectorProfileArtistsAddDialogProps {

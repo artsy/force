@@ -1,5 +1,5 @@
-import { LatestMessagesFlyOut } from "Apps/Conversations/components/Message/LatestMessagesFlyOut"
 import { fireEvent, render, screen } from "@testing-library/react"
+import { LatestMessagesFlyOut } from "Apps/Conversations/components/Message/LatestMessagesFlyOut"
 
 describe("LatestMessages", () => {
   it("renders", () => {

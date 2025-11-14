@@ -3,18 +3,18 @@
  * logging in or signing up.
  */
 
+import { parse, resolve } from "url"
+import artsyXapp from "@artsy/xapp"
 import type {
   ArtsyRequest,
   ArtsyResponse,
 } from "Server/middleware/artsyExpress"
 import opts from "Server/passport/lib/options"
-import artsyXapp from "@artsy/xapp"
 import type { NextFunction } from "express"
 import { get, isFunction, isString } from "lodash"
 import passport from "passport"
-// biome-ignore lint/style/noRestrictedImports: Server authentication setup
+// eslint-disable-next-line no-restricted-imports
 import request from "superagent"
-import { parse, resolve } from "url"
 import forwardedFor from "./forwarded_for"
 import redirectBack from "./redirectBack"
 
@@ -75,7 +75,7 @@ export const onLocalLogin = (
         err.response.body.error_description === "invalid email or password"
       ) {
         return res.redirect(
-          `${opts.loginPagePath}?error=Invalid email or password.`,
+          opts.loginPagePath + "?error=Invalid email or password.",
         )
       } else if (err) {
         return next(err)
@@ -93,7 +93,7 @@ export const onLocalSignup = (
 ) => {
   req.artsyPassportSignedUp = true
   request
-    .post(`${opts.ARTSY_URL}/api/v1/user`)
+    .post(opts.ARTSY_URL + "/api/v1/user")
     .set({
       "X-Xapp-Token": artsyXapp.token,
       "X-Forwarded-For": forwardedFor(req),
@@ -110,14 +110,14 @@ export const onLocalSignup = (
       agreed_to_receive_emails: req.body.agreed_to_receive_emails,
       recaptcha_token: req.body.recaptcha_token,
     })
-    .end((err, _sres) => {
+    .end((err, sres) => {
       let msg = ""
       if (err && err.message === "Email is invalid.") {
         msg = "Email is invalid."
         if (req.xhr) {
           return res.status(403).send({ success: false, error: msg })
         } else {
-          return res.redirect(`${opts.signupPagePath}?error=${msg}`)
+          return res.redirect(opts.signupPagePath + `?error=${msg}`)
         }
       } else if (err && req.xhr) {
         if (

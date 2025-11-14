@@ -1,3 +1,6 @@
+import { DismissibleProvider } from "@artsy/dismissible"
+import { Theme, ToastsProvider, injectGlobalStyles } from "@artsy/palette"
+import isPropValid from "@emotion/is-prop-valid"
 import {
   AppPreferencesProvider,
   useAppPreferences,
@@ -12,16 +15,13 @@ import { FeatureFlagProvider } from "System/FeatureFlags/FeatureFlagContext"
 import type { RouteProps } from "System/Router/Route"
 import type { ClientContext } from "System/Router/Utils/clientAppContext"
 import Events from "Utils/Events"
-import { getENV } from "Utils/getENV"
 import { AuthIntentProvider } from "Utils/Hooks/useAuthIntent"
 import {
   type MatchingMediaQueries,
   MediaContextProvider,
 } from "Utils/Responsive"
 import { SiftContainer } from "Utils/SiftContainer"
-import { DismissibleProvider } from "@artsy/dismissible"
-import { injectGlobalStyles, Theme, ToastsProvider } from "@artsy/palette"
-import isPropValid from "@emotion/is-prop-valid"
+import { getENV } from "Utils/getENV"
 import { type FC, useEffect } from "react"
 import { HeadProvider } from "react-head"
 import { type Environment, RelayEnvironmentProvider } from "react-relay"

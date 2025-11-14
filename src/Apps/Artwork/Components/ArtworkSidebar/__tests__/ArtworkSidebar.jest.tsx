@@ -1,7 +1,7 @@
+import { fireEvent, screen } from "@testing-library/react"
 import { ArtworkSidebarFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebar"
 import { ArtsyShippingEstimate } from "Components/ArtsyShippingEstimate"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { fireEvent, screen } from "@testing-library/react"
 import { DateTime } from "luxon"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"

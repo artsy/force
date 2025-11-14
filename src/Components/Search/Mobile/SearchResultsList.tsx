@@ -1,22 +1,22 @@
+import { ActionType } from "@artsy/cohesion"
+import { Flex, Spinner } from "@artsy/palette"
 import { InfiniteScrollSentinel } from "Components/InfiniteScrollSentinel"
-import type { PillType } from "Components/Search/constants"
 import {
   SuggestionItem,
   type SuggestionItemOptionProps,
 } from "Components/Search/SuggestionItem/SuggestionItem"
+import type { PillType } from "Components/Search/constants"
 import {
-  formatOptions,
   type SearchNodeOption,
+  formatOptions,
 } from "Components/Search/utils/formatOptions"
 import { extractNodes } from "Utils/extractNodes"
-import { ActionType } from "@artsy/cohesion"
-import { Flex, Spinner } from "@artsy/palette"
 import type { SearchResultsList_viewer$data } from "__generated__/SearchResultsList_viewer.graphql"
 import { type FC, useEffect } from "react"
 import {
+  type RelayPaginationProp,
   createPaginationContainer,
   graphql,
-  type RelayPaginationProp,
 } from "react-relay"
 import { useTracking } from "react-tracking"
 import { ContentPlaceholder } from "./SearchResultsList/ContentPlaceholder"
@@ -38,6 +38,7 @@ const SearchResultsList: FC<
   const tracking = useTracking()
   const options = extractNodes(viewer.searchConnection)
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (viewer.searchConnection) {
       tracking.trackEvent({

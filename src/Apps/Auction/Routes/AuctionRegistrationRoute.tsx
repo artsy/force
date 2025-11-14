@@ -1,3 +1,4 @@
+import { Button, Join, ModalDialog, Spacer } from "@artsy/palette"
 import { AddressFormWithCreditCard } from "Apps/Auction/Components/Form/AddressFormWithCreditCard"
 import { ConditionsOfSaleCheckbox } from "Apps/Auction/Components/Form/ConditionsOfSaleCheckbox"
 import { ErrorStatus } from "Apps/Auction/Components/Form/ErrorStatus"
@@ -11,7 +12,6 @@ import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
 import { useCreateTokenAndSubmit } from "Apps/Auction/Hooks/useCreateTokenAndSubmit"
 import { CreditCardInputProvider } from "Components/CreditCardInput"
 import { useRouter } from "System/Hooks/useRouter"
-import { Button, Join, ModalDialog, Spacer } from "@artsy/palette"
 import type { AuctionConfirmRegistrationRoute_sale$data } from "__generated__/AuctionConfirmRegistrationRoute_sale.graphql"
 import type { AuctionRegistrationRoute_me$data } from "__generated__/AuctionRegistrationRoute_me.graphql"
 import type { AuctionRegistrationRoute_sale$data } from "__generated__/AuctionRegistrationRoute_sale.graphql"
@@ -43,6 +43,7 @@ const AuctionRegistrationRoute: React.FC<
   }
 
   // Track page view or redirect
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (redirectToSaleHome(sale)) {
       router.replace(`/auction/${sale.slug}`)

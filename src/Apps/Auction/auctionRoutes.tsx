@@ -1,6 +1,6 @@
+import loadable from "@loadable/component"
 import { serverCacheTTLs } from "Apps/serverCacheTTLs"
 import type { RouteProps } from "System/Router/Route"
-import loadable from "@loadable/component"
 import { Redirect } from "found"
 import { graphql } from "react-relay"
 

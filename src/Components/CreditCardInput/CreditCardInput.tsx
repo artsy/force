@@ -15,11 +15,11 @@ import {
   CardNumberElement,
 } from "@stripe/react-stripe-js"
 import type {
-  StripeCardCvcElementChangeEvent,
   StripeCardExpiryElementChangeEvent,
   StripeCardNumberElementChangeEvent,
   StripeElementStyleVariant,
 } from "@stripe/stripe-js"
+import type { StripeCardCvcElementChangeEvent } from "@stripe/stripe-js"
 import { themeGet } from "@styled-system/theme-get"
 import styled, { css } from "styled-components"
 

@@ -1,11 +1,11 @@
+import { screen } from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
 import type { ArtworkFilterContextProps } from "Components/ArtworkFilter/ArtworkFilterContext"
+import { MaterialsFilter } from "Components/ArtworkFilter/ArtworkFilters/MaterialsFilter"
 import {
   createArtworkFilterTestRenderer,
   currentArtworkFilterContext,
 } from "Components/ArtworkFilter/ArtworkFilters/__tests__/Utils"
-import { MaterialsFilter } from "Components/ArtworkFilter/ArtworkFilters/MaterialsFilter"
-import { screen } from "@testing-library/react"
-import userEvent from "@testing-library/user-event"
 
 const artworkFilterContext: Partial<ArtworkFilterContextProps> = {
   aggregations: [

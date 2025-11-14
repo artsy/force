@@ -1,11 +1,11 @@
+import { Join, Skeleton, Spacer } from "@artsy/palette"
 import {
   ArtQuizTrendingCollectionFragmentContainer,
   ArtQuizTrendingCollectionPlaceholder,
 } from "Apps/ArtQuiz/Components/ArtQuizTrendingCollection"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { Join, Skeleton, Spacer } from "@artsy/palette"
-import type { ArtQuizTrendingCollections_viewer$data } from "__generated__/ArtQuizTrendingCollections_viewer.graphql"
 import type { ArtQuizTrendingCollectionsQuery } from "__generated__/ArtQuizTrendingCollectionsQuery.graphql"
+import type { ArtQuizTrendingCollections_viewer$data } from "__generated__/ArtQuizTrendingCollections_viewer.graphql"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 

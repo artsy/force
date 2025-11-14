@@ -1,7 +1,7 @@
+import { renderHook } from "@testing-library/react-hooks"
 import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
 import { useAfterAuthenticationRedirect } from "Components/AuthDialog/Hooks/useAfterAuthenticationRedirect"
 import { useElligibleForOnboarding } from "Components/AuthDialog/Hooks/useElligibleForOnboarding"
-import { renderHook } from "@testing-library/react-hooks"
 
 jest.mock("Utils/getENV", () => ({
   getENV: jest.fn().mockImplementation(key => {

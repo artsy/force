@@ -1,5 +1,5 @@
-import { Masonry } from "Components/Masonry"
 import { CSSGrid, Join, Spacer } from "@artsy/palette"
+import { Masonry } from "Components/Masonry"
 import type { FeatureSetContainer_set$data } from "__generated__/FeatureSetContainer_set.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"

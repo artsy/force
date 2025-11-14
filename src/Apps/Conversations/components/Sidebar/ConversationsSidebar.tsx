@@ -1,3 +1,4 @@
+import { Box, Flex, Spinner, Text } from "@artsy/palette"
 import { ConversationsSidebarEmpty } from "Apps/Conversations/components/Sidebar/ConversationsSidebarEmpty"
 import { ConversationsSidebarItem } from "Apps/Conversations/components/Sidebar/ConversationsSidebarItem"
 import { SIDEBAR_FETCH_PAGE_SIZE } from "Apps/Conversations/components/Sidebar/Utils/getSidebarTotal"
@@ -6,13 +7,12 @@ import { useRefetchLatestMessagesPoll } from "Apps/Conversations/hooks/useRefetc
 import { Sentinel } from "Components/Sentinal"
 import { useRouter } from "System/Hooks/useRouter"
 import { extractNodes } from "Utils/extractNodes"
-import { Box, Flex, Spinner, Text } from "@artsy/palette"
 import type { ConversationsSidebar_viewer$data } from "__generated__/ConversationsSidebar_viewer.graphql"
 import { useEffect, useState } from "react"
 import {
+  type RelayPaginationProp,
   createPaginationContainer,
   graphql,
-  type RelayPaginationProp,
 } from "react-relay"
 
 interface ConversationsSidebarProps {
@@ -45,6 +45,7 @@ export const ConversationsSidebar: React.FC<
     totalDisplayedCount = SIDEBAR_FETCH_PAGE_SIZE
   }
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (!match.params.conversationId) {
       return

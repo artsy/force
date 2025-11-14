@@ -1,7 +1,7 @@
 import { PaginatedMetaTags } from "Components/PaginatedMetaTags"
 import { MockBoot } from "DevTools/MockBoot"
-import { useRouter } from "System/Hooks/useRouter"
 import { render } from "@testing-library/react"
+import { useRouter } from "System/Hooks/useRouter"
 
 jest.mock("System/Hooks/useRouter")
 

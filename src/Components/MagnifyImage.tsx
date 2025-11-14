@@ -1,5 +1,5 @@
-import { isTouch } from "Utils/device"
 import { Image as BaseImage, Box, type ImageProps } from "@artsy/palette"
+import { isTouch } from "Utils/device"
 import { useRef, useState } from "react"
 import styled from "styled-components"
 

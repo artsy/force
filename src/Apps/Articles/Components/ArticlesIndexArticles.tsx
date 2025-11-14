@@ -1,11 +1,11 @@
-import { extractNodes } from "Utils/extractNodes"
 import { Box, Button, Join, Spacer, Text } from "@artsy/palette"
+import { extractNodes } from "Utils/extractNodes"
 import type { ArticlesIndexArticles_viewer$data } from "__generated__/ArticlesIndexArticles_viewer.graphql"
 import { type FC, useState } from "react"
 import {
+  type RelayPaginationProp,
   createPaginationContainer,
   graphql,
-  type RelayPaginationProp,
 } from "react-relay"
 import { ArticlesIndexArticleFragmentContainer } from "./ArticlesIndexArticle"
 

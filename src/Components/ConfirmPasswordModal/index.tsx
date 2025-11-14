@@ -1,4 +1,3 @@
-import { useSystemContext } from "System/Hooks/useSystemContext"
 import {
   Banner,
   Button,
@@ -8,6 +7,7 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import type { ConfirmPasswordInput } from "__generated__/ConfirmPasswordMutation.graphql"
 import { Form, Formik, type FormikHelpers } from "formik"
 import type { FC } from "react"

@@ -1,6 +1,6 @@
+import { fireEvent, screen } from "@testing-library/react"
 import { StandoutLotsRailFragmentContainer } from "Apps/Auctions/Components/StandoutLotsRail"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { fireEvent, screen } from "@testing-library/react"
 import { graphql } from "react-relay"
 import { useTracking as baseUseTracking } from "react-tracking"
 

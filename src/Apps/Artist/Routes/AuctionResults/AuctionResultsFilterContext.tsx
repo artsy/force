@@ -2,7 +2,7 @@ import {
   type AuctionResultsFilters,
   initialAuctionResultsFilterState,
 } from "Apps/Artist/Routes/AuctionResults/initialAuctionResultsFilterState"
-import { getSupportedMetric, type Metric } from "Utils/metrics"
+import { type Metric, getSupportedMetric } from "Utils/metrics"
 import { omit } from "lodash"
 import * as React from "react"
 import { useContext, useReducer, useRef, useState } from "react"

@@ -1,13 +1,13 @@
+import { Join, Spacer } from "@artsy/palette"
 import { EmptyState } from "Components/EmptyState"
 import { CommercePaginationFragmentContainer } from "Components/Pagination/CommercePagination"
 import { extractNodes } from "Utils/extractNodes"
-import { Join, Spacer } from "@artsy/palette"
 import type { SettingsPurchases_me$data } from "__generated__/SettingsPurchases_me.graphql"
 import { type FC, useState } from "react"
 import {
+  type RelayRefetchProp,
   createRefetchContainer,
   graphql,
-  type RelayRefetchProp,
 } from "react-relay"
 import {
   SettingsPurchasesRowFragmentContainer,
@@ -31,7 +31,7 @@ const SettingsPurchases: FC<
   }
 
   const hasNextPage = me.orders?.pageInfo.hasNextPage ?? false
-  const endCursor = me.orders?.pageInfo.endCursor as string
+  const endCursor = me.orders?.pageInfo.endCursor!
   const pageCursors = me.orders?.pageCursors
 
   const handleNext = () => {

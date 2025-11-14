@@ -1,6 +1,7 @@
-import { useAuctionFormContext } from "Apps/Auction/Hooks/useAuctionFormContext"
-import { RouterLink } from "System/Components/RouterLink"
 import { Checkbox, Spacer, Text } from "@artsy/palette"
+import { useAuctionFormContext } from "Apps/Auction/Hooks/useAuctionFormContext"
+
+import { RouterLink } from "System/Components/RouterLink"
 
 export const ConditionsOfSaleCheckbox: React.FC<
   React.PropsWithChildren<unknown>

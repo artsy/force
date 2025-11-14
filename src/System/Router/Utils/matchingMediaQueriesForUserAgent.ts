@@ -1,9 +1,9 @@
+import { findDevice } from "@artsy/detect-responsive-traits"
 import {
+  type MatchingMediaQueries,
   findBreakpointAtWidth,
   findBreakpointsForWidths,
-  type MatchingMediaQueries,
 } from "Utils/Responsive"
-import { findDevice } from "@artsy/detect-responsive-traits"
 
 /**
  * Find the breakpoints and interactions that the server should render
@@ -19,14 +19,14 @@ export function matchingMediaQueriesForUserAgent(
 
   const device = findDevice(userAgent)
   if (!device) {
-    // @ts-expect-error
+    // @ts-ignore
     return undefined
   } else {
     const supportsHover = device.touch ? "notHover" : "hover"
     const onlyMatch: MatchingMediaQueries = device.resizable
       ? [
           supportsHover,
-          // @ts-expect-error
+          // @ts-ignore
           ...findBreakpointsForWidths(device.minWidth, device.maxWidth),
         ]
       : [

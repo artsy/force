@@ -1,12 +1,4 @@
 import {
-  normalizePhoto,
-  uploadPhotoToS3,
-} from "Components/PhotoUpload/Utils/fileUtils"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { useMutation } from "Utils/Hooks/useMutation"
-import { usePoll } from "Utils/Hooks/usePoll"
-import { Media } from "Utils/Responsive"
-import {
   Avatar,
   Box,
   Clickable,
@@ -16,13 +8,21 @@ import {
   Tooltip,
   useToasts,
 } from "@artsy/palette"
-import type { SettingsEditProfileImage_me$data } from "__generated__/SettingsEditProfileImage_me.graphql"
+import {
+  normalizePhoto,
+  uploadPhotoToS3,
+} from "Components/PhotoUpload/Utils/fileUtils"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { useMutation } from "Utils/Hooks/useMutation"
+import { usePoll } from "Utils/Hooks/usePoll"
+import { Media } from "Utils/Responsive"
 import type { SettingsEditProfileImageMutation } from "__generated__/SettingsEditProfileImageMutation.graphql"
+import type { SettingsEditProfileImage_me$data } from "__generated__/SettingsEditProfileImage_me.graphql"
 import { type ChangeEvent, type FC, useState } from "react"
 import {
+  type RelayRefetchProp,
   createRefetchContainer,
   graphql,
-  type RelayRefetchProp,
 } from "react-relay"
 import styled from "styled-components"
 
@@ -97,7 +97,11 @@ const SettingsEditProfileImage: FC<
         disabled={mode === "Uploading"}
       />
 
-      <Clickable as="label" htmlFor="file">
+      <Clickable
+        as="label"
+        // @ts-ignore
+        htmlFor="file"
+      >
         <Flex alignItems="center" gap={[1, 2]}>
           {isProcessing ? (
             <Tooltip

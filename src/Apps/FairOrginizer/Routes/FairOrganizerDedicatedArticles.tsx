@@ -1,20 +1,20 @@
+import { Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import { DedicatedArticlesBreadcrumbsFragmentContainer as DedicatedArticlesBreadcrumbs } from "Apps/FairOrginizer/Components/DedicatedArticlesBreadcrumbs"
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
 import { CellArticleFragmentContainer } from "Components/Cells/CellArticle"
 import { LoadingArea } from "Components/LoadingArea"
 import { MetaTags } from "Components/MetaTags"
 import { PaginationFragmentContainer } from "Components/Pagination"
-import { extractNodes } from "Utils/extractNodes"
 import { Jump } from "Utils/Hooks/useJump"
+import { extractNodes } from "Utils/extractNodes"
 import createLogger from "Utils/logger"
-import { Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import type { FairOrganizerDedicatedArticles_fairOrganizer$data } from "__generated__/FairOrganizerDedicatedArticles_fairOrganizer.graphql"
-import type * as React from "react"
 import { useEffect, useState } from "react"
+import type * as React from "react"
 import {
+  type RelayRefetchProp,
   createRefetchContainer,
   graphql,
-  type RelayRefetchProp,
 } from "react-relay"
 import { FairOrganizerDedicatedArticlesQuery } from "./FairOrganizerDedicatedArticlesQuery"
 
@@ -56,7 +56,7 @@ export const FairOrganizerDedicatedArticles: React.FC<
 
       setIsLoading(false)
     })
-  }, [page, logger.error, relay.refetch, slug])
+  }, [page])
 
   const loadNext = () => {
     const currentPage = page ?? 0

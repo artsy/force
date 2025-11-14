@@ -1,5 +1,5 @@
-import { cropped, resized } from "Utils/resized"
 import { Image, ResponsiveBox } from "@artsy/palette"
+import { cropped, resized } from "Utils/resized"
 
 export default {
   title: "Examples/ResponsiveImages",

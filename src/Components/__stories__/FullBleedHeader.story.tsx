@@ -1,8 +1,8 @@
+import { Flex, Text } from "@artsy/palette"
 import {
   FullBleedHeader,
   type FullBleedHeaderProps,
 } from "Components/FullBleedHeader/FullBleedHeader"
-import { Flex, Text } from "@artsy/palette"
 import { States } from "storybook-states"
 
 export default {

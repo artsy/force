@@ -1,9 +1,9 @@
+import { Box, Flex, Image, StackableBorderBox, Text } from "@artsy/palette"
 import { getSidebarTotal } from "Apps/Conversations/components/Sidebar/Utils/getSidebarTotal"
 import { RouterLink } from "System/Components/RouterLink"
 import { useRouter } from "System/Hooks/useRouter"
 import { extractNodes } from "Utils/extractNodes"
 import { getENV } from "Utils/getENV"
-import { Box, Flex, Image, StackableBorderBox, Text } from "@artsy/palette"
 import type { ConversationsSidebarItem_conversation$key } from "__generated__/ConversationsSidebarItem_conversation.graphql"
 import { useEffect, useRef } from "react"
 import { graphql, useFragment } from "react-relay"
@@ -31,6 +31,7 @@ export const ConversationsSidebarItem: React.FC<
 
   const shouldHighlight = isSelected || isUnread
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (isSelected) {
       scrollRef.current?.scrollIntoView?.({ block: "center" })

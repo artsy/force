@@ -1,6 +1,6 @@
+import { screen } from "@testing-library/react"
 import { ShowAppFragmentContainer } from "Apps/Show/ShowApp"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { screen } from "@testing-library/react"
 import type { ShowAppTestQuery } from "__generated__/ShowAppTestQuery.graphql"
 import { graphql } from "react-relay"
 

@@ -1,4 +1,5 @@
 import { renderHook } from "@testing-library/react-hooks"
+import type { State } from "../Hooks/useOnboardingContext"
 import {
   OPTION_DEVELOPING_MY_ART_TASTES,
   OPTION_FOLLOW_GALLERIES_I_LOVE,
@@ -6,7 +7,6 @@ import {
   OPTION_YES_I_LOVE_COLLECTING_ART,
   useConfig,
 } from "../config"
-import type { State } from "../Hooks/useOnboardingContext"
 
 describe("config", () => {
   it("should move through workflow", () => {

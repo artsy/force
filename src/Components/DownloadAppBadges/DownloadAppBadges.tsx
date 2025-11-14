@@ -1,10 +1,10 @@
-import {
-  Device,
-  DOWNLOAD_APP_URLS,
-  useDeviceDetection,
-} from "Utils/Hooks/useDeviceDetection"
 import type { ContextModule } from "@artsy/cohesion"
 import { Flex, type FlexProps } from "@artsy/palette"
+import {
+  DOWNLOAD_APP_URLS,
+  Device,
+  useDeviceDetection,
+} from "Utils/Hooks/useDeviceDetection"
 import type React from "react"
 import { DownloadAppBadge } from "./DownloadAppBadge"
 

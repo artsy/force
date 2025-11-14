@@ -1,8 +1,8 @@
-import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
-import { type Brand, BrandCreditCardIcon } from "Components/BrandCreditCardIcon"
 import CheckmarkIcon from "@artsy/icons/CheckmarkIcon"
 import InstitutionIcon from "@artsy/icons/InstitutionIcon"
 import { Clickable, Flex, Spacer, Text } from "@artsy/palette"
+import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import { type Brand, BrandCreditCardIcon } from "Components/BrandCreditCardIcon"
 
 interface Order2PaymentCompletedViewProps {
   confirmationToken: any

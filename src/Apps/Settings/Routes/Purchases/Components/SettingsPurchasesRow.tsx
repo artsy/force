@@ -1,7 +1,3 @@
-import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
-import { EntityHeaderPlaceholder } from "Components/EntityHeaders/EntityHeaderPlaceholder"
-import { RouterLink } from "System/Components/RouterLink"
-import { extractNodes } from "Utils/extractNodes"
 import {
   ActionType,
   type ClickedChangePaymentMethod,
@@ -27,13 +23,17 @@ import {
   SkeletonText,
   Text,
 } from "@artsy/palette"
+import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
+import { EntityHeaderPlaceholder } from "Components/EntityHeaders/EntityHeaderPlaceholder"
+import { RouterLink } from "System/Components/RouterLink"
+import { extractNodes } from "Utils/extractNodes"
 import type {
   CommerceBuyerOfferActionEnum,
   CommerceOrderDisplayStateEnum,
   SettingsPurchasesRow_order$data,
 } from "__generated__/SettingsPurchasesRow_order.graphql"
-import type { LocaleOptions } from "luxon"
 import { DateTime } from "luxon"
+import type { LocaleOptions } from "luxon"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -161,7 +161,7 @@ const OrderActionButton: FC<OrderActionButtonProps> = ({
     case "PAYMENT_FAILED":
       return (
         <Button
-          // @ts-expect-error
+          // @ts-ignore
           as={RouterLink}
           to={`/orders/${orderId}/payment/new`}
           variant="primaryBlack"
@@ -177,7 +177,7 @@ const OrderActionButton: FC<OrderActionButtonProps> = ({
     case "OFFER_RECEIVED":
       return (
         <Button
-          // @ts-expect-error
+          // @ts-ignore
           as={RouterLink}
           to={`/orders/${orderId}/details`}
           variant="primaryBlack"

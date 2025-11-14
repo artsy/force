@@ -1,3 +1,14 @@
+import { ActionType, type ClickedHeader, ContextModule } from "@artsy/cohesion"
+import {
+  BaseTab,
+  Box,
+  Clickable,
+  Separator,
+  Spacer,
+  Spinner,
+  Text,
+  useTheme,
+} from "@artsy/palette"
 import {
   ArtistAuctionResultsQueryRenderer,
   useScrollToTopOfAuctionResults,
@@ -11,17 +22,6 @@ import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useRouter } from "System/Hooks/useRouter"
 import { Jump, useJump } from "Utils/Hooks/useJump"
 import { useSectionReadiness } from "Utils/Hooks/useSectionReadiness"
-import { ActionType, type ClickedHeader, ContextModule } from "@artsy/cohesion"
-import {
-  BaseTab,
-  Box,
-  Clickable,
-  Separator,
-  Spacer,
-  Spinner,
-  Text,
-  useTheme,
-} from "@artsy/palette"
 import type { ArtistCombinedRoute_artist$data } from "__generated__/ArtistCombinedRoute_artist.graphql"
 import type * as React from "react"
 import { useEffect, useMemo, useRef } from "react"

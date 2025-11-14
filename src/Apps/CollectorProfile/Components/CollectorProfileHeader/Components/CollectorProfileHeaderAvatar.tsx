@@ -1,5 +1,5 @@
-import { Media } from "Utils/Responsive"
 import { Avatar, Box, type BoxProps } from "@artsy/palette"
+import { Media } from "Utils/Responsive"
 import type { CollectorProfileHeaderAvatar_me$data } from "__generated__/CollectorProfileHeaderAvatar_me.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 

@@ -1,6 +1,6 @@
-import { RouterLink } from "System/Components/RouterLink"
 import { Clickable } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
+import { RouterLink } from "System/Components/RouterLink"
 import styled, { css } from "styled-components"
 
 const navBarMobileMenuItemMixin = css`

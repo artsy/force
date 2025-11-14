@@ -1,13 +1,13 @@
-import { usePoll } from "Utils/Hooks/usePoll"
 import { Spacer } from "@artsy/palette"
+import { usePoll } from "Utils/Hooks/usePoll"
 import type { ArtworkSidebarAuctionInfoPolling_artwork$data } from "__generated__/ArtworkSidebarAuctionInfoPolling_artwork.graphql"
 import type { ArtworkSidebarAuctionInfoPolling_me$data } from "__generated__/ArtworkSidebarAuctionInfoPolling_me.graphql"
 import type * as React from "react"
 import { useEffect, useRef, useState } from "react"
 import {
+  type RelayRefetchProp,
   createRefetchContainer,
   graphql,
-  type RelayRefetchProp,
 } from "react-relay"
 import { useTracking } from "react-tracking"
 import { ArtworkSidebarBidActionFragmentContainer } from "./ArtworkSidebarBidAction"
@@ -22,8 +22,9 @@ type Props = {
 export const ArtworkSidebarAuctionPolling: React.FC<
   React.PropsWithChildren<Props>
 > = ({ artwork, relay, me }) => {
-  const { sale } = artwork
+  const { sale, saleArtwork } = artwork
   const isClosed = !!sale?.isClosed
+  const currentBidDisplay = saleArtwork?.currentBid?.display
 
   const [currentBidChanged, setCurrentBidChanged] = useState(false)
 
@@ -36,7 +37,7 @@ export const ArtworkSidebarAuctionPolling: React.FC<
     } else {
       isMounted.current = true
     }
-  }, [])
+  }, [currentBidDisplay])
 
   usePoll({
     callback: () => {

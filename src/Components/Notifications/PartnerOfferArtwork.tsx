@@ -1,12 +1,12 @@
+import { ContextModule } from "@artsy/cohesion"
+import { Box, Button, Image, Link, Text, useTheme } from "@artsy/palette"
 import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
 import Metadata from "Components/Artwork/Metadata"
-import { CARD_MAX_WIDTH } from "Components/Notifications/constants"
 import { useNotificationsTracking } from "Components/Notifications/Hooks/useNotificationsTracking"
+import { CARD_MAX_WIDTH } from "Components/Notifications/constants"
 import { RouterLink } from "System/Components/RouterLink"
 import { useTimer } from "Utils/Hooks/useTimer"
 import { resized } from "Utils/resized"
-import { ContextModule } from "@artsy/cohesion"
-import { Box, Button, Image, Link, Text, useTheme } from "@artsy/palette"
 import type { PartnerOfferArtwork_artwork$key } from "__generated__/PartnerOfferArtwork_artwork.graphql"
 import type { FC } from "react"
 import { graphql, useFragment } from "react-relay"
@@ -122,7 +122,7 @@ export const PartnerOfferArtwork: FC<
         gap={2}
       >
         <Button
-          // @ts-expect-error
+          // @ts-ignore
           as={RouterLink}
           to={href}
           onClick={() => {
@@ -139,7 +139,7 @@ export const PartnerOfferArtwork: FC<
         </Button>
         {fullyAvailable && (
           <Button
-            // @ts-expect-error
+            // @ts-ignore
             as={RouterLink}
             to={artworkListingHref}
             onClick={() => {

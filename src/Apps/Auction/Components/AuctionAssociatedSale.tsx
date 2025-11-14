@@ -1,5 +1,5 @@
-import { RouterLink } from "System/Components/RouterLink"
 import { Column, GridColumns, Image, ResponsiveBox, Text } from "@artsy/palette"
+import { RouterLink } from "System/Components/RouterLink"
 import type { AuctionAssociatedSale_sale$data } from "__generated__/AuctionAssociatedSale_sale.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 

@@ -7,8 +7,8 @@ import type { Metric } from "Utils/metrics"
 import { compact, isNil } from "lodash"
 import {
   BOOLEAN_FILTER_LABELS,
-  getFilterDisplayName,
   INVERTED_BOOLEAN_FILTERS,
+  getFilterDisplayName,
 } from "./filterDisplayNames"
 
 interface PillGeneratorContext {

@@ -1,6 +1,6 @@
 import type { NotificationType } from "Components/Notifications/types"
 import { useRouter } from "System/Hooks/useRouter"
-import { createContext, type FC, useContext, useEffect, useState } from "react"
+import { type FC, createContext, useContext, useEffect, useState } from "react"
 
 export type State = {
   currentNotificationId: string | null
@@ -38,7 +38,7 @@ export const NotificationsContextProvider: FC<
     if (!match.params.notificationId) return
 
     setCurrentNotificationId(match.params.notificationId)
-  }, [match.params.notificationId])
+  }, [match.params.notificationId, setCurrentNotificationId])
 
   return (
     <NotificationsContext.Provider

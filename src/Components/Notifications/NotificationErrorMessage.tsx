@@ -1,6 +1,6 @@
+import { Box, Spacer, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { Box, Spacer, Text } from "@artsy/palette"
 import type { FC } from "react"
 
 export const NotificationErrorMessage: FC<

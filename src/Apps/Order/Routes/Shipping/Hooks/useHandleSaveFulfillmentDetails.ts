@@ -108,7 +108,7 @@ export const useHandleSaveFulfillmentDetails = () => {
           logger.error("Unexpected mutation result", orderOrError)
           return {
             error: new Error(
-              `Unexpected mutation result: ${orderOrError?.__typename}`,
+              "Unexpected mutation result: " + orderOrError?.__typename,
             ),
           }
       }

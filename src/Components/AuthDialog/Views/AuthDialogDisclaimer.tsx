@@ -1,8 +1,8 @@
+import { SkeletonText, Stack, Text } from "@artsy/palette"
+import { themeGet } from "@styled-system/theme-get"
 import { useCountryCode } from "Components/AuthDialog/Hooks/useCountryCode"
 import { RouterLink } from "System/Components/RouterLink"
 import { isTouch } from "Utils/device"
-import { SkeletonText, Stack, Text } from "@artsy/palette"
-import { themeGet } from "@styled-system/theme-get"
 import type { FC } from "react"
 import styled from "styled-components"
 
@@ -10,7 +10,7 @@ type AuthDialogDisclaimerProps = {}
 
 export const AuthDialogDisclaimer: FC<
   React.PropsWithChildren<AuthDialogDisclaimerProps>
-> = _props => {
+> = props => {
   const { loading, isAutomaticallySubscribed } = useCountryCode()
 
   if (loading) {

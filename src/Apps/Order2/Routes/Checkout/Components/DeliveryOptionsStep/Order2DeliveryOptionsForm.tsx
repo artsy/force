@@ -1,17 +1,3 @@
-import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
-import { BUYER_GUARANTEE_URL } from "Apps/Order2/constants"
-import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
-import {
-  CheckoutErrorBanner,
-  MailtoOrderSupport,
-} from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
-import {
-  deliveryOptionLabel,
-  deliveryOptionTimeEstimate,
-} from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/utils"
-import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
-import { useOrder2SetOrderFulfillmentOptionMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderFulfillmentOptionMutation"
-import { RouterLink } from "System/Components/RouterLink"
 import { ContextModule } from "@artsy/cohesion"
 import InfoIcon from "@artsy/icons/InfoIcon"
 import {
@@ -24,6 +10,20 @@ import {
   Text,
   Tooltip,
 } from "@artsy/palette"
+import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
+import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
+import {
+  CheckoutErrorBanner,
+  MailtoOrderSupport,
+} from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
+import {
+  deliveryOptionLabel,
+  deliveryOptionTimeEstimate,
+} from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/utils"
+import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import { useOrder2SetOrderFulfillmentOptionMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderFulfillmentOptionMutation"
+import { BUYER_GUARANTEE_URL } from "Apps/Order2/constants"
+import { RouterLink } from "System/Components/RouterLink"
 import type {
   Order2DeliveryOptionsForm_order$data,
   Order2DeliveryOptionsForm_order$key,

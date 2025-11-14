@@ -8,7 +8,6 @@ const forwardedFor = require("./forwarded_for")
 const opts = require("../options")
 const qs = require("querystring")
 // TODO: Remove let added for 'rewire'
-// biome-ignore lint/style/noRestrictedImports: ignore
 const request = require("superagent")
 const omit = require("lodash/omit")
 const isEmpty = require("lodash/isEmpty")
@@ -29,7 +28,6 @@ module.exports.headerLogin = (req, _res, next) => {
 
 module.exports.trustTokenLogin = (req, res, next) => {
   let token
-  // biome-ignore lint/suspicious/noAssignInExpressions: thing
   if ((token = req.query.trust_token) == null) {
     return next()
   }

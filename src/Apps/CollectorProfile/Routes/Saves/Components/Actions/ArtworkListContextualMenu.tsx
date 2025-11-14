@@ -1,8 +1,4 @@
 import {
-  type EditArtworkListEntity,
-  EditArtworkListModal,
-} from "Apps/CollectorProfile/Routes/Saves/Components/Actions/EditArtworkListModal"
-import {
   ContextualMenu,
   ContextualMenuDivider,
   ContextualMenuItem,
@@ -12,6 +8,11 @@ import {
   type DeleteArtworkListEntity,
   DeleteArtworkListModal,
 } from "./DeleteArtworkListModal"
+
+import {
+  type EditArtworkListEntity,
+  EditArtworkListModal,
+} from "Apps/CollectorProfile/Routes/Saves/Components/Actions/EditArtworkListModal"
 
 // FIXME: Should be a fragment
 export type ArtworkListEntity = DeleteArtworkListEntity & EditArtworkListEntity

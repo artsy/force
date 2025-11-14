@@ -25,7 +25,7 @@ describe("BankDebitProvider", () => {
     })
   })
 
-  const getWrapper = (_props: any = {}) =>
+  const getWrapper = (props: any = {}) =>
     render(
       <BankDebitProvider
         order={{

@@ -1,3 +1,4 @@
+import { useToasts } from "@artsy/palette"
 import {
   MyCollectionArtworkFormContextProvider,
   useLocalImageState,
@@ -10,7 +11,6 @@ import { useRouter } from "System/Hooks/useRouter"
 import { storeLocalImage } from "Utils/localImageHelpers"
 import createLogger from "Utils/logger"
 import { wait } from "Utils/wait"
-import { useToasts } from "@artsy/palette"
 import type { MyCollectionEditArtwork_artwork$data } from "__generated__/MyCollectionEditArtwork_artwork.graphql"
 import { Formik } from "formik"
 import { reverse } from "lodash"

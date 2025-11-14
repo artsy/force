@@ -1,14 +1,14 @@
-import {
-  OfferOrderWithShippingDetails,
-  OfferWithTotals,
-} from "Apps/__tests__/Fixtures/Order"
+import { NewPaymentFragmentContainer } from "Apps/Order/Routes/NewPayment"
 import {
   fixFailedPaymentFailure,
   fixFailedPaymentInsufficientInventoryFailure,
   fixFailedPaymentSuccess,
   fixFailedPaymentWithActionRequired,
 } from "Apps/Order/Routes/__fixtures__/MutationResults/fixFailedPayment"
-import { NewPaymentFragmentContainer } from "Apps/Order/Routes/NewPayment"
+import {
+  OfferOrderWithShippingDetails,
+  OfferWithTotals,
+} from "Apps/__tests__/Fixtures/Order"
 import { MockBoot } from "DevTools/MockBoot"
 import { mockLocation } from "DevTools/mockLocation"
 import { mockStripe } from "DevTools/mockStripe"
@@ -106,6 +106,7 @@ describe("Payment", () => {
           router={{ push: pushMock } as any}
           route={{ onTransition: jest.fn() } as any}
           order={props.order}
+          // @ts-ignore
           isCommittingMutation={isCommittingMutation}
         />
       </MockBoot>

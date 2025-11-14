@@ -1,7 +1,7 @@
+import { Text } from "@artsy/palette"
 import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
 import { useAuctionWebsocket } from "Utils/Hooks/useAuctionWebsocket"
 import { useTimer } from "Utils/Hooks/useTimer"
-import { Text } from "@artsy/palette"
 import type { BidTimerLine_artwork$key } from "__generated__/BidTimerLine_artwork.graphql"
 import { DateTime } from "luxon"
 import { useState } from "react"
@@ -28,7 +28,7 @@ export const BidTimerLine: React.FC<
     useState(onlineBiddingExtended)
 
   useAuctionWebsocket({
-    lotID: saleArtwork?.lotID as string,
+    lotID: saleArtwork?.lotID!,
     onChange: ({ extended_bidding_end_at }) => {
       setUpdatedLotClosesAt(extended_bidding_end_at)
       setUpdatedOnlineBiddingExtended(true)

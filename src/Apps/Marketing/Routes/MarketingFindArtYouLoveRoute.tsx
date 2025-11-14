@@ -1,3 +1,11 @@
+import {
+  Column,
+  FullBleed,
+  GridColumns,
+  Join,
+  Spacer,
+  Text,
+} from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { MarketingAlternatingStack } from "Apps/Marketing/Components/MarketingAlternatingStack"
@@ -8,14 +16,6 @@ import { MarketingQuizCTA } from "Apps/Marketing/Components/MarketingQuizCTA"
 import { MarketingTrendingArtistsRailQueryRenderer } from "Apps/Marketing/Components/MarketingTrendingArtistsRail"
 import { BRAND_PALETTE } from "Apps/Marketing/Utils/brandPalette"
 import { MetaTags } from "Components/MetaTags"
-import {
-  Column,
-  FullBleed,
-  GridColumns,
-  Join,
-  Spacer,
-  Text,
-} from "@artsy/palette"
 import type { FC } from "react"
 
 export const MarketingFindArtYouLoveRoute: FC<

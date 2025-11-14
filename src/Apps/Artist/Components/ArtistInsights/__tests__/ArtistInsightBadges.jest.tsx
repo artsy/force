@@ -1,6 +1,6 @@
+import { screen } from "@testing-library/react"
 import { ArtistInsightBadgesFragmentContainer } from "Apps/Artist/Components/ArtistInsights/ArtistInsightBadges"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { screen } from "@testing-library/react"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")

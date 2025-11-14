@@ -1,6 +1,6 @@
+import { Box, Button, Flex, Separator, Spacer, Text } from "@artsy/palette"
 import { Timer } from "Components/Timer"
 import { RouterLink } from "System/Components/RouterLink"
-import { Box, Button, Flex, Separator, Spacer, Text } from "@artsy/palette"
 import type { ArtworkAuctionRegistrationPanel_artwork$data } from "__generated__/ArtworkAuctionRegistrationPanel_artwork.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 
@@ -44,7 +44,7 @@ const ArtworkAuctionRegistrationPanel: React.FC<
           <Spacer y={1} x={1} />
 
           <Button
-            // @ts-expect-error
+            // @ts-ignore
             as={RouterLink}
             to={href}
             size="small"
@@ -63,7 +63,7 @@ const ArtworkAuctionRegistrationPanel: React.FC<
       <Spacer y={1} />
 
       <Button
-        // @ts-expect-error
+        // @ts-ignore
         as={RouterLink}
         to={href}
         size="small"

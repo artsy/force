@@ -1,5 +1,3 @@
-import { EntityHeaderPartnerFragmentContainer } from "Components/EntityHeaders/EntityHeaderPartner"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import {
   ActionType,
   type ClickedPartnerCard,
@@ -7,6 +5,8 @@ import {
   OwnerType,
   type PageOwnerType,
 } from "@artsy/cohesion"
+import { EntityHeaderPartnerFragmentContainer } from "Components/EntityHeaders/EntityHeaderPartner"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import type { FairExhibitorCard_exhibitor$data } from "__generated__/FairExhibitorCard_exhibitor.graphql"
 import type { FairExhibitorCard_fair$data } from "__generated__/FairExhibitorCard_fair.graphql"
 import type React from "react"

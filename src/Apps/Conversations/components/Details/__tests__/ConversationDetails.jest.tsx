@@ -1,7 +1,7 @@
+import { fireEvent, screen } from "@testing-library/react"
 import { ConversationDetails } from "Apps/Conversations/components/Details/ConversationDetails"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { MediaContextProvider } from "Utils/Responsive"
-import { fireEvent, screen } from "@testing-library/react"
 import type { ConversationDetailsTestQuery } from "__generated__/ConversationDetailsTestQuery.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"

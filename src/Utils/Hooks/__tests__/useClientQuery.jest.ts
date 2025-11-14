@@ -1,8 +1,8 @@
-import { useClientQuery } from "Utils/Hooks/useClientQuery"
 import { waitFor } from "@testing-library/react"
 import { renderHook } from "@testing-library/react-hooks"
+import { useClientQuery } from "Utils/Hooks/useClientQuery"
 import { graphql } from "react-relay"
-import { createMockEnvironment, MockPayloadGenerator } from "relay-test-utils"
+import { MockPayloadGenerator, createMockEnvironment } from "relay-test-utils"
 
 jest.unmock("react-relay")
 

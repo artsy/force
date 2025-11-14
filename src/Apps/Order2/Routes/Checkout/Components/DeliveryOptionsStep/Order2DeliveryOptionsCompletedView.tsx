@@ -1,6 +1,6 @@
-import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import CheckmarkIcon from "@artsy/icons/CheckmarkIcon"
 import { Box, Clickable, Flex, Spacer, Text } from "@artsy/palette"
+import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useCallback } from "react"
 
 export interface Order2DeliveryOptionsCompletedViewProps {

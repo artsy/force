@@ -1,11 +1,13 @@
+import { createContext } from "react"
+
 import type { CustomRange } from "Components/PriceRange/constants"
 import type {
   SearchCriteriaAttributeKeys,
   SearchCriteriaAttributes,
 } from "Components/SavedSearchAlert/types"
+
 import { DEFAULT_METRIC, type Metric } from "Utils/metrics"
 import type { AlertProviderPreviewQuery } from "__generated__/AlertProviderPreviewQuery.graphql"
-import { createContext } from "react"
 
 export type Settings = {
   details: string

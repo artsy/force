@@ -1,4 +1,4 @@
-import { appPreferencesMiddleware } from "Apps/AppPreferences/appPreferencesMiddleware"
+import path from "path"
 import bodyParser from "body-parser"
 import compression from "compression"
 import timeout from "connect-timeout"
@@ -7,19 +7,17 @@ import express from "express"
 import addRequestId from "express-request-id"
 import glob from "glob"
 import helmet from "helmet"
-import path from "path"
 import favicon from "serve-favicon"
-// biome-ignore lint/style/noRestrictedImports: Required for server middleware setup
+// eslint-disable-next-line no-restricted-imports
 import sharify from "sharify"
-import { bootstrapSharify } from "./Server/bootstrapSharify"
 import {
   API_URL,
-  APP_TIMEOUT,
-  APP_URL,
   APPLE_CLIENT_ID,
   APPLE_KEY_ID,
   APPLE_PRIVATE_KEY,
   APPLE_TEAM_ID,
+  APP_TIMEOUT,
+  APP_URL,
   CLIENT_ID,
   CLIENT_SECRET,
   FACEBOOK_ID,
@@ -30,6 +28,10 @@ import {
   NODE_ENV,
   SEGMENT_WRITE_KEY_SERVER,
 } from "./Server/config"
+import artsyPassport from "./Server/passport"
+
+import { appPreferencesMiddleware } from "Apps/AppPreferences/appPreferencesMiddleware"
+import { bootstrapSharify } from "./Server/bootstrapSharify"
 import { assetMiddleware } from "./Server/middleware/assetMiddleware"
 import { asyncLocalsMiddleware } from "./Server/middleware/asyncLocalMiddleware"
 import { bootstrapSharifyAndContextLocalsMiddleware } from "./Server/middleware/bootstrapSharifyAndContextLocalsMiddleware"
@@ -45,7 +47,6 @@ import { sameOriginMiddleware } from "./Server/middleware/sameOrigin"
 import { serverTimingHeaders } from "./Server/middleware/serverTimingHeaders"
 import { sessionMiddleware } from "./Server/middleware/session"
 import { userRequiredMiddleware } from "./Server/middleware/userRequiredMiddleware"
-import artsyPassport from "./Server/passport"
 
 bootstrapSharify()
 
@@ -166,10 +167,10 @@ export function initializeMiddleware(app) {
   /**
    * Routes for pinging system time and up
    */
-  app.get("/system/time", (_req, res) =>
+  app.get("/system/time", (req, res) =>
     res.status(200).send({ time: Date.now() }),
   )
-  app.get("/system/up", (_req, res) => {
+  app.get("/system/up", (req, res) => {
     res.status(200).send({ nodejs: true })
   })
 

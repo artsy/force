@@ -1,6 +1,3 @@
-import { SaleDetailTimerFragmentContainer } from "Apps/Auction/Components/AuctionDetails/SaleDetailTimer"
-import { RegisterButtonFragmentContainer } from "Apps/Auction/Components/RegisterButton"
-import { getENV } from "Utils/getENV"
 import {
   Column,
   Flex,
@@ -10,6 +7,9 @@ import {
   Stack,
   Text,
 } from "@artsy/palette"
+import { SaleDetailTimerFragmentContainer } from "Apps/Auction/Components/AuctionDetails/SaleDetailTimer"
+import { RegisterButtonFragmentContainer } from "Apps/Auction/Components/RegisterButton"
+import { getENV } from "Utils/getENV"
 import type { AuctionDetails_me$data } from "__generated__/AuctionDetails_me.graphql"
 import type { AuctionDetails_sale$data } from "__generated__/AuctionDetails_sale.graphql"
 import { createFragmentContainer, graphql } from "react-relay"

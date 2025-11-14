@@ -5,7 +5,7 @@ import {
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { ArtworkFilterMobileOverlay } from "Components/ArtworkFilter/ArtworkFilterMobileOverlay"
 import { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilters"
-import { fireEvent, render, screen } from "@testing-library/react"
+import { render, screen, fireEvent } from "@testing-library/react"
 import { useTracking } from "react-tracking"
 
 jest.mock("Utils/Hooks/useMatchMedia", () => ({

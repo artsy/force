@@ -1,14 +1,14 @@
-import { usePrefetchRoute } from "System/Hooks/usePrefetchRoute"
-import { useRouter } from "System/Hooks/useRouter"
-import { useIntersectionObserver } from "Utils/Hooks/useIntersectionObserver"
 import { type BoxProps, boxMixin } from "@artsy/palette"
 import isPropValid from "@emotion/is-prop-valid"
 import { themeGet } from "@styled-system/theme-get"
+import { usePrefetchRoute } from "System/Hooks/usePrefetchRoute"
+import { useRouter } from "System/Hooks/useRouter"
+import { useIntersectionObserver } from "Utils/Hooks/useIntersectionObserver"
 import { Link, type LinkPropsSimple } from "found"
 import * as React from "react"
 import { useMemo, useState } from "react"
 import styled from "styled-components"
-import { compose, type ResponsiveValue, system } from "styled-system"
+import { type ResponsiveValue, compose, system } from "styled-system"
 
 /**
  * Wrapper component around found's <Link> component with a fallback to a normal

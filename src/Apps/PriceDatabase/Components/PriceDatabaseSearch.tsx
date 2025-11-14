@@ -1,9 +1,3 @@
-import { useAuctionResultsFilterContext } from "Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
-import { categoryMap } from "Apps/Artist/Routes/AuctionResults/Components/AuctionFilters/MediumFilter"
-import { sizeMap } from "Apps/Artist/Routes/AuctionResults/Components/AuctionFilters/SizeFilter"
-import { filterSearchFilters } from "Apps/PriceDatabase/Utils/filterSearchFilters"
-import { paramsToSnakeCase } from "Components/ArtworkFilter/Utils/paramsCasing"
-import { useRouter } from "System/Hooks/useRouter"
 import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 import {
   Button,
@@ -13,6 +7,12 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
+import { useAuctionResultsFilterContext } from "Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
+import { categoryMap } from "Apps/Artist/Routes/AuctionResults/Components/AuctionFilters/MediumFilter"
+import { sizeMap } from "Apps/Artist/Routes/AuctionResults/Components/AuctionFilters/SizeFilter"
+import { filterSearchFilters } from "Apps/PriceDatabase/Utils/filterSearchFilters"
+import { paramsToSnakeCase } from "Components/ArtworkFilter/Utils/paramsCasing"
+import { useRouter } from "System/Hooks/useRouter"
 import qs from "qs"
 import { type FC, useState } from "react"
 import { useTracking } from "react-tracking"

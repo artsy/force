@@ -1,4 +1,12 @@
-import { ArtQuizArtworksCardFragmentContainer } from "Apps/ArtQuiz/Components/ArtQuizArtworksCard"
+import { ContextModule } from "@artsy/cohesion"
+import {
+  Clickable,
+  Flex,
+  FullBleed,
+  Text,
+  Tooltip,
+  useDidMount,
+} from "@artsy/palette"
 import {
   ArtQuizButton,
   type ArtQuizButtonRef,
@@ -12,21 +20,14 @@ import { useSwipe } from "Apps/ArtQuiz/Hooks/useSwipe"
 import { useUpdateQuiz } from "Apps/ArtQuiz/Hooks/useUpdateQuiz"
 import { RouterLink } from "System/Components/RouterLink"
 import { useRouter } from "System/Hooks/useRouter"
-import { ContextModule } from "@artsy/cohesion"
-import ChevronLeftIcon from "@artsy/icons/ChevronLeftIcon"
-import {
-  Clickable,
-  Flex,
-  FullBleed,
-  Text,
-  Tooltip,
-  useDidMount,
-} from "@artsy/palette"
 import type { ArtQuizArtworks_me$data } from "__generated__/ArtQuizArtworks_me.graphql"
-import { compact } from "lodash"
 import { type FC, useCallback, useRef, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
+
+import ChevronLeftIcon from "@artsy/icons/ChevronLeftIcon"
+import { ArtQuizArtworksCardFragmentContainer } from "Apps/ArtQuiz/Components/ArtQuizArtworksCard"
+import { compact } from "lodash"
 
 interface ArtQuizArtworksProps {
   me: ArtQuizArtworks_me$data

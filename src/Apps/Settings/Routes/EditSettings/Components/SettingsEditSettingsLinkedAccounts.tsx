@@ -1,10 +1,10 @@
-import { useRouter } from "System/Hooks/useRouter"
-import { getENV } from "Utils/getENV"
-import { useMode } from "Utils/Hooks/useMode"
 import AppleIcon from "@artsy/icons/AppleIcon"
 import FacebookIcon from "@artsy/icons/FacebookIcon"
 import GoogleIcon from "@artsy/icons/GoogleIcon"
 import { Button, Join, Spacer, Text, useToasts } from "@artsy/palette"
+import { useRouter } from "System/Hooks/useRouter"
+import { useMode } from "Utils/Hooks/useMode"
+import { getENV } from "Utils/getENV"
 import type {
   AuthenticationProvider,
   SettingsEditSettingsLinkedAccounts_me$data,

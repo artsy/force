@@ -1,3 +1,13 @@
+import {
+  Box,
+  Button,
+  Clickable,
+  Column,
+  Flex,
+  GridColumns,
+  Spacer,
+  Text,
+} from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { useMyCollectionArtworkFormContext } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormContext"
 import { MyCollectionArtworkFormHeader } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormHeader"
@@ -10,16 +20,6 @@ import {
 } from "Components/ArtistAutocomplete"
 import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
 import { extractNodes } from "Utils/extractNodes"
-import {
-  Box,
-  Button,
-  Clickable,
-  Column,
-  Flex,
-  GridColumns,
-  Spacer,
-  Text,
-} from "@artsy/palette"
 import type { MyCollectionArtworkFormArtistStep_me$key } from "__generated__/MyCollectionArtworkFormArtistStep_me.graphql"
 import { useFormikContext } from "formik"
 import { debounce, sortBy } from "lodash"
@@ -84,7 +84,7 @@ export const MyCollectionArtworkFormArtistStep: React.FC<
 
   const handleArtistNotFound = useMemo(
     () => debounce(setArtistNotFound, 200),
-    [],
+    [setArtistNotFound],
   )
 
   // Stop the invocation of the debounced function after unmounting

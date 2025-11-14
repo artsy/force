@@ -1,9 +1,13 @@
+import { ContextModule, Intent } from "@artsy/cohesion"
+import { type FC, useEffect, useReducer, useState } from "react"
+import { type Environment, fetchQuery, graphql } from "react-relay"
+
 import {
   AlertContext,
   type PreviewSavedSearch,
-  reducer,
   type Settings,
   type State,
+  reducer,
 } from "Components/Alert/AlertContext"
 import { Modal } from "Components/Alert/Components/Modal/Modal"
 import { Steps } from "Components/Alert/Components/Steps"
@@ -11,22 +15,19 @@ import { useAlertTracking } from "Components/Alert/Hooks/useAlertTracking"
 import { useCreateAlert } from "Components/Alert/Hooks/useCreateAlert"
 import { useEditSavedSearchAlert } from "Components/Alert/Hooks/useEditSavedSearchAlert"
 import { useAuthDialog } from "Components/AuthDialog"
-import type { SearchCriteriaAttributes } from "Components/SavedSearchAlert/types"
 import { getAllowedSearchCriteria } from "Components/SavedSearchAlert/Utils/savedSearchCriteria"
+import type { SearchCriteriaAttributes } from "Components/SavedSearchAlert/types"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useAuthIntent } from "Utils/Hooks/useAuthIntent"
 import { useDebouncedValue } from "Utils/Hooks/useDebounce"
-import createLogger from "Utils/logger"
-import { DEFAULT_METRIC, type Metric } from "Utils/metrics"
-import { ContextModule, Intent } from "@artsy/cohesion"
 
 import { useToasts } from "@artsy/palette"
+import createLogger from "Utils/logger"
+import { DEFAULT_METRIC, type Metric } from "Utils/metrics"
 import type {
   AlertProviderPreviewQuery,
   PreviewSavedSearchAttributes,
 } from "__generated__/AlertProviderPreviewQuery.graphql"
-import { type FC, useEffect, useReducer, useState } from "react"
-import { type Environment, fetchQuery, graphql } from "react-relay"
 
 const logger = createLogger("AlertProvider.tsx")
 interface AlertProviderProps {

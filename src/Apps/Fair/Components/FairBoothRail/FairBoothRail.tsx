@@ -1,4 +1,12 @@
 import {
+  ActionType,
+  type ClickedArtworkGroup,
+  ContextModule,
+  OwnerType,
+  type PageOwnerType,
+} from "@artsy/cohesion"
+import { Box, type BoxProps, Flex, Text } from "@artsy/palette"
+import {
   initialBoothFilterState,
   useBoothsFilterContext,
 } from "Apps/Fair/Components/BoothFilterContext"
@@ -7,18 +15,10 @@ import { removeDefaultValues } from "Components/ArtworkFilter/Utils/urlBuilder"
 import { RouterLink } from "System/Components/RouterLink"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useRouter } from "System/Hooks/useRouter"
-import {
-  ActionType,
-  type ClickedArtworkGroup,
-  ContextModule,
-  OwnerType,
-  type PageOwnerType,
-} from "@artsy/cohesion"
-import { Box, type BoxProps, Flex, Text } from "@artsy/palette"
 import type { FairBoothRail_show$data } from "__generated__/FairBoothRail_show.graphql"
 import qs from "qs"
-import type * as React from "react"
 import { useRef } from "react"
+import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { FairBoothRailArtworksQueryRenderer as FairBoothRailArtworks } from "./FairBoothRailArtworks"
@@ -51,6 +51,7 @@ export const FairBoothRail: React.FC<
   }
 
   if (show.href) {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const params = removeDefaultValues(filters!, {
       defaultValues: initialBoothFilterState,
     })

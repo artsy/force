@@ -1,9 +1,9 @@
+import { Card, Shelf, Stack, Text } from "@artsy/palette"
 import { getStatus } from "Apps/ViewingRoom/Utils/getStatus"
 import { RouterLink } from "System/Components/RouterLink"
-import { extractNodes } from "Utils/extractNodes"
 import { useStableShuffle } from "Utils/Hooks/useStableShuffle"
+import { extractNodes } from "Utils/extractNodes"
 import { cropped } from "Utils/resized"
-import { Card, Shelf, Stack, Text } from "@artsy/palette"
 import type { ViewingRoomsFeaturedRail_featuredViewingRooms$data } from "__generated__/ViewingRoomsFeaturedRail_featuredViewingRooms.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -53,6 +53,7 @@ export const ViewingRoomsFeaturedRail: React.FC<
               <Card
                 width={280}
                 // TODO: Fix Palette type so that `undefined` is valid for `image`
+                // @ts-ignore
                 image={image}
                 title={viewingRoom.title}
                 subtitle={viewingRoom.partner?.name}

@@ -1,10 +1,3 @@
-import { AppContainer } from "Apps/Components/AppContainer"
-import { NavigationTabsFragmentContainer as NavigationTabs } from "Apps/Search/Components/NavigationTabs"
-import { SearchMeta } from "Apps/Search/Components/SearchMeta"
-import { RecentlyViewed } from "Components/RecentlyViewed"
-import { Sticky } from "Components/Sticky"
-import { useRouter } from "System/Hooks/useRouter"
-import { Jump } from "Utils/Hooks/useJump"
 import {
   Box,
   FullBleed,
@@ -13,10 +6,18 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
+import { AppContainer } from "Apps/Components/AppContainer"
+import { NavigationTabsFragmentContainer as NavigationTabs } from "Apps/Search/Components/NavigationTabs"
+import { SearchMeta } from "Apps/Search/Components/SearchMeta"
+import { RecentlyViewed } from "Components/RecentlyViewed"
+import { Sticky } from "Components/Sticky"
+import { useRouter } from "System/Hooks/useRouter"
 import type { SearchApp_viewer$data } from "__generated__/SearchApp_viewer.graphql"
 import type React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ZeroState } from "./Components/ZeroState"
+
+import { Jump } from "Utils/Hooks/useJump"
 
 export interface SearchAppProps {
   viewer: SearchApp_viewer$data

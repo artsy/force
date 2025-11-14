@@ -1,3 +1,13 @@
+import {
+  Box,
+  Button,
+  Clickable,
+  Flex,
+  Spacer,
+  Text,
+  useTheme,
+  useToasts,
+} from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { ArtworkFormExitConfirmationDialog } from "Apps/MyCollection/Routes/EditArtwork/Components/ArtworkFormExitConfirmationDialog"
 import { ConfirmationModalDelete } from "Apps/MyCollection/Routes/EditArtwork/Components/ConfirmationModalDelete"
@@ -10,18 +20,8 @@ import { getMyCollectionArtworkFormInitialValues } from "Apps/MyCollection/Route
 import type { ArtworkModel } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkModel"
 import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
 import { useRouter } from "System/Hooks/useRouter"
-import createLogger from "Utils/logger"
 import { Media } from "Utils/Responsive"
-import {
-  Box,
-  Button,
-  Clickable,
-  Flex,
-  Spacer,
-  Text,
-  useTheme,
-  useToasts,
-} from "@artsy/palette"
+import createLogger from "Utils/logger"
 import type { MyCollectionArtworkFormMain_artwork$data } from "__generated__/MyCollectionArtworkFormMain_artwork.graphql"
 import { Form, useFormikContext } from "formik"
 import { useState } from "react"

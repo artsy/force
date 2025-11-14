@@ -1,3 +1,4 @@
+import { Button, Flex, Spacer, Text } from "@artsy/palette"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
 import { ConditionsOfSaleDisclaimer } from "Apps/Order/Components/ConditionsOfSaleDisclaimer"
 import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
@@ -11,9 +12,8 @@ import {
 import { CountdownTimer } from "Components/CountdownTimer"
 import { StepSummaryItem } from "Components/StepSummaryItem"
 import { Media } from "Utils/Responsive"
-import { Button, Flex, Spacer, Text } from "@artsy/palette"
-import type { Reject_order$data } from "__generated__/Reject_order.graphql"
 import type { RejectOfferMutation } from "__generated__/RejectOfferMutation.graphql"
+import type { Reject_order$data } from "__generated__/Reject_order.graphql"
 import type { Router } from "found"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -69,7 +69,7 @@ export const Reject: FC<React.PropsWithChildren<RejectProps>> = ({
       const orderOrError = (
         await rejectOffer({
           input: {
-            offerId: order.lastOffer?.internalID as string,
+            offerId: order.lastOffer?.internalID!,
           },
         })
       ).commerceBuyerRejectOffer?.orderOrError
@@ -109,7 +109,7 @@ export const Reject: FC<React.PropsWithChildren<RejectProps>> = ({
             <CountdownTimer
               action="Respond"
               note="Expired offers end the negotiation process permanently."
-              countdownStart={order.lastOffer?.createdAt as string}
+              countdownStart={order.lastOffer?.createdAt!}
               countdownEnd={order.stateExpiresAt!}
             />
             <StepSummaryItem

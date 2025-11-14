@@ -1,9 +1,9 @@
+import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { SettingsEditSettingsTwoFactorFragmentContainer } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/SettingsEditSettingsTwoFactor"
 import { useCreateSettingsBackupSecondFactors } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/useCreateSettingsBackupSecondFactorsMutation"
 import { ConfirmPassword } from "Components/ConfirmPasswordModal/Mutations/ConfirmPassword"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")

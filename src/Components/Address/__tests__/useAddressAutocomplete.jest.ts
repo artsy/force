@@ -1,12 +1,11 @@
+import { waitFor } from "@testing-library/react"
+import { act, renderHook } from "@testing-library/react-hooks"
 import {
   type AddressAutocompleteSuggestion,
   useAddressAutocomplete,
 } from "Components/Address/useAddressAutocomplete"
-import { getENV } from "Utils/getENV"
-import { waitFor } from "@testing-library/react"
-import { act, renderHook } from "@testing-library/react-hooks"
-// biome-ignore lint/style/noRestrictedImports: Test requires unleash feature flag dependency
 import { useFlag } from "@unleash/proxy-client-react"
+import { getENV } from "Utils/getENV"
 import { throttle } from "lodash"
 import { useTracking } from "react-tracking"
 
@@ -50,6 +49,7 @@ describe("useAddressAutocomplete", () => {
       }),
     })
 
+    // @ts-ignore
     global.fetch = mockFetch
   })
 
@@ -137,7 +137,7 @@ describe("useAddressAutocomplete", () => {
       describe("fetching secondary suggestions not enabled", () => {
         beforeEach(() => {
           hookOptions = { enableSecondarySuggestions: false }
-          const suggestions = Array.from({ length: 10 }, (_, _i) => ({
+          const suggestions = Array.from({ length: 10 }, (_, i) => ({
             city: "New York",
             entries: 10,
             secondary: `Fl`,
@@ -582,7 +582,7 @@ describe("useAddressAutocomplete", () => {
 
     describe("feature flag is disabled", () => {
       beforeAll(() => {
-        ;(useFlag as jest.Mock).mockImplementation(_featureName => false)
+        ;(useFlag as jest.Mock).mockImplementation(featureName => false)
       })
 
       describe("API key is availaible", () => {

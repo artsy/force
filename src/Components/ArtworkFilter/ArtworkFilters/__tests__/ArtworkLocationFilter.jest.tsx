@@ -1,14 +1,13 @@
+import { screen } from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
 import type { ArtworkFilterContextProps } from "Components/ArtworkFilter/ArtworkFilterContext"
+import { ArtworkLocationFilter } from "Components/ArtworkFilter/ArtworkFilters/ArtworkLocationFilter"
 import {
   createArtworkFilterTestRenderer,
   currentArtworkFilterContext,
 } from "Components/ArtworkFilter/ArtworkFilters/__tests__/Utils"
-import { ArtworkLocationFilter } from "Components/ArtworkFilter/ArtworkFilters/ArtworkLocationFilter"
-import { screen } from "@testing-library/react"
-import userEvent from "@testing-library/user-event"
-// biome-ignore lint/style/noRestrictedImports: Test requires unleash feature flag dependency
-import { useFlag } from "@unleash/proxy-client-react"
 import { useTracking } from "react-tracking"
+import { useFlag } from "@unleash/proxy-client-react"
 
 jest.mock("System/Hooks/useAnalyticsContext", () => ({
   useAnalyticsContext: jest.fn(() => ({

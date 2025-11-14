@@ -1,3 +1,5 @@
+import { DismissibleProvider, useDismissibleContext } from "@artsy/dismissible"
+import { render, screen } from "@testing-library/react"
 import { __ProgressiveOnboardingSaveArtwork__ } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveArtwork"
 import { __ProgressiveOnboardingSaveFind__ } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveFind"
 import { ProgressiveOnboardingSaveHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveHighlight"
@@ -7,8 +9,6 @@ import {
 } from "Components/ProgressiveOnboarding/progressiveOnboardingKeys"
 import { withProgressiveOnboardingCounts } from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
-import { DismissibleProvider, useDismissibleContext } from "@artsy/dismissible"
-import { render, screen } from "@testing-library/react"
 import { type FC, useEffect } from "react"
 
 jest.mock(
@@ -36,15 +36,15 @@ const Example: FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <DismissibleProvider keys={PROGRESSIVE_ONBOARDING_KEYS}>
       <ProgressiveOnboardingSaveFind>
-        <button type="button">Profile</button>
+        <button>Profile</button>
       </ProgressiveOnboardingSaveFind>
 
       <ProgressiveOnboardingSaveHighlight position="center">
-        <button type="button">Saves</button>
+        <button>Saves</button>
       </ProgressiveOnboardingSaveHighlight>
 
       <ProgressiveOnboardingSaveArtwork>
-        <button type="button">Save</button>
+        <button>Save</button>
       </ProgressiveOnboardingSaveArtwork>
     </DismissibleProvider>
   )

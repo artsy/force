@@ -1,7 +1,7 @@
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { SkeletonText, Text, type TextProps } from "@artsy/palette"
-import type { AuctionDetailsStartTime_sale$data } from "__generated__/AuctionDetailsStartTime_sale.graphql"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import type { AuctionDetailsStartTimeQuery } from "__generated__/AuctionDetailsStartTimeQuery.graphql"
+import type { AuctionDetailsStartTime_sale$data } from "__generated__/AuctionDetailsStartTime_sale.graphql"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 

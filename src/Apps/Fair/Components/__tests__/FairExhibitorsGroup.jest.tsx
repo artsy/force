@@ -1,6 +1,6 @@
 import { FairExhibitorsGroupFragmentContainer } from "Apps/Fair/Components/FairExhibitors/FairExhibitorsGroup"
-import { MockBoot } from "DevTools/MockBoot"
 import { render, screen } from "@testing-library/react"
+import { MockBoot } from "DevTools/MockBoot"
 
 jest.mock("System/Hooks/useRouter", () => ({
   useRouter: () => ({

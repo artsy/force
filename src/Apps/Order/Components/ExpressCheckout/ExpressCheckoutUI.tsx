@@ -1,18 +1,3 @@
-import { useSetFulfillmentOptionMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useSetFulfillmentOptionMutation"
-import { useSubmitOrderMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useSubmitOrderMutation"
-import { useUnsetOrderFulfillmentOptionMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useUnsetOrderFulfillmentOptionMutation"
-import { useUnsetOrderPaymentMethodMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useUnsetOrderPaymentMethodMutation"
-import { useUpdateOrderMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useUpdateOrderMutation"
-import { useUpdateOrderShippingAddressMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useUpdateOrderShippingAddressMutation"
-import {
-  type OrderMutationSuccess,
-  validateAndExtractOrderResponse,
-} from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
-import { useOrderTracking } from "Apps/Order/Hooks/useOrderTracking"
-import { preventHardReload } from "Apps/Order/OrderApp"
-import { useShippingContext } from "Apps/Order/Routes/Shipping/Hooks/useShippingContext"
-import { RouterLink } from "System/Components/RouterLink"
-import createLogger from "Utils/logger"
 import {
   Box,
   Skeleton,
@@ -38,6 +23,21 @@ import type {
   StripeExpressCheckoutElementShippingAddressChangeEvent,
   StripeExpressCheckoutElementShippingRateChangeEvent,
 } from "@stripe/stripe-js"
+import { useSetFulfillmentOptionMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useSetFulfillmentOptionMutation"
+import { useSubmitOrderMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useSubmitOrderMutation"
+import { useUnsetOrderFulfillmentOptionMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useUnsetOrderFulfillmentOptionMutation"
+import { useUnsetOrderPaymentMethodMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useUnsetOrderPaymentMethodMutation"
+import { useUpdateOrderMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useUpdateOrderMutation"
+import { useUpdateOrderShippingAddressMutation } from "Apps/Order/Components/ExpressCheckout/Mutations/useUpdateOrderShippingAddressMutation"
+import {
+  type OrderMutationSuccess,
+  validateAndExtractOrderResponse,
+} from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
+import { useOrderTracking } from "Apps/Order/Hooks/useOrderTracking"
+import { preventHardReload } from "Apps/Order/OrderApp"
+import { useShippingContext } from "Apps/Order/Routes/Shipping/Hooks/useShippingContext"
+import { RouterLink } from "System/Components/RouterLink"
+import createLogger from "Utils/logger"
 import type {
   ExpressCheckoutUI_order$data,
   ExpressCheckoutUI_order$key,
@@ -329,6 +329,7 @@ export const ExpressCheckoutUI = ({
 
   // User confirms the payment
   const onConfirm = async ({
+    paymentFailed,
     billingDetails,
     shippingAddress,
     expressPaymentType,

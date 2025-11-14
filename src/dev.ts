@@ -1,7 +1,7 @@
 import "./Server/loadenv"
+import { execSync } from "child_process"
 import { createReloadable } from "@artsy/express-reloadable"
 import { createRsbuild, loadConfig, logger } from "@rsbuild/core"
-import { execSync } from "child_process"
 import express from "express"
 import { isString } from "lodash"
 import { hideBin } from "yargs/helpers"

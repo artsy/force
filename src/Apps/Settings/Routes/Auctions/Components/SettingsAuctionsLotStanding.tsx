@@ -1,9 +1,9 @@
-import { DetailsFragmentContainer } from "Components/Artwork/Details/Details"
-import { RouterLink } from "System/Components/RouterLink"
-import { getENV } from "Utils/getENV"
 import ChevronCircleDownIcon from "@artsy/icons/ChevronCircleDownIcon"
 import ChevronCircleUpIcon from "@artsy/icons/ChevronCircleUpIcon"
 import { Box, Button, Column, Flex, Image, Text } from "@artsy/palette"
+import { DetailsFragmentContainer } from "Components/Artwork/Details/Details"
+import { RouterLink } from "System/Components/RouterLink"
+import { getENV } from "Utils/getENV"
 import type { SettingsAuctionsLotStanding_lotStanding$data } from "__generated__/SettingsAuctionsLotStanding_lotStanding.graphql"
 import { type FC, Fragment } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -96,7 +96,7 @@ const SettingsAuctionsLotStanding: FC<
       <Column span={2}>
         {sale.isLiveOpen ? (
           <Button
-            // @ts-expect-error
+            // @ts-ignore
             as={RouterLink}
             to={`${getENV("PREDICTION_URL")}/${sale.slug}/login`}
             width="100%"
@@ -106,7 +106,7 @@ const SettingsAuctionsLotStanding: FC<
           </Button>
         ) : (
           <Button
-            // @ts-expect-error
+            // @ts-ignore
             as={RouterLink}
             to={artwork.href}
             width="100%"

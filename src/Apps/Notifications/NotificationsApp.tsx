@@ -1,3 +1,5 @@
+import { ContextModule, Intent } from "@artsy/cohesion"
+import { Box, Column, FullBleed, GridColumns } from "@artsy/palette"
 import {
   DESKTOP_HEIGHT,
   MIN_LIST_WIDTH,
@@ -10,8 +12,6 @@ import { Notifications } from "Components/Notifications/Notifications"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useOnce } from "Utils/Hooks/useOnce"
 import { Media } from "Utils/Responsive"
-import { ContextModule, Intent } from "@artsy/cohesion"
-import { Box, Column, FullBleed, GridColumns } from "@artsy/palette"
 import type { NotificationsApp_me$data } from "__generated__/NotificationsApp_me.graphql"
 import { useRouter } from "found"
 import { useEffect, useRef } from "react"
@@ -50,7 +50,7 @@ const NotificationsApp: React.FC<
   // Scroll to top of content pane when route changes
   useEffect(() => {
     contentRef.current?.scrollTo(0, 0)
-  }, [])
+  }, [pathname])
 
   return (
     <FullBleed>

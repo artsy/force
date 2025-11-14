@@ -1,8 +1,8 @@
+import { OwnerType } from "@artsy/cohesion"
+import { render, screen } from "@testing-library/react"
 import { ArtworkAuctionCreateAlertTooltip } from "Apps/Artwork/Components/ArtworkAuctionCreateAlertHeader/ArtworkAuctionCreateAlertTooltip"
 import { SavedSearchAlertContextProvider } from "Components/SavedSearchAlert/SavedSearchAlertContext"
 import type { SavedSearchEntity } from "Components/SavedSearchAlert/types"
-import { OwnerType } from "@artsy/cohesion"
-import { render, screen } from "@testing-library/react"
 
 describe("ArtworkAuctionCreateAlertTooltip", () => {
   const savedSearchEntity: SavedSearchEntity = {

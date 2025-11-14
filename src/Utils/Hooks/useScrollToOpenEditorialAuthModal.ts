@@ -1,5 +1,5 @@
-import { useScrollToOpenAuthModal } from "Utils/Hooks/useScrollToOpenAuthModal"
 import { ContextModule, Intent } from "@artsy/cohesion"
+import { useScrollToOpenAuthModal } from "Utils/Hooks/useScrollToOpenAuthModal"
 
 export const useScrollToOpenEditorialAuthModal = () => {
   useScrollToOpenAuthModal({

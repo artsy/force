@@ -1,3 +1,4 @@
+import * as Sentry from "@sentry/node"
 import type {
   ArtsyRequest,
   ArtsyResponse,
@@ -5,7 +6,6 @@ import type {
 import { Boot } from "System/Boot"
 import type { SystemContextProps } from "System/Contexts/SystemContext"
 import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
-import type { RouterConfig } from "System/Router/clientRouter"
 import { renderStates } from "System/Router/RenderStates"
 import type { RouteProps } from "System/Router/Route"
 import { collectAssets } from "System/Router/Utils/collectAssets"
@@ -13,18 +13,18 @@ import { executeRouteHooks } from "System/Router/Utils/executeRouteHooks"
 import { matchingMediaQueriesForUserAgent } from "System/Router/Utils/matchingMediaQueriesForUserAgent"
 import { queryStringParsing } from "System/Router/Utils/queryStringParsing"
 import { getServerAppContext } from "System/Router/Utils/serverAppContext"
-import { createMediaStyle, type MatchingMediaQueries } from "Utils/Responsive"
+import type { RouterConfig } from "System/Router/clientRouter"
+import { type MatchingMediaQueries, createMediaStyle } from "Utils/Responsive"
 import { getUser } from "Utils/user"
-import * as Sentry from "@sentry/node"
 import type { NextFunction } from "express"
 import { createQueryMiddleware } from "farce"
 import { createRender } from "found"
+import { Resolver } from "found-relay"
 import {
   type FarceElementResult,
   type FarceRedirectResult,
   getFarceResult,
 } from "found/server"
-import { Resolver } from "found-relay"
 import qs from "qs"
 import type React from "react"
 
@@ -53,6 +53,7 @@ export const setupServerRouter = async ({
   next,
   routes,
   context,
+  ...config
 }: ServerRouterConfig): Promise<ServerAppResults> => {
   await executeRouteHooks(req, res, next)
 
@@ -161,7 +162,7 @@ export const setupServerRouter = async ({
 const isRedirect = (
   farceResult: FarceElementResult | FarceRedirectResult,
 ): farceResult is FarceRedirectResult => {
-  return Object.hasOwn(farceResult, "redirect")
+  return farceResult.hasOwnProperty("redirect")
 }
 
 export const __TEST_INTERNAL_SERVER_APP__ =

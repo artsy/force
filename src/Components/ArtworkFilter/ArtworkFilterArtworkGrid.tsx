@@ -1,3 +1,9 @@
+import {
+  ActionType,
+  type ClickedMainArtworkGrid,
+  ContextModule,
+  OwnerType,
+} from "@artsy/cohesion"
 import ArtworkGrid, {
   type ArtworkGridLayout,
 } from "Components/ArtworkGrid/ArtworkGrid"
@@ -7,15 +13,9 @@ import { PaginationFragmentContainer as Pagination } from "Components/Pagination
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { getSignalLabel } from "Utils/getSignalLabel"
-import {
-  ActionType,
-  type ClickedMainArtworkGrid,
-  ContextModule,
-  OwnerType,
-} from "@artsy/cohesion"
 import type { ArtworkFilterArtworkGrid_filtered_artworks$data } from "__generated__/ArtworkFilterArtworkGrid_filtered_artworks.graphql"
 import type * as React from "react"
-import { createFragmentContainer, graphql, type RelayProp } from "react-relay"
+import { type RelayProp, createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { useArtworkFilterContext } from "./ArtworkFilterContext"
 

@@ -9,11 +9,7 @@ describe.skip("Strategy", () => {
   describe("when otp needs to be verified", () => {
     describe("handling a request with valid credentials in body", () => {
       const strategy = new Strategy((username, password, otp, done) => {
-        if (
-          username === "johndoe" &&
-          password === "secret" &&
-          otp === "123456"
-        ) {
+        if (username == "johndoe" && password == "secret" && otp == "123456") {
           return done(null, { id: "1234" }, { scope: "read" })
         }
         return done(null, false)
@@ -50,11 +46,7 @@ describe.skip("Strategy", () => {
 
     describe("handling a request with valid credentials in query", () => {
       const strategy = new Strategy((username, password, otp, done) => {
-        if (
-          username === "johndoe" &&
-          password === "secret" &&
-          otp === "123456"
-        ) {
+        if (username == "johndoe" && password == "secret" && otp == "123456") {
           return done(null, { id: "1234" }, { scope: "read" })
         }
         return done(null, false)
@@ -91,8 +83,8 @@ describe.skip("Strategy", () => {
 
   describe("when otp does not need to be verified", () => {
     describe("handling a request with valid username and password (but no otp) in body", () => {
-      const strategy = new Strategy((username, password, _otp, done) => {
-        if (username === "johndoe" && password === "secret") {
+      const strategy = new Strategy((username, password, otp, done) => {
+        if (username == "johndoe" && password == "secret") {
           return done(null, { id: "1234" }, { scope: "read" })
         }
         return done(null, false)
@@ -126,8 +118,8 @@ describe.skip("Strategy", () => {
     })
 
     describe("handling a request with valid username and password (but no otp) in query", () => {
-      const strategy = new Strategy((username, password, _otp, done) => {
-        if (username === "johndoe" && password === "secret") {
+      const strategy = new Strategy((username, password, otp, done) => {
+        if (username == "johndoe" && password == "secret") {
           return done(null, { id: "1234" }, { scope: "read" })
         }
         return done(null, false)
@@ -163,7 +155,7 @@ describe.skip("Strategy", () => {
   })
 
   describe("handling a request without a body", () => {
-    const strategy = new Strategy((_username, _password, _otp, _done) => {
+    const strategy = new Strategy((username, password, otp, done) => {
       throw new Error("should not be called")
     })
 
@@ -187,7 +179,7 @@ describe.skip("Strategy", () => {
   })
 
   describe("handling a request with a body, but no username and password", () => {
-    const strategy = new Strategy((_username, _password, _otp, _done) => {
+    const strategy = new Strategy((username, password, otp, done) => {
       throw new Error("should not be called")
     })
 
@@ -214,7 +206,7 @@ describe.skip("Strategy", () => {
   })
 
   describe("handling a request with a body, but no password", () => {
-    const strategy = new Strategy((_username, _password, _otp, _done) => {
+    const strategy = new Strategy((username, password, otp, done) => {
       throw new Error("should not be called")
     })
 
@@ -242,7 +234,7 @@ describe.skip("Strategy", () => {
   })
 
   describe("handling a request with a body, but no username", () => {
-    const strategy = new Strategy((_username, _password, _otp, _done) => {
+    const strategy = new Strategy((username, password, otp, done) => {
       throw new Error("should not be called")
     })
 

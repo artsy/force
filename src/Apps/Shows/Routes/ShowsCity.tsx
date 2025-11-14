@@ -1,21 +1,21 @@
+import { Column, GridColumns, Join, Spacer, Sup, Text } from "@artsy/palette"
 import { ShowsFeaturedShowFragmentContainer } from "Apps/Shows/Components/ShowsFeaturedShow"
 import { ShowsHeaderFragmentContainer } from "Apps/Shows/Components/ShowsHeader"
 import { ShowsMeta } from "Apps/Shows/Components/ShowsMeta"
 import { EmptyState } from "Components/EmptyState"
 import { PaginationFragmentContainer } from "Components/Pagination"
 import { useRouter } from "System/Hooks/useRouter"
-import { extractNodes } from "Utils/extractNodes"
 import { Jump, useJump } from "Utils/Hooks/useJump"
-import { Column, GridColumns, Join, Spacer, Sup, Text } from "@artsy/palette"
+import { extractNodes } from "Utils/extractNodes"
 import type { ShowsCity_city$data } from "__generated__/ShowsCity_city.graphql"
 import type { ShowsCity_viewer$data } from "__generated__/ShowsCity_viewer.graphql"
 import { DateTime } from "luxon"
-import type * as React from "react"
 import { useMemo, useState } from "react"
+import type * as React from "react"
 import {
+  type RelayRefetchProp,
   createRefetchContainer,
   graphql,
-  type RelayRefetchProp,
 } from "react-relay"
 import type { FragmentRefs } from "relay-runtime"
 

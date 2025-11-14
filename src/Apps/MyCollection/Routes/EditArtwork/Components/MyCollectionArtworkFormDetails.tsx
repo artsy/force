@@ -1,14 +1,3 @@
-import { ArtworkSidebarClassificationsModalQueryRenderer } from "Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
-import type { ArtworkModel } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkModel"
-import { categoryOptions } from "Apps/MyCollection/Routes/EditArtwork/Utils/categoryOptions"
-import { rarityOptions } from "Apps/MyCollection/Routes/EditArtwork/Utils/rarityOptions"
-import { ArtistAutoComplete } from "Components/ArtistAutocomplete"
-import {
-  buildLocationDisplay,
-  LocationAutocompleteInput,
-  normalizePlace,
-} from "Components/LocationAutocompleteInput"
-import { NumericInput } from "Components/NumericInput"
 import {
   Box,
   Clickable,
@@ -25,6 +14,17 @@ import {
   TextArea,
   useToasts,
 } from "@artsy/palette"
+import { ArtworkSidebarClassificationsModalQueryRenderer } from "Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
+import type { ArtworkModel } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkModel"
+import { categoryOptions } from "Apps/MyCollection/Routes/EditArtwork/Utils/categoryOptions"
+import { rarityOptions } from "Apps/MyCollection/Routes/EditArtwork/Utils/rarityOptions"
+import { ArtistAutoComplete } from "Components/ArtistAutocomplete"
+import {
+  LocationAutocompleteInput,
+  buildLocationDisplay,
+  normalizePlace,
+} from "Components/LocationAutocompleteInput"
+import { NumericInput } from "Components/NumericInput"
 import { useFormikContext } from "formik"
 import { useState } from "react"
 import { ProvenanceModal } from "./ProvenanceModal"

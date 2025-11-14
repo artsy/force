@@ -1,34 +1,6 @@
-import { Collapse } from "Apps/Order/Components/Collapse"
-import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
-import { useSetPayment } from "Apps/Order/Mutations/useSetPayment"
-import {
-  CheckoutStepName,
-  CheckoutStepState,
-} from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
-import {
-  CheckoutErrorBanner,
-  MailtoOrderSupport,
-} from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
-import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
-import { useOrder2SetOrderPaymentMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderPaymentMutation"
-import { fetchAndSetConfirmationToken } from "Apps/Order2/Utils/confirmationTokenUtils"
-import { preventHardReload } from "Apps/Order2/Utils/navigationGuards"
-import {
-  AddressFormFields,
-  addressFormFieldsValidator,
-  type FormikContextWithAddress,
-} from "Components/Address/AddressFormFields"
-import { type Address, emptyAddress } from "Components/Address/utils"
-import { CreateBankDebitSetupForOrder } from "Components/BankDebitForm/Mutations/CreateBankDebitSetupForOrder"
-import { type Brand, BrandCreditCardIcon } from "Components/BrandCreditCardIcon"
-import { FadeInBox } from "Components/FadeInBox"
-import { RouterLink } from "System/Components/RouterLink"
-import { extractNodes } from "Utils/extractNodes"
-import { getENV } from "Utils/getENV"
-import createLogger from "Utils/logger"
 import { ContextModule } from "@artsy/cohesion"
-import InfoIcon from "@artsy/icons/InfoIcon"
 import InstitutionIcon from "@artsy/icons/InstitutionIcon"
+import InfoIcon from "@artsy/icons/InfoIcon"
 import LockIcon from "@artsy/icons/LockIcon"
 import ReceiptIcon from "@artsy/icons/ReceiptIcon"
 import {
@@ -56,6 +28,34 @@ import type {
   StripePaymentElementChangeEvent,
   StripePaymentElementOptions,
 } from "@stripe/stripe-js"
+import { Collapse } from "Apps/Order/Components/Collapse"
+import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
+import { useSetPayment } from "Apps/Order/Mutations/useSetPayment"
+import {
+  CheckoutStepName,
+  CheckoutStepState,
+} from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
+import {
+  CheckoutErrorBanner,
+  MailtoOrderSupport,
+} from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
+import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import { useOrder2SetOrderPaymentMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderPaymentMutation"
+import { fetchAndSetConfirmationToken } from "Apps/Order2/Utils/confirmationTokenUtils"
+import { preventHardReload } from "Apps/Order2/Utils/navigationGuards"
+import {
+  AddressFormFields,
+  type FormikContextWithAddress,
+  addressFormFieldsValidator,
+} from "Components/Address/AddressFormFields"
+import { type Address, emptyAddress } from "Components/Address/utils"
+import { CreateBankDebitSetupForOrder } from "Components/BankDebitForm/Mutations/CreateBankDebitSetupForOrder"
+import { type Brand, BrandCreditCardIcon } from "Components/BrandCreditCardIcon"
+import { FadeInBox } from "Components/FadeInBox"
+import { RouterLink } from "System/Components/RouterLink"
+import { extractNodes } from "Utils/extractNodes"
+import { getENV } from "Utils/getENV"
+import createLogger from "Utils/logger"
 import type {
   Order2PaymentForm_me$data,
   Order2PaymentForm_me$key,
@@ -69,7 +69,6 @@ import { isEqual } from "lodash"
 import type React from "react"
 import { useEffect, useState } from "react"
 import { graphql, useFragment, useRelayEnvironment } from "react-relay"
-// biome-ignore lint/style/noRestrictedImports: Legacy sharify usage for configuration
 import { data as sd } from "sharify"
 import * as yup from "yup"
 
@@ -248,6 +247,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
     checkoutTracking,
   ])
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: one-time effect to default to saved payment method if available
   useEffect(() => {
     if (hasSavedCreditCards || hasSavedBankAccounts) {
       setSelectedPaymentMethod("saved")
@@ -317,7 +317,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       setupFutureUsage: null,
       mode: "setup",
       payment_method_types: [paymentType],
-      // @ts-expect-error Stripe type issue
+      // @ts-ignore Stripe type issue
       paymentMethodOptions: {
         us_bank_account: { verification_method: "instant" },
       },
@@ -561,13 +561,13 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       } else if (selectedPaymentMethod === "stripe-ach") {
         try {
           await handleBankDebitSetup("US_BANK_ACCOUNT", confirmationToken)
-        } catch (_error) {
+        } catch (error) {
           handleError({ message: defaultErrorMessage })
         }
       } else if (selectedPaymentMethod === "stripe-sepa") {
         try {
           await handleBankDebitSetup("SEPA_DEBIT", confirmationToken)
-        } catch (_error) {
+        } catch (error) {
           handleError({ message: defaultErrorMessage })
         }
       }

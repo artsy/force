@@ -1,4 +1,3 @@
-import { RouterLink } from "System/Components/RouterLink"
 import {
   Box,
   Column,
@@ -9,6 +8,7 @@ import {
   Text,
   useTheme,
 } from "@artsy/palette"
+import { RouterLink } from "System/Components/RouterLink"
 import type { ArticleSeriesItem_article$data } from "__generated__/ArticleSeriesItem_article.graphql"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"

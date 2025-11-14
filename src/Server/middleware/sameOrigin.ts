@@ -5,7 +5,7 @@ import type { ArtsyRequest, ArtsyResponse } from "./artsyExpress"
  * Makes sure that artsy.net cannot be embedded elsewhere
  */
 export function sameOriginMiddleware(
-  _req: ArtsyRequest,
+  req: ArtsyRequest,
   res: ArtsyResponse,
   next: NextFunction,
 ) {

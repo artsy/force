@@ -1,6 +1,3 @@
-import { RouterLink } from "System/Components/RouterLink"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import { crop } from "Utils/resizer"
 import {
   ActionType,
   type ClickedCollectionGroup,
@@ -8,6 +5,9 @@ import {
   OwnerType,
 } from "@artsy/cohesion"
 import { TriptychCard } from "@artsy/palette"
+import { RouterLink } from "System/Components/RouterLink"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { crop } from "Utils/resizer"
 import type { FairCollection_collection$data } from "__generated__/FairCollection_collection.graphql"
 import { compact } from "lodash"
 import type * as React from "react"

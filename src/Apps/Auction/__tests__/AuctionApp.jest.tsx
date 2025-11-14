@@ -1,10 +1,10 @@
 import { AuctionAppFragmentContainer } from "Apps/Auction/AuctionApp"
 import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
-import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { MockBoot } from "DevTools/MockBoot"
+import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen, fireEvent } from "@testing-library/react"
 import { getENV } from "Utils/getENV"
-import { fireEvent, screen } from "@testing-library/react"
 import type { AuctionAppJestQuery } from "__generated__/AuctionAppJestQuery.graphql"
 import { graphql } from "react-relay"
 
@@ -153,7 +153,7 @@ describe("AuctionApp", () => {
       })
 
       expect(
-        screen.getByText((content, _element) =>
+        screen.getByText((content, element) =>
           content.includes(
             "Closing times may be extended due to last-minute competitive bidding",
           ),

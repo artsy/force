@@ -1,9 +1,9 @@
-import { useAuthDialog } from "Components/AuthDialog"
-import { useSystemContext } from "System/Hooks/useSystemContext"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import InfoIcon from "@artsy/icons/InfoIcon"
 import StopwatchIcon from "@artsy/icons/StopwatchIcon"
 import { Box, Button, Clickable, Flex, Text, Tooltip } from "@artsy/palette"
+import { useAuthDialog } from "Components/AuthDialog"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import type { AuctionResultPrice_auctionResult$key } from "__generated__/AuctionResultPrice_auctionResult.graphql"
 import { DateTime } from "luxon"
 import { graphql, useFragment } from "react-relay"
@@ -95,7 +95,7 @@ export const AuctionResultPrice: React.FC<
           <Flex>
             <Text variant={["md", "lg-display"]}>{salePrice}</Text>
 
-            <AuctionResultPerformance value={performance?.mid} />
+            <AuctionResultPerformance value={performance?.mid!} />
           </Flex>
           {showPriceUSD && (
             <Text variant={["xs", "sm"]} color="mono60">

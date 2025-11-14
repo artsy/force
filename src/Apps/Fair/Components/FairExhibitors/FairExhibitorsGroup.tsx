@@ -1,5 +1,5 @@
-import { Jump } from "Utils/Hooks/useJump"
 import { Column, GridColumns } from "@artsy/palette"
+import { Jump } from "Utils/Hooks/useJump"
 import type { FairExhibitorsGroup_exhibitorsGroup$data } from "__generated__/FairExhibitorsGroup_exhibitorsGroup.graphql"
 import type { FairExhibitorsGroup_fair$data } from "__generated__/FairExhibitorsGroup_fair.graphql"
 import type React from "react"

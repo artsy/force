@@ -1,8 +1,9 @@
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { NavBarUserMenu } from "Components/NavBar/Menus"
 import { NavBar } from "Components/NavBar/NavBar"
 import { SystemContextProvider } from "System/Contexts/SystemContext"
-import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { fireEvent, render, screen } from "@testing-library/react"
+import { render, screen } from "@testing-library/react"
+import { fireEvent } from "@testing-library/react"
 import { useTracking } from "react-tracking"
 
 jest.mock("react-tracking")

@@ -1,5 +1,5 @@
-import { reportLoadTimeToVolley } from "Server/volley"
 import { OwnerType } from "@artsy/cohesion"
+import { reportLoadTimeToVolley } from "Server/volley"
 
 jest.mock("Utils/getENV", () => ({
   getENV: () => "https://volley.endpoint",
@@ -8,6 +8,7 @@ jest.mock("Utils/getENV", () => ({
 describe("Reporting metrics to Volley", () => {
   const mockFetch = jest.fn()
 
+  // @ts-ignore
   global.fetch = mockFetch
 
   afterEach(() => {

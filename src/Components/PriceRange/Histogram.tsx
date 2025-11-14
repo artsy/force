@@ -2,7 +2,7 @@ import { Box, Flex, type FlexProps, RANGE_HANDLE_SIZE } from "@artsy/palette"
 
 const BAR_WIDTH = 2
 const BAR_ROUNDNESS = 10
-const HISTOGRAM_MARGIN = `${RANGE_HANDLE_SIZE / 2}px`
+const HISTOGRAM_MARGIN = RANGE_HANDLE_SIZE / 2 + "px"
 
 type Range = [number, number]
 

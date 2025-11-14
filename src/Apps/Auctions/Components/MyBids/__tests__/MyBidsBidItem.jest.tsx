@@ -1,6 +1,6 @@
 import { MyBidsBidItemFragmentContainer } from "Apps/Auctions/Components/MyBids/MyBidsBidItem"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { fireEvent, screen } from "@testing-library/react"
+import { screen, fireEvent } from "@testing-library/react"
 import { graphql } from "react-relay"
 import { useTracking as baseUseTracking } from "react-tracking"
 

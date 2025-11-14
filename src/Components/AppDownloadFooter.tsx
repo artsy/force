@@ -1,8 +1,3 @@
-import { Z } from "Apps/Components/constants"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import { useRouter } from "System/Hooks/useRouter"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { useDeviceDetection } from "Utils/Hooks/useDeviceDetection"
 import { ActionType } from "@artsy/cohesion"
 import ArtsyMarkIcon from "@artsy/icons/ArtsyMarkIcon"
 import CloseIcon from "@artsy/icons/CloseIcon"
@@ -15,6 +10,11 @@ import {
   useDidMount,
 } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
+import { Z } from "Apps/Components/constants"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { useRouter } from "System/Hooks/useRouter"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { useDeviceDetection } from "Utils/Hooks/useDeviceDetection"
 import Cookies from "cookies-js"
 import { type FC, useEffect, useRef, useState } from "react"
 import { useTracking } from "react-tracking"
@@ -97,7 +97,7 @@ export const AppDownloadFooter: FC<
         variant="primaryBlack"
         width="100%"
         size="small"
-        // @ts-expect-error
+        // @ts-ignore
         as="a"
         href={downloadAppUrl}
         target="_blank"

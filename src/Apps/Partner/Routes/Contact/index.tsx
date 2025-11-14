@@ -1,5 +1,5 @@
-import { PartnerContactsFragmentContainer } from "Apps/Partner/Components/PartnerContacts/PartnerContacts"
 import { Box, Text } from "@artsy/palette"
+import { PartnerContactsFragmentContainer } from "Apps/Partner/Components/PartnerContacts/PartnerContacts"
 import type { Contact_partner$data } from "__generated__/Contact_partner.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"

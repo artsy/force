@@ -1,6 +1,6 @@
 import { PartnerContactAddress } from "Apps/Partner/Components/PartnerContacts/PartnerContactAddress"
-import { render, screen } from "@testing-library/react"
 import type { PartnerContactAddress_location$data } from "__generated__/PartnerContactAddress_location.graphql"
+import { render, screen } from "@testing-library/react"
 
 describe("PartnerContactAddress", () => {
   it("displays partner contact address", () => {
