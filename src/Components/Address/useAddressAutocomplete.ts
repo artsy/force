@@ -6,8 +6,8 @@ import {
 } from "@artsy/cohesion"
 import type { AutocompleteInputOptionType } from "@artsy/palette"
 import type { Address } from "Components/Address/utils"
-import { useFlag } from "System/FeatureFlags/useFlag"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { useFlag } from "@unleash/proxy-client-react"
 import { getENV } from "Utils/getENV"
 import { throttle, uniqBy } from "lodash"
 import { useCallback, useEffect, useMemo, useState } from "react"
@@ -101,7 +101,9 @@ export const useAddressAutocomplete = (
         }
 
         if (!apiKey) return null
-        const url = `https://us-autocomplete-pro.api.smarty.com/lookup?${new URLSearchParams(params).toString()}`
+        const url =
+          "https://us-autocomplete-pro.api.smarty.com/lookup?" +
+          new URLSearchParams(params).toString()
 
         const response = await fetch(url)
         const json = await response.json()

@@ -21,6 +21,7 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
+import { useFlag } from "@unleash/proxy-client-react"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { ArtworkFilterActiveFilters } from "Components/ArtworkFilter/ArtworkFilterActiveFilters"
@@ -38,7 +39,6 @@ import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext
 import { ArtworkGridEmptyState } from "Components/ArtworkGrid/ArtworkGridEmptyState"
 import { ProgressiveOnboardingImmersiveView } from "Components/ProgressiveOnboarding/ProgressiveOnboardingImmersiveView"
 import { Sticky } from "Components/Sticky"
-import { useFlag } from "System/FeatureFlags/useFlag"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { Jump, useJump } from "Utils/Hooks/useJump"
@@ -250,6 +250,7 @@ export const BaseArtworkFilter: React.FC<
     )
   }, [filterContext.filters])
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: "trackImmersiveViewOptionViewed changes on every re-render and should not be used as a hook dependency"
   useEffect(() => {
     if (!enableImmersiveView) return
 

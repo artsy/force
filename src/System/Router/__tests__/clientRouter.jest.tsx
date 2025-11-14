@@ -174,7 +174,6 @@ describe("clientRouter", () => {
         featureFlags: {
           isEnabled: jest.fn().mockReturnValue(true),
           getVariant: jest.fn(),
-          toggles: [],
         },
       },
     })
