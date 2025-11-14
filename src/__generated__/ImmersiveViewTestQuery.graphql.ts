@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<677272a2da530e811768475401b44666>>
+ * @generated SignedSource<<90c6eb0e05ca98bf5fd777d953040bf0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -166,6 +166,7 @@ return {
                             "kind": "Literal",
                             "name": "version",
                             "value": [
+                              "main",
                               "larger",
                               "large"
                             ]
@@ -173,7 +174,7 @@ return {
                         ],
                         "kind": "ScalarField",
                         "name": "url",
-                        "storageKey": "url(version:[\"larger\",\"large\"])"
+                        "storageKey": "url(version:[\"main\",\"larger\",\"large\"])"
                       }
                     ],
                     "storageKey": null
@@ -192,7 +193,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0d771373f1122d9744da7707ea22e97f",
+    "cacheID": "8b73feb3bc612cc9323a390fdaedb0bd",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -249,7 +250,7 @@ return {
     },
     "name": "ImmersiveViewTestQuery",
     "operationKind": "query",
-    "text": "query ImmersiveViewTestQuery {\n  filtered_artworks: artworksConnection {\n    ...ImmersiveView_filtered_artworks\n    id\n  }\n}\n\nfragment ImmersiveView_filtered_artworks on FilterArtworksConnection {\n  pageInfo {\n    hasNextPage\n  }\n  edges {\n    immersiveArtworkNode: node {\n      internalID\n      slug\n      formattedMetadata\n      image {\n        aspectRatio\n        blurhash\n        url(version: [\"larger\", \"large\"])\n      }\n      id\n    }\n  }\n}\n"
+    "text": "query ImmersiveViewTestQuery {\n  filtered_artworks: artworksConnection {\n    ...ImmersiveView_filtered_artworks\n    id\n  }\n}\n\nfragment ImmersiveView_filtered_artworks on FilterArtworksConnection {\n  pageInfo {\n    hasNextPage\n  }\n  edges {\n    immersiveArtworkNode: node {\n      internalID\n      slug\n      formattedMetadata\n      image {\n        aspectRatio\n        blurhash\n        url(version: [\"main\", \"larger\", \"large\"])\n      }\n      id\n    }\n  }\n}\n"
   }
 };
 })();

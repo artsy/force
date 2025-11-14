@@ -19,12 +19,12 @@ import { ArtistArtworkFilterQueryRenderer } from "Apps/Artist/Routes/WorksForSal
 import { Z } from "Apps/Components/constants"
 import { RouteTabs } from "Components/RouteTabs"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { useRouter } from "System/Hooks/useRouter"
 import { Jump, useJump } from "Utils/Hooks/useJump"
 import { useSectionReadiness } from "Utils/Hooks/useSectionReadiness"
 import type { ArtistCombinedRoute_artist$data } from "__generated__/ArtistCombinedRoute_artist.graphql"
 import type * as React from "react"
-import { useMemo } from "react"
-import { Meta } from "react-head"
+import { useEffect, useMemo, useRef } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 
@@ -66,11 +66,41 @@ const ArtistCombinedRoute: React.FC<
     tracking.trackEvent(payload)
   }
 
+  // Given the initial sub-path (/artist/:id/(auction-results|about)),
+  // scroll to the appropriate section on initial load
+  const {
+    match: { location },
+    router,
+  } = useRouter()
+  const section = location.pathname.split("/").pop()
+  const scrolledToSection = useRef(false)
+
+  useEffect(() => {
+    if (scrolledToSection.current) return
+
+    const scrollToSection = async () => {
+      if (section === "auction-results") {
+        await waitUntil("auction")
+        jumpTo("marketSignalsTop", { offset: 40 })
+        // Remove the subpath from the URL
+        const newPath = location.pathname.replace(/\/auction-results$/, "")
+        router.replace(newPath)
+      } else if (section === "about") {
+        await waitUntil("about")
+        jumpTo("artistAboutTop", { offset: 40 })
+        // Remove the subpath from the URL
+        const newPath = location.pathname.replace(/\/about$/, "")
+        router.replace(newPath)
+      }
+
+      scrolledToSection.current = true
+    }
+
+    scrollToSection()
+  }, [section, jumpTo, waitUntil, location.pathname, router])
+
   return (
     <>
-      {/* Temporarily hide from search engines */}
-      <Meta name="robots" content="noindex, nofollow" />
-
       {loading && (
         <Box
           position="fixed"
