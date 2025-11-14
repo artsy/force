@@ -131,9 +131,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@artsy/palette-charts@npm:44.2.0":
-  version: 44.2.0
-  resolution: "@artsy/palette-charts@npm:44.2.0"
+"@artsy/palette-charts@npm:44.3.0":
+  version: 44.3.0
+  resolution: "@artsy/palette-charts@npm:44.3.0"
   dependencies:
     "@seznam/compose-react-refs": "npm:^1.0.6"
     d3-interpolate: "npm:^1.3.2"
@@ -145,7 +145,7 @@ __metadata:
     react-dom: ^18
     styled-components: ^6
     styled-system: ^5
-  checksum: 10c0/55a8fa68555912f86e6b38b044a52fb77f8a742181b72eec8196e29c65c18abe40897fdde5fcd979814d664db90e578a223c2e698751b4e87cb0d8bb9c530317
+  checksum: 10c0/598c009863003b50caf9e09b4cec13bdaccbcaa95d172ea74cd966cfd9f0ea20da9aa39c428c1af782cee1f411ce4b326eee265127da02c22002a5c26b7f33be
   languageName: node
   linkType: hard
 
@@ -156,9 +156,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@artsy/palette@npm:45.2.0":
-  version: 45.2.0
-  resolution: "@artsy/palette@npm:45.2.0"
+"@artsy/palette@npm:45.3.0":
+  version: 45.3.0
+  resolution: "@artsy/palette@npm:45.3.0"
   dependencies:
     "@artsy/icons": "npm:^3.2.2"
     "@artsy/palette-tokens": "npm:^7.1.0"
@@ -177,7 +177,7 @@ __metadata:
     react: ^18
     react-dom: ^18
     styled-components: ^6
-  checksum: 10c0/aa6148d6129a797e1b2e8a87ff65fcc05a214b5293a6d77a67fca3d9700529330b7c9831f59b3b7d1a3cc93e8c05f533b1655452cdda1a72e902ea0a34adcfb2
+  checksum: 10c0/e16578c2b70ce714b863ac7de2e2ddeebb18262a3f62e03f59230da348f3eb1cd271dfea4299104e6fb03d8dc49a8c78bed8da1d35ad8b41035a37a278f080fe
   languageName: node
   linkType: hard
 
@@ -9317,8 +9317,8 @@ __metadata:
     "@artsy/icons": "npm:3.56.0"
     "@artsy/img": "npm:1.0.3"
     "@artsy/multienv": "npm:^1.2.0"
-    "@artsy/palette": "npm:45.2.0"
-    "@artsy/palette-charts": "npm:44.2.0"
+    "@artsy/palette": "npm:45.3.0"
+    "@artsy/palette-charts": "npm:44.3.0"
     "@artsy/palette-tokens": "npm:7.1.0"
     "@artsy/react-html-parser": "npm:^3.0.2"
     "@artsy/xapp": "npm:2.0.0"
