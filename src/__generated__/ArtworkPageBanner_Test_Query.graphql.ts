@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4c5062c46faf9fb735c6db945f86335f>>
+ * @generated SignedSource<<0f72a3864ef84a0ba4f84873a1a909ef>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,6 +23,7 @@ export type ArtworkPageBanner_Test_Query$data = {
 export type ArtworkPageBanner_Test_Query$rawResponse = {
   readonly artwork: {
     readonly id: string;
+    readonly internalID: string;
     readonly isPurchasable: boolean | null | undefined;
     readonly published: boolean;
     readonly sale: {
@@ -67,6 +68,13 @@ v1 = {
   "value": "erik-s-mona-lisa"
 },
 v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -132,6 +140,7 @@ return {
         "name": "artwork",
         "plural": false,
         "selections": [
+          (v2/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -189,11 +198,11 @@ return {
                 "name": "extendedBiddingIntervalMinutes",
                 "storageKey": null
               },
-              (v2/*: any*/)
+              (v3/*: any*/)
             ],
             "storageKey": null
           },
-          (v2/*: any*/)
+          (v3/*: any*/)
         ],
         "storageKey": "artwork(id:\"erik-s-mona-lisa\")"
       },
@@ -236,13 +245,7 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "internalID",
-                        "storageKey": null
-                      },
+                      (v2/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -250,7 +253,7 @@ return {
                         "name": "isActive",
                         "storageKey": null
                       },
-                      (v2/*: any*/)
+                      (v3/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -260,19 +263,19 @@ return {
             ],
             "storageKey": "partnerOffersConnection(artworkID:\"erik-s-mona-lisa\",first:1)"
           },
-          (v2/*: any*/)
+          (v3/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "e614b10b22d48f742400a2fdb88bd52a",
+    "cacheID": "2f469165556a12865444bfd9bfc49655",
     "id": null,
     "metadata": {},
     "name": "ArtworkPageBanner_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkPageBanner_Test_Query {\n  artwork(id: \"erik-s-mona-lisa\") {\n    ...ArtworkPageBanner_artwork\n    id\n  }\n  me {\n    ...ArtworkPageBanner_me_4FqYAG\n    id\n  }\n}\n\nfragment ArtworkPageBanner_artwork on Artwork {\n  published\n  visibilityLevel\n  isPurchasable\n  sale {\n    __typename\n    ...CascadingEndTimesBanner_sale\n    id\n  }\n}\n\nfragment ArtworkPageBanner_me_4FqYAG on Me {\n  partnerOffersConnection(artworkID: \"erik-s-mona-lisa\", first: 1) {\n    edges {\n      node {\n        internalID\n        isActive\n        id\n      }\n    }\n  }\n}\n\nfragment CascadingEndTimesBanner_sale on Sale {\n  isClosed\n  cascadingEndTimeIntervalMinutes\n  extendedBiddingIntervalMinutes\n}\n"
+    "text": "query ArtworkPageBanner_Test_Query {\n  artwork(id: \"erik-s-mona-lisa\") {\n    ...ArtworkPageBanner_artwork\n    id\n  }\n  me {\n    ...ArtworkPageBanner_me_4FqYAG\n    id\n  }\n}\n\nfragment ArtworkPageBanner_artwork on Artwork {\n  internalID\n  published\n  visibilityLevel\n  isPurchasable\n  sale {\n    __typename\n    ...CascadingEndTimesBanner_sale\n    id\n  }\n}\n\nfragment ArtworkPageBanner_me_4FqYAG on Me {\n  partnerOffersConnection(artworkID: \"erik-s-mona-lisa\", first: 1) {\n    edges {\n      node {\n        internalID\n        isActive\n        id\n      }\n    }\n  }\n}\n\nfragment CascadingEndTimesBanner_sale on Sale {\n  isClosed\n  cascadingEndTimeIntervalMinutes\n  extendedBiddingIntervalMinutes\n}\n"
   }
 };
 })();
