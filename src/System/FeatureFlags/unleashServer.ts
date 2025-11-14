@@ -28,22 +28,27 @@ export async function getOrInitUnleashServer(): Promise<Unleash> {
 
   await new Promise<void>(resolve => {
     if (unleashServer) {
-      unleashServer.on("ready", resolve)
-      unleashServer.on("error", error => {
+      const fallbackTimeout = setTimeout(() => {
         console.warn(
-          "Failed to initialize Unleash, continuing without feature flags:",
-          error,
-        )
-        resolve() // Continue without feature flags instead of rejecting
-      })
-
-      // Add timeout to prevent hanging if Unleash never responds
-      setTimeout(() => {
-        console.warn(
-          "Unleash initialization timeout, continuing without feature flags",
+          "[unleashServer] Unleash initialization timeout. Continuing...",
         )
         resolve()
       }, 5000)
+
+      unleashServer.on("ready", () => {
+        clearInterval(fallbackTimeout)
+        resolve()
+      })
+
+      unleashServer.on("error", error => {
+        console.warn(
+          "[unleashServer] Failed to initialize Unleash, continuing without feature flags:",
+          error,
+        )
+
+        clearInterval(fallbackTimeout)
+        resolve()
+      })
     } else {
       console.error("[unleashServer] Failed to initialize Unleash server")
       resolve()
