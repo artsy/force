@@ -169,7 +169,7 @@ const InquiryInquiry: React.FC<
         )}
 
       <Text variant="sm">
-        Personalize your message and include details for the best response
+        Personalize your message and include details for the best response.
       </Text>
 
       <Spacer y={2} />
