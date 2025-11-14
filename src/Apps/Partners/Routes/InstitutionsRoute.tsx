@@ -51,7 +51,6 @@ const InstitutionsRoute: React.FC<
           <Text
             variant="sm-display"
             as={RouterLink}
-            // @ts-expect-error
             to="/institution-partnerships"
           >
             Partner with Artsy
@@ -102,5 +101,5 @@ export const InstitutionsRouteFragmentContainer = createFragmentContainer(
           @arguments(id: "564e181a258faf3d5c000080")
       }
     `,
-  }
+  },
 )

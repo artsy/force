@@ -1,6 +1,7 @@
 const serializers = require("../serializers")
 const { serialize, deserialize } = serializers
 
+// biome-ignore lint/style/noRestrictedImports: ignore
 import request from "superagent"
 
 jest.mock("superagent")

@@ -18,7 +18,7 @@ export function extractNodes<Node extends object, T = Node>(
 ): T[] {
   return (
     connection?.edges?.map(edge =>
-      // biome-ignore lint/suspicious/noNonNullAssertedOptionalChain: legacy
+      // biome-ignore lint/suspicious/noNonNullAssertedOptionalChain: thing
       mapper ? (mapper(edge?.node!) as any) : edge?.node!,
     ) ?? []
   )

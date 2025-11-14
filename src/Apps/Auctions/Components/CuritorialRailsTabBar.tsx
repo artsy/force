@@ -8,7 +8,7 @@ import { TrendingLotsRailQueryRenderer } from "./TrendingLotsRail"
 
 export const CuritorialRailsTabBar: React.FC<
   React.PropsWithChildren<unknown>
-> = ({}) => {
+> = () => {
   const { user } = useSystemContext()
 
   return (

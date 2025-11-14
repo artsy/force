@@ -22,9 +22,8 @@ type Props = {
 export const ArtworkSidebarAuctionPolling: React.FC<
   React.PropsWithChildren<Props>
 > = ({ artwork, relay, me }) => {
-  const { sale, saleArtwork } = artwork
+  const { sale } = artwork
   const isClosed = !!sale?.isClosed
-  const _currentBidDisplay = saleArtwork?.currentBid?.display
 
   const [currentBidChanged, setCurrentBidChanged] = useState(false)
 
@@ -45,7 +44,7 @@ export const ArtworkSidebarAuctionPolling: React.FC<
         { artworkID: artwork.internalID },
         null,
         {},
-        { force: true }
+        { force: true },
       )
     },
     intervalTime: 10000,
@@ -106,5 +105,5 @@ export const ArtworkSidebarAuctionPollingRefetchContainer =
           ...ArtworkSidebarAuctionInfoPolling_me
         }
       }
-    `
+    `,
   )

@@ -22,13 +22,18 @@ describe("useInquiry", () => {
       <>
         {inquiryComponent}
 
-        <button id="artwork-inquiry" onClick={() => showInquiry()}>
+        <button
+          type="button"
+          id="artwork-inquiry"
+          onClick={() => showInquiry()}
+        >
           show artwork inquiry
         </button>
 
         <button
           id="specialist-inquiry"
           onClick={() => showInquiry({ askSpecialist: true })}
+          type="button"
         >
           show specialist inquiry
         </button>
@@ -42,7 +47,7 @@ describe("useInquiry", () => {
     expect(container.innerHTML).not.toContain("Artwork Inquiry")
 
     fireEvent.click(
-      screen.getByRole("button", { name: "show artwork inquiry" })
+      screen.getByRole("button", { name: "show artwork inquiry" }),
     )
 
     expect(container.innerHTML).toContain("Artwork Inquiry")
@@ -54,7 +59,7 @@ describe("useInquiry", () => {
     expect(container.innerHTML).not.toContain("Specialist Inquiry")
 
     fireEvent.click(
-      screen.getByRole("button", { name: "show specialist inquiry" })
+      screen.getByRole("button", { name: "show specialist inquiry" }),
     )
 
     expect(container.innerHTML).toContain("Specialist Inquiry")
@@ -70,13 +75,18 @@ describe("withInquiry", () => {
       <>
         {inquiryComponent}
 
-        <button id="artwork-inquiry" onClick={() => showInquiry()}>
+        <button
+          type="button"
+          id="artwork-inquiry"
+          onClick={() => showInquiry()}
+        >
           show artwork inquiry
         </button>
 
         <button
           id="specialist-inquiry"
           onClick={() => showInquiry({ askSpecialist: true })}
+          type="button"
         >
           show specialist inquiry
         </button>
@@ -92,7 +102,7 @@ describe("withInquiry", () => {
     expect(container.innerHTML).not.toContain("Artwork Inquiry")
 
     fireEvent.click(
-      screen.getByRole("button", { name: "show artwork inquiry" })
+      screen.getByRole("button", { name: "show artwork inquiry" }),
     )
 
     expect(container.innerHTML).toContain("Artwork Inquiry")
@@ -104,7 +114,7 @@ describe("withInquiry", () => {
     expect(container.innerHTML).not.toContain("Specialist Inquiry")
 
     fireEvent.click(
-      screen.getByRole("button", { name: "show specialist inquiry" })
+      screen.getByRole("button", { name: "show specialist inquiry" }),
     )
 
     expect(container.innerHTML).toContain("Specialist Inquiry")

@@ -8,7 +8,6 @@ jest.mock("Utils/getENV", () => ({
 describe("Reporting metrics to Volley", () => {
   const mockFetch = jest.fn()
 
-  // @ts-expect-error
   global.fetch = mockFetch
 
   afterEach(() => {

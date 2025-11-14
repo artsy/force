@@ -22,7 +22,6 @@ export const RouteTab: React.FC<
   return (
     <BaseTab
       as={RouterLink}
-      // @ts-expect-error
       to={to}
       active={useIsRouteActive(to, options)}
       onClick={() => {

@@ -76,7 +76,7 @@ export const computeOrderData = (
     const isDomesticShipping =
       (shipToCountry && shipToCountry === artworkCountry) ||
       (EU_COUNTRY_CODES.includes(shipToCountry) &&
-        EU_COUNTRY_CODES.includes(artworkCountry))
+        EU_COUNTRY_CODES.includes(artworkCountry as string))
 
     const requiresArtsyShipping =
       (isDomesticShipping && firstArtwork?.processWithArtsyShippingDomestic) ||
@@ -100,9 +100,9 @@ export const computeOrderData = (
     },
     shippingQuotes,
     availableShippingCountries,
-    lockShippingCountryTo,
+    lockShippingCountryTo: lockShippingCountryTo as string,
     requiresArtsyShippingTo,
-    shipsFrom,
+    shipsFrom: shipsFrom as string,
     isFixedShipping,
   }
 }

@@ -50,7 +50,9 @@ jest.mock("@artsy/palette", () => ({
   ModalDialog: ({ children, title, onClose }) => (
     <div>
       <div>{title}</div>
-      <button onClick={onClose}>Close</button>
+      <button type="button" onClick={onClose}>
+        Close
+      </button>
       {children}
     </div>
   ),
@@ -211,12 +213,12 @@ describe("AuctionBidRoute", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText("AuctionLotInfoFragmentContainer")
+        screen.getByText("AuctionLotInfoFragmentContainer"),
       ).toBeInTheDocument()
       expect(screen.getAllByText("Set Your Max Bid")).toHaveLength(2)
       expect(screen.getByTestId("select")).toBeInTheDocument()
       expect(
-        screen.getByText("PricingTransparencyQueryRenderer")
+        screen.getByText("PricingTransparencyQueryRenderer"),
       ).toBeInTheDocument()
       expect(screen.getByText("AddressFormWithCreditCard")).toBeInTheDocument()
       expect(screen.getByText("ConditionsOfSaleCheckbox")).toBeInTheDocument()
@@ -241,7 +243,7 @@ describe("AuctionBidRoute", () => {
 
     await waitFor(() => {
       expect(
-        screen.queryByText("AddressFormWithCreditCard")
+        screen.queryByText("AddressFormWithCreditCard"),
       ).not.toBeInTheDocument()
       expect(screen.getByText("ConditionsOfSaleCheckbox")).toBeInTheDocument()
     })

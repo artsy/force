@@ -1,6 +1,7 @@
 //
 // Logout helpers.
 //
+// biome-ignore lint/style/noRestrictedImports: ignore
 const request = require("superagent")
 const opts = require("../options")
 const { parse } = require("url")

@@ -1,6 +1,7 @@
 const _rewire = require("rewire")
 const cbs = require("../callbacks")
 
+// biome-ignore lint/style/noRestrictedImports: ignore
 import request from "superagent"
 
 jest.mock("superagent")
@@ -37,7 +38,7 @@ describe("passport callbacks", () => {
       done()
     })
     expect(request.post.mock.calls[0][0]).toEqual(
-      "http://apiz.artsy.net/oauth2/access_token"
+      "http://apiz.artsy.net/oauth2/access_token",
     )
     expect(request.send.mock.calls[0][0]).toHaveProperty("otp_attempt")
     const res = { body: { access_token: "access-token" }, status: 200 }
@@ -51,7 +52,7 @@ describe("passport callbacks", () => {
       done()
     })
     expect(request.post.mock.calls[0][0]).toEqual(
-      "http://apiz.artsy.net/oauth2/access_token"
+      "http://apiz.artsy.net/oauth2/access_token",
     )
     expect(request.send.mock.calls[0][0]).not.toHaveProperty("otp_attempt")
     const res = { body: { access_token: "access-token" }, status: 200 }
@@ -64,7 +65,7 @@ describe("passport callbacks", () => {
       done()
     })
     expect(request.post.mock.calls[0][0]).toEqual(
-      "http://apiz.artsy.net/oauth2/access_token"
+      "http://apiz.artsy.net/oauth2/access_token",
     )
     const sendArgs = request.send.mock.calls[0][0]
     expect(sendArgs.oauth_provider).toEqual("facebook")
@@ -79,7 +80,7 @@ describe("passport callbacks", () => {
       done()
     })
     expect(request.post.mock.calls[0][0]).toEqual(
-      "http://apiz.artsy.net/oauth2/access_token"
+      "http://apiz.artsy.net/oauth2/access_token",
     )
     const sendArgs = request.send.mock.calls[0][0]
     expect(sendArgs.oauth_provider).toEqual("google")
@@ -102,10 +103,10 @@ describe("passport callbacks", () => {
       (_err, user) => {
         expect(user.accessToken).toEqual("access-token")
         done()
-      }
+      },
     )
     expect(request.post.mock.calls[0][0]).toEqual(
-      "http://apiz.artsy.net/oauth2/access_token"
+      "http://apiz.artsy.net/oauth2/access_token",
     )
     const sendArgs = request.send.mock.calls[0][0]
     expect(sendArgs.grant_type).toEqual("apple_uid")

@@ -77,7 +77,6 @@ export const FullBleedHeader: FC<
               : { objectFit: "cover" }
           }
           as="video"
-          // @ts-expect-error
           src={src}
           autoPlay
           loop

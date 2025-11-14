@@ -23,7 +23,7 @@ type CollectorProfileArtistsListProps = {}
 
 export const CollectorProfileArtistsList: FC<
   React.PropsWithChildren<CollectorProfileArtistsListProps>
-> = ({}) => {
+> = () => {
   const isMounted = useDidMount()
 
   return (
@@ -61,9 +61,7 @@ const CollectorProfileArtistsListArtists: FC<
   const {
     router,
     match,
-    match: {
-      location: { query },
-    } = {
+    match: { location: { query } } = {
       location: { query: { page: "1" } },
     },
   } = useRouter()
@@ -73,12 +71,12 @@ const CollectorProfileArtistsListArtists: FC<
   const data = useLazyLoadQuery<CollectorProfileArtistsListArtistsQuery>(
     QUERY,
     { page, size: PAGE_SIZE },
-    { fetchPolicy: "network-only" }
+    { fetchPolicy: "network-only" },
   )
 
   const me = useFragment(
     FRAGMENT,
-    data.me as CollectorProfileArtistsList_me$key
+    data.me as CollectorProfileArtistsList_me$key,
   )
 
   const userInterestEdges = compact(me?.userInterestsConnection?.edges)

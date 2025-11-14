@@ -8,8 +8,7 @@ import type {
   OrderDetailsPaymentInfo_order$key,
 } from "__generated__/OrderDetailsPaymentInfo_order.graphql"
 import type React from "react"
-import { useFragment } from "react-relay"
-import { graphql } from "relay-runtime"
+import { graphql, useFragment } from "react-relay"
 
 interface OrderDetailsPaymentInfoProps {
   order: OrderDetailsPaymentInfo_order$key
@@ -46,7 +45,7 @@ export const OrderDetailsPaymentInfo: React.FC<
 }
 
 const getPaymentMethodContent = (
-  order: NonNullable<OrderDetailsPaymentInfo_order$data>
+  order: NonNullable<OrderDetailsPaymentInfo_order$data>,
 ) => {
   const { creditCardWalletType, paymentMethodDetails } = order
 

@@ -51,7 +51,6 @@ export const FairBoothRail: React.FC<
   }
 
   if (show.href) {
-    // biome-ignore lint/suspicious/noNonNullAssertedOptionalChain: legacy
     const params = removeDefaultValues(filters!, {
       defaultValues: initialBoothFilterState,
     })

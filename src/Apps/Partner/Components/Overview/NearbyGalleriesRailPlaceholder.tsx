@@ -15,8 +15,8 @@ export const NearbyGalleriesRailPlaceholder: React.FC<
       </SkeletonText>
 
       <Shelf>
-        {[...Array(count)].map((_, _i) => {
-          return <CellPartnerPlaceholder />
+        {[...Array(count)].map((_, i) => {
+          return <CellPartnerPlaceholder key={i} />
         })}
       </Shelf>
     </Box>

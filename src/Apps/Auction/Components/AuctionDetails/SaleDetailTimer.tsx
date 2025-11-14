@@ -16,8 +16,10 @@ export const SaleDetailTimer: React.FC<
   const startAt = sale?.startAt
   const endedAt = sale?.endedAt
 
-  // biome-ignore lint/suspicious/noNonNullAssertedOptionalChain: legacy
-  const { hasEnded, time, hasStarted } = useTimer(endAt!, startAt!)
+  const { hasEnded, time, hasStarted } = useTimer(
+    endAt as string,
+    startAt as string,
+  )
 
   if (!endAt || endedAt) {
     return null

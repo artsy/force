@@ -20,14 +20,13 @@ const Metadata = createFragmentContainer(
         title
       }
     `,
-  }
+  },
 )
 
 export const Artwork = createFragmentContainer(
   (props: { artwork: MockRelayRendererFixtures_artwork$data }) => (
     <div>
-      {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
-      <img src={props.artwork.image.url} />
+      <img src={props?.artwork?.image?.url as string} alt="" />
 
       <Metadata artworkMetadata={props.artwork} />
       {props.artwork.artist && (
@@ -47,7 +46,7 @@ export const Artwork = createFragmentContainer(
         ...MockRelayRendererFixtures_artworkMetadata
       }
     `,
-  }
+  },
 )
 
 const Artist = createFragmentContainer(
@@ -60,7 +59,7 @@ const Artist = createFragmentContainer(
         name
       }
     `,
-  }
+  },
 )
 
 const ArtistQueryRenderer = (props: { id: string }) => (

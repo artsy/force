@@ -8,8 +8,7 @@ import MessageIcon from "@artsy/icons/MessageIcon"
 import { Box, Clickable, Flex, Spacer, Text } from "@artsy/palette"
 import type { Order2HelpLinks_order$key } from "__generated__/Order2HelpLinks_order.graphql"
 import type React from "react"
-import { useFragment } from "react-relay"
-import { graphql } from "relay-runtime"
+import { graphql, useFragment } from "react-relay"
 
 interface Order2HelpLinksProps extends WithInquiryProps {
   order: Order2HelpLinks_order$key
@@ -26,7 +25,7 @@ export const Order2HelpLinks: React.FC<
     tracking.clickedVisitHelpCenter(contextModule)
     window.open(
       "https://support.artsy.net/s/topic/0TO3b000000UessGAC/buy",
-      "_blank"
+      "_blank",
     )
   }
 

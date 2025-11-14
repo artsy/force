@@ -199,7 +199,7 @@ const computeProps = ({ me, sale }: AuctionConfirmRegistrationRouteProps) => {
     !sale?.bidder?.qualifiedForBidding &&
     !me?.isIdentityVerified
 
-  const validationSchema = !!me.phoneNumber?.originalNumber
+  const validationSchema = me.phoneNumber?.originalNumber
     ? confirmRegistrationValidationSchemas.withoutPhoneValidation
     : confirmRegistrationValidationSchemas.withPhoneValidation
 

@@ -279,7 +279,7 @@ const AddressVerificationFlow: React.FC<
             <Button
               disabled={!(selectedAddressKey && selectedAddressKey.length > 0)}
               onClick={e => {
-                // Because a <button> is treated as type="submit" by default, it
+                // Because a <button type="button"> is treated as type="submit" by default, it
                 // will trigger the formik submit handler if it is inside a formik
                 // <Form />. We want to make this behavior more explicitly handled
                 // by this component's `chooseAddress()` logic.

@@ -21,7 +21,7 @@ describe("ErrorBoundary", () => {
     const { container } = render(
       <ErrorBoundary>
         <div>found child</div>
-      </ErrorBoundary>
+      </ErrorBoundary>,
     )
 
     expect(container.textContent).toContain("found child")
@@ -32,14 +32,13 @@ describe("ErrorBoundary", () => {
 
     const ErrorComponent = () => {
       throw new Error("throw error")
-      return null
     }
 
     try {
       render(
         <ErrorBoundary>
           <ErrorComponent />
-        </ErrorBoundary>
+        </ErrorBoundary>,
       )
     } catch {
       // Ignore the error for testing purposes
@@ -51,7 +50,6 @@ describe("ErrorBoundary", () => {
   it("updates `detail` state with stack trace", () => {
     const ErrorComponent = () => {
       throw new Error("throw error")
-      return null
     }
 
     let errorBoundaryInstance: any = null

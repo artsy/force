@@ -64,6 +64,10 @@ export const SavesArtworks: FC<React.PropsWithChildren<SavesArtworksProps>> = ({
     )
   }, [state.priceMax, state.priceMin])
 
+  const handleClearFilters = () => {
+    setState(prevState => ({ ...prevState, ...DEFAULT_FILTERS }))
+  }
+
   const SaveArtworksInvalidFallback = useMemo(() => {
     return ({ onReset }: ErrorFallbackProps) => {
       return (
@@ -76,10 +80,6 @@ export const SavesArtworks: FC<React.PropsWithChildren<SavesArtworksProps>> = ({
       )
     }
   }, [handleClearFilters])
-
-  const handleClearFilters = () => {
-    setState(prevState => ({ ...prevState, ...DEFAULT_FILTERS }))
-  }
 
   return (
     <>

@@ -11,9 +11,6 @@ describe("HTTP strict transport security middleware", () => {
 
   beforeEach(() => {
     testContext = {}
-  })
-
-  beforeEach(() => {
     testContext.req = {}
     testContext.res = {
       headers: [],
@@ -28,7 +25,7 @@ describe("HTTP strict transport security middleware", () => {
     testContext.req.get = () => "https"
     hstsMiddleware(testContext.req, testContext.res, testContext.next)
     expect(testContext.res.headers["Strict-Transport-Security"]).toEqual(
-      "max-age=31536000"
+      "max-age=31536000",
     )
   })
 })

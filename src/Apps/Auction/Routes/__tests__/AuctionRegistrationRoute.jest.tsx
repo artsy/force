@@ -40,7 +40,9 @@ jest.mock("@artsy/palette", () => ({
   ModalDialog: ({ children, title, onClose }) => (
     <div>
       <div>{title}</div>
-      <button onClick={onClose}>Close</button>
+      <button type="button" onClick={onClose}>
+        Close
+      </button>
       {children}
     </div>
   ),
@@ -237,7 +239,7 @@ describe("AuctionRegistrationRoute", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText("IdentityVerificationWarning")
+        screen.getByText("IdentityVerificationWarning"),
       ).toBeInTheDocument()
     })
   })
@@ -258,7 +260,7 @@ describe("AuctionRegistrationRoute", () => {
 
     await waitFor(() => {
       expect(
-        screen.queryByText("IdentityVerificationWarning")
+        screen.queryByText("IdentityVerificationWarning"),
       ).not.toBeInTheDocument()
     })
   })
@@ -285,7 +287,7 @@ describe("AuctionRegistrationRoute", () => {
       expect(screen.getAllByText("Register")).toHaveLength(2)
       expect(screen.getByText("AddressFormWithCreditCard")).toBeInTheDocument()
       expect(
-        screen.getByText("IdentityVerificationWarning")
+        screen.getByText("IdentityVerificationWarning"),
       ).toBeInTheDocument()
     })
   })

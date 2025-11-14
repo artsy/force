@@ -104,9 +104,7 @@ const ArtworkListArtworksGrid: FC<
         context_page_owner_type: contextPageOwnerType,
         context_page_owner_id: contextPageOwnerId,
         context_page_owner_slug: contextPageOwnerSlug,
-        // biome-ignore lint/suspicious/noNonNullAssertedOptionalChain: legacy
         page_current: prevFilterValue!,
-        // biome-ignore lint/suspicious/noNonNullAssertedOptionalChain: legacy
         page_changed: currentFilterValue!,
       }
 
@@ -158,7 +156,6 @@ const ArtworkListArtworksGrid: FC<
       <Spacer y={2} />
       <LoadingArea isLoading={fetching}>
         <ArtworkGrid
-          // biome-ignore lint/suspicious/noNonNullAssertedOptionalChain: legacy
           artworks={artworks!}
           columnCount={[2, 3]}
           contextModule={ContextModule.artworkGrid}
@@ -185,7 +182,6 @@ const ArtworkListArtworksGrid: FC<
 
         <Pagination
           hasNextPage={hasNextPage}
-          // biome-ignore lint/suspicious/noNonNullAssertedOptionalChain: legacy
           pageCursors={pageCursors!}
           onClick={(_cursor, page) => loadPage(page)}
           onNext={() => loadNext()}

@@ -32,7 +32,7 @@ export const collectAssets = async ({
     } catch (_error) {
       console.error(
         "[system/router/serverRouter.tsx] Error:",
-        "Missing loadable-stats.json file"
+        "Missing loadable-stats.json file",
       )
     }
   })()
@@ -70,7 +70,7 @@ export const collectAssets = async ({
   const extractScriptTags = () => {
     const initialScripts: string[] = []
 
-    const { entries } = manifest?.manifest
+    const entries = manifest?.manifest.entries || {}
 
     const { js = [] } = entries["index"].initial
 
@@ -99,20 +99,20 @@ export const collectAssets = async ({
           if (getENV("CDN_URL")) {
             const scriptTagWithCDN = script.replace(
               /src="\/assets/g,
-              `src="${assetPublicPath}`
+              `src="${assetPublicPath}`,
             )
             return scriptTagWithCDN
           } else {
             return script
           }
         })
-        .join("\n")
+        .join("\n"),
     )
 
     initialScripts.push(`
       <script>
         var __RELAY_HYDRATION_DATA__ = ${serializeRelayHydrationData(
-          initialRelayData
+          initialRelayData,
         )};
       </script>
     `)

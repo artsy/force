@@ -11,7 +11,7 @@ import type { ArtsyRequest, ArtsyResponse } from "./artsyExpress"
 export function bootstrapSharifyAndContextLocalsMiddleware(
   req: ArtsyRequest,
   res: ArtsyResponse,
-  next: NextFunction
+  next: NextFunction,
 ) {
   const ua = req.get("user-agent") || ""
 
@@ -27,8 +27,9 @@ export function bootstrapSharifyAndContextLocalsMiddleware(
     req.session != null
       ? req.session.id != null
         ? req.session.id
-        : (req.session.id = uuid.v1())
-      : undefined
+        : // biome-ignore lint/suspicious/noAssignInExpressions: thing
+          (req.session.id = uuid.v1())
+      : undefined,
   )
   updateSharifyAndContext(res, "ARTSY_XAPP_TOKEN", artsyXapp.token)
 
@@ -41,8 +42,8 @@ export function bootstrapSharifyAndContextLocalsMiddleware(
         (ua.match(/Android/i) && ua.match(/Mobile/i)) ||
         ua.match(/Windows Phone/i) ||
         ua.match(/BB10/i) ||
-        ua.match(/BlackBerry/i)
-    )
+        ua.match(/BlackBerry/i),
+    ),
   )
   updateSharifyAndContext(
     res,
@@ -52,8 +53,8 @@ export function bootstrapSharifyAndContextLocalsMiddleware(
         // specifically targets Vivo
         (ua.match(/vivo/i) && ua.match(/Mobile/i)) ||
         // targets android devices that are not mobile
-        (ua.match(/Android/i) && ua.match(/Mobile/i))
-    )
+        (ua.match(/Android/i) && ua.match(/Mobile/i)),
+    ),
   )
   updateSharifyAndContext(res, "IS_GOOGLEBOT", Boolean(ua.match(/Googlebot/i)))
   updateSharifyAndContext(res, "IP_ADDRESS", req.ip || "")
@@ -62,7 +63,7 @@ export function bootstrapSharifyAndContextLocalsMiddleware(
   updateSharifyAndContext(
     res,
     "THIRD_PARTIES_DISABLED",
-    req.query["disable_third_parties"] === "true"
+    req.query["disable_third_parties"] === "true",
   )
 
   next()
@@ -75,7 +76,7 @@ export function bootstrapSharifyAndContextLocalsMiddleware(
 export function updateSharifyAndContext(
   res: ArtsyResponse,
   key: string,
-  value: any
+  value: any,
 ) {
   res.locals.sd[key] = value
   updateContext(key, value)

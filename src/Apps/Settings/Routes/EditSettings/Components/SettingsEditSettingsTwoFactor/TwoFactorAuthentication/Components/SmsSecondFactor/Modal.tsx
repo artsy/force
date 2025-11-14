@@ -49,7 +49,7 @@ export const SmsSecondFactorModal: React.FC<
 
   const handleOnComplete = async (
     values: FormValues,
-    actions: FormikActions<object>
+    actions: FormikActions<object>,
   ) => {
     setSubmitting(true)
 
@@ -73,7 +73,7 @@ export const SmsSecondFactorModal: React.FC<
 
   const handleMutationError = (
     actions: FormikActions<FormValues>,
-    errors: ApiError[]
+    errors: ApiError[],
   ) => {
     if (!Array.isArray(errors)) {
       throw errors
@@ -102,7 +102,7 @@ export const SmsSecondFactorModal: React.FC<
 
   const handleDeliverStepSubmit = async (
     values: FormValues,
-    actions: FormikActions<FormValues>
+    actions: FormikActions<FormValues>,
   ) => {
     return new Promise<boolean>(async (resolve, _reject) => {
       setDelivering(true)
@@ -127,7 +127,7 @@ export const SmsSecondFactorModal: React.FC<
         if (factor.__typename === "SmsSecondFactor") {
           actions.setFieldValue(
             "formattedPhoneNumber",
-            factor.formattedPhoneNumber
+            factor.formattedPhoneNumber,
           )
         }
 
@@ -153,6 +153,7 @@ export const SmsSecondFactorModal: React.FC<
       validationSchema={Yup.object().shape({
         phoneNumber: Yup.string().required("Enter your phone number"),
       })}
+      key="phone-number"
     >
       {({ form }) => (
         <>
@@ -212,6 +213,7 @@ export const SmsSecondFactorModal: React.FC<
       validationSchema={Yup.object().shape({
         code: Yup.string().required("Enter a code"),
       })}
+      key="authentication-code"
     >
       {({ form, wizard }) => (
         <>

@@ -110,7 +110,6 @@ const HomeCurrentFairsContainer: React.FC<React.PropsWithChildren<unknown>> = ({
           variant="sm"
           textAlign="right"
           as={RouterLink}
-          // @ts-expect-error
           to="/art-fairs"
           onClick={() => {
             const trackingEvent: ClickedFairGroup = {
@@ -201,7 +200,7 @@ export const HomeCurrentFairsFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 export const HomeCurrentFairsQueryRenderer: React.FC<

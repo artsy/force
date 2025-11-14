@@ -22,7 +22,9 @@ jest.mock("@artsy/palette", () => {
     ModalDialog: ({ title, children, onClose, footer }) => {
       return (
         <div data-testid="ModalDialog">
-          <button onClick={onClose}>close</button>
+          <button type="button" onClick={onClose}>
+            close
+          </button>
           {title}
           {children}
           {footer}
@@ -122,8 +124,8 @@ describe("Buyer rejects seller offer", () => {
       expect(
         screen.getByText(
           "Declining an offer permanently ends the negotiation process.",
-          { exact: false }
-        )
+          { exact: false },
+        ),
       ).toBeInTheDocument()
     })
 
@@ -133,7 +135,7 @@ describe("Buyer rejects seller offer", () => {
       })
       fireEvent.click(screen.getByRole("button", { name: /change/i }))
       expect(pushMock).toHaveBeenCalledWith(
-        `/orders/${testOrder?.internalID}/respond`
+        `/orders/${testOrder?.internalID}/respond`,
       )
     })
   })
@@ -156,7 +158,7 @@ describe("Buyer rejects seller offer", () => {
 
       await page.clickSubmit()
       expect(pushMock).toHaveBeenCalledWith(
-        `/orders/${testOrder?.internalID}/details`
+        `/orders/${testOrder?.internalID}/details`,
       )
     })
 
@@ -169,7 +171,7 @@ describe("Buyer rejects seller offer", () => {
 
       // Check if loading state is detectable
       expect(
-        page.isLoading() || page.submitButton?.textContent?.includes("Submit")
+        page.isLoading() || page.submitButton?.textContent?.includes("Submit"),
       ).toBeTruthy()
     })
 

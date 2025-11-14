@@ -56,6 +56,7 @@ export const ArtworkSidebarCollectorSignal: React.FC<
 
   if (isShowingNow) {
     const formatDate = (dateString: string) => {
+      if (!dateString) return ""
       return new Date(dateString).toLocaleDateString("en-US", {
         month: "short",
         day: "numeric",
@@ -63,16 +64,18 @@ export const ArtworkSidebarCollectorSignal: React.FC<
     }
 
     const startAt = formatDate(
-      data.collectorSignals?.runningShow?.startAt ?? ""
+      data.collectorSignals?.runningShow?.startAt ?? "",
     )
     const endAt = formatDate(data.collectorSignals?.runningShow?.endAt ?? "")
+
+    const dateRange = startAt && endAt ? `${startAt}–${endAt}` : ""
 
     return (
       <Flex alignItems="top" my={4} data-testid="showing-now">
         <FairIcon mr={1} mt={0.5} />
         <Stack gap={0}>
           <Text variant="sm" color="mono100">
-            Showing now • {startAt}–{endAt}
+            Showing now{dateRange ? ` • ${dateRange}` : ""}
           </Text>
           <RouterLink to={data.collectorSignals?.runningShow?.href}>
             <Text variant="sm">{data.collectorSignals?.runningShow?.name}</Text>

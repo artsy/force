@@ -48,6 +48,7 @@ const FairExhibitors: React.FC<
           const letter = exhibitorsGroup.letter
 
           return (
+            // biome-ignore lint/correctness/useJsxKeyInIterable: ugh
             <Jump id={getExhibitorSectionId(letter)}>
               <Box key={letter}>
                 <Text variant="lg-display">{letter}</Text>
@@ -82,5 +83,5 @@ export const FairExhibitorsFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

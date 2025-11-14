@@ -65,9 +65,6 @@ describe("FairApp", () => {
 
   afterEach(() => {
     mockUseRouter.mockReset()
-  })
-
-  afterEach(() => {
     trackEvent.mockClear()
   })
 
@@ -95,7 +92,7 @@ describe("FairApp", () => {
     expect(screen.getByText("Exhibitors A-Z")).toBeInTheDocument()
     expect(screen.getByText("Exhibitors A-Z")).toHaveAttribute(
       "href",
-      "/fair/miart-2020/exhibitors"
+      "/fair/miart-2020/exhibitors",
     )
   })
 
@@ -107,7 +104,7 @@ describe("FairApp", () => {
     expect(screen.getByText("Artworks")).toBeInTheDocument()
     expect(screen.getByText("Artworks")).toHaveAttribute(
       "href",
-      "/fair/miart-2020/artworks"
+      "/fair/miart-2020/artworks",
     )
   })
 

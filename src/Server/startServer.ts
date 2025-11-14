@@ -13,7 +13,7 @@ const { HEADERS_TIMEOUT_SECONDS, KEEPALIVE_TIMEOUT_SECONDS } = process.env
  */
 export async function startServer(
   app,
-  onStart?: () => void
+  onStart?: () => void,
 ): Promise<http.Server> {
   setupExpressErrorHandler(app)
 
@@ -35,7 +35,7 @@ export async function startServer(
 
       if (KEEPALIVE_TIMEOUT_SECONDS) {
         console.log(
-          `Setting keepAliveTimeout to ${KEEPALIVE_TIMEOUT_SECONDS} sec.`
+          `Setting keepAliveTimeout to ${KEEPALIVE_TIMEOUT_SECONDS} sec.`,
         )
         server.keepAliveTimeout = Number(KEEPALIVE_TIMEOUT_SECONDS) * 1000
       }
@@ -43,11 +43,9 @@ export async function startServer(
       if (HEADERS_TIMEOUT_SECONDS) {
         console.log(`Setting headersTimeout to ${HEADERS_TIMEOUT_SECONDS} sec.`)
 
-        // @ts-expect-error -- FIXME: Property 'headersTimeout' does not exist on type 'Server & WithShutdown'.
         server.headersTimeout = Number(HEADERS_TIMEOUT_SECONDS) * 1000
       }
 
-      // @ts-expect-error -- Argument of type 'string' is not assignable to parameter of type 'number'.
       server.listen(PORT, "0.0.0.0", () => {
         console.log(message)
 

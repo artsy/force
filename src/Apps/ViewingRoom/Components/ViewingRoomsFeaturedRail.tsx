@@ -53,7 +53,6 @@ export const ViewingRoomsFeaturedRail: React.FC<
               <Card
                 width={280}
                 // TODO: Fix Palette type so that `undefined` is valid for `image`
-                // @ts-expect-error
                 image={image}
                 title={viewingRoom.title}
                 subtitle={viewingRoom.partner?.name}

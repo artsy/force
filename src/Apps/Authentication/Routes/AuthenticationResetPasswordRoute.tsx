@@ -109,7 +109,6 @@ export const AuthenticationResetPasswordRoute: React.FC<
               mx="auto"
               py={4}
               maxWidth={440}
-              // @ts-expect-error
               onSubmit={handleSubmit}
             >
               <Join separator={<Spacer y={2} />}>

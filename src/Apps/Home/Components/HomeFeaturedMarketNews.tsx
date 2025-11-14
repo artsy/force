@@ -136,7 +136,6 @@ const HomeFeaturedMarketNewsContainer: React.FC<
           variant={["xs", "sm-display"]}
           textAlign="right"
           as={RouterLink}
-          // @ts-expect-error
           to="/articles"
           onClick={() => {
             const trackingEvent: ClickedArticleGroup = {
@@ -184,7 +183,7 @@ export const HomeFeaturedMarketNewsFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 const PLACEHOLDER = (

@@ -56,7 +56,7 @@ export const SaveButtonBase: React.FC<
   }
 
   const handleClick = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
     event.preventDefault()
 
@@ -124,7 +124,6 @@ export const SaveButton: React.FC<React.PropsWithChildren<SaveButtonProps>> = ({
     onSave: ({ action, artwork }) => {
       tracking.trackEvent({
         action,
-        // @ts-expect-error TODO: Cohesion schema
         entity_slug: artwork.slug,
         entity_id: artwork.internalID,
       })
@@ -132,7 +131,7 @@ export const SaveButton: React.FC<React.PropsWithChildren<SaveButtonProps>> = ({
   })
 
   const handleClick = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
     event.preventDefault()
     handleSave()

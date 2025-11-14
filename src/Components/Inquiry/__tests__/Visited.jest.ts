@@ -11,7 +11,8 @@ describe("Visited", () => {
 
   beforeEach(() => {
     setMock.mockImplementation(
-      (name: string, value: any) => (store[name] = value)
+      // biome-ignore lint/suspicious/noAssignInExpressions: thing
+      (name: string, value: any) => (store[name] = value),
     )
 
     getMock.mockImplementation((name: string) => store[name])

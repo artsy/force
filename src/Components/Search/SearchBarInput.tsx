@@ -100,10 +100,10 @@ export const SearchBarInput: FC<
     if (shouldStartSearching(debouncedValue)) {
       searchRequest(
         debouncedValue,
-        selectedPill.searchEntityName as SearchEntity | undefined
+        selectedPill.searchEntityName as SearchEntity | undefined,
       )
     }
-  }, [debouncedValue, selectedPill.searchEntityName, searchRequest])
+  }, [debouncedValue, selectedPill.searchEntityName])
 
   const searchRequest = (value: string, entity?: SearchEntity) => {
     const entities = entity ? [entity] : []

@@ -43,7 +43,7 @@ describe("injectCommitMutation", () => {
     render(
       <Provider>
         <Injected />
-      </Provider>
+      </Provider>,
     )
 
     expect.assertions(2)
@@ -59,7 +59,8 @@ describe("injectCommitMutation", () => {
       }) => {
         return (
           // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
-          // biome-ignore lint/a11y/useKeyWithClickEvents: test component
+          // biome-ignore lint/a11y/noStaticElementInteractions: ugh
+          // biome-ignore lint/a11y/useKeyWithClickEvents: ugh
           <div
             className={
               props.isCommittingMutation ? "isCommittingMutation" : "nothing"
@@ -97,13 +98,13 @@ describe("injectCommitMutation", () => {
             {props.word}
           </div>
         )
-      }
+      },
     )
 
     render(
       <Provider>
         <Injected word="hello" />
-      </Provider>
+      </Provider>,
     )
 
     const clickableDiv = screen.getByText("hello")

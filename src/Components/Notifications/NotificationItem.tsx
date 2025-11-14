@@ -56,12 +56,13 @@ const NotificationItem: FC<React.PropsWithChildren<NotificationItemProps>> = ({
 
   const subTitle = getNotificationSubTitle(notification)
 
+  // biome-ignore lint/correctness/useHookAtTopLevel: thing
   const images = useMemo(
     () =>
       notification.previewImages.filter(
-        image => image.resized?.width && image.resized?.height
+        image => image.resized?.width && image.resized?.height,
       ),
-    [notification.previewImages]
+    [notification.previewImages],
   )
 
   return (
@@ -191,7 +192,7 @@ export const NotificationItemFragmentContainer = createFragmentContainer(
         ...NotificationTypeLabel_notification
       }
     `,
-  }
+  },
 )
 
 interface NotificationItemWrapperProps {
@@ -263,7 +264,7 @@ NotificationItemLink.defaultProps = {
  */
 const getNotificationUrl = (
   notification: NotificationItem_notification$data,
-  mode: NotificationListMode = "page"
+  mode: NotificationListMode = "page",
 ) => {
   // Notification response has targetHref field (computed on backend), which for
   // most notifications accounts for "objectsCount". If there is only one object,

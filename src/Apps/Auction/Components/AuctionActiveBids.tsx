@@ -256,7 +256,7 @@ const BidButton: React.FC<
   const sale = saleArtwork?.sale
   if (!sale) return null
 
-  if (!!saleArtwork.endedAt) {
+  if (saleArtwork.endedAt) {
     return (
       <Box
         alignItems="center"
@@ -271,7 +271,7 @@ const BidButton: React.FC<
     )
   }
 
-  if (!!sale.isLiveOpen) {
+  if (sale.isLiveOpen) {
     return (
       <Button
         // @ts-expect-error

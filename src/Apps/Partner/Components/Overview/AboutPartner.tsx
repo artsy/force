@@ -61,7 +61,6 @@ export const AboutPartner: React.FC<
             as="a"
             mb={2}
             variant="sm"
-            // @ts-expect-error
             href={website}
             target="_blank"
             onClick={() => tracking.trackEvent(tappedViewTrackingData)}
@@ -89,5 +88,5 @@ export const AboutPartnerFragmentContainer = createFragmentContainer(
         internalID
       }
     `,
-  }
+  },
 )

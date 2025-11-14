@@ -33,7 +33,6 @@ const ArticleSponsor: FC<React.PropsWithChildren<ArticleSponsorProps>> = ({
         bg={scheme ? "mono100" : "mono0"}
         borderRadius="50%"
         as="a"
-        // @ts-expect-error
         href={sponsor.partnerLogoLink as string}
         target="_blank"
         rel="noopener noreferrer"
@@ -64,5 +63,5 @@ export const ArticleSponsorFragmentContainer = createFragmentContainer(
         partnerLogoLink
       }
     `,
-  }
+  },
 )

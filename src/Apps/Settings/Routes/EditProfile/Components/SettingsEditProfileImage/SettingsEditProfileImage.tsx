@@ -56,7 +56,7 @@ const SettingsEditProfileImage: FC<
       const uploadUrl = await uploadPhotoToS3(
         relayEnvironment,
         photo,
-        setProgress
+        setProgress,
       )
 
       await submitMutation({ variables: { input: { iconUrl: uploadUrl } } })
@@ -97,11 +97,7 @@ const SettingsEditProfileImage: FC<
         disabled={mode === "Uploading"}
       />
 
-      <Clickable
-        as="label"
-        // @ts-expect-error
-        htmlFor="file"
-      >
+      <Clickable as="label" htmlFor="file">
         <Flex alignItems="center" gap={[1, 2]}>
           {isProcessing ? (
             <Tooltip
@@ -196,7 +192,7 @@ const MUTATION = graphql`
 export const SettingsEditProfileImageRefetchContainer = createRefetchContainer(
   SettingsEditProfileImage,
   { me: FRAGMENT },
-  QUERY
+  QUERY,
 )
 
 const FileInput = styled.input`

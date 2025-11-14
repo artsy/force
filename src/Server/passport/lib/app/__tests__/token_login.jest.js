@@ -1,6 +1,7 @@
 const tokenLogin = require("../token_login")
 const { headerLogin, trustTokenLogin } = tokenLogin
 
+// biome-ignore lint/style/noRestrictedImports: ignore
 import request from "superagent"
 
 jest.mock("superagent")
@@ -72,7 +73,7 @@ a url sans trust_token param`, () => {
       const res = { redirect: jest.fn() }
       const next = jest.fn()
       request.end.mockImplementation(cb =>
-        cb(null, { ok: true, body: { access_token: "yyy" } })
+        cb(null, { ok: true, body: { access_token: "yyy" } }),
       )
       trustTokenLogin(req, res, next)
       expect(request.post).toHaveBeenCalled()
@@ -91,11 +92,11 @@ a url sans trust_token param`, () => {
       const res = { redirect: jest.fn() }
       const next = jest.fn()
       request.end.mockImplementation(cb =>
-        cb(null, { ok: true, body: { access_token: "yyy" } })
+        cb(null, { ok: true, body: { access_token: "yyy" } }),
       )
       trustTokenLogin(req, res, next)
       expect(res.redirect.mock.calls[0][0]).toEqual(
-        "/target-path?foo=bar&bar=baz"
+        "/target-path?foo=bar&bar=baz",
       )
     })
 

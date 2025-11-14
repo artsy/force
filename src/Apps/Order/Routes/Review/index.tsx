@@ -539,7 +539,7 @@ export const ReviewRoute: FC<React.PropsWithChildren<ReviewProps>> = props => {
             </Flex>
             <Media greaterThan="xs">
               <ItemReview
-                // biome-ignore lint/suspicious/noNonNullAssertedOptionalChain: legacy
+                // biome-ignore lint/suspicious/noNonNullAssertedOptionalChain: thing
                 lineItem={order?.lineItems?.edges?.[0]?.node!}
                 orderSource={order.source}
               />

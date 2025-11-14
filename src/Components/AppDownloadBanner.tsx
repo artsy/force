@@ -75,7 +75,6 @@ export const AppDownloadBanner: FC<
       justifyContent="space-between"
       alignItems="center"
       width="100%"
-      // @ts-expect-error
       href={downloadAppUrl}
       onClick={trackDownloadBanner}
       target="_blank"

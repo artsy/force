@@ -20,7 +20,7 @@ const ArtworkSidebarDetails: React.FC<
 
   const getFrameString = (
     frameDetails?: string | null,
-    isUnlisted?: boolean
+    isUnlisted?: boolean,
   ) => {
     if (frameDetails !== "Included") {
       if (isUnlisted) {
@@ -84,5 +84,5 @@ export const ArtworkSidebarDetailsFragmentContainer = createFragmentContainer(
         ...ArtworkSidebarCollectorSignal_artwork
       }
     `,
-  }
+  },
 )

@@ -13,11 +13,11 @@ interface PressAppProps {
 }
 
 const PressApp: FC<React.PropsWithChildren<PressAppProps>> = ({ page }) => {
-  if (!page.content) return null
-
   const {
     match: { location },
   } = useRouter()
+
+  if (!page.content) return null
 
   return (
     <>

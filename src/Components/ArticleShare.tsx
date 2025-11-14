@@ -31,7 +31,6 @@ export const ArticleShare: FC<React.PropsWithChildren<ArticleShareProps>> = ({
           as="a"
           display="flex"
           title="Share via email"
-          // @ts-expect-error
           href={`mailto:?subject=${description}&body=Check out ${description} on Artsy: ${url}`}
           onClick={clickedArticleShare}
         >
@@ -42,7 +41,6 @@ export const ArticleShare: FC<React.PropsWithChildren<ArticleShareProps>> = ({
           as="a"
           display="flex"
           title="Post to Facebook"
-          // @ts-expect-error
           href={`https://www.facebook.com/sharer/sharer.php?u=${url}`}
           onClick={clickedArticleShare}
         >
@@ -53,7 +51,6 @@ export const ArticleShare: FC<React.PropsWithChildren<ArticleShareProps>> = ({
           as="a"
           display="flex"
           title="Share on X"
-          // @ts-expect-error
           href={`https://twitter.com/intent/post?original_referer=${url}&text=${description}&url=${url}&via=artsy`}
           onClick={clickedArticleShare}
         >

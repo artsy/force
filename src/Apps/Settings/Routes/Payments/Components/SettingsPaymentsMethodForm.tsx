@@ -171,7 +171,6 @@ export const SettingsPaymentsMethodForm: FC<
                     title="Country"
                     name="country"
                     // TODO: Accept a value prop in Select
-                    // @ts-expect-error
                     value={values.country}
                     onChange={handleChange}
                     onBlur={handleBlur}

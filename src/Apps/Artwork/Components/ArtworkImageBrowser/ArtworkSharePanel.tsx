@@ -184,34 +184,14 @@ export const ArtworkSharePanelFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 const ICONS = {
-  facebook: (
-    <FacebookIcon
-      // @ts-expect-error
-      fill="currentColor"
-    />
-  ),
-  x: (
-    <XIcon
-      // @ts-expect-error
-      fill="currentColor"
-    />
-  ),
-  pinterest: (
-    <PinterestIcon
-      // @ts-expect-error
-      fill="currentColor"
-    />
-  ),
-  tumblr: (
-    <TumblrIcon
-      // @ts-expect-error
-      fill="currentColor"
-    />
-  ),
+  facebook: <FacebookIcon fill="currentColor" />,
+  x: <XIcon fill="currentColor" />,
+  pinterest: <PinterestIcon fill="currentColor" />,
+  tumblr: <TumblrIcon fill="currentColor" />,
 }
 
 const ShareButton: React.FC<

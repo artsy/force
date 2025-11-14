@@ -402,7 +402,6 @@ export const ArtworkSidebarQueryRenderer: React.FC<
         return (
           <ArtworkSidebarFragmentContainer
             artwork={props.artwork}
-            // biome-ignore lint/suspicious/noNonNullAssertedOptionalChain: legacy
             me={props.me!}
             {...rest}
           />

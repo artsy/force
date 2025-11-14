@@ -41,7 +41,6 @@ export const DeprecatedSaveButton: React.FC<
     onSave: ({ action, artwork }) => {
       tracking.trackEvent({
         action,
-        // @ts-expect-error TODO: Cohesion schema
         entity_slug: artwork.slug,
         entity_id: artwork.internalID,
       })
@@ -49,7 +48,7 @@ export const DeprecatedSaveButton: React.FC<
   })
 
   const handleClick = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
     event.preventDefault()
     handleSave()
@@ -126,7 +125,7 @@ export const DeprecatedSaveButtonFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 interface DeprecatedSaveButtonQueryRendererProps

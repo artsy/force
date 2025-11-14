@@ -56,6 +56,7 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
     checkoutTracking,
   } = useCheckoutContext()
 
+  // FIXME! this breaks react rules of hooks.
   if (!order) {
     return <ErrorPage code={404} message="Order not found" />
   }
@@ -65,6 +66,7 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
     orderData.lineItems[0]?.artwork?.isFixedShippingFeeOnly
   const isExpressCheckoutEligible = !isOffer && isFixedShipping
 
+  // biome-ignore lint/correctness/useHookAtTopLevel: something
   useEffect(() => {
     if (!isExpressCheckoutEligible) {
       setExpressCheckoutLoaded([])
@@ -72,6 +74,8 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
   }, [])
 
   const activeStep = steps.find(step => step.state === CheckoutStepState.ACTIVE)
+
+  // biome-ignore lint/correctness/useHookAtTopLevel: rules of hooks
   useEffect(() => {
     switch (activeStep?.name) {
       case CheckoutStepName.CONFIRMATION:

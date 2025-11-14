@@ -134,8 +134,6 @@ const FulfillmentDetailsFormLayout = (
     await props.onAddressVerificationComplete()
   }
 
-  const _serializedValues = JSON.stringify(formikContext.values)
-
   const handleSelectSavedAddress = useCallback(
     (address: SavedAddressType) => {
       shippingContext.actions.setStage("fulfillment_details")

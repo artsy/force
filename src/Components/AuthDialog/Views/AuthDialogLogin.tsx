@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/suspicious/noThenProperty: ugh */
 import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
 import { useAfterAuthentication } from "Components/AuthDialog/Hooks/useAfterAuthentication"
 import { useAuthDialogTracking } from "Components/AuthDialog/Hooks/useAuthDialogTracking"
@@ -38,7 +39,7 @@ export const AuthDialogLogin: FC<React.PropsWithChildren<unknown>> = () => {
       }}
       onSubmit={async (
         { email, password, authenticationCode },
-        { setStatus, setFieldValue }
+        { setStatus, setFieldValue },
       ) => {
         setStatus({ error: null })
         setFieldValue("mode", "Loading")

@@ -30,6 +30,7 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
     return <ErrorPage code={404} message="Order not found" />
   }
 
+  // biome-ignore lint/correctness/useHookAtTopLevel: ugh
   useEffect(() => {
     window.addEventListener("beforeunload", preventHardReload)
     window.history.pushState(null, "", window.location.pathname)

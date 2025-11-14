@@ -7,7 +7,9 @@ jest.mock("react-tracking")
 jest.mock("Components/Artwork/ShelfArtwork", () => {
   return {
     ShelfArtworkFragmentContainer: ({ onClick }) => (
-      <button onClick={onClick}>ShelfArtwork</button>
+      <button type="button" onClick={onClick}>
+        ShelfArtwork
+      </button>
     ),
   }
 })
@@ -46,7 +48,7 @@ describe("FairFollowedArtists", () => {
         path="/fair/example-fair-slug"
       >
         <FairFollowedArtists fair={FAIR_FOLLOWED_ARTISTS_FIXTURE as any} />
-      </AnalyticsCombinedContextProvider>
+      </AnalyticsCombinedContextProvider>,
     )
   }
 

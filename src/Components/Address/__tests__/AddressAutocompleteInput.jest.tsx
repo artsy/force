@@ -127,6 +127,7 @@ const TestImplementation: FC<React.PropsWithChildren<ImplementationProps>> = ({
         ))}
       </div>
       <button
+        type="button"
         onClick={() => {
           setAddress({ ...address, line2: String(Date.now()) })
         }}
@@ -230,7 +231,7 @@ describe("AddressAutocompleteInput", () => {
       expect(mockOnChange).toHaveBeenCalledWith(
         expect.objectContaining({
           target: expect.objectContaining({ value: "401 Broadway" }),
-        })
+        }),
       )
     })
 
@@ -254,7 +255,7 @@ describe("AddressAutocompleteInput", () => {
 
       const dropdown = await screen.findByRole("listbox", { hidden: true })
       const option = within(dropdown).getByText(
-        "401 Broadway, New York NY 10013"
+        "401 Broadway, New York NY 10013",
       )
 
       await userEvent.click(option)
@@ -275,7 +276,7 @@ describe("AddressAutocompleteInput", () => {
           text: "401 Broadway, New York NY 10013",
           value: "401 Broadway, New York NY 10013",
         },
-        0
+        0,
       )
     })
 
@@ -350,7 +351,7 @@ describe("AddressAutocompleteInput", () => {
 
         const dropdown = await screen.findByRole("listbox", { hidden: true })
         const option = within(dropdown).getByText(
-          "401 Broadway, New York NY 10013"
+          "401 Broadway, New York NY 10013",
         )
 
         await userEvent.click(option)

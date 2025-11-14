@@ -64,14 +64,14 @@ export const ArtworkGridItem: React.FC<
   }
 
   const handleMouseEnter = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
   ) => {
     onMouseEnter()
     rest.onMouseEnter?.(event)
   }
 
   const handleMouseLeave = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
   ) => {
     onMouseLeave()
     rest.onMouseLeave?.(event)
@@ -87,6 +87,7 @@ export const ArtworkGridItem: React.FC<
 
   const item = (
     <ManageArtworkForSavesProvider savedListId={savedListId}>
+      {/** biome-ignore lint/a11y/noStaticElementInteractions: thing */}
       <div
         data-id={artwork.internalID}
         data-test="artworkGridItem"
@@ -318,7 +319,7 @@ export const ArtworkGridItemFragmentContainer = createFragmentContainer(
         ...ExclusiveAccessBadge_artwork
       }
     `,
-  }
+  },
 )
 
 export default ArtworkGridItemFragmentContainer

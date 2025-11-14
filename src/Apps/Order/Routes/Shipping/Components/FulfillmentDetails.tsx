@@ -45,8 +45,7 @@ export const FulfillmentDetails: FC<
   const [verifyAddressNow, setVerifyAddressNow] = useState<boolean>(false)
 
   const hasSavedAddresses = shippingContext.meData.addressList.length !== 0
-  // biome-ignore lint/suspicious/noNonNullAssertedOptionalChain: legacy
-  const firstArtwork = extractNodes(orderData.lineItems)[0]!.artwork!
+  const firstArtwork = extractNodes(orderData.lineItems)[0]!.artwork
 
   const initialValues = getInitialValues(
     shippingContext.meData,
@@ -54,7 +53,7 @@ export const FulfillmentDetails: FC<
   )
 
   const availableFulfillmentTypes: FulfillmentType[] =
-    firstArtwork.pickupAvailable
+    firstArtwork?.pickupAvailable
       ? [FulfillmentType.PICKUP, FulfillmentType.SHIP]
       : [FulfillmentType.SHIP]
 

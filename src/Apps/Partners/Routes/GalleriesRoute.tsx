@@ -55,7 +55,6 @@ const GalleriesRoute: React.FC<
             <Text
               variant="sm-display"
               as="a"
-              // @ts-expect-error
               href="https://partners.artsy.net"
               mr={2}
             >
@@ -65,7 +64,6 @@ const GalleriesRoute: React.FC<
             <Text
               variant="sm-display"
               as="a"
-              // @ts-expect-error
               href="https://partners.artsy.net/gallery-resources/"
             >
               Gallery Insights
@@ -132,5 +130,5 @@ export const GalleriesRouteFragmentContainer = createFragmentContainer(
           @arguments(id: "5638fdfb7261690296000031")
       }
     `,
-  }
+  },
 )

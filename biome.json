@@ -79,7 +79,8 @@
         "noImplicitAnyLet": "off",
         "noShadowRestrictedNames": "off",
         "noGlobalIsNan": "off",
-        "noTsIgnore": "off"
+        "noTsIgnore": "off",
+        "useIterableCallbackReturn": "off"
       }
     },
     "includes": ["**", "!**/src/__generated__/**/*"]

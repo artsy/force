@@ -58,7 +58,7 @@ const ArtworkSidebarEditionSets: React.FC<
       </Flex>
     )
 
-    if (!!(isOfferable || isAcquireable || isInquireable)) {
+    if (isOfferable || isAcquireable || isInquireable) {
       return (
         <Row>
           <Radio

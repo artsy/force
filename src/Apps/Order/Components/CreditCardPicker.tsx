@@ -120,7 +120,6 @@ export class CreditCardPicker extends React.Component<
     try {
       this.setState({ isCreatingStripeToken: true })
       const stripeBillingAddress = this.getStripeBillingAddress()
-      // biome-ignore lint/suspicious/noNonNullAssertedOptionalChain: legacy
       const cardNumberElement =
         this.props.elements.getElement(CardNumberElement)!
       return await this.props.stripe.createToken(
@@ -248,7 +247,7 @@ export class CreditCardPicker extends React.Component<
 
     const orderCard = this.props.order.creditCard
 
-    // biome-ignore lint/suspicious/noNonNullAssertedOptionalChain: legacy
+    // biome-ignore lint/suspicious/noNonNullAssertedOptionalChain: thing
     const creditCardsArray = creditCards?.edges?.map(e => e?.node)!
 
     // only add the unsaved card to the cards array if it exists and is not already there

@@ -22,9 +22,9 @@ import {
 const DEBOUNCE_DELAY = 300
 
 const GOOGLE_PLACES_API_SRC = `https://maps.googleapis.com/maps/api/js?key=${getENV(
-  "PUBLIC_GOOGLE_MAPS_API_KEY"
+  "PUBLIC_GOOGLE_MAPS_API_KEY",
 )}&libraries=places&v=weekly&language=en&sessiontoken=${getENV(
-  "SESSION_ID"
+  "SESSION_ID",
 )}&callback=__googleMapsCallback`
 
 interface LocationAutocompleteInputProps
@@ -91,19 +91,19 @@ export const LocationAutocompleteInput: FC<
             suggestions.map(option => ({
               text: option.description,
               value: option.place_id,
-            }))
+            })),
           )
         }
       } catch {
         setIsLoading(false)
       }
     },
-    [fetchSuggestions]
+    [fetchSuggestions],
   )
 
   const handleSuggestionsFetchRequested = useMemo(
     () => debounce(updateSuggestions, DEBOUNCE_DELAY),
-    [updateSuggestions]
+    [updateSuggestions],
   )
 
   const handleSelect = async (option: AutocompleteInputOptionType) => {
@@ -176,7 +176,7 @@ export type Location = {
 
 export const normalizePlace = (
   place?: Place,
-  withCountryCode = false
+  withCountryCode = false,
 ): Location => {
   if (!place) return { city: "" }
 
@@ -194,7 +194,7 @@ export const normalizePlace = (
         postalCode?: google.maps.GeocoderAddressComponent
         country?: google.maps.GeocoderAddressComponent
       },
-      component
+      component,
     ) => {
       if (component.types.includes("locality")) {
         return { ...acc, city: component }
@@ -214,7 +214,7 @@ export const normalizePlace = (
 
       return { ...acc }
     },
-    {}
+    {},
   )
 
   return {
@@ -230,6 +230,7 @@ export const normalizePlace = (
 
 const PoweredByGoogleIcon: FC<React.PropsWithChildren<unknown>> = () => {
   return (
+    // biome-ignore lint/a11y/noSvgWithoutTitle: thing
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="144"
@@ -252,6 +253,6 @@ const PoweredByGoogleIcon: FC<React.PropsWithChildren<unknown>> = () => {
 }
 
 export const buildLocationDisplay = (
-  location: Location | null | undefined
+  location: Location | null | undefined,
 ): string =>
   compact([location?.city, location?.state, location?.country]).join(", ")

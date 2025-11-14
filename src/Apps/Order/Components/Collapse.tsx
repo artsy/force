@@ -95,6 +95,7 @@ export class Collapse extends React.Component<
     return (
       <div
         data-testid={this.props["data-testid"]}
+        // biome-ignore lint/suspicious/noAssignInExpressions: ugh
         ref={ref => (this.wrapperRef = ref)}
         style={{
           transition: "height 0.3s ease",

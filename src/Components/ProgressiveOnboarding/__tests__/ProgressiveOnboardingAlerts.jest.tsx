@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/a11y/useButtonType: ugh */
 import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { __ProgressiveOnboardingAlertCreate__ } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertCreate"
 import { PROGRESSIVE_ONBOARDING_KEYS } from "Components/ProgressiveOnboarding/progressiveOnboardingKeys"
@@ -19,7 +20,7 @@ jest.mock("System/Hooks/useSystemContext", () => ({
 
 const Example: FC<React.PropsWithChildren<unknown>> = () => {
   const ProgressiveOnboardingAlertCreate = withProgressiveOnboardingCounts(
-    __ProgressiveOnboardingAlertCreate__
+    __ProgressiveOnboardingAlertCreate__,
   )
 
   return (

@@ -5,9 +5,7 @@ import { TriggerCampaignButton } from "Apps/ArtQuiz/Components/TriggerCampaignBu
 import { Spacer, Tab, Tabs, Text } from "@artsy/palette"
 import type { FC } from "react"
 
-export const ArtQuizResultsTabs: FC<
-  React.PropsWithChildren<unknown>
-> = ({}) => {
+export const ArtQuizResultsTabs: FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <>
       <Spacer y={[4, 6]} />

@@ -27,8 +27,6 @@ export const AuctionResult: React.FC<
 
   const results = extractNodes(comparableAuctionResults)
 
-  if (!artist) return null
-
   const isMounted = useRef(false)
 
   useEffect(() => {
@@ -50,6 +48,8 @@ export const AuctionResult: React.FC<
       })
     }
   }, [artist, user, showAuthDialog])
+
+  if (!artist) return null
 
   return (
     <>
@@ -130,5 +130,5 @@ export const AuctionResultFragmentContainer = createFragmentContainer(
         ...AuctionResultTitleInfo_auctionResult
       }
     `,
-  }
+  },
 )

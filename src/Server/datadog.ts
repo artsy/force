@@ -12,7 +12,6 @@ if (process.env.DD_APM_ENABLED) {
     // We want the root spans of MP to be labelled as just `service`
     service: "force",
     headers: ["User-Agent"],
-    // @ts-expect-error
     hooks: {
       /**
        * Because of our wildcard routes in `apps/artsy-v2` we need to

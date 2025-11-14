@@ -50,7 +50,6 @@ describe("useAddressAutocomplete", () => {
       }),
     })
 
-    // @ts-expect-error
     global.fetch = mockFetch
   })
 
@@ -69,7 +68,7 @@ describe("useAddressAutocomplete", () => {
   describe("when the US address autocomplete feature flag is enabled", () => {
     beforeAll(() => {
       ;(useFlag as jest.Mock).mockImplementation(
-        featureName => featureName === "address_autocomplete_us"
+        featureName => featureName === "address_autocomplete_us",
       )
       ;(getENV as jest.Mock).mockImplementation(() => {
         return {
@@ -108,8 +107,8 @@ describe("useAddressAutocomplete", () => {
             expect(result.current.autocompleteOptions.length).toBe(5)
             expect(
               result.current.autocompleteOptions.map(
-                ao => ao.address.addressLine1
-              )
+                ao => ao.address.addressLine1,
+              ),
             ).toEqual([
               "401 Broadway",
               "402 Broadway",
@@ -161,7 +160,7 @@ describe("useAddressAutocomplete", () => {
               state: "NY",
               street_line: `401 Broadway`,
               zipcode: "10013",
-            }
+            },
           )
 
           mockFetch.mockResolvedValue({
@@ -182,8 +181,8 @@ describe("useAddressAutocomplete", () => {
             expect(result.current.autocompleteOptions.length).toBe(2)
             expect(
               result.current.autocompleteOptions.map(
-                ao => ao.address.addressLine1
-              )
+                ao => ao.address.addressLine1,
+              ),
             ).toEqual(["401 Broadway", "402 Broadway"])
 
             expect(result.current.autocompleteOptions[0]).toEqual({
@@ -266,8 +265,8 @@ describe("useAddressAutocomplete", () => {
             expect(result.current.autocompleteOptions.length).toBe(5)
             expect(
               result.current.autocompleteOptions.map(
-                ao => ao.address.addressLine1
-              )
+                ao => ao.address.addressLine1,
+              ),
             ).toEqual([
               "401 Broadway",
               "402 Broadway",
@@ -324,7 +323,7 @@ describe("useAddressAutocomplete", () => {
         })
 
         expect(mockFetch).toHaveBeenCalledWith(
-          "https://us-autocomplete-pro.api.smarty.com/lookup?key=smarty-api-key&search=401+Broadway"
+          "https://us-autocomplete-pro.api.smarty.com/lookup?key=smarty-api-key&search=401+Broadway",
         )
       })
 
@@ -424,7 +423,7 @@ describe("useAddressAutocomplete", () => {
         act(() => {
           result.current.fetchSecondarySuggestions(
             "401 Broadway",
-            selectedOption
+            selectedOption,
           )
         })
 
@@ -467,19 +466,19 @@ describe("useAddressAutocomplete", () => {
         act(() => {
           result.current.fetchSecondarySuggestions(
             "401 Broadway",
-            selectedOption
+            selectedOption,
           )
         })
 
         expect(mockFetch).toHaveBeenCalledWith(
-          "https://us-autocomplete-pro.api.smarty.com/lookup?key=smarty-api-key&search=401+Broadway&selected=401+Broadway+Fl+13+%282%29+New+York+NY+10013"
+          "https://us-autocomplete-pro.api.smarty.com/lookup?key=smarty-api-key&search=401+Broadway&selected=401+Broadway+Fl+13+%282%29+New+York+NY+10013",
         )
         await waitFor(() => {
           expect(result.current.autocompleteOptions.length).toBe(5)
           expect(
             result.current.autocompleteOptions.map(
-              ao => ao.address.addressLine2
-            )
+              ao => ao.address.addressLine2,
+            ),
           ).toEqual(["Fl 10", "Fl 11", "Fl 12", "Fl 13", "Fl 14"])
           expect(result.current.autocompleteOptions[0]).toEqual({
             address: {
@@ -522,7 +521,7 @@ describe("useAddressAutocomplete", () => {
 
         const formattedAddress = result.current.autocompleteOptions[0].text
         expect(formattedAddress).toBe(
-          "402 Broadway Fl 26 (2 entries), New York NY 10014"
+          "402 Broadway Fl 26 (2 entries), New York NY 10014",
         )
       })
     })
@@ -532,7 +531,7 @@ describe("useAddressAutocomplete", () => {
     describe("feature flag is enabled", () => {
       beforeAll(() => {
         ;(useFlag as jest.Mock).mockImplementation(
-          featureName => featureName === "address_autocomplete_us"
+          featureName => featureName === "address_autocomplete_us",
         )
       })
 

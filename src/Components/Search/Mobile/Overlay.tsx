@@ -64,7 +64,7 @@ export const Overlay: FC<React.PropsWithChildren<OverlayProps>> = ({
     if (shouldStartSearching(debouncedValue)) {
       refetch(debouncedValue, selectedPill.searchEntityName)
     }
-  }, [debouncedValue, selectedPill.searchEntityName, refetch])
+  }, [debouncedValue, selectedPill.searchEntityName])
 
   const refetch = useCallback(
     (value: string, entity?: string) => {

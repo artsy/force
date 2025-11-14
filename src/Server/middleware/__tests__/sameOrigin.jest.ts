@@ -14,6 +14,7 @@ describe("Same origin middleware", () => {
       headers,
       set(name, value) {
         // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+        // biome-ignore lint/suspicious/noAssignInExpressions: thing
         return (headers[name] = value)
       },
     }

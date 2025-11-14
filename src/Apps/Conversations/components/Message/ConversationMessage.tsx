@@ -208,21 +208,11 @@ const Message: React.FC<
 }
 
 export const defineSeenBy = (
-  message: Pick<
+  _message: Pick<
     NonNullable<ConversationMessage_message$data>,
     "deliveries" | "to" | "cc"
-  >
+  >,
 ): string | undefined => {
   // FIXME: Disabling this feature for now. NX will redefine how it should work.
   return undefined
-
-  const opens = message.deliveries
-    .filter(delivery => !!delivery?.openedAt)
-    .map(delivery => delivery?.fullTransformedEmail)
-
-  if (!opens.length) return
-  // "Seen by all"
-  if (opens.length === message.to.concat(message.cc).length) return "all"
-  // "Seen by [n]"
-  return opens.length.toString()
 }

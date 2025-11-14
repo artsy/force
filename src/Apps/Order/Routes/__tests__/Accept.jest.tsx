@@ -43,6 +43,7 @@ jest.mock("@stripe/stripe-js", () => {
       return mock
     },
     _mockStripe: () => mock,
+    // biome-ignore lint/suspicious/noAssignInExpressions: ugh
     _mockReset: () => (mock = mockStripe()),
   }
 })
@@ -55,7 +56,9 @@ jest.mock("@artsy/palette", () => {
     ModalDialog: ({ title, children, onClose, footer }) => {
       return (
         <div data-testid="ModalDialog">
-          <button onClick={onClose}>close</button>
+          <button type="button" onClick={onClose}>
+            close
+          </button>
           {title}
           {children}
           {footer}
@@ -199,7 +202,7 @@ describe("Accept seller offer", () => {
 
       await page.clickSubmit()
       expect(pushMock).toHaveBeenCalledWith(
-        `/orders/${testOrder.internalID}/details`
+        `/orders/${testOrder.internalID}/details`,
       )
     })
 
@@ -212,7 +215,7 @@ describe("Accept seller offer", () => {
 
       // Check if loading state is detectable
       expect(
-        page.isLoading() || page.submitButton?.textContent?.includes("Submit")
+        page.isLoading() || page.submitButton?.textContent?.includes("Submit"),
       ).toBeTruthy()
     })
 
@@ -248,10 +251,10 @@ describe("Accept seller offer", () => {
       await page.clickSubmit()
       await page.expectAndDismissErrorDialogMatching(
         "Charge failed",
-        "Payment has been declined. Please contact your card provider or bank institution"
+        "Payment has been declined. Please contact your card provider or bank institution",
       )
       expect(pushMock).toHaveBeenCalledWith(
-        `/orders/${testOrder.internalID}/payment/new`
+        `/orders/${testOrder.internalID}/payment/new`,
       )
     })
 
@@ -265,10 +268,10 @@ describe("Accept seller offer", () => {
       await page.clickSubmit()
       await page.expectAndDismissErrorDialogMatching(
         "Insufficient funds",
-        "enough funds available"
+        "enough funds available",
       )
       expect(pushMock).toHaveBeenCalledWith(
-        `/orders/${testOrder.internalID}/payment/new`
+        `/orders/${testOrder.internalID}/payment/new`,
       )
     })
 
@@ -282,7 +285,7 @@ describe("Accept seller offer", () => {
       await page.clickSubmit()
       await page.expectAndDismissErrorDialogMatching(
         "Not available",
-        "Sorry, the work is no longer available."
+        "Sorry, the work is no longer available.",
       )
       const artworkId = testOrder.lineItems.edges[0].node.artwork.slug
       expect(pushMock).toHaveBeenCalledWith(`/artwork/${artworkId}`)

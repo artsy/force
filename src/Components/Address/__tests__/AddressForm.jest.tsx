@@ -39,7 +39,9 @@ describe("AddressForm", () => {
               setAddress(address)
             }}
           />
-          <button onClick={updateAddress}>Update</button>
+          <button type="button" onClick={updateAddress}>
+            Update
+          </button>
         </>
       )
     }
@@ -47,7 +49,7 @@ describe("AddressForm", () => {
     render(<Page />)
 
     const line1 = screen.getByPlaceholderText(
-      "Street address"
+      "Street address",
     ) as HTMLInputElement
     expect(line1.value).toBe("Before update")
 
@@ -76,7 +78,6 @@ describe("AddressForm", () => {
         }),
       })
 
-      // @ts-expect-error
       global.fetch = mockFetch
     })
 
@@ -112,7 +113,7 @@ describe("AddressForm", () => {
             errors={{}}
             touched={{}}
             value={{}}
-          />
+          />,
         )
 
         const countryInput = screen.getByLabelText("Country")
@@ -128,7 +129,7 @@ describe("AddressForm", () => {
         const listbox = await screen.findByRole("listbox", { hidden: true })
 
         expect(listbox).toHaveTextContent(
-          "401 Broadway Fl 25, New York NY 10013"
+          "401 Broadway Fl 25, New York NY 10013",
         )
         fireEvent.click(listbox)
         expect(line1Input).toHaveValue("401 Broadway")

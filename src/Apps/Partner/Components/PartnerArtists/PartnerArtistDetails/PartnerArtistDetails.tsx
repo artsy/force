@@ -29,18 +29,18 @@ export interface PartnerArtistDetailsProps {
 export const PartnerArtistDetails: React.FC<
   React.PropsWithChildren<PartnerArtistDetailsProps>
 > = ({ partnerArtist, partner }) => {
+  const {
+    match: {
+      location: { pathname, hash },
+    },
+  } = useRouter()
+
   if (!partnerArtist || !partnerArtist.node) return null
 
   const {
     node: { name, href, formattedNationalityAndBirthday },
     biographyBlurb,
   } = partnerArtist
-
-  const {
-    match: {
-      location: { pathname, hash },
-    },
-  } = useRouter()
 
   const artist = partnerArtist.node
   const isArtistDetailsPath =
@@ -137,7 +137,7 @@ export const PartnerArtistDetailsFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 export const PartnerArtistDetailsRenderer: React.FC<
