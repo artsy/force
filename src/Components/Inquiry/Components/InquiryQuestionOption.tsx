@@ -5,7 +5,7 @@ import {
   normalizePlace,
 } from "Components/LocationAutocompleteInput"
 import type React from "react"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
 interface InquiryQuestionOptionProps {
   id: string
@@ -35,10 +35,8 @@ export const InquiryQuestionOption: React.FC<InquiryQuestionOptionProps> = ({
     const newSelection = !questionSelected
     setQuestionSelected(newSelection)
     if (newSelection) {
-      console.log("adding question", question)
       addQuestion({ questionID: id, details: question })
     } else {
-      console.log("removing question", question)
       removeQuestion({ questionID: id, details: question })
     }
   }
@@ -57,10 +55,6 @@ export const InquiryQuestionOption: React.FC<InquiryQuestionOptionProps> = ({
       details: JSON.stringify(shippingDetails),
     })
   }
-
-  useEffect(() => {
-    console.log("questions updated", questions)
-  }, [questions])
 
   return (
     <Box as="table" width="100%">
