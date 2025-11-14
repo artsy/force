@@ -1,5 +1,3 @@
-import { MetaTags } from "Components/MetaTags"
-import { RouterLink } from "System/Components/RouterLink"
 import {
   Button,
   Column,
@@ -8,6 +6,8 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
+import { MetaTags } from "Components/MetaTags"
+import { RouterLink } from "System/Components/RouterLink"
 import type * as React from "react"
 
 export const Processing: React.FC<React.PropsWithChildren<unknown>> = () => {
@@ -37,7 +37,7 @@ export const Processing: React.FC<React.PropsWithChildren<unknown>> = () => {
 
           <Button
             width="100%"
-            // @ts-expect-error
+            // @ts-ignore
             as={RouterLink}
             to="/"
           >

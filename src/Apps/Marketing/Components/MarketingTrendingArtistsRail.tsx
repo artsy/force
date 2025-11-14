@@ -1,3 +1,4 @@
+import { Skeleton } from "@artsy/palette"
 import {
   CellArtistFragmentContainer,
   CellArtistPlaceholder,
@@ -5,9 +6,8 @@ import {
 import { Rail } from "Components/Rail/Rail"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
-import { Skeleton } from "@artsy/palette"
-import type { MarketingTrendingArtistsRail_viewer$data } from "__generated__/MarketingTrendingArtistsRail_viewer.graphql"
 import type { MarketingTrendingArtistsRailQuery } from "__generated__/MarketingTrendingArtistsRailQuery.graphql"
+import type { MarketingTrendingArtistsRail_viewer$data } from "__generated__/MarketingTrendingArtistsRail_viewer.graphql"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 

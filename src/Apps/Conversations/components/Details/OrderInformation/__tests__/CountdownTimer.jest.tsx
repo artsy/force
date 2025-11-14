@@ -1,5 +1,5 @@
-import { CountdownTimer } from "Apps/Conversations/components/Details/OrderInformation/CountdownTimer"
 import { render, screen } from "@testing-library/react"
+import { CountdownTimer } from "Apps/Conversations/components/Details/OrderInformation/CountdownTimer"
 import { add } from "date-fns"
 
 describe("CountdownTimer", () => {

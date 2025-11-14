@@ -1,7 +1,7 @@
 import { AlertProvider } from "Components/Alert/AlertProvider"
 import { useCurrentlySelectedFilters } from "Components/ArtworkFilter/ArtworkFilterContext"
-import type { SearchCriteriaAttributes } from "Components/SavedSearchAlert/types"
 import { getAllowedSearchCriteria } from "Components/SavedSearchAlert/Utils/savedSearchCriteria"
+import type { SearchCriteriaAttributes } from "Components/SavedSearchAlert/types"
 import type { FC } from "react"
 
 interface ArtworkFilterAlertContextProviderProps {

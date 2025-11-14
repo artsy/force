@@ -1,5 +1,5 @@
-import { useIntersectionObserver } from "Utils/Hooks/useIntersectionObserver"
 import { Box } from "@artsy/palette"
+import { useIntersectionObserver } from "Utils/Hooks/useIntersectionObserver"
 import type { FC } from "react"
 
 interface InfiniteScrollSentinelProps {

@@ -1,14 +1,3 @@
-import { BankAccountPickerFragmentContainer } from "Apps/Order/Components/BankAccountPicker"
-import { Collapse } from "Apps/Order/Components/Collapse"
-import {
-  type CreditCardPicker,
-  CreditCardPickerFragmentContainer,
-} from "Apps/Order/Components/CreditCardPicker"
-import { SaveAndContinueButton } from "Apps/Order/Components/SaveAndContinueButton"
-import type { CommitMutation } from "Apps/Order/Utils/commitMutation"
-import { RouterLink } from "System/Components/RouterLink"
-import { extractNodes } from "Utils/extractNodes"
-import { Jump } from "Utils/Hooks/useJump"
 import { ActionType, OwnerType } from "@artsy/cohesion"
 import InfoIcon from "@artsy/icons/InfoIcon"
 import InstitutionIcon from "@artsy/icons/InstitutionIcon"
@@ -23,6 +12,17 @@ import {
   Text,
   Tooltip,
 } from "@artsy/palette"
+import { BankAccountPickerFragmentContainer } from "Apps/Order/Components/BankAccountPicker"
+import { Collapse } from "Apps/Order/Components/Collapse"
+import {
+  type CreditCardPicker,
+  CreditCardPickerFragmentContainer,
+} from "Apps/Order/Components/CreditCardPicker"
+import { SaveAndContinueButton } from "Apps/Order/Components/SaveAndContinueButton"
+import type { CommitMutation } from "Apps/Order/Utils/commitMutation"
+import { RouterLink } from "System/Components/RouterLink"
+import { Jump } from "Utils/Hooks/useJump"
+import { extractNodes } from "Utils/extractNodes"
 import type { Payment_me$data } from "__generated__/Payment_me.graphql"
 import type {
   CommercePaymentMethodEnum,

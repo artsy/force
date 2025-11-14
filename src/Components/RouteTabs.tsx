@@ -1,5 +1,3 @@
-import { RouterLink, type RouterLinkProps } from "System/Components/RouterLink"
-import { useIsRouteActive } from "System/Hooks/useRouter"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import {
   BaseTab,
@@ -7,6 +5,8 @@ import {
   BaseTabs,
   type BaseTabsProps,
 } from "@artsy/palette"
+import { RouterLink, type RouterLinkProps } from "System/Components/RouterLink"
+import { useIsRouteActive } from "System/Hooks/useRouter"
 import type * as React from "react"
 import { useTracking } from "react-tracking"
 
@@ -22,6 +22,7 @@ export const RouteTab: React.FC<
   return (
     <BaseTab
       as={RouterLink}
+      // @ts-ignore
       to={to}
       active={useIsRouteActive(to, options)}
       onClick={() => {

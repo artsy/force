@@ -1,6 +1,6 @@
+import { screen } from "@testing-library/react"
 import { FairExhibitorsFragmentContainer } from "Apps/Fair/Routes/FairExhibitors"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { screen } from "@testing-library/react"
 import type { FairExhibitors_Test_Query } from "__generated__/FairExhibitors_Test_Query.graphql"
 import { graphql } from "react-relay"
 

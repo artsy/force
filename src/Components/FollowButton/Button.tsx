@@ -2,9 +2,9 @@ import { Box, Button, type ButtonProps, Text } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import type React from "react"
 import {
-  forwardRef,
   type MouseEventHandler,
   type Ref,
+  forwardRef,
   useMemo,
   useState,
 } from "react"

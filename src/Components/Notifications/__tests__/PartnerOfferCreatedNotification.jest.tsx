@@ -1,6 +1,6 @@
+import { screen } from "@testing-library/react"
 import { PartnerOfferCreatedNotification } from "Components/Notifications/PartnerOfferCreatedNotification"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { screen } from "@testing-library/react"
 import type { PartnerOfferCreatedNotification_test_Query } from "__generated__/PartnerOfferCreatedNotification_test_Query.graphql"
 import { graphql } from "react-relay"
 

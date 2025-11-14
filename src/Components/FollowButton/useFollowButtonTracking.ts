@@ -1,21 +1,21 @@
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import {
   type AuthContextModule,
   type FollowedArgs,
   type FollowedArtist,
   type FollowedGene,
   type FollowedPartner,
-  followedArtist,
-  followedGene,
-  followedPartner,
   OwnerType,
   type UnfollowedArtist,
   type UnfollowedGene,
   type UnfollowedPartner,
+  followedArtist,
+  followedGene,
+  followedPartner,
   unfollowedArtist,
   unfollowedGene,
   unfollowedPartner,
 } from "@artsy/cohesion"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useCallback } from "react"
 import { useTracking } from "react-tracking"
 

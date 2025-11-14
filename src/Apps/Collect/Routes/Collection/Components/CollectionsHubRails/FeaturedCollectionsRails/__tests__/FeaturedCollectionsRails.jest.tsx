@@ -1,10 +1,10 @@
-import { CollectionHubFixture } from "Apps/__tests__/Fixtures/Collections"
 import { fireEvent, render, screen } from "@testing-library/react"
+import { CollectionHubFixture } from "Apps/__tests__/Fixtures/Collections"
 import { useTracking } from "react-tracking"
 import "jest-styled-components"
+import { paginateCarousel } from "@artsy/palette"
 import { FeaturedCollectionsRails } from "Apps/Collect/Routes/Collection/Components/CollectionsHubRails/FeaturedCollectionsRails/index"
 import { AnalyticsCombinedContextProvider } from "System/Contexts/AnalyticsContext"
-import { paginateCarousel } from "@artsy/palette"
 
 jest.mock("@artsy/palette/dist/elements/Carousel/paginate")
 jest.mock("react-tracking")

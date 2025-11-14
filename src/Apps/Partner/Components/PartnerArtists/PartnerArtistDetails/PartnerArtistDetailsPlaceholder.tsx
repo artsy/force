@@ -1,4 +1,3 @@
-import { ShelfArtworkPlaceholder } from "Components/Artwork/ShelfArtwork"
 import {
   Button,
   Column,
@@ -6,6 +5,7 @@ import {
   Shelf,
   SkeletonText,
 } from "@artsy/palette"
+import { ShelfArtworkPlaceholder } from "Components/Artwork/ShelfArtwork"
 
 export const PartnerArtistDetailsPlaceholder: React.FC<
   React.PropsWithChildren<unknown>

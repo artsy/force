@@ -1,6 +1,6 @@
+import { screen } from "@testing-library/react"
 import { ArtworkSidebarDetailsFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarDetails"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { screen } from "@testing-library/react"
 import type { ArtworkSidebarDetails_Test_Query } from "__generated__/ArtworkSidebarDetails_Test_Query.graphql"
 import { graphql } from "react-relay"
 
@@ -224,8 +224,7 @@ describe("ArtworkSidebarDetails", () => {
       })
 
       expect(screen.queryByText(/Showing now/)).toBeInTheDocument()
-      // Date formatting can vary by timezone, so check for the date pattern more flexibly
-      expect(screen.queryByText(/Jun \d{1,2}–Jun \d{1,2}/)).toBeInTheDocument()
+      expect(screen.queryByText(/Jun 17–Jun 20/)).toBeInTheDocument()
       expect(screen.queryByText(/Art Basel/)).toBeInTheDocument()
     })
 

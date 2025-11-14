@@ -1,7 +1,3 @@
-import { EntityHeaderPartnerFragmentContainer } from "Components/EntityHeaders/EntityHeaderPartner"
-import { RouterLink } from "System/Components/RouterLink"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { ActionType, type ClickedTooltip } from "@artsy/cohesion"
 import {
   Box,
@@ -11,8 +7,12 @@ import {
   SkeletonText,
   Text,
 } from "@artsy/palette"
-import type { EntityTooltipPartner_partner$data } from "__generated__/EntityTooltipPartner_partner.graphql"
+import { EntityHeaderPartnerFragmentContainer } from "Components/EntityHeaders/EntityHeaderPartner"
+import { RouterLink } from "System/Components/RouterLink"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import type { EntityTooltipPartnerQuery } from "__generated__/EntityTooltipPartnerQuery.graphql"
+import type { EntityTooltipPartner_partner$data } from "__generated__/EntityTooltipPartner_partner.graphql"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"

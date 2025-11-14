@@ -1,5 +1,4 @@
 import { OwnerType, timeOnPage } from "@artsy/cohesion"
-// biome-ignore lint/style/noRestrictedImports: Test requires sharify for server configuration
 import type { GlobalData } from "sharify"
 import { trackEvent } from "../helpers"
 

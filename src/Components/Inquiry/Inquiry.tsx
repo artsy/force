@@ -1,6 +1,6 @@
-import { SKIPPABLE_VIEWS, type View } from "Components/Inquiry/config"
 import CloseIcon from "@artsy/icons/CloseIcon"
 import { Box, Clickable, useTheme } from "@artsy/palette"
+import { SKIPPABLE_VIEWS, type View } from "Components/Inquiry/config"
 import type * as React from "react"
 import { InquiryBackdrop } from "./Components/InquiryBackdrop"
 import {

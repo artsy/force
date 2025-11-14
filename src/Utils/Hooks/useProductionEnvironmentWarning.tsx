@@ -1,6 +1,5 @@
 import { useToasts } from "@artsy/palette"
 import { useEffect, useRef } from "react"
-// biome-ignore lint/style/noRestrictedImports: Core utility requires sharify
 import { data as sd } from "sharify"
 
 export const SHOULD_WARN_PRODUCTION_ENVIRONMENT =

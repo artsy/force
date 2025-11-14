@@ -1,6 +1,6 @@
+import { screen } from "@testing-library/react"
 import { ArtworkListEmptyStateFragmentContainer } from "Apps/CollectorProfile/Routes/Saves/Components/ArtworkListEmptyState"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { screen } from "@testing-library/react"
 import type { ArtworkListEmptyState_Test_Query } from "__generated__/ArtworkListEmptyState_Test_Query.graphql"
 import { graphql } from "react-relay"
 

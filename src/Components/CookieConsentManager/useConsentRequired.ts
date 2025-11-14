@@ -1,11 +1,11 @@
+import type { CategoryPreferences } from "@segment/consent-manager/types/types"
 import {
   DEFAULT_OPT_IN_PREFERENCES,
   DEFAULT_OPT_OUT_PREFERENCES,
 } from "Components/CookieConsentManager/categories"
+import { useDidMount } from "Utils/Hooks/useDidMount"
 import { getENV } from "Utils/getENV"
 import { getTimeZone } from "Utils/getTimeZone"
-import { useDidMount } from "Utils/Hooks/useDidMount"
-import type { CategoryPreferences } from "@segment/consent-manager/types/types"
 import qs from "qs"
 
 /**

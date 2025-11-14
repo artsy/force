@@ -4,7 +4,7 @@ import type {
   useArtworkInquiryRequestMutation,
   useArtworkInquiryRequestMutation$data,
 } from "__generated__/useArtworkInquiryRequestMutation.graphql"
-import { commitMutation, type Environment, graphql } from "react-relay"
+import { type Environment, commitMutation, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { useInquiryContext } from "./useInquiryContext"
 

@@ -1,5 +1,5 @@
-import { AppContainer } from "Apps/Components/AppContainer"
 import { Box } from "@artsy/palette"
+import { AppContainer } from "Apps/Components/AppContainer"
 import { States } from "storybook-states"
 import { TopContextBar, type TopContextBarProps } from "../TopContextBar"
 

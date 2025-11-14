@@ -1,7 +1,6 @@
 import { Elements, ElementsConsumer } from "@stripe/react-stripe-js"
-import { loadStripe, type StripeElementsOptions } from "@stripe/stripe-js"
+import { type StripeElementsOptions, loadStripe } from "@stripe/stripe-js"
 import type * as React from "react"
-// biome-ignore lint/style/noRestrictedImports: Core utility requires sharify
 import { data as sd } from "sharify"
 
 export function createStripeWrapper<T>(

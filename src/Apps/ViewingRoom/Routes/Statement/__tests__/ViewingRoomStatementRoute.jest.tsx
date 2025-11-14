@@ -1,7 +1,7 @@
+import { screen, fireEvent } from "@testing-library/react"
 import { ViewingRoomStatementRouteFragmentContainer } from "Apps/ViewingRoom/Routes/Statement/ViewingRoomStatementRoute"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { fireEvent, screen } from "@testing-library/react"
 import type { ViewingRoomStatementRouteTestQuery$rawResponse } from "__generated__/ViewingRoomStatementRouteTestQuery.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"

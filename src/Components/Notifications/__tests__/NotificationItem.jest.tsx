@@ -1,7 +1,7 @@
+import { screen } from "@testing-library/react"
 import { SUPPORTED_NOTIFICATION_TYPES } from "Components/Notifications/Notification"
 import { NotificationItemFragmentContainer } from "Components/Notifications/NotificationItem"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { screen } from "@testing-library/react"
 import type { NotificationItem_test_Query } from "__generated__/NotificationItem_test_Query.graphql"
 import { graphql } from "react-relay"
 

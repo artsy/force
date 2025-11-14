@@ -1,16 +1,16 @@
+import { Box, Join, Pill, Spacer, Text } from "@artsy/palette"
 import { OnboardingFigure } from "Components/Onboarding/Components/OnboardingFigure"
 import { OnboardingQuestionPanel } from "Components/Onboarding/Components/OnboardingQuestionPanel"
+import { useOnboardingContext } from "Components/Onboarding/Hooks/useOnboardingContext"
+import { useOnboardingFadeTransition } from "Components/Onboarding/Hooks/useOnboardingFadeTransition"
+import { useOnboardingTracking } from "Components/Onboarding/Hooks/useOnboardingTracking"
 import {
   OPTION_COLLECTING_ART_THAT_MOVES_ME,
   OPTION_DEVELOPING_MY_ART_TASTES,
   OPTION_FINDING_GREAT_INVESTMENTS,
   OPTION_KEEP_TRACK_OF_ART,
 } from "Components/Onboarding/config"
-import { useOnboardingContext } from "Components/Onboarding/Hooks/useOnboardingContext"
-import { useOnboardingFadeTransition } from "Components/Onboarding/Hooks/useOnboardingFadeTransition"
-import { useOnboardingTracking } from "Components/Onboarding/Hooks/useOnboardingTracking"
 import { SplitLayout } from "Components/SplitLayout"
-import { Box, Join, Pill, Spacer, Text } from "@artsy/palette"
 import type { FC } from "react"
 
 export const OnboardingQuestionTwo: FC<

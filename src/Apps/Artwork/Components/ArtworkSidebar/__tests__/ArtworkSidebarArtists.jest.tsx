@@ -1,6 +1,6 @@
+import { fireEvent, screen } from "@testing-library/react"
 import { ArtworkSidebarArtistsFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarArtists"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { fireEvent, screen } from "@testing-library/react"
 import type { ArtworkSidebarArtists_Test_Query } from "__generated__/ArtworkSidebarArtists_Test_Query.graphql"
 import { graphql } from "react-relay"
 

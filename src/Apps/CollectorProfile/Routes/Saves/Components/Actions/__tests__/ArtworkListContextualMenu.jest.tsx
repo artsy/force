@@ -1,9 +1,9 @@
+import { fireEvent, screen } from "@testing-library/react"
 import {
   ArtworkListContextualMenu,
   type ArtworkListEntity,
 } from "Apps/CollectorProfile/Routes/Saves/Components/Actions/ArtworkListContextualMenu"
 import { render } from "DevTools/renderWithMockBoot"
-import { fireEvent, screen } from "@testing-library/react"
 
 const artworkList: ArtworkListEntity = {
   internalID: "foobar",

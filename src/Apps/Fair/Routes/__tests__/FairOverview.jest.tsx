@@ -1,7 +1,7 @@
+import { screen, waitFor } from "@testing-library/react"
 import { FairOverviewFragmentContainer } from "Apps/Fair/Routes/FairOverview"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useRouter } from "System/Hooks/useRouter"
-import { screen, waitFor } from "@testing-library/react"
 import type { FairOverviewTestQuery } from "__generated__/FairOverviewTestQuery.graphql"
 import { graphql } from "react-relay"
 

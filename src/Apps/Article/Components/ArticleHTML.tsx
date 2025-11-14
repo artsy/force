@@ -1,9 +1,9 @@
-import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
-import { FollowProfileButtonQueryRenderer } from "Components/FollowButton/FollowProfileButton"
-import { toStyle } from "Utils/toStyle"
 import { ContextModule } from "@artsy/cohesion"
 import { Box, type BoxProps, Flex, THEME } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
+import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
+import { FollowProfileButtonQueryRenderer } from "Components/FollowButton/FollowProfileButton"
+import { toStyle } from "Utils/toStyle"
 import { type FC, useEffect, useState } from "react"
 import styled from "styled-components"
 import { ArticleTooltip, isSupportedArticleTooltip } from "./ArticleTooltip"
@@ -92,7 +92,7 @@ export const ArticleHTML: FC<React.PropsWithChildren<ArticleHTMLProps>> = ({
     import("@artsy/react-html-parser").then(({ default: reactHtmlParser }) => {
       setTransformed(reactHtmlParser(children, { transform }))
     })
-  }, [children, transform])
+  }, [children])
 
   if (transformed) {
     return <Container {...rest}>{transformed}</Container>

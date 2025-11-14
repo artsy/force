@@ -1,10 +1,10 @@
-import { BASE_SAVES_PATH } from "Apps/CollectorProfile/constants"
-import { useRouter } from "System/Hooks/useRouter"
+import { Button, Flex, ModalDialog, Text, useToasts } from "@artsy/palette"
+import { useDeleteArtworkList } from "./Mutations/useDeleteArtworkList"
 
 import { ActionType, type DeletedArtworkList, OwnerType } from "@artsy/cohesion"
-import { Button, Flex, ModalDialog, Text, useToasts } from "@artsy/palette"
+import { BASE_SAVES_PATH } from "Apps/CollectorProfile/constants"
+import { useRouter } from "System/Hooks/useRouter"
 import { useTracking } from "react-tracking"
-import { useDeleteArtworkList } from "./Mutations/useDeleteArtworkList"
 
 export interface DeleteArtworkListEntity {
   internalID: string

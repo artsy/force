@@ -1,3 +1,10 @@
+import {
+  ActionType,
+  type ClickedArtworkGroup,
+  ContextModule,
+  OwnerType,
+} from "@artsy/cohesion"
+import { Box, type BoxProps, Shelf, Spacer, Text } from "@artsy/palette"
 import { ShelfArtworkFragmentContainer } from "Components/Artwork/ShelfArtwork"
 import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
 import { RouterLink } from "System/Components/RouterLink"
@@ -6,15 +13,8 @@ import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
 import { getSignalLabel } from "Utils/getSignalLabel"
-import {
-  ActionType,
-  type ClickedArtworkGroup,
-  ContextModule,
-  OwnerType,
-} from "@artsy/cohesion"
-import { Box, type BoxProps, Shelf, Spacer, Text } from "@artsy/palette"
-import type { FairFollowedArtists_fair$data } from "__generated__/FairFollowedArtists_fair.graphql"
 import type { FairFollowedArtistsQuery } from "__generated__/FairFollowedArtistsQuery.graphql"
+import type { FairFollowedArtists_fair$data } from "__generated__/FairFollowedArtists_fair.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"

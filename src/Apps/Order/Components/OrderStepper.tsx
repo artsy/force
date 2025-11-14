@@ -1,6 +1,6 @@
+import { Clickable, Step, Stepper } from "@artsy/palette"
 import { useRouter } from "System/Hooks/useRouter"
 import { extractNodes } from "Utils/extractNodes"
-import { Clickable, Step, Stepper } from "@artsy/palette"
 import type { OrderStepper_order$data } from "__generated__/OrderStepper_order.graphql"
 import { type FC, useMemo } from "react"
 import { createFragmentContainer, graphql } from "react-relay"

@@ -1,6 +1,6 @@
+import { screen } from "@testing-library/react"
 import { ArtworkAuctionRegistrationPanelFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkAuctionRegistrationPanel"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { screen } from "@testing-library/react"
 import type { ArtworkAuctionRegistrationPanelQuery } from "__generated__/ArtworkAuctionRegistrationPanelQuery.graphql"
 import { DateTime } from "luxon"
 import { graphql } from "react-relay"

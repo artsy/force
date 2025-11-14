@@ -4,11 +4,11 @@
 
 import type { ArtsyResponse } from "Server/middleware/artsyExpress"
 import { SystemContextConsumer } from "System/Contexts/SystemContext"
+import { findRoutesByPath } from "System/Router/Utils/routeUtils"
 import {
   __TEST_INTERNAL_SERVER_APP__,
   setupServerRouter,
 } from "System/Router/serverRouter"
-import { findRoutesByPath } from "System/Router/Utils/routeUtils"
 import { Media } from "Utils/Responsive"
 import type { NextFunction, Request } from "express"
 import ReactDOMServer from "react-dom/server"
@@ -63,7 +63,7 @@ describe("serverRouter", () => {
   let res: ArtsyResponse
   let req: Request
   let next: NextFunction
-  // @ts-expect-error
+  // @ts-ignore
   let options: any = { req, res, next }
 
   mockFindRoutesByPath.mockImplementation(() => {
@@ -289,6 +289,7 @@ describe("serverRouter", () => {
       expect(texts).toEqual(["xs", "notHover"])
     })
   })
+
 
   it("invokes onServerSideRender hook", async () => {
     const spy = jest.fn()

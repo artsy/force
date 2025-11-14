@@ -1,7 +1,8 @@
 import { NavBarUserMenu } from "Components/NavBar/Menus/NavBarUserMenu"
 import { SystemContextProvider } from "System/Contexts/SystemContext"
 import { logout } from "Utils/auth"
-import { fireEvent, render } from "@testing-library/react"
+import { render } from "@testing-library/react"
+import { fireEvent } from "@testing-library/react"
 
 jest.mock("react-tracking", () => ({
   useTracking: () => ({

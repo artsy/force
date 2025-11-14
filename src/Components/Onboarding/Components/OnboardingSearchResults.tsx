@@ -1,3 +1,5 @@
+import { ContextModule } from "@artsy/cohesion"
+import { Join, Message, Separator } from "@artsy/palette"
 import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
 import { EntityHeaderPartnerFragmentContainer } from "Components/EntityHeaders/EntityHeaderPartner"
 import { EntityHeaderPlaceholder } from "Components/EntityHeaders/EntityHeaderPlaceholder"
@@ -6,10 +8,8 @@ import { FollowProfileButtonQueryRenderer } from "Components/FollowButton/Follow
 import { useOnboardingContext } from "Components/Onboarding/Hooks/useOnboardingContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
-import { ContextModule } from "@artsy/cohesion"
-import { Join, Message, Separator } from "@artsy/palette"
-import type { OnboardingSearchResults_viewer$data } from "__generated__/OnboardingSearchResults_viewer.graphql"
 import type { OnboardingSearchResultsQuery } from "__generated__/OnboardingSearchResultsQuery.graphql"
+import type { OnboardingSearchResults_viewer$data } from "__generated__/OnboardingSearchResults_viewer.graphql"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 

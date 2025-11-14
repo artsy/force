@@ -1,8 +1,8 @@
 import { BaseArtworkFilter } from "Components/ArtworkFilter"
 import {
   ArtworkFilterContextProvider,
-  initialArtworkFilterState,
   type SharedArtworkFilterContextProps,
+  initialArtworkFilterState,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { ArtworkFilterPlaceholder } from "Components/ArtworkFilter/ArtworkFilterPlaceholder"
 import { allowedFilters } from "Components/ArtworkFilter/Utils/allowedFilters"
@@ -12,13 +12,13 @@ import { LazyArtworkGrid } from "Components/ArtworkGrid/LazyArtworkGrid"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import type { GeneArtworkFilter_gene$data } from "__generated__/GeneArtworkFilter_gene.graphql"
 import type { GeneArtworkFilterQuery } from "__generated__/GeneArtworkFilterQuery.graphql"
+import type { GeneArtworkFilter_gene$data } from "__generated__/GeneArtworkFilter_gene.graphql"
 import type * as React from "react"
 import {
+  type RelayRefetchProp,
   createRefetchContainer,
   graphql,
-  type RelayRefetchProp,
 } from "react-relay"
 
 interface GeneArtworkFilterProps {

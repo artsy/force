@@ -1,3 +1,4 @@
+import { Join, Spacer } from "@artsy/palette"
 import { BaseArtworkFilter } from "Components/ArtworkFilter"
 import {
   ArtworkFilterContextProvider,
@@ -22,14 +23,14 @@ import { WaysToBuyFilter } from "Components/ArtworkFilter/ArtworkFilters/WaysToB
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 import { usePathnameComplete } from "Utils/Hooks/usePathnameComplete"
-import { Join, Spacer } from "@artsy/palette"
 import type { CollectionArtworksFilter_collection$data } from "__generated__/CollectionArtworksFilter_collection.graphql"
 import type * as React from "react"
 import {
+  type RelayRefetchProp,
   createRefetchContainer,
   graphql,
-  type RelayRefetchProp,
 } from "react-relay"
 
 interface CollectionArtworksFilterProps {

@@ -1,12 +1,12 @@
-import { OfferOrderWithShippingDetails } from "Apps/__tests__/Fixtures/Order"
+import { fireEvent, screen } from "@testing-library/react"
+import { RejectFragmentContainer } from "Apps/Order/Routes/Reject"
 import {
   rejectOfferFailed,
   rejectOfferSuccess,
 } from "Apps/Order/Routes/__fixtures__/MutationResults/rejectOffer"
-import { RejectFragmentContainer } from "Apps/Order/Routes/Reject"
+import { OfferOrderWithShippingDetails } from "Apps/__tests__/Fixtures/Order"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { fireEvent, screen } from "@testing-library/react"
 import type { RejectTestEQuery$rawResponse } from "__generated__/RejectTestEQuery.graphql"
 import { DateTime } from "luxon"
 import { graphql } from "react-relay"
@@ -22,9 +22,7 @@ jest.mock("@artsy/palette", () => {
     ModalDialog: ({ title, children, onClose, footer }) => {
       return (
         <div data-testid="ModalDialog">
-          <button type="button" onClick={onClose}>
-            close
-          </button>
+          <button onClick={onClose}>close</button>
           {title}
           {children}
           {footer}
@@ -76,7 +74,7 @@ describe("Buyer rejects seller offer", () => {
         <RejectFragmentContainer
           order={props.order}
           router={{ push: pushMock } as any}
-          // @ts-expect-error
+          // @ts-ignore
           isCommittingMutation={isCommittingMutation}
         />
       </MockBoot>

@@ -2,7 +2,7 @@ import type {
   markAllNotificationsAsReadMutation,
   markAllNotificationsAsReadMutation$data,
 } from "__generated__/markAllNotificationsAsReadMutation.graphql"
-import { commitMutation, type Environment, graphql } from "react-relay"
+import { type Environment, commitMutation, graphql } from "react-relay"
 import {
   ConnectionHandler,
   type RecordSourceSelectorProxy,

@@ -1,5 +1,5 @@
-import { useRouter } from "System/Hooks/useRouter"
 import { Intent } from "@artsy/cohesion"
+import { useRouter } from "System/Hooks/useRouter"
 
 export const useTitleWithIntent = () => {
   // Circular dep

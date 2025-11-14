@@ -1,5 +1,5 @@
-import { Media } from "Utils/Responsive"
 import { Button } from "@artsy/palette"
+import { Media } from "Utils/Responsive"
 import type { FC } from "react"
 
 export const SaveAndContinueButton: FC<

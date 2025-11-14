@@ -1,9 +1,9 @@
+import { Button, Flex, Message, Spacer } from "@artsy/palette"
 import { ArtworkModalHeaderInfo } from "Apps/CollectorProfile/Routes/Saves/Components/ArtworkModalHeaderInfo"
 import {
   ModalKey,
   useManageArtworkForSavesContext,
 } from "Components/Artwork/ManageArtworkForSaves"
-import { Button, Flex, Message, Spacer } from "@artsy/palette"
 import type { FC } from "react"
 
 export const SelectArtworkListsHeader: FC<

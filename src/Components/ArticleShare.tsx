@@ -1,9 +1,9 @@
-import { useArticleTracking } from "Apps/Article/useArticleTracking"
-import { getENV } from "Utils/getENV"
 import EnvelopeIcon from "@artsy/icons/EnvelopeIcon"
 import FacebookIcon from "@artsy/icons/FacebookIcon"
 import XIcon from "@artsy/icons/XIcon"
 import { Box, type BoxProps, Flex, Join, Spacer } from "@artsy/palette"
+import { useArticleTracking } from "Apps/Article/useArticleTracking"
+import { getENV } from "Utils/getENV"
 import type { FC } from "react"
 
 interface ArticleShareProps extends BoxProps {
@@ -31,6 +31,7 @@ export const ArticleShare: FC<React.PropsWithChildren<ArticleShareProps>> = ({
           as="a"
           display="flex"
           title="Share via email"
+          // @ts-ignore
           href={`mailto:?subject=${description}&body=Check out ${description} on Artsy: ${url}`}
           onClick={clickedArticleShare}
         >
@@ -41,6 +42,7 @@ export const ArticleShare: FC<React.PropsWithChildren<ArticleShareProps>> = ({
           as="a"
           display="flex"
           title="Post to Facebook"
+          // @ts-ignore
           href={`https://www.facebook.com/sharer/sharer.php?u=${url}`}
           onClick={clickedArticleShare}
         >
@@ -51,6 +53,7 @@ export const ArticleShare: FC<React.PropsWithChildren<ArticleShareProps>> = ({
           as="a"
           display="flex"
           title="Share on X"
+          // @ts-ignore
           href={`https://twitter.com/intent/post?original_referer=${url}&text=${description}&url=${url}&via=artsy`}
           onClick={clickedArticleShare}
         >

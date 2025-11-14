@@ -1,4 +1,11 @@
 import {
+  ActionType,
+  type ClickedArtistGroup,
+  ContextModule,
+  OwnerType,
+} from "@artsy/cohesion"
+import { Skeleton } from "@artsy/palette"
+import {
   CellArtistFragmentContainer,
   CellArtistPlaceholder,
 } from "Components/Cells/CellArtist"
@@ -6,15 +13,8 @@ import { Rail } from "Components/Rail/Rail"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
-import {
-  ActionType,
-  type ClickedArtistGroup,
-  ContextModule,
-  OwnerType,
-} from "@artsy/cohesion"
-import { Skeleton } from "@artsy/palette"
-import type { HomeRecommendedArtistsRail_me$key } from "__generated__/HomeRecommendedArtistsRail_me.graphql"
 import type { HomeRecommendedArtistsRailQuery } from "__generated__/HomeRecommendedArtistsRailQuery.graphql"
+import type { HomeRecommendedArtistsRail_me$key } from "__generated__/HomeRecommendedArtistsRail_me.graphql"
 import { graphql, useFragment } from "react-relay"
 import { useTracking } from "react-tracking"
 

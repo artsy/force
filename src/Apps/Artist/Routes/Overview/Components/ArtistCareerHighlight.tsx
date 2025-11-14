@@ -49,7 +49,9 @@ const formatList = (entities: readonly string[]) => {
   if (entities.length === 0) return ""
   if (entities.length === 1) return entities[0]
   if (entities.length === 2) return entities.join(" and ")
-  return `${entities.slice(0, -1).join(", ")}, and ${entities[entities.length - 1]}`
+  return (
+    entities.slice(0, -1).join(", ") + ", and " + entities[entities.length - 1]
+  )
 }
 
 // remove paragraph margins from markdown

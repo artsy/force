@@ -1,3 +1,4 @@
+import { renderHook } from "@testing-library/react-hooks"
 import {
   DEFAULT_OPT_IN_PREFERENCES,
   DEFAULT_OPT_OUT_PREFERENCES,
@@ -5,7 +6,6 @@ import {
 import { useConsentRequired } from "Components/CookieConsentManager/useConsentRequired"
 import { getENV } from "Utils/getENV"
 import { getTimeZone } from "Utils/getTimeZone"
-import { renderHook } from "@testing-library/react-hooks"
 
 jest.mock("Utils/getTimeZone")
 jest.mock("Utils/getENV")
@@ -117,7 +117,7 @@ describe("useConsentRequired", () => {
   describe("Fallback Behavior", () => {
     it("should return restrictive defaults when Intl is undefined", () => {
       const originalIntl = global.Intl
-      // @ts-expect-error
+      // @ts-ignore
       delete global.Intl
 
       const { result } = renderHook(() => useConsentRequired())

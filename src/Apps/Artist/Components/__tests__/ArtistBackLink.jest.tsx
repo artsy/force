@@ -1,7 +1,7 @@
+import { screen, fireEvent } from "@testing-library/react"
 import { ArtistBackLinkFragmentContainer } from "Apps/Artist/Components/ArtistBackLink"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { fireEvent, screen } from "@testing-library/react"
 import type { ArtistBackLinkTestQuery } from "__generated__/ArtistBackLinkTestQuery.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"

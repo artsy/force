@@ -1,7 +1,7 @@
-import { useDidMount } from "Utils/Hooks/useDidMount"
 import { Skeleton, Spacer } from "@artsy/palette"
 import { OrderStepperFragmentContainer } from "./OrderStepper"
 import { TwoColumnLayout } from "./TwoColumnLayout"
+import { useDidMount } from "Utils/Hooks/useDidMount"
 
 export const OrderRouteContainer = ({
   order,

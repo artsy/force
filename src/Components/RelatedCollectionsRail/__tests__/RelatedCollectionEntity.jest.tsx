@@ -1,7 +1,7 @@
 import { CollectionsRailFixture } from "Apps/__tests__/Fixtures/Collections"
 import { RelatedCollectionEntity } from "Components/RelatedCollectionsRail/RelatedCollectionEntity"
 import { AnalyticsCombinedContextProvider } from "System/Contexts/AnalyticsContext"
-import { fireEvent, render, screen } from "@testing-library/react"
+import { render, screen, fireEvent } from "@testing-library/react"
 import { useTracking } from "react-tracking"
 
 jest.mock("react-tracking")

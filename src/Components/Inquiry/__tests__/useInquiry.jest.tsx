@@ -1,9 +1,9 @@
 import {
-  useInquiry,
   type WithInquiryProps,
+  useInquiry,
   withInquiry,
 } from "Components/Inquiry/useInquiry"
-import { fireEvent, render, screen } from "@testing-library/react"
+import { render, screen, fireEvent } from "@testing-library/react"
 import type * as React from "react"
 
 jest.mock("../Inquiry", () => ({
@@ -22,18 +22,13 @@ describe("useInquiry", () => {
       <>
         {inquiryComponent}
 
-        <button
-          type="button"
-          id="artwork-inquiry"
-          onClick={() => showInquiry()}
-        >
+        <button id="artwork-inquiry" onClick={() => showInquiry()}>
           show artwork inquiry
         </button>
 
         <button
           id="specialist-inquiry"
           onClick={() => showInquiry({ askSpecialist: true })}
-          type="button"
         >
           show specialist inquiry
         </button>
@@ -75,18 +70,13 @@ describe("withInquiry", () => {
       <>
         {inquiryComponent}
 
-        <button
-          type="button"
-          id="artwork-inquiry"
-          onClick={() => showInquiry()}
-        >
+        <button id="artwork-inquiry" onClick={() => showInquiry()}>
           show artwork inquiry
         </button>
 
         <button
           id="specialist-inquiry"
           onClick={() => showInquiry({ askSpecialist: true })}
-          type="button"
         >
           show specialist inquiry
         </button>

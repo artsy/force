@@ -1,3 +1,5 @@
+import type { AuthContextModule } from "@artsy/cohesion"
+import { Column, Flex, GridColumns, Spacer } from "@artsy/palette"
 import {
   FlatGridItemFragmentContainer,
   FlatGridItemPlaceholder,
@@ -8,11 +10,9 @@ import GridItem, {
 } from "Components/Artwork/GridItem"
 import { ArtworkGridEmptyState } from "Components/ArtworkGrid/ArtworkGridEmptyState"
 import { Masonry, type MasonryProps } from "Components/Masonry"
-import { extractNodes } from "Utils/extractNodes"
 import { Media, valuesWithBreakpointProps } from "Utils/Responsive"
+import { extractNodes } from "Utils/extractNodes"
 import type { ExtractNodeType } from "Utils/typeSupport"
-import type { AuthContextModule } from "@artsy/cohesion"
-import { Column, Flex, GridColumns, Spacer } from "@artsy/palette"
 import type { ArtworkGrid_artworks$data } from "__generated__/ArtworkGrid_artworks.graphql"
 import type { MyCollectionArtworkGrid_artworks$data } from "__generated__/MyCollectionArtworkGrid_artworks.graphql"
 import { isEmpty, isEqual } from "lodash"

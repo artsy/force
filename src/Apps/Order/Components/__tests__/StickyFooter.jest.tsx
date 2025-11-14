@@ -4,7 +4,7 @@ import {
 } from "Apps/Order/Components/StickyFooter"
 import { MockBoot } from "DevTools/MockBoot"
 import { SystemContextProvider } from "System/Contexts/SystemContext"
-import { fireEvent, render, screen } from "@testing-library/react"
+import { render, screen, fireEvent } from "@testing-library/react"
 import { useTracking } from "react-tracking"
 
 jest.mock("react-tracking")

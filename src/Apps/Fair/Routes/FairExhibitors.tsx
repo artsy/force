@@ -1,8 +1,8 @@
+import { Box, Join, Spacer, Text } from "@artsy/palette"
 import { FairExhibitorsGroupFragmentContainer } from "Apps/Fair/Components/FairExhibitors/FairExhibitorsGroup"
 import { getExhibitorSectionId } from "Apps/Fair/Utils/getExhibitorSectionId"
 import { useRouter } from "System/Hooks/useRouter"
 import { Jump, useJump } from "Utils/Hooks/useJump"
-import { Box, Join, Spacer, Text } from "@artsy/palette"
 import type { FairExhibitors_fair$data } from "__generated__/FairExhibitors_fair.graphql"
 import type React from "react"
 import { useEffect } from "react"
@@ -48,7 +48,6 @@ const FairExhibitors: React.FC<
           const letter = exhibitorsGroup.letter
 
           return (
-            // biome-ignore lint/correctness/useJsxKeyInIterable: ugh
             <Jump id={getExhibitorSectionId(letter)}>
               <Box key={letter}>
                 <Text variant="lg-display">{letter}</Text>

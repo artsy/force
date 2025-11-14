@@ -1,5 +1,5 @@
-import { HideUpcomingFilter } from "Apps/Artist/Routes/AuctionResults/Components/AuctionFilters/HideUpcomingFilter"
 import { Join, Spacer } from "@artsy/palette"
+import { HideUpcomingFilter } from "Apps/Artist/Routes/AuctionResults/Components/AuctionFilters/HideUpcomingFilter"
 import type * as React from "react"
 import { AuctionHouseFilter } from "./AuctionHouseFilter"
 import { CurrencyFilter } from "./CurrencyFilter"

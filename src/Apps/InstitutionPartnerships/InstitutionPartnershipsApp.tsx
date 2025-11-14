@@ -1,6 +1,3 @@
-import { MetaTags } from "Components/MetaTags"
-import { RouterLink } from "System/Components/RouterLink"
-import { cropped, resized } from "Utils/resized"
 import {
   Avatar,
   Box,
@@ -14,6 +11,9 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
+import { MetaTags } from "Components/MetaTags"
+import { RouterLink } from "System/Components/RouterLink"
+import { cropped, resized } from "Utils/resized"
 import type { FC } from "react"
 import { InstitutionPartnershipsHero } from "./Components/InstitutionPartnershipsHero"
 import { InstitutionPartnershipsProfilesQueryRenderer } from "./Components/InstitutionPartnershipsProfiles"
@@ -82,7 +82,7 @@ export const InstitutionPartnershipsApp: FC<
           <Column span={4} start={5}>
             <Button
               width="100%"
-              // @ts-expect-error
+              // @ts-ignore
               as={RouterLink}
               to="/institutions"
             >

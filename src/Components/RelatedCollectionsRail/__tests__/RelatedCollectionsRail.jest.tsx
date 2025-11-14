@@ -1,9 +1,9 @@
 import { CollectionsRailFixture } from "Apps/__tests__/Fixtures/Collections"
-import { fireEvent, render, screen } from "@testing-library/react"
+import { render, screen, fireEvent } from "@testing-library/react"
 import "jest-styled-components"
+import { paginateCarousel } from "@artsy/palette"
 import { RelatedCollectionsRail } from "Components/RelatedCollectionsRail/RelatedCollectionsRail"
 import { AnalyticsCombinedContextProvider } from "System/Contexts/AnalyticsContext"
-import { paginateCarousel } from "@artsy/palette"
 import { clone, drop } from "lodash"
 import { useTracking } from "react-tracking"
 

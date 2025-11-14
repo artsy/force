@@ -1,8 +1,8 @@
-import { RouterLink } from "System/Components/RouterLink"
 import FairIcon from "@artsy/icons/FairIcon"
 import TrendingIcon from "@artsy/icons/TrendingIcon"
 import VerifiedIcon from "@artsy/icons/VerifiedIcon"
 import { Flex, Stack, Text } from "@artsy/palette"
+import { RouterLink } from "System/Components/RouterLink"
 import type { ArtworkSidebarCollectorSignal_artwork$key } from "__generated__/ArtworkSidebarCollectorSignal_artwork.graphql"
 import { graphql, useFragment } from "react-relay"
 
@@ -56,7 +56,6 @@ export const ArtworkSidebarCollectorSignal: React.FC<
 
   if (isShowingNow) {
     const formatDate = (dateString: string) => {
-      if (!dateString) return ""
       return new Date(dateString).toLocaleDateString("en-US", {
         month: "short",
         day: "numeric",
@@ -68,14 +67,12 @@ export const ArtworkSidebarCollectorSignal: React.FC<
     )
     const endAt = formatDate(data.collectorSignals?.runningShow?.endAt ?? "")
 
-    const dateRange = startAt && endAt ? `${startAt}–${endAt}` : ""
-
     return (
       <Flex alignItems="top" my={4} data-testid="showing-now">
         <FairIcon mr={1} mt={0.5} />
         <Stack gap={0}>
           <Text variant="sm" color="mono100">
-            Showing now{dateRange ? ` • ${dateRange}` : ""}
+            Showing now • {startAt}–{endAt}
           </Text>
           <RouterLink to={data.collectorSignals?.runningShow?.href}>
             <Text variant="sm">{data.collectorSignals?.runningShow?.name}</Text>

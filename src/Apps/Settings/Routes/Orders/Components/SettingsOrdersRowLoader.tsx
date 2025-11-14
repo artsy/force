@@ -1,8 +1,8 @@
-import { Text } from "@artsy/palette"
-import type { SettingsOrdersRowLoaderQuery } from "__generated__/SettingsOrdersRowLoaderQuery.graphql"
-import type { FC } from "react"
 import { graphql, useLazyLoadQuery } from "react-relay"
 import { SettingsOrdersRowFragmentContainer } from "./SettingsOrdersRow"
+import type { SettingsOrdersRowLoaderQuery } from "__generated__/SettingsOrdersRowLoaderQuery.graphql"
+import type { FC } from "react"
+import { Text } from "@artsy/palette"
 
 interface SettingsOrdersRowLoaderProps {
   orderInternalID: string

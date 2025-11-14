@@ -1,6 +1,6 @@
+import { FullBleed, Join, Separator, Spacer } from "@artsy/palette"
 import { ArticleStructuredData } from "Apps/Article/Components/ArticleStructuredData"
 import { useScrollToOpenEditorialAuthModal } from "Utils/Hooks/useScrollToOpenEditorialAuthModal"
-import { FullBleed, Join, Separator, Spacer } from "@artsy/palette"
 import type { ArticleApp_article$data } from "__generated__/ArticleApp_article.graphql"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"

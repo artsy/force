@@ -1,6 +1,6 @@
+import { Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
 import { useJump } from "Utils/Hooks/useJump"
-import { Text } from "@artsy/palette"
 import type * as React from "react"
 
 export const ViewAllButton: React.FC<

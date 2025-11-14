@@ -1,9 +1,9 @@
+import { screen, waitFor } from "@testing-library/react"
 import { ArtworkPageBanner } from "Apps/Artwork/Components/ArtworkPageBanner"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useRouter } from "System/Hooks/useRouter"
 import type { DeepPartial } from "Utils/typeSupport"
-import { screen, waitFor } from "@testing-library/react"
 import type { ArtworkPageBanner_Test_Query$rawResponse } from "__generated__/ArtworkPageBanner_Test_Query.graphql"
 import { graphql } from "react-relay"
 

@@ -1,10 +1,10 @@
+import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { Order2OfferStep } from "Apps/Order2/Routes/Checkout/Components/OfferStep/Order2OfferStep"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useOrder2AddInitialOfferMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2AddInitialOfferMutation"
 import { useOrder2UnsetOrderFulfillmentOptionMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2UnsetOrderFulfillmentOptionMutation"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useJump } from "Utils/Hooks/useJump"
-import { fireEvent, screen, waitFor } from "@testing-library/react"
 import type { Order2OfferStepTestQuery } from "__generated__/Order2OfferStepTestQuery.graphql"
 import { graphql } from "react-relay"
 
@@ -223,17 +223,17 @@ describe("Order2OfferStep", () => {
 
     // Check for formatted currency text - might be split across elements
     expect(
-      screen.getByText((content, _element) => {
+      screen.getByText((content, element) => {
         return content.includes("2,000")
       }),
     ).toBeInTheDocument()
     expect(
-      screen.getByText((content, _element) => {
+      screen.getByText((content, element) => {
         return content.includes("1,500")
       }),
     ).toBeInTheDocument()
     expect(
-      screen.getByText((content, _element) => {
+      screen.getByText((content, element) => {
         return content.includes("1,000")
       }),
     ).toBeInTheDocument()
@@ -648,17 +648,17 @@ describe("Order2OfferStep", () => {
 
       // Check for formatted currency text
       expect(
-        screen.getByText((content, _element) => {
+        screen.getByText((content, element) => {
           return content.includes("3,000")
         }),
       ).toBeInTheDocument()
       expect(
-        screen.getByText((content, _element) => {
+        screen.getByText((content, element) => {
           return content.includes("2,250")
         }),
       ).toBeInTheDocument()
       expect(
-        screen.getByText((content, _element) => {
+        screen.getByText((content, element) => {
           return content.includes("1,500")
         }),
       ).toBeInTheDocument()

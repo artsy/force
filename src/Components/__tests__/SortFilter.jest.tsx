@@ -1,5 +1,6 @@
 import { SortFilter } from "Components/SortFilter"
-import { fireEvent, render, screen } from "@testing-library/react"
+import { render, screen } from "@testing-library/react"
+import { fireEvent } from "@testing-library/react"
 
 describe("SortFilter", () => {
   const mockedOnSort = jest.fn()

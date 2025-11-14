@@ -1,5 +1,3 @@
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { extractNodes } from "Utils/extractNodes"
 import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
 import {
   AutocompleteInput,
@@ -9,6 +7,8 @@ import {
   Image,
   Text,
 } from "@artsy/palette"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { extractNodes } from "Utils/extractNodes"
 import type {
   ArtistAutocomplete_SearchConnection_Query,
   ArtistAutocomplete_SearchConnection_Query$data,
@@ -117,6 +117,7 @@ export const ArtistAutoComplete: React.FC<
     }
   }
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const handleSuggestionsFetchRequested = useMemo(
     () => debounce(updateSuggestions, DEBOUNCE_DELAY),
     [],

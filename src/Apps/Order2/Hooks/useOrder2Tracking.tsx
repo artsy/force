@@ -1,4 +1,3 @@
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import {
   ActionType,
   type ClickedAskSpecialist,
@@ -12,6 +11,7 @@ import {
   OwnerType,
   type PageOwnerType,
 } from "@artsy/cohesion"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import type { DisplayTextsMessageTypeEnum } from "__generated__/OrderDetailsMessage_order.graphql"
 import { useMemo } from "react"
 import { useTracking } from "react-tracking"

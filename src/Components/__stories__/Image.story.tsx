@@ -1,4 +1,3 @@
-import { resized } from "Utils/resized"
 import {
   Box,
   Clickable,
@@ -9,6 +8,7 @@ import {
   Text,
   useTheme,
 } from "@artsy/palette"
+import { resized } from "Utils/resized"
 import { useState } from "react"
 import styled from "styled-components"
 

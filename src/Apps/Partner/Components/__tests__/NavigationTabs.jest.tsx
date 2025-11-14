@@ -1,6 +1,6 @@
+import { screen } from "@testing-library/react"
 import { NavigationTabsFragmentContainer as NavigationTabs } from "Apps/Partner/Components/NavigationTabs"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { screen } from "@testing-library/react"
 import type { NavigationTabsTestPartnerQuery } from "__generated__/NavigationTabsTestPartnerQuery.graphql"
 import { graphql } from "react-relay"
 

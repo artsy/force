@@ -1,7 +1,7 @@
+import { Box } from "@artsy/palette"
 import type { AdUnit } from "Apps/Article/Components/ArticleAd/types"
 import { useArticleTracking } from "Apps/Article/useArticleTracking"
 import { useSizeAndPosition } from "Utils/Hooks/useSizeAndPosition"
-import { Box } from "@artsy/palette"
 import type { FC } from "react"
 import { AdSlot } from "react-dfp"
 

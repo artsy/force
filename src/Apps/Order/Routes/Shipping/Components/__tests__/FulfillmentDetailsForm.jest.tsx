@@ -1,4 +1,14 @@
 import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+  within,
+} from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
+import { useFlag } from "@unleash/proxy-client-react"
+import {
   FulfillmentDetailsForm,
   type FulfillmentDetailsFormProps,
 } from "Apps/Order/Routes/Shipping/Components/FulfillmentDetailsForm"
@@ -10,17 +20,6 @@ import {
 import { fillAddressForm } from "Components/__tests__/Utils/addressForm2"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import type { DeepPartial } from "Utils/typeSupport"
-import {
-  cleanup,
-  fireEvent,
-  render,
-  screen,
-  waitFor,
-  within,
-} from "@testing-library/react"
-import userEvent from "@testing-library/user-event"
-// biome-ignore lint/style/noRestrictedImports: Test requires unleash feature flag dependency
-import { useFlag } from "@unleash/proxy-client-react"
 import { useTracking } from "react-tracking"
 
 jest.mock("Utils/getENV", () => ({

@@ -1,7 +1,7 @@
+import { screen } from "@testing-library/react"
 import { ConversationMessageBubble } from "Apps/Conversations/components/Message/ConversationMessageBubble"
 import { messageTime } from "Apps/Conversations/components/Message/Utils/dateFormatters"
 import { render } from "DevTools/renderWithMockBoot"
-import { screen } from "@testing-library/react"
 
 describe("ConversationMessageBubble", () => {
   it("renders given fromViewer", () => {

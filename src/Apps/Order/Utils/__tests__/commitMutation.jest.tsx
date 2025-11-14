@@ -6,12 +6,11 @@ import {
 import { createMockNetworkLayer } from "DevTools/createMockNetworkLayer"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { SystemContextProvider } from "System/Contexts/SystemContext"
-import { fireEvent, render, screen, waitFor } from "@testing-library/react"
 import type { commitMutationTest1Mutation } from "__generated__/commitMutationTest1Mutation.graphql"
-import type { Environment as IEnvironment } from "react-relay"
+import { render, screen, fireEvent, waitFor } from "@testing-library/react"
 import { graphql } from "react-relay"
+import type { Environment as IEnvironment } from "react-relay"
 import { Environment, RecordSource, Store } from "relay-runtime"
-
 jest.unmock("react-relay")
 
 describe("injectCommitMutation", () => {
@@ -59,8 +58,7 @@ describe("injectCommitMutation", () => {
       }) => {
         return (
           // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
-          // biome-ignore lint/a11y/noStaticElementInteractions: ugh
-          // biome-ignore lint/a11y/useKeyWithClickEvents: ugh
+          // biome-ignore lint/a11y/useKeyWithClickEvents: test component
           <div
             className={
               props.isCommittingMutation ? "isCommittingMutation" : "nothing"

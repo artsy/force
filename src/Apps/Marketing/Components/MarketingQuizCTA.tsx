@@ -1,9 +1,3 @@
-import { AppContainer } from "Apps/Components/AppContainer"
-import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
-import { BRAND_PALETTE } from "Apps/Marketing/Utils/brandPalette"
-import { RouterLink } from "System/Components/RouterLink"
-import { useSizeAndPosition } from "Utils/Hooks/useSizeAndPosition"
-import { resized } from "Utils/resized"
 import {
   Box,
   Button,
@@ -14,6 +8,12 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
+import { AppContainer } from "Apps/Components/AppContainer"
+import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
+import { BRAND_PALETTE } from "Apps/Marketing/Utils/brandPalette"
+import { RouterLink } from "System/Components/RouterLink"
+import { useSizeAndPosition } from "Utils/Hooks/useSizeAndPosition"
+import { resized } from "Utils/resized"
 import type { FC } from "react"
 
 export const MarketingQuizCTA: FC<React.PropsWithChildren<unknown>> = () => {
@@ -52,7 +52,7 @@ export const MarketingQuizCTA: FC<React.PropsWithChildren<unknown>> = () => {
 
                 <Box>
                   <Button
-                    // @ts-expect-error
+                    // @ts-ignore
                     as={RouterLink}
                     to="/art-quiz"
                   >

@@ -1,10 +1,11 @@
-import type { SystemContextProps } from "System/Contexts/SystemContext"
-import { extractNodes } from "Utils/extractNodes"
 import { get } from "Utils/get"
-import type { redirects_order$data } from "__generated__/redirects_order.graphql"
 import { DateTime } from "luxon"
 import { graphql } from "react-relay"
 import type { RedirectPredicate, RedirectRecord } from "./getRedirect"
+
+import type { SystemContextProps } from "System/Contexts/SystemContext"
+import { extractNodes } from "Utils/extractNodes"
+import type { redirects_order$data } from "__generated__/redirects_order.graphql"
 
 interface OrderQuery {
   order: redirects_order$data

@@ -1,6 +1,6 @@
+import { screen, fireEvent } from "@testing-library/react"
 import { MarketStatsFragmentContainer } from "Apps/Artist/Routes/AuctionResults/Components/MarketStats"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { fireEvent, screen } from "@testing-library/react"
 import type { MarketStatsTestQuery } from "__generated__/MarketStatsTestQuery.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"

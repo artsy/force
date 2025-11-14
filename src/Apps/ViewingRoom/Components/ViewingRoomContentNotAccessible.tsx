@@ -1,8 +1,9 @@
-import { RouterLink } from "System/Components/RouterLink"
 import { Button, Column, GridColumns, Text } from "@artsy/palette"
-import type { ViewingRoomContentNotAccessible_viewingRoom$data } from "__generated__/ViewingRoomContentNotAccessible_viewingRoom.graphql"
+import { RouterLink } from "System/Components/RouterLink"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+
+import type { ViewingRoomContentNotAccessible_viewingRoom$data } from "__generated__/ViewingRoomContentNotAccessible_viewingRoom.graphql"
 
 interface ViewingRoomContentNotAccessibleProps {
   viewingRoom: ViewingRoomContentNotAccessible_viewingRoom$data
@@ -29,7 +30,7 @@ const ViewingRoomContentNotAccessible: React.FC<
           <Button
             width="100%"
             variant="primaryGray"
-            // @ts-expect-error
+            // @ts-ignore
             as={RouterLink}
             to={`${viewingRoom.partner.href}/works`}
           >

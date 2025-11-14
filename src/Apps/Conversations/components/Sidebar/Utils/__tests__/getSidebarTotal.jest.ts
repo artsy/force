@@ -1,6 +1,6 @@
 import {
-  getSidebarTotal,
   SIDEBAR_FETCH_PAGE_SIZE,
+  getSidebarTotal,
 } from "Apps/Conversations/components/Sidebar/Utils/getSidebarTotal"
 
 describe("getSidebarTotal", () => {

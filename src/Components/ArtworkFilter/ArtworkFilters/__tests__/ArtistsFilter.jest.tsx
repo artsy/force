@@ -1,12 +1,12 @@
+import { screen } from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
 import type { ArtworkFilterContextProps } from "Components/ArtworkFilter/ArtworkFilterContext"
+import { ArtistsFilter } from "Components/ArtworkFilter/ArtworkFilters/ArtistsFilter"
 import {
   createArtworkFilterTestRenderer,
   currentArtworkFilterContext,
 } from "Components/ArtworkFilter/ArtworkFilters/__tests__/Utils"
-import { ArtistsFilter } from "Components/ArtworkFilter/ArtworkFilters/ArtistsFilter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { screen } from "@testing-library/react"
-import userEvent from "@testing-library/user-event"
 
 jest.mock("System/Hooks/useSystemContext")
 

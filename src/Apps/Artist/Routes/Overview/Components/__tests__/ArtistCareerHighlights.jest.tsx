@@ -1,7 +1,7 @@
+import { fireEvent, screen } from "@testing-library/react"
 import { ArtistCareerHighlightsFragmentContainer } from "Apps/Artist/Routes/Overview/Components/ArtistCareerHighlights"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { fireEvent, screen } from "@testing-library/react"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")

@@ -1,7 +1,8 @@
-import { ArtworkDetailsPartnerInfoFragmentContainer } from "Apps/Artwork/Components/ArtworkDetails/ArtworkDetailsPartnerInfo"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { screen } from "@testing-library/react"
 import { graphql } from "react-relay"
+
+import { ArtworkDetailsPartnerInfoFragmentContainer } from "Apps/Artwork/Components/ArtworkDetails/ArtworkDetailsPartnerInfo"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 
 jest.unmock("react-relay")
 

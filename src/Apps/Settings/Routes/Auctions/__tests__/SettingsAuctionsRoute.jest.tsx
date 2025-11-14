@@ -1,6 +1,6 @@
+import { screen } from "@testing-library/react"
 import { SettingsAuctionsRouteFragmentContainer } from "Apps/Settings/Routes/Auctions/SettingsAuctionsRoute"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { screen } from "@testing-library/react"
 import type { SettingsAuctionsRouteQueryTestQuery } from "__generated__/SettingsAuctionsRouteQueryTestQuery.graphql"
 import { graphql } from "react-relay"
 

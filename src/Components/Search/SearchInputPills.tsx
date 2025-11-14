@@ -105,7 +105,7 @@ const SearchInputPills: FC<React.PropsWithChildren<SearchInputPillsProps>> = ({
 
   useEffect(() => {
     showNextChevronHandler()
-  }, [showNextChevronHandler])
+  }, [])
 
   useEffect(() => {
     const handleResize = () => {
@@ -114,7 +114,7 @@ const SearchInputPills: FC<React.PropsWithChildren<SearchInputPillsProps>> = ({
 
     window.addEventListener("resize", handleResize)
     return () => window.removeEventListener("resize", handleResize)
-  }, [showNextChevronHandler])
+  }, [])
 
   const scrollToLeft = () => {
     return scroll("left")
@@ -149,7 +149,7 @@ const SearchInputPills: FC<React.PropsWithChildren<SearchInputPillsProps>> = ({
           : currentPill.nextElementSibling
       ) as HTMLElement
       let scrollBy = nextPill.offsetWidth + GRADIENT_BG_WIDTH
-      scrollBy = direction === "left" ? -scrollBy : scrollBy
+      scrollBy = direction == "left" ? -scrollBy : scrollBy
 
       pillsContainer.scrollBy({
         left: scrollBy,

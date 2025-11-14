@@ -1,3 +1,18 @@
+import {
+  ActionType,
+  ContextModule,
+  type EditProfileModalViewed,
+  type EditedUserProfile,
+} from "@artsy/cohesion"
+import {
+  Button,
+  Input,
+  Skeleton,
+  SkeletonText,
+  Stack,
+  Text,
+  useToasts,
+} from "@artsy/palette"
 import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
 import { useUpdateMyUserProfile } from "Components/Inquiry/Hooks/useUpdateMyUserProfile"
 import { logger } from "Components/Inquiry/util"
@@ -10,26 +25,11 @@ import {
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { useOnce } from "Utils/Hooks/useOnce"
-import {
-  ActionType,
-  ContextModule,
-  type EditedUserProfile,
-  type EditProfileModalViewed,
-} from "@artsy/cohesion"
-import {
-  Button,
-  Input,
-  Skeleton,
-  SkeletonText,
-  Stack,
-  Text,
-  useToasts,
-} from "@artsy/palette"
+import type { InquiryBasicInfoQuery } from "__generated__/InquiryBasicInfoQuery.graphql"
 import type { InquiryBasicInfo_artwork$data } from "__generated__/InquiryBasicInfo_artwork.graphql"
 import type { InquiryBasicInfo_me$data } from "__generated__/InquiryBasicInfo_me.graphql"
-import type { InquiryBasicInfoQuery } from "__generated__/InquiryBasicInfoQuery.graphql"
 import { Form, Formik } from "formik"
-import { createFragmentContainer, type Environment, graphql } from "react-relay"
+import { type Environment, createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import * as Yup from "yup"
 
@@ -173,7 +173,7 @@ const InquiryBasicInfo: React.FC<
                   setFieldValue("locationSelected", true)
                   setFieldTouched("locationSelected", false)
                 }}
-                onChange={_place => {
+                onChange={place => {
                   setFieldValue("locationSelected", false)
                 }}
                 onBlur={() => {

@@ -1,3 +1,6 @@
+import { ContextModule, OwnerType } from "@artsy/cohesion"
+import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import { Button, Flex, Spacer } from "@artsy/palette"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
 import { BuyerGuarantee } from "Apps/Order/Components/BuyerGuarantee"
 import { ConditionsOfSaleDisclaimer } from "Apps/Order/Components/ConditionsOfSaleDisclaimer"
@@ -12,16 +15,13 @@ import {
   injectCommitMutation,
 } from "Apps/Order/Utils/commitMutation"
 import { CountdownTimer } from "Components/CountdownTimer"
-import createLogger from "Utils/logger"
 import { Media } from "Utils/Responsive"
-import { ContextModule, OwnerType } from "@artsy/cohesion"
-import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { Button, Flex, Spacer } from "@artsy/palette"
-import type { Counter_order$data } from "__generated__/Counter_order.graphql"
+import createLogger from "Utils/logger"
 import type { CounterSubmitMutation } from "__generated__/CounterSubmitMutation.graphql"
+import type { Counter_order$data } from "__generated__/Counter_order.graphql"
 import type { Router } from "found"
 import type { FC } from "react"
-import { createFragmentContainer, graphql, type RelayProp } from "react-relay"
+import { type RelayProp, createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 
 export interface CounterProps {
@@ -79,7 +79,7 @@ export const CounterRoute: FC<
       const orderOrError = (
         await submitPendingOffer({
           input: {
-            offerId: order.myLastOffer?.internalID as string,
+            offerId: order.myLastOffer?.internalID!,
           },
         })
       ).commerceSubmitPendingOffer?.orderOrError
@@ -135,7 +135,7 @@ export const CounterRoute: FC<
             <CountdownTimer
               action="Respond"
               note="Expired offers end the negotiation process permanently."
-              countdownStart={order.lastOffer?.createdAt as string}
+              countdownStart={order.lastOffer?.createdAt!}
               countdownEnd={order.stateExpiresAt!}
             />
             <TransactionDetailsSummaryItem

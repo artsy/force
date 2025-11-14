@@ -1,4 +1,3 @@
-import { RouterLink, type RouterLinkProps } from "System/Components/RouterLink"
 import {
   Flex,
   type FlexProps,
@@ -9,6 +8,7 @@ import {
   Text,
 } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
+import { RouterLink, type RouterLinkProps } from "System/Components/RouterLink"
 import type { FeatureFeaturedLink_featuredLink$data } from "__generated__/FeatureFeaturedLink_featuredLink.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"

@@ -1,5 +1,3 @@
-import { RouterLink } from "System/Components/RouterLink"
-import CertificateIcon from "@artsy/icons/CertificateIcon"
 import {
   Button,
   Clickable,
@@ -11,6 +9,9 @@ import {
 import type { ArtworkSidebarAuthenticityCertificate_artwork$data } from "__generated__/ArtworkSidebarAuthenticityCertificate_artwork.graphql"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+
+import CertificateIcon from "@artsy/icons/CertificateIcon"
+import { RouterLink } from "System/Components/RouterLink"
 
 interface ArtworkSidebarAuthenticityCertificateProps {
   artwork: ArtworkSidebarAuthenticityCertificate_artwork$data

@@ -1,13 +1,3 @@
-import { useArtworkInquiryRequest } from "Components/Inquiry/Hooks/useArtworkInquiryRequest"
-import {
-  DEFAULT_MESSAGE,
-  useInquiryContext,
-} from "Components/Inquiry/Hooks/useInquiryContext"
-import { logger } from "Components/Inquiry/util"
-import { RouterLink } from "System/Components/RouterLink"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { wait } from "Utils/wait"
 import InfoIcon from "@artsy/icons/InfoIcon"
 import {
   Banner,
@@ -23,8 +13,18 @@ import {
   Text,
   TextArea,
 } from "@artsy/palette"
-import type { InquiryInquiry_artwork$data } from "__generated__/InquiryInquiry_artwork.graphql"
+import { useArtworkInquiryRequest } from "Components/Inquiry/Hooks/useArtworkInquiryRequest"
+import {
+  DEFAULT_MESSAGE,
+  useInquiryContext,
+} from "Components/Inquiry/Hooks/useInquiryContext"
+import { logger } from "Components/Inquiry/util"
+import { RouterLink } from "System/Components/RouterLink"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { wait } from "Utils/wait"
 import type { InquiryInquiryQuery } from "__generated__/InquiryInquiryQuery.graphql"
+import type { InquiryInquiry_artwork$data } from "__generated__/InquiryInquiry_artwork.graphql"
 import type * as React from "react"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"

@@ -1,5 +1,5 @@
 import { cropped } from "Utils/resized"
-import { forwardRef, type Ref } from "react"
+import { type Ref, forwardRef } from "react"
 import { Link } from "react-head"
 import type { FullBleedHeaderProps } from "./FullBleedHeader"
 

@@ -1,5 +1,3 @@
-import { ArticleShare } from "Components/ArticleShare"
-import { RouterLink } from "System/Components/RouterLink"
 import {
   Column,
   GridColumns,
@@ -8,6 +6,8 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
+import { ArticleShare } from "Components/ArticleShare"
+import { RouterLink } from "System/Components/RouterLink"
 import type { ArticlesIndexArticle_article$data } from "__generated__/ArticlesIndexArticle_article.graphql"
 import type React from "react"
 import { createFragmentContainer, graphql } from "react-relay"

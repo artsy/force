@@ -1,5 +1,3 @@
-import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
-import { COLOR_OPTIONS } from "Components/ArtworkFilter/ArtworkFilters/ColorFilter"
 import {
   Box,
   Checkbox,
@@ -9,6 +7,8 @@ import {
   Text,
 } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
+import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
+import { COLOR_OPTIONS } from "Components/ArtworkFilter/ArtworkFilters/ColorFilter"
 import type * as React from "react"
 import styled from "styled-components"
 

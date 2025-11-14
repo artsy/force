@@ -1,5 +1,3 @@
-import { AboutSection } from "Apps/About/Components/AboutSection"
-import { resized } from "Utils/resized"
 import {
   Column,
   GridColumns,
@@ -8,6 +6,8 @@ import {
   Stack,
   Text,
 } from "@artsy/palette"
+import { AboutSection } from "Apps/About/Components/AboutSection"
+import { resized } from "Utils/resized"
 
 export const AboutMissionAndVision = () => {
   return (

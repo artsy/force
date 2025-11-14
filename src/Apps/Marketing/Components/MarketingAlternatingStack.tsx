@@ -1,5 +1,3 @@
-import { RouterLink } from "System/Components/RouterLink"
-import { cropped } from "Utils/resized"
 import {
   Box,
   Button,
@@ -10,6 +8,8 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
+import { RouterLink } from "System/Components/RouterLink"
+import { cropped } from "Utils/resized"
 import { type FC, Fragment } from "react"
 
 interface Card {
@@ -65,7 +65,7 @@ export const MarketingAlternatingStack: FC<
 
                     <Box>
                       <Button
-                        // @ts-expect-error
+                        // @ts-ignore
                         as={RouterLink}
                         to={card.cta.href}
                       >

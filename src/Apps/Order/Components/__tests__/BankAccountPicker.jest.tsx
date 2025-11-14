@@ -1,16 +1,16 @@
+import { screen } from "@testing-library/react"
+import { BankAccountPickerFragmentContainer } from "Apps/Order/Components/BankAccountPicker"
+import { useSetPayment } from "Apps/Order/Mutations/useSetPayment"
+import { useOrderPaymentContext } from "Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext"
+import type { BankAccountSelection } from "Apps/Order/Routes/Payment/index"
 import {
   BuyOrderPickup,
   UntouchedBuyOrder,
 } from "Apps/__tests__/Fixtures/Order"
-import { BankAccountPickerFragmentContainer } from "Apps/Order/Components/BankAccountPicker"
-import { useSetPayment } from "Apps/Order/Mutations/useSetPayment"
-import type { BankAccountSelection } from "Apps/Order/Routes/Payment/index"
-import { useOrderPaymentContext } from "Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { screen } from "@testing-library/react"
-import type { BankAccountPicker_me$data } from "__generated__/BankAccountPicker_me.graphql"
 import type { BankAccountPickerTestEQuery$rawResponse } from "__generated__/BankAccountPickerTestEQuery.graphql"
+import type { BankAccountPicker_me$data } from "__generated__/BankAccountPicker_me.graphql"
 import { graphql } from "react-relay"
 
 jest.mock("Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext")

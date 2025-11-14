@@ -1,18 +1,3 @@
-import { SuggestedArtworksShelfQueryRenderer } from "Apps/Artwork/Components/ArtworkAuctionCreateAlertHeader/SuggestedArtworksShelf"
-import { lotIsClosed } from "Apps/Artwork/Utils/lotIsClosed"
-import { CreateAlertButton } from "Components/Alert/Components/CreateAlertButton"
-import type { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
-import { ProgressiveOnboardingAlertCreateSimple } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertCreateSimple"
-import { SavedSearchAlertContextProvider } from "Components/SavedSearchAlert/SavedSearchAlertContext"
-import type {
-  SavedSearchEntity,
-  SavedSearchEntityCriteria,
-  SearchCriteriaAttributes,
-} from "Components/SavedSearchAlert/types"
-import { getAllowedSearchCriteria } from "Components/SavedSearchAlert/Utils/savedSearchCriteria"
-import { RouterLink } from "System/Components/RouterLink"
-import { useTimer } from "Utils/Hooks/useTimer"
-import { Media } from "Utils/Responsive"
 import { OwnerType } from "@artsy/cohesion"
 import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
 import {
@@ -24,6 +9,21 @@ import {
   Stack,
   Text,
 } from "@artsy/palette"
+import { SuggestedArtworksShelfQueryRenderer } from "Apps/Artwork/Components/ArtworkAuctionCreateAlertHeader/SuggestedArtworksShelf"
+import { lotIsClosed } from "Apps/Artwork/Utils/lotIsClosed"
+import { CreateAlertButton } from "Components/Alert/Components/CreateAlertButton"
+import type { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
+import { ProgressiveOnboardingAlertCreateSimple } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertCreateSimple"
+import { SavedSearchAlertContextProvider } from "Components/SavedSearchAlert/SavedSearchAlertContext"
+import { getAllowedSearchCriteria } from "Components/SavedSearchAlert/Utils/savedSearchCriteria"
+import type {
+  SavedSearchEntity,
+  SavedSearchEntityCriteria,
+  SearchCriteriaAttributes,
+} from "Components/SavedSearchAlert/types"
+import { RouterLink } from "System/Components/RouterLink"
+import { useTimer } from "Utils/Hooks/useTimer"
+import { Media } from "Utils/Responsive"
 import type { ArtworkAuctionCreateAlertHeader_artwork$data } from "__generated__/ArtworkAuctionCreateAlertHeader_artwork.graphql"
 import { compact } from "lodash"
 import type { FC } from "react"
@@ -145,7 +145,7 @@ const ArtworkAuctionCreateAlertHeader: FC<
                   width={["100%", 220]}
                   variant="secondaryBlack"
                   Icon={BellStrokeIcon}
-                  // @ts-expect-error
+                  // @ts-ignore
                   as={RouterLink}
                   to={"/favorites/alerts"}
                 >

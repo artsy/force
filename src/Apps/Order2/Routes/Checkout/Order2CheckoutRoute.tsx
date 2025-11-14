@@ -1,3 +1,5 @@
+import { Elements } from "@stripe/react-stripe-js"
+import { loadStripe } from "@stripe/stripe-js"
 import { Order2CheckoutContextProvider } from "Apps/Order2/Routes/Checkout/CheckoutContext/Order2CheckoutContext"
 import { Order2CheckoutApp } from "Apps/Order2/Routes/Checkout/Order2CheckoutApp"
 import {
@@ -7,8 +9,6 @@ import {
 import { ErrorPage } from "Components/ErrorPage"
 import { Analytics } from "System/Contexts/AnalyticsContext"
 import { getENV } from "Utils/getENV"
-import { Elements } from "@stripe/react-stripe-js"
-import { loadStripe } from "@stripe/stripe-js"
 import type { Order2CheckoutRoute_viewer$key } from "__generated__/Order2CheckoutRoute_viewer.graphql"
 import { useEffect } from "react"
 import { graphql, useFragment } from "react-relay"
@@ -30,7 +30,6 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
     return <ErrorPage code={404} message="Order not found" />
   }
 
-  // biome-ignore lint/correctness/useHookAtTopLevel: ugh
   useEffect(() => {
     window.addEventListener("beforeunload", preventHardReload)
     window.history.pushState(null, "", window.location.pathname)

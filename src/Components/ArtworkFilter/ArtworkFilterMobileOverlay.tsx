@@ -28,6 +28,7 @@ export const ArtworkFilterMobileOverlay: React.FC<
     contentRef.current.scrollTop = 0
   }
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     // While mobile sheet is mounted, the effect of the user's filter selections
     // should be merely staged until the Apply button is pressed, rather than

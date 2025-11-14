@@ -1,6 +1,6 @@
 import { FairEditorialRailArticlesFragmentContainer } from "Apps/Fair/Components/FairEditorial/FairEditorialRailArticles"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { screen } from "@testing-library/react"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { FairEditorialRailArticlesTestQuery } from "__generated__/FairEditorialRailArticlesTestQuery.graphql"
 import { graphql } from "react-relay"
 

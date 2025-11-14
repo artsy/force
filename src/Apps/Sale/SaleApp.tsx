@@ -1,7 +1,3 @@
-import { AuctionDetailsStartTimeQueryRenderer } from "Apps/Auction/Components/AuctionDetails/AuctionDetailsStartTime"
-import { SaleArtworkFilterRefetchContainer } from "Apps/Sale/Components/SaleArtworks"
-import { SaleMetaFragmentContainer } from "Apps/Sale/Components/SaleMeta"
-import { FullBleedHeader } from "Components/FullBleedHeader/FullBleedHeader"
 import {
   Box,
   Flex,
@@ -11,6 +7,10 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
+import { AuctionDetailsStartTimeQueryRenderer } from "Apps/Auction/Components/AuctionDetails/AuctionDetailsStartTime"
+import { SaleArtworkFilterRefetchContainer } from "Apps/Sale/Components/SaleArtworks"
+import { SaleMetaFragmentContainer } from "Apps/Sale/Components/SaleMeta"
+import { FullBleedHeader } from "Components/FullBleedHeader/FullBleedHeader"
 import type { SaleApp_sale$data } from "__generated__/SaleApp_sale.graphql"
 import type { SaleApp_viewer$data } from "__generated__/SaleApp_viewer.graphql"
 import type * as React from "react"

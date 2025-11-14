@@ -2,7 +2,7 @@ import type { PartnerContactAddress_location$data } from "__generated__/PartnerC
 import type { PartnerContactMap_location$data } from "__generated__/PartnerContactMap_location.graphql"
 import { compact } from "lodash"
 import qs from "qs"
-// biome-ignore lint/style/noRestrictedImports: Legacy sharify usage for config data
+// eslint-disable-next-line no-restricted-imports
 import { data as sd } from "sharify"
 
 export function getContactAddressLines(

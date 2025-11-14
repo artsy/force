@@ -1,10 +1,10 @@
+import ArtsyLogoIcon from "@artsy/icons/ArtsyLogoIcon"
+import { Flex, FullBleed, Separator, useTheme } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { BackLink } from "Components/Links/BackLink"
 import { Sticky } from "Components/Sticky"
 import { RouterLink } from "System/Components/RouterLink"
-import ArtsyLogoIcon from "@artsy/icons/ArtsyLogoIcon"
-import { Flex, FullBleed, Separator, useTheme } from "@artsy/palette"
 import type { ReactNode } from "react"
 
 interface MyCollectionArtworkFormHeaderProps {
@@ -44,7 +44,7 @@ export const MyCollectionArtworkFormHeader: React.FC<
                       minHeight={[70, 90]}
                     >
                       <BackLink
-                        // @ts-expect-error
+                        // @ts-ignore
                         as={RouterLink}
                         onClick={onBackClick}
                         width="min-content"

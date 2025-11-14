@@ -26,7 +26,7 @@ if (process.env.NODE_ENV === "production") {
   // webpack pathing client side.
 
   // @ts-expect-error - webpack magic var
-  __webpack_public_path__ = `${cdnUrl}/`
+  __webpack_public_path__ = cdnUrl + "/"
 
   // @ts-expect-error - webpack magic var
   window.__getPublicPath = () => __webpack_public_path__

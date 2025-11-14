@@ -1,3 +1,4 @@
+import { Box, Skeleton, Spacer } from "@artsy/palette"
 import {
   Header,
   HeaderPlaceholder,
@@ -7,9 +8,8 @@ import ArtworkGrid, {
 } from "Components/ArtworkGrid/ArtworkGrid"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { Box, Skeleton, Spacer } from "@artsy/palette"
-import type { ArtworkErrorAppRelatedWorks_artwork$key } from "__generated__/ArtworkErrorAppRelatedWorks_artwork.graphql"
 import type { ArtworkErrorAppRelatedWorksQuery } from "__generated__/ArtworkErrorAppRelatedWorksQuery.graphql"
+import type { ArtworkErrorAppRelatedWorks_artwork$key } from "__generated__/ArtworkErrorAppRelatedWorks_artwork.graphql"
 import { graphql, useFragment } from "react-relay"
 
 interface RelatedWorksProps {

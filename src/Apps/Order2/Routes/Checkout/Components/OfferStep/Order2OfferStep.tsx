@@ -1,3 +1,5 @@
+import { ContextModule } from "@artsy/cohesion"
+import { Box, Button, Flex, Spacer, Text, TextArea } from "@artsy/palette"
 import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
 import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
 import {
@@ -16,8 +18,6 @@ import { useOrder2UnsetOrderFulfillmentOptionMutation } from "Apps/Order2/Routes
 import { mostRecentCreatedAt } from "Apps/Order2/Routes/Checkout/Utils/mostRecentCreatedAt"
 import { useJump } from "Utils/Hooks/useJump"
 import createLogger from "Utils/logger"
-import { ContextModule } from "@artsy/cohesion"
-import { Box, Button, Flex, Spacer, Text, TextArea } from "@artsy/palette"
 import type { Order2OfferStep_order$key } from "__generated__/Order2OfferStep_order.graphql"
 import type { useOrder2AddInitialOfferMutation$data } from "__generated__/useOrder2AddInitialOfferMutation.graphql"
 import { useMemo, useState } from "react"

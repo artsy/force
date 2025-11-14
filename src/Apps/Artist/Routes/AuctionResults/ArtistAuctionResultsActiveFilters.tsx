@@ -1,6 +1,6 @@
+import { Button, Flex, Pill } from "@artsy/palette"
 import { useAuctionResultsFilterContext } from "Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
 import { useAuctionResultsActiveFilters } from "Apps/Artist/Routes/AuctionResults/useAuctionResultsActiveFilters"
-import { Button, Flex, Pill } from "@artsy/palette"
 
 export const ArtistAuctionResultsActiveFilters = () => {
   const { pills, removePill } = useAuctionResultsActiveFilters()

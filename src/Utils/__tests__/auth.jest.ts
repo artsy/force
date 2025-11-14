@@ -35,7 +35,7 @@ describe("login", () => {
       }),
     )
 
-    // @ts-expect-error
+    // @ts-ignore
     global.fetch = mockFetch
 
     const res = await login({
@@ -68,7 +68,7 @@ describe("forgotPassword", () => {
       }),
     )
 
-    // @ts-expect-error
+    // @ts-ignore
     global.fetch = mockFetch
 
     const res = await forgotPassword({ email: "example@example" })
@@ -99,7 +99,7 @@ describe("forgotPassword", () => {
       }),
     )
 
-    // @ts-expect-error
+    // @ts-ignore
     global.fetch = mockFetch
 
     return expect(forgotPassword({ email: "example@example" })).rejects.toEqual(
@@ -117,7 +117,7 @@ describe("resetPassword", () => {
       }),
     )
 
-    // @ts-expect-error
+    // @ts-ignore
     global.fetch = mockFetch
 
     const res = await resetPassword({
@@ -154,7 +154,7 @@ describe("signUp", () => {
       }),
     )
 
-    // @ts-expect-error
+    // @ts-ignore
     global.fetch = mockFetch
 
     const res = await signUp({
@@ -187,7 +187,7 @@ describe("signUp", () => {
         }),
       )
 
-      // @ts-expect-error
+      // @ts-ignore
       global.fetch = mockFetch
 
       await logout()

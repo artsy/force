@@ -1,17 +1,17 @@
+import {
+  ActionType,
+  ContextModule,
+  type EditProfileModalViewed,
+  type EditedUserProfile,
+  OwnerType,
+  type TappedMyCollectionAddArtworkArtist,
+} from "@artsy/cohesion"
+import { Box, Stack, Text } from "@artsy/palette"
 import { CollectorProfileArtistsAdd } from "Components/CollectorProfile/CollectorProfileArtistsAdd"
 import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
 import { useUpdateMyUserProfile } from "Components/Inquiry/Hooks/useUpdateMyUserProfile"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useOnce } from "Utils/Hooks/useOnce"
-import {
-  ActionType,
-  ContextModule,
-  type EditedUserProfile,
-  type EditProfileModalViewed,
-  OwnerType,
-  type TappedMyCollectionAddArtworkArtist,
-} from "@artsy/cohesion"
-import { Box, Stack, Text } from "@artsy/palette"
 import type { FC } from "react"
 import type { Environment } from "react-relay"
 import { useTracking } from "react-tracking"

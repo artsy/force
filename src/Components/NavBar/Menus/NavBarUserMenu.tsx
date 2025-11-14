@@ -1,15 +1,3 @@
-import { BASE_SAVES_PATH } from "Apps/CollectorProfile/constants"
-import {
-  NavBarUserMenuAvatar,
-  NavBarUserMenuAvatarSkeleton,
-} from "Components/NavBar/Menus/NavBarUserMenuAvatar"
-import { ProgressiveOnboardingAlertHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertHighlight"
-import { ProgressiveOnboardingFollowHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowHighlight"
-import { ProgressiveOnboardingSaveHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveHighlight"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { logout } from "Utils/auth"
-import { getENV } from "Utils/getENV"
-import { userIsAdmin } from "Utils/user"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import ArtworkIcon from "@artsy/icons/ArtworkIcon"
 import BagIcon from "@artsy/icons/BagIcon"
@@ -22,6 +10,18 @@ import LockIcon from "@artsy/icons/LockIcon"
 import LogoutIcon from "@artsy/icons/LogoutIcon"
 import SettingsIcon from "@artsy/icons/SettingsIcon"
 import { Box, type BoxProps, Separator, Text } from "@artsy/palette"
+import { BASE_SAVES_PATH } from "Apps/CollectorProfile/constants"
+import {
+  NavBarUserMenuAvatar,
+  NavBarUserMenuAvatarSkeleton,
+} from "Components/NavBar/Menus/NavBarUserMenuAvatar"
+import { ProgressiveOnboardingAlertHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertHighlight"
+import { ProgressiveOnboardingFollowHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowHighlight"
+import { ProgressiveOnboardingSaveHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveHighlight"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { logout } from "Utils/auth"
+import { getENV } from "Utils/getENV"
+import { userIsAdmin } from "Utils/user"
 import type * as React from "react"
 import { Suspense } from "react"
 import { useTracking } from "react-tracking"

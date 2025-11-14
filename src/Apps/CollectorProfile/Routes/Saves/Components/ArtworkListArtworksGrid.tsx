@@ -1,3 +1,12 @@
+import {
+  ActionType,
+  type ClickedChangePage,
+  type ClickedMainArtworkGrid,
+  ContextModule,
+  OwnerType,
+  commercialFilterParamsChanged,
+} from "@artsy/cohesion"
+import { Spacer } from "@artsy/palette"
 import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { allowedFilters } from "Components/ArtworkFilter/Utils/allowedFilters"
 import ArtworkGrid from "Components/ArtworkGrid/ArtworkGrid"
@@ -6,22 +15,13 @@ import { PaginationFragmentContainer as Pagination } from "Components/Pagination
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { Jump } from "Utils/Hooks/useJump"
 import { usePrevious } from "Utils/Hooks/usePrevious"
-import {
-  ActionType,
-  type ClickedChangePage,
-  type ClickedMainArtworkGrid,
-  ContextModule,
-  commercialFilterParamsChanged,
-  OwnerType,
-} from "@artsy/cohesion"
-import { Spacer } from "@artsy/palette"
 import type { ArtworkListArtworksGrid_me$data } from "__generated__/ArtworkListArtworksGrid_me.graphql"
 import { isEqual } from "lodash"
 import { type FC, useState } from "react"
 import {
+  type RelayRefetchProp,
   createFragmentContainer,
   graphql,
-  type RelayRefetchProp,
 } from "react-relay"
 import { useTracking } from "react-tracking"
 import useDeepCompareEffect from "use-deep-compare-effect"
@@ -76,7 +76,7 @@ const ArtworkListArtworksGrid: FC<
     context.setFilter("page", page)
   }
 
-  const fetchResults = (_changedFilterKey: string) => {
+  const fetchResults = (changedFilterKey: string) => {
     setFetching(true)
 
     const variables = {
@@ -104,7 +104,9 @@ const ArtworkListArtworksGrid: FC<
         context_page_owner_type: contextPageOwnerType,
         context_page_owner_id: contextPageOwnerId,
         context_page_owner_slug: contextPageOwnerSlug,
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         page_current: prevFilterValue!,
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         page_changed: currentFilterValue!,
       }
 
@@ -156,6 +158,7 @@ const ArtworkListArtworksGrid: FC<
       <Spacer y={2} />
       <LoadingArea isLoading={fetching}>
         <ArtworkGrid
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           artworks={artworks!}
           columnCount={[2, 3]}
           contextModule={ContextModule.artworkGrid}
@@ -182,6 +185,7 @@ const ArtworkListArtworksGrid: FC<
 
         <Pagination
           hasNextPage={hasNextPage}
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           pageCursors={pageCursors!}
           onClick={(_cursor, page) => loadPage(page)}
           onNext={() => loadNext()}

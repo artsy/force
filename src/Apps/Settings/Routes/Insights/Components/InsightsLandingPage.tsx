@@ -1,5 +1,3 @@
-import { RouterLink } from "System/Components/RouterLink"
-import { resized } from "Utils/resized"
 import {
   Button,
   Column,
@@ -8,6 +6,8 @@ import {
   ResponsiveBox,
   Text,
 } from "@artsy/palette"
+import { RouterLink } from "System/Components/RouterLink"
+import { resized } from "Utils/resized"
 
 export const InsightsLandingPage = () => {
   const { src, srcSet } = resized(
@@ -30,7 +30,7 @@ export const InsightsLandingPage = () => {
         </Text>
 
         <Button
-          // @ts-expect-error
+          // @ts-ignore
           as={RouterLink}
           variant="primaryBlack"
           to={"/collector-profile/my-collection/artworks/new"}

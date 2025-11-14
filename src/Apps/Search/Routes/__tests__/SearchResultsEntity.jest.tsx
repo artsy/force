@@ -1,6 +1,6 @@
+import { render, screen } from "@testing-library/react"
 import { SearchResultsEntityRoute as SearchResultsEntity } from "Apps/Search/Routes/SearchResultsEntity"
 import { MockBoot } from "DevTools/MockBoot"
-import { render, screen } from "@testing-library/react"
 
 jest.mock("System/Hooks/useRouter", () => ({
   useRouter: () => ({

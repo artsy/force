@@ -1,6 +1,6 @@
+import { Flex, Shelf, Text } from "@artsy/palette"
 import { CellArticleFragmentContainer } from "Components/Cells/CellArticle"
 import { extractNodes } from "Utils/extractNodes"
-import { Flex, Shelf, Text } from "@artsy/palette"
 import type { ArticlesRail_partner$data } from "__generated__/ArticlesRail_partner.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"

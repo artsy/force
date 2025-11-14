@@ -1,3 +1,4 @@
+import { Checkbox, type CheckboxProps, Flex } from "@artsy/palette"
 import {
   SelectedFiltersCountsLabels,
   useArtworkFilterContext,
@@ -6,10 +7,9 @@ import {
 import { fetchFollowedArtists } from "Components/ArtworkFilter/Utils/fetchFollowedArtists"
 import { useFilterLabelCountByKey } from "Components/ArtworkFilter/Utils/useFilterLabelCountByKey"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { Checkbox, type CheckboxProps, Flex } from "@artsy/palette"
 import { sortBy } from "lodash"
-import type * as React from "react"
 import { type FC, useEffect } from "react"
+import type * as React from "react"
 import { FilterExpandable } from "./FilterExpandable"
 import { ShowMore } from "./ShowMore"
 
@@ -94,6 +94,7 @@ export const ArtistsFilter: FC<React.PropsWithChildren<ArtistsFilterProps>> = ({
   )
   const label = `Artists${filtersCount}`
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (artists?.counts && relayEnvironment && user) {
       fetchFollowedArtists({ relayEnvironment, fairID }).then(data => {

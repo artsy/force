@@ -1,12 +1,3 @@
-import { CollectorProfileArtistsDeleteDialog } from "Apps/CollectorProfile/Components/CollectorProfileArtists/CollectorProfileArtistsDeleteDialog"
-import { CollectorProfileArtistsListArtistDialog } from "Apps/CollectorProfile/Components/CollectorProfileArtists/CollectorProfileArtistsListArtistDialog"
-import { Z } from "Apps/Components/constants"
-import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
-import { EntityHeaderPlaceholder } from "Components/EntityHeaders/EntityHeaderPlaceholder"
-import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
-import { NavBarMenuItemButton } from "Components/NavBar/Menus/NavBarMenuItem"
-import { useMutation } from "Utils/Hooks/useMutation"
-import { Media } from "Utils/Responsive"
 import MoreIcon from "@artsy/icons/MoreIcon"
 import {
   Box,
@@ -20,8 +11,17 @@ import {
   Text,
   useToasts,
 } from "@artsy/palette"
-import type { CollectorProfileArtistsListArtist_userInterestEdge$key } from "__generated__/CollectorProfileArtistsListArtist_userInterestEdge.graphql"
+import { CollectorProfileArtistsDeleteDialog } from "Apps/CollectorProfile/Components/CollectorProfileArtists/CollectorProfileArtistsDeleteDialog"
+import { CollectorProfileArtistsListArtistDialog } from "Apps/CollectorProfile/Components/CollectorProfileArtists/CollectorProfileArtistsListArtistDialog"
+import { Z } from "Apps/Components/constants"
+import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
+import { EntityHeaderPlaceholder } from "Components/EntityHeaders/EntityHeaderPlaceholder"
+import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
+import { NavBarMenuItemButton } from "Components/NavBar/Menus/NavBarMenuItem"
+import { useMutation } from "Utils/Hooks/useMutation"
+import { Media } from "Utils/Responsive"
 import type { CollectorProfileArtistsListArtistUpdateMutation } from "__generated__/CollectorProfileArtistsListArtistUpdateMutation.graphql"
+import type { CollectorProfileArtistsListArtist_userInterestEdge$key } from "__generated__/CollectorProfileArtistsListArtist_userInterestEdge.graphql"
 import { type FC, useRef, useState } from "react"
 import { graphql, useFragment } from "react-relay"
 import styled from "styled-components"

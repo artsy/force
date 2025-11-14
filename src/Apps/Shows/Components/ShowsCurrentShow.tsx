@@ -1,7 +1,3 @@
-import GridItem from "Components/Artwork/GridItem"
-import { Masonry } from "Components/Masonry"
-import { RouterLink } from "System/Components/RouterLink"
-import { extractNodes } from "Utils/extractNodes"
 import {
   Box,
   Button,
@@ -13,6 +9,10 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
+import GridItem from "Components/Artwork/GridItem"
+import { Masonry } from "Components/Masonry"
+import { RouterLink } from "System/Components/RouterLink"
+import { extractNodes } from "Utils/extractNodes"
 import type { ShowsCurrentShow_show$data } from "__generated__/ShowsCurrentShow_show.graphql"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -67,7 +67,7 @@ const ShowsCurrentShow: React.FC<
           <Button
             variant="secondaryBlack"
             m="auto"
-            // @ts-expect-error
+            // @ts-ignore
             as={RouterLink}
             to={show.href}
           >

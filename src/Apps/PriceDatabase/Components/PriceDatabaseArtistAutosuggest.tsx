@@ -1,6 +1,6 @@
-import { extractNodes } from "Utils/extractNodes"
-import { useClientQuery } from "Utils/Hooks/useClientQuery"
 import { AutocompleteInput } from "@artsy/palette"
+import { useClientQuery } from "Utils/Hooks/useClientQuery"
+import { extractNodes } from "Utils/extractNodes"
 import type { PriceDatabaseArtistAutosuggestQuery } from "__generated__/PriceDatabaseArtistAutosuggestQuery.graphql"
 import { compact } from "lodash"
 import { useState } from "react"

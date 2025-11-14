@@ -5,8 +5,8 @@ import {
   CarouselRail,
   Clickable,
 } from "@artsy/palette"
-import * as React from "react"
 import { Children, useEffect, useState } from "react"
+import * as React from "react"
 
 export interface CarouselProps extends BoxProps {
   children: JSX.Element | JSX.Element[]

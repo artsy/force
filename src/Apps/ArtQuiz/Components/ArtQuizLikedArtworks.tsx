@@ -1,10 +1,10 @@
+import { Spacer } from "@artsy/palette"
 import ArtworkGridItemFragmentContainer from "Components/Artwork/GridItem"
 import { ArtworkGridPlaceholder } from "Components/ArtworkGrid/ArtworkGrid"
 import { Masonry } from "Components/Masonry"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { Spacer } from "@artsy/palette"
-import type { ArtQuizLikedArtworks_me$data } from "__generated__/ArtQuizLikedArtworks_me.graphql"
 import type { ArtQuizLikedArtworksQuery } from "__generated__/ArtQuizLikedArtworksQuery.graphql"
+import type { ArtQuizLikedArtworks_me$data } from "__generated__/ArtQuizLikedArtworks_me.graphql"
 import { type FC, Fragment } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 

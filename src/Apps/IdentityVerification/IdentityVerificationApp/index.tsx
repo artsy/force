@@ -1,6 +1,3 @@
-import { MetaTags } from "Components/MetaTags"
-import { RouterLink } from "System/Components/RouterLink"
-import createLogger from "Utils/logger"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import {
   Button,
@@ -10,16 +7,19 @@ import {
   Text,
   useToasts,
 } from "@artsy/palette"
-import type { IdentityVerificationApp_identityVerification$data } from "__generated__/IdentityVerificationApp_identityVerification.graphql"
+import { MetaTags } from "Components/MetaTags"
+import { RouterLink } from "System/Components/RouterLink"
+import createLogger from "Utils/logger"
 import type { IdentityVerificationAppStartMutation } from "__generated__/IdentityVerificationAppStartMutation.graphql"
+import type { IdentityVerificationApp_identityVerification$data } from "__generated__/IdentityVerificationApp_identityVerification.graphql"
 import { HttpError } from "found"
-import type * as React from "react"
 import { useMemo, useState } from "react"
+import type * as React from "react"
 import {
+  type RelayProp,
   commitMutation,
   createFragmentContainer,
   graphql,
-  type RelayProp,
 } from "react-relay"
 import { useTracking } from "react-tracking"
 import { CompleteFailed } from "./CompleteFailed"

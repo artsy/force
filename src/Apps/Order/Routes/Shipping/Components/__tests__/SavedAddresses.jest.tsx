@@ -1,3 +1,5 @@
+import { fireEvent, screen, waitFor, within } from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
 import {
   SavedAddresses,
   type SavedAddressesProps,
@@ -8,12 +10,10 @@ import {
   type ShipValues,
 } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
 import { fillAddressFormFields } from "Components/Address/__tests__/utils"
-import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { MockBoot } from "DevTools/MockBoot"
+import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { Analytics } from "System/Contexts/AnalyticsContext"
-import { fireEvent, screen, waitFor, within } from "@testing-library/react"
-import userEvent from "@testing-library/user-event"
 import type { SavedAddressesTestQuery } from "__generated__/SavedAddressesTestQuery.graphql"
 import { Formik } from "formik"
 import { graphql } from "react-relay"
@@ -74,7 +74,7 @@ const TestWrapper = ({ children }) => (
 )
 
 const { renderWithRelay } = setupTestWrapperTL<SavedAddressesTestQuery>({
-  Component: _props => {
+  Component: props => {
     return (
       <TestWrapper>
         <SavedAddresses {...testProps} />

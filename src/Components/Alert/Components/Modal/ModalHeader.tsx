@@ -1,7 +1,7 @@
+import { Text } from "@artsy/palette"
 import { ConfirmationHeader } from "Components/Alert/Components/Steps/StepsHeader/ConfirmationHeader"
 import { FiltersHeader } from "Components/Alert/Components/Steps/StepsHeader/FiltersHeader"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
-import { Text } from "@artsy/palette"
 import type { FC } from "react"
 
 export const ModalHeader: FC<React.PropsWithChildren<unknown>> = () => {

@@ -1,5 +1,5 @@
-import { RouterLink } from "System/Components/RouterLink"
 import { Button, Flex, Text } from "@artsy/palette"
+import { RouterLink } from "System/Components/RouterLink"
 import type React from "react"
 import type { ReactElement } from "react"
 

@@ -1,8 +1,8 @@
+import { renderHook } from "@testing-library/react-hooks"
 import { usePrefetchRoute } from "System/Hooks/usePrefetchRoute"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { findRoutesByPath } from "System/Router/Utils/routeUtils"
-import { renderHook } from "@testing-library/react-hooks"
 import take from "lodash/take"
 import { fetchQuery } from "react-relay"
 

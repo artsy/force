@@ -1,7 +1,7 @@
+import { Flex, Join, Separator, Spacer } from "@artsy/palette"
 import { CriteriaPills } from "Components/Alert/Components/CriteriaPills"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import { ConfirmationArtworksGridQueryRenderer } from "Components/SavedSearchAlert/ConfirmationArtworksGrid"
-import { Flex, Join, Separator, Spacer } from "@artsy/palette"
 import type { FC } from "react"
 
 export const Confirmation: FC<React.PropsWithChildren<unknown>> = () => {

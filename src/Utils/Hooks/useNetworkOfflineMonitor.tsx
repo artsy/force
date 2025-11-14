@@ -34,5 +34,5 @@ export const useNetworkOfflineMonitor = () => {
       window.removeEventListener("offline", handleOffline)
       window.removeEventListener("online", handleOnline)
     }
-  }, [retractToast, sendToast])
+  }, [retractToast, sendToast, toastID])
 }

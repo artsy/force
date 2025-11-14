@@ -1,17 +1,3 @@
-import { useShippingContext } from "Apps/Order/Routes/Shipping/Hooks/useShippingContext"
-import {
-  type SavedAddressResult,
-  type UserAddressAction,
-  useUserAddressUpdates,
-} from "Apps/Order/Routes/Shipping/Hooks/useUserAddressUpdates"
-import type { SavedAddressType } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
-import { addressWithFallbackValues } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
-import {
-  AddressFormFields,
-  addressFormFieldsValidator,
-  type FormikContextWithAddress,
-} from "Components/Address/AddressFormFields"
-import createLogger from "Utils/logger"
 import {
   Banner,
   Button,
@@ -22,9 +8,25 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { Form, Formik, type FormikHelpers, useFormikContext } from "formik"
 import { type FC, useEffect, useState } from "react"
 import * as Yup from "yup"
+
+import { Form, Formik, type FormikHelpers, useFormikContext } from "formik"
+
+import { useShippingContext } from "Apps/Order/Routes/Shipping/Hooks/useShippingContext"
+import {
+  type SavedAddressResult,
+  type UserAddressAction,
+  useUserAddressUpdates,
+} from "Apps/Order/Routes/Shipping/Hooks/useUserAddressUpdates"
+import { addressWithFallbackValues } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
+import type { SavedAddressType } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
+import {
+  AddressFormFields,
+  type FormikContextWithAddress,
+  addressFormFieldsValidator,
+} from "Components/Address/AddressFormFields"
+import createLogger from "Utils/logger"
 
 const logger = createLogger("AddressModal.tsx")
 
@@ -186,6 +188,7 @@ const AddressModalForm: FC<
     addressModalAction.type === "edit" ? Object.keys(errors.address || {}) : []
 
   // Touch fields that have errors on edit
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (attributeErrorFieldsForEdit.length > 0) {
       attributeErrorFieldsForEdit.forEach(field => {

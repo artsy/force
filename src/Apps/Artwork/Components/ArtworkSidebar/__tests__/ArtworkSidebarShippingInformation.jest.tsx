@@ -1,6 +1,6 @@
+import { screen } from "@testing-library/react"
 import { ArtworkSidebarShippingInformationFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarShippingInformation"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { screen } from "@testing-library/react"
 import type { ArtworkSidebarShippingInformation_Test_Query } from "__generated__/ArtworkSidebarShippingInformation_Test_Query.graphql"
 import { graphql } from "react-relay"
 

@@ -1,7 +1,7 @@
+import { screen } from "@testing-library/react"
 import { ExampleAppFragmentContainer } from "Apps/Example/ExampleApp"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { screen } from "@testing-library/react"
 import type { ExampleApp_Test_Query } from "__generated__/ExampleApp_Test_Query.graphql"
 import { graphql } from "react-relay"
 

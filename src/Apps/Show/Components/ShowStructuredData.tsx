@@ -4,7 +4,8 @@ import { extractNodes } from "Utils/extractNodes"
 import { getENV } from "Utils/getENV"
 import type { ShowStructuredData_show$key } from "__generated__/ShowStructuredData_show.graphql"
 import { compact } from "lodash"
-import { graphql, useFragment } from "react-relay"
+import { graphql } from "react-relay"
+import { useFragment } from "react-relay"
 import type { ImageObject, Organization, Person, Place } from "schema-dts"
 
 interface ShowStructuredDataProps {

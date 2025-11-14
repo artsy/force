@@ -1,9 +1,9 @@
+import { render } from "@testing-library/react"
 import {
   AuctionResultsFilterContextProvider,
   useAuctionResultsFilterContext,
 } from "Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
 import { initialAuctionResultsFilterState } from "Apps/Artist/Routes/AuctionResults/initialAuctionResultsFilterState"
-import { render } from "@testing-library/react"
 import { act } from "react-dom/test-utils"
 
 describe("AuctionResultsFilterContext", () => {

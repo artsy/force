@@ -1,13 +1,14 @@
+import { fireEvent, screen } from "@testing-library/react"
 import { ArtworkActionsSaveButtonFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkActionsSaveButton"
 import { AppToasts } from "Apps/Components/AppToasts"
 import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
 import { SaveArtwork } from "Components/Artwork/SaveButton/SaveArtworkMutation"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { fireEvent, screen } from "@testing-library/react"
 import type { ArtworkActionsSaveButton_Test_Query } from "__generated__/ArtworkActionsSaveButton_Test_Query.graphql"
 import { act } from "react-dom/test-utils"
-import { fetchQuery, graphql } from "react-relay"
+import { graphql } from "react-relay"
+import { fetchQuery } from "react-relay"
 
 jest.unmock("react-relay")
 jest.mock("Components/Artwork/SaveButton/SaveArtworkMutation")
@@ -78,7 +79,7 @@ describe("ArtworkActionsSaveButton", () => {
 
   describe("Save flow", () => {
     beforeEach(() => {
-      mockSaveArtwork.mockImplementation(_args => ({
+      mockSaveArtwork.mockImplementation(args => ({
         saveArtwork: {
           artwork: {
             isSavedToAnyList: true,
@@ -131,7 +132,7 @@ describe("ArtworkActionsSaveButton", () => {
     const mockFetchQuery = fetchQuery as jest.Mock
 
     beforeEach(() => {
-      mockSaveArtwork.mockImplementation(_args => ({
+      mockSaveArtwork.mockImplementation(args => ({
         saveArtwork: {
           artwork: {
             isSavedToAnyList: false,

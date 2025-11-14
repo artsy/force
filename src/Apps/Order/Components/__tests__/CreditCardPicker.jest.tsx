@@ -1,24 +1,24 @@
+import type { StripeError, Token } from "@stripe/stripe-js"
+import { CreditCardPickerFragmentContainer } from "Apps/Order/Components/CreditCardPicker"
+import { creatingCreditCardSuccess } from "Apps/Order/Routes/__fixtures__/MutationResults/createCreditCard"
 import {
   BuyOrderPickup,
   BuyOrderWithShippingDetails,
   OfferOrderWithShippingDetails,
   ShippingDetails,
 } from "Apps/__tests__/Fixtures/Order"
-import { CreditCardPickerFragmentContainer } from "Apps/Order/Components/CreditCardPicker"
-import { creatingCreditCardSuccess } from "Apps/Order/Routes/__fixtures__/MutationResults/createCreditCard"
+import type { Address } from "Components/Address/utils"
 import {
   fillCountrySelect,
   fillIn,
   validAddress,
 } from "Components/__tests__/Utils/addressForm"
-import type { Address } from "Components/Address/utils"
 import { MockBoot } from "DevTools/MockBoot"
 import { mockStripe } from "DevTools/mockStripe"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import type { StripeError, Token } from "@stripe/stripe-js"
 import { screen, waitFor } from "@testing-library/react"
-import type { CreditCardPicker_me$data } from "__generated__/CreditCardPicker_me.graphql"
 import type { CreditCardPickerTestQuery$rawResponse } from "__generated__/CreditCardPickerTestQuery.graphql"
+import type { CreditCardPicker_me$data } from "__generated__/CreditCardPicker_me.graphql"
 import { graphql } from "react-relay"
 
 jest.mock("sharify", () => ({

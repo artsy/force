@@ -1,22 +1,20 @@
+import { Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import { CellShowFragmentContainer } from "Components/Cells/CellShow"
 import { LoadingArea } from "Components/LoadingArea"
 import { PaginationFragmentContainer } from "Components/Pagination"
 import { useRouter } from "System/Hooks/useRouter"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { extractNodes } from "Utils/extractNodes"
 import { Jump } from "Utils/Hooks/useJump"
-import { Column, GridColumns, Spacer, Text } from "@artsy/palette"
+import { extractNodes } from "Utils/extractNodes"
+import type { ShowPaginatedEventsRendererQuery } from "__generated__/ShowPaginatedEventsRendererQuery.graphql"
+import type { EventStatus } from "__generated__/ShowPaginatedEventsRendererQuery.graphql"
 import type { ShowPaginatedEvents_partner$data } from "__generated__/ShowPaginatedEvents_partner.graphql"
-import type {
-  EventStatus,
-  ShowPaginatedEventsRendererQuery,
-} from "__generated__/ShowPaginatedEventsRendererQuery.graphql"
-import type * as React from "react"
 import { useState } from "react"
+import type * as React from "react"
 import {
+  type RelayRefetchProp,
   createRefetchContainer,
   graphql,
-  type RelayRefetchProp,
 } from "react-relay"
 
 interface ShowEventsProps {
@@ -215,7 +213,9 @@ export const ShowPaginatedEventsRenderer: React.FC<
         return (
           <ShowEventsRefetchContainer
             {...rest}
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             partner={props.partner!}
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             paramsPage={page!}
           />
         )

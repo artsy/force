@@ -2,8 +2,8 @@ import { SearchAppFragmentContainer as SearchApp } from "Apps/Search/SearchApp"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { SystemContextProvider } from "System/Contexts/SystemContext"
-import { screen } from "@testing-library/react"
 import type { SearchAppTestQuery } from "__generated__/SearchAppTestQuery.graphql"
+import { screen } from "@testing-library/react"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")

@@ -1,12 +1,12 @@
+import { DateTime } from "luxon"
 import { PrimaryLabelLineQueryRenderer } from "Components/Artwork/Details/PrimaryLabelLine"
-import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
-import { useSystemContext } from "System/Hooks/useSystemContext"
+import { createMockEnvironment, MockPayloadGenerator } from "relay-test-utils"
+import { createRef } from "react"
+import { act, render, screen } from "@testing-library/react"
 import { useDidMount } from "Utils/Hooks/useDidMount"
 import { useIntersectionObserver } from "Utils/Hooks/useIntersectionObserver"
-import { act, render, screen } from "@testing-library/react"
-import { DateTime } from "luxon"
-import { createRef } from "react"
-import { createMockEnvironment, MockPayloadGenerator } from "relay-test-utils"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
 
 jest.unmock("react-relay")
 
@@ -16,10 +16,10 @@ jest.mock("Utils/Hooks/useDidMount")
 jest.mock("Utils/Hooks/useIntersectionObserver")
 
 describe("PrimaryLabelLine", () => {
-  const mockuseDidMount = useDidMount as jest.Mock
-  const mockUseIntersectionObserver = useIntersectionObserver as jest.Mock
-  const mockUseSystemContext = useSystemContext as jest.Mock
-  const mockUseArtworkGridContext = useArtworkGridContext as jest.Mock
+  let mockuseDidMount = useDidMount as jest.Mock
+  let mockUseIntersectionObserver = useIntersectionObserver as jest.Mock
+  let mockUseSystemContext = useSystemContext as jest.Mock
+  let mockUseArtworkGridContext = useArtworkGridContext as jest.Mock
   let mockEnvironment
 
   beforeEach(() => {
@@ -51,7 +51,7 @@ describe("PrimaryLabelLine", () => {
         <PrimaryLabelLineQueryRenderer
           id="opaque-internal-id"
           label="INCREASED_INTEREST"
-        />,
+        />
       )
 
       expect(screen.getByText("Increased Interest")).toBeInTheDocument()
@@ -62,7 +62,7 @@ describe("PrimaryLabelLine", () => {
         <PrimaryLabelLineQueryRenderer
           id="opaque-internal-id"
           label="CURATORS_PICK"
-        />,
+        />
       )
 
       expect(screen.getByText("Curators’ Pick")).toBeInTheDocument()
@@ -77,7 +77,7 @@ describe("PrimaryLabelLine", () => {
         <PrimaryLabelLineQueryRenderer
           id="opaque-internal-id"
           label="INCREASED_INTEREST"
-        />,
+        />
       )
 
       expect(container).toBeEmptyDOMElement()
@@ -92,7 +92,7 @@ describe("PrimaryLabelLine", () => {
         <PrimaryLabelLineQueryRenderer
           id="opaque-internal-id"
           label="CURATORS_PICK"
-        />,
+        />
       )
 
       expect(container).toBeEmptyDOMElement()
@@ -102,7 +102,7 @@ describe("PrimaryLabelLine", () => {
   describe("after fetching null partner offer", () => {
     const renderPrimaryLabelLine = label => {
       const { container } = render(
-        <PrimaryLabelLineQueryRenderer id="opaque-internal-id" label={label} />,
+        <PrimaryLabelLineQueryRenderer id="opaque-internal-id" label={label} />
       )
 
       act(() => {
@@ -113,7 +113,7 @@ describe("PrimaryLabelLine", () => {
                 partnerOffer: null,
               },
             }),
-          }),
+          })
         )
       })
 
@@ -158,7 +158,7 @@ describe("PrimaryLabelLine", () => {
   describe("after fetching an active partner offer", () => {
     const renderPrimaryLabelLine = label => {
       const { container } = render(
-        <PrimaryLabelLineQueryRenderer id="opaque-internal-id" label={label} />,
+        <PrimaryLabelLineQueryRenderer id="opaque-internal-id" label={label} />
       )
 
       act(() => {
@@ -174,7 +174,7 @@ describe("PrimaryLabelLine", () => {
                 },
               },
             }),
-          }),
+          })
         )
       })
 

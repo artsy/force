@@ -1,6 +1,6 @@
+import { Box } from "@artsy/palette"
 import { useMode } from "Utils/Hooks/useMode"
 import { wait } from "Utils/wait"
-import { Box } from "@artsy/palette"
 import { type FC, useEffect, useRef } from "react"
 import styled from "styled-components"
 import { useCursor } from "use-cursor"

@@ -1,6 +1,6 @@
+import { Box, Spacer } from "@artsy/palette"
 import { MyCollectionArtworkDetails } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkDetails"
 import { ArtistCurrentArticlesRailQueryRenderer } from "Components/ArtistCurrentArticlesRail"
-import { Box, Spacer } from "@artsy/palette"
 import type { MyCollectionArtworkAboutTab_artwork$key } from "__generated__/MyCollectionArtworkAboutTab_artwork.graphql"
 import type { FC } from "react"
 import { graphql, useFragment } from "react-relay"

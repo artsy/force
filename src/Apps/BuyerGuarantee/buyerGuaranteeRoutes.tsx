@@ -1,5 +1,5 @@
-import type { RouteProps } from "System/Router/Route"
 import loadable from "@loadable/component"
+import type { RouteProps } from "System/Router/Route"
 
 const BuyerGuaranteeApp = loadable(
   () => import(/* webpackChunkName: "buyerBundle" */ "./BuyerGuaranteeApp"),

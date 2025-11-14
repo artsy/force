@@ -39,7 +39,7 @@ export const SearchResultsArtworksRoute: React.FC<
 
     // refresh artwork filter on query change
     setSearchFilterKey(term)
-  }, [match.location.query.term, match.location.pathname])
+  }, [match.location.query.term])
 
   return (
     <ArtworkGridContextProvider>

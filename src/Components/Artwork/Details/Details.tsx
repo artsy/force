@@ -1,12 +1,12 @@
+import type { AuthContextModule } from "@artsy/cohesion"
+import HighDemandIcon from "@artsy/icons/HighDemandIcon"
+import { Box, Flex, Join, SkeletonText, Spacer, Text } from "@artsy/palette"
+import { themeGet } from "@styled-system/theme-get"
 import { HoverDetailsFragmentContainer } from "Components/Artwork/HoverDetails"
 import { SaveArtworkToListsButtonQueryRenderer } from "Components/Artwork/SaveButton/SaveArtworkToListsButton"
 import { SaveButtonQueryRenderer } from "Components/Artwork/SaveButton/SaveButton"
 import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
 import { RouterLink, type RouterLinkProps } from "System/Components/RouterLink"
-import type { AuthContextModule } from "@artsy/cohesion"
-import HighDemandIcon from "@artsy/icons/HighDemandIcon"
-import { Box, Flex, Join, SkeletonText, Spacer, Text } from "@artsy/palette"
-import { themeGet } from "@styled-system/theme-get"
 import type { Details_artwork$data } from "__generated__/Details_artwork.graphql"
 import { isFunction } from "lodash"
 import type * as React from "react"
@@ -207,7 +207,7 @@ const HighDemandInfo = () => {
 }
 
 const BidInfo: React.FC<React.PropsWithChildren<DetailsProps>> = ({
-  artwork: { collectorSignals, sale },
+  artwork: { collectorSignals, sale, sale_artwork },
 }) => {
   const inRunningAuction = sale?.is_auction && !sale?.is_closed
 

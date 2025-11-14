@@ -1,3 +1,5 @@
+import { ContextModule, OwnerType } from "@artsy/cohesion"
+import { Box, Flex, Spacer } from "@artsy/palette"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
 import { BuyerGuarantee } from "Apps/Order/Components/BuyerGuarantee"
 import { ExpressCheckoutQueryRenderer } from "Apps/Order/Components/ExpressCheckout"
@@ -19,8 +21,6 @@ import { ShippingContextProvider } from "Apps/Order/Routes/Shipping/ShippingCont
 import { Analytics } from "System/Contexts/AnalyticsContext"
 import { Jump, useJump } from "Utils/Hooks/useJump"
 import { Media } from "Utils/Responsive"
-import { ContextModule, OwnerType } from "@artsy/cohesion"
-import { Box, Flex, Spacer } from "@artsy/palette"
 import type {
   Shipping_me$data,
   Shipping_me$key,
@@ -86,6 +86,7 @@ const ShippingRouteLayout: FC<
   const isExpressCheckoutLoading =
     shippingContext.state.isExpressCheckoutLoading
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (shippingContext.state.stage === "shipping_quotes") {
       jumpTo("shippingOptionsTop", { behavior: "smooth" })

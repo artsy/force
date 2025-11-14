@@ -1,6 +1,6 @@
+import { Text } from "@artsy/palette"
 import { LEADGEN_LOCATION } from "Apps/Jobs/Components/JobsFilter"
 import { RouterLink } from "System/Components/RouterLink"
-import { Text } from "@artsy/palette"
 import type { JobLink_job$data } from "__generated__/JobLink_job.graphql"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"

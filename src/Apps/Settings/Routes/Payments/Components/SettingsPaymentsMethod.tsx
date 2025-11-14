@@ -1,5 +1,5 @@
-import { useMode } from "Utils/Hooks/useMode"
 import { Clickable, Flex, Text, useToasts } from "@artsy/palette"
+import { useMode } from "Utils/Hooks/useMode"
 
 interface SettingsPaymentsMethodProps {
   onDelete: () => Promise<void>

@@ -1,3 +1,5 @@
+import { useDismissibleContext } from "@artsy/dismissible"
+import { Text } from "@artsy/palette"
 import { ProgressiveOnboardingPopover } from "Components/ProgressiveOnboarding/ProgressiveOnboardingPopover"
 import {
   PROGRESSIVE_ONBOARDING,
@@ -8,8 +10,6 @@ import {
   type WithProgressiveOnboardingCountsProps,
   withProgressiveOnboardingCounts,
 } from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
-import { useDismissibleContext } from "@artsy/dismissible"
-import { Text } from "@artsy/palette"
 import { type FC, useCallback, useEffect } from "react"
 
 const KEY = PROGRESSIVE_ONBOARDING.saveArtwork

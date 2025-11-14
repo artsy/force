@@ -1,6 +1,3 @@
-import { RouterLink } from "System/Components/RouterLink"
-import { useRouter } from "System/Hooks/useRouter"
-import { useDidMount } from "Utils/Hooks/useDidMount"
 import {
   Box,
   Column,
@@ -11,6 +8,9 @@ import {
   Text,
 } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
+import { RouterLink } from "System/Components/RouterLink"
+import { useRouter } from "System/Hooks/useRouter"
+import { useDidMount } from "Utils/Hooks/useDidMount"
 import type { ShowsHeader_viewer$data } from "__generated__/ShowsHeader_viewer.graphql"
 import { uniqBy } from "lodash"
 import type * as React from "react"
@@ -48,7 +48,7 @@ export const ShowsHeader: React.FC<
                 ...DEFAULT_CITIES,
                 ...featuredCities,
                 { text: "All Cities", value: "all-cities" },
-              ].map((city, _i) => {
+              ].map((city, i) => {
                 return (
                   <City
                     key={city.value}

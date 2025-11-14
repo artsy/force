@@ -1,8 +1,8 @@
+import { Text } from "@artsy/palette"
 import ArtworkGrid, {
-  type ArtworkGridLayout,
+  ArtworkGridLayout,
 } from "Components/ArtworkGrid/ArtworkGrid"
 import { useRouter } from "System/Hooks/useRouter"
-import { Text } from "@artsy/palette"
 import type { NewForYouArtworksGrid_viewer$data } from "__generated__/NewForYouArtworksGrid_viewer.graphql"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"

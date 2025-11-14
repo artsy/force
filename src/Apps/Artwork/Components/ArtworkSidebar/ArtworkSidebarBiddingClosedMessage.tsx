@@ -1,8 +1,9 @@
+import { Spacer, Text } from "@artsy/palette"
+import { createFragmentContainer, graphql } from "react-relay"
+
 import { CreateAlertButton } from "Components/Alert/Components/CreateAlertButton"
 import { ProgressiveOnboardingAlertCreateSimple } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertCreateSimple"
-import { Spacer, Text } from "@artsy/palette"
 import type { ArtworkSidebarBiddingClosedMessage_artwork$data } from "__generated__/ArtworkSidebarBiddingClosedMessage_artwork.graphql"
-import { createFragmentContainer, graphql } from "react-relay"
 
 interface BiddingClosedMessageProps {
   artwork: ArtworkSidebarBiddingClosedMessage_artwork$data

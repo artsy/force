@@ -1,9 +1,9 @@
+import { Text } from "@artsy/palette"
 import { shippingQuoteDisplayNames } from "Apps/Order/Routes/Shipping/Components/ShippingQuotes"
 import {
   StepSummaryItem,
   type StepSummaryItemProps,
 } from "Components/StepSummaryItem"
-import { Text } from "@artsy/palette"
 import type { ShippingArtaSummaryItem_order$data } from "__generated__/ShippingArtaSummaryItem_order.graphql"
 import { startCase } from "lodash"
 import type * as React from "react"

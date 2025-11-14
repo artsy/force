@@ -1,5 +1,6 @@
-import { initializeVariablesWithFilterState } from "Apps/Collect/collectRoutes"
+import { Box, Flex, Separator, Spacer, Text } from "@artsy/palette"
 import { buildUrlForCollectApp } from "Apps/Collect/Utils/urlBuilder"
+import { initializeVariablesWithFilterState } from "Apps/Collect/collectRoutes"
 import { ArtworkFilter } from "Components/ArtworkFilter"
 import type {
   Counts,
@@ -15,14 +16,13 @@ import { RouterLink } from "System/Components/RouterLink"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { Box, Flex, Separator, Spacer, Text } from "@artsy/palette"
-import type { Collect_marketingCollections$data } from "__generated__/Collect_marketingCollections.graphql"
 import type { CollectArtworkFilterQuery } from "__generated__/CollectArtworkFilterQuery.graphql"
+import type { Collect_marketingCollections$data } from "__generated__/Collect_marketingCollections.graphql"
 import type { Match, Router } from "found"
 import type * as React from "react"
 import { useMemo } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { type Color, getMetadata, type Medium } from "./Utils/getMetadata"
+import { type Color, type Medium, getMetadata } from "./Utils/getMetadata"
 
 export interface CollectAppProps {
   match: Match

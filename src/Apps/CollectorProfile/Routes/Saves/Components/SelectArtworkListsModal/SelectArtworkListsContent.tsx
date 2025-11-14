@@ -1,5 +1,5 @@
-import type { ExtractNodeType } from "Utils/typeSupport"
 import { Box, Join, Spacer } from "@artsy/palette"
+import type { ExtractNodeType } from "Utils/typeSupport"
 import type { SelectArtworkListsModal_me$data } from "__generated__/SelectArtworkListsModal_me.graphql"
 import type { FC } from "react"
 import { SelectArtworkListItemFragmentContainer } from "./SelectArtworkListItem"

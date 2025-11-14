@@ -1,10 +1,10 @@
+import { ContextModule, Intent } from "@artsy/cohesion"
+import { Button, Flex, Text } from "@artsy/palette"
 import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
 import { useAuthDialog } from "Components/AuthDialog"
 import { RouterLink } from "System/Components/RouterLink"
 import { useRouter } from "System/Hooks/useRouter"
 import createLogger from "Utils/logger"
-import { ContextModule, Intent } from "@artsy/cohesion"
-import { Button, Flex, Text } from "@artsy/palette"
 import type { RegisterButton_me$data } from "__generated__/RegisterButton_me.graphql"
 import type { RegisterButton_sale$data } from "__generated__/RegisterButton_sale.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -67,7 +67,7 @@ export const RegisterButton: React.FC<
 
     case conditions.LIVE_OPEN: {
       const liveUrl = `${sale.liveURLIfOpen}`
-      const href = me ? `${liveUrl}/login` : liveUrl
+      const href = me ? liveUrl + "/login" : liveUrl
 
       return (
         <ButtonAction
@@ -223,7 +223,7 @@ const ButtonAction: React.FC<
   return (
     <Flex flexDirection="column" data-testid="RegisterButton">
       <Button
-        // @ts-expect-error
+        // @ts-ignore
         as={RouterLink}
         to={to}
         onClick={onClick}

@@ -1,12 +1,12 @@
+import { screen } from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
 import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
+import { AvailabilityFilter } from "Components/ArtworkFilter/ArtworkFilters/AvailabilityFilter"
 import {
   createArtworkFilterTestRenderer,
   currentArtworkFilterContext,
 } from "Components/ArtworkFilter/ArtworkFilters/__tests__/Utils"
-import { AvailabilityFilter } from "Components/ArtworkFilter/ArtworkFilters/AvailabilityFilter"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
-import { screen } from "@testing-library/react"
-import userEvent from "@testing-library/user-event"
 import { useEffect } from "react"
 
 jest.mock("Utils/Hooks/useMatchMedia")
@@ -52,6 +52,7 @@ describe(AvailabilityFilter, () => {
       const MobileVersionOfAvailabilityFilter = () => {
         const filterContext = useArtworkFilterContext()
 
+        // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
         useEffect(() => {
           // on mount, initialize the staged filters
           filterContext.setShouldStageFilterChanges?.(true)

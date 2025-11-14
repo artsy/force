@@ -1,4 +1,3 @@
-import { extractNodes } from "Utils/extractNodes"
 import {
   Box,
   Flex,
@@ -8,6 +7,7 @@ import {
   SkeletonText,
   Text,
 } from "@artsy/palette"
+import { extractNodes } from "Utils/extractNodes"
 import type { CategoryRail_category$data } from "__generated__/CategoryRail_category.graphql"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"

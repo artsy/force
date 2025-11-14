@@ -1,6 +1,6 @@
+import { render, screen } from "@testing-library/react"
 import { InsightsHeader } from "Apps/Settings/Routes/Insights/Components/InsightsHeader"
 import { MockBoot } from "DevTools/MockBoot"
-import { render, screen } from "@testing-library/react"
 
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => false,

@@ -1,5 +1,5 @@
-import { useEditProfileTracking } from "Apps/Settings/Routes/EditProfile/Hooks/useEditProfileTracking"
 import { renderHook } from "@testing-library/react-hooks"
+import { useEditProfileTracking } from "Apps/Settings/Routes/EditProfile/Hooks/useEditProfileTracking"
 import { useTracking } from "react-tracking"
 
 jest.mock("react-tracking")

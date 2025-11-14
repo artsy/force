@@ -1,7 +1,7 @@
+import { screen } from "@testing-library/react"
 import { ShowContextualLinkFragmentContainer } from "Apps/Show/Components/ShowContextualLink"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { screen } from "@testing-library/react"
 import type { ShowContextualLinkTestQuery } from "__generated__/ShowContextualLinkTestQuery.graphql"
 import { graphql } from "react-relay"
 

@@ -1,10 +1,11 @@
 import { NavBarNotificationIndicator } from "Components/NavBar/NavBarNotificationIndicator"
 import { SystemContext } from "System/Contexts/SystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import type { NavBarMobileMenuNotificationsIndicator_me$data } from "__generated__/NavBarMobileMenuNotificationsIndicator_me.graphql"
 import type { NavBarMobileMenuNotificationsIndicatorQuery } from "__generated__/NavBarMobileMenuNotificationsIndicatorQuery.graphql"
+import type { NavBarMobileMenuNotificationsIndicator_me$data } from "__generated__/NavBarMobileMenuNotificationsIndicator_me.graphql"
 import { useContext } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
+import { graphql } from "react-relay"
+import { createFragmentContainer } from "react-relay"
 
 interface NavBarMobileMenuNotificationsIndicatorProps {
   me?: NavBarMobileMenuNotificationsIndicator_me$data | null

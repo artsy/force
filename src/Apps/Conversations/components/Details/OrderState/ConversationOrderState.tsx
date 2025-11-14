@@ -1,7 +1,7 @@
-import { ConversationStatusWithCounter } from "Apps/Conversations/components/Details/OrderState/ConversationStatusWithCounter"
 import CheckmarkFillIcon from "@artsy/icons/CheckmarkFillIcon"
 import CloseFillIcon from "@artsy/icons/CloseFillIcon"
 import { Flex, Text } from "@artsy/palette"
+import { ConversationStatusWithCounter } from "Apps/Conversations/components/Details/OrderState/ConversationStatusWithCounter"
 import type {
   CommerceOrderModeEnum,
   CommerceOrderStateEnum,

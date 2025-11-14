@@ -1,5 +1,3 @@
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import {
   BorderBox,
@@ -13,20 +11,22 @@ import {
   Text,
 } from "@artsy/palette"
 import { BarChart, type BarDescriptor } from "@artsy/palette-charts"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import type { PricingContextQuery } from "__generated__/PricingContextQuery.graphql"
 import type {
   AnalyticsPricingContextDimensionEnum,
   PricingContext_artwork$data,
 } from "__generated__/PricingContext_artwork.graphql"
-import type { PricingContextQuery } from "__generated__/PricingContextQuery.graphql"
 import { once } from "lodash"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-// biome-ignore lint/style/noRestrictedImports: Legacy waypoint usage in component
+// eslint-disable-next-line no-restricted-imports
 import Waypoint from "react-waypoint"
 import {
-  createCollectUrl,
   type FilterCategory,
+  createCollectUrl,
 } from "./../Utils/createCollectUrl"
 import { PricingContextModal } from "./PricingContextModal"
 
@@ -119,10 +119,10 @@ export const PricingContext: React.FC<PricingContextProps> = ({ artwork }) => {
 
       <BarChart
         minLabel="$0"
-        maxLabel={`${
+        maxLabel={
           artwork.pricingContext.bins[artwork.pricingContext.bins.length - 1]
-            .maxPrice
-        }+`}
+            .maxPrice + "+"
+        }
         bars={artwork.pricingContext.bins.map((bin, index): BarDescriptor => {
           const isFirstBin = index === 0
           const isLastBin = artwork?.pricingContext?.bins?.length

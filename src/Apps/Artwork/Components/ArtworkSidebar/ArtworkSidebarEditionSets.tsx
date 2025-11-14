@@ -1,4 +1,3 @@
-import { useSelectedEditionSetContext } from "Apps/Artwork/Components/SelectedEditionSetContext"
 import {
   Box,
   Flex,
@@ -8,9 +7,11 @@ import {
   Separator,
   Text,
 } from "@artsy/palette"
+import { createFragmentContainer, graphql } from "react-relay"
+
+import { useSelectedEditionSetContext } from "Apps/Artwork/Components/SelectedEditionSetContext"
 import type { ArtworkSidebarEditionSets_artwork$data } from "__generated__/ArtworkSidebarEditionSets_artwork.graphql"
 import React, { type Dispatch, type SetStateAction } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkSidebarSizeInfoFragmentContainer } from "./ArtworkSidebarSizeInfo"
 
 const Row: React.FC<React.PropsWithChildren<FlexProps>> = ({
@@ -58,7 +59,7 @@ const ArtworkSidebarEditionSets: React.FC<
       </Flex>
     )
 
-    if (isOfferable || isAcquireable || isInquireable) {
+    if (!!(isOfferable || isAcquireable || isInquireable)) {
       return (
         <Row>
           <Radio
@@ -86,7 +87,7 @@ const ArtworkSidebarEditionSets: React.FC<
             <Box py={2}>{renderEditionSet(editionSet)}</Box>
             {index !== editionSets.length - 1 && <Separator />}
           </React.Fragment>
-        )) as any
+        ))!
       }
     </RadioGroup>
   )

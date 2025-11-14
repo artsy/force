@@ -32,6 +32,7 @@ describe("ErrorBoundary", () => {
 
     const ErrorComponent = () => {
       throw new Error("throw error")
+      return null
     }
 
     try {
@@ -50,6 +51,7 @@ describe("ErrorBoundary", () => {
   it("updates `detail` state with stack trace", () => {
     const ErrorComponent = () => {
       throw new Error("throw error")
+      return null
     }
 
     let errorBoundaryInstance: any = null

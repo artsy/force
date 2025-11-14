@@ -1,7 +1,7 @@
-import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
-import { logout } from "Utils/auth"
-import { useAuthValidation } from "Utils/Hooks/useAuthValidation"
 import { renderHook } from "@testing-library/react-hooks"
+import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
+import { useAuthValidation } from "Utils/Hooks/useAuthValidation"
+import { logout } from "Utils/auth"
 import { fetchQuery } from "react-relay"
 
 jest.mock("react-relay")

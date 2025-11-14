@@ -1,7 +1,7 @@
+import { Button } from "@artsy/palette"
 import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
 import { TopContextBar } from "Components/TopContextBar"
 import { RouterLink } from "System/Components/RouterLink"
-import { Button } from "@artsy/palette"
 import type { MyCollectionArtworkHeader_artwork$key } from "__generated__/MyCollectionArtworkHeader_artwork.graphql"
 import { graphql, useFragment } from "react-relay"
 
@@ -23,7 +23,7 @@ export const MyCollectionArtworkHeader: React.FC<
       href="/collector-profile/my-collection"
       rightContent={
         <Button
-          // @ts-expect-error
+          // @ts-ignore
           as={RouterLink}
           variant="secondaryNeutral"
           size="small"

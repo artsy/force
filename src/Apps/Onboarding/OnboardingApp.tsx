@@ -1,8 +1,8 @@
+import { Box, Spacer } from "@artsy/palette"
 import { OnboardingDebug } from "Components/Onboarding/Components/OnboardingDebug"
 import { OnboardingSteps } from "Components/Onboarding/Components/OnboardingSteps"
 import { OnboardingProvider } from "Components/Onboarding/Hooks/useOnboardingContext"
 import { useRouter } from "System/Hooks/useRouter"
-import { Box, Spacer } from "@artsy/palette"
 import type { FC } from "react"
 
 export const OnboardingApp: FC<React.PropsWithChildren<unknown>> = () => {

@@ -1,3 +1,4 @@
+import { Box, Flex, Separator, Skeleton } from "@artsy/palette"
 import { DESKTOP_NAV_BAR_HEIGHT } from "Components/NavBar/constants"
 import { NotificationsContextProvider } from "Components/Notifications/Hooks/useNotificationsContext"
 import {
@@ -9,7 +10,6 @@ import { NotificationsListPlaceholder } from "Components/Notifications/Notificat
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useOnce } from "Utils/Hooks/useOnce"
 import createLogger from "Utils/logger"
-import { Box, Flex, Separator, Skeleton } from "@artsy/palette"
 import { DateTime } from "luxon"
 import type { FC } from "react"
 import Sticky from "react-stickynode"

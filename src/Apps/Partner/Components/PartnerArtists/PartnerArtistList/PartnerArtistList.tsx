@@ -1,5 +1,5 @@
+import { Box, Join, Spacer, Text, media } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
-import { Box, Join, media, Spacer, Text } from "@artsy/palette"
 import type { PartnerArtistList_partner$data } from "__generated__/PartnerArtistList_partner.graphql"
 import { compact } from "lodash"
 import type * as React from "react"

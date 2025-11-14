@@ -1,5 +1,5 @@
-import { RouterLink } from "System/Components/RouterLink"
 import { Text, type TextProps } from "@artsy/palette"
+import { RouterLink } from "System/Components/RouterLink"
 import type * as React from "react"
 
 interface Props {

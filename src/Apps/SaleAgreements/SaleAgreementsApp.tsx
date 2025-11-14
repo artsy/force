@@ -1,7 +1,7 @@
+import { Join, Link, Spacer, Text } from "@artsy/palette"
 import { SaleAgreementsFilter } from "Apps/SaleAgreements/Components/SaleAgreementsFilter"
 import { MetaTags } from "Components/MetaTags"
 import { getENV } from "Utils/getENV"
-import { Join, Link, Spacer, Text } from "@artsy/palette"
 import type { SaleAgreementsApp_viewer$key } from "__generated__/SaleAgreementsApp_viewer.graphql"
 import type { FC } from "react"
 import { graphql, useFragment } from "react-relay"

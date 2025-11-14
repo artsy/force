@@ -1,6 +1,3 @@
-import { RouterLink } from "System/Components/RouterLink"
-import { extractNodes } from "Utils/extractNodes"
-import { useCountdownTimer } from "Utils/Hooks/useCountdownTimer"
 import { ActionType, OwnerType, type TappedViewOffer } from "@artsy/cohesion"
 import AlertFillIcon from "@artsy/icons/AlertFillIcon"
 import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
@@ -12,6 +9,9 @@ import {
   type MessageProps,
   Text,
 } from "@artsy/palette"
+import { RouterLink } from "System/Components/RouterLink"
+import { useCountdownTimer } from "Utils/Hooks/useCountdownTimer"
+import { extractNodes } from "Utils/extractNodes"
 import type { ConversationReviewOfferCTA_conversation$key } from "__generated__/ConversationReviewOfferCTA_conversation.graphql"
 import type * as React from "react"
 import { graphql, useFragment } from "react-relay"

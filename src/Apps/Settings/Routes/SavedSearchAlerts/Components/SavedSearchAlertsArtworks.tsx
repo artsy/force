@@ -1,20 +1,3 @@
-import type { EditAlertEntity } from "Apps/Settings/Routes/SavedSearchAlerts/types"
-import { AlertProvider } from "Components/Alert/AlertProvider"
-import {
-  CriteriaPills,
-  CriteriaPillsPlaceholder,
-} from "Components/Alert/Components/CriteriaPills"
-import { Modal } from "Components/Alert/Components/Modal/Modal"
-import { ModalHeader } from "Components/Alert/Components/Modal/ModalHeader"
-import ArtworkGrid, {
-  ArtworkGridPlaceholder,
-} from "Components/ArtworkGrid/ArtworkGrid"
-import type { SearchCriteriaAttributes } from "Components/SavedSearchAlert/types"
-import { getAllowedSearchCriteria } from "Components/SavedSearchAlert/Utils/savedSearchCriteria"
-import { RouterLink } from "System/Components/RouterLink"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { useJump } from "Utils/Hooks/useJump"
-import { Media } from "Utils/Responsive"
 import {
   Box,
   Button,
@@ -30,6 +13,23 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
+import type { EditAlertEntity } from "Apps/Settings/Routes/SavedSearchAlerts/types"
+import { AlertProvider } from "Components/Alert/AlertProvider"
+import {
+  CriteriaPills,
+  CriteriaPillsPlaceholder,
+} from "Components/Alert/Components/CriteriaPills"
+import { Modal } from "Components/Alert/Components/Modal/Modal"
+import { ModalHeader } from "Components/Alert/Components/Modal/ModalHeader"
+import ArtworkGrid, {
+  ArtworkGridPlaceholder,
+} from "Components/ArtworkGrid/ArtworkGrid"
+import { getAllowedSearchCriteria } from "Components/SavedSearchAlert/Utils/savedSearchCriteria"
+import type { SearchCriteriaAttributes } from "Components/SavedSearchAlert/types"
+import { RouterLink } from "System/Components/RouterLink"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { useJump } from "Utils/Hooks/useJump"
+import { Media } from "Utils/Responsive"
 import type { SavedSearchAlertsArtworksQuery } from "__generated__/SavedSearchAlertsArtworksQuery.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 
@@ -85,7 +85,7 @@ export const AlertArtworks: React.FC<
                   <Column span={6}>
                     <Button
                       width="100%"
-                      // @ts-expect-error
+                      // @ts-ignore
                       as={RouterLink}
                       to={href}
                     >
@@ -153,7 +153,7 @@ export const AlertArtworks: React.FC<
                     emptyStateComponent={<ArtworksGridEmptyState />}
                   />
                   <Button
-                    // @ts-expect-error
+                    // @ts-ignore
                     as={RouterLink}
                     to={href}
                   >

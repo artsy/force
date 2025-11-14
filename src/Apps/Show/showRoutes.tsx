@@ -1,5 +1,5 @@
-import type { RouteProps } from "System/Router/Route"
 import loadable from "@loadable/component"
+import type { RouteProps } from "System/Router/Route"
 import { RedirectException } from "found"
 import { graphql } from "react-relay"
 

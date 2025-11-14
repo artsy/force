@@ -1,6 +1,3 @@
-import { useConversationsContext } from "Apps/Conversations/ConversationsContext"
-import { ConversationMakeOfferButton } from "Apps/Conversations/components/ConversationCTA/ConversationMakeOfferButton"
-import { ConversationPurchaseButton } from "Apps/Conversations/components/ConversationCTA/ConversationPurchaseButton"
 import {
   BorderedRadio,
   Box,
@@ -14,6 +11,9 @@ import {
   Text,
 } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
+import { useConversationsContext } from "Apps/Conversations/ConversationsContext"
+import { ConversationMakeOfferButton } from "Apps/Conversations/components/ConversationCTA/ConversationMakeOfferButton"
+import { ConversationPurchaseButton } from "Apps/Conversations/components/ConversationCTA/ConversationPurchaseButton"
 import type {
   ConversationConfirmModal_artwork$data,
   ConversationConfirmModal_artwork$key,

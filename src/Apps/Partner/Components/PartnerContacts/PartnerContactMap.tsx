@@ -1,5 +1,5 @@
-import { RouterLink } from "System/Components/RouterLink"
 import { Image, ResponsiveBox } from "@artsy/palette"
+import { RouterLink } from "System/Components/RouterLink"
 import type { PartnerContactMap_location$data } from "__generated__/PartnerContactMap_location.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"

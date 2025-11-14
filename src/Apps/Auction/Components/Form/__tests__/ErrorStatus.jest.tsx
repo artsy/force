@@ -1,6 +1,7 @@
-import { ErrorStatus } from "Apps/Auction/Components/Form/ErrorStatus"
 import { useAuctionFormContext } from "Apps/Auction/Hooks/useAuctionFormContext"
 import { render, screen } from "@testing-library/react"
+
+import { ErrorStatus } from "Apps/Auction/Components/Form/ErrorStatus"
 
 jest.mock("Apps/Auction/Hooks/useAuctionFormContext")
 

@@ -36,9 +36,9 @@ const { renderWithRelay } =
       }
     `,
     variables: {
-      // @ts-expect-error
+      // @ts-ignore
       first: 10,
-      // @ts-expect-error
+      // @ts-ignore
       page: 1,
     },
   })

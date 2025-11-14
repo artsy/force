@@ -1,7 +1,7 @@
+import { screen } from "@testing-library/react"
 import { PageAppFragmentContainer } from "Apps/Page/PageApp"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { userIsAdmin } from "Utils/user"
-import { screen } from "@testing-library/react"
 import type { PageApp_Test_Query } from "__generated__/PageApp_Test_Query.graphql"
 import { HttpError } from "found"
 import { graphql } from "react-relay"

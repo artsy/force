@@ -1,9 +1,9 @@
+import { sentConversationMessage } from "@artsy/cohesion"
+import { Button, Flex, TextArea, useToasts } from "@artsy/palette"
 import { ConversationCTA } from "Apps/Conversations/components/ConversationCTA/ConversationCTA"
 import { useSendConversationMessage } from "Apps/Conversations/mutations/useSendConversationMessage"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { sentConversationMessage } from "@artsy/cohesion"
-import { Button, Flex, TextArea, useToasts } from "@artsy/palette"
 import type { ConversationReply_conversation$key } from "__generated__/ConversationReply_conversation.graphql"
 import type { useSendConversationMessageMutation$data } from "__generated__/useSendConversationMessageMutation.graphql"
 import { type FormikHelpers, useFormik } from "formik"
@@ -137,6 +137,7 @@ export const ConversationReply: FC<
     },
   )
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     resetForm()
   }, [data?.internalID, resetForm])

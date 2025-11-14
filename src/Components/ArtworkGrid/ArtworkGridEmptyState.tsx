@@ -1,5 +1,5 @@
-import { EmptyState } from "Components/EmptyState"
 import { Box, type BoxProps, Clickable } from "@artsy/palette"
+import { EmptyState } from "Components/EmptyState"
 import type * as React from "react"
 import styled from "styled-components"
 

@@ -1,6 +1,6 @@
+import { FullBleed, Marquee, Separator, Spacer } from "@artsy/palette"
 import { NavigationTabsFragmentContainer as NavigationTabs } from "Apps/Partner/Components/NavigationTabs"
 import { Analytics } from "System/Contexts/AnalyticsContext"
-import { FullBleed, Marquee, Separator, Spacer } from "@artsy/palette"
 import type { PartnerApp_partner$data } from "__generated__/PartnerApp_partner.graphql"
 import { HttpError } from "found"
 import type * as React from "react"

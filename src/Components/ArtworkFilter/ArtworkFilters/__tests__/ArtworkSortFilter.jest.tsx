@@ -3,7 +3,7 @@ import {
   useArtworkFilterContext,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { ArtworkSortFilter } from "Components/ArtworkFilter/ArtworkFilters/ArtworkSortFilter"
-import { fireEvent, render, screen } from "@testing-library/react"
+import { render, screen, fireEvent } from "@testing-library/react"
 
 describe("ArtworkSortFilter", () => {
   let context

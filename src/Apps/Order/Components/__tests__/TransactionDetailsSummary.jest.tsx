@@ -1,3 +1,4 @@
+import { TransactionDetailsSummaryItemFragmentContainer } from "Apps/Order/Components/TransactionDetailsSummaryItem"
 import {
   BuyOrderWithSelectedShippingQuote,
   OfferOrderWithOffers,
@@ -5,7 +6,6 @@ import {
   UntouchedBuyOrder,
   UntouchedMakeOfferWithArtsyShippingDomesticFromUS,
 } from "Apps/__tests__/Fixtures/Order"
-import { TransactionDetailsSummaryItemFragmentContainer } from "Apps/Order/Components/TransactionDetailsSummaryItem"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { screen } from "@testing-library/react"
 import type { TransactionDetailsSummaryItemTestQuery$rawResponse } from "__generated__/TransactionDetailsSummaryItemTestQuery.graphql"

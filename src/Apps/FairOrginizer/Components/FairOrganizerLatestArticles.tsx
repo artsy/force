@@ -1,8 +1,8 @@
+import { Box, Button, Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import { CellArticleFragmentContainer } from "Components/Cells/CellArticle"
 import { Masonry } from "Components/Masonry"
 import { RouterLink } from "System/Components/RouterLink"
 import { extractNodes } from "Utils/extractNodes"
-import { Box, Button, Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import type { FairOrganizerLatestArticles_fairOrganizer$data } from "__generated__/FairOrganizerLatestArticles_fairOrganizer.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -22,7 +22,7 @@ export const FairOrganizerLatestArticles: React.FC<
   }
 
   const [latestArticle, ...otherArticles] = articles
-  const showReadAllButton = (articlesConnection?.totalCount as number) > 7
+  const showReadAllButton = articlesConnection?.totalCount! > 7
 
   return (
     <Box>

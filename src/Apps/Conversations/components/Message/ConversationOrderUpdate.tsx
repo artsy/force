@@ -1,6 +1,6 @@
 import AlertFillIcon from "@artsy/icons/AlertFillIcon"
 import MoneyFillIcon from "@artsy/icons/MoneyFillIcon"
-import { type Color, Flex, type FlexProps, Text, THEME } from "@artsy/palette"
+import { type Color, Flex, type FlexProps, THEME, Text } from "@artsy/palette"
 import type {
   ConversationOrderUpdate_event$data,
   ConversationOrderUpdate_event$key,

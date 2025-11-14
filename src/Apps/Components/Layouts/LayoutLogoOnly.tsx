@@ -1,3 +1,4 @@
+import { Spacer } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { AppToasts } from "Apps/Components/AppToasts"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
@@ -7,7 +8,6 @@ import { NavBarPrimaryLogo } from "Components/NavBar/NavBarPrimaryLogo"
 import { RouterLink } from "System/Components/RouterLink"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { Spacer } from "@artsy/palette"
 import type { FC } from "react"
 
 export const LayoutLogoOnly: FC<React.PropsWithChildren<BaseLayoutProps>> = ({

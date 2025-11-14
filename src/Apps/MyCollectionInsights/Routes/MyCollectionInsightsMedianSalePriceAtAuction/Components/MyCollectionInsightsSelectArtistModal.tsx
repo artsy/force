@@ -1,5 +1,5 @@
-import { SearchInputContainer } from "Components/Search/SearchInputContainer"
 import { Box, Spacer, Text } from "@artsy/palette"
+import { SearchInputContainer } from "Components/Search/SearchInputContainer"
 import { useCallback, useState } from "react"
 
 export const MyCollectionInsightsSelectArtistModal: React.FC<

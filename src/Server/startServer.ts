@@ -1,6 +1,6 @@
-import { APP_URL, NODE_ENV, PORT } from "Server/config"
-import { setupExpressErrorHandler } from "@sentry/node"
 import http from "http"
+import { setupExpressErrorHandler } from "@sentry/node"
+import { APP_URL, NODE_ENV, PORT } from "Server/config"
 import withGracefulShutdown from "http-shutdown"
 import { once } from "lodash"
 import { initializeArtsyXapp } from "./artsyXapp"
@@ -35,17 +35,21 @@ export async function startServer(
 
       if (KEEPALIVE_TIMEOUT_SECONDS) {
         console.log(
-          `Setting keepAliveTimeout to ${KEEPALIVE_TIMEOUT_SECONDS} sec.`,
+          "Setting keepAliveTimeout to " + KEEPALIVE_TIMEOUT_SECONDS + " sec.",
         )
         server.keepAliveTimeout = Number(KEEPALIVE_TIMEOUT_SECONDS) * 1000
       }
 
       if (HEADERS_TIMEOUT_SECONDS) {
-        console.log(`Setting headersTimeout to ${HEADERS_TIMEOUT_SECONDS} sec.`)
+        console.log(
+          "Setting headersTimeout to " + HEADERS_TIMEOUT_SECONDS + " sec.",
+        )
 
+        // @ts-ignore -- FIXME: Property 'headersTimeout' does not exist on type 'Server & WithShutdown'.
         server.headersTimeout = Number(HEADERS_TIMEOUT_SECONDS) * 1000
       }
 
+      // @ts-ignore -- Argument of type 'string' is not assignable to parameter of type 'number'.
       server.listen(PORT, "0.0.0.0", () => {
         console.log(message)
 

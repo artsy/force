@@ -1,16 +1,16 @@
+import { Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import { CellShowFragmentContainer } from "Components/Cells/CellShow"
 import { LoadingArea } from "Components/LoadingArea"
 import { PaginationFragmentContainer } from "Components/Pagination"
-import { extractNodes } from "Utils/extractNodes"
 import { Jump } from "Utils/Hooks/useJump"
-import { Column, GridColumns, Spacer, Text } from "@artsy/palette"
+import { extractNodes } from "Utils/extractNodes"
 import type { ArtistShowsGroup_artist$data } from "__generated__/ArtistShowsGroup_artist.graphql"
 import type * as React from "react"
 import { useState } from "react"
 import {
+  type RelayRefetchProp,
   createRefetchContainer,
   graphql,
-  type RelayRefetchProp,
 } from "react-relay"
 
 interface ArtistShowsGroupProps {
@@ -75,7 +75,7 @@ const ArtistShowsGroup: React.FC<
 
       <PaginationFragmentContainer
         getHref={() => ""}
-        pageCursors={artist.showsConnection?.pageCursors}
+        pageCursors={artist.showsConnection?.pageCursors!}
         onClick={handleClick}
         onNext={handleNext}
         hasNextPage={!!artist.showsConnection?.pageInfo.hasNextPage}

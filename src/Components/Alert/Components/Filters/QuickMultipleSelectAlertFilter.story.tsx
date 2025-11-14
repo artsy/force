@@ -1,6 +1,6 @@
-import { AlertProvider } from "Components/Alert/AlertProvider"
 import { Box } from "@artsy/palette"
 import type { Meta } from "@storybook/react"
+import { AlertProvider } from "Components/Alert/AlertProvider"
 import { QuickMultipleSelectAlertFilter } from "./QuickMultipleSelectAlertFilter"
 
 export const Basic = () => {

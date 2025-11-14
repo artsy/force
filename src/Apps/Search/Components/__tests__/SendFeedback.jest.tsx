@@ -1,8 +1,8 @@
+import { fireEvent, render, screen } from "@testing-library/react"
 import { SendFeedback } from "Apps/Search/Components/SendFeedback"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { SystemContextProvider } from "System/Contexts/SystemContext"
 import { useMutation } from "Utils/Hooks/useMutation"
-import { fireEvent, render, screen } from "@testing-library/react"
 
 jest.mock("Utils/Hooks/useMutation")
 jest.mock("Utils/getENV", () => ({

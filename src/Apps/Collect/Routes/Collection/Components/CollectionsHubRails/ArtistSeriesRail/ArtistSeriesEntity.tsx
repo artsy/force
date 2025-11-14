@@ -1,13 +1,13 @@
-import { RouterLink } from "System/Components/RouterLink"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import { extractNodes } from "Utils/extractNodes"
-import { cropped } from "Utils/resized"
 import {
   ActionType,
   type ClickedArtistSeriesGroup,
   ContextModule,
 } from "@artsy/cohesion"
 import { Box, Flex, Image, Text } from "@artsy/palette"
+import { RouterLink } from "System/Components/RouterLink"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { extractNodes } from "Utils/extractNodes"
+import { cropped } from "Utils/resized"
 import type { ArtistSeriesEntity_member$data } from "__generated__/ArtistSeriesEntity_member.graphql"
 import currency from "currency.js"
 import type * as React from "react"

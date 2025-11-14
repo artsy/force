@@ -1,10 +1,3 @@
-import type { CareerHighlightKindWithPromo } from "Apps/Settings/Routes/Insights/Components/CareerHighlights/CareerHighlightsModal/config"
-import {
-  type CareerHighlightKind,
-  getCareerHighlight,
-} from "Apps/Settings/Routes/Insights/Utils/getCareerHighlight"
-import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
-import { EntityHeaderPlaceholder } from "Components/EntityHeaders/EntityHeaderPlaceholder"
 import {
   Flex,
   Skeleton,
@@ -13,6 +6,13 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
+import type { CareerHighlightKindWithPromo } from "Apps/Settings/Routes/Insights/Components/CareerHighlights/CareerHighlightsModal/config"
+import {
+  type CareerHighlightKind,
+  getCareerHighlight,
+} from "Apps/Settings/Routes/Insights/Utils/getCareerHighlight"
+import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
+import { EntityHeaderPlaceholder } from "Components/EntityHeaders/EntityHeaderPlaceholder"
 import type { CareerHighlightModalStep_careerHighlight$key } from "__generated__/CareerHighlightModalStep_careerHighlight.graphql"
 import { graphql, useFragment } from "react-relay"
 

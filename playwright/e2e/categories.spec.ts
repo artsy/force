@@ -1,5 +1,5 @@
 /* eslint-disable jest/expect-expect */
-import { expect, test } from "@playwright/test"
+import { test, expect } from "@playwright/test"
 
 test.describe("/categories", () => {
   test("renders page content", async ({ page }) => {

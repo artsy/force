@@ -1,3 +1,4 @@
+import { fireEvent, render, screen } from "@testing-library/react"
 import {
   type Aggregations,
   type ArtworkFilterContextProps,
@@ -5,12 +6,11 @@ import {
   useArtworkFilterContext,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import {
-  aggregationsToHistogram,
   PriceRangeFilter,
   type PriceRangeFilterProps,
+  aggregationsToHistogram,
 } from "Components/ArtworkFilter/ArtworkFilters/PriceRangeFilter"
 import { getENV } from "Utils/getENV"
-import { fireEvent, render, screen } from "@testing-library/react"
 
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),

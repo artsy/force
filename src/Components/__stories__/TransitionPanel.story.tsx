@@ -1,8 +1,8 @@
+import { Box, Button, ModalDialog, Stack, Text } from "@artsy/palette"
 import {
   TransitionPanelProvider,
   useTransitionPanel,
 } from "Components/TransitionPanel"
-import { Box, Button, ModalDialog, Stack, Text } from "@artsy/palette"
 
 export default {
   title: "Components/TransitionPanel",

@@ -1,8 +1,8 @@
+import { Checkbox } from "@artsy/palette"
 import {
   useAuctionResultsFilterContext,
   useCurrentlySelectedFiltersForAuctionResults,
 } from "Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
-import { Checkbox } from "@artsy/palette"
 import type * as React from "react"
 
 export const HideUpcomingFilter: React.FC<

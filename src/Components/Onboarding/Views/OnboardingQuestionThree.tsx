@@ -1,9 +1,13 @@
+import { Box, Join, Pill, Spacer, Text } from "@artsy/palette"
 import { OnboardingFigure } from "Components/Onboarding/Components/OnboardingFigure"
 import { OnboardingQuestionPanel } from "Components/Onboarding/Components/OnboardingQuestionPanel"
+import { useOnboardingContext } from "Components/Onboarding/Hooks/useOnboardingContext"
+import { useOnboardingFadeTransition } from "Components/Onboarding/Hooks/useOnboardingFadeTransition"
+import { useOnboardingTracking } from "Components/Onboarding/Hooks/useOnboardingTracking"
 import {
-  OPTION_A_CURATED_SELECTION_OF_ARTWORKS,
-  OPTION_ART_QUIZ,
   OPTION_ARTISTS_ON_THE_RISE,
+  OPTION_ART_QUIZ,
+  OPTION_A_CURATED_SELECTION_OF_ARTWORKS,
   OPTION_COLLECTING_ART_THAT_MOVES_ME,
   OPTION_DEVELOPING_MY_ART_TASTES,
   OPTION_FINDING_GREAT_INVESTMENTS,
@@ -12,11 +16,7 @@ import {
   OPTION_KEEP_TRACK_OF_ART,
   OPTION_TOP_AUCTION_LOTS,
 } from "Components/Onboarding/config"
-import { useOnboardingContext } from "Components/Onboarding/Hooks/useOnboardingContext"
-import { useOnboardingFadeTransition } from "Components/Onboarding/Hooks/useOnboardingFadeTransition"
-import { useOnboardingTracking } from "Components/Onboarding/Hooks/useOnboardingTracking"
 import { SplitLayout } from "Components/SplitLayout"
-import { Box, Join, Pill, Spacer, Text } from "@artsy/palette"
 import { type FC, useMemo } from "react"
 
 export const OnboardingQuestionThree: FC<

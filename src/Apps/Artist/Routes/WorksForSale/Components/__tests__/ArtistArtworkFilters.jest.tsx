@@ -1,10 +1,10 @@
-import { ArtistArtworkFilters } from "Apps/Artist/Routes/WorksForSale/Components/ArtistArtworkFilters"
-import { ArtworkFilterContextProvider } from "Components/ArtworkFilter/ArtworkFilterContext"
 import {
-  render as originalRender,
   type RenderOptions,
+  render as originalRender,
   screen,
 } from "@testing-library/react"
+import { ArtistArtworkFilters } from "Apps/Artist/Routes/WorksForSale/Components/ArtistArtworkFilters"
+import { ArtworkFilterContextProvider } from "Components/ArtworkFilter/ArtworkFilterContext"
 import type { ReactElement } from "react"
 
 const render = (ui: ReactElement, options: RenderOptions = {}) =>

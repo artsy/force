@@ -1,17 +1,17 @@
+import { Elements } from "@stripe/react-stripe-js"
+import {
+  type StripeElementsOptions,
+  type StripeElementsUpdateOptions,
+  loadStripe,
+} from "@stripe/stripe-js"
 import { ExpressCheckoutUI } from "Apps/Order/Components/ExpressCheckout/ExpressCheckoutUI"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { getENV } from "Utils/getENV"
-import { Elements } from "@stripe/react-stripe-js"
-import {
-  loadStripe,
-  type StripeElementsOptions,
-  type StripeElementsUpdateOptions,
-} from "@stripe/stripe-js"
+import type { ExpressCheckoutQuery } from "__generated__/ExpressCheckoutQuery.graphql"
 import type {
   ExpressCheckout_order$data,
   ExpressCheckout_order$key,
 } from "__generated__/ExpressCheckout_order.graphql"
-import type { ExpressCheckoutQuery } from "__generated__/ExpressCheckoutQuery.graphql"
 import type { Dispatch, SetStateAction } from "react"
 import { graphql, useFragment } from "react-relay"
 

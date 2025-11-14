@@ -1,7 +1,7 @@
+import { Column, GridColumns, Separator, Spacer, Text } from "@artsy/palette"
 import { FullBleedHeader } from "Components/FullBleedHeader/FullBleedHeader"
 import { MetaTags } from "Components/MetaTags"
 import { RouterLink } from "System/Components/RouterLink"
-import { Column, GridColumns, Separator, Spacer, Text } from "@artsy/palette"
 import type { JobsApp_viewer$data } from "__generated__/JobsApp_viewer.graphql"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"

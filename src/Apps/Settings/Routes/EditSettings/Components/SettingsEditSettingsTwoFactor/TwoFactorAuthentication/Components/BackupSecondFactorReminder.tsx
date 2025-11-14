@@ -1,5 +1,5 @@
-import { SettingsEditSettingsTwoFactorBackupCodesActions } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/SettingsEditSettingsTwoFactorBackupCodesActions"
 import { type BorderBoxProps, Column, GridColumns, Text } from "@artsy/palette"
+import { SettingsEditSettingsTwoFactorBackupCodesActions } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/SettingsEditSettingsTwoFactorBackupCodesActions"
 import type * as React from "react"
 
 interface BackupSecondFactorReminderProps extends BorderBoxProps {

@@ -1,11 +1,11 @@
+import { OwnerType } from "@artsy/cohesion"
 import type { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes"
-import type { SavedSearchEntity } from "Components/SavedSearchAlert/types"
 import {
   getSearchCriteriaFromFilters,
   isDefaultValue,
   parseDefaultCriteria,
 } from "Components/SavedSearchAlert/Utils/savedSearchCriteria"
-import { OwnerType } from "@artsy/cohesion"
+import type { SavedSearchEntity } from "Components/SavedSearchAlert/types"
 
 const mockedSavedSearchEntity: SavedSearchEntity = {
   defaultCriteria: {

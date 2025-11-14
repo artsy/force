@@ -1,8 +1,10 @@
+import { act, screen, waitFor, within } from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
+import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import {
   orderMutationError,
   orderMutationSuccess,
 } from "Apps/Order2/Routes/Checkout/__tests__/utils"
-import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import {
   handleBackNavigation,
   preventHardReload,
@@ -10,8 +12,6 @@ import {
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import mockStripe from "DevTools/mockStripe"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { act, screen, waitFor, within } from "@testing-library/react"
-import userEvent from "@testing-library/user-event"
 import type { Order2CheckoutRouteTestQuery } from "__generated__/Order2CheckoutRouteTestQuery.graphql"
 import { useEffect } from "react"
 import { graphql } from "react-relay"
@@ -109,6 +109,7 @@ jest.mock(
     const MockExpressCheckout = jest.fn(() => {
       const { setExpressCheckoutLoaded, expressCheckoutPaymentMethods } =
         useCheckoutContext()
+      // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
       useEffect(() => {
         setExpressCheckoutLoaded([])
       }, [])

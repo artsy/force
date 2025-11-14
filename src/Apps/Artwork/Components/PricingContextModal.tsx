@@ -1,4 +1,3 @@
-import { RouterLink } from "System/Components/RouterLink"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import HelpIcon from "@artsy/icons/HelpIcon"
 import {
@@ -9,6 +8,7 @@ import {
   Text,
   Tooltip,
 } from "@artsy/palette"
+import { RouterLink } from "System/Components/RouterLink"
 import { useState } from "react"
 import { useTracking } from "react-tracking"
 

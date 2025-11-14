@@ -1,12 +1,12 @@
-import {
-  isMenuLinkData,
-  type LinkData,
-  type MenuData,
-} from "Components/NavBar/menuData"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import ChevronLeftIcon from "@artsy/icons/ChevronLeftIcon"
 import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
 import { Box, Flex, Separator, Text } from "@artsy/palette"
+import {
+  type LinkData,
+  type MenuData,
+  isMenuLinkData,
+} from "Components/NavBar/menuData"
 import type * as React from "react"
 import { useTracking } from "react-tracking"
 import {

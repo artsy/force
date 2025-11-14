@@ -1,3 +1,5 @@
+import { screen } from "@testing-library/react"
+import { StatusFragmentContainer } from "Apps/Order/Routes/Status"
 import {
   ArtaShippedWithNoTrackingIdNoTrackingUrl,
   ArtaShippedWithTrackingIdNoTrackingUrl,
@@ -8,10 +10,8 @@ import {
   OfferOrderWithShippingDetails,
   OfferOrderWithShippingDetailsAndNote,
 } from "Apps/__tests__/Fixtures/Order"
-import { StatusFragmentContainer } from "Apps/Order/Routes/Status"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { screen } from "@testing-library/react"
 import type { StatusQuery$rawResponse } from "__generated__/StatusQuery.graphql"
 import { graphql } from "react-relay"
 import { OrderAppTestPageRTL } from "./Utils/OrderAppTestPageRTL"

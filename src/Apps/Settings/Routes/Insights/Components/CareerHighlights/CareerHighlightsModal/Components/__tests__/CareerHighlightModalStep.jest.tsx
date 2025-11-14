@@ -1,6 +1,6 @@
+import { screen } from "@testing-library/react"
 import { CareerHighlightModalStep } from "Apps/Settings/Routes/Insights/Components/CareerHighlights/CareerHighlightsModal/Components/CareerHighlightModalStep"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { screen } from "@testing-library/react"
 import type { CareerHighlightModalStepTestQuery } from "__generated__/CareerHighlightModalStepTestQuery.graphql"
 import { graphql } from "react-relay"
 

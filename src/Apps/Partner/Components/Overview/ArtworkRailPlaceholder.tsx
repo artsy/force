@@ -1,5 +1,5 @@
-import { ShelfArtworkPlaceholder } from "Components/Artwork/ShelfArtwork"
 import { Box, type BoxProps, Flex, Shelf, SkeletonText } from "@artsy/palette"
+import { ShelfArtworkPlaceholder } from "Components/Artwork/ShelfArtwork"
 
 export interface ArtworksRailPlaceholderProps extends BoxProps {
   count: number

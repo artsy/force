@@ -1,8 +1,8 @@
-import { RouterLink } from "System/Components/RouterLink"
 import { Box, type BoxProps, Flex, Image, Text } from "@artsy/palette"
+import { RouterLink } from "System/Components/RouterLink"
 import type { AuctionLotInfo_saleArtwork$data } from "__generated__/AuctionLotInfo_saleArtwork.graphql"
 import type * as React from "react"
-import { createFragmentContainer, graphql, type RelayProp } from "react-relay"
+import { type RelayProp, createFragmentContainer, graphql } from "react-relay"
 
 interface AuctionLotInfoProps extends BoxProps {
   hideLotInfo?: boolean

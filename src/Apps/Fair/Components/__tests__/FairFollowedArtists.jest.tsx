@@ -7,9 +7,7 @@ jest.mock("react-tracking")
 jest.mock("Components/Artwork/ShelfArtwork", () => {
   return {
     ShelfArtworkFragmentContainer: ({ onClick }) => (
-      <button type="button" onClick={onClick}>
-        ShelfArtwork
-      </button>
+      <button onClick={onClick}>ShelfArtwork</button>
     ),
   }
 })

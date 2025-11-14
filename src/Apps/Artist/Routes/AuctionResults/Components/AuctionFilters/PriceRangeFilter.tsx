@@ -1,3 +1,4 @@
+import { Checkbox, Spacer } from "@artsy/palette"
 import {
   useAuctionResultsFilterContext,
   useCurrentlySelectedFiltersForAuctionResults,
@@ -5,12 +6,11 @@ import {
 import type { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { FilterExpandable } from "Components/ArtworkFilter/ArtworkFilters/FilterExpandable"
 import { aggregationsToHistogram } from "Components/ArtworkFilter/ArtworkFilters/PriceRangeFilter"
+import { PriceRange } from "Components/PriceRange/PriceRange"
 import {
   type CustomRange,
   DEFAULT_PRICE_RANGE,
 } from "Components/PriceRange/constants"
-import { PriceRange } from "Components/PriceRange/PriceRange"
-import { Checkbox, Spacer } from "@artsy/palette"
 import type { FC } from "react"
 
 interface PriceRangeFilterProps {

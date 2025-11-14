@@ -1,6 +1,6 @@
+import { Avatar, type BoxProps, Flex, Text } from "@artsy/palette"
 import { FollowGeneButtonQueryRenderer } from "Components/FollowButton/FollowGeneButton"
 import { RouterLink } from "System/Components/RouterLink"
-import { Avatar, type BoxProps, Flex, Text } from "@artsy/palette"
 import type { EntityHeaderGene_gene$data } from "__generated__/EntityHeaderGene_gene.graphql"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"

@@ -1,3 +1,8 @@
+import { ActionType } from "@artsy/cohesion"
+import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
+import EnvelopeIcon from "@artsy/icons/EnvelopeIcon"
+import PersonIcon from "@artsy/icons/PersonIcon"
+import { Dropdown, Flex, useDidMount } from "@artsy/palette"
 import { Z } from "Apps/Components/constants"
 import { ProgressiveOnboardingAlertFind } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertFind"
 import { ProgressiveOnboardingFollowFind } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowFind"
@@ -7,11 +12,6 @@ import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
 import { getENV } from "Utils/getENV"
-import { ActionType } from "@artsy/cohesion"
-import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
-import EnvelopeIcon from "@artsy/icons/EnvelopeIcon"
-import PersonIcon from "@artsy/icons/PersonIcon"
-import { Dropdown, Flex, useDidMount } from "@artsy/palette"
 import type {
   NavBarLoggedInActionsQuery,
   NavBarLoggedInActionsQuery$data,

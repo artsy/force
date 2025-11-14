@@ -1,6 +1,6 @@
+import { fireEvent, screen } from "@testing-library/react"
 import { HomeFeaturedMarketNewsFragmentContainer } from "Apps/Home/Components/HomeFeaturedMarketNews"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { fireEvent, screen } from "@testing-library/react"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 

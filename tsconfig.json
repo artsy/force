@@ -19,7 +19,7 @@
     "noErrorTruncation": true,
     "skipLibCheck": true,
     "sourceMap": true,
-    "target": "es2022",
+    "target": "es2019",
     "typeRoots": ["./src/Typings", "./node_modules/@types"],
     "types": ["node", "jest", "express", "google-maps"],
     "paths": {

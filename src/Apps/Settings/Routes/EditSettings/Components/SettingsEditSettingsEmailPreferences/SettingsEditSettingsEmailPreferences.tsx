@@ -1,5 +1,5 @@
-import { RouterLink } from "System/Components/RouterLink"
 import { Button, Text } from "@artsy/palette"
+import { RouterLink } from "System/Components/RouterLink"
 import type { FC } from "react"
 
 export const SettingsEditSettingsEmailPreferences: FC<

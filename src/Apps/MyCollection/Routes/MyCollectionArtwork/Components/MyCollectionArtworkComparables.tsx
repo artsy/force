@@ -1,7 +1,7 @@
+import { Column, Join, Spacer, Text } from "@artsy/palette"
 import { ArtistAuctionResultItemFragmentContainer } from "Apps/Artist/Routes/AuctionResults/ArtistAuctionResultItem"
 import { MetaTags } from "Components/MetaTags"
 import { extractNodes } from "Utils/extractNodes"
-import { Column, Join, Spacer, Text } from "@artsy/palette"
 import type { MyCollectionArtworkComparables_artwork$data } from "__generated__/MyCollectionArtworkComparables_artwork.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 

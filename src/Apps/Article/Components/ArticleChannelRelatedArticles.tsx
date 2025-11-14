@@ -1,11 +1,11 @@
+import { Shelf, Skeleton, SkeletonText, Text } from "@artsy/palette"
 import {
   CellArticleFragmentContainer,
   CellArticlePlaceholder,
 } from "Components/Cells/CellArticle"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { Shelf, Skeleton, SkeletonText, Text } from "@artsy/palette"
-import type { ArticleChannelRelatedArticles_article$data } from "__generated__/ArticleChannelRelatedArticles_article.graphql"
 import type { ArticleChannelRelatedArticlesQuery } from "__generated__/ArticleChannelRelatedArticlesQuery.graphql"
+import type { ArticleChannelRelatedArticles_article$data } from "__generated__/ArticleChannelRelatedArticles_article.graphql"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 

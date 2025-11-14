@@ -1,10 +1,3 @@
-import { formatErrorMessage } from "Components/AuthDialog/Utils/formatErrorMessage"
-import { useArtworkInquiryRequest } from "Components/Inquiry/Hooks/useArtworkInquiryRequest"
-import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
-import { logger } from "Components/Inquiry/util"
-import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
-import { login } from "Utils/auth"
-import { wait } from "Utils/wait"
 import {
   ActionType,
   AuthModalType,
@@ -23,8 +16,15 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import type * as React from "react"
+import { formatErrorMessage } from "Components/AuthDialog/Utils/formatErrorMessage"
+import { useArtworkInquiryRequest } from "Components/Inquiry/Hooks/useArtworkInquiryRequest"
+import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
+import { logger } from "Components/Inquiry/util"
+import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
+import { login } from "Utils/auth"
+import { wait } from "Utils/wait"
 import { useState } from "react"
+import type * as React from "react"
 import { useTracking } from "react-tracking"
 import { Screen, useInquiryAccountContext } from "./InquiryAccount"
 

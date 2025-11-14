@@ -1,4 +1,4 @@
-// biome-ignore lint/style/noRestrictedImports: Client context initialization
+// eslint-disable-next-line no-restricted-imports
 import { data as sd } from "sharify"
 
 export interface ClientContext {

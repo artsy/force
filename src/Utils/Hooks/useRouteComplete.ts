@@ -6,9 +6,7 @@ import { useEffect } from "react"
  */
 export const useRouteComplete = ({
   onComplete,
-}: {
-  onComplete?(): void
-} = {}) => {
+}: { onComplete?(): void } = {}) => {
   const { match } = useRouter()
 
   const isFetching = !match.elements

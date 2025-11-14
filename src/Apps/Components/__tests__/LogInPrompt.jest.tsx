@@ -1,6 +1,6 @@
+import { type AuthContextModule, ContextModule } from "@artsy/cohesion"
 import { LogInPrompt } from "Apps/Components/LogInPrompt"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { type AuthContextModule, ContextModule } from "@artsy/cohesion"
 import { render, screen } from "@testing-library/react"
 
 jest.mock("System/Hooks/useSystemContext", () => ({

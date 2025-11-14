@@ -1,16 +1,16 @@
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import { fireEvent, screen, waitFor } from "@testing-library/react"
+import { Toasts, ToastsProvider } from "@artsy/palette"
 import { RequestConditionReportFragmentContainer } from "Apps/Artwork/Components/ArtworkDetails/RequestConditionReport"
 import { useAuthDialog } from "Components/AuthDialog"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { Toasts, ToastsProvider } from "@artsy/palette"
-import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import {
-  createMockEnvironment,
   type MockEnvironment,
   MockPayloadGenerator,
+  createMockEnvironment,
 } from "relay-test-utils"
 
 jest.unmock("react-relay")

@@ -3,12 +3,12 @@ export const getViewportDimensions = () => {
   let height: number
   try {
     width = window.innerWidth
-  } catch (_e) {
+  } catch (e) {
     width = 0
   }
   try {
     height = window.innerHeight
-  } catch (_e) {
+  } catch (e) {
     height = 0
   }
   return { width, height }

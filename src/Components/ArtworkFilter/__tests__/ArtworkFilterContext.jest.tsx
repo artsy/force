@@ -1,9 +1,10 @@
+import { render } from "@testing-library/react"
+import { act } from "@testing-library/react"
 import {
   ArtworkFilterContextProvider,
   initialArtworkFilterState,
   useArtworkFilterContext,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
-import { act, render } from "@testing-library/react"
 
 describe("ArtworkFilterContext", () => {
   let context: ReturnType<typeof useArtworkFilterContext>

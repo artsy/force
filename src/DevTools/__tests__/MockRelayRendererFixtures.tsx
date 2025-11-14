@@ -1,12 +1,12 @@
-import { SystemContextConsumer } from "System/Contexts/SystemContext"
-import { renderWithLoadProgress } from "System/Relay/renderWithLoadProgress"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { render } from "@testing-library/react"
+import { SystemContextConsumer } from "System/Contexts/SystemContext"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { renderWithLoadProgress } from "System/Relay/renderWithLoadProgress"
+import type { MockRelayRendererFixturesArtistQuery } from "__generated__/MockRelayRendererFixturesArtistQuery.graphql"
 /* eslint-disable jsx-a11y/alt-text */
 import type { MockRelayRendererFixtures_artist$data } from "__generated__/MockRelayRendererFixtures_artist.graphql"
 import type { MockRelayRendererFixtures_artwork$data } from "__generated__/MockRelayRendererFixtures_artwork.graphql"
 import type { MockRelayRendererFixtures_artworkMetadata$data } from "__generated__/MockRelayRendererFixtures_artworkMetadata.graphql"
-import type { MockRelayRendererFixturesArtistQuery } from "__generated__/MockRelayRendererFixturesArtistQuery.graphql"
 import cheerio from "cheerio"
 import { createFragmentContainer, graphql } from "react-relay"
 
@@ -26,7 +26,8 @@ const Metadata = createFragmentContainer(
 export const Artwork = createFragmentContainer(
   (props: { artwork: MockRelayRendererFixtures_artwork$data }) => (
     <div>
-      <img src={props?.artwork?.image?.url as string} alt="" />
+      {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
+      <img src={props.artwork.image.url} />
 
       <Metadata artworkMetadata={props.artwork} />
       {props.artwork.artist && (

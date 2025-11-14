@@ -1,9 +1,3 @@
-import { AuthorStructuredData } from "Apps/Articles/Components/AuthorStructuredData"
-import { ClientSuspense } from "Components/ClientSuspense"
-import { MetaTags } from "Components/MetaTags"
-import { TopContextBar } from "Components/TopContextBar"
-import { getAuthorPath } from "Utils/getAuthorPath"
-import { useScrollToOpenEditorialAuthModal } from "Utils/Hooks/useScrollToOpenEditorialAuthModal"
 import InstagramIcon from "@artsy/icons/InstagramIcon"
 import XIcon from "@artsy/icons/XIcon"
 import {
@@ -16,6 +10,12 @@ import {
   Text,
 } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
+import { AuthorStructuredData } from "Apps/Articles/Components/AuthorStructuredData"
+import { ClientSuspense } from "Components/ClientSuspense"
+import { MetaTags } from "Components/MetaTags"
+import { getAuthorPath } from "Utils/getAuthorPath"
+import { TopContextBar } from "Components/TopContextBar"
+import { useScrollToOpenEditorialAuthModal } from "Utils/Hooks/useScrollToOpenEditorialAuthModal"
 import type { AuthorApp_author$key } from "__generated__/AuthorApp_author.graphql"
 import type { FC } from "react"
 import { graphql, useFragment } from "react-relay"

@@ -1,6 +1,6 @@
+import { screen } from "@testing-library/react"
 import { PartnerOfferTimerItem } from "Apps/Order/Components/PartnerOfferTimerItem"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { screen } from "@testing-library/react"
 import { DateTime } from "luxon"
 import { graphql } from "react-relay"
 

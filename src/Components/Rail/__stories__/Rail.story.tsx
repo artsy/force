@@ -17,9 +17,7 @@ export const DefaultRail = () => {
         alert("clicking view all link")
       }}
       getItems={() => {
-        return ["hi", "how", "are", "you"].map((item, key) => (
-          <div key={key}>{item}</div>
-        ))
+        return ["hi", "how", "are", "you"].map(item => <div>{item}</div>)
       }}
     />
   )
@@ -38,9 +36,7 @@ export const LoadingRail = () => {
         alert("clicking view all link")
       }}
       getItems={() => {
-        return ["hi", "how", "are", "you"].map((item, index) => (
-          <div key={index}>{item}</div>
-        ))
+        return ["hi", "how", "are", "you"].map(item => <div>{item}</div>)
       }}
     />
   )

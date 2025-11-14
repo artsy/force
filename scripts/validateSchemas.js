@@ -26,7 +26,7 @@ const getBreakingChanges = async (metaphysicsEnv, metaphysicsVersion = 2) => {
     }
   )
   const metaphysicsSchemaSuffix = metaphysicsVersion === 2 ? "V2" : ""
-  const metaphysicsRef = metaphysicsEnv === "production" ? "release" : "staging"
+  const metaphysicsRef = metaphysicsEnv == "production" ? "release" : "staging"
   const metaphyicsSchema = await downloadMetaphysicsSchema(
     `https://raw.githubusercontent.com/artsy/metaphysics/${metaphysicsRef}/_schema${metaphysicsSchemaSuffix}.graphql`
   )

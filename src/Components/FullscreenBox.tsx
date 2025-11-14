@@ -1,5 +1,5 @@
-import { useFullscreenBox } from "Utils/Hooks/useFullscreenBox"
 import { Box, type BoxProps } from "@artsy/palette"
+import { useFullscreenBox } from "Utils/Hooks/useFullscreenBox"
 import type { FC } from "react"
 
 export interface FullscreenBoxProps extends BoxProps {

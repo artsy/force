@@ -1,5 +1,3 @@
-import { FACTS_AND_FIGURES } from "Utils/factsAndFigures"
-import { Media } from "Utils/Responsive"
 import {
   Box,
   Column,
@@ -11,8 +9,10 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import type * as React from "react"
+import { Media } from "Utils/Responsive"
+import { FACTS_AND_FIGURES } from "Utils/factsAndFigures"
 import type { ReactElement } from "react"
+import type * as React from "react"
 
 export const PriceDatabaseBenefits: React.FC<
   React.PropsWithChildren<unknown>

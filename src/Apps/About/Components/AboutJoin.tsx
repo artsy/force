@@ -1,6 +1,3 @@
-import { AppContainer } from "Apps/Components/AppContainer"
-import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
-import { cropped } from "Utils/resized"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import {
   Button,
@@ -11,6 +8,9 @@ import {
   Stack,
   Text,
 } from "@artsy/palette"
+import { AppContainer } from "Apps/Components/AppContainer"
+import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
+import { cropped } from "Utils/resized"
 import { useTracking } from "react-tracking"
 
 export const AboutJoin = () => {

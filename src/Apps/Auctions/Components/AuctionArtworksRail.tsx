@@ -1,3 +1,12 @@
+import {
+  ActionType,
+  type AuthContextModule,
+  type ClickedArtworkGroup,
+  type ContextModule,
+  OwnerType,
+  type PageOwnerType,
+} from "@artsy/cohesion"
+import { type BoxProps, Skeleton } from "@artsy/palette"
 import { tabTypeToContextModuleMap } from "Apps/Auctions/Utils/tabTypeToContextModuleMap"
 import {
   ShelfArtworkFragmentContainer,
@@ -9,17 +18,8 @@ import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { trackHelpers } from "Utils/cohesionHelpers"
 import { extractNodes } from "Utils/extractNodes"
-import {
-  ActionType,
-  type AuthContextModule,
-  type ClickedArtworkGroup,
-  type ContextModule,
-  OwnerType,
-  type PageOwnerType,
-} from "@artsy/cohesion"
-import { type BoxProps, Skeleton } from "@artsy/palette"
-import type { AuctionArtworksRail_sale$data } from "__generated__/AuctionArtworksRail_sale.graphql"
 import type { AuctionArtworksRailQuery } from "__generated__/AuctionArtworksRailQuery.graphql"
+import type { AuctionArtworksRail_sale$data } from "__generated__/AuctionArtworksRail_sale.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -38,7 +38,7 @@ interface AuctionArtworksRailProps extends BoxProps {
 
 export const AuctionArtworksRail: React.FC<
   React.PropsWithChildren<AuctionArtworksRailProps>
-> = ({ sale, tabType }) => {
+> = ({ sale, tabType, ...rest }) => {
   const { trackEvent } = useTracking()
   const { contextPageOwnerType } = useAnalyticsContext()
   const contextModule = tabTypeToContextModuleMap[tabType] as AuthContextModule

@@ -1,5 +1,5 @@
-import { CuritorialRailsTabBar } from "Apps/Auctions/Components/CuritorialRailsTabBar"
 import { render, screen } from "@testing-library/react"
+import { CuritorialRailsTabBar } from "Apps/Auctions/Components/CuritorialRailsTabBar"
 
 jest.unmock("react-relay")
 

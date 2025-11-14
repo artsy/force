@@ -1,13 +1,13 @@
 import { FilterSelect } from "@artsy/palette"
-import type {
-  FilterSelectChangeState,
-  Item,
-} from "@artsy/palette/dist/elements/FilterSelect/Components/FilterSelectContext"
 import { FilterExpandable } from "./FilterExpandable"
 import {
   type UseFilterSelectResultsProps,
   useFilterSelectResults,
 } from "./Utils/useFilterSelectResults"
+import type {
+  FilterSelectChangeState,
+  Item,
+} from "@artsy/palette/dist/elements/FilterSelect/Components/FilterSelectContext"
 
 interface ResultsFilterProps extends UseFilterSelectResultsProps {
   expanded?: boolean

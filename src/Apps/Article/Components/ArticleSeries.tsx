@@ -1,5 +1,3 @@
-import { ArticleShare } from "Components/ArticleShare"
-import { TopContextBar } from "Components/TopContextBar"
 import {
   Column,
   Flex,
@@ -10,6 +8,8 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
+import { ArticleShare } from "Components/ArticleShare"
+import { TopContextBar } from "Components/TopContextBar"
 import type { ArticleSeries_article$data } from "__generated__/ArticleSeries_article.graphql"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"

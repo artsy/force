@@ -1,6 +1,6 @@
-import { ArtworkRelatedArtistsFixture } from "Apps/__tests__/Fixtures/Artwork/ArtworkRelatedArtists.fixture"
-import { ArtworkRelatedArtists } from "Apps/Artwork/Components/ArtworkRelatedArtists"
 import { fireEvent, render } from "@testing-library/react"
+import { ArtworkRelatedArtists } from "Apps/Artwork/Components/ArtworkRelatedArtists"
+import { ArtworkRelatedArtistsFixture } from "Apps/__tests__/Fixtures/Artwork/ArtworkRelatedArtists.fixture"
 import { useTracking } from "react-tracking"
 
 jest.mock("react-tracking")

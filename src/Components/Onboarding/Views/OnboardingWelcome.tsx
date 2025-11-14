@@ -1,3 +1,4 @@
+import { Box, Button, Flex, Spacer, Text } from "@artsy/palette"
 import { OnboardingWelcomeAnimatedPanel } from "Components/Onboarding/Components/OnboardingWelcomeAnimatedPanel"
 import { useOnboardingContext } from "Components/Onboarding/Hooks/useOnboardingContext"
 import { useOnboardingFadeTransition } from "Components/Onboarding/Hooks/useOnboardingFadeTransition"
@@ -5,7 +6,6 @@ import { useOnboardingTracking } from "Components/Onboarding/Hooks/useOnboarding
 import { SplitLayout } from "Components/SplitLayout"
 import { RouterLink } from "System/Components/RouterLink"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { Box, Button, Flex, Spacer, Text } from "@artsy/palette"
 
 export const OnboardingWelcome = () => {
   const { user } = useSystemContext()
@@ -62,7 +62,7 @@ export const OnboardingWelcome = () => {
               variant="tertiary"
               mt={1}
               width="100%"
-              // @ts-expect-error
+              // @ts-ignore
               as={RouterLink}
               onClick={onClose}
               data-test="onboarding-skip-button"

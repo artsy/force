@@ -1,7 +1,7 @@
+import { screen } from "@testing-library/react"
 import { ArtistAppFragmentContainer } from "Apps/Artist/ArtistApp"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { findCurrentRoute } from "System/Router/Utils/routeUtils"
-import { screen } from "@testing-library/react"
 import type { ArtistAppTestQuery } from "__generated__/ArtistAppTestQuery.graphql"
 import { graphql } from "react-relay"
 

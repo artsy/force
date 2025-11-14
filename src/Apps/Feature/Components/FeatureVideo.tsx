@@ -1,5 +1,5 @@
-import { useCookieConsentManager } from "Components/CookieConsentManager/CookieConsentManagerContext"
 import { Clickable, ResponsiveBox, Text } from "@artsy/palette"
+import { useCookieConsentManager } from "Components/CookieConsentManager/CookieConsentManagerContext"
 import type { FeatureVideo_video$data } from "__generated__/FeatureVideo_video.graphql"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"

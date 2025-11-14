@@ -1,7 +1,9 @@
+/* eslint-disable no-restricted-imports */
 const serializers = require("../serializers")
 const { serialize, deserialize } = serializers
 
-// biome-ignore lint/style/noRestrictedImports: ignore
+import options from "Server/passport/lib/options"
+import passport from "passport"
 import request from "superagent"
 
 jest.mock("superagent")

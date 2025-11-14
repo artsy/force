@@ -3,15 +3,19 @@
   "vcs": { "enabled": false, "clientKind": "git", "useIgnoreFile": false },
   "files": {
     "ignoreUnknown": false,
-    "includes": [
-      "src/**/*",
-      "scripts/**/*",
-      "playwright/**/*",
-      "!**/src/__generated__/**/*"
-    ]
+    "includes": ["**", "!**/src/__generated__/**/*"]
   },
   "formatter": {
-    "enabled": false
+    "enabled": true,
+    "useEditorconfig": true,
+    "formatWithErrors": false,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineEnding": "lf",
+    "lineWidth": 80,
+    "attributePosition": "auto",
+    "bracketSpacing": true,
+    "includes": ["**", "!**/__generated__", "!**/hokusai/**/*.yml"]
   },
   "assist": { "actions": { "source": { "organizeImports": "on" } } },
   "linter": {
@@ -19,8 +23,7 @@
     "rules": {
       "recommended": true,
       "correctness": {
-        "noSwitchDeclarations": "off",
-        "useExhaustiveDependencies": "off"
+        "noSwitchDeclarations": "off"
       },
       "complexity": {
         "noBannedTypes": "off",
@@ -67,14 +70,23 @@
         "noArrayIndexKey": "off",
         "noAsyncPromiseExecutor": "off",
         "noExplicitAny": "off",
-        "noImplicitAnyLet": "off",
-        "noShadowRestrictedNames": "off",
-        "noGlobalIsNan": "off",
-        "noTsIgnore": "off",
-        "useIterableCallbackReturn": "off"
+        "noImplicitAnyLet": "off"
       }
     },
     "includes": ["**", "!**/src/__generated__/**/*"]
+  },
+  "javascript": {
+    "formatter": {
+      "jsxQuoteStyle": "double",
+      "quoteProperties": "asNeeded",
+      "trailingCommas": "es5",
+      "semicolons": "asNeeded",
+      "arrowParentheses": "asNeeded",
+      "bracketSameLine": false,
+      "quoteStyle": "double",
+      "attributePosition": "auto",
+      "bracketSpacing": true
+    }
   },
   "overrides": [
     { "includes": ["**/*.cy.js", "**/*.cy.ts"], "linter": { "rules": {} } },
@@ -96,12 +108,12 @@
         "**/System/FeatureFlags/useFlag.ts",
         "**/System/FeatureFlags/useVariant.ts"
       ],
-      "linter": {
-        "rules": {
-          "style": {
-            "noRestrictedImports": "off"
-          }
-        }
+      "linter": { 
+        "rules": { 
+          "style": { 
+            "noRestrictedImports": "off" 
+          } 
+        } 
       }
     }
   ]

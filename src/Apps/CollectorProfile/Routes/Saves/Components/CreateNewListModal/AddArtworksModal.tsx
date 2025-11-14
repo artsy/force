@@ -1,13 +1,13 @@
-import { useAddArtworksToCollection } from "Apps/CollectorProfile/Routes/Saves/Components/CreateNewListModal/useAddArtworksToCollection"
-import createLogger from "Utils/logger"
+import { Button, Flex, ModalDialog, Text, useToasts } from "@artsy/palette"
+import { type FC, useState } from "react"
 
 import {
   ActionType,
   type AddedArtworkToArtworkList,
   OwnerType,
 } from "@artsy/cohesion"
-import { Button, Flex, ModalDialog, Text, useToasts } from "@artsy/palette"
-import { type FC, useState } from "react"
+import { useAddArtworksToCollection } from "Apps/CollectorProfile/Routes/Saves/Components/CreateNewListModal/useAddArtworksToCollection"
+import createLogger from "Utils/logger"
 import { useTracking } from "react-tracking"
 import { AddArtworksModalContentQueryRender } from "./AddArtworksModalContent"
 import type { ArtworkList } from "./CreateNewListModal"

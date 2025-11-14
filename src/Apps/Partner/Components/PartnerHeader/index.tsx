@@ -1,9 +1,3 @@
-import { FollowButtonInlineCount } from "Components/FollowButton/Button"
-import { FollowProfileButtonQueryRenderer } from "Components/FollowButton/FollowProfileButton"
-import { ProgressiveOnboardingFollowPartner } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowPartner"
-import { RouterLink } from "System/Components/RouterLink"
-import { formatFollowerCount } from "Utils/formatFollowerCount"
-import { Jump } from "Utils/Hooks/useJump"
 import { ContextModule } from "@artsy/cohesion"
 import {
   Box,
@@ -15,6 +9,12 @@ import {
   Text,
 } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
+import { FollowButtonInlineCount } from "Components/FollowButton/Button"
+import { FollowProfileButtonQueryRenderer } from "Components/FollowButton/FollowProfileButton"
+import { ProgressiveOnboardingFollowPartner } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowPartner"
+import { RouterLink } from "System/Components/RouterLink"
+import { Jump } from "Utils/Hooks/useJump"
+import { formatFollowerCount } from "Utils/formatFollowerCount"
 import type { PartnerHeader_partner$data } from "__generated__/PartnerHeader_partner.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"

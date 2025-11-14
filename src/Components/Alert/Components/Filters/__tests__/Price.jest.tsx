@@ -1,9 +1,9 @@
+import { fireEvent, screen } from "@testing-library/react"
 import { AlertProvider } from "Components/Alert/AlertProvider"
 import { PriceQueryRenderer } from "Components/Alert/Components/Filters/Price"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { fireEvent, screen } from "@testing-library/react"
 
 jest.unmock("react-relay")
 

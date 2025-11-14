@@ -1,11 +1,11 @@
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import { Device } from "Utils/Hooks/useDeviceDetection"
 import {
   ActionType,
   type ClickedAppDownload,
   type ContextModule,
 } from "@artsy/cohesion"
 import { Link, type LinkProps } from "@artsy/palette"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { Device } from "Utils/Hooks/useDeviceDetection"
 import type * as React from "react"
 import { useTracking } from "react-tracking"
 

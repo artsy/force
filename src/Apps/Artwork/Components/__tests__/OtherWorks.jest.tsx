@@ -1,5 +1,5 @@
-import { OtherWorksFragmentContainer as OtherWorks } from "Apps/Artwork/Components/OtherWorks/index"
 import { render, screen } from "@testing-library/react"
+import { OtherWorksFragmentContainer as OtherWorks } from "Apps/Artwork/Components/OtherWorks/index"
 import { useTracking } from "react-tracking"
 
 jest.mock("react-tracking")

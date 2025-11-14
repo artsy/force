@@ -1,5 +1,5 @@
-import { WireTransferDetails } from "Apps/Order/Components/WireTransferDetails"
 import { render, screen } from "@testing-library/react"
+import { WireTransferDetails } from "Apps/Order/Components/WireTransferDetails"
 
 describe("WireTransferDetails", () => {
   it("renders a title", () => {

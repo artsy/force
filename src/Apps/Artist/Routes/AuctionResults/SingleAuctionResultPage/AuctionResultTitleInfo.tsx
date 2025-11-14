@@ -1,5 +1,5 @@
-import { RouterLink } from "System/Components/RouterLink"
 import { Box, Text } from "@artsy/palette"
+import { RouterLink } from "System/Components/RouterLink"
 import type { AuctionResultTitleInfo_auctionResult$key } from "__generated__/AuctionResultTitleInfo_auctionResult.graphql"
 import { graphql, useFragment } from "react-relay"
 
@@ -26,7 +26,7 @@ export const AuctionResultTitleInfo: React.FC<
       </Text>
       <Text as="h1" variant={["sm-display", "lg-display"]} mb={[0.5, 0]}>
         {title?.trim()}
-        {dateText && dateText.replace(/\s+/g, "").length > 0 && `, ${dateText}`}
+        {dateText && dateText.replace(/\s+/g, "").length > 0 && ", " + dateText}
       </Text>
       <Text variant="xs" color="mono60" mb={4}>
         {formattedSaleDate} • {organization}

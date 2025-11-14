@@ -1,15 +1,15 @@
-import {
-  DEFAULT_OPT_IN_PREFERENCES,
-  type DestinationId,
-} from "Components/CookieConsentManager/categories"
 import type {
   CategoryPreferences,
   Destination,
 } from "@segment/consent-manager/types/types"
 import {
-  createContext,
+  DEFAULT_OPT_IN_PREFERENCES,
+  type DestinationId,
+} from "Components/CookieConsentManager/categories"
+import {
   type FC,
   type ReactNode,
+  createContext,
   useContext,
   useState,
 } from "react"

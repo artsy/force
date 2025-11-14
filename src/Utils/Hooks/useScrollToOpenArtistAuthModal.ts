@@ -1,6 +1,6 @@
+import { ContextModule, Intent } from "@artsy/cohesion"
 import { useAuthDialog } from "Components/AuthDialog"
 import { getENV } from "Utils/getENV"
-import { ContextModule, Intent } from "@artsy/cohesion"
 import Cookies from "cookies-js"
 import { useEffect } from "react"
 

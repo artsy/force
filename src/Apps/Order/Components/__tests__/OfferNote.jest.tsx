@@ -1,8 +1,8 @@
+import { render, screen, fireEvent } from "@testing-library/react"
 import { OfferNote } from "Apps/Order/Components/OfferNote"
 import { useInquiry } from "Components/Inquiry/useInquiry"
 import { SystemContextProvider } from "System/Contexts/SystemContext"
 import type { ExtractProps } from "Utils/ExtractProps"
-import { fireEvent, render, screen } from "@testing-library/react"
 
 const simulateTyping = (text: string) => {
   const textArea = screen.getByRole("textbox")

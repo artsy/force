@@ -1,6 +1,6 @@
+import { Column, GridColumns, Stack, Text, useTheme } from "@artsy/palette"
 import { AboutSection } from "Apps/About/Components/AboutSection"
 import { RouterLink } from "System/Components/RouterLink"
-import { Column, GridColumns, Stack, Text, useTheme } from "@artsy/palette"
 
 export const AboutWhatWeDo = () => {
   return (
