@@ -18,17 +18,14 @@ export const useCompleteOfferData = (
   }
 
   const mostRecentOffer = mostRecentCreatedAt(orderData.offers)
-  const isComplete = !!(
-    mostRecentOffer?.amount?.minor && mostRecentOffer.amount.minor > 0
-  )
 
-  if (!isComplete) {
+  if (!mostRecentOffer?.amount?.minor || mostRecentOffer.amount.minor <= 0) {
     return null
   }
 
   return {
-    lastOfferAmount: mostRecentOffer?.amount?.display || "",
-    lastOfferNote: mostRecentOffer?.note || null,
+    lastOfferAmount: mostRecentOffer.amount?.display || "",
+    lastOfferNote: mostRecentOffer.note ?? null,
   }
 }
 

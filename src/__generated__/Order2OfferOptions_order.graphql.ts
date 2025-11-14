@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a1e0a1966cbca151ee0a0a6bc400284b>>
+ * @generated SignedSource<<2bc4d47b9f01bef40ba37d0995e9c345>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type Order2PriceRangeOfferForm_order$data = {
+export type Order2OfferOptions_order$data = {
   readonly currencyCode: string;
   readonly lineItems: ReadonlyArray<{
     readonly artworkOrEditionSet: {
@@ -27,34 +27,38 @@ export type Order2PriceRangeOfferForm_order$data = {
         // value in case none of the concrete values match.
         readonly __typename: "%other";
       } | null | undefined;
-      readonly price?: string | null | undefined;
+    } | null | undefined;
+    readonly listPrice: {
+      readonly __typename: "Money";
+      readonly major: number;
     } | null | undefined;
   } | null | undefined>;
-  readonly " $fragmentType": "Order2PriceRangeOfferForm_order";
+  readonly " $fragmentType": "Order2OfferOptions_order";
 };
-export type Order2PriceRangeOfferForm_order$key = {
-  readonly " $data"?: Order2PriceRangeOfferForm_order$data;
-  readonly " $fragmentSpreads": FragmentRefs<"Order2PriceRangeOfferForm_order">;
+export type Order2OfferOptions_order$key = {
+  readonly " $data"?: Order2OfferOptions_order$data;
+  readonly " $fragmentSpreads": FragmentRefs<"Order2OfferOptions_order">;
 };
 
 const node: ReaderFragment = (function(){
-var v0 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "major",
-    "storageKey": null
-  }
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "__typename",
+  "storageKey": null
+},
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "major",
+  "storageKey": null
+},
+v2 = [
+  (v1/*: any*/)
 ],
-v1 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "price",
-    "storageKey": null
-  },
+v3 = [
   {
     "alias": null,
     "args": null,
@@ -63,13 +67,7 @@ v1 = [
     "name": "listPrice",
     "plural": false,
     "selections": [
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "__typename",
-        "storageKey": null
-      },
+      (v0/*: any*/),
       {
         "kind": "InlineFragment",
         "selections": [
@@ -80,7 +78,7 @@ v1 = [
             "kind": "LinkedField",
             "name": "maxPrice",
             "plural": false,
-            "selections": (v0/*: any*/),
+            "selections": (v2/*: any*/),
             "storageKey": null
           },
           {
@@ -90,7 +88,7 @@ v1 = [
             "kind": "LinkedField",
             "name": "minPrice",
             "plural": false,
-            "selections": (v0/*: any*/),
+            "selections": (v2/*: any*/),
             "storageKey": null
           }
         ],
@@ -105,7 +103,7 @@ return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "Order2PriceRangeOfferForm_order",
+  "name": "Order2OfferOptions_order",
   "selections": [
     {
       "alias": null,
@@ -125,6 +123,19 @@ return {
         {
           "alias": null,
           "args": null,
+          "concreteType": "Money",
+          "kind": "LinkedField",
+          "name": "listPrice",
+          "plural": false,
+          "selections": [
+            (v0/*: any*/),
+            (v1/*: any*/)
+          ],
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
           "concreteType": null,
           "kind": "LinkedField",
           "name": "artworkOrEditionSet",
@@ -132,13 +143,13 @@ return {
           "selections": [
             {
               "kind": "InlineFragment",
-              "selections": (v1/*: any*/),
+              "selections": (v3/*: any*/),
               "type": "Artwork",
               "abstractKey": null
             },
             {
               "kind": "InlineFragment",
-              "selections": (v1/*: any*/),
+              "selections": (v3/*: any*/),
               "type": "EditionSet",
               "abstractKey": null
             }
@@ -154,6 +165,6 @@ return {
 };
 })();
 
-(node as any).hash = "8acf970b246994dd11a62a1fa862b8ea";
+(node as any).hash = "59fd4f4f14dc1b13d922a103182f7640";
 
 export default node;

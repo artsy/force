@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1fb2f7e609de90bad6d3a7246c8c3d2c>>
+ * @generated SignedSource<<0f3185992b661474a3221a3b3f41f600>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -56,7 +56,7 @@ export type Order2OfferStep_order$data = {
     readonly type: FulfillmentOptionTypeEnum;
   } | null | undefined;
   readonly source: OrderSourceEnum;
-  readonly " $fragmentSpreads": FragmentRefs<"Order2ExactPriceOfferForm_order" | "Order2PriceRangeOfferForm_order" | "useCompleteOfferData_order">;
+  readonly " $fragmentSpreads": FragmentRefs<"Order2OfferOptions_order" | "useCompleteOfferData_order">;
   readonly " $fragmentType": "Order2OfferStep_order";
 };
 export type Order2OfferStep_order$key = {
@@ -96,12 +96,7 @@ return {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "Order2ExactPriceOfferForm_order"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "Order2PriceRangeOfferForm_order"
+      "name": "Order2OfferOptions_order"
     },
     (v0/*: any*/),
     {
@@ -306,6 +301,6 @@ return {
 };
 })();
 
-(node as any).hash = "ffa9777d79f8de79c699ed4773d11f75";
+(node as any).hash = "f3896c4b735d494147f892114463d4ed";
 
 export default node;
