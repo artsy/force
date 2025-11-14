@@ -1,5 +1,5 @@
-import { Text } from "@artsy/palette"
 import { useRouter } from "System/Hooks/useRouter"
+import { Text } from "@artsy/palette"
 
 export const ConversationsSidebarEmpty = () => {
   const { match } = useRouter()

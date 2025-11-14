@@ -1,6 +1,6 @@
 import { AboutPartnerFragmentContainer } from "Apps/Partner/Components/Overview/AboutPartner"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { screen, fireEvent } from "@testing-library/react"
+import { fireEvent, screen } from "@testing-library/react"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 

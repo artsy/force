@@ -1,5 +1,4 @@
 import type Braze from "@braze/web-sdk"
-import React from "react"
 
 declare global {
   interface Document {

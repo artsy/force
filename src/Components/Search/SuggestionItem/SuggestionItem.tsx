@@ -1,5 +1,5 @@
-import { Box, Pill } from "@artsy/palette"
 import { QuickNavigationItem } from "Components/Search/SuggestionItem/QuickNavigationItem"
+import { Box, Pill } from "@artsy/palette"
 import type { FC } from "react"
 import { DefaultSuggestion } from "./DefaultSuggestion"
 import { SuggestionItemLink } from "./SuggestionItemLink"

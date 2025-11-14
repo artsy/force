@@ -1,9 +1,9 @@
 // NOTE: Eventually, we'll want to drop this down to 5s again, but that can't
 // take place until the backend work outlined in this JIRA ticket is complete:
 
+import { getENV } from "Utils/getENV"
 import { usePoll } from "Utils/Hooks/usePoll"
 import { useTabVisible } from "Utils/Hooks/useTabVisible"
-import { getENV } from "Utils/getENV"
 
 export const DEFAULT_POLLING_INTERVAL_TIME = 20000
 

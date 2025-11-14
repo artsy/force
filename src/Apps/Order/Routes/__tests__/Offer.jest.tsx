@@ -1,10 +1,3 @@
-import { screen } from "@testing-library/react"
-import { OfferFragmentContainer } from "Apps/Order/Routes/Offer"
-import {
-  initialOfferFailedAmountIsInvalid,
-  initialOfferFailedCannotOffer,
-  initialOfferSuccess,
-} from "Apps/Order/Routes/__fixtures__/MutationResults/initialOffer"
 import {
   UntouchedOfferOrder,
   UntouchedOfferOrderInPounds,
@@ -14,8 +7,15 @@ import {
   UntouchedOfferOrderSingleEditionSetNoPrice,
   UntouchedOfferOrderWithRange,
 } from "Apps/__tests__/Fixtures/Order"
+import {
+  initialOfferFailedAmountIsInvalid,
+  initialOfferFailedCannotOffer,
+  initialOfferSuccess,
+} from "Apps/Order/Routes/__fixtures__/MutationResults/initialOffer"
+import { OfferFragmentContainer } from "Apps/Order/Routes/Offer"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import { graphql } from "react-relay"
 import { OrderAppTestPageRTL } from "./Utils/OrderAppTestPageRTL"
 

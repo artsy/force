@@ -1,4 +1,3 @@
-import { Join, Spacer } from "@artsy/palette"
 import { MyBidsQueryRenderer } from "Apps/Auctions/Components/MyBids/MyBids"
 import { HomeArtworkRecommendationsRailQueryRenderer } from "Apps/Home/Components/HomeArtworkRecommendationsRail"
 import { HomeAuctionLotsTabBar } from "Apps/Home/Components/HomeAuctionLotsTabBar"
@@ -6,6 +5,7 @@ import { HomeNewWorksFromGalleriesYouFollowRailQueryRenderer } from "Apps/Home/C
 import { HomeRecommendedArtistsRailQueryRenderer } from "Apps/Home/Components/HomeRecommendedArtistsRail"
 import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
 import { FlashBannerQueryRenderer } from "Components/FlashBanner"
+import { Join, Spacer } from "@artsy/palette"
 import type { HomeApp_featuredEventsOrderedSet$data } from "__generated__/HomeApp_featuredEventsOrderedSet.graphql"
 import type { HomeApp_heroUnitsConnection$data } from "__generated__/HomeApp_heroUnitsConnection.graphql"
 import type * as React from "react"

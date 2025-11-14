@@ -1,23 +1,23 @@
-import { Box } from "@artsy/palette"
-import { Elements } from "@stripe/react-stripe-js"
-import { loadStripe } from "@stripe/stripe-js"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { StickyFooterWithInquiry } from "Apps/Order/Components/StickyFooter"
 import { ErrorPage } from "Components/ErrorPage"
 import { SalesforceWrapper } from "Components/SalesforceWrapper"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { findCurrentRoute } from "System/Router/Utils/routeUtils"
-import { Media } from "Utils/Responsive"
 import { exceedsChatSupportThreshold } from "Utils/exceedsChatSupportThreshold"
 import { extractNodes } from "Utils/extractNodes"
 import { getENV } from "Utils/getENV"
+import { Media } from "Utils/Responsive"
+import { Box } from "@artsy/palette"
+import { Elements } from "@stripe/react-stripe-js"
+import { loadStripe } from "@stripe/stripe-js"
 import type { OrderApp_order$data } from "__generated__/OrderApp_order.graphql"
 import type { RouterState } from "found"
 import { type FC, useEffect, useRef } from "react"
 import { Meta, Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
-// eslint-disable-next-line no-restricted-imports
+// biome-ignore lint/style/noRestrictedImports: Legacy state management with unstated
 import { Provider } from "unstated"
 import { ConnectedModalDialog } from "./Dialogs"
 import { OrderPaymentContextProvider } from "./Routes/Payment/PaymentContext/OrderPaymentContext"
@@ -45,7 +45,6 @@ const OrderApp: FC<React.PropsWithChildren<OrderAppProps>> = props => {
 
   const removeNavigationListenerRef = useRef<null | (() => void)>(null)
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (!removeNavigationListenerRef.current) {
       removeNavigationListenerRef.current =

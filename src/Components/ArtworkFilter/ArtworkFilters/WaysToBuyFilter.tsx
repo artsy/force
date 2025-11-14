@@ -1,4 +1,3 @@
-import { Checkbox, Flex } from "@artsy/palette"
 import {
   SelectedFiltersCountsLabels,
   useArtworkFilterContext,
@@ -6,6 +5,7 @@ import {
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import type { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes"
 import { useFilterLabelCountByKey } from "Components/ArtworkFilter/Utils/useFilterLabelCountByKey"
+import { Checkbox, Flex } from "@artsy/palette"
 import { entries, isEmpty } from "lodash"
 import type { FC } from "react"
 import { FilterExpandable } from "./FilterExpandable"

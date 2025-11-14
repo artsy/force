@@ -1,5 +1,5 @@
-import { Box, Image, Join, ResponsiveBox, Spacer, Text } from "@artsy/palette"
 import { resized } from "Utils/resized"
+import { Box, Image, Join, ResponsiveBox, Spacer, Text } from "@artsy/palette"
 import type { ViewingRoomSubsections_viewingRoom$data } from "__generated__/ViewingRoomSubsections_viewingRoom.graphql"
 import type React from "react"
 import { createFragmentContainer, graphql } from "react-relay"

@@ -1,13 +1,13 @@
 import {
-  type RenderOptions,
-  render as originalRender,
-  screen,
-} from "@testing-library/react"
-import {
   type ArtworkFilterContextProps,
   ArtworkFilterContextProvider,
   useArtworkFilterContext,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
+import {
+  render as originalRender,
+  type RenderOptions,
+  screen,
+} from "@testing-library/react"
 import type { PropsWithChildren, ReactElement } from "react"
 
 /**
@@ -123,7 +123,7 @@ const ClearAllButton: React.FC<React.PropsWithChildren<unknown>> = () => {
   const artworkFilterContext = useArtworkFilterContext()
 
   return (
-    <button onClick={() => artworkFilterContext.resetFilters()}>
+    <button type="button" onClick={() => artworkFilterContext.resetFilters()}>
       Clear all
     </button>
   )

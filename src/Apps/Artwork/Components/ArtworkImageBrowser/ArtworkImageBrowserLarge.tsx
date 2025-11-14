@@ -1,3 +1,9 @@
+import { ArtworkLightboxFragmentContainer } from "Apps/Artwork/Components/ArtworkLightbox"
+import { ArtworkVideoPlayerFragmentContainer } from "Apps/Artwork/Components/ArtworkVideoPlayer"
+import { DeepZoomFragmentContainer, useDeepZoom } from "Components/DeepZoom"
+import { isTouch } from "Utils/device"
+import { useDetectActivity } from "Utils/Hooks/useDetectActivity"
+import { useNextPrevious } from "Utils/Hooks/useNextPrevious"
 import ChevronLeftIcon from "@artsy/icons/ChevronLeftIcon"
 import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
 import {
@@ -8,12 +14,6 @@ import {
   VisuallyHidden,
 } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
-import { ArtworkLightboxFragmentContainer } from "Apps/Artwork/Components/ArtworkLightbox"
-import { ArtworkVideoPlayerFragmentContainer } from "Apps/Artwork/Components/ArtworkVideoPlayer"
-import { DeepZoomFragmentContainer, useDeepZoom } from "Components/DeepZoom"
-import { useDetectActivity } from "Utils/Hooks/useDetectActivity"
-import { useNextPrevious } from "Utils/Hooks/useNextPrevious"
-import { isTouch } from "Utils/device"
 import type { ArtworkImageBrowserLarge_artwork$data } from "__generated__/ArtworkImageBrowserLarge_artwork.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"

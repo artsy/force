@@ -1,6 +1,3 @@
-import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
-import { Box, Button, Flex, Join, Spacer } from "@artsy/palette"
-import type { Stripe, StripeElements } from "@stripe/stripe-js"
 import { AdditionalArtworkDetailsFragmentContainer as AdditionalArtworkDetails } from "Apps/Order/Components/AdditionalArtworkDetails"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
 import { BuyerGuarantee } from "Apps/Order/Components/BuyerGuarantee"
@@ -33,18 +30,21 @@ import {
   withSystemContext,
 } from "System/Contexts/SystemContext"
 import type { RouteProps } from "System/Router/Route"
-import { Media } from "Utils/Responsive"
 import { createStripeWrapper } from "Utils/createStripeWrapper"
 import { extractNodes } from "Utils/extractNodes"
 import { get } from "Utils/get"
 import createLogger from "Utils/logger"
+import { Media } from "Utils/Responsive"
+import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
+import { Box, Button, Flex, Join, Spacer } from "@artsy/palette"
+import type { Stripe, StripeElements } from "@stripe/stripe-js"
+import type { Review_order$data } from "__generated__/Review_order.graphql"
 import type { ReviewSubmitOfferOrderWithConversationMutation } from "__generated__/ReviewSubmitOfferOrderWithConversationMutation.graphql"
 import type { ReviewSubmitOrderMutation } from "__generated__/ReviewSubmitOrderMutation.graphql"
-import type { Review_order$data } from "__generated__/Review_order.graphql"
 import type { Router } from "found"
 
 import { type FC, useEffect, useState } from "react"
-import { type RelayProp, createFragmentContainer, graphql } from "react-relay"
+import { createFragmentContainer, graphql, type RelayProp } from "react-relay"
 import { useTracking } from "react-tracking"
 
 export interface ReviewProps extends SystemContextProps {
@@ -421,7 +421,7 @@ export const ReviewRoute: FC<React.PropsWithChildren<ReviewProps>> = props => {
         if (errorCode === "") {
           try {
             errorCode = error.toString()
-          } catch (e) {
+          } catch (_e) {
             // do nothing
           }
         }
@@ -539,7 +539,7 @@ export const ReviewRoute: FC<React.PropsWithChildren<ReviewProps>> = props => {
             </Flex>
             <Media greaterThan="xs">
               <ItemReview
-                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                // biome-ignore lint/suspicious/noNonNullAssertedOptionalChain: thing
                 lineItem={order?.lineItems?.edges?.[0]?.node!}
                 orderSource={order.source}
               />

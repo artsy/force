@@ -1,3 +1,7 @@
+import { useOrderTracking } from "Apps/Order/Hooks/useOrderTracking"
+import { CollapseDetails } from "Apps/Order/Routes/Shipping/Components/CollapseDetails"
+import { useShippingContext } from "Apps/Order/Routes/Shipping/Hooks/useShippingContext"
+import { extractNodes } from "Utils/extractNodes"
 import {
   BorderedRadio,
   Column,
@@ -7,10 +11,6 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { useOrderTracking } from "Apps/Order/Hooks/useOrderTracking"
-import { CollapseDetails } from "Apps/Order/Routes/Shipping/Components/CollapseDetails"
-import { useShippingContext } from "Apps/Order/Routes/Shipping/Hooks/useShippingContext"
-import { extractNodes } from "Utils/extractNodes"
 import type { ShippingQuotes_order$key } from "__generated__/ShippingQuotes_order.graphql"
 import type * as React from "react"
 import { useEffect } from "react"
@@ -191,7 +191,6 @@ const useAutoSelectBestShippingQuote = (
     }
   }, [
     bestArtsyShippingQuoteID,
-    shippingContext.orderData.selectedShippingQuoteID,
     shippingContext.state.stage,
     shippingContext.state.selectedShippingQuoteID,
     shippingContext.actions,

@@ -1,3 +1,5 @@
+import { QuickMultipleSelectAlertFilter } from "Components/Alert/Components/Filters/QuickMultipleSelectAlertFilter"
+import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import {
   Flex,
   Separator,
@@ -5,8 +7,6 @@ import {
   SkeletonBox,
   SkeletonText,
 } from "@artsy/palette"
-import { QuickMultipleSelectAlertFilter } from "Components/Alert/Components/Filters/QuickMultipleSelectAlertFilter"
-import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import type { ArtistSeriesOptionsQuery } from "__generated__/ArtistSeriesOptionsQuery.graphql"
 import { compact, times } from "lodash"
 import { type FC, Suspense } from "react"

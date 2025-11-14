@@ -1,9 +1,14 @@
 import { Form, Formik, type FormikHelpers as FormikActions } from "formik"
 import { isEmpty } from "lodash"
-import { Component } from "react"
 import * as React from "react"
-import type { StepElement, StepProps, WizardRenderProps } from "./types"
-import type { FormValues, WizardContext } from "./types"
+import { Component } from "react"
+import type {
+  FormValues,
+  StepElement,
+  StepProps,
+  WizardContext,
+  WizardRenderProps,
+} from "./types"
 
 interface WizardProps {
   onComplete?: (
@@ -113,7 +118,7 @@ export class Wizard extends React.Component<
     }))
   }
 
-  previous = (e: React.FormEvent<any> | null, values) => {
+  previous = (e: React.FormEvent<any> | null, _values) => {
     e && e.preventDefault()
     this.setState(state => ({
       currentStepIndex: Math.max(state.currentStepIndex - 1, 0),

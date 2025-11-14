@@ -1,4 +1,3 @@
-import { useToasts } from "@artsy/palette"
 import {
   type BiddingStatus,
   errorMessageForBidding,
@@ -13,6 +12,7 @@ import { useBidderPosition } from "Apps/Auction/Queries/useBidderPosition"
 import { useCreateBidderPosition } from "Apps/Auction/Queries/useCreateBidderPosition"
 import { useRouter } from "System/Hooks/useRouter"
 import createLogger from "Utils/logger"
+import { useToasts } from "@artsy/palette"
 import type { AuctionBidRoute_artwork$data } from "__generated__/AuctionBidRoute_artwork.graphql"
 import type { AuctionBidRoute_me$data } from "__generated__/AuctionBidRoute_me.graphql"
 import type { AuctionBidRoute_sale$data } from "__generated__/AuctionBidRoute_sale.graphql"
@@ -106,7 +106,7 @@ export const useSubmitBid = ({
       throw error
     }
 
-    const result = bidderPositionResponse?.createBidderPosition?.result!
+    const result = bidderPositionResponse?.createBidderPosition?.result
 
     tracking.maybeTrackNewBidder({
       bidderID,

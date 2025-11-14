@@ -1,6 +1,6 @@
-import { Text } from "@artsy/palette"
 import { EventTiming } from "Components/EventTiming"
 import { useCurrentTime } from "Utils/Hooks/useCurrentTime"
+import { Text } from "@artsy/palette"
 import type { FairTiming_fair$data } from "__generated__/FairTiming_fair.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"

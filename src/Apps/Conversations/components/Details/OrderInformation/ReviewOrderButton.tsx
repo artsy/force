@@ -1,6 +1,6 @@
-import { Button, type ButtonProps } from "@artsy/palette"
 import type { CounterOfferState } from "Apps/Conversations/components/Details/OrderState/ConversationOrderState"
 import { RouterLink } from "System/Components/RouterLink"
+import { Button, type ButtonProps } from "@artsy/palette"
 import type { ReviewOrderButton_order$key } from "__generated__/ReviewOrderButton_order.graphql"
 import { graphql, useFragment } from "react-relay"
 import { useTracking } from "react-tracking"

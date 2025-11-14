@@ -3,7 +3,7 @@ import type {
   CreateSmsSecondFactorMutation,
   CreateSmsSecondFactorMutation$data,
 } from "__generated__/CreateSmsSecondFactorMutation.graphql"
-import { type Environment, commitMutation, graphql } from "react-relay"
+import { commitMutation, type Environment, graphql } from "react-relay"
 
 export const CreateSmsSecondFactor = (
   environment: Environment,

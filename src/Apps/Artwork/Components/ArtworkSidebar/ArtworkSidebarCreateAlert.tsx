@@ -1,8 +1,7 @@
+import { CreateAlertButton } from "Components/Alert/Components/CreateAlertButton"
 import { Flex, Separator, Text } from "@artsy/palette"
 import type { ArtworkSidebarCreateAlert_artwork$data } from "__generated__/ArtworkSidebarCreateAlert_artwork.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
-
-import { CreateAlertButton } from "Components/Alert/Components/CreateAlertButton"
 
 interface ArtworkSidebarCreateAlertProps {
   artwork: ArtworkSidebarCreateAlert_artwork$data

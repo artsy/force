@@ -1,11 +1,11 @@
-import { Join, Skeleton, Spacer } from "@artsy/palette"
 import {
   ArtQuizRecommendedArtistFragmentContainer,
   ArtQuizRecommendedArtistPlaceholder,
 } from "Apps/ArtQuiz/Components/ArtQuizRecommendedArtist"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import type { ArtQuizRecommendedArtistsQuery } from "__generated__/ArtQuizRecommendedArtistsQuery.graphql"
+import { Join, Skeleton, Spacer } from "@artsy/palette"
 import type { ArtQuizRecommendedArtists_me$data } from "__generated__/ArtQuizRecommendedArtists_me.graphql"
+import type { ArtQuizRecommendedArtistsQuery } from "__generated__/ArtQuizRecommendedArtistsQuery.graphql"
 import { compact, uniq } from "lodash"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"

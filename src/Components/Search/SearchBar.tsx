@@ -1,6 +1,6 @@
-import { Box } from "@artsy/palette"
 import { useRouter } from "System/Hooks/useRouter"
 import { Media } from "Utils/Responsive"
+import { Box } from "@artsy/palette"
 import type { FC } from "react"
 import { MobileSearchBarQueryRenderer } from "./Mobile/MobileSearchBar"
 import { SearchBarInput } from "./SearchBarInput"

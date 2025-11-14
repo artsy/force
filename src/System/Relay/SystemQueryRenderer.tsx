@@ -4,9 +4,9 @@ import { useIntersectionObserver } from "Utils/Hooks/useIntersectionObserver"
 import createLogger from "Utils/logger"
 import type * as React from "react"
 import {
+  cloneElement,
   type JSXElementConstructor,
   type ReactElement,
-  cloneElement,
   useState,
 } from "react"
 import { isForwardRef } from "react-is"

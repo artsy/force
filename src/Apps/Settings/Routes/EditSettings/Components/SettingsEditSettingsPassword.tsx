@@ -1,3 +1,7 @@
+import { useUpdateSettingsPassword } from "Apps/Settings/Routes/EditSettings/useUpdateSettingsPassword"
+import { passwordValidator } from "Components/AuthDialog/Views/AuthDialogSignUp"
+import { logout } from "Utils/auth"
+import { useMode } from "Utils/Hooks/useMode"
 import {
   Button,
   Flex,
@@ -8,10 +12,6 @@ import {
   Text,
   useToasts,
 } from "@artsy/palette"
-import { useUpdateSettingsPassword } from "Apps/Settings/Routes/EditSettings/useUpdateSettingsPassword"
-import { passwordValidator } from "Components/AuthDialog/Views/AuthDialogSignUp"
-import { useMode } from "Utils/Hooks/useMode"
-import { logout } from "Utils/auth"
 import type { SettingsEditSettingsPassword_me$data } from "__generated__/SettingsEditSettingsPassword_me.graphql"
 import { Form, Formik } from "formik"
 import type { FC } from "react"

@@ -1,8 +1,8 @@
-import { Flex } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { AppToasts } from "Apps/Components/AppToasts"
 import type { BaseLayoutProps } from "Apps/Components/Layouts"
 import { LayoutNav } from "Apps/Components/Layouts/Components/LayoutNav"
+import { Flex } from "@artsy/palette"
 import type { FC } from "react"
 
 export const LayoutOrderDetails: FC<

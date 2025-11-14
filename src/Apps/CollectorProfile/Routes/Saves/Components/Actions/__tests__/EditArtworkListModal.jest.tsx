@@ -1,10 +1,10 @@
-import { fireEvent, screen, waitFor } from "@testing-library/react"
 import {
   type EditArtworkListEntity,
   EditArtworkListModal,
 } from "Apps/CollectorProfile/Routes/Saves/Components/Actions/EditArtworkListModal"
 import { render } from "DevTools/renderWithMockBoot"
 import { useMutation } from "Utils/Hooks/useMutation"
+import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { useTracking } from "react-tracking"
 
 jest.mock("Utils/Hooks/useMutation")

@@ -2,7 +2,6 @@ import { ArtworkGridContainer } from "Components/ArtworkGrid/ArtworkGrid"
 import type { MyCollectionArtworkGrid_artworks$data } from "__generated__/MyCollectionArtworkGrid_artworks.graphql"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { _FragmentRefs } from "relay-runtime"
 
 interface MyCollectionArtworkGridProps {
   artworks: MyCollectionArtworkGrid_artworks$data

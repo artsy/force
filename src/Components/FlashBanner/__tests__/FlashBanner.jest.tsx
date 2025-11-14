@@ -1,7 +1,7 @@
-import { act, fireEvent, screen } from "@testing-library/react"
 import { FlashBannerFragmentContainer } from "Components/FlashBanner"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useRouter } from "System/Hooks/useRouter"
+import { act, fireEvent, screen } from "@testing-library/react"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 

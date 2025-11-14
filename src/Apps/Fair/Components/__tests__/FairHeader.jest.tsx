@@ -1,6 +1,6 @@
 import { FairHeaderFragmentContainer } from "Apps/Fair/Components/FairHeader"
-import { screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import type { FairHeaderTestQuery } from "__generated__/FairHeaderTestQuery.graphql"
 import { graphql } from "react-relay"
 

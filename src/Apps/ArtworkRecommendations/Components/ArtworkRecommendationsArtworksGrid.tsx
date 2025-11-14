@@ -1,9 +1,9 @@
-import { Text } from "@artsy/palette"
 import ArtworkGrid, {
-  ArtworkGridLayout,
+  type ArtworkGridLayout,
 } from "Components/ArtworkGrid/ArtworkGrid"
 import { InfiniteScrollSentinel } from "Components/InfiniteScrollSentinel"
 import { useRouter } from "System/Hooks/useRouter"
+import { Text } from "@artsy/palette"
 import type { ArtworkRecommendationsArtworksGrid_me$key } from "__generated__/ArtworkRecommendationsArtworksGrid_me.graphql"
 import type { FC } from "react"
 import { graphql, usePaginationFragment } from "react-relay"

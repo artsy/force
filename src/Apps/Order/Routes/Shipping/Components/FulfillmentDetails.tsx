@@ -5,11 +5,11 @@ import { useShippingContext } from "Apps/Order/Routes/Shipping/Hooks/useShipping
 import { useUserAddressUpdates } from "Apps/Order/Routes/Shipping/Hooks/useUserAddressUpdates"
 import type { ShippingContextProps } from "Apps/Order/Routes/Shipping/ShippingContext"
 import {
+  addressWithFallbackValues,
   FulfillmentType,
   type FulfillmentValues,
-  type ShipValues,
-  addressWithFallbackValues,
   getInitialShippingValues,
+  type ShipValues,
 } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
 import { useFlag } from "System/FeatureFlags/useFlag"
 import { useRouter } from "System/Hooks/useRouter"
@@ -45,8 +45,7 @@ export const FulfillmentDetails: FC<
   const [verifyAddressNow, setVerifyAddressNow] = useState<boolean>(false)
 
   const hasSavedAddresses = shippingContext.meData.addressList.length !== 0
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const firstArtwork = extractNodes(orderData.lineItems)[0]!.artwork!
+  const firstArtwork = extractNodes(orderData.lineItems)[0]!.artwork
 
   const initialValues = getInitialValues(
     shippingContext.meData,
@@ -54,7 +53,7 @@ export const FulfillmentDetails: FC<
   )
 
   const availableFulfillmentTypes: FulfillmentType[] =
-    firstArtwork.pickupAvailable
+    firstArtwork?.pickupAvailable
       ? [FulfillmentType.PICKUP, FulfillmentType.SHIP]
       : [FulfillmentType.SHIP]
 
@@ -67,7 +66,6 @@ export const FulfillmentDetails: FC<
    * the rest of its life and reset values
    */
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     const formLoaded =
       typeof shippingContext.state.fulfillmentDetailsFormikContext.setValues ===
@@ -96,7 +94,6 @@ export const FulfillmentDetails: FC<
    * require artsy shipping
    */
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     const { savedFulfillmentDetails } = shippingContext.orderData
 
@@ -236,7 +233,7 @@ export const FulfillmentDetails: FC<
           "No request for saveFulfillmentDetails - this should not happen",
         )
       }
-    } catch (error) {
+    } catch (_error) {
       orderTracking.errorMessageViewed({
         error_code: null,
         title: "An error occurred",

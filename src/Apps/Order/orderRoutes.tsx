@@ -1,9 +1,9 @@
-import loadable from "@loadable/component"
 import { getRedirect } from "Apps/Order/getRedirect"
 import { redirects } from "Apps/Order/redirects"
 import { ErrorPage } from "Components/ErrorPage"
 import type { SystemContextProps } from "System/Contexts/SystemContext"
 import type { RouteProps } from "System/Router/Route"
+import loadable from "@loadable/component"
 import { Redirect, RedirectException } from "found"
 import { graphql } from "react-relay"
 
@@ -130,7 +130,7 @@ export const orderRoutes: RouteProps[] = [
         if (order) {
           const redirect = getRedirect(
             redirects,
-            match.location.pathname.replace(/order(s)\/[^\/]+/, ""),
+            match.location.pathname.replace(/order(s)\/[^/]+/, ""),
             { order, featureFlags },
           )
 

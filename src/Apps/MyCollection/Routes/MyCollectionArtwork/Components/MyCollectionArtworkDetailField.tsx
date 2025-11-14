@@ -1,5 +1,4 @@
 import { Box, ReadMore, Text } from "@artsy/palette"
-import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 
 const EMPTY_VALUE = "----"
 export const MyCollectionArtworkDetailField = ({

@@ -11,9 +11,6 @@ describe("HTTP strict transport security middleware", () => {
 
   beforeEach(() => {
     testContext = {}
-  })
-
-  beforeEach(() => {
     testContext.req = {}
     testContext.res = {
       headers: [],

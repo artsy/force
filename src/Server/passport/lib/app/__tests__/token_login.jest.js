@@ -1,8 +1,7 @@
-/* eslint-disable no-restricted-imports */
 const tokenLogin = require("../token_login")
 const { headerLogin, trustTokenLogin } = tokenLogin
 
-import options from "Server/passport/lib/options"
+// biome-ignore lint/style/noRestrictedImports: ignore
 import request from "superagent"
 
 jest.mock("superagent")
@@ -67,7 +66,7 @@ describe("token login middleware", () => {
 a url sans trust_token param`, () => {
       const req = {
         connection: { remoteAddress: "99.99.99.99" },
-        login: jest.fn((user, cb) => cb(null)),
+        login: jest.fn((_user, cb) => cb(null)),
         query: { trust_token: "xxxx" },
         url: "/target-path?trust_token=xxxx",
       }
@@ -86,7 +85,7 @@ a url sans trust_token param`, () => {
     it("preserves any other query string params", () => {
       const req = {
         connection: { remoteAddress: "99.99.99.99" },
-        login: jest.fn((user, cb) => cb(null)),
+        login: jest.fn((_user, cb) => cb(null)),
         query: { trust_token: "xxxx", foo: "bar", bar: "baz" },
         url: "/target-path?foo=bar&trust_token=xxxx&bar=baz",
       }

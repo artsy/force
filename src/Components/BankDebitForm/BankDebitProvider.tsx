@@ -1,13 +1,13 @@
+import { useOrderPaymentContext } from "Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext"
+import { LoadingArea } from "Components/LoadingArea"
+import { getENV } from "Utils/getENV"
 import { Box, Message, Spacer, Text, useTheme } from "@artsy/palette"
 import { Elements } from "@stripe/react-stripe-js"
 import {
   type Appearance,
-  type StripeError,
   loadStripe,
+  type StripeError,
 } from "@stripe/stripe-js"
-import { useOrderPaymentContext } from "Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext"
-import { LoadingArea } from "Components/LoadingArea"
-import { getENV } from "Utils/getENV"
 import type { BankAccountPicker_order$data } from "__generated__/BankAccountPicker_order.graphql"
 import type { Payment_order$data } from "__generated__/Payment_order.graphql"
 import { camelCase, upperFirst } from "lodash"
@@ -52,7 +52,6 @@ export const BankDebitProvider: FC<React.PropsWithChildren<Props>> = ({
   const [bankDebitSetupError, setBankDebitSetupError] = useState(false)
   const { submitMutation } = CreateBankDebitSetupForOrder()
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     const fetchData = async () => {
       try {

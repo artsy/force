@@ -1,3 +1,4 @@
+import { useNextPrevious } from "Utils/Hooks/useNextPrevious"
 import {
   Box,
   Carousel,
@@ -12,7 +13,6 @@ import {
   ShelfPrevious,
   Spacer,
 } from "@artsy/palette"
-import { useNextPrevious } from "Utils/Hooks/useNextPrevious"
 import {
   Children,
   type FC,
@@ -33,7 +33,7 @@ interface HeroCarouselLargeProps {
 
 export const HeroCarouselLarge: React.FC<
   React.PropsWithChildren<HeroCarouselLargeProps>
-> = ({ children, fullBleed = true, progressbarVariant, onChange }) => {
+> = ({ children, fullBleed = true, progressbarVariant }) => {
   const length = Children.count(children)
 
   const {
@@ -56,17 +56,17 @@ export const HeroCarouselLarge: React.FC<
     )
 
     return stopAutoPlay
-  }, [setCursor])
+  }, [setCursor, stopAutoPlay])
 
   const handleNext = useCallback(() => {
     onNext()
     stopAutoPlay()
-  }, [onNext])
+  }, [onNext, stopAutoPlay])
 
   const handlePrev = useCallback(() => {
     onPrev()
     stopAutoPlay()
-  }, [onPrev])
+  }, [onPrev, stopAutoPlay])
 
   const handleClick = (index: number) => {
     setCursor(index)

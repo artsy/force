@@ -1,11 +1,4 @@
 import {
-  ActionType,
-  type ClickedGalleryGroup,
-  ContextModule,
-  OwnerType,
-} from "@artsy/cohesion"
-import { Skeleton } from "@artsy/palette"
-import {
   CellPartnerFragmentContainer,
   CellPartnerPlaceholder,
 } from "Components/Cells/CellPartner"
@@ -13,8 +6,15 @@ import { Rail } from "Components/Rail/Rail"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
-import type { HomeFeaturedGalleriesRailQuery } from "__generated__/HomeFeaturedGalleriesRailQuery.graphql"
+import {
+  ActionType,
+  type ClickedGalleryGroup,
+  ContextModule,
+  OwnerType,
+} from "@artsy/cohesion"
+import { Skeleton } from "@artsy/palette"
 import type { HomeFeaturedGalleriesRail_orderedSet$data } from "__generated__/HomeFeaturedGalleriesRail_orderedSet.graphql"
+import type { HomeFeaturedGalleriesRailQuery } from "__generated__/HomeFeaturedGalleriesRailQuery.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"

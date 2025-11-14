@@ -1,5 +1,5 @@
-import { Box, Flex, FullBleed, HTML, Image, Text } from "@artsy/palette"
 import { useFullBleedHeaderHeight } from "Components/FullBleedHeader/FullBleedHeader"
+import { Box, Flex, FullBleed, HTML, Image, Text } from "@artsy/palette"
 import type { FeatureHeaderDefault_feature$data } from "__generated__/FeatureHeaderDefault_feature.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"

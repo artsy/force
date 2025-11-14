@@ -1,6 +1,6 @@
+import { RouterLink, type RouterLinkProps } from "System/Components/RouterLink"
 import { Box, type BoxProps, Flex, Text } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
-import { RouterLink, type RouterLinkProps } from "System/Components/RouterLink"
 import type * as React from "react"
 import styled from "styled-components"
 

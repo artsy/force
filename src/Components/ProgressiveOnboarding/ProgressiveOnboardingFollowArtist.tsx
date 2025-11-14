@@ -1,5 +1,3 @@
-import { useDismissibleContext } from "@artsy/dismissible"
-import { Text } from "@artsy/palette"
 import { ProgressiveOnboardingPopover } from "Components/ProgressiveOnboarding/ProgressiveOnboardingPopover"
 import {
   PROGRESSIVE_ONBOARDING,
@@ -12,6 +10,8 @@ import {
 } from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import { useDismissibleContext } from "@artsy/dismissible"
+import { Text } from "@artsy/palette"
 import { pathToRegexp } from "path-to-regexp"
 import { type FC, useCallback, useEffect } from "react"
 

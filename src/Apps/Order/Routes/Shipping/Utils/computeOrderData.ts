@@ -1,10 +1,10 @@
 import type { ShippingContextProps } from "Apps/Order/Routes/Shipping/ShippingContext"
 import {
+  addressWithFallbackValues,
   FulfillmentType,
+  matchAddressFields,
   type PickupValues,
   type ShippingAddressFormValues,
-  addressWithFallbackValues,
-  matchAddressFields,
 } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
 import { ALL_COUNTRY_CODES, EU_COUNTRY_CODES } from "Components/CountrySelect"
 import { extractNodes } from "Utils/extractNodes"
@@ -48,19 +48,11 @@ export const computeOrderData = (
   order: ShippingContext_order$data,
   meData: ShippingContextProps["meData"],
 ): ComputedOrderData => {
-  // FIXME: Non-null assertion
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const firstLineItem = extractNodes(order.lineItems)[0]!
-  // FIXME: Non-null assertion
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const firstArtwork = firstLineItem.artwork!
-  // FIXME: Non-null assertion
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const artworkCountry = firstArtwork?.shippingCountry!
+  const artworkCountry = firstArtwork?.shippingCountry
   const savedFulfillmentDetails = getSavedFulfillmentDetails(order, meData)
-  // FIXME: Non-null assertion
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const shipsFrom = firstArtwork.shippingCountry!
+  const shipsFrom = firstArtwork.shippingCountry
   const domesticOnly = !!firstArtwork.onlyShipsDomestically
   const euOrigin = !!firstArtwork.euShippingOrigin
   // The first artwork in the order has fixed shipping cost upfront
@@ -84,7 +76,7 @@ export const computeOrderData = (
     const isDomesticShipping =
       (shipToCountry && shipToCountry === artworkCountry) ||
       (EU_COUNTRY_CODES.includes(shipToCountry) &&
-        EU_COUNTRY_CODES.includes(artworkCountry))
+        EU_COUNTRY_CODES.includes(artworkCountry as string))
 
     const requiresArtsyShipping =
       (isDomesticShipping && firstArtwork?.processWithArtsyShippingDomestic) ||
@@ -108,9 +100,9 @@ export const computeOrderData = (
     },
     shippingQuotes,
     availableShippingCountries,
-    lockShippingCountryTo,
+    lockShippingCountryTo: lockShippingCountryTo as string,
     requiresArtsyShippingTo,
-    shipsFrom,
+    shipsFrom: shipsFrom as string,
     isFixedShipping,
   }
 }

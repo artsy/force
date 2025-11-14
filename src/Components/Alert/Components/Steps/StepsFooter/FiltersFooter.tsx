@@ -1,5 +1,5 @@
-import { Button } from "@artsy/palette/dist/elements/Button"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
+import { Button } from "@artsy/palette/dist/elements/Button"
 import type { FC } from "react"
 
 export const FiltersFooter: FC<React.PropsWithChildren<unknown>> = () => {

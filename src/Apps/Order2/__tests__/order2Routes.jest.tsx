@@ -1,7 +1,7 @@
-import { Resolver } from "found-relay"
-import { getFarceResult } from "found/server"
 import type { FarceRedirectResult } from "found/server"
-import { MockPayloadGenerator, createMockEnvironment } from "relay-test-utils"
+import { getFarceResult } from "found/server"
+import { Resolver } from "found-relay"
+import { createMockEnvironment, MockPayloadGenerator } from "relay-test-utils"
 import { order2Routes } from "../order2Routes"
 
 jest.mock("Apps/Order/redirects", () => ({
@@ -28,7 +28,7 @@ describe("order2Routes redirect logic", () => {
     )
 
     const result = await getFarceResult({
-      render: props => {
+      render: _props => {
         return <div>hello</div>
       },
       resolver: new Resolver(environment),

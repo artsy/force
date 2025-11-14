@@ -1,6 +1,6 @@
+import { useAuctionResultsTracking } from "Apps/Artist/Routes/AuctionResults/Components/Hooks/useAuctionResultsTracking"
 import { OwnerType } from "@artsy/cohesion"
 import { renderHook } from "@testing-library/react-hooks"
-import { useAuctionResultsTracking } from "Apps/Artist/Routes/AuctionResults/Components/Hooks/useAuctionResultsTracking"
 import { useTracking } from "react-tracking"
 
 jest.mock("react-tracking")

@@ -1,4 +1,3 @@
-import { ArtworkSidebarCurrentBidInfoFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarCurrentBidInfo"
 import {
   AuctionPreview,
   AuctionPreviewNoStartingBid,
@@ -14,11 +13,11 @@ import {
   OpenAuctionReserveNotMetIncreasingOwnBid,
   OpenAuctionReserveNotMetWithBids,
 } from "Apps/__tests__/Fixtures/Artwork/ArtworkSidebar/ArtworkSidebarCurrentBidInfo"
+import { ArtworkSidebarCurrentBidInfoFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarCurrentBidInfo"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { fireEvent, screen } from "@testing-library/react"
 import { graphql } from "react-relay"
-import { screen } from "@testing-library/react"
 import { useTracking } from "react-tracking"
-import { fireEvent } from "@testing-library/react"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")

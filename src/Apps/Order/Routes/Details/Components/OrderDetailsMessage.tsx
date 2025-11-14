@@ -1,6 +1,6 @@
-import { Box, Flex, Spacer, Text } from "@artsy/palette"
 import { useOrder2Tracking } from "Apps/Order2/Hooks/useOrder2Tracking"
 import { RouterLink } from "System/Components/RouterLink"
+import { Box, Flex, Spacer, Text } from "@artsy/palette"
 import type { OrderDetailsMessage_me$key } from "__generated__/OrderDetailsMessage_me.graphql"
 import type {
   OrderDetailsMessage_order$data,

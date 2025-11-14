@@ -21,7 +21,6 @@ export function useStripePaymentBySetupIntentId(orderId: string) {
     null,
   )
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     // pull necessary params from Stripe redirect URL
     const {

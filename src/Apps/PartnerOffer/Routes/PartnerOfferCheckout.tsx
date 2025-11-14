@@ -1,6 +1,6 @@
-import { Box } from "@artsy/palette"
 import { LoadingArea } from "Components/LoadingArea"
 import { useRouter } from "System/Hooks/useRouter"
+import { Box } from "@artsy/palette"
 import { type FC, useCallback, useEffect } from "react"
 import { usePartnerOfferCheckoutMutation } from "./Mutations/UsePartnerOfferCheckoutMutation"
 
@@ -51,7 +51,6 @@ export const PartnerOfferCheckout: FC<
     }
   }, [partnerCheckoutMutation, partnerOfferId, router])
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     handleRedirect()
   }, [])

@@ -1,6 +1,6 @@
+import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import ChevronLeftIcon from "@artsy/icons/ChevronLeftIcon"
 import { Clickable, Flex, Text } from "@artsy/palette"
-import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import type { FC } from "react"
 
 export const FiltersHeader: FC<React.PropsWithChildren<unknown>> = () => {

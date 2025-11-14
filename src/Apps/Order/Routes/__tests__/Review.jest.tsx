@@ -1,5 +1,12 @@
-import { screen, waitFor } from "@testing-library/react"
-import { ReviewFragmentContainer } from "Apps/Order/Routes/Review"
+import {
+  BuyOrderWithBankDebitDetails,
+  BuyOrderWithShippingDetails,
+  BuyOrderWithWireTransferDetails,
+  OfferOrderWithMissingMetadata,
+  OfferOrderWithShippingDetails,
+  OfferOrderWithShippingDetailsAndNote,
+  PrivateSaleOrderWithShippingDetails,
+} from "Apps/__tests__/Fixtures/Order"
 import {
   submitOfferOrderFailedConfirmation,
   submitOfferOrderSuccess,
@@ -18,23 +25,16 @@ import {
   submitOrderWithNoInventoryFailure,
   submitOrderWithVersionMismatchFailure,
 } from "Apps/Order/Routes/__fixtures__/MutationResults/submitOrder"
+import { ReviewFragmentContainer } from "Apps/Order/Routes/Review"
 import {
   ErrorDialogs,
   getErrorDialogCopy,
 } from "Apps/Order/Utils/getErrorDialogCopy"
-import {
-  BuyOrderWithBankDebitDetails,
-  BuyOrderWithShippingDetails,
-  BuyOrderWithWireTransferDetails,
-  OfferOrderWithMissingMetadata,
-  OfferOrderWithShippingDetails,
-  OfferOrderWithShippingDetailsAndNote,
-  PrivateSaleOrderWithShippingDetails,
-} from "Apps/__tests__/Fixtures/Order"
 import { MockBoot } from "DevTools/MockBoot"
 import { mockLocation } from "DevTools/mockLocation"
 import { mockStripe } from "DevTools/mockStripe"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen, waitFor } from "@testing-library/react"
 import type { CommercePaymentMethodEnum } from "__generated__/Payment_order.graphql"
 import type { ReviewTestEQuery$rawResponse } from "__generated__/ReviewTestEQuery.graphql"
 import { graphql } from "react-relay"

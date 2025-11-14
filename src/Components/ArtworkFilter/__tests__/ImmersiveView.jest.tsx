@@ -1,9 +1,9 @@
-import { fireEvent, screen, waitFor } from "@testing-library/react"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { ImmersiveView } from "Components/ArtworkFilter/ImmersiveView"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { fireEvent, screen, waitFor } from "@testing-library/react"
+import type { ImmersiveView_filtered_artworks$data } from "__generated__/ImmersiveView_filtered_artworks.graphql"
 import type { ImmersiveViewTestQuery } from "__generated__/ImmersiveViewTestQuery.graphql"
 import { graphql } from "react-relay"
-import { ImmersiveView_filtered_artworks$data } from "__generated__/ImmersiveView_filtered_artworks.graphql"
 import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")

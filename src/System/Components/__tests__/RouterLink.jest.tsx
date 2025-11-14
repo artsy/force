@@ -1,7 +1,7 @@
-import { render, screen } from "@testing-library/react"
-import { MockRouter } from "DevTools/MockRouter"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
+import { MockRouter } from "DevTools/MockRouter"
 import { RouterLink } from "System/Components/RouterLink"
+import { render, screen } from "@testing-library/react"
 
 jest.mock("System/Router/Utils/shouldUpdateScroll", () => ({
   shouldUpdateScroll: () => true,

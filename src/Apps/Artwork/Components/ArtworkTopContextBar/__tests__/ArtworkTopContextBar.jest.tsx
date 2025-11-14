@@ -1,9 +1,9 @@
 import { ArtworkTopContextBarFragmentContainer } from "Apps/Artwork/Components/ArtworkTopContextBar/ArtworkTopContextBar"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { getENV } from "Utils/getENV"
+import { screen } from "@testing-library/react"
 import type { ArtworkTopContextBarTestQuery } from "__generated__/ArtworkTopContextBarTestQuery.graphql"
 import { graphql } from "react-relay"
-import { screen } from "@testing-library/react"
 
 jest.unmock("react-relay")
 jest.mock("Utils/getENV", () => ({

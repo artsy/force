@@ -1,10 +1,10 @@
-import { screen, waitFor } from "@testing-library/react"
 import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
 import { AuctionBidRouteFragmentContainer } from "Apps/Auction/Routes/Bid/AuctionBidRoute"
 import { useSubmitBid } from "Apps/Auction/Routes/Bid/useSubmitBid"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useRouter } from "System/Hooks/useRouter"
+import { screen, waitFor } from "@testing-library/react"
 import type { AuctionBidRouteRTLTestQuery } from "__generated__/AuctionBidRouteRTLTestQuery.graphql"
 import { Formik } from "formik"
 import { graphql } from "react-relay"
@@ -50,7 +50,9 @@ jest.mock("@artsy/palette", () => ({
   ModalDialog: ({ children, title, onClose }) => (
     <div>
       <div>{title}</div>
-      <button onClick={onClose}>Close</button>
+      <button type="button" onClick={onClose}>
+        Close
+      </button>
       {children}
     </div>
   ),

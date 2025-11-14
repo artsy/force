@@ -1,6 +1,6 @@
-import { screen } from "@testing-library/react"
 import { PollAccountBalanceRefetchContainer } from "Apps/Order/Components/PollAccountBalance"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import type { PollAccountBalanceQuery_Test_Query } from "__generated__/PollAccountBalanceQuery_Test_Query.graphql"
 import { graphql } from "react-relay"
 

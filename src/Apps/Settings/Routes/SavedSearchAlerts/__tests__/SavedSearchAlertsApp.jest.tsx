@@ -1,13 +1,13 @@
-import { fireEvent, screen } from "@testing-library/react"
 import { SavedSearchAlertsAppPaginationContainer } from "Apps/Settings/Routes/SavedSearchAlerts/SavedSearchAlertsApp"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { MediaContextProvider } from "Utils/Responsive"
+import { fireEvent, screen } from "@testing-library/react"
 import type { SavedSearchAlertsApp_Test_Query } from "__generated__/SavedSearchAlertsApp_Test_Query.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { type MockEnvironment, createMockEnvironment } from "relay-test-utils"
+import { createMockEnvironment, type MockEnvironment } from "relay-test-utils"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")

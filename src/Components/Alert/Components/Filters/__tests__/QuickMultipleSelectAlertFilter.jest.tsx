@@ -1,9 +1,9 @@
-import { render, screen } from "@testing-library/react"
-import userEvent from "@testing-library/user-event"
 import type { AlertContextProps } from "Components/Alert/AlertContext"
 import { AlertProvider } from "Components/Alert/AlertProvider"
 import { QuickMultipleSelectAlertFilter } from "Components/Alert/Components/Filters/QuickMultipleSelectAlertFilter"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
+import { render, screen } from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
 
 describe(QuickMultipleSelectAlertFilter, () => {
   it("renders a label, description and options", () => {

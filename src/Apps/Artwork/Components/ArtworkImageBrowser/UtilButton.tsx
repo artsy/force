@@ -1,3 +1,4 @@
+import { getENV } from "Utils/getENV"
 import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
 import DownloadIcon from "@artsy/icons/DownloadIcon"
 import EditIcon from "@artsy/icons/EditIcon"
@@ -15,7 +16,6 @@ import {
   type TextProps,
 } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
-import { getENV } from "Utils/getENV"
 import * as React from "react"
 import styled, { css } from "styled-components"
 
@@ -90,7 +90,7 @@ export const UtilButton = React.forwardRef(
 
     return (
       // FIXME: REACT_18_UPGRADE
-      // @ts-ignore
+      // @ts-expect-error
       <Component
         ref={forwardedRef as any}
         p={1}

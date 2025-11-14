@@ -1,11 +1,11 @@
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import "jest-styled-components"
-import { fireEvent, screen } from "@testing-library/react"
 import { useAuthDialog } from "Components/AuthDialog"
 import { FollowArtistButtonFragmentContainer } from "Components/FollowButton/FollowArtistButton"
 import { useFollowButtonTracking } from "Components/FollowButton/useFollowButtonTracking"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useMutation } from "Utils/Hooks/useMutation"
+import { fireEvent, screen } from "@testing-library/react"
 import type { FollowArtistButton_Test_Query } from "__generated__/FollowArtistButton_Test_Query.graphql"
 import { graphql } from "react-relay"
 

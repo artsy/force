@@ -1,13 +1,13 @@
-import { act, render, screen } from "@testing-library/react"
 import { SaleMessageQueryRenderer } from "Components/Artwork/Details/SaleMessage"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useDidMount } from "Utils/Hooks/useDidMount"
 import { useIntersectionObserver } from "Utils/Hooks/useIntersectionObserver"
 import type { CleanRelayFragment } from "Utils/typeSupport"
+import { act, render, screen } from "@testing-library/react"
 import type { Details_artwork$data } from "__generated__/Details_artwork.graphql"
 import { DateTime } from "luxon"
 import { createRef } from "react"
-import { MockPayloadGenerator, createMockEnvironment } from "relay-test-utils"
+import { createMockEnvironment, MockPayloadGenerator } from "relay-test-utils"
 
 jest.unmock("react-relay")
 

@@ -1,6 +1,6 @@
-import { screen } from "@testing-library/react"
 import { ConversationOrderState } from "Apps/Conversations/components/Details/OrderState/ConversationOrderState"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import type { OrderStateTestQuery } from "__generated__/OrderStateTestQuery.graphql"
 import { graphql } from "react-relay"
 

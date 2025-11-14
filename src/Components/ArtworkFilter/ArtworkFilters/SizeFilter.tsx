@@ -1,4 +1,21 @@
 import {
+  type ArtworkFiltersState,
+  SelectedFiltersCountsLabels,
+  useArtworkFilterContext,
+  useCurrentlySelectedFilters,
+} from "Components/ArtworkFilter/ArtworkFilterContext"
+import { useFilterLabelCountByKey } from "Components/ArtworkFilter/Utils/useFilterLabelCountByKey"
+import { NumericInput } from "Components/NumericInput"
+import { getRangeValue } from "Utils/customRangeUtils"
+import {
+  getCustomSizeRangeInInches,
+  getPredefinedSizesByMetric,
+  parseSizeRange,
+} from "Utils/customSizeUtils"
+import { useMode } from "Utils/Hooks/useMode"
+import { DEFAULT_METRIC, type Metric } from "Utils/metrics"
+import { Media } from "Utils/Responsive"
+import {
   Button,
   Checkbox,
   Clickable,
@@ -9,25 +26,8 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import {
-  type ArtworkFiltersState,
-  SelectedFiltersCountsLabels,
-  useArtworkFilterContext,
-  useCurrentlySelectedFilters,
-} from "Components/ArtworkFilter/ArtworkFilterContext"
-import { useFilterLabelCountByKey } from "Components/ArtworkFilter/Utils/useFilterLabelCountByKey"
-import { NumericInput } from "Components/NumericInput"
-import { useMode } from "Utils/Hooks/useMode"
-import { Media } from "Utils/Responsive"
-import { getRangeValue } from "Utils/customRangeUtils"
-import {
-  getCustomSizeRangeInInches,
-  getPredefinedSizesByMetric,
-  parseSizeRange,
-} from "Utils/customSizeUtils"
-import { DEFAULT_METRIC, type Metric } from "Utils/metrics"
-import { useEffect, useState } from "react"
 import type * as React from "react"
+import { useEffect, useState } from "react"
 import { FilterExpandable } from "./FilterExpandable"
 import { isCustomValue } from "./Utils/isCustomValue"
 
@@ -157,7 +157,6 @@ export const SizeFilter: React.FC<React.PropsWithChildren<SizeFilterProps>> = ({
     setFilters?.(updatedFilters, { force: false })
   }
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (width === "*-*" || height === "*-*") {
       setCustomSize({

@@ -1,12 +1,3 @@
-import { ContextModule } from "@artsy/cohesion"
-import {
-  Button,
-  Column,
-  GridColumns,
-  HorizontalOverflow,
-  Skeleton,
-  Stack,
-} from "@artsy/palette"
 import { ArtworkAuctionCreateAlertTooltip } from "Apps/Artwork/Components/ArtworkAuctionCreateAlertHeader/ArtworkAuctionCreateAlertTooltip"
 import { SuggestedArtworksModal } from "Apps/Artwork/Components/ArtworkAuctionCreateAlertHeader/SuggestedArtworksModal"
 import {
@@ -16,6 +7,15 @@ import {
 import type { SearchCriteriaAttributes } from "Components/SavedSearchAlert/types"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
+import { ContextModule } from "@artsy/cohesion"
+import {
+  Button,
+  Column,
+  GridColumns,
+  HorizontalOverflow,
+  Skeleton,
+  Stack,
+} from "@artsy/palette"
 import type {
   SuggestedArtworksShelfQuery,
   SuggestedArtworksShelfQuery$data,

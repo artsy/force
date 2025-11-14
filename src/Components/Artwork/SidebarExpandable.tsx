@@ -6,7 +6,7 @@ export const SidebarExpandable: React.FC<
   { labelTrackingText?: string } & React.PropsWithChildren<
     Pick<ExpandableProps, "label" | "children">
   >
-> = ({ label, labelTrackingText, children, ...rest }) => {
+> = ({ label, labelTrackingText, children }) => {
   const { trackEvent } = useTracking()
 
   const handleToggle = (isExpanded: boolean) => {

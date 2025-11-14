@@ -1,3 +1,7 @@
+import { InvoiceLineItems } from "Apps/Invoice/Components/InvoiceLineItems"
+import { InvoicePayments } from "Apps/Invoice/Components/InvoicePayments"
+import { RouterLink } from "System/Components/RouterLink"
+import { useRouter } from "System/Hooks/useRouter"
 import {
   Box,
   Button,
@@ -6,10 +10,6 @@ import {
   StackableBorderBox,
   Text,
 } from "@artsy/palette"
-import { InvoiceLineItems } from "Apps/Invoice/Components/InvoiceLineItems"
-import { InvoicePayments } from "Apps/Invoice/Components/InvoicePayments"
-import { RouterLink } from "System/Components/RouterLink"
-import { useRouter } from "System/Hooks/useRouter"
 import type { InvoiceDetailRoute_invoice$key } from "__generated__/InvoiceDetailRoute_invoice.graphql"
 import { graphql, useFragment } from "react-relay"
 
@@ -83,7 +83,7 @@ export const InvoiceDetailRoute: React.FC<
         {!isPaid && (
           <Box display="flex" justifyContent="center" width="100%">
             <Button
-              // @ts-ignore
+              // @ts-expect-error
               as={RouterLink}
               to={paymentRoute}
               width="100%"

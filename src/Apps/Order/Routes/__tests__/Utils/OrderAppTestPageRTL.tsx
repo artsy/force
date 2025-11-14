@@ -1,11 +1,11 @@
 /* eslint-disable jest/no-standalone-expect */
-import { screen, waitFor, fireEvent } from "@testing-library/react"
+import { fireEvent, screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 
 export class OrderAppTestPageRTL {
   private user = userEvent
   /** COMPONENT SELECTORS **/
-  constructor(screen?: any, user?: any) {
+  constructor(_screen?: any, user?: any) {
     if (user) this.user = user
     // screen parameter is not used as we reference the imported screen directly
   }

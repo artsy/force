@@ -1,6 +1,6 @@
-import { Box, Button, Clickable, Flex, ModalBase, Text } from "@artsy/palette"
 import { useAuctionResultsFilterContext } from "Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
 import { initialAuctionResultsFilterState } from "Apps/Artist/Routes/AuctionResults/initialAuctionResultsFilterState"
+import { Box, Button, Clickable, Flex, ModalBase, Text } from "@artsy/palette"
 import { isEqual, omit } from "lodash"
 import { type FC, useEffect, useRef } from "react"
 import styled from "styled-components"
@@ -31,7 +31,6 @@ export const AuctionFilterMobileActionSheet: FC<
     filterContext.stagedFilters,
   )
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     // While mobile sheet is mounted, the effect of the user's filter selections
     // should be merely staged until the Apply button is pressed, rather than

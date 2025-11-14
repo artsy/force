@@ -1,5 +1,5 @@
-import { Box, Text } from "@artsy/palette"
 import { Layout } from "Apps/Components/Layouts"
+import { Box, Text } from "@artsy/palette"
 
 export default {
   title: "Components/Layouts",

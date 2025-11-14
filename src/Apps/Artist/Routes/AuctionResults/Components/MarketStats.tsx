@@ -1,3 +1,8 @@
+import { formatSellThroughRate } from "Apps/Artwork/Utils/insightHelpers"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { extractNodes } from "Utils/extractNodes"
+import { formatLargeNumber } from "Utils/formatLargeNumber"
+import { useSectionReady } from "Utils/Hooks/useSectionReadiness"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import ArrowDownIcon from "@artsy/icons/ArrowDownIcon"
@@ -11,13 +16,8 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { formatSellThroughRate } from "Apps/Artwork/Utils/insightHelpers"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { useSectionReady } from "Utils/Hooks/useSectionReadiness"
-import { extractNodes } from "Utils/extractNodes"
-import { formatLargeNumber } from "Utils/formatLargeNumber"
-import type { MarketStatsQuery } from "__generated__/MarketStatsQuery.graphql"
 import type { MarketStats_priceInsightsConnection$data } from "__generated__/MarketStats_priceInsightsConnection.graphql"
+import type { MarketStatsQuery } from "__generated__/MarketStatsQuery.graphql"
 import { type FC, type ReactNode, useEffect, useRef, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"

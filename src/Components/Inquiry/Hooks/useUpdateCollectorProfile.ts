@@ -2,7 +2,7 @@ import type {
   UpdateCollectorProfileInput,
   useUpdateCollectorProfileMutation,
 } from "__generated__/useUpdateCollectorProfileMutation.graphql"
-import { type Environment, commitMutation, graphql } from "react-relay"
+import { commitMutation, type Environment, graphql } from "react-relay"
 import { useInquiryContext } from "./useInquiryContext"
 
 export const useUpdateCollectorProfile = () => {

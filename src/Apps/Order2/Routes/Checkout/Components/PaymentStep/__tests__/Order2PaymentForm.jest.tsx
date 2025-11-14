@@ -1,6 +1,6 @@
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { Order2PaymentFormTestQuery } from "__generated__/Order2PaymentFormTestQuery.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"

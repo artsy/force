@@ -1,8 +1,8 @@
 import {
+  buildPageQuery,
   getInternalHref,
   getPageNumber,
   getURLHost,
-  buildPageQuery,
 } from "Utils/url"
 
 describe("getURLHost", () => {

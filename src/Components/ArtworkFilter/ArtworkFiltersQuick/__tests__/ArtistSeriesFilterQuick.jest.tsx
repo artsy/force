@@ -1,7 +1,7 @@
-import { screen } from "@testing-library/react"
 import type { ArtworkFilterContextProps } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { createArtworkFilterTestRenderer } from "Components/ArtworkFilter/ArtworkFilters/__tests__/Utils"
 import { ArtistSeriesFilterQuick } from "Components/ArtworkFilter/ArtworkFiltersQuick/ArtistSeriesFilterQuick"
+import { screen } from "@testing-library/react"
 
 const artworkFilterContext: Partial<ArtworkFilterContextProps> = {
   aggregations: [

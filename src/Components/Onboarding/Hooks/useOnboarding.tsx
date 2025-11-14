@@ -33,7 +33,7 @@ export const useOnboarding = ({ onClose }: UseOnboarding) => {
         )}
       </>
     )
-  }, [isVisible, onClose])
+  }, [isVisible, onClose, hideDialog])
 
   return {
     isVisible,

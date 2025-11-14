@@ -1,7 +1,5 @@
 import type * as React from "react"
-import { useState } from "react"
-import { createContext } from "react"
-import { useContext } from "react"
+import { createContext, useContext, useState } from "react"
 import { InquiryLogin } from "./InquiryLogin"
 import { InquiryResetPassword } from "./InquiryResetPassword"
 import { InquirySignUp } from "./InquirySignUp"

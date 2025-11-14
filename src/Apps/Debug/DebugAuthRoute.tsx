@@ -1,3 +1,8 @@
+import { useAuthDialog } from "Components/AuthDialog"
+import {
+  AUTH_DIALOG_MODES,
+  type AuthDialogMode,
+} from "Components/AuthDialog/AuthDialogContext"
 import { type AuthIntent, ContextModule, Intent } from "@artsy/cohesion"
 import {
   Button,
@@ -8,11 +13,6 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { useAuthDialog } from "Components/AuthDialog"
-import {
-  AUTH_DIALOG_MODES,
-  type AuthDialogMode,
-} from "Components/AuthDialog/AuthDialogContext"
 import { merge } from "lodash"
 import { type FC, useState } from "react"
 import { Title } from "react-head"

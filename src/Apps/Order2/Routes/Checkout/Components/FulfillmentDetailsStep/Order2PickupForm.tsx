@@ -1,12 +1,3 @@
-import { ContextModule } from "@artsy/cohesion"
-import {
-  Button,
-  Column,
-  GridColumns,
-  SelectInput,
-  Spacer,
-  Text,
-} from "@artsy/palette"
 import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useOrder2SetOrderFulfillmentOptionMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderFulfillmentOptionMutation"
@@ -17,6 +8,15 @@ import {
 } from "Components/Address/utils"
 import { countries as phoneCountryOptions } from "Utils/countries"
 import createLogger from "Utils/logger"
+import { ContextModule } from "@artsy/cohesion"
+import {
+  Button,
+  Column,
+  GridColumns,
+  SelectInput,
+  Spacer,
+  Text,
+} from "@artsy/palette"
 import type { Order2PickupForm_order$key } from "__generated__/Order2PickupForm_order.graphql"
 import { Formik, type FormikHelpers, type FormikValues } from "formik"
 import { useCallback, useMemo } from "react"
@@ -54,7 +54,7 @@ export const Order2PickupForm: React.FC<Order2PickupFormProps> = ({
   const handleSubmit = useCallback(
     async (
       values: FormikValues,
-      formikHelpers: FormikHelpers<PickupFormValues>,
+      _formikHelpers: FormikHelpers<PickupFormValues>,
     ): Promise<void> => {
       if (!pickupFulfillmentOption) {
         logger.error(

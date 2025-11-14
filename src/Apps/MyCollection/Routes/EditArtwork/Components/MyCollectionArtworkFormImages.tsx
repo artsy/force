@@ -1,16 +1,16 @@
-import { Text } from "@artsy/palette"
 import { useMyCollectionArtworkFormContext } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormContext"
 import { MyCollectionPhotoToPhoto } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkFormHelpers"
 import type { ArtworkModel } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkModel"
 import { PhotoDropzone } from "Components/PhotoUpload/Components/PhotoDropzone"
 import { PhotoThumbnail } from "Components/PhotoUpload/Components/PhotoThumbnail"
 import {
-  type Photo,
   getErrorMessage,
   normalizePhoto,
+  type Photo,
   uploadPhotoToS3,
 } from "Components/PhotoUpload/Utils/fileUtils"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import { Text } from "@artsy/palette"
 import { useFormikContext } from "formik"
 import { useEffect, useState } from "react"
 import type { FileRejection } from "react-dropzone"
@@ -49,7 +49,7 @@ export const MyCollectionArtworkFormImages: React.FC<
       photo.url = photoURL
 
       setFieldValue("newPhotos", values.newPhotos, true)
-    } catch (error) {
+    } catch (_error) {
       photo.errorMessage = `Photo could not be added: ${photo.name}`
       setFieldValue("newPhotos", values.newPhotos)
       return
@@ -62,7 +62,6 @@ export const MyCollectionArtworkFormImages: React.FC<
     return photos.filter(c => !(c.geminiToken || c.url) && !c.loading)
   }
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     const imagesToUpload = getImagesToUpload(values.newPhotos)
 
@@ -191,7 +190,7 @@ export const MyCollectionArtworkFormImages: React.FC<
         onReject={handleReject}
       />
 
-      {errors.map((error, i) => {
+      {errors.map((error, _i) => {
         const normalizedPhoto = normalizePhoto(
           error.file,
           getErrorMessage(error),

@@ -1,4 +1,5 @@
 import { Meta, Title } from "react-head"
+// biome-ignore lint/style/noRestrictedImports: Legacy sharify usage for configuration
 import { data as sd } from "sharify"
 
 export const ExampleAppMeta = () => {

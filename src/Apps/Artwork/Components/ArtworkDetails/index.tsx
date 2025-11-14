@@ -1,3 +1,5 @@
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import {
   BorderBox,
@@ -11,10 +13,8 @@ import {
   type TabInfo,
   Tabs,
 } from "@artsy/palette"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import type { ArtworkDetailsQuery } from "__generated__/ArtworkDetailsQuery.graphql"
 import type { ArtworkDetails_artwork$data } from "__generated__/ArtworkDetails_artwork.graphql"
+import type { ArtworkDetailsQuery } from "__generated__/ArtworkDetailsQuery.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"

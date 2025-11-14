@@ -1,9 +1,9 @@
-import CloseIcon from "@artsy/icons/CloseIcon"
-import { Spinner } from "@artsy/palette"
-import { themeGet } from "@styled-system/theme-get"
 import { FullscreenBox } from "Components/FullscreenBox"
 import { useMode } from "Utils/Hooks/useMode"
 import { resized } from "Utils/resized"
+import CloseIcon from "@artsy/icons/CloseIcon"
+import { Spinner } from "@artsy/palette"
+import { themeGet } from "@styled-system/theme-get"
 import type { ArticleZoomGalleryFigure_figure$data } from "__generated__/ArticleZoomGalleryFigure_figure.graphql"
 import { type FC, type ImgHTMLAttributes, useEffect, useRef } from "react"
 import { Link } from "react-head"
@@ -183,7 +183,7 @@ const Image: FC<
     if (ref.current?.complete) {
       setMode("Ready")
     }
-  }, [ref, setMode])
+  }, [setMode])
 
   return (
     <>

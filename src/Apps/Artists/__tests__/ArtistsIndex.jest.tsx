@@ -1,7 +1,7 @@
-import { screen } from "@testing-library/react"
 import { ArtistsIndexFragmentContainer } from "Apps/Artists/Routes/ArtistsIndex"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import type { ArtistsIndexFragmentContainerTestQuery } from "__generated__/ArtistsIndexFragmentContainerTestQuery.graphql"
 import { graphql } from "react-relay"
 

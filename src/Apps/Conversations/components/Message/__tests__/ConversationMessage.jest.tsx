@@ -1,6 +1,6 @@
-import { screen } from "@testing-library/react"
 import { ConversationMessage } from "Apps/Conversations/components/Message/ConversationMessage"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import type { ConversationMessageTestQuery } from "__generated__/ConversationMessageTestQuery.graphql"
 import { graphql } from "react-relay"
 
@@ -10,7 +10,7 @@ describe("ConversationMessage", () => {
   const { renderWithRelay } = setupTestWrapperTL<ConversationMessageTestQuery>({
     Component: ({ conversation }) => (
       <ConversationMessage
-        message={conversation.messagesConnection.edges[0]?.node!}
+        message={conversation.messagesConnection.edges[0]?.node as any}
         messages={[conversation.messagesConnection.edges[0]?.node as any]}
         messageIndex={1}
         // Serves to the tests related to "Seen by"

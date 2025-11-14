@@ -1,4 +1,11 @@
 import {
+  ShelfArtworkFragmentContainer,
+  ShelfArtworkPlaceholder,
+} from "Components/Artwork/ShelfArtwork"
+import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
+import { RouterLink } from "System/Components/RouterLink"
+import { extractNodes } from "Utils/extractNodes"
+import {
   Button,
   Column,
   GridColumns,
@@ -9,13 +16,6 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import {
-  ShelfArtworkFragmentContainer,
-  ShelfArtworkPlaceholder,
-} from "Components/Artwork/ShelfArtwork"
-import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
-import { RouterLink } from "System/Components/RouterLink"
-import { extractNodes } from "Utils/extractNodes"
 import type { ArtQuizRecommendedArtist_artist$data } from "__generated__/ArtQuizRecommendedArtist_artist.graphql"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"

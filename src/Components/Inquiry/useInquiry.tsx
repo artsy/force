@@ -1,5 +1,5 @@
-import { useState } from "react"
 import type * as React from "react"
+import { useState } from "react"
 import { Inquiry } from "./Inquiry"
 
 export interface UseInquiryProps {

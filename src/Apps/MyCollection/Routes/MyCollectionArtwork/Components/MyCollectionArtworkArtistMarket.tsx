@@ -1,3 +1,5 @@
+import { formatSellThroughRate } from "Apps/Artwork/Utils/insightHelpers"
+import { Media } from "Utils/Responsive"
 import ArrowDownIcon from "@artsy/icons/ArrowDownIcon"
 import ArrowUpIcon from "@artsy/icons/ArrowUpIcon"
 import InfoIcon from "@artsy/icons/InfoIcon"
@@ -11,8 +13,6 @@ import {
   Text,
   Tooltip,
 } from "@artsy/palette"
-import { formatSellThroughRate } from "Apps/Artwork/Utils/insightHelpers"
-import { Media } from "Utils/Responsive"
 import type { MyCollectionArtworkArtistMarket_marketPriceInsights$data } from "__generated__/MyCollectionArtworkArtistMarket_marketPriceInsights.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 

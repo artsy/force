@@ -1,7 +1,7 @@
 export const tryParse = val => {
   try {
     return JSON.parse(val)
-  } catch (error) {
+  } catch (_error) {
     return val
   }
 }

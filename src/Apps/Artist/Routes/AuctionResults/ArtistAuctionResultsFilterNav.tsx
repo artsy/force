@@ -1,3 +1,9 @@
+import { ArtistAuctionResultsFilters } from "Apps/Artist/Routes/AuctionResults/Components/ArtistAuctionResultsFilters"
+import { ArtistAuctionResultsSortSelect } from "Apps/Artist/Routes/AuctionResults/Components/ArtistAuctionResultsSortSelect"
+import { AppContainer } from "Apps/Components/AppContainer"
+import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
+import { Sticky } from "Components/Sticky"
+import { Media } from "Utils/Responsive"
 import { ContextModule } from "@artsy/cohesion"
 import ChevronSmallDownIcon from "@artsy/icons/ChevronSmallDownIcon"
 import FilterIcon from "@artsy/icons/FilterIcon"
@@ -11,12 +17,6 @@ import {
   Stack,
   Text,
 } from "@artsy/palette"
-import { ArtistAuctionResultsFilters } from "Apps/Artist/Routes/AuctionResults/Components/ArtistAuctionResultsFilters"
-import { ArtistAuctionResultsSortSelect } from "Apps/Artist/Routes/AuctionResults/Components/ArtistAuctionResultsSortSelect"
-import { AppContainer } from "Apps/Components/AppContainer"
-import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
-import { Sticky } from "Components/Sticky"
-import { Media } from "Utils/Responsive"
 import type { FC } from "react"
 
 interface ArtistAuctionResultsFilterNavProps {

@@ -1,9 +1,9 @@
-import loadable from "@loadable/component"
 import { checkForRedirect } from "Apps/Authentication/Middleware/checkForRedirect"
 import { redirectIfLoggedIn } from "Apps/Authentication/Middleware/redirectIfLoggedIn"
 import { redirectPostAuth } from "Apps/Authentication/Middleware/redirectPostAuth"
 import { setReferer } from "Apps/Authentication/Middleware/setReferer"
 import type { RouteProps } from "System/Router/Route"
+import loadable from "@loadable/component"
 import { flow } from "lodash"
 import { stringify } from "qs"
 

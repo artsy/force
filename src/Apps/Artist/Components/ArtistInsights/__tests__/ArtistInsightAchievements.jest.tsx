@@ -1,6 +1,6 @@
-import { fireEvent, screen } from "@testing-library/react"
 import { ArtistInsightAchievementsFragmentContainer } from "Apps/Artist/Components/ArtistInsights/ArtistInsightAchievements"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { fireEvent, screen } from "@testing-library/react"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 

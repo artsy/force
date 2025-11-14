@@ -1,6 +1,5 @@
-import { fireEvent, render, screen } from "@testing-library/react"
-
 import { ContextualMenu, ContextualMenuItem } from "Components/ContextualMenu"
+import { fireEvent, render, screen } from "@testing-library/react"
 
 describe("ContextualMenu", () => {
   it("initially renders the trigger but not the menu", () => {

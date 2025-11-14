@@ -1,5 +1,3 @@
-import { useToasts } from "@artsy/palette"
-import { renderHook } from "@testing-library/react-hooks"
 import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
 import { useCreateTokenAndSubmit } from "Apps/Auction/Hooks/useCreateTokenAndSubmit"
 import { useBidderPosition } from "Apps/Auction/Queries/useBidderPosition"
@@ -9,6 +7,8 @@ import {
   useSubmitBid,
 } from "Apps/Auction/Routes/Bid/useSubmitBid"
 import { useRouter } from "System/Hooks/useRouter"
+import { useToasts } from "@artsy/palette"
+import { renderHook } from "@testing-library/react-hooks"
 
 jest.mock("@artsy/palette")
 jest.mock("Apps/Auction/Hooks/useAuctionTracking")
@@ -77,13 +77,7 @@ describe("useSubmitBid", () => {
     }
 
     const submitBid = result.current.submitBid as any
-
-    // eslint-disable-next-line no-useless-catch
-    try {
-      await submitBid(values, helpers)
-    } catch (error) {
-      throw error
-    }
+    await submitBid(values, helpers)
   }
 
   beforeEach(() => {

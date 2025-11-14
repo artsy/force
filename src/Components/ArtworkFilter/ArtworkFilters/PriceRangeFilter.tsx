@@ -1,14 +1,14 @@
+import type { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
 import {
   SelectedFiltersCountsLabels,
   useArtworkFilterContext,
   useCurrentlySelectedFilters,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
-import type { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { useFilterLabelCountByKey } from "Components/ArtworkFilter/Utils/useFilterLabelCountByKey"
+import type { CustomRange } from "Components/PriceRange/constants"
 import type { HistogramBarEntity } from "Components/PriceRange/Histogram"
 import { PriceRange } from "Components/PriceRange/PriceRange"
 import { parsePriceRange } from "Components/PriceRange/Utils/parsePriceRange"
-import type { CustomRange } from "Components/PriceRange/constants"
 import { sortBy } from "lodash"
 import { type FC, useMemo } from "react"
 import { FilterExpandable } from "./FilterExpandable"

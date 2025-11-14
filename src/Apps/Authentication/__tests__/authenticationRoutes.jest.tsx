@@ -1,8 +1,7 @@
-import { render, screen, waitFor } from "@testing-library/react"
+import { authenticationRoutes } from "Apps/Authentication/authenticationRoutes"
 import { checkForRedirect } from "Apps/Authentication/Middleware/checkForRedirect"
 import { redirectIfLoggedIn } from "Apps/Authentication/Middleware/redirectIfLoggedIn"
 import { setReferer } from "Apps/Authentication/Middleware/setReferer"
-import { authenticationRoutes } from "Apps/Authentication/authenticationRoutes"
 import { MockBoot } from "DevTools/MockBoot"
 import { MockRouter } from "DevTools/MockRouter"
 import type {
@@ -10,6 +9,7 @@ import type {
   ArtsyResponse,
 } from "Server/middleware/artsyExpress"
 import { getENV } from "Utils/getENV"
+import { render, screen, waitFor } from "@testing-library/react"
 import type { NextFunction } from "express"
 import qs from "qs"
 

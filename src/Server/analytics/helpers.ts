@@ -3,10 +3,11 @@ import { getContextPageFromClient } from "Server/getContextPage"
 import { reportLoadTimeToVolley } from "Server/volley"
 import { getClientParam } from "Utils/getClientParam"
 import { extend, omit, pick } from "lodash"
-// eslint-disable-next-line no-restricted-imports
+// biome-ignore lint/style/noRestrictedImports: Legacy sharify usage for server configuration
 import { data as sd } from "sharify"
 import { setAnalyticsClientReferrerOptions } from "./setAnalyticsClientReferrerOptions"
 import { trackTimeOnPage } from "./timeOnPageListener"
+
 const Events = require("../../Utils/Events").default
 
 /**

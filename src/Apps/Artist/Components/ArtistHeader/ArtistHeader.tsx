@@ -1,4 +1,15 @@
 import {
+  ArtistHeaderImage,
+  isValidImage,
+} from "Apps/Artist/Components/ArtistHeader/ArtistHeaderImage"
+import { ArtistCareerHighlightFragmentContainer } from "Apps/Artist/Routes/Overview/Components/ArtistCareerHighlight"
+import { FollowButtonInlineCount } from "Components/FollowButton/Button"
+import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
+import { ProgressiveOnboardingFollowArtist } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowArtist"
+import { RouterLink } from "System/Components/RouterLink"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { formatFollowerCount } from "Utils/formatFollowerCount"
+import {
   ActionType,
   type ClickedVerifiedRepresentative,
   ContextModule,
@@ -17,17 +28,6 @@ import {
   Stack,
   Text,
 } from "@artsy/palette"
-import {
-  ArtistHeaderImage,
-  isValidImage,
-} from "Apps/Artist/Components/ArtistHeader/ArtistHeaderImage"
-import { ArtistCareerHighlightFragmentContainer } from "Apps/Artist/Routes/Overview/Components/ArtistCareerHighlight"
-import { FollowButtonInlineCount } from "Components/FollowButton/Button"
-import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
-import { ProgressiveOnboardingFollowArtist } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowArtist"
-import { RouterLink } from "System/Components/RouterLink"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import { formatFollowerCount } from "Utils/formatFollowerCount"
 import type { ArtistHeader_artist$data } from "__generated__/ArtistHeader_artist.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -211,7 +211,7 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
                             ],
                           }
                         : {})}
-                      // @ts-ignore
+                      // @ts-expect-error
                       to={partner.href}
                       onClick={() => {
                         trackEvent(payload)

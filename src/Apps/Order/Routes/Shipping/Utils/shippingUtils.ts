@@ -62,7 +62,7 @@ export interface ShippingAddressFormValues {
 export const BASIC_PHONE_VALIDATION_SHAPE = {
   phoneNumber: Yup.string()
     .required("Phone number is required")
-    .matches(/^[+\-\(\)\d\s]+$/, "Please enter a valid phone number"),
+    .matches(/^[+\-()\d\s]+$/, "Please enter a valid phone number"),
 }
 
 export const ADDRESS_VALIDATION_SHAPE = {
@@ -74,6 +74,7 @@ export const ADDRESS_VALIDATION_SHAPE = {
   postalCode: postalCodeValidator,
   region: Yup.string().when("country", {
     is: country => ["US", "CA"].includes(country),
+    // biome-ignore lint/suspicious/noThenProperty: ugh
     then: Yup.string().required("State is required"),
     otherwise: Yup.string(),
   }),

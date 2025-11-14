@@ -7,7 +7,7 @@ export const DebugClientError500Route = () => {
   return (
     <>
       {error && (
-        // @ts-ignore
+        // @ts-expect-error
         // eslint-disable-next-line react/jsx-no-undef
         <Example />
       )}

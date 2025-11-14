@@ -1,7 +1,7 @@
-import { screen } from "@testing-library/react"
 import { ArtworkImageBrowserLargeFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkImageBrowserLarge"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import type { ArtworkImageBrowserLargeTestQuery } from "__generated__/ArtworkImageBrowserLargeTestQuery.graphql"
 import { graphql } from "react-relay"
 

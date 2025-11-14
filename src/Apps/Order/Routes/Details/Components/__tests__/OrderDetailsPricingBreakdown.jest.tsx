@@ -1,5 +1,5 @@
-import { screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import type { OrderDetailsPricingBreakdownTestQuery } from "__generated__/OrderDetailsPricingBreakdownTestQuery.graphql"
 import { graphql } from "react-relay"
 import { OrderDetailsPricingBreakdown } from "../OrderDetailsPricingBreakdown"

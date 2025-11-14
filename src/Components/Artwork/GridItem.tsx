@@ -1,6 +1,3 @@
-import { type AuthContextModule, ContextModule } from "@artsy/cohesion"
-import NoArtIcon from "@artsy/icons/NoArtIcon"
-import { Box, Flex, Popover, ResponsiveBox, SkeletonBox } from "@artsy/palette"
 import { Z } from "Apps/Components/constants"
 import { ExclusiveAccessBadge } from "Components/Artwork/ExclusiveAccessBadge"
 import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
@@ -10,6 +7,9 @@ import { useSystemContext } from "System/Hooks/useSystemContext"
 import { type LocalImage, useLocalImage } from "Utils/localImageHelpers"
 import { cropped, resized } from "Utils/resized"
 import { userIsTeam } from "Utils/user"
+import { type AuthContextModule, ContextModule } from "@artsy/cohesion"
+import NoArtIcon from "@artsy/icons/NoArtIcon"
+import { Box, Flex, Popover, ResponsiveBox, SkeletonBox } from "@artsy/palette"
 import type { GridItem_artwork$data } from "__generated__/GridItem_artwork.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
@@ -87,6 +87,7 @@ export const ArtworkGridItem: React.FC<
 
   const item = (
     <ManageArtworkForSavesProvider savedListId={savedListId}>
+      {/** biome-ignore lint/a11y/noStaticElementInteractions: thing */}
       <div
         data-id={artwork.internalID}
         data-test="artworkGridItem"

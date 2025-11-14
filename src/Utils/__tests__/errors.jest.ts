@@ -1,5 +1,5 @@
-import { captureException } from "@sentry/browser"
 import { ErrorWithMetadata, reportErrorWithScope } from "Utils/errors"
+import { captureException } from "@sentry/browser"
 
 jest.mock("@sentry/browser")
 

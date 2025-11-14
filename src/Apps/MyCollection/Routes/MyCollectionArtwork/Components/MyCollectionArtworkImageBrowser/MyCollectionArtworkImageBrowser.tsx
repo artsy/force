@@ -1,7 +1,7 @@
-import AddStrokeIcon from "@artsy/icons/AddStrokeIcon"
-import { Button, ResponsiveBox } from "@artsy/palette"
 import { ArtworkImageBrowserFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkImageBrowser"
 import { RouterLink } from "System/Components/RouterLink"
+import AddStrokeIcon from "@artsy/icons/AddStrokeIcon"
+import { Button, ResponsiveBox } from "@artsy/palette"
 import type { MyCollectionArtworkImageBrowser_artwork$key } from "__generated__/MyCollectionArtworkImageBrowser_artwork.graphql"
 import { graphql, useFragment } from "react-relay"
 
@@ -29,7 +29,7 @@ export const MyCollectionArtworkImageBrowser: React.FC<
       >
         <Button
           data-testid="uploadPhotosButton"
-          // @ts-ignore
+          // @ts-expect-error
           as={RouterLink}
           to={`/collector-profile/my-collection/artworks/${artwork.internalID}/edit?step=photos`}
           variant="secondaryNeutral"

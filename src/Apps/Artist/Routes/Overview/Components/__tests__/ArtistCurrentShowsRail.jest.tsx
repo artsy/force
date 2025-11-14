@@ -1,10 +1,9 @@
-import { screen } from "@testing-library/react"
 import { ArtistCurrentShowsRailFragmentContainer } from "Apps/Artist/Routes/Overview/Components/ArtistCurrentShowsRail"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { fireEvent, screen } from "@testing-library/react"
 import type { ArtistCurrentShowsRailTestQuery } from "__generated__/ArtistCurrentShowsRailTestQuery.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { fireEvent } from "@testing-library/react"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")

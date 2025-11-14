@@ -1,9 +1,9 @@
 import { AuctionDetailsFragmentContainer } from "Apps/Auction/Components/AuctionDetails/AuctionDetails"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import type { AuctionDetailsQuery } from "__generated__/AuctionDetailsQuery.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { screen } from "@testing-library/react"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking", () => ({

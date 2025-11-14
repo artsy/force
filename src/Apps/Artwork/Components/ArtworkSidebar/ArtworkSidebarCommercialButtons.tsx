@@ -1,3 +1,17 @@
+import { useSelectedEditionSetContext } from "Apps/Artwork/Components/SelectedEditionSetContext"
+import { usePartnerOfferCheckoutMutation } from "Apps/PartnerOffer/Routes/Mutations/UsePartnerOfferCheckoutMutation"
+import { CreateAlertButton } from "Components/Alert/Components/CreateAlertButton"
+import { useAuthDialog } from "Components/AuthDialog"
+import { useInquiry } from "Components/Inquiry/useInquiry"
+import { ExpiresInTimer } from "Components/Notifications/ExpiresInTimer"
+import { ProgressiveOnboardingAlertCreateSimple } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertCreateSimple"
+import { useRouter } from "System/Hooks/useRouter"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { ErrorWithMetadata } from "Utils/errors"
+import { extractNodes } from "Utils/extractNodes"
+import { getSignalLabel, signalsToArray } from "Utils/getSignalLabel"
+import { useMutation } from "Utils/Hooks/useMutation"
+import { useTimer } from "Utils/Hooks/useTimer"
 import {
   ActionType,
   type ClickedBuyNow,
@@ -20,33 +34,18 @@ import {
   useToasts,
 } from "@artsy/palette"
 import { logger } from "@sentry/utils"
-import { useInquiry } from "Components/Inquiry/useInquiry"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { ErrorWithMetadata } from "Utils/errors"
-import type { ArtworkSidebarCommercialButtonsOfferOrderMutation } from "__generated__/ArtworkSidebarCommercialButtonsOfferOrderMutation.graphql"
-import type { ArtworkSidebarCommercialButtonsOrderMutation } from "__generated__/ArtworkSidebarCommercialButtonsOrderMutation.graphql"
 import type { ArtworkSidebarCommercialButtons_artwork$key } from "__generated__/ArtworkSidebarCommercialButtons_artwork.graphql"
 import type { ArtworkSidebarCommercialButtons_me$key } from "__generated__/ArtworkSidebarCommercialButtons_me.graphql"
+import type { ArtworkSidebarCommercialButtonsOfferOrderMutation } from "__generated__/ArtworkSidebarCommercialButtonsOfferOrderMutation.graphql"
+import type { ArtworkSidebarCommercialButtonsOrderMutation } from "__generated__/ArtworkSidebarCommercialButtonsOrderMutation.graphql"
 import { useCallback, useEffect, useState } from "react"
 import { graphql, useFragment } from "react-relay"
 import { useTracking } from "react-tracking"
+import type { ResponsiveValue } from "styled-system"
 import {
   ArtworkSidebarEditionSetFragmentContainer,
   type EditionSet,
 } from "./ArtworkSidebarEditionSets"
-
-import { useSelectedEditionSetContext } from "Apps/Artwork/Components/SelectedEditionSetContext"
-import { usePartnerOfferCheckoutMutation } from "Apps/PartnerOffer/Routes/Mutations/UsePartnerOfferCheckoutMutation"
-import { CreateAlertButton } from "Components/Alert/Components/CreateAlertButton"
-import { useAuthDialog } from "Components/AuthDialog"
-import { ExpiresInTimer } from "Components/Notifications/ExpiresInTimer"
-import { ProgressiveOnboardingAlertCreateSimple } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertCreateSimple"
-import { useRouter } from "System/Hooks/useRouter"
-import { useMutation } from "Utils/Hooks/useMutation"
-import { useTimer } from "Utils/Hooks/useTimer"
-import { extractNodes } from "Utils/extractNodes"
-import { getSignalLabel, signalsToArray } from "Utils/getSignalLabel"
-import type { ResponsiveValue } from "styled-system"
 
 interface ArtworkSidebarCommercialButtonsProps {
   artwork: ArtworkSidebarCommercialButtons_artwork$key

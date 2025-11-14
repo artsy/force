@@ -1,7 +1,7 @@
 import { compact } from "lodash"
 import {
-  type RefObject,
   createRef,
+  type RefObject,
   useCallback,
   useEffect,
   useRef,

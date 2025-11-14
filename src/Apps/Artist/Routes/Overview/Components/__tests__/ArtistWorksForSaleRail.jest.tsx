@@ -1,6 +1,6 @@
-import { screen, fireEvent } from "@testing-library/react"
 import { ArtistWorksForSaleRailFragmentContainer } from "Apps/Artist/Routes/Overview/Components/ArtistWorksForSaleRail"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { fireEvent, screen } from "@testing-library/react"
 import type { ArtistWorksForSaleRailTestQuery } from "__generated__/ArtistWorksForSaleRailTestQuery.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"

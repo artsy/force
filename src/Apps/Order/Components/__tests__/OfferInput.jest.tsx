@@ -1,8 +1,8 @@
-import { render, screen, fireEvent } from "@testing-library/react"
 import {
   OfferInput,
   type OfferInputProps,
 } from "Apps/Order/Components/OfferInput"
+import { fireEvent, render, screen } from "@testing-library/react"
 
 const setInputValue = (input: HTMLInputElement, value: string) => {
   fireEvent.change(input, { target: { value } })

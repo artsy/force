@@ -1,5 +1,5 @@
-import { Button, Message, Spacer, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
+import { Button, Message, Spacer, Text } from "@artsy/palette"
 import type * as React from "react"
 
 export const CompleteWatchlistHit: React.FC<
@@ -22,7 +22,7 @@ export const CompleteWatchlistHit: React.FC<
       <Spacer y={2} />
 
       <Button
-        // @ts-ignore
+        // @ts-expect-error
         as={RouterLink}
         to="/"
         width="100%"

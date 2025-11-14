@@ -1,5 +1,5 @@
 import type { requestEmailConfirmationMutation$data } from "__generated__/requestEmailConfirmationMutation.graphql"
-import { type Environment, commitMutation, graphql } from "react-relay"
+import { commitMutation, type Environment, graphql } from "react-relay"
 
 export const requestEmailConfirmation = (relayEnvironment: Environment) => {
   return new Promise<requestEmailConfirmationMutation$data>((done, reject) => {

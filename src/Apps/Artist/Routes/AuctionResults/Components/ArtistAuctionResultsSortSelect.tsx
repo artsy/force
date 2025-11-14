@@ -1,6 +1,6 @@
+import { useAuctionResultsFilterContext } from "Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
 import SortIcon from "@artsy/icons/SortIcon"
 import { Button, Dropdown, Radio, RadioGroup } from "@artsy/palette"
-import { useAuctionResultsFilterContext } from "Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
 import { type FC, useMemo } from "react"
 
 export const SORTS = [

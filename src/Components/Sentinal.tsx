@@ -1,5 +1,5 @@
-import { Box } from "@artsy/palette"
 import { useIntersectionObserver } from "Utils/Hooks/useIntersectionObserver"
+import { Box } from "@artsy/palette"
 
 interface SentinalProps {
   onEnterView(): void

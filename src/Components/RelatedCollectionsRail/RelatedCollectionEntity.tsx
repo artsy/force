@@ -1,9 +1,9 @@
-import { ContextModule, clickedCollectionGroup } from "@artsy/cohesion"
-import { Box, Flex, Image, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { extractNodes } from "Utils/extractNodes"
 import { cropped } from "Utils/resized"
+import { ContextModule, clickedCollectionGroup } from "@artsy/cohesion"
+import { Box, Flex, Image, Text } from "@artsy/palette"
 import type { RelatedCollectionEntity_collection$data } from "__generated__/RelatedCollectionEntity_collection.graphql"
 import currency from "currency.js"
 import type * as React from "react"
@@ -18,7 +18,7 @@ export interface RelatedCollectionEntityProps {
 
 export const RelatedCollectionEntity: React.FC<
   React.PropsWithChildren<RelatedCollectionEntityProps>
-> = ({ lazyLoad, collection, slideIndex }) => {
+> = ({ collection, slideIndex }) => {
   const { artworksConnection, headerImage, priceGuidance, id, slug, title } =
     collection
 

@@ -1,19 +1,19 @@
-import { CounterFragmentContainer } from "Apps/Order/Routes/Counter"
+import {
+  OfferOrderWithShippingDetails,
+  Offers,
+  OfferWithTotals,
+} from "Apps/__tests__/Fixtures/Order"
 import {
   insufficientInventoryResponse,
   submitPendingOfferFailed,
   submitPendingOfferSuccess,
 } from "Apps/Order/Routes/__fixtures__/MutationResults/submitPendingOffer"
-import {
-  OfferOrderWithShippingDetails,
-  OfferWithTotals,
-  Offers,
-} from "Apps/__tests__/Fixtures/Order"
+import { CounterFragmentContainer } from "Apps/Order/Routes/Counter"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { CounterTestEQuery$rawResponse } from "__generated__/CounterTestEQuery.graphql"
 import { DateTime } from "luxon"
-import { commitMutation as _commitMutation, graphql } from "react-relay"
+import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { OrderAppTestPageRTL } from "./Utils/OrderAppTestPageRTL"
 
@@ -90,7 +90,7 @@ describe("Submit Pending Counter Offer", () => {
         <CounterFragmentContainer
           router={{ push: pushMock } as any}
           order={props.order}
-          // @ts-ignore
+          // @ts-expect-error
           isCommittingMutation={isCommittingMutation}
         />
       </MockBoot>

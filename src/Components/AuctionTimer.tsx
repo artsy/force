@@ -42,7 +42,7 @@ export class AuctionTimer extends Component<Props> {
     const dateTime = DateTime.fromISO(this.endDate!)
     const amPm = dateTime.hour >= 12 ? "pm" : "am"
     const minutes =
-      dateTime.minute < 10 ? "0" + dateTime.minute : dateTime.minute
+      dateTime.minute < 10 ? `0${dateTime.minute}` : dateTime.minute
     let hour
     if (dateTime.hour > 12) {
       hour = dateTime.hour - 12

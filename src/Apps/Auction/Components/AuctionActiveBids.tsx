@@ -1,3 +1,10 @@
+import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
+import { AuctionLotInfoFragmentContainer } from "Apps/Auction/Routes/Bid/Components/AuctionLotInfo"
+import { RouterLink } from "System/Components/RouterLink"
+import { useRouter } from "System/Hooks/useRouter"
+import { getENV } from "Utils/getENV"
+import { usePoll } from "Utils/Hooks/usePoll"
+import { Media } from "Utils/Responsive"
 import ChevronCircleDownIcon from "@artsy/icons/ChevronCircleDownIcon"
 import ChevronCircleUpIcon from "@artsy/icons/ChevronCircleUpIcon"
 import MessageIcon from "@artsy/icons/MessageIcon"
@@ -13,18 +20,11 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
-import { AuctionLotInfoFragmentContainer } from "Apps/Auction/Routes/Bid/Components/AuctionLotInfo"
-import { RouterLink } from "System/Components/RouterLink"
-import { useRouter } from "System/Hooks/useRouter"
-import { usePoll } from "Utils/Hooks/usePoll"
-import { Media } from "Utils/Responsive"
-import { getENV } from "Utils/getENV"
 import type { AuctionActiveBids_me$data } from "__generated__/AuctionActiveBids_me.graphql"
 import {
-  type RelayRefetchProp,
   createRefetchContainer,
   graphql,
+  type RelayRefetchProp,
 } from "react-relay"
 
 interface AuctionActiveBidsProps {
@@ -66,7 +66,7 @@ const AuctionActiveBids: React.FC<
               <Box my={4}>
                 <Join separator={<Spacer y={0.5} />}>
                   <AuctionLotInfoFragmentContainer
-                    saleArtwork={lotStanding?.saleArtwork!}
+                    saleArtwork={lotStanding?.saleArtwork as any}
                     hideLotInfo={!!lotStanding?.saleArtwork?.sale?.isLiveOpen}
                   />
                   {!lotStanding?.saleArtwork?.sale?.isLiveOpen ? (
@@ -256,7 +256,7 @@ const BidButton: React.FC<
   const sale = saleArtwork?.sale
   if (!sale) return null
 
-  if (!!saleArtwork.endedAt) {
+  if (saleArtwork.endedAt) {
     return (
       <Box
         alignItems="center"
@@ -271,10 +271,10 @@ const BidButton: React.FC<
     )
   }
 
-  if (!!sale.isLiveOpen) {
+  if (sale.isLiveOpen) {
     return (
       <Button
-        // @ts-ignore
+        // @ts-expect-error
         as={RouterLink}
         to={`${getENV("PREDICTION_URL")}/${sale.slug}/login`}
         width="50%"
@@ -292,7 +292,7 @@ const BidButton: React.FC<
 
   return (
     <Button
-      // @ts-ignore
+      // @ts-expect-error
       as={RouterLink}
       to={href}
       size={size}

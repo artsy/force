@@ -1,11 +1,11 @@
-import React, { type ReactElement } from "react"
-
-import MoreIcon from "@artsy/icons/MoreIcon"
-import { Clickable, Dropdown } from "@artsy/palette"
 import {
   ContextualMenuDivider,
   ContextualMenuItem,
 } from "Components/ContextualMenu/ContextualMenuItem"
+
+import MoreIcon from "@artsy/icons/MoreIcon"
+import { Clickable, Dropdown } from "@artsy/palette"
+import React, { type ReactElement } from "react"
 
 interface ContextualMenuProps {
   /** Supply `ContextualMenuItem`s and `ContextualMenuDivider`s as needed  */

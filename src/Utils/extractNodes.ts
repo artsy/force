@@ -18,7 +18,7 @@ export function extractNodes<Node extends object, T = Node>(
 ): T[] {
   return (
     connection?.edges?.map(edge =>
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      // biome-ignore lint/suspicious/noNonNullAssertedOptionalChain: thing
       mapper ? (mapper(edge?.node!) as any) : edge?.node!,
     ) ?? []
   )

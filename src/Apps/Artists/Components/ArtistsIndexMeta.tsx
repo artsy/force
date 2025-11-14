@@ -8,7 +8,7 @@ const DESCRIPTION =
 
 export const ArtistsIndexMeta: React.FC<
   React.PropsWithChildren<unknown>
-> = ({}) => {
+> = () => {
   const href = `${getENV("APP_URL")}/artists`
 
   return (

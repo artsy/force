@@ -1,5 +1,5 @@
-import { render, screen } from "@testing-library/react"
 import { StackedImageLayout } from "Apps/CollectorProfile/Routes/Saves/Components/Images/StackedImageLayout"
+import { render, screen } from "@testing-library/react"
 
 describe("StackedImageLayout", () => {
   it("should render all passed images", () => {

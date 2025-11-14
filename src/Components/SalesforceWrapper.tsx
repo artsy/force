@@ -1,6 +1,6 @@
+import { getENV } from "Utils/getENV"
 import { useAppendStylesheet } from "Utils/Hooks/useAppendStylesheet"
 import { useLoadScript } from "Utils/Hooks/useLoadScript"
-import { getENV } from "Utils/getENV"
 import { useEffect } from "react"
 
 export const SalesforceWrapper: React.FC<{}> = _props => {

@@ -1,5 +1,5 @@
-import { Box, type BoxProps, Shelf, SkeletonText } from "@artsy/palette"
 import { CellPartnerPlaceholder } from "Components/Cells/CellPartner"
+import { Box, type BoxProps, Shelf, SkeletonText } from "@artsy/palette"
 
 export interface NearbyGalleriesRailPlaceholderProps extends BoxProps {
   count: number
@@ -16,7 +16,7 @@ export const NearbyGalleriesRailPlaceholder: React.FC<
 
       <Shelf>
         {[...Array(count)].map((_, i) => {
-          return <CellPartnerPlaceholder />
+          return <CellPartnerPlaceholder key={i} />
         })}
       </Shelf>
     </Box>

@@ -1,8 +1,8 @@
-import { render, screen, fireEvent, waitFor } from "@testing-library/react"
 import {
   ShareCollectionDialog,
-  ShareCollectionDialogProps,
+  type ShareCollectionDialogProps,
 } from "Components/ShareCollectionDialog"
+import { fireEvent, render, screen, waitFor } from "@testing-library/react"
 
 jest.mock("System/Hooks/useSystemContext", () => ({
   useSystemContext: () => ({

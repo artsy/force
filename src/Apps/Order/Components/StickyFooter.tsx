@@ -1,10 +1,10 @@
-import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { Clickable, Flex, Spacer, Text } from "@artsy/palette"
-import { themeGet } from "@styled-system/theme-get"
 import {
   type WithInquiryProps,
   withInquiry,
 } from "Components/Inquiry/useInquiry"
+import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import { Clickable, Flex, Spacer, Text } from "@artsy/palette"
+import { themeGet } from "@styled-system/theme-get"
 import type { FC } from "react"
 import { useTracking } from "react-tracking"
 import styled from "styled-components"

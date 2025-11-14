@@ -35,7 +35,7 @@ export const useDarkModeToggle = ({
     return () => {
       document.removeEventListener("keydown", handleKeyDown)
     }
-  }, [preferences.theme, updatePreferences, handleKeyDown, attachKeyListeners])
+  }, [handleKeyDown, attachKeyListeners])
 
   return {
     toggleDarkMode,

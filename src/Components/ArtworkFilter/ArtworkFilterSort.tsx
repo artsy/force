@@ -1,3 +1,4 @@
+import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
 import SortIcon from "@artsy/icons/SortIcon"
 import {
   Button,
@@ -6,7 +7,6 @@ import {
   Radio,
   RadioGroup,
 } from "@artsy/palette"
-import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
 import type { FC } from "react"
 
 interface ArtworkFilterSortProps

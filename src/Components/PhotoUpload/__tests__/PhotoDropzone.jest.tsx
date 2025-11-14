@@ -2,7 +2,7 @@ import { PhotoDropzone } from "Components/PhotoUpload/Components/PhotoDropzone"
 import { MBSize } from "Components/PhotoUpload/Utils/fileUtils"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { MediaContextProvider } from "Utils/Responsive"
-import { render, fireEvent, waitFor } from "@testing-library/react"
+import { fireEvent, render, waitFor } from "@testing-library/react"
 import { Formik } from "formik"
 
 const validImage = {

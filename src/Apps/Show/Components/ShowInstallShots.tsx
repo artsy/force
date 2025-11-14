@@ -1,3 +1,6 @@
+import { FullscreenBox } from "Components/FullscreenBox"
+import { useNextPrevious } from "Utils/Hooks/useNextPrevious"
+import { maxDimensionsByArea, resized } from "Utils/resized"
 import ChevronLeftIcon from "@artsy/icons/ChevronLeftIcon"
 import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
 import {
@@ -10,9 +13,6 @@ import {
   useTheme,
 } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
-import { FullscreenBox } from "Components/FullscreenBox"
-import { useNextPrevious } from "Utils/Hooks/useNextPrevious"
-import { maxDimensionsByArea, resized } from "Utils/resized"
 import type { ShowInstallShots_show$data } from "__generated__/ShowInstallShots_show.graphql"
 import { compact } from "lodash"
 import { type FC, useState } from "react"

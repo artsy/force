@@ -1,10 +1,3 @@
-import {
-  ActionType,
-  type ClickedOfferOption,
-  type PageOwnerType,
-} from "@artsy/cohesion"
-import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { BorderedRadio, Flex, RadioGroup, Text } from "@artsy/palette"
 import { OfferInput } from "Apps/Order/Components/OfferInput"
 import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
 import {
@@ -14,6 +7,13 @@ import {
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { Device, useDeviceDetection } from "Utils/Hooks/useDeviceDetection"
 import { Jump, useJump } from "Utils/Hooks/useJump"
+import {
+  ActionType,
+  type ClickedOfferOption,
+  type PageOwnerType,
+} from "@artsy/cohesion"
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import { BorderedRadio, Flex, RadioGroup, Text } from "@artsy/palette"
 import type { PriceOptions_artwork$data } from "__generated__/PriceOptions_artwork.graphql"
 import type { PriceOptions_order$data } from "__generated__/PriceOptions_order.graphql"
 import { compact } from "lodash"
@@ -63,7 +63,6 @@ export const PriceOptions: React.FC<
     selectedPriceOption,
   )
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (lastOffer) {
       onChange(lastOffer)
@@ -72,16 +71,12 @@ export const PriceOptions: React.FC<
     }
   }, [])
 
-  useEffect(() => {
-    if (toggle) trackClick("Different amount", 0)
-  }, [toggle])
-
   const trackClick = (offer: string, amount: number) => {
     const trackingData: ClickedOfferOption = {
       action: ActionType.clickedOfferOption,
       context_page_owner_id: contextPageOwnerId!,
       context_page_owner_type: contextPageOwnerType as PageOwnerType,
-      currency: artwork?.priceCurrency!,
+      currency: artwork?.priceCurrency as string,
       order_id: order.internalID,
       flow: DeprecatedAnalyticsSchema.Flow.MakeOffer,
       offer,
@@ -90,17 +85,21 @@ export const PriceOptions: React.FC<
     tracking.trackEvent(trackingData)
   }
 
+  useEffect(() => {
+    if (toggle) trackClick("Different amount", 0)
+  }, [toggle, trackClick])
+
   const asCurrency = (value: number) =>
     appendCurrencySymbol(
       value?.toLocaleString("en-US", {
-        currency: artwork?.priceCurrency!,
+        currency: artwork?.priceCurrency as string,
         minimumFractionDigits: 2,
         style: "currency",
       }),
-      artwork?.priceCurrency!,
+      artwork?.priceCurrency as string,
     )
 
-  const minPrice = priceOptions[2]?.value!
+  const minPrice = priceOptions[2]?.value
 
   const { jumpTo } = useJump()
 

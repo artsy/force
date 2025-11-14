@@ -1,6 +1,6 @@
-import { Spacer } from "@artsy/palette"
 import { ArtistTabs } from "Apps/Artist/Components/ArtistTabs"
 import { ArtistOverviewFragmentContainer } from "Apps/Artist/Routes/Overview/Components/ArtistOverview"
+import { Spacer } from "@artsy/palette"
 import type { ArtistOverviewRoute_artist$data } from "__generated__/ArtistOverviewRoute_artist.graphql"
 import type * as React from "react"
 import { Meta, Title } from "react-head"

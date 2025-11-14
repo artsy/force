@@ -1,5 +1,5 @@
-import { render, screen } from "@testing-library/react"
 import { ConversationsSidebarEmpty } from "Apps/Conversations/components/Sidebar/ConversationsSidebarEmpty"
+import { render, screen } from "@testing-library/react"
 
 jest.mock("System/Hooks/useRouter", () => ({
   useRouter: () => ({

@@ -1,9 +1,7 @@
-/* eslint-disable no-restricted-imports */
-const rewire = require("rewire")
+const _rewire = require("rewire")
 const cbs = require("../callbacks")
 
-import options from "Server/passport/lib/options"
-import passport from "passport"
+// biome-ignore lint/style/noRestrictedImports: ignore
 import request from "superagent"
 
 jest.mock("superagent")
@@ -35,7 +33,7 @@ describe("passport callbacks", () => {
 
   it("gets a user with an access token email/password/otp", done => {
     req.body = { otpRequired: true }
-    cbs.local(req, "craig", "foo", "123456", (err, user) => {
+    cbs.local(req, "craig", "foo", "123456", (_err, user) => {
       expect(user.accessToken).toEqual("access-token")
       done()
     })
@@ -49,7 +47,7 @@ describe("passport callbacks", () => {
 
   it("gets a user with an access token email/password without otp", done => {
     req.body = { otpRequired: false }
-    cbs.local(req, "craig", "foo", null, (err, user) => {
+    cbs.local(req, "craig", "foo", null, (_err, user) => {
       expect(user.accessToken).toEqual("access-token")
       done()
     })
@@ -62,7 +60,7 @@ describe("passport callbacks", () => {
   })
 
   it("gets a user with an access token facebook", done => {
-    cbs.facebook(req, "foo-token", "refresh-token", {}, (err, user) => {
+    cbs.facebook(req, "foo-token", "refresh-token", {}, (_err, user) => {
       expect(user.accessToken).toEqual("access-token")
       done()
     })
@@ -77,7 +75,7 @@ describe("passport callbacks", () => {
   })
 
   it("gets a user with an access token google", done => {
-    cbs.google(req, "foo-token", "refresh-token", {}, (err, user) => {
+    cbs.google(req, "foo-token", "refresh-token", {}, (_err, user) => {
       expect(user.accessToken).toEqual("access-token")
       done()
     })
@@ -102,7 +100,7 @@ describe("passport callbacks", () => {
       decodedIdToken,
       "access_token",
       "refresh-token",
-      (err, user) => {
+      (_err, user) => {
         expect(user.accessToken).toEqual("access-token")
         done()
       },

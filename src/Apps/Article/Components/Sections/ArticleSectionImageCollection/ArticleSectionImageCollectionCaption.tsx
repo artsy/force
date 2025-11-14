@@ -1,5 +1,5 @@
-import { HTML, Text } from "@artsy/palette"
 import Metadata from "Components/Artwork/Metadata"
+import { HTML, Text } from "@artsy/palette"
 import type { ArticleSectionImageCollectionCaption_figure$data } from "__generated__/ArticleSectionImageCollectionCaption_figure.graphql"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"

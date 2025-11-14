@@ -1,7 +1,7 @@
-import { render, screen, fireEvent } from "@testing-library/react"
 import { AlertProvider } from "Components/Alert/AlertProvider"
 import { Color } from "Components/Alert/Components/Filters/Color"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
+import { fireEvent, render, screen } from "@testing-library/react"
 
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
@@ -16,7 +16,7 @@ describe("ColorFilter", () => {
     return <Color />
   }
 
-  const getWrapper = (contextProps = {}, initialCriteria = {}) => {
+  const getWrapper = (_contextProps = {}, initialCriteria = {}) => {
     return render(
       <AlertProvider initialCriteria={initialCriteria}>
         <ColorFilterTestComponent />

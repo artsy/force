@@ -1,3 +1,4 @@
+import { MetaTags } from "Components/MetaTags"
 import {
   Box,
   Button,
@@ -7,7 +8,6 @@ import {
   Text,
   useToasts,
 } from "@artsy/palette"
-import { MetaTags } from "Components/MetaTags"
 import { type FC, useReducer, useState } from "react"
 
 export const AdminCacheManagementRoute: FC<

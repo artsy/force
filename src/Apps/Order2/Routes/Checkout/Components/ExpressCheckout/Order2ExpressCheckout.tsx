@@ -1,9 +1,3 @@
-import { Flex } from "@artsy/palette"
-import { Elements, useStripe } from "@stripe/react-stripe-js"
-import type {
-  StripeElementsOptions,
-  StripeElementsUpdateOptions,
-} from "@stripe/stripe-js"
 import {
   CheckoutStepName,
   CheckoutStepState,
@@ -12,11 +6,17 @@ import { Order2ExpressCheckoutUI } from "Apps/Order2/Routes/Checkout/Components/
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import createLogger from "Utils/logger"
-import type { Order2ExpressCheckoutQuery } from "__generated__/Order2ExpressCheckoutQuery.graphql"
+import { Flex } from "@artsy/palette"
+import { Elements, useStripe } from "@stripe/react-stripe-js"
+import type {
+  StripeElementsOptions,
+  StripeElementsUpdateOptions,
+} from "@stripe/stripe-js"
 import type {
   Order2ExpressCheckout_order$data,
   Order2ExpressCheckout_order$key,
 } from "__generated__/Order2ExpressCheckout_order.graphql"
+import type { Order2ExpressCheckoutQuery } from "__generated__/Order2ExpressCheckoutQuery.graphql"
 import { graphql, useFragment } from "react-relay"
 
 const logger = createLogger("Order2ExpressCheckout.tsx")

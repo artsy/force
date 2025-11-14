@@ -1,13 +1,3 @@
-import {
-  Box,
-  Button,
-  Input,
-  Separator,
-  Spacer,
-  Text,
-  TextArea,
-  useToasts,
-} from "@artsy/palette"
 import { useArtworkInquiryRequest } from "Components/Inquiry/Hooks/useArtworkInquiryRequest"
 import {
   type InquiryState,
@@ -18,6 +8,16 @@ import { RouterLink } from "System/Components/RouterLink"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useMode } from "Utils/Hooks/useMode"
 import { wait } from "Utils/wait"
+import {
+  Box,
+  Button,
+  Input,
+  Separator,
+  Spacer,
+  Text,
+  TextArea,
+  useToasts,
+} from "@artsy/palette"
 import type * as React from "react"
 
 type Mode = "Pending" | "Sending" | "Error" | "Success"

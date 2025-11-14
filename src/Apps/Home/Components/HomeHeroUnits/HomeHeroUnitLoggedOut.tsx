@@ -1,6 +1,6 @@
-import { ContextModule } from "@artsy/cohesion"
 import { useAuthDialog } from "Components/AuthDialog"
 import { useDeviceDetection } from "Utils/Hooks/useDeviceDetection"
+import { ContextModule } from "@artsy/cohesion"
 import type * as React from "react"
 import { HomeHeroUnitBase } from "./HomeHeroUnit"
 

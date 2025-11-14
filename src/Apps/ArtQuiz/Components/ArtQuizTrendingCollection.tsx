@@ -1,9 +1,9 @@
-import { HTML, Shelf, SkeletonText, Spacer, Text } from "@artsy/palette"
 import {
   ShelfArtworkFragmentContainer,
   ShelfArtworkPlaceholder,
 } from "Components/Artwork/ShelfArtwork"
 import { extractNodes } from "Utils/extractNodes"
+import { HTML, Shelf, SkeletonText, Spacer, Text } from "@artsy/palette"
 import type { ArtQuizTrendingCollection_collection$data } from "__generated__/ArtQuizTrendingCollection_collection.graphql"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"

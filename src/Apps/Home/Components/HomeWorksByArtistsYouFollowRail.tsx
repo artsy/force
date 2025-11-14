@@ -1,11 +1,4 @@
 import {
-  ActionType,
-  type ClickedArtworkGroup,
-  ContextModule,
-  OwnerType,
-} from "@artsy/cohesion"
-import { Shelf, Skeleton } from "@artsy/palette"
-import {
   ShelfArtworkFragmentContainer,
   ShelfArtworkPlaceholder,
 } from "Components/Artwork/ShelfArtwork"
@@ -13,8 +6,15 @@ import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { getSignalLabel } from "Utils/getSignalLabel"
-import type { HomeWorksByArtistsYouFollowRailQuery } from "__generated__/HomeWorksByArtistsYouFollowRailQuery.graphql"
+import {
+  ActionType,
+  type ClickedArtworkGroup,
+  ContextModule,
+  OwnerType,
+} from "@artsy/cohesion"
+import { Shelf, Skeleton } from "@artsy/palette"
 import type { HomeWorksByArtistsYouFollowRail_homePage$data } from "__generated__/HomeWorksByArtistsYouFollowRail_homePage.graphql"
+import type { HomeWorksByArtistsYouFollowRailQuery } from "__generated__/HomeWorksByArtistsYouFollowRailQuery.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"

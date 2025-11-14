@@ -1,3 +1,7 @@
+import type { Address } from "Components/Address/utils"
+import { useFlag } from "System/FeatureFlags/useFlag"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { getENV } from "Utils/getENV"
 import {
   ActionType,
   type AddressAutoCompletionResult,
@@ -5,10 +9,6 @@ import {
   OwnerType,
 } from "@artsy/cohesion"
 import type { AutocompleteInputOptionType } from "@artsy/palette"
-import type { Address } from "Components/Address/utils"
-import { useFlag } from "System/FeatureFlags/useFlag"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import { getENV } from "Utils/getENV"
 import { throttle, uniqBy } from "lodash"
 import { useCallback, useEffect, useMemo, useState } from "react"
 import { useTracking } from "react-tracking"

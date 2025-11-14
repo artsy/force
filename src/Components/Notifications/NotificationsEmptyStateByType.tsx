@@ -1,5 +1,5 @@
-import { Box, Spacer, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
+import { Box, Spacer, Text } from "@artsy/palette"
 import type { NotificationType } from "./types"
 
 interface NotificationsEmptyStateByTypeProps {

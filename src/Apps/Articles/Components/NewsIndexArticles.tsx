@@ -1,13 +1,13 @@
-import { Box, Button, Join, Separator, Text } from "@artsy/palette"
 import { ArticleAd } from "Apps/Article/Components/ArticleAd/ArticleAd"
 import { ArticleBodyFragmentContainer } from "Apps/Article/Components/ArticleBody"
 import { extractNodes } from "Utils/extractNodes"
+import { Box, Button, Join, Separator, Text } from "@artsy/palette"
 import type { NewsIndexArticles_viewer$data } from "__generated__/NewsIndexArticles_viewer.graphql"
 import { type FC, Fragment, useState } from "react"
 import {
-  type RelayPaginationProp,
   createPaginationContainer,
   graphql,
+  type RelayPaginationProp,
 } from "react-relay"
 
 interface NewsIndexArticlesProps {

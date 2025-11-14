@@ -1,21 +1,21 @@
+import {
+  formatFileSize,
+  type Photo,
+} from "Components/PhotoUpload/Utils/fileUtils"
+import { Media } from "Utils/Responsive"
 import CloseStrokeIcon from "@artsy/icons/CloseStrokeIcon"
 import {
   Box,
   type BoxProps,
-  CSSGrid,
   Clickable,
   Column,
+  CSSGrid,
   Flex,
   Image,
   ProgressBar,
   Spinner,
   Text,
 } from "@artsy/palette"
-import {
-  type Photo,
-  formatFileSize,
-} from "Components/PhotoUpload/Utils/fileUtils"
-import { Media } from "Utils/Responsive"
 import { type ComponentProps, useEffect, useState } from "react"
 import styled from "styled-components"
 

@@ -1,8 +1,8 @@
-import ArtsyMarkIcon from "@artsy/icons/ArtsyMarkIcon"
-import { themeGet } from "@styled-system/theme-get"
 import { RouterLink, type RouterLinkProps } from "System/Components/RouterLink"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import ArtsyMarkIcon from "@artsy/icons/ArtsyMarkIcon"
+import { themeGet } from "@styled-system/theme-get"
 import type * as React from "react"
 import styled from "styled-components"
 

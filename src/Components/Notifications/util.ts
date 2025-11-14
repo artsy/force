@@ -1,6 +1,6 @@
 import type {
-  NotificationTypesEnum,
   NotificationsList_viewer$data,
+  NotificationTypesEnum,
 } from "__generated__/NotificationsList_viewer.graphql"
 
 export type NotificationNode = NonNullable<

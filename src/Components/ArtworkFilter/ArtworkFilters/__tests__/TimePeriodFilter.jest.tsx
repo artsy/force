@@ -1,14 +1,14 @@
-import { screen } from "@testing-library/react"
-import userEvent from "@testing-library/user-event"
 import type { ArtworkFilterContextProps } from "Components/ArtworkFilter/ArtworkFilterContext"
-import {
-  TimePeriodFilter,
-  getTimePeriodToDisplay,
-} from "Components/ArtworkFilter/ArtworkFilters/TimePeriodFilter"
 import {
   createArtworkFilterTestRenderer,
   currentArtworkFilterContext,
 } from "Components/ArtworkFilter/ArtworkFilters/__tests__/Utils"
+import {
+  getTimePeriodToDisplay,
+  TimePeriodFilter,
+} from "Components/ArtworkFilter/ArtworkFilters/TimePeriodFilter"
+import { screen } from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
 
 describe(TimePeriodFilter, () => {
   describe("with aggregations", () => {

@@ -1,4 +1,3 @@
-import { Join, Spacer } from "@artsy/palette"
 import { getArtworkFilterInputArgs } from "Apps/Auction/Components/getArtworkFilterInputArgs"
 import { ArtworkFilter } from "Components/ArtworkFilter"
 import type {
@@ -20,12 +19,13 @@ import { LazyArtworkGrid } from "Components/ArtworkGrid/LazyArtworkGrid"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import type { AuctionArtworkFilterQuery } from "__generated__/AuctionArtworkFilterQuery.graphql"
+import { Join, Spacer } from "@artsy/palette"
 import type { AuctionArtworkFilter_viewer$data } from "__generated__/AuctionArtworkFilter_viewer.graphql"
+import type { AuctionArtworkFilterQuery } from "__generated__/AuctionArtworkFilterQuery.graphql"
 import {
-  type RelayRefetchProp,
   createRefetchContainer,
   graphql,
+  type RelayRefetchProp,
 } from "react-relay"
 
 interface AuctionArtworkFilterProps {

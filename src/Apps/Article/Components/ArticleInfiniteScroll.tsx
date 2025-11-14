@@ -1,3 +1,7 @@
+import { InfiniteScrollSentinel } from "Components/InfiniteScrollSentinel"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { extractNodes } from "Utils/extractNodes"
+import { useMode } from "Utils/Hooks/useMode"
 import {
   Box,
   Column,
@@ -13,17 +17,13 @@ import {
   Spacer,
 } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
-import { InfiniteScrollSentinel } from "Components/InfiniteScrollSentinel"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { useMode } from "Utils/Hooks/useMode"
-import { extractNodes } from "Utils/extractNodes"
-import type { ArticleInfiniteScrollQuery } from "__generated__/ArticleInfiniteScrollQuery.graphql"
 import type { ArticleInfiniteScroll_viewer$data } from "__generated__/ArticleInfiniteScroll_viewer.graphql"
+import type { ArticleInfiniteScrollQuery } from "__generated__/ArticleInfiniteScrollQuery.graphql"
 import { type FC, Fragment } from "react"
 import {
-  type RelayPaginationProp,
   createPaginationContainer,
   graphql,
+  type RelayPaginationProp,
 } from "react-relay"
 import styled from "styled-components"
 import { ArticleBodyFragmentContainer } from "./ArticleBody"

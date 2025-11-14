@@ -1,15 +1,15 @@
-import { RespondFragmentContainer } from "Apps/Order/Routes/Respond"
-import {
-  buyerCounterOfferFailed,
-  buyerCounterOfferSuccess,
-} from "Apps/Order/Routes/__fixtures__/MutationResults/buyerCounterOffer"
 import {
   Buyer,
   OfferOrderWithShippingDetails,
   OfferOrderWithShippingDetailsAndNote,
-  OfferWithTotals,
   Offers,
+  OfferWithTotals,
 } from "Apps/__tests__/Fixtures/Order"
+import {
+  buyerCounterOfferFailed,
+  buyerCounterOfferSuccess,
+} from "Apps/Order/Routes/__fixtures__/MutationResults/buyerCounterOffer"
+import { RespondFragmentContainer } from "Apps/Order/Routes/Respond"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { screen } from "@testing-library/react"

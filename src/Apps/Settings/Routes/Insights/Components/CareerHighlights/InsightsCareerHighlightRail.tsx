@@ -1,8 +1,8 @@
-import { Shelf } from "@artsy/palette"
 import { useCareerHighlightsStoriesModal } from "Apps/Settings/Routes/Insights/Components/CareerHighlights/CareerHighlightsModal/Hooks/useCareerHighlightsStoriesModal"
 import { InsightsCareerHighlightCard } from "Apps/Settings/Routes/Insights/Components/CareerHighlights/InsightsCareerHighlightCard"
 import { InsightsCareerHighlightPromoCard } from "Apps/Settings/Routes/Insights/Components/CareerHighlights/InsightsCareerHighlightPromoCard"
 import type { CareerHighlightKind } from "Apps/Settings/Routes/Insights/Utils/getCareerHighlight"
+import { Shelf } from "@artsy/palette"
 import type { InsightsCareerHighlightRail_me$data } from "__generated__/InsightsCareerHighlightRail_me.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 

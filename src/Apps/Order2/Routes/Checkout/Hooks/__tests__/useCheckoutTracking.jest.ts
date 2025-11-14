@@ -1,6 +1,7 @@
 import { act, renderHook } from "@testing-library/react-hooks"
 import { useTracking } from "react-tracking"
 import { useCheckoutTracking } from "../useCheckoutTracking"
+
 jest.mock("react-tracking")
 const mockTrackEvent = jest.fn()
 

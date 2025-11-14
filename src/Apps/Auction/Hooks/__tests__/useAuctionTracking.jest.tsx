@@ -1,5 +1,5 @@
-import { renderHook } from "@testing-library/react-hooks"
 import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
+import { renderHook } from "@testing-library/react-hooks"
 import { useTracking } from "react-tracking"
 
 jest.mock("react-tracking")

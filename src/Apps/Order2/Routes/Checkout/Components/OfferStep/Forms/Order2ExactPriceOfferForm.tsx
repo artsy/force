@@ -1,7 +1,7 @@
-import { Flex, Radio, RadioGroup, Spacer, Text } from "@artsy/palette"
 import { OfferInput } from "Apps/Order/Components/OfferInput"
 import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
 import type { OfferFormProps } from "Apps/Order2/Routes/Checkout/Components/OfferStep/types"
+import { Flex, Radio, RadioGroup, Spacer, Text } from "@artsy/palette"
 import type { Order2ExactPriceOfferForm_order$key } from "__generated__/Order2ExactPriceOfferForm_order.graphql"
 import { useEffect, useState } from "react"
 import { graphql, useFragment } from "react-relay"

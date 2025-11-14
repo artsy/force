@@ -1,3 +1,9 @@
+import { PartnersFeaturedCarouselFragmentContainer } from "Apps/Partners/Components/PartnersFeaturedCarousel"
+import { PartnersFilteredCellsQueryRenderer } from "Apps/Partners/Components/PartnersFilteredCells"
+import { PartnersFilters } from "Apps/Partners/Components/PartnersFilters"
+import { PartnersRailsQueryRenderer } from "Apps/Partners/Components/PartnersRails"
+import { MetaTags } from "Components/MetaTags"
+import { useRouter } from "System/Hooks/useRouter"
 import {
   Button,
   Column,
@@ -8,12 +14,6 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { PartnersFeaturedCarouselFragmentContainer } from "Apps/Partners/Components/PartnersFeaturedCarousel"
-import { PartnersFilteredCellsQueryRenderer } from "Apps/Partners/Components/PartnersFilteredCells"
-import { PartnersFilters } from "Apps/Partners/Components/PartnersFilters"
-import { PartnersRailsQueryRenderer } from "Apps/Partners/Components/PartnersRails"
-import { MetaTags } from "Components/MetaTags"
-import { useRouter } from "System/Hooks/useRouter"
 import type { GalleriesRoute_viewer$data } from "__generated__/GalleriesRoute_viewer.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -55,7 +55,6 @@ const GalleriesRoute: React.FC<
             <Text
               variant="sm-display"
               as="a"
-              // @ts-ignore
               href="https://partners.artsy.net"
               mr={2}
             >
@@ -65,7 +64,6 @@ const GalleriesRoute: React.FC<
             <Text
               variant="sm-display"
               as="a"
-              // @ts-ignore
               href="https://partners.artsy.net/gallery-resources/"
             >
               Gallery Insights
@@ -95,7 +93,7 @@ const GalleriesRoute: React.FC<
 
             <Button
               variant="secondaryBlack"
-              // @ts-ignore
+              // @ts-expect-error
               as="a"
               href="https://partners.artsy.net/"
             >
@@ -110,7 +108,7 @@ const GalleriesRoute: React.FC<
 
             <Button
               variant="secondaryBlack"
-              // @ts-ignore
+              // @ts-expect-error
               as="a"
               href="https://partners.artsy.net/"
             >

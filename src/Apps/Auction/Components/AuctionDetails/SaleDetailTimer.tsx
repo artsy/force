@@ -1,6 +1,6 @@
-import { Text } from "@artsy/palette"
-import { useTimer } from "Utils/Hooks/useTimer"
 import { getSaleOrLotTimerInfo } from "Utils/getSaleOrLotTimerInfo"
+import { useTimer } from "Utils/Hooks/useTimer"
+import { Text } from "@artsy/palette"
 import type { SaleDetailTimer_sale$data } from "__generated__/SaleDetailTimer_sale.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -16,8 +16,10 @@ export const SaleDetailTimer: React.FC<
   const startAt = sale?.startAt
   const endedAt = sale?.endedAt
 
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const { hasEnded, time, hasStarted } = useTimer(endAt!, startAt!)
+  const { hasEnded, time, hasStarted } = useTimer(
+    endAt as string,
+    startAt as string,
+  )
 
   if (!endAt || endedAt) {
     return null

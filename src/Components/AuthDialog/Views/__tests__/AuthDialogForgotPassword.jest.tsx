@@ -1,6 +1,6 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react"
 import { AuthDialogForgotPassword } from "Components/AuthDialog/Views/AuthDialogForgotPassword"
 import { forgotPassword } from "Utils/auth"
+import { fireEvent, render, screen, waitFor } from "@testing-library/react"
 
 jest.mock("Utils/auth", () => ({
   forgotPassword: jest.fn(),

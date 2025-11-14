@@ -1,9 +1,9 @@
-import { screen } from "@testing-library/react"
 import {
   ConfirmationArtworks,
   NUMBER_OF_ARTWORKS_TO_SHOW,
 } from "Components/SavedSearchAlert/ConfirmationArtworksGrid"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import type { ConfirmationArtworksGrid_Test_Query } from "__generated__/ConfirmationArtworksGrid_Test_Query.graphql"
 import { graphql } from "react-relay"
 

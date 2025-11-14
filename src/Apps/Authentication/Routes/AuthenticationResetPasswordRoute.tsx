@@ -1,3 +1,9 @@
+import { passwordValidator } from "Components/AuthDialog/Views/AuthDialogSignUp"
+import { MetaTags } from "Components/MetaTags"
+import { useRouter } from "System/Hooks/useRouter"
+import { resetPassword } from "Utils/auth"
+import { getENV } from "Utils/getENV"
+import { useMode } from "Utils/Hooks/useMode"
 import ArtsyLogoIcon from "@artsy/icons/ArtsyLogoIcon"
 import {
   Button,
@@ -8,12 +14,6 @@ import {
   Text,
   useToasts,
 } from "@artsy/palette"
-import { passwordValidator } from "Components/AuthDialog/Views/AuthDialogSignUp"
-import { MetaTags } from "Components/MetaTags"
-import { useRouter } from "System/Hooks/useRouter"
-import { useMode } from "Utils/Hooks/useMode"
-import { resetPassword } from "Utils/auth"
-import { getENV } from "Utils/getENV"
 import { Formik } from "formik"
 import type React from "react"
 import * as Yup from "yup"
@@ -109,7 +109,6 @@ export const AuthenticationResetPasswordRoute: React.FC<
               mx="auto"
               py={4}
               maxWidth={440}
-              // @ts-ignore
               onSubmit={handleSubmit}
             >
               <Join separator={<Spacer y={2} />}>

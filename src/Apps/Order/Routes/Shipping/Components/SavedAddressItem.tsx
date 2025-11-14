@@ -1,5 +1,5 @@
-import { type BoxProps, Flex, type RadioProps, Text } from "@artsy/palette"
 import type { SavedAddressType } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
+import { type BoxProps, Flex, type RadioProps, Text } from "@artsy/palette"
 import type * as React from "react"
 import styled from "styled-components"
 

@@ -1,7 +1,6 @@
+import { NODE_ENV } from "Server/config"
 import type { NextFunction } from "express"
 import type { ArtsyRequest, ArtsyResponse } from "./artsyExpress"
-
-import { NODE_ENV } from "Server/config"
 
 /**
  * Inject common project-wide [view locals](http://expressjs.com/api.html#app.locals).

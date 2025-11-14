@@ -129,7 +129,7 @@ export const handlePartnerGenericRedirect = (
 }
 
 export const handleFairArtworks = (
-  req: Request,
+  _req: Request,
   res: ResWithProfile,
   next: NextFunction,
 ) => {
@@ -145,7 +145,7 @@ export const handleFairArtworks = (
 }
 
 export const handleFair = (
-  req: Request,
+  _req: Request,
   res: ResWithProfile,
   next: NextFunction,
 ) => {

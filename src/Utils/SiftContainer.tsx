@@ -1,5 +1,7 @@
 import { Component } from "react"
+// biome-ignore lint/style/noRestrictedImports: Core utility requires sharify
 import sharify from "sharify"
+
 const sd = sharify.data
 
 export class SiftContainer extends Component {

@@ -1,11 +1,11 @@
+import { AppContainer } from "Apps/Components/AppContainer"
+import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import {
   BANNER_VARIANTS,
   Banner,
   type BannerProps,
   FullBleed,
 } from "@artsy/palette"
-import { AppContainer } from "Apps/Components/AppContainer"
-import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import type { FC } from "react"
 
 export const FullBleedBanner: FC<React.PropsWithChildren<BannerProps>> = ({

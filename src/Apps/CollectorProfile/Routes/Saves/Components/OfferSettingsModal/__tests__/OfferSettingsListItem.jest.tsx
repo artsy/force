@@ -1,5 +1,5 @@
-import { fireEvent, render, screen } from "@testing-library/react"
 import { OfferSettingsListItem } from "Apps/CollectorProfile/Routes/Saves/Components/OfferSettingsModal/OfferSettingsListItem"
+import { fireEvent, render, screen } from "@testing-library/react"
 import type { OfferSettingsListItem_item$data } from "__generated__/OfferSettingsListItem_item.graphql"
 import { useFormikContext } from "formik"
 

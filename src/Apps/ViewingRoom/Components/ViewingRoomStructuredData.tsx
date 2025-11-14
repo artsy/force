@@ -1,8 +1,7 @@
 import { StructuredData } from "Components/Seo/StructuredData"
 import { getENV } from "Utils/getENV"
 import type { ViewingRoomStructuredData_viewingRoom$key } from "__generated__/ViewingRoomStructuredData_viewingRoom.graphql"
-import { graphql } from "react-relay"
-import { useFragment } from "react-relay"
+import { graphql, useFragment } from "react-relay"
 
 interface ViewingRoomStructuredDataProps {
   viewingRoom: ViewingRoomStructuredData_viewingRoom$key

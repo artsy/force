@@ -1,9 +1,9 @@
-import { fireEvent, screen } from "@testing-library/react"
 import {
   PreferencesAppFragmentContainer,
   parseTokenFromRouter,
 } from "Apps/Preferences/PreferencesApp"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { fireEvent, screen } from "@testing-library/react"
 import type { PreferencesAppTestQuery } from "__generated__/PreferencesAppTestQuery.graphql"
 import { graphql } from "react-relay"
 

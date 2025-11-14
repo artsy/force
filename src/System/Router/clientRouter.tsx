@@ -11,10 +11,10 @@ import { shouldUpdateScroll } from "System/Router/Utils/shouldUpdateScroll"
 import { getUser } from "Utils/user"
 import {
   BrowserProtocol,
+  createQueryMiddleware,
   HashProtocol,
   type HistoryEnhancerOptions,
   MemoryProtocol,
-  createQueryMiddleware,
 } from "farce"
 import { createInitialFarceRouter, createRender } from "found"
 import { Resolver } from "found-relay"

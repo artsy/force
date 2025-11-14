@@ -1,5 +1,5 @@
-import { Join, Spacer } from "@artsy/palette"
 import { extractNodes } from "Utils/extractNodes"
+import { Join, Spacer } from "@artsy/palette"
 import type { GeneFamilies_geneFamiliesConnection$data } from "__generated__/GeneFamilies_geneFamiliesConnection.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"

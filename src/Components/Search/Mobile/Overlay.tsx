@@ -1,26 +1,25 @@
-import SearchIcon from "@artsy/icons/SearchIcon"
-import { Box, LabeledInput } from "@artsy/palette"
-import { type FC, useCallback, useEffect, useRef, useState } from "react"
-
-import { ActionType } from "@artsy/cohesion"
-import {
-  OVERLAY_CONTENT_ID,
-  OverlayBase,
-} from "Components/Search/Mobile/OverlayBase"
-import { SearchInputPillsFragmentContainer } from "Components/Search/SearchInputPills"
 import {
   type PillType,
   SEARCH_DEBOUNCE_DELAY,
   TOP_PILL,
 } from "Components/Search/constants"
+import {
+  OVERLAY_CONTENT_ID,
+  OverlayBase,
+} from "Components/Search/Mobile/OverlayBase"
+import { SearchInputPillsFragmentContainer } from "Components/Search/SearchInputPills"
 import { reportPerformanceMeasurement } from "Components/Search/utils/reportPerformanceMeasurement"
 import { shouldStartSearching } from "Components/Search/utils/shouldStartSearching"
 import createLogger from "Utils/logger"
+import { ActionType } from "@artsy/cohesion"
+import SearchIcon from "@artsy/icons/SearchIcon"
+import { Box, LabeledInput } from "@artsy/palette"
 import type { Overlay_viewer$data } from "__generated__/Overlay_viewer.graphql"
+import { type FC, useCallback, useEffect, useRef, useState } from "react"
 import {
-  type RelayRefetchProp,
   createRefetchContainer,
   graphql,
+  type RelayRefetchProp,
 } from "react-relay"
 import { useTracking } from "react-tracking"
 import { useDebounce } from "use-debounce"
@@ -51,7 +50,6 @@ export const Overlay: FC<React.PropsWithChildren<OverlayProps>> = ({
   const [debouncedValue] = useDebounce(inputValue, SEARCH_DEBOUNCE_DELAY)
   const disablePills = !shouldStartSearching(inputValue)
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     inputRef.current?.focus()
 

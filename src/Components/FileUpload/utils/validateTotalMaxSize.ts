@@ -2,7 +2,7 @@ import { CustomErrorCode, type DropzoneFile } from "Components/FileUpload/types"
 import type { FileRejection } from "react-dropzone"
 
 const KBSize = 1000
-const MBSize = Math.pow(KBSize, 2)
+const MBSize = KBSize ** 2
 
 export const validateTotalMaxSize = (
   currentFiles: Array<DropzoneFile>,

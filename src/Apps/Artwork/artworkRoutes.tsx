@@ -1,7 +1,7 @@
-import loadable from "@loadable/component"
 import { updateContext } from "Server/middleware/bootstrapSharifyAndContextLocalsMiddleware"
 import type { RouteProps } from "System/Router/Route"
 import { getENV } from "Utils/getENV"
+import loadable from "@loadable/component"
 import { graphql } from "react-relay"
 
 const ArtworkApp = loadable(

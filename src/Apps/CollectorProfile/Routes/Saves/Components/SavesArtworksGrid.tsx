@@ -1,4 +1,3 @@
-import { PaginationSkeleton, Spacer, Stack } from "@artsy/palette"
 import {
   DEFAULT_FILTERS,
   SAVES_ARTWORKS_SECTION_ID,
@@ -10,6 +9,7 @@ import { Masonry } from "Components/Masonry"
 import { PaginationFragmentContainer } from "Components/Pagination"
 import type { CustomRangeSegment } from "Components/PriceRange/constants"
 import { extractNodes } from "Utils/extractNodes"
+import { PaginationSkeleton, Spacer, Stack } from "@artsy/palette"
 import type {
   CollectionArtworkSorts,
   SavesArtworksGridQuery,

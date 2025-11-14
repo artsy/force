@@ -1,8 +1,8 @@
-import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { Button } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
 import { useRouter } from "System/Hooks/useRouter"
 import { useJump } from "Utils/Hooks/useJump"
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import { Button } from "@artsy/palette"
 import type * as React from "react"
 import { useTracking } from "react-tracking"
 
@@ -32,7 +32,7 @@ export const ViewWorksButton: React.FC<
   return (
     <Button
       width="100%"
-      // @ts-ignore
+      // @ts-expect-error
       as={RouterLink}
       to={to}
       data-test="viewingRoomWorksButton"

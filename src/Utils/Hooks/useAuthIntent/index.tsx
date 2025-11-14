@@ -1,3 +1,5 @@
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import {
   ActionType,
   type AuthContextModule,
@@ -6,8 +8,6 @@ import {
   OwnerType,
 } from "@artsy/cohesion"
 import { useDismissibleContext } from "@artsy/dismissible"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import { useSystemContext } from "System/Hooks/useSystemContext"
 import Cookies from "cookies-js"
 import { createContext, useContext, useEffect, useState } from "react"
 import type { Environment } from "react-relay"
@@ -274,7 +274,7 @@ const parse = (value: any): AfterAuthAction | null => {
     if (!isValid(parsed)) return null
 
     return parsed
-  } catch (err) {
+  } catch (_err) {
     return null
   }
 }

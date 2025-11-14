@@ -1,5 +1,3 @@
-import { ActionType, OwnerType, type ViewedArtworkList } from "@artsy/cohesion"
-import { Spacer } from "@artsy/palette"
 import {
   ArtworkListItemsList,
   ArtworkListItemsListPlaceholder,
@@ -10,8 +8,10 @@ import { ClientSuspense } from "Components/ClientSuspense"
 import { MetaTags } from "Components/MetaTags"
 import { Analytics } from "System/Contexts/AnalyticsContext"
 import { useRouter } from "System/Hooks/useRouter"
-import { Jump } from "Utils/Hooks/useJump"
 import { extractNodes } from "Utils/extractNodes"
+import { Jump } from "Utils/Hooks/useJump"
+import { ActionType, OwnerType, type ViewedArtworkList } from "@artsy/cohesion"
+import { Spacer } from "@artsy/palette"
 import type { CollectorProfileSavesRoute_me$data } from "__generated__/CollectorProfileSavesRoute_me.graphql"
 import { HttpError } from "found"
 import { type FC, useEffect, useMemo, useRef } from "react"
@@ -80,7 +80,6 @@ const CollectorProfileSavesRoute: FC<
    * To prevent this from happening, `useMemo` is used here
    */
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const selectedArtworkList = useMemo(() => {
     return artworkLists.find(
       artworkList => artworkList.internalID === selectedArtworkListId,

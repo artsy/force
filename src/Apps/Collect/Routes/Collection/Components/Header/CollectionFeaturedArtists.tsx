@@ -1,14 +1,14 @@
-import { ContextModule } from "@artsy/cohesion"
-import { Column, GridColumns, Skeleton, Text } from "@artsy/palette"
 import { initializeVariablesWithFilterState } from "Apps/Collect/collectRoutes"
 import { LazyArtworkGrid } from "Components/ArtworkGrid/LazyArtworkGrid"
 import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
 import { EntityHeaderPlaceholder } from "Components/EntityHeaders/EntityHeaderPlaceholder"
 import { useRouter } from "System/Hooks/useRouter"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import type { CollectionFeaturedArtistsQuery } from "__generated__/CollectionFeaturedArtistsQuery.graphql"
+import { ContextModule } from "@artsy/cohesion"
+import { Column, GridColumns, Skeleton, Text } from "@artsy/palette"
 import type { CollectionFeaturedArtists_artworks$data } from "__generated__/CollectionFeaturedArtists_artworks.graphql"
 import type { CollectionFeaturedArtists_collection$data } from "__generated__/CollectionFeaturedArtists_collection.graphql"
+import type { CollectionFeaturedArtistsQuery } from "__generated__/CollectionFeaturedArtistsQuery.graphql"
 import { compact, filter, take } from "lodash"
 import { createFragmentContainer, graphql } from "react-relay"
 
@@ -168,7 +168,7 @@ const PLACEHOLDER = (
     </Text>
 
     <GridColumns>
-      {[...Array(8)].map((artist, index) => {
+      {[...Array(8)].map((_artist, index) => {
         return (
           <Column
             span={[12, 6, 3, 3]}

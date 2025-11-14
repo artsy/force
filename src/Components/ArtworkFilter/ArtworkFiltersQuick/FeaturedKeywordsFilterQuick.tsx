@@ -1,5 +1,5 @@
-import { Box, Pill, Spacer } from "@artsy/palette"
 import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
+import { Box, Pill, Spacer } from "@artsy/palette"
 import type { FC } from "react"
 
 export interface FeaturedKeywordsFilterQuickProps {

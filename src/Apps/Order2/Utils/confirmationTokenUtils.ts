@@ -1,6 +1,6 @@
-import { fetchQuery, graphql, type Environment } from "react-relay"
 import createLogger from "Utils/logger"
 import type { confirmationTokenUtilsQuery } from "__generated__/confirmationTokenUtilsQuery.graphql"
+import { type Environment, fetchQuery, graphql } from "react-relay"
 
 const logger = createLogger("confirmationTokenUtils")
 

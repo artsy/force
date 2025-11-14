@@ -1,5 +1,5 @@
-import { getArtworkLocationSearchableText } from "../getArtworkLocationSearchableText"
 import type { Item } from "@artsy/palette/dist/elements/FilterSelect/Components/FilterSelectContext"
+import { getArtworkLocationSearchableText } from "../getArtworkLocationSearchableText"
 
 describe(getArtworkLocationSearchableText, () => {
   it("returns searchable text for an artwork location", () => {

@@ -1,10 +1,10 @@
-import { render, fireEvent, screen } from "@testing-library/react"
 import {
   type AuctionResultsFilterContextProps,
   AuctionResultsFilterContextProvider,
   useAuctionResultsFilterContext,
 } from "Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
 import { SizeFilter } from "Apps/Artist/Routes/AuctionResults/Components/AuctionFilters/SizeFilter"
+import { fireEvent, render, screen } from "@testing-library/react"
 
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),

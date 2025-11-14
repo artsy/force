@@ -1,7 +1,6 @@
 import { Box, type BoxProps } from "@artsy/palette"
 import type * as React from "react"
-import { useEffect } from "react"
-import { useRef } from "react"
+import { useEffect, useRef } from "react"
 import styled from "styled-components"
 
 const roomWidth = 6578

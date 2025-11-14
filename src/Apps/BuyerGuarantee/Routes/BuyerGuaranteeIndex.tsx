@@ -1,3 +1,14 @@
+import {
+  BuyerGuaranteeTableDesktop,
+  BuyerGuaranteeTableMobile,
+} from "Apps/BuyerGuarantee/Components/BuyerGuaranteeTables"
+import { AppContainer } from "Apps/Components/AppContainer"
+import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
+import { FullBleedHeader } from "Components/FullBleedHeader/FullBleedHeader"
+import { MetaTags } from "Components/MetaTags"
+import { Jump, useJump } from "Utils/Hooks/useJump"
+import { Media } from "Utils/Responsive"
+import { cropped } from "Utils/resized"
 import CertificateIcon from "@artsy/icons/CertificateIcon"
 import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
 import LockIcon from "@artsy/icons/LockIcon"
@@ -16,18 +27,6 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import {
-  BuyerGuaranteeTableDesktop,
-  BuyerGuaranteeTableMobile,
-} from "Apps/BuyerGuarantee/Components/BuyerGuaranteeTables"
-import { AppContainer } from "Apps/Components/AppContainer"
-import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
-import { FullBleedHeader } from "Components/FullBleedHeader/FullBleedHeader"
-import { MetaTags } from "Components/MetaTags"
-import { Jump, useJump } from "Utils/Hooks/useJump"
-import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
-import { Media } from "Utils/Responsive"
-import { cropped } from "Utils/resized"
 import type { FC } from "react"
 
 const SUPPORT_ARTICLE_URL =
@@ -236,7 +235,7 @@ export const BuyerGuaranteeIndex: FC<React.PropsWithChildren<unknown>> = () => {
           <Button
             mt={2}
             variant="secondaryBlack"
-            // @ts-ignore
+            // @ts-expect-error
             as="a"
             href={SUPPORT_ARTICLE_URL}
             target="_blank"
@@ -259,7 +258,7 @@ export const BuyerGuaranteeIndex: FC<React.PropsWithChildren<unknown>> = () => {
           <Button
             mt={2}
             variant="secondaryBlack"
-            // @ts-ignore
+            // @ts-expect-error
             as="a"
             href={SUPPORT_ARTICLE_URL}
             target="_blank"
@@ -347,7 +346,7 @@ export const BuyerGuaranteeIndex: FC<React.PropsWithChildren<unknown>> = () => {
 
             <Flex justifyContent="center">
               <Button
-                // @ts-ignore
+                // @ts-expect-error
                 as="a"
                 href={SUPPORT_ARTICLE_URL}
                 target="_blank"

@@ -1,6 +1,6 @@
-import { screen } from "@testing-library/react"
 import { ArtworkSidebarClassificationsModalFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import { graphql } from "react-relay"
 
 jest.mock("@artsy/palette", () => {

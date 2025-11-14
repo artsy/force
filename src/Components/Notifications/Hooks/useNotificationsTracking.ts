@@ -1,4 +1,9 @@
 import {
+  type CollectorSignals,
+  getSignalLabel,
+  signalsToArray,
+} from "Utils/getSignalLabel"
+import {
   ActionType,
   type ClickedBuyNow,
   type ClickedViewWork,
@@ -8,11 +13,6 @@ import type {
   ClickedActivityPanelNotificationItem,
   ClickedActivityPanelTab,
 } from "@artsy/cohesion/dist/Schema/Events/ActivityPanel"
-import {
-  type CollectorSignals,
-  getSignalLabel,
-  signalsToArray,
-} from "Utils/getSignalLabel"
 import { useTracking } from "react-tracking"
 
 export const useNotificationsTracking = () => {

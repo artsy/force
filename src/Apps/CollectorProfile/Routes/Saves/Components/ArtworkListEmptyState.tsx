@@ -1,5 +1,5 @@
-import { Box, Button, Flex, Spacer, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
+import { Box, Button, Flex, Spacer, Text } from "@artsy/palette"
 import type { ArtworkListEmptyState_me$data } from "__generated__/ArtworkListEmptyState_me.graphql"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -34,7 +34,7 @@ export const ArtworkListEmptyState: FC<
       <Spacer x={[0, 2]} y={[2, 0]} />
 
       <Button
-        // @ts-ignore
+        // @ts-expect-error
         as={RouterLink}
         width={["100%", "auto"]}
         variant="primaryBlack"

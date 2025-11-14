@@ -1,15 +1,14 @@
-import type { ContextModule } from "@artsy/cohesion"
-import MessageIcon from "@artsy/icons/MessageIcon"
-import { Box, Clickable, Flex, Spacer, Text } from "@artsy/palette"
 import { useOrder2Tracking } from "Apps/Order2/Hooks/useOrder2Tracking"
 import {
   type WithInquiryProps,
   withInquiry,
 } from "Components/Inquiry/useInquiry"
+import type { ContextModule } from "@artsy/cohesion"
+import MessageIcon from "@artsy/icons/MessageIcon"
+import { Box, Clickable, Flex, Spacer, Text } from "@artsy/palette"
 import type { Order2HelpLinks_order$key } from "__generated__/Order2HelpLinks_order.graphql"
 import type React from "react"
-import { useFragment } from "react-relay"
-import { graphql } from "relay-runtime"
+import { graphql, useFragment } from "react-relay"
 
 interface Order2HelpLinksProps extends WithInquiryProps {
   order: Order2HelpLinks_order$key

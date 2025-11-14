@@ -1,5 +1,5 @@
-import { Flex, Image, ResponsiveBox, Text } from "@artsy/palette"
 import { resized } from "Utils/resized"
+import { Flex, Image, ResponsiveBox, Text } from "@artsy/palette"
 import { forwardRef } from "react"
 
 interface OnboardingFigureProps {

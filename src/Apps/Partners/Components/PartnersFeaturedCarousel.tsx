@@ -1,6 +1,6 @@
 import { HeroCarousel } from "Components/HeroCarousel/HeroCarousel"
-import { useStableShuffle } from "Utils/Hooks/useStableShuffle"
 import { extractNodes } from "Utils/extractNodes"
+import { useStableShuffle } from "Utils/Hooks/useStableShuffle"
 import type { PartnersFeaturedCarousel_viewer$data } from "__generated__/PartnersFeaturedCarousel_viewer.graphql"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"

@@ -1,8 +1,8 @@
-import { ModalBase, type ModalBaseProps, useDidMount } from "@artsy/palette"
 import { ModalContent } from "Components/Alert/Components/Modal/ModalContent"
 import { ModalHeader } from "Components/Alert/Components/Modal/ModalHeader"
 import { FiltersFooter } from "Components/Alert/Components/Steps/StepsFooter/FiltersFooter"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
+import { ModalBase, type ModalBaseProps, useDidMount } from "@artsy/palette"
 import type React from "react"
 export type AlertModalProps = ModalBaseProps
 

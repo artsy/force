@@ -1,3 +1,11 @@
+import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
+import { AuthDialogSignUpPlaceholder } from "Components/AuthDialog/Components/AuthDialogSignUpPlaceholder"
+import { useAfterAuthentication } from "Components/AuthDialog/Hooks/useAfterAuthentication"
+import { useAuthDialogTracking } from "Components/AuthDialog/Hooks/useAuthDialogTracking"
+import { useCountryCode } from "Components/AuthDialog/Hooks/useCountryCode"
+import { formatErrorMessage } from "Components/AuthDialog/Utils/formatErrorMessage"
+import { AuthDialogDisclaimer } from "Components/AuthDialog/Views/AuthDialogDisclaimer"
+import { signUp } from "Utils/auth"
 import {
   Box,
   Button,
@@ -10,14 +18,6 @@ import {
   Stack,
   Text,
 } from "@artsy/palette"
-import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
-import { AuthDialogSignUpPlaceholder } from "Components/AuthDialog/Components/AuthDialogSignUpPlaceholder"
-import { useAfterAuthentication } from "Components/AuthDialog/Hooks/useAfterAuthentication"
-import { useAuthDialogTracking } from "Components/AuthDialog/Hooks/useAuthDialogTracking"
-import { useCountryCode } from "Components/AuthDialog/Hooks/useCountryCode"
-import { formatErrorMessage } from "Components/AuthDialog/Utils/formatErrorMessage"
-import { AuthDialogDisclaimer } from "Components/AuthDialog/Views/AuthDialogDisclaimer"
-import { signUp } from "Utils/auth"
 import { Form, Formik } from "formik"
 import type { FC } from "react"
 import * as Yup from "yup"

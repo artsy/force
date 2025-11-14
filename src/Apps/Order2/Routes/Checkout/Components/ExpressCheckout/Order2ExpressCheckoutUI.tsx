@@ -1,3 +1,13 @@
+import {
+  type OrderMutationSuccess,
+  validateAndExtractOrderResponse,
+} from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
+import type { ExpressCheckoutPaymentMethod } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
+import { CheckoutErrorBanner } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
+import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import { preventHardReload } from "Apps/Order2/Utils/navigationGuards"
+import { RouterLink } from "System/Components/RouterLink"
+import createLogger from "Utils/logger"
 import { Box, Spacer, Text } from "@artsy/palette"
 import {
   ExpressCheckoutElement,
@@ -16,22 +26,6 @@ import type {
   StripeExpressCheckoutElementShippingAddressChangeEvent,
   StripeExpressCheckoutElementShippingRateChangeEvent,
 } from "@stripe/stripe-js"
-import { useOrder2ExpressCheckoutSetFulfillmentOptionMutation } from "./Mutations/useOrder2ExpressCheckoutSetFulfillmentOptionMutation"
-import { useOrder2ExpressCheckoutSubmitOrderMutation } from "./Mutations/useOrder2ExpressCheckoutSubmitOrderMutation"
-import { useOrder2ExpressCheckoutUnsetOrderFulfillmentOptionMutation } from "./Mutations/useOrder2ExpressCheckoutUnsetOrderFulfillmentOptionMutation"
-import { useOrder2ExpressCheckoutUnsetOrderPaymentMethodMutation } from "./Mutations/useOrder2ExpressCheckoutUnsetOrderPaymentMethodMutation"
-import { useOrder2ExpressCheckoutUpdateOrderMutation } from "./Mutations/useOrder2ExpressCheckoutUpdateOrderMutation"
-import { useOrder2ExpressCheckoutUpdateOrderShippingAddressMutation } from "./Mutations/useOrder2ExpressCheckoutUpdateOrderShippingAddressMutation"
-import {
-  type OrderMutationSuccess,
-  validateAndExtractOrderResponse,
-} from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
-import type { ExpressCheckoutPaymentMethod } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
-import { CheckoutErrorBanner } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
-import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
-import { preventHardReload } from "Apps/Order2/Utils/navigationGuards"
-import { RouterLink } from "System/Components/RouterLink"
-import createLogger from "Utils/logger"
 import type {
   Order2ExpressCheckoutUI_order$data,
   Order2ExpressCheckoutUI_order$key,
@@ -47,6 +41,12 @@ import type {
 import type React from "react"
 import { useEffect, useRef, useState } from "react"
 import { graphql, useFragment } from "react-relay"
+import { useOrder2ExpressCheckoutSetFulfillmentOptionMutation } from "./Mutations/useOrder2ExpressCheckoutSetFulfillmentOptionMutation"
+import { useOrder2ExpressCheckoutSubmitOrderMutation } from "./Mutations/useOrder2ExpressCheckoutSubmitOrderMutation"
+import { useOrder2ExpressCheckoutUnsetOrderFulfillmentOptionMutation } from "./Mutations/useOrder2ExpressCheckoutUnsetOrderFulfillmentOptionMutation"
+import { useOrder2ExpressCheckoutUnsetOrderPaymentMethodMutation } from "./Mutations/useOrder2ExpressCheckoutUnsetOrderPaymentMethodMutation"
+import { useOrder2ExpressCheckoutUpdateOrderMutation } from "./Mutations/useOrder2ExpressCheckoutUpdateOrderMutation"
+import { useOrder2ExpressCheckoutUpdateOrderShippingAddressMutation } from "./Mutations/useOrder2ExpressCheckoutUpdateOrderShippingAddressMutation"
 
 interface Order2ExpressCheckoutUIProps {
   order: Order2ExpressCheckoutUI_order$key
@@ -342,7 +342,6 @@ export const Order2ExpressCheckoutUI: React.FC<
 
   // User confirms the payment
   const onConfirm = async ({
-    paymentFailed,
     billingDetails,
     shippingAddress,
     expressPaymentType,

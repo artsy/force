@@ -1,14 +1,14 @@
+import { ShelfArtworkFragmentContainer } from "Components/Artwork/ShelfArtwork"
+import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
+import { Rail } from "Components/Rail/Rail"
+import { extractNodes } from "Utils/extractNodes"
+import { getSignalLabel } from "Utils/getSignalLabel"
 import {
   ActionType,
   type ClickedArtworkGroup,
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
-import { ShelfArtworkFragmentContainer } from "Components/Artwork/ShelfArtwork"
-import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
-import { Rail } from "Components/Rail/Rail"
-import { extractNodes } from "Utils/extractNodes"
-import { getSignalLabel } from "Utils/getSignalLabel"
 import type { ArtistSeriesArtworkRail_artwork$data } from "__generated__/ArtistSeriesArtworkRail_artwork.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"

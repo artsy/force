@@ -1,3 +1,16 @@
+import {
+  VIEW_ART_QUIZ,
+  VIEW_ARTISTS_ON_THE_RISE,
+  VIEW_CURATED_ARTWORKS,
+  VIEW_FOLLOW_ARTISTS,
+  VIEW_FOLLOW_GALLERIES,
+  VIEW_QUESTION_ONE,
+  VIEW_QUESTION_THREE,
+  VIEW_QUESTION_TWO,
+  VIEW_THANK_YOU,
+  VIEW_TOP_AUCTION_LOTS,
+  VIEW_WELCOME,
+} from "Components/Onboarding/config"
 import { useOnboardingContext } from "Components/Onboarding/Hooks/useOnboardingContext"
 import { OnboardingArtistsOnTheRise } from "Components/Onboarding/Views/OnboardingArtistsOnTheRise"
 import { OnboardingCuratedArtworks } from "Components/Onboarding/Views/OnboardingCuratedArtworks"
@@ -9,19 +22,6 @@ import { OnboardingQuestionTwo } from "Components/Onboarding/Views/OnboardingQue
 import { OnboardingThankYou } from "Components/Onboarding/Views/OnboardingThankYou"
 import { OnboardingTopAuctionLots } from "Components/Onboarding/Views/OnboardingTopAuctionLots"
 import { OnboardingWelcome } from "Components/Onboarding/Views/OnboardingWelcome"
-import {
-  VIEW_ARTISTS_ON_THE_RISE,
-  VIEW_ART_QUIZ,
-  VIEW_CURATED_ARTWORKS,
-  VIEW_FOLLOW_ARTISTS,
-  VIEW_FOLLOW_GALLERIES,
-  VIEW_QUESTION_ONE,
-  VIEW_QUESTION_THREE,
-  VIEW_QUESTION_TWO,
-  VIEW_THANK_YOU,
-  VIEW_TOP_AUCTION_LOTS,
-  VIEW_WELCOME,
-} from "Components/Onboarding/config"
 import { useRouter } from "System/Hooks/useRouter"
 import type { FC } from "react"
 

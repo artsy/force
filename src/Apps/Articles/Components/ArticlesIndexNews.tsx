@@ -1,5 +1,5 @@
-import { Flex, Stack, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
+import { Flex, Stack, Text } from "@artsy/palette"
 import type { ArticlesIndexNews_viewer$data } from "__generated__/ArticlesIndexNews_viewer.graphql"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"

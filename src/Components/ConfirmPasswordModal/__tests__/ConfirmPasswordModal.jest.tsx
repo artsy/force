@@ -1,7 +1,7 @@
 import { ConfirmPasswordModal } from "Components/ConfirmPasswordModal"
-import { MockBoot } from "DevTools/MockBoot"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
-import { render, screen, fireEvent } from "@testing-library/react"
+import { MockBoot } from "DevTools/MockBoot"
+import { fireEvent, render, screen } from "@testing-library/react"
 
 jest.mock("Components/ConfirmPasswordModal/Mutations/ConfirmPassword", () => ({
   ConfirmPassword: jest.fn(),

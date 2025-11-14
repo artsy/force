@@ -1,10 +1,10 @@
-import { ContextModule } from "@artsy/cohesion"
-import { Box, Column, GridColumns, Spacer } from "@artsy/palette"
 import { OrderDetailsFulfillmentInfo } from "Apps/Order/Routes/Details/Components/OrderDetailsFulfillmentInfo"
 import { OrderDetailsOrderSummary } from "Apps/Order/Routes/Details/Components/OrderDetailsOrderSummary"
 import { OrderDetailsPaymentInfo } from "Apps/Order/Routes/Details/Components/OrderDetailsPaymentInfo"
 import { Order2HelpLinksWithInquiry } from "Apps/Order2/Components/Order2HelpLinks"
 import { useOrder2Tracking } from "Apps/Order2/Hooks/useOrder2Tracking"
+import { ContextModule } from "@artsy/cohesion"
+import { Box, Column, GridColumns, Spacer } from "@artsy/palette"
 import type { OrderDetailsPage_me$key } from "__generated__/OrderDetailsPage_me.graphql"
 import type { OrderDetailsPage_order$key } from "__generated__/OrderDetailsPage_order.graphql"
 import { useEffect } from "react"
@@ -22,7 +22,6 @@ export const OrderDetailsPage = ({ order, me }: OrderDetailsPageProps) => {
   const meData = useFragment(ME_FRAGMENT, me)
   const tracking = useOrder2Tracking(orderData.source, orderData.mode)
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: one-time effect
   useEffect(() => {
     if (!!orderData) {
       tracking.orderDetailsViewed(

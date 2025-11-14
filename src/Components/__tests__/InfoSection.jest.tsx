@@ -1,5 +1,5 @@
-import { Text } from "@artsy/palette"
 import { InfoSection } from "Components/InfoSection"
+import { Text } from "@artsy/palette"
 import { render, screen } from "@testing-library/react"
 
 describe("InfoSection", () => {

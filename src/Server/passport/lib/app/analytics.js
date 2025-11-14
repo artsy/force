@@ -1,4 +1,5 @@
 const Analytics = require("analytics-node")
+// biome-ignore lint/style/noRestrictedImports: Authentication middleware dependency
 const { data: sd } = require("sharify")
 
 export const analytics = sd.SEGMENT_WRITE_KEY

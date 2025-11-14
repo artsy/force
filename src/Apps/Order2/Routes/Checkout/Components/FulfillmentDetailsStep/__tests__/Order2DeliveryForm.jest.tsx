@@ -1,7 +1,7 @@
-import { act, screen, waitFor } from "@testing-library/react"
-import userEvent from "@testing-library/user-event"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { act, screen, waitFor } from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
 import type { Order2DeliveryFormTestQuery } from "__generated__/Order2DeliveryFormTestQuery.graphql"
 import { graphql } from "react-relay"
 import {

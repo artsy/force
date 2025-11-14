@@ -1,3 +1,7 @@
+import { PageHTML } from "Apps/Page/Components/PageHTML"
+import { MetaTags } from "Components/MetaTags"
+import { TopContextBar } from "Components/TopContextBar"
+import { RouterLink } from "System/Components/RouterLink"
 import {
   Column,
   GridColumns,
@@ -6,10 +10,6 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { PageHTML } from "Apps/Page/Components/PageHTML"
-import { MetaTags } from "Components/MetaTags"
-import { TopContextBar } from "Components/TopContextBar"
-import { RouterLink } from "System/Components/RouterLink"
 import type { JobApp_job$data } from "__generated__/JobApp_job.graphql"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"

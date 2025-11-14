@@ -1,14 +1,14 @@
-import type { default as Arta } from "@artaio/arta-browser"
-import type ArtaEstimate from "@artaio/arta-browser/dist/estimate"
-import { screen, waitFor } from "@testing-library/react"
-import userEvent from "@testing-library/user-event"
 import {
   ArtsyShippingEstimate,
   estimateRequestBodyForArtwork,
 } from "Components/ArtsyShippingEstimate"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import type { ArtsyShippingEstimate_Test_Query } from "__generated__/ArtsyShippingEstimate_Test_Query.graphql"
+import type { default as Arta } from "@artaio/arta-browser"
+import type ArtaEstimate from "@artaio/arta-browser/dist/estimate"
+import { screen, waitFor } from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
 import type { ArtsyShippingEstimate_artwork$data } from "__generated__/ArtsyShippingEstimate_artwork.graphql"
+import type { ArtsyShippingEstimate_Test_Query } from "__generated__/ArtsyShippingEstimate_Test_Query.graphql"
 import { useEffect, useState } from "react"
 
 import { graphql } from "react-relay"

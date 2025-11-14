@@ -1,3 +1,11 @@
+import { CommaList } from "Components/CommaList"
+import {
+  FullBleedHeader,
+  FullBleedHeaderOverlay,
+  useFullBleedHeaderHeight,
+} from "Components/FullBleedHeader/FullBleedHeader"
+import { RouterLink } from "System/Components/RouterLink"
+import { getAuthorPath } from "Utils/getAuthorPath"
 import {
   Box,
   Column,
@@ -10,14 +18,6 @@ import {
   Text,
   useTheme,
 } from "@artsy/palette"
-import { CommaList } from "Components/CommaList"
-import {
-  FullBleedHeader,
-  FullBleedHeaderOverlay,
-  useFullBleedHeaderHeight,
-} from "Components/FullBleedHeader/FullBleedHeader"
-import { RouterLink } from "System/Components/RouterLink"
-import { getAuthorPath } from "Utils/getAuthorPath"
 import type { ArticleHero_article$data } from "__generated__/ArticleHero_article.graphql"
 import { type FC, useMemo } from "react"
 import { Link } from "react-head"

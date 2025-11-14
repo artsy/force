@@ -1,3 +1,5 @@
+import { useOrder2Tracking } from "Apps/Order2/Hooks/useOrder2Tracking"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import {
   ActionType,
   type ClickedAddNewShippingAddress,
@@ -22,8 +24,6 @@ import {
   type SubmittedOrder,
   type ToggledCollapsibleOrderSummary,
 } from "@artsy/cohesion"
-import { useOrder2Tracking } from "Apps/Order2/Hooks/useOrder2Tracking"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useMemo } from "react"
 import { useTracking } from "react-tracking"
 

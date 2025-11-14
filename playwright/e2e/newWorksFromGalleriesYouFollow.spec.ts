@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test"
+import { expect, test } from "@playwright/test"
 
 test.describe("New Works from Galleries You Follow", () => {
   test("/new-works-from-galleries-you-follow", async ({ page }) => {

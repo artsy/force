@@ -1,10 +1,10 @@
 import { ShowViewingRoomFragmentContainer as ShowViewingRoom } from "Apps/Show/Components/ShowViewingRoom"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { AnalyticsCombinedContextProvider } from "System/Contexts/AnalyticsContext"
+import { fireEvent } from "@testing-library/react"
 import type { ShowViewingRoomTestQuery } from "__generated__/ShowViewingRoomTestQuery.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { fireEvent } from "@testing-library/react"
 
 jest.mock("react-tracking")
 jest.unmock("react-relay")

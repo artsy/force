@@ -1,5 +1,5 @@
-import { Input, Stack } from "@artsy/palette"
 import { AppDownloadBanner } from "Components/AppDownloadBanner"
+import { Input, Stack } from "@artsy/palette"
 import { useState } from "react"
 
 export default {
@@ -18,7 +18,7 @@ export const Default = () => {
           type="number"
           value={transitionDuration}
           onChange={event => {
-            setTransitionDuration(Number.parseInt(event.target.value))
+            setTransitionDuration(Number.parseInt(event.target.value, 10))
           }}
         />
 
@@ -27,7 +27,7 @@ export const Default = () => {
           type="number"
           value={idleDuration}
           onChange={event => {
-            setIdleDuration(Number.parseInt(event.target.value))
+            setIdleDuration(Number.parseInt(event.target.value, 10))
           }}
         />
       </Stack>

@@ -1,7 +1,7 @@
+import { messageTime } from "Apps/Conversations/components/Message/Utils/dateFormatters"
 import CheckmarkIcon from "@artsy/icons/CheckmarkIcon"
 import PersonIcon from "@artsy/icons/PersonIcon"
 import { Avatar, Box, Flex, Text, useTheme } from "@artsy/palette"
-import { messageTime } from "Apps/Conversations/components/Message/Utils/dateFormatters"
 import { type FC, isValidElement } from "react"
 import Linkify from "react-linkify"
 import { ConversationMessageImage } from "./ConversationMessageImage"

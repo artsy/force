@@ -1,4 +1,3 @@
-import { fireEvent, screen, waitFor } from "@testing-library/react"
 import {
   CreateNewListModalContainer,
   type CreateNewListModalContainerProps,
@@ -6,6 +5,7 @@ import {
 import { render } from "DevTools/renderWithMockBoot"
 import { AnalyticsCombinedContextProvider } from "System/Contexts/AnalyticsContext"
 import { useMutation } from "Utils/Hooks/useMutation"
+import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { useTracking } from "react-tracking"
 
 jest.mock("Utils/Hooks/useMutation")

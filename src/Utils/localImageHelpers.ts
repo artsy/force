@@ -16,7 +16,7 @@ export interface LocalImage {
 }
 
 export const storeLocalImage = async (key: string, image: LocalImage) => {
-  const expires = new Date().getTime() + EXPIRATION_TIME
+  const expires = Date.now() + EXPIRATION_TIME
 
   const storeKey = `${IMAGE_KEY_PREFIX}_${key}`
   const storeValue = prepareImage(image, expires.toString())
@@ -44,7 +44,7 @@ export const cleanLocalImages = async () => {
   imageKeys.forEach(async key => {
     const item = JSON.parse((await localforage.getItem(key)) || "{}")
 
-    if (!item?.expires || +item?.expires > new Date().getTime()) {
+    if (!item?.expires || +item?.expires > Date.now()) {
       return
     }
 
@@ -99,7 +99,6 @@ export const useLocalImageStorage = (
     }
   }
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     changeLocalImage()
   }, [key])

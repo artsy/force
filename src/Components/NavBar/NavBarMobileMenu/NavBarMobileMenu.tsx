@@ -1,15 +1,15 @@
-import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import CloseIcon from "@artsy/icons/CloseIcon"
-import MenuIcon from "@artsy/icons/MenuIcon"
-import { ModalBase, Separator, Text } from "@artsy/palette"
 import {
   ARTISTS_SUBMENU_DATA,
   ARTWORKS_SUBMENU_DATA,
   WHATS_NEW_SUBMENU_DATA,
 } from "Components/NavBar/menuData"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { useDeviceDetection } from "Utils/Hooks/useDeviceDetection"
 import { logout } from "Utils/auth"
+import { useDeviceDetection } from "Utils/Hooks/useDeviceDetection"
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import CloseIcon from "@artsy/icons/CloseIcon"
+import MenuIcon from "@artsy/icons/MenuIcon"
+import { ModalBase, Separator, Text } from "@artsy/palette"
 import type * as React from "react"
 import { useTracking } from "react-tracking"
 import { NavBarMobileMenuAuthentication } from "./NavBarMobileMenuAuthentication"

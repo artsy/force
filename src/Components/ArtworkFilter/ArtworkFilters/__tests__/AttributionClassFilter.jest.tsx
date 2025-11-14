@@ -1,14 +1,14 @@
-import { screen } from "@testing-library/react"
-import userEvent from "@testing-library/user-event"
 import type { ArtworkFilterContextProps } from "Components/ArtworkFilter/ArtworkFilterContext"
-import {
-  AttributionClassFilter,
-  ATTRIBUTION_CLASS_OPTIONS,
-} from "Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
 import {
   createArtworkFilterTestRenderer,
   currentArtworkFilterContext,
 } from "Components/ArtworkFilter/ArtworkFilters/__tests__/Utils"
+import {
+  ATTRIBUTION_CLASS_OPTIONS,
+  AttributionClassFilter,
+} from "Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
+import { screen } from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
 
 const artworkFilterContext: Partial<ArtworkFilterContextProps> = {}
 

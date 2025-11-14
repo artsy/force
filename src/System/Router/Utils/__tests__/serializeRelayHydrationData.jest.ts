@@ -25,7 +25,7 @@ describe("serializeRelayHydrationData", () => {
       ],
     ] as unknown as SSRCache
 
-    mockSerialize.mockImplementation((data, options) => JSON.stringify(data))
+    mockSerialize.mockImplementation((data, _options) => JSON.stringify(data))
 
     const result = serializeRelayHydrationData(mockData)
 
@@ -41,7 +41,7 @@ describe("serializeRelayHydrationData", () => {
   })
 
   it("should handle empty data gracefully", () => {
-    mockSerialize.mockImplementation((data, options) => JSON.stringify(data))
+    mockSerialize.mockImplementation((data, _options) => JSON.stringify(data))
 
     const result = serializeRelayHydrationData([])
 

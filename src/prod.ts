@@ -3,9 +3,9 @@ import "./Server/loadenv"
 // See https://docs.datadoghq.com/tracing/languages/nodejs/ for more info.
 import "./Server/datadog"
 
-import path from "path"
 import chalk from "chalk"
 import express from "express"
+import path from "path"
 import { startServer } from "./Server/startServer"
 
 console.log(chalk.green(`\n[Force] NODE_ENV=${process.env.NODE_ENV}\n`))

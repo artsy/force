@@ -1,13 +1,3 @@
-import {
-  Box,
-  Button,
-  Flex,
-  Join,
-  Message,
-  Spacer,
-  Text,
-  media,
-} from "@artsy/palette"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
 import { BackToConversationBanner } from "Apps/Order/Components/BackToConversationBanner"
 import { PaymentMethodSummaryItemFragmentContainer as PaymentMethodSummaryItem } from "Apps/Order/Components/PaymentMethodSummaryItem"
@@ -21,6 +11,16 @@ import {
 import { RouterLink } from "System/Components/RouterLink"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import createLogger from "Utils/logger"
+import {
+  Box,
+  Button,
+  Flex,
+  Join,
+  Message,
+  media,
+  Spacer,
+  Text,
+} from "@artsy/palette"
 import type { Status_order$data } from "__generated__/Status_order.graphql"
 import type { Match } from "found"
 import type { FC } from "react"
@@ -127,7 +127,7 @@ export const StatusRoute: FC<React.PropsWithChildren<StatusProps>> = ({
               ) : (
                 shouldButtonDisplay && (
                   <Button
-                    // @ts-ignore
+                    // @ts-expect-error
                     as={RouterLink}
                     to="/"
                     variant="primaryBlack"

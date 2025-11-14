@@ -1,7 +1,6 @@
+import { Button, Flex, Input, Spacer, Text, Toggle } from "@artsy/palette"
 import { Form, type FormikProps } from "formik"
 import * as Yup from "yup"
-
-import { Button, Flex, Input, Spacer, Text, Toggle } from "@artsy/palette"
 
 export interface ArtworkListFormikValues {
   name: string

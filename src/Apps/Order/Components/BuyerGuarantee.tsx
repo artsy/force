@@ -1,7 +1,7 @@
+import { RouterLink } from "System/Components/RouterLink"
 import { ActionType, type ContextModule } from "@artsy/cohesion"
 import CheckmarkFillIcon from "@artsy/icons/CheckmarkFillIcon"
 import { Flex, Spacer, StackableBorderBox, Text } from "@artsy/palette"
-import { RouterLink } from "System/Components/RouterLink"
 import type * as React from "react"
 import { useTracking } from "react-tracking"
 

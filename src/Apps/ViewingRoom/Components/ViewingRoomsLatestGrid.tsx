@@ -1,3 +1,7 @@
+import { getStatus } from "Apps/ViewingRoom/Utils/getStatus"
+import { RouterLink } from "System/Components/RouterLink"
+import { extractNodes } from "Utils/extractNodes"
+import { cropped } from "Utils/resized"
 import {
   Box,
   Button,
@@ -7,17 +11,13 @@ import {
   Stack,
   Text,
 } from "@artsy/palette"
-import { getStatus } from "Apps/ViewingRoom/Utils/getStatus"
-import { RouterLink } from "System/Components/RouterLink"
-import { extractNodes } from "Utils/extractNodes"
-import { cropped } from "Utils/resized"
 import type { ViewingRoomsLatestGrid_viewingRooms$data } from "__generated__/ViewingRoomsLatestGrid_viewingRooms.graphql"
-import { useState } from "react"
 import type * as React from "react"
+import { useState } from "react"
 import {
-  type RelayPaginationProp,
   createPaginationContainer,
   graphql,
+  type RelayPaginationProp,
 } from "react-relay"
 
 export interface ViewingRoomsLatestGridProps {
@@ -154,7 +154,7 @@ export const ViewingRoomsLatestGridFragmentContainer =
           count: totalCount,
         }
       },
-      getVariables(props, { count, cursor }, fragmentVariables) {
+      getVariables(_props, { count, cursor }, fragmentVariables) {
         return {
           // in most cases, for variables other than connection filters like
           // `first`, `after`, etc. you may want to use the previous values.

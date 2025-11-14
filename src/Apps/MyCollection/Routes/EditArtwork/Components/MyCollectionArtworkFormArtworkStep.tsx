@@ -1,11 +1,3 @@
-import {
-  Button,
-  EntityHeader,
-  Spacer,
-  Spinner,
-  Text,
-  omit,
-} from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { useMyCollectionArtworkFormContext } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormContext"
 import { MyCollectionArtworkFormHeader } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormHeader"
@@ -14,6 +6,14 @@ import { getMyCollectionArtworkFormInitialValues } from "Apps/MyCollection/Route
 import type { ArtworkModel } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkModel"
 import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
 import { SearchInputContainer } from "Components/Search/SearchInputContainer"
+import {
+  Button,
+  EntityHeader,
+  omit,
+  Spacer,
+  Spinner,
+  Text,
+} from "@artsy/palette"
 import { useFormikContext } from "formik"
 import { pickBy } from "lodash"
 import { Suspense, useCallback, useState } from "react"
@@ -111,7 +111,7 @@ export const MyCollectionArtworkFormArtworkStep: React.FC<
         name={values.artist?.name || ""}
         meta={values.artist?.formattedNationalityAndBirthday || ""}
         initials={values.artist?.initials || ""}
-        image={values.artist?.image?.cropped!}
+        image={values.artist?.image?.cropped as any}
       />
 
       <Spacer y={4} />

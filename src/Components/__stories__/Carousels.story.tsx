@@ -7,14 +7,14 @@ import {
   Swiper,
   type SwiperProps,
   SwiperRail,
+  splitBoxProps,
   Tab,
   Tabs,
   Text,
-  splitBoxProps,
 } from "@artsy/palette"
 import { random } from "lodash"
-import { useState } from "react"
 import * as React from "react"
+import { useState } from "react"
 import { ContentHeaderExample } from "./Components/ContentHeaderExample"
 import { Page } from "./Components/Page"
 import { TombstoneExample } from "./Components/TombstoneExample"

@@ -1,9 +1,9 @@
-import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { Box, Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import type { MenuData } from "Components/NavBar/menuData"
 import { RouterLink } from "System/Components/RouterLink"
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import { Box, Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import type * as React from "react"
 import { useTracking } from "react-tracking"
 import { NavBarMenuItemLink } from "./NavBarMenuItem"
@@ -32,7 +32,6 @@ export const NavBarSubMenu: React.FC<
       action_type: DeprecatedAnalyticsSchema.ActionType.Click,
       subject: text,
       destination_path: href,
-      // @ts-ignore
       context_module: contextModule,
     })
   }

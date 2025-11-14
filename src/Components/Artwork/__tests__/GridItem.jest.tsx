@@ -1,9 +1,8 @@
-import { screen } from "@testing-library/react"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { graphql } from "react-relay"
-
 import ArtworkGridItemFragmentContainer from "Components/Artwork/GridItem"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import type { GridItem_Test_Query } from "__generated__/GridItem_Test_Query.graphql"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 describe("GridItem", () => {

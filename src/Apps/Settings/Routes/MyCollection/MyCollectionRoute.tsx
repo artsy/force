@@ -1,6 +1,3 @@
-import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
-import ShareIcon from "@artsy/icons/ShareIcon"
-import { Box, Button, Flex, Stack } from "@artsy/palette"
 import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
 import { MyCollectionArtworkGrid } from "Apps/Settings/Routes/MyCollection/Components/MyCollectionArtworkGrid"
 import { MetaTags } from "Components/MetaTags"
@@ -8,12 +5,15 @@ import { ShareCollectionDialog } from "Components/ShareCollectionDialog"
 import { RouterLink } from "System/Components/RouterLink"
 import { useFlag } from "System/FeatureFlags/useFlag"
 import { cleanLocalImages } from "Utils/localImageHelpers"
+import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
+import ShareIcon from "@artsy/icons/ShareIcon"
+import { Box, Button, Flex, Stack } from "@artsy/palette"
 import type { MyCollectionRoute_me$data } from "__generated__/MyCollectionRoute_me.graphql"
 import { type FC, useEffect, useState } from "react"
 import {
-  type RelayPaginationProp,
   createPaginationContainer,
   graphql,
+  type RelayPaginationProp,
 } from "react-relay"
 import { useTracking } from "react-tracking"
 import { EmptyMyCollectionPage } from "./Components/EmptyMyCollectionPage"
@@ -86,7 +86,7 @@ const MyCollectionRoute: FC<
             )}
 
             <Button
-              // @ts-ignore
+              // @ts-expect-error
               as={RouterLink}
               size={["small", "large"]}
               variant="primaryBlack"

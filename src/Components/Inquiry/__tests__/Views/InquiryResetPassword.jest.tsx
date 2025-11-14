@@ -1,6 +1,6 @@
 import { InquiryResetPassword } from "Components/Inquiry/Views/InquiryResetPassword"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
-import { render, screen, fireEvent, waitFor } from "@testing-library/react"
+import { fireEvent, render, screen, waitFor } from "@testing-library/react"
 import { useTracking } from "react-tracking"
 
 jest.mock("../../Hooks/useInquiryContext", () => ({

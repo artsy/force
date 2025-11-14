@@ -1,9 +1,9 @@
-import { Join, Spacer } from "@artsy/palette"
 import { InsightsCareerHighlightRailFragmentContainer } from "Apps/Settings/Routes/Insights/Components/CareerHighlights/InsightsCareerHighlightRail"
 import { InsightsMedianSalePriceFragmentContainer } from "Apps/Settings/Routes/Insights/Components/InsightsMedianSalePrice"
 import { MetaTags } from "Components/MetaTags"
 import { useFlag } from "System/FeatureFlags/useFlag"
 import { Media } from "Utils/Responsive"
+import { Join, Spacer } from "@artsy/palette"
 import type { InsightsRoute_me$data } from "__generated__/InsightsRoute_me.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { InsightsAuctionResultsFragmentContainer } from "./Components/InsightsAuctionResults"
@@ -42,7 +42,7 @@ const InsightsRoute: React.FC<React.PropsWithChildren<InsightsRouteProps>> = ({
         </Media>
 
         <Join separator={<Spacer y={[4, 6]} />}>
-          <InsightsOverviewFragmentContainer info={me?.myCollectionInfo!} />
+          <InsightsOverviewFragmentContainer info={me?.myCollectionInfo} />
 
           {!!isCareerHighlightEnabled && (
             <>

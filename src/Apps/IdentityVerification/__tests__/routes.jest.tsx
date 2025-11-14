@@ -1,18 +1,16 @@
 import { IdentityVerificationAppQueryResponseFixture } from "Apps/IdentityVerification/__fixtures__/routes_IdentityVerificationAppQuery"
+import { identityVerificationRoutes } from "Apps/IdentityVerification/identityVerificationRoutes"
 import { createMockNetworkLayer } from "DevTools/createMockNetworkLayer"
+import type { identityVerificationRoutes_IdentityVerificationAppQuery$rawResponse } from "__generated__/identityVerificationRoutes_IdentityVerificationAppQuery.graphql"
+import { createRender } from "found"
 import {
   type FarceElementResult,
   type FarceRedirectResult,
   getFarceResult,
 } from "found/server"
+import { Resolver } from "found-relay"
 import type { Environment as IEnvironment } from "react-relay"
 import { Environment, RecordSource, Store } from "relay-runtime"
-
-import { identityVerificationRoutes } from "Apps/IdentityVerification/identityVerificationRoutes"
-
-import type { identityVerificationRoutes_IdentityVerificationAppQuery$rawResponse } from "__generated__/identityVerificationRoutes_IdentityVerificationAppQuery.graphql"
-import { createRender } from "found"
-import { Resolver } from "found-relay"
 
 describe("IdentityVerification/routes", () => {
   const idvID =

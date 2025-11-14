@@ -1,9 +1,9 @@
-import { type RedirectRecord, getRedirect } from "../getRedirect"
+import { getRedirect, type RedirectRecord } from "../getRedirect"
 
 describe("getRedirect", () => {
-  const aNonMatchingPredicate = ({}) => null
+  const aNonMatchingPredicate = () => null
   function aMatchingPredicateWithResult(matchedValue) {
-    return ({}) => ({ path: matchedValue, reason: "reason" })
+    return () => ({ path: matchedValue, reason: "reason" })
   }
   function aRuleWithChildren(
     children: Array<RedirectRecord<{}>>,

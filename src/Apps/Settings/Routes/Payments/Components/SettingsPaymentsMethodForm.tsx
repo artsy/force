@@ -1,3 +1,6 @@
+import { useAddCreditCard } from "Apps/Settings/Routes/Payments/useAddCreditCard"
+import { CountrySelect } from "Components/CountrySelect"
+import { CreditCardInput } from "Components/CreditCardInput"
 import {
   Button,
   Column,
@@ -5,8 +8,8 @@ import {
   Input,
   Message,
   ModalDialog,
-  VisuallyHidden,
   useToasts,
+  VisuallyHidden,
 } from "@artsy/palette"
 import {
   CardCvcElement,
@@ -15,9 +18,6 @@ import {
   useElements,
   useStripe,
 } from "@stripe/react-stripe-js"
-import { useAddCreditCard } from "Apps/Settings/Routes/Payments/useAddCreditCard"
-import { CountrySelect } from "Components/CountrySelect"
-import { CreditCardInput } from "Components/CreditCardInput"
 import { Form, Formik } from "formik"
 import type { FC } from "react"
 import * as Yup from "yup"
@@ -171,7 +171,6 @@ export const SettingsPaymentsMethodForm: FC<
                     title="Country"
                     name="country"
                     // TODO: Accept a value prop in Select
-                    // @ts-ignore
                     value={values.country}
                     onChange={handleChange}
                     onBlur={handleBlur}

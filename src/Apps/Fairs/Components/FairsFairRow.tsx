@@ -1,7 +1,7 @@
+import { RouterLink } from "System/Components/RouterLink"
 import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
 import { Box, type BoxProps, Flex, Image, Text } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
-import { RouterLink } from "System/Components/RouterLink"
 import type { FairsFairRow_fair$data } from "__generated__/FairsFairRow_fair.graphql"
 import { DateTime } from "luxon"
 import type * as React from "react"

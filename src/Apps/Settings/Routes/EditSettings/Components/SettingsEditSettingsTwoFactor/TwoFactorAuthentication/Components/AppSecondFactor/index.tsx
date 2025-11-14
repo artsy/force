@@ -1,3 +1,9 @@
+import type { ApiError } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/ApiError"
+import { DisableFactorConfirmation } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/Components/DisableFactorConfirmation"
+import { afterUpdateRedirect } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/helpers"
+import { ConfirmPasswordModal } from "Components/ConfirmPasswordModal"
+import { RouterLink } from "System/Components/RouterLink"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import {
   Box,
   Button,
@@ -8,26 +14,19 @@ import {
   Text,
   useToasts,
 } from "@artsy/palette"
-import type { ApiError } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/ApiError"
-import { DisableFactorConfirmation } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/Components/DisableFactorConfirmation"
-import { ConfirmPasswordModal } from "Components/ConfirmPasswordModal"
-import { useSystemContext } from "System/Hooks/useSystemContext"
 import type { AppSecondFactor_me$data } from "__generated__/AppSecondFactor_me.graphql"
 import type { CreateAppSecondFactorInput } from "__generated__/CreateAppSecondFactorMutation.graphql"
 import type * as React from "react"
 import { useState } from "react"
 import {
-  type RelayRefetchProp,
   createRefetchContainer,
   graphql,
+  type RelayRefetchProp,
 } from "react-relay"
-// eslint-disable-next-line no-restricted-imports
+// biome-ignore lint/style/noRestrictedImports: Legacy authentication component dependency
 import request from "superagent"
 import { AppSecondFactorModal, OnCompleteRedirectModal } from "./Modal"
 import { CreateAppSecondFactor } from "./Mutation/CreateAppSecondFactor"
-
-import { afterUpdateRedirect } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/helpers"
-import { RouterLink } from "System/Components/RouterLink"
 
 interface AppSecondFactorProps {
   me: AppSecondFactor_me$data

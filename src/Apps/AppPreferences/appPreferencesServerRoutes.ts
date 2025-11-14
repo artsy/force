@@ -1,7 +1,7 @@
 import {
   type AppPreferences,
-  DEFAULT_PREFERENCES,
   appPreferencesSchema,
+  DEFAULT_PREFERENCES,
 } from "Apps/AppPreferences/useAppPreferences"
 import type {
   ArtsyRequest,
@@ -71,7 +71,7 @@ export const getAppPreferences = (req: ArtsyRequest): AppPreferences => {
     return appPreferencesSchema.validateSync(value, {
       stripUnknown: true,
     })
-  } catch (error) {
+  } catch (_error) {
     return DEFAULT_PREFERENCES
   }
 }

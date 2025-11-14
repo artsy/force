@@ -1,7 +1,7 @@
-import { Box, Spacer, Text } from "@artsy/palette"
 import { Masonry } from "Components/Masonry"
 import { RouterLink } from "System/Components/RouterLink"
 import { Jump } from "Utils/Hooks/useJump"
+import { Box, Spacer, Text } from "@artsy/palette"
 import type { GeneFamily_geneFamily$data } from "__generated__/GeneFamily_geneFamily.graphql"
 import { sortBy } from "lodash"
 import type * as React from "react"

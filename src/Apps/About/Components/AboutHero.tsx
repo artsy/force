@@ -1,5 +1,5 @@
-import { Column, GridColumns, Image, ResponsiveBox } from "@artsy/palette"
 import { resized } from "Utils/resized"
+import { Column, GridColumns, Image, ResponsiveBox } from "@artsy/palette"
 
 export const AboutHero = () => {
   return (

@@ -1,10 +1,10 @@
-import { ContextModule } from "@artsy/cohesion"
-import { screen } from "@testing-library/react"
 import { DetailsFragmentContainer } from "Components/Artwork/Details/Details"
 import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
 import { useAuthDialog } from "Components/AuthDialog"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import { ContextModule } from "@artsy/cohesion"
+import { screen } from "@testing-library/react"
 import type { Details_Test_Query } from "__generated__/Details_Test_Query.graphql"
 import { graphql } from "react-relay"
 

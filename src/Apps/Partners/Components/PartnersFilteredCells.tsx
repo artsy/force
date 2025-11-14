@@ -1,4 +1,11 @@
 import {
+  CellPartnerFragmentContainer,
+  CellPartnerPlaceholder,
+} from "Components/Cells/CellPartner"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { extractNodes } from "Utils/extractNodes"
+import {
   Box,
   Button,
   Column,
@@ -7,20 +14,13 @@ import {
   SkeletonText,
   Text,
 } from "@artsy/palette"
-import {
-  CellPartnerFragmentContainer,
-  CellPartnerPlaceholder,
-} from "Components/Cells/CellPartner"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { extractNodes } from "Utils/extractNodes"
-import type { PartnersFilteredCellsQuery } from "__generated__/PartnersFilteredCellsQuery.graphql"
 import type { PartnersFilteredCells_viewer$data } from "__generated__/PartnersFilteredCells_viewer.graphql"
+import type { PartnersFilteredCellsQuery } from "__generated__/PartnersFilteredCellsQuery.graphql"
 import { type FC, useState } from "react"
 import {
-  type RelayPaginationProp,
   createPaginationContainer,
   graphql,
+  type RelayPaginationProp,
 } from "react-relay"
 
 interface PartnersFilteredCellsProps {

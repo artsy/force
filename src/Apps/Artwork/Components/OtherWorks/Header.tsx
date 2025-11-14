@@ -1,5 +1,5 @@
-import { Flex, SkeletonText, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
+import { Flex, SkeletonText, Text } from "@artsy/palette"
 import type * as React from "react"
 
 interface HeaderProps {

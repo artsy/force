@@ -8,8 +8,8 @@ describe.skip("Strategy", () => {
   describe("passing request to verify callback", () => {
     const strategy = new Strategy(
       { passReqToCallback: true },
-      (req, username, password, otp, done) => {
-        if (username == "johndoe" && password == "secret") {
+      (req, username, password, _otp, done) => {
+        if (username === "johndoe" && password === "secret") {
           return done(
             null,
             { id: "1234" },

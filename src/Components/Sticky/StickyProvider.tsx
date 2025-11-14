@@ -1,5 +1,6 @@
 import { compound } from "@artsy/palette"
 import { uniqBy } from "lodash"
+import type * as React from "react"
 import {
   createContext,
   useCallback,
@@ -8,7 +9,6 @@ import {
   useRef,
   useState,
 } from "react"
-import type * as React from "react"
 
 export type TSticky = {
   id: string

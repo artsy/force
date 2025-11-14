@@ -1,7 +1,7 @@
-import { waitFor } from "@testing-library/react"
 import { NotificationsContextProvider } from "Components/Notifications/Hooks/useNotificationsContext"
 import { NotificationQueryRenderer } from "Components/Notifications/Notification"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { waitFor } from "@testing-library/react"
 
 const mockRouterPush = jest.fn()
 

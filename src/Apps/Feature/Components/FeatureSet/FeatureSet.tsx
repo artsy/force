@@ -1,5 +1,5 @@
-import { Box, type BoxProps, FullBleed, Join, Spacer } from "@artsy/palette"
 import { extractNodes } from "Utils/extractNodes"
+import { Box, type BoxProps, FullBleed, Join, Spacer } from "@artsy/palette"
 import type { FeatureSet_set$data } from "__generated__/FeatureSet_set.graphql"
 import type * as React from "react"
 import { useMemo } from "react"

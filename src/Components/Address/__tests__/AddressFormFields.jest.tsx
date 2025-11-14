@@ -1,17 +1,17 @@
-import { Button } from "@artsy/palette"
-import { render, screen, waitFor } from "@testing-library/react"
-import userEvent from "@testing-library/user-event"
-import {
-  AddressFormFields,
-  addressFormFieldsValidator,
-} from "Components/Address/AddressFormFields"
 import {
   ADDRESS_FORM_INPUTS,
   fillAddressFormFields,
   hasCorrectAddressFormFields,
 } from "Components/Address/__tests__/utils"
+import {
+  AddressFormFields,
+  addressFormFieldsValidator,
+} from "Components/Address/AddressFormFields"
 import { type Address, emptyAddress } from "Components/Address/utils"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
+import { Button } from "@artsy/palette"
+import { render, screen, waitFor } from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
 import { Formik } from "formik"
 import * as Yup from "yup"
 

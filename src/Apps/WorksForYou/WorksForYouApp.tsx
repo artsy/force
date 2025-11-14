@@ -1,3 +1,9 @@
+import { LogInPrompt } from "Apps/Components/LogInPrompt"
+import { MetaTags } from "Components/MetaTags"
+import { RouterLink } from "System/Components/RouterLink"
+import { useRouter } from "System/Hooks/useRouter"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { extractNodes } from "Utils/extractNodes"
 import { type AuthContextModule, ContextModule } from "@artsy/cohesion"
 import {
   Button,
@@ -9,12 +15,6 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { LogInPrompt } from "Apps/Components/LogInPrompt"
-import { MetaTags } from "Components/MetaTags"
-import { RouterLink } from "System/Components/RouterLink"
-import { useRouter } from "System/Hooks/useRouter"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { extractNodes } from "Utils/extractNodes"
 import type { WorksForYouApp_viewerArtist$data } from "__generated__/WorksForYouApp_viewerArtist.graphql"
 import type { WorksForYouApp_viewerFeed$data } from "__generated__/WorksForYouApp_viewerFeed.graphql"
 import type { WorksForYouApp_viewerMe$data } from "__generated__/WorksForYouApp_viewerMe.graphql"
@@ -125,7 +125,7 @@ const WorksForYouApp: React.FC<React.PropsWithChildren<WorksForYouProps>> = ({
               <Column span={3}>
                 <Button
                   size="large"
-                  // @ts-ignore
+                  // @ts-expect-error
                   as={RouterLink}
                   to="/collect"
                 >

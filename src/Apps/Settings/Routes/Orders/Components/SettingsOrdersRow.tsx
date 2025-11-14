@@ -1,3 +1,5 @@
+import { EntityHeaderPlaceholder } from "Components/EntityHeaders/EntityHeaderPlaceholder"
+import { RouterLink } from "System/Components/RouterLink"
 import {
   ActionType,
   type ClickedChangePaymentMethod,
@@ -23,14 +25,12 @@ import {
   SkeletonText,
   Text,
 } from "@artsy/palette"
-import { EntityHeaderPlaceholder } from "Components/EntityHeaders/EntityHeaderPlaceholder"
-import { RouterLink } from "System/Components/RouterLink"
 import type {
   OrderBuyerStateEnum,
   SettingsOrdersRow_order$data,
 } from "__generated__/SettingsOrdersRow_order.graphql"
-import { DateTime } from "luxon"
 import type { LocaleOptions } from "luxon"
+import { DateTime } from "luxon"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -174,7 +174,7 @@ const OrderActionButton: FC<OrderActionButtonProps> = ({
 
   return (
     <Button
-      // @ts-ignore
+      // @ts-expect-error
       as={RouterLink}
       to={route}
       variant="primaryBlack"

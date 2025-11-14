@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test"
+import { expect, test } from "@playwright/test"
 
 // FIXME: These pass locally but not on CI
 test.describe.skip("flash_message", () => {

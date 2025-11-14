@@ -1,5 +1,5 @@
-import { Elements } from "@stripe/react-stripe-js"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { Elements } from "@stripe/react-stripe-js"
 import type { ExpressCheckout_Test_Query } from "__generated__/ExpressCheckout_Test_Query.graphql"
 import { graphql } from "react-relay"
 import { ExpressCheckout } from ".."

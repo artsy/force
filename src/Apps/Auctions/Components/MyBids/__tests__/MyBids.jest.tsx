@@ -1,10 +1,9 @@
 import { MyBidsFragmentContainer } from "Apps/Auctions/Components/MyBids/MyBids"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { fireEvent, screen } from "@testing-library/react"
+import type { MyBidsTestQuery } from "__generated__/MyBidsTestQuery.graphql"
 import { graphql } from "react-relay"
 import { useTracking as baseUseTracking } from "react-tracking"
-import { screen } from "@testing-library/react"
-import { fireEvent } from "@testing-library/react"
-import type { MyBidsTestQuery } from "__generated__/MyBidsTestQuery.graphql"
 
 jest.mock("react-tracking")
 jest.unmock("react-relay")

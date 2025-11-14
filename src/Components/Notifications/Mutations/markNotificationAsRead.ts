@@ -3,7 +3,7 @@ import type {
   markNotificationAsReadMutation,
   markNotificationAsReadMutation$data,
 } from "__generated__/markNotificationAsReadMutation.graphql"
-import { type Environment, commitMutation, graphql } from "react-relay"
+import { commitMutation, type Environment, graphql } from "react-relay"
 
 const updater = (id: string, store: any) => {
   const notification = store.get(id)

@@ -1,10 +1,10 @@
+import { RouterLink } from "System/Components/RouterLink"
 import {
   ActionType,
   ContextModule,
   type SelectedSearchSuggestionQuickNavigationItem,
 } from "@artsy/cohesion"
 import { Pill, type PillProps } from "@artsy/palette"
-import { RouterLink } from "System/Components/RouterLink"
 import type { FC } from "react"
 import { useTracking } from "react-tracking"
 
@@ -46,7 +46,7 @@ export const QuickNavigationItem: FC<
   return (
     <Pill
       as={RouterLink}
-      // @ts-ignore
+      // @ts-expect-error
       to={to}
       onClick={handleClick}
       onMouseDown={handleMouseDown}

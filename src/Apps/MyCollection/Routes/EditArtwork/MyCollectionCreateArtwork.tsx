@@ -1,4 +1,3 @@
-import { useToasts } from "@artsy/palette"
 import { MyCollectionArtworkFormArtistStep } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormArtistStep"
 import { MyCollectionArtworkFormArtworkStep } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormArtworkStep"
 import {
@@ -12,6 +11,7 @@ import { MetaTags } from "Components/MetaTags"
 import { useRouter } from "System/Hooks/useRouter"
 import { storeLocalImage } from "Utils/localImageHelpers"
 import createLogger from "Utils/logger"
+import { useToasts } from "@artsy/palette"
 import type { MyCollectionCreateArtwork_me$data } from "__generated__/MyCollectionCreateArtwork_me.graphql"
 import { Formik } from "formik"
 import { useEffect, useState } from "react"
@@ -89,7 +89,7 @@ export const MyCollectionCreateArtwork: React.FC<
 
   useEffect(() => {
     window?.scrollTo?.({ top: 0 })
-  }, [currentStep])
+  }, [])
 
   const handleSubmit = async (values: ArtworkModel) => {
     // Create the new artwork
@@ -106,7 +106,7 @@ export const MyCollectionCreateArtwork: React.FC<
       localImages.forEach((image, index) => {
         if (!artwork?.images?.[index]?.internalID) return
 
-        storeLocalImage(artwork?.images?.[index]?.internalID!, image)
+        storeLocalImage(artwork?.images?.[index]?.internalID, image)
       })
 
       router.replace({

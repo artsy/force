@@ -1,4 +1,3 @@
-import { Join, Spacer } from "@artsy/palette"
 import { ArtistNationalityFilter } from "Components/ArtworkFilter/ArtworkFilters/ArtistNationalityFilter"
 import { ArtistsFilter } from "Components/ArtworkFilter/ArtworkFilters/ArtistsFilter"
 import { ArtworkLocationFilter } from "Components/ArtworkFilter/ArtworkFilters/ArtworkLocationFilter"
@@ -14,6 +13,7 @@ import { SignedFilter } from "Components/ArtworkFilter/ArtworkFilters/SignedFilt
 import { SizeFilter } from "Components/ArtworkFilter/ArtworkFilters/SizeFilter"
 import { TimePeriodFilter } from "Components/ArtworkFilter/ArtworkFilters/TimePeriodFilter"
 import { WaysToBuyFilter } from "Components/ArtworkFilter/ArtworkFilters/WaysToBuyFilter"
+import { Join, Spacer } from "@artsy/palette"
 
 export const SearchResultsArtworksFilters = () => {
   return (

@@ -1,11 +1,11 @@
-import { ContextModule, OwnerType } from "@artsy/cohesion"
-import { render, screen, waitFor, within } from "@testing-library/react"
-import userEvent from "@testing-library/user-event"
 import {
   AddressAutocompleteInput,
   type AddressAutocompleteInputProps,
 } from "Components/Address/AddressAutocompleteInput"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
+import { ContextModule, OwnerType } from "@artsy/cohesion"
+import { render, screen, waitFor, within } from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
 import compact from "lodash/compact"
 import { type FC, useState } from "react"
 import { useTracking } from "react-tracking"
@@ -127,6 +127,7 @@ const TestImplementation: FC<React.PropsWithChildren<ImplementationProps>> = ({
         ))}
       </div>
       <button
+        type="button"
         onClick={() => {
           setAddress({ ...address, line2: String(Date.now()) })
         }}

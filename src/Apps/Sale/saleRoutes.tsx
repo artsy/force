@@ -1,8 +1,8 @@
-import loadable from "@loadable/component"
 import { getArtworkFilterInputArgs } from "Apps/Sale/Components/getArtworkFilterInputArgs"
 import { serverCacheTTLs } from "Apps/serverCacheTTLs"
 import { getInitialFilterState } from "Components/ArtworkFilter/Utils/getInitialFilterState"
 import type { RouteProps } from "System/Router/Route"
+import loadable from "@loadable/component"
 import { RedirectException } from "found"
 import { graphql } from "react-relay"
 

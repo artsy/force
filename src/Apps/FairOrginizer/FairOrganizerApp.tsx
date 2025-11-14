@@ -1,5 +1,5 @@
-import { Spacer } from "@artsy/palette"
 import { MetaTags } from "Components/MetaTags"
+import { Spacer } from "@artsy/palette"
 import type { FairOrganizerApp_fairOrganizer$data } from "__generated__/FairOrganizerApp_fairOrganizer.graphql"
 import { truncate } from "lodash"
 import type * as React from "react"

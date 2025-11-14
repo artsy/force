@@ -1,5 +1,5 @@
 import { ShowMore } from "Components/ArtworkFilter/ArtworkFilters/ShowMore"
-import { render, screen, fireEvent } from "@testing-library/react"
+import { fireEvent, render, screen } from "@testing-library/react"
 
 describe("ShowMore", () => {
   it("shows more when clicked", () => {

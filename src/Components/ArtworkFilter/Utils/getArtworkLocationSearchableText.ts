@@ -1,4 +1,4 @@
-import { Item } from "@artsy/palette/dist/elements/FilterSelect/Components/FilterSelectContext"
+import type { Item } from "@artsy/palette/dist/elements/FilterSelect/Components/FilterSelectContext"
 import { compact } from "lodash"
 
 export function getArtworkLocationSearchableText(item: Item) {

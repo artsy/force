@@ -1,11 +1,11 @@
-import { Checkbox, Flex, Select, Spacer } from "@artsy/palette"
+import type { Aggregations } from "Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
 import {
   useAuctionResultsFilterContext,
   useCurrentlySelectedFiltersForAuctionResults,
 } from "Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
-import type { Aggregations } from "Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
 import { FilterExpandable } from "Components/ArtworkFilter/ArtworkFilters/FilterExpandable"
 import { ShowMore } from "Components/ArtworkFilter/ArtworkFilters/ShowMore"
+import { Checkbox, Flex, Select, Spacer } from "@artsy/palette"
 import type * as React from "react"
 
 interface YearCreatedProps {
@@ -58,7 +58,7 @@ export const YearCreated: React.FC<
               title="Earliest"
               options={startOptions}
               onSelect={year =>
-                setFilter("createdAfterYear", Number.parseInt(year))
+                setFilter("createdAfterYear", Number.parseInt(year, 10))
               }
               selected={selectedStart}
             />
@@ -68,7 +68,7 @@ export const YearCreated: React.FC<
               title="Latest"
               options={endOptions}
               onSelect={year => {
-                setFilter("createdBeforeYear", Number.parseInt(year))
+                setFilter("createdBeforeYear", Number.parseInt(year, 10))
               }}
               selected={selectedEnd}
             />

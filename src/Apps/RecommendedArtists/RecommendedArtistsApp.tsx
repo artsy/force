@@ -1,11 +1,11 @@
+import { LogInPrompt } from "Apps/Components/LogInPrompt"
+import { RecommendedArtistsGrid } from "Apps/RecommendedArtists/Components/RecommendedArtistsGrid"
+import { MetaTags } from "Components/MetaTags"
 import { type AuthContextModule, ContextModule } from "@artsy/cohesion"
 import { Spacer, Text } from "@artsy/palette"
-import { LogInPrompt } from "Apps/Components/LogInPrompt"
-import { MetaTags } from "Components/MetaTags"
+import type { RecommendedArtistsApp_me$key } from "__generated__/RecommendedArtistsApp_me.graphql"
 import type { FC } from "react"
 import { graphql, useFragment } from "react-relay"
-import { RecommendedArtistsGrid } from "Apps/RecommendedArtists/Components/RecommendedArtistsGrid"
-import type { RecommendedArtistsApp_me$key } from "__generated__/RecommendedArtistsApp_me.graphql"
 
 interface RecommendedArtistsAppProps {
   me: RecommendedArtistsApp_me$key

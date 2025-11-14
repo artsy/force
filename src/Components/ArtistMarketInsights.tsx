@@ -1,5 +1,5 @@
-import { BorderBox, Box, Join, Spacer } from "@artsy/palette"
 import { ArtworkDefinitionList } from "Apps/Artwork/Components/ArtworkDefinitionList"
+import { BorderBox, Box, Join, Spacer } from "@artsy/palette"
 import type { ArtistMarketInsights_artist$data } from "__generated__/ArtistMarketInsights_artist.graphql"
 import { groupBy } from "lodash"
 import { Component } from "react"

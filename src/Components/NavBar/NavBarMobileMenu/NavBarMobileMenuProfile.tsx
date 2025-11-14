@@ -1,7 +1,7 @@
-import { ModalBase, Text } from "@artsy/palette"
 import { NavBarUserMenu } from "Components/NavBar/Menus"
 import { NavBarMobileMenuIcon } from "Components/NavBar/NavBarMobileMenu/NavBarMobileMenu"
 import { NavBarMobileMenuItemButton } from "Components/NavBar/NavBarMobileMenu/NavBarMobileMenuItem"
+import { ModalBase, Text } from "@artsy/palette"
 import type { FC } from "react"
 
 interface NavBarMobileMenuProfileProps {

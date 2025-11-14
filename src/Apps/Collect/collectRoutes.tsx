@@ -1,6 +1,6 @@
-import loadable from "@loadable/component"
 import { getInitialFilterState } from "Components/ArtworkFilter/Utils/getInitialFilterState"
 import type { RouteProps } from "System/Router/Route"
+import loadable from "@loadable/component"
 import { graphql } from "react-relay"
 
 const CollectApp = loadable(

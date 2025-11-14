@@ -1,5 +1,5 @@
 import { SettingsEditSettingsTwoFactorBackupCodesActions } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/SettingsEditSettingsTwoFactorBackupCodesActions"
-import { render, screen, fireEvent } from "@testing-library/react"
+import { fireEvent, render, screen } from "@testing-library/react"
 
 describe("Two factor authentication enrollment", () => {
   const props = {
@@ -55,12 +55,12 @@ describe("Two factor authentication enrollment", () => {
     global.URL.createObjectURL = jest.fn()
     global.URL.revokeObjectURL = jest.fn()
 
-    // @ts-ignore: Type
+    // @ts-expect-error: Type
     global.Blob = class {
       constructor(content, options) {
-        // @ts-ignore: Type
+        // @ts-expect-error: Type
         this.content = content
-        // @ts-ignore: Type
+        // @ts-expect-error: Type
         this.options = options
       }
     }

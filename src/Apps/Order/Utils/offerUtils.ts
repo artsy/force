@@ -37,9 +37,9 @@ export const getInitialOfferState = (
   listPriceOptions: ListPriceOptionsType,
   lastOffer?: number,
 ) => {
-  let lastOfferValue: number | undefined = undefined
-  let selectedPriceOption: string | undefined = undefined
-  let selectedPriceValue: number | undefined = undefined
+  let lastOfferValue: number | undefined
+  let selectedPriceOption: string | undefined
+  let selectedPriceValue: number | undefined
 
   if (lastOffer) {
     const matchingPriceOption = listPriceOptions.find(
@@ -97,7 +97,7 @@ const getRangeOptions = (listPrice: ListPriceType) => {
     },
   ]
 
-  return getRangeDetails.map((rangePrice, idx) => ({
+  return getRangeDetails.map((rangePrice, _idx) => ({
     key: `price-option-${rangePrice.key}`,
     value: rangePrice.value!,
     description: rangePrice.description,
@@ -143,7 +143,7 @@ const getPercentageOptions = (
     ]
   }
 
-  return percentageOptions.map((option, idx) => {
+  return percentageOptions.map((option, _idx) => {
     if (listPrice?.major) {
       return {
         key: `price-option-${option.key}`,

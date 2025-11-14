@@ -1,14 +1,14 @@
+import { useFlag } from "System/FeatureFlags/useFlag"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { getENV } from "Utils/getENV"
+import { useLocalImage } from "Utils/localImageHelpers"
+import { userIsTeam } from "Utils/user"
 import {
   Clickable,
   type ClickableProps,
   Image,
   ResponsiveBox,
 } from "@artsy/palette"
-import { useFlag } from "System/FeatureFlags/useFlag"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { getENV } from "Utils/getENV"
-import { useLocalImage } from "Utils/localImageHelpers"
-import { userIsTeam } from "Utils/user"
 import type { ArtworkLightbox_artwork$data } from "__generated__/ArtworkLightbox_artwork.graphql"
 import { compact } from "lodash"
 import { scale } from "proportional-scale"

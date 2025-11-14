@@ -1,6 +1,6 @@
 import type { getConvectionGeminiKeyQuery } from "__generated__/getConvectionGeminiKeyQuery.graphql"
-import { fetchQuery, graphql } from "react-relay"
 import type { Environment } from "react-relay"
+import { fetchQuery, graphql } from "react-relay"
 
 export const getConvectionGeminiKey = (relayEnvironment: Environment) =>
   fetchQuery<getConvectionGeminiKeyQuery>(

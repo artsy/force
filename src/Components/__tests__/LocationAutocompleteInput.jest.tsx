@@ -1,11 +1,10 @@
-import { fireEvent, screen, waitFor } from "@testing-library/react"
-import { render } from "@testing-library/react"
 import {
   LocationAutocompleteInput,
-  type Place,
   normalizePlace,
+  type Place,
 } from "Components/LocationAutocompleteInput"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
+import { fireEvent, render, screen, waitFor } from "@testing-library/react"
 
 const mockGetPlacePredictions = jest.fn().mockResolvedValue({
   predictions: [
@@ -21,7 +20,7 @@ const Geocoder = jest.fn().mockImplementation(() => ({
   geocode: mockGeocode,
 }))
 const setupGoogleMapsMock = () => {
-  // @ts-ignore
+  // @ts-expect-error
   global.window.google = { maps: { Geocoder, places: { AutocompleteService } } }
 }
 

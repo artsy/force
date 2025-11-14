@@ -1,9 +1,9 @@
-import { act, screen } from "@testing-library/react"
 import {
   ArtworkFilterContextProvider,
   useArtworkFilterContext,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { createArtworkFilterTestRenderer } from "Components/ArtworkFilter/ArtworkFilters/__tests__/Utils"
+import { act, screen } from "@testing-library/react"
 import { HeadProvider } from "react-head"
 import { ArtistMediumsTitle } from "../ArtistMediumsTitle"
 

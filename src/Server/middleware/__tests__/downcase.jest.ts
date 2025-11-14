@@ -5,9 +5,6 @@ describe("downcase middleware", () => {
 
   beforeEach(() => {
     testContext = {}
-  })
-
-  beforeEach(() => {
     testContext.req = { _parsedUrl: { search: null } }
     testContext.res = { redirect: jest.fn() }
     testContext.next = jest.fn()

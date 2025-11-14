@@ -1,6 +1,6 @@
-import { screen } from "@testing-library/react"
 import { PartnerContactsFragmentContainer } from "Apps/Partner/Components/PartnerContacts/PartnerContacts"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import type { PartnerContactsTestQuery } from "__generated__/PartnerContactsTestQuery.graphql"
 import { graphql } from "react-relay"
 

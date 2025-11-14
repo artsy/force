@@ -1,5 +1,5 @@
-import { Button, Column, Separator } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
+import { Button, Column, Separator } from "@artsy/palette"
 import type { UserActiveBids_me$data } from "__generated__/UserActiveBids_me.graphql"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"

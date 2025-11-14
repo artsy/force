@@ -1,6 +1,3 @@
-import { ContextModule } from "@artsy/cohesion"
-import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { Box, Join, Skeleton, Spacer } from "@artsy/palette"
 import { OtherAuctionsQueryRenderer } from "Apps/Artwork/Components/OtherAuctions"
 import {
   Header,
@@ -16,8 +13,11 @@ import {
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { get } from "Utils/get"
-import type { OtherWorksQuery } from "__generated__/OtherWorksQuery.graphql"
+import { ContextModule } from "@artsy/cohesion"
+import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import { Box, Join, Skeleton, Spacer } from "@artsy/palette"
 import type { OtherWorks_artwork$data } from "__generated__/OtherWorks_artwork.graphql"
+import type { OtherWorksQuery } from "__generated__/OtherWorksQuery.graphql"
 import { compact } from "lodash"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"

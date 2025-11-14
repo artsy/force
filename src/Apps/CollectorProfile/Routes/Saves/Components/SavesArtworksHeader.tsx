@@ -1,3 +1,6 @@
+import { ArtworkListContextualMenu } from "Apps/CollectorProfile/Routes/Saves/Components/Actions/ArtworkListContextualMenu"
+import { ClientSuspense } from "Components/ClientSuspense"
+import { ShareCollectionDialog } from "Components/ShareCollectionDialog"
 import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 import HideIcon from "@artsy/icons/HideIcon"
 import ShareIcon from "@artsy/icons/ShareIcon"
@@ -9,9 +12,6 @@ import {
   Text,
   Tooltip,
 } from "@artsy/palette"
-import { ArtworkListContextualMenu } from "Apps/CollectorProfile/Routes/Saves/Components/Actions/ArtworkListContextualMenu"
-import { ClientSuspense } from "Components/ClientSuspense"
-import { ShareCollectionDialog } from "Components/ShareCollectionDialog"
 import type {
   SavesArtworksHeaderQuery,
   SavesArtworksHeaderQuery$data,

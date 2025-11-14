@@ -1,4 +1,3 @@
-import type { AuthContextModule, AuthIntent } from "@artsy/cohesion"
 import { useTitleWithIntent } from "Apps/Authentication/Hooks/useTitleWithIntent"
 import { DEFAULT_TITLES } from "Components/AuthDialog/AuthDialog"
 import {
@@ -8,6 +7,7 @@ import {
 } from "Components/AuthDialog/AuthDialogContext"
 import { useRouter } from "System/Hooks/useRouter"
 import type { AfterAuthAction } from "Utils/Hooks/useAuthIntent"
+import type { AuthContextModule, AuthIntent } from "@artsy/cohesion"
 import { useEffect } from "react"
 
 /**

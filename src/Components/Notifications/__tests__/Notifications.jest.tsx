@@ -1,9 +1,9 @@
-import { act, screen, waitFor } from "@testing-library/react"
 import { Notifications } from "Components/Notifications/Notifications"
-import { MockBoot } from "DevTools/MockBoot"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
+import { MockBoot } from "DevTools/MockBoot"
 import { render } from "DevTools/renderWithMockBoot"
-import { MockPayloadGenerator, createMockEnvironment } from "relay-test-utils"
+import { act, screen, waitFor } from "@testing-library/react"
+import { createMockEnvironment, MockPayloadGenerator } from "relay-test-utils"
 
 jest.mock("System/Hooks/useRouter", () => ({
   useRouter: () => ({

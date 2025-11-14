@@ -1,13 +1,3 @@
-import {
-  Box,
-  Button,
-  Flex,
-  Join,
-  Spacer,
-  THEME,
-  Text,
-  useToasts,
-} from "@artsy/palette"
 import type { EditAlertEntity } from "Apps/Settings/Routes/SavedSearchAlerts/types"
 import { AlertProvider } from "Components/Alert/AlertProvider"
 import { CriteriaPills } from "Components/Alert/Components/CriteriaPills"
@@ -21,14 +11,24 @@ import { FiltersFooter } from "Components/Alert/Components/Steps/StepsFooter/Fil
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import { FadeInBox } from "Components/FadeInBox"
 import { DetailsInput } from "Components/SavedSearchAlert/Components/DetailsInput"
-import { getAllowedSearchCriteria } from "Components/SavedSearchAlert/Utils/savedSearchCriteria"
 import type { SearchCriteriaAttributes } from "Components/SavedSearchAlert/types"
+import { getAllowedSearchCriteria } from "Components/SavedSearchAlert/Utils/savedSearchCriteria"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { useJump } from "Utils/Hooks/useJump"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 import { Media } from "Utils/Responsive"
-import type { SavedSearchAlertEditFormQuery } from "__generated__/SavedSearchAlertEditFormQuery.graphql"
+import {
+  Box,
+  Button,
+  Flex,
+  Join,
+  Spacer,
+  Text,
+  THEME,
+  useToasts,
+} from "@artsy/palette"
 import type { SavedSearchAlertEditForm_viewer$data } from "__generated__/SavedSearchAlertEditForm_viewer.graphql"
+import type { SavedSearchAlertEditFormQuery } from "__generated__/SavedSearchAlertEditFormQuery.graphql"
 import { Formik } from "formik"
 import { isEqual } from "lodash"
 import { useEffect } from "react"

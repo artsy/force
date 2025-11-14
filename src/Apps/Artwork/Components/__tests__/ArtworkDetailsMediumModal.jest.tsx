@@ -1,6 +1,6 @@
-import { screen } from "@testing-library/react"
 import { ArtworkDetailsMediumModalFragmentContainer } from "Apps/Artwork/Components/ArtworkDetailsMediumModal"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import type { ArtworkDetailsMediumModalTestQuery } from "__generated__/ArtworkDetailsMediumModalTestQuery.graphql"
 import { graphql } from "react-relay"
 

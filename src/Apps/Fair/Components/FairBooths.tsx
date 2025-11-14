@@ -1,4 +1,3 @@
-import { Flex, FullBleed, Join, Spacer, Text } from "@artsy/palette"
 import { defaultSort, isValidSort } from "Apps/Fair/Utils/IsValidSort"
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
 import { LoadingArea } from "Components/LoadingArea"
@@ -7,20 +6,21 @@ import { Sticky } from "Components/Sticky"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { extractNodes } from "Utils/extractNodes"
 import { Jump } from "Utils/Hooks/useJump"
 import { usePrevious } from "Utils/Hooks/usePrevious"
-import { Media } from "Utils/Responsive"
-import { extractNodes } from "Utils/extractNodes"
 import createLogger from "Utils/logger"
-import type { FairBoothsContainerQuery } from "__generated__/FairBoothsContainerQuery.graphql"
+import { Media } from "Utils/Responsive"
+import { Flex, FullBleed, Join, Spacer, Text } from "@artsy/palette"
 import type { FairBooths_fair$data } from "__generated__/FairBooths_fair.graphql"
+import type { FairBoothsContainerQuery } from "__generated__/FairBoothsContainerQuery.graphql"
 import { isEqual } from "lodash"
-import { useState } from "react"
 import type * as React from "react"
+import { useState } from "react"
 import {
-  type RelayRefetchProp,
   createRefetchContainer,
   graphql,
+  type RelayRefetchProp,
 } from "react-relay"
 import useDeepCompareEffect from "use-deep-compare-effect"
 import {
@@ -95,7 +95,7 @@ const FairBooths: React.FC<React.PropsWithChildren<FairBoothsProps>> = ({
 
   const loadNext = () => {
     if (fair.exhibitors?.pageInfo.hasNextPage) {
-      loadPage(context?.filters?.page! + 1)
+      loadPage((context?.filters?.page as number) + 1)
     }
   }
 

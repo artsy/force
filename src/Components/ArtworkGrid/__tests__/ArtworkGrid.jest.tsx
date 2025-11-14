@@ -3,9 +3,9 @@ import ArtworkGrid, {
 } from "Components/ArtworkGrid/ArtworkGrid"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { fireEvent, screen } from "@testing-library/react"
 import type { ArtworkGrid_artworks$data } from "__generated__/ArtworkGrid_artworks.graphql"
 import { graphql } from "react-relay"
-import { screen, fireEvent } from "@testing-library/react"
 import { ArtworkGridFixture } from "./ArtworkGridFixture"
 
 jest.unmock("react-relay")

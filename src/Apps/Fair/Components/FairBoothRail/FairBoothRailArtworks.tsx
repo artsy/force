@@ -1,12 +1,4 @@
 import {
-  ActionType,
-  type ClickedArtworkGroup,
-  ContextModule,
-  OwnerType,
-  type PageOwnerType,
-} from "@artsy/cohesion"
-import { Shelf } from "@artsy/palette"
-import {
   ShelfArtworkFragmentContainer,
   ShelfArtworkPlaceholder,
 } from "Components/Artwork/ShelfArtwork"
@@ -16,8 +8,16 @@ import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
 import { getSignalLabel } from "Utils/getSignalLabel"
-import type { FairBoothRailArtworksQuery } from "__generated__/FairBoothRailArtworksQuery.graphql"
+import {
+  ActionType,
+  type ClickedArtworkGroup,
+  ContextModule,
+  OwnerType,
+  type PageOwnerType,
+} from "@artsy/cohesion"
+import { Shelf } from "@artsy/palette"
 import type { FairBoothRailArtworks_show$data } from "__generated__/FairBoothRailArtworks_show.graphql"
+import type { FairBoothRailArtworksQuery } from "__generated__/FairBoothRailArtworksQuery.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"

@@ -1,16 +1,15 @@
-import { ContextModule } from "@artsy/cohesion"
-import { Column, GridColumns, Spacer } from "@artsy/palette"
 import { useAuthDialog } from "Components/AuthDialog"
 import { MetaTags } from "Components/MetaTags"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import { userIsAdmin } from "Utils/user"
+import { ContextModule } from "@artsy/cohesion"
+import { Column, GridColumns, Spacer } from "@artsy/palette"
 import type { PageApp_page$data } from "__generated__/PageApp_page.graphql"
+import { HttpError } from "found"
 import { type FC, useEffect, useMemo } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { PageHTML } from "./Components/PageHTML"
-
-import { userIsAdmin } from "Utils/user"
-import { HttpError } from "found"
 
 interface PageAppProps {
   page: PageApp_page$data
@@ -41,7 +40,6 @@ const PageApp: FC<React.PropsWithChildren<PageAppProps>> = ({ page }) => {
     }
   }, [page.internalID])
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (PAGE_SLUGS_WITH_AUTH_REQUIRED.includes(page.internalID) && !user?.id) {
       showAuthDialog({

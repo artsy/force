@@ -1,5 +1,5 @@
-import { themeGet } from "@styled-system/theme-get"
 import { InfoSection } from "Components/InfoSection"
+import { themeGet } from "@styled-system/theme-get"
 import type { FairOrganizerInfo_fairOrganizer$data } from "__generated__/FairOrganizerInfo_fairOrganizer.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"

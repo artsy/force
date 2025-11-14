@@ -8,7 +8,7 @@ import { uploadFileToS3 } from "./uploadFileToS3"
 export const AUTOMATICALLY_ADDED_PHOTO_NAME = "Automatically added"
 
 export const KBSize = 1000
-export const MBSize = Math.pow(KBSize, 2)
+export const MBSize = KBSize ** 2
 const NO_SIZE = ""
 
 export function formatFileSize(photo: {

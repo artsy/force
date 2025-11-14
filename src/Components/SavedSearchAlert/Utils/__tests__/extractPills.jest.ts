@@ -1,13 +1,13 @@
 import type { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
+import type {
+  SavedSearchDefaultCriteria,
+  SearchCriteriaAttributes,
+} from "Components/SavedSearchAlert/types"
 import {
   excludeDefaultCriteria,
   extractPillFromAggregation,
   extractPillsFromDefaultCriteria,
 } from "Components/SavedSearchAlert/Utils/extractPills"
-import type {
-  SavedSearchDefaultCriteria,
-  SearchCriteriaAttributes,
-} from "Components/SavedSearchAlert/types"
 
 describe("extractPillFromAggregation", () => {
   it("returns pills", () => {

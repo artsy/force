@@ -1,3 +1,6 @@
+import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
+import { RouterLink } from "System/Components/RouterLink"
+import { formatFollowerCount } from "Utils/formatFollowerCount"
 import { ActionType, type ClickedOnReadMore } from "@artsy/cohesion"
 import {
   Avatar,
@@ -10,9 +13,6 @@ import {
   Text,
 } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
-import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
-import { RouterLink } from "System/Components/RouterLink"
-import { formatFollowerCount } from "Utils/formatFollowerCount"
 import type { PrivateArtworkAboutArtist_artwork$key } from "__generated__/PrivateArtworkAboutArtist_artwork.graphql"
 import { graphql, useFragment } from "react-relay"
 import { useTracking } from "react-tracking"

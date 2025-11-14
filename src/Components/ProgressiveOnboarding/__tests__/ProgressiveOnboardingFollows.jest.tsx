@@ -1,5 +1,3 @@
-import { DismissibleProvider, useDismissibleContext } from "@artsy/dismissible"
-import { render, screen } from "@testing-library/react"
 import { __ProgressiveOnboardingFollowArtist__ } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowArtist"
 import { __ProgressiveOnboardingFollowFind__ } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowFind"
 import { ProgressiveOnboardingFollowHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowHighlight"
@@ -9,6 +7,8 @@ import {
 } from "Components/ProgressiveOnboarding/progressiveOnboardingKeys"
 import { withProgressiveOnboardingCounts } from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
+import { DismissibleProvider, useDismissibleContext } from "@artsy/dismissible"
+import { render, screen } from "@testing-library/react"
 import { type FC, useEffect } from "react"
 
 jest.mock("System/Hooks/useSystemContext", () => ({
@@ -50,15 +50,15 @@ const Example: FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <DismissibleProvider keys={PROGRESSIVE_ONBOARDING_KEYS}>
       <ProgressiveOnboardingFollowFind>
-        <button>Profile</button>
+        <button type="button">Profile</button>
       </ProgressiveOnboardingFollowFind>
 
       <ProgressiveOnboardingFollowHighlight position="center">
-        <button>Follows</button>
+        <button type="button">Follows</button>
       </ProgressiveOnboardingFollowHighlight>
 
       <ProgressiveOnboardingFollowArtist>
-        <button>Follow</button>
+        <button type="button">Follow</button>
       </ProgressiveOnboardingFollowArtist>
     </DismissibleProvider>
   )

@@ -1,3 +1,9 @@
+import {
+  AboutPressShelf,
+  AboutPressShelfPlaceholder,
+} from "Apps/About/Components/AboutPressShelf"
+import { AboutSection } from "Apps/About/Components/AboutSection"
+import { RouterLink } from "System/Components/RouterLink"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import {
   Box,
@@ -9,12 +15,6 @@ import {
   Text,
   useTheme,
 } from "@artsy/palette"
-import {
-  AboutPressShelf,
-  AboutPressShelfPlaceholder,
-} from "Apps/About/Components/AboutPressShelf"
-import { AboutSection } from "Apps/About/Components/AboutSection"
-import { RouterLink } from "System/Components/RouterLink"
 import { Suspense } from "react"
 import { useTracking } from "react-tracking"
 
@@ -85,7 +85,7 @@ export const AboutPress = () => {
             </Text>
 
             <Button
-              // @ts-ignore
+              // @ts-expect-error
               as={RouterLink}
               to="/press"
               variant="primaryBlack"

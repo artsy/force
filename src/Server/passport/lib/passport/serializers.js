@@ -7,6 +7,7 @@
 const opts = require("../options")
 // TODO: Remove let added for 'rewire'
 
+// biome-ignore lint/style/noRestrictedImports: ignore
 const request = require("superagent")
 const async = require("async")
 const pick = require("lodash/pick")

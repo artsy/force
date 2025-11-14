@@ -1,5 +1,5 @@
-import { Box, Expandable, type ExpandableProps } from "@artsy/palette"
 import { getENV } from "Utils/getENV"
+import { Box, Expandable, type ExpandableProps } from "@artsy/palette"
 import type React from "react"
 import { useRef } from "react"
 

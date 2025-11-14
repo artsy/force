@@ -1,5 +1,5 @@
-import type { CreateTokenCardData } from "@stripe/stripe-js"
 import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
+import type { CreateTokenCardData } from "@stripe/stripe-js"
 import type { utilsValidatePhoneNumberQuery } from "__generated__/utilsValidatePhoneNumberQuery.graphql"
 import { debounce } from "lodash"
 import { useCallback, useEffect, useState } from "react"
@@ -132,7 +132,7 @@ export const toStripeAddress = (address: Address): CreateTokenCardData => {
 export const basicPhoneValidator = {
   phoneNumber: Yup.string()
     .required("Phone number is required")
-    .matches(/^[+\-\(\)\d\s]+$/, "Please enter a valid phone number"),
+    .matches(/^[+\-()\d\s]+$/, "Please enter a valid phone number"),
 }
 
 export const richPhoneValidators = {

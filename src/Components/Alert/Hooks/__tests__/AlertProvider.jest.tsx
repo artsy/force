@@ -1,14 +1,13 @@
-import { screen, waitFor } from "@testing-library/react"
-import { graphql } from "react-relay"
-import { useTracking } from "react-tracking"
-import { type MockEnvironment, createMockEnvironment } from "relay-test-utils"
-
 import { AlertProvider } from "Components/Alert/AlertProvider"
 import { CreateAlertButton } from "Components/Alert/Components/CreateAlertButton"
 import { useAuthDialog } from "Components/AuthDialog"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import { screen, waitFor } from "@testing-library/react"
+import { graphql } from "react-relay"
+import { useTracking } from "react-tracking"
+import { createMockEnvironment, type MockEnvironment } from "relay-test-utils"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")

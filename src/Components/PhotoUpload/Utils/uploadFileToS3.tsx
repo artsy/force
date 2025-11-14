@@ -37,7 +37,7 @@ export const uploadFileToS3 = (
 
     try {
       file = isExternalPhoto ? await fetchExternalFile(photo) : photo.file
-    } catch (error) {
+    } catch (_error) {
       reject(new Error("Artwork image could not be automatically added."))
       return
     }
@@ -45,7 +45,7 @@ export const uploadFileToS3 = (
     const data = {
       acl,
       "Content-Type": photo.file.type,
-      key: geminiKey + "/${filename}", // NOTE: This form (which _looks_ like ES6 interpolation) is required by AWS
+      key: `${geminiKey}/\${filename}`, // NOTE: This form (which _looks_ like ES6 interpolation) is required by AWS
       AWSAccessKeyId: asset.credentials,
       success_action_status:
         asset.policyDocument.conditions.successActionStatus,
@@ -55,7 +55,7 @@ export const uploadFileToS3 = (
     }
 
     for (const key in data) {
-      if (data.hasOwnProperty(key)) {
+      if (Object.hasOwn(data, key)) {
         formData.append(key, data[key])
       }
     }

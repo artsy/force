@@ -1,4 +1,3 @@
-import { Box, Button, FullBleed, Separator, Spacer, Text } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import {
@@ -6,6 +5,7 @@ import {
   MOBILE_NAV_HEIGHT,
 } from "Components/NavBar/constants"
 import { Jump, useJump } from "Utils/Hooks/useJump"
+import { Box, Button, FullBleed, Separator, Spacer, Text } from "@artsy/palette"
 import { Sticky } from "./Sticky"
 import { StickyProvider } from "./StickyProvider"
 

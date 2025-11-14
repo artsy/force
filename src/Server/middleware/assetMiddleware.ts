@@ -1,9 +1,9 @@
+import chalk from "chalk"
 import type { NextFunction, RequestHandler } from "express"
-import type { ArtsyRequest, ArtsyResponse } from "./artsyExpress"
 
 import fs from "fs"
 import path from "path"
-import chalk from "chalk"
+import type { ArtsyRequest, ArtsyResponse } from "./artsyExpress"
 
 const { CDN_URL, NODE_ENV } = process.env
 

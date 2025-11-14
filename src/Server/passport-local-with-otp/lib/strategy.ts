@@ -40,7 +40,7 @@ const passport = require("passport-strategy"),
  * @api public
  */
 function Strategy(options, verify) {
-  if (typeof options == "function") {
+  if (typeof options === "function") {
     verify = options
     options = {}
   }

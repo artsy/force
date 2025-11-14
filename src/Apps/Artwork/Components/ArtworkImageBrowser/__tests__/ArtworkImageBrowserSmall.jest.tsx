@@ -1,7 +1,7 @@
-import { screen } from "@testing-library/react"
 import { ArtworkImageBrowserSmallFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkImageBrowserSmall"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import type { ArtworkImageBrowserSmallTestQuery } from "__generated__/ArtworkImageBrowserSmallTestQuery.graphql"
 import { graphql } from "react-relay"
 

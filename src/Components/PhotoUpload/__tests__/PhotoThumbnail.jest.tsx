@@ -2,7 +2,7 @@ import {
   PhotoThumbnail,
   type PhotoThumbnailProps,
 } from "Components/PhotoUpload/Components/PhotoThumbnail"
-import { render, screen, fireEvent } from "@testing-library/react"
+import { fireEvent, render, screen } from "@testing-library/react"
 
 const deleteFn = jest.fn()
 const file = new File([new Array(10000).join(" ")], "foo.png", {
@@ -26,7 +26,7 @@ const renderComponent = (props: PhotoThumbnailProps = defaultProps) =>
 describe("PhotoThumbnail", () => {
   beforeAll(() => {
     deleteFn.mockReset()
-    //@ts-ignore
+    //@ts-expect-error
     jest.spyOn(global, "FileReader").mockImplementation(function () {
       this.readAsDataURL = jest.fn()
     })

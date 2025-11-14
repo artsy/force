@@ -1,3 +1,16 @@
+import { editProfileVerificationSchema } from "Apps/CollectorProfile/Utils/ValidationSchemas"
+import { SettingsEditProfileImageRefetchContainer } from "Apps/Settings/Routes/EditProfile/Components/SettingsEditProfileImage/SettingsEditProfileImage"
+import { useEditProfileTracking } from "Apps/Settings/Routes/EditProfile/Hooks/useEditProfileTracking"
+import { useVerifyEmail } from "Apps/Settings/Routes/EditProfile/Mutations/useVerifyEmail"
+import { useVerifyID } from "Apps/Settings/Routes/EditProfile/Mutations/useVerifyID"
+import {
+  LocationAutocompleteInput,
+  normalizePlace,
+  type Place,
+} from "Components/LocationAutocompleteInput"
+import { RouterLink } from "System/Components/RouterLink"
+import { useUpdateMyUserProfile } from "Utils/Hooks/Mutations/useUpdateMyUserProfile"
+import createLogger from "Utils/logger"
 import {
   ActionType,
   type ClickedVerifyIdentity,
@@ -18,19 +31,6 @@ import {
   TextArea,
   useToasts,
 } from "@artsy/palette"
-import { editProfileVerificationSchema } from "Apps/CollectorProfile/Utils/ValidationSchemas"
-import { SettingsEditProfileImageRefetchContainer } from "Apps/Settings/Routes/EditProfile/Components/SettingsEditProfileImage/SettingsEditProfileImage"
-import { useEditProfileTracking } from "Apps/Settings/Routes/EditProfile/Hooks/useEditProfileTracking"
-import { useVerifyEmail } from "Apps/Settings/Routes/EditProfile/Mutations/useVerifyEmail"
-import { useVerifyID } from "Apps/Settings/Routes/EditProfile/Mutations/useVerifyID"
-import {
-  LocationAutocompleteInput,
-  type Place,
-  normalizePlace,
-} from "Components/LocationAutocompleteInput"
-import { RouterLink } from "System/Components/RouterLink"
-import { useUpdateMyUserProfile } from "Utils/Hooks/Mutations/useUpdateMyUserProfile"
-import createLogger from "Utils/logger"
 import type { SettingsEditProfileFields_me$data } from "__generated__/SettingsEditProfileFields_me.graphql"
 import type { EditableLocation } from "__generated__/useUpdateMyUserProfileMutation.graphql"
 import { Form, Formik } from "formik"
@@ -172,7 +172,7 @@ const SettingsEditProfileFields: React.FC<
                   setFieldValue("locationSelected", true)
                   setFieldTouched("locationSelected", false)
                 }}
-                onChange={place => {
+                onChange={_place => {
                   setFieldValue("locationSelected", false)
                 }}
                 onBlur={() => {

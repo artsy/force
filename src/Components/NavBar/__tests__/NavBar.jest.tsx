@@ -1,8 +1,7 @@
 import { useAuthDialog } from "Components/AuthDialog"
 import { NavBar } from "Components/NavBar/NavBar"
 import { SystemContextProvider } from "System/Contexts/SystemContext"
-import { render, screen } from "@testing-library/react"
-import { fireEvent } from "@testing-library/react"
+import { fireEvent, render, screen } from "@testing-library/react"
 import { useTracking } from "react-tracking"
 
 jest.mock("Components/Search/SearchBar", () => {

@@ -1,11 +1,10 @@
 import { ORGANIZATION_STUB_SCHEMA } from "Apps/About/Components/AboutStructuredData"
 import { StructuredData } from "Components/Seo/StructuredData"
-import { getENV } from "Utils/getENV"
 import { getAuthorPath } from "Utils/getAuthorPath"
+import { getENV } from "Utils/getENV"
 import type { AuthorStructuredData_author$key } from "__generated__/AuthorStructuredData_author.graphql"
 import { compact } from "lodash"
-import { graphql } from "react-relay"
-import { useFragment } from "react-relay"
+import { graphql, useFragment } from "react-relay"
 
 interface AuthorStructuredDataProps {
   author: AuthorStructuredData_author$key

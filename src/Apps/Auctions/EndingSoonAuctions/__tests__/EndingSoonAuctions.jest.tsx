@@ -1,7 +1,7 @@
-import { screen } from "@testing-library/react"
 import { EndingSoonAuctionsFragmentContainer } from "Apps/Auctions/EndingSoonAuctions/EndingSoonAuctions"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import { screen } from "@testing-library/react"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")

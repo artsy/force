@@ -1,6 +1,6 @@
 import { DedicatedArticlesBreadcrumbsFragmentContainer } from "Apps/FairOrginizer/Components/DedicatedArticlesBreadcrumbs"
-import { screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import type { DedicatedArticlesBreadcrumbsTestQuery } from "__generated__/DedicatedArticlesBreadcrumbsTestQuery.graphql"
 import { graphql } from "react-relay"
 

@@ -1,4 +1,3 @@
-import { Box, Image, ModalDialog } from "@artsy/palette"
 import {
   type AuthDialogMode,
   useAuthDialogContext,
@@ -11,6 +10,7 @@ import { AuthDialogSignUp } from "Components/AuthDialog/Views/AuthDialogSignUp"
 import { AuthDialogWelcome } from "Components/AuthDialog/Views/AuthDialogWelcome"
 import { useRecaptcha } from "Utils/EnableRecaptcha"
 import { resized } from "Utils/resized"
+import { Box, Image, ModalDialog } from "@artsy/palette"
 import { type FC, useEffect } from "react"
 
 export interface AuthDialogProps {

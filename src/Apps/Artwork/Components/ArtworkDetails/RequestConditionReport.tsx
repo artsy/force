@@ -1,20 +1,20 @@
-import { ContextModule, Intent } from "@artsy/cohesion"
-import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { Button, ModalDialog, Text, useToasts } from "@artsy/palette"
 import { useAuthDialog } from "Components/AuthDialog"
 import { RouterLink } from "System/Components/RouterLink"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import createLogger from "Utils/logger"
+import { ContextModule, Intent } from "@artsy/cohesion"
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import { Button, ModalDialog, Text, useToasts } from "@artsy/palette"
+import type { RequestConditionReport_artwork$data } from "__generated__/RequestConditionReport_artwork.graphql"
+import type { RequestConditionReport_me$data } from "__generated__/RequestConditionReport_me.graphql"
 import type {
   RequestConditionReportMutation,
   RequestConditionReportMutation$data,
 } from "__generated__/RequestConditionReportMutation.graphql"
 import type { RequestConditionReportQuery } from "__generated__/RequestConditionReportQuery.graphql"
-import type { RequestConditionReport_artwork$data } from "__generated__/RequestConditionReport_artwork.graphql"
-import type { RequestConditionReport_me$data } from "__generated__/RequestConditionReport_me.graphql"
-import { useState } from "react"
 import type * as React from "react"
+import { useState } from "react"
 import { commitMutation, createFragmentContainer, graphql } from "react-relay"
 import track, { useTracking } from "react-tracking"
 

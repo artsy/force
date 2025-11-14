@@ -1,10 +1,10 @@
-import type { AuthContextModule } from "@artsy/cohesion"
-import { Box, type BoxProps } from "@artsy/palette"
 import {
   DetailsFragmentContainer,
   DetailsPlaceholder,
 } from "Components/Artwork/Details/Details"
 import { RouterLink } from "System/Components/RouterLink"
+import type { AuthContextModule } from "@artsy/cohesion"
+import { Box, type BoxProps } from "@artsy/palette"
 import type { Metadata_artwork$data } from "__generated__/Metadata_artwork.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"

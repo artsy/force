@@ -1,8 +1,8 @@
-import { Message } from "@artsy/palette"
 import {
   CollectorProfileArtistsListArtist,
   CollectorProfileArtistsListArtistSkeleton,
 } from "Apps/CollectorProfile/Components/CollectorProfileArtists/CollectorProfileArtistsListArtist"
+import { Message } from "@artsy/palette"
 import type { CollectorProfileArtistsSearchResultsQuery } from "__generated__/CollectorProfileArtistsSearchResultsQuery.graphql"
 import { compact } from "lodash"
 import { type FC, Suspense, useMemo } from "react"

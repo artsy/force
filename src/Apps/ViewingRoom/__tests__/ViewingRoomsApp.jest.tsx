@@ -1,7 +1,7 @@
-import { screen } from "@testing-library/react"
 import { ViewingRoomsAppFragmentContainer } from "Apps/ViewingRoom/ViewingRoomsApp"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import type { ViewingRoomsAppTestQuery$rawResponse } from "__generated__/ViewingRoomsAppTestQuery.graphql"
 import { graphql } from "react-relay"
 

@@ -1,7 +1,7 @@
-import { FullBleed, Spacer, useTheme } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { MetaTags } from "Components/MetaTags"
 import { Sticky } from "Components/Sticky"
+import { FullBleed, Spacer, useTheme } from "@artsy/palette"
 import type { CategoriesApp_geneFamiliesConnection$data } from "__generated__/CategoriesApp_geneFamiliesConnection.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"

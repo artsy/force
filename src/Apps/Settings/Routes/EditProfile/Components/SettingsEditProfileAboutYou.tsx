@@ -1,4 +1,9 @@
 import {
+  LocationAutocompleteInput,
+  normalizePlace,
+} from "Components/LocationAutocompleteInput"
+import { useUpdateMyUserProfile } from "Utils/Hooks/Mutations/useUpdateMyUserProfile"
+import {
   Button,
   Checkbox,
   Input,
@@ -8,11 +13,6 @@ import {
   Text,
   useToasts,
 } from "@artsy/palette"
-import {
-  LocationAutocompleteInput,
-  normalizePlace,
-} from "Components/LocationAutocompleteInput"
-import { useUpdateMyUserProfile } from "Utils/Hooks/Mutations/useUpdateMyUserProfile"
 import type { SettingsEditProfileAboutYou_me$data } from "__generated__/SettingsEditProfileAboutYou_me.graphql"
 import { Formik } from "formik"
 import { type FC, useState } from "react"
@@ -94,7 +94,7 @@ const SettingsEditProfileAboutYou: FC<
                 placeholder="Enter your city"
                 maxLength={256}
                 spellCheck={false}
-                defaultValue={formik.values.displayLocation?.display!}
+                defaultValue={formik.values.displayLocation?.display as string}
                 onChange={place => {
                   formik.setFieldValue("location", normalizePlace(place))
                 }}

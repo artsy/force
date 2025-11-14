@@ -1,6 +1,6 @@
-import { Button, useToasts } from "@artsy/palette"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useMutation } from "Utils/Hooks/useMutation"
+import { Button, useToasts } from "@artsy/palette"
 import { type FC, useState } from "react"
 import { graphql } from "react-relay"
 
@@ -39,7 +39,7 @@ export const TriggerCampaignButton: FC<
       })
 
       setIsLoading(false)
-    } catch (error) {
+    } catch (_error) {
       sendToast({
         variant: "error",
         message: "Something went wrong. Please try again.",

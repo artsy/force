@@ -1,13 +1,3 @@
-import { ContextModule } from "@artsy/cohesion"
-import {
-  Flex,
-  Join,
-  Separator,
-  Skeleton,
-  SkeletonText,
-  Spacer,
-  Text,
-} from "@artsy/palette"
 import { ArtworkSidebarAuctionPollingRefetchContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarAuctionInfoPolling"
 import { ArtworkSidebarAuctionTimerFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarAuctionTimer"
 import { ArtworkSidebarBiddingClosedMessageFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarBiddingClosedMessage"
@@ -26,9 +16,19 @@ import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { useAuctionWebsocket } from "Utils/Hooks/useAuctionWebsocket"
 import { useTimer } from "Utils/Hooks/useTimer"
-import type { ArtworkSidebarQuery } from "__generated__/ArtworkSidebarQuery.graphql"
+import { ContextModule } from "@artsy/cohesion"
+import {
+  Flex,
+  Join,
+  Separator,
+  Skeleton,
+  SkeletonText,
+  Spacer,
+  Text,
+} from "@artsy/palette"
 import type { ArtworkSidebar_artwork$data } from "__generated__/ArtworkSidebar_artwork.graphql"
 import type { ArtworkSidebar_me$data } from "__generated__/ArtworkSidebar_me.graphql"
+import type { ArtworkSidebarQuery } from "__generated__/ArtworkSidebarQuery.graphql"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkSidebarArtistsFragmentContainer } from "./ArtworkSidebarArtists"
@@ -402,7 +402,6 @@ export const ArtworkSidebarQueryRenderer: React.FC<
         return (
           <ArtworkSidebarFragmentContainer
             artwork={props.artwork}
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             me={props.me!}
             {...rest}
           />

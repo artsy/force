@@ -1,15 +1,6 @@
 import {
-  Button,
-  Clickable,
-  Flex,
-  Message,
-  ModalDialog,
-  Spacer,
-  Text,
-} from "@artsy/palette"
-import {
-  type ProcessedUserAddress,
   deliveryAddressValidationSchema,
+  type ProcessedUserAddress,
 } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/utils"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useOrder2DeleteUserAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2DeleteUserAddressMutation"
@@ -20,6 +11,15 @@ import {
   type FormikContextWithAddress,
 } from "Components/Address/AddressFormFields"
 import createLogger from "Utils/logger"
+import {
+  Button,
+  Clickable,
+  Flex,
+  Message,
+  ModalDialog,
+  Spacer,
+  Text,
+} from "@artsy/palette"
 import { Formik } from "formik"
 import { useState } from "react"
 

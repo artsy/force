@@ -1,6 +1,6 @@
-import { screen } from "@testing-library/react"
 import { MyCollectionArtworkDetails } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkDetails"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import type { MyCollectionArtworkDetailsTestQuery } from "__generated__/MyCollectionArtworkDetailsTestQuery.graphql"
 import { graphql } from "react-relay"
 

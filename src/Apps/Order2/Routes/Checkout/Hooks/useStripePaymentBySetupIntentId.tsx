@@ -24,6 +24,41 @@ export function useStripePaymentBySetupIntentId(
   const { setConfirmationToken, setPaymentComplete, setStepErrorMessage } =
     useCheckoutContext()
 
+  const setPaymentBySetupIntentId = async (
+    setupIntentId: string,
+    oneTimeUse: boolean,
+  ) => {
+    try {
+      const orderOrError = (
+        await setPaymentByStripeIntentMutation({
+          variables: {
+            input: {
+              id: orderId,
+              oneTimeUse,
+              setupIntentId,
+            },
+          },
+        })
+      ).commerceSetPaymentByStripeIntent?.orderOrError
+
+      if (orderOrError?.error) throw orderOrError.error
+
+      logger.log("Successfully set payment by setup intent")
+    } catch (error) {
+      logger.error("Failed to set payment by setup intent:", error)
+      // TODO: placeholder message
+      setStepErrorMessage({
+        step: CheckoutStepName.PAYMENT,
+        error: {
+          title: "Payment could not be processed",
+          message:
+            "Please try again or use a different payment method to complete your purchase.",
+        },
+      })
+      onComplete()
+    }
+  }
+
   useEffect(() => {
     const handleRedirect = async () => {
       // pull necessary params from Stripe redirect URL
@@ -81,40 +116,6 @@ export function useStripePaymentBySetupIntentId(
     setPaymentComplete,
     environment,
     onComplete,
+    setPaymentBySetupIntentId,
   ])
-
-  const setPaymentBySetupIntentId = async (
-    setupIntentId: string,
-    oneTimeUse: boolean,
-  ) => {
-    try {
-      const orderOrError = (
-        await setPaymentByStripeIntentMutation({
-          variables: {
-            input: {
-              id: orderId,
-              oneTimeUse,
-              setupIntentId,
-            },
-          },
-        })
-      ).commerceSetPaymentByStripeIntent?.orderOrError
-
-      if (orderOrError?.error) throw orderOrError.error
-
-      logger.log("Successfully set payment by setup intent")
-    } catch (error) {
-      logger.error("Failed to set payment by setup intent:", error)
-      // TODO: placeholder message
-      setStepErrorMessage({
-        step: CheckoutStepName.PAYMENT,
-        error: {
-          title: "Payment could not be processed",
-          message:
-            "Please try again or use a different payment method to complete your purchase.",
-        },
-      })
-      onComplete()
-    }
-  }
 }

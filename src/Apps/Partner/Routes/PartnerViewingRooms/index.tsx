@@ -1,5 +1,5 @@
-import { Spacer } from "@artsy/palette"
 import { PartnerViewingRoomsGridFragmentContainer } from "Apps/Partner/Components/PartnerViewingRooms/PartnerViewingRoomsGrid"
+import { Spacer } from "@artsy/palette"
 import type { PartnerViewingRooms_currentViewingRooms$data } from "__generated__/PartnerViewingRooms_currentViewingRooms.graphql"
 import type { PartnerViewingRooms_pastViewingRooms$data } from "__generated__/PartnerViewingRooms_pastViewingRooms.graphql"
 import type { PartnerViewingRooms_upcomingViewingRooms$data } from "__generated__/PartnerViewingRooms_upcomingViewingRooms.graphql"

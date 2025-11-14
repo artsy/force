@@ -1,12 +1,12 @@
 import type { NextFunction, Request } from "express"
 import {
-  type ResWithProfile,
   handleFair,
   handleFairArtworks,
   handlePartnerArtist,
   handlePartnerGenericRedirect,
   handlePartnerOverview,
   handlePartnerWorks,
+  type ResWithProfile,
 } from "../redirectsServerRoutes"
 
 describe("handlePartnerOverview", () => {
@@ -338,7 +338,7 @@ describe("handleFair", () => {
     res.locals.profile = {
       owner: {
         __typename: "Fair",
-        // @ts-ignore
+        // @ts-expect-error
         slug: null,
       },
     }

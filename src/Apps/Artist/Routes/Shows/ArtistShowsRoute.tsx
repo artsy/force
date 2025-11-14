@@ -1,5 +1,5 @@
-import { Join, Spacer } from "@artsy/palette"
 import { EmptyState } from "Components/EmptyState"
+import { Join, Spacer } from "@artsy/palette"
 import type { ArtistShowsRoute_viewer$data } from "__generated__/ArtistShowsRoute_viewer.graphql"
 import type * as React from "react"
 import { Title } from "react-head"

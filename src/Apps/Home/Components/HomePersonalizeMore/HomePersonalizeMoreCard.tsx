@@ -1,3 +1,5 @@
+import { RouterLink } from "System/Components/RouterLink"
+import { cropped } from "Utils/resized"
 import {
   Box,
   type BoxProps,
@@ -8,8 +10,6 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { RouterLink } from "System/Components/RouterLink"
-import { cropped } from "Utils/resized"
 import type { FC } from "react"
 
 interface HomePersonalizeMoreCardProps extends BoxProps {
@@ -57,7 +57,7 @@ export const HomePersonalizeMoreCard: FC<
           <Button
             size={["small", "small", "large"]}
             variant="primaryWhite"
-            // @ts-ignore
+            // @ts-expect-error
             as={RouterLink}
             to={href}
           >

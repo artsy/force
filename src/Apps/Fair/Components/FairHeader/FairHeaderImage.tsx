@@ -1,7 +1,7 @@
-import { FullBleed, Image, ResponsiveBox } from "@artsy/palette"
 import { FullBleedHeader } from "Components/FullBleedHeader/FullBleedHeader"
 import { BREAKPOINTS, Media } from "Utils/Responsive"
 import { resized } from "Utils/resized"
+import { FullBleed, Image, ResponsiveBox } from "@artsy/palette"
 import type { FairHeaderImage_fair$data } from "__generated__/FairHeaderImage_fair.graphql"
 import type * as React from "react"
 import { Link } from "react-head"

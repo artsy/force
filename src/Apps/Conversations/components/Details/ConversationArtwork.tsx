@@ -1,5 +1,5 @@
-import { Flex, Image, Separator, Spacer, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
+import { Flex, Image, Separator, Spacer, Text } from "@artsy/palette"
 import type { ConversationArtwork_conversation$key } from "__generated__/ConversationArtwork_conversation.graphql"
 import { graphql, useFragment } from "react-relay"
 import { useTracking } from "react-tracking"

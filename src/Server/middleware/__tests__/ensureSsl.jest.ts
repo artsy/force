@@ -11,9 +11,6 @@ describe("Ensure SSL middleware", () => {
 
   beforeEach(() => {
     testContext = {}
-  })
-
-  beforeEach(() => {
     testContext.req = { params: {}, logout: jest.fn(), url: "/terms" }
     testContext.res = { redirect: jest.fn() }
   })
@@ -40,6 +37,7 @@ describe("Ensure SSL middleware", () => {
   it("does not redirect https to https causing an infinite loop", () => {
     let next
     testContext.req.get = () => "https"
+    // biome-ignore lint/suspicious/noAssignInExpressions: thing
     ensureSslMiddleware(testContext.req, testContext.res, (next = jest.fn()))
     expect(next.mock.calls.length).toBe(1)
   })

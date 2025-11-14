@@ -1,5 +1,5 @@
-import { Box, Stack } from "@artsy/palette"
 import { TopContextBar } from "Components/TopContextBar"
+import { Box, Stack } from "@artsy/palette"
 import type { ArtworkTopContextBarShowQuery } from "__generated__/ArtworkTopContextBarShowQuery.graphql"
 import type * as React from "react"
 import { graphql, useLazyLoadQuery } from "react-relay"

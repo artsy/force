@@ -1,11 +1,10 @@
-import { Box, Button, Flex, FullBleed, Spacer, Text } from "@artsy/palette"
+import { ArtQuizFullScreen } from "Apps/ArtQuiz/Components/ArtQuizFullscreen"
 import { SplitLayout } from "Components/SplitLayout"
 import { RouterLink } from "System/Components/RouterLink"
-import type { FC } from "react"
-
 import ArtsyLogoIcon from "@artsy/icons/ArtsyLogoIcon"
 import ArtsyMarkIcon from "@artsy/icons/ArtsyMarkIcon"
-import { ArtQuizFullScreen } from "Apps/ArtQuiz/Components/ArtQuizFullscreen"
+import { Box, Button, Flex, FullBleed, Spacer, Text } from "@artsy/palette"
+import type { FC } from "react"
 
 interface ArtQuizWelcomeProps {
   onStartQuiz: () => void
@@ -53,7 +52,7 @@ export const ArtQuizWelcome: FC<
 
               <Box flexShrink={0}>
                 <Button
-                  // @ts-ignore
+                  // @ts-expect-error
                   as={RouterLink}
                   width="100%"
                   onClick={onStartQuiz}
@@ -65,7 +64,7 @@ export const ArtQuizWelcome: FC<
                 <Spacer y={1} />
 
                 <Button
-                  // @ts-ignore
+                  // @ts-expect-error
                   as={RouterLink}
                   variant="tertiary"
                   width="100%"

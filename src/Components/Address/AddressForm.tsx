@@ -1,4 +1,11 @@
 import {
+  type AddressAutocompleteSuggestion,
+  useAddressAutocomplete,
+} from "Components/Address/useAddressAutocomplete"
+import { type Address, emptyAddress } from "Components/Address/utils"
+import { CountrySelect } from "Components/CountrySelect"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import {
   ActionType,
   ContextModule,
   type EditedAutocompletedAddress,
@@ -13,13 +20,6 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import {
-  type AddressAutocompleteSuggestion,
-  useAddressAutocomplete,
-} from "Components/Address/useAddressAutocomplete"
-import { type Address, emptyAddress } from "Components/Address/utils"
-import { CountrySelect } from "Components/CountrySelect"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { isEqual } from "lodash"
 import * as React from "react"
 import { useTracking } from "react-tracking"
@@ -74,14 +74,10 @@ export const AddressForm: React.FC<
     edited: false,
   })
 
-  const {
-    autocompleteOptions,
-    fetchForAutocomplete,
-    fetchSecondarySuggestions,
-    ...autocomplete
-  } = useAddressAutocomplete(address, {
-    enableSecondarySuggestions: ENABLE_SECONDARY_SUGGESTIONS,
-  })
+  const { autocompleteOptions, fetchForAutocomplete, ...autocomplete } =
+    useAddressAutocomplete(address, {
+      enableSecondarySuggestions: ENABLE_SECONDARY_SUGGESTIONS,
+    })
 
   if (!isEqual(value, prevValue)) {
     setPrevValue(value)
@@ -115,7 +111,6 @@ export const AddressForm: React.FC<
     onChangeValue(key, value)
   }
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   React.useEffect(() => {
     if (key) {
       onChange(address, key)

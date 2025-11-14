@@ -1,8 +1,8 @@
-import { Flex, Spacer, Text } from "@artsy/palette"
 import { getTotalCountLabel } from "Components/ArtworkFilter"
 import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { ArtworkSortFilter } from "Components/ArtworkFilter/ArtworkFilters/ArtworkSortFilter"
 import { Media } from "Utils/Responsive"
+import { Flex, Spacer, Text } from "@artsy/palette"
 import type { FC } from "react"
 
 export const ArtworkListArtworksGridHeader: FC<

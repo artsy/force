@@ -1,4 +1,3 @@
-import { ArtworkSidebarBidActionFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarBidAction"
 import {
   ArtworkFromAuctionPreview,
   ArtworkFromClosedAuction,
@@ -8,18 +7,19 @@ import {
   ArtworkFromTimedAuctionRegistrationOpen,
   BidderPendingApproval,
   IDVedUser,
-  NoUser,
   NotIDVedUser,
   NotRegisteredToBid,
+  NoUser,
   RegistedBidderWithBids,
   RegisteredBidder,
   SaleRequiringIDV,
   UserPendingIDV,
 } from "Apps/__tests__/Fixtures/Artwork/ArtworkSidebar/ArtworkSidebarBidAction"
+import { ArtworkSidebarBidActionFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarBidAction"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import { merge } from "lodash"
 import { graphql } from "react-relay"
-import { screen } from "@testing-library/react"
 
 jest.unmock("react-relay")
 

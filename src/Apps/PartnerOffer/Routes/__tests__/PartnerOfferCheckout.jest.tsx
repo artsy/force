@@ -1,6 +1,6 @@
-import { render, waitFor } from "@testing-library/react"
 import { PartnerOfferCheckout } from "Apps/PartnerOffer/Routes/PartnerOfferCheckout"
 import { useMutation } from "Utils/Hooks/useMutation"
+import { render, waitFor } from "@testing-library/react"
 
 jest.mock("Utils/Hooks/useMutation")
 

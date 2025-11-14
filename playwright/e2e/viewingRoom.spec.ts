@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test"
+import { expect, test } from "@playwright/test"
 
 // TODO: Needs TEST_USER and TEST_PASSWORD configured in order to generate
 // access token for querying metaphysics for a single viewing room.

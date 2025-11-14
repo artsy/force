@@ -1,8 +1,8 @@
-import { ContextModule } from "@artsy/cohesion"
-import { Spacer, Text } from "@artsy/palette"
 import { EndingSoonAuctionsGridPaginationContainer } from "Apps/Auctions/Routes/EndingSoonAuctionsGrid"
 import { LogInPrompt } from "Apps/Components/LogInPrompt"
 import { MetaTags } from "Components/MetaTags"
+import { ContextModule } from "@artsy/cohesion"
+import { Spacer, Text } from "@artsy/palette"
 import type { EndingSoonAuctions_viewer$data } from "__generated__/EndingSoonAuctions_viewer.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 

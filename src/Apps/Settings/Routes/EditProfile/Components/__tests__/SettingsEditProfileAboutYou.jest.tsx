@@ -1,7 +1,7 @@
-import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { SettingsEditProfileAboutYouFragmentContainer } from "Apps/Settings/Routes/EditProfile/Components/SettingsEditProfileAboutYou"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useUpdateMyUserProfile } from "Utils/Hooks/Mutations/useUpdateMyUserProfile"
+import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")

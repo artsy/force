@@ -1,3 +1,5 @@
+import { CollectorProfileArtistsDeleteDialog } from "Apps/CollectorProfile/Components/CollectorProfileArtists/CollectorProfileArtistsDeleteDialog"
+import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
 import {
   Box,
   Checkbox,
@@ -6,8 +8,6 @@ import {
   Stack,
   Text,
 } from "@artsy/palette"
-import { CollectorProfileArtistsDeleteDialog } from "Apps/CollectorProfile/Components/CollectorProfileArtists/CollectorProfileArtistsDeleteDialog"
-import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
 import type { CollectorProfileArtistsListArtistDialog_userInterestEdge$key } from "__generated__/CollectorProfileArtistsListArtistDialog_userInterestEdge.graphql"
 import { type FC, useState } from "react"
 import { graphql, useFragment } from "react-relay"

@@ -1,3 +1,5 @@
+import { HeroCarousel } from "Components/HeroCarousel/HeroCarousel"
+import { Media } from "Utils/Responsive"
 import {
   Box,
   Button,
@@ -9,8 +11,6 @@ import {
   SkeletonText,
   Spacer,
 } from "@artsy/palette"
-import { HeroCarousel } from "Components/HeroCarousel/HeroCarousel"
-import { Media } from "Utils/Responsive"
 import type { FC } from "react"
 
 export const PlaceholderCards: FC<React.PropsWithChildren<unknown>> = () => {

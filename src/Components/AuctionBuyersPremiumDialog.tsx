@@ -1,3 +1,5 @@
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import CloseIcon from "@artsy/icons/CloseIcon"
 import {
   Box,
@@ -8,10 +10,8 @@ import {
   Text,
   useTheme,
 } from "@artsy/palette"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import type { AuctionBuyersPremiumDialogQuery } from "__generated__/AuctionBuyersPremiumDialogQuery.graphql"
 import type { AuctionBuyersPremiumDialog_sale$data } from "__generated__/AuctionBuyersPremiumDialog_sale.graphql"
+import type { AuctionBuyersPremiumDialogQuery } from "__generated__/AuctionBuyersPremiumDialogQuery.graphql"
 import { compact } from "lodash"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"

@@ -1,3 +1,7 @@
+import { MarketingAlternatingStack } from "Apps/Marketing/Components/MarketingAlternatingStack"
+import { MarketingHeaderPrimary } from "Apps/Marketing/Components/MarketingHeaderPrimary"
+import { MetaTags } from "Components/MetaTags"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import {
   Button,
   Column,
@@ -7,10 +11,6 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { MarketingAlternatingStack } from "Apps/Marketing/Components/MarketingAlternatingStack"
-import { MarketingHeaderPrimary } from "Apps/Marketing/Components/MarketingHeaderPrimary"
-import { MetaTags } from "Components/MetaTags"
-import { useSystemContext } from "System/Hooks/useSystemContext"
 import type { FC } from "react"
 
 export const MarketingMeetArtAdvisorRoute: FC<
@@ -73,7 +73,7 @@ export const MarketingMeetArtAdvisorRoute: FC<
               <Column span={4} start={5}>
                 <Button
                   width="100%"
-                  // @ts-ignore
+                  // @ts-expect-error
                   as="a"
                   href="https://apps.apple.com/us/app/artsy-buy-sell-original-art/id703796080"
                   target="_blank"

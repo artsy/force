@@ -1,8 +1,8 @@
-import { Box, Flex, Join, Separator, Spacer, Text } from "@artsy/palette"
 import {
   RouterLink as BaseRouteLink,
   type RouterLinkProps,
 } from "System/Components/RouterLink"
+import { Box, Flex, Join, Separator, Spacer, Text } from "@artsy/palette"
 import type { ExampleApp_system$data } from "__generated__/ExampleApp_system.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"

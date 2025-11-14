@@ -6,7 +6,7 @@ export const formatFollowerCount = (n: number) => {
     })
 
     return formatter.format(n).toLocaleLowerCase()
-  } catch (error) {
+  } catch (_error) {
     return n
   }
 }

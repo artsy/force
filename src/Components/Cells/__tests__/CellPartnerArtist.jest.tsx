@@ -1,6 +1,6 @@
-import { screen } from "@testing-library/react"
 import { CellPartnerArtistFragmentContainer } from "Components/Cells/CellPartnerArtist"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import type { CellPartnerArtistFragmentContainer_Test_Query } from "__generated__/CellPartnerArtistFragmentContainer_Test_Query.graphql"
 import { graphql } from "react-relay"
 
@@ -10,7 +10,7 @@ const { renderWithRelay } =
   setupTestWrapperTL<CellPartnerArtistFragmentContainer_Test_Query>({
     Component: props => (
       <CellPartnerArtistFragmentContainer
-        artistPartnerEdge={props.partner?.artistsConnection?.edges![0]!}
+        artistPartnerEdge={props.partner?.artistsConnection?.edges?.[0] as any}
       />
     ),
     query: graphql`

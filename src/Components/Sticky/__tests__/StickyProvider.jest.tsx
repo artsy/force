@@ -1,6 +1,6 @@
 import {
-  type TSticky,
   getOffsetTopForSticky,
+  type TSticky,
 } from "Components/Sticky/StickyProvider"
 
 describe("getOffsetTopForSticky", () => {

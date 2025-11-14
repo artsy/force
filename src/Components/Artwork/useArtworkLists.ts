@@ -1,4 +1,3 @@
-import { useToasts } from "@artsy/palette"
 import {
   ResultAction,
   type SaveArtworkToListsOptions,
@@ -6,6 +5,7 @@ import {
 } from "Components/Artwork/SaveButton/useSaveArtworkToLists"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useAuthIntent } from "Utils/Hooks/useAuthIntent"
+import { useToasts } from "@artsy/palette"
 import type { useArtworkListsArtworkSaveStatesQuery } from "__generated__/useArtworkListsArtworkSaveStatesQuery.graphql"
 import { useEffect } from "react"
 import { fetchQuery, graphql } from "react-relay"
@@ -19,7 +19,6 @@ export const useArtworkLists = (options: SaveArtworkToListsOptions) => {
   const { saveArtworkToLists: saveToLists, openSelectListsForArtworkModal } =
     useSaveArtworkToLists(options)
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (
       !value ||

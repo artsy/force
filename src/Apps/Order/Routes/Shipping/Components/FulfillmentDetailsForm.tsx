@@ -1,4 +1,29 @@
 import {
+  AddressVerificationFlowQueryRenderer,
+  AddressVerifiedBy,
+} from "Apps/Order/Components/AddressVerificationFlow"
+import { Collapse } from "Apps/Order/Components/Collapse"
+import { useOrderTracking } from "Apps/Order/Hooks/useOrderTracking"
+import { SavedAddresses } from "Apps/Order/Routes/Shipping/Components/SavedAddresses"
+import { useShippingContext } from "Apps/Order/Routes/Shipping/Hooks/useShippingContext"
+import {
+  ADDRESS_VALIDATION_SHAPE,
+  addressWithFallbackValues,
+  BASIC_PHONE_VALIDATION_SHAPE,
+  FulfillmentType,
+  type FulfillmentValues,
+  getInitialShippingValues,
+  type PickupValues,
+  type SavedAddressType,
+  type ShipValues,
+} from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
+import { ScrollToFieldError } from "Apps/Order/Utils/scrollToFieldError"
+import { AddressAutocompleteInput } from "Components/Address/AddressAutocompleteInput"
+import { CountrySelect } from "Components/CountrySelect"
+import { RouterLink } from "System/Components/RouterLink"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { ContextModule, OwnerType } from "@artsy/cohesion"
+import {
   BorderedRadio,
   Checkbox,
   Column,
@@ -9,33 +34,6 @@ import {
   Text,
   usePrevious,
 } from "@artsy/palette"
-import {
-  AddressVerificationFlowQueryRenderer,
-  AddressVerifiedBy,
-} from "Apps/Order/Components/AddressVerificationFlow"
-import * as Yup from "yup"
-
-import { ContextModule, OwnerType } from "@artsy/cohesion"
-import { Collapse } from "Apps/Order/Components/Collapse"
-import { useOrderTracking } from "Apps/Order/Hooks/useOrderTracking"
-import { SavedAddresses } from "Apps/Order/Routes/Shipping/Components/SavedAddresses"
-import { useShippingContext } from "Apps/Order/Routes/Shipping/Hooks/useShippingContext"
-import {
-  ADDRESS_VALIDATION_SHAPE,
-  BASIC_PHONE_VALIDATION_SHAPE,
-  FulfillmentType,
-  type FulfillmentValues,
-  type PickupValues,
-  type SavedAddressType,
-  type ShipValues,
-  addressWithFallbackValues,
-  getInitialShippingValues,
-} from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
-import { ScrollToFieldError } from "Apps/Order/Utils/scrollToFieldError"
-import { AddressAutocompleteInput } from "Components/Address/AddressAutocompleteInput"
-import { CountrySelect } from "Components/CountrySelect"
-import { RouterLink } from "System/Components/RouterLink"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import type { FulfillmentDetailsForm_me$data } from "__generated__/FulfillmentDetailsForm_me.graphql"
 import {
   Form,
@@ -46,6 +44,7 @@ import {
 } from "formik"
 import { pick } from "lodash"
 import { useCallback, useEffect, useState } from "react"
+import * as Yup from "yup"
 
 export interface FulfillmentDetailsFormProps
   extends FulfillmentDetailsFormLayoutProps {
@@ -115,7 +114,6 @@ const FulfillmentDetailsFormLayout = (
    * via `shippingContext.state.fulfillmentDetailsCtx`
    */
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     shippingContext.actions.setFulfillmentDetailsFormikContext(formikContext)
   }, [formikContext.values, formikContext.isValid])
@@ -136,8 +134,6 @@ const FulfillmentDetailsFormLayout = (
     await props.onAddressVerificationComplete()
   }
 
-  const serializedValues = JSON.stringify(formikContext.values)
-
   const handleSelectSavedAddress = useCallback(
     (address: SavedAddressType) => {
       shippingContext.actions.setStage("fulfillment_details")
@@ -154,7 +150,11 @@ const FulfillmentDetailsFormLayout = (
       // Set the state to indicate the form should be submitted
       setShouldSubmit(true)
     },
-    [formikContext.setValues, serializedValues],
+    [
+      formikContext.setValues,
+      formikContext.values,
+      shippingContext.actions.setStage,
+    ],
   )
 
   // Use useEffect to submit the form after values are updated
@@ -163,7 +163,7 @@ const FulfillmentDetailsFormLayout = (
       formikContext.submitForm()
       setShouldSubmit(false) // Reset the state after submission
     }
-  }, [formikContext.values, shouldSubmit])
+  }, [shouldSubmit, formikContext.submitForm])
 
   const handleChooseAddressForVerification = async (
     verifiedBy,
@@ -602,7 +602,7 @@ const VALIDATION_SCHEMA = Yup.object().shape({
 
   attributes: Yup.object().when("fulfillmentType", {
     is: FulfillmentType.SHIP,
-    // biome-ignore lint/suspicious/noThenProperty: <explanation>
+    // biome-ignore lint/suspicious/noThenProperty: Yup conditional schema requires then property
     then: schema => schema.shape(ADDRESS_VALIDATION_SHAPE),
     otherwise: schema => schema.shape(BASIC_PHONE_VALIDATION_SHAPE),
   }),

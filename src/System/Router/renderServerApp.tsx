@@ -5,11 +5,11 @@ import type {
   ArtsyRequest,
   ArtsyResponse,
 } from "Server/middleware/artsyExpress"
-import type { RenderToStreamResult } from "System/Router/Utils/renderToStream"
 import type { ServerAppResults } from "System/Router/serverRouter"
+import type { RenderToStreamResult } from "System/Router/Utils/renderToStream"
 import { getENV } from "Utils/getENV"
 import { getServerParam } from "Utils/getServerParam"
-import { type HTMLProps, buildHtmlTemplate } from "html"
+import { buildHtmlTemplate, type HTMLProps } from "html"
 import { renderToString } from "react-dom/server"
 
 // TODO: Use the same variables as the asset middleware. Both config and sharify

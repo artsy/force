@@ -3,11 +3,10 @@ import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
 import { useAuthDialog } from "Components/AuthDialog"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useRouter } from "System/Hooks/useRouter"
+import { fireEvent, screen } from "@testing-library/react"
 import type { RegisterButtonTestQuery } from "__generated__/RegisterButtonTestQuery.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { screen } from "@testing-library/react"
-import { fireEvent } from "@testing-library/react"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")

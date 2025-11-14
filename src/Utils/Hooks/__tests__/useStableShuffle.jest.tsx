@@ -1,5 +1,5 @@
-import { renderHook } from "@testing-library/react-hooks"
 import { getENV } from "Utils/getENV"
+import { renderHook } from "@testing-library/react-hooks"
 import { mulberry32, useStableShuffle, xmur3 } from "../useStableShuffle"
 
 jest.mock("Utils/getENV")

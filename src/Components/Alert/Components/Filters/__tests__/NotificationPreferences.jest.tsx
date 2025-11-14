@@ -1,9 +1,9 @@
-import { fireEvent, screen } from "@testing-library/react"
 import { AlertProvider } from "Components/Alert/AlertProvider"
 import { NotificationPreferencesQueryRenderer } from "Components/Alert/Components/NotificationPreferences"
 import type { AlertFormikValues } from "Components/Alert/Components/Steps/Details"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { fireEvent, screen } from "@testing-library/react"
 import { Formik } from "formik"
 import { createMockEnvironment } from "relay-test-utils"
 

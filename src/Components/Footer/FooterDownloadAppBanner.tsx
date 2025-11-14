@@ -1,3 +1,15 @@
+import { useAuthDialog } from "Components/AuthDialog"
+import { DownloadAppBadge } from "Components/DownloadAppBadges/DownloadAppBadge"
+import { RouterLink } from "System/Components/RouterLink"
+import { useRouter } from "System/Hooks/useRouter"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import {
+  Device,
+  DOWNLOAD_APP_URLS,
+  useDeviceDetection,
+} from "Utils/Hooks/useDeviceDetection"
+import { Media } from "Utils/Responsive"
+import { resized } from "Utils/resized"
 import { ContextModule } from "@artsy/cohesion"
 import {
   Button,
@@ -7,18 +19,6 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { useAuthDialog } from "Components/AuthDialog"
-import { DownloadAppBadge } from "Components/DownloadAppBadges/DownloadAppBadge"
-import { RouterLink } from "System/Components/RouterLink"
-import { useRouter } from "System/Hooks/useRouter"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import {
-  DOWNLOAD_APP_URLS,
-  Device,
-  useDeviceDetection,
-} from "Utils/Hooks/useDeviceDetection"
-import { Media } from "Utils/Responsive"
-import { resized } from "Utils/resized"
 
 const IGNORE_PATHS = ["/meet-your-new-art-advisor", "/about"]
 
@@ -84,7 +84,7 @@ export const FooterDownloadAppBanner = () => {
               <Button
                 variant="secondaryBlack"
                 minWidth={[0, 0, 200, 250]}
-                // @ts-ignore
+                // @ts-expect-error
                 as={RouterLink}
                 to="/meet-your-new-art-advisor"
               >

@@ -1,14 +1,13 @@
-import { Button, Flex } from "@artsy/palette"
+import { NUMBER_OF_ARTWORKS_TO_SHOW } from "Components/SavedSearchAlert/ConfirmationArtworksGrid"
+import { RouterLink } from "System/Components/RouterLink"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { Button, Flex } from "@artsy/palette"
 import type {
   ConfirmationStepFooterQuery,
   ConfirmationStepFooterQuery$data,
 } from "__generated__/ConfirmationStepFooterQuery.graphql"
 import type { FC } from "react"
 import { graphql } from "react-relay"
-
-import { NUMBER_OF_ARTWORKS_TO_SHOW } from "Components/SavedSearchAlert/ConfirmationArtworksGrid"
-import { RouterLink } from "System/Components/RouterLink"
 
 interface ConfirmationStepFooterProps {
   artworksCount: number
@@ -26,7 +25,7 @@ export const ConfirmationStepFooter: FC<
       {artworksCount > NUMBER_OF_ARTWORKS_TO_SHOW && (
         <Button
           width="100%"
-          // @ts-ignore
+          // @ts-expect-error
           as={RouterLink}
           to={savedSearch?.href}
           onClick={() => {
@@ -41,7 +40,7 @@ export const ConfirmationStepFooter: FC<
       <Button
         width="100%"
         variant="secondaryBlack"
-        // @ts-ignore
+        // @ts-expect-error
         as={RouterLink}
         to={"/favorites/alerts"}
         onClick={() => {

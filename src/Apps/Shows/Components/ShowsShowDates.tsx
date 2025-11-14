@@ -1,6 +1,6 @@
-import { Text, type TextProps } from "@artsy/palette"
 import { useCurrentTime } from "Utils/Hooks/useCurrentTime"
 import { useEventTiming } from "Utils/Hooks/useEventTiming"
+import { Text, type TextProps } from "@artsy/palette"
 import type { ShowsShowDates_show$data } from "__generated__/ShowsShowDates_show.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"

@@ -1,7 +1,7 @@
-import { screen } from "@testing-library/react"
 import { ArtistsByLetterFragmentContainer } from "Apps/Artists/Routes/ArtistsByLetter"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import type { ArtistsByLetterQuery } from "__generated__/ArtistsByLetterQuery.graphql"
 import { graphql } from "react-relay"
 

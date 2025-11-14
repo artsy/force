@@ -1,3 +1,12 @@
+import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
+import { AddAddressForm } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/SavedAddressOptions/AddAddressForm"
+import { UpdateAddressForm } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/SavedAddressOptions/UpdateAddressForm"
+import {
+  countryNameFromAlpha2,
+  type ProcessedUserAddress,
+} from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/utils"
+import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import type { FormikContextWithAddress } from "Components/Address/AddressFormFields"
 import AddIcon from "@artsy/icons/AddIcon"
 import {
   BorderedRadio,
@@ -8,15 +17,6 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
-import { AddAddressForm } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/SavedAddressOptions/AddAddressForm"
-import { UpdateAddressForm } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/SavedAddressOptions/UpdateAddressForm"
-import {
-  type ProcessedUserAddress,
-  countryNameFromAlpha2,
-} from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/utils"
-import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
-import type { FormikContextWithAddress } from "Components/Address/AddressFormFields"
 import { setNestedObjectValues, useFormikContext } from "formik"
 import { useCallback, useState } from "react"
 import styled from "styled-components"

@@ -1,7 +1,7 @@
-import type { AddToCalendar as AddToCalendarEvent } from "@artsy/cohesion"
-import { Box, Button, Dropdown, Text } from "@artsy/palette"
 import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
 import { NavBarMenuItemLink } from "Components/NavBar/Menus/NavBarMenuItem"
+import type { AddToCalendar as AddToCalendarEvent } from "@artsy/cohesion"
+import { Box, Button, Dropdown, Text } from "@artsy/palette"
 import { generateGoogleCalendarUrl, generateIcsCalendarUrl } from "./helpers"
 
 export interface AddToCalendarProps {

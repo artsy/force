@@ -6,7 +6,7 @@ import {
 import { InquirySpecialist } from "Components/Inquiry/Views/InquirySpecialist"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { render, screen, fireEvent } from "@testing-library/react"
+import { fireEvent, render, screen } from "@testing-library/react"
 
 jest.mock("../../Hooks/useArtworkInquiryRequest")
 jest.mock("../../Hooks/useInquiryContext")

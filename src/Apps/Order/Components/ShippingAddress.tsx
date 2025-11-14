@@ -1,6 +1,5 @@
-import { Text } from "@artsy/palette"
-
 import { COUNTRY_CODE_TO_COUNTRY_NAME } from "Components/CountrySelect"
+import { Text } from "@artsy/palette"
 import type { ShippingAddress_ship$data } from "__generated__/ShippingAddress_ship.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 

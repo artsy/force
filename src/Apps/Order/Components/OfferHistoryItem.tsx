@@ -1,10 +1,10 @@
-import { Flex, type FlexProps, Spacer, Text } from "@artsy/palette"
 import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
 import { getOfferItemFromOrder } from "Apps/Order/Utils/offerUtils"
 import {
   StepSummaryItem,
   type StepSummaryItemProps,
 } from "Components/StepSummaryItem"
+import { Flex, type FlexProps, Spacer, Text } from "@artsy/palette"
 import type { OfferHistoryItem_order$data } from "__generated__/OfferHistoryItem_order.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"

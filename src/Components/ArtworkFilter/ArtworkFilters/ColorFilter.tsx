@@ -1,11 +1,11 @@
-import { Box, Checkbox, Flex, Text } from "@artsy/palette"
-import { themeGet } from "@styled-system/theme-get"
 import {
   SelectedFiltersCountsLabels,
   useArtworkFilterContext,
   useCurrentlySelectedFilters,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { useFilterLabelCountByKey } from "Components/ArtworkFilter/Utils/useFilterLabelCountByKey"
+import { Box, Checkbox, Flex, Text } from "@artsy/palette"
+import { themeGet } from "@styled-system/theme-get"
 import { intersection } from "lodash"
 import type * as React from "react"
 import styled from "styled-components"

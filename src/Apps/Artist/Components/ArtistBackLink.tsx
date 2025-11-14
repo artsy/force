@@ -1,7 +1,7 @@
-import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { TopContextBar } from "Components/TopContextBar"
 import { useRouter } from "System/Hooks/useRouter"
 import { sanitizeRedirect } from "Utils/sanitizeRedirect"
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import type { ArtistBackLink_artist$data } from "__generated__/ArtistBackLink_artist.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"

@@ -1,18 +1,18 @@
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { getENV } from "Utils/getENV"
+import { useMutation } from "Utils/Hooks/useMutation"
 import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 import ShareIcon from "@artsy/icons/ShareIcon"
 import {
   Button,
+  Flex,
   Input,
   ModalDialog,
-  Text,
   Stack,
-  useToasts,
-  Flex,
+  Text,
   Toggle,
+  useToasts,
 } from "@artsy/palette"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { useMutation } from "Utils/Hooks/useMutation"
-import { getENV } from "Utils/getENV"
 import type { ShareCollectionDialogMutation } from "__generated__/ShareCollectionDialogMutation.graphql"
 import { useState } from "react"
 import { graphql } from "react-relay"
@@ -95,7 +95,7 @@ export const ShareCollectionDialog: React.FC<
       })
       setSlug(result.updateCollection?.responseOrError?.collection?.slug)
       setIsShared(toggleValue)
-    } catch (error) {
+    } catch (_error) {
       onClose()
       sendToast({
         message: "Failed to enable sharing",
@@ -141,7 +141,7 @@ export const ShareCollectionDialog: React.FC<
             width={1}
             variant="secondaryBlack"
             Icon={ShareIcon}
-            // @ts-ignore
+            // @ts-expect-error
             as="a"
             href={url}
             target="_blank"

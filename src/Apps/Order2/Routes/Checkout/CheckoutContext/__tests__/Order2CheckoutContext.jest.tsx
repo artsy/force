@@ -1,4 +1,3 @@
-import { act } from "@testing-library/react"
 import {
   Order2CheckoutContext,
   Order2CheckoutContextProvider,
@@ -8,6 +7,7 @@ import {
   CheckoutStepState,
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { act } from "@testing-library/react"
 import type { Order2CheckoutContextTestQuery } from "__generated__/Order2CheckoutContextTestQuery.graphql"
 import { graphql } from "react-relay"
 

@@ -1,7 +1,7 @@
-import { screen } from "@testing-library/react"
 import { InvoiceApp } from "Apps/Invoice/InvoiceApp"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import type { InvoiceApp_Test_Query } from "__generated__/InvoiceApp_Test_Query.graphql"
 import { graphql } from "react-relay"
 

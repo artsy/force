@@ -1,6 +1,6 @@
-import { screen } from "@testing-library/react"
 import { InsightsCareerHighlightRailFragmentContainer } from "Apps/Settings/Routes/Insights/Components/CareerHighlights/InsightsCareerHighlightRail"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import type { InsightsCareerHighlightRailTestQuery } from "__generated__/InsightsCareerHighlightRailTestQuery.graphql"
 import { graphql } from "react-relay"
 

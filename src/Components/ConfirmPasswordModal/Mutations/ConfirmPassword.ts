@@ -3,7 +3,7 @@ import type {
   ConfirmPasswordMutation,
   ConfirmPasswordMutation$data,
 } from "__generated__/ConfirmPasswordMutation.graphql"
-import { type Environment, commitMutation, graphql } from "react-relay"
+import { commitMutation, type Environment, graphql } from "react-relay"
 
 export const ConfirmPassword = (
   environment: Environment,

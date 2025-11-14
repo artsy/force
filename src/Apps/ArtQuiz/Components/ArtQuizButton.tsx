@@ -1,12 +1,12 @@
+import { useMode } from "Utils/Hooks/useMode"
 import CloseIcon from "@artsy/icons/CloseIcon"
 import HeartFillIcon from "@artsy/icons/HeartFillIcon"
 import HeartStrokeIcon from "@artsy/icons/HeartStrokeIcon"
 import { Clickable, type ClickableProps } from "@artsy/palette"
-import { useMode } from "Utils/Hooks/useMode"
 import type React from "react"
 import {
-  type Ref,
   forwardRef,
+  type Ref,
   useCallback,
   useImperativeHandle,
   useRef,

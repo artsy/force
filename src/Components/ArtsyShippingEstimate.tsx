@@ -1,10 +1,13 @@
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { getENV } from "Utils/getENV"
+import { useLoadScript } from "Utils/Hooks/useLoadScript"
 import type { EstimateBody, PartialEstimateConfig } from "@artaio/arta-browser"
+import type ArtaEstimate from "@artaio/arta-browser/dist/estimate"
 import type {
   ArtaLocation,
   ArtaObject,
   SupportedCurrency,
 } from "@artaio/arta-browser/dist/MetadataTypes"
-import type ArtaEstimate from "@artaio/arta-browser/dist/estimate"
 import {
   ActionType,
   type ClickedEstimateShippingCost,
@@ -12,9 +15,6 @@ import {
   type ShippingEstimateViewed,
 } from "@artsy/cohesion"
 import { Link, Spacer, Text } from "@artsy/palette"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import { useLoadScript } from "Utils/Hooks/useLoadScript"
-import { getENV } from "Utils/getENV"
 import type {
   ArtsyShippingEstimate_artwork$data,
   ArtsyShippingEstimate_artwork$key,
@@ -254,7 +254,6 @@ const useWidgetObserver = ({
     }
   }, [])
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: We only want to run this when the price changes
   useEffect(() => {
     if (visiblePrice) {
       onViewEstimatedPrice(visiblePrice)

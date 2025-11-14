@@ -1,5 +1,5 @@
-import { Image, Spacer, Stack, Text } from "@artsy/palette"
 import { Device, useDeviceDetection } from "Utils/Hooks/useDeviceDetection"
+import { Image, Spacer, Stack, Text } from "@artsy/palette"
 import type { FC } from "react"
 import { MarketingHeader } from "./MarketingHeader"
 

@@ -1,3 +1,5 @@
+import type { FulfillmentType } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import {
   ActionType,
   type ClickedAddNewShippingAddress,
@@ -13,8 +15,6 @@ import {
   type SubmittedOrder,
 } from "@artsy/cohesion"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import type { FulfillmentType } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import type { ExpressCheckoutUI_order$data } from "__generated__/ExpressCheckoutUI_order.graphql"
 import type { Review_order$data } from "__generated__/Review_order.graphql"
 import { useMemo } from "react"

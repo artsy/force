@@ -1,6 +1,6 @@
+import chalk from "chalk"
 import fs from "fs"
 import path from "path"
-import chalk from "chalk"
 
 const { CDN_URL, NODE_ENV } = process.env
 

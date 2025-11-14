@@ -13,7 +13,7 @@ const resolveIPv4 = ipAddress => {
 module.exports = req => {
   const ipAddress = resolveIPv4(req.connection.remoteAddress)
   if (req && req.headers && req.headers["x-forwarded-for"]) {
-    return req.headers["x-forwarded-for"] + "," + ipAddress
+    return `${req.headers["x-forwarded-for"]},${ipAddress}`
   } else {
     return ipAddress
   }

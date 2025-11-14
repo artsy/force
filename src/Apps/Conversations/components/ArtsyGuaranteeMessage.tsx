@@ -1,12 +1,10 @@
 import VerifiedIcon from "@artsy/icons/VerifiedIcon"
 import { Banner } from "@artsy/palette"
-import { useRouter } from "System/Hooks/useRouter"
 import { useEffect, useState } from "react"
 
 export const ArtsyGuaranteeMessage: React.FC<
   React.PropsWithChildren<unknown>
 > = () => {
-  const { match } = useRouter()
   const [showBanner, setShowBanner] = useState(false)
 
   useEffect(() => {
@@ -19,7 +17,7 @@ export const ArtsyGuaranteeMessage: React.FC<
     return () => {
       clearTimeout(timer)
     }
-  }, [match.params.conversationId])
+  }, [])
 
   if (!showBanner) {
     return null

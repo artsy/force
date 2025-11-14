@@ -1,11 +1,11 @@
-import { screen } from "@testing-library/react"
-import userEvent from "@testing-library/user-event"
 import type { ArtworkFilterContextProps } from "Components/ArtworkFilter/ArtworkFilterContext"
-import { MediumFilter } from "Components/ArtworkFilter/ArtworkFilters/MediumFilter"
 import {
   createArtworkFilterTestRenderer,
   currentArtworkFilterContext,
 } from "Components/ArtworkFilter/ArtworkFilters/__tests__/Utils"
+import { MediumFilter } from "Components/ArtworkFilter/ArtworkFilters/MediumFilter"
+import { screen } from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
 
 describe(MediumFilter, () => {
   describe("with default options", () => {

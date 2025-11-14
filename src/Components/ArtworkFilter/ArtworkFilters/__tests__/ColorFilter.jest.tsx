@@ -1,14 +1,14 @@
-import { screen } from "@testing-library/react"
-import userEvent from "@testing-library/user-event"
 import type { ArtworkFilterContextProps } from "Components/ArtworkFilter/ArtworkFilterContext"
-import {
-  ColorFilter,
-  COLOR_OPTIONS,
-} from "Components/ArtworkFilter/ArtworkFilters/ColorFilter"
 import {
   createArtworkFilterTestRenderer,
   currentArtworkFilterContext,
 } from "Components/ArtworkFilter/ArtworkFilters/__tests__/Utils"
+import {
+  COLOR_OPTIONS,
+  ColorFilter,
+} from "Components/ArtworkFilter/ArtworkFilters/ColorFilter"
+import { screen } from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
 
 describe(ColorFilter, () => {
   const artworkFilterContext: Partial<ArtworkFilterContextProps> = {}

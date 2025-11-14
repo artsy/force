@@ -1,3 +1,4 @@
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import {
   ActionType,
   type ClickedArticleShare,
@@ -7,7 +8,6 @@ import {
   ContextModule,
   type Impression,
 } from "@artsy/cohesion"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useTracking } from "react-tracking"
 
 export const useArticleTracking = () => {

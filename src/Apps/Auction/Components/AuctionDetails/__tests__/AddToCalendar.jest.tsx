@@ -1,11 +1,10 @@
-import { ContextModule } from "@artsy/cohesion"
 import {
   AddToCalendar,
   AddToCalendarLinks,
 } from "Apps/Auction/Components/AuctionDetails/AddToCalendar"
 import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
-import { render, screen } from "@testing-library/react"
-import { fireEvent } from "@testing-library/react"
+import { ContextModule } from "@artsy/cohesion"
+import { fireEvent, render, screen } from "@testing-library/react"
 
 jest.mock("Apps/Auction/Hooks/useAuctionTracking")
 

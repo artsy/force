@@ -6,7 +6,7 @@ import type { ArtsyRequest, ArtsyResponse } from "./artsyExpress"
  * caching on the html.
  */
 export function csrfTokenMiddleware(
-  req: ArtsyRequest,
+  _req: ArtsyRequest,
   res: ArtsyResponse,
   next: NextFunction,
 ) {

@@ -1,3 +1,8 @@
+import { ShowArtworkFilterQueryRenderer } from "Apps/Show/Components/ShowArtworks"
+import { ShowMetaFragmentContainer as ShowMeta } from "Apps/Show/Components/ShowMeta"
+import { ShowStructuredData } from "Apps/Show/Components/ShowStructuredData"
+import { RouterLink } from "System/Components/RouterLink"
+import { Analytics } from "System/Contexts/AnalyticsContext"
 import {
   Column,
   GridColumns,
@@ -6,11 +11,6 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { ShowArtworkFilterQueryRenderer } from "Apps/Show/Components/ShowArtworks"
-import { ShowMetaFragmentContainer as ShowMeta } from "Apps/Show/Components/ShowMeta"
-import { ShowStructuredData } from "Apps/Show/Components/ShowStructuredData"
-import { RouterLink } from "System/Components/RouterLink"
-import { Analytics } from "System/Contexts/AnalyticsContext"
 import type { ShowApp_show$data } from "__generated__/ShowApp_show.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"

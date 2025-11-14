@@ -1,7 +1,7 @@
-import { Spacer } from "@artsy/palette"
 import { Analytics } from "System/Contexts/AnalyticsContext"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useScrollToOpenArtistAuthModal } from "Utils/Hooks/useScrollToOpenArtistAuthModal"
+import { Spacer } from "@artsy/palette"
 import type { ArtistSubApp_artist$data } from "__generated__/ArtistSubApp_artist.graphql"
 import type { Match } from "found"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -16,7 +16,6 @@ interface ArtistSubAppProps {
 const ArtistSubApp: React.FC<React.PropsWithChildren<ArtistSubAppProps>> = ({
   artist,
   children,
-  match,
 }) => {
   const { isEigen } = useSystemContext()
 

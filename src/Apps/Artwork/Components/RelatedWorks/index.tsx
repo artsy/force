@@ -1,11 +1,3 @@
-import type React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-import { useTracking } from "react-tracking"
-
-import { ContextModule } from "@artsy/cohesion"
-import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { Box, Skeleton, Spacer } from "@artsy/palette"
-
 import {
   Header,
   HeaderPlaceholder,
@@ -15,8 +7,14 @@ import ArtworkGrid, {
 } from "Components/ArtworkGrid/ArtworkGrid"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import type { RelatedWorksQuery } from "__generated__/RelatedWorksQuery.graphql"
+import { ContextModule } from "@artsy/cohesion"
+import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import { Box, Skeleton, Spacer } from "@artsy/palette"
 import type { RelatedWorks_artwork$data } from "__generated__/RelatedWorks_artwork.graphql"
+import type { RelatedWorksQuery } from "__generated__/RelatedWorksQuery.graphql"
+import type React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 interface RelatedWorksProps {
   artwork: RelatedWorks_artwork$data

@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test"
+import { expect, test } from "@playwright/test"
 
 test.describe("/system/up", () => {
   test("should not render a page for /system/up healthcheck endpoint", async ({

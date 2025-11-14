@@ -1,9 +1,8 @@
-import { screen } from "@testing-library/react"
 import { OrderDetailsPaymentInfo } from "Apps/Order/Routes/Details/Components/OrderDetailsPaymentInfo"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { graphql } from "relay-runtime"
-
+import { screen } from "@testing-library/react"
 import type { OrderDetailsPaymentInfo_TestQuery } from "__generated__/OrderDetailsPaymentInfo_TestQuery.graphql"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 

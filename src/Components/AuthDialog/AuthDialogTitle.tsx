@@ -1,8 +1,8 @@
+import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
 import ArtsyLogoIcon from "@artsy/icons/ArtsyLogoIcon"
 import ChevronLeftIcon from "@artsy/icons/ChevronLeftIcon"
 import CloseIcon from "@artsy/icons/CloseIcon"
 import { Box, type BoxProps, Clickable, Stack, Text } from "@artsy/palette"
-import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
 import type { FC } from "react"
 
 interface AuthDialogTitleProps extends BoxProps {

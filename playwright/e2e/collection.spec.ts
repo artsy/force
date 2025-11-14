@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test"
+import { expect, test } from "@playwright/test"
 
 const artworkGridRenders = async (page: any) => {
   // Wait for network to be idle to ensure artwork data has loaded

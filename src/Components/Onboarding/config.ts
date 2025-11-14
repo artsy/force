@@ -37,7 +37,7 @@ export const useConfig = ({ basis, onClose }: UseConfig) => {
       ],
       conditions: {
         [DECISION_WHERE_WOULD_YOU_LIKE_TO_DIVE_IN]: () => {
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          // biome-ignore lint/suspicious/noNonNullAssertedOptionalChain: legacy
           return basis.current?.questionThree!
         },
       },

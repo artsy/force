@@ -1,28 +1,21 @@
+import { Collapse } from "Apps/Order/Components/Collapse"
+import type { CommitMutation } from "Apps/Order/Utils/commitMutation"
+import { validateAddress } from "Apps/Order/Utils/formValidators"
 import {
   type AddressChangeHandler,
   type AddressErrors,
   AddressForm,
   type AddressTouched,
 } from "Components/Address/AddressForm"
-import type { CreditCardPickerCreateCreditCardMutation } from "__generated__/CreditCardPickerCreateCreditCardMutation.graphql"
-import type { CreditCardPicker_me$data } from "__generated__/CreditCardPicker_me.graphql"
-import type { CreditCardPicker_order$data } from "__generated__/CreditCardPicker_order.graphql"
 
 import { type Address, emptyAddress } from "Components/Address/utils"
-
-import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { CardNumberElement } from "@stripe/react-stripe-js"
-import type {
-  CreateTokenCardData,
-  Stripe,
-  StripeElements,
-  StripeError,
-} from "@stripe/stripe-js"
-import { validateAddress } from "Apps/Order/Utils/formValidators"
 import { CreditCardInput } from "Components/CreditCardInput"
-import * as React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-
+import {
+  SystemContextConsumer,
+  type SystemContextProps,
+} from "System/Contexts/SystemContext"
+import { createStripeWrapper } from "Utils/createStripeWrapper"
+import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import {
   BorderedRadio,
   Checkbox,
@@ -32,14 +25,19 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { Collapse } from "Apps/Order/Components/Collapse"
-import type { CommitMutation } from "Apps/Order/Utils/commitMutation"
-import {
-  SystemContextConsumer,
-  type SystemContextProps,
-} from "System/Contexts/SystemContext"
-import { createStripeWrapper } from "Utils/createStripeWrapper"
+import { CardNumberElement } from "@stripe/react-stripe-js"
+import type {
+  CreateTokenCardData,
+  Stripe,
+  StripeElements,
+  StripeError,
+} from "@stripe/stripe-js"
+import type { CreditCardPicker_me$data } from "__generated__/CreditCardPicker_me.graphql"
+import type { CreditCardPicker_order$data } from "__generated__/CreditCardPicker_order.graphql"
+import type { CreditCardPickerCreateCreditCardMutation } from "__generated__/CreditCardPickerCreateCreditCardMutation.graphql"
 import { isNull, mergeWith } from "lodash"
+import * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 import { type TrackingProp, useTracking } from "react-tracking"
 import { CreditCardDetails } from "./CreditCardDetails"
 
@@ -122,7 +120,6 @@ export class CreditCardPicker extends React.Component<
     try {
       this.setState({ isCreatingStripeToken: true })
       const stripeBillingAddress = this.getStripeBillingAddress()
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       const cardNumberElement =
         this.props.elements.getElement(CardNumberElement)!
       return await this.props.stripe.createToken(
@@ -250,7 +247,7 @@ export class CreditCardPicker extends React.Component<
 
     const orderCard = this.props.order.creditCard
 
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    // biome-ignore lint/suspicious/noNonNullAssertedOptionalChain: thing
     const creditCardsArray = creditCards?.edges?.map(e => e?.node)!
 
     // only add the unsaved card to the cards array if it exists and is not already there
@@ -286,7 +283,7 @@ export class CreditCardPicker extends React.Component<
             >
               {creditCardsArray
                 .map(e => {
-                  // @ts-ignore
+                  // @ts-expect-error
                   const { internalID, ...creditCardProps } = e
                   return (
                     <BorderedRadio value={internalID} key={internalID}>

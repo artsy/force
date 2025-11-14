@@ -1,8 +1,8 @@
-import { Text } from "@artsy/palette"
 import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import type { PrimaryLabelLineQuery } from "__generated__/PrimaryLabelLineQuery.graphql"
+import { Text } from "@artsy/palette"
 import type { PrimaryLabelLine_artwork$data } from "__generated__/PrimaryLabelLine_artwork.graphql"
+import type { PrimaryLabelLineQuery } from "__generated__/PrimaryLabelLineQuery.graphql"
 import { type FC, useEffect } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 

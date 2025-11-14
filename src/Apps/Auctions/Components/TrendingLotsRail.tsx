@@ -1,5 +1,3 @@
-import type { AuthContextModule } from "@artsy/cohesion"
-import { Skeleton } from "@artsy/palette"
 import { tabTypeToContextModuleMap } from "Apps/Auctions/Utils/tabTypeToContextModuleMap"
 import {
   ShelfArtworkFragmentContainer,
@@ -11,8 +9,10 @@ import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { trackHelpers } from "Utils/cohesionHelpers"
 import { extractNodes } from "Utils/extractNodes"
-import type { TrendingLotsRailQuery } from "__generated__/TrendingLotsRailQuery.graphql"
+import type { AuthContextModule } from "@artsy/cohesion"
+import { Skeleton } from "@artsy/palette"
 import type { TrendingLotsRail_viewer$data } from "__generated__/TrendingLotsRail_viewer.graphql"
+import type { TrendingLotsRailQuery } from "__generated__/TrendingLotsRailQuery.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"

@@ -1,13 +1,11 @@
-import { Spacer, Tab, Tabs, Text } from "@artsy/palette"
 import { ArtQuizLikedArtworksQueryRenderer } from "Apps/ArtQuiz/Components/ArtQuizLikedArtworks"
 import { ArtQuizRecommendedArtistsQueryRenderer } from "Apps/ArtQuiz/Components/ArtQuizRecommendedArtists"
 import { ArtQuizResultsRecommendedArtworksQueryRenderer } from "Apps/ArtQuiz/Components/ArtQuizResultsRecommendedArtworks"
 import { TriggerCampaignButton } from "Apps/ArtQuiz/Components/TriggerCampaignButton"
+import { Spacer, Tab, Tabs, Text } from "@artsy/palette"
 import type { FC } from "react"
 
-export const ArtQuizResultsTabs: FC<
-  React.PropsWithChildren<unknown>
-> = ({}) => {
+export const ArtQuizResultsTabs: FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <>
       <Spacer y={[4, 6]} />

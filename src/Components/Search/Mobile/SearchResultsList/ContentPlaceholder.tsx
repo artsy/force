@@ -1,5 +1,5 @@
-import { Flex, SkeletonBox, SkeletonText, Spacer } from "@artsy/palette"
 import { SuggestionItemLink } from "Components/Search/SuggestionItem/SuggestionItemLink"
+import { Flex, SkeletonBox, SkeletonText, Spacer } from "@artsy/palette"
 import type { FC } from "react"
 
 export const ContentPlaceholder: FC<React.PropsWithChildren<unknown>> = () => {

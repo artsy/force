@@ -1,8 +1,8 @@
-import { fireEvent, screen } from "@testing-library/react"
 import { SettingsPaymentsRouteFragmentContainer } from "Apps/Settings/Routes/Payments/SettingsPaymentsRoute"
 import { useDeleteBankAccount } from "Apps/Settings/Routes/Payments/useDeleteBankAccount"
 import { useDeleteCreditCard } from "Apps/Settings/Routes/Payments/useDeleteCreditCard"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { fireEvent, screen } from "@testing-library/react"
 import type { SettingsPaymentsRoute_Test_Query } from "__generated__/SettingsPaymentsRoute_Test_Query.graphql"
 import { graphql } from "react-relay"
 

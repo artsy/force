@@ -1,15 +1,15 @@
-import { Skeleton } from "@artsy/palette"
 import {
   CellPartnerFragmentContainer,
   CellPartnerPlaceholder,
 } from "Components/Cells/CellPartner"
 import { Rail } from "Components/Rail/Rail"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import type { PartnersRailQuery } from "__generated__/PartnersRailQuery.graphql"
+import { Skeleton } from "@artsy/palette"
 import type { PartnersRail_partnerCategory$data } from "__generated__/PartnersRail_partnerCategory.graphql"
+import type { PartnersRailQuery } from "__generated__/PartnersRailQuery.graphql"
 import { compact, take } from "lodash"
-import { useMemo } from "react"
 import type * as React from "react"
+import { useMemo } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
 interface PartnersRailProps {

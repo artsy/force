@@ -1,6 +1,6 @@
 import {
-  type FilterCategory,
   createCollectUrl,
+  type FilterCategory,
 } from "Apps/Artwork/Utils/createCollectUrl"
 
 describe("createCollectUrl", () => {

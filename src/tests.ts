@@ -20,7 +20,9 @@ if (process.env.CIRCLECI === "true") {
 }
 
 jest.mock("react-tracking")
+
 import _track, { useTracking as _useTracking } from "react-tracking"
+
 const track = _track as jest.Mock<typeof _track>
 const useTracking = _useTracking as jest.Mock
 track.mockImplementation(() => x => x as any)

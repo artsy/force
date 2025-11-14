@@ -1,3 +1,7 @@
+import { AlertProvider } from "Components/Alert/AlertProvider"
+import { CriteriaPillsPlaceholder } from "Components/Alert/Components/CriteriaPills"
+import { Modal } from "Components/Alert/Components/Modal/Modal"
+import { Media } from "Utils/Responsive"
 import {
   Flex,
   Skeleton,
@@ -6,10 +10,6 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { AlertProvider } from "Components/Alert/AlertProvider"
-import { CriteriaPillsPlaceholder } from "Components/Alert/Components/CriteriaPills"
-import { Modal } from "Components/Alert/Components/Modal/Modal"
-import { Media } from "Utils/Responsive"
 
 export const SavedSearchAlertEditFormPlaceholder: React.FC<
   React.PropsWithChildren<{

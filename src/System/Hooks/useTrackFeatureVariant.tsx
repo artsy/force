@@ -1,6 +1,6 @@
-import { ActionType } from "@artsy/cohesion"
 import { pathToOwnerType } from "System/Contexts/AnalyticsContext"
 import { useRouter } from "System/Hooks/useRouter"
+import { ActionType } from "@artsy/cohesion"
 import { useEffect, useRef } from "react"
 
 interface VariantTrackingProperties {

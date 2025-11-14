@@ -1,3 +1,5 @@
+import { MetadataPlaceholder } from "Components/Artwork/Metadata"
+import { Media } from "Utils/Responsive"
 import {
   Box,
   Flex,
@@ -6,8 +8,6 @@ import {
   SkeletonText,
   Spacer,
 } from "@artsy/palette"
-import { MetadataPlaceholder } from "Components/Artwork/Metadata"
-import { Media } from "Utils/Responsive"
 import { times } from "lodash"
 import type { FC } from "react"
 

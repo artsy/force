@@ -3,16 +3,15 @@ import { paramsToSnakeCase } from "Components/ArtworkFilter/Utils/paramsCasing"
 import { allowedSearchCriteriaKeys } from "Components/SavedSearchAlert/constants"
 import type { Metric } from "Utils/metrics"
 import qs from "qs"
-import { useContext, useState } from "react"
-import { createContext } from "react"
-import { extractPills } from "./Utils/extractPills"
-import { getAllowedSearchCriteria } from "./Utils/savedSearchCriteria"
+import { createContext, useContext, useState } from "react"
 import type {
   FilterPill,
   SavedSearchEntity,
   SearchCriteriaAttributeKeys,
   SearchCriteriaAttributes,
 } from "./types"
+import { extractPills } from "./Utils/extractPills"
+import { getAllowedSearchCriteria } from "./Utils/savedSearchCriteria"
 
 interface SavedSearchAlertContextProps {
   pills: FilterPill[]

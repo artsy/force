@@ -1,3 +1,6 @@
+import type { Address } from "Components/Address/utils"
+import { useFlag } from "System/FeatureFlags/useFlag"
+import { getENV } from "Utils/getENV"
 import {
   ActionType,
   type AddressAutoCompletionResult,
@@ -12,9 +15,6 @@ import {
   Input,
   usePrevious,
 } from "@artsy/palette"
-import type { Address } from "Components/Address/utils"
-import { useFlag } from "System/FeatureFlags/useFlag"
-import { getENV } from "Utils/getENV"
 import { throttle, uniqBy } from "lodash"
 import { useCallback, useEffect, useReducer } from "react"
 import { useTracking } from "react-tracking"
@@ -293,7 +293,6 @@ export const AddressAutocompleteInput = ({
   const serializedOptions = JSON.stringify(autocompleteOptions)
   const serializedPreviousOptions = JSON.stringify(previousOptions)
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (
       serviceAvailability?.enabled &&

@@ -1,13 +1,13 @@
-import { screen, waitFor, fireEvent } from "@testing-library/react"
-import { Toasts, ToastsProvider } from "@artsy/palette"
 import { IdentityVerificationAppFragmentContainer } from "Apps/IdentityVerification/IdentityVerificationApp"
 import { MockBoot } from "DevTools/MockBoot"
 import { mockLocation } from "DevTools/mockLocation"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { Toasts, ToastsProvider } from "@artsy/palette"
+import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { HttpError } from "found"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { MockPayloadGenerator, createMockEnvironment } from "relay-test-utils"
+import { createMockEnvironment, MockPayloadGenerator } from "relay-test-utils"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")

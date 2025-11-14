@@ -1,4 +1,13 @@
 import {
+  CellArticleFragmentContainer,
+  CellArticlePlaceholder,
+} from "Components/Cells/CellArticle"
+import { Masonry } from "Components/Masonry"
+import { RouterLink } from "System/Components/RouterLink"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { Media } from "Utils/Responsive"
+import {
   ActionType,
   type ClickedArticleGroup,
   ContextModule,
@@ -16,17 +25,8 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import {
-  CellArticleFragmentContainer,
-  CellArticlePlaceholder,
-} from "Components/Cells/CellArticle"
-import { Masonry } from "Components/Masonry"
-import { RouterLink } from "System/Components/RouterLink"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { Media } from "Utils/Responsive"
-import type { HomeFeaturedMarketNewsQuery } from "__generated__/HomeFeaturedMarketNewsQuery.graphql"
 import type { HomeFeaturedMarketNews_articles$data } from "__generated__/HomeFeaturedMarketNews_articles.graphql"
+import type { HomeFeaturedMarketNewsQuery } from "__generated__/HomeFeaturedMarketNewsQuery.graphql"
 import { compact, take } from "lodash"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -136,7 +136,6 @@ const HomeFeaturedMarketNewsContainer: React.FC<
           variant={["xs", "sm-display"]}
           textAlign="right"
           as={RouterLink}
-          // @ts-ignore
           to="/articles"
           onClick={() => {
             const trackingEvent: ClickedArticleGroup = {

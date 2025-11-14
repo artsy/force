@@ -1,6 +1,6 @@
-import { screen } from "@testing-library/react"
 import { ConversationOrderUpdate } from "Apps/Conversations/components/Message/ConversationOrderUpdate"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import type { ConversationOrderUpdate_Test_Query } from "__generated__/ConversationOrderUpdate_Test_Query.graphql"
 import { graphql } from "react-relay"
 
@@ -11,7 +11,7 @@ describe("testing different statuses", () => {
     setupTestWrapperTL<ConversationOrderUpdate_Test_Query>({
       Component: props => {
         const event =
-          props.conversation?.orderConnection?.edges?.[0]?.node!.orderHistory[0]
+          props.conversation?.orderConnection?.edges?.[0]?.node?.orderHistory[0]
 
         return <ConversationOrderUpdate event={event!} />
       },

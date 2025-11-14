@@ -1,9 +1,9 @@
-import FilterIcon from "@artsy/icons/FilterIcon"
-import { Box, HorizontalOverflow, Pill, Stack } from "@artsy/palette"
 import { ArtistAuctionResultsDrawer } from "Apps/Artist/Routes/AuctionResults/Components/ArtistAuctionResultsDrawer"
 import { ArtistAuctionResultsQuickMedium } from "Apps/Artist/Routes/AuctionResults/Components/ArtistAuctionResultsQuickFilters/ArtistAuctionResultsQuickMedium"
 import { ArtistAuctionResultsQuickPriceRange } from "Apps/Artist/Routes/AuctionResults/Components/ArtistAuctionResultsQuickFilters/ArtistAuctionResultsQuickPriceRange"
 import { ArtistAuctionResultsQuickYear } from "Apps/Artist/Routes/AuctionResults/Components/ArtistAuctionResultsQuickFilters/ArtistAuctionResultsQuickYear"
+import FilterIcon from "@artsy/icons/FilterIcon"
+import { Box, HorizontalOverflow, Pill, Stack } from "@artsy/palette"
 import type { FC } from "react"
 import { useState } from "react"
 

@@ -1,7 +1,7 @@
-import { ContextModule } from "@artsy/cohesion"
 import { DownloadAppBadge } from "Components/DownloadAppBadges/DownloadAppBadge"
 import { Device } from "Utils/Hooks/useDeviceDetection"
-import { render, screen, fireEvent } from "@testing-library/react"
+import { ContextModule } from "@artsy/cohesion"
+import { fireEvent, render, screen } from "@testing-library/react"
 import { useTracking } from "react-tracking"
 
 describe("DownloadAppBadge", () => {

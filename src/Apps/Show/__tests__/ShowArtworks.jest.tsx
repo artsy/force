@@ -1,6 +1,6 @@
-import { screen } from "@testing-library/react"
 import { ShowArtworksRefetchContainer } from "Apps/Show/Components/ShowArtworks"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import type { ShowArtworks_Test_Query } from "__generated__/ShowArtworks_Test_Query.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"

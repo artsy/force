@@ -1,5 +1,5 @@
-import { render, screen, fireEvent } from "@testing-library/react"
 import { MockBoot } from "DevTools/MockBoot"
+import { fireEvent, render, screen } from "@testing-library/react"
 import { HeadProvider } from "react-head"
 import { useTracking } from "react-tracking"
 import { createMockEnvironment } from "relay-test-utils"

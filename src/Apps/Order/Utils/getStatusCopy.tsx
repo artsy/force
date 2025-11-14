@@ -1,5 +1,5 @@
-import { Spacer, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
+import { Spacer, Text } from "@artsy/palette"
 
 interface StatusPageConfig {
   title?: React.ReactNode

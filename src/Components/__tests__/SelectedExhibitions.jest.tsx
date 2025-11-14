@@ -1,15 +1,14 @@
 import { exhibitions } from "Apps/__tests__/Fixtures/SelectedExhibitions"
 import { SelectedExhibitions } from "Components/SelectedExhibitions"
 import { MockBoot } from "DevTools/MockBoot"
-import { render, screen } from "@testing-library/react"
-import { fireEvent } from "@testing-library/react"
+import { fireEvent, render, screen } from "@testing-library/react"
 
 describe("SelectedExhibitions", () => {
   const props = {
     exhibitions: exhibitions as any,
     artistID: "andy-warhol",
     totalExhibitions: 100,
-    // biome-ignore lint/a11y/useValidAnchor: <explanation>
+    // biome-ignore lint/a11y/useValidAnchor: Test utility anchor element
     ViewAllLink: <a href="#">hi</a>,
   }
 
