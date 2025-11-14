@@ -24,7 +24,7 @@ import { useMemo, useState } from "react"
 import { graphql, useFragment } from "react-relay"
 
 const logger = createLogger(
-  "Order2/Routes/Checkout/Components/OfferStep/Order2OfferStep.tsx"
+  "Order2/Routes/Checkout/Components/OfferStep/Order2OfferStep.tsx",
 )
 
 export const DEFUALT_OFFER_NOTE_PREFIX = "I sent an offer for"
@@ -59,7 +59,7 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
   const { jumpTo } = useJump()
 
   const currentStep = steps?.find(
-    step => step.name === CheckoutStepName.OFFER_AMOUNT
+    step => step.name === CheckoutStepName.OFFER_AMOUNT,
   )?.state
 
   const onOfferOptionSelected = (value: number, description?: string) => {
@@ -69,7 +69,7 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
       orderData.currencyCode,
       orderData.internalID,
       value,
-      description
+      description,
     )
   }
 
@@ -105,7 +105,7 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
               minimumFractionDigits: 2,
               style: "currency",
             }),
-            orderData.currencyCode
+            orderData.currencyCode,
           )}`
 
       // Unset the current fulfillment option if it exists
@@ -119,7 +119,8 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
             },
           })
         validateAndExtractOrderResponse(
-          unsetFulfillmentOptionResult.unsetOrderFulfillmentOption?.orderOrError
+          unsetFulfillmentOptionResult.unsetOrderFulfillmentOption
+            ?.orderOrError,
         )
       }
 

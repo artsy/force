@@ -13,7 +13,7 @@ import type {
 interface WizardProps {
   onComplete?: (
     values?: FormValues,
-    actions?: FormikActions<FormValues>
+    actions?: FormikActions<FormValues>,
   ) => void
   initialValues?: any
   steps?: StepElement[]
@@ -112,7 +112,7 @@ export class Wizard extends React.Component<
     this.setState(state => ({
       currentStepIndex: Math.min(
         state.currentStepIndex + 1,
-        this.steps.length - 1
+        this.steps.length - 1,
       ),
       values,
     }))
@@ -127,7 +127,7 @@ export class Wizard extends React.Component<
 
   handleSubmit: (
     values: FormValues,
-    actions?: FormikActions<FormValues>
+    actions?: FormikActions<FormValues>,
   ) => void = (values, actions) => {
     const { onComplete } = this.props
     if (this.isLastStep) {

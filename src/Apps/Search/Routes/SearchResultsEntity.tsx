@@ -99,7 +99,7 @@ export class SearchResultsEntityRoute extends React.Component<Props, State> {
         // TODO: use silentPush from useRouter if this class component is
         // converted to a function component
         window.history.pushState({}, "", `${location.pathname}?${urlParams}`)
-      }
+      },
     )
   }
 
@@ -252,5 +252,5 @@ export const SearchResultsEntityRouteFragmentContainer = createRefetchContainer(
           )
       }
     }
-  `
+  `,
 )

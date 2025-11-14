@@ -74,7 +74,7 @@ export const ArtworkImageBrowser: React.FC<
             return MAX_DIMENSION
           }
         }
-      })
+      }),
     )
   }, [figures])
 
@@ -155,5 +155,5 @@ export const ArtworkImageBrowserFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

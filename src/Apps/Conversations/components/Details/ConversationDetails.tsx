@@ -43,7 +43,7 @@ export const ConversationDetails: React.FC<
         ...ConversationAttachments_conversation
       }
     `,
-    conversation
+    conversation,
   )
 
   if (!data) {

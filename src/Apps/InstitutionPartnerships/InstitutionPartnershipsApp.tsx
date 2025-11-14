@@ -128,7 +128,7 @@ export const InstitutionPartnershipsApp: FC<
               <Image
                 {...resized(
                   "https://files.artsy.net/images/institutions-density-map.png",
-                  { width: 910, height: 473 }
+                  { width: 910, height: 473 },
                 )}
                 width="100%"
                 height="100%"
@@ -154,7 +154,7 @@ export const InstitutionPartnershipsApp: FC<
               <Image
                 {...resized(
                   "https://files.artsy.net/images/institutions-page-screenshot.png",
-                  { width: 910, height: 543 }
+                  { width: 910, height: 543 },
                 )}
                 width="100%"
                 height="100%"
@@ -212,7 +212,7 @@ export const InstitutionPartnershipsApp: FC<
               <Image
                 {...resized(
                   "https://files.artsy.net/images/institutions-cms-screenshot.png",
-                  { width: 910, height: 543 }
+                  { width: 910, height: 543 },
                 )}
                 width="100%"
                 height="100%"

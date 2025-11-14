@@ -100,5 +100,5 @@ export const SaleArtworkFilterRefetchContainer = createRefetchContainer(
         ...SaleArtworksFilter_viewer @arguments(input: $input)
       }
     }
-  `
+  `,
 )

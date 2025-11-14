@@ -11,82 +11,82 @@ const RespondRoute = loadable(
   () => import(/* webpackChunkName: "orderBundle" */ "./Routes/Respond"),
   {
     resolveComponent: component => component.RespondFragmentContainer,
-  }
+  },
 )
 
 const OfferRoute = loadable(
   () => import(/* webpackChunkName: "orderBundle" */ "./Routes/Offer"),
   {
     resolveComponent: component => component.OfferFragmentContainer,
-  }
+  },
 )
 
 const ShippingRoute = loadable(
   () => import(/* webpackChunkName: "orderBundle" */ "./Routes/Shipping"),
-  { resolveComponent: component => component.ShippingRouteWithDialog }
+  { resolveComponent: component => component.ShippingRouteWithDialog },
 )
 
 const PaymentRoute = loadable(
   () => import(/* webpackChunkName: "orderBundle" */ "./Routes/Payment"),
   {
     resolveComponent: component => component.PaymentFragmentContainer,
-  }
+  },
 )
 
 const NewPaymentRoute = loadable(
   () => import(/* webpackChunkName: "orderBundle" */ "./Routes/NewPayment"),
   {
     resolveComponent: component => component.NewPaymentFragmentContainer,
-  }
+  },
 )
 
 const CounterRoute = loadable(
   () => import(/* webpackChunkName: "orderBundle" */ "./Routes/Counter"),
   {
     resolveComponent: component => component.CounterFragmentContainer,
-  }
+  },
 )
 
 const ReviewRoute = loadable(
   () => import(/* webpackChunkName: "orderBundle" */ "./Routes/Review"),
   {
     resolveComponent: component => component.ReviewFragmentContainer,
-  }
+  },
 )
 
 const AcceptRoute = loadable(
   () => import(/* webpackChunkName: "orderBundle" */ "./Routes/Accept"),
   {
     resolveComponent: component => component.AcceptFragmentContainer,
-  }
+  },
 )
 
 const DeclineRoute = loadable(
   () => import(/* webpackChunkName: "orderBundle" */ "./Routes/Reject"),
   {
     resolveComponent: component => component.RejectFragmentContainer,
-  }
+  },
 )
 
 const StatusRoute = loadable(
   () => import(/* webpackChunkName: "orderBundle" */ "./Routes/Status"),
   {
     resolveComponent: component => component.StatusFragmentContainer,
-  }
+  },
 )
 
 const DetailsRoute = loadable(
   () => import(/* webpackChunkName: "orderBundle" */ "./Routes/Details"),
   {
     resolveComponent: component => component.OrderDetailsRoute,
-  }
+  },
 )
 
 const OrderApp = loadable(
   () => import(/* webpackChunkName: "orderBundle" */ "./OrderApp"),
   {
     resolveComponent: component => component.OrderAppFragmentContainer,
-  }
+  },
 )
 
 // FIXME:
@@ -131,7 +131,7 @@ export const orderRoutes: RouteProps[] = [
           const redirect = getRedirect(
             redirects,
             match.location.pathname.replace(/order(s)\/[^/]+/, ""),
-            { order, featureFlags }
+            { order, featureFlags },
           )
 
           if (redirect === null) {
@@ -146,7 +146,7 @@ export const orderRoutes: RouteProps[] = [
           if (redirect !== null) {
             if (process.env.NODE_ENV === "development") {
               console.error(
-                `Redirecting from ${match.location.pathname} to ${redirect.path} because '${redirect.reason}'`
+                `Redirecting from ${match.location.pathname} to ${redirect.path} because '${redirect.reason}'`,
               )
             }
             throw new RedirectException(redirect.path)

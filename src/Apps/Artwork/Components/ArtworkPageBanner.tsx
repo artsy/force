@@ -89,7 +89,7 @@ const UnpublishedArtworkBanner = () => (
 
 const ME_FRAGMENT = graphql`
   fragment ArtworkPageBanner_me on Me
-    @argumentDefinitions(artworkID: { type: "String!" }) {
+  @argumentDefinitions(artworkID: { type: "String!" }) {
     partnerOffersConnection(artworkID: $artworkID, first: 1) {
       edges {
         node {

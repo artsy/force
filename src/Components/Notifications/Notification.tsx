@@ -80,7 +80,7 @@ const Notification: React.FC<React.PropsWithChildren<NotificationProps>> = ({
         const response = await markNotificationAsRead(
           relayEnvironment,
           notification.id,
-          notification.internalID
+          notification.internalID,
         )
         const responseOrError = response.markNotificationAsRead?.responseOrError
         const errorMessage = responseOrError?.mutationError?.message

@@ -126,16 +126,16 @@ describe("Submit Pending Counter Offer", () => {
       expect(
         page.transactionSummary
           ?.find?.("TransactionDetailsSummaryItem")
-          ?.text?.()
+          ?.text?.(),
       ).toMatch("Your counterofferChange")
       expect(page.transactionSummary.text()).toMatch(
-        "Seller's offerUS$sellers.offer"
+        "Seller's offerUS$sellers.offer",
       )
       expect(page.artworkSummary.text()).toMatch(
-        "Lisa BreslowGramercy Park South"
+        "Lisa BreslowGramercy Park South",
       )
       expect(page.shippingSummary.text()).toMatch(
-        "Ship toJoelle Van Dyne401 Broadway"
+        "Ship toJoelle Van Dyne401 Broadway",
       )
       expect(page.paymentSummary.text()).toMatch(/•••• 4444.*Exp 03\/21/)
       expect(page.buyerGuarantee.length).toBe(1)
@@ -171,7 +171,7 @@ describe("Submit Pending Counter Offer", () => {
 
       await page.clickSubmit()
       expect(pushMock).toHaveBeenCalledWith(
-        `/orders/${testOrder?.internalID}/details`
+        `/orders/${testOrder?.internalID}/details`,
       )
     })
 

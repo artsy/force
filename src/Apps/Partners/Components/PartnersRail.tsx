@@ -22,7 +22,7 @@ const PartnersRail: React.FC<React.PropsWithChildren<PartnersRailProps>> = ({
   const partners = useMemo(() => {
     return mergeBuckets(
       compact(partnerCategory.primary),
-      compact(partnerCategory.secondary)
+      compact(partnerCategory.secondary),
     )
   }, [partnerCategory.primary, partnerCategory.secondary])
 
@@ -99,7 +99,7 @@ export const PartnersRailFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 interface PartnersRailQueryRendererProps {

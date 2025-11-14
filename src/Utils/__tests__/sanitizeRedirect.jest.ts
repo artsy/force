@@ -11,7 +11,7 @@ describe("sanitizeRedirect", () => {
 
   it("lets artsy.net subdomains through", () => {
     expect(sanitizeRedirect("http://2013.artsy.net")).toEqual(
-      "http://2013.artsy.net"
+      "http://2013.artsy.net",
     )
   })
 
@@ -25,33 +25,33 @@ describe("sanitizeRedirect", () => {
 
   it("lets deeply nested artsy.net subdomains through", () => {
     expect(sanitizeRedirect("https://foo.2013.artsy.net")).toEqual(
-      "https://foo.2013.artsy.net"
+      "https://foo.2013.artsy.net",
     )
   })
 
   it("lets artsy.net links through", () => {
     expect(sanitizeRedirect("https://artsy.net/about")).toEqual(
-      "https://artsy.net/about"
+      "https://artsy.net/about",
     )
   })
 
   it("lets localhost through", () => {
     expect(
-      sanitizeRedirect("http://localhost:3003/artwork/joe-piccillo-a-riposo")
+      sanitizeRedirect("http://localhost:3003/artwork/joe-piccillo-a-riposo"),
     ).toEqual("http://localhost:3003/artwork/joe-piccillo-a-riposo")
   })
 
   it("lets internal paths through", () => {
     expect(sanitizeRedirect("/log_in?redirect-to=/foo/bar")).toEqual(
-      "/log_in?redirect-to=/foo/bar"
+      "/log_in?redirect-to=/foo/bar",
     )
   })
 
   it("blocks data urls", () => {
     expect(
       sanitizeRedirect(
-        "data:text/html;base64,PHNjcmlwdD5hbGVydChsb2NhdGlvbi5oYXNoKTs8L3NjcmlwdD4="
-      )[0]
+        "data:text/html;base64,PHNjcmlwdD5hbGVydChsb2NhdGlvbi5oYXNoKTs8L3NjcmlwdD4=",
+      )[0],
     ).toEqual("/")
   })
 
@@ -83,13 +83,13 @@ describe("sanitizeRedirect", () => {
   it("strips out whitespace", () => {
     expect(
       sanitizeRedirect(`http://artsy.net
-attacker.com/`)
+attacker.com/`),
     ).toEqual("/")
   })
 
   it("leaves query params alone", () => {
     expect(sanitizeRedirect("http://artsy.net?foo=bar")).toEqual(
-      "http://artsy.net?foo=bar"
+      "http://artsy.net?foo=bar",
     )
   })
 

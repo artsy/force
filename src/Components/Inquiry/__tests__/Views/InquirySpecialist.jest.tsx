@@ -50,10 +50,10 @@ describe("InquirySpecialist", () => {
       render(<InquirySpecialist />)
 
       expect(
-        screen.getByText(/An Artsy Specialist is available/)
+        screen.getByText(/An Artsy Specialist is available/),
       ).toBeInTheDocument()
       expect(
-        screen.getByPlaceholderText("Your email address")
+        screen.getByPlaceholderText("Your email address"),
       ).toBeInTheDocument()
     })
 
@@ -102,10 +102,10 @@ describe("InquirySpecialist", () => {
       render(<InquirySpecialist />)
 
       expect(
-        screen.getByText(/An Artsy Specialist is available/)
+        screen.getByText(/An Artsy Specialist is available/),
       ).toBeInTheDocument()
       expect(
-        screen.queryByPlaceholderText("Your email address")
+        screen.queryByPlaceholderText("Your email address"),
       ).not.toBeInTheDocument()
       expect(screen.getByText("From")).toBeInTheDocument()
       expect(screen.getByText(/loggedin@example\.com/)).toBeInTheDocument()

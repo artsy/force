@@ -168,7 +168,7 @@ export const ArtistMarketInsightsFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 export const hasSections = ({
@@ -213,7 +213,7 @@ const orderedCategories = ["blue-chip", "top-established", "top-emerging"]
 export const highestCategory = edges => {
   const groups = groupedByCategories(edges)
   return orderedCategories.filter(
-    category => groups[category] && groups[category].length > 0
+    category => groups[category] && groups[category].length > 0,
   )[0]
 }
 

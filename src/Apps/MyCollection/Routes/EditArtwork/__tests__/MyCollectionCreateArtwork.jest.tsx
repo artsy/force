@@ -134,7 +134,7 @@ describe("MyCollectionCreateArtwork", () => {
           expect(screen.getByText("Upload Artwork")).toBeInTheDocument()
 
           expect(
-            screen.queryByPlaceholderText("Enter full name")
+            screen.queryByPlaceholderText("Enter full name"),
           ).not.toBeInTheDocument()
           expect(screen.getByText("Banksy")).toBeInTheDocument()
           expect(screen.getByText("British, b. 1974")).toBeInTheDocument()
@@ -153,7 +153,7 @@ describe("MyCollectionCreateArtwork", () => {
         expect(screen.getByText("Upload Artwork")).toBeInTheDocument()
 
         expect(
-          screen.queryByPlaceholderText("Enter full name")
+          screen.queryByPlaceholderText("Enter full name"),
         ).toBeInTheDocument()
       })
     })
@@ -166,7 +166,7 @@ describe("MyCollectionCreateArtwork", () => {
           screen.getByPlaceholderText("Search for artists on Artsy"),
           {
             target: { value: "Someone" },
-          }
+          },
         )
 
         // Navigate to the detail step
@@ -176,7 +176,7 @@ describe("MyCollectionCreateArtwork", () => {
         expect(screen.getByText("Upload Artwork")).toBeInTheDocument()
 
         expect(screen.getByPlaceholderText("Enter full name")).toHaveValue(
-          "Someone"
+          "Someone",
         )
       })
     })
@@ -217,7 +217,7 @@ describe("MyCollectionCreateArtwork", () => {
           expect(screen.getByText("British, b. 1974")).toBeInTheDocument()
 
           expect(
-            screen.getByTestId("my-collection-artwork-details-title")
+            screen.getByTestId("my-collection-artwork-details-title"),
           ).toHaveValue("An Artwork")
         })
       })
@@ -241,7 +241,7 @@ describe("MyCollectionCreateArtwork", () => {
 
           // Navigate to the detail step
           fireEvent.click(
-            screen.getByTestId("artwork-630df944aeae3e000ea202f3")
+            screen.getByTestId("artwork-630df944aeae3e000ea202f3"),
           )
 
           // TODO: Check form values

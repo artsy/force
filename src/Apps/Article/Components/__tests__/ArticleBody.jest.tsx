@@ -32,7 +32,7 @@ describe("ArticleBody", () => {
     })
 
     expect(
-      screen.getByRole("link", { name: "Example Author" })
+      screen.getByRole("link", { name: "Example Author" }),
     ).toBeInTheDocument()
   })
 

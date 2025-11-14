@@ -84,7 +84,7 @@ describe("AuctionActiveBids", () => {
       })
       expect(screen.getByText("Your Active Bids")).toBeInTheDocument()
       expect(
-        screen.getByText("AuctionLotInfoFragmentContainer")
+        screen.getByText("AuctionLotInfoFragmentContainer"),
       ).toBeInTheDocument()
       expect(screen.getByText("Increase Bid")).toBeInTheDocument()
     })
@@ -97,7 +97,7 @@ describe("AuctionActiveBids", () => {
       renderWithRelay()
       expect(screen.getByText("Your Active Bids")).toBeInTheDocument()
       expect(
-        screen.getByText("AuctionLotInfoFragmentContainer")
+        screen.getByText("AuctionLotInfoFragmentContainer"),
       ).toBeInTheDocument()
     })
 
@@ -249,7 +249,7 @@ describe("AuctionActiveBids", () => {
     fireEvent.click(screen.getByText("Increase Bid"))
 
     expect(spy).toBeCalledWith(
-      "/auction/saleID/bid/sale-artwork-slug?redirectTo=/auction/saleID"
+      "/auction/saleID/bid/sale-artwork-slug?redirectTo=/auction/saleID",
     )
   })
 

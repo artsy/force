@@ -21,7 +21,7 @@ export const relativeTime = (timeIn, now) => {
 // now defaults to DateTime.local() but can be overriden for unit testing
 export const upcomingLabel = (
   sale: AuctionCard_sale$data,
-  now = DateTime.local()
+  now = DateTime.local(),
 ) => {
   const {
     startAt,
@@ -47,7 +47,7 @@ export const upcomingLabel = (
       return `Live in ${relativeTime(liveStartAt, now)}`
     } else {
       const dateTime = DateTime.fromISO(liveStartAt ?? "").setZone(
-        "America/New_York"
+        "America/New_York",
       )
       return `Register by ${dateTime.monthShort} ${dateTime.day}`
     }
@@ -149,5 +149,5 @@ export const AuctionCardFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

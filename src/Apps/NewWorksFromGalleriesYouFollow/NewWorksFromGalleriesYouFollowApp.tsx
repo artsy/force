@@ -135,5 +135,5 @@ export const NewWorksFromGalleriesYouFollowAppPaginationContainer =
           }
         }
       `,
-    }
+    },
   )

@@ -32,7 +32,7 @@ describe("ConversationDetails", () => {
           }
         }
       `,
-    }
+    },
   )
 
   beforeEach(() => {
@@ -67,7 +67,7 @@ describe("ConversationDetails", () => {
     })
 
     expect(
-      screen.getByText("All conversations with galleries will show here.")
+      screen.getByText("All conversations with galleries will show here."),
     ).toBeInTheDocument()
   })
 })

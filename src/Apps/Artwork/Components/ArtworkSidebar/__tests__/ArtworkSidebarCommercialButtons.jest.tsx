@@ -98,7 +98,7 @@ describe("ArtworkSidebarCommercialButtons", () => {
           }),
         },
         null,
-        mockEnvironment
+        mockEnvironment,
       )
 
       expect(screen.queryByText("Purchase")).toBeInTheDocument()
@@ -124,7 +124,7 @@ describe("ArtworkSidebarCommercialButtons", () => {
           }),
         },
         null,
-        mockEnvironment
+        mockEnvironment,
       )
 
       expect(screen.queryByText("Purchase")).not.toBeInTheDocument()
@@ -148,7 +148,7 @@ describe("ArtworkSidebarCommercialButtons", () => {
           }),
         },
         null,
-        mockEnvironment
+        mockEnvironment,
       )
 
       expect(screen.queryByText("Purchase")).toBeInTheDocument()
@@ -174,7 +174,7 @@ describe("ArtworkSidebarCommercialButtons", () => {
           }),
         },
         null,
-        mockEnvironment
+        mockEnvironment,
       )
 
       expect(screen.queryByText("Purchase")).toBeInTheDocument()
@@ -200,7 +200,7 @@ describe("ArtworkSidebarCommercialButtons", () => {
           }),
         },
         null,
-        mockEnvironment
+        mockEnvironment,
       )
 
       expect(screen.queryByText("Purchase")).toBeInTheDocument()
@@ -421,7 +421,7 @@ describe("ArtworkSidebarCommercialButtons", () => {
         }),
       },
       null,
-      mockEnvironment
+      mockEnvironment,
     )
 
     expect(screen.queryByText("Limited-Time Offer")).toBeInTheDocument()
@@ -450,7 +450,7 @@ describe("ArtworkSidebarCommercialButtons", () => {
         }),
       },
       null,
-      mockEnvironment
+      mockEnvironment,
     )
 
     expect(screen.queryByText("Limited-Time Offer")).not.toBeInTheDocument()
@@ -482,7 +482,7 @@ describe("ArtworkSidebarCommercialButtons", () => {
         }),
       },
       null,
-      mockEnvironment
+      mockEnvironment,
     )
 
     expect(screen.queryByText('"This is a note"')).toBeInTheDocument()
@@ -611,7 +611,7 @@ describe("ArtworkSidebarCommercialButtons", () => {
           }),
         },
         null,
-        mockEnvironment
+        mockEnvironment,
       )
 
       await waitFor(() => {
@@ -622,7 +622,7 @@ describe("ArtworkSidebarCommercialButtons", () => {
         const { operationName } = await mockResolveLastOperation({})
 
         expect(operationName).toBe(
-          "ArtworkSidebarCommercialButtonsOfferOrderMutation"
+          "ArtworkSidebarCommercialButtonsOfferOrderMutation",
         )
       })
     })
@@ -644,7 +644,7 @@ describe("ArtworkSidebarCommercialButtons", () => {
           }),
         },
         null,
-        mockEnvironment
+        mockEnvironment,
       )
 
       await waitFor(() => {
@@ -655,7 +655,7 @@ describe("ArtworkSidebarCommercialButtons", () => {
         const { operationName } = await mockResolveLastOperation({})
 
         expect(operationName).toBe(
-          "ArtworkSidebarCommercialButtonsOrderMutation"
+          "ArtworkSidebarCommercialButtonsOrderMutation",
         )
       })
     })
@@ -685,7 +685,7 @@ describe("ArtworkSidebarCommercialButtons", () => {
           }),
         },
         null,
-        mockEnvironment
+        mockEnvironment,
       )
 
       await waitFor(() => {
@@ -730,7 +730,7 @@ describe("ArtworkSidebarCommercialButtons", () => {
           }),
         },
         null,
-        mockEnvironment
+        mockEnvironment,
       )
       jest.advanceTimersByTime(1010)
 
@@ -761,7 +761,7 @@ describe("ArtworkSidebarCommercialButtons", () => {
           }),
         },
         null,
-        mockEnvironment
+        mockEnvironment,
       )
 
       await userEvent.click(screen.getByText("Purchase"))

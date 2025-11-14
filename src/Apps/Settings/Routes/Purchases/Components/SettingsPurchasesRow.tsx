@@ -98,7 +98,7 @@ const ORDER_COLORS = {
 
 const getPaymentMethodText = (
   paymentMethodDetails: SettingsPurchasesRow_order$data["paymentMethodDetails"],
-  creditCardWalletType: SettingsPurchasesRow_order$data["creditCardWalletType"]
+  creditCardWalletType: SettingsPurchasesRow_order$data["creditCardWalletType"],
 ) => {
   if (!!creditCardWalletType) {
     switch (creditCardWalletType) {
@@ -375,7 +375,7 @@ const SettingsPurchasesRow: FC<
           <Text variant="sm-display" color="mono60">
             {getPaymentMethodText(
               order.paymentMethodDetails,
-              order.creditCardWalletType
+              order.creditCardWalletType,
             )}
           </Text>
         </Column>
@@ -489,7 +489,7 @@ export const SettingsPurchasesRowFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 export const SettingsPurchasesRowPlaceholder: FC<

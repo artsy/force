@@ -133,7 +133,7 @@ export const SmsSecondFactor: React.FC<
   }
 
   async function createSecondFactor(
-    password: CreateSmsSecondFactorInput["password"]
+    password: CreateSmsSecondFactorInput["password"],
   ) {
     setCreating(true)
 
@@ -328,5 +328,5 @@ export const SmsSecondFactorRefetchContainer = createRefetchContainer(
         ...SmsSecondFactor_me
       }
     }
-  `
+  `,
 )

@@ -27,7 +27,7 @@ const HomeFeaturedShowsRail: React.FC<
   const { trackEvent } = useTracking()
 
   const shows = compact(orderedSet.items).flatMap(item =>
-    item.__typename === "Show" ? [item] : []
+    item.__typename === "Show" ? [item] : [],
   )
 
   if (shows.length === 0) {
@@ -80,7 +80,7 @@ export const HomeFeaturedShowsRailFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 const PLACEHOLDER = (

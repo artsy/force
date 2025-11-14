@@ -19,12 +19,12 @@ const validateChildren = (children: React.ReactNode) => {
     React.Children.map(children, (child: ReactElement) => child.type) || []
 
   const hasOnlyValidChildren = childTypes.every(
-    t => t === ContextualMenuItem || t === ContextualMenuDivider
+    t => t === ContextualMenuItem || t === ContextualMenuDivider,
   )
 
   if (!hasOnlyValidChildren)
     throw new Error(
-      "ContextualMenu accepts only ContextualMenuItem and ContextualMenuDivider as children."
+      "ContextualMenu accepts only ContextualMenuItem and ContextualMenuDivider as children.",
     )
 }
 

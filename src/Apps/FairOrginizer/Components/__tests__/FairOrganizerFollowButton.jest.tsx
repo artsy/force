@@ -123,7 +123,7 @@ describe("FairOrganizerFollowButton", () => {
         id: "profileId",
         profileID: "profileInternalID",
         isFollowed: false,
-      }
+      },
     )
   })
 })

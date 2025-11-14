@@ -98,7 +98,7 @@ describe("OrderDetailsMessage", () => {
       }),
     })
     expect(
-      screen.getByRole("link", { name: "completing your profile" })
+      screen.getByRole("link", { name: "completing your profile" }),
     ).toHaveAttribute("href", "/settings/edit-profile")
   })
 
@@ -148,7 +148,7 @@ describe("OrderDetailsMessage", () => {
       }),
     })
     expect(
-      screen.getByRole("link", { name: "completing your profile" })
+      screen.getByRole("link", { name: "completing your profile" }),
     ).toHaveAttribute("href", "/settings/edit-profile")
   })
 
@@ -165,7 +165,7 @@ describe("OrderDetailsMessage", () => {
       }),
     })
     expect(
-      screen.getByRole("link", { name: "contact the gallery" })
+      screen.getByRole("link", { name: "contact the gallery" }),
     ).toHaveAttribute("href", "/user/conversations/conv-123")
   })
 
@@ -211,7 +211,7 @@ describe("OrderDetailsMessage", () => {
     expect(screen.getByText(/Account number: 4243851425/)).toBeInTheDocument()
     expect(screen.getByText(/Routing number: 121000248/)).toBeInTheDocument()
     expect(
-      screen.getByText(/International SWIFT: WFBIUS6S/)
+      screen.getByText(/International SWIFT: WFBIUS6S/),
     ).toBeInTheDocument()
   })
 
@@ -228,7 +228,7 @@ describe("OrderDetailsMessage", () => {
     })
 
     expect(
-      screen.getByText(/This artwork will be added to/)
+      screen.getByText(/This artwork will be added to/),
     ).toBeInTheDocument()
     expect(screen.getByText(/your Collection on Artsy/)).toBeInTheDocument()
   })
@@ -266,7 +266,7 @@ describe("OrderDetailsMessage", () => {
       expect(trackingLink).toBeInTheDocument()
       expect(trackingLink).toHaveAttribute(
         "href",
-        "https://tracking.example.com/trackMe"
+        "https://tracking.example.com/trackMe",
       )
       expect(trackingLink).toHaveAttribute("target", "_blank")
     })

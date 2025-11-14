@@ -38,11 +38,11 @@ export const MarketStats: FC<React.PropsWithChildren<MarketStatsProps>> = ({
 
   useEffect(
     () => onRendered?.(priceInsights.length > 0),
-    [onRendered, priceInsights]
+    [onRendered, priceInsights],
   )
 
   const [selectedPriceInsight, setSelectedPriceInsight] = useState(
-    priceInsights[0]
+    priceInsights[0],
   )
 
   const mediumOptions = useRef<Array<{ value: string; text: string }>>(
@@ -51,7 +51,7 @@ export const MarketStats: FC<React.PropsWithChildren<MarketStatsProps>> = ({
       .map(priceInsight => ({
         value: priceInsight.medium as string,
         text: priceInsight.medium as string,
-      }))
+      })),
   )
 
   if (priceInsights.length === 0) {
@@ -99,7 +99,7 @@ export const MarketStats: FC<React.PropsWithChildren<MarketStatsProps>> = ({
             title="Medium"
             onSelect={selectedMedium => {
               const priceInsight = priceInsights.find(
-                ({ medium }) => medium === selectedMedium
+                ({ medium }) => medium === selectedMedium,
               )
 
               if (!priceInsight) return
@@ -119,7 +119,7 @@ export const MarketStats: FC<React.PropsWithChildren<MarketStatsProps>> = ({
             <MarketStatsFigure
               label="Sell-through rate"
               value={formatSellThroughRate(
-                selectedPriceInsight.sellThroughRate
+                selectedPriceInsight.sellThroughRate,
               )}
             />
 
@@ -291,7 +291,7 @@ export const MarketStatsFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 export const MarketStatsQueryRenderer: FC<

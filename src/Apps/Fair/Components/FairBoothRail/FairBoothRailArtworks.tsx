@@ -83,7 +83,7 @@ const FairBoothRailArtworks: React.FC<
                   signalBidCount: artwork.collectorSignals?.auction?.bidCount,
                   signalLotWatcherCount:
                     artwork.collectorSignals?.auction?.lotWatcherCount,
-                })
+                }),
               )
             }
           />
@@ -124,7 +124,7 @@ export const FairBoothRailArtworksFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 export const FairBoothRailArtworksQueryRenderer: React.FC<

@@ -44,7 +44,7 @@ export const ConversationConfirmModal: React.FC<
   const firstEditionSetID = firstEditionSet?.internalID as string
 
   const [selectedEdition, setSelectedEdition] = useState<string | null>(
-    data.editionSets?.length === 1 ? firstEditionSetID : null
+    data.editionSets?.length === 1 ? firstEditionSetID : null,
   )
 
   const isActionable =
@@ -64,7 +64,7 @@ export const ConversationConfirmModal: React.FC<
   const detailItems = getArtworkDetailItems(data)
 
   const showEditionSetsSelectBox = Boolean(
-    data.isEdition && data.editionSets?.length
+    data.isEdition && data.editionSets?.length,
   )
 
   return (
@@ -265,7 +265,7 @@ const UnavailableIndicator = styled(Box)`
 `
 
 const getArtworkDetailItems = (
-  artwork: ConversationConfirmModal_artwork$data
+  artwork: ConversationConfirmModal_artwork$data,
 ) => {
   const items = [
     {

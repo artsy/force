@@ -61,7 +61,7 @@ describe("UserRegistrationAuctions", () => {
     })
 
     expect(
-      screen.getByText("Registration for Upcoming Auctions")
+      screen.getByText("Registration for Upcoming Auctions"),
     ).toBeInTheDocument()
   })
 

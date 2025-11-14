@@ -5,7 +5,7 @@ const OnboardingApp = loadable(
   () => import(/* webpackChunkName: "onboardingBundle" */ "./OnboardingApp"),
   {
     resolveComponent: component => component.OnboardingApp,
-  }
+  },
 )
 
 export const onboardingRoutes: RouteProps[] = [

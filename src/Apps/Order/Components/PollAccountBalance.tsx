@@ -22,7 +22,7 @@ interface PollAccountBalanceProps {
     | undefined
   onBalanceCheckComplete: (
     displayInsufficientFundsError: boolean,
-    checkResult: BalanceCheckResult
+    checkResult: BalanceCheckResult,
   ) => void
   buyerTotalCents: number
   orderCurrencyCode: string
@@ -78,7 +78,7 @@ const PollAccountBalance: FC<
 
     onBalanceCheckComplete(
       !enoughBalance,
-      enoughBalance ? BalanceCheckResult.success : BalanceCheckResult.failed
+      enoughBalance ? BalanceCheckResult.success : BalanceCheckResult.failed,
     )
     clearTimeout(timeoutID)
   }
@@ -107,7 +107,7 @@ export const PollAccountBalanceRefetchContainer = createRefetchContainer(
       }
     `,
   },
-  BALANCE_QUERY
+  BALANCE_QUERY,
 )
 
 interface PollAccountBalanceQueryRendererProps {
@@ -116,7 +116,7 @@ interface PollAccountBalanceQueryRendererProps {
   onError: (error: Error) => void
   onBalanceCheckComplete: (
     displayInsufficientFundsError: boolean,
-    checkResult: BalanceCheckResult
+    checkResult: BalanceCheckResult,
   ) => void
   buyerTotalCents: number
   orderCurrencyCode: string

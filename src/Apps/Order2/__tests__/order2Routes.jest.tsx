@@ -24,7 +24,7 @@ describe("order2Routes redirect logic", () => {
     const environment = createMockEnvironment()
 
     environment.mock.queueOperationResolver(operation =>
-      MockPayloadGenerator.generate(operation, mockData as any)
+      MockPayloadGenerator.generate(operation, mockData as any),
     )
 
     const result = await getFarceResult({
@@ -60,7 +60,7 @@ describe("order2Routes redirect logic", () => {
         "/orders2/test-order-id/checkout",
         mockResolver({
           buyerState: "SUBMITTED",
-        })
+        }),
       )
       expect(res.redirect.url).toMatch(/\/orders\/.*\/details/)
     })
@@ -71,7 +71,7 @@ describe("order2Routes redirect logic", () => {
           "/orders2/test-order-id/checkout",
           mockResolver({
             buyerState: "INCOMPLETE",
-          })
+          }),
         )
       } catch (error) {
         expect(error.message).toBe("No redirect found for order")

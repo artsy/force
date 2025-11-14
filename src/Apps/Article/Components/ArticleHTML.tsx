@@ -103,14 +103,14 @@ export const ArticleHTML: FC<React.PropsWithChildren<ArticleHTMLProps>> = ({
 
 export const hasConflictingAdjacentEntityLinks = (
   heading: Element | null,
-  originalEntity: string
+  originalEntity: string,
 ): boolean => {
   if (!heading) return false
 
   let sibling = heading.nextElementSibling
   while (sibling && sibling.tagName === "H3") {
     const entityLinks = sibling.querySelectorAll(
-      "a[href*='/artist/'], a[href*='/partner/']"
+      "a[href*='/artist/'], a[href*='/partner/']",
     )
 
     for (const link of Array.from(entityLinks)) {
@@ -134,7 +134,7 @@ export const hasConflictingAdjacentEntityLinks = (
 
 export const isEligibleFollowHeading = (
   heading: Element | null,
-  entity: string
+  entity: string,
 ): boolean => {
   if (!heading || heading.tagName !== "H2") return false
   if (hasConflictingAdjacentEntityLinks(heading, entity)) return false

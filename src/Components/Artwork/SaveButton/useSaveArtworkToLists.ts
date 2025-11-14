@@ -104,7 +104,7 @@ export const useSaveArtworkToLists = (options: SaveArtworkToListsOptions) => {
             },
           },
         },
-      }
+      },
     )
   }
 
@@ -134,7 +134,7 @@ export const useSaveArtworkToLists = (options: SaveArtworkToListsOptions) => {
               }
             }
           `,
-          { artworkID: artwork.internalID }
+          { artworkID: artwork.internalID },
         ).toPromise()
 
       if (data?.artwork?.isSavedToList) {

@@ -28,7 +28,7 @@ export const ArtworkSidebarPrivateArtwork: React.FC<
         additionalInformation
       }
     `,
-    artwork
+    artwork,
   )
 
   const isPrivateArtwork = data.isUnlisted

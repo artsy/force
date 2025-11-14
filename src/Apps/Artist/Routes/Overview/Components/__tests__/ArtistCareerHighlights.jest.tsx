@@ -49,7 +49,7 @@ describe("ArtistCareerHighlights", () => {
 
     expect(screen.getByText("Highlights and Achievements")).toBeInTheDocument()
     expect(
-      screen.getByText("Solo show at a major institution")
+      screen.getByText("Solo show at a major institution"),
     ).toBeInTheDocument()
     expect(screen.getByText("Foo Museum")).toBeInTheDocument()
     expect(screen.getByText("View CV")).toBeInTheDocument()
@@ -75,7 +75,7 @@ describe("ArtistCareerHighlights", () => {
     fireEvent.click(button)
 
     expect(
-      screen.getByText("National Gallery of Art, Washington, D.C.")
+      screen.getByText("National Gallery of Art, Washington, D.C."),
     ).toBeInTheDocument()
   })
 
@@ -100,7 +100,7 @@ describe("ArtistCareerHighlights", () => {
 
     expect(screen.getByText("Highlights and Achievements")).toBeInTheDocument()
     expect(
-      screen.getByText("Solo show at 2 major institutions")
+      screen.getByText("Solo show at 2 major institutions"),
     ).toBeInTheDocument()
     expect(screen.getByText("Foo Museum and Bar Museum")).toBeInTheDocument()
     expect(screen.getByText("View CV")).toBeInTheDocument()
@@ -131,8 +131,8 @@ describe("ArtistCareerHighlights", () => {
 
     expect(
       screen.getByText(
-        "Tate Modern, Museum of Modern Art, New York, and National Gallery of Art, Washington, D.C."
-      )
+        "Tate Modern, Museum of Modern Art, New York, and National Gallery of Art, Washington, D.C.",
+      ),
     ).toBeInTheDocument()
   })
 
@@ -146,7 +146,7 @@ describe("ArtistCareerHighlights", () => {
     })
 
     expect(
-      screen.queryByText("Highlights and Achievements")
+      screen.queryByText("Highlights and Achievements"),
     ).not.toBeInTheDocument()
     expect(screen.queryByText("View CV")).not.toBeInTheDocument()
   })

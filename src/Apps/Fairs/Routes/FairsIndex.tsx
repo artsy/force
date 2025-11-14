@@ -53,19 +53,19 @@ export const FairsIndex: React.FC<React.PropsWithChildren<FairsIndexProps>> = ({
       fair =>
         fair.isPublished &&
         fair.profile?.isPublished &&
-        fair.bannerSize === "x-large"
+        fair.bannerSize === "x-large",
     ),
     ...runningFairs.filter(
       fair =>
         fair.isPublished &&
         fair.profile?.isPublished &&
-        fair.bannerSize !== "x-large"
+        fair.bannerSize !== "x-large",
     ),
   ]
 
   const mobileHeaderBg = cropped(
     "https://files.artsy.net/images/fairs-header-img.jpg",
-    { width: 767, height: 431 }
+    { width: 767, height: 431 },
   )
 
   const { showAuthDialog } = useAuthDialog()

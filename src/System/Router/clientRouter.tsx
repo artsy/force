@@ -34,7 +34,7 @@ export interface RouterConfig {
 }
 
 export const setupClientRouter = async (
-  config: RouterConfig
+  config: RouterConfig,
 ): Promise<{
   ClientRouter: React.ComponentType<any>
 }> => {
@@ -112,7 +112,7 @@ export const setupClientRouter = async (
           <BrowserRouter resolver={resolver} />
         </Boot>
       )
-    }
+    },
   )
 
   return { ClientRouter }

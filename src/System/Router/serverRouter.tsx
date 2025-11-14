@@ -159,7 +159,7 @@ export const setupServerRouter = async ({
 }
 
 const isRedirect = (
-  farceResult: FarceElementResult | FarceRedirectResult
+  farceResult: FarceElementResult | FarceRedirectResult,
 ): farceResult is FarceRedirectResult => {
   return Object.hasOwn(farceResult, "redirect")
 }
@@ -169,7 +169,7 @@ export const __TEST_INTERNAL_SERVER_APP__ =
 
 const nameSentryTransaction = <T extends Record<string, string>>(
   path: string,
-  params: T
+  params: T,
 ): string | undefined => {
   try {
     return Object.entries(params).reduce((result, [key, value]) => {

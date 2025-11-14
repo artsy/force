@@ -36,7 +36,7 @@ export const __ProgressiveOnboardingFollowArtist__: FC<
     // If you've already dismissed the alerts onboarding OR you're logged out OR you're not on the artist page.
     (!isLoggedIn ||
       PROGRESSIVE_ONBOARDING_ALERT_CHAIN.every(
-        key => isDismissed(key).status
+        key => isDismissed(key).status,
       ) ||
       !pathToRegexp("/artist/:artistID").test(router.match.location.pathname))
 

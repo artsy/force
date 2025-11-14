@@ -63,5 +63,5 @@ export const ArticlesAppFragmentContainer = createFragmentContainer(
         ...ArticlesIndexArticles_viewer
       }
     `,
-  }
+  },
 )

@@ -16,11 +16,11 @@ test.describe("/collection/:id", () => {
     const metaDescription = page.locator("meta[name='description']")
     await expect(metaDescription).toHaveAttribute(
       "content",
-      "Buy, bid, and inquire on Emerging Photographers on Artsy. Today’s leading photographers are pushing the medium into new territories—experimenting with digital manipulation, unleashing the power of new macro lenses..."
+      "Buy, bid, and inquire on Emerging Photographers on Artsy. Today’s leading photographers are pushing the medium into new territories—experimenting with digital manipulation, unleashing the power of new macro lenses...",
     )
 
     await expect(page.locator("h1").first()).toContainText(
-      "Emerging Photographers"
+      "Emerging Photographers",
     )
     await artworkGridRenders(page)
   })
@@ -34,7 +34,7 @@ test.describe("/collection/:id (a collection hub)", () => {
     const metaDescription = page.locator("meta[name='description']")
     await expect(metaDescription).toHaveAttribute(
       "content",
-      "Buy, bid, and inquire on Contemporary Art on Artsy. Spanning from 1970 to the present day, the contemporary period of art history represents the most diverse and widely-collected era of artistic production. ..."
+      "Buy, bid, and inquire on Contemporary Art on Artsy. Spanning from 1970 to the present day, the contemporary period of art history represents the most diverse and widely-collected era of artistic production. ...",
     )
 
     await expect(page.locator("h1").first()).toContainText("Contemporary")
@@ -48,12 +48,12 @@ test.describe("redirection", () => {
   test("redirects selected collections to artist series", async ({ page }) => {
     await page.goto("/collection/albrecht-durer-engraving")
     expect(page.url()).toContain(
-      "/artist-series/albrecht-durer-etchings-and-engravings"
+      "/artist-series/albrecht-durer-etchings-and-engravings",
     )
 
     await page.goto("/collection/zeng-fanzhi-mask-series")
     expect(page.url()).toContain(
-      "/artist-series/zeng-fanzhi-ceng-fan-zhi-mask-series"
+      "/artist-series/zeng-fanzhi-ceng-fan-zhi-mask-series",
     )
   })
 })

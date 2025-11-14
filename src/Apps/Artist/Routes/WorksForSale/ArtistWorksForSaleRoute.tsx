@@ -48,5 +48,5 @@ export const ArtistWorksForSaleRouteFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

@@ -132,7 +132,7 @@ export const AppSecondFactor: React.FC<
   }
 
   async function createSecondFactor(
-    password: CreateAppSecondFactorInput["password"]
+    password: CreateAppSecondFactorInput["password"],
   ) {
     setCreating(true)
 
@@ -327,5 +327,5 @@ export const AppSecondFactorRefetchContainer = createRefetchContainer(
         ...AppSecondFactor_me
       }
     }
-  `
+  `,
 )

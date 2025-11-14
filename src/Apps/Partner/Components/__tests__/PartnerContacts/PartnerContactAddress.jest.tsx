@@ -12,7 +12,7 @@ describe("PartnerContactAddress", () => {
             phone: "123",
           } as PartnerContactAddress_location$data
         }
-      />
+      />,
     )
 
     expect(screen.getByText("address")).toBeInTheDocument()
@@ -27,7 +27,7 @@ describe("PartnerContactAddress", () => {
             address: "address",
           } as PartnerContactAddress_location$data
         }
-      />
+      />,
     )
 
     expect(screen.getByText("address")).toBeInTheDocument()

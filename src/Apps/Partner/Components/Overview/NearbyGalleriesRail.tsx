@@ -53,7 +53,7 @@ const NearbyGalleriesRailFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 export const NearbyGalleriesRailRenderer: React.FC<

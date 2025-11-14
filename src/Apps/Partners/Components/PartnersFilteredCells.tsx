@@ -145,7 +145,7 @@ const PartnersFilteredCellsPaginationContainer = createPaginationContainer(
       return { ...fragmentVariables, after }
     },
     query: PARTNERS_FILTERED_CELLS_QUERY,
-  }
+  },
 )
 
 const PartnersFilteredCellsPlaceholder: FC<

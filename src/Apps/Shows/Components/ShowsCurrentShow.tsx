@@ -110,7 +110,7 @@ export const ShowsCurrentShowFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 export const ShowsCurrentShowPlaceholder: React.FC<

@@ -25,7 +25,7 @@ export const CollectionFeaturedArtists: React.FC<
   const featuredArtists = getFeaturedArtists(
     12,
     collection,
-    merchandisableArtists
+    merchandisableArtists,
   )
 
   if (!featuredArtists?.length) {
@@ -102,7 +102,7 @@ export const CollectionFeaturedArtistsQueryRenderer: React.FC<
 
   const { aggregations } = initializeVariablesWithFilterState(
     match.params,
-    match
+    match,
   )
 
   return (
@@ -136,7 +136,7 @@ export const CollectionFeaturedArtistsQueryRenderer: React.FC<
           if (error) {
             console.error(
               "[CollectionFeaturedArtists]: Error fetching featured artists",
-              error
+              error,
             )
             return null
           }
@@ -187,15 +187,15 @@ const PLACEHOLDER = (
 export const getFeaturedArtists = (
   artistsCount: number,
   collection: CollectionFeaturedArtists_collection$data,
-  merchandisableArtists: CollectionFeaturedArtists_artworks$data["merchandisableArtists"]
+  merchandisableArtists: CollectionFeaturedArtists_artworks$data["merchandisableArtists"],
 ) => {
   if ((collection?.query?.artistIDs?.length ?? 0) > 0) {
     return compact(
       filter(merchandisableArtists, artist =>
         (collection?.query?.artistIDs ?? []).includes(
-          artist?.internalID as string
-        )
-      )
+          artist?.internalID as string,
+        ),
+      ),
     )
   }
 
@@ -203,9 +203,9 @@ export const getFeaturedArtists = (
     const filteredArtistsIds = compact(
       merchandisableArtists?.filter(artist => {
         return !collection?.featuredArtistExclusionIds?.includes(
-          artist?.internalID as string
+          artist?.internalID as string,
         )
-      })
+      }),
     )
 
     return take(filteredArtistsIds, artistsCount)

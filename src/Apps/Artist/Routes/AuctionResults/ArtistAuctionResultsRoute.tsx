@@ -123,5 +123,5 @@ export const AuctionResultsRouteFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

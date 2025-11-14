@@ -25,7 +25,7 @@ describe("SaleAgreementsRoute", () => {
           }
         }
       `,
-    }
+    },
   )
 
   it("renders correctly", () => {

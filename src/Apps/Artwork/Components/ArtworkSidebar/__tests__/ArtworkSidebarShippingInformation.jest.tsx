@@ -80,7 +80,7 @@ describe("ArtworkSidebarShippingInformation", () => {
 
       expect(screen.queryByText(/New York, NY US/)).toBeInTheDocument()
       expect(
-        screen.queryByText(/Shipping: Calculated in checkout/)
+        screen.queryByText(/Shipping: Calculated in checkout/),
       ).toBeInTheDocument()
     })
   })

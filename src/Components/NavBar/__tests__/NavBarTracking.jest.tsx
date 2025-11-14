@@ -41,7 +41,7 @@ describe("NavBarTracking", () => {
       const { container } = render(
         <Wrapper>
           <NavBarUserMenu />
-        </Wrapper>
+        </Wrapper>,
       )
 
       const firstLink = container.querySelector("a")
@@ -61,7 +61,7 @@ describe("NavBarTracking", () => {
       const { container } = render(
         <Wrapper>
           <NavBar />
-        </Wrapper>
+        </Wrapper>,
       )
 
       const fairsLink = container.querySelector('a[href="/art-fairs"]')
@@ -75,7 +75,7 @@ describe("NavBarTracking", () => {
 
       const collectLinks = container.querySelectorAll('a[href="/collect"]')
       const emptyCollectLink = Array.from(collectLinks).find(
-        link => link.textContent === ""
+        link => link.textContent === "",
       )
       if (emptyCollectLink) {
         fireEvent.click(emptyCollectLink)
@@ -95,7 +95,7 @@ describe("NavBarTracking", () => {
         // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         <Wrapper user={null}>
           <NavBar />
-        </Wrapper>
+        </Wrapper>,
       )
 
       const menuButton = screen.getByLabelText("Menu")

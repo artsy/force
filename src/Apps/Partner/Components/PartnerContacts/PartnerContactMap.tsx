@@ -29,7 +29,7 @@ export const PartnerContactMap: React.FC<
   const mapImageUrl = getGoogleStaticMapImageUrl(
     location,
     imageHeight * aspectWidth,
-    imageHeight
+    imageHeight,
   )
 
   if (!mapImageUrl || !mapUrl) return null
@@ -61,5 +61,5 @@ export const PartnerContactMapFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

@@ -35,7 +35,7 @@ interface CookieConsentManagerDialogProps {
   setPreferences: (newPreferences: CategoryPreferences) => void
   saveConsent: (
     newPreferences?: boolean | CategoryPreferences,
-    shouldReload?: boolean
+    shouldReload?: boolean,
   ) => void
 }
 
@@ -45,7 +45,7 @@ export const CookieConsentManagerDialog: FC<
   const { trackEvent } = useTracking()
 
   const [mode, setMode] = useMode<"Idle" | "Allowing" | "Rejecting" | "Saving">(
-    "Idle"
+    "Idle",
   )
 
   const handleAllowAll = () => {

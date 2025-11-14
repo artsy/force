@@ -67,7 +67,7 @@ describe("LocationAutocompleteInput", () => {
         placeholder="Enter city where artwork is located"
         defaultValue={defaultValue}
         onChange={mockOnChange}
-      />
+      />,
     )
   })
 
@@ -80,7 +80,7 @@ describe("LocationAutocompleteInput", () => {
     expect(input).toBeInTheDocument()
     expect(input).toHaveAttribute(
       "placeholder",
-      "Enter city where artwork is located"
+      "Enter city where artwork is located",
     )
     expect(screen.getByText("Location")).toBeInTheDocument()
   })
@@ -104,7 +104,7 @@ describe("LocationAutocompleteInput", () => {
         () => {
           expect(mockGetPlacePredictions).toHaveBeenCalledTimes(0)
         },
-        { timeout: 1000 }
+        { timeout: 1000 },
       )
     })
   })
@@ -140,7 +140,7 @@ describe("LocationAutocompleteInput", () => {
 
       await waitFor(() => {
         const input = screen.getByTestId(
-          "autocomplete-location"
+          "autocomplete-location",
         ) as HTMLInputElement
         expect(input.value).toBe("New York, NY, USA")
       })

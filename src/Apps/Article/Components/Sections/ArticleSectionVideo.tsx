@@ -105,7 +105,7 @@ export const ArticleSectionVideoFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 const Video = styled.div`

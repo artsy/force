@@ -16,7 +16,7 @@ describe("SystemQueryRenderer", () => {
         render={null as any} // we don't need to test underlying QueryRenderer
         environment={true as any}
         {...props}
-      />
+      />,
     )
   }
 
@@ -33,8 +33,8 @@ describe("SystemQueryRenderer", () => {
     const { container } = getWrapper({ environment: null })
     expect(
       container.querySelector(
-        '[data-testid="QueryRenderer"], [class*="QueryRenderer"]'
-      )
+        '[data-testid="QueryRenderer"], [class*="QueryRenderer"]',
+      ),
     ).toBeNull()
   })
 
@@ -43,8 +43,8 @@ describe("SystemQueryRenderer", () => {
     const { container } = getWrapper()
     expect(
       container.querySelector(
-        '[data-testid="QueryRenderer"], [class*="QueryRenderer"]'
-      )
+        '[data-testid="QueryRenderer"], [class*="QueryRenderer"]',
+      ),
     ).toBeNull()
   })
 
@@ -80,8 +80,8 @@ describe("SystemQueryRenderer", () => {
       expect(container.textContent).toContain("lazyload placeholder")
       expect(
         container.querySelector(
-          '[data-testid="QueryRenderer"], [class*="QueryRenderer"]'
-        )
+          '[data-testid="QueryRenderer"], [class*="QueryRenderer"]',
+        ),
       ).toBeNull()
     })
 

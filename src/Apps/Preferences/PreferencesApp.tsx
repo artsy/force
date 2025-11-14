@@ -90,7 +90,7 @@ export const PreferencesApp: FC<
                     ? "SUBSCRIBED"
                     : "UNSUBSCRIBED") as SubGroupStatus,
                 }
-              }
+              },
             )
 
             await submitMutation({
@@ -292,7 +292,7 @@ export const PreferencesApp: FC<
 const getInitialValues = initialPreferences => {
   return initialPreferences
     .filter(preference =>
-      Object.keys(NOTIFICATION_FIELDS).includes(camelCase(preference.name))
+      Object.keys(NOTIFICATION_FIELDS).includes(camelCase(preference.name)),
     )
     .reduce((object, preference) => {
       object[camelCase(preference.name)] = preference.status === "SUBSCRIBED"
@@ -312,5 +312,5 @@ export const PreferencesAppFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

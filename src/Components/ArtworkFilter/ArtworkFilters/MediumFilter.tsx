@@ -22,7 +22,7 @@ export const MediumFilter: FC<React.PropsWithChildren<MediumFilterProps>> = ({
   const { additionalGeneIDs = [], medium } = useCurrentlySelectedFilters()
 
   const filtersCount = useFilterLabelCountByKey(
-    SelectedFiltersCountsLabels.additionalGeneIDs
+    SelectedFiltersCountsLabels.additionalGeneIDs,
   )
   const label = `Medium${filtersCount}`
 
@@ -48,7 +48,7 @@ export const MediumFilter: FC<React.PropsWithChildren<MediumFilterProps>> = ({
 
   const intersected = intersection(
     additionalGeneIDs,
-    allowedMediums.slice(INITIAL_ITEMS_TO_SHOW).map(({ value }) => value)
+    allowedMediums.slice(INITIAL_ITEMS_TO_SHOW).map(({ value }) => value),
   )
   const hasBelowTheFoldMediumFilter = intersected.length > 0
   const resultsSorted = sortResults(additionalGeneIDs, allowedMediums)

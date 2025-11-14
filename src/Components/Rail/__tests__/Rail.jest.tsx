@@ -11,7 +11,7 @@ describe("Rail", () => {
           <div key="2">slide-2</div>,
         ]}
         {...props}
-      />
+      />,
     )
   }
 
@@ -31,7 +31,7 @@ describe("Rail", () => {
     expect(screen.getByText("Test View All")).toBeInTheDocument()
     expect(screen.getByRole("link", { name: "Test View All" })).toHaveAttribute(
       "href",
-      "/test-href"
+      "/test-href",
     )
     expect(screen.getByText("slide-1")).toBeInTheDocument()
     expect(screen.getByText("slide-2")).toBeInTheDocument()
@@ -50,7 +50,7 @@ describe("Rail", () => {
 
     // Look for skeleton elements or components - try different approaches
     const skeletonElements = document.querySelectorAll(
-      '[class*="Skeleton"], [data-test*="Skeleton"], [class*="skeleton"], [data-test*="skeleton"], [role="progressbar"]'
+      '[class*="Skeleton"], [data-test*="Skeleton"], [class*="skeleton"], [data-test*="skeleton"], [role="progressbar"]',
     )
 
     // If no skeleton elements found, just verify that content loaded but in loading state

@@ -45,7 +45,7 @@ export const Order2PickupForm: React.FC<Order2PickupFormProps> = ({
   const fulfillmentOptions = orderData?.fulfillmentOptions
   // By the time we get here, this option should be available
   const pickupFulfillmentOption = fulfillmentOptions?.find(
-    option => option.type === "PICKUP"
+    option => option.type === "PICKUP",
   )
 
   const setOrderPickupDetails = useOrder2SetOrderPickupDetailsMutation()
@@ -54,18 +54,18 @@ export const Order2PickupForm: React.FC<Order2PickupFormProps> = ({
   const handleSubmit = useCallback(
     async (
       values: FormikValues,
-      _formikHelpers: FormikHelpers<PickupFormValues>
+      _formikHelpers: FormikHelpers<PickupFormValues>,
     ): Promise<void> => {
       if (!pickupFulfillmentOption) {
         logger.error(
-          "No pickup fulfillment option available (should not happen)"
+          "No pickup fulfillment option available (should not happen)",
         )
         return
       }
 
       try {
         checkoutTracking.clickedOrderProgression(
-          ContextModule.ordersFulfillment
+          ContextModule.ordersFulfillment,
         )
 
         const setOrderFulfillmentOptionResult =
@@ -81,7 +81,7 @@ export const Order2PickupForm: React.FC<Order2PickupFormProps> = ({
           })
         validateAndExtractOrderResponse(
           setOrderFulfillmentOptionResult.setOrderFulfillmentOption
-            ?.orderOrError
+            ?.orderOrError,
         )
 
         const setOrderPickupDetailsResult =
@@ -95,7 +95,7 @@ export const Order2PickupForm: React.FC<Order2PickupFormProps> = ({
             },
           })
         validateAndExtractOrderResponse(
-          setOrderPickupDetailsResult.updateOrderShippingAddress?.orderOrError
+          setOrderPickupDetailsResult.updateOrderShippingAddress?.orderOrError,
         )
 
         setFulfillmentDetailsComplete({ isPickup: true })
@@ -110,7 +110,7 @@ export const Order2PickupForm: React.FC<Order2PickupFormProps> = ({
       pickupFulfillmentOption,
       setFulfillmentDetailsComplete,
       checkoutTracking.clickedOrderProgression,
-    ]
+    ],
   )
 
   const existingPickupValues =
@@ -129,7 +129,7 @@ export const Order2PickupForm: React.FC<Order2PickupFormProps> = ({
     if (hasExistingPickupData) {
       const matchingCountryOption = phoneCountryOptions.find(
         option =>
-          option.value.toLowerCase() === existingRegionCode.toLowerCase()
+          option.value.toLowerCase() === existingRegionCode.toLowerCase(),
       )
 
       if (matchingCountryOption) {
@@ -184,11 +184,11 @@ export const Order2PickupForm: React.FC<Order2PickupFormProps> = ({
                 data-testid={"PickupPhoneNumberInput"}
                 options={phoneCountryOptions}
                 onSelect={(
-                  option: (typeof phoneCountryOptions)[number]
+                  option: (typeof phoneCountryOptions)[number],
                 ): void => {
                   formikContext.setFieldValue(
                     "phoneNumberCountryCode",
-                    option.value
+                    option.value,
                   )
                 }}
                 dropdownValue={formikContext.values.phoneNumberCountryCode}

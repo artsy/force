@@ -28,7 +28,7 @@ describe("PreferencesApp", () => {
 
     expect(screen.getByText("Email Preference Center")).toBeInTheDocument()
     expect(
-      screen.queryByText("Please sign in to update your email preferences")
+      screen.queryByText("Please sign in to update your email preferences"),
     ).not.toBeInTheDocument()
   })
 
@@ -38,7 +38,7 @@ describe("PreferencesApp", () => {
     })
 
     expect(
-      screen.getByText("Please sign in to update your email preferences")
+      screen.getByText("Please sign in to update your email preferences"),
     ).toBeInTheDocument()
   })
 

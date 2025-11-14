@@ -116,7 +116,7 @@ const EntityTooltipArtistFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 const EntityTooltipArtistPlaceholder: FC<

@@ -263,7 +263,7 @@ export const SavedSearchAlertsArtworksQueryRenderer: React.FC<
         return (
           <AlertProvider
             initialCriteria={getAllowedSearchCriteria(
-              props.me.alert as unknown as SearchCriteriaAttributes
+              props.me.alert as unknown as SearchCriteriaAttributes,
             )}
             alertID={props.me.alert.internalID}
             isAlertArtworksView

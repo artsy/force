@@ -14,7 +14,7 @@ export const trackHelpers = {
     artworkSlug: string,
     horizontalSlidePosition: number,
     singalBidCount?: number,
-    signalLotWatcherCount?: number
+    signalLotWatcherCount?: number,
   ): ClickedArtworkGroup => ({
     action: ActionType.clickedArtworkGroup,
     destination_page_owner_id: artworkID,

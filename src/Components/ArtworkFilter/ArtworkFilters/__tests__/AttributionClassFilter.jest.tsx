@@ -62,7 +62,7 @@ describe(AttributionClassFilter, () => {
 
     render(<AttributionClassFilter expanded={true} />)
     expect(screen.getAllByRole("checkbox")).toHaveLength(
-      ATTRIBUTION_CLASS_OPTIONS.length
+      ATTRIBUTION_CLASS_OPTIONS.length,
     )
   })
 })

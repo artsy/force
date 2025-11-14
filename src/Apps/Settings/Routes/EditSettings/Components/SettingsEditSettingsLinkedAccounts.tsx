@@ -103,18 +103,18 @@ const SettingsEditSettingsLinkedAccountsButton: FC<
   React.PropsWithChildren<SettingsEditSettingsLinkedAccountsButtonProps>
 > = ({ Icon, me, href, provider }) => {
   const isConnected = me.authentications.find(
-    authentication => authentication.provider === provider
+    authentication => authentication.provider === provider,
   )
 
   const { sendToast } = useToasts()
   const { submitMutation } = useUnlinkSettingsLinkedAccount()
 
   const [mode, setMode] = useMode<Mode>(
-    isConnected ? "Connected" : "Disconnected"
+    isConnected ? "Connected" : "Disconnected",
   )
 
   const handleClick = async (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
     if (mode === "Disconnected") {
       setMode("Connecting")

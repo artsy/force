@@ -20,7 +20,7 @@ export const ArtistAuctionResultsSortSelect: FC<
 
   const activeSort = useMemo(
     () => SORTS.find(sort => sort.value === filters.sort),
-    [filters.sort]
+    [filters.sort],
   )
 
   if (!activeSort) return null

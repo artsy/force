@@ -75,7 +75,7 @@ export const ConversationHeader: React.FC<
         }
       }
     `,
-    conversation
+    conversation,
   )
 
   const order = extractNodes(data.orderConnection)[0]

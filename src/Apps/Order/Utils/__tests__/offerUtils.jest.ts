@@ -97,8 +97,8 @@ describe("offer utils", () => {
       expect(
         getOfferPriceOptions(
           { maxPrice: { major: 150 }, minPrice: { major: 100 } },
-          true
-        )
+          true,
+        ),
       ).toEqual([
         {
           key: "price-option-max",

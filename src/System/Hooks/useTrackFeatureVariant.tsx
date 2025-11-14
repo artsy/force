@@ -51,7 +51,7 @@ export function useTrackFeatureVariant({
 export const useTrackFeatureVariantOnMount = (
   props: Omit<VariantTrackingProperties, "variantName"> & {
     variantName?: string
-  }
+  },
 ) => {
   const { trackFeatureVariant } = useTrackFeatureVariant({
     ...props,

@@ -42,7 +42,7 @@ export const SavedAddressOptions = ({
   const parentFormikContext = useFormikContext<FormikContextWithAddress>()
 
   const [selectedAddressID, setSelectedAddressID] = useState(
-    initialSelectedAddress?.internalID || ""
+    initialSelectedAddress?.internalID || "",
   )
 
   const onSaveAddress = useCallback(
@@ -51,18 +51,18 @@ export const SavedAddressOptions = ({
       setSelectedAddressID(addressID)
       setUserAddressMode(null)
     },
-    [onSelectAddress, setUserAddressMode]
+    [onSelectAddress, setUserAddressMode],
   )
 
   const onDeleteAddress = useCallback(
     async (deletedAddressID: string) => {
       const remainingAddresses = savedAddresses.filter(
-        address => address.internalID !== deletedAddressID
+        address => address.internalID !== deletedAddressID,
       )
 
       if (remainingAddresses.length > 0) {
         const addressToSelect = remainingAddresses.find(
-          address => address.isValid
+          address => address.isValid,
         )
 
         if (addressToSelect) {
@@ -71,7 +71,7 @@ export const SavedAddressOptions = ({
         }
       }
     },
-    [savedAddresses, onSelectAddress]
+    [savedAddresses, onSelectAddress],
   )
 
   if (userAddressMode?.mode === "add") {
@@ -205,7 +205,7 @@ export const SavedAddressOptions = ({
             parentFormikContext.handleSubmit()
           } else {
             const errorMessages = Object.values(errors).flatMap(v =>
-              typeof v === "object" ? Object.values(v) : v
+              typeof v === "object" ? Object.values(v) : v,
             )
             const error = {
               title: "Please fix the following errors",

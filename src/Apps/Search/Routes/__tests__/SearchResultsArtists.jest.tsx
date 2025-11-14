@@ -12,7 +12,7 @@ describe("SearchResultsArtworks", () => {
         <SystemContextProvider>
           <SearchResultsArtists {...searchProps} />
         </SystemContextProvider>
-      </MockBoot>
+      </MockBoot>,
     )
   }
 
@@ -67,7 +67,7 @@ describe("SearchResultsArtworks", () => {
     expect(
       container.querySelector("[data-testid*='pagination']") ||
         container.querySelector("nav") ||
-        container.querySelector("[role='navigation']")
+        container.querySelector("[role='navigation']"),
     ).toBeTruthy()
   })
 
@@ -77,7 +77,7 @@ describe("SearchResultsArtworks", () => {
     expect(
       screen.getByText(/No results found/i) ||
         screen.queryByText(/Try searching for something else/i) ||
-        screen.queryByText(/0 results/i)
+        screen.queryByText(/0 results/i),
     ).toBeTruthy()
   })
 })

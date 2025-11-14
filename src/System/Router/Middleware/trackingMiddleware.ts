@@ -31,7 +31,7 @@ export function trackingMiddleware(options: TrackingMiddlewareOptions = {}) {
           store.getState(),
           state =>
             state.found.match.location.pathname +
-            state.found.match.location.search
+            state.found.match.location.search,
         )
 
         const getFullReferrerUrl = () => {
@@ -76,7 +76,7 @@ export function trackingMiddleware(options: TrackingMiddlewareOptions = {}) {
               })
               const foundMatch = !!matcher(clientSideRoutingReferrer)
               return foundMatch
-            }
+            },
           )
 
           if (!foundExcludedPath && !foundExcludedReferrer) {

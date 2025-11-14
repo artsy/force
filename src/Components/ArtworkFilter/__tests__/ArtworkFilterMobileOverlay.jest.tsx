@@ -37,7 +37,7 @@ describe("ArtworkFilterMobileOverlay", () => {
     return render(
       <ArtworkFilterContextProvider {...props}>
         <ArtworkFilterMobileOverlayTest />
-      </ArtworkFilterContextProvider>
+      </ArtworkFilterContextProvider>,
     )
   }
 

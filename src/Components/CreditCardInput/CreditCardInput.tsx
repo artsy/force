@@ -29,7 +29,7 @@ interface CreditCardInputProps extends BoxProps {
     response:
       | StripeCardCvcElementChangeEvent
       | StripeCardNumberElementChangeEvent
-      | StripeCardExpiryElementChangeEvent
+      | StripeCardExpiryElementChangeEvent,
   ) => void
   required?: boolean
 }

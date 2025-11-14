@@ -52,7 +52,7 @@ interface Args extends FetchFollowedArtistsArgs {
 }
 
 export async function fetchFollowedArtists(
-  args: Args
+  args: Args,
 ): Promise<FollowedArtists> {
   const { relayEnvironment, ...props } = args
 

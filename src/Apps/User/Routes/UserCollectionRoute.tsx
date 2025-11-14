@@ -77,7 +77,7 @@ export const UserCollectionRouteFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 const tracks = {

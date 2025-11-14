@@ -37,7 +37,7 @@ describe("routeUtils", () => {
       expect.objectContaining({
         routes,
         routePaths: ["foo"],
-      })
+      }),
     )
   })
 
@@ -85,7 +85,7 @@ describe("routeUtils", () => {
       expect.objectContaining({
         routes,
         routePaths: ["", "foo", "foo/bar", "foo/bar/baz", "foo/bar/baz/bam"],
-      })
+      }),
     )
   })
 
@@ -136,7 +136,7 @@ describe("routeUtils", () => {
           },
           { path: "foo/bar/baz/bam" },
         ],
-      })
+      }),
     )
   })
 

@@ -39,8 +39,8 @@ const EntityHeaderPartner: FC<
   const initials = partner.initials ?? partner.name?.[0]
   const badges = compact(
     (partner.categories ?? []).filter(category =>
-      DISPLAYABLE_BADGES.includes(category?.slug ?? "")
-    )
+      DISPLAYABLE_BADGES.includes(category?.slug ?? ""),
+    ),
   )
   const isFollowable =
     partner && partner.type !== "Auction House" && !!partner.profile
@@ -143,5 +143,5 @@ export const EntityHeaderPartnerFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

@@ -7,7 +7,7 @@ const NotificationsApp = loadable(
     import(/* webpackChunkName: "notificationsBundle" */ "./NotificationsApp"),
   {
     resolveComponent: component => component.NotificationsAppFragmentContainer,
-  }
+  },
 )
 
 export const notificationsRoutes: RouteProps[] = [

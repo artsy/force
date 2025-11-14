@@ -129,5 +129,5 @@ export const CurrentAuctionsPaginationContainer = createPaginationContainer(
         }
       }
     `,
-  }
+  },
 )

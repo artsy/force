@@ -8,7 +8,7 @@ import type { RecordSourceSelectorProxy } from "relay-runtime"
 
 const deleteArtworkListUpdater = (
   store: RecordSourceSelectorProxy<useDeleteArtworkListMutation$data>,
-  data: useDeleteArtworkListMutation$data
+  data: useDeleteArtworkListMutation$data,
 ) => {
   const { responseOrError } = data.deleteCollection ?? {}
 
@@ -27,7 +27,7 @@ const deleteArtworkListUpdater = (
 
   const customArtworkListsConnection = ConnectionHandler.getConnection(
     me,
-    "CollectorProfileSavesRoute_customArtworkLists"
+    "CollectorProfileSavesRoute_customArtworkLists",
   )
 
   if (!customArtworkListsConnection) {
@@ -62,7 +62,7 @@ export const useDeleteArtworkList = () => {
     updater: (store, data) =>
       deleteArtworkListUpdater(
         store,
-        data as useDeleteArtworkListMutation$data
+        data as useDeleteArtworkListMutation$data,
       ),
   })
 }

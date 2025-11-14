@@ -29,7 +29,7 @@ export const INDEXED_SECTIONS = SECTIONS.reduce(
     acc[section.id] = section
     return acc
   },
-  {} as Record<string, (typeof SECTIONS)[number]>
+  {} as Record<string, (typeof SECTIONS)[number]>,
 )
 
 export type Section = (typeof SECTIONS)[number]["id"]
@@ -65,7 +65,7 @@ export const AboutNav = () => {
         subject: section.label,
       })
     },
-    [activate, jumpTo, trackEvent]
+    [activate, jumpTo, trackEvent],
   )
 
   const items = useMemo(() => {

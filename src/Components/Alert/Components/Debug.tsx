@@ -25,7 +25,7 @@ export const Debug: FC<React.PropsWithChildren<unknown>> = () => {
             state,
           },
           null,
-          2
+          2,
         )}
       </Box>
 

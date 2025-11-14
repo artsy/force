@@ -62,7 +62,7 @@ describe(WaysToBuyFilter, () => {
 
     render(<WaysToBuyFilter expanded={true} />)
     expect(screen.getAllByRole("checkbox")).toHaveLength(
-      Object.keys(WAYS_TO_BUY_OPTIONS).length
+      Object.keys(WAYS_TO_BUY_OPTIONS).length,
     )
   })
 })

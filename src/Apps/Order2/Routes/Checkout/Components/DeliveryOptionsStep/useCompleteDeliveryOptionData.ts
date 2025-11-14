@@ -11,7 +11,7 @@ import { graphql, useFragment } from "react-relay"
  * Returns null if the delivery option is not complete.
  */
 export const useCompleteDeliveryOptionData = (
-  order: useCompleteDeliveryOptionData_order$key
+  order: useCompleteDeliveryOptionData_order$key,
 ): Order2DeliveryOptionsCompletedViewProps | null => {
   const orderData = useFragment(FRAGMENT, order)
 

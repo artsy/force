@@ -15,25 +15,25 @@ const artQuizServerSideRedirect = ({ res }: { res: ArtsyResponse }) => {
 
 const ArtQuizApp = loadable(
   () => import(/* webpackChunkName: "artQuizBundle" */ "./ArtQuizApp"),
-  { resolveComponent: component => component.ArtQuizApp }
+  { resolveComponent: component => component.ArtQuizApp },
 )
 
 const ArtQuizWelcome = loadable(
   () =>
     import(/* webpackChunkName: "artQuizBundle" */ "./Routes/ArtQuizWelcome"),
-  { resolveComponent: component => component.ArtQuizWelcome }
+  { resolveComponent: component => component.ArtQuizWelcome },
 )
 
 const ArtQuizArtworks = loadable(
   () =>
     import(/* webpackChunkName: "artQuizBundle" */ "./Routes/ArtQuizArtworks"),
-  { resolveComponent: component => component.ArtQuizArtworksFragmentContainer }
+  { resolveComponent: component => component.ArtQuizArtworksFragmentContainer },
 )
 
 const ArtQuizResults = loadable(
   () =>
     import(/* webpackChunkName: "artQuizBundle" */ "./Routes/ArtQuizResults"),
-  { resolveComponent: component => component.ArtQuizResultsFragmentContainer }
+  { resolveComponent: component => component.ArtQuizResultsFragmentContainer },
 )
 
 export const artQuizRoutes: RouteProps[] = [

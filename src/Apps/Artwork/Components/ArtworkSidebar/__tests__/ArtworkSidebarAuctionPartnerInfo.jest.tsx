@@ -32,7 +32,7 @@ describe("ArtworkSidebarAuctionPartnerInfo", () => {
 
       expect(screen.getByText("Bruun Rasmussen")).toBeInTheDocument()
       expect(
-        screen.getByText("Estimated value: DKK 100,000–DKK 125,000")
+        screen.getByText("Estimated value: DKK 100,000–DKK 125,000"),
       ).toBeInTheDocument()
     })
 

@@ -106,7 +106,7 @@ export const FairsFairBannerFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 const Overlay = styled(Box)`

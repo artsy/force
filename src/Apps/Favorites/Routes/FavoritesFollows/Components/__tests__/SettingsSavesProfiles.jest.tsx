@@ -25,7 +25,7 @@ describe("SettingsSavesProfiles", () => {
     })
 
     expect(
-      screen.getByText("Followed Galleries & Institutions")
+      screen.getByText("Followed Galleries & Institutions"),
     ).toBeInTheDocument()
     expect(screen.getByText("Example Profile")).toBeInTheDocument()
   })
@@ -38,7 +38,7 @@ describe("SettingsSavesProfiles", () => {
     })
 
     expect(
-      screen.getByText("Followed Galleries & Institutions")
+      screen.getByText("Followed Galleries & Institutions"),
     ).toBeInTheDocument()
     expect(screen.getByText("Nothing yet.")).toBeInTheDocument()
   })

@@ -45,5 +45,5 @@ export const ArtistOverviewRouteFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

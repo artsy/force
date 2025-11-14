@@ -100,7 +100,7 @@ export const GeneArtworkFilterRefetchContainer = createRefetchContainer(
         ...GeneArtworkFilter_gene @arguments(input: $input)
       }
     }
-  `
+  `,
 )
 
 type GeneArtworkFilterQueryRendererProps = {}

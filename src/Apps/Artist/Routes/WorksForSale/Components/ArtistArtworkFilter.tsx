@@ -152,7 +152,7 @@ export const ArtistArtworkFilterRefetchContainer = createRefetchContainer(
         ...ArtistArtworkFilter_artist @arguments(input: $input)
       }
     }
-  `
+  `,
 )
 
 type ArtistArtworkFilterQueryRendererProps = {
@@ -201,7 +201,7 @@ export const ArtistArtworkFilterQueryRenderer: FC<
       variables={{
         ...getWorksForSaleRouteVariables(
           match.params as { artistID: string },
-          match
+          match,
         ),
         artistID: id,
       }}
@@ -210,7 +210,7 @@ export const ArtistArtworkFilterQueryRenderer: FC<
         if (error) {
           console.error(
             "[ArtistWorksForSaleRoute]: Error loading artwork grid",
-            error
+            error,
           )
 
           return null

@@ -4,7 +4,7 @@ import { render, screen } from "@testing-library/react"
 describe("StackedImageLayout", () => {
   it("should render all passed images", () => {
     render(
-      <StackedImageLayout imageURLs={["url-1", "url-2", "url-3", "url-4"]} />
+      <StackedImageLayout imageURLs={["url-1", "url-2", "url-3", "url-4"]} />,
     )
 
     expect(screen.getAllByAltText("")).toHaveLength(4)

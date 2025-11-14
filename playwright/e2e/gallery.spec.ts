@@ -6,7 +6,7 @@ test.describe("Gallery", () => {
 
     await expect(page.locator("h1").first()).toContainText("GALLERY M")
     await expect(page).toHaveTitle(
-      "GALLERY M | Artists, Art for Sale, and Contact Info | Artsy"
+      "GALLERY M | Artists, Art for Sale, and Contact Info | Artsy",
     )
   })
 })

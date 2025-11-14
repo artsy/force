@@ -27,8 +27,8 @@ const InsightsMedianSalePrice: React.FC<
   const groupedMedianSalePrices = Object.values(
     groupBy(
       medianSalePrices,
-      medianSalePrice => medianSalePrice?.artist?.internalID
-    )
+      medianSalePrice => medianSalePrice?.artist?.internalID,
+    ),
   )
 
   return (
@@ -113,7 +113,7 @@ const ArtistRowWrapper: React.FC<
   const { router } = useRouter()
 
   const enableMedianSalePriceGraphScreen = useFlag(
-    "my-collection-web-phase-7-median-sale-price-graph"
+    "my-collection-web-phase-7-median-sale-price-graph",
   )
 
   if (enableMedianSalePriceGraphScreen) {
@@ -121,7 +121,7 @@ const ArtistRowWrapper: React.FC<
       <ClickableArtistRow
         onClick={() =>
           router.push(
-            `/collector-profile/my-collection/median-sale-price-at-auction/${artistID}?medium=${medium}`
+            `/collector-profile/my-collection/median-sale-price-at-auction/${artistID}?medium=${medium}`,
           )
         }
       >
@@ -161,7 +161,7 @@ export const InsightsMedianSalePriceFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 const ClickableArtistRow = styled(Clickable)`

@@ -47,5 +47,5 @@ export const SettingsBankAccountFragmentContainer = createFragmentContainer(
         last4
       }
     `,
-  }
+  },
 )

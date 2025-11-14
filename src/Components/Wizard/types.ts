@@ -24,7 +24,7 @@ export interface StepProps {
     | React.FC<React.PropsWithChildren<WizardStepChildProps>>
   onSubmit?: (
     values: FormValues,
-    actions?: FormikActions<FormValues>
+    actions?: FormikActions<FormValues>,
   ) => boolean | Promise<boolean>
 }
 

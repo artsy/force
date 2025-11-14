@@ -13,7 +13,7 @@ describe("AuctionResultsFilterContext", () => {
     return render(
       <AuctionResultsFilterContextProvider {...props}>
         <TestComponent />
-      </AuctionResultsFilterContextProvider>
+      </AuctionResultsFilterContextProvider>,
     )
   }
 
@@ -28,7 +28,7 @@ describe("AuctionResultsFilterContext", () => {
       initialAuctionResultsFilterState({
         startDate: null,
         endDate: null,
-      })
+      }),
     )
 
     // Sets year filters to a wide range in case the data is not provided
@@ -183,7 +183,7 @@ describe("AuctionResultsFilterContext", () => {
               initialAuctionResultsFilterState({
                 startDate: null,
                 endDate: null,
-              })
+              }),
             )
           })
         })
@@ -240,7 +240,7 @@ describe("AuctionResultsFilterContext", () => {
           context.setFilter?.("categories", "photography")
         })
         expect(context.currentlySelectedFilters?.()).toEqual(
-          context.stagedFilters
+          context.stagedFilters,
         )
       })
     })

@@ -105,5 +105,5 @@ export const FairsPastFairsPaginationContainer = createPaginationContainer(
     getVariables(_, { cursor: after }, { first }) {
       return { after, first }
     },
-  }
+  },
 )

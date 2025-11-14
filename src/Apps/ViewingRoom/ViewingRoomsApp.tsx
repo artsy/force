@@ -54,5 +54,5 @@ export const ViewingRoomsAppFragmentContainer = createFragmentContainer(
         ...ViewingRoomsFeaturedRail_featuredViewingRooms
       }
     `,
-  }
+  },
 )

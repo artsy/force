@@ -14,8 +14,8 @@ describe("get", () => {
   it("allows arbitrary chaining", () => {
     expect(
       get(deepObject, p => (p as any).a.b[10].baz, ["fallback", "value"]).join(
-        " "
-      )
+        " ",
+      ),
     ).toEqual("fallback value")
   })
 

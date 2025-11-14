@@ -46,7 +46,7 @@ export const ViewingRoomsLatestGrid: React.FC<
   }
 
   const viewingRooms = extractNodes(
-    props.viewingRooms?.viewingRoomsConnection
+    props.viewingRooms?.viewingRoomsConnection,
   ).filter(viewingRoom => {
     return viewingRoom.status === "scheduled" || viewingRoom.status === "live"
   })
@@ -66,7 +66,7 @@ export const ViewingRoomsLatestGrid: React.FC<
             {
               height: 490,
               width: 490,
-            }
+            },
           )
 
           const status = getStatus({
@@ -174,5 +174,5 @@ export const ViewingRoomsLatestGridFragmentContainer =
           }
         }
       `,
-    }
+    },
   )

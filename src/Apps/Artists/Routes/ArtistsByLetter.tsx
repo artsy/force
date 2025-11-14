@@ -148,7 +148,7 @@ export const ArtistsByLetter: React.FC<
 
 const buildH1Title = (
   letter: string,
-  page: number
+  page: number,
 ): string | React.JSX.Element => {
   const baseTitle = `Artists - ${letter.toUpperCase()}`
   const isPagedContent = page > 1
@@ -165,7 +165,7 @@ const buildH1Title = (
 
 const getH1Text = (
   letter: string | undefined,
-  page: number
+  page: number,
 ): string | React.JSX.Element => {
   return letter ? buildH1Title(letter, page) : "Artists"
 }
@@ -208,5 +208,5 @@ export const ArtistsByLetterFragmentContainer = createRefetchContainer(
       }
     `,
   },
-  ARTISTS_BY_LETTER_QUERY
+  ARTISTS_BY_LETTER_QUERY,
 )

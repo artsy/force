@@ -45,7 +45,7 @@ const SettingsEditSettingsTwoFactorBackupCodesDialog: FC<
           <SettingsEditSettingsTwoFactorBackupCodesActions
             mt={4}
             backupSecondFactors={me.backupSecondFactors!.map(factor =>
-              factor!.code!.toString()
+              factor!.code!.toString(),
             )}
           />
         </>

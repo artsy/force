@@ -142,7 +142,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<
 
     if (!activePartnerOffer?.internalID) {
       throw new ErrorWithMetadata(
-        "handleCreatePartnerOfferOrder: no active partner offer"
+        "handleCreatePartnerOfferOrder: no active partner offer",
       )
     }
 
@@ -216,7 +216,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<
         if (orderOrError.error) {
           throw new ErrorWithMetadata(
             orderOrError.error.code,
-            orderOrError.error
+            orderOrError.error,
           )
         } else {
           const url = `/orders/${orderOrError.order.internalID}`
@@ -280,7 +280,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<
         if (orderOrError.error) {
           throw new ErrorWithMetadata(
             orderOrError.error.code,
-            orderOrError.error
+            orderOrError.error,
           )
         } else {
           const url = `/orders/${orderOrError.order.internalID}/offer`
@@ -317,12 +317,12 @@ export const ArtworkSidebarCommercialButtons: React.FC<
     }
 
     return editionSets?.find(
-      editionSet => editionSet?.isAcquireable || editionSet?.isOfferable
+      editionSet => editionSet?.isAcquireable || editionSet?.isOfferable,
     )
   }, [artwork])
 
   const [selectedEditionSet, setSelectedEditionSet] = useState(
-    firstAvailableEcommerceEditionSet()
+    firstAvailableEcommerceEditionSet(),
   )
   const { setSelectedEditionSet: setSelectedEditionSetInContext } =
     useSelectedEditionSetContext()
@@ -330,7 +330,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<
   useEffect(() => {
     setSelectedEditionSet(firstAvailableEcommerceEditionSet())
     setSelectedEditionSetInContext(
-      firstAvailableEcommerceEditionSet() as EditionSet
+      firstAvailableEcommerceEditionSet() as EditionSet,
     )
   }, [firstAvailableEcommerceEditionSet, setSelectedEditionSetInContext])
 

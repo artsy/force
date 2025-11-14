@@ -7,7 +7,7 @@ const logger = createLogger("confirmationTokenUtils")
 export const fetchAndSetConfirmationToken = async (
   tokenId: string,
   environment: Environment,
-  setConfirmationToken: (data: any) => void
+  setConfirmationToken: (data: any) => void,
 ) => {
   try {
     const response = await fetchQuery<confirmationTokenUtilsQuery>(
@@ -35,7 +35,7 @@ export const fetchAndSetConfirmationToken = async (
         }
       `,
       { id: tokenId },
-      { fetchPolicy: "store-or-network" }
+      { fetchPolicy: "store-or-network" },
     ).toPromise()
 
     setConfirmationToken({

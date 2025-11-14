@@ -55,8 +55,8 @@ export const StandoutLotsRail: React.FC<
                       artwork.slug,
                       index,
                       artwork.collectorSignals?.auction?.bidCount,
-                      artwork.collectorSignals?.auction?.lotWatcherCount
-                    )
+                      artwork.collectorSignals?.auction?.lotWatcherCount,
+                    ),
                   )
                 }}
               />
@@ -94,7 +94,7 @@ export const StandoutLotsRailFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 export const StandoutLotsRailQueryRenderer: React.FC<

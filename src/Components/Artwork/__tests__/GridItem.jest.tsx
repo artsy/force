@@ -29,7 +29,7 @@ describe("GridItem", () => {
 
     expect(screen.getByTestId("artwork-link")).toHaveAttribute(
       "href",
-      "artwork/id"
+      "artwork/id",
     )
   })
 
@@ -42,7 +42,7 @@ describe("GridItem", () => {
 
     expect(screen.getByTestId("artwork-link")).toHaveAttribute(
       "href",
-      "/my-collection/artwork/artwork-id"
+      "/my-collection/artwork/artwork-id",
     )
   })
 

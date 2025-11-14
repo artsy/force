@@ -5,7 +5,7 @@ import { Button, Flex, ModalDialog, Text } from "@artsy/palette"
 import { useState } from "react"
 
 const logger = createLogger(
-  "Apps/SavedSearchAlerts/Components/SavedSearchAlertDeleteModal"
+  "Apps/SavedSearchAlerts/Components/SavedSearchAlertDeleteModal",
 )
 
 interface SavedSearchAlertDeleteModalProps {

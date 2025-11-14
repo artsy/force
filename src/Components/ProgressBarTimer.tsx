@@ -19,12 +19,12 @@ export const ProgressBarTimer: React.FC<
 > = ({ currentTime, countdownStart, countdownEnd, highlight = "brand" }) => {
   const secondsRemaining = DateTime.fromISO(countdownEnd).diff(
     DateTime.fromISO(currentTime.toString()),
-    "seconds"
+    "seconds",
   ).seconds
 
   const totalSeconds = DateTime.fromISO(countdownEnd).diff(
     DateTime.fromISO(countdownStart),
-    "seconds"
+    "seconds",
   ).seconds
 
   const progress = Math.max(0, (secondsRemaining * 100) / totalSeconds)

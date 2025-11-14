@@ -34,7 +34,7 @@ app.use(async (_req, _res, next) => {
     } catch (error) {
       console.warn(
         "[force] Failed to initialize Unleash, continuing without feature flags:",
-        error
+        error,
       )
     }
   }
@@ -89,7 +89,7 @@ app.get(
       console.error(error)
       next(error)
     }
-  }
+  },
 )
 
 // Common express routes

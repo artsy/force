@@ -49,7 +49,7 @@ export const useNotificationsTracking = () => {
     clickBuyNow: (
       artworkID: string,
       artworkSlug: string,
-      collectorSignals?: CollectorSignals
+      collectorSignals?: CollectorSignals,
     ) => {
       const signals = signalsToArray(collectorSignals)
 

@@ -73,7 +73,7 @@ describe("ConversationSidebarItem", () => {
     expect(screen.getByText("Lidiane Taquehara")).toBeInTheDocument()
     expect(screen.getByRole("img")).toHaveAttribute(
       "src",
-      "https://imamges.com/img.png"
+      "https://imamges.com/img.png",
     )
     expect(screen.getByText("Edgar the doggo,")).toBeInTheDocument()
     expect(screen.getByText("Demo title")).toBeInTheDocument()
@@ -81,7 +81,7 @@ describe("ConversationSidebarItem", () => {
     expect(screen.getByText("Inquiry")).toBeInTheDocument()
     expect(screen.getByRole("link")).toHaveAttribute(
       "href",
-      "/user/conversations/conversation-id?"
+      "/user/conversations/conversation-id?",
     )
   })
 

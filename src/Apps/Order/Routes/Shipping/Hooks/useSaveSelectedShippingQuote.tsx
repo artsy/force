@@ -9,11 +9,11 @@ import createLogger from "Utils/logger"
 import type { SaveAndContinueButton_order$data } from "__generated__/SaveAndContinueButton_order.graphql"
 
 const logger = createLogger(
-  "Order/Routes/Shipping/Hooks/useSaveSelectedShippingQuote.tsx"
+  "Order/Routes/Shipping/Hooks/useSaveSelectedShippingQuote.tsx",
 )
 
 export const useSaveSelectedShippingQuote = (
-  order: SaveAndContinueButton_order$data
+  order: SaveAndContinueButton_order$data,
 ) => {
   const { router } = useRouter()
   const orderTracking = useOrderTracking()
@@ -38,7 +38,7 @@ export const useSaveSelectedShippingQuote = (
 
       if (shippingContext.state.shippingFormMode === "new_address") {
         await handleNewUserAddressUpdates(
-          shippingContext.state.fulfillmentDetailsFormikContext.values
+          shippingContext.state.fulfillmentDetailsFormikContext.values,
         )
       }
 

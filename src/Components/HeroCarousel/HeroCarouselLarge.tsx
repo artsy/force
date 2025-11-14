@@ -52,7 +52,7 @@ export const HeroCarouselLarge: React.FC<
   useEffect(() => {
     intervalRef.current = setInterval(
       () => setCursor(prevCursor => prevCursor + 1),
-      10000
+      10000,
     )
 
     return stopAutoPlay
@@ -160,7 +160,7 @@ const Cell: ForwardRefExoticComponent<CarouselCellProps> = forwardRef(
         pr={0}
       />
     )
-  }
+  },
 )
 
 const Rail: FC<React.PropsWithChildren<CarouselRailProps>> = props => {

@@ -74,15 +74,15 @@ export const SelectArtworkListsModal: React.FC<
     const artworkListById = getArtworkListsById()
     const selectedLists = getResultEntitiesByIds(
       selectedArtworkListIds,
-      artworkListById
+      artworkListById,
     )
     const addedLists = getResultEntitiesByIds(
       state.addingListIDs,
-      artworkListById
+      artworkListById,
     )
     const removedLists = getResultEntitiesByIds(
       state.removingListIDs,
-      artworkListById
+      artworkListById,
     )
 
     return {
@@ -157,7 +157,7 @@ export const SelectArtworkListsModal: React.FC<
   }
 
   const checkIsArtworkListSelected = (
-    artworkList: (typeof artworkLists)[0]
+    artworkList: (typeof artworkLists)[0],
   ) => {
     /**
      * User added artwork to the previously unselected artwork list
@@ -240,7 +240,7 @@ export const SelectArtworkListsModalFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 export const SelectArtworkListsModalQueryRender: FC<
@@ -276,7 +276,7 @@ const query = graphql`
 
 const getResultEntitiesByIds = (
   ids: string[],
-  artworkListById: ArtworkListById
+  artworkListById: ArtworkListById,
 ) => {
   return ids.map(id => artworkListById[id])
 }

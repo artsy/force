@@ -44,14 +44,14 @@ export const useAddressAutocomplete = (
   address: Partial<Address> & { country: Address["country"] },
   {
     enableSecondarySuggestions = false,
-  }: { enableSecondarySuggestions?: boolean } = {}
+  }: { enableSecondarySuggestions?: boolean } = {},
 ): ServiceAvailability & {
   autocompleteOptions: AddressAutocompleteSuggestion[]
   suggestions: ProviderSuggestion[]
   fetchForAutocomplete: (args: { search: string; selected?: string }) => void
   fetchSecondarySuggestions: (
     search: string,
-    option: AddressAutocompleteSuggestion
+    option: AddressAutocompleteSuggestion,
   ) => void
 } => {
   const [result, setResult] = useState<ProviderSuggestion[]>([])
@@ -111,7 +111,7 @@ export const useAddressAutocomplete = (
       {
         leading: true,
         trailing: true,
-      }
+      },
     )
     return throttledFetch
   }, [apiKey])
@@ -129,7 +129,7 @@ export const useAddressAutocomplete = (
         suggestion.zipcode,
       ].join(" ")
     },
-    [enableSecondarySuggestions]
+    [enableSecondarySuggestions],
   )
   const filterSecondarySuggestions = useCallback(
     (suggestions: ProviderSuggestion[]) => {
@@ -138,13 +138,13 @@ export const useAddressAutocomplete = (
         ({ secondary, ...suggestion }) => ({
           ...suggestion,
           secondary: "",
-        })
+        }),
       )
       return uniqBy(noSecondaryData, (suggestion: ProviderSuggestion) =>
-        buildAddressText(suggestion)
+        buildAddressText(suggestion),
       )
     },
-    [buildAddressText, enableSecondarySuggestions]
+    [buildAddressText, enableSecondarySuggestions],
   )
 
   const fetchForAutocomplete = useCallback(
@@ -186,7 +186,7 @@ export const useAddressAutocomplete = (
       filterSecondarySuggestions,
       isAddressAutocompleteEnabled,
       trackEvent,
-    ]
+    ],
   )
 
   const fetchSecondarySuggestions = useCallback(
@@ -197,7 +197,7 @@ export const useAddressAutocomplete = (
       const selectedParam = `${option.address.addressLine1} ${option.address.addressLine2} (${option.entries}) ${option.address.city} ${option.address.region} ${option.address.postalCode}`
       fetchForAutocomplete({ search, selected: selectedParam })
     },
-    [fetchForAutocomplete, enableSecondarySuggestions]
+    [fetchForAutocomplete, enableSecondarySuggestions],
   )
 
   const autocompleteOptions = result.map(
@@ -217,7 +217,7 @@ export const useAddressAutocomplete = (
           country: "US",
         },
       }
-    }
+    },
   )
 
   return {

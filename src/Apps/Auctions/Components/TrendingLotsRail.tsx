@@ -57,8 +57,8 @@ const TrendingLotsRail: React.FC<
                     node.slug,
                     index,
                     node.collectorSignals?.auction?.bidCount,
-                    node.collectorSignals?.auction?.lotWatcherCount
-                  )
+                    node.collectorSignals?.auction?.lotWatcherCount,
+                  ),
                 )
               }}
             />
@@ -102,7 +102,7 @@ export const TrendingLotsRailFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 export const TrendingLotsRailQueryRenderer: React.FC<

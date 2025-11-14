@@ -50,7 +50,7 @@ describe("PhotoDropzone", () => {
             onReject={onRejectMock}
           />
         </Formik>
-      </MediaContextProvider>
+      </MediaContextProvider>,
     )
   }
 
@@ -65,7 +65,7 @@ describe("PhotoDropzone", () => {
       renderComponent()
 
       const dropzoneInput = document.querySelector(
-        '[data-test-id="image-dropzone"] input'
+        '[data-test-id="image-dropzone"] input',
       )!
 
       fireEvent.change(dropzoneInput, {
@@ -88,7 +88,7 @@ describe("PhotoDropzone", () => {
       renderComponent()
 
       const dropzoneInput = document.querySelector(
-        '[data-test-id="image-dropzone"] input'
+        '[data-test-id="image-dropzone"] input',
       )!
 
       fireEvent.change(dropzoneInput, {
@@ -111,7 +111,7 @@ describe("PhotoDropzone", () => {
               code: "file-invalid-type",
             },
           ],
-        }))
+        })),
       )
     })
 
@@ -119,7 +119,7 @@ describe("PhotoDropzone", () => {
       renderComponent()
 
       const dropzoneInput = document.querySelector(
-        '[data-test-id="image-dropzone"] input'
+        '[data-test-id="image-dropzone"] input',
       )!
 
       fireEvent.change(dropzoneInput, {
@@ -151,7 +151,7 @@ describe("PhotoDropzone", () => {
       renderComponent()
 
       const dropzoneInput = document.querySelector(
-        '[data-test-id="image-dropzone"] input'
+        '[data-test-id="image-dropzone"] input',
       )!
 
       fireEvent.change(dropzoneInput, {
@@ -187,7 +187,7 @@ describe("PhotoDropzone", () => {
       renderComponent()
 
       const dropzoneInput = document.querySelector(
-        '[data-test-id="image-dropzone"] input'
+        '[data-test-id="image-dropzone"] input',
       )!
 
       fireEvent.change(dropzoneInput, {
@@ -201,7 +201,7 @@ describe("PhotoDropzone", () => {
       await waitFor(() => {
         expect(onDropMock).toHaveBeenCalled()
         expect(onDropMock).toHaveBeenCalledWith(
-          [...Array(5)].map(() => validImage)
+          [...Array(5)].map(() => validImage),
         )
         expect(onRejectMock).toHaveBeenCalled()
       })
@@ -273,7 +273,7 @@ describe("PhotoDropzone", () => {
                 code: "file-invalid-type",
               },
             ],
-          }))
+          })),
         )
       })
     })
@@ -358,7 +358,7 @@ describe("PhotoDropzone", () => {
       await waitFor(() => {
         expect(onDropMock).toHaveBeenCalled()
         expect(onDropMock).toHaveBeenCalledWith(
-          [...Array(5)].map(() => validImage)
+          [...Array(5)].map(() => validImage),
         )
         expect(onRejectMock).toHaveBeenCalled()
         // Check the last call to onRejectMock

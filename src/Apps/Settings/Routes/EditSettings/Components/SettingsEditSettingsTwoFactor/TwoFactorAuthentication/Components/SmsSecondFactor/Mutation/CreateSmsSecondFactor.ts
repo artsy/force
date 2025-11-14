@@ -7,7 +7,7 @@ import { commitMutation, type Environment, graphql } from "react-relay"
 
 export const CreateSmsSecondFactor = (
   environment: Environment,
-  input: CreateSmsSecondFactorInput
+  input: CreateSmsSecondFactorInput,
 ) => {
   return new Promise<CreateSmsSecondFactorMutation$data>(
     async (resolve, reject) => {
@@ -53,6 +53,6 @@ export const CreateSmsSecondFactor = (
           input,
         },
       })
-    }
+    },
   )
 }

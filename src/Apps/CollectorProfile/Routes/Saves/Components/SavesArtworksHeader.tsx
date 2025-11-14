@@ -135,7 +135,7 @@ const QUERY = graphql`
 
 const tracks = {
   clickedShareButton: (
-    collection: NonNullable<SavesArtworksHeaderQuery$data["me"]>["collection"]
+    collection: NonNullable<SavesArtworksHeaderQuery$data["me"]>["collection"],
   ) => ({
     action: ActionType.clickedShareButton,
     context_module: ContextModule.saves,

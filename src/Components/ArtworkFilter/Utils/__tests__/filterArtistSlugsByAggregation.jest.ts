@@ -5,7 +5,7 @@ describe("filterArtistSlugsByAggregation", () => {
   it("should return slugs only for those artists who are in ARTIST aggregation", () => {
     const result = filterArtistSlugsByAggregation(
       mockedArtistSlugs,
-      mockedAggregations
+      mockedAggregations,
     )
 
     expect(result).toEqual(["kaws", "banksy"])
@@ -26,7 +26,7 @@ describe("filterArtistSlugsByAggregation", () => {
     ]
     const result = filterArtistSlugsByAggregation(
       mockedArtistSlugs,
-      aggregations
+      aggregations,
     )
 
     expect(result).toEqual([])
@@ -41,7 +41,7 @@ describe("filterArtistSlugsByAggregation", () => {
     ]
     const result = filterArtistSlugsByAggregation(
       mockedArtistSlugs,
-      aggregations
+      aggregations,
     )
 
     expect(result).toEqual([])
@@ -57,7 +57,7 @@ describe("filterArtistSlugsByAggregation", () => {
     const artistSlugs = ["max-ernst", "zhao-zhao"]
     const result = filterArtistSlugsByAggregation(
       artistSlugs,
-      mockedAggregations
+      mockedAggregations,
     )
 
     expect(result).toEqual([])

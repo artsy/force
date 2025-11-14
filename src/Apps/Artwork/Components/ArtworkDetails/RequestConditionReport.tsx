@@ -19,7 +19,7 @@ import { commitMutation, createFragmentContainer, graphql } from "react-relay"
 import track, { useTracking } from "react-tracking"
 
 const logger = createLogger(
-  "Apps/Artwork/Components/ArtworkDetails/RequestConditionReport"
+  "Apps/Artwork/Components/ArtworkDetails/RequestConditionReport",
 )
 
 interface RequestConditionReportProps {
@@ -67,7 +67,7 @@ export const RequestConditionReport: React.FC<
             input: { saleArtworkID: artwork.saleArtwork?.internalID as string },
           },
         })
-      }
+      },
     )
   }
 
@@ -260,5 +260,5 @@ export const RequestConditionReportFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

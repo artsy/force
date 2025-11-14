@@ -100,15 +100,15 @@ describe("Status", () => {
         const page = new StatusTestPageRTL(screen)
 
         expect(
-          screen.getByText("Thank you, your offer has been submitted")
+          screen.getByText("Thank you, your offer has been submitted"),
         ).toBeInTheDocument()
         expect(
-          screen.getByText(/The seller will respond to your offer by.*Jan 15/)
+          screen.getByText(/The seller will respond to your offer by.*Jan 15/),
         ).toBeInTheDocument()
         expect(
           screen.queryByText(
-            "Negotiation with the gallery will continue in the Inbox."
-          )
+            "Negotiation with the gallery will continue in the Inbox.",
+          ),
         ).not.toBeInTheDocument()
         expect(page.getMessageLength()).toBe(2)
         expect(screen.getByText("Kathryn Markel Fine Arts")).toBeInTheDocument()
@@ -124,19 +124,19 @@ describe("Status", () => {
         const page = new StatusTestPageRTL(screen)
 
         expect(
-          screen.getByText("Thank you, your offer has been submitted")
+          screen.getByText("Thank you, your offer has been submitted"),
         ).toBeInTheDocument()
         expect(
-          screen.getByText(/The seller will respond to your offer by.*Jan 15/)
+          screen.getByText(/The seller will respond to your offer by.*Jan 15/),
         ).toBeInTheDocument()
         expect(
           screen.getByText(
-            "Negotiation with the gallery will continue in the Inbox."
-          )
+            "Negotiation with the gallery will continue in the Inbox.",
+          ),
         ).toBeInTheDocument()
         expect(page.getMessageLength()).toBe(1)
         expect(
-          screen.queryByText("Kathryn Markel Fine Arts")
+          screen.queryByText("Kathryn Markel Fine Arts"),
         ).not.toBeInTheDocument()
         expect(screen.queryByText("List price")).not.toBeInTheDocument()
       })
@@ -154,15 +154,15 @@ describe("Status", () => {
         const page = new StatusTestPageRTL(screen)
 
         expect(
-          screen.getByText("Thank you, your offer has been submitted")
+          screen.getByText("Thank you, your offer has been submitted"),
         ).toBeInTheDocument()
         expect(
-          screen.getByText(/The seller will respond to your offer by.*Jan 15/)
+          screen.getByText(/The seller will respond to your offer by.*Jan 15/),
         ).toBeInTheDocument()
         expect(
           screen.queryByText(
-            "Negotiation with the gallery will continue in the Inbox."
-          )
+            "Negotiation with the gallery will continue in the Inbox.",
+          ),
         ).not.toBeInTheDocument()
         expect(page.getMessageLength()).toBe(2)
         expect(screen.getByText("Kathryn Markel Fine Arts")).toBeInTheDocument()
@@ -182,19 +182,19 @@ describe("Status", () => {
         const page = new StatusTestPageRTL(screen)
 
         expect(
-          screen.getByText("Thank you, your offer has been submitted")
+          screen.getByText("Thank you, your offer has been submitted"),
         ).toBeInTheDocument()
         expect(
-          screen.getByText(/The seller will respond to your offer by.*Jan 15/)
+          screen.getByText(/The seller will respond to your offer by.*Jan 15/),
         ).toBeInTheDocument()
         expect(
           screen.getByText(
-            "Negotiation with the gallery will continue in the Inbox."
-          )
+            "Negotiation with the gallery will continue in the Inbox.",
+          ),
         ).toBeInTheDocument()
         expect(page.getMessageLength()).toBe(1)
         expect(
-          screen.queryByText("Kathryn Markel Fine Arts")
+          screen.queryByText("Kathryn Markel Fine Arts"),
         ).not.toBeInTheDocument()
         expect(screen.queryByText("List price")).not.toBeInTheDocument()
       })
@@ -243,7 +243,7 @@ describe("Status", () => {
           const page = new StatusTestPageRTL(screen)
 
           expect(
-            screen.getByText("Thank you, your offer has been accepted")
+            screen.getByText("Thank you, your offer has been accepted"),
           ).toBeInTheDocument()
           expect(page.getMessageLength()).toBe(1)
         })
@@ -259,8 +259,8 @@ describe("Status", () => {
 
           expect(
             screen.getByText(
-              "Please proceed with the wire transfer within 7 days to complete your purchase."
-            )
+              "Please proceed with the wire transfer within 7 days to complete your purchase.",
+            ),
           ).toBeInTheDocument()
         })
 
@@ -274,10 +274,10 @@ describe("Status", () => {
           })
 
           expect(
-            screen.getByText(/Find the total amount due.*banking details/)
+            screen.getByText(/Find the total amount due.*banking details/),
           ).toBeInTheDocument()
           expect(
-            screen.getByText(/Please inform your bank.*wire transfer fees/)
+            screen.getByText(/Please inform your bank.*wire transfer fees/),
           ).toBeInTheDocument()
           expect(screen.getByText(/orders@artsy\.net/)).toBeInTheDocument()
         })
@@ -293,22 +293,22 @@ describe("Status", () => {
 
           expect(screen.getByText("Send wire transfer to")).toBeInTheDocument()
           expect(
-            screen.getByText("Account name: Art.sy Inc.")
+            screen.getByText("Account name: Art.sy Inc."),
           ).toBeInTheDocument()
           expect(
-            screen.getByText("Account number: 4243851425")
+            screen.getByText("Account number: 4243851425"),
           ).toBeInTheDocument()
           expect(
-            screen.getByText("Routing number: 121000248")
+            screen.getByText("Routing number: 121000248"),
           ).toBeInTheDocument()
           expect(
-            screen.getByText("International SWIFT: WFBIUS6S")
+            screen.getByText("International SWIFT: WFBIUS6S"),
           ).toBeInTheDocument()
           expect(screen.getByText("Bank address")).toBeInTheDocument()
           expect(screen.getByText("Wells Fargo Bank, N.A.")).toBeInTheDocument()
           expect(screen.getByText("420 Montgomery Street")).toBeInTheDocument()
           expect(
-            screen.getByText("San Francisco, CA 94104")
+            screen.getByText("San Francisco, CA 94104"),
           ).toBeInTheDocument()
         })
       })
@@ -325,7 +325,7 @@ describe("Status", () => {
           const page = new StatusTestPageRTL(screen)
 
           expect(
-            screen.getByText("Offer accepted. Payment processing.")
+            screen.getByText("Offer accepted. Payment processing."),
           ).toBeInTheDocument()
           expect(page.getMessageLength()).toBe(1)
         })
@@ -341,8 +341,8 @@ describe("Status", () => {
 
           expect(
             screen.getByText(
-              /More delivery information will be available once your order ships/
-            )
+              /More delivery information will be available once your order ships/,
+            ),
           ).toBeInTheDocument()
         })
 
@@ -377,7 +377,7 @@ describe("Status", () => {
         expect(screen.getByText("steve")).toBeInTheDocument()
         expect(screen.getByRole("link", { name: /steve/ })).toHaveAttribute(
           "href",
-          "steves-house"
+          "steves-house",
         )
       })
 
@@ -391,7 +391,7 @@ describe("Status", () => {
 
         expect(screen.getByText(/oxa/)).toBeInTheDocument()
         expect(
-          screen.queryByRole("link", { name: /oxa/ })
+          screen.queryByRole("link", { name: /oxa/ }),
         ).not.toBeInTheDocument()
       })
 
@@ -405,7 +405,7 @@ describe("Status", () => {
         })
 
         expect(
-          screen.getByText(/Our delivery provider.*delivery window.*your area/)
+          screen.getByText(/Our delivery provider.*delivery window.*your area/),
         ).toBeInTheDocument()
       })
     })
@@ -438,7 +438,7 @@ describe("Status", () => {
         const page = new StatusTestPageRTL(screen)
 
         expect(
-          screen.getByText("Your order has been picked up")
+          screen.getByText("Your order has been picked up"),
         ).toBeInTheDocument()
         expect(page.getMessageLength()).toBe(0)
       })
@@ -524,7 +524,7 @@ describe("Status", () => {
         const page = new StatusTestPageRTL(screen)
 
         expect(
-          screen.getByText("Your order was canceled and refunded")
+          screen.getByText("Your order was canceled and refunded"),
         ).toBeInTheDocument()
         expect(page.getMessageLength()).toBe(1)
       })
@@ -543,7 +543,7 @@ describe("Status", () => {
         const page = new StatusTestPageRTL(screen)
 
         expect(
-          screen.getByText("Your order was canceled and refunded")
+          screen.getByText("Your order was canceled and refunded"),
         ).toBeInTheDocument()
         expect(page.getMessageLength()).toBe(1)
         expect(screen.getByTestId("transactionSummary")).toBeInTheDocument()
@@ -572,10 +572,10 @@ describe("Status", () => {
         const page = new StatusTestPageRTL(screen)
 
         expect(
-          screen.getByText("Thank you, your order has been submitted")
+          screen.getByText("Thank you, your order has been submitted"),
         ).toBeInTheDocument()
         expect(
-          screen.getByText(/You will receive a confirmation email by.*Jan 15/)
+          screen.getByText(/You will receive a confirmation email by.*Jan 15/),
         ).toBeInTheDocument()
         expect(page.getMessageLength()).toBe(2)
       })
@@ -605,7 +605,7 @@ describe("Status", () => {
         })
 
         expect(
-          screen.getByText("Thank you for working with Artsy Private Sales.")
+          screen.getByText("Thank you for working with Artsy Private Sales."),
         ).toBeInTheDocument()
       })
 
@@ -620,7 +620,7 @@ describe("Status", () => {
         })
 
         expect(
-          screen.getByText(/You will receive an email.*next steps/)
+          screen.getByText(/You will receive an email.*next steps/),
         ).toBeInTheDocument()
       })
 
@@ -651,7 +651,7 @@ describe("Status", () => {
           const page = new StatusTestPageRTL(screen)
 
           expect(
-            screen.getByText("Thank you, your order has been accepted")
+            screen.getByText("Thank you, your order has been accepted"),
           ).toBeInTheDocument()
           expect(page.getMessageLength()).toBe(1)
         })
@@ -668,8 +668,8 @@ describe("Status", () => {
 
           expect(
             screen.getByText(
-              "Thank you for your purchase with Artsy Private Sales."
-            )
+              "Thank you for your purchase with Artsy Private Sales.",
+            ),
           ).toBeInTheDocument()
         })
 
@@ -684,8 +684,8 @@ describe("Status", () => {
 
           expect(
             screen.getByText(
-              "Please proceed with the wire transfer within 7 days to complete your purchase."
-            )
+              "Please proceed with the wire transfer within 7 days to complete your purchase.",
+            ),
           ).toBeInTheDocument()
         })
 
@@ -713,7 +713,7 @@ describe("Status", () => {
           })
 
           expect(
-            screen.queryByText("Thank you for your purchase.")
+            screen.queryByText("Thank you for your purchase."),
           ).not.toBeInTheDocument()
         })
 
@@ -727,10 +727,10 @@ describe("Status", () => {
           })
 
           expect(
-            screen.getByText(/Find the total amount due.*banking details/)
+            screen.getByText(/Find the total amount due.*banking details/),
           ).toBeInTheDocument()
           expect(
-            screen.getByText(/Please inform your bank.*wire transfer fees/)
+            screen.getByText(/Please inform your bank.*wire transfer fees/),
           ).toBeInTheDocument()
           expect(screen.getByText(/orders@artsy\.net/)).toBeInTheDocument()
         })
@@ -747,22 +747,22 @@ describe("Status", () => {
 
           expect(screen.getByText("Send wire transfer to")).toBeInTheDocument()
           expect(
-            screen.getByText("Account name: Art.sy Inc.")
+            screen.getByText("Account name: Art.sy Inc."),
           ).toBeInTheDocument()
           expect(
-            screen.getByText("Account number: 4243851425")
+            screen.getByText("Account number: 4243851425"),
           ).toBeInTheDocument()
           expect(
-            screen.getByText("Routing number: 121000248")
+            screen.getByText("Routing number: 121000248"),
           ).toBeInTheDocument()
           expect(
-            screen.getByText("International SWIFT: WFBIUS6S")
+            screen.getByText("International SWIFT: WFBIUS6S"),
           ).toBeInTheDocument()
           expect(screen.getByText("Bank address")).toBeInTheDocument()
           expect(screen.getByText("Wells Fargo Bank, N.A.")).toBeInTheDocument()
           expect(screen.getByText("420 Montgomery Street")).toBeInTheDocument()
           expect(
-            screen.getByText("San Francisco, CA 94104")
+            screen.getByText("San Francisco, CA 94104"),
           ).toBeInTheDocument()
         })
 
@@ -778,26 +778,26 @@ describe("Status", () => {
 
           expect(screen.getByText("Send wire transfer to")).toBeInTheDocument()
           expect(
-            screen.getByText("Account name: Art.sy Inc.")
+            screen.getByText("Account name: Art.sy Inc."),
           ).toBeInTheDocument()
           expect(
-            screen.getByText("Account number: 88005417")
+            screen.getByText("Account number: 88005417"),
           ).toBeInTheDocument()
           expect(
-            screen.getByText("IBAN: GB30PNBP16567188005417")
+            screen.getByText("IBAN: GB30PNBP16567188005417"),
           ).toBeInTheDocument()
           expect(
-            screen.getByText("International SWIFT: PNBPGB2L")
+            screen.getByText("International SWIFT: PNBPGB2L"),
           ).toBeInTheDocument()
           expect(screen.getByText("Sort Code: 16-56-71")).toBeInTheDocument()
           expect(screen.getByText("Bank address")).toBeInTheDocument()
           expect(
-            screen.getByText("Wells Fargo Bank, N.A. London Branch")
+            screen.getByText("Wells Fargo Bank, N.A. London Branch"),
           ).toBeInTheDocument()
           expect(screen.getByText("1 Plantation Place")).toBeInTheDocument()
           expect(screen.getByText("30 Fenchurch Street")).toBeInTheDocument()
           expect(
-            screen.getByText("London, United Kingdom, EC3M 3BD")
+            screen.getByText("London, United Kingdom, EC3M 3BD"),
           ).toBeInTheDocument()
         })
 
@@ -813,25 +813,25 @@ describe("Status", () => {
 
           expect(screen.getByText("Send wire transfer to")).toBeInTheDocument()
           expect(
-            screen.getByText("Account name: Art.sy Inc.")
+            screen.getByText("Account name: Art.sy Inc."),
           ).toBeInTheDocument()
           expect(
-            screen.getByText("Account number: 88005419")
+            screen.getByText("Account number: 88005419"),
           ).toBeInTheDocument()
           expect(
-            screen.getByText("IBAN: GB73PNBP16567188005419")
+            screen.getByText("IBAN: GB73PNBP16567188005419"),
           ).toBeInTheDocument()
           expect(
-            screen.getByText("International SWIFT: PNBPGB2L")
+            screen.getByText("International SWIFT: PNBPGB2L"),
           ).toBeInTheDocument()
           expect(screen.getByText("Bank address")).toBeInTheDocument()
           expect(
-            screen.getByText("Wells Fargo Bank, N.A. London Branch")
+            screen.getByText("Wells Fargo Bank, N.A. London Branch"),
           ).toBeInTheDocument()
           expect(screen.getByText("1 Plantation Place")).toBeInTheDocument()
           expect(screen.getByText("30 Fenchurch Street")).toBeInTheDocument()
           expect(
-            screen.getByText("London, United Kingdom, EC3M 3BD")
+            screen.getByText("London, United Kingdom, EC3M 3BD"),
           ).toBeInTheDocument()
         })
       })
@@ -848,7 +848,7 @@ describe("Status", () => {
           const page = new StatusTestPageRTL(screen)
 
           expect(
-            screen.getByText("Your order is confirmed. Payment processing.")
+            screen.getByText("Your order is confirmed. Payment processing."),
           ).toBeInTheDocument()
           expect(page.getMessageLength()).toBe(1)
         })
@@ -865,8 +865,8 @@ describe("Status", () => {
 
           expect(
             screen.getByText(
-              "Thank you for your purchase with Artsy Private Sales."
-            )
+              "Thank you for your purchase with Artsy Private Sales.",
+            ),
           ).toBeInTheDocument()
         })
 
@@ -881,8 +881,8 @@ describe("Status", () => {
 
           expect(
             screen.getByText(
-              /More delivery information will be available once your order ships/
-            )
+              /More delivery information will be available once your order ships/,
+            ),
           ).toBeInTheDocument()
         })
 
@@ -897,10 +897,10 @@ describe("Status", () => {
           })
 
           expect(
-            screen.getByText(/You will receive an email.*next steps/)
+            screen.getByText(/You will receive an email.*next steps/),
           ).toBeInTheDocument()
           expect(
-            screen.getByText(/privatesales@artsy\.net/)
+            screen.getByText(/privatesales@artsy\.net/),
           ).toBeInTheDocument()
         })
 
@@ -948,7 +948,7 @@ describe("Status", () => {
         const page = new StatusTestPageRTL(screen)
 
         expect(
-          screen.getByText("Your order has been picked up")
+          screen.getByText("Your order has been picked up"),
         ).toBeInTheDocument()
         expect(page.getMessageLength()).toBe(0)
       })
@@ -966,7 +966,7 @@ describe("Status", () => {
         const page = new StatusTestPageRTL(screen)
 
         expect(
-          screen.getByText("Your order was canceled and refunded")
+          screen.getByText("Your order was canceled and refunded"),
         ).toBeInTheDocument()
         expect(page.getMessageLength()).toBe(1)
       })
@@ -984,7 +984,7 @@ describe("Status", () => {
         const page = new StatusTestPageRTL(screen)
 
         expect(
-          screen.getByText("Your order was canceled and refunded")
+          screen.getByText("Your order was canceled and refunded"),
         ).toBeInTheDocument()
         expect(page.getMessageLength()).toBe(1)
       })
@@ -1002,7 +1002,7 @@ describe("Status", () => {
         const page = new StatusTestPageRTL(screen)
 
         expect(
-          screen.getByText("Your order was canceled and refunded")
+          screen.getByText("Your order was canceled and refunded"),
         ).toBeInTheDocument()
         expect(page.getMessageLength()).toBe(1)
       })

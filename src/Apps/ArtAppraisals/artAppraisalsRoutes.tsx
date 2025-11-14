@@ -6,7 +6,7 @@ const ArtAppraisalsApp = loadable(
     import(/* webpackChunkName: "artAppraisalsBundle" */ "./ArtAppraisalsApp"),
   {
     resolveComponent: component => component.ArtAppraisalsApp,
-  }
+  },
 )
 
 export const artAppraisalsRoutes: RouteProps[] = [

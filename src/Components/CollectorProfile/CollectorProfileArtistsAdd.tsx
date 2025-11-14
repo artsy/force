@@ -200,7 +200,7 @@ export const CollectorProfileArtistsAdd: FC<
                     }
 
                     return prevSelected.filter(
-                      id => id !== String(artist.internalID)
+                      id => id !== String(artist.internalID),
                     )
                   })
                 }}

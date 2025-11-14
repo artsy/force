@@ -82,7 +82,7 @@ export const NewPaymentRoute: FC<
   const trackErrorMessageEvent = (
     title: string,
     message: string | undefined,
-    code?: string
+    code?: string,
   ) => {
     return tracking.trackEvent({
       action: ActionType.errorMessageViewed,
@@ -157,7 +157,7 @@ export const NewPaymentRoute: FC<
 
         if (orderOrError.actionData && orderOrError.actionData.clientSecret) {
           const scaResult = await stripe.handleCardAction(
-            orderOrError.actionData.clientSecret
+            orderOrError.actionData.clientSecret,
           )
           if (scaResult.error) {
             dialog.showErrorDialog({
@@ -198,7 +198,7 @@ export const NewPaymentRoute: FC<
   }
 
   const fixFailedPayment = (
-    variables: NewPaymentRouteSetOrderPaymentMutation["variables"]
+    variables: NewPaymentRouteSetOrderPaymentMutation["variables"],
   ) => {
     return commitMutation<NewPaymentRouteSetOrderPaymentMutation>({
       variables,
@@ -251,7 +251,7 @@ export const NewPaymentRoute: FC<
         trackErrorMessageEvent(
           "Charge failed",
           "Payment has been declined. Please contact your card provider or bank institution, then press “Continue” again. Alternatively, use another payment method.",
-          code
+          code,
         )
 
         dialog.showErrorDialog({
@@ -265,7 +265,7 @@ export const NewPaymentRoute: FC<
         trackErrorMessageEvent(
           "Not available",
           "Sorry, the work is no longer available.",
-          code
+          code,
         )
 
         await dialog.showErrorDialog({
@@ -289,7 +289,7 @@ export const NewPaymentRoute: FC<
   const routeToArtworkPage = () => {
     const artworkId = get(
       order,
-      o => o.lineItems?.edges?.[0]?.node?.artwork?.slug
+      o => o.lineItems?.edges?.[0]?.node?.artwork?.slug,
     )
     router.push(`/artwork/${artworkId}`)
   }
@@ -360,7 +360,7 @@ export const NewPaymentRoute: FC<
 
 export const NewPaymentFragmentContainer = createFragmentContainer(
   createStripeWrapper<NewPaymentProps>(
-    injectCommitMutation(injectDialog(NewPaymentRoute)) as any
+    injectCommitMutation(injectDialog(NewPaymentRoute)) as any,
   ),
   {
     me: graphql`
@@ -398,5 +398,5 @@ export const NewPaymentFragmentContainer = createFragmentContainer(
         ...OrderStepper_order
       }
     `,
-  }
+  },
 )

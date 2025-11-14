@@ -76,5 +76,5 @@ export const FairExhibitorCardFragmentContainer = createFragmentContainer(
         href
       }
     `,
-  }
+  },
 )

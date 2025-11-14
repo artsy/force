@@ -31,8 +31,8 @@ describe("CascadingEndTimesBanner", () => {
 
       expect(
         screen.getByText(
-          "Closing times may be extended due to last-minute competitive bidding."
-        )
+          "Closing times may be extended due to last-minute competitive bidding.",
+        ),
       ).toBeInTheDocument()
     })
 
@@ -46,7 +46,7 @@ describe("CascadingEndTimesBanner", () => {
       })
 
       expect(
-        screen.getByText("Lots close at 1-minute intervals.")
+        screen.getByText("Lots close at 1-minute intervals."),
       ).toBeInTheDocument()
     })
 

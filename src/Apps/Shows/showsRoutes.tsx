@@ -8,28 +8,28 @@ const ShowsApp = loadable(
   () => import(/* webpackChunkName: "showsBundle" */ "./ShowsApp"),
   {
     resolveComponent: component => component.ShowsApp,
-  }
+  },
 )
 
 const ShowsIndexRoute = loadable(
   () => import(/* webpackChunkName: "showsBundle" */ "./Routes/ShowsIndex"),
   {
     resolveComponent: component => component.ShowsIndexFragmentContainer,
-  }
+  },
 )
 
 const ShowsCityRoute = loadable(
   () => import(/* webpackChunkName: "showsBundle" */ "./Routes/ShowsCity"),
   {
     resolveComponent: component => component.ShowsCityRefetchContainer,
-  }
+  },
 )
 
 const ShowsAllCities = loadable(
   () => import(/* webpackChunkName: "showsBundle" */ "./Routes/ShowsAllCities"),
   {
     resolveComponent: component => component.ShowsAllCitiesFragmentContainer,
-  }
+  },
 )
 
 export const showsRoutes: RouteProps[] = [

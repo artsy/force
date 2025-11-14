@@ -16,7 +16,7 @@ describe("extractPillFromAggregation", () => {
         paramName: "materialsTerms",
         paramValue: ["acrylic", "canvas"],
       },
-      mockedAggregations
+      mockedAggregations,
     )
 
     const pills = [
@@ -33,7 +33,7 @@ describe("extractPillFromAggregation", () => {
         paramName: "materialsTerms",
         paramValue: ["acrylic", "canvas"],
       },
-      []
+      [],
     )
 
     expect(result).toEqual([])
@@ -45,7 +45,7 @@ describe("extractPillFromAggregation", () => {
         paramName: "additionalGeneIDs",
         paramValue: ["painting", "sculpture", "nft"],
       },
-      []
+      [],
     )
 
     expect(result).toEqual([

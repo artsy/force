@@ -42,7 +42,7 @@ export const ArtistCareerHighlightFragmentContainer = createFragmentContainer(
         description(format: HTML)
       }
     `,
-  }
+  },
 )
 
 const formatList = (entities: readonly string[]) => {

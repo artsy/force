@@ -121,7 +121,7 @@ describe(ArtistsFilter, () => {
       render(<ArtistsFilter expanded />)
 
       const followedArtistsCheckbox = screen.getByTestId(
-        "followedArtistsCheckbox"
+        "followedArtistsCheckbox",
       )
 
       expect(followedArtistsCheckbox).toHaveAttribute("disabled")

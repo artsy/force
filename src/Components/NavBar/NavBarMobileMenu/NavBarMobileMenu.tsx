@@ -36,7 +36,7 @@ export const NavBarMobileMenu: React.FC<
   const { trackEvent } = useTracking()
 
   const handleClick = (
-    event: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement, MouseEvent>
+    event: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement, MouseEvent>,
   ) => {
     const node = event.currentTarget
     const text = node.textContent ?? ""

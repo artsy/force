@@ -111,7 +111,7 @@ const ArtworkSummaryItem: React.FC<
           <Text variant="sm">
             {`${priceLabel}: ${appendCurrencySymbol(
               artworkPrice.price,
-              currencyCode
+              currencyCode,
             )}`}
           </Text>
         )}
@@ -173,5 +173,5 @@ export const ArtworkSummaryItemFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

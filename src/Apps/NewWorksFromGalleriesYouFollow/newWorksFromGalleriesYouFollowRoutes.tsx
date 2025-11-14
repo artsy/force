@@ -10,7 +10,7 @@ const NewWorksFromGalleriesYouFollowApp = loadable(
   {
     resolveComponent: component =>
       component.NewWorksFromGalleriesYouFollowAppPaginationContainer,
-  }
+  },
 )
 
 export const newWorksFromGalleriesYouFollowRoutes: RouteProps[] = [

@@ -33,11 +33,11 @@ describe("ArtistInsightAchievements", () => {
     })
 
     const expandableText = screen.getByTestId(
-      "expandable-dropdownlist"
+      "expandable-dropdownlist",
     ).innerHTML
 
     expect(
-      screen.getByText("Solo show at a major institution")
+      screen.getByText("Solo show at a major institution"),
     ).toBeInTheDocument()
     expect(expandableText).toContain("Foo Museum, and")
     expect(expandableText).toContain("2 more")
@@ -65,7 +65,9 @@ describe("ArtistInsightAchievements", () => {
     fireEvent.click(button)
 
     expect(
-      screen.getByText("FooBarforum, Foofrieze, The New FooBar, and FooBar Art")
+      screen.getByText(
+        "FooBarforum, Foofrieze, The New FooBar, and FooBar Art",
+      ),
     ).toBeInTheDocument()
   })
 
@@ -77,10 +79,10 @@ describe("ArtistInsightAchievements", () => {
     })
 
     expect(
-      screen.queryByText("Solo show at a major institution")
+      screen.queryByText("Solo show at a major institution"),
     ).not.toBeInTheDocument()
     expect(
-      screen.queryByText("Group show at a major institution")
+      screen.queryByText("Group show at a major institution"),
     ).not.toBeInTheDocument()
   })
 
@@ -108,7 +110,9 @@ describe("ArtistInsightAchievements", () => {
     const button = screen.getByText("3 more", { selector: "button" })
     fireEvent.click(button)
     expect(
-      screen.getByText("FooBarforum, Foofrieze, The New FooBar, and FooBar Art")
+      screen.getByText(
+        "FooBarforum, Foofrieze, The New FooBar, and FooBar Art",
+      ),
     ).toBeInTheDocument()
     expect(spy).toHaveBeenCalledWith({
       action_type: "Click",

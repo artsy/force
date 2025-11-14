@@ -17,7 +17,7 @@ describe("CollectorProfileArtistsRoute", () => {
     render(
       <MockBoot>
         <CollectorProfileArtistsRoute />
-      </MockBoot>
+      </MockBoot>,
     )
 
     expect(screen.getByText("Add Artist")).toBeInTheDocument()

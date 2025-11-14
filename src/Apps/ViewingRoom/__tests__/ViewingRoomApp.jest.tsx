@@ -79,7 +79,7 @@ describe("ViewingRoomApp", () => {
         ViewingRoom: () => DraftViewingRoomAppFixture.viewingRoom,
       })
       expect(
-        screen.getByText("This is a preview of your viewing room.")
+        screen.getByText("This is a preview of your viewing room."),
       ).toBeInTheDocument()
     })
 
@@ -89,7 +89,7 @@ describe("ViewingRoomApp", () => {
       })
 
       const robotsMeta = [...document.getElementsByTagName("meta")].find(
-        tag => tag.getAttribute("name") === "robots"
+        tag => tag.getAttribute("name") === "robots",
       )
       expect(robotsMeta).toBeTruthy()
       expect(robotsMeta?.getAttribute("content")).toBe("noindex, follow")
@@ -137,7 +137,7 @@ describe("ViewingRoomApp", () => {
       })
 
       const robotsMeta = [...document.getElementsByTagName("meta")].find(
-        tag => tag.getAttribute("name") === "robots"
+        tag => tag.getAttribute("name") === "robots",
       )
       expect(robotsMeta).toBeTruthy()
       expect(robotsMeta?.getAttribute("content")).toBe("noindex, follow")
@@ -159,7 +159,7 @@ describe("ViewingRoomApp", () => {
             {
               ViewingRoom: () => ScheduledViewingRoomAppFixture.viewingRoom,
             },
-            "xs"
+            "xs",
           )
           expect(container).toBeInTheDocument()
         })
@@ -208,7 +208,7 @@ describe("ViewingRoomApp", () => {
       })
 
       const robotsMeta = [...document.getElementsByTagName("meta")].find(
-        tag => tag.getAttribute("name") === "robots"
+        tag => tag.getAttribute("name") === "robots",
       )
       expect(robotsMeta).toBeUndefined()
     })
@@ -229,7 +229,7 @@ describe("ViewingRoomApp", () => {
             {
               ViewingRoom: () => OpenViewingRoomAppFixture.viewingRoom,
             },
-            "xs"
+            "xs",
           )
           expect(container).toBeInTheDocument()
         })
@@ -243,7 +243,7 @@ describe("ViewingRoomApp", () => {
         })
         expect(container.innerHTML).toContain(`href="/viewing-room/${slug}"`)
         expect(container.innerHTML).toContain(
-          `href="/viewing-room/${slug}/artworks"`
+          `href="/viewing-room/${slug}/artworks"`,
         )
       })
     })
@@ -291,7 +291,7 @@ describe("ViewingRoomApp", () => {
       })
 
       const robotsMeta = [...document.getElementsByTagName("meta")].find(
-        tag => tag.getAttribute("name") === "robots"
+        tag => tag.getAttribute("name") === "robots",
       )
       expect(robotsMeta).toBeTruthy()
       expect(robotsMeta?.getAttribute("content")).toBe("noindex, follow")
@@ -313,7 +313,7 @@ describe("ViewingRoomApp", () => {
             {
               ViewingRoom: () => ClosedViewingRoomAppFixture.viewingRoom,
             },
-            "xs"
+            "xs",
           )
           expect(container).toBeInTheDocument()
         })
@@ -361,7 +361,7 @@ describe("ViewingRoomApp", () => {
       })
 
       const robotsMeta = [...document.getElementsByTagName("meta")].find(
-        tag => tag.getAttribute("name") === "robots"
+        tag => tag.getAttribute("name") === "robots",
       )
       expect(robotsMeta).toBeUndefined()
     })

@@ -8,7 +8,7 @@ describe("ShowMore", () => {
         <div>is visible</div>
         <div>is visible</div>
         <div>is hidden</div>
-      </ShowMore>
+      </ShowMore>,
     )
 
     expect(screen.getAllByText("is visible")).toHaveLength(2)
@@ -26,7 +26,7 @@ describe("ShowMore", () => {
         <div>is visible</div>
         <div>is visible</div>
         <div>is hidden</div>
-      </ShowMore>
+      </ShowMore>,
     )
 
     expect(screen.getAllByText("is visible")).toHaveLength(2)

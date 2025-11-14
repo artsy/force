@@ -28,7 +28,7 @@ export const ConversationCTA: React.FC<
 
   const partnerOffer = artwork && findPartnerOffer(artwork.internalID)
   const partnerOfferTimer = useTimer(
-    partnerOffer?.endAt ?? new Date(0).toISOString()
+    partnerOffer?.endAt ?? new Date(0).toISOString(),
   )
 
   const activeOrder = extractNodes(data.activeOrderCTA)[0]
@@ -43,7 +43,7 @@ export const ConversationCTA: React.FC<
 
   // Active order. Shows status of the transaction, with various actions and modal triggers
   const showActiveOrderReviewOfferCTA = Boolean(
-    activeOrder && activeOrder.buyerAction
+    activeOrder && activeOrder.buyerAction,
   )
 
   // Inactive order waiting for commercial actions

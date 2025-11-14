@@ -52,7 +52,7 @@ describe("AuctionDetails", () => {
           name: "Auction Name",
           isRegistrationClosed: false,
         }),
-      })
+      }),
     ).not.toThrow()
   })
 

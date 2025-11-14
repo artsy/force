@@ -110,7 +110,7 @@ export const AuctionFAQRouteFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 const computeProps = ({ viewer }: AuctionFAQRouteProps) => {

@@ -91,7 +91,7 @@ describe("SearchResultsArtworks", () => {
     expect(screen.getByText("Ways to Buy")).toBeInTheDocument()
     expect(screen.getByText("Material")).toBeInTheDocument()
     expect(
-      screen.getByText("Artist Nationality or Ethnicity")
+      screen.getByText("Artist Nationality or Ethnicity"),
     ).toBeInTheDocument()
     expect(screen.getByText("Artwork Location")).toBeInTheDocument()
     expect(screen.getByText("Time Period")).toBeInTheDocument()

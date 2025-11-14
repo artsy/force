@@ -64,5 +64,5 @@ export const NewForYouArtworksGridFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

@@ -47,8 +47,8 @@ describe("OnboardingSearchResults", () => {
 
     expect(
       screen.getByText(
-        'Sorry, we couldn’t find anything for "abc". Please try searching again with a different spelling.'
-      )
+        'Sorry, we couldn’t find anything for "abc". Please try searching again with a different spelling.',
+      ),
     ).toBeInTheDocument()
   })
 

@@ -181,7 +181,7 @@ export const MyCollectionRoutePaginationContainer = createPaginationContainer(
         }
       }
     `,
-  }
+  },
 )
 
 const tracks = {

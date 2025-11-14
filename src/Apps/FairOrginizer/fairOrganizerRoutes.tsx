@@ -15,7 +15,7 @@ const FairOrganizerApp = loadable(
     import(/* webpackChunkName: "fairOrganizerBundle" */ "./FairOrganizerApp"),
   {
     resolveComponent: component => component.FairOrganizerAppFragmentContainer,
-  }
+  },
 )
 
 const FairOrganizerDedicatedArticles = loadable(
@@ -26,7 +26,7 @@ const FairOrganizerDedicatedArticles = loadable(
   {
     resolveComponent: component =>
       component.FairOrganizerDedicatedArticlesFragmentContainer,
-  }
+  },
 )
 
 export const fairOrganizerRoutes: RouteProps[] = [

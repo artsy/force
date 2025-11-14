@@ -28,7 +28,7 @@ describe("logFormat", () => {
       const result = logFormat(tokens, req, res)
 
       expect(result).toMatch(
-        "https://artsy.biz/artworks?foo=abc&setup_intent_client_secret=[FILTERED]&bar=def"
+        "https://artsy.biz/artworks?foo=abc&setup_intent_client_secret=[FILTERED]&bar=def",
       )
     })
     it("preserves other params", () => {

@@ -95,7 +95,7 @@ export const ArtistSeriesRailFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 export const ArtistSeriesRailPlaceholder = () => {

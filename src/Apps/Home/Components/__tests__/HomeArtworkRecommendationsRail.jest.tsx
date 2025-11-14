@@ -52,7 +52,7 @@ describe("HomeArtworkRecommendationsRail", () => {
     expect(screen.getByText("We Think You’ll Love")).toBeInTheDocument()
     expect(screen.getByText("View All Works")).toBeInTheDocument()
     expect(
-      screen.getByRole("link", { name: "View All Works" })
+      screen.getByRole("link", { name: "View All Works" }),
     ).toHaveAttribute("href", "/recommendations/artworks")
   })
 

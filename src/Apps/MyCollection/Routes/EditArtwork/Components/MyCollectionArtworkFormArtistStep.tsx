@@ -42,7 +42,7 @@ export const MyCollectionArtworkFormArtistStep: React.FC<
 
   const collectedArtists = sortBy(
     extractNodes(me?.myCollectionInfo?.collectedArtistsConnection),
-    ["displayLabel"]
+    ["displayLabel"],
   )
 
   const [artistNotFound, setArtistNotFound] = useState(false)
@@ -84,7 +84,7 @@ export const MyCollectionArtworkFormArtistStep: React.FC<
 
   const handleArtistNotFound = useMemo(
     () => debounce(setArtistNotFound, 200),
-    []
+    [],
   )
 
   // Stop the invocation of the debounced function after unmounting

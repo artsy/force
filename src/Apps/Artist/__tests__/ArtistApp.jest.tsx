@@ -48,12 +48,12 @@ describe("ArtistApp", () => {
             },
           }),
         },
-        { match: { params: { artworkId: undefined } } }
+        { match: { params: { artworkId: undefined } } },
       )
 
       // The app-level shell renders a jump target for nested routes
       expect(
-        container.querySelector("#JUMP--artistContentArea")
+        container.querySelector("#JUMP--artistContentArea"),
       ).toBeInTheDocument()
     })
 
@@ -69,17 +69,17 @@ describe("ArtistApp", () => {
             },
           }),
         },
-        { match: { params: { artworkId: undefined } } }
+        { match: { params: { artworkId: undefined } } },
       )
 
       expect(
-        screen.queryByRole("link", { name: "Artworks" })
+        screen.queryByRole("link", { name: "Artworks" }),
       ).not.toBeInTheDocument()
       expect(
-        screen.queryByRole("link", { name: "Auction Results" })
+        screen.queryByRole("link", { name: "Auction Results" }),
       ).not.toBeInTheDocument()
       expect(
-        screen.queryByRole("link", { name: "About" })
+        screen.queryByRole("link", { name: "About" }),
       ).not.toBeInTheDocument()
     })
   })

@@ -177,7 +177,7 @@ describe("ArtworkSidebarCurrentBidInfo", () => {
       expect(screen.getByText(/This auction has a/)).toBeInTheDocument()
       expect(screen.getByRole("button")).toBeInTheDocument() // The buyer's premium button
       expect(
-        screen.getByText(/Shipping, taxes, and additional fees may apply/)
+        screen.getByText(/Shipping, taxes, and additional fees may apply/),
       ).toBeInTheDocument()
     })
   })

@@ -8,7 +8,7 @@ const ExampleApp = loadable(
   () => import(/* webpackChunkName: "exampleBundle" */ "./ExampleApp"),
   {
     resolveComponent: component => component.ExampleAppFragmentContainer,
-  }
+  },
 )
 
 const ArtistRoute = loadable(
@@ -19,7 +19,7 @@ const ArtistRoute = loadable(
   {
     resolveComponent: component =>
       component.ExampleArtistRouteFragmentContainer,
-  }
+  },
 )
 const ArtworkRoute = loadable(
   () =>
@@ -29,7 +29,7 @@ const ArtworkRoute = loadable(
   {
     resolveComponent: component =>
       component.ExampleArtworkRouteFragmentContainer,
-  }
+  },
 )
 const ArtworkFilterRoute = loadable(
   () =>
@@ -39,7 +39,7 @@ const ArtworkFilterRoute = loadable(
   {
     resolveComponent: component =>
       component.ExampleArtworkFilterFragmentContainer,
-  }
+  },
 )
 
 const WelcomeRoute = loadable(
@@ -49,7 +49,7 @@ const WelcomeRoute = loadable(
     ),
   {
     resolveComponent: component => component.WelcomeRoute,
-  }
+  },
 )
 
 const AddToCollectionRoute = loadable(
@@ -60,7 +60,7 @@ const AddToCollectionRoute = loadable(
   {
     resolveComponent: component =>
       component.AddToCollectionRouteFragmentContainer,
-  }
+  },
 )
 
 const SearchRoute = loadable(
@@ -70,7 +70,7 @@ const SearchRoute = loadable(
     ),
   {
     resolveComponent: component => component.SearchRoute,
-  }
+  },
 )
 
 export const exampleRoutes: RouteProps[] = [

@@ -17,7 +17,7 @@ describe("SearchResultsEntity", () => {
     return render(
       <MockBoot>
         <SearchResultsEntity {...searchProps} />
-      </MockBoot>
+      </MockBoot>,
     )
   }
 

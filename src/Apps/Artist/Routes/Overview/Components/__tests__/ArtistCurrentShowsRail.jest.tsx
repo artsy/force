@@ -52,12 +52,12 @@ describe("ArtistCurrentShowsRail", () => {
     expect(screen.getAllByRole("link")).toHaveLength(3)
     expect(screen.getAllByRole("link")[0]).toHaveAttribute(
       "href",
-      expect.stringContaining("/artist/artistSlug/shows")
+      expect.stringContaining("/artist/artistSlug/shows"),
     )
     expect(screen.getByText("View All Shows")).toBeInTheDocument()
     expect(screen.getAllByText('<mock-value-for-field-"name">')).toHaveLength(2)
     expect(
-      screen.getByText('<mock-value-for-field-"exhibitionPeriod">')
+      screen.getByText('<mock-value-for-field-"exhibitionPeriod">'),
     ).toBeInTheDocument()
   })
 
@@ -70,7 +70,7 @@ describe("ArtistCurrentShowsRail", () => {
         context_module: "currentShowsRail",
         destination_page_owner_type: "artist",
         type: "viewAll",
-      })
+      }),
     )
   })
 

@@ -9,7 +9,7 @@ import {
 } from "relay-runtime"
 
 const updater = (
-  store: RecordSourceSelectorProxy<markAllNotificationsAsReadMutation$data>
+  store: RecordSourceSelectorProxy<markAllNotificationsAsReadMutation$data>,
 ) => {
   const root = store.getRoot()
   const me = root.getLinkedRecord("me")
@@ -34,7 +34,7 @@ const updater = (
 }
 
 export const markAllNotificationsAsRead = (
-  environment: Environment
+  environment: Environment,
 ): Promise<markAllNotificationsAsReadMutation$data> => {
   return new Promise((resolve, reject) => {
     commitMutation<markAllNotificationsAsReadMutation>(environment, {

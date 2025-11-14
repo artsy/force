@@ -48,7 +48,7 @@ const ArtQuizTrendingArtistsFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 const ArtQuizTrendingArtistsPlaceholder = () => {

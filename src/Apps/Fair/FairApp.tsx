@@ -118,7 +118,7 @@ export const FairAppFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 const Stuck: React.FC<React.PropsWithChildren<{ stuck: boolean }>> = ({

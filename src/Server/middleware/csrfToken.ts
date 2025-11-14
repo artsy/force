@@ -8,7 +8,7 @@ import type { ArtsyRequest, ArtsyResponse } from "./artsyExpress"
 export function csrfTokenMiddleware(
   _req: ArtsyRequest,
   res: ArtsyResponse,
-  next: NextFunction
+  next: NextFunction,
 ) {
   if (res.cookie && res.locals) {
     res.cookie("CSRF_TOKEN", res.locals.sd.CSRF_TOKEN)

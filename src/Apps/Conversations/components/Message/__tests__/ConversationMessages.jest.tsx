@@ -33,7 +33,7 @@ describe("ConversationMessages", () => {
           }
         }
       `,
-    }
+    },
   )
 
   beforeEach(() => {
@@ -103,7 +103,7 @@ describe("ConversationMessages", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText("Offer Accepted - Pending Action")
+        screen.getByText("Offer Accepted - Pending Action"),
       ).toBeInTheDocument()
       expect(screen.getByText("Offer Accepted")).toBeInTheDocument()
       expect(screen.getByText("First test message")).toBeInTheDocument()
@@ -235,16 +235,16 @@ describe("ConversationMessages", () => {
 
       await waitFor(() => {
         expect(
-          screen.getByText("This is the formatted first message")
+          screen.getByText("This is the formatted first message"),
         ).toBeInTheDocument()
         expect(
-          screen.queryAllByText("This is the formatted first message").length
+          screen.queryAllByText("This is the formatted first message").length,
         ).toEqual(1)
         expect(
-          screen.queryByText("This is the first message")
+          screen.queryByText("This is the first message"),
         ).not.toBeInTheDocument()
         expect(
-          screen.getByText("This is the second message")
+          screen.getByText("This is the second message"),
         ).toBeInTheDocument()
       })
     })
@@ -261,10 +261,10 @@ describe("ConversationMessages", () => {
 
       await waitFor(() => {
         expect(
-          screen.getByText("This is the first message")
+          screen.getByText("This is the first message"),
         ).toBeInTheDocument()
         expect(
-          screen.getByText("This is the second message")
+          screen.getByText("This is the second message"),
         ).toBeInTheDocument()
       })
     })

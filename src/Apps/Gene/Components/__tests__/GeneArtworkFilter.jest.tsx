@@ -58,7 +58,7 @@ describe("GeneArtworkFilter", () => {
     renderWithRelay()
     expect(screen.getByTestId("artwork-link")).toBeInTheDocument()
     expect(
-      screen.getByRole("button", { name: "All Filters" })
+      screen.getByRole("button", { name: "All Filters" }),
     ).toBeInTheDocument()
   })
 
@@ -80,7 +80,7 @@ describe("GeneArtworkFilter", () => {
     })
 
     expect(
-      screen.getByRole("button", { name: "All Filters" })
+      screen.getByRole("button", { name: "All Filters" }),
     ).toBeInTheDocument()
   })
 })

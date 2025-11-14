@@ -8,13 +8,13 @@ import type { ProcessedUserAddress } from "../../utils"
 import { UpdateAddressForm } from "../UpdateAddressForm"
 
 jest.mock(
-  "Apps/Order2/Routes/Checkout/Mutations/useOrder2UpdateUserAddressMutation"
+  "Apps/Order2/Routes/Checkout/Mutations/useOrder2UpdateUserAddressMutation",
 )
 jest.mock(
-  "Apps/Order2/Routes/Checkout/Mutations/useOrder2DeleteUserAddressMutation"
+  "Apps/Order2/Routes/Checkout/Mutations/useOrder2DeleteUserAddressMutation",
 )
 jest.mock(
-  "Apps/Order2/Routes/Checkout/Mutations/useOrder2UpdateUserDefaultAddressMutation"
+  "Apps/Order2/Routes/Checkout/Mutations/useOrder2UpdateUserDefaultAddressMutation",
 )
 jest.mock("Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext")
 jest.mock("Utils/logger")
@@ -192,7 +192,7 @@ describe("UpdateAddressForm", () => {
               name: "Jane Smith",
             }),
           }),
-          "address-id-123"
+          "address-id-123",
         )
       })
     })
@@ -233,8 +233,8 @@ describe("UpdateAddressForm", () => {
       expect(screen.getByText("Delete address?")).toBeInTheDocument()
       expect(
         screen.getByText(
-          "This will remove this address from your saved addresses."
-        )
+          "This will remove this address from your saved addresses.",
+        ),
       ).toBeInTheDocument()
     })
 
@@ -258,7 +258,7 @@ describe("UpdateAddressForm", () => {
 
       await waitFor(() => {
         expect(mockUSProps.onDeleteAddress).toHaveBeenCalledWith(
-          "address-id-123"
+          "address-id-123",
         )
       })
     })

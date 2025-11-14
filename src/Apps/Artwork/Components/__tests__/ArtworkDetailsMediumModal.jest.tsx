@@ -48,8 +48,8 @@ describe("ArtworkDetailsMediumModal", () => {
 
     expect(
       screen.getByText(
-        "Includes collages; drawings; figure drawing; pen and ink; sketch."
-      )
+        "Includes collages; drawings; figure drawing; pen and ink; sketch.",
+      ),
     ).toBeInTheDocument()
   })
 })

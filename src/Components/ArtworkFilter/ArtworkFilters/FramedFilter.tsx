@@ -16,7 +16,7 @@ export const FramedFilter: React.FC<FramedFilterProps> = ({ expanded }) => {
   const currentSelectedFilters = useCurrentlySelectedFilters()
 
   const filtersCount = useFilterLabelCountByKey(
-    SelectedFiltersCountsLabels.framed
+    SelectedFiltersCountsLabels.framed,
   )
   const label = `Framed${filtersCount}`
 

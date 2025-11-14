@@ -38,7 +38,7 @@ describe("CareerHighlightModalStep", () => {
 
     expect(screen.getByText("3")).toBeInTheDocument()
     expect(
-      screen.getByText("Artists were included in major biennials.")
+      screen.getByText("Artists were included in major biennials."),
     ).toBeInTheDocument()
 
     expect(screen.getByText("Yayoi Kusama")).toBeInTheDocument()

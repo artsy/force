@@ -33,9 +33,9 @@ const HomeFeaturedEventsRail: React.FC<
 
   const events = take(
     compact(orderedSet.items).flatMap(item =>
-      item.__typename === "FeaturedLink" ? [item] : []
+      item.__typename === "FeaturedLink" ? [item] : [],
     ),
-    4
+    4,
   )
 
   if (events.length === 0) return null
@@ -166,5 +166,5 @@ export const HomeFeaturedEventsRailFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

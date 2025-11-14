@@ -47,7 +47,7 @@ export const Pagination: React.FC<React.PropsWithChildren<PaginationProps>> = ({
   const handleClick = (
     cursor: string,
     page: number,
-    event: React.MouseEvent
+    event: React.MouseEvent,
   ) => {
     if (userIsForcingNavigation(event)) return
 

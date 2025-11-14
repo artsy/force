@@ -37,7 +37,7 @@ export const ConversationArtwork: React.FC<
         }
       }
     `,
-    conversation
+    conversation,
   )
 
   const item = data?.items?.[0]?.item

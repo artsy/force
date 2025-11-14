@@ -278,7 +278,7 @@ describe("SelectArtworkListsModal", () => {
           context_owner_type: "artist",
           artwork_ids: [artwork.internalID],
           owner_ids: ["collection-one"],
-        })
+        }),
       )
     })
 
@@ -301,7 +301,7 @@ describe("SelectArtworkListsModal", () => {
           context_owner_type: "artist",
           artwork_ids: [artwork.internalID],
           owner_ids: ["collection-one", "collection-two"],
-        })
+        }),
       )
     })
   })

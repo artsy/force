@@ -32,7 +32,7 @@ describe("MyCollectionArtworkHeader", () => {
     // Get closest link
     expect(editCTA.closest("a")).toHaveAttribute(
       "href",
-      "/collector-profile/my-collection/artworks/artwork-id/edit"
+      "/collector-profile/my-collection/artworks/artwork-id/edit",
     )
   })
 

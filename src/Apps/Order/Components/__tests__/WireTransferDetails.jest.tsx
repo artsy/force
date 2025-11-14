@@ -11,13 +11,13 @@ describe("WireTransferDetails", () => {
     render(<WireTransferDetails />)
     expect(
       screen.queryByText(
-        "• Please inform your bank that you will be responsible for all wire transfer fees."
-      )
+        "• Please inform your bank that you will be responsible for all wire transfer fees.",
+      ),
     ).toBeInTheDocument()
     expect(
       screen.queryByText(
-        "• To pay by wire transfer, complete checkout and a member of the Artsy team will contact you with next steps by email."
-      )
+        "• To pay by wire transfer, complete checkout and a member of the Artsy team will contact you with next steps by email.",
+      ),
     ).toBeInTheDocument()
   })
 
@@ -25,13 +25,13 @@ describe("WireTransferDetails", () => {
     render(<WireTransferDetails withDescription={false} />)
     expect(
       screen.queryByText(
-        "• Please inform your bank that you will be responsible for all wire transfer fees."
-      )
+        "• Please inform your bank that you will be responsible for all wire transfer fees.",
+      ),
     ).not.toBeInTheDocument()
     expect(
       screen.queryByText(
-        "• To pay by wire transfer, complete checkout and a member of the Artsy team will contact you with next steps by email."
-      )
+        "• To pay by wire transfer, complete checkout and a member of the Artsy team will contact you with next steps by email.",
+      ),
     ).not.toBeInTheDocument()
   })
 
@@ -40,8 +40,8 @@ describe("WireTransferDetails", () => {
 
     expect(
       screen.queryByText(
-        "• To pay by wire transfer, complete checkout to view banking details"
-      )
+        "• To pay by wire transfer, complete checkout to view banking details",
+      ),
     ).not.toBeInTheDocument()
   })
 })

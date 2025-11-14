@@ -5,7 +5,7 @@ import type { AuthIntentMutation } from "./types"
 
 export const followGeneMutation: AuthIntentMutation = (
   relayEnvironment: Environment,
-  id: string
+  id: string,
 ) => {
   return new Promise((resolve, reject) => {
     commitMutation<AuthIntentFollowGeneMutation>(relayEnvironment, {

@@ -32,25 +32,25 @@ export const PrivateArtworkMetadata: React.FC<
         exhibitionHistory(format: HTML)
       }
     `,
-    artwork
+    artwork,
   )
 
   const isFirstItemExpanded = Boolean(
     data.conditionDescription?.details &&
       data.provenance &&
-      data.exhibitionHistory
+      data.exhibitionHistory,
   )
 
   const isSecondItemExpanded = Boolean(
     !data.conditionDescription?.details &&
       data.provenance &&
-      data.exhibitionHistory
+      data.exhibitionHistory,
   )
 
   const isThirdItemExpanded = Boolean(
     !data.conditionDescription?.details &&
       !data.provenance &&
-      data.exhibitionHistory
+      data.exhibitionHistory,
   )
 
   return (

@@ -6,7 +6,7 @@ import type { ArtsyRequest, ArtsyResponse } from "./artsyExpress"
 export function asyncLocalsMiddleware(
   _req: ArtsyRequest,
   _res: ArtsyResponse,
-  next: NextFunction
+  next: NextFunction,
 ): void {
   const asyncLocalStorage = getAsyncLocalStorage()
   asyncLocalStorage.run(new Map(), () => {

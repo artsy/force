@@ -28,7 +28,7 @@ describe("getContextPageFromClient", () => {
     delete window.location
     // @ts-expect-error
     window.location = new URL(
-      "https://artsy.net/artist-series/test-artist-series"
+      "https://artsy.net/artist-series/test-artist-series",
     )
     const page = getContextPageFromClient()
 

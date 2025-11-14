@@ -171,7 +171,7 @@ export const SettingsSavesProfilesPaginationContainer =
         return { ...fragmentVariables, after }
       },
       query: SETTINGS_SAVES_PROFILES_QUERY,
-    }
+    },
   )
 
 const SETTINGS_SAVES_PROFILES_PLACEHOLDER = (

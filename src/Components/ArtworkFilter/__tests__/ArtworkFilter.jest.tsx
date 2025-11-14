@@ -89,7 +89,7 @@ describe("ArtworkFilter", () => {
           context_module: "artworkGrid",
           // `current` and `changed` are sent as
           // JSON blobs, and verified below
-        })
+        }),
       )
 
       const { current, changed } = trackEvent.mock.calls[0][0]
@@ -101,8 +101,8 @@ describe("ArtworkFilter", () => {
             ...filters,
             acquireable: true,
           },
-          "keyword"
-        )
+          "keyword",
+        ),
       )
 
       expect(JSON.parse(changed)).toMatchObject({
@@ -161,13 +161,13 @@ describe("ArtworkFilter", () => {
           context_module: "artworkGrid",
           page_current: 1,
           page_changed: 3,
-        })
+        }),
       )
     })
 
     it("on immersive view option viewed", () => {
       ;(useFlag as jest.Mock).mockImplementation(
-        flag => flag === "onyx_enable-immersive-view"
+        flag => flag === "onyx_enable-immersive-view",
       )
 
       renderWithRelay({
@@ -182,13 +182,13 @@ describe("ArtworkFilter", () => {
           context_module: "artworkGrid",
           context_page_owner_type: "example-owner-type",
           context_page_owner_id: "example-order-id",
-        })
+        }),
       )
     })
 
     it("on immersive view button click", () => {
       ;(useFlag as jest.Mock).mockImplementation(
-        flag => flag === "onyx_enable-immersive-view"
+        flag => flag === "onyx_enable-immersive-view",
       )
 
       renderWithRelay({
@@ -205,7 +205,7 @@ describe("ArtworkFilter", () => {
           context_module: "artworkGrid",
           context_page_owner_type: "example-owner-type",
           context_page_owner_id: "example-order-id",
-        })
+        }),
       )
     })
   })
@@ -213,7 +213,7 @@ describe("ArtworkFilter", () => {
   describe("desktop", () => {
     beforeEach(() => {
       ;(useFlag as jest.Mock).mockImplementation(
-        flag => flag === "onyx_enable-immersive-view"
+        flag => flag === "onyx_enable-immersive-view",
       )
     })
 
@@ -229,7 +229,7 @@ describe("ArtworkFilter", () => {
       expect(screen.getAllByText("Yellow")).toHaveLength(2)
       expect(screen.getByText("All Filters")).toBeInTheDocument()
       expect(
-        screen.getByRole("button", { name: "Immersive View" })
+        screen.getByRole("button", { name: "Immersive View" }),
       ).toBeInTheDocument()
     })
 
@@ -252,7 +252,7 @@ describe("ArtworkFilter", () => {
       })
 
       fireEvent.click(
-        screen.getAllByAltText("Andy Warhol, ‘Kenny Burrell’, 1956")[0]
+        screen.getAllByAltText("Andy Warhol, ‘Kenny Burrell’, 1956")[0],
       )
 
       expect(trackEvent).toHaveBeenCalledWith({
@@ -355,7 +355,7 @@ describe("ArtworkFilter", () => {
 
       expect(screen.getAllByRole("button")[0]).toHaveTextContent("Filter")
       expect(
-        screen.queryByRole("button", { name: "Immersive View" })
+        screen.queryByRole("button", { name: "Immersive View" }),
       ).not.toBeInTheDocument()
     })
 
@@ -364,7 +364,7 @@ describe("ArtworkFilter", () => {
       renderWithRelay()
 
       expect(
-        screen.queryByTestId("FiltersWithScrollIntoView")
+        screen.queryByTestId("FiltersWithScrollIntoView"),
       ).not.toBeInTheDocument()
       fireEvent.click(screen.getAllByRole("button")[0])
 

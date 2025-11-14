@@ -8,7 +8,7 @@ import { graphql, useFragment } from "react-relay"
  * Fulfillment details is complete if the backend has saved minimal address data.
  */
 export const useCompleteFulfillmentDetailsData = (
-  order: useCompleteFulfillmentDetailsData_order$key
+  order: useCompleteFulfillmentDetailsData_order$key,
 ): Order2FulfillmentDetailsCompletedViewProps | null => {
   const orderData = useFragment(FRAGMENT, order)
 

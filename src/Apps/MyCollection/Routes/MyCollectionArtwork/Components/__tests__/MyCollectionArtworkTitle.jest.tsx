@@ -32,13 +32,13 @@ describe("MyCollectionArtworkTitle", () => {
     expect(screen.getByText("Jean-Michel Basquiat")).toBeInTheDocument()
     expect(screen.getByText("Jean-Michel Basquiat")).toHaveAttribute(
       "href",
-      "/artist/artist-id"
+      "/artist/artist-id",
     )
 
     expect(
       screen.getByText(
-        "Basquiat hand-painted sweatshirt 1979/1980 (early Jean-Michel Basquiat)"
-      )
+        "Basquiat hand-painted sweatshirt 1979/1980 (early Jean-Michel Basquiat)",
+      ),
     ).toBeInTheDocument()
     expect(screen.getByText(", 1979")).toBeInTheDocument()
   })

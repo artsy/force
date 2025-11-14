@@ -92,5 +92,5 @@ export const ArtworkChatBubbleFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

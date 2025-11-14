@@ -141,5 +141,5 @@ export const CollectionArtworksFilterRefetchContainer = createRefetchContainer(
         ...CollectionArtworksFilter_collection @arguments(input: $input)
       }
     }
-  `
+  `,
 )

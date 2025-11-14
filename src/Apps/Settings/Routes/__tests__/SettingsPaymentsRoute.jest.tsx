@@ -54,8 +54,8 @@ describe("SettingsPaymentsRoute", () => {
     expect(screen.queryByText("Credit cards")).not.toBeInTheDocument()
     expect(
       screen.getByText(
-        "Please add a payment method for faster checkout in the future."
-      )
+        "Please add a payment method for faster checkout in the future.",
+      ),
     ).toBeInTheDocument()
   })
 

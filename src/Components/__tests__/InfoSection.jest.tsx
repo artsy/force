@@ -5,7 +5,7 @@ import { render, screen } from "@testing-library/react"
 describe("InfoSection", () => {
   it("shows plain text", () => {
     const { container } = render(
-      <InfoSection info={"<strong>Info example</strong>"} type="text" />
+      <InfoSection info={"<strong>Info example</strong>"} type="text" />,
     )
     expect(container.textContent).toEqual("<strong>Info example</strong>")
   })
@@ -24,7 +24,7 @@ describe("InfoSection", () => {
             <Text>Another item</Text>
           </>
         }
-      />
+      />,
     )
     expect(screen.getByText("Info item")).toBeInTheDocument()
     expect(screen.getByText("Another item")).toBeInTheDocument()

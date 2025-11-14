@@ -5,7 +5,7 @@ import { Column, GridColumns, Image, ResponsiveBox, Text } from "@artsy/palette"
 export const AboutOurStory = () => {
   const { srcSet, src } = resized(
     "https://files.artsy.net/images/about2-story.jpg",
-    { width: 800 }
+    { width: 800 },
   )
 
   return (

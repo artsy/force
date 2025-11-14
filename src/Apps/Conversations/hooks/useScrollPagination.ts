@@ -12,7 +12,7 @@ export const useScrollPagination = <T extends HTMLElement>() => {
 
   const appendElementRef = (
     element: MutableRefObject<T> | undefined,
-    key: string
+    key: string,
   ) => {
     if (!element || elementsKeysStoredRef.current.includes(key)) {
       return
@@ -25,11 +25,11 @@ export const useScrollPagination = <T extends HTMLElement>() => {
     if (length > MAX_ELEMENTS) {
       const prunedElements = elementsRef.current.slice(
         length - MAX_ELEMENTS,
-        length
+        length,
       )
       const prunedKeys = elementsKeysStoredRef.current.slice(
         length - MAX_ELEMENTS,
-        length
+        length,
       )
       elementsRef.current = prunedElements
       elementsKeysStoredRef.current = prunedKeys

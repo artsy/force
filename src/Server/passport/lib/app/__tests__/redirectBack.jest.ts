@@ -13,7 +13,7 @@ describe("redirectBack", () => {
     const redirect = redirectBack(req)
 
     expect(redirect).toEqual(
-      "https://www.artsy.net/artwork/ellsworth-kelly-red-orange-over-blue-2"
+      "https://www.artsy.net/artwork/ellsworth-kelly-red-orange-over-blue-2",
     )
   })
 
@@ -28,7 +28,7 @@ describe("redirectBack", () => {
     const redirect = redirectBack(req)
 
     expect(redirect).toEqual(
-      "https://www.artsy.net/artwork/ellsworth-kelly-red-orange-over-blue-2?foo=bar"
+      "https://www.artsy.net/artwork/ellsworth-kelly-red-orange-over-blue-2?foo=bar",
     )
   })
 
@@ -61,7 +61,7 @@ describe("redirectBack", () => {
     expect(res.redirect).not.toHaveBeenCalled()
 
     expect(req.session.redirectTo).toEqual(
-      "https://www.artsy.net/artwork/ellsworth-kelly-red-orange-over-blue-2"
+      "https://www.artsy.net/artwork/ellsworth-kelly-red-orange-over-blue-2",
     )
   })
 
@@ -80,7 +80,7 @@ describe("redirectBack", () => {
     redirectBack(req, res)
 
     expect(res.redirect).toHaveBeenCalledWith(
-      "https://www.artsy.net/artwork/ellsworth-kelly-red-orange-over-blue-2"
+      "https://www.artsy.net/artwork/ellsworth-kelly-red-orange-over-blue-2",
     )
 
     expect(req.session.redirectTo).toBeUndefined()

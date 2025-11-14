@@ -30,11 +30,11 @@ export const Shows: React.FC<React.PropsWithChildren<PartnerShowsProps>> = ({
 
   if (firstFeaturedEvent?.isFeatured) {
     const filteredUpcomingEvents = extractNodes(upcomingEvents).filter(
-      event => event?.internalID !== firstFeaturedEvent?.internalID
+      event => event?.internalID !== firstFeaturedEvent?.internalID,
     )
 
     const filteredCurrentEvents = extractNodes(currentEvents).filter(
-      event => event?.internalID !== firstFeaturedEvent?.internalID
+      event => event?.internalID !== firstFeaturedEvent?.internalID,
     )
 
     upcomingEventsList = filteredUpcomingEvents

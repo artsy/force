@@ -96,7 +96,7 @@ describe("OrderDetailsOrderSummary", () => {
     })
 
     expect(
-      screen.getByText(/Your purchase is protected with/)
+      screen.getByText(/Your purchase is protected with/),
     ).toBeInTheDocument()
     expect(screen.getByText(/Artsy’s Buyer Guarantee/)).toBeInTheDocument()
   })

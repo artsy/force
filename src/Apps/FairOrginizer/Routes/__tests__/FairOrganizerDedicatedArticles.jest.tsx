@@ -50,7 +50,7 @@ describe("FairOrganizerDedicatedArticles", () => {
     })
 
     expect(
-      screen.getByText(/All Articles for The Armory Show on Artsy/)
+      screen.getByText(/All Articles for The Armory Show on Artsy/),
     ).toBeInTheDocument()
   })
 

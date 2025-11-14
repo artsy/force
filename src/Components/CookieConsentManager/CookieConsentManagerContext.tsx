@@ -53,7 +53,7 @@ export const CookieConsentManagerProvider: FC<
 > = ({ children, openConsentManager }) => {
   const [destinations, setDestinations] = useState<Destination[]>([])
   const [preferences, setPreferences] = useState<CategoryPreferences>(
-    DEFAULT_OPT_IN_PREFERENCES
+    DEFAULT_OPT_IN_PREFERENCES,
   )
 
   const ready = destinations.length > 0

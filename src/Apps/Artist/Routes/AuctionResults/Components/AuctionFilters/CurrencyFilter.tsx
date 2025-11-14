@@ -15,7 +15,7 @@ export const CurrencyFilter: React.FC<
     useCurrentlySelectedFiltersForAuctionResults()
 
   const currencies = aggregations?.find(
-    aggregation => aggregation.slice === "CURRENCIES_COUNT"
+    aggregation => aggregation.slice === "CURRENCIES_COUNT",
   ) || { counts: [] }
 
   const counts = currencies?.counts.filter(c => c !== null)

@@ -50,12 +50,12 @@ describe("ArtistEditorialNewsGrid", () => {
     })
 
     expect(
-      screen.getByText("Artsy Editorial Featuring Test Artist")
+      screen.getByText("Artsy Editorial Featuring Test Artist"),
     ).toBeInTheDocument()
     expect(screen.getByText("View All")).toBeInTheDocument()
     expect(screen.getByRole("link", { name: /test article/i })).toHaveAttribute(
       "href",
-      "/article/test-article"
+      "/article/test-article",
     )
   })
 

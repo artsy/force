@@ -1,4 +1,3 @@
-
 import VerifiedIcon from "@artsy/icons/VerifiedIcon"
 import { Banner } from "@artsy/palette"
 import { useEffect, useState } from "react"

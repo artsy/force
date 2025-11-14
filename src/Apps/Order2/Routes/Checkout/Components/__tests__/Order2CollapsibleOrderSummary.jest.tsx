@@ -86,7 +86,7 @@ describe("Order2CollapsibleOrderSummary", () => {
       Order: () => mockOrder,
     })
     expect(
-      screen.getByText("Test Artwork", { exact: false })
+      screen.getByText("Test Artwork", { exact: false }),
     ).toBeInTheDocument()
     expect(screen.getByText("Test Artist")).toBeInTheDocument()
   })

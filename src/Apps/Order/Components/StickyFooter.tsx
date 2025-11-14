@@ -33,7 +33,7 @@ export const StickyFooter: FC<React.PropsWithChildren<StickyFooterProps>> = ({
 
     window.open(
       "https://support.artsy.net/s/topic/0TO3b000000UessGAC/buy",
-      "_blank"
+      "_blank",
     )
   }
 

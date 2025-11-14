@@ -34,7 +34,7 @@ export interface CreateNewListModalContainerProps
 }
 
 const logger = createLogger(
-  "CollectorProfile/Routes/Saves/Components/CreateNewListModal"
+  "CollectorProfile/Routes/Saves/Components/CreateNewListModal",
 )
 
 export const CreateNewListModal: React.FC<
@@ -61,7 +61,7 @@ export const CreateNewListModal: React.FC<
 
   const handleSubmit = async (
     values: ArtworkListFormikValues,
-    helpers: FormikHelpers<ArtworkListFormikValues>
+    helpers: FormikHelpers<ArtworkListFormikValues>,
   ) => {
     try {
       const { createCollection } = await submitMutation({
@@ -99,7 +99,7 @@ export const CreateNewListModal: React.FC<
 
       // if there is a specific error message for the name field, use that instead
       const nameErrorMessage = error?.fieldErrors?.find(
-        ({ name }) => name === "name"
+        ({ name }) => name === "name",
       )
       if (nameErrorMessage) {
         errorMessage = nameErrorMessage.message

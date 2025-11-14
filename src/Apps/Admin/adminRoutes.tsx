@@ -3,7 +3,7 @@ import loadable from "@loadable/component"
 
 const AdminApp = loadable(
   () => import(/* webpackChunkName: "adminBundle" */ "./AdminApp"),
-  { resolveComponent: component => component.AdminApp }
+  { resolveComponent: component => component.AdminApp },
 )
 
 const AdminNavigateToRoute = loadable(
@@ -11,7 +11,7 @@ const AdminNavigateToRoute = loadable(
     import(
       /* webpackChunkName: "adminBundle" */ "./Routes/AdminNavigateToRoute"
     ),
-  { resolveComponent: component => component.AdminNavigateToRoute }
+  { resolveComponent: component => component.AdminNavigateToRoute },
 )
 
 export const adminRoutes: RouteProps[] = [

@@ -126,10 +126,10 @@ describe("PhotoThumbnail", () => {
       // Look for any element that might contain progress information
       expect(
         document.querySelector(
-          '[class*="Progress"], [data-test*="Progress"], progress, .progress, [role="progressbar"]'
+          '[class*="Progress"], [data-test*="Progress"], progress, .progress, [role="progressbar"]',
         ) ||
           document.querySelector('*[class*="progress" i]') ||
-          document.querySelector("div") // fallback - just check that something renders
+          document.querySelector("div"), // fallback - just check that something renders
       ).toBeInTheDocument()
     })
   })

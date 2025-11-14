@@ -39,7 +39,7 @@ export const errorHandlerMiddleware = async (
   err: any,
   req: ArtsyRequest,
   res: ArtsyResponse,
-  _next: NextFunction
+  _next: NextFunction,
 ) => {
   const enableLogging = NODE_ENV === "development" || VERBOSE_LOGGING
 
@@ -86,8 +86,8 @@ Time: ${new Date().toUTCString()}`
               detail={displayStackTrace ? detail : undefined}
             />
           </LayoutLogoOnly>
-        </Theme>
-      )
+        </Theme>,
+      ),
     )
 
     const styleTags = sheet.getStyleTags()

@@ -35,7 +35,7 @@ export const lastOfferNote = (note: string) => {
 
 export const getInitialOfferState = (
   listPriceOptions: ListPriceOptionsType,
-  lastOffer?: number
+  lastOffer?: number,
 ) => {
   let lastOfferValue: number | undefined
   let selectedPriceOption: string | undefined
@@ -43,7 +43,7 @@ export const getInitialOfferState = (
 
   if (lastOffer) {
     const matchingPriceOption = listPriceOptions.find(
-      option => option?.value === lastOffer
+      option => option?.value === lastOffer,
     )
 
     if (matchingPriceOption) {
@@ -66,7 +66,7 @@ export const getInitialOfferState = (
 export const getOfferPriceOptions = (
   listPrice: ListPriceType,
   isPriceRange?: boolean | null,
-  isPartnerOfferOrder?: boolean
+  isPartnerOfferOrder?: boolean,
 ) => {
   return isPriceRange && !isPartnerOfferOrder
     ? getRangeOptions(listPrice)
@@ -77,7 +77,7 @@ const getRangeOptions = (listPrice: ListPriceType) => {
   const minPriceRange = listPrice?.minPrice?.major
   const maxPriceRange = listPrice?.maxPrice?.major
   const midPriceRange = Math.round(
-    (Number(minPriceRange) + Number(maxPriceRange)) / 2
+    (Number(minPriceRange) + Number(maxPriceRange)) / 2,
   )
   const getRangeDetails = [
     {
@@ -106,7 +106,7 @@ const getRangeOptions = (listPrice: ListPriceType) => {
 
 const getPercentageOptions = (
   listPrice: ListPriceType,
-  isPartnerOfferOrder: boolean | undefined
+  isPartnerOfferOrder: boolean | undefined,
 ) => {
   let percentageOptions
   if (isPartnerOfferOrder) {

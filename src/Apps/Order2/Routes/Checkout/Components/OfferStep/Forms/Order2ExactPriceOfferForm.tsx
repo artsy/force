@@ -57,7 +57,7 @@ export const Order2ExactPriceOfferForm: React.FC<
       }
 
     const matchingOption = priceOptions.find(
-      option => option.value === offerValue
+      option => option.value === offerValue,
     )
     if (matchingOption) {
       return {
@@ -74,10 +74,10 @@ export const Order2ExactPriceOfferForm: React.FC<
 
   const initialState = getInitialState()
   const [selectedRadio, setSelectedRadio] = useState<string | undefined>(
-    initialState.selectedRadio
+    initialState.selectedRadio,
   )
   const [customValue, setCustomValue] = useState<number | undefined>(
-    initialState.customValue
+    initialState.customValue,
   )
 
   // Update parent component state when custom values change
@@ -94,7 +94,7 @@ export const Order2ExactPriceOfferForm: React.FC<
         style: "currency",
         currency: orderData.currencyCode,
       }),
-      orderData.currencyCode
+      orderData.currencyCode,
     )
   }
 

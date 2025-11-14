@@ -108,7 +108,7 @@ export const ArtworkDetailsFragmentContainer = createFragmentContainer(
         provenance(format: HTML)
       }
     `,
-  }
+  },
 )
 
 const TabContainer = styled(Box)``

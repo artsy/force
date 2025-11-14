@@ -54,7 +54,7 @@ const Order2ReviewStepComponent: React.FC<Order2ReviewStepProps> = ({
   const { dimensionsLabel } = useArtworkDimensions(artworkData.dimensions)
 
   const stepState = steps?.find(
-    step => step.name === CheckoutStepName.CONFIRMATION
+    step => step.name === CheckoutStepName.CONFIRMATION,
   )?.state
 
   const [loading, setLoading] = useState(false)
@@ -129,7 +129,7 @@ const Order2ReviewStepComponent: React.FC<Order2ReviewStepProps> = ({
         })
 
         validateAndExtractOrderResponse(
-          submitOrderResult.submitOrder?.orderOrError
+          submitOrderResult.submitOrder?.orderOrError,
         )
 
         orderOrError = submitOrderResult.submitOrder?.orderOrError
@@ -244,7 +244,7 @@ const Order2ReviewStepComponent: React.FC<Order2ReviewStepProps> = ({
 export const Order2ReviewStep = injectDialog(Order2ReviewStepComponent)
 
 const extractLineItemMetadata = (
-  lineItem: NonNullable<Order2ReviewStep_order$data["lineItems"][number]>
+  lineItem: NonNullable<Order2ReviewStep_order$data["lineItems"][number]>,
 ) => {
   const { artwork, artworkVersion, artworkOrEditionSet } = lineItem
 

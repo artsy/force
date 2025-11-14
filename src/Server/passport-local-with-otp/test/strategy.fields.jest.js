@@ -17,7 +17,7 @@ describe.skip("Strategy", () => {
           return done(null, { id: "1234" }, { scope: "read" })
         }
         return done(null, false)
-      }
+      },
     )
 
     let user, info
@@ -65,7 +65,7 @@ describe.skip("Strategy", () => {
           return done(null, { id: "1234" }, { scope: "read" })
         }
         return done(null, false)
-      }
+      },
     )
 
     let user, info

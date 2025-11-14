@@ -59,7 +59,7 @@ export const useCreateTokenAndSubmit = ({
    */
   const createToken = async (
     values: AuctionFormValues,
-    helpers: AuctionFormHelpers
+    helpers: AuctionFormHelpers,
   ) => {
     if (!stripe || !elements) {
       logger.error(stripeNotLoadedErrorMessage)
@@ -87,7 +87,7 @@ export const useCreateTokenAndSubmit = ({
     try {
       const { error, token } = await stripe.createToken(
         cardNumberElement,
-        toStripeAddress(values.address)
+        toStripeAddress(values.address),
       )
 
       if (error) {
@@ -111,7 +111,7 @@ export const useCreateTokenAndSubmit = ({
 
             helpers.setFieldError(
               "creditCard",
-              errorMessageForCard(mutationErrorDetail)
+              errorMessageForCard(mutationErrorDetail),
             )
 
             return mutationErrorDetail

@@ -20,7 +20,7 @@ describe("WaysToBuyFilter", () => {
     return render(
       <AlertProvider initialCriteria={initialCriteria}>
         <WaysToBuyFilterTestComponent />
-      </AlertProvider>
+      </AlertProvider>,
     )
   }
 

@@ -19,7 +19,7 @@ export const FullBleedHeaderPicture = forwardRef(
       height,
       fixed,
     }: FullBleedHeaderPictureProps & { ref?: Ref<HTMLImageElement> },
-    forwardedRef
+    forwardedRef,
   ) => {
     const xs = cropped(src, { width: 450, height: 320 })
     const sm = cropped(src, { width: 767, height: 320 })
@@ -70,5 +70,5 @@ export const FullBleedHeaderPicture = forwardRef(
         </picture>
       </>
     )
-  }
+  },
 )

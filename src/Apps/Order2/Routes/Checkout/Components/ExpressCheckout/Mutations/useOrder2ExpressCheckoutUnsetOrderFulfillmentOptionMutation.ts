@@ -49,6 +49,6 @@ export const useOrder2ExpressCheckoutUnsetOrderFulfillmentOptionMutation =
             }
           }
         `,
-      }
+      },
     )
   }

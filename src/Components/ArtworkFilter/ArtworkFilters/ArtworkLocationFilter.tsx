@@ -20,7 +20,7 @@ export const ArtworkLocationFilter: React.FC<
 > = props => {
   const { expanded } = props
   const enableEnhancedFilter = useFlag(
-    "onyx_enhanced-artwork-location-filtering"
+    "onyx_enhanced-artwork-location-filtering",
   )
 
   if (enableEnhancedFilter) {

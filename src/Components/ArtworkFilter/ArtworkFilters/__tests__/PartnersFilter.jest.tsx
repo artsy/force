@@ -75,7 +75,7 @@ describe(PartnersFilter, () => {
 
     expect(screen.getByText("Custom label")).toBeInTheDocument()
     expect(
-      screen.queryByText("Galleries and Institutions")
+      screen.queryByText("Galleries and Institutions"),
     ).not.toBeInTheDocument()
   })
 

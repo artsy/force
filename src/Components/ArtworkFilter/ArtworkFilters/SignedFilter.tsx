@@ -16,7 +16,7 @@ export const SignedFilter: React.FC<SignedFilterProps> = ({ expanded }) => {
   const currentSelectedFilters = useCurrentlySelectedFilters()
 
   const filtersCount = useFilterLabelCountByKey(
-    SelectedFiltersCountsLabels.signed
+    SelectedFiltersCountsLabels.signed,
   )
   const label = `Signed${filtersCount}`
 

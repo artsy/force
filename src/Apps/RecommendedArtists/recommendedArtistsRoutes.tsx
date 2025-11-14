@@ -9,7 +9,7 @@ const RecommendedArtistsApp = loadable(
     ),
   {
     resolveComponent: component => component.RecommendedArtistsApp,
-  }
+  },
 )
 
 export const recommendedArtistsRoutes: RouteProps[] = [

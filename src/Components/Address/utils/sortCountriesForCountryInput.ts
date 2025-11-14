@@ -12,7 +12,7 @@ type CountryData = (typeof countryPhoneOptions)[number]
 
 export const sortCountriesForCountryInput = (
   unsorted: typeof countryPhoneOptions,
-  firstCode: CountryData["value"] = "us"
+  firstCode: CountryData["value"] = "us",
 ): Array<{ text: string; value: string }> => {
   const BLANK_COUNTRY = { text: "", value: "" }
 

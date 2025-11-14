@@ -25,7 +25,7 @@ describe("StructuredData", () => {
     return render(
       <HeadProvider>
         <StructuredData {...defaultProps} {...props} />
-      </HeadProvider>
+      </HeadProvider>,
     )
   }
 

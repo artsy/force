@@ -88,7 +88,7 @@ export const useNavigationHistory = (): NavigationHistoryContextType => {
 
   if (context === undefined) {
     throw new Error(
-      "useNavigationHistory must be used within a NavigationHistoryProvider"
+      "useNavigationHistory must be used within a NavigationHistoryProvider",
     )
   }
 

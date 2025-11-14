@@ -26,7 +26,7 @@ test.describe("Articles", () => {
       test("/venice-biennale-2015", async ({ page }) => {
         await page.goto("venice-biennale-2015")
         await expect(page).toHaveTitle(
-          "56th Venice Biennale | Artists, Artworks, and Contact Info | Artsy"
+          "56th Venice Biennale | Artists, Artworks, and Contact Info | Artsy",
         )
       })
     })

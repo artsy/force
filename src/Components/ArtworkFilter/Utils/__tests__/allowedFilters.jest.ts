@@ -11,7 +11,7 @@ describe("allowedFilters", () => {
         sort: "-decayed_merch",
         width: "*-*",
         blah: 1,
-      })
+      }),
     ).toEqual({
       height: "*-*",
       majorPeriods: [],
@@ -29,7 +29,7 @@ describe("allowedFilters", () => {
         last: "7.999",
         page: "9",
         size: "foobar",
-      })
+      }),
     ).toEqual({
       first: 100,
       last: 7,
@@ -46,7 +46,7 @@ describe("allowedFilters", () => {
         forSale: 1,
         includeArtworksByFollowedArtists: "",
         includeMediumFilterInAggregation: "garbage",
-      })
+      }),
     ).toEqual({
       acquireable: true,
       atAuction: false,

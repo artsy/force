@@ -38,5 +38,5 @@ export const FairOrganizerInfoFragmentContainer = createFragmentContainer(
         about(format: HTML)
       }
     `,
-  }
+  },
 )

@@ -9,7 +9,7 @@ describe("CountrySelect", () => {
         onSelect={() => {
           done()
         }}
-      />
+      />,
     )
 
     const select = container.querySelector("select")!

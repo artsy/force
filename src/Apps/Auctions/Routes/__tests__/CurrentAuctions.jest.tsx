@@ -43,7 +43,7 @@ describe("CurrentAuctions", () => {
         SaleConnection: () => ({
           edges: null,
         }),
-      })
+      }),
     ).not.toThrowError()
   })
 

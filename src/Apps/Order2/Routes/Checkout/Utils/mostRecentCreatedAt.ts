@@ -1,5 +1,5 @@
 export const mostRecentCreatedAt = <T extends { createdAt?: string | null }>(
-  list: ReadonlyArray<T | null | undefined> | null | undefined
+  list: ReadonlyArray<T | null | undefined> | null | undefined,
 ) => {
   if (!list || list.length === 0) {
     return null

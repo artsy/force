@@ -16,7 +16,7 @@ interface InitialAddressValues {
  */
 
 export const useInitialLocationValues = (
-  countryInputOptions?: Array<{ text: string; value: string }>
+  countryInputOptions?: Array<{ text: string; value: string }>,
 ): InitialAddressValues => {
   const { location, loading } = useUserLocation()
 
@@ -31,7 +31,9 @@ export const useInitialLocationValues = (
         country =>
           location.country &&
           (country.value.toLowerCase() === location.country.toLowerCase() ||
-            country.name.toLowerCase().includes(location.country.toLowerCase()))
+            country.name
+              .toLowerCase()
+              .includes(location.country.toLowerCase())),
       )
 
       return {
@@ -44,7 +46,7 @@ export const useInitialLocationValues = (
     const matchingCountry = countryInputOptions.find(
       country =>
         location.country &&
-        country.text.toLowerCase().includes(location.country.toLowerCase())
+        country.text.toLowerCase().includes(location.country.toLowerCase()),
     )
 
     if (matchingCountry) {
@@ -57,7 +59,8 @@ export const useInitialLocationValues = (
 
     if (selectedCountry) {
       const matchingPhoneCountry = countryPhoneOptions.find(
-        country => country.value.toLowerCase() === selectedCountry.toLowerCase()
+        country =>
+          country.value.toLowerCase() === selectedCountry.toLowerCase(),
       )
       if (matchingPhoneCountry) {
         result.phoneNumberCountryCode = matchingPhoneCountry.value

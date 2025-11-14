@@ -52,7 +52,7 @@ describe("HomeRecommendedArtistsRail", () => {
     expect(screen.getByText("View Artists")).toBeInTheDocument()
     expect(screen.getByRole("link", { name: "View Artists" })).toHaveAttribute(
       "href",
-      "/recommendations/artists"
+      "/recommendations/artists",
     )
   })
 

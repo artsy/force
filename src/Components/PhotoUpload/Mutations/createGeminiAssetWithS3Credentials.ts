@@ -7,7 +7,7 @@ import { commitMutation, graphql } from "react-relay"
 
 export const createGeminiAssetWithS3Credentials = (
   relayEnvironment: Environment,
-  input: CreateGeminiEntryForAssetInput
+  input: CreateGeminiEntryForAssetInput,
 ) => {
   return new Promise<string>((resolve, reject) => {
     commitMutation<createGeminiAssetWithS3CredentialsMutation>(
@@ -38,7 +38,7 @@ export const createGeminiAssetWithS3Credentials = (
             resolve(response.createGeminiEntryForAsset?.asset?.token as string)
           }
         },
-      }
+      },
     )
   })
 }

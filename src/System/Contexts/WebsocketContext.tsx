@@ -42,7 +42,7 @@ export const WebsocketContextProvider: React.FC<
         received: data => {
           setReceivedData({ data })
         },
-      }
+      },
     )
   }, [channelInfo, enabled, xapp_token])
 

@@ -57,10 +57,10 @@ describe("FairArtworks", () => {
     })
 
     expect(
-      container.querySelectorAll('[data-test="artworkGrid"]')
+      container.querySelectorAll('[data-test="artworkGrid"]'),
     ).toHaveLength(1)
     expect(
-      container.querySelectorAll('[data-testid="artwork-link"]')
+      container.querySelectorAll('[data-testid="artwork-link"]'),
     ).toHaveLength(2)
   })
 

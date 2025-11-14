@@ -81,11 +81,11 @@ describe("BankDebitForm", () => {
 
     it("renders correct not enough funds message", () => {
       const screen = render(
-        <BankDebitForm order={testOrder} onError={jest.fn()} />
+        <BankDebitForm order={testOrder} onError={jest.fn()} />,
       )
 
       expect(
-        screen.queryByText("This bank account doesn’t have enough funds.")
+        screen.queryByText("This bank account doesn’t have enough funds."),
       ).toBeInTheDocument()
     })
   })
@@ -105,11 +105,11 @@ describe("BankDebitForm", () => {
 
     it("does not render a checkbox to save bank account", () => {
       const screen = render(
-        <BankDebitForm order={testOrder} onError={jest.fn()} />
+        <BankDebitForm order={testOrder} onError={jest.fn()} />,
       )
 
       expect(
-        screen.queryByTestId("SaveBankAccountCheckbox")
+        screen.queryByTestId("SaveBankAccountCheckbox"),
       ).not.toBeInTheDocument()
     })
   })

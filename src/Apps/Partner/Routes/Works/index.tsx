@@ -119,7 +119,7 @@ export const ArtworksRefetchContainer = createRefetchContainer(
         ...Works_partner @arguments(input: $input)
       }
     }
-  `
+  `,
 )
 
 type PartnerArtworkFilterQueryRendererProps = {}

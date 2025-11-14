@@ -57,11 +57,11 @@ describe("PartnerShowOpenedNotification", () => {
 
     expect(screen.getByTestId("partner-link")).toHaveAttribute(
       "href",
-      "/partner/theo"
+      "/partner/theo",
     )
     expect(screen.getByTestId("view-show-button")).toHaveAttribute(
       "href",
-      "/show/theo-theo-at-art-ono"
+      "/show/theo-theo-at-art-ono",
     )
   })
 })

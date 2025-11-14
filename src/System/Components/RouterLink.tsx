@@ -72,7 +72,7 @@ export const RouterLink: React.FC<
 
   const isSupportedInRouter = useMemo(
     () => !!matcher?.matchRoutes(routes, to),
-    [matcher, routes, to]
+    [matcher, routes, to],
   )
 
   // If displaying the linked URL in the same browsing context, e.g. browser tab.

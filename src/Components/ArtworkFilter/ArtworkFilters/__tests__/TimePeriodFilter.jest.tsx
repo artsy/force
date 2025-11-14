@@ -126,10 +126,10 @@ describe(TimePeriodFilter, () => {
 
     it("leaves non-numeric periods unchanged", () => {
       expect(getTimePeriodToDisplay("Late 19th Century")).toBe(
-        "Late 19th Century"
+        "Late 19th Century",
       )
       expect(getTimePeriodToDisplay("18th Century & Earlier")).toBe(
-        "18th Century & Earlier"
+        "18th Century & Earlier",
       )
     })
   })

@@ -15,7 +15,7 @@ describe("ArtworkModalHeaderInfo", () => {
 
   it("should render artist names and artwork title", () => {
     render(
-      <ArtworkModalHeaderInfo artwork={{ ...artworkEntity, year: null }} />
+      <ArtworkModalHeaderInfo artwork={{ ...artworkEntity, year: null }} />,
     )
 
     // Not displayed
@@ -29,7 +29,7 @@ describe("ArtworkModalHeaderInfo", () => {
     render(
       <ArtworkModalHeaderInfo
         artwork={{ ...artworkEntity, artistNames: null }}
-      />
+      />,
     )
 
     // Not displayed
@@ -43,7 +43,7 @@ describe("ArtworkModalHeaderInfo", () => {
     render(
       <ArtworkModalHeaderInfo
         artwork={{ ...artworkEntity, artistNames: null, year: null }}
-      />
+      />,
     )
 
     // Not displayed
@@ -58,7 +58,7 @@ describe("ArtworkModalHeaderInfo", () => {
       render(
         <ArtworkModalHeaderInfo
           artwork={{ ...artworkEntity, artistNames: null }}
-        />
+        />,
       )
 
       expect(screen.getByText(/Artist Unavailable/)).toBeInTheDocument()
@@ -68,7 +68,7 @@ describe("ArtworkModalHeaderInfo", () => {
       render(
         <ArtworkModalHeaderInfo
           artwork={{ ...artworkEntity, artistNames: "" }}
-        />
+        />,
       )
 
       expect(screen.getByText(/Artist Unavailable/)).toBeInTheDocument()

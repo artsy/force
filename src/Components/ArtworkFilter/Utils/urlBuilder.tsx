@@ -10,7 +10,7 @@ interface BuildUrlOptions {
 
 export const buildUrl = (
   state: ArtworkFilters,
-  options?: BuildUrlOptions
+  options?: BuildUrlOptions,
 ): string => {
   const params = removeDefaultValues(state, {
     defaultValues: options?.defaultValues,
@@ -40,7 +40,7 @@ export const updateUrl = (state: ArtworkFilters, options?: BuildUrlOptions) => {
 
 export const removeDefaultValues = (
   state: ArtworkFilters,
-  options?: BuildUrlOptions
+  options?: BuildUrlOptions,
 ) => {
   return Object.entries(state).reduce(
     (acc, [key, value]: [keyof ArtworkFilters, any]) => {
@@ -50,7 +50,7 @@ export const removeDefaultValues = (
         return { ...acc, [key]: value }
       }
     },
-    {}
+    {},
   )
 }
 
@@ -61,7 +61,7 @@ export const removeDefaultValues = (
  */
 export const updateUrlWithNamespace = <T extends Record<string, unknown>>(
   state: T,
-  options: { namespace: string; pathname?: string }
+  options: { namespace: string; pathname?: string },
 ) => {
   const namespaced = {
     [options.namespace]: paramsToSnakeCase(state),

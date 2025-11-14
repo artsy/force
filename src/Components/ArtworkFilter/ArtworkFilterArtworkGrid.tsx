@@ -131,5 +131,5 @@ export const ArtworkFilterArtworkGridRefetchContainer = createFragmentContainer(
         ...ArtworkGrid_artworks
       }
     `,
-  }
+  },
 )

@@ -33,7 +33,7 @@ describe("ArtworkDetailsAboutTheWorkFromPartner", () => {
     expect(screen.queryByText("Nice Gallery")).toBeInTheDocument()
     expect(screen.getByRole("link")).toHaveAttribute(
       "href",
-      "/partner/nice-gallery"
+      "/partner/nice-gallery",
     )
   })
 

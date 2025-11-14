@@ -52,7 +52,7 @@ export const SearchApp: React.FC<React.PropsWithChildren<SearchAppProps>> = ({
 
   const term = query.term
   const typeAggregation = aggregations?.find(
-    agg => agg?.slice === "TYPE"
+    agg => agg?.slice === "TYPE",
   )?.counts
 
   const artworkCount = artworksConnection?.counts?.total ?? 0

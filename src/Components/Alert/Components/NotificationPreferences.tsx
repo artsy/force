@@ -89,7 +89,7 @@ export const NotificationPreferencesFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 interface NotificationPreferencesQueryRendererProps {

@@ -7,7 +7,7 @@ const Strategy = require("../lib/strategy")
 describe.skip("Strategy", () => {
   describe("failing authentication", () => {
     const strategy = new Strategy((_username, _password, _otp, done) =>
-      done(null, false)
+      done(null, false),
     )
 
     let info
@@ -36,7 +36,7 @@ describe.skip("Strategy", () => {
 
   describe("failing authentication with info", () => {
     const strategy = new Strategy((_username, _password, _otp, done) =>
-      done(null, false, { message: "authentication failed" })
+      done(null, false, { message: "authentication failed" }),
     )
 
     let info

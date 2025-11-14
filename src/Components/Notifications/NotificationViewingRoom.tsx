@@ -19,7 +19,7 @@ export const NotificationViewingRoom: React.FC<
 > = ({ viewingRoom: viewingRoomProp, contextModule, onClick, ...rest }) => {
   const viewingRoom = useFragment(
     notificationViewingRoomFragment,
-    viewingRoomProp
+    viewingRoomProp,
   )
 
   if (!viewingRoom?.image?.imageURLs?.normalized) {

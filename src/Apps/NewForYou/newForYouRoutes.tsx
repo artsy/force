@@ -6,7 +6,7 @@ const NewForYouApp = loadable(
   () => import(/* webpackChunkName: "newForYouBundle" */ "./NewForYouApp"),
   {
     resolveComponent: component => component.NewForYouAppFragmentContainer,
-  }
+  },
 )
 
 export const DEFAULT_NWFY_RECS_MODEL = "C"

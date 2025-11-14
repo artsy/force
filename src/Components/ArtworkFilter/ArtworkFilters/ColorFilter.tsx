@@ -68,7 +68,7 @@ const ColorFilterOption: React.FC<
       updatedValues = [...updatedValues, color]
     } else {
       updatedValues = updatedValues.filter(
-        selectedColor => color !== selectedColor
+        selectedColor => color !== selectedColor,
       )
     }
 
@@ -112,19 +112,19 @@ export const ColorFilter: React.FC<
   const { colors = [] } = useCurrentlySelectedFilters()
 
   const filtersCount = useFilterLabelCountByKey(
-    SelectedFiltersCountsLabels.colors
+    SelectedFiltersCountsLabels.colors,
   )
   const label = `Color${filtersCount}`
 
   const intersected = intersection(
     colors,
-    COLOR_OPTIONS.slice(INITIAL_ITEMS_TO_SHOW).map(({ value }) => value)
+    COLOR_OPTIONS.slice(INITIAL_ITEMS_TO_SHOW).map(({ value }) => value),
   )
   const hasBelowTheFoldColorFilter = intersected.length > 0
   const hasColorFilter = colors.length > 0
   const resultsSorted = sortResults(
     colors,
-    COLOR_OPTIONS.map(({ name, value, hex }) => ({ name, value, hex }))
+    COLOR_OPTIONS.map(({ name, value, hex }) => ({ name, value, hex })),
   )
 
   return (

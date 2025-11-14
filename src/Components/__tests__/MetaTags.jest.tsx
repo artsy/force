@@ -37,7 +37,7 @@ describe("MetaTags", () => {
     render(
       <MockBoot>
         <MetaTags />
-      </MockBoot>
+      </MockBoot>,
     )
 
     const tags = getTags()
@@ -50,28 +50,28 @@ describe("MetaTags", () => {
 
     // Check key meta tags exist (avoid exact match due to quote encoding differences)
     expect(tags.meta.find(tag => tag.name === "title")?.content).toBe(
-      "Artsy — Discover and Buy Fine Art"
+      "Artsy — Discover and Buy Fine Art",
     )
     expect(
-      tags.meta.find(tag => tag.name === "description")?.content
+      tags.meta.find(tag => tag.name === "description")?.content,
     ).toBeTruthy()
     expect(tags.meta.find(tag => tag.property === "og:type")?.content).toBe(
-      "website"
+      "website",
     )
     expect(tags.meta.find(tag => tag.property === "og:url")?.content).toBe(
-      "https://www.artsy.net/"
+      "https://www.artsy.net/",
     )
     expect(tags.meta.find(tag => tag.property === "og:title")?.content).toBe(
-      "Artsy — Discover and Buy Fine Art"
+      "Artsy — Discover and Buy Fine Art",
     )
     expect(
-      tags.meta.find(tag => tag.property === "og:site_name")?.content
+      tags.meta.find(tag => tag.property === "og:site_name")?.content,
     ).toBe("Artsy")
     expect(
-      tags.meta.find(tag => tag.property === "twitter:site")?.content
+      tags.meta.find(tag => tag.property === "twitter:site")?.content,
     ).toBe("@artsy")
     expect(tags.meta.find(tag => tag.property === "fb:app_id")?.content).toBe(
-      "308278682573501"
+      "308278682573501",
     )
   })
 
@@ -84,7 +84,7 @@ describe("MetaTags", () => {
           imageURL="https://example.com/example.jpg"
           pathname="/artist/example-artist"
         />
-      </MockBoot>
+      </MockBoot>,
     )
 
     const tags = getTags()
@@ -156,7 +156,7 @@ describe("MetaTags", () => {
     render(
       <MockBoot>
         <MetaTags blockRobots />
-      </MockBoot>
+      </MockBoot>,
     )
 
     const tags = getTags()
@@ -172,7 +172,7 @@ describe("MetaTags", () => {
     render(
       <MockBoot>
         <MetaTags pathname="foobar" />
-      </MockBoot>
+      </MockBoot>,
     )
 
     const tags = getTags()
@@ -192,7 +192,7 @@ describe("MetaTags", () => {
           imageURL={null}
           pathname={null}
         />
-      </MockBoot>
+      </MockBoot>,
     )
 
     const tags = getTags()
@@ -205,16 +205,16 @@ describe("MetaTags", () => {
 
     // Check key meta tags exist (avoid exact match due to quote encoding differences)
     expect(tags.meta.find(tag => tag.name === "title")?.content).toBe(
-      "Artsy — Discover and Buy Fine Art"
+      "Artsy — Discover and Buy Fine Art",
     )
     expect(
-      tags.meta.find(tag => tag.name === "description")?.content
+      tags.meta.find(tag => tag.name === "description")?.content,
     ).toBeTruthy()
     expect(tags.meta.find(tag => tag.property === "og:type")?.content).toBe(
-      "website"
+      "website",
     )
     expect(tags.meta.find(tag => tag.property === "og:url")?.content).toBe(
-      "https://www.artsy.net/"
+      "https://www.artsy.net/",
     )
   })
 })

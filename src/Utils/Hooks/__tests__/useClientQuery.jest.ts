@@ -19,7 +19,7 @@ describe("useClientQuery", () => {
     const environment = createMockEnvironment()
 
     const { result } = renderHook(() =>
-      useClientQuery({ environment, query: TEST_QUERY })
+      useClientQuery({ environment, query: TEST_QUERY }),
     )
 
     environment.mock.resolveMostRecentOperation(operation => {
@@ -38,7 +38,7 @@ describe("useClientQuery", () => {
 
   it('skips the query if "skip" is true', () => {
     const { result } = renderHook(() =>
-      useClientQuery({ query: TEST_QUERY, skip: true })
+      useClientQuery({ query: TEST_QUERY, skip: true }),
     )
 
     expect(result.current.data).toBeNull()

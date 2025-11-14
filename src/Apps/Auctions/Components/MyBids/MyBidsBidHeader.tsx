@@ -32,7 +32,7 @@ export const MyBidsBidHeader: React.FC<
             contextPageOwnerType,
             destinationPageOwnerType: OwnerType.sale,
             type: "thumbnail",
-          })
+          }),
         )
       }}
     >
@@ -88,5 +88,5 @@ export const MyBidsBidHeaderFragmentContainer = createFragmentContainer(
         slug
       }
     `,
-  }
+  },
 )

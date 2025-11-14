@@ -37,7 +37,7 @@ describe("SuggestedArtworksModal", () => {
         aggregations={[]}
       >
         <SuggestedArtworksModal onClose={() => {}} />
-      </SavedSearchAlertContextProvider>
+      </SavedSearchAlertContextProvider>,
     )
   }
 
@@ -47,8 +47,8 @@ describe("SuggestedArtworksModal", () => {
     expect(screen.getByText("Works by Banksy")).toBeInTheDocument()
     expect(
       screen.getByText(
-        "Available works you may have missed based on similar filters listed below."
-      )
+        "Available works you may have missed based on similar filters listed below.",
+      ),
     ).toBeInTheDocument()
     expect(screen.getByText("Banksy")).toBeInTheDocument()
     expect(screen.getByText("Prints")).toBeInTheDocument()

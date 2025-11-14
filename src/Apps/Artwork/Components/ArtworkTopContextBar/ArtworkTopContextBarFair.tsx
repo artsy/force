@@ -26,7 +26,7 @@ export const ArtworkTopContextBarFair: React.FC<
       }
     `,
     { id },
-    { fetchPolicy: "store-or-network" }
+    { fetchPolicy: "store-or-network" },
   )
 
   if (!data.fair) return null

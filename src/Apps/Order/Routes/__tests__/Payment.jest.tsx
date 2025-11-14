@@ -37,7 +37,7 @@ jest.mock("Apps/Order/Hooks/useStripePaymentBySetupIntentId", () => ({
 
 jest.mock("../../Mutations/useSetPayment", () => {
   const originalUseSetPayment = jest.requireActual(
-    "../../Mutations/useSetPayment"
+    "../../Mutations/useSetPayment",
   )
 
   return {
@@ -48,7 +48,7 @@ jest.mock("../../Mutations/useSetPayment", () => {
 })
 
 const CreditCardPickerMock = jest.requireActual(
-  "../../Components/__mocks__/CreditCardPicker"
+  "../../Components/__mocks__/CreditCardPicker",
 )
 
 jest.mock(
@@ -57,7 +57,7 @@ jest.mock(
   // should just work without this extra argument
   () => {
     return jest.requireActual("../../Components/__mocks__/CreditCardPicker")
-  }
+  },
 )
 jest.mock(
   "Components/BankDebitForm/BankDebitProvider",
@@ -65,7 +65,7 @@ jest.mock(
   // should just work without this extra argument
   () => {
     return jest.requireActual("../../Components/__mocks__/BankDebitProvider")
-  }
+  },
 )
 jest.mock("System/Hooks/useSystemContext")
 jest.mock("react-tracking")
@@ -282,7 +282,7 @@ describe("Payment", () => {
               id: "1234",
             },
           },
-        })
+        }),
       )
     })
 
@@ -343,8 +343,8 @@ describe("Payment", () => {
 
       expect(
         screen.queryByText(
-          'To change the co-badged card network for this purchase, select "Add another card".'
-        )
+          'To change the co-badged card network for this purchase, select "Add another card".',
+        ),
       ).not.toBeInTheDocument()
     })
 
@@ -355,8 +355,8 @@ describe("Payment", () => {
 
       expect(
         screen.getAllByText(
-          /To change the co-badged card network for this purchase, select.*Add another card/
-        )[0]
+          /To change the co-badged card network for this purchase, select.*Add another card/,
+        )[0],
       ).toBeInTheDocument()
     })
   })
@@ -447,21 +447,21 @@ describe("Payment", () => {
 
       expect(
         screen.getAllByText(
-          /Payment processing will take 4-7 business days once the gallery accepts the order/
-        )[0]
+          /Payment processing will take 4-7 business days once the gallery accepts the order/,
+        )[0],
       ).toBeInTheDocument()
       expect(
-        screen.getAllByText(/Bank transfer is powered by Stripe/)[0]
-      ).toBeInTheDocument()
-      expect(
-        screen.getAllByText(
-          /If you can not find your bank, please check your spelling or choose/
-        )[0]
+        screen.getAllByText(/Bank transfer is powered by Stripe/)[0],
       ).toBeInTheDocument()
       expect(
         screen.getAllByText(
-          /Search for your bank institution or select from the options below/
-        )[0]
+          /If you can not find your bank, please check your spelling or choose/,
+        )[0],
+      ).toBeInTheDocument()
+      expect(
+        screen.getAllByText(
+          /Search for your bank institution or select from the options below/,
+        )[0],
       ).toBeInTheDocument()
     })
 
@@ -514,7 +514,7 @@ describe("Payment", () => {
       })
 
       expect(
-        screen.getAllByText("Bank transfer payment details")[0]
+        screen.getAllByText("Bank transfer payment details")[0],
       ).toBeInTheDocument()
     })
   })
@@ -571,20 +571,20 @@ describe("Payment", () => {
       })
 
       expect(
-        screen.getAllByText(/Bank transfer is powered by Stripe/)[0]
+        screen.getAllByText(/Bank transfer is powered by Stripe/)[0],
       ).toBeInTheDocument()
       expect(
-        screen.getAllByText(/Enter your billing address in the form below/)[0]
-      ).toBeInTheDocument()
-      expect(
-        screen.getAllByText(
-          /Your bank account must be denominated in EUR and located in one of the SEPA countries/
-        )[0]
+        screen.getAllByText(/Enter your billing address in the form below/)[0],
       ).toBeInTheDocument()
       expect(
         screen.getAllByText(
-          /Once your order is accepted, please allow 7-10 business days for processing your payment/
-        )[0]
+          /Your bank account must be denominated in EUR and located in one of the SEPA countries/,
+        )[0],
+      ).toBeInTheDocument()
+      expect(
+        screen.getAllByText(
+          /Once your order is accepted, please allow 7-10 business days for processing your payment/,
+        )[0],
       ).toBeInTheDocument()
     })
 
@@ -634,7 +634,7 @@ describe("Payment", () => {
       })
 
       expect(
-        screen.getAllByText("SEPA bank transfer payment details")[0]
+        screen.getAllByText("SEPA bank transfer payment details")[0],
       ).toBeInTheDocument()
     })
   })
@@ -691,12 +691,12 @@ describe("Payment", () => {
       })
 
       expect(
-        screen.getAllByText(/To pay by wire transfer, complete checkout/)[0]
+        screen.getAllByText(/To pay by wire transfer, complete checkout/)[0],
       ).toBeInTheDocument()
       expect(
         screen.getAllByText(
-          /Please inform your bank that you will be responsible/
-        )[0]
+          /Please inform your bank that you will be responsible/,
+        )[0],
       ).toBeInTheDocument()
     })
 
@@ -773,7 +773,7 @@ describe("Payment", () => {
       })
 
       expect(
-        screen.getAllByText("Wire transfer payment details")[0]
+        screen.getAllByText("Wire transfer payment details")[0],
       ).toBeInTheDocument()
     })
   })
@@ -789,28 +789,28 @@ describe("Payment", () => {
       WIRE_TRANSFER: () => {
         expect(
           screen.getAllByText(
-            /To pay by wire transfer, complete checkout to view banking/
-          )[0]
+            /To pay by wire transfer, complete checkout to view banking/,
+          )[0],
         ).toBeInTheDocument()
         expect(
           screen.getAllByText(
-            /Please inform your bank that you will be responsible for all wire transfer fees/
-          )[0]
+            /Please inform your bank that you will be responsible for all wire transfer fees/,
+          )[0],
         ).toBeInTheDocument()
       },
       US_BANK_ACCOUNT: () => {
         expect(
           screen.getAllByText(
-            /Search for your bank institution or select from the options below/
-          )[0]
+            /Search for your bank institution or select from the options below/,
+          )[0],
         ).toBeInTheDocument()
         expect(screen.getByTestId("bank-account-form")).toBeInTheDocument()
       },
       SEPA_DEBIT: () => {
         expect(
           screen.getAllByText(
-            /Your bank account must be denominated in EUR and located in one of the SEPA countries/
-          )[0]
+            /Your bank account must be denominated in EUR and located in one of the SEPA countries/,
+          )[0],
         ).toBeInTheDocument()
         expect(screen.getByTestId("sepa-bank-account-form")).toBeInTheDocument()
       },
@@ -854,7 +854,7 @@ describe("Payment", () => {
 
       expect(screen.getByText("Artwork Description")).toBeInTheDocument()
       expect(
-        screen.getByText("additional artwork details provided by admin")
+        screen.getByText("additional artwork details provided by admin"),
       ).toBeInTheDocument()
     })
 
@@ -865,7 +865,7 @@ describe("Payment", () => {
 
       expect(screen.getByText("Artwork Description")).toBeInTheDocument()
       expect(
-        screen.getByText("Provenance: Artwork acquired via an auction in 2000")
+        screen.getByText("Provenance: Artwork acquired via an auction in 2000"),
       ).toBeInTheDocument()
     })
 
@@ -876,7 +876,7 @@ describe("Payment", () => {
 
       expect(screen.getByText("Artwork Description")).toBeInTheDocument()
       expect(
-        screen.getByText("Condition: Artwork is in perfect condition")
+        screen.getByText("Condition: Artwork is in perfect condition"),
       ).toBeInTheDocument()
     })
 
@@ -890,7 +890,9 @@ describe("Payment", () => {
     })
 
     it.each(
-      Object.keys(paymentMethodExpectsMap).map(paymentMethod => [paymentMethod])
+      Object.keys(paymentMethodExpectsMap).map(paymentMethod => [
+        paymentMethod,
+      ]),
     )(
       "shows content for %s if only this payment method avaliable",
       paymentMethod => {
@@ -917,7 +919,7 @@ describe("Payment", () => {
 
         paymentMethodExpectsMap[paymentMethod]()
         expect(screen.queryByTestId("payment-methods")).not.toBeInTheDocument()
-      }
+      },
     )
   })
 })

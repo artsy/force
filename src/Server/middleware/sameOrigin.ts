@@ -7,7 +7,7 @@ import type { ArtsyRequest, ArtsyResponse } from "./artsyExpress"
 export function sameOriginMiddleware(
   _req: ArtsyRequest,
   res: ArtsyResponse,
-  next: NextFunction
+  next: NextFunction,
 ) {
   if (!res.headersSent) {
     res.set("X-Frame-Options", "SAMEORIGIN")

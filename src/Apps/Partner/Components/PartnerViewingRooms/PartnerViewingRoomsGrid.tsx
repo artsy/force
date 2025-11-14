@@ -24,7 +24,7 @@ const PartnerViewingRoomsGrid: React.FC<
   const [loading, setLoading] = useState(false)
 
   const viewingRoomNodes = extractNodes(
-    viewingRoomsConnection.viewingRoomsConnection
+    viewingRoomsConnection.viewingRoomsConnection,
   )
 
   const loadMore = () => {
@@ -129,5 +129,5 @@ export const PartnerViewingRoomsGridFragmentContainer =
           }
         }
       `,
-    }
+    },
   )

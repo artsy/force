@@ -144,5 +144,5 @@ export const FairOrganizerDedicatedArticlesFragmentContainer =
         }
       `,
     },
-    FairOrganizerDedicatedArticlesQuery
+    FairOrganizerDedicatedArticlesQuery,
   )

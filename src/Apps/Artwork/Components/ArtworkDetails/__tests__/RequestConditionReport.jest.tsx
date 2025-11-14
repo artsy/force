@@ -93,7 +93,7 @@ describe("RequestConditionReport", () => {
         Artwork: () => artwork,
       },
       {},
-      relayEnv
+      relayEnv,
     )
 
     const requestButton = screen.getByText("Request condition report")
@@ -101,7 +101,7 @@ describe("RequestConditionReport", () => {
 
     await waitFor(() => {
       relayEnv.mock.resolveMostRecentOperation(operation =>
-        MockPayloadGenerator.generate(operation)
+        MockPayloadGenerator.generate(operation),
       )
     })
 
@@ -122,7 +122,7 @@ describe("RequestConditionReport", () => {
         Artwork: () => artwork,
       },
       {},
-      relayEnv
+      relayEnv,
     )
 
     const requestButton = screen.getByText("Request condition report")
@@ -135,8 +135,8 @@ describe("RequestConditionReport", () => {
     await waitFor(() => {
       expect(
         screen.getByText(
-          "Something went wrong. Please try again or contact support@artsy.net."
-        )
+          "Something went wrong. Please try again or contact support@artsy.net.",
+        ),
       ).toBeInTheDocument()
     })
   })
@@ -158,7 +158,7 @@ describe("RequestConditionReport", () => {
           Artwork: () => artwork,
         },
         {},
-        relayEnv
+        relayEnv,
       )
 
       const loginButton = screen.getByText("Log in to request")

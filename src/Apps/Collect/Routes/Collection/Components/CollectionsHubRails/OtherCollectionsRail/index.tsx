@@ -42,5 +42,5 @@ export const OtherCollectionsRailsContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

@@ -8,7 +8,7 @@ import { graphql, useFragment } from "react-relay"
  * not from this hook, since payment data is stored in context rather than the order fragment.
  */
 export const useCompletePaymentData = (
-  order: useCompletePaymentData_order$key
+  order: useCompletePaymentData_order$key,
 ): true | null => {
   const orderData = useFragment(FRAGMENT, order)
 

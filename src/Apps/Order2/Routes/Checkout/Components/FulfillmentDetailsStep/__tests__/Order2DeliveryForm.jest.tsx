@@ -157,22 +157,22 @@ describe("Order2DeliveryForm", () => {
         // Fill out the form with valid data
         await userEvent.type(
           screen.getByPlaceholderText("Add full name"),
-          "Jane Smith"
+          "Jane Smith",
         )
         await userEvent.type(
           screen.getByLabelText("Street address"),
-          "456 Oak Ave"
+          "456 Oak Ave",
         )
         await userEvent.type(screen.getByLabelText("City"), "Los Angeles")
         await userEvent.selectOptions(screen.getByLabelText("Country"), "US")
         await userEvent.type(
           screen.getByLabelText("State, region or province"),
-          "CA"
+          "CA",
         )
         await userEvent.type(screen.getByLabelText("ZIP/Postal code"), "90210")
         await userEvent.type(
           screen.getByTestId("addressFormFields.phoneNumber"),
-          "5559876543"
+          "5559876543",
         )
 
         // Click the button to submit the form
@@ -217,7 +217,7 @@ describe("Order2DeliveryForm", () => {
 
         // setCheckoutMode should be called during form submission
         expect(mockCheckoutContext.setCheckoutMode).toHaveBeenCalledWith(
-          "standard"
+          "standard",
         )
       })
 
@@ -251,22 +251,22 @@ describe("Order2DeliveryForm", () => {
         // Fill out the form with valid data
         await userEvent.type(
           screen.getByPlaceholderText("Add full name"),
-          "Jane Smith"
+          "Jane Smith",
         )
         await userEvent.type(
           screen.getByLabelText("Street address"),
-          "456 Oak Ave"
+          "456 Oak Ave",
         )
         await userEvent.type(screen.getByLabelText("City"), "Los Angeles")
         await userEvent.selectOptions(screen.getByLabelText("Country"), "US")
         await userEvent.type(
           screen.getByLabelText("State, region or province"),
-          "CA"
+          "CA",
         )
         await userEvent.type(screen.getByLabelText("ZIP/Postal code"), "90210")
         await userEvent.type(
           screen.getByTestId("addressFormFields.phoneNumber"),
-          "5559876543"
+          "5559876543",
         )
 
         // Click submit button
@@ -310,10 +310,10 @@ describe("Order2DeliveryForm", () => {
 
         // Should trigger tracking during form submission
         expect(mockCheckoutContext.setCheckoutMode).toHaveBeenCalledWith(
-          "standard"
+          "standard",
         )
         expect(
-          mockCheckoutContext.checkoutTracking.clickedOrderProgression
+          mockCheckoutContext.checkoutTracking.clickedOrderProgression,
         ).toHaveBeenCalled()
       })
 
@@ -336,10 +336,10 @@ describe("Order2DeliveryForm", () => {
 
         // Should not trigger tracking because form validation should prevent submission
         expect(
-          mockCheckoutContext.checkoutTracking.clickedOrderProgression
+          mockCheckoutContext.checkoutTracking.clickedOrderProgression,
         ).not.toHaveBeenCalled()
         expect(
-          mockCheckoutContext.setFulfillmentDetailsComplete
+          mockCheckoutContext.setFulfillmentDetailsComplete,
         ).not.toHaveBeenCalled()
       })
 
@@ -373,21 +373,21 @@ describe("Order2DeliveryForm", () => {
         // Fill out the form with valid data
         await userEvent.type(
           screen.getByPlaceholderText("Add full name"),
-          "Jane Smith"
+          "Jane Smith",
         )
         await userEvent.type(
           screen.getByLabelText("Street address"),
-          "456 Oak Ave"
+          "456 Oak Ave",
         )
         await userEvent.type(screen.getByLabelText("City"), "Los Angeles")
         await userEvent.type(
           screen.getByLabelText("State, region or province"),
-          "CA"
+          "CA",
         )
         await userEvent.type(screen.getByLabelText("ZIP/Postal code"), "90210")
         await userEvent.type(
           screen.getByTestId("addressFormFields.phoneNumber"),
-          "5559876543"
+          "5559876543",
         )
 
         act(() => {
@@ -418,7 +418,7 @@ describe("Order2DeliveryForm", () => {
         await flushPromiseQueue()
 
         expect(shippingAddressMutation.operationName).toBe(
-          "useOrder2SetOrderDeliveryAddressMutation"
+          "useOrder2SetOrderDeliveryAddressMutation",
         )
         expect(shippingAddressMutation.operationVariables.input).toEqual({
           id: "order-id",
@@ -456,7 +456,7 @@ describe("Order2DeliveryForm", () => {
         await flushPromiseQueue()
 
         expect(createAddressMutation.operationName).toBe(
-          "useOrder2CreateUserAddressMutation"
+          "useOrder2CreateUserAddressMutation",
         )
         expect(createAddressMutation.operationVariables.input).toEqual({
           attributes: {
@@ -474,7 +474,7 @@ describe("Order2DeliveryForm", () => {
 
         // Should trigger tracking and context updates
         expect(mockCheckoutContext.setCheckoutMode).toHaveBeenCalledWith(
-          "standard"
+          "standard",
         )
 
         expect(mockCheckoutContext.setStepErrorMessage).toHaveBeenCalledWith({
@@ -483,7 +483,7 @@ describe("Order2DeliveryForm", () => {
         })
 
         expect(
-          mockCheckoutContext.setFulfillmentDetailsComplete
+          mockCheckoutContext.setFulfillmentDetailsComplete,
         ).toHaveBeenCalledWith({})
       })
 
@@ -516,21 +516,21 @@ describe("Order2DeliveryForm", () => {
 
         await userEvent.type(
           screen.getByPlaceholderText("Add full name"),
-          "Jane Smith"
+          "Jane Smith",
         )
         await userEvent.type(
           screen.getByLabelText("Street address"),
-          "456 Oak Ave"
+          "456 Oak Ave",
         )
         await userEvent.type(screen.getByLabelText("City"), "Los Angeles")
         await userEvent.type(
           screen.getByLabelText("State, region or province"),
-          "CA"
+          "CA",
         )
         await userEvent.type(screen.getByLabelText("ZIP/Postal code"), "90210")
         await userEvent.type(
           screen.getByTestId("addressFormFields.phoneNumber"),
-          "5559876543"
+          "5559876543",
         )
 
         act(() => {
@@ -573,14 +573,14 @@ describe("Order2DeliveryForm", () => {
         await flushPromiseQueue()
 
         expect(createAddressMutation.operationName).toBe(
-          "useOrder2CreateUserAddressMutation"
+          "useOrder2CreateUserAddressMutation",
         )
 
         expect(mockCheckoutContext.setCheckoutMode).toHaveBeenCalledWith(
-          "standard"
+          "standard",
         )
         expect(
-          mockCheckoutContext.setFulfillmentDetailsComplete
+          mockCheckoutContext.setFulfillmentDetailsComplete,
         ).toHaveBeenCalledWith({})
       })
 
@@ -617,21 +617,21 @@ describe("Order2DeliveryForm", () => {
         // Fill out the form with valid data
         await userEvent.type(
           screen.getByPlaceholderText("Add full name"),
-          "Jane Smith"
+          "Jane Smith",
         )
         await userEvent.type(
           screen.getByLabelText("Street address"),
-          "456 Oak Ave"
+          "456 Oak Ave",
         )
         await userEvent.type(screen.getByLabelText("City"), "Los Angeles")
         await userEvent.type(
           screen.getByLabelText("State, region or province"),
-          "CA"
+          "CA",
         )
         await userEvent.type(screen.getByLabelText("ZIP/Postal code"), "90210")
         await userEvent.type(
           screen.getByTestId("addressFormFields.phoneNumber"),
-          "5559876543"
+          "5559876543",
         )
 
         // Submit the form
@@ -652,7 +652,7 @@ describe("Order2DeliveryForm", () => {
         await flushPromiseQueue()
 
         expect(unsetMutation.operationName).toBe(
-          "useOrder2UnsetOrderFulfillmentOptionMutation"
+          "useOrder2UnsetOrderFulfillmentOptionMutation",
         )
         expect(unsetMutation.operationVariables.input).toEqual({
           id: "order-id",
@@ -685,7 +685,7 @@ describe("Order2DeliveryForm", () => {
         })
 
         expect(addressMutation.operationName).toBe(
-          "useOrder2SetOrderDeliveryAddressMutation"
+          "useOrder2SetOrderDeliveryAddressMutation",
         )
         expect(addressMutation.operationVariables.input).toEqual({
           id: "order-id",
@@ -716,7 +716,7 @@ describe("Order2DeliveryForm", () => {
 
         // Should trigger context updates after all mutations complete
         expect(
-          mockCheckoutContext.setFulfillmentDetailsComplete
+          mockCheckoutContext.setFulfillmentDetailsComplete,
         ).toHaveBeenCalledWith({})
       })
 
@@ -750,21 +750,21 @@ describe("Order2DeliveryForm", () => {
         // Fill out the form with valid data, will trigger server error via mock
         await userEvent.type(
           screen.getByPlaceholderText("Add full name"),
-          "Jane Smith"
+          "Jane Smith",
         )
         await userEvent.type(
           screen.getByLabelText("Street address"),
-          "456 Oak Ave"
+          "456 Oak Ave",
         )
         await userEvent.type(screen.getByLabelText("City"), "Los Angeles")
         await userEvent.type(
           screen.getByLabelText("State, region or province"),
-          "CA"
+          "CA",
         )
         await userEvent.type(screen.getByLabelText("ZIP/Postal code"), "90210")
         await userEvent.type(
           screen.getByTestId("addressFormFields.phoneNumber"),
-          "5559876543"
+          "5559876543",
         )
 
         // Submit the form
@@ -782,19 +782,19 @@ describe("Order2DeliveryForm", () => {
         await flushPromiseQueue()
 
         expect(mutation.operationName).toBe(
-          "useOrder2SetOrderDeliveryAddressMutation"
+          "useOrder2SetOrderDeliveryAddressMutation",
         )
 
         // Should display error message
         await waitFor(() => {
           expect(
-            screen.getByText("Postal code is required")
+            screen.getByText("Postal code is required"),
           ).toBeInTheDocument()
         })
 
         // Should not trigger context updates when mutation fails
         expect(
-          mockCheckoutContext.setFulfillmentDetailsComplete
+          mockCheckoutContext.setFulfillmentDetailsComplete,
         ).not.toHaveBeenCalled()
       })
 
@@ -828,21 +828,21 @@ describe("Order2DeliveryForm", () => {
         // Fill out the form with valid data
         await userEvent.type(
           screen.getByPlaceholderText("Add full name"),
-          "Jane Smith"
+          "Jane Smith",
         )
         await userEvent.type(
           screen.getByLabelText("Street address"),
-          "456 Oak Ave"
+          "456 Oak Ave",
         )
         await userEvent.type(screen.getByLabelText("City"), "Los Angeles")
         await userEvent.type(
           screen.getByLabelText("State, region or province"),
-          "CA"
+          "CA",
         )
         await userEvent.type(screen.getByLabelText("ZIP/Postal code"), "90210")
         await userEvent.type(
           screen.getByTestId("addressFormFields.phoneNumber"),
-          "5559876543"
+          "5559876543",
         )
 
         act(() => {
@@ -878,7 +878,7 @@ describe("Order2DeliveryForm", () => {
         await flushPromiseQueue()
 
         expect(shippingAddressMutation.operationName).toBe(
-          "useOrder2SetOrderDeliveryAddressMutation"
+          "useOrder2SetOrderDeliveryAddressMutation",
         )
         expect(shippingAddressMutation.operationVariables.input).toEqual({
           id: "order-id",
@@ -916,7 +916,7 @@ describe("Order2DeliveryForm", () => {
         await flushPromiseQueue()
 
         expect(createAddressMutation.operationName).toBe(
-          "useOrder2CreateUserAddressMutation"
+          "useOrder2CreateUserAddressMutation",
         )
         expect(createAddressMutation.operationVariables.input).toEqual({
           attributes: {
@@ -934,7 +934,7 @@ describe("Order2DeliveryForm", () => {
 
         // Should trigger tracking and context updates
         expect(mockCheckoutContext.setCheckoutMode).toHaveBeenCalledWith(
-          "standard"
+          "standard",
         )
 
         expect(mockCheckoutContext.setStepErrorMessage).toHaveBeenCalledWith({
@@ -945,7 +945,7 @@ describe("Order2DeliveryForm", () => {
         })
 
         expect(
-          mockCheckoutContext.setFulfillmentDetailsComplete
+          mockCheckoutContext.setFulfillmentDetailsComplete,
         ).not.toHaveBeenCalled()
       })
 
@@ -979,21 +979,21 @@ describe("Order2DeliveryForm", () => {
         // Fill out the form with valid data
         await userEvent.type(
           screen.getByPlaceholderText("Add full name"),
-          "Jane Smith"
+          "Jane Smith",
         )
         await userEvent.type(
           screen.getByLabelText("Street address"),
-          "456 Oak Ave"
+          "456 Oak Ave",
         )
         await userEvent.type(screen.getByLabelText("City"), "Los Angeles")
         await userEvent.type(
           screen.getByLabelText("State, region or province"),
-          "CA"
+          "CA",
         )
         await userEvent.type(screen.getByLabelText("ZIP/Postal code"), "90210")
         await userEvent.type(
           screen.getByTestId("addressFormFields.phoneNumber"),
-          "5559876543"
+          "5559876543",
         )
 
         act(() => {
@@ -1046,7 +1046,7 @@ describe("Order2DeliveryForm", () => {
         await flushPromiseQueue()
 
         expect(createAddressMutation.operationName).toBe(
-          "useOrder2CreateUserAddressMutation"
+          "useOrder2CreateUserAddressMutation",
         )
         expect(createAddressMutation.operationVariables.input).toEqual({
           attributes: {
@@ -1063,7 +1063,7 @@ describe("Order2DeliveryForm", () => {
         })
 
         expect(
-          mockCheckoutContext.setFulfillmentDetailsComplete
+          mockCheckoutContext.setFulfillmentDetailsComplete,
         ).toHaveBeenCalledWith({})
       })
     })
@@ -1097,7 +1097,7 @@ describe("Order2DeliveryForm", () => {
         await waitFor(() => {
           expect(screen.getByText("Full name is required")).toBeInTheDocument()
           expect(
-            screen.getByText("Phone number is required")
+            screen.getByText("Phone number is required"),
           ).toBeInTheDocument()
         })
       })
@@ -1214,7 +1214,7 @@ describe("Order2DeliveryForm", () => {
       await flushPromiseQueue()
 
       expect(mutation.operationName).toBe(
-        "useOrder2SetOrderDeliveryAddressMutation"
+        "useOrder2SetOrderDeliveryAddressMutation",
       )
       expect(mutation.operationVariables.input).toEqual({
         id: "order-id",
@@ -1230,7 +1230,7 @@ describe("Order2DeliveryForm", () => {
       })
 
       expect(
-        mockCheckoutContext.setFulfillmentDetailsComplete
+        mockCheckoutContext.setFulfillmentDetailsComplete,
       ).toHaveBeenCalledWith({})
     })
 
@@ -1286,7 +1286,7 @@ describe("Order2DeliveryForm", () => {
       await flushPromiseQueue()
 
       expect(mutation.operationName).toBe(
-        "useOrder2SetOrderDeliveryAddressMutation"
+        "useOrder2SetOrderDeliveryAddressMutation",
       )
       expect(mutation.operationVariables.input).toEqual({
         id: "order-id",
@@ -1302,7 +1302,7 @@ describe("Order2DeliveryForm", () => {
       })
 
       expect(
-        mockCheckoutContext.setFulfillmentDetailsComplete
+        mockCheckoutContext.setFulfillmentDetailsComplete,
       ).toHaveBeenCalledWith({})
     })
 
@@ -1553,11 +1553,11 @@ describe("Order2DeliveryForm", () => {
       await flushPromiseQueue()
 
       expect(shippingMutation.operationName).toBe(
-        "useOrder2SetOrderDeliveryAddressMutation"
+        "useOrder2SetOrderDeliveryAddressMutation",
       )
 
       expect(
-        mockCheckoutContext.setFulfillmentDetailsComplete
+        mockCheckoutContext.setFulfillmentDetailsComplete,
       ).toHaveBeenCalledWith({})
     })
 
@@ -1585,7 +1585,7 @@ describe("Order2DeliveryForm", () => {
       })
 
       expect(
-        mockCheckoutContext.checkoutTracking.clickedAddNewShippingAddress
+        mockCheckoutContext.checkoutTracking.clickedAddNewShippingAddress,
       ).toHaveBeenCalled()
     })
 
@@ -1614,11 +1614,11 @@ describe("Order2DeliveryForm", () => {
       expect(screen.getByLabelText("Street address")).toBeInTheDocument()
       expect(screen.getByLabelText("City")).toBeInTheDocument()
       expect(
-        screen.getByLabelText("State, region or province")
+        screen.getByLabelText("State, region or province"),
       ).toBeInTheDocument()
       expect(screen.getByLabelText("ZIP/Postal code")).toBeInTheDocument()
       expect(
-        screen.getByTestId("addressFormFields.country")
+        screen.getByTestId("addressFormFields.country"),
       ).toBeInTheDocument()
     })
 

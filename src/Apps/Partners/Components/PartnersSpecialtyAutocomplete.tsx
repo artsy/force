@@ -37,8 +37,8 @@ const PartnersSpecialtyAutocomplete: FC<
   }: React.ChangeEvent<HTMLInputElement>) => {
     setOptions(
       specialties.filter(({ text }) =>
-        text.toLowerCase().includes(value.toLowerCase())
-      )
+        text.toLowerCase().includes(value.toLowerCase()),
+      ),
     )
   }
 

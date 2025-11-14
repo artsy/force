@@ -103,7 +103,7 @@ export const HomeAuctionLotsRailFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 export const HomeAuctionLotsRailQueryRenderer: React.FC<

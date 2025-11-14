@@ -48,7 +48,7 @@ describe("FairsFairRow", () => {
       expect(screen.getByText("Example Fair")).toBeInTheDocument()
       expect(screen.getByRole("link")).toHaveAttribute(
         "href",
-        "/organizer-example"
+        "/organizer-example",
       )
     })
   })

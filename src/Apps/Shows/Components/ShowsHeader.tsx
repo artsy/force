@@ -102,7 +102,7 @@ export const ShowsHeaderFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 const City = styled(RouterLink)`

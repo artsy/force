@@ -14,7 +14,7 @@ const Order2App = loadable(
   () => import(/* webpackChunkName: "checkoutBundle" */ "./Order2App"),
   {
     resolveComponent: component => component.Order2App,
-  }
+  },
 )
 
 const CheckoutRoute = loadable(
@@ -24,7 +24,7 @@ const CheckoutRoute = loadable(
     ),
   {
     resolveComponent: component => component.Order2CheckoutRoute,
-  }
+  },
 )
 
 export const order2Routes: RouteProps[] = [
@@ -85,7 +85,7 @@ export const order2Routes: RouteProps[] = [
                 : `/orders/${order.internalID}/shipping`
             if (process.env.NODE_ENV === "development") {
               console.error(
-                `Redirecting from to ${redirectUrl} because Order2 checkout is not enabled for this order`
+                `Redirecting from to ${redirectUrl} because Order2 checkout is not enabled for this order`,
               )
             }
             throw new RedirectException(redirectUrl)
@@ -147,7 +147,7 @@ export const order2Routes: RouteProps[] = [
             const redirectUrl = `/orders/${order.internalID}/offer`
             if (process.env.NODE_ENV === "development") {
               console.error(
-                `Redirecting from to ${redirectUrl} because Order2 checkout is not enabled for this order`
+                `Redirecting from to ${redirectUrl} because Order2 checkout is not enabled for this order`,
               )
             }
             throw new RedirectException(redirectUrl)

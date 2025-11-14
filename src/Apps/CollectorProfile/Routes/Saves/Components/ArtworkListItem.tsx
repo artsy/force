@@ -39,7 +39,7 @@ const ArtworkListItem: FC<
 
   const isContentOutOfView = () => {
     const element = document.getElementById(
-      `JUMP--${SAVES_ARTWORKS_SECTION_ID}`
+      `JUMP--${SAVES_ARTWORKS_SECTION_ID}`,
     )
 
     if (element === null) return false
@@ -137,7 +137,7 @@ export const ArtworkListItemFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 interface ArtworkListItemLinkProps extends RouterLinkProps {

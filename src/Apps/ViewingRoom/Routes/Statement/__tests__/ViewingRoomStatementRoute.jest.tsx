@@ -64,14 +64,14 @@ describe("ViewingRoomStatementRoute", () => {
 
     // Check for main sections
     expect(
-      screen.getByText(/Checked into a Club Med in the French Alps/)
+      screen.getByText(/Checked into a Club Med in the French Alps/),
     ).toBeInTheDocument()
     expect(screen.getAllByText(/View works \(5\)/)).toHaveLength(2)
     expect(
-      screen.getByText(/I have everything I need right here/)
+      screen.getByText(/I have everything I need right here/),
     ).toBeInTheDocument()
     expect(
-      screen.getByText(/Life can only be understood backwards/)
+      screen.getByText(/Life can only be understood backwards/),
     ).toBeInTheDocument()
     expect(screen.getByText("Guy Yanai")).toBeInTheDocument()
   })
@@ -92,7 +92,7 @@ describe("ViewingRoomStatementRoute", () => {
       })
 
       expect(
-        screen.getByText(/Checked into a Club Med in the French Alps/)
+        screen.getByText(/Checked into a Club Med in the French Alps/),
       ).toBeInTheDocument()
     })
   })
@@ -116,7 +116,7 @@ describe("ViewingRoomStatementRoute", () => {
       // Check for links containing the viewing room slug
       const links = screen.getAllByRole("link")
       const worksLinks = links.filter(link =>
-        link.getAttribute("href")?.includes(`/viewing-room/${slug}/works`)
+        link.getAttribute("href")?.includes(`/viewing-room/${slug}/works`),
       )
       expect(worksLinks.length).toBeGreaterThan(0)
     })
@@ -130,7 +130,7 @@ describe("ViewingRoomStatementRoute", () => {
       const artworkLinks = screen
         .getAllByRole("link")
         .filter(link =>
-          link.getAttribute("href")?.includes(`/viewing-room/${slug}/works`)
+          link.getAttribute("href")?.includes(`/viewing-room/${slug}/works`),
         )
 
       if (artworkLinks[0]) {
@@ -154,7 +154,7 @@ describe("ViewingRoomStatementRoute", () => {
       // Find the button by its text content - there are multiple "View works" links
       const viewWorksButtons = screen.getAllByText(/View works/)
       const targetButton = viewWorksButtons.find(el =>
-        el.closest('[data-test="viewingRoomWorksButton"]')
+        el.closest('[data-test="viewingRoomWorksButton"]'),
       )
 
       if (targetButton) {
@@ -178,7 +178,7 @@ describe("ViewingRoomStatementRoute", () => {
       })
 
       expect(
-        screen.getByText(/I have everything I need right here/)
+        screen.getByText(/I have everything I need right here/),
       ).toBeInTheDocument()
     })
   })
@@ -191,8 +191,8 @@ describe("ViewingRoomStatementRoute", () => {
 
       expect(
         screen.getByText(
-          /Life can only be understood backwards; but it must be lived forwards\./
-        )
+          /Life can only be understood backwards; but it must be lived forwards\./,
+        ),
       ).toBeInTheDocument()
     })
   })
@@ -205,10 +205,10 @@ describe("ViewingRoomStatementRoute", () => {
 
       expect(screen.getByText("Guy Yanai")).toBeInTheDocument()
       expect(
-        screen.getByText(/His visual tools are both ubiquitous and obscure/)
+        screen.getByText(/His visual tools are both ubiquitous and obscure/),
       ).toBeInTheDocument()
       expect(
-        screen.getByText(/View of Guy Yanai's studio in February 2019/)
+        screen.getByText(/View of Guy Yanai's studio in February 2019/),
       ).toBeInTheDocument()
     })
   })

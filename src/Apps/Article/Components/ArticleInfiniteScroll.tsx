@@ -137,7 +137,7 @@ export const ArticleInfiniteScrollPaginationContainer =
         return { ...fragmentVariables, count, after: cursor }
       },
       query: ARTICLE_NEXT_QUERY,
-    }
+    },
   )
 
 interface ArticleInfiniteScrollQueryRendererProps {

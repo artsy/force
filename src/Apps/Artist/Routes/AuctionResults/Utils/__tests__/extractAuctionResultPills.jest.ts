@@ -311,7 +311,7 @@ describe("extractAuctionResultPillsFromCriteria", () => {
             value: "2020-2023",
             displayValue: "Created: 2020–2023",
           },
-        ])
+        ]),
       )
     })
   })

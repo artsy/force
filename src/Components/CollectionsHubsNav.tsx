@@ -82,5 +82,5 @@ export const CollectionsHubsNavFragmentContainer = createFragmentContainer(
         thumbnail
       }
     `,
-  }
+  },
 )

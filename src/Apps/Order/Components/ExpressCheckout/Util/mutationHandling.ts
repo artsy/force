@@ -17,19 +17,19 @@ type OrderMutationError<T> = Extract<
 >
 
 const isOrderMutationSuccess = <T extends { __typename?: string }>(
-  data: T | null | undefined
+  data: T | null | undefined,
 ): data is OrderMutationSuccess<T> => {
   return data?.__typename === "OrderMutationSuccess"
 }
 
 const isOrderMutationActionRequired = <T extends { __typename?: string }>(
-  data: T | null | undefined
+  data: T | null | undefined,
 ): data is OrderMutationActionRequired<T> => {
   return data?.__typename === "OrderMutationActionRequired"
 }
 
 const isOrderMutationError = <T extends { __typename?: string }>(
-  data: T | null | undefined
+  data: T | null | undefined,
 ): data is OrderMutationError<T> => {
   return data?.__typename === "OrderMutationError"
 }
@@ -41,7 +41,7 @@ const isOrderMutationError = <T extends { __typename?: string }>(
 export const validateAndExtractOrderResponse = <
   T extends { __typename?: string },
 >(
-  orderOrError?: T | null
+  orderOrError?: T | null,
 ): OrderMutationSuccess<T> | OrderMutationActionRequired<T> => {
   if (isOrderMutationSuccess(orderOrError)) {
     return orderOrError
@@ -54,12 +54,12 @@ export const validateAndExtractOrderResponse = <
   if (isOrderMutationError(orderOrError)) {
     throw new CheckoutMutationError(
       orderOrError.mutationError.message,
-      orderOrError.mutationError.code
+      orderOrError.mutationError.code,
     )
   }
 
   throw new CheckoutMutationError(
-    `Unhandled orderOrError response type: ${JSON.stringify(orderOrError)}`
+    `Unhandled orderOrError response type: ${JSON.stringify(orderOrError)}`,
   )
 }
 

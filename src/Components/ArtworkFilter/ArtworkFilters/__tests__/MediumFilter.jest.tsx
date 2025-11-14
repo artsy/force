@@ -24,7 +24,7 @@ describe(MediumFilter, () => {
     it("updates context on filter change", () => {
       render(<MediumFilter expanded />)
       expect(currentArtworkFilterContext().filters?.additionalGeneIDs).toEqual(
-        []
+        [],
       )
 
       userEvent.click(screen.getByText("Painting"))
@@ -51,7 +51,7 @@ describe(MediumFilter, () => {
 
       userEvent.click(screen.getByText("Clear all"))
       expect(currentArtworkFilterContext().filters?.additionalGeneIDs).toEqual(
-        []
+        [],
       )
     })
 
@@ -104,7 +104,7 @@ describe(MediumFilter, () => {
     it("updates context with custom medium values", () => {
       render(<MediumFilter expanded />)
       expect(currentArtworkFilterContext().filters?.additionalGeneIDs).toEqual(
-        []
+        [],
       )
 
       userEvent.click(screen.getByText("Foo Medium"))

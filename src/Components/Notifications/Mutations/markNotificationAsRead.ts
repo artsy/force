@@ -14,7 +14,7 @@ const updater = (id: string, store: any) => {
 export const markNotificationAsRead = (
   environment: Environment,
   id: string,
-  internalID: string
+  internalID: string,
 ): Promise<markNotificationAsReadMutation$data> => {
   return new Promise((resolve, reject) => {
     commitMutation<markNotificationAsReadMutation>(environment, {
@@ -76,7 +76,7 @@ export const useMarkNotificationAsRead = () => {
     const response = await markNotificationAsRead(
       relayEnvironment,
       id,
-      internalID
+      internalID,
     )
 
     const responseOrError = response.markNotificationAsRead?.responseOrError

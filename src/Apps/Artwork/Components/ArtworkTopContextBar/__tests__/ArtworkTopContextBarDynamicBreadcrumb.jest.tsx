@@ -109,7 +109,7 @@ describe("ArtworkTopContextBarDynamicBreadcrumb", () => {
         contextMatchType="SALE"
       >
         <div>Fallback Content</div>
-      </ArtworkTopContextBarDynamicBreadcrumb>
+      </ArtworkTopContextBarDynamicBreadcrumb>,
     )
 
     expect(screen.getByTestId("sale-component")).toBeInTheDocument()
@@ -124,7 +124,7 @@ describe("ArtworkTopContextBarDynamicBreadcrumb", () => {
         contextMatchType="FAIR"
       >
         <div>Fallback Content</div>
-      </ArtworkTopContextBarDynamicBreadcrumb>
+      </ArtworkTopContextBarDynamicBreadcrumb>,
     )
 
     expect(screen.getByTestId("fair-component")).toBeInTheDocument()
@@ -139,7 +139,7 @@ describe("ArtworkTopContextBarDynamicBreadcrumb", () => {
         contextMatchType="SHOW"
       >
         <div>Fallback Content</div>
-      </ArtworkTopContextBarDynamicBreadcrumb>
+      </ArtworkTopContextBarDynamicBreadcrumb>,
     )
 
     expect(screen.getByTestId("show-component")).toBeInTheDocument()
@@ -154,7 +154,7 @@ describe("ArtworkTopContextBarDynamicBreadcrumb", () => {
         contextMatchType={"UNKNOWN" as any}
       >
         <div data-testid="fallback">Fallback Content</div>
-      </ArtworkTopContextBarDynamicBreadcrumb>
+      </ArtworkTopContextBarDynamicBreadcrumb>,
     )
 
     expect(screen.getByTestId("fallback")).toBeInTheDocument()

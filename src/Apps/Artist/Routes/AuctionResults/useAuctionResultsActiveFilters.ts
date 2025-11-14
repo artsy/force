@@ -15,7 +15,7 @@ const YEAR_RANGE_FIELDS = {
 } as const
 
 export const useAuctionResultsActiveFilters = (
-  defaultPills: FilterPill[] = []
+  defaultPills: FilterPill[] = [],
 ) => {
   const {
     aggregations,
@@ -31,7 +31,7 @@ export const useAuctionResultsActiveFilters = (
   })
 
   const criteria = allowedAuctionResultFilters(
-    (filters ?? {}) as Record<string, string | boolean>
+    (filters ?? {}) as Record<string, string | boolean>,
   )
   const filterPills = extractAuctionResultPillsFromCriteria({
     criteria: criteria as AuctionResultsFilters,
@@ -52,8 +52,8 @@ export const useAuctionResultsActiveFilters = (
       yearRangeFields.forEach(field =>
         setFilter(
           field as keyof AuctionResultsFilters,
-          initialState[field as keyof AuctionResultsFilters]
-        )
+          initialState[field as keyof AuctionResultsFilters],
+        ),
       )
       return
     }

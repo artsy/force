@@ -43,7 +43,7 @@ describe("useAuctionResultsTracking", () => {
     it("track with specific owner type", () => {
       setupHook().trackClickedAuctionResultItem(
         true,
-        OwnerType.myCollectionInsights
+        OwnerType.myCollectionInsights,
       )
 
       expect(trackingSpy).toBeCalledWith({

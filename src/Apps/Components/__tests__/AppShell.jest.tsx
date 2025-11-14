@@ -43,7 +43,7 @@ describe("AppShell", () => {
     render(
       <SystemContextProvider>
         <ClientRouter />
-      </SystemContextProvider>
+      </SystemContextProvider>,
     )
 
     await waitFor(() => {
@@ -75,7 +75,7 @@ describe("AppShell", () => {
     render(
       <SystemContextProvider>
         <ClientRouter />
-      </SystemContextProvider>
+      </SystemContextProvider>,
     )
 
     await waitFor(() => {
@@ -104,7 +104,7 @@ describe("AppShell", () => {
     render(
       <SystemContextProvider>
         <ClientRouter />
-      </SystemContextProvider>
+      </SystemContextProvider>,
     )
 
     await waitFor(() => {

@@ -61,7 +61,7 @@ describe("SettingsOrders", () => {
     })
 
     expect(
-      screen.getByText("You have no orders to display.")
+      screen.getByText("You have no orders to display."),
     ).toBeInTheDocument()
   })
 

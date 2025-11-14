@@ -56,7 +56,7 @@ describe("Deprecated Save artwork", () => {
       },
     }
     ;(SaveArtwork as jest.Mock).mockImplementation(() =>
-      Promise.resolve(defaultMutationResults)
+      Promise.resolve(defaultMutationResults),
     )
 
     trackEvent = jest.fn()

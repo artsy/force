@@ -115,7 +115,7 @@ const ArticleBody: FC<React.PropsWithChildren<ArticleBodyProps>> = ({
               >
                 {!!article.publishedAt &&
                   DateTime.fromISO(article.publishedAt).toFormat(
-                    "MMM d, yyyy h:mma"
+                    "MMM d, yyyy h:mma",
                   )}
 
                 <ArticleNewsSourceFragmentContainer article={article} />
@@ -315,5 +315,5 @@ export const ArticleBodyFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

@@ -9,11 +9,11 @@ test.describe("/collect", () => {
     const metaDescription = page.locator('meta[name="description"]')
     await expect(metaDescription).toHaveAttribute(
       "content",
-      "Find artworks by subject matter, style/technique, movement, price, and gallery/institution."
+      "Find artworks by subject matter, style/technique, movement, price, and gallery/institution.",
     )
 
     await expect(page.locator("h1").first()).toContainText(
-      "Collect art and design online"
+      "Collect art and design online",
     )
   })
 
@@ -22,7 +22,7 @@ test.describe("/collect", () => {
 
     await expect(page).toHaveTitle("Paintings - For Sale on Artsy")
     await expect(page.locator("h1").first()).toContainText(
-      "Collect paintings online"
+      "Collect paintings online",
     )
   })
 })

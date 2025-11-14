@@ -225,7 +225,7 @@ export const Order2ExpressCheckoutUI: React.FC<
         "expressCheckoutError",
         JSON.stringify({
           title: "An error occurred",
-        })
+        }),
       )
 
       errorRef.current = null
@@ -268,7 +268,7 @@ export const Order2ExpressCheckoutUI: React.FC<
 
       const validatedResult = validateAndExtractOrderResponse(
         updateOrderShippingAddressResult.updateOrderShippingAddress
-          ?.orderOrError
+          ?.orderOrError,
       )
 
       const shippingRates = extractShippingRates(validatedResult.order)
@@ -301,7 +301,7 @@ export const Order2ExpressCheckoutUI: React.FC<
     if (shippingRate.id === CALCULATING_SHIPPING_RATE.id) {
       errorRef.current = "shipping_options_not_available"
       logger.error(
-        "Shipping options not available yet, skipping setting fulfillment option"
+        "Shipping options not available yet, skipping setting fulfillment option",
       )
       reject()
       return
@@ -382,7 +382,7 @@ export const Order2ExpressCheckoutUI: React.FC<
         })
 
       validateAndExtractOrderResponse(
-        updateOrderPaymentMethodResult.updateOrder?.orderOrError
+        updateOrderPaymentMethodResult.updateOrder?.orderOrError,
       )
 
       // Finally we have all fulfillment details
@@ -409,7 +409,7 @@ export const Order2ExpressCheckoutUI: React.FC<
 
       validateAndExtractOrderResponse(
         updateOrderShippingAddressResult.updateOrderShippingAddress
-          ?.orderOrError
+          ?.orderOrError,
       )
 
       // Trigger form validation and wallet collection
@@ -440,7 +440,7 @@ export const Order2ExpressCheckoutUI: React.FC<
                   },
                 }
               : undefined,
-        }
+        },
       )
 
       if (error) {
@@ -461,7 +461,7 @@ export const Order2ExpressCheckoutUI: React.FC<
       })
 
       validateAndExtractOrderResponse(
-        submitOrderResult.submitOrder?.orderOrError
+        submitOrderResult.submitOrder?.orderOrError,
       )
 
       // Redirect to status page after successful order submission
@@ -483,7 +483,7 @@ export const Order2ExpressCheckoutUI: React.FC<
         "expressCheckoutError",
         JSON.stringify({
           title: "Payment failed",
-        })
+        }),
       )
 
       resetOrder()
@@ -494,7 +494,7 @@ export const Order2ExpressCheckoutUI: React.FC<
     let enabledPaymentMethods: ExpressCheckoutPaymentMethod[] = []
     try {
       enabledPaymentMethods = extractEnabledPaymentMethods(
-        e.availablePaymentMethods
+        e.availablePaymentMethods,
       )
       if (enabledPaymentMethods) {
         checkoutTracking.expressCheckoutViewed({
@@ -627,12 +627,12 @@ const extractLineItems = (order: ParseableOrder): Array<LineItem> => {
   }
 
   const selectedFulfillmentOption = order.fulfillmentOptions.find(
-    option => option.selected
+    option => option.selected,
   )
 
   if (selectedFulfillmentOption && shippingTotal) {
     const shippingRate = shippingRateForFulfillmentOption(
-      selectedFulfillmentOption
+      selectedFulfillmentOption,
     )
     shippingLine = {
       name: shippingRate?.displayName || "Shipping",
@@ -656,10 +656,10 @@ const extractLineItems = (order: ParseableOrder): Array<LineItem> => {
 }
 
 const extractAllowedShippingCountries = (
-  order: ParseableOrder
+  order: ParseableOrder,
 ): ClickResolveDetails["allowedShippingCountries"] => {
   return order.availableShippingCountries.map(countryCode =>
-    countryCode.toUpperCase()
+    countryCode.toUpperCase(),
   )
 }
 
@@ -723,7 +723,7 @@ const extractShippingRates = (order: ParseableOrder): Array<ShippingRate> => {
       ? rates.concat(CALCULATING_SHIPPING_RATE)
       : rates
   const selectedFulfillmentOption = order.fulfillmentOptions.find(
-    option => option.selected
+    option => option.selected,
   )
   if (selectedFulfillmentOption!.type === "PICKUP") {
     // if pickup is selected, it should be the first option since Stripe auto
@@ -736,7 +736,7 @@ const extractShippingRates = (order: ParseableOrder): Array<ShippingRate> => {
 }
 
 function extractEnabledPaymentMethods(
-  paymentMethods: AvailablePaymentMethods
+  paymentMethods: AvailablePaymentMethods,
 ): ExpressCheckoutPaymentMethod[] {
   if (!paymentMethods) return []
   return Object.entries(paymentMethods)

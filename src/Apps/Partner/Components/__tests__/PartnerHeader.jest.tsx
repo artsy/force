@@ -142,7 +142,7 @@ describe("PartnerHeader", () => {
     })
 
     expect(
-      screen.queryByText(/Jeddah|New York|San Francisco/)
+      screen.queryByText(/Jeddah|New York|San Francisco/),
     ).not.toBeInTheDocument()
   })
 
@@ -163,7 +163,7 @@ describe("PartnerHeader", () => {
 
     const partnerNameLinks = screen.getAllByRole("link", { name: "White cube" })
     partnerNameLinks.forEach(partnerNameLink =>
-      expect(partnerNameLink).toHaveAttribute("href", "/partner/white-cube")
+      expect(partnerNameLink).toHaveAttribute("href", "/partner/white-cube"),
     )
 
     const image = screen.getByRole("img")
@@ -181,7 +181,7 @@ describe("PartnerHeader", () => {
     })
 
     expect(
-      screen.queryByText(/Jeddah|New York|San Francisco/)
+      screen.queryByText(/Jeddah|New York|San Francisco/),
     ).not.toBeInTheDocument()
   })
 
@@ -203,7 +203,7 @@ describe("PartnerHeader", () => {
     })
 
     expect(
-      screen.queryByRole("button", { name: /follow/i })
+      screen.queryByRole("button", { name: /follow/i }),
     ).not.toBeInTheDocument()
   })
 
@@ -215,7 +215,7 @@ describe("PartnerHeader", () => {
     })
 
     expect(
-      screen.queryByRole("button", { name: /follow/i })
+      screen.queryByRole("button", { name: /follow/i }),
     ).not.toBeInTheDocument()
   })
 

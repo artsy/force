@@ -58,7 +58,7 @@ export const ShowStructuredData: React.FC<
       "@type": "Person",
       "@id": `${artist.href}#artist`,
       name: artist.name ?? "Unknown",
-    })
+    }),
   )
 
   const images = extractNodes(show.imagesConnection)

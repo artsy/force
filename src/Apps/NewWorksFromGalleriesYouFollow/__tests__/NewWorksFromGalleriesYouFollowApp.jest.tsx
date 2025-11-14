@@ -42,7 +42,7 @@ describe("NewWorksFromGalleriesYouFollowApp", () => {
     expect(screen.getByText("MetaTags")).toBeInTheDocument()
 
     expect(
-      screen.getByText("New Works from Galleries You Follow")
+      screen.getByText("New Works from Galleries You Follow"),
     ).toBeInTheDocument()
   })
 
@@ -53,7 +53,7 @@ describe("NewWorksFromGalleriesYouFollowApp", () => {
 
     expect(screen.getByText(/(^Log in)/g)).toBeInTheDocument()
     expect(
-      screen.getByText(/(to see your personalized recommendations\.$)/g)
+      screen.getByText(/(to see your personalized recommendations\.$)/g),
     ).toBeInTheDocument()
   })
 
@@ -61,11 +61,11 @@ describe("NewWorksFromGalleriesYouFollowApp", () => {
     renderWithRelay()
 
     expect(
-      screen.queryByText(/(^Already have an account\?)/g)
+      screen.queryByText(/(^Already have an account\?)/g),
     ).not.toBeInTheDocument()
     expect(screen.queryByText(/(^Log in)/g)).not.toBeInTheDocument()
     expect(
-      screen.queryByText(/(to see your personalized recommendations\.$)/g)
+      screen.queryByText(/(to see your personalized recommendations\.$)/g),
     ).not.toBeInTheDocument()
   })
 

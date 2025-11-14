@@ -11,7 +11,7 @@ const StatementRoute = loadable(
   {
     resolveComponent: component =>
       component.ViewingRoomStatementRouteFragmentContainer,
-  }
+  },
 )
 const WorksRoute = loadable(
   () =>
@@ -21,19 +21,19 @@ const WorksRoute = loadable(
   {
     resolveComponent: component =>
       component.ViewingRoomWorksRouteFragmentContainer,
-  }
+  },
 )
 const ViewingRoomApp = loadable(
   () => import(/* webpackChunkName: "viewingRoomBundle" */ "./ViewingRoomApp"),
   {
     resolveComponent: component => component.ViewingRoomAppFragmentContainer,
-  }
+  },
 )
 const ViewingRoomsApp = loadable(
   () => import(/* webpackChunkName: "viewingRoomBundle" */ "./ViewingRoomsApp"),
   {
     resolveComponent: component => component.ViewingRoomsAppFragmentContainer,
-  }
+  },
 )
 
 export const viewingRoomRoutes: RouteProps[] = [

@@ -33,7 +33,7 @@ export const MyCollectionBenefits: React.FC<
     {
       width: 910,
       height: 652,
-    }
+    },
   )
 
   const DesktopLayout = () => (

@@ -6,7 +6,7 @@ import {
 
 export const orderPaymentReducer = (
   state: OrderPaymentState,
-  action: OrderPaymentAction
+  action: OrderPaymentAction,
 ) => {
   switch (action.type) {
     case OrderPaymentActions.SET_SELECTED_BANK_ACCOUNT_ID: {

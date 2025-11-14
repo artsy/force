@@ -42,7 +42,7 @@ const ArtistRelatedGeneCategories: FC<
         })}
       </Flex>
     ),
-    [genes]
+    [genes],
   )
 
   if (genes.length === 0) return null

@@ -5,13 +5,13 @@ test.describe("/artwork/:id", () => {
     await page.goto("/artwork/pablo-picasso-guernica")
 
     await expect(page).toHaveTitle(
-      /Pablo Picasso \| Guernica \(1937\) \| Artsy/
+      /Pablo Picasso \| Guernica \(1937\) \| Artsy/,
     )
 
     const metaDescription = page.locator('meta[name="description"]')
     await expect(metaDescription).toHaveAttribute(
       "content",
-      "From Museo Reina Sofía, Pablo Picasso, Guernica (1937), Oil on canvas, 349.3 × 776.6 cm"
+      "From Museo Reina Sofía, Pablo Picasso, Guernica (1937), Oil on canvas, 349.3 × 776.6 cm",
     )
   })
 

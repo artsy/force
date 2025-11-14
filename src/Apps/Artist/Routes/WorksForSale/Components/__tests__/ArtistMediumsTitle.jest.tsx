@@ -64,7 +64,7 @@ describe("ArtistMediumsTitle", () => {
     renderWithHead(
       <ArtworkFilterContextProvider {...context}>
         <ArtistMediumsTitle {...defaultProps} />
-      </ArtworkFilterContextProvider>
+      </ArtworkFilterContextProvider>,
     )
 
     expect(getTitleText()).toBe("Artist Name - Paintings | Artsy")
@@ -80,11 +80,11 @@ describe("ArtistMediumsTitle", () => {
     renderWithHead(
       <ArtworkFilterContextProvider {...context}>
         <ArtistMediumsTitle {...defaultProps} />
-      </ArtworkFilterContextProvider>
+      </ArtworkFilterContextProvider>,
     )
 
     expect(getTitleText()).toBe(
-      "Artist Name - Paintings and Sculptures | Artsy"
+      "Artist Name - Paintings and Sculptures | Artsy",
     )
   })
 
@@ -98,11 +98,11 @@ describe("ArtistMediumsTitle", () => {
     renderWithHead(
       <ArtworkFilterContextProvider {...context}>
         <ArtistMediumsTitle {...defaultProps} />
-      </ArtworkFilterContextProvider>
+      </ArtworkFilterContextProvider>,
     )
 
     expect(getTitleText()).toBe(
-      "Artist Name - Paintings, Photographs, and Sculptures | Artsy"
+      "Artist Name - Paintings, Photographs, and Sculptures | Artsy",
     )
   })
 
@@ -127,7 +127,7 @@ describe("ArtistMediumsTitle", () => {
       >
         <ArtistMediumsTitle {...defaultProps} />
         <FilterResetter />
-      </ArtworkFilterContextProvider>
+      </ArtworkFilterContextProvider>,
     )
 
     expect(getTitleText()).toBe("Artist Name - Paintings | Artsy")

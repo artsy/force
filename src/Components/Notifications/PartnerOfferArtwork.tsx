@@ -129,7 +129,7 @@ export const PartnerOfferArtwork: FC<
             tracking.clickBuyNow(
               artwork.internalID,
               artwork.slug,
-              artwork.collectorSignals ?? undefined
+              artwork.collectorSignals ?? undefined,
             )
           }}
           data-testid="partner-offer-artwork-button"

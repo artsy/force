@@ -54,10 +54,10 @@ interface Actions {
       code: string
       data: string | null | undefined
     },
-    logger: ReturnType<typeof createLogger>
+    logger: ReturnType<typeof createLogger>,
   ) => void
   setFulfillmentDetailsFormikContext: (
-    payload: FormikProps<FulfillmentValues>
+    payload: FormikProps<FulfillmentValues>,
   ) => void
   setSelectedShippingQuote: (payload: string | null) => void
   setNewSavedAddressID: (payload: string | null) => void
@@ -92,11 +92,11 @@ export const ShippingContextProvider: FC<
   const meData = useMemo(
     () => ({
       addressList: compact<SavedAddressType>(
-        extractNodes(meFragmentData?.addressConnection) ?? []
+        extractNodes(meFragmentData?.addressConnection) ?? [],
       ),
       name: meFragmentData?.name ?? null,
     }),
-    [meFragmentData.addressConnection, meFragmentData.name]
+    [meFragmentData.addressConnection, meFragmentData.name],
   )
 
   // Set loading to false once data is available
@@ -152,7 +152,7 @@ export const ShippingContextProvider: FC<
 
   const dispatchActions = {
     setFulfillmentDetailsFormikContext: (
-      formHelpers: FormikProps<FulfillmentValues>
+      formHelpers: FormikProps<FulfillmentValues>,
     ) => {
       dispatch({ type: "SET_FULFILLMENT_DETAILS_CTX", payload: formHelpers })
     },

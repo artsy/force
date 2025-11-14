@@ -45,16 +45,16 @@ describe("ArtistAuctionResultItem", () => {
     renderWithRelay(mockResolver)
 
     expect(
-      screen.getByText("Neuschwanstein (Feldmann & Schellmann 372), 1987")
+      screen.getByText("Neuschwanstein (Feldmann & Schellmann 372), 1987"),
     ).toBeInTheDocument()
     expect(
       screen.getAllByText(
-        "Offset lithographic poster with screenprint in colours, on wove paper"
-      ).length
+        "Offset lithographic poster with screenprint in colours, on wove paper",
+      ).length,
     ).toBe(2)
     expect(screen.getByText("Bonhams • Athens")).toBeInTheDocument()
     expect(
-      screen.getByText("Contemporary Art Evening Sale")
+      screen.getByText("Contemporary Art Evening Sale"),
     ).toBeInTheDocument()
     expect(screen.getByText("Lot 33")).toBeInTheDocument()
 
@@ -72,7 +72,7 @@ describe("ArtistAuctionResultItem", () => {
 
     expect(auctioResultLink).toHaveAttribute(
       "href",
-      "/auction-result/auction-result-id"
+      "/auction-result/auction-result-id",
     )
   })
 
@@ -82,17 +82,17 @@ describe("ArtistAuctionResultItem", () => {
 
       expect(screen.getAllByText("Andy Warhol").length).toBe(2)
       expect(
-        screen.getByText("Neuschwanstein (Feldmann & Schellmann 372)")
+        screen.getByText("Neuschwanstein (Feldmann & Schellmann 372)"),
       ).toBeInTheDocument()
       expect(screen.getByText(", 1987")).toBeInTheDocument()
       expect(
         screen.getAllByText(
-          "Offset lithographic poster with screenprint in colours, on wove paper"
-        ).length
+          "Offset lithographic poster with screenprint in colours, on wove paper",
+        ).length,
       ).toBe(2)
       expect(screen.getByText("Bonhams • Athens")).toBeInTheDocument()
       expect(
-        screen.getByText("Contemporary Art Evening Sale")
+        screen.getByText("Contemporary Art Evening Sale"),
       ).toBeInTheDocument()
       expect(screen.getByText("Lot 33")).toBeInTheDocument()
     })

@@ -33,7 +33,7 @@ describe("ArtistInfo", () => {
     expect(screen.getByText("Example Artist")).toBeInTheDocument()
     expect(screen.getByText("American, b. 1980")).toBeInTheDocument()
     expect(
-      screen.getByText("ArtistMarketInsightsFragmentContainer")
+      screen.getByText("ArtistMarketInsightsFragmentContainer"),
     ).toBeInTheDocument()
   })
 })

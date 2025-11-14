@@ -31,7 +31,7 @@ type KnownLineType = Extract<
 >
 
 const isKnownLineType = (
-  line: OrderDetailsPricingBreakdown_order$data["pricingBreakdownLines"][number]
+  line: OrderDetailsPricingBreakdown_order$data["pricingBreakdownLines"][number],
 ): line is KnownLineType => {
   return !!line && knownLineTypes.includes(line.__typename as any)
 }

@@ -122,7 +122,7 @@ export const useAuthDialogTracking = () => {
       mode,
       redirectUrl,
       trackEvent,
-    ]
+    ],
   )
 
   return track

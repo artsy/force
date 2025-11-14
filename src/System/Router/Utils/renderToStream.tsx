@@ -45,7 +45,7 @@ export const renderToStream = async ({
       if (/<\/head>/.test(renderedHtml)) {
         const replacedHtml = renderedHtml.replace(
           "</head>",
-          `${styledCSS}</head>`
+          `${styledCSS}</head>`,
         )
         this.push(replacedHtml)
       } else if (CLOSING_TAG_R.test(renderedHtml)) {

@@ -4,7 +4,7 @@ import CheckmarkIcon from "@artsy/icons/CheckmarkIcon"
 import { Clickable, Flex, Spacer, Text } from "@artsy/palette"
 
 const logger = createLogger(
-  "Order2/Routes/Checkout/Components/OfferStep/Order2OfferCompletedView.tsx"
+  "Order2/Routes/Checkout/Components/OfferStep/Order2OfferCompletedView.tsx",
 )
 
 export interface Order2OfferCompletedViewProps {

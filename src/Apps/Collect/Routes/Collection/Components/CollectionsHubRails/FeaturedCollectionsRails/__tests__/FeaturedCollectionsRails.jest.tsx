@@ -25,7 +25,7 @@ describe("FeaturedCollectionsRails", () => {
         path="/collection/slug"
       >
         <FeaturedCollectionsRails {...passedProps} />
-      </AnalyticsCombinedContextProvider>
+      </AnalyticsCombinedContextProvider>,
     )
   }
 
@@ -47,10 +47,10 @@ describe("FeaturedCollectionsRails", () => {
     expect(screen.getByText("Featured Collections")).toBeInTheDocument()
     expect(screen.getByText("Art Inspired by Cartoons")).toBeInTheDocument()
     expect(
-      screen.getByText("Street Art: Celebrity Portraits")
+      screen.getByText("Street Art: Celebrity Portraits"),
     ).toBeInTheDocument()
     expect(
-      screen.getByText("Street Art: Superheroes and Villains")
+      screen.getByText("Street Art: Superheroes and Villains"),
     ).toBeInTheDocument()
   })
 

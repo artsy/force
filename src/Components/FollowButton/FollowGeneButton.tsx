@@ -61,7 +61,7 @@ const FollowGeneButton: React.FC<
   const { showAuthDialog } = useAuthDialog()
 
   const handleClick = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
     event.preventDefault()
 
@@ -124,7 +124,7 @@ export const FollowGeneButtonFragmentContainer = createFragmentContainer(
         isFollowed @include(if: $isLoggedIn)
       }
     `,
-  }
+  },
 )
 
 interface FollowGeneButtonQueryRendererProps

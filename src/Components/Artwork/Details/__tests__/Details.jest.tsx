@@ -36,7 +36,7 @@ const query = graphql`
 `
 
 require("Utils/getCurrentTimeAsIsoString").__setCurrentTime(
-  "2022-03-18T05:22:32.000Z"
+  "2022-03-18T05:22:32.000Z",
 )
 
 describe("Details", () => {
@@ -80,7 +80,7 @@ describe("Details", () => {
 
       // Should not show partner name
       expect(
-        screen.queryByText("This Really Great Gallery")
+        screen.queryByText("This Really Great Gallery"),
       ).not.toBeInTheDocument()
 
       // Should show sale message
@@ -88,7 +88,7 @@ describe("Details", () => {
 
       // Should show artwork title
       expect(
-        screen.getByText("Tulips (P17)", { exact: false })
+        screen.getByText("Tulips (P17)", { exact: false }),
       ).toBeInTheDocument()
     })
   })
@@ -175,7 +175,7 @@ describe("Details", () => {
         })
 
         expect(
-          screen.queryByText("SaleMessageQueryRenderer")
+          screen.queryByText("SaleMessageQueryRenderer"),
         ).not.toBeInTheDocument()
       })
     })
@@ -344,7 +344,7 @@ describe("Details", () => {
         })
 
         expect(
-          screen.queryByText("UniqueHoverDetailsFragmentContainerPrint")
+          screen.queryByText("UniqueHoverDetailsFragmentContainerPrint"),
         ).not.toBeInTheDocument()
       })
     })
@@ -372,7 +372,7 @@ describe("Details", () => {
         })
 
         expect(
-          screen.queryByText("UniqueHoverDetailsFragmentContainerPrint")
+          screen.queryByText("UniqueHoverDetailsFragmentContainerPrint"),
         ).not.toBeInTheDocument()
       })
     })
@@ -399,7 +399,7 @@ describe("Details", () => {
         })
 
         expect(
-          screen.getByText("UniqueHoverDetailsFragmentContainerPrint")
+          screen.getByText("UniqueHoverDetailsFragmentContainerPrint"),
         ).toBeInTheDocument()
       })
 
@@ -412,7 +412,7 @@ describe("Details", () => {
         })
 
         expect(
-          screen.getByText("UniqueHoverDetailsFragmentContainerPrint")
+          screen.getByText("UniqueHoverDetailsFragmentContainerPrint"),
         ).toBeInTheDocument()
       })
 
@@ -425,7 +425,7 @@ describe("Details", () => {
         })
 
         expect(
-          screen.getByText("UniqueHoverDetailsFragmentContainerPrint")
+          screen.getByText("UniqueHoverDetailsFragmentContainerPrint"),
         ).toBeInTheDocument()
       })
     })
@@ -462,7 +462,7 @@ describe("Details", () => {
         })
 
         expect(
-          screen.getByText("PrimaryLabelLineQueryRenderer")
+          screen.getByText("PrimaryLabelLineQueryRenderer"),
         ).toBeInTheDocument()
         expect(screen.getByText("SaleMessageQueryRenderer")).toBeInTheDocument()
       })
@@ -494,7 +494,7 @@ describe("Details", () => {
         })
 
         expect(
-          screen.queryByText("PrimaryLabelLineQueryRenderer")
+          screen.queryByText("PrimaryLabelLineQueryRenderer"),
         ).not.toBeInTheDocument()
         expect(screen.getByText("SaleMessageQueryRenderer")).toBeInTheDocument()
       })

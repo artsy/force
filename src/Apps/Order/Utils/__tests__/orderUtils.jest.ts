@@ -16,7 +16,7 @@ describe("order utils", () => {
           getInitialPaymentMethodValue({
             paymentSet: true,
             paymentMethod,
-          } as Payment_order$data)
+          } as Payment_order$data),
         ).toEqual(paymentMethod)
       })
     })
@@ -32,7 +32,7 @@ describe("order utils", () => {
               "CREDIT_CARD",
               "WIRE_TRANSFER",
             ],
-          } as unknown as Payment_order$data)
+          } as unknown as Payment_order$data),
         ).toEqual(undefined)
       })
 
@@ -42,7 +42,7 @@ describe("order utils", () => {
             paymentSet: false,
             paymentMethod: "CREDIT_CARD",
             availablePaymentMethods: ["WIRE_TRANSFER"],
-          } as unknown as Payment_order$data)
+          } as unknown as Payment_order$data),
         ).toEqual("WIRE_TRANSFER")
       })
     })

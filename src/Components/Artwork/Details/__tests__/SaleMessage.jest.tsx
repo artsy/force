@@ -48,7 +48,7 @@ describe("SaleMessage", () => {
           <SaleMessageQueryRenderer
             artwork={artwork}
             id={"opaque-internal-id"}
-          />
+          />,
         )
 
         act(() => {
@@ -59,7 +59,7 @@ describe("SaleMessage", () => {
                   partnerOffer: null,
                 },
               }),
-            })
+            }),
           )
         })
       }
@@ -130,7 +130,7 @@ describe("SaleMessage", () => {
           <SaleMessageQueryRenderer
             artwork={artworkNotInAuction as Details_artwork$data}
             id={"opaque-internal-id"}
-          />
+          />,
         )
 
         expect(screen.getByText("SALE MESSAGE")).toBeInTheDocument()
@@ -143,7 +143,7 @@ describe("SaleMessage", () => {
           <SaleMessageQueryRenderer
             artwork={artworkNotInAuction as Details_artwork$data}
             id={"opaque-internal-id"}
-          />
+          />,
         )
 
         act(() => {
@@ -154,7 +154,7 @@ describe("SaleMessage", () => {
                   partnerOffer: null,
                 },
               }),
-            })
+            }),
           )
         })
 
@@ -168,7 +168,7 @@ describe("SaleMessage", () => {
           <SaleMessageQueryRenderer
             artwork={artworkNotInAuction as Details_artwork$data}
             id={"opaque-internal-id"}
-          />
+          />,
         )
 
         act(() => {
@@ -186,7 +186,7 @@ describe("SaleMessage", () => {
                   },
                 },
               }),
-            })
+            }),
           )
         })
 

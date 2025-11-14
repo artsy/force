@@ -100,7 +100,7 @@ export const TagArtworkFilterRefetchContainer = createRefetchContainer(
         ...TagArtworkFilter_tag @arguments(input: $input)
       }
     }
-  `
+  `,
 )
 
 type TagArtworkFilterQueryRendererProps = {}

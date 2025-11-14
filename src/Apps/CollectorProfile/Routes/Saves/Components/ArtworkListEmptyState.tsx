@@ -61,7 +61,7 @@ export const ArtworkListEmptyStateFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 const getText = (isDefaultArtworkList: boolean, savedArtworksCount: number) => {

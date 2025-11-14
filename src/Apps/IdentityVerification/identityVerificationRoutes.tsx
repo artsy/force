@@ -10,20 +10,20 @@ const IdentityVerificationApp = loadable(
   {
     resolveComponent: component =>
       component.IdentityVerificationAppFragmentContainer,
-  }
+  },
 )
 const Processing = loadable(
   () =>
     import(/* webpackChunkName: "identityVerificationBundle" */ "./Processing"),
   {
     resolveComponent: component => component.Processing,
-  }
+  },
 )
 const Error = loadable(
   () => import(/* webpackChunkName: "identityVerificationBundle" */ "./Error"),
   {
     resolveComponent: component => component.Error,
-  }
+  },
 )
 
 export const identityVerificationRoutes: RouteProps[] = [

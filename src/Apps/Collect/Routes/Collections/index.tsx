@@ -14,7 +14,7 @@ export const CollectionsApp: React.FC<
   React.PropsWithChildren<CollectionsAppProps>
 > = ({ marketingCategories }) => {
   const sorted = [...(marketingCategories ?? [])].sort((a, b) =>
-    a.name.localeCompare(b.name)
+    a.name.localeCompare(b.name),
   )
 
   return (
@@ -67,7 +67,7 @@ export const CollectionsAppFragmentContainer = createFragmentContainer(
         ...CollectionsCategory_category
       }
     `,
-  }
+  },
 )
 
 const META_DESCRIPTION =

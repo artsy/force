@@ -43,7 +43,7 @@ const ArtQuizLikedArtworksFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 const ArtQuizLikedArtworksPlaceholder: FC<

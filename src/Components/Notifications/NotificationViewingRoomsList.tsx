@@ -15,7 +15,7 @@ export const NotificationViewingRoomsList: FC<
 > = props => {
   const viewingRoomsConnection = useFragment(
     notificationViewingRoomsListFragment,
-    props.viewingRoomsConnection
+    props.viewingRoomsConnection,
   )
 
   const viewingRooms = extractNodes(viewingRoomsConnection)

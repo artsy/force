@@ -8,7 +8,7 @@ describe(getArtworkLocationSearchableText, () => {
       value: "Potwin, KS, USA",
     }
     expect(getArtworkLocationSearchableText(item)).toEqual(
-      "Potwin, KS, USA; United States of America; U.S.A.; North America"
+      "Potwin, KS, USA; United States of America; U.S.A.; North America",
     )
   })
 })

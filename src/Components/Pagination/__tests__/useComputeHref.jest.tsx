@@ -16,7 +16,7 @@ jest.mock("Components/ArtworkFilter/ArtworkFilterContext", () => ({
 
 jest.mock("Components/ArtworkFilter/Utils/urlBuilder", () => ({
   buildUrl: jest.fn(
-    state => `/test-path?${new URLSearchParams(state).toString()}`
+    state => `/test-path?${new URLSearchParams(state).toString()}`,
   ),
 }))
 

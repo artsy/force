@@ -6,14 +6,14 @@ const ArtistsApp = loadable(
   () => import(/* webpackChunkName: "artistBundle" */ "./ArtistsApp"),
   {
     resolveComponent: component => component.ArtistsApp,
-  }
+  },
 )
 
 const ArtistsIndexRoute = loadable(
   () => import(/* webpackChunkName: "artistBundle" */ "./Routes/ArtistsIndex"),
   {
     resolveComponent: component => component.ArtistsIndexFragmentContainer,
-  }
+  },
 )
 
 const ArtistsByLetterRoute = loadable(
@@ -21,7 +21,7 @@ const ArtistsByLetterRoute = loadable(
     import(/* webpackChunkName: "artistBundle" */ "./Routes/ArtistsByLetter"),
   {
     resolveComponent: component => component.ArtistsByLetterFragmentContainer,
-  }
+  },
 )
 
 export const artistsRoutes: RouteProps[] = [

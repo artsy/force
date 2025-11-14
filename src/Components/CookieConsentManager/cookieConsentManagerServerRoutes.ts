@@ -20,12 +20,12 @@ cookieConsentManagerServerRoutes.get(
       res.cookie(
         COOKIE_CONSENT_MANAGER_COOKIE_NAME,
         trackingPreferences,
-        COOKIE_CONFIGURATION
+        COOKIE_CONFIGURATION,
       )
     }
 
     res.send("[Force] Consent cookie set.")
-  }
+  },
 )
 
 export { cookieConsentManagerServerRoutes }

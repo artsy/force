@@ -29,7 +29,7 @@ export class OrderAppTestPageRTL {
 
     // Look for the current step by checking for step names with active/current styling
     const stepElements = document.querySelectorAll(
-      '[data-testid="orderStepper"] *'
+      '[data-testid="orderStepper"] *',
     )
     for (const element of stepElements) {
       if (element.textContent === "Review") {
@@ -52,9 +52,7 @@ export class OrderAppTestPageRTL {
       document.querySelector("[class*='sidebar']") ||
       document.querySelector("[class*='Sidebar']") ||
       // Look for elements containing "Your offer" text
-      screen
-        .queryByText(/Your offer/i)
-        ?.closest("div")
+      screen.queryByText(/Your offer/i)?.closest("div")
 
     return {
       text: () => {
@@ -212,7 +210,7 @@ export class OrderAppTestPageRTL {
         const errorMessage =
           // Look in parent for error text
           element?.parentElement?.textContent?.includes(
-            "Offer amount missing or invalid."
+            "Offer amount missing or invalid.",
           )
             ? "Offer amount missing or invalid."
             : // Look for error text in siblings or nearby elements
@@ -257,7 +255,7 @@ export class OrderAppTestPageRTL {
 
         // Look for error message nearby
         const nearbyError = element?.parentElement?.querySelector(
-          '[data-testid*="error"], .error, [class*="error"]'
+          '[data-testid*="error"], .error, [class*="error"]',
         )
 
         return {
@@ -425,14 +423,14 @@ export class OrderAppTestPageRTL {
   async expectAndDismissDefaultErrorDialog() {
     await this.expectAndDismissErrorDialogMatching(
       "An error occurred",
-      "Something went wrong. Please try again or contact orders@artsy.net."
+      "Something went wrong. Please try again or contact orders@artsy.net.",
     )
   }
 
   async expectAndDismissErrorDialogMatching(
     title: string,
     message: string,
-    buttonText?: string
+    buttonText?: string,
   ) {
     const modal = this.modalDialog
     expect(modal).toBeInTheDocument()
@@ -505,7 +503,7 @@ export class OrderAppTestPageRTL {
           }),
           filterWhere: (fn: (elem: any) => boolean) => {
             return elements.filter(elem =>
-              fn({ text: () => elem.textContent || "" })
+              fn({ text: () => elem.textContent || "" }),
             )
           },
         }))

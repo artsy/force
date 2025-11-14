@@ -95,14 +95,14 @@ export const runAuthIntent = async ({
           return createOrderMutation(
             relayEnvironment,
             value.objectId,
-            value.secondaryObjectId
+            value.secondaryObjectId,
           )
 
         case "makeOffer":
           return createOfferOrderMutation(
             relayEnvironment,
             value.objectId,
-            value.secondaryObjectId
+            value.secondaryObjectId,
           )
       }
     })()

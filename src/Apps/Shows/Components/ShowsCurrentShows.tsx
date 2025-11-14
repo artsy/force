@@ -118,7 +118,7 @@ const ShowsCurrentShowsPaginationContainer = createPaginationContainer(
       return props.viewer.showsConnection
     },
     query: SHOWS_CURRENT_SHOWS_QUERY,
-  }
+  },
 )
 
 const SHOWS_CURRENT_SHOWS_PLACEHOLDER = (

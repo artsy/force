@@ -120,5 +120,5 @@ export const MyCollectionArtworkFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

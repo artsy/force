@@ -169,7 +169,7 @@ const StyledShippingSummaryItem = styled(ShippingSummaryItem)`
   `};
 `
 const StyledTransactionDetailsSummaryItem = styled(
-  TransactionDetailsSummaryItem
+  TransactionDetailsSummaryItem,
 )`
   ${media.xs`
     &&& {

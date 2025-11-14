@@ -18,7 +18,7 @@ describe("NavBarSubMenu", () => {
         }
         onClick={jest.fn()}
         {...passedProps}
-      />
+      />,
     )
   }
 

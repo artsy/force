@@ -41,11 +41,11 @@ export const PrivateArtworkAdditionalInfo: React.FC<
   const { trackEvent } = useTracking()
 
   const allDisplayItems = privateListItems.filter(
-    i => i.value != null && i.value !== ""
+    i => i.value != null && i.value !== "",
   )
 
   const [isCollapsed, setIsCollapsed] = React.useState(
-    allDisplayItems.length > COLLAPSED_COUNT
+    allDisplayItems.length > COLLAPSED_COUNT,
   )
 
   const displayItems = isCollapsed
@@ -95,7 +95,7 @@ export const PrivateArtworkAdditionalInfo: React.FC<
                   )}
                 </HTML>
               </PrivateArtworkDefinitionList>
-            )
+            ),
           )}
         </Join>
         {!!isCollapsed && (

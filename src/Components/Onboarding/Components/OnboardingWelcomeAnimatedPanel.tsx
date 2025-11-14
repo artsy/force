@@ -59,7 +59,7 @@ export const OnboardingWelcomeAnimatedPanel = forwardRef(
         </Flex>
       </Box>
     )
-  }
+  },
 )
 
 const DURATION = "120s"

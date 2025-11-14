@@ -100,7 +100,7 @@ describe("ViewingRoomWorksRoute", () => {
       expect(buyButtons.length).toBeGreaterThan(0)
       expect(buyButtons[0]).toHaveAttribute(
         "href",
-        "/artwork/bill-miles-beep-beep"
+        "/artwork/bill-miles-beep-beep",
       )
     })
 

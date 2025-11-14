@@ -55,8 +55,8 @@ export async function reportLoadTimeToVolley({
         }
 
         return metric
-      })
-    )
+      }),
+    ),
   )
 
   sendToVolley(metrics)

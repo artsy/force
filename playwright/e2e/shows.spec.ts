@@ -7,7 +7,7 @@ test.describe("Shows", () => {
 
     await expect(page.locator("h1").first()).toContainText("Featured Shows")
     await expect(page).toHaveTitle(
-      "Art Gallery Shows and Museum Exhibitions | Artsy"
+      "Art Gallery Shows and Museum Exhibitions | Artsy",
     )
 
     // follow link to individual show

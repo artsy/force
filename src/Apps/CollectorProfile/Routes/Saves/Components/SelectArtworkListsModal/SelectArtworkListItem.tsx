@@ -89,5 +89,5 @@ export const SelectArtworkListItemFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

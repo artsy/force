@@ -114,5 +114,5 @@ export const FairArticlesPaginationContainer = createRefetchContainer(
         ...FairArticles_fair @arguments(page: $page)
       }
     }
-  `
+  `,
 )

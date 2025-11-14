@@ -19,7 +19,7 @@ describe("SortFilter", () => {
           },
         ]}
         onSort={mockedOnSort}
-      />
+      />,
     )
   }
 

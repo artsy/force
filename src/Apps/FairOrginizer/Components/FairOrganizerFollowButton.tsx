@@ -22,7 +22,7 @@ export const FairOrganizerFollowButton: React.FC<
   const { showAuthDialog } = useAuthDialog()
 
   const handleClick = async (
-    event: React.MouseEvent<HTMLElement, MouseEvent>
+    event: React.MouseEvent<HTMLElement, MouseEvent>,
   ) => {
     event.preventDefault()
 

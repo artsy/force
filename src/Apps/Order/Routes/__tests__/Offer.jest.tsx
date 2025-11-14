@@ -222,7 +222,7 @@ describe("Offer InitialMutation", () => {
 
       const container = page.find("div#offer-page-left-column")
       expect((container as any)?.text?.()).toContain(
-        "List price: US$14,000 - 18,000"
+        "List price: US$14,000 - 18,000",
       )
     })
 
@@ -286,7 +286,7 @@ describe("Offer InitialMutation", () => {
       await page.setOfferAmount(0)
 
       expect(page.offerInput.text()).not.toMatch(
-        "Offer amount missing or invalid."
+        "Offer amount missing or invalid.",
       )
       await page.clickSubmit()
       expect(mockCommitMutation).not.toHaveBeenCalled()

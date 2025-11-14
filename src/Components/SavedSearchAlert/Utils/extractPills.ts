@@ -26,7 +26,7 @@ export const extractPillFromAggregation = (
     paramName: string
     paramValue?: string | number | boolean | string[]
   },
-  aggregations: Aggregations
+  aggregations: Aggregations,
 ) => {
   const { paramName, paramValue } = filter
 
@@ -156,7 +156,7 @@ export const extractPillsFromCriteria = ({
           value,
           displayValue: find(
             ATTRIBUTION_CLASS_OPTIONS,
-            option => value === option.value
+            option => value === option.value,
           )?.name,
         }))
         break
@@ -230,7 +230,7 @@ export const extractPillsFromCriteria = ({
 }
 
 export const extractPillsFromDefaultCriteria = (
-  defaultCriteria: SavedSearchDefaultCriteria
+  defaultCriteria: SavedSearchDefaultCriteria,
 ) => {
   return Object.entries(defaultCriteria).reduce((acc, entry) => {
     const [field, criteria] = entry
@@ -260,7 +260,7 @@ export const extractPillsFromDefaultCriteria = (
 
 export const excludeDefaultCriteria = (
   criteria: SearchCriteriaAttributes,
-  defaultCriteria: SavedSearchDefaultCriteria
+  defaultCriteria: SavedSearchDefaultCriteria,
 ) => {
   const excluded = {}
 

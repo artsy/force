@@ -102,5 +102,5 @@ export const ArticlesIndexArticlesPaginationContainer =
         return { ...fragmentVariables, after }
       },
       query: ARTICLES_INDEX_ARTICLES_QUERY,
-    }
+    },
   )

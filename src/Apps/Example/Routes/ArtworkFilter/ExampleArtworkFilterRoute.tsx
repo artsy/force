@@ -48,5 +48,5 @@ export const ExampleArtworkFilterFragmentContainer = createFragmentContainer(
         ...ArtworkFilter_viewer @arguments(input: $input)
       }
     `,
-  }
+  },
 )

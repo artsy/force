@@ -171,7 +171,7 @@ export const BaseArtworkFilter: React.FC<
   const { isAuctionArtwork } = useArtworkGridContext()
 
   const appliedFiltersTotalCount = getTotalSelectedFiltersCount(
-    filterContext.selectedFiltersCounts
+    filterContext.selectedFiltersCounts,
   )
 
   const total = viewer.filtered_artworks?.counts?.total ?? 0
@@ -184,7 +184,7 @@ export const BaseArtworkFilter: React.FC<
         if (field === "sort") return acc
         return acc + count
       },
-      0
+      0,
     )
   }, [filterContext.selectedFiltersCounts])
 
@@ -195,7 +195,7 @@ export const BaseArtworkFilter: React.FC<
         if (!ARTWORK_FILTERS_QUICK_FIELDS.includes(field)) return acc
         return acc + count
       },
-      0
+      0,
     )
   }, [filterContext.selectedFiltersCounts])
 
@@ -242,11 +242,11 @@ export const BaseArtworkFilter: React.FC<
                   ...onlyAllowedFilters,
                   metric: filterContext?.filters?.metric,
                 }),
-              })
+              }),
             )
           }
         }
-      }
+      },
     )
   }, [filterContext.filters])
 
@@ -526,7 +526,7 @@ export const ArtworkFilterRefetchContainer = createRefetchContainer(
       }
     `,
   },
-  ArtworkQueryFilter
+  ArtworkQueryFilter,
 )
 
 export const getTotalCountLabel = ({

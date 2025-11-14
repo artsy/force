@@ -48,7 +48,7 @@ export const ViewingRoomHeaderFragmentContainer = createFragmentContainer(
         status
       }
     `,
-  }
+  },
 )
 
 const ViewingRoomHeaderLarge: React.FC<

@@ -202,7 +202,7 @@ export const ShowInstallShotsFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 const NextPrevious = styled(Clickable).attrs({

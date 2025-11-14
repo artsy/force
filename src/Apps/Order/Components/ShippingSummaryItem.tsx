@@ -72,5 +72,5 @@ export const ShippingSummaryItemFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

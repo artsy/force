@@ -29,5 +29,5 @@ export const ViewingRoomPullQuoteFragmentContainer = createFragmentContainer(
         pullQuote
       }
     `,
-  }
+  },
 )

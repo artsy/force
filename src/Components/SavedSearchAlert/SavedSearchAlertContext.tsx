@@ -23,11 +23,11 @@ interface SavedSearchAlertContextProps {
 
   removeCriteriaValue: (
     key: SearchCriteriaAttributeKeys,
-    value: string | number | boolean
+    value: string | number | boolean,
   ) => void
   setCriteriaValue: (
     key: SearchCriteriaAttributeKeys,
-    value: string | string[] | number | boolean | null
+    value: string | string[] | number | boolean | null,
   ) => void
   removePill: (pill: FilterPill) => void
   criteriaHref: () => string | null
@@ -76,13 +76,13 @@ export const SavedSearchAlertContextProvider: React.FC<
 
   const removeCriteriaValue = (
     key: SearchCriteriaAttributeKeys,
-    value: string | number | boolean
+    value: string | number | boolean,
   ) => {
     let criteriaValue = criteria[key]
 
     if (Array.isArray(criteriaValue)) {
       criteriaValue = criteriaValue.filter(
-        currentValue => currentValue !== value
+        currentValue => currentValue !== value,
       )
     } else {
       criteriaValue = null
@@ -93,7 +93,7 @@ export const SavedSearchAlertContextProvider: React.FC<
 
   const setCriteriaValue = (
     key: SearchCriteriaAttributeKeys,
-    value: string | string[] | number | boolean | null
+    value: string | string[] | number | boolean | null,
   ) => {
     const updatedCriteria = getAllowedSearchCriteria({
       ...criteria,
@@ -120,7 +120,7 @@ export const SavedSearchAlertContextProvider: React.FC<
       Object.entries(criteria).filter(([key, _]) => {
         if (key === "artistIDs") return false
         return allowedSearchCriteriaKeys.includes(key)
-      })
+      }),
     )
     const queryParams = qs.stringify(paramsToSnakeCase(allowedCriteriaValues))
 

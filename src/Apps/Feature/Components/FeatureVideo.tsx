@@ -61,7 +61,7 @@ export const FeatureVideoFragmentContainer = createFragmentContainer(
         embed(autoPlay: true)
       }
     `,
-  }
+  },
 )
 
 const Video = styled.div`

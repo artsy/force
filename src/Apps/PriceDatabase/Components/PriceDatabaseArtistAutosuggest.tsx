@@ -16,14 +16,14 @@ export const PriceDatabaseArtistAutosuggest: React.FC<
   const [query, setQuery] = useState("")
 
   const { data, loading } = useClientQuery<PriceDatabaseArtistAutosuggestQuery>(
-    { query: QUERY, variables: { query } }
+    { query: QUERY, variables: { query } },
   )
 
   const options = compact(
     extractNodes(data?.searchConnection).map(node => {
       if (!node.value || !node.text) return null
       return { text: node.text, value: node.value }
-    })
+    }),
   )
 
   const handleChange = ({

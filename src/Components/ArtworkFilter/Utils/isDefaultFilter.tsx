@@ -3,7 +3,7 @@ import type { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes
 export const isDefaultFilter: (
   name: keyof ArtworkFilters,
   value: any,
-  defaultValues?: Partial<ArtworkFilters>
+  defaultValues?: Partial<ArtworkFilters>,
 ) => boolean = (name, value, defaultValues = {}) => {
   if (name === "keyword" && !value) {
     return true

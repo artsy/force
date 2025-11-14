@@ -15,7 +15,7 @@
 
 export const limitWithCount = (
   initial: ReadonlyArray<string>,
-  limit: number
+  limit: number,
 ) => {
   if (!initial || initial.length < 1) {
     return []

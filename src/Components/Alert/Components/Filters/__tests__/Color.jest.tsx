@@ -20,7 +20,7 @@ describe("ColorFilter", () => {
     return render(
       <AlertProvider initialCriteria={initialCriteria}>
         <ColorFilterTestComponent />
-      </AlertProvider>
+      </AlertProvider>,
     )
   }
 

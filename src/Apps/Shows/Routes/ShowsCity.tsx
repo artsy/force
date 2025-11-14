@@ -54,7 +54,7 @@ export const ShowsCity: React.FC<React.PropsWithChildren<ShowsCityProps>> = ({
         // ...and the remainder
         return [openingThisWeek, [...upcomingShows, show]]
       },
-      [[], []]
+      [[], []],
     )
   }, [city.upcomingShows])
 
@@ -79,7 +79,7 @@ export const ShowsCity: React.FC<React.PropsWithChildren<ShowsCityProps>> = ({
         setLoading(false)
 
         silentReplace(`?page=${page}`)
-      }
+      },
     )
   }
 
@@ -297,5 +297,5 @@ export const ShowsCityRefetchContainer = createRefetchContainer(
         ...ShowsCity_city @arguments(after: $after, page: $page)
       }
     }
-  `
+  `,
 )

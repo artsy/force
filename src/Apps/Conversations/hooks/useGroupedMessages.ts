@@ -46,16 +46,16 @@ export const useGroupedMessages = ({
         ) {
           return event
         }
-      }
+      },
     )
 
     const sortedMessages = sortBy(
       [...orderEventsWithoutFailedPayment, ...allMessages],
-      message => DateTime.fromISO(message.createdAt as string)
+      message => DateTime.fromISO(message.createdAt as string),
     )
 
     const groupAllMessages = groupMessages(
-      sortedMessages as MessageAndOrderEvent[]
+      sortedMessages as MessageAndOrderEvent[],
     )
 
     setMessagesAndEvents(groupAllMessages.reverse())
@@ -85,7 +85,7 @@ export const isRelevantEvent = item => {
  * @param messages Messages in the conversation
  */
 const groupMessages = (
-  messages: MessageAndOrderEvent[]
+  messages: MessageAndOrderEvent[],
 ): MessageAndOrderEvent[][] => {
   if (messages.length === 0) {
     return []
@@ -101,11 +101,11 @@ const groupMessages = (
     const currentMessage = remainingMessages.pop() as Message
 
     const lastMessageCreatedAt = DateTime.fromISO(
-      lastMessage?.createdAt as string
+      lastMessage?.createdAt as string,
     )
 
     const currentMessageCreatedAt = DateTime.fromISO(
-      currentMessage?.createdAt as string
+      currentMessage?.createdAt as string,
     )
 
     const sameDay = lastMessageCreatedAt.hasSame(currentMessageCreatedAt, "day")

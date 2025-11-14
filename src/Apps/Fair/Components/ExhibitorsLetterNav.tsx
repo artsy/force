@@ -68,7 +68,7 @@ export const ExhibitorsLetterNavFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 interface LetterProps extends BoxProps {

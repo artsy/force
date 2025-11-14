@@ -13,7 +13,7 @@ describe("ArtworkLightbox", () => {
     } = {
       activeIndex: 0,
       enableArtworkCaption: false,
-    }
+    },
   ) => {
     const { renderWithRelay } = setupTestWrapperTL({
       Component: (props: any) => (

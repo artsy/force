@@ -94,5 +94,5 @@ export const ChannelArticlesPaginationContainer = createPaginationContainer(
       return { ...fragmentVariables, after }
     },
     query: CHANNEL_ARTICLES_QUERY,
-  }
+  },
 )

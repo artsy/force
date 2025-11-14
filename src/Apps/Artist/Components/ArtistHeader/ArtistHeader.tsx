@@ -294,7 +294,7 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 const Bio = styled(HTML)<HTMLProps>`

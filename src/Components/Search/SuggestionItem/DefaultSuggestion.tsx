@@ -17,7 +17,7 @@ export const DefaultSuggestion: FC<
   const matches = match(option.text, query)
   const parts = parse(option.text, matches)
   const partTags = parts.map(({ highlight, text }, index) =>
-    highlight ? <Highlight key={index}>{text}</Highlight> : text
+    highlight ? <Highlight key={index}>{text}</Highlight> : text,
   )
 
   return (

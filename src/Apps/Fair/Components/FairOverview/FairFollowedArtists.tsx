@@ -114,7 +114,7 @@ export const FairFollowedArtists: React.FC<
                     signalBidCount: artwork.collectorSignals?.auction?.bidCount,
                     signalLotWatcherCount:
                       artwork.collectorSignals?.auction?.lotWatcherCount,
-                  })
+                  }),
                 )
               }
             />
@@ -153,7 +153,7 @@ export const FairFollowedArtistsFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 interface FairFollowedArtistsQueryRendererProps {

@@ -44,12 +44,12 @@ describe("ArtworkSidebarClassificationsModal", () => {
 
     expect(screen.getByText("Unique")).toBeInTheDocument()
     expect(
-      screen.getByText("One of a kind piece, created by the artist.")
+      screen.getByText("One of a kind piece, created by the artist."),
     ).toBeInTheDocument()
     expect(
       screen.getByText(
-        "Our partners are responsible for providing accurate classification information for all works."
-      )
+        "Our partners are responsible for providing accurate classification information for all works.",
+      ),
     ).toBeInTheDocument()
   })
 
@@ -64,12 +64,12 @@ describe("ArtworkSidebarClassificationsModal", () => {
 
     expect(screen.getByText("Unique")).toBeInTheDocument()
     expect(
-      screen.getByText("One of a kind piece, created by the artist.")
+      screen.getByText("One of a kind piece, created by the artist."),
     ).toBeInTheDocument()
     expect(
       screen.queryByText(
-        "Our partners are responsible for providing accurate classification information for all works."
-      )
+        "Our partners are responsible for providing accurate classification information for all works.",
+      ),
     ).not.toBeInTheDocument()
   })
 })

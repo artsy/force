@@ -50,7 +50,7 @@ export const ConversationPurchaseButton: React.FC<
   const handleCreatePartnerOfferOrder = async () => {
     if (!partnerOffer?.internalID) {
       throw new ErrorWithMetadata(
-        "handleCreatePartnerOfferOrder (conversations): no active partner offer"
+        "handleCreatePartnerOfferOrder (conversations): no active partner offer",
       )
     }
 
@@ -77,7 +77,7 @@ export const ConversationPurchaseButton: React.FC<
       trackPurchaseEvent("Partner offer")
 
       router.push(
-        `/orders/${response.commerceCreatePartnerOfferOrder.orderOrError.order?.internalID}/shipping?backToConversationId=${data.conversation.internalID}`
+        `/orders/${response.commerceCreatePartnerOfferOrder.orderOrError.order?.internalID}/shipping?backToConversationId=${data.conversation.internalID}`,
       )
     }
   }
@@ -106,7 +106,7 @@ export const ConversationPurchaseButton: React.FC<
       "CommerceOrderWithMutationSuccess"
     ) {
       router.push(
-        `/orders/${response.createInquiryOrder.orderOrError.order.internalID}/shipping?backToConversationId=${data.conversation.internalID}`
+        `/orders/${response.createInquiryOrder.orderOrError.order.internalID}/shipping?backToConversationId=${data.conversation.internalID}`,
       )
     }
   }

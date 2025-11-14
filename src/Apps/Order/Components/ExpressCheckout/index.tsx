@@ -40,7 +40,7 @@ export const ExpressCheckout = ({ order, setShowSpinner }: Props) => {
 
   if (!sellerStripeAccountId) {
     console.error(
-      "No seller's Stripe account found. Cannot proceed with Express Checkout."
+      "No seller's Stripe account found. Cannot proceed with Express Checkout.",
     )
     return null
   }

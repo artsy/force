@@ -35,7 +35,7 @@ export const SettingsEditSettingsTwoFactorBackupCodes: FC<
     useCreateSettingsBackupSecondFactors()
 
   const handleGenerate = async (
-    password: CreateBackupSecondFactorsInput["password"]
+    password: CreateBackupSecondFactorsInput["password"],
   ) => {
     setMode("Creating")
 

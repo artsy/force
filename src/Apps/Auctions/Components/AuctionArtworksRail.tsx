@@ -56,8 +56,8 @@ export const AuctionArtworksRail: React.FC<
             contextModule,
             contextPageOwnerType,
             sale.internalID,
-            sale.slug
-          )
+            sale.slug,
+          ),
         )
       }}
       getItems={() => {
@@ -77,8 +77,8 @@ export const AuctionArtworksRail: React.FC<
                     node.slug,
                     index,
                     node.collectorSignals?.auction?.bidCount,
-                    node.collectorSignals?.auction?.lotWatcherCount
-                  )
+                    node.collectorSignals?.auction?.lotWatcherCount,
+                  ),
                 )
               }}
             />
@@ -131,7 +131,7 @@ export const AuctionArtworksRailFragmentContainer = createFragmentContainer(
         formattedStartDateTime
       }
     `,
-  }
+  },
 )
 
 export const AuctionArtworkRailQueryRenderer = ({ slug, tabType }) => {
@@ -182,7 +182,7 @@ const tracks = {
     contextModule: ContextModule,
     contextPageOwnerType: PageOwnerType,
     saleID: string,
-    saleSlug: string
+    saleSlug: string,
   ): ClickedArtworkGroup => ({
     action: ActionType.clickedArtworkGroup,
     context_module: contextModule,

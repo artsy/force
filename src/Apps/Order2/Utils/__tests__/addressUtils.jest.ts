@@ -15,8 +15,8 @@ describe("addressUtils", () => {
         result.every(country =>
           availableShippingCountries
             .map(c => c.toLowerCase())
-            .includes(country.value)
-        )
+            .includes(country.value),
+        ),
       ).toBe(true)
     })
 
@@ -47,7 +47,7 @@ describe("addressUtils", () => {
     it("returns false for addresses not in shippable countries", () => {
       const address = { country: "FR" }
       expect(isShippableAddress(address, availableShippingCountries)).toBe(
-        false
+        false,
       )
     })
 
@@ -59,16 +59,16 @@ describe("addressUtils", () => {
     it("returns false for address without country", () => {
       const address = { country: "" }
       expect(isShippableAddress(address, availableShippingCountries)).toBe(
-        false
+        false,
       )
     })
 
     it("returns false for null/undefined address", () => {
       expect(isShippableAddress(null as any, availableShippingCountries)).toBe(
-        false
+        false,
       )
       expect(
-        isShippableAddress(undefined as any, availableShippingCountries)
+        isShippableAddress(undefined as any, availableShippingCountries),
       ).toBe(false)
     })
   })

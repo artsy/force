@@ -48,7 +48,7 @@ describe("ArtistsByLetter", () => {
     renderWithRelay()
 
     expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
-      "Artists - A"
+      "Artists - A",
     )
   })
 
@@ -63,7 +63,7 @@ describe("ArtistsByLetter", () => {
     renderWithRelay()
 
     expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
-      "Artists - D - Page 3"
+      "Artists - D - Page 3",
     )
   })
 
@@ -78,7 +78,7 @@ describe("ArtistsByLetter", () => {
     renderWithRelay()
 
     expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
-      "Artists - Z - Page 2"
+      "Artists - Z - Page 2",
     )
   })
 
@@ -93,7 +93,7 @@ describe("ArtistsByLetter", () => {
     renderWithRelay()
 
     expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
-      "Artists - A"
+      "Artists - A",
     )
   })
 
@@ -108,7 +108,7 @@ describe("ArtistsByLetter", () => {
     renderWithRelay()
 
     expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
-      "Artists - A"
+      "Artists - A",
     )
   })
 })

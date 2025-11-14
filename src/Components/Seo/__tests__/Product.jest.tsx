@@ -9,7 +9,7 @@ describe("Product", () => {
     return render(
       <HeadProvider>
         <Product {...defaultProps} {...props} />
-      </HeadProvider>
+      </HeadProvider>,
     )
   }
 

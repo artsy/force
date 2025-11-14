@@ -23,7 +23,7 @@ export const GeneFamily: React.FC<React.PropsWithChildren<GeneFamilyProps>> = ({
   const publishedGenes = genes.filter(g => !!g && g.isPublished)
   const sortedGenes = sortBy(
     publishedGenes,
-    gene => gene?.displayName || gene?.name
+    gene => gene?.displayName || gene?.name,
   )
 
   return (

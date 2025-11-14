@@ -6,7 +6,7 @@ const CategoriesApp = loadable(
   () => import(/* webpackChunkName: "categoriesBundle" */ "./CategoriesApp"),
   {
     resolveComponent: component => component.CategoriesAppFragmentContainer,
-  }
+  },
 )
 
 export const categoriesRoutes: RouteProps[] = [

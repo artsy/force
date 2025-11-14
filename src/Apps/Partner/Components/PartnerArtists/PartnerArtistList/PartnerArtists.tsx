@@ -36,7 +36,7 @@ export const PartnerArtistsFragmentContainer = createFragmentContainer(
         ...PartnerArtistList_partner
       }
     `,
-  }
+  },
 )
 
 export const PartnerArtistsQueryRenderer: React.FC<

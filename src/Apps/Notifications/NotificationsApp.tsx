@@ -112,5 +112,5 @@ export const NotificationsAppFragmentContainer = createFragmentContainer(
         unreadNotificationsCount
       }
     `,
-  }
+  },
 )

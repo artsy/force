@@ -49,7 +49,7 @@ export const ShippingQuotes: React.FC<
         }
       }
     `,
-    order
+    order,
   )
 
   const firstLineItem = extractNodes(data.lineItems)[0] ?? {}
@@ -165,7 +165,7 @@ const useAutoSelectBestShippingQuote = (
   quotes: Array<{
     id: string
     isSelected: boolean
-  }>
+  }>,
 ) => {
   const shippingContext = useShippingContext()
 
@@ -176,7 +176,7 @@ const useAutoSelectBestShippingQuote = (
    */
   const bestArtsyShippingQuoteID =
     quotes.find(
-      quote => quote.id === shippingContext.state.selectedShippingQuoteID
+      quote => quote.id === shippingContext.state.selectedShippingQuoteID,
     )?.id ||
     quotes.find(quote => quote.isSelected)?.id ||
     quotes?.[0]?.id

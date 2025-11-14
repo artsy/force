@@ -175,7 +175,7 @@ describe("Review", () => {
 
     it("shows a modal that redirects to the artwork page if there is an artwork_version_mismatch", async () => {
       mockCommitMutation.mockResolvedValue(
-        submitOrderWithVersionMismatchFailure
+        submitOrderWithVersionMismatchFailure,
       )
       const { user } = renderWithRelay({
         CommerceOrder: () => testOrder,
@@ -218,15 +218,15 @@ describe("Review", () => {
         expect.objectContaining({
           title: "Charge failed",
           message: expect.stringContaining(
-            "Payment has been declined. Please contact your card provider or bank institution, then press"
+            "Payment has been declined. Please contact your card provider or bank institution, then press",
           ),
-        })
+        }),
       )
     })
 
     it("shows a modal with a helpful error message if the user's card is declined due to insufficient funds", async () => {
       mockCommitMutation.mockResolvedValue(
-        submitOrderWithFailureInsufficientFunds
+        submitOrderWithFailureInsufficientFunds,
       )
       const { user } = renderWithRelay({
         CommerceOrder: () => testOrder,
@@ -243,7 +243,7 @@ describe("Review", () => {
 
     it("shows a modal with a helpful error message if the user's card is declined due to currency not supported", async () => {
       mockCommitMutation.mockResolvedValue(
-        submitOrderWithFailureCurrencyNotSupported
+        submitOrderWithFailureCurrencyNotSupported,
       )
       const { user } = renderWithRelay({
         CommerceOrder: () => testOrder,
@@ -358,12 +358,12 @@ describe("Review", () => {
               key: "orderSubmitted",
               orderId: "1234",
               isPurchase: true,
-            })
+            }),
           )
         })
 
         await waitFor(() =>
-          expect(pushMock).toHaveBeenCalledWith("/orders/1234/details")
+          expect(pushMock).toHaveBeenCalledWith("/orders/1234/details"),
         )
       })
     })
@@ -466,14 +466,14 @@ describe("Review", () => {
               key: "orderSubmitted",
               orderId: "offer-order-id",
               isPurchase: false,
-            })
+            }),
           )
         })
 
         await waitFor(() =>
           expect(pushMock).toHaveBeenCalledWith(
-            "/orders/offer-order-id/details"
-          )
+            "/orders/offer-order-id/details",
+          ),
         )
       })
     })
@@ -493,7 +493,7 @@ describe("Review", () => {
       expect(waitingTexts[0]).toBeInTheDocument()
 
       const shippingTexts = screen.getAllByText(
-        /Shipping costs to be confirmed by gallery/
+        /Shipping costs to be confirmed by gallery/,
       )
       expect(shippingTexts.length).toBeGreaterThan(0)
       expect(shippingTexts[0]).toBeInTheDocument()
@@ -561,7 +561,7 @@ describe("Review", () => {
       })
 
       expect(
-        screen.getByText(/Artsy Private Sales LLC Conditions of Sale/)
+        screen.getByText(/Artsy Private Sales LLC Conditions of Sale/),
       ).toBeInTheDocument()
     })
 
@@ -572,7 +572,7 @@ describe("Review", () => {
 
       expect(screen.getByText("Artwork Description")).toBeInTheDocument()
       expect(
-        screen.getByText("additional artwork details provided by admin")
+        screen.getByText("additional artwork details provided by admin"),
       ).toBeInTheDocument()
     })
   })
@@ -621,7 +621,7 @@ describe("Review", () => {
 
         expect(mockCommitMutation).toHaveBeenCalledTimes(1)
         expect(pushMock).toBeCalledWith(
-          "/user/conversations/impulse-conversation-id"
+          "/user/conversations/impulse-conversation-id",
         )
       })
     })

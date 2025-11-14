@@ -119,7 +119,7 @@ jest.mock("@stripe/react-stripe-js", () => {
             </button>
           </div>
         )
-      }
+      },
     ),
   }
 })
@@ -229,7 +229,7 @@ describe("ExpressCheckoutUI", () => {
     })
 
     expect(shippingAddressUpdate.operationName).toBe(
-      "useUpdateOrderShippingAddressMutation"
+      "useUpdateOrderShippingAddressMutation",
     )
     expect(shippingAddressUpdate.operationVariables.input).toEqual({
       id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
@@ -346,7 +346,7 @@ describe("ExpressCheckoutUI", () => {
             name: null,
           },
         },
-      })
+      }),
     )
     expect(mockShowSpinner).toHaveBeenCalledWith(true)
 
@@ -602,7 +602,7 @@ describe("ExpressCheckoutUI", () => {
         "expressCheckoutError",
         JSON.stringify({
           title: "An error occurred",
-        })
+        }),
       )
     })
   })
@@ -627,10 +627,10 @@ describe("ExpressCheckoutUI", () => {
     })
 
     expect(unsetPaymentMutation.operationName).toBe(
-      "useUnsetOrderPaymentMethodMutation"
+      "useUnsetOrderPaymentMethodMutation",
     )
     expect(unsetFulfillmentMutation.operationName).toBe(
-      "useUnsetOrderFulfillmentOptionMutation"
+      "useUnsetOrderFulfillmentOptionMutation",
     )
 
     expect(unsetPaymentMutation.operationVariables.input).toEqual({

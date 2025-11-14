@@ -10,7 +10,7 @@ const CollectorProfileApp = loadable(
   {
     resolveComponent: component =>
       component.CollectorProfileAppFragmentContainer,
-  }
+  },
 )
 
 const MyCollectionRoute = loadable(
@@ -21,7 +21,7 @@ const MyCollectionRoute = loadable(
   {
     resolveComponent: component =>
       component.CollectorProfileMyCollectionRoutePaginationContainer,
-  }
+  },
 )
 
 const InsightsRoute = loadable(
@@ -32,7 +32,7 @@ const InsightsRoute = loadable(
   {
     resolveComponent: component =>
       component.CollectorProfileInsightsRouteFragmentContainer,
-  }
+  },
 )
 
 const MyCollectionCreateArtwork = loadable(
@@ -43,7 +43,7 @@ const MyCollectionCreateArtwork = loadable(
   {
     resolveComponent: component =>
       component.MyCollectionCreateArtworkFragmentContainer,
-  }
+  },
 )
 
 const MyCollectionArtwork = loadable(
@@ -54,7 +54,7 @@ const MyCollectionArtwork = loadable(
   {
     resolveComponent: component =>
       component.MyCollectionArtworkFragmentContainer,
-  }
+  },
 )
 
 const MyCollectionEditArtwork = loadable(
@@ -65,7 +65,7 @@ const MyCollectionEditArtwork = loadable(
   {
     resolveComponent: component =>
       component.MyCollectionEditArtworkFragmentContainer,
-  }
+  },
 )
 
 const Artists = loadable(
@@ -75,7 +75,7 @@ const Artists = loadable(
     ),
   {
     resolveComponent: component => component.CollectorProfileArtistsRoute,
-  }
+  },
 )
 
 // Redirect home if the user is not logged in

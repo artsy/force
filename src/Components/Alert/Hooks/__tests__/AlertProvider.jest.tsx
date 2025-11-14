@@ -65,7 +65,7 @@ describe("AlertProvider", () => {
         },
       },
       {},
-      relayEnv
+      relayEnv,
     )
 
     // open modal, defaults to details step
@@ -138,8 +138,8 @@ describe("AlertProvider", () => {
     expect(screen.getByText("Your alert has been saved.")).toBeInTheDocument()
     expect(
       screen.getByText(
-        "We’ll let you know when matching works are added to Artsy."
-      )
+        "We’ll let you know when matching works are added to Artsy.",
+      ),
     ).toBeInTheDocument()
   })
 })

@@ -15,7 +15,7 @@ export const NotificationArtworkList: FC<
 > = props => {
   const artworksConnection = useFragment(
     notificationArtworkListFragment,
-    props.artworksConnection
+    props.artworksConnection,
   )
 
   const artworks = extractNodes(artworksConnection)

@@ -6,7 +6,7 @@ import { data as sd } from "sharify"
 
 export function createStripeWrapper<T>(
   Component: React.FC<React.PropsWithChildren<T>>,
-  stripeElementsOptions?: StripeElementsOptions
+  stripeElementsOptions?: StripeElementsOptions,
 ): React.FC<React.PropsWithChildren<T>> {
   return props => {
     const stripePromise = loadStripe(sd.STRIPE_PUBLISHABLE_KEY)

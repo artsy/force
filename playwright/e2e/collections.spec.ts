@@ -12,7 +12,7 @@ test.describe.skip("/collections", () => {
     const metaDescription = page.locator("meta[name='description']")
     await expect(metaDescription).toHaveAttribute(
       "content",
-      "Discover collections of art curated by Artsy Specialists. From iconic artist series to trending design, shop collections on the world's largest online art marketplace."
+      "Discover collections of art curated by Artsy Specialists. From iconic artist series to trending design, shop collections on the world's largest online art marketplace.",
     )
   })
 
@@ -23,15 +23,15 @@ test.describe.skip("/collections", () => {
 
   test("renders collection categories", async ({ page }) => {
     await expect(
-      page.locator("#collectible-sculptures").locator("..").locator("div")
+      page.locator("#collectible-sculptures").locator("..").locator("div"),
     ).toContainText("Collectible Sculptures")
 
     await expect(
-      page.locator("#abstract-art").locator("..").locator("div")
+      page.locator("#abstract-art").locator("..").locator("div"),
     ).toContainText("Abstract Art")
 
     await expect(
-      page.locator("#genre").locator("..").locator("div")
+      page.locator("#genre").locator("..").locator("div"),
     ).toContainText("Genre")
   })
 

@@ -60,7 +60,7 @@ export const ArticleAd: FC<React.PropsWithChildren<ArticleAdProps>> = memo(
         </Text>
       </Box>
     )
-  }
+  },
 )
 
 ArticleAd.displayName = "ArticleAd"

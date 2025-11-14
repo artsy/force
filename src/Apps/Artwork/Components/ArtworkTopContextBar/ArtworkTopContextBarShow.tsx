@@ -33,7 +33,7 @@ export const ArtworkTopContextBarShow: React.FC<
       }
     `,
     { id },
-    { fetchPolicy: "store-or-network" }
+    { fetchPolicy: "store-or-network" },
   )
 
   const { show } = data

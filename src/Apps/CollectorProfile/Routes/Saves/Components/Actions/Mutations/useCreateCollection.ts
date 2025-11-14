@@ -8,7 +8,7 @@ import type { RecordSourceSelectorProxy } from "relay-runtime"
 
 const onListAdded = (
   store: RecordSourceSelectorProxy<useCreateCollectionMutation$data>,
-  data: useCreateCollectionMutation$data
+  data: useCreateCollectionMutation$data,
 ) => {
   const response = data.createCollection?.responseOrError
   const me = store.getRoot().getLinkedRecord("me")
@@ -31,12 +31,12 @@ const onListAdded = (
     store,
     customArtworkListsConnection,
     createdCollection,
-    "Collection"
+    "Collection",
   )
 
   ConnectionHandler.insertEdgeBefore(
     customArtworkListsConnection,
-    createdCollectionEdge
+    createdCollectionEdge,
   )
 }
 

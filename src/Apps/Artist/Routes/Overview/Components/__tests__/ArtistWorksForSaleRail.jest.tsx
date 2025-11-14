@@ -53,14 +53,14 @@ describe("ArtistWorksForSaleRail", () => {
     expect(screen.getAllByRole("link")).toHaveLength(3)
     expect(screen.getAllByRole("link")[0]).toHaveAttribute(
       "href",
-      expect.stringContaining("/artist/artistSlug")
+      expect.stringContaining("/artist/artistSlug"),
     )
     expect(screen.getByText("View All Works")).toBeInTheDocument()
     expect(screen.getAllByText('<mock-value-for-field-"title">')).toHaveLength(
-      1
+      1,
     )
     expect(
-      screen.getByText(', <mock-value-for-field-"date">')
+      screen.getByText(', <mock-value-for-field-"date">'),
     ).toBeInTheDocument()
   })
 
@@ -73,7 +73,7 @@ describe("ArtistWorksForSaleRail", () => {
         context_module: "worksForSaleRail",
         destination_page_owner_type: "artist",
         type: "viewAll",
-      })
+      }),
     )
   })
 
@@ -87,7 +87,7 @@ describe("ArtistWorksForSaleRail", () => {
         destination_page_owner_type: "artwork",
         horizontal_slide_position: 1,
         type: "thumbnail",
-      })
+      }),
     )
   })
 })

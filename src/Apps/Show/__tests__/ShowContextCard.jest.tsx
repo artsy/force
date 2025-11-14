@@ -48,7 +48,7 @@ describe("ShowContextCard", () => {
       },
     })
     expect(container.innerHTML).toContain(
-      'Presented by &lt;mock-value-for-field-"name"&gt;'
+      'Presented by &lt;mock-value-for-field-"name"&gt;',
     )
   })
 

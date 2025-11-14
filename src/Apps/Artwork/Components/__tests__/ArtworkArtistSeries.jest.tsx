@@ -12,7 +12,7 @@ jest.mock(
     ArtistSeriesArtworkRailFragmentContainer: () => (
       <div>ArtistSeriesArtworkRail</div>
     ),
-  })
+  }),
 )
 jest.mock("Components/ArtistSeriesRail/ArtistSeriesRail", () => ({
   ArtistSeriesRailFragmentContainer: () => <div>ArtistSeriesRail</div>,
@@ -58,7 +58,7 @@ describe("ArtworkArtistSeries", () => {
 
     expect(screen.getByText("ArtistSeriesRail")).toBeInTheDocument()
     expect(
-      screen.queryByText("ArtistSeriesArtworkRail")
+      screen.queryByText("ArtistSeriesArtworkRail"),
     ).not.toBeInTheDocument()
   })
 
@@ -72,7 +72,7 @@ describe("ArtworkArtistSeries", () => {
 
     expect(screen.getByText("ArtistSeriesRail")).toBeInTheDocument()
     expect(
-      screen.queryByText("ArtistSeriesArtworkRail")
+      screen.queryByText("ArtistSeriesArtworkRail"),
     ).not.toBeInTheDocument()
   })
 
@@ -92,7 +92,7 @@ describe("ArtworkArtistSeries", () => {
 
     expect(screen.queryByText("ArtistSeriesRail")).not.toBeInTheDocument()
     expect(
-      screen.queryByText("ArtistSeriesArtworkRail")
+      screen.queryByText("ArtistSeriesArtworkRail"),
     ).not.toBeInTheDocument()
   })
 })

@@ -7,7 +7,7 @@ const MBSize = KBSize ** 2
 export const validateTotalMaxSize = (
   currentFiles: Array<DropzoneFile>,
   filesToAdd: Array<File>,
-  maxTotalSize: number
+  maxTotalSize: number,
 ): [Array<File>, FileRejection[]] => {
   const acceptedFiles: Array<File> = []
   const fileRejections: Array<FileRejection> = []

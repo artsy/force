@@ -84,18 +84,18 @@ describe("ArtworkTopContextBarShow", () => {
     expect(topContextBar).toBeInTheDocument()
     expect(topContextBar).toHaveAttribute(
       "data-href",
-      "/show/impressionist-modern-art"
+      "/show/impressionist-modern-art",
     )
     expect(topContextBar).toHaveAttribute(
       "data-src",
-      "https://example.com/show-image.jpg"
+      "https://example.com/show-image.jpg",
     )
     expect(topContextBar).toHaveAttribute("data-display-back-arrow", "true")
     expect(topContextBar).toHaveAttribute("data-prefer-history-back", "true")
 
     expect(screen.getByText("Impressionist & Modern Art")).toBeInTheDocument()
     expect(
-      screen.getByText("Current show at Gagosian Gallery")
+      screen.getByText("Current show at Gagosian Gallery"),
     ).toBeInTheDocument()
   })
 
@@ -116,7 +116,7 @@ describe("ArtworkTopContextBarShow", () => {
 
     expect(screen.getByText("Impressionist & Modern Art")).toBeInTheDocument()
     expect(
-      screen.getByText("Past show at Gagosian Gallery")
+      screen.getByText("Past show at Gagosian Gallery"),
     ).toBeInTheDocument()
   })
 
@@ -137,7 +137,7 @@ describe("ArtworkTopContextBarShow", () => {
 
     expect(screen.getByText("Impressionist & Modern Art")).toBeInTheDocument()
     expect(
-      screen.getByText("Upcoming show at Gagosian Gallery")
+      screen.getByText("Upcoming show at Gagosian Gallery"),
     ).toBeInTheDocument()
   })
 
@@ -176,16 +176,16 @@ describe("ArtworkTopContextBarShow", () => {
     expect(topContextBar).toBeInTheDocument()
     expect(topContextBar).toHaveAttribute(
       "data-href",
-      "/show/impressionist-modern-art"
+      "/show/impressionist-modern-art",
     )
     expect(topContextBar).not.toHaveAttribute(
       "data-src",
-      "https://example.com/show-image.jpg"
+      "https://example.com/show-image.jpg",
     )
 
     expect(screen.getByText("Impressionist & Modern Art")).toBeInTheDocument()
     expect(
-      screen.getByText("Current show at Gagosian Gallery")
+      screen.getByText("Current show at Gagosian Gallery"),
     ).toBeInTheDocument()
   })
 })

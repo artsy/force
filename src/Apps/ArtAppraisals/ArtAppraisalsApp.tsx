@@ -98,7 +98,7 @@ const WhyUseArtsy: React.FC<React.PropsWithChildren<unknown>> = () => {
     {
       width: 850,
       height: 887,
-    }
+    },
   )
 
   return (

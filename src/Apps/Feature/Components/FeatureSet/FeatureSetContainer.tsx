@@ -48,7 +48,7 @@ export const FeatureSetContainer: React.FC<
 
     default:
       console.warn(
-        "Feature pages only support FeaturedLinks, Artworks, and Videos"
+        "Feature pages only support FeaturedLinks, Artworks, and Videos",
       )
       return null
   }
@@ -69,5 +69,5 @@ export const FeatureSetContainerFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

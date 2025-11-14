@@ -16,7 +16,7 @@ describe("Offer input", () => {
         showError={false}
         onChange={() => undefined}
         {...props}
-      />
+      />,
     )
 
   it("calls onChange when the user enters values", () => {
@@ -54,7 +54,7 @@ describe("Offer input", () => {
     renderComponent({ showError: false })
 
     expect(
-      screen.queryByText("Offer amount missing or invalid.")
+      screen.queryByText("Offer amount missing or invalid."),
     ).not.toBeInTheDocument()
   })
 
@@ -62,7 +62,7 @@ describe("Offer input", () => {
     renderComponent({ showError: true })
 
     expect(
-      screen.getByText("Offer amount missing or invalid.")
+      screen.getByText("Offer amount missing or invalid."),
     ).toBeInTheDocument()
   })
 

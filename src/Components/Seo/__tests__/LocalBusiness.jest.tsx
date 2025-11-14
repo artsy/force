@@ -26,7 +26,7 @@ describe("LocalBusiness", () => {
     return render(
       <HeadProvider>
         <LocalBusiness {...defaultProps} {...props} />
-      </HeadProvider>
+      </HeadProvider>,
     )
   }
 
@@ -97,7 +97,7 @@ describe("LocalBusiness", () => {
     expect(script?.textContent).toMatch('"@type": "PostalAddress"')
     expect(script?.textContent).toMatch('"@type": "Place"')
     expect(script?.textContent).toMatch(
-      '"streetAddress": "123 Main Street Apt 1"'
+      '"streetAddress": "123 Main Street Apt 1"',
     )
     expect(script?.textContent).toMatch('"addressLocality": "New York"')
     expect(script?.textContent).toMatch('"addressRegion": "NY"')

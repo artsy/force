@@ -16,7 +16,7 @@ const InsightsCareerHighlightRail: React.FC<
 > = ({ me, showProgress = true }) => {
   const { myCollectionInfo } = me
   const careerHighlights = Object.entries(
-    myCollectionInfo?.artistInsightsCount || {}
+    myCollectionInfo?.artistInsightsCount || {},
   )
     .map(([kind, count]) => ({ kind: kind as CareerHighlightKind, count }))
     .filter(a => a.count > 0)

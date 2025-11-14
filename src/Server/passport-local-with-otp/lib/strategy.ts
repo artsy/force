@@ -83,7 +83,7 @@ Strategy.prototype.authenticate = function (req, options) {
   if (!username || !password) {
     return this.fail(
       { message: options.badRequestMessage || "Missing credentials" },
-      400
+      400,
     )
   }
 

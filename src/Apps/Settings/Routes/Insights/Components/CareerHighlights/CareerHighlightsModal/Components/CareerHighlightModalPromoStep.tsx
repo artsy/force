@@ -17,7 +17,7 @@ const CareerHighlightModalPromoStepDesktop = () => {
     {
       height: 550,
       width: 380,
-    }
+    },
   )
 
   return (
@@ -77,7 +77,7 @@ const CareerHighlightModalPromoStepMobile = () => {
     {
       height: 900,
       width: 750,
-    }
+    },
   )
 
   return (

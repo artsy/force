@@ -42,7 +42,7 @@ const inquiryBasicInfoValidationSchema = Yup.object().shape({
   locationSelected: Yup.boolean().test(
     "location-selected",
     "Please select a city from the dropdown",
-    value => value === true
+    value => value === true,
   ),
 })
 
@@ -264,7 +264,7 @@ export const InquiryBasicInfoFragmentContainer = createFragmentContainer(
         profession
       }
     `,
-  }
+  },
 )
 
 export const InquiryBasicInfoQueryRenderer: React.FC<

@@ -70,7 +70,7 @@ export const CollectionsHubRailsContainer = createFragmentContainer(
         ...ArtistSeriesRail_collectionGroup
       }
     `,
-  }
+  },
 )
 
 export const CollectionsHubRailsQueryRenderer: React.FC<
@@ -96,7 +96,7 @@ export const CollectionsHubRailsQueryRenderer: React.FC<
         if (error) {
           console.error(
             "[CollectionFeaturedArtists]: Error fetching featured artists",
-            error
+            error,
           )
           return null
         }

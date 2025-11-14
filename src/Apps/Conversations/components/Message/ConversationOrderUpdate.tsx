@@ -66,7 +66,7 @@ const FRAGMENT = graphql`
 `
 
 const getIconProps = (
-  data: ConversationOrderUpdate_event$data
+  data: ConversationOrderUpdate_event$data,
 ): {
   color: string
   message: string

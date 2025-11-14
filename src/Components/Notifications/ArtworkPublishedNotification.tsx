@@ -17,7 +17,7 @@ export const ArtworkPublishedNotification: FC<
 > = ({ notification }) => {
   const notificationData = useFragment(
     ArtworkPublishedNotificationFragment,
-    notification
+    notification,
   )
 
   const { artworksConnection, headline, item } = notificationData

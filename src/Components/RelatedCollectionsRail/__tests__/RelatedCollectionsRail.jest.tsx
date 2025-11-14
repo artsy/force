@@ -22,7 +22,7 @@ describe.skip("CollectionsRail", () => {
         path="/collection/slug"
       >
         <RelatedCollectionsRail {...passedProps} />
-      </AnalyticsCombinedContextProvider>
+      </AnalyticsCombinedContextProvider>,
     )
   }
 
@@ -44,7 +44,7 @@ describe.skip("CollectionsRail", () => {
 
     expect(screen.getByText(/More like Street Art/)).toBeInTheDocument()
     expect(
-      container.querySelectorAll('[data-test-id="related-collection-entity"]')
+      container.querySelectorAll('[data-test-id="related-collection-entity"]'),
     ).toHaveLength(8)
     expect(screen.getByText(/Flags/)).toBeInTheDocument()
     expect(screen.getByText(/From \$1,000/)).toBeInTheDocument()
@@ -64,7 +64,7 @@ describe.skip("CollectionsRail", () => {
 
     const { container } = renderComponent({ collections: collectionsCopy })
     expect(
-      container.querySelectorAll('[data-test-id="related-collection-entity"]')
+      container.querySelectorAll('[data-test-id="related-collection-entity"]'),
     ).toHaveLength(8)
   })
 
@@ -74,7 +74,7 @@ describe.skip("CollectionsRail", () => {
 
     expect(container.textContent).toBeFalsy()
     expect(
-      container.querySelectorAll('[data-test-id="related-collection-entity"]')
+      container.querySelectorAll('[data-test-id="related-collection-entity"]'),
     ).toHaveLength(0)
   })
 

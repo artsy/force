@@ -6,8 +6,8 @@ describe("IdentityVerificationWarning", () => {
     render(<IdentityVerificationWarning />)
     expect(
       screen.getByText(
-        "This auction requires Artsy to verify your identity before bidding."
-      )
+        "This auction requires Artsy to verify your identity before bidding.",
+      ),
     ).toBeInTheDocument()
   })
 })

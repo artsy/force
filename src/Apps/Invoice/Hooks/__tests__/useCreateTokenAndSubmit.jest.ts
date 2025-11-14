@@ -94,7 +94,7 @@ describe("useCreateTokenAndSubmit", () => {
               provider: "stripe",
             },
           },
-        })
+        }),
       )
     })
   })

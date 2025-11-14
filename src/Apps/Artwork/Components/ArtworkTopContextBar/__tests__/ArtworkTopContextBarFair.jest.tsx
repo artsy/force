@@ -75,7 +75,7 @@ describe("ArtworkTopContextBarFair", () => {
     expect(topContextBar).toHaveAttribute("data-href", "/fair/art-basel")
     expect(topContextBar).toHaveAttribute(
       "data-src",
-      "https://example.com/fair-icon.jpg"
+      "https://example.com/fair-icon.jpg",
     )
     expect(topContextBar).toHaveAttribute("data-display-back-arrow", "true")
     expect(topContextBar).toHaveAttribute("data-prefer-history-back", "true")
@@ -98,7 +98,7 @@ describe("ArtworkTopContextBarFair", () => {
     expect(topContextBar).toHaveAttribute("data-href", "/fair/art-basel")
     expect(topContextBar).not.toHaveAttribute(
       "data-src",
-      "https://example.com/fair-icon.jpg"
+      "https://example.com/fair-icon.jpg",
     )
 
     expect(screen.getByText("Art Basel")).toBeInTheDocument()

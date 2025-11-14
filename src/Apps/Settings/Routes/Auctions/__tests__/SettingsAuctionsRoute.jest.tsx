@@ -35,7 +35,7 @@ describe("SettingsAuctionsRoute", () => {
     expect(screen.getByText("Active Bids")).toBeInTheDocument()
     expect(screen.getByText("Bid History")).toBeInTheDocument()
     expect(
-      screen.getByText("Registration for Upcoming Auctions")
+      screen.getByText("Registration for Upcoming Auctions"),
     ).toBeInTheDocument()
   })
 })

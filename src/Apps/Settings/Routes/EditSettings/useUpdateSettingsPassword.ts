@@ -10,7 +10,7 @@ export const useUpdateSettingsPassword = () => {
   const { relayEnvironment } = useSystemContext()
 
   const submitUpdateSettingsPassword = (
-    input: UpdateMyPasswordMutationInput
+    input: UpdateMyPasswordMutationInput,
   ): Promise<useUpdateSettingsPasswordMutation$data> => {
     return new Promise((resolve, reject) => {
       commitMutation<useUpdateSettingsPasswordMutation>(relayEnvironment, {

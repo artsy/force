@@ -116,7 +116,7 @@ export const ShowsFeaturedShowFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 const Overlay = styled(Box)`

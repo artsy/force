@@ -8,7 +8,7 @@ jest.mock("react-tracking")
 describe("ArtworkRelatedArtists", () => {
   const getWrapper = props => {
     return render(
-      <ArtworkRelatedArtists relay={{ hasMore: () => true }} {...props} />
+      <ArtworkRelatedArtists relay={{ hasMore: () => true }} {...props} />,
     )
   }
 

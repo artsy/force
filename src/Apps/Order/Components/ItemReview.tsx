@@ -49,7 +49,7 @@ export const ItemReview: React.FC<React.PropsWithChildren<ItemReviewProps>> = ({
             editionSetId &&
             editionSets &&
             dimensionsDisplay(
-              editionSets.find(e => e?.internalID === editionSetId)?.dimensions
+              editionSets.find(e => e?.internalID === editionSetId)?.dimensions,
             )}
           {!editionSetId &&
             artworkDimensions &&

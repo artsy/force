@@ -37,7 +37,7 @@ describe("runAuthIntent", () => {
           action: "follow",
           kind: "gene",
           objectId: "representations-of-architecture",
-        })
+        }),
       )
     })
 
@@ -48,7 +48,7 @@ describe("runAuthIntent", () => {
     describe("success", () => {
       it("follows the gene and expires the cookie", async () => {
         ;(followGeneMutation as jest.Mock).mockImplementation(() =>
-          Promise.resolve()
+          Promise.resolve(),
         )
 
         jest.spyOn(Cookies, "expire")
@@ -61,7 +61,7 @@ describe("runAuthIntent", () => {
 
         expect(followGeneMutation).toBeCalledWith(
           env,
-          "representations-of-architecture"
+          "representations-of-architecture",
         )
         expect(Cookies.expire).toBeCalledWith("afterSignUpAction")
       })
@@ -70,7 +70,7 @@ describe("runAuthIntent", () => {
     describe("failure", () => {
       it("tries to follow the gene; does not expire the cookie", async () => {
         ;(followGeneMutation as jest.Mock).mockImplementation(() =>
-          Promise.reject()
+          Promise.reject(),
         )
 
         jest.spyOn(Cookies, "expire")
@@ -84,7 +84,7 @@ describe("runAuthIntent", () => {
 
         expect(followGeneMutation).toBeCalledWith(
           env,
-          "representations-of-architecture"
+          "representations-of-architecture",
         )
         expect(Cookies.expire).not.toBeCalled()
         expect(global.console.error).toBeCalled()
@@ -99,7 +99,7 @@ describe("runAuthIntent", () => {
           action: "follow",
           kind: "artist",
           objectId: "roni-horn",
-        })
+        }),
       )
     })
 
@@ -110,7 +110,7 @@ describe("runAuthIntent", () => {
     describe("success", () => {
       it("follows the artist and expires the cookie", async () => {
         ;(followArtistMutation as jest.Mock).mockImplementation(() =>
-          Promise.resolve()
+          Promise.resolve(),
         )
 
         jest.spyOn(Cookies, "expire")
@@ -129,7 +129,7 @@ describe("runAuthIntent", () => {
     describe("failure", () => {
       it("tries to follow the artist; does not expire the cookie", async () => {
         ;(followArtistMutation as jest.Mock).mockImplementation(() =>
-          Promise.reject()
+          Promise.reject(),
         )
 
         jest.spyOn(Cookies, "expire")
@@ -155,7 +155,7 @@ describe("runAuthIntent", () => {
           action: "follow",
           kind: "profile",
           objectId: "jtt-gallery",
-        })
+        }),
       )
     })
 
@@ -166,7 +166,7 @@ describe("runAuthIntent", () => {
     describe("success", () => {
       it("follows the profile and expires the cookie", async () => {
         ;(followProfileMutation as jest.Mock).mockImplementation(() =>
-          Promise.resolve()
+          Promise.resolve(),
         )
 
         jest.spyOn(Cookies, "expire")
@@ -185,7 +185,7 @@ describe("runAuthIntent", () => {
     describe("failure", () => {
       it("tries to follow the profile; does not expire the cookie", async () => {
         ;(followProfileMutation as jest.Mock).mockImplementation(() =>
-          Promise.reject()
+          Promise.reject(),
         )
 
         jest.spyOn(Cookies, "expire")
@@ -211,7 +211,7 @@ describe("runAuthIntent", () => {
           action: "save",
           kind: "artworks",
           objectId: "on-kawara-one-million-years",
-        })
+        }),
       )
     })
 
@@ -222,7 +222,7 @@ describe("runAuthIntent", () => {
     describe("success", () => {
       it("saves the artwork and expires the cookie", async () => {
         ;(saveArtworkMutation as jest.Mock).mockImplementation(() =>
-          Promise.resolve()
+          Promise.resolve(),
         )
 
         jest.spyOn(Cookies, "expire")
@@ -235,7 +235,7 @@ describe("runAuthIntent", () => {
 
         expect(saveArtworkMutation).toBeCalledWith(
           env,
-          "on-kawara-one-million-years"
+          "on-kawara-one-million-years",
         )
         expect(Cookies.expire).toBeCalledWith("afterSignUpAction")
       })
@@ -244,7 +244,7 @@ describe("runAuthIntent", () => {
     describe("failure", () => {
       it("tries to save the artwork; does not expire the cookie", async () => {
         ;(saveArtworkMutation as jest.Mock).mockImplementation(() =>
-          Promise.reject()
+          Promise.reject(),
         )
 
         jest.spyOn(Cookies, "expire")
@@ -258,7 +258,7 @@ describe("runAuthIntent", () => {
 
         expect(saveArtworkMutation).toBeCalledWith(
           env,
-          "on-kawara-one-million-years"
+          "on-kawara-one-million-years",
         )
         expect(Cookies.expire).not.toBeCalled()
         expect(global.console.error).toBeCalled()
@@ -273,7 +273,7 @@ describe("runAuthIntent", () => {
           action: "createAlert",
           kind: "artist",
           objectId: "banksy",
-        })
+        }),
       )
     })
 
@@ -310,14 +310,14 @@ describe("runAuthIntent", () => {
 describe("isValid", () => {
   it("validates the cookie object", () => {
     expect(
-      isValid({ action: "follow", kind: "artist", objectId: "example" })
+      isValid({ action: "follow", kind: "artist", objectId: "example" }),
     ).toBe(true)
     expect(
-      isValid({ action: "save", kind: "artworks", objectId: "example" })
+      isValid({ action: "save", kind: "artworks", objectId: "example" }),
     ).toBe(true)
     expect(isValid({ action: "createAlert" })).toBe(true)
     expect(
-      isValid({ action: "follow", kind: "invalid", objectId: "example" })
+      isValid({ action: "follow", kind: "invalid", objectId: "example" }),
     ).toBe(false)
     expect(isValid({ action: "follow", kind: "artist" })).toBe(false)
     expect(isValid({ action: "follow", objectId: "example" })).toBe(false)

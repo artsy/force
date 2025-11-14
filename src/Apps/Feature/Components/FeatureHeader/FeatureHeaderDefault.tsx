@@ -68,5 +68,5 @@ export const FeatureHeaderDefaultFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

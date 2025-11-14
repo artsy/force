@@ -15,8 +15,8 @@ describe("PricingContextModal", () => {
 
     expect(
       screen.queryByText(
-        "This feature aims to provide insight into the range of prices for an artist's works and allow buyers to discover other available works by the artist at different price points."
-      )
+        "This feature aims to provide insight into the range of prices for an artist's works and allow buyers to discover other available works by the artist at different price points.",
+      ),
     ).not.toBeInTheDocument()
   })
 
@@ -33,7 +33,7 @@ describe("PricingContextModal", () => {
 
     expect(links[0]).toHaveAttribute(
       "href",
-      "/article/artsy-editorial-artworks-prices"
+      "/article/artsy-editorial-artworks-prices",
     )
   })
 
@@ -59,8 +59,8 @@ describe("PricingContextModal", () => {
 
     expect(
       screen.getByText(
-        "This feature aims to provide insight into the range of prices for an artist's works and allow buyers to discover other available works by the artist at different price points."
-      )
+        "This feature aims to provide insight into the range of prices for an artist's works and allow buyers to discover other available works by the artist at different price points.",
+      ),
     ).toBeInTheDocument()
   })
 
@@ -74,8 +74,8 @@ describe("PricingContextModal", () => {
 
     expect(
       screen.getByText(
-        "This feature aims to provide insight into the range of prices for an artist's works and allow buyers to discover other available works by the artist at different price points."
-      )
+        "This feature aims to provide insight into the range of prices for an artist's works and allow buyers to discover other available works by the artist at different price points.",
+      ),
     ).toBeInTheDocument()
 
     const gotItButton = screen.getByText("Got it")

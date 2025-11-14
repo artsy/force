@@ -155,7 +155,7 @@ export const FairArtworksRefetchContainer = createRefetchContainer(
         ...FairArtworks_fair @arguments(input: $input)
       }
     }
-  `
+  `,
 )
 
 type FairArtworkFilterQueryRendererProps = {}

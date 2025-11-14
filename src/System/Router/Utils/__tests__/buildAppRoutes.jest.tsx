@@ -75,7 +75,7 @@ describe("buildAppRoutes", () => {
     render(
       <SystemContextProvider>
         <ClientRouter />
-      </SystemContextProvider>
+      </SystemContextProvider>,
     )
   })
 
@@ -98,7 +98,7 @@ describe("buildAppRoutes", () => {
     render(
       <SystemContextProvider>
         <ClientRouter />
-      </SystemContextProvider>
+      </SystemContextProvider>,
     )
 
     await waitFor(() => {

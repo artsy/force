@@ -7,37 +7,37 @@ const FairApp = loadable(
   () => import(/* webpackChunkName: "fairBundle" */ "./FairApp"),
   {
     resolveComponent: component => component.FairAppFragmentContainer,
-  }
+  },
 )
 const FairSubApp = loadable(
   () => import(/* webpackChunkName: "fairBundle" */ "./FairSubApp"),
   {
     resolveComponent: component => component.FairSubAppFragmentContainer,
-  }
+  },
 )
 const FairOverviewRoute = loadable(
   () => import(/* webpackChunkName: "fairBundle" */ "./Routes/FairOverview"),
   {
     resolveComponent: component => component.FairOverviewFragmentContainer,
-  }
+  },
 )
 const FairExhibitorsRoute = loadable(
   () => import(/* webpackChunkName: "fairBundle" */ "./Routes/FairExhibitors"),
   {
     resolveComponent: component => component.FairExhibitorsFragmentContainer,
-  }
+  },
 )
 const FairArtworksRoute = loadable(
   () => import(/* webpackChunkName: "fairBundle" */ "./Routes/FairArtworks"),
   {
     resolveComponent: component => component.FairArtworksQueryRenderer,
-  }
+  },
 )
 const FairArticlesRoute = loadable(
   () => import(/* webpackChunkName: "fairBundle" */ "./Routes/FairArticles"),
   {
     resolveComponent: component => component.FairArticlesPaginationContainer,
-  }
+  },
 )
 
 export const fairRoutes: RouteProps[] = [

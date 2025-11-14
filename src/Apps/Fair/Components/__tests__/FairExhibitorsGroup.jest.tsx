@@ -20,7 +20,7 @@ describe("FairExhibitorsGroup", () => {
           exhibitorsGroup={FAIR_EXHIBITORS_FIXTURE as any}
           fair={FAIR_FIXTURE as any}
         />
-      </MockBoot>
+      </MockBoot>,
     )
   }
 
@@ -28,7 +28,7 @@ describe("FairExhibitorsGroup", () => {
     getWrapper()
 
     const exhibitorsCards = screen.getAllByText(
-      /Cheryl Hazan Gallery|CULT \| Aimee Friberg Exhibitions/
+      /Cheryl Hazan Gallery|CULT \| Aimee Friberg Exhibitions/,
     )
 
     expect(exhibitorsCards).toHaveLength(2)

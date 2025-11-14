@@ -27,7 +27,7 @@ export const ArtistMediumsTitle: React.FC<ArtistMediumsTitleProps> = ({
       filters.additionalGeneIDs?.map(id => {
         const medium = MEDIUM_OPTIONS.find(medium => medium.value === id)
         return medium?.plural
-      })
+      }),
     )
 
     // If we have filters or have previously started filtering, use the filter context
@@ -44,7 +44,7 @@ export const ArtistMediumsTitle: React.FC<ArtistMediumsTitleProps> = ({
       initialFilters.additionalGeneIDs?.map(id => {
         const medium = MEDIUM_OPTIONS.find(medium => medium.value === id)
         return medium?.plural
-      })
+      }),
     )
 
     if (!urlMediums?.length) return defaultTitle

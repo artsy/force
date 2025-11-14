@@ -106,14 +106,14 @@ const FollowArtistButton = ({
         artist.isFollowed // Is followed now
           ? artistCount + 1
           : artistCount - 1,
-        "follows"
+        "follows",
       )
 
       meCountsProxy.setValue(
         artist.isFollowed // Is followed now
           ? meCount + 1
           : meCount - 1,
-        "followedArtists"
+        "followedArtists",
       )
     },
   })
@@ -121,7 +121,7 @@ const FollowArtistButton = ({
   const { showAuthDialog } = useAuthDialog()
 
   const handleClick = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
     event.preventDefault()
 
@@ -198,7 +198,7 @@ export const FollowArtistButtonFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 interface FollowArtistButtonQueryRendererProps

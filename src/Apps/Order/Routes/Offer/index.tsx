@@ -166,7 +166,7 @@ export const OfferRoute: FC<React.PropsWithChildren<OfferRouteProps>> = ({
       (artwork?.editionSets?.length ?? 0) < 2 && !!hasPrice
     const isPriceHidden = isNil(artworkPrice) || artworkPrice === ""
     const isRangeOffer = getOfferItemFromOrder(
-      order.lineItems
+      order.lineItems,
     )?.displayPriceRange
 
     if (
@@ -191,7 +191,7 @@ export const OfferRoute: FC<React.PropsWithChildren<OfferRouteProps>> = ({
               minimumFractionDigits: 2,
               style: "currency",
             }),
-            order.currencyCode
+            order.currencyCode,
           )}`
 
       const orderOrError = (
@@ -404,5 +404,5 @@ export const OfferFragmentContainer = createFragmentContainer(
         ...OrderStepper_order
       }
     `,
-  }
+  },
 )

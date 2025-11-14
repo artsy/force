@@ -76,5 +76,5 @@ export const ViewingRoomAppFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

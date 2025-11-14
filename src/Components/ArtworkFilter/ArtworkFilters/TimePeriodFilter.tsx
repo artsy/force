@@ -26,7 +26,7 @@ export const TimePeriodFilter: FC<
   const timePeriods = aggregations?.find(agg => agg.slice === "MAJOR_PERIOD")
 
   const filtersCount = useFilterLabelCountByKey(
-    SelectedFiltersCountsLabels.timePeriod
+    SelectedFiltersCountsLabels.timePeriod,
   )
   const label = `Time Period${filtersCount}`
 

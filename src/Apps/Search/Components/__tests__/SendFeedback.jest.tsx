@@ -42,8 +42,8 @@ describe("SendFeedback", () => {
 
     expect(
       screen.getByText(
-        "Your feedback is important to us. Tell us how we can improve and help you find what you are looking for."
-      )
+        "Your feedback is important to us. Tell us how we can improve and help you find what you are looking for.",
+      ),
     ).toBeInTheDocument()
   })
 
@@ -81,7 +81,7 @@ describe("SendFeedback", () => {
         user={{ id: "percy-z", email: "user@example.com", name: "Percy Z" }}
       >
         <SendFeedback />
-      </SystemContextProvider>
+      </SystemContextProvider>,
     )
 
     const message = screen.getByPlaceholderText("Your comments here")

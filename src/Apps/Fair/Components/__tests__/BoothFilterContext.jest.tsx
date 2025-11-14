@@ -13,7 +13,7 @@ describe("BoothFilterContext", () => {
     return render(
       <BoothFilterContextProvider {...props}>
         <TestComponent />
-      </BoothFilterContextProvider>
+      </BoothFilterContextProvider>,
     )
   }
 
@@ -35,7 +35,7 @@ describe("BoothFilterContext", () => {
       expect(spy).toHaveBeenCalledWith(
         "sort",
         "FEATURED_DESC",
-        initialBoothFilterState
+        initialBoothFilterState,
       )
     })
 

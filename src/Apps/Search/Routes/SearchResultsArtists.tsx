@@ -94,7 +94,7 @@ export class SearchResultsArtistsRoute extends React.Component<Props, State> {
         // TODO: use silentPush from useRouter if this class component is
         // converted to a function component
         window.history.pushState({}, "", `/search/artists?${urlParams}`)
-      }
+      },
     )
   }
 
@@ -211,5 +211,5 @@ export const SearchResultsArtistsRouteFragmentContainer =
             @arguments(first: $first, term: $term, page: $page)
         }
       }
-    `
+    `,
   )

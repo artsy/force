@@ -25,7 +25,7 @@ export const HeroCarousel: FC<React.PropsWithChildren<HeroCarouselProps>> = ({
 }) => {
   const cells = useMemo(
     () => Children.toArray(children).filter(isValidElement),
-    [children]
+    [children],
   )
 
   return (

@@ -118,7 +118,7 @@ export const OnboardingSearchResultsFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 interface OnboardingOrderedSetQueryRendererProps {

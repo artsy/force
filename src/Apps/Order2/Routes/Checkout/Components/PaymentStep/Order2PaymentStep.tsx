@@ -27,7 +27,7 @@ export const Order2PaymentStep: React.FC<Order2PaymentStepProps> = ({
   const { confirmationToken, savedPaymentMethod, steps } = useCheckoutContext()
 
   const stepState = steps?.find(
-    step => step.name === CheckoutStepName.PAYMENT
+    step => step.name === CheckoutStepName.PAYMENT,
   )?.state
 
   return (

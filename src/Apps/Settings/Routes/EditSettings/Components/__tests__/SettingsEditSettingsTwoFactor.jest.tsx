@@ -8,7 +8,7 @@ import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 jest.mock(
-  "../SettingsEditSettingsTwoFactor/useCreateSettingsBackupSecondFactorsMutation"
+  "../SettingsEditSettingsTwoFactor/useCreateSettingsBackupSecondFactorsMutation",
 )
 jest.mock("Components/ConfirmPasswordModal/Mutations/ConfirmPassword")
 
@@ -48,8 +48,8 @@ describe("TwoFactorAuthentication", () => {
 
     expect(
       screen.getByText(
-        "Set up an additional layer of security by requiring a security code in addition to your password to log in to your Artsy account."
-      )
+        "Set up an additional layer of security by requiring a security code in addition to your password to log in to your Artsy account.",
+      ),
     ).toBeInTheDocument()
   })
 
@@ -82,7 +82,7 @@ describe("TwoFactorAuthentication", () => {
       renderWithRelay()
 
       expect(
-        screen.getByText("Security codes will be sent to your mobile phone.")
+        screen.getByText("Security codes will be sent to your mobile phone."),
       ).toBeInTheDocument()
     })
 
@@ -108,8 +108,8 @@ describe("TwoFactorAuthentication", () => {
 
       expect(
         screen.getByText(
-          "Generate one-time backup codes to access your account. Keep these safe."
-        )
+          "Generate one-time backup codes to access your account. Keep these safe.",
+        ),
       ).toBeInTheDocument()
     })
 
@@ -129,7 +129,7 @@ describe("TwoFactorAuthentication", () => {
       fireEvent.click(screen.getByText("Regenerate"))
       expect(mockSubmitCreateSettingsBackupSecondFactors).not.toBeCalled()
       expect(
-        screen.getByPlaceholderText("Enter your password")
+        screen.getByPlaceholderText("Enter your password"),
       ).toBeInTheDocument()
     })
 

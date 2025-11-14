@@ -63,5 +63,5 @@ export const ArtistCVRouteFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

@@ -34,7 +34,7 @@ describe("ArtistsIndex", () => {
     })
 
     expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
-      "Featured Artists"
+      "Featured Artists",
     )
   })
 })

@@ -22,7 +22,7 @@ export const Price: React.FC<React.PropsWithChildren<PriceProps>> = ({
   const { state, dispatch } = useAlertContext()
 
   const bars = aggregationsToHistogram(
-    artworksConnection?.aggregations as Aggregations
+    artworksConnection?.aggregations as Aggregations,
   )
 
   const handlePriceRangeUpdate = (updatedValues: CustomRange) => {

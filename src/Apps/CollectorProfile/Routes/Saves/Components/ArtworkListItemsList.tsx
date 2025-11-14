@@ -31,7 +31,7 @@ export const ArtworkListItemsList: FC<
 
   if (initialArtworkListId.current !== undefined) {
     const index = customArtworkLists.findIndex(
-      artworkList => artworkList.internalID === initialArtworkListId.current
+      artworkList => artworkList.internalID === initialArtworkListId.current,
     )
 
     if (index !== -1) {

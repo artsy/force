@@ -26,7 +26,7 @@ export const RecommendedArtistsGrid: FC<
   const { trackEvent } = useTracking()
   const { data, loadNext, hasNext, isLoadingNext } = usePaginationFragment(
     FRAGMENT,
-    me
+    me,
   )
 
   const handleNext = () => {

@@ -21,14 +21,14 @@ type Action<TSectionKey extends string> =
   | { type: "END_NAVIGATION" }
 
 const buildInitialState = <TSectionKey extends string>(
-  orderedKeys: TSectionKey[]
+  orderedKeys: TSectionKey[],
 ): State<TSectionKey> => {
   const lazy = orderedKeys.reduce<SectionMap<TSectionKey, boolean>>(
     (acc, key) => {
       acc[key] = true
       return acc
     },
-    {} as SectionMap<TSectionKey, boolean>
+    {} as SectionMap<TSectionKey, boolean>,
   )
 
   const mode = orderedKeys.reduce<SectionMap<TSectionKey, SectionMode>>(
@@ -36,7 +36,7 @@ const buildInitialState = <TSectionKey extends string>(
       acc[key] = "Idle"
       return acc
     },
-    {} as SectionMap<TSectionKey, SectionMode>
+    {} as SectionMap<TSectionKey, SectionMode>,
   )
 
   return { lazy, mode, isNavigating: false, navigationTarget: null }
@@ -44,7 +44,7 @@ const buildInitialState = <TSectionKey extends string>(
 
 const reducer = <TSectionKey extends string>(
   state: State<TSectionKey>,
-  action: Action<TSectionKey>
+  action: Action<TSectionKey>,
 ): State<TSectionKey> => {
   switch (action.type) {
     case "EAGER_LOAD_KEYS": {
@@ -98,7 +98,7 @@ type UseSectionReadinessReturn<TSectionKey extends string> = {
   /** Wait for all sections up to (and optionally including) a target section to be ready. This will trigger eager loading of those sections. */
   waitUntil: (
     target: TSectionKey,
-    options?: { includeTarget?: boolean }
+    options?: { includeTarget?: boolean },
   ) => Promise<void>
   /** The original ordered array of section keys */
   order: TSectionKey[]
@@ -107,12 +107,12 @@ type UseSectionReadinessReturn<TSectionKey extends string> = {
 }
 
 export const useSectionReadiness = <TSectionKey extends string>(
-  orderedKeys: TSectionKey[]
+  orderedKeys: TSectionKey[],
 ): UseSectionReadinessReturn<TSectionKey> => {
   const [{ lazy, mode, isNavigating, navigationTarget }, dispatch] = useReducer(
     reducer<TSectionKey>,
     orderedKeys,
-    buildInitialState
+    buildInitialState,
   )
 
   const waitersRef = useRef<SectionMap<TSectionKey, Array<() => void>>>(
@@ -121,8 +121,8 @@ export const useSectionReadiness = <TSectionKey extends string>(
         acc[key] = []
         return acc
       },
-      {} as SectionMap<TSectionKey, Array<() => void>>
-    )
+      {} as SectionMap<TSectionKey, Array<() => void>>,
+    ),
   )
 
   const markReady = useCallback(
@@ -135,7 +135,7 @@ export const useSectionReadiness = <TSectionKey extends string>(
 
       dispatch({ type: "MARK_READY", key })
     },
-    [mode]
+    [mode],
   )
 
   const waitFor = useCallback(
@@ -147,15 +147,15 @@ export const useSectionReadiness = <TSectionKey extends string>(
 
             waitersRef.current[key].push(resolve)
           })
-        })
+        }),
       )
     },
-    [mode]
+    [mode],
   )
 
   const priorTo = useCallback(
     (target: TSectionKey) => orderedKeys.slice(0, orderedKeys.indexOf(target)),
-    [orderedKeys]
+    [orderedKeys],
   )
 
   const eagerLoad = useCallback((keys: TSectionKey[]) => {
@@ -179,7 +179,7 @@ export const useSectionReadiness = <TSectionKey extends string>(
         dispatch({ type: "END_NAVIGATION" })
       }
     },
-    [orderedKeys, eagerLoad, waitFor]
+    [orderedKeys, eagerLoad, waitFor],
   )
 
   const navigating = useMemo(() => {
@@ -188,7 +188,7 @@ export const useSectionReadiness = <TSectionKey extends string>(
         acc[key] = isNavigating && navigationTarget === key
         return acc
       },
-      {} as SectionMap<TSectionKey, boolean>
+      {} as SectionMap<TSectionKey, boolean>,
     )
   }, [orderedKeys, isNavigating, navigationTarget])
 

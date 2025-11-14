@@ -52,7 +52,7 @@ export const OfferSettingsModal: React.FC<
               ([id, shareableWithPartners]) => ({
                 id,
                 shareableWithPartners,
-              })
+              }),
             ) as unknown as UpdateMeCollectionInput[],
           },
         },

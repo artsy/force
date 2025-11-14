@@ -155,5 +155,5 @@ export const NavigationTabsFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

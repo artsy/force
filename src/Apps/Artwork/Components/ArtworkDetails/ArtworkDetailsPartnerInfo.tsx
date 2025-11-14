@@ -20,7 +20,7 @@ export const PartnerInfo: React.FC<
   if (!partner) return null
 
   const canLink = Boolean(
-    partner?.partnerPageEligible && partner?.isDefaultProfilePublic
+    partner?.partnerPageEligible && partner?.isDefaultProfilePublic,
   )
 
   return (

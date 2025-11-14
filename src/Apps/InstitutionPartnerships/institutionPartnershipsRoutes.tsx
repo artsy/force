@@ -6,7 +6,7 @@ const InstitutionPartnershipsApp = loadable(
     import(
       /* webpackChunkName: "institutionPartnershipsBundle" */ "./InstitutionPartnershipsApp"
     ),
-  { resolveComponent: component => component.InstitutionPartnershipsApp }
+  { resolveComponent: component => component.InstitutionPartnershipsApp },
 )
 
 export const institutionPartnershipsRoutes: RouteProps[] = [

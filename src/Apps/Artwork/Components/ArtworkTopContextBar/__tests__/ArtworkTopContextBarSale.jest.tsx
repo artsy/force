@@ -91,11 +91,11 @@ describe("ArtworkTopContextBarSale", () => {
     expect(topContextBar).toBeInTheDocument()
     expect(topContextBar).toHaveAttribute(
       "data-href",
-      "/auction/contemporary-evening-sale"
+      "/auction/contemporary-evening-sale",
     )
     expect(topContextBar).toHaveAttribute(
       "data-src",
-      "https://example.com/image.jpg"
+      "https://example.com/image.jpg",
     )
     expect(topContextBar).toHaveAttribute("data-display-back-arrow", "true")
     expect(topContextBar).toHaveAttribute("data-prefer-history-back", "true")
@@ -104,7 +104,7 @@ describe("ArtworkTopContextBarSale", () => {
     expect(screen.getByText("Auction by Christie's")).toBeInTheDocument()
     expect(screen.getByTestId("registration-auction-timer")).toBeInTheDocument()
     expect(
-      screen.getByText("Timer for: Contemporary Evening Sale")
+      screen.getByText("Timer for: Contemporary Evening Sale"),
     ).toBeInTheDocument()
   })
 
@@ -127,7 +127,7 @@ describe("ArtworkTopContextBarSale", () => {
 
     expect(screen.getByText("Benefit Auction 2023")).toBeInTheDocument()
     expect(
-      screen.getByText("Benefit Auction by Partner Name")
+      screen.getByText("Benefit Auction by Partner Name"),
     ).toBeInTheDocument()
   })
 
@@ -150,7 +150,7 @@ describe("ArtworkTopContextBarSale", () => {
 
     expect(screen.getByText("Gallery Auction 2023")).toBeInTheDocument()
     expect(
-      screen.getByText("Gallery Auction by Gallery Name")
+      screen.getByText("Gallery Auction by Gallery Name"),
     ).toBeInTheDocument()
   })
 

@@ -25,5 +25,5 @@ export const SettingsShippingRouteFragmentContainer = createFragmentContainer(
         ...SettingsShippingAddresses_me
       }
     `,
-  }
+  },
 )

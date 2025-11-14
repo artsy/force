@@ -11,7 +11,7 @@ import {
 import styled from "styled-components"
 
 export type FollowButtonRenderProps = (
-  label: "Follow" | "Following" | "Unfollow"
+  label: "Follow" | "Following" | "Unfollow",
 ) => any
 
 export interface FollowButtonProps
@@ -29,7 +29,7 @@ export const FollowButton = forwardRef(
       isFollowed = false,
       ...rest
     }: FollowButtonProps & { ref?: Ref<HTMLElement>; children?: any },
-    forwardedRef
+    forwardedRef,
   ) => {
     const [showUnfollow, setShowUnfollow] = useState(false)
 
@@ -73,7 +73,7 @@ export const FollowButton = forwardRef(
         </Box>
       </StyledButton>
     )
-  }
+  },
 )
 
 export const FollowButtonInlineCount = styled(Text).attrs({ variant: "xs" })``

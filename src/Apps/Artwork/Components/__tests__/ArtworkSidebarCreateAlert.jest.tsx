@@ -74,7 +74,7 @@ describe("ArtworkSidebarCreateAlert", () => {
         Artwork: () => Artwork,
       },
       {},
-      relayEnv
+      relayEnv,
     )
 
     fireEvent.click(screen.getByText("Create Alert"))

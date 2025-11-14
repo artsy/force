@@ -64,7 +64,7 @@ export const MyCollectionArworkSearch: React.FC<
         }
       }
     `,
-    { artistID: artistId, input }
+    { artistID: artistId, input },
   )
 
   const artworks = extractNodes(data.artist?.filterArtworksConnection)

@@ -62,7 +62,7 @@ export const UtilButton = React.forwardRef(
     }: UtilButtonProps & {
       ref?: React.Ref<HTMLElement>
     },
-    forwardedRef
+    forwardedRef,
   ) => {
     const getIcon = () => {
       switch (name) {
@@ -116,7 +116,7 @@ export const UtilButton = React.forwardRef(
         />
       </Component>
     )
-  }
+  },
 )
 
 const UtilButtonInnerText: React.FC<

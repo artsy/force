@@ -16,7 +16,7 @@ export const isValueSelected = ({
   }
   if (Array.isArray(selectedCriteria)) {
     return (selectedCriteria as any[]).find(attributeValue =>
-      isEqual(attributeValue, value)
+      isEqual(attributeValue, value),
     )
   }
   return isEqual(selectedCriteria, value)

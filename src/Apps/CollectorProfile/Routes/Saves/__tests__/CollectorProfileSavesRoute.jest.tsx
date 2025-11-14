@@ -138,7 +138,7 @@ describe("CollectorProfileSavesRoute", () => {
         action: "viewedArtworkList",
         context_owner_type: "saves",
         owner_id: "saved-artwork",
-      })
+      }),
     )
   })
 

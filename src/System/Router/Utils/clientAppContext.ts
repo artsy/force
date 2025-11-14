@@ -6,7 +6,7 @@ export interface ClientContext {
 }
 
 export const getClientAppContext = (
-  context: { injectedData?: object } = {}
+  context: { injectedData?: object } = {},
 ): ClientContext => {
   return {
     user: sd.CURRENT_USER,

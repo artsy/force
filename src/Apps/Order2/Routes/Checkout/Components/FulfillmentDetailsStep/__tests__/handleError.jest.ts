@@ -19,19 +19,19 @@ describe("fulfillment details error handling", () => {
   it("handles missing postal code error", () => {
     const error = new CheckoutMutationError(
       "this is an error `message`",
-      "missing_postal_code"
+      "missing_postal_code",
     )
 
     handleError(
       error,
       formikHelpers as FormikHelpers<any>,
       defaultErrorBannerArgs,
-      setErrorBanner
+      setErrorBanner,
     )
 
     expect(formikHelpers.setFieldError).toHaveBeenCalledWith(
       "address.postalCode",
-      "Postal code is required"
+      "Postal code is required",
     )
     expect(setErrorBanner).toHaveBeenCalledWith(null)
   })
@@ -39,19 +39,19 @@ describe("fulfillment details error handling", () => {
   it("handles missing region error", () => {
     const error = new CheckoutMutationError(
       "this is an error `message`",
-      "missing_region"
+      "missing_region",
     )
 
     handleError(
       error,
       formikHelpers as FormikHelpers<any>,
       defaultErrorBannerArgs,
-      setErrorBanner
+      setErrorBanner,
     )
 
     expect(formikHelpers.setFieldError).toHaveBeenCalledWith(
       "address.region",
-      "Region is required"
+      "Region is required",
     )
     expect(setErrorBanner).toHaveBeenCalledWith(null)
   })
@@ -59,19 +59,19 @@ describe("fulfillment details error handling", () => {
   it("handles missing country error", () => {
     const error = new CheckoutMutationError(
       "this is an error `message`",
-      "missing_country"
+      "missing_country",
     )
 
     handleError(
       error,
       formikHelpers as FormikHelpers<any>,
       defaultErrorBannerArgs,
-      setErrorBanner
+      setErrorBanner,
     )
 
     expect(formikHelpers.setFieldError).toHaveBeenCalledWith(
       "address.country",
-      "Country is required"
+      "Country is required",
     )
     expect(setErrorBanner).toHaveBeenCalledWith(null)
   })
@@ -79,21 +79,21 @@ describe("fulfillment details error handling", () => {
   it("handles destination could not be geocoded error", () => {
     const error = new CheckoutMutationError(
       "this is an error `message`",
-      "destination_could_not_be_geocoded"
+      "destination_could_not_be_geocoded",
     )
 
     handleError(
       error,
       formikHelpers as FormikHelpers<any>,
       defaultErrorBannerArgs,
-      setErrorBanner
+      setErrorBanner,
     )
 
     expect(formikHelpers.setFieldError).not.toHaveBeenCalled()
     expect(setErrorBanner).toHaveBeenCalledWith(
       expect.objectContaining({
         title: "Cannot calculate shipping",
-      })
+      }),
     )
   })
 })

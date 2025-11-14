@@ -35,10 +35,10 @@ export const PartnerApp: React.FC<React.PropsWithChildren<PartnerAppProps>> = ({
 
   const eligibleCategories = (categories || []).filter(Boolean)
   const categoryNames: string[] = eligibleCategories.map(
-    category => category?.name || ""
+    category => category?.name || "",
   )
   const firstEligibleBadgeName: string | undefined = galleryBadges.find(badge =>
-    categoryNames.includes(badge)
+    categoryNames.includes(badge),
   )
 
   return (

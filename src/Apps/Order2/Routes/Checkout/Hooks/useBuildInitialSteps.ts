@@ -17,7 +17,7 @@ import { graphql, useFragment } from "react-relay"
  * Uses completion hooks that check order data.
  */
 export const useBuildInitialSteps = (
-  order: useBuildInitialSteps_order$key
+  order: useBuildInitialSteps_order$key,
 ): CheckoutStep[] => {
   const orderData = useFragment(FRAGMENT, order)
 
@@ -68,7 +68,7 @@ export const useBuildInitialSteps = (
   ].filter((step): step is CheckoutStep => step !== false)
 
   const firstUpcomingStep = steps.find(
-    step => step.state === CheckoutStepState.UPCOMING
+    step => step.state === CheckoutStepState.UPCOMING,
   )
 
   if (firstUpcomingStep) {

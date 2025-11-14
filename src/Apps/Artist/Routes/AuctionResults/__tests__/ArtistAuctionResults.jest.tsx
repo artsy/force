@@ -147,7 +147,7 @@ describe("AuctionResults", () => {
 
       // The sort is now a button with dropdown (not a combobox)
       expect(
-        screen.getByText("Sort: Sale Date (Most Recent)")
+        screen.getByText("Sort: Sale Date (Most Recent)"),
       ).toBeInTheDocument()
 
       expect(screen.getAllByRole("presentation")).toHaveLength(10)
@@ -245,13 +245,13 @@ describe("AuctionResults", () => {
         expect(checkedCheckboxes[2]).toHaveTextContent("Small (under 40cm)")
         expect(checkedCheckboxes[3]).toHaveTextContent("Large (over 100cm)")
         expect(checkedCheckboxes[4]).toHaveTextContent(
-          "Include unspecified dates"
+          "Include unspecified dates",
         )
         expect(checkedCheckboxes[5]).toHaveTextContent(
-          "Include unknown and unavailable prices"
+          "Include unknown and unavailable prices",
         )
         expect(checkedCheckboxes[6]).toHaveTextContent(
-          "Include unspecified sale dates"
+          "Include unspecified sale dates",
         )
         expect(checkedCheckboxes[7]).toHaveTextContent("Phillips")
         expect(checkedCheckboxes[8]).toHaveTextContent("Bonhams")
@@ -284,7 +284,7 @@ describe("AuctionResults", () => {
 
           expect(screen.getAllByText("Sign up to see price")).toHaveLength(10)
           expect(
-            operationVariables.categories.includes("Work on Paper")
+            operationVariables.categories.includes("Work on Paper"),
           ).toBeTruthy()
           expect(operationVariables.after).toBe("cursor2")
         })
@@ -513,7 +513,7 @@ describe("AuctionResults", () => {
           const radios = screen.getAllByRole("radio")
           const estimateRadio = radios.find(
             radio =>
-              (radio as HTMLInputElement).value === "ESTIMATE_AND_DATE_DESC"
+              (radio as HTMLInputElement).value === "ESTIMATE_AND_DATE_DESC",
           )
 
           if (estimateRadio) {

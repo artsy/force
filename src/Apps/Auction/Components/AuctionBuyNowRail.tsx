@@ -65,5 +65,5 @@ export const AuctionBuyNowRailFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

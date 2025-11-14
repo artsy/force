@@ -139,7 +139,7 @@ describe("AuctionApp", () => {
   it("renders auction details", () => {
     renderWithRelay()
     expect(
-      screen.getByText("AuctionDetailsFragmentContainer")
+      screen.getByText("AuctionDetailsFragmentContainer"),
     ).toBeInTheDocument()
   })
 
@@ -155,9 +155,9 @@ describe("AuctionApp", () => {
       expect(
         screen.getByText((content, _element) =>
           content.includes(
-            "Closing times may be extended due to last-minute competitive bidding"
-          )
-        )
+            "Closing times may be extended due to last-minute competitive bidding",
+          ),
+        ),
       ).toBeInTheDocument()
     })
 
@@ -170,8 +170,8 @@ describe("AuctionApp", () => {
 
       expect(
         screen.queryByText(
-          "Closing times may be extended due to last-minute competitive bidding"
-        )
+          "Closing times may be extended due to last-minute competitive bidding",
+        ),
       ).not.toBeInTheDocument()
     })
   })
@@ -200,7 +200,7 @@ describe("AuctionApp", () => {
         const tabs = screen.getAllByRole("button")
         fireEvent.click(tabs[0])
         expect(
-          screen.getByText("AuctionAssociatedSaleFragmentContainer")
+          screen.getByText("AuctionAssociatedSaleFragmentContainer"),
         ).toBeInTheDocument()
       })
 
@@ -211,7 +211,7 @@ describe("AuctionApp", () => {
           }),
         })
         expect(
-          screen.queryByText("AuctionAssociatedSaleFragmentContainer")
+          screen.queryByText("AuctionAssociatedSaleFragmentContainer"),
         ).not.toBeInTheDocument()
       })
     })
@@ -229,7 +229,7 @@ describe("AuctionApp", () => {
         expect(screen.getByText("Your Active Bids")).toBeInTheDocument()
         fireEvent.click(screen.getByText("Your Active Bids"))
         expect(
-          screen.getByText("AuctionActiveBidsRefetchContainer")
+          screen.getByText("AuctionActiveBidsRefetchContainer"),
         ).toBeInTheDocument()
       })
 
@@ -241,7 +241,7 @@ describe("AuctionApp", () => {
         })
         expect(screen.queryByText("Your Active Bids")).not.toBeInTheDocument()
         expect(
-          screen.queryByText("AuctionActiveBidsRefetchContainer")
+          screen.queryByText("AuctionActiveBidsRefetchContainer"),
         ).not.toBeInTheDocument()
       })
     })
@@ -263,11 +263,13 @@ describe("AuctionApp", () => {
           }),
         })
         expect(
-          screen.getByText("Works By Artists You Follow")
+          screen.getByText("Works By Artists You Follow"),
         ).toBeInTheDocument()
         fireEvent.click(screen.getByText("Works By Artists You Follow"))
         expect(
-          screen.getByText("AuctionWorksByFollowedArtistsRailFragmentContainer")
+          screen.getByText(
+            "AuctionWorksByFollowedArtistsRailFragmentContainer",
+          ),
         ).toBeInTheDocument()
       })
 
@@ -278,12 +280,12 @@ describe("AuctionApp", () => {
           }),
         })
         expect(
-          screen.queryByText("Works By Artists You Follow")
+          screen.queryByText("Works By Artists You Follow"),
         ).not.toBeInTheDocument()
         expect(
           screen.queryByText(
-            "AuctionWorksByFollowedArtistsRailFragmentContainer"
-          )
+            "AuctionWorksByFollowedArtistsRailFragmentContainer",
+          ),
         ).not.toBeInTheDocument()
       })
     })
@@ -302,7 +304,7 @@ describe("AuctionApp", () => {
         expect(screen.getByText("Inquire")).toBeInTheDocument()
         fireEvent.click(screen.getByText("Inquire"))
         expect(
-          screen.getByText("AuctionBuyNowRailFragmentContainer")
+          screen.getByText("AuctionBuyNowRailFragmentContainer"),
         ).toBeInTheDocument()
       })
 
@@ -314,7 +316,7 @@ describe("AuctionApp", () => {
         })
         expect(screen.queryByText("Inquire")).not.toBeInTheDocument()
         expect(
-          screen.queryByText("AuctionBuyNowRailFragmentContainer")
+          screen.queryByText("AuctionBuyNowRailFragmentContainer"),
         ).not.toBeInTheDocument()
       })
     })
@@ -329,10 +331,10 @@ describe("AuctionApp", () => {
         }),
       })
       expect(
-        screen.queryByText("Registration for this auction is currently open")
+        screen.queryByText("Registration for this auction is currently open"),
       ).not.toBeInTheDocument()
       expect(
-        screen.getByText("AuctionArtworkFilterQueryRenderer")
+        screen.getByText("AuctionArtworkFilterQueryRenderer"),
       ).toBeInTheDocument()
     })
 
@@ -344,13 +346,13 @@ describe("AuctionApp", () => {
         }),
       })
       expect(
-        screen.getByText("Registration for this auction is currently open")
+        screen.getByText("Registration for this auction is currently open"),
       ).toBeInTheDocument()
       expect(
-        screen.getByText("Auction lots will be published soon.")
+        screen.getByText("Auction lots will be published soon."),
       ).toBeInTheDocument()
       expect(
-        screen.queryByText("AuctionArtworkFilterRefetchContainer")
+        screen.queryByText("AuctionArtworkFilterRefetchContainer"),
       ).not.toBeInTheDocument()
     })
 
@@ -369,7 +371,7 @@ describe("AuctionApp", () => {
         Sale: () => ({}),
       })
       expect(
-        screen.queryByText("AuctionCurrentAuctionsRail")
+        screen.queryByText("AuctionCurrentAuctionsRail"),
       ).not.toBeInTheDocument()
     })
   })

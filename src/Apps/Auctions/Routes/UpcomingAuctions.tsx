@@ -132,5 +132,5 @@ export const UpcomingAuctionsPaginationContainer = createPaginationContainer(
         }
       }
     `,
-  }
+  },
 )

@@ -192,5 +192,5 @@ export const ArtworkLightboxFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

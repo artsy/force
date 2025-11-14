@@ -39,7 +39,7 @@ export const FileDropzone: React.FC<
       const [acceptedFiles, errors] = validateTotalMaxSize(
         allFiles,
         files,
-        maxTotalSize
+        maxTotalSize,
       )
 
       if (acceptedFiles.length) {

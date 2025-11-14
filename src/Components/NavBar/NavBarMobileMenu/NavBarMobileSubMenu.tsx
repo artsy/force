@@ -178,7 +178,7 @@ export const NavBarMobileSubMenuItem: React.FC<
   }
 
   const handleClick = (
-    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
   ) => {
     trackEvent({
       action_type: DeprecatedAnalyticsSchema.ActionType.Click,

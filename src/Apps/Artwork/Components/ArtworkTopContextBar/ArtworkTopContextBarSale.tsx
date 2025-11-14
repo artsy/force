@@ -32,7 +32,7 @@ export const ArtworkTopContextBarSale: React.FC<
       }
     `,
     { id },
-    { fetchPolicy: "store-or-network" }
+    { fetchPolicy: "store-or-network" },
   )
 
   if (!data.sale) return null

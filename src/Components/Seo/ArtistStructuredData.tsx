@@ -20,7 +20,7 @@ export const ArtistStructuredData: React.FC<ArtistStructuredDataProps> = ({
       return partner?.href
         ? { "@id": `${getENV("APP_URL")}${partner.href}` }
         : null
-    })
+    }),
   )
 
   return (

@@ -20,7 +20,7 @@ jest.unmock("react-tracking")
 
 jest.mock("../../Mutations/useSetPayment", () => {
   const originalUseSetPayment = jest.requireActual(
-    "../../Mutations/useSetPayment"
+    "../../Mutations/useSetPayment",
   )
 
   return {
@@ -123,7 +123,7 @@ describe("BankAccountFragmentContainer", () => {
 
       // Check that the bank form elements are visible
       expect(
-        document.querySelector('[data-test="paymentSectionUsBankAccount"]')
+        document.querySelector('[data-test="paymentSectionUsBankAccount"]'),
       ).toBeInTheDocument()
     })
   })
@@ -190,7 +190,7 @@ describe("BankAccountFragmentContainer", () => {
 
       // Check that the bank form section is now expanded
       expect(
-        document.querySelector('[data-test="paymentSectionUsBankAccount"]')
+        document.querySelector('[data-test="paymentSectionUsBankAccount"]'),
       ).toBeInTheDocument()
     })
 
@@ -232,7 +232,7 @@ describe("BankAccountFragmentContainer", () => {
 
       // Bank form should not be rendered when existing account selected
       const bankFormSection = document.querySelector(
-        '[data-test="paymentSectionUsBankAccount"]'
+        '[data-test="paymentSectionUsBankAccount"]',
       )
       expect(bankFormSection).not.toBeInTheDocument()
     })

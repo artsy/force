@@ -7,7 +7,7 @@ test.describe("partner/:partner_id", () => {
 
   test("renders metadata", async ({ page }) => {
     await expect(page).toHaveTitle(
-      "Gagosian | Artists, Art for Sale, and Contact Info | Artsy"
+      "Gagosian | Artists, Art for Sale, and Contact Info | Artsy",
     )
 
     const metaDescription = page.locator("meta[name='description']")
@@ -40,8 +40,8 @@ test.describe("partner/:partner_id", () => {
     // TODO: cy.visit(":partner_id/contact")
     await expect(
       page.getByText(
-        "Sorry, the page you were looking for doesn&#x2019;t exist at this URL."
-      )
+        "Sorry, the page you were looking for doesn&#x2019;t exist at this URL.",
+      ),
     ).toBeVisible()
   })
 

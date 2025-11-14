@@ -49,7 +49,7 @@ describe("ArtworkDetails", () => {
 
       expect(screen.getByText("Condition")).toBeInTheDocument()
       expect(
-        screen.queryByText("Slight discoloration from sun exposure")
+        screen.queryByText("Slight discoloration from sun exposure"),
       ).not.toBeInTheDocument()
     })
 
@@ -66,7 +66,7 @@ describe("ArtworkDetails", () => {
 
       expect(screen.getByText("Condition")).toBeInTheDocument()
       expect(
-        screen.getByText("Slight discoloration from sun exposure")
+        screen.getByText("Slight discoloration from sun exposure"),
       ).toBeInTheDocument()
     })
 
@@ -98,7 +98,7 @@ describe("ArtworkDetails", () => {
       expect(screen.getByText("Signature")).toBeInTheDocument()
       expect(screen.getByText("Condition")).toBeInTheDocument()
       expect(
-        screen.getByText("Certificate of authenticity")
+        screen.getByText("Certificate of authenticity"),
       ).toBeInTheDocument()
       expect(screen.getByText("Rarity")).toBeInTheDocument()
       expect(screen.getByText("Size")).toBeInTheDocument()
@@ -151,7 +151,7 @@ describe("ArtworkDetails", () => {
       })
 
       expect(
-        screen.getByText("Here is some additional info for this work")
+        screen.getByText("Here is some additional info for this work"),
       ).toBeInTheDocument()
     })
 

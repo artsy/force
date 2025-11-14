@@ -211,5 +211,5 @@ export const ArtistCVGroupRefetchContainer = createPaginationContainer(
         }
       }
     `,
-  }
+  },
 )

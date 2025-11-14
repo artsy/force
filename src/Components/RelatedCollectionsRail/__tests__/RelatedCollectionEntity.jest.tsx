@@ -29,7 +29,7 @@ describe.skip("RelatedCollectionEntity", () => {
         path="/collection/slug"
       >
         <RelatedCollectionEntity {...passedProps} />
-      </AnalyticsCombinedContextProvider>
+      </AnalyticsCombinedContextProvider>,
     )
   }
 
@@ -45,7 +45,7 @@ describe.skip("RelatedCollectionEntity", () => {
 
     const artworkImage = images[0]
     expect(artworkImage.getAttribute("src")).toBe(
-      "https://d32dm0rphc51dk.cloudfront.net/4izTOpDv-ew-g1RFXeREcQ/small.jpg"
+      "https://d32dm0rphc51dk.cloudfront.net/4izTOpDv-ew-g1RFXeREcQ/small.jpg",
     )
     expect(artworkImage.getAttribute("alt")).toBe("Flag")
   })

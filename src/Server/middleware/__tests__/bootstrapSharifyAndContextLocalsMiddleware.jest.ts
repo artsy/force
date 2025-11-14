@@ -48,7 +48,7 @@ describe("locals middleware", () => {
 
   it("sets IS_MOBILE", () => {
     req.get.mockReturnValueOnce(
-      "Mozilla/5.0 (iPhone; CPU iPhone OS 12_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148"
+      "Mozilla/5.0 (iPhone; CPU iPhone OS 12_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148",
     )
     bootstrapSharifyAndContextLocalsMiddleware(req, res, next)
     expect(res.locals.sd.IS_MOBILE).toEqual(true)
@@ -56,7 +56,7 @@ describe("locals middleware", () => {
 
   it("sets IS_TABLET", () => {
     req.get.mockReturnValueOnce(
-      "Mozilla/5.0(iPad; U; CPU iPhone OS 3_2 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Version/4.0.4 Mobile/7B314 Safari/531.21.10"
+      "Mozilla/5.0(iPad; U; CPU iPhone OS 3_2 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Version/4.0.4 Mobile/7B314 Safari/531.21.10",
     )
     bootstrapSharifyAndContextLocalsMiddleware(req, res, next)
     expect(res.locals.sd.IS_TABLET).toEqual(true)

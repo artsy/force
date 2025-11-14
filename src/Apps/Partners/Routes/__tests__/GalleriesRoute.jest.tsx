@@ -67,7 +67,7 @@ describe("GalleriesRoute", () => {
     renderWithRelay()
 
     expect(
-      screen.getByText("Interested in Listing Your Gallery on Artsy?")
+      screen.getByText("Interested in Listing Your Gallery on Artsy?"),
     ).toBeInTheDocument()
 
     expect(screen.getByText("PartnersRailsQueryRenderer")).toBeInTheDocument()
@@ -84,11 +84,11 @@ describe("GalleriesRoute", () => {
       renderWithRelay()
 
       expect(
-        screen.getByText("Interested in Listing Your Gallery on Artsy?")
+        screen.getByText("Interested in Listing Your Gallery on Artsy?"),
       ).toBeInTheDocument()
 
       expect(
-        screen.getByText("PartnersFilteredCellsQueryRenderer")
+        screen.getByText("PartnersFilteredCellsQueryRenderer"),
       ).toBeInTheDocument()
     })
   })

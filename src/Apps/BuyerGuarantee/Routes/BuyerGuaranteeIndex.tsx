@@ -211,7 +211,7 @@ export const BuyerGuaranteeIndex: FC<React.PropsWithChildren<unknown>> = () => {
             <Image
               {...cropped(
                 "https://files.artsy.net/authenticityguaranteeartwork.jpg",
-                { width: 900, height: 675 }
+                { width: 900, height: 675 },
               )}
               alt="Paul Wackers, Constructing Planets, 2018"
               width="100%"
@@ -275,7 +275,7 @@ export const BuyerGuaranteeIndex: FC<React.PropsWithChildren<unknown>> = () => {
             <Image
               {...cropped(
                 "https://files.artsy.net/moneybackguaranteeartwork.jpg",
-                { width: 900, height: 675 }
+                { width: 900, height: 675 },
               )}
               alt="Alex Katz, Blue Umbrella 2, 2020"
               width="100%"

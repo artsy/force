@@ -9,13 +9,13 @@ test.describe("/artist/:id", () => {
 
   test("renders metadata", async ({ page }) => {
     await expect(page).toHaveTitle(
-      /Pablo Picasso - Biography, Shows, Articles & More \| Artsy/
+      /Pablo Picasso - Biography, Shows, Articles & More \| Artsy/,
     )
 
     const metaDescription = page.locator('meta[name="description"]')
     await expect(metaDescription).toHaveAttribute(
       "content",
-      /Explore Pablo Picasso\u2019s biography, achievements, artworks, auction results, and shows on Artsy\. Perhaps the most influential artist of the 20th century, Pablo Picasso/
+      /Explore Pablo Picasso\u2019s biography, achievements, artworks, auction results, and shows on Artsy\. Perhaps the most influential artist of the 20th century, Pablo Picasso/,
     )
   })
 

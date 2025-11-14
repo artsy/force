@@ -32,5 +32,5 @@ export const SubscriberBannerFragmentContainer = createFragmentContainer(
         name
       }
     `,
-  }
+  },
 )

@@ -93,5 +93,5 @@ export const ViewInRoomArtworkFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

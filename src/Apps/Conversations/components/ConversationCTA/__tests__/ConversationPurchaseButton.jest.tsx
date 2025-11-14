@@ -23,7 +23,7 @@ jest.mock(
     usePartnerOfferCheckoutMutation: jest.fn().mockReturnValue({
       submitMutation: jest.fn(),
     }),
-  })
+  }),
 )
 
 jest.mock("Apps/Conversations/ConversationsContext", () => ({

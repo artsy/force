@@ -42,7 +42,7 @@ const NavBarMobileMenuNotificationsFragmentContainer = createFragmentContainer(
         unseenNotificationsCount
       }
     `,
-  }
+  },
 )
 
 export const NavBarMobileMenuNotificationsQueryRenderer: React.FC<

@@ -10,7 +10,7 @@ test.describe("FairOrganizer", () => {
   test("/fair-organizer/:slug/articles", async ({ page }) => {
     await page.goto("fair-organizer/art-paris/articles")
     await expect(
-      page.getByText("All Articles for Art Paris on Artsy").first()
+      page.getByText("All Articles for Art Paris on Artsy").first(),
     ).toBeVisible()
     await expect(page).toHaveTitle("Art Paris | Artsy")
   })

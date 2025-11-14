@@ -38,8 +38,8 @@ export const MyBidsBidItem: React.FC<
             saleArtwork.slug,
             horizontalSlidePosition,
             saleArtwork.artwork?.collectorSignals?.auction?.bidCount,
-            saleArtwork.artwork?.collectorSignals?.auction?.lotWatcherCount
-          )
+            saleArtwork.artwork?.collectorSignals?.auction?.lotWatcherCount,
+          ),
         )
       }}
     >
@@ -198,5 +198,5 @@ export const MyBidsBidItemFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

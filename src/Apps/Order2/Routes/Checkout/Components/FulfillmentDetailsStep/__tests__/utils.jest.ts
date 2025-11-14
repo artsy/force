@@ -158,7 +158,7 @@ describe("FulfillmentDetailsStep utils", () => {
       const availableShippingCountries = ["US", "GB"]
       const result = processSavedAddresses(
         mockAddressConnection,
-        availableShippingCountries
+        availableShippingCountries,
       )
 
       expect(result).toHaveLength(2)
@@ -275,7 +275,7 @@ describe("FulfillmentDetailsStep utils", () => {
 
       const result = findInitialSelectedAddress(
         processedAddresses,
-        initialValues
+        initialValues,
       )
 
       expect(result?.internalID).toBe("address1")
@@ -298,7 +298,7 @@ describe("FulfillmentDetailsStep utils", () => {
 
       const result = findInitialSelectedAddress(
         processedAddresses,
-        initialValues
+        initialValues,
       )
 
       expect(result?.internalID).toBe("address1") // First valid address
@@ -402,7 +402,7 @@ describe("FulfillmentDetailsStep utils", () => {
 
       const result = findInitialSelectedAddress(
         processedAddressesWithEmpty,
-        initialValues
+        initialValues,
       )
 
       expect(result?.internalID).toBe("address1")
@@ -462,7 +462,7 @@ describe("FulfillmentDetailsStep utils", () => {
 
       const result = findInitialSelectedAddress(
         addressesWithDefault,
-        initialValues
+        initialValues,
       )
       expect(result?.internalID).toBe("address1") // Exact match wins over default
     })
@@ -521,7 +521,7 @@ describe("FulfillmentDetailsStep utils", () => {
 
       const result = findInitialSelectedAddress(
         addressesWithDefault,
-        initialValues
+        initialValues,
       )
       expect(result?.internalID).toBe("address1") // Valid address selected over invalid default
     })
@@ -580,7 +580,7 @@ describe("FulfillmentDetailsStep utils", () => {
 
       const result = findInitialSelectedAddress(
         addressesWithInvalidDefault,
-        initialValues
+        initialValues,
       )
       expect(result?.internalID).toBe("address1") // Falls back to first valid address
     })

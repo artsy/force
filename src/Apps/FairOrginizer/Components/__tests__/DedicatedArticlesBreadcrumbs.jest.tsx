@@ -59,7 +59,7 @@ describe("DedicatedArticlesBreadcrumbs", () => {
     expect(images.length).toBeGreaterThan(0)
     expect(images[0]).toHaveAttribute(
       "src",
-      expect.stringContaining("some-src")
+      expect.stringContaining("some-src"),
     )
   })
 

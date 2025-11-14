@@ -17,7 +17,7 @@ jest.mock(
     return {
       ConversationCTA: () => <div>ConversationCTA</div>,
     }
-  }
+  },
 )
 
 jest.mock("@artsy/palette", () => ({
@@ -125,7 +125,7 @@ describe("ConversationReply", () => {
       sentConversationMessage({
         impulseConversationId: conversation.internalID,
         impulseMessageId: "000",
-      })
+      }),
     )
     expect(resetFormMock).toHaveBeenCalledTimes(2)
   })

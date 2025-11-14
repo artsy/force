@@ -124,5 +124,5 @@ export const CellPartnerFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

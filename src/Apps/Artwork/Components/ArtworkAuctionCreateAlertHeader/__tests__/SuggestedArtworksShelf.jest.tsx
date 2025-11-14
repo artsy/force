@@ -74,7 +74,7 @@ describe("SuggestedArtworksShelf", () => {
     })
     expect(screen.queryByTestId("ShelfSuggestedArtworks")).toBeInTheDocument()
     expect(
-      screen.queryByText(/You may be interested in these similar works/)
+      screen.queryByText(/You may be interested in these similar works/),
     ).toBeInTheDocument()
     expect(screen.getByText("See more")).toBeInTheDocument()
   })
@@ -86,11 +86,11 @@ describe("SuggestedArtworksShelf", () => {
       }),
     })
     expect(
-      screen.queryByTestId("ShelfSuggestedArtworks")
+      screen.queryByTestId("ShelfSuggestedArtworks"),
     ).not.toBeInTheDocument()
     expect(screen.queryByText("See more")).not.toBeInTheDocument()
     expect(
-      screen.queryByText(/You may be interested in these similar works/)
+      screen.queryByText(/You may be interested in these similar works/),
     ).not.toBeInTheDocument()
   })
 

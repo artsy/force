@@ -59,7 +59,7 @@ describe("ShareCollectionDialog", () => {
       <ShareCollectionDialog
         onClose={mockOnClose}
         collection={mockCollection}
-      />
+      />,
     )
 
     expect(screen.getByText("Share “Test Collection”")).toBeInTheDocument()
@@ -83,7 +83,7 @@ describe("ShareCollectionDialog", () => {
           ...mockCollection,
           private: false, // not private = shared
         }}
-      />
+      />,
     )
 
     expect(screen.getByText("Share “Test Collection”")).toBeInTheDocument()
@@ -107,14 +107,14 @@ describe("ShareCollectionDialog", () => {
           ...mockCollection,
           private: false, // not private = shared
         }}
-      />
+      />,
     )
 
     const copyButton = screen.getByRole("button", { name: /Copy link/ })
     fireEvent.click(copyButton)
 
     expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
-      "https://artsy.biz/user/user-id-1/collection/test-collection-slug"
+      "https://artsy.biz/user/user-id-1/collection/test-collection-slug",
     )
   })
 
@@ -123,7 +123,7 @@ describe("ShareCollectionDialog", () => {
       <ShareCollectionDialog
         onClose={mockOnClose}
         collection={mockCollection}
-      />
+      />,
     )
 
     fireEvent.click(screen.getByText("Done"))
@@ -147,7 +147,7 @@ describe("ShareCollectionDialog", () => {
       <ShareCollectionDialog
         onClose={mockOnClose}
         collection={mockCollection}
-      />
+      />,
     )
 
     const toggle = screen.getByRole("toggle")
@@ -161,7 +161,7 @@ describe("ShareCollectionDialog", () => {
             private: false, // toggle from private to public
           },
         },
-      })
+      }),
     )
 
     // After the mutation resolves, the inputs should be enabled
@@ -179,7 +179,7 @@ describe("ShareCollectionDialog", () => {
       <ShareCollectionDialog
         onClose={mockOnClose}
         collection={mockCollection}
-      />
+      />,
     )
 
     const toggle = screen.getByRole("toggle")

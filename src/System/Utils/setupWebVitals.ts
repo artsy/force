@@ -18,7 +18,7 @@ export const setupWebVitals = () => {
       (metric: Metric) => {
         console.log(`[web-vitals] ${type}`, metric)
       },
-      { reportAllChanges: true }
+      { reportAllChanges: true },
     )
   }
 

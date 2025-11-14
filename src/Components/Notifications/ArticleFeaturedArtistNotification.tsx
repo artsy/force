@@ -26,7 +26,7 @@ export const ArticleFeaturedArtistNotification: FC<
 > = ({ notification }) => {
   const notificationData = useFragment(
     ArticleFeaturedArtistNotificationFragment,
-    notification
+    notification,
   )
 
   const { headline, item } = notificationData

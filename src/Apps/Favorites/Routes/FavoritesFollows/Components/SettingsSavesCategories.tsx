@@ -36,7 +36,7 @@ const SettingsSavesCategories: FC<
 
   const connection = me.followsAndSaves?.categoriesConnection
   const followedCategories = extractNodes(
-    me.followsAndSaves?.categoriesConnection
+    me.followsAndSaves?.categoriesConnection,
   )
   const total = connection?.totalCount ?? 0
 
@@ -129,7 +129,7 @@ export const SettingsSavesCategoriesPaginationContainer =
         return { ...fragmentVariables, after }
       },
       query: SETTINGS_SAVES_CATEGORIES_QUERY,
-    }
+    },
   )
 
 const SETTINGS_SAVES_CATEGORIES_PLACEHOLDER = (

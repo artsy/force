@@ -114,7 +114,7 @@ describe("ArtsyShippingEstimate", () => {
         expect(screen.queryByText("Unmounted")).not.toBeInTheDocument()
         expect(screen.queryByTestId("loaded-no-widget")).not.toBeInTheDocument()
         expect(
-          screen.queryByText("Estimate Shipping Cost")
+          screen.queryByText("Estimate Shipping Cost"),
         ).not.toBeInTheDocument()
       })
     })
@@ -192,7 +192,7 @@ describe("ArtsyShippingEstimate", () => {
         estimateRequestBodyForArtwork({
           ...validArtworkData,
           priceCurrency: "GBP",
-        })
+        }),
       ).toEqual(
         expect.objectContaining({
           additional_services: ["signature_delivery"],
@@ -204,7 +204,7 @@ describe("ArtsyShippingEstimate", () => {
             country: "USA",
             region: "",
           },
-        })
+        }),
       )
     })
 
@@ -214,7 +214,7 @@ describe("ArtsyShippingEstimate", () => {
           estimateRequestBodyForArtwork({
             ...validArtworkData,
             shippingOrigin: "New York, NY, USA",
-          })
+          }),
         ).toEqual(
           expect.objectContaining({
             origin: {
@@ -222,7 +222,7 @@ describe("ArtsyShippingEstimate", () => {
               country: "USA",
               region: "NY",
             },
-          })
+          }),
         )
       })
     })
@@ -234,7 +234,7 @@ describe("ArtsyShippingEstimate", () => {
           isFramed: false,
           widthCm: null,
           diameterCm: null,
-        })
+        }),
       ).toBeNull()
     })
 
@@ -245,14 +245,14 @@ describe("ArtsyShippingEstimate", () => {
           listPrice: {
             minPrice: null,
           },
-        })
+        }),
       ).toBeNull()
 
       expect(
         estimateRequestBodyForArtwork({
           ...validArtworkData,
           priceCurrency: null,
-        })
+        }),
       ).toBeNull()
     })
   })

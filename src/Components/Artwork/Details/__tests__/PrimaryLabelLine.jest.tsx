@@ -51,7 +51,7 @@ describe("PrimaryLabelLine", () => {
         <PrimaryLabelLineQueryRenderer
           id="opaque-internal-id"
           label="INCREASED_INTEREST"
-        />
+        />,
       )
 
       expect(screen.getByText("Increased Interest")).toBeInTheDocument()
@@ -62,7 +62,7 @@ describe("PrimaryLabelLine", () => {
         <PrimaryLabelLineQueryRenderer
           id="opaque-internal-id"
           label="CURATORS_PICK"
-        />
+        />,
       )
 
       expect(screen.getByText("Curators’ Pick")).toBeInTheDocument()
@@ -77,7 +77,7 @@ describe("PrimaryLabelLine", () => {
         <PrimaryLabelLineQueryRenderer
           id="opaque-internal-id"
           label="INCREASED_INTEREST"
-        />
+        />,
       )
 
       expect(container).toBeEmptyDOMElement()
@@ -92,7 +92,7 @@ describe("PrimaryLabelLine", () => {
         <PrimaryLabelLineQueryRenderer
           id="opaque-internal-id"
           label="CURATORS_PICK"
-        />
+        />,
       )
 
       expect(container).toBeEmptyDOMElement()
@@ -102,7 +102,7 @@ describe("PrimaryLabelLine", () => {
   describe("after fetching null partner offer", () => {
     const renderPrimaryLabelLine = label => {
       const { container } = render(
-        <PrimaryLabelLineQueryRenderer id="opaque-internal-id" label={label} />
+        <PrimaryLabelLineQueryRenderer id="opaque-internal-id" label={label} />,
       )
 
       act(() => {
@@ -113,7 +113,7 @@ describe("PrimaryLabelLine", () => {
                 partnerOffer: null,
               },
             }),
-          })
+          }),
         )
       })
 
@@ -158,7 +158,7 @@ describe("PrimaryLabelLine", () => {
   describe("after fetching an active partner offer", () => {
     const renderPrimaryLabelLine = label => {
       const { container } = render(
-        <PrimaryLabelLineQueryRenderer id="opaque-internal-id" label={label} />
+        <PrimaryLabelLineQueryRenderer id="opaque-internal-id" label={label} />,
       )
 
       act(() => {
@@ -174,7 +174,7 @@ describe("PrimaryLabelLine", () => {
                 },
               },
             }),
-          })
+          }),
         )
       })
 

@@ -85,7 +85,7 @@ jest.mock(
   "Apps/Order/Components/ExpressCheckout/Util/useShowStoredErrorDialog",
   () => ({
     useShowStoredErrorDialog: jest.fn(),
-  })
+  }),
 )
 
 const order = {
@@ -159,7 +159,7 @@ const meWithAddresses: ShippingTestQuery$rawResponse["me"] = Object.assign(
       ],
       pageInfo,
     },
-  }
+  },
 )
 
 const saveAndContinue = async () => {
@@ -187,7 +187,7 @@ const recommendedAddress = {
 const verifyAddressWithSuggestions = async (
   mockResolveLastOperation,
   input = validAddressBeforeVerification,
-  suggested = recommendedAddress
+  suggested = recommendedAddress,
 ) => {
   const addressLines = addr => {
     return [
@@ -246,7 +246,7 @@ const resolveSaveFulfillmentDetails = async (
   commerceSetShipping,
   /* if you submitted the form with a different address than validAddress,
    pass it here to override the address in the mutation response. */
-  responseAddress?: any
+  responseAddress?: any,
 ) => {
   await flushPromiseQueue()
   const payload = responseAddress
@@ -293,7 +293,7 @@ describe.skip("Shipping", () => {
   const renderWithRelay: typeof renderWithRelayRaw = (
     resolvers,
     componentProps = {},
-    relayEnv = createMockEnvironment()
+    relayEnv = createMockEnvironment(),
   ) => {
     mockRelayEnv = relayEnv
     return renderWithRelayRaw(resolvers, componentProps, relayEnv)
@@ -344,14 +344,14 @@ describe.skip("Shipping", () => {
       const renderedFullName = await screen.findByDisplayValue("Dr Collector")
       expect(renderedFullName).toHaveValue("Dr Collector")
       expect(screen.getByPlaceholderText("Street address")).toHaveValue(
-        "1 Main St"
+        "1 Main St",
       )
       expect(screen.getByPlaceholderText("City")).toHaveValue("Madrid")
       expect(screen.getByPlaceholderText("ZIP/Postal code")).toHaveValue(
-        "28001"
+        "28001",
       )
       expect(
-        screen.getByPlaceholderText("Add phone number including country code")
+        screen.getByPlaceholderText("Add phone number including country code"),
       ).toHaveValue("555-555-5555")
     })
 
@@ -404,12 +404,12 @@ describe.skip("Shipping", () => {
 
       await waitFor(() => {
         expect(
-          screen.getByRole("radio", { name: /Arrange for pickup/ })
+          screen.getByRole("radio", { name: /Arrange for pickup/ }),
         ).toBeChecked()
       })
 
       expect(
-        screen.getByPlaceholderText("Add phone number including country code")
+        screen.getByPlaceholderText("Add phone number including country code"),
       ).toHaveValue("555-555-5555")
     })
   })
@@ -434,13 +434,14 @@ describe.skip("Shipping", () => {
         expect(screen.getByText("Delivery method")).toBeVisible()
         expect(screen.getByRole("radio", { name: "Shipping" })).toBeVisible()
         expect(
-          screen.getByRole("radio", { name: /Arrange for pickup/ })
+          screen.getByRole("radio", { name: /Arrange for pickup/ }),
         ).toBeVisible()
       })
 
       it("does not render fulfillment selection if artwork is not available for pickup", async () => {
         const shippingOnlyOrder = cloneDeep(order) as any
-        shippingOnlyOrder.lineItems.edges[0].node.artwork.pickupAvailable = false
+        shippingOnlyOrder.lineItems.edges[0].node.artwork.pickupAvailable =
+          false
 
         renderWithRelay({
           CommerceOrder: () => shippingOnlyOrder,
@@ -449,10 +450,10 @@ describe.skip("Shipping", () => {
 
         expect(screen.queryByText("Delivery method")).not.toBeInTheDocument()
         expect(
-          screen.queryByRole("radio", { name: "Shipping" })
+          screen.queryByRole("radio", { name: "Shipping" }),
         ).not.toBeInTheDocument()
         expect(
-          screen.queryByRole("radio", { name: /Arrange for pickup/ })
+          screen.queryByRole("radio", { name: /Arrange for pickup/ }),
         ).not.toBeInTheDocument()
       })
 
@@ -524,7 +525,7 @@ describe.skip("Shipping", () => {
         })
 
         expect(createAddressOperation.operationName).toBe(
-          "useCreateSavedAddressMutation"
+          "useCreateSavedAddressMutation",
         )
         expect(createAddressOperation.operationVariables).toMatchObject({
           input: {
@@ -536,11 +537,11 @@ describe.skip("Shipping", () => {
 
         const fulfillmentRequest = await resolveSaveFulfillmentDetails(
           mockResolveLastOperation,
-          settingOrderShipmentSuccess.commerceSetShipping
+          settingOrderShipmentSuccess.commerceSetShipping,
         )
 
         expect(fulfillmentRequest.operationName).toBe(
-          "useSaveFulfillmentDetailsMutation"
+          "useSaveFulfillmentDetailsMutation",
         )
         expect(fulfillmentRequest.operationVariables).toMatchObject({
           input: {
@@ -573,11 +574,11 @@ describe.skip("Shipping", () => {
 
         const fulfillmentRequest = await resolveSaveFulfillmentDetails(
           mockResolveLastOperation,
-          settingOrderShipmentSuccess.commerceSetShipping
+          settingOrderShipmentSuccess.commerceSetShipping,
         )
 
         expect(fulfillmentRequest.operationName).toBe(
-          "useSaveFulfillmentDetailsMutation"
+          "useSaveFulfillmentDetailsMutation",
         )
         await waitFor(() => {
           expect(getAllPendingOperationNames(env)).toEqual([])
@@ -612,7 +613,7 @@ describe.skip("Shipping", () => {
 
         await resolveSaveFulfillmentDetails(
           mockResolveLastOperation,
-          settingOrderShipmentSuccess.commerceSetShipping
+          settingOrderShipmentSuccess.commerceSetShipping,
         )
 
         await waitFor(() => {
@@ -667,7 +668,7 @@ describe.skip("Shipping", () => {
         await saveAndContinue()
 
         await waitFor(() =>
-          mockRejectLastOperation(new Error("##TEST_ERROR## wrong number"))
+          mockRejectLastOperation(new Error("##TEST_ERROR## wrong number")),
         )
         await waitFor(() => expect(mockShowErrorDialog).toHaveBeenCalledWith())
 
@@ -709,7 +710,7 @@ describe.skip("Shipping", () => {
             title: "Invalid address",
             message:
               "There was an error processing your address. Please review and try again.",
-          })
+          }),
         )
         expect(mockTrackEvent).toHaveBeenLastCalledWith({
           action: "errorMessageViewed",
@@ -749,7 +750,7 @@ describe.skip("Shipping", () => {
             title: "Invalid address",
             message:
               "There was an error processing your address. Please review and try again.",
-          })
+          }),
         )
         expect(mockTrackEvent).toHaveBeenLastCalledWith({
           action: "errorMessageViewed",
@@ -882,7 +883,7 @@ describe.skip("Shipping", () => {
         })
 
         expect(screen.getByPlaceholderText("Full name")).toHaveValue(
-          "Dr Collector"
+          "Dr Collector",
         )
       })
 
@@ -895,21 +896,21 @@ describe.skip("Shipping", () => {
             })
 
             expect(
-              screen.queryByText(/[\w\s]is required/)
+              screen.queryByText(/[\w\s]is required/),
             ).not.toBeInTheDocument()
 
             await fillAddressForm({ ...validAddress, addressLine1: undefined })
 
             await flushPromiseQueue()
             expect(
-              screen.queryByText(/[\w\s]is required/)
+              screen.queryByText(/[\w\s]is required/),
             ).not.toBeInTheDocument()
 
             await userEvent.click(screen.getByText("Save and Continue"))
 
             await waitFor(() => {
               expect(
-                screen.getByText("Street address is required")
+                screen.getByText("Street address is required"),
               ).toBeVisible()
             })
             expect(env.mock.getAllOperations().length).toEqual(0)
@@ -928,7 +929,7 @@ describe.skip("Shipping", () => {
             await verifyAddressWithSuggestions(
               mockResolveLastOperation,
               validAddressBeforeVerification,
-              recommendedAddress
+              recommendedAddress,
             )
 
             expect(env.mock.getAllOperations().length).toEqual(0)
@@ -947,7 +948,7 @@ describe.skip("Shipping", () => {
             await verifyAddressWithSuggestions(
               mockResolveLastOperation,
               validAddressBeforeVerification,
-              recommendedAddress
+              recommendedAddress,
             )
 
             await userEvent.click(screen.getByText("Use This Address"))
@@ -959,17 +960,17 @@ describe.skip("Shipping", () => {
             })
 
             expect(createAddressOperation.operationName).toBe(
-              "useCreateSavedAddressMutation"
+              "useCreateSavedAddressMutation",
             )
 
             await flushPromiseQueue()
             const fulfillmentOperation = await resolveSaveFulfillmentDetails(
               mockResolveLastOperation,
-              settingOrderShipmentSuccess.commerceSetShipping
+              settingOrderShipmentSuccess.commerceSetShipping,
             )
 
             expect(fulfillmentOperation.operationName).toBe(
-              "useSaveFulfillmentDetailsMutation"
+              "useSaveFulfillmentDetailsMutation",
             )
             expect(fulfillmentOperation.operationVariables).toEqual({
               input: {
@@ -1000,7 +1001,7 @@ describe.skip("Shipping", () => {
             await verifyAddressWithSuggestions(
               mockResolveLastOperation,
               validAddressBeforeVerification,
-              recommendedAddress
+              recommendedAddress,
             )
 
             // Clicking "Back to Edit" allows users to edit the address form
@@ -1008,7 +1009,7 @@ describe.skip("Shipping", () => {
             await userEvent.click(screen.getByText("Back to Edit"))
             await userEvent.paste(
               screen.getByPlaceholderText("City"),
-              ": the big apple"
+              ": the big apple",
             )
 
             await flushPromiseQueue()
@@ -1017,11 +1018,11 @@ describe.skip("Shipping", () => {
 
             const fulfillmentOperation = await resolveSaveFulfillmentDetails(
               mockResolveLastOperation,
-              settingOrderShipmentSuccess.commerceSetShipping
+              settingOrderShipmentSuccess.commerceSetShipping,
             )
 
             expect(fulfillmentOperation.operationName).toBe(
-              "useSaveFulfillmentDetailsMutation"
+              "useSaveFulfillmentDetailsMutation",
             )
             expect(fulfillmentOperation.operationVariables).toEqual({
               input: {
@@ -1051,7 +1052,7 @@ describe.skip("Shipping", () => {
 
             await userEvent.selectOptions(
               screen.getByTestId("AddressForm_country"),
-              ["TW"]
+              ["TW"],
             )
 
             await saveAndContinue()
@@ -1061,7 +1062,7 @@ describe.skip("Shipping", () => {
             const operation = mockResolveLastOperation({})
 
             expect(operation.operationName).toBe(
-              "useSaveFulfillmentDetailsMutation"
+              "useSaveFulfillmentDetailsMutation",
             )
           })
         })
@@ -1078,7 +1079,7 @@ describe.skip("Shipping", () => {
 
         await resolveSaveFulfillmentDetails(
           mockResolveLastOperation,
-          settingOrderShipmentSuccess.commerceSetShipping
+          settingOrderShipmentSuccess.commerceSetShipping,
         )
         // TODO: need a better way to check if the form is collapsed (height 0).
         // Zero height is not considered invisible.
@@ -1088,7 +1089,7 @@ describe.skip("Shipping", () => {
         })
         expect(screen.getByPlaceholderText("Street address")).toHaveAttribute(
           "tabindex",
-          "-1"
+          "-1",
         )
       })
 
@@ -1100,15 +1101,15 @@ describe.skip("Shipping", () => {
 
         await resolveSaveFulfillmentDetails(
           mockResolveLastOperation,
-          settingOrderShipmentSuccess.commerceSetShipping
+          settingOrderShipmentSuccess.commerceSetShipping,
         )
 
         expect(
-          screen.getByRole("radio", { name: /401 Broadway/ })
+          screen.getByRole("radio", { name: /401 Broadway/ }),
         ).toBeVisible()
         expect(screen.getByRole("radio", { name: /1 Main St/ })).toBeVisible()
         expect(
-          screen.getByRole("button", { name: "Add a new address" })
+          screen.getByRole("button", { name: "Add a new address" }),
         ).toBeVisible()
       })
 
@@ -1121,11 +1122,11 @@ describe.skip("Shipping", () => {
         const automaticFulfillmentMutation =
           await resolveSaveFulfillmentDetails(
             mockResolveLastOperation,
-            settingOrderShipmentSuccess.commerceSetShipping
+            settingOrderShipmentSuccess.commerceSetShipping,
           )
 
         expect(automaticFulfillmentMutation.operationName).toEqual(
-          "useSaveFulfillmentDetailsMutation"
+          "useSaveFulfillmentDetailsMutation",
         )
         expect(automaticFulfillmentMutation.operationVariables).toEqual({
           input: {
@@ -1156,7 +1157,7 @@ describe.skip("Shipping", () => {
 
         await resolveSaveFulfillmentDetails(
           mockResolveLastOperation,
-          settingOrderShipmentSuccess.commerceSetShipping
+          settingOrderShipmentSuccess.commerceSetShipping,
         )
 
         await userEvent.click(screen.getByRole("radio", { name: /1 Main St/ }))
@@ -1170,10 +1171,10 @@ describe.skip("Shipping", () => {
 
         const fulfillmentMutation = await resolveSaveFulfillmentDetails(
           mockResolveLastOperation,
-          settingOrderShipmentSuccess.commerceSetShipping
+          settingOrderShipmentSuccess.commerceSetShipping,
         )
         expect(fulfillmentMutation.operationName).toEqual(
-          "useSaveFulfillmentDetailsMutation"
+          "useSaveFulfillmentDetailsMutation",
         )
         expect(fulfillmentMutation.operationVariables).toEqual({
           input: {
@@ -1205,22 +1206,22 @@ describe.skip("Shipping", () => {
             const automaticFulfillmentMutation =
               await resolveSaveFulfillmentDetails(
                 mockResolveLastOperation,
-                settingOrderShipmentSuccess.commerceSetShipping
+                settingOrderShipmentSuccess.commerceSetShipping,
               )
 
             expect(automaticFulfillmentMutation.operationName).toEqual(
-              "useSaveFulfillmentDetailsMutation"
+              "useSaveFulfillmentDetailsMutation",
             )
 
             await userEvent.click(
-              screen.getByRole("radio", { name: /1 Main St/ })
+              screen.getByRole("radio", { name: /1 Main St/ }),
             )
 
             const manualFulfillmentMutation = await waitFor(() =>
-              mockResolveLastOperation({})
+              mockResolveLastOperation({}),
             )
             expect(manualFulfillmentMutation.operationName).toBe(
-              "useSaveFulfillmentDetailsMutation"
+              "useSaveFulfillmentDetailsMutation",
             )
           })
         })
@@ -1235,7 +1236,7 @@ describe.skip("Shipping", () => {
 
           await resolveSaveFulfillmentDetails(
             mockResolveLastOperation,
-            settingOrderShipmentSuccess.commerceSetShipping
+            settingOrderShipmentSuccess.commerceSetShipping,
           )
 
           const selectedAddress = screen.getAllByTestId("savedAddress")[1]
@@ -1247,17 +1248,17 @@ describe.skip("Shipping", () => {
             const addressModal = screen.getByTestId("AddressModal")
             expect(screen.getByText("Edit address")).toBeVisible()
             expect(
-              within(addressModal).getByDisplayValue("401 Broadway")
+              within(addressModal).getByDisplayValue("401 Broadway"),
             ).toBeVisible()
             expect(
-              within(addressModal).getByDisplayValue("Floor 25")
+              within(addressModal).getByDisplayValue("Floor 25"),
             ).toBeVisible()
             expect(
-              within(addressModal).getByDisplayValue("New York")
+              within(addressModal).getByDisplayValue("New York"),
             ).toBeVisible()
             expect(within(addressModal).getByDisplayValue("NY")).toBeVisible()
             expect(
-              within(addressModal).getByDisplayValue("10013")
+              within(addressModal).getByDisplayValue("10013"),
             ).toBeVisible()
           })
         })
@@ -1270,7 +1271,7 @@ describe.skip("Shipping", () => {
 
           await resolveSaveFulfillmentDetails(
             mockResolveLastOperation,
-            settingOrderShipmentSuccess.commerceSetShipping
+            settingOrderShipmentSuccess.commerceSetShipping,
           )
 
           const selectedAddress = screen.getAllByTestId("savedAddress")[1]
@@ -1305,7 +1306,7 @@ describe.skip("Shipping", () => {
           })
 
           expect(updateAddressOperation.operationName).toEqual(
-            "useUpdateSavedAddressMutation"
+            "useUpdateSavedAddressMutation",
           )
           expect(updateAddressOperation.operationVariables).toMatchObject({
             input: {
@@ -1327,17 +1328,17 @@ describe.skip("Shipping", () => {
 
           const saveFulfillmentOperation = await resolveSaveFulfillmentDetails(
             mockResolveLastOperation,
-            settingOrderShipmentSuccess.commerceSetShipping
+            settingOrderShipmentSuccess.commerceSetShipping,
           )
 
           expect(saveFulfillmentOperation.operationName).toEqual(
-            "useSaveFulfillmentDetailsMutation"
+            "useSaveFulfillmentDetailsMutation",
           )
 
           // Fixme: Save address with correct new value
           expect(
             saveFulfillmentOperation.operationVariables.input.shipping
-              .addressLine2
+              .addressLine2,
           ).toEqual("25th fl.")
         })
       })
@@ -1361,7 +1362,7 @@ describe.skip("Shipping", () => {
             await verifyAddressWithSuggestions(
               mockResolveLastOperation,
               validAddress,
-              recommendedAddress
+              recommendedAddress,
             )
 
             await userEvent.click(screen.getByText("Use This Address"))
@@ -1378,7 +1379,7 @@ describe.skip("Shipping", () => {
                 }),
             })
             expect(createAddressOperation.operationName).toBe(
-              "useCreateSavedAddressMutation"
+              "useCreateSavedAddressMutation",
             )
 
             await flushPromiseQueue()
@@ -1386,11 +1387,11 @@ describe.skip("Shipping", () => {
             const fulfillmentOperation = await resolveSaveFulfillmentDetails(
               mockResolveLastOperation,
               settingOrderArtaShipmentSuccess.commerceSetShipping,
-              recommendedAddress
+              recommendedAddress,
             )
 
             expect(fulfillmentOperation.operationName).toBe(
-              "useSaveFulfillmentDetailsMutation"
+              "useSaveFulfillmentDetailsMutation",
             )
             expect(fulfillmentOperation.operationVariables).toEqual({
               input: {
@@ -1420,7 +1421,7 @@ describe.skip("Shipping", () => {
                   selectShippingQuoteSuccess.commerceSelectShippingOption,
               })
             expect(selectNewShippingOptionOperation.operationName).toBe(
-              "useSelectShippingQuoteMutation"
+              "useSelectShippingQuoteMutation",
             )
 
             await flushPromiseQueue()
@@ -1442,7 +1443,7 @@ describe.skip("Shipping", () => {
             await verifyAddressWithSuggestions(
               mockResolveLastOperation,
               validAddressBeforeVerification,
-              recommendedAddress
+              recommendedAddress,
             )
 
             // Clicking "Back to Edit" allows users to edit the address form
@@ -1457,18 +1458,18 @@ describe.skip("Shipping", () => {
                 saveAddressSuccess.createUserAddress,
             })
             expect(createAddressOperation.operationName).toBe(
-              "useCreateSavedAddressMutation"
+              "useCreateSavedAddressMutation",
             )
 
             await flushPromiseQueue()
 
             const fulfillmentOperation = await resolveSaveFulfillmentDetails(
               mockResolveLastOperation,
-              settingOrderArtaShipmentSuccess.commerceSetShipping
+              settingOrderArtaShipmentSuccess.commerceSetShipping,
             )
 
             expect(fulfillmentOperation.operationName).toBe(
-              "useSaveFulfillmentDetailsMutation"
+              "useSaveFulfillmentDetailsMutation",
             )
             expect(fulfillmentOperation.operationVariables).toEqual({
               input: {
@@ -1492,7 +1493,7 @@ describe.skip("Shipping", () => {
                   selectShippingQuoteSuccess.commerceSelectShippingOption,
               })
             expect(selectShippingOptionOperation.operationName).toBe(
-              "useSelectShippingQuoteMutation"
+              "useSelectShippingQuoteMutation",
             )
 
             await flushPromiseQueue()
@@ -1504,7 +1505,7 @@ describe.skip("Shipping", () => {
 
       it("shows an error if Arta doesn't return shipping quotes", async () => {
         const settingOrderArtaShipmentSuccessWithoutQuotes = cloneDeep(
-          settingOrderArtaShipmentSuccess
+          settingOrderArtaShipmentSuccess,
         ) as any
         settingOrderArtaShipmentSuccessWithoutQuotes.commerceSetShipping.orderOrError.order.lineItems.edges[0].node.shippingQuoteOptions.edges =
           []
@@ -1521,16 +1522,16 @@ describe.skip("Shipping", () => {
 
         await resolveSaveFulfillmentDetails(
           mockResolveLastOperation,
-          settingOrderArtaShipmentSuccessWithoutQuotes.commerceSetShipping
+          settingOrderArtaShipmentSuccessWithoutQuotes.commerceSetShipping,
         )
 
         expect(
-          screen.queryByRole("radio", { name: /Standard/ })
+          screen.queryByRole("radio", { name: /Standard/ }),
         ).not.toBeInTheDocument()
         expect(
           screen.getByText(
-            /In order to provide a shipping quote, we need some more information from you./
-          )
+            /In order to provide a shipping quote, we need some more information from you./,
+          ),
         ).toBeInTheDocument()
       })
 
@@ -1563,21 +1564,21 @@ describe.skip("Shipping", () => {
         })
 
         expect(saveAddressOperation.operationName).toBe(
-          "useCreateSavedAddressMutation"
+          "useCreateSavedAddressMutation",
         )
 
         await flushPromiseQueue()
 
         await resolveSaveFulfillmentDetails(
           mockResolveLastOperation,
-          settingOrderArtaShipmentSuccess.commerceSetShipping
+          settingOrderArtaShipmentSuccess.commerceSetShipping,
         )
 
         await flushPromiseQueue()
 
         const addressLine1 = screen.getByPlaceholderText("Street address")
         const addressLine2 = screen.getByPlaceholderText(
-          "Apt, floor, suite, etc."
+          "Apt, floor, suite, etc.",
         )
         await userEvent.clear(addressLine2)
         await userEvent.tab()
@@ -1621,7 +1622,7 @@ describe.skip("Shipping", () => {
         await flushPromiseQueue()
 
         expect(updateAddressOperation.operationName).toBe(
-          "useUpdateSavedAddressMutation"
+          "useUpdateSavedAddressMutation",
         )
         expect(updateAddressOperation.operationVariables).toEqual({
           input: {
@@ -1642,7 +1643,7 @@ describe.skip("Shipping", () => {
         await resolveSaveFulfillmentDetails(
           mockResolveLastOperation,
           settingOrderArtaShipmentSuccess.commerceSetShipping,
-          { addressLine1: "401 Broadway Suite 25", addressLine2: "" }
+          { addressLine1: "401 Broadway Suite 25", addressLine2: "" },
         )
 
         await flushPromiseQueue()
@@ -1663,7 +1664,7 @@ describe.skip("Shipping", () => {
         })
 
         expect(selectShippingOptionOperation.operationName).toBe(
-          "useSelectShippingQuoteMutation"
+          "useSelectShippingQuoteMutation",
         )
         expect(selectShippingOptionOperation.operationVariables).toEqual({
           input: {
@@ -1689,10 +1690,10 @@ describe.skip("Shipping", () => {
 
         const fulfillmentOperation = await resolveSaveFulfillmentDetails(
           mockResolveLastOperation,
-          settingOrderArtaShipmentSuccess.commerceSetShipping
+          settingOrderArtaShipmentSuccess.commerceSetShipping,
         )
         expect(fulfillmentOperation.operationName).toBe(
-          "useSaveFulfillmentDetailsMutation"
+          "useSaveFulfillmentDetailsMutation",
         )
 
         // FIXME: `getByRole` can be slow and cause test to time out.
@@ -1711,7 +1712,7 @@ describe.skip("Shipping", () => {
         })
 
         expect(saveAddressOperation.operationName).toBe(
-          "useCreateSavedAddressMutation"
+          "useCreateSavedAddressMutation",
         )
         expect(saveAddressOperation.operationVariables).toEqual({
           input: {
@@ -1735,7 +1736,7 @@ describe.skip("Shipping", () => {
             selectShippingQuoteSuccess.commerceSelectShippingOption,
         })
         expect(selectShippingOptionOperation.operationName).toBe(
-          "useSelectShippingQuoteMutation"
+          "useSelectShippingQuoteMutation",
         )
 
         await flushPromiseQueue()
@@ -1759,17 +1760,17 @@ describe.skip("Shipping", () => {
         })
 
         expect(saveAddressOperation.operationName).toBe(
-          "useCreateSavedAddressMutation"
+          "useCreateSavedAddressMutation",
         )
         await flushPromiseQueue()
 
         const fulfillmentOperation = await resolveSaveFulfillmentDetails(
           mockResolveLastOperation,
           settingOrderArtaShipmentSuccess.commerceSetShipping,
-          validAddress
+          validAddress,
         )
         expect(fulfillmentOperation.operationName).toBe(
-          "useSaveFulfillmentDetailsMutation"
+          "useSaveFulfillmentDetailsMutation",
         )
 
         // FIXME: `getByRole` can be slow and cause test to time out.
@@ -1789,7 +1790,7 @@ describe.skip("Shipping", () => {
           // DeleteUserAddressPayload: () => saveAddressSuccess,
         })
         expect(deleteAddressOperation.operationName).toBe(
-          "useDeleteSavedAddressMutation"
+          "useDeleteSavedAddressMutation",
         )
 
         await flushPromiseQueue()
@@ -1799,7 +1800,7 @@ describe.skip("Shipping", () => {
             selectShippingQuoteSuccess.commerceSelectShippingOption,
         })
         expect(selectShippingOptionOperation.operationName).toBe(
-          "useSelectShippingQuoteMutation"
+          "useSelectShippingQuoteMutation",
         )
 
         expect(deleteAddressOperation.operationVariables).toEqual({
@@ -1825,17 +1826,17 @@ describe.skip("Shipping", () => {
         })
 
         expect(saveAddressOperation.operationName).toBe(
-          "useCreateSavedAddressMutation"
+          "useCreateSavedAddressMutation",
         )
         await flushPromiseQueue()
 
         const fulfillmentOperation = await resolveSaveFulfillmentDetails(
           mockResolveLastOperation,
           settingOrderArtaShipmentSuccess.commerceSetShipping,
-          validAddress
+          validAddress,
         )
         expect(fulfillmentOperation.operationName).toBe(
-          "useSaveFulfillmentDetailsMutation"
+          "useSaveFulfillmentDetailsMutation",
         )
 
         // FIXME: `getByRole` can be slow and cause test to time out.
@@ -1851,11 +1852,11 @@ describe.skip("Shipping", () => {
         await flushPromiseQueue()
 
         const selectShippingOptionOperation = await mockRejectLastOperation(
-          new Error("##TEST_ERROR## shipping quotes failed")
+          new Error("##TEST_ERROR## shipping quotes failed"),
         )
 
         expect(selectShippingOptionOperation.operationName).toBe(
-          "useSelectShippingQuoteMutation"
+          "useSelectShippingQuoteMutation",
         )
 
         await waitFor(() => expect(mockShowErrorDialog).toHaveBeenCalledWith())
@@ -1886,10 +1887,10 @@ describe.skip("Shipping", () => {
 
         const fulfillmentOperation = await resolveSaveFulfillmentDetails(
           mockResolveLastOperation,
-          settingOrderArtaShipmentSuccess.commerceSetShipping
+          settingOrderArtaShipmentSuccess.commerceSetShipping,
         )
         expect(fulfillmentOperation.operationName).toBe(
-          "useSaveFulfillmentDetailsMutation"
+          "useSaveFulfillmentDetailsMutation",
         )
         expect(fulfillmentOperation.operationVariables).toEqual({
           input: {
@@ -1925,7 +1926,7 @@ describe.skip("Shipping", () => {
 
         await resolveSaveFulfillmentDetails(
           mockResolveLastOperation,
-          settingOrderArtaShipmentSuccess.commerceSetShipping
+          settingOrderArtaShipmentSuccess.commerceSetShipping,
         )
 
         // FIXME: `getByRole` can be slow and cause test to time out.
@@ -1949,11 +1950,13 @@ describe.skip("Shipping", () => {
         describe("with artwork located in the US", () => {
           it("sets shipping on order if the collector is in the EU", async () => {
             const meWithDefaultAddressInSpain = cloneDeep(
-              meWithAddresses
+              meWithAddresses,
             ) as any
 
-            meWithDefaultAddressInSpain.addressConnection.edges[0].node.isDefault = true // Spain
-            meWithDefaultAddressInSpain.addressConnection.edges[1].node.isDefault = false // US
+            meWithDefaultAddressInSpain.addressConnection.edges[0].node.isDefault =
+              true // Spain
+            meWithDefaultAddressInSpain.addressConnection.edges[1].node.isDefault =
+              false // US
 
             const { mockResolveLastOperation } = renderWithRelay({
               CommerceOrder: () =>
@@ -1963,11 +1966,11 @@ describe.skip("Shipping", () => {
 
             const fulfillmentRequest = await resolveSaveFulfillmentDetails(
               mockResolveLastOperation,
-              settingOrderShipmentSuccess.commerceSetShipping
+              settingOrderShipmentSuccess.commerceSetShipping,
             )
 
             expect(fulfillmentRequest.operationName).toBe(
-              "useSaveFulfillmentDetailsMutation"
+              "useSaveFulfillmentDetailsMutation",
             )
             expect(fulfillmentRequest.operationVariables).toEqual({
               input: {
@@ -1994,10 +1997,12 @@ describe.skip("Shipping", () => {
             // TODO: Why would we want this behavior? We can now set shipping on all valid saved addresses-
             // no need to check whether it needs artsy shipping.
             const meWithDefaultAddressInSpain = cloneDeep(
-              meWithAddresses
+              meWithAddresses,
             ) as any
-            meWithDefaultAddressInSpain.addressConnection.edges[0].node.isDefault = true // Spain
-            meWithDefaultAddressInSpain.addressConnection.edges[1].node.isDefault = false // US
+            meWithDefaultAddressInSpain.addressConnection.edges[0].node.isDefault =
+              true // Spain
+            meWithDefaultAddressInSpain.addressConnection.edges[1].node.isDefault =
+              false // US
 
             const { env, mockResolveLastOperation } = renderWithRelay({
               CommerceOrder: () =>
@@ -2007,14 +2012,14 @@ describe.skip("Shipping", () => {
 
             await resolveSaveFulfillmentDetails(
               mockResolveLastOperation,
-              settingOrderShipmentSuccess.commerceSetShipping
+              settingOrderShipmentSuccess.commerceSetShipping,
             )
 
             expect(getAllPendingOperationNames(env)).toEqual([])
             expect(
               screen.queryByRole("radio", {
                 name: /(^Standard|^Express|^White Glove|^Rush|^Premium)/,
-              })
+              }),
             ).not.toBeInTheDocument()
           })
 
@@ -2027,11 +2032,11 @@ describe.skip("Shipping", () => {
 
             const fulfillmentRequest = await resolveSaveFulfillmentDetails(
               mockResolveLastOperation,
-              settingOrderShipmentSuccess.commerceSetShipping
+              settingOrderShipmentSuccess.commerceSetShipping,
             )
 
             expect(fulfillmentRequest.operationName).toBe(
-              "useSaveFulfillmentDetailsMutation"
+              "useSaveFulfillmentDetailsMutation",
             )
             expect(fulfillmentRequest.operationVariables).toEqual({
               input: {
@@ -2061,10 +2066,12 @@ describe.skip("Shipping", () => {
           // We can safely set the shipping. See alsoped test above (~L1957)
           it("sets shipping on order if the collector is in the EU", async () => {
             const meWithDefaultAddressInSpain = cloneDeep(
-              meWithAddresses
+              meWithAddresses,
             ) as any
-            meWithDefaultAddressInSpain.addressConnection.edges[0].node.isDefault = true // Spain
-            meWithDefaultAddressInSpain.addressConnection.edges[1].node.isDefault = false // US
+            meWithDefaultAddressInSpain.addressConnection.edges[0].node.isDefault =
+              true // Spain
+            meWithDefaultAddressInSpain.addressConnection.edges[1].node.isDefault =
+              false // US
 
             const { mockResolveLastOperation } = renderWithRelay({
               CommerceOrder: () =>
@@ -2074,11 +2081,11 @@ describe.skip("Shipping", () => {
 
             const fulfillmentRequest = await resolveSaveFulfillmentDetails(
               mockResolveLastOperation,
-              settingOrderShipmentSuccess.commerceSetShipping
+              settingOrderShipmentSuccess.commerceSetShipping,
             )
 
             expect(fulfillmentRequest.operationName).toBe(
-              "useSaveFulfillmentDetailsMutation"
+              "useSaveFulfillmentDetailsMutation",
             )
             expect(fulfillmentRequest.operationVariables).toEqual({
               input: {
@@ -2108,14 +2115,14 @@ describe.skip("Shipping", () => {
 
             await resolveSaveFulfillmentDetails(
               mockResolveLastOperation,
-              settingOrderShipmentSuccess.commerceSetShipping
+              settingOrderShipmentSuccess.commerceSetShipping,
             )
 
             expect(getAllPendingOperationNames(env)).toEqual([])
             expect(
               screen.queryByRole("radio", {
                 name: /(^Standard|^Express|^White Glove|^Rush|^Premium)/,
-              })
+              }),
             ).not.toBeInTheDocument()
           })
         })
@@ -2123,10 +2130,12 @@ describe.skip("Shipping", () => {
         describe("with artwork located in the US", () => {
           it("does not fetch or show shipping quotes if the collector is in the EU", async () => {
             const meWithDefaultAddressInSpain = cloneDeep(
-              meWithAddresses
+              meWithAddresses,
             ) as any
-            meWithDefaultAddressInSpain.addressConnection.edges[0].node.isDefault = true // Spain
-            meWithDefaultAddressInSpain.addressConnection.edges[1].node.isDefault = false // US
+            meWithDefaultAddressInSpain.addressConnection.edges[0].node.isDefault =
+              true // Spain
+            meWithDefaultAddressInSpain.addressConnection.edges[1].node.isDefault =
+              false // US
 
             const { env, mockResolveLastOperation } = renderWithRelay({
               CommerceOrder: () =>
@@ -2136,14 +2145,14 @@ describe.skip("Shipping", () => {
 
             await resolveSaveFulfillmentDetails(
               mockResolveLastOperation,
-              settingOrderShipmentSuccess.commerceSetShipping
+              settingOrderShipmentSuccess.commerceSetShipping,
             )
 
             expect(getAllPendingOperationNames(env)).toEqual([])
             expect(
               screen.queryByRole("radio", {
                 name: /(^Standard|^Express|^White Glove|^Rush|^Premium)/,
-              })
+              }),
             ).not.toBeInTheDocument()
           })
 
@@ -2157,11 +2166,11 @@ describe.skip("Shipping", () => {
 
               const fulfillmentRequest = await resolveSaveFulfillmentDetails(
                 mockResolveLastOperation,
-                settingOrderArtaShipmentSuccess.commerceSetShipping
+                settingOrderArtaShipmentSuccess.commerceSetShipping,
               )
 
               expect(fulfillmentRequest.operationName).toBe(
-                "useSaveFulfillmentDetailsMutation"
+                "useSaveFulfillmentDetailsMutation",
               )
               expect(fulfillmentRequest.operationVariables.input).toEqual({
                 id: "2939023",
@@ -2188,17 +2197,17 @@ describe.skip("Shipping", () => {
               })
               const fulfillmentRequest = await resolveSaveFulfillmentDetails(
                 mockResolveLastOperation,
-                settingOrderArtaShipmentSuccess.commerceSetShipping
+                settingOrderArtaShipmentSuccess.commerceSetShipping,
               )
 
               expect(fulfillmentRequest.operationName).toBe(
-                "useSaveFulfillmentDetailsMutation"
+                "useSaveFulfillmentDetailsMutation",
               )
 
               expect(
                 screen.getAllByRole("radio", {
                   name: /(^Standard|^Express|^White Glove|^Rush|^Premium)/,
-                })
+                }),
               ).toHaveLength(5)
             })
 
@@ -2211,11 +2220,11 @@ describe.skip("Shipping", () => {
 
               const fulfillmentRequest = await resolveSaveFulfillmentDetails(
                 mockResolveLastOperation,
-                settingOrderArtaShipmentSuccess.commerceSetShipping
+                settingOrderArtaShipmentSuccess.commerceSetShipping,
               )
 
               expect(fulfillmentRequest.operationName).toBe(
-                "useSaveFulfillmentDetailsMutation"
+                "useSaveFulfillmentDetailsMutation",
               )
 
               expect(screen.getByText("Save and Continue")).toBeEnabled()
@@ -2228,7 +2237,7 @@ describe.skip("Shipping", () => {
                 await mockResolveLastOperation({})
 
               expect(selectShippingOptionOperation.operationName).toEqual(
-                "useSelectShippingQuoteMutation"
+                "useSelectShippingQuoteMutation",
               )
               expect(selectShippingOptionOperation.operationVariables).toEqual({
                 input: {
@@ -2247,11 +2256,11 @@ describe.skip("Shipping", () => {
               })
               const fulfillmentRequest = await resolveSaveFulfillmentDetails(
                 mockResolveLastOperation,
-                settingOrderArtaShipmentSuccess.commerceSetShipping
+                settingOrderArtaShipmentSuccess.commerceSetShipping,
               )
 
               expect(fulfillmentRequest.operationName).toBe(
-                "useSaveFulfillmentDetailsMutation"
+                "useSaveFulfillmentDetailsMutation",
               )
               expect(fulfillmentRequest.operationVariables).toEqual({
                 input: {
@@ -2279,7 +2288,7 @@ describe.skip("Shipping", () => {
               const selectShippingOptionOperation =
                 await mockResolveLastOperation({})
               expect(selectShippingOptionOperation.operationName).toEqual(
-                "useSelectShippingQuoteMutation"
+                "useSelectShippingQuoteMutation",
               )
               expect(selectShippingOptionOperation.operationVariables).toEqual({
                 input: {
@@ -2298,7 +2307,7 @@ describe.skip("Shipping", () => {
               })
               await resolveSaveFulfillmentDetails(
                 mockResolveLastOperation,
-                settingOrderArtaShipmentSuccess.commerceSetShipping
+                settingOrderArtaShipmentSuccess.commerceSetShipping,
               )
 
               const premiumShipping = screen.getByRole("radio", {
@@ -2311,7 +2320,7 @@ describe.skip("Shipping", () => {
 
               expect(premiumShipping).toBeChecked()
               expect(
-                screen.getByRole("button", { name: "Save and Continue" })
+                screen.getByRole("button", { name: "Save and Continue" }),
               ).toBeEnabled()
             })
 
@@ -2323,10 +2332,10 @@ describe.skip("Shipping", () => {
               })
               const fulfillmentRequest = await resolveSaveFulfillmentDetails(
                 mockResolveLastOperation,
-                settingOrderArtaShipmentSuccess.commerceSetShipping
+                settingOrderArtaShipmentSuccess.commerceSetShipping,
               )
               expect(fulfillmentRequest.operationName).toBe(
-                "useSaveFulfillmentDetailsMutation"
+                "useSaveFulfillmentDetailsMutation",
               )
               await saveAndContinue()
 
@@ -2337,7 +2346,7 @@ describe.skip("Shipping", () => {
                     selectShippingQuoteSuccess.commerceSelectShippingOption,
                 })
               expect(selectShippingOptionOperation.operationName).toEqual(
-                "useSelectShippingQuoteMutation"
+                "useSelectShippingQuoteMutation",
               )
 
               expect(getAllPendingOperationNames(env)).toEqual([])
@@ -2365,7 +2374,7 @@ describe.skip("Shipping", () => {
 
               await resolveSaveFulfillmentDetails(
                 mockResolveLastOperation,
-                settingOrderArtaShipmentSuccess.commerceSetShipping
+                settingOrderArtaShipmentSuccess.commerceSetShipping,
               )
 
               const selectedAddress = screen.getAllByTestId("savedAddress")[1]
@@ -2413,7 +2422,7 @@ describe.skip("Shipping", () => {
               })
 
               expect(updateAddressOperation.operationName).toEqual(
-                "useUpdateSavedAddressMutation"
+                "useUpdateSavedAddressMutation",
               )
               expect(updateAddressOperation.operationVariables).toMatchObject({
                 input: {
@@ -2436,11 +2445,11 @@ describe.skip("Shipping", () => {
               const saveFulfillmentOperation =
                 await resolveSaveFulfillmentDetails(
                   mockResolveLastOperation,
-                  settingOrderShipmentSuccess.commerceSetShipping
+                  settingOrderShipmentSuccess.commerceSetShipping,
                 )
 
               expect(saveFulfillmentOperation.operationName).toEqual(
-                "useSaveFulfillmentDetailsMutation"
+                "useSaveFulfillmentDetailsMutation",
               )
 
               await saveAndContinue()
@@ -2453,7 +2462,7 @@ describe.skip("Shipping", () => {
                 })
 
               expect(selectShippingOptionOperation.operationName).toEqual(
-                "useSelectShippingQuoteMutation"
+                "useSelectShippingQuoteMutation",
               )
               expect(selectShippingOptionOperation.operationVariables).toEqual({
                 input: {
@@ -2477,11 +2486,11 @@ describe.skip("Shipping", () => {
       })
 
       await userEvent.click(
-        screen.getByRole("radio", { name: /Arrange for pickup/ })
+        screen.getByRole("radio", { name: /Arrange for pickup/ }),
       )
 
       const phoneNumber = await screen.findByTestId(
-        "AddressForm_pickupPhoneNumber"
+        "AddressForm_pickupPhoneNumber",
       )
       // TODO: need a better way to check the input is displayed/expanded (height > 0)
       expect(phoneNumber).toHaveAttribute("tabindex", "0")
@@ -2494,7 +2503,7 @@ describe.skip("Shipping", () => {
       })
 
       await userEvent.click(
-        screen.getByRole("radio", { name: /Arrange for pickup/ })
+        screen.getByRole("radio", { name: /Arrange for pickup/ }),
       )
 
       await screen.findByTestId("AddressForm_pickupPhoneNumber")
@@ -2513,15 +2522,15 @@ describe.skip("Shipping", () => {
       })
 
       await userEvent.click(
-        screen.getByRole("radio", { name: /Arrange for pickup/ })
+        screen.getByRole("radio", { name: /Arrange for pickup/ }),
       )
 
       await flushPromiseQueue()
       await userEvent.paste(
         screen.getAllByPlaceholderText(
-          "Add phone number including country code"
+          "Add phone number including country code",
         )[0],
-        "2813308004"
+        "2813308004",
       )
 
       await flushPromiseQueue()
@@ -2540,11 +2549,11 @@ describe.skip("Shipping", () => {
               },
             },
           },
-        }
+        },
       )
 
       expect(fulfillmentRequest.operationName).toBe(
-        "useSaveFulfillmentDetailsMutation"
+        "useSaveFulfillmentDetailsMutation",
       )
       expect(fulfillmentRequest.operationVariables).toMatchObject({
         input: {

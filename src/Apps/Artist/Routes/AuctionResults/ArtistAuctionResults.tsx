@@ -115,7 +115,7 @@ const AuctionResultsContainer: React.FC<
   const tracking = useTracking()
 
   const lotsByCreatedYear = aggregations?.find(
-    aggregation => aggregation?.slice === "LOTS_BY_CREATED_YEAR"
+    aggregation => aggregation?.slice === "LOTS_BY_CREATED_YEAR",
   )?.counts
 
   const startAt = lotsByCreatedYear?.[0]?.value || null
@@ -129,7 +129,7 @@ const AuctionResultsContainer: React.FC<
   // Is current filter state different from the default (reset) state?
   const filtersAtDefault = isEqual(
     selectedFilters,
-    auctionResultsFilterResetState
+    auctionResultsFilterResetState,
   )
 
   const previousFilters = usePrevious(filters) ?? {}
@@ -345,7 +345,7 @@ export const ArtistAuctionResultsPlaceholder: React.FC<
 export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
   (props: AuctionResultsProps) => {
     const lotsByCreatedYear = props.aggregations?.find(
-      aggregation => aggregation?.slice === "LOTS_BY_CREATED_YEAR"
+      aggregation => aggregation?.slice === "LOTS_BY_CREATED_YEAR",
     )?.counts
 
     const startAt = lotsByCreatedYear?.[0]?.value || null
@@ -356,7 +356,7 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
     const { userPreferences } = useSystemContext()
     const filters = paramsToCamelCase(
       // Expect auction results params to be nested under `auction`
-      (match?.location.query?.auction as any) ?? {}
+      (match?.location.query?.auction as any) ?? {},
     )
 
     return (
@@ -545,7 +545,7 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
           )
       }
     }
-  `
+  `,
 )
 
 type ArtistAuctionResultsQueryRendererProps = {
@@ -564,7 +564,7 @@ export const ArtistAuctionResultsQueryRenderer: React.FC<
   const urlFilterState = paramsToCamelCase(
     // Expect auction results params to be nested under `auction`
     // Default to empty object if not present (legacy URLs will be redirected).
-    (match?.location.query?.auction as any) ?? {}
+    (match?.location.query?.auction as any) ?? {},
   )
   const initialInput = {
     ...initialAuctionResultsFilterState({}),
@@ -655,7 +655,7 @@ export const ArtistAuctionResultsQueryRenderer: React.FC<
         if (error) {
           console.error(
             "[ArtistAuctionResults]: Error loading auction results",
-            error
+            error,
           )
           return null
         }
@@ -684,7 +684,7 @@ export const useScrollToTopOfAuctionResults = () => {
   const { match } = useRouter()
 
   const { scrollToMarketSignals } = paramsToCamelCase(
-    match?.location.query
+    match?.location.query,
   ) as { scrollToMarketSignals?: boolean }
 
   const { jumpTo } = useJump()
@@ -703,7 +703,7 @@ export const useScrollToTopOfAuctionResults = () => {
 
     // Scroll to auction results if the market signals section is not visible
     requestAnimationFrame(
-      visible ? scrollToMarketSignalsTop : scrollToAuctionResultsTop
+      visible ? scrollToMarketSignalsTop : scrollToAuctionResultsTop,
     )
   }
 

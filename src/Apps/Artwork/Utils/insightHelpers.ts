@@ -1,5 +1,5 @@
 export const formatSellThroughRate = (
-  sellThroughRate: number | null | undefined
+  sellThroughRate: number | null | undefined,
 ) => {
   if (!sellThroughRate) {
     return ""

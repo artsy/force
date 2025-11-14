@@ -8,7 +8,7 @@ import type { ArtsyRequest, ArtsyResponse } from "./artsyExpress"
 export function localsMiddleware(
   req: ArtsyRequest,
   res: ArtsyResponse,
-  next: NextFunction
+  next: NextFunction,
 ) {
   const ua = req.get("user-agent") || ""
 

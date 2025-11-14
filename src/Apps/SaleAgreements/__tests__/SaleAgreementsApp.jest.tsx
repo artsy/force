@@ -69,7 +69,7 @@ describe("SaleAgreementsApp", () => {
     fireEvent.click(tab)
     expect(screen.getByText("Partner Auctions: Benefit")).toBeInTheDocument()
     expect(
-      screen.queryByText("Partner Auctions: Commercial")
+      screen.queryByText("Partner Auctions: Commercial"),
     ).not.toBeInTheDocument()
     expect(screen.queryByText("Artsy Auctions")).not.toBeInTheDocument()
     expect(screen.getByText("Past Auction")).toBeInTheDocument()

@@ -8,7 +8,7 @@ const opts = require("../options")
 
 export const redirectBack = (
   req: ArtsyRequest & { artsyPassportSignedUp?: boolean },
-  res: ArtsyResponse | null = null
+  res: ArtsyResponse | null = null,
 ) => {
   const url = sanitizeRedirect(
     req.session.redirectTo ||
@@ -18,7 +18,7 @@ export const redirectBack = (
       req.body["redirect-to"] ||
       req.query["redirect-to"] ||
       req.params.redirect_uri ||
-      "/"
+      "/",
   )
 
   if (res !== null) {

@@ -7,19 +7,19 @@ const CollectApp = loadable(
   () => import(/* webpackChunkName: "collectBundle" */ "./Routes/Collect"),
   {
     resolveComponent: component => component.CollectAppFragmentContainer,
-  }
+  },
 )
 const CollectionsApp = loadable(
   () => import(/* webpackChunkName: "collectBundle" */ "./Routes/Collections"),
   {
     resolveComponent: component => component.CollectionsAppFragmentContainer,
-  }
+  },
 )
 const CollectionApp = loadable(
   () => import(/* webpackChunkName: "collectBundle" */ "./Routes/Collection"),
   {
     resolveComponent: component => component.CollectionFragmentContainer,
-  }
+  },
 )
 
 export const collectRoutes: RouteProps[] = [

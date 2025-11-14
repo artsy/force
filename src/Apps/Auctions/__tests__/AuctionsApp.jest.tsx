@@ -20,7 +20,7 @@ describe("AuctionsApp", () => {
     return render(
       <MockBoot>
         <AuctionsApp />
-      </MockBoot>
+      </MockBoot>,
     )
   }
 
@@ -68,7 +68,7 @@ describe("AuctionsApp", () => {
     const link = screen.getByText("Learn more about bidding on Artsy")
     expect(link.closest("a")).toHaveAttribute(
       "href",
-      "https://support.artsy.net/s/article/The-Complete-Guide-to-Auctions-on-Artsy"
+      "https://support.artsy.net/s/article/The-Complete-Guide-to-Auctions-on-Artsy",
     )
   })
 
@@ -108,7 +108,7 @@ describe("AuctionsApp", () => {
 
     expect(screen.queryByText("Your Auctions and Bids")).not.toBeInTheDocument()
     expect(
-      screen.queryByText("Works by Artists You Follow")
+      screen.queryByText("Works by Artists You Follow"),
     ).not.toBeInTheDocument()
   })
 })

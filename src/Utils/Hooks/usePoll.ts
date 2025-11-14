@@ -9,11 +9,7 @@ interface PollProps {
   clearWhen?: boolean
 }
 
-export const usePoll = ({
-  callback,
-  intervalTime,
-  clearWhen,
-}: PollProps) => {
+export const usePoll = ({ callback, intervalTime, clearWhen }: PollProps) => {
   const savedCallback = useRef<IntervalFunction | null>(null)
 
   useEffect(() => {

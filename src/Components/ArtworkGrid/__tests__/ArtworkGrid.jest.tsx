@@ -28,13 +28,13 @@ describe("ArtworkGrid", () => {
         " $refType": null,
         edges: aspectRatios.reduce(
           (acc, aspectRatio) => [...acc, { node: { image: { aspectRatio } } }],
-          []
+          [],
         ),
       } as ArtworkGrid_artworks$data
 
       function expected(columnsRatios: number[][]) {
         return columnsRatios.map(columnRatios =>
-          columnRatios.map(aspectRatio => ({ image: { aspectRatio } }))
+          columnRatios.map(aspectRatio => ({ image: { aspectRatio } })),
         )
       }
 
@@ -44,7 +44,7 @@ describe("ArtworkGrid", () => {
             [1.23, 1.06, 0.77, 0.74, 0.71, 1.2, 0.73, 0.8],
             [0.74, 1.28, 1.37, 0.75, 0.78, 1.34, 1.27, 0.75, 1.36],
             [0.75, 0.73, 1.37, 0.73, 0.75, 0.71, 0.8],
-          ])
+          ]),
         )
         expect(createSectionedArtworks(artworks, 4)).toEqual(
           expected([
@@ -52,7 +52,7 @@ describe("ArtworkGrid", () => {
             [0.74, 1.37, 0.75, 0.71, 0.73, 1.36],
             [0.75, 0.77, 0.78, 1.2, 1.27, 0.8],
             [1.06, 1.28, 1.37, 0.73, 1.34, 0.71, 0.8],
-          ])
+          ]),
         )
       })
     })
@@ -100,7 +100,7 @@ describe("ArtworkGrid", () => {
       })
 
       expect(
-        screen.getByText(ArtworkGridFixture.edges[0].node.title)
+        screen.getByText(ArtworkGridFixture.edges[0].node.title),
       ).toBeInTheDocument()
       expect(screen.getAllByTestId("artwork-link")).toHaveLength(4)
     })
@@ -112,7 +112,7 @@ describe("ArtworkGrid", () => {
 
       expect(screen.getByText("Clear all filters")).toBeInTheDocument()
       expect(
-        screen.getByText(/Change your filter criteria to view more works/)
+        screen.getByText(/Change your filter criteria to view more works/),
       ).toBeInTheDocument()
     })
 

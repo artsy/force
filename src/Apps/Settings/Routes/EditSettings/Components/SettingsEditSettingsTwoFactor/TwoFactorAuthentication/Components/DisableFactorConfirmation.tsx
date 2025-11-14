@@ -21,7 +21,7 @@ export const DisableFactorConfirmation: React.FC<
 
   const onSubmit = async (
     password: DisableSecondFactorInput["password"],
-    formikBag: FormikProps<any>
+    formikBag: FormikProps<any>,
   ) => {
     formikBag.setStatus({ error: undefined })
 

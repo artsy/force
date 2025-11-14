@@ -47,5 +47,5 @@ export const ArtistSubAppFragmentContainer = createFragmentContainer(
         name
       }
     `,
-  }
+  },
 )

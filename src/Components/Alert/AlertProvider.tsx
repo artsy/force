@@ -250,7 +250,7 @@ export const AlertProvider: FC<React.PropsWithChildren<AlertProviderProps>> = ({
           }
         }
       `,
-      { attributes: debouncedCriteria as PreviewSavedSearchAttributes }
+      { attributes: debouncedCriteria as PreviewSavedSearchAttributes },
     )?.subscribe?.({
       next: data => {
         if (!data?.viewer?.previewSavedSearch) return

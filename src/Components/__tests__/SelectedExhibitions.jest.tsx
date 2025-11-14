@@ -21,7 +21,7 @@ describe("SelectedExhibitions", () => {
     const { container: smallContainer } = render(
       <MockBoot breakpoint="xs">
         <SelectedExhibitions {...props} />
-      </MockBoot>
+      </MockBoot>,
     )
     // Check if collapsible behavior exists on small screens
     expect(smallContainer.innerHTML).toContain("Selected exhibitions (3)")
@@ -29,7 +29,7 @@ describe("SelectedExhibitions", () => {
     const { container: largeContainer } = render(
       <MockBoot>
         <SelectedExhibitions {...props} />
-      </MockBoot>
+      </MockBoot>,
     )
     // On large screens, all exhibitions should be visible without count
     expect(largeContainer.innerHTML).not.toContain("Selected exhibitions (3)")
@@ -39,7 +39,7 @@ describe("SelectedExhibitions", () => {
     const { container } = render(
       <MockBoot breakpoint="xs">
         <SelectedExhibitions {...props} />
-      </MockBoot>
+      </MockBoot>,
     )
 
     expect(container.innerHTML).toContain("Selected exhibitions (3)")
@@ -50,7 +50,7 @@ describe("SelectedExhibitions", () => {
     const { container } = render(
       <MockBoot breakpoint="xs">
         <SelectedExhibitions {...props} />
-      </MockBoot>
+      </MockBoot>,
     )
 
     expect(container.innerHTML).toContain("Selected exhibitions (3)")

@@ -42,7 +42,7 @@ describe("KeywordFilter", () => {
     })
 
     expect(
-      (screen.getByTestId("keywordSearchInput") as HTMLInputElement).value
+      (screen.getByTestId("keywordSearchInput") as HTMLInputElement).value,
     ).toEqual("Chopper")
 
     userEvent.click(screen.getByText("Clear all"))
@@ -50,7 +50,7 @@ describe("KeywordFilter", () => {
     await waitFor(() => {
       expect(currentArtworkFilterContext().filters?.keyword).toEqual(undefined)
       expect(
-        (screen.getByTestId("keywordSearchInput") as HTMLInputElement).value
+        (screen.getByTestId("keywordSearchInput") as HTMLInputElement).value,
       ).toEqual("")
     })
   })

@@ -111,5 +111,5 @@ export const NewsIndexArticlesPaginationContainer = createPaginationContainer(
       return { ...fragmentVariables, after }
     },
     query: NEWS_INDEX_ARTICLES_QUERY,
-  }
+  },
 )

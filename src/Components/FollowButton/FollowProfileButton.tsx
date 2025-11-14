@@ -90,7 +90,7 @@ const FollowProfileButton: React.FC<
   const { showAuthDialog } = useAuthDialog()
 
   const handleClick = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
     event.preventDefault()
 
@@ -166,7 +166,7 @@ export const FollowProfileButtonFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 interface FollowProfileButtonQueryRendererProps

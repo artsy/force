@@ -135,7 +135,7 @@ describe("SavedAddressOptions", () => {
             onSelectAddress={onSelectAddress}
             newAddressInitialValues={mockNewAddressInitialValues}
           />
-        </TestWrapper>
+        </TestWrapper>,
       )
 
       expect(screen.getByText("123 Main St")).toBeInTheDocument()
@@ -156,7 +156,7 @@ describe("SavedAddressOptions", () => {
             onSelectAddress={onSelectAddress}
             newAddressInitialValues={mockNewAddressInitialValues}
           />
-        </TestWrapper>
+        </TestWrapper>,
       )
 
       expect(screen.getByText("John Doe")).toBeInTheDocument()
@@ -176,7 +176,7 @@ describe("SavedAddressOptions", () => {
             onSelectAddress={onSelectAddress}
             newAddressInitialValues={mockNewAddressInitialValues}
           />
-        </TestWrapper>
+        </TestWrapper>,
       )
 
       const secondAddress = screen.getByRole("radio", { name: /Jane Smith/i })
@@ -198,14 +198,14 @@ describe("SavedAddressOptions", () => {
             onSelectAddress={onSelectAddress}
             newAddressInitialValues={mockNewAddressInitialValues}
           />
-        </TestWrapper>
+        </TestWrapper>,
       )
 
       const secondAddress = screen.getByRole("radio", { name: /Jane Smith/i })
       await userEvent.click(secondAddress)
 
       expect(
-        mockCheckoutContext.checkoutTracking.clickedShippingAddress
+        mockCheckoutContext.checkoutTracking.clickedShippingAddress,
       ).toHaveBeenCalled()
     })
 
@@ -220,7 +220,7 @@ describe("SavedAddressOptions", () => {
             onSelectAddress={onSelectAddress}
             newAddressInitialValues={mockNewAddressInitialValues}
           />
-        </TestWrapper>
+        </TestWrapper>,
       )
 
       const invalidAddressRadio = screen.getByRole("radio", {

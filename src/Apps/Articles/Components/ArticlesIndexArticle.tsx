@@ -103,5 +103,5 @@ export const ArticlesIndexArticleFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

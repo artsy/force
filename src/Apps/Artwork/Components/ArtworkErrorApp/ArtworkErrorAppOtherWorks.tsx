@@ -33,7 +33,7 @@ const OtherWorksFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 const PLACEHOLDER = (

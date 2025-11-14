@@ -8,7 +8,7 @@ const ArticleApp = loadable(
   () => import(/* webpackChunkName: "articleBundle" */ "./ArticleApp"),
   {
     resolveComponent: component => component.ArticleAppFragmentContainer,
-  }
+  },
 )
 
 const redirectToArticle = ({

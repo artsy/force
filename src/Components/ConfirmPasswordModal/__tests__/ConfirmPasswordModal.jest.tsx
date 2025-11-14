@@ -30,7 +30,7 @@ describe("ConfirmPasswordModal", () => {
     render(
       <MockBoot>
         <ConfirmPasswordModal onCancel={onCancel} onConfirm={onConfirm} show />
-      </MockBoot>
+      </MockBoot>,
     )
 
   it("requires password to submit", () => {

@@ -24,7 +24,7 @@ describe("BuyerGuarantee", () => {
           <BuyerGuarantee
             contextModule={ContextModule.ordersShipping}
             contextPageOwnerType="test-owner"
-          />
+          />,
         )
 
         userEvent.click(screen.getByText("Artsy’s Buyer Guarantee"))
@@ -48,7 +48,7 @@ describe("BuyerGuarantee", () => {
           <BuyerGuarantee
             contextModule={null as any}
             contextPageOwnerType={null as any}
-          />
+          />,
         )
 
         userEvent.click(screen.getByText("Artsy’s Buyer Guarantee"))
@@ -68,36 +68,36 @@ describe("with private sale orders", () => {
         orderSource="private_sale"
         renderArtsyPrivateSaleConditions={true}
         privateSaleConditions="these are some extra conditions"
-      />
+      />,
     )
   })
 
   it("renders conditions of sale", () => {
     expect(screen.getByText("This purchase is subject to")).toBeInTheDocument()
     expect(
-      screen.getByText("Artsy Private Sales LLC Conditions of Sale")
+      screen.getByText("Artsy Private Sales LLC Conditions of Sale"),
     ).toBeInTheDocument()
   })
 
   it("renders correct conditions of sale page", () => {
     const conditionsPage = screen.getByText(
-      "Artsy Private Sales LLC Conditions of Sale"
+      "Artsy Private Sales LLC Conditions of Sale",
     )
     expect(conditionsPage).toHaveAttribute(
       "href",
-      "/private-sales-conditions-of-sale"
+      "/private-sales-conditions-of-sale",
     )
   })
 
   it("renders extra conditions of sale title", () => {
     expect(
-      screen.getByText("Additional Conditions of Sale")
+      screen.getByText("Additional Conditions of Sale"),
     ).toBeInTheDocument()
   })
 
   it("renders extra sale conditions", () => {
     expect(
-      screen.getByText("these are some extra conditions")
+      screen.getByText("these are some extra conditions"),
     ).toBeInTheDocument()
   })
 })

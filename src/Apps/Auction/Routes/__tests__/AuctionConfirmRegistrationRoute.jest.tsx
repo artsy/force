@@ -120,7 +120,7 @@ describe("AuctionConfirmRegistrationRoute", () => {
 
     expect(screen.getByTestId("modal-dialog")).toHaveAttribute(
       "data-title",
-      "Register for Sale Name"
+      "Register for Sale Name",
     )
   })
 
@@ -175,7 +175,7 @@ describe("AuctionConfirmRegistrationRoute", () => {
     })
 
     expect(
-      screen.queryByText("IdentityVerificationWarning")
+      screen.queryByText("IdentityVerificationWarning"),
     ).not.toBeInTheDocument()
   })
 
@@ -197,9 +197,9 @@ describe("AuctionConfirmRegistrationRoute", () => {
       expect(screen.queryByText("Phone Number")).not.toBeInTheDocument()
       expect(screen.queryByText("*Required")).not.toBeInTheDocument()
       expect(
-        screen.queryByText("and provide a valid phone number")
+        screen.queryByText("and provide a valid phone number"),
       ).not.toBeInTheDocument()
-    }
+    },
   )
 
   it.each([[true], [false]])(
@@ -220,9 +220,9 @@ describe("AuctionConfirmRegistrationRoute", () => {
       expect(screen.getByText("Phone Number")).toBeInTheDocument()
       expect(screen.getByText("*Required")).toBeInTheDocument()
       expect(
-        screen.getByText("Required for shipping logistics")
+        screen.getByText("Required for shipping logistics"),
       ).toBeInTheDocument()
-    }
+    },
   )
 
   it("renders correct components", () => {
@@ -233,8 +233,8 @@ describe("AuctionConfirmRegistrationRoute", () => {
     })
     expect(
       screen.getByText(
-        "Welcome back. To complete your registration, please confirm that you agree to the Conditions of Sale."
-      )
+        "Welcome back. To complete your registration, please confirm that you agree to the Conditions of Sale.",
+      ),
     ).toBeInTheDocument()
     expect(screen.getByText("ConditionsOfSaleCheckbox")).toBeInTheDocument()
     expect(screen.getByRole("button", { name: "Register" })).toBeInTheDocument()
@@ -376,11 +376,11 @@ describe("AuctionConfirmRegistrationRoute", () => {
       expect(trackingSpy).toHaveBeenCalledWith(
         expect.objectContaining({
           bidderID: "bidderInternalID",
-        })
+        }),
       )
 
       expect(routerSpy).toHaveBeenCalledWith(
-        "/auction/sale-slug?accepted-conditions=true"
+        "/auction/sale-slug?accepted-conditions=true",
       )
     })
   })

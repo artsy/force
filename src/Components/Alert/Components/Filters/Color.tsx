@@ -27,7 +27,7 @@ const ColorFilterOption: React.FC<
       updatedValues = [...updatedValues, color]
     } else {
       updatedValues = updatedValues.filter(
-        selectedColor => color !== selectedColor
+        selectedColor => color !== selectedColor,
       )
     }
 

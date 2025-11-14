@@ -102,7 +102,7 @@ export const Accept: FC<
 
       if (orderOrError?.actionData?.clientSecret) {
         const scaResult = await stripe.handleCardAction(
-          orderOrError.actionData.clientSecret
+          orderOrError.actionData.clientSecret,
         )
 
         if (scaResult.error) {
@@ -211,7 +211,7 @@ export const Accept: FC<
   const routeToArtworkPage = () => {
     const artworkId = get(
       order,
-      o => o.lineItems?.edges?.[0]?.node?.artwork?.slug
+      o => o.lineItems?.edges?.[0]?.node?.artwork?.slug,
     )
     router.push(`/artwork/${artworkId}`)
   }
@@ -301,7 +301,7 @@ export const Accept: FC<
 
 export const AcceptFragmentContainer = createFragmentContainer(
   createStripeWrapper<AcceptProps>(
-    injectCommitMutation(injectDialog(Accept)) as any
+    injectCommitMutation(injectDialog(Accept)) as any,
   ),
   {
     order: graphql`
@@ -334,5 +334,5 @@ export const AcceptFragmentContainer = createFragmentContainer(
         ...OrderStepper_order
       }
     `,
-  }
+  },
 )

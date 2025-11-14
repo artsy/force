@@ -9,7 +9,7 @@ describe("FilterExpandable", () => {
     return render(
       <FilterExpandable expanded>
         <span>Some render content</span>
-      </FilterExpandable>
+      </FilterExpandable>,
     )
   }
 

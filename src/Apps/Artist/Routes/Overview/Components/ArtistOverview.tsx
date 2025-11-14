@@ -171,7 +171,7 @@ export const ArtistOverviewFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 const ArtistOverviewPlaceholder: FC<React.PropsWithChildren<unknown>> = () => {

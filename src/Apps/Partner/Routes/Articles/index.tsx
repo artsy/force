@@ -63,7 +63,7 @@ const Articles: React.FC<React.PropsWithChildren<ArticlesProps>> = ({
         setIsLoading(false)
 
         router.push({ pathname: location.pathname, query })
-      }
+      },
     )
   }
 
@@ -151,5 +151,5 @@ export const ArticlesPaginationContainer = createRefetchContainer(
           @arguments(first: $first, last: $last, after: $after, before: $before)
       }
     }
-  `
+  `,
 )

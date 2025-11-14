@@ -118,7 +118,7 @@ export const CollectApp: React.FC<React.PropsWithChildren<CollectAppProps>> = ({
                 `}
                 variables={initializeVariablesWithFilterState(
                   match.params,
-                  match
+                  match,
                 )}
                 fetchPolicy="store-and-network"
                 placeholder={<ArtworkFilterPlaceholder />}

@@ -170,7 +170,7 @@ export const ArtQuizArtworks: FC<
       submitSave,
       trackEvent,
       submitDislike,
-    ]
+    ],
   )
 
   const dislikeRef = useRef<ArtQuizButtonRef | null>(null)
@@ -317,5 +317,5 @@ export const ArtQuizArtworksFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

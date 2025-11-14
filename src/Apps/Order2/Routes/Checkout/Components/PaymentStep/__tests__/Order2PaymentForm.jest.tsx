@@ -128,7 +128,7 @@ jest.mock(
   "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderPaymentMutation",
   () => ({
     useOrder2SetOrderPaymentMutation: () => mockSetPaymentMutation,
-  })
+  }),
 )
 
 const mockLegacySetPaymentMutation = {
@@ -143,7 +143,7 @@ jest.mock(
   "Components/BankDebitForm/Mutations/CreateBankDebitSetupForOrder",
   () => ({
     CreateBankDebitSetupForOrder: () => mockCreateBankDebitSetupForOrder,
-  })
+  }),
 )
 
 // Mock response factories
@@ -196,10 +196,10 @@ const expectCommonSubmissionFlow = async (tokenId: string) => {
   expect(mockStripe.createConfirmationToken).toHaveBeenCalledWith(
     expect.objectContaining({
       elements: mockElements,
-    })
+    }),
   )
   expect(
-    mockCheckoutContext.checkoutTracking.clickedOrderProgression
+    mockCheckoutContext.checkoutTracking.clickedOrderProgression,
   ).toHaveBeenCalledWith("ordersPayment")
 
   await waitFor(() => {
@@ -207,7 +207,7 @@ const expectCommonSubmissionFlow = async (tokenId: string) => {
       expect.anything(),
       expect.anything(),
       { id: tokenId },
-      { fetchPolicy: "store-or-network" }
+      { fetchPolicy: "store-or-network" },
     )
   })
 }
@@ -226,7 +226,7 @@ beforeEach(() => {
 
   // Set up default mock response for confirmation token query
   mockFetchQuery.mockImplementation(() =>
-    createConfirmationTokenResponse(MOCK_CARD_PREVIEW)
+    createConfirmationTokenResponse(MOCK_CARD_PREVIEW),
   )
 })
 
@@ -413,7 +413,7 @@ describe("Order2PaymentForm", () => {
       await userEvent.click(screen.getByTestId("mock-credit-card"))
 
       expect(
-        mockCheckoutContext.checkoutTracking.clickedPaymentMethod
+        mockCheckoutContext.checkoutTracking.clickedPaymentMethod,
       ).toHaveBeenCalledWith({
         paymentMethod: "CREDIT_CARD",
         amountMinor: 100000,
@@ -428,7 +428,7 @@ describe("Order2PaymentForm", () => {
       await userEvent.click(screen.getByTestId("mock-ach"))
 
       expect(
-        mockCheckoutContext.checkoutTracking.clickedPaymentMethod
+        mockCheckoutContext.checkoutTracking.clickedPaymentMethod,
       ).toHaveBeenCalledWith({
         paymentMethod: "US_BANK_ACCOUNT",
         amountMinor: 100000,
@@ -443,7 +443,7 @@ describe("Order2PaymentForm", () => {
       await userEvent.click(screen.getByTestId("PaymentFormWire"))
 
       expect(
-        mockCheckoutContext.checkoutTracking.clickedPaymentMethod
+        mockCheckoutContext.checkoutTracking.clickedPaymentMethod,
       ).toHaveBeenCalledWith({
         paymentMethod: "WIRE_TRANSFER",
         amountMinor: 100000,
@@ -458,7 +458,7 @@ describe("Order2PaymentForm", () => {
       await userEvent.click(screen.getByTestId("mock-sepa"))
 
       expect(
-        mockCheckoutContext.checkoutTracking.clickedPaymentMethod
+        mockCheckoutContext.checkoutTracking.clickedPaymentMethod,
       ).toHaveBeenCalledWith({
         paymentMethod: "SEPA_DEBIT",
         amountMinor: 100000,
@@ -488,7 +488,7 @@ describe("Order2PaymentForm", () => {
 
       // Should track saved payment method viewed
       expect(
-        mockCheckoutContext.checkoutTracking.savedPaymentMethodViewed
+        mockCheckoutContext.checkoutTracking.savedPaymentMethodViewed,
       ).toHaveBeenCalledWith(["CREDIT_CARD"])
     })
 
@@ -518,7 +518,7 @@ describe("Order2PaymentForm", () => {
       await userEvent.click(savedPaymentsText)
 
       expect(
-        mockCheckoutContext.checkoutTracking.clickedPaymentMethod
+        mockCheckoutContext.checkoutTracking.clickedPaymentMethod,
       ).toHaveBeenCalledWith({
         paymentMethod: "SAVED_CREDIT_CARD",
         amountMinor: 100000,
@@ -558,7 +558,7 @@ describe("Order2PaymentForm", () => {
       })
 
       expect(
-        mockCheckoutContext.checkoutTracking.savedPaymentMethodViewed
+        mockCheckoutContext.checkoutTracking.savedPaymentMethodViewed,
       ).toHaveBeenCalledWith(["CREDIT_CARD"])
     })
 
@@ -574,11 +574,11 @@ describe("Order2PaymentForm", () => {
       // For delivery orders, "same as shipping" checkbox should be shown and checked by default
       await waitFor(() => {
         expect(
-          screen.getByTestId("billing-address-same-as-shipping")
+          screen.getByTestId("billing-address-same-as-shipping"),
         ).toBeInTheDocument()
       })
       expect(
-        screen.getByTestId("billing-address-same-as-shipping")
+        screen.getByTestId("billing-address-same-as-shipping"),
       ).toBeChecked()
 
       // No billing address form should be shown since "same as shipping" is checked
@@ -586,16 +586,16 @@ describe("Order2PaymentForm", () => {
 
       setupStripeSubmission(tokenId)
       mockFetchQuery.mockImplementationOnce(() =>
-        createConfirmationTokenResponse(MOCK_CARD_PREVIEW)
+        createConfirmationTokenResponse(MOCK_CARD_PREVIEW),
       )
       mockSetPaymentMutation.submitMutation.mockResolvedValueOnce(
-        MOCK_ORDER_SUCCESS("CREDIT_CARD", tokenId)
+        MOCK_ORDER_SUCCESS("CREDIT_CARD", tokenId),
       )
 
       await userEvent.click(screen.getByText("Continue to Review"))
 
       expect(
-        mockCheckoutContext.checkoutTracking.clickedOrderProgression
+        mockCheckoutContext.checkoutTracking.clickedOrderProgression,
       ).toHaveBeenCalledWith("ordersPayment")
     })
 
@@ -610,12 +610,12 @@ describe("Order2PaymentForm", () => {
       // Wait for and uncheck "same as shipping" checkbox
       await waitFor(() => {
         expect(
-          screen.getByTestId("billing-address-same-as-shipping")
+          screen.getByTestId("billing-address-same-as-shipping"),
         ).toBeInTheDocument()
       })
 
       await userEvent.click(
-        screen.getByTestId("billing-address-same-as-shipping")
+        screen.getByTestId("billing-address-same-as-shipping"),
       )
 
       // Now billing address form should be shown
@@ -642,10 +642,10 @@ describe("Order2PaymentForm", () => {
 
       setupStripeSubmission(tokenId)
       mockFetchQuery.mockImplementationOnce(() =>
-        createConfirmationTokenResponse(MOCK_CARD_PREVIEW)
+        createConfirmationTokenResponse(MOCK_CARD_PREVIEW),
       )
       mockSetPaymentMutation.submitMutation.mockResolvedValueOnce(
-        MOCK_ORDER_SUCCESS("CREDIT_CARD", tokenId)
+        MOCK_ORDER_SUCCESS("CREDIT_CARD", tokenId),
       )
 
       await userEvent.click(screen.getByText("Continue to Review"))
@@ -714,10 +714,10 @@ describe("Order2PaymentForm", () => {
 
       setupStripeSubmission(tokenId)
       mockFetchQuery.mockImplementationOnce(() =>
-        createConfirmationTokenResponse(MOCK_CARD_PREVIEW)
+        createConfirmationTokenResponse(MOCK_CARD_PREVIEW),
       )
       mockSetPaymentMutation.submitMutation.mockResolvedValueOnce(
-        MOCK_ORDER_SUCCESS("CREDIT_CARD", tokenId)
+        MOCK_ORDER_SUCCESS("CREDIT_CARD", tokenId),
       )
 
       await userEvent.click(screen.getByText("Continue to Review"))
@@ -770,10 +770,10 @@ describe("Order2PaymentForm", () => {
 
       setupStripeSubmission(tokenId)
       mockFetchQuery.mockImplementationOnce(() =>
-        createConfirmationTokenResponse(MOCK_ACH_PREVIEW)
+        createConfirmationTokenResponse(MOCK_ACH_PREVIEW),
       )
       mockSetPaymentMutation.submitMutation.mockResolvedValueOnce(
-        MOCK_ORDER_SUCCESS("US_BANK_ACCOUNT", tokenId)
+        MOCK_ORDER_SUCCESS("US_BANK_ACCOUNT", tokenId),
       )
       mockCreateBankDebitSetupForOrder.submitMutation.mockResolvedValueOnce({})
 
@@ -793,7 +793,7 @@ describe("Order2PaymentForm", () => {
 
       await waitFor(() => {
         expect(
-          mockCreateBankDebitSetupForOrder.submitMutation
+          mockCreateBankDebitSetupForOrder.submitMutation,
         ).toHaveBeenCalledWith({
           variables: { input: { id: "order-id" } },
         })
@@ -817,13 +817,13 @@ describe("Order2PaymentForm", () => {
 
       setupStripeSubmission(tokenId)
       mockFetchQuery.mockImplementationOnce(() =>
-        createConfirmationTokenResponse(MOCK_ACH_PREVIEW)
+        createConfirmationTokenResponse(MOCK_ACH_PREVIEW),
       )
       mockSetPaymentMutation.submitMutation.mockResolvedValueOnce(
-        MOCK_ORDER_SUCCESS("US_BANK_ACCOUNT", tokenId)
+        MOCK_ORDER_SUCCESS("US_BANK_ACCOUNT", tokenId),
       )
       mockCreateBankDebitSetupForOrder.submitMutation.mockRejectedValueOnce(
-        new Error("Bank setup failed")
+        new Error("Bank setup failed"),
       )
 
       await userEvent.click(screen.getByText("Continue to Review"))
@@ -835,7 +835,7 @@ describe("Order2PaymentForm", () => {
       await waitFor(() => {
         expect(mockSetPaymentMutation.submitMutation).toHaveBeenCalled()
         expect(
-          mockCreateBankDebitSetupForOrder.submitMutation
+          mockCreateBankDebitSetupForOrder.submitMutation,
         ).toHaveBeenCalled()
       })
 
@@ -861,10 +861,10 @@ describe("Order2PaymentForm", () => {
 
       setupStripeSubmission(tokenId)
       mockFetchQuery.mockImplementationOnce(() =>
-        createConfirmationTokenResponse(MOCK_ACH_PREVIEW)
+        createConfirmationTokenResponse(MOCK_ACH_PREVIEW),
       )
       mockSetPaymentMutation.submitMutation.mockRejectedValueOnce(
-        new Error("Order update failed")
+        new Error("Order update failed"),
       )
       mockCreateBankDebitSetupForOrder.submitMutation.mockResolvedValueOnce({})
 
@@ -908,18 +908,18 @@ describe("Order2PaymentForm", () => {
       }
 
       mockLegacySetPaymentMutation.submitMutation.mockResolvedValueOnce(
-        mockWireTransferSuccess
+        mockWireTransferSuccess,
       )
 
       await userEvent.click(screen.getByText("Continue to Review"))
 
       expect(
-        mockCheckoutContext.checkoutTracking.clickedOrderProgression
+        mockCheckoutContext.checkoutTracking.clickedOrderProgression,
       ).toHaveBeenCalledWith("ordersPayment")
 
       await waitFor(() => {
         expect(
-          mockLegacySetPaymentMutation.submitMutation
+          mockLegacySetPaymentMutation.submitMutation,
         ).toHaveBeenCalledWith({
           variables: {
             input: {
@@ -943,14 +943,14 @@ describe("Order2PaymentForm", () => {
       await userEvent.click(screen.getByTestId("PaymentFormWire"))
 
       mockLegacySetPaymentMutation.submitMutation.mockRejectedValueOnce(
-        new Error("Wire transfer setup failed")
+        new Error("Wire transfer setup failed"),
       )
 
       await userEvent.click(screen.getByText("Continue to Review"))
 
       await waitFor(() => {
         expect(
-          mockLegacySetPaymentMutation.submitMutation
+          mockLegacySetPaymentMutation.submitMutation,
         ).toHaveBeenCalledWith({
           variables: {
             input: {
@@ -976,13 +976,13 @@ describe("Order2PaymentForm", () => {
 
       await waitFor(() => {
         expect(
-          screen.getByTestId("billing-address-same-as-shipping")
+          screen.getByTestId("billing-address-same-as-shipping"),
         ).toBeInTheDocument()
       })
 
       // Should be checked by default
       expect(
-        screen.getByTestId("billing-address-same-as-shipping")
+        screen.getByTestId("billing-address-same-as-shipping"),
       ).toBeChecked()
     })
 
@@ -995,13 +995,13 @@ describe("Order2PaymentForm", () => {
 
       await waitFor(() => {
         expect(
-          screen.getByTestId("billing-address-same-as-shipping")
+          screen.getByTestId("billing-address-same-as-shipping"),
         ).toBeInTheDocument()
       })
 
       // Uncheck the billing address same as shipping
       await userEvent.click(
-        screen.getByTestId("billing-address-same-as-shipping")
+        screen.getByTestId("billing-address-same-as-shipping"),
       )
 
       await waitFor(() => {
@@ -1049,7 +1049,7 @@ describe("Order2PaymentForm", () => {
 
       // Should not show the billing address same as shipping checkbox for pickup orders
       expect(
-        screen.queryByTestId("billing-address-same-as-shipping")
+        screen.queryByTestId("billing-address-same-as-shipping"),
       ).not.toBeInTheDocument()
     })
 
@@ -1124,10 +1124,10 @@ describe("Order2PaymentForm", () => {
 
       setupStripeSubmission(tokenId)
       mockFetchQuery.mockImplementationOnce(() =>
-        createConfirmationTokenResponse(MOCK_CARD_PREVIEW)
+        createConfirmationTokenResponse(MOCK_CARD_PREVIEW),
       )
       mockSetPaymentMutation.submitMutation.mockResolvedValueOnce(
-        MOCK_ORDER_SUCCESS("CREDIT_CARD", tokenId)
+        MOCK_ORDER_SUCCESS("CREDIT_CARD", tokenId),
       )
 
       await userEvent.click(screen.getByText("Continue to Review"))
@@ -1176,13 +1176,13 @@ describe("Order2PaymentForm", () => {
 
       await waitFor(() => {
         expect(
-          screen.getByTestId("billing-address-same-as-shipping")
+          screen.getByTestId("billing-address-same-as-shipping"),
         ).toBeInTheDocument()
       })
 
       // Should be checked by default
       expect(
-        screen.getByTestId("billing-address-same-as-shipping")
+        screen.getByTestId("billing-address-same-as-shipping"),
       ).toBeChecked()
     })
 
@@ -1217,17 +1217,17 @@ describe("Order2PaymentForm", () => {
 
       await waitFor(() => {
         expect(
-          screen.getByTestId("billing-address-same-as-shipping")
+          screen.getByTestId("billing-address-same-as-shipping"),
         ).toBeInTheDocument()
       })
 
       // Keep same as shipping checked (default)
       setupStripeSubmission(tokenId)
       mockFetchQuery.mockImplementationOnce(() =>
-        createConfirmationTokenResponse(MOCK_CARD_PREVIEW)
+        createConfirmationTokenResponse(MOCK_CARD_PREVIEW),
       )
       mockSetPaymentMutation.submitMutation.mockResolvedValueOnce(
-        MOCK_ORDER_SUCCESS("CREDIT_CARD", tokenId)
+        MOCK_ORDER_SUCCESS("CREDIT_CARD", tokenId),
       )
 
       await userEvent.click(screen.getByText("Continue to Review"))

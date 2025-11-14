@@ -212,7 +212,7 @@ export const ExpressCheckoutUI = ({
         "expressCheckoutError",
         JSON.stringify({
           title: "An error occurred",
-        })
+        }),
       )
 
       errorRef.current = null
@@ -255,7 +255,7 @@ export const ExpressCheckoutUI = ({
 
       const validatedResult = validateAndExtractOrderResponse(
         updateOrderShippingAddressResult.updateOrderShippingAddress
-          ?.orderOrError
+          ?.orderOrError,
       )
 
       const shippingRates = extractShippingRates(validatedResult.order)
@@ -288,7 +288,7 @@ export const ExpressCheckoutUI = ({
     if (shippingRate.id === CALCULATING_SHIPPING_RATE.id) {
       errorRef.current = "shipping_options_not_available"
       logger.error(
-        "Shipping options not available yet, skipping setting fulfillment option"
+        "Shipping options not available yet, skipping setting fulfillment option",
       )
       reject()
       return
@@ -370,7 +370,7 @@ export const ExpressCheckoutUI = ({
         })
 
       validateAndExtractOrderResponse(
-        updateOrderPaymentMethodResult.updateOrder?.orderOrError
+        updateOrderPaymentMethodResult.updateOrder?.orderOrError,
       )
 
       // Finally we have all fulfillment details
@@ -397,7 +397,7 @@ export const ExpressCheckoutUI = ({
 
       validateAndExtractOrderResponse(
         updateOrderShippingAddressResult.updateOrderShippingAddress
-          ?.orderOrError
+          ?.orderOrError,
       )
 
       // Trigger form validation and wallet collection
@@ -428,7 +428,7 @@ export const ExpressCheckoutUI = ({
                   },
                 }
               : undefined,
-        }
+        },
       )
 
       if (error) {
@@ -451,7 +451,7 @@ export const ExpressCheckoutUI = ({
       })
 
       validateAndExtractOrderResponse(
-        submitOrderResult.submitOrder?.orderOrError
+        submitOrderResult.submitOrder?.orderOrError,
       )
 
       // Redirect to status page after successful order submission
@@ -472,7 +472,7 @@ export const ExpressCheckoutUI = ({
         "expressCheckoutError",
         JSON.stringify({
           title: "Payment failed",
-        })
+        }),
       )
 
       resetOrder()
@@ -485,7 +485,7 @@ export const ExpressCheckoutUI = ({
 
       if (paymentMethods) {
         setHasMultiplePaymentOptions(
-          Object.values(paymentMethods).filter(Boolean).length > 1
+          Object.values(paymentMethods).filter(Boolean).length > 1,
         )
 
         setVisible(true)
@@ -616,12 +616,12 @@ const extractLineItems = (order: ParseableOrder): Array<LineItem> => {
   }
 
   const selectedFulfillmentOption = order.fulfillmentOptions.find(
-    option => option.selected
+    option => option.selected,
   )
 
   if (selectedFulfillmentOption && shippingTotal) {
     const shippingRate = shippingRateForFulfillmentOption(
-      selectedFulfillmentOption
+      selectedFulfillmentOption,
     )
     shippingLine = {
       name: shippingRate?.displayName || "Shipping",
@@ -645,10 +645,10 @@ const extractLineItems = (order: ParseableOrder): Array<LineItem> => {
 }
 
 const extractAllowedShippingCountries = (
-  order: ParseableOrder
+  order: ParseableOrder,
 ): ClickResolveDetails["allowedShippingCountries"] => {
   return order.availableShippingCountries.map(countryCode =>
-    countryCode.toUpperCase()
+    countryCode.toUpperCase(),
   )
 }
 
@@ -712,7 +712,7 @@ const extractShippingRates = (order: ParseableOrder): Array<ShippingRate> => {
       ? rates.concat(CALCULATING_SHIPPING_RATE)
       : rates
   const selectedFulfillmentOption = order.fulfillmentOptions.find(
-    option => option.selected
+    option => option.selected,
   )
   if (selectedFulfillmentOption!.type === "PICKUP") {
     // if pickup is selected, it should be the first option since Stripe auto
@@ -725,7 +725,7 @@ const extractShippingRates = (order: ParseableOrder): Array<ShippingRate> => {
 }
 
 function getAvailablePaymentMethods(
-  paymentMethods: AvailablePaymentMethods
+  paymentMethods: AvailablePaymentMethods,
 ): string[] {
   return Object.entries(paymentMethods)
     .filter(([_, isAvailable]) => isAvailable)

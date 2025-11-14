@@ -236,5 +236,5 @@ export const ArticleSectionImageSetFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

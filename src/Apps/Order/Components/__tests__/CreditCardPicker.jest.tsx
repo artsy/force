@@ -56,7 +56,7 @@ const { _mockStripe, _mockReset } = require("@stripe/stripe-js")
 
 _mockReset()
 _mockStripe().createToken.mockImplementation(() =>
-  Promise.resolve({ error: "bad error" })
+  Promise.resolve({ error: "bad error" }),
 )
 
 const fillAddressForm = (container: HTMLElement, address: Address) => {
@@ -128,7 +128,7 @@ describe("CreditCardPickerFragmentContainer", () => {
     mockCommitMutation.mockClear()
     _mockReset()
     _mockStripe().createToken.mockImplementation(() =>
-      Promise.resolve({ error: "bad error" })
+      Promise.resolve({ error: "bad error" }),
     )
     isEigen = false
   })
@@ -173,7 +173,7 @@ describe("CreditCardPickerFragmentContainer", () => {
     })
 
     expect(
-      screen.queryByText("Billing and shipping addresses are the same.")
+      screen.queryByText("Billing and shipping addresses are the same."),
     ).not.toBeInTheDocument()
     expect(screen.getByTestId("address-form")).toBeInTheDocument()
   })
@@ -296,7 +296,7 @@ describe("CreditCardPickerFragmentContainer", () => {
             oneTimeUse: false,
           },
         },
-      })
+      }),
     )
   })
 
@@ -314,7 +314,7 @@ describe("CreditCardPickerFragmentContainer", () => {
     })
 
     expect(
-      screen.queryByText("Your card number is invalid.")
+      screen.queryByText("Your card number is invalid."),
     ).not.toBeInTheDocument()
   })
 
@@ -400,7 +400,7 @@ describe("CreditCardPickerFragmentContainer", () => {
         const radios = screen.getAllByRole("radio")
         expect(radios).toHaveLength(2)
         expect(
-          screen.getByRole("link", { name: /manage cards/i })
+          screen.getByRole("link", { name: /manage cards/i }),
         ).toHaveAttribute("href", "/user/payments")
         expect(screen.getByText(/•••• 1234.*Exp 01\/18/)).toBeInTheDocument()
         expect(screen.getByText("Add another card.")).toBeInTheDocument()
@@ -463,10 +463,10 @@ describe("CreditCardPickerFragmentContainer", () => {
         await waitFor(
           () => {
             expect(
-              screen.queryByTestId("new-card-form")
+              screen.queryByTestId("new-card-form"),
             ).not.toBeInTheDocument()
           },
-          { timeout: 1000 }
+          { timeout: 1000 },
         )
       })
     })
@@ -485,7 +485,7 @@ describe("CreditCardPickerFragmentContainer", () => {
         const radios = screen.getAllByRole("radio")
         expect(radios).toHaveLength(3)
         expect(
-          screen.getByRole("link", { name: /manage cards/i })
+          screen.getByRole("link", { name: /manage cards/i }),
         ).toHaveAttribute("href", "/user/payments")
         expect(screen.getByText(/•••• 1234.*Exp 01\/18/)).toBeInTheDocument()
         expect(screen.getByText(/•••• 2345.*Exp 01\/19/)).toBeInTheDocument()
@@ -593,7 +593,7 @@ describe("CreditCardPickerFragmentContainer", () => {
       // In RTL, we can't easily access component instance methods like getCreditCardId
       mockCommitMutation.mockResolvedValue(creatingCreditCardSuccess)
       _mockStripe().createToken.mockReturnValue(
-        Promise.resolve({ token: { id: "tokenId", postalCode: "1324" } })
+        Promise.resolve({ token: { id: "tokenId", postalCode: "1324" } }),
       )
       renderWithRelay({
         CommerceOrder: () => defaultData.order,
@@ -613,7 +613,7 @@ describe("CreditCardPickerFragmentContainer", () => {
               oneTimeUse: false,
             },
           },
-        })
+        }),
       )
     })
 
@@ -621,7 +621,7 @@ describe("CreditCardPickerFragmentContainer", () => {
       // TODO: This test checks implementation details via mocks
       // In RTL, we can't easily access component instance methods like getCreditCardId
       _mockStripe().createToken.mockReturnValue(
-        Promise.resolve({ token: { id: "tokenId" } })
+        Promise.resolve({ token: { id: "tokenId" } }),
       )
       const { user } = renderWithRelay({
         CommerceOrder: () => defaultData.order,
@@ -644,7 +644,7 @@ describe("CreditCardPickerFragmentContainer", () => {
               oneTimeUse: true,
             },
           },
-        })
+        }),
       )
     })
   })
@@ -791,7 +791,7 @@ describe("CreditCardPickerFragmentContainer", () => {
       // TODO: Validation only happens when getCreditCardId is called
       mockCommitMutation.mockResolvedValue(creatingCreditCardSuccess)
       _mockStripe().createToken.mockReturnValue(
-        Promise.resolve({ token: { id: "tokenId" } })
+        Promise.resolve({ token: { id: "tokenId" } }),
       )
       const { user } = renderWithRelay({
         CommerceOrder: () => defaultData.order,
@@ -824,7 +824,7 @@ describe("CreditCardPickerFragmentContainer", () => {
       // TODO: Validation only happens when getCreditCardId is called
       mockCommitMutation.mockResolvedValue(creatingCreditCardSuccess)
       _mockStripe().createToken.mockReturnValue(
-        Promise.resolve({ token: { id: "tokenId" } })
+        Promise.resolve({ token: { id: "tokenId" } }),
       )
       const { user } = renderWithRelay({
         CommerceOrder: () => defaultData.order,
@@ -871,7 +871,7 @@ describe("CreditCardPickerFragmentContainer", () => {
         null,
         expect.objectContaining({
           address_line2: "",
-        })
+        }),
       )
     })
   })

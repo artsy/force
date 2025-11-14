@@ -85,5 +85,5 @@ export const EntityHeaderGeneFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

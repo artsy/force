@@ -4,7 +4,7 @@ export interface Redirect {
 }
 
 export type RedirectPredicate<Arguments> = (
-  args: Arguments
+  args: Arguments,
 ) => Redirect | undefined
 
 export interface RedirectRecord<Arguments> {
@@ -18,7 +18,7 @@ export const trimLeadingSlashes = (s: string) => s.replace(/^\/+/, "")
 export function getRedirect<Arguments>(
   redirects: RedirectRecord<Arguments>,
   location: string,
-  args: Arguments
+  args: Arguments,
 ): Redirect | null {
   const trimmedLocation = trimLeadingSlashes(location)
 
@@ -39,7 +39,7 @@ export function getRedirect<Arguments>(
       return getRedirect(
         matchingChild,
         trimmedLocation.slice(matchingChild.path.length),
-        args
+        args,
       )
     }
   }

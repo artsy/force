@@ -16,7 +16,7 @@ interface AddAddressFormProps {
   initialValues: FormikContextWithAddress
   onSaveAddress: (
     values: FormikContextWithAddress,
-    addressID: string
+    addressID: string,
   ) => Promise<void>
 }
 export const AddAddressForm = ({
@@ -77,8 +77,8 @@ export const AddAddressForm = ({
           if (result.createUserAddress?.userAddressOrErrors?.errors) {
             throw new Error(
               `Failed to create address: ${JSON.stringify(
-                result.createUserAddress.userAddressOrErrors.errors
-              )}`
+                result.createUserAddress.userAddressOrErrors.errors,
+              )}`,
             )
           }
           throw new Error("Failed to create address: Unknown error")

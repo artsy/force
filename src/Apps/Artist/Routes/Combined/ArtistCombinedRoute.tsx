@@ -222,5 +222,5 @@ export const ArtistCombinedRouteFragmentContainer = createFragmentContainer(
         internalID
       }
     `,
-  }
+  },
 )

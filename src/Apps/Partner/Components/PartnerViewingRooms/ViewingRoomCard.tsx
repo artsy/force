@@ -73,5 +73,5 @@ export const ViewingRoomCardFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

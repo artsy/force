@@ -60,7 +60,7 @@ export const Order2DeliveryOptionsForm: React.FC<
 
   const { fulfillmentOptions } = orderData
   const deliveryOptions = fulfillmentOptions.filter(
-    option => option.type !== "PICKUP"
+    option => option.type !== "PICKUP",
   )
 
   const isSingleOption = deliveryOptions.length === 1
@@ -70,7 +70,7 @@ export const Order2DeliveryOptionsForm: React.FC<
   }) => {
     try {
       checkoutTracking.clickedOrderProgression(
-        ContextModule.ordersShippingMethods
+        ContextModule.ordersShippingMethods,
       )
       const setFulfillmentOptionResult =
         await setFulfillmentOptionMutation.submitMutation({
@@ -88,7 +88,7 @@ export const Order2DeliveryOptionsForm: React.FC<
         })
 
       validateAndExtractOrderResponse(
-        setFulfillmentOptionResult.setOrderFulfillmentOption?.orderOrError
+        setFulfillmentOptionResult.setOrderFulfillmentOption?.orderOrError,
       ).order
 
       setStepErrorMessage({

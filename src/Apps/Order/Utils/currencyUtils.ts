@@ -1,6 +1,6 @@
 export const appendCurrencySymbol = (
   price: string | number | null | undefined,
-  currency: string
+  currency: string,
 ): string | number | null | undefined => {
   const pricePresent: boolean =
     typeof price === "string" || typeof price === "number"

@@ -65,7 +65,7 @@ export const hasCorrectAddressFormFields = ({
  */
 export const fillAddressFormFields = async (
   address: Partial<Address>,
-  options: { clearInputs?: boolean; wrapperTestId?: string } = {}
+  options: { clearInputs?: boolean; wrapperTestId?: string } = {},
 ) => {
   const { clearInputs = false, wrapperTestId = "addressFormFields" } = options
 
@@ -76,7 +76,7 @@ export const fillAddressFormFields = async (
   if (country) {
     await act(async () => {
       const countrySelect = within(wrapper).getByLabelText(
-        ADDRESS_FORM_INPUTS.country.label
+        ADDRESS_FORM_INPUTS.country.label,
       )
 
       userEvent.selectOptions(countrySelect, [country])
@@ -88,7 +88,7 @@ export const fillAddressFormFields = async (
     act(() => {
       Object.entries(defaultTextInputs).forEach(([key, value]) => {
         const input = within(wrapper).getByLabelText(
-          ADDRESS_FORM_INPUTS[key].label
+          ADDRESS_FORM_INPUTS[key].label,
         )
         if (clearInputs) {
           userEvent.clear(input)
@@ -100,7 +100,7 @@ export const fillAddressFormFields = async (
   if (phoneNumber) {
     act(() => {
       const phoneNumberInput = within(wrapper).getByLabelText(
-        ADDRESS_FORM_INPUTS.phoneNumber.label
+        ADDRESS_FORM_INPUTS.phoneNumber.label,
       )
       if (clearInputs) {
         userEvent.clear(phoneNumberInput)

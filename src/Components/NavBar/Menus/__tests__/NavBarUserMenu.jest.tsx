@@ -26,7 +26,7 @@ describe("NavBarUserMenu", () => {
     return render(
       <SystemContextProvider user={{}} {...props}>
         <NavBarUserMenu />
-      </SystemContextProvider>
+      </SystemContextProvider>,
     )
   }
 
@@ -57,7 +57,7 @@ describe("NavBarUserMenu", () => {
 
   it("calls logout auth action on logout menu click", () => {
     mockLogout.mockImplementationOnce(() =>
-      jest.fn().mockResolvedValue(Promise.resolve())
+      jest.fn().mockResolvedValue(Promise.resolve()),
     )
 
     const { container } = getWrapper()

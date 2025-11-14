@@ -36,7 +36,7 @@ describe("ExampleApp", () => {
           year: 2022,
         },
       }),
-    })
+    }),
   )
 
   it("renders correctly", () => {

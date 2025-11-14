@@ -11,7 +11,7 @@ export const NavBarMobileMenuLoggedIn: React.FC<
   React.PropsWithChildren<unknown>
 > = () => {
   const handleClick = (
-    event: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement, MouseEvent>
+    event: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement, MouseEvent>,
   ) => {
     const node = event.currentTarget
     const text = node.textContent ?? ""

@@ -11,10 +11,10 @@ import { graphql } from "react-relay"
 jest.unmock("react-relay")
 jest.mock("Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext")
 jest.mock(
-  "Apps/Order2/Routes/Checkout/Mutations/useOrder2AddInitialOfferMutation"
+  "Apps/Order2/Routes/Checkout/Mutations/useOrder2AddInitialOfferMutation",
 )
 jest.mock(
-  "Apps/Order2/Routes/Checkout/Mutations/useOrder2UnsetOrderFulfillmentOptionMutation"
+  "Apps/Order2/Routes/Checkout/Mutations/useOrder2UnsetOrderFulfillmentOptionMutation",
 )
 jest.mock("Utils/Hooks/useJump")
 
@@ -225,17 +225,17 @@ describe("Order2OfferStep", () => {
     expect(
       screen.getByText((content, _element) => {
         return content.includes("2,000")
-      })
+      }),
     ).toBeInTheDocument()
     expect(
       screen.getByText((content, _element) => {
         return content.includes("1,500")
-      })
+      }),
     ).toBeInTheDocument()
     expect(
       screen.getByText((content, _element) => {
         return content.includes("1,000")
-      })
+      }),
     ).toBeInTheDocument()
 
     // Select an offer
@@ -282,13 +282,13 @@ describe("Order2OfferStep", () => {
 
     // Check for formatted prices
     expect(
-      screen.getByText(content => content.includes("5,000"))
+      screen.getByText(content => content.includes("5,000")),
     ).toBeInTheDocument()
     expect(
-      screen.getByText(content => content.includes("4,500"))
+      screen.getByText(content => content.includes("4,500")),
     ).toBeInTheDocument()
     expect(
-      screen.getByText(content => content.includes("4,000"))
+      screen.getByText(content => content.includes("4,000")),
     ).toBeInTheDocument()
   })
 
@@ -388,8 +388,8 @@ describe("Order2OfferStep", () => {
       expect(screen.getByText("Offer note")).toBeInTheDocument()
       expect(
         screen.getByText(
-          "Additional context to help the gallery evaluate your offer."
-        )
+          "Additional context to help the gallery evaluate your offer.",
+        ),
       ).toBeInTheDocument()
 
       // Check for note textarea
@@ -397,7 +397,7 @@ describe("Order2OfferStep", () => {
 
       // Check for continue button
       expect(
-        screen.getByRole("button", { name: "Save and Continue" })
+        screen.getByRole("button", { name: "Save and Continue" }),
       ).toBeInTheDocument()
     })
 
@@ -546,7 +546,7 @@ describe("Order2OfferStep", () => {
         "USD",
         "order-id",
         1500,
-        "Midpoint"
+        "Midpoint",
       )
     })
 
@@ -567,7 +567,7 @@ describe("Order2OfferStep", () => {
         "USD",
         "order-id",
         5000,
-        "List price"
+        "List price",
       )
     })
 
@@ -600,7 +600,7 @@ describe("Order2OfferStep", () => {
         "USD",
         "order-id",
         1800,
-        undefined
+        undefined,
       )
     })
 
@@ -625,7 +625,7 @@ describe("Order2OfferStep", () => {
 
       await waitFor(() => {
         expect(
-          mockCheckoutTracking.clickedOrderProgression
+          mockCheckoutTracking.clickedOrderProgression,
         ).toHaveBeenCalledWith("ordersOffer")
       })
     })
@@ -650,17 +650,17 @@ describe("Order2OfferStep", () => {
       expect(
         screen.getByText((content, _element) => {
           return content.includes("3,000")
-        })
+        }),
       ).toBeInTheDocument()
       expect(
         screen.getByText((content, _element) => {
           return content.includes("2,250")
-        })
+        }),
       ).toBeInTheDocument()
       expect(
         screen.getByText((content, _element) => {
           return content.includes("1,500")
-        })
+        }),
       ).toBeInTheDocument()
     })
 

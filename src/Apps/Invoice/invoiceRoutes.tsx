@@ -6,7 +6,7 @@ const InvoiceApp = loadable(
   () => import(/* webpackChunkName: "invoiceBundle" */ "./InvoiceApp"),
   {
     resolveComponent: component => component.InvoiceApp,
-  }
+  },
 )
 
 const InvoiceDetailRoute = loadable(
@@ -16,7 +16,7 @@ const InvoiceDetailRoute = loadable(
     ),
   {
     resolveComponent: component => component.InvoiceDetailRoute,
-  }
+  },
 )
 
 const InvoicePaymentRoute = loadable(
@@ -26,7 +26,7 @@ const InvoicePaymentRoute = loadable(
     ),
   {
     resolveComponent: component => component.InvoicePaymentRoute,
-  }
+  },
 )
 
 export const invoiceRoutes: RouteProps[] = [

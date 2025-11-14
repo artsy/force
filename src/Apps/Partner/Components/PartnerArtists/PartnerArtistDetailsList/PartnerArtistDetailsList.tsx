@@ -136,11 +136,11 @@ export const PartnerArtistDetailsListPaginationContainer =
       getVariables(
         { partner: { slug: partnerId } },
         { cursor: after },
-        { first }
+        { first },
       ) {
         return { partnerId, after, first }
       },
-    }
+    },
   )
 
 export const PartnerArtistDetailsListRenderer: React.FC<

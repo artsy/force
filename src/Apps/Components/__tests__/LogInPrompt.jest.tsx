@@ -19,7 +19,7 @@ describe("LogInPrompt", () => {
           ContextModule.auctionLotsEndingSoonRail ||
           (ContextModule.newWorksForYouRail as AuthContextModule)
         }
-      />
+      />,
     )
   }
 
@@ -28,7 +28,7 @@ describe("LogInPrompt", () => {
 
     expect(screen.getByText("Log in")).toBeInTheDocument()
     expect(
-      screen.getByText("to see your personalized recommendations.")
+      screen.getByText("to see your personalized recommendations."),
     ).toBeInTheDocument()
   })
 })

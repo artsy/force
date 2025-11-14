@@ -183,7 +183,7 @@ export type Dialog = ReturnType<typeof extractDialogHelpers>
  * @param Component
  */
 export function injectDialog<R extends { dialog: Dialog }>(
-  Component: React.ComponentType<React.PropsWithChildren<R>>
+  Component: React.ComponentType<React.PropsWithChildren<R>>,
 ): React.ComponentType<React.PropsWithChildren<Omit<R, "dialog">>> {
   return props => (
     <Subscribe to={[DialogContainer]}>

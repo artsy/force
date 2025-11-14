@@ -20,7 +20,7 @@ describe("MediumFilter", () => {
     return render(
       <AlertProvider initialCriteria={initialCriteria}>
         <MediumFilterTestComponent />
-      </AlertProvider>
+      </AlertProvider>,
     )
   }
 

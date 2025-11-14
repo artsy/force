@@ -96,7 +96,7 @@ describe("serverRouter", () => {
 
   const getWrapper = async (
     Component = defaultComponent,
-    passedOptions = options
+    passedOptions = options,
   ) => {
     const result = await setupServerRouter({
       routes: [
@@ -121,7 +121,7 @@ describe("serverRouter", () => {
 
     const ServerRouter = Object.getOwnPropertyDescriptor(
       result,
-      __TEST_INTERNAL_SERVER_APP__ as any
+      __TEST_INTERNAL_SERVER_APP__ as any,
     )?.value
 
     // Since we're testing server-side rendering, we need to render to string
@@ -311,7 +311,7 @@ describe("serverRouter", () => {
       expect.objectContaining({
         ...options,
         route,
-      })
+      }),
     )
   })
 

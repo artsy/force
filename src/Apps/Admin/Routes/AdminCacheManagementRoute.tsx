@@ -276,7 +276,7 @@ const reducer = (state: State, action: Action) => {
 
     case "deleteCacheKey": {
       const updatedCacheKeys = state.cacheKeys.filter(
-        cacheKey => JSON.stringify(cacheKey) !== JSON.stringify(action.payload)
+        cacheKey => JSON.stringify(cacheKey) !== JSON.stringify(action.payload),
       )
 
       return { ...state, cacheKeys: updatedCacheKeys }

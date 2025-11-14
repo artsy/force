@@ -39,31 +39,31 @@ describe("PartnerOfferCreatedNotification", () => {
     // header
     expect(screen.getByText("Saved work by Damon Zucconi")).toBeInTheDocument()
     expect(
-      screen.getByText("Review the offer on your saved artwork")
+      screen.getByText("Review the offer on your saved artwork"),
     ).toBeInTheDocument()
     expect(screen.getByTestId("manage-saves-link")).toHaveAttribute(
       "href",
-      "/favorites/saves"
+      "/favorites/saves",
     )
 
     // artwork
     expect(screen.getByRole("presentation")).toHaveAttribute(
       "src",
-      "undefined?quality=80&resize_to=width&src=artwork-image-one&width=600"
+      "undefined?quality=80&resize_to=width&src=artwork-image-one&width=600",
     )
     expect(screen.getByText("(List price: $1,000)")).toBeInTheDocument()
 
     // Continue to purchase button
     expect(screen.getByTestId("partner-offer-artwork-button")).toHaveAttribute(
       "href",
-      "/partner-offer/offer-id/checkout"
+      "/partner-offer/offer-id/checkout",
     )
     // View Work button
     expect(
-      screen.getByTestId("partner-offer-view-artwork-button")
+      screen.getByTestId("partner-offer-view-artwork-button"),
     ).toHaveAttribute(
       "href",
-      "/artwork/artwork-one?partner_offer_id=<PartnerOffer-mock-id-1>"
+      "/artwork/artwork-one?partner_offer_id=<PartnerOffer-mock-id-1>",
     )
   })
 
@@ -87,12 +87,12 @@ describe("PartnerOfferCreatedNotification", () => {
             "2099-01-01T00:00:00+00:00",
             true,
             "Please buy this!",
-            "ABANDONED_ORDER"
+            "ABANDONED_ORDER",
           ),
       })
 
       expect(
-        screen.getByText("Review the offer before it expires")
+        screen.getByText("Review the offer before it expires"),
       ).toBeInTheDocument()
     })
   })
@@ -106,7 +106,7 @@ describe("PartnerOfferCreatedNotification", () => {
 
         expect(screen.getByText("View Work")).toBeInTheDocument()
         expect(
-          screen.getByTestId("partner-offer-artwork-button")
+          screen.getByTestId("partner-offer-artwork-button"),
         ).toHaveAttribute("href", "/artwork/artwork-one?expired_offer=true")
       })
     })
@@ -119,7 +119,7 @@ describe("PartnerOfferCreatedNotification", () => {
 
         expect(screen.getByText("Create Alert")).toBeInTheDocument()
         expect(
-          screen.getByTestId("partner-offer-artwork-button")
+          screen.getByTestId("partner-offer-artwork-button"),
         ).toHaveAttribute("href", "/artwork/artwork-one?unavailable=true")
       })
     })
@@ -130,7 +130,7 @@ const notification = (
   endAt = "2099-01-01T00:00:00+00:00",
   isAvailable = true,
   note = "",
-  source = "SAVE"
+  source = "SAVE",
 ) => {
   return {
     headline: "Saved work by Damon Zucconi",

@@ -33,7 +33,7 @@ describe(ArtistNationalityFilter, () => {
   it("renders artist nationalities", () => {
     render(<ArtistNationalityFilter expanded />)
     expect(
-      screen.getByText("Artist Nationality or Ethnicity")
+      screen.getByText("Artist Nationality or Ethnicity"),
     ).toBeInTheDocument()
     expect(screen.getByText("Cat")).toBeInTheDocument()
     expect(screen.getByText("Dog")).toBeInTheDocument()
@@ -49,19 +49,19 @@ describe(ArtistNationalityFilter, () => {
       ],
     }
     const emptyRender = createArtworkFilterTestRenderer(
-      contextWithEmptyAggregations
+      contextWithEmptyAggregations,
     )
     emptyRender(<ArtistNationalityFilter expanded />)
 
     expect(
-      screen.queryByText("Artist Nationality or Ethnicity")
+      screen.queryByText("Artist Nationality or Ethnicity"),
     ).not.toBeInTheDocument()
   })
 
   it("updates context on filter change", () => {
     render(<ArtistNationalityFilter expanded />)
     expect(currentArtworkFilterContext().filters?.artistNationalities).toEqual(
-      []
+      [],
     )
 
     userEvent.click(screen.getAllByRole("checkbox")[0])
@@ -88,7 +88,7 @@ describe(ArtistNationalityFilter, () => {
     userEvent.click(screen.getByText("Clear all"))
 
     expect(currentArtworkFilterContext().filters?.artistNationalities).toEqual(
-      []
+      [],
     )
   })
 

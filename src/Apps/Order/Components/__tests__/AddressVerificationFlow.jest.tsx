@@ -90,7 +90,7 @@ describe("AddressVerificationFlow", () => {
       {
         VerifyAddressMutationType: () => result,
       },
-      componentProps
+      componentProps,
     )
   }
 
@@ -199,7 +199,7 @@ describe("AddressVerificationFlow", () => {
       expect(mockOnChosenAddress).toHaveBeenCalledTimes(1)
       expect(mockOnChosenAddress).toHaveBeenCalledWith(
         "USER",
-        mockResult.inputAddress.address
+        mockResult.inputAddress.address,
       )
 
       expect(trackEvent).toHaveBeenCalledTimes(2)
@@ -226,7 +226,7 @@ describe("AddressVerificationFlow", () => {
       expect(mockOnChosenAddress).toHaveBeenCalledTimes(1)
       expect(mockOnChosenAddress).toHaveBeenCalledWith(
         "ARTSY",
-        mockInputAddress
+        mockInputAddress,
       )
       expect(trackEvent).not.toHaveBeenCalled()
     })
@@ -310,7 +310,7 @@ describe("AddressVerificationFlow", () => {
       expect(mockOnChosenAddress).toHaveBeenCalledTimes(1)
       expect(mockOnChosenAddress).toHaveBeenCalledWith(
         "ARTSY",
-        mockResult.suggestedAddresses[0].address
+        mockResult.suggestedAddresses[0].address,
       )
     })
 
@@ -345,7 +345,7 @@ describe("AddressVerificationFlow", () => {
         expect(mockOnChosenAddress).toHaveBeenCalledTimes(1)
         expect(mockOnChosenAddress).toHaveBeenCalledWith(
           "USER",
-          mockInputAddress
+          mockInputAddress,
         )
       })
     })

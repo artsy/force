@@ -125,10 +125,10 @@ describe("RegisterButton", () => {
 
       expect(screen.getByText("Verify Identity")).toBeInTheDocument()
       expect(
-        screen.getByText("Identity verification required to bid.")
+        screen.getByText("Identity verification required to bid."),
       ).toBeInTheDocument()
       expect(
-        screen.getByRole("link", { name: /verify identity/i })
+        screen.getByRole("link", { name: /verify identity/i }),
       ).toBeInTheDocument()
     })
   })
@@ -152,7 +152,7 @@ describe("RegisterButton", () => {
 
       expect(screen.getByText("Registration Pending")).toBeInTheDocument()
       expect(
-        screen.getByText("Identity verification required to bid.")
+        screen.getByText("Identity verification required to bid."),
       ).toBeInTheDocument()
     })
 
@@ -168,7 +168,7 @@ describe("RegisterButton", () => {
 
       expect(screen.getByText("Registration Pending")).toBeInTheDocument()
       expect(
-        screen.getByText("Reviewing submitted information")
+        screen.getByText("Reviewing submitted information"),
       ).toBeInTheDocument()
     })
   })
@@ -201,7 +201,7 @@ describe("RegisterButton", () => {
 
       expect(screen.getByText("Register to Bid")).toBeInTheDocument()
       expect(
-        screen.getByText("Identity verification required to bid.")
+        screen.getByText("Identity verification required to bid."),
       ).toBeInTheDocument()
     })
 
@@ -217,7 +217,7 @@ describe("RegisterButton", () => {
 
       expect(screen.getByText("Register to Bid")).toBeInTheDocument()
       expect(
-        screen.getByText("Registration required to bid")
+        screen.getByText("Registration required to bid"),
       ).toBeInTheDocument()
     })
 
@@ -307,7 +307,7 @@ describe("RegisterButton", () => {
       const button = screen.getByText("Register to Bid")
       fireEvent.click(button)
       expect(spy).toHaveBeenCalledWith(
-        "/auction/sale-slug/confirm-registration"
+        "/auction/sale-slug/confirm-registration",
       )
     })
   })

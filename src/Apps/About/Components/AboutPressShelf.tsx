@@ -13,7 +13,7 @@ export const AboutPressShelf = () => {
       }
     `,
     {},
-    { fetchPolicy: "store-or-network" }
+    { fetchPolicy: "store-or-network" },
   )
 
   const articles = data.page?.content

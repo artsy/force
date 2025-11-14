@@ -5,7 +5,7 @@ test.describe("Auctions", () => {
     await page.goto("auctions")
     await expect(page.locator("h1").first()).toContainText("Auctions")
     await expect(page).toHaveTitle(
-      "Auctions on Artsy | Premium Artworks from In-Demand Artists"
+      "Auctions on Artsy | Premium Artworks from In-Demand Artists",
     )
   })
 })

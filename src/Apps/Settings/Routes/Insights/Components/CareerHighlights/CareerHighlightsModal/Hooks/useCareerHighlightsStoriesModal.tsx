@@ -6,7 +6,7 @@ interface UseCareerHighlightsModalProps {
 }
 
 export const useCareerHighlightsStoriesModal = (
-  props: UseCareerHighlightsModalProps
+  props: UseCareerHighlightsModalProps,
 ) => {
   const {
     careerHighlightsStoriesModalComponent,

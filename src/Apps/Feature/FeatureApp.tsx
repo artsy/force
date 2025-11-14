@@ -49,7 +49,7 @@ const FeatureApp: React.FC<React.PropsWithChildren<FeatureAppProps>> = ({
             feature.sets.edges.length > 0 &&
             feature.sets.edges.map(
               edge =>
-                edge?.node && <FeatureSet key={edge.node.id} set={edge.node} />
+                edge?.node && <FeatureSet key={edge.node.id} set={edge.node} />,
             )}
         </Join>
       </Join>

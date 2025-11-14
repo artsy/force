@@ -91,10 +91,10 @@ export const YearCreated: React.FC<
 }
 
 export const getCreatedYearBounds = (
-  aggregations?: Aggregations
+  aggregations?: Aggregations,
 ): { minYear: number | null; maxYear: number | null } => {
   const aggregation = aggregations?.find(
-    a => a.slice === "LOTS_BY_CREATED_YEAR"
+    a => a.slice === "LOTS_BY_CREATED_YEAR",
   )
 
   const numericYears =

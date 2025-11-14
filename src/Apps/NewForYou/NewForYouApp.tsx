@@ -53,5 +53,5 @@ export const NewForYouAppFragmentContainer = createFragmentContainer(
           )
       }
     `,
-  }
+  },
 )

@@ -9,7 +9,7 @@ export const useUpdateCollectorProfile = () => {
   const { relayEnvironment } = useInquiryContext()
 
   const submitUpdateCollectorProfile = (
-    input: UpdateCollectorProfileInput = {}
+    input: UpdateCollectorProfileInput = {},
   ) => {
     return new Promise((resolve, reject) => {
       commitMutation<useUpdateCollectorProfileMutation>(
@@ -34,7 +34,7 @@ export const useUpdateCollectorProfile = () => {
             }
           `,
           variables: { input },
-        }
+        },
       )
     })
   }

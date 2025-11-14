@@ -36,7 +36,7 @@ describe("ArtworkAuctionCreateAlertTooltip", () => {
         aggregations={[]}
       >
         <ArtworkAuctionCreateAlertTooltip />
-      </SavedSearchAlertContextProvider>
+      </SavedSearchAlertContextProvider>,
     )
   }
 
@@ -45,8 +45,8 @@ describe("ArtworkAuctionCreateAlertTooltip", () => {
 
     expect(
       screen.getByText(
-        "You may be interested in these similar works by Andy Warhol."
-      )
+        "You may be interested in these similar works by Andy Warhol.",
+      ),
     ).toBeInTheDocument()
     expect(screen.getByText("Andy Warhol")).toBeInTheDocument()
     expect(screen.getByText("Prints")).toBeInTheDocument()

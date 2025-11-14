@@ -44,7 +44,7 @@ describe("AuctionArtworkFilter", () => {
           }
         }
       `,
-    }
+    },
   )
 
   it("renders correct components", () => {

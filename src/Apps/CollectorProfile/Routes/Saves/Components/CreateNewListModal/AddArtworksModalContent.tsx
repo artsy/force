@@ -66,7 +66,7 @@ export const AddArtworksModalContent: FC<
 
         setIsLoading(false)
       },
-      { sort: option }
+      { sort: option },
     )
   }
 
@@ -176,7 +176,7 @@ const AddArtworksModalContentPaginationContainer = createPaginationContainer(
         }
       }
     `,
-  }
+  },
 )
 
 export const AddArtworksModalContentQueryRender: FC<

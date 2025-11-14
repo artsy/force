@@ -7,19 +7,19 @@ const ShowApp = loadable(
   () => import(/* webpackChunkName: "showBundle" */ "./ShowApp"),
   {
     resolveComponent: component => component.ShowAppFragmentContainer,
-  }
+  },
 )
 const ShowSubApp = loadable(
   () => import(/* webpackChunkName: "showBundle" */ "./ShowSubApp"),
   {
     resolveComponent: component => component.ShowSubAppFragmentContainer,
-  }
+  },
 )
 const ShowInfoRoute = loadable(
   () => import(/* webpackChunkName: "showBundle" */ "./Routes/ShowInfo"),
   {
     resolveComponent: component => component.ShowInfoFragmentContainer,
-  }
+  },
 )
 
 export const showRoutes: RouteProps[] = [

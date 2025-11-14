@@ -12,7 +12,7 @@ interface SaleArtwork {
 
 export const lotIsClosed = (
   sale: LegacySale | Sale | null | undefined,
-  saleArtwork: SaleArtwork | null | undefined
+  saleArtwork: SaleArtwork | null | undefined,
 ): boolean => {
   // If there is no sale or saleArtwork, we can't determine if the lot is closed
   // so we return true to be safe.

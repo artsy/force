@@ -17,7 +17,7 @@ jest.mock(
   "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowArtist",
   () => ({
     ProgressiveOnboardingFollowArtist: ({ children }) => children,
-  })
+  }),
 )
 
 const mockUseTracking = useTracking as jest.Mock
@@ -113,7 +113,7 @@ describe("ArtistHeaderFragmentContainer", () => {
       })
 
       expect(
-        screen.getByText("Pablo Picasso was a Spanish painter and sculptor.")
+        screen.getByText("Pablo Picasso was a Spanish painter and sculptor."),
       ).toBeInTheDocument()
     })
 
@@ -128,7 +128,7 @@ describe("ArtistHeaderFragmentContainer", () => {
       })
 
       expect(
-        screen.getByText("This biography is provided by a gallery partner.")
+        screen.getByText("This biography is provided by a gallery partner."),
       ).toBeInTheDocument()
     })
 
@@ -183,7 +183,7 @@ describe("ArtistHeaderFragmentContainer", () => {
 
       // ReadMore component is present and processes the long text
       expect(
-        screen.getByText(/Pablo Picasso was a Spanish painter/)
+        screen.getByText(/Pablo Picasso was a Spanish painter/),
       ).toBeInTheDocument()
     })
 
@@ -200,8 +200,8 @@ describe("ArtistHeaderFragmentContainer", () => {
 
       expect(
         screen.getByText(
-          "Pablo Picasso was a Spanish painter and sculptor. Courtesy of the Museum of Modern Art"
-        )
+          "Pablo Picasso was a Spanish painter and sculptor. Courtesy of the Museum of Modern Art",
+        ),
       ).toBeInTheDocument()
     })
 
@@ -217,7 +217,7 @@ describe("ArtistHeaderFragmentContainer", () => {
       })
 
       expect(
-        screen.getByText("Pablo Picasso was a Spanish painter and sculptor.")
+        screen.getByText("Pablo Picasso was a Spanish painter and sculptor."),
       ).toBeInTheDocument()
     })
 
@@ -233,7 +233,7 @@ describe("ArtistHeaderFragmentContainer", () => {
       })
 
       expect(
-        screen.getByText("Pablo Picasso was a Spanish painter and sculptor.")
+        screen.getByText("Pablo Picasso was a Spanish painter and sculptor."),
       ).toBeInTheDocument()
     })
 
@@ -249,7 +249,7 @@ describe("ArtistHeaderFragmentContainer", () => {
       })
 
       expect(
-        screen.queryByText(/Courtesy of the Museum/)
+        screen.queryByText(/Courtesy of the Museum/),
       ).not.toBeInTheDocument()
     })
   })
@@ -273,12 +273,12 @@ describe("ArtistHeaderFragmentContainer", () => {
       })
 
       const image = screen.getByAltText(
-        "Les Demoiselles d'Avignon by Pablo Picasso"
+        "Les Demoiselles d'Avignon by Pablo Picasso",
       )
       expect(image).toBeInTheDocument()
       expect(image.closest("a")).toHaveAttribute(
         "href",
-        "/artwork/les-demoiselles-davignon"
+        "/artwork/les-demoiselles-davignon",
       )
     })
 
@@ -300,7 +300,7 @@ describe("ArtistHeaderFragmentContainer", () => {
       })
 
       expect(
-        screen.getByAltText("Artwork by Pablo Picasso")
+        screen.getByAltText("Artwork by Pablo Picasso"),
       ).toBeInTheDocument()
     })
 
@@ -382,7 +382,7 @@ describe("ArtistHeaderFragmentContainer", () => {
           context_module: "artistHeader",
           destination_page_owner_id: "partner-1",
           destination_page_owner_type: "partner",
-        })
+        }),
       )
     })
 
@@ -473,7 +473,7 @@ describe("ArtistHeaderFragmentContainer", () => {
       expect(cvLink).toBeInTheDocument()
       expect(cvLink.closest("a")).toHaveAttribute(
         "href",
-        "/artist/pablo-picasso/cv"
+        "/artist/pablo-picasso/cv",
       )
     })
   })

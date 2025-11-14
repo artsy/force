@@ -26,7 +26,7 @@ import { useState } from "react"
 const logger = createLogger("UpdateAddressForm")
 
 const getDeleteErrorMessage = (
-  backendError: string
+  backendError: string,
 ): { title: string; message: string } => {
   if (
     backendError.includes("Couldn't find Address") ||
@@ -44,7 +44,7 @@ interface UpdateAddressFormProps {
   address: ProcessedUserAddress
   onSaveAddress: (
     values: FormikContextWithAddress,
-    addressID: string
+    addressID: string,
   ) => Promise<void>
   onDeleteAddress?: (addressID: string) => Promise<void>
   defaultInitialValues?: FormikContextWithAddress
@@ -154,8 +154,8 @@ export const UpdateAddressForm = ({
     if (result.updateUserAddress?.userAddressOrErrors?.errors) {
       throw new Error(
         `Failed to update address: ${JSON.stringify(
-          result.updateUserAddress.userAddressOrErrors.errors
-        )}`
+          result.updateUserAddress.userAddressOrErrors.errors,
+        )}`,
       )
     }
 

@@ -25,7 +25,7 @@ describe("useInitialLocationValues", () => {
     })
 
     const { result } = renderHook(() =>
-      useInitialLocationValues(mockCountryOptions)
+      useInitialLocationValues(mockCountryOptions),
     )
     expect(result.current).toEqual({})
   })
@@ -37,7 +37,7 @@ describe("useInitialLocationValues", () => {
     })
 
     const { result } = renderHook(() =>
-      useInitialLocationValues(mockCountryOptions)
+      useInitialLocationValues(mockCountryOptions),
     )
     expect(result.current).toEqual({})
   })
@@ -49,7 +49,7 @@ describe("useInitialLocationValues", () => {
     })
 
     const { result } = renderHook(() =>
-      useInitialLocationValues(mockCountryOptions)
+      useInitialLocationValues(mockCountryOptions),
     )
     expect(result.current).toEqual({
       selectedCountry: "US",
@@ -64,7 +64,7 @@ describe("useInitialLocationValues", () => {
     })
 
     const { result } = renderHook(() =>
-      useInitialLocationValues(mockCountryOptions)
+      useInitialLocationValues(mockCountryOptions),
     )
     expect(result.current).toEqual({
       selectedCountry: "CA",
@@ -79,7 +79,7 @@ describe("useInitialLocationValues", () => {
     })
 
     const { result } = renderHook(() =>
-      useInitialLocationValues(mockCountryOptions)
+      useInitialLocationValues(mockCountryOptions),
     )
     expect(result.current).toEqual({
       selectedCountry: "US",

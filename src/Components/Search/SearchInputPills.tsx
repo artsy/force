@@ -98,7 +98,7 @@ const SearchInputPills: FC<React.PropsWithChildren<SearchInputPillsProps>> = ({
     if (pillsRef.current) {
       const pillsContainer = pillsRef.current
       setShowNextChevron(
-        pillsContainer.scrollWidth > pillsContainer.clientWidth
+        pillsContainer.scrollWidth > pillsContainer.clientWidth,
       )
     }
   }
@@ -139,7 +139,7 @@ const SearchInputPills: FC<React.PropsWithChildren<SearchInputPillsProps>> = ({
     const currentPill = sortedPills.find((pill: HTMLElement) =>
       direction === "left"
         ? pill.offsetLeft + pill.offsetWidth <= currentScroll + visibleWidth
-        : pill.offsetLeft >= currentScroll
+        : pill.offsetLeft >= currentScroll,
     )
 
     if (currentPill) {
@@ -249,5 +249,5 @@ export const SearchInputPillsFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

@@ -46,7 +46,7 @@ const ShowArtworksFilter: React.FC<
       sort: "partner_show_position",
       ...(match && match.location.query),
     },
-    "from_show_guide" // TODO: Investigate if we need this param.
+    "from_show_guide", // TODO: Investigate if we need this param.
   )
 
   return (
@@ -128,7 +128,7 @@ export const ShowArtworksRefetchContainer = createRefetchContainer(
         ...ShowArtworks_show @arguments(input: $input)
       }
     }
-  `
+  `,
 )
 
 type ShowArtworkFilterQueryRendererProps = {}

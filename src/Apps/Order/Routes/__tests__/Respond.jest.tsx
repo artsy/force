@@ -82,7 +82,7 @@ class RespondTestPageRTL extends OrderAppTestPageRTL {
     // Look for elements that might contain offer history
     const byTestId = screen.queryAllByTestId("offerHistoryItem")
     const byClass = Array.from(
-      document.querySelectorAll("[class*='OfferHistory']")
+      document.querySelectorAll("[class*='OfferHistory']"),
     )
     const byText = screen.queryAllByText(/You.*Seller/i)
 
@@ -104,7 +104,7 @@ class RespondTestPageRTL extends OrderAppTestPageRTL {
       btn =>
         btn.textContent?.includes("history") ||
         btn.textContent?.includes("Show") ||
-        btn.getAttribute("data-testid")?.includes("history")
+        btn.getAttribute("data-testid")?.includes("history"),
     )
     return historyButton || buttons[0] // fallback to first button
   }
@@ -194,15 +194,15 @@ describe("The respond page", () => {
       expect(page.text()).toMatch(/offer|price|amount/i)
       expect(page.orderStepper.text()).toMatchInlineSnapshot(`"RespondReview"`)
       expect(page.orderStepperCurrentStep || "Respond").toMatch(
-        /Respond|Review/
+        /Respond|Review/,
       )
       expect(page.text()).not.toContain("Your note")
       expect(page.transactionSummary.text()).toMatch("Seller's offerUS$14,000")
       expect(page.artworkSummary.text()).toMatch(
-        "Lisa BreslowGramercy Park South"
+        "Lisa BreslowGramercy Park South",
       )
       expect(page.shippingSummary.text()).toMatch(
-        "Ship toJoelle Van Dyne401 Broadway"
+        "Ship toJoelle Van Dyne401 Broadway",
       )
       expect(page.paymentSummary.text()).toContain("•••• 4444")
       expect(page.paymentSummary.text()).toContain("Exp 03/21")
@@ -222,13 +222,13 @@ describe("The respond page", () => {
       })
 
       expect(
-        radioTexts.some(text => text.includes("Accept seller's offer"))
+        radioTexts.some(text => text.includes("Accept seller's offer")),
       ).toBe(true)
       expect(radioTexts.some(text => text.includes("Send counteroffer"))).toBe(
-        true
+        true,
       )
       expect(
-        radioTexts.some(text => text.includes("Decline seller's offer"))
+        radioTexts.some(text => text.includes("Decline seller's offer")),
       ).toBe(true)
 
       const offerNote = screen.queryAllByTestId("offerNote")
@@ -251,7 +251,7 @@ describe("The respond page", () => {
       const page = new RespondTestPageRTL()
 
       expect(page.showOfferHistoryButton.textContent || "").toMatch(
-        /Show|history|offer/i
+        /Show|history|offer/i,
       )
 
       page.showOfferHistoryButton.click()
@@ -294,7 +294,7 @@ describe("The respond page", () => {
       await page.clickSubmit()
 
       expect(pushMock).toHaveBeenCalledWith(
-        `/orders/${testOrder.internalID}/review/accept`
+        `/orders/${testOrder.internalID}/review/accept`,
       )
     })
 
@@ -308,7 +308,7 @@ describe("The respond page", () => {
       await page.clickSubmit()
 
       expect(pushMock).toHaveBeenCalledWith(
-        `/orders/${testOrder.internalID}/review/decline`
+        `/orders/${testOrder.internalID}/review/decline`,
       )
     })
 
@@ -371,7 +371,7 @@ describe("The respond page", () => {
                 note: "",
               },
             },
-          })
+          }),
         )
         expect(pushMock).toHaveBeenCalledWith("/orders/2939023/review/counter")
       })
@@ -398,7 +398,7 @@ describe("The respond page", () => {
                 note: "",
               },
             },
-          })
+          }),
         )
         expect(pushMock).toHaveBeenCalledWith("/orders/2939023/review/counter")
       })
@@ -501,10 +501,10 @@ describe("The respond page", () => {
           expect.objectContaining({
             title: "Offer higher than seller's offer",
             message: expect.stringContaining(
-              "making an offer higher than the seller"
+              "making an offer higher than the seller",
             ),
             continueButtonText: "OK",
-          })
+          }),
         )
 
         expect(mockCommitMutation).not.toHaveBeenCalled()

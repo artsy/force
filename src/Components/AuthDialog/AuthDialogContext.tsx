@@ -186,7 +186,7 @@ export const AuthDialogProvider: FC<
         },
       })
     },
-    [isLoggedIn, sendToast]
+    [isLoggedIn, sendToast],
   )
 
   return (

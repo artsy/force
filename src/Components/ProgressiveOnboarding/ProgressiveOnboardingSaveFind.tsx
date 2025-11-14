@@ -54,5 +54,5 @@ export const __ProgressiveOnboardingSaveFind__: FC<
 }
 
 export const ProgressiveOnboardingSaveFind = withProgressiveOnboardingCounts(
-  __ProgressiveOnboardingSaveFind__
+  __ProgressiveOnboardingSaveFind__,
 )

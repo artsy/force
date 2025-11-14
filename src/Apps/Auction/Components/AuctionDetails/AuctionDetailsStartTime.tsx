@@ -37,7 +37,7 @@ const AuctionDetailsStartTimeFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 const AuctionDetailsStartTimePlaceholder: FC<

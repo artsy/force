@@ -7,28 +7,28 @@ const PartnerApp = loadable(
   () => import(/* webpackChunkName: "partnerBundle" */ "./PartnerApp"),
   {
     resolveComponent: component => component.PartnerAppFragmentContainer,
-  }
+  },
 )
 
 const ArticlesRoute = loadable(
   () => import(/* webpackChunkName: "partnerBundle" */ "./Routes/Articles"),
   {
     resolveComponent: component => component.ArticlesPaginationContainer,
-  }
+  },
 )
 
 const OverviewRoute = loadable(
   () => import(/* webpackChunkName: "partnerBundle" */ "./Routes/Overview"),
   {
     resolveComponent: component => component.OverviewFragmentContainer,
-  }
+  },
 )
 
 const ShowsRoute = loadable(
   () => import(/* webpackChunkName: "partnerBundle" */ "./Routes/Shows"),
   {
     resolveComponent: component => component.ShowsFragmentContainer,
-  }
+  },
 )
 
 const ViewingRoomsRoute = loadable(
@@ -39,28 +39,28 @@ const ViewingRoomsRoute = loadable(
   {
     resolveComponent: component =>
       component.PartnerViewingRoomsFragmentContainer,
-  }
+  },
 )
 
 const WorksRoute = loadable(
   () => import(/* webpackChunkName: "partnerBundle" */ "./Routes/Works"),
   {
     resolveComponent: component => component.PartnerArtworksQueryRenderer,
-  }
+  },
 )
 
 const ArtistsRoute = loadable(
   () => import(/* webpackChunkName: "partnerBundle" */ "./Routes/Artists"),
   {
     resolveComponent: component => component.ArtistsRouteFragmentContainer,
-  }
+  },
 )
 
 const ContactRoute = loadable(
   () => import(/* webpackChunkName: "partnerBundle" */ "./Routes/Contact"),
   {
     resolveComponent: component => component.ContactRouteFragmentContainer,
-  }
+  },
 )
 
 export const partnerRoutes: RouteProps[] = [
@@ -123,7 +123,7 @@ export const partnerRoutes: RouteProps[] = [
         render: props => {
           throw new RedirectException(
             `/partner/${props.match.params.partnerId}`,
-            302
+            302,
           )
         },
       },
@@ -161,7 +161,7 @@ export const partnerRoutes: RouteProps[] = [
           if (!displayableShows) {
             throw new RedirectException(
               `/partner/${match.params.partnerId}`,
-              302
+              302,
             )
           }
 
@@ -224,7 +224,7 @@ export const partnerRoutes: RouteProps[] = [
           if (!displayWorksSection || eligibleArtworks <= 0) {
             throw new RedirectException(
               `/partner/${match.params.partnerId}`,
-              302
+              302,
             )
           }
 
@@ -237,7 +237,7 @@ export const partnerRoutes: RouteProps[] = [
           // Legacy path: redirect to hash-based anchor
           throw new RedirectException(
             `/partner/${match.params.partnerId}/artists#${match.params.artistId}`,
-            301
+            301,
           )
         },
       },
@@ -276,7 +276,7 @@ export const partnerRoutes: RouteProps[] = [
           if (!(displayArtistsSection && artists && artists.totalCount > 0)) {
             throw new RedirectException(
               `/partner/${match.params.partnerId}`,
-              302
+              302,
             )
           }
 
@@ -324,7 +324,7 @@ export const partnerRoutes: RouteProps[] = [
           if (!totalCount) {
             throw new RedirectException(
               `/partner/${match.params.partnerId}`,
-              302
+              302,
             )
           }
 
@@ -361,7 +361,7 @@ export const partnerRoutes: RouteProps[] = [
           if (!partner.locations || partner.locations.totalCount === 0) {
             throw new RedirectException(
               `/partner/${match.params.partnerId}`,
-              302
+              302,
             )
           }
 

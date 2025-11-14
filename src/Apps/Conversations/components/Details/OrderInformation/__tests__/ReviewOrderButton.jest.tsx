@@ -217,7 +217,7 @@ describe("ReviewOrderButton", () => {
 
     expect(screen.getByRole("link")).toHaveAttribute(
       "href",
-      "/orders/mocked-order-id/details"
+      "/orders/mocked-order-id/details",
     )
   })
 })

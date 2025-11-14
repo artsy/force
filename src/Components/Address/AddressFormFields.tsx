@@ -90,7 +90,7 @@ export const addressFormFieldsValidator = (args: Props = {}) => ({
  *
  */
 export const AddressFormFields = <V extends FormikContextWithAddress>(
-  props: Props
+  props: Props,
 ) => {
   const {
     handleChange,
@@ -107,7 +107,7 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
 
   const countryInputOptions = useMemo(() => {
     return sortCountriesForCountryInput(
-      shippableCountries || countryPhoneOptions
+      shippableCountries || countryPhoneOptions,
     )
   }, [shippableCountries])
 

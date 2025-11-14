@@ -8,7 +8,7 @@ const UserApp = loadable(
   {
     resolveComponent: component =>
       component.UserCollectionRouteFragmentContainer,
-  }
+  },
 )
 
 export const userRoutes: RouteProps[] = [

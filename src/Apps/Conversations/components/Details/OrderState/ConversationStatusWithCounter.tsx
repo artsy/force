@@ -21,7 +21,7 @@ export const ConversationStatusWithCounter: React.FC<
         formattedStateExpiresAt: stateExpiresAt(format: "MMM D, h:mm A zz")
       }
     `,
-    order
+    order,
   )
 
   if (!data) {

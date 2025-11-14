@@ -18,7 +18,7 @@ export const CommaList: FC<CommaListProps> = ({
 }) => {
   const items = useMemo(() => {
     return Children.toArray(children).filter(
-      child => isValidElement(child) || typeof child === "string"
+      child => isValidElement(child) || typeof child === "string",
     )
   }, [children])
 

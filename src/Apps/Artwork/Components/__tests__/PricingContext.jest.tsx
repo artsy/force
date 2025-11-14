@@ -104,10 +104,10 @@ describe("PricingContext", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText("Browse works in this category")
+        screen.getByText("Browse works in this category"),
       ).toBeInTheDocument()
       expect(
-        screen.getByText("Price ranges of small mocks by David Sheldrick")
+        screen.getByText("Price ranges of small mocks by David Sheldrick"),
       ).toBeInTheDocument()
     })
   })
@@ -122,7 +122,7 @@ describe("PricingContext", () => {
 
     await waitFor(() => {
       expect(
-        screen.queryByText("Price ranges of small mocks by David Sheldrick")
+        screen.queryByText("Price ranges of small mocks by David Sheldrick"),
       ).not.toBeInTheDocument()
     })
   })
@@ -145,8 +145,8 @@ describe("PricingContext", () => {
 
     expect(
       screen.getByText(
-        /This feature aims to provide insight into the range of prices/
-      )
+        /This feature aims to provide insight into the range of prices/,
+      ),
     ).toBeInTheDocument()
   })
 
@@ -313,7 +313,7 @@ describe("PricingContext", () => {
           Artwork: () => mockArtwork,
         },
         {},
-        env
+        env,
       )
 
       await waitFor(() => {
@@ -353,7 +353,7 @@ describe("PricingContext", () => {
 
       await waitFor(() => {
         expect(
-          screen.getByText("Browse works in this category")
+          screen.getByText("Browse works in this category"),
         ).toBeInTheDocument()
       })
 

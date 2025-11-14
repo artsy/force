@@ -9,7 +9,7 @@ import createLogger from "Utils/logger"
 import type { CommerceSetShippingInput } from "__generated__/useSaveFulfillmentDetailsMutation.graphql"
 
 const logger = createLogger(
-  "Order/Routes/Shipping/Hooks/useHandleSaveFulfillmentDetails"
+  "Order/Routes/Shipping/Hooks/useHandleSaveFulfillmentDetails",
 )
 
 type ExchangeOrGravityError =
@@ -26,7 +26,7 @@ export const useHandleSaveFulfillmentDetails = () => {
   const orderTracking = useOrderTracking()
 
   const handleSaveFulfillmentDetails = async (
-    values: FulfillmentValues
+    values: FulfillmentValues,
   ): Promise<
     | {
         error: ExchangeOrGravityError
@@ -67,7 +67,7 @@ export const useHandleSaveFulfillmentDetails = () => {
       } else {
         requiresArtsyShippingToDestination =
           shippingContext.orderData.requiresArtsyShippingTo(
-            values.attributes.country
+            values.attributes.country,
           )
 
         const { phoneNumber, ...addressValues } = values.attributes
@@ -101,14 +101,14 @@ export const useHandleSaveFulfillmentDetails = () => {
         case "CommerceOrderWithMutationFailure":
           shippingContext.actions.handleExchangeError(
             orderOrError.error,
-            logger
+            logger,
           )
           return { error: orderOrError.error }
         default:
           logger.error("Unexpected mutation result", orderOrError)
           return {
             error: new Error(
-              `Unexpected mutation result: ${orderOrError?.__typename}`
+              `Unexpected mutation result: ${orderOrError?.__typename}`,
             ),
           }
       }

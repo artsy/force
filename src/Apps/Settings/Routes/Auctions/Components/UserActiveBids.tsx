@@ -62,5 +62,5 @@ export const UserActiveBidsFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

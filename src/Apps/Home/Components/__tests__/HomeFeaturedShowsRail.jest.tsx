@@ -48,7 +48,7 @@ describe("HomeFeaturedShowsRail", () => {
     expect(screen.getByText("June 9 – 25 — Opening Soon")).toBeInTheDocument()
     expect(screen.getAllByRole("link")[2]).toHaveAttribute(
       "href",
-      "/show/partner-show"
+      "/show/partner-show",
     )
   })
 

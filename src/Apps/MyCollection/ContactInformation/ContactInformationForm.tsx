@@ -83,5 +83,5 @@ export const ContactInformationFormFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

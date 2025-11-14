@@ -69,7 +69,7 @@ export const MyCollectionEditArtwork: React.FC<
               description: "Couldn't remove all images.",
             })
           }
-        })
+        }),
       )
 
       // Store images locally and start from the end because
@@ -200,5 +200,5 @@ export const MyCollectionEditArtworkFragmentContainer = createFragmentContainer(
         ...MyCollectionArtworkFormMain_artwork
       }
     `,
-  }
+  },
 )

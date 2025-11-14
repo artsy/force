@@ -92,5 +92,5 @@ export const CategoryRailFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

@@ -182,5 +182,5 @@ export const ArtistsIndexFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

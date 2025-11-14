@@ -26,7 +26,7 @@ export const AttributionClassFilter: React.FC<
   const { attributionClass = [] } = useCurrentlySelectedFilters()
 
   const filtersCount = useFilterLabelCountByKey(
-    SelectedFiltersCountsLabels.attributionClass
+    SelectedFiltersCountsLabels.attributionClass,
   )
   const label = `Rarity${filtersCount}`
 

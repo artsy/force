@@ -23,7 +23,7 @@ export const WorksForYouFeed: React.FC<
   const [loading, setLoading] = useState(false)
 
   const artworks = extractNodes(
-    viewer.me?.followsAndSaves?.bundledArtworksByArtistConnection
+    viewer.me?.followsAndSaves?.bundledArtworksByArtistConnection,
   )
 
   const loadMore = () => {
@@ -151,5 +151,5 @@ export const WorksForYouFeedPaginationContainer = createPaginationContainer(
         }
       }
     `,
-  }
+  },
 )

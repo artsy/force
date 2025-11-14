@@ -163,5 +163,5 @@ export const DeleteAccountRouteFragmentContainer = createFragmentContainer(
         hasPassword
       }
     `,
-  }
+  },
 )

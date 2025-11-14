@@ -33,7 +33,7 @@ describe.skip("OtherCollectionEntity", () => {
         path="/collection/slug"
       >
         <OtherCollectionEntity {...passedProps} />
-      </AnalyticsCombinedContextProvider>
+      </AnalyticsCombinedContextProvider>,
     )
   }
 
@@ -46,14 +46,14 @@ describe.skip("OtherCollectionEntity", () => {
     expect(image).toHaveAttribute(
       "src",
       expect.stringContaining(
-        "posters_thumbnail.png&width=60&height=60&quality=80&convert_to=jpg"
-      )
+        "posters_thumbnail.png&width=60&height=60&quality=80&convert_to=jpg",
+      ),
     )
 
     const link = screen.getByRole("link")
     expect(link).toHaveAttribute(
       "href",
-      expect.stringContaining("artist-poster")
+      expect.stringContaining("artist-poster"),
     )
   })
 

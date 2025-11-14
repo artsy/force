@@ -130,7 +130,7 @@ describe("NotificationPreferences", () => {
         await flushPromiseQueue()
 
         expect(
-          screen.queryByText("Change your email preferences")
+          screen.queryByText("Change your email preferences"),
         ).toBeInTheDocument()
 
         const checkboxes = screen.getAllByRole("checkbox")
@@ -139,7 +139,7 @@ describe("NotificationPreferences", () => {
         fireEvent.click(checkboxes[0])
 
         expect(
-          screen.queryByText("Change your email preferences")
+          screen.queryByText("Change your email preferences"),
         ).not.toBeInTheDocument()
       })
     })
@@ -241,7 +241,7 @@ describe("NotificationPreferences", () => {
         await flushPromiseQueue()
 
         expect(
-          screen.queryByText("Change your email preferences")
+          screen.queryByText("Change your email preferences"),
         ).toBeInTheDocument()
 
         const checkboxes = screen.getAllByRole("checkbox")
@@ -252,7 +252,7 @@ describe("NotificationPreferences", () => {
         await flushPromiseQueue()
 
         expect(
-          screen.queryByText("Change your email preferences")
+          screen.queryByText("Change your email preferences"),
         ).not.toBeInTheDocument()
       })
     })

@@ -17,7 +17,7 @@ describe("SizeFilter", () => {
     return render(
       <AuctionResultsFilterContextProvider>
         <SizeFilterTest />
-      </AuctionResultsFilterContextProvider>
+      </AuctionResultsFilterContextProvider>,
     )
   }
 

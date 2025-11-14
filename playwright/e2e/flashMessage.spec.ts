@@ -8,7 +8,7 @@ test.describe.skip("flash_message", () => {
     await page.goto("/?flash_message=confirmed")
 
     await expect(page.locator("[data-test='flashMessage']")).toContainText(
-      "Your email has been confirmed"
+      "Your email has been confirmed",
     )
   })
 
@@ -18,7 +18,7 @@ test.describe.skip("flash_message", () => {
     await page.goto("/?flash_message=l33thaxor")
 
     await expect(page.locator("[data-test='flashMessage']")).not.toContainText(
-      "l33thaxor"
+      "l33thaxor",
     )
   })
 })

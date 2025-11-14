@@ -94,5 +94,5 @@ export const ArtistsCarouselCellFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

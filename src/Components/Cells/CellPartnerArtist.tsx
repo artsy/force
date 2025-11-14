@@ -109,5 +109,5 @@ export const CellPartnerArtistFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

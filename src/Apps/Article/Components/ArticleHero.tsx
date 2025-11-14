@@ -305,7 +305,7 @@ export const ArticleHeroFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 const Embed = styled.div`

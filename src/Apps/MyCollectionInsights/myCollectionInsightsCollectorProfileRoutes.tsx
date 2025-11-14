@@ -14,7 +14,7 @@ const MyCollectionInsightsMedianSalePriceAtAuction = loadable(
   {
     resolveComponent: component =>
       component.MyCollectionInsightsMedianSalePriceAtAuction,
-  }
+  },
 )
 
 export const myCollectionInsightsCollectorProfileRoutes: RouteProps[] = [

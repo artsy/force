@@ -12,7 +12,7 @@ export const ViewingRoomStructuredData: React.FC<
 > = props => {
   const viewingRoom = useFragment(
     VIEWING_ROOM_STRUCTURD_DATA_FRAGMENT,
-    props.viewingRoom
+    props.viewingRoom,
   )
 
   const url = `${getENV("APP_URL")}${viewingRoom.href}`

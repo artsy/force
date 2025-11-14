@@ -58,7 +58,7 @@ export const Order2ExpressCheckout: React.FC<Order2ExpressCheckoutProps> = ({
 
   if (!sellerStripeAccountId) {
     logger.error(
-      "No seller's Stripe account found. Cannot proceed with Express Checkout."
+      "No seller's Stripe account found. Cannot proceed with Express Checkout.",
     )
     return null
   }

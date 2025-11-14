@@ -178,7 +178,7 @@ export const ArtworkRelatedArtistsPaginationContainer =
           }
         }
       `,
-    }
+    },
   )
 
 const PLACEHOLDER = (

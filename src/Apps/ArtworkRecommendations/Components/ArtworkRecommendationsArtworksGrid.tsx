@@ -18,7 +18,7 @@ export const ArtworkRecommendationsArtworksGrid: FC<
   const { match } = useRouter()
   const { data, loadNext, hasNext, isLoadingNext } = usePaginationFragment(
     FRAGMENT,
-    me
+    me,
   )
 
   const layout = (

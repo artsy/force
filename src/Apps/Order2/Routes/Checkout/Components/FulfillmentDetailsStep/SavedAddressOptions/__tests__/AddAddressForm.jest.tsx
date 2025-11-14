@@ -7,10 +7,10 @@ import userEvent from "@testing-library/user-event"
 import { AddAddressForm } from "../AddAddressForm"
 
 jest.mock(
-  "Apps/Order2/Routes/Checkout/Mutations/useOrder2CreateUserAddressMutation"
+  "Apps/Order2/Routes/Checkout/Mutations/useOrder2CreateUserAddressMutation",
 )
 jest.mock(
-  "Apps/Order2/Routes/Checkout/Mutations/useOrder2UpdateUserDefaultAddressMutation"
+  "Apps/Order2/Routes/Checkout/Mutations/useOrder2UpdateUserDefaultAddressMutation",
 )
 jest.mock("Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext")
 jest.mock("Utils/logger")
@@ -100,18 +100,18 @@ describe("AddAddressForm", () => {
     // Fill out the form
     await userEvent.type(
       screen.getByPlaceholderText("Add full name"),
-      "Jane Smith"
+      "Jane Smith",
     )
     await userEvent.type(screen.getByLabelText("Street address"), "456 Oak Ave")
     await userEvent.type(screen.getByLabelText("City"), "Los Angeles")
     await userEvent.type(
       screen.getByLabelText("State, region or province"),
-      "CA"
+      "CA",
     )
     await userEvent.type(screen.getByLabelText("ZIP/Postal code"), "90210")
     await userEvent.type(
       screen.getByTestId("addressFormFields.phoneNumber"),
-      "5559876543"
+      "5559876543",
     )
 
     // Verify setAsDefault is unchecked (default)
@@ -153,7 +153,7 @@ describe("AddAddressForm", () => {
         }),
         setAsDefault: false,
       }),
-      "new-address-id"
+      "new-address-id",
     )
   })
 
@@ -181,18 +181,18 @@ describe("AddAddressForm", () => {
     // Fill out the form
     await userEvent.type(
       screen.getByPlaceholderText("Add full name"),
-      "Jane Smith"
+      "Jane Smith",
     )
     await userEvent.type(screen.getByLabelText("Street address"), "456 Oak Ave")
     await userEvent.type(screen.getByLabelText("City"), "Los Angeles")
     await userEvent.type(
       screen.getByLabelText("State, region or province"),
-      "CA"
+      "CA",
     )
     await userEvent.type(screen.getByLabelText("ZIP/Postal code"), "90210")
     await userEvent.type(
       screen.getByTestId("addressFormFields.phoneNumber"),
-      "5559876543"
+      "5559876543",
     )
 
     // Check the setAsDefault checkbox
@@ -244,7 +244,7 @@ describe("AddAddressForm", () => {
         }),
         setAsDefault: true,
       }),
-      "new-address-id"
+      "new-address-id",
     )
   })
 
@@ -288,18 +288,18 @@ describe("AddAddressForm", () => {
     // Fill out the form
     await userEvent.type(
       screen.getByPlaceholderText("Add full name"),
-      "Jane Smith"
+      "Jane Smith",
     )
     await userEvent.type(screen.getByLabelText("Street address"), "456 Oak Ave")
     await userEvent.type(screen.getByLabelText("City"), "Los Angeles")
     await userEvent.type(
       screen.getByLabelText("State, region or province"),
-      "CA"
+      "CA",
     )
     await userEvent.type(screen.getByLabelText("ZIP/Postal code"), "90210")
     await userEvent.type(
       screen.getByTestId("addressFormFields.phoneNumber"),
-      "5559876543"
+      "5559876543",
     )
 
     // Submit the form

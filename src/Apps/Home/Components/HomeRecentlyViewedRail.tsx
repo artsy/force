@@ -105,7 +105,7 @@ export const HomeRecentlyViewedRailFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 export const HomeRecentlyViewedRailQueryRenderer: React.FC<

@@ -43,7 +43,7 @@ describe("useSocialAuthTracking", () => {
         analytics: {
           contextModule: "header",
         },
-      })
+      }),
     )
 
     renderHook(useSocialAuthTracking)
@@ -63,7 +63,7 @@ describe("useSocialAuthTracking", () => {
     mockCookiesExpire.mockImplementation(jest.fn())
 
     mockCookiesGet.mockImplementation(() =>
-      JSON.stringify({ action: "invalid" })
+      JSON.stringify({ action: "invalid" }),
     )
 
     renderHook(useSocialAuthTracking)
@@ -84,7 +84,7 @@ describe("useSocialAuthTracking", () => {
         analytics: {
           contextModule: "header",
         },
-      })
+      }),
     )
 
     mockUseRouter.mockImplementation(() => ({

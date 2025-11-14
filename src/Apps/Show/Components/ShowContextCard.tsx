@@ -121,8 +121,8 @@ const PartnerInfo: React.FC<
             NonNullable<Props["show"]["partner"]>["artworksConnection"]
           >["edges"]
         >[0]
-      >) => node?.image?.url
-    )
+      >) => node?.image?.url,
+    ),
   )
 
   const images = imageUrls.map((url, i) => {
@@ -134,7 +134,7 @@ const PartnerInfo: React.FC<
     const locationNames = limitWithCount(
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       filterLocations(partner?.locations),
-      2
+      2,
     ).join(", ")
     return locationNames
   })()
@@ -216,5 +216,5 @@ export const ShowContextCardFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

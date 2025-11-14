@@ -36,21 +36,21 @@ jest.mock(
   "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowFind",
   () => ({
     ProgressiveOnboardingFollowFind: ({ children }) => children,
-  })
+  }),
 )
 
 jest.mock(
   "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveFind",
   () => ({
     ProgressiveOnboardingSaveFind: ({ children }) => children,
-  })
+  }),
 )
 
 jest.mock(
   "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertFind",
   () => ({
     ProgressiveOnboardingAlertFind: ({ children }) => children,
-  })
+  }),
 )
 
 describe("NavBar", () => {
@@ -60,7 +60,7 @@ describe("NavBar", () => {
     return render(
       <SystemContextProvider user={user} isEigen={isEigen}>
         <NavBar />
-      </SystemContextProvider>
+      </SystemContextProvider>,
     )
   }
 
@@ -95,7 +95,7 @@ describe("NavBar", () => {
 
       expect(screen.getAllByLabelText("Conversations")).toHaveLength(1)
       expect(
-        screen.getAllByLabelText("Notifications").length
+        screen.getAllByLabelText("Notifications").length,
       ).toBeGreaterThanOrEqual(1)
     })
 

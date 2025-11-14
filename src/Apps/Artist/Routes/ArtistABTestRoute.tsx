@@ -81,7 +81,7 @@ export const ArtistABTestRouteFragmentContainer = createFragmentContainer(
         slug
       }
     `,
-  }
+  },
 )
 
 const ArtistABTestRouteControl: FC<

@@ -4,7 +4,7 @@ test.describe("/terms", () => {
   test("renders a markdown page of terms and conditions", async ({ page }) => {
     await page.goto("/terms")
     await expect(
-      page.getByText("These General Terms and Conditions of Sale")
+      page.getByText("These General Terms and Conditions of Sale"),
     ).toBeVisible()
   })
 })
@@ -18,7 +18,7 @@ test.describe("mobile", () => {
     }) => {
       await page.goto("/terms")
       await expect(
-        page.getByText("These General Terms and Conditions of Sale")
+        page.getByText("These General Terms and Conditions of Sale"),
       ).toBeVisible()
     })
   })

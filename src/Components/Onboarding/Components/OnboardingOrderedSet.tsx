@@ -103,7 +103,7 @@ export const OnboardingOrderedSetFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 const PLACEHOLDER = (

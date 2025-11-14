@@ -25,12 +25,12 @@ describe("OfferNote", () => {
   })
 
   const renderComponent = (
-    props: Partial<ExtractProps<typeof OfferNote>> = {}
+    props: Partial<ExtractProps<typeof OfferNote>> = {},
   ) => {
     return render(
       <SystemContextProvider>
         <OfferNote onChange={onChange} artworkId="artwork-id" {...props} />
-      </SystemContextProvider>
+      </SystemContextProvider>,
     )
   }
 
@@ -50,8 +50,8 @@ describe("OfferNote", () => {
     expect(screen.getByText("Note (recommended)")).toBeInTheDocument()
     expect(
       screen.getByText(
-        "Add additional information to help the gallery to evaluate your offer."
-      )
+        "Add additional information to help the gallery to evaluate your offer.",
+      ),
     ).toBeInTheDocument()
   })
 })

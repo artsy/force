@@ -112,7 +112,7 @@ describe("ShowContextualLink", () => {
       expect(screen.getByText("Presented by")).toBeInTheDocument()
       expect(screen.getByText("Catty Gallery")).toBeInTheDocument()
       expect(
-        screen.queryByText("123 Art Street, New York")
+        screen.queryByText("123 Art Street, New York"),
       ).not.toBeInTheDocument()
     })
 
@@ -129,7 +129,7 @@ describe("ShowContextualLink", () => {
       expect(screen.getByText("Part of")).toBeInTheDocument()
       expect(screen.getByText("Art Fair")).toBeInTheDocument()
       expect(
-        screen.queryByText("123 Art Street, New York")
+        screen.queryByText("123 Art Street, New York"),
       ).not.toBeInTheDocument()
     })
   })

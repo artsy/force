@@ -44,7 +44,7 @@ type LocalBusinessPlace = {
 }
 
 const computeOptionalSchemaData = (
-  location: LocalBusinessProps["partnerData"]["profile"]["locations"][0]
+  location: LocalBusinessProps["partnerData"]["profile"]["locations"][0],
 ) => {
   const address: LocalBusinessAddress = {
     "@type": "PostalAddress",

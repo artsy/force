@@ -75,5 +75,5 @@ export const CollectorProfileAppFragmentContainer = createFragmentContainer(
         name
       }
     `,
-  }
+  },
 )

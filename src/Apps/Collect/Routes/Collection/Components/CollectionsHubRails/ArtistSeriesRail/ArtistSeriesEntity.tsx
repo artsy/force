@@ -151,7 +151,7 @@ export const ArtistSeriesRailContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 const tracks = {

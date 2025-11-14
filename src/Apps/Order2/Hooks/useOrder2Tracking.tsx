@@ -18,7 +18,7 @@ import { useTracking } from "react-tracking"
 
 export const useOrder2Tracking = (
   source: "PARTNER_OFFER" | unknown,
-  mode: "BUY" | "OFFER" | unknown
+  mode: "BUY" | "OFFER" | unknown,
 ) => {
   const { trackEvent } = useTracking()
 
@@ -98,7 +98,7 @@ export const useOrder2Tracking = (
       },
       orderDetailsViewed: (
         contextModule: ContextModule,
-        messageType: DisplayTextsMessageTypeEnum
+        messageType: DisplayTextsMessageTypeEnum,
       ) => {
         const payload: OrderDetailsViewed = {
           action: ActionType.orderDetailsViewed,

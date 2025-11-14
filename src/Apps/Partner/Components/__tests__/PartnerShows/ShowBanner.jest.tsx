@@ -54,18 +54,18 @@ describe("ShowBanner", () => {
     links.forEach(link => {
       expect(link).toHaveAttribute(
         "href",
-        "/show/white-cube-ellen-altfest-nature"
+        "/show/white-cube-ellen-altfest-nature",
       )
     })
 
     const image = screen.getByRole("img")
     expect(image).toHaveAttribute(
       "src",
-      "https://d7hftxdivxxvm.cloudfront.net?example-1.jpg"
+      "https://d7hftxdivxxvm.cloudfront.net?example-1.jpg",
     )
     expect(image).toHaveAttribute(
       "srcSet",
-      "https://d7hftxdivxxvm.cloudfront.net?example-2.jpg"
+      "https://d7hftxdivxxvm.cloudfront.net?example-2.jpg",
     )
     expect(image).toHaveAttribute("alt", "Ellen Altfest | Nature")
 
@@ -119,6 +119,6 @@ describe("ShowBanner", () => {
       })
 
       expect(screen.getByText(result)).toBeInTheDocument()
-    }
+    },
   )
 })

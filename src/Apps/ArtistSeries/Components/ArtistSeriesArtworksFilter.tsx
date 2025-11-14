@@ -106,7 +106,7 @@ const ArtistSeriesArtworksFilter: React.FC<
 export const ArtistSeriesArtworksFilterRefetchContainer =
   createRefetchContainer(
     withRouter<ArtistSeriesArtworksFilterProps & RouterState>(
-      ArtistSeriesArtworksFilter
+      ArtistSeriesArtworksFilter,
     ),
     {
       artistSeries: graphql`
@@ -156,7 +156,7 @@ export const ArtistSeriesArtworksFilterRefetchContainer =
           ...ArtistSeriesArtworksFilter_artistSeries @arguments(input: $input)
         }
       }
-    `
+    `,
   )
 
 type ArtistSeriesArtworkFilterQueryRendererProps = {}

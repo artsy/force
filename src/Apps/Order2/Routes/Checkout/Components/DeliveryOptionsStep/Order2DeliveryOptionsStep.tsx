@@ -22,7 +22,7 @@ export const Order2DeliveryOptionsStep: React.FC<
   const completedViewProps = useCompleteDeliveryOptionData(orderData)
 
   const stepState = steps?.find(
-    step => step.name === CheckoutStepName.DELIVERY_OPTION
+    step => step.name === CheckoutStepName.DELIVERY_OPTION,
   )?.state
 
   if (stepState === CheckoutStepState.HIDDEN) {

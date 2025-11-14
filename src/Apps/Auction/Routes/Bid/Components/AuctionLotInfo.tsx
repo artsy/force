@@ -108,5 +108,5 @@ export const AuctionLotInfoFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

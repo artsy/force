@@ -10,7 +10,7 @@ import type { ArtworkSidebarBidAction_me$data } from "__generated__/ArtworkSideb
 export const bidderQualifications = (
   sale: ArtworkSidebarBidAction_artwork$data["sale"],
   user?: ArtworkSidebarBidAction_me$data,
-  registration?: { qualifiedForBidding: boolean }
+  registration?: { qualifiedForBidding: boolean },
 ) => {
   const registrationAttempted = Boolean(registration)
   const qualifiedForBidding =

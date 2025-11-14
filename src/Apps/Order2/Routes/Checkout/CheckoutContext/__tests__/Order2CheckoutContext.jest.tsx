@@ -128,7 +128,7 @@ describe("Order2CheckoutContext", () => {
           "orderData",
           "router",
           "checkoutTracking",
-        ])
+        ]),
       )
 
       expect(Object.keys(actions)).toEqual(
@@ -149,7 +149,7 @@ describe("Order2CheckoutContext", () => {
           "setSavedPaymentMethod",
           "redirectToOrderDetails",
           "setCheckoutMode",
-        ])
+        ]),
       )
     })
 
@@ -322,7 +322,7 @@ describe("Order2CheckoutContext", () => {
         })
 
         const deliveryStep = getState().steps.find(
-          step => step.name === CheckoutStepName.DELIVERY_OPTION
+          step => step.name === CheckoutStepName.DELIVERY_OPTION,
         )
         expect(deliveryStep?.state).toBe(CheckoutStepState.HIDDEN)
       })
@@ -337,12 +337,12 @@ describe("Order2CheckoutContext", () => {
         })
 
         const fulfillmentStep = getState().steps.find(
-          step => step.name === CheckoutStepName.FULFILLMENT_DETAILS
+          step => step.name === CheckoutStepName.FULFILLMENT_DETAILS,
         )
         expect(fulfillmentStep?.state).toBe(CheckoutStepState.COMPLETED)
 
         const deliveryStep = getState().steps.find(
-          step => step.name === CheckoutStepName.DELIVERY_OPTION
+          step => step.name === CheckoutStepName.DELIVERY_OPTION,
         )
         expect(deliveryStep?.state).toBe(CheckoutStepState.ACTIVE)
       })
@@ -355,12 +355,12 @@ describe("Order2CheckoutContext", () => {
         })
 
         const deliveryStep = getState().steps.find(
-          step => step.name === CheckoutStepName.DELIVERY_OPTION
+          step => step.name === CheckoutStepName.DELIVERY_OPTION,
         )
         expect(deliveryStep?.state).toBe(CheckoutStepState.HIDDEN)
 
         const paymentStep = getState().steps.find(
-          step => step.name === CheckoutStepName.PAYMENT
+          step => step.name === CheckoutStepName.PAYMENT,
         )
         expect(paymentStep?.state).toBe(CheckoutStepState.ACTIVE)
       })
@@ -375,7 +375,7 @@ describe("Order2CheckoutContext", () => {
         })
 
         expect(mockRouter.replace).toHaveBeenCalledWith(
-          "/orders/order-id/details"
+          "/orders/order-id/details",
         )
       })
     })

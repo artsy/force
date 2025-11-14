@@ -122,7 +122,7 @@ export const AuctionArtworkFilterRefetchContainer = createRefetchContainer(
           @arguments(input: $input, saleID: $saleID, isLoggedIn: $isLoggedIn)
       }
     }
-  `
+  `,
 )
 
 type AuctionArtworkFilterQueryRendererProps = {}
@@ -179,7 +179,7 @@ const initializeVariablesWithFilterState = (params, props) => {
   }
 
   const initialFilterStateFromUrl = getInitialFilterState(
-    props.location?.query ?? {}
+    props.location?.query ?? {},
   )
 
   const userSpecificFilterState = getArtworkFilterInputArgs(props.context.user)

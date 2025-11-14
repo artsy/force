@@ -23,7 +23,7 @@ export const RelatedCollectionsRail: React.FC<
   const { trackEvent } = useTracking()
 
   const collectionsWithArtworks = collections.filter(collection =>
-    Boolean(collection.artworksConnection)
+    Boolean(collection.artworksConnection),
   )
   const { contextPageOwnerId, contextPageOwnerSlug } = useAnalyticsContext()
 
@@ -94,7 +94,7 @@ export const RelatedCollectionsRailFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 export const RelatedCollectionsRailQueryRenderer: React.FC<

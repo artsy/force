@@ -6,7 +6,7 @@ export const requestEmailConfirmation = (relayEnvironment: Environment) => {
     commitMutation(relayEnvironment, {
       onCompleted: (
         data: PromiseLike<requestEmailConfirmationMutation$data>,
-        errors
+        errors,
       ) => {
         errors && errors.length ? reject(errors) : done(data)
       },

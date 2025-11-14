@@ -230,7 +230,7 @@ export const ArtworkActionsFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 const Container = styled(Flex)`

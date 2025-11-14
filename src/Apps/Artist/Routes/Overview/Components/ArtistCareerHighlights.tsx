@@ -110,7 +110,7 @@ export const ArtistCareerHighlightsFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 export const ArtistCareerHighlightsPlaceholder = forwardRef<

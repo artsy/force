@@ -105,7 +105,7 @@ export const PrimaryLabelLineFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 interface PrimaryLabelLineQueryRendererProps {

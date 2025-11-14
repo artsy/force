@@ -9,7 +9,7 @@ const ArtworkRecommendationsApp = loadable(
     ),
   {
     resolveComponent: component => component.ArtworkRecommendationsApp,
-  }
+  },
 )
 
 export const artworkRecommendationsRoutes: RouteProps[] = [

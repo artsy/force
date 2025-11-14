@@ -123,7 +123,7 @@ export const SettingsSavesArtistsPaginationContainer =
         return { ...fragmentVariables, after }
       },
       query: SETTINGS_SAVES_ARTISTS_QUERY,
-    }
+    },
   )
 
 const SETTINGS_SAVES_ARTISTS_PLACEHOLDER = (

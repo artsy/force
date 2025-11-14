@@ -6,7 +6,7 @@ const AboutApp = loadable(
   () => import(/* webpackChunkName: "aboutBundle" */ "./AboutApp"),
   {
     resolveComponent: component => component.AboutApp,
-  }
+  },
 )
 
 export const aboutRoutes: RouteProps[] = [

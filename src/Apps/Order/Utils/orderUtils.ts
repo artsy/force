@@ -24,6 +24,6 @@ export const getInitialPaymentMethodValue = ({
   }
 
   return orderedPaymentMethods.find(method =>
-    availablePaymentMethods.includes(method)
+    availablePaymentMethods.includes(method),
   )
 }

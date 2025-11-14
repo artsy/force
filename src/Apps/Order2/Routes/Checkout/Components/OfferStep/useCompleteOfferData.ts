@@ -9,7 +9,7 @@ import { graphql, useFragment } from "react-relay"
  * An offer is complete if there is already an offer with a positive amount.
  */
 export const useCompleteOfferData = (
-  order: useCompleteOfferData_order$key
+  order: useCompleteOfferData_order$key,
 ): Order2OfferCompletedViewProps | null => {
   const orderData = useFragment(FRAGMENT, order)
 

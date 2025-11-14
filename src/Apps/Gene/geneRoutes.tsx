@@ -8,14 +8,14 @@ const GeneApp = loadable(
   () => import(/* webpackChunkName: "geneBundle" */ "./GeneApp"),
   {
     resolveComponent: component => component.GeneApp,
-  }
+  },
 )
 
 const GeneShowRoute = loadable(
   () => import(/* webpackChunkName: "geneBundle" */ "./Routes/GeneShow"),
   {
     resolveComponent: component => component.GeneShowFragmentContainer,
-  }
+  },
 )
 
 export const geneRoutes: RouteProps[] = [

@@ -36,7 +36,7 @@ export const SuggestedFilters: React.FC<
       source: currentArtworkID
         ? { type: "ARTWORK", id: currentArtworkID }
         : undefined,
-    }
+    },
   )
 
   if (!data.previewSavedSearch?.suggestedFilters.length) {
@@ -65,7 +65,7 @@ export const SuggestedFilters: React.FC<
         selectedCriteria: state.criteria[filter.field] || [],
         value: filter.value,
       })
-    }
+    },
   )
 
   return (

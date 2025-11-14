@@ -20,7 +20,7 @@ describe("useAuctionWebsocket", () => {
       useAuctionWebsocket({
         lotID: "catty-lot-id",
         onChange,
-      })
+      }),
     )
 
     expect(onChange).toBeCalledWith({
@@ -36,7 +36,7 @@ describe("useAuctionWebsocket", () => {
       useAuctionWebsocket({
         lotID: "doggy-lot-id",
         onChange,
-      })
+      }),
     )
 
     expect(onChange).not.toBeCalled()

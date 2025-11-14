@@ -27,11 +27,11 @@ describe("ShowInfo", () => {
       })
 
       expect(
-        screen.getByRole("heading", { level: 1, name: "About" })
+        screen.getByRole("heading", { level: 1, name: "About" }),
       ).toBeInTheDocument()
       expect(screen.queryByText("Shows & Fairs")).not.toBeInTheDocument()
       expect(
-        screen.getByRole("heading", { level: 2, name: "Gallery" })
+        screen.getByRole("heading", { level: 2, name: "Gallery" }),
       ).toBeInTheDocument()
     })
   })
@@ -56,11 +56,11 @@ describe("ShowInfo", () => {
         screen.getByRole("heading", {
           level: 3,
           name: "Number one best event",
-        })
+        }),
       ).toBeInTheDocument()
       expect(screen.getByText("noon to 1:00")).toBeInTheDocument()
       expect(
-        screen.getByText("This is going to be a fun event!")
+        screen.getByText("This is going to be a fun event!"),
       ).toBeInTheDocument()
     })
   })
@@ -102,8 +102,8 @@ describe("ShowInfo", () => {
       const eventHeadings = headings.filter(
         heading =>
           !["Statement", "Press Release", "Location"].includes(
-            heading.textContent || ""
-          )
+            heading.textContent || "",
+          ),
       )
       expect(eventHeadings).toHaveLength(0)
     })

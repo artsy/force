@@ -271,5 +271,5 @@ export const RegisterButtonFragmentContainer = createFragmentContainer(
         status
       }
     `,
-  }
+  },
 )

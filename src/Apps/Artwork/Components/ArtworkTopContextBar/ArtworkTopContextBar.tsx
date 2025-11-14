@@ -40,5 +40,5 @@ export const ArtworkTopContextBarFragmentContainer = createFragmentContainer(
         internalID
       }
     `,
-  }
+  },
 )

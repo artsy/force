@@ -159,7 +159,7 @@ export const PartnerHeaderFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
 
 const FollowButtonContainer = styled(Stack)`

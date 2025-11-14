@@ -124,5 +124,5 @@ export const ArtistSeriesHeaderFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

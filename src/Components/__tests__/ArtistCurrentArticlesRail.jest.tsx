@@ -53,7 +53,7 @@ describe("ArtistCurrentArticlesRail", () => {
     const links = container.querySelectorAll("a")
     expect(links.length).toBe(3)
     expect(links[0].getAttribute("href")).toContain(
-      "/artist/artistSlug/articles"
+      "/artist/artistSlug/articles",
     )
 
     const image = container.querySelector("img")
@@ -82,7 +82,7 @@ describe("ArtistCurrentArticlesRail", () => {
         destination_page_owner_slug: "test-artist-slug",
         destination_page_owner_type: "artist",
         type: "viewAll",
-      })
+      }),
     )
   })
 
@@ -110,7 +110,7 @@ describe("ArtistCurrentArticlesRail", () => {
         horizontalSlidePosition: 1,
         subject: "showCarouselSlide",
         type: "thumbnail",
-      })
+      }),
     )
   })
 })

@@ -97,8 +97,8 @@ describe("ArtworkActionsSaveButton", () => {
       expect(await screen.findByText("Artwork saved")).toBeInTheDocument()
       expect(
         await screen.findByText(
-          "Saving an artwork signals interest to galleries."
-        )
+          "Saving an artwork signals interest to galleries.",
+        ),
       ).toBeInTheDocument()
       expect(await screen.findByText("Add to a List")).toBeInTheDocument()
     })

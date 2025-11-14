@@ -67,7 +67,7 @@ describe("AuctionArtworksRail", () => {
       new MouseEvent("click", {
         bubbles: true,
         cancelable: true,
-      })
+      }),
     )
 
     expect(trackEvent.mock.calls[0]).toMatchInlineSnapshot(`

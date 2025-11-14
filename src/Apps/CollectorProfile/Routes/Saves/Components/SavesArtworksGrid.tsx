@@ -48,7 +48,7 @@ export const SavesArtworksGrid: FC<
         priceMax,
         priceMin,
       }),
-    [page, priceMax, priceMin]
+    [page, priceMax, priceMin],
   )
 
   return (

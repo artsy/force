@@ -58,7 +58,7 @@ describe("InquirySignUp", () => {
   describe("success", () => {
     beforeAll(() => {
       ;(signUp as jest.Mock).mockImplementation(() =>
-        Promise.resolve({ user: { id: "example-id", access_token: "token" } })
+        Promise.resolve({ user: { id: "example-id", access_token: "token" } }),
       )
     })
 
@@ -113,7 +113,7 @@ describe("InquirySignUp", () => {
   describe("error", () => {
     beforeAll(() => {
       ;(signUp as jest.Mock).mockImplementation(() =>
-        Promise.reject(new Error("something went wrong"))
+        Promise.reject(new Error("something went wrong")),
       )
     })
 

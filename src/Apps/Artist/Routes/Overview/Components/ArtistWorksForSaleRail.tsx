@@ -53,7 +53,7 @@ const ArtistWorksForSaleRail: React.FC<
             destinationPageOwnerId: artist.internalID,
             destinationPageOwnerSlug: artist.slug,
             type: "viewAll",
-          })
+          }),
         )
       }}
       getItems={() => {
@@ -76,7 +76,7 @@ const ArtistWorksForSaleRail: React.FC<
                       destinationPageOwnerSlug: node.slug,
                       horizontalSlidePosition: index + 1,
                       type: "thumbnail",
-                    })
+                    }),
                   )
                 }}
               />
@@ -106,7 +106,7 @@ export const ArtistWorksForSaleRailFragmentContainer = createFragmentContainer(
         slug
       }
     `,
-  }
+  },
 )
 
 const PLACEHOLDER = (

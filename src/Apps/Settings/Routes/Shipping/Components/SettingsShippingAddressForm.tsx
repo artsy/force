@@ -120,7 +120,7 @@ export const SettingsShippingAddressForm: FC<
           phoneNumber,
           phoneNumberCountryCode,
         },
-        { setStatus, resetForm }
+        { setStatus, resetForm },
       ) => {
         try {
           const attributes = {

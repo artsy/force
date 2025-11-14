@@ -73,7 +73,7 @@ describe("AuthDialogLogin", () => {
     const loginMock = jest
       .fn()
       .mockReturnValue(
-        Promise.reject(new Error("missing on-demand authentication code"))
+        Promise.reject(new Error("missing on-demand authentication code")),
       )
     ;(login as jest.Mock).mockImplementationOnce(loginMock)
 
@@ -101,8 +101,8 @@ describe("AuthDialogLogin", () => {
 
     expect(
       screen.getByText(
-        "Your safety and security are important to us. Please check your email for a one-time authentication code to complete your login."
-      )
+        "Your safety and security are important to us. Please check your email for a one-time authentication code to complete your login.",
+      ),
     ).toBeInTheDocument()
 
     // TODO: Should be disabled
@@ -121,7 +121,7 @@ describe("AuthDialogLogin", () => {
     const loginMock = jest
       .fn()
       .mockReturnValue(
-        Promise.reject(new Error("missing two-factor authentication code"))
+        Promise.reject(new Error("missing two-factor authentication code")),
       )
     ;(login as jest.Mock).mockImplementationOnce(loginMock)
 

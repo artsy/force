@@ -48,7 +48,7 @@ export const ArticleStructuredData: React.FC<
               name: author.name,
               href: `${getENV("APP_URL")}${path}`,
             }
-          })
+          }),
         ),
         publisher: ORGANIZATION_STUB_SCHEMA,
         sourceOrganization: {

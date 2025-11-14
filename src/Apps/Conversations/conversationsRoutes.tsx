@@ -11,7 +11,7 @@ const ConversationApp = loadable(
     import(/* webpackChunkName: "conversationsBundle" */ "./ConversationApp"),
   {
     resolveComponent: component => component.ConversationAppFragmentContainer,
-  }
+  },
 )
 
 export const conversationsRoutes: RouteProps[] = [
@@ -24,7 +24,7 @@ export const conversationsRoutes: RouteProps[] = [
       }
 
       const initialConversationID = extractNodes<any>(
-        props.conversationsConnection
+        props.conversationsConnection,
       )[0]?.internalID
 
       let conversationUrl = initialConversationID

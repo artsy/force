@@ -62,7 +62,7 @@ describe("userRequiredMiddleware", () => {
       const next = jest.fn()
       userRequiredMiddleware(req, res, next)
       expect(spy).toHaveBeenCalledWith(
-        `/login?redirectTo=${encodeURIComponent(req.originalUrl)}`
+        `/login?redirectTo=${encodeURIComponent(req.originalUrl)}`,
       )
       expect(next).not.toHaveBeenCalled()
     })
@@ -88,7 +88,7 @@ describe("userRequiredMiddleware", () => {
 
       userRequiredMiddleware(req, res, next)
       expect(res.redirect).toHaveBeenCalledWith(
-        "/login?redirectTo=%2Fsettings%2Forders%2F"
+        "/login?redirectTo=%2Fsettings%2Forders%2F",
       )
       expect(next).not.toHaveBeenCalled()
     })
@@ -110,7 +110,7 @@ describe("userRequiredMiddleware", () => {
 
       userRequiredMiddleware(req, res, next)
       expect(res.redirect).toHaveBeenCalledWith(
-        "/login?redirectTo=%2Fuser%2Fconversations"
+        "/login?redirectTo=%2Fuser%2Fconversations",
       )
       expect(next).not.toHaveBeenCalled()
     })
@@ -132,7 +132,7 @@ describe("userRequiredMiddleware", () => {
 
       userRequiredMiddleware(req, res, next)
       expect(res.redirect).toHaveBeenCalledWith(
-        "/login?redirectTo=%2Fuser%2Fconversations%2F123"
+        "/login?redirectTo=%2Fuser%2Fconversations%2F123",
       )
       expect(next).not.toHaveBeenCalled()
     })

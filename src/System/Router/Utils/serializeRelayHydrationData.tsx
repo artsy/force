@@ -3,7 +3,7 @@ import type { SSRCache } from "react-relay-network-modern-ssr/lib/server"
 import serialize from "serialize-javascript"
 
 export const serializeRelayHydrationData = (
-  initialRelayData: SSRCache = []
+  initialRelayData: SSRCache = [],
 ): string => {
   initialRelayData.forEach(entry => {
     entry.forEach((item: RelayNetworkLayerResponse) => {
@@ -20,7 +20,7 @@ export const serializeRelayHydrationData = (
   } catch (error) {
     console.error(
       "[system/router/serializeRelayHydrationData] Error serializing data:",
-      error
+      error,
     )
 
     return serialize("[]", { isJSON: true })

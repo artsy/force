@@ -75,7 +75,7 @@ describe("ShowArtworks", () => {
     const filterButtons = expandedButtons.filter(button => {
       const buttonText = button.textContent
       return expectedFilters.some(filterName =>
-        buttonText?.includes(filterName)
+        buttonText?.includes(filterName),
       )
     })
 
@@ -95,7 +95,7 @@ describe("ShowArtworks", () => {
       if (index > 0) {
         const currentFilterIndex = expectedFilters.indexOf(filterName)
         const previousFilterIndex = expectedFilters.indexOf(
-          actualFilterOrder[index - 1]
+          actualFilterOrder[index - 1],
         )
 
         expect(currentFilterIndex).toBeGreaterThan(previousFilterIndex)

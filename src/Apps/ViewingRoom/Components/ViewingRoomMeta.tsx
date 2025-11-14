@@ -77,5 +77,5 @@ export const ViewingRoomMetaFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )

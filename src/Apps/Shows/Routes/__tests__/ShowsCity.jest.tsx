@@ -52,7 +52,7 @@ describe("ShowsCity", () => {
 
     const headings = container.querySelectorAll("h1, h2")
     const headingTexts = Array.from(headings).map(node =>
-      node.textContent?.trim().replace(/\u00A0/g, " ")
+      node.textContent?.trim().replace(/\u00A0/g, " "),
     )
 
     expect(headingTexts).toEqual([

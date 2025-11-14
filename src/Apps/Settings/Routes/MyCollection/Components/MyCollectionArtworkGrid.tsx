@@ -53,5 +53,5 @@ export const MyCollectionArtworkGrid = createFragmentContainer(
         }
       }
     `,
-  }
+  },
 )
