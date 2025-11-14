@@ -26,7 +26,7 @@ export async function getOrInitUnleashServer(): Promise<Unleash> {
 
   unleashServer = new Unleash(config)
 
-  await new Promise<void>((resolve, reject) => {
+  await new Promise<void>(resolve => {
     if (unleashServer) {
       unleashServer.on("ready", resolve)
       unleashServer.on("error", error => {
