@@ -128,7 +128,13 @@ describe("InquiryQuestionOption", () => {
         />,
       )
 
-      expect(screen.queryByTestId("location-input")).not.toBeInTheDocument()
+      const locationInput = screen.getByTestId("location-input")
+      expect(locationInput).toBeInTheDocument()
+      // Input is hidden with CSS
+      expect(locationInput.parentElement).toHaveStyle({
+        opacity: 0,
+        maxHeight: "0",
+      })
     })
 
     it("shows location input when shipping question is selected", () => {
@@ -142,7 +148,13 @@ describe("InquiryQuestionOption", () => {
       const checkbox = screen.getByRole("checkbox")
       fireEvent.click(checkbox)
 
-      expect(screen.getByTestId("location-input")).toBeInTheDocument()
+      const locationInput = screen.getByTestId("location-input")
+      expect(locationInput).toBeInTheDocument()
+      // Input is visible with CSS
+      expect(locationInput.parentElement).toHaveStyle({
+        opacity: 1,
+        maxHeight: "200px",
+      })
     })
 
     it("hides location input when shipping question is deselected", () => {
@@ -154,14 +166,24 @@ describe("InquiryQuestionOption", () => {
       )
 
       const checkbox = screen.getByRole("checkbox")
+      const locationInput = screen.getByTestId("location-input")
 
       // Select
       fireEvent.click(checkbox)
-      expect(screen.getByTestId("location-input")).toBeInTheDocument()
+      expect(locationInput).toBeInTheDocument()
+      expect(locationInput.parentElement).toHaveStyle({
+        opacity: 1,
+        maxHeight: "200px",
+      })
 
       // Deselect
       fireEvent.click(checkbox)
-      expect(screen.queryByTestId("location-input")).not.toBeInTheDocument()
+      expect(locationInput).toBeInTheDocument()
+      // Input is hidden again with CSS
+      expect(locationInput.parentElement).toHaveStyle({
+        opacity: 0,
+        maxHeight: "0",
+      })
     })
 
     it("adds shipping details when location is changed", () => {
@@ -176,7 +198,7 @@ describe("InquiryQuestionOption", () => {
       fireEvent.click(checkbox)
 
       const locationInput = screen.getByTestId("location-input")
-      fireEvent.change(locationInput)
+      fireEvent.change(locationInput, { target: { value: "New York, NY" } })
 
       expect(mockAddQuestionDetails).toHaveBeenCalledWith({
         questionID: InquiryQuestionIDs.Shipping,
