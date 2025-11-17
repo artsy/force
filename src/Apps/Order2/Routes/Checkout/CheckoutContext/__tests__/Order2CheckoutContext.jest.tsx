@@ -77,7 +77,7 @@ const baseOrderProps = {
   buyerStateExpiresAt: null,
   stripeConfirmationToken: null,
   selectedFulfillmentOption: null,
-  offers: [],
+  submittedOffers: [],
   fulfillmentDetails: null,
   paymentMethod: null,
   paymentMethodDetails: null,

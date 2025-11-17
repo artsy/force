@@ -22,10 +22,11 @@ export const Order2CheckoutPricingBreakdown: React.FC<
   Order2CheckoutPricingBreakdownProps
 > = ({ order }) => {
   const { checkoutTracking } = useCheckoutContext()
-  const { pricingBreakdownLines, mode, buyerStateExpiresAt, source } =
-    useFragment(FRAGMENT, order)
+  const orderData = useFragment(FRAGMENT, order)
+  const { mode, pendingOffer, source, buyerStateExpiresAt } = orderData
 
   const hasPartnerOffer = source === "PARTNER_OFFER"
+
   // Calculate timer directly in this component to ensure re-renders
   const partnerOfferEndTime = (hasPartnerOffer && buyerStateExpiresAt) || ""
   const partnerOfferStartTime = hasPartnerOffer
@@ -37,6 +38,12 @@ export const Order2CheckoutPricingBreakdown: React.FC<
     endTime: partnerOfferEndTime,
     imminentTime: 1,
   })
+
+  // Use pendingOffer.pricingBreakdownLines for OFFER mode, otherwise use order.pricingBreakdownLines
+  const pricingBreakdownLines =
+    mode === "OFFER" && pendingOffer?.pricingBreakdownLines
+      ? pendingOffer.pricingBreakdownLines
+      : orderData.pricingBreakdownLines
 
   return (
     <>
@@ -172,6 +179,44 @@ const FRAGMENT = graphql`
         amountFallbackText
         amount {
           display
+        }
+      }
+    }
+    pendingOffer {
+      pricingBreakdownLines {
+        __typename
+        ... on ShippingLine {
+          displayName
+          amountFallbackText
+          amount {
+            amount
+            currencySymbol
+          }
+        }
+
+        ... on TaxLine {
+          displayName
+          amountFallbackText
+          amount {
+            amount
+            currencySymbol
+          }
+        }
+
+        ... on SubtotalLine {
+          displayName
+          amount {
+            amount
+            currencySymbol
+          }
+        }
+
+        ... on TotalLine {
+          displayName
+          amountFallbackText
+          amount {
+            display
+          }
         }
       }
     }

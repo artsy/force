@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f128dbcea4c661e65f7e7fdee39032ad>>
+ * @generated SignedSource<<fc8349ef879189c5be0f8cb1b91dc722>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -161,16 +161,9 @@ return {
                     "args": null,
                     "concreteType": "Offer",
                     "kind": "LinkedField",
-                    "name": "offers",
-                    "plural": true,
+                    "name": "pendingOffer",
+                    "plural": false,
                     "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "createdAt",
-                        "storageKey": null
-                      },
                       {
                         "alias": null,
                         "args": null,
@@ -400,7 +393,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "7fbf0051a7d3c9236c0bc031cee4fb2f",
+    "cacheID": "8ddbcbbb0d14d50632802a86dbe3a44d",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -470,28 +463,6 @@ return {
           "plural": false,
           "type": "OrderModeEnum"
         },
-        "viewer.me.order.offers": {
-          "enumValues": null,
-          "nullable": false,
-          "plural": true,
-          "type": "Offer"
-        },
-        "viewer.me.order.offers.amount": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Money"
-        },
-        "viewer.me.order.offers.amount.display": (v6/*: any*/),
-        "viewer.me.order.offers.amount.minor": {
-          "enumValues": null,
-          "nullable": false,
-          "plural": false,
-          "type": "Long"
-        },
-        "viewer.me.order.offers.createdAt": (v6/*: any*/),
-        "viewer.me.order.offers.id": (v5/*: any*/),
-        "viewer.me.order.offers.note": (v6/*: any*/),
         "viewer.me.order.paymentMethod": {
           "enumValues": [
             "CREDIT_CARD",
@@ -523,6 +494,27 @@ return {
           "plural": false,
           "type": "Boolean"
         },
+        "viewer.me.order.pendingOffer": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Offer"
+        },
+        "viewer.me.order.pendingOffer.amount": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Money"
+        },
+        "viewer.me.order.pendingOffer.amount.display": (v6/*: any*/),
+        "viewer.me.order.pendingOffer.amount.minor": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "Long"
+        },
+        "viewer.me.order.pendingOffer.id": (v5/*: any*/),
+        "viewer.me.order.pendingOffer.note": (v6/*: any*/),
         "viewer.me.order.selectedFulfillmentOption": {
           "enumValues": null,
           "nullable": true,
@@ -559,7 +551,7 @@ return {
     },
     "name": "Order2CheckoutContextTestQuery",
     "operationKind": "query",
-    "text": "query Order2CheckoutContextTestQuery {\n  viewer {\n    me {\n      order(id: \"order-id\") {\n        ...Order2CheckoutContext_order\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment Order2CheckoutContext_order on Order {\n  ...useBuildInitialSteps_order\n  internalID\n  mode\n  source\n  buyerStateExpiresAt\n  stripeConfirmationToken\n  selectedFulfillmentOption {\n    type\n  }\n  lineItems {\n    artworkVersion {\n      internalID\n      id\n    }\n    id\n  }\n}\n\nfragment useBuildInitialSteps_order on Order {\n  ...useCompleteOfferData_order\n  ...useCompleteFulfillmentDetailsData_order\n  ...useCompleteDeliveryOptionData_order\n  ...useCompletePaymentData_order\n  mode\n  selectedFulfillmentOption {\n    type\n  }\n}\n\nfragment useCompleteDeliveryOptionData_order on Order {\n  selectedFulfillmentOption {\n    type\n  }\n}\n\nfragment useCompleteFulfillmentDetailsData_order on Order {\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    country\n    name\n    postalCode\n    region\n    phoneNumber {\n      display\n    }\n  }\n  selectedFulfillmentOption {\n    type\n  }\n}\n\nfragment useCompleteOfferData_order on Order {\n  mode\n  offers {\n    createdAt\n    note\n    amount {\n      minor\n      display\n    }\n    id\n  }\n}\n\nfragment useCompletePaymentData_order on Order {\n  paymentMethod\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      internalID\n      id\n    }\n    ... on BankAccount {\n      internalID\n      id\n    }\n    ... on WireTransfer {\n      isManualPayment\n    }\n  }\n}\n"
+    "text": "query Order2CheckoutContextTestQuery {\n  viewer {\n    me {\n      order(id: \"order-id\") {\n        ...Order2CheckoutContext_order\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment Order2CheckoutContext_order on Order {\n  ...useBuildInitialSteps_order\n  internalID\n  mode\n  source\n  buyerStateExpiresAt\n  stripeConfirmationToken\n  selectedFulfillmentOption {\n    type\n  }\n  lineItems {\n    artworkVersion {\n      internalID\n      id\n    }\n    id\n  }\n}\n\nfragment useBuildInitialSteps_order on Order {\n  ...useCompleteOfferData_order\n  ...useCompleteFulfillmentDetailsData_order\n  ...useCompleteDeliveryOptionData_order\n  ...useCompletePaymentData_order\n  mode\n  selectedFulfillmentOption {\n    type\n  }\n}\n\nfragment useCompleteDeliveryOptionData_order on Order {\n  selectedFulfillmentOption {\n    type\n  }\n}\n\nfragment useCompleteFulfillmentDetailsData_order on Order {\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    country\n    name\n    postalCode\n    region\n    phoneNumber {\n      display\n    }\n  }\n  selectedFulfillmentOption {\n    type\n  }\n}\n\nfragment useCompleteOfferData_order on Order {\n  mode\n  pendingOffer {\n    note\n    amount {\n      minor\n      display\n    }\n    id\n  }\n}\n\nfragment useCompletePaymentData_order on Order {\n  paymentMethod\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      internalID\n      id\n    }\n    ... on BankAccount {\n      internalID\n      id\n    }\n    ... on WireTransfer {\n      isManualPayment\n    }\n  }\n}\n"
   }
 };
 })();

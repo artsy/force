@@ -1820,7 +1820,7 @@ const baseProps = {
       ],
       fulfillmentDetails: null,
       selectedFulfillmentOption: null,
-      offers: [],
+      submittedOffers: [],
       paymentMethod: null,
       paymentMethodDetails: null,
       stripeConfirmationToken: null,
