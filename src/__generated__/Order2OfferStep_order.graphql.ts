@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1fb2f7e609de90bad6d3a7246c8c3d2c>>
+ * @generated SignedSource<<5f8788b97c90889cd607a3e9d2e77c9e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -51,7 +51,7 @@ export type Order2OfferStep_order$data = {
     } | null | undefined;
     readonly createdAt: string | null | undefined;
     readonly note: string | null | undefined;
-  }> | null | undefined;
+  }>;
   readonly selectedFulfillmentOption: {
     readonly type: FulfillmentOptionTypeEnum;
   } | null | undefined;

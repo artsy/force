@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0eab459fd71ce12c4f4bbddd28f481ad>>
+ * @generated SignedSource<<f0481ba157d4fa12970bd67e3c2d21b6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,7 +20,7 @@ export type useCompleteOfferData_order$data = {
     } | null | undefined;
     readonly createdAt: string | null | undefined;
     readonly note: string | null | undefined;
-  }> | null | undefined;
+  }>;
   readonly " $fragmentType": "useCompleteOfferData_order";
 };
 export type useCompleteOfferData_order$key = {
