@@ -9,7 +9,7 @@ import { getENV } from "Utils/getENV"
 export const FeatureFlagProvider: React.FC<
   React.PropsWithChildren<IFlagProvider>
 > = ({ children }) => {
-  const { user } = useSystemContext()
+  const { user, featureFlags } = useSystemContext()
 
   const unleashConfig: IConfig = {
     url: `${getENV("UNLEASH_API_URL")}/frontend`,
@@ -21,6 +21,7 @@ export const FeatureFlagProvider: React.FC<
       userId: user?.id,
       sessionId: getENV("SESSION_ID"),
     },
+    bootstrap: featureFlags?.toggles || [],
   }
 
   return <FlagProvider config={unleashConfig}>{children}</FlagProvider>

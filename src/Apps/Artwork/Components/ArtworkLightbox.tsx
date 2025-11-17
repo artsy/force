@@ -4,7 +4,7 @@ import {
   Image,
   ResponsiveBox,
 } from "@artsy/palette"
-import { useFlag } from "@unleash/proxy-client-react"
+import { useFlag } from "System/FeatureFlags/useFlag"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useLocalImage } from "Utils/localImageHelpers"
 import { userIsTeam } from "Utils/user"

@@ -12,7 +12,6 @@ import type { PaymentRouteSetOrderPaymentMutation } from "__generated__/PaymentR
 import type { Payment_me$data } from "__generated__/Payment_me.graphql"
 import type { Payment_order$data } from "__generated__/Payment_order.graphql"
 
-import { useFlag } from "@unleash/proxy-client-react"
 import { useStripePaymentBySetupIntentId } from "Apps/Order/Hooks/useStripePaymentBySetupIntentId"
 import { useSetPayment } from "Apps/Order/Mutations/useSetPayment"
 import {
@@ -20,6 +19,7 @@ import {
   injectCommitMutation,
 } from "Apps/Order/Utils/commitMutation"
 import { getInitialPaymentMethodValue } from "Apps/Order/Utils/orderUtils"
+import { useFlag } from "System/FeatureFlags/useFlag"
 import { useRouter } from "System/Hooks/useRouter"
 // utils, hooks, mutations and system tools
 import { extractNodes } from "Utils/extractNodes"
@@ -386,7 +386,7 @@ export const PaymentRoute: FC<
       let title = "An error occurred"
       let message =
         "Something went wrong. Please try again or contact orders@artsy.net"
-      let width: undefined | number = undefined
+      let width: undefined | number
 
       const errorCode = (paymentSetupError as any).code
 
