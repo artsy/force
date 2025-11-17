@@ -9,7 +9,7 @@ import { Unleash } from "unleash-client"
 
 let unleashServer: Unleash | null = null
 
-export function getOrInitUnleashServer(): Unleash {
+export async function getOrInitUnleashServer(): Promise<Unleash> {
   if (unleashServer) {
     return unleashServer
   }
@@ -25,6 +25,35 @@ export function getOrInitUnleashServer(): Unleash {
   }
 
   unleashServer = new Unleash(config)
+
+  await new Promise<void>(resolve => {
+    if (unleashServer) {
+      const fallbackTimeout = setTimeout(() => {
+        console.warn(
+          "[unleashServer] Unleash initialization timeout. Continuing...",
+        )
+        resolve()
+      }, 5000)
+
+      unleashServer.on("ready", () => {
+        clearInterval(fallbackTimeout)
+        resolve()
+      })
+
+      unleashServer.on("error", error => {
+        console.warn(
+          "[unleashServer] Failed to initialize Unleash, continuing without feature flags:",
+          error,
+        )
+
+        clearInterval(fallbackTimeout)
+        resolve()
+      })
+    } else {
+      console.error("[unleashServer] Failed to initialize Unleash server")
+      resolve()
+    }
+  })
 
   return unleashServer
 }

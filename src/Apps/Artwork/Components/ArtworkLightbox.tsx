@@ -4,7 +4,7 @@ import {
   Image,
   ResponsiveBox,
 } from "@artsy/palette"
-import { useFlag } from "@unleash/proxy-client-react"
+import { useFlag } from "System/FeatureFlags/useFlag"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { getENV } from "Utils/getENV"
 import { useLocalImage } from "Utils/localImageHelpers"
@@ -28,7 +28,7 @@ const MAX_SIZE = 800
 
 const ArtworkLightbox: React.FC<
   React.PropsWithChildren<ArtworkLightboxProps>
-> = ({ artwork, activeIndex, lazyLoad, maxHeight, onClick, ...rest }) => {
+> = ({ artwork, activeIndex, maxHeight, onClick, ...rest }) => {
   const { user } = useSystemContext()
   const isTeam = userIsTeam(user)
   const images = compact(artwork.images)

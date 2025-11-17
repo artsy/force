@@ -1,9 +1,9 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.3.5/schema.json",
   "vcs": { "enabled": false, "clientKind": "git", "useIgnoreFile": false },
   "files": {
     "ignoreUnknown": false,
-    "ignore": ["src/__generated__/**/*"]
+    "includes": ["**", "!**/src/__generated__/**/*"]
   },
   "formatter": {
     "enabled": true,
@@ -15,9 +15,9 @@
     "lineWidth": 80,
     "attributePosition": "auto",
     "bracketSpacing": true,
-    "ignore": ["**/__generated__", "hokusai/*.yml"]
+    "includes": ["**", "!**/__generated__", "!**/hokusai/**/*.yml"]
   },
-  "organizeImports": { "enabled": true },
+  "assist": { "actions": { "source": { "organizeImports": "on" } } },
   "linter": {
     "enabled": true,
     "rules": {
@@ -32,7 +32,8 @@
         "noForEach": "off",
         "noUselessFragments": "off",
         "useLiteralKeys": "off",
-        "useOptionalChain": "off"
+        "useOptionalChain": "off",
+        "noArguments": "off"
       },
       "performance": {
         "noAccumulatingSpread": "off",
@@ -42,10 +43,28 @@
         "noDangerouslySetInnerHtml": "off"
       },
       "style": {
-        "noArguments": "off",
         "noNonNullAssertion": "off",
         "noUselessElse": "off",
-        "useNodejsImportProtocol": "off"
+        "useNodejsImportProtocol": "off",
+        "noRestrictedImports": {
+          "level": "error",
+          "options": {
+            "paths": {
+              "superagent": "Please use native fetch instead.",
+              "sharify": "Please use getENV instead.",
+              "unstated": "Please just use React state.",
+              "react-waypoint": "Please use `useIntersectionObserver`",
+              "relay-runtime": {
+                "importNames": ["graphql"],
+                "message": "Please import `graphql` from `react-relay`."
+              },
+              "@unleash/proxy-client-react": {
+                "importNames": ["useFlag", "useVariant"],
+                "message": "Please import useFlag from `System/FeatureFlags/useFlag.ts` and useVariant from `System/FeatureFlags/useVariant.ts` instead."
+              }
+            }
+          }
+        }
       },
       "suspicious": {
         "noArrayIndexKey": "off",
@@ -54,7 +73,7 @@
         "noImplicitAnyLet": "off"
       }
     },
-    "ignore": ["src/__generated__/**/*"]
+    "includes": ["**", "!**/src/__generated__/**/*"]
   },
   "javascript": {
     "formatter": {
@@ -70,14 +89,32 @@
     }
   },
   "overrides": [
-    { "include": ["*.cy.js", "*.cy.ts"], "linter": { "rules": {} } },
+    { "includes": ["**/*.cy.js", "**/*.cy.ts"], "linter": { "rules": {} } },
     {
-      "include": ["webpack/**/*"],
+      "includes": ["**/webpack/**/*"],
       "linter": { "rules": { "suspicious": { "noConsole": "off" } } }
     },
     {
-      "include": ["*.test.ts", "*.test.tsx", "*.jest.ts", "**/*.jest.tsx"],
+      "includes": [
+        "**/*.test.ts",
+        "**/*.test.tsx",
+        "**/*.jest.ts",
+        "**/*.jest.tsx"
+      ],
       "linter": { "rules": { "style": { "noNonNullAssertion": "off" } } }
+    },
+    {
+      "includes": [
+        "**/System/FeatureFlags/useFlag.ts",
+        "**/System/FeatureFlags/useVariant.ts"
+      ],
+      "linter": { 
+        "rules": { 
+          "style": { 
+            "noRestrictedImports": "off" 
+          } 
+        } 
+      }
     }
   ]
 }
