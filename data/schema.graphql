@@ -24332,6 +24332,12 @@ input UpdateArtworkEditionSetInput {
   defaultImageID: String
   delete: Boolean
 
+  # The depth of the artwork
+  depth: String
+
+  # The diameter of the artwork
+  diameter: String
+
   # Show/Hide the price range of an artwork
   displayPriceRange: Boolean
 
@@ -24345,8 +24351,14 @@ input UpdateArtworkEditionSetInput {
   framedMetric: String
   framedWidth: String
 
+  # The height of the artwork
+  height: String
+
   # The id of the artwork to update.
   id: String!
+
+  # The unit of measurement for artwork dimensions
+  metric: String
 
   # True for `Make Offer` artworks
   offer: Boolean
@@ -24365,6 +24377,9 @@ input UpdateArtworkEditionSetInput {
   shippingWeight: Float
   shippingWeightMetric: String
   title: String
+
+  # The width of the artwork
+  width: String
 }
 
 type UpdateArtworkImportFailure {
@@ -24479,6 +24494,12 @@ input UpdateArtworkMutationInput {
   defaultImageID: String
   delete: Boolean
 
+  # The depth of the artwork
+  depth: String
+
+  # The diameter of the artwork
+  diameter: String
+
   # Show/Hide the price range of an artwork
   displayPriceRange: Boolean
 
@@ -24495,11 +24516,17 @@ input UpdateArtworkMutationInput {
   framedMetric: String
   framedWidth: String
 
+  # The height of the artwork
+  height: String
+
   # The id of the artwork to update.
   id: String!
 
   # A list of S3 locations (bucket and key pairs) for artwork images to be added.
   imageS3Locations: [S3LocationInput!]
+
+  # The unit of measurement for artwork dimensions
+  metric: String
 
   # True for `Make Offer` artworks
   offer: Boolean
@@ -24518,6 +24545,9 @@ input UpdateArtworkMutationInput {
   shippingWeight: Float
   shippingWeightMetric: String
   title: String
+
+  # The width of the artwork
+  width: String
 }
 
 type UpdateArtworkMutationPayload {
