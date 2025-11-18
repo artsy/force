@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7f5f7df18f733adc62294f6b446f868e>>
+ * @generated SignedSource<<c23dd74dafb503647ad74a475a79114c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -225,6 +225,33 @@ return {
             ],
             "storageKey": null
           },
+          {
+            "alias": null,
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "format",
+                "value": "HTML"
+              }
+            ],
+            "kind": "ScalarField",
+            "name": "provenance",
+            "storageKey": "provenance(format:\"HTML\")"
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "shippingInfo",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "shippingOrigin",
+            "storageKey": null
+          },
           (v3/*: any*/)
         ],
         "storageKey": null
@@ -232,12 +259,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f3aabd7177b69d63bebb7d21111d58ce",
+    "cacheID": "706009b6f1fc03a71a314d1b4961722a",
     "id": null,
     "metadata": {},
     "name": "InquiryInquiryQuery",
     "operationKind": "query",
-    "text": "query InquiryInquiryQuery(\n  $id: String!\n) {\n  artwork(id: $id) {\n    ...InquiryInquiry_artwork\n    id\n  }\n}\n\nfragment InquiryInquiry_artwork on Artwork {\n  internalID\n  title\n  date\n  artist(shallow: true) {\n    name\n    id\n  }\n  partner {\n    name\n    id\n  }\n  image {\n    resized(width: 60, height: 45) {\n      height\n      width\n      src\n      srcSet\n    }\n  }\n  inquiryQuestions {\n    internalID\n    question\n    id\n  }\n}\n"
+    "text": "query InquiryInquiryQuery(\n  $id: String!\n) {\n  artwork(id: $id) {\n    ...InquiryInquiry_artwork\n    id\n  }\n}\n\nfragment InquiryInquiry_artwork on Artwork {\n  internalID\n  title\n  date\n  artist(shallow: true) {\n    name\n    id\n  }\n  partner {\n    name\n    id\n  }\n  image {\n    resized(width: 60, height: 45) {\n      height\n      width\n      src\n      srcSet\n    }\n  }\n  inquiryQuestions {\n    internalID\n    question\n    id\n  }\n  provenance(format: HTML)\n  shippingInfo\n  shippingOrigin\n}\n"
   }
 };
 })();

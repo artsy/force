@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1a760078cd893e1f8af6e10a2efd2ad8>>
+ * @generated SignedSource<<2636f31606c63dddf733ea0e33780d2a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -31,6 +31,9 @@ export type InquiryInquiry_artwork$data = {
   readonly partner: {
     readonly name: string | null | undefined;
   } | null | undefined;
+  readonly provenance: string | null | undefined;
+  readonly shippingInfo: string | null | undefined;
+  readonly shippingOrigin: string | null | undefined;
   readonly title: string | null | undefined;
   readonly " $fragmentType": "InquiryInquiry_artwork";
 };
@@ -182,6 +185,33 @@ return {
         }
       ],
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "format",
+          "value": "HTML"
+        }
+      ],
+      "kind": "ScalarField",
+      "name": "provenance",
+      "storageKey": "provenance(format:\"HTML\")"
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "shippingInfo",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "shippingOrigin",
+      "storageKey": null
     }
   ],
   "type": "Artwork",
@@ -189,6 +219,6 @@ return {
 };
 })();
 
-(node as any).hash = "763650a61a5a080d27623eb47c1b7554";
+(node as any).hash = "cad9cda4c99c2705b5ccdd758ad8428c";
 
 export default node;

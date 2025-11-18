@@ -160,6 +160,9 @@ const InquiryInquiry: React.FC<
                     key={question.internalID}
                     id={question.internalID}
                     question={question.question}
+                    provenance={artwork.provenance}
+                    shippingInfo={artwork.shippingInfo}
+                    shippingOrigin={artwork.shippingOrigin}
                   />
                 )
               })}
@@ -241,6 +244,9 @@ const InquiryInquiryFragmentContainer = createFragmentContainer(
           internalID
           question
         }
+        provenance(format: HTML)
+        shippingInfo
+        shippingOrigin
       }
     `,
   },

@@ -10,6 +10,9 @@ import { useState } from "react"
 interface InquiryQuestionOptionProps {
   id: string
   question: string
+  provenance?: string | null
+  shippingInfo?: string | null
+  shippingOrigin?: string | null
 }
 
 export enum InquiryQuestionIDs {
@@ -24,8 +27,13 @@ export enum InquiryQuestionIDs {
 export const InquiryQuestionOption: React.FC<InquiryQuestionOptionProps> = ({
   id,
   question,
+  provenance,
+  shippingInfo,
+  shippingOrigin,
 }) => {
   const isShipping = id === InquiryQuestionIDs.Shipping
+  const isConditionAndProvenance =
+    id === InquiryQuestionIDs.ConditionAndProvance
   const { addQuestion, removeQuestion, addQuestionDetails } =
     useInquiryContext()
 
@@ -88,6 +96,58 @@ export const InquiryQuestionOption: React.FC<InquiryQuestionOptionProps> = ({
               setShippingDetails(normalizePlace(place))
             }}
           />
+          <Spacer y={1} />
+        </Box>
+      )}
+
+      {isShipping && (shippingInfo || shippingOrigin) && (
+        <Box
+          pl={6}
+          style={{
+            maxHeight: questionSelected ? "500px" : "0",
+            overflow: "hidden",
+            transition: "max-height 0.3s ease, opacity 0.3s ease",
+            opacity: questionSelected ? 1 : 0,
+          }}
+        >
+          <Box bg="mono10" p={1} borderRadius="2px">
+            {shippingOrigin && (
+              <Text variant="xs" color="mono100">
+                <strong>Ships from:</strong> {shippingOrigin}
+              </Text>
+            )}
+            {shippingOrigin && shippingInfo && <Spacer y={0.5} />}
+            {shippingInfo && (
+              <Text variant="xs" color="mono100">
+                {shippingInfo}
+              </Text>
+            )}
+          </Box>
+        </Box>
+      )}
+
+      {isConditionAndProvenance && provenance && (
+        <Box
+          pl={6}
+          style={{
+            maxHeight: questionSelected ? "500px" : "0",
+            overflow: "hidden",
+            transition: "max-height 0.3s ease, opacity 0.3s ease",
+            opacity: questionSelected ? 1 : 0,
+          }}
+        >
+          <Spacer y={1} />
+          <Box bg="mono10" p={1} borderRadius="2px">
+            <Text variant="xs" color="mono100">
+              <strong>Provenance:</strong>
+            </Text>
+            <Spacer y={0.5} />
+            <Text
+              variant="xs"
+              color="mono100"
+              dangerouslySetInnerHTML={{ __html: provenance }}
+            />
+          </Box>
           <Spacer y={1} />
         </Box>
       )}
