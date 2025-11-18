@@ -4,7 +4,6 @@ import {
   Button,
   Flex,
   Image,
-  Join,
   Separator,
   Skeleton,
   SkeletonBox,
@@ -14,7 +13,7 @@ import {
   TextArea,
 } from "@artsy/palette"
 import { useFlag } from "@unleash/proxy-client-react"
-import { InquiryQuestionOption } from "Components/Inquiry/Components/InquiryQuestionOption"
+import { InquiryQuestionsList } from "Components/Inquiry/Components/InquiryQuestionsList"
 import { useArtworkInquiryRequest } from "Components/Inquiry/Hooks/useArtworkInquiryRequest"
 import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
 import { logger } from "Components/Inquiry/util"
@@ -144,29 +143,9 @@ const InquiryInquiry: React.FC<
 
       <Separator my={2} />
 
-      {!!artwork.inquiryQuestions &&
-        artwork.inquiryQuestions?.length > 0 &&
-        enableCheckboxes && (
-          <>
-            <Text variant="sm">What information are you looking for?</Text>
-            {/*TODO: clean this up later*/}
-            <Spacer y={1} />
-            <Join separator={<Spacer y={1} />}>
-              {artwork.inquiryQuestions.map(question => {
-                if (!question) return null
-
-                return (
-                  <InquiryQuestionOption
-                    key={question.internalID}
-                    id={question.internalID}
-                    question={question.question}
-                  />
-                )
-              })}
-            </Join>
-            <Spacer y={2} />
-          </>
-        )}
+      {enableCheckboxes && (
+        <InquiryQuestionsList inquiryQuestions={artwork.inquiryQuestions} />
+      )}
 
       <Text variant="sm">
         Personalize your message and include details for the best response.
