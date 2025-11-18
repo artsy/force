@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d374b3434995f174c065d5262c024249>>
+ * @generated SignedSource<<9b770dc883e8c5a81a715cb0bef38e7c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -319,6 +319,12 @@ return {
                     "selections": (v4/*: any*/),
                     "type": "Profile",
                     "abstractKey": null
+                  },
+                  {
+                    "kind": "InlineFragment",
+                    "selections": (v4/*: any*/),
+                    "type": "Video",
+                    "abstractKey": null
                   }
                 ],
                 "storageKey": null
@@ -332,12 +338,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0583707b802770baae3e85ce5c84e632",
+    "cacheID": "d13c17574209986cdc8a0f0714202a60",
     "id": null,
     "metadata": {},
     "name": "CollectorProfileArtistsAddQuery",
     "operationKind": "query",
-    "text": "query CollectorProfileArtistsAddQuery(\n  $query: String!\n) {\n  matchConnection(term: $query, entities: ARTIST, mode: AUTOSUGGEST, first: 7) {\n    edges {\n      node {\n        __typename\n        ...CollectorProfileArtistsAddResult_artist\n        ... on Artist {\n          internalID\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n        ... on Feature {\n          id\n        }\n        ... on Page {\n          id\n        }\n        ... on Profile {\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment CollectorProfileArtistsAddResult_artist on Artist {\n  ...EntityHeaderArtist_artist\n  internalID\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query CollectorProfileArtistsAddQuery(\n  $query: String!\n) {\n  matchConnection(term: $query, entities: ARTIST, mode: AUTOSUGGEST, first: 7) {\n    edges {\n      node {\n        __typename\n        ...CollectorProfileArtistsAddResult_artist\n        ... on Artist {\n          internalID\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n        ... on Feature {\n          id\n        }\n        ... on Page {\n          id\n        }\n        ... on Profile {\n          id\n        }\n        ... on Video {\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment CollectorProfileArtistsAddResult_artist on Artist {\n  ...EntityHeaderArtist_artist\n  internalID\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();
