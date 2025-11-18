@@ -45,33 +45,79 @@ export const useClientQuery = <T extends OperationType>({
     key.current = JSON.stringify(variables)
   }, [variables])
 
-  const refetch = async (newVariables = variables) => {
+  // refetch returns an object with a `promise` that resolves when the network
+  // response arrives and a `disposable` with a `dispose()` method that can be
+  // used to cancel the in-flight subscription where supported.
+  const refetch = (newVariables = variables) => {
     setLoading(true)
 
-    try {
-      const res = await fetchQuery<T>(
-        (environment || relayEnvironment) as unknown as Environment,
-        query,
-        newVariables,
-        cacheConfig,
-      ).toPromise()
+    const observable = fetchQuery<T>(
+      (environment || relayEnvironment) as unknown as Environment,
+      query,
+      newVariables,
+      cacheConfig,
+    )
 
-      setData(res)
-      setLoading(false)
+    let subscription: {
+      unsubscribe?: () => void
+      dispose?: () => void
+    } | null = null
 
-      const operation = createOperationDescriptor(
-        getRequest(query),
-        variables ?? {},
-      )
+    const promise: Promise<T["response"] | null> = new Promise(
+      (resolve, reject) => {
+        try {
+          subscription = observable.subscribe({
+            next: res => {
+              setData(res)
+              setLoading(false)
 
-      // Retain the operation to prevent it from being garbage collected. Garbage collection can compromise type safety (e.g. non-nullable values being `null`), potentially leading to runtime errors.
-      const disposable = relayEnvironment.retain(operation)
+              const operation = createOperationDescriptor(
+                getRequest(query),
+                variables ?? {},
+              )
 
-      setDisposable(disposable)
-    } catch (err) {
-      setError(err)
-      setLoading(false)
+              // Retain the operation to prevent it from being garbage collected.
+              const retained = relayEnvironment.retain(operation)
+              setDisposable(retained)
+
+              resolve(res)
+            },
+            error: err => {
+              setError(err)
+              setLoading(false)
+              reject(err)
+            },
+          })
+        } catch (err) {
+          setError(err as Error)
+          setLoading(false)
+          reject(err)
+        }
+      },
+    )
+
+    const disposable = {
+      dispose: () => {
+        try {
+          // Prefer `unsubscribe` then `dispose` if available on the subscription
+          if (
+            subscription &&
+            typeof (subscription as any).unsubscribe === "function"
+          ) {
+            ;(subscription as any).unsubscribe()
+          } else if (
+            subscription &&
+            typeof (subscription as any).dispose === "function"
+          ) {
+            ;(subscription as any).dispose()
+          }
+        } catch (e) {
+          // swallow
+        }
+      },
     }
+
+    return { promise, disposable }
   }
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>

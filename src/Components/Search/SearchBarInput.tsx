@@ -1,4 +1,4 @@
-import { AutocompleteInput, useDidMount, useUpdateEffect } from "@artsy/palette"
+import { AutocompleteInput, useDidMount } from "@artsy/palette"
 import { type ChangeEvent, type FC, useEffect, useRef, useState } from "react"
 
 import { ActionType } from "@artsy/cohesion"
@@ -48,10 +48,10 @@ export const SearchBarInput: FC<
   const [value, setValue] = useState(searchTerm)
   const [debouncedValue] = useDebounce(value, SEARCH_DEBOUNCE_DELAY)
   const [selectedPill, setSelectedPill] = useState<PillType>(TOP_PILL)
-
-  // FIXME: Refactor to just use callback
-  // We use fetchCounter together with useUpdateEffect to track typing
-  const [fetchCounter, setFetchCounter] = useState(0)
+  // Request tracking / cancellation
+  const [requestId, setRequestId] = useState(0)
+  const lastRequestIdRef = useRef<number | null>(null)
+  const lastRefetchDisposableRef = useRef<{ dispose: () => void } | null>(null)
 
   const { router, match } = useRouter()
 
@@ -86,16 +86,7 @@ export const SearchBarInput: FC<
     },
   ]
 
-  useUpdateEffect(() => {
-    tracking.trackEvent({
-      action_type:
-        options.length > 0
-          ? ActionType.searchedWithResults
-          : ActionType.searchedWithNoResults,
-      context_module: selectedPill.analyticsContextModule,
-      query: value,
-    })
-  }, [fetchCounter])
+  // No-op here — analytics will be fired per-request when its response arrives.
 
   useEffect(() => {
     if (shouldStartSearching(debouncedValue)) {
@@ -109,13 +100,44 @@ export const SearchBarInput: FC<
   const searchRequest = (value: string, entity?: SearchEntity) => {
     const entities = entity ? [entity] : []
 
-    refetch({
+    // Cancel previous in-flight request if possible
+    try {
+      lastRefetchDisposableRef.current?.dispose()
+    } catch (e) {
+      // swallow
+    }
+
+    const nextId = requestId + 1
+    setRequestId(nextId)
+    lastRequestIdRef.current = nextId
+
+    const { promise, disposable } = refetch({
       hasTerm: true,
       term: String(value),
       entities,
-    })
+    }) as { promise: Promise<any>; disposable: { dispose: () => void } }
 
-    setFetchCounter(prevCounter => prevCounter + 1)
+    lastRefetchDisposableRef.current = disposable
+
+    // When the network response arrives, only act if this is the latest request
+    void promise
+      .then((res: any) => {
+        if (lastRequestIdRef.current !== nextId) return
+
+        const nodes = extractNodes(res?.viewer?.searchConnection)
+
+        tracking.trackEvent({
+          action_type:
+            nodes.length > 0
+              ? ActionType.searchedWithResults
+              : ActionType.searchedWithNoResults,
+          context_module: selectedPill.analyticsContextModule,
+          query: value,
+        })
+      })
+      .catch(() => {
+        // network error or cancelled - do not send searchedWithNoResults
+      })
   }
 
   const resetValue = () => {
@@ -134,9 +156,10 @@ export const SearchBarInput: FC<
     setSelectedPill(pill)
     searchRequest(value, pill.searchEntityName as SearchEntity | undefined)
 
+    // Use the pill value directly to avoid stale selectedPill in tracking
     tracking.trackEvent({
       action_type: ActionType.tappedNavigationTab,
-      context_module: selectedPill.analyticsContextModule,
+      context_module: pill.analyticsContextModule,
       query: value,
     })
   }
