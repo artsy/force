@@ -59,11 +59,16 @@ export const Order2OfferCompletedView: React.FC<
         ml="30px"
         mt={1}
       >
-        <Text variant="sm-display" color="mono100">
+        <Text variant="sm" color="mono100">
           {lastOfferAmount}
         </Text>
         {lastOfferNote && (
-          <Text variant="sm-display" color="mono100">
+          <Text
+            variant="sm-display"
+            color="mono100"
+            lineClamp={4}
+            style={{ wordBreak: "break-word" }}
+          >
             {lastOfferNote}
           </Text>
         )}

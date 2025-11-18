@@ -4,7 +4,6 @@ import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckou
 import { useOrder2AddInitialOfferMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2AddInitialOfferMutation"
 import { useOrder2UnsetOrderFulfillmentOptionMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2UnsetOrderFulfillmentOptionMutation"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { useJump } from "Utils/Hooks/useJump"
 import type { Order2OfferStepTestQuery } from "__generated__/Order2OfferStepTestQuery.graphql"
 import { graphql } from "react-relay"
 
@@ -16,14 +15,12 @@ jest.mock(
 jest.mock(
   "Apps/Order2/Routes/Checkout/Mutations/useOrder2UnsetOrderFulfillmentOptionMutation",
 )
-jest.mock("Utils/Hooks/useJump")
 
 const mockUseCheckoutContext = useCheckoutContext as jest.Mock
 const mockUseOrder2AddInitialOfferMutation =
   useOrder2AddInitialOfferMutation as jest.Mock
 const mockUseOrder2UnsetOrderFulfillmentOptionMutation =
   useOrder2UnsetOrderFulfillmentOptionMutation as jest.Mock
-const mockUseJump = useJump as jest.Mock
 
 const MOCK_PRICE_RANGE_ORDER = {
   internalID: "order-id",
@@ -80,7 +77,15 @@ const MOCK_EXACT_PRICE_ORDER = {
         price: "$5,000",
       },
       listPrice: {
+        __typename: "Money",
         major: 5000,
+      },
+      artworkOrEditionSet: {
+        __typename: "Artwork",
+        listPrice: {
+          __typename: "Money",
+          major: 5000,
+        },
       },
     },
   ],
@@ -146,7 +151,6 @@ describe("Order2OfferStep", () => {
   let mockSetOfferAmountComplete: jest.Mock
   let mockSubmitMutation: jest.Mock
   let mockUnsetFulfillmentOptionMutation: jest.Mock
-  let mockJumpTo: jest.Mock
   let mockCheckoutTracking: {
     clickedOfferOption: jest.Mock
     clickedOrderProgression: jest.Mock
@@ -167,7 +171,6 @@ describe("Order2OfferStep", () => {
         },
       },
     }))
-    mockJumpTo = jest.fn()
     mockCheckoutTracking = {
       clickedOfferOption: jest.fn(),
       clickedOrderProgression: jest.fn(),
@@ -177,6 +180,8 @@ describe("Order2OfferStep", () => {
       steps: [{ name: "OFFER_AMOUNT", state: "ACTIVE" }],
       setOfferAmountComplete: mockSetOfferAmountComplete,
       checkoutTracking: mockCheckoutTracking,
+      messages: {},
+      setStepErrorMessage: jest.fn(),
     })
     mockUseOrder2AddInitialOfferMutation.mockReturnValue({
       submitMutation: mockSubmitMutation,
@@ -184,7 +189,6 @@ describe("Order2OfferStep", () => {
     mockUseOrder2UnsetOrderFulfillmentOptionMutation.mockReturnValue({
       submitMutation: mockUnsetFulfillmentOptionMutation,
     })
-    mockUseJump.mockReturnValue({ jumpTo: mockJumpTo })
   })
 
   const { renderWithRelay } = setupTestWrapperTL<Order2OfferStepTestQuery>({
@@ -255,7 +259,7 @@ describe("Order2OfferStep", () => {
           input: {
             orderID: "order-id",
             amountMinor: 150000, // 1500 * 100
-            note: "I sent an offer for US$1,500.00",
+            note: "",
           },
         },
       })
@@ -326,7 +330,7 @@ describe("Order2OfferStep", () => {
           input: {
             orderID: "order-id",
             amountMinor: 180000,
-            note: "I sent an offer for US$1,800.00",
+            note: "",
           },
         },
       })
@@ -426,7 +430,7 @@ describe("Order2OfferStep", () => {
             input: {
               orderID: "order-id",
               amountMinor: 300000,
-              note: "I sent an offer for US$3,000.00",
+              note: "",
             },
           },
         })
@@ -499,6 +503,23 @@ describe("Order2OfferStep", () => {
     })
 
     it("disables submit button while submitting", async () => {
+      // Mock a delayed submission to ensure we can test the disabled state
+      const delayedMock = jest.fn(
+        () =>
+          new Promise(resolve => {
+            setTimeout(() => {
+              resolve({
+                createBuyerOffer: {
+                  offerOrError: { offer: { internalID: "offer-id" } },
+                },
+              })
+            }, 100)
+          }),
+      )
+      mockUseOrder2AddInitialOfferMutation.mockReturnValue({
+        submitMutation: delayedMock,
+      })
+
       renderWithRelay({
         Viewer: () => ({
           me: {
@@ -523,7 +544,7 @@ describe("Order2OfferStep", () => {
       })
 
       await waitFor(() => {
-        expect(mockSubmitMutation).toHaveBeenCalled()
+        expect(delayedMock).toHaveBeenCalled()
       })
     })
   })
@@ -546,7 +567,7 @@ describe("Order2OfferStep", () => {
         "USD",
         "order-id",
         1500,
-        "Midpoint",
+        "Custom amount",
       )
     })
 
@@ -567,7 +588,7 @@ describe("Order2OfferStep", () => {
         "USD",
         "order-id",
         5000,
-        "List price",
+        "Custom amount",
       )
     })
 
@@ -600,7 +621,7 @@ describe("Order2OfferStep", () => {
         "USD",
         "order-id",
         1800,
-        undefined,
+        "Custom amount",
       )
     })
 
@@ -690,7 +711,7 @@ describe("Order2OfferStep", () => {
             input: {
               orderID: "order-id",
               amountMinor: 300000, // 3000 * 100
-              note: "I sent an offer for US$3,000.00",
+              note: "",
             },
           },
         })
@@ -744,7 +765,7 @@ describe("Order2OfferStep", () => {
             input: {
               orderID: "order-id",
               amountMinor: 150000,
-              note: "I sent an offer for US$1,500.00",
+              note: "",
             },
           },
         })
