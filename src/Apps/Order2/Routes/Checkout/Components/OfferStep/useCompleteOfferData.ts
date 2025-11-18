@@ -1,5 +1,4 @@
 import type { Order2OfferCompletedViewProps } from "Apps/Order2/Routes/Checkout/Components/OfferStep/Order2OfferCompletedView"
-import { mostRecentCreatedAt } from "Apps/Order2/Routes/Checkout/Utils/mostRecentCreatedAt"
 import type { useCompleteOfferData_order$key } from "__generated__/useCompleteOfferData_order.graphql"
 import { graphql, useFragment } from "react-relay"
 
@@ -17,8 +16,7 @@ export const useCompleteOfferData = (
     return null
   }
 
-  const mostRecentOffer = mostRecentCreatedAt(orderData.offers)
-
+  const mostRecentOffer = orderData.pendingOffer
   if (!mostRecentOffer?.amount?.minor || mostRecentOffer.amount.minor <= 0) {
     return null
   }
@@ -32,8 +30,7 @@ export const useCompleteOfferData = (
 const FRAGMENT = graphql`
   fragment useCompleteOfferData_order on Order {
     mode
-    offers {
-      createdAt
+    pendingOffer {
       note
       amount {
         minor

@@ -41,7 +41,7 @@ const Order2ReviewStepComponent: React.FC<Order2ReviewStepProps> = ({
   const stripe = useStripe()
 
   // Get the offer ID for offer orders (only call the hook when needed)
-  const offerId = orderData.offers?.[0]?.internalID ?? null
+  const offerId = orderData.pendingOffer?.internalID ?? null
   const {
     steps,
     confirmationToken,
@@ -324,7 +324,7 @@ const FRAGMENT = graphql`
         }
       }
     }
-    offers {
+    pendingOffer {
       internalID
     }
   }

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f0481ba157d4fa12970bd67e3c2d21b6>>
+ * @generated SignedSource<<f91d6fc35d3eb706fe7518b2fd103aeb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,14 +13,13 @@ export type OrderModeEnum = "BUY" | "OFFER" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type useCompleteOfferData_order$data = {
   readonly mode: OrderModeEnum;
-  readonly offers: ReadonlyArray<{
+  readonly pendingOffer: {
     readonly amount: {
       readonly display: string | null | undefined;
       readonly minor: any;
     } | null | undefined;
-    readonly createdAt: string | null | undefined;
     readonly note: string | null | undefined;
-  }>;
+  } | null | undefined;
   readonly " $fragmentType": "useCompleteOfferData_order";
 };
 export type useCompleteOfferData_order$key = {
@@ -46,16 +45,9 @@ const node: ReaderFragment = {
       "args": null,
       "concreteType": "Offer",
       "kind": "LinkedField",
-      "name": "offers",
-      "plural": true,
+      "name": "pendingOffer",
+      "plural": false,
       "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "createdAt",
-          "storageKey": null
-        },
         {
           "alias": null,
           "args": null,
@@ -96,6 +88,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "945d12299d897e0875a3b92d7b6526ed";
+(node as any).hash = "879e3f81a0080cb95acc711b4e8eb22f";
 
 export default node;

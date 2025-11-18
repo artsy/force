@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<36bd86475f138be8d01a611b0de30522>>
+ * @generated SignedSource<<df48986cdebd17d58f48f924fc1aeac9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -58,9 +58,9 @@ export type Order2ReviewStep_order$data = {
     } | null | undefined;
   } | null | undefined>;
   readonly mode: OrderModeEnum;
-  readonly offers: ReadonlyArray<{
+  readonly pendingOffer: {
     readonly internalID: string;
-  }>;
+  } | null | undefined;
   readonly shippingTotal: {
     readonly display: string | null | undefined;
   } | null | undefined;
@@ -347,8 +347,8 @@ return {
       "args": null,
       "concreteType": "Offer",
       "kind": "LinkedField",
-      "name": "offers",
-      "plural": true,
+      "name": "pendingOffer",
+      "plural": false,
       "selections": [
         (v0/*: any*/)
       ],
@@ -360,6 +360,6 @@ return {
 };
 })();
 
-(node as any).hash = "60ce7661d4dfc64919b5798f90605793";
+(node as any).hash = "1938b71409a6b4b4ce68c0d15eff3621";
 
 export default node;

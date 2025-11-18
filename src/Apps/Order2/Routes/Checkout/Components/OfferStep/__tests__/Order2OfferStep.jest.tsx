@@ -28,7 +28,7 @@ const MOCK_PRICE_RANGE_ORDER = {
   source: "artwork_page",
   currencyCode: "USD",
   selectedFulfillmentOption: null,
-  offers: [],
+  pendingOffer: null,
   lineItems: [
     {
       artwork: {
@@ -62,7 +62,7 @@ const MOCK_EXACT_PRICE_ORDER = {
   source: "artwork_page",
   currencyCode: "USD",
   selectedFulfillmentOption: null,
-  offers: [],
+  pendingOffer: null,
   lineItems: [
     {
       artwork: {
@@ -97,7 +97,7 @@ const MOCK_HIDDEN_PRICE_ORDER = {
   currencyCode: "USD",
   source: "artwork_page",
   selectedFulfillmentOption: null,
-  offers: [],
+  pendingOffer: null,
   lineItems: [
     {
       artwork: {
@@ -119,7 +119,7 @@ const MOCK_EDITION_SET_PRICE_RANGE_ORDER = {
   source: "artwork_page",
   currencyCode: "USD",
   selectedFulfillmentOption: null,
-  offers: [],
+  pendingOffer: null,
   lineItems: [
     {
       artwork: {

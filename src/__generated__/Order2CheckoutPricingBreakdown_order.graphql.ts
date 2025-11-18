@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<952ed0b74fdb0b291c70a7280a0cdf18>>
+ * @generated SignedSource<<8d50254f3a2db210346d058fbf79fc97>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,6 +15,43 @@ import { FragmentRefs } from "relay-runtime";
 export type Order2CheckoutPricingBreakdown_order$data = {
   readonly buyerStateExpiresAt: string | null | undefined;
   readonly mode: OrderModeEnum;
+  readonly pendingOffer: {
+    readonly pricingBreakdownLines: ReadonlyArray<{
+      readonly __typename: "ShippingLine";
+      readonly amount: {
+        readonly amount: string | null | undefined;
+        readonly currencySymbol: string | null | undefined;
+      } | null | undefined;
+      readonly amountFallbackText: string | null | undefined;
+      readonly displayName: string;
+    } | {
+      readonly __typename: "SubtotalLine";
+      readonly amount: {
+        readonly amount: string | null | undefined;
+        readonly currencySymbol: string | null | undefined;
+      } | null | undefined;
+      readonly displayName: string;
+    } | {
+      readonly __typename: "TaxLine";
+      readonly amount: {
+        readonly amount: string | null | undefined;
+        readonly currencySymbol: string | null | undefined;
+      } | null | undefined;
+      readonly amountFallbackText: string | null | undefined;
+      readonly displayName: string;
+    } | {
+      readonly __typename: "TotalLine";
+      readonly amount: {
+        readonly display: string | null | undefined;
+      } | null | undefined;
+      readonly amountFallbackText: string | null | undefined;
+      readonly displayName: string;
+    } | {
+      // This will never be '%other', but we need some
+      // value in case none of the concrete values match.
+      readonly __typename: "%other";
+    } | null | undefined>;
+  } | null | undefined;
   readonly pricingBreakdownLines: ReadonlyArray<{
     readonly __typename: "ShippingLine";
     readonly amount: {
@@ -102,7 +139,73 @@ v3 = [
   (v0/*: any*/),
   (v1/*: any*/),
   (v2/*: any*/)
-];
+],
+v4 = {
+  "alias": null,
+  "args": null,
+  "concreteType": null,
+  "kind": "LinkedField",
+  "name": "pricingBreakdownLines",
+  "plural": true,
+  "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "__typename",
+      "storageKey": null
+    },
+    {
+      "kind": "InlineFragment",
+      "selections": (v3/*: any*/),
+      "type": "ShippingLine",
+      "abstractKey": null
+    },
+    {
+      "kind": "InlineFragment",
+      "selections": (v3/*: any*/),
+      "type": "TaxLine",
+      "abstractKey": null
+    },
+    {
+      "kind": "InlineFragment",
+      "selections": [
+        (v0/*: any*/),
+        (v2/*: any*/)
+      ],
+      "type": "SubtotalLine",
+      "abstractKey": null
+    },
+    {
+      "kind": "InlineFragment",
+      "selections": [
+        (v0/*: any*/),
+        (v1/*: any*/),
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Money",
+          "kind": "LinkedField",
+          "name": "amount",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "display",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "type": "TotalLine",
+      "abstractKey": null
+    }
+  ],
+  "storageKey": null
+};
 return {
   "argumentDefinitions": [],
   "kind": "Fragment",
@@ -130,69 +233,16 @@ return {
       "name": "buyerStateExpiresAt",
       "storageKey": null
     },
+    (v4/*: any*/),
     {
       "alias": null,
       "args": null,
-      "concreteType": null,
+      "concreteType": "Offer",
       "kind": "LinkedField",
-      "name": "pricingBreakdownLines",
-      "plural": true,
+      "name": "pendingOffer",
+      "plural": false,
       "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "__typename",
-          "storageKey": null
-        },
-        {
-          "kind": "InlineFragment",
-          "selections": (v3/*: any*/),
-          "type": "ShippingLine",
-          "abstractKey": null
-        },
-        {
-          "kind": "InlineFragment",
-          "selections": (v3/*: any*/),
-          "type": "TaxLine",
-          "abstractKey": null
-        },
-        {
-          "kind": "InlineFragment",
-          "selections": [
-            (v0/*: any*/),
-            (v2/*: any*/)
-          ],
-          "type": "SubtotalLine",
-          "abstractKey": null
-        },
-        {
-          "kind": "InlineFragment",
-          "selections": [
-            (v0/*: any*/),
-            (v1/*: any*/),
-            {
-              "alias": null,
-              "args": null,
-              "concreteType": "Money",
-              "kind": "LinkedField",
-              "name": "amount",
-              "plural": false,
-              "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "display",
-                  "storageKey": null
-                }
-              ],
-              "storageKey": null
-            }
-          ],
-          "type": "TotalLine",
-          "abstractKey": null
-        }
+        (v4/*: any*/)
       ],
       "storageKey": null
     }
@@ -202,6 +252,6 @@ return {
 };
 })();
 
-(node as any).hash = "52a85a3df09af99f600d9b0a5570caaa";
+(node as any).hash = "e5a999380639b2f226d9dfcbcd03672d";
 
 export default node;

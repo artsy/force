@@ -21,7 +21,6 @@ import { useCompleteOfferData } from "Apps/Order2/Routes/Checkout/Components/Off
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useOrder2AddInitialOfferMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2AddInitialOfferMutation"
 import { useOrder2UnsetOrderFulfillmentOptionMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2UnsetOrderFulfillmentOptionMutation"
-import { mostRecentCreatedAt } from "Apps/Order2/Routes/Checkout/Utils/mostRecentCreatedAt"
 import createLogger from "Utils/logger"
 import type {
   Order2OfferStep_order$data,
@@ -71,9 +70,7 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
   const unsetOrderFulfillmentOption =
     useOrder2UnsetOrderFulfillmentOptionMutation()
 
-  const { offers } = orderData
-
-  const lastOffer = mostRecentCreatedAt(offers)
+  const { pendingOffer } = orderData
 
   const [isSubmittingOffer, setIsSubmittingOffer] = useState(false)
 
@@ -82,7 +79,6 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
   )?.state
 
   const completedViewProps = useCompleteOfferData(orderData)
-
 
   const validationSchema = yup.object().shape({
     offerValue: yup
@@ -173,8 +169,8 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
   return (
     <Formik<OfferFormValues>
       initialValues={{
-        offerValue: lastOffer?.amount?.major || 0,
-        offerNote: lastOffer?.note || "",
+        offerValue: pendingOffer?.amount?.major || 0,
+        offerNote: pendingOffer?.note || "",
       }}
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
@@ -256,7 +252,8 @@ const Order2OfferStepFormContent: React.FC<Order2OfferStepFormContentProps> = ({
     submitForm()
   }
 
-  const isPriceHidden = orderData.lineItems?.[0]?.artwork?.priceDisplay === "hidden"
+  const isPriceHidden =
+    orderData.lineItems?.[0]?.artwork?.priceDisplay === "hidden"
 
   return (
     <Flex
@@ -372,8 +369,7 @@ const FRAGMENT = graphql`
     selectedFulfillmentOption {
       type
     }
-    offers {
-      createdAt
+    pendingOffer {
       amount {
         display
         major
