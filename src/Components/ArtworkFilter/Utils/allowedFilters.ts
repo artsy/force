@@ -122,6 +122,11 @@ const ALLOWED_SORTS = [
   "-year",
   "partner_show_position",
   "sale_position",
+  "-sale_position",
+  "bidder_positions_count",
+  "-bidder_positions_count",
+  "prices",
+  "-prices",
 ]
 
 const SORT_SCHEMA = yupString().oneOf(ALLOWED_SORTS)
