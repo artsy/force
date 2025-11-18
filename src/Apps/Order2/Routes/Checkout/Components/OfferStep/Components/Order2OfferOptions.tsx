@@ -115,8 +115,8 @@ export const Order2OfferOptions: React.FC<Order2OfferOptionsProps> = ({
 
   return (
     <RadioGroup onSelect={handleRadioSelect} defaultValue={selectedRadio}>
-      <>
-        {priceOptions.map(({ value: optionValue, description, key }) => (
+      {[
+        ...priceOptions.map(({ value: optionValue, description, key }) => (
           <Radio value={key} label={formatCurrency(optionValue)} key={key}>
             <Spacer y={1} />
             <Text variant="sm-display" color="mono60">
@@ -124,7 +124,7 @@ export const Order2OfferOptions: React.FC<Order2OfferOptionsProps> = ({
             </Text>
             <Spacer y={4} />
           </Radio>
-        ))}
+        )),
         <Radio
           key="price-option-custom"
           value="price-option-custom"
@@ -135,8 +135,8 @@ export const Order2OfferOptions: React.FC<Order2OfferOptionsProps> = ({
               <OfferInput name="offerValue" onBlur={onCustomOfferBlur} />
             </Flex>
           )}
-        </Radio>
-      </>
+        </Radio>,
+      ]}
     </RadioGroup>
   )
 }
