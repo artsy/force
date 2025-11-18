@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7c3924751a1d535e2ce5ad7f1974c742>>
+ * @generated SignedSource<<1a760078cd893e1f8af6e10a2efd2ad8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,6 +23,10 @@ export type InquiryInquiry_artwork$data = {
       readonly width: number | null | undefined;
     } | null | undefined;
   } | null | undefined;
+  readonly inquiryQuestions: ReadonlyArray<{
+    readonly internalID: string;
+    readonly question: string;
+  } | null | undefined> | null | undefined;
   readonly internalID: string;
   readonly partner: {
     readonly name: string | null | undefined;
@@ -36,7 +40,14 @@ export type InquiryInquiry_artwork$key = {
 };
 
 const node: ReaderFragment = (function(){
-var v0 = [
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v1 = [
   {
     "alias": null,
     "args": null,
@@ -51,13 +62,7 @@ return {
   "metadata": null,
   "name": "InquiryInquiry_artwork",
   "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "internalID",
-      "storageKey": null
-    },
+    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -85,7 +90,7 @@ return {
       "kind": "LinkedField",
       "name": "artist",
       "plural": false,
-      "selections": (v0/*: any*/),
+      "selections": (v1/*: any*/),
       "storageKey": "artist(shallow:true)"
     },
     {
@@ -95,7 +100,7 @@ return {
       "kind": "LinkedField",
       "name": "partner",
       "plural": false,
-      "selections": (v0/*: any*/),
+      "selections": (v1/*: any*/),
       "storageKey": null
     },
     {
@@ -158,6 +163,25 @@ return {
         }
       ],
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "InquiryQuestion",
+      "kind": "LinkedField",
+      "name": "inquiryQuestions",
+      "plural": true,
+      "selections": [
+        (v0/*: any*/),
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "question",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
     }
   ],
   "type": "Artwork",
@@ -165,6 +189,6 @@ return {
 };
 })();
 
-(node as any).hash = "c84804fdabc1aa30e6ddd562f5c65a0a";
+(node as any).hash = "763650a61a5a080d27623eb47c1b7554";
 
 export default node;

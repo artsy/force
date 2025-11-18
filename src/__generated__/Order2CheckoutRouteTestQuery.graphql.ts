@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9fc73057cafd893a3b74a503d7ef2383>>
+ * @generated SignedSource<<3d0ff506b713caeba7cba58f81147b5f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -1561,7 +1561,7 @@ return {
         },
         "viewer.me.order.offers": {
           "enumValues": null,
-          "nullable": true,
+          "nullable": false,
           "plural": true,
           "type": "Offer"
         },

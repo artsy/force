@@ -25,7 +25,7 @@ type UseArtworkInquiryRequestInput = Omit<
 }
 
 export const useArtworkInquiryRequest = () => {
-  const { relayEnvironment } = useInquiryContext()
+  const { relayEnvironment, questions } = useInquiryContext()
 
   const { trackEvent } = useTracking()
 
@@ -87,6 +87,7 @@ export const useArtworkInquiryRequest = () => {
             input: {
               inquireableID: artworkID,
               inquireableType: "Artwork",
+              questions: questions,
               ...rest,
             },
           },
