@@ -195,7 +195,10 @@ describe("Order2CheckoutContext", () => {
     })
 
     it("adds offer amount step for OFFER mode orders", async () => {
-      const { getState } = await setup({ mode: "OFFER" })
+      const { getState } = await setup({
+        mode: "OFFER",
+        pendingOffer: null,
+      })
       const state = getState()
 
       expect(state.steps).toEqual([
