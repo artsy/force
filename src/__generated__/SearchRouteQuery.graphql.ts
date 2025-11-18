@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<349200297c2b61a24ae83dda10959810>>
+ * @generated SignedSource<<a96504e21efadb610fdfe9e3e11bb69d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -277,6 +277,12 @@ return {
                     "selections": (v4/*: any*/),
                     "type": "Profile",
                     "abstractKey": null
+                  },
+                  {
+                    "kind": "InlineFragment",
+                    "selections": (v4/*: any*/),
+                    "type": "Video",
+                    "abstractKey": null
                   }
                 ],
                 "storageKey": null
@@ -290,12 +296,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f127b8c34938b7ecf723c22bc14c6e93",
+    "cacheID": "77a564dd0dd7238e5a8e680e2117c726",
     "id": null,
     "metadata": {},
     "name": "SearchRouteQuery",
     "operationKind": "query",
-    "text": "query SearchRouteQuery(\n  $query: String!\n) {\n  matchConnection(term: $query, entities: ARTIST, mode: AUTOSUGGEST, first: 7) {\n    edges {\n      node {\n        __typename\n        ... on Artist {\n          ...SearchRouteOption_artist\n          text: name\n          value: slug\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n        ... on Feature {\n          id\n        }\n        ... on Page {\n          id\n        }\n        ... on Profile {\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment SearchRouteOption_artist on Artist {\n  name\n  initials\n  formattedNationalityAndBirthday\n  image {\n    cropped(height: 200, width: 200) {\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query SearchRouteQuery(\n  $query: String!\n) {\n  matchConnection(term: $query, entities: ARTIST, mode: AUTOSUGGEST, first: 7) {\n    edges {\n      node {\n        __typename\n        ... on Artist {\n          ...SearchRouteOption_artist\n          text: name\n          value: slug\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n        ... on Feature {\n          id\n        }\n        ... on Page {\n          id\n        }\n        ... on Profile {\n          id\n        }\n        ... on Video {\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment SearchRouteOption_artist on Artist {\n  name\n  initials\n  formattedNationalityAndBirthday\n  image {\n    cropped(height: 200, width: 200) {\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();
