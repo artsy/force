@@ -1,4 +1,4 @@
-import { Box, Checkbox, Flex, Join, Spacer, Text } from "@artsy/palette"
+import { Box, Checkbox, Flex, Spacer, Text } from "@artsy/palette"
 import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
 import {
   LocationAutocompleteInput,
@@ -58,18 +58,14 @@ export const InquiryQuestionOption: React.FC<InquiryQuestionOptionProps> = ({
 
   return (
     <Flex flexDirection="column">
-      <Flex flexDirection="row" alignItems="flex-start">
-        <Join separator={<Spacer x={1} />}>
-          <Box pl={2}>
-            <Checkbox selected={questionSelected} onSelect={setSelection} />
-          </Box>
-          <Text variant="sm">{question}</Text>
-        </Join>
-      </Flex>
+      <Checkbox selected={questionSelected} onSelect={setSelection}>
+        <Text variant="sm" color="mono100">
+          {question}
+        </Text>
+      </Checkbox>
 
       {isShipping && (
         <Box
-          pl={6}
           data-testid="location-container"
           style={{
             maxHeight: questionSelected ? "200px" : "0",
@@ -88,7 +84,6 @@ export const InquiryQuestionOption: React.FC<InquiryQuestionOptionProps> = ({
               setShippingDetails(normalizePlace(place))
             }}
           />
-          <Spacer y={1} />
         </Box>
       )}
     </Flex>
