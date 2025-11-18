@@ -113,32 +113,30 @@ export const Order2OfferOptions: React.FC<Order2OfferOptionsProps> = ({
     setSelectedRadio(value)
   }
 
-  const radioOptions = [
-    ...priceOptions.map(({ value: optionValue, description, key }) => (
-      <Radio value={key} label={formatCurrency(optionValue)} key={key}>
-        <Spacer y={1} />
-        <Text variant="sm-display" color="mono60">
-          {description}
-        </Text>
-        <Spacer y={4} />
-      </Radio>
-    )),
-    <Radio
-      key="price-option-custom"
-      value="price-option-custom"
-      label="Other amount"
-    >
-      {selectedRadio === "price-option-custom" && (
-        <Flex flexDirection="column" mt={2}>
-          <OfferInput name="offerValue" onBlur={onCustomOfferBlur} />
-        </Flex>
-      )}
-    </Radio>,
-  ]
-
   return (
     <RadioGroup onSelect={handleRadioSelect} defaultValue={selectedRadio}>
-      {radioOptions}
+      <>
+        {priceOptions.map(({ value: optionValue, description, key }) => (
+          <Radio value={key} label={formatCurrency(optionValue)} key={key}>
+            <Spacer y={1} />
+            <Text variant="sm-display" color="mono60">
+              {description}
+            </Text>
+            <Spacer y={4} />
+          </Radio>
+        ))}
+        <Radio
+          key="price-option-custom"
+          value="price-option-custom"
+          label="Other amount"
+        >
+          {selectedRadio === "price-option-custom" && (
+            <Flex flexDirection="column" mt={2}>
+              <OfferInput name="offerValue" onBlur={onCustomOfferBlur} />
+            </Flex>
+          )}
+        </Radio>
+      </>
     </RadioGroup>
   )
 }
