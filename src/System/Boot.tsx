@@ -7,6 +7,7 @@ import {
 } from "Apps/AppPreferences/useAppPreferences"
 import { AuthDialogProvider } from "Components/AuthDialog/AuthDialogContext"
 import { CookieConsentManager } from "Components/CookieConsentManager/CookieConsentManager"
+import { DeveloperBreakpointOverlay } from "Components/DeveloperBreakpointOverlay"
 import { PROGRESSIVE_ONBOARDING_KEYS } from "Components/ProgressiveOnboarding/progressiveOnboardingKeys"
 import { StickyProvider } from "Components/Sticky"
 import { ErrorBoundary } from "System/Components/ErrorBoundary"
@@ -86,6 +87,7 @@ export const Boot: React.FC<
                             >
                               <CookieConsentManager>
                                 <SiftContainer />
+                                <DeveloperBreakpointOverlay />
                                 {children}
                               </CookieConsentManager>
                             </DismissibleProvider>
