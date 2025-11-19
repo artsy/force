@@ -18,7 +18,7 @@ export const DeveloperBreakpointOverlay: React.FC = () => {
     return null
   }
 
-  const [mode, setMode] = useState<OverlayMode>("off")
+  const [mode, setMode] = useState<OverlayMode>("auto")
   const [isResizing, setIsResizing] = useState(false)
   const [dimensions, setDimensions] = useState({
     width: 0,
@@ -214,7 +214,7 @@ export const DeveloperBreakpointOverlay: React.FC = () => {
             Mode: {mode}
           </Text>
           <Text variant="xs" color="mono40">
-            Ctrl+Shift+B to cycle
+            Cmd+Shift+B to cycle
           </Text>
         </Flex>
       </Flex>

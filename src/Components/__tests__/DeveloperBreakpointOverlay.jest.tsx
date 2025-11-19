@@ -37,18 +37,14 @@ describe("DeveloperBreakpointOverlay", () => {
 
   it("should not render by default (off mode)", () => {
     renderComponent()
-    expect(
-      screen.queryByText(/Ctrl\+Shift\+B to cycle/),
-    ).not.toBeInTheDocument()
+    expect(screen.queryByText(/Cmd\+Shift\+B to cycle/)).not.toBeInTheDocument()
   })
 
   it("should cycle through modes: off -> auto -> on -> off", () => {
     renderComponent()
 
     // Start in off mode
-    expect(
-      screen.queryByText(/Ctrl\+Shift\+B to cycle/),
-    ).not.toBeInTheDocument()
+    expect(screen.queryByText(/Cmd\+Shift\+B to cycle/)).not.toBeInTheDocument()
 
     // Press hotkey to switch to auto mode
     act(() => {
@@ -62,9 +58,7 @@ describe("DeveloperBreakpointOverlay", () => {
     })
 
     // Auto mode doesn't show until resize
-    expect(
-      screen.queryByText(/Ctrl\+Shift\+B to cycle/),
-    ).not.toBeInTheDocument()
+    expect(screen.queryByText(/Cmd\+Shift\+B to cycle/)).not.toBeInTheDocument()
 
     // Trigger resize to show in auto mode
     act(() => {
@@ -97,9 +91,7 @@ describe("DeveloperBreakpointOverlay", () => {
       )
     })
 
-    expect(
-      screen.queryByText(/Ctrl\+Shift\+B to cycle/),
-    ).not.toBeInTheDocument()
+    expect(screen.queryByText(/Cmd\+Shift\+B to cycle/)).not.toBeInTheDocument()
   })
 
   it("should show overlay when resizing in auto mode", () => {
@@ -251,8 +243,6 @@ describe("DeveloperBreakpointOverlay", () => {
       window.dispatchEvent(new Event("resize"))
     })
 
-    expect(
-      screen.queryByText(/Ctrl\+Shift\+B to cycle/),
-    ).not.toBeInTheDocument()
+    expect(screen.queryByText(/Cmd\+Shift\+B to cycle/)).not.toBeInTheDocument()
   })
 })
