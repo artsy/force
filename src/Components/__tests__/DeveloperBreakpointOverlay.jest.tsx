@@ -3,6 +3,8 @@ import { DeveloperBreakpointOverlay } from "Components/DeveloperBreakpointOverla
 import { act, render, screen } from "@testing-library/react"
 
 describe("DeveloperBreakpointOverlay", () => {
+  const originalNodeEnv = process.env.NODE_ENV
+
   const renderComponent = () => {
     return render(
       <Theme>
@@ -12,6 +14,9 @@ describe("DeveloperBreakpointOverlay", () => {
   }
 
   beforeEach(() => {
+    // Mock development environment
+    process.env.NODE_ENV = "development"
+
     // Set initial window dimensions
     Object.defineProperty(window, "innerWidth", {
       writable: true,
@@ -23,6 +28,11 @@ describe("DeveloperBreakpointOverlay", () => {
       configurable: true,
       value: 768,
     })
+  })
+
+  afterEach(() => {
+    // Restore original NODE_ENV
+    process.env.NODE_ENV = originalNodeEnv
   })
 
   it("should not render by default", () => {
@@ -49,7 +59,7 @@ describe("DeveloperBreakpointOverlay", () => {
     act(() => {
       window.dispatchEvent(
         new KeyboardEvent("keydown", {
-          key: "B",
+          code: "KeyB",
           ctrlKey: true,
           shiftKey: true,
         }),
@@ -66,7 +76,7 @@ describe("DeveloperBreakpointOverlay", () => {
     act(() => {
       window.dispatchEvent(
         new KeyboardEvent("keydown", {
-          key: "B",
+          code: "KeyB",
           ctrlKey: true,
           shiftKey: true,
         }),
@@ -114,7 +124,7 @@ describe("DeveloperBreakpointOverlay", () => {
       window.innerHeight = 768
       window.dispatchEvent(
         new KeyboardEvent("keydown", {
-          key: "B",
+          code: "KeyB",
           ctrlKey: true,
           shiftKey: true,
         }),
@@ -122,5 +132,19 @@ describe("DeveloperBreakpointOverlay", () => {
     })
 
     expect(screen.getByText("1024 × 768")).toBeInTheDocument()
+  })
+
+  it("should not render in production", () => {
+    process.env.NODE_ENV = "production"
+    renderComponent()
+
+    // Trigger resize to try to show overlay
+    act(() => {
+      window.dispatchEvent(new Event("resize"))
+    })
+
+    expect(
+      screen.queryByText(/Ctrl\+Shift\+B to toggle/),
+    ).not.toBeInTheDocument()
   })
 })

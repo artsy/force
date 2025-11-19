@@ -6,8 +6,14 @@ import { useCallback, useEffect, useState } from "react"
  * Developer overlay that displays the current breakpoint and viewport dimensions
  * Triggered by pressing Ctrl+Shift+B (or Cmd+Shift+B on Mac)
  * Shows automatically while resizing the viewport, then fades out after 2 seconds
+ * Only renders in development mode
  */
 export const DeveloperBreakpointOverlay: React.FC = () => {
+  // Only render in development
+  if (process.env.NODE_ENV !== "development") {
+    return null
+  }
+
   const [isVisible, setIsVisible] = useState(false)
   const [dimensions, setDimensions] = useState({
     width: 0,
@@ -50,10 +56,11 @@ export const DeveloperBreakpointOverlay: React.FC = () => {
 
     // Toggle overlay with Ctrl+Shift+B (Cmd+Shift+B on Mac)
     const handleKeyPress = (event: KeyboardEvent) => {
+      // Use event.code for more reliable key detection across browsers
       if (
         (event.ctrlKey || event.metaKey) &&
         event.shiftKey &&
-        event.key === "B"
+        event.code === "KeyB"
       ) {
         event.preventDefault()
         setIsVisible(prev => !prev)
