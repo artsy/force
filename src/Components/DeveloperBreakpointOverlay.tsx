@@ -6,7 +6,7 @@ type OverlayMode = "off" | "auto" | "on"
 
 /**
  * Developer overlay that displays the current breakpoint and viewport dimensions
- * Press Ctrl+Shift+B (or Cmd+Shift+B on Mac) to cycle through modes:
+ * Press Ctrl+Shift+B to cycle through modes:
  * - off: overlay hidden
  * - auto: shows while resizing, fades after 2 seconds
  * - on: always visible
@@ -61,14 +61,10 @@ export const DeveloperBreakpointOverlay: React.FC = () => {
       }
     }
 
-    // Cycle through modes with Ctrl+Shift+B (Cmd+Shift+B on Mac)
+    // Cycle through modes with Ctrl+Shift+B
     const handleKeyPress = (event: KeyboardEvent) => {
       // Use event.code for more reliable key detection across browsers
-      if (
-        (event.ctrlKey || event.metaKey) &&
-        event.shiftKey &&
-        event.code === "KeyB"
-      ) {
+      if (event.ctrlKey && event.shiftKey && event.code === "KeyB") {
         event.preventDefault()
         setMode(prev => {
           if (prev === "off") return "auto"
@@ -214,7 +210,7 @@ export const DeveloperBreakpointOverlay: React.FC = () => {
             Mode: {mode}
           </Text>
           <Text variant="xs" color="mono40">
-            Cmd+Shift+B to cycle
+            Ctrl+Shift+B to cycle
           </Text>
         </Flex>
       </Flex>
