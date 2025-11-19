@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<afbc009f5197af6d5faadc17646ee4d1>>
+ * @generated SignedSource<<03f6ff03539d991bbd68e2c53c5d10ce>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SearchEntity = "ARTICLE" | "ARTIST" | "ARTIST_SERIES" | "ARTWORK" | "CITY" | "COLLECTION" | "FAIR" | "FEATURE" | "GALLERY" | "GENE" | "INSTITUTION" | "PAGE" | "PROFILE" | "SALE" | "SHOW" | "TAG" | "VIEWING_ROOM" | "%future added value";
+export type SearchEntity = "ARTICLE" | "ARTIST" | "ARTIST_SERIES" | "ARTWORK" | "CITY" | "COLLECTION" | "FAIR" | "FEATURE" | "GALLERY" | "GENE" | "INSTITUTION" | "PAGE" | "PROFILE" | "SALE" | "SHOW" | "TAG" | "VIDEO" | "VIEWING_ROOM" | "%future added value";
 export type SearchResultsEntityQuery$variables = {
   after?: string | null | undefined;
   before?: string | null | undefined;

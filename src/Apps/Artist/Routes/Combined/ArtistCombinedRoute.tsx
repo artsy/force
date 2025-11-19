@@ -79,6 +79,10 @@ const ArtistCombinedRoute: React.FC<
     if (scrolledToSection.current) return
 
     const scrollToSection = async () => {
+      if (scrolledToSection.current) return
+
+      scrolledToSection.current = true
+
       if (section === "auction-results") {
         await waitUntil("auction")
         jumpTo("marketSignalsTop", { offset: 40 })
@@ -92,8 +96,6 @@ const ArtistCombinedRoute: React.FC<
         const newPath = location.pathname.replace(/\/about$/, "")
         router.replace(newPath)
       }
-
-      scrolledToSection.current = true
     }
 
     scrollToSection()

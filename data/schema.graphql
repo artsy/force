@@ -15540,6 +15540,7 @@ union Match =
   | Sale
   | Show
   | Tag
+  | Video
 
 # A connection to a list of items.
 type MatchConnection {
@@ -21210,6 +21211,7 @@ type Query {
       SALE
       SHOW
       TAG
+      VIDEO
       VIEWING_ROOM
     ]
     first: Int
@@ -22953,6 +22955,7 @@ enum SearchEntity {
   SALE
   SHOW
   TAG
+  VIDEO
   VIEWING_ROOM
 }
 
@@ -26719,6 +26722,8 @@ type VerifyUser {
 
 # An object containing video metadata
 type Video {
+  # The aspect ratio of the video (width / height)
+  aspectRatio: Float
   description(format: Format): String
 
   # Only YouTube and Vimeo are supported
@@ -27564,6 +27569,7 @@ type Viewer {
       SALE
       SHOW
       TAG
+      VIDEO
       VIEWING_ROOM
     ]
     first: Int

@@ -305,6 +305,7 @@ describe("Order2PricingBreakdown", () => {
       Me: () => ({
         order: {
           mode: "OFFER",
+          pendingOffer: null,
           pricingBreakdownLines: [
             {
               __typename: "SubtotalLine",
