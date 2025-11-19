@@ -22,6 +22,7 @@ import {
   MediaContextProvider,
 } from "Utils/Responsive"
 import { SiftContainer } from "Utils/SiftContainer"
+import { isDevelopment } from "Utils/device"
 import { getENV } from "Utils/getENV"
 import { type FC, useEffect } from "react"
 import { HeadProvider } from "react-head"
@@ -87,7 +88,7 @@ export const Boot: React.FC<
                             >
                               <CookieConsentManager>
                                 <SiftContainer />
-                                {process.env.NODE_ENV === "development" && (
+                                {isDevelopment && (
                                   <DeveloperBreakpointOverlay />
                                 )}
                                 {children}
