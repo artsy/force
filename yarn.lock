@@ -47,10 +47,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@artsy/detect-responsive-traits@npm:^0.1.0":
-  version: 0.1.0
-  resolution: "@artsy/detect-responsive-traits@npm:0.1.0"
-  checksum: 10c0/19752c60eca6e0e3ae560639d66241cbec9045160f6561c5ef1493160cddced936d319ae19e8a3397e72588c74f57acfccabf09f3b53dec00ae07ae81a17e190
+"@artsy/detect-responsive-traits@npm:^0.2.0":
+  version: 0.2.0
+  resolution: "@artsy/detect-responsive-traits@npm:0.2.0"
+  checksum: 10c0/341e7f7694b79a37213e82662c8b44b98dbc2c7918ed61339d0731ed1952b860973f12d0817b7e05be904cbff3c42e68f5dbe57472869d9791de67fa0a8b4a23
   languageName: node
   linkType: hard
 
@@ -9310,7 +9310,7 @@ __metadata:
     "@artaio/arta-browser": "npm:^2.16.1"
     "@artsy/cohesion": "npm:4.324.0"
     "@artsy/commerce_helpers": artsy/commerce_helpers
-    "@artsy/detect-responsive-traits": "npm:^0.1.0"
+    "@artsy/detect-responsive-traits": "npm:^0.2.0"
     "@artsy/dismissible": "npm:^0.7.0"
     "@artsy/express-reloadable": "npm:^1.7.0"
     "@artsy/fresnel": "npm:^8.1.0"
