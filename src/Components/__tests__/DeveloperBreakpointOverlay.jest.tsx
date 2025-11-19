@@ -35,27 +35,22 @@ describe("DeveloperBreakpointOverlay", () => {
     process.env.NODE_ENV = originalNodeEnv
   })
 
-  it("should not render by default", () => {
+  it("should not render by default (off mode)", () => {
     renderComponent()
     expect(
-      screen.queryByText(/Ctrl\+Shift\+B to toggle/),
+      screen.queryByText(/Ctrl\+Shift\+B to cycle/),
     ).not.toBeInTheDocument()
   })
 
-  it("should show overlay when window is resized", () => {
+  it("should cycle through modes: off -> auto -> on -> off", () => {
     renderComponent()
 
-    act(() => {
-      window.innerWidth = 800
-      window.dispatchEvent(new Event("resize"))
-    })
+    // Start in off mode
+    expect(
+      screen.queryByText(/Ctrl\+Shift\+B to cycle/),
+    ).not.toBeInTheDocument()
 
-    expect(screen.getByText(/Ctrl\+Shift\+B to toggle/)).toBeInTheDocument()
-  })
-
-  it("should toggle overlay with Ctrl+Shift+B", () => {
-    renderComponent()
-
+    // Press hotkey to switch to auto mode
     act(() => {
       window.dispatchEvent(
         new KeyboardEvent("keydown", {
@@ -66,14 +61,112 @@ describe("DeveloperBreakpointOverlay", () => {
       )
     })
 
-    expect(screen.getByText(/Ctrl\+Shift\+B to toggle/)).toBeInTheDocument()
+    // Auto mode doesn't show until resize
+    expect(
+      screen.queryByText(/Ctrl\+Shift\+B to cycle/),
+    ).not.toBeInTheDocument()
+
+    // Trigger resize to show in auto mode
+    act(() => {
+      window.dispatchEvent(new Event("resize"))
+    })
+
+    expect(screen.getByText(/Mode: auto/)).toBeInTheDocument()
+
+    // Press hotkey to switch to on mode
+    act(() => {
+      window.dispatchEvent(
+        new KeyboardEvent("keydown", {
+          code: "KeyB",
+          ctrlKey: true,
+          shiftKey: true,
+        }),
+      )
+    })
+
+    expect(screen.getByText(/Mode: on/)).toBeInTheDocument()
+
+    // Press hotkey to switch back to off mode
+    act(() => {
+      window.dispatchEvent(
+        new KeyboardEvent("keydown", {
+          code: "KeyB",
+          ctrlKey: true,
+          shiftKey: true,
+        }),
+      )
+    })
+
+    expect(
+      screen.queryByText(/Ctrl\+Shift\+B to cycle/),
+    ).not.toBeInTheDocument()
+  })
+
+  it("should show overlay when resizing in auto mode", () => {
+    renderComponent()
+
+    // Switch to auto mode
+    act(() => {
+      window.dispatchEvent(
+        new KeyboardEvent("keydown", {
+          code: "KeyB",
+          ctrlKey: true,
+          shiftKey: true,
+        }),
+      )
+    })
+
+    // Trigger resize
+    act(() => {
+      window.innerWidth = 800
+      window.dispatchEvent(new Event("resize"))
+    })
+
+    expect(screen.getByText(/Mode: auto/)).toBeInTheDocument()
+  })
+
+  it("should stay visible in on mode without resize", () => {
+    renderComponent()
+
+    // Switch to auto mode
+    act(() => {
+      window.dispatchEvent(
+        new KeyboardEvent("keydown", {
+          code: "KeyB",
+          ctrlKey: true,
+          shiftKey: true,
+        }),
+      )
+    })
+
+    // Switch to on mode
+    act(() => {
+      window.dispatchEvent(
+        new KeyboardEvent("keydown", {
+          code: "KeyB",
+          ctrlKey: true,
+          shiftKey: true,
+        }),
+      )
+    })
+
+    expect(screen.getByText(/Mode: on/)).toBeInTheDocument()
   })
 
   it("should display correct breakpoint for different viewport sizes", () => {
     renderComponent()
 
-    // Show overlay
+    // Switch to on mode for always visible
     act(() => {
+      // off -> auto
+      window.dispatchEvent(
+        new KeyboardEvent("keydown", {
+          code: "KeyB",
+          ctrlKey: true,
+          shiftKey: true,
+        }),
+      )
+      // auto -> on
       window.dispatchEvent(
         new KeyboardEvent("keydown", {
           code: "KeyB",
@@ -122,6 +215,14 @@ describe("DeveloperBreakpointOverlay", () => {
     act(() => {
       window.innerWidth = 1024
       window.innerHeight = 768
+      // Switch to on mode
+      window.dispatchEvent(
+        new KeyboardEvent("keydown", {
+          code: "KeyB",
+          ctrlKey: true,
+          shiftKey: true,
+        }),
+      )
       window.dispatchEvent(
         new KeyboardEvent("keydown", {
           code: "KeyB",
@@ -138,13 +239,20 @@ describe("DeveloperBreakpointOverlay", () => {
     process.env.NODE_ENV = "production"
     renderComponent()
 
-    // Trigger resize to try to show overlay
+    // Try to activate overlay
     act(() => {
+      window.dispatchEvent(
+        new KeyboardEvent("keydown", {
+          code: "KeyB",
+          ctrlKey: true,
+          shiftKey: true,
+        }),
+      )
       window.dispatchEvent(new Event("resize"))
     })
 
     expect(
-      screen.queryByText(/Ctrl\+Shift\+B to toggle/),
+      screen.queryByText(/Ctrl\+Shift\+B to cycle/),
     ).not.toBeInTheDocument()
   })
 })

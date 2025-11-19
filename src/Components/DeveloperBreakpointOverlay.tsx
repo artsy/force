@@ -2,10 +2,14 @@ import { Box, Flex, Text, useTheme } from "@artsy/palette"
 import { BREAKPOINTS } from "Utils/Responsive"
 import { useCallback, useEffect, useState } from "react"
 
+type OverlayMode = "off" | "auto" | "on"
+
 /**
  * Developer overlay that displays the current breakpoint and viewport dimensions
- * Triggered by pressing Ctrl+Shift+B (or Cmd+Shift+B on Mac)
- * Shows automatically while resizing the viewport, then fades out after 2 seconds
+ * Press Ctrl+Shift+B (or Cmd+Shift+B on Mac) to cycle through modes:
+ * - off: overlay hidden
+ * - auto: shows while resizing, fades after 2 seconds
+ * - on: always visible
  * Only renders in development mode
  */
 export const DeveloperBreakpointOverlay: React.FC = () => {
@@ -14,7 +18,8 @@ export const DeveloperBreakpointOverlay: React.FC = () => {
     return null
   }
 
-  const [isVisible, setIsVisible] = useState(false)
+  const [mode, setMode] = useState<OverlayMode>("off")
+  const [isResizing, setIsResizing] = useState(false)
   const [dimensions, setDimensions] = useState({
     width: 0,
     height: 0,
@@ -44,17 +49,19 @@ export const DeveloperBreakpointOverlay: React.FC = () => {
 
     let resizeTimeout: NodeJS.Timeout
 
-    // Show overlay on resize, hide after 2 seconds of no resizing
+    // Show overlay on resize when in auto mode
     const handleResize = () => {
       updateDimensions()
-      setIsVisible(true)
-      clearTimeout(resizeTimeout)
-      resizeTimeout = setTimeout(() => {
-        setIsVisible(false)
-      }, 2000)
+      if (mode === "auto") {
+        setIsResizing(true)
+        clearTimeout(resizeTimeout)
+        resizeTimeout = setTimeout(() => {
+          setIsResizing(false)
+        }, 2000)
+      }
     }
 
-    // Toggle overlay with Ctrl+Shift+B (Cmd+Shift+B on Mac)
+    // Cycle through modes with Ctrl+Shift+B (Cmd+Shift+B on Mac)
     const handleKeyPress = (event: KeyboardEvent) => {
       // Use event.code for more reliable key detection across browsers
       if (
@@ -63,7 +70,11 @@ export const DeveloperBreakpointOverlay: React.FC = () => {
         event.code === "KeyB"
       ) {
         event.preventDefault()
-        setIsVisible(prev => !prev)
+        setMode(prev => {
+          if (prev === "off") return "auto"
+          if (prev === "auto") return "on"
+          return "off"
+        })
       }
     }
 
@@ -75,7 +86,10 @@ export const DeveloperBreakpointOverlay: React.FC = () => {
       window.removeEventListener("keydown", handleKeyPress)
       clearTimeout(resizeTimeout)
     }
-  }, [updateDimensions])
+  }, [updateDimensions, mode])
+
+  // Determine if overlay should be visible
+  const isVisible = mode === "on" || (mode === "auto" && isResizing)
 
   if (!isVisible) return null
 
@@ -195,9 +209,14 @@ export const DeveloperBreakpointOverlay: React.FC = () => {
         </Flex>
 
         {/* Help text */}
-        <Text variant="xs" color="mono40" mt={1}>
-          Ctrl+Shift+B to toggle
-        </Text>
+        <Flex flexDirection="column" alignItems="flex-end" gap={0.5} mt={1}>
+          <Text variant="xs" color="mono40">
+            Mode: {mode}
+          </Text>
+          <Text variant="xs" color="mono40">
+            Ctrl+Shift+B to cycle
+          </Text>
+        </Flex>
       </Flex>
     </>
   )
