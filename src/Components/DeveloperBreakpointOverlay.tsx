@@ -3,6 +3,7 @@ import { BREAKPOINTS } from "Utils/Responsive"
 import { useCallback, useEffect, useState } from "react"
 
 type OverlayMode = "off" | "auto" | "on"
+type Breakpoint = "xs" | "sm" | "md" | "lg"
 
 /**
  * Developer overlay that displays the current breakpoint and viewport dimensions
@@ -12,17 +13,17 @@ type OverlayMode = "off" | "auto" | "on"
  * - on: always visible
  */
 export const DeveloperBreakpointOverlay: React.FC = () => {
-  const [mode, setMode] = useState<OverlayMode>("auto")
+  const [mode, setMode] = useState<OverlayMode>("off")
   const [isResizing, setIsResizing] = useState(false)
   const [dimensions, setDimensions] = useState({
     width: 0,
     height: 0,
   })
-  const [currentBreakpoint, setCurrentBreakpoint] = useState<string>("")
+  const [currentBreakpoint, setCurrentBreakpoint] = useState<Breakpoint>("xs")
   const { theme } = useTheme()
 
   // Determine current breakpoint based on width
-  const getBreakpoint = useCallback((width: number): string => {
+  const getBreakpoint = useCallback((width: number): Breakpoint => {
     if (width >= BREAKPOINTS.lg) return "lg"
     if (width >= BREAKPOINTS.md) return "md"
     if (width >= BREAKPOINTS.sm) return "sm"
@@ -83,19 +84,20 @@ export const DeveloperBreakpointOverlay: React.FC = () => {
 
   if (!isVisible) return null
 
-  const breakpointColors = {
+  const breakpointColors: Record<Breakpoint, string> = {
     xs: "rgba(255, 99, 132, 0.6)", // Red
     sm: "rgba(255, 206, 86, 0.6)", // Yellow
     md: "rgba(54, 162, 235, 0.6)", // Blue
     lg: "rgba(75, 192, 192, 0.6)", // Green
   }
 
-  const breakpointInfo = [
-    { name: "xs", min: 0, max: BREAKPOINTS.sm - 1 },
-    { name: "sm", min: BREAKPOINTS.sm, max: BREAKPOINTS.md - 1 },
-    { name: "md", min: BREAKPOINTS.md, max: BREAKPOINTS.lg - 1 },
-    { name: "lg", min: BREAKPOINTS.lg, max: Number.POSITIVE_INFINITY },
-  ]
+  const breakpointInfo: Array<{ name: Breakpoint; min: number; max: number }> =
+    [
+      { name: "xs", min: 0, max: BREAKPOINTS.sm - 1 },
+      { name: "sm", min: BREAKPOINTS.sm, max: BREAKPOINTS.md - 1 },
+      { name: "md", min: BREAKPOINTS.md, max: BREAKPOINTS.lg - 1 },
+      { name: "lg", min: BREAKPOINTS.lg, max: Number.POSITIVE_INFINITY },
+    ]
 
   return (
     <>
