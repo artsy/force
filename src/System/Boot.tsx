@@ -87,7 +87,9 @@ export const Boot: React.FC<
                             >
                               <CookieConsentManager>
                                 <SiftContainer />
-                                <DeveloperBreakpointOverlay />
+                                {process.env.NODE_ENV === "development" && (
+                                  <DeveloperBreakpointOverlay />
+                                )}
                                 {children}
                               </CookieConsentManager>
                             </DismissibleProvider>

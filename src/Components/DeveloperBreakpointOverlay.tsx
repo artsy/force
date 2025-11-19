@@ -10,14 +10,8 @@ type OverlayMode = "off" | "auto" | "on"
  * - off: overlay hidden
  * - auto: shows while resizing, fades after 2 seconds
  * - on: always visible
- * Only renders in development mode
  */
 export const DeveloperBreakpointOverlay: React.FC = () => {
-  // Only render in development
-  if (process.env.NODE_ENV !== "development") {
-    return null
-  }
-
   const [mode, setMode] = useState<OverlayMode>("auto")
   const [isResizing, setIsResizing] = useState(false)
   const [dimensions, setDimensions] = useState({
