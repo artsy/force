@@ -38,7 +38,7 @@ const InquiryInquiry: React.FC<
 > = ({ artwork }) => {
   const { user } = useSystemContext()
 
-  const { next, setInquiry, inquiry, artworkID, setContext } =
+  const { next, setInquiry, inquiry, artworkID, setContext, questions } =
     useInquiryContext()
 
   const [mode, setMode] = useState<Mode>("Pending")
@@ -158,7 +158,7 @@ const InquiryInquiry: React.FC<
         title="Your message"
         defaultValue={inquiry.message}
         onChange={handleTextAreaChange}
-        required
+        required={questions?.length === 0}
       />
 
       <Spacer y={1} />
