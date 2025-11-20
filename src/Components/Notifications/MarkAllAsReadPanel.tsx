@@ -1,28 +1,26 @@
-import { Box, Clickable, Text } from "@artsy/palette"
-
+import type { ClickableProps } from "@artsy/palette"
+import { ContextualMenuItemButton } from "Components/ContextualMenu"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import createLogger from "Utils/logger"
+import { forwardRef } from "react"
 import { markAllNotificationsAsRead } from "./Mutations/markAllNotificationsAsRead"
-
-export const MARK_ALL_AS_READ_PANEL_HEIGHT = 40
 
 const logger = createLogger("MarkAllAsReadPanel")
 
-export interface MarkAllAsReadPanelProps {
+export interface MarkAllAsReadPanelProps extends ClickableProps {
   unreadCounts: number
 }
 
-export const MarkAllAsReadPanel: React.FC<
-  React.PropsWithChildren<MarkAllAsReadPanelProps>
-> = ({ unreadCounts }) => {
+export const MarkAllAsReadPanel = forwardRef<
+  HTMLButtonElement,
+  MarkAllAsReadPanelProps
+>(({ unreadCounts, ...rest }, ref) => {
   const { relayEnvironment } = useSystemContext()
 
   const hasUnreadNotifications = unreadCounts > 0
 
   const markAllAsRead = async () => {
-    if (!relayEnvironment) {
-      return
-    }
+    if (!relayEnvironment) return
 
     try {
       const response = await markAllNotificationsAsRead(relayEnvironment)
@@ -39,20 +37,14 @@ export const MarkAllAsReadPanel: React.FC<
   }
 
   return (
-    <Box>
-      <Clickable
-        onClick={markAllAsRead}
-        disabled={!hasUnreadNotifications}
-        width="100%"
-        p={2}
-      >
-        <Text
-          variant="sm-display"
-          color={!hasUnreadNotifications ? "mono60" : "mono100"}
-        >
-          Mark all as read
-        </Text>
-      </Clickable>
-    </Box>
+    <ContextualMenuItemButton
+      ref={ref}
+      onClick={markAllAsRead}
+      disabled={!hasUnreadNotifications}
+      color={!hasUnreadNotifications ? "mono60" : "mono100"}
+      {...rest}
+    >
+      Mark all as read
+    </ContextualMenuItemButton>
   )
-}
+})

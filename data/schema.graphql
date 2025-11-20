@@ -4829,6 +4829,33 @@ type BankAccount {
   type: BankAccountTypes!
 }
 
+# Result of checking if a bank account has sufficient balance for an order
+type BankAccountBalanceCheck {
+  # Optional message providing additional context about the result
+  message: String
+
+  # The result of the balance check
+  result: BankAccountBalanceCheckResult!
+}
+
+# The result of a bank account balance check
+enum BankAccountBalanceCheckResult {
+  # The bank account does not have sufficient funds
+  INSUFFICIENT
+
+  # The order is not valid for balance check (missing required data or in wrong state)
+  INVALID
+
+  # This payment method does not support balance checks
+  NOT_SUPPORTED
+
+  # Balance check is pending, external service has not returned result yet
+  PENDING
+
+  # The bank account has sufficient funds for the order
+  SUFFICIENT
+}
+
 # A connection to a list of items.
 type BankAccountConnection {
   # A list of edges.
@@ -5168,6 +5195,9 @@ input BulkUpdateArtworksMetadataInput {
 
   # Adjusts the artworks' prices according to the value passed (percentage).
   priceAdjustment: Int
+
+  # The currency for the artworks. Required when setting flat shipping fees.
+  priceCurrency: String
 
   # Set artwork price visibility to price on request
   priceHidden: Boolean
@@ -17989,6 +18019,9 @@ type Order {
   # List of alpha-2 country codes to which the order can be shipped
   availableShippingCountries: [String!]!
 
+  # Check if the bank account has sufficient balance for this order
+  bankAccountBalanceCheck: BankAccountBalanceCheck
+
   # Phone number of the buyer
   buyerPhoneNumber: String
     @deprecated(reason: "Use `order.fulfillmentDetails.phoneNumber`")
@@ -18750,6 +18783,9 @@ type Partner implements Node {
     before: String
     first: Int
     last: Int
+
+    # Filter by price currency. Returns presets with matching currency AND presets with no currency (which apply to all currencies).
+    priceCurrency: String
   ): ShippingPresetConnection
   showPromoted: Boolean
 
@@ -23226,6 +23262,12 @@ type ShippingPreset implements Node {
 
   # Whether Artsy handles international shipping
   artsyShippingInternational: Boolean
+  createdAt(
+    format: String
+
+    # A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    timezone: String
+  ): String
 
   # Domestic shipping fee in cents
   domesticShippingFeeCents: Int

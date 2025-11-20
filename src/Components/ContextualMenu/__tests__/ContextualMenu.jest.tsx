@@ -1,13 +1,15 @@
 import { fireEvent, render, screen } from "@testing-library/react"
-
-import { ContextualMenu, ContextualMenuItem } from "Components/ContextualMenu"
+import {
+  ContextualMenu,
+  ContextualMenuItemButton,
+} from "Components/ContextualMenu"
 
 describe("ContextualMenu", () => {
   it("initially renders the trigger but not the menu", () => {
     render(
       <ContextualMenu>
-        <ContextualMenuItem>Do the first thing</ContextualMenuItem>
-        <ContextualMenuItem>Do the second thing</ContextualMenuItem>
+        <ContextualMenuItemButton>Do the first thing</ContextualMenuItemButton>
+        <ContextualMenuItemButton>Do the second thing</ContextualMenuItemButton>
       </ContextualMenu>,
     )
 
@@ -19,8 +21,8 @@ describe("ContextualMenu", () => {
   it("reveals the menu when the trigger is clicked", async () => {
     render(
       <ContextualMenu>
-        <ContextualMenuItem>Do the first thing</ContextualMenuItem>
-        <ContextualMenuItem>Do the second thing</ContextualMenuItem>
+        <ContextualMenuItemButton>Do the first thing</ContextualMenuItemButton>
+        <ContextualMenuItemButton>Do the second thing</ContextualMenuItemButton>
       </ContextualMenu>,
     )
 
@@ -36,13 +38,13 @@ describe("ContextualMenu", () => {
 
     render(
       <ContextualMenu>
-        <ContextualMenuItem onClick={firstHandler}>
+        <ContextualMenuItemButton onClick={firstHandler}>
           Do the first thing
-        </ContextualMenuItem>
+        </ContextualMenuItemButton>
 
-        <ContextualMenuItem onClick={secondHandler}>
+        <ContextualMenuItemButton onClick={secondHandler}>
           Do the second thing
-        </ContextualMenuItem>
+        </ContextualMenuItemButton>
       </ContextualMenu>,
     )
 
@@ -56,19 +58,5 @@ describe("ContextualMenu", () => {
 
     expect(firstHandler).toHaveBeenCalledTimes(1)
     expect(secondHandler).toHaveBeenCalledTimes(1)
-  })
-
-  it("only accepts permitted children", () => {
-    expect(() => {
-      render(
-        <ContextualMenu>
-          <ContextualMenuItem>Do the first thing</ContextualMenuItem>
-          <ContextualMenuItem>Do the second thing</ContextualMenuItem>
-          <div>Do the third thing</div>
-        </ContextualMenu>,
-      )
-    }).toThrowError(
-      /ContextualMenu accepts only ContextualMenuItem and ContextualMenuDivider/,
-    )
   })
 })
