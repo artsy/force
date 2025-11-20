@@ -11,7 +11,7 @@ import {
 import {
   ContextualMenu,
   ContextualMenuDivider,
-  ContextualMenuItem,
+  ContextualMenuItemButton,
 } from "Components/ContextualMenu"
 
 export default {
@@ -53,21 +53,21 @@ export const Basic = () => {
 
   return (
     <ContextualMenu>
-      <ContextualMenuItem onClick={confirmIt}>
+      <ContextualMenuItemButton onClick={confirmIt}>
         Lorem ipsum dolor
-      </ContextualMenuItem>
+      </ContextualMenuItemButton>
 
-      <ContextualMenuItem onClick={confirmIt}>
+      <ContextualMenuItemButton onClick={confirmIt}>
         Dolor sit amet
-      </ContextualMenuItem>
+      </ContextualMenuItemButton>
 
-      <ContextualMenuItem onClick={confirmIt}>
+      <ContextualMenuItemButton onClick={confirmIt}>
         Consectetur adipisicing
-      </ContextualMenuItem>
+      </ContextualMenuItemButton>
 
-      <ContextualMenuItem onClick={confirmIt}>
+      <ContextualMenuItemButton onClick={confirmIt}>
         Quisquam et quod
-      </ContextualMenuItem>
+      </ContextualMenuItemButton>
     </ContextualMenu>
   )
 }
@@ -77,27 +77,27 @@ export const WithDividers = () => {
 
   return (
     <ContextualMenu>
-      <ContextualMenuItem onClick={confirmIt}>
+      <ContextualMenuItemButton onClick={confirmIt}>
         Lorem ipsum dolor
-      </ContextualMenuItem>
+      </ContextualMenuItemButton>
 
       <ContextualMenuDivider />
 
-      <ContextualMenuItem onClick={confirmIt}>
+      <ContextualMenuItemButton onClick={confirmIt}>
         Dolor sit amet
-      </ContextualMenuItem>
+      </ContextualMenuItemButton>
 
       <ContextualMenuDivider />
 
-      <ContextualMenuItem onClick={confirmIt}>
+      <ContextualMenuItemButton onClick={confirmIt}>
         Consectetur adipisicing
-      </ContextualMenuItem>
+      </ContextualMenuItemButton>
 
       <ContextualMenuDivider />
 
-      <ContextualMenuItem onClick={confirmIt}>
+      <ContextualMenuItemButton onClick={confirmIt}>
         Quisquam et quod
-      </ContextualMenuItem>
+      </ContextualMenuItemButton>
     </ContextualMenu>
   )
 }
@@ -107,14 +107,14 @@ export const RichContent = () => {
 
   return (
     <ContextualMenu>
-      <ContextualMenuItem onClick={confirmIt}>
+      <ContextualMenuItemButton onClick={confirmIt}>
         <Text color="blue100">Styled</Text> <em>Lorem</em> <code>ipsum</code>{" "}
         <strong>dolor</strong>
-      </ContextualMenuItem>
+      </ContextualMenuItemButton>
 
       <ContextualMenuDivider />
 
-      <ContextualMenuItem onClick={confirmIt}>
+      <ContextualMenuItemButton onClick={confirmIt}>
         <>
           <Text color="blue100">Nested</Text>
           <Flex alignItems="center" mt={1}>
@@ -128,11 +128,11 @@ export const RichContent = () => {
             <Text>Dolor sit amet</Text>
           </Flex>
         </>
-      </ContextualMenuItem>
+      </ContextualMenuItemButton>
 
       <ContextualMenuDivider />
 
-      <ContextualMenuItem onClick={confirmIt} padding={0}>
+      <ContextualMenuItemButton onClick={confirmIt} padding={0}>
         <Box
           backgroundImage={'url("https://picsum.photos/seed/example19/250/75")'}
           backgroundColor="#00000000"
@@ -144,14 +144,14 @@ export const RichContent = () => {
           </Text>
           <Text color="mono0">Consectetur adipisicing</Text>
         </Box>
-      </ContextualMenuItem>
+      </ContextualMenuItemButton>
 
       <ContextualMenuDivider />
 
-      <ContextualMenuItem onClick={confirmIt}>
+      <ContextualMenuItemButton onClick={confirmIt}>
         <Text color="blue100">Basic</Text>
         <Text>Quisquam et quod</Text>
-      </ContextualMenuItem>
+      </ContextualMenuItemButton>
     </ContextualMenu>
   )
 }

@@ -9,6 +9,11 @@ const navBarMenuItemMixin = css`
   width: 100%;
   text-decoration: none;
 
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible,
   &:hover {
     background-color: ${themeGet("colors.mono5")};
   }
