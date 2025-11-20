@@ -1,7 +1,9 @@
 import { Z } from "Apps/Components/constants"
-import { ContextualMenu, ContextualMenuItem } from "Components/ContextualMenu"
+import {
+  ContextualMenu,
+  ContextualMenuItemLink,
+} from "Components/ContextualMenu"
 import { MarkAllAsReadPanel } from "Components/Notifications/MarkAllAsReadPanel"
-import { RouterLink } from "System/Components/RouterLink"
 
 interface NotificationsContextualMenuProps {
   onHide?: () => void
@@ -13,33 +15,15 @@ export const NotificationsContextualMenu: React.FC<
 > = ({ onHide, unreadCounts }) => {
   return (
     <ContextualMenu placement="bottom-start" zIndex={Z.dropdown}>
-      <ContextualMenuItem p={0}>
-        <MarkAllAsReadPanel unreadCounts={unreadCounts} />
-      </ContextualMenuItem>
-      <ContextualMenuItem p={0}>
-        <RouterLink
-          onClick={onHide}
-          to={"/favorites/alerts"}
-          textDecoration="none"
-          color="mono100"
-          display="block"
-          p={2}
-        >
-          Manage Alerts
-        </RouterLink>
-      </ContextualMenuItem>
-      <ContextualMenuItem p={0}>
-        <RouterLink
-          onClick={onHide}
-          to="/favorites/follows"
-          textDecoration="none"
-          color="mono100"
-          display="block"
-          p={2}
-        >
-          Manage Follows
-        </RouterLink>
-      </ContextualMenuItem>
+      <MarkAllAsReadPanel unreadCounts={unreadCounts} />
+
+      <ContextualMenuItemLink onClick={onHide} to="/favorites/alerts">
+        Manage Alerts
+      </ContextualMenuItemLink>
+
+      <ContextualMenuItemLink onClick={onHide} to="/favorites/follows">
+        Manage Follows
+      </ContextualMenuItemLink>
     </ContextualMenu>
   )
 }

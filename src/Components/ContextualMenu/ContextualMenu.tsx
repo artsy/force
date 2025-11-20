@@ -1,31 +1,11 @@
-import React, { type ReactElement } from "react"
-
 import MoreIcon from "@artsy/icons/MoreIcon"
-import { Clickable, Dropdown } from "@artsy/palette"
-import {
-  ContextualMenuDivider,
-  ContextualMenuItem,
-} from "Components/ContextualMenu/ContextualMenuItem"
+import { Clickable, Dropdown, type DropdownActions, Text } from "@artsy/palette"
+import React, { useCallback } from "react"
 
 interface ContextualMenuProps {
-  /** Supply `ContextualMenuItem`s and `ContextualMenuDivider`s as needed  */
   children: React.ReactNode
   placement?: "bottom-end" | "bottom-start" | "top-end" | "top-start"
   zIndex?: number
-}
-
-const validateChildren = (children: React.ReactNode) => {
-  const childTypes =
-    React.Children.map(children, (child: ReactElement) => child.type) || []
-
-  const hasOnlyValidChildren = childTypes.every(
-    t => t === ContextualMenuItem || t === ContextualMenuDivider,
-  )
-
-  if (!hasOnlyValidChildren)
-    throw new Error(
-      "ContextualMenu accepts only ContextualMenuItem and ContextualMenuDivider as children.",
-    )
 }
 
 /**
@@ -35,7 +15,36 @@ const validateChildren = (children: React.ReactNode) => {
 export const ContextualMenu: React.FC<
   React.PropsWithChildren<ContextualMenuProps>
 > = ({ children, placement = "bottom-end", zIndex }) => {
-  validateChildren(children)
+  const dropdown = useCallback(
+    ({ onHide }: DropdownActions) => {
+      // Wrap onClick handlers to close the dropdown when clicked
+      return (
+        <Text variant="sm">
+          {React.Children.map(children, child => {
+            // If the child has an onClick prop, wrap it with onHide
+            if (
+              React.isValidElement(child) &&
+              typeof child.props === "object" &&
+              child.props !== null &&
+              "onClick" in child.props
+            ) {
+              const originalOnClick = (child.props as any).onClick
+
+              return React.cloneElement(child as any, {
+                onClick: () => {
+                  onHide()
+                  originalOnClick?.()
+                },
+              })
+            }
+
+            return child
+          })}
+        </Text>
+      )
+    },
+    [children],
+  )
 
   return (
     <Dropdown
@@ -44,31 +53,12 @@ export const ContextualMenu: React.FC<
       placement={placement}
       offset={0}
       zIndex={zIndex}
-      dropdown={({ onHide }) => {
-        /*
-         * Each ContextualMenuItem must be able to close this
-         * parent ContextualMenu's Dropdown when it is clicked.
-         */
-        return React.Children.map(children, (child: ReactElement) => {
-          if (child.type === ContextualMenuItem) {
-            const onClick = () => {
-              onHide()
-              child.props.onClick?.()
-            }
-            return React.cloneElement(child, {
-              onClick,
-            })
-          } else {
-            return child
-          }
-        })
-      }}
+      dropdown={dropdown}
     >
       {({ anchorRef, anchorProps }) => {
         return (
           <Clickable
-            // @ts-expect-error TODO: fix this ref type error
-            ref={anchorRef}
+            ref={anchorRef as any}
             {...anchorProps}
             p={1}
             aria-label="Open contextual menu"

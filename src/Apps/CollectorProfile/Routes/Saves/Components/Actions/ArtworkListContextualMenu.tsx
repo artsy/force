@@ -1,7 +1,6 @@
 import {
   ContextualMenu,
-  ContextualMenuDivider,
-  ContextualMenuItem,
+  ContextualMenuItemButton,
 } from "Components/ContextualMenu"
 import { useState } from "react"
 import {
@@ -60,15 +59,13 @@ export const ArtworkListContextualMenu: React.FC<
       )}
 
       <ContextualMenu>
-        <ContextualMenuItem onClick={openEditModal}>
+        <ContextualMenuItemButton onClick={openEditModal}>
           Edit List
-        </ContextualMenuItem>
+        </ContextualMenuItemButton>
 
-        <ContextualMenuDivider />
-
-        <ContextualMenuItem onClick={openDeleteModal}>
+        <ContextualMenuItemButton onClick={openDeleteModal}>
           Delete List
-        </ContextualMenuItem>
+        </ContextualMenuItemButton>
       </ContextualMenu>
     </>
   )
