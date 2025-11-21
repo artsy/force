@@ -7,6 +7,7 @@ import {
 } from "Apps/AppPreferences/useAppPreferences"
 import { AuthDialogProvider } from "Components/AuthDialog/AuthDialogContext"
 import { CookieConsentManager } from "Components/CookieConsentManager/CookieConsentManager"
+import { DeveloperBreakpointOverlay } from "Components/DeveloperBreakpointOverlay"
 import { PROGRESSIVE_ONBOARDING_KEYS } from "Components/ProgressiveOnboarding/progressiveOnboardingKeys"
 import { StickyProvider } from "Components/Sticky"
 import { ErrorBoundary } from "System/Components/ErrorBoundary"
@@ -21,6 +22,7 @@ import {
   MediaContextProvider,
 } from "Utils/Responsive"
 import { SiftContainer } from "Utils/SiftContainer"
+import { isDevelopment } from "Utils/device"
 import { getENV } from "Utils/getENV"
 import { type FC, useEffect } from "react"
 import { HeadProvider } from "react-head"
@@ -86,6 +88,9 @@ export const Boot: React.FC<
                             >
                               <CookieConsentManager>
                                 <SiftContainer />
+                                {isDevelopment && (
+                                  <DeveloperBreakpointOverlay />
+                                )}
                                 {children}
                               </CookieConsentManager>
                             </DismissibleProvider>
