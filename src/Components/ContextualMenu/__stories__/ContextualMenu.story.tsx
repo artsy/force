@@ -108,14 +108,16 @@ export const RichContent = () => {
   return (
     <ContextualMenu>
       <ContextualMenuItemButton onClick={confirmIt}>
-        <Text color="blue100">Styled</Text> <em>Lorem</em> <code>ipsum</code>{" "}
-        <strong>dolor</strong>
+        <Box>
+          <Text color="blue100">Styled</Text> <em>Lorem</em> <code>ipsum</code>{" "}
+          <strong>dolor</strong>
+        </Box>
       </ContextualMenuItemButton>
 
       <ContextualMenuDivider />
 
       <ContextualMenuItemButton onClick={confirmIt}>
-        <>
+        <Box>
           <Text color="blue100">Nested</Text>
           <Flex alignItems="center" mt={1}>
             <Box mr={1}>
@@ -127,15 +129,16 @@ export const RichContent = () => {
             </Box>
             <Text>Dolor sit amet</Text>
           </Flex>
-        </>
+        </Box>
       </ContextualMenuItemButton>
 
       <ContextualMenuDivider />
 
-      <ContextualMenuItemButton onClick={confirmIt} padding={0}>
+      <ContextualMenuItemButton onClick={confirmIt} px={0} py={0}>
         <Box
-          backgroundImage={'url("https://picsum.photos/seed/example19/250/75")'}
-          backgroundColor="#00000000"
+          width="100%"
+          backgroundImage="url('https://picsum.photos/seed/example19/250/75')"
+          backgroundColor="black"
           backgroundSize="cover"
           padding={2}
         >
@@ -149,8 +152,10 @@ export const RichContent = () => {
       <ContextualMenuDivider />
 
       <ContextualMenuItemButton onClick={confirmIt}>
-        <Text color="blue100">Basic</Text>
-        <Text>Quisquam et quod</Text>
+        <Box>
+          <Text color="blue100">Basic</Text>
+          <Text>Quisquam et quod</Text>
+        </Box>
       </ContextualMenuItemButton>
     </ContextualMenu>
   )
