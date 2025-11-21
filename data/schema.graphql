@@ -5577,6 +5577,9 @@ type CollectorProfileType implements Node {
     )
   initials(length: Int = 3): String
   inquiryRequestsCount: Int!
+
+  # Collector's Instagram handle
+  instagram: String
   institutionalAffiliations: String
   intents: [String]
   interestsConnection(
@@ -5599,6 +5602,9 @@ type CollectorProfileType implements Node {
     # A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
     timezone: String
   ): String
+
+  # Collector's LinkedIn handle
+  linkedIn: String
   location: MyLocation
   loyaltyApplicantAt(
     format: String
@@ -14790,6 +14796,9 @@ type InquirerCollectorProfile {
     )
   initials(length: Int = 3): String
   inquiryRequestsCount: Int!
+
+  # Collector's Instagram handle
+  instagram: String
   institutionalAffiliations: String
   intents: [String]
   interestsConnection(
@@ -14812,6 +14821,9 @@ type InquirerCollectorProfile {
     # A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
     timezone: String
   ): String
+
+  # Collector's LinkedIn handle
+  linkedIn: String
   location: MyLocation
   loyaltyApplicantAt(
     format: String
@@ -24687,8 +24699,14 @@ input UpdateCollectorProfileInput {
   clientMutationId: String
   companyName: String
   companyWebsite: String
+
+  # Collector's Instagram handle
+  instagram: String
   institutionalAffiliations: String
   intents: [Intents]
+
+  # Collector's LinkedIn handle
+  linkedIn: String
   loyaltyApplicant: Boolean
   professionalBuyer: Boolean
 
@@ -24730,8 +24748,14 @@ input UpdateCollectorProfileWithIDInput {
 
   # The internal ID of the collector profile to update
   id: String
+
+  # Collector's Instagram handle
+  instagram: String
   institutionalAffiliations: String
   intents: [Intents]
+
+  # Collector's LinkedIn handle
+  linkedIn: String
   loyaltyApplicant: Boolean
   professionalBuyer: Boolean
 
