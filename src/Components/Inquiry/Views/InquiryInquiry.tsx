@@ -38,7 +38,7 @@ const InquiryInquiry: React.FC<
 > = ({ artwork }) => {
   const { user } = useSystemContext()
 
-  const { next, setInquiry, inquiry, artworkID, setContext } =
+  const { next, setInquiry, inquiry, artworkID, setContext, questions } =
     useInquiryContext()
 
   const [mode, setMode] = useState<Mode>("Pending")
@@ -90,6 +90,9 @@ const InquiryInquiry: React.FC<
     ["Success"]: "Sent",
     ["Error"]: "Error",
   }[mode]
+
+  const showErrorMessage =
+    questions?.length === 0 && inquiry.message.trim().length === 0
 
   return (
     <Box as="form" onSubmit={handleSubmit}>
@@ -158,7 +161,10 @@ const InquiryInquiry: React.FC<
         title="Your message"
         defaultValue={inquiry.message}
         onChange={handleTextAreaChange}
-        required
+        error={
+          showErrorMessage &&
+          "Please enter a message or select at least one option."
+        }
       />
 
       <Spacer y={1} />
@@ -186,7 +192,7 @@ const InquiryInquiry: React.FC<
         display="block"
         width="100%"
         loading={mode === "Sending"}
-        disabled={mode === "Success"}
+        disabled={mode === "Success" || showErrorMessage}
       >
         {label}
       </Button>
