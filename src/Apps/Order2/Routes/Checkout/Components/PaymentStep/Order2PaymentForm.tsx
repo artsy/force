@@ -32,6 +32,10 @@ import { Collapse } from "Apps/Order/Components/Collapse"
 import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
 import { useSetPayment } from "Apps/Order/Mutations/useSetPayment"
 import {
+  BankAccountBalanceCheckResult,
+  Order2PollBankAccountBalanceQueryRenderer,
+} from "Apps/Order2/Components/Order2PollBankAccountBalance"
+import {
   CheckoutStepName,
   CheckoutStepState,
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
@@ -214,6 +218,11 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
     useState<FormikContextWithAddress>(() => ({
       address: defaultBillingAddress,
     }))
+  const [isCheckingBankBalance, setIsCheckingBankBalance] = useState(false)
+  const [pendingBankDebitSetup, setPendingBankDebitSetup] = useState<{
+    paymentMethod: "US_BANK_ACCOUNT" | "SEPA_DEBIT"
+    confirmationToken: { id: string }
+  } | null>(null)
 
   const isSelectedPaymentMethodStripe = selectedPaymentMethod?.match(/^stripe/)
   const savedCreditCards = extractNodes(me.creditCards)
@@ -319,7 +328,13 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       payment_method_types: [paymentType],
       // @ts-ignore Stripe type issue
       paymentMethodOptions: {
-        us_bank_account: { verification_method: "instant" },
+        us_bank_account: {
+          verification_method: "instant",
+          financial_connections: {
+            prefetch: ["balances"],
+            permissions: ["payment_method", "balances", "ownership"],
+          },
+        },
       },
     })
 
@@ -409,6 +424,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
     paymentMethod: "US_BANK_ACCOUNT" | "SEPA_DEBIT",
     confirmationToken: { id: string },
   ) => {
+    // Step 1: Set payment method on order
     const updateOrderPaymentMethodResult =
       await setPaymentMutation.submitMutation({
         variables: {
@@ -424,6 +440,14 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       updateOrderPaymentMethodResult.updateOrder?.orderOrError,
     )
 
+    // Step 2: Start balance check polling
+    setIsCheckingBankBalance(true)
+    setPendingBankDebitSetup({ paymentMethod, confirmationToken })
+  }
+
+  const completeBankDebitSetup = async () => {
+    if (!pendingBankDebitSetup) return
+
     // Creating a SetupIntent
     const bankDebitSetupResult =
       await createBankDebitSetupForOrder.submitMutation({
@@ -436,7 +460,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
     ) {
       const return_url = `${getENV("APP_URL")}/orders2/${
         order.internalID
-      }/checkout?save_bank_account=${savePaymentMethod}&confirmation_token=${confirmationToken.id}`
+      }/checkout?save_bank_account=${savePaymentMethod}&confirmation_token=${pendingBankDebitSetup.confirmationToken.id}`
       window.removeEventListener("beforeunload", preventHardReload)
 
       // This will redirect to Stripe for bank verification, no code after this will execute
@@ -455,6 +479,34 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         handleError({ message: defaultErrorMessage })
       }
     }
+  }
+
+  const handleBalanceCheckComplete = async (
+    result: BankAccountBalanceCheckResult,
+    message?: string,
+  ) => {
+    setIsCheckingBankBalance(false)
+
+    switch (result) {
+      // We only want to block the checkout when we know there is insufficient funds.
+      case BankAccountBalanceCheckResult.INSUFFICIENT:
+        setIsSubmittingToStripe(false)
+        handleError({
+          message: message || "Insufficient funds in bank account",
+        })
+        setPendingBankDebitSetup(null)
+        break
+      default:
+        await completeBankDebitSetup()
+        break
+    }
+  }
+
+  const handleBalanceCheckError = (error: Error) => {
+    logger.error("Error during balance check:", error)
+    setIsCheckingBankBalance(false)
+    // On error, proceed with setup anyway
+    completeBankDebitSetup()
   }
 
   const handleError = (error: { message?: string | JSX.Element }) => {
@@ -527,6 +579,8 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         environment,
         setConfirmationToken,
       )
+
+      console.log(confirmationToken)
 
       setSavePaymentMethod(savePaymentMethod)
 
@@ -895,6 +949,15 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       </Collapse>
 
       <Spacer y={2} />
+
+      {isCheckingBankBalance && (
+        <Order2PollBankAccountBalanceQueryRenderer
+          orderId={order.internalID}
+          onBalanceCheckComplete={handleBalanceCheckComplete}
+          onError={handleBalanceCheckError}
+        />
+      )}
+
       {/* Stripe error messages are displayed within the Payment Element, so we don't need to handle them here. */}
       {errorMessage && !isSelectedPaymentMethodStripe && (
         <>
@@ -947,6 +1010,10 @@ const ORDER_FRAGMENT = graphql`
     internalID
     currencyCode
     availablePaymentMethods
+    bankAccountBalanceCheck {
+      result
+      message
+    }
     itemsTotal {
       minor
       currencyCode
