@@ -92,7 +92,9 @@ const InquiryInquiry: React.FC<
   }[mode]
 
   const showErrorMessage =
-    questions?.length === 0 && inquiry.message.trim().length === 0
+    enableCheckboxes &&
+    questions?.length === 0 &&
+    inquiry.message.trim().length === 0
 
   return (
     <Box as="form" onSubmit={handleSubmit}>
@@ -165,6 +167,7 @@ const InquiryInquiry: React.FC<
           showErrorMessage &&
           "Please enter a message or select at least one option."
         }
+        required={!enableCheckboxes}
       />
 
       <Spacer y={1} />
