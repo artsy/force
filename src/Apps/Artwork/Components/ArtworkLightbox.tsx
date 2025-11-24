@@ -70,12 +70,13 @@ const ArtworkLightbox: React.FC<
     lightboxImage = mobileLightboxSource
   }
 
-  // Always preload the 2x image for mobile lightbox if available
+  // Always preload the 2x image for desktop only
   const preloadImage = mobileLightboxSource?.srcSet?.match(/ ([^ ]+) 2x/)?.[1]
+  const isMobile = getENV("IS_MOBILE")
 
   return (
     <>
-      {isDefault && (
+      {isDefault && !isMobile && (
         <Link
           rel="preload"
           as="image"
@@ -129,6 +130,7 @@ const ArtworkLightbox: React.FC<
             src={lightboxImage.src}
             srcSet={lightboxImage.srcSet}
             alt={artworkCaption ?? ""}
+            lazyLoad={!isDefault}
             position="relative"
             preventRightClick={!isTeam}
             style={{

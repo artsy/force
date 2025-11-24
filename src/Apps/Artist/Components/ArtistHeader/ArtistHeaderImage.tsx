@@ -90,7 +90,7 @@ export const ArtistHeaderImage: FC<
               height="100%"
               style={{ objectFit: "cover" }}
               // Deliberate, to improve LCP
-              lazyLoad={false}
+              lazyLoad={true}
               fetchPriority="high"
             />
           </ResponsiveBox>
