@@ -13,6 +13,7 @@ import {
   Flex,
   Input,
   Join,
+  LabeledInput,
   Spacer,
   Text,
   TextArea,
@@ -150,6 +151,9 @@ const SettingsEditProfileFields: React.FC<
           setFieldValue,
           setFieldTouched,
           handleChange,
+          handleBlur,
+          handleSubmit,
+          validateForm,
           errors,
           touched,
         }) => (
@@ -200,30 +204,6 @@ const SettingsEditProfileFields: React.FC<
                 data-testid="edit-profile-profession-input"
               />
 
-              {enableSocialAccounts && (
-                <>
-                  <Input
-                    title="LinkedIn"
-                    placeholder="LinkedIn handle"
-                    name="linkedIn"
-                    maxLength={256}
-                    onChange={handleChange}
-                    value={values.linkedIn}
-                    data-testid="edit-profile-linkedin-input"
-                  />
-
-                  <Input
-                    title="Instagram"
-                    placeholder="Instagram handle"
-                    name="instagram"
-                    maxLength={256}
-                    onChange={handleChange}
-                    value={values.instagram}
-                    data-testid="edit-profile-instagram-input"
-                  />
-                </>
-              )}
-
               <Input
                 title="Other relevant positions"
                 placeholder="Other relevant positions"
@@ -233,6 +213,36 @@ const SettingsEditProfileFields: React.FC<
                 value={values.otherRelevantPositions}
                 data-testid="edit-profile-other-relevant-positions-input"
               />
+
+              {enableSocialAccounts && (
+                <>
+                  <Input
+                    title="LinkedIn"
+                    placeholder="LinkedIn handle"
+                    name="linkedIn"
+                    maxLength={256}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.linkedIn}
+                    error={touched.linkedIn && errors.linkedIn}
+                    data-testid="edit-profile-linkedin-input"
+                  />
+
+                  <LabeledInput
+                    title="Instagram"
+                    placeholder="Instagram handle"
+                    name="instagram"
+                    maxLength={256}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.instagram}
+                    error={touched.instagram && errors.instagram}
+                    label="@"
+                    variant="prefix"
+                    data-testid="edit-profile-instagram-input"
+                  />
+                </>
+              )}
 
               <TextArea
                 title="About"
@@ -383,11 +393,25 @@ const SettingsEditProfileFields: React.FC<
               px={4}
               width={["100%", "auto"]}
               data-testid="edit-profile-save-button"
-              type="submit"
+              type="button"
               size="large"
               variant="primaryBlack"
               loading={isSubmitting}
-              disabled={!isValid}
+              onClick={async () => {
+                const validationErrors = await validateForm()
+
+                if (Object.keys(validationErrors).length > 0) {
+                  // Show toast with first validation error
+                  const firstError = Object.values(validationErrors)[0]
+                  sendToast({
+                    variant: "error",
+                    message: "Please fix the errors in the form",
+                    description: firstError as string,
+                  })
+                } else {
+                  handleSubmit()
+                }
+              }}
             >
               Save
             </Button>
