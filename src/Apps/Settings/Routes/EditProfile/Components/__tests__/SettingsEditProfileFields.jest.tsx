@@ -6,12 +6,14 @@ import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useUpdateMyUserProfile } from "Utils/Hooks/Mutations/useUpdateMyUserProfile"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
+import { useFlag } from "@unleash/proxy-client-react"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
 jest.mock("Utils/Hooks/Mutations/useUpdateMyUserProfile")
 jest.mock("Apps/Settings/Routes/EditProfile/Mutations/useVerifyID")
 jest.mock("Apps/Settings/Routes/EditProfile/Mutations/useVerifyEmail")
+jest.mock("@unleash/proxy-client-react")
 jest.mock("Components/LocationAutocompleteInput", () => ({
   LocationAutocompleteInput: ({ title }: { title: string }) => (
     <div>{title}</div>
@@ -43,6 +45,7 @@ describe("SettingsEditProfileFields", () => {
   const mockUseUpdateMyUserProfile = useUpdateMyUserProfile as jest.Mock
   const mockUseVerifyID = useVerifyID as jest.Mock
   const mockUseVerifyEmail = useVerifyEmail as jest.Mock
+  const mockUseFlag = useFlag as jest.Mock
   const mockSubmitUpdateMyUserProfile = jest.fn()
   const mockSubmitVerifyIDMutation = jest.fn()
   const mockSubmitVerifyEmailMutation = jest.fn()
@@ -58,12 +61,15 @@ describe("SettingsEditProfileFields", () => {
     mockUseVerifyEmail.mockImplementation(() => ({
       submitMutation: mockSubmitVerifyEmailMutation,
     }))
+    // Default: feature flag is disabled
+    mockUseFlag.mockReturnValue(false)
   })
 
   afterEach(() => {
     mockUseUpdateMyUserProfile.mockReset()
     mockUseVerifyID.mockReset()
     mockUseVerifyEmail.mockReset()
+    mockUseFlag.mockReset()
     mockSendToast.mockClear()
   })
 
@@ -79,6 +85,8 @@ describe("SettingsEditProfileFields", () => {
     expect(screen.getByText("Name")).toBeInTheDocument()
     expect(screen.getByText("Primary Location")).toBeInTheDocument()
     expect(screen.getByText("Profession")).toBeInTheDocument()
+    expect(screen.queryByText("LinkedIn")).not.toBeInTheDocument()
+    expect(screen.queryByText("Instagram")).not.toBeInTheDocument()
     expect(screen.getByText("Other relevant positions")).toBeInTheDocument()
     expect(screen.getByText("About")).toBeInTheDocument()
   })
@@ -148,6 +156,77 @@ describe("SettingsEditProfileFields", () => {
 
     await waitFor(() => {
       expect(mockSubmitUpdateMyUserProfile).toHaveBeenCalled()
+    })
+  })
+
+  describe("with emerald_collector-social-accounts feature flag enabled", () => {
+    beforeEach(() => {
+      mockUseFlag.mockReturnValue(true)
+    })
+
+    it("renders LinkedIn and Instagram fields", () => {
+      renderWithRelay()
+
+      expect(screen.getByText("LinkedIn")).toBeInTheDocument()
+      expect(screen.getByText("Instagram")).toBeInTheDocument()
+      expect(screen.getByPlaceholderText("LinkedIn handle")).toBeInTheDocument()
+      expect(
+        screen.getByPlaceholderText("Instagram handle"),
+      ).toBeInTheDocument()
+    })
+
+    it("submits linkedin and instagram fields", async () => {
+      const trackingSpy = jest.fn()
+
+      mockUseTracking.mockImplementation(() => ({
+        trackEvent: trackingSpy,
+      }))
+
+      renderWithRelay()
+
+      fireEvent.change(screen.getByPlaceholderText("Name"), {
+        target: { name: "name", value: "Collector Name" },
+      })
+      fireEvent.change(screen.getByPlaceholderText("LinkedIn handle"), {
+        target: { name: "linkedIn", value: "collector-linkedin" },
+      })
+      fireEvent.change(screen.getByPlaceholderText("Instagram handle"), {
+        target: { name: "instagram", value: "@collector_insta" },
+      })
+
+      fireEvent.click(screen.getByText("Save"))
+
+      await waitFor(() => {
+        expect(mockSubmitUpdateMyUserProfile).toHaveBeenCalledWith(
+          expect.objectContaining({
+            name: "Collector Name",
+            linkedIn: "collector-linkedin",
+            instagram: "@collector_insta",
+          }),
+        )
+      })
+    })
+
+    it("loads initial values from collectorProfile", () => {
+      renderWithRelay({
+        Me: () => ({
+          name: "Test User",
+          collectorProfile: {
+            linkedIn: "test-linkedin",
+            instagram: "@test_instagram",
+          },
+        }),
+      })
+
+      const linkedInInput = screen.getByPlaceholderText(
+        "LinkedIn handle",
+      ) as HTMLInputElement
+      const instagramInput = screen.getByPlaceholderText(
+        "Instagram handle",
+      ) as HTMLInputElement
+
+      expect(linkedInInput.value).toBe("test-linkedin")
+      expect(instagramInput.value).toBe("@test_instagram")
     })
   })
 
