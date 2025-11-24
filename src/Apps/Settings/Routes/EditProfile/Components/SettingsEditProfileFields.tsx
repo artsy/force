@@ -50,6 +50,8 @@ export interface EditProfileFormModel {
   location: EditableLocationProps | null | undefined
   locationSelected: boolean
   profession: string
+  linkedIn: string
+  instagram: string
   otherRelevantPositions: string
   bio: string
 }
@@ -85,6 +87,8 @@ const SettingsEditProfileFields: React.FC<
     location: me.location ?? null,
     locationSelected: true,
     profession: me.profession ?? "",
+    linkedIn: me.linkedIn ?? "",
+    instagram: me.instagram ?? "",
     otherRelevantPositions: me.otherRelevantPositions ?? "",
     bio: me.bio ?? "",
     photo: null,
@@ -103,6 +107,8 @@ const SettingsEditProfileFields: React.FC<
         name: values.name,
         location,
         profession: values.profession,
+        linkedIn: values.linkedIn,
+        instagram: values.instagram,
         otherRelevantPositions: values.otherRelevantPositions,
         bio: values.bio,
       }
@@ -188,6 +194,26 @@ const SettingsEditProfileFields: React.FC<
                 onChange={handleChange}
                 value={values.profession}
                 data-testid="edit-profile-profession-input"
+              />
+
+              <Input
+                title="LinkedIn"
+                placeholder="LinkedIn handle"
+                name="linkedIn"
+                maxLength={256}
+                onChange={handleChange}
+                value={values.linkedIn}
+                data-testid="edit-profile-linkedin-input"
+              />
+
+              <Input
+                title="Instagram"
+                placeholder="Instagram handle"
+                name="instagram"
+                maxLength={256}
+                onChange={handleChange}
+                value={values.instagram}
+                data-testid="edit-profile-instagram-input"
               />
 
               <Input
@@ -372,6 +398,8 @@ export const SettingsEditProfileFieldsFragmentContainer =
         internalID
         name
         profession
+        linkedIn
+        instagram
         otherRelevantPositions
         bio
         location {

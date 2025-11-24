@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<eae2bf520a01a8ea2beaf8142ef09fe1>>
+ * @generated SignedSource<<4ae20a4ce44b4a516fa53feaa98f8d45>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -182,6 +182,20 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
+            "name": "linkedIn",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "instagram",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
             "name": "otherRelevantPositions",
             "storageKey": null
           },
@@ -267,7 +281,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "4d423fc30179a8b07e550b7c43fbaac8",
+    "cacheID": "595e085a50f95f7cbf4f27bc51811aa2",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -308,6 +322,7 @@ return {
         },
         "me.id": (v5/*: any*/),
         "me.initials": (v2/*: any*/),
+        "me.instagram": (v2/*: any*/),
         "me.internalID": (v5/*: any*/),
         "me.isEmailConfirmed": (v3/*: any*/),
         "me.isIdentityVerified": {
@@ -316,6 +331,7 @@ return {
           "plural": false,
           "type": "Boolean"
         },
+        "me.linkedIn": (v2/*: any*/),
         "me.location": {
           "enumValues": null,
           "nullable": true,
@@ -334,7 +350,7 @@ return {
     },
     "name": "SettingsEditProfileFields_Test_Query",
     "operationKind": "query",
-    "text": "query SettingsEditProfileFields_Test_Query {\n  me {\n    ...SettingsEditProfileFields_me\n    id\n  }\n}\n\nfragment CollectorProfileHeaderAvatar_me on Me {\n  initials\n  icon {\n    internalID\n    versions\n    cropped(height: 100, width: 100) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment SettingsEditProfileFields_me on Me {\n  ...SettingsEditProfileImage_me\n  internalID\n  name\n  profession\n  otherRelevantPositions\n  bio\n  location {\n    display\n    city\n    state\n    country\n    id\n  }\n  email\n  isEmailConfirmed\n  isIdentityVerified\n  canRequestEmailConfirmation\n}\n\nfragment SettingsEditProfileImage_me on Me {\n  ...CollectorProfileHeaderAvatar_me\n  initials\n  icon {\n    internalID\n    versions\n    cropped(height: 100, width: 100) {\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query SettingsEditProfileFields_Test_Query {\n  me {\n    ...SettingsEditProfileFields_me\n    id\n  }\n}\n\nfragment CollectorProfileHeaderAvatar_me on Me {\n  initials\n  icon {\n    internalID\n    versions\n    cropped(height: 100, width: 100) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment SettingsEditProfileFields_me on Me {\n  ...SettingsEditProfileImage_me\n  internalID\n  name\n  profession\n  linkedIn\n  instagram\n  otherRelevantPositions\n  bio\n  location {\n    display\n    city\n    state\n    country\n    id\n  }\n  email\n  isEmailConfirmed\n  isIdentityVerified\n  canRequestEmailConfirmation\n}\n\nfragment SettingsEditProfileImage_me on Me {\n  ...CollectorProfileHeaderAvatar_me\n  initials\n  icon {\n    internalID\n    versions\n    cropped(height: 100, width: 100) {\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();

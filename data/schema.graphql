@@ -16102,6 +16102,12 @@ type Me implements Node {
   privacy: String
   profession: String
 
+  # Collector's LinkedIn handle
+  linkedIn: String
+
+  # Collector's Instagram handle
+  instagram: String
+
   # The art quiz of a logged-in user
   quiz: Quiz!
 
@@ -25129,6 +25135,12 @@ input UpdateMyProfileInput {
 
   # Profession.
   profession: String
+
+  # Collector's LinkedIn handle
+  linkedIn: String
+
+  # Collector's Instagram handle
+  instagram: String
 
   # Since we don't want to ask a collector to update their profile too often, set this to record they've been prompted
   promptedForUpdate: Boolean
