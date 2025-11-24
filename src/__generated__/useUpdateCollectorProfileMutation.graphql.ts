@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e591c8383a66e9f827a4b98e7ef40c05>>
+ * @generated SignedSource<<9d19869106f6f9fd365b26bc535e1f2a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,8 +17,10 @@ export type UpdateCollectorProfileInput = {
   clientMutationId?: string | null | undefined;
   companyName?: string | null | undefined;
   companyWebsite?: string | null | undefined;
+  instagram?: string | null | undefined;
   institutionalAffiliations?: string | null | undefined;
   intents?: ReadonlyArray<Intents | null | undefined> | null | undefined;
+  linkedIn?: string | null | undefined;
   loyaltyApplicant?: boolean | null | undefined;
   professionalBuyer?: boolean | null | undefined;
   promptedForUpdate?: boolean | null | undefined;
