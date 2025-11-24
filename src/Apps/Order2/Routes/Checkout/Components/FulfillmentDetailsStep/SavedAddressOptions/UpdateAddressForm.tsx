@@ -103,15 +103,6 @@ export const UpdateAddressForm = ({
     }
   }
 
-  // Pre-fill phone number and country from defaultInitialValues if not present
-  // since we show form inputs with default value. phoneNumberCountryCode and
-  // address.country are the only non-"" default values
-  address.phoneNumberCountryCode ||=
-    defaultInitialValues?.phoneNumberCountryCode
-  if (defaultInitialValues?.address?.country) {
-    address.address.country ||= defaultInitialValues.address.country
-  }
-
   const initialValues: FormikContextWithAddress = {
     ...address,
     setAsDefault: false,
@@ -181,6 +172,20 @@ export const UpdateAddressForm = ({
       initialValues={initialValues}
       validationSchema={deliveryAddressValidationSchema}
       onSubmit={handleSubmitAddress}
+      validateOnMount
+      initialTouched={{
+        address: {
+          name: true,
+          country: true,
+          addressLine1: true,
+          addressLine2: true,
+          city: true,
+          region: true,
+          postalCode: true,
+        },
+        phoneNumber: true,
+        phoneNumberCountryCode: true,
+      }}
     >
       {({ isSubmitting, handleSubmit }) => (
         <>

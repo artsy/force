@@ -17,7 +17,7 @@ import {
 } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/utils"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import type { FormikContextWithAddress } from "Components/Address/AddressFormFields"
-import { setNestedObjectValues, useFormikContext } from "formik"
+import { useFormikContext } from "formik"
 import { useCallback, useState } from "react"
 import styled from "styled-components"
 
@@ -62,7 +62,7 @@ export const SavedAddressOptions = ({
 
       if (remainingAddresses.length > 0) {
         const addressToSelect = remainingAddresses.find(
-          address => address.isValid,
+          address => address.isShippable && address.isValid,
         )
 
         if (addressToSelect) {
@@ -72,6 +72,42 @@ export const SavedAddressOptions = ({
       }
     },
     [savedAddresses, onSelectAddress],
+  )
+
+  const handleAddressClick = useCallback(
+    async (processedAddress: ProcessedUserAddress) => {
+      const { isShippable, isValid, internalID } = processedAddress
+
+      checkoutTracking.clickedShippingAddress()
+      setSelectedAddressID(internalID)
+      await onSelectAddress(processedAddress)
+
+      if (!isShippable) {
+        return setStepErrorMessage({
+          step: CheckoutStepName.FULFILLMENT_DETAILS,
+          error: {
+            title: "Unable to ship to this address",
+            message: "Select a different address or add a new one to continue",
+          },
+        })
+      }
+
+      if (!isValid) {
+        return setStepErrorMessage({
+          step: CheckoutStepName.FULFILLMENT_DETAILS,
+          error: {
+            title: "Invalid address",
+            message: "This address is missing required information.",
+          },
+        })
+      }
+
+      setStepErrorMessage({
+        step: CheckoutStepName.FULFILLMENT_DETAILS,
+        error: null,
+      })
+    },
+    [checkoutTracking, onSelectAddress, setStepErrorMessage],
   )
 
   if (userAddressMode?.mode === "add") {
@@ -105,8 +141,7 @@ export const SavedAddressOptions = ({
       </Text>{" "}
       <Spacer y={2} />
       {savedAddresses.map(processedAddress => {
-        const { address, isValid, internalID, phoneNumberParsed } =
-          processedAddress
+        const { address, internalID, phoneNumberParsed } = processedAddress
         const isSelected = selectedAddressID === internalID
         const backgroundColor = isSelected ? "mono5" : "mono0"
         const textColor = isSelected ? "mono100" : "mono60"
@@ -118,14 +153,9 @@ export const SavedAddressOptions = ({
               backgroundColor={backgroundColor}
               value={internalID}
               flex={0}
-              disabled={!isValid}
               alignSelf="center"
               selected={isSelected}
-              onClick={async () => {
-                checkoutTracking.clickedShippingAddress()
-                setSelectedAddressID(internalID)
-                await onSelectAddress(processedAddress)
-              }}
+              onClick={() => handleAddressClick(processedAddress)}
               label={<Text variant="sm-display">{address.name || ""}</Text>}
             >
               <Flex flexDirection="column" width="100%" ml={0.4}>
@@ -194,28 +224,12 @@ export const SavedAddressOptions = ({
         type="submit"
         loading={parentFormikContext.isSubmitting}
         disabled={
-          Object.keys(parentFormikContext.errors).length > 0 ||
-          !!parentFormikContext.status?.errorBanner
+          !savedAddresses.find(a => a.internalID === selectedAddressID)
+            ?.isShippable ||
+          !savedAddresses.find(a => a.internalID === selectedAddressID)?.isValid
         }
-        onClick={async () => {
-          const errors = await parentFormikContext.validateForm()
-          parentFormikContext.setTouched(setNestedObjectValues(errors, true))
-
-          if (Object.keys(errors).length === 0) {
-            parentFormikContext.handleSubmit()
-          } else {
-            const errorMessages = Object.values(errors).flatMap(v =>
-              typeof v === "object" ? Object.values(v) : v,
-            )
-            const error = {
-              title: "Please fix the following errors",
-              message: `${errorMessages.join(". ")}.`,
-            }
-            setStepErrorMessage({
-              step: CheckoutStepName.FULFILLMENT_DETAILS,
-              error,
-            })
-          }
+        onClick={() => {
+          parentFormikContext.handleSubmit()
         }}
       >
         See Shipping Methods
