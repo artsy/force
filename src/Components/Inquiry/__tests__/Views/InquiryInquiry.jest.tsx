@@ -7,8 +7,10 @@ import { render, screen } from "@testing-library/react"
 jest.mock("../../Hooks/useInquiryContext")
 jest.mock("System/Hooks/useSystemContext")
 jest.mock("../../Hooks/useArtworkInquiryRequest")
+
+const mockUseFlag = jest.fn()
 jest.mock("@unleash/proxy-client-react", () => ({
-  useFlag: jest.fn(() => true),
+  useFlag: () => mockUseFlag(),
 }))
 jest.mock("System/Relay/SystemQueryRenderer", () => ({
   SystemQueryRenderer: ({ render: renderProp }: any) => {
@@ -59,7 +61,11 @@ describe("InquiryInquiry", () => {
     mockSetContext.mockReset()
   })
 
-  describe("validation", () => {
+  describe("validation when feature flag is enabled", () => {
+    beforeAll(() => {
+      mockUseFlag.mockReturnValue(true)
+    })
+
     it("shows error and disables button when message is empty and no questions selected", () => {
       ;(useInquiryContext as jest.Mock).mockImplementation(() => ({
         next: mockNext,
@@ -146,6 +152,53 @@ describe("InquiryInquiry", () => {
 
       const button = screen.getByRole("button", { name: "Send" })
       expect(button).not.toBeDisabled()
+    })
+  })
+
+  describe("validation when feature flag is disabled", () => {
+    beforeAll(() => {
+      mockUseFlag.mockReturnValue(false)
+    })
+
+    it("does not show error message and textarea is required", () => {
+      ;(useInquiryContext as jest.Mock).mockImplementation(() => ({
+        next: mockNext,
+        setInquiry: mockSetInquiry,
+        inquiry: { message: "" },
+        artworkID: "artwork-123",
+        setContext: mockSetContext,
+        questions: [],
+      }))
+
+      render(<InquiryInquiryQueryRenderer />)
+
+      expect(
+        screen.queryByText(
+          "Please enter a message or select at least one option.",
+        ),
+      ).not.toBeInTheDocument()
+
+      const textarea = screen.getByTitle("Your message")
+      expect(textarea).toBeRequired()
+    })
+
+    it("does not show error when message is empty but textarea is still required", () => {
+      ;(useInquiryContext as jest.Mock).mockImplementation(() => ({
+        next: mockNext,
+        setInquiry: mockSetInquiry,
+        inquiry: { message: "" },
+        artworkID: "artwork-123",
+        setContext: mockSetContext,
+        questions: [],
+      }))
+
+      render(<InquiryInquiryQueryRenderer />)
+
+      const button = screen.getByRole("button", { name: "Send" })
+      expect(button).not.toBeDisabled()
+
+      const textarea = screen.getByTitle("Your message")
+      expect(textarea).toBeRequired()
     })
   })
 })
