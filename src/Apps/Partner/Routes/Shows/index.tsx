@@ -124,7 +124,8 @@ export const ShowsFragmentContainer = createFragmentContainer(Shows, {
       }
       currentEvents: showsConnection(
         first: 12
-        status: RUNNING
+        status: CURRENT
+        sort: END_AT_ASC
         isDisplayable: true
       ) {
         edges {
