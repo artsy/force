@@ -6,6 +6,7 @@ import {
   type ImmersiveViewOptionViewed,
   commercialFilterParamsChanged,
 } from "@artsy/cohesion"
+import { useDismissibleContext } from "@artsy/dismissible"
 import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
 import ExpandIcon from "@artsy/icons/ExpandIcon"
 import FilterIcon from "@artsy/icons/FilterIcon"
@@ -37,7 +38,10 @@ import { ImmersiveView } from "Components/ArtworkFilter/ImmersiveView"
 import type { ArtworkGridLayout } from "Components/ArtworkGrid/ArtworkGrid"
 import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
 import { ArtworkGridEmptyState } from "Components/ArtworkGrid/ArtworkGridEmptyState"
-import { ProgressiveOnboardingImmersiveView } from "Components/ProgressiveOnboarding/ProgressiveOnboardingImmersiveView"
+import {
+  KEY as IMMERSIVE_KEY,
+  ProgressiveOnboardingImmersiveView,
+} from "Components/ProgressiveOnboarding/ProgressiveOnboardingImmersiveView"
 import { Sticky } from "Components/Sticky"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useSystemContext } from "System/Hooks/useSystemContext"
@@ -143,6 +147,7 @@ export const BaseArtworkFilter: React.FC<
 
   const [isImmersed, setIsImmersed] = useState(false)
   const enableImmersiveView = useFlag("onyx_enable-immersive-view")
+  const { dismiss, isDismissed } = useDismissibleContext()
 
   const trackClickedImmersiveView = () => {
     const params: ClickedImmersiveView = {
@@ -448,6 +453,9 @@ export const BaseArtworkFilter: React.FC<
                               onClick={() => {
                                 setIsImmersed(true)
                                 trackClickedImmersiveView()
+                                if (!isDismissed(IMMERSIVE_KEY).status) {
+                                  dismiss(IMMERSIVE_KEY)
+                                }
                               }}
                               disabled={Number(total) === 0}
                             >
