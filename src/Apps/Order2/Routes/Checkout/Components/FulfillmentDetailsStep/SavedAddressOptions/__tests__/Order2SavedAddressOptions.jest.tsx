@@ -260,7 +260,8 @@ describe("SavedAddressOptions", () => {
           step: CheckoutStepName.FULFILLMENT_DETAILS,
           error: {
             title: "Invalid address",
-            message: "This address is missing required information.",
+            message:
+              "This address is missing required information. Edit your address to continue.",
           },
         })
       })
@@ -290,7 +291,7 @@ describe("SavedAddressOptions", () => {
           step: CheckoutStepName.FULFILLMENT_DETAILS,
           error: {
             title: "Unable to ship to this address",
-            message: "Select a different address or add a new one to continue",
+            message: "Select a different address or add a new one to continue.",
           },
         })
       })

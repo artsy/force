@@ -7,6 +7,7 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
+import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import {
   type ProcessedUserAddress,
   deliveryAddressValidationSchema,
@@ -53,12 +54,11 @@ export const UpdateAddressForm = ({
   onSaveAddress,
   onDeleteAddress,
   address,
-  defaultInitialValues,
 }: UpdateAddressFormProps) => {
   const updateUserAddress = useOrder2UpdateUserAddressMutation()
   const updateUserDefaultAddress = useOrder2UpdateUserDefaultAddressMutation()
   const deleteUserAddress = useOrder2DeleteUserAddressMutation()
-  const { setUserAddressMode } = useCheckoutContext()
+  const { setUserAddressMode, setStepErrorMessage } = useCheckoutContext()
   const [showDeleteDialog, setShowDeleteDialog] = useState(false)
   const [isDeleting, setIsDeleting] = useState(false)
   const [deleteError, setDeleteError] = useState<{
@@ -162,6 +162,11 @@ export const UpdateAddressForm = ({
       }
 
       await onSaveAddress(values, updatedAddressID)
+
+      setStepErrorMessage({
+        step: CheckoutStepName.FULFILLMENT_DETAILS,
+        error: null,
+      })
     } catch (error) {
       logger.error("Error updating address:", error)
     }
