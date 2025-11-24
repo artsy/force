@@ -15895,9 +15895,6 @@ type Me implements Node {
   initials(length: Int = 3): String
   inquiryIntroduction: String
 
-  # Collector's Instagram handle
-  instagram: String
-
   # A type-specific ID.
   internalID: ID!
   isCollector: Boolean!
@@ -15911,9 +15908,6 @@ type Me implements Node {
 
   # Length unit preference of the user
   lengthUnitPreference: LengthUnitPreference!
-
-  # Collector's LinkedIn handle
-  linkedIn: String
   location: MyLocation
 
   # The current user's status relating to bids on artworks
@@ -25143,12 +25137,6 @@ input UpdateMyProfileInput {
 
   # Profession.
   profession: String
-
-  # Collector's LinkedIn handle
-  linkedIn: String
-
-  # Collector's Instagram handle
-  instagram: String
 
   # Since we don't want to ask a collector to update their profile too often, set this to record they've been prompted
   promptedForUpdate: Boolean

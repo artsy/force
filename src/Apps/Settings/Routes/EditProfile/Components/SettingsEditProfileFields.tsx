@@ -87,8 +87,8 @@ const SettingsEditProfileFields: React.FC<
     location: me.location ?? null,
     locationSelected: true,
     profession: me.profession ?? "",
-    linkedIn: me.linkedIn ?? "",
-    instagram: me.instagram ?? "",
+    linkedIn: me.collectorProfile?.linkedIn ?? "",
+    instagram: me.collectorProfile?.instagram ?? "",
     otherRelevantPositions: me.otherRelevantPositions ?? "",
     bio: me.bio ?? "",
     photo: null,
@@ -398,8 +398,6 @@ export const SettingsEditProfileFieldsFragmentContainer =
         internalID
         name
         profession
-        linkedIn
-        instagram
         otherRelevantPositions
         bio
         location {
@@ -412,6 +410,10 @@ export const SettingsEditProfileFieldsFragmentContainer =
         isEmailConfirmed
         isIdentityVerified
         canRequestEmailConfirmation
+        collectorProfile {
+          linkedIn
+          instagram
+        }
       }
     `,
   })
