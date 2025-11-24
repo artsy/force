@@ -4,7 +4,7 @@ import { ProgressiveOnboardingPopover } from "Components/ProgressiveOnboarding/P
 import { PROGRESSIVE_ONBOARDING } from "Components/ProgressiveOnboarding/progressiveOnboardingKeys"
 import type { FC } from "react"
 
-const KEY = PROGRESSIVE_ONBOARDING.immersiveView
+export const KEY = PROGRESSIVE_ONBOARDING.immersiveView
 
 export const ProgressiveOnboardingImmersiveView: FC<
   React.PropsWithChildren
