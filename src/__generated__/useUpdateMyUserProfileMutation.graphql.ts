@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5e30da4a59948ca4dc72f912e9bc1d22>>
+ * @generated SignedSource<<2eb515a1969594715995daaaaa695f2a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -24,8 +24,10 @@ export type UpdateMyProfileInput = {
   iconUrl?: string | null | undefined;
   industry?: string | null | undefined;
   instagram?: string | null | undefined;
+  instagram?: string | null | undefined;
   isCollector?: boolean | null | undefined;
   lengthUnitPreference?: LengthUnitPreference | null | undefined;
+  linkedIn?: string | null | undefined;
   linkedIn?: string | null | undefined;
   location?: EditableLocation | null | undefined;
   name?: string | null | undefined;
