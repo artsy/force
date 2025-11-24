@@ -380,7 +380,7 @@ export const BaseArtworkFilter: React.FC<
         {/* Negative offset for positive sticky padding */}
         <Spacer y={-1} />
 
-        <Sticky bottomBoundary="#Sticky__ArtworkFilter">
+        <Sticky bottomBoundary="#Sticky__ArtworkFilter" retractGlobalNav>
           {({ stuck }) => {
             return (
               <FullBleed backgroundColor="mono0">

@@ -24,7 +24,7 @@ export const LayoutDefault: FC<React.PropsWithChildren<LayoutDefaultProps>> = ({
       <Flex
         width="100%"
         // Prevents horizontal scrollbars from `FullBleed` + persistent vertical scrollbars
-        overflowX="hidden"
+        overflowX="clip"
         // Implements "Sticky footer" pattern
         // https://philipwalton.github.io/solved-by-flexbox/demos/sticky-footer/
         minHeight="100vh"

@@ -1,9 +1,9 @@
 import { compound } from "@artsy/palette"
-import { uniqBy } from "lodash"
 import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useRef,
   useState,
@@ -14,16 +14,23 @@ export type TSticky = {
   id: string
   height: number
   status: "FIXED" | "ORIGINAL" | "RELEASED"
+  retractsNav?: boolean
 }
 
 const StickyContext = createContext<{
   /** Sorted by place in React tree (lower on the page = later in the array) */
   stickies: TSticky[]
+  isNavBarRetracted: boolean
+  shouldRetractGlobalNav: boolean
+  scrollDirection: "up" | "down"
   registerSticky(sticky: TSticky): void
   deregisterSticky(sticky: Pick<TSticky, "id">): void
   updateSticky({ id, payload }: { id: string; payload: Partial<TSticky> }): void
 }>({
   stickies: [],
+  isNavBarRetracted: false,
+  shouldRetractGlobalNav: false,
+  scrollDirection: "up",
   registerSticky: () => {},
   deregisterSticky: () => {},
   updateSticky: () => {},
@@ -36,13 +43,28 @@ const StickyContext = createContext<{
 export const StickyProvider: React.FC<React.PropsWithChildren<unknown>> = ({
   children,
 }) => {
+  const DELTA_THRESHOLD = 2
+  const RETRACT_THRESHOLD = 24
+
   const [stickies, setStickies] = useState<TSticky[]>([])
+  const [isNavBarRetracted, setIsNavBarRetracted] = useState(false)
+  const [scrollDirection, setScrollDirection] = useState<"up" | "down">("up")
 
   const registerSticky = useCallback((sticky: TSticky) => {
-    setStickies(prevStickies => uniqBy([...prevStickies, sticky], "id"))
+    setStickies(prevStickies => {
+      const existingIndex = prevStickies.findIndex(({ id }) => id === sticky.id)
+
+      if (existingIndex >= 0) {
+        const next = [...prevStickies]
+        next[existingIndex] = { ...next[existingIndex], ...sticky }
+        return next
+      }
+
+      return [...prevStickies, sticky]
+    })
   }, [])
 
-  const deregisterSticky = useCallback((sticky: TSticky) => {
+  const deregisterSticky = useCallback((sticky: Pick<TSticky, "id">) => {
     setStickies(prevStickies =>
       prevStickies.filter(({ id }) => id !== sticky.id),
     )
@@ -63,9 +85,89 @@ export const StickyProvider: React.FC<React.PropsWithChildren<unknown>> = ({
     [],
   )
 
+  const shouldRetractGlobalNav = useMemo(
+    () =>
+      stickies.some(
+        sticky => sticky.status === "FIXED" && sticky.retractsNav === true,
+      ),
+    [stickies],
+  )
+
+  useEffect(() => {
+    if (typeof window === "undefined") return
+
+    if (!shouldRetractGlobalNav) {
+      setIsNavBarRetracted(false)
+      setScrollDirection("up")
+      return
+    }
+
+    let lastScrollY = window.scrollY
+    let lastToggleY = lastScrollY
+    let ticking = false
+
+    const updateDirection = () => {
+      const current = window.scrollY
+
+      const delta = current - lastScrollY
+
+      if (Math.abs(delta) < DELTA_THRESHOLD) {
+        ticking = false
+        return
+      }
+
+      const direction: "up" | "down" = delta > 0 ? "down" : "up"
+
+      setScrollDirection(prev => (prev === direction ? prev : direction))
+
+      setIsNavBarRetracted(prev => {
+        if (!shouldRetractGlobalNav) return false
+
+        if (!prev && direction === "down") {
+          if (Math.abs(current - lastToggleY) > RETRACT_THRESHOLD) {
+            lastToggleY = current
+            return true
+          }
+        }
+
+        if (prev && direction === "up") {
+          if (Math.abs(current - lastToggleY) > RETRACT_THRESHOLD) {
+            lastToggleY = current
+            return false
+          }
+        }
+
+        return prev
+      })
+
+      lastScrollY = current
+      ticking = false
+    }
+
+    const handleScroll = () => {
+      if (ticking) return
+      ticking = true
+      requestAnimationFrame(updateDirection)
+    }
+
+    window.addEventListener("scroll", handleScroll, { passive: true })
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll)
+    }
+  }, [shouldRetractGlobalNav])
+
   return (
     <StickyContext.Provider
-      value={{ stickies, registerSticky, deregisterSticky, updateSticky }}
+      value={{
+        stickies,
+        isNavBarRetracted,
+        shouldRetractGlobalNav,
+        scrollDirection,
+        registerSticky,
+        deregisterSticky,
+        updateSticky,
+      }}
     >
       {children}
     </StickyContext.Provider>
@@ -99,6 +201,9 @@ export const getOffsetTopForSticky = ({
 export const useSticky = ({ id: _id }: { id?: string } = {}) => {
   const {
     stickies,
+    isNavBarRetracted,
+    shouldRetractGlobalNav,
+    scrollDirection,
     registerSticky: __registerSticky__,
     deregisterSticky: __deregisterSticky__,
     updateSticky: __updateSticky__,
@@ -107,9 +212,14 @@ export const useSticky = ({ id: _id }: { id?: string } = {}) => {
   const id = useRef(_id ?? generateId())
 
   const registerSticky = useCallback(
-    height => {
+    (height: number, options: { retractsNav?: boolean } = {}) => {
       if (height === undefined) return
-      __registerSticky__({ id: id.current, height, status: "ORIGINAL" })
+      __registerSticky__({
+        id: id.current,
+        height,
+        retractsNav: options.retractsNav,
+        status: "ORIGINAL",
+      })
     },
     [__registerSticky__],
   )
@@ -135,6 +245,9 @@ export const useSticky = ({ id: _id }: { id?: string } = {}) => {
     deregisterSticky,
     offsetTop,
     registerSticky,
+    isNavBarRetracted,
+    shouldRetractGlobalNav,
+    scrollDirection,
     stickies,
     updateSticky,
   }

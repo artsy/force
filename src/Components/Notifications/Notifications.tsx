@@ -12,7 +12,7 @@ import { useOnce } from "Utils/Hooks/useOnce"
 import createLogger from "Utils/logger"
 import { DateTime } from "luxon"
 import type { FC } from "react"
-import Sticky from "react-stickynode"
+import { Sticky } from "Components/Sticky"
 import { markNotificationsAsSeen } from "./Mutations/markNotificationsAsSeen"
 import type { NotificationsWrapperProps } from "./NotificationsWrapper"
 
