@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d479ea3ff5322c02a012ad4a9b119611>>
+ * @generated SignedSource<<9250b331be54d0bbd77b8571b03c75a5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -175,8 +175,13 @@ return {
         (v0/*: any*/),
         {
           "kind": "Literal",
+          "name": "sort",
+          "value": "END_AT_ASC"
+        },
+        {
+          "kind": "Literal",
           "name": "status",
-          "value": "RUNNING"
+          "value": "CURRENT"
         }
       ],
       "concreteType": "ShowConnection",
@@ -184,7 +189,7 @@ return {
       "name": "showsConnection",
       "plural": false,
       "selections": (v3/*: any*/),
-      "storageKey": "showsConnection(first:12,isDisplayable:true,status:\"RUNNING\")"
+      "storageKey": "showsConnection(first:12,isDisplayable:true,sort:\"END_AT_ASC\",status:\"CURRENT\")"
     },
     {
       "alias": "upcomingEvents",
@@ -210,6 +215,6 @@ return {
 };
 })();
 
-(node as any).hash = "a8a169083bf31768bbec1a51531ed995";
+(node as any).hash = "4d0fd3b121d1d4f55cd20bdf815bc7ff";
 
 export default node;
