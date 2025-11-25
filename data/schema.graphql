@@ -5571,14 +5571,10 @@ type CollectorProfileType implements Node {
   collectedArtworksCount: Int!
 
   # Structured attributes describing the collector in relation to the artwork/partner.
-<<<<<<< HEAD
   collectorAttributes(
     # This can be specified, and is injected in a conversation context for convenience.
     artworkID: String
   ): [CollectorSummaryAttribute!]!
-=======
-  collectorAttributes: [CollectorSummaryAttribute!]!
->>>>>>> 4181e6815f (schema)
   collectorLevel: Int
   companyName: String
   companyWebsite: String
@@ -14808,14 +14804,10 @@ type InquirerCollectorProfile {
   collectedArtworksCount: Int!
 
   # Structured attributes describing the collector in relation to the artwork/partner.
-<<<<<<< HEAD
   collectorAttributes(
     # This can be specified, and is injected in a conversation context for convenience.
     artworkID: String
   ): [CollectorSummaryAttribute!]!
-=======
-  collectorAttributes: [CollectorSummaryAttribute!]!
->>>>>>> 4181e6815f (schema)
   collectorLevel: Int
   companyName: String
   companyWebsite: String

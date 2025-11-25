@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * @generated SignedSource<<2eb515a1969594715995daaaaa695f2a>>
-=======
  * @generated SignedSource<<e401d3e7803221a5328fc67f16ffb52c>>
->>>>>>> b8d747088d (feat: add instagram and linked in inputs for collector settings)
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -28,10 +24,8 @@ export type UpdateMyProfileInput = {
   iconUrl?: string | null | undefined;
   industry?: string | null | undefined;
   instagram?: string | null | undefined;
-  instagram?: string | null | undefined;
   isCollector?: boolean | null | undefined;
   lengthUnitPreference?: LengthUnitPreference | null | undefined;
-  linkedIn?: string | null | undefined;
   linkedIn?: string | null | undefined;
   location?: EditableLocation | null | undefined;
   name?: string | null | undefined;
