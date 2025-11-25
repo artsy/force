@@ -333,9 +333,7 @@ describe("SettingsEditProfileFields", () => {
       })
     })
 
-    it("shows toast when submitting with validation errors", async () => {
-      mockSubmitUpdateMyUserProfile.mockClear()
-
+    it("disables save button when there are validation errors", async () => {
       renderWithRelay({
         Me: () => ({
           collectorProfile: {
@@ -360,20 +358,9 @@ describe("SettingsEditProfileFields", () => {
         ).toBeInTheDocument()
       })
 
-      const saveButton = screen.getByText("Save")
-      fireEvent.click(saveButton)
-
-      await waitFor(() => {
-        expect(mockSendToast).toHaveBeenCalledWith({
-          variant: "error",
-          message: "Please fix the errors in the form",
-          description:
-            "Instagram handle can only contain letters, numbers, underscores, and periods",
-        })
-      })
-
-      // Should not call the mutation when there are validation errors
-      expect(mockSubmitUpdateMyUserProfile).not.toHaveBeenCalled()
+      // Save button should be disabled when there are validation errors
+      const saveButton = screen.getByTestId("edit-profile-save-button")
+      expect(saveButton).toBeDisabled()
     })
   })
 

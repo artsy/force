@@ -152,8 +152,6 @@ const SettingsEditProfileFields: React.FC<
           setFieldTouched,
           handleChange,
           handleBlur,
-          handleSubmit,
-          validateForm,
           errors,
           touched,
         }) => (
@@ -393,25 +391,11 @@ const SettingsEditProfileFields: React.FC<
               px={4}
               width={["100%", "auto"]}
               data-testid="edit-profile-save-button"
-              type="button"
+              type="submit"
               size="large"
               variant="primaryBlack"
               loading={isSubmitting}
-              onClick={async () => {
-                const validationErrors = await validateForm()
-
-                if (Object.keys(validationErrors).length > 0) {
-                  // Show toast with first validation error
-                  const firstError = Object.values(validationErrors)[0]
-                  sendToast({
-                    variant: "error",
-                    message: "Please fix the errors in the form",
-                    description: firstError as string,
-                  })
-                } else {
-                  handleSubmit()
-                }
-              }}
+              disabled={!isValid}
             >
               Save
             </Button>
