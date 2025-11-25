@@ -14,6 +14,7 @@ type MeAddresses = ExtractNodeType<
 type GravityAddress = ReturnType<typeof extractNodes<MeAddresses>>[number]
 
 export type ProcessedUserAddress = FormikContextWithAddress & {
+  isShippable: boolean
   isValid: boolean
   internalID: string
   isDefault: boolean
@@ -49,11 +50,21 @@ export const processSavedAddresses = (
   const meAddresses = extractNodes(addresses)
   const processedAddresses = meAddresses.map(address => {
     const normalizedAddress = normalizeAddress(address)
-    const isValid = availableShippingCountries.includes(
+    const isShippable = availableShippingCountries.includes(
       normalizedAddress.address.country,
     )
+
+    const isValid =
+      !!normalizedAddress.address.name &&
+      !!normalizedAddress.address.country &&
+      !!normalizedAddress.address.addressLine1 &&
+      !!normalizedAddress.address.city &&
+      !!normalizedAddress.phoneNumber &&
+      !!normalizedAddress.phoneNumberCountryCode
+
     return {
       ...normalizedAddress,
+      isShippable,
       isValid,
       internalID: address.internalID,
       isDefault: address.isDefault,
@@ -65,11 +76,14 @@ export const processSavedAddresses = (
 
 export const sortAddressesByPriority = (addresses: ProcessedUserAddress[]) => {
   return [...addresses].sort((a, b) => {
-    if (a.isDefault && a.isValid && !(b.isDefault && b.isValid)) return -1
-    if (b.isDefault && b.isValid && !(a.isDefault && a.isValid)) return 1
+    const aUsable = a.isShippable && a.isValid
+    const bUsable = b.isShippable && b.isValid
 
-    if (a.isValid && !b.isValid) return -1
-    if (!a.isValid && b.isValid) return 1
+    if (a.isDefault && aUsable && !(b.isDefault && bUsable)) return -1
+    if (b.isDefault && bUsable && !(a.isDefault && aUsable)) return 1
+
+    if (aUsable && !bUsable) return -1
+    if (!aUsable && bUsable) return 1
 
     return 0
   })
@@ -96,7 +110,11 @@ export const findInitialSelectedAddress = (
         initialValues.phoneNumberCountryCode ===
           processedAddress.phoneNumberCountryCode
       )
-    }) || processedAddresses.find(processedAddress => processedAddress.isValid)
+    }) ||
+    processedAddresses.find(
+      processedAddress =>
+        processedAddress.isShippable && processedAddress.isValid,
+    )
   )
 }
 

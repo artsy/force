@@ -1,5 +1,6 @@
 import { render, screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
+import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import type { FormikContextWithAddress } from "Components/Address/AddressFormFields"
 import { Formik } from "formik"
@@ -19,6 +20,7 @@ const mockUSAddress1: ProcessedUserAddress = {
   phoneNumber: "555-1234",
   phoneNumberCountryCode: "+1",
   isValid: true,
+  isShippable: true,
   isDefault: true,
   address: {
     name: "John Doe",
@@ -39,6 +41,7 @@ const mockUSAddress2: ProcessedUserAddress = {
   phoneNumber: "555-5678",
   phoneNumberCountryCode: "+1",
   isValid: true,
+  isShippable: true,
   isDefault: false,
   address: {
     name: "Jane Smith",
@@ -59,6 +62,28 @@ const mockInvalidAddress: ProcessedUserAddress = {
   phoneNumber: "555-9999",
   phoneNumberCountryCode: "+1",
   isValid: false,
+  isShippable: true,
+  isDefault: false,
+  address: {
+    name: "Invalid Address",
+    addressLine1: "789 Invalid St",
+    addressLine2: "",
+    city: "Invalid City",
+    region: "XX",
+    postalCode: "99999",
+    country: "XX",
+  },
+  phoneNumberParsed: {
+    display: "+1 555-9999",
+  },
+}
+
+const mockUnshippableAddress: ProcessedUserAddress = {
+  internalID: "address-id-789",
+  phoneNumber: "555-9999",
+  phoneNumberCountryCode: "+1",
+  isValid: true,
+  isShippable: false,
   isDefault: false,
   address: {
     name: "Invalid Address",
@@ -208,8 +233,10 @@ describe("SavedAddressOptions", () => {
         mockCheckoutContext.checkoutTracking.clickedShippingAddress,
       ).toHaveBeenCalled()
     })
+  })
 
-    it("does not allow selecting invalid addresses", () => {
+  describe("Error handling", () => {
+    it("displays error banner when selecting an invalid address", async () => {
       const onSelectAddress = jest.fn()
 
       render(
@@ -223,13 +250,76 @@ describe("SavedAddressOptions", () => {
         </TestWrapper>,
       )
 
-      const invalidAddressRadio = screen.getByRole("radio", {
+      const invalidAddress = screen.getByRole("radio", {
         name: /Invalid Address/i,
       })
+      await userEvent.click(invalidAddress)
 
-      expect(invalidAddressRadio).toHaveAttribute("disabled")
+      await waitFor(() => {
+        expect(mockCheckoutContext.setStepErrorMessage).toHaveBeenCalledWith({
+          step: CheckoutStepName.FULFILLMENT_DETAILS,
+          error: {
+            title: "Invalid address",
+            message:
+              "This address is missing required information. Edit your address to continue.",
+          },
+        })
+      })
+    })
 
-      expect(onSelectAddress).not.toHaveBeenCalled()
+    it("displays error banner when selecting an unshippable address", async () => {
+      const onSelectAddress = jest.fn()
+
+      render(
+        <TestWrapper>
+          <SavedAddressOptions
+            savedAddresses={[mockUSAddress1, mockUnshippableAddress]}
+            initialSelectedAddress={mockUSAddress1}
+            onSelectAddress={onSelectAddress}
+            newAddressInitialValues={mockNewAddressInitialValues}
+          />
+        </TestWrapper>,
+      )
+
+      const unshippableAddress = screen.getByRole("radio", {
+        name: /Invalid Address/i,
+      })
+      await userEvent.click(unshippableAddress)
+
+      await waitFor(() => {
+        expect(mockCheckoutContext.setStepErrorMessage).toHaveBeenCalledWith({
+          step: CheckoutStepName.FULFILLMENT_DETAILS,
+          error: {
+            title: "Unable to ship to this address",
+            message: "Select a different address or add a new one to continue.",
+          },
+        })
+      })
+    })
+
+    it("clears error banner when selecting a valid and shippable address", async () => {
+      const onSelectAddress = jest.fn()
+
+      render(
+        <TestWrapper>
+          <SavedAddressOptions
+            savedAddresses={[mockUSAddress1, mockUSAddress2]}
+            initialSelectedAddress={mockUSAddress1}
+            onSelectAddress={onSelectAddress}
+            newAddressInitialValues={mockNewAddressInitialValues}
+          />
+        </TestWrapper>,
+      )
+
+      const validAddress = screen.getByRole("radio", { name: /Jane Smith/i })
+      await userEvent.click(validAddress)
+
+      await waitFor(() => {
+        expect(mockCheckoutContext.setStepErrorMessage).toHaveBeenCalledWith({
+          step: CheckoutStepName.FULFILLMENT_DETAILS,
+          error: null,
+        })
+      })
     })
   })
 })

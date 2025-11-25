@@ -1,11 +1,11 @@
 import { render, screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-import { UpdateAddressForm } from "../UpdateAddressForm"
-import { useOrder2UpdateUserAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2UpdateUserAddressMutation"
-import { useOrder2DeleteUserAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2DeleteUserAddressMutation"
-import { useOrder2UpdateUserDefaultAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2UpdateUserDefaultAddressMutation"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import { useOrder2DeleteUserAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2DeleteUserAddressMutation"
+import { useOrder2UpdateUserAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2UpdateUserAddressMutation"
+import { useOrder2UpdateUserDefaultAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2UpdateUserDefaultAddressMutation"
 import type { ProcessedUserAddress } from "../../utils"
+import { UpdateAddressForm } from "../UpdateAddressForm"
 
 jest.mock(
   "Apps/Order2/Routes/Checkout/Mutations/useOrder2UpdateUserAddressMutation",
@@ -45,6 +45,7 @@ const mockUSAddress: ProcessedUserAddress = {
   phoneNumber: "555-1234",
   phoneNumberCountryCode: "+1",
   isValid: true,
+  isShippable: true,
   isDefault: false,
   address: {
     name: "John Doe",
@@ -62,6 +63,7 @@ const mockDEAddress: ProcessedUserAddress = {
   phoneNumber: "030 12345678",
   phoneNumberCountryCode: "+49",
   isValid: true,
+  isShippable: true,
   isDefault: true,
   address: {
     name: "Hans Mueller",
