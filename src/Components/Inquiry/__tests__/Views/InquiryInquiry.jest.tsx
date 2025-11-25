@@ -8,9 +8,12 @@ jest.mock("../../Hooks/useInquiryContext")
 jest.mock("System/Hooks/useSystemContext")
 jest.mock("../../Hooks/useArtworkInquiryRequest")
 
-const mockUseFlag = jest.fn()
+const mockUseVariant = jest.fn()
 jest.mock("@unleash/proxy-client-react", () => ({
-  useFlag: () => mockUseFlag(),
+  useVariant: (flagName: string) => mockUseVariant(flagName),
+}))
+jest.mock("System/Hooks/useTrackFeatureVariant", () => ({
+  useTrackFeatureVariantOnMount: jest.fn(),
 }))
 jest.mock("System/Relay/SystemQueryRenderer", () => ({
   SystemQueryRenderer: ({ render: renderProp }: any) => {
@@ -63,7 +66,7 @@ describe("InquiryInquiry", () => {
 
   describe("validation when feature flag is enabled", () => {
     beforeAll(() => {
-      mockUseFlag.mockReturnValue(true)
+      mockUseVariant.mockReturnValue({ name: "experiment" })
     })
 
     it("shows error and disables button when message is empty and no questions selected", () => {
@@ -157,7 +160,7 @@ describe("InquiryInquiry", () => {
 
   describe("validation when feature flag is disabled", () => {
     beforeAll(() => {
-      mockUseFlag.mockReturnValue(false)
+      mockUseVariant.mockReturnValue({ name: "control" })
     })
 
     it("does not show error message and textarea is required", () => {

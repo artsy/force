@@ -75,7 +75,7 @@ IMPORTANT: `useVariant` is not isomorphic. Meaning you will not have access to t
 
 ```tsx
 import { useVariant } from "@unleash/proxy-client-react"
-import { useTrackFeatureVariantOnMount } from "System/Hooks/useTrackFeatureVariantOnMount"
+import { useTrackFeatureVariantOnMount } from "System/Hooks/useTrackFeatureVariant"
 
 const MyExperiment = () => {
   // Get variant information
