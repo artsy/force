@@ -113,41 +113,29 @@ export const Order2PickupForm: React.FC<Order2PickupFormProps> = ({
     ],
   )
 
-  const existingPickupValues =
-    orderData?.selectedFulfillmentOption?.type === "PICKUP"
-      ? orderData.fulfillmentDetails
-      : null
-
-  const existingRegionCode = existingPickupValues?.phoneNumber?.regionCode
-
   const locationBasedInitialValues = useInitialLocationValues()
 
   const initialValues = useMemo(() => {
-    const hasExistingPickupData =
-      existingPickupValues?.phoneNumber?.originalNumber && existingRegionCode
+    const existingPhone =
+      orderData?.selectedFulfillmentOption?.type === "PICKUP"
+        ? orderData.fulfillmentDetails?.phoneNumber
+        : null
 
-    if (hasExistingPickupData) {
-      const matchingCountryOption = phoneCountryOptions.find(
-        option =>
-          option.value.toLowerCase() === existingRegionCode.toLowerCase(),
-      )
-
-      if (matchingCountryOption) {
-        return {
-          phoneNumber: existingPickupValues.phoneNumber.originalNumber,
-          phoneNumberCountryCode: matchingCountryOption.value,
-        }
+    if (existingPhone?.originalNumber && existingPhone.regionCode) {
+      return {
+        phoneNumber: existingPhone.originalNumber,
+        phoneNumberCountryCode: existingPhone.regionCode.toLowerCase(),
       }
     }
 
     return {
       phoneNumber: "",
       phoneNumberCountryCode:
-        locationBasedInitialValues.phoneNumberCountryCode || "",
+        locationBasedInitialValues.phoneNumberCountryCode || "us",
     }
   }, [
-    existingPickupValues?.phoneNumber?.originalNumber,
-    existingRegionCode,
+    orderData?.selectedFulfillmentOption?.type,
+    orderData?.fulfillmentDetails?.phoneNumber,
     locationBasedInitialValues.phoneNumberCountryCode,
   ])
 

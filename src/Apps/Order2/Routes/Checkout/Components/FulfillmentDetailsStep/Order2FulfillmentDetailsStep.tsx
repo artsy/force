@@ -130,7 +130,7 @@ const ORDER_FRAGMENT = graphql`
         countryCode
         regionCode
         originalNumber
-        display
+        display(format: INTERNATIONAL)
       }
       addressLine1
       addressLine2

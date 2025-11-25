@@ -12,7 +12,6 @@ import {
   Text,
   TextArea,
 } from "@artsy/palette"
-import { useFlag } from "@unleash/proxy-client-react"
 import { InquiryQuestionsList } from "Components/Inquiry/Components/InquiryQuestionsList"
 import { useArtworkInquiryRequest } from "Components/Inquiry/Hooks/useArtworkInquiryRequest"
 import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
@@ -26,6 +25,10 @@ import type { InquiryInquiry_artwork$data } from "__generated__/InquiryInquiry_a
 import type * as React from "react"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+import { useVariant } from "@unleash/proxy-client-react"
+import { useTrackFeatureVariantOnMount } from "System/Hooks/useTrackFeatureVariant"
+
+const INQUIRY_CHECKBOXES_FLAG = "emerald_inquiry-checkboxes-on-web"
 
 type Mode = "Pending" | "Sending" | "Error" | "Success"
 
@@ -38,14 +41,20 @@ const InquiryInquiry: React.FC<
 > = ({ artwork }) => {
   const { user } = useSystemContext()
 
-  const { next, setInquiry, inquiry, artworkID, setContext } =
+  const { next, setInquiry, inquiry, artworkID, setContext, questions } =
     useInquiryContext()
 
   const [mode, setMode] = useState<Mode>("Pending")
 
   const { submitArtworkInquiryRequest } = useArtworkInquiryRequest()
 
-  const enableCheckboxes = useFlag("emerald_inquiry-checkboxes-on-web")
+  const variant = useVariant(INQUIRY_CHECKBOXES_FLAG)
+  const enableCheckboxes = variant.name === "experiment"
+
+  useTrackFeatureVariantOnMount({
+    experimentName: INQUIRY_CHECKBOXES_FLAG,
+    variantName: variant.name,
+  })
 
   const handleTextAreaChange = ({ value }: { value: string }) => {
     setInquiry(prevState => ({ ...prevState, message: value }))
@@ -90,6 +99,11 @@ const InquiryInquiry: React.FC<
     ["Success"]: "Sent",
     ["Error"]: "Error",
   }[mode]
+
+  const showErrorMessage =
+    enableCheckboxes &&
+    questions?.length === 0 &&
+    inquiry.message.trim().length === 0
 
   return (
     <Box as="form" onSubmit={handleSubmit}>
@@ -158,7 +172,11 @@ const InquiryInquiry: React.FC<
         title="Your message"
         defaultValue={inquiry.message}
         onChange={handleTextAreaChange}
-        required
+        error={
+          showErrorMessage &&
+          "Please enter a message or select at least one option."
+        }
+        required={!enableCheckboxes}
       />
 
       <Spacer y={1} />
@@ -186,7 +204,7 @@ const InquiryInquiry: React.FC<
         display="block"
         width="100%"
         loading={mode === "Sending"}
-        disabled={mode === "Success"}
+        disabled={mode === "Success" || showErrorMessage}
       >
         {label}
       </Button>

@@ -7,6 +7,7 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
+import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import {
   type ProcessedUserAddress,
   deliveryAddressValidationSchema,
@@ -53,12 +54,11 @@ export const UpdateAddressForm = ({
   onSaveAddress,
   onDeleteAddress,
   address,
-  defaultInitialValues,
 }: UpdateAddressFormProps) => {
   const updateUserAddress = useOrder2UpdateUserAddressMutation()
   const updateUserDefaultAddress = useOrder2UpdateUserDefaultAddressMutation()
   const deleteUserAddress = useOrder2DeleteUserAddressMutation()
-  const { setUserAddressMode } = useCheckoutContext()
+  const { setUserAddressMode, setStepErrorMessage } = useCheckoutContext()
   const [showDeleteDialog, setShowDeleteDialog] = useState(false)
   const [isDeleting, setIsDeleting] = useState(false)
   const [deleteError, setDeleteError] = useState<{
@@ -101,15 +101,6 @@ export const UpdateAddressForm = ({
     } finally {
       setIsDeleting(false)
     }
-  }
-
-  // Pre-fill phone number and country from defaultInitialValues if not present
-  // since we show form inputs with default value. phoneNumberCountryCode and
-  // address.country are the only non-"" default values
-  address.phoneNumberCountryCode ||=
-    defaultInitialValues?.phoneNumberCountryCode
-  if (defaultInitialValues?.address?.country) {
-    address.address.country ||= defaultInitialValues.address.country
   }
 
   const initialValues: FormikContextWithAddress = {
@@ -171,6 +162,11 @@ export const UpdateAddressForm = ({
       }
 
       await onSaveAddress(values, updatedAddressID)
+
+      setStepErrorMessage({
+        step: CheckoutStepName.FULFILLMENT_DETAILS,
+        error: null,
+      })
     } catch (error) {
       logger.error("Error updating address:", error)
     }
@@ -181,6 +177,12 @@ export const UpdateAddressForm = ({
       initialValues={initialValues}
       validationSchema={deliveryAddressValidationSchema}
       onSubmit={handleSubmitAddress}
+      validateOnMount
+      initialTouched={{
+        address: true,
+        phoneNumber: true,
+        phoneNumberCountryCode: true,
+      }}
     >
       {({ isSubmitting, handleSubmit }) => (
         <>

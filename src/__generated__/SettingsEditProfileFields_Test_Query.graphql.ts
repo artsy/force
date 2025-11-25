@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<eae2bf520a01a8ea2beaf8142ef09fe1>>
+ * @generated SignedSource<<f92c906dde41d1362018c716347efbcb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -52,13 +52,13 @@ v4 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
-  "type": "String"
+  "type": "ID"
 },
 v5 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
-  "type": "ID"
+  "type": "String"
 };
 return {
   "fragment": {
@@ -260,6 +260,32 @@ return {
             "name": "canRequestEmailConfirmation",
             "storageKey": null
           },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "CollectorProfileType",
+            "kind": "LinkedField",
+            "name": "collectorProfile",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "linkedIn",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "instagram",
+                "storageKey": null
+              },
+              (v1/*: any*/)
+            ],
+            "storageKey": null
+          },
           (v1/*: any*/)
         ],
         "storageKey": null
@@ -267,7 +293,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "4d423fc30179a8b07e550b7c43fbaac8",
+    "cacheID": "85660195f31a9204cca9da902d32bf20",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -279,6 +305,15 @@ return {
         },
         "me.bio": (v2/*: any*/),
         "me.canRequestEmailConfirmation": (v3/*: any*/),
+        "me.collectorProfile": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "CollectorProfileType"
+        },
+        "me.collectorProfile.id": (v4/*: any*/),
+        "me.collectorProfile.instagram": (v2/*: any*/),
+        "me.collectorProfile.linkedIn": (v2/*: any*/),
         "me.email": (v2/*: any*/),
         "me.icon": {
           "enumValues": null,
@@ -292,8 +327,8 @@ return {
           "plural": false,
           "type": "CroppedImageUrl"
         },
-        "me.icon.cropped.src": (v4/*: any*/),
-        "me.icon.cropped.srcSet": (v4/*: any*/),
+        "me.icon.cropped.src": (v5/*: any*/),
+        "me.icon.cropped.srcSet": (v5/*: any*/),
         "me.icon.internalID": {
           "enumValues": null,
           "nullable": true,
@@ -306,9 +341,9 @@ return {
           "plural": true,
           "type": "String"
         },
-        "me.id": (v5/*: any*/),
+        "me.id": (v4/*: any*/),
         "me.initials": (v2/*: any*/),
-        "me.internalID": (v5/*: any*/),
+        "me.internalID": (v4/*: any*/),
         "me.isEmailConfirmed": (v3/*: any*/),
         "me.isIdentityVerified": {
           "enumValues": null,
@@ -325,7 +360,7 @@ return {
         "me.location.city": (v2/*: any*/),
         "me.location.country": (v2/*: any*/),
         "me.location.display": (v2/*: any*/),
-        "me.location.id": (v5/*: any*/),
+        "me.location.id": (v4/*: any*/),
         "me.location.state": (v2/*: any*/),
         "me.name": (v2/*: any*/),
         "me.otherRelevantPositions": (v2/*: any*/),
@@ -334,7 +369,7 @@ return {
     },
     "name": "SettingsEditProfileFields_Test_Query",
     "operationKind": "query",
-    "text": "query SettingsEditProfileFields_Test_Query {\n  me {\n    ...SettingsEditProfileFields_me\n    id\n  }\n}\n\nfragment CollectorProfileHeaderAvatar_me on Me {\n  initials\n  icon {\n    internalID\n    versions\n    cropped(height: 100, width: 100) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment SettingsEditProfileFields_me on Me {\n  ...SettingsEditProfileImage_me\n  internalID\n  name\n  profession\n  otherRelevantPositions\n  bio\n  location {\n    display\n    city\n    state\n    country\n    id\n  }\n  email\n  isEmailConfirmed\n  isIdentityVerified\n  canRequestEmailConfirmation\n}\n\nfragment SettingsEditProfileImage_me on Me {\n  ...CollectorProfileHeaderAvatar_me\n  initials\n  icon {\n    internalID\n    versions\n    cropped(height: 100, width: 100) {\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query SettingsEditProfileFields_Test_Query {\n  me {\n    ...SettingsEditProfileFields_me\n    id\n  }\n}\n\nfragment CollectorProfileHeaderAvatar_me on Me {\n  initials\n  icon {\n    internalID\n    versions\n    cropped(height: 100, width: 100) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment SettingsEditProfileFields_me on Me {\n  ...SettingsEditProfileImage_me\n  internalID\n  name\n  profession\n  otherRelevantPositions\n  bio\n  location {\n    display\n    city\n    state\n    country\n    id\n  }\n  email\n  isEmailConfirmed\n  isIdentityVerified\n  canRequestEmailConfirmation\n  collectorProfile {\n    linkedIn\n    instagram\n    id\n  }\n}\n\nfragment SettingsEditProfileImage_me on Me {\n  ...CollectorProfileHeaderAvatar_me\n  initials\n  icon {\n    internalID\n    versions\n    cropped(height: 100, width: 100) {\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();

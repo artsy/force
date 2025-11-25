@@ -139,6 +139,17 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
     return null
   }, [props.withLegacyPhoneInput, props.withPhoneNumber])
 
+  const phoneCountryOptions = useMemo(() => {
+    const hasValue =
+      values.phoneNumberCountryCode && values.phoneNumberCountryCode !== ""
+
+    if (!hasValue) {
+      return [EMPTY_PHONE_COUNTRY_OPTION, ...countryPhoneOptions]
+    }
+
+    return countryPhoneOptions
+  }, [values.phoneNumberCountryCode])
+
   return (
     <GridColumns data-testid={dataTestIdPrefix}>
       <Column span={12}>
@@ -309,7 +320,7 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
             onChange={handleChange}
             onBlur={handleBlur}
             data-testid={`${dataTestIdPrefix}.phoneNumber`}
-            options={countryPhoneOptions}
+            options={phoneCountryOptions}
             onSelect={(option: CountryData): void => {
               setFieldValue("phoneNumberCountryCode", option.value)
             }}
@@ -344,4 +355,11 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
       )}
     </GridColumns>
   )
+}
+
+const EMPTY_PHONE_COUNTRY_OPTION: CountryData = {
+  name: "",
+  countryCode: "",
+  text: "",
+  value: "",
 }

@@ -1,13 +1,5 @@
 import AddIcon from "@artsy/icons/AddIcon"
-import {
-  BorderedRadio,
-  Box,
-  Button,
-  Clickable,
-  Flex,
-  Spacer,
-  Text,
-} from "@artsy/palette"
+import { Button, Clickable, Flex, Radio, Spacer, Text } from "@artsy/palette"
 import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { AddAddressForm } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/SavedAddressOptions/AddAddressForm"
 import { UpdateAddressForm } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/SavedAddressOptions/UpdateAddressForm"
@@ -17,9 +9,8 @@ import {
 } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/utils"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import type { FormikContextWithAddress } from "Components/Address/AddressFormFields"
-import { setNestedObjectValues, useFormikContext } from "formik"
+import { useFormikContext } from "formik"
 import { useCallback, useState } from "react"
-import styled from "styled-components"
 
 interface SavedAddressOptionsProps {
   savedAddresses: ProcessedUserAddress[]
@@ -41,17 +32,18 @@ export const SavedAddressOptions = ({
   } = useCheckoutContext()
   const parentFormikContext = useFormikContext<FormikContextWithAddress>()
 
-  const [selectedAddressID, setSelectedAddressID] = useState(
-    initialSelectedAddress?.internalID || "",
-  )
+  const [selectedAddress, setSelectedAddress] = useState<
+    ProcessedUserAddress | undefined
+  >(initialSelectedAddress)
 
   const onSaveAddress = useCallback(
     async (values, addressID) => {
       await onSelectAddress(values)
-      setSelectedAddressID(addressID)
       setUserAddressMode(null)
+      const address = savedAddresses.find(a => a.internalID === addressID)
+      setSelectedAddress(address)
     },
-    [onSelectAddress, setUserAddressMode],
+    [onSelectAddress, setUserAddressMode, savedAddresses],
   )
 
   const onDeleteAddress = useCallback(
@@ -62,16 +54,53 @@ export const SavedAddressOptions = ({
 
       if (remainingAddresses.length > 0) {
         const addressToSelect = remainingAddresses.find(
-          address => address.isValid,
+          address => address.isShippable && address.isValid,
         )
 
         if (addressToSelect) {
-          setSelectedAddressID(addressToSelect.internalID)
+          setSelectedAddress(addressToSelect)
           await onSelectAddress(addressToSelect)
         }
       }
     },
     [savedAddresses, onSelectAddress],
+  )
+
+  const handleAddressClick = useCallback(
+    async (processedAddress: ProcessedUserAddress) => {
+      const { isShippable, isValid } = processedAddress
+
+      checkoutTracking.clickedShippingAddress()
+      setSelectedAddress(processedAddress)
+      await onSelectAddress(processedAddress)
+
+      if (!isShippable) {
+        return setStepErrorMessage({
+          step: CheckoutStepName.FULFILLMENT_DETAILS,
+          error: {
+            title: "Unable to ship to this address",
+            message: "Select a different address or add a new one to continue.",
+          },
+        })
+      }
+
+      if (!isValid) {
+        return setStepErrorMessage({
+          step: CheckoutStepName.FULFILLMENT_DETAILS,
+          error: {
+            title: "Invalid address",
+            message:
+              "This address is missing required information. Edit your address to continue.",
+          },
+        })
+      }
+
+      setStepErrorMessage({
+        step: CheckoutStepName.FULFILLMENT_DETAILS,
+        error: null,
+      })
+    },
+    [checkoutTracking, onSelectAddress, setStepErrorMessage],
   )
 
   if (userAddressMode?.mode === "add") {
@@ -102,33 +131,30 @@ export const SavedAddressOptions = ({
         variant={["sm-display", "md"]}
       >
         Delivery address
-      </Text>{" "}
+      </Text>
+
       <Spacer y={2} />
+
       {savedAddresses.map(processedAddress => {
-        const { address, isValid, internalID, phoneNumberParsed } =
-          processedAddress
-        const isSelected = selectedAddressID === internalID
+        const { address, internalID, phoneNumberParsed } = processedAddress
+        const isSelected = selectedAddress?.internalID === internalID
         const backgroundColor = isSelected ? "mono5" : "mono0"
         const textColor = isSelected ? "mono100" : "mono60"
 
         return (
-          <Box key={internalID} position="relative">
-            <UnBorderedRadio
-              width="100%"
-              backgroundColor={backgroundColor}
+          <Flex
+            key={internalID}
+            backgroundColor={backgroundColor}
+            p={2}
+          >
+            <Radio
+              flex={1}
               value={internalID}
-              flex={0}
-              disabled={!isValid}
-              alignSelf="center"
               selected={isSelected}
-              onClick={async () => {
-                checkoutTracking.clickedShippingAddress()
-                setSelectedAddressID(internalID)
-                await onSelectAddress(processedAddress)
-              }}
+              onClick={() => handleAddressClick(processedAddress)}
               label={<Text variant="sm-display">{address.name || ""}</Text>}
             >
-              <Flex flexDirection="column" width="100%" ml={0.4}>
+              <Flex flexDirection="column">
                 {address.addressLine1 && (
                   <Text variant="sm" fontWeight="normal" color={textColor}>
                     {address.addressLine1}
@@ -158,11 +184,10 @@ export const SavedAddressOptions = ({
                   </Text>
                 )}
               </Flex>
-            </UnBorderedRadio>
+            </Radio>
+
             <Clickable
-              position="absolute"
-              top={2}
-              right={2}
+              alignSelf="flex-start"
               onClick={async () => {
                 setUserAddressMode({
                   mode: "edit",
@@ -174,10 +199,12 @@ export const SavedAddressOptions = ({
                 Edit
               </Text>
             </Clickable>
-          </Box>
+          </Flex>
         )
       })}
+
       <Spacer y={2} />
+
       <Clickable
         onClick={() => {
           checkoutTracking.clickedAddNewShippingAddress()
@@ -189,33 +216,15 @@ export const SavedAddressOptions = ({
           Add new address
         </Text>
       </Clickable>
+
       <Spacer y={4} />
+
       <Button
         type="submit"
         loading={parentFormikContext.isSubmitting}
-        disabled={
-          Object.keys(parentFormikContext.errors).length > 0 ||
-          !!parentFormikContext.status?.errorBanner
-        }
-        onClick={async () => {
-          const errors = await parentFormikContext.validateForm()
-          parentFormikContext.setTouched(setNestedObjectValues(errors, true))
-
-          if (Object.keys(errors).length === 0) {
-            parentFormikContext.handleSubmit()
-          } else {
-            const errorMessages = Object.values(errors).flatMap(v =>
-              typeof v === "object" ? Object.values(v) : v,
-            )
-            const error = {
-              title: "Please fix the following errors",
-              message: `${errorMessages.join(". ")}.`,
-            }
-            setStepErrorMessage({
-              step: CheckoutStepName.FULFILLMENT_DETAILS,
-              error,
-            })
-          }
+        disabled={!selectedAddress?.isShippable || !selectedAddress?.isValid}
+        onClick={() => {
+          parentFormikContext.handleSubmit()
         }}
       >
         See Shipping Methods
@@ -223,6 +232,3 @@ export const SavedAddressOptions = ({
     </Flex>
   )
 }
-const UnBorderedRadio = styled(BorderedRadio)`
-  border: 0;
-`

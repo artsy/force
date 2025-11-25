@@ -162,10 +162,11 @@ describe("FulfillmentDetailsStep utils", () => {
       )
 
       expect(result).toHaveLength(2)
-      // After sorting: valid addresses come first (invalid default comes after valid)
+      // After sorting: usable addresses come first (non-shippable default comes after usable)
       expect(result[0]).toMatchObject({
         internalID: "address1",
-        isValid: true, // US is in available countries
+        isShippable: true, // US is in available countries
+        isValid: true, // All required fields present
         isDefault: false,
         phoneNumber: "1234567890",
         phoneNumberCountryCode: "US",
@@ -177,7 +178,8 @@ describe("FulfillmentDetailsStep utils", () => {
       })
       expect(result[1]).toMatchObject({
         internalID: "address2",
-        isValid: false, // CA is not in available countries
+        isShippable: false, // CA is not in available countries
+        isValid: true, // All required fields present
         isDefault: true,
         phoneNumber: "9876543210",
         phoneNumberCountryCode: "CA",
@@ -207,6 +209,7 @@ describe("FulfillmentDetailsStep utils", () => {
     const processedAddresses: ProcessedUserAddress[] = [
       {
         internalID: "address1",
+        isShippable: true,
         isValid: true,
         isDefault: false,
         phoneNumber: "1234567890",
@@ -224,7 +227,8 @@ describe("FulfillmentDetailsStep utils", () => {
       },
       {
         internalID: "address2",
-        isValid: false,
+        isShippable: false,
+        isValid: true,
         isDefault: true,
         phoneNumber: "9876543210",
         phoneNumberCountryCode: "CA",
@@ -241,6 +245,7 @@ describe("FulfillmentDetailsStep utils", () => {
       },
       {
         internalID: "address3",
+        isShippable: true,
         isValid: true,
         isDefault: false,
         phoneNumber: "5551234567",
@@ -328,6 +333,7 @@ describe("FulfillmentDetailsStep utils", () => {
       const invalidAddresses: ProcessedUserAddress[] = [
         {
           internalID: "invalid1",
+          isShippable: false,
           isValid: false,
           isDefault: false,
           phoneNumber: "",
@@ -383,6 +389,7 @@ describe("FulfillmentDetailsStep utils", () => {
       const processedAddressesWithEmpty: ProcessedUserAddress[] = [
         {
           internalID: "address1",
+          isShippable: true,
           isValid: true,
           isDefault: false,
           phoneNumber: "1234567890",
@@ -412,6 +419,7 @@ describe("FulfillmentDetailsStep utils", () => {
       const addressesWithDefault: ProcessedUserAddress[] = [
         {
           internalID: "address1",
+          isShippable: true,
           isValid: true,
           isDefault: false,
           phoneNumber: "1234567890",
@@ -429,6 +437,7 @@ describe("FulfillmentDetailsStep utils", () => {
         },
         {
           internalID: "address2",
+          isShippable: true,
           isValid: true,
           isDefault: true,
           phoneNumber: "9876543210",
@@ -471,6 +480,7 @@ describe("FulfillmentDetailsStep utils", () => {
       const addressesWithDefault: ProcessedUserAddress[] = [
         {
           internalID: "address1",
+          isShippable: true,
           isValid: true,
           isDefault: false,
           phoneNumber: "1234567890",
@@ -488,6 +498,7 @@ describe("FulfillmentDetailsStep utils", () => {
         },
         {
           internalID: "address2",
+          isShippable: true,
           isValid: true,
           isDefault: true,
           phoneNumber: "9876543210",
@@ -530,6 +541,7 @@ describe("FulfillmentDetailsStep utils", () => {
       const addressesWithInvalidDefault: ProcessedUserAddress[] = [
         {
           internalID: "address1",
+          isShippable: true,
           isValid: true,
           isDefault: false,
           phoneNumber: "1234567890",
@@ -547,6 +559,7 @@ describe("FulfillmentDetailsStep utils", () => {
         },
         {
           internalID: "address2",
+          isShippable: false,
           isValid: false,
           isDefault: true,
           phoneNumber: "9876543210",
@@ -587,10 +600,11 @@ describe("FulfillmentDetailsStep utils", () => {
   })
 
   describe("sortAddressesByPriority", () => {
-    it("sorts default address first", () => {
+    it("sorts default address first when both are usable", () => {
       const addresses: ProcessedUserAddress[] = [
         {
           internalID: "address1",
+          isShippable: true,
           isValid: true,
           isDefault: false,
           phoneNumber: "1234567890",
@@ -608,6 +622,7 @@ describe("FulfillmentDetailsStep utils", () => {
         },
         {
           internalID: "address2",
+          isShippable: true,
           isValid: true,
           isDefault: true,
           phoneNumber: "9876543210",
@@ -626,14 +641,15 @@ describe("FulfillmentDetailsStep utils", () => {
       ]
 
       const result = sortAddressesByPriority(addresses)
-      expect(result[0].internalID).toBe("address2") // Default address first
+      expect(result[0].internalID).toBe("address2") // Default usable address first
       expect(result[1].internalID).toBe("address1")
     })
 
-    it("sorts valid addresses before invalid ones", () => {
+    it("sorts usable addresses before unusable ones", () => {
       const addresses: ProcessedUserAddress[] = [
         {
-          internalID: "invalid1",
+          internalID: "unusable1",
+          isShippable: false,
           isValid: false,
           isDefault: false,
           phoneNumber: "1234567890",
@@ -650,7 +666,8 @@ describe("FulfillmentDetailsStep utils", () => {
           },
         },
         {
-          internalID: "valid1",
+          internalID: "usable1",
+          isShippable: true,
           isValid: true,
           isDefault: false,
           phoneNumber: "9876543210",
@@ -669,14 +686,15 @@ describe("FulfillmentDetailsStep utils", () => {
       ]
 
       const result = sortAddressesByPriority(addresses)
-      expect(result[0].internalID).toBe("valid1") // Valid address first
-      expect(result[1].internalID).toBe("invalid1")
+      expect(result[0].internalID).toBe("usable1") // Usable address first
+      expect(result[1].internalID).toBe("unusable1")
     })
 
-    it("prioritizes valid over invalid default", () => {
+    it("prioritizes usable over unusable default", () => {
       const addresses: ProcessedUserAddress[] = [
         {
-          internalID: "valid1",
+          internalID: "usable1",
+          isShippable: true,
           isValid: true,
           isDefault: false,
           phoneNumber: "1234567890",
@@ -693,7 +711,8 @@ describe("FulfillmentDetailsStep utils", () => {
           },
         },
         {
-          internalID: "defaultInvalid",
+          internalID: "defaultUnusable",
+          isShippable: false,
           isValid: false,
           isDefault: true,
           phoneNumber: "9876543210",
@@ -712,14 +731,15 @@ describe("FulfillmentDetailsStep utils", () => {
       ]
 
       const result = sortAddressesByPriority(addresses)
-      expect(result[0].internalID).toBe("valid1") // Valid comes before invalid default
-      expect(result[1].internalID).toBe("defaultInvalid")
+      expect(result[0].internalID).toBe("usable1") // Usable comes before unusable default
+      expect(result[1].internalID).toBe("defaultUnusable")
     })
 
-    it("prioritizes valid default over valid non-default", () => {
+    it("prioritizes usable default over usable non-default", () => {
       const addresses: ProcessedUserAddress[] = [
         {
-          internalID: "valid1",
+          internalID: "usable1",
+          isShippable: true,
           isValid: true,
           isDefault: false,
           phoneNumber: "1234567890",
@@ -736,7 +756,8 @@ describe("FulfillmentDetailsStep utils", () => {
           },
         },
         {
-          internalID: "defaultValid",
+          internalID: "defaultUsable",
+          isShippable: true,
           isValid: true,
           isDefault: true,
           phoneNumber: "9876543210",
@@ -755,8 +776,8 @@ describe("FulfillmentDetailsStep utils", () => {
       ]
 
       const result = sortAddressesByPriority(addresses)
-      expect(result[0].internalID).toBe("defaultValid") // Valid default comes first
-      expect(result[1].internalID).toBe("valid1")
+      expect(result[0].internalID).toBe("defaultUsable") // Usable default comes first
+      expect(result[1].internalID).toBe("usable1")
     })
 
     it("handles empty address list", () => {

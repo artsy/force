@@ -35,6 +35,22 @@ export const useUpdateMyUserProfile = ({
             ) {
               updateMyUserProfile(input: $input) {
                 clientMutationId
+                me {
+                  name
+                  profession
+                  bio
+                  otherRelevantPositions
+                  location {
+                    city
+                    state
+                    country
+                    countryCode
+                  }
+                  collectorProfile {
+                    linkedIn
+                    instagram
+                  }
+                }
               }
             }
           `,
