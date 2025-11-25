@@ -5571,10 +5571,14 @@ type CollectorProfileType implements Node {
   collectedArtworksCount: Int!
 
   # Structured attributes describing the collector in relation to the artwork/partner.
+<<<<<<< HEAD
   collectorAttributes(
     # This can be specified, and is injected in a conversation context for convenience.
     artworkID: String
   ): [CollectorSummaryAttribute!]!
+=======
+  collectorAttributes: [CollectorSummaryAttribute!]!
+>>>>>>> 4181e6815f (schema)
   collectorLevel: Int
   companyName: String
   companyWebsite: String
@@ -14804,10 +14808,14 @@ type InquirerCollectorProfile {
   collectedArtworksCount: Int!
 
   # Structured attributes describing the collector in relation to the artwork/partner.
+<<<<<<< HEAD
   collectorAttributes(
     # This can be specified, and is injected in a conversation context for convenience.
     artworkID: String
   ): [CollectorSummaryAttribute!]!
+=======
+  collectorAttributes: [CollectorSummaryAttribute!]!
+>>>>>>> 4181e6815f (schema)
   collectorLevel: Int
   companyName: String
   companyWebsite: String
@@ -15887,6 +15895,9 @@ type Me implements Node {
   initials(length: Int = 3): String
   inquiryIntroduction: String
 
+  # Collector's Instagram handle
+  instagram: String
+
   # A type-specific ID.
   internalID: ID!
   isCollector: Boolean!
@@ -15900,6 +15911,9 @@ type Me implements Node {
 
   # Length unit preference of the user
   lengthUnitPreference: LengthUnitPreference!
+
+  # Collector's LinkedIn handle
+  linkedIn: String
   location: MyLocation
 
   # The current user's status relating to bids on artworks
@@ -16101,12 +16115,6 @@ type Me implements Node {
   priceRangeMin: Float
   privacy: String
   profession: String
-
-  # Collector's LinkedIn handle
-  linkedIn: String
-
-  # Collector's Instagram handle
-  instagram: String
 
   # The art quiz of a logged-in user
   quiz: Quiz!
