@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c91537682ef57525d0193fd72558b3f9>>
+ * @generated SignedSource<<9a280b0959ec0dd47ea6924995a62cd7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,6 +13,10 @@ import { FragmentRefs } from "relay-runtime";
 export type SettingsEditProfileFields_me$data = {
   readonly bio: string | null | undefined;
   readonly canRequestEmailConfirmation: boolean;
+  readonly collectorProfile: {
+    readonly instagram: string | null | undefined;
+    readonly linkedIn: string | null | undefined;
+  } | null | undefined;
   readonly email: string | null | undefined;
   readonly internalID: string;
   readonly isEmailConfirmed: boolean;
@@ -146,12 +150,37 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "canRequestEmailConfirmation",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "CollectorProfileType",
+      "kind": "LinkedField",
+      "name": "collectorProfile",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "linkedIn",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "instagram",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
     }
   ],
   "type": "Me",
   "abstractKey": null
 };
 
-(node as any).hash = "276fb1db62fab2b13830211f53301dc4";
+(node as any).hash = "4a8618f8a998cfcc522e528ed0b7ff62";
 
 export default node;

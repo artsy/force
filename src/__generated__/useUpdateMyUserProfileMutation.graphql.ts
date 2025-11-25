@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5e30da4a59948ca4dc72f912e9bc1d22>>
+ * @generated SignedSource<<e401d3e7803221a5328fc67f16ffb52c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -71,6 +71,22 @@ export type useUpdateMyUserProfileMutation$variables = {
 export type useUpdateMyUserProfileMutation$data = {
   readonly updateMyUserProfile: {
     readonly clientMutationId: string | null | undefined;
+    readonly me: {
+      readonly bio: string | null | undefined;
+      readonly collectorProfile: {
+        readonly instagram: string | null | undefined;
+        readonly linkedIn: string | null | undefined;
+      } | null | undefined;
+      readonly location: {
+        readonly city: string | null | undefined;
+        readonly country: string | null | undefined;
+        readonly countryCode: string | null | undefined;
+        readonly state: string | null | undefined;
+      } | null | undefined;
+      readonly name: string | null | undefined;
+      readonly otherRelevantPositions: string | null | undefined;
+      readonly profession: string | null | undefined;
+    } | null | undefined;
   } | null | undefined;
 };
 export type useUpdateMyUserProfileMutation = {
@@ -88,37 +104,158 @@ var v0 = [
 ],
 v1 = [
   {
-    "alias": null,
-    "args": [
-      {
-        "kind": "Variable",
-        "name": "input",
-        "variableName": "input"
-      }
-    ],
-    "concreteType": "UpdateMyProfilePayload",
-    "kind": "LinkedField",
-    "name": "updateMyUserProfile",
-    "plural": false,
-    "selections": [
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "clientMutationId",
-        "storageKey": null
-      }
-    ],
-    "storageKey": null
+    "kind": "Variable",
+    "name": "input",
+    "variableName": "input"
   }
-];
+],
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "clientMutationId",
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+},
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "profession",
+  "storageKey": null
+},
+v5 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "bio",
+  "storageKey": null
+},
+v6 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "otherRelevantPositions",
+  "storageKey": null
+},
+v7 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "city",
+  "storageKey": null
+},
+v8 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "state",
+  "storageKey": null
+},
+v9 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "country",
+  "storageKey": null
+},
+v10 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "countryCode",
+  "storageKey": null
+},
+v11 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "linkedIn",
+  "storageKey": null
+},
+v12 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "instagram",
+  "storageKey": null
+},
+v13 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
     "name": "useUpdateMyUserProfileMutation",
-    "selections": (v1/*: any*/),
+    "selections": [
+      {
+        "alias": null,
+        "args": (v1/*: any*/),
+        "concreteType": "UpdateMyProfilePayload",
+        "kind": "LinkedField",
+        "name": "updateMyUserProfile",
+        "plural": false,
+        "selections": [
+          (v2/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Me",
+            "kind": "LinkedField",
+            "name": "me",
+            "plural": false,
+            "selections": [
+              (v3/*: any*/),
+              (v4/*: any*/),
+              (v5/*: any*/),
+              (v6/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "MyLocation",
+                "kind": "LinkedField",
+                "name": "location",
+                "plural": false,
+                "selections": [
+                  (v7/*: any*/),
+                  (v8/*: any*/),
+                  (v9/*: any*/),
+                  (v10/*: any*/)
+                ],
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "CollectorProfileType",
+                "kind": "LinkedField",
+                "name": "collectorProfile",
+                "plural": false,
+                "selections": [
+                  (v11/*: any*/),
+                  (v12/*: any*/)
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          }
+        ],
+        "storageKey": null
+      }
+    ],
     "type": "Mutation",
     "abstractKey": null
   },
@@ -127,19 +264,78 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "useUpdateMyUserProfileMutation",
-    "selections": (v1/*: any*/)
+    "selections": [
+      {
+        "alias": null,
+        "args": (v1/*: any*/),
+        "concreteType": "UpdateMyProfilePayload",
+        "kind": "LinkedField",
+        "name": "updateMyUserProfile",
+        "plural": false,
+        "selections": [
+          (v2/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Me",
+            "kind": "LinkedField",
+            "name": "me",
+            "plural": false,
+            "selections": [
+              (v3/*: any*/),
+              (v4/*: any*/),
+              (v5/*: any*/),
+              (v6/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "MyLocation",
+                "kind": "LinkedField",
+                "name": "location",
+                "plural": false,
+                "selections": [
+                  (v7/*: any*/),
+                  (v8/*: any*/),
+                  (v9/*: any*/),
+                  (v10/*: any*/),
+                  (v13/*: any*/)
+                ],
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "CollectorProfileType",
+                "kind": "LinkedField",
+                "name": "collectorProfile",
+                "plural": false,
+                "selections": [
+                  (v11/*: any*/),
+                  (v12/*: any*/),
+                  (v13/*: any*/)
+                ],
+                "storageKey": null
+              },
+              (v13/*: any*/)
+            ],
+            "storageKey": null
+          }
+        ],
+        "storageKey": null
+      }
+    ]
   },
   "params": {
-    "cacheID": "a26a005d1ab78e7ddbeda4115be42bb2",
+    "cacheID": "92485257b13a186ae842a829f5987f2a",
     "id": null,
     "metadata": {},
     "name": "useUpdateMyUserProfileMutation",
     "operationKind": "mutation",
-    "text": "mutation useUpdateMyUserProfileMutation(\n  $input: UpdateMyProfileInput!\n) {\n  updateMyUserProfile(input: $input) {\n    clientMutationId\n  }\n}\n"
+    "text": "mutation useUpdateMyUserProfileMutation(\n  $input: UpdateMyProfileInput!\n) {\n  updateMyUserProfile(input: $input) {\n    clientMutationId\n    me {\n      name\n      profession\n      bio\n      otherRelevantPositions\n      location {\n        city\n        state\n        country\n        countryCode\n        id\n      }\n      collectorProfile {\n        linkedIn\n        instagram\n        id\n      }\n      id\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "69ea3f3647ec583546e80aa54ebcdbe4";
+(node as any).hash = "9a6e577bd5b23047dcf2286f45c689dc";
 
 export default node;

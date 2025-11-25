@@ -13,11 +13,13 @@ import {
   Flex,
   Input,
   Join,
+  LabeledInput,
   Spacer,
   Text,
   TextArea,
   useToasts,
 } from "@artsy/palette"
+import { useFlag } from "@unleash/proxy-client-react"
 import { editProfileVerificationSchema } from "Apps/CollectorProfile/Utils/ValidationSchemas"
 import { SettingsEditProfileImageRefetchContainer } from "Apps/Settings/Routes/EditProfile/Components/SettingsEditProfileImage/SettingsEditProfileImage"
 import { useEditProfileTracking } from "Apps/Settings/Routes/EditProfile/Hooks/useEditProfileTracking"
@@ -50,6 +52,8 @@ export interface EditProfileFormModel {
   location: EditableLocationProps | null | undefined
   locationSelected: boolean
   profession: string
+  linkedIn: string
+  instagram: string
   otherRelevantPositions: string
   bio: string
 }
@@ -67,6 +71,7 @@ const SettingsEditProfileFields: React.FC<
   const { submitMutation: submitVerifyEmailMutation } = useVerifyEmail()
   const { editedUserProfile: trackEditProfile } = useEditProfileTracking()
   const { trackEvent } = useTracking()
+  const enableSocialAccounts = useFlag("emerald_collector-social-accounts")
 
   const clickedIdVerificationEvent: ClickedVerifyIdentity = {
     action: ActionType.clickedVerifyIdentity,
@@ -85,6 +90,8 @@ const SettingsEditProfileFields: React.FC<
     location: me.location ?? null,
     locationSelected: true,
     profession: me.profession ?? "",
+    linkedIn: me.collectorProfile?.linkedIn ?? "",
+    instagram: me.collectorProfile?.instagram ?? "",
     otherRelevantPositions: me.otherRelevantPositions ?? "",
     bio: me.bio ?? "",
     photo: null,
@@ -105,6 +112,10 @@ const SettingsEditProfileFields: React.FC<
         profession: values.profession,
         otherRelevantPositions: values.otherRelevantPositions,
         bio: values.bio,
+        ...(enableSocialAccounts && {
+          linkedIn: values.linkedIn,
+          instagram: values.instagram,
+        }),
       }
 
       await submitUpdateMyUserProfile(payload)
@@ -140,6 +151,7 @@ const SettingsEditProfileFields: React.FC<
           setFieldValue,
           setFieldTouched,
           handleChange,
+          handleBlur,
           errors,
           touched,
         }) => (
@@ -199,6 +211,36 @@ const SettingsEditProfileFields: React.FC<
                 value={values.otherRelevantPositions}
                 data-testid="edit-profile-other-relevant-positions-input"
               />
+
+              {enableSocialAccounts && (
+                <>
+                  <Input
+                    title="LinkedIn"
+                    placeholder="LinkedIn handle"
+                    name="linkedIn"
+                    maxLength={256}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.linkedIn}
+                    error={touched.linkedIn && errors.linkedIn}
+                    data-testid="edit-profile-linkedin-input"
+                  />
+
+                  <LabeledInput
+                    title="Instagram"
+                    placeholder="Instagram handle"
+                    name="instagram"
+                    maxLength={256}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.instagram}
+                    error={touched.instagram && errors.instagram}
+                    label="@"
+                    variant="prefix"
+                    data-testid="edit-profile-instagram-input"
+                  />
+                </>
+              )}
 
               <TextArea
                 title="About"
@@ -384,6 +426,10 @@ export const SettingsEditProfileFieldsFragmentContainer =
         isEmailConfirmed
         isIdentityVerified
         canRequestEmailConfirmation
+        collectorProfile {
+          linkedIn
+          instagram
+        }
       }
     `,
   })
