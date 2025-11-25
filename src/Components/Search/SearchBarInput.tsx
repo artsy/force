@@ -228,7 +228,7 @@ export const SearchBarInput: FC<
       onClear={resetValue}
       onSelect={handleSelect}
       onSubmit={handleSubmit}
-      onClick={handleFocus}
+      onFocus={handleFocus}
       header={
         data?.viewer ? (
           <SearchInputPillsFragmentContainer
