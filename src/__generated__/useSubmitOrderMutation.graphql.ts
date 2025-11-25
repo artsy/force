@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6cc04dd18109b670b01b27e011d8d7ea>>
+ * @generated SignedSource<<3ce5183d0df123b6e2b4aded097e2152>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,7 +12,9 @@ import { ConcreteRequest } from 'relay-runtime';
 export type submitOrderInput = {
   clientMutationId?: string | null | undefined;
   confirmationToken?: string | null | undefined;
+  confirmedSetupIntentId?: string | null | undefined;
   id: string;
+  offerID?: string | null | undefined;
   oneTimeUse?: boolean | null | undefined;
 };
 export type useSubmitOrderMutation$variables = {
