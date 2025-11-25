@@ -1,5 +1,6 @@
 import InfoIcon from "@artsy/icons/InfoIcon"
 import {
+  Banner,
   Box,
   Button,
   Flex,
@@ -14,7 +15,10 @@ import {
 } from "@artsy/palette"
 import { InquiryQuestionsList } from "Components/Inquiry/Components/InquiryQuestionsList"
 import { useArtworkInquiryRequest } from "Components/Inquiry/Hooks/useArtworkInquiryRequest"
-import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
+import {
+  DEFAULT_MESSAGE,
+  useInquiryContext,
+} from "Components/Inquiry/Hooks/useInquiryContext"
 import { logger } from "Components/Inquiry/util"
 import { RouterLink } from "System/Components/RouterLink"
 import { useSystemContext } from "System/Hooks/useSystemContext"
@@ -30,7 +34,7 @@ import { useTrackFeatureVariantOnMount } from "System/Hooks/useTrackFeatureVaria
 
 const INQUIRY_CHECKBOXES_FLAG = "emerald_inquiry-checkboxes-on-web"
 
-type Mode = "Pending" | "Sending" | "Error" | "Success"
+type Mode = "Pending" | "Confirm" | "Sending" | "Error" | "Success"
 
 interface InquiryInquiryProps {
   artwork: InquiryInquiry_artwork$data
@@ -57,11 +61,23 @@ const InquiryInquiry: React.FC<
   })
 
   const handleTextAreaChange = ({ value }: { value: string }) => {
+    if (mode === "Confirm" && value !== DEFAULT_MESSAGE && !enableCheckboxes) {
+      setMode("Pending")
+    }
     setInquiry(prevState => ({ ...prevState, message: value }))
   }
 
   const handleSubmit = async (event: React.FormEvent<HTMLElement>) => {
     event.preventDefault()
+
+    if (
+      inquiry.message === DEFAULT_MESSAGE &&
+      mode !== "Confirm" &&
+      !enableCheckboxes
+    ) {
+      setMode("Confirm")
+      return
+    }
 
     // If the user is logged out we just go to the next view which should
     // be the authentication step. The inquiry gets sent after login or sign up.
@@ -95,6 +111,7 @@ const InquiryInquiry: React.FC<
 
   const label = {
     ["Pending"]: "Send",
+    ["Confirm"]: "Send Anyway?",
     ["Sending"]: "Send",
     ["Success"]: "Sent",
     ["Error"]: "Error",
@@ -164,6 +181,15 @@ const InquiryInquiry: React.FC<
       <Text variant="sm">
         Personalize your message and include details for the best response.
       </Text>
+
+      <Spacer y={1} />
+
+      {mode === "Confirm" && !enableCheckboxes && (
+        <Banner variant="defaultLight">
+          We recommend personalizing your message to get a faster answer from
+          the gallery.
+        </Banner>
+      )}
 
       <Spacer y={2} />
 
