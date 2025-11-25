@@ -1,8 +1,11 @@
 import { useArtworkInquiryRequest } from "Components/Inquiry/Hooks/useArtworkInquiryRequest"
-import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
+import {
+  DEFAULT_MESSAGE,
+  useInquiryContext,
+} from "Components/Inquiry/Hooks/useInquiryContext"
 import { InquiryInquiryQueryRenderer } from "Components/Inquiry/Views/InquiryInquiry"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { render, screen } from "@testing-library/react"
+import { fireEvent, render, screen } from "@testing-library/react"
 
 jest.mock("../../Hooks/useInquiryContext")
 jest.mock("System/Hooks/useSystemContext")
@@ -202,6 +205,70 @@ describe("InquiryInquiry", () => {
 
       const textarea = screen.getByTitle("Your message")
       expect(textarea).toBeRequired()
+    })
+
+    it("shows confirmation banner and changes button text when submitting default message", () => {
+      ;(useInquiryContext as jest.Mock).mockImplementation(() => ({
+        next: mockNext,
+        setInquiry: mockSetInquiry,
+        inquiry: { message: DEFAULT_MESSAGE },
+        artworkID: "artwork-123",
+        setContext: mockSetContext,
+        questions: [],
+      }))
+
+      render(<InquiryInquiryQueryRenderer />)
+
+      // Initially should not show banner
+      expect(
+        screen.queryByText(
+          /We recommend personalizing your message to get a faster answer/,
+        ),
+      ).not.toBeInTheDocument()
+
+      // Click send button
+      const button = screen.getByRole("button", { name: "Send" })
+      fireEvent.click(button)
+
+      // Should show confirmation banner
+      expect(
+        screen.getByText(
+          /We recommend personalizing your message to get a faster answer/,
+        ),
+      ).toBeInTheDocument()
+
+      // Button text should change to "Send Anyway?"
+      expect(
+        screen.getByRole("button", { name: "Send Anyway?" }),
+      ).toBeInTheDocument()
+    })
+
+    it("does not show confirmation when message is customized", () => {
+      ;(useInquiryContext as jest.Mock).mockImplementation(() => ({
+        next: mockNext,
+        setInquiry: mockSetInquiry,
+        inquiry: { message: "I have a custom message" },
+        artworkID: "artwork-123",
+        setContext: mockSetContext,
+        questions: [],
+      }))
+
+      render(<InquiryInquiryQueryRenderer />)
+
+      const button = screen.getByRole("button", { name: "Send" })
+      fireEvent.click(button)
+
+      // Should not show confirmation banner
+      expect(
+        screen.queryByText(
+          /We recommend personalizing your message to get a faster answer/,
+        ),
+      ).not.toBeInTheDocument()
+
+      // Button text should still be "Send"
+      expect(
+        screen.queryByRole("button", { name: "Send Anyway?" }),
+      ).not.toBeInTheDocument()
     })
   })
 })
