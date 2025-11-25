@@ -144,15 +144,7 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
       values.phoneNumberCountryCode && values.phoneNumberCountryCode !== ""
 
     if (!hasValue) {
-      return [
-        {
-          name: "",
-          countryCode: "",
-          text: "",
-          value: "",
-        },
-        ...countryPhoneOptions,
-      ]
+      return [EMPTY_PHONE_COUNTRY_OPTION, ...countryPhoneOptions]
     }
 
     return countryPhoneOptions
@@ -363,4 +355,11 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
       )}
     </GridColumns>
   )
+}
+
+const EMPTY_PHONE_COUNTRY_OPTION: CountryData = {
+  name: "",
+  countryCode: "",
+  text: "",
+  value: "",
 }

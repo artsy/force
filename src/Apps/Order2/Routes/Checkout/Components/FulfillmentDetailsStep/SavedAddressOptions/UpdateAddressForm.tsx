@@ -179,15 +179,7 @@ export const UpdateAddressForm = ({
       onSubmit={handleSubmitAddress}
       validateOnMount
       initialTouched={{
-        address: {
-          name: true,
-          country: true,
-          addressLine1: true,
-          addressLine2: true,
-          city: true,
-          region: true,
-          postalCode: true,
-        },
+        address: true,
         phoneNumber: true,
         phoneNumberCountryCode: true,
       }}
