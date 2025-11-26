@@ -1,6 +1,6 @@
 import { ContextModule } from "@artsy/cohesion"
-import InstitutionIcon from "@artsy/icons/InstitutionIcon"
 import InfoIcon from "@artsy/icons/InfoIcon"
+import InstitutionIcon from "@artsy/icons/InstitutionIcon"
 import LockIcon from "@artsy/icons/LockIcon"
 import ReceiptIcon from "@artsy/icons/ReceiptIcon"
 import {
@@ -231,12 +231,18 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
   const [wireEmailSubject, setWireEmailSubject] = useState<string | null>(null)
   const [wireEmailBody, setWireEmailBody] = useState<string | null>(null)
 
-  // one-time event after step becomes active and credit cards have loaded if
-  // the user has any saved credit cards available
+  // Track analytics event when step becomes active and user has saved payment methods
   useEffect(() => {
     if (stepIsActive && !hasActivatedPaymentStep) {
+      const savedPaymentTypes: string[] = []
       if (hasSavedCreditCards) {
-        checkoutTracking.savedPaymentMethodViewed(["CREDIT_CARD"])
+        savedPaymentTypes.push("CREDIT_CARD")
+      }
+      if (hasSavedBankAccounts) {
+        savedPaymentTypes.push("BANK_ACCOUNT")
+      }
+      if (savedPaymentTypes.length > 0) {
+        checkoutTracking.savedPaymentMethodViewed(savedPaymentTypes)
       }
       setHasActivatedPaymentStep(true)
     }
@@ -244,16 +250,19 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
     stepIsActive,
     hasActivatedPaymentStep,
     hasSavedCreditCards,
+    hasSavedBankAccounts,
     checkoutTracking,
   ])
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: one-time effect to default to saved payment method if available
+  // Default to saved payment method when available, but don't override user selection
   useEffect(() => {
-    if (hasSavedCreditCards || hasSavedBankAccounts) {
+    if (
+      !selectedPaymentMethod &&
+      (hasSavedCreditCards || hasSavedBankAccounts)
+    ) {
       setSelectedPaymentMethod("saved")
-      return
     }
-  }, [environment])
+  }, [hasSavedCreditCards, hasSavedBankAccounts, selectedPaymentMethod])
 
   if (!(stripe && elements)) {
     return null
@@ -295,12 +304,6 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
   }
 
   const handleCardPaymentSelect = () => {
-    elements.update({
-      captureMethod: "manual",
-      setupFutureUsage: "off_session",
-      mode: "payment",
-    })
-
     if (selectedPaymentMethod !== "stripe-card") {
       trackPaymentMethodSelection("CREDIT_CARD")
     }
@@ -312,17 +315,6 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
     paymentType: "sepa_debit" | "us_bank_account",
     methodType: "stripe-sepa" | "stripe-ach",
   ) => {
-    elements.update({
-      captureMethod: "automatic",
-      setupFutureUsage: null,
-      mode: "setup",
-      payment_method_types: [paymentType],
-      // @ts-ignore Stripe type issue
-      paymentMethodOptions: {
-        us_bank_account: { verification_method: "instant" },
-      },
-    })
-
     if (selectedPaymentMethod !== methodType) {
       const trackingMethod =
         paymentType === "sepa_debit" ? "SEPA_DEBIT" : "US_BANK_ACCOUNT"
@@ -439,13 +431,30 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       }/checkout?save_bank_account=${savePaymentMethod}&confirmation_token=${confirmationToken.id}`
       window.removeEventListener("beforeunload", preventHardReload)
 
-      // This will redirect to Stripe for bank verification, no code after this will execute
-      // src/Apps/Order2/Routes/Checkout/Hooks/useStripePaymentBySetupIntentId.tsx will handle the post redirect logic
+      const clientSecret =
+        bankDebitSetupResult.commerceCreateBankDebitSetupForOrder?.actionOrError
+          ?.actionData?.clientSecret
+
+      if (!clientSecret) {
+        handleError({ message: defaultErrorMessage })
+        return
+      }
+
+      // Switch Elements to setup mode
+      elements.update({
+        captureMethod: "automatic",
+        setupFutureUsage: null,
+        mode: "setup",
+        payment_method_types: [paymentMethod.toLowerCase()],
+        // @ts-ignore Stripe type issue
+        paymentMethodOptions: {
+          us_bank_account: { verification_method: "instant" },
+        },
+      })
+
       const { error } = await stripe.confirmSetup({
         elements,
-        clientSecret:
-          bankDebitSetupResult.commerceCreateBankDebitSetupForOrder
-            ?.actionOrError?.actionData?.clientSecret,
+        clientSecret,
         confirmParams: {
           return_url,
         },
@@ -490,6 +499,15 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         logger.error(submitError)
         handleError(submitError)
         return
+      }
+
+      // Switch Elements to payment mode
+      if (selectedPaymentMethod === "stripe-card") {
+        elements.update({
+          captureMethod: "manual",
+          setupFutureUsage: "off_session",
+          mode: "payment",
+        })
       }
 
       const billingAddress = getBillingAddress()
@@ -660,6 +678,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
           {subtitleErrorMessage}
         </Text>
       )}
+
       {/* Stripe error messages are displayed within the Payment Element, so we don't need to handle them here. */}
       {errorMessage && !isSelectedPaymentMethodStripe && (
         <>
@@ -668,7 +687,9 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
           <Spacer y={2} />
         </>
       )}
+
       <Spacer y={2} />
+
       {(hasSavedCreditCards || hasSavedBankAccounts) && (
         <FadeInBox>
           <Box
@@ -693,10 +714,12 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
                 Saved payments
               </Text>
             </Flex>
+
             <Collapse open={selectedPaymentMethod === "saved"}>
               <Text variant="sm" ml="50px">
                 Select a saved payment method or add a new one.
               </Text>
+
               <Box ml="50px">
                 <RadioGroup
                   defaultValue={selectedSavedPaymentMethod}
@@ -752,8 +775,11 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
           </Box>
         </FadeInBox>
       )}
+
       <PaymentElement options={paymentElementOptions} onChange={onChange} />
+
       <Spacer y={1} />
+
       {order.availablePaymentMethods?.includes("WIRE_TRANSFER") && (
         <FadeInBox>
           <Box
@@ -779,15 +805,18 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
                 Wire Transfer
               </Text>
             </Flex>
+
             <Collapse open={selectedPaymentMethod === "wire"}>
               <Text color="mono100" variant="sm" ml="50px" mb={1}>
                 To pay by wire transfer, complete checkout and a member of the
                 Artsy team will contact you with next steps by email.
               </Text>
+
               <Text color="mono100" variant="sm" ml="50px" mb={1}>
                 Please inform your bank that you will be responsible for all
                 wire transfer fees.
               </Text>
+
               <Text color="mono100" variant="sm" ml="50px">
                 You can contact{" "}
                 <RouterLink
@@ -902,6 +931,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
           <Spacer y={4} />
         </>
       )}
+
       <Button
         loading={isSubmittingToStripe}
         variant="primaryBlack"
