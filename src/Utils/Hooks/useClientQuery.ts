@@ -15,6 +15,12 @@ import {
   getRequest,
 } from "relay-runtime"
 
+// Type for the refetch return value
+type RefetchResult<T> = {
+  promise: Promise<T>
+  disposable: Disposable
+}
+
 export const useClientQuery = <T extends OperationType>({
   environment,
   query,
@@ -34,47 +40,114 @@ export const useClientQuery = <T extends OperationType>({
   const { relayEnvironment } = useSystemContext()
 
   const [data, setData] = useState<T["response"] | null>(null)
-  const [disposable, setDisposable] = useState<Disposable | null>(null)
   const [error, setError] = useState<Error | null>(null)
   const [loading, setLoading] = useState(true)
 
   const key = useRef(JSON.stringify(variables))
   const prevKey = useRef(key.current)
+  const retainedRef = useRef<Disposable | null>(null)
 
   useUpdateEffect(() => {
     key.current = JSON.stringify(variables)
   }, [variables])
 
-  const refetch = async (newVariables = variables) => {
+  // Clean up retained operations on unmount
+  useEffect(() => {
+    return () => {
+      if (retainedRef.current) {
+        retainedRef.current.dispose()
+        retainedRef.current = null
+      }
+    }
+  }, [])
+
+  // refetch returns an object with a `promise` that resolves when the network
+  // response arrives and a `disposable` with a `dispose()` method that can be
+  // used to cancel the in-flight subscription where supported.
+  const refetch = (
+    newVariables = variables,
+  ): RefetchResult<T["response"] | null> => {
     setLoading(true)
 
-    try {
-      const res = await fetchQuery<T>(
-        (environment || relayEnvironment) as unknown as Environment,
-        query,
-        newVariables,
-        cacheConfig,
-      ).toPromise()
+    const env = (environment || relayEnvironment) as unknown as Environment
 
-      setData(res)
+    // Validate environment
+    if (!env) {
+      const error = new Error("No Relay environment available")
+      setError(error)
       setLoading(false)
-
-      const operation = createOperationDescriptor(
-        getRequest(query),
-        variables ?? {},
-      )
-
-      // Retain the operation to prevent it from being garbage collected. Garbage collection can compromise type safety (e.g. non-nullable values being `null`), potentially leading to runtime errors.
-      const disposable = relayEnvironment.retain(operation)
-
-      setDisposable(disposable)
-    } catch (err) {
-      setError(err)
-      setLoading(false)
+      const rejectedPromise = Promise.reject(error).catch(() => null)
+      return { promise: rejectedPromise, disposable: { dispose: () => {} } }
     }
+
+    const observable = fetchQuery<T>(env, query, newVariables, cacheConfig)
+
+    // Validate observable
+    if (!observable || typeof observable.toPromise !== "function") {
+      const error = new Error("fetchQuery did not return a valid observable")
+      setError(error)
+      setLoading(false)
+      const rejectedPromise = Promise.reject(error).catch(() => null)
+      return { promise: rejectedPromise, disposable: { dispose: () => {} } }
+    }
+
+    // Dispose previous retained operation before creating new one
+    if (retainedRef.current) {
+      try {
+        retainedRef.current.dispose()
+      } catch (e) {
+        if (process.env.NODE_ENV !== "production") {
+          console.warn("useClientQuery: Error disposing previous retained:", e)
+        }
+      }
+      retainedRef.current = null
+    }
+
+    // Use toPromise() to get the result and subscribe to handle state updates
+    const subscription = observable.subscribe({
+      next: res => {
+        setData(res)
+        setLoading(false)
+
+        // Use newVariables (not outer variables) to retain the correct operation
+        const operation = createOperationDescriptor(
+          getRequest(query),
+          newVariables ?? {},
+        )
+
+        // Retain the operation to prevent garbage collection
+        const retained = env.retain(operation)
+        retainedRef.current = retained
+      },
+      error: (err: Error) => {
+        setError(err)
+        setLoading(false)
+      },
+    })
+
+    // Convert observable to promise
+    const promise = observable.toPromise()
+
+    // Create disposable that cancels the subscription
+    const disposable: Disposable = {
+      dispose: () => {
+        try {
+          if (subscription && typeof subscription.unsubscribe === "function") {
+            subscription.unsubscribe()
+          }
+        } catch (e) {
+          // Disposal is best-effort - log in dev but don't throw
+          if (process.env.NODE_ENV !== "production") {
+            console.warn("useClientQuery: Error during disposal:", e)
+          }
+        }
+      },
+    }
+
+    return { promise, disposable }
   }
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Intentionally excluding refetch to prevent infinite loop (see https://github.com/facebook/react/issues/25149)
   useEffect(() => {
     if (key.current !== prevKey.current) {
       setData(null)
@@ -87,20 +160,13 @@ export const useClientQuery = <T extends OperationType>({
     if (skip || data || error) return
 
     refetch()
+  }, [data, error, skip, variables])
 
-    // https://github.com/facebook/react/issues/25149
-    // Excludes `T`
-  }, [
-    cacheConfig,
+  return {
     data,
-    disposable,
-    environment,
+    disposable: retainedRef.current,
     error,
-    query,
-    relayEnvironment,
-    skip,
-    variables,
-  ])
-
-  return { data, disposable, error, loading: skip ? false : loading, refetch }
+    loading: skip ? false : loading,
+    refetch,
+  }
 }

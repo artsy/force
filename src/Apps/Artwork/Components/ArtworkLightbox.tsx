@@ -129,6 +129,7 @@ const ArtworkLightbox: React.FC<
             src={lightboxImage.src}
             srcSet={lightboxImage.srcSet}
             alt={artworkCaption ?? ""}
+            lazyLoad={lazyLoad}
             position="relative"
             preventRightClick={!isTeam}
             style={{

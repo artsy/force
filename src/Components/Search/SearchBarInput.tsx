@@ -1,4 +1,4 @@
-import { AutocompleteInput, useDidMount, useUpdateEffect } from "@artsy/palette"
+import { AutocompleteInput, useDidMount } from "@artsy/palette"
 import { type ChangeEvent, type FC, useEffect, useRef, useState } from "react"
 
 import { ActionType } from "@artsy/cohesion"
@@ -48,10 +48,10 @@ export const SearchBarInput: FC<
   const [value, setValue] = useState(searchTerm)
   const [debouncedValue] = useDebounce(value, SEARCH_DEBOUNCE_DELAY)
   const [selectedPill, setSelectedPill] = useState<PillType>(TOP_PILL)
-
-  // FIXME: Refactor to just use callback
-  // We use fetchCounter together with useUpdateEffect to track typing
-  const [fetchCounter, setFetchCounter] = useState(0)
+  // Request tracking / cancellation
+  const [requestId, setRequestId] = useState(0)
+  const lastRequestIdRef = useRef<number | null>(null)
+  const lastRefetchDisposableRef = useRef<{ dispose: () => void } | null>(null)
 
   const { router, match } = useRouter()
 
@@ -86,17 +86,6 @@ export const SearchBarInput: FC<
     },
   ]
 
-  useUpdateEffect(() => {
-    tracking.trackEvent({
-      action_type:
-        options.length > 0
-          ? ActionType.searchedWithResults
-          : ActionType.searchedWithNoResults,
-      context_module: selectedPill.analyticsContextModule,
-      query: value,
-    })
-  }, [fetchCounter])
-
   useEffect(() => {
     if (shouldStartSearching(debouncedValue)) {
       searchRequest(
@@ -109,13 +98,44 @@ export const SearchBarInput: FC<
   const searchRequest = (value: string, entity?: SearchEntity) => {
     const entities = entity ? [entity] : []
 
-    refetch({
+    // Cancel previous request and generate new request ID
+    lastRefetchDisposableRef.current?.dispose()
+    const nextId = requestId + 1
+    setRequestId(nextId)
+    lastRequestIdRef.current = nextId
+
+    // Perform the search - type is now properly inferred from useClientQuery
+    const { promise, disposable } = refetch({
       hasTerm: true,
       term: String(value),
       entities,
     })
 
-    setFetchCounter(prevCounter => prevCounter + 1)
+    lastRefetchDisposableRef.current = disposable
+
+    // Track analytics when response arrives (only if still latest request)
+    void promise
+      .then(res => {
+        // Ignore stale responses
+        if (lastRequestIdRef.current !== nextId) return
+
+        const nodes = extractNodes(res?.viewer?.searchConnection)
+
+        tracking.trackEvent({
+          action_type:
+            nodes.length > 0
+              ? ActionType.searchedWithResults
+              : ActionType.searchedWithNoResults,
+          context_module: selectedPill.analyticsContextModule,
+          query: value,
+        })
+      })
+      .catch((err: Error) => {
+        // Network errors or cancelled requests - no analytics needed
+        if (process.env.NODE_ENV !== "production") {
+          console.warn("SearchBarInput: Error during search request:", err)
+        }
+      })
   }
 
   const resetValue = () => {
@@ -134,9 +154,10 @@ export const SearchBarInput: FC<
     setSelectedPill(pill)
     searchRequest(value, pill.searchEntityName as SearchEntity | undefined)
 
+    // Use the pill value directly to avoid stale selectedPill in tracking
     tracking.trackEvent({
       action_type: ActionType.tappedNavigationTab,
-      context_module: selectedPill.analyticsContextModule,
+      context_module: pill.analyticsContextModule,
       query: value,
     })
   }
@@ -207,7 +228,7 @@ export const SearchBarInput: FC<
       onClear={resetValue}
       onSelect={handleSelect}
       onSubmit={handleSubmit}
-      onClick={handleFocus}
+      onFocus={handleFocus}
       header={
         data?.viewer ? (
           <SearchInputPillsFragmentContainer
