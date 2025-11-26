@@ -103,12 +103,6 @@ export const Order2PaymentForm: React.FC<Order2PaymentFormProps> = ({
 
   const options: StripeElementsOptions = {
     mode: "payment",
-    paymentMethodOptions: {
-      us_bank_account: {
-        verification_method: "instant",
-        financial_connections: { permissions: ["payment_method", "ownership"] },
-      },
-    },
     appearance: {
       variables: {
         accordionItemSpacing: "10px",
@@ -420,6 +414,15 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         setupFutureUsage: null,
         mode: "setup",
         payment_method_types: [paymentMethod.toLowerCase()],
+        // @ts-ignore Stripe type issue
+        paymentMethodOptions: {
+          us_bank_account: {
+            verification_method: "instant",
+            financial_connections: {
+              permissions: ["payment_method", "ownership"],
+            },
+          },
+        },
       })
 
       const { error } = await stripe.confirmSetup({
