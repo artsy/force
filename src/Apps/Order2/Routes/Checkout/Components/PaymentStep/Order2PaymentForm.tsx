@@ -104,7 +104,10 @@ export const Order2PaymentForm: React.FC<Order2PaymentFormProps> = ({
   const options: StripeElementsOptions = {
     mode: "payment",
     paymentMethodOptions: {
-      us_bank_account: { verification_method: "instant" },
+      us_bank_account: {
+        verification_method: "instant",
+        financial_connections: { permissions: ["payment_method", "ownership"] },
+      },
     },
     appearance: {
       variables: {
