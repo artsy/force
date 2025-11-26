@@ -12,19 +12,21 @@ import styled from "styled-components"
 
 interface ErrorPageProps extends BoxProps {
   code: number | string
+  headline?: string
   message?: string
   detail?: string
 }
 
 export const ErrorPage: React.FC<React.PropsWithChildren<ErrorPageProps>> = ({
   code,
+  headline,
   message,
   detail,
   children,
   ...rest
 }) => {
   // We assume string codes are client exceptions
-  const headline =
+  headline ||=
     typeof code === "number" ? ERROR_MESSAGES[code] : "Internal Error"
 
   return (
@@ -55,7 +57,7 @@ export const ErrorPage: React.FC<React.PropsWithChildren<ErrorPageProps>> = ({
         </Column>
       </GridColumns>
 
-      {((typeof code === "number" && code >= 500) ||
+      {((typeof code === "number" && code >= 400) ||
         typeof code === "string") &&
         (detail || message) && (
           <>

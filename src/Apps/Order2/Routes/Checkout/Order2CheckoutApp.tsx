@@ -56,7 +56,13 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
   } = useCheckoutContext()
 
   if (!order) {
-    return <ErrorPage code={404} message="Order not found" />
+    return (
+      <ErrorPage
+        code={404}
+        message="Order not found"
+        headline="Sorry, something went wrong. Please verify your account details or check the URL."
+      />
+    )
   }
 
   const isOffer = orderData.mode === "OFFER"
