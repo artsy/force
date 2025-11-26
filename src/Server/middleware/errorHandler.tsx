@@ -62,11 +62,6 @@ export const errorHandlerMiddleware = async (
 Current URL: ${`${req.protocol}://${req.get("host")}${req.originalUrl}`}
 Time: ${new Date().toUTCString()}`
 
-  console.log(
-    "errorHandlerMiddleware - extracted message:",
-    err.message || err.text || err.data || "Internal Server Error",
-  )
-
   const detail = err.stack
 
   if (enableLogging && err.status !== 404) {

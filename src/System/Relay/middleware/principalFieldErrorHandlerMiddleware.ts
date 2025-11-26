@@ -9,8 +9,6 @@ export function principalFieldErrorHandlerMiddleware() {
       r => r.json.extensions.principalField.httpStatusCode,
     )
 
-    console.log("got statusCode from middleware", statusCode)
-
     if (statusCode) {
       throw new HttpError(statusCode)
     } else {

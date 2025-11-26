@@ -9,13 +9,9 @@ import { graphql } from "react-relay"
 import { Provider } from "unstated"
 
 const renderWithErrorHandling = ({ Component, props }: any) => {
-  console.log("renderWithErrorHandling called")
   if (!Component || !props) {
-    console.log("Either Component or props is missing, showing error page")
-
     // Server-side: throw HttpError so errorHandlerMiddleware can handle it properly
     if (typeof window === "undefined") {
-      console.log("Server-side: throwing HttpError")
       throw new HttpError(
         404,
         "Please check the URL or verify your account details.",
@@ -23,7 +19,6 @@ const renderWithErrorHandling = ({ Component, props }: any) => {
     }
 
     // Client-side: render ErrorPage (for component load failures, etc.)
-    console.log("Client-side: rendering ErrorPage component")
     return (
       <Provider>
         <ErrorPage
@@ -33,7 +28,6 @@ const renderWithErrorHandling = ({ Component, props }: any) => {
       </Provider>
     )
   }
-  console.log("Rendering component with props")
   return <Component {...props} />
 }
 
@@ -54,10 +48,7 @@ const OfferRoute = loadable(
 const ShippingRoute = loadable(
   () => import(/* webpackChunkName: "orderBundle" */ "./Routes/Shipping"),
   {
-    resolveComponent: component => {
-      console.log("Loading ShippingRoute component")
-      return component.ShippingRouteWithDialog
-    },
+    resolveComponent: component => component.ShippingRouteWithDialog,
   },
 )
 
@@ -150,18 +141,11 @@ export const orderRoutes: RouteProps[] = [
       }
     `,
     render: ({ Component, props, resolving }) => {
-      console.log("rendering orderRoutes")
-      console.log("Component:", Component)
-      console.log("Props:", props)
-      console.log("Resolving:", resolving)
-
       if (!Component) {
-        console.log("!Component - showing loading")
         return undefined // Show loading spinner
       }
 
       if (!props) {
-        console.log("!props but Component exists - order not found")
         return undefined // Show loading spinner
         // This happens when the query fails (e.g., @principalField returns null)
         // return (
@@ -177,14 +161,10 @@ export const orderRoutes: RouteProps[] = [
       // resolving is true only if this render results from a query initiated by
       // found-relay
       if (resolving) {
-        console.log("resolving")
         const { match, order } = props as any
         const { featureFlags } = match.context as SystemContextProps
 
-        console.log("Order:", order)
-
         if (order) {
-          console.log("found order:", order)
           const redirect = getRedirect(
             redirects,
             match.location.pathname.replace(/order(s)\/[^\/]+/, ""),
@@ -211,7 +191,6 @@ export const orderRoutes: RouteProps[] = [
         }
       }
 
-      console.log("returning <Component>")
       return <Component {...props} />
     },
     children: [
@@ -412,7 +391,6 @@ export const orderRoutes: RouteProps[] = [
       {
         path: "*",
         Component: () => {
-          console.log("Route not found, redirecting to 404 page")
           return (
             <Provider>
               <ErrorPage
