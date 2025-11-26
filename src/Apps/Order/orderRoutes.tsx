@@ -4,7 +4,7 @@ import { redirects } from "Apps/Order/redirects"
 import { ErrorPage } from "Components/ErrorPage"
 import type { SystemContextProps } from "System/Contexts/SystemContext"
 import type { RouteProps } from "System/Router/Route"
-import { Redirect, RedirectException } from "found"
+import { HttpError, Redirect, RedirectException } from "found"
 import { graphql } from "react-relay"
 import { Provider } from "unstated"
 
@@ -12,6 +12,18 @@ const renderWithErrorHandling = ({ Component, props }: any) => {
   console.log("renderWithErrorHandling called")
   if (!Component || !props) {
     console.log("Either Component or props is missing, showing error page")
+
+    // Server-side: throw HttpError so errorHandlerMiddleware can handle it properly
+    if (typeof window === "undefined") {
+      console.log("Server-side: throwing HttpError")
+      throw new HttpError(
+        404,
+        "Please check the URL or verify your account details.",
+      )
+    }
+
+    // Client-side: render ErrorPage (for component load failures, etc.)
+    console.log("Client-side: rendering ErrorPage component")
     return (
       <Provider>
         <ErrorPage
