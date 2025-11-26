@@ -147,15 +147,6 @@ export const orderRoutes: RouteProps[] = [
 
       if (!props) {
         return undefined // Show loading spinner
-        // This happens when the query fails (e.g., @principalField returns null)
-        // return (
-        //   <Provider>
-        //     <ErrorPage
-        //       code={404}
-        //       message="Please check the URL or verify your account details."
-        //     />
-        //   </Provider>
-        // )
       }
 
       // resolving is true only if this render results from a query initiated by
