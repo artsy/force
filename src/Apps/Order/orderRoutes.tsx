@@ -141,12 +141,10 @@ export const orderRoutes: RouteProps[] = [
       }
     `,
     render: ({ Component, props, resolving }) => {
-      if (!Component) {
-        return undefined // Show loading spinner
-      }
-
-      if (!props) {
-        return undefined // Show loading spinner
+      if (!(Component && props)) {
+        // Returning `null` will show the spinner; but undefined uses purple
+        // loader. Its a weird quirk :/
+        return undefined // null
       }
 
       // resolving is true only if this render results from a query initiated by
