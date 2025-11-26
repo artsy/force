@@ -24,17 +24,12 @@ import {
 } from "@stripe/react-stripe-js"
 import type {
   StripeElementsOptions,
-  StripeElementsUpdateOptions,
   StripePaymentElementChangeEvent,
   StripePaymentElementOptions,
 } from "@stripe/stripe-js"
 import { Collapse } from "Apps/Order/Components/Collapse"
 import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
 import { useSetPayment } from "Apps/Order/Mutations/useSetPayment"
-import {
-  CheckoutStepName,
-  CheckoutStepState,
-} from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import {
   CheckoutErrorBanner,
   MailtoOrderSupport,
@@ -96,24 +91,36 @@ export const Order2PaymentForm: React.FC<Order2PaymentFormProps> = ({
   const orderData = useFragment(ORDER_FRAGMENT, order)
   const meData = useFragment(ME_FRAGMENT, me)
   const stripe = useStripe()
-  const { itemsTotal, buyerTotal, seller, mode } = orderData
-  const totalForPayment = mode === "BUY" ? itemsTotal : buyerTotal
+  const { itemsTotal, seller, mode, pendingOffer } = orderData
 
-  let orderOptions: StripeElementsUpdateOptions
+  // For BUY orders, use itemsTotal
+  // For OFFER orders, extract total from pendingOffer.pricingBreakdownLines
+  let totalForPayment:
+    | { minor: number; currencyCode: string }
+    | null
+    | undefined = null
+
+  if (mode === "BUY") {
+    totalForPayment = itemsTotal
+  }
+
+  if (mode === "OFFER" && pendingOffer?.pricingBreakdownLines) {
+    // Find the TotalLine in the pricing breakdown
+    const totalLine = pendingOffer.pricingBreakdownLines.find(
+      line => line?.amount?.amount != null,
+    )
+
+    if (totalLine?.amount?.amount) {
+      // Convert to the format expected by Stripe Elements
+      totalForPayment = {
+        minor: Math.round(Number.parseFloat(totalLine.amount.amount) * 100), // Convert dollars to cents
+        currencyCode: totalLine.amount.currencyCode,
+      }
+    }
+  }
 
   if (!totalForPayment) {
-    // Make Offer order first loading state
-    orderOptions = {
-      amount: 100,
-      currency: "usd",
-      onBehalfOf: seller?.merchantAccount?.externalId,
-    }
-  } else {
-    orderOptions = {
-      amount: totalForPayment.minor,
-      currency: totalForPayment.currencyCode.toLowerCase(),
-      onBehalfOf: seller?.merchantAccount?.externalId,
-    }
+    return null
   }
 
   const { theme } = useTheme()
@@ -143,7 +150,9 @@ export const Order2PaymentForm: React.FC<Order2PaymentFormProps> = ({
         },
       },
     },
-    ...orderOptions,
+    amount: totalForPayment.minor,
+    currency: totalForPayment.currencyCode.toLowerCase(),
+    onBehalfOf: seller?.merchantAccount?.externalId,
   }
 
   return (
@@ -176,7 +185,6 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
     setPaymentComplete,
     setSavePaymentMethod,
     savePaymentMethod,
-    steps,
     activeFulfillmentDetailsTab,
   } = useCheckoutContext()
 
@@ -223,46 +231,30 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
     order.availablePaymentMethods?.includes(bankAccount.type),
   )
   const hasSavedBankAccounts = allowedSavedBankAccounts.length > 0
-
-  const stepIsActive =
-    steps?.find(step => step.name === CheckoutStepName.PAYMENT)?.state ===
-    CheckoutStepState.ACTIVE
-  const [hasActivatedPaymentStep, setHasActivatedPaymentStep] = useState(false)
   const [wireEmailSubject, setWireEmailSubject] = useState<string | null>(null)
   const [wireEmailBody, setWireEmailBody] = useState<string | null>(null)
 
-  // Track analytics event when step becomes active and user has saved payment methods
-  useEffect(() => {
-    if (stepIsActive && !hasActivatedPaymentStep) {
-      const savedPaymentTypes: string[] = []
-      if (hasSavedCreditCards) {
-        savedPaymentTypes.push("CREDIT_CARD")
-      }
-      if (hasSavedBankAccounts) {
-        savedPaymentTypes.push("BANK_ACCOUNT")
-      }
-      if (savedPaymentTypes.length > 0) {
-        checkoutTracking.savedPaymentMethodViewed(savedPaymentTypes)
-      }
-      setHasActivatedPaymentStep(true)
-    }
-  }, [
-    stepIsActive,
-    hasActivatedPaymentStep,
-    hasSavedCreditCards,
-    hasSavedBankAccounts,
-    checkoutTracking,
-  ])
-
-  // Default to saved payment method when available, but don't override user selection
+  // Default to saved payment method when available and track that it has been viewed
   useEffect(() => {
     if (
       !selectedPaymentMethod &&
       (hasSavedCreditCards || hasSavedBankAccounts)
     ) {
       setSelectedPaymentMethod("saved")
+
+      const savedPaymentTypes = [
+        hasSavedCreditCards && "CREDIT_CARD",
+        hasSavedBankAccounts && "BANK_ACCOUNT",
+      ].filter(Boolean) as string[]
+
+      checkoutTracking.savedPaymentMethodViewed(savedPaymentTypes)
     }
-  }, [hasSavedCreditCards, hasSavedBankAccounts, selectedPaymentMethod])
+  }, [
+    hasSavedCreditCards,
+    hasSavedBankAccounts,
+    selectedPaymentMethod,
+    checkoutTracking,
+  ])
 
   if (!(stripe && elements)) {
     return null
@@ -977,6 +969,16 @@ const ORDER_FRAGMENT = graphql`
     internalID
     currencyCode
     availablePaymentMethods
+    pendingOffer {
+      pricingBreakdownLines {
+        ... on TotalLine {
+          amount {
+            amount
+            currencyCode
+          }
+        }
+      }
+    }
     itemsTotal {
       minor
       currencyCode
