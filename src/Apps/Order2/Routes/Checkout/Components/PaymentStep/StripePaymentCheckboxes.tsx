@@ -8,11 +8,6 @@ import {
   Text,
   Tooltip,
 } from "@artsy/palette"
-import { PaymentElement } from "@stripe/react-stripe-js"
-import type {
-  StripePaymentElementChangeEvent,
-  StripePaymentElementOptions,
-} from "@stripe/stripe-js"
 import { Collapse } from "Apps/Order/Components/Collapse"
 import {
   AddressFormFields,
@@ -24,7 +19,7 @@ import { isEqual } from "lodash"
 import type React from "react"
 import * as yup from "yup"
 
-interface StripePaymentOptionProps {
+interface StripePaymentCheckboxesProps {
   selectedPaymentMethod:
     | "saved"
     | "stripe-card"
@@ -36,27 +31,22 @@ interface StripePaymentOptionProps {
   activeFulfillmentDetailsTab: string | null
   billingAddressSameAsShipping: boolean
   billingFormValues: FormikContextWithAddress
-  paymentElementOptions: StripePaymentElementOptions
-  onPaymentMethodChange: (
-    method: "stripe-card" | "stripe-ach" | "stripe-sepa",
-  ) => void
   onSavePaymentMethodChange: (save: boolean) => void
   onBillingAddressSameAsShippingChange: (selected: boolean) => void
   onBillingFormValuesChange: (values: FormikContextWithAddress) => void
-  onChange: (event: StripePaymentElementChangeEvent) => void
 }
 
-export const StripePaymentOption: React.FC<StripePaymentOptionProps> = ({
+export const StripePaymentCheckboxes: React.FC<
+  StripePaymentCheckboxesProps
+> = ({
   selectedPaymentMethod,
   savePaymentMethod,
   activeFulfillmentDetailsTab,
   billingAddressSameAsShipping,
   billingFormValues,
-  paymentElementOptions,
   onSavePaymentMethodChange,
   onBillingAddressSameAsShippingChange,
   onBillingFormValuesChange,
-  onChange,
 }) => {
   const needsBillingAddress = () => {
     if (selectedPaymentMethod !== "stripe-card") return false
@@ -66,10 +56,6 @@ export const StripePaymentOption: React.FC<StripePaymentOptionProps> = ({
 
   return (
     <>
-      <PaymentElement options={paymentElementOptions} onChange={onChange} />
-
-      <Spacer y={1} />
-
       {/* Credit Card Options */}
       <Collapse
         open={selectedPaymentMethod === "stripe-card"}

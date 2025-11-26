@@ -30,7 +30,7 @@ export const WireTransferOption: React.FC<WireTransferOptionProps> = ({
         data-testid="PaymentFormWire"
       >
         <Flex alignItems="center">
-          <ReceiptIcon fill="mono100" />
+          <ReceiptIcon height={18} fill="mono100" />
           {/* Spacer has to be 31px to match Stripe's spacing */}
           <Spacer x="31px" />
           <Text
@@ -44,13 +44,13 @@ export const WireTransferOption: React.FC<WireTransferOptionProps> = ({
 
         <Collapse open={isSelected}>
           <Text color="mono100" variant="sm" ml="50px" mb={1}>
-            To pay by wire transfer, complete checkout and a member of the
-            Artsy team will contact you with next steps by email.
+            To pay by wire transfer, complete checkout and a member of the Artsy
+            team will contact you with next steps by email.
           </Text>
 
           <Text color="mono100" variant="sm" ml="50px" mb={1}>
-            Please inform your bank that you will be responsible for all
-            wire transfer fees.
+            Please inform your bank that you will be responsible for all wire
+            transfer fees.
           </Text>
 
           <Text color="mono100" variant="sm" ml="50px">

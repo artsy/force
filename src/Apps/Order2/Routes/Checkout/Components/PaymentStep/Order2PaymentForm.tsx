@@ -1,6 +1,11 @@
 import { ContextModule } from "@artsy/cohesion"
 import { Button, Spacer, Text, useTheme } from "@artsy/palette"
-import { Elements, useElements, useStripe } from "@stripe/react-stripe-js"
+import {
+  Elements,
+  PaymentElement,
+  useElements,
+  useStripe,
+} from "@stripe/react-stripe-js"
 import type {
   StripeElementsOptions,
   StripePaymentElementChangeEvent,
@@ -35,7 +40,7 @@ import { useEffect, useState } from "react"
 import { graphql, useFragment, useRelayEnvironment } from "react-relay"
 import { data as sd } from "sharify"
 import { SavedPaymentMethodOption } from "./SavedPaymentMethodOption"
-import { StripePaymentOption } from "./StripePaymentOption"
+import { StripePaymentCheckboxes } from "./StripePaymentCheckboxes"
 import { WireTransferOption } from "./WireTransferOption"
 
 const logger = createLogger("Order2PaymentForm")
@@ -403,7 +408,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         return
       }
 
-      // Switch Elements to setup mode
+      // update elements to bank debit params
       elements.update({
         captureMethod: "automatic",
         setupFutureUsage: null,
@@ -464,7 +469,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         return
       }
 
-      // Switch Elements to payment mode
+      // update elements to credit card params
       if (selectedPaymentMethod === "stripe-card") {
         elements.update({
           captureMethod: "manual",
@@ -664,21 +669,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         />
       )}
 
-      <StripePaymentOption
-        selectedPaymentMethod={selectedPaymentMethod}
-        savePaymentMethod={savePaymentMethod}
-        activeFulfillmentDetailsTab={activeFulfillmentDetailsTab}
-        billingAddressSameAsShipping={billingAddressSameAsShipping}
-        billingFormValues={billingFormValues}
-        paymentElementOptions={paymentElementOptions}
-        onPaymentMethodChange={setSelectedPaymentMethod}
-        onSavePaymentMethodChange={setSavePaymentMethod}
-        onBillingAddressSameAsShippingChange={
-          handleBillingAddressSameAsShippingChange
-        }
-        onBillingFormValuesChange={setBillingFormValues}
-        onChange={onChange}
-      />
+      <PaymentElement options={paymentElementOptions} onChange={onChange} />
 
       <Spacer y={1} />
 
@@ -690,6 +681,21 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
           onSelect={onClickWirePaymentMethods}
         />
       )}
+
+      <Spacer y={1} />
+
+      <StripePaymentCheckboxes
+        selectedPaymentMethod={selectedPaymentMethod}
+        savePaymentMethod={savePaymentMethod}
+        activeFulfillmentDetailsTab={activeFulfillmentDetailsTab}
+        billingAddressSameAsShipping={billingAddressSameAsShipping}
+        billingFormValues={billingFormValues}
+        onSavePaymentMethodChange={setSavePaymentMethod}
+        onBillingAddressSameAsShippingChange={
+          handleBillingAddressSameAsShippingChange
+        }
+        onBillingFormValuesChange={setBillingFormValues}
+      />
 
       <Spacer y={2} />
       {/* Stripe error messages are displayed within the Payment Element, so we don't need to handle them here. */}
