@@ -17,6 +17,7 @@ export const useOrder2SubmitOrderMutation = () => {
             ... on OrderMutationError {
               mutationError {
                 message
+                code
               }
             }
             ... on OrderMutationActionRequired {

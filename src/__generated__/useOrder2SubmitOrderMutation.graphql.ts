@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8cf16fadd6cebdf0b27cef9a29a6894f>>
+ * @generated SignedSource<<4263a51de7a6c6d86d159591a3fa4fca>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -30,6 +30,7 @@ export type useOrder2SubmitOrderMutation$data = {
     } | {
       readonly __typename: "OrderMutationError";
       readonly mutationError: {
+        readonly code: string;
         readonly message: string;
       };
     } | {
@@ -94,6 +95,13 @@ v4 = {
           "args": null,
           "kind": "ScalarField",
           "name": "message",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "code",
           "storageKey": null
         }
       ],
@@ -243,16 +251,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "4fdc868656101fa5714cfa9657c2b479",
+    "cacheID": "2987a4d262234cdc269f9a101164c08f",
     "id": null,
     "metadata": {},
     "name": "useOrder2SubmitOrderMutation",
     "operationKind": "mutation",
-    "text": "mutation useOrder2SubmitOrderMutation(\n  $input: submitOrderInput!\n) {\n  submitOrder(input: $input) {\n    orderOrError {\n      __typename\n      ... on OrderMutationSuccess {\n        order {\n          internalID\n          id\n        }\n      }\n      ... on OrderMutationError {\n        mutationError {\n          message\n        }\n      }\n      ... on OrderMutationActionRequired {\n        actionData {\n          clientSecret\n        }\n      }\n    }\n  }\n}\n"
+    "text": "mutation useOrder2SubmitOrderMutation(\n  $input: submitOrderInput!\n) {\n  submitOrder(input: $input) {\n    orderOrError {\n      __typename\n      ... on OrderMutationSuccess {\n        order {\n          internalID\n          id\n        }\n      }\n      ... on OrderMutationError {\n        mutationError {\n          message\n          code\n        }\n      }\n      ... on OrderMutationActionRequired {\n        actionData {\n          clientSecret\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "af1e3c6caaa789d20216566add3d98ed";
+(node as any).hash = "b455e1f0b80d05a98df3dfd13f10e73d";
 
 export default node;
