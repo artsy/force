@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c096f90d5cdb17879ebc7233f9e85f33>>
+ * @generated SignedSource<<2faf481034aba946448c054155c91638>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -305,6 +305,56 @@ return {
               {
                 "alias": null,
                 "args": null,
+                "concreteType": "Offer",
+                "kind": "LinkedField",
+                "name": "pendingOffer",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": null,
+                    "kind": "LinkedField",
+                    "name": "pricingBreakdownLines",
+                    "plural": true,
+                    "selections": [
+                      (v2/*: any*/),
+                      {
+                        "kind": "InlineFragment",
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "concreteType": "Money",
+                            "kind": "LinkedField",
+                            "name": "amount",
+                            "plural": false,
+                            "selections": [
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "amount",
+                                "storageKey": null
+                              },
+                              (v5/*: any*/)
+                            ],
+                            "storageKey": null
+                          }
+                        ],
+                        "type": "TotalLine",
+                        "abstractKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  },
+                  (v4/*: any*/)
+                ],
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
                 "concreteType": "Money",
                 "kind": "LinkedField",
                 "name": "itemsTotal",
@@ -487,7 +537,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b65e3cba30d663909fed7767ef1f3dd9",
+    "cacheID": "b357f3c7a0265d20853493bfe31a47e8",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -623,6 +673,23 @@ return {
           "plural": false,
           "type": "OrderModeEnum"
         },
+        "me.order.pendingOffer": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Offer"
+        },
+        "me.order.pendingOffer.id": (v8/*: any*/),
+        "me.order.pendingOffer.pricingBreakdownLines": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": true,
+          "type": "PricingBreakdownLineUnion"
+        },
+        "me.order.pendingOffer.pricingBreakdownLines.__typename": (v7/*: any*/),
+        "me.order.pendingOffer.pricingBreakdownLines.amount": (v9/*: any*/),
+        "me.order.pendingOffer.pricingBreakdownLines.amount.amount": (v11/*: any*/),
+        "me.order.pendingOffer.pricingBreakdownLines.amount.currencyCode": (v7/*: any*/),
         "me.order.seller": {
           "enumValues": null,
           "nullable": true,
@@ -654,7 +721,7 @@ return {
     },
     "name": "Order2PaymentFormTestQuery",
     "operationKind": "query",
-    "text": "query Order2PaymentFormTestQuery {\n  me {\n    ...Order2PaymentForm_me\n    order(id: \"order-id\") {\n      ...Order2PaymentForm_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2PaymentForm_me on Me {\n  creditCards(first: 10) {\n    edges {\n      node {\n        __typename\n        internalID\n        brand\n        lastDigits\n        id\n      }\n    }\n  }\n  bankAccounts(first: 10) {\n    edges {\n      node {\n        __typename\n        type\n        internalID\n        last4\n        id\n      }\n    }\n  }\n}\n\nfragment Order2PaymentForm_order on Order {\n  code\n  mode\n  source\n  internalID\n  currencyCode\n  availablePaymentMethods\n  itemsTotal {\n    minor\n    currencyCode\n  }\n  buyerTotal {\n    minor\n    currencyCode\n  }\n  seller {\n    __typename\n    ... on Partner {\n      merchantAccount {\n        externalId\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  fulfillmentDetails {\n    name\n    addressLine1\n    addressLine2\n    city\n    region\n    postalCode\n    country\n  }\n  lineItems {\n    artwork {\n      href\n      artworkMeta: meta {\n        share\n      }\n      id\n    }\n    id\n  }\n}\n"
+    "text": "query Order2PaymentFormTestQuery {\n  me {\n    ...Order2PaymentForm_me\n    order(id: \"order-id\") {\n      ...Order2PaymentForm_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2PaymentForm_me on Me {\n  creditCards(first: 10) {\n    edges {\n      node {\n        __typename\n        internalID\n        brand\n        lastDigits\n        id\n      }\n    }\n  }\n  bankAccounts(first: 10) {\n    edges {\n      node {\n        __typename\n        type\n        internalID\n        last4\n        id\n      }\n    }\n  }\n}\n\nfragment Order2PaymentForm_order on Order {\n  code\n  mode\n  source\n  internalID\n  currencyCode\n  availablePaymentMethods\n  pendingOffer {\n    pricingBreakdownLines {\n      __typename\n      ... on TotalLine {\n        amount {\n          amount\n          currencyCode\n        }\n      }\n    }\n    id\n  }\n  itemsTotal {\n    minor\n    currencyCode\n  }\n  buyerTotal {\n    minor\n    currencyCode\n  }\n  seller {\n    __typename\n    ... on Partner {\n      merchantAccount {\n        externalId\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  fulfillmentDetails {\n    name\n    addressLine1\n    addressLine2\n    city\n    region\n    postalCode\n    country\n  }\n  lineItems {\n    artwork {\n      href\n      artworkMeta: meta {\n        share\n      }\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();

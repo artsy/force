@@ -3,14 +3,18 @@ import InstitutionIcon from "@artsy/icons/InstitutionIcon"
 import { Clickable, Flex, Spacer, Text } from "@artsy/palette"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { type Brand, BrandCreditCardIcon } from "Components/BrandCreditCardIcon"
+import type { Order2PaymentCompletedView_order$key } from "__generated__/Order2PaymentCompletedView_order.graphql"
+import { graphql, useFragment } from "react-relay"
 
 interface Order2PaymentCompletedViewProps {
+  order: Order2PaymentCompletedView_order$key
   confirmationToken: any
   savedPaymentMethod: any
 }
 export const Order2PaymentCompletedView: React.FC<
   Order2PaymentCompletedViewProps
-> = ({ confirmationToken, savedPaymentMethod }) => {
+> = ({ order, confirmationToken, savedPaymentMethod }) => {
+  const orderData = useFragment(ORDER_FRAGMENT, order)
   const { editPayment, checkoutTracking } = useCheckoutContext()
 
   const onClickEdit = () => {
@@ -18,16 +22,27 @@ export const Order2PaymentCompletedView: React.FC<
     editPayment()
   }
 
+  // Primary source: order.paymentMethodDetails (persisted on refresh)
+  // Fallback: context (confirmationToken, savedPaymentMethod) for newly completed payments
+  const paymentMethodDetails = orderData.paymentMethodDetails
+
   const isCreditCard =
+    paymentMethodDetails?.__typename === "CreditCard" ||
     confirmationToken?.paymentMethodPreview?.__typename === "Card" ||
     savedPaymentMethod?.__typename === "CreditCard"
   const isBankAccount =
+    (paymentMethodDetails?.__typename === "BankAccount" &&
+      orderData.paymentMethod === "US_BANK_ACCOUNT") ||
     confirmationToken?.paymentMethodPreview?.__typename === "USBankAccount" ||
     savedPaymentMethod?.type === "US_BANK_ACCOUNT"
   const isSEPA =
+    (paymentMethodDetails?.__typename === "BankAccount" &&
+      orderData.paymentMethod === "SEPA_DEBIT") ||
     confirmationToken?.paymentMethodPreview?.__typename === "SEPADebit" ||
     savedPaymentMethod?.type === "SEPA_DEBIT"
-  const isWireTransfer = !isCreditCard && !isBankAccount && !isSEPA
+  const isWireTransfer =
+    paymentMethodDetails?.__typename === "WireTransfer" ||
+    (!isCreditCard && !isBankAccount && !isSEPA)
 
   return (
     <Flex flexDirection="column" backgroundColor="mono0">
@@ -60,7 +75,9 @@ export const Order2PaymentCompletedView: React.FC<
             <InstitutionIcon fill="mono100" width="24px" height="24px" mr={1} />
             <Text variant="sm-display">
               ••••{" "}
-              {confirmationToken?.paymentMethodPreview?.last4 ||
+              {(paymentMethodDetails?.__typename === "BankAccount" &&
+                paymentMethodDetails.last4) ||
+                confirmationToken?.paymentMethodPreview?.last4 ||
                 savedPaymentMethod?.last4}
             </Text>
           </>
@@ -70,7 +87,9 @@ export const Order2PaymentCompletedView: React.FC<
             <BrandCreditCardIcon
               mr={1}
               type={
-                (confirmationToken?.paymentMethodPreview?.displayBrand ||
+                ((paymentMethodDetails?.__typename === "CreditCard" &&
+                  paymentMethodDetails.brand) ||
+                  confirmationToken?.paymentMethodPreview?.displayBrand ||
                   savedPaymentMethod?.brand) as Brand
               }
               width="24px"
@@ -78,7 +97,9 @@ export const Order2PaymentCompletedView: React.FC<
             />
             <Text variant="sm-display">
               ••••{" "}
-              {confirmationToken?.paymentMethodPreview?.last4 ||
+              {(paymentMethodDetails?.__typename === "CreditCard" &&
+                paymentMethodDetails.lastDigits) ||
+                confirmationToken?.paymentMethodPreview?.last4 ||
                 savedPaymentMethod?.lastDigits}
             </Text>
           </>
@@ -93,3 +114,22 @@ export const Order2PaymentCompletedView: React.FC<
     </Flex>
   )
 }
+
+const ORDER_FRAGMENT = graphql`
+  fragment Order2PaymentCompletedView_order on Order {
+    paymentMethod
+    paymentMethodDetails {
+      __typename
+      ... on CreditCard {
+        brand
+        lastDigits
+      }
+      ... on BankAccount {
+        last4
+      }
+      ... on WireTransfer {
+        isManualPayment
+      }
+    }
+  }
+`

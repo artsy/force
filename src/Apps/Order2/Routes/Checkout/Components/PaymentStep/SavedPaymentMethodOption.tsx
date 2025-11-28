@@ -1,0 +1,119 @@
+import InstitutionIcon from "@artsy/icons/InstitutionIcon"
+import LockIcon from "@artsy/icons/LockIcon"
+import {
+  Box,
+  Flex,
+  Radio,
+  RadioGroup,
+  Spacer,
+  Text,
+} from "@artsy/palette"
+import { Collapse } from "Apps/Order/Components/Collapse"
+import { type Brand, BrandCreditCardIcon } from "Components/BrandCreditCardIcon"
+import { FadeInBox } from "Components/FadeInBox"
+import type { Order2PaymentForm_me$data } from "__generated__/Order2PaymentForm_me.graphql"
+import type React from "react"
+
+interface SavedPaymentMethodOptionProps {
+  me: Order2PaymentForm_me$data
+  isSelected: boolean
+  selectedSavedPaymentMethod: any | null
+  allowedSavedBankAccounts: any[]
+  onSelect: () => void
+  onSavedPaymentMethodSelect: (paymentMethod: any) => void
+}
+
+export const SavedPaymentMethodOption: React.FC<SavedPaymentMethodOptionProps> = ({
+  me,
+  isSelected,
+  selectedSavedPaymentMethod,
+  allowedSavedBankAccounts,
+  onSelect,
+  onSavedPaymentMethodSelect,
+}) => {
+  const savedCreditCards = me.creditCards?.edges?.map(edge => edge?.node).filter(Boolean) ?? []
+
+  return (
+    <FadeInBox>
+      <Box
+        backgroundColor="mono5"
+        borderRadius="5px"
+        padding="1rem"
+        marginBottom="10px"
+        style={{ cursor: "pointer" }}
+        onClick={onSelect}
+      >
+        <Flex alignItems="center">
+          <LockIcon fill="mono100" />
+          {/* Spacer has to be 31px to match Stripe's spacing */}
+          <Spacer x="31px" />
+          <Text
+            variant="sm"
+            color="mono100"
+            fontWeight={isSelected ? "bold" : "normal"}
+          >
+            Saved payments
+          </Text>
+        </Flex>
+
+        <Collapse open={isSelected}>
+          <Text variant="sm" ml="50px">
+            Select a saved payment method or add a new one.
+          </Text>
+
+          <Box ml="50px">
+            <RadioGroup
+              defaultValue={selectedSavedPaymentMethod}
+              onSelect={val => {
+                onSavedPaymentMethodSelect(val)
+              }}
+            >
+              {[...savedCreditCards, ...allowedSavedBankAccounts].map(
+                paymentMethod => (
+                  <Radio
+                    key={paymentMethod.internalID}
+                    value={paymentMethod}
+                    pb="15px"
+                    pt="15px"
+                    label={
+                      <Flex>
+                        {paymentMethod.__typename === "CreditCard" ? (
+                          <>
+                            <BrandCreditCardIcon
+                              type={paymentMethod.brand as Brand}
+                              width="24px"
+                              height="24px"
+                              mr={1}
+                            />
+                            <Text variant="sm">
+                              •••• {paymentMethod.lastDigits}
+                            </Text>
+                          </>
+                        ) : (
+                          <>
+                            <InstitutionIcon
+                              fill="mono100"
+                              width={["18px", "26px"]}
+                              height={["18px", "26px"]}
+                              mr={1}
+                            />
+                            <Text
+                              variant={["xs", "sm-display"]}
+                              mt={["0px", "3px"]}
+                            >
+                              Bank account •••• {paymentMethod.last4}
+                            </Text>
+                          </>
+                        )}
+                      </Flex>
+                    }
+                  />
+                ),
+              )}
+            </RadioGroup>
+          </Box>
+        </Collapse>
+      </Box>
+    </FadeInBox>
+  )
+}

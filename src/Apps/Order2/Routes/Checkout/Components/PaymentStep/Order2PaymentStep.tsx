@@ -53,6 +53,7 @@ export const Order2PaymentStep: React.FC<Order2PaymentStepProps> = ({
         hidden={stepState !== CheckoutStepState.COMPLETED}
       >
         <Order2PaymentCompletedView
+          order={orderData}
           savedPaymentMethod={savedPaymentMethod}
           confirmationToken={confirmationToken}
         />
@@ -78,6 +79,7 @@ const ORDER_FRAGMENT = graphql`
   fragment Order2PaymentStep_order on Order {
     ...useCompletePaymentData_order
     ...Order2PaymentForm_order
+    ...Order2PaymentCompletedView_order
     internalID
     paymentMethod
     paymentMethodDetails {
