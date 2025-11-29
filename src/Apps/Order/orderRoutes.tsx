@@ -4,8 +4,28 @@ import { redirects } from "Apps/Order/redirects"
 import { ErrorPage } from "Components/ErrorPage"
 import type { SystemContextProps } from "System/Contexts/SystemContext"
 import type { RouteProps } from "System/Router/Route"
-import { Redirect, RedirectException } from "found"
+import { HttpError, Redirect, RedirectException } from "found"
 import { graphql } from "react-relay"
+import { Provider } from "unstated"
+
+const NOT_FOUND_ERROR = "Please check the URL or verify your account details."
+
+const renderWithErrorHandling = ({ Component, props }: any) => {
+  if (!Component || !props) {
+    // Server-side: throw HttpError so errorHandlerMiddleware can handle it properly
+    if (typeof window === "undefined") {
+      throw new HttpError(404, NOT_FOUND_ERROR)
+    }
+
+    // Client-side: render ErrorPage (for component load failures, etc.)
+    return (
+      <Provider>
+        <ErrorPage code={404} message={NOT_FOUND_ERROR} />
+      </Provider>
+    )
+  }
+  return <Component {...props} />
+}
 
 const RespondRoute = loadable(
   () => import(/* webpackChunkName: "orderBundle" */ "./Routes/Respond"),
@@ -23,7 +43,9 @@ const OfferRoute = loadable(
 
 const ShippingRoute = loadable(
   () => import(/* webpackChunkName: "orderBundle" */ "./Routes/Shipping"),
-  { resolveComponent: component => component.ShippingRouteWithDialog },
+  {
+    resolveComponent: component => component.ShippingRouteWithDialog,
+  },
 )
 
 const PaymentRoute = loadable(
@@ -164,7 +186,7 @@ export const orderRoutes: RouteProps[] = [
         layout: "LogoOnly",
         query: graphql`
           query orderRoutes_RespondQuery($orderID: ID!) {
-            order: commerceOrder(id: $orderID) {
+            order: commerceOrder(id: $orderID) @principalField {
               ...Respond_order
             }
           }
@@ -172,6 +194,7 @@ export const orderRoutes: RouteProps[] = [
         cacheConfig: {
           force: true,
         },
+        render: renderWithErrorHandling,
       },
       {
         path: "offer",
@@ -180,7 +203,7 @@ export const orderRoutes: RouteProps[] = [
         layout: "LogoOnly",
         query: graphql`
           query orderRoutes_OfferQuery($orderID: ID!) {
-            order: commerceOrder(id: $orderID) {
+            order: commerceOrder(id: $orderID) @principalField {
               ...Offer_order
             }
           }
@@ -188,6 +211,7 @@ export const orderRoutes: RouteProps[] = [
         cacheConfig: {
           force: true,
         },
+        render: renderWithErrorHandling,
       },
       {
         path: "shipping",
@@ -196,7 +220,7 @@ export const orderRoutes: RouteProps[] = [
         layout: "LogoOnly",
         query: graphql`
           query orderRoutes_ShippingQuery($orderID: ID!) {
-            order: commerceOrder(id: $orderID) {
+            order: commerceOrder(id: $orderID) @principalField {
               ...Shipping_order
             }
             me {
@@ -207,6 +231,7 @@ export const orderRoutes: RouteProps[] = [
         cacheConfig: {
           force: true,
         },
+        render: renderWithErrorHandling,
       },
       {
         path: "payment",
@@ -218,7 +243,7 @@ export const orderRoutes: RouteProps[] = [
             me {
               ...Payment_me
             }
-            order: commerceOrder(id: $orderID) {
+            order: commerceOrder(id: $orderID) @principalField {
               ...Payment_order
             }
           }
@@ -226,6 +251,7 @@ export const orderRoutes: RouteProps[] = [
         cacheConfig: {
           force: true,
         },
+        render: renderWithErrorHandling,
       },
       {
         path: "payment/new",
@@ -237,7 +263,7 @@ export const orderRoutes: RouteProps[] = [
             me {
               ...NewPayment_me
             }
-            order: commerceOrder(id: $orderID) {
+            order: commerceOrder(id: $orderID) @principalField {
               ...NewPayment_order
             }
           }
@@ -245,6 +271,7 @@ export const orderRoutes: RouteProps[] = [
         cacheConfig: {
           force: true,
         },
+        render: renderWithErrorHandling,
       },
       {
         path: "review/counter",
@@ -253,7 +280,7 @@ export const orderRoutes: RouteProps[] = [
         layout: "LogoOnly",
         query: graphql`
           query orderRoutes_CounterQuery($orderID: ID!) {
-            order: commerceOrder(id: $orderID) {
+            order: commerceOrder(id: $orderID) @principalField {
               ...Counter_order
             }
           }
@@ -261,6 +288,7 @@ export const orderRoutes: RouteProps[] = [
         cacheConfig: {
           force: true,
         },
+        render: renderWithErrorHandling,
       },
       {
         path: "review",
@@ -269,7 +297,7 @@ export const orderRoutes: RouteProps[] = [
         layout: "LogoOnly",
         query: graphql`
           query orderRoutes_ReviewQuery($orderID: ID!) {
-            order: commerceOrder(id: $orderID) {
+            order: commerceOrder(id: $orderID) @principalField {
               ...Review_order
             }
           }
@@ -277,6 +305,7 @@ export const orderRoutes: RouteProps[] = [
         cacheConfig: {
           force: true,
         },
+        render: renderWithErrorHandling,
       },
       {
         path: "review/accept",
@@ -284,7 +313,7 @@ export const orderRoutes: RouteProps[] = [
         layout: "LogoOnly",
         query: graphql`
           query orderRoutes_AcceptQuery($orderID: ID!) {
-            order: commerceOrder(id: $orderID) {
+            order: commerceOrder(id: $orderID) @principalField {
               ...Accept_order
             }
           }
@@ -292,6 +321,7 @@ export const orderRoutes: RouteProps[] = [
         cacheConfig: {
           force: true,
         },
+        render: renderWithErrorHandling,
       },
       {
         path: "review/decline",
@@ -299,11 +329,12 @@ export const orderRoutes: RouteProps[] = [
         layout: "LogoOnly",
         query: graphql`
           query orderRoutes_RejectQuery($orderID: ID!) {
-            order: commerceOrder(id: $orderID) {
+            order: commerceOrder(id: $orderID) @principalField {
               ...Reject_order
             }
           }
         `,
+        render: renderWithErrorHandling,
       },
       {
         path: "status",
@@ -311,7 +342,7 @@ export const orderRoutes: RouteProps[] = [
         layout: "LogoOnly",
         query: graphql`
           query orderRoutes_StatusQuery($orderID: ID!) {
-            order: commerceOrder(id: $orderID) {
+            order: commerceOrder(id: $orderID) @principalField {
               ...Status_order
             }
           }
@@ -319,6 +350,7 @@ export const orderRoutes: RouteProps[] = [
         cacheConfig: {
           force: true,
         },
+        render: renderWithErrorHandling,
       },
       {
         path: "details",
@@ -344,7 +376,11 @@ export const orderRoutes: RouteProps[] = [
       {
         path: "*",
         Component: () => {
-          return <ErrorPage code={404} />
+          return (
+            <Provider>
+              <ErrorPage code={404} message={NOT_FOUND_ERROR} />
+            </Provider>
+          )
         },
       },
     ],
