@@ -272,6 +272,12 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
   }
 
   const handleCardPaymentSelect = () => {
+    elements.update({
+      captureMethod: "manual",
+      setupFutureUsage: "off_session",
+      mode: "payment",
+    })
+
     if (selectedPaymentMethod !== "stripe-card") {
       trackPaymentMethodSelection("CREDIT_CARD")
     }
@@ -283,6 +289,17 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
     paymentType: "sepa_debit" | "us_bank_account",
     methodType: "stripe-sepa" | "stripe-ach",
   ) => {
+    elements.update({
+      captureMethod: "automatic",
+      setupFutureUsage: null,
+      mode: "setup",
+      payment_method_types: [paymentType],
+      // @ts-ignore Stripe type issue
+      paymentMethodOptions: {
+        us_bank_account: { verification_method: "instant" },
+      },
+    })
+
     if (selectedPaymentMethod !== methodType) {
       const trackingMethod =
         paymentType === "sepa_debit" ? "SEPA_DEBIT" : "US_BANK_ACCOUNT"
@@ -408,23 +425,6 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         return
       }
 
-      // update elements to bank debit params
-      elements.update({
-        captureMethod: "automatic",
-        setupFutureUsage: null,
-        mode: "setup",
-        payment_method_types: [paymentMethod.toLowerCase()],
-        // @ts-ignore Stripe type issue
-        paymentMethodOptions: {
-          us_bank_account: {
-            verification_method: "instant",
-            financial_connections: {
-              permissions: ["payment_method", "ownership"],
-            },
-          },
-        },
-      })
-
       const { error } = await stripe.confirmSetup({
         elements,
         clientSecret,
@@ -468,19 +468,11 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       setIsSubmittingToStripe(true)
 
       const { error: submitError } = await elements.submit()
+
       if (submitError) {
         logger.error(submitError)
         handleError(submitError)
         return
-      }
-
-      // update elements to credit card params
-      if (selectedPaymentMethod === "stripe-card") {
-        elements.update({
-          captureMethod: "manual",
-          setupFutureUsage: "off_session",
-          mode: "payment",
-        })
       }
 
       const billingAddress = getBillingAddress()
