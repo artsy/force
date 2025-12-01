@@ -104,20 +104,13 @@ const Order2ReviewStepComponent: React.FC<Order2ReviewStepProps> = ({
         variables: { input },
       })
 
-      validateAndExtractOrderResponse(
+      const order = validateAndExtractOrderResponse(
         submitOrderResult.submitOrder?.orderOrError,
       )
 
-      const orderOrError = submitOrderResult.submitOrder?.orderOrError
-
-      if (orderOrError?.__typename === "OrderMutationError") {
-        handleSubmitError(orderOrError.mutationError)
-        return
-      }
-
-      if (orderOrError?.__typename === "OrderMutationActionRequired") {
+      if (order?.__typename === "OrderMutationActionRequired") {
         const cardActionResults = await stripe?.handleNextAction({
-          clientSecret: orderOrError.actionData.clientSecret,
+          clientSecret: order.actionData.clientSecret,
         })
 
         if (cardActionResults?.error) {
