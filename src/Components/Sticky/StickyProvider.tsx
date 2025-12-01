@@ -1,12 +1,13 @@
 import { compound } from "@artsy/palette"
-import { uniqBy } from "lodash"
+import { useScrollDirection } from "Utils/Hooks/useScrollDirection"
 import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
+  useReducer,
   useRef,
-  useState,
 } from "react"
 import type * as React from "react"
 
@@ -16,17 +17,120 @@ export type TSticky = {
   status: "FIXED" | "ORIGINAL" | "RELEASED"
 }
 
+type StickyState = {
+  stickies: TSticky[]
+  globalNavRetractors: Record<string, boolean>
+  isGlobalNavRetracted: boolean
+}
+
+type StickyAction =
+  | { type: "REGISTER_STICKY"; sticky: TSticky }
+  | { type: "DEREGISTER_STICKY"; id: string }
+  | { type: "UPDATE_STICKY"; id: string; payload: Partial<TSticky> }
+  | { type: "SET_NAV_RETRACTION"; id: string; isActive: boolean }
+  | { type: "SET_NAV_RETRACTED"; isRetracted: boolean }
+
+const INITIAL_STATE: StickyState = {
+  stickies: [],
+  globalNavRetractors: {},
+  isGlobalNavRetracted: false,
+}
+
+const reducer = (state: StickyState, action: StickyAction): StickyState => {
+  switch (action.type) {
+    case "REGISTER_STICKY": {
+      if (state.stickies.some(({ id }) => id === action.sticky.id)) {
+        return state
+      }
+
+      return {
+        ...state,
+        stickies: [...state.stickies, action.sticky],
+      }
+    }
+
+    case "DEREGISTER_STICKY": {
+      const { [action.id]: _unused, ...restRetractors } =
+        state.globalNavRetractors
+
+      return {
+        ...state,
+        stickies: state.stickies.filter(({ id }) => id !== action.id),
+        globalNavRetractors: restRetractors,
+      }
+    }
+
+    case "UPDATE_STICKY": {
+      return {
+        ...state,
+        stickies: state.stickies.map(sticky => {
+          if (sticky.id !== action.id) return sticky
+          return {
+            ...sticky,
+            ...action.payload,
+          }
+        }),
+      }
+    }
+
+    case "SET_NAV_RETRACTION": {
+      if (action.isActive) {
+        if (state.globalNavRetractors[action.id]) return state
+
+        return {
+          ...state,
+          globalNavRetractors: {
+            ...state.globalNavRetractors,
+            [action.id]: true,
+          },
+        }
+      }
+
+      if (!state.globalNavRetractors[action.id]) return state
+
+      const { [action.id]: _unused, ...rest } = state.globalNavRetractors
+
+      return {
+        ...state,
+        globalNavRetractors: rest,
+      }
+    }
+
+    case "SET_NAV_RETRACTED": {
+      if (state.isGlobalNavRetracted === action.isRetracted) return state
+
+      return {
+        ...state,
+        isGlobalNavRetracted: action.isRetracted,
+      }
+    }
+
+    default:
+      return state
+  }
+}
+
 const StickyContext = createContext<{
   /** Sorted by place in React tree (lower on the page = later in the array) */
   stickies: TSticky[]
   registerSticky(sticky: TSticky): void
   deregisterSticky(sticky: Pick<TSticky, "id">): void
   updateSticky({ id, payload }: { id: string; payload: Partial<TSticky> }): void
+  isGlobalNavRetracted: boolean
+  setGlobalNavRetraction({
+    id,
+    isActive,
+  }: {
+    id: string
+    isActive: boolean
+  }): void
 }>({
   stickies: [],
   registerSticky: () => {},
   deregisterSticky: () => {},
   updateSticky: () => {},
+  isGlobalNavRetracted: false,
+  setGlobalNavRetraction: () => {},
 })
 
 /**
@@ -36,36 +140,59 @@ const StickyContext = createContext<{
 export const StickyProvider: React.FC<React.PropsWithChildren<unknown>> = ({
   children,
 }) => {
-  const [stickies, setStickies] = useState<TSticky[]>([])
+  const [state, dispatch] = useReducer(reducer, INITIAL_STATE)
 
   const registerSticky = useCallback((sticky: TSticky) => {
-    setStickies(prevStickies => uniqBy([...prevStickies, sticky], "id"))
+    dispatch({ type: "REGISTER_STICKY", sticky })
   }, [])
 
   const deregisterSticky = useCallback((sticky: TSticky) => {
-    setStickies(prevStickies =>
-      prevStickies.filter(({ id }) => id !== sticky.id),
-    )
+    dispatch({ type: "DEREGISTER_STICKY", id: sticky.id })
   }, [])
 
   const updateSticky = useCallback(
     ({ id, payload }: { id: string; payload: Partial<TSticky> }) => {
-      setStickies(prevStickies =>
-        prevStickies.map(sticky => {
-          if (sticky.id !== id) return sticky
-          return {
-            ...sticky,
-            ...payload,
-          }
-        }),
-      )
+      dispatch({ type: "UPDATE_STICKY", id, payload })
     },
     [],
   )
 
+  const setGlobalNavRetraction = useCallback(
+    ({ id, isActive }: { id: string; isActive: boolean }) => {
+      dispatch({ type: "SET_NAV_RETRACTION", id, isActive })
+    },
+    [],
+  )
+
+  const hasActiveRetractors = useMemo(
+    () => Object.keys(state.globalNavRetractors).length > 0,
+    [state.globalNavRetractors],
+  )
+
+  const { isScrollingDown } = useScrollDirection({
+    enabled: hasActiveRetractors,
+    initialDirection: "down",
+  })
+
+  useEffect(() => {
+    if (!hasActiveRetractors) {
+      dispatch({ type: "SET_NAV_RETRACTED", isRetracted: false })
+      return
+    }
+
+    dispatch({ type: "SET_NAV_RETRACTED", isRetracted: isScrollingDown })
+  }, [hasActiveRetractors, isScrollingDown])
+
   return (
     <StickyContext.Provider
-      value={{ stickies, registerSticky, deregisterSticky, updateSticky }}
+      value={{
+        stickies: state.stickies,
+        registerSticky,
+        deregisterSticky,
+        updateSticky,
+        isGlobalNavRetracted: state.isGlobalNavRetracted,
+        setGlobalNavRetraction,
+      }}
     >
       {children}
     </StickyContext.Provider>
@@ -102,6 +229,8 @@ export const useSticky = ({ id: _id }: { id?: string } = {}) => {
     registerSticky: __registerSticky__,
     deregisterSticky: __deregisterSticky__,
     updateSticky: __updateSticky__,
+    isGlobalNavRetracted,
+    setGlobalNavRetraction: __setGlobalNavRetraction__,
   } = useContext(StickyContext)
 
   const id = useRef(_id ?? generateId())
@@ -130,6 +259,13 @@ export const useSticky = ({ id: _id }: { id?: string } = {}) => {
     [stickies],
   )
 
+  const setGlobalNavRetraction = useCallback(
+    (isActive: boolean) => {
+      __setGlobalNavRetraction__({ id: id.current, isActive })
+    },
+    [__setGlobalNavRetraction__],
+  )
+
   return {
     id: id.current,
     deregisterSticky,
@@ -137,5 +273,7 @@ export const useSticky = ({ id: _id }: { id?: string } = {}) => {
     registerSticky,
     stickies,
     updateSticky,
+    isGlobalNavRetracted,
+    setGlobalNavRetraction,
   }
 }
