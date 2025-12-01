@@ -1,4 +1,5 @@
 import { Box, EntityHeader, Join, Spacer, Text } from "@artsy/palette"
+import { RouterLink } from "System/Components/RouterLink"
 import type { ArticleByline_article$data } from "__generated__/ArticleByline_article.graphql"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -33,6 +34,7 @@ const ArticleByline: FC<React.PropsWithChildren<ArticleBylineProps>> = ({
             return (
               <EntityHeader
                 key={author.internalID}
+                href={`/articles/author/${author.slug}`}
                 name={author.name || "Artsy Editorial"}
                 initials={author.initials || "A"}
                 meta={author.bio!}
@@ -43,9 +45,11 @@ const ArticleByline: FC<React.PropsWithChildren<ArticleBylineProps>> = ({
 
           return (
             <Box key={author.internalID}>
-              <Text variant={["xs", "md"]} color="mono60">
-                {author.name || "Artsy Editorial"}
-              </Text>
+              <RouterLink to={`/author/${author.slug}`} textDecoration="none">
+                <Text variant={["xs", "md"]} color="mono60">
+                  {author.name || "Artsy Editorial"}
+                </Text>
+              </RouterLink>
 
               {author.bio && (
                 <Text variant="xs" color="mono60">
