@@ -2,8 +2,8 @@ import ArtsyMarkIcon from "@artsy/icons/ArtsyMarkIcon"
 import CheckmarkStrokeIcon from "@artsy/icons/CheckmarkStrokeIcon"
 import EmptyCheckCircleIcon from "@artsy/icons/EmptyCheckCircleIcon"
 import FacebookIcon from "@artsy/icons/FacebookIcon"
-import InstagramIcon from "@artsy/icons/InstagramIcon"
-import LinkedInIcon from "@artsy/icons/LinkedInIcon"
+import InstagramFillIcon from "@artsy/icons/InstagramFillIcon"
+import LinkedInFillIcon from "@artsy/icons/LinkedInFillIcon"
 import PinterestIcon from "@artsy/icons/PinterestIcon"
 import SpotifyIcon from "@artsy/icons/SpotifyIcon"
 import ThreadsIcon from "@artsy/icons/ThreadsIcon"
@@ -207,7 +207,7 @@ export const Footer: React.FC<React.PropsWithChildren<FooterProps>> = props => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <InstagramIcon />
+                <InstagramFillIcon />
               </FooterLink>
 
               <FooterLink
@@ -231,7 +231,7 @@ export const Footer: React.FC<React.PropsWithChildren<FooterProps>> = props => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <LinkedInIcon />
+                <LinkedInFillIcon />
               </FooterLink>
 
               <FooterLink

@@ -1,4 +1,4 @@
-import InstagramIcon from "@artsy/icons/InstagramIcon"
+import InstagramFillIcon from "@artsy/icons/InstagramFillIcon"
 import XIcon from "@artsy/icons/XIcon"
 import {
   Avatar,
@@ -121,7 +121,7 @@ export const AuthorApp: FC<React.PropsWithChildren<AuthorAppProps>> = ({
                           target="_blank"
                           rel="noopener noreferrer"
                         >
-                          <InstagramIcon />
+                          <InstagramFillIcon />
 
                           <Text variant="xs">
                             {author.socials.instagram.handle}
