@@ -45,7 +45,10 @@ const ArticleByline: FC<React.PropsWithChildren<ArticleBylineProps>> = ({
 
           return (
             <Box key={author.internalID}>
-              <RouterLink to={`/author/${author.slug}`} textDecoration="none">
+              <RouterLink
+                to={`/articles/author/${author.slug}`}
+                textDecoration="none"
+              >
                 <Text variant={["xs", "md"]} color="mono60">
                   {author.name || "Artsy Editorial"}
                 </Text>
