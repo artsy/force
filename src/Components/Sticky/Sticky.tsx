@@ -31,16 +31,24 @@ export const Sticky = ({
   bottomBoundary,
   withoutHeaderOffset,
   id,
+  retractGlobalNav = false,
 }: Pick<ReactStickyProps, "bottomBoundary"> & {
   id?: string
   // TODO: Remove this prop!
   withoutHeaderOffset?: boolean
+  retractGlobalNav?: boolean
   children: ReactNode | (({ stuck }: { stuck: boolean }) => ReactNode)
 }) => {
-  const { offsetTop, registerSticky, deregisterSticky, updateSticky } =
-    useSticky({
-      id,
-    })
+  const {
+    offsetTop,
+    registerSticky,
+    deregisterSticky,
+    updateSticky,
+    isGlobalNavRetracted,
+    setGlobalNavRetraction,
+  } = useSticky({
+    id,
+  })
 
   const { desktop, mobile } = useNavBarHeight()
 
@@ -57,6 +65,13 @@ export const Sticky = ({
     return deregisterSticky
   }, [registerSticky, deregisterSticky])
 
+  useEffect(() => {
+    return () => {
+      if (!retractGlobalNav) return
+      setGlobalNavRetraction(false)
+    }
+  }, [retractGlobalNav, setGlobalNavRetraction])
+
   return (
     <ReactSticky
       top={headerOffset + offsetTop}
@@ -66,23 +81,41 @@ export const Sticky = ({
           case ReactSticky.STATUS_FIXED: {
             setStuck(true)
             updateSticky({ status: "FIXED" })
+            if (retractGlobalNav) {
+              setGlobalNavRetraction(true)
+            }
             break
           }
           case ReactSticky.STATUS_ORIGINAL: {
             setStuck(false)
             updateSticky({ status: "ORIGINAL" })
+            if (retractGlobalNav) {
+              setGlobalNavRetraction(false)
+            }
             break
           }
           case ReactSticky.STATUS_RELEASED: {
             setStuck(false)
             updateSticky({ status: "RELEASED" })
+            if (retractGlobalNav) {
+              setGlobalNavRetraction(false)
+            }
             break
           }
         }
       }}
       innerZ={1}
     >
-      <Box ref={containerRef as any}>
+      <Box
+        ref={containerRef as any}
+        style={{
+          transform:
+            isGlobalNavRetracted && stuck
+              ? `translate3d(0, -${headerOffset}px, 0)`
+              : "translate3d(0, 0, 0)",
+          transition: "transform 250ms ease",
+        }}
+      >
         {typeof children === "function" ? children({ stuck }) : children}
       </Box>
     </ReactSticky>
