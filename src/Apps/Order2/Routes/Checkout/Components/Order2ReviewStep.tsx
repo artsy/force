@@ -11,7 +11,6 @@ import {
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { Order2CheckoutPricingBreakdown } from "Apps/Order2/Routes/Checkout/Components/Order2CheckoutPricingBreakdown"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
-import { useOrder2SubmitOfferMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SubmitOfferMutation"
 import { useOrder2SubmitOrderMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SubmitOrderMutation"
 import { BUYER_GUARANTEE_URL } from "Apps/Order2/constants"
 import { RouterLink } from "System/Components/RouterLink"
@@ -37,7 +36,6 @@ const Order2ReviewStepComponent: React.FC<Order2ReviewStepProps> = ({
   const orderData = useFragment(FRAGMENT, order)
   const isOffer = orderData.mode === "OFFER"
   const submitOrderMutation = useOrder2SubmitOrderMutation()
-  const submitOfferMutation = useOrder2SubmitOfferMutation()
   const stripe = useStripe()
 
   // Get the offer ID for offer orders (only call the hook when needed)
@@ -81,70 +79,45 @@ const Order2ReviewStepComponent: React.FC<Order2ReviewStepProps> = ({
     setLoading(true)
 
     try {
-      let orderOrError: any
+      const input: {
+        id: string
+        confirmationToken?: string
+        confirmedSetupIntentId?: string
+        offerID?: string
+        oneTimeUse?: boolean
+      } = {
+        id: orderData.internalID,
+      }
 
       if (isOffer) {
         if (!offerId) {
           throw new Error("No offer ID available for submission")
         }
-
-        const submitOfferResult = await submitOfferMutation.submitMutation({
-          variables: {
-            input: {
-              offerId: offerId,
-              confirmedSetupIntentId: confirmationToken?.id,
-            },
-          },
-        })
-
-        orderOrError =
-          submitOfferResult.submitOfferOrderWithConversation?.orderOrError
-
-        if (orderOrError?.error) {
-          handleSubmitError(orderOrError.error)
-          return
-        }
-
-        if (orderOrError?.__typename === "CommerceOrderRequiresAction") {
-          const cardActionResults = await stripe?.handleNextAction({
-            clientSecret: orderOrError.actionData.clientSecret,
-          })
-
-          if (cardActionResults?.error) {
-            throw new Error(cardActionResults.error.message)
-          } else {
-            handleClick()
-            return
-          }
-        }
+        input.offerID = offerId
+        input.confirmedSetupIntentId = confirmationToken?.id
       } else {
-        const submitOrderResult = await submitOrderMutation.submitMutation({
-          variables: {
-            input: {
-              id: orderData.internalID,
-              confirmationToken: confirmationToken?.id,
-              oneTimeUse: !savePaymentMethod,
-            },
-          },
+        input.confirmationToken = confirmationToken?.id
+        input.oneTimeUse = !savePaymentMethod
+      }
+
+      const submitOrderResult = await submitOrderMutation.submitMutation({
+        variables: { input },
+      })
+
+      const order = validateAndExtractOrderResponse(
+        submitOrderResult.submitOrder?.orderOrError,
+      )
+
+      if (order?.__typename === "OrderMutationActionRequired") {
+        const cardActionResults = await stripe?.handleNextAction({
+          clientSecret: order.actionData.clientSecret,
         })
 
-        validateAndExtractOrderResponse(
-          submitOrderResult.submitOrder?.orderOrError,
-        )
-
-        orderOrError = submitOrderResult.submitOrder?.orderOrError
-
-        if (orderOrError?.__typename === "OrderMutationActionRequired") {
-          const cardActionResults = await stripe?.handleNextAction({
-            clientSecret: orderOrError.actionData.clientSecret,
-          })
-
-          if (cardActionResults?.error) {
-            throw new Error(cardActionResults.error.message)
-          } else {
-            handleClick()
-            return
-          }
+        if (cardActionResults?.error) {
+          throw new Error(cardActionResults.error.message)
+        } else {
+          handleClick()
+          return
         }
       }
 

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a6bbee9c42ee35a201406dd15bd321e2>>
+ * @generated SignedSource<<023089fc7cce294f9adcf6bce9727b9d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -44,6 +44,14 @@ export type Order2PaymentForm_order$data = {
     } | null | undefined;
   } | null | undefined>;
   readonly mode: OrderModeEnum;
+  readonly pendingOffer: {
+    readonly pricingBreakdownLines: ReadonlyArray<{
+      readonly amount?: {
+        readonly amount: string | null | undefined;
+        readonly currencyCode: string;
+      } | null | undefined;
+    } | null | undefined>;
+  } | null | undefined;
   readonly seller: {
     readonly merchantAccount?: {
       readonly externalId: string;
@@ -115,6 +123,54 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "availablePaymentMethods",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Offer",
+      "kind": "LinkedField",
+      "name": "pendingOffer",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": null,
+          "kind": "LinkedField",
+          "name": "pricingBreakdownLines",
+          "plural": true,
+          "selections": [
+            {
+              "kind": "InlineFragment",
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "Money",
+                  "kind": "LinkedField",
+                  "name": "amount",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "amount",
+                      "storageKey": null
+                    },
+                    (v0/*: any*/)
+                  ],
+                  "storageKey": null
+                }
+              ],
+              "type": "TotalLine",
+              "abstractKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
       "storageKey": null
     },
     {
@@ -286,6 +342,6 @@ return {
 };
 })();
 
-(node as any).hash = "3979f8117293496f0e31ef87c4a7e100";
+(node as any).hash = "e05eb97b90e0c2f8bd6ecf3ad3e7b74d";
 
 export default node;
