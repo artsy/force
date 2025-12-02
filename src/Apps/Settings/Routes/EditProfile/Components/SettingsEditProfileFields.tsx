@@ -19,7 +19,6 @@ import {
   TextArea,
   useToasts,
 } from "@artsy/palette"
-import { useFlag } from "@unleash/proxy-client-react"
 import { editProfileVerificationSchema } from "Apps/CollectorProfile/Utils/ValidationSchemas"
 import { SettingsEditProfileImageRefetchContainer } from "Apps/Settings/Routes/EditProfile/Components/SettingsEditProfileImage/SettingsEditProfileImage"
 import { useEditProfileTracking } from "Apps/Settings/Routes/EditProfile/Hooks/useEditProfileTracking"
@@ -71,7 +70,6 @@ const SettingsEditProfileFields: React.FC<
   const { submitMutation: submitVerifyEmailMutation } = useVerifyEmail()
   const { editedUserProfile: trackEditProfile } = useEditProfileTracking()
   const { trackEvent } = useTracking()
-  const enableSocialAccounts = useFlag("emerald_collector-social-accounts")
 
   const clickedIdVerificationEvent: ClickedVerifyIdentity = {
     action: ActionType.clickedVerifyIdentity,
@@ -112,10 +110,8 @@ const SettingsEditProfileFields: React.FC<
         profession: values.profession,
         otherRelevantPositions: values.otherRelevantPositions,
         bio: values.bio,
-        ...(enableSocialAccounts && {
-          linkedIn: values.linkedIn,
-          instagram: values.instagram,
-        }),
+        linkedIn: values.linkedIn,
+        instagram: values.instagram,
       }
 
       await submitUpdateMyUserProfile(payload)
@@ -212,35 +208,31 @@ const SettingsEditProfileFields: React.FC<
                 data-testid="edit-profile-other-relevant-positions-input"
               />
 
-              {enableSocialAccounts && (
-                <>
-                  <Input
-                    title="LinkedIn"
-                    placeholder="LinkedIn handle"
-                    name="linkedIn"
-                    maxLength={256}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    value={values.linkedIn}
-                    error={touched.linkedIn && errors.linkedIn}
-                    data-testid="edit-profile-linkedin-input"
-                  />
+              <Input
+                title="LinkedIn"
+                placeholder="LinkedIn handle"
+                name="linkedIn"
+                maxLength={256}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.linkedIn}
+                error={touched.linkedIn && errors.linkedIn}
+                data-testid="edit-profile-linkedin-input"
+              />
 
-                  <LabeledInput
-                    title="Instagram"
-                    placeholder="Instagram handle"
-                    name="instagram"
-                    maxLength={256}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    value={values.instagram}
-                    error={touched.instagram && errors.instagram}
-                    label="@"
-                    variant="prefix"
-                    data-testid="edit-profile-instagram-input"
-                  />
-                </>
-              )}
+              <LabeledInput
+                title="Instagram"
+                placeholder="Instagram handle"
+                name="instagram"
+                maxLength={256}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.instagram}
+                error={touched.instagram && errors.instagram}
+                label="@"
+                variant="prefix"
+                data-testid="edit-profile-instagram-input"
+              />
 
               <TextArea
                 title="About"

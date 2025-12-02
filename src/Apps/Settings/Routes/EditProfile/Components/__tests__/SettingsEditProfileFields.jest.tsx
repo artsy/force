@@ -6,14 +6,12 @@ import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useUpdateMyUserProfile } from "Utils/Hooks/Mutations/useUpdateMyUserProfile"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { useFlag } from "@unleash/proxy-client-react"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
 jest.mock("Utils/Hooks/Mutations/useUpdateMyUserProfile")
 jest.mock("Apps/Settings/Routes/EditProfile/Mutations/useVerifyID")
 jest.mock("Apps/Settings/Routes/EditProfile/Mutations/useVerifyEmail")
-jest.mock("@unleash/proxy-client-react")
 jest.mock("Components/LocationAutocompleteInput", () => ({
   LocationAutocompleteInput: ({ title }: { title: string }) => (
     <div>{title}</div>
@@ -45,7 +43,6 @@ describe("SettingsEditProfileFields", () => {
   const mockUseUpdateMyUserProfile = useUpdateMyUserProfile as jest.Mock
   const mockUseVerifyID = useVerifyID as jest.Mock
   const mockUseVerifyEmail = useVerifyEmail as jest.Mock
-  const mockUseFlag = useFlag as jest.Mock
   const mockSubmitUpdateMyUserProfile = jest.fn()
   const mockSubmitVerifyIDMutation = jest.fn()
   const mockSubmitVerifyEmailMutation = jest.fn()
@@ -61,15 +58,12 @@ describe("SettingsEditProfileFields", () => {
     mockUseVerifyEmail.mockImplementation(() => ({
       submitMutation: mockSubmitVerifyEmailMutation,
     }))
-    // Default: feature flag is disabled
-    mockUseFlag.mockReturnValue(false)
   })
 
   afterEach(() => {
     mockUseUpdateMyUserProfile.mockReset()
     mockUseVerifyID.mockReset()
     mockUseVerifyEmail.mockReset()
-    mockUseFlag.mockReset()
     mockSendToast.mockClear()
   })
 
@@ -85,8 +79,8 @@ describe("SettingsEditProfileFields", () => {
     expect(screen.getByText("Name")).toBeInTheDocument()
     expect(screen.getByText("Primary Location")).toBeInTheDocument()
     expect(screen.getByText("Profession")).toBeInTheDocument()
-    expect(screen.queryByText("LinkedIn")).not.toBeInTheDocument()
-    expect(screen.queryByText("Instagram")).not.toBeInTheDocument()
+    expect(screen.getByText("LinkedIn")).toBeInTheDocument()
+    expect(screen.getByText("Instagram")).toBeInTheDocument()
     expect(screen.getByText("Other relevant positions")).toBeInTheDocument()
     expect(screen.getByText("About")).toBeInTheDocument()
   })
@@ -170,198 +164,190 @@ describe("SettingsEditProfileFields", () => {
     })
   })
 
-  describe("with emerald_collector-social-accounts feature flag enabled", () => {
-    beforeEach(() => {
-      mockUseFlag.mockReturnValue(true)
+  it("renders LinkedIn and Instagram fields", () => {
+    renderWithRelay()
+
+    expect(screen.getByText("LinkedIn")).toBeInTheDocument()
+    expect(screen.getByText("Instagram")).toBeInTheDocument()
+    expect(screen.getByPlaceholderText("LinkedIn handle")).toBeInTheDocument()
+    expect(screen.getByPlaceholderText("Instagram handle")).toBeInTheDocument()
+  })
+
+  it("submits linkedin and instagram fields", async () => {
+    const trackingSpy = jest.fn()
+
+    mockUseTracking.mockImplementation(() => ({
+      trackEvent: trackingSpy,
+    }))
+
+    renderWithRelay({
+      Me: () => ({
+        collectorProfile: {
+          linkedIn: null,
+          instagram: null,
+        },
+      }),
     })
 
-    it("renders LinkedIn and Instagram fields", () => {
-      renderWithRelay()
+    fireEvent.change(screen.getByPlaceholderText("Name"), {
+      target: { name: "name", value: "Collector Name" },
+    })
+    fireEvent.change(screen.getByPlaceholderText("LinkedIn handle"), {
+      target: { name: "linkedIn", value: "collector-linkedin" },
+    })
+    fireEvent.change(screen.getByPlaceholderText("Instagram handle"), {
+      target: { name: "instagram", value: "collector_insta" },
+    })
 
-      expect(screen.getByText("LinkedIn")).toBeInTheDocument()
-      expect(screen.getByText("Instagram")).toBeInTheDocument()
-      expect(screen.getByPlaceholderText("LinkedIn handle")).toBeInTheDocument()
+    fireEvent.click(screen.getByText("Save"))
+
+    await waitFor(() => {
+      expect(mockSubmitUpdateMyUserProfile).toHaveBeenCalledWith(
+        expect.objectContaining({
+          name: "Collector Name",
+          linkedIn: "collector-linkedin",
+          instagram: "collector_insta",
+        }),
+      )
+    })
+  })
+
+  it("loads initial values from collectorProfile", () => {
+    renderWithRelay({
+      Me: () => ({
+        name: "Test User",
+        collectorProfile: {
+          linkedIn: "test-linkedin",
+          instagram: "@test_instagram",
+        },
+      }),
+    })
+
+    const linkedInInput = screen.getByPlaceholderText(
+      "LinkedIn handle",
+    ) as HTMLInputElement
+    const instagramInput = screen.getByPlaceholderText(
+      "Instagram handle",
+    ) as HTMLInputElement
+
+    expect(linkedInInput.value).toBe("test-linkedin")
+    expect(instagramInput.value).toBe("@test_instagram")
+  })
+
+  it("shows inline error for invalid instagram handle", async () => {
+    renderWithRelay({
+      Me: () => ({
+        collectorProfile: {
+          linkedIn: null,
+          instagram: null,
+        },
+      }),
+    })
+
+    const instagramInput = screen.getByPlaceholderText("Instagram handle")
+
+    fireEvent.change(instagramInput, {
+      target: { value: "invalid@handle" },
+    })
+    fireEvent.blur(instagramInput)
+
+    await waitFor(() => {
       expect(
-        screen.getByPlaceholderText("Instagram handle"),
+        screen.getByText(
+          "Instagram handle can only contain letters, numbers, underscores, and periods",
+        ),
+      ).toBeInTheDocument()
+    })
+  })
+
+  it("accepts instagram handle with @ prefix", async () => {
+    const trackingSpy = jest.fn()
+
+    mockUseTracking.mockImplementation(() => ({
+      trackEvent: trackingSpy,
+    }))
+
+    renderWithRelay({
+      Me: () => ({
+        collectorProfile: {
+          linkedIn: null,
+          instagram: null,
+        },
+      }),
+    })
+
+    fireEvent.change(screen.getByPlaceholderText("Name"), {
+      target: { name: "name", value: "Collector Name" },
+    })
+    fireEvent.change(screen.getByPlaceholderText("Instagram handle"), {
+      target: { name: "instagram", value: "@valid_instagram" },
+    })
+
+    fireEvent.click(screen.getByText("Save"))
+
+    await waitFor(() => {
+      expect(mockSubmitUpdateMyUserProfile).toHaveBeenCalledWith(
+        expect.objectContaining({
+          instagram: "@valid_instagram",
+        }),
+      )
+    })
+  })
+
+  it("shows inline error for invalid linkedin handle", async () => {
+    renderWithRelay({
+      Me: () => ({
+        collectorProfile: {
+          linkedIn: null,
+          instagram: null,
+        },
+      }),
+    })
+
+    const linkedInInput = screen.getByPlaceholderText("LinkedIn handle")
+
+    fireEvent.change(linkedInInput, {
+      target: { value: "invalid_handle" },
+    })
+    fireEvent.blur(linkedInInput)
+
+    await waitFor(() => {
+      expect(
+        screen.getByText(
+          "LinkedIn handle can only contain letters, numbers, and hyphens",
+        ),
+      ).toBeInTheDocument()
+    })
+  })
+
+  it("disables save button when there are validation errors", async () => {
+    renderWithRelay({
+      Me: () => ({
+        collectorProfile: {
+          linkedIn: null,
+          instagram: null,
+        },
+      }),
+    })
+
+    const instagramInput = screen.getByPlaceholderText("Instagram handle")
+
+    fireEvent.change(instagramInput, {
+      target: { value: "invalid@handle" },
+    })
+    fireEvent.blur(instagramInput)
+
+    await waitFor(() => {
+      expect(
+        screen.getByText(
+          "Instagram handle can only contain letters, numbers, underscores, and periods",
+        ),
       ).toBeInTheDocument()
     })
 
-    it("submits linkedin and instagram fields", async () => {
-      const trackingSpy = jest.fn()
-
-      mockUseTracking.mockImplementation(() => ({
-        trackEvent: trackingSpy,
-      }))
-
-      renderWithRelay({
-        Me: () => ({
-          collectorProfile: {
-            linkedIn: null,
-            instagram: null,
-          },
-        }),
-      })
-
-      fireEvent.change(screen.getByPlaceholderText("Name"), {
-        target: { name: "name", value: "Collector Name" },
-      })
-      fireEvent.change(screen.getByPlaceholderText("LinkedIn handle"), {
-        target: { name: "linkedIn", value: "collector-linkedin" },
-      })
-      fireEvent.change(screen.getByPlaceholderText("Instagram handle"), {
-        target: { name: "instagram", value: "collector_insta" },
-      })
-
-      fireEvent.click(screen.getByText("Save"))
-
-      await waitFor(() => {
-        expect(mockSubmitUpdateMyUserProfile).toHaveBeenCalledWith(
-          expect.objectContaining({
-            name: "Collector Name",
-            linkedIn: "collector-linkedin",
-            instagram: "collector_insta",
-          }),
-        )
-      })
-    })
-
-    it("loads initial values from collectorProfile", () => {
-      renderWithRelay({
-        Me: () => ({
-          name: "Test User",
-          collectorProfile: {
-            linkedIn: "test-linkedin",
-            instagram: "@test_instagram",
-          },
-        }),
-      })
-
-      const linkedInInput = screen.getByPlaceholderText(
-        "LinkedIn handle",
-      ) as HTMLInputElement
-      const instagramInput = screen.getByPlaceholderText(
-        "Instagram handle",
-      ) as HTMLInputElement
-
-      expect(linkedInInput.value).toBe("test-linkedin")
-      expect(instagramInput.value).toBe("@test_instagram")
-    })
-
-    it("shows inline error for invalid instagram handle", async () => {
-      renderWithRelay({
-        Me: () => ({
-          collectorProfile: {
-            linkedIn: null,
-            instagram: null,
-          },
-        }),
-      })
-
-      const instagramInput = screen.getByPlaceholderText("Instagram handle")
-
-      fireEvent.change(instagramInput, {
-        target: { value: "invalid@handle" },
-      })
-      fireEvent.blur(instagramInput)
-
-      await waitFor(() => {
-        expect(
-          screen.getByText(
-            "Instagram handle can only contain letters, numbers, underscores, and periods",
-          ),
-        ).toBeInTheDocument()
-      })
-    })
-
-    it("accepts instagram handle with @ prefix", async () => {
-      const trackingSpy = jest.fn()
-
-      mockUseTracking.mockImplementation(() => ({
-        trackEvent: trackingSpy,
-      }))
-
-      renderWithRelay({
-        Me: () => ({
-          collectorProfile: {
-            linkedIn: null,
-            instagram: null,
-          },
-        }),
-      })
-
-      fireEvent.change(screen.getByPlaceholderText("Name"), {
-        target: { name: "name", value: "Collector Name" },
-      })
-      fireEvent.change(screen.getByPlaceholderText("Instagram handle"), {
-        target: { name: "instagram", value: "@valid_instagram" },
-      })
-
-      fireEvent.click(screen.getByText("Save"))
-
-      await waitFor(() => {
-        expect(mockSubmitUpdateMyUserProfile).toHaveBeenCalledWith(
-          expect.objectContaining({
-            instagram: "@valid_instagram",
-          }),
-        )
-      })
-    })
-
-    it("shows inline error for invalid linkedin handle", async () => {
-      renderWithRelay({
-        Me: () => ({
-          collectorProfile: {
-            linkedIn: null,
-            instagram: null,
-          },
-        }),
-      })
-
-      const linkedInInput = screen.getByPlaceholderText("LinkedIn handle")
-
-      fireEvent.change(linkedInInput, {
-        target: { value: "invalid_handle" },
-      })
-      fireEvent.blur(linkedInInput)
-
-      await waitFor(() => {
-        expect(
-          screen.getByText(
-            "LinkedIn handle can only contain letters, numbers, and hyphens",
-          ),
-        ).toBeInTheDocument()
-      })
-    })
-
-    it("disables save button when there are validation errors", async () => {
-      renderWithRelay({
-        Me: () => ({
-          collectorProfile: {
-            linkedIn: null,
-            instagram: null,
-          },
-        }),
-      })
-
-      const instagramInput = screen.getByPlaceholderText("Instagram handle")
-
-      fireEvent.change(instagramInput, {
-        target: { value: "invalid@handle" },
-      })
-      fireEvent.blur(instagramInput)
-
-      await waitFor(() => {
-        expect(
-          screen.getByText(
-            "Instagram handle can only contain letters, numbers, underscores, and periods",
-          ),
-        ).toBeInTheDocument()
-      })
-
-      // Save button should be disabled when there are validation errors
-      const saveButton = screen.getByTestId("edit-profile-save-button")
-      expect(saveButton).toBeDisabled()
-    })
+    // Save button should be disabled when there are validation errors
+    const saveButton = screen.getByTestId("edit-profile-save-button")
+    expect(saveButton).toBeDisabled()
   })
 
   describe("ID verification", () => {
