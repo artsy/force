@@ -58,7 +58,7 @@ export const errorHandlerMiddleware = async (
     }
   })()
 
-  const message = `${err.message || err.text || err.data || "Internal Server Error"}
+  const message = `${err.message || err.text || "Internal Server Error"}
 Current URL: ${`${req.protocol}://${req.get("host")}${req.originalUrl}`}
 Time: ${new Date().toUTCString()}`
 
