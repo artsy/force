@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ae1fe6b72d9538315251c9e458fb969b>>
+ * @generated SignedSource<<9fd71db63f7da12adec299d65d800cc7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -52,7 +52,7 @@ export type Order2PaymentStep_order$data = {
   readonly taxTotal: {
     readonly minor: any;
   } | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"Order2PaymentForm_order" | "useCompletePaymentData_order">;
+  readonly " $fragmentSpreads": FragmentRefs<"Order2PaymentCompletedView_order" | "Order2PaymentForm_order" | "useCompletePaymentData_order">;
   readonly " $fragmentType": "Order2PaymentStep_order";
 };
 export type Order2PaymentStep_order$key = {
@@ -113,6 +113,11 @@ return {
       "args": null,
       "kind": "FragmentSpread",
       "name": "Order2PaymentForm_order"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "Order2PaymentCompletedView_order"
     },
     (v0/*: any*/),
     {
@@ -243,6 +248,6 @@ return {
 };
 })();
 
-(node as any).hash = "12b9572590ecb6e3ae9b0640eb58a322";
+(node as any).hash = "4882a4d16dd63a7883a19be2cdc5b2b4";
 
 export default node;
