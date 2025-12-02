@@ -22,8 +22,6 @@ export const Order2PaymentCompletedView: React.FC<
     editPayment()
   }
 
-  // Primary source: order.paymentMethodDetails (persisted on refresh)
-  // Fallback: context (confirmationToken, savedPaymentMethod) for newly completed payments
   const paymentMethodDetails = orderData.paymentMethodDetails
 
   const isCreditCard =

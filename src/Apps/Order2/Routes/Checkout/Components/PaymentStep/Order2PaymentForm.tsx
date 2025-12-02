@@ -55,6 +55,31 @@ const defaultBillingAddress = {
   country: "US",
 }
 
+const getTotalForPayment = (
+  orderData: Order2PaymentForm_order$data,
+): { minor: number; currencyCode: string } | null => {
+  const { mode, itemsTotal, pendingOffer } = orderData
+
+  if (mode === "BUY" && itemsTotal) {
+    return itemsTotal
+  }
+
+  if (mode === "OFFER") {
+    const totalLine = pendingOffer?.pricingBreakdownLines?.find(
+      line => line?.amount?.amount != null,
+    )
+
+    if (totalLine?.amount?.amount) {
+      return {
+        minor: Math.round(Number.parseFloat(totalLine.amount.amount) * 100),
+        currencyCode: totalLine.amount.currencyCode,
+      }
+    }
+  }
+
+  return null
+}
+
 interface Order2PaymentFormProps {
   order: Order2PaymentForm_order$key
   me: Order2PaymentForm_me$key
@@ -67,33 +92,9 @@ export const Order2PaymentForm: React.FC<Order2PaymentFormProps> = ({
   const orderData = useFragment(ORDER_FRAGMENT, order)
   const meData = useFragment(ME_FRAGMENT, me)
   const stripe = useStripe()
-  const { itemsTotal, seller, mode, pendingOffer } = orderData
+  const { seller } = orderData
 
-  // For BUY orders, use itemsTotal
-  // For OFFER orders, extract total from pendingOffer.pricingBreakdownLines
-  let totalForPayment:
-    | { minor: number; currencyCode: string }
-    | null
-    | undefined = null
-
-  if (mode === "BUY") {
-    totalForPayment = itemsTotal
-  }
-
-  if (mode === "OFFER" && pendingOffer?.pricingBreakdownLines) {
-    // Find the TotalLine in the pricing breakdown
-    const totalLine = pendingOffer.pricingBreakdownLines.find(
-      line => line?.amount?.amount != null,
-    )
-
-    if (totalLine?.amount?.amount) {
-      // Convert to the format expected by Stripe Elements
-      totalForPayment = {
-        minor: Math.round(Number.parseFloat(totalLine.amount.amount) * 100), // Convert dollars to cents
-        currencyCode: totalLine.amount.currencyCode,
-      }
-    }
-  }
+  const totalForPayment = getTotalForPayment(orderData)
 
   if (!totalForPayment) {
     return null
