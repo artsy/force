@@ -10,19 +10,37 @@ import { Provider } from "unstated"
 
 const NOT_FOUND_ERROR = "Please check the URL or verify your account details."
 
-const renderWithErrorHandling = ({ Component, props, error }: any) => {
-  const is404 = error?.status === 404
-
-  if (error && !is404) throw error
-
-  const isLoading = !Component || !props
+const renderWithErrorHandling = ({
+  Component,
+  props,
+  error,
+  resolving,
+}: any) => {
   const isServer = typeof window === "undefined"
 
-  if (isServer && (is404 || isLoading)) {
+  if (error && error.status !== 404) throw error
+
+  const is404 = error?.status === 404
+
+  const isLoading = !Component || !props
+
+  console.log("renderWithErrorHandling vars:", {
+    Component: !!Component,
+    props: !!props,
+    error,
+    is404,
+    isLoading,
+    isServer,
+    resolving,
+  })
+
+  if (isServer && (is404 || (isLoading && !resolving))) {
+    console.log("renderWithErrorHandling: throwing 404 (server-side)")
     throw new HttpError(404, NOT_FOUND_ERROR)
   }
 
   if (is404) {
+    console.log("renderWithErrorHandling: rendering 404 (client-side)")
     return (
       <Provider>
         <ErrorPage code={404} message={NOT_FOUND_ERROR} />
@@ -144,7 +162,17 @@ export const orderRoutes: RouteProps[] = [
         }
       }
     `,
-    render: ({ Component, props, resolving }) => {
+    render: ({ Component, props, resolving, error }: any) => {
+      console.log("OrderApp (Parent) render vars:", {
+        Component: !!Component,
+        props: !!props,
+        resolving,
+        error,
+        isServer: typeof window === "undefined",
+      })
+
+      if (error) throw error
+
       if (!(Component && props)) {
         // Returning `null` will show the spinner; but undefined uses purple
         // loader. Its a weird quirk :/
@@ -385,6 +413,7 @@ export const orderRoutes: RouteProps[] = [
       {
         path: "*",
         Component: () => {
+          console.log("Wildcard route: rendering 404")
           return (
             <Provider>
               <ErrorPage code={404} message={NOT_FOUND_ERROR} />
