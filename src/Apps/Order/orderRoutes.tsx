@@ -10,19 +10,31 @@ import { Provider } from "unstated"
 
 const NOT_FOUND_ERROR = "Please check the URL or verify your account details."
 
-const renderWithErrorHandling = ({ Component, props }: any) => {
+const renderWithErrorHandling = ({ Component, props, error }: any) => {
+  if (error) {
+    if (error.status === 404) {
+      if (typeof window === "undefined") {
+        throw new HttpError(404, NOT_FOUND_ERROR)
+      }
+
+      return (
+        <Provider>
+          <ErrorPage code={404} message={NOT_FOUND_ERROR} />
+        </Provider>
+      )
+    }
+
+    throw error
+  }
+
   if (!Component || !props) {
     // Server-side: throw HttpError so errorHandlerMiddleware can handle it properly
     if (typeof window === "undefined") {
       throw new HttpError(404, NOT_FOUND_ERROR)
     }
 
-    // Client-side: render ErrorPage (for component load failures, etc.)
-    return (
-      <Provider>
-        <ErrorPage code={404} message={NOT_FOUND_ERROR} />
-      </Provider>
-    )
+    // Client-side: return undefined to show loading spinner
+    return undefined
   }
   return <Component {...props} />
 }
@@ -366,6 +378,7 @@ export const orderRoutes: RouteProps[] = [
         cacheConfig: {
           force: true,
         },
+        render: renderWithErrorHandling,
       },
 
       new Redirect({
