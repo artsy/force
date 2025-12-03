@@ -22,7 +22,7 @@ const renderWithErrorHandling = ({
 
   const is404 = error?.status === 404
 
-  const isLoading = !Component || !props
+  const isLoading = !props
 
   console.log("renderWithErrorHandling vars:", {
     Component: !!Component,
@@ -171,7 +171,13 @@ export const orderRoutes: RouteProps[] = [
         isServer: typeof window === "undefined",
       })
 
-      if (error) throw error
+      if (error) {
+        // If it's a 404 with undefined data, replace with our standard message
+        if (error.status === 404 && !error.data) {
+          throw new HttpError(404, NOT_FOUND_ERROR)
+        }
+        throw error
+      }
 
       if (!(Component && props)) {
         // Returning `null` will show the spinner; but undefined uses purple
