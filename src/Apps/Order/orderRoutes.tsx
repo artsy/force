@@ -16,12 +16,10 @@ const renderWithErrorHandling = ({
   error,
   resolving,
 }: any) => {
-  const isServer = typeof window === "undefined"
-
   if (error && error.status !== 404) throw error
 
+  const isServer = typeof window === "undefined"
   const is404 = error?.status === 404
-
   const isLoading = !props
 
   if (isServer && (is404 || (isLoading && !resolving))) {
