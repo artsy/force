@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f56c1ad290bee6cdbc6a4cec0f37ef2b>>
+ * @generated SignedSource<<38de467888fa5ab68fc17919b450af48>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -136,14 +136,14 @@ return {
         "plural": false,
         "selections": [
           {
-            "alias": null,
+            "alias": "descriptionHTML",
             "args": (v1/*: any*/),
             "kind": "ScalarField",
             "name": "description",
             "storageKey": "description(format:\"HTML\")"
           },
           {
-            "alias": null,
+            "alias": "additionalInformationHTML",
             "args": (v1/*: any*/),
             "kind": "ScalarField",
             "name": "additionalInformation",
@@ -450,7 +450,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f8eceae641b5f1a1d8532f83f48d023c",
+    "cacheID": "73ee89ef2190fe5a9f981a95aedf2037",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -460,7 +460,7 @@ return {
           "plural": false,
           "type": "Artwork"
         },
-        "artwork.additionalInformation": (v6/*: any*/),
+        "artwork.additionalInformationHTML": (v6/*: any*/),
         "artwork.articles": {
           "enumValues": null,
           "nullable": true,
@@ -515,7 +515,7 @@ return {
         "artwork.conditionDescription": (v9/*: any*/),
         "artwork.conditionDescription.details": (v6/*: any*/),
         "artwork.conditionDescription.label": (v6/*: any*/),
-        "artwork.description": (v6/*: any*/),
+        "artwork.descriptionHTML": (v6/*: any*/),
         "artwork.dimensions": {
           "enumValues": null,
           "nullable": true,
@@ -559,7 +559,7 @@ return {
     },
     "name": "ArtworkDetailsTestQuery",
     "operationKind": "query",
-    "text": "query ArtworkDetailsTestQuery {\n  artwork(id: \"example\") {\n    ...ArtworkDetails_artwork\n    id\n  }\n}\n\nfragment ArtworkDetailsAboutTheWorkFromArtsy_artwork on Artwork {\n  description(format: HTML)\n  additionalInformation(format: HTML)\n}\n\nfragment ArtworkDetailsAdditionalInfo_artwork on Artwork {\n  category\n  series\n  publisher\n  manufacturer\n  image_rights: imageRights\n  canRequestLotConditionsReport\n  internalID\n  isUnlisted\n  framed {\n    label\n    details\n  }\n  signatureInfo {\n    label\n    details\n  }\n  conditionDescription {\n    label\n    details\n  }\n  certificateOfAuthenticity {\n    label\n    details\n  }\n  mediumType {\n    __typename\n  }\n  dimensions {\n    in\n    cm\n  }\n  attributionClass {\n    name\n    id\n  }\n  medium\n  ...ArtworkDetailsMediumModal_artwork\n}\n\nfragment ArtworkDetailsArticles_artwork on Artwork {\n  articles(size: 10) {\n    author {\n      name\n      id\n    }\n    href\n    publishedAt(format: \"MMM Do, YYYY\")\n    thumbnailImage {\n      cropped(width: 200, height: 150) {\n        src\n        srcSet\n      }\n    }\n    thumbnailTitle\n    id\n  }\n}\n\nfragment ArtworkDetailsMediumModal_artwork on Artwork {\n  mediumType {\n    name\n    longDescription\n  }\n}\n\nfragment ArtworkDetails_artwork on Artwork {\n  ...ArtworkDetailsAboutTheWorkFromArtsy_artwork\n  ...ArtworkDetailsAdditionalInfo_artwork\n  ...ArtworkDetailsArticles_artwork\n  articles(size: 10) {\n    slug\n    id\n  }\n  literature(format: HTML)\n  exhibition_history: exhibitionHistory(format: HTML)\n  provenance(format: HTML)\n}\n"
+    "text": "query ArtworkDetailsTestQuery {\n  artwork(id: \"example\") {\n    ...ArtworkDetails_artwork\n    id\n  }\n}\n\nfragment ArtworkDetailsAboutTheWorkFromArtsy_artwork on Artwork {\n  descriptionHTML: description(format: HTML)\n  additionalInformationHTML: additionalInformation(format: HTML)\n}\n\nfragment ArtworkDetailsAdditionalInfo_artwork on Artwork {\n  category\n  series\n  publisher\n  manufacturer\n  image_rights: imageRights\n  canRequestLotConditionsReport\n  internalID\n  isUnlisted\n  framed {\n    label\n    details\n  }\n  signatureInfo {\n    label\n    details\n  }\n  conditionDescription {\n    label\n    details\n  }\n  certificateOfAuthenticity {\n    label\n    details\n  }\n  mediumType {\n    __typename\n  }\n  dimensions {\n    in\n    cm\n  }\n  attributionClass {\n    name\n    id\n  }\n  medium\n  ...ArtworkDetailsMediumModal_artwork\n}\n\nfragment ArtworkDetailsArticles_artwork on Artwork {\n  articles(size: 10) {\n    author {\n      name\n      id\n    }\n    href\n    publishedAt(format: \"MMM Do, YYYY\")\n    thumbnailImage {\n      cropped(width: 200, height: 150) {\n        src\n        srcSet\n      }\n    }\n    thumbnailTitle\n    id\n  }\n}\n\nfragment ArtworkDetailsMediumModal_artwork on Artwork {\n  mediumType {\n    name\n    longDescription\n  }\n}\n\nfragment ArtworkDetails_artwork on Artwork {\n  ...ArtworkDetailsAboutTheWorkFromArtsy_artwork\n  ...ArtworkDetailsAdditionalInfo_artwork\n  ...ArtworkDetailsArticles_artwork\n  articles(size: 10) {\n    slug\n    id\n  }\n  literature(format: HTML)\n  exhibition_history: exhibitionHistory(format: HTML)\n  provenance(format: HTML)\n}\n"
   }
 };
 })();

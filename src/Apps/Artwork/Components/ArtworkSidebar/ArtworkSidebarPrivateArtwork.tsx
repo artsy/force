@@ -25,7 +25,7 @@ export const ArtworkSidebarPrivateArtwork: React.FC<
           }
         }
         isUnlisted
-        additionalInformation
+        additionalInformationPlain: additionalInformation
       }
     `,
     artwork,
