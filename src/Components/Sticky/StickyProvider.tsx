@@ -1,4 +1,6 @@
-import { compound } from "@artsy/palette"
+import { Box, compound, useTheme } from "@artsy/palette"
+import { NAV_BAR_TRANSITION_DURATION } from "Apps/Components/Layouts/Components/LayoutNav"
+import { useNavBarHeight } from "Components/NavBar/useNavBarHeight"
 import { useScrollDirection } from "Utils/Hooks/useScrollDirection"
 import {
   createContext,
@@ -8,6 +10,7 @@ import {
   useMemo,
   useReducer,
   useRef,
+  useState,
 } from "react"
 import type * as React from "react"
 
@@ -117,6 +120,7 @@ const StickyContext = createContext<{
   deregisterSticky(sticky: Pick<TSticky, "id">): void
   updateSticky({ id, payload }: { id: string; payload: Partial<TSticky> }): void
   isGlobalNavRetracted: boolean
+  hasRetractGlobalNavStickies: boolean
   setGlobalNavRetraction({
     id,
     isActive,
@@ -130,6 +134,7 @@ const StickyContext = createContext<{
   deregisterSticky: () => {},
   updateSticky: () => {},
   isGlobalNavRetracted: false,
+  hasRetractGlobalNavStickies: false,
   setGlobalNavRetraction: () => {},
 })
 
@@ -191,11 +196,88 @@ export const StickyProvider: React.FC<React.PropsWithChildren<unknown>> = ({
         deregisterSticky,
         updateSticky,
         isGlobalNavRetracted: state.isGlobalNavRetracted,
+        hasRetractGlobalNavStickies: hasActiveRetractors,
         setGlobalNavRetraction,
       }}
     >
       {children}
+
+      <StickyShadow
+        stickies={state.stickies}
+        hasRetractGlobalNavStickies={hasActiveRetractors}
+        isGlobalNavRetracted={state.isGlobalNavRetracted}
+      />
     </StickyContext.Provider>
+  )
+}
+
+const StickyShadow: React.FC<{
+  stickies: TSticky[]
+  hasRetractGlobalNavStickies: boolean
+  isGlobalNavRetracted: boolean
+}> = ({ stickies, hasRetractGlobalNavStickies, isGlobalNavRetracted }) => {
+  const { theme } = useTheme()
+
+  const { computedHeight: headerOffset } = useNavBarHeight()
+
+  const [shadowHeight, setShadowHeight] = useState<number | null>(null)
+
+  useEffect(() => {
+    if (!hasRetractGlobalNavStickies) {
+      setShadowHeight(null)
+      return
+    }
+
+    // Find all FIXED stickies
+    const fixedStickies = stickies.filter(s => s.status === "FIXED")
+
+    if (fixedStickies.length === 0) {
+      setShadowHeight(null)
+      return
+    }
+
+    // Calculate the bottom position of the last FIXED sticky
+    // We need to sum up all the heights of FIXED stickies + nav bar offset
+    const stickyStackHeight = fixedStickies.reduce(
+      (sum, s) => sum + s.height,
+      0,
+    )
+
+    const totalHeight = headerOffset + stickyStackHeight
+
+    setShadowHeight(totalHeight)
+  }, [stickies, hasRetractGlobalNavStickies, headerOffset])
+
+  if (shadowHeight === null) return null
+
+  return (
+    <Box
+      position="fixed"
+      top={0}
+      left={0}
+      width="100vw"
+      pointerEvents="none"
+      zIndex={1}
+      style={{
+        height: shadowHeight,
+        transform: isGlobalNavRetracted
+          ? `translate3d(0, -${headerOffset}px, 0)`
+          : "translate3d(0, 0, 0)",
+        transition: `transform ${NAV_BAR_TRANSITION_DURATION}, opacity ${NAV_BAR_TRANSITION_DURATION}`,
+        opacity: 1,
+      }}
+    >
+      <Box
+        position="absolute"
+        top={0}
+        left={0}
+        width="100%"
+        height="100%"
+        style={{
+          boxShadow: theme.effects.dropShadow,
+        }}
+      />
+    </Box>
   )
 }
 
@@ -230,6 +312,7 @@ export const useSticky = ({ id: _id }: { id?: string } = {}) => {
     deregisterSticky: __deregisterSticky__,
     updateSticky: __updateSticky__,
     isGlobalNavRetracted,
+    hasRetractGlobalNavStickies,
     setGlobalNavRetraction: __setGlobalNavRetraction__,
   } = useContext(StickyContext)
 
@@ -274,6 +357,7 @@ export const useSticky = ({ id: _id }: { id?: string } = {}) => {
     stickies,
     updateSticky,
     isGlobalNavRetracted,
+    hasRetractGlobalNavStickies,
     setGlobalNavRetraction,
   }
 }
