@@ -1,4 +1,5 @@
 import { Box, THEME } from "@artsy/palette"
+import { NAV_BAR_TRANSITION_DURATION } from "Apps/Components/Layouts/Components/LayoutNav"
 import { useNavBarHeight } from "Components/NavBar/useNavBarHeight"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 import { type ReactNode, useEffect, useMemo, useRef, useState } from "react"
@@ -113,14 +114,14 @@ export const Sticky = ({
         el.style.transition = "none"
         el.style.transform = `translate3d(0, ${headerOffset}px, 0)`
         void el.offsetHeight // Force reflow
-        el.style.transition = "transform 250ms ease"
+        el.style.transition = `transform ${NAV_BAR_TRANSITION_DURATION}`
         el.style.transform = "translate3d(0, 0, 0)"
       } else if (wasRetracted && !isGlobalNavRetracted) {
         // Just un-retracted - top moved down, animate from old position
         el.style.transition = "none"
         el.style.transform = `translate3d(0, ${-headerOffset}px, 0)`
         void el.offsetHeight // Force reflow
-        el.style.transition = "transform 250ms ease"
+        el.style.transition = `transform ${NAV_BAR_TRANSITION_DURATION}`
         el.style.transform = "translate3d(0, 0, 0)"
       }
     }
@@ -177,7 +178,7 @@ export const Sticky = ({
                   isGlobalNavRetracted && stuck
                     ? `translate3d(0, -${headerOffset}px, 0)`
                     : "translate3d(0, 0, 0)",
-                transition: "transform 250ms ease",
+                transition: `transform ${NAV_BAR_TRANSITION_DURATION}`,
               }
             : {
                 // Other stickies: transitions handled via DOM manipulation in useEffect

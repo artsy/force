@@ -29,7 +29,7 @@ export const LayoutNav: FC<React.PropsWithChildren<unknown>> = () => {
           transform: isGlobalNavRetracted
             ? `translate3d(0, -${computedHeight}px, 0)`
             : "translate3d(0, 0, 0)",
-          transition: "transform 250ms ease",
+          transition: `transform ${NAV_BAR_TRANSITION_DURATION}`,
         }}
       >
         <NavBar />
@@ -37,3 +37,5 @@ export const LayoutNav: FC<React.PropsWithChildren<unknown>> = () => {
     </Box>
   )
 }
+
+export const NAV_BAR_TRANSITION_DURATION = "150ms"
