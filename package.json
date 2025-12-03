@@ -201,7 +201,7 @@
     "@graphql-inspector/core": "1.14.0",
     "@graphql-tools/jest-transform": "^2.0.0",
     "@loadable/webpack-plugin": "5.15.2",
-    "@playwright/test": "^1.55.0",
+    "@playwright/test": "1.57",
     "@relative-ci/agent": "^4.2.10",
     "@rsbuild/core": "^1.2.3",
     "@rsbuild/plugin-assets-retry": "^1.1.0",
