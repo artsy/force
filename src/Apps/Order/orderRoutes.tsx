@@ -11,31 +11,27 @@ import { Provider } from "unstated"
 const NOT_FOUND_ERROR = "Please check the URL or verify your account details."
 
 const renderWithErrorHandling = ({ Component, props, error }: any) => {
-  if (error) {
-    if (error.status === 404) {
-      if (typeof window === "undefined") {
-        throw new HttpError(404, NOT_FOUND_ERROR)
-      }
+  const is404 = error?.status === 404
 
-      return (
-        <Provider>
-          <ErrorPage code={404} message={NOT_FOUND_ERROR} />
-        </Provider>
-      )
-    }
+  if (error && !is404) throw error
 
-    throw error
+  const isLoading = !Component || !props
+  const isServer = typeof window === "undefined"
+
+  if (isServer && (is404 || isLoading)) {
+    throw new HttpError(404, NOT_FOUND_ERROR)
   }
 
-  if (!Component || !props) {
-    // Server-side: throw HttpError so errorHandlerMiddleware can handle it properly
-    if (typeof window === "undefined") {
-      throw new HttpError(404, NOT_FOUND_ERROR)
-    }
-
-    // Client-side: return undefined to show loading spinner
-    return undefined
+  if (is404) {
+    return (
+      <Provider>
+        <ErrorPage code={404} message={NOT_FOUND_ERROR} />
+      </Provider>
+    )
   }
+
+  if (isLoading) return undefined
+
   return <Component {...props} />
 }
 
