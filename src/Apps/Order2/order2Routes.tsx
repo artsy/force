@@ -70,7 +70,12 @@ export const order2Routes: RouteProps[] = [
 
           if (!order) {
             logger.warn("No order found - checkout page")
-            return <ErrorPage code={404} />
+            return (
+              <ErrorPage
+                code={404}
+                headline="Sorry, something went wrong. Please verify your account details or check the URL."
+              />
+            )
           }
 
           if (order.buyerState !== "INCOMPLETE") {
@@ -129,7 +134,12 @@ export const order2Routes: RouteProps[] = [
 
           if (!order) {
             logger.warn("No order found - offer page")
-            return <ErrorPage code={404} />
+            return (
+              <ErrorPage
+                code={404}
+                headline="Sorry, something went wrong. Please verify your account details or check the URL."
+              />
+            )
           }
 
           if (order.mode !== "OFFER") {
@@ -157,5 +167,18 @@ export const order2Routes: RouteProps[] = [
         },
       },
     ],
+  },
+  {
+    path: "*",
+    layout: "LogoOnly",
+    Component: () => {
+      return (
+        <ErrorPage
+          code={404}
+          message="Order not found"
+          headline="Sorry, something went wrong. Please verify your account details or check the URL."
+        />
+      )
+    },
   },
 ]
