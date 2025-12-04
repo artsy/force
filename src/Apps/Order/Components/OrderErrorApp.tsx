@@ -19,6 +19,7 @@ interface OrderErrorAppProps extends BoxProps {
 export const OrderErrorApp: React.FC<
   React.PropsWithChildren<OrderErrorAppProps>
 > = ({ code = 404, message, detail, children, ...rest }) => {
+  // We assume string codes are client exceptions
   const headline =
     typeof code === "number" ? ERROR_MESSAGES[code] : "Internal Error"
 
@@ -31,6 +32,10 @@ export const OrderErrorApp: React.FC<
           <Text variant="xl" color="mono60">
             {code}
           </Text>
+
+          <Spacer y={4} />
+
+          {message && <Text>{message}</Text>}
 
           <Spacer y={2} />
 
@@ -46,10 +51,6 @@ export const OrderErrorApp: React.FC<
           </Text>
         </Column>
       </GridColumns>
-
-      <Spacer y={4} />
-
-      {message && <Text>{message}</Text>}
     </Box>
   )
 }

@@ -26,7 +26,7 @@ const renderWithErrorHandling = ({
   }
 
   if (is404) {
-    return <OrderErrorApp code={404} />
+    return <OrderErrorApp code={404} message={NOT_FOUND_ERROR} />
   }
 
   if (isLoading) {
@@ -162,7 +162,7 @@ export const orderRoutes: RouteProps[] = [
 
       // Check if order is null (not found)
       if (props.order === null) {
-        return <OrderErrorApp code={404} />
+        return <OrderErrorApp code={404} message={NOT_FOUND_ERROR} />
       }
 
       // resolving is true only if this render results from a query initiated by
@@ -399,7 +399,7 @@ export const orderRoutes: RouteProps[] = [
       {
         path: "*",
         Component: () => {
-          return <OrderErrorApp />
+          return <OrderErrorApp code={404} message={NOT_FOUND_ERROR} />
         },
       },
     ],
