@@ -20,12 +20,9 @@ import {
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useOrder2SetOrderPaymentMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderPaymentMutation"
 import { fetchAndSetConfirmationToken } from "Apps/Order2/Utils/confirmationTokenUtils"
-import { preventHardReload } from "Apps/Order2/Utils/navigationGuards"
 import type { FormikContextWithAddress } from "Components/Address/AddressFormFields"
 import { type Address, emptyAddress } from "Components/Address/utils"
-import { CreateBankDebitSetupForOrder } from "Components/BankDebitForm/Mutations/CreateBankDebitSetupForOrder"
 import { extractNodes } from "Utils/extractNodes"
-import { getENV } from "Utils/getENV"
 import createLogger from "Utils/logger"
 import type {
   Order2PaymentForm_me$data,
@@ -153,7 +150,6 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
   const setPaymentMutation = useOrder2SetOrderPaymentMutation()
   // TODO: Update from legacy commerceSetPayment mutation
   const legacySetPaymentMutation = useSetPayment()
-  const createBankDebitSetupForOrder = CreateBankDebitSetupForOrder()
 
   const {
     setConfirmationToken,
