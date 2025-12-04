@@ -10,6 +10,7 @@ import {
   Pill,
   Stack,
   Text,
+  useTheme,
 } from "@artsy/palette"
 import { ArtistAuctionResultsFilters } from "Apps/Artist/Routes/AuctionResults/Components/ArtistAuctionResultsFilters"
 import { ArtistAuctionResultsSortSelect } from "Apps/Artist/Routes/AuctionResults/Components/ArtistAuctionResultsSortSelect"
@@ -131,6 +132,8 @@ interface ArtistAuctionResultsFilterNavBarProps {
 const ArtistAuctionResultsFilterNavBar: FC<
   React.PropsWithChildren<ArtistAuctionResultsFilterNavBarProps>
 > = ({ children, mobile, desktop }) => {
+  const { theme } = useTheme()
+
   return (
     <Box
       id="Sticky__ArtistAuctionResultsFilter"
@@ -152,21 +155,31 @@ const ArtistAuctionResultsFilterNavBar: FC<
 
       <Media greaterThan="xs">
         <Sticky bottomBoundary="#Sticky__ArtistAuctionResultsFilter">
-          <FullBleed backgroundColor="mono0">
-            <AppContainer>
-              <HorizontalPadding>
-                <Flex
-                  alignItems="center"
-                  justifyContent="space-between"
-                  gap={2}
-                  py={1}
-                  bg="mono0"
-                >
-                  {desktop}
-                </Flex>
-              </HorizontalPadding>
-            </AppContainer>
-          </FullBleed>
+          {({ scrollDirection }) => {
+            const bg = {
+              light: "rgba(255, 255, 255, 0.9)",
+              dark: "rgba(0, 0, 0, 0.9)",
+            }[theme.name]
+
+            return (
+              <FullBleed
+                backgroundColor={scrollDirection === "up" ? bg : "mono0"}
+              >
+                <AppContainer>
+                  <HorizontalPadding>
+                    <Flex
+                      alignItems="center"
+                      justifyContent="space-between"
+                      gap={2}
+                      py={1}
+                    >
+                      {desktop}
+                    </Flex>
+                  </HorizontalPadding>
+                </AppContainer>
+              </FullBleed>
+            )
+          }}
         </Sticky>
       </Media>
 

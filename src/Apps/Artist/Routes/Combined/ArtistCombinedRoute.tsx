@@ -123,43 +123,56 @@ const ArtistCombinedRoute: React.FC<
       )}
 
       <Sticky retractGlobalNav>
-        <RouteTabs data-test="navigationTabs" bg="mono0" pt={2}>
-          <BaseTab
-            as={Clickable}
-            disabled={navigating.artworks}
-            onClick={async () => {
-              // No prior sections; just jump.
-              jumpTo("artistArtworksTop", { offset: 40 })
-              handleClick("artworks")
-            }}
-          >
-            Artworks
-          </BaseTab>
+        {({ scrollDirection }) => {
+          const bg = {
+            light: "rgba(255, 255, 255, 0.9)",
+            dark: "rgba(0, 0, 0, 0.9)",
+          }[theme.name]
 
-          <BaseTab
-            as={Clickable}
-            disabled={navigating.auction}
-            onClick={async () => {
-              await waitUntil("auction")
-              jumpTo("marketSignalsTop", { offset: 40 })
-              handleClick("auction results")
-            }}
-          >
-            Auction Results
-          </BaseTab>
+          return (
+            <RouteTabs
+              data-test="navigationTabs"
+              bg={scrollDirection === "up" ? bg : "mono0"}
+              pt={2}
+            >
+              <BaseTab
+                as={Clickable}
+                disabled={navigating.artworks}
+                onClick={async () => {
+                  // No prior sections; just jump.
+                  jumpTo("artistArtworksTop", { offset: 40 })
+                  handleClick("artworks")
+                }}
+              >
+                Artworks
+              </BaseTab>
 
-          <BaseTab
-            as={Clickable}
-            disabled={navigating.about}
-            onClick={async () => {
-              await waitUntil("about")
-              jumpTo("artistAboutTop", { offset: 40 })
-              handleClick("about")
-            }}
-          >
-            About
-          </BaseTab>
-        </RouteTabs>
+              <BaseTab
+                as={Clickable}
+                disabled={navigating.auction}
+                onClick={async () => {
+                  await waitUntil("auction")
+                  jumpTo("marketSignalsTop", { offset: 40 })
+                  handleClick("auction results")
+                }}
+              >
+                Auction Results
+              </BaseTab>
+
+              <BaseTab
+                as={Clickable}
+                disabled={navigating.about}
+                onClick={async () => {
+                  await waitUntil("about")
+                  jumpTo("artistAboutTop", { offset: 40 })
+                  handleClick("about")
+                }}
+              >
+                About
+              </BaseTab>
+            </RouteTabs>
+          )
+        }}
       </Sticky>
 
       <Spacer y={[2, 4]} />
