@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fbfd265c29f8980312ba3f21c17f6538>>
+ * @generated SignedSource<<aac7440011f2c5150ed706cfa1a12f28>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,8 +11,8 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkDetailsAboutTheWorkFromArtsy_artwork$data = {
-  readonly additionalInformation: string | null | undefined;
-  readonly description: string | null | undefined;
+  readonly additionalInformationHTML: string | null | undefined;
+  readonly descriptionHTML: string | null | undefined;
   readonly " $fragmentType": "ArtworkDetailsAboutTheWorkFromArtsy_artwork";
 };
 export type ArtworkDetailsAboutTheWorkFromArtsy_artwork$key = {
@@ -35,14 +35,14 @@ return {
   "name": "ArtworkDetailsAboutTheWorkFromArtsy_artwork",
   "selections": [
     {
-      "alias": null,
+      "alias": "descriptionHTML",
       "args": (v0/*: any*/),
       "kind": "ScalarField",
       "name": "description",
       "storageKey": "description(format:\"HTML\")"
     },
     {
-      "alias": null,
+      "alias": "additionalInformationHTML",
       "args": (v0/*: any*/),
       "kind": "ScalarField",
       "name": "additionalInformation",
@@ -54,6 +54,6 @@ return {
 };
 })();
 
-(node as any).hash = "d9c920f09b7daa0d6a39a333cb4d0d6e";
+(node as any).hash = "0b15f81f04784b325f503bb4a4d2f06c";
 
 export default node;

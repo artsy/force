@@ -36,7 +36,7 @@ import type { TrackingProp } from "react-tracking"
 import styled from "styled-components"
 import { ArtistInfoQueryRenderer } from "./Components/ArtistInfo"
 import { ArtworkArtistSeriesQueryRenderer } from "./Components/ArtworkArtistSeries"
-import { ArtworkDetailsQueryRenderer } from "./Components/ArtworkDetails"
+import { ArtworkDetailsFragmentContainer } from "./Components/ArtworkDetails"
 import { ArtworkImageBrowserFragmentContainer } from "./Components/ArtworkImageBrowser/ArtworkImageBrowser"
 import { ArtworkMeta } from "./Components/ArtworkMeta"
 import { ArtworkRelatedArtistsQueryRenderer } from "./Components/ArtworkRelatedArtists"
@@ -64,17 +64,18 @@ declare const window: any
 interface BelowTheFoldArtworkDetailsProps {
   artists: ArtworkApp_artwork$data["artists"]
   slug: ArtworkApp_artwork$data["slug"]
+  artwork: ArtworkApp_artwork$data
 }
 
 const BelowTheFoldArtworkDetails: React.FC<
   React.PropsWithChildren<BelowTheFoldArtworkDetailsProps>
-> = ({ artists, slug }) => {
+> = ({ artists, slug, artwork }) => {
   return (
     <>
       <Spacer y={6} />
 
       <Join separator={<Spacer y={2} />}>
-        <ArtworkDetailsQueryRenderer slug={slug} />
+        <ArtworkDetailsFragmentContainer artwork={artwork} />
 
         <PricingContextQueryRenderer slug={slug} />
 
@@ -266,6 +267,7 @@ export const ArtworkApp: React.FC<React.PropsWithChildren<Props>> = props => {
               <BelowTheFoldArtworkDetails
                 slug={artwork.slug}
                 artists={artwork.artists}
+                artwork={artwork}
               />
             </Media>
           )}
@@ -294,6 +296,7 @@ export const ArtworkApp: React.FC<React.PropsWithChildren<Props>> = props => {
             <BelowTheFoldArtworkDetails
               slug={artwork.slug}
               artists={artwork.artists}
+              artwork={artwork}
             />
           </Media>
 
@@ -393,6 +396,7 @@ const ArtworkAppFragmentContainer = createFragmentContainer(
         ...ArtworkAuctionCreateAlertHeader_artwork
         ...PrivateArtworkDetails_artwork
         ...ArtworkPageBanner_artwork
+        ...ArtworkDetails_artwork
 
         attributionClass {
           internalID
