@@ -1,19 +1,5 @@
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import {
-  BorderBox,
-  Box,
-  HTML,
-  Skeleton,
-  SkeletonBox,
-  SkeletonText,
-  StackableBorderBox,
-  Tab,
-  type TabInfo,
-  Tabs,
-} from "@artsy/palette"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import type { ArtworkDetailsQuery } from "__generated__/ArtworkDetailsQuery.graphql"
+import { BorderBox, Box, HTML, Tab, type TabInfo, Tabs } from "@artsy/palette"
 import type { ArtworkDetails_artwork$data } from "__generated__/ArtworkDetails_artwork.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -116,63 +102,3 @@ const ArtworkDetailsContainer = TabContainer
 const ExhibitionHistory = TabContainer
 const Literature = TabContainer
 const Provenance = TabContainer
-
-const PLACEHOLDER = (
-  <Skeleton>
-    <ArtworkDetailsContainer>
-      <Tabs>
-        <Tab name="About the work">
-          <StackableBorderBox>
-            <SkeletonBox width="100%" height={90} />
-          </StackableBorderBox>
-          <StackableBorderBox flexDirection="column">
-            <SkeletonText variant="xs">Medium</SkeletonText>
-            <SkeletonText variant="xs">Condition</SkeletonText>
-            <SkeletonText variant="xs">Signature</SkeletonText>
-            <SkeletonText variant="xs">
-              Certificate of authenticity
-            </SkeletonText>
-            <SkeletonText variant="xs">Frame</SkeletonText>
-          </StackableBorderBox>
-        </Tab>
-      </Tabs>
-    </ArtworkDetailsContainer>
-  </Skeleton>
-)
-
-export const ArtworkDetailsQueryRenderer: React.FC<
-  React.PropsWithChildren<{
-    slug: string
-  }>
-> = ({ slug }) => {
-  const { relayEnvironment } = useSystemContext()
-
-  return (
-    <Box data-test="ArtworkDetailsQueryRenderer">
-      <SystemQueryRenderer<ArtworkDetailsQuery>
-        environment={relayEnvironment}
-        variables={{ slug }}
-        placeholder={PLACEHOLDER}
-        query={graphql`
-          query ArtworkDetailsQuery($slug: String!) {
-            artwork(id: $slug) {
-              ...ArtworkDetails_artwork
-            }
-          }
-        `}
-        render={({ error, props }) => {
-          if (error) {
-            console.error(error)
-            return null
-          }
-          if (!props) {
-            return PLACEHOLDER
-          }
-          if (props.artwork) {
-            return <ArtworkDetailsFragmentContainer artwork={props.artwork} />
-          }
-        }}
-      />
-    </Box>
-  )
-}

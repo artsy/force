@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8a5776de7e728820420d8be88eec7df5>>
+ * @generated SignedSource<<0054fb2e7031afacbe0e755923037699>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,6 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarPrivateArtwork_artwork$data = {
-  readonly additionalInformationPlain: string | null | undefined;
   readonly isUnlisted: boolean;
   readonly partner: {
     readonly name: string | null | undefined;
@@ -82,19 +81,12 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "isUnlisted",
       "storageKey": null
-    },
-    {
-      "alias": "additionalInformationPlain",
-      "args": null,
-      "kind": "ScalarField",
-      "name": "additionalInformation",
-      "storageKey": null
     }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
 
-(node as any).hash = "4cdd13c94b0fe6a3576712e981dc139d";
+(node as any).hash = "0f1cec7825bf2821310cd5f7e480b35d";
 
 export default node;
