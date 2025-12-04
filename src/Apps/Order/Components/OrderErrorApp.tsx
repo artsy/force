@@ -20,6 +20,7 @@ export const OrderErrorApp: React.FC<
   React.PropsWithChildren<OrderErrorAppProps>
 > = ({ code = 404, message, detail, children, ...rest }) => {
   // We assume string codes are client exceptions
+  console.log("OrderErrorApp: code", code)
   const headline =
     typeof code === "number" ? ERROR_MESSAGES[code] : "Internal Error"
 
@@ -42,20 +43,15 @@ export const OrderErrorApp: React.FC<
             </RouterLink>{" "}
             with any questions.
           </Text>
-
-          {children ?? (
-            <Text variant="sm-display" color="mono60">
-              <RouterLink to="/">Go to Artsy Homepage</RouterLink>
-            </Text>
-          )}
+          <Text variant="sm-display" color="mono60">
+            <RouterLink to="/">Go to Artsy Homepage</RouterLink>
+          </Text>
         </Column>
       </GridColumns>
 
       <Spacer y={4} />
 
-      {message && (
-        <Message color={detail ? "mono100" : "mono60"}>{message}</Message>
-      )}
+      {message && <Text>{message}</Text>}
 
       {detail && <Detail {...(message ? { mt: "-1px" } : {})}>{detail}</Detail>}
     </Box>
