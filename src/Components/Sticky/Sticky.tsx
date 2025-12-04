@@ -2,13 +2,39 @@ import { Box, THEME } from "@artsy/palette"
 import { NAV_BAR_TRANSITION_DURATION } from "Apps/Components/Layouts/Components/LayoutNav"
 import { useNavBarHeight } from "Components/NavBar/useNavBarHeight"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
-import { type ReactNode, useEffect, useMemo, useRef, useState } from "react"
+import type { ScrollDirection } from "Utils/Hooks/useScrollDirection"
+import {
+  type ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react"
 import ReactSticky, { type Props as ReactStickyProps } from "react-stickynode"
 import { useSticky } from "./StickyProvider"
 
+type StickyStateContextValue = {
+  stuck: boolean
+  scrollDirection: ScrollDirection
+}
+
+const StickyStateContext = createContext<StickyStateContextValue | null>(null)
+
+export const useStickyState = (): StickyStateContextValue => {
+  const context = useContext(StickyStateContext)
+  if (!context) {
+    throw new Error("useStickyState must be used within a Sticky component")
+  }
+
+  return context
+}
+
 /**
  * Wrap a component to have it stick below the main nav.
- * Use render props `{({ stuck }) => {}` to swap styles.
+ * Use render props `{({ stuck, scrollDirection }) => {}` to swap styles,
+ * or use the `useStickyState()` hook from within children components.
  * See the stories for examples.
  *
  * FAQ:
@@ -38,7 +64,15 @@ export const Sticky = ({
   // TODO: Remove this prop!
   withoutHeaderOffset?: boolean
   retractGlobalNav?: boolean
-  children: ReactNode | (({ stuck }: { stuck: boolean }) => ReactNode)
+  children:
+    | ReactNode
+    | (({
+        stuck,
+        scrollDirection,
+      }: {
+        stuck: boolean
+        scrollDirection: ScrollDirection
+      }) => ReactNode)
 }) => {
   const {
     id: stickyId,
@@ -49,9 +83,8 @@ export const Sticky = ({
     updateSticky,
     isGlobalNavRetracted,
     setGlobalNavRetraction,
-  } = useSticky({
-    id,
-  })
+    scrollDirection,
+  } = useSticky({ id })
 
   const { desktop, mobile } = useNavBarHeight()
 
@@ -168,26 +201,30 @@ export const Sticky = ({
       }}
       innerZ={zIndex}
     >
-      <Box
-        ref={containerRef as any}
-        style={
-          retractGlobalNav
-            ? {
-                // retractGlobalNav stickies: transform up when retracted
-                transform:
-                  isGlobalNavRetracted && stuck
-                    ? `translate3d(0, -${headerOffset}px, 0)`
-                    : "translate3d(0, 0, 0)",
-                transition: `transform ${NAV_BAR_TRANSITION_DURATION}`,
-              }
-            : {
-                // Other stickies: transitions handled via DOM manipulation in useEffect
-                // Don't set transform here to avoid React overwriting the animated value
-              }
-        }
-      >
-        {typeof children === "function" ? children({ stuck }) : children}
-      </Box>
+      <StickyStateContext.Provider value={{ stuck, scrollDirection }}>
+        <Box
+          ref={containerRef as any}
+          style={
+            retractGlobalNav
+              ? {
+                  // retractGlobalNav stickies: transform up when retracted
+                  transform:
+                    isGlobalNavRetracted && stuck
+                      ? `translate3d(0, -${headerOffset}px, 0)`
+                      : "translate3d(0, 0, 0)",
+                  transition: `transform ${NAV_BAR_TRANSITION_DURATION}`,
+                }
+              : {
+                  // Other stickies: transitions handled via DOM manipulation in useEffect
+                  // Don't set transform here to avoid React overwriting the animated value
+                }
+          }
+        >
+          {typeof children === "function"
+            ? children({ stuck, scrollDirection })
+            : children}
+        </Box>
+      </StickyStateContext.Provider>
     </ReactSticky>
   )
 }

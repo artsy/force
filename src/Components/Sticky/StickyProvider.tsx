@@ -1,7 +1,10 @@
 import { Box, compound, useTheme } from "@artsy/palette"
 import { NAV_BAR_TRANSITION_DURATION } from "Apps/Components/Layouts/Components/LayoutNav"
 import { useNavBarHeight } from "Components/NavBar/useNavBarHeight"
-import { useScrollDirection } from "Utils/Hooks/useScrollDirection"
+import {
+  type ScrollDirection,
+  useScrollDirection,
+} from "Utils/Hooks/useScrollDirection"
 import {
   createContext,
   useCallback,
@@ -128,6 +131,7 @@ const StickyContext = createContext<{
     id: string
     isActive: boolean
   }): void
+  scrollDirection: ScrollDirection
 }>({
   stickies: [],
   registerSticky: () => {},
@@ -136,6 +140,7 @@ const StickyContext = createContext<{
   isGlobalNavRetracted: false,
   hasRetractGlobalNavStickies: false,
   setGlobalNavRetraction: () => {},
+  scrollDirection: "down",
 })
 
 /**
@@ -174,7 +179,7 @@ export const StickyProvider: React.FC<React.PropsWithChildren<unknown>> = ({
     [state.globalNavRetractors],
   )
 
-  const { isScrollingDown } = useScrollDirection({
+  const { isScrollingDown, direction } = useScrollDirection({
     enabled: hasActiveRetractors,
     initialDirection: "down",
   })
@@ -198,6 +203,7 @@ export const StickyProvider: React.FC<React.PropsWithChildren<unknown>> = ({
         isGlobalNavRetracted: state.isGlobalNavRetracted,
         hasRetractGlobalNavStickies: hasActiveRetractors,
         setGlobalNavRetraction,
+        scrollDirection: direction,
       }}
     >
       {children}
@@ -314,12 +320,13 @@ export const useSticky = ({ id: _id }: { id?: string } = {}) => {
     isGlobalNavRetracted,
     hasRetractGlobalNavStickies,
     setGlobalNavRetraction: __setGlobalNavRetraction__,
+    scrollDirection,
   } = useContext(StickyContext)
 
   const id = useRef(_id ?? generateId())
 
   const registerSticky = useCallback(
-    height => {
+    (height: number | undefined) => {
       if (height === undefined) return
       __registerSticky__({ id: id.current, height, status: "ORIGINAL" })
     },
@@ -359,5 +366,6 @@ export const useSticky = ({ id: _id }: { id?: string } = {}) => {
     isGlobalNavRetracted,
     hasRetractGlobalNavStickies,
     setGlobalNavRetraction,
+    scrollDirection,
   }
 }
