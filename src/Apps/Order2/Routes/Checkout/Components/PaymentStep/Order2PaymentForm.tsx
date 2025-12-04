@@ -20,12 +20,9 @@ import {
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useOrder2SetOrderPaymentMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderPaymentMutation"
 import { fetchAndSetConfirmationToken } from "Apps/Order2/Utils/confirmationTokenUtils"
-import { preventHardReload } from "Apps/Order2/Utils/navigationGuards"
 import type { FormikContextWithAddress } from "Components/Address/AddressFormFields"
 import { type Address, emptyAddress } from "Components/Address/utils"
-import { CreateBankDebitSetupForOrder } from "Components/BankDebitForm/Mutations/CreateBankDebitSetupForOrder"
 import { extractNodes } from "Utils/extractNodes"
-import { getENV } from "Utils/getENV"
 import createLogger from "Utils/logger"
 import type {
   Order2PaymentForm_me$data,
@@ -153,7 +150,6 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
   const setPaymentMutation = useOrder2SetOrderPaymentMutation()
   // TODO: Update from legacy commerceSetPayment mutation
   const legacySetPaymentMutation = useSetPayment()
-  const createBankDebitSetupForOrder = CreateBankDebitSetupForOrder()
 
   const {
     setConfirmationToken,
@@ -297,7 +293,13 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       payment_method_types: [paymentType],
       // @ts-ignore Stripe type issue
       paymentMethodOptions: {
-        us_bank_account: { verification_method: "instant" },
+        us_bank_account: {
+          verification_method: "instant",
+          financial_connections: {
+            prefetch: ["balances"],
+            permissions: ["payment_method", "balances", "ownership"],
+          },
+        },
       },
     })
 
@@ -383,63 +385,6 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
     )
   }
 
-  const handleBankDebitSetup = async (
-    paymentMethod: "US_BANK_ACCOUNT" | "SEPA_DEBIT",
-    confirmationToken: { id: string },
-  ) => {
-    const updateOrderPaymentMethodResult =
-      await setPaymentMutation.submitMutation({
-        variables: {
-          input: {
-            id: order.internalID,
-            paymentMethod,
-            stripeConfirmationToken: confirmationToken.id,
-          },
-        },
-      })
-
-    validateAndExtractOrderResponse(
-      updateOrderPaymentMethodResult.updateOrder?.orderOrError,
-    )
-
-    // Creating a SetupIntent
-    const bankDebitSetupResult =
-      await createBankDebitSetupForOrder.submitMutation({
-        variables: { input: { id: order.internalID } },
-      })
-
-    if (
-      bankDebitSetupResult.commerceCreateBankDebitSetupForOrder?.actionOrError
-        .__typename === "CommerceOrderRequiresAction"
-    ) {
-      const return_url = `${getENV("APP_URL")}/orders2/${
-        order.internalID
-      }/checkout?save_bank_account=${savePaymentMethod}&confirmation_token=${confirmationToken.id}`
-      window.removeEventListener("beforeunload", preventHardReload)
-
-      const clientSecret =
-        bankDebitSetupResult.commerceCreateBankDebitSetupForOrder?.actionOrError
-          ?.actionData?.clientSecret
-
-      if (!clientSecret) {
-        handleError({ message: defaultErrorMessage })
-        return
-      }
-
-      const { error } = await stripe.confirmSetup({
-        elements,
-        clientSecret,
-        confirmParams: {
-          return_url,
-        },
-      })
-
-      if (error) {
-        handleError({ message: defaultErrorMessage })
-      }
-    }
-  }
-
   const handleError = (error: { message?: string | JSX.Element }) => {
     setErrorMessage(error.message || defaultErrorMessage)
     setIsSubmittingToStripe(false)
@@ -519,41 +464,33 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         return
       }
 
-      if (selectedPaymentMethod === "stripe-card") {
-        try {
-          const updateOrderPaymentMethodResult =
-            await setPaymentMutation.submitMutation({
-              variables: {
-                input: {
-                  id: order.internalID,
-                  paymentMethod: "CREDIT_CARD",
-                  stripeConfirmationToken: confirmationToken.id,
-                },
-              },
-            })
+      const paymentMethod = {
+        "stripe-card": "CREDIT_CARD",
+        "stripe-ach": "US_BANK_ACCOUNT",
+        "stripe-sepa": "SEPA_DEBIT",
+      }[selectedPaymentMethod]
 
-          validateAndExtractOrderResponse(
-            updateOrderPaymentMethodResult.updateOrder?.orderOrError,
-          )
-        } catch (error) {
-          logger.error("Error while updating order payment method", error)
-          handleError({ message: defaultErrorMessage })
-        } finally {
-          setPaymentComplete()
-          setIsSubmittingToStripe(false)
-        }
-      } else if (selectedPaymentMethod === "stripe-ach") {
-        try {
-          await handleBankDebitSetup("US_BANK_ACCOUNT", confirmationToken)
-        } catch (error) {
-          handleError({ message: defaultErrorMessage })
-        }
-      } else if (selectedPaymentMethod === "stripe-sepa") {
-        try {
-          await handleBankDebitSetup("SEPA_DEBIT", confirmationToken)
-        } catch (error) {
-          handleError({ message: defaultErrorMessage })
-        }
+      try {
+        const updateOrderPaymentMethodResult =
+          await setPaymentMutation.submitMutation({
+            variables: {
+              input: {
+                id: order.internalID,
+                paymentMethod: paymentMethod,
+                stripeConfirmationToken: confirmationToken.id,
+              },
+            },
+          })
+
+        validateAndExtractOrderResponse(
+          updateOrderPaymentMethodResult.updateOrder?.orderOrError,
+        )
+      } catch (error) {
+        logger.error("Error while updating order payment method", error)
+        handleError({ message: defaultErrorMessage })
+      } finally {
+        setPaymentComplete()
+        setIsSubmittingToStripe(false)
       }
     }
 
