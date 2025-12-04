@@ -6,8 +6,6 @@ import type { SystemContextProps } from "System/Contexts/SystemContext"
 import type { RouteProps } from "System/Router/Route"
 import { HttpError, Redirect, RedirectException } from "found"
 import { graphql } from "react-relay"
-import { ErrorPage } from "Components/ErrorPage"
-import { Text } from "@artsy/palette"
 
 const NOT_FOUND_ERROR = "Please check the URL or verify your account details."
 
@@ -47,7 +45,7 @@ const renderWithErrorHandling = ({
     console.log(
       "renderWithErrorHandling: rendering OrderErrorApp for 404 error",
     )
-    return <OrderErrorApp code={"404"} />
+    return <OrderErrorApp code={404} />
   }
 
   if (isLoading) {
@@ -194,7 +192,7 @@ export const orderRoutes: RouteProps[] = [
       if (props.order === null) {
         console.log("Parent route: order is null, rendering ErrorPage")
 
-        return <OrderErrorApp code={"404"} />
+        return <OrderErrorApp code={404} />
       }
 
       // resolving is true only if this render results from a query initiated by
