@@ -297,7 +297,13 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       payment_method_types: [paymentType],
       // @ts-ignore Stripe type issue
       paymentMethodOptions: {
-        us_bank_account: { verification_method: "instant" },
+        us_bank_account: {
+          verification_method: "instant",
+          financial_connections: {
+            prefetch: ["balances"],
+            permissions: ["payment_method", "balances", "ownership"],
+          },
+        },
       },
     })
 
