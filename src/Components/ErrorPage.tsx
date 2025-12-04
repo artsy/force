@@ -55,7 +55,7 @@ export const ErrorPage: React.FC<React.PropsWithChildren<ErrorPageProps>> = ({
         </Column>
       </GridColumns>
 
-      {((typeof code === "number" && code >= 400) ||
+      {((typeof code === "number" && code >= 500) ||
         typeof code === "string") &&
         (detail || message) && (
           <>
