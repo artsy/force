@@ -9,7 +9,6 @@ import {
 import { ERROR_MESSAGES as BASE_ERROR_MESSAGES } from "Components/ErrorPage"
 import { RouterLink } from "System/Components/RouterLink"
 import type * as React from "react"
-import styled from "styled-components"
 
 interface OrderErrorAppProps extends BoxProps {
   code?: number
