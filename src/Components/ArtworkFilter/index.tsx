@@ -21,6 +21,7 @@ import {
   Pill,
   Spacer,
   Text,
+  useTheme,
 } from "@artsy/palette"
 import { useFlag } from "@unleash/proxy-client-react"
 import { AppContainer } from "Apps/Components/AppContainer"
@@ -148,6 +149,8 @@ export const BaseArtworkFilter: React.FC<
   const [isImmersed, setIsImmersed] = useState(false)
   const enableImmersiveView = useFlag("onyx_enable-immersive-view")
   const { dismiss, isDismissed } = useDismissibleContext()
+
+  const { theme } = useTheme()
 
   const trackClickedImmersiveView = () => {
     const params: ClickedImmersiveView = {
@@ -386,9 +389,16 @@ export const BaseArtworkFilter: React.FC<
         <Spacer y={-1} />
 
         <Sticky bottomBoundary="#Sticky__ArtworkFilter">
-          {({ stuck }) => {
+          {({ stuck, scrollDirection }) => {
+            const bg = {
+              light: "rgba(255, 255, 255, 0.9)",
+              dark: "rgba(0, 0, 0, 0.9)",
+            }[theme.name]
+
             return (
-              <FullBleed backgroundColor="mono0">
+              <FullBleed
+                backgroundColor={scrollDirection === "up" ? bg : "mono0"}
+              >
                 <AppContainer>
                   <HorizontalPadding>
                     <Flex
@@ -396,7 +406,6 @@ export const BaseArtworkFilter: React.FC<
                       justifyContent="space-between"
                       gap={2}
                       py={1}
-                      bg="mono0"
                     >
                       <HorizontalOverflow minWidth={0}>
                         <Flex gap={1}>
