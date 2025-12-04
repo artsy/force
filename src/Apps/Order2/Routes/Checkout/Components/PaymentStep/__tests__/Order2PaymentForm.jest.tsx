@@ -120,10 +120,6 @@ const mockSetPaymentMutation = {
   submitMutation: jest.fn(),
 }
 
-const mockCreateBankDebitSetupForOrder = {
-  submitMutation: jest.fn(),
-}
-
 jest.mock(
   "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderPaymentMutation",
   () => ({
@@ -138,13 +134,6 @@ const mockLegacySetPaymentMutation = {
 jest.mock("Apps/Order/Mutations/useSetPayment", () => ({
   useSetPayment: () => mockLegacySetPaymentMutation,
 }))
-
-jest.mock(
-  "Components/BankDebitForm/Mutations/CreateBankDebitSetupForOrder",
-  () => ({
-    CreateBankDebitSetupForOrder: () => mockCreateBankDebitSetupForOrder,
-  }),
-)
 
 // Mock response factories
 const createConfirmationTokenResponse = paymentMethodPreview => ({
@@ -332,14 +321,20 @@ describe("Order2PaymentForm", () => {
       // Select ACH
       await userEvent.click(screen.getByTestId("mock-ach"))
 
-      // Should update elements to automatic capture for ACH
+      // Should update elements to automatic capture for ACH with financial connections
       expect(mockElements.update).toHaveBeenCalledWith({
         captureMethod: "automatic",
         setupFutureUsage: null,
         mode: "setup",
         payment_method_types: ["us_bank_account"],
         paymentMethodOptions: {
-          us_bank_account: { verification_method: "instant" },
+          us_bank_account: {
+            verification_method: "instant",
+            financial_connections: {
+              prefetch: ["balances"],
+              permissions: ["payment_method", "balances", "ownership"],
+            },
+          },
         },
       })
     })
@@ -369,7 +364,13 @@ describe("Order2PaymentForm", () => {
         mode: "setup",
         payment_method_types: ["us_bank_account"],
         paymentMethodOptions: {
-          us_bank_account: { verification_method: "instant" },
+          us_bank_account: {
+            verification_method: "instant",
+            financial_connections: {
+              prefetch: ["balances"],
+              permissions: ["payment_method", "balances", "ownership"],
+            },
+          },
         },
       })
     })
@@ -387,7 +388,13 @@ describe("Order2PaymentForm", () => {
         mode: "setup",
         payment_method_types: ["us_bank_account"],
         paymentMethodOptions: {
-          us_bank_account: { verification_method: "instant" },
+          us_bank_account: {
+            verification_method: "instant",
+            financial_connections: {
+              prefetch: ["balances"],
+              permissions: ["payment_method", "balances", "ownership"],
+            },
+          },
         },
       })
 
@@ -676,25 +683,23 @@ describe("Order2PaymentForm", () => {
 
   describe("order submission flow", () => {
     /**
-     * Payment method submission flows differ based on the payment type:
+     * Payment method submission flows:
      *
-     * Credit Card:
+     * Credit Card / ACH / SEPA (Stripe Payment Element):
      * 1. elements.submit() -> createConfirmationToken()
      * 2. Fetch confirmation token details from Exchange
-     * 3. updateOrderMutation with CREDIT_CARD payment method
-     * 4. setConfirmationToken with saveCreditCard option
+     * 3. updateOrderMutation with corresponding payment method (CREDIT_CARD, US_BANK_ACCOUNT, or SEPA_DEBIT)
+     * 4. setConfirmationToken with payment method preview
+     * 5. setPaymentComplete
      *
-     * ACH (US Bank Account):
-     * 1. elements.submit() -> createConfirmationToken()
-     * 2. Fetch confirmation token details from Exchange
-     * 3. createBankDebitSetupForOrder mutation
-     * 4. updateOrderMutation with US_BANK_ACCOUNT payment method
-     * 5. setConfirmationToken without saveCreditCard option
-     *
-     * Saved Credit Card:
+     * Saved Credit Card / Bank Account:
      * 1. No Stripe interaction needed
-     * 2. setPaymentMutation with selected card ID
+     * 2. setPaymentMutation with selected payment method ID
      * 3. setSavePaymentMethod in context
+     *
+     * Wire Transfer:
+     * 1. No Stripe interaction needed
+     * 2. setPaymentMutation with WIRE_TRANSFER payment method
      */
 
     it("successfully submits a credit card order", async () => {
@@ -775,7 +780,6 @@ describe("Order2PaymentForm", () => {
       mockSetPaymentMutation.submitMutation.mockResolvedValueOnce(
         MOCK_ORDER_SUCCESS("US_BANK_ACCOUNT", tokenId),
       )
-      mockCreateBankDebitSetupForOrder.submitMutation.mockResolvedValueOnce({})
 
       await userEvent.click(screen.getByText("Continue to Review"))
 
@@ -791,55 +795,6 @@ describe("Order2PaymentForm", () => {
         },
       })
 
-      await waitFor(() => {
-        expect(
-          mockCreateBankDebitSetupForOrder.submitMutation,
-        ).toHaveBeenCalledWith({
-          variables: { input: { id: "order-id" } },
-        })
-      })
-
-      expect(mockCheckoutContext.setConfirmationToken).toHaveBeenCalledWith({
-        confirmationToken: {
-          id: tokenId,
-          paymentMethodPreview: MOCK_ACH_PREVIEW,
-        },
-      })
-    })
-
-    it("handles createBankDebitSetupForOrder error", async () => {
-      const tokenId = "ach-confirmation-token-id"
-
-      renderPaymentForm()
-      await waitForPaymentElement()
-
-      await userEvent.click(screen.getByTestId("mock-ach"))
-
-      setupStripeSubmission(tokenId)
-      mockFetchQuery.mockImplementationOnce(() =>
-        createConfirmationTokenResponse(MOCK_ACH_PREVIEW),
-      )
-      mockSetPaymentMutation.submitMutation.mockResolvedValueOnce(
-        MOCK_ORDER_SUCCESS("US_BANK_ACCOUNT", tokenId),
-      )
-      mockCreateBankDebitSetupForOrder.submitMutation.mockRejectedValueOnce(
-        new Error("Bank setup failed"),
-      )
-
-      await userEvent.click(screen.getByText("Continue to Review"))
-
-      await waitFor(() => {
-        expect(mockFetchQuery).toHaveBeenCalled()
-      })
-
-      await waitFor(() => {
-        expect(mockSetPaymentMutation.submitMutation).toHaveBeenCalled()
-        expect(
-          mockCreateBankDebitSetupForOrder.submitMutation,
-        ).toHaveBeenCalled()
-      })
-
-      // setConfirmationToken should still be called since it happens before mutations
       expect(mockCheckoutContext.setConfirmationToken).toHaveBeenCalledWith({
         confirmationToken: {
           id: tokenId,
@@ -847,8 +802,7 @@ describe("Order2PaymentForm", () => {
         },
       })
 
-      // Button should be available again (not in loading state)
-      expect(screen.getByText("Continue to Review")).toBeInTheDocument()
+      expect(mockCheckoutContext.setPaymentComplete).toHaveBeenCalled()
     })
 
     it("handles updateOrderMutation error", async () => {
@@ -866,7 +820,6 @@ describe("Order2PaymentForm", () => {
       mockSetPaymentMutation.submitMutation.mockRejectedValueOnce(
         new Error("Order update failed"),
       )
-      mockCreateBankDebitSetupForOrder.submitMutation.mockResolvedValueOnce({})
 
       await userEvent.click(screen.getByText("Continue to Review"))
 
