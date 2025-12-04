@@ -15,45 +15,24 @@ const renderWithErrorHandling = ({
   error,
   resolving,
 }: any) => {
-  console.log("renderWithErrorHandling:", {
-    Component: !!Component,
-    props,
-    error,
-    resolving,
-    order: props?.order,
-  })
-
   if (error && error.status !== 404) throw error
 
   const isServer = typeof window === "undefined"
   const is404 = error?.status === 404
   const isLoading = !props
 
-  console.log("renderWithErrorHandling state:", {
-    isServer,
-    is404,
-    isLoading,
-    orderIsNull: props?.order === null,
-  })
-
   if (isServer && (is404 || (isLoading && !resolving))) {
-    console.log("renderWithErrorHandling: throwing HttpError 404")
     throw new HttpError(404, NOT_FOUND_ERROR)
   }
 
   if (is404) {
-    console.log(
-      "renderWithErrorHandling: rendering OrderErrorApp for 404 error",
-    )
     return <OrderErrorApp code={404} />
   }
 
   if (isLoading) {
-    console.log("renderWithErrorHandling: loading, returning undefined")
     return undefined
   }
 
-  console.log("renderWithErrorHandling: rendering Component")
   return <Component {...props} />
 }
 
@@ -167,13 +146,6 @@ export const orderRoutes: RouteProps[] = [
       }
     `,
     render: ({ Component, props, resolving, error }: any) => {
-      console.log("Parent route render:", {
-        props,
-        error,
-        resolving,
-        order: props?.order,
-      })
-
       if (error) {
         // If it's a 404 with undefined data, replace with our standard message
         if (error.status === 404 && !error.data) {
@@ -190,8 +162,6 @@ export const orderRoutes: RouteProps[] = [
 
       // Check if order is null (not found)
       if (props.order === null) {
-        console.log("Parent route: order is null, rendering ErrorPage")
-
         return <OrderErrorApp code={404} />
       }
 

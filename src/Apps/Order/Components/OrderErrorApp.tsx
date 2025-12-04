@@ -19,8 +19,6 @@ interface OrderErrorAppProps extends BoxProps {
 export const OrderErrorApp: React.FC<
   React.PropsWithChildren<OrderErrorAppProps>
 > = ({ code = 404, message, detail, children, ...rest }) => {
-  // We assume string codes are client exceptions
-  console.log("OrderErrorApp: code", code)
   const headline =
     typeof code === "number" ? ERROR_MESSAGES[code] : "Internal Error"
 
