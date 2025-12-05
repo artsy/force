@@ -3,33 +3,30 @@ import {
   paramsToCamelCase,
   paramsToSnakeCase,
 } from "Components/ArtworkFilter/Utils/paramsCasing"
-import { stringify } from "qs"
 
 /**
- * Redirects legacy top-level auction results params on the dedicated
- * /artist/:id/auction-results subroute into a namespaced object:
+ * Rewrites legacy top-level auction results params into a namespaced object:
  *   ?sort=DATE_DESC&page=2  ->  ?auction[sort]=DATE_DESC&auction[page]=2
  *
- * This isolates auction-results params from artworks filter params when both
- * features share the same page.
+ * Returns the rewritten query params, or the original query if no rewrite is needed.
  */
-export function redirectAuctionResultsParamsToNamespace({ req, res }) {
-  // If already namespaced, nothing to do.
-  if (req.query && req.query.auction) {
-    return
+export function rewriteAuctionResultsParamsToNamespace(query: any) {
+  // If already namespaced, return original query.
+  if (query && query.auction) {
+    return query
   }
 
-  const camel = paramsToCamelCase(req.query ?? {})
+  const camel = paramsToCamelCase(query ?? {})
   const allowed = allowedAuctionResultFilters(camel)
 
-  // If there are no auction-results params present, nothing to do.
+  // If there are no auction-results params present, return original query.
   if (!allowed || Object.keys(allowed).length === 0) {
-    return
+    return query ?? {}
   }
 
   // Remove auction-results params from top-level and nest them under `auction`.
   const auctionParamsSnake = paramsToSnakeCase(allowed)
-  const filteredQuery = { ...(req.query ?? {}) }
+  const filteredQuery = { ...(query ?? {}) }
   Object.keys(auctionParamsSnake).forEach(key => {
     delete filteredQuery[key]
   })
@@ -39,7 +36,5 @@ export function redirectAuctionResultsParamsToNamespace({ req, res }) {
     auction: auctionParamsSnake,
   }
 
-  const queryString = stringify(nextQuery)
-  const nextPath = [req.path, queryString].join("?")
-  res.redirect(301, nextPath)
+  return nextQuery
 }
