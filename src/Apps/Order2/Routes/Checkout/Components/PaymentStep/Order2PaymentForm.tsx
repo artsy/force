@@ -104,6 +104,11 @@ export const Order2PaymentForm: React.FC<Order2PaymentFormProps> = ({
     paymentMethodOptions: {
       us_bank_account: {
         verification_method: "instant",
+        financial_connections: {
+          permissions: ["payment_method", "balances", "ownership"],
+          // @ts-ignore Stripe type issue
+          prefetch: ["balances"],
+        },
       },
     },
     appearance: {
@@ -419,16 +424,6 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
           setupFutureUsage: null,
           mode: "setup",
           payment_method_types: paymentMethodTypes,
-          // @ts-ignore Stripe type issue
-          paymentMethodOptions: {
-            us_bank_account: {
-              verification_method: "instant",
-              financial_connections: {
-                prefetch: ["balances"],
-                permissions: ["payment_method", "balances", "ownership"],
-              },
-            },
-          },
         })
       }
 
