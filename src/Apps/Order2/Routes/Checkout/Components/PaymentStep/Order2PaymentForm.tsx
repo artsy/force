@@ -101,6 +101,11 @@ export const Order2PaymentForm: React.FC<Order2PaymentFormProps> = ({
 
   const options: StripeElementsOptions = {
     mode: "payment",
+    paymentMethodOptions: {
+      us_bank_account: {
+        verification_method: "instant",
+      },
+    },
     appearance: {
       variables: {
         accordionItemSpacing: "10px",
@@ -269,12 +274,6 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
   }
 
   const handleCardPaymentSelect = () => {
-    elements.update({
-      captureMethod: "manual",
-      setupFutureUsage: "off_session",
-      mode: "payment",
-    })
-
     if (selectedPaymentMethod !== "stripe-card") {
       trackPaymentMethodSelection("CREDIT_CARD")
     }
@@ -286,23 +285,6 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
     paymentType: "sepa_debit" | "us_bank_account",
     methodType: "stripe-sepa" | "stripe-ach",
   ) => {
-    elements.update({
-      captureMethod: "automatic",
-      setupFutureUsage: null,
-      mode: "setup",
-      payment_method_types: [paymentType],
-      // @ts-ignore Stripe type issue
-      paymentMethodOptions: {
-        us_bank_account: {
-          verification_method: "instant",
-          financial_connections: {
-            prefetch: ["balances"],
-            permissions: ["payment_method", "balances", "ownership"],
-          },
-        },
-      },
-    })
-
     if (selectedPaymentMethod !== methodType) {
       const trackingMethod =
         paymentType === "sepa_debit" ? "SEPA_DEBIT" : "US_BANK_ACCOUNT"
@@ -412,6 +394,43 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
 
     if (isSelectedPaymentMethodStripe) {
       setIsSubmittingToStripe(true)
+
+      if (selectedPaymentMethod === "stripe-card") {
+        elements.update({
+          captureMethod: "manual",
+          setupFutureUsage: "off_session",
+          mode: "payment",
+          // @ts-ignore Stripe type issue
+          paymentMethodOptions: null,
+        })
+      }
+
+      if (
+        selectedPaymentMethod === "stripe-ach" ||
+        selectedPaymentMethod === "stripe-sepa"
+      ) {
+        const paymentMethodTypes = {
+          "stripe-ach": ["us_bank_account"],
+          "stripe-sepa": ["sepa_debit"],
+        }[selectedPaymentMethod]
+
+        elements.update({
+          captureMethod: "automatic",
+          setupFutureUsage: null,
+          mode: "setup",
+          payment_method_types: paymentMethodTypes,
+          // @ts-ignore Stripe type issue
+          paymentMethodOptions: {
+            us_bank_account: {
+              verification_method: "instant",
+              financial_connections: {
+                prefetch: ["balances"],
+                permissions: ["payment_method", "balances", "ownership"],
+              },
+            },
+          },
+        })
+      }
 
       const { error: submitError } = await elements.submit()
 
