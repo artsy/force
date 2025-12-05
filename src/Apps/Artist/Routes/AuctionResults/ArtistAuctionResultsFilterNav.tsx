@@ -16,6 +16,7 @@ import { ArtistAuctionResultsSortSelect } from "Apps/Artist/Routes/AuctionResult
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { Sticky } from "Components/Sticky"
+import { useStickyBackdrop } from "Components/Sticky/useStickyBackdrop"
 import { Media } from "Utils/Responsive"
 import type { FC } from "react"
 
@@ -131,6 +132,8 @@ interface ArtistAuctionResultsFilterNavBarProps {
 const ArtistAuctionResultsFilterNavBar: FC<
   React.PropsWithChildren<ArtistAuctionResultsFilterNavBarProps>
 > = ({ children, mobile, desktop }) => {
+  const backdrop = useStickyBackdrop()
+
   return (
     <Box
       id="Sticky__ArtistAuctionResultsFilter"
@@ -152,21 +155,24 @@ const ArtistAuctionResultsFilterNavBar: FC<
 
       <Media greaterThan="xs">
         <Sticky bottomBoundary="#Sticky__ArtistAuctionResultsFilter">
-          <FullBleed backgroundColor="mono0">
-            <AppContainer>
-              <HorizontalPadding>
-                <Flex
-                  alignItems="center"
-                  justifyContent="space-between"
-                  gap={2}
-                  py={1}
-                  bg="mono0"
-                >
-                  {desktop}
-                </Flex>
-              </HorizontalPadding>
-            </AppContainer>
-          </FullBleed>
+          {({ scrollDirection }) => {
+            return (
+              <FullBleed style={backdrop[scrollDirection]}>
+                <AppContainer>
+                  <HorizontalPadding>
+                    <Flex
+                      alignItems="center"
+                      justifyContent="space-between"
+                      gap={2}
+                      py={1}
+                    >
+                      {desktop}
+                    </Flex>
+                  </HorizontalPadding>
+                </AppContainer>
+              </FullBleed>
+            )
+          }}
         </Sticky>
       </Media>
 

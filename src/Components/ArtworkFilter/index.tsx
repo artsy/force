@@ -43,6 +43,7 @@ import {
   ProgressiveOnboardingImmersiveView,
 } from "Components/ProgressiveOnboarding/ProgressiveOnboardingImmersiveView"
 import { Sticky } from "Components/Sticky"
+import { useStickyBackdrop } from "Components/Sticky/useStickyBackdrop"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { Jump, useJump } from "Utils/Hooks/useJump"
@@ -148,6 +149,8 @@ export const BaseArtworkFilter: React.FC<
   const [isImmersed, setIsImmersed] = useState(false)
   const enableImmersiveView = useFlag("onyx_enable-immersive-view")
   const { dismiss, isDismissed } = useDismissibleContext()
+
+  const backdrop = useStickyBackdrop()
 
   const trackClickedImmersiveView = () => {
     const params: ClickedImmersiveView = {
@@ -255,7 +258,6 @@ export const BaseArtworkFilter: React.FC<
     )
   }, [filterContext.filters])
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: "trackImmersiveViewOptionViewed changes on every re-render and should not be used as a hook dependency"
   useEffect(() => {
     if (!enableImmersiveView) return
 
@@ -386,9 +388,9 @@ export const BaseArtworkFilter: React.FC<
         <Spacer y={-1} />
 
         <Sticky bottomBoundary="#Sticky__ArtworkFilter">
-          {({ stuck }) => {
+          {({ stuck, scrollDirection }) => {
             return (
-              <FullBleed backgroundColor="mono0">
+              <FullBleed style={backdrop[scrollDirection]}>
                 <AppContainer>
                   <HorizontalPadding>
                     <Flex
@@ -396,7 +398,6 @@ export const BaseArtworkFilter: React.FC<
                       justifyContent="space-between"
                       gap={2}
                       py={1}
-                      bg="mono0"
                     >
                       <HorizontalOverflow minWidth={0}>
                         <Flex gap={1}>
