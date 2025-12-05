@@ -120,7 +120,7 @@ export const artistRoutes: RouteProps[] = [
           const queryString = stringify(
             rewriteAuctionResultsParamsToNamespace(match.location.query),
           )
-          const hash = "#artistAuctionResultsTop"
+          const hash = "#JUMP--marketSignalsTop"
           const redirectUrl = compact([basePath, queryString]).join("?") + hash
           throw new RedirectException(redirectUrl, 301)
         },
@@ -136,6 +136,10 @@ export const artistRoutes: RouteProps[] = [
             }
           }
         `,
+        render: ({ match }) => {
+          const redirectUrl = `/artist/${match.params.artistID}#JUMP--artistAboutTop`
+          throw new RedirectException(redirectUrl, 301)
+        },
       },
     ],
   },
