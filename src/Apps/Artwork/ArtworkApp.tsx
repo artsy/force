@@ -74,10 +74,7 @@ const BelowTheFoldArtworkDetails: React.FC<
     <>
       <Spacer y={6} />
 
-      <Join
-        separator={<Spacer y={2} />}
-        data-test="ArtworkDetailsQueryRenderer"
-      >
+      <Join separator={<Spacer y={2} />} data-test="belowTheFoldArtworkDetails">
         <ArtworkDetailsFragmentContainer artwork={artwork} />
 
         <PricingContextQueryRenderer slug={slug} />
