@@ -2,17 +2,18 @@ import {
   Box,
   Carousel,
   CarouselCell,
-  CarouselCellProps,
+  type CarouselCellProps,
   CarouselRail,
-  CarouselRailProps,
+  type CarouselRailProps,
   Flex,
   Image,
 } from "@artsy/palette"
 import { useFlag } from "@unleash/proxy-client-react"
 import {
-  FC,
+  type FC,
   forwardRef,
-  ForwardRefExoticComponent,
+  type ForwardRefExoticComponent,
+  useCallback,
   useEffect,
   useRef,
 } from "react"
@@ -54,9 +55,9 @@ const ImageSlider: FC = () => {
 
   const { index, setCursor } = useCursor({ max: DEFAULT_IMAGES.length })
 
-  const stopAutoPlay = () => {
+  const stopAutoPlay = useCallback(() => {
     intervalRef.current && clearInterval(intervalRef.current)
-  }
+  }, [])
 
   useEffect(() => {
     intervalRef.current = setInterval(
@@ -65,7 +66,7 @@ const ImageSlider: FC = () => {
     )
 
     return stopAutoPlay
-  }, [setCursor])
+  }, [setCursor, stopAutoPlay])
 
   const handleClick = (index: number) => {
     setCursor(index)
@@ -174,7 +175,7 @@ const COLUMN_WIDTH = MODAL_WIDTH / 2 - 20
 const IMAGE = {
   width: MODAL_WIDTH,
   height: 2030,
-  src: "https://d/images/2x_Evergreen-Artist-Page-Sign-Up-Modal.jpg",
+  src: "https://files.artsy.net/images/2x_Evergreen-Artist-Page-Sign-Up-Modal.jpg",
 }
 const DEFAULT_IMAGES = [
   {
