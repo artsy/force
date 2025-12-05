@@ -135,6 +135,39 @@ export const ContactApp: React.FC<React.PropsWithChildren<unknown>> = () => {
             .
           </Text>
         </Column>
+
+        <Column span={4}>
+          <Text as="h3" variant="xs">
+            Report Suspicious or Fraudulent Activity
+          </Text>
+
+          <Text variant="sm">
+            If you believe an artwork, listing, seller, or transaction on Artsy
+            may involve suspicious, fraudulent, or prohibited activity, you can
+            report it using the options below.
+          </Text>
+
+          <Text variant="sm" mt={2}>
+            Phone (voicemail reporting)
+            <br />
+            <RouterLink inline to="tel:+18007184149">
+              +1 (800) 718-4149
+            </RouterLink>
+            <br />
+            Leave a voicemail with any details you can provide, including your
+            name and phone number or email, so our team can follow up if needed.
+            Voicemails are securely transcribed and emailed to our Trust &
+            Safety team for review.
+          </Text>
+
+          <Text variant="sm" mt={2}>
+            Email
+            <br />
+            <RouterLink inline to="mailto:trust@artsy.net">
+              trust@artsy.net
+            </RouterLink>
+          </Text>
+        </Column>
       </GridColumns>
 
       <Spacer y={12} />
@@ -183,7 +216,7 @@ export const ContactApp: React.FC<React.PropsWithChildren<unknown>> = () => {
 
       <GridColumns gridRowGap={4}>
         <Column span={4}>
-          <Text as="h2" variant="lg-display"></Text>
+          <Text as="h2" variant="lg-display" />
         </Column>
 
         <Column span={2}>
