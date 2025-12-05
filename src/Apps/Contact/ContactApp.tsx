@@ -148,24 +148,17 @@ export const ContactApp: React.FC<React.PropsWithChildren<unknown>> = () => {
           </Text>
 
           <Text variant="sm" mt={2}>
-            Phone (voicemail reporting)
-            <br />
+            Voicemail:{" "}
             <RouterLink inline to="tel:+18007184149">
               +1 (800) 718-4149
             </RouterLink>
             <br />
-            Leave a voicemail with any details you can provide, including your
-            name and phone number or email, so our team can follow up if needed.
-            Voicemails are securely transcribed and emailed to our Trust &
-            Safety team for review.
-          </Text>
-
-          <Text variant="sm" mt={2}>
-            Email
-            <br />
+            Email:{" "}
             <RouterLink inline to="mailto:trust@artsy.net">
               trust@artsy.net
             </RouterLink>
+            <br />
+            (Please include details and your contact info.)
           </Text>
         </Column>
       </GridColumns>
