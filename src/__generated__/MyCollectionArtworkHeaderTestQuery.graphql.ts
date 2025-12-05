@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d0676417ee1a2f4016308fdc894f3c52>>
+ * @generated SignedSource<<175647f7bcd859bb0774483fde7b6661>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -91,7 +91,7 @@ return {
             "storageKey": null
           },
           {
-            "alias": null,
+            "alias": "isOwnedByCurrentUser",
             "args": [
               {
                 "kind": "Literal",
@@ -121,7 +121,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e2a4434d09ca6b561012b289914b50ca",
+    "cacheID": "fa696b9a2d472561e62049eb15e16e36",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -133,7 +133,7 @@ return {
         },
         "artwork.id": (v1/*: any*/),
         "artwork.internalID": (v1/*: any*/),
-        "artwork.isSavedToList": {
+        "artwork.isOwnedByCurrentUser": {
           "enumValues": null,
           "nullable": false,
           "plural": false,
@@ -144,7 +144,7 @@ return {
     },
     "name": "MyCollectionArtworkHeaderTestQuery",
     "operationKind": "query",
-    "text": "query MyCollectionArtworkHeaderTestQuery {\n  artwork(id: \"foo\") {\n    ...MyCollectionArtworkHeader_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkHeader_artwork on Artwork {\n  internalID\n  slug\n  isSavedToList(default: false, saves: false)\n}\n"
+    "text": "query MyCollectionArtworkHeaderTestQuery {\n  artwork(id: \"foo\") {\n    ...MyCollectionArtworkHeader_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkHeader_artwork on Artwork {\n  internalID\n  slug\n  isOwnedByCurrentUser: isSavedToList(default: false, saves: false)\n}\n"
   }
 };
 })();

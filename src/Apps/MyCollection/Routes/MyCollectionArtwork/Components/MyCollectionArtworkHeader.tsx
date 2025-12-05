@@ -16,14 +16,13 @@ export const MyCollectionArtworkHeader: React.FC<
     useMyCollectionTracking()
 
   const artwork = useFragment(FRAGMENT, props.artwork)
-  const isOwnedByCurrentUser = !!artwork.isSavedToList
 
   return (
     <TopContextBar
       displayBackArrow
       href="/collector-profile/my-collection"
       rightContent={
-        isOwnedByCurrentUser ? (
+        artwork.isOwnedByCurrentUser ? (
           <Button
             // @ts-ignore
             as={RouterLink}
@@ -48,6 +47,6 @@ const FRAGMENT = graphql`
   fragment MyCollectionArtworkHeader_artwork on Artwork {
     internalID
     slug
-    isSavedToList(default: false, saves: false)
+    isOwnedByCurrentUser: isSavedToList(default: false, saves: false)
   }
 `
