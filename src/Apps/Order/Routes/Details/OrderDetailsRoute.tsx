@@ -1,5 +1,5 @@
 import { OrderDetailsPage } from "Apps/Order/Routes/Details/Components/OrderDetailsPage"
-import { ErrorPage } from "Components/ErrorPage"
+import { OrderErrorApp } from "Apps/Order/Components/OrderErrorApp"
 import { Analytics } from "System/Contexts/AnalyticsContext"
 import type { OrderDetailsRoute_viewer$key } from "__generated__/OrderDetailsRoute_viewer.graphql"
 import type React from "react"
@@ -15,7 +15,7 @@ export const OrderDetailsRoute: React.FC<DetailsProps> = ({ viewer }) => {
   const order = data.me?.order
 
   if (!order) {
-    return <ErrorPage code={404} message="Order not found" />
+    return <OrderErrorApp code={404} />
   }
 
   return (

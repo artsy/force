@@ -22,18 +22,20 @@ export const MyCollectionArtworkHeader: React.FC<
       displayBackArrow
       href="/collector-profile/my-collection"
       rightContent={
-        <Button
-          // @ts-ignore
-          as={RouterLink}
-          variant="secondaryNeutral"
-          size="small"
-          to={`/collector-profile/my-collection/artworks/${artwork.internalID}/edit`}
-          onClick={() =>
-            trackEditCollectedArtwork(artwork.internalID, artwork.slug)
-          }
-        >
-          Edit Artwork Details
-        </Button>
+        artwork.isOwnedByCurrentUser ? (
+          <Button
+            // @ts-ignore
+            as={RouterLink}
+            variant="secondaryNeutral"
+            size="small"
+            to={`/collector-profile/my-collection/artworks/${artwork.internalID}/edit`}
+            onClick={() =>
+              trackEditCollectedArtwork(artwork.internalID, artwork.slug)
+            }
+          >
+            Edit Artwork Details
+          </Button>
+        ) : null
       }
     >
       Back to My Collection
@@ -45,5 +47,6 @@ const FRAGMENT = graphql`
   fragment MyCollectionArtworkHeader_artwork on Artwork {
     internalID
     slug
+    isOwnedByCurrentUser: isSavedToList(default: false, saves: false)
   }
 `
