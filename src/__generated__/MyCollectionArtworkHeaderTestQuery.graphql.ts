@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<17f311b5092a9908c00aacce6049c346>>
+ * @generated SignedSource<<d0676417ee1a2f4016308fdc894f3c52>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -92,6 +92,24 @@ return {
           },
           {
             "alias": null,
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "default",
+                "value": false
+              },
+              {
+                "kind": "Literal",
+                "name": "saves",
+                "value": false
+              }
+            ],
+            "kind": "ScalarField",
+            "name": "isSavedToList",
+            "storageKey": "isSavedToList(default:false,saves:false)"
+          },
+          {
+            "alias": null,
             "args": null,
             "kind": "ScalarField",
             "name": "id",
@@ -103,7 +121,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0ccd6343a0b09e760e3a654cf2dbf13b",
+    "cacheID": "e2a4434d09ca6b561012b289914b50ca",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -115,12 +133,18 @@ return {
         },
         "artwork.id": (v1/*: any*/),
         "artwork.internalID": (v1/*: any*/),
+        "artwork.isSavedToList": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "Boolean"
+        },
         "artwork.slug": (v1/*: any*/)
       }
     },
     "name": "MyCollectionArtworkHeaderTestQuery",
     "operationKind": "query",
-    "text": "query MyCollectionArtworkHeaderTestQuery {\n  artwork(id: \"foo\") {\n    ...MyCollectionArtworkHeader_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkHeader_artwork on Artwork {\n  internalID\n  slug\n}\n"
+    "text": "query MyCollectionArtworkHeaderTestQuery {\n  artwork(id: \"foo\") {\n    ...MyCollectionArtworkHeader_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkHeader_artwork on Artwork {\n  internalID\n  slug\n  isSavedToList(default: false, saves: false)\n}\n"
   }
 };
 })();

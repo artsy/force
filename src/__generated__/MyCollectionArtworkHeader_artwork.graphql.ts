@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<dfc273711904382a62473fe6208eb2a2>>
+ * @generated SignedSource<<2a0bf5acbe2bada490f9301a3bbf8434>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,6 +12,7 @@ import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type MyCollectionArtworkHeader_artwork$data = {
   readonly internalID: string;
+  readonly isSavedToList: boolean;
   readonly slug: string;
   readonly " $fragmentType": "MyCollectionArtworkHeader_artwork";
 };
@@ -39,12 +40,30 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "slug",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "default",
+          "value": false
+        },
+        {
+          "kind": "Literal",
+          "name": "saves",
+          "value": false
+        }
+      ],
+      "kind": "ScalarField",
+      "name": "isSavedToList",
+      "storageKey": "isSavedToList(default:false,saves:false)"
     }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
 
-(node as any).hash = "30ce4fbe3910040e64e7277641f54736";
+(node as any).hash = "14163959cddf715d6d25ac8f96dde802";
 
 export default node;

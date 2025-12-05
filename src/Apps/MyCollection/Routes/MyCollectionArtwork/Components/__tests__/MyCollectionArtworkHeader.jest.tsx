@@ -41,11 +41,74 @@ describe("MyCollectionArtworkHeader", () => {
 
     expect(screen.queryByText("Edit Artwork Details")).toBeInTheDocument()
   })
+
+  describe("ownership-based edit button visibility", () => {
+    it("shows edit button when user owns the artwork (isSavedToList: true)", () => {
+      renderWithRelay({
+        Artwork: () => ({
+          ...mockResolversWithoutSubmission,
+          isSavedToList: true,
+        }),
+      })
+
+      const editButton = screen.getByText("Edit Artwork Details")
+      expect(editButton).toBeInTheDocument()
+      expect(editButton.closest("a")).toHaveAttribute(
+        "href",
+        "/collector-profile/my-collection/artworks/artwork-id/edit",
+      )
+    })
+
+    it("hides edit button when user does not own the artwork (isSavedToList: false)", () => {
+      renderWithRelay({
+        Artwork: () => ({
+          ...mockResolversWithoutSubmission,
+          isSavedToList: false,
+        }),
+      })
+
+      expect(screen.queryByText("Edit Artwork Details")).not.toBeInTheDocument()
+    })
+
+    it("hides edit button when isSavedToList is null/undefined", () => {
+      renderWithRelay({
+        Artwork: () => ({
+          ...mockResolversWithoutSubmission,
+          isSavedToList: null,
+        }),
+      })
+
+      expect(screen.queryByText("Edit Artwork Details")).not.toBeInTheDocument()
+    })
+
+    it("shows edit button for artwork owner even with submission", () => {
+      renderWithRelay({
+        Artwork: () => ({
+          ...mockResolversWithSubmission,
+          isSavedToList: true,
+        }),
+      })
+
+      expect(screen.getByText("Edit Artwork Details")).toBeInTheDocument()
+    })
+
+    it("hides edit button for non-owner even with submission", () => {
+      renderWithRelay({
+        Artwork: () => ({
+          ...mockResolversWithSubmission,
+          isSavedToList: false,
+        }),
+      })
+
+      expect(screen.queryByText("Edit Artwork Details")).not.toBeInTheDocument()
+    })
+  })
 })
 
 const mockResolversWithSubmission = {
   internalID: "artwork-id",
   slug: "artwork-slug",
+  isSavedToList: true,
   consignmentSubmission: {
     internalID: "submission-id",
   },
@@ -53,5 +116,6 @@ const mockResolversWithSubmission = {
 const mockResolversWithoutSubmission = {
   internalID: "artwork-id",
   slug: "artwork-slug",
+  isSavedToList: true,
   consignmentSubmission: null,
 }
