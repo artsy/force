@@ -22,9 +22,9 @@ const ArtworkDetailsAboutTheWorkFromArtsy: React.FC<
     })
   }
 
-  const { description, additionalInformation } = artwork
+  const { descriptionHTML, additionalInformationHTML } = artwork
 
-  if (!description && !additionalInformation) {
+  if (!descriptionHTML && !additionalInformationHTML) {
     return null
   }
 
@@ -32,18 +32,18 @@ const ArtworkDetailsAboutTheWorkFromArtsy: React.FC<
     <StackableBorderBox>
       <HTML variant="sm">
         <Stack gap={2}>
-          {description && (
+          {descriptionHTML && (
             <ReadMore
               maxLines={3}
-              content={description}
+              content={descriptionHTML}
               onReadMoreClicked={trackReadMoreClick}
             />
           )}
 
-          {additionalInformation && (
+          {additionalInformationHTML && (
             <ReadMore
               maxLines={3}
-              content={additionalInformation}
+              content={additionalInformationHTML}
               onReadMoreClicked={trackReadMoreClick}
             />
           )}
@@ -57,8 +57,8 @@ export const ArtworkDetailsAboutTheWorkFromArtsyFragmentContainer =
   createFragmentContainer(ArtworkDetailsAboutTheWorkFromArtsy, {
     artwork: graphql`
       fragment ArtworkDetailsAboutTheWorkFromArtsy_artwork on Artwork {
-        description(format: HTML)
-        additionalInformation(format: HTML)
+        descriptionHTML: description(format: HTML)
+        additionalInformationHTML: additionalInformation(format: HTML)
       }
     `,
   })

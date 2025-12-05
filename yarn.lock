@@ -31,12 +31,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@artsy/cohesion@npm:4.328.0":
-  version: 4.328.0
-  resolution: "@artsy/cohesion@npm:4.328.0"
+"@artsy/cohesion@npm:4.330.0":
+  version: 4.330.0
+  resolution: "@artsy/cohesion@npm:4.330.0"
   dependencies:
     core-js: "npm:3"
-  checksum: 10c0/1e8a827c878029fbc486f1c9c414c0a86d9fefff6daca78b66262fd0615e008a80abf02c69c1789ffdd5eb71160b237e9c31f0bccfe2322804620074c0899205
+  checksum: 10c0/8ff2051fbc3c75e25dd5c19c28203c3f337d4abc33f16a06b6ca16cd0f18e8e78342806096a3ebb5099e68fdd8e247d6826bb1ffc2c645c62345d0c6515962b9
   languageName: node
   linkType: hard
 
@@ -131,9 +131,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@artsy/palette-charts@npm:44.4.0":
-  version: 44.4.0
-  resolution: "@artsy/palette-charts@npm:44.4.0"
+"@artsy/palette-charts@npm:44.5.0":
+  version: 44.5.0
+  resolution: "@artsy/palette-charts@npm:44.5.0"
   dependencies:
     "@seznam/compose-react-refs": "npm:^1.0.6"
     d3-interpolate: "npm:^1.3.2"
@@ -145,7 +145,7 @@ __metadata:
     react-dom: ^18
     styled-components: ^6
     styled-system: ^5
-  checksum: 10c0/b0aa8a6f8d89a57c7291f671adb68846d4d7cdf60ed2be616a3ee72260c8ac05dafaeef356f51eb883ea30dc8be0f70fec7614e2038ae023024c7515692302ea
+  checksum: 10c0/8892d5284b6c31af35a6c5f154bfed477cbbaa9eb475761c1e3e4739956c3408da271bb4b169fa494d8fef0dfcd3fe51157e2b6145d32ea71820bbaf9ace7f74
   languageName: node
   linkType: hard
 
@@ -156,9 +156,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@artsy/palette@npm:45.4.0":
-  version: 45.4.0
-  resolution: "@artsy/palette@npm:45.4.0"
+"@artsy/palette@npm:45.5.0":
+  version: 45.5.0
+  resolution: "@artsy/palette@npm:45.5.0"
   dependencies:
     "@artsy/icons": "npm:^3.2.2"
     "@artsy/palette-tokens": "npm:^7.1.0"
@@ -177,7 +177,7 @@ __metadata:
     react: ^18
     react-dom: ^18
     styled-components: ^6
-  checksum: 10c0/d31d3874d6bccded0e668aa374d888b1ab828cbe9aee4ff01b5296521bb662274b3723243f6cfb2a00c031d29e22e1defdf65b2f8fc9451f4d2d992d3dd3aaba
+  checksum: 10c0/f52e10c35fc68cb52b8bccd37c91c45a48c9ce4e15a7bb5db31f43fb0f79571a66da6d968404b70270e7cdfe6485f32414b2dbf3386f260aacfeb69d22386979
   languageName: node
   linkType: hard
 
@@ -9308,7 +9308,7 @@ __metadata:
   resolution: "force@workspace:."
   dependencies:
     "@artaio/arta-browser": "npm:^2.16.1"
-    "@artsy/cohesion": "npm:4.328.0"
+    "@artsy/cohesion": "npm:4.330.0"
     "@artsy/commerce_helpers": artsy/commerce_helpers
     "@artsy/detect-responsive-traits": "npm:^0.2.0"
     "@artsy/dismissible": "npm:^0.7.0"
@@ -9317,8 +9317,8 @@ __metadata:
     "@artsy/icons": "npm:3.62.0"
     "@artsy/img": "npm:1.1.0"
     "@artsy/multienv": "npm:^1.2.0"
-    "@artsy/palette": "npm:45.4.0"
-    "@artsy/palette-charts": "npm:44.4.0"
+    "@artsy/palette": "npm:45.5.0"
+    "@artsy/palette-charts": "npm:44.5.0"
     "@artsy/palette-tokens": "npm:7.1.0"
     "@artsy/react-html-parser": "npm:^3.0.2"
     "@artsy/xapp": "npm:2.0.0"

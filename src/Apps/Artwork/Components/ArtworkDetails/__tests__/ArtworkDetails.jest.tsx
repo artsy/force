@@ -1,6 +1,5 @@
 import { screen } from "@testing-library/react"
 import { ArtworkDetailsFragmentContainer } from "Apps/Artwork/Components/ArtworkDetails"
-import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { ArtworkDetailsTestQuery } from "__generated__/ArtworkDetailsTestQuery.graphql"
 import { graphql } from "react-relay"
@@ -19,11 +18,7 @@ jest.mock("Components/EntityHeaders/EntityHeaderPartner", () => ({
 
 const { renderWithRelay } = setupTestWrapperTL<ArtworkDetailsTestQuery>({
   Component: ({ artwork }) => {
-    return (
-      <MockBoot breakpoint="xs">
-        <ArtworkDetailsFragmentContainer artwork={artwork!} />
-      </MockBoot>
-    )
+    return <ArtworkDetailsFragmentContainer artwork={artwork!} />
   },
   query: graphql`
     query ArtworkDetailsTestQuery @relay_test_operation {
@@ -146,7 +141,8 @@ describe("ArtworkDetails", () => {
     it("displays partner additionalInformation for artwork", () => {
       renderWithRelay({
         Artwork: () => ({
-          additionalInformation: "Here is some additional info for this work",
+          additionalInformationHTML:
+            "Here is some additional info for this work",
         }),
       })
 
