@@ -1,6 +1,7 @@
 import { ContextModule } from "@artsy/cohesion"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import {
+  Box,
   Column,
   Flex,
   GridColumns,
@@ -74,22 +75,24 @@ const BelowTheFoldArtworkDetails: React.FC<
     <>
       <Spacer y={6} />
 
-      <Join separator={<Spacer y={2} />} data-test="belowTheFoldArtworkDetails">
-        <ArtworkDetailsFragmentContainer artwork={artwork} />
+      <Box data-test="belowTheFoldArtworkDetails">
+        <Join separator={<Spacer y={2} />}>
+          <ArtworkDetailsFragmentContainer artwork={artwork} />
 
-        <PricingContextQueryRenderer slug={slug} />
+          <PricingContextQueryRenderer slug={slug} />
 
-        {!!artists &&
-          artists.map(artist => {
-            if (!artist) return null
+          {!!artists &&
+            artists.map(artist => {
+              if (!artist) return null
 
-            return (
-              <ArtistInfoQueryRenderer key={artist.id} slug={artist.slug} />
-            )
-          })}
+              return (
+                <ArtistInfoQueryRenderer key={artist.id} slug={artist.slug} />
+              )
+            })}
 
-        <ArtworkDetailsPartnerInfoQueryRenderer slug={slug} />
-      </Join>
+          <ArtworkDetailsPartnerInfoQueryRenderer slug={slug} />
+        </Join>
+      </Box>
     </>
   )
 }
