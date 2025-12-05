@@ -299,115 +299,85 @@ describe("Order2PaymentForm", () => {
   })
 
   describe("payment method switching behavior", () => {
-    it("updates Stripe's captureMethod and setupFutureUsage when selecting credit card", async () => {
+    it("updates Stripe elements on submit for credit card", async () => {
+      const tokenId = "test-token-id"
       renderPaymentForm()
       await waitForPaymentElement()
 
       // Select credit card
       await userEvent.click(screen.getByTestId("mock-credit-card"))
 
-      // Should update elements to manual capture for credit cards
+      setupStripeSubmission(tokenId)
+      mockFetchQuery.mockImplementationOnce(() =>
+        createConfirmationTokenResponse(MOCK_CARD_PREVIEW),
+      )
+      mockSetPaymentMutation.submitMutation.mockResolvedValueOnce(
+        MOCK_ORDER_SUCCESS("CREDIT_CARD", tokenId),
+      )
+
+      await userEvent.click(screen.getByText("Continue to Review"))
+
       expect(mockElements.update).toHaveBeenCalledWith({
         captureMethod: "manual",
         setupFutureUsage: "off_session",
         mode: "payment",
+        paymentMethodOptions: null,
       })
     })
 
-    it("updates Stripe's captureMethod and setupFutureUsage when selecting ACH", async () => {
+    it("updates Stripe elements on submit for ACH", async () => {
+      const tokenId = "test-token-id"
       renderPaymentForm()
       await waitForPaymentElement()
 
       // Select ACH
       await userEvent.click(screen.getByTestId("mock-ach"))
 
-      // Should update elements to automatic capture for ACH with financial connections
+      setupStripeSubmission(tokenId)
+      mockFetchQuery.mockImplementationOnce(() =>
+        createConfirmationTokenResponse(MOCK_ACH_PREVIEW),
+      )
+      mockSetPaymentMutation.submitMutation.mockResolvedValueOnce(
+        MOCK_ORDER_SUCCESS("US_BANK_ACCOUNT", tokenId),
+      )
+
+      await userEvent.click(screen.getByText("Continue to Review"))
+
       expect(mockElements.update).toHaveBeenCalledWith({
         captureMethod: "automatic",
         setupFutureUsage: null,
         mode: "setup",
         payment_method_types: ["us_bank_account"],
-        paymentMethodOptions: {
-          us_bank_account: {
-            verification_method: "instant",
-            financial_connections: {
-              prefetch: ["balances"],
-              permissions: ["payment_method", "balances", "ownership"],
-            },
-          },
-        },
       })
     })
 
-    it("switching from credit card to ACH updates Stripe settings correctly", async () => {
+    it("updates Stripe elements on submit for SEPA", async () => {
+      const tokenId = "test-token-id"
       renderPaymentForm()
       await waitForPaymentElement()
 
-      // First select credit card
-      await userEvent.click(screen.getByTestId("mock-credit-card"))
+      // Select SEPA
+      await userEvent.click(screen.getByTestId("mock-sepa"))
 
-      expect(mockElements.update).toHaveBeenCalledWith({
-        captureMethod: "manual",
-        setupFutureUsage: "off_session",
-        mode: "payment",
-      })
+      setupStripeSubmission(tokenId)
+      mockFetchQuery.mockImplementationOnce(() =>
+        createConfirmationTokenResponse({
+          __typename: "SEPADebit" as const,
+          bankCode: "12345",
+          last4: "1234",
+        }),
+      )
+      mockSetPaymentMutation.submitMutation.mockResolvedValueOnce(
+        MOCK_ORDER_SUCCESS("SEPA_DEBIT", tokenId),
+      )
 
-      // Clear the mock to check the next call
-      mockElements.update.mockClear()
-
-      // Then select ACH
-      await userEvent.click(screen.getByTestId("mock-ach"))
+      await userEvent.click(screen.getByText("Continue to Review"))
 
       expect(mockElements.update).toHaveBeenCalledWith({
         captureMethod: "automatic",
         setupFutureUsage: null,
         mode: "setup",
-        payment_method_types: ["us_bank_account"],
-        paymentMethodOptions: {
-          us_bank_account: {
-            verification_method: "instant",
-            financial_connections: {
-              prefetch: ["balances"],
-              permissions: ["payment_method", "balances", "ownership"],
-            },
-          },
-        },
-      })
-    })
-
-    it("switching from ACH to credit card updates Stripe settings correctly", async () => {
-      renderPaymentForm()
-      await waitForPaymentElement()
-
-      // First select ACH
-      await userEvent.click(screen.getByTestId("mock-ach"))
-
-      expect(mockElements.update).toHaveBeenCalledWith({
-        captureMethod: "automatic",
-        setupFutureUsage: null,
-        mode: "setup",
-        payment_method_types: ["us_bank_account"],
-        paymentMethodOptions: {
-          us_bank_account: {
-            verification_method: "instant",
-            financial_connections: {
-              prefetch: ["balances"],
-              permissions: ["payment_method", "balances", "ownership"],
-            },
-          },
-        },
-      })
-
-      // Clear the mock to check the next call
-      mockElements.update.mockClear()
-
-      // Then select credit card
-      await userEvent.click(screen.getByTestId("mock-credit-card"))
-
-      expect(mockElements.update).toHaveBeenCalledWith({
-        captureMethod: "manual",
-        setupFutureUsage: "off_session",
-        mode: "payment",
+        payment_method_types: ["sepa_debit"],
       })
     })
   })
