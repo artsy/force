@@ -3,7 +3,6 @@ import {
   paramsToCamelCase,
   paramsToSnakeCase,
 } from "Components/ArtworkFilter/Utils/paramsCasing"
-import { stringify } from "qs"
 
 /**
  * Rewrites legacy top-level auction results params into a namespaced object:
@@ -38,26 +37,4 @@ export function rewriteAuctionResultsParamsToNamespace(query: any) {
   }
 
   return nextQuery
-}
-
-/**
- * Redirects legacy top-level auction results params on the dedicated
- * /artist/:id/auction-results subroute into a namespaced object:
- *   ?sort=DATE_DESC&page=2  ->  ?auction[sort]=DATE_DESC&auction[page]=2
- *
- * This isolates auction-results params from artworks filter params when both
- * features share the same page.
- */
-export function redirectAuctionResultsParamsToNamespace({ req, res }) {
-  const originalQuery = req.query
-  const nextQuery = rewriteAuctionResultsParamsToNamespace(originalQuery)
-
-  // Only redirect if the query actually changed
-  if (nextQuery === originalQuery) {
-    return
-  }
-
-  const queryString = stringify(nextQuery)
-  const nextPath = [req.path, queryString].join("?")
-  res.redirect(301, nextPath)
 }
