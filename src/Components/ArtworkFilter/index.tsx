@@ -21,7 +21,6 @@ import {
   Pill,
   Spacer,
   Text,
-  useTheme,
 } from "@artsy/palette"
 import { useFlag } from "@unleash/proxy-client-react"
 import { AppContainer } from "Apps/Components/AppContainer"
@@ -44,6 +43,7 @@ import {
   ProgressiveOnboardingImmersiveView,
 } from "Components/ProgressiveOnboarding/ProgressiveOnboardingImmersiveView"
 import { Sticky } from "Components/Sticky"
+import { useStickyBackdrop } from "Components/Sticky/useStickyBackdrop"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { Jump, useJump } from "Utils/Hooks/useJump"
@@ -150,7 +150,7 @@ export const BaseArtworkFilter: React.FC<
   const enableImmersiveView = useFlag("onyx_enable-immersive-view")
   const { dismiss, isDismissed } = useDismissibleContext()
 
-  const { theme } = useTheme()
+  const backdrop = useStickyBackdrop()
 
   const trackClickedImmersiveView = () => {
     const params: ClickedImmersiveView = {
@@ -258,7 +258,6 @@ export const BaseArtworkFilter: React.FC<
     )
   }, [filterContext.filters])
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: "trackImmersiveViewOptionViewed changes on every re-render and should not be used as a hook dependency"
   useEffect(() => {
     if (!enableImmersiveView) return
 
@@ -390,15 +389,8 @@ export const BaseArtworkFilter: React.FC<
 
         <Sticky bottomBoundary="#Sticky__ArtworkFilter">
           {({ stuck, scrollDirection }) => {
-            const bg = {
-              light: "rgba(255, 255, 255, 0.9)",
-              dark: "rgba(0, 0, 0, 0.9)",
-            }[theme.name]
-
             return (
-              <FullBleed
-                backgroundColor={scrollDirection === "up" ? bg : "mono0"}
-              >
+              <FullBleed style={backdrop[scrollDirection]}>
                 <AppContainer>
                   <HorizontalPadding>
                     <Flex
