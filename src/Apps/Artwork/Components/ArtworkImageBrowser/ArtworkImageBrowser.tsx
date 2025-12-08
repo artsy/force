@@ -22,16 +22,19 @@ interface ArtworkImageBrowserProps {
 export const ArtworkImageBrowser: React.FC<
   React.PropsWithChildren<ArtworkImageBrowserProps>
 > = ({ artwork, isMyCollectionArtwork }) => {
-  const { figures } = artwork
+  const { figures, isSetVideoAsCover } = artwork
 
   // Calculate the default index first so it can be used to initialize the cursor
   const defaultIndex = useMemo(() => {
     const index = figures.findIndex(figure => {
+      if (isSetVideoAsCover) {
+        return figure.__typename === "Video"
+      }
       return figure.__typename === "Image" && !!figure.isDefault
     })
 
     return index === -1 ? 0 : index
-  }, [figures])
+  }, [figures, isSetVideoAsCover])
 
   const {
     index: activeIndex,
@@ -153,6 +156,7 @@ export const ArtworkImageBrowserFragmentContainer = createFragmentContainer(
             videoHeight: height
           }
         }
+        isSetVideoAsCover
       }
     `,
   },

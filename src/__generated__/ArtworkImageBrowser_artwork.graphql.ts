@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<00af4c9b5260f1644530e63e1607453f>>
+ * @generated SignedSource<<a97120bd7f91c9ab53786fa67d9f4eeb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -26,6 +26,7 @@ export type ArtworkImageBrowser_artwork$data = {
     readonly __typename: "%other";
   }>;
   readonly internalID: string;
+  readonly isSetVideoAsCover: boolean | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkActions_artwork" | "ArtworkImageBrowserLarge_artwork" | "ArtworkImageBrowserSmall_artwork">;
   readonly " $fragmentType": "ArtworkImageBrowser_artwork";
 };
@@ -148,6 +149,13 @@ return {
         }
       ],
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isSetVideoAsCover",
+      "storageKey": null
     }
   ],
   "type": "Artwork",
@@ -155,6 +163,6 @@ return {
 };
 })();
 
-(node as any).hash = "4726d6d5fdb93a8545b71bf226f2f3a8";
+(node as any).hash = "b59d1b8fba071117e6df6bcbfd731e85";
 
 export default node;
