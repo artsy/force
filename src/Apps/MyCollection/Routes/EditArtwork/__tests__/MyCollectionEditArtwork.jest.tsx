@@ -87,16 +87,13 @@ const getWrapper = (breakpoint: Breakpoint = "lg") =>
   })
 
 describe("Edit artwork", () => {
-  beforeAll(() => {
-    ;(useSystemContext as jest.Mock).mockImplementation(() => ({
-      relayEnvironment: createMockEnvironment(),
-    }))
-  })
-
   const mockuseTracking = useTracking as jest.Mock
   const trackingSpy = jest.fn()
 
   beforeAll(() => {
+    ;(useSystemContext as jest.Mock).mockImplementation(() => ({
+      relayEnvironment: createMockEnvironment(),
+    }))
     mockuseTracking.mockImplementation(() => ({
       trackEvent: trackingSpy,
     }))
@@ -125,32 +122,32 @@ describe("Edit artwork", () => {
       expect(
         screen
           .getAllByRole("combobox")
-          .find(c => c.getAttribute("name") == "category"),
+          .find(c => c.getAttribute("name") === "category"),
       ).toHaveValue("Drawing, Collage or other Work on Paper")
       expect(
         screen
           .getAllByRole("combobox")
-          .find(c => c.getAttribute("name") == "attributionClass"),
+          .find(c => c.getAttribute("name") === "attributionClass"),
       ).toHaveValue("LIMITED_EDITION")
       expect(screen.getByPlaceholderText("Your work's #")).toHaveValue(1)
       expect(screen.getByPlaceholderText("Total # in edition")).toHaveValue(2)
       expect(
         screen
           .getAllByRole("textbox")
-          .find(c => c.getAttribute("name") == "height"),
+          .find(c => c.getAttribute("name") === "height"),
       ).toHaveValue(8.75)
       expect(
         screen
           .getAllByRole("textbox")
-          .find(c => c.getAttribute("name") == "width"),
+          .find(c => c.getAttribute("name") === "width"),
       ).toHaveValue(11)
       expect(
         screen
           .getAllByRole("textbox")
-          .find(c => c.getAttribute("name") == "depth"),
+          .find(c => c.getAttribute("name") === "depth"),
       ).toHaveValue(2)
       expect(
-        screen.getAllByRole("radio").find(c => c.textContent == "in"),
+        screen.getAllByRole("radio").find(c => c.textContent === "in"),
       ).toBeChecked()
       expect(
         screen.getByPlaceholderText("Describe how you acquired the work"),
@@ -161,7 +158,7 @@ describe("Edit artwork", () => {
       expect(
         screen
           .getAllByRole("textbox")
-          .find(c => c.getAttribute("name") == "confidentialNotes"),
+          .find(c => c.getAttribute("name") === "confidentialNotes"),
       ).toHaveValue("Secret Notes here")
     })
   })

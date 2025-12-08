@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1175a659ce3d278c6e87b5b849084558>>
+ * @generated SignedSource<<0abb34d5de658b155bd1ed01ef7a3e20>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -783,16 +783,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "04eb65e8e71c48f3bbaeb023379fb57e",
+    "cacheID": "00ebe51e58b38f3dc66dfd1736628d2d",
     "id": null,
     "metadata": {},
     "name": "orderRoutes_OrderQuery",
     "operationKind": "query",
-    "text": "query orderRoutes_OrderQuery(\n  $orderID: ID!\n) {\n  me {\n    name\n    id\n  }\n  order: commerceOrder(id: $orderID) @principalField {\n    __typename\n    __isCommerceOrder: __typename\n    bankAccountId\n    internalID\n    mode\n    state\n    displayState\n    source\n    lastTransactionFailed\n    paymentSet\n    ... on CommerceOfferOrder {\n      myLastOffer {\n        internalID\n        createdAt\n        id\n      }\n      lastOffer {\n        internalID\n        createdAt\n        id\n      }\n      awaitingResponseFrom\n    }\n    requestedFulfillment {\n      __typename\n    }\n    lineItems {\n      edges {\n        node {\n          artwork {\n            slug\n            id\n          }\n          shippingQuoteOptions {\n            edges {\n              node {\n                isSelected\n                id\n              }\n            }\n          }\n          id\n        }\n      }\n    }\n    creditCard {\n      internalID\n      id\n    }\n    paymentMethod\n    paymentMethodDetails {\n      __typename\n      ... on CreditCard {\n        id\n      }\n      ... on BankAccount {\n        id\n      }\n      ... on WireTransfer {\n        isManualPayment\n      }\n    }\n    ...OrderApp_order\n    id\n  }\n}\n\nfragment OrderApp_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  mode\n  source\n  currencyCode\n  itemsTotalCents\n  lineItems {\n    edges {\n      node {\n        artwork {\n          href\n          slug\n          is_acquireable: isAcquireable\n          is_offerable: isOfferable\n          id\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query orderRoutes_OrderQuery(\n  $orderID: ID!\n) {\n  me {\n    name\n    id\n  }\n  order: commerceOrder(id: $orderID) {\n    __typename\n    __isCommerceOrder: __typename\n    bankAccountId\n    internalID\n    mode\n    state\n    displayState\n    source\n    lastTransactionFailed\n    paymentSet\n    ... on CommerceOfferOrder {\n      myLastOffer {\n        internalID\n        createdAt\n        id\n      }\n      lastOffer {\n        internalID\n        createdAt\n        id\n      }\n      awaitingResponseFrom\n    }\n    requestedFulfillment {\n      __typename\n    }\n    lineItems {\n      edges {\n        node {\n          artwork {\n            slug\n            id\n          }\n          shippingQuoteOptions {\n            edges {\n              node {\n                isSelected\n                id\n              }\n            }\n          }\n          id\n        }\n      }\n    }\n    creditCard {\n      internalID\n      id\n    }\n    paymentMethod\n    paymentMethodDetails {\n      __typename\n      ... on CreditCard {\n        id\n      }\n      ... on BankAccount {\n        id\n      }\n      ... on WireTransfer {\n        isManualPayment\n      }\n    }\n    ...OrderApp_order\n    id\n  }\n}\n\nfragment OrderApp_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  mode\n  source\n  currencyCode\n  itemsTotalCents\n  lineItems {\n    edges {\n      node {\n        artwork {\n          href\n          slug\n          is_acquireable: isAcquireable\n          is_offerable: isOfferable\n          id\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "9bdd79b212bd6b969f744c45247c5933";
+(node as any).hash = "76141cacffd33ab7b87c3dfb63cefb4f";
 
 export default node;
