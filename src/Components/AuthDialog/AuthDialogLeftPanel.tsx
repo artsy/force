@@ -7,8 +7,10 @@ import {
   type CarouselRailProps,
   Flex,
   Image,
+  THEME,
 } from "@artsy/palette"
 import { useFlag } from "@unleash/proxy-client-react"
+import { MODAL_WIDTH } from "Components/AuthDialog/Utils/utils"
 import {
   type FC,
   forwardRef,
@@ -20,8 +22,6 @@ import {
 import styled from "styled-components"
 import { useCursor } from "use-cursor"
 import { resized } from "Utils/resized"
-
-const MODAL_WIDTH = 900
 
 export const AuthDialogLeftPanel: FC<React.PropsWithChildren> = () => {
   const img = resized(IMAGE.src, { width: MODAL_WIDTH / 2 })
@@ -62,7 +62,7 @@ const ImageSlider: FC = () => {
   useEffect(() => {
     intervalRef.current = setInterval(
       () => setCursor(prevCursor => prevCursor + 1),
-      5000,
+      CAROUSEL_INTERVAL,
     )
 
     return stopAutoPlay
@@ -171,26 +171,29 @@ const Dot = styled(Box)`
   }
 `
 
-const COLUMN_WIDTH = MODAL_WIDTH / 2 - 20
+const CAROUSEL_INTERVAL = 5000
+const COLUMN_WIDTH =
+  MODAL_WIDTH / 2 - Number.parseInt(THEME.space["2"].replace("px", ""))
+const IMAGE_HEIGHT = 2030
 const IMAGE = {
   width: MODAL_WIDTH,
-  height: 2030,
+  height: IMAGE_HEIGHT,
   src: "https://files.artsy.net/images/2x_Evergreen-Artist-Page-Sign-Up-Modal.jpg",
 }
 const DEFAULT_IMAGES = [
   {
     width: MODAL_WIDTH,
-    height: 2030,
-    src: "https://files.artsy.net/images/signup01.webp",
+    height: IMAGE_HEIGHT,
+    src: "https://files.artsy.net/images/signup-01.png",
   },
   {
     width: MODAL_WIDTH,
-    height: 2030,
-    src: "https://files.artsy.net/images/signup02.webp",
+    height: IMAGE_HEIGHT,
+    src: "https://files.artsy.net/images/signup-02.png",
   },
   {
     width: MODAL_WIDTH,
-    height: 2030,
-    src: "https://files.artsy.net/images/signup03.webp",
+    height: IMAGE_HEIGHT,
+    src: "https://files.artsy.net/images/signup-03.png",
   },
 ]

@@ -7,14 +7,13 @@ import {
 import { AuthDialogLeftPanel } from "Components/AuthDialog/AuthDialogLeftPanel"
 import { AuthDialogTitle } from "Components/AuthDialog/AuthDialogTitle"
 import { useAuthDialogTracking } from "Components/AuthDialog/Hooks/useAuthDialogTracking"
+import { MODAL_WIDTH } from "Components/AuthDialog/Utils/utils"
 import { AuthDialogForgotPassword } from "Components/AuthDialog/Views/AuthDialogForgotPassword"
 import { AuthDialogLogin } from "Components/AuthDialog/Views/AuthDialogLogin"
 import { AuthDialogSignUp } from "Components/AuthDialog/Views/AuthDialogSignUp"
 import { AuthDialogWelcome } from "Components/AuthDialog/Views/AuthDialogWelcome"
 import { useRecaptcha } from "Utils/EnableRecaptcha"
 import { type FC, useEffect } from "react"
-
-export const MODAL_WIDTH = 900
 
 export interface AuthDialogProps {
   onClose: () => void
@@ -47,7 +46,7 @@ export const AuthDialog: FC<React.PropsWithChildren<AuthDialogProps>> = ({
   }
 
   const isCloseable = options.isCloseable ?? true
-  let modalProps = getModalProps(!!options.image, newSignupEnabled)
+  const modalProps = getModalProps(!!options.image, newSignupEnabled)
 
   return (
     <ModalDialog
