@@ -348,6 +348,7 @@ describe("Order2PaymentForm", () => {
         setupFutureUsage: null,
         mode: "setup",
         payment_method_types: ["us_bank_account"],
+        on_behalf_of: null,
       })
     })
 
