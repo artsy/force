@@ -44,7 +44,7 @@ describe("ArtworkImageBrowser", () => {
     })
   })
 
-  describe("default image selection", () => {
+  describe("default figure selection", () => {
     it("should initialize cursor with index of image marked isDefault: true", () => {
       renderWithRelay({
         Artwork: () => ({
@@ -216,6 +216,48 @@ describe("ArtworkImageBrowser", () => {
       expect(mockUseCursor).toHaveBeenCalledWith({
         max: 3,
         initialCursor: 2,
+      })
+    })
+
+    it("should handle selecting a video as default figure", () => {
+      renderWithRelay({
+        Artwork: () => ({
+          internalID: "test-artwork-id",
+          isSetVideoAsCover: true,
+          figures: [
+            {
+              __typename: "Image",
+              width: 800,
+              height: 600,
+              isDefault: false,
+              aspectRatio: 1.33,
+            },
+            {
+              __typename: "Video",
+              videoWidth: 800,
+              videoHeight: 600,
+              id: "video-id",
+            },
+            {
+              __typename: "Image",
+              width: 800,
+              height: 600,
+              isDefault: true,
+              aspectRatio: 1.33,
+            },
+          ],
+        }),
+        ResizedImageUrl: () => ({
+          width: 800,
+          height: 600,
+          src: "example.jpg",
+          srcSet: "example.jpg 1x",
+        }),
+      })
+
+      expect(mockUseCursor).toHaveBeenCalledWith({
+        max: 3,
+        initialCursor: 1,
       })
     })
 
