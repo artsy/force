@@ -1,9 +1,15 @@
 import { AutocompleteInput, useDidMount } from "@artsy/palette"
 import { type ChangeEvent, type FC, useEffect, useRef, useState } from "react"
 
-import { ActionType, type SelectedItemFromSearch } from "@artsy/cohesion"
+import {
+  ActionType,
+  type SearchedWithNoResults,
+  type SearchedWithResults,
+  type SelectedItemFromSearch,
+} from "@artsy/cohesion"
 import { DESKTOP_NAV_BAR_TOP_TIER_HEIGHT } from "Components/NavBar/constants"
 import { useRouter } from "System/Hooks/useRouter"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useClientQuery } from "Utils/Hooks/useClientQuery"
 import { extractNodes } from "Utils/extractNodes"
 import type {
@@ -36,6 +42,8 @@ export const SearchBarInput: FC<
   React.PropsWithChildren<SearchBarInputProps>
 > = ({ searchTerm }) => {
   const tracking = useTracking()
+  const { contextPageOwnerType, contextPageOwnerId, contextPageOwnerSlug } =
+    useAnalyticsContext()
 
   const isClient = useDidMount()
 
@@ -143,14 +151,27 @@ export const SearchBarInput: FC<
 
         const nodes = extractNodes(res?.viewer?.searchConnection)
 
-        tracking.trackEvent({
-          action_type:
-            nodes.length > 0
-              ? ActionType.searchedWithResults
-              : ActionType.searchedWithNoResults,
+        const baseEvent = {
           context_module: selectedPill.analyticsContextModule,
+          context_owner_type: contextPageOwnerType,
+          context_owner_id: contextPageOwnerId,
+          context_owner_slug: contextPageOwnerSlug,
           query: value,
-        })
+        }
+
+        if (nodes.length > 0) {
+          const event: SearchedWithResults = {
+            action: ActionType.searchedWithResults,
+            ...baseEvent,
+          }
+          tracking.trackEvent(event)
+        } else {
+          const event: SearchedWithNoResults = {
+            action: ActionType.searchedWithNoResults,
+            ...baseEvent,
+          }
+          tracking.trackEvent(event)
+        }
       })
       .catch((err: Error) => {
         // Network errors or cancelled requests - no analytics needed
