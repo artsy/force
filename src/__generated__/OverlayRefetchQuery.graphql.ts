@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4b7838555187f685fff8996fd80db831>>
+ * @generated SignedSource<<686ac8c33a6d94421c75427d86f33d42>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,6 +15,7 @@ export type OverlayRefetchQuery$variables = {
   entities?: ReadonlyArray<SearchEntity | null | undefined> | null | undefined;
   hasTerm: boolean;
   term: string;
+  variant?: string | null | undefined;
 };
 export type OverlayRefetchQuery$data = {
   readonly viewer: {
@@ -43,31 +44,42 @@ v2 = {
   "name": "term"
 },
 v3 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "variant"
+},
+v4 = {
   "kind": "Variable",
   "name": "entities",
   "variableName": "entities"
 },
-v4 = {
+v5 = {
+  "kind": "Variable",
+  "name": "variant",
+  "variableName": "variant"
+},
+v6 = {
   "kind": "Literal",
   "name": "mode",
   "value": "AUTOSUGGEST"
 },
-v5 = {
+v7 = {
   "kind": "Variable",
   "name": "query",
   "variableName": "term"
 },
-v6 = [
-  (v3/*: any*/),
+v8 = [
+  (v4/*: any*/),
   {
     "kind": "Literal",
     "name": "first",
     "value": 10
   },
-  (v4/*: any*/),
+  (v6/*: any*/),
+  (v7/*: any*/),
   (v5/*: any*/)
 ],
-v7 = {
+v9 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -79,7 +91,8 @@ return {
     "argumentDefinitions": [
       (v0/*: any*/),
       (v1/*: any*/),
-      (v2/*: any*/)
+      (v2/*: any*/),
+      (v3/*: any*/)
     ],
     "kind": "Fragment",
     "metadata": null,
@@ -95,7 +108,7 @@ return {
         "selections": [
           {
             "args": [
-              (v3/*: any*/),
+              (v4/*: any*/),
               {
                 "kind": "Variable",
                 "name": "hasTerm",
@@ -105,7 +118,8 @@ return {
                 "kind": "Variable",
                 "name": "term",
                 "variableName": "term"
-              }
+              },
+              (v5/*: any*/)
             ],
             "kind": "FragmentSpread",
             "name": "Overlay_viewer"
@@ -122,7 +136,8 @@ return {
     "argumentDefinitions": [
       (v2/*: any*/),
       (v1/*: any*/),
-      (v0/*: any*/)
+      (v0/*: any*/),
+      (v3/*: any*/)
     ],
     "kind": "Operation",
     "name": "OverlayRefetchQuery",
@@ -150,8 +165,8 @@ return {
                 "name": "first",
                 "value": 0
               },
-              (v4/*: any*/),
-              (v5/*: any*/)
+              (v6/*: any*/),
+              (v7/*: any*/)
             ],
             "concreteType": "SearchableConnection",
             "kind": "LinkedField",
@@ -204,7 +219,7 @@ return {
             "selections": [
               {
                 "alias": null,
-                "args": (v6/*: any*/),
+                "args": (v8/*: any*/),
                 "concreteType": "SearchableConnection",
                 "kind": "LinkedField",
                 "name": "searchConnection",
@@ -337,7 +352,7 @@ return {
                                     ],
                                     "storageKey": null
                                   },
-                                  (v7/*: any*/)
+                                  (v9/*: any*/)
                                 ],
                                 "storageKey": null
                               }
@@ -348,7 +363,7 @@ return {
                           {
                             "kind": "InlineFragment",
                             "selections": [
-                              (v7/*: any*/)
+                              (v9/*: any*/)
                             ],
                             "type": "Node",
                             "abstractKey": "__isNode"
@@ -396,11 +411,12 @@ return {
               },
               {
                 "alias": null,
-                "args": (v6/*: any*/),
+                "args": (v8/*: any*/),
                 "filters": [
                   "query",
                   "entities",
-                  "mode"
+                  "mode",
+                  "variant"
                 ],
                 "handle": "connection",
                 "key": "SearchResultsList_searchConnection",
@@ -415,16 +431,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "7971c608ca2fb0a4b1c23c1c1bc90101",
+    "cacheID": "423dfe3a3da2ffe10b2c2572ffd0e6a2",
     "id": null,
     "metadata": {},
     "name": "OverlayRefetchQuery",
     "operationKind": "query",
-    "text": "query OverlayRefetchQuery(\n  $term: String!\n  $hasTerm: Boolean!\n  $entities: [SearchEntity]\n) {\n  viewer {\n    ...Overlay_viewer_1B9obU\n  }\n}\n\nfragment Overlay_viewer_1B9obU on Viewer {\n  ...SearchInputPills_viewer_4hh6ED\n  ...SearchResultsList_viewer_plJt2 @include(if: $hasTerm)\n}\n\nfragment SearchInputPills_viewer_4hh6ED on Viewer {\n  searchConnectionAggregation: searchConnection(first: 0, mode: AUTOSUGGEST, query: $term, aggregations: [TYPE]) {\n    aggregations {\n      counts {\n        count\n        name\n      }\n    }\n  }\n}\n\nfragment SearchResultsList_viewer_plJt2 on Viewer {\n  searchConnection(query: $term, entities: $entities, mode: AUTOSUGGEST, first: 10) {\n    edges {\n      node {\n        displayLabel\n        href\n        imageUrl\n        __typename\n        ... on SearchableItem {\n          displayType\n          slug\n        }\n        ... on Artist {\n          statuses {\n            artworks\n            auctionLots\n          }\n          coverArtwork {\n            image {\n              src: url(version: [\"small\"])\n            }\n            id\n          }\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query OverlayRefetchQuery(\n  $term: String!\n  $hasTerm: Boolean!\n  $entities: [SearchEntity]\n  $variant: String\n) {\n  viewer {\n    ...Overlay_viewer_gouck\n  }\n}\n\nfragment Overlay_viewer_gouck on Viewer {\n  ...SearchInputPills_viewer_4hh6ED\n  ...SearchResultsList_viewer_3X26Y1 @include(if: $hasTerm)\n}\n\nfragment SearchInputPills_viewer_4hh6ED on Viewer {\n  searchConnectionAggregation: searchConnection(first: 0, mode: AUTOSUGGEST, query: $term, aggregations: [TYPE]) {\n    aggregations {\n      counts {\n        count\n        name\n      }\n    }\n  }\n}\n\nfragment SearchResultsList_viewer_3X26Y1 on Viewer {\n  searchConnection(query: $term, entities: $entities, mode: AUTOSUGGEST, first: 10, variant: $variant) {\n    edges {\n      node {\n        displayLabel\n        href\n        imageUrl\n        __typename\n        ... on SearchableItem {\n          displayType\n          slug\n        }\n        ... on Artist {\n          statuses {\n            artworks\n            auctionLots\n          }\n          coverArtwork {\n            image {\n              src: url(version: [\"small\"])\n            }\n            id\n          }\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "86cd4d7171dd1d61feb7167f768cda14";
+(node as any).hash = "3b23184f7f2f3b4444ae5869ae9cfbb2";
 
 export default node;
