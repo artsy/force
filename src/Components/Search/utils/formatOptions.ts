@@ -10,6 +10,7 @@ export interface SearchNodeOption {
     auctionLots?: boolean
   }
   href?: string
+  internalID?: string
 }
 
 export const formatOptions = (
@@ -28,6 +29,7 @@ export const formatOptions = (
       showAuctionResultsButton: !!option.statuses?.auctionLots,
       href: option.href!,
       typename: option.__typename,
+      item_id: option.internalID!,
       item_number: index,
       item_type: option.displayType!,
     }

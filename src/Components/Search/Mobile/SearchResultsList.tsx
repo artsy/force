@@ -1,4 +1,4 @@
-import { ActionType } from "@artsy/cohesion"
+import { ActionType, type SelectedItemFromSearch } from "@artsy/cohesion"
 import { Flex, Spinner } from "@artsy/palette"
 import { InfiniteScrollSentinel } from "Components/InfiniteScrollSentinel"
 import {
@@ -87,12 +87,16 @@ const SearchResultsList: FC<
     quickNavigation = false,
   ) => {
     if (!quickNavigation) {
-      tracking.trackEvent({
-        action_type: ActionType.selectedItemFromSearch,
+      const event: SelectedItemFromSearch = {
+        action: ActionType.selectedItemFromSearch,
         context_module: selectedPill.analyticsContextModule,
         destination_path: option.href,
         query: query,
-      })
+        item_id: option.item_id!,
+        item_number: option.item_number!,
+        item_type: option.item_type!,
+      }
+      tracking.trackEvent(event)
     }
 
     onClose()
@@ -151,10 +155,12 @@ export const SearchResultsListPaginationContainer = createPaginationContainer(
               imageUrl
               __typename
               ... on SearchableItem {
+                internalID
                 displayType
                 slug
               }
               ... on Artist {
+                internalID
                 statuses {
                   artworks
                   auctionLots

@@ -1,7 +1,7 @@
 import { AutocompleteInput, useDidMount } from "@artsy/palette"
 import { type ChangeEvent, type FC, useEffect, useRef, useState } from "react"
 
-import { ActionType } from "@artsy/cohesion"
+import { ActionType, type SelectedItemFromSearch } from "@artsy/cohesion"
 import { DESKTOP_NAV_BAR_TOP_TIER_HEIGHT } from "Components/NavBar/constants"
 import { useRouter } from "System/Hooks/useRouter"
 import { useClientQuery } from "Utils/Hooks/useClientQuery"
@@ -78,7 +78,7 @@ export const SearchBarInput: FC<
   const options = extractNodes(data?.viewer?.searchConnection)
 
   const formattedOptions: SuggestionItemOptionProps[] = [
-    ...options.map(option => {
+    ...options.map((option, index) => {
       return {
         text: option.displayLabel ?? "Unknown",
         value: option.displayLabel ?? "unknown",
@@ -91,6 +91,9 @@ export const SearchBarInput: FC<
         showAuctionResultsButton: !!option.statuses?.auctionLots,
         href: option.href ?? "/",
         typename: option.__typename,
+        item_id: option.internalID,
+        item_number: index,
+        item_type: option.displayType ?? undefined,
       }
     }),
     {
@@ -188,12 +191,19 @@ export const SearchBarInput: FC<
   }
 
   const handleSelect = (option: SuggestionItemOptionProps) => {
-    tracking.trackEvent({
-      action_type: ActionType.selectedItemFromSearch,
-      context_module: selectedPill.analyticsContextModule,
-      destination_path: option.href,
-      query: value,
-    })
+    // Only track if this is an actual search result, not the footer
+    if (option.typename !== "Footer") {
+      const event: SelectedItemFromSearch = {
+        action: ActionType.selectedItemFromSearch,
+        context_module: selectedPill.analyticsContextModule,
+        destination_path: option.href,
+        query: value,
+        item_id: option.item_id!,
+        item_number: option.item_number!,
+        item_type: option.item_type!,
+      }
+      tracking.trackEvent(event)
+    }
 
     resetValue()
     redirect(option.href)
@@ -309,10 +319,12 @@ const QUERY = graphql`
             imageUrl
             __typename
             ... on SearchableItem {
+              internalID
               displayType
               slug
             }
             ... on Artist {
+              internalID
               statuses {
                 artworks
                 auctionLots
