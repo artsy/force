@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c6aef0cd12af45faaba14961da01871a>>
+ * @generated SignedSource<<9220808b97450240389acbe3c96dc678>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,6 +15,7 @@ export type SearchBarInputSuggestQuery$variables = {
   entities?: ReadonlyArray<SearchEntity | null | undefined> | null | undefined;
   hasTerm: boolean;
   term: string;
+  variant?: string | null | undefined;
 };
 export type SearchBarInputSuggestQuery$data = {
   readonly viewer: {
@@ -64,16 +65,21 @@ v2 = {
   "name": "term"
 },
 v3 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "variant"
+},
+v4 = {
   "kind": "Literal",
   "name": "mode",
   "value": "AUTOSUGGEST"
 },
-v4 = {
+v5 = {
   "kind": "Variable",
   "name": "query",
   "variableName": "term"
 },
-v5 = [
+v6 = [
   {
     "kind": "Variable",
     "name": "entities",
@@ -84,38 +90,43 @@ v5 = [
     "name": "first",
     "value": 7
   },
-  (v3/*: any*/),
-  (v4/*: any*/)
+  (v4/*: any*/),
+  (v5/*: any*/),
+  {
+    "kind": "Variable",
+    "name": "variant",
+    "variableName": "variant"
+  }
 ],
-v6 = {
+v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "displayLabel",
   "storageKey": null
 },
-v7 = {
+v8 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "href",
   "storageKey": null
 },
-v8 = {
+v9 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "imageUrl",
   "storageKey": null
 },
-v9 = {
+v10 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "__typename",
   "storageKey": null
 },
-v10 = {
+v11 = {
   "kind": "InlineFragment",
   "selections": [
     {
@@ -136,7 +147,7 @@ v10 = {
   "type": "SearchableItem",
   "abstractKey": null
 },
-v11 = {
+v12 = {
   "alias": null,
   "args": null,
   "concreteType": "ArtistStatuses",
@@ -161,7 +172,7 @@ v11 = {
   ],
   "storageKey": null
 },
-v12 = {
+v13 = {
   "alias": null,
   "args": null,
   "concreteType": "Image",
@@ -187,7 +198,7 @@ v12 = {
   ],
   "storageKey": null
 },
-v13 = {
+v14 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -199,7 +210,8 @@ return {
     "argumentDefinitions": [
       (v0/*: any*/),
       (v1/*: any*/),
-      (v2/*: any*/)
+      (v2/*: any*/),
+      (v3/*: any*/)
     ],
     "kind": "Fragment",
     "metadata": null,
@@ -231,7 +243,7 @@ return {
             "selections": [
               {
                 "alias": null,
-                "args": (v5/*: any*/),
+                "args": (v6/*: any*/),
                 "concreteType": "SearchableConnection",
                 "kind": "LinkedField",
                 "name": "searchConnection",
@@ -253,15 +265,15 @@ return {
                         "name": "node",
                         "plural": false,
                         "selections": [
-                          (v6/*: any*/),
                           (v7/*: any*/),
                           (v8/*: any*/),
                           (v9/*: any*/),
                           (v10/*: any*/),
+                          (v11/*: any*/),
                           {
                             "kind": "InlineFragment",
                             "selections": [
-                              (v11/*: any*/),
+                              (v12/*: any*/),
                               {
                                 "alias": null,
                                 "args": null,
@@ -270,7 +282,7 @@ return {
                                 "name": "coverArtwork",
                                 "plural": false,
                                 "selections": [
-                                  (v12/*: any*/)
+                                  (v13/*: any*/)
                                 ],
                                 "storageKey": null
                               }
@@ -301,7 +313,8 @@ return {
     "argumentDefinitions": [
       (v2/*: any*/),
       (v1/*: any*/),
-      (v0/*: any*/)
+      (v0/*: any*/),
+      (v3/*: any*/)
     ],
     "kind": "Operation",
     "name": "SearchBarInputSuggestQuery",
@@ -329,8 +342,8 @@ return {
                 "name": "first",
                 "value": 0
               },
-              (v3/*: any*/),
-              (v4/*: any*/)
+              (v4/*: any*/),
+              (v5/*: any*/)
             ],
             "concreteType": "SearchableConnection",
             "kind": "LinkedField",
@@ -383,7 +396,7 @@ return {
             "selections": [
               {
                 "alias": null,
-                "args": (v5/*: any*/),
+                "args": (v6/*: any*/),
                 "concreteType": "SearchableConnection",
                 "kind": "LinkedField",
                 "name": "searchConnection",
@@ -405,15 +418,15 @@ return {
                         "name": "node",
                         "plural": false,
                         "selections": [
-                          (v6/*: any*/),
                           (v7/*: any*/),
                           (v8/*: any*/),
                           (v9/*: any*/),
                           (v10/*: any*/),
+                          (v11/*: any*/),
                           {
                             "kind": "InlineFragment",
                             "selections": [
-                              (v11/*: any*/),
+                              (v12/*: any*/),
                               {
                                 "alias": null,
                                 "args": null,
@@ -422,8 +435,8 @@ return {
                                 "name": "coverArtwork",
                                 "plural": false,
                                 "selections": [
-                                  (v12/*: any*/),
-                                  (v13/*: any*/)
+                                  (v13/*: any*/),
+                                  (v14/*: any*/)
                                 ],
                                 "storageKey": null
                               }
@@ -434,7 +447,7 @@ return {
                           {
                             "kind": "InlineFragment",
                             "selections": [
-                              (v13/*: any*/)
+                              (v14/*: any*/)
                             ],
                             "type": "Node",
                             "abstractKey": "__isNode"
@@ -456,16 +469,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "04d19cea2adb45006b8bd09c434abffc",
+    "cacheID": "f73cfe923596d723a566eff511fe2ed3",
     "id": null,
     "metadata": {},
     "name": "SearchBarInputSuggestQuery",
     "operationKind": "query",
-    "text": "query SearchBarInputSuggestQuery(\n  $term: String!\n  $hasTerm: Boolean!\n  $entities: [SearchEntity]\n) {\n  viewer {\n    ...SearchInputPills_viewer_4hh6ED\n    searchConnection(query: $term, entities: $entities, mode: AUTOSUGGEST, first: 7) @include(if: $hasTerm) {\n      edges {\n        node {\n          displayLabel\n          href\n          imageUrl\n          __typename\n          ... on SearchableItem {\n            displayType\n            slug\n          }\n          ... on Artist {\n            statuses {\n              artworks\n              auctionLots\n            }\n            coverArtwork {\n              image {\n                src: url(version: [\"square\"])\n              }\n              id\n            }\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n      }\n    }\n  }\n}\n\nfragment SearchInputPills_viewer_4hh6ED on Viewer {\n  searchConnectionAggregation: searchConnection(first: 0, mode: AUTOSUGGEST, query: $term, aggregations: [TYPE]) {\n    aggregations {\n      counts {\n        count\n        name\n      }\n    }\n  }\n}\n"
+    "text": "query SearchBarInputSuggestQuery(\n  $term: String!\n  $hasTerm: Boolean!\n  $entities: [SearchEntity]\n  $variant: String\n) {\n  viewer {\n    ...SearchInputPills_viewer_4hh6ED\n    searchConnection(query: $term, entities: $entities, mode: AUTOSUGGEST, first: 7, variant: $variant) @include(if: $hasTerm) {\n      edges {\n        node {\n          displayLabel\n          href\n          imageUrl\n          __typename\n          ... on SearchableItem {\n            displayType\n            slug\n          }\n          ... on Artist {\n            statuses {\n              artworks\n              auctionLots\n            }\n            coverArtwork {\n              image {\n                src: url(version: [\"square\"])\n              }\n              id\n            }\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n      }\n    }\n  }\n}\n\nfragment SearchInputPills_viewer_4hh6ED on Viewer {\n  searchConnectionAggregation: searchConnection(first: 0, mode: AUTOSUGGEST, query: $term, aggregations: [TYPE]) {\n    aggregations {\n      counts {\n        count\n        name\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "24a8f0c826080a6d521d3bbd1bad13a1";
+(node as any).hash = "22b99fe40d5345d65d3fc97d4ca9390b";
 
 export default node;

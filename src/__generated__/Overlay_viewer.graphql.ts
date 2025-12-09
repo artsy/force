@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<425b6fb6f3e7142fc2daf3a891c3544a>>
+ * @generated SignedSource<<25c266e37cdc5218ff7f72e8b49df51e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -41,6 +41,11 @@ return {
       "defaultValue": "",
       "kind": "LocalArgument",
       "name": "term"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "variant"
     }
   ],
   "kind": "Fragment",
@@ -66,7 +71,12 @@ return {
               "name": "entities",
               "variableName": "entities"
             },
-            (v0/*: any*/)
+            (v0/*: any*/),
+            {
+              "kind": "Variable",
+              "name": "variant",
+              "variableName": "variant"
+            }
           ],
           "kind": "FragmentSpread",
           "name": "SearchResultsList_viewer"
@@ -79,6 +89,6 @@ return {
 };
 })();
 
-(node as any).hash = "fe83ba741b45f8354214073892b9dced";
+(node as any).hash = "d36354589ce30dac19dc3b190ca0c9b1";
 
 export default node;
