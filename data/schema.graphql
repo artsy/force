@@ -21919,6 +21919,9 @@ type Query {
 
     # Search query to perform. Required.
     query: String!
+
+    # Search variant for A/B testing (e.g. 'experiment').
+    variant: String
   ): SearchableConnection
 
   # A ShippingPreset
@@ -28274,6 +28277,9 @@ type Viewer {
 
     # Search query to perform. Required.
     query: String!
+
+    # Search variant for A/B testing (e.g. 'experiment').
+    variant: String
   ): SearchableConnection
 
   # A ShippingPreset
