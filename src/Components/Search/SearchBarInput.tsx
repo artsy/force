@@ -1,9 +1,15 @@
 import { AutocompleteInput, useDidMount } from "@artsy/palette"
 import { type ChangeEvent, type FC, useEffect, useRef, useState } from "react"
 
-import { ActionType } from "@artsy/cohesion"
+import {
+  ActionType,
+  type SearchedWithNoResults,
+  type SearchedWithResults,
+  type SelectedItemFromSearch,
+} from "@artsy/cohesion"
 import { DESKTOP_NAV_BAR_TOP_TIER_HEIGHT } from "Components/NavBar/constants"
 import { useRouter } from "System/Hooks/useRouter"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useClientQuery } from "Utils/Hooks/useClientQuery"
 import { extractNodes } from "Utils/extractNodes"
 import type {
@@ -13,6 +19,8 @@ import type {
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { useDebounce } from "use-debounce"
+import { useVariant } from "@unleash/proxy-client-react"
+import { useTrackFeatureVariantOnMount } from "System/Hooks/useTrackFeatureVariant"
 import { SearchBarFooter } from "./SearchBarFooter"
 import { SearchInputPillsFragmentContainer } from "./SearchInputPills"
 import { StaticSearchContainer } from "./StaticSearchContainer"
@@ -24,6 +32,8 @@ import { type PillType, SEARCH_DEBOUNCE_DELAY, TOP_PILL } from "./constants"
 import { getLabel } from "./utils/getLabel"
 import { shouldStartSearching } from "./utils/shouldStartSearching"
 
+const SEARCH_AUTOSUGGEST_VARIANT_EXPERIMENT = "onyx_search-autosuggest-variant"
+
 export interface SearchBarInputProps {
   searchTerm: string
 }
@@ -32,8 +42,23 @@ export const SearchBarInput: FC<
   React.PropsWithChildren<SearchBarInputProps>
 > = ({ searchTerm }) => {
   const tracking = useTracking()
+  const { contextPageOwnerType, contextPageOwnerId, contextPageOwnerSlug } =
+    useAnalyticsContext()
 
   const isClient = useDidMount()
+
+  // Get variant from Unleash for A/B testing
+  const unleashVariant = useVariant(SEARCH_AUTOSUGGEST_VARIANT_EXPERIMENT)
+  const variant =
+    unleashVariant.enabled && unleashVariant.name !== "disabled"
+      ? unleashVariant.name
+      : undefined
+
+  // Track experiment view for analytics
+  useTrackFeatureVariantOnMount({
+    experimentName: SEARCH_AUTOSUGGEST_VARIANT_EXPERIMENT,
+    variantName: unleashVariant.name,
+  })
 
   const { data, refetch } = useClientQuery<SearchBarInputSuggestQuery>({
     query: QUERY,
@@ -41,6 +66,7 @@ export const SearchBarInput: FC<
       hasTerm: shouldStartSearching(searchTerm ?? ""),
       term: searchTerm ? String(searchTerm) : "",
       entities: [],
+      variant,
     },
     skip: !searchTerm,
   })
@@ -60,7 +86,7 @@ export const SearchBarInput: FC<
   const options = extractNodes(data?.viewer?.searchConnection)
 
   const formattedOptions: SuggestionItemOptionProps[] = [
-    ...options.map(option => {
+    ...options.map((option, index) => {
       return {
         text: option.displayLabel ?? "Unknown",
         value: option.displayLabel ?? "unknown",
@@ -73,6 +99,9 @@ export const SearchBarInput: FC<
         showAuctionResultsButton: !!option.statuses?.auctionLots,
         href: option.href ?? "/",
         typename: option.__typename,
+        item_id: option.internalID,
+        item_number: index,
+        item_type: option.displayType ?? undefined,
       }
     }),
     {
@@ -109,6 +138,7 @@ export const SearchBarInput: FC<
       hasTerm: true,
       term: String(value),
       entities,
+      variant,
     })
 
     lastRefetchDisposableRef.current = disposable
@@ -121,14 +151,27 @@ export const SearchBarInput: FC<
 
         const nodes = extractNodes(res?.viewer?.searchConnection)
 
-        tracking.trackEvent({
-          action_type:
-            nodes.length > 0
-              ? ActionType.searchedWithResults
-              : ActionType.searchedWithNoResults,
+        const baseEvent = {
           context_module: selectedPill.analyticsContextModule,
+          context_owner_type: contextPageOwnerType,
+          context_owner_id: contextPageOwnerId,
+          context_owner_slug: contextPageOwnerSlug,
           query: value,
-        })
+        }
+
+        if (nodes.length > 0) {
+          const event: SearchedWithResults = {
+            action: ActionType.searchedWithResults,
+            ...baseEvent,
+          }
+          tracking.trackEvent(event)
+        } else {
+          const event: SearchedWithNoResults = {
+            action: ActionType.searchedWithNoResults,
+            ...baseEvent,
+          }
+          tracking.trackEvent(event)
+        }
       })
       .catch((err: Error) => {
         // Network errors or cancelled requests - no analytics needed
@@ -169,12 +212,19 @@ export const SearchBarInput: FC<
   }
 
   const handleSelect = (option: SuggestionItemOptionProps) => {
-    tracking.trackEvent({
-      action_type: ActionType.selectedItemFromSearch,
-      context_module: selectedPill.analyticsContextModule,
-      destination_path: option.href,
-      query: value,
-    })
+    // Only track if this is an actual search result, not the footer
+    if (option.typename !== "Footer") {
+      const event: SelectedItemFromSearch = {
+        action: ActionType.selectedItemFromSearch,
+        context_module: selectedPill.analyticsContextModule,
+        destination_path: option.href,
+        query: value,
+        item_id: option.item_id!,
+        item_number: option.item_number!,
+        item_type: option.item_type!,
+      }
+      tracking.trackEvent(event)
+    }
 
     resetValue()
     redirect(option.href)
@@ -271,6 +321,7 @@ const QUERY = graphql`
     $term: String!
     $hasTerm: Boolean!
     $entities: [SearchEntity]
+    $variant: String
   ) {
     viewer {
       ...SearchInputPills_viewer @arguments(term: $term)
@@ -280,6 +331,7 @@ const QUERY = graphql`
         entities: $entities
         mode: AUTOSUGGEST
         first: 7
+        variant: $variant
       ) @include(if: $hasTerm) {
         edges {
           node {
@@ -288,10 +340,12 @@ const QUERY = graphql`
             imageUrl
             __typename
             ... on SearchableItem {
+              internalID
               displayType
               slug
             }
             ... on Artist {
+              internalID
               statuses {
                 artworks
                 auctionLots

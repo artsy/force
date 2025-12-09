@@ -1,6 +1,12 @@
-import { ActionType } from "@artsy/cohesion"
+import {
+  ActionType,
+  type SearchedWithNoResults,
+  type SearchedWithResults,
+  type SelectedItemFromSearch,
+} from "@artsy/cohesion"
 import { Flex, Spinner } from "@artsy/palette"
 import { InfiniteScrollSentinel } from "Components/InfiniteScrollSentinel"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import {
   SuggestionItem,
   type SuggestionItemOptionProps,
@@ -36,19 +42,34 @@ const SearchResultsList: FC<
   React.PropsWithChildren<SearchResultsListProps>
 > = ({ relay, viewer, query, selectedPill, onClose }) => {
   const tracking = useTracking()
+  const { contextPageOwnerType, contextPageOwnerId, contextPageOwnerSlug } =
+    useAnalyticsContext()
   const options = extractNodes(viewer.searchConnection)
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (viewer.searchConnection) {
-      tracking.trackEvent({
-        action_type:
-          options.length > 0
-            ? ActionType.searchedWithResults
-            : ActionType.searchedWithNoResults,
+      const baseEvent = {
         context_module: selectedPill.analyticsContextModule,
+        context_owner_type: contextPageOwnerType,
+        context_owner_id: contextPageOwnerId,
+        context_owner_slug: contextPageOwnerSlug,
         query: query,
-      })
+      }
+
+      if (options.length > 0) {
+        const event: SearchedWithResults = {
+          action: ActionType.searchedWithResults,
+          ...baseEvent,
+        }
+        tracking.trackEvent(event)
+      } else {
+        const event: SearchedWithNoResults = {
+          action: ActionType.searchedWithNoResults,
+          ...baseEvent,
+        }
+        tracking.trackEvent(event)
+      }
     }
     // When selecting another pill - this effect shouldn't be executed again, so we disable the linting rule
   }, [viewer.searchConnection])
@@ -87,12 +108,16 @@ const SearchResultsList: FC<
     quickNavigation = false,
   ) => {
     if (!quickNavigation) {
-      tracking.trackEvent({
-        action_type: ActionType.selectedItemFromSearch,
+      const event: SelectedItemFromSearch = {
+        action: ActionType.selectedItemFromSearch,
         context_module: selectedPill.analyticsContextModule,
         destination_path: option.href,
         query: query,
-      })
+        item_id: option.item_id!,
+        item_number: option.item_number!,
+        item_type: option.item_type!,
+      }
+      tracking.trackEvent(event)
     }
 
     onClose()
@@ -134,6 +159,7 @@ export const SearchResultsListPaginationContainer = createPaginationContainer(
         after: { type: "String" }
         term: { type: "String!", defaultValue: "" }
         entities: { type: "[SearchEntity]" }
+        variant: { type: "String" }
       ) {
         searchConnection(
           query: $term
@@ -141,6 +167,7 @@ export const SearchResultsListPaginationContainer = createPaginationContainer(
           mode: AUTOSUGGEST
           first: $first
           after: $after
+          variant: $variant
         ) @connection(key: "SearchResultsList_searchConnection") {
           edges {
             node {
@@ -149,10 +176,12 @@ export const SearchResultsListPaginationContainer = createPaginationContainer(
               imageUrl
               __typename
               ... on SearchableItem {
+                internalID
                 displayType
                 slug
               }
               ... on Artist {
+                internalID
                 statuses {
                   artworks
                   auctionLots
@@ -183,6 +212,7 @@ export const SearchResultsListPaginationContainer = createPaginationContainer(
         after: cursor,
         term: fragmentVariables.term,
         entities: fragmentVariables.entities,
+        variant: fragmentVariables.variant,
       }
     },
     query: graphql`
@@ -190,10 +220,16 @@ export const SearchResultsListPaginationContainer = createPaginationContainer(
         $after: String
         $term: String!
         $entities: [SearchEntity]
+        $variant: String
       ) {
         viewer {
           ...SearchResultsList_viewer
-            @arguments(term: $term, entities: $entities, after: $after)
+            @arguments(
+              term: $term
+              entities: $entities
+              after: $after
+              variant: $variant
+            )
         }
       }
     `,

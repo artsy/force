@@ -1,3 +1,4 @@
+import { ActionType } from "@artsy/cohesion"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import ChevronLeftIcon from "@artsy/icons/ChevronLeftIcon"
 import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
@@ -7,7 +8,9 @@ import {
   type MenuData,
   isMenuLinkData,
 } from "Components/NavBar/menuData"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import type * as React from "react"
+import { useEffect, useRef } from "react"
 import { useTracking } from "react-tracking"
 import {
   NavBarMobileMenuItemButton,
@@ -19,14 +22,52 @@ import { useTrackingContextModule } from "./useTrackingContextModule"
 
 interface NavBarMobileSubMenuProps {
   menu: MenuData
+  level?: number
 }
 
 export const NavBarMobileSubMenu: React.FC<
   React.PropsWithChildren<NavBarMobileSubMenuProps>
-> = ({ children, menu }) => {
+> = ({ children, menu, level = 0 }) => {
   const { trackEvent } = useTracking()
   const { path, push } = useNavBarMobileMenuNavigation()
   const contextModule = useTrackingContextModule()
+  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
+    useAnalyticsContext()
+
+  const hasTrackedRef = useRef(false)
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const isOpen = !!path?.includes(menu.title)
+
+  // Track when drilldown menu becomes visible (once per page load, with 500ms delay)
+  // biome-ignore lint/correctness/useExhaustiveDependencies: only track once per page load based on open state
+  useEffect(() => {
+    if (isOpen && !hasTrackedRef.current) {
+      // Only fire if menu stays open for at least 500ms
+      timeoutRef.current = setTimeout(() => {
+        trackEvent({
+          action: ActionType.navigationDropdownViewed,
+          context_module: "header" as any,
+          context_page_owner_type: contextPageOwnerType!,
+          context_page_owner_id: contextPageOwnerId,
+          context_page_owner_slug: contextPageOwnerSlug,
+          navigation_item: menu.title,
+          level: level,
+          interaction_type: "drilldown",
+        })
+        hasTrackedRef.current = true
+      }, 500)
+    } else if (!isOpen && timeoutRef.current) {
+      // Cancel tracking if menu closes before delay
+      clearTimeout(timeoutRef.current)
+      timeoutRef.current = null
+    }
+
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current)
+      }
+    }
+  }, [isOpen])
 
   return (
     <>
@@ -55,9 +96,11 @@ export const NavBarMobileSubMenu: React.FC<
       </NavBarMobileMenuItemButton>
 
       <NavBarMobileSubMenuPanel
-        isOpen={!!path?.includes(menu.title)}
+        isOpen={isOpen}
         title={menu.title}
         links={menu.links}
+        parentNavigationItem={menu.title}
+        level={level}
       />
     </>
   )
@@ -69,12 +112,21 @@ interface NavBarMobileSubMenuPanelProps {
   isOpen: boolean
   title: string
   links: LinkData[]
+  parentNavigationItem: string
+  level: number
   showBacknav?: boolean
 }
 
 const NavBarMobileSubMenuPanel: React.FC<
   React.PropsWithChildren<NavBarMobileSubMenuPanelProps>
-> = ({ isOpen, title, links, showBacknav = true }) => {
+> = ({
+  isOpen,
+  title,
+  links,
+  parentNavigationItem,
+  level,
+  showBacknav = true,
+}) => {
   const isArtistsMenu = title === "Artists"
 
   return (
@@ -91,7 +143,14 @@ const NavBarMobileSubMenuPanel: React.FC<
       </Flex>
 
       {links.map((link, i) => {
-        return <NavBarMobileSubMenuItem key={i} link={link} />
+        return (
+          <NavBarMobileSubMenuItem
+            key={i}
+            link={link}
+            parentNavigationItem={parentNavigationItem}
+            level={level}
+          />
+        )
       })}
 
       {isArtistsMenu && (
@@ -159,18 +218,24 @@ export const NavBarMobileSubMenuBack: React.FC<
 
 interface NavBarMobileSubMenuItemProps {
   link: LinkData
+  parentNavigationItem: string
+  level: number
 }
 
 export const NavBarMobileSubMenuItem: React.FC<
   React.PropsWithChildren<NavBarMobileSubMenuItemProps>
-> = ({ link }) => {
+> = ({ link, parentNavigationItem, level }) => {
   const { trackEvent } = useTracking()
   const contextModule = useTrackingContextModule()
+  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
+    useAnalyticsContext()
 
   if (isMenuLinkData(link)) {
     return (
       <>
-        <NavBarMobileSubMenu menu={link.menu}>{link.text}</NavBarMobileSubMenu>
+        <NavBarMobileSubMenu menu={link.menu} level={level + 1}>
+          {link.text}
+        </NavBarMobileSubMenu>
 
         {link.dividerBelow && <Separator my={1} />}
       </>
@@ -181,9 +246,13 @@ export const NavBarMobileSubMenuItem: React.FC<
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
   ) => {
     trackEvent({
-      action_type: DeprecatedAnalyticsSchema.ActionType.Click,
-      context_module: contextModule,
+      action: "click",
       flow: "Header",
+      context_module: contextModule,
+      context_page_owner_type: contextPageOwnerType!,
+      context_page_owner_id: contextPageOwnerId,
+      context_page_owner_slug: contextPageOwnerSlug,
+      parent_navigation_item: parentNavigationItem,
       subject: link.text,
       destination_path: link.href,
     })

@@ -1,6 +1,8 @@
 import SearchIcon from "@artsy/icons/SearchIcon"
 import { LabeledInput, useDidMount } from "@artsy/palette"
 import { type FC, useState } from "react"
+import { useVariant } from "@unleash/proxy-client-react"
+import { useTrackFeatureVariantOnMount } from "System/Hooks/useTrackFeatureVariant"
 import { OverlayRefetchContainer } from "./Overlay"
 
 import { StaticSearchContainer } from "Components/Search/StaticSearchContainer"
@@ -12,6 +14,8 @@ import type {
 } from "__generated__/MobileSearchBarSuggestQuery.graphql"
 import { graphql } from "react-relay"
 
+const SEARCH_AUTOSUGGEST_VARIANT_EXPERIMENT = "onyx_search-autosuggest-variant"
+
 interface MobileSearchBarProps {
   viewer: NonNullable<MobileSearchBarSuggestQuery$data["viewer"]>
   onClose: () => void
@@ -21,6 +25,19 @@ export const MobileSearchBar: FC<
   React.PropsWithChildren<MobileSearchBarProps>
 > = ({ viewer, onClose }) => {
   const [overlayDisplayed, setOverlayDisplayed] = useState(false)
+
+  // Get variant from Unleash for A/B testing (on page load)
+  const unleashVariant = useVariant(SEARCH_AUTOSUGGEST_VARIANT_EXPERIMENT)
+  const variant =
+    unleashVariant.enabled && unleashVariant.name !== "disabled"
+      ? unleashVariant.name
+      : undefined
+
+  // Track experiment view for analytics (on page load, not on overlay open)
+  useTrackFeatureVariantOnMount({
+    experimentName: SEARCH_AUTOSUGGEST_VARIANT_EXPERIMENT,
+    variantName: unleashVariant.name,
+  })
 
   const displayOverlay = () => {
     setOverlayDisplayed(true)
@@ -34,7 +51,11 @@ export const MobileSearchBar: FC<
   return (
     <>
       {overlayDisplayed && (
-        <OverlayRefetchContainer viewer={viewer} onClose={handleOverlayClose} />
+        <OverlayRefetchContainer
+          viewer={viewer}
+          onClose={handleOverlayClose}
+          variant={variant}
+        />
       )}
 
       <LabeledInput
@@ -69,10 +90,16 @@ export const MobileSearchBarQueryRenderer: FC<
           $term: String!
           $hasTerm: Boolean!
           $entities: [SearchEntity]
+          $variant: String
         ) {
           viewer {
             ...Overlay_viewer
-              @arguments(term: $term, hasTerm: $hasTerm, entities: $entities)
+              @arguments(
+                term: $term
+                hasTerm: $hasTerm
+                entities: $entities
+                variant: $variant
+              )
           }
         }
       `}
@@ -80,6 +107,7 @@ export const MobileSearchBarQueryRenderer: FC<
         hasTerm: false,
         term: "",
         entities: [],
+        variant: undefined,
       }}
       render={({ props: relayProps }) => {
         if (relayProps?.viewer) {

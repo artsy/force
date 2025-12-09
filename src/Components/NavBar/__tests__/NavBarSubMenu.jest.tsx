@@ -6,6 +6,13 @@ import { fireEvent } from "@testing-library/react"
 import { useTracking } from "react-tracking"
 
 jest.mock("react-tracking")
+jest.mock("System/Hooks/useAnalyticsContext", () => ({
+  useAnalyticsContext: jest.fn(() => ({
+    contextPageOwnerId: undefined,
+    contextPageOwnerSlug: undefined,
+    contextPageOwnerType: "home",
+  })),
+}))
 
 describe("NavBarSubMenu", () => {
   const trackEvent = jest.fn()
@@ -17,6 +24,7 @@ describe("NavBarSubMenu", () => {
         contextModule={
           DeprecatedAnalyticsSchema.ContextModule.HeaderArtworksDropdown
         }
+        parentNavigationItem="Artworks"
         onClick={jest.fn()}
         {...passedProps}
       />,
@@ -58,7 +66,17 @@ describe("NavBarSubMenu", () => {
     const firstLink = container.querySelector("a")
     fireEvent.click(firstLink!)
 
-    expect(trackEvent).toBeCalled()
+    expect(trackEvent).toBeCalledWith({
+      action: "click",
+      flow: "Header",
+      context_module:
+        DeprecatedAnalyticsSchema.ContextModule.HeaderArtworksDropdown,
+      context_page_owner_type: "home",
+      parent_navigation_item: "Artworks",
+      dropdown_group: "By Size",
+      subject: "Small (under 16in)",
+      destination_path: "/collect?sizes%5B0%5D=SMALL",
+    })
   })
 
   it("calls onClick prop", () => {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<670212337c6efe4898e1e0c116304585>>
+ * @generated SignedSource<<502ba2f1813eb00bd57d03860a276009>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -24,6 +24,7 @@ export type SearchResultsList_viewer$data = {
         readonly displayType?: string | null | undefined;
         readonly href: string | null | undefined;
         readonly imageUrl: string | null | undefined;
+        readonly internalID?: string;
         readonly slug?: string;
         readonly statuses?: {
           readonly artworks: boolean | null | undefined;
@@ -39,7 +40,15 @@ export type SearchResultsList_viewer$key = {
   readonly " $fragmentSpreads": FragmentRefs<"SearchResultsList_viewer">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [
     {
       "defaultValue": null,
@@ -60,6 +69,11 @@ const node: ReaderFragment = {
       "defaultValue": "",
       "kind": "LocalArgument",
       "name": "term"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "variant"
     }
   ],
   "kind": "Fragment",
@@ -94,6 +108,11 @@ const node: ReaderFragment = {
           "kind": "Variable",
           "name": "query",
           "variableName": "term"
+        },
+        {
+          "kind": "Variable",
+          "name": "variant",
+          "variableName": "variant"
         }
       ],
       "concreteType": "SearchableConnection",
@@ -148,6 +167,7 @@ const node: ReaderFragment = {
                 {
                   "kind": "InlineFragment",
                   "selections": [
+                    (v0/*: any*/),
                     {
                       "alias": null,
                       "args": null,
@@ -169,6 +189,7 @@ const node: ReaderFragment = {
                 {
                   "kind": "InlineFragment",
                   "selections": [
+                    (v0/*: any*/),
                     {
                       "alias": null,
                       "args": null,
@@ -280,7 +301,8 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "8ebbcb51fdd52ce906eb31c9608d3d8a";
+(node as any).hash = "3ec2b9f055d3dacb8dca427a3393458c";
 
 export default node;
