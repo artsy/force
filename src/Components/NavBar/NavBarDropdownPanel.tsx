@@ -71,6 +71,7 @@ export const NavBarDropdownPanel: React.FC<NavBarDropdownPanelProps> = ({
                 context_page_owner_id: contextPageOwnerId,
                 context_page_owner_slug: contextPageOwnerSlug,
                 navigation_item: label,
+                level: 0,
                 interaction_type: "hover",
               })
               hasTrackedRef.current = true

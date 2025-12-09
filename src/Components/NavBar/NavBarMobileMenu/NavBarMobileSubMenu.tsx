@@ -22,11 +22,12 @@ import { useTrackingContextModule } from "./useTrackingContextModule"
 
 interface NavBarMobileSubMenuProps {
   menu: MenuData
+  level?: number
 }
 
 export const NavBarMobileSubMenu: React.FC<
   React.PropsWithChildren<NavBarMobileSubMenuProps>
-> = ({ children, menu }) => {
+> = ({ children, menu, level = 0 }) => {
   const { trackEvent } = useTracking()
   const { path, push } = useNavBarMobileMenuNavigation()
   const contextModule = useTrackingContextModule()
@@ -50,6 +51,7 @@ export const NavBarMobileSubMenu: React.FC<
           context_page_owner_id: contextPageOwnerId,
           context_page_owner_slug: contextPageOwnerSlug,
           navigation_item: menu.title,
+          level: level,
           interaction_type: "drilldown",
         })
         hasTrackedRef.current = true
@@ -98,6 +100,7 @@ export const NavBarMobileSubMenu: React.FC<
         title={menu.title}
         links={menu.links}
         parentNavigationItem={menu.title}
+        level={level}
       />
     </>
   )
@@ -110,12 +113,20 @@ interface NavBarMobileSubMenuPanelProps {
   title: string
   links: LinkData[]
   parentNavigationItem: string
+  level: number
   showBacknav?: boolean
 }
 
 const NavBarMobileSubMenuPanel: React.FC<
   React.PropsWithChildren<NavBarMobileSubMenuPanelProps>
-> = ({ isOpen, title, links, parentNavigationItem, showBacknav = true }) => {
+> = ({
+  isOpen,
+  title,
+  links,
+  parentNavigationItem,
+  level,
+  showBacknav = true,
+}) => {
   const isArtistsMenu = title === "Artists"
 
   return (
@@ -137,6 +148,7 @@ const NavBarMobileSubMenuPanel: React.FC<
             key={i}
             link={link}
             parentNavigationItem={parentNavigationItem}
+            level={level}
           />
         )
       })}
@@ -207,11 +219,12 @@ export const NavBarMobileSubMenuBack: React.FC<
 interface NavBarMobileSubMenuItemProps {
   link: LinkData
   parentNavigationItem: string
+  level: number
 }
 
 export const NavBarMobileSubMenuItem: React.FC<
   React.PropsWithChildren<NavBarMobileSubMenuItemProps>
-> = ({ link, parentNavigationItem }) => {
+> = ({ link, parentNavigationItem, level }) => {
   const { trackEvent } = useTracking()
   const contextModule = useTrackingContextModule()
   const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
@@ -220,7 +233,9 @@ export const NavBarMobileSubMenuItem: React.FC<
   if (isMenuLinkData(link)) {
     return (
       <>
-        <NavBarMobileSubMenu menu={link.menu}>{link.text}</NavBarMobileSubMenu>
+        <NavBarMobileSubMenu menu={link.menu} level={level + 1}>
+          {link.text}
+        </NavBarMobileSubMenu>
 
         {link.dividerBelow && <Separator my={1} />}
       </>
