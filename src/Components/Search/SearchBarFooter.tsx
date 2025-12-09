@@ -1,4 +1,4 @@
-import { ActionType } from "@artsy/cohesion"
+import { ActionType, type SelectedItemFromSearchPage } from "@artsy/cohesion"
 import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
 import { Flex, Text } from "@artsy/palette"
 import type { FC } from "react"
@@ -19,12 +19,17 @@ export const SearchBarFooter: FC<
   const tracking = useTracking()
 
   const handleClick = () => {
-    tracking.trackEvent({
-      action_type: ActionType.selectedItemFromSearch,
-      context_module: selectedPill.analyticsContextModule,
+    // Note: This is clicking through to see all results, not selecting a specific item
+    // We track this as selectedItemFromSearchPage since it's navigating to the search page
+    const event: SelectedItemFromSearchPage = {
+      action: ActionType.selectedItemFromSearchPage,
       destination_path: href,
       query: query,
-    })
+      item_id: "search-footer",
+      item_number: -1,
+      item_type: "search-page",
+    }
+    tracking.trackEvent(event)
   }
 
   return (
