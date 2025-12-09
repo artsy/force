@@ -127,14 +127,6 @@ jest.mock(
   }),
 )
 
-const mockLegacySetPaymentMutation = {
-  submitMutation: jest.fn(),
-}
-
-jest.mock("Apps/Order/Mutations/useSetPayment", () => ({
-  useSetPayment: () => mockLegacySetPaymentMutation,
-}))
-
 // Mock response factories
 const createConfirmationTokenResponse = paymentMethodPreview => ({
   toPromise: () =>
@@ -160,7 +152,7 @@ const MOCK_ACH_PREVIEW = {
 }
 
 const MOCK_ORDER_SUCCESS = (paymentMethod: string, tokenId: string) => ({
-  updateOrder: {
+  setOrderPayment: {
     orderOrError: {
       __typename: "OrderMutationSuccess",
       order: {
@@ -658,7 +650,7 @@ describe("Order2PaymentForm", () => {
      * Credit Card / ACH / SEPA (Stripe Payment Element):
      * 1. elements.submit() -> createConfirmationToken()
      * 2. Fetch confirmation token details from Exchange
-     * 3. updateOrderMutation with corresponding payment method (CREDIT_CARD, US_BANK_ACCOUNT, or SEPA_DEBIT)
+     * 3. setOrderPaymentMutation with corresponding payment method (CREDIT_CARD, US_BANK_ACCOUNT, or SEPA_DEBIT)
      * 4. setConfirmationToken with payment method preview
      * 5. setPaymentComplete
      *
@@ -775,7 +767,7 @@ describe("Order2PaymentForm", () => {
       expect(mockCheckoutContext.setPaymentComplete).toHaveBeenCalled()
     })
 
-    it("handles updateOrderMutation error", async () => {
+    it("handles setOrderPaymentMutation error", async () => {
       const tokenId = "ach-confirmation-token-id"
 
       renderPaymentForm()
@@ -819,18 +811,9 @@ describe("Order2PaymentForm", () => {
 
       await userEvent.click(screen.getByTestId("PaymentFormWire"))
 
-      const mockWireTransferSuccess = {
-        commerceSetPayment: {
-          orderOrError: {
-            __typename: "OrderMutationSuccess",
-            order: {
-              paymentMethod: "WIRE_TRANSFER",
-            },
-          },
-        },
-      }
+      const mockWireTransferSuccess = MOCK_ORDER_SUCCESS("WIRE_TRANSFER", "")
 
-      mockLegacySetPaymentMutation.submitMutation.mockResolvedValueOnce(
+      mockSetPaymentMutation.submitMutation.mockResolvedValueOnce(
         mockWireTransferSuccess,
       )
 
@@ -841,9 +824,7 @@ describe("Order2PaymentForm", () => {
       ).toHaveBeenCalledWith("ordersPayment")
 
       await waitFor(() => {
-        expect(
-          mockLegacySetPaymentMutation.submitMutation,
-        ).toHaveBeenCalledWith({
+        expect(mockSetPaymentMutation.submitMutation).toHaveBeenCalledWith({
           variables: {
             input: {
               id: "order-id",
@@ -865,16 +846,14 @@ describe("Order2PaymentForm", () => {
 
       await userEvent.click(screen.getByTestId("PaymentFormWire"))
 
-      mockLegacySetPaymentMutation.submitMutation.mockRejectedValueOnce(
+      mockSetPaymentMutation.submitMutation.mockRejectedValueOnce(
         new Error("Wire transfer setup failed"),
       )
 
       await userEvent.click(screen.getByText("Continue to Review"))
 
       await waitFor(() => {
-        expect(
-          mockLegacySetPaymentMutation.submitMutation,
-        ).toHaveBeenCalledWith({
+        expect(mockSetPaymentMutation.submitMutation).toHaveBeenCalledWith({
           variables: {
             input: {
               id: "order-id",
