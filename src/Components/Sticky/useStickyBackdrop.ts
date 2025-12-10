@@ -4,9 +4,8 @@ export const useStickyBackdrop = () => {
   const { theme } = useTheme()
 
   const up = {
-    backdropFilter: "blur(10px)",
     backgroundColor: {
-      light: "rgba(255, 255, 255, 0.9)",
+      light: "rgba(255, 255, 255, 0.98)",
       dark: "rgba(0, 0, 0, 0.9)",
     }[theme.name],
   }
