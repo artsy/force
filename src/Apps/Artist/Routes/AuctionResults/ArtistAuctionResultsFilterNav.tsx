@@ -38,7 +38,8 @@ export const ArtistAuctionResultsFilterNav: FC<
             display="flex"
             alignItems="center"
             gap={0.5}
-            p={2}
+            px={2}
+            pb={2}
           >
             <FilterIcon />
 
@@ -67,7 +68,7 @@ export const ArtistAuctionResultsFilterNavPlaceholder: FC<
   return (
     <ArtistAuctionResultsFilterNavBar
       mobile={
-        <Box display="flex" alignItems="center" gap={0.5} p={2}>
+        <Box display="flex" alignItems="center" gap={0.5} px={2} pb={2}>
           <FilterIcon />
 
           <Text variant="xs">Sort & Filter</Text>
@@ -141,15 +142,23 @@ const ArtistAuctionResultsFilterNavBar: FC<
     >
       <Media at="xs">
         <Sticky bottomBoundary="#Sticky__ArtistAuctionResultsFilter">
-          <FullBleed
-            backgroundColor="mono0"
-            borderBottom="1px solid"
-            borderColor="mono10"
-          >
-            <Flex justifyContent="flex-end" alignItems="center" width="100%">
-              {mobile}
-            </Flex>
-          </FullBleed>
+          {({ scrollDirection }) => {
+            return (
+              <FullBleed
+                style={backdrop[scrollDirection]}
+                borderBottom="1px solid"
+                borderColor="mono10"
+              >
+                <Flex
+                  justifyContent="flex-end"
+                  alignItems="center"
+                  width="100%"
+                >
+                  {mobile}
+                </Flex>
+              </FullBleed>
+            )
+          }}
         </Sticky>
       </Media>
 
@@ -164,7 +173,7 @@ const ArtistAuctionResultsFilterNavBar: FC<
                       alignItems="center"
                       justifyContent="space-between"
                       gap={2}
-                      py={1}
+                      pb={2}
                     >
                       {desktop}
                     </Flex>
