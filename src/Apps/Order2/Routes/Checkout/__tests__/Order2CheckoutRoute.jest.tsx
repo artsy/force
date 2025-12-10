@@ -326,7 +326,9 @@ const helpers = {
         })
       })
 
-      expect(wireTransferMutation.operationName).toBe("useSetPaymentMutation")
+      expect(wireTransferMutation.operationName).toBe(
+        "useOrder2SetOrderPaymentMutation",
+      )
       expect(wireTransferMutation.operationVariables.input).toEqual({
         id: "order-id",
         paymentMethod: "WIRE_TRANSFER",
