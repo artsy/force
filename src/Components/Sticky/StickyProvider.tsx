@@ -289,26 +289,53 @@ const StickyShadow: React.FC<{
 
 const generateId = () => Math.random().toString(26).slice(2)
 
+const NAMESPACE = "JUMP"
+
 /**
- * Given a sticky ID; find the distance from the top it should sit in relation
- * to any existing stickies.
+ * Given a sticky ID and target element; find the distance from the top based on
+ * which stickies will be FIXED when scrolling to that target.
  */
 export const getOffsetTopForSticky = ({
   id,
   stickies,
+  targetEl,
 }: {
   id: string
   stickies: TSticky[]
+  targetEl?: HTMLElement | null
 }) => {
-  const relevant = stickies.filter(sticky => sticky.status === "FIXED")
-  const index = relevant.findIndex(sticky => sticky.id === id)
+  // If we don't have a target element, fall back to the current FIXED stickies
+  if (!targetEl) {
+    const relevant = stickies.filter(sticky => sticky.status === "FIXED")
+    const index = relevant.findIndex(sticky => sticky.id === id)
 
-  // If sticky is not FIXED, return 0 (no offset needed)
-  if (index === -1) return 0
+    // If sticky is not FIXED, return 0 (no offset needed)
+    if (index === -1) return 0
 
-  return compound([0, ...relevant.map(({ height }) => height).slice(0, -1)])[
-    index
-  ]
+    return compound([0, ...relevant.map(({ height }) => height).slice(0, -1)])[
+      index
+    ]
+  }
+
+  // Calculate which stickies will be FIXED when we reach the target
+  const targetRect = targetEl.getBoundingClientRect()
+  const targetY = targetRect.top + window.scrollY
+
+  // Find stickies that will be FIXED when we reach the destination
+  // For stickies above the target, they will be stuck when we arrive
+  const futureStickies = stickies.filter(sticky => {
+    const stickyEl = document.querySelector(`#${NAMESPACE}--${sticky.id}`)
+    if (!stickyEl || sticky.id === id) return false
+
+    const stickyRect = stickyEl.getBoundingClientRect()
+    const stickyY = stickyRect.top + window.scrollY
+
+    // If the sticky is above our target, it will be stuck
+    return stickyY < targetY
+  })
+
+  // Calculate the offset from stickies that will be stuck
+  return futureStickies.reduce((sum, s) => sum + s.height, 0)
 }
 
 export const useSticky = ({ id: _id }: { id?: string } = {}) => {
@@ -345,7 +372,8 @@ export const useSticky = ({ id: _id }: { id?: string } = {}) => {
   )
 
   const offsetTop = useMemo(
-    () => getOffsetTopForSticky({ id: id.current, stickies }) ?? 0,
+    () =>
+      getOffsetTopForSticky({ id: id.current, stickies, targetEl: null }) ?? 0,
     [stickies],
   )
 

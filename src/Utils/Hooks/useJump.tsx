@@ -1,7 +1,5 @@
-import { THEME } from "@artsy/palette-tokens"
 import { useNavBarHeight } from "Components/NavBar/useNavBarHeight"
 import { getOffsetTopForSticky, useSticky } from "Components/Sticky"
-import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 import { scrollToAwaitable } from "Utils/scrollToAwaitable"
 import { type FC, useCallback, useEffect } from "react"
 
@@ -17,9 +15,7 @@ const NAMESPACE = "JUMP"
  * based on the nav and the current state of the sticky component.
  */
 export const useJump = ({ behavior = "smooth", offset = 0 }: UseJump = {}) => {
-  const isMobile = __internal__useMatchMedia(THEME.mediaQueries.xs)
-
-  const { mobile, desktop } = useNavBarHeight()
+  const { computedHeight: navHeight } = useNavBarHeight()
 
   const { stickies, isGlobalNavRetracted } = useSticky()
 
@@ -39,14 +35,12 @@ export const useJump = ({ behavior = "smooth", offset = 0 }: UseJump = {}) => {
         return null
       }
 
-      const offsetTop = getOffsetTopForSticky({ id, stickies }) ?? 0
-
       const { top } = el.getBoundingClientRect()
-
-      const navHeight = isMobile ? mobile : desktop
-
-      // Determine if we're scrolling up - the element is above the current scroll position
       const isScrollingUp = top < 0
+
+      const stickyOffset =
+        getOffsetTopForSticky({ id, stickies, targetEl: el as HTMLElement }) ??
+        0
 
       // When scrolling up and nav is retracted, the nav will expand back down during the scroll,
       // pushing content (including stickies) down by navHeight. We need to account for this
@@ -54,29 +48,21 @@ export const useJump = ({ behavior = "smooth", offset = 0 }: UseJump = {}) => {
       const retractionCompensation =
         isScrollingUp && isGlobalNavRetracted ? navHeight : 0
 
-      const position =
-        top +
-        window.scrollY -
-        (navHeight +
-          offsetTop +
-          retractionCompensation +
-          (options.offset ?? offset))
+      const totalOffset = -(
+        navHeight +
+        stickyOffset +
+        retractionCompensation +
+        (options.offset ?? offset)
+      )
 
       scrollToAwaitable({
-        target: position,
+        target: el as HTMLElement,
+        offset: totalOffset,
         behavior: options.behavior ?? behavior,
         onComplete: options.onComplete,
       })
     },
-    [
-      behavior,
-      desktop,
-      isMobile,
-      mobile,
-      offset,
-      stickies,
-      isGlobalNavRetracted,
-    ],
+    [behavior, navHeight, offset, stickies, isGlobalNavRetracted],
   )
 
   return { jumpTo }
