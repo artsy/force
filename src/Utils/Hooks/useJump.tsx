@@ -21,7 +21,7 @@ export const useJump = ({ behavior = "smooth", offset = 0 }: UseJump = {}) => {
 
   const { mobile, desktop } = useNavBarHeight()
 
-  const { stickies } = useSticky()
+  const { stickies, isGlobalNavRetracted } = useSticky()
 
   const jumpTo = useCallback(
     (
@@ -43,10 +43,24 @@ export const useJump = ({ behavior = "smooth", offset = 0 }: UseJump = {}) => {
 
       const { top } = el.getBoundingClientRect()
 
+      const navHeight = isMobile ? mobile : desktop
+
+      // Determine if we're scrolling up - the element is above the current scroll position
+      const isScrollingUp = top < 0
+
+      // When scrolling up and nav is retracted, the nav will expand back down during the scroll,
+      // pushing content (including stickies) down by navHeight. We need to account for this
+      // by adding extra offset to compensate for the movement.
+      const retractionCompensation =
+        isScrollingUp && isGlobalNavRetracted ? navHeight : 0
+
       const position =
         top +
         window.scrollY -
-        ((isMobile ? mobile : desktop) + offsetTop + (options.offset ?? offset))
+        (navHeight +
+          offsetTop +
+          retractionCompensation +
+          (options.offset ?? offset))
 
       scrollToAwaitable({
         target: position,
@@ -54,7 +68,15 @@ export const useJump = ({ behavior = "smooth", offset = 0 }: UseJump = {}) => {
         onComplete: options.onComplete,
       })
     },
-    [behavior, desktop, isMobile, mobile, offset, stickies],
+    [
+      behavior,
+      desktop,
+      isMobile,
+      mobile,
+      offset,
+      stickies,
+      isGlobalNavRetracted,
+    ],
   )
 
   return { jumpTo }

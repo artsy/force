@@ -91,13 +91,13 @@ const ArtistCombinedRoute: React.FC<
 
       if (section === "auction-results") {
         await waitUntil("auction")
-        jumpTo("marketSignalsTop", { offset: 40 })
+        jumpTo("marketSignalsTop")
         // Remove the subpath from the URL
         const newPath = location.pathname.replace(/\/auction-results$/, "")
         router.replace(newPath)
       } else if (section === "about") {
         await waitUntil("about")
-        jumpTo("artistAboutTop", { offset: 40 })
+        jumpTo("artistAboutTop")
         // Remove the subpath from the URL
         const newPath = location.pathname.replace(/\/about$/, "")
         router.replace(newPath)
@@ -139,7 +139,7 @@ const ArtistCombinedRoute: React.FC<
                       disabled={navigating.artworks}
                       onClick={async () => {
                         // No prior sections; just jump.
-                        jumpTo("artistArtworksTop", { offset: 40 })
+                        jumpTo("artistArtworksTop")
                         handleClick("artworks")
                       }}
                     >
@@ -151,7 +151,7 @@ const ArtistCombinedRoute: React.FC<
                       disabled={navigating.auction}
                       onClick={async () => {
                         await waitUntil("auction")
-                        jumpTo("marketSignalsTop", { offset: 40 })
+                        jumpTo("marketSignalsTop")
                         handleClick("auction results")
                       }}
                     >
@@ -163,7 +163,7 @@ const ArtistCombinedRoute: React.FC<
                       disabled={navigating.about}
                       onClick={async () => {
                         await waitUntil("about")
-                        jumpTo("artistAboutTop", { offset: 40 })
+                        jumpTo("artistAboutTop")
                         handleClick("about")
                       }}
                     >
