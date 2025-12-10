@@ -132,7 +132,7 @@ const ArtistCombinedRoute: React.FC<
           return (
             <FullBleed style={backdrop[scrollDirection]}>
               <AppContainer>
-                <HorizontalPadding>
+                <HorizontalPadding pb={2}>
                   <RouteTabs data-test="navigationTabs" pt={2}>
                     <BaseTab
                       as={Clickable}

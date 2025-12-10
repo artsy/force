@@ -304,61 +304,66 @@ export const BaseArtworkFilter: React.FC<
       {/* Mobile Artwork Filter */}
       <Media at="xs">
         <Sticky bottomBoundary="#Sticky__ArtworkFilter">
-          <FullBleed backgroundColor="mono0">
-            <Flex
-              justifyContent="space-between"
-              alignItems="center"
-              p={2}
-              gap={2}
-              borderBottom="1px solid"
-              borderColor="mono10"
-            >
-              <ArtworkFilterCreateAlert
-                renderButton={props => {
-                  return (
-                    <Clickable
-                      display="flex"
-                      alignItems="center"
-                      gap={0.5}
-                      {...props}
-                    >
-                      <BellStrokeIcon />
+          {({ scrollDirection }) => {
+            return (
+              <FullBleed style={backdrop[scrollDirection]}>
+                <Flex
+                  justifyContent="space-between"
+                  alignItems="center"
+                  px={2}
+                  pb={2}
+                  gap={2}
+                  borderBottom="1px solid"
+                  borderColor="mono10"
+                >
+                  <ArtworkFilterCreateAlert
+                    renderButton={props => {
+                      return (
+                        <Clickable
+                          display="flex"
+                          alignItems="center"
+                          gap={0.5}
+                          {...props}
+                        >
+                          <BellStrokeIcon />
 
-                      <Text variant="xs">Create Alert</Text>
-                    </Clickable>
-                  )
-                }}
-              />
+                          <Text variant="xs">Create Alert</Text>
+                        </Clickable>
+                      )
+                    }}
+                  />
 
-              <Clickable
-                onClick={handleOpen}
-                display="flex"
-                alignItems="center"
-                gap={0.5}
-              >
-                <FilterIcon />
-                <Text variant="xs">
-                  Sort & Filter
-                  {appliedFiltersTotalCount > 0 && (
-                    <Box as="span" color="brand">
-                      {" "}
-                      • {appliedFiltersTotalCount}
-                    </Box>
+                  <Clickable
+                    onClick={handleOpen}
+                    display="flex"
+                    alignItems="center"
+                    gap={0.5}
+                  >
+                    <FilterIcon />
+                    <Text variant="xs">
+                      Sort & Filter
+                      {appliedFiltersTotalCount > 0 && (
+                        <Box as="span" color="brand">
+                          {" "}
+                          • {appliedFiltersTotalCount}
+                        </Box>
+                      )}
+                    </Text>
+                  </Clickable>
+
+                  {isOpen && (
+                    <ArtworkFilterMobileOverlay onClose={handleClose}>
+                      <ArtworkFilterExpandableSort />
+
+                      <Spacer y={4} />
+
+                      {Filters ? Filters : <ArtworkFilters user={user} />}
+                    </ArtworkFilterMobileOverlay>
                   )}
-                </Text>
-              </Clickable>
-
-              {isOpen && (
-                <ArtworkFilterMobileOverlay onClose={handleClose}>
-                  <ArtworkFilterExpandableSort />
-
-                  <Spacer y={4} />
-
-                  {Filters ? Filters : <ArtworkFilters user={user} />}
-                </ArtworkFilterMobileOverlay>
-              )}
-            </Flex>
-          </FullBleed>
+                </Flex>
+              </FullBleed>
+            )
+          }}
         </Sticky>
 
         <Spacer y={4} />
@@ -384,9 +389,6 @@ export const BaseArtworkFilter: React.FC<
 
       {/* Desktop Artwork Filter */}
       <Media greaterThan="xs">
-        {/* Negative offset for positive sticky padding */}
-        <Spacer y={-1} />
-
         <Sticky bottomBoundary="#Sticky__ArtworkFilter">
           {({ stuck, scrollDirection }) => {
             return (
@@ -397,7 +399,7 @@ export const BaseArtworkFilter: React.FC<
                       alignItems="center"
                       justifyContent="space-between"
                       gap={2}
-                      py={1}
+                      pb={2}
                     >
                       <HorizontalOverflow minWidth={0}>
                         <Flex gap={1}>

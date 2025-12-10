@@ -38,4 +38,4 @@ export const LayoutNav: FC<React.PropsWithChildren<unknown>> = () => {
   )
 }
 
-export const NAV_BAR_TRANSITION_DURATION = "150ms"
+export const NAV_BAR_TRANSITION_DURATION = "300ms"
