@@ -6,13 +6,13 @@ import {
   handleBackNavigation,
   preventHardReload,
 } from "Apps/Order2/Utils/navigationGuards"
-import { ErrorPage } from "Components/ErrorPage"
+import { OrderErrorApp } from "Apps/Order2/Components/Order2ErrorPage"
 import { Analytics } from "System/Contexts/AnalyticsContext"
 import { getENV } from "Utils/getENV"
 import type { Order2CheckoutRoute_viewer$key } from "__generated__/Order2CheckoutRoute_viewer.graphql"
 import { useEffect } from "react"
 import { graphql, useFragment } from "react-relay"
-
+import { NOT_FOUND_ERROR } from "Apps/Order2/order2Routes"
 interface Order2CheckoutRouteProps {
   viewer: Order2CheckoutRoute_viewer$key
 }
@@ -27,7 +27,7 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
   const order = me?.order
 
   if (!(order && me)) {
-    return <ErrorPage code={404} message="Order not found" />
+    return <OrderErrorApp code={404} message={NOT_FOUND_ERROR} />
   }
 
   useEffect(() => {

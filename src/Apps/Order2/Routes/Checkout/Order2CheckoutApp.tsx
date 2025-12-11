@@ -23,7 +23,7 @@ import { Order2CollapsibleOrderSummary } from "Apps/Order2/Routes/Checkout/Compo
 import { Order2ReviewStep } from "Apps/Order2/Routes/Checkout/Components/Order2ReviewStep"
 import { Order2PaymentStep } from "Apps/Order2/Routes/Checkout/Components/PaymentStep/Order2PaymentStep"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
-import { ErrorPage } from "Components/ErrorPage"
+import { OrderErrorApp } from "Apps/Order2/Components/Order2ErrorPage"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import type { Order2CheckoutApp_me$key } from "__generated__/Order2CheckoutApp_me.graphql"
 import type { Order2CheckoutApp_order$key } from "__generated__/Order2CheckoutApp_order.graphql"
@@ -32,6 +32,7 @@ import { Meta, Title } from "react-head"
 import { graphql, useFragment } from "react-relay"
 // eslint-disable-next-line no-restricted-imports
 import { Provider } from "unstated"
+import { NOT_FOUND_ERROR } from "Apps/Order2/order2Routes"
 interface Order2CheckoutAppProps {
   order: Order2CheckoutApp_order$key
   me: Order2CheckoutApp_me$key
@@ -56,7 +57,7 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
   } = useCheckoutContext()
 
   if (!order) {
-    return <ErrorPage code={404} message="Order not found" />
+    return <OrderErrorApp code={404} message={NOT_FOUND_ERROR} />
   }
 
   const isOffer = orderData.mode === "OFFER"

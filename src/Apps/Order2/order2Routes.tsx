@@ -1,12 +1,15 @@
 import loadable from "@loadable/component"
 import { newCheckoutEnabled } from "Apps/Order/redirects"
-import { ErrorPage } from "Components/ErrorPage"
+import { OrderErrorApp } from "Apps/Order2/Components/Order2ErrorPage"
 import type { SystemContextProps } from "System/Contexts/SystemContext"
 import type { RouteProps } from "System/Router/Route"
 import createLogger from "Utils/logger"
 import type { order2Routes_CheckoutQuery$data } from "__generated__/order2Routes_CheckoutQuery.graphql"
 import { type Match, RedirectException } from "found"
 import { graphql } from "react-relay"
+
+export const NOT_FOUND_ERROR =
+  "Please check the URL or verify your account details."
 
 const logger = createLogger("order2Routes.tsx")
 
@@ -70,7 +73,7 @@ export const order2Routes: RouteProps[] = [
 
           if (!order) {
             logger.warn("No order found - checkout page")
-            return <ErrorPage code={404} />
+            return <OrderErrorApp code={404} message={NOT_FOUND_ERROR} />
           }
 
           if (order.buyerState !== "INCOMPLETE") {
@@ -129,7 +132,7 @@ export const order2Routes: RouteProps[] = [
 
           if (!order) {
             logger.warn("No order found - offer page")
-            return <ErrorPage code={404} />
+            return <OrderErrorApp code={404} message={NOT_FOUND_ERROR} />
           }
 
           if (order.mode !== "OFFER") {
