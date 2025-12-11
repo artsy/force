@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6952cc5e6850b9bc8763f538a44f6438>>
+ * @generated SignedSource<<08e1bbe4399040f7370c039bf4523be8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -31,7 +31,7 @@ export type FilterArtworksInput = {
   categories?: ReadonlyArray<string | null | undefined> | null | undefined;
   color?: string | null | undefined;
   colors?: ReadonlyArray<string | null | undefined> | null | undefined;
-  completenessTier?: string | null | undefined;
+  completenessTier?: ReadonlyArray<string | null | undefined> | null | undefined;
   dimensionRange?: string | null | undefined;
   disableNotForSaleSorting?: boolean | null | undefined;
   excludeArtworkIDs?: ReadonlyArray<string | null | undefined> | null | undefined;
