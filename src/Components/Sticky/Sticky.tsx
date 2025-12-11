@@ -76,7 +76,6 @@ export const Sticky = ({
 }) => {
   const {
     id: stickyId,
-    offsetTop,
     stickies,
     registerSticky,
     deregisterSticky,
@@ -120,12 +119,13 @@ export const Sticky = ({
   // stickies lower in the DOM (higher index) for correct visual stacking
   const zIndex = myIndex === -1 ? 1 : Math.max(1, 10 - myIndex)
 
-  // Calculate the effective top position
-  // When retracted, non-retractGlobalNav stickies stick at the retracted position
+  // Calculate the effective top position for stacking multiple stickies.
+  // offsetFromFixedAbove sums the heights of FIXED stickies above this one in the DOM,
+  // giving us a stable value that doesn't change based on this sticky's own status.
   const effectiveTop =
     isGlobalNavRetracted && !retractGlobalNav
       ? offsetFromFixedAbove
-      : headerOffset + offsetTop
+      : headerOffset + offsetFromFixedAbove
 
   useEffect(() => {
     registerSticky(containerRef.current?.clientHeight)
