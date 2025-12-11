@@ -1,15 +1,13 @@
 import loadable from "@loadable/component"
 import { newCheckoutEnabled } from "Apps/Order/redirects"
-import { OrderErrorApp } from "Apps/Order2/Components/Order2ErrorPage"
+import { OrderErrorApp } from "Apps/Order2/Components/Order2ErrorApp"
 import type { SystemContextProps } from "System/Contexts/SystemContext"
 import type { RouteProps } from "System/Router/Route"
 import createLogger from "Utils/logger"
 import type { order2Routes_CheckoutQuery$data } from "__generated__/order2Routes_CheckoutQuery.graphql"
+import { NOT_FOUND_ERROR } from "Apps/Order2/constants"
 import { type Match, RedirectException } from "found"
 import { graphql } from "react-relay"
-
-export const NOT_FOUND_ERROR =
-  "Please check the URL or verify your account details."
 
 const logger = createLogger("order2Routes.tsx")
 

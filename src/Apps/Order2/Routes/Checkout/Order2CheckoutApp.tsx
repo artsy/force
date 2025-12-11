@@ -23,7 +23,7 @@ import { Order2CollapsibleOrderSummary } from "Apps/Order2/Routes/Checkout/Compo
 import { Order2ReviewStep } from "Apps/Order2/Routes/Checkout/Components/Order2ReviewStep"
 import { Order2PaymentStep } from "Apps/Order2/Routes/Checkout/Components/PaymentStep/Order2PaymentStep"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
-import { OrderErrorApp } from "Apps/Order2/Components/Order2ErrorPage"
+import { OrderErrorApp } from "Apps/Order2/Components/Order2ErrorApp"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import type { Order2CheckoutApp_me$key } from "__generated__/Order2CheckoutApp_me.graphql"
 import type { Order2CheckoutApp_order$key } from "__generated__/Order2CheckoutApp_order.graphql"
@@ -32,7 +32,7 @@ import { Meta, Title } from "react-head"
 import { graphql, useFragment } from "react-relay"
 // eslint-disable-next-line no-restricted-imports
 import { Provider } from "unstated"
-import { NOT_FOUND_ERROR } from "Apps/Order2/order2Routes"
+import { NOT_FOUND_ERROR } from "Apps/Order2/constants"
 interface Order2CheckoutAppProps {
   order: Order2CheckoutApp_order$key
   me: Order2CheckoutApp_me$key

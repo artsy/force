@@ -6,13 +6,13 @@ import {
   handleBackNavigation,
   preventHardReload,
 } from "Apps/Order2/Utils/navigationGuards"
-import { OrderErrorApp } from "Apps/Order2/Components/Order2ErrorPage"
+import { OrderErrorApp } from "Apps/Order2/Components/Order2ErrorApp"
 import { Analytics } from "System/Contexts/AnalyticsContext"
 import { getENV } from "Utils/getENV"
 import type { Order2CheckoutRoute_viewer$key } from "__generated__/Order2CheckoutRoute_viewer.graphql"
 import { useEffect } from "react"
 import { graphql, useFragment } from "react-relay"
-import { NOT_FOUND_ERROR } from "Apps/Order2/order2Routes"
+import { NOT_FOUND_ERROR } from "Apps/Order2/constants"
 interface Order2CheckoutRouteProps {
   viewer: Order2CheckoutRoute_viewer$key
 }
