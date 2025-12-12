@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8e8d3b2a05248102a9b6f982f69a4a62>>
+ * @generated SignedSource<<ec76a5d0557c6de5f73ac14dd628d5f2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -148,6 +148,44 @@ return {
           {
             "alias": null,
             "args": null,
+            "concreteType": "Image",
+            "kind": "LinkedField",
+            "name": "image",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": [
+                  {
+                    "kind": "Literal",
+                    "name": "version",
+                    "value": "main"
+                  }
+                ],
+                "kind": "ScalarField",
+                "name": "url",
+                "storageKey": "url(version:\"main\")"
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "aspectRatio",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "blurhash",
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "kind": "ScalarField",
             "name": "isInAuction",
             "storageKey": null
@@ -208,12 +246,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2f0677fa8adcc1698157a4a8f82991e1",
+    "cacheID": "d6fd083a02f54c35e1aba3acf13ee5ee",
     "id": null,
     "metadata": {},
     "name": "SaveArtworkToListsButtonQuery",
     "operationKind": "query",
-    "text": "query SaveArtworkToListsButtonQuery(\n  $id: String!\n) {\n  artwork(id: $id) {\n    ...SaveArtworkToListsButton_artwork\n    id\n  }\n}\n\nfragment SaveArtworkToListsButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  title\n  date\n  artistNames\n  preview: image {\n    url(version: \"square\")\n  }\n  isInAuction\n  isSavedToAnyList\n  collectorSignals {\n    auction {\n      lotWatcherCount\n      lotClosesAt\n      liveBiddingStarted\n    }\n  }\n}\n"
+    "text": "query SaveArtworkToListsButtonQuery(\n  $id: String!\n) {\n  artwork(id: $id) {\n    ...SaveArtworkToListsButton_artwork\n    id\n  }\n}\n\nfragment SaveArtworkToListsButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  title\n  date\n  artistNames\n  preview: image {\n    url(version: \"square\")\n  }\n  image {\n    url(version: \"main\")\n    aspectRatio\n    blurhash\n  }\n  isInAuction\n  isSavedToAnyList\n  collectorSignals {\n    auction {\n      lotWatcherCount\n      lotClosesAt\n      liveBiddingStarted\n    }\n  }\n}\n"
   }
 };
 })();

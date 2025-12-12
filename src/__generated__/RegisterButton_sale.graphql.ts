@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f35e3e8bae796923933ff8a283d51cd4>>
+ * @generated SignedSource<<3f431ddc2a65582b53633ff988fded29>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,6 +13,11 @@ import { FragmentRefs } from "relay-runtime";
 export type RegisterButton_sale$data = {
   readonly bidder: {
     readonly qualifiedForBidding: boolean | null | undefined;
+  } | null | undefined;
+  readonly coverImage: {
+    readonly aspectRatio: number;
+    readonly blurhash: string | null | undefined;
+    readonly signupImage: string | null | undefined;
   } | null | undefined;
   readonly isAuction: boolean | null | undefined;
   readonly isClosed: boolean | null | undefined;
@@ -52,6 +57,44 @@ const node: ReaderFragment = {
           "args": null,
           "kind": "ScalarField",
           "name": "qualifiedForBidding",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Image",
+      "kind": "LinkedField",
+      "name": "coverImage",
+      "plural": false,
+      "selections": [
+        {
+          "alias": "signupImage",
+          "args": [
+            {
+              "kind": "Literal",
+              "name": "version",
+              "value": "main"
+            }
+          ],
+          "kind": "ScalarField",
+          "name": "url",
+          "storageKey": "url(version:\"main\")"
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "aspectRatio",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "blurhash",
           "storageKey": null
         }
       ],
@@ -143,6 +186,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "e18690c44438367e8901d36af57723fa";
+(node as any).hash = "738eb147d1ae9179a87b0bb91a14703e";
 
 export default node;

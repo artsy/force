@@ -11,14 +11,22 @@ import {
   AuthDialog,
   type AuthDialogProps,
 } from "Components/AuthDialog/AuthDialog"
+import {
+  COLUMN_WIDTH,
+  getResizedAuthDialogGalleryImage,
+  getResizedAuthDialogImages,
+} from "Components/AuthDialog/Utils/authDialogConstants"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import { prefetchUrlWithSizes } from "System/Utils/prefetchUrl"
 import type { AfterAuthAction } from "Utils/Hooks/useAuthIntent"
+import { getENV } from "Utils/getENV"
 import { merge } from "lodash"
 import {
   type FC,
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useReducer,
 } from "react"
 
@@ -46,8 +54,18 @@ export const DEFAULT_AUTH_MODAL_INTENTS: Record<AuthDialogMode, AuthIntent> = {
 }
 
 export type AuthDialogOptions = {
-  /** Whether or not to display an evergreen side panel for visual interest */
-  image?: boolean
+  /** Whether or not to display SEO default image */
+  seoImage?: boolean
+  /** Whether or not to display Gallery default image */
+  galleryImage?: boolean
+  /** Custom desired image url to be displayed */
+  imageUrl?: string | null
+  /** Artwork Image, shows the artwork with a view window moving around */
+  image?: {
+    url?: string | null
+    aspectRatio?: number | null
+    blurhash?: string | null
+  } | null
   /** Applies to SignUp or Login, not ForgotPassword */
   afterAuthAction?: AfterAuthAction
   /** Applies to SignUp or Login, not ForgotPassword */
@@ -152,6 +170,27 @@ export const AuthDialogProvider: FC<
   const hideAuthDialog = () => {
     dispatch({ type: "HIDE" })
   }
+
+  // Prefetch carousel images after page load (desktop only)
+  useEffect(() => {
+    if (
+      !isLoggedIn &&
+      !getENV("IS_MOBILE") &&
+      document.readyState === "complete"
+    ) {
+      getResizedAuthDialogImages().forEach(img =>
+        prefetchUrlWithSizes({
+          url: img.quality2x,
+          sizes: `${COLUMN_WIDTH}px`,
+        }),
+      )
+      const galleryImage = getResizedAuthDialogGalleryImage()
+      prefetchUrlWithSizes({
+        url: galleryImage.quality2x,
+        sizes: `${COLUMN_WIDTH}px`,
+      })
+    }
+  }, [isLoggedIn])
 
   const showAuthDialog = useCallback(
     ({

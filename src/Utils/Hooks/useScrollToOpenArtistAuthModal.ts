@@ -32,7 +32,7 @@ export const useScrollToOpenArtistAuthModal = ({
       timeout = setTimeout(() => {
         showAuthDialog({
           options: {
-            image: true,
+            seoImage: true,
             onClose: dismiss,
             onSuccess: dismiss,
             title: `Sign up or log in to discover new works by ${

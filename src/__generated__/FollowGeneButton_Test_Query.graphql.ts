@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f0d319e18b5d258a003e083cc41a969e>>
+ * @generated SignedSource<<99254e1564030507c7bf925c3f22ea04>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -34,6 +34,12 @@ v1 = {
   "nullable": false,
   "plural": false,
   "type": "ID"
+},
+v2 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
 };
 return {
   "fragment": {
@@ -116,6 +122,44 @@ return {
             "kind": "ScalarField",
             "name": "isFollowed",
             "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Image",
+            "kind": "LinkedField",
+            "name": "image",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": [
+                  {
+                    "kind": "Literal",
+                    "name": "version",
+                    "value": "main"
+                  }
+                ],
+                "kind": "ScalarField",
+                "name": "url",
+                "storageKey": "url(version:\"main\")"
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "aspectRatio",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "blurhash",
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
           }
         ],
         "storageKey": "gene(id:\"example\")"
@@ -123,7 +167,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "54cf4fae1b4bfb8aa44405e0651d74a8",
+    "cacheID": "ada6711a7dcfcccad7fd8557203be173",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -134,6 +178,20 @@ return {
           "type": "Gene"
         },
         "gene.id": (v1/*: any*/),
+        "gene.image": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Image"
+        },
+        "gene.image.aspectRatio": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "Float"
+        },
+        "gene.image.blurhash": (v2/*: any*/),
+        "gene.image.url": (v2/*: any*/),
         "gene.internalID": (v1/*: any*/),
         "gene.isFollowed": {
           "enumValues": null,
@@ -141,18 +199,13 @@ return {
           "plural": false,
           "type": "Boolean"
         },
-        "gene.name": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "String"
-        },
+        "gene.name": (v2/*: any*/),
         "gene.slug": (v1/*: any*/)
       }
     },
     "name": "FollowGeneButton_Test_Query",
     "operationKind": "query",
-    "text": "query FollowGeneButton_Test_Query {\n  gene(id: \"example\") {\n    ...FollowGeneButton_gene_2OV785\n    id\n  }\n}\n\nfragment FollowGeneButton_gene_2OV785 on Gene {\n  id\n  slug\n  name\n  internalID\n  isFollowed\n}\n"
+    "text": "query FollowGeneButton_Test_Query {\n  gene(id: \"example\") {\n    ...FollowGeneButton_gene_2OV785\n    id\n  }\n}\n\nfragment FollowGeneButton_gene_2OV785 on Gene {\n  id\n  slug\n  name\n  internalID\n  isFollowed\n  image {\n    url(version: \"main\")\n    aspectRatio\n    blurhash\n  }\n}\n"
   }
 };
 })();

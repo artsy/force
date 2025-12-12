@@ -93,7 +93,12 @@ describe("FollowArtistButton", () => {
             kind: "artist",
             objectId: "example",
           },
-          title: expect.any(String),
+          title: "Sign up or log in to follow Example",
+          image: {
+            url: '<mock-value-for-field-"url">',
+            aspectRatio: 4.2,
+            blurhash: '<mock-value-for-field-"blurhash">',
+          },
         },
       })
     })

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<11e699b805353a7e2ac255e5de6fe4c1>>
+ * @generated SignedSource<<ed12590f2eed3c36a93731470f70b952>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,6 +15,12 @@ export type AuctionResultPrice_auctionResult$data = {
   readonly currency: string | null | undefined;
   readonly estimate: {
     readonly display: string | null | undefined;
+  } | null | undefined;
+  readonly images: {
+    readonly larger: {
+      readonly aspectRatio: number;
+      readonly url: string | null | undefined;
+    } | null | undefined;
   } | null | undefined;
   readonly isUpcoming: boolean | null | undefined;
   readonly performance: {
@@ -77,6 +83,48 @@ return {
     {
       "alias": null,
       "args": null,
+      "concreteType": "AuctionLotImages",
+      "kind": "LinkedField",
+      "name": "images",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Image",
+          "kind": "LinkedField",
+          "name": "larger",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": [
+                {
+                  "kind": "Literal",
+                  "name": "version",
+                  "value": "main"
+                }
+              ],
+              "kind": "ScalarField",
+              "name": "url",
+              "storageKey": "url(version:\"main\")"
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "aspectRatio",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": "AuctionLotPerformance",
       "kind": "LinkedField",
       "name": "performance",
@@ -129,6 +177,6 @@ return {
 };
 })();
 
-(node as any).hash = "95f2bb961edaf2669f6ee71720453072";
+(node as any).hash = "d5fb2dc51850ca029538387ffcef3286";
 
 export default node;
