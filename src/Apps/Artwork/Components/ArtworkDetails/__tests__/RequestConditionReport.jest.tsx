@@ -170,6 +170,9 @@ describe("RequestConditionReport", () => {
             contextModule: "aboutTheWork",
             intent: "requestConditionReport",
           },
+          options: {
+            imageUrl: '<mock-value-for-field-"url">',
+          },
         })
       })
 

@@ -250,8 +250,9 @@ describe("RegisterButton", () => {
           intent: "registerToBid",
         },
         options: {
-          title: expect.any(String),
+          title: "Sign up or log in to bid on artworks",
           redirectTo: "/auction/sale-slug/register",
+          imageUrl: '<mock-value-for-field-"signupImage">',
         },
       })
     })

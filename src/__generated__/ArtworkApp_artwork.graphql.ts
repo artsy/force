@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6da3e857cc053aa6e4dd8f3520e53e58>>
+ * @generated SignedSource<<5f93dea774f8fd19df72fb0584dc1ea4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,6 +21,9 @@ export type ArtworkApp_artwork$data = {
     readonly internalID: string;
   } | null | undefined;
   readonly availability: string | null | undefined;
+  readonly image: {
+    readonly url: string | null | undefined;
+  } | null | undefined;
   readonly internalID: string;
   readonly isAcquireable: boolean | null | undefined;
   readonly isInAuction: boolean | null | undefined;
@@ -205,6 +208,30 @@ return {
     {
       "alias": null,
       "args": null,
+      "concreteType": "Image",
+      "kind": "LinkedField",
+      "name": "image",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": [
+            {
+              "kind": "Literal",
+              "name": "version",
+              "value": "large"
+            }
+          ],
+          "kind": "ScalarField",
+          "name": "url",
+          "storageKey": "url(version:\"large\")"
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "kind": "ScalarField",
       "name": "visibilityLevel",
       "storageKey": null
@@ -323,6 +350,6 @@ return {
 };
 })();
 
-(node as any).hash = "019186df6e3a39e94a59e569f4f80caf";
+(node as any).hash = "6f3e76a129bfb4e52c718141c4706980";
 
 export default node;

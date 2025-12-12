@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<09e69d788bd594965a213227f68fe7d4>>
+ * @generated SignedSource<<9088e1803f2498e03135b97742f656e2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -129,6 +129,30 @@ return {
           {
             "alias": null,
             "args": null,
+            "concreteType": "Image",
+            "kind": "LinkedField",
+            "name": "coverImage",
+            "plural": false,
+            "selections": [
+              {
+                "alias": "signupImage",
+                "args": [
+                  {
+                    "kind": "Literal",
+                    "name": "version",
+                    "value": "large"
+                  }
+                ],
+                "kind": "ScalarField",
+                "name": "url",
+                "storageKey": "url(version:\"large\")"
+              }
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "kind": "ScalarField",
             "name": "isAuction",
             "storageKey": null
@@ -243,12 +267,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f999e2d1b9949878fc04b0dd87903ff9",
+    "cacheID": "3c14373706afe7ff34f79add8d2ef5d5",
     "id": null,
     "metadata": {},
     "name": "RegisterButtonTestQuery",
     "operationKind": "query",
-    "text": "query RegisterButtonTestQuery {\n  sale(id: \"foo\") {\n    ...RegisterButton_sale\n    id\n  }\n  me {\n    ...RegisterButton_me\n    id\n  }\n}\n\nfragment RegisterButton_me on Me {\n  internalID\n  isIdentityVerified\n  hasCreditCards\n  pendingIdentityVerification {\n    internalID\n    id\n  }\n}\n\nfragment RegisterButton_sale on Sale {\n  bidder {\n    qualifiedForBidding\n    id\n  }\n  isAuction\n  isClosed\n  isLiveOpen\n  isPreview\n  isRegistrationClosed\n  liveURLIfOpen\n  requireIdentityVerification\n  registrationStatus {\n    internalID\n    id\n  }\n  slug\n  status\n}\n"
+    "text": "query RegisterButtonTestQuery {\n  sale(id: \"foo\") {\n    ...RegisterButton_sale\n    id\n  }\n  me {\n    ...RegisterButton_me\n    id\n  }\n}\n\nfragment RegisterButton_me on Me {\n  internalID\n  isIdentityVerified\n  hasCreditCards\n  pendingIdentityVerification {\n    internalID\n    id\n  }\n}\n\nfragment RegisterButton_sale on Sale {\n  bidder {\n    qualifiedForBidding\n    id\n  }\n  coverImage {\n    signupImage: url(version: \"large\")\n  }\n  isAuction\n  isClosed\n  isLiveOpen\n  isPreview\n  isRegistrationClosed\n  liveURLIfOpen\n  requireIdentityVerification\n  registrationStatus {\n    internalID\n    id\n  }\n  slug\n  status\n}\n"
   }
 };
 })();

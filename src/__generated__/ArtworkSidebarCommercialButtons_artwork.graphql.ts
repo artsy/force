@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<63a27c95eb833187149d0ce741654d15>>
+ * @generated SignedSource<<cf07019fd2492d9cc0a7c59aa6a00736>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -35,6 +35,9 @@ export type ArtworkSidebarCommercialButtons_artwork$data = {
     readonly isOfferable: boolean | null | undefined;
     readonly saleMessage: string | null | undefined;
   } | null | undefined> | null | undefined;
+  readonly image: {
+    readonly url: string | null | undefined;
+  } | null | undefined;
   readonly internalID: string;
   readonly isAcquireable: boolean | null | undefined;
   readonly isEligibleToCreateAlert: boolean;
@@ -162,6 +165,30 @@ return {
     (v0/*: any*/),
     (v2/*: any*/),
     (v3/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Image",
+      "kind": "LinkedField",
+      "name": "image",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": [
+            {
+              "kind": "Literal",
+              "name": "version",
+              "value": "large"
+            }
+          ],
+          "kind": "ScalarField",
+          "name": "url",
+          "storageKey": "url(version:\"large\")"
+        }
+      ],
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -373,6 +400,6 @@ return {
 };
 })();
 
-(node as any).hash = "03b4a4e94936ad4c45b688b3437fc61a";
+(node as any).hash = "fac99d6bc1c6ed682711f4d6e3e28cbd";
 
 export default node;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5e451b8d69ef9b6ab3c23e82f5a6c9a4>>
+ * @generated SignedSource<<19b55cedd3dff330a7408ca94475c47d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -108,6 +108,30 @@ return {
           {
             "alias": null,
             "args": null,
+            "concreteType": "Image",
+            "kind": "LinkedField",
+            "name": "image",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": [
+                  {
+                    "kind": "Literal",
+                    "name": "version",
+                    "value": "large"
+                  }
+                ],
+                "kind": "ScalarField",
+                "name": "url",
+                "storageKey": "url(version:\"large\")"
+              }
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": "CollectorSignals",
             "kind": "LinkedField",
             "name": "collectorSignals",
@@ -147,12 +171,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "19810fd36b5ba4cfa804ea637484b483",
+    "cacheID": "319e0b292c0c6e12bd112fbee8654b01",
     "id": null,
     "metadata": {},
     "name": "SaveButtonJestQuery",
     "operationKind": "query",
-    "text": "query SaveButtonJestQuery {\n  artwork(id: \"gerhard-richter-bagdad-ii-flow-p10-1\") {\n    ...SaveButton_artwork\n    id\n  }\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSaved\n  title\n  collectorSignals {\n    auction {\n      lotWatcherCount\n      lotClosesAt\n    }\n  }\n}\n"
+    "text": "query SaveButtonJestQuery {\n  artwork(id: \"gerhard-richter-bagdad-ii-flow-p10-1\") {\n    ...SaveButton_artwork\n    id\n  }\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSaved\n  title\n  image {\n    url(version: \"large\")\n  }\n  collectorSignals {\n    auction {\n      lotWatcherCount\n      lotClosesAt\n    }\n  }\n}\n"
   }
 };
 })();

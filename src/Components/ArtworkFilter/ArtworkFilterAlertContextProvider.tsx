@@ -6,6 +6,7 @@ import type { FC } from "react"
 
 interface ArtworkFilterAlertContextProviderProps {
   initialCriteria?: SearchCriteriaAttributes
+  imageUrl?: string | null
 }
 
 /**
@@ -14,7 +15,7 @@ interface ArtworkFilterAlertContextProviderProps {
  */
 export const ArtworkFilterAlertContextProvider: FC<
   React.PropsWithChildren<ArtworkFilterAlertContextProviderProps>
-> = ({ children, initialCriteria, ...rest }) => {
+> = ({ children, initialCriteria, imageUrl, ...rest }) => {
   const filters = useCurrentlySelectedFilters()
   const allowedFilters = getAllowedSearchCriteria(filters)
 
@@ -24,7 +25,7 @@ export const ArtworkFilterAlertContextProvider: FC<
   }
 
   return (
-    <AlertProvider initialCriteria={criteria} {...rest}>
+    <AlertProvider initialCriteria={criteria} imageUrl={imageUrl} {...rest}>
       {children}
     </AlertProvider>
   )

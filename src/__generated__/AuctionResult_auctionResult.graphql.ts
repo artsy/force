@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1ea31e60a61db5928916fb5d2e0243ef>>
+ * @generated SignedSource<<02398bb86fe7b6516098df8100d04cc2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,6 +12,11 @@ import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AuctionResult_auctionResult$data = {
   readonly artist: {
+    readonly coverArtwork: {
+      readonly image: {
+        readonly url: string | null | undefined;
+      } | null | undefined;
+    } | null | undefined;
     readonly href: string | null | undefined;
     readonly name: string | null | undefined;
   } | null | undefined;
@@ -66,6 +71,41 @@ const node: ReaderFragment = {
           "args": null,
           "kind": "ScalarField",
           "name": "href",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Artwork",
+          "kind": "LinkedField",
+          "name": "coverArtwork",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "Image",
+              "kind": "LinkedField",
+              "name": "image",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": [
+                    {
+                      "kind": "Literal",
+                      "name": "version",
+                      "value": "large"
+                    }
+                  ],
+                  "kind": "ScalarField",
+                  "name": "url",
+                  "storageKey": "url(version:\"large\")"
+                }
+              ],
+              "storageKey": null
+            }
+          ],
           "storageKey": null
         }
       ],
@@ -154,6 +194,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "5baccfec80bd4c2f62daeca23da3c38e";
+(node as any).hash = "a9c47feb17ff2a68f1c6fdbbfedf2124";
 
 export default node;
