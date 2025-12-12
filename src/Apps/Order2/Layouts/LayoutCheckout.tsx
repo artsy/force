@@ -3,6 +3,7 @@ import { AppContainer } from "Apps/Components/AppContainer"
 import { AppToasts } from "Apps/Components/AppToasts"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import type { BaseLayoutProps } from "Apps/Components/Layouts"
+import { Z } from "Apps/Components/constants"
 import { NavBarPrimaryLogo } from "Components/NavBar/NavBarPrimaryLogo"
 import { RouterLink } from "System/Components/RouterLink"
 import { useSystemContext } from "System/Hooks/useSystemContext"
@@ -18,11 +19,14 @@ export const LayoutCheckout: FC<React.PropsWithChildren<BaseLayoutProps>> = ({
       <AppToasts />
 
       <Box
+        as="header"
         position={["initial", "sticky"]}
         py={1}
         top={0}
+        zIndex={Z.globalNav}
         bg="mono0"
-        zIndex={1}
+        borderBottom="1px solid"
+        borderColor="mono30"
       >
         {!isEigen && (
           <HorizontalPadding>
