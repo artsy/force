@@ -1,32 +1,21 @@
-import { ActionType, type ClickedHeader, ContextModule } from "@artsy/cohesion"
-import {
-  BaseTab,
-  Box,
-  Clickable,
-  Separator,
-  Spacer,
-  Spinner,
-  Text,
-  useTheme,
-} from "@artsy/palette"
+import { Box, Separator, Spacer, Spinner, Text, useTheme } from "@artsy/palette"
 import {
   ArtistAuctionResultsQueryRenderer,
   useScrollToTopOfAuctionResults,
 } from "Apps/Artist/Routes/AuctionResults/ArtistAuctionResults"
 import { MarketStatsQueryRenderer } from "Apps/Artist/Routes/AuctionResults/Components/MarketStats"
+import { ArtistCombinedNav } from "Apps/Artist/Routes/Combined/Components/ArtistCombinedNav"
 import { ArtistOverviewQueryRenderer } from "Apps/Artist/Routes/Overview/Components/ArtistOverview"
 import { ArtistArtworkFilterQueryRenderer } from "Apps/Artist/Routes/WorksForSale/Components/ArtistArtworkFilter"
 import { Z } from "Apps/Components/constants"
-import { RouteTabs } from "Components/RouteTabs"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useRouter } from "System/Hooks/useRouter"
-import { Jump, useJump } from "Utils/Hooks/useJump"
+import { useJump } from "Utils/Hooks/useJump"
+import { Section, SectionNavProvider } from "Utils/Hooks/useSectionNav"
 import { useSectionReadiness } from "Utils/Hooks/useSectionReadiness"
 import type { ArtistCombinedRoute_artist$data } from "__generated__/ArtistCombinedRoute_artist.graphql"
 import type * as React from "react"
 import { useEffect, useMemo, useRef } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useTracking } from "react-tracking"
 
 interface ArtistCombinedRouteProps {
   artist: ArtistCombinedRoute_artist$data
@@ -52,20 +41,6 @@ const ArtistCombinedRoute: React.FC<
     return Object.values(navigating).some(Boolean)
   }, [navigating])
 
-  const tracking = useTracking()
-  const { contextPageOwnerType } = useAnalyticsContext()
-
-  const handleClick = (subject: string) => {
-    const payload: ClickedHeader = {
-      action: ActionType.clickedHeader,
-      context_module: ContextModule.artistHeader,
-      context_page_owner_type: contextPageOwnerType,
-      subject,
-    }
-
-    tracking.trackEvent(payload)
-  }
-
   // Given the initial sub-path (/artist/:id/(auction-results|about)),
   // scroll to the appropriate section on initial load
   const {
@@ -85,13 +60,13 @@ const ArtistCombinedRoute: React.FC<
 
       if (section === "auction-results") {
         await waitUntil("auction")
-        jumpTo("marketSignalsTop", { offset: 40 })
+        jumpTo("marketSignalsTop")
         // Remove the subpath from the URL
         const newPath = location.pathname.replace(/\/auction-results$/, "")
         router.replace(newPath)
       } else if (section === "about") {
         await waitUntil("about")
-        jumpTo("artistAboutTop", { offset: 40 })
+        jumpTo("artistAboutTop")
         // Remove the subpath from the URL
         const newPath = location.pathname.replace(/\/about$/, "")
         router.replace(newPath)
@@ -102,7 +77,7 @@ const ArtistCombinedRoute: React.FC<
   }, [section, jumpTo, waitUntil, location.pathname, router])
 
   return (
-    <>
+    <SectionNavProvider>
       {loading && (
         <Box
           position="fixed"
@@ -121,98 +96,60 @@ const ArtistCombinedRoute: React.FC<
         </Box>
       )}
 
-      <RouteTabs data-test="navigationTabs">
-        <BaseTab
-          as={Clickable}
-          disabled={navigating.artworks}
-          onClick={async () => {
-            // No prior sections; just jump.
-            jumpTo("artistArtworksTop", { offset: 40 })
-            handleClick("artworks")
-          }}
-        >
-          Artworks
-        </BaseTab>
-
-        <BaseTab
-          as={Clickable}
-          disabled={navigating.auction}
-          onClick={async () => {
-            await waitUntil("auction")
-            jumpTo("marketSignalsTop", { offset: 40 })
-            handleClick("auction results")
-          }}
-        >
-          Auction Results
-        </BaseTab>
-
-        <BaseTab
-          as={Clickable}
-          disabled={navigating.about}
-          onClick={async () => {
-            await waitUntil("about")
-            jumpTo("artistAboutTop", { offset: 40 })
-            handleClick("about")
-          }}
-        >
-          About
-        </BaseTab>
-      </RouteTabs>
+      <ArtistCombinedNav waitUntil={waitUntil} navigating={navigating} />
 
       <Spacer y={[2, 4]} />
 
-      <Jump id="artistArtworksTop" />
+      <Section id="artistArtworksTop">
+        <Text variant="lg-display" as="h2">
+          Artworks
+        </Text>
 
-      <Text variant="lg-display" as="h2">
-        Artworks
-      </Text>
+        <Spacer y={2} />
 
-      <Spacer y={2} />
-
-      <ArtistArtworkFilterQueryRenderer
-        id={artist.internalID}
-        lazyLoad={lazy.artworks}
-        onReady={() => markReady("artworks")}
-      />
-
-      <Separator my={4} />
-
-      <Jump id="marketSignalsTop" />
-
-      <MarketStatsQueryRenderer
-        id={artist.internalID}
-        onRendered={handleScrollToTop}
-        onReady={() => markReady("market")}
-        lazyLoad={lazy.market}
-      />
-
-      <Spacer y={6} />
-
-      <Jump id="artistAuctionResultsTop" />
-
-      <Text variant="lg-display" as="h2">
-        Auction Results
-      </Text>
-
-      <Spacer y={2} />
-
-      <ArtistAuctionResultsQueryRenderer
-        id={artist.internalID}
-        lazyLoad={lazy.auction}
-        truncate
-        onReady={() => markReady("auction")}
-      />
+        <ArtistArtworkFilterQueryRenderer
+          id={artist.internalID}
+          lazyLoad={lazy.artworks}
+          onReady={() => markReady("artworks")}
+        />
+      </Section>
 
       <Separator my={4} />
 
-      <Jump id="artistAboutTop" />
+      <Section id="marketSignalsTop">
+        <MarketStatsQueryRenderer
+          id={artist.internalID}
+          onRendered={handleScrollToTop}
+          onReady={() => markReady("market")}
+          lazyLoad={lazy.market}
+        />
 
-      <ArtistOverviewQueryRenderer
-        id={artist.internalID}
-        lazyLoad={lazy.about}
-        onReady={() => markReady("about")}
-      />
-    </>
+        <Spacer y={6} />
+
+        <Text variant="lg-display" as="h2">
+          Auction Results
+        </Text>
+
+        <Spacer y={2} />
+
+        <ArtistAuctionResultsQueryRenderer
+          id={artist.internalID}
+          lazyLoad={lazy.auction}
+          truncate
+          onReady={() => markReady("auction")}
+        />
+      </Section>
+
+      <Separator my={4} />
+
+      <Section id="artistAboutTop">
+        <ArtistOverviewQueryRenderer
+          id={artist.internalID}
+          lazyLoad={lazy.about}
+          onReady={() => markReady("about")}
+        />
+      </Section>
+    </SectionNavProvider>
   )
 }
 
