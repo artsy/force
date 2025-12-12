@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<11e699b805353a7e2ac255e5de6fe4c1>>
+ * @generated SignedSource<<7cf47fcf3e6012a4dcad6245e6ee7ff8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,6 +15,11 @@ export type AuctionResultPrice_auctionResult$data = {
   readonly currency: string | null | undefined;
   readonly estimate: {
     readonly display: string | null | undefined;
+  } | null | undefined;
+  readonly images: {
+    readonly larger: {
+      readonly url: string | null | undefined;
+    } | null | undefined;
   } | null | undefined;
   readonly isUpcoming: boolean | null | undefined;
   readonly performance: {
@@ -77,6 +82,41 @@ return {
     {
       "alias": null,
       "args": null,
+      "concreteType": "AuctionLotImages",
+      "kind": "LinkedField",
+      "name": "images",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Image",
+          "kind": "LinkedField",
+          "name": "larger",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": [
+                {
+                  "kind": "Literal",
+                  "name": "version",
+                  "value": "large"
+                }
+              ],
+              "kind": "ScalarField",
+              "name": "url",
+              "storageKey": "url(version:\"large\")"
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": "AuctionLotPerformance",
       "kind": "LinkedField",
       "name": "performance",
@@ -129,6 +169,6 @@ return {
 };
 })();
 
-(node as any).hash = "95f2bb961edaf2669f6ee71720453072";
+(node as any).hash = "1d2fa082a29eb904fde284cd06ae7d87";
 
 export default node;

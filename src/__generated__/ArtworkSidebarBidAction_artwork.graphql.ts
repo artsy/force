@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a411da4976e4089f99c31bb0531b6d0f>>
+ * @generated SignedSource<<e178d307cd1bd21e472cddfa938de8ef>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,6 +16,9 @@ export type ArtworkSidebarBidAction_artwork$data = {
       readonly bidCount: number;
       readonly lotWatcherCount: number;
     } | null | undefined;
+  } | null | undefined;
+  readonly image: {
+    readonly url: string | null | undefined;
   } | null | undefined;
   readonly internalID: string;
   readonly myLotStanding: ReadonlyArray<{
@@ -119,6 +122,30 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "internalID",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Image",
+      "kind": "LinkedField",
+      "name": "image",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": [
+            {
+              "kind": "Literal",
+              "name": "version",
+              "value": "large"
+            }
+          ],
+          "kind": "ScalarField",
+          "name": "url",
+          "storageKey": "url(version:\"large\")"
+        }
+      ],
       "storageKey": null
     },
     {
@@ -272,6 +299,6 @@ return {
 };
 })();
 
-(node as any).hash = "e849b5aff04538f5a633abd7f229f8eb";
+(node as any).hash = "a045f557988aa39e7984e0818905ce21";
 
 export default node;

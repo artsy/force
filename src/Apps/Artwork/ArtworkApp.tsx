@@ -115,6 +115,7 @@ export const ArtworkApp: React.FC<React.PropsWithChildren<Props>> = props => {
         showAuthDialog({
           options: {
             title: "Log in or sign up to view gallery offer",
+            imageUrl: artwork.image?.url,
           },
           analytics: {
             // TODO: Placeholder - Determine correct tracking - EMI-1783
@@ -414,6 +415,9 @@ const ArtworkAppFragmentContainer = createFragmentContainer(
           filterGene {
             slug
           }
+        }
+        image {
+          url(version: "large")
         }
         visibilityLevel
         isUnlisted

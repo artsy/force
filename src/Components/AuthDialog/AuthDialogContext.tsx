@@ -48,6 +48,8 @@ export const DEFAULT_AUTH_MODAL_INTENTS: Record<AuthDialogMode, AuthIntent> = {
 export type AuthDialogOptions = {
   /** Whether or not to display an evergreen side panel for visual interest */
   image?: boolean
+  /** Custom desired image url to be displayed */
+  imageUrl?: string | null
   /** Applies to SignUp or Login, not ForgotPassword */
   afterAuthAction?: AfterAuthAction
   /** Applies to SignUp or Login, not ForgotPassword */

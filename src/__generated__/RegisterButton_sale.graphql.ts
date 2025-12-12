@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f35e3e8bae796923933ff8a283d51cd4>>
+ * @generated SignedSource<<681ac716931afe0086ed8cd280653de4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,6 +13,9 @@ import { FragmentRefs } from "relay-runtime";
 export type RegisterButton_sale$data = {
   readonly bidder: {
     readonly qualifiedForBidding: boolean | null | undefined;
+  } | null | undefined;
+  readonly coverImage: {
+    readonly signupImage: string | null | undefined;
   } | null | undefined;
   readonly isAuction: boolean | null | undefined;
   readonly isClosed: boolean | null | undefined;
@@ -53,6 +56,30 @@ const node: ReaderFragment = {
           "kind": "ScalarField",
           "name": "qualifiedForBidding",
           "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Image",
+      "kind": "LinkedField",
+      "name": "coverImage",
+      "plural": false,
+      "selections": [
+        {
+          "alias": "signupImage",
+          "args": [
+            {
+              "kind": "Literal",
+              "name": "version",
+              "value": "large"
+            }
+          ],
+          "kind": "ScalarField",
+          "name": "url",
+          "storageKey": "url(version:\"large\")"
         }
       ],
       "storageKey": null
@@ -143,6 +170,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "e18690c44438367e8901d36af57723fa";
+(node as any).hash = "94f52ac744fa52ff03b7a977389147df";
 
 export default node;

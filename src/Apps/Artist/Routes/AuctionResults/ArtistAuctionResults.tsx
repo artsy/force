@@ -150,6 +150,7 @@ const AuctionResultsContainer: React.FC<
           showAuthDialog({
             options: {
               title: `Sign up or log in to see auction results for ${artist.name}`,
+              imageUrl: artist.coverArtwork?.image?.url,
             },
             analytics: {
               contextModule: ContextModule.auctionResults,
@@ -489,6 +490,11 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
           allowEmptyCreatedDates: $allowEmptyCreatedDates
         ) {
           totalCount
+        }
+        coverArtwork {
+          image {
+            url(version: "large")
+          }
         }
       }
     `,

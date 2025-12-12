@@ -10,6 +10,7 @@ import {
   THEME,
 } from "@artsy/palette"
 import { useFlag } from "@unleash/proxy-client-react"
+import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
 import { MODAL_WIDTH } from "Components/AuthDialog/Utils/utils"
 import {
   type FC,
@@ -24,7 +25,11 @@ import { useCursor } from "use-cursor"
 import { resized } from "Utils/resized"
 
 export const AuthDialogLeftPanel: FC<React.PropsWithChildren> = () => {
-  const img = resized(IMAGE.src, { width: MODAL_WIDTH / 2 })
+  const {
+    state: { options },
+  } = useAuthDialogContext()
+
+  const img = resized(options.imageUrl ?? IMAGE.src, { width: MODAL_WIDTH / 2 })
 
   const newSignupEnabled = useFlag("onyx_new-signup-modal")
 
@@ -38,6 +43,23 @@ export const AuthDialogLeftPanel: FC<React.PropsWithChildren> = () => {
           lazyLoad
           alt=""
           style={{ objectFit: "cover" }}
+        />
+      </Box>
+    )
+  }
+
+  if (!!options.imageUrl) {
+    return (
+      <Box display={["none", "block"]} width="100%" overflow="hidden">
+        <Image
+          {...img}
+          width="100%"
+          height="100%"
+          fetchPriority={"high"}
+          alt=""
+          style={{
+            objectFit: "cover",
+          }}
         />
       </Box>
     )

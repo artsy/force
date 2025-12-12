@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<095a4e2130de52225a68d094925c7420>>
+ * @generated SignedSource<<743f00efefa283ab3d6a5ce744941115>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -44,6 +44,12 @@ v2 = {
   "nullable": false,
   "plural": false,
   "type": "ID"
+},
+v3 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
 };
 return {
   "fragment": {
@@ -184,6 +190,42 @@ return {
               }
             ],
             "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Artwork",
+            "kind": "LinkedField",
+            "name": "coverArtwork",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Image",
+                "kind": "LinkedField",
+                "name": "image",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": [
+                      {
+                        "kind": "Literal",
+                        "name": "version",
+                        "value": "large"
+                      }
+                    ],
+                    "kind": "ScalarField",
+                    "name": "url",
+                    "storageKey": "url(version:\"large\")"
+                  }
+                ],
+                "storageKey": null
+              },
+              (v1/*: any*/)
+            ],
+            "storageKey": null
           }
         ],
         "storageKey": "artist(id:\"example\")"
@@ -191,7 +233,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "ac0e8f342b27a0961260035865e59269",
+    "cacheID": "b9606c1e0fc74947828628bb8800ac3c",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -213,6 +255,20 @@ return {
           "plural": false,
           "type": "FormattedNumber"
         },
+        "artist.coverArtwork": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Artwork"
+        },
+        "artist.coverArtwork.id": (v2/*: any*/),
+        "artist.coverArtwork.image": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Image"
+        },
+        "artist.coverArtwork.image.url": (v3/*: any*/),
         "artist.id": (v2/*: any*/),
         "artist.internalID": (v2/*: any*/),
         "artist.isFollowed": {
@@ -221,12 +277,7 @@ return {
           "plural": false,
           "type": "Boolean"
         },
-        "artist.name": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "String"
-        },
+        "artist.name": (v3/*: any*/),
         "artist.slug": (v2/*: any*/),
         "me": {
           "enumValues": null,
@@ -251,7 +302,7 @@ return {
     },
     "name": "FollowArtistButton_Test_Query",
     "operationKind": "query",
-    "text": "query FollowArtistButton_Test_Query {\n  me {\n    ...FollowArtistButton_me\n    id\n  }\n  artist(id: \"example\") {\n    ...FollowArtistButton_artist_2OV785\n    id\n  }\n}\n\nfragment FollowArtistButton_artist_2OV785 on Artist {\n  id\n  slug\n  name\n  internalID\n  isFollowed\n  counts {\n    follows\n  }\n}\n\nfragment FollowArtistButton_me on Me {\n  id\n  counts {\n    followedArtists\n  }\n}\n"
+    "text": "query FollowArtistButton_Test_Query {\n  me {\n    ...FollowArtistButton_me\n    id\n  }\n  artist(id: \"example\") {\n    ...FollowArtistButton_artist_2OV785\n    id\n  }\n}\n\nfragment FollowArtistButton_artist_2OV785 on Artist {\n  id\n  slug\n  name\n  internalID\n  isFollowed\n  counts {\n    follows\n  }\n  coverArtwork {\n    image {\n      url(version: \"large\")\n    }\n    id\n  }\n}\n\nfragment FollowArtistButton_me on Me {\n  id\n  counts {\n    followedArtists\n  }\n}\n"
   }
 };
 })();

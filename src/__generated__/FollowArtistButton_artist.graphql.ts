@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9851e5bd318bceee74527b38b5b343ff>>
+ * @generated SignedSource<<f0e06b9d100e0a620819b844de6127e8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,6 +13,11 @@ import { FragmentRefs } from "relay-runtime";
 export type FollowArtistButton_artist$data = {
   readonly counts: {
     readonly follows: any | null | undefined;
+  } | null | undefined;
+  readonly coverArtwork: {
+    readonly image: {
+      readonly url: string | null | undefined;
+    } | null | undefined;
   } | null | undefined;
   readonly id: string;
   readonly internalID: string;
@@ -97,12 +102,47 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Artwork",
+      "kind": "LinkedField",
+      "name": "coverArtwork",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Image",
+          "kind": "LinkedField",
+          "name": "image",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": [
+                {
+                  "kind": "Literal",
+                  "name": "version",
+                  "value": "large"
+                }
+              ],
+              "kind": "ScalarField",
+              "name": "url",
+              "storageKey": "url(version:\"large\")"
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
     }
   ],
   "type": "Artist",
   "abstractKey": null
 };
 
-(node as any).hash = "e54ac420a5f09d58305f8408605c7ea8";
+(node as any).hash = "ef478abbd82075c767a545e86ec45511";
 
 export default node;

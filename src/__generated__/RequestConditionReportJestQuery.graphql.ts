@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a1b9beaca024ce4835a2f6a41783dc87>>
+ * @generated SignedSource<<bbb63ecf65ed8a345356d0e3113234b7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -22,6 +22,9 @@ export type RequestConditionReportJestQuery$data = {
 export type RequestConditionReportJestQuery$rawResponse = {
   readonly artwork: {
     readonly id: string;
+    readonly image: {
+      readonly url: string | null | undefined;
+    } | null | undefined;
     readonly internalID: string;
     readonly saleArtwork: {
       readonly id: string;
@@ -68,6 +71,12 @@ v3 = {
   "nullable": false,
   "plural": false,
   "type": "ID"
+},
+v4 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
 };
 return {
   "fragment": {
@@ -167,6 +176,30 @@ return {
             ],
             "storageKey": null
           },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Image",
+            "kind": "LinkedField",
+            "name": "image",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": [
+                  {
+                    "kind": "Literal",
+                    "name": "version",
+                    "value": "large"
+                  }
+                ],
+                "kind": "ScalarField",
+                "name": "url",
+                "storageKey": "url(version:\"large\")"
+              }
+            ],
+            "storageKey": null
+          },
           (v2/*: any*/)
         ],
         "storageKey": "artwork(id:\"artwork-id\")"
@@ -174,7 +207,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "af0fe8cf782c8dc9d2e935eb8e61e49f",
+    "cacheID": "da65f2589892b6a9675c4b45066cb820",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -185,6 +218,13 @@ return {
           "type": "Artwork"
         },
         "artwork.id": (v3/*: any*/),
+        "artwork.image": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Image"
+        },
+        "artwork.image.url": (v4/*: any*/),
         "artwork.internalID": (v3/*: any*/),
         "artwork.saleArtwork": {
           "enumValues": null,
@@ -201,19 +241,14 @@ return {
           "plural": false,
           "type": "Me"
         },
-        "me.email": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "String"
-        },
+        "me.email": (v4/*: any*/),
         "me.id": (v3/*: any*/),
         "me.internalID": (v3/*: any*/)
       }
     },
     "name": "RequestConditionReportJestQuery",
     "operationKind": "query",
-    "text": "query RequestConditionReportJestQuery {\n  me {\n    ...RequestConditionReport_me\n    id\n  }\n  artwork(id: \"artwork-id\") {\n    ...RequestConditionReport_artwork\n    id\n  }\n}\n\nfragment RequestConditionReport_artwork on Artwork {\n  internalID\n  slug\n  saleArtwork {\n    internalID\n    id\n  }\n}\n\nfragment RequestConditionReport_me on Me {\n  email\n  internalID\n}\n"
+    "text": "query RequestConditionReportJestQuery {\n  me {\n    ...RequestConditionReport_me\n    id\n  }\n  artwork(id: \"artwork-id\") {\n    ...RequestConditionReport_artwork\n    id\n  }\n}\n\nfragment RequestConditionReport_artwork on Artwork {\n  internalID\n  slug\n  saleArtwork {\n    internalID\n    id\n  }\n  image {\n    url(version: \"large\")\n  }\n}\n\nfragment RequestConditionReport_me on Me {\n  email\n  internalID\n}\n"
   }
 };
 })();
