@@ -336,7 +336,7 @@ export const ArtworkApp: React.FC<React.PropsWithChildren<Props>> = props => {
 
 const WrappedArtworkApp: React.FC<React.PropsWithChildren<Props>> = props => {
   const {
-    artwork: { artists, attributionClass, internalID, mediumType, sale },
+    artwork: { artists, attributionClass, internalID, mediumType, sale, image },
   } = props
 
   const {
@@ -369,6 +369,7 @@ const WrappedArtworkApp: React.FC<React.PropsWithChildren<Props>> = props => {
         <AlertProvider
           initialCriteria={initialAlertCriteria}
           currentArtworkID={internalID}
+          imageUrl={image?.url}
         >
           <ArtworkApp
             {...props}
