@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<36ed0c2e9f6292d45a51ef1916f31538>>
+ * @generated SignedSource<<41b9f5acd2256ac3b34675ce24f4e76b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,6 +17,9 @@ export type DeprecatedSaveButton_artwork$data = {
     } | null | undefined;
   } | null | undefined;
   readonly id: string;
+  readonly image: {
+    readonly url: string | null | undefined;
+  } | null | undefined;
   readonly internalID: string;
   readonly isSavedToAnyList: boolean;
   readonly slug: string;
@@ -72,6 +75,30 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
+      "concreteType": "Image",
+      "kind": "LinkedField",
+      "name": "image",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": [
+            {
+              "kind": "Literal",
+              "name": "version",
+              "value": "large"
+            }
+          ],
+          "kind": "ScalarField",
+          "name": "url",
+          "storageKey": "url(version:\"large\")"
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": "CollectorSignals",
       "kind": "LinkedField",
       "name": "collectorSignals",
@@ -103,6 +130,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "67c6401cf0c3acbdeba292f8dc795c47";
+(node as any).hash = "adb83575cd6039667056b6cc78bdde10";
 
 export default node;

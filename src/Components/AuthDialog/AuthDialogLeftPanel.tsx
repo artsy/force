@@ -33,6 +33,8 @@ export const AuthDialogLeftPanel: FC<React.PropsWithChildren> = () => {
 
   const newSignupEnabled = useFlag("onyx_new-signup-modal")
 
+  console.log("cb::leftPanel", { options })
+
   if (!newSignupEnabled) {
     return (
       <Box display={["none", "block"]} width="100%">

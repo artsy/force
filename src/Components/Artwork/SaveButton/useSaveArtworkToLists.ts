@@ -14,6 +14,7 @@ type Artwork = {
   year: string | null | undefined
   artistNames: string | null | undefined
   imageURL: string | null
+  imageURLLarge?: string | null
   isInAuction: boolean
   isSavedToAnyList: boolean
   collectorSignals: {
@@ -50,6 +51,7 @@ export const useSaveArtworkToLists = (options: SaveArtworkToListsOptions) => {
           kind: "artworks",
           objectId: artwork.internalID,
         },
+        imageUrl: artwork.imageURLLarge,
       },
       analytics: {
         intent: Intent.saveArtwork,
