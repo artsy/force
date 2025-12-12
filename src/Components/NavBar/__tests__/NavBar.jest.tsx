@@ -102,8 +102,8 @@ describe("NavBar", () => {
 
     it("includes the sub-menus when rendering", () => {
       const { container } = getWrapper()
-      expect(container.innerHTML).toContain("View All Artists")
-      expect(container.innerHTML).toContain("View All Artworks")
+      expect(container.innerHTML).toContain("Browse by Identity")
+      expect(container.innerHTML).toContain("The Home Edit")
     })
 
     it("renders menu item price database", () => {
