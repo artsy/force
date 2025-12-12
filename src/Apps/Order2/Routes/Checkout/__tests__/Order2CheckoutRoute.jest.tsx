@@ -453,6 +453,22 @@ describe("Order2CheckoutRoute", () => {
     expect(artworkTitles).toHaveLength(3)
   })
 
+  it("renders the error page when order is not found", async () => {
+    await renderWithRelay({
+      Viewer: () => ({
+        ...baseProps,
+        me: {
+          ...baseProps.me,
+          order: null,
+        },
+      }),
+    })
+
+    expect(
+      screen.getByText("Sorry, we couldn't find that order."),
+    ).toBeInTheDocument()
+  })
+
   describe("Checkout with pickup", () => {
     it.each([
       ["", false],

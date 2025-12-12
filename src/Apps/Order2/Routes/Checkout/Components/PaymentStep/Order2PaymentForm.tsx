@@ -408,22 +408,21 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
           // @ts-ignore Stripe type issue
           paymentMethodOptions: null,
         })
-      }
-
-      if (
-        selectedPaymentMethod === "stripe-ach" ||
-        selectedPaymentMethod === "stripe-sepa"
-      ) {
-        const paymentMethodTypes = {
-          "stripe-ach": ["us_bank_account"],
-          "stripe-sepa": ["sepa_debit"],
-        }[selectedPaymentMethod]
-
+      } else if (selectedPaymentMethod === "stripe-ach") {
         elements.update({
           captureMethod: "automatic",
           setupFutureUsage: null,
           mode: "setup",
-          payment_method_types: paymentMethodTypes,
+          payment_method_types: ["us_bank_account"],
+          // @ts-ignore Stripe type issue
+          on_behalf_of: null,
+        })
+      } else if (selectedPaymentMethod === "stripe-sepa") {
+        elements.update({
+          captureMethod: "automatic",
+          setupFutureUsage: null,
+          mode: "setup",
+          payment_method_types: ["sepa_debit"],
         })
       }
 
