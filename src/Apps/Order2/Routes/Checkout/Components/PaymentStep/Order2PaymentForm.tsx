@@ -101,6 +101,7 @@ export const Order2PaymentForm: React.FC<Order2PaymentFormProps> = ({
 
   const options: StripeElementsOptions = {
     mode: "payment",
+    setupFutureUsage: "off_session",
     paymentMethodOptions: {
       us_bank_account: {
         verification_method: "instant",
@@ -425,8 +426,6 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       if (selectedPaymentMethod === "stripe-card") {
         elements.update({
           captureMethod: "manual",
-          setupFutureUsage: "off_session",
-          mode: "payment",
           // @ts-ignore Stripe type issue
           paymentMethodOptions: null,
         })
@@ -523,9 +522,11 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       } catch (error) {
         logger.error("Error while updating order payment method", error)
         handleError({ message: defaultErrorMessage })
+        return
       } finally {
         setPaymentComplete()
         setIsSubmittingToStripe(false)
+        resetElementsToInitialParams()
       }
     }
 
@@ -554,8 +555,10 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       } catch (error) {
         logger.error("Error while updating order payment method", error)
         handleError({ message: defaultErrorMessage })
+        return
       } finally {
         setIsSubmittingToStripe(false)
+        resetElementsToInitialParams()
         // Resets for the PaymentCompletedView
         setSavedPaymentMethod({ savedPaymentMethod: null })
         setConfirmationToken({ confirmationToken: null })
@@ -596,13 +599,13 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
             new Error("Failed to set payment method")
           )
         }
-
-        resetElementsToInitialParams()
       } catch (error) {
         logger.error("Error while updating order payment method", error)
         handleError({ message: defaultErrorMessage })
+        return
       } finally {
         setIsSubmittingToStripe(false)
+        resetElementsToInitialParams()
         setSavedPaymentMethod({
           savedPaymentMethod: selectedSavedPaymentMethod,
         })
