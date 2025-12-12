@@ -372,9 +372,31 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
     )
   }
 
+  const resetElementsToInitialParams = () => {
+    elements.update({
+      mode: "payment",
+      paymentMethodOptions: {
+        us_bank_account: {
+          verification_method: "instant",
+          financial_connections: {
+            permissions: ["payment_method", "balances", "ownership"],
+            prefetch: ["balances"],
+          },
+        },
+      },
+      setupFutureUsage: "off_session",
+      // @ts-ignore Stripe type issue
+      captureMethod: null,
+      // @ts-ignore Stripe type issue
+      paymentMethodTypes: null,
+      onBehalfOf: order.seller?.merchantAccount?.externalId,
+    })
+  }
+
   const handleError = (error: { message?: string | JSX.Element }) => {
     setErrorMessage(error.message || defaultErrorMessage)
     setIsSubmittingToStripe(false)
+    resetElementsToInitialParams()
   }
 
   const handleSubmit = async event => {
@@ -413,16 +435,16 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
           captureMethod: "automatic",
           setupFutureUsage: null,
           mode: "setup",
-          payment_method_types: ["us_bank_account"],
+          paymentMethodTypes: ["us_bank_account"],
           // @ts-ignore Stripe type issue
-          on_behalf_of: null,
+          onBehalfOf: null,
         })
       } else if (selectedPaymentMethod === "stripe-sepa") {
         elements.update({
           captureMethod: "automatic",
           setupFutureUsage: null,
           mode: "setup",
-          payment_method_types: ["sepa_debit"],
+          paymentMethodTypes: ["sepa_debit"],
         })
       }
 
@@ -574,6 +596,8 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
             new Error("Failed to set payment method")
           )
         }
+
+        resetElementsToInitialParams()
       } catch (error) {
         logger.error("Error while updating order payment method", error)
         handleError({ message: defaultErrorMessage })
