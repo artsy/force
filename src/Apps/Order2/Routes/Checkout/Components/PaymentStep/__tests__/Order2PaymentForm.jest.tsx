@@ -319,8 +319,6 @@ describe("Order2PaymentForm", () => {
 
       expect(mockElements.update).toHaveBeenCalledWith({
         captureMethod: "manual",
-        setupFutureUsage: "off_session",
-        mode: "payment",
         paymentMethodOptions: null,
       })
     })
