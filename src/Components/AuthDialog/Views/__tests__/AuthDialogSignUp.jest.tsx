@@ -131,7 +131,7 @@ describe("AuthDialogSignUp", () => {
       render(<AuthDialogSignUp />)
 
       expect(screen.getByTestId("skeleton-disclaimer")).toHaveTextContent(
-        "By clicking Sign Up or Continue with Email, Apple, Google, or Facebook, you agree to Artsy’s Terms and Conditions and Privacy Policy and to receiving emails from Artsy.",
+        "██ ████████ ████ ██ ██ ████████ ████ ██████ ██████ ███████ ██ █████████ ███ █████ ██ ███████ █████ ███ ██████████ ███ ███████ ██████ ███ ██ █████████ ██████ ████ ██████",
       )
     })
   })
