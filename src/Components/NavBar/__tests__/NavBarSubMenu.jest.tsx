@@ -41,8 +41,10 @@ describe("NavBarSubMenu", () => {
     const { container } = getWrapper()
     const links = container.querySelectorAll("a")
 
-    expect(links[0].textContent).toContain("Small (under 16in)")
-    expect(links[0].getAttribute("href")).toEqual("/collect?sizes%5B0%5D=SMALL")
+    expect(links[0].textContent).toContain("Art for Small Spaces")
+    expect(links[0].getAttribute("href")).toEqual(
+      "/collection/art-for-small-spaces",
+    )
   })
 
   it("doesn't render artists letter nav inside artworks dropdown", () => {
@@ -73,9 +75,9 @@ describe("NavBarSubMenu", () => {
         DeprecatedAnalyticsSchema.ContextModule.HeaderArtworksDropdown,
       context_page_owner_type: "home",
       parent_navigation_item: "Artworks",
-      dropdown_group: "By Size",
-      subject: "Small (under 16in)",
-      destination_path: "/collect?sizes%5B0%5D=SMALL",
+      dropdown_group: "The Home Edit",
+      subject: "Art for Small Spaces",
+      destination_path: "/collection/art-for-small-spaces",
     })
   })
 

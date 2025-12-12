@@ -32,65 +32,49 @@ export const WHATS_NEW_SUBMENU_DATA: MenuLinkData = {
     title: "What’s New",
     links: [
       {
-        text: "By Price",
+        text: "What’s New",
         menu: {
-          title: "By Price",
+          title: "What’s New",
           links: [
             {
-              text: "Art under $500",
-              href: "/collect?price_range=%2A-500",
+              text: "New This Week",
+              href: "/collection/new-this-week",
             },
             {
               text: "Art under $1,000",
-              href: "/collect?price_range=501-1000",
+              href: "/collection/art-under-1000-dollars",
             },
             {
               text: "Art under $2,500",
-              href: "/collect?price_range=1001-2500",
+              href: "/collection/art-under-2500-dollars",
             },
             {
-              text: "Art under $5,000",
-              href: "/collect?price_range=2501-5000",
-            },
-            {
-              text: "Art under $10,000",
-              href: "/collect?price_range=5001-10000",
-            },
-            {
-              text: "Art under $25,000",
-              href: "/collect?price_range=10001-25000",
-            },
-            {
-              text: "Art above $25,000",
-              href: "/collect?price_range=25000-%2A",
-            },
-          ],
-        },
-      },
-      {
-        text: "By Seller",
-        menu: {
-          title: "By Seller",
-          links: [
-            {
-              text: "New from Leading Galleries",
-              href: "/collection/new-from-leading-galleries",
-            },
-            {
-              text: "New from Tastemaking Galleries",
-              href: "/collection/new-from-tastemaking-galleries",
+              text: "Most Loved",
+              href: "/collection/most-loved",
             },
             {
               text: "New from Small Galleries",
               href: "/collection/new-from-small-galleries",
             },
+          ],
+        },
+      },
+      {
+        text: "Current Events",
+        menu: {
+          title: "Current Events",
+          links: [
             {
-              text: "New from Nonprofits",
-              href: "/collection/new-from-nonprofits",
+              text: "Shows",
+              href: "/shows",
             },
             {
-              text: "The Artsy Edition Shop",
-              href: "/fair/the-artsy-edition-shop/artworks",
+              text: "Fairs",
+              href: "/art-fairs",
+            },
+            {
+              text: "Auctions",
+              href: "/auctions",
             },
           ],
         },
@@ -105,56 +89,44 @@ export const WHATS_NEW_SUBMENU_DATA: MenuLinkData = {
               href: "/collection/curators-picks",
             },
             {
-              text: "Best Bids",
-              href: "/collection/best-bids",
-            },
-            {
-              text: "Most Loved",
-              href: "/collection/most-loved",
+              text: "Blue-Chip Icons",
+              href: "/collection/icons",
             },
             {
               text: "Street Art Edit",
               href: "/collection/street-art-edit",
             },
             {
-              text: "Icons",
-              href: "/collection/icons",
-            },
-            {
-              text: "Bleeding Edge",
-              href: "/collection/bleeding-edge",
+              text: "Best Bids",
+              href: "/collection/best-bids",
             },
           ],
         },
       },
       {
-        text: "By Style",
+        text: "Trending Now",
         menu: {
-          title: "By Style",
+          title: "Trending Now",
           links: [
             {
-              text: "Statement Pieces",
-              href: "/collection/statement-pieces",
+              text: "Into the Blue",
+              href: "/collection/into-the-blue",
             },
             {
-              text: "Little Gems",
-              href: "/collection/little-gems",
+              text: "Mini Art, Major Impact",
+              href: "/collection/mini-art-major-impact",
             },
             {
-              text: "Understated",
-              href: "/collection/understated",
+              text: "The Tablescape Renaissance",
+              href: "/collection/the-tablescape-renaissance",
             },
             {
-              text: "Transcendent",
-              href: "/collection/transcendent",
+              text: "Back to the Land",
+              href: "/collection/back-to-the-land",
             },
             {
-              text: "Feast for the Eyes",
-              href: "/collection/feast-for-the-eyes",
-            },
-            {
-              text: "Flora and Fauna",
-              href: "/collection/flora-and-fauna",
+              text: "David Hockney Etchings",
+              href: "/collection/david-hockney-etchings",
             },
           ],
         },
@@ -169,113 +141,117 @@ export const ARTISTS_SUBMENU_DATA: MenuLinkData = {
     title: "Artists",
     links: [
       {
-        text: "Blue-Chip Artists",
+        text: "Browse by Identity",
         menu: {
-          title: "Blue-Chip Artists",
+          title: "Browse by Identity",
           links: [
             {
-              text: "Banksy",
-              href: "/artist/banksy",
+              text: "AAPI Artists",
+              href: "/collection/aapi-artists-to-know",
             },
             {
-              text: "Cecily Brown",
-              href: "/artist/cecily-brown",
+              text: "Black Artists",
+              href: "/collection/black-artists-to-know",
             },
             {
-              text: "KAWS",
-              href: "/artist/kaws",
+              text: "Queer Artists",
+              href: "/collection/queer-artists-to-know",
             },
             {
-              text: "Ed Ruscha",
-              href: "/artist/ed-ruscha",
-            },
-            {
-              text: "Marlene Dumas",
-              href: "/artist/marlene-dumas",
+              text: "Women Artists",
+              href: "/collection/women-artists-to-know",
             },
           ],
         },
       },
       {
-        text: "Trending on Artsy",
+        text: "Artists on Our Radar",
         menu: {
-          title: "Trending on Artsy",
+          title: "Artists on Our Radar",
           links: [
             {
-              text: "Julie Mehretu",
-              href: "/artist/julie-mehretu",
+              text: "Imogen Allen",
+              href: "/artist/imogen-allen",
             },
             {
-              text: "Frank Stella",
-              href: "/artist/frank-stella",
+              text: "Elian Almeida",
+              href: "/artist/elian-almeida",
             },
             {
-              text: "Takashi Murakami",
-              href: "/artist/takashi-murakami",
+              text: "ektor garcia",
+              href: "/artist/ektor-garcia",
             },
             {
-              text: "Jenny Holzer",
-              href: "/artist/jenny-holzer",
+              text: "Eny Lee Parker",
+              href: "/artist/eny-lee-parker",
             },
             {
-              text: "Jonas Wood",
-              href: "/artist/jonas-wood",
+              text: "Jesse Zuo",
+              href: "/artist/jesse-zuo",
             },
           ],
         },
       },
       {
-        text: "Recent Auction Records",
+        text: "Browse by Nationality",
         menu: {
-          title: "Recent Auction Records",
+          title: "Browse by Nationality",
           links: [
             {
-              text: "Faith Ringgold",
-              href: "/artist/faith-ringgold",
+              text: "American",
+              href: "/collect?artist_nationalities%5B0%5D=American",
             },
             {
-              text: "Lucy Bull",
-              href: "/artist/lucy-bull",
+              text: "Brazilian",
+              href: "/collect?artist_nationalities%5B0%5D=Brazilian",
             },
             {
-              text: "Martin Wong",
-              href: "/artist/martin-wong",
+              text: "British",
+              href: "/collect?artist_nationalities%5B0%5D=British",
             },
             {
-              text: "Reggie Burrows Hodges",
-              href: "/artist/reggie-burrows-hodges",
+              text: "Chinese",
+              href: "/collect?artist_nationalities%5B0%5D=Chinese",
             },
             {
-              text: "Ana Mendieta",
-              href: "/artist/ana-mendieta",
+              text: "French",
+              href: "/collect?artist_nationalities%5B0%5D=French",
+            },
+            {
+              text: "Indian",
+              href: "/collect?artist_nationalities%5B0%5D=Indian",
+            },
+            {
+              text: "Japanese",
+              href: "/collect?artist_nationalities%5B0%5D=Japanese",
             },
           ],
         },
       },
       {
-        text: "New Representation",
+        text: "In-Demand Artists",
         menu: {
-          title: "New Representation",
+          title: "In-Demand Artists",
           links: [
             {
-              text: "Sarah Blaustein",
-              href: "/artist/sarah-blaustein",
+              text: "David Lynch",
+              href: "/artist/david-lynch",
             },
             {
-              text: "Francesca Mollett",
-              href: "/artist/francesca-mollett",
+              text: "Guim Tió Zarraluki",
+              href: "/artist/guim-tio-zarraluki",
             },
             {
-              text: "Jessie Stevenson",
-              href: "/artist/jessie-stevenson",
+              text: "Danny Fox",
+              href: "/artist/danny-fox",
             },
             {
-              text: "Soojin Kang",
-              href: "/artist/soojin-kang",
+              text: "Amy Sherald",
+              href: "/artist/amy-sherald",
             },
             {
-              text: "Sam Moyer",
-              href: "/artist/sam-moyer",
+              text: "Hilary Pecis",
+              href: "/artist/hilary-pecis",
             },
           ],
         },
@@ -295,121 +271,81 @@ export const ARTWORKS_SUBMENU_DATA: MenuLinkData = {
     title: "Artworks",
     links: [
       {
-        text: "By Size",
+        text: "The Home Edit",
         menu: {
-          title: "By Size",
+          title: "The Home Edit",
           links: [
             {
-              text: "Small (under 16in)",
-              href: "/collect?sizes%5B0%5D=SMALL",
+              text: "Art for Small Spaces",
+              href: "/collection/art-for-small-spaces",
             },
             {
-              text: "Medium (16in - 40in)",
-              href: "/collect?sizes%5B0%5D=MEDIUM",
+              text: "Art for Large Spaces",
+              href: "/collection/art-for-large-spaces",
             },
             {
-              text: "Large (over 40in)",
-              href: "/collect?sizes%5B0%5D=LARGE",
+              text: "Table Lamps",
+              href: "/collection/table-lamps",
             },
           ],
         },
       },
       {
-        text: "By Color",
+        text: "Shop by Scenery",
         menu: {
-          title: "By Color",
+          title: "Shop by Scenery",
           links: [
             {
-              text: "Black and White",
-              href: "/collect?colors%5B0%5D=black-and-white",
+              text: "Landscapes",
+              href: "/collection/contemporary-landscapes",
             },
             {
-              text: "Red",
-              href: "/collect?colors%5B0%5D=red",
+              text: "Cityscapes",
+              href: "/collection/cityscapes",
             },
             {
-              text: "Orange",
-              href: "/collect?colors%5B0%5D=orange",
+              text: "Beaches & Seascapes",
+              href: "/collection/beaches-and-seascapes",
             },
             {
-              text: "Yellow",
-              href: "/collect?colors%5B0%5D=yellow",
-            },
-            {
-              text: "Green",
-              href: "/collect?colors%5B0%5D=green",
-            },
-            {
-              text: "Blue",
-              href: "/collect?colors%5B0%5D=blue",
-            },
-            {
-              text: "Pink",
-              href: "/collect?colors%5B0%5D=pink",
-            },
-            {
-              text: "Brown",
-              href: "/collect?colors%5B0%5D=brown",
+              text: "Interiors",
+              href: "/collection/contemporary-interiors",
             },
           ],
         },
       },
       {
-        text: "Movements",
+        text: "Shop by Mood",
         menu: {
-          title: "Movements",
+          title: "Shop by Mood",
           links: [
             {
-              text: "Contemporary Art",
-              href: "/collection/contemporary",
+              text: "Calm",
+              href: "/collection/understated",
             },
             {
-              text: "Emerging Art",
-              href: "/collection/emerging-art",
+              text: "Bold",
+              href: "/collection/statement-pieces",
             },
             {
-              text: "Post-War Art",
-              href: "/collection/post-war",
+              text: "Romantic",
+              href: "/collection/romantic",
             },
             {
-              text: "Abstract Art",
-              href: "/collection/abstract-art",
-            },
-            {
-              text: "Minimalist Art",
-              href: "/collection/minimalism",
-            },
-            {
-              text: "Pop Art",
-              href: "/collection/pop-art",
-            },
-            {
-              text: "Impressionist and Modern Art",
-              href: "/collection/impressionist-and-modern",
-            },
-            {
-              text: "Street Art",
-              href: "/collection/street-art",
+              text: "Transcendent",
+              href: "/collection/transcendent",
             },
           ],
         },
       },
       {
-        text: "Mediums",
+        text: "Shop by Medium",
         menu: {
-          title: "Mediums",
+          title: "Shop by Medium",
           links: [
             {
               text: "Painting",
               href: "/collection/painting",
-            },
-            {
-              text: "Prints",
-              href: "/collection/prints",
-            },
-            {
-              text: "Works on Paper",
-              href: "/collection/works-on-paper",
             },
             {
               text: "Photography",
@@ -420,12 +356,20 @@ export const ARTWORKS_SUBMENU_DATA: MenuLinkData = {
               href: "/collection/sculpture",
             },
             {
-              text: "Ceramics",
-              href: "/collection/ceramics",
+              text: "Prints",
+              href: "/collection/prints",
+            },
+            {
+              text: "Works on Paper",
+              href: "/collection/works-on-paper",
             },
             {
               text: "Textile Art",
               href: "/collection/textile-art",
+            },
+            {
+              text: "Ceramics",
+              href: "/collection/ceramics",
             },
             {
               text: "Design Objects and Furniture",
