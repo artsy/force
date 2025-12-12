@@ -17,10 +17,10 @@ import type {
   StripeExpressCheckoutElementShippingRateChangeEvent,
 } from "@stripe/stripe-js"
 import { useOrder2ExpressCheckoutSetFulfillmentOptionMutation } from "./Mutations/useOrder2ExpressCheckoutSetFulfillmentOptionMutation"
+import { useOrder2ExpressCheckoutSetOrderPaymentMutation } from "./Mutations/useOrder2ExpressCheckoutSetOrderPaymentMutation"
 import { useOrder2ExpressCheckoutSubmitOrderMutation } from "./Mutations/useOrder2ExpressCheckoutSubmitOrderMutation"
 import { useOrder2ExpressCheckoutUnsetOrderFulfillmentOptionMutation } from "./Mutations/useOrder2ExpressCheckoutUnsetOrderFulfillmentOptionMutation"
 import { useOrder2ExpressCheckoutUnsetOrderPaymentMethodMutation } from "./Mutations/useOrder2ExpressCheckoutUnsetOrderPaymentMethodMutation"
-import { useOrder2ExpressCheckoutUpdateOrderMutation } from "./Mutations/useOrder2ExpressCheckoutUpdateOrderMutation"
 import { useOrder2ExpressCheckoutUpdateOrderShippingAddressMutation } from "./Mutations/useOrder2ExpressCheckoutUpdateOrderShippingAddressMutation"
 import {
   type OrderMutationSuccess,
@@ -40,10 +40,7 @@ import type {
   FulfillmentOptionInputEnum,
   useOrder2ExpressCheckoutSetFulfillmentOptionMutation$data,
 } from "__generated__/useOrder2ExpressCheckoutSetFulfillmentOptionMutation.graphql"
-import type {
-  OrderCreditCardWalletTypeEnum,
-  useOrder2ExpressCheckoutUpdateOrderMutation$data,
-} from "__generated__/useOrder2ExpressCheckoutUpdateOrderMutation.graphql"
+import type { OrderCreditCardWalletTypeEnum } from "__generated__/useOrder2ExpressCheckoutSetOrderPaymentMutation.graphql"
 import type React from "react"
 import { useEffect, useRef, useState } from "react"
 import { graphql, useFragment } from "react-relay"
@@ -69,7 +66,8 @@ export const Order2ExpressCheckoutUI: React.FC<
 
   const setFulfillmentOptionMutation =
     useOrder2ExpressCheckoutSetFulfillmentOptionMutation()
-  const updateOrderMutation = useOrder2ExpressCheckoutUpdateOrderMutation()
+  const setOrderPaymentMutation =
+    useOrder2ExpressCheckoutSetOrderPaymentMutation()
   const updateOrderShippingAddressMutation =
     useOrder2ExpressCheckoutUpdateOrderShippingAddressMutation()
   const submitOrderMutation = useOrder2ExpressCheckoutSubmitOrderMutation()
@@ -372,7 +370,7 @@ export const Order2ExpressCheckoutUI: React.FC<
     try {
       // update order payment method
       const updateOrderPaymentMethodResult =
-        await updateOrderMutation.submitMutation({
+        await setOrderPaymentMutation.submitMutation({
           variables: {
             input: {
               id: orderData.internalID,
@@ -383,7 +381,7 @@ export const Order2ExpressCheckoutUI: React.FC<
         })
 
       validateAndExtractOrderResponse(
-        updateOrderPaymentMethodResult.updateOrder?.orderOrError,
+        updateOrderPaymentMethodResult.setOrderPayment?.orderOrError,
       )
 
       // Finally we have all fulfillment details
@@ -601,16 +599,9 @@ type SetFulfillmentOrderResult = OrderMutationSuccess<
   >["orderOrError"]
 >["order"]
 
-type UpdateOrderResult = OrderMutationSuccess<
-  NonNullable<
-    useOrder2ExpressCheckoutUpdateOrderMutation$data["updateOrder"]
-  >["orderOrError"]
->["order"]
-
 type ParseableOrder =
   | Order2ExpressCheckoutUI_order$data
   | SetFulfillmentOrderResult
-  | UpdateOrderResult
 
 const extractLineItems = (order: ParseableOrder): Array<LineItem> => {
   const { itemsTotal, shippingTotal } = order
