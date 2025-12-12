@@ -89,7 +89,8 @@ describe("FollowGeneButton", () => {
             kind: "gene",
             objectId: "example",
           },
-          title: expect.any(String),
+          title: "Sign up or log in to follow Example",
+          imageUrl: '<mock-value-for-field-"url">',
         },
       })
     })

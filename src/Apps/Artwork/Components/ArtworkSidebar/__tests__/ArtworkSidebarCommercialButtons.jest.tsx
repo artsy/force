@@ -530,13 +530,14 @@ describe("ArtworkSidebarCommercialButtons", () => {
 
       expect(showAuthDialog).toBeCalledWith({
         options: {
-          title: expect.any(String),
+          title: "Sign up or log in to buy art with ease",
           afterAuthAction: {
             action: "buyNow",
             kind: "artworks",
             objectId: "artwork-1",
             secondaryObjectId: "edition-set-id",
           },
+          imageUrl: '<mock-value-for-field-"url">',
           redirectTo: "/artwork/artwork-1?creating_order=true",
         },
         analytics: {
@@ -568,13 +569,14 @@ describe("ArtworkSidebarCommercialButtons", () => {
 
       expect(showAuthDialog).toBeCalledWith({
         options: {
-          title: expect.any(String),
+          title: "Sign up or log in to make an offer",
           afterAuthAction: {
             action: "makeOffer",
             kind: "artworks",
             objectId: "artwork-1",
             secondaryObjectId: "edition-set-id",
           },
+          imageUrl: '<mock-value-for-field-"url">',
           redirectTo: "/artwork/artwork-1?creating_order=true",
         },
         analytics: {
