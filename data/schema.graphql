@@ -146,7 +146,7 @@ type AddArtworkToPartnerShowMutationPayload {
 }
 
 union AddArtworkToPartnerShowResponseOrError =
-  | AddArtworkToPartnerShowFailure
+    AddArtworkToPartnerShowFailure
   | AddArtworkToPartnerShowSuccess
 
 type AddArtworkToPartnerShowSuccess {
@@ -232,7 +232,7 @@ type AddInstallShotToPartnerShowMutationPayload {
 }
 
 union AddInstallShotToPartnerShowResponseOrError =
-  | AddInstallShotToPartnerShowFailure
+    AddInstallShotToPartnerShowFailure
   | AddInstallShotToPartnerShowSuccess
 
 type AddInstallShotToPartnerShowSuccess {
@@ -418,8 +418,8 @@ type Alert {
     color: String
     colors: [String]
 
-    # Filter by artwork completeness tiers. Accepts multiple values.
-    completenessTier: [String]
+    # Filter by artwork completeness tier.
+    completenessTier: String
     dimensionRange: String
 
     # When true, will skip pushing sold works to the back of the list. Useful in a CMS context.
@@ -829,7 +829,7 @@ enum AnalyticsGroupedStatsObjectTypeEnum {
 
 # A grouped stat item: country or device etc.
 union AnalyticsGroupedStatsUnion =
-  | AnalyticsVisitorsByCountry
+    AnalyticsVisitorsByCountry
   | AnalyticsVisitorsByDevice
   | AnalyticsVisitorsByLandingPage
   | AnalyticsVisitorsByReferral
@@ -1271,7 +1271,7 @@ enum AnalyticsRankedStatsObjectTypeEnum {
 
 # An artwork, artist, show, or viewing room
 union AnalyticsRankedStatsUnion =
-  | AnalyticsArtist
+    AnalyticsArtist
   | AnalyticsArtwork
   | AnalyticsShow
   | AnalyticsViewingRoom
@@ -1536,7 +1536,7 @@ type ArticleSectionImageCollection {
 }
 
 union ArticleSectionImageCollectionFigure =
-  | ArticleImageSection
+    ArticleImageSection
   | ArticleUnpublishedArtwork
   | Artwork
 
@@ -1594,7 +1594,7 @@ enum ArticleSectionVideoLayout {
 }
 
 union ArticleSections =
-  | ArticleSectionCallout
+    ArticleSectionCallout
   | ArticleSectionEmbed
   | ArticleSectionImageCollection
   | ArticleSectionImageSet
@@ -1832,8 +1832,8 @@ type Artist implements EntityWithFilterArtworksConnectionInterface & Node & Sear
     color: String
     colors: [String]
 
-    # Filter by artwork completeness tiers. Accepts multiple values.
-    completenessTier: [String]
+    # Filter by artwork completeness tier.
+    completenessTier: String
     dimensionRange: String
 
     # When true, will skip pushing sold works to the back of the list. Useful in a CMS context.
@@ -2280,8 +2280,8 @@ type ArtistPartnerEdge {
     color: String
     colors: [String]
 
-    # Filter by artwork completeness tiers. Accepts multiple values.
-    completenessTier: [String]
+    # Filter by artwork completeness tier.
+    completenessTier: String
     dimensionRange: String
 
     # When true, will skip pushing sold works to the back of the list. Useful in a CMS context.
@@ -2447,8 +2447,8 @@ type ArtistSeries implements Node {
     color: String
     colors: [String]
 
-    # Filter by artwork completeness tiers. Accepts multiple values.
-    completenessTier: [String]
+    # Filter by artwork completeness tier.
+    completenessTier: String
     dimensionRange: String
 
     # When true, will skip pushing sold works to the back of the list. Useful in a CMS context.
@@ -2658,7 +2658,7 @@ type ArtsyShippingOptInMutationSuccess {
 }
 
 union ArtsyShippingOptInMutationType =
-  | ArtsyShippingOptInMutationFailure
+    ArtsyShippingOptInMutationFailure
   | ArtsyShippingOptInMutationSuccess
 
 type ArtsyShippingOptInResponse {
@@ -3360,8 +3360,8 @@ type ArtworkFilterNode {
     color: String
     colors: [String]
 
-    # Filter by artwork completeness tiers. Accepts multiple values.
-    completenessTier: [String]
+    # Filter by artwork completeness tier.
+    completenessTier: String
     dimensionRange: String
 
     # When true, will skip pushing sold works to the back of the list. Useful in a CMS context.
@@ -3742,7 +3742,7 @@ type ArtworkMutationFailure {
 }
 
 union ArtworkMutationType =
-  | ArtworkMutationDeleteSuccess
+    ArtworkMutationDeleteSuccess
   | ArtworkMutationFailure
 
 union ArtworkOrEditionSetType = Artwork | EditionSet
@@ -4042,7 +4042,7 @@ type ArtworksCollectionsBatchUpdatePayload {
 }
 
 union ArtworksCollectionsBatchUpdateResponseOrError =
-  | ArtworksCollectionsBatchUpdateFailure
+    ArtworksCollectionsBatchUpdateFailure
   | ArtworksCollectionsBatchUpdateSuccess
 
 type ArtworksCollectionsBatchUpdateSuccess {
@@ -4084,7 +4084,7 @@ type AssignArtistToPartnerMutationPayload {
 }
 
 union AssignArtistToPartnerResponseOrError =
-  | AssignArtistToPartnerFailure
+    AssignArtistToPartnerFailure
   | AssignArtistToPartnerSuccess
 
 type AssignArtistToPartnerSuccess {
@@ -4740,6 +4740,7 @@ type Author {
   slug: ID
   socials: AuthorSocials
   twitterHandle: String @deprecated(reason: "Use `socials.x` instead")
+  website: String
 }
 
 # A connection to a list of items.
@@ -4908,7 +4909,7 @@ type BankAccountMutationSuccess {
 }
 
 union BankAccountMutationType =
-  | BankAccountMutationFailure
+    BankAccountMutationFailure
   | BankAccountMutationSuccess
 
 enum BankAccountTypes {
@@ -4948,7 +4949,7 @@ type BatchArtworkImportImagesPayload {
 }
 
 union BatchArtworkImportImagesResponseOrError =
-  | BatchArtworkImportImagesFailure
+    BatchArtworkImportImagesFailure
   | BatchArtworkImportImagesSuccess
 
 type BatchArtworkImportImagesSuccess {
@@ -5116,7 +5117,7 @@ type BulkAddArtworksToShowMutationSuccess {
 }
 
 union BulkAddArtworksToShowMutationType =
-  | BulkAddArtworksToShowMutationFailure
+    BulkAddArtworksToShowMutationFailure
   | BulkAddArtworksToShowMutationSuccess
 
 type BulkAddArtworksToShowResponse {
@@ -5276,7 +5277,7 @@ type BulkUpdateArtworksMetadataMutationSuccess {
 }
 
 union BulkUpdateArtworksMetadataMutationType =
-  | BulkUpdateArtworksMetadataMutationFailure
+    BulkUpdateArtworksMetadataMutationFailure
   | BulkUpdateArtworksMetadataMutationSuccess
 
 type BulkUpdateArtworksMetadataResponse {
@@ -5837,7 +5838,7 @@ type CollectorSummaryAttribute {
 
 # Represents either an action or a potential failure
 union CommerceActionOrFailureUnion =
-  | CommerceOrderRequiresAction
+    CommerceOrderRequiresAction
   | CommerceOrderWithMutationFailure
 
 # Autogenerated input type of AddInitialOfferToOrder
@@ -7065,7 +7066,7 @@ type CommerceOptInReportMutationPayload {
 }
 
 union CommerceOptInReportMutationType =
-  | CommerceOptInReportFailure
+    CommerceOptInReportFailure
   | CommerceOptInReportSuccess
 
 type CommerceOptInReportResponse {
@@ -7369,7 +7370,7 @@ type CommerceOrderError {
 
 # Represents either a state change or new offer
 union CommerceOrderEventUnion =
-  | CommerceOfferSubmittedEvent
+    CommerceOfferSubmittedEvent
   | CommerceOrderStateChangedEvent
 
 enum CommerceOrderFulfillmentTypeEnum {
@@ -7393,7 +7394,7 @@ enum CommerceOrderModeEnum {
 
 # Represents either a resolved Order or a potential failure
 union CommerceOrderOrFailureUnion =
-  | CommerceOrderRequiresAction
+    CommerceOrderRequiresAction
   | CommerceOrderWithMutationFailure
   | CommerceOrderWithMutationSuccess
 
@@ -7415,7 +7416,7 @@ type CommerceOrderRequiresAction {
 }
 
 union CommerceOrderResult =
-  | CommerceBuyOrder
+    CommerceBuyOrder
   | CommerceOfferOrder
   | CommerceOrderError
 
@@ -7547,7 +7548,7 @@ type CommercePickup {
 
 # Represents either a shipping information or pickup
 union CommerceRequestedFulfillmentUnion =
-  | CommercePickup
+    CommercePickup
   | CommerceShip
   | CommerceShipArta
 
@@ -9275,6 +9276,9 @@ type Conversation implements Node {
     first: Int
     last: Int
     page: Int
+
+    # Partner ID to fetch orders for
+    partnerID: String!
     size: Int
   ): PartnerOrdersConnection
 
@@ -9473,7 +9477,7 @@ type CreateAccountRequestMutationSuccess {
 }
 
 union CreateAccountRequestMutationType =
-  | CreateAccountRequestMutationFailure
+    CreateAccountRequestMutationFailure
   | CreateAccountRequestMutationSuccess
 
 type CreateAlertFailure {
@@ -9574,7 +9578,7 @@ type CreateArtworkFromTemplatePayload {
 }
 
 union CreateArtworkFromTemplateResponseOrError =
-  | CreateArtworkFromTemplateFailure
+    CreateArtworkFromTemplateFailure
   | CreateArtworkFromTemplateSuccess
 
 type CreateArtworkFromTemplateSuccess {
@@ -9601,7 +9605,7 @@ type CreateArtworkImportArtistAssignmentPayload {
 }
 
 union CreateArtworkImportArtistAssignmentResponseOrError =
-  | CreateArtworkImportArtistAssignmentFailure
+    CreateArtworkImportArtistAssignmentFailure
   | CreateArtworkImportArtistAssignmentSuccess
 
 type CreateArtworkImportArtistAssignmentSuccess {
@@ -9625,7 +9629,7 @@ type CreateArtworkImportArtistMatchPayload {
 }
 
 union CreateArtworkImportArtistMatchResponseOrError =
-  | CreateArtworkImportArtistMatchFailure
+    CreateArtworkImportArtistMatchFailure
   | CreateArtworkImportArtistMatchSuccess
 
 type CreateArtworkImportArtistMatchSuccess {
@@ -9649,7 +9653,7 @@ type CreateArtworkImportArtworksPayload {
 }
 
 union CreateArtworkImportArtworksResponseOrError =
-  | CreateArtworkImportArtworksFailure
+    CreateArtworkImportArtworksFailure
   | CreateArtworkImportArtworksSuccess
 
 type CreateArtworkImportArtworksSuccess {
@@ -9686,7 +9690,7 @@ type CreateArtworkImportCellFlagPayload {
 }
 
 union CreateArtworkImportCellFlagResponseOrError =
-  | CreateArtworkImportCellFlagFailure
+    CreateArtworkImportCellFlagFailure
   | CreateArtworkImportCellFlagSuccess
 
 type CreateArtworkImportCellFlagSuccess {
@@ -9725,7 +9729,7 @@ type CreateArtworkImportImageMatchPayload {
 }
 
 union CreateArtworkImportImageMatchResponseOrError =
-  | CreateArtworkImportImageMatchFailure
+    CreateArtworkImportImageMatchFailure
   | CreateArtworkImportImageMatchSuccess
 
 type CreateArtworkImportImageMatchSuccess {
@@ -9751,7 +9755,7 @@ type CreateArtworkImportPayload {
 }
 
 union CreateArtworkImportResponseOrError =
-  | CreateArtworkImportFailure
+    CreateArtworkImportFailure
   | CreateArtworkImportSuccess
 
 type CreateArtworkImportSuccess {
@@ -9812,7 +9816,7 @@ type CreateArtworkTemplatePayload {
 }
 
 union CreateArtworkTemplateResponseOrError =
-  | CreateArtworkTemplateFailure
+    CreateArtworkTemplateFailure
   | CreateArtworkTemplateSuccess
 
 type CreateArtworkTemplateSuccess {
@@ -9882,7 +9886,7 @@ type CreateCanonicalArtistSuccess {
 }
 
 union CreateCanonicalArtistSuccessOrErrorType =
-  | CreateCanonicalArtistFailure
+    CreateCanonicalArtistFailure
   | CreateCanonicalArtistSuccess
 
 type CreateCareerHighlightFailure {
@@ -9909,7 +9913,7 @@ type CreateCareerHighlightSuccess {
 }
 
 union CreateCareerHighlightSuccessResponseOrError =
-  | CreateCareerHighlightFailure
+    CreateCareerHighlightFailure
   | CreateCareerHighlightSuccess
 
 type CreateCollectionFailure {
@@ -9917,7 +9921,7 @@ type CreateCollectionFailure {
 }
 
 union CreateCollectionResponseOrError =
-  | CreateCollectionFailure
+    CreateCollectionFailure
   | CreateCollectionSuccess
 
 type CreateCollectionSuccess {
@@ -9940,7 +9944,7 @@ type CreateConsignmentInquiryMutationPayload {
 }
 
 union CreateConsignmentInquiryMutationType =
-  | ConsignmentInquiryMutationFailure
+    ConsignmentInquiryMutationFailure
   | ConsignmentInquiryMutationSuccess
 
 type CreateConversationMessageTemplateFailure {
@@ -9974,7 +9978,7 @@ type CreateConversationMessageTemplatePayload {
 }
 
 union CreateConversationMessageTemplateResponseOrError =
-  | CreateConversationMessageTemplateFailure
+    CreateConversationMessageTemplateFailure
   | CreateConversationMessageTemplateSuccess
 
 type CreateConversationMessageTemplateSuccess {
@@ -10029,7 +10033,7 @@ type CreateFeaturedLinkMutationPayload {
 }
 
 union CreateFeaturedLinkResponseOrError =
-  | CreateFeaturedLinkFailure
+    CreateFeaturedLinkFailure
   | CreateFeaturedLinkSuccess
 
 type CreateFeaturedLinkSuccess {
@@ -10103,7 +10107,7 @@ type CreateIdentityVerificationOverrideMutationPayload {
 }
 
 union CreateIdentityVerificationOverrideResponseOrError =
-  | IdentityVerificationOverrideMutationFailure
+    IdentityVerificationOverrideMutationFailure
   | IdentityVerificationOverrideMutationSuccess
 
 # Autogenerated input type of CreateImage
@@ -10144,7 +10148,7 @@ type CreateInvoicePaymentPayload {
 }
 
 union CreateInvoicePaymentResponseOrError =
-  | CreateInvoicePaymentFailure
+    CreateInvoicePaymentFailure
   | CreateInvoicePaymentSuccess
 
 type CreateInvoicePaymentSuccess {
@@ -10272,7 +10276,7 @@ type CreatePartnerArtistDocumentMutationPayload {
 }
 
 union CreatePartnerArtistDocumentResponseOrError =
-  | CreatePartnerArtistDocumentFailure
+    CreatePartnerArtistDocumentFailure
   | CreatePartnerArtistDocumentSuccess
 
 type CreatePartnerArtistDocumentSuccess {
@@ -10309,7 +10313,7 @@ input CreatePartnerContactInput {
 }
 
 union CreatePartnerContactOrError =
-  | CreatePartnerContactFailure
+    CreatePartnerContactFailure
   | CreatePartnerContactSuccess
 
 type CreatePartnerContactPayload {
@@ -10339,7 +10343,7 @@ input CreatePartnerLocationDaySchedulesInput {
 }
 
 union CreatePartnerLocationDaySchedulesOrError =
-  | CreatePartnerLocationDaySchedulesFailure
+    CreatePartnerLocationDaySchedulesFailure
   | CreatePartnerLocationDaySchedulesSuccess
 
 type CreatePartnerLocationDaySchedulesPayload {
@@ -10379,7 +10383,7 @@ input CreatePartnerLocationInput {
 }
 
 union CreatePartnerLocationOrError =
-  | CreatePartnerLocationFailure
+    CreatePartnerLocationFailure
   | CreatePartnerLocationSuccess
 
 type CreatePartnerLocationPayload {
@@ -10419,7 +10423,7 @@ type CreatePartnerShowDocumentMutationPayload {
 }
 
 union CreatePartnerShowDocumentResponseOrError =
-  | CreatePartnerShowDocumentFailure
+    CreatePartnerShowDocumentFailure
   | CreatePartnerShowDocumentSuccess
 
 type CreatePartnerShowDocumentSuccess {
@@ -10464,7 +10468,7 @@ type CreatePartnerShowEventMutationPayload {
 }
 
 union CreatePartnerShowEventResponseOrError =
-  | CreatePartnerShowEventFailure
+    CreatePartnerShowEventFailure
   | CreatePartnerShowEventSuccess
 
 type CreatePartnerShowEventSuccess {
@@ -10539,7 +10543,7 @@ type CreatePartnerShowMutationPayload {
 }
 
 union CreatePartnerShowResponseOrError =
-  | CreatePartnerShowFailure
+    CreatePartnerShowFailure
   | CreatePartnerShowSuccess
 
 type CreatePartnerShowSuccess {
@@ -10551,7 +10555,7 @@ type CreatePurchaseFailure {
 }
 
 union CreatePurchaseResponseOrError =
-  | CreatePurchaseFailure
+    CreatePurchaseFailure
   | CreatePurchaseSuccess
 
 type CreatePurchaseSuccess {
@@ -10578,7 +10582,7 @@ type CreateSaleAgreementMutationPayload {
 }
 
 union CreateSaleAgreementResponseOrError =
-  | CreateSaleAgreementFailure
+    CreateSaleAgreementFailure
   | CreateSaleAgreementSuccess
 
 type CreateSaleAgreementSuccess {
@@ -10630,7 +10634,7 @@ type CreateShippingPresetMutationPayload {
 }
 
 union CreateShippingPresetResponseOrError =
-  | CreateShippingPresetFailure
+    CreateShippingPresetFailure
   | CreateShippingPresetSuccess
 
 type CreateShippingPresetSuccess {
@@ -10794,7 +10798,7 @@ type CreateUserSaleProfileMutationPayload {
 }
 
 union CreateUserSaleProfileResponseOrError =
-  | CreateUserSaleProfileFailure
+    CreateUserSaleProfileFailure
   | CreateUserSaleProfileSuccess
 
 type CreateUserSaleProfileSuccess {
@@ -10822,7 +10826,7 @@ type CreateUserSeenArtworkSuccess {
 }
 
 union CreateUserSeenArtworkSuccessResponseOrError =
-  | CreateUserSeenArtworkFailure
+    CreateUserSeenArtworkFailure
   | CreateUserSeenArtworkSuccess
 
 type CreateVerifiedRepresentativeFailure {
@@ -10843,7 +10847,7 @@ type CreateVerifiedRepresentativePayload {
 }
 
 union CreateVerifiedRepresentativeResponseOrError =
-  | CreateVerifiedRepresentativeFailure
+    CreateVerifiedRepresentativeFailure
   | CreateVerifiedRepresentativeSuccess
 
 type CreateVerifiedRepresentativeSuccess {
@@ -11006,7 +11010,7 @@ type CreditCardMutationSuccess {
 }
 
 union CreditCardMutationType =
-  | CreditCardMutationFailure
+    CreditCardMutationFailure
   | CreditCardMutationSuccess
 
 type CreditCardPayload {
@@ -11184,7 +11188,7 @@ type DeleteArtworkTemplatePayload {
 }
 
 union DeleteArtworkTemplateResponseOrError =
-  | DeleteArtworkTemplateFailure
+    DeleteArtworkTemplateFailure
   | DeleteArtworkTemplateSuccess
 
 type DeleteArtworkTemplateSuccess {
@@ -11222,7 +11226,7 @@ type DeleteCareerHighlightSuccess {
 }
 
 union DeleteCareerHighlightSuccessOrErrorType =
-  | DeleteCareerHighlightFailure
+    DeleteCareerHighlightFailure
   | DeleteCareerHighlightSuccess
 
 type DeleteCollectionFailure {
@@ -11230,7 +11234,7 @@ type DeleteCollectionFailure {
 }
 
 union DeleteCollectionResponseOrError =
-  | DeleteCollectionFailure
+    DeleteCollectionFailure
   | DeleteCollectionSuccess
 
 type DeleteCollectionSuccess {
@@ -11258,7 +11262,7 @@ type DeleteConversationMessageTemplatePayload {
 }
 
 union DeleteConversationMessageTemplateResponseOrError =
-  | DeleteConversationMessageTemplateFailure
+    DeleteConversationMessageTemplateFailure
   | DeleteConversationMessageTemplateSuccess
 
 type DeleteConversationMessageTemplateSuccess {
@@ -11281,7 +11285,7 @@ type DeleteConversationMutationPayload {
 }
 
 union DeleteConversationResponseOrError =
-  | DeleteConversationFailure
+    DeleteConversationFailure
   | DeleteConversationSuccess
 
 type DeleteConversationSuccess {
@@ -11334,7 +11338,7 @@ type DeleteFeaturedLinkMutationPayload {
 }
 
 union DeleteFeaturedLinkResponseOrError =
-  | DeleteFeaturedLinkFailure
+    DeleteFeaturedLinkFailure
   | DeleteFeaturedLinkSuccess
 
 type DeleteFeaturedLinkSuccess {
@@ -11385,7 +11389,7 @@ type DeletePartnerArtistDocumentMutationPayload {
 }
 
 union DeletePartnerArtistDocumentResponseOrError =
-  | DeletePartnerArtistDocumentFailure
+    DeletePartnerArtistDocumentFailure
   | DeletePartnerArtistDocumentSuccess
 
 type DeletePartnerArtistDocumentSuccess {
@@ -11414,7 +11418,7 @@ type DeletePartnerArtistMutationPayload {
 }
 
 union DeletePartnerArtistResponseOrError =
-  | DeletePartnerArtistFailure
+    DeletePartnerArtistFailure
   | DeletePartnerArtistSuccess
 
 type DeletePartnerArtistSuccess {
@@ -11441,7 +11445,7 @@ type DeletePartnerContactMutationPayload {
 }
 
 union DeletePartnerContactOrError =
-  | DeletePartnerContactFailure
+    DeletePartnerContactFailure
   | DeletePartnerContactSuccess
 
 type DeletePartnerContactSuccess {
@@ -11468,7 +11472,7 @@ type DeletePartnerLocationMutationPayload {
 }
 
 union DeletePartnerLocationOrError =
-  | DeletePartnerLocationFailure
+    DeletePartnerLocationFailure
   | DeletePartnerLocationSuccess
 
 type DeletePartnerLocationSuccess {
@@ -11500,7 +11504,7 @@ type DeletePartnerShowDocumentMutationPayload {
 }
 
 union DeletePartnerShowDocumentResponseOrError =
-  | DeletePartnerShowDocumentFailure
+    DeletePartnerShowDocumentFailure
   | DeletePartnerShowDocumentSuccess
 
 type DeletePartnerShowDocumentSuccess {
@@ -11533,7 +11537,7 @@ type DeletePartnerShowEventMutationPayload {
 }
 
 union DeletePartnerShowEventResponseOrError =
-  | DeletePartnerShowEventFailure
+    DeletePartnerShowEventFailure
   | DeletePartnerShowEventSuccess
 
 type DeletePartnerShowEventSuccess {
@@ -11563,7 +11567,7 @@ type DeletePartnerShowMutationPayload {
 }
 
 union DeletePartnerShowResponseOrError =
-  | DeletePartnerShowFailure
+    DeletePartnerShowFailure
   | DeletePartnerShowSuccess
 
 type DeletePartnerShowSuccess {
@@ -11575,7 +11579,7 @@ type DeletePurchaseFailure {
 }
 
 union DeletePurchaseResponseOrError =
-  | DeletePurchaseFailure
+    DeletePurchaseFailure
   | DeletePurchaseSuccess
 
 type DeletePurchaseSuccess {
@@ -11601,7 +11605,7 @@ type DeleteShippingPresetMutationPayload {
 }
 
 union DeleteShippingPresetResponseOrError =
-  | DeleteShippingPresetFailure
+    DeleteShippingPresetFailure
   | DeleteShippingPresetSuccess
 
 type DeleteShippingPresetSuccess {
@@ -11716,7 +11720,7 @@ type DeleteVerifiedRepresentativeMutationPayload {
 }
 
 union DeleteVerifiedRepresentativeResponseOrError =
-  | DeleteVerifiedRepresentativeFailure
+    DeleteVerifiedRepresentativeFailure
   | DeleteVerifiedRepresentativeSuccess
 
 type DeleteVerifiedRepresentativeSuccess {
@@ -11945,7 +11949,7 @@ type DiscoveryCategory implements Node {
 
 # A union of different discovery category types
 union DiscoveryCategoryUnion =
-  | DiscoveryArtworksWithFiltersCollection
+    DiscoveryArtworksWithFiltersCollection
   | DiscoveryMarketingCollection
 
 # A discovery category that contains marketing collections
@@ -12239,8 +12243,8 @@ interface EntityWithFilterArtworksConnectionInterface {
     color: String
     colors: [String]
 
-    # Filter by artwork completeness tiers. Accepts multiple values.
-    completenessTier: [String]
+    # Filter by artwork completeness tier.
+    completenessTier: String
     dimensionRange: String
 
     # When true, will skip pushing sold works to the back of the list. Useful in a CMS context.
@@ -12373,7 +12377,7 @@ type ExcludeArtistFromDiscoveryPayload {
 }
 
 union ExcludeArtistFromDiscoveryResponseOrError =
-  | ExcludeArtistFromDiscoveryFailure
+    ExcludeArtistFromDiscoveryFailure
   | ExcludeArtistFromDiscoverySuccess
 
 type ExcludeArtistFromDiscoverySuccess {
@@ -12534,8 +12538,8 @@ type Fair implements EntityWithFilterArtworksConnectionInterface & Node {
     color: String
     colors: [String]
 
-    # Filter by artwork completeness tiers. Accepts multiple values.
-    completenessTier: [String]
+    # Filter by artwork completeness tier.
+    completenessTier: String
     dimensionRange: String
 
     # When true, will skip pushing sold works to the back of the list. Useful in a CMS context.
@@ -13075,8 +13079,8 @@ input FilterArtworksInput {
   color: String
   colors: [String]
 
-  # Filter by artwork completeness tiers. Accepts multiple values.
-  completenessTier: [String]
+  # Filter by artwork completeness tier.
+  completenessTier: String
   dimensionRange: String
 
   # When true, will skip pushing sold works to the back of the list. Useful in a CMS context.
@@ -13640,8 +13644,8 @@ type Gene implements Node & Searchable {
     color: String
     colors: [String]
 
-    # Filter by artwork completeness tiers. Accepts multiple values.
-    completenessTier: [String]
+    # Filter by artwork completeness tier.
+    completenessTier: String
     dimensionRange: String
 
     # When true, will skip pushing sold works to the back of the list. Useful in a CMS context.
@@ -14022,7 +14026,7 @@ type HomePageArtworkModule implements Node {
 }
 
 union HomePageArtworkModuleContext =
-  | Fair
+    Fair
   | FollowArtists
   | Gene
   | HomePageFollowedArtistArtworkModule
@@ -14739,7 +14743,7 @@ type IdentityVerificationEmailMutationSuccessType {
 }
 
 union IdentityVerificationEmailMutationType =
-  | IdentityVerificationEmailMutationFailureType
+    IdentityVerificationEmailMutationFailureType
   | IdentityVerificationEmailMutationSuccessType
 
 type IdentityVerificationOverride {
@@ -15419,7 +15423,7 @@ type MarkAllNotificationsAsReadPayload {
 }
 
 union MarkAllNotificationsAsReadResponseOrError =
-  | MarkAllNotificationsAsReadFailure
+    MarkAllNotificationsAsReadFailure
   | MarkAllNotificationsAsReadSuccess
 
 type MarkAllNotificationsAsReadSuccess {
@@ -15442,7 +15446,7 @@ type MarkNotificationAsReadPayload {
 }
 
 union MarkNotificationAsReadResponseOrError =
-  | MarkNotificationAsReadFailure
+    MarkNotificationAsReadFailure
   | MarkNotificationAsReadSuccess
 
 type MarkNotificationAsReadSuccess {
@@ -15467,7 +15471,7 @@ type MarkNotificationsAsSeenPayload {
 }
 
 union MarkNotificationsAsSeenResponseOrError =
-  | MarkNotificationsAsSeenFailure
+    MarkNotificationsAsSeenFailure
   | MarkNotificationsAsSeenSuccess
 
 type MarkNotificationsAsSeenSuccess {
@@ -15572,8 +15576,8 @@ type MarketingCollection implements Node {
     color: String
     colors: [String]
 
-    # Filter by artwork completeness tiers. Accepts multiple values.
-    completenessTier: [String]
+    # Filter by artwork completeness tier.
+    completenessTier: String
     dimensionRange: String
 
     # When true, will skip pushing sold works to the back of the list. Useful in a CMS context.
@@ -15743,7 +15747,7 @@ enum MarketingCollectionsSorts {
 }
 
 union Match =
-  | Article
+    Article
   | Artist
   | Artwork
   | Fair
@@ -17464,9 +17468,6 @@ type Mutation {
     input: setOrderFulfillmentOptionInput!
   ): setOrderFulfillmentOptionPayload
 
-  # Set payment method for an order.
-  setOrderPayment(input: setOrderPaymentInput!): setOrderPaymentPayload
-
   # Start an identity verification flow for a pending identity verification
   startIdentityVerification(
     input: startIdentityVerificationMutationInput!
@@ -17616,7 +17617,7 @@ type Mutation {
     input: updateNotificationPreferencesMutationInput!
   ): updateNotificationPreferencesMutationPayload
 
-  # Update an order. NOTE: For payment-related updates, use setOrderPayment mutation instead.
+  # Update an order
   updateOrder(input: updateOrderInput!): updateOrderPayload
 
   # Update an order's shipping address
@@ -17768,7 +17769,7 @@ type MyCollectionArtworkMutationSuccess {
 }
 
 union MyCollectionArtworkMutationType =
-  | MyCollectionArtworkMutationDeleteSuccess
+    MyCollectionArtworkMutationDeleteSuccess
   | MyCollectionArtworkMutationFailure
   | MyCollectionArtworkMutationSuccess
 
@@ -18092,7 +18093,7 @@ type NotificationEdge {
 }
 
 union NotificationItem =
-  | AlertNotificationItem
+    AlertNotificationItem
   | ArticleFeaturedArtistNotificationItem
   | ArtworkPublishedNotificationItem
   | CollectorProfileUpdatePromptNotificationItem
@@ -18397,7 +18398,7 @@ type OrderMutationError {
 }
 
 union OrderMutationResponse =
-  | OrderMutationActionRequired
+    OrderMutationActionRequired
   | OrderMutationError
   | OrderMutationSuccess
 
@@ -18530,7 +18531,7 @@ type OrderedSetEdge {
 }
 
 union OrderedSetItem =
-  | Artist
+    Artist
   | Artwork
   | FeaturedLink
   | Gene
@@ -18894,8 +18895,8 @@ type Partner implements Node {
     color: String
     colors: [String]
 
-    # Filter by artwork completeness tiers. Accepts multiple values.
-    completenessTier: [String]
+    # Filter by artwork completeness tier.
+    completenessTier: String
     dimensionRange: String
 
     # When true, will skip pushing sold works to the back of the list. Useful in a CMS context.
@@ -19264,8 +19265,8 @@ type PartnerArtist {
     color: String
     colors: [String]
 
-    # Filter by artwork completeness tiers. Accepts multiple values.
-    completenessTier: [String]
+    # Filter by artwork completeness tier.
+    completenessTier: String
     dimensionRange: String
 
     # When true, will skip pushing sold works to the back of the list. Useful in a CMS context.
@@ -19464,8 +19465,8 @@ type PartnerArtistEdge {
     color: String
     colors: [String]
 
-    # Filter by artwork completeness tiers. Accepts multiple values.
-    completenessTier: [String]
+    # Filter by artwork completeness tier.
+    completenessTier: String
     dimensionRange: String
 
     # When true, will skip pushing sold works to the back of the list. Useful in a CMS context.
@@ -20402,7 +20403,7 @@ type PriceRange {
 
 # Pricing breakdown line
 union PricingBreakdownLineUnion =
-  | ShippingLine
+    ShippingLine
   | SubtotalLine
   | TaxLine
   | TotalLine
@@ -20803,8 +20804,8 @@ type Query {
     color: String
     colors: [String]
 
-    # Filter by artwork completeness tiers. Accepts multiple values.
-    completenessTier: [String]
+    # Filter by artwork completeness tier.
+    completenessTier: String
     dimensionRange: String
 
     # When true, will skip pushing sold works to the back of the list. Useful in a CMS context.
@@ -21201,8 +21202,8 @@ type Query {
     color: String
     colors: [String]
 
-    # Filter by artwork completeness tiers. Accepts multiple values.
-    completenessTier: [String]
+    # Filter by artwork completeness tier.
+    completenessTier: String
     dimensionRange: String
 
     # When true, will skip pushing sold works to the back of the list. Useful in a CMS context.
@@ -22265,7 +22266,7 @@ type RemoveArtworkFromPartnerShowMutationPayload {
 }
 
 union RemoveArtworkFromPartnerShowResponseOrError =
-  | RemoveArtworkFromPartnerShowFailure
+    RemoveArtworkFromPartnerShowFailure
   | RemoveArtworkFromPartnerShowSuccess
 
 type RemoveArtworkFromPartnerShowSuccess {
@@ -22291,7 +22292,7 @@ type RemoveArtworkImportImagePayload {
 }
 
 union RemoveArtworkImportImageResponseOrError =
-  | RemoveArtworkImportImageFailure
+    RemoveArtworkImportImageFailure
   | RemoveArtworkImportImageSuccess
 
 type RemoveArtworkImportImageSuccess {
@@ -22338,7 +22339,7 @@ type RemoveInstallShotFromPartnerShowMutationPayload {
 }
 
 union RemoveInstallShotFromPartnerShowResponseOrError =
-  | RemoveInstallShotFromPartnerShowFailure
+    RemoveInstallShotFromPartnerShowFailure
   | RemoveInstallShotFromPartnerShowSuccess
 
 type RemoveInstallShotFromPartnerShowSuccess {
@@ -22365,7 +22366,7 @@ type RepositionArtworkImagesMutationPayload {
 }
 
 union RepositionArtworkImagesResponseOrError =
-  | RepositionArtworkImagesFailure
+    RepositionArtworkImagesFailure
   | RepositionArtworkImagesSuccess
 
 type RepositionArtworkImagesSuccess {
@@ -22396,7 +22397,7 @@ type RepositionArtworksInPartnerShowMutationPayload {
 }
 
 union RepositionArtworksInPartnerShowResponseOrError =
-  | RepositionArtworksInPartnerShowFailure
+    RepositionArtworksInPartnerShowFailure
   | RepositionArtworksInPartnerShowSuccess
 
 type RepositionArtworksInPartnerShowSuccess {
@@ -22425,7 +22426,7 @@ type RepositionInstallShotsInPartnerShowMutationPayload {
 }
 
 union RepositionInstallShotsInPartnerShowResponseOrError =
-  | RepositionInstallShotsInPartnerShowFailure
+    RepositionInstallShotsInPartnerShowFailure
   | RepositionInstallShotsInPartnerShowSuccess
 
 type RepositionInstallShotsInPartnerShowSuccess {
@@ -22454,7 +22455,7 @@ type RepositionPartnerArtistArtworksMutationPayload {
 }
 
 union RepositionPartnerArtistArtworksResponseOrError =
-  | RepositionPartnerArtistArtworksFailure
+    RepositionPartnerArtistArtworksFailure
   | RepositionPartnerArtistArtworksSuccess
 
 type RepositionPartnerArtistArtworksSuccess {
@@ -22485,7 +22486,7 @@ type RepositionPartnerLocationsSuccess {
 }
 
 union RepositionPartnerLocationsSuccessOrError =
-  | RepositionPartnerLocationsFailure
+    RepositionPartnerLocationsFailure
   | RepositionPartnerLocationsSuccess
 
 type ReprocessArtworkImageFailure {
@@ -22499,7 +22500,7 @@ input ReprocessArtworkImageInput {
 }
 
 union ReprocessArtworkImageMutationType =
-  | ReprocessArtworkImageFailure
+    ReprocessArtworkImageFailure
   | ReprocessArtworkImageSuccess
 
 type ReprocessArtworkImagePayload {
@@ -22564,7 +22565,7 @@ input RequestPriceEstimateInput {
 }
 
 union RequestPriceEstimateMutationType =
-  | RequestPriceEstimatedMutationFailure
+    RequestPriceEstimatedMutationFailure
   | RequestPriceEstimatedMutationSuccess
 
 type RequestPriceEstimatePayload {
@@ -23460,7 +23461,7 @@ type SendConfirmationEmailMutationSuccess {
 }
 
 union SendConfirmationEmailMutationType =
-  | SendConfirmationEmailMutationFailure
+    SendConfirmationEmailMutationFailure
   | SendConfirmationEmailMutationSuccess
 
 input SendConversationMessageMutationInput {
@@ -23532,7 +23533,7 @@ type SendFeedbackMutationSuccess {
 }
 
 union SendFeedbackMutationType =
-  | SendFeedbackMutationFailure
+    SendFeedbackMutationFailure
   | SendFeedbackMutationSuccess
 
 input SendIdentityVerificationEmailMutationInput {
@@ -23766,8 +23767,8 @@ type Show implements EntityWithFilterArtworksConnectionInterface & Node {
     color: String
     colors: [String]
 
-    # Filter by artwork completeness tiers. Accepts multiple values.
-    completenessTier: [String]
+    # Filter by artwork completeness tier.
+    completenessTier: String
     dimensionRange: String
 
     # When true, will skip pushing sold works to the back of the list. Useful in a CMS context.
@@ -24163,7 +24164,7 @@ type StartIdentityVerificationFailure {
 }
 
 union StartIdentityVerificationResponseOrError =
-  | StartIdentityVerificationFailure
+    StartIdentityVerificationFailure
   | StartIdentityVerificationSuccess
 
 type StartIdentityVerificationSuccess {
@@ -24340,8 +24341,8 @@ type Tag implements Node {
     color: String
     colors: [String]
 
-    # Filter by artwork completeness tiers. Accepts multiple values.
-    completenessTier: [String]
+    # Filter by artwork completeness tier.
+    completenessTier: String
     dimensionRange: String
 
     # When true, will skip pushing sold works to the back of the list. Useful in a CMS context.
@@ -24569,7 +24570,7 @@ type TransferMyCollectionSuccess {
 
 # A transfer My Collection success or errors object
 union TransferMyCollectionSuccessOrErrorsUnion =
-  | Errors
+    Errors
   | TransferMyCollectionSuccess
 
 type TrendingArtists {
@@ -24598,7 +24599,7 @@ type TriggerCampaignMutationSuccess {
 }
 
 union TriggerCampaignMutationSuccessOrError =
-  | TriggerCampaignMutationFailure
+    TriggerCampaignMutationFailure
   | TriggerCampaignMutationSuccess
 
 type TriggerCampaignPayload {
@@ -24795,7 +24796,7 @@ type UpdateArtworkImportPayload {
 }
 
 union UpdateArtworkImportResponseOrError =
-  | UpdateArtworkImportFailure
+    UpdateArtworkImportFailure
   | UpdateArtworkImportSuccess
 
 type UpdateArtworkImportRowFailure {
@@ -24823,7 +24824,7 @@ type UpdateArtworkImportRowImagesPayload {
 }
 
 union UpdateArtworkImportRowImagesResponseOrError =
-  | UpdateArtworkImportRowImagesFailure
+    UpdateArtworkImportRowImagesFailure
   | UpdateArtworkImportRowImagesSuccess
 
 type UpdateArtworkImportRowImagesSuccess {
@@ -24852,7 +24853,7 @@ type UpdateArtworkImportRowPayload {
 }
 
 union UpdateArtworkImportRowResponseOrError =
-  | UpdateArtworkImportRowFailure
+    UpdateArtworkImportRowFailure
   | UpdateArtworkImportRowSuccess
 
 type UpdateArtworkImportRowSuccess {
@@ -24958,7 +24959,7 @@ type UpdateCMSLastAccessTimestampMutationPayload {
 }
 
 union UpdateCMSLastAccessTimestampResponseOrError =
-  | UpdateCMSLastAccessTimestampFailure
+    UpdateCMSLastAccessTimestampFailure
   | UpdateCMSLastAccessTimestampSuccess
 
 type UpdateCMSLastAccessTimestampSuccess {
@@ -24988,7 +24989,7 @@ type UpdateCareerHighlightSuccess {
 }
 
 union UpdateCareerHighlightsSuccessResponseOrError =
-  | UpdateCareerHighlightFailure
+    UpdateCareerHighlightFailure
   | UpdateCareerHighlightSuccess
 
 type UpdateCollectionFailure {
@@ -24996,7 +24997,7 @@ type UpdateCollectionFailure {
 }
 
 union UpdateCollectionResponseOrError =
-  | UpdateCollectionFailure
+    UpdateCollectionFailure
   | UpdateCollectionSuccess
 
 type UpdateCollectionSuccess {
@@ -25091,7 +25092,7 @@ type UpdateCollectorProfileWithIDPayload {
 }
 
 union UpdateCollectorProfileWithIDResponseOrError =
-  | UpdateCollectorProfileWithIDFailure
+    UpdateCollectorProfileWithIDFailure
   | UpdateCollectorProfileWithIDSuccess
 
 type UpdateCollectorProfileWithIDSuccess {
@@ -25123,7 +25124,7 @@ type UpdateConversationMessageTemplatePayload {
 }
 
 union UpdateConversationMessageTemplateResponseOrError =
-  | UpdateConversationMessageTemplateFailure
+    UpdateConversationMessageTemplateFailure
   | UpdateConversationMessageTemplateSuccess
 
 type UpdateConversationMessageTemplateSuccess {
@@ -25213,7 +25214,7 @@ type UpdateFeaturedLinkMutationPayload {
 }
 
 union UpdateFeaturedLinkResponseOrError =
-  | UpdateFeaturedLinkFailure
+    UpdateFeaturedLinkFailure
   | UpdateFeaturedLinkSuccess
 
 type UpdateFeaturedLinkSuccess {
@@ -25270,7 +25271,7 @@ type UpdateInstallShotForPartnerShowMutationPayload {
 }
 
 union UpdateInstallShotForPartnerShowResponseOrError =
-  | UpdateInstallShotForPartnerShowFailure
+    UpdateInstallShotForPartnerShowFailure
   | UpdateInstallShotForPartnerShowSuccess
 
 type UpdateInstallShotForPartnerShowSuccess {
@@ -25287,7 +25288,7 @@ type UpdateMeCollectionsFailure {
 }
 
 union UpdateMeCollectionsResponseOrError =
-  | UpdateMeCollectionsFailure
+    UpdateMeCollectionsFailure
   | UpdateMeCollectionsSuccess
 
 type UpdateMeCollectionsSuccess {
@@ -25450,7 +25451,7 @@ input UpdateMyProfileInput {
 }
 
 union UpdateMyProfileMutation =
-  | UpdateMyProfileMutationFailure
+    UpdateMyProfileMutationFailure
   | UpdateMyProfileMutationSuccess
 
 type UpdateMyProfileMutationFailure {
@@ -25499,7 +25500,7 @@ type UpdateOrderedSetMutationPayload {
 }
 
 union UpdateOrderedSetResponseOrError =
-  | UpdateOrderedSetFailure
+    UpdateOrderedSetFailure
   | UpdateOrderedSetSuccess
 
 type UpdateOrderedSetSuccess {
@@ -25562,7 +25563,7 @@ type UpdatePartnerArtistDocumentMutationPayload {
 }
 
 union UpdatePartnerArtistDocumentResponseOrError =
-  | UpdatePartnerArtistDocumentFailure
+    UpdatePartnerArtistDocumentFailure
   | UpdatePartnerArtistDocumentSuccess
 
 type UpdatePartnerArtistDocumentSuccess {
@@ -25606,7 +25607,7 @@ type UpdatePartnerArtistMutationPayload {
 }
 
 union UpdatePartnerArtistResponseOrError =
-  | UpdatePartnerArtistFailure
+    UpdatePartnerArtistFailure
   | UpdatePartnerArtistSuccess
 
 type UpdatePartnerArtistSuccess {
@@ -25646,7 +25647,7 @@ input UpdatePartnerContactInput {
 }
 
 union UpdatePartnerContactOrError =
-  | UpdatePartnerContactFailure
+    UpdatePartnerContactFailure
   | UpdatePartnerContactSuccess
 
 type UpdatePartnerContactPayload {
@@ -25695,7 +25696,7 @@ type UpdatePartnerFlagsMutationPayload {
 }
 
 union UpdatePartnerFlagsResponseOrError =
-  | UpdatePartnerFlagsFailure
+    UpdatePartnerFlagsFailure
   | UpdatePartnerFlagsSuccess
 
 type UpdatePartnerFlagsSuccess {
@@ -25733,7 +25734,7 @@ input UpdatePartnerLocationInput {
 }
 
 union UpdatePartnerLocationOrError =
-  | UpdatePartnerLocationFailure
+    UpdatePartnerLocationFailure
   | UpdatePartnerLocationSuccess
 
 type UpdatePartnerLocationPayload {
@@ -25902,7 +25903,7 @@ input UpdatePartnerProfileImageInput {
 }
 
 union UpdatePartnerProfileImageOrError =
-  | UpdatePartnerProfileImageFailure
+    UpdatePartnerProfileImageFailure
   | UpdatePartnerProfileImageSuccess
 
 type UpdatePartnerProfileImagePayload {
@@ -25947,7 +25948,7 @@ type UpdatePartnerShowDocumentMutationPayload {
 }
 
 union UpdatePartnerShowDocumentResponseOrError =
-  | UpdatePartnerShowDocumentFailure
+    UpdatePartnerShowDocumentFailure
   | UpdatePartnerShowDocumentSuccess
 
 type UpdatePartnerShowDocumentSuccess {
@@ -25995,7 +25996,7 @@ type UpdatePartnerShowEventMutationPayload {
 }
 
 union UpdatePartnerShowEventResponseOrError =
-  | UpdatePartnerShowEventFailure
+    UpdatePartnerShowEventFailure
   | UpdatePartnerShowEventSuccess
 
 type UpdatePartnerShowEventSuccess {
@@ -26076,7 +26077,7 @@ type UpdatePartnerShowMutationPayload {
 }
 
 union UpdatePartnerShowResponseOrError =
-  | UpdatePartnerShowFailure
+    UpdatePartnerShowFailure
   | UpdatePartnerShowSuccess
 
 type UpdatePartnerShowSuccess {
@@ -26133,7 +26134,7 @@ type UpdatePurchaseFailure {
 }
 
 union UpdatePurchaseResponseOrError =
-  | UpdatePurchaseFailure
+    UpdatePurchaseFailure
   | UpdatePurchaseSuccess
 
 type UpdatePurchaseSuccess {
@@ -26163,7 +26164,7 @@ type UpdateSaleAgreementMutationPayload {
 }
 
 union UpdateSaleAgreementResponseOrError =
-  | UpdateSaleAgreementFailure
+    UpdateSaleAgreementFailure
   | UpdateSaleAgreementSuccess
 
 type UpdateSaleAgreementSuccess {
@@ -26215,7 +26216,7 @@ type UpdateShippingPresetMutationPayload {
 }
 
 union UpdateShippingPresetResponseOrError =
-  | UpdateShippingPresetFailure
+    UpdateShippingPresetFailure
   | UpdateShippingPresetSuccess
 
 type UpdateShippingPresetSuccess {
@@ -26335,7 +26336,7 @@ type UpdateUserInterestMutationPayload {
 union UpdateUserInterestOrError = UpdateUserInterestsFailure | UserInterest
 
 union UpdateUserInterestResponseOrError =
-  | UpdateUserInterestFailure
+    UpdateUserInterestFailure
   | UpdateUserInterestSuccess
 
 type UpdateUserInterestSuccess {
@@ -26828,7 +26829,7 @@ type UserIconDeleteSuccessType {
 }
 
 union UserIconDeletionMutationType =
-  | UserIconDeleteFailureType
+    UserIconDeleteFailureType
   | UserIconDeleteSuccessType
 
 # A connection to a list of items.
@@ -27355,8 +27356,8 @@ type Viewer {
     color: String
     colors: [String]
 
-    # Filter by artwork completeness tiers. Accepts multiple values.
-    completenessTier: [String]
+    # Filter by artwork completeness tier.
+    completenessTier: String
     dimensionRange: String
 
     # When true, will skip pushing sold works to the back of the list. Useful in a CMS context.
@@ -27627,8 +27628,8 @@ type Viewer {
     color: String
     colors: [String]
 
-    # Filter by artwork completeness tiers. Accepts multiple values.
-    completenessTier: [String]
+    # Filter by artwork completeness tier.
+    completenessTier: String
     dimensionRange: String
 
     # When true, will skip pushing sold works to the back of the list. Useful in a CMS context.
@@ -28669,7 +28670,7 @@ type addOrderedSetItemMutationPayload {
 }
 
 union addOrderedSetItemResponseOrError =
-  | addOrderedSetItemFailure
+    addOrderedSetItemFailure
   | addOrderedSetItemSuccess
 
 type addOrderedSetItemSuccess {
@@ -28775,7 +28776,7 @@ type createHeroUnitFailure {
 }
 
 union createHeroUnitResponseOrError =
-  | createHeroUnitFailure
+    createHeroUnitFailure
   | createHeroUnitSuccess
 
 type createHeroUnitSuccess {
@@ -28787,7 +28788,7 @@ type createOrderedSetFailure {
 }
 
 union createOrderedSetResponseOrError =
-  | createOrderedSetFailure
+    createOrderedSetFailure
   | createOrderedSetSuccess
 
 type createOrderedSetSuccess {
@@ -28813,7 +28814,7 @@ type createPartnerOfferMutationPayload {
 }
 
 union createPartnerOfferResponseOrError =
-  | createPartnerOfferFailure
+    createPartnerOfferFailure
   | createPartnerOfferSuccess
 
 type createPartnerOfferSuccess {
@@ -28863,7 +28864,7 @@ type createUserAdminNoteMutationPayload {
 }
 
 union createUserAdminNoteResponseOrError =
-  | createUserAdminNoteFailure
+    createUserAdminNoteFailure
   | createUserAdminNoteSuccess
 
 type createUserAdminNoteSuccess {
@@ -28875,7 +28876,7 @@ type createUserInterestForUserFailure {
 }
 
 union createUserInterestForUserResponseOrError =
-  | createUserInterestForUserFailure
+    createUserInterestForUserFailure
   | createUserInterestForUserSuccess
 
 type createUserInterestForUserSuccess {
@@ -28922,7 +28923,7 @@ type deleteHeroUnitMutationPayload {
 }
 
 union deleteHeroUnitResponseOrError =
-  | deleteHeroUnitFailure
+    deleteHeroUnitFailure
   | deleteHeroUnitSuccess
 
 type deleteHeroUnitSuccess {
@@ -28951,7 +28952,7 @@ type deleteOrderedSetItemMutationPayload {
 }
 
 union deleteOrderedSetItemResponseOrError =
-  | deleteOrderedSetItemFailure
+    deleteOrderedSetItemFailure
   | deleteOrderedSetItemSuccess
 
 type deleteOrderedSetItemSuccess {
@@ -28972,7 +28973,7 @@ type deleteOrderedSetMutationPayload {
 }
 
 union deleteOrderedSetResponseOrError =
-  | deleteOrderedSetFailure
+    deleteOrderedSetFailure
   | deleteOrderedSetSuccess
 
 type deleteOrderedSetSuccess {
@@ -29006,7 +29007,7 @@ type deleteUserAdminNoteMutationPayload {
 }
 
 union deleteUserAdminNoteResponseOrError =
-  | deleteUserAdminNoteFailure
+    deleteUserAdminNoteFailure
   | deleteUserAdminNoteSuccess
 
 type deleteUserAdminNoteSuccess {
@@ -29018,7 +29019,7 @@ type deleteUserInterestForUserFailure {
 }
 
 union deleteUserInterestForUserResponseOrError =
-  | deleteUserInterestForUserFailure
+    deleteUserInterestForUserFailure
   | deleteUserInterestForUserSuccess
 
 type deleteUserInterestForUserSuccess {
@@ -29044,7 +29045,7 @@ type deleteUserRoleMutationPayload {
 }
 
 union deleteUserRoleResponseOrError =
-  | deleteUserRoleFailure
+    deleteUserRoleFailure
   | deleteUserRoleSuccess
 
 type deleteUserRoleSuccess {
@@ -29077,30 +29078,6 @@ input setOrderFulfillmentOptionInput {
 }
 
 type setOrderFulfillmentOptionPayload {
-  clientMutationId: String
-  orderOrError: OrderMutationResponse
-}
-
-input setOrderPaymentInput {
-  clientMutationId: String
-
-  # Credit card wallet type (e.g., Apple Pay, Google Pay).
-  creditCardWalletType: OrderCreditCardWalletTypeEnum
-
-  # Order id.
-  id: ID!
-
-  # Payment method.
-  paymentMethod: OrderPaymentMethodEnum!
-
-  # Saved payment method id (credit card or bank account).
-  paymentMethodId: String
-
-  # Stripe confirmation token.
-  stripeConfirmationToken: String
-}
-
-type setOrderPaymentPayload {
   clientMutationId: String
   orderOrError: OrderMutationResponse
 }
@@ -29246,7 +29223,7 @@ type updateCollectionPayload {
 }
 
 union updateCollectorProfileResponseOrError =
-  | UpdateCollectorProfileFailure
+    UpdateCollectorProfileFailure
   | UpdateCollectorProfileSuccess
 
 type updateHeroUnitFailure {
@@ -29254,7 +29231,7 @@ type updateHeroUnitFailure {
 }
 
 union updateHeroUnitResponseOrError =
-  | updateHeroUnitFailure
+    updateHeroUnitFailure
   | updateHeroUnitSuccess
 
 type updateHeroUnitSuccess {
@@ -29291,24 +29268,15 @@ input updateOrderInput {
 
   # Credit card wallet type
   creditCardWalletType: OrderCreditCardWalletTypeEnum
-    @deprecated(
-      reason: "Use setOrderPayment mutation instead for setting payment methods."
-    )
 
   # Order id.
   id: ID!
 
   # Payment method.
   paymentMethod: OrderPaymentMethodEnum
-    @deprecated(
-      reason: "Use setOrderPayment mutation instead for setting payment methods."
-    )
 
   # Stripe confirmation token
   stripeConfirmationToken: String
-    @deprecated(
-      reason: "Use setOrderPayment mutation instead for setting payment methods."
-    )
 }
 
 type updateOrderPayload {

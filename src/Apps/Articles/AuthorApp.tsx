@@ -1,5 +1,6 @@
 import InstagramFillIcon from "@artsy/icons/InstagramFillIcon"
 import XIcon from "@artsy/icons/XIcon"
+import PublicationIcon from "@artsy/icons/PublicationIcon"
 import {
   Avatar,
   Box,
@@ -128,6 +129,19 @@ export const AuthorApp: FC<React.PropsWithChildren<AuthorAppProps>> = ({
                           </Text>
                         </AuthorSocialLink>
                       )}
+
+                      {author.website && (
+                        <AuthorSocialLink
+                          as="a"
+                          href={author.website}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <PublicationIcon />
+
+                          <Text variant="xs">{author.website}</Text>
+                        </AuthorSocialLink>
+                      )}
                     </Stack>
                   )}
                 </Stack>
@@ -172,6 +186,7 @@ const FRAGMENT = graphql`
     bio
     initials
     role
+    website
     socials {
       x {
         handle
