@@ -1,4 +1,4 @@
-import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
+import { ActionType, type ContextModule, OwnerType } from "@artsy/cohesion"
 import { Expandable, Text } from "@artsy/palette"
 import type { ArtistCareerHighlight_insight$data } from "__generated__/ArtistCareerHighlight_insight.graphql"
 import type { FC } from "react"
@@ -8,12 +8,12 @@ import styled from "styled-components"
 
 interface ArtistCareerHighlightProps {
   insight: ArtistCareerHighlight_insight$data
-  contextModule?: ContextModule
+  contextModule: ContextModule
 }
 
 export const ArtistCareerHighlight: FC<
   React.PropsWithChildren<ArtistCareerHighlightProps>
-> = ({ insight, contextModule = ContextModule.artistHeader }) => {
+> = ({ insight, contextModule }) => {
   const { trackEvent } = useTracking()
 
   if (!insight?.description && !insight?.entities?.length) return null

@@ -235,6 +235,7 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
                   <ArtistCareerHighlightFragmentContainer
                     key={insight.kind ?? index}
                     insight={insight}
+                    contextModule={ContextModule.artistHeader}
                   />
                 )
               })}
