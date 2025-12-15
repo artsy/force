@@ -3,6 +3,7 @@ import { deliveryAddressValidationSchema } from "Apps/Order2/Routes/Checkout/Com
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useOrder2CreateUserAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2CreateUserAddressMutation"
 import { useOrder2UpdateUserDefaultAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2UpdateUserDefaultAddressMutation"
+import { responsiveColumnsProps } from "Apps/Order2/Utils/responsiveColumnProps"
 import {
   AddressFormFields,
   type FormikContextWithAddress,
@@ -90,9 +91,9 @@ export const AddAddressForm = ({
       {({ isSubmitting, handleSubmit }) => (
         <>
           <Text
-            fontWeight={["bold", "normal"]}
+            fontWeight={responsiveColumnsProps("bold", "normal")}
             color="mono100"
-            variant={["sm-display", "md"]}
+            variant={responsiveColumnsProps("sm-display", "md")}
           >
             Add address
           </Text>{" "}

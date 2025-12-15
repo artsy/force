@@ -2,6 +2,7 @@ import CheckmarkIcon from "@artsy/icons/CheckmarkIcon"
 import InstitutionIcon from "@artsy/icons/InstitutionIcon"
 import { Clickable, Flex, Spacer, Text } from "@artsy/palette"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import { responsiveColumnsProps } from "Apps/Order2/Utils/responsiveColumnProps"
 import { type Brand, BrandCreditCardIcon } from "Components/BrandCreditCardIcon"
 import type { Order2PaymentCompletedView_order$key } from "__generated__/Order2PaymentCompletedView_order.graphql"
 import { graphql, useFragment } from "react-relay"
@@ -49,8 +50,8 @@ export const Order2PaymentCompletedView: React.FC<
           <CheckmarkIcon fill="mono100" />
           <Spacer x={1} />
           <Text
-            variant={["sm-display", "md"]}
-            fontWeight={["bold", "normal"]}
+            variant={responsiveColumnsProps("sm-display", "md")}
+            fontWeight={responsiveColumnsProps("bold", "normal")}
             color="mono100"
           >
             Payment

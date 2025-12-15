@@ -8,6 +8,7 @@ import {
   countryNameFromAlpha2,
 } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/utils"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import { responsiveColumnsProps } from "Apps/Order2/Utils/responsiveColumnProps"
 import type { FormikContextWithAddress } from "Components/Address/AddressFormFields"
 import { useFormikContext } from "formik"
 import { useCallback, useState } from "react"
@@ -126,9 +127,9 @@ export const SavedAddressOptions = ({
   return (
     <Flex flexDirection="column">
       <Text
-        fontWeight={["bold", "normal"]}
+        fontWeight={responsiveColumnsProps("bold", "normal")}
         color="mono100"
-        variant={["sm-display", "md"]}
+        variant={responsiveColumnsProps("sm-display", "md")}
       >
         Delivery address
       </Text>
@@ -142,11 +143,7 @@ export const SavedAddressOptions = ({
         const textColor = isSelected ? "mono100" : "mono60"
 
         return (
-          <Flex
-            key={internalID}
-            backgroundColor={backgroundColor}
-            p={2}
-          >
+          <Flex key={internalID} backgroundColor={backgroundColor} p={2}>
             <Radio
               flex={1}
               value={internalID}

@@ -1,6 +1,7 @@
 import CheckmarkIcon from "@artsy/icons/CheckmarkIcon"
 import { Clickable, Flex, Spacer, Text } from "@artsy/palette"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import { responsiveColumnsProps } from "Apps/Order2/Utils/responsiveColumnProps"
 import createLogger from "Utils/logger"
 
 const logger = createLogger(
@@ -34,8 +35,8 @@ export const Order2OfferCompletedView: React.FC<
           <CheckmarkIcon fill="mono100" />
           <Spacer x={1} />
           <Text
-            variant={["sm-display", "md"]}
-            fontWeight={["bold", "normal"]}
+            variant={responsiveColumnsProps("sm-display", "md")}
+            fontWeight={responsiveColumnsProps("bold", "normal")}
             color="mono100"
           >
             Offer

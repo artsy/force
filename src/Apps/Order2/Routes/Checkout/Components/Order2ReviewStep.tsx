@@ -12,6 +12,7 @@ import {
 import { Order2CheckoutPricingBreakdown } from "Apps/Order2/Routes/Checkout/Components/Order2CheckoutPricingBreakdown"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useOrder2SubmitOrderMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SubmitOrderMutation"
+import { responsiveColumnsProps } from "Apps/Order2/Utils/responsiveColumnProps"
 import { BUYER_GUARANTEE_URL } from "Apps/Order2/constants"
 import { RouterLink } from "System/Components/RouterLink"
 import createLogger from "Utils/logger"
@@ -131,10 +132,15 @@ const Order2ReviewStepComponent: React.FC<Order2ReviewStepProps> = ({
   }
 
   return (
-    <Flex flexDirection="column" backgroundColor="mono0" py={2} px={[2, 4]}>
+    <Flex
+      flexDirection="column"
+      backgroundColor="mono0"
+      py={2}
+      px={responsiveColumnsProps(2, 4)}
+    >
       <Text
-        variant={["sm-display", "md"]}
-        fontWeight={["bold", "normal"]}
+        variant={responsiveColumnsProps("sm-display", "md")}
+        fontWeight={responsiveColumnsProps("bold", "normal")}
         color="mono100"
       >
         {isOffer ? "Offer" : "Order"} summary

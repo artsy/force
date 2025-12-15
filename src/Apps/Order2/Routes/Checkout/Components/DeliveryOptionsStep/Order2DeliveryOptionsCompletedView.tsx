@@ -1,6 +1,7 @@
 import CheckmarkIcon from "@artsy/icons/CheckmarkIcon"
 import { Box, Clickable, Flex, Spacer, Text } from "@artsy/palette"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import { responsiveColumnsProps } from "Apps/Order2/Utils/responsiveColumnProps"
 import { useCallback } from "react"
 
 export interface Order2DeliveryOptionsCompletedViewProps {
@@ -21,14 +22,19 @@ export const Order2DeliveryOptionsCompletedView: React.FC<
   }, [checkoutTracking, editDeliveryOption])
 
   return (
-    <Flex flexDirection="column" backgroundColor="mono0" py={2} px={[2, 4]}>
+    <Flex
+      flexDirection="column"
+      backgroundColor="mono0"
+      py={2}
+      px={responsiveColumnsProps(2, 4)}
+    >
       <Flex justifyContent="space-between">
         <Flex alignItems="center">
           <CheckmarkIcon fill="mono100" />
           <Spacer x={1} />
           <Text
-            variant={["sm-display", "md"]}
-            fontWeight={["bold", "normal"]}
+            variant={responsiveColumnsProps("sm-display", "md")}
+            fontWeight={responsiveColumnsProps("bold", "normal")}
             color="mono100"
           >
             Shipping method

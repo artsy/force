@@ -21,6 +21,7 @@ import { useCompleteOfferData } from "Apps/Order2/Routes/Checkout/Components/Off
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useOrder2AddInitialOfferMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2AddInitialOfferMutation"
 import { useOrder2UnsetOrderFulfillmentOptionMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2UnsetOrderFulfillmentOptionMutation"
+import { responsiveColumnsProps } from "Apps/Order2/Utils/responsiveColumnProps"
 import createLogger from "Utils/logger"
 import type {
   Order2OfferStep_order$data,
@@ -263,13 +264,13 @@ const Order2OfferStepFormContent: React.FC<Order2OfferStepFormContentProps> = ({
     >
       <Box
         py={2}
-        px={[2, 4]}
+        px={responsiveColumnsProps(2, 4)}
         hidden={currentStep !== CheckoutStepState.UPCOMING}
       >
         <Flex flexDirection="column">
           <Text
-            variant={["sm-display", "md"]}
-            fontWeight={["bold", "normal"]}
+            variant={responsiveColumnsProps("sm-display", "md")}
+            fontWeight={responsiveColumnsProps("bold", "normal")}
             color="mono100"
           >
             Offer
@@ -283,7 +284,7 @@ const Order2OfferStepFormContent: React.FC<Order2OfferStepFormContentProps> = ({
 
       <Box
         py={2}
-        px={[2, 4]}
+        px={responsiveColumnsProps(2, 4)}
         hidden={currentStep !== CheckoutStepState.COMPLETED}
       >
         {completedViewProps && (
@@ -291,11 +292,15 @@ const Order2OfferStepFormContent: React.FC<Order2OfferStepFormContentProps> = ({
         )}
       </Box>
 
-      <Box pt={2} px={[2, 4]} hidden={currentStep !== CheckoutStepState.ACTIVE}>
+      <Box
+        pt={2}
+        px={responsiveColumnsProps(2, 4)}
+        hidden={currentStep !== CheckoutStepState.ACTIVE}
+      >
         <Flex flexDirection="column">
           <Text
-            variant={["sm-display", "md"]}
-            fontWeight={["bold", "normal"]}
+            variant={responsiveColumnsProps("sm-display", "md")}
+            fontWeight={responsiveColumnsProps("bold", "normal")}
             color="mono100"
           >
             Offer
@@ -309,7 +314,11 @@ const Order2OfferStepFormContent: React.FC<Order2OfferStepFormContentProps> = ({
         </Flex>
       </Box>
 
-      <Box py={2} px={[2, 4]} hidden={currentStep !== CheckoutStepState.ACTIVE}>
+      <Box
+        py={2}
+        px={responsiveColumnsProps(2, 4)}
+        hidden={currentStep !== CheckoutStepState.ACTIVE}
+      >
         {isPriceHidden ? (
           <OfferInput name="offerValue" onBlur={onCustomOfferBlur} />
         ) : (
@@ -324,8 +333,8 @@ const Order2OfferStepFormContent: React.FC<Order2OfferStepFormContentProps> = ({
 
         <Flex flexDirection="column">
           <Text
-            variant={["sm-display", "md"]}
-            fontWeight={["bold", "normal"]}
+            variant={responsiveColumnsProps("sm-display", "md")}
+            fontWeight={responsiveColumnsProps("bold", "normal")}
             color="mono100"
           >
             Offer note

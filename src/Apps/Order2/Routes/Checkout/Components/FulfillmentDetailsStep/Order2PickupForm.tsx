@@ -11,6 +11,7 @@ import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCh
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useOrder2SetOrderFulfillmentOptionMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderFulfillmentOptionMutation"
 import { useOrder2SetOrderPickupDetailsMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderPickupDetailsMutation"
+import { responsiveColumnsProps } from "Apps/Order2/Utils/responsiveColumnProps"
 import {
   richRequiredPhoneValidators,
   useInitialLocationValues,
@@ -141,7 +142,11 @@ export const Order2PickupForm: React.FC<Order2PickupFormProps> = ({
 
   return (
     <>
-      <Text fontWeight="normal" color="mono100" variant={["sm-display", "md"]}>
+      <Text
+        fontWeight="normal"
+        color="mono100"
+        variant={responsiveColumnsProps("sm-display", "md")}
+      >
         Free pickup
       </Text>
       <Spacer y={1} />
@@ -152,7 +157,7 @@ export const Order2PickupForm: React.FC<Order2PickupFormProps> = ({
         After your order is confirmed, a specialist will contact you with
         details on how to pickup the work.
       </Text>
-      <Spacer y={[2, 4]} />
+      <Spacer y={responsiveColumnsProps(2, 4)} />
       <Formik<PickupFormValues>
         initialValues={initialValues}
         validationSchema={VALIDATION_SCHEMA}
