@@ -49,7 +49,7 @@ const Order2CollapsibleOrderSummarySkeleton: React.FC<
   Order2CollapsibleOrderSummarySkeletonProps
 > = props => {
   return (
-    <GridColumns py={[0, 0, 4]} px={[0, 0, 4]}>
+    <GridColumns py={[0, 4]} px={[0, 0, 4]}>
       <Column span={[12, 12, 6]} start={[1, 1, 2]}>
         <Box maxWidth={["100%", breakpoints.sm, "100%"]} mx={[0, "auto", 0]}>
           <Stack gap={1}>
