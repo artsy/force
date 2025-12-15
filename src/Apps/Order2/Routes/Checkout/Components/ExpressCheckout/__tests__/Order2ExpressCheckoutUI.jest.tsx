@@ -216,7 +216,7 @@ describe("ExpressCheckoutUI", () => {
 
     // First, test the payment method update
     const paymentMethodUpdate = await mockResolveLastOperation({
-      updateOrder: () => ({
+      setOrderPayment: () => ({
         orderOrError: {
           __typename: "OrderMutationSuccess",
           order: orderData,
@@ -225,7 +225,7 @@ describe("ExpressCheckoutUI", () => {
     })
 
     expect(paymentMethodUpdate.operationName).toBe(
-      "useOrder2ExpressCheckoutUpdateOrderMutation",
+      "useOrder2ExpressCheckoutSetOrderPaymentMutation",
     )
     expect(paymentMethodUpdate.operationVariables.input).toEqual({
       id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
@@ -307,7 +307,7 @@ describe("ExpressCheckoutUI", () => {
 
     // First, test the payment method update
     const paymentMethodUpdate = await mockResolveLastOperation({
-      updateOrder: () => ({
+      setOrderPayment: () => ({
         orderOrError: {
           __typename: "OrderMutationSuccess",
           order: orderData,
@@ -316,7 +316,7 @@ describe("ExpressCheckoutUI", () => {
     })
 
     expect(paymentMethodUpdate.operationName).toBe(
-      "useOrder2ExpressCheckoutUpdateOrderMutation",
+      "useOrder2ExpressCheckoutSetOrderPaymentMutation",
     )
     expect(paymentMethodUpdate.operationVariables.input).toEqual({
       id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
@@ -475,7 +475,7 @@ describe("ExpressCheckoutUI", () => {
 
     // First, test the payment method update
     await mockResolveLastOperation({
-      updateOrder: () => ({
+      setOrderPayment: () => ({
         orderOrError: {
           __typename: "OrderMutationSuccess",
           order: orderData,
@@ -485,9 +485,9 @@ describe("ExpressCheckoutUI", () => {
 
     await flushPromiseQueue()
 
-    // Resolve the update order mutation
+    // Resolve the update shipping address mutation
     await mockResolveLastOperation({
-      updateOrderPayload: () => ({
+      updateOrderShippingAddress: () => ({
         orderOrError: {
           __typename: "OrderMutationSuccess",
           order: orderData,
@@ -531,7 +531,7 @@ describe("ExpressCheckoutUI", () => {
 
     // Resolve the payment method update mutation
     await mockResolveLastOperation({
-      updateOrder: () => ({
+      setOrderPayment: () => ({
         orderOrError: {
           __typename: "OrderMutationSuccess",
           order: orderData,

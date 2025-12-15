@@ -12,7 +12,6 @@ import type {
   StripePaymentElementOptions,
 } from "@stripe/stripe-js"
 import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
-import { useSetPayment } from "Apps/Order/Mutations/useSetPayment"
 import {
   CheckoutErrorBanner,
   MailtoOrderSupport,
@@ -159,8 +158,6 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
   const elements = useElements()
   const environment = useRelayEnvironment()
   const setPaymentMutation = useOrder2SetOrderPaymentMutation()
-  // TODO: Update from legacy commerceSetPayment mutation
-  const legacySetPaymentMutation = useSetPayment()
 
   const {
     setConfirmationToken,
@@ -517,7 +514,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
           })
 
         validateAndExtractOrderResponse(
-          updateOrderPaymentMethodResult.updateOrder?.orderOrError,
+          updateOrderPaymentMethodResult.setOrderPayment?.orderOrError,
         )
       } catch (error) {
         logger.error("Error while updating order payment method", error)
@@ -534,7 +531,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       setIsSubmittingToStripe(true)
 
       try {
-        const result = await legacySetPaymentMutation.submitMutation({
+        const result = await setPaymentMutation.submitMutation({
           variables: {
             input: {
               id: order.internalID,
@@ -543,15 +540,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
           },
         })
 
-        if (
-          result?.commerceSetPayment?.orderOrError?.error ||
-          !result?.commerceSetPayment?.orderOrError?.order
-        ) {
-          throw (
-            result?.commerceSetPayment?.orderOrError.error ||
-            new Error("Failed to set payment method")
-          )
-        }
+        validateAndExtractOrderResponse(result.setOrderPayment?.orderOrError)
       } catch (error) {
         logger.error("Error while updating order payment method", error)
         handleError({ message: defaultErrorMessage })
@@ -578,27 +567,17 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         const paymentMethod = getPaymentMethodFromSavedPayment(
           selectedSavedPaymentMethod,
         )
-        const result = await legacySetPaymentMutation.submitMutation({
+        const result = await setPaymentMutation.submitMutation({
           variables: {
             input: {
               id: order.internalID,
               paymentMethod: paymentMethod,
               paymentMethodId: selectedSavedPaymentMethod?.internalID,
-              // Note: paymentMethodId is not supported in updateOrder mutation
-              // Saved credit card functionality may need a different approach
             },
           },
         })
 
-        if (
-          result?.commerceSetPayment?.orderOrError?.error ||
-          !result?.commerceSetPayment?.orderOrError?.order
-        ) {
-          throw (
-            result?.commerceSetPayment?.orderOrError.error ||
-            new Error("Failed to set payment method")
-          )
-        }
+        validateAndExtractOrderResponse(result.setOrderPayment?.orderOrError)
       } catch (error) {
         logger.error("Error while updating order payment method", error)
         handleError({ message: defaultErrorMessage })
