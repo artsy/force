@@ -53,7 +53,7 @@ const ArtistSeriesHeader: React.FC<
           </Text>
 
           <Text variant="xl" as="h1" mb={1}>
-            {title}
+            {artist.name} {title}
           </Text>
 
           <Text variant="sm-display" mb={1}>
