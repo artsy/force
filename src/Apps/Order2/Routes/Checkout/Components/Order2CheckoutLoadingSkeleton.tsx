@@ -10,7 +10,6 @@ import {
   Stack,
   breakpoints,
 } from "@artsy/palette"
-import { responsiveColumnsProps } from "Apps/Order2/Utils/responsiveColumnProps"
 import type { Order2CheckoutLoadingSkeleton_order$key } from "__generated__/Order2CheckoutLoadingSkeleton_order.graphql"
 import { graphql, useFragment } from "react-relay"
 
@@ -50,17 +49,11 @@ const Order2CollapsibleOrderSummarySkeleton: React.FC<
   Order2CollapsibleOrderSummarySkeletonProps
 > = props => {
   return (
-    <GridColumns
-      py={responsiveColumnsProps(0, 4)}
-      px={responsiveColumnsProps(0, 4)}
-    >
-      <Column
-        span={responsiveColumnsProps(12, 6)}
-        start={responsiveColumnsProps(1, 2)}
-      >
+    <GridColumns py={[0, 0, 4]} px={[0, 0, 4]}>
+      <Column span={[12, 12, 6]} start={[1, 1, 2]}>
         <Box maxWidth={["100%", breakpoints.sm, "100%"]} mx={[0, "auto", 0]}>
           <Stack gap={1}>
-            <Box display={responsiveColumnsProps("block", "none")}>
+            <Box display={["block", "block", "none"]}>
               <Flex height={60} py={1} px={2} backgroundColor="mono0">
                 {/* Artwork image */}
                 <SkeletonBox width={40} height={40} />
@@ -92,9 +85,9 @@ const Order2CollapsibleOrderSummarySkeleton: React.FC<
       </Column>
 
       <Column
-        span={responsiveColumnsProps(12, 4)}
-        start={responsiveColumnsProps(1, 8)}
-        display={responsiveColumnsProps("none", "block")}
+        span={[12, 12, 4]}
+        start={[1, 1, 8]}
+        display={["none", "none", "block"]}
       >
         {/* Order summary skeleton for desktop */}
         <Box backgroundColor="mono0" p={2}>

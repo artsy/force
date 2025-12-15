@@ -1,7 +1,6 @@
 import CheckmarkIcon from "@artsy/icons/CheckmarkIcon"
 import { Box, Clickable, Flex, Spacer, Text } from "@artsy/palette"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
-import { responsiveColumnsProps } from "Apps/Order2/Utils/responsiveColumnProps"
 
 export interface FulfillmentDetails {
   name?: string | null
@@ -37,8 +36,8 @@ export const Order2FulfillmentDetailsCompletedView: React.FC<
             <CheckmarkIcon fill="mono100" />
             <Spacer x={1} />
             <Text
-              variant={responsiveColumnsProps("sm-display", "md")}
-              fontWeight={responsiveColumnsProps("bold", "normal")}
+              variant={["sm-display", "sm-display", "md"]}
+              fontWeight={["bold", "bold", "normal"]}
               color="mono100"
             >
               Pickup
@@ -72,8 +71,8 @@ export const Order2FulfillmentDetailsCompletedView: React.FC<
           <CheckmarkIcon height={20} width={20} fill="mono100" />
           <Box flexGrow={1} mx={0.5} />
           <Text
-            variant={responsiveColumnsProps("sm-display", "md")}
-            fontWeight={responsiveColumnsProps("bold", "normal")}
+            variant={["sm-display", "sm-display", "md"]}
+            fontWeight={["bold", "bold", "normal"]}
             color="mono100"
           >
             Delivery

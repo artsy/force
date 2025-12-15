@@ -24,7 +24,6 @@ import type { ExpressCheckoutPaymentMethod } from "Apps/Order2/Routes/Checkout/C
 import { CheckoutErrorBanner } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { preventHardReload } from "Apps/Order2/Utils/navigationGuards"
-import { responsiveColumnsProps } from "Apps/Order2/Utils/responsiveColumnProps"
 import { RouterLink } from "System/Components/RouterLink"
 import createLogger from "Utils/logger"
 import type {
@@ -510,10 +509,8 @@ export const Order2ExpressCheckoutUI: React.FC<
 
   return (
     <Box>
-      <Text variant={responsiveColumnsProps("sm-display", "md")}>
-        Express checkout
-      </Text>
-      <Spacer y={responsiveColumnsProps(1, 2)} />
+      <Text variant={["sm-display", "sm-display", "md"]}>Express checkout</Text>
+      <Spacer y={[1, 1, 2]} />
       {error && checkoutMode === "express" && (
         <>
           <CheckoutErrorBanner error={error} />
@@ -534,7 +531,7 @@ export const Order2ExpressCheckoutUI: React.FC<
           onConfirm={onConfirm}
         />
       </Box>
-      <Text variant="xs" color="mono60" mt={responsiveColumnsProps(1, 2)}>
+      <Text variant="xs" color="mono60" mt={[1, 1, 2]}>
         <>By clicking Pay, I agree to Artsy's </>
         <RouterLink
           inline

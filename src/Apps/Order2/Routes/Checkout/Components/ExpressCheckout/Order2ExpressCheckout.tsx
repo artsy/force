@@ -10,7 +10,6 @@ import {
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { Order2ExpressCheckoutUI } from "Apps/Order2/Routes/Checkout/Components/ExpressCheckout/Order2ExpressCheckoutUI"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
-import { responsiveColumnsProps } from "Apps/Order2/Utils/responsiveColumnProps"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import createLogger from "Utils/logger"
 import type { Order2ExpressCheckoutQuery } from "__generated__/Order2ExpressCheckoutQuery.graphql"
@@ -83,12 +82,7 @@ export const Order2ExpressCheckout: React.FC<Order2ExpressCheckoutProps> = ({
   }
 
   return (
-    <Flex
-      flexDirection="column"
-      backgroundColor="mono0"
-      py={2}
-      px={responsiveColumnsProps(2, 4)}
-    >
+    <Flex flexDirection="column" backgroundColor="mono0" py={2} px={[2, 2, 4]}>
       <Elements stripe={stripe} options={options}>
         <Order2ExpressCheckoutUI order={orderData} />
       </Elements>

@@ -7,7 +7,6 @@ import { Order2DeliveryOptionsCompletedView } from "Apps/Order2/Routes/Checkout/
 import { Order2DeliveryOptionsForm } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/Order2DeliveryOptionsForm"
 import { useCompleteDeliveryOptionData } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/useCompleteDeliveryOptionData"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
-import { responsiveColumnsProps } from "Apps/Order2/Utils/responsiveColumnProps"
 import type { Order2DeliveryOptionsStep_order$key } from "__generated__/Order2DeliveryOptionsStep_order.graphql"
 import { graphql, useFragment } from "react-relay"
 
@@ -40,15 +39,11 @@ export const Order2DeliveryOptionsStep: React.FC<
 
   return (
     <Flex flexDirection="column" backgroundColor="mono0">
-      <Box
-        py={2}
-        px={responsiveColumnsProps(2, 4)}
-        data-testid="DeliveryOptionsStep"
-      >
+      <Box py={2} px={[2, 2, 4]} data-testid="DeliveryOptionsStep">
         <Flex flexDirection="column">
           <Text
-            variant={responsiveColumnsProps("sm-display", "md")}
-            fontWeight={responsiveColumnsProps("bold", "normal")}
+            variant={["sm-display", "sm-display", "md"]}
+            fontWeight={["bold", "bold", "normal"]}
             color="mono100"
           >
             Shipping method

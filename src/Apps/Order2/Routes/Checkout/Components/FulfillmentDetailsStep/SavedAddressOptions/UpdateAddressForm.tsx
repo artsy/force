@@ -16,7 +16,6 @@ import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckou
 import { useOrder2DeleteUserAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2DeleteUserAddressMutation"
 import { useOrder2UpdateUserAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2UpdateUserAddressMutation"
 import { useOrder2UpdateUserDefaultAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2UpdateUserDefaultAddressMutation"
-import { responsiveColumnsProps } from "Apps/Order2/Utils/responsiveColumnProps"
 import {
   AddressFormFields,
   type FormikContextWithAddress,
@@ -188,9 +187,9 @@ export const UpdateAddressForm = ({
       {({ isSubmitting, handleSubmit }) => (
         <>
           <Text
-            fontWeight={responsiveColumnsProps("bold", "normal")}
+            fontWeight={["bold", "bold", "normal"]}
             color="mono100"
-            variant={responsiveColumnsProps("sm-display", "md")}
+            variant={["sm-display", "sm-display", "md"]}
           >
             Edit address
           </Text>

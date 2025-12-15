@@ -6,7 +6,6 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { responsiveColumnsProps } from "Apps/Order2/Utils/responsiveColumnProps"
 import { ERROR_MESSAGES as BASE_ERROR_MESSAGES } from "Components/ErrorPage"
 import { RouterLink } from "System/Components/RouterLink"
 import type * as React from "react"
@@ -26,12 +25,9 @@ export const OrderErrorApp: React.FC<
 
   return (
     <Box data-testid="order-error-page" {...rest}>
-      <GridColumns
-        py={responsiveColumnsProps(0, 4)}
-        px={responsiveColumnsProps(0, 4)}
-      >
+      <GridColumns py={[0, 0, 4]} px={[0, 0, 4]}>
         <Column span={6} wrap>
-          <Spacer y={responsiveColumnsProps(2, 4)} />
+          <Spacer y={[2, 2, 4]} />
           <Text variant="xl">{headline}</Text>
 
           <Text variant="xl" color="mono60">

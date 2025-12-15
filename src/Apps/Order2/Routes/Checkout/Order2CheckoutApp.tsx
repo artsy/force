@@ -25,7 +25,6 @@ import { Order2CollapsibleOrderSummary } from "Apps/Order2/Routes/Checkout/Compo
 import { Order2ReviewStep } from "Apps/Order2/Routes/Checkout/Components/Order2ReviewStep"
 import { Order2PaymentStep } from "Apps/Order2/Routes/Checkout/Components/PaymentStep/Order2PaymentStep"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
-import { responsiveColumnsProps } from "Apps/Order2/Utils/responsiveColumnProps"
 import { NOT_FOUND_ERROR } from "Apps/Order2/constants"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import type { Order2CheckoutApp_me$key } from "__generated__/Order2CheckoutApp_me.graphql"
@@ -110,7 +109,7 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
       />
       {isLoading && <Order2CheckoutLoadingSkeleton order={orderData} />}
       <GridColumns
-        px={responsiveColumnsProps(0, 4)}
+        px={[0, 0, 4]}
         // add vertical padding at `sm` instead of `md` ( using responsiveProps() ) because horizontal padding starts to appear
         // at maxWidth breakpoints.sm
         py={[0, 4]}
@@ -118,10 +117,7 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
           display: isLoading ? "none" : "grid",
         }}
       >
-        <Column
-          span={responsiveColumnsProps(12, 6)}
-          start={responsiveColumnsProps(1, 2)}
-        >
+        <Column span={[12, 12, 6]} start={[1, 1, 2]}>
           {expressCheckoutSubmitting && <SubmittingOrderSpinner />}
           <Box
             // Introduce padding with constrained single-column width at `sm` breakpoint
@@ -132,7 +128,7 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
             }}
           >
             <Stack gap={1}>
-              <Box display={responsiveColumnsProps("block", "none")}>
+              <Box display={["block", "block", "none"]}>
                 <Order2CollapsibleOrderSummary order={orderData} />
               </Box>
               {isExpressCheckoutEligible && (
@@ -143,7 +139,7 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
               <Order2DeliveryOptionsStep order={orderData} />
               <Order2PaymentStep order={orderData} me={meData} />
             </Stack>
-            <Box display={responsiveColumnsProps("block", "none")}>
+            <Box display={["block", "block", "none"]}>
               <Spacer y={1} />
               <Order2ReviewStep order={orderData} />
               <Order2HelpLinksWithInquiry
@@ -156,14 +152,11 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
         </Column>
 
         <Column
-          span={responsiveColumnsProps(12, 4)}
-          start={responsiveColumnsProps(1, 8)}
-          display={responsiveColumnsProps("none", "block")}
+          span={[12, 12, 4]}
+          start={[1, 1, 8]}
+          display={["none", "none", "block"]}
         >
-          <Box
-            position={responsiveColumnsProps("initial", "sticky")}
-            top="100px"
-          >
+          <Box position={["initial", "initial", "sticky"]} top="100px">
             <Order2ReviewStep order={orderData} />
             <Separator as="hr" />
             <Order2HelpLinksWithInquiry

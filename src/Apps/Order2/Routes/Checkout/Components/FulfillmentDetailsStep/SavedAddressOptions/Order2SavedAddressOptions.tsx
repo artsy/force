@@ -8,7 +8,6 @@ import {
   countryNameFromAlpha2,
 } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/utils"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
-import { responsiveColumnsProps } from "Apps/Order2/Utils/responsiveColumnProps"
 import type { FormikContextWithAddress } from "Components/Address/AddressFormFields"
 import { useFormikContext } from "formik"
 import { useCallback, useState } from "react"
@@ -127,9 +126,9 @@ export const SavedAddressOptions = ({
   return (
     <Flex flexDirection="column">
       <Text
-        fontWeight={responsiveColumnsProps("bold", "normal")}
+        fontWeight={["bold", "bold", "normal"]}
         color="mono100"
-        variant={responsiveColumnsProps("sm-display", "md")}
+        variant={["sm-display", "sm-display", "md"]}
       >
         Delivery address
       </Text>

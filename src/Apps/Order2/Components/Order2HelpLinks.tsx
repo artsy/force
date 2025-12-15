@@ -2,7 +2,6 @@ import type { ContextModule } from "@artsy/cohesion"
 import MessageIcon from "@artsy/icons/MessageIcon"
 import { Box, Clickable, Flex, Spacer, Text } from "@artsy/palette"
 import { useOrder2Tracking } from "Apps/Order2/Hooks/useOrder2Tracking"
-import { responsiveColumnsProps } from "Apps/Order2/Utils/responsiveColumnProps"
 import {
   type WithInquiryProps,
   withInquiry,
@@ -40,11 +39,7 @@ export const Order2HelpLinks: React.FC<
     <>
       {inquiryComponent}
 
-      <Box
-        px={responsiveColumnsProps(2, 4)}
-        py={2}
-        backgroundColor={responsiveColumnsProps("mono5", "mono0")}
-      >
+      <Box px={[2, 2, 4]} py={2} backgroundColor={["mono5", "mono5", "mono0"]}>
         <Flex>
           <MessageIcon fill="mono100" mt={0.5} />
 

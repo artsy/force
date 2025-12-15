@@ -22,7 +22,6 @@ import {
 } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/utils"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useOrder2SetOrderFulfillmentOptionMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderFulfillmentOptionMutation"
-import { responsiveColumnsProps } from "Apps/Order2/Utils/responsiveColumnProps"
 import { BUYER_GUARANTEE_URL } from "Apps/Order2/constants"
 import { RouterLink } from "System/Components/RouterLink"
 import type {
@@ -124,7 +123,7 @@ export const Order2DeliveryOptionsForm: React.FC<
           flexDirection="column"
           backgroundColor="mono0"
           py={2}
-          px={responsiveColumnsProps(2, 4)}
+          px={[2, 2, 4]}
         >
           {deliveryOptionError && (
             <>
@@ -135,7 +134,7 @@ export const Order2DeliveryOptionsForm: React.FC<
           <Flex flexDirection="column">
             <Flex>
               <Text
-                variant={responsiveColumnsProps("sm-display", "md")}
+                variant={["sm-display", "sm-display", "md"]}
                 fontWeight="bold"
                 color="mono100"
               >
