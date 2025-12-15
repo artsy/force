@@ -319,8 +319,6 @@ describe("Order2PaymentForm", () => {
 
       expect(mockElements.update).toHaveBeenCalledWith({
         captureMethod: "manual",
-        setupFutureUsage: "off_session",
-        mode: "payment",
         paymentMethodOptions: null,
       })
     })
@@ -347,8 +345,8 @@ describe("Order2PaymentForm", () => {
         captureMethod: "automatic",
         setupFutureUsage: null,
         mode: "setup",
-        payment_method_types: ["us_bank_account"],
-        on_behalf_of: null,
+        paymentMethodTypes: ["us_bank_account"],
+        onBehalfOf: null,
       })
     })
 
@@ -378,7 +376,7 @@ describe("Order2PaymentForm", () => {
         captureMethod: "automatic",
         setupFutureUsage: null,
         mode: "setup",
-        payment_method_types: ["sepa_debit"],
+        paymentMethodTypes: ["sepa_debit"],
       })
     })
   })
