@@ -8,6 +8,14 @@ import { useTracking } from "react-tracking"
 jest.unmock("react-relay")
 jest.mock("react-tracking")
 
+jest.mock("System/Hooks/useAnalyticsContext", () => ({
+  useAnalyticsContext: jest.fn(() => ({
+    contextPageOwnerId: "example-artist-id",
+    contextPageOwnerSlug: "example-artist-slug",
+    contextPageOwnerType: "artist",
+  })),
+}))
+
 const { renderWithRelay } =
   setupTestWrapperTL<ArtistEditorialNewsGridTestQuery>({
     Component: ArtistEditorialNewsGridFragmentContainer,
@@ -60,13 +68,8 @@ describe("ArtistEditorialNewsGrid", () => {
   })
 
   describe("tracking", () => {
-    it("tracks item clicks", () => {
-      renderWithRelay({
-        Artist: () => ({
-          internalID: "example-artist-id",
-          slug: "example-artist-slug",
-        }),
-      })
+    it("tracks large article clicks", () => {
+      renderWithRelay()
 
       fireEvent.click(screen.getAllByRole("link")[1])
 
@@ -89,9 +92,49 @@ describe("ArtistEditorialNewsGrid", () => {
       expect(trackEvent).toBeCalledWith({
         action: "clickedArticleGroup",
         context_module: "marketNews",
+        context_page_owner_id: "example-artist-id",
+        context_page_owner_slug: "example-artist-slug",
         context_page_owner_type: "artist",
         destination_page_owner_type: "articles",
         type: "viewAll",
+      })
+    })
+
+    it("tracks small article thumbnail clicks", () => {
+      renderWithRelay({
+        Artist: () => ({
+          articlesConnection: {
+            edges: [
+              {
+                node: {
+                  href: "/article/first-article",
+                  title: "First Article",
+                },
+              },
+              {
+                node: {
+                  href: "/article/second-article",
+                  title: "Second Article",
+                },
+              },
+            ],
+          },
+        }),
+      })
+
+      // Click on the second article (first is the large one, second is a small thumbnail)
+      const articleLinks = screen.getAllByRole("link")
+      // Index 0 is "View All", Index 1 is the large article, Index 2 is the first small thumbnail
+      fireEvent.click(articleLinks[2])
+
+      expect(trackEvent).toBeCalledWith({
+        action: "clickedArticleGroup",
+        context_module: "marketNews",
+        context_page_owner_id: "example-artist-id",
+        context_page_owner_slug: "example-artist-slug",
+        context_page_owner_type: "artist",
+        destination_page_owner_type: "article",
+        type: "thumbnail",
       })
     })
   })
