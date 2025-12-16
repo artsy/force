@@ -54,11 +54,7 @@ const ArtworkImageBrowserSmall: React.FC<
           switch (figure.type) {
             case "Image": {
               const isActive = i === activeIndex
-              const isNext = i === activeIndex + 1
-
-              if (!isActive && !isNext) {
-                return null
-              }
+              const isNeighbor = i === activeIndex - 1 || i === activeIndex + 1
 
               return (
                 <ArtworkLightboxFragmentContainer
@@ -69,6 +65,7 @@ const ArtworkImageBrowserSmall: React.FC<
                   activeIndex={artwork.isSetVideoAsCover ? i - 1 : i}
                   lazyLoad={false}
                   shouldRenderFullImage={isActive}
+                  shouldRenderPlaceholder={isActive || isNeighbor}
                   onClick={
                     isActive &&
                     activeFigure.type === "Image" &&

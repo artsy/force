@@ -23,6 +23,7 @@ interface ArtworkLightboxProps extends ClickableProps {
   maxHeight: number
   lazyLoad?: boolean
   shouldRenderFullImage?: boolean
+  shouldRenderPlaceholder?: boolean
 }
 
 const MAX_SIZE = 800
@@ -35,6 +36,7 @@ const ArtworkLightbox: React.FC<
   lazyLoad,
   maxHeight,
   shouldRenderFullImage = true,
+  shouldRenderPlaceholder = true,
   onClick,
   ...rest
 }) => {
@@ -114,7 +116,7 @@ const ArtworkLightbox: React.FC<
           aspectWidth={image.width || 1}
           aspectHeight={image.height || 1}
         >
-          {placeholder && (
+          {shouldRenderPlaceholder && placeholder && (
             <ArtworkLightboxPlaceholder
               key={placeholder}
               src={placeholder}
