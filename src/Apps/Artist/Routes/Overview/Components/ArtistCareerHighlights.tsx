@@ -1,3 +1,4 @@
+import { ContextModule } from "@artsy/cohesion"
 import {
   Box,
   Column,
@@ -56,6 +57,7 @@ const ArtistCareerHighlights: FC<
                   <ArtistCareerHighlightFragmentContainer
                     key={insight.kind ?? index}
                     insight={insight}
+                    contextModule={ContextModule.artistAchievements}
                   />
                 )
               })}
@@ -81,6 +83,7 @@ const ArtistCareerHighlights: FC<
                         <ArtistCareerHighlightFragmentContainer
                           key={insight.kind ?? index}
                           insight={insight}
+                          contextModule={ContextModule.artistAchievements}
                         />
                       )
                     })}

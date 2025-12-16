@@ -12,7 +12,6 @@ import type {
   StripePaymentElementOptions,
 } from "@stripe/stripe-js"
 import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
-import { useSetPayment } from "Apps/Order/Mutations/useSetPayment"
 import {
   CheckoutErrorBanner,
   MailtoOrderSupport,
@@ -101,6 +100,7 @@ export const Order2PaymentForm: React.FC<Order2PaymentFormProps> = ({
 
   const options: StripeElementsOptions = {
     mode: "payment",
+    setupFutureUsage: "off_session",
     paymentMethodOptions: {
       us_bank_account: {
         verification_method: "instant",
@@ -158,8 +158,6 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
   const elements = useElements()
   const environment = useRelayEnvironment()
   const setPaymentMutation = useOrder2SetOrderPaymentMutation()
-  // TODO: Update from legacy commerceSetPayment mutation
-  const legacySetPaymentMutation = useSetPayment()
 
   const {
     setConfirmationToken,
@@ -372,9 +370,31 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
     )
   }
 
+  const resetElementsToInitialParams = () => {
+    elements.update({
+      mode: "payment",
+      paymentMethodOptions: {
+        us_bank_account: {
+          verification_method: "instant",
+          financial_connections: {
+            permissions: ["payment_method", "balances", "ownership"],
+            prefetch: ["balances"],
+          },
+        },
+      },
+      setupFutureUsage: "off_session",
+      // @ts-ignore Stripe type issue
+      captureMethod: null,
+      // @ts-ignore Stripe type issue
+      paymentMethodTypes: null,
+      onBehalfOf: order.seller?.merchantAccount?.externalId,
+    })
+  }
+
   const handleError = (error: { message?: string | JSX.Element }) => {
     setErrorMessage(error.message || defaultErrorMessage)
     setIsSubmittingToStripe(false)
+    resetElementsToInitialParams()
   }
 
   const handleSubmit = async event => {
@@ -403,8 +423,6 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       if (selectedPaymentMethod === "stripe-card") {
         elements.update({
           captureMethod: "manual",
-          setupFutureUsage: "off_session",
-          mode: "payment",
           // @ts-ignore Stripe type issue
           paymentMethodOptions: null,
         })
@@ -413,16 +431,16 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
           captureMethod: "automatic",
           setupFutureUsage: null,
           mode: "setup",
-          payment_method_types: ["us_bank_account"],
+          paymentMethodTypes: ["us_bank_account"],
           // @ts-ignore Stripe type issue
-          on_behalf_of: null,
+          onBehalfOf: null,
         })
       } else if (selectedPaymentMethod === "stripe-sepa") {
         elements.update({
           captureMethod: "automatic",
           setupFutureUsage: null,
           mode: "setup",
-          payment_method_types: ["sepa_debit"],
+          paymentMethodTypes: ["sepa_debit"],
         })
       }
 
@@ -496,14 +514,16 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
           })
 
         validateAndExtractOrderResponse(
-          updateOrderPaymentMethodResult.updateOrder?.orderOrError,
+          updateOrderPaymentMethodResult.setOrderPayment?.orderOrError,
         )
       } catch (error) {
         logger.error("Error while updating order payment method", error)
         handleError({ message: defaultErrorMessage })
+        return
       } finally {
         setPaymentComplete()
         setIsSubmittingToStripe(false)
+        resetElementsToInitialParams()
       }
     }
 
@@ -511,7 +531,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       setIsSubmittingToStripe(true)
 
       try {
-        const result = await legacySetPaymentMutation.submitMutation({
+        const result = await setPaymentMutation.submitMutation({
           variables: {
             input: {
               id: order.internalID,
@@ -520,20 +540,14 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
           },
         })
 
-        if (
-          result?.commerceSetPayment?.orderOrError?.error ||
-          !result?.commerceSetPayment?.orderOrError?.order
-        ) {
-          throw (
-            result?.commerceSetPayment?.orderOrError.error ||
-            new Error("Failed to set payment method")
-          )
-        }
+        validateAndExtractOrderResponse(result.setOrderPayment?.orderOrError)
       } catch (error) {
         logger.error("Error while updating order payment method", error)
         handleError({ message: defaultErrorMessage })
+        return
       } finally {
         setIsSubmittingToStripe(false)
+        resetElementsToInitialParams()
         // Resets for the PaymentCompletedView
         setSavedPaymentMethod({ savedPaymentMethod: null })
         setConfirmationToken({ confirmationToken: null })
@@ -553,32 +567,24 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         const paymentMethod = getPaymentMethodFromSavedPayment(
           selectedSavedPaymentMethod,
         )
-        const result = await legacySetPaymentMutation.submitMutation({
+        const result = await setPaymentMutation.submitMutation({
           variables: {
             input: {
               id: order.internalID,
               paymentMethod: paymentMethod,
               paymentMethodId: selectedSavedPaymentMethod?.internalID,
-              // Note: paymentMethodId is not supported in updateOrder mutation
-              // Saved credit card functionality may need a different approach
             },
           },
         })
 
-        if (
-          result?.commerceSetPayment?.orderOrError?.error ||
-          !result?.commerceSetPayment?.orderOrError?.order
-        ) {
-          throw (
-            result?.commerceSetPayment?.orderOrError.error ||
-            new Error("Failed to set payment method")
-          )
-        }
+        validateAndExtractOrderResponse(result.setOrderPayment?.orderOrError)
       } catch (error) {
         logger.error("Error while updating order payment method", error)
         handleError({ message: defaultErrorMessage })
+        return
       } finally {
         setIsSubmittingToStripe(false)
+        resetElementsToInitialParams()
         setSavedPaymentMethod({
           savedPaymentMethod: selectedSavedPaymentMethod,
         })

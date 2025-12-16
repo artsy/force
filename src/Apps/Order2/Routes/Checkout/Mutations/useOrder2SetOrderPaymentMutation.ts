@@ -5,8 +5,8 @@ import { graphql } from "react-relay"
 export const useOrder2SetOrderPaymentMutation = () => {
   return useMutation<useOrder2SetOrderPaymentMutationType>({
     mutation: graphql`
-      mutation useOrder2SetOrderPaymentMutation($input: updateOrderInput!) {
-        updateOrder(input: $input) {
+      mutation useOrder2SetOrderPaymentMutation($input: setOrderPaymentInput!) {
+        setOrderPayment(input: $input) {
           orderOrError {
             __typename
             ... on OrderMutationSuccess {

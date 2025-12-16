@@ -3,8 +3,10 @@ import { ArtistCareerHighlightsFragmentContainer } from "Apps/Artist/Routes/Over
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
+jest.mock("react-tracking")
 
 jest.mock("Apps/Artist/Components/ArtistHeader/ArtistHeader", () => ({
   ARTIST_HEADER_NUMBER_OF_INSIGHTS: 0,
@@ -28,6 +30,17 @@ const { renderWithRelay } = setupTestWrapperTL({
 })
 
 describe("ArtistCareerHighlights", () => {
+  const mockUseTracking = useTracking as jest.Mock
+  const trackEvent = jest.fn()
+
+  beforeAll(() => {
+    mockUseTracking.mockImplementation(() => ({ trackEvent }))
+  })
+
+  beforeEach(() => {
+    trackEvent.mockClear()
+  })
+
   it("renders one Career Highlight correctly", () => {
     renderWithRelay({
       Artist: () => ({
@@ -149,5 +162,117 @@ describe("ArtistCareerHighlights", () => {
       screen.queryByText("Highlights and Achievements"),
     ).not.toBeInTheDocument()
     expect(screen.queryByText("View CV")).not.toBeInTheDocument()
+  })
+
+  describe("Tracking", () => {
+    it("tracks toggledAccordion event when expanding accordion with artistAchievements context", () => {
+      renderWithRelay({
+        Artist: () => ({
+          insights: [
+            {
+              label: "Solo show at a major institution",
+              entities: ["Foo Museum"],
+              kind: "SOLO_SHOW",
+              description: null,
+            },
+          ],
+          name: "Test Artist",
+          slug: "test-artist",
+        }),
+      })
+
+      const button = screen.getByRole("button")
+      fireEvent.click(button)
+
+      expect(trackEvent).toHaveBeenCalledTimes(1)
+      expect(trackEvent).toHaveBeenCalledWith({
+        action: "toggledAccordion",
+        context_module: "artistAchievements",
+        context_owner_type: "artist",
+        subject: "SOLO_SHOW",
+        expand: true,
+      })
+    })
+
+    it("tracks toggledAccordion event when collapsing accordion", () => {
+      renderWithRelay({
+        Artist: () => ({
+          insights: [
+            {
+              label: "Critically acclaimed",
+              entities: [],
+              kind: "CRITICALLY_ACCLAIMED",
+              description: "<p>Test description</p>",
+            },
+          ],
+          name: "Test Artist",
+          slug: "test-artist",
+        }),
+      })
+
+      const button = screen.getByRole("button")
+
+      // Expand
+      fireEvent.click(button)
+      expect(trackEvent).toHaveBeenCalledWith({
+        action: "toggledAccordion",
+        context_module: "artistAchievements",
+        context_owner_type: "artist",
+        subject: "CRITICALLY_ACCLAIMED",
+        expand: true,
+      })
+
+      // Collapse
+      fireEvent.click(button)
+      expect(trackEvent).toHaveBeenCalledTimes(2)
+      expect(trackEvent).toHaveBeenCalledWith({
+        action: "toggledAccordion",
+        context_module: "artistAchievements",
+        context_owner_type: "artist",
+        subject: "CRITICALLY_ACCLAIMED",
+        expand: false,
+      })
+    })
+
+    it("tracks correct subject for different insight types", () => {
+      renderWithRelay({
+        Artist: () => ({
+          insights: [
+            {
+              label: "High auction record",
+              entities: [],
+              kind: "HIGH_AUCTION_RECORD",
+              description: "<p>US$195.0m</p>",
+            },
+            {
+              label: "Collected by a major institution",
+              entities: ["MoMA", "Tate"],
+              kind: "COLLECTED",
+              description: null,
+            },
+          ],
+          name: "Test Artist",
+          slug: "test-artist",
+        }),
+      })
+
+      const buttons = screen.getAllByRole("button")
+
+      // Click first accordion
+      fireEvent.click(buttons[0])
+      expect(trackEvent).toHaveBeenCalledWith(
+        expect.objectContaining({
+          subject: "HIGH_AUCTION_RECORD",
+        }),
+      )
+
+      // Click second accordion
+      fireEvent.click(buttons[1])
+      expect(trackEvent).toHaveBeenCalledWith(
+        expect.objectContaining({
+          subject: "COLLECTED",
+        }),
+      )
+    })
   })
 })

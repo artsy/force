@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6b3688600aa39b5c4fd839f19a36022b>>
+ * @generated SignedSource<<8588b35a320770e98107fa9399e1d4e7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -102,6 +102,13 @@ return {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
+                "name": "kind",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
                 "name": "label",
                 "storageKey": null
               },
@@ -124,13 +131,6 @@ return {
                 "kind": "ScalarField",
                 "name": "description",
                 "storageKey": "description(format:\"HTML\")"
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "kind",
-                "storageKey": null
               }
             ],
             "storageKey": null
@@ -148,7 +148,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0943e9ef5c013def00467155b585c158",
+    "cacheID": "4231d35ab562fa8dda6322c8f9fee94c",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -213,7 +213,7 @@ return {
     },
     "name": "ArtistCareerHighlights_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistCareerHighlights_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistCareerHighlights_artist\n    id\n  }\n}\n\nfragment ArtistCareerHighlight_insight on ArtistInsight {\n  label\n  entities\n  description(format: HTML)\n}\n\nfragment ArtistCareerHighlights_artist on Artist {\n  name\n  href\n  insights {\n    ...ArtistCareerHighlight_insight\n    kind\n    entities\n    description(format: HTML)\n  }\n}\n"
+    "text": "query ArtistCareerHighlights_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistCareerHighlights_artist\n    id\n  }\n}\n\nfragment ArtistCareerHighlight_insight on ArtistInsight {\n  kind\n  label\n  entities\n  description(format: HTML)\n}\n\nfragment ArtistCareerHighlights_artist on Artist {\n  name\n  href\n  insights {\n    ...ArtistCareerHighlight_insight\n    kind\n    entities\n    description(format: HTML)\n  }\n}\n"
   }
 };
 })();
