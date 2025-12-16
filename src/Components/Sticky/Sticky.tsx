@@ -58,12 +58,10 @@ export const Sticky = ({
   bottomBoundary,
   withoutHeaderOffset,
   id,
-  retractGlobalNav = false,
 }: Pick<ReactStickyProps, "bottomBoundary"> & {
   id?: string
   // TODO: Remove this prop!
   withoutHeaderOffset?: boolean
-  retractGlobalNav?: boolean
   children:
     | ReactNode
     | (({
@@ -81,7 +79,6 @@ export const Sticky = ({
     deregisterSticky,
     updateSticky,
     isGlobalNavRetracted,
-    setGlobalNavRetraction,
     scrollDirection,
   } = useSticky({ id })
 
@@ -120,12 +117,10 @@ export const Sticky = ({
   const zIndex = myIndex === -1 ? 1 : Math.max(1, 10 - myIndex)
 
   // Calculate the effective top position for stacking multiple stickies.
-  // offsetFromFixedAbove sums the heights of FIXED stickies above this one in the DOM,
-  // giving us a stable value that doesn't change based on this sticky's own status.
-  const effectiveTop =
-    isGlobalNavRetracted && !retractGlobalNav
-      ? offsetFromFixedAbove
-      : headerOffset + offsetFromFixedAbove
+  // When nav is retracted, stack at top of viewport; otherwise below the nav.
+  const effectiveTop = isGlobalNavRetracted
+    ? offsetFromFixedAbove
+    : headerOffset + offsetFromFixedAbove
 
   useEffect(() => {
     registerSticky(containerRef.current?.clientHeight)
@@ -138,8 +133,7 @@ export const Sticky = ({
     const wasRetracted = prevRetractedRef.current
     prevRetractedRef.current = isGlobalNavRetracted
 
-    // Only for non-retractGlobalNav stickies that are stuck
-    if (!retractGlobalNav && stuck && containerRef.current) {
+    if (stuck && containerRef.current) {
       const el = containerRef.current
 
       if (!wasRetracted && isGlobalNavRetracted) {
@@ -158,36 +152,7 @@ export const Sticky = ({
         el.style.transform = "translate3d(0, 0, 0)"
       }
     }
-  }, [isGlobalNavRetracted, stuck, retractGlobalNav, headerOffset])
-
-  // When the nav retracts, the inner content transforms up but the sticky wrapper's
-  // bounding box remains in place, potentially blocking clicks on elements below.
-  // Use pointer-events to allow clicks to pass through the wrapper's "ghost" area.
-  useEffect(() => {
-    if (!retractGlobalNav || !containerRef.current) return
-
-    // Find the sticky-inner-wrapper (parent of our container)
-    const stickyInnerWrapper = containerRef.current.parentElement
-    if (!stickyInnerWrapper) return
-
-    if (isGlobalNavRetracted && stuck) {
-      // Allow clicks to pass through the wrapper
-      stickyInnerWrapper.style.pointerEvents = "none"
-      // But capture clicks on the actual content
-      containerRef.current.style.pointerEvents = "auto"
-    } else {
-      // Reset to default behavior
-      stickyInnerWrapper.style.pointerEvents = ""
-      containerRef.current.style.pointerEvents = ""
-    }
-  }, [retractGlobalNav, isGlobalNavRetracted, stuck])
-
-  useEffect(() => {
-    return () => {
-      if (!retractGlobalNav) return
-      setGlobalNavRetraction(false)
-    }
-  }, [retractGlobalNav, setGlobalNavRetraction])
+  }, [isGlobalNavRetracted, stuck, headerOffset])
 
   return (
     <ReactSticky
@@ -198,25 +163,16 @@ export const Sticky = ({
           case ReactSticky.STATUS_FIXED: {
             setStuck(true)
             updateSticky({ status: "FIXED" })
-            if (retractGlobalNav) {
-              setGlobalNavRetraction(true)
-            }
             break
           }
           case ReactSticky.STATUS_ORIGINAL: {
             setStuck(false)
             updateSticky({ status: "ORIGINAL" })
-            if (retractGlobalNav) {
-              setGlobalNavRetraction(false)
-            }
             break
           }
           case ReactSticky.STATUS_RELEASED: {
             setStuck(false)
             updateSticky({ status: "RELEASED" })
-            if (retractGlobalNav) {
-              setGlobalNavRetraction(false)
-            }
             break
           }
         }
@@ -224,24 +180,7 @@ export const Sticky = ({
       innerZ={zIndex}
     >
       <StickyStateContext.Provider value={{ stuck, scrollDirection }}>
-        <Box
-          ref={containerRef as any}
-          style={
-            retractGlobalNav
-              ? {
-                  // retractGlobalNav stickies: transform up when retracted
-                  transform:
-                    isGlobalNavRetracted && stuck
-                      ? `translate3d(0, -${headerOffset}px, 0)`
-                      : "translate3d(0, 0, 0)",
-                  transition: `transform ${NAV_BAR_TRANSITION_DURATION}`,
-                }
-              : {
-                  // Other stickies: transitions handled via DOM manipulation in useEffect
-                  // Don't set transform here to avoid React overwriting the animated value
-                }
-          }
-        >
+        <Box ref={containerRef as any}>
           {typeof children === "function"
             ? children({ stuck, scrollDirection })
             : children}
