@@ -1,3 +1,4 @@
+import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 import {
   Box,
   Flex,
@@ -7,6 +8,7 @@ import {
   Text,
 } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { Media } from "Utils/Responsive"
@@ -15,6 +17,7 @@ import type { ArtistRelatedGeneCategoriesQuery } from "__generated__/ArtistRelat
 import type { ArtistRelatedGeneCategories_artist$data } from "__generated__/ArtistRelatedGeneCategories_artist.graphql"
 import { type FC, useMemo } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 interface ArtistRelatedGeneCategoriesProps {
   artist: ArtistRelatedGeneCategories_artist$data
@@ -23,6 +26,10 @@ interface ArtistRelatedGeneCategoriesProps {
 const ArtistRelatedGeneCategories: FC<
   React.PropsWithChildren<ArtistRelatedGeneCategoriesProps>
 > = ({ artist }) => {
+  const { trackEvent } = useTracking()
+  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
+    useAnalyticsContext()
+
   const genes = extractNodes(artist.related?.genes)
 
   const pills = useMemo(
@@ -35,6 +42,18 @@ const ArtistRelatedGeneCategories: FC<
               as={RouterLink}
               // @ts-ignore
               to={gene.href}
+              onClick={() => {
+                trackEvent({
+                  action: ActionType.clickedGene,
+                  context_module: ContextModule.relatedCategories,
+                  context_page_owner_type: contextPageOwnerType!,
+                  context_page_owner_id: contextPageOwnerId,
+                  context_page_owner_slug: contextPageOwnerSlug,
+                  destination_page_owner_type: OwnerType.gene,
+                  destination_page_owner_id: gene.internalID,
+                  destination_page_owner_slug: gene.slug,
+                })
+              }}
             >
               {gene.name}
             </Pill>
@@ -42,7 +61,13 @@ const ArtistRelatedGeneCategories: FC<
         })}
       </Flex>
     ),
-    [genes],
+    [
+      genes,
+      trackEvent,
+      contextPageOwnerId,
+      contextPageOwnerSlug,
+      contextPageOwnerType,
+    ],
   )
 
   if (genes.length === 0) return null
@@ -71,6 +96,7 @@ export const ArtistRelatedGeneCategoriesFragmentContainer =
             edges {
               node {
                 internalID
+                slug
                 href
                 name
               }
