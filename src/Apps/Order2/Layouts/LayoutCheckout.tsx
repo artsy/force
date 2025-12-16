@@ -20,7 +20,7 @@ export const LayoutCheckout: FC<React.PropsWithChildren<BaseLayoutProps>> = ({
 
       <Box
         as="header"
-        position={["initial", "sticky"]}
+        position={["initial", "initial", "sticky"]}
         py={1}
         top={0}
         zIndex={Z.globalNav}

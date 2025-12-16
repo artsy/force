@@ -16,12 +16,6 @@ import type {
   StripeExpressCheckoutElementShippingAddressChangeEvent,
   StripeExpressCheckoutElementShippingRateChangeEvent,
 } from "@stripe/stripe-js"
-import { useOrder2ExpressCheckoutSetFulfillmentOptionMutation } from "./Mutations/useOrder2ExpressCheckoutSetFulfillmentOptionMutation"
-import { useOrder2ExpressCheckoutSetOrderPaymentMutation } from "./Mutations/useOrder2ExpressCheckoutSetOrderPaymentMutation"
-import { useOrder2ExpressCheckoutSubmitOrderMutation } from "./Mutations/useOrder2ExpressCheckoutSubmitOrderMutation"
-import { useOrder2ExpressCheckoutUnsetOrderFulfillmentOptionMutation } from "./Mutations/useOrder2ExpressCheckoutUnsetOrderFulfillmentOptionMutation"
-import { useOrder2ExpressCheckoutUnsetOrderPaymentMethodMutation } from "./Mutations/useOrder2ExpressCheckoutUnsetOrderPaymentMethodMutation"
-import { useOrder2ExpressCheckoutUpdateOrderShippingAddressMutation } from "./Mutations/useOrder2ExpressCheckoutUpdateOrderShippingAddressMutation"
 import {
   type OrderMutationSuccess,
   validateAndExtractOrderResponse,
@@ -44,6 +38,12 @@ import type { OrderCreditCardWalletTypeEnum } from "__generated__/useOrder2Expre
 import type React from "react"
 import { useEffect, useRef, useState } from "react"
 import { graphql, useFragment } from "react-relay"
+import { useOrder2ExpressCheckoutSetFulfillmentOptionMutation } from "./Mutations/useOrder2ExpressCheckoutSetFulfillmentOptionMutation"
+import { useOrder2ExpressCheckoutSetOrderPaymentMutation } from "./Mutations/useOrder2ExpressCheckoutSetOrderPaymentMutation"
+import { useOrder2ExpressCheckoutSubmitOrderMutation } from "./Mutations/useOrder2ExpressCheckoutSubmitOrderMutation"
+import { useOrder2ExpressCheckoutUnsetOrderFulfillmentOptionMutation } from "./Mutations/useOrder2ExpressCheckoutUnsetOrderFulfillmentOptionMutation"
+import { useOrder2ExpressCheckoutUnsetOrderPaymentMethodMutation } from "./Mutations/useOrder2ExpressCheckoutUnsetOrderPaymentMethodMutation"
+import { useOrder2ExpressCheckoutUpdateOrderShippingAddressMutation } from "./Mutations/useOrder2ExpressCheckoutUpdateOrderShippingAddressMutation"
 
 interface Order2ExpressCheckoutUIProps {
   order: Order2ExpressCheckoutUI_order$key
@@ -509,8 +509,8 @@ export const Order2ExpressCheckoutUI: React.FC<
 
   return (
     <Box>
-      <Text variant={["sm-display", "md"]}>Express checkout</Text>
-      <Spacer y={[1, 2]} />
+      <Text variant={["sm-display", "sm-display", "md"]}>Express checkout</Text>
+      <Spacer y={[1, 1, 2]} />
       {error && checkoutMode === "express" && (
         <>
           <CheckoutErrorBanner error={error} />
@@ -531,8 +531,8 @@ export const Order2ExpressCheckoutUI: React.FC<
           onConfirm={onConfirm}
         />
       </Box>
-      <Text variant="xs" color="mono60" mt={[1, 2]}>
-        <>By clicking Pay, I agree to Artsy’s </>
+      <Text variant="xs" color="mono60" mt={[1, 1, 2]}>
+        <>By clicking Pay, I agree to Artsy's </>
         <RouterLink
           inline
           to="https://www.artsy.net/terms"

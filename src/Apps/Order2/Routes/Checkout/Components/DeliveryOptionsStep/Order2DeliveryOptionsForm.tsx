@@ -119,7 +119,12 @@ export const Order2DeliveryOptionsForm: React.FC<
       onSubmit={handleSubmit}
     >
       {({ handleSubmit, isSubmitting }) => (
-        <Flex flexDirection="column" backgroundColor="mono0" py={2} px={[2, 4]}>
+        <Flex
+          flexDirection="column"
+          backgroundColor="mono0"
+          py={2}
+          px={[2, 2, 4]}
+        >
           {deliveryOptionError && (
             <>
               <CheckoutErrorBanner error={deliveryOptionError} />
@@ -129,7 +134,7 @@ export const Order2DeliveryOptionsForm: React.FC<
           <Flex flexDirection="column">
             <Flex>
               <Text
-                variant={["sm-display", "md"]}
+                variant={["sm-display", "sm-display", "md"]}
                 fontWeight="bold"
                 color="mono100"
               >

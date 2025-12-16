@@ -1,13 +1,6 @@
 import InstitutionIcon from "@artsy/icons/InstitutionIcon"
 import LockIcon from "@artsy/icons/LockIcon"
-import {
-  Box,
-  Flex,
-  Radio,
-  RadioGroup,
-  Spacer,
-  Text,
-} from "@artsy/palette"
+import { Box, Flex, Radio, RadioGroup, Spacer, Text } from "@artsy/palette"
 import { Collapse } from "Apps/Order/Components/Collapse"
 import { type Brand, BrandCreditCardIcon } from "Components/BrandCreditCardIcon"
 import { FadeInBox } from "Components/FadeInBox"
@@ -23,7 +16,9 @@ interface SavedPaymentMethodOptionProps {
   onSavedPaymentMethodSelect: (paymentMethod: any) => void
 }
 
-export const SavedPaymentMethodOption: React.FC<SavedPaymentMethodOptionProps> = ({
+export const SavedPaymentMethodOption: React.FC<
+  SavedPaymentMethodOptionProps
+> = ({
   me,
   isSelected,
   selectedSavedPaymentMethod,
@@ -31,7 +26,8 @@ export const SavedPaymentMethodOption: React.FC<SavedPaymentMethodOptionProps> =
   onSelect,
   onSavedPaymentMethodSelect,
 }) => {
-  const savedCreditCards = me.creditCards?.edges?.map(edge => edge?.node).filter(Boolean) ?? []
+  const savedCreditCards =
+    me.creditCards?.edges?.map(edge => edge?.node).filter(Boolean) ?? []
 
   return (
     <FadeInBox>
@@ -93,13 +89,13 @@ export const SavedPaymentMethodOption: React.FC<SavedPaymentMethodOptionProps> =
                           <>
                             <InstitutionIcon
                               fill="mono100"
-                              width={["18px", "26px"]}
-                              height={["18px", "26px"]}
+                              width={["18px", "18px", "26px"]}
+                              height={["18px", "18px", "26px"]}
                               mr={1}
                             />
                             <Text
-                              variant={["xs", "sm-display"]}
-                              mt={["0px", "3px"]}
+                              variant={["xs", "xs", "sm-display"]}
+                              mt={["0px", "0px", "3px"]}
                             >
                               Bank account •••• {paymentMethod.last4}
                             </Text>

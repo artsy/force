@@ -34,8 +34,8 @@ export const Order2OfferCompletedView: React.FC<
           <CheckmarkIcon fill="mono100" />
           <Spacer x={1} />
           <Text
-            variant={["sm-display", "md"]}
-            fontWeight={["bold", "normal"]}
+            variant={["sm-display", "sm-display", "md"]}
+            fontWeight={["bold", "bold", "normal"]}
             color="mono100"
           >
             Offer
