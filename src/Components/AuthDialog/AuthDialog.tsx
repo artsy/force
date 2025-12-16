@@ -61,7 +61,6 @@ export const AuthDialog: FC<React.PropsWithChildren<AuthDialogProps>> = ({
       }
       hasLogo
       m={[1, 2]}
-      height={[400, "auto"]}
       {...modalProps}
     >
       <AuthDialogView />

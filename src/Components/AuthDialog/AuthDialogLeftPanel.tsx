@@ -12,17 +12,17 @@ import {
 import { useFlag } from "@unleash/proxy-client-react"
 import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
 import { MODAL_WIDTH } from "Components/AuthDialog/Utils/utils"
+import { resized } from "Utils/resized"
 import {
   type FC,
-  forwardRef,
   type ForwardRefExoticComponent,
+  forwardRef,
   useCallback,
   useEffect,
   useRef,
 } from "react"
 import styled from "styled-components"
 import { useCursor } from "use-cursor"
-import { resized } from "Utils/resized"
 
 export const AuthDialogLeftPanel: FC<React.PropsWithChildren> = () => {
   const {
@@ -204,20 +204,25 @@ const IMAGE = {
   height: IMAGE_HEIGHT,
   src: "https://files.artsy.net/images/2x_Evergreen-Artist-Page-Sign-Up-Modal.jpg",
 }
+// const PARTNER_IMAGE = {
+//   width: MODAL_WIDTH,
+//   height: IMAGE_HEIGHT,
+//   src: "https://files.artsy.net/images/signup-gallery.png",
+// }
 const DEFAULT_IMAGES = [
   {
     width: MODAL_WIDTH,
     height: IMAGE_HEIGHT,
-    src: "https://files.artsy.net/images/signup-01.png",
+    src: "https://files.artsy.net/images/signup-01-1765895830875.png",
   },
   {
     width: MODAL_WIDTH,
     height: IMAGE_HEIGHT,
-    src: "https://files.artsy.net/images/signup-02.png",
+    src: "https://files.artsy.net/images/signup-02-1765895830877.png",
   },
   {
     width: MODAL_WIDTH,
     height: IMAGE_HEIGHT,
-    src: "https://files.artsy.net/images/signup-03.png",
+    src: "https://files.artsy.net/images/signup-03-1765895830761.png",
   },
 ]
