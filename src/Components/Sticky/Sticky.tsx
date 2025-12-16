@@ -160,6 +160,28 @@ export const Sticky = ({
     }
   }, [isGlobalNavRetracted, stuck, retractGlobalNav, headerOffset])
 
+  // When the nav retracts, the inner content transforms up but the sticky wrapper's
+  // bounding box remains in place, potentially blocking clicks on elements below.
+  // Use pointer-events to allow clicks to pass through the wrapper's "ghost" area.
+  useEffect(() => {
+    if (!retractGlobalNav || !containerRef.current) return
+
+    // Find the sticky-inner-wrapper (parent of our container)
+    const stickyInnerWrapper = containerRef.current.parentElement
+    if (!stickyInnerWrapper) return
+
+    if (isGlobalNavRetracted && stuck) {
+      // Allow clicks to pass through the wrapper
+      stickyInnerWrapper.style.pointerEvents = "none"
+      // But capture clicks on the actual content
+      containerRef.current.style.pointerEvents = "auto"
+    } else {
+      // Reset to default behavior
+      stickyInnerWrapper.style.pointerEvents = ""
+      containerRef.current.style.pointerEvents = ""
+    }
+  }, [retractGlobalNav, isGlobalNavRetracted, stuck])
+
   useEffect(() => {
     return () => {
       if (!retractGlobalNav) return
