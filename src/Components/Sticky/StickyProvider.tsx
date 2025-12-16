@@ -26,7 +26,6 @@ export type TSticky = {
 type StickyState = {
   stickies: TSticky[]
   globalNavRetractors: Record<string, boolean>
-  isGlobalNavRetracted: boolean
 }
 
 type StickyAction =
@@ -34,12 +33,10 @@ type StickyAction =
   | { type: "DEREGISTER_STICKY"; id: string }
   | { type: "UPDATE_STICKY"; id: string; payload: Partial<TSticky> }
   | { type: "SET_NAV_RETRACTION"; id: string; isActive: boolean }
-  | { type: "SET_NAV_RETRACTED"; isRetracted: boolean }
 
 const INITIAL_STATE: StickyState = {
   stickies: [],
   globalNavRetractors: {},
-  isGlobalNavRetracted: false,
 }
 
 const reducer = (state: StickyState, action: StickyAction): StickyState => {
@@ -99,15 +96,6 @@ const reducer = (state: StickyState, action: StickyAction): StickyState => {
       return {
         ...state,
         globalNavRetractors: rest,
-      }
-    }
-
-    case "SET_NAV_RETRACTED": {
-      if (state.isGlobalNavRetracted === action.isRetracted) return state
-
-      return {
-        ...state,
-        isGlobalNavRetracted: action.isRetracted,
       }
     }
 
@@ -184,14 +172,9 @@ export const StickyProvider: React.FC<React.PropsWithChildren<unknown>> = ({
     initialDirection: "down",
   })
 
-  useEffect(() => {
-    if (!hasActiveRetractors) {
-      dispatch({ type: "SET_NAV_RETRACTED", isRetracted: false })
-      return
-    }
-
-    dispatch({ type: "SET_NAV_RETRACTED", isRetracted: isScrollingDown })
-  }, [hasActiveRetractors, isScrollingDown])
+  // Compute isGlobalNavRetracted directly (no useEffect delay)
+  // This ensures stickies immediately use top: 0 when sentinel triggers
+  const isGlobalNavRetracted = hasActiveRetractors && isScrollingDown
 
   return (
     <StickyContext.Provider
@@ -200,7 +183,7 @@ export const StickyProvider: React.FC<React.PropsWithChildren<unknown>> = ({
         registerSticky,
         deregisterSticky,
         updateSticky,
-        isGlobalNavRetracted: state.isGlobalNavRetracted,
+        isGlobalNavRetracted,
         hasRetractGlobalNavStickies: hasActiveRetractors,
         setGlobalNavRetraction,
         scrollDirection: direction,
@@ -211,7 +194,7 @@ export const StickyProvider: React.FC<React.PropsWithChildren<unknown>> = ({
       <StickyShadow
         stickies={state.stickies}
         hasRetractGlobalNavStickies={hasActiveRetractors}
-        isGlobalNavRetracted={state.isGlobalNavRetracted}
+        isGlobalNavRetracted={isGlobalNavRetracted}
       />
     </StickyContext.Provider>
   )

@@ -1,9 +1,9 @@
 import { ActionType, type ClickedHeader, ContextModule } from "@artsy/cohesion"
-import { BaseTab, Clickable, FullBleed } from "@artsy/palette"
+import { BaseTab, Box, Clickable, FullBleed } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { RouteTabs } from "Components/RouteTabs"
-import { Sticky } from "Components/Sticky"
+import { Sticky, StickyNavRetractionSentinel } from "Components/Sticky"
 import { useNavInteractionBlocker } from "Components/Sticky/useNavInteractionBlocker"
 import { useStickyBackdrop } from "Components/Sticky/useStickyBackdrop"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
@@ -51,7 +51,12 @@ export const ArtistCombinedNav = ({
     <>
       <NavBlocker />
 
-      <Sticky retractGlobalNav>
+      {/* Retract the global nav slightly early */}
+      <Box mt={-12} pb={12}>
+        <StickyNavRetractionSentinel />
+      </Box>
+
+      <Sticky>
         {({ scrollDirection }) => {
           return (
             <FullBleed style={backdrop[scrollDirection]} {...containerProps}>
