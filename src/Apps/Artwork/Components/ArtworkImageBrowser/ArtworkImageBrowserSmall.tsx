@@ -12,7 +12,6 @@ import { DeepZoomFragmentContainer, useDeepZoom } from "Components/DeepZoom"
 import type { ArtworkImageBrowserSmall_artwork$data } from "__generated__/ArtworkImageBrowserSmall_artwork.graphql"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useIntersectionObserver } from "Utils/Hooks/useIntersectionObserver"
 
 interface ArtworkImageBrowserSmallProps {
   artwork: ArtworkImageBrowserSmall_artwork$data
@@ -21,40 +20,6 @@ interface ArtworkImageBrowserSmallProps {
   /** Update the currently active artwork (on swipe change) */
   setActiveIndex(index: number): void
   maxHeight: number
-}
-
-// Defers rendering children until the wrapper enters the viewport.
-
-const DeferredUntilInView: React.FC<
-  React.PropsWithChildren<{
-    enabled: boolean
-    placeholder?: React.ReactNode
-  }>
-> = ({ enabled, placeholder = null, children }) => {
-  const [shouldRender, setShouldRender] = React.useState(!enabled)
-
-  const { ref } = useIntersectionObserver({
-    once: true,
-    options: {
-      threshold: 0.01,
-      rootMargin: "250px",
-    },
-    onIntersection: () => {
-      setShouldRender(true)
-    },
-  })
-
-  React.useEffect(() => {
-    if (!enabled) {
-      setShouldRender(true)
-    }
-  }, [enabled])
-
-  if (shouldRender) {
-    return <>{children}</>
-  }
-
-  return <div ref={ref as any}>{placeholder}</div>
 }
 
 const ArtworkImageBrowserSmall: React.FC<
@@ -88,27 +53,30 @@ const ArtworkImageBrowserSmall: React.FC<
         {figures.map((figure, i) => {
           switch (figure.type) {
             case "Image": {
-              const windowSize = 2
-              const isNearActive = Math.abs(i - activeIndex) <= windowSize
+              const isActive = i === activeIndex
+              const isNext = i === activeIndex + 1
+
+              if (!isActive && !isNext) {
+                return null
+              }
+
               return (
-                <DeferredUntilInView
+                <ArtworkLightboxFragmentContainer
                   key={figure.internalID ?? i}
-                  enabled={!isNearActive}
-                  placeholder={<div style={{ height: maxHeight }} />}
-                >
-                  <ArtworkLightboxFragmentContainer
-                    maxHeight={maxHeight}
-                    my={2}
-                    artwork={artwork}
-                    activeIndex={artwork.isSetVideoAsCover ? i - 1 : i}
-                    lazyLoad={false}
-                    onClick={
-                      activeFigure.type === "Image" && activeFigure.isZoomable
-                        ? showDeepZoom
-                        : undefined
-                    }
-                  />
-                </DeferredUntilInView>
+                  maxHeight={maxHeight}
+                  my={2}
+                  artwork={artwork}
+                  activeIndex={artwork.isSetVideoAsCover ? i - 1 : i}
+                  lazyLoad={false}
+                  shouldRenderFullImage={isActive}
+                  onClick={
+                    isActive &&
+                    activeFigure.type === "Image" &&
+                    activeFigure.isZoomable
+                      ? showDeepZoom
+                      : undefined
+                  }
+                />
               )
             }
 
