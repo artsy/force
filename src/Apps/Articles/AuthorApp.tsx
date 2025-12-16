@@ -1,6 +1,6 @@
 import InstagramFillIcon from "@artsy/icons/InstagramFillIcon"
+import LinkIcon from "@artsy/icons/LinkIcon"
 import XIcon from "@artsy/icons/XIcon"
-import PublicationIcon from "@artsy/icons/PublicationIcon"
 import {
   Avatar,
   Box,
@@ -14,9 +14,9 @@ import { themeGet } from "@styled-system/theme-get"
 import { AuthorStructuredData } from "Apps/Articles/Components/AuthorStructuredData"
 import { ClientSuspense } from "Components/ClientSuspense"
 import { MetaTags } from "Components/MetaTags"
-import { getAuthorPath } from "Utils/getAuthorPath"
 import { TopContextBar } from "Components/TopContextBar"
 import { useScrollToOpenEditorialAuthModal } from "Utils/Hooks/useScrollToOpenEditorialAuthModal"
+import { getAuthorPath } from "Utils/getAuthorPath"
 import type { AuthorApp_author$key } from "__generated__/AuthorApp_author.graphql"
 import type { FC } from "react"
 import { graphql, useFragment } from "react-relay"
@@ -137,7 +137,7 @@ export const AuthorApp: FC<React.PropsWithChildren<AuthorAppProps>> = ({
                           target="_blank"
                           rel="noopener noreferrer"
                         >
-                          <PublicationIcon />
+                          <LinkIcon />
 
                           <Text variant="xs">{author.website}</Text>
                         </AuthorSocialLink>
