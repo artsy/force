@@ -10,6 +10,7 @@ import {
   type DropdownProps,
   Pill,
 } from "@artsy/palette"
+import { Z } from "Apps/Components/constants"
 import {
   type Slice,
   initialArtworkFilterState,
@@ -69,6 +70,7 @@ export const FilterQuick: FC<React.PropsWithChildren<FilterQuickProps>> = ({
 
   return (
     <Dropdown
+      dropdownZIndex={Z.dropdown}
       // eslint-disable-next-line react/no-unstable-nested-components
       dropdown={({ onHide }) => {
         return (

@@ -6,6 +6,7 @@ import {
   Radio,
   RadioGroup,
 } from "@artsy/palette"
+import { Z } from "Apps/Components/constants"
 import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
 import type { FC } from "react"
 
@@ -23,6 +24,7 @@ export const ArtworkFilterSort: FC<
 
   return (
     <Dropdown
+      dropdownZIndex={Z.dropdown}
       dropdown={({ onHide }) => {
         return (
           <RadioGroup
