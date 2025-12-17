@@ -83,7 +83,9 @@ const ArtworkImageBrowserSmall: React.FC<
                   activeIndex={artwork.isSetVideoAsCover ? i - 1 : i}
                   lazyLoad={false}
                   shouldRenderFullImage={isActive || hasBeenActive}
-                  shouldRenderPlaceholder={isNeighbor && !hasBeenActive}
+                  shouldRenderPlaceholder={
+                    isActive || (isNeighbor && !hasBeenActive)
+                  }
                   onClick={
                     isActive &&
                     activeFigure.type === "Image" &&
