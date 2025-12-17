@@ -12,6 +12,7 @@ import {
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import mockStripe from "DevTools/mockStripe"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import createLogger from "Utils/logger"
 import type { Order2CheckoutRouteTestQuery } from "__generated__/Order2CheckoutRouteTestQuery.graphql"
 import { useEffect } from "react"
 import { graphql } from "react-relay"
@@ -20,6 +21,23 @@ import { Order2ExpressCheckout as MockExpressCheckout } from "../Components/Expr
 import { Order2CheckoutRoute } from "../Order2CheckoutRoute"
 
 jest.setTimeout(10000)
+
+// Create logger mock inside the factory to avoid hoisting issues
+// The factory creates a single shared logger instance
+// Use var instead of let to avoid temporal dead zone issues with jest.mock hoisting
+// biome-ignore lint/style/noVar: <explanation>
+var mockLogger: { log: jest.Mock; warn: jest.Mock; error: jest.Mock }
+
+jest.mock("Utils/logger", () => {
+  const logger = {
+    log: jest.fn(),
+    warn: jest.fn(),
+    error: jest.fn(),
+  }
+  // Assign to outer scope so tests can access it
+  mockLogger = logger
+  return jest.fn(() => logger)
+})
 
 jest.unmock("react-relay")
 jest.useFakeTimers()
@@ -133,6 +151,9 @@ jest.mock("Utils/Hooks/useUserLocation", () => ({
 const mockTrackEvent = jest.fn()
 beforeEach(() => {
   mockTrackEvent.mockClear()
+  mockLogger.log.mockClear()
+  mockLogger.warn.mockClear()
+  mockLogger.error.mockClear()
   ;(useTracking as jest.Mock).mockImplementation(() => ({
     trackEvent: mockTrackEvent,
   }))
@@ -400,6 +421,48 @@ describe("Order2CheckoutRoute", () => {
           screen.queryByLabelText("Checkout loading skeleton"),
         ).not.toBeInTheDocument()
       })
+    })
+
+    it("logs an error if loading exceeds MAX_LOADING_MS with loading state details", async () => {
+      // Mock ExpressCheckout to never complete loading
+      ;(MockExpressCheckout as jest.Mock).mockImplementation(() => {
+        return <div>MockExpressCheckout</div>
+      })
+
+      await renderWithRelay({
+        Viewer: () => ({
+          ...baseProps,
+        }),
+      })
+
+      expect(
+        screen.getByLabelText("Checkout loading skeleton"),
+      ).toBeInTheDocument()
+
+      // Advance to MAX_LOADING_MS to trigger the timeout error
+      await act(async () => {
+        jest.advanceTimersByTime(5000)
+        await flushPromiseQueue()
+      })
+
+      // Verify the error was logged
+      expect(mockLogger.error).toHaveBeenCalled()
+
+      // Get the error message
+      const errorCall = mockLogger.error.mock.calls[0]
+      expect(errorCall).toBeDefined()
+      const errorMessage = errorCall[0]
+
+      // Verify the error message contains the timeout text
+      expect(errorMessage).toContain(
+        "Checkout loading state exceeded 5000ms timeout",
+      )
+
+      // Verify the error includes the loading state checks
+      expect(errorMessage).toContain("minimumLoadingPassed: false")
+      expect(errorMessage).toContain("orderValidated: false")
+      expect(errorMessage).toContain("isExpressCheckoutLoaded: false")
+      expect(errorMessage).toContain("isStripeRedirectHandled: false")
     })
   })
 
