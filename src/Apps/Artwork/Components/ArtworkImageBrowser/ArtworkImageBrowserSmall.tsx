@@ -10,7 +10,7 @@ import { ArtworkLightboxFragmentContainer } from "Apps/Artwork/Components/Artwor
 import { ArtworkVideoPlayerFragmentContainer } from "Apps/Artwork/Components/ArtworkVideoPlayer"
 import { DeepZoomFragmentContainer, useDeepZoom } from "Components/DeepZoom"
 import type { ArtworkImageBrowserSmall_artwork$data } from "__generated__/ArtworkImageBrowserSmall_artwork.graphql"
-import * as React from "react"
+import { useEffect, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
 interface ArtworkImageBrowserSmallProps {
@@ -29,6 +29,22 @@ const ArtworkImageBrowserSmall: React.FC<
   const activeFigure = figures[activeIndex]
 
   const { isDeepZoomVisible, showDeepZoom, hideDeepZoom } = useDeepZoom()
+
+  // Track which slides have been active at least once
+  const [visited, setVisited] = useState<Record<number, boolean>>({
+    [activeIndex]: true,
+  })
+
+  useEffect(() => {
+    setVisited(prev => {
+      if (prev[activeIndex]) return prev
+
+      return {
+        ...prev,
+        [activeIndex]: true,
+      }
+    })
+  }, [activeIndex])
 
   if (figures.length === 0) {
     return null
@@ -55,6 +71,7 @@ const ArtworkImageBrowserSmall: React.FC<
             case "Image": {
               const isActive = i === activeIndex
               const isNeighbor = i === activeIndex - 1 || i === activeIndex + 1
+              const hasBeenActive = !!visited[i]
 
               return (
                 <ArtworkLightboxFragmentContainer
@@ -64,8 +81,8 @@ const ArtworkImageBrowserSmall: React.FC<
                   artwork={artwork}
                   activeIndex={artwork.isSetVideoAsCover ? i - 1 : i}
                   lazyLoad={false}
-                  shouldRenderFullImage={isActive}
-                  shouldRenderPlaceholder={isActive || isNeighbor}
+                  shouldRenderFullImage={isActive || hasBeenActive}
+                  shouldRenderPlaceholder={isNeighbor && !hasBeenActive}
                   onClick={
                     isActive &&
                     activeFigure.type === "Image" &&
