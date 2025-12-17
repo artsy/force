@@ -41,11 +41,26 @@ const ArtistSeriesRail: FC<React.PropsWithChildren<ArtistSeriesProps>> = ({
 
   if (artistSeries.length === 0) return null
 
+  const handleViewAllClick = () => {
+    const payload: ClickedArtistSeriesGroup = {
+      action: ActionType.clickedArtistSeriesGroup,
+      context_module: contextModule,
+      context_page_owner_id: contextPageOwnerId,
+      context_page_owner_slug: contextPageOwnerSlug,
+      context_page_owner_type: contextPageOwnerType!,
+      destination_page_owner_type: OwnerType.allArtistSeries,
+      type: "viewAll",
+    }
+
+    trackEvent(payload)
+  }
+
   return (
     <Rail
       title={title ?? "Artist Series"}
       viewAllLabel="View All"
       viewAllHref={`${artist.href}/series`}
+      viewAllOnClick={handleViewAllClick}
       getItems={() => {
         return artistSeries.map((series, i) => {
           return (

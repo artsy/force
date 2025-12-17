@@ -54,11 +54,11 @@ export const Order2FulfillmentDetailsStep: React.FC<
       backgroundColor="mono0"
       py={2}
     >
-      <Box px={[2, 4]} hidden={stepState !== CheckoutStepState.UPCOMING}>
+      <Box px={[2, 2, 4]} hidden={stepState !== CheckoutStepState.UPCOMING}>
         <Flex flexDirection="column">
           <Text
-            variant={["sm-display", "md"]}
-            fontWeight={["bold", "normal"]}
+            variant={["sm-display", "sm-display", "md"]}
+            fontWeight={["bold", "bold", "normal"]}
             color="mono100"
           >
             Delivery
@@ -69,7 +69,7 @@ export const Order2FulfillmentDetailsStep: React.FC<
         </Flex>
       </Box>
       {stepState === CheckoutStepState.COMPLETED && completedViewProps && (
-        <Box px={[2, 4]}>
+        <Box px={[2, 2, 4]}>
           <Order2FulfillmentDetailsCompletedView {...completedViewProps} />
         </Box>
       )}
@@ -93,18 +93,18 @@ export const Order2FulfillmentDetailsStep: React.FC<
             }}
           >
             <Tab name={<Text variant="sm-display">Delivery</Text>}>
-              <Box px={[2, 4]}>
+              <Box px={[2, 2, 4]}>
                 <Order2DeliveryForm order={orderData} me={meData} />
               </Box>
             </Tab>
             <Tab name={<Text variant="sm-display">Pickup</Text>}>
-              <Box px={[2, 4]}>
+              <Box px={[2, 2, 4]}>
                 <Order2PickupForm order={orderData} />
               </Box>
             </Tab>
           </Tabs>
         ) : (
-          <Box px={[2, 4]} hidden={stepState !== CheckoutStepState.ACTIVE}>
+          <Box px={[2, 2, 4]} hidden={stepState !== CheckoutStepState.ACTIVE}>
             <Order2DeliveryForm order={orderData} me={meData} />
           </Box>
         )}

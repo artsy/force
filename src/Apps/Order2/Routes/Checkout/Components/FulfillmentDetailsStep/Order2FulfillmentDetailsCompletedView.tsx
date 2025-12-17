@@ -36,8 +36,8 @@ export const Order2FulfillmentDetailsCompletedView: React.FC<
             <CheckmarkIcon fill="mono100" />
             <Spacer x={1} />
             <Text
-              variant={["sm-display", "md"]}
-              fontWeight={["bold", "normal"]}
+              variant={["sm-display", "sm-display", "md"]}
+              fontWeight={["bold", "bold", "normal"]}
               color="mono100"
             >
               Pickup
@@ -71,8 +71,8 @@ export const Order2FulfillmentDetailsCompletedView: React.FC<
           <CheckmarkIcon height={20} width={20} fill="mono100" />
           <Box flexGrow={1} mx={0.5} />
           <Text
-            variant={["sm-display", "md"]}
-            fontWeight={["bold", "normal"]}
+            variant={["sm-display", "sm-display", "md"]}
+            fontWeight={["bold", "bold", "normal"]}
             color="mono100"
           >
             Delivery

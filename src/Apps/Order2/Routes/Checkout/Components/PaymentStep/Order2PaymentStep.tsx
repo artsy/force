@@ -32,11 +32,15 @@ export const Order2PaymentStep: React.FC<Order2PaymentStepProps> = ({
 
   return (
     <Flex flexDirection="column" backgroundColor="mono0">
-      <Box py={2} px={[2, 4]} hidden={stepState !== CheckoutStepState.UPCOMING}>
+      <Box
+        py={2}
+        px={[2, 2, 4]}
+        hidden={stepState !== CheckoutStepState.UPCOMING}
+      >
         <Flex flexDirection="column">
           <Text
-            variant={["sm-display", "md"]}
-            fontWeight={["bold", "normal"]}
+            variant={["sm-display", "sm-display", "md"]}
+            fontWeight={["bold", "bold", "normal"]}
             color="mono100"
           >
             Payment
@@ -49,7 +53,7 @@ export const Order2PaymentStep: React.FC<Order2PaymentStepProps> = ({
 
       <Box
         py={2}
-        px={[2, 4]}
+        px={[2, 2, 4]}
         hidden={stepState !== CheckoutStepState.COMPLETED}
       >
         <Order2PaymentCompletedView
@@ -59,11 +63,15 @@ export const Order2PaymentStep: React.FC<Order2PaymentStepProps> = ({
         />
       </Box>
 
-      <Box py={2} px={[2, 4]} hidden={stepState !== CheckoutStepState.ACTIVE}>
+      <Box
+        py={2}
+        px={[2, 2, 4]}
+        hidden={stepState !== CheckoutStepState.ACTIVE}
+      >
         <Flex flexDirection="column">
           <Text
-            variant={["sm-display", "md"]}
-            fontWeight={["bold", "normal"]}
+            variant={["sm-display", "sm-display", "md"]}
+            fontWeight={["bold", "bold", "normal"]}
             color="mono100"
           >
             Payment

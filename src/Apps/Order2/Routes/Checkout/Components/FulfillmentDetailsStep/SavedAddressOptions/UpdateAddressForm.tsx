@@ -187,9 +187,9 @@ export const UpdateAddressForm = ({
       {({ isSubmitting, handleSubmit }) => (
         <>
           <Text
-            fontWeight={["bold", "normal"]}
+            fontWeight={["bold", "bold", "normal"]}
             color="mono100"
-            variant={["sm-display", "md"]}
+            variant={["sm-display", "sm-display", "md"]}
           >
             Edit address
           </Text>

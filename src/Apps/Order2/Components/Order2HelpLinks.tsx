@@ -39,7 +39,7 @@ export const Order2HelpLinks: React.FC<
     <>
       {inquiryComponent}
 
-      <Box px={[2, 4]} py={2} backgroundColor={["mono5", "mono5", "mono0"]}>
+      <Box px={[2, 2, 4]} py={2} backgroundColor={["mono5", "mono5", "mono0"]}>
         <Flex>
           <MessageIcon fill="mono100" mt={0.5} />
 

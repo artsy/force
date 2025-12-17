@@ -141,7 +141,11 @@ export const Order2PickupForm: React.FC<Order2PickupFormProps> = ({
 
   return (
     <>
-      <Text fontWeight="normal" color="mono100" variant={["sm-display", "md"]}>
+      <Text
+        fontWeight="normal"
+        color="mono100"
+        variant={["sm-display", "sm-display", "md"]}
+      >
         Free pickup
       </Text>
       <Spacer y={1} />
@@ -152,7 +156,7 @@ export const Order2PickupForm: React.FC<Order2PickupFormProps> = ({
         After your order is confirmed, a specialist will contact you with
         details on how to pickup the work.
       </Text>
-      <Spacer y={[2, 4]} />
+      <Spacer y={[2, 2, 4]} />
       <Formik<PickupFormValues>
         initialValues={initialValues}
         validationSchema={VALIDATION_SCHEMA}

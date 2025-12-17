@@ -17,6 +17,7 @@ export function getOrInitUnleashClient(): UnleashClient {
     context: {
       userId: getENV("CURRENT_USER")?.id,
       sessionId: getENV("SESSION_ID"),
+      roles: getENV("CURRENT_USER")?.roles,
     },
   }
 

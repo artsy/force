@@ -256,7 +256,7 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
         />
       </Column>
 
-      <Column span={6}>
+      <Column span={[12, 6]}>
         <Input
           name="address.region"
           id="address.region"
@@ -272,7 +272,7 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
         />
       </Column>
 
-      <Column span={6}>
+      <Column span={[12, 6]}>
         <Input
           name="address.postalCode"
           id="address.postalCode"

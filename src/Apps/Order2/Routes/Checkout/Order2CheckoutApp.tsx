@@ -6,9 +6,11 @@ import {
   Separator,
   Spacer,
   Stack,
+  breakpoints,
 } from "@artsy/palette"
 import { SubmittingOrderSpinner } from "Apps/Order/Components/SubmittingOrderSpinner"
 import { ConnectedModalDialog } from "Apps/Order/Dialogs"
+import { OrderErrorApp } from "Apps/Order2/Components/Order2ErrorApp"
 import { Order2HelpLinksWithInquiry } from "Apps/Order2/Components/Order2HelpLinks"
 import {
   CheckoutStepName,
@@ -23,7 +25,7 @@ import { Order2CollapsibleOrderSummary } from "Apps/Order2/Routes/Checkout/Compo
 import { Order2ReviewStep } from "Apps/Order2/Routes/Checkout/Components/Order2ReviewStep"
 import { Order2PaymentStep } from "Apps/Order2/Routes/Checkout/Components/PaymentStep/Order2PaymentStep"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
-import { OrderErrorApp } from "Apps/Order2/Components/Order2ErrorApp"
+import { NOT_FOUND_ERROR } from "Apps/Order2/constants"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import type { Order2CheckoutApp_me$key } from "__generated__/Order2CheckoutApp_me.graphql"
 import type { Order2CheckoutApp_order$key } from "__generated__/Order2CheckoutApp_order.graphql"
@@ -32,7 +34,6 @@ import { Meta, Title } from "react-head"
 import { graphql, useFragment } from "react-relay"
 // eslint-disable-next-line no-restricted-imports
 import { Provider } from "unstated"
-import { NOT_FOUND_ERROR } from "Apps/Order2/constants"
 interface Order2CheckoutAppProps {
   order: Order2CheckoutApp_order$key
   me: Order2CheckoutApp_me$key
@@ -108,21 +109,26 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
       />
       {isLoading && <Order2CheckoutLoadingSkeleton order={orderData} />}
       <GridColumns
+        px={[0, 0, 4]}
+        // add vertical padding at `sm` instead of `md` ( using responsiveProps() ) because horizontal padding starts to appear
+        // at maxWidth breakpoints.sm
         py={[0, 4]}
-        px={[0, 4]}
         style={{
           display: isLoading ? "none" : "grid",
         }}
       >
-        <Column span={[12, 7, 6, 5]} start={[1, 1, 2, 3]}>
+        <Column span={[12, 12, 6]} start={[1, 1, 2]}>
           {expressCheckoutSubmitting && <SubmittingOrderSpinner />}
           <Box
+            // Introduce padding with constrained single-column width at `sm` breakpoint
+            maxWidth={["100%", breakpoints.sm, "100%"]}
+            mx={[0, "auto", 0]}
             style={{
               display: expressCheckoutSubmitting ? "none" : "block",
             }}
           >
             <Stack gap={1}>
-              <Box display={["block", "none"]}>
+              <Box display={["block", "block", "none"]}>
                 <Order2CollapsibleOrderSummary order={orderData} />
               </Box>
               {isExpressCheckoutEligible && (
@@ -133,7 +139,7 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
               <Order2DeliveryOptionsStep order={orderData} />
               <Order2PaymentStep order={orderData} me={meData} />
             </Stack>
-            <Box display={["block", "none"]}>
+            <Box display={["block", "block", "none"]}>
               <Spacer y={1} />
               <Order2ReviewStep order={orderData} />
               <Order2HelpLinksWithInquiry
@@ -146,11 +152,11 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
         </Column>
 
         <Column
-          span={[12, 5, 4, 3]}
-          start={[1, 8, 8, 8]}
-          display={["none", "block"]}
+          span={[12, 12, 4]}
+          start={[1, 1, 8]}
+          display={["none", "none", "block"]}
         >
-          <Box position={["initial", "sticky"]} top="100px">
+          <Box position={["initial", "initial", "sticky"]} top="100px">
             <Order2ReviewStep order={orderData} />
             <Separator as="hr" />
             <Order2HelpLinksWithInquiry

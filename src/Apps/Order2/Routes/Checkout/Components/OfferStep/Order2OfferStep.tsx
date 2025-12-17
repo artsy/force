@@ -263,13 +263,13 @@ const Order2OfferStepFormContent: React.FC<Order2OfferStepFormContentProps> = ({
     >
       <Box
         py={2}
-        px={[2, 4]}
+        px={[2, 2, 4]}
         hidden={currentStep !== CheckoutStepState.UPCOMING}
       >
         <Flex flexDirection="column">
           <Text
-            variant={["sm-display", "md"]}
-            fontWeight={["bold", "normal"]}
+            variant={["sm-display", "sm-display", "md"]}
+            fontWeight={["bold", "bold", "normal"]}
             color="mono100"
           >
             Offer
@@ -283,7 +283,7 @@ const Order2OfferStepFormContent: React.FC<Order2OfferStepFormContentProps> = ({
 
       <Box
         py={2}
-        px={[2, 4]}
+        px={[2, 2, 4]}
         hidden={currentStep !== CheckoutStepState.COMPLETED}
       >
         {completedViewProps && (
@@ -291,11 +291,15 @@ const Order2OfferStepFormContent: React.FC<Order2OfferStepFormContentProps> = ({
         )}
       </Box>
 
-      <Box pt={2} px={[2, 4]} hidden={currentStep !== CheckoutStepState.ACTIVE}>
+      <Box
+        pt={2}
+        px={[2, 2, 4]}
+        hidden={currentStep !== CheckoutStepState.ACTIVE}
+      >
         <Flex flexDirection="column">
           <Text
-            variant={["sm-display", "md"]}
-            fontWeight={["bold", "normal"]}
+            variant={["sm-display", "sm-display", "md"]}
+            fontWeight={["bold", "bold", "normal"]}
             color="mono100"
           >
             Offer
@@ -309,7 +313,11 @@ const Order2OfferStepFormContent: React.FC<Order2OfferStepFormContentProps> = ({
         </Flex>
       </Box>
 
-      <Box py={2} px={[2, 4]} hidden={currentStep !== CheckoutStepState.ACTIVE}>
+      <Box
+        py={2}
+        px={[2, 2, 4]}
+        hidden={currentStep !== CheckoutStepState.ACTIVE}
+      >
         {isPriceHidden ? (
           <OfferInput name="offerValue" onBlur={onCustomOfferBlur} />
         ) : (
@@ -324,8 +332,8 @@ const Order2OfferStepFormContent: React.FC<Order2OfferStepFormContentProps> = ({
 
         <Flex flexDirection="column">
           <Text
-            variant={["sm-display", "md"]}
-            fontWeight={["bold", "normal"]}
+            variant={["sm-display", "sm-display", "md"]}
+            fontWeight={["bold", "bold", "normal"]}
             color="mono100"
           >
             Offer note

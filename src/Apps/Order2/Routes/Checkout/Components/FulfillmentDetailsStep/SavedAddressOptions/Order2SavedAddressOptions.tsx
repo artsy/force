@@ -126,9 +126,9 @@ export const SavedAddressOptions = ({
   return (
     <Flex flexDirection="column">
       <Text
-        fontWeight={["bold", "normal"]}
+        fontWeight={["bold", "bold", "normal"]}
         color="mono100"
-        variant={["sm-display", "md"]}
+        variant={["sm-display", "sm-display", "md"]}
       >
         Delivery address
       </Text>
@@ -142,11 +142,7 @@ export const SavedAddressOptions = ({
         const textColor = isSelected ? "mono100" : "mono60"
 
         return (
-          <Flex
-            key={internalID}
-            backgroundColor={backgroundColor}
-            p={2}
-          >
+          <Flex key={internalID} backgroundColor={backgroundColor} p={2}>
             <Radio
               flex={1}
               value={internalID}

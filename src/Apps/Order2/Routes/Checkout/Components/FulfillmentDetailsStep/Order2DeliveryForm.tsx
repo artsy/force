@@ -310,9 +310,9 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
             ) : (
               <>
                 <Text
-                  fontWeight={["bold", "normal"]}
+                  fontWeight={["bold", "bold", "normal"]}
                   color="mono100"
-                  variant={["sm-display", "md"]}
+                  variant={["sm-display", "sm-display", "md"]}
                 >
                   Delivery address
                 </Text>

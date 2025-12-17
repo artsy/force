@@ -20,6 +20,7 @@ import {
 import { Masonry } from "Components/Masonry"
 import { useReturnTo } from "Components/Rail/RailHeader"
 import { RouterLink } from "System/Components/RouterLink"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { Media } from "Utils/Responsive"
@@ -41,6 +42,9 @@ const ArtistEditorialNewsGrid: FC<
   React.PropsWithChildren<ArtistEditorialNewsGridProps>
 > = ({ artist }) => {
   const { trackEvent } = useTracking()
+
+  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
+    useAnalyticsContext()
 
   const articles = extractNodes(artist.articlesConnection)
 
@@ -75,7 +79,9 @@ const ArtistEditorialNewsGrid: FC<
             const trackingEvent: ClickedArticleGroup = {
               action: ActionType.clickedArticleGroup,
               context_module: ContextModule.marketNews,
-              context_page_owner_type: OwnerType.artist,
+              context_page_owner_type: contextPageOwnerType!,
+              context_page_owner_id: contextPageOwnerId,
+              context_page_owner_slug: contextPageOwnerSlug,
               destination_page_owner_type: OwnerType.articles,
               type: "viewAll",
             }
@@ -97,9 +103,9 @@ const ArtistEditorialNewsGrid: FC<
             const trackingEvent: ClickedArticleGroup = {
               action: ActionType.clickedArticleGroup,
               context_module: ContextModule.marketNews,
-              context_page_owner_type: OwnerType.artist,
-              context_page_owner_id: artist.internalID,
-              context_page_owner_slug: artist.slug,
+              context_page_owner_type: contextPageOwnerType!,
+              context_page_owner_id: contextPageOwnerId,
+              context_page_owner_slug: contextPageOwnerSlug,
               destination_page_owner_type: OwnerType.article,
               type: "thumbnail",
             }
@@ -151,6 +157,19 @@ const ArtistEditorialNewsGrid: FC<
                 article={article}
                 mode="GRID"
                 mb={4}
+                onClick={() => {
+                  const trackingEvent: ClickedArticleGroup = {
+                    action: ActionType.clickedArticleGroup,
+                    context_module: ContextModule.marketNews,
+                    context_page_owner_type: contextPageOwnerType!,
+                    context_page_owner_id: contextPageOwnerId,
+                    context_page_owner_slug: contextPageOwnerSlug,
+                    destination_page_owner_type: OwnerType.article,
+                    type: "thumbnail",
+                  }
+
+                  trackEvent(trackingEvent)
+                }}
               />
             )
           })}

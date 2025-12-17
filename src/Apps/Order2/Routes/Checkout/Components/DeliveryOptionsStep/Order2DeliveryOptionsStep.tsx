@@ -39,11 +39,11 @@ export const Order2DeliveryOptionsStep: React.FC<
 
   return (
     <Flex flexDirection="column" backgroundColor="mono0">
-      <Box py={2} px={[2, 4]} data-testid="DeliveryOptionsStep">
+      <Box py={2} px={[2, 2, 4]} data-testid="DeliveryOptionsStep">
         <Flex flexDirection="column">
           <Text
-            variant={["sm-display", "md"]}
-            fontWeight={["bold", "normal"]}
+            variant={["sm-display", "sm-display", "md"]}
+            fontWeight={["bold", "bold", "normal"]}
             color="mono100"
           >
             Shipping method
