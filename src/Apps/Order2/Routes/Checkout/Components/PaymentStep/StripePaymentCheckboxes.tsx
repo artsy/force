@@ -112,13 +112,8 @@ export const StripePaymentCheckboxes: React.FC<
         </Box>
       </Collapse>
 
-      {/* Bank Debit Options (ACH & SEPA) */}
-      <Collapse
-        open={
-          selectedPaymentMethod === "stripe-ach" ||
-          selectedPaymentMethod === "stripe-sepa"
-        }
-      >
+      {/* Bank Debit Options (ACH) */}
+      <Collapse open={selectedPaymentMethod === "stripe-ach"}>
         <Box p={2}>
           <Flex>
             <Checkbox
