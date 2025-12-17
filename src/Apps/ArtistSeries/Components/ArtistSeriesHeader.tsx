@@ -53,7 +53,7 @@ const ArtistSeriesHeader: React.FC<
           </Text>
 
           <Text variant="xl" as="h1" mb={1}>
-            {artist.name} {title}
+            {title === "Portraits" ? `${artist.name}'s ${title}` : title}
           </Text>
 
           <Text variant="sm-display" mb={1}>
