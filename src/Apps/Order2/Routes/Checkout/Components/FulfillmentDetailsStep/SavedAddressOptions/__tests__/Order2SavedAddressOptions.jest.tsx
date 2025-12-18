@@ -322,4 +322,168 @@ describe("SavedAddressOptions", () => {
       })
     })
   })
+
+  describe("Address editing validation", () => {
+    it("re-validates address after editing and clears error if now valid", async () => {
+      const onSelectAddress = jest.fn()
+      const mockInvalidAddressWithMissingCity: ProcessedUserAddress = {
+        ...mockInvalidAddress,
+        address: {
+          ...mockInvalidAddress.address,
+          name: "Test User",
+          country: "US",
+          addressLine1: "123 Test St",
+          city: "",
+          region: "CA",
+          postalCode: "90210",
+        },
+        isValid: false,
+        isShippable: true,
+      }
+
+      render(
+        <TestWrapper>
+          <SavedAddressOptions
+            savedAddresses={[mockUSAddress1, mockInvalidAddressWithMissingCity]}
+            initialSelectedAddress={mockUSAddress1}
+            onSelectAddress={onSelectAddress}
+            newAddressInitialValues={mockNewAddressInitialValues}
+          />
+        </TestWrapper>,
+      )
+
+      const invalidAddress = screen.getByRole("radio", {
+        name: /Test User/i,
+      })
+      await userEvent.click(invalidAddress)
+
+      await waitFor(() => {
+        expect(mockCheckoutContext.setStepErrorMessage).toHaveBeenCalledWith({
+          step: CheckoutStepName.FULFILLMENT_DETAILS,
+          error: {
+            title: "Invalid address",
+            message:
+              "This address is missing required information. Edit your address to continue.",
+          },
+        })
+      })
+
+      const updatedValidAddress: FormikContextWithAddress = {
+        ...mockInvalidAddressWithMissingCity,
+        address: {
+          ...mockInvalidAddressWithMissingCity.address,
+          city: "Los Angeles",
+        },
+      }
+
+      const mockUpdatedAddress: ProcessedUserAddress = {
+        ...mockInvalidAddressWithMissingCity,
+        ...updatedValidAddress,
+        isValid: true,
+      }
+
+      const mockOnSaveAddress = jest.fn(async (values, addressID) => {
+        await onSelectAddress(values)
+
+        const address = mockUpdatedAddress
+
+        if (address) {
+          const { isShippable, isValid } = address
+
+          if (isShippable && isValid) {
+            mockCheckoutContext.setStepErrorMessage({
+              step: CheckoutStepName.FULFILLMENT_DETAILS,
+              error: null,
+            })
+          }
+        }
+      })
+
+      await mockOnSaveAddress(
+        updatedValidAddress,
+        mockInvalidAddressWithMissingCity.internalID,
+      )
+
+      expect(mockCheckoutContext.setStepErrorMessage).toHaveBeenLastCalledWith({
+        step: CheckoutStepName.FULFILLMENT_DETAILS,
+        error: null,
+      })
+    })
+
+    it("shows error when editing a valid address to make it invalid", async () => {
+      const onSelectAddress = jest.fn()
+
+      render(
+        <TestWrapper>
+          <SavedAddressOptions
+            savedAddresses={[mockUSAddress1]}
+            initialSelectedAddress={mockUSAddress1}
+            onSelectAddress={onSelectAddress}
+            newAddressInitialValues={mockNewAddressInitialValues}
+            availableShippingCountries={["US"]}
+          />
+        </TestWrapper>,
+      )
+
+      expect(mockCheckoutContext.setStepErrorMessage).not.toHaveBeenCalled()
+
+      const updatedInvalidAddress: FormikContextWithAddress = {
+        ...mockUSAddress1,
+        address: {
+          ...mockUSAddress1.address,
+          city: "",
+        },
+      }
+
+      const mockOnSaveAddress = jest.fn(async values => {
+        await onSelectAddress(values)
+
+        const isValid =
+          !!values.address.name &&
+          !!values.address.country &&
+          !!values.address.addressLine1 &&
+          !!values.address.city &&
+          !!values.phoneNumber &&
+          !!values.phoneNumberCountryCode
+
+        const isShippable = ["US"].includes(values.address.country)
+
+        if (!isShippable) {
+          mockCheckoutContext.setStepErrorMessage({
+            step: CheckoutStepName.FULFILLMENT_DETAILS,
+            error: {
+              title: "Unable to ship to this address",
+              message:
+                "Select a different address or add a new one to continue.",
+            },
+          })
+        } else if (!isValid) {
+          mockCheckoutContext.setStepErrorMessage({
+            step: CheckoutStepName.FULFILLMENT_DETAILS,
+            error: {
+              title: "Invalid address",
+              message:
+                "This address is missing required information. Edit your address to continue.",
+            },
+          })
+        } else {
+          mockCheckoutContext.setStepErrorMessage({
+            step: CheckoutStepName.FULFILLMENT_DETAILS,
+            error: null,
+          })
+        }
+      })
+
+      await mockOnSaveAddress(updatedInvalidAddress)
+
+      expect(mockCheckoutContext.setStepErrorMessage).toHaveBeenLastCalledWith({
+        step: CheckoutStepName.FULFILLMENT_DETAILS,
+        error: {
+          title: "Invalid address",
+          message:
+            "This address is missing required information. Edit your address to continue.",
+        },
+      })
+    })
+  })
 })
