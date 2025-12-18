@@ -12,9 +12,9 @@ import {
 } from "react"
 import { createPortal } from "react-dom"
 
-const HOVER_ACTIVATION_DELAY = 300 // ms before blocking activates on hover
-const CLICK_BLOCK_DURATION = 1500 // ms to keep blocking after a click
-const DEACTIVATION_DELAY = 200 // ms after leaving before deactivating
+const HOVER_ACTIVATION_DELAY = 500 // ms before blocking activates on hover
+const DEACTIVATION_DELAY = 700 // ms after leaving before deactivating
+const CLICK_BLOCK_DURATION = 1200 // ms to keep blocking after a click
 
 interface UseNavInteractionBlockerOptions {
   /** Whether the blocker functionality is enabled */
