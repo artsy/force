@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<da92e8a5529e012d30d2caaa26155f3c>>
+ * @generated SignedSource<<ab66025226d953c420fd6b1dd3d7bcc1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,6 +17,9 @@ export type Order2CheckoutContext_order$data = {
   readonly buyerStateExpiresAt: string | null | undefined;
   readonly internalID: string;
   readonly lineItems: ReadonlyArray<{
+    readonly artwork: {
+      readonly slug: string;
+    } | null | undefined;
     readonly artworkVersion: {
       readonly internalID: string;
     } | null | undefined;
@@ -120,6 +123,24 @@ return {
             (v0/*: any*/)
           ],
           "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Artwork",
+          "kind": "LinkedField",
+          "name": "artwork",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "slug",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
         }
       ],
       "storageKey": null
@@ -130,6 +151,6 @@ return {
 };
 })();
 
-(node as any).hash = "27c6acb428487cb6df9cba3ef259acf6";
+(node as any).hash = "a3883d6d6386de056069e1821768183d";
 
 export default node;

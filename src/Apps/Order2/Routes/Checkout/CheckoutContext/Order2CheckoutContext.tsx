@@ -1,6 +1,6 @@
 import type {
-  CheckoutLoadingError,
   CheckoutStep,
+  CriticalCheckoutError,
   ExpressCheckoutPaymentMethod,
   FulfillmentDetailsTab,
   UserAddressMode,
@@ -13,6 +13,10 @@ import type { CheckoutErrorBannerProps } from "Apps/Order2/Routes/Checkout/Compo
 import { useBuildInitialSteps } from "Apps/Order2/Routes/Checkout/Hooks/useBuildInitialSteps"
 import { useCheckoutTracking } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutTracking"
 import { useStripePaymentBySetupIntentId } from "Apps/Order2/Routes/Checkout/Hooks/useStripePaymentBySetupIntentId"
+import {
+  handleBackNavigation,
+  preventHardReload,
+} from "Apps/Order2/Utils/navigationGuards"
 import { useRouter } from "System/Hooks/useRouter"
 import createLogger from "Utils/logger"
 import type {
@@ -79,7 +83,7 @@ export interface Order2CheckoutModel {
   isLoading: boolean
   /** Order is redirecting to the details page */
   expressCheckoutSubmitting: boolean
-  loadingError: CheckoutLoadingError | null
+  criticalCheckoutError: CriticalCheckoutError | null
   expressCheckoutPaymentMethods: ExpressCheckoutPaymentMethod[] | null
   steps: CheckoutStep[]
   activeFulfillmentDetailsTab: FulfillmentDetailsTab | null
@@ -109,7 +113,7 @@ export interface Order2CheckoutModel {
   editPayment: Action<this>
   setOfferAmountComplete: Action<this>
   editOfferAmount: Action<this>
-  setLoadingError: Action<this, CheckoutLoadingError | null>
+  setCriticalCheckoutError: Action<this, CriticalCheckoutError | null>
   setLoadingComplete: Action<this>
   setPaymentComplete: Action<this>
   setConfirmationToken: Action<
@@ -136,7 +140,7 @@ export const Order2CheckoutContext: ReturnType<
   // Initial state with defaults
   isLoading: true,
   expressCheckoutSubmitting: false,
-  loadingError: null,
+  criticalCheckoutError: null,
   expressCheckoutPaymentMethods: null,
   activeFulfillmentDetailsTab: null,
   confirmationToken: null,
@@ -192,8 +196,8 @@ export const Order2CheckoutContext: ReturnType<
     },
   ),
 
-  setLoadingError: action((state, error) => {
-    state.loadingError = error
+  setCriticalCheckoutError: action((state, error) => {
+    state.criticalCheckoutError = error
   }),
 
   setLoadingComplete: action(state => {
@@ -512,6 +516,42 @@ interface Order2CheckoutContextProviderProps {
   children: React.ReactNode
 }
 
+const NavigationGuardsManager: React.FC = () => {
+  const isLoading = Order2CheckoutContext.useStoreState(
+    state => state.isLoading,
+  )
+  const criticalCheckoutError = Order2CheckoutContext.useStoreState(
+    state => state.criticalCheckoutError,
+  )
+
+  useEffect(() => {
+    // Don't set up guards if there's a critical error or still loading
+    if (isLoading || criticalCheckoutError) {
+      return
+    }
+
+    window.addEventListener("beforeunload", preventHardReload)
+    window.history.pushState(null, "", window.location.pathname)
+    window.addEventListener("popstate", handleBackNavigation)
+
+    return () => {
+      window.removeEventListener("beforeunload", preventHardReload)
+      window.removeEventListener("popstate", handleBackNavigation)
+    }
+  }, [isLoading, criticalCheckoutError])
+
+  // If a critical error occurs, immediately remove any existing guards
+  useEffect(() => {
+    if (criticalCheckoutError) {
+      window.removeEventListener("beforeunload", preventHardReload)
+      window.removeEventListener("popstate", handleBackNavigation)
+      window.onbeforeunload = null
+    }
+  }, [criticalCheckoutError])
+
+  return null
+}
+
 export const Order2CheckoutContextProvider: React.FC<
   Order2CheckoutContextProviderProps
 > = ({ order, children }) => {
@@ -532,7 +572,7 @@ export const Order2CheckoutContextProvider: React.FC<
     // Default values
     isLoading: true,
     expressCheckoutSubmitting: false,
-    loadingError: null,
+    criticalCheckoutError: null,
     expressCheckoutPaymentMethods: null,
     activeFulfillmentDetailsTab: null,
     confirmationToken: null,
@@ -554,6 +594,7 @@ export const Order2CheckoutContextProvider: React.FC<
   return (
     <Order2CheckoutContext.Provider runtimeModel={runtimeModel}>
       <CheckoutLoadingManager orderData={orderData}>
+        <NavigationGuardsManager />
         {children}
       </CheckoutLoadingManager>
     </Order2CheckoutContext.Provider>
@@ -590,8 +631,11 @@ const CheckoutLoadingManager: React.FC<{
   const isLoading = Order2CheckoutContext.useStoreState(
     state => state.isLoading,
   )
-  const setLoadingError = Order2CheckoutContext.useStoreActions(
-    actions => actions.setLoadingError,
+  const criticalCheckoutError = Order2CheckoutContext.useStoreState(
+    state => state.criticalCheckoutError,
+  )
+  const setCriticalCheckoutError = Order2CheckoutContext.useStoreActions(
+    actions => actions.setCriticalCheckoutError,
   )
   const setLoadingComplete = Order2CheckoutContext.useStoreActions(
     actions => actions.setLoadingComplete,
@@ -610,9 +654,9 @@ const CheckoutLoadingManager: React.FC<{
       setOrderValidated(true)
     } catch (error) {
       logger.error("Error validating order: ", error.message)
-      setLoadingError(error.message)
+      setCriticalCheckoutError(error.message)
     }
-  }, [orderData, orderValidated, setLoadingError])
+  }, [orderData, orderValidated, setCriticalCheckoutError])
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -642,15 +686,16 @@ const CheckoutLoadingManager: React.FC<{
             .map(([key, value]) => `${key}: ${value}`)
             .join(", ")}`,
         )
-
         logger.error(error)
+
+        setCriticalCheckoutError("loading_timeout")
       }
     }, MAX_LOADING_MS)
     return () => clearTimeout(timeout)
   }, [])
 
   useEffect(() => {
-    if (!isLoading) {
+    if (!isLoading || !!criticalCheckoutError) {
       return
     }
 
@@ -673,6 +718,7 @@ const CheckoutLoadingManager: React.FC<{
     isStripeRedirectHandled,
     isLoading,
     setLoadingComplete,
+    criticalCheckoutError,
   ])
 
   return <>{children}</>
@@ -692,6 +738,9 @@ const ORDER_FRAGMENT = graphql`
     lineItems {
       artworkVersion {
         internalID
+      }
+      artwork {
+        slug
       }
     }
   }
@@ -732,7 +781,7 @@ const initialStateForOrder = (
   return {
     isLoading: true,
     expressCheckoutSubmitting: false,
-    loadingError: null,
+    criticalCheckoutError: null,
     expressCheckoutPaymentMethods: null,
     activeFulfillmentDetailsTab: fulfillmentComplete
       ? (activeFulfillmentDetailsTab as FulfillmentDetailsTab)

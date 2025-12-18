@@ -45,6 +45,7 @@ interface Order2CollapsibleOrderSummarySkeletonProps {
   artworkDate: string
   artworkPrice: string
 }
+
 const Order2CollapsibleOrderSummarySkeleton: React.FC<
   Order2CollapsibleOrderSummarySkeletonProps
 > = props => {
