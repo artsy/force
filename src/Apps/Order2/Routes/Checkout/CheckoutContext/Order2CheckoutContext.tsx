@@ -1,3 +1,4 @@
+import { CheckoutLoadingManager } from "Apps/Order2/Routes/Checkout/CheckoutContext/CheckoutLoadingManager"
 import type {
   CheckoutStep,
   CriticalCheckoutError,
@@ -12,7 +13,6 @@ import {
 import type { CheckoutErrorBannerProps } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { useBuildInitialSteps } from "Apps/Order2/Routes/Checkout/Hooks/useBuildInitialSteps"
 import { useCheckoutTracking } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutTracking"
-import { useStripePaymentBySetupIntentId } from "Apps/Order2/Routes/Checkout/Hooks/useStripePaymentBySetupIntentId"
 import {
   handleBackNavigation,
   preventHardReload,
@@ -24,14 +24,11 @@ import type {
   Order2CheckoutContext_order$key,
 } from "__generated__/Order2CheckoutContext_order.graphql"
 import { type Action, action, createContextStore } from "easy-peasy"
-import { every } from "lodash"
 import type React from "react"
-import { useEffect, useMemo, useRef, useState } from "react"
+import { useEffect, useMemo } from "react"
 import { graphql, useFragment } from "react-relay"
 
 const logger = createLogger("Order2CheckoutContext.tsx")
-const MIN_LOADING_MS = 1000
-const MAX_LOADING_MS = 6000
 const CHECKOUT_MODE_STORAGE_KEY = "checkout_mode"
 
 type CheckoutMode = "standard" | "express"
@@ -601,129 +598,6 @@ export const Order2CheckoutContextProvider: React.FC<
   )
 }
 
-const CheckoutLoadingManager: React.FC<{
-  orderData: Order2CheckoutContext_order$data
-  children: React.ReactNode
-}> = ({ orderData, children }) => {
-  const [minimumLoadingPassed, setMinimumLoadingPassed] = useState(false)
-  const [orderValidated, setOrderValidated] = useState(false)
-  const [isStripeRedirectHandled, setIsStripeRedirectHandled] = useState(false)
-
-  // Handle Stripe redirect and call onComplete when done
-  useStripePaymentBySetupIntentId(orderData.internalID, () => {
-    setIsStripeRedirectHandled(true)
-  })
-
-  const isExpressCheckoutLoaded = Order2CheckoutContext.useStoreState(state => {
-    // Express Checkout is considered "loaded" if:
-    // 1. It's actually loaded (not null), OR
-    // 2. We're in post-payment state where Express Checkout should be hidden
-    const isActuallyLoaded = state.expressCheckoutPaymentMethods !== null
-    const activeStep = state.steps.find(
-      step => step.state === CheckoutStepState.ACTIVE,
-    )
-    const isInPostPaymentState =
-      activeStep?.name === CheckoutStepName.CONFIRMATION
-
-    return isActuallyLoaded || isInPostPaymentState
-  })
-
-  const isLoading = Order2CheckoutContext.useStoreState(
-    state => state.isLoading,
-  )
-  const criticalCheckoutError = Order2CheckoutContext.useStoreState(
-    state => state.criticalCheckoutError,
-  )
-  const setCriticalCheckoutError = Order2CheckoutContext.useStoreActions(
-    actions => actions.setCriticalCheckoutError,
-  )
-  const setLoadingComplete = Order2CheckoutContext.useStoreActions(
-    actions => actions.setLoadingComplete,
-  )
-
-  // Validate order and get into good initial checkout state on load
-  // - artwork version match
-  // - any resetting
-  useEffect(() => {
-    if (orderValidated || !orderData) {
-      return
-    }
-
-    try {
-      validateOrder(orderData)
-      setOrderValidated(true)
-    } catch (error) {
-      logger.error("Error validating order: ", error.message)
-      setCriticalCheckoutError(error.message)
-    }
-  }, [orderData, orderValidated, setCriticalCheckoutError])
-
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setMinimumLoadingPassed(true)
-    }, MIN_LOADING_MS)
-    return () => clearTimeout(timeout)
-  }, [])
-
-  const isLoadingRef = useRef(isLoading)
-  useEffect(() => {
-    isLoadingRef.current = isLoading
-  }, [isLoading])
-
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      if (isLoadingRef.current) {
-        const error = new Error(
-          `Checkout loading state exceeded ${MAX_LOADING_MS}ms timeout: ${Object.entries(
-            {
-              minimumLoadingPassed,
-              orderValidated,
-              isExpressCheckoutLoaded,
-              isStripeRedirectHandled,
-            },
-          )
-            .map(([key, value]) => `${key}: ${value}`)
-            .join(", ")}`,
-        )
-        logger.error(error)
-
-        setCriticalCheckoutError("loading_timeout")
-      }
-    }, MAX_LOADING_MS)
-    return () => clearTimeout(timeout)
-  }, [])
-
-  useEffect(() => {
-    if (!isLoading || !!criticalCheckoutError) {
-      return
-    }
-
-    if (
-      [
-        minimumLoadingPassed,
-        orderValidated,
-        isExpressCheckoutLoaded,
-        isStripeRedirectHandled,
-        isLoading,
-        setLoadingComplete,
-      ].every(Boolean)
-    ) {
-      setLoadingComplete()
-    }
-  }, [
-    minimumLoadingPassed,
-    orderValidated,
-    isExpressCheckoutLoaded,
-    isStripeRedirectHandled,
-    isLoading,
-    setLoadingComplete,
-    criticalCheckoutError,
-  ])
-
-  return <>{children}</>
-}
-
 const ORDER_FRAGMENT = graphql`
   fragment Order2CheckoutContext_order on Order {
     ...useBuildInitialSteps_order
@@ -745,19 +619,6 @@ const ORDER_FRAGMENT = graphql`
     }
   }
 `
-
-const validateOrder = (order: Order2CheckoutContext_order$data) => {
-  const hasLineItemsWithData =
-    order.lineItems.length &&
-    every(order.lineItems, lineItem => {
-      return !!lineItem?.artworkVersion?.internalID
-    })
-
-  if (!hasLineItemsWithData) {
-    throw new Error("missing_line_item_data")
-  }
-  return
-}
 
 const initialStateForOrder = (
   order: Order2CheckoutContext_order$data,
