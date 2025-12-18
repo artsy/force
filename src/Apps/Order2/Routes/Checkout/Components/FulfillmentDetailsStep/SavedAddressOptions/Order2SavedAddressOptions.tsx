@@ -1,11 +1,11 @@
 import AddIcon from "@artsy/icons/AddIcon"
 import { Button, Clickable, Flex, Radio, Spacer, Text } from "@artsy/palette"
 import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
+import { AddressDisplay } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/AddressDisplay"
 import { AddAddressForm } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/SavedAddressOptions/AddAddressForm"
 import { UpdateAddressForm } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/SavedAddressOptions/UpdateAddressForm"
 import {
   type ProcessedUserAddress,
-  countryNameFromAlpha2,
   validateAddressFields,
 } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/utils"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
@@ -65,8 +65,7 @@ export const SavedAddressOptions = ({
           step: CheckoutStepName.FULFILLMENT_DETAILS,
           error: {
             title: "Unable to ship to this address",
-            message:
-              "Select a different address or add a new one to continue.",
+            message: "Select a different address or add a new one to continue.",
           },
         })
       }
@@ -198,39 +197,16 @@ export const SavedAddressOptions = ({
               value={internalID}
               selected={isSelected}
               onClick={() => handleAddressClick(processedAddress)}
-              label={<Text variant="sm-display">{address.name || ""}</Text>}
-            >
-              <Flex flexDirection="column">
-                {address.addressLine1 && (
-                  <Text variant="sm" fontWeight="normal" color={textColor}>
-                    {address.addressLine1}
-                  </Text>
-                )}
-                {address.addressLine2 && (
-                  <Text variant="sm" fontWeight="normal" color={textColor}>
-                    {address.addressLine2}
-                  </Text>
-                )}
-                {(address.city || address.region || address.postalCode) && (
-                  <Text variant="sm" fontWeight="normal" color={textColor}>
-                    {[address.city, address.region, address.postalCode]
-                      .filter(Boolean)
-                      .join(", ")}
-                  </Text>
-                )}
-                {address.country && (
-                  <Text variant="sm" fontWeight="normal" color={textColor}>
-                    {countryNameFromAlpha2(address.country)}
-                  </Text>
-                )}
-
-                {phoneNumberParsed?.display && (
-                  <Text variant="sm" fontWeight="normal" color={textColor}>
-                    {phoneNumberParsed.display}
-                  </Text>
-                )}
-              </Flex>
-            </Radio>
+              label={
+                <Flex flexDirection="column">
+                  <AddressDisplay
+                    address={address}
+                    phoneNumber={phoneNumberParsed?.display}
+                    textColor={textColor}
+                  />
+                </Flex>
+              }
+            />
 
             <Clickable
               alignSelf="flex-start"
