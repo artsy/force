@@ -12,7 +12,6 @@ import {
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import mockStripe from "DevTools/mockStripe"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import createLogger from "Utils/logger"
 import type { Order2CheckoutRouteTestQuery } from "__generated__/Order2CheckoutRouteTestQuery.graphql"
 import { useEffect } from "react"
 import { graphql } from "react-relay"
