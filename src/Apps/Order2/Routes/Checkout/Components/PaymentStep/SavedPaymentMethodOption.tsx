@@ -36,6 +36,8 @@ export const SavedPaymentMethodOption: React.FC<
         borderRadius="5px"
         padding="1rem"
         marginBottom="10px"
+        border={isSelected ? "1px solid" : "none"}
+        borderColor="mono10"
         style={{ cursor: "pointer" }}
         onClick={onSelect}
       >

@@ -123,14 +123,14 @@ export const Order2PaymentForm: React.FC<Order2PaymentFormProps> = ({
           lineHeight: "26px",
           fontSize: "16px",
           fontWeight: "normal",
-          border: "none",
+          border: "1px solid transparent",
           backgroundColor: theme.colors.mono5,
         },
         ".AccordionItem--selected": {
           lineHeight: "26px",
           fontSize: "16px",
           fontWeight: "bold",
-          border: "none",
+          border: "1px solid #E7E7E7", // mono10
         },
       },
     },
