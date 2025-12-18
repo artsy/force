@@ -1,5 +1,6 @@
 import {
   ActionType,
+  type ClickedCV,
   type ClickedVerifiedRepresentative,
   ContextModule,
   OwnerType,
@@ -71,6 +72,19 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
       context_page_owner_id: contextPageOwnerId,
       context_page_owner_slug: contextPageOwnerSlug,
       expand,
+    }
+    trackEvent(payload)
+  }
+
+  const trackClickedCV = () => {
+    if (!contextPageOwnerId) return
+
+    const payload: ClickedCV = {
+      action: ActionType.clickedCV,
+      context_module: ContextModule.artistHeader,
+      context_page_owner_type: contextPageOwnerType,
+      context_page_owner_id: contextPageOwnerId,
+      context_page_owner_slug: contextPageOwnerSlug,
     }
     trackEvent(payload)
   }
@@ -189,7 +203,11 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
         )}
 
         <Text variant="xs" display={["none", "block"]}>
-          <CV to={`/artist/${artist.slug}/cv`} color="mono60">
+          <CV
+            to={`/artist/${artist.slug}/cv`}
+            color="mono60"
+            onClick={trackClickedCV}
+          >
             See all past shows and fair booths
           </CV>
         </Text>

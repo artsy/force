@@ -12,6 +12,14 @@ jest.mock("Apps/Artist/Components/ArtistHeader/ArtistHeader", () => ({
   ARTIST_HEADER_NUMBER_OF_INSIGHTS: 0,
 }))
 
+jest.mock("System/Hooks/useAnalyticsContext", () => ({
+  useAnalyticsContext: jest.fn(() => ({
+    contextPageOwnerId: "4d8b92b34eb68a1b2c0003f4",
+    contextPageOwnerSlug: "andy-warhol",
+    contextPageOwnerType: "artist",
+  })),
+}))
+
 const { renderWithRelay } = setupTestWrapperTL({
   Component: props => {
     return (
@@ -273,6 +281,35 @@ describe("ArtistCareerHighlights", () => {
           subject: "COLLECTED",
         }),
       )
+    })
+
+    it("tracks clickedCV event when clicking View CV link", () => {
+      renderWithRelay({
+        Artist: () => ({
+          insights: [
+            {
+              label: "Solo show at a major institution",
+              entities: ["Foo Museum"],
+              kind: "SOLO_SHOW",
+              description: null,
+            },
+          ],
+          name: "Test Artist",
+          href: "/artist/test-artist",
+          slug: "test-artist",
+        }),
+      })
+
+      const viewCVLink = screen.getByText("View CV")
+      fireEvent.click(viewCVLink)
+
+      expect(trackEvent).toHaveBeenCalledWith({
+        action: "clickedCV",
+        context_module: "artistAchievements",
+        context_page_owner_type: "artist",
+        context_page_owner_id: "4d8b92b34eb68a1b2c0003f4",
+        context_page_owner_slug: "andy-warhol",
+      })
     })
   })
 })
