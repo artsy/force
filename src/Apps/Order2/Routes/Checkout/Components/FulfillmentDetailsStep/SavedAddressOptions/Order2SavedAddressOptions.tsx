@@ -182,7 +182,7 @@ export const SavedAddressOptions = ({
         Delivery address
       </Text>
 
-      <Spacer y={2} />
+      <Spacer y={1} />
 
       {savedAddresses.map(processedAddress => {
         const { address, internalID, phoneNumberParsed } = processedAddress

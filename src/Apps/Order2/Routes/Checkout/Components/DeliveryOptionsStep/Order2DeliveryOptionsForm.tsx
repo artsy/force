@@ -140,6 +140,7 @@ export const Order2DeliveryOptionsForm: React.FC<
               >
                 Shipping method
               </Text>
+
               <Tooltip
                 variant="defaultDark"
                 placement="top"
@@ -158,6 +159,7 @@ export const Order2DeliveryOptionsForm: React.FC<
                 </Clickable>
               </Tooltip>
             </Flex>
+
             <Text variant="xs" color="mono60">
               All options are protected against damage and loss with{" "}
               <RouterLink
@@ -170,13 +172,18 @@ export const Order2DeliveryOptionsForm: React.FC<
               </RouterLink>
               .
             </Text>
+
+            <Spacer y={2} />
+
             {isSingleOption ? (
               <SingleShippingOption option={deliveryOptions[0]} />
             ) : (
               <MultipleShippingOptionsForm options={deliveryOptions} />
             )}
           </Flex>
-          <Spacer y={2} />
+
+          <Spacer y={4} />
+
           <Button
             loading={isSubmitting}
             variant="primaryBlack"
@@ -214,27 +221,21 @@ const SingleShippingOption = ({ option }: SingleShippingOptionProps) => {
   const [prefix, timeRange] = timeEstimate || []
 
   return (
-    <>
-      <Spacer y={1} />
-      <Spacer y={0.5} />
-      <Flex flexDirection="column">
-        <Flex justifyContent="space-between">
-          <Text variant="sm-display" color="mono100">
-            {label}
-          </Text>
-          <Text variant="sm-display" color="mono100">
-            {option.amount?.display}
-          </Text>
-        </Flex>
-        {timeEstimate && (
-          <Text variant="sm" color="mono60" mt={1}>
-            {prefix} <strong>{timeRange}</strong>
-          </Text>
-        )}
+    <Flex flexDirection="column">
+      <Flex justifyContent="space-between">
+        <Text variant="sm-display" color="mono100">
+          {label}
+        </Text>
+        <Text variant="sm" color="mono100">
+          {option.amount?.display}
+        </Text>
       </Flex>
-      <Spacer y={0.5} />
-      <Spacer y={1} />
-    </>
+      {timeEstimate && (
+        <Text variant="sm" color="mono60">
+          {prefix} <strong>{timeRange}</strong>
+        </Text>
+      )}
+    </Flex>
   )
 }
 
@@ -259,6 +260,7 @@ const MultipleShippingOptionsForm = ({
           setFieldValue("deliveryOption", selected)
           checkoutTracking.clickedSelectShippingOption(selected.type)
         }}
+        gap={2}
       >
         {options.map((option, i) => {
           const label = deliveryOptionLabel(option.type)
@@ -268,22 +270,24 @@ const MultipleShippingOptionsForm = ({
           return (
             <Radio
               label={
-                <Flex justifyContent="space-between" width="100%">
-                  <Text variant="sm-display">{label}</Text>
-                  <Text variant="sm-display">{option.amount?.display}</Text>
-                </Flex>
+                <>
+                  <Flex justifyContent="space-between" width="100%">
+                    <Text variant="sm-display">{label}</Text>
+                    <Text variant="sm">{option.amount?.display}</Text>
+                  </Flex>
+                </>
               }
               key={`${option.type}:${i}`}
               value={option}
-              mt={2}
             >
-              <Flex justifyContent="space-between" width="100%">
+              <Flex width="100%">
                 <Flex flexDirection="column">
                   {timeEstimate && (
-                    <Text variant="sm" color="mono60" mt={1}>
+                    <Text variant="sm" color="mono60">
                       {prefix} <strong>{timeRange}</strong>
                     </Text>
                   )}
+
                   {option.type === "ARTSY_WHITE_GLOVE" &&
                     selectedOption === option && (
                       <Text variant="sm" color="mono60">
