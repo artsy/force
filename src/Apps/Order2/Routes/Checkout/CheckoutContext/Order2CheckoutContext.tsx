@@ -27,7 +27,7 @@ import { graphql, useFragment } from "react-relay"
 
 const logger = createLogger("Order2CheckoutContext.tsx")
 const MIN_LOADING_MS = 1000
-const MAX_LOADING_MS = 5000
+const MAX_LOADING_MS = 6000
 const CHECKOUT_MODE_STORAGE_KEY = "checkout_mode"
 
 type CheckoutMode = "standard" | "express"
