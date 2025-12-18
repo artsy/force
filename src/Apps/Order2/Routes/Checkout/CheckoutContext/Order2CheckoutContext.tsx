@@ -10,9 +10,9 @@ import {
   CheckoutStepState,
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import type { CheckoutErrorBannerProps } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
+import { useBuildInitialSteps } from "Apps/Order2/Routes/Checkout/Hooks/useBuildInitialSteps"
 import { useCheckoutTracking } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutTracking"
 import { useStripePaymentBySetupIntentId } from "Apps/Order2/Routes/Checkout/Hooks/useStripePaymentBySetupIntentId"
-import { useBuildInitialSteps } from "Apps/Order2/Routes/Checkout/Hooks/useBuildInitialSteps"
 import { useRouter } from "System/Hooks/useRouter"
 import createLogger from "Utils/logger"
 import type {
@@ -22,11 +22,12 @@ import type {
 import { type Action, action, createContextStore } from "easy-peasy"
 import { every } from "lodash"
 import type React from "react"
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import { graphql, useFragment } from "react-relay"
 
 const logger = createLogger("Order2CheckoutContext.tsx")
-const MINIMUM_LOADING_MS = 1000
+const MIN_LOADING_MS = 1000
+const MAX_LOADING_MS = 6000
 const CHECKOUT_MODE_STORAGE_KEY = "checkout_mode"
 
 type CheckoutMode = "standard" | "express"
@@ -616,7 +617,35 @@ const CheckoutLoadingManager: React.FC<{
   useEffect(() => {
     const timeout = setTimeout(() => {
       setMinimumLoadingPassed(true)
-    }, MINIMUM_LOADING_MS)
+    }, MIN_LOADING_MS)
+    return () => clearTimeout(timeout)
+  }, [])
+
+  const isLoadingRef = useRef(isLoading)
+  useEffect(() => {
+    isLoadingRef.current = isLoading
+  }, [isLoading])
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      if (isLoadingRef.current) {
+        const error = new Error(
+          `Checkout loading state exceeded ${MAX_LOADING_MS}ms timeout: ${Object.entries(
+            {
+              minimumLoadingPassed,
+              orderValidated,
+              isExpressCheckoutLoaded,
+              isStripeRedirectHandled,
+            },
+          )
+            .map(([key, value]) => `${key}: ${value}`)
+            .join(", ")}`,
+        )
+
+        logger.error(error)
+      }
+    }, MAX_LOADING_MS)
     return () => clearTimeout(timeout)
   }, [])
 
