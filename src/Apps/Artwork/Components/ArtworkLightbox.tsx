@@ -22,13 +22,24 @@ interface ArtworkLightboxProps extends ClickableProps {
   activeIndex: number
   maxHeight: number
   lazyLoad?: boolean
+  shouldRenderFullImage?: boolean
+  shouldRenderPlaceholder?: boolean
 }
 
 const MAX_SIZE = 800
 
 const ArtworkLightbox: React.FC<
   React.PropsWithChildren<ArtworkLightboxProps>
-> = ({ artwork, activeIndex, lazyLoad, maxHeight, onClick, ...rest }) => {
+> = ({
+  artwork,
+  activeIndex,
+  lazyLoad,
+  maxHeight,
+  shouldRenderFullImage = true,
+  shouldRenderPlaceholder = true,
+  onClick,
+  ...rest
+}) => {
   const { user } = useSystemContext()
   const isTeam = userIsTeam(user)
   const images = compact(artwork.images)
@@ -75,7 +86,7 @@ const ArtworkLightbox: React.FC<
 
   return (
     <>
-      {isDefault && (
+      {isDefault && shouldRenderFullImage && preloadImage && (
         <Link
           rel="preload"
           as="image"
@@ -105,7 +116,7 @@ const ArtworkLightbox: React.FC<
           aspectWidth={image.width || 1}
           aspectHeight={image.height || 1}
         >
-          {placeholder && (
+          {shouldRenderPlaceholder && placeholder && (
             <ArtworkLightboxPlaceholder
               key={placeholder}
               src={placeholder}
@@ -115,27 +126,29 @@ const ArtworkLightbox: React.FC<
             />
           )}
 
-          <Image
-            data-testid="artwork-lightbox-image"
-            key={`${internalID}`}
-            {...(isDefault
-              ? {
-                  id: "transitionFrom--ViewInRoom",
-                  fetchPriority: "high",
-                }
-              : {})}
-            width="100%"
-            height="100%"
-            src={lightboxImage.src}
-            srcSet={lightboxImage.srcSet}
-            alt={artworkCaption ?? ""}
-            lazyLoad={lazyLoad}
-            position="relative"
-            preventRightClick={!isTeam}
-            style={{
-              objectFit: "cover",
-            }}
-          />
+          {shouldRenderFullImage && (
+            <Image
+              data-testid="artwork-lightbox-image"
+              key={`${internalID}`}
+              {...(isDefault
+                ? {
+                    id: "transitionFrom--ViewInRoom",
+                    fetchPriority: "high",
+                  }
+                : {})}
+              width="100%"
+              height="100%"
+              src={lightboxImage.src}
+              srcSet={lightboxImage.srcSet}
+              alt={artworkCaption ?? ""}
+              lazyLoad={lazyLoad}
+              position="relative"
+              preventRightClick={!isTeam}
+              style={{
+                objectFit: "cover",
+              }}
+            />
+          )}
         </ResponsiveBox>
       </Clickable>
     </>

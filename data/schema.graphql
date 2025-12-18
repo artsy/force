@@ -4740,6 +4740,7 @@ type Author {
   slug: ID
   socials: AuthorSocials
   twitterHandle: String @deprecated(reason: "Use `socials.x` instead")
+  website: String
 }
 
 # A connection to a list of items.
@@ -10590,11 +10591,6 @@ type CreateShippingPresetFailure {
 }
 
 input CreateShippingPresetMutationInput {
-  # Whether Artsy handles domestic shipping.
-  artsyShippingDomestic: Boolean
-
-  # Whether Artsy handles international shipping.
-  artsyShippingInternational: Boolean
   clientMutationId: String
 
   # Domestic shipping fee in cents.
@@ -23583,11 +23579,6 @@ type ShippingLine {
 }
 
 type ShippingPreset implements Node {
-  # Whether Artsy handles domestic shipping
-  artsyShippingDomestic: Boolean
-
-  # Whether Artsy handles international shipping
-  artsyShippingInternational: Boolean
   createdAt(
     format: String
 
@@ -26175,11 +26166,6 @@ type UpdateShippingPresetFailure {
 }
 
 input UpdateShippingPresetMutationInput {
-  # Whether Artsy handles domestic shipping.
-  artsyShippingDomestic: Boolean
-
-  # Whether Artsy handles international shipping.
-  artsyShippingInternational: Boolean
   clientMutationId: String
 
   # Domestic shipping fee in cents.
