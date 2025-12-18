@@ -198,13 +198,11 @@ export const SavedAddressOptions = ({
               selected={isSelected}
               onClick={() => handleAddressClick(processedAddress)}
               label={
-                <Flex flexDirection="column">
-                  <AddressDisplay
-                    address={address}
-                    phoneNumber={phoneNumberParsed?.display}
-                    textColor={textColor}
-                  />
-                </Flex>
+                <AddressDisplay
+                  address={address}
+                  phoneNumber={phoneNumberParsed?.display}
+                  textColor={textColor}
+                />
               }
             />
 

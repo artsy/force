@@ -1,4 +1,4 @@
-import { Spacer, Text } from "@artsy/palette"
+import { Flex, Spacer, Text } from "@artsy/palette"
 import { countryNameFromAlpha2 } from "./utils"
 
 export interface AddressDisplayProps {
@@ -34,7 +34,7 @@ export const AddressDisplay: React.FC<AddressDisplayProps> = ({
   } = address
 
   return (
-    <>
+    <Flex flexDirection="column">
       {name && (
         <Text variant="sm-display" fontWeight="normal" color={textColor}>
           {name}
@@ -74,6 +74,6 @@ export const AddressDisplay: React.FC<AddressDisplayProps> = ({
           {phoneNumber}
         </Text>
       )}
-    </>
+    </Flex>
   )
 }

@@ -130,7 +130,7 @@ export const Order2PaymentForm: React.FC<Order2PaymentFormProps> = ({
           lineHeight: "26px",
           fontSize: "16px",
           fontWeight: "bold",
-          border: "1px solid #E7E7E7", // mono10
+          border: "none",
         },
       },
     },
