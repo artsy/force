@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cdfabe3cbf583e714b64bc0dd405b945>>
+ * @generated SignedSource<<7985d1e7825b9ac231f7a04a2cc191f9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -26,6 +26,11 @@ export type ArtistAuctionResults_artist$data = {
       readonly hasNextPage: boolean;
     };
     readonly totalCount: number | null | undefined;
+  } | null | undefined;
+  readonly coverArtwork: {
+    readonly image: {
+      readonly url: string | null | undefined;
+    } | null | undefined;
   } | null | undefined;
   readonly internalID: string;
   readonly meta: {
@@ -509,6 +514,41 @@ return {
       "plural": false,
       "selections": (v15/*: any*/),
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Artwork",
+      "kind": "LinkedField",
+      "name": "coverArtwork",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Image",
+          "kind": "LinkedField",
+          "name": "image",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": [
+                {
+                  "kind": "Literal",
+                  "name": "version",
+                  "value": "large"
+                }
+              ],
+              "kind": "ScalarField",
+              "name": "url",
+              "storageKey": "url(version:\"large\")"
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
     }
   ],
   "type": "Artist",
@@ -516,6 +556,6 @@ return {
 };
 })();
 
-(node as any).hash = "d67a990e35e7b52e0a04497b9b1a59f9";
+(node as any).hash = "e23371663a2e16547926ce7327075bc0";
 
 export default node;

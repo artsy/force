@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<49e8e7c48be39a8dae384897c9e07fe9>>
+ * @generated SignedSource<<07f0aa17ad4e16374eb89f94e36095c5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -117,6 +117,30 @@ return {
           {
             "alias": null,
             "args": null,
+            "concreteType": "Image",
+            "kind": "LinkedField",
+            "name": "image",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": [
+                  {
+                    "kind": "Literal",
+                    "name": "version",
+                    "value": "large"
+                  }
+                ],
+                "kind": "ScalarField",
+                "name": "url",
+                "storageKey": "url(version:\"large\")"
+              }
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": "CollectorSignals",
             "kind": "LinkedField",
             "name": "collectorSignals",
@@ -149,12 +173,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0be565b25dc02f4d578cffce7d14fe63",
+    "cacheID": "19576bf8293d65671d45e0d976eb1142",
     "id": null,
     "metadata": {},
     "name": "DeprecatedSaveButtonQuery",
     "operationKind": "query",
-    "text": "query DeprecatedSaveButtonQuery(\n  $id: String!\n) {\n  artwork(id: $id) {\n    ...DeprecatedSaveButton_artwork\n    id\n  }\n}\n\nfragment DeprecatedSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSavedToAnyList\n  title\n  collectorSignals {\n    auction {\n      lotWatcherCount\n    }\n  }\n}\n"
+    "text": "query DeprecatedSaveButtonQuery(\n  $id: String!\n) {\n  artwork(id: $id) {\n    ...DeprecatedSaveButton_artwork\n    id\n  }\n}\n\nfragment DeprecatedSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSavedToAnyList\n  title\n  image {\n    url(version: \"large\")\n  }\n  collectorSignals {\n    auction {\n      lotWatcherCount\n    }\n  }\n}\n"
   }
 };
 })();

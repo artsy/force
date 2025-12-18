@@ -10,21 +10,25 @@ import {
   THEME,
 } from "@artsy/palette"
 import { useFlag } from "@unleash/proxy-client-react"
+import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
 import { MODAL_WIDTH } from "Components/AuthDialog/Utils/utils"
+import { resized } from "Utils/resized"
 import {
   type FC,
-  forwardRef,
   type ForwardRefExoticComponent,
+  forwardRef,
   useCallback,
   useEffect,
+  useMemo,
   useRef,
 } from "react"
 import styled from "styled-components"
 import { useCursor } from "use-cursor"
-import { resized } from "Utils/resized"
 
 export const AuthDialogLeftPanel: FC<React.PropsWithChildren> = () => {
-  const img = resized(IMAGE.src, { width: MODAL_WIDTH / 2 })
+  const {
+    state: { options },
+  } = useAuthDialogContext()
 
   const newSignupEnabled = useFlag("onyx_new-signup-modal")
 
@@ -32,12 +36,34 @@ export const AuthDialogLeftPanel: FC<React.PropsWithChildren> = () => {
     return (
       <Box display={["none", "block"]} width="100%">
         <Image
-          {...img}
+          {...resized(IMAGE.src, { width: MODAL_WIDTH / 2 })}
           width="100%"
           height="100%"
           lazyLoad
           alt=""
           style={{ objectFit: "cover" }}
+        />
+      </Box>
+    )
+  }
+
+  if (!!options.imageUrl) {
+    const img = resized(options.imageUrl, {
+      width: MODAL_WIDTH / 2,
+      quality: 80,
+    })
+
+    return (
+      <Box display={["none", "block"]} width="100%" overflow="hidden">
+        <Image
+          {...img}
+          width="100%"
+          height="100%"
+          fetchPriority={"high"}
+          alt=""
+          style={{
+            objectFit: "contain",
+          }}
         />
       </Box>
     )
@@ -73,6 +99,14 @@ const ImageSlider: FC = () => {
     stopAutoPlay()
   }
 
+  const images = useMemo(
+    () =>
+      DEFAULT_IMAGES.map(image =>
+        resized(image.src, { width: image.width, quality: 80 }),
+      ),
+    [],
+  )
+
   return (
     <Flex width={COLUMN_WIDTH} height="100%" position="relative">
       <Carousel
@@ -82,7 +116,7 @@ const ImageSlider: FC = () => {
         height="100%"
         display="flex"
       >
-        {DEFAULT_IMAGES.map((img, index) => (
+        {images.map((img, index) => (
           <Box width={COLUMN_WIDTH} height="100%" key={`signup-img-${img.src}`}>
             <Image
               {...img}
@@ -180,20 +214,25 @@ const IMAGE = {
   height: IMAGE_HEIGHT,
   src: "https://files.artsy.net/images/2x_Evergreen-Artist-Page-Sign-Up-Modal.jpg",
 }
+// const PARTNER_IMAGE = {
+//   width: MODAL_WIDTH,
+//   height: IMAGE_HEIGHT,
+//   src: "https://files.artsy.net/images/signup-gallery.png",
+// }
 const DEFAULT_IMAGES = [
   {
     width: MODAL_WIDTH,
     height: IMAGE_HEIGHT,
-    src: "https://files.artsy.net/images/signup-01.png",
+    src: "https://files.artsy.net/images/signup-01-1765895830875.png",
   },
   {
     width: MODAL_WIDTH,
     height: IMAGE_HEIGHT,
-    src: "https://files.artsy.net/images/signup-02.png",
+    src: "https://files.artsy.net/images/signup-02-1765895830877.png",
   },
   {
     width: MODAL_WIDTH,
     height: IMAGE_HEIGHT,
-    src: "https://files.artsy.net/images/signup-03.png",
+    src: "https://files.artsy.net/images/signup-03-1765895830761.png",
   },
 ]

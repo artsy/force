@@ -38,6 +38,7 @@ export const AuctionResultPrice: React.FC<
           showAuthDialog({
             options: {
               title: "Sign up or log in to see price",
+              imageUrl: data.images?.larger?.url,
             },
             analytics: {
               contextModule: ContextModule.auctionResults,
@@ -152,6 +153,11 @@ const auctionResultPriceFragment = graphql`
     currency
     boughtIn
     isUpcoming
+    images {
+      larger {
+        url(version: "large")
+      }
+    }
     performance {
       mid
     }

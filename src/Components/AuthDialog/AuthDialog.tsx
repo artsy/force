@@ -2,6 +2,7 @@ import { ModalDialog } from "@artsy/palette"
 import { useFlag } from "@unleash/proxy-client-react"
 import {
   type AuthDialogMode,
+  type AuthDialogOptions,
   useAuthDialogContext,
 } from "Components/AuthDialog/AuthDialogContext"
 import { AuthDialogLeftPanel } from "Components/AuthDialog/AuthDialogLeftPanel"
@@ -46,7 +47,7 @@ export const AuthDialog: FC<React.PropsWithChildren<AuthDialogProps>> = ({
   }
 
   const isCloseable = options.isCloseable ?? true
-  const modalProps = getModalProps(!!options.image, newSignupEnabled)
+  const modalProps = getModalProps(options, newSignupEnabled)
 
   return (
     <ModalDialog
@@ -60,7 +61,6 @@ export const AuthDialog: FC<React.PropsWithChildren<AuthDialogProps>> = ({
       }
       hasLogo
       m={[1, 2]}
-      height={[400, "auto"]}
       {...modalProps}
     >
       <AuthDialogView />
@@ -90,8 +90,11 @@ export const DEFAULT_TITLES: Record<AuthDialogMode, string> = {
   Welcome: "Sign up or log in",
 }
 
-const getModalProps = (hasImage: boolean, newSignupEnabled: boolean) => {
-  if (hasImage || newSignupEnabled) {
+const getModalProps = (
+  options: AuthDialogOptions,
+  newSignupEnabled: boolean,
+) => {
+  if (!!options.image || !!options.imageUrl || newSignupEnabled) {
     return {
       width: ["100%", MODAL_WIDTH],
       leftPanel: <AuthDialogLeftPanel />,

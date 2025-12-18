@@ -134,6 +134,7 @@ const FollowArtistButton = ({
             kind: "artist",
             objectId: artist.slug,
           },
+          imageUrl: artist.coverArtwork?.image?.url,
         },
         analytics: {
           intent: Intent.followArtist,
@@ -195,6 +196,11 @@ export const FollowArtistButtonFragmentContainer = createFragmentContainer(
         isFollowed @include(if: $isLoggedIn)
         counts {
           follows
+        }
+        coverArtwork {
+          image {
+            url(version: "large")
+          }
         }
       }
     `,

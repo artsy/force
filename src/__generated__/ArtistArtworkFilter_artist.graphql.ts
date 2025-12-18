@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d2b6714465692bfb3f699048bfed80ab>>
+ * @generated SignedSource<<0ae75dc68650bc8b94cb8b78ff6266ad>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,6 +18,11 @@ export type ArtistArtworkFilter_artist$data = {
     readonly for_sale_artworks: any | null | undefined;
     readonly has_make_offer_artworks: boolean | null | undefined;
     readonly partner_shows: any | null | undefined;
+  } | null | undefined;
+  readonly coverArtwork: {
+    readonly image: {
+      readonly url: string | null | undefined;
+    } | null | undefined;
   } | null | undefined;
   readonly filtered_artworks: {
     readonly counts: {
@@ -211,12 +216,47 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": "meta(page:\"ARTWORKS\")"
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Artwork",
+      "kind": "LinkedField",
+      "name": "coverArtwork",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Image",
+          "kind": "LinkedField",
+          "name": "image",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": [
+                {
+                  "kind": "Literal",
+                  "name": "version",
+                  "value": "large"
+                }
+              ],
+              "kind": "ScalarField",
+              "name": "url",
+              "storageKey": "url(version:\"large\")"
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
     }
   ],
   "type": "Artist",
   "abstractKey": null
 };
 
-(node as any).hash = "eb952be86a8a420fc96c6d4e09e50156";
+(node as any).hash = "115ceab054f63522e4ac72146e5ebbf3";
 
 export default node;
