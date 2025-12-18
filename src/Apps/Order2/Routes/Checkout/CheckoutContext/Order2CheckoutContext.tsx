@@ -630,7 +630,7 @@ const CheckoutLoadingManager: React.FC<{
   useEffect(() => {
     const timeout = setTimeout(() => {
       if (isLoadingRef.current) {
-        logger.error(
+        const error = new Error(
           `Checkout loading state exceeded ${MAX_LOADING_MS}ms timeout: ${Object.entries(
             {
               minimumLoadingPassed,
@@ -642,6 +642,8 @@ const CheckoutLoadingManager: React.FC<{
             .map(([key, value]) => `${key}: ${value}`)
             .join(", ")}`,
         )
+
+        logger.error(error)
       }
     }, MAX_LOADING_MS)
     return () => clearTimeout(timeout)
