@@ -1,3 +1,4 @@
+import { ActionType, type ClickedCV, ContextModule } from "@artsy/cohesion"
 import { Stack } from "@artsy/palette"
 import { ARTIST_HEADER_NUMBER_OF_INSIGHTS } from "Apps/Artist/Components/ArtistHeader/ArtistHeader"
 import {
@@ -5,6 +6,7 @@ import {
   ArtistSeriesRailQueryRenderer,
 } from "Components/ArtistSeriesRail/ArtistSeriesRail"
 import { RailHeader } from "Components/Rail/RailHeader"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useIsRouteActive } from "System/Hooks/useRouter"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { useSectionReady } from "Utils/Hooks/useSectionReadiness"
@@ -13,6 +15,7 @@ import type { ArtistOverview_artist$data } from "__generated__/ArtistOverview_ar
 import type * as React from "react"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 import {
   ArtistCareerHighlightsPlaceholder,
   ArtistCareerHighlightsQueryRenderer,
@@ -71,6 +74,10 @@ interface ArtistOverviewProps {
 export const ArtistOverview: React.FC<
   React.PropsWithChildren<ArtistOverviewProps>
 > = ({ artist }) => {
+  const { trackEvent } = useTracking()
+  const { contextPageOwnerType, contextPageOwnerId, contextPageOwnerSlug } =
+    useAnalyticsContext()
+
   const hasCareerHighlights =
     Array.isArray(artist.insights) &&
     artist.insights.length > ARTIST_HEADER_NUMBER_OF_INSIGHTS
@@ -83,6 +90,19 @@ export const ArtistOverview: React.FC<
     artist.related.genes.edges.length > 0
 
   const isCombinedPage = useIsRouteActive(`${artist.href}/combined`)
+
+  const trackClickedCV = () => {
+    if (!contextPageOwnerId) return
+
+    const payload: ClickedCV = {
+      action: ActionType.clickedCV,
+      context_module: ContextModule.artistAchievements,
+      context_page_owner_type: contextPageOwnerType,
+      context_page_owner_id: contextPageOwnerId,
+      context_page_owner_slug: contextPageOwnerSlug,
+    }
+    trackEvent(payload)
+  }
 
   if (
     !hasCareerHighlights &&
@@ -99,6 +119,7 @@ export const ArtistOverview: React.FC<
             title="Highlights and Achievements"
             viewAllHref={`${artist.href}/cv`}
             viewAllLabel="View CV"
+            viewAllOnClick={trackClickedCV}
           />
         )}
 
