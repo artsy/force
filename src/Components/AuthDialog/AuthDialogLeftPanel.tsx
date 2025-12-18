@@ -19,6 +19,7 @@ import {
   forwardRef,
   useCallback,
   useEffect,
+  useMemo,
   useRef,
 } from "react"
 import styled from "styled-components"
@@ -29,17 +30,13 @@ export const AuthDialogLeftPanel: FC<React.PropsWithChildren> = () => {
     state: { options },
   } = useAuthDialogContext()
 
-  const img = resized(options.imageUrl ?? IMAGE.src, { width: MODAL_WIDTH / 2 })
-
   const newSignupEnabled = useFlag("onyx_new-signup-modal")
-
-  console.log("cb::leftPanel", { options })
 
   if (!newSignupEnabled) {
     return (
       <Box display={["none", "block"]} width="100%">
         <Image
-          {...img}
+          {...resized(IMAGE.src, { width: MODAL_WIDTH / 2 })}
           width="100%"
           height="100%"
           lazyLoad
@@ -51,6 +48,11 @@ export const AuthDialogLeftPanel: FC<React.PropsWithChildren> = () => {
   }
 
   if (!!options.imageUrl) {
+    const img = resized(options.imageUrl, {
+      width: MODAL_WIDTH / 2,
+      quality: 80,
+    })
+
     return (
       <Box display={["none", "block"]} width="100%" overflow="hidden">
         <Image
@@ -60,7 +62,7 @@ export const AuthDialogLeftPanel: FC<React.PropsWithChildren> = () => {
           fetchPriority={"high"}
           alt=""
           style={{
-            objectFit: "cover",
+            objectFit: "contain",
           }}
         />
       </Box>
@@ -97,6 +99,14 @@ const ImageSlider: FC = () => {
     stopAutoPlay()
   }
 
+  const images = useMemo(
+    () =>
+      DEFAULT_IMAGES.map(image =>
+        resized(image.src, { width: image.width, quality: 80 }),
+      ),
+    [],
+  )
+
   return (
     <Flex width={COLUMN_WIDTH} height="100%" position="relative">
       <Carousel
@@ -106,7 +116,7 @@ const ImageSlider: FC = () => {
         height="100%"
         display="flex"
       >
-        {DEFAULT_IMAGES.map((img, index) => (
+        {images.map((img, index) => (
           <Box width={COLUMN_WIDTH} height="100%" key={`signup-img-${img.src}`}>
             <Image
               {...img}

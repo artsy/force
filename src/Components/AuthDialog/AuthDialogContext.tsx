@@ -12,6 +12,7 @@ import {
   type AuthDialogProps,
 } from "Components/AuthDialog/AuthDialog"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import { prefetchUrl } from "System/Utils/prefetchUrl"
 import type { AfterAuthAction } from "Utils/Hooks/useAuthIntent"
 import { merge } from "lodash"
 import {
@@ -165,6 +166,9 @@ export const AuthDialogProvider: FC<
       mode?: AuthDialogMode
       options?: AuthDialogOptions
     }) => {
+      if (!isLoggedIn && options?.imageUrl) {
+        prefetchUrl(options.imageUrl)
+      }
       if (isLoggedIn) {
         sendToast({
           variant: "message",
