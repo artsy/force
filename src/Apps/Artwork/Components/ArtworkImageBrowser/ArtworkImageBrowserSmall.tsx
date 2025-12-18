@@ -11,6 +11,7 @@ import { ArtworkVideoPlayerFragmentContainer } from "Apps/Artwork/Components/Art
 import { DeepZoomFragmentContainer, useDeepZoom } from "Components/DeepZoom"
 import type { ArtworkImageBrowserSmall_artwork$data } from "__generated__/ArtworkImageBrowserSmall_artwork.graphql"
 import * as React from "react"
+import { useEffect, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
 interface ArtworkImageBrowserSmallProps {
@@ -29,6 +30,22 @@ const ArtworkImageBrowserSmall: React.FC<
   const activeFigure = figures[activeIndex]
 
   const { isDeepZoomVisible, showDeepZoom, hideDeepZoom } = useDeepZoom()
+
+  // Track which slides have been active at least once
+  const [visited, setVisited] = useState<Record<number, boolean>>({
+    [activeIndex]: true,
+  })
+
+  useEffect(() => {
+    setVisited(prev => {
+      if (prev[activeIndex]) return prev
+
+      return {
+        ...prev,
+        [activeIndex]: true,
+      }
+    })
+  }, [activeIndex])
 
   if (figures.length === 0) {
     return null
@@ -52,7 +69,11 @@ const ArtworkImageBrowserSmall: React.FC<
       >
         {figures.map((figure, i) => {
           switch (figure.type) {
-            case "Image":
+            case "Image": {
+              const isActive = i === activeIndex
+              const isNeighbor = i === activeIndex - 1 || i === activeIndex + 1
+              const hasBeenActive = !!visited[i]
+
               return (
                 <ArtworkLightboxFragmentContainer
                   key={figure.internalID ?? i}
@@ -60,14 +81,22 @@ const ArtworkImageBrowserSmall: React.FC<
                   my={2}
                   artwork={artwork}
                   activeIndex={artwork.isSetVideoAsCover ? i - 1 : i}
-                  lazyLoad={i !== 0}
+                  lazyLoad={false}
+                  shouldRenderFullImage={isActive || hasBeenActive}
+                  shouldRenderPlaceholder={
+                    isActive || (isNeighbor && !hasBeenActive)
+                  }
                   onClick={
-                    activeFigure.type === "Image" && activeFigure.isZoomable
+                    isActive &&
+                    activeFigure.type === "Image" &&
+                    activeFigure.isZoomable
                       ? showDeepZoom
                       : undefined
                   }
                 />
               )
+            }
+
             case "Video":
               return (
                 <ArtworkVideoPlayerFragmentContainer
