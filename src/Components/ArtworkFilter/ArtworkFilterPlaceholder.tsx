@@ -1,3 +1,4 @@
+import { OwnerType } from "@artsy/cohesion"
 import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
 import ChevronDownIcon from "@artsy/icons/ChevronDownIcon"
 import ExpandIcon from "@artsy/icons/ExpandIcon"
@@ -28,6 +29,7 @@ import {
 } from "Components/ArtworkGrid/ArtworkGrid"
 import { Sticky } from "Components/Sticky"
 import { useStickyBackdrop } from "Components/Sticky/useStickyBackdrop"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { Media } from "Utils/Responsive"
 
 interface ArtworkFilterPlaceholderProps extends BoxProps {
@@ -39,7 +41,8 @@ export const ArtworkFilterPlaceholder: React.FC<
   React.PropsWithChildren<ArtworkFilterPlaceholderProps>
 > = ({ showCreateAlert = false, layout = "MASONRY", ...rest }) => {
   const enableImmersiveView = useFlag("onyx_enable-immersive-view")
-
+  const { contextPageOwnerType } = useAnalyticsContext()
+  const isArtistPage = contextPageOwnerType === OwnerType.artist
   const backdrop = useStickyBackdrop()
 
   return (
@@ -54,11 +57,11 @@ export const ArtworkFilterPlaceholder: React.FC<
                   <Flex
                     justifyContent="space-between"
                     alignItems="center"
-                    px={2}
-                    pb={2}
                     gap={2}
                     borderBottom="1px solid"
                     borderColor="mono10"
+                    px={2}
+                    {...(isArtistPage ? { pb: 2 } : { py: 1 })}
                   >
                     <Box display="flex" alignItems="center" gap={0.5}>
                       <FilterIcon />
@@ -102,7 +105,7 @@ export const ArtworkFilterPlaceholder: React.FC<
                         alignItems="center"
                         justifyContent="space-between"
                         gap={2}
-                        pb={2}
+                        {...(isArtistPage ? { pb: 2 } : { py: 2 })}
                       >
                         <HorizontalOverflow minWidth={0}>
                           <Flex gap={1}>

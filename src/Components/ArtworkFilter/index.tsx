@@ -4,6 +4,7 @@ import {
   type ClickedImmersiveView,
   ContextModule,
   type ImmersiveViewOptionViewed,
+  OwnerType,
   commercialFilterParamsChanged,
 } from "@artsy/cohesion"
 import { useDismissibleContext } from "@artsy/dismissible"
@@ -142,6 +143,8 @@ export const BaseArtworkFilter: React.FC<
 
   const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
     useAnalyticsContext()
+
+  const isArtistPage = contextPageOwnerType === OwnerType.artist
 
   const [isLoading, setIsLoading] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
@@ -310,11 +313,11 @@ export const BaseArtworkFilter: React.FC<
                 <Flex
                   justifyContent="space-between"
                   alignItems="center"
-                  px={2}
-                  pb={2}
                   gap={2}
                   borderBottom="1px solid"
                   borderColor="mono10"
+                  px={2}
+                  {...(isArtistPage ? { pb: 2 } : { py: 1 })}
                 >
                   <ArtworkFilterCreateAlert
                     renderButton={props => {
@@ -399,7 +402,7 @@ export const BaseArtworkFilter: React.FC<
                       alignItems="center"
                       justifyContent="space-between"
                       gap={2}
-                      pb={2}
+                      {...(isArtistPage ? { pb: 2 } : { py: 1 })}
                     >
                       <HorizontalOverflow minWidth={0}>
                         <Flex gap={1}>
