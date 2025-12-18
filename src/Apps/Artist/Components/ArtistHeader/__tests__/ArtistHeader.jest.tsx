@@ -8,6 +8,13 @@ import { useRouter } from "System/Hooks/useRouter"
 jest.unmock("react-relay")
 jest.mock("react-tracking")
 jest.mock("System/Hooks/useRouter")
+jest.mock("System/Hooks/useAnalyticsContext", () => ({
+  useAnalyticsContext: jest.fn(() => ({
+    contextPageOwnerId: "4d8b92b34eb68a1b2c0003f4",
+    contextPageOwnerSlug: "pablo-picasso",
+    contextPageOwnerType: "artist",
+  })),
+}))
 jest.mock("Components/FollowButton/FollowArtistButton", () => ({
   FollowArtistButtonQueryRenderer: ({ children }) => (
     <div data-testid="follow-button">{children && children("Follow")}</div>
@@ -170,8 +177,7 @@ describe("ArtistHeaderFragmentContainer", () => {
     })
 
     it("renders bio with ReadMore functionality for long text", () => {
-      const longBio =
-        "Pablo Picasso was a Spanish painter and sculptor. " + "A".repeat(250) // Text longer than 250 char limit
+      const longBio = `Pablo Picasso was a Spanish painter and sculptor. ${"A".repeat(250)}` // Text longer than 250 char limit
 
       renderWithRelay({
         Artist: () => ({
@@ -475,6 +481,29 @@ describe("ArtistHeaderFragmentContainer", () => {
       expect(cvLink.closest("a")).toHaveAttribute(
         "href",
         "/artist/pablo-picasso/cv",
+      )
+    })
+
+    it("tracks clicks on CV link", () => {
+      renderWithRelay({
+        Artist: () => ({
+          name: "Pablo Picasso",
+          slug: "pablo-picasso",
+          internalID: "artist-id-123",
+        }),
+      })
+
+      const cvLink = screen.getByText("See all past shows and fair booths")
+      cvLink.click()
+
+      expect(trackEvent).toHaveBeenCalledWith(
+        expect.objectContaining({
+          action: "clickedCV",
+          context_module: "artistHeader",
+          context_page_owner_type: "artist",
+          context_page_owner_id: "4d8b92b34eb68a1b2c0003f4",
+          context_page_owner_slug: "pablo-picasso",
+        }),
       )
     })
   })

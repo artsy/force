@@ -1,4 +1,4 @@
-import { ContextModule } from "@artsy/cohesion"
+import { ActionType, type ClickedCV, ContextModule } from "@artsy/cohesion"
 import {
   Box,
   Column,
@@ -9,6 +9,7 @@ import {
 import { ARTIST_HEADER_NUMBER_OF_INSIGHTS } from "Apps/Artist/Components/ArtistHeader/ArtistHeader"
 import { ArtistCareerHighlightFragmentContainer } from "Apps/Artist/Routes/Overview/Components/ArtistCareerHighlight"
 import { RailHeader } from "Components/Rail/RailHeader"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { Media } from "Utils/Responsive"
 import type { ArtistCareerHighlightsQuery } from "__generated__/ArtistCareerHighlightsQuery.graphql"
@@ -16,6 +17,7 @@ import type { ArtistCareerHighlights_artist$data } from "__generated__/ArtistCar
 import type { FC } from "react"
 import { forwardRef } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 interface ArtistCareerHighlightsProps {
   artist: ArtistCareerHighlights_artist$data
@@ -24,6 +26,10 @@ interface ArtistCareerHighlightsProps {
 const ArtistCareerHighlights: FC<
   React.PropsWithChildren<ArtistCareerHighlightsProps>
 > = ({ artist }) => {
+  const { trackEvent } = useTracking()
+  const { contextPageOwnerType, contextPageOwnerId, contextPageOwnerSlug } =
+    useAnalyticsContext()
+
   if (!artist || !artist.insights?.length) {
     return null
   }
@@ -40,6 +46,19 @@ const ArtistCareerHighlights: FC<
     return insight.entities.length > 0 || insight.description
   })
 
+  const trackClickedCV = () => {
+    if (!contextPageOwnerId) return
+
+    const payload: ClickedCV = {
+      action: ActionType.clickedCV,
+      context_module: ContextModule.artistAchievements,
+      context_page_owner_type: contextPageOwnerType,
+      context_page_owner_id: contextPageOwnerId,
+      context_page_owner_slug: contextPageOwnerSlug,
+    }
+    trackEvent(payload)
+  }
+
   return (
     <>
       {artist.insights.length > 0 && (
@@ -49,6 +68,7 @@ const ArtistCareerHighlights: FC<
               title="Highlights and Achievements"
               viewAllHref={`${artist.href}/cv`}
               viewAllLabel="View CV"
+              viewAllOnClick={trackClickedCV}
             />
 
             <Box>
@@ -73,6 +93,7 @@ const ArtistCareerHighlights: FC<
               title="Highlights and Achievements"
               viewAllHref={`${artist.href}/cv`}
               viewAllLabel="View CV"
+              viewAllOnClick={trackClickedCV}
             />
             <GridColumns gridRowGap={0}>
               {columns.map((column, index) => {

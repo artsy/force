@@ -1,8 +1,10 @@
 import {
   ActionType,
+  type ClickedCV,
   type ClickedVerifiedRepresentative,
   ContextModule,
   OwnerType,
+  type ToggledArtistBio,
 } from "@artsy/cohesion"
 import {
   Box,
@@ -41,7 +43,8 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
   artist,
 }) => {
   const { trackEvent } = useTracking()
-  const { contextPageOwnerType, contextPageOwnerId } = useAnalyticsContext()
+  const { contextPageOwnerType, contextPageOwnerId, contextPageOwnerSlug } =
+    useAnalyticsContext()
 
   const image = artist.coverArtwork?.image
   const hasImage = isValidImage(image)
@@ -58,6 +61,33 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
   const hasInsights = artist.insights.length > 0
   const hasRightDetails = hasVerifiedRepresentatives || hasInsights
   const hasSomething = hasImage || hasBio || hasRightDetails
+
+  const trackToggledArtistBio = (expand: boolean) => {
+    if (!contextPageOwnerId || !contextPageOwnerSlug) return
+
+    const payload: ToggledArtistBio = {
+      action: ActionType.toggledArtistBio,
+      context_module: ContextModule.artistHeader,
+      context_page_owner_type: contextPageOwnerType,
+      context_page_owner_id: contextPageOwnerId,
+      context_page_owner_slug: contextPageOwnerSlug,
+      expand,
+    }
+    trackEvent(payload)
+  }
+
+  const trackClickedCV = () => {
+    if (!contextPageOwnerId) return
+
+    const payload: ClickedCV = {
+      action: ActionType.clickedCV,
+      context_module: ContextModule.artistHeader,
+      context_page_owner_type: contextPageOwnerType,
+      context_page_owner_id: contextPageOwnerId,
+      context_page_owner_slug: contextPageOwnerSlug,
+    }
+    trackEvent(payload)
+  }
 
   return (
     <GridColumns gridRowGap={2} gridColumnGap={[0, 4]} data-test="artistHeader">
@@ -163,12 +193,21 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
 
         {biographyContent && (
           <Bio variant="sm">
-            <ReadMore maxLines={4} content={biographyContent} />
+            <ReadMore
+              maxLines={4}
+              content={biographyContent}
+              onReadMoreClicked={() => trackToggledArtistBio(true)}
+              onReadLessClicked={() => trackToggledArtistBio(false)}
+            />
           </Bio>
         )}
 
         <Text variant="xs" display={["none", "block"]}>
-          <CV to={`/artist/${artist.slug}/cv`} color="mono60">
+          <CV
+            to={`/artist/${artist.slug}/cv`}
+            color="mono60"
+            onClick={trackClickedCV}
+          >
             See all past shows and fair booths
           </CV>
         </Text>
