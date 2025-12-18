@@ -1,4 +1,5 @@
 import InstagramFillIcon from "@artsy/icons/InstagramFillIcon"
+import LinkIcon from "@artsy/icons/LinkIcon"
 import XIcon from "@artsy/icons/XIcon"
 import {
   Avatar,
@@ -13,9 +14,9 @@ import { themeGet } from "@styled-system/theme-get"
 import { AuthorStructuredData } from "Apps/Articles/Components/AuthorStructuredData"
 import { ClientSuspense } from "Components/ClientSuspense"
 import { MetaTags } from "Components/MetaTags"
-import { getAuthorPath } from "Utils/getAuthorPath"
 import { TopContextBar } from "Components/TopContextBar"
 import { useScrollToOpenEditorialAuthModal } from "Utils/Hooks/useScrollToOpenEditorialAuthModal"
+import { getAuthorPath } from "Utils/getAuthorPath"
 import type { AuthorApp_author$key } from "__generated__/AuthorApp_author.graphql"
 import type { FC } from "react"
 import { graphql, useFragment } from "react-relay"
@@ -128,6 +129,19 @@ export const AuthorApp: FC<React.PropsWithChildren<AuthorAppProps>> = ({
                           </Text>
                         </AuthorSocialLink>
                       )}
+
+                      {author.website && (
+                        <AuthorSocialLink
+                          as="a"
+                          href={author.website}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <LinkIcon />
+
+                          <Text variant="xs">{author.website}</Text>
+                        </AuthorSocialLink>
+                      )}
                     </Stack>
                   )}
                 </Stack>
@@ -172,6 +186,7 @@ const FRAGMENT = graphql`
     bio
     initials
     role
+    website
     socials {
       x {
         handle
