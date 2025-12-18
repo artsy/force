@@ -165,7 +165,7 @@ describe("SavedAddressOptions", () => {
 
       expect(screen.getByText("123 Main St")).toBeInTheDocument()
       expect(screen.getByText("Apt 4B")).toBeInTheDocument()
-      expect(screen.getByText("New York, NY, 10001")).toBeInTheDocument()
+      expect(screen.getByText("New York, NY 10001")).toBeInTheDocument()
       expect(screen.getByText("United States")).toBeInTheDocument()
       expect(screen.getByText("+1 555-1234")).toBeInTheDocument()
     })
