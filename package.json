@@ -273,7 +273,7 @@
     "relay-compiler": "^18.2.0",
     "relay-test-utils": "^16.0.0",
     "rewire": "2.2.0",
-    "storybook": "^8.4.7",
+    "storybook": "^8.6.15",
     "storybook-react-rsbuild": "^0.1.8",
     "storybook-states": "1.2.0",
     "typescript": "^5.6.3",
