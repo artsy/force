@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0345b09db5b87c263164bd0de0244bfc>>
+ * @generated SignedSource<<9af25bde9942407e063a440db4a688d3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,6 +13,9 @@ import { FragmentRefs } from "relay-runtime";
 export type useLoadCheckout_order$data = {
   readonly internalID: string;
   readonly lineItems: ReadonlyArray<{
+    readonly artwork: {
+      readonly isAcquireable: boolean | null | undefined;
+    } | null | undefined;
     readonly artworkVersion: {
       readonly internalID: string;
     } | null | undefined;
@@ -50,6 +53,24 @@ return {
         {
           "alias": null,
           "args": null,
+          "concreteType": "Artwork",
+          "kind": "LinkedField",
+          "name": "artwork",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "isAcquireable",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
           "concreteType": "ArtworkVersion",
           "kind": "LinkedField",
           "name": "artworkVersion",
@@ -68,6 +89,6 @@ return {
 };
 })();
 
-(node as any).hash = "4608db26c5b40d99999ece7ad6d7cf72";
+(node as any).hash = "3205d348999e4dae1e0eac2c12baeba9";
 
 export default node;

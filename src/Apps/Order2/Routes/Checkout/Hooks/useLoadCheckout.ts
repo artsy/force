@@ -181,6 +181,9 @@ const ORDER_FRAGMENT = graphql`
   fragment useLoadCheckout_order on Order {
     internalID
     lineItems {
+      artwork {
+        isAcquireable
+      }
       artworkVersion {
         internalID
       }
@@ -197,6 +200,9 @@ const validateOrder = (order: useLoadCheckout_order$data) => {
 
   if (!hasLineItemsWithData) {
     throw new Error("missing_line_item_data")
+  }
+  if (!order.lineItems.every(li => li?.artwork?.isAcquireable)) {
+    throw new Error("artwork_not_for_sale")
   }
   return
 }

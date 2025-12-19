@@ -47,6 +47,7 @@ const Order2ReviewStepComponent: React.FC<Order2ReviewStepProps> = ({
     redirectToOrderDetails,
     checkoutTracking,
     artworkPath,
+    setCriticalCheckoutError,
   } = useCheckoutContext()
 
   const artworkData = extractLineItemMetadata(orderData.lineItems[0]!)
@@ -64,6 +65,11 @@ const Order2ReviewStepComponent: React.FC<Order2ReviewStepProps> = ({
       orderId: orderData.internalID,
       shouldLogErrorToSentry: true,
     })
+
+    if (error.code === "insufficient_inventory") {
+      setCriticalCheckoutError("artwork_not_for_sale")
+      return
+    }
 
     const title = "An error occurred"
     const message =

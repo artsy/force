@@ -38,9 +38,7 @@ describe("CriticalErrorModal", () => {
 
       expect(screen.getByText("Checkout Error")).toBeInTheDocument()
       expect(
-        screen.getByText(
-          "There was an error loading your checkout. Please try refreshing the page.",
-        ),
+        screen.getByText("There was an error loading your checkout."),
       ).toBeInTheDocument()
       expect(screen.getByText("Reload")).toBeInTheDocument()
       expect(screen.getByText("Return to Artwork")).toBeInTheDocument()
@@ -70,10 +68,10 @@ describe("CriticalErrorModal", () => {
     it("shows the version mismatch message without reload button", () => {
       render(<CriticalErrorModal error="artwork_version_mismatch" />)
 
-      expect(screen.getByText("Checkout Error")).toBeInTheDocument()
+      expect(screen.getByText("Work has been updated")).toBeInTheDocument()
       expect(
         screen.getByText(
-          "The artwork has been updated since you started checkout. Please return to the artwork to create a new order.",
+          "Something about the work changed since you started checkout. Please review the work before submitting your order.",
         ),
       ).toBeInTheDocument()
       expect(screen.queryByText("Reload")).not.toBeInTheDocument()
@@ -82,6 +80,28 @@ describe("CriticalErrorModal", () => {
 
     it("returns to artwork when Return to Artwork button is clicked", async () => {
       render(<CriticalErrorModal error="artwork_version_mismatch" />)
+
+      const returnButton = screen.getByText("Return to Artwork")
+      await userEvent.click(returnButton)
+
+      expect(mockRouterReplace).toHaveBeenCalledWith("/artwork/test-artwork")
+    })
+  })
+
+  describe("artwork_not_for_sale error", () => {
+    it("shows the sold work message without reload button", () => {
+      render(<CriticalErrorModal error="artwork_not_for_sale" />)
+
+      expect(screen.getByText("Not available")).toBeInTheDocument()
+      expect(
+        screen.getByText("Sorry, the work is no longer available."),
+      ).toBeInTheDocument()
+      expect(screen.queryByText("Reload")).not.toBeInTheDocument()
+      expect(screen.getByText("Return to Artwork")).toBeInTheDocument()
+    })
+
+    it("returns to artwork when Return to Artwork button is clicked", async () => {
+      render(<CriticalErrorModal error="artwork_not_for_sale" />)
 
       const returnButton = screen.getByText("Return to Artwork")
       await userEvent.click(returnButton)
