@@ -4,7 +4,6 @@ import {
   type ClickedImmersiveView,
   ContextModule,
   type ImmersiveViewOptionViewed,
-  OwnerType,
   commercialFilterParamsChanged,
 } from "@artsy/cohesion"
 import { useDismissibleContext } from "@artsy/dismissible"
@@ -67,6 +66,7 @@ import {
   useArtworkFilterContext,
 } from "./ArtworkFilterContext"
 import { ArtworkFilterMobileOverlay } from "./ArtworkFilterMobileOverlay"
+import { useArtistPageExperimentPadding } from "./ArtworkFilterPlaceholder"
 import { ArtworkFilters } from "./ArtworkFilters"
 import { ArtworkQueryFilter } from "./ArtworkQueryFilter"
 import { allowedFilters } from "./Utils/allowedFilters"
@@ -144,7 +144,7 @@ export const BaseArtworkFilter: React.FC<
   const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
     useAnalyticsContext()
 
-  const isArtistPage = contextPageOwnerType === OwnerType.artist
+  const padding = useArtistPageExperimentPadding()
 
   const [isLoading, setIsLoading] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
@@ -317,7 +317,7 @@ export const BaseArtworkFilter: React.FC<
                   borderBottom="1px solid"
                   borderColor="mono10"
                   px={2}
-                  {...(isArtistPage ? { pb: 2 } : { py: 1 })}
+                  {...padding}
                 >
                   <ArtworkFilterCreateAlert
                     renderButton={props => {
@@ -402,7 +402,7 @@ export const BaseArtworkFilter: React.FC<
                       alignItems="center"
                       justifyContent="space-between"
                       gap={2}
-                      {...(isArtistPage ? { pb: 2 } : { py: 1 })}
+                      {...padding}
                     >
                       <HorizontalOverflow minWidth={0}>
                         <Flex gap={1}>
