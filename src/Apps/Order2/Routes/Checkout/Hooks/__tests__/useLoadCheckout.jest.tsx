@@ -1,16 +1,22 @@
 import { act, renderHook, waitFor } from "@testing-library/react"
+import { CheckoutStepState } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import {
   MAX_LOADING_MS,
   MIN_LOADING_MS,
   useLoadCheckout,
-} from "Apps/Order2/Routes/Checkout/CheckoutContext/useLoadCheckout"
-import { Order2CheckoutContext } from "Apps/Order2/Routes/Checkout/CheckoutContext/Order2CheckoutContext"
-import { CheckoutStepState } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
+} from "Apps/Order2/Routes/Checkout/Hooks/useLoadCheckout"
 import { useStripePaymentBySetupIntentId } from "Apps/Order2/Routes/Checkout/Hooks/useStripePaymentBySetupIntentId"
 import type { Order2CheckoutContext_order$data } from "__generated__/Order2CheckoutContext_order.graphql"
 
 // Mock dependencies
 jest.mock("Apps/Order2/Routes/Checkout/Hooks/useStripePaymentBySetupIntentId")
+
+jest.mock("react-relay", () => ({
+  ...jest.requireActual("react-relay"),
+  useFragment: jest.fn(),
+}))
+
+jest.mock("Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext")
 
 jest.mock("Utils/logger", () => {
   // Create logger mock
@@ -30,12 +36,10 @@ jest.useFakeTimers()
 const mockSetLoadingComplete = jest.fn()
 const mockSetCriticalCheckoutError = jest.fn()
 
-// Mock the Order2CheckoutContext hooks
-const mockUseStoreState = jest.fn()
-const mockUseStoreActions = jest.fn()
-
-Order2CheckoutContext.useStoreState = mockUseStoreState as any
-Order2CheckoutContext.useStoreActions = mockUseStoreActions as any
+const { useFragment } = jest.requireMock("react-relay")
+const { useCheckoutContext } = jest.requireMock(
+  "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext",
+)
 
 describe("useLoadCheckout", () => {
   const mockOrderData: Order2CheckoutContext_order$data = {
@@ -59,9 +63,14 @@ describe("useLoadCheckout", () => {
 
   let mockStripeCallback: (() => void) | null = null
 
+  const mockOrder = {} as any // Fragment key
+
   beforeEach(() => {
     jest.clearAllMocks()
     mockStripeCallback = null
+
+    // Setup useFragment mock to return mockOrderData
+    useFragment.mockReturnValue(mockOrderData)
 
     // Setup default mocks
     ;(useStripePaymentBySetupIntentId as jest.Mock).mockImplementation(
@@ -70,23 +79,14 @@ describe("useLoadCheckout", () => {
       },
     )
 
-    mockUseStoreActions.mockImplementation(selector => {
-      const actions = {
-        setCriticalCheckoutError: mockSetCriticalCheckoutError,
-        setLoadingComplete: mockSetLoadingComplete,
-      }
-      return selector(actions)
-    })
-
-    // Default state mocks
-    mockUseStoreState.mockImplementation(selector => {
-      const state = {
-        isLoading: true,
-        criticalCheckoutError: null,
-        expressCheckoutPaymentMethods: null,
-        steps: [{ state: CheckoutStepState.ACTIVE, name: "PAYMENT" }],
-      }
-      return selector(state)
+    // Mock useCheckoutContext
+    useCheckoutContext.mockReturnValue({
+      isLoading: true,
+      criticalCheckoutError: null,
+      expressCheckoutPaymentMethods: null,
+      steps: [{ state: CheckoutStepState.ACTIVE, name: "PAYMENT" }],
+      setCriticalCheckoutError: mockSetCriticalCheckoutError,
+      setLoadingComplete: mockSetLoadingComplete,
     })
   })
 
@@ -96,34 +96,32 @@ describe("useLoadCheckout", () => {
 
   describe("scroll lock", () => {
     it("locks scroll when loading", () => {
-      mockUseStoreState.mockImplementation(selector => {
-        const state = {
-          isLoading: true,
-          criticalCheckoutError: null,
-          expressCheckoutPaymentMethods: null,
-          steps: [],
-        }
-        return selector(state)
+      useCheckoutContext.mockReturnValue({
+        isLoading: true,
+        criticalCheckoutError: null,
+        expressCheckoutPaymentMethods: null,
+        steps: [],
+        setCriticalCheckoutError: mockSetCriticalCheckoutError,
+        setLoadingComplete: mockSetLoadingComplete,
       })
 
-      renderHook(() => useLoadCheckout(mockOrderData))
+      renderHook(() => useLoadCheckout(mockOrder))
 
       expect(document.body.style.overflow).toBe("hidden")
     })
 
     it("unlocks scroll when loading completes", () => {
       let isLoading = true
-      mockUseStoreState.mockImplementation(selector => {
-        const state = {
-          isLoading,
-          criticalCheckoutError: null,
-          expressCheckoutPaymentMethods: null,
-          steps: [],
-        }
-        return selector(state)
-      })
+      useCheckoutContext.mockImplementation(() => ({
+        isLoading,
+        criticalCheckoutError: null,
+        expressCheckoutPaymentMethods: null,
+        steps: [],
+        setCriticalCheckoutError: mockSetCriticalCheckoutError,
+        setLoadingComplete: mockSetLoadingComplete,
+      }))
 
-      const { rerender } = renderHook(() => useLoadCheckout(mockOrderData))
+      const { rerender } = renderHook(() => useLoadCheckout(mockOrder))
 
       expect(document.body.style.overflow).toBe("hidden")
 
@@ -135,17 +133,16 @@ describe("useLoadCheckout", () => {
     })
 
     it("cleans up scroll lock on unmount", () => {
-      mockUseStoreState.mockImplementation(selector => {
-        const state = {
-          isLoading: true,
-          criticalCheckoutError: null,
-          expressCheckoutPaymentMethods: null,
-          steps: [],
-        }
-        return selector(state)
+      useCheckoutContext.mockReturnValue({
+        isLoading: true,
+        criticalCheckoutError: null,
+        expressCheckoutPaymentMethods: null,
+        steps: [],
+        setCriticalCheckoutError: mockSetCriticalCheckoutError,
+        setLoadingComplete: mockSetLoadingComplete,
       })
 
-      const { unmount } = renderHook(() => useLoadCheckout(mockOrderData))
+      const { unmount } = renderHook(() => useLoadCheckout(mockOrder))
 
       expect(document.body.style.overflow).toBe("hidden")
 
@@ -157,7 +154,7 @@ describe("useLoadCheckout", () => {
 
   describe("order validation", () => {
     it("validates order successfully with valid data", async () => {
-      renderHook(() => useLoadCheckout(mockOrderData))
+      renderHook(() => useLoadCheckout(mockOrder))
 
       await waitFor(() => {
         expect(mockSetCriticalCheckoutError).not.toHaveBeenCalled()
@@ -170,7 +167,9 @@ describe("useLoadCheckout", () => {
         lineItems: [],
       } as any
 
-      renderHook(() => useLoadCheckout(invalidOrderData))
+      useFragment.mockReturnValue(invalidOrderData)
+
+      renderHook(() => useLoadCheckout(mockOrder))
 
       await waitFor(() => {
         expect(mockSetCriticalCheckoutError).toHaveBeenCalledWith(
@@ -185,7 +184,9 @@ describe("useLoadCheckout", () => {
         lineItems: [{ artworkVersion: null }],
       } as any
 
-      renderHook(() => useLoadCheckout(invalidOrderData))
+      useFragment.mockReturnValue(invalidOrderData)
+
+      renderHook(() => useLoadCheckout(mockOrder))
 
       await waitFor(() => {
         expect(mockSetCriticalCheckoutError).toHaveBeenCalledWith(
@@ -197,7 +198,7 @@ describe("useLoadCheckout", () => {
 
   describe("loading timeout", () => {
     it("sets loading_timeout error when MAX_LOADING_MS is exceeded", async () => {
-      renderHook(() => useLoadCheckout(mockOrderData))
+      renderHook(() => useLoadCheckout(mockOrder))
 
       act(() => {
         jest.advanceTimersByTime(MAX_LOADING_MS)
@@ -218,17 +219,16 @@ describe("useLoadCheckout", () => {
 
     it("does not set timeout error if loading completes before MAX_LOADING_MS", async () => {
       let isLoading = true
-      mockUseStoreState.mockImplementation(selector => {
-        const state = {
-          isLoading,
-          criticalCheckoutError: null,
-          expressCheckoutPaymentMethods: [],
-          steps: [],
-        }
-        return selector(state)
-      })
+      useCheckoutContext.mockImplementation(() => ({
+        isLoading,
+        criticalCheckoutError: null,
+        expressCheckoutPaymentMethods: [],
+        steps: [],
+        setCriticalCheckoutError: mockSetCriticalCheckoutError,
+        setLoadingComplete: mockSetLoadingComplete,
+      }))
 
-      const { rerender } = renderHook(() => useLoadCheckout(mockOrderData))
+      const { rerender } = renderHook(() => useLoadCheckout(mockOrder))
 
       // Advance past minimum loading time
       act(() => {
@@ -261,17 +261,16 @@ describe("useLoadCheckout", () => {
     it("completes loading when all conditions are met", async () => {
       let expressCheckoutLoaded = false
 
-      mockUseStoreState.mockImplementation(selector => {
-        const state = {
-          isLoading: true,
-          criticalCheckoutError: null,
-          expressCheckoutPaymentMethods: expressCheckoutLoaded ? [] : null,
-          steps: [],
-        }
-        return selector(state)
-      })
+      useCheckoutContext.mockImplementation(() => ({
+        isLoading: true,
+        criticalCheckoutError: null,
+        expressCheckoutPaymentMethods: expressCheckoutLoaded ? [] : null,
+        steps: [],
+        setCriticalCheckoutError: mockSetCriticalCheckoutError,
+        setLoadingComplete: mockSetLoadingComplete,
+      }))
 
-      const { rerender } = renderHook(() => useLoadCheckout(mockOrderData))
+      const { rerender } = renderHook(() => useLoadCheckout(mockOrder))
 
       // Advance minimum loading time
       act(() => {
@@ -293,17 +292,16 @@ describe("useLoadCheckout", () => {
     })
 
     it("does not complete loading if minimum time has not passed", () => {
-      mockUseStoreState.mockImplementation(selector => {
-        const state = {
-          isLoading: true,
-          criticalCheckoutError: null,
-          expressCheckoutPaymentMethods: [],
-          steps: [],
-        }
-        return selector(state)
+      useCheckoutContext.mockReturnValue({
+        isLoading: true,
+        criticalCheckoutError: null,
+        expressCheckoutPaymentMethods: [],
+        steps: [],
+        setCriticalCheckoutError: mockSetCriticalCheckoutError,
+        setLoadingComplete: mockSetLoadingComplete,
       })
 
-      renderHook(() => useLoadCheckout(mockOrderData))
+      renderHook(() => useLoadCheckout(mockOrder))
 
       // Trigger stripe callback
       act(() => {
@@ -315,17 +313,16 @@ describe("useLoadCheckout", () => {
     })
 
     it("does not complete loading if there is a critical error", async () => {
-      mockUseStoreState.mockImplementation(selector => {
-        const state = {
-          isLoading: true,
-          criticalCheckoutError: "loading_timeout",
-          expressCheckoutPaymentMethods: [],
-          steps: [],
-        }
-        return selector(state)
+      useCheckoutContext.mockReturnValue({
+        isLoading: true,
+        criticalCheckoutError: "loading_timeout",
+        expressCheckoutPaymentMethods: [],
+        steps: [],
+        setCriticalCheckoutError: mockSetCriticalCheckoutError,
+        setLoadingComplete: mockSetLoadingComplete,
       })
 
-      renderHook(() => useLoadCheckout(mockOrderData))
+      renderHook(() => useLoadCheckout(mockOrder))
 
       act(() => {
         jest.advanceTimersByTime(MIN_LOADING_MS)
@@ -340,7 +337,7 @@ describe("useLoadCheckout", () => {
 
   describe("stripe redirect handling", () => {
     it("handles stripe redirect callback", () => {
-      renderHook(() => useLoadCheckout(mockOrderData))
+      renderHook(() => useLoadCheckout(mockOrder))
 
       expect(useStripePaymentBySetupIntentId).toHaveBeenCalledWith(
         "order-123",

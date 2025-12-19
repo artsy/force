@@ -33,6 +33,18 @@ jest.mock("Utils/Hooks/useCountdownTimer", () => ({
   })),
 }))
 
+jest.mock(
+  "Apps/Order2/Routes/Checkout/Hooks/useStripePaymentBySetupIntentId",
+  () => ({
+    useStripePaymentBySetupIntentId: (
+      orderId: string,
+      callback: () => void,
+    ) => {
+      callback()
+    },
+  }),
+)
+
 afterEach(() => {
   jest.clearAllMocks()
 })
@@ -85,6 +97,9 @@ const baseOrderProps = {
     {
       artworkVersion: {
         internalID: "artwork-version-1",
+      },
+      artwork: {
+        slug: "test-artwork",
       },
     },
   ],

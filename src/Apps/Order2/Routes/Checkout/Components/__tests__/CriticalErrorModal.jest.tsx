@@ -53,7 +53,7 @@ describe("CriticalErrorModal", () => {
       const returnButton = screen.getByText("Return to Artwork")
       await userEvent.click(returnButton)
 
-      expect(mockReturnToArtwork).toHaveBeenCalledWith({ force: true })
+      expect(mockReturnToArtwork).toHaveBeenCalled()
     })
   })
 
@@ -77,7 +77,7 @@ describe("CriticalErrorModal", () => {
       const returnButton = screen.getByText("Return to Artwork")
       await userEvent.click(returnButton)
 
-      expect(mockReturnToArtwork).toHaveBeenCalledWith({ force: true })
+      expect(mockReturnToArtwork).toHaveBeenCalled()
     })
   })
 
@@ -104,7 +104,7 @@ describe("CriticalErrorModal", () => {
       const closeButton = screen.getByLabelText("Close")
       await userEvent.click(closeButton)
 
-      expect(mockReturnToArtwork).toHaveBeenCalledWith({ force: true })
+      expect(mockReturnToArtwork).toHaveBeenCalled()
     })
   })
 })

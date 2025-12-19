@@ -9,7 +9,6 @@ import {
   CheckoutStepName,
   CheckoutStepState,
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
-import { useLoadCheckout } from "Apps/Order2/Routes/Checkout/CheckoutContext/useLoadCheckout"
 import type { CheckoutErrorBannerProps } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { useBuildInitialSteps } from "Apps/Order2/Routes/Checkout/Hooks/useBuildInitialSteps"
 import { useCheckoutTracking } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutTracking"
@@ -547,9 +546,6 @@ export const Order2CheckoutContextProvider: React.FC<
     router,
     orderData,
   } as Order2CheckoutModel
-
-  // Load checkout and manage window side effects
-  useLoadCheckout(orderData)
 
   return (
     <Order2CheckoutContext.Provider runtimeModel={runtimeModel}>

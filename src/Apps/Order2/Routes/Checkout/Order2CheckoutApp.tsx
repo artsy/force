@@ -26,6 +26,7 @@ import { Order2CollapsibleOrderSummary } from "Apps/Order2/Routes/Checkout/Compo
 import { Order2ReviewStep } from "Apps/Order2/Routes/Checkout/Components/Order2ReviewStep"
 import { Order2PaymentStep } from "Apps/Order2/Routes/Checkout/Components/PaymentStep/Order2PaymentStep"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import { useLoadCheckout } from "Apps/Order2/Routes/Checkout/Hooks/useLoadCheckout"
 import { NOT_FOUND_ERROR } from "Apps/Order2/constants"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import type { Order2CheckoutApp_me$key } from "__generated__/Order2CheckoutApp_me.graphql"
@@ -58,6 +59,9 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
     checkoutTracking,
     criticalCheckoutError,
   } = useCheckoutContext()
+
+  // Load checkout and manage window side effects
+  useLoadCheckout(orderData)
 
   if (!order) {
     return <OrderErrorApp code={404} message={NOT_FOUND_ERROR} />
@@ -112,8 +116,8 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
       {isLoading && <Order2CheckoutLoadingSkeleton order={orderData} />}
       <GridColumns
         px={[0, 0, 4]}
-        // add vertical padding at `sm` instead of `md` ( using responsiveProps() ) because horizontal padding starts to appear
-        // at maxWidth breakpoints.sm
+        // add vertical padding at `sm` instead of `md` because horizontal padding starts to appear
+        // at [maxWidth=] breakpoints.sm
         py={[0, 4]}
         style={{
           display: isLoading ? "none" : "grid",
@@ -195,6 +199,7 @@ const ORDER_FRAGMENT = graphql`
         isFixedShippingFeeOnly
       }
     }
+    ...useLoadCheckout_order
     ...Order2ExpressCheckout_order
     ...Order2CollapsibleOrderSummary_order
     ...Order2OfferStep_order
