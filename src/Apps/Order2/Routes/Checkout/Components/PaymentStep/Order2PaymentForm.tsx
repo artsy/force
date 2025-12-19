@@ -13,6 +13,10 @@ import type {
 } from "@stripe/stripe-js"
 import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
 import {
+  BankAccountBalanceCheckResult,
+  Order2PollBankAccountBalanceQueryRenderer,
+} from "Apps/Order2/Components/Order2PollBankAccountBalance"
+import {
   CheckoutErrorBanner,
   MailtoOrderSupport,
 } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
@@ -203,6 +207,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
     useState<FormikContextWithAddress>(() => ({
       address: defaultBillingAddress,
     }))
+  const [isCheckingBankBalance, setIsCheckingBankBalance] = useState(false)
 
   const isSelectedPaymentMethodStripe = selectedPaymentMethod?.match(/^stripe/)
   const savedCreditCards = extractNodes(me.creditCards)
@@ -397,6 +402,37 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
     resetElementsToInitialParams()
   }
 
+  const handleBalanceCheckComplete = async (
+    result: BankAccountBalanceCheckResult,
+    message?: string,
+  ) => {
+    setIsCheckingBankBalance(false)
+
+    switch (result) {
+      // We only want to block the checkout when we know there is insufficient funds.
+      case BankAccountBalanceCheckResult.INSUFFICIENT:
+        handleError({
+          message: message || "Insufficient funds in bank account",
+        })
+        break
+      default:
+        // For SUFFICIENT, PENDING, TIMEOUT, or OTHER, proceed with checkout
+        setPaymentComplete()
+        setIsSubmittingToStripe(false)
+        resetElementsToInitialParams()
+        break
+    }
+  }
+
+  const handleBalanceCheckError = (error: Error) => {
+    logger.error("Error during balance check:", error)
+    setIsCheckingBankBalance(false)
+    // On error, proceed with checkout anyway
+    setPaymentComplete()
+    setIsSubmittingToStripe(false)
+    resetElementsToInitialParams()
+  }
+
   const handleSubmit = async event => {
     event.preventDefault()
 
@@ -516,14 +552,23 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         validateAndExtractOrderResponse(
           updateOrderPaymentMethodResult.setOrderPayment?.orderOrError,
         )
+
+        // For ACH debit, start balance check
+        if (paymentMethod === "US_BANK_ACCOUNT") {
+          setIsCheckingBankBalance(true)
+          // Keep submitting state active during balance check
+          // The balance check handlers will call setPaymentComplete() and setIsSubmittingToStripe(false)
+          return
+        }
+
+        // For other payment methods, complete immediately
+        setPaymentComplete()
+        setIsSubmittingToStripe(false)
+        resetElementsToInitialParams()
       } catch (error) {
         logger.error("Error while updating order payment method", error)
         handleError({ message: defaultErrorMessage })
         return
-      } finally {
-        setPaymentComplete()
-        setIsSubmittingToStripe(false)
-        resetElementsToInitialParams()
       }
     }
 
@@ -652,6 +697,15 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       />
 
       <Spacer y={2} />
+
+      {isCheckingBankBalance && (
+        <Order2PollBankAccountBalanceQueryRenderer
+          orderId={order.internalID}
+          onBalanceCheckComplete={handleBalanceCheckComplete}
+          onError={handleBalanceCheckError}
+        />
+      )}
+
       {/* Stripe error messages are displayed within the Payment Element, so we don't need to handle them here. */}
       {errorMessage && !isSelectedPaymentMethodStripe && (
         <>
@@ -705,6 +759,10 @@ const ORDER_FRAGMENT = graphql`
     internalID
     currencyCode
     availablePaymentMethods
+    bankAccountBalanceCheck {
+      result
+      message
+    }
     pendingOffer {
       pricingBreakdownLines {
         ... on TotalLine {

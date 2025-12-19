@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2faf481034aba946448c054155c91638>>
+ * @generated SignedSource<<b244329716a3116156d42ffa81bbc365>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -93,19 +93,19 @@ v9 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "Money"
+  "type": "String"
 },
 v10 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Money"
+},
+v11 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "Long"
-},
-v11 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "String"
 };
 return {
   "fragment": {
@@ -300,6 +300,31 @@ return {
                 "args": null,
                 "kind": "ScalarField",
                 "name": "availablePaymentMethods",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "BankAccountBalanceCheck",
+                "kind": "LinkedField",
+                "name": "bankAccountBalanceCheck",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "result",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "message",
+                    "storageKey": null
+                  }
+                ],
                 "storageKey": null
               },
               {
@@ -537,7 +562,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b357f3c7a0265d20853493bfe31a47e8",
+    "cacheID": "3f3a2783cb99cfe3dbf87ff9054e755f",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -619,9 +644,28 @@ return {
           "plural": true,
           "type": "OrderPaymentMethodEnum"
         },
-        "me.order.buyerTotal": (v9/*: any*/),
+        "me.order.bankAccountBalanceCheck": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "BankAccountBalanceCheck"
+        },
+        "me.order.bankAccountBalanceCheck.message": (v9/*: any*/),
+        "me.order.bankAccountBalanceCheck.result": {
+          "enumValues": [
+            "INSUFFICIENT",
+            "INVALID",
+            "NOT_SUPPORTED",
+            "PENDING",
+            "SUFFICIENT"
+          ],
+          "nullable": false,
+          "plural": false,
+          "type": "BankAccountBalanceCheckResult"
+        },
+        "me.order.buyerTotal": (v10/*: any*/),
         "me.order.buyerTotal.currencyCode": (v7/*: any*/),
-        "me.order.buyerTotal.minor": (v10/*: any*/),
+        "me.order.buyerTotal.minor": (v11/*: any*/),
         "me.order.code": (v7/*: any*/),
         "me.order.currencyCode": (v7/*: any*/),
         "me.order.fulfillmentDetails": {
@@ -630,18 +674,18 @@ return {
           "plural": false,
           "type": "FulfillmentDetails"
         },
-        "me.order.fulfillmentDetails.addressLine1": (v11/*: any*/),
-        "me.order.fulfillmentDetails.addressLine2": (v11/*: any*/),
-        "me.order.fulfillmentDetails.city": (v11/*: any*/),
-        "me.order.fulfillmentDetails.country": (v11/*: any*/),
-        "me.order.fulfillmentDetails.name": (v11/*: any*/),
-        "me.order.fulfillmentDetails.postalCode": (v11/*: any*/),
-        "me.order.fulfillmentDetails.region": (v11/*: any*/),
+        "me.order.fulfillmentDetails.addressLine1": (v9/*: any*/),
+        "me.order.fulfillmentDetails.addressLine2": (v9/*: any*/),
+        "me.order.fulfillmentDetails.city": (v9/*: any*/),
+        "me.order.fulfillmentDetails.country": (v9/*: any*/),
+        "me.order.fulfillmentDetails.name": (v9/*: any*/),
+        "me.order.fulfillmentDetails.postalCode": (v9/*: any*/),
+        "me.order.fulfillmentDetails.region": (v9/*: any*/),
         "me.order.id": (v8/*: any*/),
         "me.order.internalID": (v8/*: any*/),
-        "me.order.itemsTotal": (v9/*: any*/),
+        "me.order.itemsTotal": (v10/*: any*/),
         "me.order.itemsTotal.currencyCode": (v7/*: any*/),
-        "me.order.itemsTotal.minor": (v10/*: any*/),
+        "me.order.itemsTotal.minor": (v11/*: any*/),
         "me.order.lineItems": {
           "enumValues": null,
           "nullable": false,
@@ -660,8 +704,8 @@ return {
           "plural": false,
           "type": "ArtworkMeta"
         },
-        "me.order.lineItems.artwork.artworkMeta.share": (v11/*: any*/),
-        "me.order.lineItems.artwork.href": (v11/*: any*/),
+        "me.order.lineItems.artwork.artworkMeta.share": (v9/*: any*/),
+        "me.order.lineItems.artwork.href": (v9/*: any*/),
         "me.order.lineItems.artwork.id": (v8/*: any*/),
         "me.order.lineItems.id": (v8/*: any*/),
         "me.order.mode": {
@@ -687,8 +731,8 @@ return {
           "type": "PricingBreakdownLineUnion"
         },
         "me.order.pendingOffer.pricingBreakdownLines.__typename": (v7/*: any*/),
-        "me.order.pendingOffer.pricingBreakdownLines.amount": (v9/*: any*/),
-        "me.order.pendingOffer.pricingBreakdownLines.amount.amount": (v11/*: any*/),
+        "me.order.pendingOffer.pricingBreakdownLines.amount": (v10/*: any*/),
+        "me.order.pendingOffer.pricingBreakdownLines.amount.amount": (v9/*: any*/),
         "me.order.pendingOffer.pricingBreakdownLines.amount.currencyCode": (v7/*: any*/),
         "me.order.seller": {
           "enumValues": null,
@@ -721,7 +765,7 @@ return {
     },
     "name": "Order2PaymentFormTestQuery",
     "operationKind": "query",
-    "text": "query Order2PaymentFormTestQuery {\n  me {\n    ...Order2PaymentForm_me\n    order(id: \"order-id\") {\n      ...Order2PaymentForm_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2PaymentForm_me on Me {\n  creditCards(first: 10) {\n    edges {\n      node {\n        __typename\n        internalID\n        brand\n        lastDigits\n        id\n      }\n    }\n  }\n  bankAccounts(first: 10) {\n    edges {\n      node {\n        __typename\n        type\n        internalID\n        last4\n        id\n      }\n    }\n  }\n}\n\nfragment Order2PaymentForm_order on Order {\n  code\n  mode\n  source\n  internalID\n  currencyCode\n  availablePaymentMethods\n  pendingOffer {\n    pricingBreakdownLines {\n      __typename\n      ... on TotalLine {\n        amount {\n          amount\n          currencyCode\n        }\n      }\n    }\n    id\n  }\n  itemsTotal {\n    minor\n    currencyCode\n  }\n  buyerTotal {\n    minor\n    currencyCode\n  }\n  seller {\n    __typename\n    ... on Partner {\n      merchantAccount {\n        externalId\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  fulfillmentDetails {\n    name\n    addressLine1\n    addressLine2\n    city\n    region\n    postalCode\n    country\n  }\n  lineItems {\n    artwork {\n      href\n      artworkMeta: meta {\n        share\n      }\n      id\n    }\n    id\n  }\n}\n"
+    "text": "query Order2PaymentFormTestQuery {\n  me {\n    ...Order2PaymentForm_me\n    order(id: \"order-id\") {\n      ...Order2PaymentForm_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2PaymentForm_me on Me {\n  creditCards(first: 10) {\n    edges {\n      node {\n        __typename\n        internalID\n        brand\n        lastDigits\n        id\n      }\n    }\n  }\n  bankAccounts(first: 10) {\n    edges {\n      node {\n        __typename\n        type\n        internalID\n        last4\n        id\n      }\n    }\n  }\n}\n\nfragment Order2PaymentForm_order on Order {\n  code\n  mode\n  source\n  internalID\n  currencyCode\n  availablePaymentMethods\n  bankAccountBalanceCheck {\n    result\n    message\n  }\n  pendingOffer {\n    pricingBreakdownLines {\n      __typename\n      ... on TotalLine {\n        amount {\n          amount\n          currencyCode\n        }\n      }\n    }\n    id\n  }\n  itemsTotal {\n    minor\n    currencyCode\n  }\n  buyerTotal {\n    minor\n    currencyCode\n  }\n  seller {\n    __typename\n    ... on Partner {\n      merchantAccount {\n        externalId\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  fulfillmentDetails {\n    name\n    addressLine1\n    addressLine2\n    city\n    region\n    postalCode\n    country\n  }\n  lineItems {\n    artwork {\n      href\n      artworkMeta: meta {\n        share\n      }\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();
