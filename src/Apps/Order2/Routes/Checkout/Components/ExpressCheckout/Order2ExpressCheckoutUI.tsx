@@ -537,11 +537,9 @@ export const Order2ExpressCheckoutUI: React.FC<
         <>By clicking Pay, I agree to Artsy's </>
         <RouterLink
           inline
-          to="https://www.artsy.net/terms"
-          {...(!isEigen && {
-            target: "_blank",
-            rel: "noopener noreferrer",
-          })}
+          to={`https://www.artsy.net/terms${isEigen ? "?hideCloseButton=true" : ""}`}
+          target="_blank"
+          rel="noopener noreferrer"
         >
           General Terms and Conditions of Sale
         </RouterLink>
