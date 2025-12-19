@@ -25,6 +25,7 @@ import { CheckoutErrorBanner } from "Apps/Order2/Routes/Checkout/Components/Chec
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { preventHardReload } from "Apps/Order2/Utils/navigationGuards"
 import { RouterLink } from "System/Components/RouterLink"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import createLogger from "Utils/logger"
 import type {
   Order2ExpressCheckoutUI_order$data,
@@ -63,6 +64,7 @@ export const Order2ExpressCheckoutUI: React.FC<
 
   const elements = useElements()
   const stripe = useStripe()
+  const { isEigen } = useSystemContext()
 
   const setFulfillmentOptionMutation =
     useOrder2ExpressCheckoutSetFulfillmentOptionMutation()
@@ -536,8 +538,10 @@ export const Order2ExpressCheckoutUI: React.FC<
         <RouterLink
           inline
           to="https://www.artsy.net/terms"
-          target="_blank"
-          rel="noopener noreferrer"
+          {...(!isEigen && {
+            target: "_blank",
+            rel: "noopener noreferrer",
+          })}
         >
           General Terms and Conditions of Sale
         </RouterLink>
