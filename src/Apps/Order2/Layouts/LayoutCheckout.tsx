@@ -25,8 +25,6 @@ export const LayoutCheckout: FC<React.PropsWithChildren<BaseLayoutProps>> = ({
         top={0}
         zIndex={Z.globalNav}
         bg="mono0"
-        borderBottom="1px solid"
-        borderColor="mono30"
       >
         {!isEigen && (
           <HorizontalPadding>

@@ -303,6 +303,9 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
                 savedAddresses={processedAddresses}
                 initialSelectedAddress={initialSelectedAddress}
                 newAddressInitialValues={blankAddressValuesForUser}
+                availableShippingCountries={
+                  orderData.availableShippingCountries
+                }
                 onSelectAddress={async values => {
                   await formikContext.setValues(values)
                 }}

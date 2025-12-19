@@ -36,6 +36,8 @@ export const SavedPaymentMethodOption: React.FC<
         borderRadius="5px"
         padding="1rem"
         marginBottom="10px"
+        border={isSelected ? "1px solid" : "none"}
+        borderColor="mono10"
         style={{ cursor: "pointer" }}
         onClick={onSelect}
       >
@@ -89,14 +91,11 @@ export const SavedPaymentMethodOption: React.FC<
                           <>
                             <InstitutionIcon
                               fill="mono100"
-                              width={["18px", "18px", "26px"]}
-                              height={["18px", "18px", "26px"]}
+                              width="24px"
+                              height="24px"
                               mr={1}
                             />
-                            <Text
-                              variant={["xs", "xs", "sm-display"]}
-                              mt={["0px", "0px", "3px"]}
-                            >
+                            <Text variant="sm">
                               Bank account •••• {paymentMethod.last4}
                             </Text>
                           </>
