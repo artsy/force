@@ -1,17 +1,22 @@
 import { Button, Flex, ModalDialog, Text } from "@artsy/palette"
-import { useReturnToArtwork } from "Apps/Order2/Routes/Checkout/Hooks/useReturnToArtwork"
+import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import { RouterLink } from "System/Components/RouterLink"
+import { useRouter } from "System/Hooks/useRouter"
+
+// TODO: Tracking
 
 export const CriticalErrorModal: React.FC<{
   error: string | null
 }> = ({ error }) => {
-  const returnToArtwork = useReturnToArtwork()
+  const { artworkPath } = useCheckoutContext()
+  const { router } = useRouter()
 
   if (!error) {
     return null
   }
 
-  const handleClose = () => {
-    returnToArtwork()
+  const sendToArtworkScreen = () => {
+    router.replace(artworkPath)
   }
 
   const handleReload = () => {
@@ -40,7 +45,7 @@ export const CriticalErrorModal: React.FC<{
   }
 
   return (
-    <ModalDialog title={title} width="450px" onClose={handleClose}>
+    <ModalDialog title={title} width="450px" onClose={sendToArtworkScreen}>
       <Text variant="sm" mb={2}>
         {description}
       </Text>
@@ -50,9 +55,11 @@ export const CriticalErrorModal: React.FC<{
             Reload
           </Button>
         )}
-        <Button variant="primaryBlack" onClick={handleClose}>
-          Return to Artwork
-        </Button>
+        <RouterLink to={artworkPath}>
+          <Button variant="primaryBlack" onClick={sendToArtworkScreen}>
+            Return to Artwork
+          </Button>
+        </RouterLink>
       </Flex>
     </ModalDialog>
   )

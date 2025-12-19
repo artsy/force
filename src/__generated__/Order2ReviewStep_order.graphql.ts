@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<df48986cdebd17d58f48f924fc1aeac9>>
+ * @generated SignedSource<<d4922f995bd31c0357a4ce8fc887164b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,9 +21,6 @@ export type Order2ReviewStep_order$data = {
     readonly display: string | null | undefined;
   } | null | undefined;
   readonly lineItems: ReadonlyArray<{
-    readonly artwork: {
-      readonly slug: string;
-    } | null | undefined;
     readonly artworkOrEditionSet: {
       readonly __typename: "Artwork";
       readonly dimensions: {
@@ -204,24 +201,6 @@ return {
         {
           "alias": null,
           "args": null,
-          "concreteType": "Artwork",
-          "kind": "LinkedField",
-          "name": "artwork",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "slug",
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
           "concreteType": null,
           "kind": "LinkedField",
           "name": "artworkOrEditionSet",
@@ -360,6 +339,6 @@ return {
 };
 })();
 
-(node as any).hash = "1938b71409a6b4b4ce68c0d15eff3621";
+(node as any).hash = "b607578fe02ccba356a38b02701f50bb";
 
 export default node;

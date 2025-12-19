@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8ce28735dd0e1a8c981074c66cc10ee4>>
+ * @generated SignedSource<<197c6846b7e474c7384c9d783c73a37a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,6 +15,11 @@ export type OrderSourceEnum = "ARTWORK_PAGE" | "INQUIRY" | "PARTNER_OFFER" | "PR
 import { FragmentRefs } from "relay-runtime";
 export type Order2CheckoutContext_order$data = {
   readonly internalID: string;
+  readonly lineItems: ReadonlyArray<{
+    readonly artwork: {
+      readonly slug: string;
+    } | null | undefined;
+  } | null | undefined>;
   readonly mode: OrderModeEnum;
   readonly selectedFulfillmentOption: {
     readonly type: FulfillmentOptionTypeEnum;
@@ -85,12 +90,41 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "LineItem",
+      "kind": "LinkedField",
+      "name": "lineItems",
+      "plural": true,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Artwork",
+          "kind": "LinkedField",
+          "name": "artwork",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "slug",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
     }
   ],
   "type": "Order",
   "abstractKey": null
 };
 
-(node as any).hash = "0d57f6fcf0bbc3519fe4340629abb142";
+(node as any).hash = "26d1a886d9b04f5f3d3fe1dd32e29238";
 
 export default node;

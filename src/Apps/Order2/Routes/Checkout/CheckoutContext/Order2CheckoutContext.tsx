@@ -85,6 +85,7 @@ export interface Order2CheckoutModel {
   checkoutMode: CheckoutMode
   userAddressMode: UserAddressMode | null
   messages: Messages
+  artworkPath: string
 
   // External data - passed in as runtime props
   checkoutTracking: ReturnType<typeof useCheckoutTracking>
@@ -142,6 +143,7 @@ export const Order2CheckoutContext: ReturnType<
   steps: [],
   userAddressMode: null,
   messages: {},
+  artworkPath: "/",
 
   // Required runtime props - will be provided by Provider
   // These will be overridden by the Provider with actual values
@@ -524,6 +526,12 @@ export const Order2CheckoutContextProvider: React.FC<
     [orderData, initialSteps],
   )
 
+  // Calculate artworkPath from orderData
+  const artworkPath = useMemo(() => {
+    const artworkSlug = orderData.lineItems?.[0]?.artwork?.slug
+    return artworkSlug ? `/artwork/${artworkSlug}` : "/"
+  }, [orderData])
+
   const runtimeModel = {
     // Default values
     isLoading: true,
@@ -545,6 +553,7 @@ export const Order2CheckoutContextProvider: React.FC<
     checkoutTracking,
     router,
     orderData,
+    artworkPath,
   } as Order2CheckoutModel
 
   return (
@@ -563,6 +572,11 @@ const ORDER_FRAGMENT = graphql`
     stripeConfirmationToken
     selectedFulfillmentOption {
       type
+    }
+    lineItems {
+      artwork {
+        slug
+      }
     }
   }
 `

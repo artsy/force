@@ -1,21 +1,30 @@
 import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-import { useReturnToArtwork } from "Apps/Order2/Routes/Checkout/Hooks/useReturnToArtwork"
+import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import { useRouter } from "System/Hooks/useRouter"
 import { CriticalErrorModal } from "../CriticalErrorModal"
 
-// Mock the useReturnToArtwork hook
-jest.mock("Apps/Order2/Routes/Checkout/Hooks/useReturnToArtwork")
+// Mock the useCheckoutContext hook
+jest.mock("Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext")
 
-const mockReturnToArtwork = jest.fn()
+// Mock the useRouter hook
+jest.mock("System/Hooks/useRouter")
+
+const mockRouterReplace = jest.fn()
 
 describe("CriticalErrorModal", () => {
   beforeEach(() => {
     jest.clearAllMocks()
-    ;(useReturnToArtwork as jest.Mock).mockReturnValue(mockReturnToArtwork)
+    ;(useCheckoutContext as jest.Mock).mockReturnValue({
+      artworkPath: "/artwork/test-artwork",
+    })
+    ;(useRouter as jest.Mock).mockReturnValue({
+      router: { replace: mockRouterReplace },
+    })
 
-    // Mock window.location.reload
+    // Mock window.location
     delete (window as any).location
-    window.location = { reload: jest.fn() } as any
+    window.location = { reload: jest.fn(), href: "" } as any
   })
 
   it("does not render when error is null", () => {
@@ -53,7 +62,7 @@ describe("CriticalErrorModal", () => {
       const returnButton = screen.getByText("Return to Artwork")
       await userEvent.click(returnButton)
 
-      expect(mockReturnToArtwork).toHaveBeenCalled()
+      expect(mockRouterReplace).toHaveBeenCalledWith("/artwork/test-artwork")
     })
   })
 
@@ -77,7 +86,7 @@ describe("CriticalErrorModal", () => {
       const returnButton = screen.getByText("Return to Artwork")
       await userEvent.click(returnButton)
 
-      expect(mockReturnToArtwork).toHaveBeenCalled()
+      expect(mockRouterReplace).toHaveBeenCalledWith("/artwork/test-artwork")
     })
   })
 
@@ -104,7 +113,7 @@ describe("CriticalErrorModal", () => {
       const closeButton = screen.getByLabelText("Close")
       await userEvent.click(closeButton)
 
-      expect(mockReturnToArtwork).toHaveBeenCalled()
+      expect(mockRouterReplace).toHaveBeenCalledWith("/artwork/test-artwork")
     })
   })
 })
