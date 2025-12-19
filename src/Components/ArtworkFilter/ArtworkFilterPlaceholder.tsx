@@ -19,7 +19,8 @@ import {
   SkeletonText,
   Spacer,
 } from "@artsy/palette"
-import { useFlag } from "@unleash/proxy-client-react"
+import { useFlag, useVariant } from "@unleash/proxy-client-react"
+import { ARTIST_COMBINED_LAYOUT_FLAG } from "Apps/Artist/Routes/ArtistABTestRoute"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { ArtworkFilterActiveFilters } from "Components/ArtworkFilter/ArtworkFilterActiveFilters"
@@ -41,8 +42,9 @@ export const ArtworkFilterPlaceholder: React.FC<
   React.PropsWithChildren<ArtworkFilterPlaceholderProps>
 > = ({ showCreateAlert = false, layout = "MASONRY", ...rest }) => {
   const enableImmersiveView = useFlag("onyx_enable-immersive-view")
-  const { contextPageOwnerType } = useAnalyticsContext()
-  const isArtistPage = contextPageOwnerType === OwnerType.artist
+
+  const padding = useArtistPageExperimentPadding()
+
   const backdrop = useStickyBackdrop()
 
   return (
@@ -61,7 +63,7 @@ export const ArtworkFilterPlaceholder: React.FC<
                     borderBottom="1px solid"
                     borderColor="mono10"
                     px={2}
-                    {...(isArtistPage ? { pb: 2 } : { py: 1 })}
+                    {...padding}
                   >
                     <Box display="flex" alignItems="center" gap={0.5}>
                       <FilterIcon />
@@ -105,7 +107,7 @@ export const ArtworkFilterPlaceholder: React.FC<
                         alignItems="center"
                         justifyContent="space-between"
                         gap={2}
-                        {...(isArtistPage ? { pb: 2 } : { py: 2 })}
+                        {...padding}
                       >
                         <HorizontalOverflow minWidth={0}>
                           <Flex gap={1}>
@@ -229,4 +231,14 @@ export const ArtworkFilterPlaceholder: React.FC<
       </Skeleton>
     </Box>
   )
+}
+
+export const useArtistPageExperimentPadding = () => {
+  const { contextPageOwnerType } = useAnalyticsContext()
+
+  const isArtistPage = contextPageOwnerType === OwnerType.artist
+
+  const variant = useVariant(ARTIST_COMBINED_LAYOUT_FLAG)
+
+  return variant.name === "experiment" && isArtistPage ? { pb: 2 } : { py: 1 }
 }
