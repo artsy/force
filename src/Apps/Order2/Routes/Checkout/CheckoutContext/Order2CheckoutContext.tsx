@@ -1,4 +1,3 @@
-import { CheckoutLoadingManager } from "Apps/Order2/Routes/Checkout/CheckoutContext/CheckoutLoadingManager"
 import type {
   CheckoutStep,
   CriticalCheckoutError,
@@ -10,13 +9,10 @@ import {
   CheckoutStepName,
   CheckoutStepState,
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
+import { useLoadCheckout } from "Apps/Order2/Routes/Checkout/CheckoutContext/useLoadCheckout"
 import type { CheckoutErrorBannerProps } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { useBuildInitialSteps } from "Apps/Order2/Routes/Checkout/Hooks/useBuildInitialSteps"
 import { useCheckoutTracking } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutTracking"
-import {
-  handleBackNavigation,
-  preventHardReload,
-} from "Apps/Order2/Utils/navigationGuards"
 import { useRouter } from "System/Hooks/useRouter"
 import createLogger from "Utils/logger"
 import type {
@@ -25,7 +21,7 @@ import type {
 } from "__generated__/Order2CheckoutContext_order.graphql"
 import { type Action, action, createContextStore } from "easy-peasy"
 import type React from "react"
-import { useEffect, useMemo } from "react"
+import { useMemo } from "react"
 import { graphql, useFragment } from "react-relay"
 
 const logger = createLogger("Order2CheckoutContext.tsx")
@@ -513,42 +509,6 @@ interface Order2CheckoutContextProviderProps {
   children: React.ReactNode
 }
 
-const NavigationGuardsManager: React.FC = () => {
-  const isLoading = Order2CheckoutContext.useStoreState(
-    state => state.isLoading,
-  )
-  const criticalCheckoutError = Order2CheckoutContext.useStoreState(
-    state => state.criticalCheckoutError,
-  )
-
-  useEffect(() => {
-    // Don't set up guards if there's a critical error or still loading
-    if (isLoading || criticalCheckoutError) {
-      return
-    }
-
-    window.addEventListener("beforeunload", preventHardReload)
-    window.history.pushState(null, "", window.location.pathname)
-    window.addEventListener("popstate", handleBackNavigation)
-
-    return () => {
-      window.removeEventListener("beforeunload", preventHardReload)
-      window.removeEventListener("popstate", handleBackNavigation)
-    }
-  }, [isLoading, criticalCheckoutError])
-
-  // If a critical error occurs, immediately remove any existing guards
-  useEffect(() => {
-    if (criticalCheckoutError) {
-      window.removeEventListener("beforeunload", preventHardReload)
-      window.removeEventListener("popstate", handleBackNavigation)
-      window.onbeforeunload = null
-    }
-  }, [criticalCheckoutError])
-
-  return null
-}
-
 export const Order2CheckoutContextProvider: React.FC<
   Order2CheckoutContextProviderProps
 > = ({ order, children }) => {
@@ -588,12 +548,12 @@ export const Order2CheckoutContextProvider: React.FC<
     orderData,
   } as Order2CheckoutModel
 
+  // Load checkout and manage window side effects
+  useLoadCheckout(orderData)
+
   return (
     <Order2CheckoutContext.Provider runtimeModel={runtimeModel}>
-      <CheckoutLoadingManager orderData={orderData}>
-        <NavigationGuardsManager />
-        {children}
-      </CheckoutLoadingManager>
+      {children}
     </Order2CheckoutContext.Provider>
   )
 }

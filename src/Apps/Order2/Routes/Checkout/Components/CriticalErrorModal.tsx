@@ -11,12 +11,10 @@ export const CriticalErrorModal: React.FC<{
   }
 
   const handleClose = () => {
-    returnToArtwork({ force: true })
+    returnToArtwork()
   }
 
   const handleReload = () => {
-    // Remove all event listeners before reloading to avoid confirmation dialog
-    window.onbeforeunload = null
     window.location.reload()
   }
 

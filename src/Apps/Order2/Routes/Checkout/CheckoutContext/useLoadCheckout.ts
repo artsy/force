@@ -1,29 +1,26 @@
+import { Order2CheckoutContext } from "Apps/Order2/Routes/Checkout/CheckoutContext/Order2CheckoutContext"
 import {
   CheckoutStepName,
   CheckoutStepState,
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
-import { Order2CheckoutContext } from "Apps/Order2/Routes/Checkout/CheckoutContext/Order2CheckoutContext"
 import { useStripePaymentBySetupIntentId } from "Apps/Order2/Routes/Checkout/Hooks/useStripePaymentBySetupIntentId"
+import {
+  handleBackNavigation,
+  preventHardReload,
+} from "Apps/Order2/Utils/navigationGuards"
 import createLogger from "Utils/logger"
 import type { Order2CheckoutContext_order$data } from "__generated__/Order2CheckoutContext_order.graphql"
 import { every } from "lodash"
-import type React from "react"
 import { useEffect, useRef, useState } from "react"
 
-const logger = createLogger("CheckoutLoadingManager.tsx")
+const logger = createLogger("useLoadCheckout.tsx")
 
 export const MIN_LOADING_MS = 1000
 export const MAX_LOADING_MS = 6000
 
-interface CheckoutLoadingManagerProps {
-  orderData: Order2CheckoutContext_order$data
-  children: React.ReactNode
-}
-
-export const CheckoutLoadingManager: React.FC<CheckoutLoadingManagerProps> = ({
-  orderData,
-  children,
-}) => {
+export const useLoadCheckout = (
+  orderData: Order2CheckoutContext_order$data,
+) => {
   const [minimumLoadingPassed, setMinimumLoadingPassed] = useState(false)
   const [orderValidated, setOrderValidated] = useState(false)
   const [isStripeRedirectHandled, setIsStripeRedirectHandled] = useState(false)
@@ -60,7 +57,7 @@ export const CheckoutLoadingManager: React.FC<CheckoutLoadingManagerProps> = ({
     actions => actions.setLoadingComplete,
   )
 
-  // Scroll lock during loading (EMI-2880)
+  // Scroll lock during loading
   useEffect(() => {
     if (isLoading) {
       document.body.style.overflow = "hidden"
@@ -73,9 +70,34 @@ export const CheckoutLoadingManager: React.FC<CheckoutLoadingManagerProps> = ({
     }
   }, [isLoading])
 
+  // Navigation guards - prevent accidental navigation away from checkout
+  // except during loading or error
+  useEffect(() => {
+    // Don't set up guards if there's a critical error or still loading
+    if (isLoading || criticalCheckoutError) {
+      return
+    }
+
+    window.addEventListener("beforeunload", preventHardReload)
+    window.history.pushState(null, "", window.location.pathname)
+    window.addEventListener("popstate", handleBackNavigation)
+
+    return () => {
+      window.removeEventListener("beforeunload", preventHardReload)
+      window.removeEventListener("popstate", handleBackNavigation)
+    }
+  }, [isLoading, criticalCheckoutError])
+
+  // If a critical error occurs, immediately remove any existing guards
+  useEffect(() => {
+    if (criticalCheckoutError) {
+      window.removeEventListener("beforeunload", preventHardReload)
+      window.removeEventListener("popstate", handleBackNavigation)
+      window.onbeforeunload = null
+    }
+  }, [criticalCheckoutError])
+
   // Validate order and get into good initial checkout state on load
-  // - artwork version match
-  // - any resetting
   useEffect(() => {
     if (orderValidated || !orderData) {
       return
@@ -90,6 +112,7 @@ export const CheckoutLoadingManager: React.FC<CheckoutLoadingManagerProps> = ({
     }
   }, [orderData, orderValidated, setCriticalCheckoutError])
 
+  // Set minimum loading duration to avoid flash of loading state
   useEffect(() => {
     const timeout = setTimeout(() => {
       setMinimumLoadingPassed(true)
@@ -102,30 +125,32 @@ export const CheckoutLoadingManager: React.FC<CheckoutLoadingManagerProps> = ({
     isLoadingRef.current = isLoading
   }, [isLoading])
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  // Set timeout for maximum loading duration
+  // biome-ignore lint/correctness/useExhaustiveDependencies: 1-time effect
   useEffect(() => {
     const timeout = setTimeout(() => {
       if (isLoadingRef.current) {
-        const error = new Error(
-          `Checkout loading state exceeded ${MAX_LOADING_MS}ms timeout: ${Object.entries(
-            {
-              minimumLoadingPassed,
-              orderValidated,
-              isExpressCheckoutLoaded,
-              isStripeRedirectHandled,
-            },
-          )
-            .map(([key, value]) => `${key}: ${value}`)
-            .join(", ")}`,
-        )
-        logger.error(error)
+        const loadingState = Object.entries({
+          minimumLoadingPassed,
+          orderValidated,
+          isExpressCheckoutLoaded,
+          isStripeRedirectHandled,
+        })
+          .map(([key, value]) => `${key}: ${value}`)
+          .join(", ")
 
+        const error = new Error(
+          `Checkout loading state exceeded ${MAX_LOADING_MS}ms timeout: ${loadingState}`,
+        )
+
+        logger.error(error)
         setCriticalCheckoutError("loading_timeout")
       }
     }, MAX_LOADING_MS)
     return () => clearTimeout(timeout)
   }, [])
 
+  // Set loading complete when all conditions are met
   useEffect(() => {
     if (!isLoading || !!criticalCheckoutError) {
       return
@@ -152,8 +177,6 @@ export const CheckoutLoadingManager: React.FC<CheckoutLoadingManagerProps> = ({
     setLoadingComplete,
     criticalCheckoutError,
   ])
-
-  return <>{children}</>
 }
 
 const validateOrder = (order: Order2CheckoutContext_order$data) => {

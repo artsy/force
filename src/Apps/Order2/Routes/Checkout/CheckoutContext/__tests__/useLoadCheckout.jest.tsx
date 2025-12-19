@@ -1,9 +1,9 @@
-import { act, render, screen, waitFor } from "@testing-library/react"
+import { act, renderHook, waitFor } from "@testing-library/react"
 import {
-  CheckoutLoadingManager,
   MAX_LOADING_MS,
   MIN_LOADING_MS,
-} from "Apps/Order2/Routes/Checkout/CheckoutContext/CheckoutLoadingManager"
+  useLoadCheckout,
+} from "Apps/Order2/Routes/Checkout/CheckoutContext/useLoadCheckout"
 import { Order2CheckoutContext } from "Apps/Order2/Routes/Checkout/CheckoutContext/Order2CheckoutContext"
 import { CheckoutStepState } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { useStripePaymentBySetupIntentId } from "Apps/Order2/Routes/Checkout/Hooks/useStripePaymentBySetupIntentId"
@@ -37,7 +37,7 @@ const mockUseStoreActions = jest.fn()
 Order2CheckoutContext.useStoreState = mockUseStoreState as any
 Order2CheckoutContext.useStoreActions = mockUseStoreActions as any
 
-describe("CheckoutLoadingManager", () => {
+describe("useLoadCheckout", () => {
   const mockOrderData: Order2CheckoutContext_order$data = {
     internalID: "order-123",
     mode: "BUY",
@@ -106,11 +106,7 @@ describe("CheckoutLoadingManager", () => {
         return selector(state)
       })
 
-      render(
-        <CheckoutLoadingManager orderData={mockOrderData}>
-          <div>Content</div>
-        </CheckoutLoadingManager>,
-      )
+      renderHook(() => useLoadCheckout(mockOrderData))
 
       expect(document.body.style.overflow).toBe("hidden")
     })
@@ -127,21 +123,13 @@ describe("CheckoutLoadingManager", () => {
         return selector(state)
       })
 
-      const { rerender } = render(
-        <CheckoutLoadingManager orderData={mockOrderData}>
-          <div>Content</div>
-        </CheckoutLoadingManager>,
-      )
+      const { rerender } = renderHook(() => useLoadCheckout(mockOrderData))
 
       expect(document.body.style.overflow).toBe("hidden")
 
       // Simulate loading complete
       isLoading = false
-      rerender(
-        <CheckoutLoadingManager orderData={mockOrderData}>
-          <div>Content</div>
-        </CheckoutLoadingManager>,
-      )
+      rerender()
 
       expect(document.body.style.overflow).toBe("")
     })
@@ -157,11 +145,7 @@ describe("CheckoutLoadingManager", () => {
         return selector(state)
       })
 
-      const { unmount } = render(
-        <CheckoutLoadingManager orderData={mockOrderData}>
-          <div>Content</div>
-        </CheckoutLoadingManager>,
-      )
+      const { unmount } = renderHook(() => useLoadCheckout(mockOrderData))
 
       expect(document.body.style.overflow).toBe("hidden")
 
@@ -173,11 +157,7 @@ describe("CheckoutLoadingManager", () => {
 
   describe("order validation", () => {
     it("validates order successfully with valid data", async () => {
-      render(
-        <CheckoutLoadingManager orderData={mockOrderData}>
-          <div>Content</div>
-        </CheckoutLoadingManager>,
-      )
+      renderHook(() => useLoadCheckout(mockOrderData))
 
       await waitFor(() => {
         expect(mockSetCriticalCheckoutError).not.toHaveBeenCalled()
@@ -190,11 +170,7 @@ describe("CheckoutLoadingManager", () => {
         lineItems: [],
       } as any
 
-      render(
-        <CheckoutLoadingManager orderData={invalidOrderData}>
-          <div>Content</div>
-        </CheckoutLoadingManager>,
-      )
+      renderHook(() => useLoadCheckout(invalidOrderData))
 
       await waitFor(() => {
         expect(mockSetCriticalCheckoutError).toHaveBeenCalledWith(
@@ -209,11 +185,7 @@ describe("CheckoutLoadingManager", () => {
         lineItems: [{ artworkVersion: null }],
       } as any
 
-      render(
-        <CheckoutLoadingManager orderData={invalidOrderData}>
-          <div>Content</div>
-        </CheckoutLoadingManager>,
-      )
+      renderHook(() => useLoadCheckout(invalidOrderData))
 
       await waitFor(() => {
         expect(mockSetCriticalCheckoutError).toHaveBeenCalledWith(
@@ -225,11 +197,7 @@ describe("CheckoutLoadingManager", () => {
 
   describe("loading timeout", () => {
     it("sets loading_timeout error when MAX_LOADING_MS is exceeded", async () => {
-      render(
-        <CheckoutLoadingManager orderData={mockOrderData}>
-          <div>Content</div>
-        </CheckoutLoadingManager>,
-      )
+      renderHook(() => useLoadCheckout(mockOrderData))
 
       act(() => {
         jest.advanceTimersByTime(MAX_LOADING_MS)
@@ -260,11 +228,7 @@ describe("CheckoutLoadingManager", () => {
         return selector(state)
       })
 
-      const { rerender } = render(
-        <CheckoutLoadingManager orderData={mockOrderData}>
-          <div>Content</div>
-        </CheckoutLoadingManager>,
-      )
+      const { rerender } = renderHook(() => useLoadCheckout(mockOrderData))
 
       // Advance past minimum loading time
       act(() => {
@@ -278,11 +242,7 @@ describe("CheckoutLoadingManager", () => {
 
       // Loading completes
       isLoading = false
-      rerender(
-        <CheckoutLoadingManager orderData={mockOrderData}>
-          <div>Content</div>
-        </CheckoutLoadingManager>,
-      )
+      rerender()
 
       // Advance to where timeout would fire
       act(() => {
@@ -311,11 +271,7 @@ describe("CheckoutLoadingManager", () => {
         return selector(state)
       })
 
-      const { rerender } = render(
-        <CheckoutLoadingManager orderData={mockOrderData}>
-          <div>Content</div>
-        </CheckoutLoadingManager>,
-      )
+      const { rerender } = renderHook(() => useLoadCheckout(mockOrderData))
 
       // Advance minimum loading time
       act(() => {
@@ -329,11 +285,7 @@ describe("CheckoutLoadingManager", () => {
 
       // Express checkout loads
       expressCheckoutLoaded = true
-      rerender(
-        <CheckoutLoadingManager orderData={mockOrderData}>
-          <div>Content</div>
-        </CheckoutLoadingManager>,
-      )
+      rerender()
 
       await waitFor(() => {
         expect(mockSetLoadingComplete).toHaveBeenCalled()
@@ -351,11 +303,7 @@ describe("CheckoutLoadingManager", () => {
         return selector(state)
       })
 
-      render(
-        <CheckoutLoadingManager orderData={mockOrderData}>
-          <div>Content</div>
-        </CheckoutLoadingManager>,
-      )
+      renderHook(() => useLoadCheckout(mockOrderData))
 
       // Trigger stripe callback
       act(() => {
@@ -377,11 +325,7 @@ describe("CheckoutLoadingManager", () => {
         return selector(state)
       })
 
-      render(
-        <CheckoutLoadingManager orderData={mockOrderData}>
-          <div>Content</div>
-        </CheckoutLoadingManager>,
-      )
+      renderHook(() => useLoadCheckout(mockOrderData))
 
       act(() => {
         jest.advanceTimersByTime(MIN_LOADING_MS)
@@ -396,11 +340,7 @@ describe("CheckoutLoadingManager", () => {
 
   describe("stripe redirect handling", () => {
     it("handles stripe redirect callback", () => {
-      render(
-        <CheckoutLoadingManager orderData={mockOrderData}>
-          <div>Content</div>
-        </CheckoutLoadingManager>,
-      )
+      renderHook(() => useLoadCheckout(mockOrderData))
 
       expect(useStripePaymentBySetupIntentId).toHaveBeenCalledWith(
         "order-123",
@@ -409,18 +349,6 @@ describe("CheckoutLoadingManager", () => {
 
       // Callback should be stored
       expect(mockStripeCallback).not.toBeNull()
-    })
-  })
-
-  describe("children rendering", () => {
-    it("renders children", () => {
-      render(
-        <CheckoutLoadingManager orderData={mockOrderData}>
-          <div data-testid="child-content">Test Content</div>
-        </CheckoutLoadingManager>,
-      )
-
-      expect(screen.getByTestId("child-content")).toBeInTheDocument()
     })
   })
 })
