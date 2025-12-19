@@ -251,7 +251,7 @@ export const ImmersiveView: React.FC<ImmersiveViewProps> = props => {
                   onError={() => setIsImageLoading(false)}
                 />
 
-                <Text color="mono60">
+                <Text color="mono60" px={2}>
                   {currentArtwork.formattedMetadata ?? "…"}
                 </Text>
               </Flex>
