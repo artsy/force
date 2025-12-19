@@ -560,18 +560,9 @@ const ORDER_FRAGMENT = graphql`
     internalID
     mode
     source
-    buyerStateExpiresAt
     stripeConfirmationToken
     selectedFulfillmentOption {
       type
-    }
-    lineItems {
-      artworkVersion {
-        internalID
-      }
-      artwork {
-        slug
-      }
     }
   }
 `

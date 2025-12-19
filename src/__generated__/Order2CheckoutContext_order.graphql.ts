@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ab66025226d953c420fd6b1dd3d7bcc1>>
+ * @generated SignedSource<<8ce28735dd0e1a8c981074c66cc10ee4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,16 +14,7 @@ export type OrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type OrderSourceEnum = "ARTWORK_PAGE" | "INQUIRY" | "PARTNER_OFFER" | "PRIVATE_SALE" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type Order2CheckoutContext_order$data = {
-  readonly buyerStateExpiresAt: string | null | undefined;
   readonly internalID: string;
-  readonly lineItems: ReadonlyArray<{
-    readonly artwork: {
-      readonly slug: string;
-    } | null | undefined;
-    readonly artworkVersion: {
-      readonly internalID: string;
-    } | null | undefined;
-  } | null | undefined>;
   readonly mode: OrderModeEnum;
   readonly selectedFulfillmentOption: {
     readonly type: FulfillmentOptionTypeEnum;
@@ -38,15 +29,7 @@ export type Order2CheckoutContext_order$key = {
   readonly " $fragmentSpreads": FragmentRefs<"Order2CheckoutContext_order">;
 };
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "internalID",
-  "storageKey": null
-};
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -57,7 +40,13 @@ return {
       "kind": "FragmentSpread",
       "name": "useBuildInitialSteps_order"
     },
-    (v0/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "internalID",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -70,13 +59,6 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "source",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "buyerStateExpiresAt",
       "storageKey": null
     },
     {
@@ -103,54 +85,12 @@ return {
         }
       ],
       "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "LineItem",
-      "kind": "LinkedField",
-      "name": "lineItems",
-      "plural": true,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "ArtworkVersion",
-          "kind": "LinkedField",
-          "name": "artworkVersion",
-          "plural": false,
-          "selections": [
-            (v0/*: any*/)
-          ],
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "Artwork",
-          "kind": "LinkedField",
-          "name": "artwork",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "slug",
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
     }
   ],
   "type": "Order",
   "abstractKey": null
 };
-})();
 
-(node as any).hash = "a3883d6d6386de056069e1821768183d";
+(node as any).hash = "0d57f6fcf0bbc3519fe4340629abb142";
 
 export default node;
