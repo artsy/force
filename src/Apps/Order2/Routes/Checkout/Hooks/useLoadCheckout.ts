@@ -123,11 +123,16 @@ export const useLoadCheckout = (order: useLoadCheckout_order$key) => {
     isLoadingRef.current = isLoading
   }, [isLoading])
 
+  const loadingErrorRef = useRef(criticalCheckoutError)
+  useEffect(() => {
+    loadingErrorRef.current = criticalCheckoutError
+  }, [criticalCheckoutError])
+
   // Set timeout for maximum loading duration
   // biome-ignore lint/correctness/useExhaustiveDependencies: 1-time effect
   useEffect(() => {
     const timeout = setTimeout(() => {
-      if (isLoadingRef.current) {
+      if (isLoadingRef.current && !loadingErrorRef.current) {
         const loadingState = Object.entries({
           minimumLoadingPassed,
           orderValidated,
@@ -200,9 +205,6 @@ const validateOrder = (order: useLoadCheckout_order$data) => {
 
   if (!hasLineItemsWithData) {
     throw new Error("missing_line_item_data")
-  }
-  if (!order.lineItems.every(li => li?.artwork?.isAcquireable)) {
-    throw new Error("artwork_not_for_sale")
   }
   return
 }
