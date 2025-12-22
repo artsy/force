@@ -5,6 +5,7 @@ import type { Order2PaymentFormTestQuery } from "__generated__/Order2PaymentForm
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { Order2PaymentForm } from "../Order2PaymentForm"
+import React from "react"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -126,6 +127,26 @@ jest.mock(
     useOrder2SetOrderPaymentMutation: () => mockSetPaymentMutation,
   }),
 )
+
+// Mock balance check component
+jest.mock("Apps/Order2/Components/Order2PollBankAccountBalance", () => ({
+  Order2PollBankAccountBalanceQueryRenderer: ({
+    onBalanceCheckComplete,
+  }: any) => {
+    // Immediately call onBalanceCheckComplete with SUFFICIENT result
+    React.useEffect(() => {
+      onBalanceCheckComplete("SUFFICIENT")
+    }, [onBalanceCheckComplete])
+    return <div data-testid="balance-check-polling">Checking balance...</div>
+  },
+  BankAccountBalanceCheckResult: {
+    SUFFICIENT: "SUFFICIENT",
+    INSUFFICIENT: "INSUFFICIENT",
+    PENDING: "PENDING",
+    TIMEOUT: "TIMEOUT",
+    OTHER: "OTHER",
+  },
+}))
 
 // Mock response factories
 const createConfirmationTokenResponse = paymentMethodPreview => ({
@@ -726,6 +747,7 @@ describe("Order2PaymentForm", () => {
         },
       })
     })
+
     it("successfully submits an ACH order", async () => {
       const tokenId = "ach-confirmation-token-id"
 
