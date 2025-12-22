@@ -4,7 +4,6 @@ import { Box, Button, Flex, Image, Message, Spacer, Text } from "@artsy/palette"
 import { useStripe } from "@stripe/react-stripe-js"
 import { useArtworkDimensions } from "Apps/Artwork/useArtworkDimensions"
 import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
-import { type Dialog, injectDialog } from "Apps/Order/Dialogs"
 import {
   CheckoutStepName,
   CheckoutStepState,
@@ -27,12 +26,10 @@ const logger = createLogger("Order2ReviewStep.tsx")
 
 interface Order2ReviewStepProps {
   order: Order2ReviewStep_order$key
-  dialog: Dialog
 }
 
-const Order2ReviewStepComponent: React.FC<Order2ReviewStepProps> = ({
+export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
   order,
-  dialog,
 }) => {
   const orderData = useFragment(FRAGMENT, order)
   const isOffer = orderData.mode === "OFFER"
@@ -48,7 +45,7 @@ const Order2ReviewStepComponent: React.FC<Order2ReviewStepProps> = ({
     redirectToOrderDetails,
     checkoutTracking,
     artworkPath,
-    setCriticalCheckoutError,
+    setCheckoutModalError,
   } = useCheckoutContext()
 
   const artworkData = extractLineItemMetadata(orderData.lineItems[0]!)
@@ -68,18 +65,11 @@ const Order2ReviewStepComponent: React.FC<Order2ReviewStepProps> = ({
     })
 
     if (error.code === "insufficient_inventory") {
-      setCriticalCheckoutError(CheckoutModalError.ARTWORK_NOT_FOR_SALE)
+      setCheckoutModalError(CheckoutModalError.ARTWORK_NOT_FOR_SALE)
       return
     }
 
-    const title = "An error occurred"
-    const message =
-      "Something went wrong while submitting your order. Please try again."
-
-    dialog.showErrorDialog({
-      title: title,
-      message: message,
-    })
+    setCheckoutModalError(CheckoutModalError.SUBMIT_ERROR)
   }
 
   const handleClick = async () => {
@@ -217,8 +207,6 @@ const Order2ReviewStepComponent: React.FC<Order2ReviewStepProps> = ({
     </Flex>
   )
 }
-
-export const Order2ReviewStep = injectDialog(Order2ReviewStepComponent)
 
 const extractLineItemMetadata = (
   lineItem: NonNullable<Order2ReviewStep_order$data["lineItems"][number]>,
