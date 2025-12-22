@@ -436,6 +436,10 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
   const handleSubmit = async event => {
     event.preventDefault()
 
+    // Clear any previous error messages
+    setErrorMessage(null)
+    setSubtitleErrorMessage(null)
+
     if (!selectedPaymentMethod) {
       setSubtitleErrorMessage("Select a payment method")
       return
