@@ -9,6 +9,7 @@ import {
   CheckoutStepName,
   CheckoutStepState,
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
+import { CheckoutModalError } from "Apps/Order2/Routes/Checkout/Components/CheckoutModal"
 import { Order2CheckoutPricingBreakdown } from "Apps/Order2/Routes/Checkout/Components/Order2CheckoutPricingBreakdown"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useOrder2SubmitOrderMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SubmitOrderMutation"
@@ -67,7 +68,7 @@ const Order2ReviewStepComponent: React.FC<Order2ReviewStepProps> = ({
     })
 
     if (error.code === "insufficient_inventory") {
-      setCriticalCheckoutError("artwork_not_for_sale")
+      setCriticalCheckoutError(CheckoutModalError.ARTWORK_NOT_FOR_SALE)
       return
     }
 

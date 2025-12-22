@@ -2,6 +2,7 @@ import {
   CheckoutStepName,
   CheckoutStepState,
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
+import { CheckoutModalError } from "Apps/Order2/Routes/Checkout/Components/CheckoutModal"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useStripePaymentBySetupIntentId } from "Apps/Order2/Routes/Checkout/Hooks/useStripePaymentBySetupIntentId"
 import {
@@ -147,7 +148,7 @@ export const useLoadCheckout = (order: useLoadCheckout_order$key) => {
         )
 
         logger.error(error)
-        setCriticalCheckoutError("loading_timeout")
+        setCriticalCheckoutError(CheckoutModalError.LOADING_TIMEOUT)
       }
     }, MAX_LOADING_MS)
     return () => clearTimeout(timeout)

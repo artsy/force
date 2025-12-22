@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useRouter } from "System/Hooks/useRouter"
-import { CriticalErrorModal } from "../CriticalErrorModal"
+import { CheckoutModal } from "../CheckoutModal"
 
 // Mock the useCheckoutContext hook
 jest.mock("Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext")
@@ -28,13 +28,13 @@ describe("CriticalErrorModal", () => {
   })
 
   it("does not render when error is null", () => {
-    const { container } = render(<CriticalErrorModal error={null} />)
+    const { container } = render(<CheckoutModal error={null} />)
     expect(container.firstChild).toBeNull()
   })
 
   describe("loading_timeout error", () => {
     it("shows the loading timeout message with reload button", () => {
-      render(<CriticalErrorModal error="loading_timeout" />)
+      render(<CheckoutModal error="loading_timeout" />)
 
       expect(screen.getByText("Checkout Error")).toBeInTheDocument()
       expect(
@@ -45,7 +45,7 @@ describe("CriticalErrorModal", () => {
     })
 
     it("reloads the page when Reload button is clicked", async () => {
-      render(<CriticalErrorModal error="loading_timeout" />)
+      render(<CheckoutModal error="loading_timeout" />)
 
       const reloadButton = screen.getByText("Reload")
       await userEvent.click(reloadButton)
@@ -55,7 +55,7 @@ describe("CriticalErrorModal", () => {
     })
 
     it("returns to artwork when Return to Artwork button is clicked", async () => {
-      render(<CriticalErrorModal error="loading_timeout" />)
+      render(<CheckoutModal error="loading_timeout" />)
 
       const returnButton = screen.getByText("Return to Artwork")
       await userEvent.click(returnButton)
@@ -66,7 +66,7 @@ describe("CriticalErrorModal", () => {
 
   describe("artwork_version_mismatch error", () => {
     it("shows the version mismatch message without reload button", () => {
-      render(<CriticalErrorModal error="artwork_version_mismatch" />)
+      render(<CheckoutModal error="artwork_version_mismatch" />)
 
       expect(screen.getByText("Work has been updated")).toBeInTheDocument()
       expect(
@@ -79,7 +79,7 @@ describe("CriticalErrorModal", () => {
     })
 
     it("returns to artwork when Return to Artwork button is clicked", async () => {
-      render(<CriticalErrorModal error="artwork_version_mismatch" />)
+      render(<CheckoutModal error="artwork_version_mismatch" />)
 
       const returnButton = screen.getByText("Return to Artwork")
       await userEvent.click(returnButton)
@@ -90,7 +90,7 @@ describe("CriticalErrorModal", () => {
 
   describe("artwork_not_for_sale error", () => {
     it("shows the sold work message without reload button", () => {
-      render(<CriticalErrorModal error="artwork_not_for_sale" />)
+      render(<CheckoutModal error="artwork_not_for_sale" />)
 
       expect(screen.getByText("Not available")).toBeInTheDocument()
       expect(
@@ -101,7 +101,7 @@ describe("CriticalErrorModal", () => {
     })
 
     it("returns to artwork when Return to Artwork button is clicked", async () => {
-      render(<CriticalErrorModal error="artwork_not_for_sale" />)
+      render(<CheckoutModal error="artwork_not_for_sale" />)
 
       const returnButton = screen.getByText("Return to Artwork")
       await userEvent.click(returnButton)
@@ -112,7 +112,7 @@ describe("CriticalErrorModal", () => {
 
   describe("unknown error types", () => {
     it("shows the default error message without reload button", () => {
-      render(<CriticalErrorModal error="some_unknown_error" />)
+      render(<CheckoutModal error="some_unknown_error" />)
 
       expect(screen.getByText("Checkout Error")).toBeInTheDocument()
       expect(
@@ -127,7 +127,7 @@ describe("CriticalErrorModal", () => {
 
   describe("modal close handling", () => {
     it("returns to artwork when modal is closed via X button", async () => {
-      render(<CriticalErrorModal error="loading_timeout" />)
+      render(<CheckoutModal error="loading_timeout" />)
 
       // ModalDialog should have a close button with aria-label
       const closeButton = screen.getByLabelText("Close")
