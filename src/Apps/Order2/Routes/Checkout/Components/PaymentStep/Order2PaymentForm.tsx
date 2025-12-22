@@ -635,17 +635,27 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         })
 
         validateAndExtractOrderResponse(result.setOrderPayment?.orderOrError)
+
+        setSavedPaymentMethod({
+          savedPaymentMethod: selectedSavedPaymentMethod,
+        })
+
+        // For saved ACH bank accounts, start balance check
+        if (paymentMethod === "US_BANK_ACCOUNT") {
+          setIsCheckingBankBalance(true)
+          // Keep submitting state active during balance check
+          // The balance check handlers will call setPaymentComplete() and setIsSubmittingToStripe(false)
+          return
+        }
+
+        // For other saved payment methods, complete immediately
+        setIsSubmittingToStripe(false)
+        resetElementsToInitialParams()
+        setPaymentComplete()
       } catch (error) {
         logger.error("Error while updating order payment method", error)
         handleError({ message: defaultErrorMessage })
         return
-      } finally {
-        setIsSubmittingToStripe(false)
-        resetElementsToInitialParams()
-        setSavedPaymentMethod({
-          savedPaymentMethod: selectedSavedPaymentMethod,
-        })
-        setPaymentComplete()
       }
     }
   }
