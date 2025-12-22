@@ -75,7 +75,7 @@ export interface Order2CheckoutModel {
   isLoading: boolean
   /** Order is redirecting to the details page */
   expressCheckoutSubmitting: boolean
-  criticalCheckoutError: CheckoutModalError | null
+  checkoutModalError: CheckoutModalError | null
   expressCheckoutPaymentMethods: ExpressCheckoutPaymentMethod[] | null
   steps: CheckoutStep[]
   activeFulfillmentDetailsTab: FulfillmentDetailsTab | null
@@ -106,7 +106,7 @@ export interface Order2CheckoutModel {
   editPayment: Action<this>
   setOfferAmountComplete: Action<this>
   editOfferAmount: Action<this>
-  setCriticalCheckoutError: Action<this, CheckoutModalError | null>
+  setCheckoutModalError: Action<this, CheckoutModalError | null>
   setLoadingComplete: Action<this>
   setPaymentComplete: Action<this>
   setConfirmationToken: Action<
@@ -133,7 +133,7 @@ export const Order2CheckoutContext: ReturnType<
   // Initial state with defaults
   isLoading: true,
   expressCheckoutSubmitting: false,
-  criticalCheckoutError: null,
+  checkoutModalError: null,
   expressCheckoutPaymentMethods: null,
   activeFulfillmentDetailsTab: null,
   confirmationToken: null,
@@ -190,8 +190,8 @@ export const Order2CheckoutContext: ReturnType<
     },
   ),
 
-  setCriticalCheckoutError: action((state, error) => {
-    state.criticalCheckoutError = error
+  setCheckoutModalError: action((state, error) => {
+    state.checkoutModalError = error
   }),
 
   setLoadingComplete: action(state => {
@@ -536,7 +536,7 @@ export const Order2CheckoutContextProvider: React.FC<
     // Default values
     isLoading: true,
     expressCheckoutSubmitting: false,
-    criticalCheckoutError: null,
+    checkoutModalError: null,
     expressCheckoutPaymentMethods: null,
     activeFulfillmentDetailsTab: null,
     confirmationToken: null,
@@ -603,7 +603,7 @@ const initialStateForOrder = (
   return {
     isLoading: true,
     expressCheckoutSubmitting: false,
-    criticalCheckoutError: null,
+    checkoutModalError: null,
     expressCheckoutPaymentMethods: null,
     activeFulfillmentDetailsTab: fulfillmentComplete
       ? (activeFulfillmentDetailsTab as FulfillmentDetailsTab)

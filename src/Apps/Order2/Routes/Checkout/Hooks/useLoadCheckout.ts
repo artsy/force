@@ -32,8 +32,8 @@ export const useLoadCheckout = (order: useLoadCheckout_order$key) => {
 
   const {
     isLoading,
-    criticalCheckoutError,
-    setCriticalCheckoutError,
+    checkoutModalError,
+    setCheckoutModalError,
     setLoadingComplete,
     expressCheckoutPaymentMethods,
     steps,
@@ -73,7 +73,7 @@ export const useLoadCheckout = (order: useLoadCheckout_order$key) => {
   // except during loading or error
   useEffect(() => {
     // Don't set up guards if there's a critical error or still loading
-    if (isLoading || criticalCheckoutError) {
+    if (isLoading || checkoutModalError) {
       return
     }
 
@@ -85,16 +85,16 @@ export const useLoadCheckout = (order: useLoadCheckout_order$key) => {
       window.removeEventListener("beforeunload", preventHardReload)
       window.removeEventListener("popstate", handleBackNavigation)
     }
-  }, [isLoading, criticalCheckoutError])
+  }, [isLoading, checkoutModalError])
 
   // If a critical error occurs, immediately remove any existing guards
   useEffect(() => {
-    if (criticalCheckoutError) {
+    if (checkoutModalError) {
       window.removeEventListener("beforeunload", preventHardReload)
       window.removeEventListener("popstate", handleBackNavigation)
       window.onbeforeunload = null
     }
-  }, [criticalCheckoutError])
+  }, [checkoutModalError])
 
   // Validate order and get into good initial checkout state on load
   useEffect(() => {
@@ -107,9 +107,9 @@ export const useLoadCheckout = (order: useLoadCheckout_order$key) => {
       setOrderValidated(true)
     } catch (error) {
       logger.error("Error validating order: ", error.message)
-      setCriticalCheckoutError(error.message)
+      setCheckoutModalError(error.message)
     }
-  }, [orderData, orderValidated, setCriticalCheckoutError])
+  }, [orderData, orderValidated, setCheckoutModalError])
 
   // Set minimum loading duration to avoid flash of loading state
   useEffect(() => {
@@ -124,10 +124,10 @@ export const useLoadCheckout = (order: useLoadCheckout_order$key) => {
     isLoadingRef.current = isLoading
   }, [isLoading])
 
-  const loadingErrorRef = useRef(criticalCheckoutError)
+  const loadingErrorRef = useRef(checkoutModalError)
   useEffect(() => {
-    loadingErrorRef.current = criticalCheckoutError
-  }, [criticalCheckoutError])
+    loadingErrorRef.current = checkoutModalError
+  }, [checkoutModalError])
 
   // Set timeout for maximum loading duration
   // biome-ignore lint/correctness/useExhaustiveDependencies: 1-time effect
@@ -148,7 +148,7 @@ export const useLoadCheckout = (order: useLoadCheckout_order$key) => {
         )
 
         logger.error(error)
-        setCriticalCheckoutError(CheckoutModalError.LOADING_TIMEOUT)
+        setCheckoutModalError(CheckoutModalError.LOADING_TIMEOUT)
       }
     }, MAX_LOADING_MS)
     return () => clearTimeout(timeout)
@@ -156,7 +156,7 @@ export const useLoadCheckout = (order: useLoadCheckout_order$key) => {
 
   // Set loading complete when all conditions are met
   useEffect(() => {
-    if (!isLoading || !!criticalCheckoutError) {
+    if (!isLoading || !!checkoutModalError) {
       return
     }
 
@@ -179,7 +179,7 @@ export const useLoadCheckout = (order: useLoadCheckout_order$key) => {
     isStripeRedirectHandled,
     isLoading,
     setLoadingComplete,
-    criticalCheckoutError,
+    checkoutModalError,
   ])
 }
 

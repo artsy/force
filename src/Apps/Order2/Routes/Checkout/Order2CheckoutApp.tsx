@@ -9,7 +9,6 @@ import {
   breakpoints,
 } from "@artsy/palette"
 import { SubmittingOrderSpinner } from "Apps/Order/Components/SubmittingOrderSpinner"
-import { ConnectedModalDialog } from "Apps/Order/Dialogs"
 import { OrderErrorApp } from "Apps/Order2/Components/Order2ErrorApp"
 import { Order2HelpLinksWithInquiry } from "Apps/Order2/Components/Order2HelpLinks"
 import {
@@ -34,8 +33,6 @@ import type { Order2CheckoutApp_order$key } from "__generated__/Order2CheckoutAp
 import { useEffect } from "react"
 import { Meta, Title } from "react-head"
 import { graphql, useFragment } from "react-relay"
-// eslint-disable-next-line no-restricted-imports
-import { Provider } from "unstated"
 interface Order2CheckoutAppProps {
   order: Order2CheckoutApp_order$key
   me: Order2CheckoutApp_me$key
@@ -57,7 +54,7 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
     expressCheckoutSubmitting,
     steps,
     checkoutTracking,
-    criticalCheckoutError,
+    checkoutModalError,
   } = useCheckoutContext()
 
   // Load checkout and manage window side effects
@@ -103,7 +100,7 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
   }, [activeStep?.name, checkoutTracking])
 
   return (
-    <Provider>
+    <>
       <Title>Checkout | Artsy</Title>
       <Meta
         name="viewport"
@@ -173,9 +170,8 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
           </Box>
         </Column>
       </GridColumns>
-      <CheckoutModal error={criticalCheckoutError} />
-      <ConnectedModalDialog />
-    </Provider>
+      <CheckoutModal error={checkoutModalError} />
+    </>
   )
 }
 

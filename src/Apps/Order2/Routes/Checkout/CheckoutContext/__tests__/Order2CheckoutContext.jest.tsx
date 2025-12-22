@@ -132,7 +132,7 @@ describe("Order2CheckoutContext", () => {
         expect.arrayContaining([
           "isLoading",
           "expressCheckoutSubmitting",
-          "criticalCheckoutError",
+          "checkoutModalError",
           "expressCheckoutPaymentMethods",
           "steps",
           "activeFulfillmentDetailsTab",
@@ -156,7 +156,7 @@ describe("Order2CheckoutContext", () => {
           "setDeliveryOptionComplete",
           "editDeliveryOption",
           "editPayment",
-          "setCriticalCheckoutError",
+          "setCheckoutModalError",
           "setLoadingComplete",
           "setPaymentComplete",
           "setConfirmationToken",
@@ -175,7 +175,7 @@ describe("Order2CheckoutContext", () => {
       expect(state).toMatchObject({
         isLoading: true,
         expressCheckoutSubmitting: false,
-        criticalCheckoutError: null,
+        checkoutModalError: null,
         expressCheckoutPaymentMethods: null,
         activeFulfillmentDetailsTab: null,
         confirmationToken: null,
