@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a05b495afcb76d786addbd98c32210c3>>
+ * @generated SignedSource<<3aeb59112e3d00235acd7e37c4bea741>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,9 +19,6 @@ export type Order2CollapsibleOrderSummary_order$data = {
     readonly display: string | null | undefined;
   } | null | undefined;
   readonly lineItems: ReadonlyArray<{
-    readonly artwork: {
-      readonly slug: string;
-    } | null | undefined;
     readonly artworkVersion: {
       readonly artistNames: string | null | undefined;
       readonly date: string | null | undefined;
@@ -127,24 +124,6 @@ return {
         {
           "alias": null,
           "args": null,
-          "concreteType": "Artwork",
-          "kind": "LinkedField",
-          "name": "artwork",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "slug",
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
           "concreteType": "ArtworkVersion",
           "kind": "LinkedField",
           "name": "artworkVersion",
@@ -225,6 +204,6 @@ return {
 };
 })();
 
-(node as any).hash = "e581de3b56c07c2651f98abdff35c6a9";
+(node as any).hash = "8546826b81b03504f395981f2730f545";
 
 export default node;

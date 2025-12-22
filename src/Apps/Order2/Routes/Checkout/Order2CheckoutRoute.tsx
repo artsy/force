@@ -2,15 +2,10 @@ import { Elements } from "@stripe/react-stripe-js"
 import { loadStripe } from "@stripe/stripe-js"
 import { Order2CheckoutContextProvider } from "Apps/Order2/Routes/Checkout/CheckoutContext/Order2CheckoutContext"
 import { Order2CheckoutApp } from "Apps/Order2/Routes/Checkout/Order2CheckoutApp"
-import {
-  handleBackNavigation,
-  preventHardReload,
-} from "Apps/Order2/Utils/navigationGuards"
 import { OrderErrorApp } from "Apps/Order2/Components/Order2ErrorApp"
 import { Analytics } from "System/Contexts/AnalyticsContext"
 import { getENV } from "Utils/getENV"
 import type { Order2CheckoutRoute_viewer$key } from "__generated__/Order2CheckoutRoute_viewer.graphql"
-import { useEffect } from "react"
 import { graphql, useFragment } from "react-relay"
 import { NOT_FOUND_ERROR } from "Apps/Order2/constants"
 interface Order2CheckoutRouteProps {
@@ -29,17 +24,6 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
   if (!(order && me)) {
     return <OrderErrorApp code={404} message={NOT_FOUND_ERROR} />
   }
-
-  useEffect(() => {
-    window.addEventListener("beforeunload", preventHardReload)
-    window.history.pushState(null, "", window.location.pathname)
-    window.addEventListener("popstate", handleBackNavigation)
-
-    return () => {
-      window.removeEventListener("beforeunload", preventHardReload)
-      window.removeEventListener("popstate", handleBackNavigation)
-    }
-  }, [])
 
   return (
     <Analytics contextPageOwnerId={order.internalID}>

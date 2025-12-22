@@ -1,6 +1,6 @@
 import type {
-  CheckoutLoadingError,
   CheckoutStep,
+  CriticalCheckoutError,
   ExpressCheckoutPaymentMethod,
   FulfillmentDetailsTab,
   UserAddressMode,
@@ -12,7 +12,6 @@ import {
 import type { CheckoutErrorBannerProps } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { useBuildInitialSteps } from "Apps/Order2/Routes/Checkout/Hooks/useBuildInitialSteps"
 import { useCheckoutTracking } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutTracking"
-import { useStripePaymentBySetupIntentId } from "Apps/Order2/Routes/Checkout/Hooks/useStripePaymentBySetupIntentId"
 import { useRouter } from "System/Hooks/useRouter"
 import createLogger from "Utils/logger"
 import type {
@@ -20,14 +19,11 @@ import type {
   Order2CheckoutContext_order$key,
 } from "__generated__/Order2CheckoutContext_order.graphql"
 import { type Action, action, createContextStore } from "easy-peasy"
-import { every } from "lodash"
 import type React from "react"
-import { useEffect, useMemo, useRef, useState } from "react"
+import { useMemo } from "react"
 import { graphql, useFragment } from "react-relay"
 
 const logger = createLogger("Order2CheckoutContext.tsx")
-const MIN_LOADING_MS = 1000
-const MAX_LOADING_MS = 6000
 const CHECKOUT_MODE_STORAGE_KEY = "checkout_mode"
 
 type CheckoutMode = "standard" | "express"
@@ -79,7 +75,7 @@ export interface Order2CheckoutModel {
   isLoading: boolean
   /** Order is redirecting to the details page */
   expressCheckoutSubmitting: boolean
-  loadingError: CheckoutLoadingError | null
+  criticalCheckoutError: CriticalCheckoutError | null
   expressCheckoutPaymentMethods: ExpressCheckoutPaymentMethod[] | null
   steps: CheckoutStep[]
   activeFulfillmentDetailsTab: FulfillmentDetailsTab | null
@@ -89,6 +85,7 @@ export interface Order2CheckoutModel {
   checkoutMode: CheckoutMode
   userAddressMode: UserAddressMode | null
   messages: Messages
+  artworkPath: string
 
   // External data - passed in as runtime props
   checkoutTracking: ReturnType<typeof useCheckoutTracking>
@@ -109,7 +106,7 @@ export interface Order2CheckoutModel {
   editPayment: Action<this>
   setOfferAmountComplete: Action<this>
   editOfferAmount: Action<this>
-  setLoadingError: Action<this, CheckoutLoadingError | null>
+  setCriticalCheckoutError: Action<this, CriticalCheckoutError | null>
   setLoadingComplete: Action<this>
   setPaymentComplete: Action<this>
   setConfirmationToken: Action<
@@ -136,7 +133,7 @@ export const Order2CheckoutContext: ReturnType<
   // Initial state with defaults
   isLoading: true,
   expressCheckoutSubmitting: false,
-  loadingError: null,
+  criticalCheckoutError: null,
   expressCheckoutPaymentMethods: null,
   activeFulfillmentDetailsTab: null,
   confirmationToken: null,
@@ -146,6 +143,7 @@ export const Order2CheckoutContext: ReturnType<
   steps: [],
   userAddressMode: null,
   messages: {},
+  artworkPath: "/",
 
   // Required runtime props - will be provided by Provider
   // These will be overridden by the Provider with actual values
@@ -192,8 +190,8 @@ export const Order2CheckoutContext: ReturnType<
     },
   ),
 
-  setLoadingError: action((state, error) => {
-    state.loadingError = error
+  setCriticalCheckoutError: action((state, error) => {
+    state.criticalCheckoutError = error
   }),
 
   setLoadingComplete: action(state => {
@@ -528,11 +526,17 @@ export const Order2CheckoutContextProvider: React.FC<
     [orderData, initialSteps],
   )
 
+  // Calculate artworkPath from orderData
+  const artworkPath = useMemo(() => {
+    const artworkSlug = orderData.lineItems?.[0]?.artwork?.slug
+    return artworkSlug ? `/artwork/${artworkSlug}` : "/"
+  }, [orderData])
+
   const runtimeModel = {
     // Default values
     isLoading: true,
     expressCheckoutSubmitting: false,
-    loadingError: null,
+    criticalCheckoutError: null,
     expressCheckoutPaymentMethods: null,
     activeFulfillmentDetailsTab: null,
     confirmationToken: null,
@@ -549,133 +553,14 @@ export const Order2CheckoutContextProvider: React.FC<
     checkoutTracking,
     router,
     orderData,
+    artworkPath,
   } as Order2CheckoutModel
 
   return (
     <Order2CheckoutContext.Provider runtimeModel={runtimeModel}>
-      <CheckoutLoadingManager orderData={orderData}>
-        {children}
-      </CheckoutLoadingManager>
+      {children}
     </Order2CheckoutContext.Provider>
   )
-}
-
-const CheckoutLoadingManager: React.FC<{
-  orderData: Order2CheckoutContext_order$data
-  children: React.ReactNode
-}> = ({ orderData, children }) => {
-  const [minimumLoadingPassed, setMinimumLoadingPassed] = useState(false)
-  const [orderValidated, setOrderValidated] = useState(false)
-  const [isStripeRedirectHandled, setIsStripeRedirectHandled] = useState(false)
-
-  // Handle Stripe redirect and call onComplete when done
-  useStripePaymentBySetupIntentId(orderData.internalID, () => {
-    setIsStripeRedirectHandled(true)
-  })
-
-  const isExpressCheckoutLoaded = Order2CheckoutContext.useStoreState(state => {
-    // Express Checkout is considered "loaded" if:
-    // 1. It's actually loaded (not null), OR
-    // 2. We're in post-payment state where Express Checkout should be hidden
-    const isActuallyLoaded = state.expressCheckoutPaymentMethods !== null
-    const activeStep = state.steps.find(
-      step => step.state === CheckoutStepState.ACTIVE,
-    )
-    const isInPostPaymentState =
-      activeStep?.name === CheckoutStepName.CONFIRMATION
-
-    return isActuallyLoaded || isInPostPaymentState
-  })
-
-  const isLoading = Order2CheckoutContext.useStoreState(
-    state => state.isLoading,
-  )
-  const setLoadingError = Order2CheckoutContext.useStoreActions(
-    actions => actions.setLoadingError,
-  )
-  const setLoadingComplete = Order2CheckoutContext.useStoreActions(
-    actions => actions.setLoadingComplete,
-  )
-
-  // Validate order and get into good initial checkout state on load
-  // - artwork version match
-  // - any resetting
-  useEffect(() => {
-    if (orderValidated || !orderData) {
-      return
-    }
-
-    try {
-      validateOrder(orderData)
-      setOrderValidated(true)
-    } catch (error) {
-      logger.error("Error validating order: ", error.message)
-      setLoadingError(error.message)
-    }
-  }, [orderData, orderValidated, setLoadingError])
-
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setMinimumLoadingPassed(true)
-    }, MIN_LOADING_MS)
-    return () => clearTimeout(timeout)
-  }, [])
-
-  const isLoadingRef = useRef(isLoading)
-  useEffect(() => {
-    isLoadingRef.current = isLoading
-  }, [isLoading])
-
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      if (isLoadingRef.current) {
-        const error = new Error(
-          `Checkout loading state exceeded ${MAX_LOADING_MS}ms timeout: ${Object.entries(
-            {
-              minimumLoadingPassed,
-              orderValidated,
-              isExpressCheckoutLoaded,
-              isStripeRedirectHandled,
-            },
-          )
-            .map(([key, value]) => `${key}: ${value}`)
-            .join(", ")}`,
-        )
-
-        logger.error(error)
-      }
-    }, MAX_LOADING_MS)
-    return () => clearTimeout(timeout)
-  }, [])
-
-  useEffect(() => {
-    if (!isLoading) {
-      return
-    }
-
-    if (
-      [
-        minimumLoadingPassed,
-        orderValidated,
-        isExpressCheckoutLoaded,
-        isStripeRedirectHandled,
-        isLoading,
-        setLoadingComplete,
-      ].every(Boolean)
-    ) {
-      setLoadingComplete()
-    }
-  }, [
-    minimumLoadingPassed,
-    orderValidated,
-    isExpressCheckoutLoaded,
-    isStripeRedirectHandled,
-    isLoading,
-    setLoadingComplete,
-  ])
-
-  return <>{children}</>
 }
 
 const ORDER_FRAGMENT = graphql`
@@ -684,31 +569,17 @@ const ORDER_FRAGMENT = graphql`
     internalID
     mode
     source
-    buyerStateExpiresAt
     stripeConfirmationToken
     selectedFulfillmentOption {
       type
     }
     lineItems {
-      artworkVersion {
-        internalID
+      artwork {
+        slug
       }
     }
   }
 `
-
-const validateOrder = (order: Order2CheckoutContext_order$data) => {
-  const hasLineItemsWithData =
-    order.lineItems.length &&
-    every(order.lineItems, lineItem => {
-      return !!lineItem?.artworkVersion?.internalID
-    })
-
-  if (!hasLineItemsWithData) {
-    throw new Error("missing_line_item_data")
-  }
-  return
-}
 
 const initialStateForOrder = (
   order: Order2CheckoutContext_order$data,
@@ -732,7 +603,7 @@ const initialStateForOrder = (
   return {
     isLoading: true,
     expressCheckoutSubmitting: false,
-    loadingError: null,
+    criticalCheckoutError: null,
     expressCheckoutPaymentMethods: null,
     activeFulfillmentDetailsTab: fulfillmentComplete
       ? (activeFulfillmentDetailsTab as FulfillmentDetailsTab)

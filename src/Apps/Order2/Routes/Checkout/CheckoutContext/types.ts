@@ -20,7 +20,11 @@ export type CheckoutStep = {
   state: CheckoutStepState
 }
 
-export type CheckoutLoadingError = "missing_line_item_data"
+export type CriticalCheckoutError =
+  | "missing_line_item_data"
+  | "loading_timeout"
+  | "artwork_version_mismatch"
+  | "artwork_not_for_sale"
 
 export type ExpressCheckoutPaymentMethod = "applePay" | "googlePay"
 

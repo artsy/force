@@ -15,11 +15,10 @@ interface Order2CollapsibleOrderSummaryProps {
 export const Order2CollapsibleOrderSummary: React.FC<
   Order2CollapsibleOrderSummaryProps
 > = ({ order }) => {
-  const { checkoutTracking } = useCheckoutContext()
+  const { checkoutTracking, artworkPath } = useCheckoutContext()
   const orderData = useFragment(FRAGMENT, order)
   const [isExpanded, setIsExpanded] = useState(false)
 
-  const artwork = orderData.lineItems[0]?.artwork
   const artworkVersion = orderData.lineItems[0]?.artworkVersion
 
   const handleToggle = () => {
@@ -30,7 +29,7 @@ export const Order2CollapsibleOrderSummary: React.FC<
   return (
     <Box backgroundColor="mono0">
       <Flex py={1} px={2} justifyContent="space-between">
-        <RouterLink flex={0} to={`/artwork/${artwork?.slug}`} target="_blank">
+        <RouterLink flex={0} to={artworkPath} target="_blank">
           <Image
             mr={1}
             src={artworkVersion?.thumbnail?.resized?.url}
@@ -97,9 +96,6 @@ const FRAGMENT = graphql`
       display
     }
     lineItems {
-      artwork {
-        slug
-      }
       artworkVersion {
         title
         artistNames
