@@ -14,7 +14,7 @@ import type { ArtistABTestRoute_artist$data } from "__generated__/ArtistABTestRo
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
-const ARTIST_COMBINED_LAYOUT_FLAG = "diamond_artist-combined-layout"
+export const ARTIST_COMBINED_LAYOUT_FLAG = "diamond_artist-combined-layout"
 
 interface ArtistABTestRouteProps {
   artist: ArtistABTestRoute_artist$data

@@ -1,13 +1,14 @@
+import { screen } from "@testing-library/react"
 import { GeneFamiliesFragmentContainer } from "Apps/Categories/Components/GeneFamilies"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { screen } from "@testing-library/react"
 import type { GeneFamiliesTestQuery } from "__generated__/GeneFamiliesTestQuery.graphql"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   useMatchMedia: () => false,
+  __internal__useMatchMedia: () => false,
 }))
 
 const { renderWithRelay } = setupTestWrapperTL<GeneFamiliesTestQuery>({

@@ -43,6 +43,7 @@ import {
   ProgressiveOnboardingImmersiveView,
 } from "Components/ProgressiveOnboarding/ProgressiveOnboardingImmersiveView"
 import { Sticky } from "Components/Sticky"
+import { useStickyBackdrop } from "Components/Sticky/useStickyBackdrop"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { Jump, useJump } from "Utils/Hooks/useJump"
@@ -65,6 +66,7 @@ import {
   useArtworkFilterContext,
 } from "./ArtworkFilterContext"
 import { ArtworkFilterMobileOverlay } from "./ArtworkFilterMobileOverlay"
+import { useArtistPageExperimentPadding } from "./ArtworkFilterPlaceholder"
 import { ArtworkFilters } from "./ArtworkFilters"
 import { ArtworkQueryFilter } from "./ArtworkQueryFilter"
 import { allowedFilters } from "./Utils/allowedFilters"
@@ -142,12 +144,16 @@ export const BaseArtworkFilter: React.FC<
   const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
     useAnalyticsContext()
 
+  const padding = useArtistPageExperimentPadding()
+
   const [isLoading, setIsLoading] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
 
   const [isImmersed, setIsImmersed] = useState(false)
   const enableImmersiveView = useFlag("onyx_enable-immersive-view")
   const { dismiss, isDismissed } = useDismissibleContext()
+
+  const backdrop = useStickyBackdrop()
 
   const trackClickedImmersiveView = () => {
     const params: ClickedImmersiveView = {
@@ -255,7 +261,6 @@ export const BaseArtworkFilter: React.FC<
     )
   }, [filterContext.filters])
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: "trackImmersiveViewOptionViewed changes on every re-render and should not be used as a hook dependency"
   useEffect(() => {
     if (!enableImmersiveView) return
 
@@ -302,61 +307,66 @@ export const BaseArtworkFilter: React.FC<
       {/* Mobile Artwork Filter */}
       <Media at="xs">
         <Sticky bottomBoundary="#Sticky__ArtworkFilter">
-          <FullBleed backgroundColor="mono0">
-            <Flex
-              justifyContent="space-between"
-              alignItems="center"
-              p={2}
-              gap={2}
-              borderBottom="1px solid"
-              borderColor="mono10"
-            >
-              <ArtworkFilterCreateAlert
-                renderButton={props => {
-                  return (
-                    <Clickable
-                      display="flex"
-                      alignItems="center"
-                      gap={0.5}
-                      {...props}
-                    >
-                      <BellStrokeIcon />
+          {({ scrollDirection }) => {
+            return (
+              <FullBleed style={backdrop[scrollDirection]}>
+                <Flex
+                  justifyContent="space-between"
+                  alignItems="center"
+                  gap={2}
+                  borderBottom="1px solid"
+                  borderColor="mono10"
+                  px={2}
+                  {...padding}
+                >
+                  <ArtworkFilterCreateAlert
+                    renderButton={props => {
+                      return (
+                        <Clickable
+                          display="flex"
+                          alignItems="center"
+                          gap={0.5}
+                          {...props}
+                        >
+                          <BellStrokeIcon />
 
-                      <Text variant="xs">Create Alert</Text>
-                    </Clickable>
-                  )
-                }}
-              />
+                          <Text variant="xs">Create Alert</Text>
+                        </Clickable>
+                      )
+                    }}
+                  />
 
-              <Clickable
-                onClick={handleOpen}
-                display="flex"
-                alignItems="center"
-                gap={0.5}
-              >
-                <FilterIcon />
-                <Text variant="xs">
-                  Sort & Filter
-                  {appliedFiltersTotalCount > 0 && (
-                    <Box as="span" color="brand">
-                      {" "}
-                      • {appliedFiltersTotalCount}
-                    </Box>
+                  <Clickable
+                    onClick={handleOpen}
+                    display="flex"
+                    alignItems="center"
+                    gap={0.5}
+                  >
+                    <FilterIcon />
+                    <Text variant="xs">
+                      Sort & Filter
+                      {appliedFiltersTotalCount > 0 && (
+                        <Box as="span" color="brand">
+                          {" "}
+                          • {appliedFiltersTotalCount}
+                        </Box>
+                      )}
+                    </Text>
+                  </Clickable>
+
+                  {isOpen && (
+                    <ArtworkFilterMobileOverlay onClose={handleClose}>
+                      <ArtworkFilterExpandableSort />
+
+                      <Spacer y={4} />
+
+                      {Filters ? Filters : <ArtworkFilters user={user} />}
+                    </ArtworkFilterMobileOverlay>
                   )}
-                </Text>
-              </Clickable>
-
-              {isOpen && (
-                <ArtworkFilterMobileOverlay onClose={handleClose}>
-                  <ArtworkFilterExpandableSort />
-
-                  <Spacer y={4} />
-
-                  {Filters ? Filters : <ArtworkFilters user={user} />}
-                </ArtworkFilterMobileOverlay>
-              )}
-            </Flex>
-          </FullBleed>
+                </Flex>
+              </FullBleed>
+            )
+          }}
         </Sticky>
 
         <Spacer y={4} />
@@ -382,21 +392,17 @@ export const BaseArtworkFilter: React.FC<
 
       {/* Desktop Artwork Filter */}
       <Media greaterThan="xs">
-        {/* Negative offset for positive sticky padding */}
-        <Spacer y={-1} />
-
         <Sticky bottomBoundary="#Sticky__ArtworkFilter">
-          {({ stuck }) => {
+          {({ stuck, scrollDirection }) => {
             return (
-              <FullBleed backgroundColor="mono0">
+              <FullBleed style={backdrop[scrollDirection]}>
                 <AppContainer>
                   <HorizontalPadding>
                     <Flex
                       alignItems="center"
                       justifyContent="space-between"
                       gap={2}
-                      py={1}
-                      bg="mono0"
+                      {...padding}
                     >
                       <HorizontalOverflow minWidth={0}>
                         <Flex gap={1}>

@@ -1,4 +1,5 @@
 import { Dropdown, type DropdownProps } from "@artsy/palette"
+import { Z } from "Apps/Components/constants"
 import { initialArtworkFilterState } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { usePriceRangeFilter } from "Components/ArtworkFilter/ArtworkFilters/PriceRangeFilter"
 import {
@@ -23,6 +24,7 @@ export const PriceRangeFilterQuick: FC<
 
   return (
     <Dropdown
+      dropdownZIndex={Z.dropdown}
       // FIXME: REACT_18_UPGRADE
       // eslint-disable-next-line react/no-unstable-nested-components
       dropdown={({ onHide }) => {
