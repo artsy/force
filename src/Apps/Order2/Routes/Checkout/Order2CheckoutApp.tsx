@@ -16,7 +16,7 @@ import {
   CheckoutStepName,
   CheckoutStepState,
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
-import { CriticalErrorModal } from "Apps/Order2/Routes/Checkout/Components/CriticalErrorModal"
+import { CheckoutModal } from "Apps/Order2/Routes/Checkout/Components/CheckoutModal"
 import { Order2DeliveryOptionsStep } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/Order2DeliveryOptionsStep"
 import { Order2ExpressCheckout } from "Apps/Order2/Routes/Checkout/Components/ExpressCheckout/Order2ExpressCheckout"
 import { Order2FulfillmentDetailsStep } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/Order2FulfillmentDetailsStep"
@@ -201,7 +201,7 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
           </Box>
         </Column>
       </GridColumns>
-      <CriticalErrorModal error={criticalCheckoutError} />
+      <CheckoutModal error={criticalCheckoutError} />
       <ConnectedModalDialog />
     </Provider>
   )

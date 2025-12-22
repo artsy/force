@@ -1,6 +1,5 @@
 import type {
   CheckoutStep,
-  CriticalCheckoutError,
   ExpressCheckoutPaymentMethod,
   FulfillmentDetailsTab,
   UserAddressMode,
@@ -10,6 +9,7 @@ import {
   CheckoutStepState,
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import type { CheckoutErrorBannerProps } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
+import type { CheckoutModalError } from "Apps/Order2/Routes/Checkout/Components/CheckoutModal"
 import { useBuildInitialSteps } from "Apps/Order2/Routes/Checkout/Hooks/useBuildInitialSteps"
 import { useCheckoutTracking } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutTracking"
 import { useRouter } from "System/Hooks/useRouter"
@@ -75,7 +75,7 @@ export interface Order2CheckoutModel {
   isLoading: boolean
   /** Order is redirecting to the details page */
   expressCheckoutSubmitting: boolean
-  criticalCheckoutError: CriticalCheckoutError | null
+  criticalCheckoutError: CheckoutModalError | null
   expressCheckoutPaymentMethods: ExpressCheckoutPaymentMethod[] | null
   steps: CheckoutStep[]
   activeFulfillmentDetailsTab: FulfillmentDetailsTab | null
@@ -106,7 +106,7 @@ export interface Order2CheckoutModel {
   editPayment: Action<this>
   setOfferAmountComplete: Action<this>
   editOfferAmount: Action<this>
-  setCriticalCheckoutError: Action<this, CriticalCheckoutError | null>
+  setCriticalCheckoutError: Action<this, CheckoutModalError | null>
   setLoadingComplete: Action<this>
   setPaymentComplete: Action<this>
   setConfirmationToken: Action<

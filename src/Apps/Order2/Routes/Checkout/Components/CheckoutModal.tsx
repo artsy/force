@@ -3,10 +3,15 @@ import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckou
 import { RouterLink } from "System/Components/RouterLink"
 import { useRouter } from "System/Hooks/useRouter"
 
-// TODO: Tracking
+export enum CheckoutModalError {
+  LOADING_TIMEOUT = "loading_timeout",
+  ARTWORK_VERSION_MISMATCH = "artwork_version_mismatch",
+  ARTWORK_NOT_FOR_SALE = "artwork_not_for_sale",
+  UNHANDLED = "UNHANDLED",
+}
 
-export const CriticalErrorModal: React.FC<{
-  error: string | null
+export const CheckoutModal: React.FC<{
+  error: CheckoutModalError | null
 }> = ({ error }) => {
   const { artworkPath } = useCheckoutContext()
   const { router } = useRouter()
@@ -30,16 +35,16 @@ export const CriticalErrorModal: React.FC<{
   let description: string
 
   switch (error) {
-    case "loading_timeout":
+    case CheckoutModalError.LOADING_TIMEOUT:
       description = "There was an error loading your checkout."
       canReload = true
       break
-    case "artwork_version_mismatch":
+    case CheckoutModalError.ARTWORK_VERSION_MISMATCH:
       title = "Work has been updated"
       description =
         "Something about the work changed since you started checkout. Please review the work before submitting your order."
       break
-    case "artwork_not_for_sale":
+    case CheckoutModalError.ARTWORK_NOT_FOR_SALE:
       title = "Not available"
       description = "Sorry, the work is no longer available."
       break
