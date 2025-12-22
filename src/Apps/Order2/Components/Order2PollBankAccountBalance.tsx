@@ -5,12 +5,25 @@ import {
   graphql,
 } from "react-relay"
 
-import { SavingPaymentSpinner } from "Apps/Order/Components/SavingPaymentSpinner"
+import { Flex, Text } from "@artsy/palette"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { usePoll } from "Utils/Hooks/usePoll"
 import type { Order2PollBankAccountBalanceQuery } from "__generated__/Order2PollBankAccountBalanceQuery.graphql"
 import type { Order2PollBankAccountBalance_order$data } from "__generated__/Order2PollBankAccountBalance_order.graphql"
+
+const BalanceCheckingMessage: FC<React.PropsWithChildren<unknown>> = () => {
+  return (
+    <Flex flexDirection="column" alignItems="center" mb={6}>
+      <Text variant="md" color="black100">
+        Saving payment preferences
+      </Text>
+      <Text variant="sm" textColor="mono60">
+        Please do not close or refresh this window
+      </Text>
+    </Flex>
+  )
+}
 
 export enum BankAccountBalanceCheckResult {
   SUFFICIENT = "SUFFICIENT",
@@ -90,7 +103,7 @@ const Order2PollBankAccountBalance: FC<
     }
   }, [balanceCheck, polling, onBalanceCheckComplete])
 
-  return <SavingPaymentSpinner />
+  return <BalanceCheckingMessage />
 }
 
 export const BALANCE_CHECK_QUERY = graphql`
@@ -142,12 +155,12 @@ export const Order2PollBankAccountBalanceQueryRenderer: FC<
   return (
     <SystemQueryRenderer<Order2PollBankAccountBalanceQuery>
       environment={relayEnvironment}
-      placeholder={<SavingPaymentSpinner />}
+      placeholder={<BalanceCheckingMessage />}
       variables={{ id: orderId }}
       query={BALANCE_CHECK_QUERY}
       render={({ props, error }) => {
         if (!props?.me?.order) {
-          return <SavingPaymentSpinner />
+          return <BalanceCheckingMessage />
         }
 
         if (error) {
