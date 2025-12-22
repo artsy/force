@@ -697,8 +697,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         />
       )}
 
-      {/* Stripe error messages are displayed within the Payment Element, so we don't need to handle them here. */}
-      {errorMessage && !isSelectedPaymentMethodStripe && (
+      {errorMessage && (
         <>
           <CheckoutErrorBanner error={{ message: errorMessage }} />
           <Spacer y={4} />
