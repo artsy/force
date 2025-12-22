@@ -1153,8 +1153,8 @@ describe("Order2DeliveryForm", () => {
       await waitFor(() => {
         expect(screen.getByText("Delivery address")).toBeInTheDocument()
       })
-      screen.getByText("Berlin, Berlin, 56789")
-      screen.getByText("New York, NY, 10001")
+      screen.getByText("Berlin, Berlin 56789")
+      screen.getByText("New York, NY 10001")
       screen.getByText("Germany")
     })
 
@@ -1259,7 +1259,7 @@ describe("Order2DeliveryForm", () => {
       await waitFor(() => {
         expect(screen.getByText("Delivery address")).toBeInTheDocument()
       })
-      userEvent.click(screen.getByText("Berlin, Berlin, 56789"))
+      userEvent.click(screen.getByText("Berlin, Berlin 56789"))
       userEvent.click(screen.getByText("See Shipping Methods"))
 
       let mutation

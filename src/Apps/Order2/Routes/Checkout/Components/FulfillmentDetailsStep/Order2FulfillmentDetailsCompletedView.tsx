@@ -1,5 +1,6 @@
 import CheckmarkIcon from "@artsy/icons/CheckmarkIcon"
 import { Box, Clickable, Flex, Spacer, Text } from "@artsy/palette"
+import { AddressDisplay } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/AddressDisplay"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 
 export interface FulfillmentDetails {
@@ -100,44 +101,11 @@ export const Order2FulfillmentDetailsCompletedView: React.FC<
 const ShippingContent: React.FC<{ fulfillmentDetails: FulfillmentDetails }> = ({
   fulfillmentDetails,
 }) => {
-  const {
-    name,
-    addressLine1,
-    addressLine2,
-    city,
-    region,
-    postalCode,
-    country,
-    phoneNumber,
-  } = fulfillmentDetails
   return (
-    <>
-      {name && (
-        <Text variant="sm" color="mono100">
-          {name}
-        </Text>
-      )}
-      {addressLine1 && (
-        <Text variant="sm" color="mono100">
-          {addressLine1}
-        </Text>
-      )}
-      {addressLine2 && (
-        <Text variant="sm" color="mono100">
-          {addressLine2}
-        </Text>
-      )}
-      {(city || region || postalCode) && (
-        <Text variant="sm" color="mono100">
-          {[city, region, country, postalCode].filter(Boolean).join(", ")}
-        </Text>
-      )}
-
-      {phoneNumber && (
-        <Text variant="sm" color="mono100">
-          {phoneNumber}
-        </Text>
-      )}
-    </>
+    <AddressDisplay
+      address={fulfillmentDetails}
+      phoneNumber={fulfillmentDetails.phoneNumber}
+      textColor="mono100"
+    />
   )
 }

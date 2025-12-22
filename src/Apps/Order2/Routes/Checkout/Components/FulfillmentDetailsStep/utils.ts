@@ -43,6 +43,19 @@ export const countryNameFromAlpha2 = (country: string): string => {
   return COUNTRY_CODE_TO_COUNTRY_NAME[country.toUpperCase()] || country
 }
 
+export const validateAddressFields = (
+  values: FormikContextWithAddress,
+): boolean => {
+  return (
+    !!values.address.name &&
+    !!values.address.country &&
+    !!values.address.addressLine1 &&
+    !!values.address.city &&
+    !!values.phoneNumber &&
+    !!values.phoneNumberCountryCode
+  )
+}
+
 export const processSavedAddresses = (
   addresses: Order2DeliveryForm_me$data["addressConnection"],
   availableShippingCountries: readonly string[],
@@ -54,13 +67,7 @@ export const processSavedAddresses = (
       normalizedAddress.address.country,
     )
 
-    const isValid =
-      !!normalizedAddress.address.name &&
-      !!normalizedAddress.address.country &&
-      !!normalizedAddress.address.addressLine1 &&
-      !!normalizedAddress.address.city &&
-      !!normalizedAddress.phoneNumber &&
-      !!normalizedAddress.phoneNumberCountryCode
+    const isValid = validateAddressFields(normalizedAddress)
 
     return {
       ...normalizedAddress,
