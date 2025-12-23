@@ -9,6 +9,7 @@ import {
   validateAddressFields,
 } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/utils"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import { useScrollToStep } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToStep"
 import type { FormikContextWithAddress } from "Components/Address/AddressFormFields"
 import { useFormikContext } from "formik"
 import { useCallback, useState } from "react"
@@ -33,6 +34,7 @@ export const SavedAddressOptions = ({
     setStepErrorMessage,
     checkoutTracking,
   } = useCheckoutContext()
+  const { scrollToStep } = useScrollToStep()
   const parentFormikContext = useFormikContext<FormikContextWithAddress>()
 
   const [selectedAddress, setSelectedAddress] = useState<
@@ -43,6 +45,7 @@ export const SavedAddressOptions = ({
     async (values, addressID) => {
       await onSelectAddress(values)
       setUserAddressMode(null)
+      scrollToStep(CheckoutStepName.FULFILLMENT_DETAILS)
 
       const address = savedAddresses.find(a => a.internalID === addressID)
 
@@ -89,6 +92,7 @@ export const SavedAddressOptions = ({
     [
       onSelectAddress,
       setUserAddressMode,
+      scrollToStep,
       savedAddresses,
       setStepErrorMessage,
       availableShippingCountries,
@@ -111,8 +115,10 @@ export const SavedAddressOptions = ({
           await onSelectAddress(addressToSelect)
         }
       }
+
+      scrollToStep(CheckoutStepName.FULFILLMENT_DETAILS)
     },
-    [savedAddresses, onSelectAddress],
+    [savedAddresses, onSelectAddress, scrollToStep],
   )
 
   const handleAddressClick = useCallback(
@@ -213,6 +219,7 @@ export const SavedAddressOptions = ({
                   mode: "edit",
                   address: processedAddress,
                 })
+                scrollToStep(CheckoutStepName.FULFILLMENT_DETAILS)
               }}
             >
               <Text variant="sm" fontWeight="normal" color={textColor}>
