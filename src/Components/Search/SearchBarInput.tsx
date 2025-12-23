@@ -238,7 +238,7 @@ export const SearchBarInput: FC<
   }
   const handlePaste = () => {
     tracking.trackEvent({
-      action_type: "pastedIntoSearchInput", // ActionType.pastedIntoSearchInput,
+      action_type: ActionType.pastedIntoSearchInput,
       context_module: selectedPill.analyticsContextModule,
       query: value,
     })
