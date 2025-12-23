@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<023089fc7cce294f9adcf6bce9727b9d>>
+ * @generated SignedSource<<d001d5aa99af106cd8eb82564d77fa49>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,12 +9,17 @@
 // @ts-nocheck
 
 import { ReaderFragment } from 'relay-runtime';
+export type BankAccountBalanceCheckResult = "INSUFFICIENT" | "INVALID" | "NOT_SUPPORTED" | "PENDING" | "SUFFICIENT" | "%future added value";
 export type OrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type OrderPaymentMethodEnum = "CREDIT_CARD" | "SEPA_DEBIT" | "US_BANK_ACCOUNT" | "WIRE_TRANSFER" | "%future added value";
 export type OrderSourceEnum = "ARTWORK_PAGE" | "INQUIRY" | "PARTNER_OFFER" | "PRIVATE_SALE" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type Order2PaymentForm_order$data = {
   readonly availablePaymentMethods: ReadonlyArray<OrderPaymentMethodEnum>;
+  readonly bankAccountBalanceCheck: {
+    readonly message: string | null | undefined;
+    readonly result: BankAccountBalanceCheckResult;
+  } | null | undefined;
   readonly buyerTotal: {
     readonly currencyCode: string;
     readonly minor: any;
@@ -123,6 +128,31 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "availablePaymentMethods",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "BankAccountBalanceCheck",
+      "kind": "LinkedField",
+      "name": "bankAccountBalanceCheck",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "result",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "message",
+          "storageKey": null
+        }
+      ],
       "storageKey": null
     },
     {
@@ -342,6 +372,6 @@ return {
 };
 })();
 
-(node as any).hash = "e05eb97b90e0c2f8bd6ecf3ad3e7b74d";
+(node as any).hash = "6d42f3d736e3ab274e767d08bc9ad888";
 
 export default node;
