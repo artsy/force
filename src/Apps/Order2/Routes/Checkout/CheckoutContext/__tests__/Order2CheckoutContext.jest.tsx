@@ -33,6 +33,18 @@ jest.mock("Utils/Hooks/useCountdownTimer", () => ({
   })),
 }))
 
+jest.mock(
+  "Apps/Order2/Routes/Checkout/Hooks/useStripePaymentBySetupIntentId",
+  () => ({
+    useStripePaymentBySetupIntentId: (
+      orderId: string,
+      callback: () => void,
+    ) => {
+      callback()
+    },
+  }),
+)
+
 afterEach(() => {
   jest.clearAllMocks()
 })
@@ -86,6 +98,9 @@ const baseOrderProps = {
       artworkVersion: {
         internalID: "artwork-version-1",
       },
+      artwork: {
+        slug: "test-artwork",
+      },
     },
   ],
 }
@@ -117,7 +132,7 @@ describe("Order2CheckoutContext", () => {
         expect.arrayContaining([
           "isLoading",
           "expressCheckoutSubmitting",
-          "loadingError",
+          "criticalCheckoutError",
           "expressCheckoutPaymentMethods",
           "steps",
           "activeFulfillmentDetailsTab",
@@ -141,7 +156,7 @@ describe("Order2CheckoutContext", () => {
           "setDeliveryOptionComplete",
           "editDeliveryOption",
           "editPayment",
-          "setLoadingError",
+          "setCriticalCheckoutError",
           "setLoadingComplete",
           "setPaymentComplete",
           "setConfirmationToken",
@@ -160,7 +175,7 @@ describe("Order2CheckoutContext", () => {
       expect(state).toMatchObject({
         isLoading: true,
         expressCheckoutSubmitting: false,
-        loadingError: null,
+        criticalCheckoutError: null,
         expressCheckoutPaymentMethods: null,
         activeFulfillmentDetailsTab: null,
         confirmationToken: null,

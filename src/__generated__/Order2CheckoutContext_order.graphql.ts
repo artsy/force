@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<da92e8a5529e012d30d2caaa26155f3c>>
+ * @generated SignedSource<<197c6846b7e474c7384c9d783c73a37a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,11 +14,10 @@ export type OrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type OrderSourceEnum = "ARTWORK_PAGE" | "INQUIRY" | "PARTNER_OFFER" | "PRIVATE_SALE" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type Order2CheckoutContext_order$data = {
-  readonly buyerStateExpiresAt: string | null | undefined;
   readonly internalID: string;
   readonly lineItems: ReadonlyArray<{
-    readonly artworkVersion: {
-      readonly internalID: string;
+    readonly artwork: {
+      readonly slug: string;
     } | null | undefined;
   } | null | undefined>;
   readonly mode: OrderModeEnum;
@@ -35,15 +34,7 @@ export type Order2CheckoutContext_order$key = {
   readonly " $fragmentSpreads": FragmentRefs<"Order2CheckoutContext_order">;
 };
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "internalID",
-  "storageKey": null
-};
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -54,7 +45,13 @@ return {
       "kind": "FragmentSpread",
       "name": "useBuildInitialSteps_order"
     },
-    (v0/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "internalID",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -67,13 +64,6 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "source",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "buyerStateExpiresAt",
       "storageKey": null
     },
     {
@@ -112,12 +102,18 @@ return {
         {
           "alias": null,
           "args": null,
-          "concreteType": "ArtworkVersion",
+          "concreteType": "Artwork",
           "kind": "LinkedField",
-          "name": "artworkVersion",
+          "name": "artwork",
           "plural": false,
           "selections": [
-            (v0/*: any*/)
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "slug",
+              "storageKey": null
+            }
           ],
           "storageKey": null
         }
@@ -128,8 +124,7 @@ return {
   "type": "Order",
   "abstractKey": null
 };
-})();
 
-(node as any).hash = "27c6acb428487cb6df9cba3ef259acf6";
+(node as any).hash = "26d1a886d9b04f5f3d3fe1dd32e29238";
 
 export default node;

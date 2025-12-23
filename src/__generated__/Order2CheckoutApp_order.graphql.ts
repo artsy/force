@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f269f90ae036d40d937d8488c12c1198>>
+ * @generated SignedSource<<4bdc99f3edcb324aedf130b3b957441d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -24,7 +24,7 @@ export type Order2CheckoutApp_order$data = {
   readonly selectedFulfillmentOption: {
     readonly type: FulfillmentOptionTypeEnum;
   } | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"Order2CheckoutLoadingSkeleton_order" | "Order2CollapsibleOrderSummary_order" | "Order2DeliveryOptionsStep_order" | "Order2ExpressCheckout_order" | "Order2FulfillmentDetailsStep_order" | "Order2HelpLinks_order" | "Order2OfferStep_order" | "Order2PaymentStep_order" | "Order2ReviewStep_order">;
+  readonly " $fragmentSpreads": FragmentRefs<"Order2CheckoutLoadingSkeleton_order" | "Order2CollapsibleOrderSummary_order" | "Order2DeliveryOptionsStep_order" | "Order2ExpressCheckout_order" | "Order2FulfillmentDetailsStep_order" | "Order2HelpLinks_order" | "Order2OfferStep_order" | "Order2PaymentStep_order" | "Order2ReviewStep_order" | "useLoadCheckout_order">;
   readonly " $fragmentType": "Order2CheckoutApp_order";
 };
 export type Order2CheckoutApp_order$key = {
@@ -109,6 +109,11 @@ const node: ReaderFragment = {
     {
       "args": null,
       "kind": "FragmentSpread",
+      "name": "useLoadCheckout_order"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
       "name": "Order2ExpressCheckout_order"
     },
     {
@@ -156,6 +161,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "865a486e3ea8749cd7b82dbf7edfd6fd";
+(node as any).hash = "13249e0d6bf0487a8512433900250799";
 
 export default node;

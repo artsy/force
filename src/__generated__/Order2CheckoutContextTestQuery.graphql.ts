@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<017ac366f19e63a97151bfaf646c1fed>>
+ * @generated SignedSource<<3890444638367c93918f4348ec43b63b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -358,13 +358,6 @@ return {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
-                    "name": "buyerStateExpiresAt",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
                     "name": "stripeConfirmationToken",
                     "storageKey": null
                   },
@@ -379,11 +372,20 @@ return {
                       {
                         "alias": null,
                         "args": null,
-                        "concreteType": "ArtworkVersion",
+                        "concreteType": "Artwork",
                         "kind": "LinkedField",
-                        "name": "artworkVersion",
+                        "name": "artwork",
                         "plural": false,
-                        "selections": (v3/*: any*/),
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "slug",
+                            "storageKey": null
+                          },
+                          (v1/*: any*/)
+                        ],
                         "storageKey": null
                       },
                       (v1/*: any*/)
@@ -404,7 +406,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "493f4acad6032d1f8b290986a15396ef",
+    "cacheID": "bd28709588c2fd6f88ff0dfdf0ba6779",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -427,7 +429,6 @@ return {
           "plural": false,
           "type": "Order"
         },
-        "viewer.me.order.buyerStateExpiresAt": (v5/*: any*/),
         "viewer.me.order.fulfillmentDetails": {
           "enumValues": null,
           "nullable": true,
@@ -456,14 +457,14 @@ return {
           "plural": true,
           "type": "LineItem"
         },
-        "viewer.me.order.lineItems.artworkVersion": {
+        "viewer.me.order.lineItems.artwork": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
-          "type": "ArtworkVersion"
+          "type": "Artwork"
         },
-        "viewer.me.order.lineItems.artworkVersion.id": (v4/*: any*/),
-        "viewer.me.order.lineItems.artworkVersion.internalID": (v4/*: any*/),
+        "viewer.me.order.lineItems.artwork.id": (v4/*: any*/),
+        "viewer.me.order.lineItems.artwork.slug": (v4/*: any*/),
         "viewer.me.order.lineItems.id": (v4/*: any*/),
         "viewer.me.order.mode": {
           "enumValues": [
@@ -562,7 +563,7 @@ return {
     },
     "name": "Order2CheckoutContextTestQuery",
     "operationKind": "query",
-    "text": "query Order2CheckoutContextTestQuery {\n  viewer {\n    me {\n      order(id: \"order-id\") {\n        ...Order2CheckoutContext_order\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment Order2CheckoutContext_order on Order {\n  ...useBuildInitialSteps_order\n  internalID\n  mode\n  source\n  buyerStateExpiresAt\n  stripeConfirmationToken\n  selectedFulfillmentOption {\n    type\n  }\n  lineItems {\n    artworkVersion {\n      internalID\n      id\n    }\n    id\n  }\n}\n\nfragment useBuildInitialSteps_order on Order {\n  ...useCompleteOfferData_order\n  ...useCompleteFulfillmentDetailsData_order\n  ...useCompleteDeliveryOptionData_order\n  ...useCompletePaymentData_order\n  mode\n  selectedFulfillmentOption {\n    type\n  }\n}\n\nfragment useCompleteDeliveryOptionData_order on Order {\n  selectedFulfillmentOption {\n    type\n  }\n}\n\nfragment useCompleteFulfillmentDetailsData_order on Order {\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    country\n    name\n    postalCode\n    region\n    phoneNumber {\n      display(format: INTERNATIONAL)\n    }\n  }\n  selectedFulfillmentOption {\n    type\n  }\n}\n\nfragment useCompleteOfferData_order on Order {\n  mode\n  pendingOffer {\n    note\n    amount {\n      minor\n      display\n    }\n    id\n  }\n}\n\nfragment useCompletePaymentData_order on Order {\n  paymentMethod\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      internalID\n      id\n    }\n    ... on BankAccount {\n      internalID\n      id\n    }\n    ... on WireTransfer {\n      isManualPayment\n    }\n  }\n}\n"
+    "text": "query Order2CheckoutContextTestQuery {\n  viewer {\n    me {\n      order(id: \"order-id\") {\n        ...Order2CheckoutContext_order\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment Order2CheckoutContext_order on Order {\n  ...useBuildInitialSteps_order\n  internalID\n  mode\n  source\n  stripeConfirmationToken\n  selectedFulfillmentOption {\n    type\n  }\n  lineItems {\n    artwork {\n      slug\n      id\n    }\n    id\n  }\n}\n\nfragment useBuildInitialSteps_order on Order {\n  ...useCompleteOfferData_order\n  ...useCompleteFulfillmentDetailsData_order\n  ...useCompleteDeliveryOptionData_order\n  ...useCompletePaymentData_order\n  mode\n  selectedFulfillmentOption {\n    type\n  }\n}\n\nfragment useCompleteDeliveryOptionData_order on Order {\n  selectedFulfillmentOption {\n    type\n  }\n}\n\nfragment useCompleteFulfillmentDetailsData_order on Order {\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    country\n    name\n    postalCode\n    region\n    phoneNumber {\n      display(format: INTERNATIONAL)\n    }\n  }\n  selectedFulfillmentOption {\n    type\n  }\n}\n\nfragment useCompleteOfferData_order on Order {\n  mode\n  pendingOffer {\n    note\n    amount {\n      minor\n      display\n    }\n    id\n  }\n}\n\nfragment useCompletePaymentData_order on Order {\n  paymentMethod\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      internalID\n      id\n    }\n    ... on BankAccount {\n      internalID\n      id\n    }\n    ... on WireTransfer {\n      isManualPayment\n    }\n  }\n}\n"
   }
 };
 })();

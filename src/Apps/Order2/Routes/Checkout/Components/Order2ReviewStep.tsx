@@ -46,6 +46,8 @@ const Order2ReviewStepComponent: React.FC<Order2ReviewStepProps> = ({
     savePaymentMethod,
     redirectToOrderDetails,
     checkoutTracking,
+    artworkPath,
+    setCriticalCheckoutError,
   } = useCheckoutContext()
 
   const artworkData = extractLineItemMetadata(orderData.lineItems[0]!)
@@ -63,6 +65,11 @@ const Order2ReviewStepComponent: React.FC<Order2ReviewStepProps> = ({
       orderId: orderData.internalID,
       shouldLogErrorToSentry: true,
     })
+
+    if (error.code === "insufficient_inventory") {
+      setCriticalCheckoutError("artwork_not_for_sale")
+      return
+    }
 
     const title = "An error occurred"
     const message =
@@ -140,11 +147,7 @@ const Order2ReviewStepComponent: React.FC<Order2ReviewStepProps> = ({
         {isOffer ? "Offer" : "Order"} summary
       </Text>
       <Flex py={1} justifyContent="space-between" alignItems="flex-start">
-        <RouterLink
-          flex={0}
-          to={`/artwork/${artworkData.slug}`}
-          target="_blank"
-        >
+        <RouterLink flex={0} to={artworkPath} target="_blank">
           <Image
             mr={1}
             src={artworkData?.image?.resized?.url}
@@ -219,7 +222,7 @@ export const Order2ReviewStep = injectDialog(Order2ReviewStepComponent)
 const extractLineItemMetadata = (
   lineItem: NonNullable<Order2ReviewStep_order$data["lineItems"][number]>,
 ) => {
-  const { artwork, artworkVersion, artworkOrEditionSet } = lineItem
+  const { artworkVersion, artworkOrEditionSet } = lineItem
 
   const isArtworkOrEdition =
     artworkOrEditionSet &&
@@ -232,7 +235,6 @@ const extractLineItemMetadata = (
   const attributionClass = artworkVersion?.attributionClass
 
   return {
-    slug: artwork?.slug,
     image: artworkVersion?.image,
     title: artworkVersion?.title,
     artistNames: artworkVersion?.artistNames,
@@ -262,9 +264,6 @@ const FRAGMENT = graphql`
       display
     }
     lineItems {
-      artwork {
-        slug
-      }
       artworkOrEditionSet {
         __typename
         ... on Artwork {

@@ -1800,11 +1800,17 @@ describe("Order2CheckoutRoute", () => {
       jest.restoreAllMocks()
     })
 
-    it("adds event listeners on mount", async () => {
+    it("adds event listeners after loading completes", async () => {
       await renderWithRelay({
         Viewer: () => ({
           ...baseProps,
         }),
+      })
+
+      // Advance timers to complete loading
+      await act(async () => {
+        jest.advanceTimersByTime(1000)
+        await flushPromiseQueue()
       })
 
       expect(addEventListenerSpy).toHaveBeenCalledWith(
