@@ -785,7 +785,10 @@ describe("Order2PaymentForm", () => {
         },
       })
 
-      expect(mockCheckoutContext.setPaymentComplete).toHaveBeenCalled()
+      // Wait for balance check to complete and trigger setPaymentComplete
+      await waitFor(() => {
+        expect(mockCheckoutContext.setPaymentComplete).toHaveBeenCalled()
+      })
     })
 
     it("handles setOrderPaymentMutation error", async () => {

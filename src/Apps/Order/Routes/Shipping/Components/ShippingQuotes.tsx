@@ -90,36 +90,45 @@ export const ShippingQuotes: React.FC<
         data-testid="shipping-quotes"
         defaultValue={shippingContext.state.selectedShippingQuoteID}
       >
-        {quotes.map(shippingQuote => {
-          const description =
-            shippingQuoteDescriptions[shippingQuote?.typeName as string]
-          const displayName =
-            shippingQuoteDisplayNames[shippingQuote?.typeName as string]
+        {quotes
+          .map(shippingQuote => {
+            const description =
+              shippingQuoteDescriptions[shippingQuote?.typeName as string]
+            const displayName =
+              shippingQuoteDisplayNames[shippingQuote?.typeName as string]
 
-          return (
-            <BorderedRadio
-              value={shippingQuote?.id}
-              key={shippingQuote?.id}
-              position="relative"
-            >
-              <Flex flexDirection="column" width="100%">
-                <GridColumns>
-                  <Column span={10}>
-                    <Text variant="sm-display" textTransform="capitalize">
-                      {displayName}
-                    </Text>
-                    <Text textColor="mono60">{description}</Text>
-                  </Column>
-                  <Column span={2} textAlign={"right"}>
-                    <Text textTransform="capitalize" data-testid="quotePrice">
-                      {shippingQuote?.price}
-                    </Text>
-                  </Column>
-                </GridColumns>
-              </Flex>
-            </BorderedRadio>
-          )
-        })}
+            return {
+              shippingQuote,
+              description,
+              displayName,
+            }
+          })
+          .filter(({ description, displayName }) => description && displayName)
+          .map(({ shippingQuote, description, displayName }) => {
+            return (
+              <BorderedRadio
+                value={shippingQuote?.id}
+                key={shippingQuote?.id}
+                position="relative"
+              >
+                <Flex flexDirection="column" width="100%">
+                  <GridColumns>
+                    <Column span={10}>
+                      <Text variant="sm-display" textTransform="capitalize">
+                        {displayName}
+                      </Text>
+                      <Text textColor="mono60">{description}</Text>
+                    </Column>
+                    <Column span={2} textAlign={"right"}>
+                      <Text textTransform="capitalize" data-testid="quotePrice">
+                        {shippingQuote?.price}
+                      </Text>
+                    </Column>
+                  </GridColumns>
+                </Flex>
+              </BorderedRadio>
+            )
+          })}
       </RadioGroup>
 
       <Spacer y={4} />
