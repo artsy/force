@@ -1,5 +1,13 @@
 import AddIcon from "@artsy/icons/AddIcon"
-import { Button, Clickable, Flex, Radio, Spacer, Text } from "@artsy/palette"
+import {
+  Button,
+  Clickable,
+  Flex,
+  Radio,
+  Spacer,
+  Text,
+  usePrevious,
+} from "@artsy/palette"
 import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { AddressDisplay } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/AddressDisplay"
 import { AddAddressForm } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/SavedAddressOptions/AddAddressForm"
@@ -12,7 +20,7 @@ import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckou
 import { useScrollToStep } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToStep"
 import type { FormikContextWithAddress } from "Components/Address/AddressFormFields"
 import { useFormikContext } from "formik"
-import { useCallback, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 
 interface SavedAddressOptionsProps {
   savedAddresses: ProcessedUserAddress[]
@@ -41,11 +49,21 @@ export const SavedAddressOptions = ({
     ProcessedUserAddress | undefined
   >(initialSelectedAddress)
 
+  const previousUserAddressMode = usePrevious(userAddressMode)
+
+  // Scroll to top of step whenever userAddressMode changes
+  // This covers: beginning edit, completing edit, canceling edit,
+  // beginning add, completing add, canceling add, deleting address
+  useEffect(() => {
+    if (previousUserAddressMode !== userAddressMode) {
+      scrollToStep(CheckoutStepName.FULFILLMENT_DETAILS)
+    }
+  }, [userAddressMode, previousUserAddressMode, scrollToStep])
+
   const onSaveAddress = useCallback(
     async (values, addressID) => {
       await onSelectAddress(values)
       setUserAddressMode(null)
-      scrollToStep(CheckoutStepName.FULFILLMENT_DETAILS)
 
       const address = savedAddresses.find(a => a.internalID === addressID)
 
@@ -92,7 +110,6 @@ export const SavedAddressOptions = ({
     [
       onSelectAddress,
       setUserAddressMode,
-      scrollToStep,
       savedAddresses,
       setStepErrorMessage,
       availableShippingCountries,
@@ -115,10 +132,8 @@ export const SavedAddressOptions = ({
           await onSelectAddress(addressToSelect)
         }
       }
-
-      scrollToStep(CheckoutStepName.FULFILLMENT_DETAILS)
     },
-    [savedAddresses, onSelectAddress, scrollToStep],
+    [savedAddresses, onSelectAddress],
   )
 
   const handleAddressClick = useCallback(
@@ -219,7 +234,6 @@ export const SavedAddressOptions = ({
                   mode: "edit",
                   address: processedAddress,
                 })
-                scrollToStep(CheckoutStepName.FULFILLMENT_DETAILS)
               }}
             >
               <Text variant="sm" fontWeight="normal" color={textColor}>
