@@ -502,10 +502,6 @@ export const Order2CheckoutContext: ReturnType<
       ...state.messages,
       [step]: { error },
     }
-
-    // Scroll step back into view to show error banner (except payment)
-    if (error && step !== CheckoutStepName.PAYMENT) {
-    }
   }),
 }))
 

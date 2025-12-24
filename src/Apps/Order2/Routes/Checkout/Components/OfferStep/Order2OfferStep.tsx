@@ -256,117 +256,113 @@ const Order2OfferStepFormContent: React.FC<Order2OfferStepFormContentProps> = ({
     orderData.lineItems?.[0]?.artwork?.priceDisplay === "hidden"
 
   return (
-    <>
-      <Flex
-        flexDirection="column"
-        data-testid="offer-step-active"
-        backgroundColor="mono0"
+    <Flex
+      flexDirection="column"
+      data-testid="offer-step-active"
+      backgroundColor="mono0"
+    >
+      <Box
+        py={2}
+        px={[2, 2, 4]}
+        hidden={currentStep !== CheckoutStepState.UPCOMING}
       >
-        <Box
-          py={2}
-          px={[2, 2, 4]}
-          hidden={currentStep !== CheckoutStepState.UPCOMING}
-        >
-          <Flex flexDirection="column">
-            <Text
-              variant={["sm-display", "sm-display", "md"]}
-              fontWeight={["bold", "bold", "normal"]}
-              color="mono100"
-            >
-              Offer
-            </Text>
-            <Text variant="sm" color="mono60">
-              If accepted, your payment will be processed. All offers are
-              binding once submitted.
-            </Text>
-          </Flex>
-        </Box>
+        <Flex flexDirection="column">
+          <Text
+            variant={["sm-display", "sm-display", "md"]}
+            fontWeight={["bold", "bold", "normal"]}
+            color="mono100"
+          >
+            Offer
+          </Text>
+          <Text variant="sm" color="mono60">
+            If accepted, your payment will be processed. All offers are binding
+            once submitted.
+          </Text>
+        </Flex>
+      </Box>
 
-        <Box
-          py={2}
-          px={[2, 2, 4]}
-          hidden={currentStep !== CheckoutStepState.COMPLETED}
-        >
-          {completedViewProps && (
-            <Order2OfferCompletedView {...completedViewProps} />
-          )}
-        </Box>
+      <Box
+        py={2}
+        px={[2, 2, 4]}
+        hidden={currentStep !== CheckoutStepState.COMPLETED}
+      >
+        {completedViewProps && (
+          <Order2OfferCompletedView {...completedViewProps} />
+        )}
+      </Box>
 
-        <Box
-          pt={2}
-          px={[2, 2, 4]}
-          hidden={currentStep !== CheckoutStepState.ACTIVE}
-        >
-          <Flex flexDirection="column">
-            <Text
-              variant={["sm-display", "sm-display", "md"]}
-              fontWeight={["bold", "bold", "normal"]}
-              color="mono100"
-            >
-              Offer
-            </Text>
-            <Text variant="sm" color="mono100">
-              If accepted, your payment will be processed. All offers are
-              binding once submitted.
-            </Text>
-            <Spacer y={1} />
-            {offerAmountError && (
-              <CheckoutErrorBanner error={offerAmountError} />
-            )}
-          </Flex>
-        </Box>
+      <Box
+        pt={2}
+        px={[2, 2, 4]}
+        hidden={currentStep !== CheckoutStepState.ACTIVE}
+      >
+        <Flex flexDirection="column">
+          <Text
+            variant={["sm-display", "sm-display", "md"]}
+            fontWeight={["bold", "bold", "normal"]}
+            color="mono100"
+          >
+            Offer
+          </Text>
+          <Text variant="sm" color="mono100">
+            If accepted, your payment will be processed. All offers are binding
+            once submitted.
+          </Text>
+          <Spacer y={1} />
+          {offerAmountError && <CheckoutErrorBanner error={offerAmountError} />}
+        </Flex>
+      </Box>
 
-        <Box
-          py={2}
-          px={[2, 2, 4]}
-          hidden={currentStep !== CheckoutStepState.ACTIVE}
-        >
-          {isPriceHidden ? (
-            <OfferInput name="offerValue" onBlur={onCustomOfferBlur} />
-          ) : (
-            <Order2OfferOptions
-              order={orderData}
-              onOfferOptionSelected={onOfferOptionSelected}
-              onCustomOfferBlur={onCustomOfferBlur}
-            />
-          )}
+      <Box
+        py={2}
+        px={[2, 2, 4]}
+        hidden={currentStep !== CheckoutStepState.ACTIVE}
+      >
+        {isPriceHidden ? (
+          <OfferInput name="offerValue" onBlur={onCustomOfferBlur} />
+        ) : (
+          <Order2OfferOptions
+            order={orderData}
+            onOfferOptionSelected={onOfferOptionSelected}
+            onCustomOfferBlur={onCustomOfferBlur}
+          />
+        )}
+
+        <Spacer y={4} />
+
+        <Flex flexDirection="column">
+          <Text
+            variant={["sm-display", "sm-display", "md"]}
+            fontWeight={["bold", "bold", "normal"]}
+            color="mono100"
+          >
+            Offer note
+          </Text>
+          <Text variant="sm" color="mono100">
+            Additional context to help the gallery evaluate your offer.
+          </Text>
+
+          <TextArea
+            title="Note (recommended)"
+            maxLength={1000}
+            placeholder="Share what draws you to this work or artist, or add any context about your offer"
+            onChange={onOfferNoteChange}
+            value={values.offerNote}
+          />
 
           <Spacer y={4} />
-
-          <Flex flexDirection="column">
-            <Text
-              variant={["sm-display", "sm-display", "md"]}
-              fontWeight={["bold", "bold", "normal"]}
-              color="mono100"
-            >
-              Offer note
-            </Text>
-            <Text variant="sm" color="mono100">
-              Additional context to help the gallery evaluate your offer.
-            </Text>
-
-            <TextArea
-              title="Note (recommended)"
-              maxLength={1000}
-              placeholder="Share what draws you to this work or artist, or add any context about your offer"
-              onChange={onOfferNoteChange}
-              value={values.offerNote}
-            />
-
-            <Spacer y={4} />
-            <Button
-              variant="primaryBlack"
-              width="100%"
-              onClick={onContinueButtonPressed}
-              loading={isSubmittingOffer}
-              disabled={isSubmittingOffer}
-            >
-              Save and Continue
-            </Button>
-          </Flex>
-        </Box>
-      </Flex>
-    </>
+          <Button
+            variant="primaryBlack"
+            width="100%"
+            onClick={onContinueButtonPressed}
+            loading={isSubmittingOffer}
+            disabled={isSubmittingOffer}
+          >
+            Save and Continue
+          </Button>
+        </Flex>
+      </Box>
+    </Flex>
   )
 }
 
