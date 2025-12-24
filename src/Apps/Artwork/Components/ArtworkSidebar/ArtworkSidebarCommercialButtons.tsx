@@ -238,7 +238,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<
             secondaryObjectId: selectedEditionSet?.internalID,
           },
           redirectTo: `${match?.location?.pathname}?creating_order=true`,
-          imageUrl: artwork.image?.url,
+          image: artwork.image,
         },
         analytics: {
           contextModule: ContextModule.artworkSidebar,
@@ -639,7 +639,8 @@ const ARTWORK_FRAGMENT = graphql`
     slug
     saleMessage
     image {
-      url(version: "large")
+      url(version: "x-large")
+      aspectRatio
     }
     isInquireable
     isAcquireable

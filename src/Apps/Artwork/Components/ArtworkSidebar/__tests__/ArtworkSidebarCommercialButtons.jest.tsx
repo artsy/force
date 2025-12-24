@@ -1,4 +1,5 @@
 import { Toasts, ToastsProvider, useToasts } from "@artsy/palette"
+import * as SentryUtils from "@sentry/utils"
 import { fireEvent, screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { ArtworkSidebarCommercialButtons } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarCommercialButtons"
@@ -10,7 +11,6 @@ import type { ArtworkSidebarCommercialButtons_Test_Query } from "__generated__/A
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { createMockEnvironment } from "relay-test-utils"
-import * as SentryUtils from "@sentry/utils"
 
 jest.unmock("react-relay")
 
@@ -537,7 +537,10 @@ describe("ArtworkSidebarCommercialButtons", () => {
             objectId: "artwork-1",
             secondaryObjectId: "edition-set-id",
           },
-          imageUrl: '<mock-value-for-field-"url">',
+          image: {
+            url: '<mock-value-for-field-"url">',
+            aspectRatio: 4.2,
+          },
           redirectTo: "/artwork/artwork-1?creating_order=true",
         },
         analytics: {

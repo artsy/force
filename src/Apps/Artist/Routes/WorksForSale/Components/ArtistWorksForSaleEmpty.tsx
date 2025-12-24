@@ -25,7 +25,7 @@ const ArtistWorksForSaleEmpty: FC<
       action={
         <ArtworkFilterAlertContextProvider
           initialCriteria={{ artistIDs: [artist.internalID] }}
-          imageUrl={artist.coverArtwork?.image?.url}
+          image={artist.coverArtwork?.image}
         >
           <CreateAlertButton variant="secondaryNeutral" size="large" />
         </ArtworkFilterAlertContextProvider>
@@ -43,7 +43,8 @@ export const ArtistWorksForSaleEmptyFragmentContainer = createFragmentContainer(
         name
         coverArtwork {
           image {
-            url(version: "large")
+            url(version: "x-large")
+            aspectRatio
           }
         }
       }

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<41b9f5acd2256ac3b34675ce24f4e76b>>
+ * @generated SignedSource<<71163008a823f9205ac81ab25551e825>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,6 +18,7 @@ export type DeprecatedSaveButton_artwork$data = {
   } | null | undefined;
   readonly id: string;
   readonly image: {
+    readonly aspectRatio: number;
     readonly url: string | null | undefined;
   } | null | undefined;
   readonly internalID: string;
@@ -86,12 +87,19 @@ const node: ReaderFragment = {
             {
               "kind": "Literal",
               "name": "version",
-              "value": "large"
+              "value": "x-large"
             }
           ],
           "kind": "ScalarField",
           "name": "url",
-          "storageKey": "url(version:\"large\")"
+          "storageKey": "url(version:\"x-large\")"
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "aspectRatio",
+          "storageKey": null
         }
       ],
       "storageKey": null
@@ -130,6 +138,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "adb83575cd6039667056b6cc78bdde10";
+(node as any).hash = "dbe25d206ce2a83aff4568657149d051";
 
 export default node;

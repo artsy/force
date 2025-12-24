@@ -129,7 +129,10 @@ describe("ArtworkApp", () => {
         },
         options: {
           title: "Log in or sign up to view gallery offer",
-          imageUrl: '<mock-value-for-field-"url">',
+          image: {
+            url: '<mock-value-for-field-"url">',
+            aspectRatio: '<mock-value-for-field-\"aspectRatio\">',
+          },
         },
       })
     })

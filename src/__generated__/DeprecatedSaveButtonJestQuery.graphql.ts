@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<eacf96bdce9de65b6f260fd7cb5ab2d0>>
+ * @generated SignedSource<<f37740ae6dd3ce13316b261b817219f4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -131,12 +131,19 @@ return {
                   {
                     "kind": "Literal",
                     "name": "version",
-                    "value": "large"
+                    "value": "x-large"
                   }
                 ],
                 "kind": "ScalarField",
                 "name": "url",
-                "storageKey": "url(version:\"large\")"
+                "storageKey": "url(version:\"x-large\")"
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "aspectRatio",
+                "storageKey": null
               }
             ],
             "storageKey": null
@@ -176,7 +183,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "035848df1f5ffce1bd2ba8d7c02a74a4",
+    "cacheID": "6b35e1598658b2aa1b3881d8d9d2a250",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -211,6 +218,12 @@ return {
           "plural": false,
           "type": "Image"
         },
+        "artwork.image.aspectRatio": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "Float"
+        },
         "artwork.image.url": (v2/*: any*/),
         "artwork.internalID": (v1/*: any*/),
         "artwork.isSavedToAnyList": {
@@ -225,7 +238,7 @@ return {
     },
     "name": "DeprecatedSaveButtonJestQuery",
     "operationKind": "query",
-    "text": "query DeprecatedSaveButtonJestQuery {\n  artwork(id: \"example-artwork-id\") {\n    ...DeprecatedSaveButton_artwork\n    id\n  }\n}\n\nfragment DeprecatedSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSavedToAnyList\n  title\n  image {\n    url(version: \"large\")\n  }\n  collectorSignals {\n    auction {\n      lotWatcherCount\n    }\n  }\n}\n"
+    "text": "query DeprecatedSaveButtonJestQuery {\n  artwork(id: \"example-artwork-id\") {\n    ...DeprecatedSaveButton_artwork\n    id\n  }\n}\n\nfragment DeprecatedSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSavedToAnyList\n  title\n  image {\n    url(version: \"x-large\")\n    aspectRatio\n  }\n  collectorSignals {\n    auction {\n      lotWatcherCount\n    }\n  }\n}\n"
   }
 };
 })();

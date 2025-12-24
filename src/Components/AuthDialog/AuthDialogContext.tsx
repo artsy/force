@@ -53,10 +53,17 @@ export const DEFAULT_AUTH_MODAL_INTENTS: Record<AuthDialogMode, AuthIntent> = {
 }
 
 export type AuthDialogOptions = {
-  /** Whether or not to display an evergreen side panel for visual interest */
-  image?: boolean
+  /** Whether or not to display SEO default image */
+  seoImage?: boolean
+  /** Whether or not to display Gallery default image */
+  galleryImage?: boolean
   /** Custom desired image url to be displayed */
   imageUrl?: string | null
+  /** Image */
+  image?: {
+    url?: string | null
+    aspectRatio?: number | null
+  } | null
   /** Applies to SignUp or Login, not ForgotPassword */
   afterAuthAction?: AfterAuthAction
   /** Applies to SignUp or Login, not ForgotPassword */

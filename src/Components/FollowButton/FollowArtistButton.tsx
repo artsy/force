@@ -134,7 +134,7 @@ const FollowArtistButton = ({
             kind: "artist",
             objectId: artist.slug,
           },
-          imageUrl: artist.coverArtwork?.image?.url,
+          image: artist.coverArtwork?.image,
         },
         analytics: {
           intent: Intent.followArtist,
@@ -199,7 +199,8 @@ export const FollowArtistButtonFragmentContainer = createFragmentContainer(
         }
         coverArtwork {
           image {
-            url(version: "large")
+            url(version: "x-large")
+            aspectRatio
           }
         }
       }

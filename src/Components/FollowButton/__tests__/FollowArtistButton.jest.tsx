@@ -94,7 +94,10 @@ describe("FollowArtistButton", () => {
             objectId: "example",
           },
           title: "Sign up or log in to follow Example",
-          imageUrl: '<mock-value-for-field-"url">',
+          image: {
+            url: '<mock-value-for-field-"url">',
+            aspectRatio: 4.2,
+          },
         },
       })
     })

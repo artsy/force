@@ -74,7 +74,7 @@ const FollowGeneButton: React.FC<
             kind: "gene",
             objectId: gene.slug,
           },
-          imageUrl: gene.image?.url,
+          image: gene.image,
         },
         analytics: {
           intent: Intent.followGene,
@@ -124,7 +124,8 @@ export const FollowGeneButtonFragmentContainer = createFragmentContainer(
         internalID
         isFollowed @include(if: $isLoggedIn)
         image {
-          url(version: "large")
+          url(version: "x-large")
+          aspectRatio
         }
       }
     `,

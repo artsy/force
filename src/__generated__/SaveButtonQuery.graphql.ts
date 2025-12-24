@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6a6730eff3086defb9559f92c896b762>>
+ * @generated SignedSource<<2b2b6c75e1a6f3fc9b111cd3b18e50a1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -128,12 +128,19 @@ return {
                   {
                     "kind": "Literal",
                     "name": "version",
-                    "value": "large"
+                    "value": "x-large"
                   }
                 ],
                 "kind": "ScalarField",
                 "name": "url",
-                "storageKey": "url(version:\"large\")"
+                "storageKey": "url(version:\"x-large\")"
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "aspectRatio",
+                "storageKey": null
               }
             ],
             "storageKey": null
@@ -180,12 +187,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a4618cd4fe439eb1eca99bd54e81bc94",
+    "cacheID": "7b6842c9a44ba848c68c3230e9ee78dd",
     "id": null,
     "metadata": {},
     "name": "SaveButtonQuery",
     "operationKind": "query",
-    "text": "query SaveButtonQuery(\n  $id: String!\n) {\n  artwork(id: $id) {\n    ...SaveButton_artwork\n    id\n  }\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSaved\n  title\n  image {\n    url(version: \"large\")\n  }\n  collectorSignals {\n    auction {\n      lotWatcherCount\n      lotClosesAt\n    }\n  }\n}\n"
+    "text": "query SaveButtonQuery(\n  $id: String!\n) {\n  artwork(id: $id) {\n    ...SaveButton_artwork\n    id\n  }\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSaved\n  title\n  image {\n    url(version: \"x-large\")\n    aspectRatio\n  }\n  collectorSignals {\n    auction {\n      lotWatcherCount\n      lotClosesAt\n    }\n  }\n}\n"
   }
 };
 })();

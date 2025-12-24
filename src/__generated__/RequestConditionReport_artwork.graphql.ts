@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9e451cae8ffa09f8f6069c6fb06efe78>>
+ * @generated SignedSource<<f4596e1dad00e67773a8b61e76627cb5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,6 +12,7 @@ import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type RequestConditionReport_artwork$data = {
   readonly image: {
+    readonly aspectRatio: number;
     readonly url: string | null | undefined;
   } | null | undefined;
   readonly internalID: string;
@@ -74,12 +75,19 @@ return {
             {
               "kind": "Literal",
               "name": "version",
-              "value": "large"
+              "value": "x-large"
             }
           ],
           "kind": "ScalarField",
           "name": "url",
-          "storageKey": "url(version:\"large\")"
+          "storageKey": "url(version:\"x-large\")"
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "aspectRatio",
+          "storageKey": null
         }
       ],
       "storageKey": null
@@ -90,6 +98,6 @@ return {
 };
 })();
 
-(node as any).hash = "59d86976e207647dfd31e5768b903182";
+(node as any).hash = "4a9463cb27950a24facd829c61a03c94";
 
 export default node;

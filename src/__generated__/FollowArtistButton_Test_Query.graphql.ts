@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<743f00efefa283ab3d6a5ce744941115>>
+ * @generated SignedSource<<33809fbcac5cd5229b370b4494e46219>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -213,12 +213,19 @@ return {
                       {
                         "kind": "Literal",
                         "name": "version",
-                        "value": "large"
+                        "value": "x-large"
                       }
                     ],
                     "kind": "ScalarField",
                     "name": "url",
-                    "storageKey": "url(version:\"large\")"
+                    "storageKey": "url(version:\"x-large\")"
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "aspectRatio",
+                    "storageKey": null
                   }
                 ],
                 "storageKey": null
@@ -233,7 +240,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b9606c1e0fc74947828628bb8800ac3c",
+    "cacheID": "aabfba3b1abeb58da618c6cce55f8408",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -267,6 +274,12 @@ return {
           "nullable": true,
           "plural": false,
           "type": "Image"
+        },
+        "artist.coverArtwork.image.aspectRatio": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "Float"
         },
         "artist.coverArtwork.image.url": (v3/*: any*/),
         "artist.id": (v2/*: any*/),
@@ -302,7 +315,7 @@ return {
     },
     "name": "FollowArtistButton_Test_Query",
     "operationKind": "query",
-    "text": "query FollowArtistButton_Test_Query {\n  me {\n    ...FollowArtistButton_me\n    id\n  }\n  artist(id: \"example\") {\n    ...FollowArtistButton_artist_2OV785\n    id\n  }\n}\n\nfragment FollowArtistButton_artist_2OV785 on Artist {\n  id\n  slug\n  name\n  internalID\n  isFollowed\n  counts {\n    follows\n  }\n  coverArtwork {\n    image {\n      url(version: \"large\")\n    }\n    id\n  }\n}\n\nfragment FollowArtistButton_me on Me {\n  id\n  counts {\n    followedArtists\n  }\n}\n"
+    "text": "query FollowArtistButton_Test_Query {\n  me {\n    ...FollowArtistButton_me\n    id\n  }\n  artist(id: \"example\") {\n    ...FollowArtistButton_artist_2OV785\n    id\n  }\n}\n\nfragment FollowArtistButton_artist_2OV785 on Artist {\n  id\n  slug\n  name\n  internalID\n  isFollowed\n  counts {\n    follows\n  }\n  coverArtwork {\n    image {\n      url(version: \"x-large\")\n      aspectRatio\n    }\n    id\n  }\n}\n\nfragment FollowArtistButton_me on Me {\n  id\n  counts {\n    followedArtists\n  }\n}\n"
   }
 };
 })();

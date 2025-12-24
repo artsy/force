@@ -30,7 +30,10 @@ export const ArtworkActionsSaveButton: FC<
       year: artwork.date,
       artistNames: artwork.artistNames,
       imageURL: artwork.preview?.url ?? null,
-      imageURLLarge: artwork.image?.url,
+      image: {
+        url: artwork.modalImage?.url,
+        aspectRatio: artwork.modalImage?.aspectRatio,
+      },
       isInAuction: !!artwork.isInAuction,
       isSavedToAnyList: artwork.isSavedToAnyList,
       collectorSignals: {
@@ -81,8 +84,9 @@ export const ArtworkActionsSaveButtonFragmentContainer =
         preview: image {
           url(version: "square")
         }
-        image {
-          url(version: "large")
+        modalImage: image {
+          url(version: "x-large")
+          aspectRatio
         }
         isInAuction
         isSavedToAnyList

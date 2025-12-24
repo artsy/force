@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<02398bb86fe7b6516098df8100d04cc2>>
+ * @generated SignedSource<<3bf556877c6209b6b7c66e43e442088f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,6 +14,7 @@ export type AuctionResult_auctionResult$data = {
   readonly artist: {
     readonly coverArtwork: {
       readonly image: {
+        readonly aspectRatio: number;
         readonly url: string | null | undefined;
       } | null | undefined;
     } | null | undefined;
@@ -95,12 +96,19 @@ const node: ReaderFragment = {
                     {
                       "kind": "Literal",
                       "name": "version",
-                      "value": "large"
+                      "value": "x-large"
                     }
                   ],
                   "kind": "ScalarField",
                   "name": "url",
-                  "storageKey": "url(version:\"large\")"
+                  "storageKey": "url(version:\"x-large\")"
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "aspectRatio",
+                  "storageKey": null
                 }
               ],
               "storageKey": null
@@ -194,6 +202,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "a9c47feb17ff2a68f1c6fdbbfedf2124";
+(node as any).hash = "0eca595da183c5552425e42da7e98274";
 
 export default node;

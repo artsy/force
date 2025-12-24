@@ -86,7 +86,7 @@ export const RequestConditionReport: React.FC<
   const handleLoginClick = () => {
     showAuthDialog({
       options: {
-        imageUrl: artwork.image?.url,
+        image: artwork.image,
       },
       analytics: {
         contextModule: ContextModule.aboutTheWork,
@@ -262,7 +262,8 @@ export const RequestConditionReportFragmentContainer = createFragmentContainer(
           internalID
         }
         image {
-          url(version: "large")
+          url(version: "x-large")
+          aspectRatio
         }
       }
     `,

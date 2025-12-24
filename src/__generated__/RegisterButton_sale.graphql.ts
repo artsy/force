@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<681ac716931afe0086ed8cd280653de4>>
+ * @generated SignedSource<<d33dce4a8640d2e200cc9e8afa032840>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,6 +15,7 @@ export type RegisterButton_sale$data = {
     readonly qualifiedForBidding: boolean | null | undefined;
   } | null | undefined;
   readonly coverImage: {
+    readonly aspectRatio: number;
     readonly signupImage: string | null | undefined;
   } | null | undefined;
   readonly isAuction: boolean | null | undefined;
@@ -74,12 +75,19 @@ const node: ReaderFragment = {
             {
               "kind": "Literal",
               "name": "version",
-              "value": "large"
+              "value": "x-large"
             }
           ],
           "kind": "ScalarField",
           "name": "url",
-          "storageKey": "url(version:\"large\")"
+          "storageKey": "url(version:\"x-large\")"
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "aspectRatio",
+          "storageKey": null
         }
       ],
       "storageKey": null
@@ -170,6 +178,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "94f52ac744fa52ff03b7a977389147df";
+(node as any).hash = "f1cb4b40ba73e331064cf575d8e2ae0e";
 
 export default node;

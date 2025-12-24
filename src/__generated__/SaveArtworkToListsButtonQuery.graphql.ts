@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<54f10ded9f52a6bdb0fe08add27c50b8>>
+ * @generated SignedSource<<ff0b649316a566f0aef121b06951bf3f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -159,12 +159,19 @@ return {
                   {
                     "kind": "Literal",
                     "name": "version",
-                    "value": "large"
+                    "value": "x-large"
                   }
                 ],
                 "kind": "ScalarField",
                 "name": "url",
-                "storageKey": "url(version:\"large\")"
+                "storageKey": "url(version:\"x-large\")"
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "aspectRatio",
+                "storageKey": null
               }
             ],
             "storageKey": null
@@ -232,12 +239,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5d8fdaaad723c4ba53ad9c21c89bf535",
+    "cacheID": "63704d874072c0224990c9179e8fb15f",
     "id": null,
     "metadata": {},
     "name": "SaveArtworkToListsButtonQuery",
     "operationKind": "query",
-    "text": "query SaveArtworkToListsButtonQuery(\n  $id: String!\n) {\n  artwork(id: $id) {\n    ...SaveArtworkToListsButton_artwork\n    id\n  }\n}\n\nfragment SaveArtworkToListsButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  title\n  date\n  artistNames\n  preview: image {\n    url(version: \"square\")\n  }\n  image {\n    url(version: \"large\")\n  }\n  isInAuction\n  isSavedToAnyList\n  collectorSignals {\n    auction {\n      lotWatcherCount\n      lotClosesAt\n      liveBiddingStarted\n    }\n  }\n}\n"
+    "text": "query SaveArtworkToListsButtonQuery(\n  $id: String!\n) {\n  artwork(id: $id) {\n    ...SaveArtworkToListsButton_artwork\n    id\n  }\n}\n\nfragment SaveArtworkToListsButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  title\n  date\n  artistNames\n  preview: image {\n    url(version: \"square\")\n  }\n  image {\n    url(version: \"x-large\")\n    aspectRatio\n  }\n  isInAuction\n  isSavedToAnyList\n  collectorSignals {\n    auction {\n      lotWatcherCount\n      lotClosesAt\n      liveBiddingStarted\n    }\n  }\n}\n"
   }
 };
 })();

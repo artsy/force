@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0820025140991f1997618ab7cdc2de15>>
+ * @generated SignedSource<<028bc3d1aa094172dedd3f647e8c8074>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -137,12 +137,19 @@ return {
                   {
                     "kind": "Literal",
                     "name": "version",
-                    "value": "large"
+                    "value": "x-large"
                   }
                 ],
                 "kind": "ScalarField",
                 "name": "url",
-                "storageKey": "url(version:\"large\")"
+                "storageKey": "url(version:\"x-large\")"
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "aspectRatio",
+                "storageKey": null
               }
             ],
             "storageKey": null
@@ -153,7 +160,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "bb1609eaab1a5b689e7e62498229b8bd",
+    "cacheID": "8cad1a96af6661b8c4c372f60067f97c",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -170,6 +177,12 @@ return {
           "plural": false,
           "type": "Image"
         },
+        "gene.image.aspectRatio": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "Float"
+        },
         "gene.image.url": (v2/*: any*/),
         "gene.internalID": (v1/*: any*/),
         "gene.isFollowed": {
@@ -184,7 +197,7 @@ return {
     },
     "name": "FollowGeneButton_Test_Query",
     "operationKind": "query",
-    "text": "query FollowGeneButton_Test_Query {\n  gene(id: \"example\") {\n    ...FollowGeneButton_gene_2OV785\n    id\n  }\n}\n\nfragment FollowGeneButton_gene_2OV785 on Gene {\n  id\n  slug\n  name\n  internalID\n  isFollowed\n  image {\n    url(version: \"large\")\n  }\n}\n"
+    "text": "query FollowGeneButton_Test_Query {\n  gene(id: \"example\") {\n    ...FollowGeneButton_gene_2OV785\n    id\n  }\n}\n\nfragment FollowGeneButton_gene_2OV785 on Gene {\n  id\n  slug\n  name\n  internalID\n  isFollowed\n  image {\n    url(version: \"x-large\")\n    aspectRatio\n  }\n}\n"
   }
 };
 })();
