@@ -1,11 +1,12 @@
 import { usePrevious } from "@artsy/palette"
-import type {
-  CheckoutStep,
-  CheckoutStepName,
+import type { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
+import {
+  CheckoutStepState,
+  CheckoutStepName as StepName,
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
-import { CheckoutStepName as StepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
+import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useScrollToStep } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToStep"
-import { useEffect } from "react"
+import { useEffect, useRef } from "react"
 export { STEP_JUMP_MAP } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToStep"
 
 export const STEP_ORDER: CheckoutStepName[] = [
@@ -16,20 +17,32 @@ export const STEP_ORDER: CheckoutStepName[] = [
   StepName.CONFIRMATION,
 ]
 
-interface UseCheckoutAutoScrollOptions {
-  activeStep?: CheckoutStep
-}
-
-export const useCheckoutAutoScroll = (
-  options?: UseCheckoutAutoScrollOptions,
-) => {
+export const useCheckoutAutoScroll = () => {
+  const { isLoading, steps } = useCheckoutContext()
   const { scrollToStep } = useScrollToStep()
-  const previousStep = usePrevious(options?.activeStep)
+  const activeStep = steps.find(step => step.state === CheckoutStepState.ACTIVE)
+  const previousStep = usePrevious(activeStep)
+
+  const wasLoading = usePrevious(isLoading)
+  const justLoaded = wasLoading && !isLoading
+
+  const intialScrollComplete = useRef(false)
+
+  // Scroll to active step when loading completes
+  useEffect(() => {
+    if (intialScrollComplete.current) {
+      return
+    }
+    if (justLoaded) {
+      if (activeStep) {
+        scrollToStep(activeStep.name)
+      }
+      intialScrollComplete.current = true
+    }
+  }, [justLoaded, activeStep, scrollToStep])
 
   // Auto-scroll as user advances through steps
   useEffect(() => {
-    const activeStep = options?.activeStep
-
     if (!activeStep) {
       return
     }
@@ -57,7 +70,5 @@ export const useCheckoutAutoScroll = (
       // When going forwards, scroll to the step that was just completed
       scrollToStep(previousStep.name)
     }
-  }, [options?.activeStep, previousStep, scrollToStep])
-
-  return { scrollToStep }
+  }, [activeStep, previousStep, scrollToStep])
 }

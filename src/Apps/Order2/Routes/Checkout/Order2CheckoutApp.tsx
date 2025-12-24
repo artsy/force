@@ -88,7 +88,7 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
   const activeStep = steps.find(step => step.state === CheckoutStepState.ACTIVE)
 
   // Auto-scroll as user advances through steps
-  useCheckoutAutoScroll({ activeStep })
+  useCheckoutAutoScroll()
 
   useEffect(() => {
     switch (activeStep?.name) {

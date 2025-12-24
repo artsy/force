@@ -1,15 +1,17 @@
 import { renderHook } from "@testing-library/react"
-import type { CheckoutStep } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import {
   CheckoutStepName,
   CheckoutStepState,
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { useCheckoutAutoScroll } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutAutoScroll"
+import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useJump } from "Utils/Hooks/useJump"
 
 jest.mock("Utils/Hooks/useJump")
+jest.mock("Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext")
 
 const mockUseJump = useJump as jest.Mock
+const mockUseCheckoutContext = useCheckoutContext as jest.Mock
 
 describe("useCheckoutAutoScroll", () => {
   let mockJumpTo: jest.Mock
@@ -29,171 +31,130 @@ describe("useCheckoutAutoScroll", () => {
     jest.useRealTimers()
   })
 
-  const createStep = (
-    name: CheckoutStepName,
-    state: CheckoutStepState,
-  ): CheckoutStep => ({
-    name,
-    state,
+  it("scrolls to active step when loading completes", () => {
+    mockUseCheckoutContext.mockReturnValue({
+      isLoading: true,
+      steps: [
+        {
+          name: CheckoutStepName.FULFILLMENT_DETAILS,
+          state: CheckoutStepState.ACTIVE,
+        },
+      ],
+    })
+
+    const { rerender } = renderHook(() => useCheckoutAutoScroll())
+
+    expect(mockJumpTo).not.toHaveBeenCalled()
+
+    mockUseCheckoutContext.mockReturnValue({
+      isLoading: false,
+      steps: [
+        {
+          name: CheckoutStepName.FULFILLMENT_DETAILS,
+          state: CheckoutStepState.ACTIVE,
+        },
+      ],
+    })
+
+    rerender()
+    jest.runAllTimers()
+
+    expect(mockJumpTo).toHaveBeenCalledWith("fulfillment-details-step", {
+      behavior: "smooth",
+      offset: 30,
+    })
   })
 
-  describe("scrollToStep", () => {
-    it("exposes a scrollToStep function", () => {
-      const { result } = renderHook(() => useCheckoutAutoScroll())
-      expect(result.current.scrollToStep).toBeDefined()
-      expect(typeof result.current.scrollToStep).toBe("function")
+  it("scrolls to confirmation when it becomes active", () => {
+    mockUseCheckoutContext.mockReturnValue({
+      isLoading: false,
+      steps: [
+        { name: CheckoutStepName.PAYMENT, state: CheckoutStepState.ACTIVE },
+      ],
     })
 
-    it("scrolls to the correct jump ID when scrollToStep is called", () => {
-      const { result } = renderHook(() => useCheckoutAutoScroll())
+    const { rerender } = renderHook(() => useCheckoutAutoScroll())
 
-      result.current.scrollToStep(CheckoutStepName.FULFILLMENT_DETAILS)
+    mockUseCheckoutContext.mockReturnValue({
+      isLoading: false,
+      steps: [
+        {
+          name: CheckoutStepName.CONFIRMATION,
+          state: CheckoutStepState.ACTIVE,
+        },
+      ],
+    })
 
-      jest.runAllTimers()
+    rerender()
+    jest.runAllTimers()
 
-      expect(mockJumpTo).toHaveBeenCalledWith("fulfillment-details-step", {
-        behavior: "smooth",
-        offset: 30,
-      })
+    expect(mockJumpTo).toHaveBeenCalledWith("review-step", {
+      behavior: "smooth",
+      offset: 30,
     })
   })
 
-  describe("auto-scroll behavior", () => {
-    it("scrolls to confirmation step when it becomes active", () => {
-      const { rerender } = renderHook(
-        ({ activeStep }: { activeStep?: CheckoutStep }) =>
-          useCheckoutAutoScroll({ activeStep }),
+  it("scrolls to just-completed step when going forward", () => {
+    mockUseCheckoutContext.mockReturnValue({
+      isLoading: false,
+      steps: [
         {
-          initialProps: {
-            activeStep: createStep(
-              CheckoutStepName.PAYMENT,
-              CheckoutStepState.ACTIVE,
-            ),
-          },
+          name: CheckoutStepName.FULFILLMENT_DETAILS,
+          state: CheckoutStepState.ACTIVE,
         },
-      )
-
-      // Make confirmation step active
-      rerender({
-        activeStep: createStep(
-          CheckoutStepName.CONFIRMATION,
-          CheckoutStepState.ACTIVE,
-        ),
-      })
-
-      jest.runAllTimers()
-
-      expect(mockJumpTo).toHaveBeenCalledWith("review-step", {
-        behavior: "smooth",
-        offset: 30,
-      })
+      ],
     })
 
-    it("scrolls to just-completed step when moving forward through checkout", () => {
-      const { rerender } = renderHook(
-        ({ activeStep }: { activeStep?: CheckoutStep }) =>
-          useCheckoutAutoScroll({ activeStep }),
+    const { rerender } = renderHook(() => useCheckoutAutoScroll())
+
+    mockUseCheckoutContext.mockReturnValue({
+      isLoading: false,
+      steps: [
         {
-          initialProps: {
-            activeStep: createStep(
-              CheckoutStepName.FULFILLMENT_DETAILS,
-              CheckoutStepState.ACTIVE,
-            ),
-          },
+          name: CheckoutStepName.DELIVERY_OPTION,
+          state: CheckoutStepState.ACTIVE,
         },
-      )
-
-      // Move to delivery options step (forward progression)
-      rerender({
-        activeStep: createStep(
-          CheckoutStepName.DELIVERY_OPTION,
-          CheckoutStepState.ACTIVE,
-        ),
-      })
-
-      jest.runAllTimers()
-
-      // Should scroll to the previous step that was just completed
-      expect(mockJumpTo).toHaveBeenCalledWith("fulfillment-details-step", {
-        behavior: "smooth",
-        offset: 30,
-      })
+      ],
     })
 
-    it("scrolls to newly-active step when going backwards (editing a previous step)", () => {
-      const { rerender } = renderHook(
-        ({ activeStep }: { activeStep?: CheckoutStep }) =>
-          useCheckoutAutoScroll({ activeStep }),
+    rerender()
+    jest.runAllTimers()
+
+    expect(mockJumpTo).toHaveBeenCalledWith("fulfillment-details-step", {
+      behavior: "smooth",
+      offset: 30,
+    })
+  })
+
+  it("scrolls to newly-active step when going backwards", () => {
+    mockUseCheckoutContext.mockReturnValue({
+      isLoading: false,
+      steps: [
         {
-          initialProps: {
-            activeStep: createStep(
-              CheckoutStepName.DELIVERY_OPTION,
-              CheckoutStepState.ACTIVE,
-            ),
-          },
+          name: CheckoutStepName.DELIVERY_OPTION,
+          state: CheckoutStepState.ACTIVE,
         },
-      )
-
-      // Go back to fulfillment details (backwards progression)
-      rerender({
-        activeStep: createStep(
-          CheckoutStepName.FULFILLMENT_DETAILS,
-          CheckoutStepState.ACTIVE,
-        ),
-      })
-
-      jest.runAllTimers()
-
-      // Should scroll to the current active step being edited
-      expect(mockJumpTo).toHaveBeenCalledWith("fulfillment-details-step", {
-        behavior: "smooth",
-        offset: 30,
-      })
+      ],
     })
 
-    it("does not scroll when there is no active step", () => {
-      const { rerender } = renderHook(
-        ({ activeStep }: { activeStep?: CheckoutStep }) =>
-          useCheckoutAutoScroll({ activeStep }),
+    const { rerender } = renderHook(() => useCheckoutAutoScroll())
+
+    mockUseCheckoutContext.mockReturnValue({
+      isLoading: false,
+      steps: [
         {
-          initialProps: {
-            activeStep: undefined,
-          },
+          name: CheckoutStepName.FULFILLMENT_DETAILS,
+          state: CheckoutStepState.ACTIVE,
         },
-      )
-
-      rerender({ activeStep: undefined })
-
-      jest.runAllTimers()
-
-      expect(mockJumpTo).not.toHaveBeenCalled()
+      ],
     })
 
-    it("scrolls to active step when there is no previous step", () => {
-      const { rerender } = renderHook(
-        ({ activeStep }: { activeStep?: CheckoutStep }) =>
-          useCheckoutAutoScroll({ activeStep }),
-        {
-          initialProps: {
-            activeStep: undefined,
-          },
-        },
-      )
+    rerender()
+    jest.runAllTimers()
 
-      // First render with an active step (no previous)
-      rerender({
-        activeStep: createStep(
-          CheckoutStepName.FULFILLMENT_DETAILS,
-          CheckoutStepState.ACTIVE,
-        ),
-      })
-
-      jest.runAllTimers()
-
-      expect(mockJumpTo).toHaveBeenCalledWith("fulfillment-details-step", {
-        behavior: "smooth",
-        offset: 30,
-      })
+    expect(mockJumpTo).toHaveBeenCalledWith("fulfillment-details-step", {
+      behavior: "smooth",
+      offset: 30,
     })
   })
 })
