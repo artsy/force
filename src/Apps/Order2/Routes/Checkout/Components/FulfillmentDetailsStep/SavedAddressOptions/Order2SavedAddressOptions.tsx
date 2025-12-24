@@ -1,5 +1,13 @@
 import AddIcon from "@artsy/icons/AddIcon"
-import { Button, Clickable, Flex, Radio, Spacer, Text } from "@artsy/palette"
+import {
+  Button,
+  Clickable,
+  Flex,
+  Radio,
+  Spacer,
+  Text,
+  usePrevious,
+} from "@artsy/palette"
 import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { AddressDisplay } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/AddressDisplay"
 import { AddAddressForm } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/SavedAddressOptions/AddAddressForm"
@@ -9,9 +17,10 @@ import {
   validateAddressFields,
 } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/utils"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import { useScrollToStep } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToStep"
 import type { FormikContextWithAddress } from "Components/Address/AddressFormFields"
 import { useFormikContext } from "formik"
-import { useCallback, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 
 interface SavedAddressOptionsProps {
   savedAddresses: ProcessedUserAddress[]
@@ -33,11 +42,23 @@ export const SavedAddressOptions = ({
     setStepErrorMessage,
     checkoutTracking,
   } = useCheckoutContext()
+  const { scrollToStep } = useScrollToStep()
   const parentFormikContext = useFormikContext<FormikContextWithAddress>()
 
   const [selectedAddress, setSelectedAddress] = useState<
     ProcessedUserAddress | undefined
   >(initialSelectedAddress)
+
+  const previousUserAddressMode = usePrevious(userAddressMode)
+
+  // Scroll to top of step whenever userAddressMode changes
+  // This covers: beginning edit, completing edit, canceling edit,
+  // beginning add, completing add, canceling add, deleting address
+  useEffect(() => {
+    if (previousUserAddressMode !== userAddressMode) {
+      scrollToStep(CheckoutStepName.FULFILLMENT_DETAILS)
+    }
+  }, [userAddressMode, previousUserAddressMode, scrollToStep])
 
   const onSaveAddress = useCallback(
     async (values, addressID) => {

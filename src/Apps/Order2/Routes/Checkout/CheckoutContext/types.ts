@@ -38,7 +38,3 @@ export type UserAddressMode =
       mode: "edit"
       address: ProcessedUserAddress
     }
-  | {
-      mode: "delete"
-      address: ProcessedUserAddress
-    }
