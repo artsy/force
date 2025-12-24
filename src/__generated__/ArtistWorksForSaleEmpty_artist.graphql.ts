@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<24cd671e34c894399379284b70c9c47b>>
+ * @generated SignedSource<<5a990a552f23e6bfbc71fdb437a5899e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,6 +13,7 @@ import { FragmentRefs } from "relay-runtime";
 export type ArtistWorksForSaleEmpty_artist$data = {
   readonly coverArtwork: {
     readonly image: {
+      readonly aspectRatio: number;
       readonly url: string | null | undefined;
     } | null | undefined;
   } | null | undefined;
@@ -67,12 +68,19 @@ const node: ReaderFragment = {
                 {
                   "kind": "Literal",
                   "name": "version",
-                  "value": "large"
+                  "value": "x-large"
                 }
               ],
               "kind": "ScalarField",
               "name": "url",
-              "storageKey": "url(version:\"large\")"
+              "storageKey": "url(version:\"x-large\")"
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "aspectRatio",
+              "storageKey": null
             }
           ],
           "storageKey": null
@@ -85,6 +93,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "a5ac6db23f0b498182329c12953ad941";
+(node as any).hash = "f578614cb1ce8ded5f0860b3b29c59a5";
 
 export default node;

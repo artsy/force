@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4048c1883f47e65710d5bca743e88a9e>>
+ * @generated SignedSource<<13c06d1cecbb6a4fa9104738497e35e1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -223,12 +223,19 @@ return {
                       {
                         "kind": "Literal",
                         "name": "version",
-                        "value": "large"
+                        "value": "x-large"
                       }
                     ],
                     "kind": "ScalarField",
                     "name": "url",
-                    "storageKey": "url(version:\"large\")"
+                    "storageKey": "url(version:\"x-large\")"
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "aspectRatio",
+                    "storageKey": null
                   }
                 ],
                 "storageKey": null
@@ -243,12 +250,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "60bde8dabf54b45a1f658a443b9958cc",
+    "cacheID": "af560aebe503a7a8798c49e3a19cbb2d",
     "id": null,
     "metadata": {},
     "name": "FollowArtistButtonQuery",
     "operationKind": "query",
-    "text": "query FollowArtistButtonQuery(\n  $id: String!\n  $isLoggedIn: Boolean!\n) {\n  me {\n    ...FollowArtistButton_me\n    id\n  }\n  artist(id: $id) {\n    ...FollowArtistButton_artist_4dcqWc\n    id\n  }\n}\n\nfragment FollowArtistButton_artist_4dcqWc on Artist {\n  id\n  slug\n  name\n  internalID\n  isFollowed @include(if: $isLoggedIn)\n  counts {\n    follows\n  }\n  coverArtwork {\n    image {\n      url(version: \"large\")\n    }\n    id\n  }\n}\n\nfragment FollowArtistButton_me on Me {\n  id\n  counts {\n    followedArtists\n  }\n}\n"
+    "text": "query FollowArtistButtonQuery(\n  $id: String!\n  $isLoggedIn: Boolean!\n) {\n  me {\n    ...FollowArtistButton_me\n    id\n  }\n  artist(id: $id) {\n    ...FollowArtistButton_artist_4dcqWc\n    id\n  }\n}\n\nfragment FollowArtistButton_artist_4dcqWc on Artist {\n  id\n  slug\n  name\n  internalID\n  isFollowed @include(if: $isLoggedIn)\n  counts {\n    follows\n  }\n  coverArtwork {\n    image {\n      url(version: \"x-large\")\n      aspectRatio\n    }\n    id\n  }\n}\n\nfragment FollowArtistButton_me on Me {\n  id\n  counts {\n    followedArtists\n  }\n}\n"
   }
 };
 })();

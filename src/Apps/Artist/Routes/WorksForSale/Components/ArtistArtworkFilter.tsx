@@ -91,7 +91,7 @@ const ArtistArtworkFilter: React.FC<
 
         <ArtworkFilterAlertContextProvider
           initialCriteria={{ artistIDs: [artist.internalID] }}
-          imageUrl={artist.coverArtwork?.image?.url}
+          image={artist.coverArtwork?.image}
         >
           <ArtworkFilterSavedSearchAlertContextProvider
             entity={savedSearchEntity}
@@ -143,7 +143,8 @@ export const ArtistArtworkFilterRefetchContainer = createRefetchContainer(
         }
         coverArtwork {
           image {
-            url(version: "large")
+            url(version: "x-large")
+            aspectRatio
           }
         }
       }

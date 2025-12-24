@@ -105,11 +105,11 @@ export const DebugAuthRoute: FC<React.PropsWithChildren<unknown>> = () => {
         />
 
         <Checkbox
-          selected={state.options.image}
-          onSelect={image =>
+          selected={state.options.seoImage}
+          onSelect={selected =>
             setState(prevState => ({
               ...prevState,
-              options: { ...prevState.options, image },
+              options: { ...prevState.options, seoImage: selected },
             }))
           }
         >

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7985d1e7825b9ac231f7a04a2cc191f9>>
+ * @generated SignedSource<<660337aa8877dddd68384c1b73159947>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -29,6 +29,7 @@ export type ArtistAuctionResults_artist$data = {
   } | null | undefined;
   readonly coverArtwork: {
     readonly image: {
+      readonly aspectRatio: number;
       readonly url: string | null | undefined;
     } | null | undefined;
   } | null | undefined;
@@ -537,12 +538,19 @@ return {
                 {
                   "kind": "Literal",
                   "name": "version",
-                  "value": "large"
+                  "value": "x-large"
                 }
               ],
               "kind": "ScalarField",
               "name": "url",
-              "storageKey": "url(version:\"large\")"
+              "storageKey": "url(version:\"x-large\")"
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "aspectRatio",
+              "storageKey": null
             }
           ],
           "storageKey": null
@@ -556,6 +564,6 @@ return {
 };
 })();
 
-(node as any).hash = "e23371663a2e16547926ce7327075bc0";
+(node as any).hash = "28f2b2e6869fb791f1eaa8ee4dd84cd4";
 
 export default node;

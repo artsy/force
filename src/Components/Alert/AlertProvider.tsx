@@ -40,7 +40,10 @@ interface AlertProviderProps {
   metric?: Metric
   isEditMode?: boolean
   isAlertArtworksView?: boolean
-  imageUrl?: string | null
+  image?: {
+    url?: string | null
+    aspectRatio?: number | null
+  } | null
 }
 
 export const AlertProvider: FC<React.PropsWithChildren<AlertProviderProps>> = ({
@@ -54,7 +57,7 @@ export const AlertProvider: FC<React.PropsWithChildren<AlertProviderProps>> = ({
   metric,
   isEditMode,
   isAlertArtworksView,
-  imageUrl,
+  image,
 }) => {
   const { createdAlert } = useAlertTracking()
   const { showAuthDialog } = useAuthDialog()
@@ -204,7 +207,7 @@ export const AlertProvider: FC<React.PropsWithChildren<AlertProviderProps>> = ({
           afterAuthAction: {
             action: Intent.createAlert,
           },
-          imageUrl,
+          image,
         },
         analytics: {
           intent: Intent.createAlert,

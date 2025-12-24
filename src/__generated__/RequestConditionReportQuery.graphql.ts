@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b5428b79fb0f08b1176bb3be0b381f99>>
+ * @generated SignedSource<<a8cc583efbe8e9bd838daa0936511785>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -167,12 +167,19 @@ return {
                   {
                     "kind": "Literal",
                     "name": "version",
-                    "value": "large"
+                    "value": "x-large"
                   }
                 ],
                 "kind": "ScalarField",
                 "name": "url",
-                "storageKey": "url(version:\"large\")"
+                "storageKey": "url(version:\"x-large\")"
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "aspectRatio",
+                "storageKey": null
               }
             ],
             "storageKey": null
@@ -184,12 +191,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "7486520dd83982c65c338623b1139f0b",
+    "cacheID": "f9c0aaeb6408fbcc795100a9a15e0a31",
     "id": null,
     "metadata": {},
     "name": "RequestConditionReportQuery",
     "operationKind": "query",
-    "text": "query RequestConditionReportQuery(\n  $artworkID: String!\n) {\n  me {\n    ...RequestConditionReport_me\n    id\n  }\n  artwork(id: $artworkID) {\n    ...RequestConditionReport_artwork\n    id\n  }\n}\n\nfragment RequestConditionReport_artwork on Artwork {\n  internalID\n  slug\n  saleArtwork {\n    internalID\n    id\n  }\n  image {\n    url(version: \"large\")\n  }\n}\n\nfragment RequestConditionReport_me on Me {\n  email\n  internalID\n}\n"
+    "text": "query RequestConditionReportQuery(\n  $artworkID: String!\n) {\n  me {\n    ...RequestConditionReport_me\n    id\n  }\n  artwork(id: $artworkID) {\n    ...RequestConditionReport_artwork\n    id\n  }\n}\n\nfragment RequestConditionReport_artwork on Artwork {\n  internalID\n  slug\n  saleArtwork {\n    internalID\n    id\n  }\n  image {\n    url(version: \"x-large\")\n    aspectRatio\n  }\n}\n\nfragment RequestConditionReport_me on Me {\n  email\n  internalID\n}\n"
   }
 };
 })();

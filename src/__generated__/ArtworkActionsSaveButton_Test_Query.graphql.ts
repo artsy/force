@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ae66c76de73c47c9c9030fc6c3b7954c>>
+ * @generated SignedSource<<7937595a534097c5e49d7e73c9db83e2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -59,13 +59,13 @@ v5 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "Image"
+  "type": "Boolean"
 },
 v6 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "Boolean"
+  "type": "Image"
 };
 return {
   "fragment": {
@@ -163,7 +163,7 @@ return {
             "storageKey": null
           },
           {
-            "alias": null,
+            "alias": "modalImage",
             "args": null,
             "concreteType": "Image",
             "kind": "LinkedField",
@@ -176,12 +176,19 @@ return {
                   {
                     "kind": "Literal",
                     "name": "version",
-                    "value": "large"
+                    "value": "x-large"
                   }
                 ],
                 "kind": "ScalarField",
                 "name": "url",
-                "storageKey": "url(version:\"large\")"
+                "storageKey": "url(version:\"x-large\")"
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "aspectRatio",
+                "storageKey": null
               }
             ],
             "storageKey": null
@@ -309,7 +316,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "79061331937b188758964661015e8288",
+    "cacheID": "93649669bb6cbc24a658efb745ff211d",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -340,17 +347,23 @@ return {
         },
         "artwork.date": (v3/*: any*/),
         "artwork.id": (v4/*: any*/),
-        "artwork.image": (v5/*: any*/),
-        "artwork.image.url": (v3/*: any*/),
         "artwork.internalID": (v4/*: any*/),
-        "artwork.isInAuction": (v6/*: any*/),
+        "artwork.isInAuction": (v5/*: any*/),
         "artwork.isSavedToAnyList": {
           "enumValues": null,
           "nullable": false,
           "plural": false,
           "type": "Boolean"
         },
-        "artwork.preview": (v5/*: any*/),
+        "artwork.modalImage": (v6/*: any*/),
+        "artwork.modalImage.aspectRatio": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "Float"
+        },
+        "artwork.modalImage.url": (v3/*: any*/),
+        "artwork.preview": (v6/*: any*/),
         "artwork.preview.url": (v3/*: any*/),
         "artwork.sale": {
           "enumValues": null,
@@ -359,10 +372,10 @@ return {
           "type": "Sale"
         },
         "artwork.sale.id": (v4/*: any*/),
-        "artwork.sale.isAuction": (v6/*: any*/),
-        "artwork.sale.isClosed": (v6/*: any*/),
-        "artwork.sale.isLiveOpen": (v6/*: any*/),
-        "artwork.sale.isRegistrationClosed": (v6/*: any*/),
+        "artwork.sale.isAuction": (v5/*: any*/),
+        "artwork.sale.isClosed": (v5/*: any*/),
+        "artwork.sale.isLiveOpen": (v5/*: any*/),
+        "artwork.sale.isRegistrationClosed": (v5/*: any*/),
         "artwork.sale.liveStartAt": (v3/*: any*/),
         "artwork.sale.registrationEndsAt": (v3/*: any*/),
         "artwork.sale.registrationStatus": {
@@ -372,7 +385,7 @@ return {
           "type": "Bidder"
         },
         "artwork.sale.registrationStatus.id": (v4/*: any*/),
-        "artwork.sale.registrationStatus.qualifiedForBidding": (v6/*: any*/),
+        "artwork.sale.registrationStatus.qualifiedForBidding": (v5/*: any*/),
         "artwork.sale.slug": (v4/*: any*/),
         "artwork.slug": (v4/*: any*/),
         "artwork.title": (v3/*: any*/)
@@ -380,7 +393,7 @@ return {
     },
     "name": "ArtworkActionsSaveButton_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkActionsSaveButton_Test_Query {\n  artwork(id: \"artworkID\") {\n    ...ArtworkActionsSaveButton_artwork\n    id\n  }\n}\n\nfragment ArtworkActionsSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  title\n  date\n  artistNames\n  preview: image {\n    url(version: \"square\")\n  }\n  image {\n    url(version: \"large\")\n  }\n  isInAuction\n  isSavedToAnyList\n  sale {\n    isAuction\n    isClosed\n    id\n  }\n  collectorSignals {\n    auction {\n      lotWatcherCount\n    }\n  }\n  ...ArtworkActionsWatchLotButton_artwork\n}\n\nfragment ArtworkActionsWatchLotButton_artwork on Artwork {\n  sale {\n    isLiveOpen\n    isRegistrationClosed\n    liveStartAt\n    registrationStatus {\n      qualifiedForBidding\n      id\n    }\n    id\n  }\n  ...ArtworkAuctionRegistrationPanel_artwork\n}\n\nfragment ArtworkAuctionRegistrationPanel_artwork on Artwork {\n  sale {\n    slug\n    registrationEndsAt\n    isRegistrationClosed\n    id\n  }\n}\n"
+    "text": "query ArtworkActionsSaveButton_Test_Query {\n  artwork(id: \"artworkID\") {\n    ...ArtworkActionsSaveButton_artwork\n    id\n  }\n}\n\nfragment ArtworkActionsSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  title\n  date\n  artistNames\n  preview: image {\n    url(version: \"square\")\n  }\n  modalImage: image {\n    url(version: \"x-large\")\n    aspectRatio\n  }\n  isInAuction\n  isSavedToAnyList\n  sale {\n    isAuction\n    isClosed\n    id\n  }\n  collectorSignals {\n    auction {\n      lotWatcherCount\n    }\n  }\n  ...ArtworkActionsWatchLotButton_artwork\n}\n\nfragment ArtworkActionsWatchLotButton_artwork on Artwork {\n  sale {\n    isLiveOpen\n    isRegistrationClosed\n    liveStartAt\n    registrationStatus {\n      qualifiedForBidding\n      id\n    }\n    id\n  }\n  ...ArtworkAuctionRegistrationPanel_artwork\n}\n\nfragment ArtworkAuctionRegistrationPanel_artwork on Artwork {\n  sale {\n    slug\n    registrationEndsAt\n    isRegistrationClosed\n    id\n  }\n}\n"
   }
 };
 })();

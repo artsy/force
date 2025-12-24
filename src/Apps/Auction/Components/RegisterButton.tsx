@@ -37,7 +37,10 @@ export const RegisterButton: React.FC<
         options: {
           redirectTo: `${saleURL}/register`,
           title: "Sign up or log in to bid on artworks",
-          imageUrl: sale.coverImage?.signupImage,
+          image: {
+            url: sale.coverImage?.signupImage,
+            aspectRatio: sale.coverImage?.aspectRatio,
+          },
         },
         analytics: {
           contextModule: ContextModule.auctionSidebar,
@@ -260,7 +263,8 @@ export const RegisterButtonFragmentContainer = createFragmentContainer(
         }
         coverImage {
           # alias to avoid conflicts
-          signupImage: url(version: "large")
+          signupImage: url(version: "x-large")
+          aspectRatio
         }
         isAuction
         isClosed

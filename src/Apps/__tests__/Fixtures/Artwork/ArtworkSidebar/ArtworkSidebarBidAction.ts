@@ -7,6 +7,7 @@ export const ArtworkFromAuctionPreview: ArtworkSidebarBidActionTestQuery$rawResp
     internalID: "sdf12345",
     image: {
       url: "https://example.com/artwork.jpg",
+      aspectRatio: 4.2,
     },
     sale: {
       id: "sdfsdfsdf3",
@@ -45,6 +46,7 @@ export const ArtworkFromTimedAuctionRegistrationOpen: ArtworkSidebarBidActionTes
     internalID: "sdf12345",
     image: {
       url: "https://example.com/artwork.jpg",
+      aspectRatio: 4.2,
     },
     sale: {
       id: "sdfsdfsdf3",
@@ -83,6 +85,7 @@ export const ArtworkFromTimedAuctionRegistrationClosed: ArtworkSidebarBidActionT
     internalID: "sdf12345",
     image: {
       url: "https://example.com/artwork.jpg",
+      aspectRatio: 4.2,
     },
     sale: {
       id: "sdfsdfsdf3",
@@ -150,6 +153,7 @@ export const ArtworkFromLiveAuctionRegistrationOpen: ArtworkSidebarBidActionTest
     internalID: "sdf12345",
     image: {
       url: "https://example.com/artwork.jpg",
+      aspectRatio: 4.2,
     },
     sale: {
       id: "sdfsdfsdf3",
@@ -188,6 +192,7 @@ export const ArtworkFromLiveAuctionRegistrationClosed: ArtworkSidebarBidActionTe
     internalID: "sdf12345",
     image: {
       url: "https://example.com/artwork.jpg",
+      aspectRatio: 4.2,
     },
     sale: {
       id: "sdfsdfsdf3",
@@ -226,6 +231,7 @@ export const ArtworkFromClosedAuction: ArtworkSidebarBidActionTestQuery$rawRespo
     internalID: "sdf12345",
     image: {
       url: "https://example.com/artwork.jpg",
+      aspectRatio: 4.2,
     },
     sale: {
       id: "sdfsdfsdf3",

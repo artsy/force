@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f0f4101c891da248461604ffb2ca6f6f>>
+ * @generated SignedSource<<b378e37b21540c0472982449c25406d1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,6 +13,7 @@ import { FragmentRefs } from "relay-runtime";
 export type FollowGeneButton_gene$data = {
   readonly id: string;
   readonly image: {
+    readonly aspectRatio: number;
     readonly url: string | null | undefined;
   } | null | undefined;
   readonly internalID: string;
@@ -94,12 +95,19 @@ const node: ReaderFragment = {
             {
               "kind": "Literal",
               "name": "version",
-              "value": "large"
+              "value": "x-large"
             }
           ],
           "kind": "ScalarField",
           "name": "url",
-          "storageKey": "url(version:\"large\")"
+          "storageKey": "url(version:\"x-large\")"
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "aspectRatio",
+          "storageKey": null
         }
       ],
       "storageKey": null
@@ -109,6 +117,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "e5fde8d797906515ae47d85717252363";
+(node as any).hash = "a22369a6d3743f50e5f9087e14a9850c";
 
 export default node;

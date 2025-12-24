@@ -121,7 +121,7 @@ export const SaveButton: React.FC<React.PropsWithChildren<SaveButtonProps>> = ({
       id: artwork.id,
     },
     contextModule,
-    imageUrl: artwork.image?.url,
+    image: artwork.image,
     onSave: ({ action, artwork }) => {
       tracking.trackEvent({
         action,
@@ -153,7 +153,8 @@ export const SaveButtonFragmentContainer = createFragmentContainer(SaveButton, {
       isSaved
       title
       image {
-        url(version: "large")
+        url(version: "x-large")
+        aspectRatio
       }
       collectorSignals {
         auction {

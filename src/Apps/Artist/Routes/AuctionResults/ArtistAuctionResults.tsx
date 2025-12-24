@@ -150,7 +150,10 @@ const AuctionResultsContainer: React.FC<
           showAuthDialog({
             options: {
               title: `Sign up or log in to see auction results for ${artist.name}`,
-              imageUrl: artist.coverArtwork?.image?.url,
+              image: {
+                url: artist.coverArtwork?.image?.url,
+                aspectRatio: artist.coverArtwork?.image?.aspectRatio,
+              },
             },
             analytics: {
               contextModule: ContextModule.auctionResults,
@@ -493,7 +496,8 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
         }
         coverArtwork {
           image {
-            url(version: "large")
+            url(version: "x-large")
+            aspectRatio
           }
         }
       }

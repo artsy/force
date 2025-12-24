@@ -32,7 +32,7 @@ const SaveArtworkToListsButton: FC<
       year: artwork.date,
       artistNames: artwork.artistNames,
       imageURL: artwork.preview?.url ?? null,
-      imageURLLarge: artwork.image?.url,
+      image: artwork.image,
       isInAuction: !!artwork.isInAuction,
       isSavedToAnyList: artwork.isSavedToAnyList,
       collectorSignals: {
@@ -95,7 +95,8 @@ export const SaveArtworkToListsButtonFragmentContainer =
           url(version: "square")
         }
         image {
-          url(version: "large")
+          url(version: "x-large")
+          aspectRatio
         }
         isInAuction
         isSavedToAnyList

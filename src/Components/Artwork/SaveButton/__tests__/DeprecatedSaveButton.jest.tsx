@@ -1,14 +1,14 @@
 import { ContextModule } from "@artsy/cohesion"
+import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { SaveArtwork } from "Components/Artwork/SaveButton/SaveArtworkMutation"
 import { DeprecatedSaveButtonFragmentContainer } from "Components/Artwork/SaveButton/index"
 import { useAuthDialog } from "Components/AuthDialog"
 import { MockBoot } from "DevTools/MockBoot"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { mockLocation } from "DevTools/mockLocation"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { screen, fireEvent, waitFor } from "@testing-library/react"
 
 jest.unmock("react-relay")
 jest.mock("System/Hooks/useSystemContext")
@@ -139,7 +139,10 @@ describe("Deprecated Save artwork", () => {
             objectId: "abcd1234",
           },
           title: expect.any(String),
-          imageUrl: "https://example.com/artwork.jpg",
+          image: {
+            url: "https://example.com/artwork.jpg",
+            aspectRatio: 4.2,
+          },
         },
       })
     })

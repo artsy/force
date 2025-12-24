@@ -1,6 +1,6 @@
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { Toasts, ToastsProvider } from "@artsy/palette"
+import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { RequestConditionReportFragmentContainer } from "Apps/Artwork/Components/ArtworkDetails/RequestConditionReport"
 import { useAuthDialog } from "Components/AuthDialog"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
@@ -171,7 +171,10 @@ describe("RequestConditionReport", () => {
             intent: "requestConditionReport",
           },
           options: {
-            imageUrl: '<mock-value-for-field-"url">',
+            image: {
+              url: '<mock-value-for-field-"url">',
+              aspectRatio: 4.2,
+            },
           },
         })
       })

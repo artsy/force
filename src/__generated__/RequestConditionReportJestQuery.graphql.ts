@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bbb63ecf65ed8a345356d0e3113234b7>>
+ * @generated SignedSource<<11ad138e33d95e1d6b1b2e5e5bcf3337>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,6 +23,7 @@ export type RequestConditionReportJestQuery$rawResponse = {
   readonly artwork: {
     readonly id: string;
     readonly image: {
+      readonly aspectRatio: number;
       readonly url: string | null | undefined;
     } | null | undefined;
     readonly internalID: string;
@@ -190,12 +191,19 @@ return {
                   {
                     "kind": "Literal",
                     "name": "version",
-                    "value": "large"
+                    "value": "x-large"
                   }
                 ],
                 "kind": "ScalarField",
                 "name": "url",
-                "storageKey": "url(version:\"large\")"
+                "storageKey": "url(version:\"x-large\")"
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "aspectRatio",
+                "storageKey": null
               }
             ],
             "storageKey": null
@@ -207,7 +215,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "da65f2589892b6a9675c4b45066cb820",
+    "cacheID": "f6eac56b780a4d68e25e95eddf4129ff",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -223,6 +231,12 @@ return {
           "nullable": true,
           "plural": false,
           "type": "Image"
+        },
+        "artwork.image.aspectRatio": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "Float"
         },
         "artwork.image.url": (v4/*: any*/),
         "artwork.internalID": (v3/*: any*/),
@@ -248,7 +262,7 @@ return {
     },
     "name": "RequestConditionReportJestQuery",
     "operationKind": "query",
-    "text": "query RequestConditionReportJestQuery {\n  me {\n    ...RequestConditionReport_me\n    id\n  }\n  artwork(id: \"artwork-id\") {\n    ...RequestConditionReport_artwork\n    id\n  }\n}\n\nfragment RequestConditionReport_artwork on Artwork {\n  internalID\n  slug\n  saleArtwork {\n    internalID\n    id\n  }\n  image {\n    url(version: \"large\")\n  }\n}\n\nfragment RequestConditionReport_me on Me {\n  email\n  internalID\n}\n"
+    "text": "query RequestConditionReportJestQuery {\n  me {\n    ...RequestConditionReport_me\n    id\n  }\n  artwork(id: \"artwork-id\") {\n    ...RequestConditionReport_artwork\n    id\n  }\n}\n\nfragment RequestConditionReport_artwork on Artwork {\n  internalID\n  slug\n  saleArtwork {\n    internalID\n    id\n  }\n  image {\n    url(version: \"x-large\")\n    aspectRatio\n  }\n}\n\nfragment RequestConditionReport_me on Me {\n  email\n  internalID\n}\n"
   }
 };
 })();
