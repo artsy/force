@@ -41,6 +41,7 @@ export const useCheckoutAutoScroll = (
     }
 
     if (!previousStep) {
+      scrollToStep(activeStep.name)
       return
     }
 

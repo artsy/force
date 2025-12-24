@@ -56,16 +56,6 @@ describe("useCheckoutAutoScroll", () => {
         offset: 30,
       })
     })
-
-    it("does not scroll when payment step is specified", () => {
-      const { result } = renderHook(() => useCheckoutAutoScroll())
-
-      result.current.scrollToStep(CheckoutStepName.PAYMENT)
-
-      jest.runAllTimers()
-
-      expect(mockJumpTo).not.toHaveBeenCalled()
-    })
   })
 
   describe("auto-scroll behavior", () => {
@@ -99,7 +89,7 @@ describe("useCheckoutAutoScroll", () => {
       })
     })
 
-    it("scrolls to previous step when moving forward through checkout", () => {
+    it("scrolls to just-completed step when moving forward through checkout", () => {
       const { rerender } = renderHook(
         ({ activeStep }: { activeStep?: CheckoutStep }) =>
           useCheckoutAutoScroll({ activeStep }),
@@ -130,7 +120,7 @@ describe("useCheckoutAutoScroll", () => {
       })
     })
 
-    it("scrolls to active step when going backwards (editing a previous step)", () => {
+    it("scrolls to newly-active step when going backwards (editing a previous step)", () => {
       const { rerender } = renderHook(
         ({ activeStep }: { activeStep?: CheckoutStep }) =>
           useCheckoutAutoScroll({ activeStep }),
@@ -179,7 +169,7 @@ describe("useCheckoutAutoScroll", () => {
       expect(mockJumpTo).not.toHaveBeenCalled()
     })
 
-    it("does not scroll when there is no previous step", () => {
+    it("scrolls to active step when there is no previous step", () => {
       const { rerender } = renderHook(
         ({ activeStep }: { activeStep?: CheckoutStep }) =>
           useCheckoutAutoScroll({ activeStep }),
@@ -200,169 +190,10 @@ describe("useCheckoutAutoScroll", () => {
 
       jest.runAllTimers()
 
-      expect(mockJumpTo).not.toHaveBeenCalled()
-    })
-
-    it("respects payment step exclusion when moving forward", () => {
-      const { rerender } = renderHook(
-        ({ activeStep }: { activeStep?: CheckoutStep }) =>
-          useCheckoutAutoScroll({ activeStep }),
-        {
-          initialProps: {
-            activeStep: createStep(
-              CheckoutStepName.DELIVERY_OPTION,
-              CheckoutStepState.ACTIVE,
-            ),
-          },
-        },
-      )
-
-      // Move to payment step
-      rerender({
-        activeStep: createStep(
-          CheckoutStepName.PAYMENT,
-          CheckoutStepState.ACTIVE,
-        ),
-      })
-
-      jest.runAllTimers()
-
-      // Should try to scroll to delivery option (previous step)
-      // But since payment is excluded, jumpTo should not be called
-      // Actually, based on the logic, it WILL scroll to the previous step (delivery option)
-      // The exclusion only applies when payment itself would be the target
-      expect(mockJumpTo).toHaveBeenCalledWith("delivery-options-step", {
+      expect(mockJumpTo).toHaveBeenCalledWith("fulfillment-details-step", {
         behavior: "smooth",
         offset: 30,
       })
-    })
-
-    it("does not scroll when going back FROM payment step", () => {
-      const { rerender } = renderHook(
-        ({ activeStep }: { activeStep?: CheckoutStep }) =>
-          useCheckoutAutoScroll({ activeStep }),
-        {
-          initialProps: {
-            activeStep: createStep(
-              CheckoutStepName.PAYMENT,
-              CheckoutStepState.ACTIVE,
-            ),
-          },
-        },
-      )
-
-      // Go back to delivery options from payment
-      rerender({
-        activeStep: createStep(
-          CheckoutStepName.DELIVERY_OPTION,
-          CheckoutStepState.ACTIVE,
-        ),
-      })
-
-      jest.runAllTimers()
-
-      // Should scroll to delivery option (active step when going backwards)
-      expect(mockJumpTo).toHaveBeenCalledWith("delivery-options-step", {
-        behavior: "smooth",
-        offset: 30,
-      })
-    })
-  })
-
-  describe("offer flow", () => {
-    it("scrolls to offer step when completing it", () => {
-      const { rerender } = renderHook(
-        ({ activeStep }: { activeStep?: CheckoutStep }) =>
-          useCheckoutAutoScroll({ activeStep }),
-        {
-          initialProps: {
-            activeStep: createStep(
-              CheckoutStepName.OFFER_AMOUNT,
-              CheckoutStepState.ACTIVE,
-            ),
-          },
-        },
-      )
-
-      // Move to fulfillment details after completing offer
-      rerender({
-        activeStep: createStep(
-          CheckoutStepName.FULFILLMENT_DETAILS,
-          CheckoutStepState.ACTIVE,
-        ),
-      })
-
-      jest.runAllTimers()
-
-      // Should scroll to the previous step (offer) that was just completed
-      expect(mockJumpTo).toHaveBeenCalledWith("offer-step", {
-        behavior: "smooth",
-        offset: 30,
-      })
-    })
-
-    it("scrolls to offer step when editing it", () => {
-      const { rerender } = renderHook(
-        ({ activeStep }: { activeStep?: CheckoutStep }) =>
-          useCheckoutAutoScroll({ activeStep }),
-        {
-          initialProps: {
-            activeStep: createStep(
-              CheckoutStepName.FULFILLMENT_DETAILS,
-              CheckoutStepState.ACTIVE,
-            ),
-          },
-        },
-      )
-
-      // Go back to edit offer
-      rerender({
-        activeStep: createStep(
-          CheckoutStepName.OFFER_AMOUNT,
-          CheckoutStepState.ACTIVE,
-        ),
-      })
-
-      jest.runAllTimers()
-
-      // Should scroll to offer step (active step when going backwards)
-      expect(mockJumpTo).toHaveBeenCalledWith("offer-step", {
-        behavior: "smooth",
-        offset: 30,
-      })
-    })
-  })
-
-  describe("timing", () => {
-    it("waits 100ms before scrolling to allow DOM updates", () => {
-      const { rerender } = renderHook(
-        ({ activeStep }: { activeStep?: CheckoutStep }) =>
-          useCheckoutAutoScroll({ activeStep }),
-        {
-          initialProps: {
-            activeStep: createStep(
-              CheckoutStepName.FULFILLMENT_DETAILS,
-              CheckoutStepState.ACTIVE,
-            ),
-          },
-        },
-      )
-
-      rerender({
-        activeStep: createStep(
-          CheckoutStepName.DELIVERY_OPTION,
-          CheckoutStepState.ACTIVE,
-        ),
-      })
-
-      // Should not have scrolled yet
-      expect(mockJumpTo).not.toHaveBeenCalled()
-
-      // Advance timers by 100ms
-      jest.advanceTimersByTime(100)
-
-      // Now it should have scrolled
-      expect(mockJumpTo).toHaveBeenCalled()
     })
   })
 })

@@ -18,11 +18,6 @@ export const useScrollToStep = () => {
 
   const scrollToStep = useCallback(
     (stepName: CheckoutStepName) => {
-      // Never scroll when completing payment step per requirements
-      if (stepName === "PAYMENT") {
-        return
-      }
-
       const jumpId = STEP_JUMP_MAP[stepName]
       if (!jumpId) return
 
