@@ -187,7 +187,7 @@ jobs:
           name: Run Playwright Smoke Tests on Live Environment
           command: |
             TESTS=$(circleci tests glob "playwright/e2e/**/*" | circleci tests split | paste -sd ' ')
-            PLAYWRIGHT_BASE_URL=$SMOKE_TEST_TARGET npx playwright test $TESTS --config playwright.config.ts
+            PLAYWRIGHT-ID=$PLAYWRIGHT_ID PLAYWRIGHT_BASE_URL=$SMOKE_TEST_TARGET npx playwright test $TESTS --config playwright.config.ts
       - store_artifacts:
           path: playwright-report
       - store_artifacts:
