@@ -68,6 +68,7 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
 
   // Load checkout and manage window side effects
   useLoadCheckout(orderData)
+  useCheckoutAutoScroll()
 
   if (!order) {
     return <OrderErrorApp code={404} message={NOT_FOUND_ERROR} />
@@ -87,14 +88,10 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
 
   const activeStep = steps.find(step => step.state === CheckoutStepState.ACTIVE)
 
-  // Auto-scroll as user advances through steps
-  useCheckoutAutoScroll()
-
   useEffect(() => {
     switch (activeStep?.name) {
       case CheckoutStepName.CONFIRMATION:
         checkoutTracking.orderProgressionViewed(ContextModule.ordersReview)
-        // Scroll to review step when it becomes active
         break
       case CheckoutStepName.FULFILLMENT_DETAILS:
         checkoutTracking.orderProgressionViewed(ContextModule.ordersFulfillment)
