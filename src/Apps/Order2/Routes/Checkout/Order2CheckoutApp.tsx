@@ -25,10 +25,15 @@ import { Order2CheckoutLoadingSkeleton } from "Apps/Order2/Routes/Checkout/Compo
 import { Order2CollapsibleOrderSummary } from "Apps/Order2/Routes/Checkout/Components/Order2CollapsibleOrderSummary"
 import { Order2ReviewStep } from "Apps/Order2/Routes/Checkout/Components/Order2ReviewStep"
 import { Order2PaymentStep } from "Apps/Order2/Routes/Checkout/Components/PaymentStep/Order2PaymentStep"
+import {
+  STEP_JUMP_MAP,
+  useCheckoutAutoScroll,
+} from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutAutoScroll"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useLoadCheckout } from "Apps/Order2/Routes/Checkout/Hooks/useLoadCheckout"
 import { NOT_FOUND_ERROR } from "Apps/Order2/constants"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import { Jump } from "Utils/Hooks/useJump"
 import type { Order2CheckoutApp_me$key } from "__generated__/Order2CheckoutApp_me.graphql"
 import type { Order2CheckoutApp_order$key } from "__generated__/Order2CheckoutApp_order.graphql"
 import { useEffect } from "react"
@@ -36,6 +41,7 @@ import { Meta, Title } from "react-head"
 import { graphql, useFragment } from "react-relay"
 // eslint-disable-next-line no-restricted-imports
 import { Provider } from "unstated"
+
 interface Order2CheckoutAppProps {
   order: Order2CheckoutApp_order$key
   me: Order2CheckoutApp_me$key
@@ -62,6 +68,7 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
 
   // Load checkout and manage window side effects
   useLoadCheckout(orderData)
+  useCheckoutAutoScroll()
 
   if (!order) {
     return <OrderErrorApp code={404} message={NOT_FOUND_ERROR} />
@@ -72,14 +79,15 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
     orderData.lineItems[0]?.artwork?.isFixedShippingFeeOnly
   const isExpressCheckoutEligible = !isOffer && isFixedShipping
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Mount effect
   useEffect(() => {
     if (!isExpressCheckoutEligible) {
       setExpressCheckoutLoaded([])
     }
-  }, [])
+  }, [isExpressCheckoutEligible])
 
   const activeStep = steps.find(step => step.state === CheckoutStepState.ACTIVE)
+
   useEffect(() => {
     switch (activeStep?.name) {
       case CheckoutStepName.CONFIRMATION:
@@ -140,14 +148,31 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
               {isExpressCheckoutEligible && (
                 <Order2ExpressCheckout order={orderData} />
               )}
-              {isOffer && <Order2OfferStep order={orderData} />}
-              <Order2FulfillmentDetailsStep order={orderData} me={meData} />
-              <Order2DeliveryOptionsStep order={orderData} />
-              <Order2PaymentStep order={orderData} me={meData} />
+              {isOffer && (
+                <>
+                  <Jump id={STEP_JUMP_MAP.OFFER_AMOUNT} />
+                  <Order2OfferStep order={orderData} />
+                </>
+              )}
+              <>
+                <Jump id={STEP_JUMP_MAP.FULFILLMENT_DETAILS} />
+                <Order2FulfillmentDetailsStep order={orderData} me={meData} />
+              </>
+              <>
+                <Jump id={STEP_JUMP_MAP.DELIVERY_OPTION} />
+                <Order2DeliveryOptionsStep order={orderData} />
+              </>
+              <>
+                <Jump id={STEP_JUMP_MAP.PAYMENT} />
+                <Order2PaymentStep order={orderData} me={meData} />
+              </>
             </Stack>
             <Box display={["block", "block", "none"]}>
               <Spacer y={1} />
-              <Order2ReviewStep order={orderData} />
+              <>
+                <Jump id={STEP_JUMP_MAP.CONFIRMATION} />
+                <Order2ReviewStep order={orderData} />
+              </>
               <Order2HelpLinksWithInquiry
                 order={orderData}
                 artworkID={artworkSlug as string}
@@ -163,7 +188,10 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
           display={["none", "none", "block"]}
         >
           <Box position={["initial", "initial", "sticky"]} top="100px">
-            <Order2ReviewStep order={orderData} />
+            <>
+              <Jump id={STEP_JUMP_MAP.CONFIRMATION} />
+              <Order2ReviewStep order={orderData} />
+            </>
             <Separator as="hr" />
             <Order2HelpLinksWithInquiry
               order={orderData}

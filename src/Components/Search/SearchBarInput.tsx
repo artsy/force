@@ -7,9 +7,11 @@ import {
   type SearchedWithResults,
   type SelectedItemFromSearch,
 } from "@artsy/cohesion"
+import { useVariant } from "@unleash/proxy-client-react"
 import { DESKTOP_NAV_BAR_TOP_TIER_HEIGHT } from "Components/NavBar/constants"
-import { useRouter } from "System/Hooks/useRouter"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { useRouter } from "System/Hooks/useRouter"
+import { useTrackFeatureVariantOnMount } from "System/Hooks/useTrackFeatureVariant"
 import { useClientQuery } from "Utils/Hooks/useClientQuery"
 import { extractNodes } from "Utils/extractNodes"
 import type {
@@ -19,8 +21,6 @@ import type {
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { useDebounce } from "use-debounce"
-import { useVariant } from "@unleash/proxy-client-react"
-import { useTrackFeatureVariantOnMount } from "System/Hooks/useTrackFeatureVariant"
 import { SearchBarFooter } from "./SearchBarFooter"
 import { SearchInputPillsFragmentContainer } from "./SearchInputPills"
 import { StaticSearchContainer } from "./StaticSearchContainer"
@@ -236,6 +236,13 @@ export const SearchBarInput: FC<
       context_module: selectedPill.analyticsContextModule,
     })
   }
+  const handlePaste = () => {
+    tracking.trackEvent({
+      action_type: ActionType.pastedIntoSearchInput,
+      context_module: selectedPill.analyticsContextModule,
+      query: value,
+    })
+  }
 
   const ref = useRef<HTMLInputElement | null>(null)
 
@@ -279,6 +286,7 @@ export const SearchBarInput: FC<
       onSelect={handleSelect}
       onSubmit={handleSubmit}
       onFocus={handleFocus}
+      onPaste={handlePaste}
       header={
         data?.viewer ? (
           <SearchInputPillsFragmentContainer
