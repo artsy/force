@@ -117,10 +117,12 @@ export const Order2PaymentForm: React.FC<Order2PaymentFormProps> = ({
     },
     appearance: {
       variables: {
+        // https://docs.stripe.com/elements/appearance-api#variables
         accordionItemSpacing: "10px",
         fontFamily: theme.fonts.sans,
-        colorPrimary: theme.colors.mono100, // accordion is selected
-        colorTextSecondary: theme.colors.mono60, // accordion is not selected
+        colorPrimary: theme.colors.mono100, // A primary color used throughout the Element. Accordian selected.
+        colorTextSecondary: theme.colors.mono60, // The color used for text of secondary importance. Accordian not selected.
+        colorText: theme.colors.mono60, // The default text color used in the Element. Used for input labels.
         colorBackground: theme.colors.mono5,
       },
       rules: {
@@ -129,18 +131,15 @@ export const Order2PaymentForm: React.FC<Order2PaymentFormProps> = ({
           fontSize: "16px",
           fontWeight: "normal",
           border: "1px solid transparent",
-          backgroundColor: "var(--colorBackground)",
         },
         ".AccordionItem--selected": {
           lineHeight: "26px",
           fontSize: "16px",
           fontWeight: "bold",
-          backgroundColor: "var(--colorBackground)",
         },
         ".AccordionItem:hover": {
           border: "1px solid transparent",
           color: "var(--colorPrimary)",
-          backgroundColor: "var(--colorBackground)",
         },
         ".Label": {
           color: "var(--colorPrimary)",
