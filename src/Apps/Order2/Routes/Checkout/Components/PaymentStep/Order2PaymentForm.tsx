@@ -120,7 +120,8 @@ export const Order2PaymentForm: React.FC<Order2PaymentFormProps> = ({
         accordionItemSpacing: "10px",
         fontFamily: theme.fonts.sans,
         colorPrimary: theme.colors.mono100, // accordion is selected
-        colorTextSecondary: theme.colors.mono100, // accordion is not selected
+        colorTextSecondary: theme.colors.mono60, // accordion is not selected
+        colorBackground: theme.colors.mono5,
       },
       rules: {
         ".AccordionItem": {
@@ -128,13 +129,21 @@ export const Order2PaymentForm: React.FC<Order2PaymentFormProps> = ({
           fontSize: "16px",
           fontWeight: "normal",
           border: "1px solid transparent",
-          backgroundColor: theme.colors.mono5,
+          backgroundColor: "var(--colorBackground)",
         },
         ".AccordionItem--selected": {
           lineHeight: "26px",
           fontSize: "16px",
           fontWeight: "bold",
-          border: "1px solid #E7E7E7", // mono10
+          backgroundColor: "var(--colorBackground)",
+        },
+        ".AccordionItem:hover": {
+          border: "1px solid transparent",
+          color: "var(--colorPrimary)",
+          backgroundColor: "var(--colorBackground)",
+        },
+        ".Label": {
+          color: "var(--colorPrimary)",
         },
       },
     },

@@ -45,6 +45,7 @@ export const SavedPaymentMethodOption: React.FC<
           <LockIcon fill="mono100" />
           {/* Spacer has to be 31px to match Stripe's spacing */}
           <Spacer x="31px" />
+          {/* TODO: change text color on hover */}
           <Text
             variant="sm"
             color="mono100"
