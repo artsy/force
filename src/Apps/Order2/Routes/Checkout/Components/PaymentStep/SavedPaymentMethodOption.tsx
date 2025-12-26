@@ -6,6 +6,8 @@ import { type Brand, BrandCreditCardIcon } from "Components/BrandCreditCardIcon"
 import { FadeInBox } from "Components/FadeInBox"
 import type { Order2PaymentForm_me$data } from "__generated__/Order2PaymentForm_me.graphql"
 import type React from "react"
+import styled from "styled-components"
+import { themeGet } from "@styled-system/theme-get"
 
 interface SavedPaymentMethodOptionProps {
   me: Order2PaymentForm_me$data
@@ -45,13 +47,13 @@ export const SavedPaymentMethodOption: React.FC<
           <LockIcon fill="mono100" />
           {/* Spacer has to be 31px to match Stripe's spacing */}
           <Spacer x="31px" />
-          <Text
+          <HoverText
             variant="sm"
-            color="mono100"
+            color={isSelected ? "mono100" : "mono60"}
             fontWeight={isSelected ? "bold" : "normal"}
           >
             Saved payments
-          </Text>
+          </HoverText>
         </Flex>
 
         <Collapse open={isSelected}>
@@ -112,3 +114,10 @@ export const SavedPaymentMethodOption: React.FC<
     </FadeInBox>
   )
 }
+
+const HoverText = styled(Text)`
+  transition: color 0.25s;
+  &:hover {
+    color: ${themeGet("colors.mono100")};
+  }
+`
