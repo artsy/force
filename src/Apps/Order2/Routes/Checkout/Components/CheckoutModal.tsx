@@ -7,7 +7,7 @@ export enum CheckoutModalError {
   ARTWORK_VERSION_MISMATCH = "artwork_version_mismatch",
   ARTWORK_NOT_FOR_SALE = "artwork_not_for_sale",
   SUBMIT_ERROR = "submit_error",
-  UNHANDLED = "UNHANDLED",
+  OTHER_ERROR = "other_error",
 }
 
 export const CheckoutModal: React.FC<{

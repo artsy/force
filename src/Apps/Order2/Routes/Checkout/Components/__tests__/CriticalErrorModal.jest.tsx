@@ -116,7 +116,7 @@ describe("CriticalErrorModal", () => {
 
   describe("unknown error types", () => {
     it("shows the default error message without reload button", () => {
-      render(<CheckoutModal error={CheckoutModalError.UNHANDLED} />)
+      render(<CheckoutModal error={CheckoutModalError.OTHER_ERROR} />)
 
       expect(screen.getByText("Checkout Error")).toBeInTheDocument()
       expect(
