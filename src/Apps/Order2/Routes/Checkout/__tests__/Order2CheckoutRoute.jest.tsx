@@ -519,11 +519,11 @@ describe("Order2CheckoutRoute", () => {
         expect(screen.queryByText("Shipping method")).toBeInTheDocument()
 
         // Click pickup tab
-        expect(screen.queryByText("Free pickup")).not.toBeInTheDocument()
+        expect(screen.queryByText("Free pickup from")).not.toBeInTheDocument()
         act(() => {
           userEvent.click(screen.getByText("Pickup"))
         })
-        expect(screen.getByText("Free pickup")).toBeInTheDocument()
+        expect(screen.getByText("Free pickup from")).toBeInTheDocument()
         expect(screen.queryByText("Eagle, CO, US")).toBeInTheDocument()
 
         // Verify submit button is present and disabled
@@ -905,7 +905,7 @@ describe("Order2CheckoutRoute", () => {
         userEvent.click(screen.getByText("Pickup"))
       })
 
-      expect(screen.getByText("Free pickup")).toBeInTheDocument()
+      expect(screen.getByText("Free pickup from")).toBeInTheDocument()
 
       await waitFor(() => {
         const phoneCountryPicker = screen.getByTestId(
