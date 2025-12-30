@@ -34,7 +34,7 @@ export const WireTransferOption: React.FC<WireTransferOptionProps> = ({
         data-testid="PaymentFormWire"
       >
         <HoverFlex alignItems="center">
-          <ReceiptIcon height={18} fill="mono100" />
+          <HoverIcon height={18} fill={isSelected ? "mono100" : "mono60"} />
           {/* Spacer has to be 31px to match Stripe's spacing */}
           <Spacer x="31px" />
           <HoverText
@@ -77,8 +77,18 @@ const HoverText = styled(Text)`
   transition: color 0.25s;
 `
 
+const HoverIcon = styled(ReceiptIcon)`
+  svg {
+    transition: fill 0.25s;
+  }
+`
+
 const HoverFlex = styled(Flex)`
   &:hover ${HoverText} {
     color: ${themeGet("colors.mono100")};
+  }
+
+  &:hover ${HoverIcon} svg {
+    fill: ${themeGet("colors.mono100")};
   }
 `
