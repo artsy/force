@@ -152,7 +152,8 @@ const Order2ReviewStepComponent: React.FC<Order2ReviewStepProps> = ({
             mr={1}
             src={artworkData?.image?.resized?.url}
             alt={artworkData.title || ""}
-            width="65px"
+            // starting at small, allow a larger image
+            width={["65px", "85px"]}
           />
         </RouterLink>
         <Box overflow="hidden" flex={1}>
