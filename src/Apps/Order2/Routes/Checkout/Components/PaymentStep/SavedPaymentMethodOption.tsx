@@ -43,7 +43,7 @@ export const SavedPaymentMethodOption: React.FC<
         style={{ cursor: "pointer" }}
         onClick={onSelect}
       >
-        <Flex alignItems="center">
+        <HoverFlex alignItems="center">
           <LockIcon fill="mono100" />
           {/* Spacer has to be 31px to match Stripe's spacing */}
           <Spacer x="31px" />
@@ -54,7 +54,7 @@ export const SavedPaymentMethodOption: React.FC<
           >
             Saved payments
           </HoverText>
-        </Flex>
+        </HoverFlex>
 
         <Collapse open={isSelected}>
           <Text variant="sm" ml="50px">
@@ -117,7 +117,10 @@ export const SavedPaymentMethodOption: React.FC<
 
 const HoverText = styled(Text)`
   transition: color 0.25s;
-  &:hover {
+`
+
+const HoverFlex = styled(Flex)`
+  &:hover ${HoverText} {
     color: ${themeGet("colors.mono100")};
   }
 `

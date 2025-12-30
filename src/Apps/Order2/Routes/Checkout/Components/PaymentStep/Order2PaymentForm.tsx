@@ -136,9 +136,9 @@ export const Order2PaymentForm: React.FC<Order2PaymentFormProps> = ({
           lineHeight: "26px",
           fontSize: "16px",
           fontWeight: "bold",
+          border: `1px solid ${theme.colors.mono10}`,
         },
         ".AccordionItem:hover": {
-          border: "1px solid transparent",
           color: "var(--colorPrimary)",
         },
         ".Label": {
