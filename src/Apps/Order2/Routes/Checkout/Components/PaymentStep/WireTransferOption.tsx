@@ -1,9 +1,11 @@
 import ReceiptIcon from "@artsy/icons/ReceiptIcon"
 import { Box, Flex, Spacer, Text } from "@artsy/palette"
+import { themeGet } from "@styled-system/theme-get"
 import { Collapse } from "Apps/Order/Components/Collapse"
 import { FadeInBox } from "Components/FadeInBox"
 import { RouterLink } from "System/Components/RouterLink"
 import type React from "react"
+import styled from "styled-components"
 
 interface WireTransferOptionProps {
   isSelected: boolean
@@ -31,18 +33,18 @@ export const WireTransferOption: React.FC<WireTransferOptionProps> = ({
         onClick={onSelect}
         data-testid="PaymentFormWire"
       >
-        <Flex alignItems="center">
-          <ReceiptIcon height={18} fill="mono100" />
+        <HoverFlex alignItems="center">
+          <HoverIcon height={18} fill={isSelected ? "mono100" : "mono60"} />
           {/* Spacer has to be 31px to match Stripe's spacing */}
           <Spacer x="31px" />
-          <Text
+          <HoverText
             variant="sm"
-            color="mono100"
+            color={isSelected ? "mono100" : "mono60"}
             fontWeight={isSelected ? "bold" : "normal"}
           >
             Wire Transfer
-          </Text>
-        </Flex>
+          </HoverText>
+        </HoverFlex>
 
         <Collapse open={isSelected}>
           <Text color="mono100" variant="sm" ml="50px" mb={1}>
@@ -70,3 +72,23 @@ export const WireTransferOption: React.FC<WireTransferOptionProps> = ({
     </FadeInBox>
   )
 }
+
+const HoverText = styled(Text)`
+  transition: color 0.25s;
+`
+
+const HoverIcon = styled(ReceiptIcon)`
+  svg {
+    transition: fill 0.25s;
+  }
+`
+
+const HoverFlex = styled(Flex)`
+  &:hover ${HoverText} {
+    color: ${themeGet("colors.mono100")};
+  }
+
+  &:hover ${HoverIcon} svg {
+    fill: ${themeGet("colors.mono100")};
+  }
+`

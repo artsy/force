@@ -146,15 +146,16 @@ export const Order2PickupForm: React.FC<Order2PickupFormProps> = ({
         color="mono100"
         variant={["sm-display", "sm-display", "md"]}
       >
-        Free pickup
+        Free pickup from
       </Text>
       <Spacer y={1} />
       <Text variant="sm" color="mono60">
         {orderData.shippingOrigin}
       </Text>
+      <Spacer y={1} />
       <Text variant="sm" color="mono60">
-        After your order is confirmed, a specialist will contact you with
-        details on how to pickup the work.
+        After the seller confirms your order, you’ll be appointed an Artsy
+        specialist within 2 business days to handle pickup logistics.
       </Text>
       <Spacer y={[2, 2, 4]} />
       <Formik<PickupFormValues>

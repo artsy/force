@@ -13,6 +13,27 @@ jest.mock("Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext")
 const mockUseJump = useJump as jest.Mock
 const mockUseCheckoutContext = useCheckoutContext as jest.Mock
 
+const ALL_STEPS = [
+  CheckoutStepName.OFFER_AMOUNT,
+  CheckoutStepName.FULFILLMENT_DETAILS,
+  CheckoutStepName.DELIVERY_OPTION,
+  CheckoutStepName.PAYMENT,
+  CheckoutStepName.CONFIRMATION,
+]
+
+const createSteps = (activeStep: CheckoutStepName) => {
+  const activeIndex = ALL_STEPS.indexOf(activeStep)
+  return ALL_STEPS.map((name, index) => ({
+    name,
+    state:
+      index < activeIndex
+        ? CheckoutStepState.COMPLETED
+        : index === activeIndex
+          ? CheckoutStepState.ACTIVE
+          : CheckoutStepState.UPCOMING,
+  }))
+}
+
 describe("useCheckoutAutoScroll", () => {
   let mockJumpTo: jest.Mock
 
@@ -32,29 +53,15 @@ describe("useCheckoutAutoScroll", () => {
   })
 
   it("scrolls to active step when loading completes", () => {
-    mockUseCheckoutContext.mockReturnValue({
-      isLoading: true,
-      steps: [
-        {
-          name: CheckoutStepName.FULFILLMENT_DETAILS,
-          state: CheckoutStepState.ACTIVE,
-        },
-      ],
-    })
+    const steps = createSteps(CheckoutStepName.FULFILLMENT_DETAILS)
+
+    mockUseCheckoutContext.mockReturnValue({ isLoading: true, steps })
 
     const { rerender } = renderHook(() => useCheckoutAutoScroll())
 
     expect(mockJumpTo).not.toHaveBeenCalled()
 
-    mockUseCheckoutContext.mockReturnValue({
-      isLoading: false,
-      steps: [
-        {
-          name: CheckoutStepName.FULFILLMENT_DETAILS,
-          state: CheckoutStepState.ACTIVE,
-        },
-      ],
-    })
+    mockUseCheckoutContext.mockReturnValue({ isLoading: false, steps })
 
     rerender()
     jest.runAllTimers()
@@ -65,24 +72,35 @@ describe("useCheckoutAutoScroll", () => {
     })
   })
 
+  it("does not autoscroll on load if user is on the first step", () => {
+    const steps = createSteps(CheckoutStepName.OFFER_AMOUNT)
+
+    mockUseCheckoutContext.mockReturnValue({ isLoading: true, steps })
+
+    const { rerender } = renderHook(() => useCheckoutAutoScroll())
+
+    mockUseCheckoutContext.mockReturnValue({ isLoading: false, steps })
+
+    rerender()
+    jest.runAllTimers()
+
+    // The initial load scroll (first useEffect) should NOT fire for the first step (activeStepIndex = 0)
+    // The step navigation scroll (second useEffect) should also not fire because step hasn't changed
+    // We expect 0 calls, confirming no unwanted scrolling on load for the first step
+    expect(mockJumpTo).not.toHaveBeenCalled()
+  })
+
   it("scrolls to confirmation when it becomes active", () => {
     mockUseCheckoutContext.mockReturnValue({
       isLoading: false,
-      steps: [
-        { name: CheckoutStepName.PAYMENT, state: CheckoutStepState.ACTIVE },
-      ],
+      steps: createSteps(CheckoutStepName.PAYMENT),
     })
 
     const { rerender } = renderHook(() => useCheckoutAutoScroll())
 
     mockUseCheckoutContext.mockReturnValue({
       isLoading: false,
-      steps: [
-        {
-          name: CheckoutStepName.CONFIRMATION,
-          state: CheckoutStepState.ACTIVE,
-        },
-      ],
+      steps: createSteps(CheckoutStepName.CONFIRMATION),
     })
 
     rerender()
@@ -97,24 +115,14 @@ describe("useCheckoutAutoScroll", () => {
   it("scrolls to just-completed step when going forward", () => {
     mockUseCheckoutContext.mockReturnValue({
       isLoading: false,
-      steps: [
-        {
-          name: CheckoutStepName.FULFILLMENT_DETAILS,
-          state: CheckoutStepState.ACTIVE,
-        },
-      ],
+      steps: createSteps(CheckoutStepName.FULFILLMENT_DETAILS),
     })
 
     const { rerender } = renderHook(() => useCheckoutAutoScroll())
 
     mockUseCheckoutContext.mockReturnValue({
       isLoading: false,
-      steps: [
-        {
-          name: CheckoutStepName.DELIVERY_OPTION,
-          state: CheckoutStepState.ACTIVE,
-        },
-      ],
+      steps: createSteps(CheckoutStepName.DELIVERY_OPTION),
     })
 
     rerender()
@@ -129,24 +137,14 @@ describe("useCheckoutAutoScroll", () => {
   it("scrolls to newly-active step when going backwards", () => {
     mockUseCheckoutContext.mockReturnValue({
       isLoading: false,
-      steps: [
-        {
-          name: CheckoutStepName.DELIVERY_OPTION,
-          state: CheckoutStepState.ACTIVE,
-        },
-      ],
+      steps: createSteps(CheckoutStepName.DELIVERY_OPTION),
     })
 
     const { rerender } = renderHook(() => useCheckoutAutoScroll())
 
     mockUseCheckoutContext.mockReturnValue({
       isLoading: false,
-      steps: [
-        {
-          name: CheckoutStepName.FULFILLMENT_DETAILS,
-          state: CheckoutStepState.ACTIVE,
-        },
-      ],
+      steps: createSteps(CheckoutStepName.FULFILLMENT_DETAILS),
     })
 
     rerender()
