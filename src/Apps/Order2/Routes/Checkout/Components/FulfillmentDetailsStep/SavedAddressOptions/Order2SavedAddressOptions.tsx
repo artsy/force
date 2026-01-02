@@ -252,10 +252,12 @@ export const SavedAddressOptions = ({
           setUserAddressMode({ mode: "add" })
         }}
       >
-        <Text>
-          <AddIcon display="inline-block" top="2px" height="18px" />
-          Add new address
-        </Text>
+        <Flex alignItems="center">
+          <AddIcon height="25px" width="25px" mr={0.5} />
+          <Text variant="sm" fontWeight="normal">
+            Add new address
+          </Text>
+        </Flex>
       </Clickable>
 
       <Spacer y={4} />
