@@ -13,6 +13,8 @@ import type { Order2FulfillmentDetailsStep_order$key } from "__generated__/Order
 import { useMemo } from "react"
 
 import { graphql, useFragment } from "react-relay"
+import styled from "styled-components"
+import { themeGet } from "@styled-system/theme-get"
 
 interface Order2FulfillmentDetailsStepProps {
   order: Order2FulfillmentDetailsStep_order$key
@@ -75,7 +77,7 @@ export const Order2FulfillmentDetailsStep: React.FC<
       )}
       <Box hidden={stepState !== CheckoutStepState.ACTIVE}>
         {pickupOption ? (
-          <Tabs
+          <TabsWithFocusHighlight
             fill
             data-testid="FulfillmentDetailsStepTabs"
             justifyContent="space-between"
@@ -102,7 +104,7 @@ export const Order2FulfillmentDetailsStep: React.FC<
                 <Order2PickupForm order={orderData} />
               </Box>
             </Tab>
-          </Tabs>
+          </TabsWithFocusHighlight>
         ) : (
           <Box px={[2, 2, 4]} hidden={stepState !== CheckoutStepState.ACTIVE}>
             <Order2DeliveryForm order={orderData} me={meData} />
@@ -148,5 +150,14 @@ const ORDER_FRAGMENT = graphql`
       selected
     }
     availableShippingCountries
+  }
+`
+const TabsWithFocusHighlight = styled(Tabs)`
+  button {
+    &:focus {
+      outline: none;
+      z-index: 1;
+      border: 1px solid ${themeGet("colors.blue100")};
+    }
   }
 `
