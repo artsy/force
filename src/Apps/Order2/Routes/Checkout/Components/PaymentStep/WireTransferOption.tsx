@@ -81,6 +81,9 @@ const HoverIcon = styled(ReceiptIcon)`
   svg {
     transition: fill 0.25s;
   }
+  g {
+    clip-path: none;
+  }
 `
 
 const HoverFlex = styled(Flex)`
