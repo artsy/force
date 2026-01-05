@@ -14,23 +14,49 @@ export const Order2PaymentCompletedView: React.FC<
   Order2PaymentCompletedViewProps
 > = ({ order }) => {
   const orderData = useFragment(ORDER_FRAGMENT, order)
-  const { editPayment, checkoutTracking } = useCheckoutContext()
+  const { editPayment, checkoutTracking, confirmationToken } =
+    useCheckoutContext()
 
   const onClickEdit = () => {
     checkoutTracking.clickedChangePaymentMethod()
     editPayment()
   }
 
-  const paymentMethodDetails = orderData.paymentMethodDetails
-  const paymentType = paymentMethodDetails?.__typename
+  const savedPaymentMethod = orderData.paymentMethodDetails
+  const paymentPreview = confirmationToken?.paymentMethodPreview
 
-  const isCreditCard = paymentType === "CreditCard"
-  const isBankAccount =
-    paymentType === "BankAccount" &&
-    orderData.paymentMethod === "US_BANK_ACCOUNT"
-  const isSEPA =
-    paymentType === "BankAccount" && orderData.paymentMethod === "SEPA_DEBIT"
-  const isWireTransfer = paymentType === "WireTransfer"
+  const getDisplayDetails = () => {
+    // For new payment methods, use preview data
+    if (paymentPreview) {
+      const isCard = paymentPreview.__typename === "Card"
+      const isUSBankAccount = paymentPreview.__typename === "USBankAccount"
+
+      return {
+        cardBrand: isCard ? paymentPreview.displayBrand : null,
+        last4:
+          paymentPreview.__typename !== "%other" ? paymentPreview.last4 : null,
+        bankName: isUSBankAccount ? paymentPreview.bankName : null,
+      }
+    }
+
+    // For saved payment methods, use saved details
+    return {
+      cardBrand:
+        savedPaymentMethod?.__typename === "CreditCard"
+          ? savedPaymentMethod.brand
+          : null,
+      last4:
+        savedPaymentMethod?.__typename === "CreditCard"
+          ? savedPaymentMethod.lastDigits
+          : savedPaymentMethod?.__typename === "BankAccount"
+            ? savedPaymentMethod.last4
+            : null,
+      bankName: null,
+    }
+  }
+
+  const details = getDisplayDetails()
+  const paymentMethod = orderData.paymentMethod
 
   return (
     <Flex flexDirection="column" backgroundColor="mono0">
@@ -58,8 +84,10 @@ export const Order2PaymentCompletedView: React.FC<
         </Clickable>
       </Flex>
       <Flex alignItems="center" ml="30px" mt={1}>
-        {(isBankAccount || isSEPA) &&
-          paymentMethodDetails?.__typename === "BankAccount" && (
+        {/* Bank Account (ACH or SEPA) */}
+        {(paymentMethod === "US_BANK_ACCOUNT" ||
+          paymentMethod === "SEPA_DEBIT") &&
+          details.last4 && (
             <>
               <InstitutionIcon
                 fill="mono100"
@@ -68,24 +96,29 @@ export const Order2PaymentCompletedView: React.FC<
                 mr={1}
               />
               <Text variant="sm-display">
-                •••• {paymentMethodDetails.last4}
+                {details.bankName && `${details.bankName} `}
+                •••• {details.last4}
               </Text>
             </>
           )}
-        {isCreditCard && paymentMethodDetails?.__typename === "CreditCard" && (
-          <>
-            <BrandCreditCardIcon
-              mr={1}
-              type={paymentMethodDetails.brand as Brand}
-              width="24px"
-              height="24px"
-            />
-            <Text variant="sm-display">
-              •••• {paymentMethodDetails.lastDigits}
-            </Text>
-          </>
-        )}
-        {isWireTransfer && (
+
+        {/* Credit Card */}
+        {paymentMethod === "CREDIT_CARD" &&
+          details.cardBrand &&
+          details.last4 && (
+            <>
+              <BrandCreditCardIcon
+                mr={1}
+                type={details.cardBrand as Brand}
+                width="24px"
+                height="24px"
+              />
+              <Text variant="sm-display">•••• {details.last4}</Text>
+            </>
+          )}
+
+        {/* Wire Transfer */}
+        {paymentMethod === "WIRE_TRANSFER" && (
           <>
             <InstitutionIcon fill="mono100" width="24px" height="24px" mr={1} />
             <Text variant="sm-display">Wire Transfer</Text>
