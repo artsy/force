@@ -15,6 +15,7 @@ jest.mock("System/Hooks/useRouter", () => ({
 
 jest.mock("System/Components/RouterLink", () => ({
   RouterLink: ({ to, children }) => <a href={to}>{children}</a>,
+  RouterUnawareLink: ({ to, children }) => <a href={to}>{children}</a>,
 }))
 
 const { renderWithRelay } = setupTestWrapperTL<InvoiceDetailRoute_Test_Query>({

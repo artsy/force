@@ -1,3 +1,10 @@
+jest.mock("react-tracking", () => ({
+  track: () => (component: any) => component,
+  useTracking: () => ({ trackEvent: jest.fn() }),
+}))
+jest.mock("Utils/Hooks/useJump")
+jest.mock("Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext")
+
 import { renderHook } from "@testing-library/react"
 import {
   CheckoutStepName,
@@ -6,9 +13,6 @@ import {
 import { useCheckoutAutoScroll } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutAutoScroll"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useJump } from "Utils/Hooks/useJump"
-
-jest.mock("Utils/Hooks/useJump")
-jest.mock("Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext")
 
 const mockUseJump = useJump as jest.Mock
 const mockUseCheckoutContext = useCheckoutContext as jest.Mock
