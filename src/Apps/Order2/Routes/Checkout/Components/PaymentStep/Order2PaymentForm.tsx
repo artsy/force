@@ -16,11 +16,13 @@ import {
   BankAccountBalanceCheckResult,
   Order2PollBankAccountBalanceQueryRenderer,
 } from "Apps/Order2/Components/Order2PollBankAccountBalance"
+import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import {
   CheckoutErrorBanner,
   MailtoOrderSupport,
 } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import { useScrollToStep } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToStep"
 import { useOrder2SetOrderPaymentMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderPaymentMutation"
 import { fetchAndSetConfirmationToken } from "Apps/Order2/Utils/confirmationTokenUtils"
 import type { FormikContextWithAddress } from "Components/Address/AddressFormFields"
@@ -36,7 +38,7 @@ import type {
   Order2PaymentForm_order$key,
 } from "__generated__/Order2PaymentForm_order.graphql"
 import type React from "react"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { graphql, useFragment, useRelayEnvironment } from "react-relay"
 import { data as sd } from "sharify"
 import { SavedPaymentMethodOption } from "./SavedPaymentMethodOption"
@@ -227,6 +229,40 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
   const hasSavedBankAccounts = allowedSavedBankAccounts.length > 0
   const [wireEmailSubject, setWireEmailSubject] = useState<string | null>(null)
   const [wireEmailBody, setWireEmailBody] = useState<string | null>(null)
+
+  const { scrollToStep } = useScrollToStep()
+  const formRef = useRef<HTMLFormElement>(null)
+
+  // Scroll to error and focus when error messages are set
+  useEffect(() => {
+    if (subtitleErrorMessage || errorMessage) {
+      // Scroll to payment step
+      scrollToStep(CheckoutStepName.PAYMENT)
+
+      // Wait for scroll to complete, then focus error
+      setTimeout(() => {
+        if (!formRef.current) return
+
+        if (subtitleErrorMessage) {
+          // Focus subtitle error if it exists
+          const subtitleError = formRef.current.querySelector(
+            '[data-subtitle-error="true"]',
+          )
+          if (subtitleError && subtitleError instanceof HTMLElement) {
+            subtitleError.focus()
+          }
+        } else if (errorMessage) {
+          // Focus banner error if subtitle error doesn't exist
+          const banner = formRef.current.querySelector(
+            '[data-error-banner="true"]',
+          )
+          if (banner && banner instanceof HTMLElement) {
+            banner.focus()
+          }
+        }
+      }, 300)
+    }
+  }, [subtitleErrorMessage, errorMessage, scrollToStep])
 
   // Default to saved payment method when available and track that it has been viewed
   useEffect(() => {
@@ -651,9 +687,15 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form ref={formRef} onSubmit={handleSubmit}>
       {subtitleErrorMessage && !selectedPaymentMethod && (
-        <Text variant="xs" color="red100" mb={2}>
+        <Text
+          variant="xs"
+          color="red100"
+          mb={2}
+          tabIndex={-1}
+          data-subtitle-error="true"
+        >
           {subtitleErrorMessage}
         </Text>
       )}

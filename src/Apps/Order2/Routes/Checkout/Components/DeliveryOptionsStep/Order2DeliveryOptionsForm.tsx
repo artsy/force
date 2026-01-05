@@ -14,6 +14,7 @@ import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCh
 import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import {
   CheckoutErrorBanner,
+  type CheckoutErrorBannerProps,
   MailtoOrderSupport,
 } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import {
@@ -21,6 +22,7 @@ import {
   deliveryOptionTimeEstimate,
 } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/utils"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import { useScrollToFieldErrorOnSubmit } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToFieldErrorOnSubmit"
 import { useOrder2SetOrderFulfillmentOptionMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderFulfillmentOptionMutation"
 import { BUYER_GUARANTEE_URL } from "Apps/Order2/constants"
 import { RouterLink } from "System/Components/RouterLink"
@@ -118,83 +120,107 @@ export const Order2DeliveryOptionsForm: React.FC<
       initialValues={{ deliveryOption: deliveryOptions[0] }}
       onSubmit={handleSubmit}
     >
-      {({ handleSubmit, isSubmitting }) => (
-        <Flex
-          flexDirection="column"
-          backgroundColor="mono0"
-          py={2}
-          px={[2, 2, 4]}
-        >
-          {deliveryOptionError && (
-            <>
-              <CheckoutErrorBanner error={deliveryOptionError} />
-              <Spacer y={2} />
-            </>
-          )}
-          <Flex flexDirection="column">
-            <Flex>
-              <Text
-                variant={["sm-display", "sm-display", "md"]}
-                fontWeight="bold"
-                color="mono100"
-              >
-                Shipping method
-              </Text>
-
-              <Tooltip
-                variant="defaultDark"
-                placement="top"
-                width={250}
-                pointer={true}
-                content={
-                  <Text variant="xs">
-                    Shipping methods depend on location and artwork size. If
-                    shipped internationally or part of a show, delivery may take
-                    longer.
-                  </Text>
-                }
-              >
-                <Clickable ml={0.5} style={{ lineHeight: 0 }}>
-                  <InfoIcon />
-                </Clickable>
-              </Tooltip>
-            </Flex>
-
-            <Text variant="xs" color="mono60">
-              All options are protected against damage and loss with{" "}
-              <RouterLink
-                onClick={() => checkoutTracking.clickedBuyerProtection()}
-                inline
-                target="_blank"
-                to={BUYER_GUARANTEE_URL}
-              >
-                Artsy&rsquo;s Buyer Guarantee
-              </RouterLink>
-              .
-            </Text>
-
-            <Spacer y={2} />
-
-            {isSingleOption ? (
-              <SingleShippingOption option={deliveryOptions[0]} />
-            ) : (
-              <MultipleShippingOptionsForm options={deliveryOptions} />
-            )}
-          </Flex>
-
-          <Spacer y={4} />
-
-          <Button
-            loading={isSubmitting}
-            variant="primaryBlack"
-            width="100%"
-            onClick={() => handleSubmit()}
-          >
-            Continue to Payment
-          </Button>
-        </Flex>
-      )}
+      <DeliveryOptionsFormFields
+        deliveryOptionError={deliveryOptionError}
+        isSingleOption={isSingleOption}
+        deliveryOptions={deliveryOptions}
+      />
     </Formik>
+  )
+}
+
+interface DeliveryOptionsFormFieldsProps {
+  deliveryOptionError: CheckoutErrorBannerProps["error"]
+  isSingleOption: boolean
+  deliveryOptions: DeliveryOption[]
+}
+
+const DeliveryOptionsFormFields: React.FC<DeliveryOptionsFormFieldsProps> = ({
+  deliveryOptionError,
+  isSingleOption,
+  deliveryOptions,
+}) => {
+  const { handleSubmit, isSubmitting } = useFormikContext<FormValues>()
+  const { checkoutTracking } = useCheckoutContext()
+  const formRef = useScrollToFieldErrorOnSubmit(
+    CheckoutStepName.DELIVERY_OPTION,
+  )
+
+  return (
+    <Flex
+      flexDirection="column"
+      backgroundColor="mono0"
+      py={2}
+      px={[2, 2, 4]}
+      ref={formRef}
+    >
+      {deliveryOptionError && (
+        <>
+          <CheckoutErrorBanner error={deliveryOptionError} />
+          <Spacer y={2} />
+        </>
+      )}
+      <Flex flexDirection="column">
+        <Flex>
+          <Text
+            variant={["sm-display", "sm-display", "md"]}
+            fontWeight="bold"
+            color="mono100"
+          >
+            Shipping method
+          </Text>
+
+          <Tooltip
+            variant="defaultDark"
+            placement="top"
+            width={250}
+            pointer={true}
+            content={
+              <Text variant="xs">
+                Shipping methods depend on location and artwork size. If shipped
+                internationally or part of a show, delivery may take longer.
+              </Text>
+            }
+          >
+            <Clickable ml={0.5} style={{ lineHeight: 0 }}>
+              <InfoIcon />
+            </Clickable>
+          </Tooltip>
+        </Flex>
+
+        <Text variant="xs" color="mono60">
+          All options are protected against damage and loss with{" "}
+          <RouterLink
+            onClick={() => checkoutTracking.clickedBuyerProtection()}
+            inline
+            target="_blank"
+            to={BUYER_GUARANTEE_URL}
+          >
+            Artsy&rsquo;s Buyer Guarantee
+          </RouterLink>
+          .
+        </Text>
+
+        <Spacer y={2} />
+
+        {isSingleOption ? (
+          <SingleShippingOption option={deliveryOptions[0]} />
+        ) : (
+          <MultipleShippingOptionsForm options={deliveryOptions} />
+        )}
+      </Flex>
+
+      <Spacer y={4} />
+
+      <Button
+        loading={isSubmitting}
+        variant="primaryBlack"
+        width="100%"
+        onClick={() => handleSubmit()}
+      >
+        Continue to Payment
+      </Button>
+    </Flex>
   )
 }
 

@@ -12,9 +12,9 @@ interface ArtworkPageBannerProps {
   artwork: ArtworkPageBanner_artwork$key
   me: ArtworkPageBanner_me$key
 }
-export const ArtworkPageBanner: FC<React.PropsWithChildren<
-  ArtworkPageBannerProps
->> = props => {
+export const ArtworkPageBanner: FC<
+  React.PropsWithChildren<ArtworkPageBannerProps>
+> = props => {
   const artwork = useFragment(ARTWORK_FRAGMENT, props.artwork)
   const me = useFragment(ME_FRAGMENT, props.me)
   const { match } = useRouter()
@@ -53,7 +53,7 @@ export const ArtworkPageBanner: FC<React.PropsWithChildren<
 
     if (
       partnerOffer &&
-      partnerOffer.internalID == expectedPartnerOfferID &&
+      partnerOffer.internalID === expectedPartnerOfferID &&
       !partnerOffer.isActive
     ) {
       return <ExpiredOfferBanner />
@@ -89,7 +89,7 @@ const UnpublishedArtworkBanner = () => (
 
 const ME_FRAGMENT = graphql`
   fragment ArtworkPageBanner_me on Me
-    @argumentDefinitions(artworkID: { type: "String!" }) {
+  @argumentDefinitions(artworkID: { type: "String!" }) {
     partnerOffersConnection(artworkID: $artworkID, first: 1) {
       edges {
         node {
