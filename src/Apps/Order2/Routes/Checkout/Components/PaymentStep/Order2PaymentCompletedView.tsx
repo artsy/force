@@ -8,12 +8,11 @@ import { graphql, useFragment } from "react-relay"
 
 interface Order2PaymentCompletedViewProps {
   order: Order2PaymentCompletedView_order$key
-  confirmationToken: any
-  savedPaymentMethod: any
 }
+
 export const Order2PaymentCompletedView: React.FC<
   Order2PaymentCompletedViewProps
-> = ({ order, confirmationToken, savedPaymentMethod }) => {
+> = ({ order }) => {
   const orderData = useFragment(ORDER_FRAGMENT, order)
   const { editPayment, checkoutTracking } = useCheckoutContext()
 
@@ -23,24 +22,15 @@ export const Order2PaymentCompletedView: React.FC<
   }
 
   const paymentMethodDetails = orderData.paymentMethodDetails
+  const paymentType = paymentMethodDetails?.__typename
 
-  const isCreditCard =
-    paymentMethodDetails?.__typename === "CreditCard" ||
-    confirmationToken?.paymentMethodPreview?.__typename === "Card" ||
-    savedPaymentMethod?.__typename === "CreditCard"
+  const isCreditCard = paymentType === "CreditCard"
   const isBankAccount =
-    (paymentMethodDetails?.__typename === "BankAccount" &&
-      orderData.paymentMethod === "US_BANK_ACCOUNT") ||
-    confirmationToken?.paymentMethodPreview?.__typename === "USBankAccount" ||
-    savedPaymentMethod?.type === "US_BANK_ACCOUNT"
+    paymentType === "BankAccount" &&
+    orderData.paymentMethod === "US_BANK_ACCOUNT"
   const isSEPA =
-    (paymentMethodDetails?.__typename === "BankAccount" &&
-      orderData.paymentMethod === "SEPA_DEBIT") ||
-    confirmationToken?.paymentMethodPreview?.__typename === "SEPADebit" ||
-    savedPaymentMethod?.type === "SEPA_DEBIT"
-  const isWireTransfer =
-    paymentMethodDetails?.__typename === "WireTransfer" ||
-    (!isCreditCard && !isBankAccount && !isSEPA)
+    paymentType === "BankAccount" && orderData.paymentMethod === "SEPA_DEBIT"
+  const isWireTransfer = paymentType === "WireTransfer"
 
   return (
     <Flex flexDirection="column" backgroundColor="mono0">
@@ -68,37 +58,30 @@ export const Order2PaymentCompletedView: React.FC<
         </Clickable>
       </Flex>
       <Flex alignItems="center" ml="30px" mt={1}>
-        {(isBankAccount || isSEPA) && (
-          <>
-            <InstitutionIcon fill="mono100" width="24px" height="24px" mr={1} />
-            <Text variant="sm-display">
-              ••••{" "}
-              {(paymentMethodDetails?.__typename === "BankAccount" &&
-                paymentMethodDetails.last4) ||
-                confirmationToken?.paymentMethodPreview?.last4 ||
-                savedPaymentMethod?.last4}
-            </Text>
-          </>
-        )}
-        {isCreditCard && (
+        {(isBankAccount || isSEPA) &&
+          paymentMethodDetails?.__typename === "BankAccount" && (
+            <>
+              <InstitutionIcon
+                fill="mono100"
+                width="24px"
+                height="24px"
+                mr={1}
+              />
+              <Text variant="sm-display">
+                •••• {paymentMethodDetails.last4}
+              </Text>
+            </>
+          )}
+        {isCreditCard && paymentMethodDetails?.__typename === "CreditCard" && (
           <>
             <BrandCreditCardIcon
               mr={1}
-              type={
-                ((paymentMethodDetails?.__typename === "CreditCard" &&
-                  paymentMethodDetails.brand) ||
-                  confirmationToken?.paymentMethodPreview?.displayBrand ||
-                  savedPaymentMethod?.brand) as Brand
-              }
+              type={paymentMethodDetails.brand as Brand}
               width="24px"
               height="24px"
             />
             <Text variant="sm-display">
-              ••••{" "}
-              {(paymentMethodDetails?.__typename === "CreditCard" &&
-                paymentMethodDetails.lastDigits) ||
-                confirmationToken?.paymentMethodPreview?.last4 ||
-                savedPaymentMethod?.lastDigits}
+              •••• {paymentMethodDetails.lastDigits}
             </Text>
           </>
         )}

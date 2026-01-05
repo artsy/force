@@ -174,7 +174,6 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
   const {
     setConfirmationToken,
     checkoutTracking,
-    setSavedPaymentMethod,
     setPaymentComplete,
     setSavePaymentMethod,
     savePaymentMethod,
@@ -612,8 +611,6 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       } finally {
         setIsSubmittingToStripe(false)
         resetElementsToInitialParams()
-        // Resets for the PaymentCompletedView
-        setSavedPaymentMethod({ savedPaymentMethod: null })
         setConfirmationToken({ confirmationToken: null })
         setPaymentComplete()
       }
@@ -643,10 +640,6 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
 
         validateAndExtractOrderResponse(result.setOrderPayment?.orderOrError)
 
-        setSavedPaymentMethod({
-          savedPaymentMethod: selectedSavedPaymentMethod,
-        })
-
         // For saved ACH bank accounts, start balance check
         if (paymentMethod === "US_BANK_ACCOUNT") {
           setIsCheckingBankBalance(true)
@@ -658,6 +651,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         // For other saved payment methods, complete immediately
         setIsSubmittingToStripe(false)
         resetElementsToInitialParams()
+        setConfirmationToken({ confirmationToken: null })
         setPaymentComplete()
       } catch (error) {
         logger.error("Error while updating order payment method", error)

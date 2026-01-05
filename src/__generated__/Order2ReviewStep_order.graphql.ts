@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d4922f995bd31c0357a4ce8fc887164b>>
+ * @generated SignedSource<<af7b49281c59708fe937c8c7335ef5ff>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -62,6 +62,7 @@ export type Order2ReviewStep_order$data = {
     readonly display: string | null | undefined;
   } | null | undefined;
   readonly source: OrderSourceEnum;
+  readonly stripeConfirmationToken: string | null | undefined;
   readonly taxTotal: {
     readonly display: string | null | undefined;
   } | null | undefined;
@@ -148,6 +149,13 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "source",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "stripeConfirmationToken",
       "storageKey": null
     },
     {
@@ -339,6 +347,6 @@ return {
 };
 })();
 
-(node as any).hash = "b607578fe02ccba356a38b02701f50bb";
+(node as any).hash = "b429bbfda1f591dcbda95171d253a137";
 
 export default node;

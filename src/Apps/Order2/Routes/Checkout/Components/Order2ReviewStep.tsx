@@ -40,7 +40,6 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
   const offerId = orderData.pendingOffer?.internalID ?? null
   const {
     steps,
-    confirmationToken,
     savePaymentMethod,
     redirectToOrderDetails,
     checkoutTracking,
@@ -72,7 +71,7 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
     setCheckoutModalError(CheckoutModalError.SUBMIT_ERROR)
   }
 
-  const handleClick = async () => {
+  const handleSubmit = async () => {
     checkoutTracking.clickedOrderProgression(ContextModule.ordersReview)
     setLoading(true)
 
@@ -92,10 +91,17 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
           throw new Error("No offer ID available for submission")
         }
         input.offerID = offerId
-        input.confirmedSetupIntentId = confirmationToken?.id
+        if (orderData.stripeConfirmationToken) {
+          input.confirmedSetupIntentId = orderData.stripeConfirmationToken
+        }
       } else {
-        input.confirmationToken = confirmationToken?.id
-        input.oneTimeUse = !savePaymentMethod
+        if (orderData.stripeConfirmationToken) {
+          input.confirmationToken = orderData.stripeConfirmationToken
+        }
+      }
+
+      if (!savePaymentMethod) {
+        input.oneTimeUse = true
       }
 
       const submitOrderResult = await submitOrderMutation.submitMutation({
@@ -114,7 +120,7 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
         if (cardActionResults?.error) {
           throw new Error(cardActionResults.error.message)
         } else {
-          handleClick()
+          handleSubmit()
           return
         }
       }
@@ -198,7 +204,7 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
           <Button
             variant="primaryBlack"
             width="100%"
-            onClick={handleClick}
+            onClick={handleSubmit}
             loading={loading}
           >
             Submit
@@ -241,6 +247,7 @@ const FRAGMENT = graphql`
     internalID
     mode
     source
+    stripeConfirmationToken
     buyerTotal {
       display
     }
