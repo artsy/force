@@ -1,6 +1,8 @@
 import { Button, Spacer, Text } from "@artsy/palette"
+import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { deliveryAddressValidationSchema } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/utils"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import { useScrollToFieldErrorOnSubmit } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToFieldErrorOnSubmit"
 import { useOrder2CreateUserAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2CreateUserAddressMutation"
 import { useOrder2UpdateUserDefaultAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2UpdateUserDefaultAddressMutation"
 import {
@@ -8,7 +10,7 @@ import {
   type FormikContextWithAddress,
 } from "Components/Address/AddressFormFields"
 import createLogger from "Utils/logger"
-import { Formik } from "formik"
+import { Formik, useFormikContext } from "formik"
 
 const logger = createLogger("AddAddressForm")
 
@@ -38,85 +40,102 @@ export const AddAddressForm = ({
     })
   }
 
+  const handleSubmit = async (values: FormikContextWithAddress) => {
+    try {
+      const result = await createUserAddress.submitMutation({
+        variables: {
+          input: {
+            attributes: {
+              name: values.address.name,
+              addressLine1: values.address.addressLine1,
+              addressLine2: values.address.addressLine2,
+              city: values.address.city,
+              region: values.address.region,
+              postalCode: values.address.postalCode,
+              country: values.address.country,
+              phoneNumber: values.phoneNumber,
+              phoneNumberCountryCode: values.phoneNumberCountryCode,
+            },
+          },
+        },
+      })
+
+      const newAddressID =
+        result.createUserAddress?.userAddressOrErrors?.internalID
+
+      if (newAddressID) {
+        if (values.setAsDefault) {
+          await handleSetAsDefault(newAddressID)
+        }
+
+        await onSaveAddress(values, newAddressID)
+        return
+      }
+
+      if (result.createUserAddress?.userAddressOrErrors?.errors) {
+        throw new Error(
+          `Failed to create address: ${JSON.stringify(
+            result.createUserAddress.userAddressOrErrors.errors,
+          )}`,
+        )
+      }
+      throw new Error("Failed to create address: Unknown error")
+    } catch (error) {
+      logger.error("Error creating address:", error)
+    }
+  }
+
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={deliveryAddressValidationSchema}
-      onSubmit={async (values: FormikContextWithAddress) => {
-        try {
-          const result = await createUserAddress.submitMutation({
-            variables: {
-              input: {
-                attributes: {
-                  name: values.address.name,
-                  addressLine1: values.address.addressLine1,
-                  addressLine2: values.address.addressLine2,
-                  city: values.address.city,
-                  region: values.address.region,
-                  postalCode: values.address.postalCode,
-                  country: values.address.country,
-                  phoneNumber: values.phoneNumber,
-                  phoneNumberCountryCode: values.phoneNumberCountryCode,
-                },
-              },
-            },
-          })
-
-          const newAddressID =
-            result.createUserAddress?.userAddressOrErrors?.internalID
-
-          if (newAddressID) {
-            if (values.setAsDefault) {
-              await handleSetAsDefault(newAddressID)
-            }
-
-            await onSaveAddress(values, newAddressID)
-            return
-          }
-
-          if (result.createUserAddress?.userAddressOrErrors?.errors) {
-            throw new Error(
-              `Failed to create address: ${JSON.stringify(
-                result.createUserAddress.userAddressOrErrors.errors,
-              )}`,
-            )
-          }
-          throw new Error("Failed to create address: Unknown error")
-        } catch (error) {
-          logger.error("Error creating address:", error)
-        }
-      }}
+      onSubmit={handleSubmit}
     >
-      {({ isSubmitting, handleSubmit }) => (
-        <>
-          <Text
-            fontWeight={["bold", "bold", "normal"]}
-            color="mono100"
-            variant={["sm-display", "sm-display", "md"]}
-          >
-            Add address
-          </Text>{" "}
-          <Spacer y={2} />
-          <AddressFormFields withPhoneNumber withSetAsDefault />
-          <Spacer y={4} />
-          <Button
-            width="100%"
-            type="submit"
-            loading={isSubmitting}
-            onClick={() => handleSubmit()}
-          >
-            Save Address
-          </Button>
-          <Spacer y={1} />
-          <Button
-            width="100%"
-            variant="secondaryBlack"
-            onClick={() => setUserAddressMode(null)}
-          >
-            Cancel
-          </Button>
-        </>
-      )}
+      <AddAddressFormFields setUserAddressMode={setUserAddressMode} />
     </Formik>
+  )
+}
+
+interface AddAddressFormFieldsProps {
+  setUserAddressMode: (mode: any) => void
+}
+
+const AddAddressFormFields: React.FC<AddAddressFormFieldsProps> = ({
+  setUserAddressMode,
+}) => {
+  const { isSubmitting, handleSubmit } = useFormikContext()
+  const formRef = useScrollToFieldErrorOnSubmit(
+    CheckoutStepName.FULFILLMENT_DETAILS,
+  )
+
+  return (
+    <div ref={formRef}>
+      <Text
+        fontWeight={["bold", "bold", "normal"]}
+        color="mono100"
+        variant={["sm-display", "sm-display", "md"]}
+      >
+        Add address
+      </Text>{" "}
+      <Spacer y={2} />
+      <AddressFormFields withPhoneNumber withSetAsDefault />
+      <Spacer y={4} />
+      <Button
+        width="100%"
+        type="submit"
+        loading={isSubmitting}
+        onClick={() => handleSubmit()}
+      >
+        Save Address
+      </Button>
+      <Spacer y={1} />
+      <Button
+        width="100%"
+        variant="secondaryBlack"
+        onClick={() => setUserAddressMode(null)}
+      >
+        Cancel
+      </Button>
+    </div>
   )
 }

@@ -36,7 +36,7 @@ import type {
   Order2PaymentForm_order$key,
 } from "__generated__/Order2PaymentForm_order.graphql"
 import type React from "react"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { graphql, useFragment, useRelayEnvironment } from "react-relay"
 import { data as sd } from "sharify"
 import { SavedPaymentMethodOption } from "./SavedPaymentMethodOption"
@@ -226,6 +226,34 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
   const hasSavedBankAccounts = allowedSavedBankAccounts.length > 0
   const [wireEmailSubject, setWireEmailSubject] = useState<string | null>(null)
   const [wireEmailBody, setWireEmailBody] = useState<string | null>(null)
+
+  const formRef = useRef<HTMLFormElement>(null)
+  const paymentElementRef = useRef<HTMLDivElement>(null)
+
+  // Scroll to error and focus when error messages are set
+  useEffect(() => {
+    if (!subtitleErrorMessage && !errorMessage) return
+    // Wait for DOM to update, then scroll to fields
+    setTimeout(() => {
+      if (!formRef.current) return
+
+      let errorElement: HTMLElement | null = null
+
+      if (subtitleErrorMessage) {
+        // Focus subtitle error if it exists
+        errorElement = formRef.current?.querySelector(
+          '[data-subtitle-error="true"]',
+        ) as HTMLElement | null
+      } else if (errorMessage) {
+        // For PaymentElement errors, scroll to the payment element fields
+        errorElement = paymentElementRef.current
+      }
+      errorElement?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      })
+    }, 100)
+  }, [subtitleErrorMessage, errorMessage])
 
   // Default to saved payment method when available and track that it has been viewed
   useEffect(() => {
@@ -663,9 +691,15 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form ref={formRef} onSubmit={handleSubmit}>
       {subtitleErrorMessage && !selectedPaymentMethod && (
-        <Text variant="xs" color="red100" mb={2}>
+        <Text
+          variant="xs"
+          color="red100"
+          mb={2}
+          tabIndex={-1}
+          data-subtitle-error="true"
+        >
           {subtitleErrorMessage}
         </Text>
       )}
@@ -683,7 +717,9 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         />
       )}
 
-      <PaymentElement options={paymentElementOptions} onChange={onChange} />
+      <div ref={paymentElementRef}>
+        <PaymentElement options={paymentElementOptions} onChange={onChange} />
+      </div>
 
       <Spacer y={1} />
 
