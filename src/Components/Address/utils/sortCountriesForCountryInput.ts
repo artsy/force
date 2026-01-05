@@ -13,7 +13,7 @@ type CountryData = (typeof countryPhoneOptions)[number]
 export const sortCountriesForCountryInput = (
   unsorted: typeof countryPhoneOptions,
   firstCode: CountryData["value"] = "us",
-): Array<{ text: string; value: string }> => {
+): CountryData[] => {
   const BLANK_COUNTRY = { text: "", value: "" }
 
   const sortedCountries = sortBy(unsorted, [
@@ -29,7 +29,7 @@ export const sortCountriesForCountryInput = (
         value: countryData.value.toUpperCase(),
       }
     }),
-  ]
+  ] as CountryData[]
 
   return options
 }

@@ -8,7 +8,9 @@ import {
   Text,
 } from "@artsy/palette"
 import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
+import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import { useScrollToFieldErrorOnSubmit } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToFieldErrorOnSubmit"
 import { useOrder2SetOrderFulfillmentOptionMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderFulfillmentOptionMutation"
 import { useOrder2SetOrderPickupDetailsMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderPickupDetailsMutation"
 import {
@@ -18,7 +20,12 @@ import {
 import { countries as phoneCountryOptions } from "Utils/countries"
 import createLogger from "Utils/logger"
 import type { Order2PickupForm_order$key } from "__generated__/Order2PickupForm_order.graphql"
-import { Formik, type FormikHelpers, type FormikValues } from "formik"
+import {
+  Formik,
+  useFormikContext,
+  type FormikHelpers,
+  type FormikValues,
+} from "formik"
 import { useCallback, useMemo } from "react"
 import { graphql, useFragment } from "react-relay"
 import * as Yup from "yup"
@@ -39,7 +46,7 @@ export const Order2PickupForm: React.FC<Order2PickupFormProps> = ({
 }) => {
   const orderData = useFragment(FRAGMENT, order)
 
-  const { setFulfillmentDetailsComplete, setCheckoutMode, checkoutTracking } =
+  const { setFulfillmentDetailsComplete, checkoutTracking } =
     useCheckoutContext()
 
   const fulfillmentOptions = orderData?.fulfillmentOptions
@@ -154,7 +161,7 @@ export const Order2PickupForm: React.FC<Order2PickupFormProps> = ({
       </Text>
       <Spacer y={1} />
       <Text variant="sm" color="mono60">
-        After the seller confirms your order, you’ll be appointed an Artsy
+        After the seller confirms your order, you'll be appointed an Artsy
         specialist within 2 business days to handle pickup logistics.
       </Text>
       <Spacer y={[2, 2, 4]} />
@@ -164,60 +171,65 @@ export const Order2PickupForm: React.FC<Order2PickupFormProps> = ({
         onSubmit={handleSubmit}
         enableReinitialize={true}
       >
-        {formikContext => (
-          <GridColumns data-testid={"PickupDetailsForm"}>
-            <Column span={12}>
-              <SelectInput
-                key={`phone-input-${formikContext.values.phoneNumberCountryCode || "empty"}`}
-                label="Phone number"
-                mt={1}
-                name="phoneNumber"
-                onChange={formikContext.handleChange}
-                onBlur={formikContext.handleBlur}
-                data-testid={"PickupPhoneNumberInput"}
-                options={phoneCountryOptions}
-                onSelect={(
-                  option: (typeof phoneCountryOptions)[number],
-                ): void => {
-                  formikContext.setFieldValue(
-                    "phoneNumberCountryCode",
-                    option.value,
-                  )
-                }}
-                dropdownValue={formikContext.values.phoneNumberCountryCode}
-                inputValue={formikContext.values.phoneNumber}
-                placeholder="(000) 000 0000"
-                autoComplete="tel-national"
-                error={
-                  (formikContext.touched.phoneNumberCountryCode &&
-                    (formikContext.errors.phoneNumberCountryCode as
-                      | string
-                      | undefined)) ||
-                  (formikContext.touched.phoneNumber &&
-                    (formikContext.errors.phoneNumber as string | undefined))
-                }
-                enableSearch
-                required
-              />
-              <Spacer y={4} />
-              <Button
-                variant={"primaryBlack"}
-                width="100%"
-                type="submit"
-                onClick={() => {
-                  setCheckoutMode("standard")
-                  formikContext.handleSubmit()
-                }}
-                loading={formikContext.isSubmitting}
-                disabled={!formikContext.isValid}
-              >
-                Continue to Payment
-              </Button>
-            </Column>
-          </GridColumns>
-        )}
+        <PickupFormContent />
       </Formik>
     </>
+  )
+}
+
+const PickupFormContent: React.FC = () => {
+  const formikContext = useFormikContext<PickupFormValues>()
+  const { setCheckoutMode } = useCheckoutContext()
+  const formRef = useScrollToFieldErrorOnSubmit(
+    CheckoutStepName.FULFILLMENT_DETAILS,
+  )
+
+  return (
+    <GridColumns data-testid={"PickupDetailsForm"} ref={formRef}>
+      <Column span={12}>
+        <SelectInput
+          key={`phone-input-${formikContext.values.phoneNumberCountryCode || "empty"}`}
+          label="Phone number"
+          mt={1}
+          name="phoneNumber"
+          onChange={formikContext.handleChange}
+          onBlur={formikContext.handleBlur}
+          data-testid={"PickupPhoneNumberInput"}
+          options={phoneCountryOptions}
+          onSelect={(option: (typeof phoneCountryOptions)[number]): void => {
+            formikContext.setFieldValue("phoneNumberCountryCode", option.value)
+          }}
+          dropdownValue={formikContext.values.phoneNumberCountryCode}
+          inputValue={formikContext.values.phoneNumber}
+          placeholder="(000) 000 0000"
+          autoComplete="tel-national"
+          error={
+            (formikContext.touched.phoneNumberCountryCode &&
+              (formikContext.errors.phoneNumberCountryCode as
+                | string
+                | undefined)) ||
+            (formikContext.touched.phoneNumber &&
+              (formikContext.errors.phoneNumber as string | undefined))
+          }
+          enableSearch
+          required
+        />
+        <Spacer y={4} />
+        <Button
+          variant={"primaryBlack"}
+          width="100%"
+          type="submit"
+          onClick={() => {
+            setCheckoutMode("standard")
+            formikContext.handleSubmit()
+          }}
+          loading={formikContext.isSubmitting}
+          disabled={!formikContext.isValid}
+        >
+          Continue to Payment
+        </Button>
+      </Column>
+    </GridColumns>
   )
 }
 
