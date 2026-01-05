@@ -41,7 +41,7 @@ export const useScrollToFieldErrorOnSubmit = (stepName: CheckoutStepName) => {
   const { messages } = useCheckoutContext()
   const formRef = useRef<HTMLDivElement>(null)
 
-  const bannerError = messages[stepName]?.error
+  const bannerError = messages?.[stepName]?.error
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: submitCount is intentionally used to trigger only on form submission
   useEffect(() => {
@@ -70,7 +70,9 @@ export const useScrollToFieldErrorOnSubmit = (stepName: CheckoutStepName) => {
         if (field && field instanceof HTMLElement) {
           field.focus()
           // Optional: fine-tune scroll position to center the field
-          field.scrollIntoView({ behavior: "smooth", block: "center" })
+          if (field.scrollIntoView) {
+            field.scrollIntoView({ behavior: "smooth", block: "center" })
+          }
         }
       }, 300) // Wait for useScrollToStep's delay (100ms) + scroll animation
 
