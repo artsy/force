@@ -11,19 +11,27 @@ export const isMenuLinkData = (
   return "menu" in linkData
 }
 
-// e.g. "Editorial"
-export interface SimpleLinkData {
-  text: string
-  href: string
+type BasicLinkData = {
   dividerBelow?: boolean
+  dividerBefore?: boolean
   onClick?(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>): void
 }
+
+// e.g. "Editorial"
+export type SimpleLinkData =
+  | (BasicLinkData & { text: string; href: string; type?: never })
+  | (BasicLinkData & { type: "Article"; text: string; href?: never })
 
 // e.g. "Art Movement >"
 export interface MenuLinkData {
   text: string
   menu: MenuData
   dividerBelow?: boolean
+}
+
+const ArticleSubmenuItem: SimpleLinkData = {
+  text: "Further Reading in Art Market",
+  type: "Article",
 }
 
 export const WHATS_NEW_SUBMENU_DATA: MenuLinkData = {
@@ -131,6 +139,7 @@ export const WHATS_NEW_SUBMENU_DATA: MenuLinkData = {
           ],
         },
       },
+      ArticleSubmenuItem,
     ],
   },
 }
@@ -257,6 +266,7 @@ export const ARTISTS_SUBMENU_DATA: MenuLinkData = {
         },
         dividerBelow: true,
       },
+      ArticleSubmenuItem,
       {
         text: "View All Artists",
         href: "/artists",
@@ -379,6 +389,7 @@ export const ARTWORKS_SUBMENU_DATA: MenuLinkData = {
         },
         dividerBelow: true,
       },
+      ArticleSubmenuItem,
       {
         text: "View All Artworks",
         href: "/collect",

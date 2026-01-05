@@ -3,6 +3,7 @@ import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchem
 import { Box, Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
+import { NavBarMenuItemArticleQueryRenderer } from "Components/NavBar/Menus/NavBarMenuItemArticle"
 import type { MenuData } from "Components/NavBar/menuData"
 import { RouterLink } from "System/Components/RouterLink"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
@@ -79,7 +80,7 @@ export const NavBarSubMenu: React.FC<
             {menu.links.map(subMenu => {
               if ("menu" in subMenu) {
                 return (
-                  <Column key={subMenu.text} span={3}>
+                  <Column key={subMenu.text} span={2}>
                     <Text variant="xs" px={2} color="mono60">
                       {subMenu.text}
                     </Text>
@@ -100,6 +101,13 @@ export const NavBarSubMenu: React.FC<
                           )
                         )
                       })}
+                  </Column>
+                )
+              }
+              if (subMenu.type === "Article") {
+                return (
+                  <Column key={subMenu.text} span={4}>
+                    <NavBarMenuItemArticleQueryRenderer text={subMenu.text} />
                   </Column>
                 )
               }

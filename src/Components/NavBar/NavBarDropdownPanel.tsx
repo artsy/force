@@ -42,16 +42,18 @@ export const NavBarDropdownPanel: React.FC<NavBarDropdownPanelProps> = ({
       offset={0}
       transition={shouldTransition}
       // eslint-disable-next-line react/no-unstable-nested-components
-      dropdown={({ setVisible }) => (
-        <NavBarSubMenu
-          menu={menu}
-          contextModule={
-            contextModule as DeprecatedAnalyticsSchema.ContextModule
-          }
-          onClick={() => setVisible(false)}
-          parentNavigationItem={label}
-        />
-      )}
+      dropdown={({ setVisible }) => {
+        return (
+          <NavBarSubMenu
+            menu={menu}
+            contextModule={
+              contextModule as DeprecatedAnalyticsSchema.ContextModule
+            }
+            onClick={() => setVisible(false)}
+            parentNavigationItem={label}
+          />
+        )
+      }}
     >
       {({ anchorRef, anchorProps, visible, setVisible }) => {
         const { onMouseEnter, ...restAnchorProps } = anchorProps
