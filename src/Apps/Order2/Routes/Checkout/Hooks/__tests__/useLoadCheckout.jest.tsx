@@ -34,7 +34,7 @@ const mockLogger = loggerFactory()
 jest.useFakeTimers()
 
 const mockSetLoadingComplete = jest.fn()
-const mockSetCriticalCheckoutError = jest.fn()
+const mockSetCheckoutModalError = jest.fn()
 
 const { useFragment } = jest.requireMock("react-relay")
 const { useCheckoutContext } = jest.requireMock(
@@ -82,10 +82,10 @@ describe("useLoadCheckout", () => {
     // Mock useCheckoutContext
     useCheckoutContext.mockReturnValue({
       isLoading: true,
-      criticalCheckoutError: null,
+      checkoutModalError: null,
       expressCheckoutPaymentMethods: null,
       steps: [{ state: CheckoutStepState.ACTIVE, name: "PAYMENT" }],
-      setCriticalCheckoutError: mockSetCriticalCheckoutError,
+      setCheckoutModalError: mockSetCheckoutModalError,
       setLoadingComplete: mockSetLoadingComplete,
     })
   })
@@ -98,10 +98,10 @@ describe("useLoadCheckout", () => {
     it("locks scroll when loading", () => {
       useCheckoutContext.mockReturnValue({
         isLoading: true,
-        criticalCheckoutError: null,
+        checkoutModalError: null,
         expressCheckoutPaymentMethods: null,
         steps: [],
-        setCriticalCheckoutError: mockSetCriticalCheckoutError,
+        setCheckoutModalError: mockSetCheckoutModalError,
         setLoadingComplete: mockSetLoadingComplete,
       })
 
@@ -114,10 +114,10 @@ describe("useLoadCheckout", () => {
       let isLoading = true
       useCheckoutContext.mockImplementation(() => ({
         isLoading,
-        criticalCheckoutError: null,
+        checkoutModalError: null,
         expressCheckoutPaymentMethods: null,
         steps: [],
-        setCriticalCheckoutError: mockSetCriticalCheckoutError,
+        setCheckoutModalError: mockSetCheckoutModalError,
         setLoadingComplete: mockSetLoadingComplete,
       }))
 
@@ -135,10 +135,10 @@ describe("useLoadCheckout", () => {
     it("cleans up scroll lock on unmount", () => {
       useCheckoutContext.mockReturnValue({
         isLoading: true,
-        criticalCheckoutError: null,
+        checkoutModalError: null,
         expressCheckoutPaymentMethods: null,
         steps: [],
-        setCriticalCheckoutError: mockSetCriticalCheckoutError,
+        setCheckoutModalError: mockSetCheckoutModalError,
         setLoadingComplete: mockSetLoadingComplete,
       })
 
@@ -157,7 +157,7 @@ describe("useLoadCheckout", () => {
       renderHook(() => useLoadCheckout(mockOrder))
 
       await waitFor(() => {
-        expect(mockSetCriticalCheckoutError).not.toHaveBeenCalled()
+        expect(mockSetCheckoutModalError).not.toHaveBeenCalled()
       })
     })
 
@@ -172,7 +172,7 @@ describe("useLoadCheckout", () => {
       renderHook(() => useLoadCheckout(mockOrder))
 
       await waitFor(() => {
-        expect(mockSetCriticalCheckoutError).toHaveBeenCalledWith(
+        expect(mockSetCheckoutModalError).toHaveBeenCalledWith(
           "missing_line_item_data",
         )
       })
@@ -189,7 +189,7 @@ describe("useLoadCheckout", () => {
       renderHook(() => useLoadCheckout(mockOrder))
 
       await waitFor(() => {
-        expect(mockSetCriticalCheckoutError).toHaveBeenCalledWith(
+        expect(mockSetCheckoutModalError).toHaveBeenCalledWith(
           "missing_line_item_data",
         )
       })
@@ -205,7 +205,7 @@ describe("useLoadCheckout", () => {
       })
 
       await waitFor(() => {
-        expect(mockSetCriticalCheckoutError).toHaveBeenCalledWith(
+        expect(mockSetCheckoutModalError).toHaveBeenCalledWith(
           "loading_timeout",
         )
       })
@@ -221,10 +221,10 @@ describe("useLoadCheckout", () => {
       let isLoading = true
       useCheckoutContext.mockImplementation(() => ({
         isLoading,
-        criticalCheckoutError: null,
+        checkoutModalError: null,
         expressCheckoutPaymentMethods: [],
         steps: [],
-        setCriticalCheckoutError: mockSetCriticalCheckoutError,
+        setCheckoutModalError: mockSetCheckoutModalError,
         setLoadingComplete: mockSetLoadingComplete,
       }))
 
@@ -253,7 +253,7 @@ describe("useLoadCheckout", () => {
       await waitFor(() => {
         expect(mockSetLoadingComplete).toHaveBeenCalled()
       })
-      expect(mockSetCriticalCheckoutError).not.toHaveBeenCalled()
+      expect(mockSetCheckoutModalError).not.toHaveBeenCalled()
     })
   })
 
@@ -263,10 +263,10 @@ describe("useLoadCheckout", () => {
 
       useCheckoutContext.mockImplementation(() => ({
         isLoading: true,
-        criticalCheckoutError: null,
+        checkoutModalError: null,
         expressCheckoutPaymentMethods: expressCheckoutLoaded ? [] : null,
         steps: [],
-        setCriticalCheckoutError: mockSetCriticalCheckoutError,
+        setCheckoutModalError: mockSetCheckoutModalError,
         setLoadingComplete: mockSetLoadingComplete,
       }))
 
@@ -294,10 +294,10 @@ describe("useLoadCheckout", () => {
     it("does not complete loading if minimum time has not passed", () => {
       useCheckoutContext.mockReturnValue({
         isLoading: true,
-        criticalCheckoutError: null,
+        checkoutModalError: null,
         expressCheckoutPaymentMethods: [],
         steps: [],
-        setCriticalCheckoutError: mockSetCriticalCheckoutError,
+        setCheckoutModalError: mockSetCheckoutModalError,
         setLoadingComplete: mockSetLoadingComplete,
       })
 
@@ -315,10 +315,10 @@ describe("useLoadCheckout", () => {
     it("does not complete loading if there is a critical error", async () => {
       useCheckoutContext.mockReturnValue({
         isLoading: true,
-        criticalCheckoutError: "loading_timeout",
+        checkoutModalError: "loading_timeout",
         expressCheckoutPaymentMethods: [],
         steps: [],
-        setCriticalCheckoutError: mockSetCriticalCheckoutError,
+        setCheckoutModalError: mockSetCheckoutModalError,
         setLoadingComplete: mockSetLoadingComplete,
       })
 
