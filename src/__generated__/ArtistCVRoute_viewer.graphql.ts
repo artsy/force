@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7a75bd75f9de0cc9703f421a0e044326>>
+ * @generated SignedSource<<0a3d3472112c51c8ceafe034b23f1caa>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,10 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistCVRoute_viewer$data = {
+  readonly artist: {
+    readonly name: string | null | undefined;
+    readonly slug: string;
+  };
   readonly fairBooths: {
     readonly " $fragmentSpreads": FragmentRefs<"ArtistCVGroup_artist">;
   };
@@ -18,7 +22,6 @@ export type ArtistCVRoute_viewer$data = {
     readonly " $fragmentSpreads": FragmentRefs<"ArtistCVGroup_artist">;
   };
   readonly soloShows: {
-    readonly name: string | null | undefined;
     readonly " $fragmentSpreads": FragmentRefs<"ArtistCVGroup_artist">;
   };
   readonly " $fragmentType": "ArtistCVRoute_viewer";
@@ -55,6 +58,35 @@ return {
     {
       "kind": "RequiredField",
       "field": {
+        "alias": null,
+        "args": (v0/*: any*/),
+        "concreteType": "Artist",
+        "kind": "LinkedField",
+        "name": "artist",
+        "plural": false,
+        "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "name",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "slug",
+            "storageKey": null
+          }
+        ],
+        "storageKey": null
+      },
+      "action": "NONE"
+    },
+    {
+      "kind": "RequiredField",
+      "field": {
         "alias": "soloShows",
         "args": (v0/*: any*/),
         "concreteType": "Artist",
@@ -73,13 +105,6 @@ return {
             ],
             "kind": "FragmentSpread",
             "name": "ArtistCVGroup_artist"
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "name",
-            "storageKey": null
           }
         ],
         "storageKey": null
@@ -145,6 +170,6 @@ return {
 };
 })();
 
-(node as any).hash = "adc344e57b79d7e1f429b6bf4f955b67";
+(node as any).hash = "75038705d721ab894583ba50e9718e32";
 
 export default node;
