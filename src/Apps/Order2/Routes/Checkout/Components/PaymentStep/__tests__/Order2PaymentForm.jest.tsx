@@ -5,7 +5,6 @@ import type { Order2PaymentFormTestQuery } from "__generated__/Order2PaymentForm
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { Order2PaymentForm } from "../Order2PaymentForm"
-import React from "react"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -128,15 +127,17 @@ jest.mock(
   }),
 )
 
-// Mock balance check component
+// Mock balance check component - store callback for manual triggering in tests
+let mockOnBalanceCheckComplete:
+  | ((result: string, message?: string) => void)
+  | null = null
+
 jest.mock("Apps/Order2/Components/Order2PollBankAccountBalance", () => ({
   Order2PollBankAccountBalanceQueryRenderer: ({
     onBalanceCheckComplete,
   }: any) => {
-    // Immediately call onBalanceCheckComplete with SUFFICIENT result
-    React.useEffect(() => {
-      onBalanceCheckComplete("SUFFICIENT")
-    }, [onBalanceCheckComplete])
+    // Store callback for tests to trigger manually
+    mockOnBalanceCheckComplete = onBalanceCheckComplete
     return <div data-testid="balance-check-polling">Checking balance...</div>
   },
   BankAccountBalanceCheckResult: {
@@ -222,6 +223,7 @@ const waitForPaymentElement = async () => {
 
 beforeEach(() => {
   jest.clearAllMocks()
+  mockOnBalanceCheckComplete = null
   ;(useTracking as jest.Mock).mockImplementation(() => ({
     trackEvent: jest.fn(),
   }))
@@ -785,6 +787,15 @@ describe("Order2PaymentForm", () => {
         },
       })
 
+      // Verify balance check component IS rendered for ACH bank accounts
+      await waitFor(() => {
+        expect(screen.getByTestId("balance-check-polling")).toBeInTheDocument()
+      })
+
+      // Manually trigger balance check completion
+      expect(mockOnBalanceCheckComplete).not.toBeNull()
+      mockOnBalanceCheckComplete?.("SUFFICIENT")
+
       // Wait for balance check to complete and trigger setPaymentComplete
       await waitFor(() => {
         expect(mockCheckoutContext.setPaymentComplete).toHaveBeenCalled()
@@ -1214,10 +1225,182 @@ describe("Order2PaymentForm", () => {
         },
       })
 
-      // After setting payment method, balance check should be triggered
-      // The isCheckingBankBalance state would be set to true
-      // and Order2PollBankAccountBalanceQueryRenderer would be rendered
-      // Note: Full verification requires mocking the balance check component
+      // Verify balance check component IS rendered for ACH payments
+      await waitFor(() => {
+        expect(screen.getByTestId("balance-check-polling")).toBeInTheDocument()
+      })
+
+      // Manually trigger balance check completion
+      expect(mockOnBalanceCheckComplete).not.toBeNull()
+      mockOnBalanceCheckComplete?.("SUFFICIENT")
+
+      // Verify setPaymentComplete is called after balance check completes
+      await waitFor(() => {
+        expect(mockCheckoutContext.setPaymentComplete).toHaveBeenCalled()
+      })
+    })
+
+    it("shows balance check polling after submitting saved ACH bank account", async () => {
+      const savedBankAccounts = [
+        {
+          id: "bank-1",
+          internalID: "bank-1",
+          last4: "5678",
+          bankName: "Test Bank",
+          type: "US_BANK_ACCOUNT",
+        },
+      ]
+
+      renderWithRelay({
+        Me: () => ({
+          ...baseMeProps,
+          bankAccounts: {
+            edges: savedBankAccounts.map(bank => ({ node: bank })),
+          },
+          order: {
+            ...baseMeProps.order,
+            availablePaymentMethods: [
+              "CREDIT_CARD",
+              "US_BANK_ACCOUNT",
+              "WIRE_TRANSFER",
+            ],
+          },
+        }),
+      })
+
+      await waitForPaymentElement()
+
+      await userEvent.click(screen.getByText("Saved payments"))
+
+      // Wait for collapse to open and select the bank account
+      await waitFor(() => {
+        expect(screen.getByText("Bank account •••• 5678")).toBeInTheDocument()
+      })
+      await userEvent.click(screen.getByText("Bank account •••• 5678"))
+
+      mockSetPaymentMutation.submitMutation.mockResolvedValueOnce({
+        setOrderPayment: {
+          orderOrError: {
+            __typename: "OrderMutationSuccess",
+            order: {
+              paymentMethod: "US_BANK_ACCOUNT",
+            },
+          },
+        },
+      })
+
+      await userEvent.click(screen.getByText("Continue to Review"))
+
+      await waitFor(() => {
+        expect(mockSetPaymentMutation.submitMutation).toHaveBeenCalledWith({
+          variables: {
+            input: {
+              id: "order-id",
+              paymentMethod: "US_BANK_ACCOUNT",
+              paymentMethodId: "bank-1",
+            },
+          },
+        })
+      })
+
+      // Verify saved payment method was set
+      expect(mockCheckoutContext.setSavedPaymentMethod).toHaveBeenCalledWith({
+        savedPaymentMethod: {
+          __typename: "BankAccount",
+          internalID: "bank-1",
+          last4: "5678",
+          type: "US_BANK_ACCOUNT",
+        },
+      })
+
+      // Verify balance check component IS rendered for ACH bank accounts
+      await waitFor(() => {
+        expect(screen.getByTestId("balance-check-polling")).toBeInTheDocument()
+      })
+
+      // Manually trigger balance check completion
+      expect(mockOnBalanceCheckComplete).not.toBeNull()
+      mockOnBalanceCheckComplete?.("SUFFICIENT")
+
+      // Verify setPaymentComplete is called after balance check completes
+      await waitFor(() => {
+        expect(mockCheckoutContext.setPaymentComplete).toHaveBeenCalled()
+      })
+    })
+
+    it("completes immediately for saved credit card without balance check", async () => {
+      const savedCards = [
+        {
+          id: "card-1",
+          internalID: "card-1",
+          brand: "Visa",
+          last4: "1234",
+          lastDigits: "1234",
+        },
+      ]
+
+      renderWithRelay({
+        Me: () => ({
+          ...baseMeProps,
+          creditCards: { edges: savedCards.map(card => ({ node: card })) },
+        }),
+      })
+
+      await waitForPaymentElement()
+
+      await userEvent.click(screen.getByText("Saved payments"))
+
+      // Wait for collapse to open and select the credit card
+      await waitFor(() => {
+        expect(screen.getByText("•••• 1234")).toBeInTheDocument()
+      })
+      await userEvent.click(screen.getByText("•••• 1234"))
+
+      mockSetPaymentMutation.submitMutation.mockResolvedValueOnce({
+        setOrderPayment: {
+          orderOrError: {
+            __typename: "OrderMutationSuccess",
+            order: {
+              paymentMethod: "CREDIT_CARD",
+            },
+          },
+        },
+      })
+
+      await userEvent.click(screen.getByText("Continue to Review"))
+
+      await waitFor(() => {
+        expect(mockSetPaymentMutation.submitMutation).toHaveBeenCalledWith({
+          variables: {
+            input: {
+              id: "order-id",
+              paymentMethod: "CREDIT_CARD",
+              paymentMethodId: "card-1",
+            },
+          },
+        })
+      })
+
+      // Verify saved payment method was set
+      expect(mockCheckoutContext.setSavedPaymentMethod).toHaveBeenCalledWith({
+        savedPaymentMethod: {
+          __typename: "CreditCard",
+          internalID: "card-1",
+          brand: "Visa",
+          lastDigits: "1234",
+        },
+      })
+
+      // Verify balance check component is NOT rendered for credit cards
+      expect(
+        screen.queryByTestId("balance-check-polling"),
+      ).not.toBeInTheDocument()
+      expect(mockOnBalanceCheckComplete).toBeNull()
+
+      // Verify payment completes immediately without balance check
+      await waitFor(() => {
+        expect(mockCheckoutContext.setPaymentComplete).toHaveBeenCalled()
+      })
     })
   })
 })
