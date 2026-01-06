@@ -3,7 +3,10 @@ import InstitutionIcon from "@artsy/icons/InstitutionIcon"
 import { Clickable, Flex, Spacer, Text } from "@artsy/palette"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { type Brand, BrandCreditCardIcon } from "Components/BrandCreditCardIcon"
-import type { Order2PaymentCompletedView_order$key } from "__generated__/Order2PaymentCompletedView_order.graphql"
+import type {
+  Order2PaymentCompletedView_order$data,
+  Order2PaymentCompletedView_order$key,
+} from "__generated__/Order2PaymentCompletedView_order.graphql"
 import { graphql, useFragment } from "react-relay"
 
 interface Order2PaymentCompletedViewProps {
@@ -24,39 +27,13 @@ export const Order2PaymentCompletedView: React.FC<
 
   const savedPaymentMethod = orderData.paymentMethodDetails
   const paymentPreview = confirmationToken?.paymentMethodPreview
-
-  const getDisplayDetails = () => {
-    // For new payment methods, use preview data
-    if (paymentPreview) {
-      const isCard = paymentPreview.__typename === "Card"
-      const isUSBankAccount = paymentPreview.__typename === "USBankAccount"
-
-      return {
-        cardBrand: isCard ? paymentPreview.displayBrand : null,
-        last4:
-          paymentPreview.__typename !== "%other" ? paymentPreview.last4 : null,
-        bankName: isUSBankAccount ? paymentPreview.bankName : null,
-      }
-    }
-
-    // For saved payment methods, use saved details
-    return {
-      cardBrand:
-        savedPaymentMethod?.__typename === "CreditCard"
-          ? savedPaymentMethod.brand
-          : null,
-      last4:
-        savedPaymentMethod?.__typename === "CreditCard"
-          ? savedPaymentMethod.lastDigits
-          : savedPaymentMethod?.__typename === "BankAccount"
-            ? savedPaymentMethod.last4
-            : null,
-      bankName: null,
-    }
-  }
-
-  const details = getDisplayDetails()
   const paymentMethod = orderData.paymentMethod
+
+  const details = getDisplayDetails(
+    paymentMethod,
+    paymentPreview,
+    savedPaymentMethod,
+  )
 
   return (
     <Flex flexDirection="column" backgroundColor="mono0">
@@ -127,6 +104,52 @@ export const Order2PaymentCompletedView: React.FC<
       </Flex>
     </Flex>
   )
+}
+
+const getDisplayDetails = (
+  paymentMethod: Order2PaymentCompletedView_order$data["paymentMethod"],
+  paymentPreview: NonNullable<
+    ReturnType<typeof useCheckoutContext>["confirmationToken"]
+  >["paymentMethodPreview"],
+  savedPaymentMethod: Order2PaymentCompletedView_order$data["paymentMethodDetails"],
+) => {
+  if (paymentMethod === "CREDIT_CARD") {
+    if (paymentPreview && paymentPreview.__typename === "Card") {
+      return {
+        cardBrand: paymentPreview.displayBrand,
+        last4: paymentPreview.last4,
+        bankName: null,
+      }
+    }
+
+    if (savedPaymentMethod?.__typename === "CreditCard") {
+      return {
+        cardBrand: savedPaymentMethod.brand,
+        last4: savedPaymentMethod.lastDigits,
+        bankName: null,
+      }
+    }
+  }
+
+  if (paymentMethod === "US_BANK_ACCOUNT" || paymentMethod === "SEPA_DEBIT") {
+    if (paymentPreview && paymentPreview.__typename === "USBankAccount") {
+      return {
+        cardBrand: null,
+        last4: paymentPreview.last4,
+        bankName: paymentPreview.bankName,
+      }
+    }
+
+    if (savedPaymentMethod?.__typename === "BankAccount") {
+      return {
+        cardBrand: null,
+        last4: savedPaymentMethod.last4,
+        bankName: null,
+      }
+    }
+  }
+
+  return { cardBrand: null, last4: null, bankName: null }
 }
 
 const ORDER_FRAGMENT = graphql`
