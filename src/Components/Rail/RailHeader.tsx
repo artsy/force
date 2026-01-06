@@ -1,8 +1,6 @@
 import { Text as BaseText, Box, Flex, SkeletonText, Sup } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
-import { getENV } from "Utils/getENV"
 import { getInternalHref } from "Utils/url"
-import { useRouter } from "found"
 import type * as React from "react"
 
 export interface RailHeaderProps {
@@ -47,7 +45,7 @@ export const RailHeader: React.FC<React.PropsWithChildren<RailHeaderProps>> = ({
 
   const showViewAll = Boolean(viewAllLabel && _viewAllHref)
 
-  const viewAllHref = useReturnTo(_viewAllHref)
+  const viewAllHref = _viewAllHref ? getInternalHref(_viewAllHref) : null
 
   return (
     <Flex justifyContent="space-between" alignItems="center">
@@ -98,23 +96,4 @@ export const RailHeader: React.FC<React.PropsWithChildren<RailHeaderProps>> = ({
       )}
     </Flex>
   )
-}
-
-export const useReturnTo = (href?: string | null): string | null => {
-  const router = useRouter()
-
-  if (!href) return null
-
-  const referrer = router?.match?.location?.pathname
-
-  if (!referrer) return href
-
-  try {
-    const withReferrer = new URL(href, getENV("APP_URL"))
-    withReferrer.searchParams.append("returnTo", referrer)
-
-    return withReferrer.toString()
-  } catch {
-    return href
-  }
 }

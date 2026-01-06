@@ -18,7 +18,6 @@ import {
   CellArticlePlaceholder,
 } from "Components/Cells/CellArticle"
 import { Masonry } from "Components/Masonry"
-import { useReturnTo } from "Components/Rail/RailHeader"
 import { RouterLink } from "System/Components/RouterLink"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useSystemContext } from "System/Hooks/useSystemContext"
@@ -48,7 +47,7 @@ const ArtistEditorialNewsGrid: FC<
 
   const articles = extractNodes(artist.articlesConnection)
 
-  const viewAllHref = useReturnTo(`${artist.href}/articles`)
+  const viewAllHref = `${artist.href}/articles`
 
   if (articles.length === 0) {
     return null
