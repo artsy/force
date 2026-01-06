@@ -5,7 +5,6 @@ import type { Order2PaymentFormTestQuery } from "__generated__/Order2PaymentForm
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { Order2PaymentForm } from "../Order2PaymentForm"
-import React from "react"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -128,15 +127,17 @@ jest.mock(
   }),
 )
 
-// Mock balance check component
+// Mock balance check component - store callback for manual triggering in tests
+let mockOnBalanceCheckComplete:
+  | ((result: string, message?: string) => void)
+  | null = null
+
 jest.mock("Apps/Order2/Components/Order2PollBankAccountBalance", () => ({
   Order2PollBankAccountBalanceQueryRenderer: ({
     onBalanceCheckComplete,
   }: any) => {
-    // Immediately call onBalanceCheckComplete with SUFFICIENT result
-    React.useEffect(() => {
-      onBalanceCheckComplete("SUFFICIENT")
-    }, [onBalanceCheckComplete])
+    // Store callback for tests to trigger manually
+    mockOnBalanceCheckComplete = onBalanceCheckComplete
     return <div data-testid="balance-check-polling">Checking balance...</div>
   },
   BankAccountBalanceCheckResult: {
@@ -222,6 +223,7 @@ const waitForPaymentElement = async () => {
 
 beforeEach(() => {
   jest.clearAllMocks()
+  mockOnBalanceCheckComplete = null
   ;(useTracking as jest.Mock).mockImplementation(() => ({
     trackEvent: jest.fn(),
   }))
@@ -785,6 +787,15 @@ describe("Order2PaymentForm", () => {
         },
       })
 
+      // Verify balance check component IS rendered for ACH bank accounts
+      await waitFor(() => {
+        expect(screen.getByTestId("balance-check-polling")).toBeInTheDocument()
+      })
+
+      // Manually trigger balance check completion
+      expect(mockOnBalanceCheckComplete).not.toBeNull()
+      mockOnBalanceCheckComplete?.("SUFFICIENT")
+
       // Wait for balance check to complete and trigger setPaymentComplete
       await waitFor(() => {
         expect(mockCheckoutContext.setPaymentComplete).toHaveBeenCalled()
@@ -1214,10 +1225,19 @@ describe("Order2PaymentForm", () => {
         },
       })
 
-      // After setting payment method, balance check should be triggered
-      // The isCheckingBankBalance state would be set to true
-      // and Order2PollBankAccountBalanceQueryRenderer would be rendered
-      // Note: Full verification requires mocking the balance check component
+      // Verify balance check component IS rendered for ACH payments
+      await waitFor(() => {
+        expect(screen.getByTestId("balance-check-polling")).toBeInTheDocument()
+      })
+
+      // Manually trigger balance check completion
+      expect(mockOnBalanceCheckComplete).not.toBeNull()
+      mockOnBalanceCheckComplete?.("SUFFICIENT")
+
+      // Verify setPaymentComplete is called after balance check completes
+      await waitFor(() => {
+        expect(mockCheckoutContext.setPaymentComplete).toHaveBeenCalled()
+      })
     })
 
     it("shows balance check polling after submitting saved ACH bank account", async () => {
@@ -1293,8 +1313,16 @@ describe("Order2PaymentForm", () => {
         },
       })
 
-      // Verify balance check component is rendered and setPaymentComplete is called
-      // after balance check completes (mocked to return SUFFICIENT immediately)
+      // Verify balance check component IS rendered for ACH bank accounts
+      await waitFor(() => {
+        expect(screen.getByTestId("balance-check-polling")).toBeInTheDocument()
+      })
+
+      // Manually trigger balance check completion
+      expect(mockOnBalanceCheckComplete).not.toBeNull()
+      mockOnBalanceCheckComplete?.("SUFFICIENT")
+
+      // Verify setPaymentComplete is called after balance check completes
       await waitFor(() => {
         expect(mockCheckoutContext.setPaymentComplete).toHaveBeenCalled()
       })
@@ -1362,6 +1390,12 @@ describe("Order2PaymentForm", () => {
           lastDigits: "1234",
         },
       })
+
+      // Verify balance check component is NOT rendered for credit cards
+      expect(
+        screen.queryByTestId("balance-check-polling"),
+      ).not.toBeInTheDocument()
+      expect(mockOnBalanceCheckComplete).toBeNull()
 
       // Verify payment completes immediately without balance check
       await waitFor(() => {
