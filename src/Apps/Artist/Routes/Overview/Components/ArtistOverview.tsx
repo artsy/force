@@ -1,13 +1,14 @@
 import { ActionType, type ClickedCV, ContextModule } from "@artsy/cohesion"
 import { Stack } from "@artsy/palette"
+import { useVariant } from "@unleash/proxy-client-react"
 import { ARTIST_HEADER_NUMBER_OF_INSIGHTS } from "Apps/Artist/Components/ArtistHeader/ArtistHeader"
+import { ARTIST_COMBINED_LAYOUT_FLAG } from "Apps/Artist/Routes/ArtistABTestRoute"
 import {
   ArtistSeriesRailPlaceholder,
   ArtistSeriesRailQueryRenderer,
 } from "Components/ArtistSeriesRail/ArtistSeriesRail"
 import { RailHeader } from "Components/Rail/RailHeader"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import { useIsRouteActive } from "System/Hooks/useRouter"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { useSectionReady } from "Utils/Hooks/useSectionReadiness"
 import type { ArtistOverviewQueryRendererQuery } from "__generated__/ArtistOverviewQueryRendererQuery.graphql"
@@ -74,7 +75,10 @@ interface ArtistOverviewProps {
 export const ArtistOverview: React.FC<
   React.PropsWithChildren<ArtistOverviewProps>
 > = ({ artist }) => {
+  const variant = useVariant(ARTIST_COMBINED_LAYOUT_FLAG)
+
   const { trackEvent } = useTracking()
+
   const { contextPageOwnerType, contextPageOwnerId, contextPageOwnerSlug } =
     useAnalyticsContext()
 
@@ -88,8 +92,6 @@ export const ArtistOverview: React.FC<
   const hasRelatedCategories =
     Array.isArray(artist.related?.genes?.edges) &&
     artist.related.genes.edges.length > 0
-
-  const isCombinedPage = useIsRouteActive(`${artist.href}/combined`)
 
   const trackClickedCV = () => {
     if (!contextPageOwnerId) return
@@ -114,7 +116,7 @@ export const ArtistOverview: React.FC<
   ) {
     return (
       <Stack gap={4}>
-        {isCombinedPage && (
+        {variant.name === "experiment" && (
           <RailHeader
             title="Highlights and Achievements"
             viewAllHref={`${artist.href}/cv`}

@@ -9,6 +9,7 @@ import {
   type DropdownProps,
   Pill,
 } from "@artsy/palette"
+import { Z } from "Apps/Components/constants"
 import type { FC } from "react"
 
 interface DropdownFilterProps
@@ -29,6 +30,7 @@ export const DropdownFilter = ({
   return (
     <Dropdown
       openDropdownByClick
+      dropdownZIndex={Z.dropdown}
       placement="bottom-start"
       dropdown={({ onHide }) => {
         return (

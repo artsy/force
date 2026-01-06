@@ -1,55 +1,73 @@
 import { Button, Flex, ModalDialog, Text } from "@artsy/palette"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
-import { RouterLink } from "System/Components/RouterLink"
 import { useRouter } from "System/Hooks/useRouter"
 
-// TODO: Tracking
+export enum CheckoutModalError {
+  LOADING_TIMEOUT = "loading_timeout",
+  ARTWORK_VERSION_MISMATCH = "artwork_version_mismatch",
+  ARTWORK_NOT_FOR_SALE = "artwork_not_for_sale",
+  SUBMIT_ERROR = "submit_error",
+  OTHER_ERROR = "other_error",
+}
 
-export const CriticalErrorModal: React.FC<{
-  error: string | null
+export const CheckoutModal: React.FC<{
+  error: CheckoutModalError | null
 }> = ({ error }) => {
-  const { artworkPath } = useCheckoutContext()
+  const { artworkPath, setCheckoutModalError } = useCheckoutContext()
   const { router } = useRouter()
 
   if (!error) {
     return null
   }
 
-  const sendToArtworkScreen = () => {
-    router.replace(artworkPath)
-  }
-
   const handleReload = () => {
     window.location.reload()
   }
 
-  // Determine if reload should be available based on error type
+  // Determine modal behavior based on error type
   let canReload = false
+  let canDismiss = false
 
   let title = "Checkout Error"
   let description: string
 
   switch (error) {
-    case "loading_timeout":
+    case CheckoutModalError.LOADING_TIMEOUT:
       description = "There was an error loading your checkout."
       canReload = true
       break
-    case "artwork_version_mismatch":
+    case CheckoutModalError.ARTWORK_VERSION_MISMATCH:
       title = "Work has been updated"
       description =
         "Something about the work changed since you started checkout. Please review the work before submitting your order."
       break
-    case "artwork_not_for_sale":
+    case CheckoutModalError.ARTWORK_NOT_FOR_SALE:
       title = "Not available"
       description = "Sorry, the work is no longer available."
+      break
+    case CheckoutModalError.SUBMIT_ERROR:
+      title = "An error occurred"
+      description =
+        "Something went wrong while submitting your order. Please try again."
+      canDismiss = true
       break
     default:
       description =
         "There was an error with your checkout. Please return to the artwork and try again."
   }
 
+  const handleClose = () => {
+    if (canDismiss) {
+      setCheckoutModalError(null)
+    } else {
+      router.replace(artworkPath)
+    }
+  }
+
+  const primaryButtonText = canDismiss ? "Continue" : "Return to Artwork"
+
   return (
-    <ModalDialog title={title} width="450px" onClose={sendToArtworkScreen}>
+    <ModalDialog title={title} width="450px" onClose={handleClose}>
       <Text variant="sm" mb={2}>
         {description}
       </Text>
@@ -59,11 +77,9 @@ export const CriticalErrorModal: React.FC<{
             Reload
           </Button>
         )}
-        <RouterLink to={artworkPath}>
-          <Button variant="primaryBlack" onClick={sendToArtworkScreen}>
-            Return to Artwork
-          </Button>
-        </RouterLink>
+        <Button variant="primaryBlack" onClick={handleClose}>
+          {primaryButtonText}
+        </Button>
       </Flex>
     </ModalDialog>
   )

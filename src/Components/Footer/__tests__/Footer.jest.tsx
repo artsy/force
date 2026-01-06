@@ -1,9 +1,9 @@
 import type { Breakpoint } from "@artsy/palette/dist/themes/types"
+import { render, screen } from "@testing-library/react"
 import { Footer } from "Components/Footer/Footer"
 import { MockBoot } from "DevTools/MockBoot"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { useRouter } from "System/Hooks/useRouter"
-import { render, screen } from "@testing-library/react"
 import { fetchQuery } from "react-relay"
 
 jest.mock("System/Hooks/useRouter", () => ({
@@ -16,6 +16,9 @@ jest.mock("react-relay", () => ({
   fetchQuery: jest.fn(() => ({
     toPromise: jest.fn().mockResolvedValue(false),
   })),
+  createFragmentContainer: jest.fn(),
+  createPaginationContainer: jest.fn(),
+  createRefetchContainer: jest.fn(),
 }))
 
 describe("Footer", () => {
