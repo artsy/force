@@ -36,7 +36,7 @@ import type {
   Order2PaymentForm_order$key,
 } from "__generated__/Order2PaymentForm_order.graphql"
 import type React from "react"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { graphql, useFragment, useRelayEnvironment } from "react-relay"
 import { data as sd } from "sharify"
 import { SavedPaymentMethodOption } from "./SavedPaymentMethodOption"
@@ -383,7 +383,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
     )
   }
 
-  const resetElementsToInitialParams = () => {
+  const resetElementsToInitialParams = useCallback(() => {
     elements.update({
       mode: "payment",
       paymentMethodOptions: {
@@ -402,44 +402,50 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       paymentMethodTypes: null,
       onBehalfOf: order.seller?.merchantAccount?.externalId,
     })
-  }
+  }, [elements, order.seller?.merchantAccount?.externalId])
 
-  const handleError = (error: { message?: string | JSX.Element }) => {
-    setErrorMessage(error.message || defaultErrorMessage)
-    setIsSubmittingToStripe(false)
-    resetElementsToInitialParams()
-  }
+  const handleError = useCallback(
+    (error: { message?: string | JSX.Element }) => {
+      setErrorMessage(error.message || defaultErrorMessage)
+      setIsSubmittingToStripe(false)
+      resetElementsToInitialParams()
+    },
+    [resetElementsToInitialParams],
+  )
 
-  const handleBalanceCheckComplete = async (
-    result: BankAccountBalanceCheckResult,
-    message?: string,
-  ) => {
-    setIsCheckingBankBalance(false)
+  const handleBalanceCheckComplete = useCallback(
+    async (result: BankAccountBalanceCheckResult, message?: string) => {
+      setIsCheckingBankBalance(false)
 
-    switch (result) {
-      // We only want to block the checkout when we know there is insufficient funds.
-      case BankAccountBalanceCheckResult.INSUFFICIENT:
-        handleError({
-          message: message || "Insufficient funds in bank account",
-        })
-        break
-      default:
-        // For SUFFICIENT, PENDING, TIMEOUT, or OTHER, proceed with checkout
-        setPaymentComplete()
-        setIsSubmittingToStripe(false)
-        resetElementsToInitialParams()
-        break
-    }
-  }
+      switch (result) {
+        // We only want to block the checkout when we know there is insufficient funds.
+        case BankAccountBalanceCheckResult.INSUFFICIENT:
+          handleError({
+            message: message || "Insufficient funds in bank account",
+          })
+          break
+        default:
+          // For SUFFICIENT, PENDING, TIMEOUT, or OTHER, proceed with checkout
+          setPaymentComplete()
+          setIsSubmittingToStripe(false)
+          resetElementsToInitialParams()
+          break
+      }
+    },
+    [handleError, setPaymentComplete, resetElementsToInitialParams],
+  )
 
-  const handleBalanceCheckError = (error: Error) => {
-    logger.error("Error during balance check:", error)
-    setIsCheckingBankBalance(false)
-    // On error, proceed with checkout anyway
-    setPaymentComplete()
-    setIsSubmittingToStripe(false)
-    resetElementsToInitialParams()
-  }
+  const handleBalanceCheckError = useCallback(
+    (error: Error) => {
+      logger.error("Error during balance check:", error)
+      setIsCheckingBankBalance(false)
+      // On error, proceed with checkout anyway
+      setPaymentComplete()
+      setIsSubmittingToStripe(false)
+      resetElementsToInitialParams()
+    },
+    [setPaymentComplete, resetElementsToInitialParams],
+  )
 
   const handleSubmit = async event => {
     event.preventDefault()
