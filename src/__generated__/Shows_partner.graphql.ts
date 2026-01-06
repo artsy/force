@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9250b331be54d0bbd77b8571b03c75a5>>
+ * @generated SignedSource<<3a3b434d5749b8027e3fbbf3d75141cc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,20 +11,20 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type Shows_partner$data = {
-  readonly currentEvents: {
-    readonly edges: ReadonlyArray<{
-      readonly node: {
-        readonly internalID: string;
-        readonly " $fragmentSpreads": FragmentRefs<"CellShow_show">;
-      } | null | undefined;
-    } | null | undefined> | null | undefined;
-  } | null | undefined;
   readonly featuredEvents: {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly internalID: string;
         readonly isFeatured: boolean | null | undefined;
         readonly " $fragmentSpreads": FragmentRefs<"ShowBanner_show">;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
+  readonly runningEvents: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly internalID: string;
+        readonly " $fragmentSpreads": FragmentRefs<"CellShow_show">;
       } | null | undefined;
     } | null | undefined> | null | undefined;
   } | null | undefined;
@@ -169,7 +169,7 @@ return {
       "storageKey": "showsConnection(first:1,isDisplayable:true,sort:\"FEATURED_DESC_END_AT_DESC\",status:\"ALL\")"
     },
     {
-      "alias": "currentEvents",
+      "alias": "runningEvents",
       "args": [
         (v2/*: any*/),
         (v0/*: any*/),
@@ -181,7 +181,7 @@ return {
         {
           "kind": "Literal",
           "name": "status",
-          "value": "CURRENT"
+          "value": "RUNNING"
         }
       ],
       "concreteType": "ShowConnection",
@@ -189,7 +189,7 @@ return {
       "name": "showsConnection",
       "plural": false,
       "selections": (v3/*: any*/),
-      "storageKey": "showsConnection(first:12,isDisplayable:true,sort:\"END_AT_ASC\",status:\"CURRENT\")"
+      "storageKey": "showsConnection(first:12,isDisplayable:true,sort:\"END_AT_ASC\",status:\"RUNNING\")"
     },
     {
       "alias": "upcomingEvents",
@@ -215,6 +215,6 @@ return {
 };
 })();
 
-(node as any).hash = "4d0fd3b121d1d4f55cd20bdf815bc7ff";
+(node as any).hash = "82018118273fcacd92689f124d3c4144";
 
 export default node;
