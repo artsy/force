@@ -22,7 +22,7 @@ export const ArtistMeta: React.FC<React.PropsWithChildren<Props>> = ({
 
   const hasArtworks = (artist.counts?.artworks ?? 0) > 0
   const hasBiographyBlurb = !!artist.biographyBlurb?.text
-  const hasShows = (artist.counts?.shows ?? 0) > 0
+  const hasShows = (artist.showsConnection?.totalCount ?? 0) > 0
   const hasAuctionResults = (artist.counts?.auctionResults ?? 0) > 0
   const hasArticles = (artist.counts?.articles ?? 0) > 0
   const hasRelatedArtists = (artist.counts?.relatedArtists ?? 0) > 0
@@ -101,15 +101,17 @@ export const ArtistMetaFragmentContainer = createFragmentContainer(ArtistMeta, {
           large: url(version: "large")
         }
       }
-      biographyBlurb(format: HTML, partnerBio: false) {
+      biographyBlurb(format: HTML) {
         text
       }
       counts {
         artworks
-        shows
         auctionResults
         articles
         relatedArtists
+      }
+      showsConnection(first: 0) {
+        totalCount
       }
       artistSeriesConnection(first: 0) {
         totalCount
