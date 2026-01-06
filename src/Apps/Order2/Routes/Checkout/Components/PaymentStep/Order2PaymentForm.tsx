@@ -250,6 +250,71 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
     checkoutTracking,
   ])
 
+  const resetElementsToInitialParams = useCallback(() => {
+    if (!elements) return
+    elements.update({
+      mode: "payment",
+      paymentMethodOptions: {
+        us_bank_account: {
+          verification_method: "instant",
+          financial_connections: {
+            permissions: ["payment_method", "balances", "ownership"],
+            prefetch: ["balances"],
+          },
+        },
+      },
+      setupFutureUsage: "off_session",
+      // @ts-ignore Stripe type issue
+      captureMethod: null,
+      // @ts-ignore Stripe type issue
+      paymentMethodTypes: null,
+      onBehalfOf: order.seller?.merchantAccount?.externalId,
+    })
+  }, [elements, order.seller?.merchantAccount?.externalId])
+
+  const handleError = useCallback(
+    (error: { message?: string | JSX.Element }) => {
+      setErrorMessage(error.message || defaultErrorMessage)
+      setIsSubmittingToStripe(false)
+      resetElementsToInitialParams()
+    },
+    [resetElementsToInitialParams],
+  )
+
+  const handleBalanceCheckComplete = useCallback(
+    async (result: BankAccountBalanceCheckResult, message?: string) => {
+      setIsCheckingBankBalance(false)
+
+      switch (result) {
+        // We only want to block the checkout when we know there is insufficient funds.
+        case BankAccountBalanceCheckResult.INSUFFICIENT:
+          handleError({
+            message: message || "Insufficient funds in bank account",
+          })
+          break
+        default:
+          // For SUFFICIENT, PENDING, TIMEOUT, or OTHER, proceed with checkout
+          setPaymentComplete()
+          setIsSubmittingToStripe(false)
+          resetElementsToInitialParams()
+          break
+      }
+    },
+    [handleError, setPaymentComplete, resetElementsToInitialParams],
+  )
+
+  const handleBalanceCheckError = useCallback(
+    (error: Error) => {
+      logger.error("Error during balance check:", error)
+      setIsCheckingBankBalance(false)
+      // On error, proceed with checkout anyway
+      setPaymentComplete()
+      setIsSubmittingToStripe(false)
+      resetElementsToInitialParams()
+    },
+    [setPaymentComplete, resetElementsToInitialParams],
+  )
+
   if (!(stripe && elements)) {
     return null
   }
@@ -382,70 +447,6 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       "Could not determine mutation payment method from saved payment method chosen.",
     )
   }
-
-  const resetElementsToInitialParams = useCallback(() => {
-    elements.update({
-      mode: "payment",
-      paymentMethodOptions: {
-        us_bank_account: {
-          verification_method: "instant",
-          financial_connections: {
-            permissions: ["payment_method", "balances", "ownership"],
-            prefetch: ["balances"],
-          },
-        },
-      },
-      setupFutureUsage: "off_session",
-      // @ts-ignore Stripe type issue
-      captureMethod: null,
-      // @ts-ignore Stripe type issue
-      paymentMethodTypes: null,
-      onBehalfOf: order.seller?.merchantAccount?.externalId,
-    })
-  }, [elements, order.seller?.merchantAccount?.externalId])
-
-  const handleError = useCallback(
-    (error: { message?: string | JSX.Element }) => {
-      setErrorMessage(error.message || defaultErrorMessage)
-      setIsSubmittingToStripe(false)
-      resetElementsToInitialParams()
-    },
-    [resetElementsToInitialParams],
-  )
-
-  const handleBalanceCheckComplete = useCallback(
-    async (result: BankAccountBalanceCheckResult, message?: string) => {
-      setIsCheckingBankBalance(false)
-
-      switch (result) {
-        // We only want to block the checkout when we know there is insufficient funds.
-        case BankAccountBalanceCheckResult.INSUFFICIENT:
-          handleError({
-            message: message || "Insufficient funds in bank account",
-          })
-          break
-        default:
-          // For SUFFICIENT, PENDING, TIMEOUT, or OTHER, proceed with checkout
-          setPaymentComplete()
-          setIsSubmittingToStripe(false)
-          resetElementsToInitialParams()
-          break
-      }
-    },
-    [handleError, setPaymentComplete, resetElementsToInitialParams],
-  )
-
-  const handleBalanceCheckError = useCallback(
-    (error: Error) => {
-      logger.error("Error during balance check:", error)
-      setIsCheckingBankBalance(false)
-      // On error, proceed with checkout anyway
-      setPaymentComplete()
-      setIsSubmittingToStripe(false)
-      resetElementsToInitialParams()
-    },
-    [setPaymentComplete, resetElementsToInitialParams],
-  )
 
   const handleSubmit = async event => {
     event.preventDefault()
