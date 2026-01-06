@@ -283,4 +283,128 @@ describe("AdminMeta", () => {
       expect(structuredDataTag).not.toBeNull()
     })
   })
+
+  describe("noindex meta tag", () => {
+    it("adds noindex when artist has no content", () => {
+      const emptyArtist = {
+        href: "/artist/empty-artist",
+        meta: { description: null, title: "Empty Artist" },
+        biographyBlurb: null,
+        counts: {
+          artworks: 0,
+          shows: 0,
+          auctionResults: 0,
+          articles: 0,
+          relatedArtists: 0,
+        },
+        artistSeriesConnection: { totalCount: 0 },
+        insights: [],
+        related: { genes: { totalCount: 0 } },
+      }
+      renderWithRelay({ Artist: () => emptyArtist })
+      expect(
+        getMetaBy({ name: "robots", content: "noindex, nofollow" }),
+      ).not.toBeNull()
+    })
+
+    it("does not add noindex when artist has artworks", () => {
+      const artistWithArtworks = {
+        href: "/artist/artist-with-artworks",
+        meta: { description: null, title: "Artist With Artworks" },
+        biographyBlurb: null,
+        counts: {
+          artworks: 5,
+          shows: 0,
+          auctionResults: 0,
+          articles: 0,
+          relatedArtists: 0,
+        },
+        artistSeriesConnection: { totalCount: 0 },
+        insights: [],
+        related: { genes: { totalCount: 0 } },
+      }
+      renderWithRelay({ Artist: () => artistWithArtworks })
+      expect(getMetaBy({ name: "robots" })).toBeNull()
+    })
+
+    it("does not add noindex when artist has biography", () => {
+      const artistWithBio = {
+        href: "/artist/artist-with-bio",
+        meta: { description: null, title: "Artist With Bio" },
+        biographyBlurb: { text: "This is a biography" },
+        counts: {
+          artworks: 0,
+          shows: 0,
+          auctionResults: 0,
+          articles: 0,
+          relatedArtists: 0,
+        },
+        artistSeriesConnection: { totalCount: 0 },
+        insights: [],
+        related: { genes: { totalCount: 0 } },
+      }
+      renderWithRelay({ Artist: () => artistWithBio })
+      expect(getMetaBy({ name: "robots" })).toBeNull()
+    })
+
+    it("does not add noindex when artist has auction results", () => {
+      const artistWithAuctions = {
+        href: "/artist/artist-with-auctions",
+        meta: { description: null, title: "Artist With Auctions" },
+        biographyBlurb: null,
+        counts: {
+          artworks: 0,
+          shows: 0,
+          auctionResults: 10,
+          articles: 0,
+          relatedArtists: 0,
+        },
+        artistSeriesConnection: { totalCount: 0 },
+        insights: [],
+        related: { genes: { totalCount: 0 } },
+      }
+      renderWithRelay({ Artist: () => artistWithAuctions })
+      expect(getMetaBy({ name: "robots" })).toBeNull()
+    })
+
+    it("does not add noindex when artist has shows", () => {
+      const artistWithShows = {
+        href: "/artist/artist-with-shows",
+        meta: { description: null, title: "Artist With Shows" },
+        biographyBlurb: null,
+        counts: {
+          artworks: 0,
+          shows: 3,
+          auctionResults: 0,
+          articles: 0,
+          relatedArtists: 0,
+        },
+        artistSeriesConnection: { totalCount: 0 },
+        insights: [],
+        related: { genes: { totalCount: 0 } },
+      }
+      renderWithRelay({ Artist: () => artistWithShows })
+      expect(getMetaBy({ name: "robots" })).toBeNull()
+    })
+
+    it("does not add noindex when artist has articles", () => {
+      const artistWithArticles = {
+        href: "/artist/artist-with-articles",
+        meta: { description: null, title: "Artist With Articles" },
+        biographyBlurb: null,
+        counts: {
+          artworks: 0,
+          shows: 0,
+          auctionResults: 0,
+          articles: 2,
+          relatedArtists: 0,
+        },
+        artistSeriesConnection: { totalCount: 0 },
+        insights: [],
+        related: { genes: { totalCount: 0 } },
+      }
+      renderWithRelay({ Artist: () => artistWithArticles })
+      expect(getMetaBy({ name: "robots" })).toBeNull()
+    })
+  })
 })

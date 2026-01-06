@@ -20,6 +20,27 @@ export const ArtistMeta: React.FC<React.PropsWithChildren<Props>> = ({
   const page = getPageNumber(match?.location)
   const pathname = page > 1 ? `${artist.href}?page=${page}` : artist.href
 
+  const hasArtworks = (artist.counts?.artworks ?? 0) > 0
+  const hasBiographyBlurb = !!artist.biographyBlurb?.text
+  const hasShows = (artist.counts?.shows ?? 0) > 0
+  const hasAuctionResults = (artist.counts?.auctionResults ?? 0) > 0
+  const hasArticles = (artist.counts?.articles ?? 0) > 0
+  const hasRelatedArtists = (artist.counts?.relatedArtists ?? 0) > 0
+  const hasArtistSeries = (artist.artistSeriesConnection?.totalCount ?? 0) > 0
+  const hasCareerHighlights = (artist.insights?.length ?? 0) > 0
+  const hasRelatedCategories = (artist.related?.genes?.totalCount ?? 0) > 0
+
+  const hasNoContent =
+    !hasArtworks &&
+    !hasBiographyBlurb &&
+    !hasShows &&
+    !hasAuctionResults &&
+    !hasArticles &&
+    !hasRelatedArtists &&
+    !hasArtistSeries &&
+    !hasCareerHighlights &&
+    !hasRelatedCategories
+
   return (
     <>
       <MetaTags
@@ -27,6 +48,7 @@ export const ArtistMeta: React.FC<React.PropsWithChildren<Props>> = ({
         description={artist.meta.description}
         imageURL={artist.coverArtwork?.image?.large}
         pathname={pathname}
+        blockRobots={hasNoContent}
       />
 
       <Meta
@@ -77,6 +99,27 @@ export const ArtistMetaFragmentContainer = createFragmentContainer(ArtistMeta, {
       coverArtwork {
         image {
           large: url(version: "large")
+        }
+      }
+      biographyBlurb(format: HTML, partnerBio: false) {
+        text
+      }
+      counts {
+        artworks
+        shows
+        auctionResults
+        articles
+        relatedArtists
+      }
+      artistSeriesConnection(first: 0) {
+        totalCount
+      }
+      insights {
+        __typename
+      }
+      related {
+        genes(first: 0) {
+          totalCount
         }
       }
     }
