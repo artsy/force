@@ -36,7 +36,7 @@ import type {
   Order2PaymentForm_order$key,
 } from "__generated__/Order2PaymentForm_order.graphql"
 import type React from "react"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { graphql, useFragment, useRelayEnvironment } from "react-relay"
 import { data as sd } from "sharify"
 import { SavedPaymentMethodOption } from "./SavedPaymentMethodOption"
@@ -250,6 +250,71 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
     checkoutTracking,
   ])
 
+  const resetElementsToInitialParams = useCallback(() => {
+    if (!elements) return
+    elements.update({
+      mode: "payment",
+      paymentMethodOptions: {
+        us_bank_account: {
+          verification_method: "instant",
+          financial_connections: {
+            permissions: ["payment_method", "balances", "ownership"],
+            prefetch: ["balances"],
+          },
+        },
+      },
+      setupFutureUsage: "off_session",
+      // @ts-ignore Stripe type issue
+      captureMethod: null,
+      // @ts-ignore Stripe type issue
+      paymentMethodTypes: null,
+      onBehalfOf: order.seller?.merchantAccount?.externalId,
+    })
+  }, [elements, order.seller?.merchantAccount?.externalId])
+
+  const handleError = useCallback(
+    (error: { message?: string | JSX.Element }) => {
+      setErrorMessage(error.message || defaultErrorMessage)
+      setIsSubmittingToStripe(false)
+      resetElementsToInitialParams()
+    },
+    [resetElementsToInitialParams],
+  )
+
+  const handleBalanceCheckComplete = useCallback(
+    async (result: BankAccountBalanceCheckResult, message?: string) => {
+      setIsCheckingBankBalance(false)
+
+      switch (result) {
+        // We only want to block the checkout when we know there is insufficient funds.
+        case BankAccountBalanceCheckResult.INSUFFICIENT:
+          handleError({
+            message: message || "Insufficient funds in bank account",
+          })
+          break
+        default:
+          // For SUFFICIENT, PENDING, TIMEOUT, or OTHER, proceed with checkout
+          setPaymentComplete()
+          setIsSubmittingToStripe(false)
+          resetElementsToInitialParams()
+          break
+      }
+    },
+    [handleError, setPaymentComplete, resetElementsToInitialParams],
+  )
+
+  const handleBalanceCheckError = useCallback(
+    (error: Error) => {
+      logger.error("Error during balance check:", error)
+      setIsCheckingBankBalance(false)
+      // On error, proceed with checkout anyway
+      setPaymentComplete()
+      setIsSubmittingToStripe(false)
+      resetElementsToInitialParams()
+    },
+    [setPaymentComplete, resetElementsToInitialParams],
+  )
+
   if (!(stripe && elements)) {
     return null
   }
@@ -381,64 +446,6 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
     throw new Error(
       "Could not determine mutation payment method from saved payment method chosen.",
     )
-  }
-
-  const resetElementsToInitialParams = () => {
-    elements.update({
-      mode: "payment",
-      paymentMethodOptions: {
-        us_bank_account: {
-          verification_method: "instant",
-          financial_connections: {
-            permissions: ["payment_method", "balances", "ownership"],
-            prefetch: ["balances"],
-          },
-        },
-      },
-      setupFutureUsage: "off_session",
-      // @ts-ignore Stripe type issue
-      captureMethod: null,
-      // @ts-ignore Stripe type issue
-      paymentMethodTypes: null,
-      onBehalfOf: order.seller?.merchantAccount?.externalId,
-    })
-  }
-
-  const handleError = (error: { message?: string | JSX.Element }) => {
-    setErrorMessage(error.message || defaultErrorMessage)
-    setIsSubmittingToStripe(false)
-    resetElementsToInitialParams()
-  }
-
-  const handleBalanceCheckComplete = async (
-    result: BankAccountBalanceCheckResult,
-    message?: string,
-  ) => {
-    setIsCheckingBankBalance(false)
-
-    switch (result) {
-      // We only want to block the checkout when we know there is insufficient funds.
-      case BankAccountBalanceCheckResult.INSUFFICIENT:
-        handleError({
-          message: message || "Insufficient funds in bank account",
-        })
-        break
-      default:
-        // For SUFFICIENT, PENDING, TIMEOUT, or OTHER, proceed with checkout
-        setPaymentComplete()
-        setIsSubmittingToStripe(false)
-        resetElementsToInitialParams()
-        break
-    }
-  }
-
-  const handleBalanceCheckError = (error: Error) => {
-    logger.error("Error during balance check:", error)
-    setIsCheckingBankBalance(false)
-    // On error, proceed with checkout anyway
-    setPaymentComplete()
-    setIsSubmittingToStripe(false)
-    resetElementsToInitialParams()
   }
 
   const handleSubmit = async event => {
@@ -635,17 +642,27 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         })
 
         validateAndExtractOrderResponse(result.setOrderPayment?.orderOrError)
+
+        setSavedPaymentMethod({
+          savedPaymentMethod: selectedSavedPaymentMethod,
+        })
+
+        // For saved ACH bank accounts, start balance check
+        if (paymentMethod === "US_BANK_ACCOUNT") {
+          setIsCheckingBankBalance(true)
+          // Keep submitting state active during balance check
+          // The balance check handlers will call setPaymentComplete() and setIsSubmittingToStripe(false)
+          return
+        }
+
+        // For other saved payment methods, complete immediately
+        setIsSubmittingToStripe(false)
+        resetElementsToInitialParams()
+        setPaymentComplete()
       } catch (error) {
         logger.error("Error while updating order payment method", error)
         handleError({ message: defaultErrorMessage })
         return
-      } finally {
-        setIsSubmittingToStripe(false)
-        resetElementsToInitialParams()
-        setSavedPaymentMethod({
-          savedPaymentMethod: selectedSavedPaymentMethod,
-        })
-        setPaymentComplete()
       }
     }
   }
