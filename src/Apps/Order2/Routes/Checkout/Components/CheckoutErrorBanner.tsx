@@ -24,9 +24,11 @@ export const CheckoutErrorBanner: React.FC<CheckoutErrorBannerProps> = ({
   const variant = "error"
 
   return (
-    <Message variant={variant} title={title}>
-      {message}
-    </Message>
+    <div tabIndex={-1} data-error-banner="true" role="alert">
+      <Message variant={variant} title={title}>
+        {message}
+      </Message>
+    </div>
   )
 }
 
