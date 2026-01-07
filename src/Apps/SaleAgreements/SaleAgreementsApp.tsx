@@ -21,7 +21,10 @@ export const SaleAgreementsApp: FC<
 
   return (
     <>
-      <MetaTags title="Supplemental Conditions of Sale | Artsy" />
+      <MetaTags
+        title="Supplemental Conditions of Sale | Artsy"
+        pathname="/supplemental-cos"
+      />
 
       <Join separator={<Spacer y={6} />}>
         <Text variant="xl" my={4}>

@@ -23,6 +23,7 @@ export const SaleAgreementRoute: FC<
     <>
       <MetaTags
         title={`${data.sale.name} | Supplemental Conditions of Sale | Artsy`}
+        pathname={`/supplemental-cos/${data.internalID}`}
       />
 
       <TopContextBar displayBackArrow href="/supplemental-cos">
