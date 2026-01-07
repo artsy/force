@@ -57,7 +57,7 @@ describe("FairMeta", () => {
     mockUseRouter.mockImplementation(() => ({
       match: {
         location: {
-          pathname: "/fair/test-fair/exhibitors",
+          pathname: "/fair/test-fair/info",
         },
       },
     }))

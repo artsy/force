@@ -14,7 +14,7 @@ const FairMeta: React.FC<React.PropsWithChildren<FairMetaProps>> = ({
   const { match } = useRouter()
   const pathname = match.location.pathname
 
-  if (pathname === `/fair/${slug}`) {
+  if (pathname === `/fair/${slug}` || pathname === `/fair/${slug}/exhibitors`) {
     return null
   }
 
