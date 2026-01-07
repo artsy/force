@@ -17,7 +17,8 @@ const FairMeta: React.FC<React.PropsWithChildren<FairMetaProps>> = ({
   if (
     pathname === `/fair/${slug}` ||
     pathname === `/fair/${slug}/exhibitors` ||
-    pathname === `/fair/${slug}/artworks`
+    pathname === `/fair/${slug}/artworks` ||
+    pathname === `/fair/${slug}/articles`
   ) {
     return null
   }
