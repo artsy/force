@@ -2,6 +2,7 @@ import { Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import { CellArticleFragmentContainer } from "Components/Cells/CellArticle"
 import { EmptyState } from "Components/EmptyState"
 import { LoadingArea } from "Components/LoadingArea"
+import { MetaTags } from "Components/MetaTags"
 import { PaginationFragmentContainer } from "Components/Pagination"
 import { Jump } from "Utils/Hooks/useJump"
 import { extractNodes } from "Utils/extractNodes"
@@ -13,6 +14,23 @@ import {
   createRefetchContainer,
   graphql,
 } from "react-relay"
+
+interface FairArticlesMetaProps {
+  fair: FairArticles_fair$data
+}
+
+const FairArticlesMeta: React.FC<
+  React.PropsWithChildren<FairArticlesMetaProps>
+> = ({ fair }) => {
+  return (
+    <MetaTags
+      title={`${fair.name} | Artsy`}
+      description={fair.metaDescription || fair.metaDescriptionFallback}
+      pathname={`${fair.href}/articles`}
+      imageURL={fair.metaImage?.src}
+    />
+  )
+}
 
 interface FairArticlesProps {
   fair: FairArticles_fair$data
@@ -44,11 +62,18 @@ const FairArticles: React.FC<React.PropsWithChildren<FairArticlesProps>> = ({
   }
 
   if (articles.length === 0) {
-    return <EmptyState title="There aren’t any articles at this time." />
+    return (
+      <>
+        <FairArticlesMeta fair={fair} />
+        <EmptyState title="There aren't any articles at this time." />
+      </>
+    )
   }
 
   return (
     <>
+      <FairArticlesMeta fair={fair} />
+
       <Spacer y={4} />
 
       <Jump id="top" />
@@ -90,7 +115,14 @@ export const FairArticlesPaginationContainer = createRefetchContainer(
     fair: graphql`
       fragment FairArticles_fair on Fair
       @argumentDefinitions(page: { type: "Int", defaultValue: 1 }) {
+        name
         slug
+        href
+        metaDescription: summary
+        metaDescriptionFallback: about(format: PLAIN)
+        metaImage: image {
+          src: url(version: "large_rectangle")
+        }
         articlesConnection(page: $page, size: 12) {
           pageInfo {
             hasNextPage
