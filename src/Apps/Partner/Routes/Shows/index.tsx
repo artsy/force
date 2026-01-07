@@ -15,7 +15,7 @@ interface PartnerShowsProps {
 export const Shows: React.FC<React.PropsWithChildren<PartnerShowsProps>> = ({
   partner,
 }) => {
-  const { currentEvents, upcomingEvents, featuredEvents } = partner
+  const { runningEvents, upcomingEvents, featuredEvents } = partner
 
   const {
     match: {
@@ -26,19 +26,19 @@ export const Shows: React.FC<React.PropsWithChildren<PartnerShowsProps>> = ({
   const [firstFeaturedEvent] = extractNodes(featuredEvents)
 
   let upcomingEventsList = extractNodes(upcomingEvents)
-  let currentEventsList = extractNodes(currentEvents)
+  let runningEventsList = extractNodes(runningEvents)
 
   if (firstFeaturedEvent?.isFeatured) {
     const filteredUpcomingEvents = extractNodes(upcomingEvents).filter(
       event => event?.internalID !== firstFeaturedEvent?.internalID,
     )
 
-    const filteredCurrentEvents = extractNodes(currentEvents).filter(
+    const filteredRunningEvents = extractNodes(runningEvents).filter(
       event => event?.internalID !== firstFeaturedEvent?.internalID,
     )
 
     upcomingEventsList = filteredUpcomingEvents
-    currentEventsList = filteredCurrentEvents
+    runningEventsList = filteredRunningEvents
   }
 
   return (
@@ -48,12 +48,12 @@ export const Shows: React.FC<React.PropsWithChildren<PartnerShowsProps>> = ({
           <ShowBannerFragmentContainer my={4} show={firstFeaturedEvent!} />
         )}
 
-        {currentEventsList.length > 0 && (
+        {runningEventsList.length > 0 && (
           <>
             <Text variant="lg-display">Current Events</Text>
 
             <GridColumns gridRowGap={[2, 4]}>
-              {currentEventsList.map(show => {
+              {runningEventsList.map(show => {
                 return (
                   <Column key={show.internalID} span={[6, 6, 3, 3]}>
                     <CellShowFragmentContainer
@@ -122,9 +122,9 @@ export const ShowsFragmentContainer = createFragmentContainer(Shows, {
           }
         }
       }
-      currentEvents: showsConnection(
+      runningEvents: showsConnection(
         first: 12
-        status: CURRENT
+        status: RUNNING
         sort: END_AT_ASC
         isDisplayable: true
       ) {
