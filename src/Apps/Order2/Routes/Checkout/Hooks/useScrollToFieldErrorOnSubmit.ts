@@ -57,7 +57,11 @@ export const useScrollToFieldErrorOnSubmit = (stepName: CheckoutStepName) => {
     // Priority 1: Focus first error field if any field errors exist
     if (fieldErrorName) {
       // Scroll to step first
-      scrollToStep(stepName)
+      const element = document.querySelector(`input[name='${fieldErrorName}']`)
+      if (!element) return
+
+      // Scroll to first known error into view
+      element.scrollIntoView({ behavior: "smooth", block: "center" })
 
       // Wait for scroll to complete, then focus field
       setTimeout(() => {
