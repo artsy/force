@@ -1,9 +1,11 @@
 import { FairMetaFragmentContainer } from "Apps/Fair/Components/FairMeta"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { useRouter } from "System/Hooks/useRouter"
 import { HeadProvider } from "react-head"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
+jest.mock("System/Hooks/useRouter")
 
 jest.mock("Utils/getENV", () => ({
   getENV: (name: string) => {
@@ -49,6 +51,18 @@ const getTags = () => {
 }
 
 describe("FairMeta", () => {
+  const mockUseRouter = useRouter as jest.Mock
+
+  beforeEach(() => {
+    mockUseRouter.mockImplementation(() => ({
+      match: {
+        location: {
+          pathname: "/fair/test-fair/exhibitors",
+        },
+      },
+    }))
+  })
+
   afterEach(() => {
     document.getElementsByTagName("html")[0].innerHTML = ""
   })
@@ -77,5 +91,26 @@ describe("FairMeta", () => {
 
     const tags = getTags()
     expect(tags.title).toBe("Amazing Art Fair | Artsy")
+  })
+
+  it("returns null when on overview route", () => {
+    mockUseRouter.mockImplementation(() => ({
+      match: {
+        location: {
+          pathname: "/fair/test-fair",
+        },
+      },
+    }))
+
+    renderWithRelay({
+      Fair: () => ({
+        name: "Test Fair",
+        slug: "test-fair",
+      }),
+    })
+
+    const tags = getTags()
+    expect(tags.title).toBeUndefined()
+    expect(tags.links.find(link => link.rel === "canonical")).toBeUndefined()
   })
 })
