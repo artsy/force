@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<978d7fc5910b8e1a7af2ed72e6edcd42>>
+ * @generated SignedSource<<b843e7318934118a0cb7895739dcf2c6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,7 +12,19 @@ import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistMeta_artist$data = {
   readonly alternateNames: ReadonlyArray<string | null | undefined> | null | undefined;
+  readonly artistSeriesConnection: {
+    readonly totalCount: number;
+  } | null | undefined;
+  readonly biographyBlurb: {
+    readonly text: string | null | undefined;
+  } | null | undefined;
   readonly birthday: string | null | undefined;
+  readonly counts: {
+    readonly articles: number | null | undefined;
+    readonly artworks: any | null | undefined;
+    readonly auctionResults: number | null | undefined;
+    readonly relatedArtists: number | null | undefined;
+  } | null | undefined;
   readonly coverArtwork: {
     readonly image: {
       readonly large: string | null | undefined;
@@ -20,12 +32,23 @@ export type ArtistMeta_artist$data = {
   } | null | undefined;
   readonly deathday: string | null | undefined;
   readonly href: string | null | undefined;
+  readonly insights: ReadonlyArray<{
+    readonly __typename: "ArtistInsight";
+  }>;
   readonly meta: {
     readonly description: string;
     readonly title: string;
   };
   readonly name: string | null | undefined;
   readonly nationality: string | null | undefined;
+  readonly related: {
+    readonly genes: {
+      readonly totalCount: number | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
+  readonly showsConnection: {
+    readonly totalCount: number | null | undefined;
+  } | null | undefined;
   readonly slug: string;
   readonly " $fragmentSpreads": FragmentRefs<"ArtistStructuredData_artist">;
   readonly " $fragmentType": "ArtistMeta_artist";
@@ -35,7 +58,24 @@ export type ArtistMeta_artist$key = {
   readonly " $fragmentSpreads": FragmentRefs<"ArtistMeta_artist">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = [
+  {
+    "kind": "Literal",
+    "name": "first",
+    "value": 0
+  }
+],
+v1 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "totalCount",
+    "storageKey": null
+  }
+];
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -160,12 +200,135 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "format",
+          "value": "HTML"
+        }
+      ],
+      "concreteType": "ArtistBlurb",
+      "kind": "LinkedField",
+      "name": "biographyBlurb",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "text",
+          "storageKey": null
+        }
+      ],
+      "storageKey": "biographyBlurb(format:\"HTML\")"
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "ArtistCounts",
+      "kind": "LinkedField",
+      "name": "counts",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "artworks",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "auctionResults",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "articles",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "relatedArtists",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": (v0/*: any*/),
+      "concreteType": "ShowConnection",
+      "kind": "LinkedField",
+      "name": "showsConnection",
+      "plural": false,
+      "selections": (v1/*: any*/),
+      "storageKey": "showsConnection(first:0)"
+    },
+    {
+      "alias": null,
+      "args": (v0/*: any*/),
+      "concreteType": "ArtistSeriesConnection",
+      "kind": "LinkedField",
+      "name": "artistSeriesConnection",
+      "plural": false,
+      "selections": (v1/*: any*/),
+      "storageKey": "artistSeriesConnection(first:0)"
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "ArtistInsight",
+      "kind": "LinkedField",
+      "name": "insights",
+      "plural": true,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "__typename",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "ArtistRelatedData",
+      "kind": "LinkedField",
+      "name": "related",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": (v0/*: any*/),
+          "concreteType": "GeneConnection",
+          "kind": "LinkedField",
+          "name": "genes",
+          "plural": false,
+          "selections": (v1/*: any*/),
+          "storageKey": "genes(first:0)"
+        }
+      ],
+      "storageKey": null
     }
   ],
   "type": "Artist",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "5aa43fd9a383be550bef0deb31b3591a";
+(node as any).hash = "461bd751ba9dfd6afcd00af5bf4b09d6";
 
 export default node;
