@@ -5,10 +5,6 @@ import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 
-jest.mock("Apps/Fair/Components/FairMeta", () => ({
-  FairMetaFragmentContainer: () => null,
-}))
-
 const { renderWithRelay } = setupTestWrapperTL({
   Component: FairSubAppFragmentContainer,
   query: graphql`

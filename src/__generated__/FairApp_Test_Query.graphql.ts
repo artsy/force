@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<94fec16646e184b0ce6ed5a3c13e8d41>>
+ * @generated SignedSource<<4ef636aa33b1bcd57fc71f2dd8ae15bb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -131,57 +131,6 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "slug",
-            "storageKey": null
-          },
-          {
-            "alias": "metaDescription",
-            "args": null,
-            "kind": "ScalarField",
-            "name": "summary",
-            "storageKey": null
-          },
-          {
-            "alias": "metaDescriptionFallback",
-            "args": [
-              {
-                "kind": "Literal",
-                "name": "format",
-                "value": "PLAIN"
-              }
-            ],
-            "kind": "ScalarField",
-            "name": "about",
-            "storageKey": "about(format:\"PLAIN\")"
-          },
-          {
-            "alias": "metaImage",
-            "args": null,
-            "concreteType": "Image",
-            "kind": "LinkedField",
-            "name": "image",
-            "plural": false,
-            "selections": [
-              {
-                "alias": "src",
-                "args": [
-                  {
-                    "kind": "Literal",
-                    "name": "version",
-                    "value": "large_rectangle"
-                  }
-                ],
-                "kind": "ScalarField",
-                "name": "url",
-                "storageKey": "url(version:\"large_rectangle\")"
-              }
-            ],
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
             "name": "exhibitionPeriod",
             "storageKey": null
           },
@@ -223,6 +172,13 @@ return {
               },
               (v1/*: any*/)
             ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "slug",
             "storageKey": null
           },
           {
@@ -281,7 +237,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b0193d7e9dec28124c5da7a12f941fc2",
+    "cacheID": "fdfbbb6f1fefe13aa48a097b3c2a322f",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -316,10 +272,6 @@ return {
         "fair.image": (v4/*: any*/),
         "fair.image.url": (v2/*: any*/),
         "fair.internalID": (v3/*: any*/),
-        "fair.metaDescription": (v2/*: any*/),
-        "fair.metaDescriptionFallback": (v2/*: any*/),
-        "fair.metaImage": (v4/*: any*/),
-        "fair.metaImage.src": (v2/*: any*/),
         "fair.name": (v2/*: any*/),
         "fair.profile": {
           "enumValues": null,
@@ -335,7 +287,7 @@ return {
     },
     "name": "FairApp_Test_Query",
     "operationKind": "query",
-    "text": "query FairApp_Test_Query {\n  fair(id: \"example\") {\n    ...FairApp_fair\n    id\n  }\n}\n\nfragment ExhibitorsLetterNav_fair on Fair {\n  exhibitorsGroupedByName {\n    letter\n  }\n}\n\nfragment FairApp_fair on Fair {\n  ...FairTabs_fair\n  ...FairMeta_fair\n  ...FairHeader_fair\n  ...FairHeaderImage_fair\n  ...ExhibitorsLetterNav_fair\n  internalID\n  profile {\n    id\n  }\n}\n\nfragment FairHeaderImage_fair on Fair {\n  image {\n    url(version: \"wide\")\n  }\n}\n\nfragment FairHeader_fair on Fair {\n  name\n  exhibitionPeriod\n  profile {\n    icon {\n      url(version: [\"large\", \"square\", \"square140\"])\n    }\n    id\n  }\n  slug\n}\n\nfragment FairMeta_fair on Fair {\n  name\n  slug\n  metaDescription: summary\n  metaDescriptionFallback: about(format: PLAIN)\n  metaImage: image {\n    src: url(version: \"large_rectangle\")\n  }\n}\n\nfragment FairTabs_fair on Fair {\n  href\n  counts {\n    artworks\n  }\n}\n"
+    "text": "query FairApp_Test_Query {\n  fair(id: \"example\") {\n    ...FairApp_fair\n    id\n  }\n}\n\nfragment ExhibitorsLetterNav_fair on Fair {\n  exhibitorsGroupedByName {\n    letter\n  }\n}\n\nfragment FairApp_fair on Fair {\n  ...FairTabs_fair\n  ...FairHeader_fair\n  ...FairHeaderImage_fair\n  ...ExhibitorsLetterNav_fair\n  internalID\n  profile {\n    id\n  }\n}\n\nfragment FairHeaderImage_fair on Fair {\n  image {\n    url(version: \"wide\")\n  }\n}\n\nfragment FairHeader_fair on Fair {\n  name\n  exhibitionPeriod\n  profile {\n    icon {\n      url(version: [\"large\", \"square\", \"square140\"])\n    }\n    id\n  }\n  slug\n}\n\nfragment FairTabs_fair on Fair {\n  href\n  counts {\n    artworks\n  }\n}\n"
   }
 };
 })();

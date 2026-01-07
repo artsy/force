@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a5a489f57691f5201427ba0a21726c66>>
+ * @generated SignedSource<<7419aa2eba0b4559d83daea55dcff1ac>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,7 +15,7 @@ export type FairApp_fair$data = {
   readonly profile: {
     readonly id: string;
   } | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"ExhibitorsLetterNav_fair" | "FairHeaderImage_fair" | "FairHeader_fair" | "FairMeta_fair" | "FairTabs_fair">;
+  readonly " $fragmentSpreads": FragmentRefs<"ExhibitorsLetterNav_fair" | "FairHeaderImage_fair" | "FairHeader_fair" | "FairTabs_fair">;
   readonly " $fragmentType": "FairApp_fair";
 };
 export type FairApp_fair$key = {
@@ -33,11 +33,6 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "FragmentSpread",
       "name": "FairTabs_fair"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "FairMeta_fair"
     },
     {
       "args": null,
@@ -84,6 +79,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "0eb1702e4a331569aee3578c3d71af36";
+(node as any).hash = "7f514c69a28fe55190418a888e7d836e";
 
 export default node;

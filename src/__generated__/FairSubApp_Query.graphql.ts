@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<385490947552b22461fbb7f6d242066f>>
+ * @generated SignedSource<<39d6a778222e3956e2f59fdf763aef1e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -89,6 +89,7 @@ return {
         "name": "fair",
         "plural": false,
         "selections": [
+          (v1/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -96,58 +97,6 @@ return {
             "name": "name",
             "storageKey": null
           },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "slug",
-            "storageKey": null
-          },
-          {
-            "alias": "metaDescription",
-            "args": null,
-            "kind": "ScalarField",
-            "name": "summary",
-            "storageKey": null
-          },
-          {
-            "alias": "metaDescriptionFallback",
-            "args": [
-              {
-                "kind": "Literal",
-                "name": "format",
-                "value": "PLAIN"
-              }
-            ],
-            "kind": "ScalarField",
-            "name": "about",
-            "storageKey": "about(format:\"PLAIN\")"
-          },
-          {
-            "alias": "metaImage",
-            "args": null,
-            "concreteType": "Image",
-            "kind": "LinkedField",
-            "name": "image",
-            "plural": false,
-            "selections": [
-              {
-                "alias": "src",
-                "args": [
-                  {
-                    "kind": "Literal",
-                    "name": "version",
-                    "value": "large_rectangle"
-                  }
-                ],
-                "kind": "ScalarField",
-                "name": "url",
-                "storageKey": "url(version:\"large_rectangle\")"
-              }
-            ],
-            "storageKey": null
-          },
-          (v1/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -180,7 +129,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "37474f07285d4bf2d4058ae6c539a6d6",
+    "cacheID": "3b22c65f4d1758379463431ea0a49afc",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -192,15 +141,6 @@ return {
         },
         "fair.href": (v2/*: any*/),
         "fair.id": (v3/*: any*/),
-        "fair.metaDescription": (v2/*: any*/),
-        "fair.metaDescriptionFallback": (v2/*: any*/),
-        "fair.metaImage": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Image"
-        },
-        "fair.metaImage.src": (v2/*: any*/),
         "fair.name": (v2/*: any*/),
         "fair.profile": {
           "enumValues": null,
@@ -214,13 +154,12 @@ return {
           "plural": false,
           "type": "String"
         },
-        "fair.profile.id": (v3/*: any*/),
-        "fair.slug": (v3/*: any*/)
+        "fair.profile.id": (v3/*: any*/)
       }
     },
     "name": "FairSubApp_Query",
     "operationKind": "query",
-    "text": "query FairSubApp_Query {\n  fair(id: \"example\") {\n    ...FairSubApp_fair\n    id\n  }\n}\n\nfragment FairMeta_fair on Fair {\n  name\n  slug\n  metaDescription: summary\n  metaDescriptionFallback: about(format: PLAIN)\n  metaImage: image {\n    src: url(version: \"large_rectangle\")\n  }\n}\n\nfragment FairSubApp_fair on Fair {\n  ...FairMeta_fair\n  id\n  name\n  href\n  profile {\n    __typename\n    id\n  }\n}\n"
+    "text": "query FairSubApp_Query {\n  fair(id: \"example\") {\n    ...FairSubApp_fair\n    id\n  }\n}\n\nfragment FairSubApp_fair on Fair {\n  id\n  name\n  href\n  profile {\n    __typename\n    id\n  }\n}\n"
   }
 };
 })();

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<09c1584638ae4996b5b98f4795b9f5ca>>
+ * @generated SignedSource<<4386abb4b90f285b7483d841d4801cb9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -86,6 +86,7 @@ return {
         "name": "fair",
         "plural": false,
         "selections": [
+          (v2/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -93,58 +94,6 @@ return {
             "name": "name",
             "storageKey": null
           },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "slug",
-            "storageKey": null
-          },
-          {
-            "alias": "metaDescription",
-            "args": null,
-            "kind": "ScalarField",
-            "name": "summary",
-            "storageKey": null
-          },
-          {
-            "alias": "metaDescriptionFallback",
-            "args": [
-              {
-                "kind": "Literal",
-                "name": "format",
-                "value": "PLAIN"
-              }
-            ],
-            "kind": "ScalarField",
-            "name": "about",
-            "storageKey": "about(format:\"PLAIN\")"
-          },
-          {
-            "alias": "metaImage",
-            "args": null,
-            "concreteType": "Image",
-            "kind": "LinkedField",
-            "name": "image",
-            "plural": false,
-            "selections": [
-              {
-                "alias": "src",
-                "args": [
-                  {
-                    "kind": "Literal",
-                    "name": "version",
-                    "value": "large_rectangle"
-                  }
-                ],
-                "kind": "ScalarField",
-                "name": "url",
-                "storageKey": "url(version:\"large_rectangle\")"
-              }
-            ],
-            "storageKey": null
-          },
-          (v2/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -177,12 +126,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "31936dae1cbe10c0508b8ec9244d2d3f",
+    "cacheID": "d0ecafb682fb3fe33613652c64e139dd",
     "id": null,
     "metadata": {},
     "name": "fairRoutes_FairSubAppQuery",
     "operationKind": "query",
-    "text": "query fairRoutes_FairSubAppQuery(\n  $slug: String!\n) @cacheable {\n  fair(id: $slug) @principalField {\n    ...FairSubApp_fair\n    id\n  }\n}\n\nfragment FairMeta_fair on Fair {\n  name\n  slug\n  metaDescription: summary\n  metaDescriptionFallback: about(format: PLAIN)\n  metaImage: image {\n    src: url(version: \"large_rectangle\")\n  }\n}\n\nfragment FairSubApp_fair on Fair {\n  ...FairMeta_fair\n  id\n  name\n  href\n  profile {\n    __typename\n    id\n  }\n}\n"
+    "text": "query fairRoutes_FairSubAppQuery(\n  $slug: String!\n) @cacheable {\n  fair(id: $slug) @principalField {\n    ...FairSubApp_fair\n    id\n  }\n}\n\nfragment FairSubApp_fair on Fair {\n  id\n  name\n  href\n  profile {\n    __typename\n    id\n  }\n}\n"
   }
 };
 })();
