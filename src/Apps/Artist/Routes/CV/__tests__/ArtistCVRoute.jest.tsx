@@ -4,9 +4,6 @@ import type { ArtistCVRouteTestQuery } from "__generated__/ArtistCVRouteTestQuer
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
-jest.mock("Components/MetaTags", () => ({
-  MetaTags: () => null,
-}))
 
 describe("ArtistCVRoute", () => {
   const { renderWithRelay } = setupTestWrapperTL<ArtistCVRouteTestQuery>({
@@ -42,5 +39,19 @@ describe("ArtistCVRoute", () => {
     expect(container.textContent).toContain(
       'Fair booths<mock-value-for-field-"startAt"><mock-value-for-field-"name">, <mock-value-for-field-"name">',
     )
+  })
+
+  describe("canonical URL", () => {
+    it("renders correct canonical URL for artist CV", () => {
+      renderWithRelay({
+        Artist: () => ({
+          name: "Banksy",
+          slug: "banksy",
+        }),
+      })
+
+      const canonicalLink = document.querySelector('link[rel="canonical"]')
+      expect(canonicalLink).toHaveAttribute("href", "/artist/banksy/cv")
+    })
   })
 })

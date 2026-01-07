@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9960e3be66431f220ae6fdb688a49901>>
+ * @generated SignedSource<<2c829cc11a5c766667975d709d8bba95>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -42,65 +42,65 @@ v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "slug",
+  "name": "name",
   "storageKey": null
 },
 v3 = {
-  "kind": "Literal",
-  "name": "atAFair",
-  "value": false
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "slug",
+  "storageKey": null
 },
 v4 = {
-  "kind": "Literal",
-  "name": "first",
-  "value": 10
-},
-v5 = {
-  "kind": "Literal",
-  "name": "isReference",
-  "value": true
-},
-v6 = {
-  "kind": "Literal",
-  "name": "sort",
-  "value": "START_AT_DESC"
-},
-v7 = {
-  "kind": "Literal",
-  "name": "visibleToPublic",
-  "value": false
-},
-v8 = [
-  (v3/*: any*/),
-  (v4/*: any*/),
-  (v5/*: any*/),
-  {
-    "kind": "Literal",
-    "name": "soloShow",
-    "value": true
-  },
-  (v6/*: any*/),
-  (v7/*: any*/)
-],
-v9 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v10 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "__typename",
-  "storageKey": null
+v5 = {
+  "kind": "Literal",
+  "name": "atAFair",
+  "value": false
 },
+v6 = {
+  "kind": "Literal",
+  "name": "first",
+  "value": 10
+},
+v7 = {
+  "kind": "Literal",
+  "name": "isReference",
+  "value": true
+},
+v8 = {
+  "kind": "Literal",
+  "name": "sort",
+  "value": "START_AT_DESC"
+},
+v9 = {
+  "kind": "Literal",
+  "name": "visibleToPublic",
+  "value": false
+},
+v10 = [
+  (v5/*: any*/),
+  (v6/*: any*/),
+  (v7/*: any*/),
+  {
+    "kind": "Literal",
+    "name": "soloShow",
+    "value": true
+  },
+  (v8/*: any*/),
+  (v9/*: any*/)
+],
 v11 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "name",
+  "name": "__typename",
   "storageKey": null
 },
 v12 = {
@@ -152,7 +152,7 @@ v13 = [
         "name": "node",
         "plural": false,
         "selections": [
-          (v9/*: any*/),
+          (v4/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -161,12 +161,12 @@ v13 = [
             "name": "partner",
             "plural": false,
             "selections": [
-              (v10/*: any*/),
+              (v11/*: any*/),
               {
                 "kind": "InlineFragment",
                 "selections": [
-                  (v11/*: any*/),
-                  (v9/*: any*/)
+                  (v2/*: any*/),
+                  (v4/*: any*/)
                 ],
                 "type": "ExternalPartner",
                 "abstractKey": null
@@ -174,7 +174,7 @@ v13 = [
               {
                 "kind": "InlineFragment",
                 "selections": [
-                  (v11/*: any*/),
+                  (v2/*: any*/),
                   (v12/*: any*/)
                 ],
                 "type": "Partner",
@@ -183,7 +183,7 @@ v13 = [
               {
                 "kind": "InlineFragment",
                 "selections": [
-                  (v9/*: any*/)
+                  (v4/*: any*/)
                 ],
                 "type": "Node",
                 "abstractKey": "__isNode"
@@ -191,7 +191,7 @@ v13 = [
             ],
             "storageKey": null
           },
-          (v11/*: any*/),
+          (v2/*: any*/),
           {
             "alias": null,
             "args": [
@@ -213,7 +213,7 @@ v13 = [
             "storageKey": null
           },
           (v12/*: any*/),
-          (v10/*: any*/)
+          (v11/*: any*/)
         ],
         "storageKey": null
       },
@@ -236,16 +236,16 @@ v14 = [
   "visibleToPublic"
 ],
 v15 = [
-  (v3/*: any*/),
-  (v4/*: any*/),
   (v5/*: any*/),
+  (v6/*: any*/),
+  (v7/*: any*/),
   {
     "kind": "Literal",
     "name": "soloShow",
     "value": false
   },
-  (v6/*: any*/),
-  (v7/*: any*/)
+  (v8/*: any*/),
+  (v9/*: any*/)
 ],
 v16 = [
   {
@@ -253,10 +253,10 @@ v16 = [
     "name": "atAFair",
     "value": true
   },
-  (v4/*: any*/),
-  (v5/*: any*/),
   (v6/*: any*/),
-  (v7/*: any*/)
+  (v7/*: any*/),
+  (v8/*: any*/),
+  (v9/*: any*/)
 ],
 v17 = {
   "enumValues": null,
@@ -274,31 +274,31 @@ v19 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "ShowConnection"
+  "type": "String"
 },
 v20 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "ShowConnection"
+},
+v21 = {
   "enumValues": null,
   "nullable": true,
   "plural": true,
   "type": "ShowEdge"
 },
-v21 = {
+v22 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "String"
 },
-v22 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "Show"
-},
 v23 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "String"
+  "type": "Show"
 },
 v24 = {
   "enumValues": null,
@@ -360,7 +360,7 @@ return {
         "plural": false,
         "selections": [
           {
-            "alias": "soloShows",
+            "alias": null,
             "args": (v1/*: any*/),
             "concreteType": "Artist",
             "kind": "LinkedField",
@@ -368,9 +368,23 @@ return {
             "plural": false,
             "selections": [
               (v2/*: any*/),
+              (v3/*: any*/),
+              (v4/*: any*/)
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": "soloShows",
+            "args": (v1/*: any*/),
+            "concreteType": "Artist",
+            "kind": "LinkedField",
+            "name": "artist",
+            "plural": false,
+            "selections": [
+              (v3/*: any*/),
               {
                 "alias": null,
-                "args": (v8/*: any*/),
+                "args": (v10/*: any*/),
                 "concreteType": "ShowConnection",
                 "kind": "LinkedField",
                 "name": "showsConnection",
@@ -380,15 +394,14 @@ return {
               },
               {
                 "alias": null,
-                "args": (v8/*: any*/),
+                "args": (v10/*: any*/),
                 "filters": (v14/*: any*/),
                 "handle": "connection",
                 "key": "ArtistCVGroup_showsConnection",
                 "kind": "LinkedHandle",
                 "name": "showsConnection"
               },
-              (v11/*: any*/),
-              (v9/*: any*/)
+              (v4/*: any*/)
             ],
             "storageKey": null
           },
@@ -400,7 +413,7 @@ return {
             "name": "artist",
             "plural": false,
             "selections": [
-              (v2/*: any*/),
+              (v3/*: any*/),
               {
                 "alias": null,
                 "args": (v15/*: any*/),
@@ -420,7 +433,7 @@ return {
                 "kind": "LinkedHandle",
                 "name": "showsConnection"
               },
-              (v9/*: any*/)
+              (v4/*: any*/)
             ],
             "storageKey": null
           },
@@ -432,7 +445,7 @@ return {
             "name": "artist",
             "plural": false,
             "selections": [
-              (v2/*: any*/),
+              (v3/*: any*/),
               {
                 "alias": null,
                 "args": (v16/*: any*/),
@@ -452,7 +465,7 @@ return {
                 "kind": "LinkedHandle",
                 "name": "showsConnection"
               },
-              (v9/*: any*/)
+              (v4/*: any*/)
             ],
             "storageKey": null
           }
@@ -462,7 +475,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2bfa412792b58459416b92c2b5370335",
+    "cacheID": "f97e262028eca669912e6fa48feb0028",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -472,78 +485,81 @@ return {
           "plural": false,
           "type": "Viewer"
         },
+        "viewer.artist": (v17/*: any*/),
+        "viewer.artist.id": (v18/*: any*/),
+        "viewer.artist.name": (v19/*: any*/),
+        "viewer.artist.slug": (v18/*: any*/),
         "viewer.fairBooths": (v17/*: any*/),
         "viewer.fairBooths.id": (v18/*: any*/),
-        "viewer.fairBooths.showsConnection": (v19/*: any*/),
-        "viewer.fairBooths.showsConnection.edges": (v20/*: any*/),
-        "viewer.fairBooths.showsConnection.edges.cursor": (v21/*: any*/),
-        "viewer.fairBooths.showsConnection.edges.node": (v22/*: any*/),
-        "viewer.fairBooths.showsConnection.edges.node.__typename": (v21/*: any*/),
-        "viewer.fairBooths.showsConnection.edges.node.city": (v23/*: any*/),
-        "viewer.fairBooths.showsConnection.edges.node.href": (v23/*: any*/),
+        "viewer.fairBooths.showsConnection": (v20/*: any*/),
+        "viewer.fairBooths.showsConnection.edges": (v21/*: any*/),
+        "viewer.fairBooths.showsConnection.edges.cursor": (v22/*: any*/),
+        "viewer.fairBooths.showsConnection.edges.node": (v23/*: any*/),
+        "viewer.fairBooths.showsConnection.edges.node.__typename": (v22/*: any*/),
+        "viewer.fairBooths.showsConnection.edges.node.city": (v19/*: any*/),
+        "viewer.fairBooths.showsConnection.edges.node.href": (v19/*: any*/),
         "viewer.fairBooths.showsConnection.edges.node.id": (v18/*: any*/),
-        "viewer.fairBooths.showsConnection.edges.node.name": (v23/*: any*/),
+        "viewer.fairBooths.showsConnection.edges.node.name": (v19/*: any*/),
         "viewer.fairBooths.showsConnection.edges.node.partner": (v24/*: any*/),
-        "viewer.fairBooths.showsConnection.edges.node.partner.__isNode": (v21/*: any*/),
-        "viewer.fairBooths.showsConnection.edges.node.partner.__typename": (v21/*: any*/),
-        "viewer.fairBooths.showsConnection.edges.node.partner.href": (v23/*: any*/),
+        "viewer.fairBooths.showsConnection.edges.node.partner.__isNode": (v22/*: any*/),
+        "viewer.fairBooths.showsConnection.edges.node.partner.__typename": (v22/*: any*/),
+        "viewer.fairBooths.showsConnection.edges.node.partner.href": (v19/*: any*/),
         "viewer.fairBooths.showsConnection.edges.node.partner.id": (v18/*: any*/),
-        "viewer.fairBooths.showsConnection.edges.node.partner.name": (v23/*: any*/),
-        "viewer.fairBooths.showsConnection.edges.node.startAt": (v23/*: any*/),
+        "viewer.fairBooths.showsConnection.edges.node.partner.name": (v19/*: any*/),
+        "viewer.fairBooths.showsConnection.edges.node.startAt": (v19/*: any*/),
         "viewer.fairBooths.showsConnection.pageInfo": (v25/*: any*/),
-        "viewer.fairBooths.showsConnection.pageInfo.endCursor": (v23/*: any*/),
+        "viewer.fairBooths.showsConnection.pageInfo.endCursor": (v19/*: any*/),
         "viewer.fairBooths.showsConnection.pageInfo.hasNextPage": (v26/*: any*/),
         "viewer.fairBooths.slug": (v18/*: any*/),
         "viewer.groupShows": (v17/*: any*/),
         "viewer.groupShows.id": (v18/*: any*/),
-        "viewer.groupShows.showsConnection": (v19/*: any*/),
-        "viewer.groupShows.showsConnection.edges": (v20/*: any*/),
-        "viewer.groupShows.showsConnection.edges.cursor": (v21/*: any*/),
-        "viewer.groupShows.showsConnection.edges.node": (v22/*: any*/),
-        "viewer.groupShows.showsConnection.edges.node.__typename": (v21/*: any*/),
-        "viewer.groupShows.showsConnection.edges.node.city": (v23/*: any*/),
-        "viewer.groupShows.showsConnection.edges.node.href": (v23/*: any*/),
+        "viewer.groupShows.showsConnection": (v20/*: any*/),
+        "viewer.groupShows.showsConnection.edges": (v21/*: any*/),
+        "viewer.groupShows.showsConnection.edges.cursor": (v22/*: any*/),
+        "viewer.groupShows.showsConnection.edges.node": (v23/*: any*/),
+        "viewer.groupShows.showsConnection.edges.node.__typename": (v22/*: any*/),
+        "viewer.groupShows.showsConnection.edges.node.city": (v19/*: any*/),
+        "viewer.groupShows.showsConnection.edges.node.href": (v19/*: any*/),
         "viewer.groupShows.showsConnection.edges.node.id": (v18/*: any*/),
-        "viewer.groupShows.showsConnection.edges.node.name": (v23/*: any*/),
+        "viewer.groupShows.showsConnection.edges.node.name": (v19/*: any*/),
         "viewer.groupShows.showsConnection.edges.node.partner": (v24/*: any*/),
-        "viewer.groupShows.showsConnection.edges.node.partner.__isNode": (v21/*: any*/),
-        "viewer.groupShows.showsConnection.edges.node.partner.__typename": (v21/*: any*/),
-        "viewer.groupShows.showsConnection.edges.node.partner.href": (v23/*: any*/),
+        "viewer.groupShows.showsConnection.edges.node.partner.__isNode": (v22/*: any*/),
+        "viewer.groupShows.showsConnection.edges.node.partner.__typename": (v22/*: any*/),
+        "viewer.groupShows.showsConnection.edges.node.partner.href": (v19/*: any*/),
         "viewer.groupShows.showsConnection.edges.node.partner.id": (v18/*: any*/),
-        "viewer.groupShows.showsConnection.edges.node.partner.name": (v23/*: any*/),
-        "viewer.groupShows.showsConnection.edges.node.startAt": (v23/*: any*/),
+        "viewer.groupShows.showsConnection.edges.node.partner.name": (v19/*: any*/),
+        "viewer.groupShows.showsConnection.edges.node.startAt": (v19/*: any*/),
         "viewer.groupShows.showsConnection.pageInfo": (v25/*: any*/),
-        "viewer.groupShows.showsConnection.pageInfo.endCursor": (v23/*: any*/),
+        "viewer.groupShows.showsConnection.pageInfo.endCursor": (v19/*: any*/),
         "viewer.groupShows.showsConnection.pageInfo.hasNextPage": (v26/*: any*/),
         "viewer.groupShows.slug": (v18/*: any*/),
         "viewer.soloShows": (v17/*: any*/),
         "viewer.soloShows.id": (v18/*: any*/),
-        "viewer.soloShows.name": (v23/*: any*/),
-        "viewer.soloShows.showsConnection": (v19/*: any*/),
-        "viewer.soloShows.showsConnection.edges": (v20/*: any*/),
-        "viewer.soloShows.showsConnection.edges.cursor": (v21/*: any*/),
-        "viewer.soloShows.showsConnection.edges.node": (v22/*: any*/),
-        "viewer.soloShows.showsConnection.edges.node.__typename": (v21/*: any*/),
-        "viewer.soloShows.showsConnection.edges.node.city": (v23/*: any*/),
-        "viewer.soloShows.showsConnection.edges.node.href": (v23/*: any*/),
+        "viewer.soloShows.showsConnection": (v20/*: any*/),
+        "viewer.soloShows.showsConnection.edges": (v21/*: any*/),
+        "viewer.soloShows.showsConnection.edges.cursor": (v22/*: any*/),
+        "viewer.soloShows.showsConnection.edges.node": (v23/*: any*/),
+        "viewer.soloShows.showsConnection.edges.node.__typename": (v22/*: any*/),
+        "viewer.soloShows.showsConnection.edges.node.city": (v19/*: any*/),
+        "viewer.soloShows.showsConnection.edges.node.href": (v19/*: any*/),
         "viewer.soloShows.showsConnection.edges.node.id": (v18/*: any*/),
-        "viewer.soloShows.showsConnection.edges.node.name": (v23/*: any*/),
+        "viewer.soloShows.showsConnection.edges.node.name": (v19/*: any*/),
         "viewer.soloShows.showsConnection.edges.node.partner": (v24/*: any*/),
-        "viewer.soloShows.showsConnection.edges.node.partner.__isNode": (v21/*: any*/),
-        "viewer.soloShows.showsConnection.edges.node.partner.__typename": (v21/*: any*/),
-        "viewer.soloShows.showsConnection.edges.node.partner.href": (v23/*: any*/),
+        "viewer.soloShows.showsConnection.edges.node.partner.__isNode": (v22/*: any*/),
+        "viewer.soloShows.showsConnection.edges.node.partner.__typename": (v22/*: any*/),
+        "viewer.soloShows.showsConnection.edges.node.partner.href": (v19/*: any*/),
         "viewer.soloShows.showsConnection.edges.node.partner.id": (v18/*: any*/),
-        "viewer.soloShows.showsConnection.edges.node.partner.name": (v23/*: any*/),
-        "viewer.soloShows.showsConnection.edges.node.startAt": (v23/*: any*/),
+        "viewer.soloShows.showsConnection.edges.node.partner.name": (v19/*: any*/),
+        "viewer.soloShows.showsConnection.edges.node.startAt": (v19/*: any*/),
         "viewer.soloShows.showsConnection.pageInfo": (v25/*: any*/),
-        "viewer.soloShows.showsConnection.pageInfo.endCursor": (v23/*: any*/),
+        "viewer.soloShows.showsConnection.pageInfo.endCursor": (v19/*: any*/),
         "viewer.soloShows.showsConnection.pageInfo.hasNextPage": (v26/*: any*/),
         "viewer.soloShows.slug": (v18/*: any*/)
       }
     },
     "name": "ArtistCVRouteTestQuery",
     "operationKind": "query",
-    "text": "query ArtistCVRouteTestQuery(\n  $artistID: String!\n) {\n  viewer {\n    ...ArtistCVRoute_viewer\n  }\n}\n\nfragment ArtistCVGroup_artist_47e96d on Artist {\n  slug\n  showsConnection(first: 10, sort: START_AT_DESC, atAFair: true, isReference: true, visibleToPublic: false) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        partner {\n          __typename\n          ... on ExternalPartner {\n            name\n            id\n          }\n          ... on Partner {\n            name\n            href\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        name\n        startAt(format: \"YYYY\")\n        city\n        href\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment ArtistCVGroup_artist_8zYC6 on Artist {\n  slug\n  showsConnection(first: 10, sort: START_AT_DESC, atAFair: false, soloShow: false, isReference: true, visibleToPublic: false) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        partner {\n          __typename\n          ... on ExternalPartner {\n            name\n            id\n          }\n          ... on Partner {\n            name\n            href\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        name\n        startAt(format: \"YYYY\")\n        city\n        href\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment ArtistCVGroup_artist_ieWPx on Artist {\n  slug\n  showsConnection(first: 10, sort: START_AT_DESC, atAFair: false, soloShow: true, isReference: true, visibleToPublic: false) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        partner {\n          __typename\n          ... on ExternalPartner {\n            name\n            id\n          }\n          ... on Partner {\n            name\n            href\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        name\n        startAt(format: \"YYYY\")\n        city\n        href\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment ArtistCVRoute_viewer on Viewer {\n  soloShows: artist(id: $artistID) @principalField {\n    ...ArtistCVGroup_artist_ieWPx\n    name\n    id\n  }\n  groupShows: artist(id: $artistID) {\n    ...ArtistCVGroup_artist_8zYC6\n    id\n  }\n  fairBooths: artist(id: $artistID) {\n    ...ArtistCVGroup_artist_47e96d\n    id\n  }\n}\n"
+    "text": "query ArtistCVRouteTestQuery(\n  $artistID: String!\n) {\n  viewer {\n    ...ArtistCVRoute_viewer\n  }\n}\n\nfragment ArtistCVGroup_artist_47e96d on Artist {\n  slug\n  showsConnection(first: 10, sort: START_AT_DESC, atAFair: true, isReference: true, visibleToPublic: false) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        partner {\n          __typename\n          ... on ExternalPartner {\n            name\n            id\n          }\n          ... on Partner {\n            name\n            href\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        name\n        startAt(format: \"YYYY\")\n        city\n        href\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment ArtistCVGroup_artist_8zYC6 on Artist {\n  slug\n  showsConnection(first: 10, sort: START_AT_DESC, atAFair: false, soloShow: false, isReference: true, visibleToPublic: false) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        partner {\n          __typename\n          ... on ExternalPartner {\n            name\n            id\n          }\n          ... on Partner {\n            name\n            href\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        name\n        startAt(format: \"YYYY\")\n        city\n        href\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment ArtistCVGroup_artist_ieWPx on Artist {\n  slug\n  showsConnection(first: 10, sort: START_AT_DESC, atAFair: false, soloShow: true, isReference: true, visibleToPublic: false) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        partner {\n          __typename\n          ... on ExternalPartner {\n            name\n            id\n          }\n          ... on Partner {\n            name\n            href\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        name\n        startAt(format: \"YYYY\")\n        city\n        href\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment ArtistCVRoute_viewer on Viewer {\n  artist(id: $artistID) @principalField {\n    name\n    slug\n    id\n  }\n  soloShows: artist(id: $artistID) {\n    ...ArtistCVGroup_artist_ieWPx\n    id\n  }\n  groupShows: artist(id: $artistID) {\n    ...ArtistCVGroup_artist_8zYC6\n    id\n  }\n  fairBooths: artist(id: $artistID) {\n    ...ArtistCVGroup_artist_47e96d\n    id\n  }\n}\n"
   }
 };
 })();

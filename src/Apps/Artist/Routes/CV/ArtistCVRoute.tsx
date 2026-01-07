@@ -18,11 +18,14 @@ const ArtistCVRoute: React.FC<React.PropsWithChildren<ArtistCVRouteProps>> = ({
 
   return (
     <>
-      <MetaTags title={`${viewer?.soloShows?.name} CV | Artsy`} />
+      <MetaTags
+        title={`${viewer.artist.name} CV | Artsy`}
+        pathname={`/artist/${viewer.artist.slug}/cv`}
+      />
 
       <Stack gap={4}>
         <Text as="h1" variant="xl">
-          {viewer.soloShows?.name} CV
+          {viewer.artist.name} CV
         </Text>
 
         <ArtistCVGroupRefetchContainer
@@ -49,11 +52,12 @@ export const ArtistCVRouteFragmentContainer = createFragmentContainer(
   {
     viewer: graphql`
       fragment ArtistCVRoute_viewer on Viewer {
-        soloShows: artist(id: $artistID)
-          @principalField
-          @required(action: NONE) {
-          ...ArtistCVGroup_artist @arguments(atAFair: false, soloShow: true)
+        artist(id: $artistID) @principalField @required(action: NONE) {
           name
+          slug
+        }
+        soloShows: artist(id: $artistID) @required(action: NONE) {
+          ...ArtistCVGroup_artist @arguments(atAFair: false, soloShow: true)
         }
         groupShows: artist(id: $artistID) @required(action: NONE) {
           ...ArtistCVGroup_artist @arguments(atAFair: false, soloShow: false)
