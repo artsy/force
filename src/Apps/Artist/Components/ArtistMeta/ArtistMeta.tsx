@@ -19,6 +19,12 @@ export const ArtistMeta: React.FC<React.PropsWithChildren<Props>> = ({
   const alternateNames = artist?.alternateNames || []
   const page = getPageNumber(match?.location)
   const pathname = page > 1 ? `${artist.href}?page=${page}` : artist.href
+  const currentPathname = match.location.pathname
+
+  // Skip rendering if we're on the CV route which handles its own MetaTags
+  if (currentPathname === `${artist.href}/cv`) {
+    return null
+  }
 
   return (
     <>

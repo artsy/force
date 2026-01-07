@@ -43,6 +43,7 @@ describe("AdminMeta", () => {
   describe("canonical link", () => {
     beforeEach(() => {
       mockLocation.query = {}
+      mockLocation.pathname = "/artist/example-artist"
     })
 
     it("renders basic canonical URL", () => {
@@ -120,6 +121,19 @@ describe("AdminMeta", () => {
 
       const linkTag = document.querySelector("link[rel='canonical']")
       expect(linkTag?.getAttribute("href")).toEqual("/artist/picasso")
+    })
+
+    it("does not render meta tags on CV route", () => {
+      mockLocation.pathname = "/artist/banksy/cv"
+
+      renderWithRelay({
+        Artist: () => ({
+          href: "/artist/banksy",
+        }),
+      })
+
+      const linkTag = document.querySelector("link[rel='canonical']")
+      expect(linkTag).toBeNull()
     })
   })
 
