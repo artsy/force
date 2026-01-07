@@ -91,17 +91,11 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
           throw new Error("No offer ID available for submission")
         }
         input.offerID = offerId
-        if (orderData.stripeConfirmationToken) {
-          input.confirmedSetupIntentId = orderData.stripeConfirmationToken
-        }
+        input.confirmedSetupIntentId =
+          orderData.stripeConfirmationToken ?? undefined
       } else {
-        if (orderData.stripeConfirmationToken) {
-          input.confirmationToken = orderData.stripeConfirmationToken
-        }
-      }
-
-      if (!savePaymentMethod) {
-        input.oneTimeUse = true
+        input.confirmationToken = orderData.stripeConfirmationToken ?? undefined
+        input.oneTimeUse = !savePaymentMethod
       }
 
       const submitOrderResult = await submitOrderMutation.submitMutation({
