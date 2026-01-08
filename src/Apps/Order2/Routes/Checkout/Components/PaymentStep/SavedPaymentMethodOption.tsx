@@ -98,7 +98,9 @@ export const SavedPaymentMethodOption: React.FC<
                               mr={1}
                             />
                             <Text variant="sm">
-                              Bank account •••• {paymentMethod.last4}
+                              {paymentMethod.bankName &&
+                                `${paymentMethod.bankName} `}
+                              •••• {paymentMethod.last4}
                             </Text>
                           </>
                         )}

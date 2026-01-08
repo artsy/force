@@ -758,6 +758,7 @@ const ME_FRAGMENT = graphql`
           type
           internalID
           last4
+          bankName
         }
       }
     }

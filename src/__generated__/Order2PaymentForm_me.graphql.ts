@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f15718fed2b27051227fa9e25d747d5b>>
+ * @generated SignedSource<<d8582e021e713ffeb05b8c5e64d6e6cc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,6 +16,7 @@ export type Order2PaymentForm_me$data = {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly __typename: "BankAccount";
+        readonly bankName: string;
         readonly internalID: string;
         readonly last4: string;
         readonly type: BankAccountTypes;
@@ -155,6 +156,13 @@ return {
                   "kind": "ScalarField",
                   "name": "last4",
                   "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "bankName",
+                  "storageKey": null
                 }
               ],
               "storageKey": null
@@ -171,6 +179,6 @@ return {
 };
 })();
 
-(node as any).hash = "4aec3fc1eecc8c3f7e9f9b60854b5077";
+(node as any).hash = "f5ced24e01242949ba6e0f853c092c0d";
 
 export default node;

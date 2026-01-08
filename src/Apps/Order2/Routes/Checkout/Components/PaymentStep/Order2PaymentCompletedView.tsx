@@ -144,7 +144,7 @@ const getDisplayDetails = (
       return {
         cardBrand: null,
         last4: savedPaymentMethod.last4,
-        bankName: null,
+        bankName: savedPaymentMethod.bankName,
       }
     }
   }
@@ -163,6 +163,7 @@ const ORDER_FRAGMENT = graphql`
       }
       ... on BankAccount {
         last4
+        bankName
       }
       ... on WireTransfer {
         isManualPayment
