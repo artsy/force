@@ -748,6 +748,8 @@ const ME_FRAGMENT = graphql`
           internalID
           brand
           lastDigits
+          expirationYear
+          expirationMonth
         }
       }
     }

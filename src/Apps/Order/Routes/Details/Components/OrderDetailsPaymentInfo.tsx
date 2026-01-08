@@ -75,7 +75,7 @@ const getPaymentMethodContent = (
     case "BankAccount":
       return {
         Icon: InstitutionIcon,
-        text: `Bank transfer •••• ${paymentMethodDetails.last4}`,
+        text: `${paymentMethodDetails.bankName} •••• ${paymentMethodDetails.last4}`,
       }
 
     case "WireTransfer":
@@ -104,6 +104,7 @@ const fragment = graphql`
       }
       ... on BankAccount {
         last4
+        bankName
       }
       ... on WireTransfer {
         isManualPayment

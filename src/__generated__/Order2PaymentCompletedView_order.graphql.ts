@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0dc015937d67b4ab772e1f55ed65ec52>>
+ * @generated SignedSource<<939b5a08ae7c214548c93b73f23f0839>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,6 +20,8 @@ export type Order2PaymentCompletedView_order$data = {
   } | {
     readonly __typename: "CreditCard";
     readonly brand: string;
+    readonly expirationMonth: number;
+    readonly expirationYear: number;
     readonly lastDigits: string;
   } | {
     readonly __typename: "WireTransfer";
@@ -80,6 +82,20 @@ const node: ReaderFragment = {
               "kind": "ScalarField",
               "name": "lastDigits",
               "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "expirationYear",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "expirationMonth",
+              "storageKey": null
             }
           ],
           "type": "CreditCard",
@@ -128,6 +144,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "a4a5e9025a6fc9550abd39dfb1bbb6a6";
+(node as any).hash = "0971b8f9fec8c4b34741cb090ee16777";
 
 export default node;

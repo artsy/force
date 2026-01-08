@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<14db65334e7c4cf240b9501a64289eff>>
+ * @generated SignedSource<<906502b068cef098de8b8059a245064d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,6 +15,7 @@ export type OrderDetailsPaymentInfo_order$data = {
   readonly creditCardWalletType: OrderCreditCardWalletTypeEnum | null | undefined;
   readonly paymentMethodDetails: {
     readonly __typename: "BankAccount";
+    readonly bankName: string;
     readonly last4: string;
   } | {
     readonly __typename: "CreditCard";
@@ -109,6 +110,13 @@ const node: ReaderFragment = {
               "kind": "ScalarField",
               "name": "last4",
               "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "bankName",
+              "storageKey": null
             }
           ],
           "type": "BankAccount",
@@ -136,6 +144,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "739da6a6f591224c6461fbc0fe24cb44";
+(node as any).hash = "6f3be68203f57ff46f2a367e62c4c8d6";
 
 export default node;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d8582e021e713ffeb05b8c5e64d6e6cc>>
+ * @generated SignedSource<<427cc67ac630d230e01e6e5e03786963>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -28,6 +28,8 @@ export type Order2PaymentForm_me$data = {
       readonly node: {
         readonly __typename: "CreditCard";
         readonly brand: string;
+        readonly expirationMonth: number;
+        readonly expirationYear: number;
         readonly internalID: string;
         readonly lastDigits: string;
       } | null | undefined;
@@ -107,6 +109,20 @@ return {
                   "kind": "ScalarField",
                   "name": "lastDigits",
                   "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "expirationYear",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "expirationMonth",
+                  "storageKey": null
                 }
               ],
               "storageKey": null
@@ -179,6 +195,6 @@ return {
 };
 })();
 
-(node as any).hash = "f5ced24e01242949ba6e0f853c092c0d";
+(node as any).hash = "287ef80423a80132687d624f7eafa271";
 
 export default node;

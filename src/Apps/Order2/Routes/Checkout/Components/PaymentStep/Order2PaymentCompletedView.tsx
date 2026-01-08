@@ -90,7 +90,10 @@ export const Order2PaymentCompletedView: React.FC<
                 width="24px"
                 height="24px"
               />
-              <Text variant="sm-display">•••• {details.last4}</Text>
+              <Text variant="sm-display">
+                •••• {details.last4}
+                {details.formattedExpDate && ` Exp ${details.formattedExpDate}`}
+              </Text>
             </>
           )}
 
@@ -123,10 +126,15 @@ const getDisplayDetails = (
     }
 
     if (savedPaymentMethod?.__typename === "CreditCard") {
+      const formattedExpDate = `${savedPaymentMethod.expirationMonth.toString().padStart(2, "0")}/${savedPaymentMethod.expirationYear
+        .toString()
+        .slice(-2)}`
+
       return {
         cardBrand: savedPaymentMethod.brand,
         last4: savedPaymentMethod.lastDigits,
         bankName: null,
+        formattedExpDate,
       }
     }
   }
@@ -160,6 +168,8 @@ const ORDER_FRAGMENT = graphql`
       ... on CreditCard {
         brand
         lastDigits
+        expirationYear
+        expirationMonth
       }
       ... on BankAccount {
         last4
