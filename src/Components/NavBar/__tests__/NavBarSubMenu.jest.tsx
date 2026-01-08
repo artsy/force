@@ -14,6 +14,11 @@ jest.mock("System/Hooks/useAnalyticsContext", () => ({
   })),
 }))
 
+jest.mock("react-relay", () => ({
+  ...jest.requireActual("react-relay"),
+  useLazyLoadQuery: jest.fn(() => ({ articles: null })),
+}))
+
 describe("NavBarSubMenu", () => {
   const trackEvent = jest.fn()
 
