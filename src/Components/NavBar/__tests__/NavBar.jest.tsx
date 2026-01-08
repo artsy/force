@@ -16,6 +16,11 @@ jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
 }))
 
+jest.mock("react-relay", () => ({
+  ...jest.requireActual("react-relay"),
+  useLazyLoadQuery: jest.fn(() => ({ articles: null })),
+}))
+
 jest.mock("@artsy/palette", () => ({
   ...jest.requireActual("@artsy/palette"),
   useDidMount: jest.fn().mockReturnValue(false), // SSR-render
