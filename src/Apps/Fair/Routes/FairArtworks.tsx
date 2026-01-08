@@ -4,8 +4,10 @@ import {
   ArtworkFilterContextProvider,
   type Counts,
   type SharedArtworkFilterContextProps,
+  useArtworkFilterContext,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { ArtworkFilterPlaceholder } from "Components/ArtworkFilter/ArtworkFilterPlaceholder"
+import { MetaTags } from "Components/MetaTags"
 import { ArtistNationalityFilter } from "Components/ArtworkFilter/ArtworkFilters/ArtistNationalityFilter"
 import { ArtistsFilter } from "Components/ArtworkFilter/ArtworkFilters/ArtistsFilter"
 import { ArtworkLocationFilter } from "Components/ArtworkFilter/ArtworkFilters/ArtworkLocationFilter"
@@ -37,6 +39,29 @@ import {
   createRefetchContainer,
   graphql,
 } from "react-relay"
+
+interface FairArtworksMetaProps {
+  fair: FairArtworks_fair$data
+}
+
+const FairArtworksMeta: React.FC<
+  React.PropsWithChildren<FairArtworksMetaProps>
+> = ({ fair }) => {
+  const artworkFilterContext = useArtworkFilterContext()
+  const page = artworkFilterContext.filters?.page || 1
+
+  const basePath = `${fair.href}/artworks`
+  const pathname = page > 1 ? `${basePath}?page=${page}` : basePath
+
+  return (
+    <MetaTags
+      title={`${fair.name} | Artsy`}
+      description={fair.metaDescription || fair.metaDescriptionFallback}
+      pathname={pathname}
+      imageURL={fair.metaImage?.src}
+    />
+  )
+}
 
 interface FairArtworksFilterProps {
   fair: FairArtworks_fair$data
@@ -97,6 +122,7 @@ const FairArtworksFilter: React.FC<
         }
         userPreferredMetric={userPreferences?.metric}
       >
+        <FairArtworksMeta fair={fair} />
         <BaseArtworkFilter
           mt={[0, 6]}
           relay={relay}
@@ -120,7 +146,14 @@ export const FairArtworksRefetchContainer = createRefetchContainer(
       ) {
         slug
         internalID
+        name
+        href
         featuredKeywords
+        metaDescription: summary
+        metaDescriptionFallback: about(format: PLAIN)
+        metaImage: image {
+          src: url(version: "large_rectangle")
+        }
         sidebarAggregations: filterArtworksConnection(
           aggregations: $aggregations
           first: 1

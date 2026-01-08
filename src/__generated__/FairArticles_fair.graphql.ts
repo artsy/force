@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<64ff54397341ee25a88082f2c181e2b1>>
+ * @generated SignedSource<<baa39455da03991769993a0307895796>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -25,6 +25,13 @@ export type FairArticles_fair$data = {
       readonly hasNextPage: boolean;
     };
   } | null | undefined;
+  readonly href: string | null | undefined;
+  readonly metaDescription: string | null | undefined;
+  readonly metaDescriptionFallback: string | null | undefined;
+  readonly metaImage: {
+    readonly src: string | null | undefined;
+  } | null | undefined;
+  readonly name: string | null | undefined;
   readonly slug: string;
   readonly " $fragmentType": "FairArticles_fair";
 };
@@ -49,7 +56,65 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
+      "name": "name",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "slug",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "href",
+      "storageKey": null
+    },
+    {
+      "alias": "metaDescription",
+      "args": null,
+      "kind": "ScalarField",
+      "name": "summary",
+      "storageKey": null
+    },
+    {
+      "alias": "metaDescriptionFallback",
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "format",
+          "value": "PLAIN"
+        }
+      ],
+      "kind": "ScalarField",
+      "name": "about",
+      "storageKey": "about(format:\"PLAIN\")"
+    },
+    {
+      "alias": "metaImage",
+      "args": null,
+      "concreteType": "Image",
+      "kind": "LinkedField",
+      "name": "image",
+      "plural": false,
+      "selections": [
+        {
+          "alias": "src",
+          "args": [
+            {
+              "kind": "Literal",
+              "name": "version",
+              "value": "large_rectangle"
+            }
+          ],
+          "kind": "ScalarField",
+          "name": "url",
+          "storageKey": "url(version:\"large_rectangle\")"
+        }
+      ],
       "storageKey": null
     },
     {
@@ -147,6 +212,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "d71b8800705bb0b0ea82fe1aac4758c5";
+(node as any).hash = "85c05e21c4a207f9146a5352fba8a51d";
 
 export default node;

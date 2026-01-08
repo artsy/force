@@ -8,9 +8,6 @@ jest.unmock("react-relay")
 jest.mock("System/Hooks/useRouter", () => ({
   useRouter: () => ({ match: { params: { id: "example" } } }),
 }))
-jest.mock("Components/MetaTags", () => ({
-  MetaTags: () => null,
-}))
 
 describe("SaleAgreementsApp", () => {
   const { renderWithRelay } = setupTestWrapperTL<SaleAgreementsApp_Test_Query>({
@@ -73,5 +70,20 @@ describe("SaleAgreementsApp", () => {
     ).not.toBeInTheDocument()
     expect(screen.queryByText("Artsy Auctions")).not.toBeInTheDocument()
     expect(screen.getByText("Past Auction")).toBeInTheDocument()
+  })
+
+  describe("canonical URL", () => {
+    it("renders correct canonical URL for sale agreements list", () => {
+      renderWithRelay({
+        Viewer: () => ({
+          saleAgreementsConnection: {
+            edges: [],
+          },
+        }),
+      })
+
+      const canonicalLink = document.querySelector('link[rel="canonical"]')
+      expect(canonicalLink).toHaveAttribute("href", "/supplemental-cos")
+    })
   })
 })

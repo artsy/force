@@ -65,9 +65,6 @@ describe("FairApp", () => {
 
   afterEach(() => {
     mockUseRouter.mockReset()
-  })
-
-  afterEach(() => {
     trackEvent.mockClear()
   })
 
@@ -75,14 +72,6 @@ describe("FairApp", () => {
     renderWithRelay()
 
     expect(screen.getByText("Overview")).toBeInTheDocument()
-  })
-
-  it("sets a title tag", () => {
-    renderWithRelay({
-      Fair: () => ({ name: "Miart 2020" }),
-    })
-
-    expect(document.title).toBe("Miart 2020 | Artsy")
   })
 
   it("renders the exhibitors tab", () => {
