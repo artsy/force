@@ -6,6 +6,7 @@ import {
   Box,
   Column,
   GridColumns,
+  HTML,
   Spacer,
   Stack,
   Text,
@@ -154,10 +155,8 @@ export const AuthorApp: FC<React.PropsWithChildren<AuthorAppProps>> = ({
               <Text variant="sm-display" as="h3" fontWeight="bold">
                 About {author.name}
               </Text>
-
-              <Text variant="sm" as="p">
-                {author.bio}
-              </Text>
+              <Spacer y={1} />
+              <HTML variant="sm" html={author.bio} />
             </Column>
           )}
         </GridColumns>
@@ -183,7 +182,7 @@ const FRAGMENT = graphql`
     internalID
     slug
     name
-    bio
+    bio(format: HTML)
     initials
     role
     website
