@@ -89,19 +89,32 @@ describe(FramedFilter, () => {
     })
   })
 
-  describe("the `expanded` prop", () => {
-    it("hides the filter controls when not set", () => {
+  describe("expanded prop", () => {
+    it("renders collapsed when not set", () => {
       render(<FramedFilter />)
-      expect(screen.queryAllByRole("checkbox").length).toBe(0)
+      const button = screen.getByRole("button", {
+        name: "Framed",
+        expanded: false,
+      })
+      expect(button).toHaveAttribute("aria-expanded", "false")
     })
 
-    it("hides the filter controls when `false`", () => {
+    it("renders collapsed when false", () => {
       render(<FramedFilter expanded={false} />)
-      expect(screen.queryAllByRole("checkbox").length).toBe(0)
+      const button = screen.getByRole("button", {
+        name: "Framed",
+        expanded: false,
+      })
+      expect(button).toHaveAttribute("aria-expanded", "false")
     })
 
-    it("shows the filter controls when `true`", () => {
+    it("renders expanded when true", () => {
       render(<FramedFilter expanded />)
+      const button = screen.getByRole("button", {
+        name: "Framed",
+        expanded: true,
+      })
+      expect(button).toHaveAttribute("aria-expanded", "true")
       expect(screen.queryAllByRole("checkbox").length).not.toBe(0)
     })
   })

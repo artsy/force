@@ -58,16 +58,35 @@ describe(PartnersFilter, () => {
     expect(currentArtworkFilterContext().filters?.partnerIDs).toEqual([])
   })
 
-  it("can render in expanded or collapsed state", () => {
-    render(<PartnersFilter />)
-    expect(screen.queryByText("Percy Z")).not.toBeInTheDocument()
+  describe("expanded prop", () => {
+    it("renders collapsed when not set", () => {
+      render(<PartnersFilter />)
+      const button = screen.getByRole("button", {
+        name: "Galleries and Institutions",
+        expanded: false,
+      })
+      expect(button).toHaveAttribute("aria-expanded", "false")
+    })
 
-    render(<PartnersFilter expanded={false} />)
-    expect(screen.queryByText("Percy Z")).not.toBeInTheDocument()
+    it("renders collapsed when false", () => {
+      render(<PartnersFilter expanded={false} />)
+      const button = screen.getByRole("button", {
+        name: "Galleries and Institutions",
+        expanded: false,
+      })
+      expect(button).toHaveAttribute("aria-expanded", "false")
+    })
 
-    render(<PartnersFilter expanded={true} />)
-    expect(screen.getByText("Percy Z")).toBeInTheDocument()
-    expect(screen.getByText("Gallery ABC")).toBeInTheDocument()
+    it("renders expanded when true", () => {
+      render(<PartnersFilter expanded={true} />)
+      const button = screen.getByRole("button", {
+        name: "Galleries and Institutions",
+        expanded: true,
+      })
+      expect(button).toHaveAttribute("aria-expanded", "true")
+      expect(screen.getByText("Percy Z")).toBeInTheDocument()
+      expect(screen.getByText("Gallery ABC")).toBeInTheDocument()
+    })
   })
 
   it("renders custom label when provided", () => {

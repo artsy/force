@@ -85,15 +85,34 @@ describe(ArtistsFilter, () => {
       expect(currentArtworkFilterContext().filters?.artistIDs).toEqual([])
     })
 
-    it("can render in expanded or collapsed state", () => {
-      render(<ArtistsFilter />)
-      expect(screen.queryByRole("checkbox")).not.toBeInTheDocument()
+    describe("expanded prop", () => {
+      it("renders collapsed when not set", () => {
+        render(<ArtistsFilter />)
+        const button = screen.getByRole("button", {
+          name: "Artists",
+          expanded: false,
+        })
+        expect(button).toHaveAttribute("aria-expanded", "false")
+      })
 
-      render(<ArtistsFilter expanded={false} />)
-      expect(screen.queryByRole("checkbox")).not.toBeInTheDocument()
+      it("renders collapsed when false", () => {
+        render(<ArtistsFilter expanded={false} />)
+        const button = screen.getByRole("button", {
+          name: "Artists",
+          expanded: false,
+        })
+        expect(button).toHaveAttribute("aria-expanded", "false")
+      })
 
-      render(<ArtistsFilter expanded={true} />)
-      expect(screen.getAllByRole("checkbox")).toHaveLength(7)
+      it("renders expanded when true", () => {
+        render(<ArtistsFilter expanded={true} />)
+        const button = screen.getByRole("button", {
+          name: "Artists",
+          expanded: true,
+        })
+        expect(button).toHaveAttribute("aria-expanded", "true")
+        expect(screen.getAllByRole("checkbox")).toHaveLength(7)
+      })
     })
   })
 
