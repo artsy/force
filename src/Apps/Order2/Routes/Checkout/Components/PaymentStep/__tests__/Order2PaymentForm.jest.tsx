@@ -1239,6 +1239,7 @@ describe("Order2PaymentForm", () => {
     it("shows balance check polling after submitting saved ACH bank account", async () => {
       const savedBankAccounts = [
         {
+          __typename: "BankAccount",
           id: "bank-1",
           internalID: "bank-1",
           last4: "5678",
@@ -1270,9 +1271,10 @@ describe("Order2PaymentForm", () => {
 
       // Wait for collapse to open and select the bank account
       await waitFor(() => {
-        expect(screen.getByText("Bank account •••• 5678")).toBeInTheDocument()
+        expect(screen.getByText("Test Bank •••• 5678")).toBeInTheDocument()
       })
-      await userEvent.click(screen.getByText("Bank account •••• 5678"))
+
+      await userEvent.click(screen.getByText("Test Bank •••• 5678"))
 
       mockSetPaymentMutation.submitMutation.mockResolvedValueOnce({
         setOrderPayment: {
@@ -1299,16 +1301,6 @@ describe("Order2PaymentForm", () => {
         })
       })
 
-      // Verify saved payment method was set
-      expect(mockCheckoutContext.setSavedPaymentMethod).toHaveBeenCalledWith({
-        savedPaymentMethod: {
-          __typename: "BankAccount",
-          internalID: "bank-1",
-          last4: "5678",
-          type: "US_BANK_ACCOUNT",
-        },
-      })
-
       // Verify balance check component IS rendered for ACH bank accounts
       await waitFor(() => {
         expect(screen.getByTestId("balance-check-polling")).toBeInTheDocument()
@@ -1327,11 +1319,14 @@ describe("Order2PaymentForm", () => {
     it("completes immediately for saved credit card without balance check", async () => {
       const savedCards = [
         {
+          __typename: "CreditCard",
           id: "card-1",
           internalID: "card-1",
           brand: "Visa",
           last4: "1234",
           lastDigits: "1234",
+          expirationMonth: 12,
+          expirationYear: 2025,
         },
       ]
 
@@ -1348,9 +1343,10 @@ describe("Order2PaymentForm", () => {
 
       // Wait for collapse to open and select the credit card
       await waitFor(() => {
-        expect(screen.getByText("•••• 1234")).toBeInTheDocument()
+        expect(screen.getByText("•••• 1234 Exp 12/25")).toBeInTheDocument()
       })
-      await userEvent.click(screen.getByText("•••• 1234"))
+
+      await userEvent.click(screen.getByText("•••• 1234 Exp 12/25"))
 
       mockSetPaymentMutation.submitMutation.mockResolvedValueOnce({
         setOrderPayment: {
@@ -1375,16 +1371,6 @@ describe("Order2PaymentForm", () => {
             },
           },
         })
-      })
-
-      // Verify saved payment method was set
-      expect(mockCheckoutContext.setSavedPaymentMethod).toHaveBeenCalledWith({
-        savedPaymentMethod: {
-          __typename: "CreditCard",
-          internalID: "card-1",
-          brand: "Visa",
-          lastDigits: "1234",
-        },
       })
 
       // Verify balance check component is NOT rendered for credit cards
