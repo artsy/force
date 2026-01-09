@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0b830374a9c96537b7147fb8d8683d6e>>
+ * @generated SignedSource<<8b4c0f0eae109f0244ad842d57d62268>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -176,10 +176,16 @@ return {
           },
           {
             "alias": null,
-            "args": null,
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "format",
+                "value": "HTML"
+              }
+            ],
             "kind": "ScalarField",
             "name": "bio",
-            "storageKey": null
+            "storageKey": "bio(format:\"HTML\")"
           },
           {
             "alias": null,
@@ -255,12 +261,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "80c79c481d7bc6f5236d2db065c64167",
+    "cacheID": "c724d92d8349944ad128905611f17a3f",
     "id": null,
     "metadata": {},
     "name": "articlesRoutes_AuthorQuery",
     "operationKind": "query",
-    "text": "query articlesRoutes_AuthorQuery(\n  $id: String!\n) {\n  author(id: $id) @principalField {\n    ...AuthorApp_author\n    id\n  }\n}\n\nfragment AuthorApp_author on Author {\n  ...AuthorStructuredData_author\n  __typename\n  internalID\n  slug\n  name\n  bio\n  initials\n  role\n  website\n  socials {\n    x {\n      handle\n      url\n    }\n    instagram {\n      handle\n      url\n    }\n  }\n  image {\n    cropped(width: 100, height: 100) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment AuthorStructuredData_author on Author {\n  name\n  role\n  internalID\n  slug\n  description: bio(format: PLAIN)\n  socials {\n    x {\n      url\n    }\n    instagram {\n      url\n    }\n  }\n}\n"
+    "text": "query articlesRoutes_AuthorQuery(\n  $id: String!\n) {\n  author(id: $id) @principalField {\n    ...AuthorApp_author\n    id\n  }\n}\n\nfragment AuthorApp_author on Author {\n  ...AuthorStructuredData_author\n  __typename\n  internalID\n  slug\n  name\n  bio(format: HTML)\n  initials\n  role\n  website\n  socials {\n    x {\n      handle\n      url\n    }\n    instagram {\n      handle\n      url\n    }\n  }\n  image {\n    cropped(width: 100, height: 100) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment AuthorStructuredData_author on Author {\n  name\n  role\n  internalID\n  slug\n  description: bio(format: PLAIN)\n  socials {\n    x {\n      url\n    }\n    instagram {\n      url\n    }\n  }\n}\n"
   }
 };
 })();

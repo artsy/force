@@ -36,7 +36,7 @@ export const NavBarDropdownPanel: React.FC<NavBarDropdownPanelProps> = ({
 
   return (
     <Dropdown
-      zIndex={Z.dropdown}
+      zIndex={Z.navDropdown}
       keepInDOM
       placement="bottom"
       offset={0}

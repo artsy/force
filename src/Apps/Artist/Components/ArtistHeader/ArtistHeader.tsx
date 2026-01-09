@@ -19,6 +19,7 @@ import {
   Stack,
   Text,
 } from "@artsy/palette"
+import { useVariant } from "@unleash/proxy-client-react"
 import {
   ArtistHeaderImage,
   isValidImage,
@@ -42,6 +43,10 @@ interface ArtistHeaderProps {
 const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
   artist,
 }) => {
+  const openCareerHighlightsVariant = useVariant(
+    "diamond_open-artist-header-career-highlights",
+  )
+
   const { trackEvent } = useTracking()
   const { contextPageOwnerType, contextPageOwnerId, contextPageOwnerSlug } =
     useAnalyticsContext()
@@ -275,6 +280,7 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
                     key={insight.kind ?? index}
                     insight={insight}
                     contextModule={ContextModule.artistHeader}
+                    expanded={openCareerHighlightsVariant.name === "experiment"}
                   />
                 )
               })}
