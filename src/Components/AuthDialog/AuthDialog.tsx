@@ -1,16 +1,18 @@
-import { Box, Image, ModalDialog } from "@artsy/palette"
+import { ModalDialog } from "@artsy/palette"
+import { useFlag } from "@unleash/proxy-client-react"
 import {
   type AuthDialogMode,
   useAuthDialogContext,
 } from "Components/AuthDialog/AuthDialogContext"
+import { AuthDialogLeftPanel } from "Components/AuthDialog/AuthDialogLeftPanel"
 import { AuthDialogTitle } from "Components/AuthDialog/AuthDialogTitle"
 import { useAuthDialogTracking } from "Components/AuthDialog/Hooks/useAuthDialogTracking"
+import { MODAL_WIDTH } from "Components/AuthDialog/Utils/utils"
 import { AuthDialogForgotPassword } from "Components/AuthDialog/Views/AuthDialogForgotPassword"
 import { AuthDialogLogin } from "Components/AuthDialog/Views/AuthDialogLogin"
 import { AuthDialogSignUp } from "Components/AuthDialog/Views/AuthDialogSignUp"
 import { AuthDialogWelcome } from "Components/AuthDialog/Views/AuthDialogWelcome"
 import { useRecaptcha } from "Utils/EnableRecaptcha"
-import { resized } from "Utils/resized"
 import { type FC, useEffect } from "react"
 
 export interface AuthDialogProps {
@@ -21,6 +23,7 @@ export const AuthDialog: FC<React.PropsWithChildren<AuthDialogProps>> = ({
   onClose,
 }) => {
   useRecaptcha()
+  const newSignupEnabled = useFlag("onyx_new-signup-modal")
 
   const {
     state: { mode, options },
@@ -43,6 +46,7 @@ export const AuthDialog: FC<React.PropsWithChildren<AuthDialogProps>> = ({
   }
 
   const isCloseable = options.isCloseable ?? true
+  const modalProps = getModalProps(!!options.image, newSignupEnabled)
 
   return (
     <ModalDialog
@@ -56,12 +60,8 @@ export const AuthDialog: FC<React.PropsWithChildren<AuthDialogProps>> = ({
       }
       hasLogo
       m={[1, 2]}
-      {...(options.image
-        ? {
-            width: ["100%", 900],
-            leftPanel: <AuthDialogLeftPanel />,
-          }
-        : { width: ["100%", 450] })}
+      height={[400, "auto"]}
+      {...modalProps}
     >
       <AuthDialogView />
     </ModalDialog>
@@ -90,25 +90,15 @@ export const DEFAULT_TITLES: Record<AuthDialogMode, string> = {
   Welcome: "Sign up or log in",
 }
 
-const IMAGE = {
-  width: 900,
-  height: 2030,
-  src: "https://files.artsy.net/images/2x_Evergreen-Artist-Page-Sign-Up-Modal.jpg",
-}
+const getModalProps = (hasImage: boolean, newSignupEnabled: boolean) => {
+  if (hasImage || newSignupEnabled) {
+    return {
+      width: ["100%", MODAL_WIDTH],
+      leftPanel: <AuthDialogLeftPanel />,
+    }
+  }
 
-const AuthDialogLeftPanel: FC<React.PropsWithChildren<unknown>> = () => {
-  const img = resized(IMAGE.src, { width: 450 })
-
-  return (
-    <Box display={["none", "block"]} width="100%">
-      <Image
-        {...img}
-        width="100%"
-        height="100%"
-        lazyLoad
-        alt=""
-        style={{ objectFit: "cover" }}
-      />
-    </Box>
-  )
+  return {
+    width: ["100%", 450],
+  }
 }
