@@ -3,44 +3,37 @@ import InstitutionIcon from "@artsy/icons/InstitutionIcon"
 import { Clickable, Flex, Spacer, Text } from "@artsy/palette"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { type Brand, BrandCreditCardIcon } from "Components/BrandCreditCardIcon"
-import type { Order2PaymentCompletedView_order$key } from "__generated__/Order2PaymentCompletedView_order.graphql"
+import type {
+  Order2PaymentCompletedView_order$data,
+  Order2PaymentCompletedView_order$key,
+} from "__generated__/Order2PaymentCompletedView_order.graphql"
 import { graphql, useFragment } from "react-relay"
 
 interface Order2PaymentCompletedViewProps {
   order: Order2PaymentCompletedView_order$key
-  confirmationToken: any
-  savedPaymentMethod: any
 }
+
 export const Order2PaymentCompletedView: React.FC<
   Order2PaymentCompletedViewProps
-> = ({ order, confirmationToken, savedPaymentMethod }) => {
+> = ({ order }) => {
   const orderData = useFragment(ORDER_FRAGMENT, order)
-  const { editPayment, checkoutTracking } = useCheckoutContext()
+  const { editPayment, checkoutTracking, confirmationToken } =
+    useCheckoutContext()
 
   const onClickEdit = () => {
     checkoutTracking.clickedChangePaymentMethod()
     editPayment()
   }
 
-  const paymentMethodDetails = orderData.paymentMethodDetails
+  const savedPaymentMethod = orderData.paymentMethodDetails
+  const paymentPreview = confirmationToken?.paymentMethodPreview
+  const paymentMethod = orderData.paymentMethod
 
-  const isCreditCard =
-    paymentMethodDetails?.__typename === "CreditCard" ||
-    confirmationToken?.paymentMethodPreview?.__typename === "Card" ||
-    savedPaymentMethod?.__typename === "CreditCard"
-  const isBankAccount =
-    (paymentMethodDetails?.__typename === "BankAccount" &&
-      orderData.paymentMethod === "US_BANK_ACCOUNT") ||
-    confirmationToken?.paymentMethodPreview?.__typename === "USBankAccount" ||
-    savedPaymentMethod?.type === "US_BANK_ACCOUNT"
-  const isSEPA =
-    (paymentMethodDetails?.__typename === "BankAccount" &&
-      orderData.paymentMethod === "SEPA_DEBIT") ||
-    confirmationToken?.paymentMethodPreview?.__typename === "SEPADebit" ||
-    savedPaymentMethod?.type === "SEPA_DEBIT"
-  const isWireTransfer =
-    paymentMethodDetails?.__typename === "WireTransfer" ||
-    (!isCreditCard && !isBankAccount && !isSEPA)
+  const details = getDisplayDetails(
+    paymentMethod,
+    paymentPreview,
+    savedPaymentMethod,
+  )
 
   return (
     <Flex flexDirection="column" backgroundColor="mono0">
@@ -68,41 +61,44 @@ export const Order2PaymentCompletedView: React.FC<
         </Clickable>
       </Flex>
       <Flex alignItems="center" ml="30px" mt={1}>
-        {(isBankAccount || isSEPA) && (
-          <>
-            <InstitutionIcon fill="mono100" width="24px" height="24px" mr={1} />
-            <Text variant="sm-display">
-              ••••{" "}
-              {(paymentMethodDetails?.__typename === "BankAccount" &&
-                paymentMethodDetails.last4) ||
-                confirmationToken?.paymentMethodPreview?.last4 ||
-                savedPaymentMethod?.last4}
-            </Text>
-          </>
-        )}
-        {isCreditCard && (
-          <>
-            <BrandCreditCardIcon
-              mr={1}
-              type={
-                ((paymentMethodDetails?.__typename === "CreditCard" &&
-                  paymentMethodDetails.brand) ||
-                  confirmationToken?.paymentMethodPreview?.displayBrand ||
-                  savedPaymentMethod?.brand) as Brand
-              }
-              width="24px"
-              height="24px"
-            />
-            <Text variant="sm-display">
-              ••••{" "}
-              {(paymentMethodDetails?.__typename === "CreditCard" &&
-                paymentMethodDetails.lastDigits) ||
-                confirmationToken?.paymentMethodPreview?.last4 ||
-                savedPaymentMethod?.lastDigits}
-            </Text>
-          </>
-        )}
-        {isWireTransfer && (
+        {/* Bank Account (ACH or SEPA) */}
+        {(paymentMethod === "US_BANK_ACCOUNT" ||
+          paymentMethod === "SEPA_DEBIT") &&
+          details.last4 && (
+            <>
+              <InstitutionIcon
+                fill="mono100"
+                width="24px"
+                height="24px"
+                mr={1}
+              />
+              <Text variant="sm-display">
+                {details.bankName && `${details.bankName} `}
+                •••• {details.last4}
+              </Text>
+            </>
+          )}
+
+        {/* Credit Card */}
+        {paymentMethod === "CREDIT_CARD" &&
+          details.cardBrand &&
+          details.last4 && (
+            <>
+              <BrandCreditCardIcon
+                mr={1}
+                type={details.cardBrand as Brand}
+                width="24px"
+                height="24px"
+              />
+              <Text variant="sm-display">
+                •••• {details.last4}
+                {details.formattedExpDate && ` Exp ${details.formattedExpDate}`}
+              </Text>
+            </>
+          )}
+
+        {/* Wire Transfer */}
+        {paymentMethod === "WIRE_TRANSFER" && (
           <>
             <InstitutionIcon fill="mono100" width="24px" height="24px" mr={1} />
             <Text variant="sm-display">Wire Transfer</Text>
@@ -113,6 +109,62 @@ export const Order2PaymentCompletedView: React.FC<
   )
 }
 
+const getDisplayDetails = (
+  paymentMethod: Order2PaymentCompletedView_order$data["paymentMethod"],
+  paymentPreview: NonNullable<
+    ReturnType<typeof useCheckoutContext>["confirmationToken"]
+  >["paymentMethodPreview"],
+  savedPaymentMethod: Order2PaymentCompletedView_order$data["paymentMethodDetails"],
+) => {
+  switch (paymentMethod) {
+    case "CREDIT_CARD": {
+      if (paymentPreview && paymentPreview.__typename === "Card") {
+        return {
+          cardBrand: paymentPreview.displayBrand,
+          last4: paymentPreview.last4,
+          bankName: null,
+        }
+      }
+
+      if (savedPaymentMethod?.__typename === "CreditCard") {
+        const formattedExpDate = `${savedPaymentMethod.expirationMonth.toString().padStart(2, "0")}/${savedPaymentMethod.expirationYear
+          .toString()
+          .slice(-2)}`
+
+        return {
+          cardBrand: savedPaymentMethod.brand,
+          last4: savedPaymentMethod.lastDigits,
+          bankName: null,
+          formattedExpDate,
+        }
+      }
+      break
+    }
+
+    case "US_BANK_ACCOUNT":
+    case "SEPA_DEBIT": {
+      if (paymentPreview && paymentPreview.__typename === "USBankAccount") {
+        return {
+          cardBrand: null,
+          last4: paymentPreview.last4,
+          bankName: paymentPreview.bankName,
+        }
+      }
+
+      if (savedPaymentMethod?.__typename === "BankAccount") {
+        return {
+          cardBrand: null,
+          last4: savedPaymentMethod.last4,
+          bankName: savedPaymentMethod.bankName,
+        }
+      }
+      break
+    }
+  }
+
+  return { cardBrand: null, last4: null, bankName: null }
+}
+
 const ORDER_FRAGMENT = graphql`
   fragment Order2PaymentCompletedView_order on Order {
     paymentMethod
@@ -121,9 +173,12 @@ const ORDER_FRAGMENT = graphql`
       ... on CreditCard {
         brand
         lastDigits
+        expirationYear
+        expirationMonth
       }
       ... on BankAccount {
         last4
+        bankName
       }
       ... on WireTransfer {
         isManualPayment

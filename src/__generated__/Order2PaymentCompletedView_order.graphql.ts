@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9a46817beeeb6be38395b13c3c92aaaf>>
+ * @generated SignedSource<<939b5a08ae7c214548c93b73f23f0839>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,10 +15,13 @@ export type Order2PaymentCompletedView_order$data = {
   readonly paymentMethod: OrderPaymentMethodEnum | null | undefined;
   readonly paymentMethodDetails: {
     readonly __typename: "BankAccount";
+    readonly bankName: string;
     readonly last4: string;
   } | {
     readonly __typename: "CreditCard";
     readonly brand: string;
+    readonly expirationMonth: number;
+    readonly expirationYear: number;
     readonly lastDigits: string;
   } | {
     readonly __typename: "WireTransfer";
@@ -79,6 +82,20 @@ const node: ReaderFragment = {
               "kind": "ScalarField",
               "name": "lastDigits",
               "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "expirationYear",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "expirationMonth",
+              "storageKey": null
             }
           ],
           "type": "CreditCard",
@@ -92,6 +109,13 @@ const node: ReaderFragment = {
               "args": null,
               "kind": "ScalarField",
               "name": "last4",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "bankName",
               "storageKey": null
             }
           ],
@@ -120,6 +144,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "9caebceab5dbaed682812e05cbfe7e3c";
+(node as any).hash = "0971b8f9fec8c4b34741cb090ee16777";
 
 export default node;

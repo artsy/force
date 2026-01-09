@@ -69,43 +69,57 @@ export const SavedPaymentMethodOption: React.FC<
               }}
             >
               {[...savedCreditCards, ...allowedSavedBankAccounts].map(
-                paymentMethod => (
-                  <Radio
-                    key={paymentMethod.internalID}
-                    value={paymentMethod}
-                    pb="15px"
-                    pt="15px"
-                    label={
-                      <Flex>
-                        {paymentMethod.__typename === "CreditCard" ? (
-                          <>
-                            <BrandCreditCardIcon
-                              type={paymentMethod.brand as Brand}
-                              width="24px"
-                              height="24px"
-                              mr={1}
-                            />
-                            <Text variant="sm">
-                              •••• {paymentMethod.lastDigits}
-                            </Text>
-                          </>
-                        ) : (
-                          <>
-                            <InstitutionIcon
-                              fill="mono100"
-                              width="24px"
-                              height="24px"
-                              mr={1}
-                            />
-                            <Text variant="sm">
-                              Bank account •••• {paymentMethod.last4}
-                            </Text>
-                          </>
-                        )}
-                      </Flex>
-                    }
-                  />
-                ),
+                paymentMethod => {
+                  const formattedExpDate =
+                    paymentMethod.__typename === "CreditCard"
+                      ? `${paymentMethod.expirationMonth
+                          .toString()
+                          .padStart(2, "0")}/${paymentMethod.expirationYear
+                          .toString()
+                          .slice(-2)}`
+                      : null
+
+                  return (
+                    <Radio
+                      key={paymentMethod.internalID}
+                      value={paymentMethod}
+                      pb="15px"
+                      pt="15px"
+                      label={
+                        <Flex>
+                          {paymentMethod.__typename === "CreditCard" ? (
+                            <>
+                              <BrandCreditCardIcon
+                                type={paymentMethod.brand as Brand}
+                                width="24px"
+                                height="24px"
+                                mr={1}
+                              />
+                              <Text variant="sm">
+                                •••• {paymentMethod.lastDigits}
+                                {formattedExpDate && ` Exp ${formattedExpDate}`}
+                              </Text>
+                            </>
+                          ) : (
+                            <>
+                              <InstitutionIcon
+                                fill="mono100"
+                                width="24px"
+                                height="24px"
+                                mr={1}
+                              />
+                              <Text variant="sm">
+                                {paymentMethod.bankName &&
+                                  `${paymentMethod.bankName} `}
+                                •••• {paymentMethod.last4}
+                              </Text>
+                            </>
+                          )}
+                        </Flex>
+                      }
+                    />
+                  )
+                },
               )}
             </RadioGroup>
           </Box>
