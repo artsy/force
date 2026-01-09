@@ -116,44 +116,49 @@ const getDisplayDetails = (
   >["paymentMethodPreview"],
   savedPaymentMethod: Order2PaymentCompletedView_order$data["paymentMethodDetails"],
 ) => {
-  if (paymentMethod === "CREDIT_CARD") {
-    if (paymentPreview && paymentPreview.__typename === "Card") {
-      return {
-        cardBrand: paymentPreview.displayBrand,
-        last4: paymentPreview.last4,
-        bankName: null,
+  switch (paymentMethod) {
+    case "CREDIT_CARD": {
+      if (paymentPreview && paymentPreview.__typename === "Card") {
+        return {
+          cardBrand: paymentPreview.displayBrand,
+          last4: paymentPreview.last4,
+          bankName: null,
+        }
       }
+
+      if (savedPaymentMethod?.__typename === "CreditCard") {
+        const formattedExpDate = `${savedPaymentMethod.expirationMonth.toString().padStart(2, "0")}/${savedPaymentMethod.expirationYear
+          .toString()
+          .slice(-2)}`
+
+        return {
+          cardBrand: savedPaymentMethod.brand,
+          last4: savedPaymentMethod.lastDigits,
+          bankName: null,
+          formattedExpDate,
+        }
+      }
+      break
     }
 
-    if (savedPaymentMethod?.__typename === "CreditCard") {
-      const formattedExpDate = `${savedPaymentMethod.expirationMonth.toString().padStart(2, "0")}/${savedPaymentMethod.expirationYear
-        .toString()
-        .slice(-2)}`
-
-      return {
-        cardBrand: savedPaymentMethod.brand,
-        last4: savedPaymentMethod.lastDigits,
-        bankName: null,
-        formattedExpDate,
+    case "US_BANK_ACCOUNT":
+    case "SEPA_DEBIT": {
+      if (paymentPreview && paymentPreview.__typename === "USBankAccount") {
+        return {
+          cardBrand: null,
+          last4: paymentPreview.last4,
+          bankName: paymentPreview.bankName,
+        }
       }
-    }
-  }
 
-  if (paymentMethod === "US_BANK_ACCOUNT" || paymentMethod === "SEPA_DEBIT") {
-    if (paymentPreview && paymentPreview.__typename === "USBankAccount") {
-      return {
-        cardBrand: null,
-        last4: paymentPreview.last4,
-        bankName: paymentPreview.bankName,
+      if (savedPaymentMethod?.__typename === "BankAccount") {
+        return {
+          cardBrand: null,
+          last4: savedPaymentMethod.last4,
+          bankName: savedPaymentMethod.bankName,
+        }
       }
-    }
-
-    if (savedPaymentMethod?.__typename === "BankAccount") {
-      return {
-        cardBrand: null,
-        last4: savedPaymentMethod.last4,
-        bankName: savedPaymentMethod.bankName,
-      }
+      break
     }
   }
 

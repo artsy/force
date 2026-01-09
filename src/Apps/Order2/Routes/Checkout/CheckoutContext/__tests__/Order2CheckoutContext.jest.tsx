@@ -138,7 +138,6 @@ describe("Order2CheckoutContext", () => {
           "activeFulfillmentDetailsTab",
           "confirmationToken",
           "savePaymentMethod",
-          "savedPaymentMethod",
           "checkoutMode",
           "orderData",
           "router",
@@ -161,7 +160,6 @@ describe("Order2CheckoutContext", () => {
           "setPaymentComplete",
           "setConfirmationToken",
           "setSavePaymentMethod",
-          "setSavedPaymentMethod",
           "redirectToOrderDetails",
           "setCheckoutMode",
         ]),
@@ -180,7 +178,6 @@ describe("Order2CheckoutContext", () => {
         activeFulfillmentDetailsTab: null,
         confirmationToken: null,
         savePaymentMethod: true,
-        savedPaymentMethod: null,
         checkoutMode: "standard",
         orderData: expect.objectContaining({
           internalID: "order-id",

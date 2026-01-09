@@ -696,12 +696,6 @@ describe("Order2CheckoutRoute", () => {
                 orderMutationSuccess(initialOrder, {
                   paymentMethod: "CREDIT_CARD",
                   stripeConfirmationToken: "confirmation-token-id",
-                  paymentMethodDetails: {
-                    __typename: "CreditCard",
-                    brand: "Visa",
-                    lastDigits: "5309",
-                    id: "credit-card-id",
-                  },
                 }),
             })
           expect(updateOrderPaymentMethodMutation.operationName).toBe(
@@ -736,7 +730,6 @@ describe("Order2CheckoutRoute", () => {
             "order-id",
           )
 
-          // Verify oneTimeUse is included when appropriate
           if (oneTimeUse) {
             expect(
               submitOrderMutation.operationVariables.input.oneTimeUse,

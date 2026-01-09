@@ -94,7 +94,6 @@ jest.mock("react-relay", () => {
 const mockCheckoutContext = {
   setConfirmationToken: jest.fn(),
   setSavePaymentMethod: jest.fn(),
-  setSavedPaymentMethod: jest.fn(),
   setPaymentComplete: jest.fn(),
   savePaymentMethod: false,
   checkoutTracking: {
@@ -869,9 +868,6 @@ describe("Order2PaymentForm", () => {
         })
       })
 
-      expect(mockCheckoutContext.setSavedPaymentMethod).toHaveBeenCalledWith({
-        savedPaymentMethod: null,
-      })
       expect(mockCheckoutContext.setPaymentComplete).toHaveBeenCalled()
     })
 
