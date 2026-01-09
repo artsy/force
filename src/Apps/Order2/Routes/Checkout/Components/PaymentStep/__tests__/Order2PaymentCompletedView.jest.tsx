@@ -2,7 +2,7 @@ import { screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { Order2PaymentCompletedViewTestQuery } from "__generated__/Order2PaymentCompletedViewTestQuery.graphql"
 import { graphql } from "react-relay"
-import { Order2CheckoutRoute } from "../Order2CheckoutRoute"
+import { Order2CheckoutRoute } from "../../../Order2CheckoutRoute"
 
 jest.unmock("react-relay")
 
