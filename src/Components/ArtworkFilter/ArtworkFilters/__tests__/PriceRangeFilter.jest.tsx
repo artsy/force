@@ -149,48 +149,42 @@ describe("PriceRangeFilterNew", () => {
     expect(screen.queryByTestId("PriceFilterHistogram")).not.toBeInTheDocument()
   })
 
-  describe("the `expanded` prop", () => {
-    it("hides the filter controls when not set", () => {
+  describe("expanded prop", () => {
+    it("renders collapsed when not set", () => {
       renderPriceRangeFilter({})
 
-      const minSliderHandle = screen.queryByLabelText("Min price")
-      const maxSliderHandle = screen.queryByLabelText("Min price")
-
-      expect(screen.queryByLabelText("Min price")).not.toBeInTheDocument()
-      expect(screen.queryByLabelText("Max price")).not.toBeInTheDocument()
-
-      expect(minSliderHandle).not.toBeInTheDocument()
-      expect(maxSliderHandle).not.toBeInTheDocument()
+      const button = screen.getByRole("button", {
+        name: "Price",
+        expanded: false,
+      })
+      expect(button).toHaveAttribute("aria-expanded", "false")
     })
 
-    it("hides the filter controls when `false`", () => {
+    it("renders collapsed when false", () => {
       renderPriceRangeFilter({
         expanded: false,
       })
 
-      const minSliderHandle = screen.queryByLabelText("Min price")
-      const maxSliderHandle = screen.queryByLabelText("Min price")
-
-      expect(screen.queryByLabelText("Min price")).not.toBeInTheDocument()
-      expect(screen.queryByLabelText("Max price")).not.toBeInTheDocument()
-
-      expect(minSliderHandle).not.toBeInTheDocument()
-      expect(maxSliderHandle).not.toBeInTheDocument()
+      const button = screen.getByRole("button", {
+        name: "Price",
+        expanded: false,
+      })
+      expect(button).toHaveAttribute("aria-expanded", "false")
     })
 
-    it("shows the filter controls when `true`", () => {
+    it("renders expanded when true", () => {
       renderPriceRangeFilter({
         expanded: true,
       })
 
-      const minSliderHandle = screen.queryAllByLabelText("Min price")[1]
-      const maxSliderHandle = screen.queryAllByLabelText("Min price")[1]
+      const button = screen.getByRole("button", {
+        name: "Price",
+        expanded: true,
+      })
+      expect(button).toHaveAttribute("aria-expanded", "true")
 
       expect(screen.queryAllByLabelText("Min price")[0]).toBeInTheDocument()
       expect(screen.queryAllByLabelText("Max price")[0]).toBeInTheDocument()
-
-      expect(minSliderHandle).toBeInTheDocument()
-      expect(maxSliderHandle).toBeInTheDocument()
     })
   })
 })

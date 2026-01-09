@@ -53,16 +53,35 @@ describe(WaysToBuyFilter, () => {
     expect(currentArtworkFilterContext().filters?.offerable).toBeFalsy()
   })
 
-  it("can render in expanded or collapsed state", () => {
-    render(<WaysToBuyFilter />)
-    expect(screen.queryByRole("checkbox")).not.toBeInTheDocument()
+  describe("expanded prop", () => {
+    it("renders collapsed when not set", () => {
+      render(<WaysToBuyFilter />)
+      const button = screen.getByRole("button", {
+        name: "Ways to Buy",
+        expanded: false,
+      })
+      expect(button).toHaveAttribute("aria-expanded", "false")
+    })
 
-    render(<WaysToBuyFilter expanded={false} />)
-    expect(screen.queryByRole("checkbox")).not.toBeInTheDocument()
+    it("renders collapsed when false", () => {
+      render(<WaysToBuyFilter expanded={false} />)
+      const button = screen.getByRole("button", {
+        name: "Ways to Buy",
+        expanded: false,
+      })
+      expect(button).toHaveAttribute("aria-expanded", "false")
+    })
 
-    render(<WaysToBuyFilter expanded={true} />)
-    expect(screen.getAllByRole("checkbox")).toHaveLength(
-      Object.keys(WAYS_TO_BUY_OPTIONS).length,
-    )
+    it("renders expanded when true", () => {
+      render(<WaysToBuyFilter expanded={true} />)
+      const button = screen.getByRole("button", {
+        name: "Ways to Buy",
+        expanded: true,
+      })
+      expect(button).toHaveAttribute("aria-expanded", "true")
+      expect(screen.getAllByRole("checkbox")).toHaveLength(
+        Object.keys(WAYS_TO_BUY_OPTIONS).length,
+      )
+    })
   })
 })
