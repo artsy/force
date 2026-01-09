@@ -55,16 +55,35 @@ describe(MediumFilter, () => {
       )
     })
 
-    it("can render in expanded or collapsed state", () => {
-      render(<MediumFilter />)
-      expect(screen.queryByRole("checkbox")).not.toBeInTheDocument()
+    describe("expanded prop", () => {
+      it("renders collapsed when not set", () => {
+        render(<MediumFilter />)
+        const button = screen.getByRole("button", {
+          name: "Medium",
+          expanded: false,
+        })
+        expect(button).toHaveAttribute("aria-expanded", "false")
+      })
 
-      render(<MediumFilter expanded={false} />)
-      expect(screen.queryByRole("checkbox")).not.toBeInTheDocument()
+      it("renders collapsed when false", () => {
+        render(<MediumFilter expanded={false} />)
+        const button = screen.getByRole("button", {
+          name: "Medium",
+          expanded: false,
+        })
+        expect(button).toHaveAttribute("aria-expanded", "false")
+      })
 
-      render(<MediumFilter expanded={true} />)
-      // By default, it shows the initial 6 items
-      expect(screen.getAllByRole("checkbox").length).toBeGreaterThan(0)
+      it("renders expanded when true", () => {
+        render(<MediumFilter expanded={true} />)
+        const button = screen.getByRole("button", {
+          name: "Medium",
+          expanded: true,
+        })
+        expect(button).toHaveAttribute("aria-expanded", "true")
+        // By default, it shows the initial 6 items
+        expect(screen.getAllByRole("checkbox").length).toBeGreaterThan(0)
+      })
     })
   })
 

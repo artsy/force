@@ -104,14 +104,33 @@ describe(ColorFilter, () => {
     expect(currentArtworkFilterContext().filters?.colors).toEqual([])
   })
 
-  it("can render in expanded or collapsed state", () => {
-    render(<ColorFilter />)
-    expect(screen.queryByText("Red")).not.toBeInTheDocument()
+  describe("expanded prop", () => {
+    it("renders collapsed when not set", () => {
+      render(<ColorFilter />)
+      const button = screen.getByRole("button", {
+        name: "Color",
+        expanded: false,
+      })
+      expect(button).toHaveAttribute("aria-expanded", "false")
+    })
 
-    render(<ColorFilter expanded={false} />)
-    expect(screen.queryByText("Red")).not.toBeInTheDocument()
+    it("renders collapsed when false", () => {
+      render(<ColorFilter expanded={false} />)
+      const button = screen.getByRole("button", {
+        name: "Color",
+        expanded: false,
+      })
+      expect(button).toHaveAttribute("aria-expanded", "false")
+    })
 
-    render(<ColorFilter expanded={true} />)
-    expect(screen.getByText("Red")).toBeInTheDocument()
+    it("renders expanded when true", () => {
+      render(<ColorFilter expanded={true} />)
+      const button = screen.getByRole("button", {
+        name: "Color",
+        expanded: true,
+      })
+      expect(button).toHaveAttribute("aria-expanded", "true")
+      expect(screen.getByText("Red")).toBeInTheDocument()
+    })
   })
 })
