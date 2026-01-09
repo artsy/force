@@ -9,11 +9,12 @@ import styled from "styled-components"
 interface ArtistCareerHighlightProps {
   insight: ArtistCareerHighlight_insight$data
   contextModule: ContextModule
+  expanded?: boolean
 }
 
 export const ArtistCareerHighlight: FC<
   React.PropsWithChildren<ArtistCareerHighlightProps>
-> = ({ insight, contextModule }) => {
+> = ({ insight, contextModule, expanded }) => {
   const { trackEvent } = useTracking()
 
   if (!insight?.description && !insight?.entities?.length) return null
@@ -29,7 +30,12 @@ export const ArtistCareerHighlight: FC<
   }
 
   return (
-    <Expandable label={insight.label} pb={1} onToggle={handleToggle}>
+    <Expandable
+      label={insight.label}
+      pb={1}
+      onToggle={handleToggle}
+      expanded={expanded}
+    >
       <Description
         variant="sm"
         color="mono60"
