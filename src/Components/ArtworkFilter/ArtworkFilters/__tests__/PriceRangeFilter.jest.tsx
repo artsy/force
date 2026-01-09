@@ -149,42 +149,48 @@ describe("PriceRangeFilterNew", () => {
     expect(screen.queryByTestId("PriceFilterHistogram")).not.toBeInTheDocument()
   })
 
-  describe("expanded prop", () => {
-    it("renders collapsed when not set", () => {
+  describe("the `expanded` prop", () => {
+    it("hides the filter controls when not set", () => {
       renderPriceRangeFilter({})
 
-      const button = screen.getByRole("button", {
-        name: "Price",
-        expanded: false,
-      })
-      expect(button).toHaveAttribute("aria-expanded", "false")
+      const minSliderHandle = screen.queryByLabelText("Min price")
+      const maxSliderHandle = screen.queryByLabelText("Min price")
+
+      expect(screen.queryByLabelText("Min price")).not.toBeInTheDocument()
+      expect(screen.queryByLabelText("Max price")).not.toBeInTheDocument()
+
+      expect(minSliderHandle).not.toBeInTheDocument()
+      expect(maxSliderHandle).not.toBeInTheDocument()
     })
 
-    it("renders collapsed when false", () => {
+    it("hides the filter controls when `false`", () => {
       renderPriceRangeFilter({
         expanded: false,
       })
 
-      const button = screen.getByRole("button", {
-        name: "Price",
-        expanded: false,
-      })
-      expect(button).toHaveAttribute("aria-expanded", "false")
+      const minSliderHandle = screen.queryByLabelText("Min price")
+      const maxSliderHandle = screen.queryByLabelText("Min price")
+
+      expect(screen.queryByLabelText("Min price")).not.toBeInTheDocument()
+      expect(screen.queryByLabelText("Max price")).not.toBeInTheDocument()
+
+      expect(minSliderHandle).not.toBeInTheDocument()
+      expect(maxSliderHandle).not.toBeInTheDocument()
     })
 
-    it("renders expanded when true", () => {
+    it("shows the filter controls when `true`", () => {
       renderPriceRangeFilter({
         expanded: true,
       })
 
-      const button = screen.getByRole("button", {
-        name: "Price",
-        expanded: true,
-      })
-      expect(button).toHaveAttribute("aria-expanded", "true")
+      const minSliderHandle = screen.queryAllByLabelText("Min price")[1]
+      const maxSliderHandle = screen.queryAllByLabelText("Min price")[1]
 
       expect(screen.queryAllByLabelText("Min price")[0]).toBeInTheDocument()
       expect(screen.queryAllByLabelText("Max price")[0]).toBeInTheDocument()
+
+      expect(minSliderHandle).toBeInTheDocument()
+      expect(maxSliderHandle).toBeInTheDocument()
     })
   })
 })

@@ -84,33 +84,14 @@ describe(MaterialsFilter, () => {
     expect(currentArtworkFilterContext().filters?.materialsTerms).toEqual([])
   })
 
-  describe("expanded prop", () => {
-    it("renders collapsed when not set", () => {
-      render(<MaterialsFilter />)
-      const button = screen.getByRole("button", {
-        name: "Material",
-        expanded: false,
-      })
-      expect(button).toHaveAttribute("aria-expanded", "false")
-    })
+  it("can render in expanded or collapsed state", () => {
+    render(<MaterialsFilter />)
+    expect(screen.queryByRole("checkbox")).not.toBeInTheDocument()
 
-    it("renders collapsed when false", () => {
-      render(<MaterialsFilter expanded={false} />)
-      const button = screen.getByRole("button", {
-        name: "Material",
-        expanded: false,
-      })
-      expect(button).toHaveAttribute("aria-expanded", "false")
-    })
+    render(<MaterialsFilter expanded={false} />)
+    expect(screen.queryByRole("checkbox")).not.toBeInTheDocument()
 
-    it("renders expanded when true", () => {
-      render(<MaterialsFilter expanded={true} />)
-      const button = screen.getByRole("button", {
-        name: "Material",
-        expanded: true,
-      })
-      expect(button).toHaveAttribute("aria-expanded", "true")
-      expect(screen.getAllByRole("checkbox")).toHaveLength(6) // First 6 items
-    })
+    render(<MaterialsFilter expanded={true} />)
+    expect(screen.getAllByRole("checkbox")).toHaveLength(6) // First 6 items
   })
 })

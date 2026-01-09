@@ -29,8 +29,6 @@ describe("FilterExpandable", () => {
     mockGetENV.mockImplementation(() => true)
     getWrapper()
 
-    expect(screen.queryByText("Some render content")).toBeInTheDocument()
-    const expandableButton = screen.getByRole("button")
-    expect(expandableButton).toHaveAttribute("aria-expanded", "false")
+    expect(screen.queryByText("Some render content")).not.toBeInTheDocument()
   })
 })
