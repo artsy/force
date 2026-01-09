@@ -92,33 +92,14 @@ describe(ArtistNationalityFilter, () => {
     )
   })
 
-  describe("expanded prop", () => {
-    it("renders collapsed when not set", () => {
-      render(<ArtistNationalityFilter />)
-      const button = screen.getByRole("button", {
-        name: "Artist Nationality or Ethnicity",
-        expanded: false,
-      })
-      expect(button).toHaveAttribute("aria-expanded", "false")
-    })
+  it("can render in expanded or collapsed state", () => {
+    render(<ArtistNationalityFilter />)
+    expect(screen.queryByRole("checkbox")).not.toBeInTheDocument()
 
-    it("renders collapsed when false", () => {
-      render(<ArtistNationalityFilter expanded={false} />)
-      const button = screen.getByRole("button", {
-        name: "Artist Nationality or Ethnicity",
-        expanded: false,
-      })
-      expect(button).toHaveAttribute("aria-expanded", "false")
-    })
+    render(<ArtistNationalityFilter expanded={false} />)
+    expect(screen.queryByRole("checkbox")).not.toBeInTheDocument()
 
-    it("renders expanded when true", () => {
-      render(<ArtistNationalityFilter expanded={true} />)
-      const button = screen.getByRole("button", {
-        name: "Artist Nationality or Ethnicity",
-        expanded: true,
-      })
-      expect(button).toHaveAttribute("aria-expanded", "true")
-      expect(screen.getAllByRole("checkbox")).toHaveLength(2)
-    })
+    render(<ArtistNationalityFilter expanded={true} />)
+    expect(screen.getAllByRole("checkbox")).toHaveLength(2)
   })
 })

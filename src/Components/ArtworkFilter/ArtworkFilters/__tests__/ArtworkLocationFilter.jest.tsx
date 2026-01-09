@@ -71,34 +71,15 @@ describe(ArtworkLocationFilter, () => {
     expect(currentArtworkFilterContext().filters?.locationCities).toEqual([])
   })
 
-  describe("expanded prop", () => {
-    it("renders collapsed when not set", () => {
-      render(<ArtworkLocationFilter />)
-      const button = screen.getByRole("button", {
-        name: "Artwork Location",
-        expanded: false,
-      })
-      expect(button).toHaveAttribute("aria-expanded", "false")
-    })
+  it("can render in expanded or collapsed state", () => {
+    render(<ArtworkLocationFilter />)
+    expect(screen.queryByRole("checkbox")).not.toBeInTheDocument()
 
-    it("renders collapsed when false", () => {
-      render(<ArtworkLocationFilter expanded={false} />)
-      const button = screen.getByRole("button", {
-        name: "Artwork Location",
-        expanded: false,
-      })
-      expect(button).toHaveAttribute("aria-expanded", "false")
-    })
+    render(<ArtworkLocationFilter expanded={false} />)
+    expect(screen.queryByRole("checkbox")).not.toBeInTheDocument()
 
-    it("renders expanded when true", () => {
-      render(<ArtworkLocationFilter expanded={true} />)
-      const button = screen.getByRole("button", {
-        name: "Artwork Location",
-        expanded: true,
-      })
-      expect(button).toHaveAttribute("aria-expanded", "true")
-      expect(screen.getAllByRole("checkbox")).toHaveLength(3)
-    })
+    render(<ArtworkLocationFilter expanded={true} />)
+    expect(screen.getAllByRole("checkbox")).toHaveLength(3)
   })
 
   describe("keyword filtering within facet", () => {

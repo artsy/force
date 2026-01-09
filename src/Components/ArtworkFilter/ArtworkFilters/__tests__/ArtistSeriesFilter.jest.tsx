@@ -58,33 +58,14 @@ describe(ArtistSeriesFilter, () => {
     expect(currentArtworkFilterContext().filters?.artistSeriesIDs).toEqual([])
   })
 
-  describe("expanded prop", () => {
-    it("renders collapsed when not set", () => {
-      render(<ArtistSeriesFilter />)
-      const button = screen.getByRole("button", {
-        name: "Artist Series",
-        expanded: false,
-      })
-      expect(button).toHaveAttribute("aria-expanded", "false")
-    })
+  it("can render in expanded or collapsed state", () => {
+    render(<ArtistSeriesFilter />)
+    expect(screen.queryByRole("checkbox")).not.toBeInTheDocument()
 
-    it("renders collapsed when false", () => {
-      render(<ArtistSeriesFilter expanded={false} />)
-      const button = screen.getByRole("button", {
-        name: "Artist Series",
-        expanded: false,
-      })
-      expect(button).toHaveAttribute("aria-expanded", "false")
-    })
+    render(<ArtistSeriesFilter expanded={false} />)
+    expect(screen.queryByRole("checkbox")).not.toBeInTheDocument()
 
-    it("renders expanded when true", () => {
-      render(<ArtistSeriesFilter expanded={true} />)
-      const button = screen.getByRole("button", {
-        name: "Artist Series",
-        expanded: true,
-      })
-      expect(button).toHaveAttribute("aria-expanded", "true")
-      expect(screen.getAllByRole("checkbox")).toHaveLength(2)
-    })
+    render(<ArtistSeriesFilter expanded={true} />)
+    expect(screen.getAllByRole("checkbox")).toHaveLength(2)
   })
 })

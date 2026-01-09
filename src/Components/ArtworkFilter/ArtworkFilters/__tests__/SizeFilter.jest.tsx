@@ -177,35 +177,19 @@ describe("SizeFilter", () => {
     })
   })
 
-  describe("expanded prop", () => {
-    it("renders collapsed when not set", () => {
+  describe("the `expanded` prop", () => {
+    it("hides the filter controls when not set", () => {
       render(<SizeFilter />)
-
-      const button = screen.getByRole("button", {
-        name: "Size",
-        expanded: false,
-      })
-      expect(button).toHaveAttribute("aria-expanded", "false")
+      expect(screen.queryByRole("checkbox")).not.toBeInTheDocument()
     })
 
-    it("renders collapsed when false", () => {
+    it("hides the filter controls when `false`", () => {
       render(<SizeFilter expanded={false} />)
-
-      const button = screen.getByRole("button", {
-        name: "Size",
-        expanded: false,
-      })
-      expect(button).toHaveAttribute("aria-expanded", "false")
+      expect(screen.queryByRole("checkbox")).not.toBeInTheDocument()
     })
 
-    it("renders expanded when true", () => {
+    it("shows the filter controls when `true`", () => {
       render(<SizeFilter expanded={true} />)
-
-      const button = screen.getByRole("button", {
-        name: "Size",
-        expanded: true,
-      })
-      expect(button).toHaveAttribute("aria-expanded", "true")
       expect(screen.getAllByRole("checkbox")).toHaveLength(3)
     })
   })

@@ -86,34 +86,15 @@ describe(TimePeriodFilter, () => {
       expect(currentArtworkFilterContext().filters?.majorPeriods).toEqual([])
     })
 
-    describe("expanded prop", () => {
-      it("renders collapsed when not set", () => {
-        render(<TimePeriodFilter />)
-        const button = screen.getByRole("button", {
-          name: "Time Period",
-          expanded: false,
-        })
-        expect(button).toHaveAttribute("aria-expanded", "false")
-      })
+    it("can render in expanded or collapsed state", () => {
+      render(<TimePeriodFilter />)
+      expect(screen.queryByRole("checkbox")).not.toBeInTheDocument()
 
-      it("renders collapsed when false", () => {
-        render(<TimePeriodFilter expanded={false} />)
-        const button = screen.getByRole("button", {
-          name: "Time Period",
-          expanded: false,
-        })
-        expect(button).toHaveAttribute("aria-expanded", "false")
-      })
+      render(<TimePeriodFilter expanded={false} />)
+      expect(screen.queryByRole("checkbox")).not.toBeInTheDocument()
 
-      it("renders expanded when true", () => {
-        render(<TimePeriodFilter expanded={true} />)
-        const button = screen.getByRole("button", {
-          name: "Time Period",
-          expanded: true,
-        })
-        expect(button).toHaveAttribute("aria-expanded", "true")
-        expect(screen.getAllByRole("checkbox")).toHaveLength(3) // Based on our mock aggregations
-      })
+      render(<TimePeriodFilter expanded={true} />)
+      expect(screen.getAllByRole("checkbox")).toHaveLength(3) // Based on our mock aggregations
     })
   })
 

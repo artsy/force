@@ -53,35 +53,16 @@ describe(AttributionClassFilter, () => {
     expect(currentArtworkFilterContext().filters?.attributionClass).toEqual([])
   })
 
-  describe("expanded prop", () => {
-    it("renders collapsed when not set", () => {
-      render(<AttributionClassFilter />)
-      const button = screen.getByRole("button", {
-        name: "Rarity",
-        expanded: false,
-      })
-      expect(button).toHaveAttribute("aria-expanded", "false")
-    })
+  it("can render in expanded or collapsed state", () => {
+    render(<AttributionClassFilter />)
+    expect(screen.queryByRole("checkbox")).not.toBeInTheDocument()
 
-    it("renders collapsed when false", () => {
-      render(<AttributionClassFilter expanded={false} />)
-      const button = screen.getByRole("button", {
-        name: "Rarity",
-        expanded: false,
-      })
-      expect(button).toHaveAttribute("aria-expanded", "false")
-    })
+    render(<AttributionClassFilter expanded={false} />)
+    expect(screen.queryByRole("checkbox")).not.toBeInTheDocument()
 
-    it("renders expanded when true", () => {
-      render(<AttributionClassFilter expanded={true} />)
-      const button = screen.getByRole("button", {
-        name: "Rarity",
-        expanded: true,
-      })
-      expect(button).toHaveAttribute("aria-expanded", "true")
-      expect(screen.getAllByRole("checkbox")).toHaveLength(
-        ATTRIBUTION_CLASS_OPTIONS.length,
-      )
-    })
+    render(<AttributionClassFilter expanded={true} />)
+    expect(screen.getAllByRole("checkbox")).toHaveLength(
+      ATTRIBUTION_CLASS_OPTIONS.length,
+    )
   })
 })

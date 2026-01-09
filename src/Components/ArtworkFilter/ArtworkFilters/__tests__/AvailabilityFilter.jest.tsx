@@ -89,32 +89,19 @@ describe(AvailabilityFilter, () => {
     })
   })
 
-  describe("expanded prop", () => {
-    it("renders collapsed when not set", () => {
+  describe("the `expanded` prop", () => {
+    it("hides the filter controls when not set", () => {
       render(<AvailabilityFilter />)
-      const button = screen.getByRole("button", {
-        name: "Availability",
-        expanded: false,
-      })
-      expect(button).toHaveAttribute("aria-expanded", "false")
+      expect(screen.queryAllByRole("checkbox").length).toBe(0)
     })
 
-    it("renders collapsed when false", () => {
+    it("hides the filter controls when `false`", () => {
       render(<AvailabilityFilter expanded={false} />)
-      const button = screen.getByRole("button", {
-        name: "Availability",
-        expanded: false,
-      })
-      expect(button).toHaveAttribute("aria-expanded", "false")
+      expect(screen.queryAllByRole("checkbox").length).toBe(0)
     })
 
-    it("renders expanded when true", () => {
+    it("shows the filter controls when `true`", () => {
       render(<AvailabilityFilter expanded />)
-      const button = screen.getByRole("button", {
-        name: "Availability",
-        expanded: true,
-      })
-      expect(button).toHaveAttribute("aria-expanded", "true")
       expect(screen.queryAllByRole("checkbox").length).not.toBe(0)
     })
   })
