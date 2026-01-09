@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b244329716a3116156d42ffa81bbc365>>
+ * @generated SignedSource<<4aa06560470c442fdaff7dbf681c801d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -91,17 +91,23 @@ v8 = {
 },
 v9 = {
   "enumValues": null,
-  "nullable": true,
+  "nullable": false,
   "plural": false,
-  "type": "String"
+  "type": "Int"
 },
 v10 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "Money"
+  "type": "String"
 },
 v11 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Money"
+},
+v12 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
@@ -204,6 +210,20 @@ return {
                         "name": "lastDigits",
                         "storageKey": null
                       },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "expirationYear",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "expirationMonth",
+                        "storageKey": null
+                      },
                       (v4/*: any*/)
                     ],
                     "storageKey": null
@@ -252,6 +272,13 @@ return {
                         "args": null,
                         "kind": "ScalarField",
                         "name": "last4",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "bankName",
                         "storageKey": null
                       },
                       (v4/*: any*/)
@@ -562,7 +589,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3f3a2783cb99cfe3dbf87ff9054e755f",
+    "cacheID": "c699c54e18f5412e897047c1ab5b13de",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -591,6 +618,7 @@ return {
           "type": "BankAccount"
         },
         "me.bankAccounts.edges.node.__typename": (v7/*: any*/),
+        "me.bankAccounts.edges.node.bankName": (v7/*: any*/),
         "me.bankAccounts.edges.node.id": (v8/*: any*/),
         "me.bankAccounts.edges.node.internalID": (v8/*: any*/),
         "me.bankAccounts.edges.node.last4": (v7/*: any*/),
@@ -623,6 +651,8 @@ return {
         },
         "me.creditCards.edges.node.__typename": (v7/*: any*/),
         "me.creditCards.edges.node.brand": (v7/*: any*/),
+        "me.creditCards.edges.node.expirationMonth": (v9/*: any*/),
+        "me.creditCards.edges.node.expirationYear": (v9/*: any*/),
         "me.creditCards.edges.node.id": (v8/*: any*/),
         "me.creditCards.edges.node.internalID": (v8/*: any*/),
         "me.creditCards.edges.node.lastDigits": (v7/*: any*/),
@@ -650,7 +680,7 @@ return {
           "plural": false,
           "type": "BankAccountBalanceCheck"
         },
-        "me.order.bankAccountBalanceCheck.message": (v9/*: any*/),
+        "me.order.bankAccountBalanceCheck.message": (v10/*: any*/),
         "me.order.bankAccountBalanceCheck.result": {
           "enumValues": [
             "INSUFFICIENT",
@@ -663,9 +693,9 @@ return {
           "plural": false,
           "type": "BankAccountBalanceCheckResult"
         },
-        "me.order.buyerTotal": (v10/*: any*/),
+        "me.order.buyerTotal": (v11/*: any*/),
         "me.order.buyerTotal.currencyCode": (v7/*: any*/),
-        "me.order.buyerTotal.minor": (v11/*: any*/),
+        "me.order.buyerTotal.minor": (v12/*: any*/),
         "me.order.code": (v7/*: any*/),
         "me.order.currencyCode": (v7/*: any*/),
         "me.order.fulfillmentDetails": {
@@ -674,18 +704,18 @@ return {
           "plural": false,
           "type": "FulfillmentDetails"
         },
-        "me.order.fulfillmentDetails.addressLine1": (v9/*: any*/),
-        "me.order.fulfillmentDetails.addressLine2": (v9/*: any*/),
-        "me.order.fulfillmentDetails.city": (v9/*: any*/),
-        "me.order.fulfillmentDetails.country": (v9/*: any*/),
-        "me.order.fulfillmentDetails.name": (v9/*: any*/),
-        "me.order.fulfillmentDetails.postalCode": (v9/*: any*/),
-        "me.order.fulfillmentDetails.region": (v9/*: any*/),
+        "me.order.fulfillmentDetails.addressLine1": (v10/*: any*/),
+        "me.order.fulfillmentDetails.addressLine2": (v10/*: any*/),
+        "me.order.fulfillmentDetails.city": (v10/*: any*/),
+        "me.order.fulfillmentDetails.country": (v10/*: any*/),
+        "me.order.fulfillmentDetails.name": (v10/*: any*/),
+        "me.order.fulfillmentDetails.postalCode": (v10/*: any*/),
+        "me.order.fulfillmentDetails.region": (v10/*: any*/),
         "me.order.id": (v8/*: any*/),
         "me.order.internalID": (v8/*: any*/),
-        "me.order.itemsTotal": (v10/*: any*/),
+        "me.order.itemsTotal": (v11/*: any*/),
         "me.order.itemsTotal.currencyCode": (v7/*: any*/),
-        "me.order.itemsTotal.minor": (v11/*: any*/),
+        "me.order.itemsTotal.minor": (v12/*: any*/),
         "me.order.lineItems": {
           "enumValues": null,
           "nullable": false,
@@ -704,8 +734,8 @@ return {
           "plural": false,
           "type": "ArtworkMeta"
         },
-        "me.order.lineItems.artwork.artworkMeta.share": (v9/*: any*/),
-        "me.order.lineItems.artwork.href": (v9/*: any*/),
+        "me.order.lineItems.artwork.artworkMeta.share": (v10/*: any*/),
+        "me.order.lineItems.artwork.href": (v10/*: any*/),
         "me.order.lineItems.artwork.id": (v8/*: any*/),
         "me.order.lineItems.id": (v8/*: any*/),
         "me.order.mode": {
@@ -731,8 +761,8 @@ return {
           "type": "PricingBreakdownLineUnion"
         },
         "me.order.pendingOffer.pricingBreakdownLines.__typename": (v7/*: any*/),
-        "me.order.pendingOffer.pricingBreakdownLines.amount": (v10/*: any*/),
-        "me.order.pendingOffer.pricingBreakdownLines.amount.amount": (v9/*: any*/),
+        "me.order.pendingOffer.pricingBreakdownLines.amount": (v11/*: any*/),
+        "me.order.pendingOffer.pricingBreakdownLines.amount.amount": (v10/*: any*/),
         "me.order.pendingOffer.pricingBreakdownLines.amount.currencyCode": (v7/*: any*/),
         "me.order.seller": {
           "enumValues": null,
@@ -765,7 +795,7 @@ return {
     },
     "name": "Order2PaymentFormTestQuery",
     "operationKind": "query",
-    "text": "query Order2PaymentFormTestQuery {\n  me {\n    ...Order2PaymentForm_me\n    order(id: \"order-id\") {\n      ...Order2PaymentForm_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2PaymentForm_me on Me {\n  creditCards(first: 10) {\n    edges {\n      node {\n        __typename\n        internalID\n        brand\n        lastDigits\n        id\n      }\n    }\n  }\n  bankAccounts(first: 10) {\n    edges {\n      node {\n        __typename\n        type\n        internalID\n        last4\n        id\n      }\n    }\n  }\n}\n\nfragment Order2PaymentForm_order on Order {\n  code\n  mode\n  source\n  internalID\n  currencyCode\n  availablePaymentMethods\n  bankAccountBalanceCheck {\n    result\n    message\n  }\n  pendingOffer {\n    pricingBreakdownLines {\n      __typename\n      ... on TotalLine {\n        amount {\n          amount\n          currencyCode\n        }\n      }\n    }\n    id\n  }\n  itemsTotal {\n    minor\n    currencyCode\n  }\n  buyerTotal {\n    minor\n    currencyCode\n  }\n  seller {\n    __typename\n    ... on Partner {\n      merchantAccount {\n        externalId\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  fulfillmentDetails {\n    name\n    addressLine1\n    addressLine2\n    city\n    region\n    postalCode\n    country\n  }\n  lineItems {\n    artwork {\n      href\n      artworkMeta: meta {\n        share\n      }\n      id\n    }\n    id\n  }\n}\n"
+    "text": "query Order2PaymentFormTestQuery {\n  me {\n    ...Order2PaymentForm_me\n    order(id: \"order-id\") {\n      ...Order2PaymentForm_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2PaymentForm_me on Me {\n  creditCards(first: 10) {\n    edges {\n      node {\n        __typename\n        internalID\n        brand\n        lastDigits\n        expirationYear\n        expirationMonth\n        id\n      }\n    }\n  }\n  bankAccounts(first: 10) {\n    edges {\n      node {\n        __typename\n        type\n        internalID\n        last4\n        bankName\n        id\n      }\n    }\n  }\n}\n\nfragment Order2PaymentForm_order on Order {\n  code\n  mode\n  source\n  internalID\n  currencyCode\n  availablePaymentMethods\n  bankAccountBalanceCheck {\n    result\n    message\n  }\n  pendingOffer {\n    pricingBreakdownLines {\n      __typename\n      ... on TotalLine {\n        amount {\n          amount\n          currencyCode\n        }\n      }\n    }\n    id\n  }\n  itemsTotal {\n    minor\n    currencyCode\n  }\n  buyerTotal {\n    minor\n    currencyCode\n  }\n  seller {\n    __typename\n    ... on Partner {\n      merchantAccount {\n        externalId\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  fulfillmentDetails {\n    name\n    addressLine1\n    addressLine2\n    city\n    region\n    postalCode\n    country\n  }\n  lineItems {\n    artwork {\n      href\n      artworkMeta: meta {\n        share\n      }\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();

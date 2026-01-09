@@ -56,11 +56,15 @@ describe("OrderDetailsPaymentInfo", () => {
     renderWithRelay({
       Order: () => ({
         creditCardWalletType: null,
-        paymentMethodDetails: { __typename: "BankAccount", last4: 2468 },
+        paymentMethodDetails: {
+          __typename: "BankAccount",
+          last4: 2468,
+          bankName: "Chase",
+        },
       }),
     })
 
-    expect(screen.getByText("Bank transfer •••• 2468")).toBeInTheDocument()
+    expect(screen.getByText("Chase •••• 2468")).toBeInTheDocument()
   })
 
   it("renders wire transfer order payment details", () => {

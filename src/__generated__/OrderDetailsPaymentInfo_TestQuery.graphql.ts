@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<140fb13525165681b1344645d234a523>>
+ * @generated SignedSource<<311d1f19fd71f4bd5323304b2d4a0344>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -184,6 +184,13 @@ return {
                         "name": "last4",
                         "storageKey": null
                       },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "bankName",
+                        "storageKey": null
+                      },
                       (v1/*: any*/)
                     ],
                     "type": "BankAccount",
@@ -217,7 +224,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "42d910558e12201b36dc0d93292f6e53",
+    "cacheID": "dfa79a8a651d1593835ac1d07130b7ba",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -251,6 +258,7 @@ return {
           "type": "PaymentMethodUnion"
         },
         "me.order.paymentMethodDetails.__typename": (v3/*: any*/),
+        "me.order.paymentMethodDetails.bankName": (v3/*: any*/),
         "me.order.paymentMethodDetails.brand": (v3/*: any*/),
         "me.order.paymentMethodDetails.expirationMonth": (v4/*: any*/),
         "me.order.paymentMethodDetails.expirationYear": (v4/*: any*/),
@@ -267,7 +275,7 @@ return {
     },
     "name": "OrderDetailsPaymentInfo_TestQuery",
     "operationKind": "query",
-    "text": "query OrderDetailsPaymentInfo_TestQuery {\n  me {\n    order(id: \"order-id\") {\n      ...OrderDetailsPaymentInfo_order\n      id\n    }\n    id\n  }\n}\n\nfragment OrderDetailsPaymentInfo_order on Order {\n  creditCardWalletType\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      brand\n      lastDigits\n      expirationYear\n      expirationMonth\n      id\n    }\n    ... on BankAccount {\n      last4\n      id\n    }\n    ... on WireTransfer {\n      isManualPayment\n    }\n  }\n}\n"
+    "text": "query OrderDetailsPaymentInfo_TestQuery {\n  me {\n    order(id: \"order-id\") {\n      ...OrderDetailsPaymentInfo_order\n      id\n    }\n    id\n  }\n}\n\nfragment OrderDetailsPaymentInfo_order on Order {\n  creditCardWalletType\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      brand\n      lastDigits\n      expirationYear\n      expirationMonth\n      id\n    }\n    ... on BankAccount {\n      last4\n      bankName\n      id\n    }\n    ... on WireTransfer {\n      isManualPayment\n    }\n  }\n}\n"
   }
 };
 })();

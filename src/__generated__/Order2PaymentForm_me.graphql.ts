@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f15718fed2b27051227fa9e25d747d5b>>
+ * @generated SignedSource<<427cc67ac630d230e01e6e5e03786963>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,6 +16,7 @@ export type Order2PaymentForm_me$data = {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly __typename: "BankAccount";
+        readonly bankName: string;
         readonly internalID: string;
         readonly last4: string;
         readonly type: BankAccountTypes;
@@ -27,6 +28,8 @@ export type Order2PaymentForm_me$data = {
       readonly node: {
         readonly __typename: "CreditCard";
         readonly brand: string;
+        readonly expirationMonth: number;
+        readonly expirationYear: number;
         readonly internalID: string;
         readonly lastDigits: string;
       } | null | undefined;
@@ -106,6 +109,20 @@ return {
                   "kind": "ScalarField",
                   "name": "lastDigits",
                   "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "expirationYear",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "expirationMonth",
+                  "storageKey": null
                 }
               ],
               "storageKey": null
@@ -155,6 +172,13 @@ return {
                   "kind": "ScalarField",
                   "name": "last4",
                   "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "bankName",
+                  "storageKey": null
                 }
               ],
               "storageKey": null
@@ -171,6 +195,6 @@ return {
 };
 })();
 
-(node as any).hash = "4aec3fc1eecc8c3f7e9f9b60854b5077";
+(node as any).hash = "287ef80423a80132687d624f7eafa271";
 
 export default node;

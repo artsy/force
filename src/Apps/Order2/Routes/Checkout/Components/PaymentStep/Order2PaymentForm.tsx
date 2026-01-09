@@ -174,7 +174,6 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
   const {
     setConfirmationToken,
     checkoutTracking,
-    setSavedPaymentMethod,
     setPaymentComplete,
     setSavePaymentMethod,
     savePaymentMethod,
@@ -612,8 +611,6 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       } finally {
         setIsSubmittingToStripe(false)
         resetElementsToInitialParams()
-        // Resets for the PaymentCompletedView
-        setSavedPaymentMethod({ savedPaymentMethod: null })
         setConfirmationToken({ confirmationToken: null })
         setPaymentComplete()
       }
@@ -643,9 +640,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
 
         validateAndExtractOrderResponse(result.setOrderPayment?.orderOrError)
 
-        setSavedPaymentMethod({
-          savedPaymentMethod: selectedSavedPaymentMethod,
-        })
+        setConfirmationToken({ confirmationToken: null })
 
         // For saved ACH bank accounts, start balance check
         if (paymentMethod === "US_BANK_ACCOUNT") {
@@ -754,6 +749,8 @@ const ME_FRAGMENT = graphql`
           internalID
           brand
           lastDigits
+          expirationYear
+          expirationMonth
         }
       }
     }
@@ -764,6 +761,7 @@ const ME_FRAGMENT = graphql`
           type
           internalID
           last4
+          bankName
         }
       }
     }

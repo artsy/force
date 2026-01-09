@@ -52,20 +52,6 @@ type ConfirmationTokenState = {
     | undefined
 } | null
 
-type SavedCreditCard = {
-  __typename: "CreditCard"
-  internalID: string
-  brand: string
-  lastDigits: string
-}
-
-type SavedBankAccount = {
-  __typename: "BankAccount"
-  type: "US_BANK_ACCOUNT" | "SEPA_DEBIT"
-  internalID: string
-  last4: string
-}
-
 type Messages = Partial<
   Record<CheckoutStepName, { error: CheckoutErrorBannerProps["error"] }>
 >
@@ -81,7 +67,6 @@ export interface Order2CheckoutModel {
   activeFulfillmentDetailsTab: FulfillmentDetailsTab | null
   confirmationToken: ConfirmationTokenState
   savePaymentMethod: boolean
-  savedPaymentMethod: SavedCreditCard | SavedBankAccount | null
   checkoutMode: CheckoutMode
   userAddressMode: UserAddressMode | null
   messages: Messages
@@ -114,10 +99,6 @@ export interface Order2CheckoutModel {
     { confirmationToken: ConfirmationTokenState }
   >
   setSavePaymentMethod: Action<this, boolean>
-  setSavedPaymentMethod: Action<
-    this,
-    { savedPaymentMethod: SavedCreditCard | SavedBankAccount | null }
-  >
   redirectToOrderDetails: Action<this>
   setCheckoutMode: Action<this, CheckoutMode>
   setUserAddressMode: Action<this, UserAddressMode | null>
@@ -138,7 +119,6 @@ export const Order2CheckoutContext: ReturnType<
   activeFulfillmentDetailsTab: null,
   confirmationToken: null,
   savePaymentMethod: true,
-  savedPaymentMethod: null,
   checkoutMode: "standard",
   steps: [],
   userAddressMode: null,
@@ -344,12 +324,6 @@ export const Order2CheckoutContext: ReturnType<
 
   setSavePaymentMethod: action((state, savePaymentMethod) => {
     state.savePaymentMethod = savePaymentMethod
-  }),
-
-  setSavedPaymentMethod: action((state, { savedPaymentMethod }) => {
-    state.savedPaymentMethod = savedPaymentMethod
-    state.savePaymentMethod = false
-    state.confirmationToken = null
   }),
 
   editFulfillmentDetails: action(state => {
@@ -612,7 +586,6 @@ const initialStateForOrder = (
       ? { id: order.stripeConfirmationToken }
       : null,
     savePaymentMethod: true,
-    savedPaymentMethod: null,
     steps,
     checkoutMode: (savedCheckoutMode === "express"
       ? "express"

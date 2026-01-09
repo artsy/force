@@ -37,7 +37,7 @@ export const OrderDetailsPaymentInfo: React.FC<
       <Flex alignItems="center">
         <Icon mr={1} width={18} height={18} />
 
-        <Text variant={["xs", "sm"]} color="mono100">
+        <Text variant="sm" color="mono100">
           {text}
         </Text>
       </Flex>
@@ -75,7 +75,7 @@ const getPaymentMethodContent = (
     case "BankAccount":
       return {
         Icon: InstitutionIcon,
-        text: `Bank transfer •••• ${paymentMethodDetails.last4}`,
+        text: `${paymentMethodDetails.bankName} •••• ${paymentMethodDetails.last4}`,
       }
 
     case "WireTransfer":
@@ -104,6 +104,7 @@ const fragment = graphql`
       }
       ... on BankAccount {
         last4
+        bankName
       }
       ... on WireTransfer {
         isManualPayment
