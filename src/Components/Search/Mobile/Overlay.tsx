@@ -1,5 +1,5 @@
 import SearchIcon from "@artsy/icons/SearchIcon"
-import { Box, LabeledInput } from "@artsy/palette"
+import { LabeledInput } from "@artsy/palette"
 import { type FC, useCallback, useEffect, useRef, useState } from "react"
 
 import { ActionType } from "@artsy/cohesion"
@@ -114,16 +114,15 @@ export const Overlay: FC<React.PropsWithChildren<OverlayProps>> = ({
       onClose={onClose}
       header={
         <>
-          <Box mt={-15}>
-            <LabeledInput
-              mx={2}
-              ref={inputRef}
-              value={inputValue}
-              placeholder="Search Artsy"
-              label={<SearchIcon fill="mono60" aria-hidden size={18} />}
-              onChange={handleValueChange}
-            />
-          </Box>
+          <LabeledInput
+            autoFocus
+            mx={2}
+            ref={inputRef}
+            value={inputValue}
+            placeholder="Search Artsy"
+            label={<SearchIcon fill="mono60" aria-hidden size={18} />}
+            onChange={handleValueChange}
+          />
 
           {shouldStartSearching(inputValue) && (
             <SearchInputPillsFragmentContainer

@@ -18,11 +18,11 @@ export const SearchBar: FC<React.PropsWithChildren<SearchBarProps>> = ({
 
   return (
     <Box flex={1}>
-      <Media at="xs">
+      <Media lessThan="md">
         <MobileSearchBarQueryRenderer onClose={onClose} />
       </Media>
 
-      <Media greaterThan="xs">
+      <Media greaterThanOrEqual="md">
         <SearchBarInput searchTerm={urlSearchTerm} />
       </Media>
     </Box>
