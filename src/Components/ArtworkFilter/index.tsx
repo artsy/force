@@ -49,6 +49,7 @@ import { useSystemContext } from "System/Hooks/useSystemContext"
 import { Jump, useJump } from "Utils/Hooks/useJump"
 import { usePrevious } from "Utils/Hooks/usePrevious"
 import { Media } from "Utils/Responsive"
+import { getENV } from "Utils/getENV"
 import { isEqual } from "lodash"
 import type React from "react"
 import { useEffect, useMemo, useState } from "react"
@@ -150,8 +151,10 @@ export const BaseArtworkFilter: React.FC<
   const [isOpen, setIsOpen] = useState(false)
 
   const [isImmersed, setIsImmersed] = useState(false)
-  const enableImmersiveView = useFlag("onyx_enable-immersive-view")
   const { dismiss, isDismissed } = useDismissibleContext()
+
+  const isMobile = getENV("IS_MOBILE")
+  const enableImmersiveView = useFlag("onyx_enable-immersive-view") && !isMobile
 
   const backdrop = useStickyBackdrop()
 
