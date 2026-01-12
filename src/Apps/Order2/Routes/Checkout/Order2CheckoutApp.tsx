@@ -146,30 +146,30 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
                 <Order2ExpressCheckout order={orderData} />
               )}
               {isOffer && (
-                <>
+                <Box>
                   <Jump id={STEP_JUMP_MAP.OFFER_AMOUNT} />
                   <Order2OfferStep order={orderData} />
-                </>
+                </Box>
               )}
-              <>
+              <Box>
                 <Jump id={STEP_JUMP_MAP.FULFILLMENT_DETAILS} />
                 <Order2FulfillmentDetailsStep order={orderData} me={meData} />
-              </>
-              <>
+              </Box>
+              <Box>
                 <Jump id={STEP_JUMP_MAP.DELIVERY_OPTION} />
                 <Order2DeliveryOptionsStep order={orderData} />
-              </>
-              <>
+              </Box>
+              <Box>
                 <Jump id={STEP_JUMP_MAP.PAYMENT} />
                 <Order2PaymentStep order={orderData} me={meData} />
-              </>
+              </Box>
             </Stack>
             <Box display={["block", "block", "none"]}>
               <Spacer y={1} />
-              <>
+              <Box>
                 <Jump id={STEP_JUMP_MAP.CONFIRMATION} />
                 <Order2ReviewStep order={orderData} />
-              </>
+              </Box>
               <Order2HelpLinksWithInquiry
                 order={orderData}
                 artworkID={artworkSlug as string}
@@ -185,10 +185,10 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
           display={["none", "none", "block"]}
         >
           <Box position={["initial", "initial", "sticky"]} top="100px">
-            <>
+            <Box>
               <Jump id={STEP_JUMP_MAP.CONFIRMATION} />
               <Order2ReviewStep order={orderData} />
-            </>
+            </Box>
             <Separator as="hr" />
             <Order2HelpLinksWithInquiry
               order={orderData}
