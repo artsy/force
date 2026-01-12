@@ -104,14 +104,21 @@ describe(ColorFilter, () => {
     expect(currentArtworkFilterContext().filters?.colors).toEqual([])
   })
 
-  it("can render in expanded or collapsed state", () => {
+  it("hides the filter controls when collapsed by default", () => {
     render(<ColorFilter />)
-    expect(screen.queryByText("Red")).not.toBeInTheDocument()
 
+    expect(screen.getByText("Red")).not.toBeVisible()
+  })
+
+  it("hides the filter controls when explicitly collapsed", () => {
     render(<ColorFilter expanded={false} />)
-    expect(screen.queryByText("Red")).not.toBeInTheDocument()
 
+    expect(screen.getByText("Red")).not.toBeVisible()
+  })
+
+  it("shows the filter controls when expanded", () => {
     render(<ColorFilter expanded={true} />)
-    expect(screen.getByText("Red")).toBeInTheDocument()
+
+    expect(screen.getByText("Red")).toBeVisible()
   })
 })

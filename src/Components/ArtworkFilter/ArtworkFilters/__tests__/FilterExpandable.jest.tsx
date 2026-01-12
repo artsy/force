@@ -29,6 +29,6 @@ describe("FilterExpandable", () => {
     mockGetENV.mockImplementation(() => true)
     getWrapper()
 
-    expect(screen.queryByText("Some render content")).not.toBeInTheDocument()
+    expect(screen.getByText("Some render content")).not.toBeVisible()
   })
 })
