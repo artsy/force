@@ -153,14 +153,16 @@ describe("PriceRangeFilterNew", () => {
     it("hides the filter controls when not set", () => {
       renderPriceRangeFilter({})
 
-      const minSliderHandle = screen.queryByLabelText("Min price")
-      const maxSliderHandle = screen.queryByLabelText("Min price")
+      const minPriceElements = screen.getAllByLabelText("Min price")
+      const maxPriceElements = screen.getAllByLabelText("Max price")
 
-      expect(screen.queryByLabelText("Min price")).not.toBeInTheDocument()
-      expect(screen.queryByLabelText("Max price")).not.toBeInTheDocument()
+      minPriceElements.forEach(element => {
+        expect(element).not.toBeVisible()
+      })
 
-      expect(minSliderHandle).not.toBeInTheDocument()
-      expect(maxSliderHandle).not.toBeInTheDocument()
+      maxPriceElements.forEach(element => {
+        expect(element).not.toBeVisible()
+      })
     })
 
     it("hides the filter controls when `false`", () => {
@@ -168,14 +170,16 @@ describe("PriceRangeFilterNew", () => {
         expanded: false,
       })
 
-      const minSliderHandle = screen.queryByLabelText("Min price")
-      const maxSliderHandle = screen.queryByLabelText("Min price")
+      const minPriceElements = screen.getAllByLabelText("Min price")
+      const maxPriceElements = screen.getAllByLabelText("Max price")
 
-      expect(screen.queryByLabelText("Min price")).not.toBeInTheDocument()
-      expect(screen.queryByLabelText("Max price")).not.toBeInTheDocument()
+      minPriceElements.forEach(element => {
+        expect(element).not.toBeVisible()
+      })
 
-      expect(minSliderHandle).not.toBeInTheDocument()
-      expect(maxSliderHandle).not.toBeInTheDocument()
+      maxPriceElements.forEach(element => {
+        expect(element).not.toBeVisible()
+      })
     })
 
     it("shows the filter controls when `true`", () => {

@@ -58,16 +58,25 @@ describe(PartnersFilter, () => {
     expect(currentArtworkFilterContext().filters?.partnerIDs).toEqual([])
   })
 
-  it("can render in expanded or collapsed state", () => {
+  it("hides the filter controls when collapsed by default", () => {
     render(<PartnersFilter />)
-    expect(screen.queryByText("Percy Z")).not.toBeInTheDocument()
 
+    expect(screen.getByText("Percy Z")).not.toBeVisible()
+    expect(screen.getByText("Gallery ABC")).not.toBeVisible()
+  })
+
+  it("hides the filter controls when explicitly collapsed", () => {
     render(<PartnersFilter expanded={false} />)
-    expect(screen.queryByText("Percy Z")).not.toBeInTheDocument()
 
+    expect(screen.getByText("Percy Z")).not.toBeVisible()
+    expect(screen.getByText("Gallery ABC")).not.toBeVisible()
+  })
+
+  it("shows the filter controls when expanded", () => {
     render(<PartnersFilter expanded={true} />)
-    expect(screen.getByText("Percy Z")).toBeInTheDocument()
-    expect(screen.getByText("Gallery ABC")).toBeInTheDocument()
+
+    expect(screen.getByText("Percy Z")).toBeVisible()
+    expect(screen.getByText("Gallery ABC")).toBeVisible()
   })
 
   it("renders custom label when provided", () => {
