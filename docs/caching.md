@@ -80,7 +80,7 @@ const data = useLazyLoadQuery(..., { cacheConfig: { force: true }})
 // etc.
 ```
 
-By default, when no custom cache TTL is set via `serverCacheTTL`, or the non-default route cache times in [`Apps/serverCacheTTLs.tsx`](src/Apps/serverCacheTTLs.tsx) isn't specified, we fall back to a default of 1 hour, [configured at the CDN level via an ENV var](https://dash.cloudflare.com/0373426be7be649ff052277fb5377c4f/workers/services/view/metaphysics-cdn-staging/production/settings).
+By default, when no custom cache TTL is set via `serverCacheTTL`, or the non-default route cache times in [`Apps/serverCacheTTLs.tsx`](../src/Apps/serverCacheTTLs.tsx) isn't specified, we fall back to a default of 1 hour, [configured at the CDN level via an ENV var](https://dash.cloudflare.com/0373426be7be649ff052277fb5377c4f/workers/services/view/metaphysics-cdn-staging/production/settings).
 
 ### General Cache Behavior
 
@@ -108,9 +108,9 @@ Worth noting that one can mix and match, and add `@cacheable` _and_ a `force: tr
 
 **What if I want to see the latest page / unpublished preview?** There is an escape hatch - a query param in the URL: `?nocache=true` - that will force the CDN to bypass the cache and hit Metaphysics directly _despite_ any `@cacheable` directive. This can be useful for a privileged user to see an unpublished page (which we wouldn't want to cache).
 
-Setting/unsetting the `Cache-Control` header, and propagating any `max-age` is accomplished in a Relay middleware: [`System/Relay/middleware/cacheHeaderMiddleware.tsx`](System/Relay/middleware/cacheHeaderMiddleware.tsx). This takes into account the various configuration options available (including `@cacheable`).
+Setting/unsetting the `Cache-Control` header, and propagating any `max-age` is accomplished in a Relay middleware: [`System/Relay/middleware/cacheHeaderMiddleware.ts`](../src/System/Relay/middleware/cacheHeaderMiddleware.ts). This takes into account the various configuration options available (including `@cacheable`).
 
-Un-setting the access token header for logged-in queries using `@cacheable` is accomplished in a Relay middleware: [`System/Relay/createRelaySSREnvironment.ts`](System/Relay/createRelaySSREnvironment.ts).
+Un-setting the access token header for logged-in queries using `@cacheable` is accomplished in a Relay middleware: [`System/Relay/createRelaySSREnvironment.ts`](../src/System/Relay/createRelaySSREnvironment.ts).
 
 ### Cache-related ENV vars for Relay caching:
 
