@@ -117,34 +117,31 @@ export const StripePaymentCheckboxes: React.FC<
         open={selectedPaymentMethod === "stripe-ach"}
         data-testid="stripe-ach-collapse"
       >
-        <Box p={2}>
-          <Flex>
-            <Checkbox
-              selected={savePaymentMethod}
-              onSelect={onSavePaymentMethodChange}
-            >
-              Save bank account for later use.
-            </Checkbox>
+        <Flex p={2} position="relative">
+          <Checkbox
+            selected={savePaymentMethod}
+            onSelect={onSavePaymentMethodChange}
+          >
+            Save bank account for later use.
+          </Checkbox>
 
-            <Tooltip
-              placement="top-start"
-              width={400}
-              content={`Thank you for signing up for direct debits from Artsy. You
-                    have authorized Artsy and, if applicable, its affiliated
-                    entities to debit the bank account specified above, on behalf
-                    of sellers that use the Artsy website, for any amount owed for
-                    your purchase of artworks from such sellers, according to
-                    Artsy's website and terms. You can change or cancel this
-                    authorization at any time by providing Artsy with 30 (thirty)
-                    days' notice. By clicking "Save bank account for later use",
-                    you authorize Artsy to save the bank account specified above.`}
-            >
-              <Clickable ml={0.5} style={{ lineHeight: 0 }}>
-                <InfoIcon />
-              </Clickable>
-            </Tooltip>
-          </Flex>
-        </Box>
+          <Tooltip
+            width={250}
+            content={`Thank you for signing up for direct debits from Artsy. You
+                      have authorized Artsy and, if applicable, its affiliated
+                      entities to debit the bank account specified above, on behalf
+                      of sellers that use the Artsy website, for any amount owed for
+                      your purchase of artworks from such sellers, according to
+                      Artsy's website and terms. You can change or cancel this
+                      authorization at any time by providing Artsy with 30 (thirty)
+                      days' notice. By clicking "Save bank account for later use",
+                      you authorize Artsy to save the bank account specified above.`}
+          >
+            <Clickable ml={0.5} style={{ lineHeight: 0 }}>
+              <InfoIcon />
+            </Clickable>
+          </Tooltip>
+        </Flex>
       </Collapse>
     </>
   )
