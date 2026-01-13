@@ -171,7 +171,6 @@ export const AuthDialogProvider: FC<
       options?: AuthDialogOptions
     }) => {
       if (!isLoggedIn && options?.imageUrl) {
-        console.log("Prefetching options?.imageUrl:", options?.imageUrl)
         // Prefetch custom image if provided
         prefetchUrl(options.imageUrl)
       }
