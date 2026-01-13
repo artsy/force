@@ -2,10 +2,15 @@ import { Column, GridColumns, Message, Spacer } from "@artsy/palette"
 import { MetaTags } from "Components/MetaTags"
 import type * as React from "react"
 
-export const Error: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const IdentityVerificationError: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <>
-      <MetaTags title="Artsy | ID Verification" />
+      <MetaTags
+        title="Artsy | ID Verification"
+        pathname="/identity-verification/error"
+      />
 
       <Spacer y={4} />
 

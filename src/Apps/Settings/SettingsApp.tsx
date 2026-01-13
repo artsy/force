@@ -36,7 +36,7 @@ const SettingsApp: React.FC<React.PropsWithChildren<SettingsAppProps>> = ({
 
   return (
     <>
-      <MetaTags title="Settings | Artsy" />
+      <MetaTags title="Settings | Artsy" pathname="/settings" />
 
       <TopContextBar displayBackArrow href="/collector-profile/my-collection">
         Profile

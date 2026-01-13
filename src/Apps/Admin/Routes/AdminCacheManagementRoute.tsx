@@ -141,7 +141,10 @@ export const AdminCacheManagementRoute: FC<
 
   return (
     <>
-      <MetaTags title="Cache Manaagement | Artsy" />
+      <MetaTags
+        title="Cache Manaagement | Artsy"
+        pathname="/admin/cache-management"
+      />
 
       <Spacer y={4} />
 

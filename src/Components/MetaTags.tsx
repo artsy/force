@@ -5,9 +5,8 @@ import { Link, Meta, Title } from "react-head"
 
 const DEFAULT_TITLE = "Artsy — Discover and Buy Fine Art"
 const DEFAULT_DESCRIPTION =
-  "Artsy is the world’s largest online art marketplace. Browse over 1 million artworks by iconic and emerging artists from 4000+ galleries and top auction houses."
+  "Artsy is the world's largest online art marketplace. Browse over 1 million artworks by iconic and emerging artists from 4000+ galleries and top auction houses."
 const DEFAULT_IMAGE_URL = "https://files.artsy.net/images/og_image.jpeg"
-const DEFAULT_PATHNAME = "/"
 
 export interface MetaTagsProps {
   title?: string | null
@@ -18,7 +17,7 @@ export interface MetaTagsProps {
   /** Will be cropped to 1200 × 630 (1.9:1) */
   imageURL?: string | null
   /** Path relative to www.artsy.net */
-  pathname?: string | null
+  pathname: string
   /** Include a `noindex, nofollow` meta tag */
   blockRobots?: boolean
 }
@@ -28,14 +27,13 @@ export const MetaTags: React.FC<React.PropsWithChildren<MetaTagsProps>> = ({
   socialTitle: _socialTitle,
   description: _description,
   imageURL: _imageURL,
-  pathname: _pathname,
+  pathname,
   blockRobots,
 }) => {
   const title = _title ?? DEFAULT_TITLE
   const socialTitle = _socialTitle ?? _title ?? DEFAULT_TITLE
   const description = _description ?? DEFAULT_DESCRIPTION
   const imageURL = _imageURL ?? DEFAULT_IMAGE_URL
-  const pathname = _pathname ?? DEFAULT_PATHNAME
 
   const href = [
     getENV("APP_URL"),

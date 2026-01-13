@@ -46,7 +46,7 @@ export const AuthenticationResetPasswordRoute: React.FC<
 
   return (
     <>
-      <MetaTags title="Reset Password | Artsy" />
+      <MetaTags title="Reset Password | Artsy" pathname="/reset_password" />
 
       <Formik
         validateOnMount

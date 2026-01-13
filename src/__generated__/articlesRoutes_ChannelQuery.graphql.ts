@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4ffa9ac3f50c4aea59651c38b268ddff>>
+ * @generated SignedSource<<9975ec13b0ef1f56e91fe733c136a88c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -305,6 +305,7 @@ return {
             "kind": "LinkedHandle",
             "name": "articlesConnection"
           },
+          (v3/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -349,20 +350,19 @@ return {
               }
             ],
             "storageKey": null
-          },
-          (v3/*: any*/)
+          }
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "075d5a51a647e1a37b598998e7c48a77",
+    "cacheID": "51f48326aa5eb74c2bae121ebeeeac51",
     "id": null,
     "metadata": {},
     "name": "articlesRoutes_ChannelQuery",
     "operationKind": "query",
-    "text": "query articlesRoutes_ChannelQuery(\n  $id: ID!\n) {\n  channel(id: $id) @principalField {\n    ...ChannelApp_channel\n    id\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  thumbnailTitle\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ChannelApp_channel on Channel {\n  ...ChannelArticles_channel\n  name\n  tagline\n  image {\n    url\n  }\n  links {\n    url\n    text\n  }\n}\n\nfragment ChannelArticles_channel on Channel {\n  articlesConnection(first: 9, sort: PUBLISHED_AT_DESC) {\n    edges {\n      node {\n        ...CellArticle_article\n        internalID\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query articlesRoutes_ChannelQuery(\n  $id: ID!\n) {\n  channel(id: $id) @principalField {\n    ...ChannelApp_channel\n    id\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  thumbnailTitle\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ChannelApp_channel on Channel {\n  ...ChannelArticles_channel\n  id\n  name\n  tagline\n  image {\n    url\n  }\n  links {\n    url\n    text\n  }\n}\n\nfragment ChannelArticles_channel on Channel {\n  articlesConnection(first: 9, sort: PUBLISHED_AT_DESC) {\n    edges {\n      node {\n        ...CellArticle_article\n        internalID\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

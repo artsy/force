@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5a857cd1d2a147dbe8fb61a0bbb12ece>>
+ * @generated SignedSource<<4472fa889d8c49725c44af181be4500c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -126,6 +126,13 @@ return {
             "args": null,
             "kind": "ScalarField",
             "name": "displayName",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "slug",
             "storageKey": null
           },
           (v3/*: any*/),
@@ -272,12 +279,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3536f8d90496eb8640e4a0bfbca81a34",
+    "cacheID": "f93745a1cbe7d1304bd44036c40d22f3",
     "id": null,
     "metadata": {},
     "name": "geneRoutes_GeneShowQuery",
     "operationKind": "query",
-    "text": "query geneRoutes_GeneShowQuery(\n  $slug: String!\n) @cacheable {\n  gene(id: $slug) @principalField {\n    ...GeneShow_gene\n    id\n  }\n}\n\nfragment GeneMeta_gene on Gene {\n  name\n  displayName\n  href\n  meta {\n    description\n  }\n  image {\n    cropped(width: 1200, height: 630) {\n      src\n    }\n  }\n}\n\nfragment GeneShow_gene on Gene {\n  ...GeneMeta_gene\n  internalID\n  name\n  displayName\n  formattedDescription: description(format: HTML)\n  similar(first: 10) {\n    edges {\n      node {\n        internalID\n        name\n        href\n        id\n      }\n    }\n  }\n  artistsConnection(first: 10) {\n    edges {\n      node {\n        internalID\n        name\n        href\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query geneRoutes_GeneShowQuery(\n  $slug: String!\n) @cacheable {\n  gene(id: $slug) @principalField {\n    ...GeneShow_gene\n    id\n  }\n}\n\nfragment GeneMeta_gene on Gene {\n  name\n  displayName\n  slug\n  href\n  meta {\n    description\n  }\n  image {\n    cropped(width: 1200, height: 630) {\n      src\n    }\n  }\n}\n\nfragment GeneShow_gene on Gene {\n  ...GeneMeta_gene\n  internalID\n  name\n  displayName\n  formattedDescription: description(format: HTML)\n  similar(first: 10) {\n    edges {\n      node {\n        internalID\n        name\n        href\n        id\n      }\n    }\n  }\n  artistsConnection(first: 10) {\n    edges {\n      node {\n        internalID\n        name\n        href\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

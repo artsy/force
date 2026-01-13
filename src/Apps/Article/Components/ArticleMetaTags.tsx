@@ -11,12 +11,14 @@ interface ArticleMetaTagsProps {
 const ArticleMetaTags: FC<React.PropsWithChildren<ArticleMetaTagsProps>> = ({
   article,
 }) => {
+  if (!article) return null
+
   return (
     <>
       <MetaTags
         title={`${article.searchTitle || article.title} | Artsy`}
         socialTitle={article.title}
-        pathname={article.href}
+        pathname={article.href || "/articles"}
         description={article.searchDescription || article.description}
         imageURL={article.thumbnailImage?.url}
       />
@@ -50,7 +52,7 @@ export const ArticleMetaTagsFragmentContainer = createFragmentContainer(
     article: graphql`
       fragment ArticleMetaTags_article on Article {
         byline
-        href
+        href @required(action: NONE)
         keywords
         metaPublishedAt: publishedAt
         title

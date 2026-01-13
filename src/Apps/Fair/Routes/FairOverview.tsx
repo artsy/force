@@ -25,6 +25,8 @@ const FairOverview: FC<React.PropsWithChildren<FairOverviewProps>> = ({
   const { match } = useRouter()
   const { jumpTo } = useJump()
 
+  if (!fair) return null
+
   const { focused_booths: focusedBooths } = match.location.query
 
   const scrolledTo = useRef(false)
@@ -47,7 +49,7 @@ const FairOverview: FC<React.PropsWithChildren<FairOverviewProps>> = ({
       <MetaTags
         title={`${fair.name} | Artsy`}
         description={fair.metaDescription || fair.metaDescriptionFallback}
-        pathname={fair.href}
+        pathname={fair.href || `/fair/${fair.slug}`}
         imageURL={fair.metaImage?.src}
       />
 
@@ -86,7 +88,7 @@ export const FairOverviewFragmentContainer = createFragmentContainer(
         ...FairCollections_fair
         ...FairAbout_fair
         name
-        href
+        href @required(action: NONE)
         slug
         metaDescription: summary
         metaDescriptionFallback: about(format: PLAIN)

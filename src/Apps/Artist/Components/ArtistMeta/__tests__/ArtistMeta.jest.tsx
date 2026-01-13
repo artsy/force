@@ -142,12 +142,13 @@ describe("AdminMeta", () => {
       renderWithRelay({
         Artist: () => ({
           href: "/artist/example-artist",
+          slug: "example-artist",
           meta: { description: null, title: "Example Artist" },
         }),
       })
 
       const defaultDescription =
-        "Artsy is the world’s largest online art marketplace. Browse over 1 million artworks by iconic and emerging artists from 4000+ galleries and top auction houses."
+        "Artsy is the world's largest online art marketplace. Browse over 1 million artworks by iconic and emerging artists from 4000+ galleries and top auction houses."
 
       expect(
         getMetaBy({ name: "description" })?.getAttribute("content"),

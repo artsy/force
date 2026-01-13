@@ -18,7 +18,10 @@ const ExampleArtworkRoute: React.FC<
 
   return (
     <Box>
-      <MetaTags title={`${artwork.title} | Artsy`} />
+      <MetaTags
+        title={`${artwork.title} | Artsy`}
+        pathname={`/artwork/${artwork.slug}`}
+      />
 
       <Box mb={4}>
         <Text variant="lg-display" mb={2}>

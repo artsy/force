@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5ec4a54f6e581d9a24ec1b96a42f0d36>>
+ * @generated SignedSource<<42232d041d36ab7ed5265a750cf72d1d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,7 +12,7 @@ import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type GeneMeta_gene$data = {
   readonly displayName: string | null | undefined;
-  readonly href: string | null | undefined;
+  readonly href: string;
   readonly image: {
     readonly cropped: {
       readonly src: string;
@@ -22,8 +22,9 @@ export type GeneMeta_gene$data = {
     readonly description: string;
   };
   readonly name: string | null | undefined;
+  readonly slug: string;
   readonly " $fragmentType": "GeneMeta_gene";
-};
+} | null | undefined;
 export type GeneMeta_gene$key = {
   readonly " $data"?: GeneMeta_gene$data;
   readonly " $fragmentSpreads": FragmentRefs<"GeneMeta_gene">;
@@ -53,8 +54,19 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "href",
+      "name": "slug",
       "storageKey": null
+    },
+    {
+      "kind": "RequiredField",
+      "field": {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "href",
+        "storageKey": null
+      },
+      "action": "NONE"
     },
     {
       "alias": null,
@@ -119,6 +131,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "2e27d5537beb9dd961399d8fc7cdfcc5";
+(node as any).hash = "24f8430e65ba61215d17e48b4fec39d4";
 
 export default node;

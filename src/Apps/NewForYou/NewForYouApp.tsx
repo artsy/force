@@ -16,7 +16,7 @@ export const NewForYouApp: FC<React.PropsWithChildren<NewForYouAppProps>> = ({
 }) => {
   return (
     <>
-      <MetaTags title="New For You" />
+      <MetaTags title="New For You" pathname="/new-for-you" />
 
       <Spacer y={4} />
 

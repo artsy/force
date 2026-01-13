@@ -21,6 +21,7 @@ const NewsApp: FC<React.PropsWithChildren<NewsAppProps>> = ({ viewer }) => {
       <MetaTags
         title="News | Artsy"
         description="Never miss the biggest art world stories. Artsy Editorial delivers art world news and updates, each and every day."
+        pathname="/articles/news"
       />
 
       <Link

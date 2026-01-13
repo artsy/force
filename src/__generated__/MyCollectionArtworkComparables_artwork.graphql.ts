@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e115929e88d7617f3039324a5b7f94b8>>
+ * @generated SignedSource<<a8215b81dc242472029f17a2a0e380a0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -24,6 +24,7 @@ export type MyCollectionArtworkComparables_artwork$data = {
       } | null | undefined;
     } | null | undefined> | null | undefined;
   } | null | undefined;
+  readonly internalID: string;
   readonly " $fragmentType": "MyCollectionArtworkComparables_artwork";
 };
 export type MyCollectionArtworkComparables_artwork$key = {
@@ -31,12 +32,21 @@ export type MyCollectionArtworkComparables_artwork$key = {
   readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkComparables_artwork">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "MyCollectionArtworkComparables_artwork",
   "selections": [
+    (v0/*: any*/),
     {
       "alias": "auctionResult",
       "args": [
@@ -86,13 +96,7 @@ const node: ReaderFragment = {
                   "name": "artistID",
                   "storageKey": null
                 },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "internalID",
-                  "storageKey": null
-                }
+                (v0/*: any*/)
               ],
               "storageKey": null
             }
@@ -130,7 +134,8 @@ const node: ReaderFragment = {
   "type": "Artwork",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "417792b31251c2d2ba0fd6fba8ec9327";
+(node as any).hash = "45a4195a0b466a1021c2d9ccbeb55ea9";
 
 export default node;

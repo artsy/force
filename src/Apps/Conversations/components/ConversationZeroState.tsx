@@ -6,7 +6,7 @@ export const ConversationZeroState: React.FC<
 > = () => {
   return (
     <>
-      <MetaTags title="Inbox | Artsy" />
+      <MetaTags title="Inbox | Artsy" pathname="/user/conversations" />
 
       <Box width="100%" height="100dvh">
         <Flex

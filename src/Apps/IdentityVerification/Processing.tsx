@@ -13,7 +13,10 @@ import type * as React from "react"
 export const Processing: React.FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <>
-      <MetaTags title="Artsy | ID Verification" />
+      <MetaTags
+        title="Artsy | ID Verification"
+        pathname="/identity-verification/processing"
+      />
 
       <Spacer y={4} />
 

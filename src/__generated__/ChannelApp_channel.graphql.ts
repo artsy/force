@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<916d8826ea1103c823508eaed30fccd1>>
+ * @generated SignedSource<<9b399c0b44aa92413afae4259db04766>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,7 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ChannelApp_channel$data = {
+  readonly id: string;
   readonly image: {
     readonly url: string | null | undefined;
   } | null | undefined;
@@ -46,6 +47,13 @@ return {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ChannelArticles_channel"
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "id",
+      "storageKey": null
     },
     {
       "alias": null,
@@ -98,6 +106,6 @@ return {
 };
 })();
 
-(node as any).hash = "6fe32a16ec30d9c06b7039d4b6be6685";
+(node as any).hash = "c960cb8a74815e58bc61b1ab76f0aede";
 
 export default node;

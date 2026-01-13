@@ -25,7 +25,10 @@ const MyCollectionArtworkComparables: React.FC<
 
   return (
     <>
-      <MetaTags title={titleString} />
+      <MetaTags
+        title={titleString}
+        pathname={`/collector-profile/my-collection/artwork/${artwork.internalID}/comparables`}
+      />
 
       <Spacer y={2} />
 
@@ -57,6 +60,7 @@ export const MyCollectionArtworkComparablesFragmentContainer =
   createFragmentContainer(MyCollectionArtworkComparables, {
     artwork: graphql`
       fragment MyCollectionArtworkComparables_artwork on Artwork {
+        internalID
         auctionResult: comparableAuctionResults(first: 6) @optionalField {
           edges {
             cursor

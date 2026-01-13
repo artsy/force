@@ -87,6 +87,7 @@ export const MyCollectionCreateArtwork: React.FC<
     }
   }
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: scroll to top on step change
   useEffect(() => {
     window?.scrollTo?.({ top: 0 })
   }, [currentStep])
@@ -116,7 +117,7 @@ export const MyCollectionCreateArtwork: React.FC<
         pathname: "/collector-profile/my-collection/",
       })
     } catch (error) {
-      logger.error(`Artwork not created`, error)
+      logger.error("Artwork not created", error)
       sendToast({
         variant: "error",
         message: "An error occurred",
@@ -127,7 +128,10 @@ export const MyCollectionCreateArtwork: React.FC<
 
   return (
     <>
-      <MetaTags title="Upload Artwork | Artsy" />
+      <MetaTags
+        title="Upload Artwork | Artsy"
+        pathname="/collector-profile/my-collection/artworks/new"
+      />
 
       <MyCollectionArtworkFormContextProvider
         onBack={handleBack}

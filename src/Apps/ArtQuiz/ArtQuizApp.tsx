@@ -6,7 +6,7 @@ export const ArtQuizApp: FC<React.PropsWithChildren<unknown>> = ({
 }) => {
   return (
     <>
-      <MetaTags title="Art Taste Quiz | Artsy" />
+      <MetaTags title="Art Taste Quiz | Artsy" pathname="/art-quiz" />
 
       {children}
     </>

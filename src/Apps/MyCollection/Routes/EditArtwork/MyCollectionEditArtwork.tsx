@@ -111,6 +111,7 @@ export const MyCollectionEditArtwork: React.FC<
     <>
       <MetaTags
         title={`Edit ${artwork?.title} - ${artwork?.artistNames} | Artsy`}
+        pathname={`/collector-profile/my-collection/artwork/${artwork?.internalID}/edit`}
       />
 
       <MyCollectionArtworkFormContextProvider

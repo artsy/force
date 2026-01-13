@@ -29,7 +29,7 @@ const ConversationApp: React.FC<
 
   return (
     <ConversationsProvider viewer={viewer}>
-      <MetaTags title="Inbox | Artsy" />
+      <MetaTags title="Inbox | Artsy" pathname="/user/conversations" />
 
       <ConversationsLayout
         renderSidebar={() => {

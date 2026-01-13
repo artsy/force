@@ -9,17 +9,24 @@ interface MyCollectionArtworkMetaProps {
 export const MyCollectionArtworkMeta: React.FC<
   React.PropsWithChildren<MyCollectionArtworkMetaProps>
 > = props => {
-  const { artistNames, title } = useFragment(FRAGMENT, props.artwork)
+  const { internalID, artistNames, title } = useFragment(
+    FRAGMENT,
+    props.artwork,
+  )
 
   return (
     <>
-      <MetaTags title={`${title} - ${artistNames} | Artsy`} />
+      <MetaTags
+        title={`${title} - ${artistNames} | Artsy`}
+        pathname={`/collector-profile/my-collection/artwork/${internalID}`}
+      />
     </>
   )
 }
 
 const FRAGMENT = graphql`
   fragment MyCollectionArtworkMeta_artwork on Artwork {
+    internalID
     artistNames
     title
   }

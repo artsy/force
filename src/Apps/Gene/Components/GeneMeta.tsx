@@ -10,6 +10,8 @@ interface GeneMetaProps {
 const GeneMeta: React.FC<React.PropsWithChildren<GeneMetaProps>> = ({
   gene,
 }) => {
+  if (!gene) return null
+
   const fallbackDescription = `Explore ${gene.name} art on Artsy. Browse works by size, price, and medium.`
   const title = `${gene.displayName || gene.name} | Artsy`
 
@@ -17,7 +19,7 @@ const GeneMeta: React.FC<React.PropsWithChildren<GeneMetaProps>> = ({
     <MetaTags
       title={title}
       description={gene.meta.description || fallbackDescription}
-      pathname={gene.href}
+      pathname={gene.href || `/gene/${gene.slug}`}
       imageURL={gene.image?.cropped?.src}
     />
   )
@@ -28,7 +30,8 @@ export const GeneMetaFragmentContainer = createFragmentContainer(GeneMeta, {
     fragment GeneMeta_gene on Gene {
       name
       displayName
-      href
+      slug
+      href @required(action: NONE)
       meta {
         description
       }

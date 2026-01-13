@@ -25,7 +25,8 @@ export const MarketingFindArtYouLoveRoute: FC<
     <>
       <MetaTags
         title="Find the art you love | Artsy"
-        description="Discover the tools you need to collect artworks that fit your taste. Save works, follow artists, and set alerts to get the art you’re looking for."
+        description="Discover the tools you need to collect artworks that fit your taste. Save works, follow artists, and set alerts to get the art you're looking for."
+        pathname="/find-art-you-love"
       />
 
       <Join separator={<Spacer y={6} />}>

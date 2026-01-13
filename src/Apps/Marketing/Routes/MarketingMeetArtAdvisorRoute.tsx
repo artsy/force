@@ -23,6 +23,7 @@ export const MarketingMeetArtAdvisorRoute: FC<
       <MetaTags
         title="Meet your new art advisor | Artsy"
         description="See what you can do on Artsy—the best tool for art collectors. In-demand artworks, free auction results, collection management, expert sales advice, and more."
+        pathname="/meet-your-new-art-advisor"
       />
 
       <Join separator={<Spacer y={6} />}>

@@ -1,5 +1,6 @@
 import { Box, StackableBorderBox, Text } from "@artsy/palette"
 import { MetaTags } from "Components/MetaTags"
+import { useRouter } from "System/Hooks/useRouter"
 import type { InvoiceApp_invoice$key } from "__generated__/InvoiceApp_invoice.graphql"
 import { HttpError } from "found"
 import { graphql, useFragment } from "react-relay"
@@ -13,6 +14,8 @@ export const InvoiceApp: React.FC<React.PropsWithChildren<InvoiceAppProps>> = ({
   children,
 }) => {
   const data = useFragment(InvoiceAppFragment, invoice)
+  const { match } = useRouter()
+  const token = match?.params?.token
 
   if (!data) {
     throw new HttpError(404)
@@ -22,7 +25,10 @@ export const InvoiceApp: React.FC<React.PropsWithChildren<InvoiceAppProps>> = ({
 
   return (
     <>
-      <MetaTags title={`Invoice #${number} | Artsy`} />
+      <MetaTags
+        title={`Invoice #${number} | Artsy`}
+        pathname={`/invoice/${token}`}
+      />
 
       <Box width="50%" margin="auto" p={2}>
         <StackableBorderBox>

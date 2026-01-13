@@ -20,7 +20,10 @@ const CollectorProfileApp: React.FC<
   if (!isLoggedIn) {
     return (
       <>
-        <MetaTags title="Collector Profile | Artsy" />
+        <MetaTags
+          title="Collector Profile | Artsy"
+          pathname="/collector-profile"
+        />
 
         <EmptyMyCollectionPage />
       </>
@@ -29,7 +32,10 @@ const CollectorProfileApp: React.FC<
 
   return (
     <>
-      <MetaTags title="Collector Profile | Artsy" />
+      <MetaTags
+        title="Collector Profile | Artsy"
+        pathname="/collector-profile"
+      />
 
       <Spacer y={[4, 6]} />
 

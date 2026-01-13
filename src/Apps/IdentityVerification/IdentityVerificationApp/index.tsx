@@ -145,7 +145,10 @@ const IdentityVerificationApp: React.FC<React.PropsWithChildren<Props>> = ({
 
   return (
     <>
-      <MetaTags title="Artsy | ID Verification" />
+      <MetaTags
+        title="Artsy | ID Verification"
+        pathname="/identity-verification"
+      />
 
       <Spacer y={4} />
 

@@ -25,7 +25,7 @@ const AuctionFAQRoute: React.FC<
 
   return (
     <>
-      <MetaTags title="Auction FAQs | Artsy" />
+      <MetaTags title="Auction FAQs | Artsy" pathname="/auction-faq" />
 
       <Text variant={["lg-display", "xl"]} mt={2}>
         Auction FAQs

@@ -47,7 +47,7 @@ export const AdminNavigateToRoute: React.FC<
 
   return (
     <>
-      <MetaTags title="Admin | Navigate" />
+      <MetaTags title="Admin | Navigate" pathname="/admin/navigate" />
 
       <Text variant="lg" pt={2}>
         Navigate

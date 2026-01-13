@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ac5e410df19201e6e4d6af89ddb82568>>
+ * @generated SignedSource<<e11989d85a180490a15a9f6b1c681d7f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -105,6 +105,13 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
+            "name": "slug",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
             "name": "name",
             "storageKey": null
           },
@@ -139,12 +146,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "90c2d87ae5acdf1de96a22c77d858cb2",
+    "cacheID": "df0583561dfa5543fcad9d7a62df67df",
     "id": null,
     "metadata": {},
     "name": "userRoutes_UserQuery",
     "operationKind": "query",
-    "text": "query userRoutes_UserQuery(\n  $userID: String!\n  $collectionID: String!\n) {\n  collection(id: $collectionID, userID: $userID) {\n    ...UserCollectionRoute_collection\n    id\n  }\n}\n\nfragment UserCollectionRoute_collection on Collection {\n  internalID\n  name\n  artworksConnection {\n    totalCount\n  }\n}\n"
+    "text": "query userRoutes_UserQuery(\n  $userID: String!\n  $collectionID: String!\n) {\n  collection(id: $collectionID, userID: $userID) {\n    ...UserCollectionRoute_collection\n    id\n  }\n}\n\nfragment UserCollectionRoute_collection on Collection {\n  internalID\n  slug\n  name\n  artworksConnection {\n    totalCount\n  }\n}\n"
   }
 };
 })();

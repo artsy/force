@@ -60,7 +60,10 @@ const WorksForYouApp: React.FC<React.PropsWithChildren<WorksForYouProps>> = ({
 
   return (
     <>
-      <MetaTags title="Works by Artists You Follow | Artsy" />
+      <MetaTags
+        title="Works by Artists You Follow | Artsy"
+        pathname="/works-for-you"
+      />
 
       <Text variant={["lg-display", "xl"]} my={[2, 4]}>
         Works By Artists You Follow

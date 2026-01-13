@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3b095345976f92c7fe2d9bf60c4b5bdf>>
+ * @generated SignedSource<<2e7aeda47ef595f667f7a5ba343c5ff0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,7 +13,7 @@ import { FragmentRefs } from "relay-runtime";
 export type ArticleMetaTags_article$data = {
   readonly byline: string | null | undefined;
   readonly description: string | null | undefined;
-  readonly href: string | null | undefined;
+  readonly href: string;
   readonly keywords: ReadonlyArray<string>;
   readonly metaPublishedAt: string | null | undefined;
   readonly searchDescription: string | null | undefined;
@@ -23,7 +23,7 @@ export type ArticleMetaTags_article$data = {
   } | null | undefined;
   readonly title: string | null | undefined;
   readonly " $fragmentType": "ArticleMetaTags_article";
-};
+} | null | undefined;
 export type ArticleMetaTags_article$key = {
   readonly " $data"?: ArticleMetaTags_article$data;
   readonly " $fragmentSpreads": FragmentRefs<"ArticleMetaTags_article">;
@@ -43,11 +43,15 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "href",
-      "storageKey": null
+      "kind": "RequiredField",
+      "field": {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "href",
+        "storageKey": null
+      },
+      "action": "NONE"
     },
     {
       "alias": null,
@@ -114,6 +118,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "79c17ffae9985576d77cb87aad7750d9";
+(node as any).hash = "4a07c39007d7829d967d759a7a8c2b5b";
 
 export default node;

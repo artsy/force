@@ -36,7 +36,7 @@ describe("MetaTags", () => {
   it("renders the appropriate meta tags with sane defaults", () => {
     render(
       <MockBoot>
-        <MetaTags />
+        <MetaTags pathname="/" />
       </MockBoot>,
     )
 
@@ -155,7 +155,7 @@ describe("MetaTags", () => {
   it("optionally renders a noindex meta tag for robots", () => {
     render(
       <MockBoot>
-        <MetaTags blockRobots />
+        <MetaTags pathname="/" blockRobots />
       </MockBoot>,
     )
 
@@ -190,7 +190,7 @@ describe("MetaTags", () => {
           title={null}
           description={null}
           imageURL={null}
-          pathname={null}
+          pathname="/"
         />
       </MockBoot>,
     )

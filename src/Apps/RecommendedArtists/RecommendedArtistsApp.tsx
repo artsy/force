@@ -18,7 +18,7 @@ export const RecommendedArtistsApp: FC<
 
   return (
     <>
-      <MetaTags title="Recommended Artists" />
+      <MetaTags title="Recommended Artists" pathname="/recommended-artists" />
 
       <Spacer y={4} />
 

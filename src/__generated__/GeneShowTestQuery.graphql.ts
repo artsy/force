@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7b1886d2da67b09ffed41413853a561f>>
+ * @generated SignedSource<<8842f6640293f497dee623848c61fc1a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -141,6 +141,13 @@ return {
             "args": null,
             "kind": "ScalarField",
             "name": "displayName",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "slug",
             "storageKey": null
           },
           (v2/*: any*/),
@@ -287,7 +294,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "db7d12acaff4447e935887896ce3ae7d",
+    "cacheID": "62470e168e34deac79ac25165c492919",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -356,12 +363,13 @@ return {
         "gene.similar.edges.node.href": (v8/*: any*/),
         "gene.similar.edges.node.id": (v9/*: any*/),
         "gene.similar.edges.node.internalID": (v9/*: any*/),
-        "gene.similar.edges.node.name": (v8/*: any*/)
+        "gene.similar.edges.node.name": (v8/*: any*/),
+        "gene.slug": (v9/*: any*/)
       }
     },
     "name": "GeneShowTestQuery",
     "operationKind": "query",
-    "text": "query GeneShowTestQuery {\n  gene(id: \"example\") {\n    ...GeneShow_gene\n    id\n  }\n}\n\nfragment GeneMeta_gene on Gene {\n  name\n  displayName\n  href\n  meta {\n    description\n  }\n  image {\n    cropped(width: 1200, height: 630) {\n      src\n    }\n  }\n}\n\nfragment GeneShow_gene on Gene {\n  ...GeneMeta_gene\n  internalID\n  name\n  displayName\n  formattedDescription: description(format: HTML)\n  similar(first: 10) {\n    edges {\n      node {\n        internalID\n        name\n        href\n        id\n      }\n    }\n  }\n  artistsConnection(first: 10) {\n    edges {\n      node {\n        internalID\n        name\n        href\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query GeneShowTestQuery {\n  gene(id: \"example\") {\n    ...GeneShow_gene\n    id\n  }\n}\n\nfragment GeneMeta_gene on Gene {\n  name\n  displayName\n  slug\n  href\n  meta {\n    description\n  }\n  image {\n    cropped(width: 1200, height: 630) {\n      src\n    }\n  }\n}\n\nfragment GeneShow_gene on Gene {\n  ...GeneMeta_gene\n  internalID\n  name\n  displayName\n  formattedDescription: description(format: HTML)\n  similar(first: 10) {\n    edges {\n      node {\n        internalID\n        name\n        href\n        id\n      }\n    }\n  }\n  artistsConnection(first: 10) {\n    edges {\n      node {\n        internalID\n        name\n        href\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

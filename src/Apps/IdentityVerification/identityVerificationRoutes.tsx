@@ -19,10 +19,10 @@ const Processing = loadable(
     resolveComponent: component => component.Processing,
   },
 )
-const Error = loadable(
+const IdentityVerificationError = loadable(
   () => import(/* webpackChunkName: "identityVerificationBundle" */ "./Error"),
   {
-    resolveComponent: component => component.Error,
+    resolveComponent: component => component.IdentityVerificationError,
   },
 )
 
@@ -36,9 +36,9 @@ export const identityVerificationRoutes: RouteProps[] = [
   },
   {
     path: "/identity-verification/error",
-    getComponent: () => Error,
+    getComponent: () => IdentityVerificationError,
     onPreloadJS: () => {
-      Error.preload()
+      IdentityVerificationError.preload()
     },
   },
   {

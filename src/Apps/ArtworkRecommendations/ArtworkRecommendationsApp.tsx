@@ -18,7 +18,10 @@ export const ArtworkRecommendationsApp: FC<
 
   return (
     <>
-      <MetaTags title="We Think You’ll Love" />
+      <MetaTags
+        title="We Think You'll Love"
+        pathname="/artwork-recommendations"
+      />
 
       <Spacer y={4} />
 

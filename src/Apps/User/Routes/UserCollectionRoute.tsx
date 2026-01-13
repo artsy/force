@@ -33,7 +33,10 @@ const UserCollectionRoute = ({ collection }: UserCollectionRouteProps) => {
 
   return (
     <>
-      <MetaTags title={`${collection.name} | Artsy`} />
+      <MetaTags
+        title={`${collection.name} | Artsy`}
+        pathname={`/user/${params.userID}/collection/${collection.slug}`}
+      />
 
       <Spacer y={4} />
 
@@ -71,6 +74,7 @@ export const UserCollectionRouteFragmentContainer = createFragmentContainer(
     collection: graphql`
       fragment UserCollectionRoute_collection on Collection {
         internalID
+        slug
         name
         artworksConnection {
           totalCount

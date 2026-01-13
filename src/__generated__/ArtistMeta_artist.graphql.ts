@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<978d7fc5910b8e1a7af2ed72e6edcd42>>
+ * @generated SignedSource<<caf54a23c13b9da7cc93dd6079cab2bf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,7 +19,7 @@ export type ArtistMeta_artist$data = {
     } | null | undefined;
   } | null | undefined;
   readonly deathday: string | null | undefined;
-  readonly href: string | null | undefined;
+  readonly href: string;
   readonly meta: {
     readonly description: string;
     readonly title: string;
@@ -29,7 +29,7 @@ export type ArtistMeta_artist$data = {
   readonly slug: string;
   readonly " $fragmentSpreads": FragmentRefs<"ArtistStructuredData_artist">;
   readonly " $fragmentType": "ArtistMeta_artist";
-};
+} | null | undefined;
 export type ArtistMeta_artist$key = {
   readonly " $data"?: ArtistMeta_artist$data;
   readonly " $fragmentSpreads": FragmentRefs<"ArtistMeta_artist">;
@@ -82,11 +82,15 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "href",
-      "storageKey": null
+      "kind": "RequiredField",
+      "field": {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "href",
+        "storageKey": null
+      },
+      "action": "NONE"
     },
     {
       "alias": null,
@@ -166,6 +170,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "5aa43fd9a383be550bef0deb31b3591a";
+(node as any).hash = "b55fdcedde1a2d011229f2c2ab6ef8f5";
 
 export default node;

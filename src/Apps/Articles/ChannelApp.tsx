@@ -27,6 +27,7 @@ const ChannelApp: FC<React.PropsWithChildren<ChannelAppProps>> = ({
       <MetaTags
         title={`${channel.name} | Artsy`}
         description={channel.tagline}
+        pathname={`/channel/${channel.id}`}
       />
 
       {channel.image?.url ? (
@@ -108,6 +109,7 @@ export const ChannelAppFragmentContainer = createFragmentContainer(ChannelApp, {
   channel: graphql`
     fragment ChannelApp_channel on Channel {
       ...ChannelArticles_channel
+      id
       name
       tagline
       image {

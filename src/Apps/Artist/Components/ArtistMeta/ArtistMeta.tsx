@@ -16,9 +16,14 @@ export const ArtistMeta: React.FC<React.PropsWithChildren<Props>> = ({
 }) => {
   const { match } = useRouter()
 
-  const alternateNames = artist?.alternateNames || []
+  if (!artist) return null
+
+  const alternateNames = artist.alternateNames || []
   const page = getPageNumber(match?.location)
-  const pathname = page > 1 ? `${artist.href}?page=${page}` : artist.href
+  const pathname =
+    page > 1
+      ? `${artist.href}?page=${page}`
+      : artist.href || `/artist/${artist.slug}`
   const currentPathname = match.location.pathname
 
   // Skip rendering if we're on the CV route which handles its own MetaTags
@@ -74,7 +79,7 @@ export const ArtistMetaFragmentContainer = createFragmentContainer(ArtistMeta, {
       nationality
       birthday
       deathday
-      href
+      href @required(action: NONE)
       meta(page: ABOUT) {
         description
         title

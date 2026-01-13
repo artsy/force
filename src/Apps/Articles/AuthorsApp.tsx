@@ -10,7 +10,7 @@ import type { FC } from "react"
 export const AuthorsApp: FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <>
-      <MetaTags title="Authors | Artsy" />
+      <MetaTags title="Authors | Artsy" pathname="/articles/authors" />
 
       <Spacer y={4} />
 

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<58329b984f9adcc7d6f168b325795e04>>
+ * @generated SignedSource<<7dae9f06ba95cc618c8b769dae54d2ef>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,6 +16,7 @@ export type UserCollectionRoute_collection$data = {
   } | null | undefined;
   readonly internalID: string;
   readonly name: string;
+  readonly slug: string | null | undefined;
   readonly " $fragmentType": "UserCollectionRoute_collection";
 };
 export type UserCollectionRoute_collection$key = {
@@ -34,6 +35,13 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "internalID",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "slug",
       "storageKey": null
     },
     {
@@ -66,6 +74,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "3eda99b742801f942b18f5ae99e689c5";
+(node as any).hash = "a22566419c1471424eb4c0990a1743bb";
 
 export default node;
