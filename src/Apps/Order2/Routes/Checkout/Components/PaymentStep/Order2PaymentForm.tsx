@@ -122,8 +122,6 @@ export const Order2PaymentForm: React.FC<Order2PaymentFormProps> = ({
         fontFamily: theme.fonts.sans,
         colorPrimary: theme.colors.mono100, // Accordian selected.
         colorTextSecondary: theme.colors.mono60, // Accordian not selected.
-        colorText: theme.colors.mono60, // Used for input labels.
-        colorBackground: theme.colors.mono5,
       },
       rules: {
         ".AccordionItem": {
@@ -131,6 +129,7 @@ export const Order2PaymentForm: React.FC<Order2PaymentFormProps> = ({
           fontSize: "16px",
           fontWeight: "normal",
           border: "1px solid transparent",
+          backgroundColor: theme.colors.mono5,
         },
         ".AccordionItem--selected": {
           lineHeight: "26px",
