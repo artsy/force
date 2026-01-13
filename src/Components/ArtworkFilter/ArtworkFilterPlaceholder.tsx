@@ -19,8 +19,7 @@ import {
   SkeletonText,
   Spacer,
 } from "@artsy/palette"
-import { useFlag, useVariant } from "@unleash/proxy-client-react"
-import { ARTIST_COMBINED_LAYOUT_FLAG } from "Apps/Artist/Routes/ArtistABTestRoute"
+import { useFlag } from "@unleash/proxy-client-react"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { ArtworkFilterActiveFilters } from "Components/ArtworkFilter/ArtworkFilterActiveFilters"
@@ -238,7 +237,5 @@ export const useArtistPageExperimentPadding = () => {
 
   const isArtistPage = contextPageOwnerType === OwnerType.artist
 
-  const variant = useVariant(ARTIST_COMBINED_LAYOUT_FLAG)
-
-  return variant.name === "experiment" && isArtistPage ? { pb: 2 } : { py: 1 }
+  return isArtistPage ? { pb: 2 } : { py: 1 }
 }
