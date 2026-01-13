@@ -27,7 +27,7 @@ export const Order2CollapsibleOrderSummary: React.FC<
   }
 
   return (
-    <Box backgroundColor="mono0">
+    <Clickable width="100%" onClick={handleToggle} backgroundColor="mono0">
       <Flex py={1} px={2} justifyContent="space-between">
         <RouterLink flex={0} to={artworkPath} target="_blank">
           <Image
@@ -46,7 +46,7 @@ export const Order2CollapsibleOrderSummary: React.FC<
             {[artworkVersion?.title, artworkVersion?.date].join(", ")}
           </Text>
         </Box>
-        <Clickable display="flex" onClick={handleToggle} flexShrink={0}>
+        <Flex flexShrink={0}>
           <Text variant="sm" color="mono100" mr={0.5}>
             {orderData.buyerTotal?.display || orderData.itemsTotal?.display}
           </Text>
@@ -59,7 +59,7 @@ export const Order2CollapsibleOrderSummary: React.FC<
               transform: isExpanded ? "scaleY(-1)" : "scaleY(1)",
             }}
           />
-        </Clickable>
+        </Flex>
       </Flex>
       <Box
         px={2}
@@ -75,7 +75,7 @@ export const Order2CollapsibleOrderSummary: React.FC<
         </Box>
         <Spacer y={1} />
       </Box>
-    </Box>
+    </Clickable>
   )
 }
 
