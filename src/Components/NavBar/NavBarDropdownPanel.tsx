@@ -40,6 +40,7 @@ export const NavBarDropdownPanel: React.FC<NavBarDropdownPanelProps> = ({
       keepInDOM
       placement="bottom"
       offset={0}
+      delay={shouldTransition ? 100 : 0}
       transition={shouldTransition}
       // eslint-disable-next-line react/no-unstable-nested-components
       dropdown={({ setVisible }) => (
