@@ -11,10 +11,6 @@ import {
   AuthDialog,
   type AuthDialogProps,
 } from "Components/AuthDialog/AuthDialog"
-/* import {
-  DEFAULT_IMAGES,
-  IMAGE,
-} from "Components/AuthDialog/Utils/authDialogConstants" */
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { prefetchUrl } from "System/Utils/prefetchUrl"
 import type { AfterAuthAction } from "Utils/Hooks/useAuthIntent"
