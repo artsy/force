@@ -1,11 +1,5 @@
-import { THEME } from "@artsy/palette"
 import { Layout } from "Apps/Components/Layouts"
-import {
-  COLUMN_WIDTH,
-  DEFAULT_IMAGES,
-  IMAGE,
-  MODAL_WIDTH,
-} from "Components/AuthDialog/Utils/authDialogConstants"
+import { getResizedAuthDialogImages } from "Components/AuthDialog/Utils/authDialogConstants"
 import { PageLoadingBar } from "System/Components/PageLoadingBar"
 import { AnalyticsContextProvider } from "System/Contexts/AnalyticsContext"
 import { NavigationHistoryProvider } from "System/Contexts/NavigationHistoryContext"
@@ -18,7 +12,6 @@ import { useOnboardingModal } from "Utils/Hooks/useOnboardingModal"
 import { useProductionEnvironmentWarning } from "Utils/Hooks/useProductionEnvironmentWarning"
 import { useSetupAuth } from "Utils/Hooks/useSetupAuth"
 import createLogger from "Utils/logger"
-import { resized } from "Utils/resized"
 import type { Match } from "found"
 import { useEffect } from "react"
 import type * as React from "react"
@@ -72,11 +65,10 @@ export const AppShell: React.FC<
     if (!isLoggedIn) {
       // Prefetch the exact resized versions that AuthDialogLeftPanel component uses
       // This prevents duplicate downloads of unoptimized source images
-      // Prefetch 2x width for high-DPI displays
-      const authDialogImages = DEFAULT_IMAGES.flatMap(img => [
-        resized(img.src, { width: COLUMN_WIDTH * 2, quality: 80 }).src,
-      ])
-      prefetchUrls(authDialogImages)
+      const authDialogImageUrls = getResizedAuthDialogImages().map(
+        img => img.src,
+      )
+      prefetchUrls(authDialogImageUrls)
     }
   }, [isLoggedIn])
 

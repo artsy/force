@@ -1,4 +1,5 @@
 import { THEME } from "@artsy/palette"
+import { resized } from "Utils/resized"
 
 export const MODAL_WIDTH = 900
 
@@ -29,3 +30,8 @@ export const DEFAULT_IMAGES = [
     src: "https://files.artsy.net/images/signup-03-1765895830761.png",
   },
 ]
+
+export const getResizedAuthDialogImages = () =>
+  DEFAULT_IMAGES.map(image =>
+    resized(image.src, { width: image.width, quality: 80 }),
+  )

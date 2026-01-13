@@ -15,6 +15,7 @@ import {
   DEFAULT_IMAGES,
   IMAGE,
   MODAL_WIDTH,
+  getResizedAuthDialogImages,
 } from "Components/AuthDialog/Utils/authDialogConstants"
 import { resized } from "Utils/resized"
 import {
@@ -103,13 +104,7 @@ const ImageSlider: FC = () => {
     stopAutoPlay()
   }
 
-  const images = useMemo(
-    () =>
-      DEFAULT_IMAGES.map(image =>
-        resized(image.src, { width: image.width, quality: 80 }),
-      ),
-    [],
-  )
+  const images = useMemo(() => getResizedAuthDialogImages(), [])
 
   return (
     <Flex width={COLUMN_WIDTH} height="100%" position="relative">
