@@ -61,6 +61,7 @@ export const AppShell: React.FC<
 
   // Prefetch auth dialog images (resized optimized versions) on app load
   // Only prefetch if user is logged out to avoid unnecessary bandwidth for authenticated users
+  // biome-ignore lint/correctness/useExhaustiveDependencies: we do not need to useEffect to re-run
   useEffect(() => {
     if (!isLoggedIn) {
       // Prefetch the exact resized versions that AuthDialogLeftPanel component uses
@@ -70,7 +71,7 @@ export const AppShell: React.FC<
       )
       prefetchUrls(authDialogImageUrls)
     }
-  }, [isLoggedIn])
+  }, [])
 
   return (
     <>
