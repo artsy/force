@@ -14,7 +14,8 @@ const UserApp = loadable(
 export const userRoutes: RouteProps[] = [
   {
     path: "/user/:userID/collection/:collectionID",
-    fetchPolicy: "store-and-network",
+    fetchPolicy: "network-only",
+    serverCacheTTL: 0,
     getComponent: () => UserApp,
     onPreloadJS: () => {
       UserApp.preload()
