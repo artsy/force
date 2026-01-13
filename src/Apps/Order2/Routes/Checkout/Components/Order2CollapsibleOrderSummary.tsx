@@ -27,8 +27,15 @@ export const Order2CollapsibleOrderSummary: React.FC<
   }
 
   return (
-    <Clickable width="100%" onClick={handleToggle} backgroundColor="mono0">
-      <Flex py={1} px={2} justifyContent="space-between">
+    <Box backgroundColor="mono0">
+      <Clickable
+        display="flex"
+        width="100%"
+        onClick={handleToggle}
+        py={1}
+        px={2}
+        justifyContent="space-between"
+      >
         <RouterLink flex={0} to={artworkPath} target="_blank">
           <Image
             mr={1}
@@ -60,7 +67,7 @@ export const Order2CollapsibleOrderSummary: React.FC<
             }}
           />
         </Flex>
-      </Flex>
+      </Clickable>
       <Box
         px={2}
         overflow="hidden"
@@ -75,7 +82,7 @@ export const Order2CollapsibleOrderSummary: React.FC<
         </Box>
         <Spacer y={1} />
       </Box>
-    </Clickable>
+    </Box>
   )
 }
 
