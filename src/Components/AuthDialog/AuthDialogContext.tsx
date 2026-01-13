@@ -11,6 +11,10 @@ import {
   AuthDialog,
   type AuthDialogProps,
 } from "Components/AuthDialog/AuthDialog"
+/* import {
+  DEFAULT_IMAGES,
+  IMAGE,
+} from "Components/AuthDialog/Utils/authDialogConstants" */
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { prefetchUrl } from "System/Utils/prefetchUrl"
 import type { AfterAuthAction } from "Utils/Hooks/useAuthIntent"
@@ -167,6 +171,8 @@ export const AuthDialogProvider: FC<
       options?: AuthDialogOptions
     }) => {
       if (!isLoggedIn && options?.imageUrl) {
+        console.log("Prefetching options?.imageUrl:", options?.imageUrl)
+        // Prefetch custom image if provided
         prefetchUrl(options.imageUrl)
       }
       if (isLoggedIn) {
