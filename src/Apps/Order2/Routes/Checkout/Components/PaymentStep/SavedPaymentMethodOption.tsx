@@ -57,13 +57,13 @@ export const SavedPaymentMethodOption: React.FC<
         </HoverFlex>
 
         <Collapse open={isSelected}>
-          <Spacer y={2} />
+          <Spacer y={1} />
 
           <Text variant="sm">
             Select a saved payment method or add a new one.
           </Text>
 
-          <Spacer y={1} />
+          <Spacer y={2} />
 
           <RadioGroup
             gap={2}
@@ -95,6 +95,7 @@ export const SavedPaymentMethodOption: React.FC<
                               type={paymentMethod.brand as Brand}
                               width="24px"
                               height="24px"
+                              flexShrink={0}
                               mr={1}
                             />
                             <Text variant="sm">
@@ -108,15 +109,12 @@ export const SavedPaymentMethodOption: React.FC<
                               fill="mono100"
                               width="24px"
                               height="24px"
+                              flexShrink={0}
                               mr={1}
                             />
-
-                            {paymentMethod.bankName && (
-                              <Text variant="sm" overflowEllipsis mr={0.5}>
-                                {paymentMethod.bankName}
-                              </Text>
-                            )}
-                            <Text variant="sm" flexShrink={0}>
+                            <Text variant="sm">
+                              {paymentMethod.bankName &&
+                                `${paymentMethod.bankName} `}
                               •••• {paymentMethod.last4}
                             </Text>
                           </>
