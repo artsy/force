@@ -625,7 +625,10 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         resetElementsToInitialParams()
       } catch (error) {
         handleError({ error, defaultError: true })
-        logger.error("Error while submitting order payment method", error)
+        logger.error(
+          "Error while submitting order with new stripe payment method",
+          error,
+        )
         return
       }
     }
@@ -646,6 +649,10 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         validateAndExtractOrderResponse(result.setOrderPayment?.orderOrError)
       } catch (error) {
         handleError({ error, defaultError: true })
+        logger.error(
+          "Error while submitting order with wire payment method",
+          error,
+        )
         return
       } finally {
         setIsSubmittingToStripe(false)
@@ -695,6 +702,11 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         setPaymentComplete()
       } catch (error) {
         handleError({ error, defaultError: true })
+        logger.error(
+          "Error while submitting order with saved payment method",
+          error,
+        )
+
         return
       }
     }
