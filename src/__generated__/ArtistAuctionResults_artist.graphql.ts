@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cdfabe3cbf583e714b64bc0dd405b945>>
+ * @generated SignedSource<<6a1babd833fe4f2e2f4e5da16f1cd97c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,6 +9,7 @@
 // @ts-nocheck
 
 import { ReaderFragment } from 'relay-runtime';
+export type AuctionResultsAggregation = "CURRENCIES_COUNT" | "LOTS_BY_CREATED_YEAR" | "LOTS_BY_SALE_YEAR" | "SIMPLE_PRICE_HISTOGRAM" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ArtistAuctionResults_artist$data = {
   readonly auctionResultsConnection: {
@@ -36,6 +37,16 @@ export type ArtistAuctionResults_artist$data = {
   readonly pastAuctionResults: {
     readonly totalCount: number | null | undefined;
   } | null | undefined;
+  readonly sidebarAggregations: {
+    readonly aggregations: ReadonlyArray<{
+      readonly counts: ReadonlyArray<{
+        readonly count: number;
+        readonly name: string;
+        readonly value: string;
+      } | null | undefined> | null | undefined;
+      readonly slice: AuctionResultsAggregation | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly slug: string;
   readonly statuses: {
     readonly auctionLots: boolean | null | undefined;
@@ -52,84 +63,91 @@ export type ArtistAuctionResults_artist$key = {
 
 const node: ReaderFragment = (function(){
 var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+},
+v1 = {
   "kind": "Variable",
   "name": "allowEmptyCreatedDates",
   "variableName": "allowEmptyCreatedDates"
 },
-v1 = {
+v2 = {
   "kind": "Variable",
   "name": "allowUnspecifiedSaleDates",
   "variableName": "allowUnspecifiedSaleDates"
 },
-v2 = {
+v3 = {
   "kind": "Variable",
   "name": "categories",
   "variableName": "categories"
 },
-v3 = {
+v4 = {
   "kind": "Variable",
   "name": "currency",
   "variableName": "currency"
 },
-v4 = {
+v5 = {
   "kind": "Variable",
   "name": "earliestCreatedYear",
   "variableName": "createdAfterYear"
 },
-v5 = {
+v6 = {
   "kind": "Variable",
   "name": "includeEstimateRange",
   "variableName": "includeEstimateRange"
 },
-v6 = {
+v7 = {
   "kind": "Variable",
   "name": "includeUnknownPrices",
   "variableName": "includeUnknownPrices"
 },
-v7 = {
+v8 = {
   "kind": "Variable",
   "name": "keyword",
   "variableName": "keyword"
 },
-v8 = {
+v9 = {
   "kind": "Variable",
   "name": "latestCreatedYear",
   "variableName": "createdBeforeYear"
 },
-v9 = {
+v10 = {
   "kind": "Variable",
   "name": "organizations",
   "variableName": "organizations"
 },
-v10 = {
+v11 = {
   "kind": "Variable",
   "name": "priceRange",
   "variableName": "priceRange"
 },
-v11 = {
+v12 = {
   "kind": "Variable",
   "name": "saleEndYear",
   "variableName": "saleEndYear"
 },
-v12 = {
+v13 = {
   "kind": "Variable",
   "name": "saleStartYear",
   "variableName": "saleStartYear"
 },
-v13 = {
+v14 = {
   "kind": "Variable",
   "name": "sizes",
   "variableName": "sizes"
 },
-v14 = {
+v15 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "totalCount",
   "storageKey": null
 },
-v15 = [
-  (v14/*: any*/)
+v16 = [
+  (v15/*: any*/)
 ];
 return {
   "argumentDefinitions": [
@@ -257,13 +275,7 @@ return {
       "name": "internalID",
       "storageKey": null
     },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "name",
-      "storageKey": null
-    },
+    (v0/*: any*/),
     {
       "alias": null,
       "args": [
@@ -316,45 +328,45 @@ return {
     {
       "alias": null,
       "args": [
-        (v0/*: any*/),
         (v1/*: any*/),
+        (v2/*: any*/),
         {
           "kind": "Variable",
           "name": "before",
           "variableName": "before"
         },
-        (v2/*: any*/),
         (v3/*: any*/),
         (v4/*: any*/),
+        (v5/*: any*/),
         {
           "kind": "Variable",
           "name": "first",
           "variableName": "first"
         },
-        (v5/*: any*/),
         (v6/*: any*/),
         (v7/*: any*/),
+        (v8/*: any*/),
         {
           "kind": "Variable",
           "name": "last",
           "variableName": "last"
         },
-        (v8/*: any*/),
         (v9/*: any*/),
+        (v10/*: any*/),
         {
           "kind": "Variable",
           "name": "page",
           "variableName": "page"
         },
-        (v10/*: any*/),
         (v11/*: any*/),
         (v12/*: any*/),
+        (v13/*: any*/),
         {
           "kind": "Variable",
           "name": "size",
           "variableName": "size"
         },
-        (v13/*: any*/),
+        (v14/*: any*/),
         {
           "kind": "Variable",
           "name": "sort",
@@ -412,7 +424,7 @@ return {
           ],
           "storageKey": null
         },
-        (v14/*: any*/),
+        (v15/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -453,7 +465,6 @@ return {
     {
       "alias": "pastAuctionResults",
       "args": [
-        (v0/*: any*/),
         (v1/*: any*/),
         (v2/*: any*/),
         (v3/*: any*/),
@@ -467,6 +478,7 @@ return {
         (v11/*: any*/),
         (v12/*: any*/),
         (v13/*: any*/),
+        (v14/*: any*/),
         {
           "kind": "Literal",
           "name": "state",
@@ -477,13 +489,12 @@ return {
       "kind": "LinkedField",
       "name": "auctionResultsConnection",
       "plural": false,
-      "selections": (v15/*: any*/),
+      "selections": (v16/*: any*/),
       "storageKey": null
     },
     {
       "alias": "upcomingAuctionResults",
       "args": [
-        (v0/*: any*/),
         (v1/*: any*/),
         (v2/*: any*/),
         (v3/*: any*/),
@@ -497,6 +508,7 @@ return {
         (v11/*: any*/),
         (v12/*: any*/),
         (v13/*: any*/),
+        (v14/*: any*/),
         {
           "kind": "Literal",
           "name": "state",
@@ -507,8 +519,74 @@ return {
       "kind": "LinkedField",
       "name": "auctionResultsConnection",
       "plural": false,
-      "selections": (v15/*: any*/),
+      "selections": (v16/*: any*/),
       "storageKey": null
+    },
+    {
+      "alias": "sidebarAggregations",
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "aggregations",
+          "value": [
+            "SIMPLE_PRICE_HISTOGRAM",
+            "CURRENCIES_COUNT",
+            "LOTS_BY_SALE_YEAR",
+            "LOTS_BY_CREATED_YEAR"
+          ]
+        }
+      ],
+      "concreteType": "AuctionResultConnection",
+      "kind": "LinkedField",
+      "name": "auctionResultsConnection",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "AuctionResultsAggregationType",
+          "kind": "LinkedField",
+          "name": "aggregations",
+          "plural": true,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "slice",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "AggregationCount",
+              "kind": "LinkedField",
+              "name": "counts",
+              "plural": true,
+              "selections": [
+                (v0/*: any*/),
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "value",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "count",
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": "auctionResultsConnection(aggregations:[\"SIMPLE_PRICE_HISTOGRAM\",\"CURRENCIES_COUNT\",\"LOTS_BY_SALE_YEAR\",\"LOTS_BY_CREATED_YEAR\"])"
     }
   ],
   "type": "Artist",
@@ -516,6 +594,6 @@ return {
 };
 })();
 
-(node as any).hash = "d67a990e35e7b52e0a04497b9b1a59f9";
+(node as any).hash = "48d9d7c4e3363cf8996a480347b5fc4e";
 
 export default node;

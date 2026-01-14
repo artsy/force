@@ -14,7 +14,6 @@ import { updateUrlWithNamespace } from "Components/ArtworkFilter/Utils/urlBuilde
 import { ArtworkGridEmptyState } from "Components/ArtworkGrid/ArtworkGridEmptyState"
 import { useAuthDialog } from "Components/AuthDialog"
 import { LoadingArea } from "Components/LoadingArea"
-import { PaginatedMetaTags } from "Components/PaginatedMetaTags"
 import { PaginationFragmentContainer as Pagination } from "Components/Pagination"
 import { TruncateComponent } from "Components/TruncateComponent"
 import { SystemContext } from "System/Contexts/SystemContext"
@@ -27,7 +26,6 @@ import { useSectionReady } from "Utils/Hooks/useSectionReadiness"
 import { extractNodes } from "Utils/extractNodes"
 import createLogger from "Utils/logger"
 import type { ArtistAuctionResultsQueryRendererQuery } from "__generated__/ArtistAuctionResultsQueryRendererQuery.graphql"
-import type { ArtistAuctionResultsRoute_artist$data } from "__generated__/ArtistAuctionResultsRoute_artist.graphql"
 import type { ArtistAuctionResults_artist$data } from "__generated__/ArtistAuctionResults_artist.graphql"
 import { isEqual } from "lodash"
 import type * as React from "react"
@@ -61,7 +59,7 @@ interface AuctionResultsProps {
   relay: RelayRefetchProp
   artist: ArtistAuctionResults_artist$data
   aggregations?: NonNullable<
-    ArtistAuctionResultsRoute_artist$data["sidebarAggregations"]
+    ArtistAuctionResults_artist$data["sidebarAggregations"]
   >["aggregations"]
   truncate?: boolean
 }
@@ -204,13 +202,9 @@ const AuctionResultsContainer: React.FC<
     })
   }
 
-  const { title, description } = artist.meta
-
   if (!artist.statuses?.auctionLots) {
     return (
       <>
-        <PaginatedMetaTags title={title} description={description} />
-
         <Spacer y={[2, 0]} />
 
         <ArtistAuctionResultsEmptyState />
@@ -220,8 +214,6 @@ const AuctionResultsContainer: React.FC<
 
   return (
     <>
-      <PaginatedMetaTags title={title} description={description} />
-
       {mode === "MobileActionSheet" && (
         <AuctionFilterMobileActionSheet onClose={() => setMode("Idle")}>
           <Stack gap={4}>
@@ -489,6 +481,23 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
           allowEmptyCreatedDates: $allowEmptyCreatedDates
         ) {
           totalCount
+        }
+        sidebarAggregations: auctionResultsConnection(
+          aggregations: [
+            SIMPLE_PRICE_HISTOGRAM
+            CURRENCIES_COUNT
+            LOTS_BY_SALE_YEAR
+            LOTS_BY_CREATED_YEAR
+          ]
+        ) {
+          aggregations {
+            slice
+            counts {
+              name
+              value
+              count
+            }
+          }
         }
       }
     `,

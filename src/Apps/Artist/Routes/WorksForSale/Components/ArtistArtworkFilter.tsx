@@ -1,5 +1,4 @@
 import { OwnerType } from "@artsy/cohesion"
-import { ArtistMediumsTitle } from "Apps/Artist/Routes/WorksForSale/Components/ArtistMediumsTitle"
 import { ArtistWorksForSaleEmptyFragmentContainer } from "Apps/Artist/Routes/WorksForSale/Components/ArtistWorksForSaleEmpty"
 import { getWorksForSaleRouteVariables } from "Apps/Artist/Routes/WorksForSale/Utils/getWorksForSaleRouteVariables"
 import { BaseArtworkFilter } from "Components/ArtworkFilter"
@@ -84,11 +83,6 @@ const ArtistArtworkFilter: React.FC<
         ZeroState={ZeroState}
         userPreferredMetric={userPreferences?.metric}
       >
-        <ArtistMediumsTitle
-          defaultTitle={artist.meta.title}
-          name={artist.name ?? "Unknown Artist"}
-        />
-
         <ArtworkFilterAlertContextProvider
           initialCriteria={{ artistIDs: [artist.internalID] }}
         >
@@ -209,7 +203,7 @@ export const ArtistArtworkFilterQueryRenderer: FC<
       render={({ error, props }) => {
         if (error) {
           console.error(
-            "[ArtistWorksForSaleRoute]: Error loading artwork grid",
+            "[ArtistArtworkFilter]: Error loading artwork grid",
             error,
           )
 

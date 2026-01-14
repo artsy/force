@@ -1,5 +1,5 @@
 import { act, fireEvent, screen, within } from "@testing-library/react"
-import { AuctionResultsRouteFragmentContainer as AuctionResultsRoute } from "Apps/Artist/Routes/AuctionResults/ArtistAuctionResultsRoute"
+import { ArtistAuctionResultsRefetchContainer } from "Apps/Artist/Routes/AuctionResults/ArtistAuctionResults"
 import { useAuthDialog } from "Components/AuthDialog"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
@@ -64,14 +64,17 @@ describe("AuctionResults", () => {
   const { renderWithRelay } = setupTestWrapperTL({
     Component: (props: any) => (
       <MockBoot breakpoint={breakpoint}>
-        <AuctionResultsRoute {...props} />
+        <ArtistAuctionResultsRefetchContainer
+          artist={props.artist}
+          aggregations={props.artist?.sidebarAggregations?.aggregations}
+        />
       </MockBoot>
     ),
     query: graphql`
       query ArtistAuctionResults_Test_Query($artistID: String!)
       @raw_response_type {
         artist(id: $artistID) {
-          ...ArtistAuctionResultsRoute_artist
+          ...ArtistAuctionResults_artist
         }
       }
     `,
@@ -560,7 +563,6 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
       totalCount: 5,
     },
     sidebarAggregations: {
-      totalCount: 1000,
       aggregations: [
         { slice: "SIMPLE_PRICE_HISTOGRAM", counts: [] },
         {
