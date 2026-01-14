@@ -119,8 +119,12 @@ const getDisplayDetails = (
   switch (paymentMethod) {
     case "CREDIT_CARD": {
       if (paymentPreview && paymentPreview.__typename === "Card") {
+        const cardBrand = paymentPreview.displayBrand
+          ?.replace(/_/g, " ")
+          .replace(/\b\w/g, char => char.toUpperCase())
+
         return {
-          cardBrand: paymentPreview.displayBrand,
+          cardBrand: cardBrand,
           last4: paymentPreview.last4,
           bankName: null,
         }

@@ -1,13 +1,13 @@
 import InstitutionIcon from "@artsy/icons/InstitutionIcon"
 import LockIcon from "@artsy/icons/LockIcon"
 import { Box, Flex, Radio, RadioGroup, Spacer, Text } from "@artsy/palette"
+import { themeGet } from "@styled-system/theme-get"
 import { Collapse } from "Apps/Order/Components/Collapse"
 import { type Brand, BrandCreditCardIcon } from "Components/BrandCreditCardIcon"
 import { FadeInBox } from "Components/FadeInBox"
 import type { Order2PaymentForm_me$data } from "__generated__/Order2PaymentForm_me.graphql"
 import type React from "react"
 import styled from "styled-components"
-import { themeGet } from "@styled-system/theme-get"
 
 interface SavedPaymentMethodOptionProps {
   me: Order2PaymentForm_me$data
@@ -57,72 +57,75 @@ export const SavedPaymentMethodOption: React.FC<
         </HoverFlex>
 
         <Collapse open={isSelected}>
-          <Text variant="sm" ml="50px">
+          <Spacer y={1} />
+
+          <Text variant="sm">
             Select a saved payment method or add a new one.
           </Text>
 
-          <Box ml="50px">
-            <RadioGroup
-              defaultValue={selectedSavedPaymentMethod}
-              onSelect={val => {
-                onSavedPaymentMethodSelect(val)
-              }}
-            >
-              {[...savedCreditCards, ...allowedSavedBankAccounts].map(
-                paymentMethod => {
-                  const formattedExpDate =
-                    paymentMethod.__typename === "CreditCard"
-                      ? `${paymentMethod.expirationMonth
-                          .toString()
-                          .padStart(2, "0")}/${paymentMethod.expirationYear
-                          .toString()
-                          .slice(-2)}`
-                      : null
+          <Spacer y={2} />
 
-                  return (
-                    <Radio
-                      key={paymentMethod.internalID}
-                      value={paymentMethod}
-                      pb="15px"
-                      pt="15px"
-                      label={
-                        <Flex>
-                          {paymentMethod.__typename === "CreditCard" ? (
-                            <>
-                              <BrandCreditCardIcon
-                                type={paymentMethod.brand as Brand}
-                                width="24px"
-                                height="24px"
-                                mr={1}
-                              />
-                              <Text variant="sm">
-                                •••• {paymentMethod.lastDigits}
-                                {formattedExpDate && ` Exp ${formattedExpDate}`}
-                              </Text>
-                            </>
-                          ) : (
-                            <>
-                              <InstitutionIcon
-                                fill="mono100"
-                                width="24px"
-                                height="24px"
-                                mr={1}
-                              />
-                              <Text variant="sm">
-                                {paymentMethod.bankName &&
-                                  `${paymentMethod.bankName} `}
-                                •••• {paymentMethod.last4}
-                              </Text>
-                            </>
-                          )}
-                        </Flex>
-                      }
-                    />
-                  )
-                },
-              )}
-            </RadioGroup>
-          </Box>
+          <RadioGroup
+            gap={2}
+            defaultValue={selectedSavedPaymentMethod}
+            onSelect={val => {
+              onSavedPaymentMethodSelect(val)
+            }}
+          >
+            {[...savedCreditCards, ...allowedSavedBankAccounts].map(
+              paymentMethod => {
+                const formattedExpDate =
+                  paymentMethod.__typename === "CreditCard"
+                    ? `${paymentMethod.expirationMonth
+                        .toString()
+                        .padStart(2, "0")}/${paymentMethod.expirationYear
+                        .toString()
+                        .slice(-2)}`
+                    : null
+
+                return (
+                  <Radio
+                    key={paymentMethod.internalID}
+                    value={paymentMethod}
+                    label={
+                      <Flex>
+                        {paymentMethod.__typename === "CreditCard" ? (
+                          <>
+                            <BrandCreditCardIcon
+                              type={paymentMethod.brand as Brand}
+                              width="24px"
+                              height="24px"
+                              flexShrink={0}
+                              mr={1}
+                            />
+                            <Text variant="sm">
+                              •••• {paymentMethod.lastDigits}
+                              {formattedExpDate && ` Exp ${formattedExpDate}`}
+                            </Text>
+                          </>
+                        ) : (
+                          <>
+                            <InstitutionIcon
+                              fill="mono100"
+                              width="24px"
+                              height="24px"
+                              flexShrink={0}
+                              mr={1}
+                            />
+                            <Text variant="sm">
+                              {paymentMethod.bankName &&
+                                `${paymentMethod.bankName} `}
+                              •••• {paymentMethod.last4}
+                            </Text>
+                          </>
+                        )}
+                      </Flex>
+                    }
+                  />
+                )
+              },
+            )}
+          </RadioGroup>
         </Collapse>
       </Box>
     </FadeInBox>
