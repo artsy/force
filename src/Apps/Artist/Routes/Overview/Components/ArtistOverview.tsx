@@ -1,8 +1,6 @@
 import { ActionType, type ClickedCV, ContextModule } from "@artsy/cohesion"
 import { Stack } from "@artsy/palette"
-import { useVariant } from "@unleash/proxy-client-react"
 import { ARTIST_HEADER_NUMBER_OF_INSIGHTS } from "Apps/Artist/Components/ArtistHeader/ArtistHeader"
-import { ARTIST_COMBINED_LAYOUT_FLAG } from "Apps/Artist/Routes/ArtistABTestRoute"
 import {
   ArtistSeriesRailPlaceholder,
   ArtistSeriesRailQueryRenderer,
@@ -75,8 +73,6 @@ interface ArtistOverviewProps {
 export const ArtistOverview: React.FC<
   React.PropsWithChildren<ArtistOverviewProps>
 > = ({ artist }) => {
-  const variant = useVariant(ARTIST_COMBINED_LAYOUT_FLAG)
-
   const { trackEvent } = useTracking()
 
   const { contextPageOwnerType, contextPageOwnerId, contextPageOwnerSlug } =
@@ -116,14 +112,12 @@ export const ArtistOverview: React.FC<
   ) {
     return (
       <Stack gap={4}>
-        {variant.name === "experiment" && (
-          <RailHeader
-            title="Highlights and Achievements"
-            viewAllHref={`${artist.href}/cv`}
-            viewAllLabel="View CV"
-            viewAllOnClick={trackClickedCV}
-          />
-        )}
+        <RailHeader
+          title="Highlights and Achievements"
+          viewAllHref={`${artist.href}/cv`}
+          viewAllLabel="View CV"
+          viewAllOnClick={trackClickedCV}
+        />
 
         <ArtistOverviewEmpty />
       </Stack>

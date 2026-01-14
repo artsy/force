@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bf3b7a2e71e28b5c090d91131b9b76b7>>
+ * @generated SignedSource<<749ccbffc688ae6bec3940322a121f4b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,7 +15,7 @@ export type artistRoutes_ArtistAuctionResultsQuery$variables = {
 };
 export type artistRoutes_ArtistAuctionResultsQuery$data = {
   readonly artist: {
-    readonly " $fragmentSpreads": FragmentRefs<"ArtistABTestRoute_artist">;
+    readonly " $fragmentSpreads": FragmentRefs<"ArtistCombinedRoute_artist">;
   } | null | undefined;
 };
 export type artistRoutes_ArtistAuctionResultsQuery = {
@@ -56,7 +56,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "ArtistABTestRoute_artist"
+            "name": "ArtistCombinedRoute_artist"
           }
         ],
         "storageKey": null
@@ -90,13 +90,6 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "slug",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
             "name": "id",
             "storageKey": null
           }
@@ -106,16 +99,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "dd6680b5f4b4176ca9a4d5ef7ff68430",
+    "cacheID": "93520d76d73f823c971fcf269aa06063",
     "id": null,
     "metadata": {},
     "name": "artistRoutes_ArtistAuctionResultsQuery",
     "operationKind": "query",
-    "text": "query artistRoutes_ArtistAuctionResultsQuery(\n  $artistID: String!\n) @cacheable {\n  artist(id: $artistID) @principalField {\n    ...ArtistABTestRoute_artist\n    id\n  }\n}\n\nfragment ArtistABTestRoute_artist on Artist {\n  ...ArtistCombinedRoute_artist\n  internalID\n  slug\n}\n\nfragment ArtistCombinedRoute_artist on Artist {\n  internalID\n}\n"
+    "text": "query artistRoutes_ArtistAuctionResultsQuery(\n  $artistID: String!\n) @cacheable {\n  artist(id: $artistID) @principalField {\n    ...ArtistCombinedRoute_artist\n    id\n  }\n}\n\nfragment ArtistCombinedRoute_artist on Artist {\n  internalID\n}\n"
   }
 };
 })();
 
-(node as any).hash = "46699fa61434b87fefd1601508ea5875";
+(node as any).hash = "3436b5956daf79e7f8621e379075a10c";
 
 export default node;
