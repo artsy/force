@@ -84,9 +84,22 @@ export const artistRoutes: RouteProps[] = [
       ArtistApp.preload()
       ArtistCombinedRoute.preload()
     },
+    render: ({ Component, props, match }) => {
+      if (!Component || !props) return
+
+      const { artist } = props as unknown as { artist: { slug: string } }
+
+      // Redirect to canonical slug if URL param doesn't match
+      if (artist?.slug && artist.slug !== match.params.artistID) {
+        throw new RedirectException(`/artist/${artist.slug}`, 301)
+      }
+
+      return <Component {...props} />
+    },
     query: graphql`
       query artistRoutes_ArtistAppQuery($artistID: String!) @cacheable {
         artist(id: $artistID) @principalField {
+          slug
           ...ArtistApp_artist
           ...ArtistCombinedRoute_artist
         }
