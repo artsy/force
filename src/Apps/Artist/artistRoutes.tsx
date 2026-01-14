@@ -61,11 +61,14 @@ const AuctionResultRoute = loadable(
   { resolveComponent: component => component.AuctionResultFragmentContainer },
 )
 
-const ArtistABTestRoute = loadable(
+const ArtistCombinedRoute = loadable(
   () =>
-    import(/* webpackChunkName: "artistBundle" */ "./Routes/ArtistABTestRoute"),
+    import(
+      /* webpackChunkName: "artistBundle" */ "./Routes/Combined/ArtistCombinedRoute"
+    ),
   {
-    resolveComponent: component => component.ArtistABTestRouteFragmentContainer,
+    resolveComponent: component =>
+      component.ArtistCombinedRouteFragmentContainer,
   },
 )
 
@@ -77,49 +80,49 @@ export const artistRoutes: RouteProps[] = [
     onServerSideRender: enableArtistPageCTA,
     onPreloadJS: () => {
       ArtistApp.preload()
-      ArtistABTestRoute.preload()
+      ArtistCombinedRoute.preload()
     },
     query: graphql`
       query artistRoutes_ArtistAppQuery($artistID: String!) @cacheable {
         artist(id: $artistID) @principalField {
           ...ArtistApp_artist
-          ...ArtistABTestRoute_artist
+          ...ArtistCombinedRoute_artist
         }
       }
     `,
     children: [
       {
         path: "",
-        getComponent: () => ArtistABTestRoute,
+        getComponent: () => ArtistCombinedRoute,
         query: graphql`
           query artistRoutes_ArtistRootQuery($artistID: String!) @cacheable {
             artist(id: $artistID) @principalField {
-              ...ArtistABTestRoute_artist
+              ...ArtistCombinedRoute_artist
             }
           }
         `,
       },
       {
         path: "auction-results",
-        getComponent: () => ArtistABTestRoute,
+        getComponent: () => ArtistCombinedRoute,
         onServerSideRender: redirectAuctionResultsParamsToNamespace,
         query: graphql`
           query artistRoutes_ArtistAuctionResultsQuery($artistID: String!)
           @cacheable {
             artist(id: $artistID) @principalField {
-              ...ArtistABTestRoute_artist
+              ...ArtistCombinedRoute_artist
             }
           }
         `,
       },
       {
         path: "about",
-        getComponent: () => ArtistABTestRoute,
+        getComponent: () => ArtistCombinedRoute,
         onServerSideRender: enableArtistPageCTA,
         query: graphql`
           query artistRoutes_ArtistAboutQuery($artistID: String!) @cacheable {
             artist(id: $artistID) @principalField {
-              ...ArtistABTestRoute_artist
+              ...ArtistCombinedRoute_artist
             }
           }
         `,
