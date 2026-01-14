@@ -238,6 +238,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
   const hasSavedBankAccounts = allowedSavedBankAccounts.length > 0
   const [wireEmailSubject, setWireEmailSubject] = useState<string | null>(null)
   const [wireEmailBody, setWireEmailBody] = useState<string | null>(null)
+  const merchantAccountExternalId = order.seller?.merchantAccount?.externalId
 
   const formRef = useRef<HTMLFormElement>(null)
   const paymentElementRef = useRef<HTMLDivElement>(null)
@@ -307,9 +308,9 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       captureMethod: null,
       // @ts-ignore Stripe type issue
       paymentMethodTypes: null,
-      onBehalfOf: order.seller?.merchantAccount?.externalId,
+      onBehalfOf: merchantAccountExternalId,
     })
-  }, [elements, order.seller?.merchantAccount?.externalId])
+  }, [elements, merchantAccountExternalId])
 
   const handleError = useCallback(
     (error: { message?: string | JSX.Element }) => {
