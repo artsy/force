@@ -59,19 +59,16 @@ describe("AuctionResults", () => {
   })
 
   const { renderWithRelay } = setupTestWrapperTL({
-    Component: (props: any) => {
-      return (
-        <MockBoot breakpoint={breakpoint}>
-          <ArtistAuctionResultsRefetchContainer
-            artist={props.artist}
-            aggregations={
-              AuctionResultsFixture.artist.sidebarAggregations
-                .aggregations as any
-            }
-          />
-        </MockBoot>
-      )
-    },
+    Component: (props: any) => (
+      <MockBoot breakpoint={breakpoint}>
+        <ArtistAuctionResultsRefetchContainer
+          artist={props.artist}
+          aggregations={
+            AuctionResultsFixture.artist.sidebarAggregations.aggregations as any
+          }
+        />
+      </MockBoot>
+    ),
     query: graphql`
       query ArtistAuctionResults_Test_Query @relay_test_operation {
         artist(id: "pablo-picasso") {
