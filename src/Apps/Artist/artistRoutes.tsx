@@ -1,9 +1,11 @@
 import loadable from "@loadable/component"
 import type { RouteProps } from "System/Router/Route"
 import { RedirectException } from "found"
+import { compact } from "lodash"
+import { stringify } from "qs"
 import { graphql } from "react-relay"
 import { enableArtistPageCTA } from "./Server/enableArtistPageCTA"
-import { redirectAuctionResultsParamsToNamespace } from "./Server/redirect"
+import { rewriteAuctionResultsParamsToNamespace } from "./Server/redirect"
 
 const ArtistApp = loadable(
   () => import(/* webpackChunkName: "artistBundle" */ "./ArtistApp"),
@@ -105,7 +107,6 @@ export const artistRoutes: RouteProps[] = [
       {
         path: "auction-results",
         getComponent: () => ArtistCombinedRoute,
-        onServerSideRender: redirectAuctionResultsParamsToNamespace,
         query: graphql`
           query artistRoutes_ArtistAuctionResultsQuery($artistID: String!)
           @cacheable {
@@ -114,6 +115,15 @@ export const artistRoutes: RouteProps[] = [
             }
           }
         `,
+        render: ({ match }) => {
+          const basePath = `/artist/${match.params.artistID}`
+          const queryString = stringify(
+            rewriteAuctionResultsParamsToNamespace(match.location.query),
+          )
+          const hash = "#JUMP--marketSignalsTop"
+          const redirectUrl = compact([basePath, queryString]).join("?") + hash
+          throw new RedirectException(redirectUrl, 301)
+        },
       },
       {
         path: "about",
@@ -126,6 +136,10 @@ export const artistRoutes: RouteProps[] = [
             }
           }
         `,
+        render: ({ match }) => {
+          const redirectUrl = `/artist/${match.params.artistID}#JUMP--artistAboutTop`
+          throw new RedirectException(redirectUrl, 301)
+        },
       },
     ],
   },
