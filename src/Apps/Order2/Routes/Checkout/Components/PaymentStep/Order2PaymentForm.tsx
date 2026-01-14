@@ -218,29 +218,8 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
   const [wireEmailSubject, setWireEmailSubject] = useState<string | null>(null)
   const [wireEmailBody, setWireEmailBody] = useState<string | null>(null)
 
-  const formRef = useRef<HTMLFormElement>(null)
   const paymentElementRef = useRef<HTMLDivElement>(null)
-
-  // Scroll to error and focus when error messages are set
-  useEffect(() => {
-    if (!paymentError) return
-    // Wait for DOM to update, then scroll to fields
-    setTimeout(() => {
-      if (!formRef.current) return
-
-      let errorElement: HTMLElement | null = null
-
-      if (paymentError) {
-        // For PaymentElement errors, scroll to the payment element fields
-        errorElement = paymentElementRef.current
-      }
-
-      errorElement?.scrollIntoView({
-        behavior: "smooth",
-        block: "center",
-      })
-    }, 100)
-  }, [paymentError])
+  const errorBannerRef = useRef<HTMLDivElement>(null)
 
   // Default to saved payment method when available and track that it has been viewed
   useEffect(() => {
@@ -288,6 +267,11 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
 
   const handleError = useCallback(
     (error?: { message?: string | JSX.Element }) => {
+      errorBannerRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      })
+
       setStepErrorMessage({
         step: CheckoutStepName.PAYMENT,
         error: {
@@ -295,6 +279,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         },
       })
 
+      logger.error("Error while updating order payment method", error)
       setIsSubmittingToStripe(false)
       resetElementsToInitialParams()
     },
@@ -560,7 +545,6 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       )
 
       if (error) {
-        logger.error(error)
         handleError(error)
         return
       }
@@ -613,7 +597,6 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         setIsSubmittingToStripe(false)
         resetElementsToInitialParams()
       } catch (error) {
-        logger.error("Error while updating order payment method", error)
         handleError()
         return
       }
@@ -634,7 +617,6 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
 
         validateAndExtractOrderResponse(result.setOrderPayment?.orderOrError)
       } catch (error) {
-        logger.error("Error while updating order payment method", error)
         handleError()
         return
       } finally {
@@ -684,7 +666,6 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         resetElementsToInitialParams()
         setPaymentComplete()
       } catch (error) {
-        logger.error("Error while updating order payment method", error)
         handleError()
         return
       }
@@ -692,7 +673,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
   }
 
   return (
-    <form ref={formRef} onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit}>
       <Spacer y={2} />
 
       {(hasSavedCreditCards || hasSavedBankAccounts) && (
@@ -746,12 +727,14 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         />
       )}
 
-      {paymentError && (
-        <>
-          <CheckoutErrorBanner error={paymentError} />
-          <Spacer y={4} />
-        </>
-      )}
+      <div ref={errorBannerRef}>
+        {paymentError && (
+          <>
+            <CheckoutErrorBanner error={paymentError} />
+            <Spacer y={4} />
+          </>
+        )}
+      </div>
 
       <Button
         loading={isSubmittingToStripe}
