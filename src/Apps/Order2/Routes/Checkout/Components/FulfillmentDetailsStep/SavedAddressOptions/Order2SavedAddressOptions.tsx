@@ -95,9 +95,8 @@ export const SavedAddressOptions = ({
         return setStepErrorMessage({
           step: CheckoutStepName.FULFILLMENT_DETAILS,
           error: {
-            title: "Invalid address",
-            message:
-              "This address is missing required information. Edit your address to continue.",
+            title: "Missing required information",
+            message: "Edit your address and/or phone number to continue.",
           },
         })
       }
@@ -158,9 +157,8 @@ export const SavedAddressOptions = ({
         return setStepErrorMessage({
           step: CheckoutStepName.FULFILLMENT_DETAILS,
           error: {
-            title: "Invalid address",
-            message:
-              "This address is missing required information. Edit your address to continue.",
+            title: "Missing required information",
+            message: "Edit your address and/or phone number to continue.",
           },
         })
       }
