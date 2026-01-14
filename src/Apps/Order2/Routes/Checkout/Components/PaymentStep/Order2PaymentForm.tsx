@@ -92,7 +92,7 @@ export const Order2PaymentForm: React.FC<Order2PaymentFormProps> = ({
   const orderData = useFragment(ORDER_FRAGMENT, order)
   const meData = useFragment(ME_FRAGMENT, me)
   const stripe = useStripe()
-  const { seller } = orderData
+  const { seller, mode } = orderData
 
   const totalForPayment = getTotalForPayment(orderData)
 
@@ -102,8 +102,8 @@ export const Order2PaymentForm: React.FC<Order2PaymentFormProps> = ({
 
   const { theme } = useTheme()
 
-  const options: StripeElementsOptions = {
-    mode: "payment",
+  const sharedOptions: StripeElementsOptions = {
+    currency: totalForPayment.currencyCode.toLowerCase(),
     setupFutureUsage: "off_session",
     paymentMethodOptions: {
       us_bank_account: {
@@ -115,6 +115,7 @@ export const Order2PaymentForm: React.FC<Order2PaymentFormProps> = ({
         },
       },
     },
+    onBehalfOf: seller?.merchantAccount?.externalId,
     appearance: {
       variables: {
         // https://docs.stripe.com/elements/appearance-api#variables
@@ -145,10 +146,22 @@ export const Order2PaymentForm: React.FC<Order2PaymentFormProps> = ({
         },
       },
     },
-    amount: totalForPayment.minor,
-    currency: totalForPayment.currencyCode.toLowerCase(),
-    onBehalfOf: seller?.merchantAccount?.externalId,
   }
+
+  const paymentOptions: StripeElementsOptions = {
+    mode: "payment",
+    amount: totalForPayment.minor,
+  }
+
+  const setupOptions: StripeElementsOptions = {
+    mode: "setup",
+    paymentMethodTypes: ["card"],
+  }
+
+  const options =
+    mode === "BUY"
+      ? { ...sharedOptions, ...paymentOptions }
+      : { ...sharedOptions, ...setupOptions }
 
   return (
     <Elements stripe={stripe} options={options}>

@@ -71,8 +71,11 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
     setCheckoutModalError(CheckoutModalError.SUBMIT_ERROR)
   }
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (confirmedSetupIntentId?: any) => {
     checkoutTracking.clickedOrderProgression(ContextModule.ordersReview)
+
+    if (!stripe) return
+
     setLoading(true)
 
     try {
@@ -91,8 +94,9 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
           throw new Error("No offer ID available for submission")
         }
         input.offerID = offerId
-        input.confirmedSetupIntentId =
-          orderData.stripeConfirmationToken ?? undefined
+        if (confirmedSetupIntentId) {
+          input.confirmedSetupIntentId = confirmedSetupIntentId
+        }
       } else {
         input.confirmationToken = orderData.stripeConfirmationToken ?? undefined
         input.oneTimeUse = !savePaymentMethod
@@ -107,14 +111,14 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
       )
 
       if (order?.__typename === "OrderMutationActionRequired") {
-        const cardActionResults = await stripe?.handleNextAction({
+        const { error, setupIntent } = await stripe.handleNextAction({
           clientSecret: order.actionData.clientSecret,
         })
 
-        if (cardActionResults?.error) {
-          throw new Error(cardActionResults.error.message)
+        if (error) {
+          throw new Error(error.message)
         } else {
-          handleSubmit()
+          isOffer ? handleSubmit(setupIntent?.id) : handleSubmit()
           return
         }
       }
