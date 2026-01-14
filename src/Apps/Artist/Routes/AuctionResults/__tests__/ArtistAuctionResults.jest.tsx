@@ -5,7 +5,6 @@ import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import type { ArtistAuctionResults_Test_Query$rawResponse } from "__generated__/ArtistAuctionResults_Test_Query.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { MockPayloadGenerator } from "relay-test-utils"
@@ -32,9 +31,7 @@ describe("AuctionResults", () => {
   let breakpoint
   const trackEvent = jest.fn()
   const mockedResolver = {
-    Artist: () => ({
-      ...AuctionResultsFixture.artist,
-    }),
+    Artist: () => AuctionResultsFixture.artist,
   }
 
   beforeAll(() => {
@@ -62,25 +59,26 @@ describe("AuctionResults", () => {
   })
 
   const { renderWithRelay } = setupTestWrapperTL({
-    Component: (props: any) => (
-      <MockBoot breakpoint={breakpoint}>
-        <ArtistAuctionResultsRefetchContainer
-          artist={props.artist}
-          aggregations={props.artist?.sidebarAggregations?.aggregations}
-        />
-      </MockBoot>
-    ),
+    Component: (props: any) => {
+      return (
+        <MockBoot breakpoint={breakpoint}>
+          <ArtistAuctionResultsRefetchContainer
+            artist={props.artist}
+            aggregations={
+              AuctionResultsFixture.artist.sidebarAggregations
+                .aggregations as any
+            }
+          />
+        </MockBoot>
+      )
+    },
     query: graphql`
-      query ArtistAuctionResults_Test_Query($artistID: String!)
-      @raw_response_type {
-        artist(id: $artistID) {
+      query ArtistAuctionResults_Test_Query @relay_test_operation {
+        artist(id: "pablo-picasso") {
           ...ArtistAuctionResults_artist
         }
       }
     `,
-    variables: {
-      artistID: "pablo-picasso",
-    },
   })
 
   describe("trigger auth modal for filtering and pagination", () => {
@@ -93,9 +91,9 @@ describe("AuctionResults", () => {
       renderWithRelay(mockedResolver)
 
       const links = screen.getAllByRole("link")
-      expect(links).toHaveLength(13)
+      expect(links).toHaveLength(10)
 
-      fireEvent.click(links[4])
+      fireEvent.click(links[1])
       expect(showAuthDialog).toHaveBeenCalledTimes(1)
     })
 
@@ -146,7 +144,7 @@ describe("AuctionResults", () => {
       expect(screen.getByText("5 results")).toBeInTheDocument()
 
       const links = screen.getAllByRole("link")
-      expect(links).toHaveLength(13)
+      expect(links).toHaveLength(10)
 
       // The sort is now a button with dropdown (not a combobox)
       expect(
@@ -542,7 +540,7 @@ describe("AuctionResults", () => {
 })
 
 // FIXME: Should not be using fixtures
-const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
+const AuctionResultsFixture = {
   artist: {
     internalID: "QXJ0aXN0OnBhYmxvLXBpY2Fzc28",
     id: "QXJ0aXN0OnBhYmxvLXBpY2Fzc28=",
