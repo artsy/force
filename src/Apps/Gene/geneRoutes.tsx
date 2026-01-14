@@ -43,9 +43,22 @@ export const geneRoutes: RouteProps[] = [
         onPreloadJS: () => {
           GeneShowRoute.preload()
         },
+        render: ({ Component, props, match }) => {
+          if (!Component || !props) return
+
+          const { gene } = props as unknown as { gene: { slug: string } }
+
+          // Redirect to canonical slug if URL param doesn't match
+          if (gene?.slug && gene.slug !== match.params.slug) {
+            throw new RedirectException(`/gene/${gene.slug}`, 301)
+          }
+
+          return <Component {...props} />
+        },
         query: graphql`
           query geneRoutes_GeneShowQuery($slug: String!) @cacheable {
             gene(id: $slug) @principalField {
+              slug
               ...GeneShow_gene
             }
           }
