@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test"
 
 test.describe("/artist/:id", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto("/artist/pablo-picasso/about", {
+    await page.goto("/artist/pablo-picasso", {
       timeout: 30000,
     })
   })
