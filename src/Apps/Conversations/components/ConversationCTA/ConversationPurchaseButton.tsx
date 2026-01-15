@@ -5,6 +5,7 @@ import { useConversationPurchaseButtonData } from "Apps/Conversations/components
 import { useMakeInquiryOrder } from "Apps/Conversations/mutations/useMakeInquiryOrderMutation"
 import { usePartnerOfferCheckoutMutation } from "Apps/PartnerOffer/Routes/Mutations/UsePartnerOfferCheckoutMutation"
 import { useRouter } from "System/Hooks/useRouter"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { ErrorWithMetadata } from "Utils/errors"
 import type { useConversationPurchaseButtonData_conversation$key } from "__generated__/useConversationPurchaseButtonData_conversation.graphql"
 import { useState } from "react"
@@ -24,6 +25,7 @@ export const ConversationPurchaseButton: React.FC<
   const makeInquiryOrder = useMakeInquiryOrder()
   const partnerOfferCheckout = usePartnerOfferCheckoutMutation()
   const { sendToast } = useToasts()
+  const { featureFlags } = useSystemContext()
 
   const { showSelectEditionSetModal, isConfirmModalVisible } =
     useConversationsContext()
@@ -76,8 +78,17 @@ export const ConversationPurchaseButton: React.FC<
     ) {
       trackPurchaseEvent("Partner offer")
 
+      const orderUrlBase = featureFlags?.isEnabled("emerald_checkout-redesign")
+        ? "orders2"
+        : "orders"
+      const orderCheckoutSuffix = featureFlags?.isEnabled(
+        "emerald_checkout-redesign",
+      )
+        ? "checkout"
+        : "shipping"
+
       router.push(
-        `/orders/${response.commerceCreatePartnerOfferOrder.orderOrError.order?.internalID}/shipping?backToConversationId=${data.conversation.internalID}`,
+        `/${orderUrlBase}/${response.commerceCreatePartnerOfferOrder.orderOrError.order?.internalID}/${orderCheckoutSuffix}?backToConversationId=${data.conversation.internalID}`,
       )
     }
   }
@@ -105,8 +116,17 @@ export const ConversationPurchaseButton: React.FC<
       response.createInquiryOrder?.orderOrError.__typename ===
       "CommerceOrderWithMutationSuccess"
     ) {
+      const orderUrlBase = featureFlags?.isEnabled("emerald_checkout-redesign")
+        ? "orders2"
+        : "orders"
+      const orderCheckoutSuffix = featureFlags?.isEnabled(
+        "emerald_checkout-redesign",
+      )
+        ? "checkout"
+        : "shipping"
+
       router.push(
-        `/orders/${response.createInquiryOrder.orderOrError.order.internalID}/shipping?backToConversationId=${data.conversation.internalID}`,
+        `/${orderUrlBase}/${response.createInquiryOrder.orderOrError.order.internalID}/${orderCheckoutSuffix}?backToConversationId=${data.conversation.internalID}`,
       )
     }
   }

@@ -7,6 +7,7 @@ export const createOrderMutation: AuthIntentMutation = (
   relayEnvironment: Environment,
   id: string,
   secondaryId: string | null | undefined,
+  featureFlags?: { isEnabled: (flag: string) => boolean },
 ) => {
   return new Promise((resolve, reject) => {
     commitMutation<AuthIntentCreateOrderMutation>(relayEnvironment, {
@@ -18,8 +19,18 @@ export const createOrderMutation: AuthIntentMutation = (
         const orderID =
           res.commerceCreateOrderWithArtwork?.orderOrError.order?.internalID
 
+        const ONE_PAGE_CHECKOUT_ENABLED = featureFlags?.isEnabled(
+          "emerald_checkout-redesign",
+        )
+        const orderUrlBase = ONE_PAGE_CHECKOUT_ENABLED ? "orders2" : "orders"
+        const orderCheckoutSuffix = ONE_PAGE_CHECKOUT_ENABLED
+          ? "checkout"
+          : "shipping"
+
         resolve(res)
-        window.location.assign(`/orders/${orderID}/shipping`)
+        window.location.assign(
+          `/${orderUrlBase}/${orderID}/${orderCheckoutSuffix}`,
+        )
       },
       mutation: graphql`
         mutation AuthIntentCreateOrderMutation(

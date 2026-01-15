@@ -5,4 +5,5 @@ export type AuthIntentMutation = (
   relayEnvironment: Environment,
   id: string,
   secondaryId?: string | null | undefined,
+  featureFlags?: { isEnabled: (flag: string) => boolean },
 ) => Promise<unknown>

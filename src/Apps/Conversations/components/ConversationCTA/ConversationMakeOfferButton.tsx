@@ -4,6 +4,7 @@ import { useConversationsContext } from "Apps/Conversations/ConversationsContext
 import { useConversationPurchaseButtonData } from "Apps/Conversations/components/ConversationCTA/useConversationPurchaseButtonData"
 import { useMakeInquiryOffer } from "Apps/Conversations/mutations/useMakeInquiryOfferMutation"
 import { useRouter } from "System/Hooks/useRouter"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import type { useConversationPurchaseButtonData_conversation$key } from "__generated__/useConversationPurchaseButtonData_conversation.graphql"
 import { useState } from "react"
 import { useTracking } from "react-tracking"
@@ -20,6 +21,7 @@ export const ConversationMakeOfferButton: React.FC<
   const { router } = useRouter()
   const { submitMutation } = useMakeInquiryOffer()
   const { sendToast } = useToasts()
+  const { featureFlags } = useSystemContext()
 
   const { showSelectEditionSetModal, isConfirmModalVisible } =
     useConversationsContext()
@@ -70,8 +72,14 @@ export const ConversationMakeOfferButton: React.FC<
         response?.createInquiryOfferOrder?.orderOrError.__typename ===
         "CommerceOrderWithMutationSuccess"
       ) {
+        const orderUrlBase = featureFlags?.isEnabled(
+          "emerald_checkout-redesign",
+        )
+          ? "orders2"
+          : "orders"
+
         router.push(
-          `/orders/${response.createInquiryOfferOrder.orderOrError.order.internalID}/offer?backToConversationId=${data.conversation.internalID}`,
+          `/${orderUrlBase}/${response.createInquiryOfferOrder.orderOrError.order.internalID}/offer?backToConversationId=${data.conversation.internalID}`,
         )
       }
     } catch (error) {

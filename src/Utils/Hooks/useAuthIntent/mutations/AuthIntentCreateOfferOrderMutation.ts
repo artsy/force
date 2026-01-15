@@ -7,6 +7,7 @@ export const createOfferOrderMutation: AuthIntentMutation = (
   relayEnvironment: Environment,
   id: string,
   secondaryId: string | null | undefined,
+  featureFlags?: { isEnabled: (flag: string) => boolean },
 ) => {
   return new Promise((resolve, reject) => {
     commitMutation<AuthIntentCreateOfferOrderMutation>(relayEnvironment, {
@@ -19,8 +20,14 @@ export const createOfferOrderMutation: AuthIntentMutation = (
           res.commerceCreateOfferOrderWithArtwork?.orderOrError.order
             ?.internalID
 
+        const orderUrlBase = featureFlags?.isEnabled(
+          "emerald_checkout-redesign",
+        )
+          ? "orders2"
+          : "orders"
+
         resolve(res)
-        window.location.assign(`/orders/${orderID}/offer`)
+        window.location.assign(`/${orderUrlBase}/${orderID}/offer`)
       },
       mutation: graphql`
         mutation AuthIntentCreateOfferOrderMutation(

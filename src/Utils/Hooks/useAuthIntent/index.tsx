@@ -48,10 +48,12 @@ export const runAuthIntent = async ({
   user,
   relayEnvironment,
   onSuccess,
+  featureFlags,
 }: {
   user: User
   relayEnvironment: Environment
   onSuccess: (value: AfterAuthAction) => void
+  featureFlags?: { isEnabled: (flag: string) => boolean }
 }) => {
   if (!user) return
 
@@ -96,6 +98,7 @@ export const runAuthIntent = async ({
             relayEnvironment,
             value.objectId,
             value.secondaryObjectId,
+            featureFlags,
           )
 
         case "makeOffer":
@@ -103,6 +106,7 @@ export const runAuthIntent = async ({
             relayEnvironment,
             value.objectId,
             value.secondaryObjectId,
+            featureFlags,
           )
       }
     })()
@@ -122,7 +126,7 @@ export const runAuthIntent = async ({
  * This hook is what checks that cookie and runs that action after they are authenticated.
  */
 export const useRunAuthIntent = () => {
-  const { user, relayEnvironment } = useSystemContext()
+  const { user, relayEnvironment, featureFlags } = useSystemContext()
 
   const { setValue } = useAuthIntent()
 
@@ -139,6 +143,7 @@ export const useRunAuthIntent = () => {
     runAuthIntent({
       user,
       relayEnvironment,
+      featureFlags,
       onSuccess: value => {
         setValue(value)
 
@@ -199,6 +204,7 @@ export const useRunAuthIntent = () => {
     setValue,
     syncFromLoggedOutUser,
     user,
+    featureFlags,
     contextPageOwnerId,
     contextPageOwnerSlug,
     contextPageOwnerType,
