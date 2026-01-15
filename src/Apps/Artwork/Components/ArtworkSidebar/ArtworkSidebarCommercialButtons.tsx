@@ -80,10 +80,16 @@ export const ArtworkSidebarCommercialButtons: React.FC<
   const activePartnerOffer =
     (!partnerOfferTimer.hasEnded && partnerOffer) || null
 
-  const { router, user } = useSystemContext()
+  const { router, user, featureFlags } = useSystemContext()
   const { match } = useRouter()
 
   const { trackEvent } = useTracking()
+
+  const ONE_PAGE_CHECKOUT_ENABLED = featureFlags?.isEnabled(
+    "emerald_checkout-redesign",
+  )
+  const orderUrlBase = ONE_PAGE_CHECKOUT_ENABLED ? "orders2" : "orders"
+  const orderCheckoutSuffix = ONE_PAGE_CHECKOUT_ENABLED ? "/checkout" : ""
 
   const { sendToast } = useToasts()
 
@@ -177,7 +183,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<
             throw new ErrorWithMetadata(errorCode, orderOrError.error)
         }
       } else {
-        redirectUrl = `/orders/${orderOrError?.order?.internalID}`
+        redirectUrl = `/${orderUrlBase}/${orderOrError?.order?.internalID}${orderCheckoutSuffix}`
       }
       setIsCommitingCreateOrderMutation(false)
       router?.push(redirectUrl)
@@ -220,7 +226,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<
             orderOrError.error,
           )
         } else {
-          const url = `/orders/${orderOrError.order.internalID}`
+          const url = `/${orderUrlBase}/${orderOrError.order.internalID}${orderCheckoutSuffix}`
 
           router?.push(url)
         }
@@ -284,7 +290,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<
             orderOrError.error,
           )
         } else {
-          const url = `/orders/${orderOrError.order.internalID}/offer`
+          const url = `/${orderUrlBase}/${orderOrError.order.internalID}/offer`
           router?.push(url)
         }
       } catch (error) {
