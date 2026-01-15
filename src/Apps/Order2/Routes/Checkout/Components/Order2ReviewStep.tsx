@@ -202,7 +202,7 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
           <Button
             variant="primaryBlack"
             width="100%"
-            onClick={handleSubmit}
+            onClick={() => handleSubmit()}
             loading={loading}
           >
             Submit
