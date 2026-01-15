@@ -102,14 +102,16 @@ export const Order2PaymentForm: React.FC<Order2PaymentFormProps> = ({
 
   const { theme } = useTheme()
 
-  const sharedOptions: StripeElementsOptions = {
+  const sharedOptions = {
     currency: totalForPayment.currencyCode.toLowerCase(),
-    setupFutureUsage: "off_session",
+    setupFutureUsage: "off_session" as const,
     paymentMethodOptions: {
       us_bank_account: {
-        verification_method: "instant",
+        verification_method: "instant" as const,
         financial_connections: {
-          permissions: ["payment_method", "balances", "ownership"],
+          permissions: ["payment_method", "balances", "ownership"] as Array<
+            "payment_method" | "balances" | "ownership"
+          >,
           // @ts-ignore Stripe type issue
           prefetch: ["balances"],
         },
@@ -148,20 +150,18 @@ export const Order2PaymentForm: React.FC<Order2PaymentFormProps> = ({
     },
   }
 
-  const paymentOptions: StripeElementsOptions = {
-    mode: "payment",
-    amount: totalForPayment.minor,
-  }
-
-  const setupOptions: StripeElementsOptions = {
-    mode: "setup",
-    paymentMethodTypes: ["card"],
-  }
-
-  const options =
+  const options: StripeElementsOptions =
     mode === "BUY"
-      ? { ...sharedOptions, ...paymentOptions }
-      : { ...sharedOptions, ...setupOptions }
+      ? {
+          ...sharedOptions,
+          mode: "payment" as const,
+          amount: totalForPayment.minor,
+        }
+      : {
+          ...sharedOptions,
+          mode: "setup" as const,
+          paymentMethodTypes: ["card"],
+        }
 
   return (
     <Elements stripe={stripe} options={options}>
