@@ -27,6 +27,14 @@ export const ConversationPurchaseButton: React.FC<
   const { sendToast } = useToasts()
   const { featureFlags } = useSystemContext()
 
+  const ONE_PAGE_CHECKOUT_ENABLED = featureFlags?.isEnabled(
+    "emerald_checkout-redesign",
+  )
+  const orderUrlBase = ONE_PAGE_CHECKOUT_ENABLED ? "orders2" : "orders"
+  const orderCheckoutSuffix = ONE_PAGE_CHECKOUT_ENABLED
+    ? "checkout"
+    : "shipping"
+
   const { showSelectEditionSetModal, isConfirmModalVisible } =
     useConversationsContext()
 
@@ -78,15 +86,6 @@ export const ConversationPurchaseButton: React.FC<
     ) {
       trackPurchaseEvent("Partner offer")
 
-      const orderUrlBase = featureFlags?.isEnabled("emerald_checkout-redesign")
-        ? "orders2"
-        : "orders"
-      const orderCheckoutSuffix = featureFlags?.isEnabled(
-        "emerald_checkout-redesign",
-      )
-        ? "checkout"
-        : "shipping"
-
       router.push(
         `/${orderUrlBase}/${response.commerceCreatePartnerOfferOrder.orderOrError.order?.internalID}/${orderCheckoutSuffix}?backToConversationId=${data.conversation.internalID}`,
       )
@@ -116,15 +115,6 @@ export const ConversationPurchaseButton: React.FC<
       response.createInquiryOrder?.orderOrError.__typename ===
       "CommerceOrderWithMutationSuccess"
     ) {
-      const orderUrlBase = featureFlags?.isEnabled("emerald_checkout-redesign")
-        ? "orders2"
-        : "orders"
-      const orderCheckoutSuffix = featureFlags?.isEnabled(
-        "emerald_checkout-redesign",
-      )
-        ? "checkout"
-        : "shipping"
-
       router.push(
         `/${orderUrlBase}/${response.createInquiryOrder.orderOrError.order.internalID}/${orderCheckoutSuffix}?backToConversationId=${data.conversation.internalID}`,
       )
