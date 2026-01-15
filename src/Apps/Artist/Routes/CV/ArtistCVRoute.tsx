@@ -1,5 +1,4 @@
 import { Stack, Text } from "@artsy/palette"
-import { MetaTags } from "Components/MetaTags"
 import type { ArtistCVRoute_viewer$data } from "__generated__/ArtistCVRoute_viewer.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -18,11 +17,6 @@ const ArtistCVRoute: React.FC<React.PropsWithChildren<ArtistCVRouteProps>> = ({
 
   return (
     <>
-      <MetaTags
-        title={`${viewer.artist.name} CV | Artsy`}
-        pathname={`/artist/${viewer.artist.slug}/cv`}
-      />
-
       <Stack gap={4}>
         <Text as="h1" variant="xl">
           {viewer.artist.name} CV

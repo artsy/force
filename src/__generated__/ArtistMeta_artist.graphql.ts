@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<978d7fc5910b8e1a7af2ed72e6edcd42>>
+ * @generated SignedSource<<9e7526f686f9d67b12513b683f5f7e4a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,6 +12,9 @@ import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistMeta_artist$data = {
   readonly alternateNames: ReadonlyArray<string | null | undefined> | null | undefined;
+  readonly biographyBlurbPlain: {
+    readonly text: string | null | undefined;
+  } | null | undefined;
   readonly birthday: string | null | undefined;
   readonly coverArtwork: {
     readonly image: {
@@ -20,10 +23,6 @@ export type ArtistMeta_artist$data = {
   } | null | undefined;
   readonly deathday: string | null | undefined;
   readonly href: string | null | undefined;
-  readonly meta: {
-    readonly description: string;
-    readonly title: string;
-  };
   readonly name: string | null | undefined;
   readonly nationality: string | null | undefined;
   readonly slug: string;
@@ -90,41 +89,34 @@ const node: ReaderFragment = {
     },
     {
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "alternateNames",
+      "storageKey": null
+    },
+    {
+      "alias": "biographyBlurbPlain",
       "args": [
         {
           "kind": "Literal",
-          "name": "page",
-          "value": "ABOUT"
+          "name": "format",
+          "value": "PLAIN"
         }
       ],
-      "concreteType": "ArtistMeta",
+      "concreteType": "ArtistBlurb",
       "kind": "LinkedField",
-      "name": "meta",
+      "name": "biographyBlurb",
       "plural": false,
       "selections": [
         {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
-          "name": "description",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "title",
+          "name": "text",
           "storageKey": null
         }
       ],
-      "storageKey": "meta(page:\"ABOUT\")"
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "alternateNames",
-      "storageKey": null
+      "storageKey": "biographyBlurb(format:\"PLAIN\")"
     },
     {
       "alias": null,
@@ -166,6 +158,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "5aa43fd9a383be550bef0deb31b3591a";
+(node as any).hash = "465a458f73ce878e56a574f79ba71073";
 
 export default node;

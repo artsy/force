@@ -5,7 +5,6 @@ import { Jump } from "Utils/Hooks/useJump"
 import { extractNodes } from "Utils/extractNodes"
 import type { ArtistArtistSeriesRoute_artist$data } from "__generated__/ArtistArtistSeriesRoute_artist.graphql"
 import type { FC } from "react"
-import { Meta, Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 
 interface ArtistArtistSeriesRouteProps {
@@ -25,10 +24,6 @@ const ArtistArtistSeriesRoute: FC<
 
   return (
     <>
-      <Title>{artist.meta.title}</Title>
-      <Meta name="title" content={artist.meta.title} />
-      <Meta name="description" content={artist.meta.description} />
-
       <Jump id="top" />
 
       <Text variant="xl">{artist.name} Series</Text>

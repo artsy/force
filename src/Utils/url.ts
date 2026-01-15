@@ -21,7 +21,7 @@ export const getPageNumber = (location: any): number => {
   if (!location?.query?.page) return 1
 
   const page = Number(location.query.page)
-  if (isNaN(page)) return 1
+  if (Number.isNaN(page)) return 1
 
   return page
 }
@@ -34,4 +34,13 @@ export const buildPageQuery = (query: any, page: number) => {
     updatedQuery.page = String(page)
   }
   return updatedQuery
+}
+
+export const getPrimaryRouteSegment = (
+  pathname: string,
+  basePath: string,
+): string | undefined => {
+  const subRoute = pathname.replace(basePath, "").split("?")[0]
+  const [primaryRoute] = subRoute.split("/").filter(Boolean)
+  return primaryRoute
 }
