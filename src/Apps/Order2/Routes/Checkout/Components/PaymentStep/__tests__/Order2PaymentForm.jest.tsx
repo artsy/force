@@ -96,6 +96,8 @@ const mockCheckoutContext = {
   setSavePaymentMethod: jest.fn(),
   setPaymentComplete: jest.fn(),
   savePaymentMethod: false,
+  messages: jest.fn(),
+  setStepErrorMessage: jest.fn(),
   checkoutTracking: {
     clickedPaymentMethod: jest.fn(),
     clickedOrderProgression: jest.fn(),
@@ -665,6 +667,7 @@ describe("Order2PaymentForm", () => {
   })
 
   describe("order submission flow", () => {
+    HTMLElement.prototype.scrollIntoView = jest.fn()
     /**
      * Payment method submission flows:
      *

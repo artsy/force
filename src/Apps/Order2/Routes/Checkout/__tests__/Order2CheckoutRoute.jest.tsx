@@ -131,6 +131,7 @@ jest.mock("Utils/Hooks/useUserLocation", () => ({
 }))
 
 const mockTrackEvent = jest.fn()
+
 beforeEach(() => {
   mockTrackEvent.mockClear()
   ;(useTracking as jest.Mock).mockImplementation(() => ({
@@ -1753,6 +1754,7 @@ describe("Order2CheckoutRoute", () => {
     let removeEventListenerSpy: jest.SpyInstance
     let preventHardReloadMock: jest.Mock
     let handleBackNavigationMock: jest.Mock
+    HTMLElement.prototype.scrollIntoView = jest.fn()
 
     beforeEach(() => {
       preventHardReloadMock = jest.fn()

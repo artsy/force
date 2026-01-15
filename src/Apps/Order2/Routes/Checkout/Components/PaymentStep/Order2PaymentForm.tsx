@@ -47,6 +47,13 @@ import { WireTransferOption } from "./WireTransferOption"
 
 const logger = createLogger("Order2PaymentForm")
 
+const defaultErrorMessage = (
+  <>
+    Something went wrong while selecting your payment method. Please try again
+    or contact <MailtoOrderSupport />.
+  </>
+)
+
 const defaultBillingAddress = {
   ...emptyAddress,
   country: "US",
@@ -269,33 +276,13 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
   }, [elements, order.seller?.merchantAccount?.externalId])
 
   const handleError = useCallback(
-    ({
-      error,
-      defaultError,
-    }: {
-      error?: { message?: string | JSX.Element }
-      defaultError?: boolean
-    }) => {
-      if (defaultError) {
-        setStepErrorMessage({
-          step: CheckoutStepName.PAYMENT,
-          error: {
-            message: (
-              <>
-                Something went wrong while selecting your payment method. Please
-                try again or contact <MailtoOrderSupport />.
-              </>
-            ),
-          },
-        })
-      } else {
-        setStepErrorMessage({
-          step: CheckoutStepName.PAYMENT,
-          error: {
-            message: error?.message,
-          },
-        })
-      }
+    (error?: { message?: string | JSX.Element }) => {
+      setStepErrorMessage({
+        step: CheckoutStepName.PAYMENT,
+        error: {
+          message: error?.message,
+        },
+      })
 
       errorBannerRef.current?.scrollIntoView({
         behavior: "smooth",
@@ -330,9 +317,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         // We only want to block the checkout when we know there is insufficient funds.
         case BankAccountBalanceCheckResult.INSUFFICIENT:
           handleError({
-            error: {
-              message: message || "Insufficient funds in bank account",
-            },
+            message: message || "Insufficient funds in bank account",
           })
           break
         default:
@@ -507,7 +492,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
     })
 
     if (!selectedPaymentMethod) {
-      handleError({ error: { message: "Select a payment method" } })
+      handleError({ message: "Select a payment method" })
       return
     }
 
@@ -572,7 +557,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       )
 
       if (error) {
-        handleError({ error, defaultError: true })
+        handleError({ message: defaultErrorMessage })
         return
       }
 
@@ -585,7 +570,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       setSavePaymentMethod(savePaymentMethod)
 
       if (!response) {
-        handleError({ error, defaultError: true })
+        handleError({ message: defaultErrorMessage })
         return
       }
 
@@ -624,7 +609,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         setIsSubmittingToStripe(false)
         resetElementsToInitialParams()
       } catch (error) {
-        handleError({ error, defaultError: true })
+        handleError({ message: defaultErrorMessage })
         logger.error(
           "Error while submitting order with new stripe payment method",
           error,
@@ -648,9 +633,9 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
 
         validateAndExtractOrderResponse(result.setOrderPayment?.orderOrError)
       } catch (error) {
-        handleError({ error, defaultError: true })
+        handleError({ message: defaultErrorMessage })
         logger.error(
-          "Error while submitting order with wire payment method",
+          "Error while submitting order with wire trasnfer payment method",
           error,
         )
         return
@@ -664,7 +649,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
 
     if (selectedPaymentMethod === "saved") {
       if (!selectedSavedPaymentMethod) {
-        handleError({ error: { message: "Select a saved payment method" } })
+        handleError({ message: "Select a saved payment method" })
         return
       }
 
@@ -701,7 +686,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         resetElementsToInitialParams()
         setPaymentComplete()
       } catch (error) {
-        handleError({ error, defaultError: true })
+        handleError({ message: defaultErrorMessage })
         logger.error(
           "Error while submitting order with saved payment method",
           error,
