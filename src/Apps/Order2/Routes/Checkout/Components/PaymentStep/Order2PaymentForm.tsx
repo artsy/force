@@ -92,7 +92,7 @@ export const Order2PaymentForm: React.FC<Order2PaymentFormProps> = ({
   const orderData = useFragment(ORDER_FRAGMENT, order)
   const meData = useFragment(ME_FRAGMENT, me)
   const stripe = useStripe()
-  const { seller } = orderData
+  const { seller, mode } = orderData
 
   const totalForPayment = getTotalForPayment(orderData)
 
@@ -102,19 +102,22 @@ export const Order2PaymentForm: React.FC<Order2PaymentFormProps> = ({
 
   const { theme } = useTheme()
 
-  const options: StripeElementsOptions = {
-    mode: "payment",
-    setupFutureUsage: "off_session",
+  const sharedOptions = {
+    currency: totalForPayment.currencyCode.toLowerCase(),
+    setupFutureUsage: "off_session" as const,
     paymentMethodOptions: {
       us_bank_account: {
-        verification_method: "instant",
+        verification_method: "instant" as const,
         financial_connections: {
-          permissions: ["payment_method", "balances", "ownership"],
+          permissions: ["payment_method", "balances", "ownership"] as Array<
+            "payment_method" | "balances" | "ownership"
+          >,
           // @ts-ignore Stripe type issue
           prefetch: ["balances"],
         },
       },
     },
+    onBehalfOf: seller?.merchantAccount?.externalId,
     appearance: {
       variables: {
         // https://docs.stripe.com/elements/appearance-api#variables
@@ -145,10 +148,20 @@ export const Order2PaymentForm: React.FC<Order2PaymentFormProps> = ({
         },
       },
     },
-    amount: totalForPayment.minor,
-    currency: totalForPayment.currencyCode.toLowerCase(),
-    onBehalfOf: seller?.merchantAccount?.externalId,
   }
+
+  const options: StripeElementsOptions =
+    mode === "BUY"
+      ? {
+          ...sharedOptions,
+          mode: "payment" as const,
+          amount: totalForPayment.minor,
+        }
+      : {
+          ...sharedOptions,
+          mode: "setup" as const,
+          paymentMethodTypes: ["card"],
+        }
 
   return (
     <Elements stripe={stripe} options={options}>
@@ -225,6 +238,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
   const hasSavedBankAccounts = allowedSavedBankAccounts.length > 0
   const [wireEmailSubject, setWireEmailSubject] = useState<string | null>(null)
   const [wireEmailBody, setWireEmailBody] = useState<string | null>(null)
+  const merchantAccountExternalId = order.seller?.merchantAccount?.externalId
 
   const formRef = useRef<HTMLFormElement>(null)
   const paymentElementRef = useRef<HTMLDivElement>(null)
@@ -294,9 +308,9 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       captureMethod: null,
       // @ts-ignore Stripe type issue
       paymentMethodTypes: null,
-      onBehalfOf: order.seller?.merchantAccount?.externalId,
+      onBehalfOf: merchantAccountExternalId,
     })
-  }, [elements, order.seller?.merchantAccount?.externalId])
+  }, [elements, merchantAccountExternalId])
 
   const handleError = useCallback(
     (error: { message?: string | JSX.Element }) => {
