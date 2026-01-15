@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<af7b49281c59708fe937c8c7335ef5ff>>
+ * @generated SignedSource<<f4a77c47da35fde258273d24fe61dcbc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,6 +21,18 @@ export type Order2ReviewStep_order$data = {
     readonly display: string | null | undefined;
   } | null | undefined;
   readonly lineItems: ReadonlyArray<{
+    readonly artwork: {
+      readonly figures: ReadonlyArray<{
+        readonly __typename: "Image";
+        readonly resized: {
+          readonly url: string;
+        } | null | undefined;
+      } | {
+        // This will never be '%other', but we need some
+        // value in case none of the concrete values match.
+        readonly __typename: "%other";
+      }>;
+    } | null | undefined;
     readonly artworkOrEditionSet: {
       readonly __typename: "Artwork";
       readonly dimensions: {
@@ -50,6 +62,7 @@ export type Order2ReviewStep_order$data = {
         readonly resized: {
           readonly url: string;
         } | null | undefined;
+        readonly url: string | null | undefined;
       } | null | undefined;
       readonly title: string | null | undefined;
     } | null | undefined;
@@ -91,7 +104,14 @@ v1 = [
     "storageKey": null
   }
 ],
-v2 = [
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "__typename",
+  "storageKey": null
+},
+v3 = [
   {
     "alias": null,
     "args": null,
@@ -124,7 +144,37 @@ v2 = [
     ],
     "storageKey": null
   }
-];
+],
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "url",
+  "storageKey": null
+},
+v5 = {
+  "alias": null,
+  "args": [
+    {
+      "kind": "Literal",
+      "name": "height",
+      "value": 138
+    },
+    {
+      "kind": "Literal",
+      "name": "width",
+      "value": 185
+    }
+  ],
+  "concreteType": "ResizedImageUrl",
+  "kind": "LinkedField",
+  "name": "resized",
+  "plural": false,
+  "selections": [
+    (v4/*: any*/)
+  ],
+  "storageKey": "resized(height:138,width:185)"
+};
 return {
   "argumentDefinitions": [],
   "kind": "Fragment",
@@ -214,22 +264,16 @@ return {
           "name": "artworkOrEditionSet",
           "plural": false,
           "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "__typename",
-              "storageKey": null
-            },
+            (v2/*: any*/),
             {
               "kind": "InlineFragment",
-              "selections": (v2/*: any*/),
+              "selections": (v3/*: any*/),
               "type": "Artwork",
               "abstractKey": null
             },
             {
               "kind": "InlineFragment",
-              "selections": (v2/*: any*/),
+              "selections": (v3/*: any*/),
               "type": "EditionSet",
               "abstractKey": null
             }
@@ -291,37 +335,47 @@ return {
               "name": "image",
               "plural": false,
               "selections": [
-                {
-                  "alias": null,
-                  "args": [
-                    {
-                      "kind": "Literal",
-                      "name": "height",
-                      "value": 138
-                    },
-                    {
-                      "kind": "Literal",
-                      "name": "width",
-                      "value": 185
-                    }
-                  ],
-                  "concreteType": "ResizedImageUrl",
-                  "kind": "LinkedField",
-                  "name": "resized",
-                  "plural": false,
-                  "selections": [
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "url",
-                      "storageKey": null
-                    }
-                  ],
-                  "storageKey": "resized(height:138,width:185)"
-                }
+                (v4/*: any*/),
+                (v5/*: any*/)
               ],
               "storageKey": null
+            }
+          ],
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Artwork",
+          "kind": "LinkedField",
+          "name": "artwork",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": [
+                {
+                  "kind": "Literal",
+                  "name": "includeAll",
+                  "value": false
+                }
+              ],
+              "concreteType": null,
+              "kind": "LinkedField",
+              "name": "figures",
+              "plural": true,
+              "selections": [
+                (v2/*: any*/),
+                {
+                  "kind": "InlineFragment",
+                  "selections": [
+                    (v5/*: any*/)
+                  ],
+                  "type": "Image",
+                  "abstractKey": null
+                }
+              ],
+              "storageKey": "figures(includeAll:false)"
             }
           ],
           "storageKey": null
@@ -347,6 +401,6 @@ return {
 };
 })();
 
-(node as any).hash = "b429bbfda1f591dcbda95171d253a137";
+(node as any).hash = "7474f6c095c4a5d53f6251f9cf832905";
 
 export default node;
