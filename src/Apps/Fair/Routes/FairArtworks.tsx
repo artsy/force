@@ -7,7 +7,6 @@ import {
   useArtworkFilterContext,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { ArtworkFilterPlaceholder } from "Components/ArtworkFilter/ArtworkFilterPlaceholder"
-import { MetaTags } from "Components/MetaTags"
 import { ArtistNationalityFilter } from "Components/ArtworkFilter/ArtworkFilters/ArtistNationalityFilter"
 import { ArtistsFilter } from "Components/ArtworkFilter/ArtworkFilters/ArtistsFilter"
 import { ArtworkLocationFilter } from "Components/ArtworkFilter/ArtworkFilters/ArtworkLocationFilter"
@@ -28,6 +27,7 @@ import { getInitialFilterState } from "Components/ArtworkFilter/Utils/getInitial
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
 import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
 import { LazyArtworkGrid } from "Components/ArtworkGrid/LazyArtworkGrid"
+import { MetaTags } from "Components/MetaTags"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
@@ -123,8 +123,8 @@ const FairArtworksFilter: React.FC<
         userPreferredMetric={userPreferences?.metric}
       >
         <FairArtworksMeta fair={fair} />
+
         <BaseArtworkFilter
-          mt={[0, 6]}
           relay={relay}
           viewer={fair}
           featuredKeywords={fair.featuredKeywords}

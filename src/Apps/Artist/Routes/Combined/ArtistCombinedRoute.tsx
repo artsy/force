@@ -76,6 +76,29 @@ const ArtistCombinedRoute: React.FC<
     scrollToSection()
   }, [section, jumpTo, waitUntil, location.pathname, router])
 
+  // When the page is accessed via a URL that contains a hash to a jump link
+  // anchor -- as in the case of the 301 redirects we've set up --
+  // we similarly scroll to the appropriate section and clean up the URL
+  useEffect(() => {
+    const scrollToSectionFromHash = async () => {
+      if (location.hash === "#JUMP--marketSignalsTop") {
+        await waitUntil("auction")
+        jumpTo("marketSignalsTop", { offset: 40 })
+        // Remove the hash from the URL
+        const newPath = location.pathname + location.search
+        router.replace(newPath)
+      } else if (location.hash === "#JUMP--artistAboutTop") {
+        await waitUntil("about")
+        jumpTo("artistAboutTop", { offset: 40 })
+        // Remove the hash from the URL
+        const newPath = location.pathname + location.search
+        router.replace(newPath)
+      }
+    }
+
+    scrollToSectionFromHash()
+  }, [location, jumpTo, waitUntil, router])
+
   return (
     <SectionNavProvider>
       {loading && (
