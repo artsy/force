@@ -8,7 +8,6 @@ import { extractNodes } from "Utils/extractNodes"
 import type { ArtistArticlesRoute_artist$data } from "__generated__/ArtistArticlesRoute_artist.graphql"
 import type * as React from "react"
 import { useState } from "react"
-import { Title } from "react-head"
 import {
   type RelayRefetchProp,
   createRefetchContainer,
@@ -49,8 +48,6 @@ const ArtistArticlesRoute: React.FC<
 
   return (
     <>
-      <Title>{`${artist.name} - Articles`}</Title>
-
       <Jump id="top" />
 
       <Text variant="xl">{artist.name} Articles</Text>
