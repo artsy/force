@@ -221,7 +221,7 @@ describe("AdminMeta", () => {
 
         const descriptionTag = getMetaBy({ name: "description" })
         expect(descriptionTag?.getAttribute("content")).toBe(
-          "Explore Andy Warhol's biography, achievements, artworks, auction results, and shows on Artsy.",
+          "Explore Andy Warhol’s biography, achievements, artworks, auction results, and shows on Artsy.",
         )
       })
 
@@ -236,7 +236,7 @@ describe("AdminMeta", () => {
 
         const descriptionTag = getMetaBy({ name: "description" })
         expect(descriptionTag?.getAttribute("content")).toBe(
-          "Explore Andy Warhol's biography, achievements, artworks, auction results, and shows on Artsy. Andy Warhol was an American visual artist, film director, and producer",
+          "Explore Andy Warhol’s biography, achievements, artworks, auction results, and shows on Artsy. Andy Warhol was an American visual artist, film director, and producer",
         )
       })
     })
@@ -284,7 +284,7 @@ describe("AdminMeta", () => {
 
         const descriptionTag = getMetaBy({ name: "description" })
         expect(descriptionTag?.getAttribute("content")).toBe(
-          "View Andy Warhol's complete exhibition history on Artsy. Browse their CV including solo shows, group shows, and fair booths at galleries and fairs worldwide.",
+          "View Andy Warhol’s complete exhibition history on Artsy. Browse their CV including solo shows, group shows, and fair booths at galleries and fairs worldwide.",
         )
       })
     })
@@ -308,7 +308,7 @@ describe("AdminMeta", () => {
 
         const descriptionTag = getMetaBy({ name: "description" })
         expect(descriptionTag?.getAttribute("content")).toBe(
-          "Explore Andy Warhol's series on Artsy and discover artworks available to collect. Browse the themes and artistic expressions that define Andy Warhol's career.",
+          "Explore Andy Warhol’s series on Artsy and discover artworks available to collect. Browse the themes and artistic expressions that define Andy Warhol’s career.",
         )
       })
     })
