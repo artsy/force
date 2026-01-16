@@ -28,7 +28,6 @@ import { institutionPartnershipsRoutes } from "Apps/InstitutionPartnerships/inst
 import { invoiceRoutes } from "Apps/Invoice/invoiceRoutes"
 import { jobsRoutes } from "Apps/Jobs/jobsRoutes"
 import { marketingRoutes } from "Apps/Marketing/marketingRoutes"
-import { myCollectionRoutes } from "Apps/MyCollection/myCollectionRoutes"
 import { myCollectionInsightsCollectorProfileRoutes } from "Apps/MyCollectionInsights/myCollectionInsightsCollectorProfileRoutes"
 import { myCollectionInsightsRoutes } from "Apps/MyCollectionInsights/myCollectionInsightsRoutes"
 import { newForYouRoutes } from "Apps/NewForYou/newForYouRoutes"
@@ -101,7 +100,6 @@ const ROUTES = buildAppRoutes([
   invoiceRoutes,
   jobsRoutes,
   marketingRoutes,
-  myCollectionRoutes,
   myCollectionInsightsRoutes,
   myCollectionInsightsCollectorProfileRoutes,
   newForYouRoutes,
