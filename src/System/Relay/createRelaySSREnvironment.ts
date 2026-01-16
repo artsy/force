@@ -2,7 +2,16 @@ import { getENV } from "Utils/getENV"
 import { getTimeZone } from "Utils/getTimeZone"
 import createLogger from "Utils/logger"
 import "isomorphic-fetch"
+import { getMetaphysicsEndpoint } from "System/Relay/getMetaphysicsEndpoint"
+import {
+  hasNoCacheParamPresent,
+  hasPersonalizedArguments,
+  isRequestCacheable,
+} from "System/Relay/isRequestCacheable"
+import { cacheHeaderMiddleware } from "System/Relay/middleware/cacheHeaderMiddleware"
+import { cacheLoggerMiddleware } from "System/Relay/middleware/cacheLoggerMiddleware"
 import { isEmpty } from "lodash"
+import type { Environment as IEnvironment } from "react-relay"
 import type RelayClientSSR from "react-relay-network-modern-ssr/lib/client"
 import type RelayServerSSR from "react-relay-network-modern-ssr/lib/server"
 import {
@@ -12,16 +21,6 @@ import {
   loggerMiddleware,
   urlMiddleware,
 } from "react-relay-network-modern/node8"
-import "regenerator-runtime/runtime"
-import { getMetaphysicsEndpoint } from "System/Relay/getMetaphysicsEndpoint"
-import {
-  hasNoCacheParamPresent,
-  hasPersonalizedArguments,
-  isRequestCacheable,
-} from "System/Relay/isRequestCacheable"
-import { cacheHeaderMiddleware } from "System/Relay/middleware/cacheHeaderMiddleware"
-import { cacheLoggerMiddleware } from "System/Relay/middleware/cacheLoggerMiddleware"
-import type { Environment as IEnvironment } from "react-relay"
 import { Environment, type INetwork, RecordSource, Store } from "relay-runtime"
 import { metaphysicsErrorHandlerMiddleware } from "./middleware/metaphysicsErrorHandlerMiddleware"
 import { metaphysicsExtensionsLoggerMiddleware } from "./middleware/metaphysicsExtensionsLoggerMiddleware"
@@ -35,7 +34,7 @@ const isDevelopment = getENV("NODE_ENV") === "development"
 // Only log on the client during development
 const loggingEnabled = !isServer && isDevelopment
 
-const USER_AGENT = `Reaction/Migration`
+const USER_AGENT = "Reaction/Migration"
 
 interface Config {
   cache?: object

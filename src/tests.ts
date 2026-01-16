@@ -1,6 +1,5 @@
-import chalk from "chalk"
-import "regenerator-runtime/runtime"
 import { format } from "util"
+import chalk from "chalk"
 import "@testing-library/jest-dom"
 import { configure } from "@testing-library/react"
 
