@@ -36,11 +36,16 @@ export const buildPageQuery = (query: any, page: number) => {
   return updatedQuery
 }
 
-export const getPrimaryRouteSegment = (
-  pathname: string,
-  basePath: string,
-): string | undefined => {
-  const subRoute = pathname.replace(basePath, "").split("?")[0]
-  const [primaryRoute] = subRoute.split("/").filter(Boolean)
-  return primaryRoute
+export const getArtistSubRoute = (pathname: string): string | undefined => {
+  // Strip query params and fragments
+  const path = pathname.split("?")[0].split("#")[0]
+  const segments = path.split("/").filter(Boolean)
+
+  // Artist URLs are /artist/[slug]/[subRoute?]
+  // If there's a 3rd segment (index 2), that's the sub-route
+  if (segments.length >= 3 && segments[0] === "artist") {
+    return segments[2]
+  }
+
+  return undefined
 }

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9e7526f686f9d67b12513b683f5f7e4a>>
+ * @generated SignedSource<<850b2309d415a2226d9fc19883ffa78b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -22,10 +22,8 @@ export type ArtistMeta_artist$data = {
     } | null | undefined;
   } | null | undefined;
   readonly deathday: string | null | undefined;
-  readonly href: string | null | undefined;
   readonly name: string | null | undefined;
   readonly nationality: string | null | undefined;
-  readonly slug: string;
   readonly " $fragmentSpreads": FragmentRefs<"ArtistStructuredData_artist">;
   readonly " $fragmentType": "ArtistMeta_artist";
 };
@@ -44,13 +42,6 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ArtistStructuredData_artist"
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "slug",
-      "storageKey": null
     },
     {
       "alias": null,
@@ -78,13 +69,6 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "deathday",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "href",
       "storageKey": null
     },
     {
@@ -158,6 +142,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "465a458f73ce878e56a574f79ba71073";
+(node as any).hash = "5959555e0f90a4130e2296b6489ec815";
 
 export default node;

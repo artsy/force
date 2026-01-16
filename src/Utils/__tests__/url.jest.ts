@@ -3,7 +3,7 @@ import {
   getPageNumber,
   getURLHost,
   buildPageQuery,
-  getPrimaryRouteSegment,
+  getArtistSubRoute,
 } from "Utils/url"
 
 describe("getURLHost", () => {
@@ -165,91 +165,71 @@ describe("buildPageQuery", () => {
   })
 })
 
-describe("getPrimaryRouteSegment", () => {
+describe("getArtistSubRoute", () => {
   it("should extract the primary route segment from a nested path", () => {
     const pathname = "/artist/picasso/articles/123"
-    const basePath = "/artist/picasso"
-    const result = getPrimaryRouteSegment(pathname, basePath)
+    const result = getArtistSubRoute(pathname)
     expect(result).toBe("articles")
   })
 
   it("should extract the primary route segment from a simple subroute", () => {
     const pathname = "/artist/picasso/cv"
-    const basePath = "/artist/picasso"
-    const result = getPrimaryRouteSegment(pathname, basePath)
+    const result = getArtistSubRoute(pathname)
     expect(result).toBe("cv")
   })
 
   it("should return undefined when pathname matches basePath exactly", () => {
     const pathname = "/artist/picasso"
-    const basePath = "/artist/picasso"
-    const result = getPrimaryRouteSegment(pathname, basePath)
+    const result = getArtistSubRoute(pathname)
     expect(result).toBeUndefined()
   })
 
   it("should handle paths with trailing slashes", () => {
     const pathname = "/artist/picasso/shows/"
-    const basePath = "/artist/picasso"
-    const result = getPrimaryRouteSegment(pathname, basePath)
+    const result = getArtistSubRoute(pathname)
     expect(result).toBe("shows")
   })
 
   it("should handle basePath with trailing slash", () => {
     const pathname = "/artist/picasso/series"
-    const basePath = "/artist/picasso/"
-    const result = getPrimaryRouteSegment(pathname, basePath)
+    const result = getArtistSubRoute(pathname)
     expect(result).toBe("series")
   })
 
   it("should strip query parameters before extracting route", () => {
     const pathname = "/artist/picasso/articles?page=2&sort=recent"
-    const basePath = "/artist/picasso"
-    const result = getPrimaryRouteSegment(pathname, basePath)
+    const result = getArtistSubRoute(pathname)
     expect(result).toBe("articles")
   })
 
   it("should handle deeply nested routes and return only first segment", () => {
     const pathname = "/artist/picasso/articles/2024/january/post-123"
-    const basePath = "/artist/picasso"
-    const result = getPrimaryRouteSegment(pathname, basePath)
+    const result = getArtistSubRoute(pathname)
     expect(result).toBe("articles")
   })
 
   it("should return undefined for basePath with only trailing slash difference", () => {
     const pathname = "/artist/picasso/"
-    const basePath = "/artist/picasso"
-    const result = getPrimaryRouteSegment(pathname, basePath)
+    const result = getArtistSubRoute(pathname)
     expect(result).toBeUndefined()
   })
 
   it("should handle all artist subroutes", () => {
-    const basePath = "/artist/andy-warhol"
-
-    expect(
-      getPrimaryRouteSegment("/artist/andy-warhol/articles", basePath),
-    ).toBe("articles")
-    expect(getPrimaryRouteSegment("/artist/andy-warhol/cv", basePath)).toBe(
-      "cv",
-    )
-    expect(getPrimaryRouteSegment("/artist/andy-warhol/series", basePath)).toBe(
-      "series",
-    )
-    expect(getPrimaryRouteSegment("/artist/andy-warhol/shows", basePath)).toBe(
-      "shows",
-    )
+    expect(getArtistSubRoute("/artist/andy-warhol/articles")).toBe("articles")
+    expect(getArtistSubRoute("/artist/andy-warhol/cv")).toBe("cv")
+    expect(getArtistSubRoute("/artist/andy-warhol/series")).toBe("series")
+    expect(getArtistSubRoute("/artist/andy-warhol/shows")).toBe("shows")
   })
 
   it("should handle query parameters with fragments", () => {
     const pathname = "/artist/picasso/cv?view=grid#exhibitions"
-    const basePath = "/artist/picasso"
-    const result = getPrimaryRouteSegment(pathname, basePath)
+    const result = getArtistSubRoute(pathname)
     expect(result).toBe("cv")
   })
 
   it("should return undefined when only query params differ", () => {
     const pathname = "/artist/picasso?utm_source=email"
-    const basePath = "/artist/picasso"
-    const result = getPrimaryRouteSegment(pathname, basePath)
+    const result = getArtistSubRoute(pathname)
     expect(result).toBeUndefined()
   })
 })

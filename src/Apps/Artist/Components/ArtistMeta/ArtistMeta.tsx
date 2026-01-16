@@ -2,7 +2,7 @@ import { MetaTags } from "Components/MetaTags"
 import { ArtistStructuredData } from "Components/Seo/ArtistStructuredData"
 import { useRouter } from "System/Hooks/useRouter"
 import { getENV } from "Utils/getENV"
-import { getPageNumber, getPrimaryRouteSegment } from "Utils/url"
+import { getPageNumber, getArtistSubRoute } from "Utils/url"
 import type { ArtistMeta_artist$data } from "__generated__/ArtistMeta_artist.graphql"
 import { Meta } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -18,10 +18,11 @@ export const ArtistMeta: React.FC<React.PropsWithChildren<Props>> = ({
 
   const alternateNames = artist?.alternateNames || []
   const pathname = match.location.pathname
+
   const page = getPageNumber(match?.location)
   const canonicalPath = page > 1 ? `${pathname}?page=${page}` : pathname
 
-  const primaryRoute = getPrimaryRouteSegment(pathname, artist.href || "")
+  const primaryRoute = getArtistSubRoute(pathname)
 
   const getTitle = () => {
     switch (primaryRoute) {
@@ -95,12 +96,10 @@ export const ArtistMetaFragmentContainer = createFragmentContainer(ArtistMeta, {
   artist: graphql`
     fragment ArtistMeta_artist on Artist {
       ...ArtistStructuredData_artist
-      slug
       name
       nationality
       birthday
       deathday
-      href
       alternateNames
       biographyBlurbPlain: biographyBlurb(format: PLAIN) {
         text
