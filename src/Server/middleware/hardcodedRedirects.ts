@@ -75,6 +75,12 @@ const PERMANENT_REDIRECTS = {
   "/magazine": "/articles",
   "/meet-the-specialists": "/sell",
   "/my-collection": "/collector-profile/my-collection",
+  "/my-collection/artwork/:artworkID":
+    "/collector-profile/my-collection/artwork/:artworkID",
+  "/my-collection/artworks/:artworkID/edit":
+    "/collector-profile/my-collection/artworks/:artworkID/edit",
+  "/my-collection/artworks/new":
+    "/collector-profile/my-collection/artworks/new",
   "/page/collector-faqs-selling-on-artsy": "/sell",
   "/partner-application": "/apply",
   "/partners": "/galleries",

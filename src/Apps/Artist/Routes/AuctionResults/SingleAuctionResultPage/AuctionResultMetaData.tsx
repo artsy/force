@@ -1,5 +1,5 @@
 import { Box, Flex, Join, Separator, Text } from "@artsy/palette"
-import { MyCollectionArtworkDetailFields } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkDetailFields"
+import { MyCollectionArtworkDetailFields } from "Apps/CollectorProfile/Routes/MyCollection/MyCollectionArtwork/Components/MyCollectionArtworkDetailFields"
 import { Media } from "Utils/Responsive"
 import type { AuctionResultMetaData_auctionResult$key } from "__generated__/AuctionResultMetaData_auctionResult.graphql"
 import { graphql, useFragment } from "react-relay"
