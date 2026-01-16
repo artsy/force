@@ -2,7 +2,7 @@ import { MetaTags } from "Components/MetaTags"
 import { ArtistStructuredData } from "Components/Seo/ArtistStructuredData"
 import { useRouter } from "System/Hooks/useRouter"
 import { getENV } from "Utils/getENV"
-import { getPageNumber } from "Utils/url"
+import { getPageNumber, getArtistSubRoute } from "Utils/url"
 import type { ArtistMeta_artist$data } from "__generated__/ArtistMeta_artist.graphql"
 import { Meta } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -17,31 +17,58 @@ export const ArtistMeta: React.FC<React.PropsWithChildren<Props>> = ({
   const { match } = useRouter()
 
   const alternateNames = artist?.alternateNames || []
-  const page = getPageNumber(match?.location)
-  const pathname = page > 1 ? `${artist.href}?page=${page}` : artist.href
-  const currentPathname = match.location.pathname
+  const pathname = match.location.pathname
 
-  // Skip rendering if we're on the CV route which handles its own MetaTags
-  if (currentPathname === `${artist.href}/cv`) {
-    return null
+  const page = getPageNumber(match?.location)
+  const canonicalPath = page > 1 ? `${pathname}?page=${page}` : pathname
+
+  const primaryRoute = getArtistSubRoute(pathname)
+
+  const getTitle = () => {
+    switch (primaryRoute) {
+      case "articles":
+        return `${artist.name} - Articles | Artsy`
+      case "cv":
+        return `${artist.name} - CV | Artsy`
+      case "series":
+        return `${artist.name} - Series | Artsy`
+      case "shows":
+        return `${artist.name} - Shows | Artsy`
+      default:
+        return `${artist.name} - Biography, Shows, Articles & More | Artsy`
+    }
+  }
+
+  const getDescription = () => {
+    switch (primaryRoute) {
+      case "articles":
+        return `Read articles and editorial content about ${artist.name} on Artsy. Browse reviews, interviews, and critical analysis of their work.`
+      case "cv":
+        return `View ${artist.name}’s complete exhibition history on Artsy. Browse their CV including solo shows, group shows, and fair booths at galleries and fairs worldwide.`
+      case "series":
+        return `Explore ${artist.name}’s series on Artsy and discover artworks available to collect. Browse the themes and artistic expressions that define ${artist.name}’s career.`
+      case "shows":
+        return `View current and upcoming exhibitions featuring ${artist.name} on Artsy. Browse shows at galleries and fairs worldwide.`
+      default: {
+        const baseDescription = `Explore ${artist.name}’s biography, achievements, artworks, auction results, and shows on Artsy.`
+        const blurb = artist.biographyBlurbPlain?.text?.substring(0, 70) || ""
+        return blurb ? `${baseDescription} ${blurb}` : baseDescription
+      }
+    }
   }
 
   return (
     <>
       <MetaTags
-        title={artist.meta.title}
-        description={artist.meta.description}
+        title={getTitle()}
+        description={getDescription()}
         imageURL={artist.coverArtwork?.image?.large}
-        pathname={pathname}
+        pathname={canonicalPath}
       />
 
       <Meta
-        property="og:url"
-        href={`${getENV("APP_URL")}/artist/${artist.slug}`}
-      />
-      <Meta
         property="og:type"
-        href={`${getENV("FACEBOOK_APP_NAMESPACE")}:artist`}
+        content={`${getENV("FACEBOOK_APP_NAMESPACE")}:artist`}
       />
 
       {artist.nationality && (
@@ -69,17 +96,14 @@ export const ArtistMetaFragmentContainer = createFragmentContainer(ArtistMeta, {
   artist: graphql`
     fragment ArtistMeta_artist on Artist {
       ...ArtistStructuredData_artist
-      slug
       name
       nationality
       birthday
       deathday
-      href
-      meta(page: ABOUT) {
-        description
-        title
-      }
       alternateNames
+      biographyBlurbPlain: biographyBlurb(format: PLAIN) {
+        text
+      }
       coverArtwork {
         image {
           large: url(version: "large")

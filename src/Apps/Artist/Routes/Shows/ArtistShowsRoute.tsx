@@ -2,7 +2,6 @@ import { Join, Spacer } from "@artsy/palette"
 import { EmptyState } from "Components/EmptyState"
 import type { ArtistShowsRoute_viewer$data } from "__generated__/ArtistShowsRoute_viewer.graphql"
 import type * as React from "react"
-import { Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistShowsGroupRefetchContainer } from "./Components/ArtistShowsGroup"
 
@@ -21,12 +20,9 @@ const ArtistShowsRoute: React.FC<
 
   return (
     <>
-      <Title>{viewer.artist.name} - Shows</Title>
-
       {!hasCurrentShows && !hasUpcomingShows && (
         <EmptyState title="There aren’t any shows at this time." />
       )}
-
       <Join separator={<Spacer y={4} />}>
         {viewer.currentShows && (
           <ArtistShowsGroupRefetchContainer

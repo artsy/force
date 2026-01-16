@@ -47,11 +47,7 @@ describe("AdminMeta", () => {
     })
 
     it("renders basic canonical URL", () => {
-      renderWithRelay({
-        Artist: () => ({
-          href: "/artist/example-artist",
-        }),
-      })
+      renderWithRelay()
 
       const linkTag = document.querySelector("link[rel='canonical']")
       expect(linkTag?.getAttribute("href")).toEqual("/artist/example-artist")
@@ -64,14 +60,10 @@ describe("AdminMeta", () => {
         additional_gene_ids: ["prints"],
       }
 
-      renderWithRelay({
-        Artist: () => ({
-          href: "/artist/picasso",
-        }),
-      })
+      renderWithRelay()
 
       const linkTag = document.querySelector("link[rel='canonical']")
-      expect(linkTag?.getAttribute("href")).toEqual("/artist/picasso")
+      expect(linkTag?.getAttribute("href")).toEqual("/artist/example-artist")
     })
 
     it("includes page parameter in canonical URL when page > 1", () => {
@@ -79,14 +71,12 @@ describe("AdminMeta", () => {
         page: "3",
       }
 
-      renderWithRelay({
-        Artist: () => ({
-          href: "/artist/picasso",
-        }),
-      })
+      renderWithRelay()
 
       const linkTag = document.querySelector("link[rel='canonical']")
-      expect(linkTag?.getAttribute("href")).toEqual("/artist/picasso?page=3")
+      expect(linkTag?.getAttribute("href")).toEqual(
+        "/artist/example-artist?page=3",
+      )
     })
 
     it("includes page parameter but strips other query parameters", () => {
@@ -97,14 +87,12 @@ describe("AdminMeta", () => {
         price_range: "1000-5000",
       }
 
-      renderWithRelay({
-        Artist: () => ({
-          href: "/artist/picasso",
-        }),
-      })
+      renderWithRelay()
 
       const linkTag = document.querySelector("link[rel='canonical']")
-      expect(linkTag?.getAttribute("href")).toEqual("/artist/picasso?page=2")
+      expect(linkTag?.getAttribute("href")).toEqual(
+        "/artist/example-artist?page=2",
+      )
     })
 
     it("uses base URL when page is 1", () => {
@@ -113,110 +101,28 @@ describe("AdminMeta", () => {
         sort: "recently_updated",
       }
 
-      renderWithRelay({
-        Artist: () => ({
-          href: "/artist/picasso",
-        }),
-      })
+      renderWithRelay()
 
       const linkTag = document.querySelector("link[rel='canonical']")
-      expect(linkTag?.getAttribute("href")).toEqual("/artist/picasso")
-    })
-
-    it("does not render meta tags on CV route", () => {
-      mockLocation.pathname = "/artist/banksy/cv"
-
-      renderWithRelay({
-        Artist: () => ({
-          href: "/artist/banksy",
-        }),
-      })
-
-      const linkTag = document.querySelector("link[rel='canonical']")
-      expect(linkTag).toBeNull()
-    })
-  })
-
-  describe("without an artist description", () => {
-    it("renders the default description", () => {
-      renderWithRelay({
-        Artist: () => ({
-          href: "/artist/example-artist",
-          meta: { description: null, title: "Example Artist" },
-        }),
-      })
-
-      const defaultDescription =
-        "Artsy is the world’s largest online art marketplace. Browse over 1 million artworks by iconic and emerging artists from 4000+ galleries and top auction houses."
-
-      expect(
-        getMetaBy({ name: "description" })?.getAttribute("content"),
-      ).toEqual(defaultDescription)
-
-      expect(
-        getMetaBy({ property: "og:description" })?.getAttribute("content"),
-      ).toEqual(defaultDescription)
-
-      expect(
-        getMetaBy({ property: "twitter:description" })?.getAttribute("content"),
-      ).toEqual(defaultDescription)
-    })
-  })
-
-  describe("with an artist that has a description", () => {
-    it("renders meta tags with that description", () => {
-      const artist = {
-        href: "/artist/example-artist",
-        meta: {
-          description: "Very important painter!",
-          title: "Example Artist",
-        },
-      }
-      renderWithRelay({ Artist: () => artist })
-
-      expect(
-        getMetaBy({
-          name: "description",
-          content: artist.meta.description,
-        }),
-      ).not.toBeNull()
-
-      expect(
-        getMetaBy({
-          property: "og:description",
-          content: artist.meta.description,
-        }),
-      ).not.toBeNull()
-
-      expect(
-        getMetaBy({
-          property: "twitter:description",
-          content: artist.meta.description,
-        }),
-      ).not.toBeNull()
+      expect(linkTag?.getAttribute("href")).toEqual("/artist/example-artist")
     })
   })
 
   describe("og tags", () => {
     it("renders them", () => {
-      const artist = {
-        slug: "andy-warhol",
-        href: "/artist/andy-warhol",
-        meta: { description: null, title: "Andy Warhol" },
-      }
-      renderWithRelay({ Artist: () => artist })
+      renderWithRelay()
 
       expect(
         getMetaBy({
           property: "og:url",
-          href: "undefined/artist/andy-warhol",
+          content: "/artist/example-artist",
         }),
       ).not.toBeNull()
 
       expect(
         getMetaBy({
           property: "og:type",
-          href: "undefined:artist",
+          content: "undefined:artist",
         }),
       ).not.toBeNull()
     })
@@ -228,8 +134,6 @@ describe("AdminMeta", () => {
         birthday: null,
         deathday: null,
         nationality: null,
-        href: "/artist/example-artist",
-        meta: { description: null, title: "Example Artist" },
       }
       renderWithRelay({ Artist: () => artist })
 
@@ -243,8 +147,6 @@ describe("AdminMeta", () => {
         birthday: "March 9",
         deathday: "June 7",
         nationality: "American",
-        href: "/artist/example-artist",
-        meta: { description: null, title: "Example Artist" },
       }
       renderWithRelay({ Artist: () => artist })
 
@@ -264,8 +166,6 @@ describe("AdminMeta", () => {
     it("skips rendering them without the data", () => {
       const artist = {
         alternateNames: [],
-        href: "/artist/example-artist",
-        meta: { description: null, title: "Example Artist" },
       }
       renderWithRelay({ Artist: () => artist })
       expect(getMetaBy({ name: "skos:prefLabel" })).toBeNull()
@@ -274,8 +174,6 @@ describe("AdminMeta", () => {
     it("renders them with the data", () => {
       const artist = {
         alternateNames: ["Bonnie", "Betty"],
-        href: "/artist/example-artist",
-        meta: { description: null, title: "Example Artist" },
       }
       renderWithRelay({ Artist: () => artist })
       expect(
@@ -286,15 +184,157 @@ describe("AdminMeta", () => {
 
   describe("structured data", () => {
     it("renders", () => {
-      const artist = {
-        href: "/artist/example-artist",
-        meta: { description: null, title: "Example Artist" },
-      }
-      renderWithRelay({ Artist: () => artist })
+      renderWithRelay()
       const structuredDataTag = document.querySelector(
         "script[type='application/ld+json']",
       )
       expect(structuredDataTag).not.toBeNull()
+    })
+  })
+
+  describe("route-specific titles and descriptions", () => {
+    beforeEach(() => {
+      mockLocation.query = {}
+    })
+
+    describe("default artist page", () => {
+      beforeEach(() => {
+        mockLocation.pathname = "/artist/andy-warhol"
+      })
+
+      it("renders default title", () => {
+        const artist = { name: "Andy Warhol" }
+        renderWithRelay({ Artist: () => artist })
+
+        const titleTag = document.querySelector("title")
+        expect(titleTag?.textContent).toBe(
+          "Andy Warhol - Biography, Shows, Articles & More | Artsy",
+        )
+      })
+
+      it("renders default description without biography blurb", () => {
+        const artist = {
+          name: "Andy Warhol",
+          biographyBlurbPlain: null,
+        }
+        renderWithRelay({ Artist: () => artist })
+
+        const descriptionTag = getMetaBy({ name: "description" })
+        expect(descriptionTag?.getAttribute("content")).toBe(
+          "Explore Andy Warhol’s biography, achievements, artworks, auction results, and shows on Artsy.",
+        )
+      })
+
+      it("renders default description with biography blurb", () => {
+        const artist = {
+          name: "Andy Warhol",
+          biographyBlurbPlain: {
+            text: "Andy Warhol was an American visual artist, film director, and producer who was a leading figure in the visual art movement known as pop art.",
+          },
+        }
+        renderWithRelay({ Artist: () => artist })
+
+        const descriptionTag = getMetaBy({ name: "description" })
+        expect(descriptionTag?.getAttribute("content")).toBe(
+          "Explore Andy Warhol’s biography, achievements, artworks, auction results, and shows on Artsy. Andy Warhol was an American visual artist, film director, and producer",
+        )
+      })
+    })
+
+    describe("articles route", () => {
+      beforeEach(() => {
+        mockLocation.pathname = "/artist/andy-warhol/articles"
+      })
+
+      it("renders articles title", () => {
+        const artist = { name: "Andy Warhol" }
+        renderWithRelay({ Artist: () => artist })
+
+        const titleTag = document.querySelector("title")
+        expect(titleTag?.textContent).toBe("Andy Warhol - Articles | Artsy")
+      })
+
+      it("renders articles description", () => {
+        const artist = { name: "Andy Warhol" }
+        renderWithRelay({ Artist: () => artist })
+
+        const descriptionTag = getMetaBy({ name: "description" })
+        expect(descriptionTag?.getAttribute("content")).toBe(
+          "Read articles and editorial content about Andy Warhol on Artsy. Browse reviews, interviews, and critical analysis of their work.",
+        )
+      })
+    })
+
+    describe("cv route", () => {
+      beforeEach(() => {
+        mockLocation.pathname = "/artist/andy-warhol/cv"
+      })
+
+      it("renders cv title", () => {
+        const artist = { name: "Andy Warhol" }
+        renderWithRelay({ Artist: () => artist })
+
+        const titleTag = document.querySelector("title")
+        expect(titleTag?.textContent).toBe("Andy Warhol - CV | Artsy")
+      })
+
+      it("renders cv description", () => {
+        const artist = { name: "Andy Warhol" }
+        renderWithRelay({ Artist: () => artist })
+
+        const descriptionTag = getMetaBy({ name: "description" })
+        expect(descriptionTag?.getAttribute("content")).toBe(
+          "View Andy Warhol’s complete exhibition history on Artsy. Browse their CV including solo shows, group shows, and fair booths at galleries and fairs worldwide.",
+        )
+      })
+    })
+
+    describe("series route", () => {
+      beforeEach(() => {
+        mockLocation.pathname = "/artist/andy-warhol/series"
+      })
+
+      it("renders series title", () => {
+        const artist = { name: "Andy Warhol" }
+        renderWithRelay({ Artist: () => artist })
+
+        const titleTag = document.querySelector("title")
+        expect(titleTag?.textContent).toBe("Andy Warhol - Series | Artsy")
+      })
+
+      it("renders series description", () => {
+        const artist = { name: "Andy Warhol" }
+        renderWithRelay({ Artist: () => artist })
+
+        const descriptionTag = getMetaBy({ name: "description" })
+        expect(descriptionTag?.getAttribute("content")).toBe(
+          "Explore Andy Warhol’s series on Artsy and discover artworks available to collect. Browse the themes and artistic expressions that define Andy Warhol’s career.",
+        )
+      })
+    })
+
+    describe("shows route", () => {
+      beforeEach(() => {
+        mockLocation.pathname = "/artist/andy-warhol/shows"
+      })
+
+      it("renders shows title", () => {
+        const artist = { name: "Andy Warhol" }
+        renderWithRelay({ Artist: () => artist })
+
+        const titleTag = document.querySelector("title")
+        expect(titleTag?.textContent).toBe("Andy Warhol - Shows | Artsy")
+      })
+
+      it("renders shows description", () => {
+        const artist = { name: "Andy Warhol" }
+        renderWithRelay({ Artist: () => artist })
+
+        const descriptionTag = getMetaBy({ name: "description" })
+        expect(descriptionTag?.getAttribute("content")).toBe(
+          "View current and upcoming exhibitions featuring Andy Warhol on Artsy. Browse shows at galleries and fairs worldwide.",
+        )
+      })
     })
   })
 })
