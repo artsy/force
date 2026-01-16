@@ -187,6 +187,13 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
 
   const paymentError = messages[CheckoutStepName.PAYMENT]?.error
 
+  const unsetStepError = () => {
+    setStepErrorMessage({
+      step: CheckoutStepName.PAYMENT,
+      error: null,
+    })
+  }
+
   const trackPaymentMethodSelection = (
     paymentMethod:
       | "CREDIT_CARD"
@@ -386,10 +393,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
     if (selectedPaymentMethod !== "stripe-card") {
       trackPaymentMethodSelection("CREDIT_CARD")
     }
-    setStepErrorMessage({
-      step: CheckoutStepName.PAYMENT,
-      error: null,
-    })
+    unsetStepError()
     setSelectedPaymentMethod("stripe-card")
   }
 
@@ -402,29 +406,20 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         paymentType === "sepa_debit" ? "SEPA_DEBIT" : "US_BANK_ACCOUNT"
       trackPaymentMethodSelection(trackingMethod)
     }
-    setStepErrorMessage({
-      step: CheckoutStepName.PAYMENT,
-      error: null,
-    })
+    unsetStepError()
     setSelectedPaymentMethod(methodType)
   }
 
   const onClickSavedPaymentMethods = () => {
     trackPaymentMethodSelection("SAVED_CREDIT_CARD")
-    setStepErrorMessage({
-      step: CheckoutStepName.PAYMENT,
-      error: null,
-    })
+    unsetStepError()
     setSelectedPaymentMethod("saved")
     elements?.getElement("payment")?.collapse()
   }
 
   const onClickWirePaymentMethods = () => {
     trackPaymentMethodSelection("WIRE_TRANSFER")
-    setStepErrorMessage({
-      step: CheckoutStepName.PAYMENT,
-      error: null,
-    })
+    unsetStepError()
     setSelectedPaymentMethod("wire")
     setWireEmailSubject(`Wire transfer inquiry (CODE #${order.code})`)
     const artworkInfo =
@@ -486,10 +481,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
     event.preventDefault()
 
     // Clear any previous error messages
-    setStepErrorMessage({
-      step: CheckoutStepName.PAYMENT,
-      error: null,
-    })
+    unsetStepError()
 
     if (!selectedPaymentMethod) {
       handleError({ message: "Select a payment method" })
