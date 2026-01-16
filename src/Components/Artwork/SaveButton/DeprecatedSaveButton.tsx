@@ -121,7 +121,7 @@ export const DeprecatedSaveButtonFragmentContainer = createFragmentContainer(
         isSavedToAnyList
         title
         image {
-          url(version: "x-large")
+          url(version: "large")
           aspectRatio
         }
         collectorSignals {

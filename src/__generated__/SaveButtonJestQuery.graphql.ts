@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5159222a73529033b17c3dc59a8a9e85>>
+ * @generated SignedSource<<57743ddbc35c38ac550f200a062ef41f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -119,12 +119,12 @@ return {
                   {
                     "kind": "Literal",
                     "name": "version",
-                    "value": "x-large"
+                    "value": "large"
                   }
                 ],
                 "kind": "ScalarField",
                 "name": "url",
-                "storageKey": "url(version:\"x-large\")"
+                "storageKey": "url(version:\"large\")"
               },
               {
                 "alias": null,
@@ -178,12 +178,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "15954878a0c5c0a20415c1992a3fa13d",
+    "cacheID": "5013e75e569df60a558aa015ed9e7c01",
     "id": null,
     "metadata": {},
     "name": "SaveButtonJestQuery",
     "operationKind": "query",
-    "text": "query SaveButtonJestQuery {\n  artwork(id: \"gerhard-richter-bagdad-ii-flow-p10-1\") {\n    ...SaveButton_artwork\n    id\n  }\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSaved\n  title\n  image {\n    url(version: \"x-large\")\n    aspectRatio\n  }\n  collectorSignals {\n    auction {\n      lotWatcherCount\n      lotClosesAt\n    }\n  }\n}\n"
+    "text": "query SaveButtonJestQuery {\n  artwork(id: \"gerhard-richter-bagdad-ii-flow-p10-1\") {\n    ...SaveButton_artwork\n    id\n  }\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSaved\n  title\n  image {\n    url(version: \"large\")\n    aspectRatio\n  }\n  collectorSignals {\n    auction {\n      lotWatcherCount\n      lotClosesAt\n    }\n  }\n}\n"
   }
 };
 })();

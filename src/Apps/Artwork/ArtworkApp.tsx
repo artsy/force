@@ -418,7 +418,7 @@ const ArtworkAppFragmentContainer = createFragmentContainer(
           }
         }
         image {
-          url(version: "x-large")
+          url(version: "large")
           aspectRatio
         }
         visibilityLevel

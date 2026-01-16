@@ -262,7 +262,7 @@ export const RequestConditionReportFragmentContainer = createFragmentContainer(
           internalID
         }
         image {
-          url(version: "x-large")
+          url(version: "large")
           aspectRatio
         }
       }

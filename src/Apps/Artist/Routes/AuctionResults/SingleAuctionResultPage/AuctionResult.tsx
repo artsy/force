@@ -119,7 +119,7 @@ export const AuctionResultFragmentContainer = createFragmentContainer(
           href
           coverArtwork {
             image {
-              url(version: "x-large")
+              url(version: "large")
               aspectRatio
             }
           }

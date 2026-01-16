@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<11ad138e33d95e1d6b1b2e5e5bcf3337>>
+ * @generated SignedSource<<ead851b128686661b1c0d1ea719439cc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -191,12 +191,12 @@ return {
                   {
                     "kind": "Literal",
                     "name": "version",
-                    "value": "x-large"
+                    "value": "large"
                   }
                 ],
                 "kind": "ScalarField",
                 "name": "url",
-                "storageKey": "url(version:\"x-large\")"
+                "storageKey": "url(version:\"large\")"
               },
               {
                 "alias": null,
@@ -215,7 +215,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f6eac56b780a4d68e25e95eddf4129ff",
+    "cacheID": "9dfbced4bd03fc1b4e9fc2e91821203a",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -262,7 +262,7 @@ return {
     },
     "name": "RequestConditionReportJestQuery",
     "operationKind": "query",
-    "text": "query RequestConditionReportJestQuery {\n  me {\n    ...RequestConditionReport_me\n    id\n  }\n  artwork(id: \"artwork-id\") {\n    ...RequestConditionReport_artwork\n    id\n  }\n}\n\nfragment RequestConditionReport_artwork on Artwork {\n  internalID\n  slug\n  saleArtwork {\n    internalID\n    id\n  }\n  image {\n    url(version: \"x-large\")\n    aspectRatio\n  }\n}\n\nfragment RequestConditionReport_me on Me {\n  email\n  internalID\n}\n"
+    "text": "query RequestConditionReportJestQuery {\n  me {\n    ...RequestConditionReport_me\n    id\n  }\n  artwork(id: \"artwork-id\") {\n    ...RequestConditionReport_artwork\n    id\n  }\n}\n\nfragment RequestConditionReport_artwork on Artwork {\n  internalID\n  slug\n  saleArtwork {\n    internalID\n    id\n  }\n  image {\n    url(version: \"large\")\n    aspectRatio\n  }\n}\n\nfragment RequestConditionReport_me on Me {\n  email\n  internalID\n}\n"
   }
 };
 })();

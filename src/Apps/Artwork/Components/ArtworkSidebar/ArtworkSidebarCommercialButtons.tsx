@@ -639,7 +639,7 @@ const ARTWORK_FRAGMENT = graphql`
     slug
     saleMessage
     image {
-      url(version: "x-large")
+      url(version: "large")
       aspectRatio
     }
     isInquireable

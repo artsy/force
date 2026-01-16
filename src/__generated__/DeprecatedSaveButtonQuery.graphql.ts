@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0b1793ff6f4bf2d88711a722113637b8>>
+ * @generated SignedSource<<0800df7dc53a3b92de78c2bdc5912bb5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -128,12 +128,12 @@ return {
                   {
                     "kind": "Literal",
                     "name": "version",
-                    "value": "x-large"
+                    "value": "large"
                   }
                 ],
                 "kind": "ScalarField",
                 "name": "url",
-                "storageKey": "url(version:\"x-large\")"
+                "storageKey": "url(version:\"large\")"
               },
               {
                 "alias": null,
@@ -180,12 +180,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "eaaf6e7d272c4258e231b03ca8b61d97",
+    "cacheID": "4c6fa828058d314d736dcdfd13477a76",
     "id": null,
     "metadata": {},
     "name": "DeprecatedSaveButtonQuery",
     "operationKind": "query",
-    "text": "query DeprecatedSaveButtonQuery(\n  $id: String!\n) {\n  artwork(id: $id) {\n    ...DeprecatedSaveButton_artwork\n    id\n  }\n}\n\nfragment DeprecatedSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSavedToAnyList\n  title\n  image {\n    url(version: \"x-large\")\n    aspectRatio\n  }\n  collectorSignals {\n    auction {\n      lotWatcherCount\n    }\n  }\n}\n"
+    "text": "query DeprecatedSaveButtonQuery(\n  $id: String!\n) {\n  artwork(id: $id) {\n    ...DeprecatedSaveButton_artwork\n    id\n  }\n}\n\nfragment DeprecatedSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSavedToAnyList\n  title\n  image {\n    url(version: \"large\")\n    aspectRatio\n  }\n  collectorSignals {\n    auction {\n      lotWatcherCount\n    }\n  }\n}\n"
   }
 };
 })();

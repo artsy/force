@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<78ed02a3b0cb9cd355875a1d0c967d3a>>
+ * @generated SignedSource<<66dbdac8cf10b3e85768d02cb6931712>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -147,12 +147,12 @@ return {
                   {
                     "kind": "Literal",
                     "name": "version",
-                    "value": "x-large"
+                    "value": "large"
                   }
                 ],
                 "kind": "ScalarField",
                 "name": "url",
-                "storageKey": "url(version:\"x-large\")"
+                "storageKey": "url(version:\"large\")"
               },
               {
                 "alias": null,
@@ -170,12 +170,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "34667ce1c4df385a42f6f280ddd554ae",
+    "cacheID": "bc24135b3d29c68c4490010a059384e5",
     "id": null,
     "metadata": {},
     "name": "FollowGeneButtonQuery",
     "operationKind": "query",
-    "text": "query FollowGeneButtonQuery(\n  $id: String!\n  $isLoggedIn: Boolean!\n) {\n  gene(id: $id) {\n    ...FollowGeneButton_gene_4dcqWc\n    id\n  }\n}\n\nfragment FollowGeneButton_gene_4dcqWc on Gene {\n  id\n  slug\n  name\n  internalID\n  isFollowed @include(if: $isLoggedIn)\n  image {\n    url(version: \"x-large\")\n    aspectRatio\n  }\n}\n"
+    "text": "query FollowGeneButtonQuery(\n  $id: String!\n  $isLoggedIn: Boolean!\n) {\n  gene(id: $id) {\n    ...FollowGeneButton_gene_4dcqWc\n    id\n  }\n}\n\nfragment FollowGeneButton_gene_4dcqWc on Gene {\n  id\n  slug\n  name\n  internalID\n  isFollowed @include(if: $isLoggedIn)\n  image {\n    url(version: \"large\")\n    aspectRatio\n  }\n}\n"
   }
 };
 })();

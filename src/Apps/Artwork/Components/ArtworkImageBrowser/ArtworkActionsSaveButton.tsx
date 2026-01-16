@@ -85,7 +85,7 @@ export const ArtworkActionsSaveButtonFragmentContainer =
           url(version: "square")
         }
         modalImage: image {
-          url(version: "x-large")
+          url(version: "large")
           aspectRatio
         }
         isInAuction

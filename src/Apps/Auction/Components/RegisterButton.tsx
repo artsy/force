@@ -263,7 +263,7 @@ export const RegisterButtonFragmentContainer = createFragmentContainer(
         }
         coverImage {
           # alias to avoid conflicts
-          signupImage: url(version: "x-large")
+          signupImage: url(version: "large")
           aspectRatio
         }
         isAuction

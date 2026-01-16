@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<952b56773c5456929e1166dc7c945a73>>
+ * @generated SignedSource<<8a147e5347801c6b1cbb74556fed9368>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -126,12 +126,12 @@ const node: ReaderFragment = {
             {
               "kind": "Literal",
               "name": "version",
-              "value": "x-large"
+              "value": "large"
             }
           ],
           "kind": "ScalarField",
           "name": "url",
-          "storageKey": "url(version:\"x-large\")"
+          "storageKey": "url(version:\"large\")"
         },
         {
           "alias": null,
@@ -205,6 +205,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "f98f1969dda2c962c5026bfe50ecaa8c";
+(node as any).hash = "8cdd831ae1fb52c0abb71c35301e3a99";
 
 export default node;

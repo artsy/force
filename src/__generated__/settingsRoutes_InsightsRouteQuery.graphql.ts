@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<133ee6b672cac1d0a649003371d7f0e7>>
+ * @generated SignedSource<<1ea2c67716ea1fc3cefa99c10f7fa185>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -266,16 +266,10 @@ return {
                             "selections": [
                               {
                                 "alias": null,
-                                "args": [
-                                  {
-                                    "kind": "Literal",
-                                    "name": "version",
-                                    "value": "x-large"
-                                  }
-                                ],
+                                "args": null,
                                 "kind": "ScalarField",
                                 "name": "url",
-                                "storageKey": "url(version:\"x-large\")"
+                                "storageKey": null
                               },
                               {
                                 "alias": null,
@@ -693,12 +687,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2f12211cc16e9c6d4ed68efcd37dc570",
+    "cacheID": "cadebe59afefb02a573163af8fd44f7b",
     "id": null,
     "metadata": {},
     "name": "settingsRoutes_InsightsRouteQuery",
     "operationKind": "query",
-    "text": "query settingsRoutes_InsightsRouteQuery {\n  me {\n    ...InsightsRoute_me\n    id\n  }\n}\n\nfragment ArtistAuctionResultItem_auctionResult on AuctionResult {\n  internalID\n  title\n  dimension_text: dimensionText\n  organization\n  artist {\n    name\n    id\n  }\n  images {\n    larger {\n      url(version: \"x-large\")\n      aspectRatio\n    }\n    thumbnail {\n      cropped(width: 130, height: 130, version: [\"square140\"]) {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n  }\n  mediumText\n  categoryText\n  date_text: dateText\n  saleDate\n  boughtIn\n  currency\n  price_realized: priceRealized {\n    display\n    display_usd: displayUSD\n    cents_usd: centsUSD\n  }\n  performance {\n    mid\n  }\n  estimate {\n    display\n  }\n  location\n  lotNumber\n  saleTitle\n  isUpcoming\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment InsightsAuctionResults_me on Me {\n  myCollectionAuctionResults(first: 6, state: PAST) {\n    edges {\n      node {\n        ...ArtistAuctionResultItem_auctionResult\n        id\n      }\n    }\n  }\n}\n\nfragment InsightsCareerHighlightRail_me on Me {\n  myCollectionInfo {\n    artistInsightsCount {\n      BIENNIAL: biennialCount\n      COLLECTED: collectedCount\n      GROUP_SHOW: groupShowCount\n      SOLO_SHOW: soloShowCount\n      REVIEWED: reviewedCount\n    }\n  }\n}\n\nfragment InsightsMedianSalePrice_me on Me {\n  medianSalePrices: myCollectionConnection(first: 3, sortByLastAuctionResultDate: true) {\n    edges {\n      node {\n        internalID\n        medium\n        mediumType {\n          name\n        }\n        title\n        artist(shallow: true) {\n          internalID\n          ...EntityHeaderArtist_artist\n          id\n        }\n        marketPriceInsights {\n          medianSalePriceDisplayText\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment InsightsOverview_info on MyCollectionInfo {\n  artworksCount\n  artistsCount\n}\n\nfragment InsightsRoute_me on Me {\n  internalID\n  myCollectionInfo {\n    artworksCount\n    ...InsightsOverview_info\n  }\n  ...InsightsAuctionResults_me\n  ...InsightsCareerHighlightRail_me\n  ...InsightsMedianSalePrice_me\n}\n"
+    "text": "query settingsRoutes_InsightsRouteQuery {\n  me {\n    ...InsightsRoute_me\n    id\n  }\n}\n\nfragment ArtistAuctionResultItem_auctionResult on AuctionResult {\n  internalID\n  title\n  dimension_text: dimensionText\n  organization\n  artist {\n    name\n    id\n  }\n  images {\n    larger {\n      url\n      aspectRatio\n    }\n    thumbnail {\n      cropped(width: 130, height: 130, version: [\"square140\"]) {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n  }\n  mediumText\n  categoryText\n  date_text: dateText\n  saleDate\n  boughtIn\n  currency\n  price_realized: priceRealized {\n    display\n    display_usd: displayUSD\n    cents_usd: centsUSD\n  }\n  performance {\n    mid\n  }\n  estimate {\n    display\n  }\n  location\n  lotNumber\n  saleTitle\n  isUpcoming\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment InsightsAuctionResults_me on Me {\n  myCollectionAuctionResults(first: 6, state: PAST) {\n    edges {\n      node {\n        ...ArtistAuctionResultItem_auctionResult\n        id\n      }\n    }\n  }\n}\n\nfragment InsightsCareerHighlightRail_me on Me {\n  myCollectionInfo {\n    artistInsightsCount {\n      BIENNIAL: biennialCount\n      COLLECTED: collectedCount\n      GROUP_SHOW: groupShowCount\n      SOLO_SHOW: soloShowCount\n      REVIEWED: reviewedCount\n    }\n  }\n}\n\nfragment InsightsMedianSalePrice_me on Me {\n  medianSalePrices: myCollectionConnection(first: 3, sortByLastAuctionResultDate: true) {\n    edges {\n      node {\n        internalID\n        medium\n        mediumType {\n          name\n        }\n        title\n        artist(shallow: true) {\n          internalID\n          ...EntityHeaderArtist_artist\n          id\n        }\n        marketPriceInsights {\n          medianSalePriceDisplayText\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment InsightsOverview_info on MyCollectionInfo {\n  artworksCount\n  artistsCount\n}\n\nfragment InsightsRoute_me on Me {\n  internalID\n  myCollectionInfo {\n    artworksCount\n    ...InsightsOverview_info\n  }\n  ...InsightsAuctionResults_me\n  ...InsightsCareerHighlightRail_me\n  ...InsightsMedianSalePrice_me\n}\n"
   }
 };
 })();

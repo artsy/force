@@ -399,7 +399,7 @@ export const ArtworkSidebarBidActionFragmentContainer = withAuthDialog(
           slug
           internalID
           image {
-            url(version: "x-large")
+            url(version: "large")
             aspectRatio
           }
           sale {

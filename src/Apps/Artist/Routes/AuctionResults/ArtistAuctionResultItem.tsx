@@ -278,7 +278,7 @@ export const ArtistAuctionResultItemFragmentContainer = createFragmentContainer(
         }
         images {
           larger {
-            url(version: "x-large")
+            url
             aspectRatio
           }
           thumbnail {

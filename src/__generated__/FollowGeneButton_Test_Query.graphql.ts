@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<028bc3d1aa094172dedd3f647e8c8074>>
+ * @generated SignedSource<<5cc1fb0f4fb6f399217ca572d071bafd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -137,12 +137,12 @@ return {
                   {
                     "kind": "Literal",
                     "name": "version",
-                    "value": "x-large"
+                    "value": "large"
                   }
                 ],
                 "kind": "ScalarField",
                 "name": "url",
-                "storageKey": "url(version:\"x-large\")"
+                "storageKey": "url(version:\"large\")"
               },
               {
                 "alias": null,
@@ -160,7 +160,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "8cad1a96af6661b8c4c372f60067f97c",
+    "cacheID": "602fe4d7608af5b9478d4b5b8e5eba2b",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -197,7 +197,7 @@ return {
     },
     "name": "FollowGeneButton_Test_Query",
     "operationKind": "query",
-    "text": "query FollowGeneButton_Test_Query {\n  gene(id: \"example\") {\n    ...FollowGeneButton_gene_2OV785\n    id\n  }\n}\n\nfragment FollowGeneButton_gene_2OV785 on Gene {\n  id\n  slug\n  name\n  internalID\n  isFollowed\n  image {\n    url(version: \"x-large\")\n    aspectRatio\n  }\n}\n"
+    "text": "query FollowGeneButton_Test_Query {\n  gene(id: \"example\") {\n    ...FollowGeneButton_gene_2OV785\n    id\n  }\n}\n\nfragment FollowGeneButton_gene_2OV785 on Gene {\n  id\n  slug\n  name\n  internalID\n  isFollowed\n  image {\n    url(version: \"large\")\n    aspectRatio\n  }\n}\n"
   }
 };
 })();

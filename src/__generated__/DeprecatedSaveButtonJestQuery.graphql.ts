@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f37740ae6dd3ce13316b261b817219f4>>
+ * @generated SignedSource<<30d15b56db0168912559ef8b53d8609f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -131,12 +131,12 @@ return {
                   {
                     "kind": "Literal",
                     "name": "version",
-                    "value": "x-large"
+                    "value": "large"
                   }
                 ],
                 "kind": "ScalarField",
                 "name": "url",
-                "storageKey": "url(version:\"x-large\")"
+                "storageKey": "url(version:\"large\")"
               },
               {
                 "alias": null,
@@ -183,7 +183,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "6b35e1598658b2aa1b3881d8d9d2a250",
+    "cacheID": "ce896ddcc940a4fb489180119ef1bf26",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -238,7 +238,7 @@ return {
     },
     "name": "DeprecatedSaveButtonJestQuery",
     "operationKind": "query",
-    "text": "query DeprecatedSaveButtonJestQuery {\n  artwork(id: \"example-artwork-id\") {\n    ...DeprecatedSaveButton_artwork\n    id\n  }\n}\n\nfragment DeprecatedSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSavedToAnyList\n  title\n  image {\n    url(version: \"x-large\")\n    aspectRatio\n  }\n  collectorSignals {\n    auction {\n      lotWatcherCount\n    }\n  }\n}\n"
+    "text": "query DeprecatedSaveButtonJestQuery {\n  artwork(id: \"example-artwork-id\") {\n    ...DeprecatedSaveButton_artwork\n    id\n  }\n}\n\nfragment DeprecatedSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSavedToAnyList\n  title\n  image {\n    url(version: \"large\")\n    aspectRatio\n  }\n  collectorSignals {\n    auction {\n      lotWatcherCount\n    }\n  }\n}\n"
   }
 };
 })();

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<75531b4132fe44b833475cec8d75f256>>
+ * @generated SignedSource<<4b2d56093b68616831641b8fa63c559e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -174,12 +174,12 @@ return {
                   {
                     "kind": "Literal",
                     "name": "version",
-                    "value": "x-large"
+                    "value": "large"
                   }
                 ],
                 "kind": "ScalarField",
                 "name": "url",
-                "storageKey": "url(version:\"x-large\")"
+                "storageKey": "url(version:\"large\")"
               },
               {
                 "alias": null,
@@ -254,7 +254,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "15a7f58384aeb4410d1331e49000473b",
+    "cacheID": "405df698e9b54231bd6a6fde5b2ad711",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -311,7 +311,7 @@ return {
     },
     "name": "SaveArtworkToListsButton_Test_Query",
     "operationKind": "query",
-    "text": "query SaveArtworkToListsButton_Test_Query {\n  artwork(id: \"artworkID\") {\n    ...SaveArtworkToListsButton_artwork\n    id\n  }\n}\n\nfragment SaveArtworkToListsButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  title\n  date\n  artistNames\n  preview: image {\n    url(version: \"square\")\n  }\n  image {\n    url(version: \"x-large\")\n    aspectRatio\n  }\n  isInAuction\n  isSavedToAnyList\n  collectorSignals {\n    auction {\n      lotWatcherCount\n      lotClosesAt\n      liveBiddingStarted\n    }\n  }\n}\n"
+    "text": "query SaveArtworkToListsButton_Test_Query {\n  artwork(id: \"artworkID\") {\n    ...SaveArtworkToListsButton_artwork\n    id\n  }\n}\n\nfragment SaveArtworkToListsButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  title\n  date\n  artistNames\n  preview: image {\n    url(version: \"square\")\n  }\n  image {\n    url(version: \"large\")\n    aspectRatio\n  }\n  isInAuction\n  isSavedToAnyList\n  collectorSignals {\n    auction {\n      lotWatcherCount\n      lotClosesAt\n      liveBiddingStarted\n    }\n  }\n}\n"
   }
 };
 })();

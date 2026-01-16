@@ -95,7 +95,7 @@ export const SaveArtworkToListsButtonFragmentContainer =
           url(version: "square")
         }
         image {
-          url(version: "x-large")
+          url(version: "large")
           aspectRatio
         }
         isInAuction

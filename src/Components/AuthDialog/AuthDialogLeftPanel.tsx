@@ -54,8 +54,6 @@ export const AuthDialogLeftPanel: FC<React.PropsWithChildren> = () => {
     )
   }
 
-  console.log("cb::options", options)
-
   if (!!options.image?.url && !!options.image?.aspectRatio) {
     return (
       <Box
@@ -201,7 +199,7 @@ const Dot = styled(Box)`
   }
 `
 
-const CAROUSEL_INTERVAL = 5000
+const CAROUSEL_INTERVAL = 4000
 const COLUMN_WIDTH =
   MODAL_WIDTH / 2 - Number.parseInt(THEME.space["2"].replace("px", ""))
 // const PARTNER_IMAGE = {
@@ -236,7 +234,7 @@ const MovingImageMeasured: FC<{
     height: 0,
   })
 
-  const width = (MODAL_WIDTH / 2) * 1.8
+  const width = (MODAL_WIDTH / 2) * 1.4
   const height = width / aspectRatio
 
   const handleOnViewportResize = useCallback(() => {
@@ -260,7 +258,6 @@ const MovingImageMeasured: FC<{
   const tx = Math.max(0, width - viewportGeometry.width)
   const ty = Math.max(0, height - viewportGeometry.height)
   const total = 2 * (tx + ty)
-  console.log("cb::total", { total, tx, ty, delta: total / PX_PER_SEC })
   const durationSec = Math.max(10, total / PX_PER_SEC)
   const pan = useMemo(() => makeClockwisePan(tx, ty), [tx, ty])
 
@@ -304,7 +301,12 @@ const makeClockwisePan = (tx: number, ty: number) => {
     return keyframes`0%, 100% { transform: translate(0px, 0px); }`
   }
 
-  const denom = 2 * (t + u)
+  // Calculate diagonal distance for 45-degree transitions
+  const diagonalLength = Math.min(t, u) * 0.3
+  const diagonalDistance = Math.sqrt(2) * diagonalLength
+
+  // Update denominator to include diagonal segments with correct distances
+  const denom = 2 * (t + u - 2 * diagonalLength) + 4 * diagonalDistance
 
   // If one axis is zero, avoid NaNs and make it a 2-point loop on that axis
   if (u === 0) {
@@ -323,14 +325,36 @@ const makeClockwisePan = (tx: number, ty: number) => {
     `
   }
 
-  const p1 = (100 * t) / denom
-  const p3 = (100 * (2 * t + u)) / denom
+  // dynamic percentages for smooth transitions
+  const horizontalSegment = t - diagonalLength
+  const verticalSegment = u - diagonalLength
+
+  // cumulative distances for proper timing
+  const d1 = horizontalSegment
+  const d2 = d1 + diagonalDistance
+  const d3 = d2 + verticalSegment
+  const d4 = d3 + diagonalDistance
+  const d5 = d4 + horizontalSegment
+  const d6 = d5 + diagonalDistance
+  const d7 = d6 + verticalSegment
+
+  const p1 = (100 * d1) / denom
+  const p2 = (100 * d2) / denom
+  const p3 = (100 * d3) / denom
+  const p4 = (100 * d4) / denom
+  const p5 = (100 * d5) / denom
+  const p6 = (100 * d6) / denom
+  const p7 = (100 * d7) / denom
 
   return keyframes`
-    0%   { transform: translate(0px, 0px); }
-    ${p1}%  { transform: translate(${-t}px, 0px); }
-    50%  { transform: translate(${-t}px, ${-u}px); }
-    ${p3}%  { transform: translate(0px, ${-u}px); }
-    100% { transform: translate(0px, 0px); }
+    0%   { transform: translate(${-diagonalLength}px, 0px); }
+    ${p1}%  { transform: translate(${-t + diagonalLength}px, 0px); }
+    ${p2}%  { transform: translate(${-t}px, ${-diagonalLength}px); }
+    ${p3}%  { transform: translate(${-t}px, ${-u + diagonalLength}px); }
+    ${p4}%  { transform: translate(${-t + diagonalLength}px, ${-u}px); }
+    ${p5}%  { transform: translate(${-diagonalLength}px, ${-u}px); }
+    ${p6}%  { transform: translate(0px, ${-u + diagonalLength}px); }
+    ${p7}%  { transform: translate(0px, ${-diagonalLength}px); }
+    100% { transform: translate(${-diagonalLength}px, 0px); }
   `
 }

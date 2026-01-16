@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9e1c2305b70a127a29b1af163c6e68ac>>
+ * @generated SignedSource<<f6691d0066b87dbae4ad9efe522306cd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -140,12 +140,12 @@ return {
                   {
                     "kind": "Literal",
                     "name": "version",
-                    "value": "x-large"
+                    "value": "large"
                   }
                 ],
                 "kind": "ScalarField",
                 "name": "url",
-                "storageKey": "url(version:\"x-large\")"
+                "storageKey": "url(version:\"large\")"
               },
               {
                 "alias": null,
@@ -274,12 +274,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "80074c9e57f2557d1396ec117d896491",
+    "cacheID": "4df9dbac3041606b060398f63e7d3bcd",
     "id": null,
     "metadata": {},
     "name": "RegisterButtonTestQuery",
     "operationKind": "query",
-    "text": "query RegisterButtonTestQuery {\n  sale(id: \"foo\") {\n    ...RegisterButton_sale\n    id\n  }\n  me {\n    ...RegisterButton_me\n    id\n  }\n}\n\nfragment RegisterButton_me on Me {\n  internalID\n  isIdentityVerified\n  hasCreditCards\n  pendingIdentityVerification {\n    internalID\n    id\n  }\n}\n\nfragment RegisterButton_sale on Sale {\n  bidder {\n    qualifiedForBidding\n    id\n  }\n  coverImage {\n    signupImage: url(version: \"x-large\")\n    aspectRatio\n  }\n  isAuction\n  isClosed\n  isLiveOpen\n  isPreview\n  isRegistrationClosed\n  liveURLIfOpen\n  requireIdentityVerification\n  registrationStatus {\n    internalID\n    id\n  }\n  slug\n  status\n}\n"
+    "text": "query RegisterButtonTestQuery {\n  sale(id: \"foo\") {\n    ...RegisterButton_sale\n    id\n  }\n  me {\n    ...RegisterButton_me\n    id\n  }\n}\n\nfragment RegisterButton_me on Me {\n  internalID\n  isIdentityVerified\n  hasCreditCards\n  pendingIdentityVerification {\n    internalID\n    id\n  }\n}\n\nfragment RegisterButton_sale on Sale {\n  bidder {\n    qualifiedForBidding\n    id\n  }\n  coverImage {\n    signupImage: url(version: \"large\")\n    aspectRatio\n  }\n  isAuction\n  isClosed\n  isLiveOpen\n  isPreview\n  isRegistrationClosed\n  liveURLIfOpen\n  requireIdentityVerification\n  registrationStatus {\n    internalID\n    id\n  }\n  slug\n  status\n}\n"
   }
 };
 })();

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ff0b649316a566f0aef121b06951bf3f>>
+ * @generated SignedSource<<78597d128e1e2bbb244cd8e59e3aa303>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -159,12 +159,12 @@ return {
                   {
                     "kind": "Literal",
                     "name": "version",
-                    "value": "x-large"
+                    "value": "large"
                   }
                 ],
                 "kind": "ScalarField",
                 "name": "url",
-                "storageKey": "url(version:\"x-large\")"
+                "storageKey": "url(version:\"large\")"
               },
               {
                 "alias": null,
@@ -239,12 +239,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "63704d874072c0224990c9179e8fb15f",
+    "cacheID": "962951d67abe9c25d0728e05f797c398",
     "id": null,
     "metadata": {},
     "name": "SaveArtworkToListsButtonQuery",
     "operationKind": "query",
-    "text": "query SaveArtworkToListsButtonQuery(\n  $id: String!\n) {\n  artwork(id: $id) {\n    ...SaveArtworkToListsButton_artwork\n    id\n  }\n}\n\nfragment SaveArtworkToListsButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  title\n  date\n  artistNames\n  preview: image {\n    url(version: \"square\")\n  }\n  image {\n    url(version: \"x-large\")\n    aspectRatio\n  }\n  isInAuction\n  isSavedToAnyList\n  collectorSignals {\n    auction {\n      lotWatcherCount\n      lotClosesAt\n      liveBiddingStarted\n    }\n  }\n}\n"
+    "text": "query SaveArtworkToListsButtonQuery(\n  $id: String!\n) {\n  artwork(id: $id) {\n    ...SaveArtworkToListsButton_artwork\n    id\n  }\n}\n\nfragment SaveArtworkToListsButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  title\n  date\n  artistNames\n  preview: image {\n    url(version: \"square\")\n  }\n  image {\n    url(version: \"large\")\n    aspectRatio\n  }\n  isInAuction\n  isSavedToAnyList\n  collectorSignals {\n    auction {\n      lotWatcherCount\n      lotClosesAt\n      liveBiddingStarted\n    }\n  }\n}\n"
   }
 };
 })();
