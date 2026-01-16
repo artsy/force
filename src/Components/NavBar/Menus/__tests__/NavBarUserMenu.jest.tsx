@@ -76,11 +76,6 @@ describe("NavBarUserMenu", () => {
       expect(container.innerHTML).not.toContain("Admin")
     })
 
-    it("shows admin button if admin", () => {
-      const { container } = getWrapper({ user: { type: "Admin" } })
-      expect(container.innerHTML).toContain("Admin")
-    })
-
     it("shows order history button if admin", () => {
       const { container } = getWrapper({ user: { type: "Admin" } })
       expect(container.innerHTML).toContain("Order History")

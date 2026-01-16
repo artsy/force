@@ -169,17 +169,6 @@ export const NavBarUserMenu: React.FC<
 
       <Separator my={1} />
 
-      {isAdmin && (
-        <NavBarMenuItemLink
-          to={getENV("ADMIN_URL")}
-          onClick={trackClick}
-          enablePrefetch={false}
-        >
-          <LockIcon mr={1} aria-hidden="true" />
-          Admin
-        </NavBarMenuItemLink>
-      )}
-
       {(isAdmin || hasPartnerAccess) && (
         <NavBarMenuItemLink
           to={getENV("CMS_URL")}
