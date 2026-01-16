@@ -38,7 +38,7 @@ const InsightsRoute = loadable(
 const MyCollectionCreateArtwork = loadable(
   () =>
     import(
-      /* webpackChunkName: "collectorProfileBundle" */ "../../Apps/MyCollection/Routes/EditArtwork/MyCollectionCreateArtwork"
+      /* webpackChunkName: "collectorProfileBundle" */ "./Routes/MyCollection/EditArtwork/MyCollectionCreateArtwork"
     ),
   {
     resolveComponent: component =>
@@ -49,7 +49,7 @@ const MyCollectionCreateArtwork = loadable(
 const MyCollectionArtwork = loadable(
   () =>
     import(
-      /* webpackChunkName: "collectorProfileBundle" */ "../../Apps/MyCollection/Routes/MyCollectionArtwork/MyCollectionArtwork"
+      /* webpackChunkName: "collectorProfileBundle" */ "./Routes/MyCollection/MyCollectionArtwork/MyCollectionArtwork"
     ),
   {
     resolveComponent: component =>
@@ -60,7 +60,7 @@ const MyCollectionArtwork = loadable(
 const MyCollectionEditArtwork = loadable(
   () =>
     import(
-      /* webpackChunkName: "collectorProfileBundle" */ "../../Apps/MyCollection/Routes/EditArtwork/MyCollectionEditArtwork"
+      /* webpackChunkName: "collectorProfileBundle" */ "./Routes/MyCollection/EditArtwork/MyCollectionEditArtwork"
     ),
   {
     resolveComponent: component =>
