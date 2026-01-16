@@ -1,5 +1,5 @@
 import { ContextModule } from "@artsy/cohesion"
-import { Button, Spacer, Text, useTheme } from "@artsy/palette"
+import { Button, Spacer, useTheme } from "@artsy/palette"
 import {
   Elements,
   PaymentElement,
@@ -8,6 +8,7 @@ import {
 } from "@stripe/react-stripe-js"
 import type {
   StripeElementsOptions,
+  StripeError,
   StripePaymentElementChangeEvent,
   StripePaymentElementOptions,
 } from "@stripe/stripe-js"
@@ -16,6 +17,7 @@ import {
   BankAccountBalanceCheckResult,
   Order2PollBankAccountBalanceQueryRenderer,
 } from "Apps/Order2/Components/Order2PollBankAccountBalance"
+import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import {
   CheckoutErrorBanner,
   MailtoOrderSupport,
@@ -44,9 +46,11 @@ import { StripePaymentCheckboxes } from "./StripePaymentCheckboxes"
 import { WireTransferOption } from "./WireTransferOption"
 
 const logger = createLogger("Order2PaymentForm")
+
 const defaultErrorMessage = (
   <>
-    Something went wrong. Please try again or contact <MailtoOrderSupport />.
+    Something went wrong while selecting your payment method. Please try again
+    or contact <MailtoOrderSupport />.
   </>
 )
 
@@ -190,7 +194,18 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
     setSavePaymentMethod,
     savePaymentMethod,
     activeFulfillmentDetailsTab,
+    messages,
+    setStepErrorMessage,
   } = useCheckoutContext()
+
+  const paymentError = messages[CheckoutStepName.PAYMENT]?.error
+
+  const unsetStepError = () => {
+    setStepErrorMessage({
+      step: CheckoutStepName.PAYMENT,
+      error: null,
+    })
+  }
 
   const trackPaymentMethodSelection = (
     paymentMethod:
@@ -208,12 +223,6 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
   }
 
   const [isSubmittingToStripe, setIsSubmittingToStripe] = useState(false)
-  const [errorMessage, setErrorMessage] = useState<JSX.Element | string | null>(
-    null,
-  )
-  const [subtitleErrorMessage, setSubtitleErrorMessage] = useState<
-    string | null
-  >(null)
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
     null | "saved" | "stripe-card" | "wire" | "stripe-ach" | "stripe-sepa"
   >(null)
@@ -240,33 +249,8 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
   const [wireEmailBody, setWireEmailBody] = useState<string | null>(null)
   const merchantAccountExternalId = order.seller?.merchantAccount?.externalId
 
-  const formRef = useRef<HTMLFormElement>(null)
   const paymentElementRef = useRef<HTMLDivElement>(null)
-
-  // Scroll to error and focus when error messages are set
-  useEffect(() => {
-    if (!subtitleErrorMessage && !errorMessage) return
-    // Wait for DOM to update, then scroll to fields
-    setTimeout(() => {
-      if (!formRef.current) return
-
-      let errorElement: HTMLElement | null = null
-
-      if (subtitleErrorMessage) {
-        // Focus subtitle error if it exists
-        errorElement = formRef.current?.querySelector(
-          '[data-subtitle-error="true"]',
-        ) as HTMLElement | null
-      } else if (errorMessage) {
-        // For PaymentElement errors, scroll to the payment element fields
-        errorElement = paymentElementRef.current
-      }
-      errorElement?.scrollIntoView({
-        behavior: "smooth",
-        block: "center",
-      })
-    }, 100)
-  }, [subtitleErrorMessage, errorMessage])
+  const errorBannerRef = useRef<HTMLDivElement>(null)
 
   // Default to saved payment method when available and track that it has been viewed
   useEffect(() => {
@@ -313,8 +297,33 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
   }, [elements, merchantAccountExternalId])
 
   const handleError = useCallback(
-    (error: { message?: string | JSX.Element }) => {
-      setErrorMessage(error.message || defaultErrorMessage)
+    (error?: { message?: string | JSX.Element }) => {
+      setStepErrorMessage({
+        step: CheckoutStepName.PAYMENT,
+        error: {
+          message: error?.message,
+        },
+      })
+
+      errorBannerRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      })
+
+      setIsSubmittingToStripe(false)
+      resetElementsToInitialParams()
+    },
+    [resetElementsToInitialParams, setStepErrorMessage],
+  )
+
+  const handlePaymentElementError = useCallback(
+    // do not setStepErrorMessage since the error is being handled by the PaymentElement
+    (error: StripeError) => {
+      paymentElementRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      })
+
       setIsSubmittingToStripe(false)
       resetElementsToInitialParams()
     },
@@ -398,7 +407,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
     if (selectedPaymentMethod !== "stripe-card") {
       trackPaymentMethodSelection("CREDIT_CARD")
     }
-
+    unsetStepError()
     setSelectedPaymentMethod("stripe-card")
   }
 
@@ -411,20 +420,20 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         paymentType === "sepa_debit" ? "SEPA_DEBIT" : "US_BANK_ACCOUNT"
       trackPaymentMethodSelection(trackingMethod)
     }
-
+    unsetStepError()
     setSelectedPaymentMethod(methodType)
   }
 
   const onClickSavedPaymentMethods = () => {
     trackPaymentMethodSelection("SAVED_CREDIT_CARD")
-    setErrorMessage(null)
+    unsetStepError()
     setSelectedPaymentMethod("saved")
     elements?.getElement("payment")?.collapse()
   }
 
   const onClickWirePaymentMethods = () => {
     trackPaymentMethodSelection("WIRE_TRANSFER")
-    setErrorMessage(null)
+    unsetStepError()
     setSelectedPaymentMethod("wire")
     setWireEmailSubject(`Wire transfer inquiry (CODE #${order.code})`)
     const artworkInfo =
@@ -434,12 +443,6 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       `Hello%2C%0D%0AI'm interested in paying by wire transfer and would like some assistance.%0D%0A${artworkInfo} on Artsy: ${artworkUrl}`,
     )
     elements?.getElement("payment")?.collapse()
-  }
-
-  const needsBillingAddress = () => {
-    if (selectedPaymentMethod !== "stripe-card") return false
-    if (activeFulfillmentDetailsTab === "PICKUP") return true
-    return !billingAddressSameAsShipping
   }
 
   const getBillingAddress = (): Address => {
@@ -492,22 +495,11 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
     event.preventDefault()
 
     // Clear any previous error messages
-    setErrorMessage(null)
-    setSubtitleErrorMessage(null)
+    unsetStepError()
 
     if (!selectedPaymentMethod) {
-      setSubtitleErrorMessage("Select a payment method")
+      handleError({ message: "Select a payment method" })
       return
-    }
-
-    if (needsBillingAddress()) {
-      const billingAddr = getBillingAddress()
-      if (!billingAddr.name || !billingAddr.addressLine1 || !billingAddr.city) {
-        setSubtitleErrorMessage(
-          "Please fill in required billing address fields",
-        )
-        return
-      }
     }
 
     checkoutTracking.clickedOrderProgression(ContextModule.ordersPayment)
@@ -542,8 +534,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       const { error: submitError } = await elements.submit()
 
       if (submitError) {
-        logger.error(submitError)
-        handleError(submitError)
+        handlePaymentElementError(submitError)
         return
       }
 
@@ -572,8 +563,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       )
 
       if (error) {
-        logger.error(error)
-        handleError(error)
+        handleError({ message: defaultErrorMessage })
         return
       }
 
@@ -625,8 +615,11 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         setIsSubmittingToStripe(false)
         resetElementsToInitialParams()
       } catch (error) {
-        logger.error("Error while updating order payment method", error)
         handleError({ message: defaultErrorMessage })
+        logger.error(
+          "Error while submitting order with new stripe payment method",
+          error,
+        )
         return
       }
     }
@@ -646,8 +639,11 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
 
         validateAndExtractOrderResponse(result.setOrderPayment?.orderOrError)
       } catch (error) {
-        logger.error("Error while updating order payment method", error)
         handleError({ message: defaultErrorMessage })
+        logger.error(
+          "Error while submitting order with wire trasnfer payment method",
+          error,
+        )
         return
       } finally {
         setIsSubmittingToStripe(false)
@@ -659,7 +655,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
 
     if (selectedPaymentMethod === "saved") {
       if (!selectedSavedPaymentMethod) {
-        setSubtitleErrorMessage("Select a saved payment method")
+        handleError({ message: "Select a saved payment method" })
         return
       }
 
@@ -696,27 +692,19 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         resetElementsToInitialParams()
         setPaymentComplete()
       } catch (error) {
-        logger.error("Error while updating order payment method", error)
         handleError({ message: defaultErrorMessage })
+        logger.error(
+          "Error while submitting order with saved payment method",
+          error,
+        )
+
         return
       }
     }
   }
 
   return (
-    <form ref={formRef} onSubmit={handleSubmit}>
-      {subtitleErrorMessage && !selectedPaymentMethod && (
-        <Text
-          variant="xs"
-          color="red100"
-          mb={2}
-          tabIndex={-1}
-          data-subtitle-error="true"
-        >
-          {subtitleErrorMessage}
-        </Text>
-      )}
-
+    <form onSubmit={handleSubmit}>
       <Spacer y={2} />
 
       {(hasSavedCreditCards || hasSavedBankAccounts) && (
@@ -770,12 +758,14 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         />
       )}
 
-      {errorMessage && (
-        <>
-          <CheckoutErrorBanner error={{ message: errorMessage }} />
-          <Spacer y={4} />
-        </>
-      )}
+      <div ref={errorBannerRef}>
+        {paymentError && (
+          <>
+            <CheckoutErrorBanner error={paymentError} />
+            <Spacer y={4} />
+          </>
+        )}
+      </div>
 
       <Button
         loading={isSubmittingToStripe}
