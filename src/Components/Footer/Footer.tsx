@@ -206,6 +206,7 @@ export const Footer: React.FC<React.PropsWithChildren<FooterProps>> = props => {
                 to="https://www.instagram.com/artsy/"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Follow Artsy on Instagram"
               >
                 <InstagramFillIcon />
               </FooterLink>
@@ -214,6 +215,7 @@ export const Footer: React.FC<React.PropsWithChildren<FooterProps>> = props => {
                 to="https://www.tiktok.com/@artsy"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Follow Artsy on TikTok"
               >
                 <TikTokIcon />
               </FooterLink>
@@ -222,6 +224,7 @@ export const Footer: React.FC<React.PropsWithChildren<FooterProps>> = props => {
                 to="https://www.facebook.com/artsy"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Follow Artsy on Facebook"
               >
                 <FacebookIcon />
               </FooterLink>
@@ -230,6 +233,7 @@ export const Footer: React.FC<React.PropsWithChildren<FooterProps>> = props => {
                 to="https://www.linkedin.com/company/artsyinc/"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Follow Artsy on LinkedIn"
               >
                 <LinkedInFillIcon />
               </FooterLink>
@@ -238,6 +242,7 @@ export const Footer: React.FC<React.PropsWithChildren<FooterProps>> = props => {
                 to="https://www.youtube.com/artsy"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Follow Artsy on YouTube"
               >
                 <YouTubeIcon />
               </FooterLink>
@@ -246,6 +251,7 @@ export const Footer: React.FC<React.PropsWithChildren<FooterProps>> = props => {
                 to="https://open.spotify.com/user/ic7ea71nb4o0dy7xpu958vx2q"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Follow Artsy on Spotify"
               >
                 <SpotifyIcon />
               </FooterLink>
@@ -254,6 +260,7 @@ export const Footer: React.FC<React.PropsWithChildren<FooterProps>> = props => {
                 to="https://www.pinterest.com/artsy"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Follow Artsy on Pinterest"
               >
                 <PinterestIcon />
               </FooterLink>
@@ -283,6 +290,7 @@ export const Footer: React.FC<React.PropsWithChildren<FooterProps>> = props => {
                         to="http://weixin.qq.com/r/2CotNbbES_s0rfJW93-K"
                         target="_blank"
                         rel="noopener noreferrer"
+                        aria-label="Follow Artsy on WeChat"
                       >
                         <WeChatIcon />
                       </FooterLink>
@@ -295,6 +303,7 @@ export const Footer: React.FC<React.PropsWithChildren<FooterProps>> = props => {
                 to="https://www.threads.com/@artsy"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Follow Artsy on Threads"
               >
                 <ThreadsIcon />
               </FooterLink>
@@ -303,6 +312,7 @@ export const Footer: React.FC<React.PropsWithChildren<FooterProps>> = props => {
                 to="https://x.com/artsy"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Follow Artsy on X"
               >
                 <XIcon />
               </FooterLink>
