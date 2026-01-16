@@ -44,13 +44,13 @@ export const ArtistMeta: React.FC<React.PropsWithChildren<Props>> = ({
       case "articles":
         return `Read articles and editorial content about ${artist.name} on Artsy. Browse reviews, interviews, and critical analysis of their work.`
       case "cv":
-        return `View ${artist.name}'s complete exhibition history on Artsy. Browse their CV including solo shows, group shows, and fair booths at galleries and fairs worldwide.`
+        return `View ${artist.name}’s complete exhibition history on Artsy. Browse their CV including solo shows, group shows, and fair booths at galleries and fairs worldwide.`
       case "series":
-        return `Explore ${artist.name}'s series on Artsy and discover artworks available to collect. Browse the themes and artistic expressions that define ${artist.name}'s career.`
+        return `Explore ${artist.name}’s series on Artsy and discover artworks available to collect. Browse the themes and artistic expressions that define ${artist.name}’s career.`
       case "shows":
         return `View current and upcoming exhibitions featuring ${artist.name} on Artsy. Browse shows at galleries and fairs worldwide.`
       default: {
-        const baseDescription = `Explore ${artist.name}'s biography, achievements, artworks, auction results, and shows on Artsy.`
+        const baseDescription = `Explore ${artist.name}’s biography, achievements, artworks, auction results, and shows on Artsy.`
         const blurb = artist.biographyBlurbPlain?.text?.substring(0, 70) || ""
         return blurb ? `${baseDescription} ${blurb}` : baseDescription
       }
