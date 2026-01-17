@@ -1,6 +1,13 @@
 {
   "permissions": {
-    "allow": [],
+    "allow": [
+      "Bash(yarn type-check:*)",
+      "Bash(yarn lint:*)",
+      "Bash(yarn jest:*)",
+      "Bash(yarn relay:*)",
+      "Bash(grep:*)",
+      "Bash(find:*)"
+    ],
     "deny": [
       "Read(.env)",
       "Read(.env.shared)",
