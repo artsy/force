@@ -11,9 +11,12 @@ import {
   AuthDialog,
   type AuthDialogProps,
 } from "Components/AuthDialog/AuthDialog"
-import { getResizedAuthDialogImages } from "Components/AuthDialog/Utils/authDialogConstants"
+import {
+  COLUMN_WIDTH,
+  getResizedAuthDialogImages,
+} from "Components/AuthDialog/Utils/authDialogConstants"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { prefetchUrl, prefetchUrls } from "System/Utils/prefetchUrl"
+import { prefetchUrl, prefetchUrlWithSizes } from "System/Utils/prefetchUrl"
 import type { AfterAuthAction } from "Utils/Hooks/useAuthIntent"
 import { merge } from "lodash"
 import {
@@ -158,7 +161,7 @@ export const AuthDialogProvider: FC<
     dispatch({ type: "HIDE" })
   }
 
-  // Prefetch default images on mouseover to be ready when dialog opens
+  // Prefetch carousel images on first mouseover
   useEffect(() => {
     if (!isLoggedIn) {
       let hasPreloaded = false
@@ -166,11 +169,12 @@ export const AuthDialogProvider: FC<
       const prefetchOnMouseOver = () => {
         if (!hasPreloaded) {
           hasPreloaded = true
-          const authDialogImageUrls = getResizedAuthDialogImages().map(
-            img => img.src,
+          getResizedAuthDialogImages().forEach(img =>
+            prefetchUrlWithSizes({
+              url: img.quality2x,
+              sizes: `${COLUMN_WIDTH}px`,
+            }),
           )
-          prefetchUrls(authDialogImageUrls)
-          // Remove listener after first prefetch to avoid redundant work
           document.removeEventListener("mouseover", prefetchOnMouseOver)
         }
       }
@@ -237,3 +241,6 @@ export const AuthDialogProvider: FC<
 export const useAuthDialogContext = () => {
   return useContext(AuthDialogContext)
 }
+
+// https://d7hftxdivxxvm.cloudfront.net/?quality=80&resize_to=width&src=https%3A%2F%2Ffiles.artsy.net%2Fimages%2Fsignup-01-1765895830875.png&width=860
+// https://d7hftxdivxxvm.cloudfront.net/?quality=80&resize_to=width&src=https%3A%2F%2Ffiles.artsy.net%2Fimages%2Fsignup-01-1765895830875.png&width=430
