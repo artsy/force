@@ -18,6 +18,7 @@ import {
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { prefetchUrl, prefetchUrlWithSizes } from "System/Utils/prefetchUrl"
 import type { AfterAuthAction } from "Utils/Hooks/useAuthIntent"
+import { getENV } from "Utils/getENV"
 import { merge } from "lodash"
 import {
   type FC,
@@ -161,9 +162,9 @@ export const AuthDialogProvider: FC<
     dispatch({ type: "HIDE" })
   }
 
-  // Prefetch carousel images on first mouseover
+  // Prefetch carousel images on first mouseover (desktop only)
   useEffect(() => {
-    if (!isLoggedIn) {
+    if (!isLoggedIn && !getENV("IS_MOBILE")) {
       let hasPreloaded = false
 
       const prefetchOnMouseOver = () => {
