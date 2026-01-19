@@ -162,29 +162,19 @@ export const AuthDialogProvider: FC<
     dispatch({ type: "HIDE" })
   }
 
-  // Prefetch carousel images on first mouseover (desktop only)
+  // Prefetch carousel images after page load (desktop only)
   useEffect(() => {
-    if (!isLoggedIn && !getENV("IS_MOBILE")) {
-      let hasPreloaded = false
-
-      const prefetchOnMouseOver = () => {
-        if (!hasPreloaded) {
-          hasPreloaded = true
-          getResizedAuthDialogImages().forEach(img =>
-            prefetchUrlWithSizes({
-              url: img.quality2x,
-              sizes: `${COLUMN_WIDTH}px`,
-            }),
-          )
-          document.removeEventListener("mouseover", prefetchOnMouseOver)
-        }
-      }
-
-      document.addEventListener("mouseover", prefetchOnMouseOver)
-
-      return () => {
-        document.removeEventListener("mouseover", prefetchOnMouseOver)
-      }
+    if (
+      !isLoggedIn &&
+      !getENV("IS_MOBILE") &&
+      document.readyState === "complete"
+    ) {
+      getResizedAuthDialogImages().forEach(img =>
+        prefetchUrlWithSizes({
+          url: img.quality2x,
+          sizes: `${COLUMN_WIDTH}px`,
+        }),
+      )
     }
   }, [isLoggedIn])
 
@@ -242,6 +232,3 @@ export const AuthDialogProvider: FC<
 export const useAuthDialogContext = () => {
   return useContext(AuthDialogContext)
 }
-
-// https://d7hftxdivxxvm.cloudfront.net/?quality=80&resize_to=width&src=https%3A%2F%2Ffiles.artsy.net%2Fimages%2Fsignup-01-1765895830875.png&width=860
-// https://d7hftxdivxxvm.cloudfront.net/?quality=80&resize_to=width&src=https%3A%2F%2Ffiles.artsy.net%2Fimages%2Fsignup-01-1765895830875.png&width=430
