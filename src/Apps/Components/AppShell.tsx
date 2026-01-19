@@ -1,11 +1,8 @@
 import { Layout } from "Apps/Components/Layouts"
-import { getResizedAuthDialogImages } from "Components/AuthDialog/Utils/authDialogConstants"
 import { PageLoadingBar } from "System/Components/PageLoadingBar"
 import { AnalyticsContextProvider } from "System/Contexts/AnalyticsContext"
 import { NavigationHistoryProvider } from "System/Contexts/NavigationHistoryContext"
-import { useSystemContext } from "System/Hooks/useSystemContext"
 import { findCurrentRoute } from "System/Router/Utils/routeUtils"
-import { prefetchUrls } from "System/Utils/prefetchUrl"
 import { useDarkModeToggle } from "Utils/Hooks/useDarkModeToggle"
 import { useNetworkOfflineMonitor } from "Utils/Hooks/useNetworkOfflineMonitor"
 import { useOnboardingModal } from "Utils/Hooks/useOnboardingModal"
@@ -26,7 +23,6 @@ export const AppShell: React.FC<
   React.PropsWithChildren<AppShellProps>
 > = props => {
   const { onboardingComponent } = useOnboardingModal()
-  const { isLoggedIn } = useSystemContext()
 
   const { children, match } = props
   const routeConfig = match ? findCurrentRoute(match) : null
@@ -58,20 +54,6 @@ export const AppShell: React.FC<
   useDarkModeToggle()
   useNetworkOfflineMonitor()
   useProductionEnvironmentWarning()
-
-  // Prefetch auth dialog images (resized optimized versions) on app load
-  // Only prefetch if user is logged out to avoid unnecessary bandwidth for authenticated users
-  // biome-ignore lint/correctness/useExhaustiveDependencies: we do not need to useEffect to re-run
-  useEffect(() => {
-    if (!isLoggedIn) {
-      // Prefetch the exact resized versions that AuthDialogLeftPanel component uses
-      // This prevents duplicate downloads of unoptimized source images
-      const authDialogImageUrls = getResizedAuthDialogImages().map(
-        img => img.src,
-      )
-      prefetchUrls(authDialogImageUrls)
-    }
-  }, [])
 
   return (
     <>

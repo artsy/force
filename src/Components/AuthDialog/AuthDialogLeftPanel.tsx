@@ -121,7 +121,7 @@ const ImageSlider: FC = () => {
               {...img}
               width="100%"
               height="100%"
-              lazyLoad={index !== 0}
+              //   lazyLoad={index !== 0}
               fetchPriority={index === 0 ? "high" : "auto"}
               alt=""
               style={{

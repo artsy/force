@@ -11,8 +11,9 @@ import {
   AuthDialog,
   type AuthDialogProps,
 } from "Components/AuthDialog/AuthDialog"
+import { getResizedAuthDialogImages } from "Components/AuthDialog/Utils/authDialogConstants"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { prefetchUrl } from "System/Utils/prefetchUrl"
+import { prefetchUrl, prefetchUrls } from "System/Utils/prefetchUrl"
 import type { AfterAuthAction } from "Utils/Hooks/useAuthIntent"
 import { merge } from "lodash"
 import {
@@ -20,6 +21,7 @@ import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useReducer,
 } from "react"
 
@@ -155,6 +157,31 @@ export const AuthDialogProvider: FC<
   const hideAuthDialog = () => {
     dispatch({ type: "HIDE" })
   }
+
+  // Prefetch default images on mouseover to be ready when dialog opens
+  useEffect(() => {
+    if (!isLoggedIn) {
+      let hasPreloaded = false
+
+      const prefetchOnMouseOver = () => {
+        if (!hasPreloaded) {
+          hasPreloaded = true
+          const authDialogImageUrls = getResizedAuthDialogImages().map(
+            img => img.src,
+          )
+          prefetchUrls(authDialogImageUrls)
+          // Remove listener after first prefetch to avoid redundant work
+          document.removeEventListener("mouseover", prefetchOnMouseOver)
+        }
+      }
+
+      document.addEventListener("mouseover", prefetchOnMouseOver)
+
+      return () => {
+        document.removeEventListener("mouseover", prefetchOnMouseOver)
+      }
+    }
+  }, [isLoggedIn])
 
   const showAuthDialog = useCallback(
     ({
