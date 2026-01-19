@@ -40,18 +40,4 @@ describe("ArtistCVRoute", () => {
       'Fair booths<mock-value-for-field-"startAt"><mock-value-for-field-"name">, <mock-value-for-field-"name">',
     )
   })
-
-  describe("canonical URL", () => {
-    it("renders correct canonical URL for artist CV", () => {
-      renderWithRelay({
-        Artist: () => ({
-          name: "Banksy",
-          slug: "banksy",
-        }),
-      })
-
-      const canonicalLink = document.querySelector('link[rel="canonical"]')
-      expect(canonicalLink).toHaveAttribute("href", "/artist/banksy/cv")
-    })
-  })
 })

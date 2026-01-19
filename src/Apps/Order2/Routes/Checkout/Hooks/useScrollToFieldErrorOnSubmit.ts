@@ -58,31 +58,33 @@ export const useScrollToFieldErrorOnSubmit = (stepName: CheckoutStepName) => {
     if (fieldErrorName) {
       // Scroll to step first
       const element = document.querySelector(`input[name='${fieldErrorName}']`)
-      if (!element) return
 
-      // Scroll to first known error into view
-      if (typeof element.scrollIntoView === "function") {
-        element.scrollIntoView({ behavior: "smooth", block: "center" })
-      }
-
-      // Wait for scroll to complete, then focus field
-      setTimeout(() => {
-        // Query within form container only
-        const field =
-          container.querySelector(`input[name='${fieldErrorName}']`) ||
-          container.querySelector(`textarea[name='${fieldErrorName}']`) ||
-          container.querySelector(`select[name='${fieldErrorName}']`)
-
-        if (field && field instanceof HTMLElement) {
-          field.focus()
-          // Optional: fine-tune scroll position to center the field
-          if (typeof field.scrollIntoView === "function") {
-            field.scrollIntoView({ behavior: "smooth", block: "center" })
-          }
+      if (element) {
+        // Scroll to first known error into view
+        if (typeof element.scrollIntoView === "function") {
+          element.scrollIntoView({ behavior: "smooth", block: "center" })
         }
-      }, 300) // Wait for useScrollToStep's delay (100ms) + scroll animation
 
-      return
+        // Wait for scroll to complete, then focus field
+        setTimeout(() => {
+          // Query within form container only
+          const field =
+            container.querySelector(`input[name='${fieldErrorName}']`) ||
+            container.querySelector(`textarea[name='${fieldErrorName}']`) ||
+            container.querySelector(`select[name='${fieldErrorName}']`)
+
+          if (field && field instanceof HTMLElement) {
+            field.focus()
+            // Optional: fine-tune scroll position to center the field
+            if (typeof field.scrollIntoView === "function") {
+              field.scrollIntoView({ behavior: "smooth", block: "center" })
+            }
+          }
+        }, 300) // Wait for useScrollToStep's delay (100ms) + scroll animation
+
+        return
+      }
+      // If fieldErrorName exists but no element found, fall through to check banner
     }
 
     // Priority 2: Focus banner if it exists and no field errors

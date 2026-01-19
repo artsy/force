@@ -1,12 +1,6 @@
 import ChevronLeftIcon from "@artsy/icons/ChevronLeftIcon"
 import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
-import {
-  Box,
-  Clickable,
-  ProgressDots,
-  Spacer,
-  VisuallyHidden,
-} from "@artsy/palette"
+import { Box, Clickable, ProgressDots, Spacer } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import { ArtworkLightboxFragmentContainer } from "Apps/Artwork/Components/ArtworkLightbox"
 import { ArtworkVideoPlayerFragmentContainer } from "Apps/Artwork/Components/ArtworkVideoPlayer"
@@ -118,18 +112,12 @@ const ArtworkImageBrowserLarge: React.FC<
         <Spacer y={2} />
 
         {figures.length > 1 && (
-          <>
-            <VisuallyHidden aria-live="polite" aria-atomic="true">
-              Page {activeIndex + 1} of {figures.length}
-            </VisuallyHidden>
-
-            <ProgressDots
-              activeIndex={activeIndex}
-              amount={figures.length}
-              variant="dash"
-              onClick={onChange}
-            />
-          </>
+          <ProgressDots
+            activeIndex={activeIndex}
+            amount={figures.length}
+            variant="dash"
+            onClick={onChange}
+          />
         )}
       </Box>
     </>

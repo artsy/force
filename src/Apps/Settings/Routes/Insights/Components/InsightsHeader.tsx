@@ -2,7 +2,7 @@ import { OwnerType } from "@artsy/cohesion"
 import { Box, Button, Flex, FullBleed, useTheme } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
-import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
+import { useMyCollectionTracking } from "Apps/CollectorProfile/Routes/MyCollection/Hooks/useMyCollectionTracking"
 import { Sticky } from "Components/Sticky"
 import { RouterLink } from "System/Components/RouterLink"
 
