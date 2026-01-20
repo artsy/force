@@ -1,6 +1,7 @@
 import { Spacer, Text } from "@artsy/palette"
 import { ArticleAdProvider } from "Apps/Article/Components/ArticleAd/ArticleAd"
 import { MetaTags } from "Components/MetaTags"
+import { useRouter } from "System/Hooks/useRouter"
 import { useScrollToOpenEditorialAuthModal } from "Utils/Hooks/useScrollToOpenEditorialAuthModal"
 import { getENV } from "Utils/getENV"
 import type { NewsApp_viewer$data } from "__generated__/NewsApp_viewer.graphql"
@@ -14,13 +15,17 @@ interface NewsAppProps {
 }
 
 const NewsApp: FC<React.PropsWithChildren<NewsAppProps>> = ({ viewer }) => {
+  const { match } = useRouter()
   useScrollToOpenEditorialAuthModal()
+
+  const pathname = match.location.pathname
 
   return (
     <ArticleAdProvider>
       <MetaTags
         title="News | Artsy"
         description="Never miss the biggest art world stories. Artsy Editorial delivers art world news and updates, each and every day."
+        pathname={pathname}
       />
 
       <Link
