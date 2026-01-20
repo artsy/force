@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<dc56c1702e0056c925f7c8d32861fb78>>
+ * @generated SignedSource<<0b0bebf5b865d978568cb38a5dbed360>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -234,12 +234,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "bda52d1ca795bba86efe326a377a9292",
+    "cacheID": "6fbf372b3f1cb1c9a5d65ec5b938f3f7",
     "id": null,
     "metadata": {},
     "name": "showRoutes_ShowSubAppQuery",
     "operationKind": "query",
-    "text": "query showRoutes_ShowSubAppQuery(\n  $slug: String!\n) {\n  show(id: $slug) @principalField {\n    ...ShowSubApp_show\n    id\n  }\n}\n\nfragment ShowMeta_show on Show {\n  name\n  href\n  metaDescription: description\n  metaImage {\n    src: url(version: [\"main\", \"normalized\", \"larger\", \"large\"])\n  }\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on ExternalPartner {\n      id\n    }\n  }\n  formattedStartAt: startAt(format: \"MMMM D\")\n  formattedEndAt: endAt(format: \"MMMM D, YYYY\")\n}\n\nfragment ShowSubApp_show on Show {\n  id\n  internalID\n  slug\n  name\n  href\n  isFairBooth\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  ...ShowMeta_show\n}\n"
+    "text": "query showRoutes_ShowSubAppQuery(\n  $slug: String!\n) {\n  show(id: $slug) @principalField {\n    ...ShowSubApp_show\n    id\n  }\n}\n\nfragment ShowMeta_show on Show {\n  name\n  metaDescription: description\n  metaImage {\n    src: url(version: [\"main\", \"normalized\", \"larger\", \"large\"])\n  }\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on ExternalPartner {\n      id\n    }\n  }\n  formattedStartAt: startAt(format: \"MMMM D\")\n  formattedEndAt: endAt(format: \"MMMM D, YYYY\")\n}\n\nfragment ShowSubApp_show on Show {\n  id\n  internalID\n  slug\n  name\n  href\n  isFairBooth\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  ...ShowMeta_show\n}\n"
   }
 };
 })();

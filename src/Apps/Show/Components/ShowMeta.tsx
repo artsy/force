@@ -11,7 +11,6 @@ interface ShowMetaProps {
 const ShowMeta: React.FC<React.PropsWithChildren<ShowMetaProps>> = ({
   show: {
     name,
-    href,
     metaDescription,
     metaImage,
     partner,
@@ -21,8 +20,7 @@ const ShowMeta: React.FC<React.PropsWithChildren<ShowMetaProps>> = ({
 }) => {
   const router = useRouter()
 
-  // Fallback to current href if show is not `displayable`
-  const fallbackHref = router.match.location.pathname
+  const pathname = router.match.location.pathname
   const fallbackDescription = `Explore ${name} presented by ${
     partner ? `${partner.name} on` : ""
   } Artsy. On view from ${formattedStartAt} to ${formattedEndAt}.`
@@ -31,7 +29,7 @@ const ShowMeta: React.FC<React.PropsWithChildren<ShowMetaProps>> = ({
     <MetaTags
       title={`${name} | Artsy`}
       description={metaDescription || fallbackDescription}
-      pathname={href || fallbackHref}
+      pathname={pathname}
       imageURL={metaImage?.src}
     />
   )
@@ -41,7 +39,6 @@ export const ShowMetaFragmentContainer = createFragmentContainer(ShowMeta, {
   show: graphql`
     fragment ShowMeta_show on Show {
       name
-      href
       metaDescription: description
       metaImage {
         src: url(version: ["main", "normalized", "larger", "large"])
