@@ -249,6 +249,10 @@ export const SavedAddressOptions = ({
       <Clickable
         onClick={() => {
           checkoutTracking.clickedAddNewShippingAddress()
+          setStepErrorMessage({
+            step: CheckoutStepName.FULFILLMENT_DETAILS,
+            error: null,
+          })
           setUserAddressMode({ mode: "add" })
         }}
       >
