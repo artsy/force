@@ -19,6 +19,7 @@ declare module "sharify" {
      * TODO: Grab types from bootstrapSharify
      */
     export interface GlobalData {
+      ADMIN_URL: string
       ALLOWED_REDIRECT_HOSTS: string
       API_REQUEST_TIMEOUT?: number
       API_URL: string

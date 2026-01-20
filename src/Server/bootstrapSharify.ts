@@ -20,6 +20,7 @@ export const bootstrapSharify = () => {
     _.pick(
       config,
       "ACTIVE_BIDS_POLL_INTERVAL",
+      "ADMIN_URL",
       "AP",
       "API_REQUEST_TIMEOUT",
       "API_URL",

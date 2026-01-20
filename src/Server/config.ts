@@ -21,6 +21,7 @@ if (process.env.NODE_ENV !== "test") {
 export const PORT: any = 4000
 
 export const ACTIVE_BIDS_POLL_INTERVAL: any = 5000
+export const ADMIN_URL: any = "https://tools.artsy.net"
 export const ALLOWED_VANITY_ASSETS: any = "videos/*|vrview/*|hls-videos/*"
 export const API_REQUEST_TIMEOUT: any = 5000
 export const API_URL: any = "http://localhost:3000"
