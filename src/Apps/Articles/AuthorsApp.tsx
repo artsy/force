@@ -5,12 +5,16 @@ import {
 } from "Apps/Articles/Components/ArticlesAuthors"
 import { ClientSuspense } from "Components/ClientSuspense"
 import { MetaTags } from "Components/MetaTags"
+import { useRouter } from "System/Hooks/useRouter"
 import type { FC } from "react"
 
 export const AuthorsApp: FC<React.PropsWithChildren<unknown>> = () => {
+  const { match } = useRouter()
+  const pathname = match.location.pathname
+
   return (
     <>
-      <MetaTags title="Authors | Artsy" />
+      <MetaTags title="Authors | Artsy" pathname={pathname} />
 
       <Spacer y={4} />
 
