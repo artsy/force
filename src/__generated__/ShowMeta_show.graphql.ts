@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3d0de7f749211aa3f454ac5785a3e4a9>>
+ * @generated SignedSource<<83edfadab43198768b4a7f561181d882>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,7 +13,6 @@ import { FragmentRefs } from "relay-runtime";
 export type ShowMeta_show$data = {
   readonly formattedEndAt: string | null | undefined;
   readonly formattedStartAt: string | null | undefined;
-  readonly href: string | null | undefined;
   readonly metaDescription: string | null | undefined;
   readonly metaImage: {
     readonly src: string | null | undefined;
@@ -44,13 +43,6 @@ return {
   "name": "ShowMeta_show",
   "selections": [
     (v0/*: any*/),
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "href",
-      "storageKey": null
-    },
     {
       "alias": "metaDescription",
       "args": null,
@@ -138,6 +130,6 @@ return {
 };
 })();
 
-(node as any).hash = "31deb48e2f1ef791fc27802a1a196764";
+(node as any).hash = "10ce04929c1f5be5dcc7b2bceb5c4a08";
 
 export default node;
