@@ -29,9 +29,22 @@ export const showRoutes: RouteProps[] = [
     onPreloadJS: () => {
       ShowApp.preload()
     },
+    render: ({ Component, props, match }) => {
+      if (!Component || !props) return
+
+      const { show } = props as unknown as { show: { slug: string } }
+
+      // Redirect to canonical slug if URL param doesn't match
+      if (show?.slug && show.slug !== match.params.slug) {
+        throw new RedirectException(`/show/${show.slug}`, 301)
+      }
+
+      return <Component {...props} />
+    },
     query: graphql`
       query showRoutes_ShowQuery($slug: String!) {
         show(id: $slug) @principalField {
+          slug
           ...ShowApp_show
         }
       }
@@ -67,9 +80,22 @@ export const showRoutes: RouteProps[] = [
     onPreloadJS: () => {
       ShowSubApp.preload()
     },
+    render: ({ Component, props, match }) => {
+      if (!Component || !props) return
+
+      const { show } = props as unknown as { show: { slug: string } }
+
+      // Redirect to canonical slug if URL param doesn't match
+      if (show?.slug && show.slug !== match.params.slug) {
+        throw new RedirectException(`/show/${show.slug}`, 301)
+      }
+
+      return <Component {...props} />
+    },
     query: graphql`
       query showRoutes_ShowSubAppQuery($slug: String!) {
         show(id: $slug) @principalField {
+          slug
           ...ShowSubApp_show
         }
       }
