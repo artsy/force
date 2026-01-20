@@ -184,4 +184,82 @@ describe("CriticalErrorModal", () => {
       expect(mockRouterReplace).not.toHaveBeenCalled()
     })
   })
+
+  describe("stripe_authentication_failure error", () => {
+    const mockSetCheckoutModalError = jest.fn()
+    const mockSetStepErrorMessage = jest.fn()
+    const mockEditPayment = jest.fn()
+
+    beforeEach(() => {
+      ;(useCheckoutContext as jest.Mock).mockReturnValue({
+        artworkPath: "/artwork/test-artwork",
+        setCheckoutModalError: mockSetCheckoutModalError,
+        setStepErrorMessage: mockSetStepErrorMessage,
+        editPayment: mockEditPayment,
+      })
+    })
+
+    it("shows payment authentication error message with Continue button", () => {
+      render(
+        <CheckoutModal
+          error={CheckoutModalError.STRIPE_AUTHENTICATION_FAILURE}
+        />,
+      )
+
+      expect(
+        screen.getByText("Payment authentication error"),
+      ).toBeInTheDocument()
+      expect(
+        screen.getByText(
+          "We are unable to authenticate your payment method. Please choose a different payment method and try again.",
+        ),
+      ).toBeInTheDocument()
+      expect(screen.getByText("Continue")).toBeInTheDocument()
+      expect(screen.queryByText("Return to Artwork")).not.toBeInTheDocument()
+    })
+
+    it("dismisses modal, edits payment and sets error message when Continue button is clicked", async () => {
+      render(
+        <CheckoutModal
+          error={CheckoutModalError.STRIPE_AUTHENTICATION_FAILURE}
+        />,
+      )
+
+      const continueButton = screen.getByText("Continue")
+      await userEvent.click(continueButton)
+
+      expect(mockSetCheckoutModalError).toHaveBeenCalledWith(null)
+      expect(mockEditPayment).toHaveBeenCalled()
+      expect(mockSetStepErrorMessage).toHaveBeenCalledWith({
+        step: "PAYMENT",
+        error: {
+          title: "Payment error",
+          message: "Please update your payment method",
+        },
+      })
+      expect(mockRouterReplace).not.toHaveBeenCalled()
+    })
+
+    it("dismisses modal, edits payment and sets error message when X button is clicked", async () => {
+      render(
+        <CheckoutModal
+          error={CheckoutModalError.STRIPE_AUTHENTICATION_FAILURE}
+        />,
+      )
+
+      const closeButton = screen.getByLabelText("Close")
+      await userEvent.click(closeButton)
+
+      expect(mockSetCheckoutModalError).toHaveBeenCalledWith(null)
+      expect(mockEditPayment).toHaveBeenCalled()
+      expect(mockSetStepErrorMessage).toHaveBeenCalledWith({
+        step: "PAYMENT",
+        error: {
+          title: "Payment error",
+          message: "Please update your payment method",
+        },
+      })
+      expect(mockRouterReplace).not.toHaveBeenCalled()
+    })
+  })
 })
