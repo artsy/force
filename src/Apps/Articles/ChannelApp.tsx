@@ -6,6 +6,7 @@ import {
 } from "Components/FullBleedHeader/FullBleedHeader"
 import { MetaTags } from "Components/MetaTags"
 import { RouterLink } from "System/Components/RouterLink"
+import { useRouter } from "System/Hooks/useRouter"
 import type { ChannelApp_channel$data } from "__generated__/ChannelApp_channel.graphql"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -18,6 +19,9 @@ interface ChannelAppProps {
 const ChannelApp: FC<React.PropsWithChildren<ChannelAppProps>> = ({
   channel,
 }) => {
+  const { match } = useRouter()
+  const pathname = match.location.pathname
+
   const { theme } = useTheme()
 
   const rgb = theme.name === "light" ? "255, 255, 255" : "0, 0, 0"
@@ -27,6 +31,7 @@ const ChannelApp: FC<React.PropsWithChildren<ChannelAppProps>> = ({
       <MetaTags
         title={`${channel.name} | Artsy`}
         description={channel.tagline}
+        pathname={pathname}
       />
 
       {channel.image?.url ? (
