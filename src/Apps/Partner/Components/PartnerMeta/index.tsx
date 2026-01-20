@@ -1,6 +1,7 @@
 import { PartnerMetaStructuredData } from "Apps/Partner/Components/PartnerMeta/PartnerMetaStructuredData"
 import { useRouter } from "System/Hooks/useRouter"
 import { getENV } from "Utils/getENV"
+import { getPageNumber } from "Utils/url"
 import type { PartnerMeta_partner$data } from "__generated__/PartnerMeta_partner.graphql"
 import type * as React from "react"
 import { Link, Meta, Title } from "react-head"
@@ -14,18 +15,18 @@ const PartnerMeta: React.FC<React.PropsWithChildren<PartnerMetaProps>> = ({
   partner,
 }) => {
   const {
+    match,
     match: {
-      params: { artistId },
       location: { pathname },
     },
   } = useRouter()
 
-  const { meta, slug } = partner
+  const { meta } = partner
 
-  const href = `${getENV("APP_URL")}${pathname}`
-  const canonicalHref = artistId
-    ? `${getENV("APP_URL")}/artist/${artistId}`
-    : `${getENV("APP_URL")}/partner/${slug}`
+  const page = getPageNumber(match.location)
+  const canonicalPath = page > 1 ? `${pathname}?page=${page}` : pathname
+
+  const href = `${getENV("APP_URL")}${canonicalPath}`
 
   return (
     <>
@@ -40,7 +41,7 @@ const PartnerMeta: React.FC<React.PropsWithChildren<PartnerMetaProps>> = ({
       <Meta property="twitter:description" content={meta?.description} />
       <Meta property="twitter:card" content="summary" />
 
-      <Link rel="canonical" href={canonicalHref} />
+      <Link rel="canonical" href={href} />
 
       {meta?.image && <Meta property="og:image" content={meta?.image} />}
       {meta?.image && <Meta name="thumbnail" content={meta?.image} />}
@@ -61,7 +62,6 @@ export const PartnerMetaFragmentContainer = createFragmentContainer(
           title
           description
         }
-        slug
       }
     `,
   },

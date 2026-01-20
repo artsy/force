@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c3035799f25a8f320bda98646a8efd02>>
+ * @generated SignedSource<<5492f2b3d473f76fd82e46f7845dfb81>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,6 @@ export type PartnerMeta_partner$data = {
     readonly image: string | null | undefined;
     readonly title: string | null | undefined;
   } | null | undefined;
-  readonly slug: string;
   readonly " $fragmentSpreads": FragmentRefs<"PartnerMetaStructuredData_partner">;
   readonly " $fragmentType": "PartnerMeta_partner";
 };
@@ -67,19 +66,12 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "slug",
-      "storageKey": null
     }
   ],
   "type": "Partner",
   "abstractKey": null
 };
 
-(node as any).hash = "2d13af1d1398c7b1b7d3cb9d0e5ec54b";
+(node as any).hash = "6231e9703d7040b186bb84d372fd24f5";
 
 export default node;
