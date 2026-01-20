@@ -521,4 +521,132 @@ describe("Order2ReviewStep", () => {
       })
     })
   })
+
+  describe("Error handling", () => {
+    const defaultOrderData = {
+      __typename: "Order",
+      internalID: "order-id",
+      mode: "BUY",
+      stripeConfirmationToken: "ctoken_123",
+      buyerTotal: { display: "$100" },
+      itemsTotal: { display: "$90" },
+      shippingTotal: { display: "$5" },
+      taxTotal: { display: "$5" },
+      lineItems: [
+        {
+          artworkOrEditionSet: {
+            __typename: "Artwork",
+            price: "$90",
+            dimensions: { in: "10 x 10", cm: "25 x 25" },
+          },
+          artworkVersion: {
+            title: "Test Artwork",
+            artistNames: "Test Artist",
+            date: "2024",
+            attributionClass: {
+              shortDescription: "Original",
+            },
+            image: {
+              resized: {
+                url: "https://test.com/image.jpg",
+              },
+            },
+          },
+        },
+      ],
+      pendingOffer: null,
+    }
+
+    it("sets STRIPE_AUTHENTICATION_FAILURE modal error when handleNextAction returns payment_intent_authentication_failure", async () => {
+      mockSubmitOrderMutation.submitMutation.mockResolvedValueOnce({
+        submitOrder: {
+          orderOrError: {
+            __typename: "OrderMutationActionRequired",
+            actionData: {
+              clientSecret: "test-secret",
+            },
+          },
+        },
+      })
+
+      mockStripe.handleNextAction.mockResolvedValueOnce({
+        error: {
+          code: "payment_intent_authentication_failure",
+          message: "Authentication failed",
+        },
+      })
+
+      renderWithRelay({
+        Me: () => ({
+          order: defaultOrderData,
+        }),
+      })
+
+      const submitButton = screen.getByText("Submit")
+      await userEvent.click(submitButton)
+
+      await waitFor(() => {
+        expect(mockCheckoutContext.setCheckoutModalError).toHaveBeenCalledWith(
+          CheckoutModalError.STRIPE_AUTHENTICATION_FAILURE,
+        )
+      })
+    })
+
+    it("sets SUBMIT_ERROR modal error for other Stripe errors", async () => {
+      mockSubmitOrderMutation.submitMutation.mockResolvedValueOnce({
+        submitOrder: {
+          orderOrError: {
+            __typename: "OrderMutationActionRequired",
+            actionData: {
+              clientSecret: "test-secret",
+            },
+          },
+        },
+      })
+
+      mockStripe.handleNextAction.mockResolvedValueOnce({
+        error: {
+          code: "some_other_error",
+          message: "Some other error",
+        },
+      })
+
+      renderWithRelay({
+        Me: () => ({
+          order: defaultOrderData,
+        }),
+      })
+
+      const submitButton = screen.getByText("Submit")
+      await userEvent.click(submitButton)
+
+      await waitFor(() => {
+        expect(mockCheckoutContext.setCheckoutModalError).toHaveBeenCalledWith(
+          CheckoutModalError.SUBMIT_ERROR,
+        )
+      })
+    })
+
+    it("sets ARTWORK_NOT_FOR_SALE modal error when insufficient_inventory error is returned", async () => {
+      mockSubmitOrderMutation.submitMutation.mockRejectedValueOnce({
+        code: "insufficient_inventory",
+        message: "Insufficient inventory",
+      })
+
+      renderWithRelay({
+        Me: () => ({
+          order: defaultOrderData,
+        }),
+      })
+
+      const submitButton = screen.getByText("Submit")
+      await userEvent.click(submitButton)
+
+      await waitFor(() => {
+        expect(mockCheckoutContext.setCheckoutModalError).toHaveBeenCalledWith(
+          CheckoutModalError.ARTWORK_NOT_FOR_SALE,
+        )
+      })
+    })
+  })
 })
