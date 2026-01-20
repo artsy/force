@@ -1,6 +1,7 @@
 import { Button, Flex, ModalDialog, Text } from "@artsy/palette"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useRouter } from "System/Hooks/useRouter"
+import { CheckoutStepName } from "../CheckoutContext/types"
 
 export enum CheckoutModalError {
   LOADING_TIMEOUT = "loading_timeout",
@@ -14,7 +15,12 @@ export enum CheckoutModalError {
 export const CheckoutModal: React.FC<{
   error: CheckoutModalError | null
 }> = ({ error }) => {
-  const { artworkPath, setCheckoutModalError } = useCheckoutContext()
+  const {
+    artworkPath,
+    setCheckoutModalError,
+    setStepErrorMessage,
+    editPayment,
+  } = useCheckoutContext()
   const { router } = useRouter()
 
   if (!error) {
@@ -28,6 +34,7 @@ export const CheckoutModal: React.FC<{
   // Determine modal behavior based on error type
   let canReload = false
   let canDismiss = false
+  let onDismiss = () => {}
 
   let title = "Checkout Error"
   let description: string
@@ -57,6 +64,16 @@ export const CheckoutModal: React.FC<{
       description =
         "We are unable to authenticate your payment method. Please choose a different payment method and try again."
       canDismiss = true
+      onDismiss = () => {
+        editPayment()
+        setStepErrorMessage({
+          step: CheckoutStepName.PAYMENT,
+          error: {
+            title: "Payment error",
+            message: "Please update your payment method",
+          },
+        })
+      }
       break
     default:
       description =
@@ -66,6 +83,9 @@ export const CheckoutModal: React.FC<{
   const handleClose = () => {
     if (canDismiss) {
       setCheckoutModalError(null)
+      if (onDismiss) {
+        onDismiss()
+      }
     } else {
       router.replace(artworkPath)
     }
