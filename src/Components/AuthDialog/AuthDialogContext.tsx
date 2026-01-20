@@ -11,15 +11,21 @@ import {
   AuthDialog,
   type AuthDialogProps,
 } from "Components/AuthDialog/AuthDialog"
+import {
+  COLUMN_WIDTH,
+  getResizedAuthDialogImages,
+} from "Components/AuthDialog/Utils/authDialogConstants"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { prefetchUrl } from "System/Utils/prefetchUrl"
+import { prefetchUrl, prefetchUrlWithSizes } from "System/Utils/prefetchUrl"
 import type { AfterAuthAction } from "Utils/Hooks/useAuthIntent"
+import { getENV } from "Utils/getENV"
 import { merge } from "lodash"
 import {
   type FC,
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useReducer,
 } from "react"
 
@@ -156,6 +162,22 @@ export const AuthDialogProvider: FC<
     dispatch({ type: "HIDE" })
   }
 
+  // Prefetch carousel images after page load (desktop only)
+  useEffect(() => {
+    if (
+      !isLoggedIn &&
+      !getENV("IS_MOBILE") &&
+      document.readyState === "complete"
+    ) {
+      getResizedAuthDialogImages().forEach(img =>
+        prefetchUrlWithSizes({
+          url: img.quality2x,
+          sizes: `${COLUMN_WIDTH}px`,
+        }),
+      )
+    }
+  }, [isLoggedIn])
+
   const showAuthDialog = useCallback(
     ({
       analytics,
@@ -167,6 +189,7 @@ export const AuthDialogProvider: FC<
       options?: AuthDialogOptions
     }) => {
       if (!isLoggedIn && options?.imageUrl) {
+        // Prefetch custom image if provided
         prefetchUrl(options.imageUrl)
       }
       if (isLoggedIn) {
