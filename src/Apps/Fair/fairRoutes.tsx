@@ -48,9 +48,22 @@ export const fairRoutes: RouteProps[] = [
     onPreloadJS: () => {
       FairApp.preload()
     },
+    render: ({ Component, props, match }) => {
+      if (!Component || !props) return
+
+      const { fair } = props as unknown as { fair: { slug: string } }
+
+      // Redirect to canonical slug if URL param doesn't match
+      if (fair?.slug && fair.slug !== match.params.slug) {
+        throw new RedirectException(`/fair/${fair.slug}`, 301)
+      }
+
+      return <Component {...props} />
+    },
     query: graphql`
       query fairRoutes_FairQuery($slug: String!) @cacheable {
         fair(id: $slug) @principalField {
+          slug
           ...FairApp_fair
         }
       }
@@ -108,9 +121,22 @@ export const fairRoutes: RouteProps[] = [
     onPreloadJS: () => {
       FairSubApp.preload()
     },
+    render: ({ Component, props, match }) => {
+      if (!Component || !props) return
+
+      const { fair } = props as unknown as { fair: { slug: string } }
+
+      // Redirect to canonical slug if URL param doesn't match
+      if (fair?.slug && fair.slug !== match.params.slug) {
+        throw new RedirectException(`/fair/${fair.slug}`, 301)
+      }
+
+      return <Component {...props} />
+    },
     query: graphql`
       query fairRoutes_FairSubAppQuery($slug: String!) @cacheable {
         fair(id: $slug) @principalField {
+          slug
           ...FairSubApp_fair
         }
       }
