@@ -358,7 +358,6 @@ describe("Order2PaymentForm", () => {
       await userEvent.click(screen.getByText("Continue to Review"))
 
       expect(mockElements.update).toHaveBeenCalledWith({
-        captureMethod: "automatic",
         setupFutureUsage: null,
         mode: "setup",
         paymentMethodTypes: ["us_bank_account"],
@@ -389,7 +388,6 @@ describe("Order2PaymentForm", () => {
       await userEvent.click(screen.getByText("Continue to Review"))
 
       expect(mockElements.update).toHaveBeenCalledWith({
-        captureMethod: "automatic",
         setupFutureUsage: null,
         mode: "setup",
         paymentMethodTypes: ["sepa_debit"],
