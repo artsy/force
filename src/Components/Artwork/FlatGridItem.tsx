@@ -128,6 +128,7 @@ export const FlatGridItemFragmentContainer = createFragmentContainer(
       fragment FlatGridItem_artwork on Artwork
       @argumentDefinitions(
         includeAllImages: { type: "Boolean", defaultValue: false }
+        imageQuality: { type: "[Int!]" }
       ) {
         ...Metadata_artwork
         sale {
@@ -145,7 +146,11 @@ export const FlatGridItemFragmentContainer = createFragmentContainer(
         title
         image_title: imageTitle
         image(includeAll: $includeAllImages) {
-          resized(width: 445, version: ["larger", "large"]) {
+          resized(
+            quality: $imageQuality
+            width: 445
+            version: ["larger", "large"]
+          ) {
             src
             srcSet
             width

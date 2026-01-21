@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<05ed773145efb5b0494faaecbf24b28f>>
+ * @generated SignedSource<<7bdb1a8ed20063530ad9a0453d7a5b42>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -209,7 +209,15 @@ const node: ReaderFragment = {
           "storageKey": null
         },
         {
-          "args": null,
+          "args": [
+            {
+              "kind": "Literal",
+              "name": "imageQuality",
+              "value": [
+                85
+              ]
+            }
+          ],
           "kind": "FragmentSpread",
           "name": "ArtworkFilterArtworkGrid_filtered_artworks"
         },
@@ -226,6 +234,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "d7c94efedf8b88a627e9c26c948c9577";
+(node as any).hash = "3809410e048438edb4bbc29ff60c87fb";
 
 export default node;
