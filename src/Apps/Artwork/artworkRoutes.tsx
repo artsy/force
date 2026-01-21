@@ -41,6 +41,7 @@ export const artworkRoutes: RouteProps[] = [
         entity: artworkResult as any,
         paramValue: match.params.artworkID,
         basePath: "/artwork",
+        match,
       })
 
       const requestError = artworkResult?.requestError

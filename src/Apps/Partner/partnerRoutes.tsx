@@ -97,6 +97,7 @@ export const partnerRoutes: RouteProps[] = [
         entity: partner,
         paramValue: match.params.partnerId,
         basePath: "/partner",
+        match,
       })
 
       const overviewPath = `/partner/${match.params.partnerId}`
