@@ -1,5 +1,6 @@
 import { Button, Flex, ModalDialog, Text } from "@artsy/palette"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import { useCheckoutModal } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutModal"
 import { useRouter } from "System/Hooks/useRouter"
 import { CheckoutStepName } from "../CheckoutContext/types"
 
@@ -15,12 +16,8 @@ export enum CheckoutModalError {
 export const CheckoutModal: React.FC<{
   error: CheckoutModalError | null
 }> = ({ error }) => {
-  const {
-    artworkPath,
-    setCheckoutModalError,
-    setStepErrorMessage,
-    editPayment,
-  } = useCheckoutContext()
+  const { artworkPath, setStepErrorMessage, editPayment } = useCheckoutContext()
+  const { setCheckoutModalError } = useCheckoutModal()
   const { router } = useRouter()
 
   if (!error) {

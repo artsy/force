@@ -41,11 +41,18 @@ const mockCheckoutContext = {
     clickedBuyerProtection: jest.fn(),
   },
   artworkPath: "/artwork/test-artwork",
-  setCheckoutModalError: jest.fn(),
 }
 
 jest.mock("Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext", () => ({
   useCheckoutContext: () => mockCheckoutContext,
+}))
+
+const mockCheckoutModal = {
+  setCheckoutModalError: jest.fn(),
+}
+
+jest.mock("Apps/Order2/Routes/Checkout/Hooks/useCheckoutModal", () => ({
+  useCheckoutModal: () => mockCheckoutModal,
 }))
 
 const { renderWithRelay } = setupTestWrapperTL<Order2ReviewStepTestQuery>({
@@ -586,13 +593,13 @@ describe("Order2ReviewStep", () => {
       await userEvent.click(submitButton)
 
       await waitFor(() => {
-        expect(mockCheckoutContext.setCheckoutModalError).toHaveBeenCalledWith(
+        expect(mockCheckoutModal.setCheckoutModalError).toHaveBeenCalledWith(
           CheckoutModalError.STRIPE_AUTHENTICATION_FAILURE,
         )
       })
     })
 
-    it("sets SUBMIT_ERROR modal error for other Stripe errors", async () => {
+    it("sets STRIPE_AUTHENTICATION_FAILURE modal error for other Stripe errors", async () => {
       mockSubmitOrderMutation.submitMutation.mockResolvedValueOnce({
         submitOrder: {
           orderOrError: {
@@ -621,7 +628,29 @@ describe("Order2ReviewStep", () => {
       await userEvent.click(submitButton)
 
       await waitFor(() => {
-        expect(mockCheckoutContext.setCheckoutModalError).toHaveBeenCalledWith(
+        expect(mockCheckoutModal.setCheckoutModalError).toHaveBeenCalledWith(
+          CheckoutModalError.STRIPE_AUTHENTICATION_FAILURE,
+        )
+      })
+    })
+
+    it("sets SUBMIT_ERROR modal error for non-Stripe errors", async () => {
+      mockSubmitOrderMutation.submitMutation.mockRejectedValueOnce({
+        code: "unknown_error",
+        message: "Unknown error",
+      })
+
+      renderWithRelay({
+        Me: () => ({
+          order: defaultOrderData,
+        }),
+      })
+
+      const submitButton = screen.getByText("Submit")
+      await userEvent.click(submitButton)
+
+      await waitFor(() => {
+        expect(mockCheckoutModal.setCheckoutModalError).toHaveBeenCalledWith(
           CheckoutModalError.SUBMIT_ERROR,
         )
       })
@@ -643,7 +672,7 @@ describe("Order2ReviewStep", () => {
       await userEvent.click(submitButton)
 
       await waitFor(() => {
-        expect(mockCheckoutContext.setCheckoutModalError).toHaveBeenCalledWith(
+        expect(mockCheckoutModal.setCheckoutModalError).toHaveBeenCalledWith(
           CheckoutModalError.ARTWORK_NOT_FOR_SALE,
         )
       })

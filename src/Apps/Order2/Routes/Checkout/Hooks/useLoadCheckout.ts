@@ -4,6 +4,7 @@ import {
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { CheckoutModalError } from "Apps/Order2/Routes/Checkout/Components/CheckoutModal"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import { useCheckoutModal } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutModal"
 import { useStripePaymentBySetupIntentId } from "Apps/Order2/Routes/Checkout/Hooks/useStripePaymentBySetupIntentId"
 import {
   handleBackNavigation,
@@ -32,12 +33,12 @@ export const useLoadCheckout = (order: useLoadCheckout_order$key) => {
 
   const {
     isLoading,
-    checkoutModalError,
-    setCheckoutModalError,
     setLoadingComplete,
     expressCheckoutPaymentMethods,
     steps,
   } = useCheckoutContext()
+
+  const { checkoutModalError, setCheckoutModalError } = useCheckoutModal()
 
   // Handle Stripe redirect and call onComplete when done
   useStripePaymentBySetupIntentId(orderData.internalID, () => {

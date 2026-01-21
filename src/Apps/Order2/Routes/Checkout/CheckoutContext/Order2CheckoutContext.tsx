@@ -9,7 +9,6 @@ import {
   CheckoutStepState,
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import type { CheckoutErrorBannerProps } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
-import type { CheckoutModalError } from "Apps/Order2/Routes/Checkout/Components/CheckoutModal"
 import { useBuildInitialSteps } from "Apps/Order2/Routes/Checkout/Hooks/useBuildInitialSteps"
 import { useCheckoutTracking } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutTracking"
 import { useRouter } from "System/Hooks/useRouter"
@@ -61,7 +60,6 @@ export interface Order2CheckoutModel {
   isLoading: boolean
   /** Order is redirecting to the details page */
   expressCheckoutSubmitting: boolean
-  checkoutModalError: CheckoutModalError | null
   expressCheckoutPaymentMethods: ExpressCheckoutPaymentMethod[] | null
   steps: CheckoutStep[]
   activeFulfillmentDetailsTab: FulfillmentDetailsTab | null
@@ -91,7 +89,6 @@ export interface Order2CheckoutModel {
   editPayment: Action<this>
   setOfferAmountComplete: Action<this>
   editOfferAmount: Action<this>
-  setCheckoutModalError: Action<this, CheckoutModalError | null>
   setLoadingComplete: Action<this>
   setPaymentComplete: Action<this>
   setConfirmationToken: Action<
@@ -114,7 +111,6 @@ export const Order2CheckoutContext: ReturnType<
   // Initial state with defaults
   isLoading: true,
   expressCheckoutSubmitting: false,
-  checkoutModalError: null,
   expressCheckoutPaymentMethods: null,
   activeFulfillmentDetailsTab: null,
   confirmationToken: null,
@@ -169,10 +165,6 @@ export const Order2CheckoutContext: ReturnType<
       })
     },
   ),
-
-  setCheckoutModalError: action((state, error) => {
-    state.checkoutModalError = error
-  }),
 
   setLoadingComplete: action(state => {
     state.isLoading = false
@@ -510,7 +502,6 @@ export const Order2CheckoutContextProvider: React.FC<
     // Default values
     isLoading: true,
     expressCheckoutSubmitting: false,
-    checkoutModalError: null,
     expressCheckoutPaymentMethods: null,
     activeFulfillmentDetailsTab: null,
     confirmationToken: null,
@@ -577,7 +568,6 @@ const initialStateForOrder = (
   return {
     isLoading: true,
     expressCheckoutSubmitting: false,
-    checkoutModalError: null,
     expressCheckoutPaymentMethods: null,
     activeFulfillmentDetailsTab: fulfillmentComplete
       ? (activeFulfillmentDetailsTab as FulfillmentDetailsTab)

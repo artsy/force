@@ -1,22 +1,30 @@
 import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import { useCheckoutModal } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutModal"
 import { useRouter } from "System/Hooks/useRouter"
 import { CheckoutModal, CheckoutModalError } from "../CheckoutModal"
 
 // Mock the useCheckoutContext hook
 jest.mock("Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext")
 
+// Mock the useCheckoutModal hook
+jest.mock("Apps/Order2/Routes/Checkout/Hooks/useCheckoutModal")
+
 // Mock the useRouter hook
 jest.mock("System/Hooks/useRouter")
 
 const mockRouterReplace = jest.fn()
+const mockSetCheckoutModalError = jest.fn()
 
 describe("CriticalErrorModal", () => {
   beforeEach(() => {
     jest.clearAllMocks()
     ;(useCheckoutContext as jest.Mock).mockReturnValue({
       artworkPath: "/artwork/test-artwork",
+    })
+    ;(useCheckoutModal as jest.Mock).mockReturnValue({
+      setCheckoutModalError: mockSetCheckoutModalError,
     })
     ;(useRouter as jest.Mock).mockReturnValue({
       router: { replace: mockRouterReplace },
@@ -142,15 +150,6 @@ describe("CriticalErrorModal", () => {
   })
 
   describe("submit_error", () => {
-    const mockSetCheckoutModalError = jest.fn()
-
-    beforeEach(() => {
-      ;(useCheckoutContext as jest.Mock).mockReturnValue({
-        artworkPath: "/artwork/test-artwork",
-        setCheckoutModalError: mockSetCheckoutModalError,
-      })
-    })
-
     it("shows dismissible error message with Continue button", () => {
       render(<CheckoutModal error={CheckoutModalError.SUBMIT_ERROR} />)
 
@@ -186,14 +185,12 @@ describe("CriticalErrorModal", () => {
   })
 
   describe("stripe_authentication_failure error", () => {
-    const mockSetCheckoutModalError = jest.fn()
     const mockSetStepErrorMessage = jest.fn()
     const mockEditPayment = jest.fn()
 
     beforeEach(() => {
       ;(useCheckoutContext as jest.Mock).mockReturnValue({
         artworkPath: "/artwork/test-artwork",
-        setCheckoutModalError: mockSetCheckoutModalError,
         setStepErrorMessage: mockSetStepErrorMessage,
         editPayment: mockEditPayment,
       })
