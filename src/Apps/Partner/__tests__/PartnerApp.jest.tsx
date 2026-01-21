@@ -6,21 +6,28 @@ import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
+
+const mockRouterMatch = {
+  location: {
+    pathname: "/partner/example",
+    query: {},
+  },
+}
+
 jest.mock("System/Hooks/useRouter", () => ({
   useRouter: () => ({
-    match: {
-      params: {
-        artistId: "andy-warhol",
-      },
-      location: {
-        pathname: "/partner/example",
-      },
-    },
+    match: mockRouterMatch,
   }),
   useIsRouteActive: () => false,
 }))
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => false,
+}))
+jest.mock("Utils/getENV", () => ({
+  getENV: (key: string) => {
+    if (key === "APP_URL") return "https://www.artsy.net"
+    return undefined
+  },
 }))
 
 const { renderWithRelay } = setupTestWrapperTL<PartnerAppTestQuery>({
@@ -42,6 +49,10 @@ const { renderWithRelay } = setupTestWrapperTL<PartnerAppTestQuery>({
 })
 
 describe("PartnerApp", () => {
+  beforeEach(() => {
+    mockRouterMatch.location = { pathname: "/partner/example", query: {} }
+  })
+
   it("displays navigation tabs for the partner page", () => {
     const { container } = renderWithRelay({
       Partner: () => ({
@@ -134,5 +145,103 @@ describe("PartnerApp", () => {
     })
 
     expect(container.querySelector("img")).toBeFalsy()
+  })
+
+  it("sets canonical URL to current pathname for normal partner subpage", () => {
+    mockRouterMatch.location = {
+      pathname: "/partner/gagosian/shows",
+      query: {},
+    }
+
+    renderWithRelay({
+      Partner: () => ({
+        displayFullPartnerPage: true,
+        isDefaultProfilePublic: true,
+        partnerPageEligible: true,
+        slug: "gagosian",
+        meta: {
+          title: "Gagosian",
+          description: "Gallery description",
+        },
+      }),
+    })
+
+    const canonical = document.querySelector('link[rel="canonical"]')
+    expect(canonical?.getAttribute("href")).toBe(
+      "https://www.artsy.net/partner/gagosian/shows",
+    )
+  })
+
+  it("sets canonical URL with page parameter for paginated pages", () => {
+    mockRouterMatch.location = {
+      pathname: "/partner/gagosian/articles",
+      query: { page: "2" },
+    }
+
+    renderWithRelay({
+      Partner: () => ({
+        displayFullPartnerPage: true,
+        isDefaultProfilePublic: true,
+        partnerPageEligible: true,
+        slug: "gagosian",
+        meta: {
+          title: "Gagosian - Articles",
+          description: "Gallery articles",
+        },
+      }),
+    })
+
+    const canonical = document.querySelector('link[rel="canonical"]')
+    expect(canonical?.getAttribute("href")).toBe(
+      "https://www.artsy.net/partner/gagosian/articles?page=2",
+    )
+  })
+
+  it("includes og:image and thumbnail meta tags when partner has image", () => {
+    renderWithRelay({
+      Partner: () => ({
+        displayFullPartnerPage: true,
+        isDefaultProfilePublic: true,
+        partnerPageEligible: true,
+        slug: "example-partner",
+        meta: {
+          title: "Example Partner",
+          description: "Partner description",
+          image: "https://example.com/partner-image.jpg",
+        },
+      }),
+    })
+
+    const ogImage = document.querySelector('meta[property="og:image"]')
+    expect(ogImage?.getAttribute("content")).toBe(
+      "https://example.com/partner-image.jpg",
+    )
+
+    const thumbnail = document.querySelector('meta[name="thumbnail"]')
+    expect(thumbnail?.getAttribute("content")).toBe(
+      "https://example.com/partner-image.jpg",
+    )
+  })
+
+  it("does not include og:image meta tags when partner has no image", () => {
+    renderWithRelay({
+      Partner: () => ({
+        displayFullPartnerPage: true,
+        isDefaultProfilePublic: true,
+        partnerPageEligible: true,
+        slug: "example-partner",
+        meta: {
+          title: "Example Partner",
+          description: "Partner description",
+          image: null,
+        },
+      }),
+    })
+
+    const ogImage = document.querySelector('meta[property="og:image"]')
+    expect(ogImage).toBeNull()
+
+    const thumbnail = document.querySelector('meta[name="thumbnail"]')
+    expect(thumbnail).toBeNull()
   })
 })

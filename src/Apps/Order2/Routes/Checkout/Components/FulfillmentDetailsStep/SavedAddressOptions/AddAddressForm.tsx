@@ -90,6 +90,8 @@ export const AddAddressForm = ({
       initialValues={initialValues}
       validationSchema={deliveryAddressValidationSchema}
       onSubmit={handleSubmit}
+      validateOnBlur={false}
+      validateOnChange={false}
     >
       <AddAddressFormFields setUserAddressMode={setUserAddressMode} />
     </Formik>
@@ -132,6 +134,7 @@ const AddAddressFormFields: React.FC<AddAddressFormFieldsProps> = ({
       <Button
         width="100%"
         variant="secondaryBlack"
+        type="button"
         onClick={() => setUserAddressMode(null)}
       >
         Cancel
