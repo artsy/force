@@ -13,15 +13,28 @@ import type { ViewingRoomAppScheduledTestQuery$rawResponse } from "__generated__
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
+
+const mockRouterMatch = {
+  params: {
+    slug: "subscription-demo-gg-guy-yanai",
+  },
+  location: {
+    pathname: "/viewing-room/subscription-demo-gg-guy-yanai",
+    query: {},
+  },
+}
+
 jest.mock("System/Hooks/useRouter", () => ({
   useIsRouteActive: () => false,
   useRouter: () => ({
-    match: {
-      params: {
-        slug: "subscription-demo-gg-guy-yanai",
-      },
-    },
+    match: mockRouterMatch,
   }),
+}))
+jest.mock("Utils/getENV", () => ({
+  getENV: (key: string) => {
+    if (key === "APP_URL") return "https://www.artsy.net"
+    return undefined
+  },
 }))
 
 describe("ViewingRoomApp", () => {
@@ -32,6 +45,10 @@ describe("ViewingRoomApp", () => {
     mockLocation()
     user = { id: "blah" }
     window.history.pushState({}, "Viewing Room Title", slug)
+    mockRouterMatch.location = {
+      pathname: `/viewing-room/${slug}`,
+      query: {},
+    }
   })
 
   afterEach(() => {
@@ -246,6 +263,38 @@ describe("ViewingRoomApp", () => {
           `href="/viewing-room/${slug}/artworks"`,
         )
       })
+    })
+
+    it("sets canonical URL to current pathname for base viewing room page", () => {
+      mockRouterMatch.location = {
+        pathname: `/viewing-room/${slug}`,
+        query: {},
+      }
+
+      renderWithRelay({
+        ViewingRoom: () => OpenViewingRoomAppFixture.viewingRoom,
+      })
+
+      const canonical = document.querySelector('link[rel="canonical"]')
+      expect(canonical?.getAttribute("href")).toBe(
+        `https://www.artsy.net/viewing-room/${slug}`,
+      )
+    })
+
+    it("sets canonical URL to current pathname for artworks subpage", () => {
+      mockRouterMatch.location = {
+        pathname: `/viewing-room/${slug}/artworks`,
+        query: {},
+      }
+
+      renderWithRelay({
+        ViewingRoom: () => OpenViewingRoomAppFixture.viewingRoom,
+      })
+
+      const canonical = document.querySelector('link[rel="canonical"]')
+      expect(canonical?.getAttribute("href")).toBe(
+        `https://www.artsy.net/viewing-room/${slug}/artworks`,
+      )
     })
   })
 
