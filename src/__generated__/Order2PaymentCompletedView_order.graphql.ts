@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<939b5a08ae7c214548c93b73f23f0839>>
+ * @generated SignedSource<<b23db79fe19902d227613bf9da1d7661>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,7 +15,7 @@ export type Order2PaymentCompletedView_order$data = {
   readonly paymentMethod: OrderPaymentMethodEnum | null | undefined;
   readonly paymentMethodDetails: {
     readonly __typename: "BankAccount";
-    readonly bankName: string;
+    readonly bankName: string | null | undefined;
     readonly last4: string;
   } | {
     readonly __typename: "CreditCard";

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<427cc67ac630d230e01e6e5e03786963>>
+ * @generated SignedSource<<f6c617d74295f5386f0be10ae715abfe>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type Order2PaymentForm_me$data = {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly __typename: "BankAccount";
-        readonly bankName: string;
+        readonly bankName: string | null | undefined;
         readonly internalID: string;
         readonly last4: string;
         readonly type: BankAccountTypes;
