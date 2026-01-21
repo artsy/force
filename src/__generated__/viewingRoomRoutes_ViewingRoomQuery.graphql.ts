@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c59b8c7b9cdc19aedbf970d1b6b24d58>>
+ * @generated SignedSource<<a89f2cce5e837f9fbf3f07512c7038e6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -100,7 +100,6 @@ return {
             "name": "title",
             "storageKey": null
           },
-          (v2/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -185,6 +184,7 @@ return {
             "name": "distanceToClose",
             "storageKey": null
           },
+          (v2/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -213,12 +213,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "4bf9d96b08de733a6ef6f94b95a2749c",
+    "cacheID": "cfb8eb1e126247a856f9792e8389ab4a",
     "id": null,
     "metadata": {},
     "name": "viewingRoomRoutes_ViewingRoomQuery",
     "operationKind": "query",
-    "text": "query viewingRoomRoutes_ViewingRoomQuery(\n  $slug: ID!\n) @cacheable {\n  viewingRoom(id: $slug) @principalField {\n    ...ViewingRoomApp_viewingRoom\n  }\n}\n\nfragment ViewingRoomApp_viewingRoom on ViewingRoom {\n  ...ViewingRoomMeta_viewingRoom\n  ...ViewingRoomHeader_viewingRoom\n  ...ViewingRoomContentNotAccessible_viewingRoom\n  ...ViewingRoomStructuredData_viewingRoom\n  internalID\n  status\n  partner {\n    internalID\n    id\n  }\n}\n\nfragment ViewingRoomContentNotAccessible_viewingRoom on ViewingRoom {\n  status\n  partner {\n    href\n    id\n  }\n}\n\nfragment ViewingRoomHeader_viewingRoom on ViewingRoom {\n  image {\n    imageURLs {\n      normalized\n    }\n  }\n  title\n  partner {\n    name\n    href\n    id\n  }\n  distanceToOpen\n  distanceToClose\n  status\n}\n\nfragment ViewingRoomMeta_viewingRoom on ViewingRoom {\n  title\n  href\n  pullQuote\n  status\n  image {\n    imageURLs {\n      normalized\n    }\n  }\n}\n\nfragment ViewingRoomStructuredData_viewingRoom on ViewingRoom {\n  title\n  href\n  introStatement\n  startAt\n  endAt\n  status\n  image {\n    imageURLs {\n      normalized\n    }\n  }\n  partner {\n    name\n    href\n    id\n  }\n}\n"
+    "text": "query viewingRoomRoutes_ViewingRoomQuery(\n  $slug: ID!\n) @cacheable {\n  viewingRoom(id: $slug) @principalField {\n    ...ViewingRoomApp_viewingRoom\n  }\n}\n\nfragment ViewingRoomApp_viewingRoom on ViewingRoom {\n  ...ViewingRoomMeta_viewingRoom\n  ...ViewingRoomHeader_viewingRoom\n  ...ViewingRoomContentNotAccessible_viewingRoom\n  ...ViewingRoomStructuredData_viewingRoom\n  internalID\n  status\n  partner {\n    internalID\n    id\n  }\n}\n\nfragment ViewingRoomContentNotAccessible_viewingRoom on ViewingRoom {\n  status\n  partner {\n    href\n    id\n  }\n}\n\nfragment ViewingRoomHeader_viewingRoom on ViewingRoom {\n  image {\n    imageURLs {\n      normalized\n    }\n  }\n  title\n  partner {\n    name\n    href\n    id\n  }\n  distanceToOpen\n  distanceToClose\n  status\n}\n\nfragment ViewingRoomMeta_viewingRoom on ViewingRoom {\n  title\n  pullQuote\n  status\n  image {\n    imageURLs {\n      normalized\n    }\n  }\n}\n\nfragment ViewingRoomStructuredData_viewingRoom on ViewingRoom {\n  title\n  href\n  introStatement\n  startAt\n  endAt\n  status\n  image {\n    imageURLs {\n      normalized\n    }\n  }\n  partner {\n    name\n    href\n    id\n  }\n}\n"
   }
 };
 })();

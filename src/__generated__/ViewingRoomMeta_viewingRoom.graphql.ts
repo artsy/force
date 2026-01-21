@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1da58f876049d867a8afe28d699c4774>>
+ * @generated SignedSource<<f371f75965c2563d4d8021fb671e5614>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,6 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ViewingRoomMeta_viewingRoom$data = {
-  readonly href: string | null | undefined;
   readonly image: {
     readonly imageURLs: {
       readonly normalized: string | null | undefined;
@@ -38,13 +37,6 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "title",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "href",
       "storageKey": null
     },
     {
@@ -95,6 +87,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "b237dcb7784ce0afbca069eae4efd361";
+(node as any).hash = "66496f921ba4562c31762d5a8ce06542";
 
 export default node;

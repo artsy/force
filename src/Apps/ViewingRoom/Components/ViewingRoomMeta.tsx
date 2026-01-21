@@ -1,3 +1,4 @@
+import { useRouter } from "System/Hooks/useRouter"
 import { getENV } from "Utils/getENV"
 import { cropped } from "Utils/resized"
 import type { ViewingRoomMeta_viewingRoom$data } from "__generated__/ViewingRoomMeta_viewingRoom.graphql"
@@ -12,8 +13,14 @@ interface ViewingRoomMetaProps {
 const ViewingRoomMeta: React.FC<
   React.PropsWithChildren<ViewingRoomMetaProps>
 > = ({ viewingRoom }) => {
+  const {
+    match: {
+      location: { pathname },
+    },
+  } = useRouter()
+
   const title = `${viewingRoom.title} | Artsy`
-  const href = `${getENV("APP_URL")}${viewingRoom.href}`
+  const href = `${getENV("APP_URL")}${pathname}`
   const description = viewingRoom.pullQuote
   const src = viewingRoom.image?.imageURLs?.normalized
     ? cropped(viewingRoom.image?.imageURLs?.normalized, {
@@ -67,7 +74,6 @@ export const ViewingRoomMetaFragmentContainer = createFragmentContainer(
     viewingRoom: graphql`
       fragment ViewingRoomMeta_viewingRoom on ViewingRoom {
         title
-        href
         pullQuote
         status
         image {
