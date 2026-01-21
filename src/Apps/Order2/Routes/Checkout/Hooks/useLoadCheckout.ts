@@ -38,7 +38,7 @@ export const useLoadCheckout = (order: useLoadCheckout_order$key) => {
     steps,
   } = useCheckoutContext()
 
-  const { checkoutModalError, setCheckoutModalError } = useCheckoutModal()
+  const { checkoutModalError, showCheckoutErrorModal } = useCheckoutModal()
 
   // Handle Stripe redirect and call onComplete when done
   useStripePaymentBySetupIntentId(orderData.internalID, () => {
@@ -108,9 +108,9 @@ export const useLoadCheckout = (order: useLoadCheckout_order$key) => {
       setOrderValidated(true)
     } catch (error) {
       logger.error("Error validating order: ", error.message)
-      setCheckoutModalError(error.message)
+      showCheckoutErrorModal(error.message)
     }
-  }, [orderData, orderValidated, setCheckoutModalError])
+  }, [orderData, orderValidated, showCheckoutErrorModal])
 
   // Set minimum loading duration to avoid flash of loading state
   useEffect(() => {
@@ -149,7 +149,7 @@ export const useLoadCheckout = (order: useLoadCheckout_order$key) => {
         )
 
         logger.error(error)
-        setCheckoutModalError(CheckoutModalError.LOADING_TIMEOUT)
+        showCheckoutErrorModal(CheckoutModalError.LOADING_TIMEOUT)
       }
     }, MAX_LOADING_MS)
     return () => clearTimeout(timeout)

@@ -35,7 +35,7 @@ const mockLogger = loggerFactory()
 jest.useFakeTimers()
 
 const mockSetLoadingComplete = jest.fn()
-const mockSetCheckoutModalError = jest.fn()
+const mockShowCheckoutErrorModal = jest.fn()
 
 const { useFragment } = jest.requireMock("react-relay")
 const { useCheckoutContext } = jest.requireMock(
@@ -94,7 +94,7 @@ describe("useLoadCheckout", () => {
     // Mock useCheckoutModal
     useCheckoutModal.mockReturnValue({
       checkoutModalError: null,
-      setCheckoutModalError: mockSetCheckoutModalError,
+      showCheckoutErrorModal: mockShowCheckoutErrorModal,
     })
   })
 
@@ -159,7 +159,7 @@ describe("useLoadCheckout", () => {
       renderHook(() => useLoadCheckout(mockOrder))
 
       await waitFor(() => {
-        expect(mockSetCheckoutModalError).not.toHaveBeenCalled()
+        expect(mockShowCheckoutErrorModal).not.toHaveBeenCalled()
       })
     })
 
@@ -174,7 +174,7 @@ describe("useLoadCheckout", () => {
       renderHook(() => useLoadCheckout(mockOrder))
 
       await waitFor(() => {
-        expect(mockSetCheckoutModalError).toHaveBeenCalledWith(
+        expect(mockShowCheckoutErrorModal).toHaveBeenCalledWith(
           "missing_line_item_data",
         )
       })
@@ -191,7 +191,7 @@ describe("useLoadCheckout", () => {
       renderHook(() => useLoadCheckout(mockOrder))
 
       await waitFor(() => {
-        expect(mockSetCheckoutModalError).toHaveBeenCalledWith(
+        expect(mockShowCheckoutErrorModal).toHaveBeenCalledWith(
           "missing_line_item_data",
         )
       })
@@ -207,7 +207,7 @@ describe("useLoadCheckout", () => {
       })
 
       await waitFor(() => {
-        expect(mockSetCheckoutModalError).toHaveBeenCalledWith(
+        expect(mockShowCheckoutErrorModal).toHaveBeenCalledWith(
           "loading_timeout",
         )
       })
@@ -253,7 +253,7 @@ describe("useLoadCheckout", () => {
       await waitFor(() => {
         expect(mockSetLoadingComplete).toHaveBeenCalled()
       })
-      expect(mockSetCheckoutModalError).not.toHaveBeenCalled()
+      expect(mockShowCheckoutErrorModal).not.toHaveBeenCalled()
     })
   })
 
@@ -317,7 +317,7 @@ describe("useLoadCheckout", () => {
       })
       useCheckoutModal.mockReturnValue({
         checkoutModalError: "loading_timeout",
-        setCheckoutModalError: mockSetCheckoutModalError,
+        showCheckoutErrorModal: mockShowCheckoutErrorModal,
       })
 
       renderHook(() => useLoadCheckout(mockOrder))

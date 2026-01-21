@@ -63,7 +63,8 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
     checkoutTracking,
   } = useCheckoutContext()
 
-  const { checkoutModalError } = useCheckoutModal()
+  const { checkoutModalError, checkoutModalTitle, checkoutModalDescription } =
+    useCheckoutModal()
 
   // Load checkout and manage window side effects
   useLoadCheckout(orderData)
@@ -200,7 +201,11 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
           </Box>
         </Column>
       </GridColumns>
-      <CheckoutModal error={checkoutModalError} />
+      <CheckoutModal
+        error={checkoutModalError}
+        overrideTitle={checkoutModalTitle}
+        overrideDescription={checkoutModalDescription}
+      />
     </>
   )
 }

@@ -46,9 +46,11 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
     redirectToOrderDetails,
     checkoutTracking,
     artworkPath,
+    editPayment,
+    setStepErrorMessage,
   } = useCheckoutContext()
 
-  const { setCheckoutModalError } = useCheckoutModal()
+  const { showCheckoutErrorModal } = useCheckoutModal()
 
   const artworkData = extractLineItemMetadata(orderData.lineItems[0]!)
   const { dimensionsLabel } = useArtworkDimensions(artworkData.dimensions)
@@ -59,6 +61,17 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
 
   const [loading, setLoading] = useState(false)
 
+  const showPaymentError = () => {
+    editPayment()
+    setStepErrorMessage({
+      step: CheckoutStepName.PAYMENT,
+      error: {
+        title: "Payment error",
+        message: "Please update your payment method",
+      },
+    })
+  }
+
   const handleSubmitError = (error: any) => {
     logger.error({
       ...error,
@@ -67,16 +80,21 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
     })
 
     if (error.code === "insufficient_inventory") {
-      setCheckoutModalError(CheckoutModalError.ARTWORK_NOT_FOR_SALE)
+      showCheckoutErrorModal(CheckoutModalError.ARTWORK_NOT_FOR_SALE)
       return
     }
 
     if (error.code === "stripe_error") {
-      setCheckoutModalError(CheckoutModalError.STRIPE_AUTHENTICATION_FAILURE)
+      showCheckoutErrorModal(
+        CheckoutModalError.STRIPE_ERROR,
+        "An error occurred while processing your payment",
+        error.message,
+        showPaymentError,
+      )
       return
     }
 
-    setCheckoutModalError(CheckoutModalError.SUBMIT_ERROR)
+    showCheckoutErrorModal(CheckoutModalError.SUBMIT_ERROR)
   }
 
   const handleSubmit = async (confirmedSetupIntentId?: any) => {
