@@ -1,19 +1,26 @@
 import { Button, Flex, ModalDialog, Text } from "@artsy/palette"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useRouter } from "System/Hooks/useRouter"
+import { CheckoutStepName } from "../CheckoutContext/types"
 
 export enum CheckoutModalError {
   LOADING_TIMEOUT = "loading_timeout",
   ARTWORK_VERSION_MISMATCH = "artwork_version_mismatch",
   ARTWORK_NOT_FOR_SALE = "artwork_not_for_sale",
   SUBMIT_ERROR = "submit_error",
+  STRIPE_AUTHENTICATION_FAILURE = "stripe_authentication_failure",
   OTHER_ERROR = "other_error",
 }
 
 export const CheckoutModal: React.FC<{
   error: CheckoutModalError | null
 }> = ({ error }) => {
-  const { artworkPath, setCheckoutModalError } = useCheckoutContext()
+  const {
+    artworkPath,
+    setCheckoutModalError,
+    setStepErrorMessage,
+    editPayment,
+  } = useCheckoutContext()
   const { router } = useRouter()
 
   if (!error) {
@@ -27,6 +34,7 @@ export const CheckoutModal: React.FC<{
   // Determine modal behavior based on error type
   let canReload = false
   let canDismiss = false
+  let onDismiss = () => {}
 
   let title = "Checkout Error"
   let description: string
@@ -51,6 +59,22 @@ export const CheckoutModal: React.FC<{
         "Something went wrong while submitting your order. Please try again."
       canDismiss = true
       break
+    case CheckoutModalError.STRIPE_AUTHENTICATION_FAILURE:
+      title = "Payment authentication error"
+      description =
+        "We are unable to authenticate your payment method. Please choose a different payment method and try again."
+      canDismiss = true
+      onDismiss = () => {
+        editPayment()
+        setStepErrorMessage({
+          step: CheckoutStepName.PAYMENT,
+          error: {
+            title: "Payment error",
+            message: "Please update your payment method",
+          },
+        })
+      }
+      break
     default:
       description =
         "There was an error with your checkout. Please return to the artwork and try again."
@@ -59,6 +83,9 @@ export const CheckoutModal: React.FC<{
   const handleClose = () => {
     if (canDismiss) {
       setCheckoutModalError(null)
+      if (onDismiss) {
+        onDismiss()
+      }
     } else {
       router.replace(artworkPath)
     }
