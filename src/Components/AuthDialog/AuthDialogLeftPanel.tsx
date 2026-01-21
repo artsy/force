@@ -53,31 +53,23 @@ export const AuthDialogLeftPanel: FC<React.PropsWithChildren> = () => {
     )
   }
 
-  if (!!options.imageUrl && options.placeholder) {
+  if (!!options.imageUrl) {
     const img = resized(options.imageUrl, {
       width: MODAL_WIDTH / 2,
       quality: 80,
     })
 
     return (
-      <Box
-        display={["none", "block"]}
-        position="relative"
-        width="100%"
-        height="100%"
-      >
+      <Box display={["none", "block"]} width="100%" position="relative">
         {options.placeholder && (
-          <AuthDialogLeftPanelImagePlaceholder
-            key={options.placeholder}
-            src={options.placeholder}
-          />
+          <AuthDialogLeftPanelImagePlaceholder src={options.placeholder} />
         )}
         <Image
           {...img}
           width="100%"
           height="100%"
-          fetchPriority={"high"}
-          alt=""
+          fetchPriority="high"
+          alt="Artwork image"
           style={{
             objectFit: "contain",
             position: "absolute",

@@ -70,7 +70,7 @@ export const AuthDialog: FC<React.PropsWithChildren<AuthDialogProps>> = ({
 
 export const AuthDialogView: FC<React.PropsWithChildren<unknown>> = () => {
   const { state } = useAuthDialogContext()
-  console.log("LOGD state.mode:", state.mode)
+
   switch (state.mode) {
     case "Login":
       return <AuthDialogLogin />
