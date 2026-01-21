@@ -87,6 +87,7 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
         oneTimeUse?: boolean
       } = {
         id: orderData.internalID,
+        oneTimeUse: !savePaymentMethod,
       }
 
       if (isOffer) {
@@ -99,7 +100,6 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
         }
       } else {
         input.confirmationToken = orderData.stripeConfirmationToken ?? undefined
-        input.oneTimeUse = !savePaymentMethod
       }
 
       const submitOrderResult = await submitOrderMutation.submitMutation({
