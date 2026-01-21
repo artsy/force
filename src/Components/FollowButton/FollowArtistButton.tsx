@@ -199,7 +199,7 @@ export const FollowArtistButtonFragmentContainer = createFragmentContainer(
         }
         coverArtwork {
           image {
-            url(version: "large")
+            url(version: "main")
             aspectRatio
           }
         }

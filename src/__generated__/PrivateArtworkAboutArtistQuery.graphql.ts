@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<73eceebb4cbf3a0e75c7026b877f17f4>>
+ * @generated SignedSource<<bd11f079040fcdb98c252290659a6fd5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -162,12 +162,12 @@ return {
                           {
                             "kind": "Literal",
                             "name": "version",
-                            "value": "large"
+                            "value": "main"
                           }
                         ],
                         "kind": "ScalarField",
                         "name": "url",
-                        "storageKey": "url(version:\"large\")"
+                        "storageKey": "url(version:\"main\")"
                       },
                       {
                         "alias": null,
@@ -279,12 +279,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "4da5e55cc1bcc4f02f67223bbe1eb5ba",
+    "cacheID": "fc62e426695cdd33cba235b56ec7daa4",
     "id": null,
     "metadata": {},
     "name": "PrivateArtworkAboutArtistQuery",
     "operationKind": "query",
-    "text": "query PrivateArtworkAboutArtistQuery {\n  artwork(id: \"foo\") {\n    ...PrivateArtworkAboutArtist_artwork\n    id\n  }\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  slug\n  name\n  internalID\n  counts {\n    follows\n  }\n  coverArtwork {\n    image {\n      url(version: \"large\")\n      aspectRatio\n    }\n    id\n  }\n}\n\nfragment PrivateArtworkAboutArtist_artwork on Artwork {\n  displayArtistBio\n  slug\n  artists(shallow: true) {\n    ...FollowArtistButton_artist\n    internalID\n    href\n    slug\n    name\n    initials\n    formattedNationalityAndBirthday\n    counts {\n      follows\n    }\n    coverArtwork {\n      image {\n        cropped(width: 145, height: 145) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    biographyBlurb(format: HTML, partnerBio: false) {\n      text\n    }\n    id\n  }\n}\n"
+    "text": "query PrivateArtworkAboutArtistQuery {\n  artwork(id: \"foo\") {\n    ...PrivateArtworkAboutArtist_artwork\n    id\n  }\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  slug\n  name\n  internalID\n  counts {\n    follows\n  }\n  coverArtwork {\n    image {\n      url(version: \"main\")\n      aspectRatio\n    }\n    id\n  }\n}\n\nfragment PrivateArtworkAboutArtist_artwork on Artwork {\n  displayArtistBio\n  slug\n  artists(shallow: true) {\n    ...FollowArtistButton_artist\n    internalID\n    href\n    slug\n    name\n    initials\n    formattedNationalityAndBirthday\n    counts {\n      follows\n    }\n    coverArtwork {\n      image {\n        cropped(width: 145, height: 145) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    biographyBlurb(format: HTML, partnerBio: false) {\n      text\n    }\n    id\n  }\n}\n"
   }
 };
 })();

@@ -45,6 +45,7 @@ export const AuthDialogLeftPanel: FC<React.PropsWithChildren> = () => {
         <Image
           {...resized(IMAGE.src, { width: MODAL_WIDTH / 2 })}
           width="100%"
+          minHeight={750}
           height="100%"
           lazyLoad
           alt=""
@@ -207,7 +208,6 @@ const COLUMN_WIDTH =
 //   height: IMAGE_HEIGHT,
 //   src: "https://files.artsy.net/images/signup-gallery.png",
 // }
-const PX_PER_SEC = 200
 
 const MovingImage = styled(Image)<{ $pan: ReturnType<typeof keyframes> }>`
   position: absolute;
@@ -234,8 +234,10 @@ const MovingImageMeasured: FC<{
     height: 0,
   })
 
-  const width = (MODAL_WIDTH / 2) * 1.4
-  const height = width / aspectRatio
+  // const width = (MODAL_WIDTH / 2) * 1.4
+  // const height = width / aspectRatio
+  const height = 750 * 1.4
+  const width = height * aspectRatio
 
   const handleOnViewportResize = useCallback(() => {
     if (!viewportRef.current) {
@@ -257,8 +259,8 @@ const MovingImageMeasured: FC<{
 
   const tx = Math.max(0, width - viewportGeometry.width)
   const ty = Math.max(0, height - viewportGeometry.height)
-  const total = 2 * (tx + ty)
-  const durationSec = Math.max(10, total / PX_PER_SEC)
+  // const total = 2 * (tx + ty)
+  const durationSec = 250
   const pan = useMemo(() => makeClockwisePan(tx, ty), [tx, ty])
 
   // Calculate overflow and set CSS vars

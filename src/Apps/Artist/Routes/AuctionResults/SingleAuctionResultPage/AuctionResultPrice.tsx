@@ -158,7 +158,7 @@ const auctionResultPriceFragment = graphql`
     isUpcoming
     images {
       larger {
-        url
+        url(version: "main")
         aspectRatio
       }
     }

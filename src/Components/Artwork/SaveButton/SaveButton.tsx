@@ -153,7 +153,7 @@ export const SaveButtonFragmentContainer = createFragmentContainer(SaveButton, {
       isSaved
       title
       image {
-        url(version: "large")
+        url(version: "main")
         aspectRatio
       }
       collectorSignals {

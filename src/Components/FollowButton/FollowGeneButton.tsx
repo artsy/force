@@ -124,7 +124,7 @@ export const FollowGeneButtonFragmentContainer = createFragmentContainer(
         internalID
         isFollowed @include(if: $isLoggedIn)
         image {
-          url(version: "large")
+          url(version: "main")
           aspectRatio
         }
       }

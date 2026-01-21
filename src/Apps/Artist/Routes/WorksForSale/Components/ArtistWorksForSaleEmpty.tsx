@@ -43,7 +43,7 @@ export const ArtistWorksForSaleEmptyFragmentContainer = createFragmentContainer(
         name
         coverArtwork {
           image {
-            url(version: "large")
+            url(version: "main")
             aspectRatio
           }
         }

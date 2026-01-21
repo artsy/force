@@ -496,7 +496,7 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
         }
         coverArtwork {
           image {
-            url(version: "large")
+            url(version: "main")
             aspectRatio
           }
         }

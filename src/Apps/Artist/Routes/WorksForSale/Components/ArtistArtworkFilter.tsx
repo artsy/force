@@ -143,7 +143,7 @@ export const ArtistArtworkFilterRefetchContainer = createRefetchContainer(
         }
         coverArtwork {
           image {
-            url(version: "large")
+            url(version: "main")
             aspectRatio
           }
         }

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0be753a2a5ce7acec497bfdce9c5e040>>
+ * @generated SignedSource<<fd4751a73781bedc6a16694fad4a8243>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -213,12 +213,12 @@ return {
                       {
                         "kind": "Literal",
                         "name": "version",
-                        "value": "large"
+                        "value": "main"
                       }
                     ],
                     "kind": "ScalarField",
                     "name": "url",
-                    "storageKey": "url(version:\"large\")"
+                    "storageKey": "url(version:\"main\")"
                   },
                   {
                     "alias": null,
@@ -240,7 +240,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "4294c54b9a4a7e3eb63f607e657b8d31",
+    "cacheID": "e4daaca4c5ad0f152427fc264ff9d11f",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -315,7 +315,7 @@ return {
     },
     "name": "FollowArtistButton_Test_Query",
     "operationKind": "query",
-    "text": "query FollowArtistButton_Test_Query {\n  me {\n    ...FollowArtistButton_me\n    id\n  }\n  artist(id: \"example\") {\n    ...FollowArtistButton_artist_2OV785\n    id\n  }\n}\n\nfragment FollowArtistButton_artist_2OV785 on Artist {\n  id\n  slug\n  name\n  internalID\n  isFollowed\n  counts {\n    follows\n  }\n  coverArtwork {\n    image {\n      url(version: \"large\")\n      aspectRatio\n    }\n    id\n  }\n}\n\nfragment FollowArtistButton_me on Me {\n  id\n  counts {\n    followedArtists\n  }\n}\n"
+    "text": "query FollowArtistButton_Test_Query {\n  me {\n    ...FollowArtistButton_me\n    id\n  }\n  artist(id: \"example\") {\n    ...FollowArtistButton_artist_2OV785\n    id\n  }\n}\n\nfragment FollowArtistButton_artist_2OV785 on Artist {\n  id\n  slug\n  name\n  internalID\n  isFollowed\n  counts {\n    follows\n  }\n  coverArtwork {\n    image {\n      url(version: \"main\")\n      aspectRatio\n    }\n    id\n  }\n}\n\nfragment FollowArtistButton_me on Me {\n  id\n  counts {\n    followedArtists\n  }\n}\n"
   }
 };
 })();
