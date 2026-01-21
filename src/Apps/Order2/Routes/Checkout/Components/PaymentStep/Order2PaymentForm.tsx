@@ -84,6 +84,43 @@ const getTotalForPayment = (
   return null
 }
 
+const getBaseStripeOptions = (
+  mode: Order2PaymentForm_order$data["mode"],
+  total: { minor: number; currencyCode: string },
+  merchantAccountExternalId: string | undefined,
+) => {
+  const sharedOptions = {
+    currency: total.currencyCode.toLowerCase(),
+    setupFutureUsage: "off_session" as const,
+    captureMethod: "automatic" as const,
+    paymentMethodOptions: {
+      us_bank_account: {
+        verification_method: "instant" as const,
+        financial_connections: {
+          permissions: ["payment_method", "balances", "ownership"] as Array<
+            "payment_method" | "balances" | "ownership"
+          >,
+          // @ts-ignore Stripe type issue
+          prefetch: ["balances"],
+        },
+      },
+    },
+    onBehalfOf: merchantAccountExternalId,
+  }
+
+  return mode === "BUY"
+    ? {
+        ...sharedOptions,
+        mode: "payment" as const,
+        amount: total.minor,
+      }
+    : {
+        ...sharedOptions,
+        mode: "setup" as const,
+        paymentMethodTypes: ["card"],
+      }
+}
+
 interface Order2PaymentFormProps {
   order: Order2PaymentForm_order$key
   me: Order2PaymentForm_me$key
@@ -98,30 +135,22 @@ export const Order2PaymentForm: React.FC<Order2PaymentFormProps> = ({
   const stripe = useStripe()
   const { seller, mode } = orderData
 
-  const totalForPayment = getTotalForPayment(orderData)
+  const total = getTotalForPayment(orderData)
 
-  if (!totalForPayment) {
+  if (!total) {
     return null
   }
 
   const { theme } = useTheme()
 
-  const sharedOptions = {
-    currency: totalForPayment.currencyCode.toLowerCase(),
-    setupFutureUsage: "off_session" as const,
-    paymentMethodOptions: {
-      us_bank_account: {
-        verification_method: "instant" as const,
-        financial_connections: {
-          permissions: ["payment_method", "balances", "ownership"] as Array<
-            "payment_method" | "balances" | "ownership"
-          >,
-          // @ts-ignore Stripe type issue
-          prefetch: ["balances"],
-        },
-      },
-    },
-    onBehalfOf: seller?.merchantAccount?.externalId,
+  const baseOptions = getBaseStripeOptions(
+    mode,
+    total,
+    seller?.merchantAccount?.externalId,
+  )
+
+  const options: StripeElementsOptions = {
+    ...baseOptions,
     appearance: {
       variables: {
         // https://docs.stripe.com/elements/appearance-api#variables
@@ -153,19 +182,6 @@ export const Order2PaymentForm: React.FC<Order2PaymentFormProps> = ({
       },
     },
   }
-
-  const options: StripeElementsOptions =
-    mode === "BUY"
-      ? {
-          ...sharedOptions,
-          mode: "payment" as const,
-          amount: totalForPayment.minor,
-        }
-      : {
-          ...sharedOptions,
-          mode: "setup" as const,
-          paymentMethodTypes: ["card"],
-        }
 
   return (
     <Elements stripe={stripe} options={options}>
@@ -276,25 +292,18 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
 
   const resetElementsToInitialParams = useCallback(() => {
     if (!elements) return
-    elements.update({
-      mode: "payment",
-      paymentMethodOptions: {
-        us_bank_account: {
-          verification_method: "instant",
-          financial_connections: {
-            permissions: ["payment_method", "balances", "ownership"],
-            prefetch: ["balances"],
-          },
-        },
-      },
-      setupFutureUsage: "off_session",
-      // @ts-ignore Stripe type issue
-      captureMethod: null,
-      // @ts-ignore Stripe type issue
-      paymentMethodTypes: null,
-      onBehalfOf: merchantAccountExternalId,
-    })
-  }, [elements, merchantAccountExternalId])
+
+    const total = getTotalForPayment(order)
+    if (!total) return
+
+    const options = getBaseStripeOptions(
+      order.mode,
+      total,
+      merchantAccountExternalId,
+    )
+
+    elements.update(options)
+  }, [elements, merchantAccountExternalId, order])
 
   const handleError = useCallback(
     (error?: { message?: string | JSX.Element }) => {
@@ -515,7 +524,6 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         })
       } else if (selectedPaymentMethod === "stripe-ach") {
         elements.update({
-          captureMethod: "automatic",
           setupFutureUsage: null,
           mode: "setup",
           paymentMethodTypes: ["us_bank_account"],
@@ -524,7 +532,6 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         })
       } else if (selectedPaymentMethod === "stripe-sepa") {
         elements.update({
-          captureMethod: "automatic",
           setupFutureUsage: null,
           mode: "setup",
           paymentMethodTypes: ["sepa_debit"],
