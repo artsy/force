@@ -114,8 +114,7 @@ export const ArtworkFilterArtworkGridRefetchContainer = createFragmentContainer(
   ArtworkFilterArtworkGrid,
   {
     filtered_artworks: graphql`
-      fragment ArtworkFilterArtworkGrid_filtered_artworks on FilterArtworksConnection
-      @argumentDefinitions(imageQuality: { type: "[Int!]" }) {
+      fragment ArtworkFilterArtworkGrid_filtered_artworks on FilterArtworksConnection {
         id
         pageInfo {
           hasNextPage
@@ -129,7 +128,7 @@ export const ArtworkFilterArtworkGridRefetchContainer = createFragmentContainer(
             id
           }
         }
-        ...ArtworkGrid_artworks @arguments(imageQuality: $imageQuality)
+        ...ArtworkGrid_artworks
       }
     `,
   },

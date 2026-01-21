@@ -342,7 +342,6 @@ export default createFragmentContainer(withArtworkGridContext(ArtworkGrid), {
     fragment ArtworkGrid_artworks on ArtworkConnectionInterface
     @argumentDefinitions(
       includeAllImages: { type: "Boolean", defaultValue: false }
-      imageQuality: { type: "[Int!]" }
     ) {
       edges {
         node {
@@ -354,7 +353,7 @@ export default createFragmentContainer(withArtworkGridContext(ArtworkGrid), {
             aspectRatio
           }
           ...GridItem_artwork
-          ...FlatGridItem_artwork @arguments(imageQuality: $imageQuality)
+          ...FlatGridItem_artwork
         }
       }
     }

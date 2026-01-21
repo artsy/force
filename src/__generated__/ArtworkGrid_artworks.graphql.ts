@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ac8c89a4324df7334a5ba0cac7a7df2c>>
+ * @generated SignedSource<<3545391260cd0401a642e3a969fcf8a8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -32,11 +32,6 @@ export type ArtworkGrid_artworks$key = {
 
 const node: ReaderFragment = {
   "argumentDefinitions": [
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "imageQuality"
-    },
     {
       "defaultValue": false,
       "kind": "LocalArgument",
@@ -121,13 +116,7 @@ const node: ReaderFragment = {
               "name": "GridItem_artwork"
             },
             {
-              "args": [
-                {
-                  "kind": "Variable",
-                  "name": "imageQuality",
-                  "variableName": "imageQuality"
-                }
-              ],
+              "args": null,
               "kind": "FragmentSpread",
               "name": "FlatGridItem_artwork"
             }
@@ -142,6 +131,6 @@ const node: ReaderFragment = {
   "abstractKey": "__isArtworkConnectionInterface"
 };
 
-(node as any).hash = "d4216efd1729bd29c12ca67754c8e5ce";
+(node as any).hash = "06779604fb6132105ed09f08851b1eba";
 
 export default node;

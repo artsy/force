@@ -114,7 +114,6 @@ export const ShowArtworksRefetchContainer = createRefetchContainer(
             total(format: "0,0")
           }
           ...ArtworkFilterArtworkGrid_filtered_artworks
-            @arguments(imageQuality: [85])
           ...ImmersiveView_filtered_artworks
         }
       }
