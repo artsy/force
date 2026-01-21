@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d98862cb8260707275fca40437ea8e16>>
+ * @generated SignedSource<<074bec3d099ad4a157ab8e06cf313423>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -180,6 +180,22 @@ return {
                 "kind": "ScalarField",
                 "name": "url",
                 "storageKey": "url(version:\"large\")"
+              },
+              {
+                "alias": "placeholder",
+                "args": [
+                  {
+                    "kind": "Literal",
+                    "name": "version",
+                    "value": [
+                      "small",
+                      "medium"
+                    ]
+                  }
+                ],
+                "kind": "ScalarField",
+                "name": "url",
+                "storageKey": "url(version:[\"small\",\"medium\"])"
               }
             ],
             "storageKey": null
@@ -247,7 +263,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "515a9d05e48285a5b0242dc53d3c9fbe",
+    "cacheID": "8724f4c9c5246ecc0687e7cd0c42bea4",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -281,6 +297,7 @@ return {
         "artwork.date": (v1/*: any*/),
         "artwork.id": (v3/*: any*/),
         "artwork.image": (v4/*: any*/),
+        "artwork.image.placeholder": (v1/*: any*/),
         "artwork.image.url": (v1/*: any*/),
         "artwork.internalID": (v3/*: any*/),
         "artwork.isInAuction": {
@@ -298,7 +315,7 @@ return {
     },
     "name": "SaveArtworkToListsButton_Test_Query",
     "operationKind": "query",
-    "text": "query SaveArtworkToListsButton_Test_Query {\n  artwork(id: \"artworkID\") {\n    ...SaveArtworkToListsButton_artwork\n    id\n  }\n}\n\nfragment SaveArtworkToListsButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  title\n  date\n  artistNames\n  preview: image {\n    url(version: \"square\")\n  }\n  image {\n    url(version: \"large\")\n  }\n  isInAuction\n  isSavedToAnyList\n  collectorSignals {\n    auction {\n      lotWatcherCount\n      lotClosesAt\n      liveBiddingStarted\n    }\n  }\n}\n"
+    "text": "query SaveArtworkToListsButton_Test_Query {\n  artwork(id: \"artworkID\") {\n    ...SaveArtworkToListsButton_artwork\n    id\n  }\n}\n\nfragment SaveArtworkToListsButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  title\n  date\n  artistNames\n  preview: image {\n    url(version: \"square\")\n  }\n  image {\n    url(version: \"large\")\n    placeholder: url(version: [\"small\", \"medium\"])\n  }\n  isInAuction\n  isSavedToAnyList\n  collectorSignals {\n    auction {\n      lotWatcherCount\n      lotClosesAt\n      liveBiddingStarted\n    }\n  }\n}\n"
   }
 };
 })();

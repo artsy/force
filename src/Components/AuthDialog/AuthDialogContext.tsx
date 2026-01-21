@@ -16,7 +16,7 @@ import {
   getResizedAuthDialogImages,
 } from "Components/AuthDialog/Utils/authDialogConstants"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { prefetchUrl, prefetchUrlWithSizes } from "System/Utils/prefetchUrl"
+import { prefetchUrlWithSizes } from "System/Utils/prefetchUrl"
 import type { AfterAuthAction } from "Utils/Hooks/useAuthIntent"
 import { getENV } from "Utils/getENV"
 import { merge } from "lodash"
@@ -57,6 +57,8 @@ export type AuthDialogOptions = {
   image?: boolean
   /** Custom desired image url to be displayed */
   imageUrl?: string | null
+  /** Custom placeholder image url to be displayed while the main image loads */
+  placeholder?: string | null
   /** Applies to SignUp or Login, not ForgotPassword */
   afterAuthAction?: AfterAuthAction
   /** Applies to SignUp or Login, not ForgotPassword */
@@ -188,10 +190,6 @@ export const AuthDialogProvider: FC<
       mode?: AuthDialogMode
       options?: AuthDialogOptions
     }) => {
-      if (!isLoggedIn && options?.imageUrl) {
-        // Prefetch custom image if provided
-        prefetchUrl(options.imageUrl)
-      }
       if (isLoggedIn) {
         sendToast({
           variant: "message",

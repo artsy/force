@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b7143b15a591bf02d2e1718d4361f5c1>>
+ * @generated SignedSource<<fc75abb1c685a41dd170da446d5c737c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -22,6 +22,7 @@ export type SaveArtworkToListsButton_artwork$data = {
   readonly date: string | null | undefined;
   readonly id: string;
   readonly image: {
+    readonly placeholder: string | null | undefined;
     readonly url: string | null | undefined;
   } | null | undefined;
   readonly internalID: string;
@@ -131,6 +132,22 @@ const node: ReaderFragment = {
           "kind": "ScalarField",
           "name": "url",
           "storageKey": "url(version:\"large\")"
+        },
+        {
+          "alias": "placeholder",
+          "args": [
+            {
+              "kind": "Literal",
+              "name": "version",
+              "value": [
+                "small",
+                "medium"
+              ]
+            }
+          ],
+          "kind": "ScalarField",
+          "name": "url",
+          "storageKey": "url(version:[\"small\",\"medium\"])"
         }
       ],
       "storageKey": null
@@ -197,6 +214,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "d19178deed43fbe7fb0b5fec090fc521";
+(node as any).hash = "f04651d9ef47ab42a53df3c910af0e52";
 
 export default node;

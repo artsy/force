@@ -19,6 +19,7 @@ interface UseSaveArtwork {
   artwork: Artwork
   contextModule: AuthContextModule
   imageUrl?: string | null
+  placeholder?: string | null
   onSave?({ action, artwork }: { action: string; artwork: Artwork }): void
 }
 
@@ -27,6 +28,7 @@ export const useSaveArtwork = ({
   artwork,
   contextModule,
   imageUrl,
+  placeholder,
   onSave,
 }: UseSaveArtwork) => {
   const { relayEnvironment, isLoggedIn } = useSystemContext()
@@ -85,6 +87,7 @@ export const useSaveArtwork = ({
             objectId: artwork.internalID,
           },
           imageUrl,
+          placeholder,
         },
         analytics: {
           intent: Intent.saveArtwork,

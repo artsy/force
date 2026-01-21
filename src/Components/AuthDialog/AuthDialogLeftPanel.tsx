@@ -11,6 +11,7 @@ import {
 } from "@artsy/palette"
 import { useFlag } from "@unleash/proxy-client-react"
 import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
+import { AuthDialogLeftPanelImagePlaceholder } from "Components/AuthDialog/AuthDialogLeftPanelImagePlaceholder"
 import {
   DEFAULT_IMAGES,
   IMAGE,
@@ -52,14 +53,25 @@ export const AuthDialogLeftPanel: FC<React.PropsWithChildren> = () => {
     )
   }
 
-  if (!!options.imageUrl) {
+  if (!!options.imageUrl && options.placeholder) {
     const img = resized(options.imageUrl, {
       width: MODAL_WIDTH / 2,
       quality: 80,
     })
 
     return (
-      <Box display={["none", "block"]} width="100%" overflow="hidden">
+      <Box
+        display={["none", "block"]}
+        position="relative"
+        width="100%"
+        height="100%"
+      >
+        {options.placeholder && (
+          <AuthDialogLeftPanelImagePlaceholder
+            key={options.placeholder}
+            src={options.placeholder}
+          />
+        )}
         <Image
           {...img}
           width="100%"
@@ -68,6 +80,10 @@ export const AuthDialogLeftPanel: FC<React.PropsWithChildren> = () => {
           alt=""
           style={{
             objectFit: "contain",
+            position: "absolute",
+            top: 0,
+            left: 0,
+            zIndex: 1,
           }}
         />
       </Box>
