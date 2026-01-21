@@ -180,6 +180,7 @@ const ArtworkGridItemImage: React.FC<
     ? transform(imageURL, {
         width,
         height,
+        quality: 85,
       })
     : { src: "", srcSet: "" }
 

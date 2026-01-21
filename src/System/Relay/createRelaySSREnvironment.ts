@@ -63,9 +63,9 @@ export function createRelaySSREnvironment(config: Config = {}) {
   } = config
 
   /**
-   * Lazy load these here so we can safely ignore the server module from client
-   * bundles without that leading to an exception trying to import it
-   * unconditionally at the top-level.
+   * Load client/server SSR middleware.
+   * Note: On the client, the server module is aliased to a stub (see rsbuild.config.ts)
+   * to avoid bundling the heavy `graphql` dependency (~1MB).
    */
   const relaySSRMiddleware = isServer
     ? new (require("react-relay-network-modern-ssr/node8/server").default)()

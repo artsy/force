@@ -18,6 +18,11 @@ export default defineConfig({
         entry: {
           index: "./src/client.tsx",
         },
+        alias: {
+          // Replace server-only SSR module with stub on client
+          "react-relay-network-modern-ssr/node8/server":
+            "./src/System/Relay/RelayServerSSRStub.ts",
+        },
       },
       output: {
         target: "web",
