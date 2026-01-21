@@ -5,7 +5,6 @@ interface CheckoutModalContextValue {
   checkoutModalError: CheckoutModalError | null
   checkoutModalTitle?: string
   checkoutModalDescription?: string
-  onClose?: () => void
   showCheckoutErrorModal: (
     error: CheckoutModalError,
     title?: string,
@@ -61,7 +60,6 @@ export const CheckoutModalProvider: React.FC<{
         checkoutModalError,
         checkoutModalTitle,
         checkoutModalDescription,
-        onClose,
         showCheckoutErrorModal,
         dismissCheckoutErrorModal,
       }}
