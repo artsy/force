@@ -185,7 +185,7 @@ describe("Order2ReviewStep", () => {
       expect(secondCallArgs.variables.input.offerID).toBe("offer-id")
     })
 
-    it("includes oneTimeUse in offer order submission", async () => {
+    it("includes oneTimeUse when submitting offer with new payment method", async () => {
       mockSubmitOrderMutation.submitMutation.mockResolvedValueOnce({
         submitOrder: {
           orderOrError: {
@@ -213,8 +213,41 @@ describe("Order2ReviewStep", () => {
       const callArgs = mockSubmitOrderMutation.submitMutation.mock.calls[0][0]
       const input = callArgs.variables.input
 
-      // Verify oneTimeUse is set for offer orders
+      // Verify oneTimeUse is set for new payment methods (has confirmationToken)
       expect(input.oneTimeUse).toBe(true) // savePaymentMethod is false by default
+      expect(input.offerID).toBe("offer-id")
+    })
+
+    it("omits oneTimeUse when submitting offer with saved payment method", async () => {
+      mockSubmitOrderMutation.submitMutation.mockResolvedValueOnce({
+        submitOrder: {
+          orderOrError: {
+            __typename: "OrderMutationSuccess",
+            order: {
+              internalID: "order-id",
+            },
+          },
+        },
+      })
+
+      renderWithRelay({
+        Me: () => ({
+          order: createOfferOrder({ stripeConfirmationToken: null }),
+        }),
+      })
+
+      const submitButton = screen.getByText("Submit")
+      await userEvent.click(submitButton)
+
+      await waitFor(() => {
+        expect(mockSubmitOrderMutation.submitMutation).toHaveBeenCalledTimes(1)
+      })
+
+      const callArgs = mockSubmitOrderMutation.submitMutation.mock.calls[0][0]
+      const input = callArgs.variables.input
+
+      // Verify oneTimeUse is NOT set for saved payment methods (no confirmationToken)
+      expect(input.oneTimeUse).toBeUndefined()
       expect(input.offerID).toBe("offer-id")
       expect(input.confirmationToken).toBeUndefined()
     })
@@ -255,7 +288,7 @@ describe("Order2ReviewStep", () => {
   })
 
   describe("Submitting a buy order", () => {
-    it("includes oneTimeUse in buy order submission", async () => {
+    it("includes oneTimeUse when submitting buy order with new payment method", async () => {
       mockSubmitOrderMutation.submitMutation.mockResolvedValueOnce({
         submitOrder: {
           orderOrError: {
@@ -283,10 +316,79 @@ describe("Order2ReviewStep", () => {
       const callArgs = mockSubmitOrderMutation.submitMutation.mock.calls[0][0]
       const input = callArgs.variables.input
 
-      // Verify oneTimeUse is set for buy orders
+      // Verify oneTimeUse is set for new payment methods (has confirmationToken)
       expect(input.oneTimeUse).toBe(true) // savePaymentMethod is false by default
       expect(input.confirmationToken).toBe("test-token")
       expect(input.offerID).toBeUndefined()
+    })
+
+    it("omits oneTimeUse when submitting buy order with saved payment method", async () => {
+      mockSubmitOrderMutation.submitMutation.mockResolvedValueOnce({
+        submitOrder: {
+          orderOrError: {
+            __typename: "OrderMutationSuccess",
+            order: {
+              internalID: "order-id",
+            },
+          },
+        },
+      })
+
+      renderWithRelay({
+        Me: () => ({
+          order: createBuyOrder({ stripeConfirmationToken: null }),
+        }),
+      })
+
+      const submitButton = screen.getByText("Submit")
+      await userEvent.click(submitButton)
+
+      await waitFor(() => {
+        expect(mockSubmitOrderMutation.submitMutation).toHaveBeenCalledTimes(1)
+      })
+
+      const callArgs = mockSubmitOrderMutation.submitMutation.mock.calls[0][0]
+      const input = callArgs.variables.input
+
+      // Verify oneTimeUse is NOT set for saved payment methods (no confirmationToken)
+      expect(input.oneTimeUse).toBeUndefined()
+      expect(input.confirmationToken).toBeUndefined()
+      expect(input.offerID).toBeUndefined()
+    })
+
+    it("respects savePaymentMethod setting for buy orders", async () => {
+      mockCheckoutContext.savePaymentMethod = true
+
+      mockSubmitOrderMutation.submitMutation.mockResolvedValueOnce({
+        submitOrder: {
+          orderOrError: {
+            __typename: "OrderMutationSuccess",
+            order: {
+              internalID: "order-id",
+            },
+          },
+        },
+      })
+
+      renderWithRelay({
+        Me: () => ({
+          order: createBuyOrder(),
+        }),
+      })
+
+      const submitButton = screen.getByText("Submit")
+      await userEvent.click(submitButton)
+
+      await waitFor(() => {
+        expect(mockSubmitOrderMutation.submitMutation).toHaveBeenCalledTimes(1)
+      })
+
+      const callArgs = mockSubmitOrderMutation.submitMutation.mock.calls[0][0]
+      const input = callArgs.variables.input
+
+      // When savePaymentMethod is true, oneTimeUse should be false
+      expect(input.oneTimeUse).toBe(false)
+      expect(input.confirmationToken).toBe("test-token")
     })
   })
 })

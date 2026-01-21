@@ -38,6 +38,7 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
 
   // Get the offer ID for offer orders (only call the hook when needed)
   const offerId = orderData.pendingOffer?.internalID ?? null
+  const confirmationToken = orderData.stripeConfirmationToken ?? undefined
   const {
     steps,
     savePaymentMethod,
@@ -87,7 +88,11 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
         oneTimeUse?: boolean
       } = {
         id: orderData.internalID,
-        oneTimeUse: !savePaymentMethod,
+      }
+
+      if (confirmationToken) {
+        // only specify oneTimeUse for new payment methods
+        input.oneTimeUse = !savePaymentMethod
       }
 
       if (isOffer) {
@@ -99,7 +104,7 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
           input.confirmedSetupIntentId = confirmedSetupIntentId
         }
       } else {
-        input.confirmationToken = orderData.stripeConfirmationToken ?? undefined
+        input.confirmationToken = confirmationToken
       }
 
       const submitOrderResult = await submitOrderMutation.submitMutation({
