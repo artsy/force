@@ -1,11 +1,18 @@
 import loadable from "@loadable/component"
 import type { RouteProps } from "System/Router/Route"
+import { canonicalSlugRedirect } from "System/Router/Utils/canonicalSlugRedirect"
 import { RedirectException } from "found"
 import { compact } from "lodash"
 import { stringify } from "qs"
 import { graphql } from "react-relay"
 import { enableArtistPageCTA } from "./Server/enableArtistPageCTA"
 import { rewriteAuctionResultsParamsToNamespace } from "./Server/redirect"
+
+const artistWithCanonicalSlugRedirect = canonicalSlugRedirect({
+  entityName: "artist",
+  paramName: "artistID",
+  basePath: "/artist",
+})
 
 const ArtistApp = loadable(
   () => import(/* webpackChunkName: "artistBundle" */ "./ArtistApp"),
@@ -84,18 +91,7 @@ export const artistRoutes: RouteProps[] = [
       ArtistApp.preload()
       ArtistCombinedRoute.preload()
     },
-    render: ({ Component, props, match }) => {
-      if (!Component || !props) return
-
-      const { artist } = props as unknown as { artist: { slug: string } }
-
-      // Redirect to canonical slug if URL param doesn't match
-      if (artist?.slug && artist.slug !== match.params.artistID) {
-        throw new RedirectException(`/artist/${artist.slug}`, 301)
-      }
-
-      return <Component {...props} />
-    },
+    render: artistWithCanonicalSlugRedirect,
     query: graphql`
       query artistRoutes_ArtistAppQuery($artistID: String!) @cacheable {
         artist(id: $artistID) @principalField {

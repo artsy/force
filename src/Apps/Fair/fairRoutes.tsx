@@ -1,7 +1,14 @@
 import loadable from "@loadable/component"
 import type { RouteProps } from "System/Router/Route"
+import { canonicalSlugRedirect } from "System/Router/Utils/canonicalSlugRedirect"
 import { RedirectException } from "found"
 import { graphql } from "react-relay"
+
+const fairWithCanonicalSlugRedirect = canonicalSlugRedirect({
+  entityName: "fair",
+  paramName: "slug",
+  basePath: "/fair",
+})
 
 const FairApp = loadable(
   () => import(/* webpackChunkName: "fairBundle" */ "./FairApp"),
@@ -48,18 +55,7 @@ export const fairRoutes: RouteProps[] = [
     onPreloadJS: () => {
       FairApp.preload()
     },
-    render: ({ Component, props, match }) => {
-      if (!Component || !props) return
-
-      const { fair } = props as unknown as { fair: { slug: string } }
-
-      // Redirect to canonical slug if URL param doesn't match
-      if (fair?.slug && fair.slug !== match.params.slug) {
-        throw new RedirectException(`/fair/${fair.slug}`, 301)
-      }
-
-      return <Component {...props} />
-    },
+    render: fairWithCanonicalSlugRedirect,
     query: graphql`
       query fairRoutes_FairQuery($slug: String!) @cacheable {
         fair(id: $slug) @principalField {
@@ -121,18 +117,7 @@ export const fairRoutes: RouteProps[] = [
     onPreloadJS: () => {
       FairSubApp.preload()
     },
-    render: ({ Component, props, match }) => {
-      if (!Component || !props) return
-
-      const { fair } = props as unknown as { fair: { slug: string } }
-
-      // Redirect to canonical slug if URL param doesn't match
-      if (fair?.slug && fair.slug !== match.params.slug) {
-        throw new RedirectException(`/fair/${fair.slug}`, 301)
-      }
-
-      return <Component {...props} />
-    },
+    render: fairWithCanonicalSlugRedirect,
     query: graphql`
       query fairRoutes_FairSubAppQuery($slug: String!) @cacheable {
         fair(id: $slug) @principalField {

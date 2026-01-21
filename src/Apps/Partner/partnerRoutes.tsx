@@ -1,5 +1,6 @@
 import loadable from "@loadable/component"
 import type { RouteProps } from "System/Router/Route"
+import { checkForCanonicalSlugRedirect } from "System/Router/Utils/canonicalSlugRedirect"
 import { RedirectException } from "found"
 import { graphql } from "react-relay"
 
@@ -92,10 +93,11 @@ export const partnerRoutes: RouteProps[] = [
         return undefined
       }
 
-      // Redirect to canonical slug if URL param doesn't match
-      if (partner.slug && partner.slug !== match.params.partnerId) {
-        throw new RedirectException(`/partner/${partner.slug}`, 301)
-      }
+      checkForCanonicalSlugRedirect({
+        entity: partner,
+        paramValue: match.params.partnerId,
+        basePath: "/partner",
+      })
 
       const overviewPath = `/partner/${match.params.partnerId}`
 
