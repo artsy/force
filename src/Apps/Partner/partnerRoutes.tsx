@@ -74,6 +74,7 @@ export const partnerRoutes: RouteProps[] = [
     query: graphql`
       query partnerRoutes_PartnerQuery($partnerId: String!) @cacheable {
         partner(id: $partnerId) @principalField {
+          slug
           partnerType
           displayFullPartnerPage
           ...PartnerApp_partner
@@ -89,6 +90,11 @@ export const partnerRoutes: RouteProps[] = [
 
       if (!partner) {
         return undefined
+      }
+
+      // Redirect to canonical slug if URL param doesn't match
+      if (partner.slug && partner.slug !== match.params.partnerId) {
+        throw new RedirectException(`/partner/${partner.slug}`, 301)
       }
 
       const overviewPath = `/partner/${match.params.partnerId}`
