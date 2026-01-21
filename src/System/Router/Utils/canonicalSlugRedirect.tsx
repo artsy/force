@@ -51,16 +51,16 @@ export function canonicalSlugRedirect(config: CanonicalSlugRedirectConfig) {
     if (!Component || !props) return
 
     const entity = props[entityName] as { slug: string } | null | undefined
+    const paramValue = match.params[paramName]
 
     // Redirect to canonical slug if URL param doesn't match
-    if (entity?.slug && entity.slug !== match.params[paramName]) {
-      // Preserve query string and hash from original URL
+    if (entity?.slug && entity.slug !== paramValue) {
+      // Preserve the full path structure (including subpaths), query string, and hash
+      const pathname = match.location?.pathname || `${basePath}/${paramValue}`
+      const newPathname = pathname.replace(paramValue, entity.slug)
       const search = match.location?.search || ""
       const hash = match.location?.hash || ""
-      throw new RedirectException(
-        `${basePath}/${entity.slug}${search}${hash}`,
-        301,
-      )
+      throw new RedirectException(`${newPathname}${search}${hash}`, 301)
     }
 
     return <Component {...props} />
@@ -107,12 +107,11 @@ export function checkForCanonicalSlugRedirect(config: {
   const { entity, paramValue, basePath, match } = config
 
   if (entity?.slug && entity.slug !== paramValue) {
-    // Preserve query string and hash from original URL
+    // Preserve the full path structure (including subpaths), query string, and hash
+    const pathname = match.location?.pathname || `${basePath}/${paramValue}`
+    const newPathname = pathname.replace(paramValue, entity.slug)
     const search = match.location?.search || ""
     const hash = match.location?.hash || ""
-    throw new RedirectException(
-      `${basePath}/${entity.slug}${search}${hash}`,
-      301,
-    )
+    throw new RedirectException(`${newPathname}${search}${hash}`, 301)
   }
 }

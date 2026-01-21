@@ -8,7 +8,7 @@ const MockComponent = () => null
 
 const createMatch = (
   params: Record<string, string>,
-  location?: { search?: string; hash?: string },
+  location?: { pathname?: string; search?: string; hash?: string },
 ) =>
   ({
     params,
@@ -180,6 +180,53 @@ describe("canonicalSlugRedirect", () => {
       expect((error as any).location).toBe("/artist/banksy?page=2#works")
     }
   })
+
+  it("preserves subpath when redirecting", () => {
+    const fairRender = canonicalSlugRedirect({
+      entityName: "fair",
+      paramName: "slug",
+      basePath: "/fair",
+    })
+
+    try {
+      fairRender({
+        Component: MockComponent,
+        props: { fair: { slug: "art-basel-2024" } },
+        match: createMatch(
+          { slug: "art-basel-old" },
+          { pathname: "/fair/art-basel-old/artworks" },
+        ),
+      })
+    } catch (error) {
+      expect((error as any).location).toBe("/fair/art-basel-2024/artworks")
+    }
+  })
+
+  it("preserves subpath with query string when redirecting", () => {
+    const fairRender = canonicalSlugRedirect({
+      entityName: "fair",
+      paramName: "slug",
+      basePath: "/fair",
+    })
+
+    try {
+      fairRender({
+        Component: MockComponent,
+        props: { fair: { slug: "art-basel-2024" } },
+        match: createMatch(
+          { slug: "art-basel-old" },
+          {
+            pathname: "/fair/art-basel-old/artworks",
+            search: "?medium=painting",
+          },
+        ),
+      })
+    } catch (error) {
+      expect((error as any).location).toBe(
+        "/fair/art-basel-2024/artworks?medium=painting",
+      )
+    }
+  })
 })
 
 describe("checkForCanonicalSlugRedirect", () => {
@@ -287,6 +334,41 @@ describe("checkForCanonicalSlugRedirect", () => {
       expect((error as any).location).toBe(
         "/partner/gagosian?tab=shows#contact",
       )
+    }
+  })
+
+  it("preserves subpath when redirecting", () => {
+    try {
+      checkForCanonicalSlugRedirect({
+        entity: { slug: "gagosian" },
+        paramValue: "old-gagosian-slug",
+        basePath: "/partner",
+        match: createMatch(
+          { partnerId: "old-gagosian-slug" },
+          { pathname: "/partner/old-gagosian-slug/works" },
+        ),
+      })
+    } catch (error) {
+      expect((error as any).location).toBe("/partner/gagosian/works")
+    }
+  })
+
+  it("preserves subpath with query string when redirecting", () => {
+    try {
+      checkForCanonicalSlugRedirect({
+        entity: { slug: "gagosian" },
+        paramValue: "old-gagosian-slug",
+        basePath: "/partner",
+        match: createMatch(
+          { partnerId: "old-gagosian-slug" },
+          {
+            pathname: "/partner/old-gagosian-slug/works",
+            search: "?page=2",
+          },
+        ),
+      })
+    } catch (error) {
+      expect((error as any).location).toBe("/partner/gagosian/works?page=2")
     }
   })
 })
