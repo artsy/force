@@ -466,8 +466,8 @@ describe("Order2ReviewStep", () => {
       await userEvent.click(submitButton)
 
       await waitFor(() => {
-        expect(mockCheckoutContext.setCheckoutModalError).toHaveBeenCalledWith(
-          CheckoutModalError.STRIPE_AUTHENTICATION_FAILURE,
+        expect(mockCheckoutModal.showCheckoutErrorModal).toHaveBeenCalledWith(
+          CheckoutModalError.STRIPE_ERROR,
         )
       })
     })
@@ -501,7 +501,7 @@ describe("Order2ReviewStep", () => {
       await userEvent.click(submitButton)
 
       await waitFor(() => {
-        expect(mockCheckoutContext.setCheckoutModalError).toHaveBeenCalledWith(
+        expect(mockCheckoutModal.showCheckoutErrorModal).toHaveBeenCalledWith(
           CheckoutModalError.SUBMIT_ERROR,
         )
       })
@@ -523,7 +523,7 @@ describe("Order2ReviewStep", () => {
       await userEvent.click(submitButton)
 
       await waitFor(() => {
-        expect(mockCheckoutContext.setCheckoutModalError).toHaveBeenCalledWith(
+        expect(mockCheckoutModal.showCheckoutErrorModal).toHaveBeenCalledWith(
           CheckoutModalError.ARTWORK_NOT_FOR_SALE,
         )
       })
