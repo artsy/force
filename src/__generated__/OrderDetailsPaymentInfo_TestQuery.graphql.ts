@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<311d1f19fd71f4bd5323304b2d4a0344>>
+ * @generated SignedSource<<0ce6f2c67876103c2cfc4964316ffe41>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -258,7 +258,12 @@ return {
           "type": "PaymentMethodUnion"
         },
         "me.order.paymentMethodDetails.__typename": (v3/*: any*/),
-        "me.order.paymentMethodDetails.bankName": (v3/*: any*/),
+        "me.order.paymentMethodDetails.bankName": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "String"
+        },
         "me.order.paymentMethodDetails.brand": (v3/*: any*/),
         "me.order.paymentMethodDetails.expirationMonth": (v4/*: any*/),
         "me.order.paymentMethodDetails.expirationYear": (v4/*: any*/),

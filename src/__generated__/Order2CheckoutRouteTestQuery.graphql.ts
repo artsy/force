@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d9b623905ccdf438f53415afa2f77177>>
+ * @generated SignedSource<<36b17f69ee33b165c8fb9b6d1b2fea61>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -1480,7 +1480,7 @@ return {
           "type": "BankAccount"
         },
         "viewer.me.bankAccounts.edges.node.__typename": (v41/*: any*/),
-        "viewer.me.bankAccounts.edges.node.bankName": (v41/*: any*/),
+        "viewer.me.bankAccounts.edges.node.bankName": (v42/*: any*/),
         "viewer.me.bankAccounts.edges.node.id": (v43/*: any*/),
         "viewer.me.bankAccounts.edges.node.internalID": (v43/*: any*/),
         "viewer.me.bankAccounts.edges.node.last4": (v41/*: any*/),
@@ -1717,7 +1717,7 @@ return {
           "type": "PaymentMethodUnion"
         },
         "viewer.me.order.paymentMethodDetails.__typename": (v41/*: any*/),
-        "viewer.me.order.paymentMethodDetails.bankName": (v41/*: any*/),
+        "viewer.me.order.paymentMethodDetails.bankName": (v42/*: any*/),
         "viewer.me.order.paymentMethodDetails.brand": (v41/*: any*/),
         "viewer.me.order.paymentMethodDetails.expirationMonth": (v46/*: any*/),
         "viewer.me.order.paymentMethodDetails.expirationYear": (v46/*: any*/),

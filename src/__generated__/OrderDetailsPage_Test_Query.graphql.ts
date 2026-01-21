@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<03a03d029e993d6e01c9bece0863d493>>
+ * @generated SignedSource<<8ce35d16526cb359facfc23cb0990c9a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -128,7 +128,7 @@ export type OrderDetailsPage_Test_Query$rawResponse = {
       readonly mode: OrderModeEnum;
       readonly paymentMethodDetails: {
         readonly __typename: "BankAccount";
-        readonly bankName: string;
+        readonly bankName: string | null | undefined;
         readonly id: string;
         readonly last4: string;
       } | {
