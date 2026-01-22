@@ -21,6 +21,7 @@ import {
   deliveryOptionTimeEstimate,
 } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/utils"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import { useScrollToErrorBanner } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToErrorBanner"
 import { useOrder2SetOrderFulfillmentOptionMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderFulfillmentOptionMutation"
 import { BUYER_GUARANTEE_URL } from "Apps/Order2/constants"
 import { RouterLink } from "System/Components/RouterLink"
@@ -57,6 +58,9 @@ export const Order2DeliveryOptionsForm: React.FC<
     useOrder2SetOrderFulfillmentOptionMutation()
 
   const deliveryOptionError = messages[CheckoutStepName.DELIVERY_OPTION]?.error
+  const errorBannerRef = useScrollToErrorBanner(
+    CheckoutStepName.DELIVERY_OPTION,
+  )
 
   const { fulfillmentOptions } = orderData
   const deliveryOptions = fulfillmentOptions.filter(
@@ -129,7 +133,10 @@ export const Order2DeliveryOptionsForm: React.FC<
             >
               {deliveryOptionError && (
                 <>
-                  <CheckoutErrorBanner error={deliveryOptionError} />
+                  <CheckoutErrorBanner
+                    ref={errorBannerRef}
+                    error={deliveryOptionError}
+                  />
                   <Spacer y={2} />
                 </>
               )}

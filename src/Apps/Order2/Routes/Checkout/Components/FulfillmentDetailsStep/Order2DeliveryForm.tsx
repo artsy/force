@@ -16,6 +16,7 @@ import {
   processSavedAddresses,
 } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/utils"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import { useScrollToErrorBanner } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToErrorBanner"
 import { useScrollToFieldErrorOnSubmit } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToFieldErrorOnSubmit"
 import { useOrder2CreateUserAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2CreateUserAddressMutation"
 
@@ -329,12 +330,18 @@ const DeliveryFormContent: React.FC<DeliveryFormContentProps> = ({
 }) => {
   const formikContext = useFormikContext<FormikContextWithAddress>()
   const formRef = useScrollToFieldErrorOnSubmit()
+  const errorBannerRef = useScrollToErrorBanner(
+    CheckoutStepName.FULFILLMENT_DETAILS,
+  )
 
   return (
     <Flex flexDirection={"column"} mb={2} ref={formRef}>
       {fulfillmentDetailsError && (
         <>
-          <CheckoutErrorBanner error={fulfillmentDetailsError} />
+          <CheckoutErrorBanner
+            ref={errorBannerRef}
+            error={fulfillmentDetailsError}
+          />
           <Spacer y={2} />
         </>
       )}

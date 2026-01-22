@@ -19,6 +19,7 @@ import {
 import type { OfferNoteValue } from "Apps/Order2/Routes/Checkout/Components/OfferStep/types"
 import { useCompleteOfferData } from "Apps/Order2/Routes/Checkout/Components/OfferStep/useCompleteOfferData"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import { useScrollToErrorBanner } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToErrorBanner"
 import { useOrder2AddInitialOfferMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2AddInitialOfferMutation"
 import { useOrder2UnsetOrderFulfillmentOptionMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2UnsetOrderFulfillmentOptionMutation"
 import createLogger from "Utils/logger"
@@ -198,6 +199,7 @@ const Order2OfferStepFormContent: React.FC<Order2OfferStepFormContentProps> = ({
   const { values, errors, setFieldValue, submitForm } =
     useFormikContext<OfferFormValues>()
   const { setStepErrorMessage, checkoutTracking } = useCheckoutContext()
+  const errorBannerRef = useScrollToErrorBanner(CheckoutStepName.OFFER_AMOUNT)
 
   const clearOfferError = () => {
     setStepErrorMessage({
@@ -309,7 +311,9 @@ const Order2OfferStepFormContent: React.FC<Order2OfferStepFormContentProps> = ({
             once submitted.
           </Text>
           <Spacer y={1} />
-          {offerAmountError && <CheckoutErrorBanner error={offerAmountError} />}
+          {offerAmountError && (
+            <CheckoutErrorBanner ref={errorBannerRef} error={offerAmountError} />
+          )}
         </Flex>
       </Box>
 

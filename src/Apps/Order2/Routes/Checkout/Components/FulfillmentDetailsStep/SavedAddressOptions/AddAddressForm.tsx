@@ -1,5 +1,4 @@
 import { Button, Spacer, Text } from "@artsy/palette"
-import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { deliveryAddressValidationSchema } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/utils"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useScrollToFieldErrorOnSubmit } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToFieldErrorOnSubmit"
@@ -130,9 +129,7 @@ export const AddAddressForm = ({
 }
 
 const AddAddressFormFields: React.FC = () => {
-  const formRef = useScrollToFieldErrorOnSubmit(
-    CheckoutStepName.FULFILLMENT_DETAILS,
-  )
+  const formRef = useScrollToFieldErrorOnSubmit()
 
   return (
     <div ref={formRef}>
