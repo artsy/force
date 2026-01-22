@@ -152,7 +152,7 @@ describe("Order2CollapsibleOrderSummary", () => {
               figures: [
                 {
                   __typename: "Image",
-                  resized: {
+                  resizedSquare: {
                     url: "https://example.com/fallback-image.jpg",
                   },
                 },
@@ -164,7 +164,7 @@ describe("Order2CollapsibleOrderSummary", () => {
               artistNames: "Test Artist",
               thumbnail: {
                 url: "https://example.com/thumbnail.jpg",
-                resized: {
+                resizedSquare: {
                   url: "https://example.com/thumbnail-resized.jpg",
                 },
               },
@@ -192,7 +192,7 @@ describe("Order2CollapsibleOrderSummary", () => {
               figures: [
                 {
                   __typename: "Image",
-                  resized: {
+                  resizedSquare: {
                     url: "https://example.com/fallback-image.jpg",
                   },
                 },
@@ -227,7 +227,7 @@ describe("Order2CollapsibleOrderSummary", () => {
               figures: [
                 {
                   __typename: "Image",
-                  resized: {
+                  resizedSquare: {
                     url: "https://example.com/fallback-image.jpg",
                   },
                 },
@@ -239,7 +239,7 @@ describe("Order2CollapsibleOrderSummary", () => {
               artistNames: "Test Artist",
               thumbnail: {
                 url: null,
-                resized: {
+                resizedSquare: {
                   url: "https://example.com/thumbnail-resized.jpg",
                 },
               },
