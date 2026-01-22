@@ -22,7 +22,7 @@ import {
   type FormikContextWithAddress,
 } from "Components/Address/AddressFormFields"
 import createLogger from "Utils/logger"
-import { Formik, useFormikContext } from "formik"
+import { Form, Formik } from "formik"
 import { useState } from "react"
 
 const logger = createLogger("UpdateAddressForm")
@@ -169,139 +169,137 @@ export const UpdateAddressForm = ({
   }
 
   return (
-    <Formik
+    <Formik<FormikContextWithAddress>
       initialValues={initialValues}
       validationSchema={deliveryAddressValidationSchema}
       onSubmit={handleSubmitAddress}
       validateOnMount
       initialTouched={{
-        address: true,
+        address: {
+          name: true,
+          addressLine1: true,
+          city: true,
+          region: true,
+          postalCode: true,
+          country: true,
+        },
         phoneNumber: true,
         phoneNumberCountryCode: true,
       }}
     >
-      <UpdateAddressFormFields
-        address={address}
-        showDeleteDialog={showDeleteDialog}
-        setShowDeleteDialog={setShowDeleteDialog}
-        deleteError={deleteError}
-        setDeleteError={setDeleteError}
-        isDeleting={isDeleting}
-        handleDeleteAddress={handleDeleteAddress}
-        setUserAddressMode={setUserAddressMode}
-      />
+      {({ isSubmitting }) => {
+        return (
+          <Form noValidate>
+            <Text
+              fontWeight={["bold", "bold", "normal"]}
+              color="mono100"
+              variant={["sm-display", "sm-display", "md"]}
+            >
+              Edit address
+            </Text>
+
+            <Spacer y={2} />
+
+            <UpdateAddressFormFields address={address} />
+
+            <Spacer y={4} />
+
+            <Button width="100%" type="submit" loading={isSubmitting}>
+              Save Address
+            </Button>
+
+            <Spacer y={1} />
+
+            <Button
+              width="100%"
+              variant="secondaryBlack"
+              onClick={() => setUserAddressMode(null)}
+            >
+              Cancel
+            </Button>
+
+            <Spacer y={2} />
+
+            <Flex justifyContent="center">
+              <Clickable onClick={() => setShowDeleteDialog(true)}>
+                <Text variant="sm" color="red100">
+                  Delete address
+                </Text>
+              </Clickable>
+            </Flex>
+
+            {showDeleteDialog && (
+              <ModalDialog
+                title="Delete address?"
+                onClose={() => {
+                  setShowDeleteDialog(false)
+                  setDeleteError(null)
+                }}
+                width="450px"
+              >
+                {deleteError && (
+                  <>
+                    <Message variant="error" title={deleteError.title}>
+                      {deleteError.message}
+                    </Message>
+
+                    <Spacer y={2} />
+                  </>
+                )}
+                <Text variant="xs">
+                  This will remove this address from your saved addresses.
+                </Text>
+
+                <Spacer y={2} />
+
+                <Flex justifyContent="flex-end">
+                  <Button
+                    variant="secondaryNeutral"
+                    size="small"
+                    onClick={() => {
+                      setShowDeleteDialog(false)
+                      setDeleteError(null)
+                    }}
+                  >
+                    Cancel
+                  </Button>
+
+                  <Spacer x={1} />
+
+                  <Button
+                    size="small"
+                    loading={isDeleting}
+                    onClick={handleDeleteAddress}
+                  >
+                    Delete
+                  </Button>
+                </Flex>
+              </ModalDialog>
+            )}
+          </Form>
+        )
+      }}
     </Formik>
   )
 }
 
 interface UpdateAddressFormFieldsProps {
   address: ProcessedUserAddress
-  showDeleteDialog: boolean
-  setShowDeleteDialog: (show: boolean) => void
-  deleteError: { title: string; message: string } | null
-  setDeleteError: (error: { title: string; message: string } | null) => void
-  isDeleting: boolean
-  handleDeleteAddress: () => Promise<void>
-  setUserAddressMode: (mode: any) => void
 }
 
 const UpdateAddressFormFields: React.FC<UpdateAddressFormFieldsProps> = ({
   address,
-  showDeleteDialog,
-  setShowDeleteDialog,
-  deleteError,
-  setDeleteError,
-  isDeleting,
-  handleDeleteAddress,
-  setUserAddressMode,
 }) => {
-  const { isSubmitting, handleSubmit } = useFormikContext()
   const formRef = useScrollToFieldErrorOnSubmit(
     CheckoutStepName.FULFILLMENT_DETAILS,
   )
 
   return (
     <div ref={formRef}>
-      <Text
-        fontWeight={["bold", "bold", "normal"]}
-        color="mono100"
-        variant={["sm-display", "sm-display", "md"]}
-      >
-        Edit address
-      </Text>
-      <Spacer y={2} />
       <AddressFormFields
         withPhoneNumber
         withSetAsDefault={!address.isDefault}
       />
-      <Spacer y={4} />
-      <Button
-        width="100%"
-        type="submit"
-        loading={isSubmitting}
-        onClick={() => handleSubmit()}
-      >
-        Save Address
-      </Button>
-      <Spacer y={1} />
-      <Button
-        width="100%"
-        variant="secondaryBlack"
-        onClick={() => setUserAddressMode(null)}
-      >
-        Cancel
-      </Button>
-      <Spacer y={2} />
-      <Flex justifyContent="center">
-        <Clickable onClick={() => setShowDeleteDialog(true)}>
-          <Text variant="sm" color="red100">
-            Delete address
-          </Text>
-        </Clickable>
-      </Flex>
-      {showDeleteDialog && (
-        <ModalDialog
-          title="Delete address?"
-          onClose={() => {
-            setShowDeleteDialog(false)
-            setDeleteError(null)
-          }}
-          width="450px"
-        >
-          {deleteError && (
-            <>
-              <Message variant="error" title={deleteError.title}>
-                {deleteError.message}
-              </Message>
-              <Spacer y={2} />
-            </>
-          )}
-          <Text variant="xs">
-            This will remove this address from your saved addresses.
-          </Text>
-          <Spacer y={2} />
-          <Flex justifyContent="flex-end">
-            <Button
-              variant="secondaryNeutral"
-              size="small"
-              onClick={() => {
-                setShowDeleteDialog(false)
-                setDeleteError(null)
-              }}
-            >
-              Cancel
-            </Button>
-            <Spacer x={1} />
-            <Button
-              size="small"
-              loading={isDeleting}
-              onClick={handleDeleteAddress}
-            >
-              Delete
-            </Button>
-          </Flex>
-        </ModalDialog>
-      )}
     </div>
   )
 }

@@ -91,30 +91,40 @@ export const AddAddressForm = ({
       validationSchema={deliveryAddressValidationSchema}
       onSubmit={handleSubmit}
     >
-      <Form noValidate>
-        <Text
-          fontWeight={["bold", "bold", "normal"]}
-          color="mono100"
-          variant={["sm-display", "sm-display", "md"]}
-        >
-          Add address
-        </Text>{" "}
-        <Spacer y={2} />
-        <AddAddressFormFields />
-        <Spacer y={4} />
-        <Button width="100%" type="submit">
-          Save Address
-        </Button>
-        <Spacer y={1} />
-        <Button
-          width="100%"
-          variant="secondaryBlack"
-          type="button"
-          onClick={() => setUserAddressMode(null)}
-        >
-          Cancel
-        </Button>
-      </Form>
+      {({ isSubmitting }) => {
+        return (
+          <Form noValidate>
+            <Text
+              fontWeight={["bold", "bold", "normal"]}
+              color="mono100"
+              variant={["sm-display", "sm-display", "md"]}
+            >
+              Add address
+            </Text>
+
+            <Spacer y={2} />
+
+            <AddAddressFormFields />
+
+            <Spacer y={4} />
+
+            <Button width="100%" type="submit" loading={isSubmitting}>
+              Save Address
+            </Button>
+
+            <Spacer y={1} />
+
+            <Button
+              width="100%"
+              variant="secondaryBlack"
+              type="button"
+              onClick={() => setUserAddressMode(null)}
+            >
+              Cancel
+            </Button>
+          </Form>
+        )
+      }}
     </Formik>
   )
 }
