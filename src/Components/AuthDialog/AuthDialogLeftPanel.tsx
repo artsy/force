@@ -45,7 +45,7 @@ export const AuthDialogLeftPanel: FC<React.PropsWithChildren> = () => {
         <Image
           {...resized(IMAGE.src, { width: MODAL_WIDTH / 2 })}
           width="100%"
-          minHeight={680}
+          minHeight={760}
           height="100%"
           lazyLoad
           alt=""
@@ -236,7 +236,7 @@ const MovingImageMeasured: FC<{
 
   // const width = (MODAL_WIDTH / 2) * 1.4
   // const height = width / aspectRatio
-  const height = 680 * 1.4
+  const height = 760 * 1.4
   const width = height * aspectRatio
 
   const handleOnViewportResize = useCallback(() => {

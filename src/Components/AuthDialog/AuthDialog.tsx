@@ -52,7 +52,7 @@ export const AuthDialog: FC<React.PropsWithChildren<AuthDialogProps>> = ({
   return (
     <ModalDialog
       onClose={isCloseable ? handleClose : () => {}}
-      minHeight={["auto", 680]}
+      minHeight={["auto", 760]}
       title={
         <AuthDialogTitle
           title={title}
@@ -95,7 +95,7 @@ const getModalProps = (
   options: AuthDialogOptions,
   newSignupEnabled: boolean,
 ) => {
-  if (!!options.image || (!!options.imageUrl && newSignupEnabled)) {
+  if (!!options.image || !!options.imageUrl || newSignupEnabled) {
     return {
       width: ["100%", MODAL_WIDTH],
       leftPanel: <AuthDialogLeftPanel />,
