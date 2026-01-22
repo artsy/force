@@ -69,6 +69,11 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
       return
     }
 
+    if (error.code === "payment_intent_authentication_failure") {
+      setCheckoutModalError(CheckoutModalError.STRIPE_AUTHENTICATION_FAILURE)
+      return
+    }
+
     setCheckoutModalError(CheckoutModalError.SUBMIT_ERROR)
   }
 
@@ -121,7 +126,7 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
         })
 
         if (error) {
-          throw new Error(error.message)
+          throw error
         } else {
           isOffer ? handleSubmit(setupIntent?.id) : handleSubmit()
           return

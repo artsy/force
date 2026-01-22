@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<906502b068cef098de8b8059a245064d>>
+ * @generated SignedSource<<a53e7f4d88f0f6e3f66405808b2e6734>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,7 +15,7 @@ export type OrderDetailsPaymentInfo_order$data = {
   readonly creditCardWalletType: OrderCreditCardWalletTypeEnum | null | undefined;
   readonly paymentMethodDetails: {
     readonly __typename: "BankAccount";
-    readonly bankName: string;
+    readonly bankName: string | null | undefined;
     readonly last4: string;
   } | {
     readonly __typename: "CreditCard";

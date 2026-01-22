@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4aa06560470c442fdaff7dbf681c801d>>
+ * @generated SignedSource<<2936559759fe2c4c6928dddbb0b24a4a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -85,21 +85,21 @@ v7 = {
 },
 v8 = {
   "enumValues": null,
-  "nullable": false,
+  "nullable": true,
   "plural": false,
-  "type": "ID"
+  "type": "String"
 },
 v9 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
-  "type": "Int"
+  "type": "ID"
 },
 v10 = {
   "enumValues": null,
-  "nullable": true,
+  "nullable": false,
   "plural": false,
-  "type": "String"
+  "type": "Int"
 },
 v11 = {
   "enumValues": null,
@@ -618,9 +618,9 @@ return {
           "type": "BankAccount"
         },
         "me.bankAccounts.edges.node.__typename": (v7/*: any*/),
-        "me.bankAccounts.edges.node.bankName": (v7/*: any*/),
-        "me.bankAccounts.edges.node.id": (v8/*: any*/),
-        "me.bankAccounts.edges.node.internalID": (v8/*: any*/),
+        "me.bankAccounts.edges.node.bankName": (v8/*: any*/),
+        "me.bankAccounts.edges.node.id": (v9/*: any*/),
+        "me.bankAccounts.edges.node.internalID": (v9/*: any*/),
         "me.bankAccounts.edges.node.last4": (v7/*: any*/),
         "me.bankAccounts.edges.node.type": {
           "enumValues": [
@@ -651,12 +651,12 @@ return {
         },
         "me.creditCards.edges.node.__typename": (v7/*: any*/),
         "me.creditCards.edges.node.brand": (v7/*: any*/),
-        "me.creditCards.edges.node.expirationMonth": (v9/*: any*/),
-        "me.creditCards.edges.node.expirationYear": (v9/*: any*/),
-        "me.creditCards.edges.node.id": (v8/*: any*/),
-        "me.creditCards.edges.node.internalID": (v8/*: any*/),
+        "me.creditCards.edges.node.expirationMonth": (v10/*: any*/),
+        "me.creditCards.edges.node.expirationYear": (v10/*: any*/),
+        "me.creditCards.edges.node.id": (v9/*: any*/),
+        "me.creditCards.edges.node.internalID": (v9/*: any*/),
         "me.creditCards.edges.node.lastDigits": (v7/*: any*/),
-        "me.id": (v8/*: any*/),
+        "me.id": (v9/*: any*/),
         "me.order": {
           "enumValues": null,
           "nullable": true,
@@ -680,7 +680,7 @@ return {
           "plural": false,
           "type": "BankAccountBalanceCheck"
         },
-        "me.order.bankAccountBalanceCheck.message": (v10/*: any*/),
+        "me.order.bankAccountBalanceCheck.message": (v8/*: any*/),
         "me.order.bankAccountBalanceCheck.result": {
           "enumValues": [
             "INSUFFICIENT",
@@ -704,15 +704,15 @@ return {
           "plural": false,
           "type": "FulfillmentDetails"
         },
-        "me.order.fulfillmentDetails.addressLine1": (v10/*: any*/),
-        "me.order.fulfillmentDetails.addressLine2": (v10/*: any*/),
-        "me.order.fulfillmentDetails.city": (v10/*: any*/),
-        "me.order.fulfillmentDetails.country": (v10/*: any*/),
-        "me.order.fulfillmentDetails.name": (v10/*: any*/),
-        "me.order.fulfillmentDetails.postalCode": (v10/*: any*/),
-        "me.order.fulfillmentDetails.region": (v10/*: any*/),
-        "me.order.id": (v8/*: any*/),
-        "me.order.internalID": (v8/*: any*/),
+        "me.order.fulfillmentDetails.addressLine1": (v8/*: any*/),
+        "me.order.fulfillmentDetails.addressLine2": (v8/*: any*/),
+        "me.order.fulfillmentDetails.city": (v8/*: any*/),
+        "me.order.fulfillmentDetails.country": (v8/*: any*/),
+        "me.order.fulfillmentDetails.name": (v8/*: any*/),
+        "me.order.fulfillmentDetails.postalCode": (v8/*: any*/),
+        "me.order.fulfillmentDetails.region": (v8/*: any*/),
+        "me.order.id": (v9/*: any*/),
+        "me.order.internalID": (v9/*: any*/),
         "me.order.itemsTotal": (v11/*: any*/),
         "me.order.itemsTotal.currencyCode": (v7/*: any*/),
         "me.order.itemsTotal.minor": (v12/*: any*/),
@@ -734,10 +734,10 @@ return {
           "plural": false,
           "type": "ArtworkMeta"
         },
-        "me.order.lineItems.artwork.artworkMeta.share": (v10/*: any*/),
-        "me.order.lineItems.artwork.href": (v10/*: any*/),
-        "me.order.lineItems.artwork.id": (v8/*: any*/),
-        "me.order.lineItems.id": (v8/*: any*/),
+        "me.order.lineItems.artwork.artworkMeta.share": (v8/*: any*/),
+        "me.order.lineItems.artwork.href": (v8/*: any*/),
+        "me.order.lineItems.artwork.id": (v9/*: any*/),
+        "me.order.lineItems.id": (v9/*: any*/),
         "me.order.mode": {
           "enumValues": [
             "BUY",
@@ -753,7 +753,7 @@ return {
           "plural": false,
           "type": "Offer"
         },
-        "me.order.pendingOffer.id": (v8/*: any*/),
+        "me.order.pendingOffer.id": (v9/*: any*/),
         "me.order.pendingOffer.pricingBreakdownLines": {
           "enumValues": null,
           "nullable": false,
@@ -762,7 +762,7 @@ return {
         },
         "me.order.pendingOffer.pricingBreakdownLines.__typename": (v7/*: any*/),
         "me.order.pendingOffer.pricingBreakdownLines.amount": (v11/*: any*/),
-        "me.order.pendingOffer.pricingBreakdownLines.amount.amount": (v10/*: any*/),
+        "me.order.pendingOffer.pricingBreakdownLines.amount.amount": (v8/*: any*/),
         "me.order.pendingOffer.pricingBreakdownLines.amount.currencyCode": (v7/*: any*/),
         "me.order.seller": {
           "enumValues": null,
@@ -772,7 +772,7 @@ return {
         },
         "me.order.seller.__isNode": (v7/*: any*/),
         "me.order.seller.__typename": (v7/*: any*/),
-        "me.order.seller.id": (v8/*: any*/),
+        "me.order.seller.id": (v9/*: any*/),
         "me.order.seller.merchantAccount": {
           "enumValues": null,
           "nullable": true,

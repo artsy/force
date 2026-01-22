@@ -4895,7 +4895,7 @@ type BankAccount {
   accountHolderName: String
 
   # Bank name
-  bankName: String!
+  bankName: String
 
   # A globally unique ID.
   id: ID!
