@@ -437,7 +437,7 @@ describe("Order2ReviewStep", () => {
       pendingOffer: null,
     }
 
-    it("sets STRIPE_AUTHENTICATION_FAILURE modal error when handleNextAction returns payment_intent_authentication_failure", async () => {
+    it("sets STRIPE_ERROR modal error when handleNextAction returns a failure", async () => {
       mockSubmitOrderMutation.submitMutation.mockResolvedValueOnce({
         submitOrder: {
           orderOrError: {
@@ -468,41 +468,9 @@ describe("Order2ReviewStep", () => {
       await waitFor(() => {
         expect(mockCheckoutModal.showCheckoutErrorModal).toHaveBeenCalledWith(
           CheckoutModalError.STRIPE_ERROR,
-        )
-      })
-    })
-
-    it("sets SUBMIT_ERROR modal error for other Stripe errors", async () => {
-      mockSubmitOrderMutation.submitMutation.mockResolvedValueOnce({
-        submitOrder: {
-          orderOrError: {
-            __typename: "OrderMutationActionRequired",
-            actionData: {
-              clientSecret: "test-secret",
-            },
-          },
-        },
-      })
-
-      mockStripe.handleNextAction.mockResolvedValueOnce({
-        error: {
-          code: "some_other_error",
-          message: "Some other error",
-        },
-      })
-
-      renderWithRelay({
-        Me: () => ({
-          order: defaultOrderData,
-        }),
-      })
-
-      const submitButton = screen.getByText("Submit")
-      await userEvent.click(submitButton)
-
-      await waitFor(() => {
-        expect(mockCheckoutModal.showCheckoutErrorModal).toHaveBeenCalledWith(
-          CheckoutModalError.SUBMIT_ERROR,
+          "An error occurred while processing your payment",
+          "Authentication failed",
+          expect.any(Function),
         )
       })
     })
@@ -596,6 +564,8 @@ describe("Order2ReviewStep", () => {
       await waitFor(() => {
         expect(mockCheckoutModal.showCheckoutErrorModal).toHaveBeenCalledWith(
           CheckoutModalError.STRIPE_ERROR,
+          "An error occurred while processing your payment",
+          "Authentication failed",
           expect.any(Function),
         )
       })
@@ -632,6 +602,8 @@ describe("Order2ReviewStep", () => {
       await waitFor(() => {
         expect(mockCheckoutModal.showCheckoutErrorModal).toHaveBeenCalledWith(
           CheckoutModalError.STRIPE_ERROR,
+          "An error occurred while processing your payment",
+          "Some other error",
           expect.any(Function),
         )
       })
