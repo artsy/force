@@ -21,7 +21,6 @@ import { useCompleteOfferData } from "Apps/Order2/Routes/Checkout/Components/Off
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useOrder2AddInitialOfferMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2AddInitialOfferMutation"
 import { useOrder2UnsetOrderFulfillmentOptionMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2UnsetOrderFulfillmentOptionMutation"
-import { useScrollToFieldErrorOnSubmit } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToFieldErrorOnSubmit"
 import createLogger from "Utils/logger"
 import type {
   Order2OfferStep_order$data,
@@ -200,8 +199,6 @@ const Order2OfferStepFormContent: React.FC<Order2OfferStepFormContentProps> = ({
     useFormikContext<OfferFormValues>()
   const { setStepErrorMessage, checkoutTracking } = useCheckoutContext()
 
-  const formRef = useScrollToFieldErrorOnSubmit(CheckoutStepName.OFFER_AMOUNT)
-
   const clearOfferError = () => {
     setStepErrorMessage({
       step: CheckoutStepName.OFFER_AMOUNT,
@@ -263,7 +260,6 @@ const Order2OfferStepFormContent: React.FC<Order2OfferStepFormContentProps> = ({
       flexDirection="column"
       data-testid="offer-step-active"
       backgroundColor="mono0"
-      ref={formRef}
     >
       <Box
         py={2}

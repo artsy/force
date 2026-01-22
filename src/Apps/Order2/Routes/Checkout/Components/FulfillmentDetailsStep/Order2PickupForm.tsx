@@ -1,7 +1,6 @@
 import { ContextModule } from "@artsy/cohesion"
 import { Button, SelectInput, Spacer, Text } from "@artsy/palette"
 import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
-import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useScrollToFieldErrorOnSubmit } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToFieldErrorOnSubmit"
 import { useOrder2SetOrderFulfillmentOptionMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderFulfillmentOptionMutation"
@@ -192,9 +191,7 @@ export const Order2PickupForm: React.FC<Order2PickupFormProps> = ({
 
 const PickupFormInput: React.FC = () => {
   const formikContext = useFormikContext<PickupFormValues>()
-  const formRef = useScrollToFieldErrorOnSubmit(
-    CheckoutStepName.FULFILLMENT_DETAILS,
-  )
+  const formRef = useScrollToFieldErrorOnSubmit()
 
   return (
     <div ref={formRef}>

@@ -9,7 +9,6 @@ import {
   Tooltip,
 } from "@artsy/palette"
 import { Collapse } from "Apps/Order/Components/Collapse"
-import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { useScrollToFieldErrorOnSubmit } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToFieldErrorOnSubmit"
 import {
   AddressFormFields,
@@ -157,7 +156,7 @@ export const StripePaymentCheckboxes: React.FC<
 }
 
 const BillingAddressFormFields: React.FC = () => {
-  const formRef = useScrollToFieldErrorOnSubmit(CheckoutStepName.PAYMENT)
+  const formRef = useScrollToFieldErrorOnSubmit()
 
   return (
     <div ref={formRef}>

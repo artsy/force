@@ -289,24 +289,22 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
     ],
   )
   return (
-    <>
-      <Formik
-        initialValues={initialSelectedAddress || initialValues}
-        enableReinitialize={true}
-        validationSchema={deliveryAddressValidationSchema}
-        onSubmit={onSubmit}
-      >
-        <DeliveryFormContent
-          fulfillmentDetailsError={fulfillmentDetailsError}
-          hasSavedAddresses={hasSavedAddresses}
-          processedAddresses={processedAddresses}
-          initialSelectedAddress={initialSelectedAddress}
-          blankAddressValuesForUser={blankAddressValuesForUser}
-          orderData={orderData}
-          shippableCountries={shippableCountries}
-        />
-      </Formik>
-    </>
+    <Formik
+      initialValues={initialSelectedAddress || initialValues}
+      enableReinitialize={true}
+      validationSchema={deliveryAddressValidationSchema}
+      onSubmit={onSubmit}
+    >
+      <DeliveryFormContent
+        fulfillmentDetailsError={fulfillmentDetailsError}
+        hasSavedAddresses={hasSavedAddresses}
+        processedAddresses={processedAddresses}
+        initialSelectedAddress={initialSelectedAddress}
+        blankAddressValuesForUser={blankAddressValuesForUser}
+        orderData={orderData}
+        shippableCountries={shippableCountries}
+      />
+    </Formik>
   )
 }
 
@@ -330,9 +328,7 @@ const DeliveryFormContent: React.FC<DeliveryFormContentProps> = ({
   shippableCountries,
 }) => {
   const formikContext = useFormikContext<FormikContextWithAddress>()
-  const formRef = useScrollToFieldErrorOnSubmit(
-    CheckoutStepName.FULFILLMENT_DETAILS,
-  )
+  const formRef = useScrollToFieldErrorOnSubmit()
 
   return (
     <Flex flexDirection={"column"} mb={2} ref={formRef}>
@@ -342,6 +338,7 @@ const DeliveryFormContent: React.FC<DeliveryFormContentProps> = ({
           <Spacer y={2} />
         </>
       )}
+
       {hasSavedAddresses ? (
         <SavedAddressOptions
           savedAddresses={processedAddresses}
@@ -361,12 +358,16 @@ const DeliveryFormContent: React.FC<DeliveryFormContentProps> = ({
           >
             Delivery address
           </Text>
+
           <Spacer y={2} />
+
           <AddressFormFields
             withPhoneNumber
             shippableCountries={shippableCountries as any}
           />
+
           <Spacer y={4} />
+
           <Button
             type="submit"
             loading={formikContext.isSubmitting}

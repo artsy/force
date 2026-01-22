@@ -7,7 +7,6 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import {
   type ProcessedUserAddress,
   deliveryAddressValidationSchema,
@@ -290,9 +289,7 @@ interface UpdateAddressFormFieldsProps {
 const UpdateAddressFormFields: React.FC<UpdateAddressFormFieldsProps> = ({
   address,
 }) => {
-  const formRef = useScrollToFieldErrorOnSubmit(
-    CheckoutStepName.FULFILLMENT_DETAILS,
-  )
+  const formRef = useScrollToFieldErrorOnSubmit()
 
   return (
     <div ref={formRef}>
