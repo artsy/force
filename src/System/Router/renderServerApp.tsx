@@ -53,6 +53,8 @@ export const renderServerApp = ({
 
   const { linkHeaders, linkPreloadTags } = getEarlyHints(headTags ?? [])
 
+  const theme = res.locals.sd.X_THEME_HEADER === "dark" ? "dark" : "light"
+
   const options: HTMLProps = {
     cdnUrl: NODE_ENV === "production" ? (CDN_URL as string) : "",
     content: {
@@ -85,6 +87,7 @@ export const renderServerApp = ({
       openSearch: MANIFEST.lookup("/images/opensearch.xml"),
       webmanifest: MANIFEST.lookup("/images/manifest.webmanifest"),
     },
+    theme,
   }
 
   setLinkHeaders(linkHeaders, res)

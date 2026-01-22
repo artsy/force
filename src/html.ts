@@ -1,3 +1,5 @@
+import { THEMES } from "@artsy/palette"
+
 export interface HTMLProps {
   cdnUrl: string
   content: {
@@ -28,6 +30,7 @@ export interface HTMLProps {
     openSearch: string
     webmanifest: string
   }
+  theme?: "light" | "dark"
 }
 
 export function buildHtmlTemplate({
@@ -38,7 +41,11 @@ export function buildHtmlTemplate({
   icons,
   imageCdnUrl,
   manifest,
+  theme = "light",
 }: HTMLProps) {
+  console.warn("Building HTML template with theme:", theme)
+  const themeColors =
+    theme === "dark" ? THEMES.dark.colors : THEMES.light.colors
   return `
     <!DOCTYPE html>
     <html lang="en">
@@ -81,7 +88,7 @@ export function buildHtmlTemplate({
       ${content.sharifyData || ""}
     </head>
 
-    <body>
+    <body style="background-color: ${themeColors.mono5};"}>
 
       ${(() => {
         if (!disable.segment) {
