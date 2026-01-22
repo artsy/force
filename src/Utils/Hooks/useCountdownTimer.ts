@@ -1,8 +1,6 @@
-import {
-  differenceInHours,
-  differenceInMinutes,
-  differenceInSeconds,
-} from "date-fns"
+import differenceInHours from "date-fns/differenceInHours"
+import differenceInMinutes from "date-fns/differenceInMinutes"
+import differenceInSeconds from "date-fns/differenceInSeconds"
 import { useEffect, useState } from "react"
 
 const calculateTime = (endTime: string, includeSeconds: boolean) => {

@@ -8,7 +8,7 @@ import type {
   ConversationMessage_message$key,
 } from "__generated__/ConversationMessage_message.graphql"
 import type { ConversationMessages_conversation$data } from "__generated__/ConversationMessages_conversation.graphql"
-import { isSameMinute } from "date-fns"
+import isSameMinute from "date-fns/isSameMinute"
 import React from "react"
 import Linkify from "react-linkify"
 import { graphql, useFragment } from "react-relay"
@@ -215,14 +215,4 @@ export const defineSeenBy = (
 ): string | undefined => {
   // FIXME: Disabling this feature for now. NX will redefine how it should work.
   return undefined
-
-  const opens = message.deliveries
-    .filter(delivery => !!delivery?.openedAt)
-    .map(delivery => delivery?.fullTransformedEmail)
-
-  if (!opens.length) return
-  // "Seen by all"
-  if (opens.length === message.to.concat(message.cc).length) return "all"
-  // "Seen by [n]"
-  return opens.length.toString()
 }

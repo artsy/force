@@ -25,6 +25,16 @@
       "correctness": {
         "noSwitchDeclarations": "off"
       },
+      "nursery": {
+        "noRestrictedImports": {
+          "level": "error",
+          "options": {
+            "paths": {
+              "date-fns": "Import from 'date-fns/<function>' instead to enable tree-shaking (e.g., 'date-fns/format')"
+            }
+          }
+        }
+      },
       "complexity": {
         "noBannedTypes": "off",
         "noExtraBooleanCast": "off",

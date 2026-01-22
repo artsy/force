@@ -4,7 +4,8 @@ import { useLoadMore } from "Apps/Conversations/hooks/useLoadMore"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { intersect } from "Utils/Hooks/__tests__/mockIntersectionObserver"
 import type { ConversationMessagesTestQuery } from "__generated__/ConversationMessagesTestQuery.graphql"
-import { format, subDays } from "date-fns"
+import format from "date-fns/format"
+import subDays from "date-fns/subDays"
 import { graphql } from "react-relay"
 
 jest.mock("Apps/Conversations/hooks/useLoadMore")

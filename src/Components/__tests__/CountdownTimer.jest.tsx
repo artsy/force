@@ -1,6 +1,6 @@
+import { render, waitFor } from "@testing-library/react"
 import { CountdownTimer } from "Components/CountdownTimer"
 import type { ExtractProps } from "Utils/ExtractProps"
-import { render, waitFor } from "@testing-library/react"
 import { DateTime, Duration, Settings } from "luxon"
 
 const DATE = "2018-12-03T13:50:31.641Z"

@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react"
 import { CountdownTimer } from "Apps/Conversations/components/Details/OrderInformation/CountdownTimer"
-import { add } from "date-fns"
+import add from "date-fns/add"
 
 describe("CountdownTimer", () => {
   it("does not render if offer has expired", () => {
