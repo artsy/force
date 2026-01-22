@@ -62,27 +62,54 @@ type HandleCancelCallback = NonNullable<
 const errorBannerPropsForErrorCode = (
   errorCode: string,
 ): CheckoutErrorBannerProps["error"] => {
-  switch (errorCode) {
-    case "payment_method_requires_identifier": {
-      return {
-        title: "you suck",
-      }
+  // Card/payment failed errors
+  if (
+    [
+      "card_declined",
+      "insufficient_funds",
+      "incorrect_number",
+      "expired_card",
+      "charge_authorization_failed",
+      "credit_card_not_found",
+      "credit_card_deactivated",
+      "invalid_credit_card",
+      "processing_error",
+    ].includes(errorCode)
+  ) {
+    return {
+      title: "Payment failed",
+      message: "There was an issue with your payment method. Please try again.",
     }
-    case "incorrect_number": {
-      return {
-        title: "incorre ct number",
-      }
+  }
+
+  // Shipping address errors
+  if (
+    [
+      "unsupported_shipping_location",
+      "missing_postal_code",
+      "missing_country",
+      "missing_phone_number",
+      "missing_shipping_info",
+    ].includes(errorCode)
+  ) {
+    return {
+      title: "Shipping address error",
+      message: "Please check your shipping address and try again.",
     }
-    case "insufficient_funds": {
-      return {
-        title: "you suck",
-      }
+  }
+
+  // Payment method not supported
+  if (errorCode === "unsupported_payment_method") {
+    return {
+      title: "Payment method not supported",
+      message:
+        "This payment method is not supported. Please try a different payment method.",
     }
-    default: {
-      return {
-        title: "An error occurred!",
-      }
-    }
+  }
+
+  // Fallback for all other errors
+  return {
+    title: "An error occurred",
   }
 }
 
@@ -496,7 +523,6 @@ export const Order2ExpressCheckoutUI: React.FC<
       redirectToOrderDetails()
       return
     } catch (error) {
-      console.log("** Error confirming payment", error)
       logger.error("Error confirming payment", error)
       errorRef.current = (error.code || "unknown_error") as string
 
