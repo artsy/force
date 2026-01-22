@@ -4,13 +4,11 @@ import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCh
 import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import {
   CheckoutErrorBanner,
-  type CheckoutErrorBannerProps,
   MailtoOrderSupport,
 } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { SavedAddressOptions } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/SavedAddressOptions/Order2SavedAddressOptions"
 import { handleError } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/handleError"
 import {
-  type ProcessedUserAddress,
   deliveryAddressValidationSchema,
   findInitialSelectedAddress,
   processSavedAddresses,
@@ -33,11 +31,8 @@ import { useInitialLocationValues } from "Components/Address/utils/useInitialLoc
 import type { CountryData } from "Utils/countries"
 import createLogger from "Utils/logger"
 import type { Order2DeliveryForm_me$key } from "__generated__/Order2DeliveryForm_me.graphql"
-import type {
-  Order2DeliveryForm_order$data,
-  Order2DeliveryForm_order$key,
-} from "__generated__/Order2DeliveryForm_order.graphql"
-import { Formik, type FormikHelpers, useFormikContext } from "formik"
+import type { Order2DeliveryForm_order$key } from "__generated__/Order2DeliveryForm_order.graphql"
+import { Form, Formik, type FormikHelpers } from "formik"
 import { useCallback, useMemo } from "react"
 import { graphql, useFragment } from "react-relay"
 
@@ -59,6 +54,10 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
 
   const shippableCountries = getShippableCountryData(
     orderData.availableShippingCountries,
+  )
+
+  const errorBannerRef = useScrollToErrorBanner(
+    CheckoutStepName.FULFILLMENT_DETAILS,
   )
 
   // Get country options for locationBasedInitialValues
@@ -296,100 +295,84 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
       validationSchema={deliveryAddressValidationSchema}
       onSubmit={onSubmit}
     >
-      <DeliveryFormContent
-        fulfillmentDetailsError={fulfillmentDetailsError}
-        hasSavedAddresses={hasSavedAddresses}
-        processedAddresses={processedAddresses}
-        initialSelectedAddress={initialSelectedAddress}
-        blankAddressValuesForUser={blankAddressValuesForUser}
-        orderData={orderData}
-        shippableCountries={shippableCountries}
-      />
+      {({ isSubmitting, setValues, errors, status }) => {
+        return (
+          <Form noValidate>
+            <Flex flexDirection={"column"} mb={2}>
+              {fulfillmentDetailsError && (
+                <>
+                  <CheckoutErrorBanner
+                    ref={errorBannerRef}
+                    error={fulfillmentDetailsError}
+                  />
+                  <Spacer y={2} />
+                </>
+              )}
+
+              {hasSavedAddresses ? (
+                <SavedAddressOptions
+                  savedAddresses={processedAddresses}
+                  initialSelectedAddress={initialSelectedAddress}
+                  newAddressInitialValues={blankAddressValuesForUser}
+                  availableShippingCountries={
+                    orderData.availableShippingCountries
+                  }
+                  onSelectAddress={async values => {
+                    await setValues(values)
+                  }}
+                />
+              ) : (
+                <>
+                  <Text
+                    fontWeight={["bold", "bold", "normal"]}
+                    color="mono100"
+                    variant={["sm-display", "sm-display", "md"]}
+                  >
+                    Delivery address
+                  </Text>
+
+                  <Spacer y={2} />
+
+                  <DeliveryFormFields
+                    shippableCountries={shippableCountries as any}
+                  />
+
+                  <Spacer y={4} />
+
+                  <Button
+                    type="submit"
+                    loading={isSubmitting}
+                    disabled={!!status?.errorBanner}
+                  >
+                    {/* TODO: This would not apply for flat shipping */}
+                    See Shipping Methods
+                  </Button>
+                </>
+              )}
+            </Flex>
+          </Form>
+        )
+      }}
     </Formik>
   )
 }
 
-interface DeliveryFormContentProps {
-  fulfillmentDetailsError: CheckoutErrorBannerProps["error"]
-  hasSavedAddresses: boolean
-  processedAddresses: ProcessedUserAddress[]
-  initialSelectedAddress: ProcessedUserAddress | undefined
-  blankAddressValuesForUser: FormikContextWithAddress
-  orderData: Order2DeliveryForm_order$data
+interface DeliveryFormFieldsProps {
   shippableCountries: CountryData[]
 }
 
-const DeliveryFormContent: React.FC<DeliveryFormContentProps> = ({
-  fulfillmentDetailsError,
-  hasSavedAddresses,
-  processedAddresses,
-  initialSelectedAddress,
-  blankAddressValuesForUser,
-  orderData,
+const DeliveryFormFields: React.FC<DeliveryFormFieldsProps> = ({
   shippableCountries,
 }) => {
-  const formikContext = useFormikContext<FormikContextWithAddress>()
   const formRef = useScrollToFieldErrorOnSubmit()
-  const errorBannerRef = useScrollToErrorBanner(
-    CheckoutStepName.FULFILLMENT_DETAILS,
-  )
 
   return (
-    <Flex flexDirection={"column"} mb={2} ref={formRef}>
-      {fulfillmentDetailsError && (
-        <>
-          <CheckoutErrorBanner
-            ref={errorBannerRef}
-            error={fulfillmentDetailsError}
-          />
-          <Spacer y={2} />
-        </>
-      )}
-
-      {hasSavedAddresses ? (
-        <SavedAddressOptions
-          savedAddresses={processedAddresses}
-          initialSelectedAddress={initialSelectedAddress}
-          newAddressInitialValues={blankAddressValuesForUser}
-          availableShippingCountries={orderData.availableShippingCountries}
-          onSelectAddress={async values => {
-            await formikContext.setValues(values)
-          }}
-        />
-      ) : (
-        <>
-          <Text
-            fontWeight={["bold", "bold", "normal"]}
-            color="mono100"
-            variant={["sm-display", "sm-display", "md"]}
-          >
-            Delivery address
-          </Text>
-
-          <Spacer y={2} />
-
-          <AddressFormFields
-            withPhoneNumber
-            shippableCountries={shippableCountries as any}
-          />
-
-          <Spacer y={4} />
-
-          <Button
-            type="submit"
-            loading={formikContext.isSubmitting}
-            disabled={
-              !!formikContext.status?.errorBanner ||
-              Object.keys(formikContext.errors).length > 0
-            }
-            onClick={() => formikContext.handleSubmit()}
-          >
-            {/* TODO: This would not apply for flat shipping */}
-            See Shipping Methods
-          </Button>
-        </>
-      )}
-    </Flex>
+    <div ref={formRef}>
+      <AddressFormFields
+        withPhoneNumber
+        shippableCountries={shippableCountries as any}
+      />
+    </div>
   )
 }
 
