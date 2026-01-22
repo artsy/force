@@ -140,4 +140,119 @@ describe("Order2CollapsibleOrderSummary", () => {
       expanded: false,
     })
   })
+
+  it("uses artworkVersion thumbnail image when available", async () => {
+    await renderWithRelay({
+      Order: () => ({
+        ...mockOrder,
+        lineItems: [
+          {
+            artwork: {
+              slug: "test-artwork",
+              figures: [
+                {
+                  __typename: "Image",
+                  resizedSquare: {
+                    url: "https://example.com/fallback-image.jpg",
+                  },
+                },
+              ],
+            },
+            artworkVersion: {
+              title: "Test Artwork",
+              date: "2023",
+              artistNames: "Test Artist",
+              thumbnail: {
+                url: "https://example.com/thumbnail.jpg",
+                resizedSquare: {
+                  url: "https://example.com/thumbnail-resized.jpg",
+                },
+              },
+            },
+          },
+        ],
+      }),
+    })
+
+    const image = screen.getByAltText("Test Artwork")
+    expect(image).toHaveAttribute(
+      "src",
+      "https://example.com/thumbnail-resized.jpg",
+    )
+  })
+
+  it("falls back to artwork figures when artworkVersion thumbnail is not available", async () => {
+    await renderWithRelay({
+      Order: () => ({
+        ...mockOrder,
+        lineItems: [
+          {
+            artwork: {
+              slug: "test-artwork",
+              figures: [
+                {
+                  __typename: "Image",
+                  resizedSquare: {
+                    url: "https://example.com/fallback-image.jpg",
+                  },
+                },
+              ],
+            },
+            artworkVersion: {
+              title: "Test Artwork",
+              date: "2023",
+              artistNames: "Test Artist",
+              thumbnail: null,
+            },
+          },
+        ],
+      }),
+    })
+
+    const image = screen.getByAltText("Test Artwork")
+    expect(image).toHaveAttribute(
+      "src",
+      "https://example.com/fallback-image.jpg",
+    )
+  })
+
+  it("falls back to artwork figures when artworkVersion thumbnail url is missing", async () => {
+    await renderWithRelay({
+      Order: () => ({
+        ...mockOrder,
+        lineItems: [
+          {
+            artwork: {
+              slug: "test-artwork",
+              figures: [
+                {
+                  __typename: "Image",
+                  resizedSquare: {
+                    url: "https://example.com/fallback-image.jpg",
+                  },
+                },
+              ],
+            },
+            artworkVersion: {
+              title: "Test Artwork",
+              date: "2023",
+              artistNames: "Test Artist",
+              thumbnail: {
+                url: null,
+                resizedSquare: {
+                  url: "https://example.com/thumbnail-resized.jpg",
+                },
+              },
+            },
+          },
+        ],
+      }),
+    })
+
+    const image = screen.getByAltText("Test Artwork")
+    expect(image).toHaveAttribute(
+      "src",
+      "https://example.com/fallback-image.jpg",
+    )
+  })
 })
