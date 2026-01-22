@@ -267,6 +267,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
 
   const paymentElementRef = useRef<HTMLDivElement>(null)
   const errorBannerRef = useRef<HTMLDivElement>(null)
+  const billingFormRef = useRef<any>(null)
 
   // Default to saved payment method when available and track that it has been viewed
   useEffect(() => {
@@ -505,6 +506,16 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
 
     // Clear any previous error messages
     unsetStepError()
+
+    // Validate billing form if it's rendered
+    if (billingFormRef.current) {
+      const errors = await billingFormRef.current.validateForm()
+
+      if (Object.keys(errors).length > 0) {
+        await billingFormRef.current.submitForm()
+        return
+      }
+    }
 
     if (!selectedPaymentMethod) {
       handleError({ message: "Select a payment method" })
@@ -753,6 +764,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
           handleBillingAddressSameAsShippingChange
         }
         onBillingFormValuesChange={setBillingFormValues}
+        billingFormRef={billingFormRef}
       />
 
       <Spacer y={2} />

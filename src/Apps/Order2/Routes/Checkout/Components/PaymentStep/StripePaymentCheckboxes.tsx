@@ -9,12 +9,14 @@ import {
   Tooltip,
 } from "@artsy/palette"
 import { Collapse } from "Apps/Order/Components/Collapse"
+import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
+import { useScrollToFieldErrorOnSubmit } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToFieldErrorOnSubmit"
 import {
   AddressFormFields,
   type FormikContextWithAddress,
   addressFormFieldsValidator,
 } from "Components/Address/AddressFormFields"
-import { Formik } from "formik"
+import { Form, Formik } from "formik"
 import { isEqual } from "lodash"
 import type React from "react"
 import * as yup from "yup"
@@ -34,6 +36,7 @@ interface StripePaymentCheckboxesProps {
   onSavePaymentMethodChange: (save: boolean) => void
   onBillingAddressSameAsShippingChange: (selected: boolean) => void
   onBillingFormValuesChange: (values: FormikContextWithAddress) => void
+  billingFormRef?: React.RefObject<any>
 }
 
 export const StripePaymentCheckboxes: React.FC<
@@ -47,6 +50,7 @@ export const StripePaymentCheckboxes: React.FC<
   onSavePaymentMethodChange,
   onBillingAddressSameAsShippingChange,
   onBillingFormValuesChange,
+  billingFormRef,
 }) => {
   const needsBillingAddress = () => {
     if (selectedPaymentMethod !== "stripe-card") return false
@@ -90,6 +94,7 @@ export const StripePaymentCheckboxes: React.FC<
                 Billing address
               </Text>
               <Formik
+                key={`${selectedPaymentMethod}-${billingAddressSameAsShipping}`}
                 initialValues={billingFormValues}
                 validationSchema={yup
                   .object()
@@ -97,14 +102,18 @@ export const StripePaymentCheckboxes: React.FC<
                 onSubmit={(values: FormikContextWithAddress) => {
                   onBillingFormValuesChange(values)
                 }}
-                enableReinitialize
+                innerRef={billingFormRef}
               >
                 {({ values }) => {
                   if (!isEqual(values, billingFormValues)) {
                     onBillingFormValuesChange(values)
                   }
 
-                  return <AddressFormFields />
+                  return (
+                    <Form noValidate>
+                      <BillingAddressFormFields />
+                    </Form>
+                  )
                 }}
               </Formik>
             </>
@@ -144,5 +153,15 @@ export const StripePaymentCheckboxes: React.FC<
         </Flex>
       </Collapse>
     </>
+  )
+}
+
+const BillingAddressFormFields: React.FC = () => {
+  const formRef = useScrollToFieldErrorOnSubmit(CheckoutStepName.PAYMENT)
+
+  return (
+    <div ref={formRef}>
+      <AddressFormFields />
+    </div>
   )
 }
