@@ -166,7 +166,9 @@ export const Order2ExpressCheckoutUI: React.FC<
     validateAndExtractOrderResponse(unsetOrderPaymentMethod?.orderOrError)
     validateAndExtractOrderResponse(unsetOrderFulfillmentOption?.orderOrError)
 
-    window.location.reload()
+    // Reset checkout mode back to standard
+    // The mutations above already update the Relay store, so no reload needed
+    setCheckoutMode("standard")
   }
 
   const handleOpenExpressCheckout = async ({

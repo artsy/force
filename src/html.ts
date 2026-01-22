@@ -88,7 +88,8 @@ export function buildHtmlTemplate({
       ${content.sharifyData || ""}
     </head>
 
-    <body style="background-color: ${themeColors.mono5};"}>
+    <body style="background-color: ${themeColors.mono5}; min-height: 100vh;">
+    TESTING
 
       ${(() => {
         if (!disable.segment) {
