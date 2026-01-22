@@ -40,6 +40,7 @@ export const useOrder2ExpressCheckoutSetFulfillmentOptionMutation = () => {
             ... on OrderMutationError {
               mutationError {
                 message
+                code
               }
             }
           }

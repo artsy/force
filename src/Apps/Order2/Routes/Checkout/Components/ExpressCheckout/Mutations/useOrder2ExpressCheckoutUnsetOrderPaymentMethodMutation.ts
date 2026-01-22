@@ -20,6 +20,7 @@ export const useOrder2ExpressCheckoutUnsetOrderPaymentMethodMutation = () => {
               ... on OrderMutationError {
                 mutationError {
                   message
+                  code
                 }
               }
             }

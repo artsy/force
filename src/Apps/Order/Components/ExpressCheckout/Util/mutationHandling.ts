@@ -52,6 +52,11 @@ export const validateAndExtractOrderResponse = <
   }
 
   if (isOrderMutationError(orderOrError)) {
+    console.log(
+      "** validateAndExtractOrderResponse",
+      orderOrError.mutationError,
+    )
+
     throw new CheckoutMutationError(
       orderOrError.mutationError.message,
       orderOrError.mutationError.code,

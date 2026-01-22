@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1fd95bdcf597bd3dd702662755d312da>>
+ * @generated SignedSource<<42632be9cda338d8616ab2153444030b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,6 +23,7 @@ export type useOrder2ExpressCheckoutUnsetOrderFulfillmentOptionMutation$data = {
     readonly orderOrError: {
       readonly __typename: "OrderMutationError";
       readonly mutationError: {
+        readonly code: string;
         readonly message: string;
       };
     } | {
@@ -190,6 +191,13 @@ v14 = {
           "args": null,
           "kind": "ScalarField",
           "name": "message",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "code",
           "storageKey": null
         }
       ],
@@ -480,16 +488,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "53e7084649f46b5db7b5694d7e4a2e58",
+    "cacheID": "113c00df8ad18e6cb4f27e0bbf391de6",
     "id": null,
     "metadata": {},
     "name": "useOrder2ExpressCheckoutUnsetOrderFulfillmentOptionMutation",
     "operationKind": "mutation",
-    "text": "mutation useOrder2ExpressCheckoutUnsetOrderFulfillmentOptionMutation(\n  $input: unsetOrderFulfillmentOptionInput!\n) {\n  unsetOrderFulfillmentOption(input: $input) {\n    orderOrError {\n      __typename\n      ... on OrderMutationSuccess {\n        order {\n          ...Order2ExpressCheckoutUI_order\n          internalID\n          fulfillmentOptions {\n            amount {\n              minor\n            }\n            selected\n            type\n          }\n          buyerTotal {\n            minor\n            currencyCode\n          }\n          itemsTotal {\n            minor\n          }\n          shippingTotal {\n            minor\n          }\n          taxTotal {\n            minor\n          }\n          availableShippingCountries\n          id\n        }\n      }\n      ... on OrderMutationError {\n        mutationError {\n          message\n        }\n      }\n    }\n  }\n}\n\nfragment Order2ExpressCheckoutUI_order on Order {\n  internalID\n  source\n  mode\n  buyerTotal {\n    minor\n    currencyCode\n  }\n  itemsTotal {\n    minor\n  }\n  shippingTotal {\n    minor\n  }\n  taxTotal {\n    minor\n  }\n  availableShippingCountries\n  fulfillmentOptions {\n    type\n    amount {\n      minor\n      currencyCode\n    }\n    selected\n  }\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    postalCode\n    region\n    country\n    name\n  }\n  lineItems {\n    artwork {\n      internalID\n      slug\n      id\n    }\n    id\n  }\n}\n"
+    "text": "mutation useOrder2ExpressCheckoutUnsetOrderFulfillmentOptionMutation(\n  $input: unsetOrderFulfillmentOptionInput!\n) {\n  unsetOrderFulfillmentOption(input: $input) {\n    orderOrError {\n      __typename\n      ... on OrderMutationSuccess {\n        order {\n          ...Order2ExpressCheckoutUI_order\n          internalID\n          fulfillmentOptions {\n            amount {\n              minor\n            }\n            selected\n            type\n          }\n          buyerTotal {\n            minor\n            currencyCode\n          }\n          itemsTotal {\n            minor\n          }\n          shippingTotal {\n            minor\n          }\n          taxTotal {\n            minor\n          }\n          availableShippingCountries\n          id\n        }\n      }\n      ... on OrderMutationError {\n        mutationError {\n          message\n          code\n        }\n      }\n    }\n  }\n}\n\nfragment Order2ExpressCheckoutUI_order on Order {\n  internalID\n  source\n  mode\n  buyerTotal {\n    minor\n    currencyCode\n  }\n  itemsTotal {\n    minor\n  }\n  shippingTotal {\n    minor\n  }\n  taxTotal {\n    minor\n  }\n  availableShippingCountries\n  fulfillmentOptions {\n    type\n    amount {\n      minor\n      currencyCode\n    }\n    selected\n  }\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    postalCode\n    region\n    country\n    name\n  }\n  lineItems {\n    artwork {\n      internalID\n      slug\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "d7887f9ae17c68cb5a2a8aa9f5fb4dd0";
+(node as any).hash = "323569c37541b97731f1045f9cde2ffd";
 
 export default node;

@@ -21,7 +21,10 @@ import {
   validateAndExtractOrderResponse,
 } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
 import type { ExpressCheckoutPaymentMethod } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
-import { CheckoutErrorBanner } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
+import {
+  CheckoutErrorBanner,
+  type CheckoutErrorBannerProps,
+} from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { preventHardReload } from "Apps/Order2/Utils/navigationGuards"
 import { RouterLink } from "System/Components/RouterLink"
@@ -55,6 +58,33 @@ const logger = createLogger("ExpressCheckoutUI")
 type HandleCancelCallback = NonNullable<
   React.ComponentProps<typeof ExpressCheckoutElement>["onCancel"]
 >
+
+const errorBannerPropsForErrorCode = (
+  errorCode: string,
+): CheckoutErrorBannerProps["error"] => {
+  switch (errorCode) {
+    case "payment_method_requires_identifier": {
+      return {
+        title: "you suck",
+      }
+    }
+    case "incorrect_number": {
+      return {
+        title: "incorre ct number",
+      }
+    }
+    case "insufficient_funds": {
+      return {
+        title: "you suck",
+      }
+    }
+    default: {
+      return {
+        title: "An error occurred!",
+      }
+    }
+  }
+}
 
 export const Order2ExpressCheckoutUI: React.FC<
   Order2ExpressCheckoutUIProps
@@ -219,11 +249,10 @@ export const Order2ExpressCheckoutUI: React.FC<
         flow: "Express checkout",
       })
 
+      const errorBannerProps = errorBannerPropsForErrorCode(errorRef.current)
       sessionStorage.setItem(
         "expressCheckoutError",
-        JSON.stringify({
-          title: "An error occurred",
-        }),
+        JSON.stringify(errorBannerProps),
       )
 
       errorRef.current = null
@@ -445,7 +474,7 @@ export const Order2ExpressCheckoutUI: React.FC<
       if (error) {
         // This point is only reached if there's an immediate error when
         // creating the ConfirmationToken. Show the error to customer (for example, payment details incomplete)
-        logger.error(error)
+        logger.error("Error on createConfirmationToken", error)
         setExpressCheckoutSubmitting(false)
         return
       }
@@ -467,8 +496,9 @@ export const Order2ExpressCheckoutUI: React.FC<
       redirectToOrderDetails()
       return
     } catch (error) {
+      console.log("** Error confirming payment", error)
       logger.error("Error confirming payment", error)
-      errorRef.current = error.code || "unknown_error"
+      errorRef.current = (error.code || "unknown_error") as string
 
       checkoutTracking.errorMessageViewed({
         error_code: errorRef.current,
@@ -478,11 +508,10 @@ export const Order2ExpressCheckoutUI: React.FC<
         flow: "Express checkout",
       })
 
+      const errorBannerProps = errorBannerPropsForErrorCode(errorRef.current)
       sessionStorage.setItem(
         "expressCheckoutError",
-        JSON.stringify({
-          title: "Payment failed",
-        }),
+        JSON.stringify(errorBannerProps),
       )
 
       resetOrder()
