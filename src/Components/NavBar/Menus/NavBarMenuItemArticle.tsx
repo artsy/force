@@ -1,100 +1,131 @@
-import {
-  ActionType,
-  type ClickedArticleGroup,
-  ContextModule,
-  OwnerType,
-} from "@artsy/cohesion"
-import { Flex, Image, ResponsiveBox, Text } from "@artsy/palette"
+import type { ClickedNavigationDropdownItem } from "@artsy/cohesion"
+import { Box, Flex, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
-import { getENV } from "Utils/getENV"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import type { NavBarMenuItemArticleQuery } from "__generated__/NavBarMenuItemArticleQuery.graphql"
 import type { NavBarMenuItemArticle_article$key } from "__generated__/NavBarMenuItemArticle_article.graphql"
-import type { FC, PropsWithChildren } from "react"
+import type { FC } from "react"
 import { graphql, useFragment, useLazyLoadQuery } from "react-relay"
 import { useTracking } from "react-tracking"
 
 interface NavBarMenuItemArticleProps {
-  text: string
-  articles: NavBarMenuItemArticle_article$key
+  articleId: string
+  headerText: string
+  contextModule: string
+  parentNavigationItem: string
 }
 
-const NavBarMenuItemArticle: FC<
-  PropsWithChildren<NavBarMenuItemArticleProps>
-> = ({ articles, text }) => {
-  const { trackEvent } = useTracking()
-  const data = useFragment(fragment, articles)
-  const article = data?.[0]
+export const NavBarMenuItemArticleQueryRenderer: FC<
+  NavBarMenuItemArticleProps
+> = ({ articleId, headerText, contextModule, parentNavigationItem }) => {
+  const data = useLazyLoadQuery<NavBarMenuItemArticleQuery>(query, {
+    articleId,
+  })
 
-  if (!article.thumbnailImage?.cropped) {
+  if (!data.article) {
     return null
   }
 
-  const image = article.thumbnailImage.cropped
+  return (
+    <NavBarMenuItemArticle
+      article={data.article}
+      headerText={headerText}
+      contextModule={contextModule}
+      parentNavigationItem={parentNavigationItem}
+    />
+  )
+}
+
+interface NavBarMenuItemArticleInnerProps {
+  article: NavBarMenuItemArticle_article$key
+  headerText: string
+  contextModule: string
+  parentNavigationItem: string
+}
+
+const NavBarMenuItemArticle: FC<NavBarMenuItemArticleInnerProps> = ({
+  article: articleKey,
+  headerText,
+  contextModule,
+  parentNavigationItem,
+}) => {
+  const { trackEvent } = useTracking()
+  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
+    useAnalyticsContext()
+  const article = useFragment(fragment, articleKey)
+
+  const image = article.thumbnailImage?.resized
+
+  if (!image) {
+    return null
+  }
 
   return (
-    <RouterLink
-      key={article.internalID}
-      to={article.href ?? ""}
-      display="block"
-      textDecoration="none"
-      onClick={() => {
-        const trackingEvent: ClickedArticleGroup = {
-          action: ActionType.clickedArticleGroup,
-          context_module: ContextModule.navBar,
-          // TODO: check with data the best owner type, navBar is not in Cohesion as OwnerType
-          context_page_owner_type: OwnerType.home,
-          context_page_owner_id: article.internalID,
-          destination_page_owner_type: OwnerType.article,
-          type: "thumbnail",
-        }
-        trackEvent(trackingEvent)
-      }}
+    <Flex
+      borderLeftWidth={1}
+      borderLeftColor="mono30"
+      borderLeftStyle="solid"
+      gap={1}
+      pl={4}
+      pb={4}
+      flexDirection="column"
     >
-      <Flex
-        borderLeftWidth={1}
-        borderLeftColor="mono60"
-        borderLeftStyle="solid"
-        gap={1}
-        paddingLeft={2}
-        flexDirection="column"
-        maxWidth={360}
-      >
-        <Text>{text}</Text>
+      <Text variant="sm-display" mb={0.5}>
+        {headerText}
+      </Text>
 
-        <ResponsiveBox
-          aspectWidth={image.width}
-          aspectHeight={image.height}
-          maxWidth={360}
-          maxHeight={400}
-        >
-          <Image
+      <RouterLink
+        to={article.href ?? ""}
+        display="block"
+        textDecoration="none"
+        onClick={() => {
+          trackEvent({
+            action: "click",
+            flow: "Header",
+            // @ts-expect-error - ContextModule types between deprecated and new schema
+            context_module: contextModule,
+            context_page_owner_type: contextPageOwnerType!,
+            context_page_owner_id: contextPageOwnerId,
+            context_page_owner_slug: contextPageOwnerSlug,
+            parent_navigation_item: parentNavigationItem,
+            dropdown_group: headerText,
+            subject: article.title || "",
+            destination_path: article.href || "",
+          } satisfies ClickedNavigationDropdownItem)
+        }}
+      >
+        <Box maxHeight={400} overflow="hidden" mb={2}>
+          <img
             src={image.src}
             srcSet={image.srcSet}
-            width="100%"
-            height="100%"
-            lazyLoad
+            alt=""
+            style={{
+              width: "100%",
+              height: "auto",
+              display: "block",
+            }}
           />
-        </ResponsiveBox>
+        </Box>
 
-        <Text color="mono60" variant="xs">
+        <Text color="mono60" variant="sm">
           {article.vertical}
         </Text>
-        <Text variant="xs">{article.title}</Text>
-      </Flex>
-    </RouterLink>
+        <Text color="mono100" variant="sm">
+          {article.title}
+        </Text>
+      </RouterLink>
+    </Flex>
   )
 }
 
 const fragment = graphql`
-  fragment NavBarMenuItemArticle_article on Article @relay(plural: true) {
+  fragment NavBarMenuItemArticle_article on Article {
     internalID
     href
     vertical
     title
     thumbnailImage {
-      cropped(width: 670, height: 720) {
-        width
-        height
+      resized(height: 400) {
         src
         srcSet
       }
@@ -103,29 +134,9 @@ const fragment = graphql`
 `
 
 const query = graphql`
-  query NavBarMenuItemArticleQuery($isMobile: Boolean!) {
-    articles(
-      featured: true
-      published: true
-      sort: PUBLISHED_AT_DESC
-      limit: 1
-    ) @skip(if: $isMobile) {
+  query NavBarMenuItemArticleQuery($articleId: String!) {
+    article(id: $articleId) {
       ...NavBarMenuItemArticle_article
     }
   }
 `
-
-export const NavBarMenuItemArticleQueryRenderer: FC<{ text: string }> = ({
-  text,
-}) => {
-  const isMobile = getENV("IS_MOBILE")
-  const data = useLazyLoadQuery<NavBarMenuItemArticleQuery>(query, {
-    isMobile,
-  })
-
-  if (isMobile || !data.articles) {
-    return null
-  }
-
-  return <NavBarMenuItemArticle articles={data.articles} text={text} />
-}

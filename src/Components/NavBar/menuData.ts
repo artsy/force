@@ -3,7 +3,7 @@ export interface MenuData {
   links: LinkData[]
 }
 
-export type LinkData = MenuLinkData | SimpleLinkData
+export type LinkData = MenuLinkData | SimpleLinkData | VisualComponentData
 
 export const isMenuLinkData = (
   linkData: LinkData,
@@ -11,16 +11,13 @@ export const isMenuLinkData = (
   return "menu" in linkData
 }
 
-type BasicLinkData = {
+// e.g. "Editorial"
+export interface SimpleLinkData {
+  text: string
+  href: string
   dividerBelow?: boolean
-  dividerBefore?: boolean
   onClick?(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>): void
 }
-
-// e.g. "Editorial"
-export type SimpleLinkData =
-  | (BasicLinkData & { text: string; href: string; type?: never })
-  | (BasicLinkData & { type: "Article"; text: string; href?: never })
 
 // e.g. "Art Movement >"
 export interface MenuLinkData {
@@ -29,9 +26,11 @@ export interface MenuLinkData {
   dividerBelow?: boolean
 }
 
-const ArticleSubmenuItem: SimpleLinkData = {
-  text: "Further Reading in Art Market",
-  type: "Article",
+// e.g. Article visual component
+export interface VisualComponentData {
+  type: "Article"
+  articleId: string
+  headerText: string
 }
 
 export const WHATS_NEW_SUBMENU_DATA: MenuLinkData = {
@@ -139,7 +138,12 @@ export const WHATS_NEW_SUBMENU_DATA: MenuLinkData = {
           ],
         },
       },
-      ArticleSubmenuItem,
+      {
+        type: "Article",
+        articleId:
+          "artsy-editorial-16-leading-curators-predict-art-trends-2026",
+        headerText: "What's Next",
+      },
     ],
   },
 }
@@ -266,7 +270,11 @@ export const ARTISTS_SUBMENU_DATA: MenuLinkData = {
         },
         dividerBelow: true,
       },
-      ArticleSubmenuItem,
+      {
+        type: "Article",
+        articleId: "artsy-editorial-11-artists-breakout-moments-2026",
+        headerText: "Artists to Discover",
+      },
       {
         text: "View All Artists",
         href: "/artists",
@@ -389,7 +397,11 @@ export const ARTWORKS_SUBMENU_DATA: MenuLinkData = {
         },
         dividerBelow: true,
       },
-      ArticleSubmenuItem,
+      {
+        type: "Article",
+        articleId: "artsy-editorial-inside-collection-michael-sherman",
+        headerText: "Get Inspired",
+      },
       {
         text: "View All Artworks",
         href: "/collect",

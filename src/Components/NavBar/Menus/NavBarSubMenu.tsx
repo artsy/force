@@ -3,13 +3,13 @@ import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchem
 import { Box, Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
-import { NavBarMenuItemArticleQueryRenderer } from "Components/NavBar/Menus/NavBarMenuItemArticle"
 import type { MenuData } from "Components/NavBar/menuData"
 import { RouterLink } from "System/Components/RouterLink"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import type * as React from "react"
 import { useTracking } from "react-tracking"
 import { NavBarMenuItemLink } from "./NavBarMenuItem"
+import { NavBarMenuItemArticleQueryRenderer } from "./NavBarMenuItemArticle"
 
 interface NavBarSubMenuProps {
   menu: MenuData
@@ -39,7 +39,10 @@ export const NavBarSubMenu: React.FC<
     for (const item of menu.links) {
       if ("menu" in item && item.menu) {
         const isInSubmenu = item.menu.links.some(
-          menuItem => !("menu" in menuItem) && menuItem.href === href,
+          menuItem =>
+            !("menu" in menuItem) &&
+            "href" in menuItem &&
+            menuItem.href === href,
         )
         if (isInSubmenu) {
           dropdownGroup = item.text
@@ -67,6 +70,10 @@ export const NavBarSubMenu: React.FC<
     contextModule ===
     DeprecatedAnalyticsSchema.ContextModule.HeaderArtistsDropdown
 
+  // Find article and non-menu items
+  const articleItem = menu.links.find(
+    item => "type" in item && item.type === "Article",
+  )
   const lastMenuLinkIndex = menu.links.length - 1
   const lastMenuItem = menu.links[lastMenuLinkIndex]
   const viewAllMenuItem =
@@ -90,7 +97,8 @@ export const NavBarSubMenu: React.FC<
                     {subMenu.menu &&
                       subMenu.menu.links.map(menuItem => {
                         return (
-                          !("menu" in menuItem) && (
+                          !("menu" in menuItem) &&
+                          "href" in menuItem && (
                             <NavBarMenuItemLink
                               key={menuItem.text}
                               to={menuItem.href}
@@ -104,25 +112,30 @@ export const NavBarSubMenu: React.FC<
                   </Column>
                 )
               }
-              if (subMenu.type === "Article") {
-                return (
-                  <Column key={subMenu.text} span={4}>
-                    <NavBarMenuItemArticleQueryRenderer text={subMenu.text} />
-                  </Column>
-                )
-              }
+              return null
             })}
+
+            {articleItem && "type" in articleItem && (
+              <Column span={4} px={2}>
+                <NavBarMenuItemArticleQueryRenderer
+                  articleId={articleItem.articleId}
+                  headerText={articleItem.headerText}
+                  contextModule={contextModule}
+                  parentNavigationItem={parentNavigationItem}
+                />
+              </Column>
+            )}
 
             <>
               <Column
-                span={3}
+                span={2}
                 display="flex"
                 flexDirection="column"
                 justifyContent="space-between"
               >
                 <Box>
                   {menu.links.map((menuItem, i) => {
-                    if (!("menu" in menuItem)) {
+                    if (!("menu" in menuItem) && "href" in menuItem) {
                       const isLast = lastMenuLinkIndex === i
 
                       return (
