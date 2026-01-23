@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e28616abe87c1df812bedcbe2a34dbbc>>
+ * @generated SignedSource<<b2ea0dd28b34c569ffddcb9c503c3282>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -30,7 +30,6 @@ export type ArtworkSidebarBidActionTestQuery$rawResponse = {
     readonly id: string;
     readonly image: {
       readonly aspectRatio: number;
-      readonly blurhash: string | null | undefined;
       readonly url: string | null | undefined;
     } | null | undefined;
     readonly internalID: string;
@@ -274,13 +273,6 @@ return {
                 "kind": "ScalarField",
                 "name": "aspectRatio",
                 "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "blurhash",
-                "storageKey": null
               }
             ],
             "storageKey": null
@@ -472,7 +464,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "16030c0c4775a15685150976d34f8901",
+    "cacheID": "505561b4c5e1c86579879ed069545c24",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -509,7 +501,6 @@ return {
           "plural": false,
           "type": "Float"
         },
-        "artwork.image.blurhash": (v7/*: any*/),
         "artwork.image.url": (v7/*: any*/),
         "artwork.internalID": (v6/*: any*/),
         "artwork.myLotStanding": {
@@ -591,7 +582,7 @@ return {
     },
     "name": "ArtworkSidebarBidActionTestQuery",
     "operationKind": "query",
-    "text": "query ArtworkSidebarBidActionTestQuery {\n  artwork(id: \"auction_artwork\") {\n    ...ArtworkSidebarBidAction_artwork\n    id\n  }\n  me {\n    ...ArtworkSidebarBidAction_me\n    id\n  }\n}\n\nfragment ArtworkSidebarBidAction_artwork on Artwork {\n  myLotStanding(live: true) {\n    most_recent_bid: mostRecentBid {\n      max_bid: maxBid {\n        cents\n      }\n      id\n    }\n  }\n  slug\n  internalID\n  image {\n    url(version: \"main\")\n    aspectRatio\n    blurhash\n  }\n  sale {\n    slug\n    registrationStatus {\n      qualified_for_bidding: qualifiedForBidding\n      id\n    }\n    is_preview: isPreview\n    is_open: isOpen\n    is_live_open: isLiveOpen\n    is_closed: isClosed\n    is_registration_closed: isRegistrationClosed\n    requireIdentityVerification\n    id\n  }\n  sale_artwork: saleArtwork {\n    increments {\n      cents\n      display\n    }\n    endedAt\n    id\n  }\n  collectorSignals {\n    auction {\n      bidCount\n      lotWatcherCount\n    }\n  }\n}\n\nfragment ArtworkSidebarBidAction_me on Me {\n  isIdentityVerified\n  pendingIdentityVerification {\n    internalID\n    id\n  }\n}\n"
+    "text": "query ArtworkSidebarBidActionTestQuery {\n  artwork(id: \"auction_artwork\") {\n    ...ArtworkSidebarBidAction_artwork\n    id\n  }\n  me {\n    ...ArtworkSidebarBidAction_me\n    id\n  }\n}\n\nfragment ArtworkSidebarBidAction_artwork on Artwork {\n  myLotStanding(live: true) {\n    most_recent_bid: mostRecentBid {\n      max_bid: maxBid {\n        cents\n      }\n      id\n    }\n  }\n  slug\n  internalID\n  image {\n    url(version: \"main\")\n    aspectRatio\n  }\n  sale {\n    slug\n    registrationStatus {\n      qualified_for_bidding: qualifiedForBidding\n      id\n    }\n    is_preview: isPreview\n    is_open: isOpen\n    is_live_open: isLiveOpen\n    is_closed: isClosed\n    is_registration_closed: isRegistrationClosed\n    requireIdentityVerification\n    id\n  }\n  sale_artwork: saleArtwork {\n    increments {\n      cents\n      display\n    }\n    endedAt\n    id\n  }\n  collectorSignals {\n    auction {\n      bidCount\n      lotWatcherCount\n    }\n  }\n}\n\nfragment ArtworkSidebarBidAction_me on Me {\n  isIdentityVerified\n  pendingIdentityVerification {\n    internalID\n    id\n  }\n}\n"
   }
 };
 })();
