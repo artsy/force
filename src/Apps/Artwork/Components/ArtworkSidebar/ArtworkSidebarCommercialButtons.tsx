@@ -302,8 +302,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<
             secondaryObjectId: selectedEditionSet?.internalID,
           },
           redirectTo: `${match?.location?.pathname}?creating_order=true`,
-          imageUrl: artwork.image?.url,
-          image: { blurhash: artwork.image?.blurhash },
+          image: artwork.image,
         },
         analytics: {
           contextModule: ContextModule.artworkSidebar,
