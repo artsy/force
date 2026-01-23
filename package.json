@@ -136,7 +136,7 @@
     "jsdom": "20.0.3",
     "jwt-decode": "2.2.0",
     "localforage": "^1.10.0",
-    "lodash": "^4.17.21",
+    "lodash": "^4.17.23",
     "luxon": "^3.2.1",
     "map-cursor-to-max": "^1.0.0",
     "memoize-one": "^5.2.1",

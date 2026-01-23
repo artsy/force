@@ -9752,7 +9752,7 @@ __metadata:
     jwt-decode: "npm:2.2.0"
     lint-staged: "npm:10.2.6"
     localforage: "npm:^1.10.0"
-    lodash: "npm:^4.17.21"
+    lodash: "npm:^4.17.23"
     luxon: "npm:^3.2.1"
     map-cursor-to-max: "npm:^1.0.0"
     memoize-one: "npm:^5.2.1"
