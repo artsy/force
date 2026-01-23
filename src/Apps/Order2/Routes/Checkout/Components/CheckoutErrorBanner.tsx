@@ -1,4 +1,5 @@
 import { Message } from "@artsy/palette"
+import { forwardRef } from "react"
 
 export interface CheckoutErrorBannerProps {
   error?: {
@@ -9,9 +10,10 @@ export interface CheckoutErrorBannerProps {
 
 const SUPPORT_EMAIL = "orders@artsy.net" as const
 
-export const CheckoutErrorBanner: React.FC<CheckoutErrorBannerProps> = ({
-  error,
-}) => {
+export const CheckoutErrorBanner = forwardRef<
+  HTMLDivElement,
+  CheckoutErrorBannerProps
+>(({ error }, ref) => {
   if (!error) return null
 
   const title = error.title || "An error occurred"
@@ -24,13 +26,15 @@ export const CheckoutErrorBanner: React.FC<CheckoutErrorBannerProps> = ({
   const variant = "error"
 
   return (
-    <div tabIndex={-1} data-error-banner="true" role="alert">
+    <div ref={ref} tabIndex={-1} data-error-banner="true" role="alert">
       <Message variant={variant} title={title}>
         {message}
       </Message>
     </div>
   )
-}
+})
+
+CheckoutErrorBanner.displayName = "CheckoutErrorBanner"
 
 export const MailtoOrderSupport = () => {
   return <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a>

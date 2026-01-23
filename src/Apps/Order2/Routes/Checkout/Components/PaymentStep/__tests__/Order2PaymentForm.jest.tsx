@@ -638,7 +638,19 @@ describe("Order2PaymentForm", () => {
         MOCK_ORDER_SUCCESS("CREDIT_CARD", tokenId),
       )
 
-      await userEvent.click(screen.getByText("Continue to Review"))
+      const continueButton = screen.getByText("Continue to Review")
+
+      await userEvent.click(continueButton)
+
+      // Check if the form submission started
+      await waitFor(
+        () => {
+          expect(
+            mockCheckoutContext.checkoutTracking.clickedOrderProgression,
+          ).toHaveBeenCalled()
+        },
+        { timeout: 1000 },
+      )
 
       await expectCommonSubmissionFlow(tokenId)
 
@@ -1064,7 +1076,19 @@ describe("Order2PaymentForm", () => {
         MOCK_ORDER_SUCCESS("CREDIT_CARD", tokenId),
       )
 
-      await userEvent.click(screen.getByText("Continue to Review"))
+      const continueButton = screen.getByText("Continue to Review")
+
+      await userEvent.click(continueButton)
+
+      // Check if the form submission started
+      await waitFor(
+        () => {
+          expect(
+            mockCheckoutContext.checkoutTracking.clickedOrderProgression,
+          ).toHaveBeenCalled()
+        },
+        { timeout: 1000 },
+      )
 
       await expectCommonSubmissionFlow(tokenId)
 

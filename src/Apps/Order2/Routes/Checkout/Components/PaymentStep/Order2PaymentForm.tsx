@@ -23,6 +23,7 @@ import {
   MailtoOrderSupport,
 } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import { useScrollToErrorBanner } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToErrorBanner"
 import { useOrder2SetOrderPaymentMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderPaymentMutation"
 import { fetchAndSetConfirmationToken } from "Apps/Order2/Utils/confirmationTokenUtils"
 import type { FormikContextWithAddress } from "Components/Address/AddressFormFields"
@@ -266,7 +267,8 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
   const merchantAccountExternalId = order.seller?.merchantAccount?.externalId
 
   const paymentElementRef = useRef<HTMLDivElement>(null)
-  const errorBannerRef = useRef<HTMLDivElement>(null)
+  const errorBannerRef = useScrollToErrorBanner(CheckoutStepName.PAYMENT)
+  const billingFormRef = useRef<any>(null)
 
   // Default to saved payment method when available and track that it has been viewed
   useEffect(() => {
@@ -312,11 +314,6 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         error: {
           message: error?.message,
         },
-      })
-
-      errorBannerRef.current?.scrollIntoView({
-        behavior: "smooth",
-        block: "center",
       })
 
       setIsSubmittingToStripe(false)
@@ -505,6 +502,16 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
 
     // Clear any previous error messages
     unsetStepError()
+
+    // Validate billing form if it's rendered
+    if (billingFormRef.current) {
+      const errors = await billingFormRef.current.validateForm()
+
+      if (Object.keys(errors).length > 0) {
+        await billingFormRef.current.submitForm()
+        return
+      }
+    }
 
     if (!selectedPaymentMethod) {
       handleError({ message: "Select a payment method" })
@@ -753,6 +760,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
           handleBillingAddressSameAsShippingChange
         }
         onBillingFormValuesChange={setBillingFormValues}
+        billingFormRef={billingFormRef}
       />
 
       <Spacer y={2} />
@@ -765,14 +773,12 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         />
       )}
 
-      <div ref={errorBannerRef}>
-        {paymentError && (
-          <>
-            <CheckoutErrorBanner error={paymentError} />
-            <Spacer y={4} />
-          </>
-        )}
-      </div>
+      {paymentError && (
+        <>
+          <CheckoutErrorBanner ref={errorBannerRef} error={paymentError} />
+          <Spacer y={4} />
+        </>
+      )}
 
       <Button
         loading={isSubmittingToStripe}

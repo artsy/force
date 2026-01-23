@@ -644,10 +644,17 @@ describe("Order2CheckoutRoute", () => {
         },
       })
 
-      await userEvent.click(screen.getByText("Continue to Review"))
+      const continueButton = screen.getByText("Continue to Review")
 
-      expect(mockElements.submit).toHaveBeenCalled()
-      expect(mockStripe.createConfirmationToken).toHaveBeenCalled()
+      await userEvent.click(continueButton)
+
+      await waitFor(
+        () => {
+          expect(mockElements.submit).toHaveBeenCalled()
+          expect(mockStripe.createConfirmationToken).toHaveBeenCalled()
+        },
+        { timeout: 1000 },
+      )
 
       await act(async () => {
         const confirmationTokenQuery = await waitFor(() => {

@@ -1,6 +1,3 @@
-import type { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
-import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
-import { useScrollToStep } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToStep"
 import { useFormikContext } from "formik"
 import { useEffect, useRef } from "react"
 
@@ -32,23 +29,18 @@ const getFirstFieldErrorName = (
  * Hook that scrolls to the step and focuses the first error field when a Formik form is submitted with errors.
  * Must be called within a Formik form context.
  *
- * @param stepName - The checkout step to scroll to when errors are present
  * @returns A ref to attach to the form container for scoped element queries
  */
-export const useScrollToFieldErrorOnSubmit = (stepName: CheckoutStepName) => {
+export const useScrollToFieldErrorOnSubmit = () => {
   const { submitCount, isValid, errors } = useFormikContext()
-  const { scrollToStep } = useScrollToStep()
-  const { messages } = useCheckoutContext()
   const formRef = useRef<HTMLDivElement>(null)
 
-  const bannerError = messages?.[stepName]?.error
-
-  // biome-ignore lint/correctness/useExhaustiveDependencies: submitCount is intentionally used to trigger only on form submission
   useEffect(() => {
     // Only run when form is submitted and invalid
-    if (isValid) return
+    if (isValid || submitCount === 0) return
 
     const container = formRef.current
+
     if (!container) return
 
     // Find first field error
@@ -56,8 +48,15 @@ export const useScrollToFieldErrorOnSubmit = (stepName: CheckoutStepName) => {
 
     // Priority 1: Focus first error field if any field errors exist
     if (fieldErrorName) {
+      let element: Element | null = null
+
       // Scroll to step first
-      const element = document.querySelector(`input[name='${fieldErrorName}']`)
+      element = document.querySelector(`input[name='${fieldErrorName}']`)
+
+      // Special case for phoneNumberCountryCode
+      if (fieldErrorName === "phoneNumberCountryCode") {
+        element = document.querySelector(`input[name='phoneNumber']`)
+      }
 
       if (element) {
         // Scroll to first known error into view
@@ -75,32 +74,13 @@ export const useScrollToFieldErrorOnSubmit = (stepName: CheckoutStepName) => {
 
           if (field && field instanceof HTMLElement) {
             field.focus()
-            // Optional: fine-tune scroll position to center the field
-            if (typeof field.scrollIntoView === "function") {
-              field.scrollIntoView({ behavior: "smooth", block: "center" })
-            }
           }
-        }, 300) // Wait for useScrollToStep's delay (100ms) + scroll animation
+        }, 300) // Wait for scroll animation
 
         return
       }
-      // If fieldErrorName exists but no element found, fall through to check banner
     }
-
-    // Priority 2: Focus banner if it exists and no field errors
-    if (bannerError) {
-      scrollToStep(stepName)
-
-      // Wait for scroll, then try to focus banner
-      setTimeout(() => {
-        // Query within form container only
-        const banner = container.querySelector('[data-error-banner="true"]')
-        if (banner && banner instanceof HTMLElement) {
-          banner.focus()
-        }
-      }, 300)
-    }
-  }, [submitCount, isValid, errors, stepName, scrollToStep, bannerError])
+  }, [submitCount, isValid, errors])
 
   return formRef
 }

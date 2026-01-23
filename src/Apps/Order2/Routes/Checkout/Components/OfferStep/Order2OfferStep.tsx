@@ -19,9 +19,9 @@ import {
 import type { OfferNoteValue } from "Apps/Order2/Routes/Checkout/Components/OfferStep/types"
 import { useCompleteOfferData } from "Apps/Order2/Routes/Checkout/Components/OfferStep/useCompleteOfferData"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import { useScrollToErrorBanner } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToErrorBanner"
 import { useOrder2AddInitialOfferMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2AddInitialOfferMutation"
 import { useOrder2UnsetOrderFulfillmentOptionMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2UnsetOrderFulfillmentOptionMutation"
-import { useScrollToFieldErrorOnSubmit } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToFieldErrorOnSubmit"
 import createLogger from "Utils/logger"
 import type {
   Order2OfferStep_order$data,
@@ -199,8 +199,7 @@ const Order2OfferStepFormContent: React.FC<Order2OfferStepFormContentProps> = ({
   const { values, errors, setFieldValue, submitForm } =
     useFormikContext<OfferFormValues>()
   const { setStepErrorMessage, checkoutTracking } = useCheckoutContext()
-
-  const formRef = useScrollToFieldErrorOnSubmit(CheckoutStepName.OFFER_AMOUNT)
+  const errorBannerRef = useScrollToErrorBanner(CheckoutStepName.OFFER_AMOUNT)
 
   const clearOfferError = () => {
     setStepErrorMessage({
@@ -263,7 +262,6 @@ const Order2OfferStepFormContent: React.FC<Order2OfferStepFormContentProps> = ({
       flexDirection="column"
       data-testid="offer-step-active"
       backgroundColor="mono0"
-      ref={formRef}
     >
       <Box
         py={2}
@@ -313,7 +311,9 @@ const Order2OfferStepFormContent: React.FC<Order2OfferStepFormContentProps> = ({
             once submitted.
           </Text>
           <Spacer y={1} />
-          {offerAmountError && <CheckoutErrorBanner error={offerAmountError} />}
+          {offerAmountError && (
+            <CheckoutErrorBanner ref={errorBannerRef} error={offerAmountError} />
+          )}
         </Flex>
       </Box>
 
