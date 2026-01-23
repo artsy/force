@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f4a77c47da35fde258273d24fe61dcbc>>
+ * @generated SignedSource<<24c546b451c5efdc37a91d5d75b46a03>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,6 +10,7 @@
 
 import { ReaderFragment } from 'relay-runtime';
 export type OrderModeEnum = "BUY" | "OFFER" | "%future added value";
+export type OrderPaymentMethodEnum = "CREDIT_CARD" | "SEPA_DEBIT" | "US_BANK_ACCOUNT" | "WIRE_TRANSFER" | "%future added value";
 export type OrderSourceEnum = "ARTWORK_PAGE" | "INQUIRY" | "PARTNER_OFFER" | "PRIVATE_SALE" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type Order2ReviewStep_order$data = {
@@ -68,6 +69,7 @@ export type Order2ReviewStep_order$data = {
     } | null | undefined;
   } | null | undefined>;
   readonly mode: OrderModeEnum;
+  readonly paymentMethod: OrderPaymentMethodEnum | null | undefined;
   readonly pendingOffer: {
     readonly internalID: string;
   } | null | undefined;
@@ -206,6 +208,13 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "stripeConfirmationToken",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "paymentMethod",
       "storageKey": null
     },
     {
@@ -401,6 +410,6 @@ return {
 };
 })();
 
-(node as any).hash = "7474f6c095c4a5d53f6251f9cf832905";
+(node as any).hash = "8e68dcccdc97c0aa9a0672cb290b2b49";
 
 export default node;

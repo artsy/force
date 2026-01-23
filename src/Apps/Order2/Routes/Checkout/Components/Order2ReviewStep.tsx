@@ -95,9 +95,14 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
         id: orderData.internalID,
       }
 
+      // only specify oneTimeUse for new payment methods
       if (confirmationToken) {
-        // only specify oneTimeUse for new payment methods
-        input.oneTimeUse = !savePaymentMethod
+        // SEPA cannot be saved, always set oneTimeUse to true
+        if (orderData.paymentMethod === "SEPA_DEBIT") {
+          input.oneTimeUse = true
+        } else {
+          input.oneTimeUse = !savePaymentMethod
+        }
       }
 
       if (isOffer) {
@@ -264,6 +269,7 @@ const FRAGMENT = graphql`
     mode
     source
     stripeConfirmationToken
+    paymentMethod
     buyerTotal {
       display
     }
