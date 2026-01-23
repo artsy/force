@@ -295,62 +295,60 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
       validationSchema={deliveryAddressValidationSchema}
       onSubmit={onSubmit}
     >
-      {({ isSubmitting, setValues, errors, status }) => {
+      {({ isSubmitting, setValues, status }) => {
         return (
-          <Form noValidate>
-            <Flex flexDirection={"column"} mb={2}>
-              {fulfillmentDetailsError && (
-                <>
-                  <CheckoutErrorBanner
-                    ref={errorBannerRef}
-                    error={fulfillmentDetailsError}
-                  />
-                  <Spacer y={2} />
-                </>
-              )}
-
-              {hasSavedAddresses ? (
-                <SavedAddressOptions
-                  savedAddresses={processedAddresses}
-                  initialSelectedAddress={initialSelectedAddress}
-                  newAddressInitialValues={blankAddressValuesForUser}
-                  availableShippingCountries={
-                    orderData.availableShippingCountries
-                  }
-                  onSelectAddress={async values => {
-                    await setValues(values)
-                  }}
+          <Flex flexDirection={"column"} mb={2}>
+            {fulfillmentDetailsError && (
+              <>
+                <CheckoutErrorBanner
+                  ref={errorBannerRef}
+                  error={fulfillmentDetailsError}
                 />
-              ) : (
-                <>
-                  <Text
-                    fontWeight={["bold", "bold", "normal"]}
-                    color="mono100"
-                    variant={["sm-display", "sm-display", "md"]}
-                  >
-                    Delivery address
-                  </Text>
+                <Spacer y={2} />
+              </>
+            )}
 
-                  <Spacer y={2} />
+            {hasSavedAddresses ? (
+              <SavedAddressOptions
+                savedAddresses={processedAddresses}
+                initialSelectedAddress={initialSelectedAddress}
+                newAddressInitialValues={blankAddressValuesForUser}
+                availableShippingCountries={
+                  orderData.availableShippingCountries
+                }
+                onSelectAddress={async values => {
+                  await setValues(values)
+                }}
+              />
+            ) : (
+              <Form noValidate>
+                <Text
+                  fontWeight={["bold", "bold", "normal"]}
+                  color="mono100"
+                  variant={["sm-display", "sm-display", "md"]}
+                >
+                  Delivery address
+                </Text>
 
-                  <DeliveryFormFields
-                    shippableCountries={shippableCountries as any}
-                  />
+                <Spacer y={2} />
 
-                  <Spacer y={4} />
+                <DeliveryFormFields
+                  shippableCountries={shippableCountries as any}
+                />
 
-                  <Button
-                    type="submit"
-                    loading={isSubmitting}
-                    disabled={!!status?.errorBanner}
-                  >
-                    {/* TODO: This would not apply for flat shipping */}
-                    See Shipping Methods
-                  </Button>
-                </>
-              )}
-            </Flex>
-          </Form>
+                <Spacer y={4} />
+
+                <Button
+                  type="submit"
+                  loading={isSubmitting}
+                  disabled={!!status?.errorBanner}
+                >
+                  {/* TODO: This would not apply for flat shipping */}
+                  See Shipping Methods
+                </Button>
+              </Form>
+            )}
+          </Flex>
         )
       }}
     </Formik>
