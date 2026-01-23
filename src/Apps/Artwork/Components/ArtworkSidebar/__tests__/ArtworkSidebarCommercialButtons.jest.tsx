@@ -580,8 +580,9 @@ describe("ArtworkSidebarCommercialButtons", () => {
             objectId: "artwork-1",
             secondaryObjectId: "edition-set-id",
           },
-          imageUrl: '<mock-value-for-field-"url">',
           image: {
+            aspectRatio: 4.2,
+            url: '<mock-value-for-field-"url">',
             blurhash: '<mock-value-for-field-"blurhash">',
           },
           redirectTo: "/artwork/artwork-1?creating_order=true",

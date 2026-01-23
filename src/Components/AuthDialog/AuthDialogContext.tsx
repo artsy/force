@@ -13,6 +13,7 @@ import {
 } from "Components/AuthDialog/AuthDialog"
 import {
   COLUMN_WIDTH,
+  getResizedAuthDialogGalleryImage,
   getResizedAuthDialogImages,
 } from "Components/AuthDialog/Utils/authDialogConstants"
 import { useSystemContext } from "System/Hooks/useSystemContext"
@@ -59,7 +60,7 @@ export type AuthDialogOptions = {
   galleryImage?: boolean
   /** Custom desired image url to be displayed */
   imageUrl?: string | null
-  /** Image */
+  /** Artwork Image, shows the artwork with a view window moving around */
   image?: {
     url?: string | null
     aspectRatio?: number | null
@@ -183,6 +184,11 @@ export const AuthDialogProvider: FC<
           sizes: `${COLUMN_WIDTH}px`,
         }),
       )
+      const galleryImage = getResizedAuthDialogGalleryImage()
+      prefetchUrlWithSizes({
+        url: galleryImage.quality2x,
+        sizes: `${COLUMN_WIDTH}px`,
+      })
     }
   }, [isLoggedIn])
 

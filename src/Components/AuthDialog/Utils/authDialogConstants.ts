@@ -31,7 +31,16 @@ export const DEFAULT_IMAGES = [
   },
 ]
 
+export const GALLERY_IMAGE = {
+  width: MODAL_WIDTH,
+  height: IMAGE_HEIGHT,
+  src: "https://files.artsy.net/images/signup-gallery.png",
+}
+
 export const getResizedAuthDialogImages = () =>
   DEFAULT_IMAGES.map(image =>
     resized(image.src, { width: image.width, quality: 80 }),
   )
+
+export const getResizedAuthDialogGalleryImage = () =>
+  resized(GALLERY_IMAGE.src, { width: GALLERY_IMAGE.width, quality: 80 })

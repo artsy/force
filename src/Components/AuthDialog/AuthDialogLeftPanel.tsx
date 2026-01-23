@@ -16,6 +16,7 @@ import {
   DEFAULT_IMAGES,
   IMAGE,
   MODAL_WIDTH,
+  getResizedAuthDialogGalleryImage,
   getResizedAuthDialogImages,
 } from "Components/AuthDialog/Utils/authDialogConstants"
 import { resized } from "Utils/resized"
@@ -90,6 +91,21 @@ export const AuthDialogLeftPanel: FC<React.PropsWithChildren> = () => {
             setIsImageLoading(false)
           }}
           onError={() => setIsImageLoading(false)}
+        />
+      </Box>
+    )
+  }
+
+  if (options.galleryImage) {
+    return (
+      <Box display={["none", "block"]} width="100%" overflow="hidden">
+        <Image
+          {...getResizedAuthDialogGalleryImage()}
+          width="100%"
+          height="100%"
+          fetchPriority="high"
+          alt=""
+          style={{ objectFit: "cover" }}
         />
       </Box>
     )
@@ -226,11 +242,6 @@ const Dot = styled(Box)`
 const CAROUSEL_INTERVAL = 4000
 const COLUMN_WIDTH =
   MODAL_WIDTH / 2 - Number.parseInt(THEME.space["2"].replace("px", ""))
-// const PARTNER_IMAGE = {
-//   width: MODAL_WIDTH,
-//   height: IMAGE_HEIGHT,
-//   src: "https://files.artsy.net/images/signup-gallery.png",
-// }
 
 const MovingImage = styled(Image)<{ $pan: ReturnType<typeof keyframes> }>`
   position: absolute;
@@ -260,9 +271,7 @@ const MovingImageMeasured: FC<{
     height: 0,
   })
 
-  // const width = (MODAL_WIDTH / 2) * 1.4
-  // const height = width / aspectRatio
-  const height = 760 * 1.4
+  const height = 760 * 1.1
   const width = height * aspectRatio
 
   const handleOnViewportResize = useCallback(() => {
@@ -285,7 +294,6 @@ const MovingImageMeasured: FC<{
 
   const tx = Math.max(0, width - viewportGeometry.width)
   const ty = Math.max(0, height - viewportGeometry.height)
-  // const total = 2 * (tx + ty)
   const durationSec = 250
   const pan = useMemo(() => makeClockwisePan(tx, ty), [tx, ty])
 
