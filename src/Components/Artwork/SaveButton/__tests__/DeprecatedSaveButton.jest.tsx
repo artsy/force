@@ -28,6 +28,8 @@ describe("Deprecated Save artwork", () => {
     title: "Skull",
     image: {
       url: "https://example.com/artwork.jpg",
+      aspectRatio: 4.2,
+      blurhash: null,
     },
   }
 
@@ -142,6 +144,7 @@ describe("Deprecated Save artwork", () => {
           image: {
             url: "https://example.com/artwork.jpg",
             aspectRatio: 4.2,
+            blurhash: null,
           },
         },
       })

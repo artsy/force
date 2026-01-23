@@ -38,9 +38,7 @@ export const DeprecatedSaveButton: React.FC<
       id: artwork.id,
     },
     contextModule,
-    image: artwork.image
-      ? { ...artwork.image, blurhash: artwork.image.blurhash ?? undefined }
-      : artwork.image,
+    image: artwork.image,
     onSave: ({ action, artwork }) => {
       tracking.trackEvent({
         action,
