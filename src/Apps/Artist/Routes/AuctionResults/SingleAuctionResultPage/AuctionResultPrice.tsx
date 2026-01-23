@@ -41,7 +41,6 @@ export const AuctionResultPrice: React.FC<
               image: {
                 url: data.images?.larger?.url,
                 aspectRatio: data.images?.larger?.aspectRatio,
-                blurhash: data.images?.larger?.blurhash,
               },
             },
             analytics: {
@@ -161,7 +160,6 @@ const auctionResultPriceFragment = graphql`
       larger {
         url(version: "main")
         aspectRatio
-        blurhash
       }
     }
     performance {

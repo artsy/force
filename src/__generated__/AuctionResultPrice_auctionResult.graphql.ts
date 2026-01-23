@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a1ce7dad6b89a7203714071e659c99a8>>
+ * @generated SignedSource<<ed12590f2eed3c36a93731470f70b952>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,7 +19,6 @@ export type AuctionResultPrice_auctionResult$data = {
   readonly images: {
     readonly larger: {
       readonly aspectRatio: number;
-      readonly blurhash: string | null | undefined;
       readonly url: string | null | undefined;
     } | null | undefined;
   } | null | undefined;
@@ -116,13 +115,6 @@ return {
               "kind": "ScalarField",
               "name": "aspectRatio",
               "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "blurhash",
-              "storageKey": null
             }
           ],
           "storageKey": null
@@ -185,6 +177,6 @@ return {
 };
 })();
 
-(node as any).hash = "c0155dec6dbf76351d5b5e98f0f9c6a6";
+(node as any).hash = "d5fb2dc51850ca029538387ffcef3286";
 
 export default node;
