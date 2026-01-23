@@ -29,6 +29,7 @@ import {
   useRef,
   useState,
 } from "react"
+import { Blurhash } from "react-blurhash"
 import styled, { keyframes } from "styled-components"
 import { useCursor } from "use-cursor"
 
@@ -36,6 +37,8 @@ export const AuthDialogLeftPanel: FC<React.PropsWithChildren> = () => {
   const {
     state: { options },
   } = useAuthDialogContext()
+
+  const [isImageLoading, setIsImageLoading] = useState(true)
 
   const newSignupEnabled = useFlag("onyx_new-signup-modal")
 
@@ -64,9 +67,29 @@ export const AuthDialogLeftPanel: FC<React.PropsWithChildren> = () => {
         position="relative"
         overflow="hidden"
       >
+        {isImageLoading &&
+          (options.blurhash ? (
+            <Blurhash
+              hash={options.blurhash}
+              width="100%"
+              height="100%"
+              resolutionX={32}
+              resolutionY={32}
+              punch={1}
+              aria-hidden="true"
+            />
+          ) : (
+            <Box bg="mono10" width="100%" height="100%" />
+          ))}
+
         <MovingImageMeasured
           src={options.image.url}
           aspectRatio={options.image.aspectRatio}
+          display={isImageLoading ? "none" : "block"}
+          onLoad={() => {
+            setIsImageLoading(false)
+          }}
+          onError={() => setIsImageLoading(false)}
         />
       </Box>
     )
@@ -225,7 +248,10 @@ const MovingImage = styled(Image)<{ $pan: ReturnType<typeof keyframes> }>`
 const MovingImageMeasured: FC<{
   src: string
   aspectRatio: number
-}> = ({ src, aspectRatio }) => {
+  display: string
+  onLoad: () => void
+  onError: () => void
+}> = ({ src, aspectRatio, display, onLoad, onError }) => {
   const viewportRef = useRef<HTMLDivElement | null>(null)
   const [viewportGeometry, setViewportGeometry] = useState({
     top: 0,
@@ -288,7 +314,10 @@ const MovingImageMeasured: FC<{
         height={height}
         alt=""
         fetchPriority="high"
+        display={display}
         style={{ objectFit: "cover" }}
+        onLoad={onLoad}
+        onError={onError}
       />
     </Box>
   )

@@ -33,6 +33,7 @@ const SaveArtworkToListsButton: FC<
       artistNames: artwork.artistNames,
       imageURL: artwork.preview?.url ?? null,
       image: artwork.image,
+      blurhash: artwork.image?.blurhash ?? null,
       isInAuction: !!artwork.isInAuction,
       isSavedToAnyList: artwork.isSavedToAnyList,
       collectorSignals: {
@@ -81,6 +82,7 @@ const SaveArtworkToListsButton: FC<
   )
 }
 
+// TODO: remove preview field from fragment
 export const SaveArtworkToListsButtonFragmentContainer =
   createFragmentContainer(SaveArtworkToListsButton, {
     artwork: graphql`
@@ -97,6 +99,7 @@ export const SaveArtworkToListsButtonFragmentContainer =
         image {
           url(version: "main")
           aspectRatio
+          blurhash
         }
         isInAuction
         isSavedToAnyList

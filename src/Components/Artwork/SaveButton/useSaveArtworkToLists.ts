@@ -18,7 +18,7 @@ type Artwork = {
     url?: string | null
     aspectRatio?: number | null
   } | null
-  imageURLLarge?: string | null
+  blurhash: string | null
   isInAuction: boolean
   isSavedToAnyList: boolean
   collectorSignals: {
@@ -56,6 +56,7 @@ export const useSaveArtworkToLists = (options: SaveArtworkToListsOptions) => {
           objectId: artwork.internalID,
         },
         image: artwork.image,
+        blurhash: artwork.blurhash,
       },
       analytics: {
         intent: Intent.saveArtwork,
