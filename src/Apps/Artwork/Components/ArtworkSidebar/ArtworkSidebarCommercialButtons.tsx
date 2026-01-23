@@ -292,7 +292,6 @@ export const ArtworkSidebarCommercialButtons: React.FC<
         onMutationError(error)
       }
     } else {
-      // HERE TO TEST
       showAuthDialog({
         options: {
           title: "Sign up or log in to make an offer",

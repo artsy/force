@@ -81,7 +81,6 @@ const SaveArtworkToListsButton: FC<
   )
 }
 
-// TODO: remove preview field from fragment
 export const SaveArtworkToListsButtonFragmentContainer =
   createFragmentContainer(SaveArtworkToListsButton, {
     artwork: graphql`
