@@ -97,6 +97,7 @@ export const SaveArtworkToListsButtonFragmentContainer =
         image {
           url(version: "main")
           aspectRatio
+          blurhash
         }
         isInAuction
         isSavedToAnyList

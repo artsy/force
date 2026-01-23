@@ -126,6 +126,7 @@ export const FollowGeneButtonFragmentContainer = createFragmentContainer(
         image {
           url(version: "main")
           aspectRatio
+          blurhash
         }
       }
     `,

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b1fe045789f92c6532fbe171e907094e>>
+ * @generated SignedSource<<bd0b74db1c3387bdc25eff32d0d4481a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,6 +14,7 @@ export type FollowGeneButton_gene$data = {
   readonly id: string;
   readonly image: {
     readonly aspectRatio: number;
+    readonly blurhash: string | null | undefined;
     readonly url: string | null | undefined;
   } | null | undefined;
   readonly internalID: string;
@@ -108,6 +109,13 @@ const node: ReaderFragment = {
           "kind": "ScalarField",
           "name": "aspectRatio",
           "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "blurhash",
+          "storageKey": null
         }
       ],
       "storageKey": null
@@ -117,6 +125,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "218221e180cb50294b4bf1bcc94c7f3b";
+(node as any).hash = "88c0ba5de63e0791ad302e16ef8479a9";
 
 export default node;

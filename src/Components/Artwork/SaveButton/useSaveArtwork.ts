@@ -21,6 +21,7 @@ interface UseSaveArtwork {
   image?: {
     url?: string | null
     aspectRatio?: number | null
+    blurhash?: string | null
   } | null
   onSave?({ action, artwork }: { action: string; artwork: Artwork }): void
 }

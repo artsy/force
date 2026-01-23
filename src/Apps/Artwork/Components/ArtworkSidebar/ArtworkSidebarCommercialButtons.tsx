@@ -303,6 +303,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<
           },
           redirectTo: `${match?.location?.pathname}?creating_order=true`,
           imageUrl: artwork.image?.url,
+          image: { blurhash: artwork.image?.blurhash },
         },
         analytics: {
           contextModule: ContextModule.artworkSidebar,
@@ -641,6 +642,7 @@ const ARTWORK_FRAGMENT = graphql`
     image {
       url(version: "main")
       aspectRatio
+      blurhash
     }
     isInquireable
     isAcquireable

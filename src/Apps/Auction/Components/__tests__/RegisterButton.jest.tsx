@@ -255,6 +255,7 @@ describe("RegisterButton", () => {
           image: {
             url: '<mock-value-for-field-"signupImage">',
             aspectRatio: '<mock-value-for-field-\"aspectRatio\">',
+            blurhash: '<mock-value-for-field-"blurhash">',
           },
         },
       })

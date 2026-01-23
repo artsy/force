@@ -201,6 +201,7 @@ export const FollowArtistButtonFragmentContainer = createFragmentContainer(
           image {
             url(version: "main")
             aspectRatio
+            blurhash
           }
         }
       }

@@ -17,8 +17,8 @@ type Artwork = {
   image?: {
     url?: string | null
     aspectRatio?: number | null
+    blurhash?: string | null
   } | null
-  imageURLLarge?: string | null
   isInAuction: boolean
   isSavedToAnyList: boolean
   collectorSignals: {

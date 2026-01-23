@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cc7e3bf1c36aedd18a8ffea0e6f02f42>>
+ * @generated SignedSource<<6e869c4b1c319066dcd7168d13dfff00>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -24,6 +24,7 @@ export type RequestConditionReportJestQuery$rawResponse = {
     readonly id: string;
     readonly image: {
       readonly aspectRatio: number;
+      readonly blurhash: string | null | undefined;
       readonly url: string | null | undefined;
     } | null | undefined;
     readonly internalID: string;
@@ -204,6 +205,13 @@ return {
                 "kind": "ScalarField",
                 "name": "aspectRatio",
                 "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "blurhash",
+                "storageKey": null
               }
             ],
             "storageKey": null
@@ -215,7 +223,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "86abb4886e5c0298521f6d0a015e2590",
+    "cacheID": "ad4389b4901a1d1978d1c4a624f9967c",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -238,6 +246,7 @@ return {
           "plural": false,
           "type": "Float"
         },
+        "artwork.image.blurhash": (v4/*: any*/),
         "artwork.image.url": (v4/*: any*/),
         "artwork.internalID": (v3/*: any*/),
         "artwork.saleArtwork": {
@@ -262,7 +271,7 @@ return {
     },
     "name": "RequestConditionReportJestQuery",
     "operationKind": "query",
-    "text": "query RequestConditionReportJestQuery {\n  me {\n    ...RequestConditionReport_me\n    id\n  }\n  artwork(id: \"artwork-id\") {\n    ...RequestConditionReport_artwork\n    id\n  }\n}\n\nfragment RequestConditionReport_artwork on Artwork {\n  internalID\n  slug\n  saleArtwork {\n    internalID\n    id\n  }\n  image {\n    url(version: \"main\")\n    aspectRatio\n  }\n}\n\nfragment RequestConditionReport_me on Me {\n  email\n  internalID\n}\n"
+    "text": "query RequestConditionReportJestQuery {\n  me {\n    ...RequestConditionReport_me\n    id\n  }\n  artwork(id: \"artwork-id\") {\n    ...RequestConditionReport_artwork\n    id\n  }\n}\n\nfragment RequestConditionReport_artwork on Artwork {\n  internalID\n  slug\n  saleArtwork {\n    internalID\n    id\n  }\n  image {\n    url(version: \"main\")\n    aspectRatio\n    blurhash\n  }\n}\n\nfragment RequestConditionReport_me on Me {\n  email\n  internalID\n}\n"
   }
 };
 })();

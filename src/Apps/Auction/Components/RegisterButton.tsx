@@ -40,6 +40,7 @@ export const RegisterButton: React.FC<
           image: {
             url: sale.coverImage?.signupImage,
             aspectRatio: sale.coverImage?.aspectRatio,
+            blurhash: sale.coverImage?.blurhash,
           },
         },
         analytics: {
@@ -265,6 +266,7 @@ export const RegisterButtonFragmentContainer = createFragmentContainer(
           # alias to avoid conflicts
           signupImage: url(version: "main")
           aspectRatio
+          blurhash
         }
         isAuction
         isClosed

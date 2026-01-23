@@ -123,6 +123,7 @@ export const DeprecatedSaveButtonFragmentContainer = createFragmentContainer(
         image {
           url(version: "main")
           aspectRatio
+          blurhash
         }
         collectorSignals {
           auction {

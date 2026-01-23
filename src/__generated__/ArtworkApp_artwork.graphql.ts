@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<210a2ded1eab1b9995f8922f0a436e3a>>
+ * @generated SignedSource<<d2563f0c60aac444e9e5aa49c14625d5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,6 +23,7 @@ export type ArtworkApp_artwork$data = {
   readonly availability: string | null | undefined;
   readonly image: {
     readonly aspectRatio: number;
+    readonly blurhash: string | null | undefined;
     readonly url: string | null | undefined;
   } | null | undefined;
   readonly internalID: string;
@@ -233,6 +234,13 @@ return {
           "kind": "ScalarField",
           "name": "aspectRatio",
           "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "blurhash",
+          "storageKey": null
         }
       ],
       "storageKey": null
@@ -358,6 +366,6 @@ return {
 };
 })();
 
-(node as any).hash = "04800df535fbed415415dbb608cfa9af";
+(node as any).hash = "f299fbb5bd196c94efb59294538c102e";
 
 export default node;

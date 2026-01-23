@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ccc69fda1b9eebd9e70301e34a01a67b>>
+ * @generated SignedSource<<9767bc898e2648fb9a36768ffb62b48a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -153,6 +153,13 @@ return {
                 "args": null,
                 "kind": "ScalarField",
                 "name": "aspectRatio",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "blurhash",
                 "storageKey": null
               }
             ],
@@ -336,7 +343,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a76e126790ab5ccc3c1fd60259ab329b",
+    "cacheID": "d3768e58295a266158fcc97dcbb317c9",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -367,6 +374,7 @@ return {
           "plural": false,
           "type": "Float"
         },
+        "sale.coverImage.blurhash": (v6/*: any*/),
         "sale.coverImage.signupImage": (v6/*: any*/),
         "sale.description": (v6/*: any*/),
         "sale.endAt": (v6/*: any*/),
@@ -407,7 +415,7 @@ return {
     },
     "name": "AuctionDetailsQuery",
     "operationKind": "query",
-    "text": "query AuctionDetailsQuery {\n  sale(id: \"foo\") {\n    ...AuctionDetails_sale\n    id\n  }\n}\n\nfragment AuctionDetails_sale on Sale {\n  ...RegisterButton_sale\n  ...AuctionInfoSidebar_sale\n  ...SaleDetailTimer_sale\n  internalID\n  name\n  slug\n  liveStartAt\n  startAt\n  endAt\n  description(format: HTML)\n  href\n  isClosed\n  cascadingEndTimeIntervalMinutes\n}\n\nfragment AuctionInfoSidebar_sale on Sale {\n  internalID\n  liveStartAt\n  hideTotal\n  totalRaised {\n    minor\n    display\n  }\n}\n\nfragment RegisterButton_sale on Sale {\n  bidder {\n    qualifiedForBidding\n    id\n  }\n  coverImage {\n    signupImage: url(version: \"main\")\n    aspectRatio\n  }\n  isAuction\n  isClosed\n  isLiveOpen\n  isPreview\n  isRegistrationClosed\n  liveURLIfOpen\n  requireIdentityVerification\n  registrationStatus {\n    internalID\n    id\n  }\n  slug\n  status\n}\n\nfragment SaleDetailTimer_sale on Sale {\n  endAt\n  endedAt\n  startAt\n}\n"
+    "text": "query AuctionDetailsQuery {\n  sale(id: \"foo\") {\n    ...AuctionDetails_sale\n    id\n  }\n}\n\nfragment AuctionDetails_sale on Sale {\n  ...RegisterButton_sale\n  ...AuctionInfoSidebar_sale\n  ...SaleDetailTimer_sale\n  internalID\n  name\n  slug\n  liveStartAt\n  startAt\n  endAt\n  description(format: HTML)\n  href\n  isClosed\n  cascadingEndTimeIntervalMinutes\n}\n\nfragment AuctionInfoSidebar_sale on Sale {\n  internalID\n  liveStartAt\n  hideTotal\n  totalRaised {\n    minor\n    display\n  }\n}\n\nfragment RegisterButton_sale on Sale {\n  bidder {\n    qualifiedForBidding\n    id\n  }\n  coverImage {\n    signupImage: url(version: \"main\")\n    aspectRatio\n    blurhash\n  }\n  isAuction\n  isClosed\n  isLiveOpen\n  isPreview\n  isRegistrationClosed\n  liveURLIfOpen\n  requireIdentityVerification\n  registrationStatus {\n    internalID\n    id\n  }\n  slug\n  status\n}\n\nfragment SaleDetailTimer_sale on Sale {\n  endAt\n  endedAt\n  startAt\n}\n"
   }
 };
 })();

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1337737def24394960db2a4507e15919>>
+ * @generated SignedSource<<3f431ddc2a65582b53633ff988fded29>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,6 +16,7 @@ export type RegisterButton_sale$data = {
   } | null | undefined;
   readonly coverImage: {
     readonly aspectRatio: number;
+    readonly blurhash: string | null | undefined;
     readonly signupImage: string | null | undefined;
   } | null | undefined;
   readonly isAuction: boolean | null | undefined;
@@ -87,6 +88,13 @@ const node: ReaderFragment = {
           "args": null,
           "kind": "ScalarField",
           "name": "aspectRatio",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "blurhash",
           "storageKey": null
         }
       ],
@@ -178,6 +186,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "37bd546d6a17d9c6cd2f3523dc0d67fb";
+(node as any).hash = "738eb147d1ae9179a87b0bb91a14703e";
 
 export default node;

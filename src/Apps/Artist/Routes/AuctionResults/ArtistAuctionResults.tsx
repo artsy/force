@@ -153,6 +153,7 @@ const AuctionResultsContainer: React.FC<
               image: {
                 url: artist.coverArtwork?.image?.url,
                 aspectRatio: artist.coverArtwork?.image?.aspectRatio,
+                blurhash: artist.coverArtwork?.image?.blurhash,
               },
             },
             analytics: {
@@ -498,6 +499,7 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
           image {
             url(version: "main")
             aspectRatio
+            blurhash
           }
         }
       }

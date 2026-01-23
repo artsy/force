@@ -155,6 +155,7 @@ export const SaveButtonFragmentContainer = createFragmentContainer(SaveButton, {
       image {
         url(version: "main")
         aspectRatio
+        blurhash
       }
       collectorSignals {
         auction {

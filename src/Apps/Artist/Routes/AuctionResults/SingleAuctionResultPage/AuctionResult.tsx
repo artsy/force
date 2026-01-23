@@ -44,6 +44,8 @@ export const AuctionResult: React.FC<
           title: `Sign up or log in to see auction results for ${artist.name}`,
           image: {
             url: artist.coverArtwork?.image?.url,
+            aspectRatio: artist.coverArtwork?.image?.aspectRatio,
+            blurhash: artist.coverArtwork?.image?.blurhash,
           },
         },
         analytics: {
@@ -121,6 +123,7 @@ export const AuctionResultFragmentContainer = createFragmentContainer(
             image {
               url(version: "main")
               aspectRatio
+              blurhash
             }
           }
         }
