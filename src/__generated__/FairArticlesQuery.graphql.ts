@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<112eef61558a58961011f8281bc25844>>
+ * @generated SignedSource<<a4674660a91297016ccc35585c243d78>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -53,26 +53,19 @@ v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "href",
+  "name": "cursor",
   "storageKey": null
 },
 v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "cursor",
-  "storageKey": null
-},
-v5 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
   "name": "page",
   "storageKey": null
 },
-v6 = [
+v5 = [
+  (v3/*: any*/),
   (v4/*: any*/),
-  (v5/*: any*/),
   {
     "alias": null,
     "args": null,
@@ -81,7 +74,7 @@ v6 = [
     "storageKey": null
   }
 ],
-v7 = {
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -135,59 +128,7 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "name",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
             "name": "slug",
-            "storageKey": null
-          },
-          (v3/*: any*/),
-          {
-            "alias": "metaDescription",
-            "args": null,
-            "kind": "ScalarField",
-            "name": "summary",
-            "storageKey": null
-          },
-          {
-            "alias": "metaDescriptionFallback",
-            "args": [
-              {
-                "kind": "Literal",
-                "name": "format",
-                "value": "PLAIN"
-              }
-            ],
-            "kind": "ScalarField",
-            "name": "about",
-            "storageKey": "about(format:\"PLAIN\")"
-          },
-          {
-            "alias": "metaImage",
-            "args": null,
-            "concreteType": "Image",
-            "kind": "LinkedField",
-            "name": "image",
-            "plural": false,
-            "selections": [
-              {
-                "alias": "src",
-                "args": [
-                  {
-                    "kind": "Literal",
-                    "name": "version",
-                    "value": "large_rectangle"
-                  }
-                ],
-                "kind": "ScalarField",
-                "name": "url",
-                "storageKey": "url(version:\"large_rectangle\")"
-              }
-            ],
             "storageKey": null
           },
           {
@@ -238,7 +179,7 @@ return {
                     "kind": "LinkedField",
                     "name": "around",
                     "plural": true,
-                    "selections": (v6/*: any*/),
+                    "selections": (v5/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -248,7 +189,7 @@ return {
                     "kind": "LinkedField",
                     "name": "first",
                     "plural": false,
-                    "selections": (v6/*: any*/),
+                    "selections": (v5/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -258,7 +199,7 @@ return {
                     "kind": "LinkedField",
                     "name": "last",
                     "plural": false,
-                    "selections": (v6/*: any*/),
+                    "selections": (v5/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -269,8 +210,8 @@ return {
                     "name": "previous",
                     "plural": false,
                     "selections": [
-                      (v4/*: any*/),
-                      (v5/*: any*/)
+                      (v3/*: any*/),
+                      (v4/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -321,7 +262,13 @@ return {
                         "name": "byline",
                         "storageKey": null
                       },
-                      (v3/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "href",
+                        "storageKey": null
+                      },
                       {
                         "alias": null,
                         "args": [
@@ -403,7 +350,7 @@ return {
                         "name": "internalID",
                         "storageKey": null
                       },
-                      (v7/*: any*/)
+                      (v6/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -413,19 +360,19 @@ return {
             ],
             "storageKey": null
           },
-          (v7/*: any*/)
+          (v6/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "e702f2478e7e28cc00616abb36dd7c78",
+    "cacheID": "e0f06f0e271453f3ee958dc77090d09a",
     "id": null,
     "metadata": {},
     "name": "FairArticlesQuery",
     "operationKind": "query",
-    "text": "query FairArticlesQuery(\n  $id: String!\n  $page: Int\n) {\n  fair(id: $id) {\n    ...FairArticles_fair_2Pg8Wv\n    id\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  thumbnailTitle\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment FairArticles_fair_2Pg8Wv on Fair {\n  name\n  slug\n  href\n  metaDescription: summary\n  metaDescriptionFallback: about(format: PLAIN)\n  metaImage: image {\n    src: url(version: \"large_rectangle\")\n  }\n  articlesConnection(page: $page, size: 12) {\n    pageInfo {\n      hasNextPage\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        ...CellArticle_article\n        internalID\n        id\n      }\n    }\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
+    "text": "query FairArticlesQuery(\n  $id: String!\n  $page: Int\n) {\n  fair(id: $id) {\n    ...FairArticles_fair_2Pg8Wv\n    id\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  thumbnailTitle\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment FairArticles_fair_2Pg8Wv on Fair {\n  slug\n  articlesConnection(page: $page, size: 12) {\n    pageInfo {\n      hasNextPage\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        ...CellArticle_article\n        internalID\n        id\n      }\n    }\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
   }
 };
 })();

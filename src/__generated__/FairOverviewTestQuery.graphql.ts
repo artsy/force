@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7da7b74f2f56f34b7b2f9fbd556b7d8d>>
+ * @generated SignedSource<<400076c1ef44bf273f3a9b1796c22deb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -47,61 +47,60 @@ v3 = [
   {
     "kind": "Literal",
     "name": "format",
-    "value": "PLAIN"
-  }
-],
-v4 = [
-  {
-    "kind": "Literal",
-    "name": "format",
     "value": "YYYY-MM-DD"
   }
 ],
-v5 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v6 = {
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "src",
   "storageKey": null
 },
-v7 = {
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "width",
   "storageKey": null
 },
-v8 = {
+v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "height",
   "storageKey": null
 },
-v9 = {
+v8 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "title",
   "storageKey": null
 },
-v10 = {
+v9 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "slug",
   "storageKey": null
 },
-v11 = {
+v10 = {
   "enumValues": null,
   "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v11 = {
+  "enumValues": null,
+  "nullable": false,
   "plural": false,
   "type": "String"
 },
@@ -109,27 +108,21 @@ v12 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
-  "type": "String"
-},
-v13 = {
-  "enumValues": null,
-  "nullable": false,
-  "plural": false,
   "type": "ID"
 },
-v14 = {
+v13 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "Image"
 },
-v15 = {
+v14 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "CroppedImageUrl"
 },
-v16 = {
+v15 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
@@ -180,21 +173,27 @@ return {
           (v2/*: any*/),
           {
             "alias": "description",
-            "args": (v3/*: any*/),
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "format",
+                "value": "PLAIN"
+              }
+            ],
             "kind": "ScalarField",
             "name": "about",
             "storageKey": "about(format:\"PLAIN\")"
           },
           {
             "alias": "structuredDataStartAt",
-            "args": (v4/*: any*/),
+            "args": (v3/*: any*/),
             "kind": "ScalarField",
             "name": "startAt",
             "storageKey": "startAt(format:\"YYYY-MM-DD\")"
           },
           {
             "alias": "structuredDataEndAt",
-            "args": (v4/*: any*/),
+            "args": (v3/*: any*/),
             "kind": "ScalarField",
             "name": "endAt",
             "storageKey": "endAt(format:\"YYYY-MM-DD\")"
@@ -256,7 +255,7 @@ return {
                 "name": "postalCode",
                 "storageKey": null
               },
-              (v5/*: any*/)
+              (v4/*: any*/)
             ],
             "storageKey": null
           },
@@ -276,7 +275,7 @@ return {
                 "name": "website",
                 "storageKey": null
               },
-              (v5/*: any*/)
+              (v4/*: any*/)
             ],
             "storageKey": null
           },
@@ -315,9 +314,9 @@ return {
                 "name": "cropped",
                 "plural": false,
                 "selections": [
+                  (v5/*: any*/),
                   (v6/*: any*/),
-                  (v7/*: any*/),
-                  (v8/*: any*/)
+                  (v7/*: any*/)
                 ],
                 "storageKey": "cropped(height:900,version:[\"larger\",\"large\"],width:1200)"
               }
@@ -373,7 +372,7 @@ return {
                         "name": "vertical",
                         "storageKey": null
                       },
-                      (v9/*: any*/),
+                      (v8/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -429,9 +428,9 @@ return {
                             "name": "cropped",
                             "plural": false,
                             "selections": [
-                              (v7/*: any*/),
-                              (v8/*: any*/),
                               (v6/*: any*/),
+                              (v7/*: any*/),
+                              (v5/*: any*/),
                               {
                                 "alias": null,
                                 "args": null,
@@ -452,8 +451,8 @@ return {
                         "name": "internalID",
                         "storageKey": null
                       },
-                      (v10/*: any*/),
-                      (v5/*: any*/)
+                      (v9/*: any*/),
+                      (v4/*: any*/)
                     ],
                     "storageKey": null
                   },
@@ -484,9 +483,9 @@ return {
             "name": "marketingCollections",
             "plural": true,
             "selections": [
-              (v5/*: any*/),
-              (v10/*: any*/),
+              (v4/*: any*/),
               (v9/*: any*/),
+              (v8/*: any*/),
               {
                 "alias": "artworks",
                 "args": [
@@ -559,14 +558,14 @@ return {
                             ],
                             "storageKey": null
                           },
-                          (v5/*: any*/)
+                          (v4/*: any*/)
                         ],
                         "storageKey": null
                       }
                     ],
                     "storageKey": null
                   },
-                  (v5/*: any*/)
+                  (v4/*: any*/)
                 ],
                 "storageKey": "artworksConnection(first:3)"
               }
@@ -593,53 +592,15 @@ return {
             "name": "about",
             "storageKey": "about(format:\"HTML\")"
           },
-          (v10/*: any*/),
-          {
-            "alias": "metaDescription",
-            "args": null,
-            "kind": "ScalarField",
-            "name": "summary",
-            "storageKey": null
-          },
-          {
-            "alias": "metaDescriptionFallback",
-            "args": (v3/*: any*/),
-            "kind": "ScalarField",
-            "name": "about",
-            "storageKey": "about(format:\"PLAIN\")"
-          },
-          {
-            "alias": "metaImage",
-            "args": null,
-            "concreteType": "Image",
-            "kind": "LinkedField",
-            "name": "image",
-            "plural": false,
-            "selections": [
-              {
-                "alias": "src",
-                "args": [
-                  {
-                    "kind": "Literal",
-                    "name": "version",
-                    "value": "large_rectangle"
-                  }
-                ],
-                "kind": "ScalarField",
-                "name": "url",
-                "storageKey": "url(version:\"large_rectangle\")"
-              }
-            ],
-            "storageKey": null
-          },
-          (v5/*: any*/)
+          (v9/*: any*/),
+          (v4/*: any*/)
         ],
         "storageKey": "fair(id:\"example\")"
       }
     ]
   },
   "params": {
-    "cacheID": "d97b43499a38113fbe724fd18dac044c",
+    "cacheID": "969e8033d153c49f0a8dcf83aaa9eb63",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -649,7 +610,7 @@ return {
           "plural": false,
           "type": "Fair"
         },
-        "fair.about": (v11/*: any*/),
+        "fair.about": (v10/*: any*/),
         "fair.articlesConnection": {
           "enumValues": null,
           "nullable": true,
@@ -662,52 +623,52 @@ return {
           "plural": true,
           "type": "ArticleEdge"
         },
-        "fair.articlesConnection.edges.__typename": (v12/*: any*/),
+        "fair.articlesConnection.edges.__typename": (v11/*: any*/),
         "fair.articlesConnection.edges.node": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Article"
         },
-        "fair.articlesConnection.edges.node.byline": (v11/*: any*/),
-        "fair.articlesConnection.edges.node.href": (v11/*: any*/),
-        "fair.articlesConnection.edges.node.id": (v13/*: any*/),
-        "fair.articlesConnection.edges.node.internalID": (v13/*: any*/),
-        "fair.articlesConnection.edges.node.publishedAt": (v11/*: any*/),
-        "fair.articlesConnection.edges.node.slug": (v11/*: any*/),
-        "fair.articlesConnection.edges.node.thumbnailImage": (v14/*: any*/),
-        "fair.articlesConnection.edges.node.thumbnailImage.cropped": (v15/*: any*/),
-        "fair.articlesConnection.edges.node.thumbnailImage.cropped.height": (v16/*: any*/),
-        "fair.articlesConnection.edges.node.thumbnailImage.cropped.src": (v12/*: any*/),
-        "fair.articlesConnection.edges.node.thumbnailImage.cropped.srcSet": (v12/*: any*/),
-        "fair.articlesConnection.edges.node.thumbnailImage.cropped.width": (v16/*: any*/),
-        "fair.articlesConnection.edges.node.thumbnailTitle": (v11/*: any*/),
-        "fair.articlesConnection.edges.node.title": (v11/*: any*/),
-        "fair.articlesConnection.edges.node.vertical": (v11/*: any*/),
+        "fair.articlesConnection.edges.node.byline": (v10/*: any*/),
+        "fair.articlesConnection.edges.node.href": (v10/*: any*/),
+        "fair.articlesConnection.edges.node.id": (v12/*: any*/),
+        "fair.articlesConnection.edges.node.internalID": (v12/*: any*/),
+        "fair.articlesConnection.edges.node.publishedAt": (v10/*: any*/),
+        "fair.articlesConnection.edges.node.slug": (v10/*: any*/),
+        "fair.articlesConnection.edges.node.thumbnailImage": (v13/*: any*/),
+        "fair.articlesConnection.edges.node.thumbnailImage.cropped": (v14/*: any*/),
+        "fair.articlesConnection.edges.node.thumbnailImage.cropped.height": (v15/*: any*/),
+        "fair.articlesConnection.edges.node.thumbnailImage.cropped.src": (v11/*: any*/),
+        "fair.articlesConnection.edges.node.thumbnailImage.cropped.srcSet": (v11/*: any*/),
+        "fair.articlesConnection.edges.node.thumbnailImage.cropped.width": (v15/*: any*/),
+        "fair.articlesConnection.edges.node.thumbnailTitle": (v10/*: any*/),
+        "fair.articlesConnection.edges.node.title": (v10/*: any*/),
+        "fair.articlesConnection.edges.node.vertical": (v10/*: any*/),
         "fair.articlesConnection.totalCount": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Int"
         },
-        "fair.description": (v11/*: any*/),
-        "fair.endAt": (v11/*: any*/),
-        "fair.href": (v11/*: any*/),
-        "fair.id": (v13/*: any*/),
+        "fair.description": (v10/*: any*/),
+        "fair.endAt": (v10/*: any*/),
+        "fair.href": (v10/*: any*/),
+        "fair.id": (v12/*: any*/),
         "fair.location": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Location"
         },
-        "fair.location.address": (v11/*: any*/),
-        "fair.location.address2": (v11/*: any*/),
-        "fair.location.city": (v11/*: any*/),
-        "fair.location.country": (v11/*: any*/),
-        "fair.location.id": (v13/*: any*/),
-        "fair.location.postalCode": (v11/*: any*/),
-        "fair.location.state": (v11/*: any*/),
-        "fair.location.summary": (v11/*: any*/),
+        "fair.location.address": (v10/*: any*/),
+        "fair.location.address2": (v10/*: any*/),
+        "fair.location.city": (v10/*: any*/),
+        "fair.location.country": (v10/*: any*/),
+        "fair.location.id": (v12/*: any*/),
+        "fair.location.postalCode": (v10/*: any*/),
+        "fair.location.state": (v10/*: any*/),
+        "fair.location.summary": (v10/*: any*/),
         "fair.marketingCollections": {
           "enumValues": null,
           "nullable": false,
@@ -744,40 +705,36 @@ return {
           "plural": false,
           "type": "Artwork"
         },
-        "fair.marketingCollections.artworks.edges.node.id": (v13/*: any*/),
-        "fair.marketingCollections.artworks.edges.node.image": (v14/*: any*/),
-        "fair.marketingCollections.artworks.edges.node.image.url": (v11/*: any*/),
-        "fair.marketingCollections.artworks.id": (v13/*: any*/),
-        "fair.marketingCollections.id": (v13/*: any*/),
-        "fair.marketingCollections.slug": (v12/*: any*/),
-        "fair.marketingCollections.title": (v12/*: any*/),
-        "fair.metaDescription": (v11/*: any*/),
-        "fair.metaDescriptionFallback": (v11/*: any*/),
-        "fair.metaImage": (v14/*: any*/),
-        "fair.metaImage.src": (v11/*: any*/),
-        "fair.name": (v11/*: any*/),
+        "fair.marketingCollections.artworks.edges.node.id": (v12/*: any*/),
+        "fair.marketingCollections.artworks.edges.node.image": (v13/*: any*/),
+        "fair.marketingCollections.artworks.edges.node.image.url": (v10/*: any*/),
+        "fair.marketingCollections.artworks.id": (v12/*: any*/),
+        "fair.marketingCollections.id": (v12/*: any*/),
+        "fair.marketingCollections.slug": (v11/*: any*/),
+        "fair.marketingCollections.title": (v11/*: any*/),
+        "fair.name": (v10/*: any*/),
         "fair.organizer": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "FairOrganizer"
         },
-        "fair.organizer.id": (v13/*: any*/),
-        "fair.organizer.name": (v11/*: any*/),
-        "fair.organizer.website": (v11/*: any*/),
-        "fair.slug": (v13/*: any*/),
-        "fair.structuredDataEndAt": (v11/*: any*/),
-        "fair.structuredDataImage": (v14/*: any*/),
-        "fair.structuredDataImage.cropped": (v15/*: any*/),
-        "fair.structuredDataImage.cropped.height": (v16/*: any*/),
-        "fair.structuredDataImage.cropped.src": (v12/*: any*/),
-        "fair.structuredDataImage.cropped.width": (v16/*: any*/),
-        "fair.structuredDataStartAt": (v11/*: any*/)
+        "fair.organizer.id": (v12/*: any*/),
+        "fair.organizer.name": (v10/*: any*/),
+        "fair.organizer.website": (v10/*: any*/),
+        "fair.slug": (v12/*: any*/),
+        "fair.structuredDataEndAt": (v10/*: any*/),
+        "fair.structuredDataImage": (v13/*: any*/),
+        "fair.structuredDataImage.cropped": (v14/*: any*/),
+        "fair.structuredDataImage.cropped.height": (v15/*: any*/),
+        "fair.structuredDataImage.cropped.src": (v11/*: any*/),
+        "fair.structuredDataImage.cropped.width": (v15/*: any*/),
+        "fair.structuredDataStartAt": (v10/*: any*/)
       }
     },
     "name": "FairOverviewTestQuery",
     "operationKind": "query",
-    "text": "query FairOverviewTestQuery {\n  fair(id: \"example\") {\n    ...FairOverview_fair\n    id\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  thumbnailTitle\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment FairAbout_fair on Fair {\n  ...FairTimer_fair\n  about(format: HTML)\n  slug\n}\n\nfragment FairCollection_collection on MarketingCollection {\n  id\n  slug\n  title\n  artworks: artworksConnection(first: 3) {\n    counts {\n      total\n    }\n    edges {\n      node {\n        image {\n          url(version: \"larger\")\n        }\n        id\n      }\n    }\n    id\n  }\n}\n\nfragment FairCollections_fair on Fair {\n  marketingCollections(size: 5) {\n    id\n    slug\n    ...FairCollection_collection\n  }\n}\n\nfragment FairEditorialRailArticles_fair on Fair {\n  href\n  articlesConnection(first: 6, sort: PUBLISHED_AT_DESC) {\n    totalCount\n    edges {\n      node {\n        ...CellArticle_article\n        internalID\n        slug\n        id\n      }\n    }\n  }\n}\n\nfragment FairOverview_fair on Fair {\n  ...FairStructuredData_fair\n  ...FairEditorialRailArticles_fair\n  ...FairCollections_fair\n  ...FairAbout_fair\n  name\n  href\n  slug\n  metaDescription: summary\n  metaDescriptionFallback: about(format: PLAIN)\n  metaImage: image {\n    src: url(version: \"large_rectangle\")\n  }\n  articlesConnection(first: 6, sort: PUBLISHED_AT_DESC) {\n    edges {\n      __typename\n    }\n  }\n  marketingCollections(size: 5) {\n    id\n  }\n}\n\nfragment FairStructuredData_fair on Fair {\n  name\n  href\n  description: about(format: PLAIN)\n  structuredDataStartAt: startAt(format: \"YYYY-MM-DD\")\n  structuredDataEndAt: endAt(format: \"YYYY-MM-DD\")\n  location {\n    address\n    address2\n    city\n    state\n    country\n    summary\n    postalCode\n    id\n  }\n  organizer {\n    name\n    website\n    id\n  }\n  structuredDataImage: image {\n    cropped(width: 1200, height: 900, version: [\"larger\", \"large\"]) {\n      src\n      width\n      height\n    }\n  }\n}\n\nfragment FairTimer_fair on Fair {\n  endAt\n}\n"
+    "text": "query FairOverviewTestQuery {\n  fair(id: \"example\") {\n    ...FairOverview_fair\n    id\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  thumbnailTitle\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment FairAbout_fair on Fair {\n  ...FairTimer_fair\n  about(format: HTML)\n  slug\n}\n\nfragment FairCollection_collection on MarketingCollection {\n  id\n  slug\n  title\n  artworks: artworksConnection(first: 3) {\n    counts {\n      total\n    }\n    edges {\n      node {\n        image {\n          url(version: \"larger\")\n        }\n        id\n      }\n    }\n    id\n  }\n}\n\nfragment FairCollections_fair on Fair {\n  marketingCollections(size: 5) {\n    id\n    slug\n    ...FairCollection_collection\n  }\n}\n\nfragment FairEditorialRailArticles_fair on Fair {\n  href\n  articlesConnection(first: 6, sort: PUBLISHED_AT_DESC) {\n    totalCount\n    edges {\n      node {\n        ...CellArticle_article\n        internalID\n        slug\n        id\n      }\n    }\n  }\n}\n\nfragment FairOverview_fair on Fair {\n  ...FairStructuredData_fair\n  ...FairEditorialRailArticles_fair\n  ...FairCollections_fair\n  ...FairAbout_fair\n  slug\n  articlesConnection(first: 6, sort: PUBLISHED_AT_DESC) {\n    edges {\n      __typename\n    }\n  }\n  marketingCollections(size: 5) {\n    id\n  }\n}\n\nfragment FairStructuredData_fair on Fair {\n  name\n  href\n  description: about(format: PLAIN)\n  structuredDataStartAt: startAt(format: \"YYYY-MM-DD\")\n  structuredDataEndAt: endAt(format: \"YYYY-MM-DD\")\n  location {\n    address\n    address2\n    city\n    state\n    country\n    summary\n    postalCode\n    id\n  }\n  organizer {\n    name\n    website\n    id\n  }\n  structuredDataImage: image {\n    cropped(width: 1200, height: 900, version: [\"larger\", \"large\"]) {\n      src\n      width\n      height\n    }\n  }\n}\n\nfragment FairTimer_fair on Fair {\n  endAt\n}\n"
   }
 };
 })();

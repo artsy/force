@@ -153,18 +153,4 @@ describe("FairOverview", () => {
 
     await waitFor(() => expect(mockJumpTo).toBeCalled())
   })
-
-  describe("canonical URL", () => {
-    it("renders correct canonical URL for fair overview", () => {
-      renderWithRelay({
-        Fair: () => ({
-          name: "Test Fair",
-          href: "/fair/test-fair",
-        }),
-      })
-
-      const canonicalLink = document.querySelector('link[rel="canonical"]')
-      expect(canonicalLink).toHaveAttribute("href", "/fair/test-fair")
-    })
-  })
 })
