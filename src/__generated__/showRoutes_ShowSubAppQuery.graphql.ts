@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0b0bebf5b865d978568cb38a5dbed360>>
+ * @generated SignedSource<<f29b2f4e1fd6d4db3f0262e5cd7acead>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,6 +15,7 @@ export type showRoutes_ShowSubAppQuery$variables = {
 };
 export type showRoutes_ShowSubAppQuery$data = {
   readonly show: {
+    readonly slug: string;
     readonly " $fragmentSpreads": FragmentRefs<"ShowSubApp_show">;
   } | null | undefined;
 };
@@ -42,10 +43,17 @@ v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "slug",
   "storageKey": null
 },
 v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -67,6 +75,7 @@ return {
         "name": "show",
         "plural": false,
         "selections": [
+          (v2/*: any*/),
           {
             "args": null,
             "kind": "FragmentSpread",
@@ -94,6 +103,7 @@ return {
         "plural": false,
         "selections": [
           (v2/*: any*/),
+          (v3/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -101,14 +111,7 @@ return {
             "name": "internalID",
             "storageKey": null
           },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "slug",
-            "storageKey": null
-          },
-          (v3/*: any*/),
+          (v4/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -141,7 +144,7 @@ return {
               {
                 "kind": "InlineFragment",
                 "selections": [
-                  (v3/*: any*/)
+                  (v4/*: any*/)
                 ],
                 "type": "Partner",
                 "abstractKey": null
@@ -149,8 +152,8 @@ return {
               {
                 "kind": "InlineFragment",
                 "selections": [
-                  (v3/*: any*/),
-                  (v2/*: any*/)
+                  (v4/*: any*/),
+                  (v3/*: any*/)
                 ],
                 "type": "ExternalPartner",
                 "abstractKey": null
@@ -158,7 +161,7 @@ return {
               {
                 "kind": "InlineFragment",
                 "selections": [
-                  (v2/*: any*/)
+                  (v3/*: any*/)
                 ],
                 "type": "Node",
                 "abstractKey": "__isNode"
@@ -234,16 +237,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "6fbf372b3f1cb1c9a5d65ec5b938f3f7",
+    "cacheID": "9c24a7566873b97be40a42c2e93690f8",
     "id": null,
     "metadata": {},
     "name": "showRoutes_ShowSubAppQuery",
     "operationKind": "query",
-    "text": "query showRoutes_ShowSubAppQuery(\n  $slug: String!\n) {\n  show(id: $slug) @principalField {\n    ...ShowSubApp_show\n    id\n  }\n}\n\nfragment ShowMeta_show on Show {\n  name\n  metaDescription: description\n  metaImage {\n    src: url(version: [\"main\", \"normalized\", \"larger\", \"large\"])\n  }\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on ExternalPartner {\n      id\n    }\n  }\n  formattedStartAt: startAt(format: \"MMMM D\")\n  formattedEndAt: endAt(format: \"MMMM D, YYYY\")\n}\n\nfragment ShowSubApp_show on Show {\n  id\n  internalID\n  slug\n  name\n  href\n  isFairBooth\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  ...ShowMeta_show\n}\n"
+    "text": "query showRoutes_ShowSubAppQuery(\n  $slug: String!\n) {\n  show(id: $slug) @principalField {\n    slug\n    ...ShowSubApp_show\n    id\n  }\n}\n\nfragment ShowMeta_show on Show {\n  name\n  metaDescription: description\n  metaImage {\n    src: url(version: [\"main\", \"normalized\", \"larger\", \"large\"])\n  }\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on ExternalPartner {\n      id\n    }\n  }\n  formattedStartAt: startAt(format: \"MMMM D\")\n  formattedEndAt: endAt(format: \"MMMM D, YYYY\")\n}\n\nfragment ShowSubApp_show on Show {\n  id\n  internalID\n  slug\n  name\n  href\n  isFairBooth\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  ...ShowMeta_show\n}\n"
   }
 };
 })();
 
-(node as any).hash = "4e79350804781d58abe13909be5e579b";
+(node as any).hash = "25988fae5b0bb97529ce50f83396c9ea";
 
 export default node;

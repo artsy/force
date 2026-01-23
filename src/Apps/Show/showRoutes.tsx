@@ -1,7 +1,14 @@
 import loadable from "@loadable/component"
 import type { RouteProps } from "System/Router/Route"
+import { canonicalSlugRedirect } from "System/Router/Utils/canonicalSlugRedirect"
 import { RedirectException } from "found"
 import { graphql } from "react-relay"
+
+const showWithCanonicalSlugRedirect = canonicalSlugRedirect({
+  entityName: "show",
+  paramName: "slug",
+  basePath: "/show",
+})
 
 const ShowApp = loadable(
   () => import(/* webpackChunkName: "showBundle" */ "./ShowApp"),
@@ -29,9 +36,11 @@ export const showRoutes: RouteProps[] = [
     onPreloadJS: () => {
       ShowApp.preload()
     },
+    render: showWithCanonicalSlugRedirect,
     query: graphql`
       query showRoutes_ShowQuery($slug: String!) {
         show(id: $slug) @principalField {
+          slug
           ...ShowApp_show
         }
       }
@@ -67,9 +76,11 @@ export const showRoutes: RouteProps[] = [
     onPreloadJS: () => {
       ShowSubApp.preload()
     },
+    render: showWithCanonicalSlugRedirect,
     query: graphql`
       query showRoutes_ShowSubAppQuery($slug: String!) {
         show(id: $slug) @principalField {
+          slug
           ...ShowSubApp_show
         }
       }

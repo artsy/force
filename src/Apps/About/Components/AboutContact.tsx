@@ -69,7 +69,7 @@ export const AboutContact = () => {
                     </a>
                   ),
                 },
-                { term: "Phone Number", description: "1-646-291-2683" },
+                { term: "Phone Number", description: "1-800-718-4149" },
               ]}
             />
           </Stack>

@@ -1,8 +1,15 @@
 import loadable from "@loadable/component"
 import type { RouteProps } from "System/Router/Route"
+import { canonicalSlugRedirect } from "System/Router/Utils/canonicalSlugRedirect"
 import { RedirectException } from "found"
 import { graphql } from "react-relay"
 import { redirectGeneToCollection } from "./Server/redirectGeneToCollection"
+
+const geneWithCanonicalSlugRedirect = canonicalSlugRedirect({
+  entityName: "gene",
+  paramName: "slug",
+  basePath: "/gene",
+})
 
 const GeneApp = loadable(
   () => import(/* webpackChunkName: "geneBundle" */ "./GeneApp"),
@@ -43,9 +50,11 @@ export const geneRoutes: RouteProps[] = [
         onPreloadJS: () => {
           GeneShowRoute.preload()
         },
+        render: geneWithCanonicalSlugRedirect,
         query: graphql`
           query geneRoutes_GeneShowQuery($slug: String!) @cacheable {
             gene(id: $slug) @principalField {
+              slug
               ...GeneShow_gene
             }
           }

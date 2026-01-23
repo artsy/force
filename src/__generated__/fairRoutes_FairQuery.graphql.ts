@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a32a7edd8b8e01d899fad929e77aa6b4>>
+ * @generated SignedSource<<98666b944a00fd9e5d3f8f12f333ad2f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,6 +15,7 @@ export type fairRoutes_FairQuery$variables = {
 };
 export type fairRoutes_FairQuery$data = {
   readonly fair: {
+    readonly slug: string;
     readonly " $fragmentSpreads": FragmentRefs<"FairApp_fair">;
   } | null | undefined;
 };
@@ -42,6 +43,13 @@ v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "slug",
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 };
@@ -60,6 +68,7 @@ return {
         "name": "fair",
         "plural": false,
         "selections": [
+          (v2/*: any*/),
           {
             "args": null,
             "kind": "FragmentSpread",
@@ -86,6 +95,7 @@ return {
         "name": "fair",
         "plural": false,
         "selections": [
+          (v2/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -161,15 +171,8 @@ return {
                 ],
                 "storageKey": null
               },
-              (v2/*: any*/)
+              (v3/*: any*/)
             ],
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "slug",
             "storageKey": null
           },
           {
@@ -221,23 +224,23 @@ return {
             "name": "internalID",
             "storageKey": null
           },
-          (v2/*: any*/)
+          (v3/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "13178de36f30f5137711121e0586fe4c",
+    "cacheID": "7c05a478ea2f63d751ae2053e878215a",
     "id": null,
     "metadata": {},
     "name": "fairRoutes_FairQuery",
     "operationKind": "query",
-    "text": "query fairRoutes_FairQuery(\n  $slug: String!\n) @cacheable {\n  fair(id: $slug) @principalField {\n    ...FairApp_fair\n    id\n  }\n}\n\nfragment ExhibitorsLetterNav_fair on Fair {\n  exhibitorsGroupedByName {\n    letter\n  }\n}\n\nfragment FairApp_fair on Fair {\n  ...FairTabs_fair\n  ...FairHeader_fair\n  ...FairHeaderImage_fair\n  ...ExhibitorsLetterNav_fair\n  internalID\n  profile {\n    id\n  }\n}\n\nfragment FairHeaderImage_fair on Fair {\n  image {\n    url(version: \"wide\")\n  }\n}\n\nfragment FairHeader_fair on Fair {\n  name\n  exhibitionPeriod\n  profile {\n    icon {\n      url(version: [\"large\", \"square\", \"square140\"])\n    }\n    id\n  }\n  slug\n}\n\nfragment FairTabs_fair on Fair {\n  href\n  counts {\n    artworks\n  }\n}\n"
+    "text": "query fairRoutes_FairQuery(\n  $slug: String!\n) @cacheable {\n  fair(id: $slug) @principalField {\n    slug\n    ...FairApp_fair\n    id\n  }\n}\n\nfragment ExhibitorsLetterNav_fair on Fair {\n  exhibitorsGroupedByName {\n    letter\n  }\n}\n\nfragment FairApp_fair on Fair {\n  ...FairTabs_fair\n  ...FairHeader_fair\n  ...FairHeaderImage_fair\n  ...ExhibitorsLetterNav_fair\n  internalID\n  profile {\n    id\n  }\n}\n\nfragment FairHeaderImage_fair on Fair {\n  image {\n    url(version: \"wide\")\n  }\n}\n\nfragment FairHeader_fair on Fair {\n  name\n  exhibitionPeriod\n  profile {\n    icon {\n      url(version: [\"large\", \"square\", \"square140\"])\n    }\n    id\n  }\n  slug\n}\n\nfragment FairTabs_fair on Fair {\n  href\n  counts {\n    artworks\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "eccd0e5e64505cec23f0723eb4c124f8";
+(node as any).hash = "733e1431848245624f93ff225556030e";
 
 export default node;

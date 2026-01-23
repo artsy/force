@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4386abb4b90f285b7483d841d4801cb9>>
+ * @generated SignedSource<<7788f2944a509e98168f5146f4dc0515>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,6 +15,7 @@ export type fairRoutes_FairSubAppQuery$variables = {
 };
 export type fairRoutes_FairSubAppQuery$data = {
   readonly fair: {
+    readonly slug: string;
     readonly " $fragmentSpreads": FragmentRefs<"FairSubApp_fair">;
   } | null | undefined;
 };
@@ -42,6 +43,13 @@ v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "slug",
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 };
@@ -60,6 +68,7 @@ return {
         "name": "fair",
         "plural": false,
         "selections": [
+          (v2/*: any*/),
           {
             "args": null,
             "kind": "FragmentSpread",
@@ -87,6 +96,7 @@ return {
         "plural": false,
         "selections": [
           (v2/*: any*/),
+          (v3/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -116,7 +126,7 @@ return {
                 "name": "__typename",
                 "storageKey": null
               },
-              (v2/*: any*/)
+              (v3/*: any*/)
             ],
             "storageKey": null
           }
@@ -126,16 +136,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d0ecafb682fb3fe33613652c64e139dd",
+    "cacheID": "19115c0fcf3d5c266b65dffe769d6903",
     "id": null,
     "metadata": {},
     "name": "fairRoutes_FairSubAppQuery",
     "operationKind": "query",
-    "text": "query fairRoutes_FairSubAppQuery(\n  $slug: String!\n) @cacheable {\n  fair(id: $slug) @principalField {\n    ...FairSubApp_fair\n    id\n  }\n}\n\nfragment FairSubApp_fair on Fair {\n  id\n  name\n  href\n  profile {\n    __typename\n    id\n  }\n}\n"
+    "text": "query fairRoutes_FairSubAppQuery(\n  $slug: String!\n) @cacheable {\n  fair(id: $slug) @principalField {\n    slug\n    ...FairSubApp_fair\n    id\n  }\n}\n\nfragment FairSubApp_fair on Fair {\n  id\n  name\n  href\n  profile {\n    __typename\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "c506ef0625fb58fec14aab04e151bae4";
+(node as any).hash = "1fd0578d3fb6dd0c16aee940244f5c95";
 
 export default node;
