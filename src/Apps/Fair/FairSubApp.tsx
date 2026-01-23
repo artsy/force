@@ -5,6 +5,7 @@ import type { FairSubApp_fair$data } from "__generated__/FairSubApp_fair.graphql
 import { HttpError } from "found"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+import { FairMetaFragmentContainer } from "./Components/FairMeta"
 
 interface FairAppProps {
   fair: FairSubApp_fair$data
@@ -24,6 +25,8 @@ const FairApp: React.FC<React.PropsWithChildren<FairAppProps>> = ({
 
   return (
     <>
+      <FairMetaFragmentContainer fair={fair} />
+
       <TopContextBar href={fair.href} displayBackArrow>
         Back to {fair.name}
       </TopContextBar>
@@ -37,6 +40,7 @@ const FairApp: React.FC<React.PropsWithChildren<FairAppProps>> = ({
 export const FairSubAppFragmentContainer = createFragmentContainer(FairApp, {
   fair: graphql`
     fragment FairSubApp_fair on Fair {
+      ...FairMeta_fair
       id
       name
       href

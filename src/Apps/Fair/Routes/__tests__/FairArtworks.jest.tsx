@@ -71,21 +71,6 @@ describe("FairArtworks", () => {
 
     expect(screen.getByText("Artists")).toBeInTheDocument()
   })
-
-  describe("canonical URL", () => {
-    it("renders correct canonical URL for fair artworks", () => {
-      renderWithRelay({
-        Fair: () => ({
-          ...FAIR_ARTWORKS_FIXTURE.fair,
-          name: "Test Fair",
-          href: "/fair/test-fair",
-        }),
-      })
-
-      const canonicalLink = document.querySelector('link[rel="canonical"]')
-      expect(canonicalLink).toHaveAttribute("href", "/fair/test-fair/artworks")
-    })
-  })
 })
 
 const FAIR_ARTWORKS_FIXTURE: FairArtworksQuery$rawResponse = {
@@ -93,14 +78,7 @@ const FAIR_ARTWORKS_FIXTURE: FairArtworksQuery$rawResponse = {
     id: "xxx",
     slug: "cool-fair",
     internalID: "bson-fair",
-    name: "Cool Fair",
-    href: "/fair/cool-fair",
     featuredKeywords: ["cats", "dogs"],
-    metaDescription: "A cool fair",
-    metaDescriptionFallback: "A cool fair fallback",
-    metaImage: {
-      src: "https://test.artsy.net/fair-image.jpg",
-    },
     filtered_artworks: {
       __isArtworkConnectionInterface: "FilterArtworksConnection",
       id: "filteredartworksabc123",

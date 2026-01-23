@@ -6,7 +6,6 @@ import { FairAboutFragmentContainer as FairAbout } from "Apps/Fair/Components/Fa
 import { FairFollowedArtistsQueryRenderer } from "Apps/Fair/Components/FairOverview/FairFollowedArtists"
 import { FairStructuredData } from "Apps/Fair/Components/FairStructuredData"
 import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
-import { MetaTags } from "Components/MetaTags"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { Jump, useJump } from "Utils/Hooks/useJump"
@@ -44,13 +43,6 @@ const FairOverview: FC<React.PropsWithChildren<FairOverviewProps>> = ({
 
   return (
     <>
-      <MetaTags
-        title={`${fair.name} | Artsy`}
-        description={fair.metaDescription || fair.metaDescriptionFallback}
-        pathname={fair.href}
-        imageURL={fair.metaImage?.src}
-      />
-
       <FairStructuredData fair={fair} />
 
       <Join separator={<Spacer y={6} />}>
@@ -85,14 +77,7 @@ export const FairOverviewFragmentContainer = createFragmentContainer(
         ...FairEditorialRailArticles_fair
         ...FairCollections_fair
         ...FairAbout_fair
-        name
-        href
         slug
-        metaDescription: summary
-        metaDescriptionFallback: about(format: PLAIN)
-        metaImage: image {
-          src: url(version: "large_rectangle")
-        }
         articlesConnection(first: 6, sort: PUBLISHED_AT_DESC) {
           edges {
             __typename
