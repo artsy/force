@@ -63,6 +63,7 @@ describe("SaveButton", () => {
           image: {
             url: '<mock-value-for-field-"url">',
             aspectRatio: '<mock-value-for-field-\"aspectRatio\">',
+            blurhash: '<mock-value-for-field-"blurhash">',
           },
         },
       },
