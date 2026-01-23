@@ -392,6 +392,41 @@ describe("Order2ReviewStep", () => {
       expect(input.oneTimeUse).toBe(false)
       expect(input.confirmationToken).toBe("test-token")
     })
+
+    it("always sets oneTimeUse to true for SEPA payment method", async () => {
+      mockCheckoutContext.savePaymentMethod = true // Even when set to true
+
+      mockSubmitOrderMutation.submitMutation.mockResolvedValueOnce({
+        submitOrder: {
+          orderOrError: {
+            __typename: "OrderMutationSuccess",
+            order: {
+              internalID: "order-id",
+            },
+          },
+        },
+      })
+
+      renderWithRelay({
+        Me: () => ({
+          order: createBuyOrder({ paymentMethod: "SEPA_DEBIT" }),
+        }),
+      })
+
+      const submitButton = screen.getByText("Submit")
+      await userEvent.click(submitButton)
+
+      await waitFor(() => {
+        expect(mockSubmitOrderMutation.submitMutation).toHaveBeenCalledTimes(1)
+      })
+
+      const callArgs = mockSubmitOrderMutation.submitMutation.mock.calls[0][0]
+      const input = callArgs.variables.input
+
+      // SEPA cannot be saved, so oneTimeUse should always be true
+      expect(input.oneTimeUse).toBe(true)
+      expect(input.confirmationToken).toBe("test-token")
+    })
   })
 
   describe("Error handling", () => {
