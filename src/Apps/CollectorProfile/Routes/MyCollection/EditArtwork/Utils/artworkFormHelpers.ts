@@ -1,7 +1,6 @@
 import type { Photo } from "Components/PhotoUpload/Utils/fileUtils"
 import type { MyCollectionEditArtwork_artwork$data } from "__generated__/MyCollectionEditArtwork_artwork.graphql"
 import { compact } from "lodash"
-import { v1 as uuid } from "uuid"
 import type { Artist, ArtworkModel, MyCollectionPhoto } from "./artworkModel"
 import { getAttributionClassByName } from "./rarityOptions"
 
@@ -35,7 +34,7 @@ export const getMyCollectionArtworkFormInitialValues = (
 
 export const MyCollectionPhotoToPhoto = (photo: MyCollectionPhoto): Photo => {
   return {
-    id: photo.internalID ?? uuid(),
+    id: photo.internalID ?? crypto.randomUUID(),
     assetId: undefined,
     name: "",
     size: undefined,

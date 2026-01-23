@@ -1,5 +1,5 @@
 import loadable from "@loadable/component"
-import { updateContext } from "Server/middleware/bootstrapSharifyAndContextLocalsMiddleware"
+import { updateContext } from "Server/context"
 import type { RouteProps } from "System/Router/Route"
 import { getENV } from "Utils/getENV"
 import { graphql } from "react-relay"
