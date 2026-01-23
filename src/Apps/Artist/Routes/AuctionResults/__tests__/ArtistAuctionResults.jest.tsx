@@ -550,6 +550,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
       image: {
         url: "https://example.com/cover-artwork.jpg",
         aspectRatio: 4.2,
+        blurhash: undefined,
       },
     },
     meta: {
