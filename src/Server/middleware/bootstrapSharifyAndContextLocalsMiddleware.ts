@@ -1,9 +1,11 @@
 import { parse } from "url"
 import artsyXapp from "@artsy/xapp"
-import { getAsyncLocalStorage } from "Server/asyncLocalWrapper"
+import { updateContext } from "Server/context"
 import type { NextFunction } from "express"
 import uuid from "node-uuid"
 import type { ArtsyRequest, ArtsyResponse } from "./artsyExpress"
+
+export { updateContext } from "Server/context"
 
 /**
  * Contains the subset of sharify locals that are required for all force routes.
@@ -27,7 +29,8 @@ export function bootstrapSharifyAndContextLocalsMiddleware(
     req.session != null
       ? req.session.id != null
         ? req.session.id
-        : (req.session.id = uuid.v1())
+        : // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
+          (req.session.id = uuid.v1())
       : undefined,
   )
   updateSharifyAndContext(res, "ARTSY_XAPP_TOKEN", artsyXapp.token)
@@ -79,9 +82,4 @@ export function updateSharifyAndContext(
 ) {
   res.locals.sd[key] = value
   updateContext(key, value)
-}
-
-export function updateContext(key: string, value: any) {
-  const asyncLocalStorage = getAsyncLocalStorage()
-  asyncLocalStorage.getStore()?.set(key, value)
 }

@@ -2,13 +2,12 @@ import { getConvectionGeminiKey } from "Components/PhotoUpload/Mutations/getConv
 import { getGeminiCredentialsForEnvironment } from "Components/PhotoUpload/Mutations/getGeminiCredentialsForEnvironment"
 import { ErrorCode, type FileRejection } from "react-dropzone"
 import type { Environment } from "react-relay"
-import { v1 as uuid } from "uuid"
 import { uploadFileToS3 } from "./uploadFileToS3"
 
 export const AUTOMATICALLY_ADDED_PHOTO_NAME = "Automatically added"
 
 export const KBSize = 1000
-export const MBSize = Math.pow(KBSize, 2)
+export const MBSize = KBSize ** 2
 const NO_SIZE = ""
 
 export function formatFileSize(photo: {
@@ -60,7 +59,7 @@ export function normalizePhoto(
   externalUrl?: string,
 ): Photo {
   return {
-    id: uuid(),
+    id: crypto.randomUUID(),
     assetId: undefined,
     externalUrl,
     file,
