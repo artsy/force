@@ -11,6 +11,7 @@ import {
 import { CheckoutModalError } from "Apps/Order2/Routes/Checkout/Components/CheckoutModal"
 import { Order2CheckoutPricingBreakdown } from "Apps/Order2/Routes/Checkout/Components/Order2CheckoutPricingBreakdown"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import { useCheckoutModal } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutModal"
 import { useOrder2SubmitOrderMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SubmitOrderMutation"
 import { BUYER_GUARANTEE_URL } from "Apps/Order2/constants"
 import { RouterLink } from "System/Components/RouterLink"
@@ -45,8 +46,11 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
     redirectToOrderDetails,
     checkoutTracking,
     artworkPath,
-    setCheckoutModalError,
+    editPayment,
+    setStepErrorMessage,
   } = useCheckoutContext()
+
+  const { showCheckoutErrorModal } = useCheckoutModal()
 
   const artworkData = extractLineItemMetadata(orderData.lineItems[0]!)
   const { dimensionsLabel } = useArtworkDimensions(artworkData.dimensions)
@@ -57,6 +61,17 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
 
   const [loading, setLoading] = useState(false)
 
+  const showPaymentError = () => {
+    editPayment()
+    setStepErrorMessage({
+      step: CheckoutStepName.PAYMENT,
+      error: {
+        title: "Payment error",
+        message: "Please update your payment method",
+      },
+    })
+  }
+
   const handleSubmitError = (error: any) => {
     logger.error({
       ...error,
@@ -65,16 +80,21 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
     })
 
     if (error.code === "insufficient_inventory") {
-      setCheckoutModalError(CheckoutModalError.ARTWORK_NOT_FOR_SALE)
+      showCheckoutErrorModal(CheckoutModalError.ARTWORK_NOT_FOR_SALE)
       return
     }
 
-    if (error.code === "payment_intent_authentication_failure") {
-      setCheckoutModalError(CheckoutModalError.STRIPE_AUTHENTICATION_FAILURE)
+    if (error.code === "stripe_error") {
+      showCheckoutErrorModal(
+        CheckoutModalError.STRIPE_ERROR,
+        "An error occurred while processing your payment",
+        error.message,
+        showPaymentError,
+      )
       return
     }
 
-    setCheckoutModalError(CheckoutModalError.SUBMIT_ERROR)
+    showCheckoutErrorModal(CheckoutModalError.SUBMIT_ERROR)
   }
 
   const handleSubmit = async (confirmedSetupIntentId?: any) => {
@@ -131,7 +151,7 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
         })
 
         if (error) {
-          throw error
+          throw { code: "stripe_error", message: error.message }
         } else {
           isOffer ? handleSubmit(setupIntent?.id) : handleSubmit()
           return

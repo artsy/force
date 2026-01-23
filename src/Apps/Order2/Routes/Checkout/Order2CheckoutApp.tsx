@@ -29,6 +29,7 @@ import {
   useCheckoutAutoScroll,
 } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutAutoScroll"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import { useCheckoutModal } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutModal"
 import { useLoadCheckout } from "Apps/Order2/Routes/Checkout/Hooks/useLoadCheckout"
 import { NOT_FOUND_ERROR } from "Apps/Order2/constants"
 import { useSystemContext } from "System/Hooks/useSystemContext"
@@ -60,8 +61,10 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
     expressCheckoutSubmitting,
     steps,
     checkoutTracking,
-    checkoutModalError,
   } = useCheckoutContext()
+
+  const { checkoutModalError, checkoutModalTitle, checkoutModalDescription } =
+    useCheckoutModal()
 
   // Load checkout and manage window side effects
   useLoadCheckout(orderData)
@@ -198,7 +201,11 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
           </Box>
         </Column>
       </GridColumns>
-      <CheckoutModal error={checkoutModalError} />
+      <CheckoutModal
+        error={checkoutModalError}
+        overrideTitle={checkoutModalTitle}
+        overrideDescription={checkoutModalDescription}
+      />
     </>
   )
 }
