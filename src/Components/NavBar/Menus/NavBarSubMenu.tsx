@@ -9,7 +9,7 @@ import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import type * as React from "react"
 import { useTracking } from "react-tracking"
 import { NavBarMenuItemLink } from "./NavBarMenuItem"
-import { NavBarMenuItemArticleQueryRenderer } from "./NavBarMenuItemArticle"
+import { NavBarMenuItemFeaturedLinkQueryRenderer } from "./NavBarMenuItemFeaturedLink"
 
 interface NavBarSubMenuProps {
   menu: MenuData
@@ -70,9 +70,9 @@ export const NavBarSubMenu: React.FC<
     contextModule ===
     DeprecatedAnalyticsSchema.ContextModule.HeaderArtistsDropdown
 
-  // Find article and non-menu items
-  const articleItem = menu.links.find(
-    item => "type" in item && item.type === "Article",
+  // Find featured link and non-menu items
+  const featuredLinkItem = menu.links.find(
+    item => "type" in item && item.type === "FeaturedLink",
   )
   const lastMenuLinkIndex = menu.links.length - 1
   const lastMenuItem = menu.links[lastMenuLinkIndex]
@@ -115,11 +115,11 @@ export const NavBarSubMenu: React.FC<
               return null
             })}
 
-            {articleItem && "type" in articleItem && (
+            {featuredLinkItem && "type" in featuredLinkItem && (
               <Column span={4} px={2}>
-                <NavBarMenuItemArticleQueryRenderer
-                  articleId={articleItem.articleId}
-                  headerText={articleItem.headerText}
+                <NavBarMenuItemFeaturedLinkQueryRenderer
+                  setKey={featuredLinkItem.setKey}
+                  headerText={featuredLinkItem.headerText}
                   contextModule={contextModule}
                   parentNavigationItem={parentNavigationItem}
                 />

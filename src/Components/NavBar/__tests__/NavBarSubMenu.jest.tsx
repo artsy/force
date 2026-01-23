@@ -16,7 +16,7 @@ jest.mock("System/Hooks/useAnalyticsContext", () => ({
 
 jest.mock("react-relay", () => ({
   ...jest.requireActual("react-relay"),
-  useLazyLoadQuery: jest.fn(() => ({ article: null })),
+  useLazyLoadQuery: jest.fn(() => ({ orderedSets: [] })),
   useFragment: jest.fn(() => null),
 }))
 
@@ -97,44 +97,51 @@ describe("NavBarSubMenu", () => {
     expect(spy).toHaveBeenCalled()
   })
 
-  it("renders article component when visual component is specified in menu data", () => {
-    const mockArticle = {
-      internalID: "test-article-id",
-      href: "/article/test-article",
-      vertical: "Art Market",
-      title: "Test Article Title",
-      thumbnailImage: {
-        resized: {
-          src: "https://example.com/image.jpg",
-          srcSet: "https://example.com/image.jpg 1x",
+  it("renders featured link component when visual component is specified in menu data", () => {
+    const mockOrderedSet = {
+      internalID: "test-set-id",
+      itemType: "FeaturedLink",
+      items: [
+        {
+          __typename: "FeaturedLink",
+          internalID: "test-featured-link-id",
+          href: "/article/test-article",
+          subtitle: "Art Market",
+          title: "Test Featured Link Title",
+          image: {
+            resized: {
+              src: "https://example.com/image.jpg",
+              srcSet: "https://example.com/image.jpg 1x",
+            },
+          },
         },
-      },
+      ],
     }
 
-    // Mock the GraphQL query to return article data
+    // Mock the GraphQL query to return ordered sets data (array with one set)
     const { useLazyLoadQuery, useFragment } = require("react-relay")
     ;(useLazyLoadQuery as jest.Mock).mockReturnValueOnce({
-      article: { __fragmentRef: "mock-ref" },
+      orderedSets: [{ __fragmentRef: "mock-ref" }],
     })
 
-    // Mock the fragment to return the article data
-    ;(useFragment as jest.Mock).mockReturnValueOnce(mockArticle)
+    // Mock the fragment to return the ordered set data
+    ;(useFragment as jest.Mock).mockReturnValueOnce(mockOrderedSet)
 
-    // ARTWORKS_SUBMENU_DATA includes an article visual component
+    // ARTWORKS_SUBMENU_DATA includes a featured link visual component
     const { container } = getWrapper()
 
-    // Check that article header text is rendered
+    // Check that featured link header text is rendered
     expect(container.textContent).toContain("Get Inspired")
 
-    // Check that article vertical is rendered
+    // Check that featured link subtitle is rendered
     expect(container.textContent).toContain("Art Market")
 
-    // Check that article title is rendered
-    expect(container.textContent).toContain("Test Article Title")
+    // Check that featured link title is rendered
+    expect(container.textContent).toContain("Test Featured Link Title")
   })
 
-  it("does not render article component when no visual component is specified", () => {
-    const menuWithoutArticle = {
+  it("does not render featured link component when no visual component is specified", () => {
+    const menuWithoutFeaturedLink = {
       title: "Test Menu",
       links: [
         {
@@ -153,7 +160,7 @@ describe("NavBarSubMenu", () => {
 
     const { container } = render(
       <NavBarSubMenu
-        menu={menuWithoutArticle}
+        menu={menuWithoutFeaturedLink}
         contextModule={
           DeprecatedAnalyticsSchema.ContextModule.HeaderArtworksDropdown
         }
@@ -162,7 +169,7 @@ describe("NavBarSubMenu", () => {
       />,
     )
 
-    // No article header should be present
+    // No featured link header should be present
     expect(container.textContent).not.toContain("Get Inspired")
     expect(container.textContent).not.toContain("What's Next")
     expect(container.textContent).not.toContain("Artists to Discover")

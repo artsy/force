@@ -26,10 +26,10 @@ export interface MenuLinkData {
   dividerBelow?: boolean
 }
 
-// e.g. Article visual component
+// e.g. FeaturedLink visual component
 export interface VisualComponentData {
-  type: "Article"
-  articleId: string
+  type: "FeaturedLink"
+  setKey: string
   headerText: string
 }
 
@@ -139,9 +139,8 @@ export const WHATS_NEW_SUBMENU_DATA: MenuLinkData = {
         },
       },
       {
-        type: "Article",
-        articleId:
-          "artsy-editorial-16-leading-curators-predict-art-trends-2026",
+        type: "FeaturedLink",
+        setKey: "nav-visual:whats-new",
         headerText: "What's Next",
       },
     ],
@@ -271,8 +270,8 @@ export const ARTISTS_SUBMENU_DATA: MenuLinkData = {
         dividerBelow: true,
       },
       {
-        type: "Article",
-        articleId: "artsy-editorial-11-artists-breakout-moments-2026",
+        type: "FeaturedLink",
+        setKey: "nav-visual:artists",
         headerText: "Artists to Discover",
       },
       {
@@ -398,8 +397,8 @@ export const ARTWORKS_SUBMENU_DATA: MenuLinkData = {
         dividerBelow: true,
       },
       {
-        type: "Article",
-        articleId: "artsy-editorial-inside-collection-michael-sherman",
+        type: "FeaturedLink",
+        setKey: "nav-visual:artworks",
         headerText: "Get Inspired",
       },
       {
