@@ -66,6 +66,7 @@ export const ArtistAuctionResultItem: React.FC<
           image: {
             url: images?.larger?.url,
             aspectRatio: images?.larger?.aspectRatio,
+            blurhash: images?.larger?.blurhash,
           },
         },
         analytics: {
@@ -280,6 +281,7 @@ export const ArtistAuctionResultItemFragmentContainer = createFragmentContainer(
           larger {
             url
             aspectRatio
+            blurhash
           }
           thumbnail {
             cropped(width: 130, height: 130, version: ["square140"]) {

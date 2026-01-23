@@ -264,6 +264,7 @@ export const RequestConditionReportFragmentContainer = createFragmentContainer(
         image {
           url(version: "main")
           aspectRatio
+          blurhash
         }
       }
     `,

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<04a3b8ceef10286a1f85584a4f077dad>>
+ * @generated SignedSource<<3943594484faaf8f7f3d2d8675fd163a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,6 +17,7 @@ export type FollowArtistButton_artist$data = {
   readonly coverArtwork: {
     readonly image: {
       readonly aspectRatio: number;
+      readonly blurhash: string | null | undefined;
       readonly url: string | null | undefined;
     } | null | undefined;
   } | null | undefined;
@@ -139,6 +140,13 @@ const node: ReaderFragment = {
               "kind": "ScalarField",
               "name": "aspectRatio",
               "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "blurhash",
+              "storageKey": null
             }
           ],
           "storageKey": null
@@ -151,6 +159,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "374c1b74c13a679b84d5e900197762b9";
+(node as any).hash = "879775deb5b1344f252d41e432304400";
 
 export default node;

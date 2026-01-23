@@ -9,6 +9,7 @@ interface ArtworkFilterAlertContextProviderProps {
   image?: {
     url?: string | null
     aspectRatio?: number | null
+    blurhash?: string | null
   } | null
 }
 

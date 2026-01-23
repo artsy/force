@@ -43,6 +43,7 @@ interface AlertProviderProps {
   image?: {
     url?: string | null
     aspectRatio?: number | null
+    blurhash?: string | null
   } | null
 }
 

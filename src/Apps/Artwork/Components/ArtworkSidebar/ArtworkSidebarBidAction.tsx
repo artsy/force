@@ -401,6 +401,7 @@ export const ArtworkSidebarBidActionFragmentContainer = withAuthDialog(
           image {
             url(version: "main")
             aspectRatio
+            blurhash
           }
           sale {
             slug

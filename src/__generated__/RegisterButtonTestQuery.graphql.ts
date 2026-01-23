@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d8ddef7740b49dd3b1f7cdb6275bd264>>
+ * @generated SignedSource<<9ca9c309794cc9bdcc8d05d9baeda70c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -153,6 +153,13 @@ return {
                 "kind": "ScalarField",
                 "name": "aspectRatio",
                 "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "blurhash",
+                "storageKey": null
               }
             ],
             "storageKey": null
@@ -274,12 +281,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b052fc6d4a3a2b559f97322ecba7d3c2",
+    "cacheID": "3b3aafedbe60076055c74a25045ff2c0",
     "id": null,
     "metadata": {},
     "name": "RegisterButtonTestQuery",
     "operationKind": "query",
-    "text": "query RegisterButtonTestQuery {\n  sale(id: \"foo\") {\n    ...RegisterButton_sale\n    id\n  }\n  me {\n    ...RegisterButton_me\n    id\n  }\n}\n\nfragment RegisterButton_me on Me {\n  internalID\n  isIdentityVerified\n  hasCreditCards\n  pendingIdentityVerification {\n    internalID\n    id\n  }\n}\n\nfragment RegisterButton_sale on Sale {\n  bidder {\n    qualifiedForBidding\n    id\n  }\n  coverImage {\n    signupImage: url(version: \"main\")\n    aspectRatio\n  }\n  isAuction\n  isClosed\n  isLiveOpen\n  isPreview\n  isRegistrationClosed\n  liveURLIfOpen\n  requireIdentityVerification\n  registrationStatus {\n    internalID\n    id\n  }\n  slug\n  status\n}\n"
+    "text": "query RegisterButtonTestQuery {\n  sale(id: \"foo\") {\n    ...RegisterButton_sale\n    id\n  }\n  me {\n    ...RegisterButton_me\n    id\n  }\n}\n\nfragment RegisterButton_me on Me {\n  internalID\n  isIdentityVerified\n  hasCreditCards\n  pendingIdentityVerification {\n    internalID\n    id\n  }\n}\n\nfragment RegisterButton_sale on Sale {\n  bidder {\n    qualifiedForBidding\n    id\n  }\n  coverImage {\n    signupImage: url(version: \"main\")\n    aspectRatio\n    blurhash\n  }\n  isAuction\n  isClosed\n  isLiveOpen\n  isPreview\n  isRegistrationClosed\n  liveURLIfOpen\n  requireIdentityVerification\n  registrationStatus {\n    internalID\n    id\n  }\n  slug\n  status\n}\n"
   }
 };
 })();

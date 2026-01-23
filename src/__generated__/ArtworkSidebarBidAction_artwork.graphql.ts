@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<52f63842cd5bec6a704aa90dbcb60ce0>>
+ * @generated SignedSource<<7eace2b88e97f725bba9a4df8c3c8452>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,6 +19,7 @@ export type ArtworkSidebarBidAction_artwork$data = {
   } | null | undefined;
   readonly image: {
     readonly aspectRatio: number;
+    readonly blurhash: string | null | undefined;
     readonly url: string | null | undefined;
   } | null | undefined;
   readonly internalID: string;
@@ -151,6 +152,13 @@ return {
           "args": null,
           "kind": "ScalarField",
           "name": "aspectRatio",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "blurhash",
           "storageKey": null
         }
       ],
@@ -307,6 +315,6 @@ return {
 };
 })();
 
-(node as any).hash = "60ced0ddef077bec67fbbe63c56df619";
+(node as any).hash = "2aa616249e1a780d31c257bff62e5350";
 
 export default node;

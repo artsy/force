@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3ebb788d6e0b7273f45f5c5d41ab2db8>>
+ * @generated SignedSource<<19051b1a4939fb0bfcab65ad8ea19e1d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -30,6 +30,7 @@ export type ArtistAuctionResults_artist$data = {
   readonly coverArtwork: {
     readonly image: {
       readonly aspectRatio: number;
+      readonly blurhash: string | null | undefined;
       readonly url: string | null | undefined;
     } | null | undefined;
   } | null | undefined;
@@ -551,6 +552,13 @@ return {
               "kind": "ScalarField",
               "name": "aspectRatio",
               "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "blurhash",
+              "storageKey": null
             }
           ],
           "storageKey": null
@@ -564,6 +572,6 @@ return {
 };
 })();
 
-(node as any).hash = "71662baf0f03c22c6584b3b24c1ca3bd";
+(node as any).hash = "4ecd0e8622e44c8ed26c2e7fc0607c99";
 
 export default node;

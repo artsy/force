@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1172727d10418cfd2ff6fb4a1e652a0e>>
+ * @generated SignedSource<<d23eaa942bb779b72ae8e45a73dffa24>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -236,6 +236,13 @@ return {
                     "kind": "ScalarField",
                     "name": "aspectRatio",
                     "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "blurhash",
+                    "storageKey": null
                   }
                 ],
                 "storageKey": null
@@ -250,12 +257,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f4e5608c8e8833edbb26d15cb36952f9",
+    "cacheID": "6c27ccee33223610787ab3c1fab8a896",
     "id": null,
     "metadata": {},
     "name": "FollowArtistButtonQuery",
     "operationKind": "query",
-    "text": "query FollowArtistButtonQuery(\n  $id: String!\n  $isLoggedIn: Boolean!\n) {\n  me {\n    ...FollowArtistButton_me\n    id\n  }\n  artist(id: $id) {\n    ...FollowArtistButton_artist_4dcqWc\n    id\n  }\n}\n\nfragment FollowArtistButton_artist_4dcqWc on Artist {\n  id\n  slug\n  name\n  internalID\n  isFollowed @include(if: $isLoggedIn)\n  counts {\n    follows\n  }\n  coverArtwork {\n    image {\n      url(version: \"main\")\n      aspectRatio\n    }\n    id\n  }\n}\n\nfragment FollowArtistButton_me on Me {\n  id\n  counts {\n    followedArtists\n  }\n}\n"
+    "text": "query FollowArtistButtonQuery(\n  $id: String!\n  $isLoggedIn: Boolean!\n) {\n  me {\n    ...FollowArtistButton_me\n    id\n  }\n  artist(id: $id) {\n    ...FollowArtistButton_artist_4dcqWc\n    id\n  }\n}\n\nfragment FollowArtistButton_artist_4dcqWc on Artist {\n  id\n  slug\n  name\n  internalID\n  isFollowed @include(if: $isLoggedIn)\n  counts {\n    follows\n  }\n  coverArtwork {\n    image {\n      url(version: \"main\")\n      aspectRatio\n      blurhash\n    }\n    id\n  }\n}\n\nfragment FollowArtistButton_me on Me {\n  id\n  counts {\n    followedArtists\n  }\n}\n"
   }
 };
 })();

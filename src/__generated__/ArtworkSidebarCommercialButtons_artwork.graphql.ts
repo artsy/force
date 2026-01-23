@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2e8eea5ac85aecb2a0ac1e1ab88f5346>>
+ * @generated SignedSource<<06b69d2ffb54670885682e5f4286335e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -37,6 +37,7 @@ export type ArtworkSidebarCommercialButtons_artwork$data = {
   } | null | undefined> | null | undefined;
   readonly image: {
     readonly aspectRatio: number;
+    readonly blurhash: string | null | undefined;
     readonly url: string | null | undefined;
   } | null | undefined;
   readonly internalID: string;
@@ -192,6 +193,13 @@ return {
           "args": null,
           "kind": "ScalarField",
           "name": "aspectRatio",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "blurhash",
           "storageKey": null
         }
       ],
@@ -408,6 +416,6 @@ return {
 };
 })();
 
-(node as any).hash = "e6849b8a7dfc9b369b2365369ea12a06";
+(node as any).hash = "ea269571977005267f3bb3985a8f5848";
 
 export default node;

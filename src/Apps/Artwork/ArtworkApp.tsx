@@ -420,6 +420,7 @@ const ArtworkAppFragmentContainer = createFragmentContainer(
         image {
           url(version: "main")
           aspectRatio
+          blurhash
         }
         visibilityLevel
         isUnlisted
