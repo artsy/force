@@ -1,6 +1,7 @@
 import loadable from "@loadable/component"
 import { updateContext } from "Server/context"
 import type { RouteProps } from "System/Router/Route"
+import { checkForCanonicalSlugRedirect } from "System/Router/Utils/canonicalSlugRedirect"
 import { getENV } from "Utils/getENV"
 import { graphql } from "react-relay"
 
@@ -28,12 +29,22 @@ export const artworkRoutes: RouteProps[] = [
         loadSidebar,
       }
     },
-    render: ({ Component, props }) => {
+    render: ({ Component, props, match }) => {
       if (!(Component && props)) {
         return undefined
       }
 
-      const requestError = (props as any).artworkResult?.requestError
+      const artworkResult = (props as any).artworkResult
+
+      // Redirect to canonical slug if URL param doesn't match
+      checkForCanonicalSlugRedirect({
+        entity: artworkResult as any,
+        paramValue: match.params.artworkID,
+        basePath: "/artwork",
+        match,
+      })
+
+      const requestError = artworkResult?.requestError
       const requestErrorStatusCode = requestError?.statusCode
 
       if (requestErrorStatusCode) {
@@ -49,6 +60,10 @@ export const artworkRoutes: RouteProps[] = [
       ) {
         artworkResult(id: $artworkID) {
           ...ArtworkApp_artworkResult @arguments(loadSidebar: $loadSidebar)
+
+          ... on Artwork {
+            slug
+          }
 
           ... on ArtworkError {
             requestError {

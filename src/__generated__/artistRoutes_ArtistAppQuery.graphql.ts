@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c5df6c6d085bceda8b70513776a9106d>>
+ * @generated SignedSource<<a31314ebfcc9ff7f3e8e32a36642d6a4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,6 +15,7 @@ export type artistRoutes_ArtistAppQuery$variables = {
 };
 export type artistRoutes_ArtistAppQuery$data = {
   readonly artist: {
+    readonly slug: string;
     readonly " $fragmentSpreads": FragmentRefs<"ArtistApp_artist" | "ArtistCombinedRoute_artist">;
   } | null | undefined;
 };
@@ -42,59 +43,66 @@ v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "name",
+  "name": "slug",
   "storageKey": null
 },
 v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "href",
+  "name": "name",
   "storageKey": null
 },
 v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "href",
+  "storageKey": null
+},
+v5 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "title",
   "storageKey": null
 },
-v5 = [
+v6 = [
   {
     "kind": "Literal",
     "name": "version",
     "value": "large"
   }
 ],
-v6 = {
+v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v7 = {
+v8 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "text",
   "storageKey": null
 },
-v8 = {
+v9 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "internalID",
   "storageKey": null
 },
-v9 = [
+v10 = [
   {
     "kind": "Literal",
     "name": "format",
     "value": "HTML"
   }
 ],
-v10 = [
+v11 = [
   {
     "alias": null,
     "args": null,
@@ -118,6 +126,7 @@ return {
         "name": "artist",
         "plural": false,
         "selections": [
+          (v2/*: any*/),
           {
             "args": null,
             "kind": "FragmentSpread",
@@ -149,14 +158,8 @@ return {
         "name": "artist",
         "plural": false,
         "selections": [
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "slug",
-            "storageKey": null
-          },
           (v2/*: any*/),
+          (v3/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -185,7 +188,7 @@ return {
             "name": "nationality",
             "storageKey": null
           },
-          (v3/*: any*/),
+          (v4/*: any*/),
           {
             "alias": null,
             "args": [
@@ -200,7 +203,7 @@ return {
             "name": "meta",
             "plural": false,
             "selections": [
-              (v4/*: any*/),
+              (v5/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -229,14 +232,14 @@ return {
                 "selections": [
                   {
                     "alias": null,
-                    "args": (v5/*: any*/),
+                    "args": (v6/*: any*/),
                     "kind": "ScalarField",
                     "name": "url",
                     "storageKey": "url(version:\"large\")"
                   },
                   {
                     "alias": "large",
-                    "args": (v5/*: any*/),
+                    "args": (v6/*: any*/),
                     "kind": "ScalarField",
                     "name": "url",
                     "storageKey": "url(version:\"large\")"
@@ -274,8 +277,8 @@ return {
                 ],
                 "storageKey": null
               },
-              (v6/*: any*/),
-              (v4/*: any*/),
+              (v7/*: any*/),
+              (v5/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -283,7 +286,7 @@ return {
                 "name": "imageTitle",
                 "storageKey": null
               },
-              (v3/*: any*/)
+              (v4/*: any*/)
             ],
             "storageKey": null
           },
@@ -317,12 +320,12 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      (v3/*: any*/),
-                      (v6/*: any*/)
+                      (v4/*: any*/),
+                      (v7/*: any*/)
                     ],
                     "storageKey": null
                   },
-                  (v6/*: any*/)
+                  (v7/*: any*/)
                 ],
                 "storageKey": null
               }
@@ -350,11 +353,11 @@ return {
             "name": "biographyBlurb",
             "plural": false,
             "selections": [
-              (v7/*: any*/)
+              (v8/*: any*/)
             ],
             "storageKey": "biographyBlurb(format:\"PLAIN\")"
           },
-          (v8/*: any*/),
+          (v9/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -382,13 +385,13 @@ return {
           },
           {
             "alias": null,
-            "args": (v9/*: any*/),
+            "args": (v10/*: any*/),
             "concreteType": "ArtistBlurb",
             "kind": "LinkedField",
             "name": "biographyBlurb",
             "plural": false,
             "selections": [
-              (v7/*: any*/),
+              (v8/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -430,7 +433,7 @@ return {
               },
               {
                 "alias": null,
-                "args": (v9/*: any*/),
+                "args": (v10/*: any*/),
                 "kind": "ScalarField",
                 "name": "description",
                 "storageKey": "description(format:\"HTML\")"
@@ -454,9 +457,9 @@ return {
                 "name": "partner",
                 "plural": false,
                 "selections": [
-                  (v8/*: any*/),
-                  (v2/*: any*/),
+                  (v9/*: any*/),
                   (v3/*: any*/),
+                  (v4/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -491,7 +494,7 @@ return {
                             "kind": "LinkedField",
                             "name": "cropped",
                             "plural": false,
-                            "selections": (v10/*: any*/),
+                            "selections": (v11/*: any*/),
                             "storageKey": "cropped(height:30,width:30)"
                           },
                           {
@@ -512,41 +515,41 @@ return {
                             "kind": "LinkedField",
                             "name": "cropped",
                             "plural": false,
-                            "selections": (v10/*: any*/),
+                            "selections": (v11/*: any*/),
                             "storageKey": "cropped(height:60,width:60)"
                           }
                         ],
                         "storageKey": null
                       },
-                      (v6/*: any*/)
+                      (v7/*: any*/)
                     ],
                     "storageKey": null
                   },
-                  (v6/*: any*/)
+                  (v7/*: any*/)
                 ],
                 "storageKey": null
               },
-              (v6/*: any*/)
+              (v7/*: any*/)
             ],
             "storageKey": null
           },
-          (v6/*: any*/)
+          (v7/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "1dd95a78ee974e8743fdbe0ba184f44e",
+    "cacheID": "2d0394c74f0e36dd1827338c4c588c5d",
     "id": null,
     "metadata": {},
     "name": "artistRoutes_ArtistAppQuery",
     "operationKind": "query",
-    "text": "query artistRoutes_ArtistAppQuery(\n  $artistID: String!\n) @cacheable {\n  artist(id: $artistID) @principalField {\n    ...ArtistApp_artist\n    ...ArtistCombinedRoute_artist\n    id\n  }\n}\n\nfragment ArtistApp_artist on Artist {\n  ...ArtistMeta_artist\n  ...ArtistHeader_artist\n  internalID\n  slug\n  name\n}\n\nfragment ArtistCareerHighlight_insight on ArtistInsight {\n  kind\n  label\n  entities\n  description(format: HTML)\n}\n\nfragment ArtistCombinedRoute_artist on Artist {\n  internalID\n}\n\nfragment ArtistHeader_artist on Artist {\n  internalID\n  slug\n  name\n  formattedNationalityAndBirthday\n  counts {\n    follows\n  }\n  biographyBlurb(format: HTML) {\n    text\n    credit\n  }\n  insights {\n    kind\n    ...ArtistCareerHighlight_insight\n  }\n  verifiedRepresentatives {\n    partner {\n      internalID\n      name\n      href\n      profile {\n        icon {\n          src1x: cropped(width: 30, height: 30) {\n            src\n          }\n          src2x: cropped(width: 60, height: 60) {\n            src\n          }\n        }\n        id\n      }\n      id\n    }\n    id\n  }\n  coverArtwork {\n    title\n    imageTitle\n    href\n    image {\n      src: url(version: [\"larger\", \"larger\"])\n      width\n      height\n    }\n    id\n  }\n}\n\nfragment ArtistMeta_artist on Artist {\n  ...ArtistStructuredData_artist\n  name\n  nationality\n  birthday\n  deathday\n  alternateNames\n  biographyBlurbPlain: biographyBlurb(format: PLAIN) {\n    text\n  }\n  coverArtwork {\n    image {\n      large: url(version: \"large\")\n    }\n    id\n  }\n}\n\nfragment ArtistStructuredData_artist on Artist {\n  slug\n  name\n  birthday\n  deathday\n  gender\n  nationality\n  href\n  meta(page: ABOUT) {\n    title\n    description\n  }\n  coverArtwork {\n    image {\n      url(version: \"large\")\n    }\n    id\n  }\n  partnersConnection(first: 10) {\n    edges {\n      node {\n        href\n        id\n      }\n      id\n    }\n  }\n}\n"
+    "text": "query artistRoutes_ArtistAppQuery(\n  $artistID: String!\n) @cacheable {\n  artist(id: $artistID) @principalField {\n    slug\n    ...ArtistApp_artist\n    ...ArtistCombinedRoute_artist\n    id\n  }\n}\n\nfragment ArtistApp_artist on Artist {\n  ...ArtistMeta_artist\n  ...ArtistHeader_artist\n  internalID\n  slug\n  name\n}\n\nfragment ArtistCareerHighlight_insight on ArtistInsight {\n  kind\n  label\n  entities\n  description(format: HTML)\n}\n\nfragment ArtistCombinedRoute_artist on Artist {\n  internalID\n}\n\nfragment ArtistHeader_artist on Artist {\n  internalID\n  slug\n  name\n  formattedNationalityAndBirthday\n  counts {\n    follows\n  }\n  biographyBlurb(format: HTML) {\n    text\n    credit\n  }\n  insights {\n    kind\n    ...ArtistCareerHighlight_insight\n  }\n  verifiedRepresentatives {\n    partner {\n      internalID\n      name\n      href\n      profile {\n        icon {\n          src1x: cropped(width: 30, height: 30) {\n            src\n          }\n          src2x: cropped(width: 60, height: 60) {\n            src\n          }\n        }\n        id\n      }\n      id\n    }\n    id\n  }\n  coverArtwork {\n    title\n    imageTitle\n    href\n    image {\n      src: url(version: [\"larger\", \"larger\"])\n      width\n      height\n    }\n    id\n  }\n}\n\nfragment ArtistMeta_artist on Artist {\n  ...ArtistStructuredData_artist\n  name\n  nationality\n  birthday\n  deathday\n  alternateNames\n  biographyBlurbPlain: biographyBlurb(format: PLAIN) {\n    text\n  }\n  coverArtwork {\n    image {\n      large: url(version: \"large\")\n    }\n    id\n  }\n}\n\nfragment ArtistStructuredData_artist on Artist {\n  slug\n  name\n  birthday\n  deathday\n  gender\n  nationality\n  href\n  meta(page: ABOUT) {\n    title\n    description\n  }\n  coverArtwork {\n    image {\n      url(version: \"large\")\n    }\n    id\n  }\n  partnersConnection(first: 10) {\n    edges {\n      node {\n        href\n        id\n      }\n      id\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "7d2ef1cfda9c3d9dccb442afad4ed58b";
+(node as any).hash = "bfee92ede28c9b96821879852dac8387";
 
 export default node;

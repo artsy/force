@@ -1,5 +1,6 @@
 import loadable from "@loadable/component"
 import type { RouteProps } from "System/Router/Route"
+import { checkForCanonicalSlugRedirect } from "System/Router/Utils/canonicalSlugRedirect"
 import { RedirectException } from "found"
 import { graphql } from "react-relay"
 
@@ -74,6 +75,7 @@ export const partnerRoutes: RouteProps[] = [
     query: graphql`
       query partnerRoutes_PartnerQuery($partnerId: String!) @cacheable {
         partner(id: $partnerId) @principalField {
+          slug
           partnerType
           displayFullPartnerPage
           ...PartnerApp_partner
@@ -90,6 +92,13 @@ export const partnerRoutes: RouteProps[] = [
       if (!partner) {
         return undefined
       }
+
+      checkForCanonicalSlugRedirect({
+        entity: partner,
+        paramValue: match.params.partnerId,
+        basePath: "/partner",
+        match,
+      })
 
       const overviewPath = `/partner/${match.params.partnerId}`
 

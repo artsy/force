@@ -1,7 +1,14 @@
 import loadable from "@loadable/component"
 import type { RouteProps } from "System/Router/Route"
+import { canonicalSlugRedirect } from "System/Router/Utils/canonicalSlugRedirect"
 import { RedirectException } from "found"
 import { graphql } from "react-relay"
+
+const fairWithCanonicalSlugRedirect = canonicalSlugRedirect({
+  entityName: "fair",
+  paramName: "slug",
+  basePath: "/fair",
+})
 
 const FairApp = loadable(
   () => import(/* webpackChunkName: "fairBundle" */ "./FairApp"),
@@ -48,9 +55,11 @@ export const fairRoutes: RouteProps[] = [
     onPreloadJS: () => {
       FairApp.preload()
     },
+    render: fairWithCanonicalSlugRedirect,
     query: graphql`
       query fairRoutes_FairQuery($slug: String!) @cacheable {
         fair(id: $slug) @principalField {
+          slug
           ...FairApp_fair
         }
       }
@@ -108,9 +117,11 @@ export const fairRoutes: RouteProps[] = [
     onPreloadJS: () => {
       FairSubApp.preload()
     },
+    render: fairWithCanonicalSlugRedirect,
     query: graphql`
       query fairRoutes_FairSubAppQuery($slug: String!) @cacheable {
         fair(id: $slug) @principalField {
+          slug
           ...FairSubApp_fair
         }
       }
