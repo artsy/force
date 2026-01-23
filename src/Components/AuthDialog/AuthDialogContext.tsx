@@ -63,9 +63,8 @@ export type AuthDialogOptions = {
   image?: {
     url?: string | null
     aspectRatio?: number | null
+    blurhash?: string | null
   } | null
-  /** Blurhash for the image */
-  blurhash?: string | null
   /** Applies to SignUp or Login, not ForgotPassword */
   afterAuthAction?: AfterAuthAction
   /** Applies to SignUp or Login, not ForgotPassword */

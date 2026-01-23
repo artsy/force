@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<de6d035a7a820e3a6f26665fabe3a957>>
+ * @generated SignedSource<<d75bf0bc9d98a32995deecf5194f6f19>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -144,6 +144,13 @@ return {
                 "kind": "ScalarField",
                 "name": "aspectRatio",
                 "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "blurhash",
+                "storageKey": null
               }
             ],
             "storageKey": null
@@ -183,7 +190,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "19e61e784eca71c80b49c5884254cbf9",
+    "cacheID": "ec33bbb496f83a5f4c970420bd8ffcae",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -224,6 +231,7 @@ return {
           "plural": false,
           "type": "Float"
         },
+        "artwork.image.blurhash": (v2/*: any*/),
         "artwork.image.url": (v2/*: any*/),
         "artwork.internalID": (v1/*: any*/),
         "artwork.isSavedToAnyList": {
@@ -238,7 +246,7 @@ return {
     },
     "name": "DeprecatedSaveButtonJestQuery",
     "operationKind": "query",
-    "text": "query DeprecatedSaveButtonJestQuery {\n  artwork(id: \"example-artwork-id\") {\n    ...DeprecatedSaveButton_artwork\n    id\n  }\n}\n\nfragment DeprecatedSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSavedToAnyList\n  title\n  image {\n    url(version: \"main\")\n    aspectRatio\n  }\n  collectorSignals {\n    auction {\n      lotWatcherCount\n    }\n  }\n}\n"
+    "text": "query DeprecatedSaveButtonJestQuery {\n  artwork(id: \"example-artwork-id\") {\n    ...DeprecatedSaveButton_artwork\n    id\n  }\n}\n\nfragment DeprecatedSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSavedToAnyList\n  title\n  image {\n    url(version: \"main\")\n    aspectRatio\n    blurhash\n  }\n  collectorSignals {\n    auction {\n      lotWatcherCount\n    }\n  }\n}\n"
   }
 };
 })();

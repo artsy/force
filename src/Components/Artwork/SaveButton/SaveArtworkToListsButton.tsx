@@ -33,7 +33,6 @@ const SaveArtworkToListsButton: FC<
       artistNames: artwork.artistNames,
       imageURL: artwork.preview?.url ?? null,
       image: artwork.image,
-      blurhash: artwork.image?.blurhash ?? null,
       isInAuction: !!artwork.isInAuction,
       isSavedToAnyList: artwork.isSavedToAnyList,
       collectorSignals: {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d5feec42a4802fe0acf34f4143bafd30>>
+ * @generated SignedSource<<62bde28e1ac13fc9a8c438b70b690264>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -141,6 +141,13 @@ return {
                 "kind": "ScalarField",
                 "name": "aspectRatio",
                 "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "blurhash",
+                "storageKey": null
               }
             ],
             "storageKey": null
@@ -180,12 +187,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "6484103e089f0b91e4f162703121d2f3",
+    "cacheID": "b7243047058dd7ff909086b161f1a506",
     "id": null,
     "metadata": {},
     "name": "DeprecatedSaveButtonQuery",
     "operationKind": "query",
-    "text": "query DeprecatedSaveButtonQuery(\n  $id: String!\n) {\n  artwork(id: $id) {\n    ...DeprecatedSaveButton_artwork\n    id\n  }\n}\n\nfragment DeprecatedSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSavedToAnyList\n  title\n  image {\n    url(version: \"main\")\n    aspectRatio\n  }\n  collectorSignals {\n    auction {\n      lotWatcherCount\n    }\n  }\n}\n"
+    "text": "query DeprecatedSaveButtonQuery(\n  $id: String!\n) {\n  artwork(id: $id) {\n    ...DeprecatedSaveButton_artwork\n    id\n  }\n}\n\nfragment DeprecatedSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSavedToAnyList\n  title\n  image {\n    url(version: \"main\")\n    aspectRatio\n    blurhash\n  }\n  collectorSignals {\n    auction {\n      lotWatcherCount\n    }\n  }\n}\n"
   }
 };
 })();

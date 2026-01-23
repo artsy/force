@@ -68,9 +68,9 @@ export const AuthDialogLeftPanel: FC<React.PropsWithChildren> = () => {
         overflow="hidden"
       >
         {isImageLoading &&
-          (options.blurhash ? (
+          (options.image?.blurhash ? (
             <Blurhash
-              hash={options.blurhash}
+              hash={options.image.blurhash}
               width="100%"
               height="100%"
               resolutionX={32}

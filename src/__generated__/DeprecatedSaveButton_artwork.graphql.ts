@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<00a691750a124ce033fdc36445bdceff>>
+ * @generated SignedSource<<43e073ae927219e9d40a01a841a0d930>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,6 +19,7 @@ export type DeprecatedSaveButton_artwork$data = {
   readonly id: string;
   readonly image: {
     readonly aspectRatio: number;
+    readonly blurhash: string | null | undefined;
     readonly url: string | null | undefined;
   } | null | undefined;
   readonly internalID: string;
@@ -100,6 +101,13 @@ const node: ReaderFragment = {
           "kind": "ScalarField",
           "name": "aspectRatio",
           "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "blurhash",
+          "storageKey": null
         }
       ],
       "storageKey": null
@@ -138,6 +146,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "98330c8a5639c5388fbd6d21ceaa8d68";
+(node as any).hash = "95cc143344d677b3c77d8f8dcfc27efd";
 
 export default node;

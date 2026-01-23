@@ -38,7 +38,9 @@ export const DeprecatedSaveButton: React.FC<
       id: artwork.id,
     },
     contextModule,
-    image: artwork.image,
+    image: artwork.image
+      ? { ...artwork.image, blurhash: artwork.image.blurhash ?? undefined }
+      : artwork.image,
     onSave: ({ action, artwork }) => {
       tracking.trackEvent({
         action,
@@ -123,6 +125,7 @@ export const DeprecatedSaveButtonFragmentContainer = createFragmentContainer(
         image {
           url(version: "main")
           aspectRatio
+          blurhash
         }
         collectorSignals {
           auction {
