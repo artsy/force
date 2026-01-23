@@ -1,9 +1,8 @@
+import { MetaTags } from "Components/MetaTags"
 import { useRouter } from "System/Hooks/useRouter"
-import { getENV } from "Utils/getENV"
 import { getPageNumber } from "Utils/url"
 import type { FairMeta_fair$data } from "__generated__/FairMeta_fair.graphql"
 import type * as React from "react"
-import { Link, Meta, Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 
 interface FairMetaProps {
@@ -25,35 +24,13 @@ const FairMeta: React.FC<React.PropsWithChildren<FairMetaProps>> = ({
   const page = getPageNumber(match.location)
   const canonicalPath = page > 1 ? `${pathname}?page=${page}` : pathname
 
-  const href = `${getENV("APP_URL")}${canonicalPath}`
-
   return (
-    <>
-      <Title>{`${name} | Artsy`}</Title>
-      <Meta
-        name="description"
-        content={metaDescription || metaDescriptionFallback}
-      />
-
-      <Meta property="og:title" content={`${name} | Artsy`} />
-      <Meta
-        property="og:description"
-        content={metaDescription || metaDescriptionFallback}
-      />
-      <Meta property="og:url" content={href} />
-      <Meta property="og:type" content="website" />
-
-      <Meta
-        property="twitter:description"
-        content={metaDescription || metaDescriptionFallback}
-      />
-      <Meta property="twitter:card" content="summary" />
-
-      <Link rel="canonical" href={href} />
-
-      {metaImage?.src && <Meta property="og:image" content={metaImage.src} />}
-      {metaImage?.src && <Meta name="thumbnail" content={metaImage.src} />}
-    </>
+    <MetaTags
+      title={`${name} | Artsy`}
+      description={metaDescription || metaDescriptionFallback}
+      pathname={canonicalPath}
+      imageURL={metaImage?.src}
+    />
   )
 }
 
