@@ -1,6 +1,7 @@
 import {
   Box,
   Column,
+  Flex,
   FullBleed,
   GridColumns,
   Image,
@@ -41,11 +42,25 @@ export const AboutOurTeam = () => {
               </Column>
 
               <Column span={10} start={2}>
-                <GridColumns gridColumnGap={1}>
-                  {TEAM_MEMBERS.map(member => (
-                    <AboutOurTeamItem key={member.name} {...member} />
-                  ))}
-                </GridColumns>
+                <Stack gap={1}>
+                  <Flex
+                    justifyContent="center"
+                    gap={1}
+                    flexDirection={["column", "row"]}
+                  >
+                    {TEAM_MEMBERS.slice(0, 3).map(member => (
+                      <Box key={member.name} flexBasis={["100%", "25%"]}>
+                        <AboutOurTeamItem {...member} />
+                      </Box>
+                    ))}
+                  </Flex>
+
+                  <GridColumns gridColumnGap={1}>
+                    {TEAM_MEMBERS.slice(3).map(member => (
+                      <AboutOurTeamItem key={member.name} {...member} />
+                    ))}
+                  </GridColumns>
+                </Stack>
               </Column>
 
               <Column span={10} start={2} py={[4, 6]}>
@@ -77,11 +92,6 @@ const TEAM_MEMBERS = [
     name: "Dustyn Kim",
     title: "President",
     src: "https://files.artsy.net/images/about-our-team-dustyn-kim.png",
-  },
-  {
-    name: "Elisa Colombani",
-    title: "Chief HR Officer",
-    src: "https://files.artsy.net/images/about-our-team-elisa-colombani.png",
   },
   {
     name: "Angela Vinci",
