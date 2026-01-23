@@ -163,6 +163,7 @@ export const SmsSecondFactor: React.FC<
   }
 
   const show2FAWarning = isArtsyEmail(me?.email)
+  const showEmailVerificationWarning = !isEnabled && !me.isEmailConfirmed
 
   return (
     <>
@@ -181,6 +182,15 @@ export const SmsSecondFactor: React.FC<
               here in Notion
             </RouterLink>
             .
+          </Message>
+        )}
+
+        {showEmailVerificationWarning && (
+          <Message variant="warning" title="Email verification required">
+            You must verify your email address before setting up SMS 2FA.{" "}
+            <RouterLink inline to="/settings/edit-profile">
+              Verify your email
+            </RouterLink>
           </Message>
         )}
 
@@ -230,9 +240,20 @@ export const SmsSecondFactor: React.FC<
             ) : (
               <Button
                 width={["100%", "auto"]}
-                onClick={() => setShowConfirmPassword(true)}
+                onClick={() => {
+                  if (!me.isEmailConfirmed) {
+                    sendToast({
+                      variant: "error",
+                      message: "Email verification required",
+                      description:
+                        "Please verify your email before setting up SMS 2FA.",
+                    })
+                    return
+                  }
+                  setShowConfirmPassword(true)
+                }}
                 loading={isCreating}
-                disabled={isCreating}
+                disabled={isCreating || !me.isEmailConfirmed}
               >
                 Set Up
               </Button>
@@ -311,6 +332,7 @@ export const SmsSecondFactorRefetchContainer = createRefetchContainer(
       fragment SmsSecondFactor_me on Me {
         email
         hasSecondFactorEnabled
+        isEmailConfirmed
 
         smsSecondFactors: secondFactors(kinds: [sms]) {
           ... on SmsSecondFactor {

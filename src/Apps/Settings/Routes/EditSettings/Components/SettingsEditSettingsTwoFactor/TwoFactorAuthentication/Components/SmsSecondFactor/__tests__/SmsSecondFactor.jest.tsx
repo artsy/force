@@ -44,4 +44,104 @@ describe("SmsSecondFactor", () => {
       ).toBeInTheDocument()
     })
   })
+
+  describe("Email confirmation requirement", () => {
+    it("shows warning banner when email is not confirmed and SMS 2FA is not enabled", () => {
+      renderWithRelay({
+        Me: () => ({
+          email: "user@example.com",
+          isEmailConfirmed: false,
+          smsSecondFactors: [],
+        }),
+      })
+
+      expect(
+        screen.getByText("Email verification required"),
+      ).toBeInTheDocument()
+      expect(
+        screen.getByText(
+          /You must verify your email address before setting up SMS 2FA/,
+        ),
+      ).toBeInTheDocument()
+    })
+
+    it("does not show warning banner when email is confirmed", () => {
+      renderWithRelay({
+        Me: () => ({
+          email: "user@example.com",
+          isEmailConfirmed: true,
+          smsSecondFactors: [],
+        }),
+      })
+
+      expect(
+        screen.queryByText("Email verification required"),
+      ).not.toBeInTheDocument()
+    })
+
+    it("does not show warning banner when SMS 2FA is already enabled (grandfathered users)", () => {
+      renderWithRelay({
+        Me: () => ({
+          email: "user@example.com",
+          isEmailConfirmed: false,
+          smsSecondFactors: [
+            {
+              __typename: "SmsSecondFactor",
+              internalID: "123",
+              formattedPhoneNumber: "+1 (555) 555-5555",
+            },
+          ],
+        }),
+      })
+
+      expect(
+        screen.queryByText("Email verification required"),
+      ).not.toBeInTheDocument()
+    })
+
+    it("disables 'Set Up' button when email is not confirmed", () => {
+      renderWithRelay({
+        Me: () => ({
+          email: "user@example.com",
+          isEmailConfirmed: false,
+          smsSecondFactors: [],
+        }),
+      })
+
+      const setupButton = screen.getByRole("button", { name: "Set Up" })
+      expect(setupButton).toBeDisabled()
+    })
+
+    it("enables 'Set Up' button when email is confirmed", () => {
+      renderWithRelay({
+        Me: () => ({
+          email: "user@example.com",
+          isEmailConfirmed: true,
+          smsSecondFactors: [],
+        }),
+      })
+
+      const setupButton = screen.getByRole("button", { name: "Set Up" })
+      expect(setupButton).not.toBeDisabled()
+    })
+
+    it("allows grandfathered users with unconfirmed email to edit their phone number", () => {
+      renderWithRelay({
+        Me: () => ({
+          email: "user@example.com",
+          isEmailConfirmed: false,
+          smsSecondFactors: [
+            {
+              __typename: "SmsSecondFactor",
+              internalID: "123",
+              formattedPhoneNumber: "+1 (555) 555-5555",
+            },
+          ],
+        }),
+      })
+
+      const editButton = screen.getByRole("button", { name: "Edit" })
+      expect(editButton).not.toBeDisabled()
+    })
+  })
 })

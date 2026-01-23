@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<11e412adb89739f181428663996b1073>>
+ * @generated SignedSource<<883e6cb262d133b2f7b27b83acd0f95d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -29,6 +29,12 @@ var v0 = {
   "type": "String"
 },
 v1 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "Boolean"
+},
+v2 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
@@ -87,6 +93,13 @@ return {
             "args": null,
             "kind": "ScalarField",
             "name": "hasSecondFactorEnabled",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "isEmailConfirmed",
             "storageKey": null
           },
           {
@@ -149,7 +162,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "6806993c93488fb084c153a5cd6a3323",
+    "cacheID": "144e2e382ace1a3e4e61907133051e01",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -160,13 +173,9 @@ return {
           "type": "Me"
         },
         "me.email": (v0/*: any*/),
-        "me.hasSecondFactorEnabled": {
-          "enumValues": null,
-          "nullable": false,
-          "plural": false,
-          "type": "Boolean"
-        },
-        "me.id": (v1/*: any*/),
+        "me.hasSecondFactorEnabled": (v1/*: any*/),
+        "me.id": (v2/*: any*/),
+        "me.isEmailConfirmed": (v1/*: any*/),
         "me.smsSecondFactors": {
           "enumValues": null,
           "nullable": true,
@@ -180,12 +189,12 @@ return {
           "type": "String"
         },
         "me.smsSecondFactors.formattedPhoneNumber": (v0/*: any*/),
-        "me.smsSecondFactors.internalID": (v1/*: any*/)
+        "me.smsSecondFactors.internalID": (v2/*: any*/)
       }
     },
     "name": "SmsSecondFactor_Test_Query",
     "operationKind": "query",
-    "text": "query SmsSecondFactor_Test_Query {\n  me {\n    ...SmsSecondFactor_me\n    id\n  }\n}\n\nfragment SmsSecondFactor_me on Me {\n  email\n  hasSecondFactorEnabled\n  smsSecondFactors: secondFactors(kinds: [sms]) {\n    __typename\n    ... on SmsSecondFactor {\n      __typename\n      internalID\n      formattedPhoneNumber\n    }\n  }\n}\n"
+    "text": "query SmsSecondFactor_Test_Query {\n  me {\n    ...SmsSecondFactor_me\n    id\n  }\n}\n\nfragment SmsSecondFactor_me on Me {\n  email\n  hasSecondFactorEnabled\n  isEmailConfirmed\n  smsSecondFactors: secondFactors(kinds: [sms]) {\n    __typename\n    ... on SmsSecondFactor {\n      __typename\n      internalID\n      formattedPhoneNumber\n    }\n  }\n}\n"
   }
 };
 })();

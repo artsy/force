@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d666d0279e59b4ad7997b7108bc509ad>>
+ * @generated SignedSource<<0bc91b0750e0065d79aacdc401c315c7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -59,6 +59,12 @@ v5 = {
   "nullable": true,
   "plural": false,
   "type": "String"
+},
+v6 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "Boolean"
 };
 return {
   "fragment": {
@@ -151,6 +157,13 @@ return {
             "storageKey": null
           },
           {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "isEmailConfirmed",
+            "storageKey": null
+          },
+          {
             "alias": "smsSecondFactors",
             "args": [
               {
@@ -218,7 +231,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "fd1e23c00e12848477c2f2b296a7a275",
+    "cacheID": "6e7792ff19b546c724e0e97d71e98597",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -235,13 +248,9 @@ return {
         "me.backupSecondFactors": (v2/*: any*/),
         "me.backupSecondFactors.__typename": (v3/*: any*/),
         "me.email": (v5/*: any*/),
-        "me.hasSecondFactorEnabled": {
-          "enumValues": null,
-          "nullable": false,
-          "plural": false,
-          "type": "Boolean"
-        },
+        "me.hasSecondFactorEnabled": (v6/*: any*/),
         "me.id": (v4/*: any*/),
+        "me.isEmailConfirmed": (v6/*: any*/),
         "me.smsSecondFactors": (v2/*: any*/),
         "me.smsSecondFactors.__typename": (v3/*: any*/),
         "me.smsSecondFactors.formattedPhoneNumber": (v5/*: any*/),
@@ -250,7 +259,7 @@ return {
     },
     "name": "SettingsEditSettingsTwoFactor_Test_Query",
     "operationKind": "query",
-    "text": "query SettingsEditSettingsTwoFactor_Test_Query {\n  me {\n    ...SettingsEditSettingsTwoFactor_me\n    id\n  }\n}\n\nfragment AppSecondFactor_me on Me {\n  hasSecondFactorEnabled\n  appSecondFactors: secondFactors(kinds: [app]) {\n    __typename\n    ... on AppSecondFactor {\n      __typename\n      internalID\n      name\n    }\n  }\n}\n\nfragment SettingsEditSettingsTwoFactorBackupCodes_me on Me {\n  backupSecondFactors: secondFactors(kinds: [backup]) {\n    __typename\n    ... on BackupSecondFactor {\n      __typename\n    }\n  }\n}\n\nfragment SettingsEditSettingsTwoFactor_me on Me {\n  hasSecondFactorEnabled\n  ...AppSecondFactor_me\n  ...SmsSecondFactor_me\n  ...SettingsEditSettingsTwoFactorBackupCodes_me\n}\n\nfragment SmsSecondFactor_me on Me {\n  email\n  hasSecondFactorEnabled\n  smsSecondFactors: secondFactors(kinds: [sms]) {\n    __typename\n    ... on SmsSecondFactor {\n      __typename\n      internalID\n      formattedPhoneNumber\n    }\n  }\n}\n"
+    "text": "query SettingsEditSettingsTwoFactor_Test_Query {\n  me {\n    ...SettingsEditSettingsTwoFactor_me\n    id\n  }\n}\n\nfragment AppSecondFactor_me on Me {\n  hasSecondFactorEnabled\n  appSecondFactors: secondFactors(kinds: [app]) {\n    __typename\n    ... on AppSecondFactor {\n      __typename\n      internalID\n      name\n    }\n  }\n}\n\nfragment SettingsEditSettingsTwoFactorBackupCodes_me on Me {\n  backupSecondFactors: secondFactors(kinds: [backup]) {\n    __typename\n    ... on BackupSecondFactor {\n      __typename\n    }\n  }\n}\n\nfragment SettingsEditSettingsTwoFactor_me on Me {\n  hasSecondFactorEnabled\n  ...AppSecondFactor_me\n  ...SmsSecondFactor_me\n  ...SettingsEditSettingsTwoFactorBackupCodes_me\n}\n\nfragment SmsSecondFactor_me on Me {\n  email\n  hasSecondFactorEnabled\n  isEmailConfirmed\n  smsSecondFactors: secondFactors(kinds: [sms]) {\n    __typename\n    ... on SmsSecondFactor {\n      __typename\n      internalID\n      formattedPhoneNumber\n    }\n  }\n}\n"
   }
 };
 })();

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f47980a156845d1cb1eed0d115f548b4>>
+ * @generated SignedSource<<3c05a9df0a4712c192269c885427b00e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -77,6 +77,13 @@ const node: ConcreteRequest = {
             "storageKey": null
           },
           {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "isEmailConfirmed",
+            "storageKey": null
+          },
+          {
             "alias": "smsSecondFactors",
             "args": [
               {
@@ -136,12 +143,12 @@ const node: ConcreteRequest = {
     ]
   },
   "params": {
-    "cacheID": "9550b3c56002c636c161cfadb608925a",
+    "cacheID": "970adfad5a6c45e0201a1b32365704eb",
     "id": null,
     "metadata": {},
     "name": "SmsSecondFactorRefetchQuery",
     "operationKind": "query",
-    "text": "query SmsSecondFactorRefetchQuery {\n  me {\n    ...SmsSecondFactor_me\n    id\n  }\n}\n\nfragment SmsSecondFactor_me on Me {\n  email\n  hasSecondFactorEnabled\n  smsSecondFactors: secondFactors(kinds: [sms]) {\n    __typename\n    ... on SmsSecondFactor {\n      __typename\n      internalID\n      formattedPhoneNumber\n    }\n  }\n}\n"
+    "text": "query SmsSecondFactorRefetchQuery {\n  me {\n    ...SmsSecondFactor_me\n    id\n  }\n}\n\nfragment SmsSecondFactor_me on Me {\n  email\n  hasSecondFactorEnabled\n  isEmailConfirmed\n  smsSecondFactors: secondFactors(kinds: [sms]) {\n    __typename\n    ... on SmsSecondFactor {\n      __typename\n      internalID\n      formattedPhoneNumber\n    }\n  }\n}\n"
   }
 };
 
