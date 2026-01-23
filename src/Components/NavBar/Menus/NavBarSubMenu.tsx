@@ -1,6 +1,6 @@
 import type { ClickedNavigationDropdownItem } from "@artsy/cohesion"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { Box, Column, GridColumns, Spacer, Text } from "@artsy/palette"
+import { Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import type { MenuData } from "Components/NavBar/menuData"
@@ -9,7 +9,7 @@ import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import type * as React from "react"
 import { useTracking } from "react-tracking"
 import { NavBarMenuItemLink } from "./NavBarMenuItem"
-import { NavBarMenuItemFeaturedLinkQueryRenderer } from "./NavBarMenuItemFeaturedLink"
+import { NavBarMenuItemFeaturedLinkWithColumn } from "./NavBarMenuItemFeaturedLink"
 
 interface NavBarSubMenuProps {
   menu: MenuData
@@ -79,116 +79,184 @@ export const NavBarSubMenu: React.FC<
   const viewAllMenuItem =
     !("links" in lastMenuItem) && "href" in lastMenuItem ? lastMenuItem : null
 
+  // When there's NO featured link, use span=3 for normal layout
+  // When there IS a featured link, use span=3 for nav columns within the nested grid
+  const columnSpan = 3
+
   return (
     <Text width="100vw" variant={["xs", "xs", "sm"]} onClick={onClick}>
       <AppContainer>
         <HorizontalPadding>
-          <GridColumns py={6} gridColumnGap={0}>
-            {menu.links.map(subMenu => {
-              if ("menu" in subMenu) {
-                return (
-                  <Column key={subMenu.text} span={2}>
-                    <Text variant="xs" px={2} color="mono60">
-                      {subMenu.text}
-                    </Text>
-
-                    <Spacer y={1} />
-
-                    {subMenu.menu &&
-                      subMenu.menu.links.map(menuItem => {
+          <GridColumns py={6} gridColumnGap={0} gridAutoRows="1fr">
+            {featuredLinkItem ? (
+              <>
+                {/* Left outer column: contains nav columns and bottom elements */}
+                <Column span={8}>
+                  <GridColumns gridColumnGap={0}>
+                    {menu.links.map(subMenu => {
+                      if ("menu" in subMenu) {
                         return (
-                          !("menu" in menuItem) &&
-                          "href" in menuItem && (
+                          <Column key={subMenu.text} span={columnSpan}>
+                            <Text variant="xs" px={2} color="mono60">
+                              {subMenu.text}
+                            </Text>
+
+                            <Spacer y={1} />
+
+                            {subMenu.menu &&
+                              subMenu.menu.links.map(menuItem => {
+                                return (
+                                  !("menu" in menuItem) &&
+                                  "href" in menuItem && (
+                                    <NavBarMenuItemLink
+                                      key={menuItem.text}
+                                      to={menuItem.href}
+                                      onClick={handleClick}
+                                    >
+                                      {menuItem.text}
+                                    </NavBarMenuItemLink>
+                                  )
+                                )
+                              })}
+                          </Column>
+                        )
+                      }
+                      return null
+                    })}
+
+                    {isArtistsDropdown ? (
+                      <>
+                        {viewAllMenuItem && (
+                          <Column span={3}>
                             <NavBarMenuItemLink
-                              key={menuItem.text}
-                              to={menuItem.href}
+                              to={viewAllMenuItem.href}
                               onClick={handleClick}
                             >
-                              {menuItem.text}
+                              {viewAllMenuItem.text}
                             </NavBarMenuItemLink>
-                          )
-                        )
-                      })}
-                  </Column>
-                )
-              }
-              return null
-            })}
+                          </Column>
+                        )}
+                        <Column span={8}>
+                          <Text variant="xs" py={1} px={2} color="mono60">
+                            Browse by name
+                          </Text>
 
-            {featuredLinkItem && "type" in featuredLinkItem && (
-              <Column span={4} px={2}>
-                <NavBarMenuItemFeaturedLinkQueryRenderer
-                  setKey={featuredLinkItem.setKey}
-                  headerText={featuredLinkItem.headerText}
-                  contextModule={contextModule}
-                  parentNavigationItem={parentNavigationItem}
-                />
-              </Column>
-            )}
-
-            <>
-              <Column
-                span={2}
-                display="flex"
-                flexDirection="column"
-                justifyContent="space-between"
-              >
-                <Box>
-                  {menu.links.map((menuItem, i) => {
-                    if (!("menu" in menuItem) && "href" in menuItem) {
-                      const isLast = lastMenuLinkIndex === i
-
-                      return (
-                        !isLast && (
+                          <Text variant="sm" mx={1}>
+                            {LETTERS.map(letter => {
+                              return (
+                                <RouterLink
+                                  key={letter}
+                                  to={`/artists/artists-starting-with-${letter.toLowerCase()}`}
+                                  title={`View artists starting with "${letter}"`}
+                                  display="inline-block"
+                                  textDecoration="none"
+                                  p={1}
+                                  onClick={handleClick}
+                                >
+                                  {letter}
+                                </RouterLink>
+                              )
+                            })}
+                          </Text>
+                        </Column>
+                      </>
+                    ) : (
+                      viewAllMenuItem && (
+                        <Column span={9}>
                           <NavBarMenuItemLink
-                            key={menuItem.text}
-                            to={menuItem.href}
+                            to={viewAllMenuItem.href}
                             onClick={handleClick}
                           >
-                            {menuItem.text}
+                            {viewAllMenuItem.text}
                           </NavBarMenuItemLink>
-                        )
+                        </Column>
                       )
-                    }
-                  })}
-                </Box>
+                    )}
+                  </GridColumns>
+                </Column>
+
+                {/* Right outer column: visual component */}
+                {"type" in featuredLinkItem && (
+                  <NavBarMenuItemFeaturedLinkWithColumn
+                    setKey={featuredLinkItem.setKey}
+                    headerText={featuredLinkItem.headerText}
+                    contextModule={contextModule}
+                    parentNavigationItem={parentNavigationItem}
+                  />
+                )}
+              </>
+            ) : (
+              <>
+                {/* Normal layout without featured link */}
+                {menu.links.map(subMenu => {
+                  if ("menu" in subMenu) {
+                    return (
+                      <Column key={subMenu.text} span={columnSpan}>
+                        <Text variant="xs" px={2} color="mono60">
+                          {subMenu.text}
+                        </Text>
+
+                        <Spacer y={1} />
+
+                        {subMenu.menu &&
+                          subMenu.menu.links.map(menuItem => {
+                            return (
+                              !("menu" in menuItem) &&
+                              "href" in menuItem && (
+                                <NavBarMenuItemLink
+                                  key={menuItem.text}
+                                  to={menuItem.href}
+                                  onClick={handleClick}
+                                >
+                                  {menuItem.text}
+                                </NavBarMenuItemLink>
+                              )
+                            )
+                          })}
+                      </Column>
+                    )
+                  }
+                  return null
+                })}
 
                 {viewAllMenuItem && (
-                  <NavBarMenuItemLink
-                    to={viewAllMenuItem.href}
-                    onClick={handleClick}
-                  >
-                    {viewAllMenuItem.text}
-                  </NavBarMenuItemLink>
+                  <Column span={columnSpan}>
+                    <NavBarMenuItemLink
+                      to={viewAllMenuItem.href}
+                      onClick={handleClick}
+                    >
+                      {viewAllMenuItem.text}
+                    </NavBarMenuItemLink>
+                  </Column>
                 )}
-              </Column>
 
-              {isArtistsDropdown && (
-                <Column span={9}>
-                  <Text variant="xs" py={1} px={2} color="mono60">
-                    Browse by name
-                  </Text>
+                {isArtistsDropdown && (
+                  <Column span={9}>
+                    <Text variant="xs" py={1} px={2} color="mono60">
+                      Browse by name
+                    </Text>
 
-                  <Text variant="sm" mx={1}>
-                    {LETTERS.map(letter => {
-                      return (
-                        <RouterLink
-                          key={letter}
-                          to={`/artists/artists-starting-with-${letter.toLowerCase()}`}
-                          title={`View artists starting with “${letter}”`}
-                          display="inline-block"
-                          textDecoration="none"
-                          p={1}
-                          onClick={handleClick}
-                        >
-                          {letter}
-                        </RouterLink>
-                      )
-                    })}
-                  </Text>
-                </Column>
-              )}
-            </>
+                    <Text variant="sm" mx={1}>
+                      {LETTERS.map(letter => {
+                        return (
+                          <RouterLink
+                            key={letter}
+                            to={`/artists/artists-starting-with-${letter.toLowerCase()}`}
+                            title={`View artists starting with "${letter}"`}
+                            display="inline-block"
+                            textDecoration="none"
+                            p={1}
+                            onClick={handleClick}
+                          >
+                            {letter}
+                          </RouterLink>
+                        )
+                      })}
+                    </Text>
+                  </Column>
+                )}
+              </>
+            )}
           </GridColumns>
         </HorizontalPadding>
       </AppContainer>

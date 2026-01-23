@@ -1,5 +1,5 @@
 import type { ClickedNavigationDropdownItem } from "@artsy/cohesion"
-import { Box, Flex, Image, Text } from "@artsy/palette"
+import { Box, Column, Flex, Image, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import type { NavBarMenuItemFeaturedLinkQuery } from "__generated__/NavBarMenuItemFeaturedLinkQuery.graphql"
@@ -77,6 +77,7 @@ const NavBarMenuItemFeaturedLink: FC<NavBarMenuItemFeaturedLinkInnerProps> = ({
       pl={4}
       pb={4}
       flexDirection="column"
+      maxHeight={480}
     >
       <Text variant="sm-display" mb={0.5}>
         {headerText}
@@ -84,7 +85,8 @@ const NavBarMenuItemFeaturedLink: FC<NavBarMenuItemFeaturedLinkInnerProps> = ({
 
       <RouterLink
         to={featuredLink.href ?? ""}
-        display="block"
+        display="flex"
+        flexDirection="column"
         textDecoration="none"
         onClick={() => {
           trackEvent({
@@ -102,14 +104,17 @@ const NavBarMenuItemFeaturedLink: FC<NavBarMenuItemFeaturedLinkInnerProps> = ({
           } satisfies ClickedNavigationDropdownItem)
         }}
       >
-        <Box maxHeight={400} mb={2}>
+        <Box mb={2} maxHeight={370}>
           <Image
             src={featuredLink.image.resized.src}
             srcSet={featuredLink.image.resized.srcSet}
             width="100%"
-            height="auto"
-            style={{ objectFit: "contain", objectPosition: "left" }}
-            maxHeight={400}
+            height="100%"
+            style={{
+              objectFit: "contain",
+              objectPosition: "left top",
+              maxHeight: "370px",
+            }}
             alt=""
           />
         </Box>
@@ -154,3 +159,34 @@ const query = graphql`
     }
   }
 `
+
+/**
+ * Wrapper component that includes the Column span logic.
+ * Renders a span={4} column when data exists.
+ * Renders a span={4} empty spacer when data is missing (to maintain grid layout).
+ */
+export const NavBarMenuItemFeaturedLinkWithColumn: FC<
+  NavBarMenuItemFeaturedLinkProps
+> = props => {
+  const data = useLazyLoadQuery<NavBarMenuItemFeaturedLinkQuery>(query, {
+    key: props.setKey,
+  })
+
+  const orderedSet = data.orderedSets?.[0]
+
+  // Render empty spacer column if no data to maintain grid layout
+  if (!orderedSet) {
+    return <Column span={4} />
+  }
+
+  return (
+    <Column span={4} px={2}>
+      <NavBarMenuItemFeaturedLink
+        orderedSet={orderedSet}
+        headerText={props.headerText}
+        contextModule={props.contextModule}
+        parentNavigationItem={props.parentNavigationItem}
+      />
+    </Column>
+  )
+}

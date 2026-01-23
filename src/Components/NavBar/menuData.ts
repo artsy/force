@@ -398,7 +398,7 @@ export const ARTWORKS_SUBMENU_DATA: MenuLinkData = {
       },
       {
         type: "FeaturedLink",
-        setKey: "nav-visual:artworks",
+        setKey: "nav-visiisual:artworks",
         headerText: "Get Inspired",
       },
       {
