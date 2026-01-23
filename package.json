@@ -118,7 +118,7 @@
     "easy-peasy": "^6.1.0",
     "ejs": "3.1.10",
     "eventemitter3": "4.0.7",
-    "express": "4.19.2",
+    "express": "4.22.1",
     "express-ipfilter": "0.2.6",
     "express-request-id": "1.4.0",
     "farce": "0.4.5",
