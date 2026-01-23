@@ -152,15 +152,17 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
         {isOffer ? "Offer" : "Order"} summary
       </Text>
       <Flex py={1} justifyContent="space-between" alignItems="flex-start">
-        <RouterLink flex={0} to={artworkPath} target="_blank">
-          <Image
-            mr={1}
-            src={artworkData?.image?.resized?.url}
-            alt={artworkData.title || ""}
-            // starting at small, allow a larger image
-            width={["65px", "85px"]}
-          />
-        </RouterLink>
+        {artworkData?.image?.resized?.url && (
+          <RouterLink flex={0} to={artworkPath} target="_blank">
+            <Image
+              mr={1}
+              src={artworkData?.image?.resized?.url}
+              alt={artworkData.title || ""}
+              // starting at small, allow a larger image
+              width={["65px", "85px"]}
+            />
+          </RouterLink>
+        )}
         <Box overflow="hidden" flex={1}>
           <Text overflowEllipsis variant="sm" color="mono100">
             {artworkData.artistNames}
@@ -226,7 +228,7 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
 const extractLineItemMetadata = (
   lineItem: NonNullable<Order2ReviewStep_order$data["lineItems"][number]>,
 ) => {
-  const { artworkVersion, artworkOrEditionSet } = lineItem
+  const { artworkVersion, artworkOrEditionSet, artwork } = lineItem
 
   const isArtworkOrEdition =
     artworkOrEditionSet &&
@@ -238,8 +240,14 @@ const extractLineItemMetadata = (
   const price = isArtworkOrEdition ? artworkOrEditionSet.price : undefined
   const attributionClass = artworkVersion?.attributionClass
 
+  const fallbackImage =
+    artwork?.figures?.[0]?.__typename === "Image" ? artwork?.figures?.[0] : null
+  const image = artworkVersion?.image?.url
+    ? artworkVersion?.image
+    : fallbackImage
+
   return {
-    image: artworkVersion?.image,
+    image,
     title: artworkVersion?.title,
     artistNames: artworkVersion?.artistNames,
     date: artworkVersion?.date,
@@ -286,7 +294,6 @@ const FRAGMENT = graphql`
           }
         }
       }
-
       artworkVersion {
         title
         artistNames
@@ -295,8 +302,19 @@ const FRAGMENT = graphql`
           shortDescription
         }
         image {
+          url
           resized(width: 185, height: 138) {
             url
+          }
+        }
+      }
+      artwork {
+        figures(includeAll: false) {
+          __typename
+          ... on Image {
+            resized(width: 185, height: 138) {
+              url
+            }
           }
         }
       }

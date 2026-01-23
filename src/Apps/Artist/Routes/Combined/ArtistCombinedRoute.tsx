@@ -49,6 +49,7 @@ const ArtistCombinedRoute: React.FC<
   } = useRouter()
   const section = location.pathname.split("/").pop()
   const scrolledToSection = useRef(false)
+  const scrolledToHash = useRef(false)
 
   useEffect(() => {
     if (scrolledToSection.current) return
@@ -80,14 +81,20 @@ const ArtistCombinedRoute: React.FC<
   // anchor -- as in the case of the 301 redirects we've set up --
   // we similarly scroll to the appropriate section and clean up the URL
   useEffect(() => {
+    if (scrolledToHash.current) return
+
     const scrollToSectionFromHash = async () => {
+      if (scrolledToHash.current) return
+
       if (location.hash === "#JUMP--marketSignalsTop") {
+        scrolledToHash.current = true
         await waitUntil("auction")
         jumpTo("marketSignalsTop", { offset: 40 })
         // Remove the hash from the URL
         const newPath = location.pathname + location.search
         router.replace(newPath)
       } else if (location.hash === "#JUMP--artistAboutTop") {
+        scrolledToHash.current = true
         await waitUntil("about")
         jumpTo("artistAboutTop", { offset: 40 })
         // Remove the hash from the URL

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3aeb59112e3d00235acd7e37c4bea741>>
+ * @generated SignedSource<<cd2bcbf7145b3059a817f21a232facd4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,13 +19,26 @@ export type Order2CollapsibleOrderSummary_order$data = {
     readonly display: string | null | undefined;
   } | null | undefined;
   readonly lineItems: ReadonlyArray<{
+    readonly artwork: {
+      readonly figures: ReadonlyArray<{
+        readonly __typename: "Image";
+        readonly resizedSquare: {
+          readonly url: string;
+        } | null | undefined;
+      } | {
+        // This will never be '%other', but we need some
+        // value in case none of the concrete values match.
+        readonly __typename: "%other";
+      }>;
+    } | null | undefined;
     readonly artworkVersion: {
       readonly artistNames: string | null | undefined;
       readonly date: string | null | undefined;
       readonly thumbnail: {
-        readonly resized: {
+        readonly resizedSquare: {
           readonly url: string;
         } | null | undefined;
+        readonly url: string | null | undefined;
       } | null | undefined;
       readonly title: string | null | undefined;
     } | null | undefined;
@@ -54,7 +67,39 @@ var v0 = [
     "name": "display",
     "storageKey": null
   }
-];
+],
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "url",
+  "storageKey": null
+},
+v2 = {
+  "alias": "resizedSquare",
+  "args": [
+    {
+      "kind": "Literal",
+      "name": "height",
+      "value": 200
+    },
+    {
+      "kind": "Literal",
+      "name": "version",
+      "value": [
+        "square"
+      ]
+    }
+  ],
+  "concreteType": "ResizedImageUrl",
+  "kind": "LinkedField",
+  "name": "resized",
+  "plural": false,
+  "selections": [
+    (v1/*: any*/)
+  ],
+  "storageKey": "resized(height:200,version:[\"square\"])"
+};
 return {
   "argumentDefinitions": [],
   "kind": "Fragment",
@@ -158,39 +203,53 @@ return {
               "name": "image",
               "plural": false,
               "selections": [
-                {
-                  "alias": null,
-                  "args": [
-                    {
-                      "kind": "Literal",
-                      "name": "height",
-                      "value": 200
-                    },
-                    {
-                      "kind": "Literal",
-                      "name": "version",
-                      "value": [
-                        "square"
-                      ]
-                    }
-                  ],
-                  "concreteType": "ResizedImageUrl",
-                  "kind": "LinkedField",
-                  "name": "resized",
-                  "plural": false,
-                  "selections": [
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "url",
-                      "storageKey": null
-                    }
-                  ],
-                  "storageKey": "resized(height:200,version:[\"square\"])"
-                }
+                (v1/*: any*/),
+                (v2/*: any*/)
               ],
               "storageKey": null
+            }
+          ],
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Artwork",
+          "kind": "LinkedField",
+          "name": "artwork",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": [
+                {
+                  "kind": "Literal",
+                  "name": "includeAll",
+                  "value": false
+                }
+              ],
+              "concreteType": null,
+              "kind": "LinkedField",
+              "name": "figures",
+              "plural": true,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "__typename",
+                  "storageKey": null
+                },
+                {
+                  "kind": "InlineFragment",
+                  "selections": [
+                    (v2/*: any*/)
+                  ],
+                  "type": "Image",
+                  "abstractKey": null
+                }
+              ],
+              "storageKey": "figures(includeAll:false)"
             }
           ],
           "storageKey": null
@@ -204,6 +263,6 @@ return {
 };
 })();
 
-(node as any).hash = "8546826b81b03504f395981f2730f545";
+(node as any).hash = "94c627474454218a63a66b7ee36be85a";
 
 export default node;

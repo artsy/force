@@ -26,6 +26,17 @@ export const Order2CollapsibleOrderSummary: React.FC<
     setIsExpanded(!isExpanded)
   }
 
+  // Check for url on the artworkVersion before assigning the resized url
+  const fallbackImage = orderData.lineItems[0]?.artwork?.figures?.[0]
+  const fallbackImageUrl =
+    fallbackImage?.__typename === "Image"
+      ? fallbackImage.resizedSquare?.url
+      : null
+
+  const imageUrl = artworkVersion?.thumbnail?.url
+    ? artworkVersion?.thumbnail?.resizedSquare?.url
+    : fallbackImageUrl
+
   return (
     <Box backgroundColor="mono0">
       <Clickable
@@ -36,15 +47,17 @@ export const Order2CollapsibleOrderSummary: React.FC<
         px={2}
         justifyContent="space-between"
       >
-        <RouterLink flex={0} to={artworkPath} target="_blank">
-          <Image
-            mr={1}
-            src={artworkVersion?.thumbnail?.resized?.url}
-            alt={artworkVersion?.title as string}
-            width={40}
-            height={40}
-          />
-        </RouterLink>
+        {imageUrl && (
+          <RouterLink flex={0} to={artworkPath} target="_blank">
+            <Image
+              mr={1}
+              src={imageUrl}
+              alt={artworkVersion?.title as string}
+              width={40}
+              height={40}
+            />
+          </RouterLink>
+        )}
         <Box overflow="hidden" flex={1} mr={2}>
           <Text overflowEllipsis variant="sm" color="mono100">
             {artworkVersion?.artistNames}
@@ -108,8 +121,19 @@ const FRAGMENT = graphql`
         artistNames
         date
         thumbnail: image {
-          resized(height: 200, version: ["square"]) {
+          url
+          resizedSquare: resized(height: 200, version: ["square"]) {
             url
+          }
+        }
+      }
+      artwork {
+        figures(includeAll: false) {
+          __typename
+          ... on Image {
+            resizedSquare: resized(height: 200, version: ["square"]) {
+              url
+            }
           }
         }
       }
