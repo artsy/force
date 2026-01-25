@@ -84,6 +84,12 @@ src/
 └── System/                  # Framework code
 ```
 
+## Skills
+
+If you have a matching skill for a user request, be sure to use it.
+
+The documentation below may augment your knowledge, but the skill should be your first resort.
+
 ## Further documentation
 
 - [Best Practices (Full)](docs/best_practices.md)
