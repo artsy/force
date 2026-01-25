@@ -1,5 +1,6 @@
 import loadable from "@loadable/component"
 import type { RouteProps } from "System/Router/Route"
+import { canonicalSlugRedirect } from "System/Router/Utils/canonicalSlugRedirect"
 import { RedirectException } from "found"
 import { graphql } from "react-relay"
 
@@ -44,9 +45,23 @@ export const replaceRoutes: RouteProps[] = [
       ReplaceApp.preload()
     },
 
+    /*
+     * If the content being served is slugged, it probably needs to enforce
+     * canonical slug redirects.
+     *
+     * If not, you can remove this render function, and the `slug` field in
+     * the query below.
+     */
+    render: canonicalSlugRedirect({
+      entityName: "artist",
+      paramName: "slug",
+      basePath: "/replace",
+    }),
+
     query: graphql`
       query replaceRoutes_ReplaceQuery($slug: String!) @cacheable {
         artist(id: $slug) @principalField {
+          slug # for canonical slug redirect
           ...ReplaceApp_artist
         }
       }
