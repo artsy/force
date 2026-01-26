@@ -15,6 +15,7 @@ export const userRoutes: RouteProps[] = [
   {
     path: "/user/:userID/collection/:collectionID",
     fetchPolicy: "store-and-network",
+    serverCacheTTL: 0,
     getComponent: () => UserApp,
     onPreloadJS: () => {
       UserApp.preload()
