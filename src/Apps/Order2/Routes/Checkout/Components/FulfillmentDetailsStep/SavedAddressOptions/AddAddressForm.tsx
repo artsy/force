@@ -1,5 +1,4 @@
 import { Button, Spacer, Text } from "@artsy/palette"
-import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { deliveryAddressValidationSchema } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/utils"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useScrollToFieldErrorOnSubmit } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToFieldErrorOnSubmit"
@@ -10,7 +9,7 @@ import {
   type FormikContextWithAddress,
 } from "Components/Address/AddressFormFields"
 import createLogger from "Utils/logger"
-import { Formik, useFormikContext } from "formik"
+import { Form, Formik } from "formik"
 
 const logger = createLogger("AddAddressForm")
 
@@ -21,9 +20,9 @@ interface AddAddressFormProps {
     addressID: string,
   ) => Promise<void>
 }
+
 export const AddAddressForm = ({
   onSaveAddress,
-
   initialValues,
 }: AddAddressFormProps) => {
   const createUserAddress = useOrder2CreateUserAddressMutation()
@@ -86,59 +85,55 @@ export const AddAddressForm = ({
   }
 
   return (
-    <Formik
+    <Formik<FormikContextWithAddress>
       initialValues={initialValues}
       validationSchema={deliveryAddressValidationSchema}
       onSubmit={handleSubmit}
-      validateOnBlur={false}
-      validateOnChange={false}
     >
-      <AddAddressFormFields setUserAddressMode={setUserAddressMode} />
+      {({ isSubmitting }) => {
+        return (
+          <Form noValidate>
+            <Text
+              fontWeight={["bold", "bold", "normal"]}
+              color="mono100"
+              variant={["sm-display", "sm-display", "md"]}
+            >
+              Add address
+            </Text>
+
+            <Spacer y={2} />
+
+            <AddAddressFormFields />
+
+            <Spacer y={4} />
+
+            <Button width="100%" type="submit" loading={isSubmitting}>
+              Save Address
+            </Button>
+
+            <Spacer y={1} />
+
+            <Button
+              width="100%"
+              variant="secondaryBlack"
+              type="button"
+              onClick={() => setUserAddressMode(null)}
+            >
+              Cancel
+            </Button>
+          </Form>
+        )
+      }}
     </Formik>
   )
 }
 
-interface AddAddressFormFieldsProps {
-  setUserAddressMode: (mode: any) => void
-}
-
-const AddAddressFormFields: React.FC<AddAddressFormFieldsProps> = ({
-  setUserAddressMode,
-}) => {
-  const { isSubmitting, handleSubmit } = useFormikContext()
-  const formRef = useScrollToFieldErrorOnSubmit(
-    CheckoutStepName.FULFILLMENT_DETAILS,
-  )
+const AddAddressFormFields: React.FC = () => {
+  const formRef = useScrollToFieldErrorOnSubmit()
 
   return (
     <div ref={formRef}>
-      <Text
-        fontWeight={["bold", "bold", "normal"]}
-        color="mono100"
-        variant={["sm-display", "sm-display", "md"]}
-      >
-        Add address
-      </Text>{" "}
-      <Spacer y={2} />
       <AddressFormFields withPhoneNumber withSetAsDefault />
-      <Spacer y={4} />
-      <Button
-        width="100%"
-        type="submit"
-        loading={isSubmitting}
-        onClick={() => handleSubmit()}
-      >
-        Save Address
-      </Button>
-      <Spacer y={1} />
-      <Button
-        width="100%"
-        variant="secondaryBlack"
-        type="button"
-        onClick={() => setUserAddressMode(null)}
-      >
-        Cancel
-      </Button>
     </div>
   )
 }

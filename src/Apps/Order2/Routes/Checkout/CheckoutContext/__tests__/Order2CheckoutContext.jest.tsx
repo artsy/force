@@ -132,7 +132,6 @@ describe("Order2CheckoutContext", () => {
         expect.arrayContaining([
           "isLoading",
           "expressCheckoutSubmitting",
-          "checkoutModalError",
           "expressCheckoutPaymentMethods",
           "steps",
           "activeFulfillmentDetailsTab",
@@ -155,7 +154,6 @@ describe("Order2CheckoutContext", () => {
           "setDeliveryOptionComplete",
           "editDeliveryOption",
           "editPayment",
-          "setCheckoutModalError",
           "setLoadingComplete",
           "setPaymentComplete",
           "setConfirmationToken",
@@ -173,7 +171,6 @@ describe("Order2CheckoutContext", () => {
       expect(state).toMatchObject({
         isLoading: true,
         expressCheckoutSubmitting: false,
-        checkoutModalError: null,
         expressCheckoutPaymentMethods: null,
         activeFulfillmentDetailsTab: null,
         confirmationToken: null,

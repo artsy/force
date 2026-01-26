@@ -1,14 +1,6 @@
 import { ContextModule } from "@artsy/cohesion"
-import {
-  Button,
-  Column,
-  GridColumns,
-  SelectInput,
-  Spacer,
-  Text,
-} from "@artsy/palette"
+import { Button, SelectInput, Spacer, Text } from "@artsy/palette"
 import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
-import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useScrollToFieldErrorOnSubmit } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToFieldErrorOnSubmit"
 import { useOrder2SetOrderFulfillmentOptionMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderFulfillmentOptionMutation"
@@ -21,10 +13,11 @@ import { countries as phoneCountryOptions } from "Utils/countries"
 import createLogger from "Utils/logger"
 import type { Order2PickupForm_order$key } from "__generated__/Order2PickupForm_order.graphql"
 import {
+  Form,
   Formik,
-  useFormikContext,
   type FormikHelpers,
   type FormikValues,
+  useFormikContext,
 } from "formik"
 import { useCallback, useMemo } from "react"
 import { graphql, useFragment } from "react-relay"
@@ -46,7 +39,7 @@ export const Order2PickupForm: React.FC<Order2PickupFormProps> = ({
 }) => {
   const orderData = useFragment(FRAGMENT, order)
 
-  const { setFulfillmentDetailsComplete, checkoutTracking } =
+  const { setFulfillmentDetailsComplete, checkoutTracking, setCheckoutMode } =
     useCheckoutContext()
 
   const fulfillmentOptions = orderData?.fulfillmentOptions
@@ -171,65 +164,65 @@ export const Order2PickupForm: React.FC<Order2PickupFormProps> = ({
         onSubmit={handleSubmit}
         enableReinitialize={true}
       >
-        <PickupFormContent />
+        {({ isSubmitting, isValid }) => {
+          return (
+            <Form noValidate>
+              <PickupFormInput />
+              <Spacer y={4} />
+              <Button
+                variant={"primaryBlack"}
+                width="100%"
+                type="submit"
+                onClick={() => {
+                  setCheckoutMode("standard")
+                }}
+                loading={isSubmitting}
+                disabled={!isValid}
+              >
+                Continue to Payment
+              </Button>
+            </Form>
+          )
+        }}
       </Formik>
     </>
   )
 }
 
-const PickupFormContent: React.FC = () => {
+const PickupFormInput: React.FC = () => {
   const formikContext = useFormikContext<PickupFormValues>()
-  const { setCheckoutMode } = useCheckoutContext()
-  const formRef = useScrollToFieldErrorOnSubmit(
-    CheckoutStepName.FULFILLMENT_DETAILS,
-  )
+  const formRef = useScrollToFieldErrorOnSubmit()
 
   return (
-    <GridColumns data-testid={"PickupDetailsForm"} ref={formRef}>
-      <Column span={12}>
-        <SelectInput
-          key={`phone-input-${formikContext.values.phoneNumberCountryCode || "empty"}`}
-          label="Phone number"
-          mt={1}
-          name="phoneNumber"
-          onChange={formikContext.handleChange}
-          onBlur={formikContext.handleBlur}
-          data-testid={"PickupPhoneNumberInput"}
-          options={phoneCountryOptions}
-          onSelect={(option: (typeof phoneCountryOptions)[number]): void => {
-            formikContext.setFieldValue("phoneNumberCountryCode", option.value)
-          }}
-          dropdownValue={formikContext.values.phoneNumberCountryCode}
-          inputValue={formikContext.values.phoneNumber}
-          placeholder="(000) 000 0000"
-          autoComplete="tel-national"
-          error={
-            (formikContext.touched.phoneNumberCountryCode &&
-              (formikContext.errors.phoneNumberCountryCode as
-                | string
-                | undefined)) ||
-            (formikContext.touched.phoneNumber &&
-              (formikContext.errors.phoneNumber as string | undefined))
-          }
-          enableSearch
-          required
-        />
-        <Spacer y={4} />
-        <Button
-          variant={"primaryBlack"}
-          width="100%"
-          type="submit"
-          onClick={() => {
-            setCheckoutMode("standard")
-            formikContext.handleSubmit()
-          }}
-          loading={formikContext.isSubmitting}
-          disabled={!formikContext.isValid}
-        >
-          Continue to Payment
-        </Button>
-      </Column>
-    </GridColumns>
+    <div ref={formRef}>
+      <SelectInput
+        key={`phone-input-${formikContext.values.phoneNumberCountryCode || "empty"}`}
+        label="Phone number"
+        mt={1}
+        name="phoneNumber"
+        onChange={formikContext.handleChange}
+        onBlur={formikContext.handleBlur}
+        data-testid={"PickupPhoneNumberInput"}
+        options={phoneCountryOptions}
+        onSelect={(option: (typeof phoneCountryOptions)[number]): void => {
+          formikContext.setFieldValue("phoneNumberCountryCode", option.value)
+        }}
+        dropdownValue={formikContext.values.phoneNumberCountryCode}
+        inputValue={formikContext.values.phoneNumber}
+        placeholder="(000) 000 0000"
+        autoComplete="tel-national"
+        error={
+          (formikContext.touched.phoneNumberCountryCode &&
+            (formikContext.errors.phoneNumberCountryCode as
+              | string
+              | undefined)) ||
+          (formikContext.touched.phoneNumber &&
+            (formikContext.errors.phoneNumber as string | undefined))
+        }
+        enableSearch
+        required
+      />
+    </div>
   )
 }
 

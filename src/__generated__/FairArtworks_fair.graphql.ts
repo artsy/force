@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<365fa0723e6d6edfa9937c55478ff6f3>>
+ * @generated SignedSource<<c8982535f2d17cdc577b8f14f09b4cba>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,14 +21,7 @@ export type FairArtworks_fair$data = {
     readonly id: string;
     readonly " $fragmentSpreads": FragmentRefs<"ArtworkFilterArtworkGrid_filtered_artworks" | "ImmersiveView_filtered_artworks">;
   } | null | undefined;
-  readonly href: string | null | undefined;
   readonly internalID: string;
-  readonly metaDescription: string | null | undefined;
-  readonly metaDescriptionFallback: string | null | undefined;
-  readonly metaImage: {
-    readonly src: string | null | undefined;
-  } | null | undefined;
-  readonly name: string | null | undefined;
   readonly sidebarAggregations: {
     readonly aggregations: ReadonlyArray<{
       readonly counts: ReadonlyArray<{
@@ -47,15 +40,7 @@ export type FairArtworks_fair$key = {
   readonly " $fragmentSpreads": FragmentRefs<"FairArtworks_fair">;
 };
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "name",
-  "storageKey": null
-};
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [
     {
       "defaultValue": null,
@@ -86,63 +71,11 @@ return {
       "name": "internalID",
       "storageKey": null
     },
-    (v0/*: any*/),
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "href",
-      "storageKey": null
-    },
     {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
       "name": "featuredKeywords",
-      "storageKey": null
-    },
-    {
-      "alias": "metaDescription",
-      "args": null,
-      "kind": "ScalarField",
-      "name": "summary",
-      "storageKey": null
-    },
-    {
-      "alias": "metaDescriptionFallback",
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "format",
-          "value": "PLAIN"
-        }
-      ],
-      "kind": "ScalarField",
-      "name": "about",
-      "storageKey": "about(format:\"PLAIN\")"
-    },
-    {
-      "alias": "metaImage",
-      "args": null,
-      "concreteType": "Image",
-      "kind": "LinkedField",
-      "name": "image",
-      "plural": false,
-      "selections": [
-        {
-          "alias": "src",
-          "args": [
-            {
-              "kind": "Literal",
-              "name": "version",
-              "value": "large_rectangle"
-            }
-          ],
-          "kind": "ScalarField",
-          "name": "url",
-          "storageKey": "url(version:\"large_rectangle\")"
-        }
-      ],
       "storageKey": null
     },
     {
@@ -187,7 +120,13 @@ return {
               "name": "counts",
               "plural": true,
               "selections": [
-                (v0/*: any*/),
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "name",
+                  "storageKey": null
+                },
                 {
                   "alias": null,
                   "args": null,
@@ -285,8 +224,7 @@ return {
   "type": "Fair",
   "abstractKey": null
 };
-})();
 
-(node as any).hash = "a9e1ab5ede1c8113123dbda35f0c5139";
+(node as any).hash = "c85736fabadf060f2bd22450c3d960c6";
 
 export default node;

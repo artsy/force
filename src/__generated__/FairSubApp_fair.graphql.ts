@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ebd37ea5a112ad9939b6f1442c6c475e>>
+ * @generated SignedSource<<a5f91a46abb48a77dd2a38b89dcab5ec>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,6 +17,7 @@ export type FairSubApp_fair$data = {
   readonly profile: {
     readonly __typename: "Profile";
   } | null | undefined;
+  readonly " $fragmentSpreads": FragmentRefs<"FairMeta_fair">;
   readonly " $fragmentType": "FairSubApp_fair";
 };
 export type FairSubApp_fair$key = {
@@ -30,6 +31,11 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "FairSubApp_fair",
   "selections": [
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "FairMeta_fair"
+    },
     {
       "alias": null,
       "args": null,
@@ -74,6 +80,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "98d499a3d6f94021de2faa6e352f6172";
+(node as any).hash = "8800fcf01337098f990219c0fee9f38e";
 
 export default node;

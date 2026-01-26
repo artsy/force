@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7382d8acd7b9918d7eb4eed738f383a9>>
+ * @generated SignedSource<<e39d15a62ffb10034c45c0d8a46f4fc2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -56,52 +56,45 @@ v4 = [
   {
     "kind": "Literal",
     "name": "format",
-    "value": "PLAIN"
-  }
-],
-v5 = [
-  {
-    "kind": "Literal",
-    "name": "format",
     "value": "YYYY-MM-DD"
   }
 ],
-v6 = {
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v7 = {
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "src",
   "storageKey": null
 },
-v8 = {
+v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "width",
   "storageKey": null
 },
-v9 = {
+v8 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "height",
   "storageKey": null
 },
-v10 = {
+v9 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "title",
   "storageKey": null
 },
-v11 = {
+v10 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -153,21 +146,27 @@ return {
           (v3/*: any*/),
           {
             "alias": "description",
-            "args": (v4/*: any*/),
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "format",
+                "value": "PLAIN"
+              }
+            ],
             "kind": "ScalarField",
             "name": "about",
             "storageKey": "about(format:\"PLAIN\")"
           },
           {
             "alias": "structuredDataStartAt",
-            "args": (v5/*: any*/),
+            "args": (v4/*: any*/),
             "kind": "ScalarField",
             "name": "startAt",
             "storageKey": "startAt(format:\"YYYY-MM-DD\")"
           },
           {
             "alias": "structuredDataEndAt",
-            "args": (v5/*: any*/),
+            "args": (v4/*: any*/),
             "kind": "ScalarField",
             "name": "endAt",
             "storageKey": "endAt(format:\"YYYY-MM-DD\")"
@@ -229,7 +228,7 @@ return {
                 "name": "postalCode",
                 "storageKey": null
               },
-              (v6/*: any*/)
+              (v5/*: any*/)
             ],
             "storageKey": null
           },
@@ -249,7 +248,7 @@ return {
                 "name": "website",
                 "storageKey": null
               },
-              (v6/*: any*/)
+              (v5/*: any*/)
             ],
             "storageKey": null
           },
@@ -288,9 +287,9 @@ return {
                 "name": "cropped",
                 "plural": false,
                 "selections": [
+                  (v6/*: any*/),
                   (v7/*: any*/),
-                  (v8/*: any*/),
-                  (v9/*: any*/)
+                  (v8/*: any*/)
                 ],
                 "storageKey": "cropped(height:900,version:[\"larger\",\"large\"],width:1200)"
               }
@@ -346,7 +345,7 @@ return {
                         "name": "vertical",
                         "storageKey": null
                       },
-                      (v10/*: any*/),
+                      (v9/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -402,9 +401,9 @@ return {
                             "name": "cropped",
                             "plural": false,
                             "selections": [
-                              (v8/*: any*/),
-                              (v9/*: any*/),
                               (v7/*: any*/),
+                              (v8/*: any*/),
+                              (v6/*: any*/),
                               {
                                 "alias": null,
                                 "args": null,
@@ -425,8 +424,8 @@ return {
                         "name": "internalID",
                         "storageKey": null
                       },
-                      (v11/*: any*/),
-                      (v6/*: any*/)
+                      (v10/*: any*/),
+                      (v5/*: any*/)
                     ],
                     "storageKey": null
                   },
@@ -457,9 +456,9 @@ return {
             "name": "marketingCollections",
             "plural": true,
             "selections": [
-              (v6/*: any*/),
-              (v11/*: any*/),
+              (v5/*: any*/),
               (v10/*: any*/),
+              (v9/*: any*/),
               {
                 "alias": "artworks",
                 "args": [
@@ -532,14 +531,14 @@ return {
                             ],
                             "storageKey": null
                           },
-                          (v6/*: any*/)
+                          (v5/*: any*/)
                         ],
                         "storageKey": null
                       }
                     ],
                     "storageKey": null
                   },
-                  (v6/*: any*/)
+                  (v5/*: any*/)
                 ],
                 "storageKey": "artworksConnection(first:3)"
               }
@@ -566,58 +565,20 @@ return {
             "name": "about",
             "storageKey": "about(format:\"HTML\")"
           },
-          (v11/*: any*/),
-          {
-            "alias": "metaDescription",
-            "args": null,
-            "kind": "ScalarField",
-            "name": "summary",
-            "storageKey": null
-          },
-          {
-            "alias": "metaDescriptionFallback",
-            "args": (v4/*: any*/),
-            "kind": "ScalarField",
-            "name": "about",
-            "storageKey": "about(format:\"PLAIN\")"
-          },
-          {
-            "alias": "metaImage",
-            "args": null,
-            "concreteType": "Image",
-            "kind": "LinkedField",
-            "name": "image",
-            "plural": false,
-            "selections": [
-              {
-                "alias": "src",
-                "args": [
-                  {
-                    "kind": "Literal",
-                    "name": "version",
-                    "value": "large_rectangle"
-                  }
-                ],
-                "kind": "ScalarField",
-                "name": "url",
-                "storageKey": "url(version:\"large_rectangle\")"
-              }
-            ],
-            "storageKey": null
-          },
-          (v6/*: any*/)
+          (v10/*: any*/),
+          (v5/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "5c9bba1d43c34c476b96a572051f4eac",
+    "cacheID": "36d68cff611638d79c7292b3eed7b9e1",
     "id": null,
     "metadata": {},
     "name": "fairRoutes_FairOverviewQuery",
     "operationKind": "query",
-    "text": "query fairRoutes_FairOverviewQuery(\n  $slug: String!\n) @cacheable {\n  fair(id: $slug) @principalField {\n    ...FairOverview_fair\n    id\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  thumbnailTitle\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment FairAbout_fair on Fair {\n  ...FairTimer_fair\n  about(format: HTML)\n  slug\n}\n\nfragment FairCollection_collection on MarketingCollection {\n  id\n  slug\n  title\n  artworks: artworksConnection(first: 3) {\n    counts {\n      total\n    }\n    edges {\n      node {\n        image {\n          url(version: \"larger\")\n        }\n        id\n      }\n    }\n    id\n  }\n}\n\nfragment FairCollections_fair on Fair {\n  marketingCollections(size: 5) {\n    id\n    slug\n    ...FairCollection_collection\n  }\n}\n\nfragment FairEditorialRailArticles_fair on Fair {\n  href\n  articlesConnection(first: 6, sort: PUBLISHED_AT_DESC) {\n    totalCount\n    edges {\n      node {\n        ...CellArticle_article\n        internalID\n        slug\n        id\n      }\n    }\n  }\n}\n\nfragment FairOverview_fair on Fair {\n  ...FairStructuredData_fair\n  ...FairEditorialRailArticles_fair\n  ...FairCollections_fair\n  ...FairAbout_fair\n  name\n  href\n  slug\n  metaDescription: summary\n  metaDescriptionFallback: about(format: PLAIN)\n  metaImage: image {\n    src: url(version: \"large_rectangle\")\n  }\n  articlesConnection(first: 6, sort: PUBLISHED_AT_DESC) {\n    edges {\n      __typename\n    }\n  }\n  marketingCollections(size: 5) {\n    id\n  }\n}\n\nfragment FairStructuredData_fair on Fair {\n  name\n  href\n  description: about(format: PLAIN)\n  structuredDataStartAt: startAt(format: \"YYYY-MM-DD\")\n  structuredDataEndAt: endAt(format: \"YYYY-MM-DD\")\n  location {\n    address\n    address2\n    city\n    state\n    country\n    summary\n    postalCode\n    id\n  }\n  organizer {\n    name\n    website\n    id\n  }\n  structuredDataImage: image {\n    cropped(width: 1200, height: 900, version: [\"larger\", \"large\"]) {\n      src\n      width\n      height\n    }\n  }\n}\n\nfragment FairTimer_fair on Fair {\n  endAt\n}\n"
+    "text": "query fairRoutes_FairOverviewQuery(\n  $slug: String!\n) @cacheable {\n  fair(id: $slug) @principalField {\n    ...FairOverview_fair\n    id\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  thumbnailTitle\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment FairAbout_fair on Fair {\n  ...FairTimer_fair\n  about(format: HTML)\n  slug\n}\n\nfragment FairCollection_collection on MarketingCollection {\n  id\n  slug\n  title\n  artworks: artworksConnection(first: 3) {\n    counts {\n      total\n    }\n    edges {\n      node {\n        image {\n          url(version: \"larger\")\n        }\n        id\n      }\n    }\n    id\n  }\n}\n\nfragment FairCollections_fair on Fair {\n  marketingCollections(size: 5) {\n    id\n    slug\n    ...FairCollection_collection\n  }\n}\n\nfragment FairEditorialRailArticles_fair on Fair {\n  href\n  articlesConnection(first: 6, sort: PUBLISHED_AT_DESC) {\n    totalCount\n    edges {\n      node {\n        ...CellArticle_article\n        internalID\n        slug\n        id\n      }\n    }\n  }\n}\n\nfragment FairOverview_fair on Fair {\n  ...FairStructuredData_fair\n  ...FairEditorialRailArticles_fair\n  ...FairCollections_fair\n  ...FairAbout_fair\n  slug\n  articlesConnection(first: 6, sort: PUBLISHED_AT_DESC) {\n    edges {\n      __typename\n    }\n  }\n  marketingCollections(size: 5) {\n    id\n  }\n}\n\nfragment FairStructuredData_fair on Fair {\n  name\n  href\n  description: about(format: PLAIN)\n  structuredDataStartAt: startAt(format: \"YYYY-MM-DD\")\n  structuredDataEndAt: endAt(format: \"YYYY-MM-DD\")\n  location {\n    address\n    address2\n    city\n    state\n    country\n    summary\n    postalCode\n    id\n  }\n  organizer {\n    name\n    website\n    id\n  }\n  structuredDataImage: image {\n    cropped(width: 1200, height: 900, version: [\"larger\", \"large\"]) {\n      src\n      width\n      height\n    }\n  }\n}\n\nfragment FairTimer_fair on Fair {\n  endAt\n}\n"
   }
 };
 })();

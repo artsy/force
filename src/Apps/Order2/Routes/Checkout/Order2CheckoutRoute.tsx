@@ -1,6 +1,7 @@
 import { Elements } from "@stripe/react-stripe-js"
 import { loadStripe } from "@stripe/stripe-js"
 import { Order2CheckoutContextProvider } from "Apps/Order2/Routes/Checkout/CheckoutContext/Order2CheckoutContext"
+import { CheckoutModalProvider } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutModal"
 import { Order2CheckoutApp } from "Apps/Order2/Routes/Checkout/Order2CheckoutApp"
 import { OrderErrorApp } from "Apps/Order2/Components/Order2ErrorApp"
 import { Analytics } from "System/Contexts/AnalyticsContext"
@@ -28,9 +29,11 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
   return (
     <Analytics contextPageOwnerId={order.internalID}>
       <Elements stripe={stripePromise}>
-        <Order2CheckoutContextProvider order={order}>
-          <Order2CheckoutApp order={order} me={me} />
-        </Order2CheckoutContextProvider>
+        <CheckoutModalProvider>
+          <Order2CheckoutContextProvider order={order}>
+            <Order2CheckoutApp order={order} me={me} />
+          </Order2CheckoutContextProvider>
+        </CheckoutModalProvider>
       </Elements>
     </Analytics>
   )

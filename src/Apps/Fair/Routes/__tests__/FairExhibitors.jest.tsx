@@ -48,23 +48,6 @@ describe("FairExhibitors", () => {
     expect(screen.getByText("Partner 3")).toBeInTheDocument()
     expect(screen.getByText("Partner 4")).toBeInTheDocument()
   })
-
-  describe("canonical URL", () => {
-    it("renders correct canonical URL for fair exhibitors", () => {
-      renderWithRelay({
-        Fair: () => ({
-          name: "Test Fair",
-          href: "/fair/test-fair",
-        }),
-      })
-
-      const canonicalLink = document.querySelector('link[rel="canonical"]')
-      expect(canonicalLink).toHaveAttribute(
-        "href",
-        "/fair/test-fair/exhibitors",
-      )
-    })
-  })
 })
 
 const FAIR_FIXTURE = {

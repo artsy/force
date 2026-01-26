@@ -48,18 +48,4 @@ describe("FairArticles", () => {
     expect(html).not.toContain("Example Author")
     expect(container.textContent).toMatch(/There.*any articles.*time/)
   })
-
-  describe("canonical URL", () => {
-    it("renders correct canonical URL for fair articles", () => {
-      renderWithRelay({
-        Fair: () => ({
-          name: "Test Fair",
-          href: "/fair/test-fair",
-        }),
-      })
-
-      const canonicalLink = document.querySelector('link[rel="canonical"]')
-      expect(canonicalLink).toHaveAttribute("href", "/fair/test-fair/articles")
-    })
-  })
 })

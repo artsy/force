@@ -16,6 +16,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { ExhibitorsLetterNavFragmentContainer as ExhibitorsLetterNav } from "./Components/ExhibitorsLetterNav"
 import { FairHeaderFragmentContainer } from "./Components/FairHeader"
 import { FairHeaderImageFragmentContainer } from "./Components/FairHeader/FairHeaderImage"
+import { FairMetaFragmentContainer } from "./Components/FairMeta"
 
 interface FairAppProps {
   fair: FairApp_fair$data
@@ -29,6 +30,8 @@ const FairApp: React.FC<React.PropsWithChildren<FairAppProps>> = ({
 
   return (
     <>
+      <FairMetaFragmentContainer fair={fair} />
+
       <FairHeaderImageFragmentContainer fair={fair} />
 
       <Spacer y={[2, 4]} />
@@ -104,6 +107,7 @@ export const FairAppFragmentContainer = createFragmentContainer(
   {
     fair: graphql`
       fragment FairApp_fair on Fair {
+        ...FairMeta_fair
         ...FairTabs_fair
         ...FairHeader_fair
         ...FairHeaderImage_fair
