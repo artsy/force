@@ -54,10 +54,6 @@ export const ArtistArtistSeriesRouteFragmentContainer = createFragmentContainer(
         internalID
         name
         slug
-        meta(page: ARTIST_SERIES) {
-          description
-          title
-        }
         artistSeriesConnection(first: 50) {
           edges {
             node {

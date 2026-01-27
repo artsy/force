@@ -543,11 +543,6 @@ const AuctionResultsFixture = {
     id: "QXJ0aXN0OnBhYmxvLXBpY2Fzc28=",
     slug: "pablo-picasso",
     name: "Pablo Picasso",
-    meta: {
-      description:
-        "Find out about Pablo Picasso’s auction history, past sales, and current market value. Browse Artsy’s Price Database for recent auction results from the artist.`",
-      title: "Pablo Picasso - Auction Results and Sales Data | Artsy",
-    },
     statuses: {
       auctionLots: true,
     },
