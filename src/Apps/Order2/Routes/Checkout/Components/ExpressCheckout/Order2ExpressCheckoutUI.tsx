@@ -23,6 +23,7 @@ import {
 import type { ExpressCheckoutPaymentMethod } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { CheckoutErrorBanner } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import { fetchAndSetConfirmationToken } from "Apps/Order2/Utils/confirmationTokenUtils"
 import { preventHardReload } from "Apps/Order2/Utils/navigationGuards"
 import { RouterLink } from "System/Components/RouterLink"
 import createLogger from "Utils/logger"
@@ -37,7 +38,7 @@ import type {
 import type { OrderCreditCardWalletTypeEnum } from "__generated__/useOrder2ExpressCheckoutSetOrderPaymentMutation.graphql"
 import type React from "react"
 import { useEffect, useRef, useState } from "react"
-import { graphql, useFragment } from "react-relay"
+import { graphql, useFragment, useRelayEnvironment } from "react-relay"
 import { useOrder2ExpressCheckoutSetFulfillmentOptionMutation } from "./Mutations/useOrder2ExpressCheckoutSetFulfillmentOptionMutation"
 import { useOrder2ExpressCheckoutSetOrderPaymentMutation } from "./Mutations/useOrder2ExpressCheckoutSetOrderPaymentMutation"
 import { useOrder2ExpressCheckoutSubmitOrderMutation } from "./Mutations/useOrder2ExpressCheckoutSubmitOrderMutation"
@@ -63,6 +64,7 @@ export const Order2ExpressCheckoutUI: React.FC<
 
   const elements = useElements()
   const stripe = useStripe()
+  const environment = useRelayEnvironment()
 
   const setFulfillmentOptionMutation =
     useOrder2ExpressCheckoutSetFulfillmentOptionMutation()
@@ -90,6 +92,7 @@ export const Order2ExpressCheckoutUI: React.FC<
     checkoutMode,
     setCheckoutMode,
     checkoutTracking,
+    setConfirmationToken,
   } = useCheckoutContext()
 
   useEffect(() => {
@@ -368,49 +371,6 @@ export const Order2ExpressCheckoutUI: React.FC<
     })
 
     try {
-      // update order payment method
-      const updateOrderPaymentMethodResult =
-        await setOrderPaymentMutation.submitMutation({
-          variables: {
-            input: {
-              id: orderData.internalID,
-              paymentMethod: "CREDIT_CARD",
-              creditCardWalletType,
-            },
-          },
-        })
-
-      validateAndExtractOrderResponse(
-        updateOrderPaymentMethodResult.setOrderPayment?.orderOrError,
-      )
-
-      // Finally we have all fulfillment details
-      const updateOrderShippingAddressResult =
-        await updateOrderShippingAddressMutation.submitMutation({
-          variables: {
-            input: {
-              id: orderData.internalID,
-              buyerPhoneNumber: phone,
-              buyerPhoneNumberCountryCode: null,
-              shippingName: shippingRate?.id === "PICKUP" ? null : name,
-              shippingAddressLine1:
-                shippingRate?.id === "PICKUP" ? null : line1,
-              shippingAddressLine2:
-                shippingRate?.id === "PICKUP" ? null : line2,
-              shippingPostalCode:
-                shippingRate?.id === "PICKUP" ? null : postal_code,
-              shippingCity: shippingRate?.id === "PICKUP" ? null : city,
-              shippingRegion: shippingRate?.id === "PICKUP" ? null : state,
-              shippingCountry: shippingRate?.id === "PICKUP" ? null : country,
-            },
-          },
-        })
-
-      validateAndExtractOrderResponse(
-        updateOrderShippingAddressResult.updateOrderShippingAddress
-          ?.orderOrError,
-      )
-
       // Trigger form validation and wallet collection
       const { error: submitError } = await elements.submit()
       if (submitError) {
@@ -449,6 +409,57 @@ export const Order2ExpressCheckoutUI: React.FC<
         setExpressCheckoutSubmitting(false)
         return
       }
+
+      // Persist confirmation token to context
+      await fetchAndSetConfirmationToken(
+        confirmationToken.id,
+        environment,
+        setConfirmationToken,
+      )
+
+      // Update order payment method with confirmation token
+      const updateOrderPaymentMethodResult =
+        await setOrderPaymentMutation.submitMutation({
+          variables: {
+            input: {
+              id: orderData.internalID,
+              paymentMethod: "CREDIT_CARD",
+              creditCardWalletType,
+              stripeConfirmationToken: confirmationToken.id,
+            },
+          },
+        })
+
+      validateAndExtractOrderResponse(
+        updateOrderPaymentMethodResult.setOrderPayment?.orderOrError,
+      )
+
+      // Finally we have all fulfillment details
+      const updateOrderShippingAddressResult =
+        await updateOrderShippingAddressMutation.submitMutation({
+          variables: {
+            input: {
+              id: orderData.internalID,
+              buyerPhoneNumber: phone,
+              buyerPhoneNumberCountryCode: null,
+              shippingName: shippingRate?.id === "PICKUP" ? null : name,
+              shippingAddressLine1:
+                shippingRate?.id === "PICKUP" ? null : line1,
+              shippingAddressLine2:
+                shippingRate?.id === "PICKUP" ? null : line2,
+              shippingPostalCode:
+                shippingRate?.id === "PICKUP" ? null : postal_code,
+              shippingCity: shippingRate?.id === "PICKUP" ? null : city,
+              shippingRegion: shippingRate?.id === "PICKUP" ? null : state,
+              shippingCountry: shippingRate?.id === "PICKUP" ? null : country,
+            },
+          },
+        })
+
+      validateAndExtractOrderResponse(
+        updateOrderShippingAddressResult.updateOrderShippingAddress
+          ?.orderOrError,
+      )
 
       const submitOrderResult = await submitOrderMutation.submitMutation({
         variables: {
