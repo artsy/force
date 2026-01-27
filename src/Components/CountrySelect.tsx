@@ -344,6 +344,7 @@ export const SMS_UNSUPPORTED_COUNTRY_CODES = [
   { text: "French Polynesia", value: "PF" },
   { text: "Gabon", value: "GA" },
   { text: "Gambia", value: "GM" },
+  { text: "Ghana", value: "GH" },
   { text: "Gibraltar", value: "GI" },
   { text: "Grenada", value: "GD" },
   { text: "Guadeloupe", value: "GP" },
