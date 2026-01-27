@@ -54,7 +54,7 @@ export const AboutMissionAndVision = () => {
             >
               <Image
                 {...resized(
-                  "https://files.artsy.net/images/about2-mission-1.jpg",
+                  "https://files.artsy.net/images/about2-mission-1-1.png",
                   { width: 650 },
                 )}
                 width="100%"
@@ -81,7 +81,7 @@ export const AboutMissionAndVision = () => {
             >
               <Image
                 {...resized(
-                  "https://files.artsy.net/images/about2-mission-2.jpg",
+                  "https://files.artsy.net/images/about2-mission-2-1.png",
                   { width: 650 },
                 )}
                 width="100%"
