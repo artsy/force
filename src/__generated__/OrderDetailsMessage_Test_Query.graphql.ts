@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8c06f91a3c04f8dd9cfcab3d29a9a1cd>>
+ * @generated SignedSource<<c2691d7c9f49f0a32636978c8846df82>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -25,7 +25,6 @@ export type OrderDetailsMessage_Test_Query$data = {
 export type OrderDetailsMessage_Test_Query$rawResponse = {
   readonly me: {
     readonly collectorProfile: {
-      readonly bio: string | null | undefined;
       readonly id: string;
       readonly isEmailConfirmed: boolean | null | undefined;
       readonly isIdentityVerified: boolean | null | undefined;
@@ -192,13 +191,6 @@ return {
                 "name": "otherRelevantPositions",
                 "storageKey": null
               },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "bio",
-                "storageKey": null
-              },
               (v1/*: any*/)
             ],
             "storageKey": null
@@ -335,12 +327,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "aee1889e76b6518c6183211df95ecd92",
+    "cacheID": "5041e2ca9a81fcd9165e70e61bb0e3fd",
     "id": null,
     "metadata": {},
     "name": "OrderDetailsMessage_Test_Query",
     "operationKind": "query",
-    "text": "query OrderDetailsMessage_Test_Query {\n  me {\n    ...OrderDetailsMessage_me\n    order(id: \"123\") {\n      ...OrderDetailsMessage_order\n      id\n    }\n    id\n  }\n}\n\nfragment OrderDetailsMessage_me on Me {\n  collectorProfile {\n    isEmailConfirmed\n    location {\n      country\n      id\n    }\n    profession\n    isIdentityVerified\n    otherRelevantPositions\n    bio\n    id\n  }\n}\n\nfragment OrderDetailsMessage_order on Order {\n  buyerStateExpiresAt\n  code\n  currencyCode\n  internalID\n  impulseConversationId\n  displayTexts {\n    messageType\n  }\n  deliveryInfo {\n    shipperName\n    trackingNumber\n    trackingURL\n    estimatedDelivery\n    estimatedDeliveryWindow\n  }\n  source\n  mode\n}\n"
+    "text": "query OrderDetailsMessage_Test_Query {\n  me {\n    ...OrderDetailsMessage_me\n    order(id: \"123\") {\n      ...OrderDetailsMessage_order\n      id\n    }\n    id\n  }\n}\n\nfragment OrderDetailsMessage_me on Me {\n  collectorProfile {\n    isEmailConfirmed\n    location {\n      country\n      id\n    }\n    profession\n    isIdentityVerified\n    otherRelevantPositions\n    id\n  }\n}\n\nfragment OrderDetailsMessage_order on Order {\n  buyerStateExpiresAt\n  code\n  currencyCode\n  internalID\n  impulseConversationId\n  displayTexts {\n    messageType\n  }\n  deliveryInfo {\n    shipperName\n    trackingNumber\n    trackingURL\n    estimatedDelivery\n    estimatedDeliveryWindow\n  }\n  source\n  mode\n}\n"
   }
 };
 })();

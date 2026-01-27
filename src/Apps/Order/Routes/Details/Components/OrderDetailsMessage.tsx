@@ -439,7 +439,6 @@ const ME_FRAGMENT = graphql`
       profession
       isIdentityVerified
       otherRelevantPositions
-      bio
     }
   }
 `
