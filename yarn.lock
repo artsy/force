@@ -149,7 +149,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@artsy/palette-tokens@npm:7.2.0, @artsy/palette-tokens@npm:^7.2.0":
+"@artsy/palette-tokens@npm:7.3.0":
+  version: 7.3.0
+  resolution: "@artsy/palette-tokens@npm:7.3.0"
+  checksum: 10c0/5fe6fe51cd2d223f97b277b240552b8e963f3ecdfbee155bb6e2267415bd77397d100a917dcb189081a2a480f611ceed2f87c6478685f3ebc6e8bd9a77a54961
+  languageName: node
+  linkType: hard
+
+"@artsy/palette-tokens@npm:^7.2.0":
   version: 7.2.0
   resolution: "@artsy/palette-tokens@npm:7.2.0"
   checksum: 10c0/209acefaed20362b608271281a9ba2fbbaa2e1af820ed00d13c73cc4bd02e366638b09d3631e5b82c00978167226ac49d0c54044fd38741d3ac895037c810a59
@@ -9629,7 +9636,7 @@ __metadata:
     "@artsy/multienv": "npm:^1.2.0"
     "@artsy/palette": "npm:45.11.3"
     "@artsy/palette-charts": "npm:44.11.3"
-    "@artsy/palette-tokens": "npm:7.2.0"
+    "@artsy/palette-tokens": "npm:7.3.0"
     "@artsy/react-html-parser": "npm:^3.0.2"
     "@artsy/xapp": "npm:2.0.0"
     "@biomejs/biome": "npm:1.9.4"
