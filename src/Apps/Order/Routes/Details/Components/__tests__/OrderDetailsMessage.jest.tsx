@@ -94,7 +94,7 @@ describe("OrderDetailsMessage", () => {
         impulseConversationId: "conv-123",
       }),
       Me: () => ({
-        collectorProfile: { bio: "" },
+        collectorProfile: { profession: "" },
       }),
     })
     expect(
@@ -114,7 +114,7 @@ describe("OrderDetailsMessage", () => {
         impulseConversationId: "conv-123",
       }),
       Me: () => ({
-        collectorProfile: { bio: "" },
+        collectorProfile: { profession: "" },
       }),
     })
 
@@ -144,7 +144,7 @@ describe("OrderDetailsMessage", () => {
         impulseConversationId: "conv-123",
       }),
       Me: () => ({
-        collectorProfile: { bio: "" },
+        collectorProfile: { profession: "" },
       }),
     })
     expect(
