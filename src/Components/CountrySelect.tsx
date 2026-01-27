@@ -360,6 +360,7 @@ export const SMS_UNSUPPORTED_COUNTRY_CODES = [
   { text: "Kyrgyzstan", value: "KG" },
   { text: "Lao People'S Democratic Republic", value: "LA" },
   { text: "Latvia", value: "LV" },
+  { text: "Lebanon", value: "LB" },
   { text: "Liberia", value: "LR" },
   { text: "Liechtenstein", value: "LI" },
   { text: "Madagascar", value: "MG" },
