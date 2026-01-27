@@ -186,8 +186,9 @@ export const SmsSecondFactor: React.FC<
         )}
 
         {showEmailVerificationWarning && (
-          <Message variant="warning" title="Email verification required">
-            You must verify your email address before setting up SMS 2FA.{" "}
+          <Message variant="error" title="Email verification required">
+            You must verify your email address before setting up text message
+            two-factor authentication.{" "}
             <RouterLink inline to="/settings/edit-profile">
               Verify your email
             </RouterLink>
@@ -246,7 +247,7 @@ export const SmsSecondFactor: React.FC<
                       variant: "error",
                       message: "Email verification required",
                       description:
-                        "Please verify your email before setting up SMS 2FA.",
+                        "Please verify your email before setting up text message two-factor authentication.",
                     })
                     return
                   }

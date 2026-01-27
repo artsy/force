@@ -46,7 +46,7 @@ describe("SmsSecondFactor", () => {
   })
 
   describe("Email confirmation requirement", () => {
-    it("shows warning banner when email is not confirmed and SMS 2FA is not enabled", () => {
+    it("shows error banner when email is not confirmed and SMS 2FA is not enabled", () => {
       renderWithRelay({
         Me: () => ({
           email: "user@example.com",
@@ -60,12 +60,12 @@ describe("SmsSecondFactor", () => {
       ).toBeInTheDocument()
       expect(
         screen.getByText(
-          /You must verify your email address before setting up SMS 2FA/,
+          /You must verify your email address before setting up text message two-factor authentication/,
         ),
       ).toBeInTheDocument()
     })
 
-    it("does not show warning banner when email is confirmed", () => {
+    it("does not show error banner when email is confirmed", () => {
       renderWithRelay({
         Me: () => ({
           email: "user@example.com",
