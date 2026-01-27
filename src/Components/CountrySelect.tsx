@@ -273,7 +273,7 @@ export const COUNTRY_SELECT_OPTIONS = [
   { text: "Zimbabwe", value: "ZW" },
 ]
 
-const EU_COUNTRY_SELECT_OPTIONS = [
+export const EU_COUNTRY_SELECT_OPTIONS = [
   { text: "Austria", value: "AT" },
   { text: "Belgium", value: "BE" },
   { text: "Bulgaria", value: "BG" },

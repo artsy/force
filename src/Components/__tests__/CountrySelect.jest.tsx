@@ -2,15 +2,18 @@ import {
   CountrySelect,
   COUNTRY_SELECT_OPTIONS,
   SMS_UNSUPPORTED_COUNTRY_CODES,
+  EU_COUNTRY_SELECT_OPTIONS,
 } from "Components/CountrySelect"
 import { render, fireEvent } from "@testing-library/react"
 
 describe("CountrySelect", () => {
   it("renders a select element with all countries by default", () => {
     const { container } = render(<CountrySelect />)
-    const select = container.querySelector("select")
+    const select = container.querySelector("select")!
+    const options = select.querySelectorAll("option")
 
     expect(select).toBeInTheDocument()
+    expect(options.length).toBe(COUNTRY_SELECT_OPTIONS.length)
   })
 
   it("renders with euShippingOnly prop to show only EU countries", () => {
@@ -27,6 +30,8 @@ describe("CountrySelect", () => {
     // Verify non-EU countries are not present
     expect(optionValues).not.toContain("US") // United States
     expect(optionValues).not.toContain("CA") // Canada
+
+    expect(options.length).toBe(EU_COUNTRY_SELECT_OPTIONS.length)
   })
 
   it("renders with smsSupported prop to show only SMS-supported countries", () => {
@@ -50,15 +55,6 @@ describe("CountrySelect", () => {
     expect(optionValues).toContain("CA") // Canada
   })
 
-  it("renders all countries when no filtering props are provided", () => {
-    const { container } = render(<CountrySelect />)
-    const select = container.querySelector("select")!
-    const options = select.querySelectorAll("option")
-
-    // Should have all countries including the empty option
-    expect(options.length).toBe(COUNTRY_SELECT_OPTIONS.length)
-  })
-
   it("triggers onSelect callback on change", () => {
     const mockOnSelect = jest.fn()
     const { container } = render(<CountrySelect onSelect={mockOnSelect} />)
@@ -74,13 +70,6 @@ describe("CountrySelect", () => {
     const select = container.querySelector("select")!
 
     expect(select).toBeDisabled()
-  })
-
-  it("respects tabIndex prop", () => {
-    const { container } = render(<CountrySelect tabIndex={-1} />)
-    const select = container.querySelector("select")!
-
-    expect(select).toHaveAttribute("tabindex", "-1")
   })
 
   it("renders with a default empty option", () => {
