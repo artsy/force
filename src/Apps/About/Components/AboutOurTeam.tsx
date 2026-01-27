@@ -96,7 +96,7 @@ const TEAM_MEMBERS = [
   {
     name: "Angela Vinci",
     title: "Chief Product Officer",
-    src: "https://files.artsy.net/images/about-our-team-angela-vinci.png",
+    src: "https://files.artsy.net/images/about-our-team-angela-vinci-1.png",
   },
   {
     name: "Joey Aghion",
@@ -111,12 +111,12 @@ const TEAM_MEMBERS = [
   {
     name: "Ani Petrov",
     title: "VP, Marketing & Data Analytics",
-    src: "https://files.artsy.net/images/about-our-team-ani-petrov.png",
+    src: "https://files.artsy.net/images/about-our-team-ani-petrov-1.png",
   },
   {
     name: "Christopher Young",
     title: "VP, Finance & Corporate Development",
-    src: "https://files.artsy.net/images/about-our-team-christopher-young.png",
+    src: "https://files.artsy.net/images/about-our-team-christopher-young-1.png",
   },
 ]
 
