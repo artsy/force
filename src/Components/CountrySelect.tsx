@@ -4,23 +4,23 @@ import type { FC } from "react"
 
 export interface CountrySelectProps extends Omit<SelectProps, "options"> {
   euShippingOnly?: boolean
+  smsSupported?: boolean
   tabIndex?: number
 }
 
 export const CountrySelect: FC<React.PropsWithChildren<CountrySelectProps>> = ({
   euShippingOnly,
+  smsSupported,
   tabIndex,
   ...rest
 }) => {
-  return (
-    <Select
-      tabIndex={tabIndex}
-      options={
-        euShippingOnly ? EU_COUNTRY_SELECT_OPTIONS : COUNTRY_SELECT_OPTIONS
-      }
-      {...rest}
-    />
-  )
+  const getOptions = () => {
+    if (euShippingOnly) return EU_COUNTRY_SELECT_OPTIONS
+    if (smsSupported) return SMS_SUPPORTED_COUNTRY_SELECT_OPTIONS
+    return COUNTRY_SELECT_OPTIONS
+  }
+
+  return <Select tabIndex={tabIndex} options={getOptions()} {...rest} />
 }
 
 export const COUNTRY_SELECT_OPTIONS = [
@@ -302,6 +302,136 @@ const EU_COUNTRY_SELECT_OPTIONS = [
   { text: "Spain", value: "ES" },
   { text: "Sweden", value: "SE" },
 ]
+
+export const SMS_UNSUPPORTED_COUNTRY_CODES = [
+  { text: "Afghanistan", value: "AF" },
+  { text: "Algeria", value: "DZ" },
+  { text: "American Samoa", value: "AS" },
+  { text: "Angola", value: "AO" },
+  { text: "Anguilla", value: "AI" },
+  { text: "Antigua and Barbuda", value: "AG" },
+  { text: "Aruba", value: "AW" },
+  { text: "Azerbaijan", value: "AZ" },
+  { text: "Belarus", value: "BY" },
+  { text: "Benin", value: "BJ" },
+  { text: "Bhutan", value: "BT" },
+  { text: "Bolivia", value: "BO" },
+  { text: "Bosnia and Herzegovina", value: "BA" },
+  { text: "Botswana", value: "BW" },
+  { text: "Burkina Faso", value: "BF" },
+  { text: "Burundi", value: "BI" },
+  { text: "Cambodia", value: "KH" },
+  { text: "Cameroon", value: "CM" },
+  { text: "Cape Verde", value: "CV" },
+  { text: "Cayman Islands", value: "KY" },
+  { text: "Central African Republic", value: "CF" },
+  { text: "Chad", value: "TD" },
+  { text: "Comoros", value: "KM" },
+  { text: "Congo", value: "CG" },
+  { text: "Congo, The Democratic Republic of the", value: "CD" },
+  { text: "Cook Islands", value: "CK" },
+  { text: "Cuba", value: "CU" },
+  { text: "Djibouti", value: "DJ" },
+  { text: "Dominica", value: "DM" },
+  { text: "Dominican Republic", value: "DO" },
+  { text: "Ecuador", value: "EC" },
+  { text: "Equatorial Guinea", value: "GQ" },
+  { text: "Eritrea", value: "ER" },
+  { text: "Estonia", value: "EE" },
+  { text: "Falkland Islands (Malvinas)", value: "FK" },
+  { text: "Fiji", value: "FJ" },
+  { text: "French Guiana", value: "GF" },
+  { text: "French Polynesia", value: "PF" },
+  { text: "Gabon", value: "GA" },
+  { text: "Gambia", value: "GM" },
+  { text: "Gibraltar", value: "GI" },
+  { text: "Grenada", value: "GD" },
+  { text: "Guadeloupe", value: "GP" },
+  { text: "Guam", value: "GU" },
+  { text: "Guernsey", value: "GG" },
+  { text: "Guinea", value: "GN" },
+  { text: "Guinea-Bissau", value: "GW" },
+  { text: "Guyana", value: "GY" },
+  { text: "Haiti", value: "HT" },
+  { text: "Iran, Islamic Republic Of", value: "IR" },
+  { text: "Kiribati", value: "KI" },
+  { text: "Korea, Democratic People'S Republic of", value: "KP" },
+  { text: "Kuwait", value: "KW" },
+  { text: "Kyrgyzstan", value: "KG" },
+  { text: "Lao People'S Democratic Republic", value: "LA" },
+  { text: "Latvia", value: "LV" },
+  { text: "Liberia", value: "LR" },
+  { text: "Liechtenstein", value: "LI" },
+  { text: "Madagascar", value: "MG" },
+  { text: "Malawi", value: "MW" },
+  { text: "Maldives", value: "MV" },
+  { text: "Mali", value: "ML" },
+  { text: "Marshall Islands", value: "MH" },
+  { text: "Martinique", value: "MQ" },
+  { text: "Mauritania", value: "MR" },
+  { text: "Mauritius", value: "MU" },
+  { text: "Micronesia, Federated States of", value: "FM" },
+  { text: "Moldova, Republic of", value: "MD" },
+  { text: "Mongolia", value: "MN" },
+  { text: "Montenegro", value: "ME" },
+  { text: "Montserrat", value: "MS" },
+  { text: "Mozambique", value: "MZ" },
+  { text: "Myanmar", value: "MM" },
+  { text: "Namibia", value: "NA" },
+  { text: "Nepal", value: "NP" },
+  { text: "Nicaragua", value: "NI" },
+  { text: "Niger", value: "NE" },
+  { text: "Nigeria", value: "NG" },
+  { text: "Niue", value: "NU" },
+  { text: "Northern Mariana Islands", value: "MP" },
+  { text: "Pakistan", value: "PK" },
+  { text: "Palau", value: "PW" },
+  { text: "Papua New Guinea", value: "PG" },
+  { text: "Peru", value: "PE" },
+  { text: "Portugal", value: "PT" },
+  { text: "Qatar", value: "QA" },
+  { text: "Reunion", value: "RE" },
+  { text: "Rwanda", value: "RW" },
+  { text: "Samoa", value: "WS" },
+  { text: "San Marino", value: "SM" },
+  { text: "Sao Tome and Principe", value: "ST" },
+  { text: "Saudi Arabia", value: "SA" },
+  { text: "Senegal", value: "SN" },
+  { text: "Sierra Leone", value: "SL" },
+  { text: "Solomon Islands", value: "SB" },
+  { text: "Somalia", value: "SO" },
+  { text: "South Sudan", value: "SS" },
+  { text: "Sudan", value: "SD" },
+  { text: "Suriname", value: "SR" },
+  { text: "Swaziland", value: "SZ" },
+  { text: "Syrian Arab Republic", value: "SY" },
+  { text: "Tajikistan", value: "TJ" },
+  { text: "Tanzania, United Republic of", value: "TZ" },
+  { text: "Timor-Leste", value: "TL" },
+  { text: "Togo", value: "TG" },
+  { text: "Tonga", value: "TO" },
+  { text: "Trinidad and Tobago", value: "TT" },
+  { text: "Tunisia", value: "TN" },
+  { text: "Turkmenistan", value: "TM" },
+  { text: "Turks and Caicos Islands", value: "TC" },
+  { text: "Tuvalu", value: "TV" },
+  { text: "Uzbekistan", value: "UZ" },
+  { text: "Vanuatu", value: "VU" },
+  { text: "Holy See (Vatican City State)", value: "VA" },
+  { text: "Venezuela", value: "VE" },
+  { text: "Virgin Islands, British", value: "VG" },
+  { text: "Wallis and Futuna", value: "WF" },
+  { text: "Yemen", value: "YE" },
+  { text: "Zimbabwe", value: "ZW" },
+]
+
+const SMS_UNSUPPORTED_VALUES = new Set(
+  SMS_UNSUPPORTED_COUNTRY_CODES.map(country => country.value),
+)
+
+const SMS_SUPPORTED_COUNTRY_SELECT_OPTIONS = COUNTRY_SELECT_OPTIONS.filter(
+  country => !SMS_UNSUPPORTED_VALUES.has(country.value),
+)
 
 export const ALL_COUNTRY_SELECT_OPTIONS = uniqBy(
   [...COUNTRY_SELECT_OPTIONS, ...EU_COUNTRY_SELECT_OPTIONS],

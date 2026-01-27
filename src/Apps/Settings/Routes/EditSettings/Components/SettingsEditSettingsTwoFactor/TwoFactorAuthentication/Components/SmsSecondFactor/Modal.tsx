@@ -146,8 +146,8 @@ export const SmsSecondFactorModal: React.FC<
   }
 
   const steps: StepElement[] = [
-    // eslint-disable-next-line react/jsx-key
     <Step
+      key="phone-number"
       label="Phone Number"
       onSubmit={handleDeliverStepSubmit}
       validationSchema={Yup.object().shape({
@@ -170,6 +170,7 @@ export const SmsSecondFactorModal: React.FC<
           <CountrySelect
             selected={form.values.countryCode}
             onSelect={value => form.setFieldValue("countryCode", value)}
+            smsSupported
           />
 
           <Spacer y={1} />
@@ -206,8 +207,8 @@ export const SmsSecondFactorModal: React.FC<
       )}
     </Step>,
 
-    // eslint-disable-next-line react/jsx-key
     <Step
+      key="authentication-code"
       label="Authentication Code"
       validationSchema={Yup.object().shape({
         code: Yup.string().required("Enter a code"),
