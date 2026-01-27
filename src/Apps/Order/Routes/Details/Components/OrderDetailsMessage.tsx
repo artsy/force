@@ -140,14 +140,7 @@ const MessageContent = ({
                 contact the gallery
               </RouterLink>
             ) : (
-              <a
-                href="/user/conversations"
-                onClick={() => {
-                  tracking.clickedContactGallery(order.internalID)
-                }}
-              >
-                contact the gallery
-              </a>
+              "contact the gallery"
             )}{" "}
             with any questions about your offer.
           </Text>

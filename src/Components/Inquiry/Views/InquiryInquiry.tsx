@@ -12,12 +12,14 @@ import {
   Text,
   TextArea,
 } from "@artsy/palette"
+import { useVariant } from "@unleash/proxy-client-react"
 import { InquiryQuestionsList } from "Components/Inquiry/Components/InquiryQuestionsList"
 import { useArtworkInquiryRequest } from "Components/Inquiry/Hooks/useArtworkInquiryRequest"
 import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
 import { logger } from "Components/Inquiry/util"
 import { RouterLink } from "System/Components/RouterLink"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import { useTrackFeatureVariantOnMount } from "System/Hooks/useTrackFeatureVariant"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { wait } from "Utils/wait"
 import type { InquiryInquiryQuery } from "__generated__/InquiryInquiryQuery.graphql"
@@ -25,8 +27,6 @@ import type { InquiryInquiry_artwork$data } from "__generated__/InquiryInquiry_a
 import type * as React from "react"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useVariant } from "@unleash/proxy-client-react"
-import { useTrackFeatureVariantOnMount } from "System/Hooks/useTrackFeatureVariant"
 
 const INQUIRY_CHECKBOXES_FLAG = "emerald_inquiry-checkboxes-on-web"
 
@@ -146,7 +146,7 @@ const InquiryInquiry: React.FC<
           lazyLoad
         />
 
-        <Box ml={2}>
+        <Box flex={1} ml={2}>
           <Text variant="sm-display">{artwork.artist?.name}</Text>
 
           <Text variant="sm-display">

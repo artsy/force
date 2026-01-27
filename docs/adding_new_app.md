@@ -18,9 +18,15 @@ export const routes: RouteProps[] = [
         <div>
           <h1>Hello new app!</h1>
           <nav>
-            <RouterLink to='/new-app/artworks'> - Navigate to Artworks</RouterLink>
-            <RouterLink to='/new-app/artists'> - Navigate to Artists</RouterLink>
-          <nav>
+            <RouterLink to="/new-app/artworks">
+              {" "}
+              - Navigate to Artworks
+            </RouterLink>
+            <RouterLink to="/new-app/artists">
+              {" "}
+              - Navigate to Artists
+            </RouterLink>
+          </nav>
           <div>{props.children}</div>
         </div>
       )
@@ -28,14 +34,14 @@ export const routes: RouteProps[] = [
     children: [
       {
         path: "artworks",
-        Component: () => <div>Artworks list...</div>
+        Component: () => <div>Artworks list...</div>,
       },
-            {
+      {
         path: "artists",
-        Component: () => <div>Artists list...</div>
-      }
-    ]
-  }
+        Component: () => <div>Artists list...</div>,
+      },
+    ],
+  },
 ]
 ```
 
@@ -105,7 +111,7 @@ Extending the example above, lets add a server-side redirect if the user isn't l
 export function myNewAppRedirect({ req, res, next }) {
   if (!res.locals.sd.CURRENT_USER) {
     return res.redirect(
-      `/login?redirectTo=${encodeURIComponent(req.originalUrl)}`
+      `/login?redirectTo=${encodeURIComponent(req.originalUrl)}`,
     )
   }
 }

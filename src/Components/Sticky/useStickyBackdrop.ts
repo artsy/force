@@ -1,12 +1,13 @@
 import { useTheme } from "@artsy/palette"
+import { THEME, THEME_DARK } from "@artsy/palette-tokens"
 
 export const useStickyBackdrop = () => {
   const { theme } = useTheme()
 
   const up = {
     backgroundColor: {
-      light: "rgba(255, 255, 255, 0.98)",
-      dark: "rgba(0, 0, 0, 0.9)",
+      light: `${THEME.colors.mono0}FA`, // @ 98% opacity
+      dark: `${THEME_DARK.colors.mono0}FA`, // @ 98% opacity
     }[theme.name],
   }
 

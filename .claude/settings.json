@@ -1,6 +1,16 @@
 {
+  "companyAnnouncements": [
+    "███████████████████████████████████████\n███                                 ███\n███         █████                   ███\n███        ███ ███                  ███\n███       ███   ███                 ███\n███      ███████████                ███\n███     ███       ███               ███\n███                                 ███\n███                        ███      ███\n███                        ███      ███\n███████████████████████████████████████\n\n\nHello, Artsy developers!\n\nHere are some guidelines for working with Claude in this project:\n- View /skills to see what agent skills are available, e.g. `adding-a-new-app-route`\n- View /artsy to see more tips and info"
+  ],
   "permissions": {
-    "allow": [],
+    "allow": [
+      "Bash(yarn type-check:*)",
+      "Bash(yarn lint:*)",
+      "Bash(yarn jest:*)",
+      "Bash(yarn relay:*)",
+      "Bash(grep:*)",
+      "Bash(find:*)"
+    ],
     "deny": [
       "Read(.env)",
       "Read(.env.shared)",
