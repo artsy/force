@@ -16,7 +16,6 @@ import {
   LabeledInput,
   Spacer,
   Text,
-  TextArea,
   useToasts,
 } from "@artsy/palette"
 import { editProfileVerificationSchema } from "Apps/CollectorProfile/Utils/ValidationSchemas"
@@ -54,7 +53,6 @@ export interface EditProfileFormModel {
   linkedIn: string
   instagram: string
   otherRelevantPositions: string
-  bio: string
 }
 
 interface SettingsEditProfileFieldsProps {
@@ -91,7 +89,6 @@ const SettingsEditProfileFields: React.FC<
     linkedIn: me.collectorProfile?.linkedIn ?? "",
     instagram: me.collectorProfile?.instagram ?? "",
     otherRelevantPositions: me.otherRelevantPositions ?? "",
-    bio: me.bio ?? "",
     photo: null,
   }
 
@@ -109,7 +106,6 @@ const SettingsEditProfileFields: React.FC<
         location,
         profession: values.profession,
         otherRelevantPositions: values.otherRelevantPositions,
-        bio: values.bio,
         linkedIn: values.linkedIn,
         instagram: values.instagram,
       }
@@ -232,18 +228,6 @@ const SettingsEditProfileFields: React.FC<
                 label="@"
                 variant="prefix"
                 data-testid="edit-profile-instagram-input"
-              />
-
-              <TextArea
-                title="About"
-                placeholder="Add a brief bio, so galleries know which artists or genres you collect."
-                name="bio"
-                maxLength={150}
-                onChange={({ value }) => {
-                  setFieldValue("bio", value)
-                }}
-                value={values.bio}
-                data-testid="edit-profile-about-input"
               />
             </Join>
 
@@ -407,7 +391,6 @@ export const SettingsEditProfileFieldsFragmentContainer =
         name
         profession
         otherRelevantPositions
-        bio
         location {
           display
           city

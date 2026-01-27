@@ -27,8 +27,7 @@ export const OrderDetailsMessage = ({
     collectorProfile?.isEmailConfirmed &&
     collectorProfile?.profession &&
     collectorProfile?.isIdentityVerified &&
-    collectorProfile?.otherRelevantPositions &&
-    collectorProfile?.bio
+    collectorProfile?.otherRelevantPositions
   )
 
   return (
