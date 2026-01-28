@@ -1,5 +1,6 @@
 import { MetaTags } from "Components/MetaTags"
 import { ArtistStructuredData } from "Components/Seo/ArtistStructuredData"
+import { getArtistMeta } from "Apps/Artist/Utils/getArtistMeta"
 import { useRouter } from "System/Hooks/useRouter"
 import { getENV } from "Utils/getENV"
 import { getPageNumber, getArtistSubRoute } from "Utils/url"
@@ -24,44 +25,17 @@ export const ArtistMeta: React.FC<React.PropsWithChildren<Props>> = ({
 
   const primaryRoute = getArtistSubRoute(pathname)
 
-  const getTitle = () => {
-    switch (primaryRoute) {
-      case "articles":
-        return `${artist.name} - Articles | Artsy`
-      case "cv":
-        return `${artist.name} - CV | Artsy`
-      case "series":
-        return `${artist.name} - Series | Artsy`
-      case "shows":
-        return `${artist.name} - Shows | Artsy`
-      default:
-        return `${artist.name} - Biography, Shows, Articles & More | Artsy`
-    }
-  }
-
-  const getDescription = () => {
-    switch (primaryRoute) {
-      case "articles":
-        return `Read articles and editorial content about ${artist.name} on Artsy. Browse reviews, interviews, and critical analysis of their work.`
-      case "cv":
-        return `View ${artist.name}’s complete exhibition history on Artsy. Browse their CV including solo shows, group shows, and fair booths at galleries and fairs worldwide.`
-      case "series":
-        return `Explore ${artist.name}’s series on Artsy and discover artworks available to collect. Browse the themes and artistic expressions that define ${artist.name}’s career.`
-      case "shows":
-        return `View current and upcoming exhibitions featuring ${artist.name} on Artsy. Browse shows at galleries and fairs worldwide.`
-      default: {
-        const baseDescription = `Explore ${artist.name}’s biography, achievements, artworks, auction results, and shows on Artsy.`
-        const blurb = artist.biographyBlurbPlain?.text?.substring(0, 70) || ""
-        return blurb ? `${baseDescription} ${blurb}` : baseDescription
-      }
-    }
-  }
+  const { title, description } = getArtistMeta({
+    name: artist.name,
+    biographyBlurb: artist.biographyBlurbPlain,
+    subRoute: primaryRoute,
+  })
 
   return (
     <>
       <MetaTags
-        title={getTitle()}
-        description={getDescription()}
+        title={title}
+        description={description}
         imageURL={artist.coverArtwork?.image?.large}
         pathname={canonicalPath}
       />

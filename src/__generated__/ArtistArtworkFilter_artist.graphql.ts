@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d2b6714465692bfb3f699048bfed80ab>>
+ * @generated SignedSource<<4a061b179db501b16125b5dad668f0b6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -27,9 +27,6 @@ export type ArtistArtworkFilter_artist$data = {
     readonly " $fragmentSpreads": FragmentRefs<"ArtworkFilterArtworkGrid_filtered_artworks" | "ImmersiveView_filtered_artworks">;
   } | null | undefined;
   readonly internalID: string;
-  readonly meta: {
-    readonly title: string;
-  };
   readonly name: string | null | undefined;
   readonly slug: string;
   readonly " $fragmentType": "ArtistArtworkFilter_artist";
@@ -187,36 +184,12 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "slug",
       "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "page",
-          "value": "ARTWORKS"
-        }
-      ],
-      "concreteType": "ArtistMeta",
-      "kind": "LinkedField",
-      "name": "meta",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "title",
-          "storageKey": null
-        }
-      ],
-      "storageKey": "meta(page:\"ARTWORKS\")"
     }
   ],
   "type": "Artist",
   "abstractKey": null
 };
 
-(node as any).hash = "eb952be86a8a420fc96c6d4e09e50156";
+(node as any).hash = "e07d35d3ddba4c5d54123da59c60c1a9";
 
 export default node;

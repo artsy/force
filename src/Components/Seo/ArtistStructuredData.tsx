@@ -1,4 +1,5 @@
 import { StructuredData } from "Components/Seo/StructuredData"
+import { getArtistMeta } from "Apps/Artist/Utils/getArtistMeta"
 import { getENV } from "Utils/getENV"
 import type { ArtistStructuredData_artist$key } from "__generated__/ArtistStructuredData_artist.graphql"
 import compact from "lodash/compact"
@@ -23,6 +24,11 @@ export const ArtistStructuredData: React.FC<ArtistStructuredDataProps> = ({
     }),
   )
 
+  const { title, description } = getArtistMeta({
+    name: data.name,
+    biographyBlurb: data.biographyBlurbPlain,
+  })
+
   return (
     <StructuredData
       schemaData={{
@@ -34,7 +40,7 @@ export const ArtistStructuredData: React.FC<ArtistStructuredDataProps> = ({
             additionalType: "Artist",
             birthDate: data.birthday ?? undefined,
             deathDate: data.deathday ?? undefined,
-            description: data.meta?.description,
+            description,
             gender: data.gender ?? undefined,
             image: data.coverArtwork?.image?.url ?? undefined,
             mainEntityOfPage: artistUrl,
@@ -48,8 +54,8 @@ export const ArtistStructuredData: React.FC<ArtistStructuredDataProps> = ({
           {
             "@type": "WebPage",
             "@id": artistUrl,
-            name: data.meta?.title ?? undefined,
-            description: data.meta?.description ?? undefined,
+            name: title,
+            description,
             mainEntity: {
               "@id": artistUrl,
             },
@@ -69,9 +75,8 @@ const fragment = graphql`
     gender
     nationality
     href
-    meta(page: ABOUT) {
-      title
-      description
+    biographyBlurbPlain: biographyBlurb(format: PLAIN) {
+      text
     }
     coverArtwork {
       image {
