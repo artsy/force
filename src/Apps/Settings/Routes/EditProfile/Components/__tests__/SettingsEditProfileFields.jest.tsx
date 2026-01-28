@@ -82,7 +82,6 @@ describe("SettingsEditProfileFields", () => {
     expect(screen.getByText("LinkedIn")).toBeInTheDocument()
     expect(screen.getByText("Instagram")).toBeInTheDocument()
     expect(screen.getByText("Other relevant positions")).toBeInTheDocument()
-    expect(screen.getByText("About")).toBeInTheDocument()
   })
 
   it("submits the form", async () => {
@@ -110,14 +109,6 @@ describe("SettingsEditProfileFields", () => {
     fireEvent.change(screen.getByPlaceholderText("Other relevant positions"), {
       target: { name: "otherRelevantPositions", value: "Positions" },
     })
-    fireEvent.change(
-      screen.getByPlaceholderText(
-        "Add a brief bio, so galleries know which artists or genres you collect.",
-      ),
-      {
-        target: { name: "bio", value: "I collect" },
-      },
-    )
 
     fireEvent.click(screen.getByText("Save"))
 

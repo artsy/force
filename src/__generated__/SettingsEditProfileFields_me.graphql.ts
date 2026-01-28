@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9a280b0959ec0dd47ea6924995a62cd7>>
+ * @generated SignedSource<<18cb0700928d5b2745cd63b21c7f5f84>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,6 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SettingsEditProfileFields_me$data = {
-  readonly bio: string | null | undefined;
   readonly canRequestEmailConfirmation: boolean;
   readonly collectorProfile: {
     readonly instagram: string | null | undefined;
@@ -75,13 +74,6 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "otherRelevantPositions",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "bio",
       "storageKey": null
     },
     {
@@ -181,6 +173,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "4a8618f8a998cfcc522e528ed0b7ff62";
+(node as any).hash = "fe61a90749d1549d442e6cd5428ab88f";
 
 export default node;

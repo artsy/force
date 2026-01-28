@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1a0bd92967c77ebbe137005892550182>>
+ * @generated SignedSource<<355b54e398e498141a2325485e8b3a98>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,7 +12,6 @@ import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type OrderDetailsMessage_me$data = {
   readonly collectorProfile: {
-    readonly bio: string | null | undefined;
     readonly isEmailConfirmed: boolean | null | undefined;
     readonly isIdentityVerified: boolean | null | undefined;
     readonly location: {
@@ -87,13 +86,6 @@ const node: ReaderFragment = {
           "kind": "ScalarField",
           "name": "otherRelevantPositions",
           "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "bio",
-          "storageKey": null
         }
       ],
       "storageKey": null
@@ -103,6 +95,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "5dfd9b11e8fe66d124e0f700e325f07f";
+(node as any).hash = "dfbdf6f9fe05fd88bce87c66f2f7aab6";
 
 export default node;

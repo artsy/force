@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f92c906dde41d1362018c716347efbcb>>
+ * @generated SignedSource<<224541ebeb60ed3d5fe869b093f6a170>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -38,21 +38,21 @@ v1 = {
 },
 v2 = {
   "enumValues": null,
-  "nullable": true,
+  "nullable": false,
   "plural": false,
-  "type": "String"
+  "type": "Boolean"
 },
 v3 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
-  "type": "Boolean"
+  "type": "ID"
 },
 v4 = {
   "enumValues": null,
-  "nullable": false,
+  "nullable": true,
   "plural": false,
-  "type": "ID"
+  "type": "String"
 },
 v5 = {
   "enumValues": null,
@@ -188,13 +188,6 @@ return {
           {
             "alias": null,
             "args": null,
-            "kind": "ScalarField",
-            "name": "bio",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
             "concreteType": "MyLocation",
             "kind": "LinkedField",
             "name": "location",
@@ -293,7 +286,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "85660195f31a9204cca9da902d32bf20",
+    "cacheID": "bd46a278d5ec0b6dad74eb4f7f468fdf",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -303,18 +296,17 @@ return {
           "plural": false,
           "type": "Me"
         },
-        "me.bio": (v2/*: any*/),
-        "me.canRequestEmailConfirmation": (v3/*: any*/),
+        "me.canRequestEmailConfirmation": (v2/*: any*/),
         "me.collectorProfile": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "CollectorProfileType"
         },
-        "me.collectorProfile.id": (v4/*: any*/),
-        "me.collectorProfile.instagram": (v2/*: any*/),
-        "me.collectorProfile.linkedIn": (v2/*: any*/),
-        "me.email": (v2/*: any*/),
+        "me.collectorProfile.id": (v3/*: any*/),
+        "me.collectorProfile.instagram": (v4/*: any*/),
+        "me.collectorProfile.linkedIn": (v4/*: any*/),
+        "me.email": (v4/*: any*/),
         "me.icon": {
           "enumValues": null,
           "nullable": true,
@@ -341,10 +333,10 @@ return {
           "plural": true,
           "type": "String"
         },
-        "me.id": (v4/*: any*/),
-        "me.initials": (v2/*: any*/),
-        "me.internalID": (v4/*: any*/),
-        "me.isEmailConfirmed": (v3/*: any*/),
+        "me.id": (v3/*: any*/),
+        "me.initials": (v4/*: any*/),
+        "me.internalID": (v3/*: any*/),
+        "me.isEmailConfirmed": (v2/*: any*/),
         "me.isIdentityVerified": {
           "enumValues": null,
           "nullable": true,
@@ -357,19 +349,19 @@ return {
           "plural": false,
           "type": "MyLocation"
         },
-        "me.location.city": (v2/*: any*/),
-        "me.location.country": (v2/*: any*/),
-        "me.location.display": (v2/*: any*/),
-        "me.location.id": (v4/*: any*/),
-        "me.location.state": (v2/*: any*/),
-        "me.name": (v2/*: any*/),
-        "me.otherRelevantPositions": (v2/*: any*/),
-        "me.profession": (v2/*: any*/)
+        "me.location.city": (v4/*: any*/),
+        "me.location.country": (v4/*: any*/),
+        "me.location.display": (v4/*: any*/),
+        "me.location.id": (v3/*: any*/),
+        "me.location.state": (v4/*: any*/),
+        "me.name": (v4/*: any*/),
+        "me.otherRelevantPositions": (v4/*: any*/),
+        "me.profession": (v4/*: any*/)
       }
     },
     "name": "SettingsEditProfileFields_Test_Query",
     "operationKind": "query",
-    "text": "query SettingsEditProfileFields_Test_Query {\n  me {\n    ...SettingsEditProfileFields_me\n    id\n  }\n}\n\nfragment CollectorProfileHeaderAvatar_me on Me {\n  initials\n  icon {\n    internalID\n    versions\n    cropped(height: 100, width: 100) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment SettingsEditProfileFields_me on Me {\n  ...SettingsEditProfileImage_me\n  internalID\n  name\n  profession\n  otherRelevantPositions\n  bio\n  location {\n    display\n    city\n    state\n    country\n    id\n  }\n  email\n  isEmailConfirmed\n  isIdentityVerified\n  canRequestEmailConfirmation\n  collectorProfile {\n    linkedIn\n    instagram\n    id\n  }\n}\n\nfragment SettingsEditProfileImage_me on Me {\n  ...CollectorProfileHeaderAvatar_me\n  initials\n  icon {\n    internalID\n    versions\n    cropped(height: 100, width: 100) {\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query SettingsEditProfileFields_Test_Query {\n  me {\n    ...SettingsEditProfileFields_me\n    id\n  }\n}\n\nfragment CollectorProfileHeaderAvatar_me on Me {\n  initials\n  icon {\n    internalID\n    versions\n    cropped(height: 100, width: 100) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment SettingsEditProfileFields_me on Me {\n  ...SettingsEditProfileImage_me\n  internalID\n  name\n  profession\n  otherRelevantPositions\n  location {\n    display\n    city\n    state\n    country\n    id\n  }\n  email\n  isEmailConfirmed\n  isIdentityVerified\n  canRequestEmailConfirmation\n  collectorProfile {\n    linkedIn\n    instagram\n    id\n  }\n}\n\nfragment SettingsEditProfileImage_me on Me {\n  ...CollectorProfileHeaderAvatar_me\n  initials\n  icon {\n    internalID\n    versions\n    cropped(height: 100, width: 100) {\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();
