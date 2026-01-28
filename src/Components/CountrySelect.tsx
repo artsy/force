@@ -365,6 +365,7 @@ export const SMS_UNSUPPORTED_COUNTRY_CODES = [
   { text: "Liechtenstein", value: "LI" },
   { text: "Madagascar", value: "MG" },
   { text: "Malawi", value: "MW" },
+  { text: "Malaysia", value: "MY" },
   { text: "Maldives", value: "MV" },
   { text: "Mali", value: "ML" },
   { text: "Marshall Islands", value: "MH" },
@@ -419,6 +420,7 @@ export const SMS_UNSUPPORTED_COUNTRY_CODES = [
   { text: "Virgin Islands, British", value: "VG" },
   { text: "Wallis and Futuna", value: "WF" },
   { text: "Yemen", value: "YE" },
+  { text: "Zambia", value: "ZM" },
   { text: "Zimbabwe", value: "ZW" },
 ]
 
