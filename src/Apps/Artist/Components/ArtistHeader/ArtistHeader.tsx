@@ -19,7 +19,6 @@ import {
   Stack,
   Text,
 } from "@artsy/palette"
-import { useVariant } from "@unleash/proxy-client-react"
 import {
   ArtistHeaderImage,
   isValidImage,
@@ -30,7 +29,6 @@ import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowA
 import { ProgressiveOnboardingFollowArtist } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowArtist"
 import { RouterLink } from "System/Components/RouterLink"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import { useTrackFeatureVariantOnMount } from "System/Hooks/useTrackFeatureVariant"
 import { formatFollowerCount } from "Utils/formatFollowerCount"
 import type { ArtistHeader_artist$data } from "__generated__/ArtistHeader_artist.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -44,15 +42,6 @@ interface ArtistHeaderProps {
 const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
   artist,
 }) => {
-  const openCareerHighlightsVariant = useVariant(
-    "diamond_open-artist-header-career-highlights",
-  )
-
-  useTrackFeatureVariantOnMount({
-    experimentName: "diamond_open-artist-header-career-highlights",
-    variantName: openCareerHighlightsVariant.name,
-  })
-
   const { trackEvent } = useTracking()
   const { contextPageOwnerType, contextPageOwnerId, contextPageOwnerSlug } =
     useAnalyticsContext()
@@ -286,7 +275,6 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
                     key={insight.kind ?? index}
                     insight={insight}
                     contextModule={ContextModule.artistHeader}
-                    expanded={openCareerHighlightsVariant.name === "experiment"}
                   />
                 )
               })}
