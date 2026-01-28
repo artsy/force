@@ -27,8 +27,7 @@ export const OrderDetailsMessage = ({
     collectorProfile?.isEmailConfirmed &&
     collectorProfile?.profession &&
     collectorProfile?.isIdentityVerified &&
-    collectorProfile?.otherRelevantPositions &&
-    collectorProfile?.bio
+    collectorProfile?.otherRelevantPositions
   )
 
   return (
@@ -440,7 +439,6 @@ const ME_FRAGMENT = graphql`
       profession
       isIdentityVerified
       otherRelevantPositions
-      bio
     }
   }
 `
