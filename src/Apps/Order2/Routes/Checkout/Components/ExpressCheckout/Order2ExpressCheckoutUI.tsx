@@ -144,7 +144,7 @@ export const Order2ExpressCheckoutUI: React.FC<
     country: string
     postal_code?: string
     name: string
-  }) => {
+  }): Promise<OrderMutationResult> => {
     const result = await updateOrderShippingAddressMutation.submitMutation({
       variables: {
         input: {
@@ -173,13 +173,8 @@ export const Order2ExpressCheckoutUI: React.FC<
     const requiresFulfillmentAutoSelect = expressCheckoutType === "google_pay"
     if (
       requiresFulfillmentAutoSelect &&
-      initialResult.shippingRates.length > 0 &&
-      initialResult.shippingRates[0].id !== CALCULATING_SHIPPING_RATE.id
+      initialResult.shippingRates.length > 0 // TODO: This should be an error - exit checkout and display an error to user (pr #16653)
     ) {
-      logger.warn(
-        "Auto-setting fulfillment option for Google Pay:",
-        initialResult.shippingRates[0].id,
-      )
       return await setFulfillmentOption(
         initialResult.shippingRates[0].id as FulfillmentOptionInputEnum,
       )
@@ -191,8 +186,7 @@ export const Order2ExpressCheckoutUI: React.FC<
   // Helper to set fulfillment option and extract data
   const setFulfillmentOption = async (
     fulfillmentType: FulfillmentOptionInputEnum,
-  ) => {
-    logger.warn("Setting fulfillment option:", fulfillmentType)
+  ): Promise<OrderMutationResult> => {
     const result = await setFulfillmentOptionMutation.submitMutation({
       variables: {
         input: {
@@ -220,12 +214,9 @@ export const Order2ExpressCheckoutUI: React.FC<
     const buyerTotalMinor = order.buyerTotal?.minor
 
     if (buyerTotalMinor != null) {
-      logger.warn("Updating Stripe elements with amount:", buyerTotalMinor)
       elements?.update({
         amount: buyerTotalMinor,
       })
-    } else {
-      logger.error("buyerTotal is null, cannot update Stripe elements")
     }
   }
 
@@ -235,14 +226,10 @@ export const Order2ExpressCheckoutUI: React.FC<
     timeout?: number
   }) => {
     const { buyerTotalMinor, resolveDetails, timeout = 500 } = args
-    logger.warn("Updating order total", buyerTotalMinor)
     if (buyerTotalMinor != null) {
-      logger.warn("Calling elements.update with amount", buyerTotalMinor)
       elements?.update({
         amount: buyerTotalMinor,
       })
-    } else {
-      logger.error("buyerTotalMinor is null or undefined, skipping update")
     }
     setTimeout(() => {
       resolveDetails()
@@ -340,8 +327,6 @@ export const Order2ExpressCheckoutUI: React.FC<
     resolve,
     reject,
   }: StripeExpressCheckoutElementShippingAddressChangeEvent) => {
-    logger.warn("Express checkout element address change", address)
-
     const { city, state, country, postal_code } = address
 
     try {
@@ -351,12 +336,6 @@ export const Order2ExpressCheckoutUI: React.FC<
         country,
         postal_code,
         name,
-      })
-
-      logger.warn("handleShippingAddressChange - result:", {
-        shippingRates: result.shippingRates,
-        lineItems: result.lineItems,
-        buyerTotal: result.order.buyerTotal?.minor,
       })
 
       updateStripeElements(result.order)
@@ -378,27 +357,10 @@ export const Order2ExpressCheckoutUI: React.FC<
     resolve,
     reject,
   }: StripeExpressCheckoutElementShippingRateChangeEvent) => {
-    logger.warn("Shipping rate change", shippingRate)
-
-    if (shippingRate.id === CALCULATING_SHIPPING_RATE.id) {
-      errorRef.current = "shipping_options_not_available"
-      logger.error(
-        "Shipping options not available yet, skipping setting fulfillment option",
-      )
-      reject()
-      return
-    }
-
     try {
       const result = await setFulfillmentOption(
         shippingRate.id as FulfillmentOptionInputEnum,
       )
-
-      logger.warn("handleShippingRateChange - result:", {
-        shippingRates: result.shippingRates,
-        lineItems: result.lineItems,
-        buyerTotal: result.order.buyerTotal?.minor,
-      })
 
       updateStripeElements(result.order)
 
@@ -505,14 +467,6 @@ export const Order2ExpressCheckoutUI: React.FC<
       validateAndExtractOrderResponse(
         updateOrderPaymentMethodResult.setOrderPayment?.orderOrError,
       )
-
-      // Set fulfillment option from the selected shipping rate
-      // This ensures the fulfillment type is set even if onShippingRateChange wasn't triggered
-      if (shippingRate?.id) {
-        await setFulfillmentOption(
-          shippingRate.id as FulfillmentOptionInputEnum,
-        )
-      }
 
       // Finally we have all fulfillment details
       const updateOrderShippingAddressResult =
@@ -694,8 +648,14 @@ type ParseableOrder =
   | Order2ExpressCheckoutUI_order$data
   | SetFulfillmentOrderResult
 
+type OrderMutationResult = {
+  order: ParseableOrder
+  shippingRates: Array<ShippingRate>
+  lineItems: Array<LineItem>
+}
+
 const extractLineItems = (order: ParseableOrder): Array<LineItem> => {
-  const { itemsTotal, shippingTotal, buyerTotal, taxTotal } = order
+  const { itemsTotal, shippingTotal, taxTotal } = order
 
   if (!itemsTotal) {
     throw new Error("itemsTotal is required")
@@ -712,18 +672,6 @@ const extractLineItems = (order: ParseableOrder): Array<LineItem> => {
   const selectedFulfillmentOption = order.fulfillmentOptions.find(
     option => option.selected,
   )
-
-  logger.warn(
-    "extractLineItems - fulfillmentOptions:",
-    order.fulfillmentOptions,
-  )
-  logger.warn(
-    "extractLineItems - selectedFulfillmentOption:",
-    selectedFulfillmentOption,
-  )
-  logger.warn("extractLineItems - shippingTotal:", shippingTotal)
-  logger.warn("extractLineItems - taxTotal:", taxTotal)
-  logger.warn("extractLineItems - buyerTotal:", buyerTotal)
 
   if (selectedFulfillmentOption && shippingTotal) {
     const shippingRate = shippingRateForFulfillmentOption(
@@ -746,15 +694,6 @@ const extractLineItems = (order: ParseableOrder): Array<LineItem> => {
     [itemsSubtotal, shippingLine, taxLine] as Array<LineItem>
   ).filter(Boolean)
 
-  const lineItemsSum = lineItems.reduce((sum, item) => sum + item.amount, 0)
-  logger.warn("Line items", lineItems)
-  logger.warn(
-    "Line items sum:",
-    lineItemsSum,
-    "vs buyerTotal:",
-    buyerTotal?.minor,
-  )
-
   return lineItems
 }
 
@@ -765,13 +704,6 @@ const extractAllowedShippingCountries = (
     countryCode.toUpperCase(),
   )
 }
-
-const CALCULATING_SHIPPING_RATE = {
-  id: "CALCULATING_SHIPPING",
-  displayName: "Calculating shipping...",
-  // Express checkout requires a number for amount
-  amount: 0,
-} as const
 
 const shippingRateForFulfillmentOption = option => {
   const { type, amount } = option
@@ -796,8 +728,6 @@ const shippingRateForFulfillmentOption = option => {
       }
       break
     case "SHIPPING_TBD":
-      // TODO: Maybe we no longer return this (rates might be empty on
-      // server, define our fallback CALCULATING_SHIPPING_RATE in this file)
       return null
     default:
       logger.warn("Unhandled fulfillment option", type)
@@ -820,21 +750,16 @@ const extractShippingRates = (order: ParseableOrder): Array<ShippingRate> => {
   const rates = order.fulfillmentOptions
     .map(shippingRateForFulfillmentOption)
     .filter(Boolean) as ShippingRate[]
-  const shippingRatesOnly = rates.filter(rate => rate.id !== "PICKUP")
-  const finalRates =
-    shippingRatesOnly.length === 0
-      ? rates.concat(CALCULATING_SHIPPING_RATE)
-      : rates
   const selectedFulfillmentOption = order.fulfillmentOptions.find(
     option => option.selected,
   )
   if (selectedFulfillmentOption?.type === "PICKUP") {
     // if pickup is selected, it should be the first option since Stripe auto
     // selects the first option
-    return finalRates
+    return rates
   } else {
     // on modal open, the first option should always be ship
-    return finalRates.sort(sortPickupLast)
+    return rates.sort(sortPickupLast)
   }
 }
 
