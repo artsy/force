@@ -119,5 +119,26 @@ describe("ConversationDetails", () => {
         artwork_id: "mocked-artwork-id",
       })
     })
+
+    it("tracks click on Inquiries FAQ link", () => {
+      renderWithRelay({
+        Conversation: () => ({
+          internalID: "test-conversation-id",
+        }),
+      })
+
+      fireEvent.click(screen.getByText("Inquiries FAQ"))
+
+      expect(trackEvent).toHaveBeenCalledTimes(1)
+      expect(trackEvent.mock.calls[0][0]).toMatchObject({
+        action: "clickedVisitHelpCenter",
+        context_module: "conversations",
+        context_page_owner_id: "test-conversation-id",
+        context_page_owner_type: "conversation",
+        destination_page_owner_type: "articles",
+        destination_page_owner_slug: "0TO3b000000UevEGAS/contacting-a-gallery",
+        flow: "Inquiry",
+      })
+    })
   })
 })

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<db3e43a88a3464b60c81816d46fbaa42>>
+ * @generated SignedSource<<40142d070d1f57d2efee67b2d2727643>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,7 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ConversationDetails_conversation$data = {
+  readonly internalID: string | null | undefined;
   readonly orderConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
@@ -33,6 +34,13 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "ConversationDetails_conversation",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "internalID",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": [
@@ -115,6 +123,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "69a0ab88affc27af34d9305641294924";
+(node as any).hash = "6ad99c6f6229e4e45649b9c6787b42c6";
 
 export default node;
