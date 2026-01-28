@@ -715,7 +715,6 @@ const sortPickupLast = (a: ShippingRate, b: ShippingRate) => {
 }
 
 const extractShippingRates = (order: ParseableOrder): Array<ShippingRate> => {
-  console.log("**", order.fulfillmentOptions)
   const rates = order.fulfillmentOptions
     .map(shippingRateForFulfillmentOption)
     .filter(Boolean) as ShippingRate[]

@@ -414,7 +414,7 @@ describe("ExpressCheckoutUI", () => {
     expect(env.mock.getAllOperations()).toHaveLength(0)
   })
 
-  it("uses the itemTotal and 'calculating shipping...' for initial values on load", async () => {
+  it("uses the itemTotal for initial values on load", async () => {
     const { env } = renderWithRelay({
       Order: () => ({
         ...orderData,
@@ -444,13 +444,6 @@ describe("ExpressCheckoutUI", () => {
         shippingAddressRequired: true,
         business: { name: "Artsy" },
         lineItems: [{ amount: 12345, name: "Subtotal" }],
-        shippingRates: [
-          {
-            amount: 0,
-            displayName: "Calculating shipping...",
-            id: "CALCULATING_SHIPPING",
-          },
-        ],
       })
     })
     expect(mockElementsUpdate).toHaveBeenCalledWith({ amount: 12345 })
