@@ -51,6 +51,8 @@ export const SmsSecondFactor: React.FC<
   const [isCreating, setCreating] = useState(false)
   const [passwordConfirmation, setPasswordConfirmation] = useState("")
   const [emailSent, setEmailSent] = useState(false)
+  const [isSendingEmail, setIsSendingEmail] = useState(false)
+  const [lastSentTime, setLastSentTime] = useState<number | null>(null)
 
   // Reset's _all_ of these state flags.
   // NOTE: Don't do this. Just hacking around the architecture here.
@@ -167,6 +169,27 @@ export const SmsSecondFactor: React.FC<
   }
 
   async function handleSendVerifyEmail() {
+    const COOLDOWN_MS = 30000 // 30 seconds
+    const now = Date.now()
+
+    // Guard: Check if already sending
+    if (isSendingEmail) return
+
+    // Guard: Check cooldown period
+    if (lastSentTime && now - lastSentTime < COOLDOWN_MS) {
+      const remainingSeconds = Math.ceil(
+        (COOLDOWN_MS - (now - lastSentTime)) / 1000,
+      )
+      sendToast({
+        variant: "message",
+        message: "Please wait",
+        description: `You can resend the verification email in ${remainingSeconds} seconds.`,
+      })
+      return
+    }
+
+    setIsSendingEmail(true)
+
     try {
       await submitVerifyEmailMutation({
         variables: { input: {} },
@@ -176,12 +199,15 @@ export const SmsSecondFactor: React.FC<
       })
 
       setEmailSent(true)
+      setLastSentTime(now)
     } catch (error) {
       sendToast({
         variant: "error",
         message: "There was a problem",
         description: error.message || "Something went wrong",
       })
+    } finally {
+      setIsSendingEmail(false)
     }
   }
 
@@ -236,8 +262,13 @@ export const SmsSecondFactor: React.FC<
                 <Clickable
                   onClick={handleSendVerifyEmail}
                   textDecoration="underline"
+                  style={{ opacity: isSendingEmail ? 0.5 : 1 }}
                 >
-                  <Text variant="sm-display">Resend verification email</Text>
+                  <Text variant="sm-display">
+                    {isSendingEmail
+                      ? "Sending..."
+                      : "Resend verification email"}
+                  </Text>
                 </Clickable>
               </>
             ) : (
@@ -247,8 +278,11 @@ export const SmsSecondFactor: React.FC<
                 <Clickable
                   onClick={handleSendVerifyEmail}
                   textDecoration="underline"
+                  style={{ opacity: isSendingEmail ? 0.5 : 1 }}
                 >
-                  <Text variant="sm-display">Send verification email</Text>
+                  <Text variant="sm-display">
+                    {isSendingEmail ? "Sending..." : "Send verification email"}
+                  </Text>
                 </Clickable>
               </>
             )}
