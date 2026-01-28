@@ -415,24 +415,7 @@ export const Order2ExpressCheckoutUI: React.FC<
         setConfirmationToken,
       )
 
-      // Update order payment method with confirmation token
-      const updateOrderPaymentMethodResult =
-        await setOrderPaymentMutation.submitMutation({
-          variables: {
-            input: {
-              id: orderData.internalID,
-              paymentMethod: "CREDIT_CARD",
-              creditCardWalletType,
-              stripeConfirmationToken: confirmationToken.id,
-            },
-          },
-        })
-
-      validateAndExtractOrderResponse(
-        updateOrderPaymentMethodResult.setOrderPayment?.orderOrError,
-      )
-
-      // Finally we have all fulfillment details
+      // Update order with shipping address
       const updateOrderShippingAddressResult =
         await updateOrderShippingAddressMutation.submitMutation({
           variables: {
@@ -457,6 +440,23 @@ export const Order2ExpressCheckoutUI: React.FC<
       validateAndExtractOrderResponse(
         updateOrderShippingAddressResult.updateOrderShippingAddress
           ?.orderOrError,
+      )
+
+      // Update order payment method with confirmation token
+      const updateOrderPaymentMethodResult =
+        await setOrderPaymentMutation.submitMutation({
+          variables: {
+            input: {
+              id: orderData.internalID,
+              paymentMethod: "CREDIT_CARD",
+              creditCardWalletType,
+              stripeConfirmationToken: confirmationToken.id,
+            },
+          },
+        })
+
+      validateAndExtractOrderResponse(
+        updateOrderPaymentMethodResult.setOrderPayment?.orderOrError,
       )
 
       const submitOrderResult = await submitOrderMutation.submitMutation({
