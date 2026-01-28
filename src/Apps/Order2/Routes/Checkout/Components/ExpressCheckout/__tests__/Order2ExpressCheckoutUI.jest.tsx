@@ -276,6 +276,8 @@ describe("ExpressCheckoutUI", () => {
       },
     })
 
+    await flushPromiseQueue()
+
     // Third, test the shipping address update
     const shippingAddressUpdate = await mockResolveLastOperation({
       updateOrderShippingAddress: () => ({
@@ -389,6 +391,8 @@ describe("ExpressCheckoutUI", () => {
         type: "PICKUP",
       },
     })
+
+    await flushPromiseQueue()
 
     // Third, test the shipping address update
     const { operationName, operationVariables } =
@@ -612,6 +616,8 @@ describe("ExpressCheckoutUI", () => {
         },
       }),
     })
+
+    await flushPromiseQueue()
 
     // Resolve the update order mutation
     await mockResolveLastOperation({

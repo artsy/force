@@ -137,6 +137,79 @@ export const Order2ExpressCheckoutUI: React.FC<
     business: { name: "Artsy" },
   }
 
+  // Helper to update shipping address and extract data
+  const updateShippingAddress = async (params: {
+    city?: string
+    state?: string
+    country: string
+    postal_code?: string
+    name: string
+  }) => {
+    const result = await updateOrderShippingAddressMutation.submitMutation({
+      variables: {
+        input: {
+          id: orderData.internalID,
+          shippingCity: params.city,
+          shippingRegion: params.state,
+          shippingCountry: params.country,
+          shippingPostalCode: params.postal_code,
+          shippingName: params.name,
+        },
+      },
+    })
+
+    const order = validateAndExtractOrderResponse(
+      result.updateOrderShippingAddress?.orderOrError,
+    ).order
+
+    return {
+      order,
+      shippingRates: extractShippingRates(order),
+      lineItems: extractLineItems(order),
+    }
+  }
+
+  // Helper to set fulfillment option and extract data
+  const setFulfillmentOption = async (
+    fulfillmentType: FulfillmentOptionInputEnum,
+  ) => {
+    logger.warn("Setting fulfillment option:", fulfillmentType)
+    const result = await setFulfillmentOptionMutation.submitMutation({
+      variables: {
+        input: {
+          id: orderData.internalID,
+          fulfillmentOption: {
+            type: fulfillmentType,
+          },
+        },
+      },
+    })
+
+    const order = validateAndExtractOrderResponse(
+      result.setOrderFulfillmentOption?.orderOrError,
+    ).order
+
+    return {
+      order,
+      shippingRates: extractShippingRates(order),
+      lineItems: extractLineItems(order),
+    }
+  }
+
+  // Helper to update Stripe elements with order details
+  const updateStripeElements = (order: ParseableOrder) => {
+    const buyerTotalMinor = order.buyerTotal?.minor
+
+    if (buyerTotalMinor != null) {
+      logger.warn("Updating Stripe elements with amount:", buyerTotalMinor)
+      elements?.update({
+        amount: buyerTotalMinor,
+      })
+    } else {
+      logger.error("buyerTotal is null, cannot update Stripe elements")
+    }
+  }
+
   const updateOrderTotalAndResolve = (args: {
     buyerTotalMinor?: number | null
     resolveDetails: () => void
@@ -241,9 +314,58 @@ export const Order2ExpressCheckoutUI: React.FC<
     }
   }
 
+  // Internal handler for shipping address changes
+  const processShippingAddressChange = async (params: {
+    city?: string
+    state?: string
+    country: string
+    postal_code?: string
+    name: string
+  }) => {
+    // Update shipping address and get initial data
+    const updateShippingAddressResult = await updateShippingAddress(params)
+    let fulfillmentOptionAutoSelectResult: Awaited<
+      ReturnType<typeof setFulfillmentOption>
+    > | null = null
+
+    // Set the first shipping rate as the fulfillment option to ensure we have a full price
+    // Google Pay doesn't reliably trigger onShippingRateChange, so we auto-set for it
+    const requiresShippingRateSelection = expressCheckoutType === "google_pay"
+    if (
+      requiresShippingRateSelection &&
+      updateShippingAddressResult.shippingRates.length > 0 &&
+      updateShippingAddressResult.shippingRates[0].id !==
+        CALCULATING_SHIPPING_RATE.id
+    ) {
+      logger.warn(
+        "Auto-setting fulfillment option from first shipping rate:",
+        updateShippingAddressResult.shippingRates[0].id,
+      )
+      fulfillmentOptionAutoSelectResult = await setFulfillmentOption(
+        updateShippingAddressResult.shippingRates[0]
+          .id as FulfillmentOptionInputEnum,
+      )
+    }
+
+    const targetResult =
+      fulfillmentOptionAutoSelectResult ?? updateShippingAddressResult
+
+    logger.warn("processShippingAddressChange - result:", {
+      shippingRates: targetResult.shippingRates,
+      lineItems: targetResult.lineItems,
+      buyerTotal: targetResult.order.buyerTotal?.minor,
+    })
+
+    updateStripeElements(targetResult.order)
+
+    return {
+      shippingRates: targetResult.shippingRates,
+      lineItems: targetResult.lineItems,
+    }
+  }
+
   // User selects a shipping address
   const handleShippingAddressChange = async ({
-    // Stripe type only guarantees a partial address
     address,
     name,
     resolve,
@@ -251,109 +373,42 @@ export const Order2ExpressCheckoutUI: React.FC<
   }: StripeExpressCheckoutElementShippingAddressChangeEvent) => {
     logger.warn("Express checkout element address change", address)
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { city, state, country, postal_code } = address
 
     try {
-      const updateOrderShippingAddressResult =
-        await updateOrderShippingAddressMutation.submitMutation({
-          variables: {
-            input: {
-              id: orderData.internalID,
-              shippingCity: city,
-              shippingRegion: state,
-              shippingCountry: country,
-              shippingPostalCode: postal_code,
-              shippingName: name,
-            },
-          },
-        })
+      const { shippingRates, lineItems } = await processShippingAddressChange({
+        city,
+        state,
+        country,
+        postal_code,
+        name,
+      })
 
-      const validatedResult = validateAndExtractOrderResponse(
-        updateOrderShippingAddressResult.updateOrderShippingAddress
-          ?.orderOrError,
-      )
-
-      const shippingRates = extractShippingRates(validatedResult.order)
-
-      // Set the first shipping rate as the fulfillment option to ensure we have a full price
-      // Google Pay doesn't reliably trigger onShippingRateChange, so we auto-set for it
-      const requiresShippingRateSelection = expressCheckoutType === "google_pay"
-      if (
-        requiresShippingRateSelection &&
-        shippingRates.length > 0 &&
-        shippingRates[0].id !== CALCULATING_SHIPPING_RATE.id
-      ) {
-        logger.warn(
-          "Auto-setting fulfillment option for Google Pay from first shipping rate:",
-          shippingRates[0].id,
-        )
-        const setFulfillmentResult =
-          await setFulfillmentOptionMutation.submitMutation({
-            variables: {
-              input: {
-                id: orderData.internalID,
-                fulfillmentOption: {
-                  type: shippingRates[0].id as FulfillmentOptionInputEnum,
-                },
-              },
-            },
-          })
-        const fulfillmentValidatedResult = validateAndExtractOrderResponse(
-          setFulfillmentResult.setOrderFulfillmentOption?.orderOrError,
-        )
-
-        // Extract line items from the updated order with fulfillment set
-        const lineItems = extractLineItems(fulfillmentValidatedResult.order)
-        const buyerTotalMinor =
-          fulfillmentValidatedResult.order.buyerTotal?.minor
-
-        logger.warn(
-          "handleShippingAddressChange - buyerTotal after setting fulfillment:",
-          buyerTotalMinor,
-        )
-
-        // Resolve with updated rates and line items
-        resolve({
-          shippingRates,
-          lineItems,
-        })
-
-        // Update the total amount after resolving
-        if (buyerTotalMinor != null) {
-          logger.warn("Updating elements amount to:", buyerTotalMinor)
-          elements?.update({
-            amount: buyerTotalMinor,
-          })
-        } else {
-          logger.error("buyerTotalMinor is null, cannot update amount")
-        }
-      } else {
-        // No valid shipping rates yet, just resolve with what we have
-        const lineItems = extractLineItems(validatedResult.order)
-        const buyerTotalMinor = validatedResult.order.buyerTotal?.minor
-
-        logger.warn(
-          "handleShippingAddressChange - no valid rates yet, buyerTotal:",
-          buyerTotalMinor,
-        )
-
-        resolve({
-          shippingRates,
-          lineItems,
-        })
-
-        if (buyerTotalMinor != null) {
-          elements?.update({
-            amount: buyerTotalMinor,
-          })
-        }
-      }
+      resolve({ shippingRates, lineItems })
     } catch (error) {
       errorRef.current = error.code || "unknown_error"
       logger.error("Error updating order", error)
       reject()
-      return
+    }
+  }
+
+  // Internal handler for shipping rate changes
+  const processShippingRateChange = async (rateId: string) => {
+    const result = await setFulfillmentOption(
+      rateId as FulfillmentOptionInputEnum,
+    )
+
+    logger.warn("processShippingRateChange - result:", {
+      shippingRates: result.shippingRates,
+      lineItems: result.lineItems,
+      buyerTotal: result.order.buyerTotal?.minor,
+    })
+
+    updateStripeElements(result.order)
+
+    return {
+      shippingRates: result.shippingRates,
+      lineItems: result.lineItems,
     }
   }
 
@@ -375,41 +430,11 @@ export const Order2ExpressCheckoutUI: React.FC<
     }
 
     try {
-      const result = await setFulfillmentOptionMutation.submitMutation({
-        variables: {
-          input: {
-            id: orderData.internalID,
-            fulfillmentOption: {
-              type: shippingRate.id as FulfillmentOptionInputEnum,
-            },
-          },
-        },
-      })
-      const data = result.setOrderFulfillmentOption?.orderOrError
+      const { shippingRates, lineItems } = await processShippingRateChange(
+        shippingRate.id,
+      )
 
-      const validatedResult = validateAndExtractOrderResponse(data)
-
-      const lineItems = extractLineItems(validatedResult.order)
-      const shippingRates = extractShippingRates(validatedResult.order)
-      const buyerTotalMinor = validatedResult.order.buyerTotal?.minor
-
-      logger.warn("handleShippingRateChange - buyerTotal:", buyerTotalMinor)
-
-      // Resolve with updated rates and line items
-      resolve({
-        shippingRates,
-        lineItems,
-      })
-
-      // Update the total amount after resolving
-      if (buyerTotalMinor != null) {
-        logger.warn("Updating elements amount to:", buyerTotalMinor)
-        elements?.update({
-          amount: buyerTotalMinor,
-        })
-      } else {
-        logger.error("buyerTotalMinor is null, cannot update amount")
-      }
+      resolve({ shippingRates, lineItems })
     } catch (error) {
       errorRef.current = error.code || "unknown_error"
       logger.error("Error updating order", error)
@@ -513,23 +538,8 @@ export const Order2ExpressCheckoutUI: React.FC<
       // Set fulfillment option from the selected shipping rate
       // This ensures the fulfillment type is set even if onShippingRateChange wasn't triggered
       if (shippingRate?.id) {
-        logger.warn(
-          "Setting fulfillment option from shippingRate:",
-          shippingRate.id,
-        )
-        const setFulfillmentResult =
-          await setFulfillmentOptionMutation.submitMutation({
-            variables: {
-              input: {
-                id: orderData.internalID,
-                fulfillmentOption: {
-                  type: shippingRate.id as FulfillmentOptionInputEnum,
-                },
-              },
-            },
-          })
-        validateAndExtractOrderResponse(
-          setFulfillmentResult.setOrderFulfillmentOption?.orderOrError,
+        await setFulfillmentOption(
+          shippingRate.id as FulfillmentOptionInputEnum,
         )
       }
 
