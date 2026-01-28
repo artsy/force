@@ -187,7 +187,6 @@ export const Order2ExpressCheckoutUI: React.FC<
     try {
       const allowedShippingCountries =
         extractAllowedShippingCountries(orderData)
-      const shippingRates = [CALCULATING_SHIPPING_RATE]
 
       return updateOrderTotalAndResolve({
         buyerTotalMinor: itemsTotal?.minor,
@@ -195,7 +194,6 @@ export const Order2ExpressCheckoutUI: React.FC<
           resolve({
             ...checkoutOptions,
             allowedShippingCountries,
-            shippingRates,
             lineItems: [{ name: "Subtotal", amount: itemsTotal?.minor }],
           }),
       })
@@ -717,6 +715,7 @@ const sortPickupLast = (a: ShippingRate, b: ShippingRate) => {
 }
 
 const extractShippingRates = (order: ParseableOrder): Array<ShippingRate> => {
+  console.log("**", order.fulfillmentOptions)
   const rates = order.fulfillmentOptions
     .map(shippingRateForFulfillmentOption)
     .filter(Boolean) as ShippingRate[]
@@ -728,7 +727,7 @@ const extractShippingRates = (order: ParseableOrder): Array<ShippingRate> => {
   const selectedFulfillmentOption = order.fulfillmentOptions.find(
     option => option.selected,
   )
-  if (selectedFulfillmentOption!.type === "PICKUP") {
+  if (selectedFulfillmentOption?.type === "PICKUP") {
     // if pickup is selected, it should be the first option since Stripe auto
     // selects the first option
     return finalRates
