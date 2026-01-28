@@ -138,7 +138,7 @@ export const Order2ExpressCheckoutUI: React.FC<
   }
 
   // Helper to update shipping address and extract data
-  const updateShippingAddress = async (params: {
+  const setShippingAddress = async (params: {
     city?: string
     state?: string
     country: string
@@ -162,11 +162,30 @@ export const Order2ExpressCheckoutUI: React.FC<
       result.updateOrderShippingAddress?.orderOrError,
     ).order
 
-    return {
+    const initialResult = {
       order,
       shippingRates: extractShippingRates(order),
       lineItems: extractLineItems(order),
     }
+
+    // Auto-select first fulfillment option for Google Pay
+    // Google Pay doesn't reliably trigger onShippingRateChange, so we auto-set for it
+    const requiresFulfillmentAutoSelect = expressCheckoutType === "google_pay"
+    if (
+      requiresFulfillmentAutoSelect &&
+      initialResult.shippingRates.length > 0 &&
+      initialResult.shippingRates[0].id !== CALCULATING_SHIPPING_RATE.id
+    ) {
+      logger.warn(
+        "Auto-setting fulfillment option for Google Pay:",
+        initialResult.shippingRates[0].id,
+      )
+      return await setFulfillmentOption(
+        initialResult.shippingRates[0].id as FulfillmentOptionInputEnum,
+      )
+    }
+
+    return initialResult
   }
 
   // Helper to set fulfillment option and extract data
@@ -314,56 +333,6 @@ export const Order2ExpressCheckoutUI: React.FC<
     }
   }
 
-  // Internal handler for shipping address changes
-  const processShippingAddressChange = async (params: {
-    city?: string
-    state?: string
-    country: string
-    postal_code?: string
-    name: string
-  }) => {
-    // Update shipping address and get initial data
-    const updateShippingAddressResult = await updateShippingAddress(params)
-    let fulfillmentOptionAutoSelectResult: Awaited<
-      ReturnType<typeof setFulfillmentOption>
-    > | null = null
-
-    // Set the first shipping rate as the fulfillment option to ensure we have a full price
-    // Google Pay doesn't reliably trigger onShippingRateChange, so we auto-set for it
-    const requiresShippingRateSelection = expressCheckoutType === "google_pay"
-    if (
-      requiresShippingRateSelection &&
-      updateShippingAddressResult.shippingRates.length > 0 &&
-      updateShippingAddressResult.shippingRates[0].id !==
-        CALCULATING_SHIPPING_RATE.id
-    ) {
-      logger.warn(
-        "Auto-setting fulfillment option from first shipping rate:",
-        updateShippingAddressResult.shippingRates[0].id,
-      )
-      fulfillmentOptionAutoSelectResult = await setFulfillmentOption(
-        updateShippingAddressResult.shippingRates[0]
-          .id as FulfillmentOptionInputEnum,
-      )
-    }
-
-    const targetResult =
-      fulfillmentOptionAutoSelectResult ?? updateShippingAddressResult
-
-    logger.warn("processShippingAddressChange - result:", {
-      shippingRates: targetResult.shippingRates,
-      lineItems: targetResult.lineItems,
-      buyerTotal: targetResult.order.buyerTotal?.minor,
-    })
-
-    updateStripeElements(targetResult.order)
-
-    return {
-      shippingRates: targetResult.shippingRates,
-      lineItems: targetResult.lineItems,
-    }
-  }
-
   // User selects a shipping address
   const handleShippingAddressChange = async ({
     address,
@@ -376,7 +345,7 @@ export const Order2ExpressCheckoutUI: React.FC<
     const { city, state, country, postal_code } = address
 
     try {
-      const { shippingRates, lineItems } = await processShippingAddressChange({
+      const result = await setShippingAddress({
         city,
         state,
         country,
@@ -384,31 +353,22 @@ export const Order2ExpressCheckoutUI: React.FC<
         name,
       })
 
-      resolve({ shippingRates, lineItems })
+      logger.warn("handleShippingAddressChange - result:", {
+        shippingRates: result.shippingRates,
+        lineItems: result.lineItems,
+        buyerTotal: result.order.buyerTotal?.minor,
+      })
+
+      updateStripeElements(result.order)
+
+      resolve({
+        shippingRates: result.shippingRates,
+        lineItems: result.lineItems,
+      })
     } catch (error) {
       errorRef.current = error.code || "unknown_error"
       logger.error("Error updating order", error)
       reject()
-    }
-  }
-
-  // Internal handler for shipping rate changes
-  const processShippingRateChange = async (rateId: string) => {
-    const result = await setFulfillmentOption(
-      rateId as FulfillmentOptionInputEnum,
-    )
-
-    logger.warn("processShippingRateChange - result:", {
-      shippingRates: result.shippingRates,
-      lineItems: result.lineItems,
-      buyerTotal: result.order.buyerTotal?.minor,
-    })
-
-    updateStripeElements(result.order)
-
-    return {
-      shippingRates: result.shippingRates,
-      lineItems: result.lineItems,
     }
   }
 
@@ -430,11 +390,22 @@ export const Order2ExpressCheckoutUI: React.FC<
     }
 
     try {
-      const { shippingRates, lineItems } = await processShippingRateChange(
-        shippingRate.id,
+      const result = await setFulfillmentOption(
+        shippingRate.id as FulfillmentOptionInputEnum,
       )
 
-      resolve({ shippingRates, lineItems })
+      logger.warn("handleShippingRateChange - result:", {
+        shippingRates: result.shippingRates,
+        lineItems: result.lineItems,
+        buyerTotal: result.order.buyerTotal?.minor,
+      })
+
+      updateStripeElements(result.order)
+
+      resolve({
+        shippingRates: result.shippingRates,
+        lineItems: result.lineItems,
+      })
     } catch (error) {
       errorRef.current = error.code || "unknown_error"
       logger.error("Error updating order", error)
