@@ -178,9 +178,10 @@ describe("SmsSecondFactor", () => {
       ).toBeInTheDocument()
       expect(
         screen.getByText(
-          "Please check your inbox and click the link to verify your email.",
+          /Please check your inbox and click the link to verify your email\. This page will automatically update once verified \(or refresh manually\)\./,
         ),
       ).toBeInTheDocument()
+      expect(screen.getByText("Resend email")).toBeInTheDocument()
     })
   })
 })

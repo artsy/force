@@ -20,7 +20,7 @@ import { isArtsyEmail } from "Utils/isArtsyEmail"
 import type { CreateSmsSecondFactorInput } from "__generated__/CreateSmsSecondFactorMutation.graphql"
 import type { SmsSecondFactor_me$data } from "__generated__/SmsSecondFactor_me.graphql"
 import type * as React from "react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import {
   type RelayRefetchProp,
   createRefetchContainer,
@@ -185,6 +185,17 @@ export const SmsSecondFactor: React.FC<
     }
   }
 
+  // Poll for email confirmation after user sends confirmation email
+  useEffect(() => {
+    if (emailSent && !me.isEmailConfirmed) {
+      const interval = setInterval(() => {
+        relay.refetch({}, null, {}, { force: true })
+      }, 5000) // Check every 5 seconds
+
+      return () => clearInterval(interval)
+    }
+  }, [emailSent, me.isEmailConfirmed, relay])
+
   const show2FAWarning = isArtsyEmail(me?.email)
   const showEmailVerificationWarning = !isEnabled && !me.isEmailConfirmed
 
@@ -218,7 +229,17 @@ export const SmsSecondFactor: React.FC<
             }
           >
             {emailSent ? (
-              "Please check your inbox and click the link to verify your email."
+              <>
+                Please check your inbox and click the link to verify your email.
+                This page will automatically update once verified (or refresh
+                manually).{" "}
+                <Clickable
+                  onClick={handleSendConfirmationEmail}
+                  textDecoration="underline"
+                >
+                  <Text variant="sm-display">Resend email</Text>
+                </Clickable>
+              </>
             ) : (
               <>
                 You must verify your email address before setting up text
