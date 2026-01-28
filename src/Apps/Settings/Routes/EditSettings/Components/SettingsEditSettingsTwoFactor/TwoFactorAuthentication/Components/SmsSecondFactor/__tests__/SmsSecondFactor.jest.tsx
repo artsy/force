@@ -79,7 +79,7 @@ describe("SmsSecondFactor", () => {
           /You must verify your email address before setting up text message two-factor authentication/,
         ),
       ).toBeInTheDocument()
-      expect(screen.getByText("Send confirmation email")).toBeInTheDocument()
+      expect(screen.getByText("Send verification email")).toBeInTheDocument()
     })
 
     it("does not show error banner when email is confirmed", () => {
@@ -170,18 +170,18 @@ describe("SmsSecondFactor", () => {
         }),
       })
 
-      const sendEmailLink = screen.getByText("Send confirmation email")
+      const sendEmailLink = screen.getByText("Send verification email")
       fireEvent.click(sendEmailLink)
 
       expect(
-        await screen.findByText("Confirmation email sent"),
+        await screen.findByText("Verification email sent"),
       ).toBeInTheDocument()
       expect(
         screen.getByText(
           /Please check your inbox and click the link to verify your email\. This page will automatically update once verified \(or refresh manually\)\./,
         ),
       ).toBeInTheDocument()
-      expect(screen.getByText("Resend email")).toBeInTheDocument()
+      expect(screen.getByText("Resend verification email")).toBeInTheDocument()
     })
   })
 })

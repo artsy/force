@@ -166,7 +166,7 @@ export const SmsSecondFactor: React.FC<
     })
   }
 
-  async function handleSendConfirmationEmail() {
+  async function handleSendVerifyEmail() {
     try {
       await submitVerifyEmailMutation({
         variables: { input: {} },
@@ -185,7 +185,7 @@ export const SmsSecondFactor: React.FC<
     }
   }
 
-  // Poll for email confirmation after user sends confirmation email
+  // Poll for email verification after user requests verification email
   useEffect(() => {
     if (emailSent && !me.isEmailConfirmed) {
       const interval = setInterval(() => {
@@ -224,7 +224,7 @@ export const SmsSecondFactor: React.FC<
             variant={emailSent ? "success" : "error"}
             title={
               emailSent
-                ? "Confirmation email sent"
+                ? "Verification email sent"
                 : "Email verification required"
             }
           >
@@ -234,10 +234,10 @@ export const SmsSecondFactor: React.FC<
                 This page will automatically update once verified (or refresh
                 manually).{" "}
                 <Clickable
-                  onClick={handleSendConfirmationEmail}
+                  onClick={handleSendVerifyEmail}
                   textDecoration="underline"
                 >
-                  <Text variant="sm-display">Resend email</Text>
+                  <Text variant="sm-display">Resend verification email</Text>
                 </Clickable>
               </>
             ) : (
@@ -245,10 +245,10 @@ export const SmsSecondFactor: React.FC<
                 You must verify your email address before setting up text
                 message two-factor authentication.{" "}
                 <Clickable
-                  onClick={handleSendConfirmationEmail}
+                  onClick={handleSendVerifyEmail}
                   textDecoration="underline"
                 >
-                  <Text variant="sm-display">Send confirmation email</Text>
+                  <Text variant="sm-display">Send verification email</Text>
                 </Clickable>
               </>
             )}
