@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Clickable,
   Flex,
   Message,
   ModalDialog,
@@ -14,6 +15,7 @@ import { afterUpdateRedirect } from "Apps/Settings/Routes/EditSettings/Component
 import { ConfirmPasswordModal } from "Components/ConfirmPasswordModal"
 import { RouterLink } from "System/Components/RouterLink"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import { useVerifyEmail } from "Apps/Settings/Routes/EditProfile/Mutations/useVerifyEmail"
 import { isArtsyEmail } from "Utils/isArtsyEmail"
 import type { CreateSmsSecondFactorInput } from "__generated__/CreateSmsSecondFactorMutation.graphql"
 import type { SmsSecondFactor_me$data } from "__generated__/SmsSecondFactor_me.graphql"
@@ -48,6 +50,7 @@ export const SmsSecondFactor: React.FC<
   const [isDisabling] = useState(false) // ???
   const [isCreating, setCreating] = useState(false)
   const [passwordConfirmation, setPasswordConfirmation] = useState("")
+  const [emailSent, setEmailSent] = useState(false)
 
   // Reset's _all_ of these state flags.
   // NOTE: Don't do this. Just hacking around the architecture here.
@@ -62,6 +65,7 @@ export const SmsSecondFactor: React.FC<
   }
 
   const { sendToast } = useToasts()
+  const { submitMutation: submitVerifyEmailMutation } = useVerifyEmail()
 
   const [stagedSecondFactor, setStagedSecondFactor] = useState(null)
 
@@ -162,6 +166,25 @@ export const SmsSecondFactor: React.FC<
     })
   }
 
+  async function handleSendConfirmationEmail() {
+    try {
+      await submitVerifyEmailMutation({
+        variables: { input: {} },
+        rejectIf: res => {
+          return res.sendConfirmationEmail?.confirmationOrError?.mutationError
+        },
+      })
+
+      setEmailSent(true)
+    } catch (error) {
+      sendToast({
+        variant: "error",
+        message: "There was a problem",
+        description: error.message || "Something went wrong",
+      })
+    }
+  }
+
   const show2FAWarning = isArtsyEmail(me?.email)
   const showEmailVerificationWarning = !isEnabled && !me.isEmailConfirmed
 
@@ -186,12 +209,28 @@ export const SmsSecondFactor: React.FC<
         )}
 
         {showEmailVerificationWarning && (
-          <Message variant="error" title="Email verification required">
-            You must verify your email address before setting up text message
-            two-factor authentication.{" "}
-            <RouterLink inline to="/settings/edit-profile">
-              Verify your email
-            </RouterLink>
+          <Message
+            variant={emailSent ? "success" : "error"}
+            title={
+              emailSent
+                ? "Confirmation email sent"
+                : "Email verification required"
+            }
+          >
+            {emailSent ? (
+              "Please check your inbox and click the link to verify your email."
+            ) : (
+              <>
+                You must verify your email address before setting up text
+                message two-factor authentication.{" "}
+                <Clickable
+                  onClick={handleSendConfirmationEmail}
+                  textDecoration="underline"
+                >
+                  <Text variant="sm-display">Send confirmation email</Text>
+                </Clickable>
+              </>
+            )}
           </Message>
         )}
 

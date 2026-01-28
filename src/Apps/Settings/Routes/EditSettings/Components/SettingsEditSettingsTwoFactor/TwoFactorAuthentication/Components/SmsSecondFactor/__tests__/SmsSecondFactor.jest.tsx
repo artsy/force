@@ -1,9 +1,14 @@
-import { screen } from "@testing-library/react"
+import { fireEvent, screen } from "@testing-library/react"
 import { SmsSecondFactorRefetchContainer } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/Components/SmsSecondFactor/index"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
+import { useVerifyEmail } from "Apps/Settings/Routes/EditProfile/Mutations/useVerifyEmail"
 
 jest.unmock("react-relay")
+jest.mock("Apps/Settings/Routes/EditProfile/Mutations/useVerifyEmail")
+
+const mockUseVerifyEmail = useVerifyEmail as jest.Mock
+const mockSubmitVerifyEmailMutation = jest.fn()
 
 const { renderWithRelay } = setupTestWrapperTL({
   Component: SmsSecondFactorRefetchContainer,
@@ -17,6 +22,17 @@ const { renderWithRelay } = setupTestWrapperTL({
 })
 
 describe("SmsSecondFactor", () => {
+  beforeEach(() => {
+    mockSubmitVerifyEmailMutation.mockResolvedValue({})
+    mockUseVerifyEmail.mockImplementation(() => ({
+      submitMutation: mockSubmitVerifyEmailMutation,
+    }))
+  })
+
+  afterEach(() => {
+    jest.clearAllMocks()
+  })
+
   describe("SMS warning message", () => {
     it("doesn't encourage users to use MFA app over SMS if user is not an Artsy employee", () => {
       renderWithRelay({
@@ -63,6 +79,7 @@ describe("SmsSecondFactor", () => {
           /You must verify your email address before setting up text message two-factor authentication/,
         ),
       ).toBeInTheDocument()
+      expect(screen.getByText("Send confirmation email")).toBeInTheDocument()
     })
 
     it("does not show error banner when email is confirmed", () => {
@@ -142,6 +159,28 @@ describe("SmsSecondFactor", () => {
 
       const editButton = screen.getByRole("button", { name: "Edit" })
       expect(editButton).not.toBeDisabled()
+    })
+
+    it("shows success message after sending confirmation email", async () => {
+      renderWithRelay({
+        Me: () => ({
+          email: "user@example.com",
+          isEmailConfirmed: false,
+          smsSecondFactors: [],
+        }),
+      })
+
+      const sendEmailLink = screen.getByText("Send confirmation email")
+      fireEvent.click(sendEmailLink)
+
+      expect(
+        await screen.findByText("Confirmation email sent"),
+      ).toBeInTheDocument()
+      expect(
+        screen.getByText(
+          "Please check your inbox and click the link to verify your email.",
+        ),
+      ).toBeInTheDocument()
     })
   })
 })
