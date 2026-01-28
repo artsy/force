@@ -256,7 +256,27 @@ describe("ExpressCheckoutUI", () => {
       stripeConfirmationToken: "ctoken_123",
     })
 
-    // Second, test the shipping address update
+    // Second, test the fulfillment option update
+    const fulfillmentUpdate = await mockResolveLastOperation({
+      setOrderFulfillmentOption: () => ({
+        orderOrError: {
+          __typename: "OrderMutationSuccess",
+          order: orderData,
+        },
+      }),
+    })
+
+    expect(fulfillmentUpdate.operationName).toBe(
+      "useOrder2ExpressCheckoutSetFulfillmentOptionMutation",
+    )
+    expect(fulfillmentUpdate.operationVariables.input).toEqual({
+      id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
+      fulfillmentOption: {
+        type: "DOMESTIC_FLAT",
+      },
+    })
+
+    // Third, test the shipping address update
     const shippingAddressUpdate = await mockResolveLastOperation({
       updateOrderShippingAddress: () => ({
         orderOrError: {
@@ -285,7 +305,7 @@ describe("ExpressCheckoutUI", () => {
     await flushPromiseQueue()
     expect(mockCreateConfirmationToken).toHaveBeenCalled()
 
-    // Third, test the order submission
+    // Fourth, test the order submission
     const orderSubmission = await mockResolveLastOperation({
       submitOrder: () => ({
         orderOrError: {
@@ -350,6 +370,27 @@ describe("ExpressCheckoutUI", () => {
       stripeConfirmationToken: "ctoken_123",
     })
 
+    // Second, test the fulfillment option update
+    const fulfillmentUpdate = await mockResolveLastOperation({
+      setOrderFulfillmentOption: () => ({
+        orderOrError: {
+          __typename: "OrderMutationSuccess",
+          order: orderData,
+        },
+      }),
+    })
+
+    expect(fulfillmentUpdate.operationName).toBe(
+      "useOrder2ExpressCheckoutSetFulfillmentOptionMutation",
+    )
+    expect(fulfillmentUpdate.operationVariables.input).toEqual({
+      id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
+      fulfillmentOption: {
+        type: "PICKUP",
+      },
+    })
+
+    // Third, test the shipping address update
     const { operationName, operationVariables } =
       await mockResolveLastOperation({
         updateOrderShippingAddress: () => ({
@@ -555,6 +596,16 @@ describe("ExpressCheckoutUI", () => {
     // Resolve the payment method update mutation
     await mockResolveLastOperation({
       setOrderPayment: () => ({
+        orderOrError: {
+          __typename: "OrderMutationSuccess",
+          order: orderData,
+        },
+      }),
+    })
+
+    // Resolve the fulfillment option mutation
+    await mockResolveLastOperation({
+      setOrderFulfillmentOption: () => ({
         orderOrError: {
           __typename: "OrderMutationSuccess",
           order: orderData,
