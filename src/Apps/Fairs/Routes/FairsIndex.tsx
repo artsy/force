@@ -204,6 +204,9 @@ export const FairsIndex: React.FC<React.PropsWithChildren<FairsIndexProps>> = ({
                           contextModule: ContextModule.fairsHeader,
                           intent: Intent.signup,
                         },
+                        options: {
+                          galleryImage: true,
+                        },
                       })
                     }}
                   >

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bd1b79f01bdef42edf723e14d9a72769>>
+ * @generated SignedSource<<2d114c9adb1fd2c02f68c97222c66933>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -117,6 +117,44 @@ return {
           {
             "alias": null,
             "args": null,
+            "concreteType": "Image",
+            "kind": "LinkedField",
+            "name": "image",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": [
+                  {
+                    "kind": "Literal",
+                    "name": "version",
+                    "value": "main"
+                  }
+                ],
+                "kind": "ScalarField",
+                "name": "url",
+                "storageKey": "url(version:\"main\")"
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "aspectRatio",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "blurhash",
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": "CollectorSignals",
             "kind": "LinkedField",
             "name": "collectorSignals",
@@ -156,12 +194,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e6f5edf616f39d3be2d5a06fbb43597e",
+    "cacheID": "fa7c8f53a3657db7f87318d21628ea21",
     "id": null,
     "metadata": {},
     "name": "SaveButtonQuery",
     "operationKind": "query",
-    "text": "query SaveButtonQuery(\n  $id: String!\n) {\n  artwork(id: $id) {\n    ...SaveButton_artwork\n    id\n  }\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSaved\n  title\n  collectorSignals {\n    auction {\n      lotWatcherCount\n      lotClosesAt\n    }\n  }\n}\n"
+    "text": "query SaveButtonQuery(\n  $id: String!\n) {\n  artwork(id: $id) {\n    ...SaveButton_artwork\n    id\n  }\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSaved\n  title\n  image {\n    url(version: \"main\")\n    aspectRatio\n    blurhash\n  }\n  collectorSignals {\n    auction {\n      lotWatcherCount\n      lotClosesAt\n    }\n  }\n}\n"
   }
 };
 })();

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6da3e857cc053aa6e4dd8f3520e53e58>>
+ * @generated SignedSource<<d2563f0c60aac444e9e5aa49c14625d5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,6 +21,11 @@ export type ArtworkApp_artwork$data = {
     readonly internalID: string;
   } | null | undefined;
   readonly availability: string | null | undefined;
+  readonly image: {
+    readonly aspectRatio: number;
+    readonly blurhash: string | null | undefined;
+    readonly url: string | null | undefined;
+  } | null | undefined;
   readonly internalID: string;
   readonly isAcquireable: boolean | null | undefined;
   readonly isInAuction: boolean | null | undefined;
@@ -205,6 +210,44 @@ return {
     {
       "alias": null,
       "args": null,
+      "concreteType": "Image",
+      "kind": "LinkedField",
+      "name": "image",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": [
+            {
+              "kind": "Literal",
+              "name": "version",
+              "value": "main"
+            }
+          ],
+          "kind": "ScalarField",
+          "name": "url",
+          "storageKey": "url(version:\"main\")"
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "aspectRatio",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "blurhash",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "kind": "ScalarField",
       "name": "visibilityLevel",
       "storageKey": null
@@ -323,6 +366,6 @@ return {
 };
 })();
 
-(node as any).hash = "019186df6e3a39e94a59e569f4f80caf";
+(node as any).hash = "f299fbb5bd196c94efb59294538c102e";
 
 export default node;

@@ -63,6 +63,10 @@ export const ArtistAuctionResultItem: React.FC<
       showAuthDialog({
         options: {
           title: "Sign up or log in to see full auction records — for free",
+          image: {
+            url: images?.larger?.url,
+            aspectRatio: images?.larger?.aspectRatio,
+          },
         },
         analytics: {
           contextModule: ContextModule.auctionResult,
@@ -273,6 +277,10 @@ export const ArtistAuctionResultItemFragmentContainer = createFragmentContainer(
           name
         }
         images {
+          larger {
+            url
+            aspectRatio
+          }
           thumbnail {
             cropped(width: 130, height: 130, version: ["square140"]) {
               src

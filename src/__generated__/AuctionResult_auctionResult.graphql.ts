@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1ea31e60a61db5928916fb5d2e0243ef>>
+ * @generated SignedSource<<9e53179174e8dc8a8cbc846e710968da>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,6 +12,13 @@ import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AuctionResult_auctionResult$data = {
   readonly artist: {
+    readonly coverArtwork: {
+      readonly image: {
+        readonly aspectRatio: number;
+        readonly blurhash: string | null | undefined;
+        readonly url: string | null | undefined;
+      } | null | undefined;
+    } | null | undefined;
     readonly href: string | null | undefined;
     readonly name: string | null | undefined;
   } | null | undefined;
@@ -66,6 +73,55 @@ const node: ReaderFragment = {
           "args": null,
           "kind": "ScalarField",
           "name": "href",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Artwork",
+          "kind": "LinkedField",
+          "name": "coverArtwork",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "Image",
+              "kind": "LinkedField",
+              "name": "image",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": [
+                    {
+                      "kind": "Literal",
+                      "name": "version",
+                      "value": "main"
+                    }
+                  ],
+                  "kind": "ScalarField",
+                  "name": "url",
+                  "storageKey": "url(version:\"main\")"
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "aspectRatio",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "blurhash",
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            }
+          ],
           "storageKey": null
         }
       ],
@@ -154,6 +210,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "5baccfec80bd4c2f62daeca23da3c38e";
+(node as any).hash = "23177933d0ddd3b679b07674bda88959";
 
 export default node;

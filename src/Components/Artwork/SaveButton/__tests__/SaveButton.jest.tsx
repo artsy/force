@@ -1,10 +1,10 @@
 import { ContextModule } from "@artsy/cohesion"
+import { fireEvent, screen } from "@testing-library/react"
 import { SaveButtonFragmentContainer } from "Components/Artwork/SaveButton/SaveButton"
 import { useAuthDialog } from "Components/AuthDialog/useAuthDialog"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { SaveButtonQuery } from "__generated__/SaveButtonQuery.graphql"
 import { graphql } from "react-relay"
-import { screen, fireEvent } from "@testing-library/react"
 
 jest.unmock("react-relay")
 
@@ -60,6 +60,11 @@ describe("SaveButton", () => {
             objectId: "opaque-internal-id",
           },
           title: "Sign up or log in to save artworks",
+          image: {
+            url: '<mock-value-for-field-"url">',
+            aspectRatio: '<mock-value-for-field-\"aspectRatio\">',
+            blurhash: '<mock-value-for-field-"blurhash">',
+          },
         },
       },
     ])

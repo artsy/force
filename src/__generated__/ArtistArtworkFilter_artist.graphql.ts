@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d2b6714465692bfb3f699048bfed80ab>>
+ * @generated SignedSource<<8b6cdfc6150c269e2cac2cae5f643dae>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,6 +18,12 @@ export type ArtistArtworkFilter_artist$data = {
     readonly for_sale_artworks: any | null | undefined;
     readonly has_make_offer_artworks: boolean | null | undefined;
     readonly partner_shows: any | null | undefined;
+  } | null | undefined;
+  readonly coverArtwork: {
+    readonly image: {
+      readonly aspectRatio: number;
+      readonly url: string | null | undefined;
+    } | null | undefined;
   } | null | undefined;
   readonly filtered_artworks: {
     readonly counts: {
@@ -211,12 +217,54 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": "meta(page:\"ARTWORKS\")"
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Artwork",
+      "kind": "LinkedField",
+      "name": "coverArtwork",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Image",
+          "kind": "LinkedField",
+          "name": "image",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": [
+                {
+                  "kind": "Literal",
+                  "name": "version",
+                  "value": "main"
+                }
+              ],
+              "kind": "ScalarField",
+              "name": "url",
+              "storageKey": "url(version:\"main\")"
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "aspectRatio",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
     }
   ],
   "type": "Artist",
   "abstractKey": null
 };
 
-(node as any).hash = "eb952be86a8a420fc96c6d4e09e50156";
+(node as any).hash = "49ed811713c19cd941aa4ed73e4a642b";
 
 export default node;

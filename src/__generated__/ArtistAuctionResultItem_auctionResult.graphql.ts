@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6584ee243fa4f356fc4982a272fc8140>>
+ * @generated SignedSource<<7118812c751cdd7fd5a1092116b3193e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,6 +23,10 @@ export type ArtistAuctionResultItem_auctionResult$data = {
     readonly display: string | null | undefined;
   } | null | undefined;
   readonly images: {
+    readonly larger: {
+      readonly aspectRatio: number;
+      readonly url: string | null | undefined;
+    } | null | undefined;
     readonly thumbnail: {
       readonly cropped: {
         readonly height: number;
@@ -124,6 +128,31 @@ return {
       "name": "images",
       "plural": false,
       "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Image",
+          "kind": "LinkedField",
+          "name": "larger",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "url",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "aspectRatio",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        },
         {
           "alias": null,
           "args": null,
@@ -327,6 +356,6 @@ return {
 };
 })();
 
-(node as any).hash = "99807385dccfd1e701d0ba531b448a29";
+(node as any).hash = "500b493ad7c525440c80b52d7fe5627d";
 
 export default node;

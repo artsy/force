@@ -1,7 +1,7 @@
+import { fireEvent, screen } from "@testing-library/react"
 import { FairOrganizerFollowButtonFragmentContainer } from "Apps/FairOrginizer/Components/FairOrganizerFollowButton"
 import { fairOrganizerFollowMutation } from "Apps/FairOrginizer/Mutations/FairOrganizerFollowMutation"
 import { useAuthDialog } from "Components/AuthDialog"
-import { fireEvent, screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import type { FairOrganizerFollowButtonTestQuery } from "__generated__/FairOrganizerFollowButtonTestQuery.graphql"
@@ -95,6 +95,7 @@ describe("FairOrganizerFollowButton", () => {
           kind: "profile",
           objectId: "faiOrganizerSlug",
         },
+        galleryImage: true,
         title: expect.any(String),
       },
     })

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<63a27c95eb833187149d0ce741654d15>>
+ * @generated SignedSource<<06b69d2ffb54670885682e5f4286335e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -35,6 +35,11 @@ export type ArtworkSidebarCommercialButtons_artwork$data = {
     readonly isOfferable: boolean | null | undefined;
     readonly saleMessage: string | null | undefined;
   } | null | undefined> | null | undefined;
+  readonly image: {
+    readonly aspectRatio: number;
+    readonly blurhash: string | null | undefined;
+    readonly url: string | null | undefined;
+  } | null | undefined;
   readonly internalID: string;
   readonly isAcquireable: boolean | null | undefined;
   readonly isEligibleToCreateAlert: boolean;
@@ -162,6 +167,44 @@ return {
     (v0/*: any*/),
     (v2/*: any*/),
     (v3/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Image",
+      "kind": "LinkedField",
+      "name": "image",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": [
+            {
+              "kind": "Literal",
+              "name": "version",
+              "value": "main"
+            }
+          ],
+          "kind": "ScalarField",
+          "name": "url",
+          "storageKey": "url(version:\"main\")"
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "aspectRatio",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "blurhash",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -373,6 +416,6 @@ return {
 };
 })();
 
-(node as any).hash = "03b4a4e94936ad4c45b688b3437fc61a";
+(node as any).hash = "ea269571977005267f3bb3985a8f5848";
 
 export default node;

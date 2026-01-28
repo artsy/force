@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a411da4976e4089f99c31bb0531b6d0f>>
+ * @generated SignedSource<<52f63842cd5bec6a704aa90dbcb60ce0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,6 +16,10 @@ export type ArtworkSidebarBidAction_artwork$data = {
       readonly bidCount: number;
       readonly lotWatcherCount: number;
     } | null | undefined;
+  } | null | undefined;
+  readonly image: {
+    readonly aspectRatio: number;
+    readonly url: string | null | undefined;
   } | null | undefined;
   readonly internalID: string;
   readonly myLotStanding: ReadonlyArray<{
@@ -119,6 +123,37 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "internalID",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Image",
+      "kind": "LinkedField",
+      "name": "image",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": [
+            {
+              "kind": "Literal",
+              "name": "version",
+              "value": "main"
+            }
+          ],
+          "kind": "ScalarField",
+          "name": "url",
+          "storageKey": "url(version:\"main\")"
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "aspectRatio",
+          "storageKey": null
+        }
+      ],
       "storageKey": null
     },
     {
@@ -272,6 +307,6 @@ return {
 };
 })();
 
-(node as any).hash = "e849b5aff04538f5a633abd7f229f8eb";
+(node as any).hash = "60ced0ddef077bec67fbbe63c56df619";
 
 export default node;

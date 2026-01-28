@@ -18,6 +18,11 @@ interface UseSaveArtwork {
   isSaved: boolean
   artwork: Artwork
   contextModule: AuthContextModule
+  image?: {
+    url?: string | null
+    aspectRatio?: number | null
+    blurhash?: string | null
+  } | null
   onSave?({ action, artwork }: { action: string; artwork: Artwork }): void
 }
 
@@ -25,6 +30,7 @@ export const useSaveArtwork = ({
   isSaved,
   artwork,
   contextModule,
+  image,
   onSave,
 }: UseSaveArtwork) => {
   const { relayEnvironment, isLoggedIn } = useSystemContext()
@@ -82,6 +88,7 @@ export const useSaveArtwork = ({
             kind: "artworks",
             objectId: artwork.internalID,
           },
+          image,
         },
         analytics: {
           intent: Intent.saveArtwork,

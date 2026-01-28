@@ -37,6 +37,11 @@ export const RegisterButton: React.FC<
         options: {
           redirectTo: `${saleURL}/register`,
           title: "Sign up or log in to bid on artworks",
+          image: {
+            url: sale.coverImage?.signupImage,
+            aspectRatio: sale.coverImage?.aspectRatio,
+            blurhash: sale.coverImage?.blurhash,
+          },
         },
         analytics: {
           contextModule: ContextModule.auctionSidebar,
@@ -67,7 +72,7 @@ export const RegisterButton: React.FC<
 
     case conditions.LIVE_OPEN: {
       const liveUrl = `${sale.liveURLIfOpen}`
-      const href = me ? liveUrl + "/login" : liveUrl
+      const href = me ? `${liveUrl}/login` : liveUrl
 
       return (
         <ButtonAction
@@ -256,6 +261,12 @@ export const RegisterButtonFragmentContainer = createFragmentContainer(
       fragment RegisterButton_sale on Sale {
         bidder {
           qualifiedForBidding
+        }
+        coverImage {
+          # alias to avoid conflicts
+          signupImage: url(version: "main")
+          aspectRatio
+          blurhash
         }
         isAuction
         isClosed

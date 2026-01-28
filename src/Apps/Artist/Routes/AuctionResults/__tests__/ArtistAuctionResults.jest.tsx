@@ -543,6 +543,14 @@ const AuctionResultsFixture = {
     id: "QXJ0aXN0OnBhYmxvLXBpY2Fzc28=",
     slug: "pablo-picasso",
     name: "Pablo Picasso",
+    coverArtwork: {
+      id: "cover-artwork-id",
+      image: {
+        url: "https://example.com/cover-artwork.jpg",
+        aspectRatio: 4.2,
+        blurhash: undefined,
+      },
+    },
     meta: {
       description:
         "Find out about Pablo Picasso’s auction history, past sales, and current market value. Browse Artsy’s Price Database for recent auction results from the artist.`",
@@ -615,6 +623,10 @@ const AuctionResultsFixture = {
                   height: 100,
                 },
               },
+              larger: {
+                url: "https://d32dm0rphc51dk.cloudfront.net/xACxJ_uIHApai3JP9odtZg/larger.jpg",
+                aspectRatio: 4.2,
+              },
             },
             date_text: "1881-1973",
             saleDate: "2020-02-05T19:00:00Z",
@@ -652,6 +664,10 @@ const AuctionResultsFixture = {
                   width: 100,
                   height: 100,
                 },
+              },
+              larger: {
+                url: "https://d32dm0rphc51dk.cloudfront.net/lmY_wowdeGi__ZtKVHV8Dw/larger.jpg",
+                aspectRatio: 4.2,
               },
             },
             date_text: "1881-1973",
@@ -691,6 +707,10 @@ const AuctionResultsFixture = {
                   height: 100,
                 },
               },
+              larger: {
+                url: "https://d32dm0rphc51dk.cloudfront.net/AI6P5qi0Xq7Efs9d6HMt4A/larger.jpg",
+                aspectRatio: 4.2,
+              },
             },
             date_text: "1881-1973",
             saleDate: "2020-02-05T19:00:00Z",
@@ -728,6 +748,10 @@ const AuctionResultsFixture = {
                   width: 100,
                   height: 100,
                 },
+              },
+              larger: {
+                url: "https://d32dm0rphc51dk.cloudfront.net/B3EtIMtH8XnDmt1KBD6VhQ/larger.jpg",
+                aspectRatio: 4.2,
               },
             },
             date_text: "1881-1973",
@@ -767,6 +791,10 @@ const AuctionResultsFixture = {
                   height: 100,
                 },
               },
+              larger: {
+                url: "https://d32dm0rphc51dk.cloudfront.net/rLyB6jNe0lQ8fF6EEQ61wg/larger.jpg",
+                aspectRatio: 4.2,
+              },
             },
             date_text: "1881-1973",
             saleDate: "2020-02-05T19:00:00Z",
@@ -804,6 +832,10 @@ const AuctionResultsFixture = {
                   width: 100,
                   height: 100,
                 },
+              },
+              larger: {
+                url: "https://d32dm0rphc51dk.cloudfront.net/46t-8KytTjCwYPw17E7U6w/larger.jpg",
+                aspectRatio: 4.2,
               },
             },
             date_text: "1881-1973",
@@ -843,6 +875,10 @@ const AuctionResultsFixture = {
                   height: 100,
                 },
               },
+              larger: {
+                url: "https://d32dm0rphc51dk.cloudfront.net/eivcrcx7PVnvmKZzOQosXA/larger.jpg",
+                aspectRatio: 4.2,
+              },
             },
             date_text: "1881-1973",
             saleDate: "2020-02-05T19:00:00Z",
@@ -880,6 +916,10 @@ const AuctionResultsFixture = {
                   width: 100,
                   height: 100,
                 },
+              },
+              larger: {
+                url: "https://d32dm0rphc51dk.cloudfront.net/-ZlQnxE8T8MsVRGjSSwaXw/larger.jpg",
+                aspectRatio: 4.2,
               },
             },
             date_text: "1881-1973",
@@ -919,6 +959,10 @@ const AuctionResultsFixture = {
                   height: 100,
                 },
               },
+              larger: {
+                url: "https://d32dm0rphc51dk.cloudfront.net/3nGESp60mCg0xygJ4bvjcA/larger.jpg",
+                aspectRatio: 4.2,
+              },
             },
             date_text: "1881-1973",
             saleDate: "2025-02-05T19:00:00Z",
@@ -956,6 +1000,10 @@ const AuctionResultsFixture = {
                   width: 100,
                   height: 100,
                 },
+              },
+              larger: {
+                url: "https://d32dm0rphc51dk.cloudfront.net/Db93v-hdsJjCV6XHFUfn2g/larger.jpg",
+                aspectRatio: 4.2,
               },
             },
             date_text: "1881-1973",

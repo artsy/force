@@ -5,6 +5,10 @@ export const ArtworkFromAuctionPreview: ArtworkSidebarBidActionTestQuery$rawResp
     slug: "artwork_from_preview_auction",
     id: "sdfsdfsdf2",
     internalID: "sdf12345",
+    image: {
+      url: "https://example.com/artwork.jpg",
+      aspectRatio: 4.2,
+    },
     sale: {
       id: "sdfsdfsdf3",
       slug: "cool-sale",
@@ -40,6 +44,10 @@ export const ArtworkFromTimedAuctionRegistrationOpen: ArtworkSidebarBidActionTes
     slug: "artwork_from_open_non_live_auction",
     id: "sdfsdfsdf2",
     internalID: "sdf12345",
+    image: {
+      url: "https://example.com/artwork.jpg",
+      aspectRatio: 4.2,
+    },
     sale: {
       id: "sdfsdfsdf3",
       slug: "cool-sale",
@@ -75,6 +83,10 @@ export const ArtworkFromTimedAuctionRegistrationClosed: ArtworkSidebarBidActionT
     slug: "artwork_from_registration_closed_timed_auction",
     id: "sdfsdfsdf2",
     internalID: "sdf12345",
+    image: {
+      url: "https://example.com/artwork.jpg",
+      aspectRatio: 4.2,
+    },
     sale: {
       id: "sdfsdfsdf3",
       slug: "cool-sale",
@@ -139,6 +151,10 @@ export const ArtworkFromLiveAuctionRegistrationOpen: ArtworkSidebarBidActionTest
     slug: "artwork_from_open_live_auction_open_registration",
     id: "sdfsdfsdf2",
     internalID: "sdf12345",
+    image: {
+      url: "https://example.com/artwork.jpg",
+      aspectRatio: 4.2,
+    },
     sale: {
       id: "sdfsdfsdf3",
       slug: "cool-sale",
@@ -174,6 +190,10 @@ export const ArtworkFromLiveAuctionRegistrationClosed: ArtworkSidebarBidActionTe
     slug: "artwork_from_open_live_auction_closed_registration",
     id: "sdfsdfsdf2",
     internalID: "sdf12345",
+    image: {
+      url: "https://example.com/artwork.jpg",
+      aspectRatio: 4.2,
+    },
     sale: {
       id: "sdfsdfsdf3",
       slug: "cool-sale",
@@ -209,6 +229,10 @@ export const ArtworkFromClosedAuction: ArtworkSidebarBidActionTestQuery$rawRespo
     slug: "artwork_from_closed_auction",
     id: "sdfsdfsdf2",
     internalID: "sdf12345",
+    image: {
+      url: "https://example.com/artwork.jpg",
+      aspectRatio: 4.2,
+    },
     sale: {
       id: "sdfsdfsdf3",
       slug: "cool-sale",

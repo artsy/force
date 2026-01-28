@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6a1babd833fe4f2e2f4e5da16f1cd97c>>
+ * @generated SignedSource<<77c1e2241a53e543a56f59ef1a4d3ad8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -27,6 +27,13 @@ export type ArtistAuctionResults_artist$data = {
       readonly hasNextPage: boolean;
     };
     readonly totalCount: number | null | undefined;
+  } | null | undefined;
+  readonly coverArtwork: {
+    readonly image: {
+      readonly aspectRatio: number;
+      readonly blurhash: string | null | undefined;
+      readonly url: string | null | undefined;
+    } | null | undefined;
   } | null | undefined;
   readonly internalID: string;
   readonly meta: {
@@ -306,6 +313,55 @@ return {
         }
       ],
       "storageKey": "meta(page:\"AUCTION_RESULTS\")"
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Artwork",
+      "kind": "LinkedField",
+      "name": "coverArtwork",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Image",
+          "kind": "LinkedField",
+          "name": "image",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": [
+                {
+                  "kind": "Literal",
+                  "name": "version",
+                  "value": "main"
+                }
+              ],
+              "kind": "ScalarField",
+              "name": "url",
+              "storageKey": "url(version:\"main\")"
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "aspectRatio",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "blurhash",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
     },
     {
       "alias": null,
@@ -594,6 +650,6 @@ return {
 };
 })();
 
-(node as any).hash = "48d9d7c4e3363cf8996a480347b5fc4e";
+(node as any).hash = "c195cefa7a1cc52d1df2e4e1e2ecffa1";
 
 export default node;

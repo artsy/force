@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f18a648fc703d42386ab18b27a2aa2c9>>
+ * @generated SignedSource<<5369dee3660a0e50697c64ca1b782828>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,11 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type RequestConditionReport_artwork$data = {
+  readonly image: {
+    readonly aspectRatio: number;
+    readonly blurhash: string | null | undefined;
+    readonly url: string | null | undefined;
+  } | null | undefined;
   readonly internalID: string;
   readonly saleArtwork: {
     readonly internalID: string;
@@ -56,6 +61,44 @@ return {
         (v0/*: any*/)
       ],
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Image",
+      "kind": "LinkedField",
+      "name": "image",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": [
+            {
+              "kind": "Literal",
+              "name": "version",
+              "value": "main"
+            }
+          ],
+          "kind": "ScalarField",
+          "name": "url",
+          "storageKey": "url(version:\"main\")"
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "aspectRatio",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "blurhash",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
     }
   ],
   "type": "Artwork",
@@ -63,6 +106,6 @@ return {
 };
 })();
 
-(node as any).hash = "e20d4fa964b57dd0a75664fa56741ed4";
+(node as any).hash = "23736293941e41814eb32569275d5b26";
 
 export default node;

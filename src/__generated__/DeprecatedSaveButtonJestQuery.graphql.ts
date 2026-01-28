@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7dcc0173a744ebdb8a2909a3426e42b6>>
+ * @generated SignedSource<<d75bf0bc9d98a32995deecf5194f6f19>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -34,6 +34,12 @@ v1 = {
   "nullable": false,
   "plural": false,
   "type": "ID"
+},
+v2 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
 };
 return {
   "fragment": {
@@ -114,6 +120,44 @@ return {
           {
             "alias": null,
             "args": null,
+            "concreteType": "Image",
+            "kind": "LinkedField",
+            "name": "image",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": [
+                  {
+                    "kind": "Literal",
+                    "name": "version",
+                    "value": "main"
+                  }
+                ],
+                "kind": "ScalarField",
+                "name": "url",
+                "storageKey": "url(version:\"main\")"
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "aspectRatio",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "blurhash",
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": "CollectorSignals",
             "kind": "LinkedField",
             "name": "collectorSignals",
@@ -146,7 +190,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f0fb0e7b560d5e3efda7f72720639975",
+    "cacheID": "ec33bbb496f83a5f4c970420bd8ffcae",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -175,6 +219,20 @@ return {
           "type": "Int"
         },
         "artwork.id": (v1/*: any*/),
+        "artwork.image": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Image"
+        },
+        "artwork.image.aspectRatio": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "Float"
+        },
+        "artwork.image.blurhash": (v2/*: any*/),
+        "artwork.image.url": (v2/*: any*/),
         "artwork.internalID": (v1/*: any*/),
         "artwork.isSavedToAnyList": {
           "enumValues": null,
@@ -183,17 +241,12 @@ return {
           "type": "Boolean"
         },
         "artwork.slug": (v1/*: any*/),
-        "artwork.title": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "String"
-        }
+        "artwork.title": (v2/*: any*/)
       }
     },
     "name": "DeprecatedSaveButtonJestQuery",
     "operationKind": "query",
-    "text": "query DeprecatedSaveButtonJestQuery {\n  artwork(id: \"example-artwork-id\") {\n    ...DeprecatedSaveButton_artwork\n    id\n  }\n}\n\nfragment DeprecatedSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSavedToAnyList\n  title\n  collectorSignals {\n    auction {\n      lotWatcherCount\n    }\n  }\n}\n"
+    "text": "query DeprecatedSaveButtonJestQuery {\n  artwork(id: \"example-artwork-id\") {\n    ...DeprecatedSaveButton_artwork\n    id\n  }\n}\n\nfragment DeprecatedSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSavedToAnyList\n  title\n  image {\n    url(version: \"main\")\n    aspectRatio\n    blurhash\n  }\n  collectorSignals {\n    auction {\n      lotWatcherCount\n    }\n  }\n}\n"
   }
 };
 })();
