@@ -37,6 +37,7 @@ export const RegisterButton: React.FC<
         options: {
           redirectTo: `${saleURL}/register`,
           title: "Sign up or log in to bid on artworks",
+          nodeId: sale.id,
         },
         analytics: {
           contextModule: ContextModule.auctionSidebar,
@@ -67,7 +68,7 @@ export const RegisterButton: React.FC<
 
     case conditions.LIVE_OPEN: {
       const liveUrl = `${sale.liveURLIfOpen}`
-      const href = me ? liveUrl + "/login" : liveUrl
+      const href = me ? `${liveUrl}/login` : liveUrl
 
       return (
         <ButtonAction
@@ -257,6 +258,7 @@ export const RegisterButtonFragmentContainer = createFragmentContainer(
         bidder {
           qualifiedForBidding
         }
+        id
         isAuction
         isClosed
         isLiveOpen

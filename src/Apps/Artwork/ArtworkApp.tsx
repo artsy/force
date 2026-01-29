@@ -115,6 +115,7 @@ export const ArtworkApp: React.FC<React.PropsWithChildren<Props>> = props => {
         showAuthDialog({
           options: {
             title: "Log in or sign up to view gallery offer",
+            nodeId: props.artwork.id,
           },
           analytics: {
             // TODO: Placeholder - Determine correct tracking - EMI-1783
@@ -335,7 +336,7 @@ export const ArtworkApp: React.FC<React.PropsWithChildren<Props>> = props => {
 
 const WrappedArtworkApp: React.FC<React.PropsWithChildren<Props>> = props => {
   const {
-    artwork: { artists, attributionClass, internalID, mediumType, sale },
+    artwork: { artists, attributionClass, internalID, mediumType, sale, id },
   } = props
 
   const {
@@ -368,6 +369,7 @@ const WrappedArtworkApp: React.FC<React.PropsWithChildren<Props>> = props => {
         <AlertProvider
           initialCriteria={initialAlertCriteria}
           currentArtworkID={internalID}
+          nodeId={id}
         >
           <ArtworkApp
             {...props}
@@ -405,6 +407,7 @@ const ArtworkAppFragmentContainer = createFragmentContainer(
           internalID
         }
         slug
+        id
         internalID
         isAcquireable
         isOfferable

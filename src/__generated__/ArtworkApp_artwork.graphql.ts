@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6da3e857cc053aa6e4dd8f3520e53e58>>
+ * @generated SignedSource<<68a629889a2769f9beeb0dc6b745be19>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,6 +21,7 @@ export type ArtworkApp_artwork$data = {
     readonly internalID: string;
   } | null | undefined;
   readonly availability: string | null | undefined;
+  readonly id: string;
   readonly internalID: string;
   readonly isAcquireable: boolean | null | undefined;
   readonly isInAuction: boolean | null | undefined;
@@ -69,7 +70,14 @@ v1 = {
   "name": "slug",
   "storageKey": null
 },
-v2 = [
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v3 = [
   {
     "alias": null,
     "args": null,
@@ -150,6 +158,7 @@ return {
       "storageKey": null
     },
     (v1/*: any*/),
+    (v2/*: any*/),
     (v0/*: any*/),
     {
       "alias": null,
@@ -226,13 +235,13 @@ return {
       "selections": [
         {
           "kind": "InlineFragment",
-          "selections": (v2/*: any*/),
+          "selections": (v3/*: any*/),
           "type": "PriceRange",
           "abstractKey": null
         },
         {
           "kind": "InlineFragment",
-          "selections": (v2/*: any*/),
+          "selections": (v3/*: any*/),
           "type": "Money",
           "abstractKey": null
         }
@@ -305,13 +314,7 @@ return {
       "name": "artists",
       "plural": true,
       "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "id",
-          "storageKey": null
-        },
+        (v2/*: any*/),
         (v0/*: any*/),
         (v1/*: any*/)
       ],
@@ -323,6 +326,6 @@ return {
 };
 })();
 
-(node as any).hash = "019186df6e3a39e94a59e569f4f80caf";
+(node as any).hash = "d1a1345e444e1e4e9507b48a6b097243";
 
 export default node;

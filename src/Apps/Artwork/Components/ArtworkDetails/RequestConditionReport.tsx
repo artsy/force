@@ -85,6 +85,9 @@ export const RequestConditionReport: React.FC<
 
   const handleLoginClick = () => {
     showAuthDialog({
+      options: {
+        nodeId: artwork.id,
+      },
       analytics: {
         contextModule: ContextModule.aboutTheWork,
         intent: Intent.requestConditionReport,
@@ -253,6 +256,7 @@ export const RequestConditionReportFragmentContainer = createFragmentContainer(
     `,
     artwork: graphql`
       fragment RequestConditionReport_artwork on Artwork {
+        id
         internalID
         slug
         saleArtwork {

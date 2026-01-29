@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6a1babd833fe4f2e2f4e5da16f1cd97c>>
+ * @generated SignedSource<<3a4f639efd7f0779623b39636ea1ac5f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -28,6 +28,7 @@ export type ArtistAuctionResults_artist$data = {
     };
     readonly totalCount: number | null | undefined;
   } | null | undefined;
+  readonly id: string;
   readonly internalID: string;
   readonly meta: {
     readonly description: string;
@@ -266,6 +267,13 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "slug",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "id",
       "storageKey": null
     },
     {
@@ -594,6 +602,6 @@ return {
 };
 })();
 
-(node as any).hash = "48d9d7c4e3363cf8996a480347b5fc4e";
+(node as any).hash = "d967b5032299499e40c8b34e0faf6b72";
 
 export default node;

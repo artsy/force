@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a411da4976e4089f99c31bb0531b6d0f>>
+ * @generated SignedSource<<142095e1fd0e66f7d4406b8def0e035a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,6 +17,7 @@ export type ArtworkSidebarBidAction_artwork$data = {
       readonly lotWatcherCount: number;
     } | null | undefined;
   } | null | undefined;
+  readonly id: string;
   readonly internalID: string;
   readonly myLotStanding: ReadonlyArray<{
     readonly most_recent_bid: {
@@ -114,6 +115,13 @@ return {
       "storageKey": "myLotStanding(live:true)"
     },
     (v1/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "id",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -272,6 +280,6 @@ return {
 };
 })();
 
-(node as any).hash = "e849b5aff04538f5a633abd7f229f8eb";
+(node as any).hash = "500a4eea631018bbe4bf9403168e0d2a";
 
 export default node;

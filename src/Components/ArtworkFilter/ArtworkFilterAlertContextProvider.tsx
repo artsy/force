@@ -6,6 +6,7 @@ import type { FC } from "react"
 
 interface ArtworkFilterAlertContextProviderProps {
   initialCriteria?: SearchCriteriaAttributes
+  nodeId?: string | null
 }
 
 /**

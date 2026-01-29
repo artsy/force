@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<11e699b805353a7e2ac255e5de6fe4c1>>
+ * @generated SignedSource<<bca7ff68020396fcd8467330c2b1fd64>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,9 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AuctionResultPrice_auctionResult$data = {
+  readonly artist: {
+    readonly id: string;
+  } | null | undefined;
   readonly boughtIn: boolean | null | undefined;
   readonly currency: string | null | undefined;
   readonly estimate: {
@@ -77,6 +80,24 @@ return {
     {
       "alias": null,
       "args": null,
+      "concreteType": "Artist",
+      "kind": "LinkedField",
+      "name": "artist",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "id",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": "AuctionLotPerformance",
       "kind": "LinkedField",
       "name": "performance",
@@ -129,6 +150,6 @@ return {
 };
 })();
 
-(node as any).hash = "95f2bb961edaf2669f6ee71720453072";
+(node as any).hash = "769f421de4e8f0f11eb3d766b772712c";
 
 export default node;

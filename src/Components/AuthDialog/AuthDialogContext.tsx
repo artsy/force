@@ -11,14 +11,21 @@ import {
   AuthDialog,
   type AuthDialogProps,
 } from "Components/AuthDialog/AuthDialog"
+import {
+  getResizedAuthDialogGalleryImage,
+  getResizedAuthDialogImages,
+} from "Components/AuthDialog/Utils/authDialogConstants"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import { prefetchUrlWithSizes } from "System/Utils/prefetchUrl"
 import type { AfterAuthAction } from "Utils/Hooks/useAuthIntent"
+import { getENV } from "Utils/getENV"
 import { merge } from "lodash"
 import {
   type FC,
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useReducer,
 } from "react"
 
@@ -46,8 +53,12 @@ export const DEFAULT_AUTH_MODAL_INTENTS: Record<AuthDialogMode, AuthIntent> = {
 }
 
 export type AuthDialogOptions = {
-  /** Whether or not to display an evergreen side panel for visual interest */
-  image?: boolean
+  /** Whether or not to display SEO default image */
+  seoImage?: boolean
+  /** Whether or not to display Gallery default image */
+  galleryImage?: boolean
+  /** Node id used for the Artwork#image and Artist#coverImage */
+  nodeId?: string | null
   /** Applies to SignUp or Login, not ForgotPassword */
   afterAuthAction?: AfterAuthAction
   /** Applies to SignUp or Login, not ForgotPassword */
@@ -152,6 +163,23 @@ export const AuthDialogProvider: FC<
   const hideAuthDialog = () => {
     dispatch({ type: "HIDE" })
   }
+
+  // Prefetch carousel images after page load (desktop only)
+  useEffect(() => {
+    if (!isLoggedIn && !getENV("IS_MOBILE")) {
+      getResizedAuthDialogImages().forEach(img =>
+        prefetchUrlWithSizes({
+          url: img.src,
+          srcSet: img.srcSet,
+        }),
+      )
+      const galleryImage = getResizedAuthDialogGalleryImage()
+      prefetchUrlWithSizes({
+        url: galleryImage.src,
+        srcSet: galleryImage.srcSet,
+      })
+    }
+  }, [isLoggedIn])
 
   const showAuthDialog = useCallback(
     ({

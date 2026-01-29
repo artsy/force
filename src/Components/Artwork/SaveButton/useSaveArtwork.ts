@@ -82,6 +82,7 @@ export const useSaveArtwork = ({
             kind: "artworks",
             objectId: artwork.internalID,
           },
+          nodeId: artwork.id,
         },
         analytics: {
           intent: Intent.saveArtwork,
