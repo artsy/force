@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<63a27c95eb833187149d0ce741654d15>>
+ * @generated SignedSource<<6c3750a4f050c737f43f0fd752764621>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -35,6 +35,7 @@ export type ArtworkSidebarCommercialButtons_artwork$data = {
     readonly isOfferable: boolean | null | undefined;
     readonly saleMessage: string | null | undefined;
   } | null | undefined> | null | undefined;
+  readonly id: string;
   readonly internalID: string;
   readonly isAcquireable: boolean | null | undefined;
   readonly isEligibleToCreateAlert: boolean;
@@ -82,31 +83,38 @@ v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "slug",
+  "name": "id",
   "storageKey": null
 },
 v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "saleMessage",
+  "name": "slug",
   "storageKey": null
 },
 v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "isAcquireable",
+  "name": "saleMessage",
   "storageKey": null
 },
 v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "isAcquireable",
+  "storageKey": null
+},
+v6 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "isOfferable",
   "storageKey": null
 },
-v6 = [
+v7 = [
   {
     "alias": null,
     "args": null,
@@ -159,9 +167,10 @@ return {
       "selections": (v1/*: any*/),
       "storageKey": null
     },
-    (v0/*: any*/),
     (v2/*: any*/),
+    (v0/*: any*/),
     (v3/*: any*/),
+    (v4/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -169,8 +178,8 @@ return {
       "name": "isInquireable",
       "storageKey": null
     },
-    (v4/*: any*/),
     (v5/*: any*/),
+    (v6/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -195,13 +204,13 @@ return {
       "selections": [
         {
           "kind": "InlineFragment",
-          "selections": (v6/*: any*/),
+          "selections": (v7/*: any*/),
           "type": "PriceRange",
           "abstractKey": null
         },
         {
           "kind": "InlineFragment",
-          "selections": (v6/*: any*/),
+          "selections": (v7/*: any*/),
           "type": "Money",
           "abstractKey": null
         }
@@ -224,7 +233,7 @@ return {
           "name": "filterGene",
           "plural": false,
           "selections": [
-            (v2/*: any*/)
+            (v3/*: any*/)
           ],
           "storageKey": null
         }
@@ -239,17 +248,11 @@ return {
       "name": "editionSets",
       "plural": true,
       "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "id",
-          "storageKey": null
-        },
+        (v2/*: any*/),
         (v0/*: any*/),
-        (v4/*: any*/),
         (v5/*: any*/),
-        (v3/*: any*/),
+        (v6/*: any*/),
+        (v4/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -373,6 +376,6 @@ return {
 };
 })();
 
-(node as any).hash = "03b4a4e94936ad4c45b688b3437fc61a";
+(node as any).hash = "f9b0dd8c7ed20bb3b55fdf8f299354af";
 
 export default node;

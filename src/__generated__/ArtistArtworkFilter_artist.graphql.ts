@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d2b6714465692bfb3f699048bfed80ab>>
+ * @generated SignedSource<<56ab6ec3440d048474a8b541fbef4f2d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -26,6 +26,7 @@ export type ArtistArtworkFilter_artist$data = {
     readonly id: string;
     readonly " $fragmentSpreads": FragmentRefs<"ArtworkFilterArtworkGrid_filtered_artworks" | "ImmersiveView_filtered_artworks">;
   } | null | undefined;
+  readonly id: string;
   readonly internalID: string;
   readonly meta: {
     readonly title: string;
@@ -39,7 +40,15 @@ export type ArtistArtworkFilter_artist$key = {
   readonly " $fragmentSpreads": FragmentRefs<"ArtistArtworkFilter_artist">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [
     {
       "defaultValue": null,
@@ -123,13 +132,7 @@ const node: ReaderFragment = {
       "name": "filterArtworksConnection",
       "plural": false,
       "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "id",
-          "storageKey": null
-        },
+        (v0/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -167,6 +170,7 @@ const node: ReaderFragment = {
       ],
       "storageKey": null
     },
+    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -216,7 +220,8 @@ const node: ReaderFragment = {
   "type": "Artist",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "eb952be86a8a420fc96c6d4e09e50156";
+(node as any).hash = "2733eeba4263d242a78908de043e4845";
 
 export default node;

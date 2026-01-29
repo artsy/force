@@ -148,6 +148,7 @@ const AuctionResultsContainer: React.FC<
           showAuthDialog({
             options: {
               title: `Sign up or log in to see auction results for ${artist.name}`,
+              nodeId: artist.id,
             },
             analytics: {
               contextModule: ContextModule.auctionResults,
@@ -397,6 +398,7 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
         state: { type: "AuctionResultsState", defaultValue: ALL }
       ) {
         slug
+        id
         internalID
         name
         meta(page: AUCTION_RESULTS) {

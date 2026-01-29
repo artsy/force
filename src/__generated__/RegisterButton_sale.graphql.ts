@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f35e3e8bae796923933ff8a283d51cd4>>
+ * @generated SignedSource<<c7707b991c54970676efd0363ea74500>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,6 +14,7 @@ export type RegisterButton_sale$data = {
   readonly bidder: {
     readonly qualifiedForBidding: boolean | null | undefined;
   } | null | undefined;
+  readonly id: string;
   readonly isAuction: boolean | null | undefined;
   readonly isClosed: boolean | null | undefined;
   readonly isLiveOpen: boolean | null | undefined;
@@ -55,6 +56,13 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "id",
       "storageKey": null
     },
     {
@@ -143,6 +151,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "e18690c44438367e8901d36af57723fa";
+(node as any).hash = "c983fc064dfc792d75f8fd629406a06b";
 
 export default node;

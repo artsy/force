@@ -74,6 +74,7 @@ const FollowGeneButton: React.FC<
             kind: "gene",
             objectId: gene.slug,
           },
+          nodeId: gene.id,
         },
         analytics: {
           intent: Intent.followGene,

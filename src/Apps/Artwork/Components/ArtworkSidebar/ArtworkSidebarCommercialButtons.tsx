@@ -238,6 +238,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<
             secondaryObjectId: selectedEditionSet?.internalID,
           },
           redirectTo: `${match?.location?.pathname}?creating_order=true`,
+          nodeId: artwork.id,
         },
         analytics: {
           contextModule: ContextModule.artworkSidebar,
@@ -301,6 +302,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<
             secondaryObjectId: selectedEditionSet?.internalID,
           },
           redirectTo: `${match?.location?.pathname}?creating_order=true`,
+          nodeId: artwork.id,
         },
         analytics: {
           contextModule: ContextModule.artworkSidebar,
@@ -633,6 +635,7 @@ const ARTWORK_FRAGMENT = graphql`
     attributionClass {
       internalID
     }
+    id
     internalID
     slug
     saleMessage

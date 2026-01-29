@@ -103,6 +103,7 @@ const FollowProfileButton: React.FC<
             kind: "profile",
             objectId: profile.slug,
           },
+          galleryImage: true,
         },
         analytics: {
           intent: Intent.followPartner,

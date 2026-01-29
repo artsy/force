@@ -63,6 +63,7 @@ export const ArtistAuctionResultItem: React.FC<
       showAuthDialog({
         options: {
           title: "Sign up or log in to see full auction records — for free",
+          nodeId: artist?.id,
         },
         analytics: {
           contextModule: ContextModule.auctionResult,
@@ -270,6 +271,7 @@ export const ArtistAuctionResultItemFragmentContainer = createFragmentContainer(
         dimension_text: dimensionText
         organization
         artist {
+          id
           name
         }
         images {
@@ -314,7 +316,14 @@ const ArtistAuctionResultItemPrice: React.FC<
   const {
     salePrice,
     salePriceUSD,
-    auctionResult: { saleDate, currency, performance, boughtIn, isUpcoming },
+    auctionResult: {
+      saleDate,
+      currency,
+      performance,
+      boughtIn,
+      isUpcoming,
+      artist,
+    },
     estimatedPrice,
   } = getProps(props)
 
@@ -335,6 +344,7 @@ const ArtistAuctionResultItemPrice: React.FC<
           showAuthDialog({
             options: {
               title: "Sign up or log in to see full auction records — for free",
+              nodeId: artist?.id,
             },
             analytics: {
               contextModule: ContextModule.auctionResults,

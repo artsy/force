@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b16f88a09c02b6d7071b872de5d16a59>>
+ * @generated SignedSource<<5791923428c67d77459be2b684140ac8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -241,6 +241,7 @@ return {
             "storageKey": "myLotStanding(live:true)"
           },
           (v3/*: any*/),
+          (v2/*: any*/),
           (v4/*: any*/),
           {
             "alias": null,
@@ -389,8 +390,7 @@ return {
               }
             ],
             "storageKey": null
-          },
-          (v2/*: any*/)
+          }
         ],
         "storageKey": "artwork(id:\"auction_artwork\")"
       },
@@ -429,7 +429,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d2bdeeea9fb4012c8f7fcd7caa173cb4",
+    "cacheID": "ea11533f360914bf41dc839f827afa35",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -534,7 +534,7 @@ return {
     },
     "name": "ArtworkSidebarBidActionTestQuery",
     "operationKind": "query",
-    "text": "query ArtworkSidebarBidActionTestQuery {\n  artwork(id: \"auction_artwork\") {\n    ...ArtworkSidebarBidAction_artwork\n    id\n  }\n  me {\n    ...ArtworkSidebarBidAction_me\n    id\n  }\n}\n\nfragment ArtworkSidebarBidAction_artwork on Artwork {\n  myLotStanding(live: true) {\n    most_recent_bid: mostRecentBid {\n      max_bid: maxBid {\n        cents\n      }\n      id\n    }\n  }\n  slug\n  internalID\n  sale {\n    slug\n    registrationStatus {\n      qualified_for_bidding: qualifiedForBidding\n      id\n    }\n    is_preview: isPreview\n    is_open: isOpen\n    is_live_open: isLiveOpen\n    is_closed: isClosed\n    is_registration_closed: isRegistrationClosed\n    requireIdentityVerification\n    id\n  }\n  sale_artwork: saleArtwork {\n    increments {\n      cents\n      display\n    }\n    endedAt\n    id\n  }\n  collectorSignals {\n    auction {\n      bidCount\n      lotWatcherCount\n    }\n  }\n}\n\nfragment ArtworkSidebarBidAction_me on Me {\n  isIdentityVerified\n  pendingIdentityVerification {\n    internalID\n    id\n  }\n}\n"
+    "text": "query ArtworkSidebarBidActionTestQuery {\n  artwork(id: \"auction_artwork\") {\n    ...ArtworkSidebarBidAction_artwork\n    id\n  }\n  me {\n    ...ArtworkSidebarBidAction_me\n    id\n  }\n}\n\nfragment ArtworkSidebarBidAction_artwork on Artwork {\n  myLotStanding(live: true) {\n    most_recent_bid: mostRecentBid {\n      max_bid: maxBid {\n        cents\n      }\n      id\n    }\n  }\n  slug\n  id\n  internalID\n  sale {\n    slug\n    registrationStatus {\n      qualified_for_bidding: qualifiedForBidding\n      id\n    }\n    is_preview: isPreview\n    is_open: isOpen\n    is_live_open: isLiveOpen\n    is_closed: isClosed\n    is_registration_closed: isRegistrationClosed\n    requireIdentityVerification\n    id\n  }\n  sale_artwork: saleArtwork {\n    increments {\n      cents\n      display\n    }\n    endedAt\n    id\n  }\n  collectorSignals {\n    auction {\n      bidCount\n      lotWatcherCount\n    }\n  }\n}\n\nfragment ArtworkSidebarBidAction_me on Me {\n  isIdentityVerified\n  pendingIdentityVerification {\n    internalID\n    id\n  }\n}\n"
   }
 };
 })();

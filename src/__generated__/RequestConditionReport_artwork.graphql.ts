@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f18a648fc703d42386ab18b27a2aa2c9>>
+ * @generated SignedSource<<277cde145b60a37d7d6f363099e9cbe3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,7 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type RequestConditionReport_artwork$data = {
+  readonly id: string;
   readonly internalID: string;
   readonly saleArtwork: {
     readonly internalID: string;
@@ -37,6 +38,13 @@ return {
   "metadata": null,
   "name": "RequestConditionReport_artwork",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "id",
+      "storageKey": null
+    },
     (v0/*: any*/),
     {
       "alias": null,
@@ -63,6 +71,6 @@ return {
 };
 })();
 
-(node as any).hash = "e20d4fa964b57dd0a75664fa56741ed4";
+(node as any).hash = "e030c56e392d864de9a910380af4a441";
 
 export default node;
