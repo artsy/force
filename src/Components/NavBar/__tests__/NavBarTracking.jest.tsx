@@ -22,6 +22,11 @@ jest.mock("System/Relay/SystemQueryRenderer", () => ({
   ),
 }))
 
+jest.mock("@unleash/proxy-client-react", () => ({
+  useFlag: jest.fn(() => false),
+  useVariant: jest.fn(() => ({ name: "disabled", enabled: false })),
+}))
+
 jest.mock("@artsy/palette", () => ({
   ...jest.requireActual("@artsy/palette"),
   useDidMount: jest.fn().mockReturnValue(false), // SSR-render

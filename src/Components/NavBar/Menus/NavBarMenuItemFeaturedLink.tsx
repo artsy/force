@@ -177,7 +177,9 @@ const query = graphql`
 `
 
 export const NavBarMenuItemFeaturedLinkWithColumn: FC<
-  NavBarMenuItemFeaturedLinkProps
+  NavBarMenuItemFeaturedLinkProps & {
+    onDataLoaded?: (hasData: boolean) => void
+  }
 > = props => {
   const { relayEnvironment } = useSystemContext()
 
@@ -189,7 +191,8 @@ export const NavBarMenuItemFeaturedLinkWithColumn: FC<
       render={({ error, props: data }) => {
         if (error) {
           console.error(error)
-          return <Column span={4} />
+          props.onDataLoaded?.(false)
+          return null
         }
 
         if (!data) {
@@ -199,9 +202,11 @@ export const NavBarMenuItemFeaturedLinkWithColumn: FC<
         const orderedSet = data.orderedSets?.[0]
 
         if (!orderedSet) {
-          return <Column span={4} />
+          props.onDataLoaded?.(false)
+          return null
         }
 
+        props.onDataLoaded?.(true)
         return (
           <Column span={4} px={2}>
             <NavBarMenuItemFeaturedLink

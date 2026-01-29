@@ -1,12 +1,14 @@
 import type { ClickedNavigationDropdownItem } from "@artsy/cohesion"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { Column, GridColumns, Spacer, Text } from "@artsy/palette"
+import { Column, GridColumns, Spacer, Text, useDidMount } from "@artsy/palette"
+import { useFlag } from "@unleash/proxy-client-react"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import type { MenuData } from "Components/NavBar/menuData"
 import { RouterLink } from "System/Components/RouterLink"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import type * as React from "react"
+import { useState } from "react"
 import { useTracking } from "react-tracking"
 import { NavBarMenuItemLink } from "./NavBarMenuItem"
 import { NavBarMenuItemFeaturedLinkWithColumn } from "./NavBarMenuItemFeaturedLink"
@@ -26,6 +28,13 @@ export const NavBarSubMenu: React.FC<
   const { trackEvent } = useTracking()
   const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
     useAnalyticsContext()
+  const isMounted = useDidMount()
+  const enableVisualComponents = useFlag("onyx_nav-submenu-visual-component")
+  const [hasVisualComponentData, setHasVisualComponentData] = useState(true)
+
+  // Only show visual components after client mount and when flag is enabled
+  // (useFlag is not isomorphic, so we need to wait for client-side mount)
+  const shouldEnableVisualComponents = isMounted && enableVisualComponents
 
   const handleClick = (
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
@@ -74,6 +83,11 @@ export const NavBarSubMenu: React.FC<
   const featuredLinkItem = menu.links.find(
     item => "type" in item && item.type === "FeaturedLink",
   )
+
+  // Only show featured link if feature flag is enabled, component is mounted, and data loaded successfully
+  const shouldShowFeaturedLink =
+    shouldEnableVisualComponents && featuredLinkItem && hasVisualComponentData
+
   const lastMenuLinkIndex = menu.links.length - 1
   const lastMenuItem = menu.links[lastMenuLinkIndex]
   const viewAllMenuItem =
@@ -85,8 +99,12 @@ export const NavBarSubMenu: React.FC<
     <Text width="100vw" variant={["xs", "xs", "sm"]} onClick={onClick}>
       <AppContainer>
         <HorizontalPadding>
-          <GridColumns py={6} gridColumnGap={0} gridAutoRows="1fr">
-            {featuredLinkItem ? (
+          <GridColumns
+            py={6}
+            gridColumnGap={0}
+            gridAutoRows={shouldShowFeaturedLink ? "1fr" : "auto"}
+          >
+            {shouldShowFeaturedLink ? (
               <>
                 {/* Left outer column: contains nav columns and bottom elements */}
                 <Column span={8}>
@@ -180,6 +198,7 @@ export const NavBarSubMenu: React.FC<
                     headerText={featuredLinkItem.headerText}
                     contextModule={contextModule}
                     parentNavigationItem={parentNavigationItem}
+                    onDataLoaded={setHasVisualComponentData}
                   />
                 )}
               </>

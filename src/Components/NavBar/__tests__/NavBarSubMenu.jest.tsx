@@ -14,6 +14,10 @@ jest.mock("System/Hooks/useAnalyticsContext", () => ({
   })),
 }))
 
+jest.mock("@unleash/proxy-client-react", () => ({
+  useFlag: jest.fn(() => false),
+}))
+
 jest.mock("System/Hooks/useSystemContext", () => ({
   useSystemContext: jest.fn(() => ({
     relayEnvironment: null,
@@ -29,6 +33,11 @@ jest.mock("System/Relay/SystemQueryRenderer", () => ({
   SystemQueryRenderer: jest.fn(({ render }) =>
     render({ error: null, props: { orderedSets: [] }, retry: null }),
   ),
+}))
+
+jest.mock("@artsy/palette", () => ({
+  ...jest.requireActual("@artsy/palette"),
+  useDidMount: jest.fn().mockReturnValue(false), // SSR-render by default
 }))
 
 describe("NavBarSubMenu", () => {
@@ -129,6 +138,14 @@ describe("NavBarSubMenu", () => {
       ],
     }
 
+    // Mock useDidMount to return true (component is mounted)
+    const { useDidMount } = require("@artsy/palette")
+    ;(useDidMount as jest.Mock).mockReturnValueOnce(true)
+
+    // Mock feature flag to be enabled
+    const { useFlag } = require("@unleash/proxy-client-react")
+    ;(useFlag as jest.Mock).mockReturnValueOnce(true)
+
     // Mock SystemQueryRenderer to return ordered sets data
     const { SystemQueryRenderer } = require("System/Relay/SystemQueryRenderer")
     ;(SystemQueryRenderer as jest.Mock).mockImplementationOnce(({ render }) =>
@@ -189,5 +206,17 @@ describe("NavBarSubMenu", () => {
     expect(container.textContent).not.toContain("Get Inspired")
     expect(container.textContent).not.toContain("What's Next")
     expect(container.textContent).not.toContain("Artists to Discover")
+  })
+
+  it("does not render featured link component when feature flag is disabled", () => {
+    // Mock feature flag to be disabled
+    const { useFlag } = require("@unleash/proxy-client-react")
+    ;(useFlag as jest.Mock).mockReturnValueOnce(false)
+
+    // ARTWORKS_SUBMENU_DATA includes a featured link visual component
+    const { container } = getWrapper()
+
+    // Featured link should not be rendered when flag is disabled
+    expect(container.textContent).not.toContain("Get Inspired")
   })
 })
