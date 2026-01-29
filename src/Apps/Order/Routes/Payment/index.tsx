@@ -228,7 +228,6 @@ export const PaymentRoute: FC<
       const result = await CreditCardPicker?.current?.getCreditCardId()
 
       if (result?.type === "invalid_form") {
-        setIsSavingPayment(false)
         jumpTo("paymentDetailsTop", { behavior: "smooth" })
         return
       }
@@ -249,7 +248,6 @@ export const PaymentRoute: FC<
           message:
             "Please enter another payment method or contact your bank for more information.",
         })
-        setIsSavingPayment(false)
         return
       }
 
@@ -269,7 +267,6 @@ export const PaymentRoute: FC<
           title: "An internal error occurred",
         })
         logger.error(result.error)
-        setIsSavingPayment(false)
         return
       }
 
@@ -284,13 +281,11 @@ export const PaymentRoute: FC<
       ).commerceSetPayment?.orderOrError
 
       if (orderOrError?.error) {
-        setIsSavingPayment(false)
         throw orderOrError.error
       }
 
       handlePaymentStepComplete()
     } catch (error) {
-      setIsSavingPayment(false)
       handlePaymentError(error)
 
       let errorCode = error.code || ""
@@ -324,6 +319,8 @@ export const PaymentRoute: FC<
       })
 
       props.dialog.showErrorDialog()
+    } finally {
+      setIsSavingPayment(false)
     }
   }
 
