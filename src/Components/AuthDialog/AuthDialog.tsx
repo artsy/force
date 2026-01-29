@@ -14,6 +14,7 @@ import { AuthDialogLogin } from "Components/AuthDialog/Views/AuthDialogLogin"
 import { AuthDialogSignUp } from "Components/AuthDialog/Views/AuthDialogSignUp"
 import { AuthDialogWelcome } from "Components/AuthDialog/Views/AuthDialogWelcome"
 import { useRecaptcha } from "Utils/EnableRecaptcha"
+import { getENV } from "Utils/getENV"
 import { type FC, useEffect } from "react"
 
 export interface AuthDialogProps {
@@ -95,7 +96,10 @@ const getModalProps = (
   options: AuthDialogOptions,
   newSignupEnabled: boolean,
 ) => {
-  if (!!options.nodeId || !!options.seoImage || newSignupEnabled) {
+  if (
+    !getENV("IS_MOBILE") &&
+    (!!options.nodeId || !!options.seoImage || newSignupEnabled)
+  ) {
     return {
       width: ["100%", MODAL_WIDTH],
       leftPanel: <AuthDialogLeftPanel />,
