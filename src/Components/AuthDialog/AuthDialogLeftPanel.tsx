@@ -18,6 +18,7 @@ import {
   MODAL_WIDTH,
   getResizedAuthDialogGalleryImage,
   getResizedAuthDialogImages,
+  getResizedAuthDialogSEOImage,
 } from "Components/AuthDialog/Utils/authDialogConstants"
 import { resized } from "Utils/resized"
 import {
@@ -67,6 +68,22 @@ export const AuthDialogLeftPanel: FC<React.PropsWithChildren> = () => {
           width="100%"
           height="100%"
           fetchPriority="high"
+          alt=""
+          style={{ objectFit: "cover" }}
+        />
+      </Box>
+    )
+  }
+
+  if (options.seoImage) {
+    return (
+      <Box display={["none", "block"]} width="100%">
+        <Image
+          {...getResizedAuthDialogSEOImage()}
+          width="100%"
+          minHeight={760}
+          height="100%"
+          lazyLoad
           alt=""
           style={{ objectFit: "cover" }}
         />
