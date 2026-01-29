@@ -21,7 +21,10 @@ import {
   validateAndExtractOrderResponse,
 } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
 import type { ExpressCheckoutPaymentMethod } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
-import { CheckoutErrorBanner } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
+import {
+  CheckoutErrorBanner,
+  type CheckoutErrorBannerProps,
+} from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { fetchAndSetConfirmationToken } from "Apps/Order2/Utils/confirmationTokenUtils"
 import { preventHardReload } from "Apps/Order2/Utils/navigationGuards"
@@ -58,6 +61,60 @@ type HandleCancelCallback = NonNullable<
 >
 
 const EXPRESS_CHECKOUT_OPEN_RESOLVE_DELAY_MS = 500
+
+const errorBannerPropsForErrorCode = (
+  errorCode: string,
+): CheckoutErrorBannerProps["error"] => {
+  // Card/payment failed errors
+  if (
+    [
+      "card_declined",
+      "insufficient_funds",
+      "incorrect_number",
+      "expired_card",
+      "charge_authorization_failed",
+      "credit_card_not_found",
+      "credit_card_deactivated",
+      "invalid_credit_card",
+      "processing_error",
+    ].includes(errorCode)
+  ) {
+    return {
+      title: "Payment failed",
+      message: "There was an issue with your payment method. Please try again.",
+    }
+  }
+
+  // Shipping address errors
+  if (
+    [
+      "unsupported_shipping_location",
+      "missing_postal_code",
+      "missing_country",
+      "missing_phone_number",
+      "missing_shipping_info",
+    ].includes(errorCode)
+  ) {
+    return {
+      title: "Shipping address error",
+      message: "Please check your shipping address and try again.",
+    }
+  }
+
+  // Payment method not supported
+  if (errorCode === "unsupported_payment_method") {
+    return {
+      title: "Payment method not supported",
+      message:
+        "This payment method is not supported. Please try a different payment method.",
+    }
+  }
+
+  // Fallback for all other errors
+  return {
+    title: "An error occurred",
+  }
+}
 
 export const Order2ExpressCheckoutUI: React.FC<
   Order2ExpressCheckoutUIProps
@@ -300,11 +357,10 @@ export const Order2ExpressCheckoutUI: React.FC<
         flow: "Express checkout",
       })
 
+      const errorBannerProps = errorBannerPropsForErrorCode(errorRef.current)
       sessionStorage.setItem(
         "expressCheckoutError",
-        JSON.stringify({
-          title: "An error occurred",
-        }),
+        JSON.stringify(errorBannerProps),
       )
 
       errorRef.current = null
@@ -511,7 +567,7 @@ export const Order2ExpressCheckoutUI: React.FC<
       return
     } catch (error) {
       logger.error("Error confirming payment", error)
-      errorRef.current = error.code || "unknown_error"
+      errorRef.current = (error.code || "unknown_error") as string
 
       checkoutTracking.errorMessageViewed({
         error_code: errorRef.current,
@@ -521,11 +577,10 @@ export const Order2ExpressCheckoutUI: React.FC<
         flow: "Express checkout",
       })
 
+      const errorBannerProps = errorBannerPropsForErrorCode(errorRef.current)
       sessionStorage.setItem(
         "expressCheckoutError",
-        JSON.stringify({
-          title: "Payment failed",
-        }),
+        JSON.stringify(errorBannerProps),
       )
 
       resetOrder()
