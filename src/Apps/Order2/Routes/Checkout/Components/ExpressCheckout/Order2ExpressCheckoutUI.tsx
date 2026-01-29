@@ -23,6 +23,7 @@ import {
 import type { ExpressCheckoutPaymentMethod } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { CheckoutErrorBanner } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import { fetchAndSetConfirmationToken } from "Apps/Order2/Utils/confirmationTokenUtils"
 import { preventHardReload } from "Apps/Order2/Utils/navigationGuards"
 import { RouterLink } from "System/Components/RouterLink"
 import createLogger from "Utils/logger"
@@ -37,7 +38,7 @@ import type {
 import type { OrderCreditCardWalletTypeEnum } from "__generated__/useOrder2ExpressCheckoutSetOrderPaymentMutation.graphql"
 import type React from "react"
 import { useEffect, useRef, useState } from "react"
-import { graphql, useFragment } from "react-relay"
+import { graphql, useFragment, useRelayEnvironment } from "react-relay"
 import { useOrder2ExpressCheckoutSetFulfillmentOptionMutation } from "./Mutations/useOrder2ExpressCheckoutSetFulfillmentOptionMutation"
 import { useOrder2ExpressCheckoutSetOrderPaymentMutation } from "./Mutations/useOrder2ExpressCheckoutSetOrderPaymentMutation"
 import { useOrder2ExpressCheckoutSubmitOrderMutation } from "./Mutations/useOrder2ExpressCheckoutSubmitOrderMutation"
@@ -56,6 +57,8 @@ type HandleCancelCallback = NonNullable<
   React.ComponentProps<typeof ExpressCheckoutElement>["onCancel"]
 >
 
+const EXPRESS_CHECKOUT_OPEN_RESOLVE_DELAY_MS = 500
+
 export const Order2ExpressCheckoutUI: React.FC<
   Order2ExpressCheckoutUIProps
 > = ({ order }) => {
@@ -63,6 +66,7 @@ export const Order2ExpressCheckoutUI: React.FC<
 
   const elements = useElements()
   const stripe = useStripe()
+  const environment = useRelayEnvironment()
 
   const setFulfillmentOptionMutation =
     useOrder2ExpressCheckoutSetFulfillmentOptionMutation()
@@ -90,6 +94,7 @@ export const Order2ExpressCheckoutUI: React.FC<
     checkoutMode,
     setCheckoutMode,
     checkoutTracking,
+    setConfirmationToken,
   } = useCheckoutContext()
 
   useEffect(() => {
@@ -134,39 +139,115 @@ export const Order2ExpressCheckoutUI: React.FC<
     business: { name: "Artsy" },
   }
 
-  const updateOrderTotalAndResolve = (args: {
-    buyerTotalMinor?: number | null
-    resolveDetails: () => void
-    timeout?: number
-  }) => {
-    const { buyerTotalMinor, resolveDetails, timeout = 500 } = args
-    logger.warn("Updating order total", buyerTotalMinor)
-    buyerTotalMinor &&
+  /** Helper to update shipping address and extract data
+   * conditionally also sets the first fulfillment option for express checkouts
+   * that require it (Google Pay)
+   */
+  const setShippingAddress = async (params: {
+    city?: string
+    state?: string
+    country: string
+    postal_code?: string
+    name: string
+  }): Promise<OrderMutationResult> => {
+    const result = await updateOrderShippingAddressMutation.submitMutation({
+      variables: {
+        input: {
+          id: orderData.internalID,
+          shippingCity: params.city,
+          shippingRegion: params.state,
+          shippingCountry: params.country,
+          shippingPostalCode: params.postal_code,
+          shippingName: params.name,
+        },
+      },
+    })
+
+    const order = validateAndExtractOrderResponse(
+      result.updateOrderShippingAddress?.orderOrError,
+    ).order
+
+    const initialResult = {
+      order,
+      shippingRates: extractShippingRates(order),
+      lineItems: extractLineItems(order),
+    }
+
+    // Auto-select first fulfillment option for Google Pay
+    // Google Pay doesn't reliably trigger onShippingRateChange, so we auto-set for it
+    const requiresFulfillmentAutoSelect = expressCheckoutType === "google_pay"
+    if (
+      requiresFulfillmentAutoSelect &&
+      initialResult.shippingRates.length > 0 // TODO: This should be an error - exit checkout and display an error to user (pr #16653)
+    ) {
+      return await setFulfillmentOption(
+        initialResult.shippingRates[0].id as FulfillmentOptionInputEnum,
+      )
+    }
+
+    return initialResult
+  }
+
+  /**
+   * Helper to set fulfillment option and extract data
+   */
+  const setFulfillmentOption = async (
+    fulfillmentType: FulfillmentOptionInputEnum,
+  ): Promise<OrderMutationResult> => {
+    const result = await setFulfillmentOptionMutation.submitMutation({
+      variables: {
+        input: {
+          id: orderData.internalID,
+          fulfillmentOption: {
+            type: fulfillmentType,
+          },
+        },
+      },
+    })
+
+    const order = validateAndExtractOrderResponse(
+      result.setOrderFulfillmentOption?.orderOrError,
+    ).order
+
+    return {
+      order,
+      shippingRates: extractShippingRates(order),
+      lineItems: extractLineItems(order),
+    }
+  }
+
+  // Helper to update Stripe elements with order details
+  const updateStripeElements = (order: ParseableOrder) => {
+    const buyerTotalMinor = order.buyerTotal?.minor
+
+    if (buyerTotalMinor != null) {
       elements?.update({
         amount: buyerTotalMinor,
       })
-    setTimeout(() => {
-      resolveDetails()
-    }, timeout)
+    }
   }
 
   const resetOrder = async () => {
     window.removeEventListener("beforeunload", preventHardReload)
 
-    const { unsetOrderPaymentMethod } =
-      await unsetPaymentMethodMutation.submitMutation({
-        variables: { input: { id: orderData.internalID } },
-      })
+    try {
+      const { unsetOrderPaymentMethod } =
+        await unsetPaymentMethodMutation.submitMutation({
+          variables: { input: { id: orderData.internalID } },
+        })
 
-    const { unsetOrderFulfillmentOption } =
-      await unsetFulfillmentOptionMutation.submitMutation({
-        variables: { input: { id: orderData.internalID } },
-      })
+      const { unsetOrderFulfillmentOption } =
+        await unsetFulfillmentOptionMutation.submitMutation({
+          variables: { input: { id: orderData.internalID } },
+        })
 
-    validateAndExtractOrderResponse(unsetOrderPaymentMethod?.orderOrError)
-    validateAndExtractOrderResponse(unsetOrderFulfillmentOption?.orderOrError)
-
-    window.location.reload()
+      validateAndExtractOrderResponse(unsetOrderPaymentMethod?.orderOrError)
+      validateAndExtractOrderResponse(unsetOrderFulfillmentOption?.orderOrError)
+    } catch (error) {
+      logger.error("Error resetting order", error)
+    } finally {
+      window.location.reload()
+    }
   }
 
   const handleOpenExpressCheckout = async ({
@@ -184,26 +265,26 @@ export const Order2ExpressCheckoutUI: React.FC<
     try {
       const allowedShippingCountries =
         extractAllowedShippingCountries(orderData)
-      const shippingRates = [CALCULATING_SHIPPING_RATE]
 
-      return updateOrderTotalAndResolve({
-        buyerTotalMinor: itemsTotal?.minor,
-        resolveDetails: () =>
-          resolve({
-            ...checkoutOptions,
-            allowedShippingCountries,
-            shippingRates,
-            lineItems: [{ name: "Subtotal", amount: itemsTotal?.minor }],
-          }),
-      })
+      if (itemsTotal?.minor != null) {
+        elements?.update({
+          amount: itemsTotal.minor,
+        })
+      }
+
+      setTimeout(() => {
+        resolve({
+          ...checkoutOptions,
+          allowedShippingCountries,
+          lineItems: [{ name: "Subtotal", amount: itemsTotal?.minor }],
+        })
+      }, EXPRESS_CHECKOUT_OPEN_RESOLVE_DELAY_MS)
     } catch (error) {
-      logger.error("Error resetting order on load", error)
+      logger.error("Error opening express checkout", error)
     }
   }
 
   const handleCancel: HandleCancelCallback = async () => {
-    logger.warn("Express checkout element cancelled - resetting")
-
     if (!errorRef.current) {
       checkoutTracking.clickedCancelExpressCheckout({
         walletType: expressCheckoutType as string,
@@ -238,53 +319,32 @@ export const Order2ExpressCheckoutUI: React.FC<
 
   // User selects a shipping address
   const handleShippingAddressChange = async ({
-    // Stripe type only guarantees a partial address
     address,
     name,
     resolve,
     reject,
   }: StripeExpressCheckoutElementShippingAddressChangeEvent) => {
-    logger.warn("Express checkout element address change", address)
-
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { city, state, country, postal_code } = address
 
     try {
-      const updateOrderShippingAddressResult =
-        await updateOrderShippingAddressMutation.submitMutation({
-          variables: {
-            input: {
-              id: orderData.internalID,
-              shippingCity: city,
-              shippingRegion: state,
-              shippingCountry: country,
-              shippingPostalCode: postal_code,
-              shippingName: name,
-            },
-          },
-        })
+      const result = await setShippingAddress({
+        city,
+        state,
+        country,
+        postal_code,
+        name,
+      })
 
-      const validatedResult = validateAndExtractOrderResponse(
-        updateOrderShippingAddressResult.updateOrderShippingAddress
-          ?.orderOrError,
-      )
+      updateStripeElements(result.order)
 
-      const shippingRates = extractShippingRates(validatedResult.order)
-      const lineItems = extractLineItems(validatedResult.order)
-
-      return updateOrderTotalAndResolve({
-        buyerTotalMinor: validatedResult.order.buyerTotal?.minor,
-        resolveDetails: () =>
-          resolve({
-            shippingRates,
-            lineItems,
-          }),
+      resolve({
+        shippingRates: result.shippingRates,
+        lineItems: result.lineItems,
       })
     } catch (error) {
       errorRef.current = error.code || "unknown_error"
       logger.error("Error updating order", error)
       reject()
-      return
     }
   }
 
@@ -294,42 +354,16 @@ export const Order2ExpressCheckoutUI: React.FC<
     resolve,
     reject,
   }: StripeExpressCheckoutElementShippingRateChangeEvent) => {
-    logger.warn("Shipping rate change", shippingRate)
-
-    if (shippingRate.id === CALCULATING_SHIPPING_RATE.id) {
-      errorRef.current = "shipping_options_not_available"
-      logger.error(
-        "Shipping options not available yet, skipping setting fulfillment option",
-      )
-      reject()
-      return
-    }
-
     try {
-      const result = await setFulfillmentOptionMutation.submitMutation({
-        variables: {
-          input: {
-            id: orderData.internalID,
-            fulfillmentOption: {
-              type: shippingRate.id as FulfillmentOptionInputEnum,
-            },
-          },
-        },
-      })
-      const data = result.setOrderFulfillmentOption?.orderOrError
+      const result = await setFulfillmentOption(
+        shippingRate.id as FulfillmentOptionInputEnum,
+      )
 
-      const validatedResult = validateAndExtractOrderResponse(data)
+      updateStripeElements(result.order)
 
-      const lineItems = extractLineItems(validatedResult.order)
-      const shippingRates = extractShippingRates(validatedResult.order)
-
-      return updateOrderTotalAndResolve({
-        buyerTotalMinor: validatedResult.order.buyerTotal?.minor,
-        resolveDetails: () =>
-          resolve({
-            shippingRates,
-            lineItems,
-          }),
+      resolve({
+        shippingRates: result.shippingRates,
+        lineItems: result.lineItems,
       })
     } catch (error) {
       errorRef.current = error.code || "unknown_error"
@@ -368,7 +402,54 @@ export const Order2ExpressCheckoutUI: React.FC<
     })
 
     try {
-      // update order payment method
+      // Trigger form validation and wallet collection
+      const { error: submitError } = await elements.submit()
+      if (submitError) {
+        logger.error(submitError)
+        setExpressCheckoutSubmitting(false)
+        return
+      }
+
+      // Create the ConfirmationToken using the details collected by the Payment Element
+      const { error, confirmationToken } = await stripe.createConfirmationToken(
+        {
+          elements,
+          params:
+            shippingRate?.id === "PICKUP"
+              ? {
+                  shipping: {
+                    address: {
+                      line1: null,
+                      line2: null,
+                      city: null,
+                      postal_code: null,
+                      state: null,
+                      country: null,
+                    },
+                    name: null,
+                  },
+                }
+              : undefined,
+        },
+      )
+
+      if (error) {
+        // This point is only reached if there's an immediate error when
+        // creating the ConfirmationToken.
+        // TODO: Handle this error with the others below. (pr #16653)
+        logger.error(error)
+        setExpressCheckoutSubmitting(false)
+        return
+      }
+
+      // Persist confirmation token to context
+      await fetchAndSetConfirmationToken(
+        confirmationToken.id,
+        environment,
+        setConfirmationToken,
+      )
+
+      // Update order payment method with confirmation token
       const updateOrderPaymentMethodResult =
         await setOrderPaymentMutation.submitMutation({
           variables: {
@@ -376,6 +457,7 @@ export const Order2ExpressCheckoutUI: React.FC<
               id: orderData.internalID,
               paymentMethod: "CREDIT_CARD",
               creditCardWalletType,
+              stripeConfirmationToken: confirmationToken.id,
             },
           },
         })
@@ -410,45 +492,6 @@ export const Order2ExpressCheckoutUI: React.FC<
         updateOrderShippingAddressResult.updateOrderShippingAddress
           ?.orderOrError,
       )
-
-      // Trigger form validation and wallet collection
-      const { error: submitError } = await elements.submit()
-      if (submitError) {
-        logger.error(submitError)
-        setExpressCheckoutSubmitting(false)
-        return
-      }
-
-      // Create the ConfirmationToken using the details collected by the Payment Element
-      const { error, confirmationToken } = await stripe.createConfirmationToken(
-        {
-          elements,
-          params:
-            shippingRate?.id === "PICKUP"
-              ? {
-                  shipping: {
-                    address: {
-                      line1: null,
-                      line2: null,
-                      city: null,
-                      postal_code: null,
-                      state: null,
-                      country: null,
-                    },
-                    name: null,
-                  },
-                }
-              : undefined,
-        },
-      )
-
-      if (error) {
-        // This point is only reached if there's an immediate error when
-        // creating the ConfirmationToken. Show the error to customer (for example, payment details incomplete)
-        logger.error(error)
-        setExpressCheckoutSubmitting(false)
-        return
-      }
 
       const submitOrderResult = await submitOrderMutation.submitMutation({
         variables: {
@@ -603,8 +646,14 @@ type ParseableOrder =
   | Order2ExpressCheckoutUI_order$data
   | SetFulfillmentOrderResult
 
+type OrderMutationResult = {
+  order: ParseableOrder
+  shippingRates: Array<ShippingRate>
+  lineItems: Array<LineItem>
+}
+
 const extractLineItems = (order: ParseableOrder): Array<LineItem> => {
-  const { itemsTotal, shippingTotal } = order
+  const { itemsTotal, shippingTotal, taxTotal } = order
 
   if (!itemsTotal) {
     throw new Error("itemsTotal is required")
@@ -632,10 +681,10 @@ const extractLineItems = (order: ParseableOrder): Array<LineItem> => {
     }
   }
 
-  if (order.taxTotal) {
+  if (taxTotal) {
     taxLine = {
       name: "Tax",
-      amount: order.taxTotal.minor,
+      amount: taxTotal.minor,
     }
   }
 
@@ -643,7 +692,6 @@ const extractLineItems = (order: ParseableOrder): Array<LineItem> => {
     [itemsSubtotal, shippingLine, taxLine] as Array<LineItem>
   ).filter(Boolean)
 
-  logger.warn("Line items", lineItems)
   return lineItems
 }
 
@@ -654,13 +702,6 @@ const extractAllowedShippingCountries = (
     countryCode.toUpperCase(),
   )
 }
-
-const CALCULATING_SHIPPING_RATE = {
-  id: "CALCULATING_SHIPPING",
-  displayName: "Calculating shipping...",
-  // Express checkout requires a number for amount
-  amount: 0,
-} as const
 
 const shippingRateForFulfillmentOption = option => {
   const { type, amount } = option
@@ -685,8 +726,6 @@ const shippingRateForFulfillmentOption = option => {
       }
       break
     case "SHIPPING_TBD":
-      // TODO: Maybe we no longer return this (rates might be empty on
-      // server, define our fallback CALCULATING_SHIPPING_RATE in this file)
       return null
     default:
       logger.warn("Unhandled fulfillment option", type)
@@ -709,21 +748,16 @@ const extractShippingRates = (order: ParseableOrder): Array<ShippingRate> => {
   const rates = order.fulfillmentOptions
     .map(shippingRateForFulfillmentOption)
     .filter(Boolean) as ShippingRate[]
-  const shippingRatesOnly = rates.filter(rate => rate.id !== "PICKUP")
-  const finalRates =
-    shippingRatesOnly.length === 0
-      ? rates.concat(CALCULATING_SHIPPING_RATE)
-      : rates
   const selectedFulfillmentOption = order.fulfillmentOptions.find(
     option => option.selected,
   )
-  if (selectedFulfillmentOption!.type === "PICKUP") {
+  if (selectedFulfillmentOption?.type === "PICKUP") {
     // if pickup is selected, it should be the first option since Stripe auto
     // selects the first option
-    return finalRates
+    return rates
   } else {
     // on modal open, the first option should always be ship
-    return finalRates.sort(sortPickupLast)
+    return rates.sort(sortPickupLast)
   }
 }
 

@@ -23,17 +23,37 @@ jest.mock("System/Hooks/useAnalyticsContext", () => ({
   })),
 }))
 
+jest.mock("Apps/Order2/Utils/confirmationTokenUtils", () => ({
+  fetchAndSetConfirmationToken: jest.fn(
+    async (tokenId, environment, setConfirmationToken) => {
+      setConfirmationToken({
+        confirmationToken: {
+          id: tokenId,
+          paymentMethodPreview: {
+            __typename: "Card",
+            displayBrand: "visa",
+            last4: "4242",
+          },
+        },
+      })
+      return Promise.resolve()
+    },
+  ),
+}))
+
 let shippingRateId = "DOMESTIC_FLAT"
 
 const mockRedirectToOrderDetails = jest.fn()
 const mockSetExpressCheckoutLoaded = jest.fn()
 const mockSetShowOrderSubmittingSpinner = jest.fn()
 const mockSetCheckoutMode = jest.fn()
+const mockSetConfirmationToken = jest.fn()
 const mockCheckoutContext = {
   setExpressCheckoutLoaded: mockSetExpressCheckoutLoaded,
   setExpressCheckoutSubmitting: mockSetShowOrderSubmittingSpinner,
   redirectToOrderDetails: mockRedirectToOrderDetails,
   setCheckoutMode: mockSetCheckoutMode,
+  setConfirmationToken: mockSetConfirmationToken,
 } as any
 
 jest.mock("Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext", () => ({
@@ -214,6 +234,8 @@ describe("ExpressCheckoutUI", () => {
 
     fireEvent.click(screen.getByTestId("express-checkout-confirm"))
 
+    await flushPromiseQueue()
+
     // First, test the payment method update
     const paymentMethodUpdate = await mockResolveLastOperation({
       setOrderPayment: () => ({
@@ -231,6 +253,7 @@ describe("ExpressCheckoutUI", () => {
       id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
       paymentMethod: "CREDIT_CARD",
       creditCardWalletType: "APPLE_PAY",
+      stripeConfirmationToken: "ctoken_123",
     })
 
     // Second, test the shipping address update
@@ -305,6 +328,8 @@ describe("ExpressCheckoutUI", () => {
 
     fireEvent.click(screen.getByTestId("express-checkout-confirm"))
 
+    await flushPromiseQueue()
+
     // First, test the payment method update
     const paymentMethodUpdate = await mockResolveLastOperation({
       setOrderPayment: () => ({
@@ -322,8 +347,10 @@ describe("ExpressCheckoutUI", () => {
       id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
       paymentMethod: "CREDIT_CARD",
       creditCardWalletType: "APPLE_PAY",
+      stripeConfirmationToken: "ctoken_123",
     })
 
+    // Second, test the shipping address update
     const { operationName, operationVariables } =
       await mockResolveLastOperation({
         updateOrderShippingAddress: () => ({
@@ -388,7 +415,7 @@ describe("ExpressCheckoutUI", () => {
     expect(env.mock.getAllOperations()).toHaveLength(0)
   })
 
-  it("uses the itemTotal and 'calculating shipping...' for initial values on load", async () => {
+  it("uses the itemTotal for initial values on load", async () => {
     const { env } = renderWithRelay({
       Order: () => ({
         ...orderData,
@@ -418,13 +445,6 @@ describe("ExpressCheckoutUI", () => {
         shippingAddressRequired: true,
         business: { name: "Artsy" },
         lineItems: [{ amount: 12345, name: "Subtotal" }],
-        shippingRates: [
-          {
-            amount: 0,
-            displayName: "Calculating shipping...",
-            id: "CALCULATING_SHIPPING",
-          },
-        ],
       })
     })
     expect(mockElementsUpdate).toHaveBeenCalledWith({ amount: 12345 })
@@ -472,6 +492,8 @@ describe("ExpressCheckoutUI", () => {
     })
 
     fireEvent.click(screen.getByTestId("express-checkout-confirm"))
+
+    await flushPromiseQueue()
 
     // First, test the payment method update
     await mockResolveLastOperation({
@@ -528,6 +550,8 @@ describe("ExpressCheckoutUI", () => {
     })
 
     fireEvent.click(screen.getByTestId("express-checkout-confirm"))
+
+    await flushPromiseQueue()
 
     // Resolve the payment method update mutation
     await mockResolveLastOperation({
