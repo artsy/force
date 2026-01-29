@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3f431ddc2a65582b53633ff988fded29>>
+ * @generated SignedSource<<c7707b991c54970676efd0363ea74500>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,11 +14,7 @@ export type RegisterButton_sale$data = {
   readonly bidder: {
     readonly qualifiedForBidding: boolean | null | undefined;
   } | null | undefined;
-  readonly coverImage: {
-    readonly aspectRatio: number;
-    readonly blurhash: string | null | undefined;
-    readonly signupImage: string | null | undefined;
-  } | null | undefined;
+  readonly id: string;
   readonly isAuction: boolean | null | undefined;
   readonly isClosed: boolean | null | undefined;
   readonly isLiveOpen: boolean | null | undefined;
@@ -65,39 +61,8 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
-      "concreteType": "Image",
-      "kind": "LinkedField",
-      "name": "coverImage",
-      "plural": false,
-      "selections": [
-        {
-          "alias": "signupImage",
-          "args": [
-            {
-              "kind": "Literal",
-              "name": "version",
-              "value": "main"
-            }
-          ],
-          "kind": "ScalarField",
-          "name": "url",
-          "storageKey": "url(version:\"main\")"
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "aspectRatio",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "blurhash",
-          "storageKey": null
-        }
-      ],
+      "kind": "ScalarField",
+      "name": "id",
       "storageKey": null
     },
     {
@@ -186,6 +151,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "738eb147d1ae9179a87b0bb91a14703e";
+(node as any).hash = "c983fc064dfc792d75f8fd629406a06b";
 
 export default node;

@@ -250,13 +250,9 @@ describe("RegisterButton", () => {
           intent: "registerToBid",
         },
         options: {
+          nodeId: "<Sale-mock-id-2>",
           title: "Sign up or log in to bid on artworks",
           redirectTo: "/auction/sale-slug/register",
-          image: {
-            url: '<mock-value-for-field-"signupImage">',
-            aspectRatio: '<mock-value-for-field-\"aspectRatio\">',
-            blurhash: '<mock-value-for-field-"blurhash">',
-          },
         },
       })
     })

@@ -171,11 +171,7 @@ describe("RequestConditionReport", () => {
             intent: "requestConditionReport",
           },
           options: {
-            image: {
-              url: '<mock-value-for-field-"url">',
-              aspectRatio: 4.2,
-              blurhash: '<mock-value-for-field-"blurhash">',
-            },
+            nodeId: "<Artwork-mock-id-3>",
           },
         })
       })

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<77c1e2241a53e543a56f59ef1a4d3ad8>>
+ * @generated SignedSource<<3a4f639efd7f0779623b39636ea1ac5f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -28,13 +28,7 @@ export type ArtistAuctionResults_artist$data = {
     };
     readonly totalCount: number | null | undefined;
   } | null | undefined;
-  readonly coverArtwork: {
-    readonly image: {
-      readonly aspectRatio: number;
-      readonly blurhash: string | null | undefined;
-      readonly url: string | null | undefined;
-    } | null | undefined;
-  } | null | undefined;
+  readonly id: string;
   readonly internalID: string;
   readonly meta: {
     readonly description: string;
@@ -279,6 +273,13 @@ return {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
+      "name": "id",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "internalID",
       "storageKey": null
     },
@@ -313,55 +314,6 @@ return {
         }
       ],
       "storageKey": "meta(page:\"AUCTION_RESULTS\")"
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "Artwork",
-      "kind": "LinkedField",
-      "name": "coverArtwork",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "Image",
-          "kind": "LinkedField",
-          "name": "image",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": [
-                {
-                  "kind": "Literal",
-                  "name": "version",
-                  "value": "main"
-                }
-              ],
-              "kind": "ScalarField",
-              "name": "url",
-              "storageKey": "url(version:\"main\")"
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "aspectRatio",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "blurhash",
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
     },
     {
       "alias": null,
@@ -650,6 +602,6 @@ return {
 };
 })();
 
-(node as any).hash = "c195cefa7a1cc52d1df2e4e1e2ecffa1";
+(node as any).hash = "d967b5032299499e40c8b34e0faf6b72";
 
 export default node;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<997689a948f74b85ab1d855cc0ed2548>>
+ * @generated SignedSource<<218d68da779eec3dcdb28fe8f99f5e19>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,12 +11,7 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistWorksForSaleEmpty_artist$data = {
-  readonly coverArtwork: {
-    readonly image: {
-      readonly aspectRatio: number;
-      readonly url: string | null | undefined;
-    } | null | undefined;
-  } | null | undefined;
+  readonly id: string;
   readonly internalID: string;
   readonly name: string | null | undefined;
   readonly " $fragmentType": "ArtistWorksForSaleEmpty_artist";
@@ -36,6 +31,13 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
+      "name": "id",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "internalID",
       "storageKey": null
     },
@@ -45,54 +47,12 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "name",
       "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "Artwork",
-      "kind": "LinkedField",
-      "name": "coverArtwork",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "Image",
-          "kind": "LinkedField",
-          "name": "image",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": [
-                {
-                  "kind": "Literal",
-                  "name": "version",
-                  "value": "main"
-                }
-              ],
-              "kind": "ScalarField",
-              "name": "url",
-              "storageKey": "url(version:\"main\")"
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "aspectRatio",
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
     }
   ],
   "type": "Artist",
   "abstractKey": null
 };
 
-(node as any).hash = "33cd18ae43c2133c0f7331de42cc1b9e";
+(node as any).hash = "7aa230316f544f03e36ef5d5e8b09608";
 
 export default node;

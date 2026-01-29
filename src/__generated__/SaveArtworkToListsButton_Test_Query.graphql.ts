@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6140aa4d4fc59b61d1aca4de1b23bd5c>>
+ * @generated SignedSource<<3ac07cb48547ab44852fee9e84e25a81>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -46,12 +46,6 @@ v3 = {
   "nullable": false,
   "plural": false,
   "type": "ID"
-},
-v4 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "Image"
 };
 return {
   "fragment": {
@@ -163,44 +157,6 @@ return {
           {
             "alias": null,
             "args": null,
-            "concreteType": "Image",
-            "kind": "LinkedField",
-            "name": "image",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": [
-                  {
-                    "kind": "Literal",
-                    "name": "version",
-                    "value": "main"
-                  }
-                ],
-                "kind": "ScalarField",
-                "name": "url",
-                "storageKey": "url(version:\"main\")"
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "aspectRatio",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "blurhash",
-                "storageKey": null
-              }
-            ],
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
             "kind": "ScalarField",
             "name": "isInAuction",
             "storageKey": null
@@ -261,7 +217,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a54382c33da9d5c3dca30bac6b6d0aeb",
+    "cacheID": "3e0910926b201f94569f6ab717dd89e2",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -294,15 +250,6 @@ return {
         },
         "artwork.date": (v1/*: any*/),
         "artwork.id": (v3/*: any*/),
-        "artwork.image": (v4/*: any*/),
-        "artwork.image.aspectRatio": {
-          "enumValues": null,
-          "nullable": false,
-          "plural": false,
-          "type": "Float"
-        },
-        "artwork.image.blurhash": (v1/*: any*/),
-        "artwork.image.url": (v1/*: any*/),
         "artwork.internalID": (v3/*: any*/),
         "artwork.isInAuction": {
           "enumValues": null,
@@ -311,7 +258,12 @@ return {
           "type": "Boolean"
         },
         "artwork.isSavedToAnyList": (v2/*: any*/),
-        "artwork.preview": (v4/*: any*/),
+        "artwork.preview": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Image"
+        },
         "artwork.preview.url": (v1/*: any*/),
         "artwork.slug": (v3/*: any*/),
         "artwork.title": (v1/*: any*/)
@@ -319,7 +271,7 @@ return {
     },
     "name": "SaveArtworkToListsButton_Test_Query",
     "operationKind": "query",
-    "text": "query SaveArtworkToListsButton_Test_Query {\n  artwork(id: \"artworkID\") {\n    ...SaveArtworkToListsButton_artwork\n    id\n  }\n}\n\nfragment SaveArtworkToListsButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  title\n  date\n  artistNames\n  preview: image {\n    url(version: \"square\")\n  }\n  image {\n    url(version: \"main\")\n    aspectRatio\n    blurhash\n  }\n  isInAuction\n  isSavedToAnyList\n  collectorSignals {\n    auction {\n      lotWatcherCount\n      lotClosesAt\n      liveBiddingStarted\n    }\n  }\n}\n"
+    "text": "query SaveArtworkToListsButton_Test_Query {\n  artwork(id: \"artworkID\") {\n    ...SaveArtworkToListsButton_artwork\n    id\n  }\n}\n\nfragment SaveArtworkToListsButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  title\n  date\n  artistNames\n  preview: image {\n    url(version: \"square\")\n  }\n  isInAuction\n  isSavedToAnyList\n  collectorSignals {\n    auction {\n      lotWatcherCount\n      lotClosesAt\n      liveBiddingStarted\n    }\n  }\n}\n"
   }
 };
 })();

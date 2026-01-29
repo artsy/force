@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7118812c751cdd7fd5a1092116b3193e>>
+ * @generated SignedSource<<3fc17eecb66090b71b162494014e12eb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,6 +12,7 @@ import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistAuctionResultItem_auctionResult$data = {
   readonly artist: {
+    readonly id: string;
     readonly name: string | null | undefined;
   } | null | undefined;
   readonly boughtIn: boolean | null | undefined;
@@ -23,10 +24,6 @@ export type ArtistAuctionResultItem_auctionResult$data = {
     readonly display: string | null | undefined;
   } | null | undefined;
   readonly images: {
-    readonly larger: {
-      readonly aspectRatio: number;
-      readonly url: string | null | undefined;
-    } | null | undefined;
     readonly thumbnail: {
       readonly cropped: {
         readonly height: number;
@@ -114,6 +111,13 @@ return {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
+          "name": "id",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
           "name": "name",
           "storageKey": null
         }
@@ -128,31 +132,6 @@ return {
       "name": "images",
       "plural": false,
       "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "Image",
-          "kind": "LinkedField",
-          "name": "larger",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "url",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "aspectRatio",
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        },
         {
           "alias": null,
           "args": null,
@@ -356,6 +335,6 @@ return {
 };
 })();
 
-(node as any).hash = "500b493ad7c525440c80b52d7fe5627d";
+(node as any).hash = "ec5ce4ae23a7713cbb9b1bd41a095807";
 
 export default node;

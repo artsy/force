@@ -42,11 +42,7 @@ export const AuctionResult: React.FC<
         options: {
           isCloseable: false,
           title: `Sign up or log in to see auction results for ${artist.name}`,
-          image: {
-            url: artist.coverArtwork?.image?.url,
-            aspectRatio: artist.coverArtwork?.image?.aspectRatio,
-            blurhash: artist.coverArtwork?.image?.blurhash,
-          },
+          nodeId: artist?.id,
         },
         analytics: {
           contextModule: ContextModule.auctionResults,
@@ -117,15 +113,9 @@ export const AuctionResultFragmentContainer = createFragmentContainer(
       fragment AuctionResult_auctionResult on AuctionResult {
         internalID
         artist {
+          id
           name
           href
-          coverArtwork {
-            image {
-              url(version: "main")
-              aspectRatio
-              blurhash
-            }
-          }
         }
         title
         comparableAuctionResults(first: 6) @optionalField {

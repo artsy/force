@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3c2019425db089eaa97adfeb04fb1473>>
+ * @generated SignedSource<<c5d54ddc414d47d5727a09c047f88efe>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -190,14 +190,14 @@ return {
                         "name": "artist",
                         "plural": false,
                         "selections": [
+                          (v2/*: any*/),
                           {
                             "alias": null,
                             "args": null,
                             "kind": "ScalarField",
                             "name": "name",
                             "storageKey": null
-                          },
-                          (v2/*: any*/)
+                          }
                         ],
                         "storageKey": null
                       },
@@ -209,31 +209,6 @@ return {
                         "name": "images",
                         "plural": false,
                         "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "concreteType": "Image",
-                            "kind": "LinkedField",
-                            "name": "larger",
-                            "plural": false,
-                            "selections": [
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "url",
-                                "storageKey": null
-                              },
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "aspectRatio",
-                                "storageKey": null
-                              }
-                            ],
-                            "storageKey": null
-                          },
                           {
                             "alias": null,
                             "args": null,
@@ -448,12 +423,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "db5460e5c69e8f4cb69eb9dfa50fbfa5",
+    "cacheID": "38fb936b445b47e3b934d58c2aecb505",
     "id": null,
     "metadata": {},
     "name": "ArtistAuctionResultItemTestQuery",
     "operationKind": "query",
-    "text": "query ArtistAuctionResultItemTestQuery {\n  artist(id: \"andy-warhol\") {\n    auctionResultsConnection(first: 1) {\n      edges {\n        node {\n          ...ArtistAuctionResultItem_auctionResult\n          id\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment ArtistAuctionResultItem_auctionResult on AuctionResult {\n  internalID\n  title\n  dimension_text: dimensionText\n  organization\n  artist {\n    name\n    id\n  }\n  images {\n    larger {\n      url\n      aspectRatio\n    }\n    thumbnail {\n      cropped(width: 130, height: 130, version: [\"square140\"]) {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n  }\n  mediumText\n  categoryText\n  date_text: dateText\n  saleDate\n  boughtIn\n  currency\n  price_realized: priceRealized {\n    display\n    display_usd: displayUSD\n    cents_usd: centsUSD\n  }\n  performance {\n    mid\n  }\n  estimate {\n    display\n  }\n  location\n  lotNumber\n  saleTitle\n  isUpcoming\n}\n"
+    "text": "query ArtistAuctionResultItemTestQuery {\n  artist(id: \"andy-warhol\") {\n    auctionResultsConnection(first: 1) {\n      edges {\n        node {\n          ...ArtistAuctionResultItem_auctionResult\n          id\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment ArtistAuctionResultItem_auctionResult on AuctionResult {\n  internalID\n  title\n  dimension_text: dimensionText\n  organization\n  artist {\n    id\n    name\n  }\n  images {\n    thumbnail {\n      cropped(width: 130, height: 130, version: [\"square140\"]) {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n  }\n  mediumText\n  categoryText\n  date_text: dateText\n  saleDate\n  boughtIn\n  currency\n  price_realized: priceRealized {\n    display\n    display_usd: displayUSD\n    cents_usd: centsUSD\n  }\n  performance {\n    mid\n  }\n  estimate {\n    display\n  }\n  location\n  lotNumber\n  saleTitle\n  isUpcoming\n}\n"
   }
 };
 })();

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9ca9c309794cc9bdcc8d05d9baeda70c>>
+ * @generated SignedSource<<ca37da99b490c9b7f8d913f9825ff0b9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -126,44 +126,7 @@ return {
             ],
             "storageKey": null
           },
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "Image",
-            "kind": "LinkedField",
-            "name": "coverImage",
-            "plural": false,
-            "selections": [
-              {
-                "alias": "signupImage",
-                "args": [
-                  {
-                    "kind": "Literal",
-                    "name": "version",
-                    "value": "main"
-                  }
-                ],
-                "kind": "ScalarField",
-                "name": "url",
-                "storageKey": "url(version:\"main\")"
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "aspectRatio",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "blurhash",
-                "storageKey": null
-              }
-            ],
-            "storageKey": null
-          },
+          (v1/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -236,8 +199,7 @@ return {
             "kind": "ScalarField",
             "name": "status",
             "storageKey": null
-          },
-          (v1/*: any*/)
+          }
         ],
         "storageKey": "sale(id:\"foo\")"
       },
@@ -281,12 +243,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3b3aafedbe60076055c74a25045ff2c0",
+    "cacheID": "bc0469fa4c3871dcfe324edfef0c4a93",
     "id": null,
     "metadata": {},
     "name": "RegisterButtonTestQuery",
     "operationKind": "query",
-    "text": "query RegisterButtonTestQuery {\n  sale(id: \"foo\") {\n    ...RegisterButton_sale\n    id\n  }\n  me {\n    ...RegisterButton_me\n    id\n  }\n}\n\nfragment RegisterButton_me on Me {\n  internalID\n  isIdentityVerified\n  hasCreditCards\n  pendingIdentityVerification {\n    internalID\n    id\n  }\n}\n\nfragment RegisterButton_sale on Sale {\n  bidder {\n    qualifiedForBidding\n    id\n  }\n  coverImage {\n    signupImage: url(version: \"main\")\n    aspectRatio\n    blurhash\n  }\n  isAuction\n  isClosed\n  isLiveOpen\n  isPreview\n  isRegistrationClosed\n  liveURLIfOpen\n  requireIdentityVerification\n  registrationStatus {\n    internalID\n    id\n  }\n  slug\n  status\n}\n"
+    "text": "query RegisterButtonTestQuery {\n  sale(id: \"foo\") {\n    ...RegisterButton_sale\n    id\n  }\n  me {\n    ...RegisterButton_me\n    id\n  }\n}\n\nfragment RegisterButton_me on Me {\n  internalID\n  isIdentityVerified\n  hasCreditCards\n  pendingIdentityVerification {\n    internalID\n    id\n  }\n}\n\nfragment RegisterButton_sale on Sale {\n  bidder {\n    qualifiedForBidding\n    id\n  }\n  id\n  isAuction\n  isClosed\n  isLiveOpen\n  isPreview\n  isRegistrationClosed\n  liveURLIfOpen\n  requireIdentityVerification\n  registrationStatus {\n    internalID\n    id\n  }\n  slug\n  status\n}\n"
   }
 };
 })();

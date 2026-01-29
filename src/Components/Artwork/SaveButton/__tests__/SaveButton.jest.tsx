@@ -60,11 +60,7 @@ describe("SaveButton", () => {
             objectId: "opaque-internal-id",
           },
           title: "Sign up or log in to save artworks",
-          image: {
-            url: '<mock-value-for-field-"url">',
-            aspectRatio: '<mock-value-for-field-\"aspectRatio\">',
-            blurhash: '<mock-value-for-field-"blurhash">',
-          },
+          nodeId: "<Artwork-mock-id-1>",
         },
       },
     ])

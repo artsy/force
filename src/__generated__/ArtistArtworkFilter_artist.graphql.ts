@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8b6cdfc6150c269e2cac2cae5f643dae>>
+ * @generated SignedSource<<56ab6ec3440d048474a8b541fbef4f2d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,12 +19,6 @@ export type ArtistArtworkFilter_artist$data = {
     readonly has_make_offer_artworks: boolean | null | undefined;
     readonly partner_shows: any | null | undefined;
   } | null | undefined;
-  readonly coverArtwork: {
-    readonly image: {
-      readonly aspectRatio: number;
-      readonly url: string | null | undefined;
-    } | null | undefined;
-  } | null | undefined;
   readonly filtered_artworks: {
     readonly counts: {
       readonly total: any | null | undefined;
@@ -32,6 +26,7 @@ export type ArtistArtworkFilter_artist$data = {
     readonly id: string;
     readonly " $fragmentSpreads": FragmentRefs<"ArtworkFilterArtworkGrid_filtered_artworks" | "ImmersiveView_filtered_artworks">;
   } | null | undefined;
+  readonly id: string;
   readonly internalID: string;
   readonly meta: {
     readonly title: string;
@@ -45,7 +40,15 @@ export type ArtistArtworkFilter_artist$key = {
   readonly " $fragmentSpreads": FragmentRefs<"ArtistArtworkFilter_artist">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [
     {
       "defaultValue": null,
@@ -129,13 +132,7 @@ const node: ReaderFragment = {
       "name": "filterArtworksConnection",
       "plural": false,
       "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "id",
-          "storageKey": null
-        },
+        (v0/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -173,6 +170,7 @@ const node: ReaderFragment = {
       ],
       "storageKey": null
     },
+    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -217,54 +215,13 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": "meta(page:\"ARTWORKS\")"
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "Artwork",
-      "kind": "LinkedField",
-      "name": "coverArtwork",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "Image",
-          "kind": "LinkedField",
-          "name": "image",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": [
-                {
-                  "kind": "Literal",
-                  "name": "version",
-                  "value": "main"
-                }
-              ],
-              "kind": "ScalarField",
-              "name": "url",
-              "storageKey": "url(version:\"main\")"
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "aspectRatio",
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
     }
   ],
   "type": "Artist",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "49ed811713c19cd941aa4ed73e4a642b";
+(node as any).hash = "2733eeba4263d242a78908de043e4845";
 
 export default node;

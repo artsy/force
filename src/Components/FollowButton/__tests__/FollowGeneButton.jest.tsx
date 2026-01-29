@@ -90,11 +90,7 @@ describe("FollowGeneButton", () => {
             objectId: "example",
           },
           title: "Sign up or log in to follow Example",
-          image: {
-            url: '<mock-value-for-field-"url">',
-            aspectRatio: 4.2,
-            blurhash: '<mock-value-for-field-"blurhash">',
-          },
+          nodeId: "<Gene-mock-id-1>",
         },
       })
     })

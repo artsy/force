@@ -58,14 +58,8 @@ export type AuthDialogOptions = {
   seoImage?: boolean
   /** Whether or not to display Gallery default image */
   galleryImage?: boolean
-  /** Custom desired image url to be displayed */
-  imageUrl?: string | null
-  /** Artwork Image, shows the artwork with a view window moving around */
-  image?: {
-    url?: string | null
-    aspectRatio?: number | null
-    blurhash?: string | null
-  } | null
+  /** Node id used for the Artwork#image and Artist#coverImage */
+  nodeId?: string | null
   /** Applies to SignUp or Login, not ForgotPassword */
   afterAuthAction?: AfterAuthAction
   /** Applies to SignUp or Login, not ForgotPassword */

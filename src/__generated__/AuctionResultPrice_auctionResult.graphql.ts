@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ed12590f2eed3c36a93731470f70b952>>
+ * @generated SignedSource<<bca7ff68020396fcd8467330c2b1fd64>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,16 +11,13 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AuctionResultPrice_auctionResult$data = {
+  readonly artist: {
+    readonly id: string;
+  } | null | undefined;
   readonly boughtIn: boolean | null | undefined;
   readonly currency: string | null | undefined;
   readonly estimate: {
     readonly display: string | null | undefined;
-  } | null | undefined;
-  readonly images: {
-    readonly larger: {
-      readonly aspectRatio: number;
-      readonly url: string | null | undefined;
-    } | null | undefined;
   } | null | undefined;
   readonly isUpcoming: boolean | null | undefined;
   readonly performance: {
@@ -83,40 +80,16 @@ return {
     {
       "alias": null,
       "args": null,
-      "concreteType": "AuctionLotImages",
+      "concreteType": "Artist",
       "kind": "LinkedField",
-      "name": "images",
+      "name": "artist",
       "plural": false,
       "selections": [
         {
           "alias": null,
           "args": null,
-          "concreteType": "Image",
-          "kind": "LinkedField",
-          "name": "larger",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": [
-                {
-                  "kind": "Literal",
-                  "name": "version",
-                  "value": "main"
-                }
-              ],
-              "kind": "ScalarField",
-              "name": "url",
-              "storageKey": "url(version:\"main\")"
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "aspectRatio",
-              "storageKey": null
-            }
-          ],
+          "kind": "ScalarField",
+          "name": "id",
           "storageKey": null
         }
       ],
@@ -177,6 +150,6 @@ return {
 };
 })();
 
-(node as any).hash = "d5fb2dc51850ca029538387ffcef3286";
+(node as any).hash = "769f421de4e8f0f11eb3d766b772712c";
 
 export default node;

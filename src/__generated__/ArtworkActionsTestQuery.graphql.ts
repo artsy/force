@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ae965bebaf9cec3fe41d7b28be0d0ae6>>
+ * @generated SignedSource<<b62646b0c30392dbc25bb0b327899317>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -182,37 +182,6 @@ return {
                 "kind": "ScalarField",
                 "name": "url",
                 "storageKey": "url(version:\"square\")"
-              }
-            ],
-            "storageKey": null
-          },
-          {
-            "alias": "modalImage",
-            "args": null,
-            "concreteType": "Image",
-            "kind": "LinkedField",
-            "name": "image",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": [
-                  {
-                    "kind": "Literal",
-                    "name": "version",
-                    "value": "main"
-                  }
-                ],
-                "kind": "ScalarField",
-                "name": "url",
-                "storageKey": "url(version:\"main\")"
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "aspectRatio",
-                "storageKey": null
               }
             ],
             "storageKey": null
@@ -547,7 +516,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "8cf5708c121453c682b769ddc71b1c1e",
+    "cacheID": "15ef445be24b77db7a94ff225c738f5d",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -621,14 +590,6 @@ return {
         "artwork.isInAuction": (v9/*: any*/),
         "artwork.isSavedToAnyList": (v10/*: any*/),
         "artwork.isUnlisted": (v10/*: any*/),
-        "artwork.modalImage": (v6/*: any*/),
-        "artwork.modalImage.aspectRatio": {
-          "enumValues": null,
-          "nullable": false,
-          "plural": false,
-          "type": "Float"
-        },
-        "artwork.modalImage.url": (v3/*: any*/),
         "artwork.partner": {
           "enumValues": null,
           "nullable": true,
@@ -668,7 +629,7 @@ return {
     },
     "name": "ArtworkActionsTestQuery",
     "operationKind": "query",
-    "text": "query ArtworkActionsTestQuery {\n  artwork(id: \"example\") {\n    ...ArtworkActions_artwork\n    id\n  }\n}\n\nfragment ArtworkActionsSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  title\n  date\n  artistNames\n  preview: image {\n    url(version: \"square\")\n  }\n  modalImage: image {\n    url(version: \"main\")\n    aspectRatio\n  }\n  isInAuction\n  isSavedToAnyList\n  sale {\n    isAuction\n    isClosed\n    id\n  }\n  collectorSignals {\n    auction {\n      lotWatcherCount\n    }\n  }\n  ...ArtworkActionsWatchLotButton_artwork\n}\n\nfragment ArtworkActionsWatchLotButton_artwork on Artwork {\n  sale {\n    isLiveOpen\n    isRegistrationClosed\n    liveStartAt\n    registrationStatus {\n      qualifiedForBidding\n      id\n    }\n    id\n  }\n  ...ArtworkAuctionRegistrationPanel_artwork\n}\n\nfragment ArtworkActions_artwork on Artwork {\n  ...ArtworkActionsSaveButton_artwork\n  ...ArtworkDownloadButton_artwork\n  ...ArtworkSharePanel_artwork_FOvjt\n  ...ViewInRoom_artwork\n  isUnlisted\n  slug\n  downloadableImageUrl\n  isDownloadable\n  isHangable\n  partner {\n    slug\n    id\n  }\n}\n\nfragment ArtworkAuctionRegistrationPanel_artwork on Artwork {\n  sale {\n    slug\n    registrationEndsAt\n    isRegistrationClosed\n    id\n  }\n}\n\nfragment ArtworkDownloadButton_artwork on Artwork {\n  title\n  date\n  downloadableImageUrl\n  artists(shallow: true) {\n    name\n    id\n  }\n}\n\nfragment ArtworkSharePanel_artwork_FOvjt on Artwork {\n  href\n  images(includeAll: false) {\n    url\n  }\n  artworkMeta: meta {\n    share\n  }\n}\n\nfragment ViewInRoomArtwork_artwork on Artwork {\n  diameterCm\n  widthCm\n  heightCm\n  image {\n    resized(width: 800, height: 800, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n\nfragment ViewInRoom_artwork on Artwork {\n  ...ViewInRoomArtwork_artwork\n}\n"
+    "text": "query ArtworkActionsTestQuery {\n  artwork(id: \"example\") {\n    ...ArtworkActions_artwork\n    id\n  }\n}\n\nfragment ArtworkActionsSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  title\n  date\n  artistNames\n  preview: image {\n    url(version: \"square\")\n  }\n  isInAuction\n  isSavedToAnyList\n  sale {\n    isAuction\n    isClosed\n    id\n  }\n  collectorSignals {\n    auction {\n      lotWatcherCount\n    }\n  }\n  ...ArtworkActionsWatchLotButton_artwork\n}\n\nfragment ArtworkActionsWatchLotButton_artwork on Artwork {\n  sale {\n    isLiveOpen\n    isRegistrationClosed\n    liveStartAt\n    registrationStatus {\n      qualifiedForBidding\n      id\n    }\n    id\n  }\n  ...ArtworkAuctionRegistrationPanel_artwork\n}\n\nfragment ArtworkActions_artwork on Artwork {\n  ...ArtworkActionsSaveButton_artwork\n  ...ArtworkDownloadButton_artwork\n  ...ArtworkSharePanel_artwork_FOvjt\n  ...ViewInRoom_artwork\n  isUnlisted\n  slug\n  downloadableImageUrl\n  isDownloadable\n  isHangable\n  partner {\n    slug\n    id\n  }\n}\n\nfragment ArtworkAuctionRegistrationPanel_artwork on Artwork {\n  sale {\n    slug\n    registrationEndsAt\n    isRegistrationClosed\n    id\n  }\n}\n\nfragment ArtworkDownloadButton_artwork on Artwork {\n  title\n  date\n  downloadableImageUrl\n  artists(shallow: true) {\n    name\n    id\n  }\n}\n\nfragment ArtworkSharePanel_artwork_FOvjt on Artwork {\n  href\n  images(includeAll: false) {\n    url\n  }\n  artworkMeta: meta {\n    share\n  }\n}\n\nfragment ViewInRoomArtwork_artwork on Artwork {\n  diameterCm\n  widthCm\n  heightCm\n  image {\n    resized(width: 800, height: 800, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n\nfragment ViewInRoom_artwork on Artwork {\n  ...ViewInRoomArtwork_artwork\n}\n"
   }
 };
 })();

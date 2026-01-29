@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<52f63842cd5bec6a704aa90dbcb60ce0>>
+ * @generated SignedSource<<142095e1fd0e66f7d4406b8def0e035a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,10 +17,7 @@ export type ArtworkSidebarBidAction_artwork$data = {
       readonly lotWatcherCount: number;
     } | null | undefined;
   } | null | undefined;
-  readonly image: {
-    readonly aspectRatio: number;
-    readonly url: string | null | undefined;
-  } | null | undefined;
+  readonly id: string;
   readonly internalID: string;
   readonly myLotStanding: ReadonlyArray<{
     readonly most_recent_bid: {
@@ -122,38 +119,14 @@ return {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "internalID",
+      "name": "id",
       "storageKey": null
     },
     {
       "alias": null,
       "args": null,
-      "concreteType": "Image",
-      "kind": "LinkedField",
-      "name": "image",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": [
-            {
-              "kind": "Literal",
-              "name": "version",
-              "value": "main"
-            }
-          ],
-          "kind": "ScalarField",
-          "name": "url",
-          "storageKey": "url(version:\"main\")"
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "aspectRatio",
-          "storageKey": null
-        }
-      ],
+      "kind": "ScalarField",
+      "name": "internalID",
       "storageKey": null
     },
     {
@@ -307,6 +280,6 @@ return {
 };
 })();
 
-(node as any).hash = "60ced0ddef077bec67fbbe63c56df619";
+(node as any).hash = "500a4eea631018bbe4bf9403168e0d2a";
 
 export default node;

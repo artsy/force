@@ -119,7 +119,7 @@ export class ArtworkSidebarBidAction extends React.Component<
             const action = mode === "SignUp" ? "Sign up" : "Log in"
             return `${action} to bid on artworks`
           },
-          image: this.props.artwork.image,
+          nodeId: this.props.artwork.id,
         },
         analytics: {
           contextModule: ContextModule.artworkSidebar,
@@ -397,11 +397,8 @@ export const ArtworkSidebarBidActionFragmentContainer = withAuthDialog(
             }
           }
           slug
+          id
           internalID
-          image {
-            url(version: "main")
-            aspectRatio
-          }
           sale {
             slug
             registrationStatus {

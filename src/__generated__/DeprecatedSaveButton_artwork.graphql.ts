@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<43e073ae927219e9d40a01a841a0d930>>
+ * @generated SignedSource<<36ed0c2e9f6292d45a51ef1916f31538>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,11 +17,6 @@ export type DeprecatedSaveButton_artwork$data = {
     } | null | undefined;
   } | null | undefined;
   readonly id: string;
-  readonly image: {
-    readonly aspectRatio: number;
-    readonly blurhash: string | null | undefined;
-    readonly url: string | null | undefined;
-  } | null | undefined;
   readonly internalID: string;
   readonly isSavedToAnyList: boolean;
   readonly slug: string;
@@ -77,44 +72,6 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
-      "concreteType": "Image",
-      "kind": "LinkedField",
-      "name": "image",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": [
-            {
-              "kind": "Literal",
-              "name": "version",
-              "value": "main"
-            }
-          ],
-          "kind": "ScalarField",
-          "name": "url",
-          "storageKey": "url(version:\"main\")"
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "aspectRatio",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "blurhash",
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
       "concreteType": "CollectorSignals",
       "kind": "LinkedField",
       "name": "collectorSignals",
@@ -146,6 +103,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "95cc143344d677b3c77d8f8dcfc27efd";
+(node as any).hash = "67c6401cf0c3acbdeba292f8dc795c47";
 
 export default node;

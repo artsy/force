@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c38d61f0bc96346abc9f6f4430757415>>
+ * @generated SignedSource<<6db422d477efd3f9b37d521ffacb1c45>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -132,44 +132,6 @@ return {
                 "storageKey": null
               }
             ]
-          },
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "Image",
-            "kind": "LinkedField",
-            "name": "image",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": [
-                  {
-                    "kind": "Literal",
-                    "name": "version",
-                    "value": "main"
-                  }
-                ],
-                "kind": "ScalarField",
-                "name": "url",
-                "storageKey": "url(version:\"main\")"
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "aspectRatio",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "blurhash",
-                "storageKey": null
-              }
-            ],
-            "storageKey": null
           }
         ],
         "storageKey": null
@@ -177,12 +139,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5e7600d6e0703b32abe78e1f4f248900",
+    "cacheID": "8c7c5558867414c43413ce9818030b69",
     "id": null,
     "metadata": {},
     "name": "FollowGeneButtonQuery",
     "operationKind": "query",
-    "text": "query FollowGeneButtonQuery(\n  $id: String!\n  $isLoggedIn: Boolean!\n) {\n  gene(id: $id) {\n    ...FollowGeneButton_gene_4dcqWc\n    id\n  }\n}\n\nfragment FollowGeneButton_gene_4dcqWc on Gene {\n  id\n  slug\n  name\n  internalID\n  isFollowed @include(if: $isLoggedIn)\n  image {\n    url(version: \"main\")\n    aspectRatio\n    blurhash\n  }\n}\n"
+    "text": "query FollowGeneButtonQuery(\n  $id: String!\n  $isLoggedIn: Boolean!\n) {\n  gene(id: $id) {\n    ...FollowGeneButton_gene_4dcqWc\n    id\n  }\n}\n\nfragment FollowGeneButton_gene_4dcqWc on Gene {\n  id\n  slug\n  name\n  internalID\n  isFollowed @include(if: $isLoggedIn)\n}\n"
   }
 };
 })();

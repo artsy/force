@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e17d0a8fce3b266ea469b1fc9c01d5dd>>
+ * @generated SignedSource<<01c6c5ce35eae273cacd476aa39817e8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -132,6 +132,7 @@ return {
         "name": "artwork",
         "plural": false,
         "selections": [
+          (v3/*: any*/),
           (v2/*: any*/),
           {
             "alias": null,
@@ -152,58 +153,19 @@ return {
               (v3/*: any*/)
             ],
             "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "Image",
-            "kind": "LinkedField",
-            "name": "image",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": [
-                  {
-                    "kind": "Literal",
-                    "name": "version",
-                    "value": "main"
-                  }
-                ],
-                "kind": "ScalarField",
-                "name": "url",
-                "storageKey": "url(version:\"main\")"
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "aspectRatio",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "blurhash",
-                "storageKey": null
-              }
-            ],
-            "storageKey": null
-          },
-          (v3/*: any*/)
+          }
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "07aaa8b0d2d4d09669c9c180d9757c50",
+    "cacheID": "c01d7375d6d41d7f76b0787b0ec76c65",
     "id": null,
     "metadata": {},
     "name": "RequestConditionReportQuery",
     "operationKind": "query",
-    "text": "query RequestConditionReportQuery(\n  $artworkID: String!\n) {\n  me {\n    ...RequestConditionReport_me\n    id\n  }\n  artwork(id: $artworkID) {\n    ...RequestConditionReport_artwork\n    id\n  }\n}\n\nfragment RequestConditionReport_artwork on Artwork {\n  internalID\n  slug\n  saleArtwork {\n    internalID\n    id\n  }\n  image {\n    url(version: \"main\")\n    aspectRatio\n    blurhash\n  }\n}\n\nfragment RequestConditionReport_me on Me {\n  email\n  internalID\n}\n"
+    "text": "query RequestConditionReportQuery(\n  $artworkID: String!\n) {\n  me {\n    ...RequestConditionReport_me\n    id\n  }\n  artwork(id: $artworkID) {\n    ...RequestConditionReport_artwork\n    id\n  }\n}\n\nfragment RequestConditionReport_artwork on Artwork {\n  id\n  internalID\n  slug\n  saleArtwork {\n    internalID\n    id\n  }\n}\n\nfragment RequestConditionReport_me on Me {\n  email\n  internalID\n}\n"
   }
 };
 })();

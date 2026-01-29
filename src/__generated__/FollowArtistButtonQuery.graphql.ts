@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d23eaa942bb779b72ae8e45a73dffa24>>
+ * @generated SignedSource<<3220a20849f8a55040e4ad0825eb206f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -200,56 +200,6 @@ return {
               }
             ],
             "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "Artwork",
-            "kind": "LinkedField",
-            "name": "coverArtwork",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "Image",
-                "kind": "LinkedField",
-                "name": "image",
-                "plural": false,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": [
-                      {
-                        "kind": "Literal",
-                        "name": "version",
-                        "value": "main"
-                      }
-                    ],
-                    "kind": "ScalarField",
-                    "name": "url",
-                    "storageKey": "url(version:\"main\")"
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "aspectRatio",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "blurhash",
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": null
-              },
-              (v2/*: any*/)
-            ],
-            "storageKey": null
           }
         ],
         "storageKey": null
@@ -257,12 +207,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "6c27ccee33223610787ab3c1fab8a896",
+    "cacheID": "20dbf776bb08b92835e2010b8447b323",
     "id": null,
     "metadata": {},
     "name": "FollowArtistButtonQuery",
     "operationKind": "query",
-    "text": "query FollowArtistButtonQuery(\n  $id: String!\n  $isLoggedIn: Boolean!\n) {\n  me {\n    ...FollowArtistButton_me\n    id\n  }\n  artist(id: $id) {\n    ...FollowArtistButton_artist_4dcqWc\n    id\n  }\n}\n\nfragment FollowArtistButton_artist_4dcqWc on Artist {\n  id\n  slug\n  name\n  internalID\n  isFollowed @include(if: $isLoggedIn)\n  counts {\n    follows\n  }\n  coverArtwork {\n    image {\n      url(version: \"main\")\n      aspectRatio\n      blurhash\n    }\n    id\n  }\n}\n\nfragment FollowArtistButton_me on Me {\n  id\n  counts {\n    followedArtists\n  }\n}\n"
+    "text": "query FollowArtistButtonQuery(\n  $id: String!\n  $isLoggedIn: Boolean!\n) {\n  me {\n    ...FollowArtistButton_me\n    id\n  }\n  artist(id: $id) {\n    ...FollowArtistButton_artist_4dcqWc\n    id\n  }\n}\n\nfragment FollowArtistButton_artist_4dcqWc on Artist {\n  id\n  slug\n  name\n  internalID\n  isFollowed @include(if: $isLoggedIn)\n  counts {\n    follows\n  }\n}\n\nfragment FollowArtistButton_me on Me {\n  id\n  counts {\n    followedArtists\n  }\n}\n"
   }
 };
 })();

@@ -26,11 +26,6 @@ describe("Deprecated Save artwork", () => {
     slug: "andy-warhol-skull",
     isSavedToAnyList: false,
     title: "Skull",
-    image: {
-      url: "https://example.com/artwork.jpg",
-      aspectRatio: 4.2,
-      blurhash: null,
-    },
   }
 
   const { renderWithRelay } = setupTestWrapperTL({
@@ -141,11 +136,7 @@ describe("Deprecated Save artwork", () => {
             objectId: "abcd1234",
           },
           title: expect.any(String),
-          image: {
-            url: "https://example.com/artwork.jpg",
-            aspectRatio: 4.2,
-            blurhash: null,
-          },
+          nodeId: "foo",
         },
       })
     })

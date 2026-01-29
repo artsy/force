@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9e53179174e8dc8a8cbc846e710968da>>
+ * @generated SignedSource<<cde630c9673128f02d0a7ff9b9804f65>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,14 +12,8 @@ import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AuctionResult_auctionResult$data = {
   readonly artist: {
-    readonly coverArtwork: {
-      readonly image: {
-        readonly aspectRatio: number;
-        readonly blurhash: string | null | undefined;
-        readonly url: string | null | undefined;
-      } | null | undefined;
-    } | null | undefined;
     readonly href: string | null | undefined;
+    readonly id: string;
     readonly name: string | null | undefined;
   } | null | undefined;
   readonly comparableAuctionResults: {
@@ -65,6 +59,13 @@ const node: ReaderFragment = {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
+          "name": "id",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
           "name": "name",
           "storageKey": null
         },
@@ -73,55 +74,6 @@ const node: ReaderFragment = {
           "args": null,
           "kind": "ScalarField",
           "name": "href",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "Artwork",
-          "kind": "LinkedField",
-          "name": "coverArtwork",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "concreteType": "Image",
-              "kind": "LinkedField",
-              "name": "image",
-              "plural": false,
-              "selections": [
-                {
-                  "alias": null,
-                  "args": [
-                    {
-                      "kind": "Literal",
-                      "name": "version",
-                      "value": "main"
-                    }
-                  ],
-                  "kind": "ScalarField",
-                  "name": "url",
-                  "storageKey": "url(version:\"main\")"
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "aspectRatio",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "blurhash",
-                  "storageKey": null
-                }
-              ],
-              "storageKey": null
-            }
-          ],
           "storageKey": null
         }
       ],
@@ -210,6 +162,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "23177933d0ddd3b679b07674bda88959";
+(node as any).hash = "811435ba389f2665172fdb2e1ba4f211";
 
 export default node;

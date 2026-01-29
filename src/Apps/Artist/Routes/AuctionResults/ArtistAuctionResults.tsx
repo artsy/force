@@ -148,11 +148,7 @@ const AuctionResultsContainer: React.FC<
           showAuthDialog({
             options: {
               title: `Sign up or log in to see auction results for ${artist.name}`,
-              image: {
-                url: artist.coverArtwork?.image?.url,
-                aspectRatio: artist.coverArtwork?.image?.aspectRatio,
-                blurhash: artist.coverArtwork?.image?.blurhash,
-              },
+              nodeId: artist.id,
             },
             analytics: {
               contextModule: ContextModule.auctionResults,
@@ -402,18 +398,12 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
         state: { type: "AuctionResultsState", defaultValue: ALL }
       ) {
         slug
+        id
         internalID
         name
         meta(page: AUCTION_RESULTS) {
           description
           title
-        }
-        coverArtwork {
-          image {
-            url(version: "main")
-            aspectRatio
-            blurhash
-          }
         }
         statuses {
           auctionLots

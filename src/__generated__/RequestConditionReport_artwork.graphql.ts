@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5369dee3660a0e50697c64ca1b782828>>
+ * @generated SignedSource<<277cde145b60a37d7d6f363099e9cbe3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,11 +11,7 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type RequestConditionReport_artwork$data = {
-  readonly image: {
-    readonly aspectRatio: number;
-    readonly blurhash: string | null | undefined;
-    readonly url: string | null | undefined;
-  } | null | undefined;
+  readonly id: string;
   readonly internalID: string;
   readonly saleArtwork: {
     readonly internalID: string;
@@ -42,6 +38,13 @@ return {
   "metadata": null,
   "name": "RequestConditionReport_artwork",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "id",
+      "storageKey": null
+    },
     (v0/*: any*/),
     {
       "alias": null,
@@ -61,44 +64,6 @@ return {
         (v0/*: any*/)
       ],
       "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "Image",
-      "kind": "LinkedField",
-      "name": "image",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": [
-            {
-              "kind": "Literal",
-              "name": "version",
-              "value": "main"
-            }
-          ],
-          "kind": "ScalarField",
-          "name": "url",
-          "storageKey": "url(version:\"main\")"
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "aspectRatio",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "blurhash",
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
     }
   ],
   "type": "Artwork",
@@ -106,6 +71,6 @@ return {
 };
 })();
 
-(node as any).hash = "23736293941e41814eb32569275d5b26";
+(node as any).hash = "e030c56e392d864de9a910380af4a441";
 
 export default node;

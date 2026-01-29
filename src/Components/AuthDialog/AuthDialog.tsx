@@ -95,7 +95,7 @@ const getModalProps = (
   options: AuthDialogOptions,
   newSignupEnabled: boolean,
 ) => {
-  if (!!options.image || !!options.imageUrl || newSignupEnabled) {
+  if (!!options.nodeId || !!options.seoImage || newSignupEnabled) {
     return {
       width: ["100%", MODAL_WIDTH],
       leftPanel: <AuthDialogLeftPanel />,

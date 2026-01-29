@@ -25,7 +25,7 @@ const ArtistWorksForSaleEmpty: FC<
       action={
         <ArtworkFilterAlertContextProvider
           initialCriteria={{ artistIDs: [artist.internalID] }}
-          image={artist.coverArtwork?.image}
+          nodeId={artist.id}
         >
           <CreateAlertButton variant="secondaryNeutral" size="large" />
         </ArtworkFilterAlertContextProvider>
@@ -39,14 +39,9 @@ export const ArtistWorksForSaleEmptyFragmentContainer = createFragmentContainer(
   {
     artist: graphql`
       fragment ArtistWorksForSaleEmpty_artist on Artist {
+        id
         internalID
         name
-        coverArtwork {
-          image {
-            url(version: "main")
-            aspectRatio
-          }
-        }
       }
     `,
   },
