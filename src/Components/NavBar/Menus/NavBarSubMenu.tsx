@@ -141,7 +141,7 @@ export const NavBarSubMenu: React.FC<
                             Browse by name
                           </Text>
 
-                          <Text variant="sm" mx={1}>
+                          <Text variant="sm" lineHeight="16px" mx={1}>
                             {LETTERS.map(letter => {
                               return (
                                 <RouterLink
@@ -236,7 +236,7 @@ export const NavBarSubMenu: React.FC<
                       Browse by name
                     </Text>
 
-                    <Text variant="sm" mx={1}>
+                    <Text variant="sm" lineHeight="16px" mx={1}>
                       {LETTERS.map(letter => {
                         return (
                           <RouterLink

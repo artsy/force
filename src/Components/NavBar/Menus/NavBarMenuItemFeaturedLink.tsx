@@ -79,7 +79,7 @@ const NavBarMenuItemFeaturedLink: FC<NavBarMenuItemFeaturedLinkInnerProps> = ({
       flexDirection="column"
       maxHeight={480}
     >
-      <Text variant="sm-display" mb={0.5}>
+      <Text variant={["xs", "xs", "sm"]} mb={0.5}>
         {headerText}
       </Text>
 
@@ -119,10 +119,10 @@ const NavBarMenuItemFeaturedLink: FC<NavBarMenuItemFeaturedLinkInnerProps> = ({
           />
         </Box>
 
-        <Text color="mono60" variant="sm">
+        <Text color="mono60" variant={["xs", "xs", "sm"]} lineHeight="20px">
           {featuredLink.subtitle}
         </Text>
-        <Text color="mono100" variant="sm">
+        <Text color="mono100" variant={["xs", "xs", "sm"]} lineHeight="20px">
           {featuredLink.title}
         </Text>
       </RouterLink>
