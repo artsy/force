@@ -53,7 +53,7 @@ export const AuthDialog: FC<React.PropsWithChildren<AuthDialogProps>> = ({
   return (
     <ModalDialog
       onClose={isCloseable ? handleClose : () => {}}
-      minHeight={["auto", 760]}
+      height={["auto", 760]}
       title={
         <AuthDialogTitle
           title={title}
