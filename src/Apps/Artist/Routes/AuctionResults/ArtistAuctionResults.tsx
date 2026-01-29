@@ -401,10 +401,6 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
         id
         internalID
         name
-        meta(page: AUCTION_RESULTS) {
-          description
-          title
-        }
         statuses {
           auctionLots
         }

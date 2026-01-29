@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b67d5471d615584c88c5a647a9b8825b>>
+ * @generated SignedSource<<9f13d842f65c14db90eb1d99495e653f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -144,35 +144,28 @@ return {
           },
           (v2/*: any*/),
           {
-            "alias": null,
+            "alias": "biographyBlurbPlain",
             "args": [
               {
                 "kind": "Literal",
-                "name": "page",
-                "value": "ABOUT"
+                "name": "format",
+                "value": "PLAIN"
               }
             ],
-            "concreteType": "ArtistMeta",
+            "concreteType": "ArtistBlurb",
             "kind": "LinkedField",
-            "name": "meta",
+            "name": "biographyBlurb",
             "plural": false,
             "selections": [
               {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
-                "name": "title",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "description",
+                "name": "text",
                 "storageKey": null
               }
             ],
-            "storageKey": "meta(page:\"ABOUT\")"
+            "storageKey": "biographyBlurb(format:\"PLAIN\")"
           },
           {
             "alias": null,
@@ -261,30 +254,6 @@ return {
             "storageKey": null
           },
           {
-            "alias": "biographyBlurbPlain",
-            "args": [
-              {
-                "kind": "Literal",
-                "name": "format",
-                "value": "PLAIN"
-              }
-            ],
-            "concreteType": "ArtistBlurb",
-            "kind": "LinkedField",
-            "name": "biographyBlurb",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "text",
-                "storageKey": null
-              }
-            ],
-            "storageKey": "biographyBlurb(format:\"PLAIN\")"
-          },
-          {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
@@ -298,12 +267,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "9b5dfc9b2e5ccdcee332fbc205f10a51",
+    "cacheID": "10421b199c6c84f21d16d0bd25d7173d",
     "id": null,
     "metadata": {},
     "name": "artistRoutes_ArtistSubAppQuery",
     "operationKind": "query",
-    "text": "query artistRoutes_ArtistSubAppQuery(\n  $artistID: String!\n) @cacheable {\n  artist(id: $artistID) @principalField {\n    ...ArtistSubApp_artist\n    id\n  }\n}\n\nfragment ArtistBackLink_artist on Artist {\n  name\n  href\n}\n\nfragment ArtistMeta_artist on Artist {\n  ...ArtistStructuredData_artist\n  name\n  nationality\n  birthday\n  deathday\n  alternateNames\n  biographyBlurbPlain: biographyBlurb(format: PLAIN) {\n    text\n  }\n  coverArtwork {\n    image {\n      large: url(version: \"large\")\n    }\n    id\n  }\n}\n\nfragment ArtistStructuredData_artist on Artist {\n  slug\n  name\n  birthday\n  deathday\n  gender\n  nationality\n  href\n  meta(page: ABOUT) {\n    title\n    description\n  }\n  coverArtwork {\n    image {\n      url(version: \"large\")\n    }\n    id\n  }\n  partnersConnection(first: 10) {\n    edges {\n      node {\n        href\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment ArtistSubApp_artist on Artist {\n  ...ArtistMeta_artist\n  ...ArtistBackLink_artist\n  internalID\n  name\n}\n"
+    "text": "query artistRoutes_ArtistSubAppQuery(\n  $artistID: String!\n) @cacheable {\n  artist(id: $artistID) @principalField {\n    ...ArtistSubApp_artist\n    id\n  }\n}\n\nfragment ArtistBackLink_artist on Artist {\n  name\n  href\n}\n\nfragment ArtistMeta_artist on Artist {\n  ...ArtistStructuredData_artist\n  name\n  nationality\n  birthday\n  deathday\n  alternateNames\n  biographyBlurbPlain: biographyBlurb(format: PLAIN) {\n    text\n  }\n  coverArtwork {\n    image {\n      large: url(version: \"large\")\n    }\n    id\n  }\n}\n\nfragment ArtistStructuredData_artist on Artist {\n  slug\n  name\n  birthday\n  deathday\n  gender\n  nationality\n  href\n  biographyBlurbPlain: biographyBlurb(format: PLAIN) {\n    text\n  }\n  coverArtwork {\n    image {\n      url(version: \"large\")\n    }\n    id\n  }\n  partnersConnection(first: 10) {\n    edges {\n      node {\n        href\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment ArtistSubApp_artist on Artist {\n  ...ArtistMeta_artist\n  ...ArtistBackLink_artist\n  internalID\n  name\n}\n"
   }
 };
 })();
