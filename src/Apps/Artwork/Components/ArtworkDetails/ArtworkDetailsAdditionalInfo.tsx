@@ -8,10 +8,14 @@ import {
   Join,
   ReadMore,
   Spacer,
+  Stack,
   StackableBorderBox,
   Text,
 } from "@artsy/palette"
-import { ArtworkDefinitionList } from "Apps/Artwork/Components/ArtworkDefinitionList"
+import {
+  ArtworkDefinitionList,
+  ArtworkDefinitionListSkeleton,
+} from "Apps/Artwork/Components/ArtworkDefinitionList"
 import { ConditionInfoModal } from "Apps/Artwork/Components/ArtworkDetails/ConditionInfoModal"
 import { ArtworkDetailsMediumModalFragmentContainer } from "Apps/Artwork/Components/ArtworkDetailsMediumModal"
 import { ArtworkSidebarClassificationsModalQueryRenderer } from "Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
@@ -286,3 +290,22 @@ export const ArtworkDetailsAdditionalInfoFragmentContainer =
       }
     `,
   })
+
+export const ArtworkDetailsAdditionalInfoSkeleton = () => {
+  const examples = [
+    "Lorem ipsum dolor.",
+    "Sit amet consectetur adipisicing elit.",
+    "Architecto voluptatem dolores impedit cum inventore.",
+    "Impedit cum inventore.",
+  ]
+
+  return (
+    <Stack gap={1}>
+      {Array.from({ length: 6 }).map((_, index) => (
+        <ArtworkDefinitionListSkeleton key={index}>
+          {examples[index % examples.length]}
+        </ArtworkDefinitionListSkeleton>
+      ))}
+    </Stack>
+  )
+}
