@@ -14,10 +14,21 @@ jest.mock("System/Hooks/useAnalyticsContext", () => ({
   })),
 }))
 
+jest.mock("System/Hooks/useSystemContext", () => ({
+  useSystemContext: jest.fn(() => ({
+    relayEnvironment: null,
+  })),
+}))
+
 jest.mock("react-relay", () => ({
   ...jest.requireActual("react-relay"),
-  useLazyLoadQuery: jest.fn(() => ({ orderedSets: [] })),
   useFragment: jest.fn(() => null),
+}))
+
+jest.mock("System/Relay/SystemQueryRenderer", () => ({
+  SystemQueryRenderer: jest.fn(({ render }) =>
+    render({ error: null, props: { orderedSets: [] }, retry: null }),
+  ),
 }))
 
 describe("NavBarSubMenu", () => {
@@ -118,13 +129,18 @@ describe("NavBarSubMenu", () => {
       ],
     }
 
-    // Mock the GraphQL query to return ordered sets data (array with one set)
-    const { useLazyLoadQuery, useFragment } = require("react-relay")
-    ;(useLazyLoadQuery as jest.Mock).mockReturnValueOnce({
-      orderedSets: [{ __fragmentRef: "mock-ref" }],
-    })
+    // Mock SystemQueryRenderer to return ordered sets data
+    const { SystemQueryRenderer } = require("System/Relay/SystemQueryRenderer")
+    ;(SystemQueryRenderer as jest.Mock).mockImplementationOnce(({ render }) =>
+      render({
+        error: null,
+        props: { orderedSets: [{ __fragmentRef: "mock-ref" }] },
+        retry: null,
+      }),
+    )
 
     // Mock the fragment to return the ordered set data
+    const { useFragment } = require("react-relay")
     ;(useFragment as jest.Mock).mockReturnValueOnce(mockOrderedSet)
 
     // ARTWORKS_SUBMENU_DATA includes a featured link visual component

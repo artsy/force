@@ -79,8 +79,6 @@ export const NavBarSubMenu: React.FC<
   const viewAllMenuItem =
     !("links" in lastMenuItem) && "href" in lastMenuItem ? lastMenuItem : null
 
-  // When there's NO featured link, use span=3 for normal layout
-  // When there IS a featured link, use span=3 for nav columns within the nested grid
   const columnSpan = 3
 
   return (

@@ -2,11 +2,13 @@ import type { ClickedNavigationDropdownItem } from "@artsy/cohesion"
 import { Box, Column, Flex, Image, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import type { NavBarMenuItemFeaturedLinkQuery } from "__generated__/NavBarMenuItemFeaturedLinkQuery.graphql"
 import type { NavBarMenuItemFeaturedLink_orderedSet$key } from "__generated__/NavBarMenuItemFeaturedLink_orderedSet.graphql"
 import { compact } from "lodash"
 import type { FC } from "react"
-import { graphql, useFragment, useLazyLoadQuery } from "react-relay"
+import { graphql, useFragment } from "react-relay"
 import { useTracking } from "react-tracking"
 
 interface NavBarMenuItemFeaturedLinkProps {
@@ -19,23 +21,38 @@ interface NavBarMenuItemFeaturedLinkProps {
 export const NavBarMenuItemFeaturedLinkQueryRenderer: FC<
   NavBarMenuItemFeaturedLinkProps
 > = ({ setKey, headerText, contextModule, parentNavigationItem }) => {
-  const data = useLazyLoadQuery<NavBarMenuItemFeaturedLinkQuery>(query, {
-    key: setKey,
-  })
-
-  // Get first ordered set from the array
-  const orderedSet = data.orderedSets?.[0]
-
-  if (!orderedSet) {
-    return null
-  }
+  const { relayEnvironment } = useSystemContext()
 
   return (
-    <NavBarMenuItemFeaturedLink
-      orderedSet={orderedSet}
-      headerText={headerText}
-      contextModule={contextModule}
-      parentNavigationItem={parentNavigationItem}
+    <SystemQueryRenderer<NavBarMenuItemFeaturedLinkQuery>
+      environment={relayEnvironment}
+      query={query}
+      variables={{ key: setKey }}
+      render={({ error, props }) => {
+        if (error) {
+          console.error(error)
+          return null
+        }
+
+        if (!props) {
+          return null
+        }
+
+        const orderedSet = props.orderedSets?.[0]
+
+        if (!orderedSet) {
+          return null
+        }
+
+        return (
+          <NavBarMenuItemFeaturedLink
+            orderedSet={orderedSet}
+            headerText={headerText}
+            contextModule={contextModule}
+            parentNavigationItem={parentNavigationItem}
+          />
+        )
+      }}
     />
   )
 }
@@ -58,7 +75,6 @@ const NavBarMenuItemFeaturedLink: FC<NavBarMenuItemFeaturedLinkInnerProps> = ({
     useAnalyticsContext()
   const orderedSet = useFragment(fragment, orderedSetKey)
 
-  // Extract first FeaturedLink (pattern from HomeFeaturedEventsRail)
   const featuredLinks = compact(orderedSet.items).flatMap(item =>
     item.__typename === "FeaturedLink" ? [item] : [],
   )
@@ -160,33 +176,43 @@ const query = graphql`
   }
 `
 
-/**
- * Wrapper component that includes the Column span logic.
- * Renders a span={4} column when data exists.
- * Renders a span={4} empty spacer when data is missing (to maintain grid layout).
- */
 export const NavBarMenuItemFeaturedLinkWithColumn: FC<
   NavBarMenuItemFeaturedLinkProps
 > = props => {
-  const data = useLazyLoadQuery<NavBarMenuItemFeaturedLinkQuery>(query, {
-    key: props.setKey,
-  })
-
-  const orderedSet = data.orderedSets?.[0]
-
-  // Render empty spacer column if no data to maintain grid layout
-  if (!orderedSet) {
-    return <Column span={4} />
-  }
+  const { relayEnvironment } = useSystemContext()
 
   return (
-    <Column span={4} px={2}>
-      <NavBarMenuItemFeaturedLink
-        orderedSet={orderedSet}
-        headerText={props.headerText}
-        contextModule={props.contextModule}
-        parentNavigationItem={props.parentNavigationItem}
-      />
-    </Column>
+    <SystemQueryRenderer<NavBarMenuItemFeaturedLinkQuery>
+      environment={relayEnvironment}
+      query={query}
+      variables={{ key: props.setKey }}
+      render={({ error, props: data }) => {
+        if (error) {
+          console.error(error)
+          return <Column span={4} />
+        }
+
+        if (!data) {
+          return <Column span={4} />
+        }
+
+        const orderedSet = data.orderedSets?.[0]
+
+        if (!orderedSet) {
+          return <Column span={4} />
+        }
+
+        return (
+          <Column span={4} px={2}>
+            <NavBarMenuItemFeaturedLink
+              orderedSet={orderedSet}
+              headerText={props.headerText}
+              contextModule={props.contextModule}
+              parentNavigationItem={props.parentNavigationItem}
+            />
+          </Column>
+        )
+      }}
+    />
   )
 }

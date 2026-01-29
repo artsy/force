@@ -13,7 +13,13 @@ jest.mock("Utils/Hooks/useMatchMedia", () => ({
 
 jest.mock("react-relay", () => ({
   ...jest.requireActual("react-relay"),
-  useLazyLoadQuery: jest.fn(() => ({ articles: null })),
+  useFragment: jest.fn(() => null),
+}))
+
+jest.mock("System/Relay/SystemQueryRenderer", () => ({
+  SystemQueryRenderer: jest.fn(({ render }) =>
+    render({ error: null, props: { orderedSets: [] }, retry: null }),
+  ),
 }))
 
 jest.mock("@artsy/palette", () => ({
