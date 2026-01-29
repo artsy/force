@@ -1,6 +1,6 @@
 type PrefetchOptions = {
   url: string
-  sizes?: string
+  srcSet?: string
 }
 
 export const prefetchUrlWithSizes = (opts: PrefetchOptions): void => {
@@ -8,18 +8,24 @@ export const prefetchUrlWithSizes = (opts: PrefetchOptions): void => {
     return
   }
 
-  const existingLink = document.querySelector(
-    `link[rel="preload"][as="image"][href="${opts.url}"]`,
-  )
+  const selector = opts.srcSet
+    ? `link[rel="preload"][as="image"][imagesrcset="${opts.srcSet}"]`
+    : `link[rel="preload"][as="image"][href="${opts.url}"]`
 
-  if (!existingLink) {
-    const link = document.createElement("link")
-    link.rel = "preload"
-    link.as = "image"
-    link.href = opts.url
-    if (opts.sizes) {
-      link.setAttribute("imagesizes", opts.sizes)
-    }
-    document.head.appendChild(link)
+  const existingLink = document.querySelector(selector)
+
+  if (existingLink) {
+    return
   }
+
+  const link = document.createElement("link")
+  link.rel = "preload"
+  link.as = "image"
+  link.href = opts.url
+
+  if (opts.srcSet) {
+    link.setAttribute("imagesrcset", opts.srcSet)
+  }
+
+  document.head.appendChild(link)
 }

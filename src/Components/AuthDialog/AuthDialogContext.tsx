@@ -12,7 +12,6 @@ import {
   type AuthDialogProps,
 } from "Components/AuthDialog/AuthDialog"
 import {
-  COLUMN_WIDTH,
   getResizedAuthDialogGalleryImage,
   getResizedAuthDialogImages,
 } from "Components/AuthDialog/Utils/authDialogConstants"
@@ -167,21 +166,17 @@ export const AuthDialogProvider: FC<
 
   // Prefetch carousel images after page load (desktop only)
   useEffect(() => {
-    if (
-      !isLoggedIn &&
-      !getENV("IS_MOBILE") &&
-      document.readyState === "complete"
-    ) {
+    if (!isLoggedIn && !getENV("IS_MOBILE")) {
       getResizedAuthDialogImages().forEach(img =>
         prefetchUrlWithSizes({
-          url: img.quality2x,
-          sizes: `${COLUMN_WIDTH}px`,
+          url: img.src,
+          srcSet: img.srcSet,
         }),
       )
       const galleryImage = getResizedAuthDialogGalleryImage()
       prefetchUrlWithSizes({
-        url: galleryImage.quality2x,
-        sizes: `${COLUMN_WIDTH}px`,
+        url: galleryImage.src,
+        srcSet: galleryImage.srcSet,
       })
     }
   }, [isLoggedIn])
