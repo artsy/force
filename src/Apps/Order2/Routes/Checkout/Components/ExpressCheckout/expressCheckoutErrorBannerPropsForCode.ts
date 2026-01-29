@@ -44,6 +44,7 @@ export const expressCheckoutErrorBannerPropsForCode = (
     return {
       title: "No shipping options available",
       message:
+        // TODO: Align with other missing shipping options messaging
         "We couldn't find any shipping options for the address provided or this order may not be deliverable to that address.",
     }
   }

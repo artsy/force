@@ -21,10 +21,7 @@ import {
   validateAndExtractOrderResponse,
 } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
 import type { ExpressCheckoutPaymentMethod } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
-import {
-  CheckoutErrorBanner,
-  type CheckoutErrorBannerProps,
-} from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
+import { CheckoutErrorBanner } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { fetchAndSetConfirmationToken } from "Apps/Order2/Utils/confirmationTokenUtils"
 import { preventHardReload } from "Apps/Order2/Utils/navigationGuards"
@@ -304,7 +301,9 @@ export const Order2ExpressCheckoutUI: React.FC<
         flow: "Express checkout",
       })
 
-      const errorBannerProps = expressCheckoutErrorBannerPropsForCode(errorRef.current)
+      const errorBannerProps = expressCheckoutErrorBannerPropsForCode(
+        errorRef.current,
+      )
       sessionStorage.setItem(
         "expressCheckoutError",
         JSON.stringify(errorBannerProps),
@@ -524,7 +523,9 @@ export const Order2ExpressCheckoutUI: React.FC<
         flow: "Express checkout",
       })
 
-      const errorBannerProps = expressCheckoutErrorBannerPropsForCode(errorRef.current)
+      const errorBannerProps = expressCheckoutErrorBannerPropsForCode(
+        errorRef.current,
+      )
       sessionStorage.setItem(
         "expressCheckoutError",
         JSON.stringify(errorBannerProps),
