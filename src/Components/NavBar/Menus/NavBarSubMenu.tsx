@@ -30,7 +30,9 @@ export const NavBarSubMenu: React.FC<
     useAnalyticsContext()
   const isMounted = useDidMount()
   const enableVisualComponents = useFlag("onyx_nav-submenu-visual-component")
-  const [hasVisualComponentData, setHasVisualComponentData] = useState(true)
+  const [hasVisualComponentData, setHasVisualComponentData] = useState<
+    boolean | null
+  >(null)
 
   // Only show visual components after client mount and when flag is enabled
   // (useFlag is not isomorphic, so we need to wait for client-side mount)
@@ -86,7 +88,9 @@ export const NavBarSubMenu: React.FC<
 
   // Only show featured link if feature flag is enabled, component is mounted, and data loaded successfully
   const shouldShowFeaturedLink =
-    shouldEnableVisualComponents && featuredLinkItem && hasVisualComponentData
+    shouldEnableVisualComponents &&
+    featuredLinkItem &&
+    hasVisualComponentData === true
 
   const lastMenuLinkIndex = menu.links.length - 1
   const lastMenuItem = menu.links[lastMenuLinkIndex]
@@ -94,6 +98,10 @@ export const NavBarSubMenu: React.FC<
     !("links" in lastMenuItem) && "href" in lastMenuItem ? lastMenuItem : null
 
   const columnSpan = 3
+
+  // Decide whether to try loading visual component
+  const shouldTryVisualComponent =
+    shouldEnableVisualComponents && featuredLinkItem
 
   return (
     <Text width="100vw" variant={["xs", "xs", "sm"]} onClick={onClick}>
@@ -104,10 +112,10 @@ export const NavBarSubMenu: React.FC<
             gridColumnGap={0}
             gridAutoRows={shouldShowFeaturedLink ? "1fr" : "auto"}
           >
-            {shouldShowFeaturedLink ? (
+            {shouldTryVisualComponent ? (
               <>
                 {/* Left outer column: contains nav columns and bottom elements */}
-                <Column span={8}>
+                <Column span={shouldShowFeaturedLink ? 8 : 12}>
                   <GridColumns gridColumnGap={0}>
                     {menu.links.map(subMenu => {
                       if ("menu" in subMenu) {
@@ -192,7 +200,7 @@ export const NavBarSubMenu: React.FC<
                 </Column>
 
                 {/* Right outer column: visual component */}
-                {"type" in featuredLinkItem && (
+                {shouldShowFeaturedLink && "type" in featuredLinkItem && (
                   <NavBarMenuItemFeaturedLinkWithColumn
                     setKey={featuredLinkItem.setKey}
                     headerText={featuredLinkItem.headerText}
@@ -200,6 +208,18 @@ export const NavBarSubMenu: React.FC<
                     parentNavigationItem={parentNavigationItem}
                     onDataLoaded={setHasVisualComponentData}
                   />
+                )}
+                {/* Hidden query to check if data exists */}
+                {!shouldShowFeaturedLink && "type" in featuredLinkItem && (
+                  <div style={{ position: "absolute", visibility: "hidden" }}>
+                    <NavBarMenuItemFeaturedLinkWithColumn
+                      setKey={featuredLinkItem.setKey}
+                      headerText={featuredLinkItem.headerText}
+                      contextModule={contextModule}
+                      parentNavigationItem={parentNavigationItem}
+                      onDataLoaded={setHasVisualComponentData}
+                    />
+                  </div>
                 )}
               </>
             ) : (

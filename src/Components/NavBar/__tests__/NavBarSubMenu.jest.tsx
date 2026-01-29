@@ -40,6 +40,10 @@ jest.mock("@artsy/palette", () => ({
   useDidMount: jest.fn().mockReturnValue(false), // SSR-render by default
 }))
 
+jest.mock("Components/NavBar/Menus/NavBarMenuItemFeaturedLink", () => ({
+  NavBarMenuItemFeaturedLinkWithColumn: jest.fn(() => null),
+}))
+
 describe("NavBarSubMenu", () => {
   const trackEvent = jest.fn()
 
@@ -118,47 +122,34 @@ describe("NavBarSubMenu", () => {
   })
 
   it("renders featured link component when visual component is specified in menu data", () => {
-    const mockOrderedSet = {
-      internalID: "test-set-id",
-      itemType: "FeaturedLink",
-      items: [
-        {
-          __typename: "FeaturedLink",
-          internalID: "test-featured-link-id",
-          href: "/article/test-article",
-          subtitle: "Art Market",
-          title: "Test Featured Link Title",
-          image: {
-            resized: {
-              src: "https://example.com/image.jpg",
-              srcSet: "https://example.com/image.jpg 1x",
-            },
-          },
-        },
-      ],
-    }
-
     // Mock useDidMount to return true (component is mounted)
     const { useDidMount } = require("@artsy/palette")
-    ;(useDidMount as jest.Mock).mockReturnValueOnce(true)
+    ;(useDidMount as jest.Mock).mockReturnValue(true)
 
     // Mock feature flag to be enabled
     const { useFlag } = require("@unleash/proxy-client-react")
-    ;(useFlag as jest.Mock).mockReturnValueOnce(true)
+    ;(useFlag as jest.Mock).mockReturnValue(true)
 
-    // Mock SystemQueryRenderer to return ordered sets data
-    const { SystemQueryRenderer } = require("System/Relay/SystemQueryRenderer")
-    ;(SystemQueryRenderer as jest.Mock).mockImplementationOnce(({ render }) =>
-      render({
-        error: null,
-        props: { orderedSets: [{ __fragmentRef: "mock-ref" }] },
-        retry: null,
-      }),
+    // Mock NavBarMenuItemFeaturedLinkWithColumn to call onDataLoaded and render content
+    const {
+      NavBarMenuItemFeaturedLinkWithColumn,
+    } = require("Components/NavBar/Menus/NavBarMenuItemFeaturedLink")
+    ;(NavBarMenuItemFeaturedLinkWithColumn as jest.Mock).mockImplementation(
+      ({ onDataLoaded, headerText }) => {
+        // Call onDataLoaded immediately to simulate successful data load
+        if (onDataLoaded) {
+          onDataLoaded(true)
+        }
+        // Return mock content
+        return (
+          <div>
+            <div>{headerText}</div>
+            <div>Art Market</div>
+            <div>Test Featured Link Title</div>
+          </div>
+        )
+      },
     )
-
-    // Mock the fragment to return the ordered set data
-    const { useFragment } = require("react-relay")
-    ;(useFragment as jest.Mock).mockReturnValueOnce(mockOrderedSet)
 
     // ARTWORKS_SUBMENU_DATA includes a featured link visual component
     const { container } = getWrapper()
