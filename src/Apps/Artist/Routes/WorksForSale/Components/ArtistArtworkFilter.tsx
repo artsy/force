@@ -133,9 +133,6 @@ export const ArtistArtworkFilterRefetchContainer = createRefetchContainer(
         internalID
         name
         slug
-        meta(page: ARTWORKS) {
-          title
-        }
       }
     `,
   },

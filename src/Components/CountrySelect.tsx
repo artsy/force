@@ -374,6 +374,7 @@ export const SMS_UNSUPPORTED_COUNTRY_CODES = [
   { text: "Mauritius", value: "MU" },
   { text: "Micronesia, Federated States of", value: "FM" },
   { text: "Moldova, Republic of", value: "MD" },
+  { text: "Mongolia", value: "MN" },
   { text: "Montenegro", value: "ME" },
   { text: "Montserrat", value: "MS" },
   { text: "Mozambique", value: "MZ" },

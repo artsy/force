@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<56ab6ec3440d048474a8b541fbef4f2d>>
+ * @generated SignedSource<<8bcc88329fd7dd6999545d61cf9210f8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -28,9 +28,6 @@ export type ArtistArtworkFilter_artist$data = {
   } | null | undefined;
   readonly id: string;
   readonly internalID: string;
-  readonly meta: {
-    readonly title: string;
-  };
   readonly name: string | null | undefined;
   readonly slug: string;
   readonly " $fragmentType": "ArtistArtworkFilter_artist";
@@ -191,30 +188,6 @@ return {
       "kind": "ScalarField",
       "name": "slug",
       "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "page",
-          "value": "ARTWORKS"
-        }
-      ],
-      "concreteType": "ArtistMeta",
-      "kind": "LinkedField",
-      "name": "meta",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "title",
-          "storageKey": null
-        }
-      ],
-      "storageKey": "meta(page:\"ARTWORKS\")"
     }
   ],
   "type": "Artist",
@@ -222,6 +195,6 @@ return {
 };
 })();
 
-(node as any).hash = "2733eeba4263d242a78908de043e4845";
+(node as any).hash = "586b8e6d7b471903b27810857e20e8ed";
 
 export default node;
