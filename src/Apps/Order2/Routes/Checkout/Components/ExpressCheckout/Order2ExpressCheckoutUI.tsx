@@ -57,6 +57,8 @@ type HandleCancelCallback = NonNullable<
   React.ComponentProps<typeof ExpressCheckoutElement>["onCancel"]
 >
 
+const EXPRESS_CHECKOUT_OPEN_RESOLVE_DELAY_MS = 500
+
 export const Order2ExpressCheckoutUI: React.FC<
   Order2ExpressCheckoutUIProps
 > = ({ order }) => {
@@ -137,7 +139,10 @@ export const Order2ExpressCheckoutUI: React.FC<
     business: { name: "Artsy" },
   }
 
-  // Helper to update shipping address and extract data
+  /** Helper to update shipping address and extract data
+   * conditionally also sets the first fulfillment option for express checkouts
+   * that require it (Google Pay)
+   */
   const setShippingAddress = async (params: {
     city?: string
     state?: string
@@ -183,7 +188,9 @@ export const Order2ExpressCheckoutUI: React.FC<
     return initialResult
   }
 
-  // Helper to set fulfillment option and extract data
+  /**
+   * Helper to set fulfillment option and extract data
+   */
   const setFulfillmentOption = async (
     fulfillmentType: FulfillmentOptionInputEnum,
   ): Promise<OrderMutationResult> => {
@@ -220,39 +227,27 @@ export const Order2ExpressCheckoutUI: React.FC<
     }
   }
 
-  const updateOrderTotalAndResolve = (args: {
-    buyerTotalMinor?: number | null
-    resolveDetails: () => void
-    timeout?: number
-  }) => {
-    const { buyerTotalMinor, resolveDetails, timeout = 500 } = args
-    if (buyerTotalMinor != null) {
-      elements?.update({
-        amount: buyerTotalMinor,
-      })
-    }
-    setTimeout(() => {
-      resolveDetails()
-    }, timeout)
-  }
-
   const resetOrder = async () => {
     window.removeEventListener("beforeunload", preventHardReload)
 
-    const { unsetOrderPaymentMethod } =
-      await unsetPaymentMethodMutation.submitMutation({
-        variables: { input: { id: orderData.internalID } },
-      })
+    try {
+      const { unsetOrderPaymentMethod } =
+        await unsetPaymentMethodMutation.submitMutation({
+          variables: { input: { id: orderData.internalID } },
+        })
 
-    const { unsetOrderFulfillmentOption } =
-      await unsetFulfillmentOptionMutation.submitMutation({
-        variables: { input: { id: orderData.internalID } },
-      })
+      const { unsetOrderFulfillmentOption } =
+        await unsetFulfillmentOptionMutation.submitMutation({
+          variables: { input: { id: orderData.internalID } },
+        })
 
-    validateAndExtractOrderResponse(unsetOrderPaymentMethod?.orderOrError)
-    validateAndExtractOrderResponse(unsetOrderFulfillmentOption?.orderOrError)
-
-    window.location.reload()
+      validateAndExtractOrderResponse(unsetOrderPaymentMethod?.orderOrError)
+      validateAndExtractOrderResponse(unsetOrderFulfillmentOption?.orderOrError)
+    } catch (error) {
+      logger.error("Error resetting order", error)
+    } finally {
+      window.location.reload()
+    }
   }
 
   const handleOpenExpressCheckout = async ({
@@ -271,23 +266,25 @@ export const Order2ExpressCheckoutUI: React.FC<
       const allowedShippingCountries =
         extractAllowedShippingCountries(orderData)
 
-      return updateOrderTotalAndResolve({
-        buyerTotalMinor: itemsTotal?.minor,
-        resolveDetails: () =>
-          resolve({
-            ...checkoutOptions,
-            allowedShippingCountries,
-            lineItems: [{ name: "Subtotal", amount: itemsTotal?.minor }],
-          }),
-      })
+      if (itemsTotal?.minor != null) {
+        elements?.update({
+          amount: itemsTotal.minor,
+        })
+      }
+
+      setTimeout(() => {
+        resolve({
+          ...checkoutOptions,
+          allowedShippingCountries,
+          lineItems: [{ name: "Subtotal", amount: itemsTotal?.minor }],
+        })
+      }, EXPRESS_CHECKOUT_OPEN_RESOLVE_DELAY_MS)
     } catch (error) {
-      logger.error("Error resetting order on load", error)
+      logger.error("Error opening express checkout", error)
     }
   }
 
   const handleCancel: HandleCancelCallback = async () => {
-    logger.warn("Express checkout element cancelled - resetting")
-
     if (!errorRef.current) {
       checkoutTracking.clickedCancelExpressCheckout({
         walletType: expressCheckoutType as string,
@@ -438,7 +435,8 @@ export const Order2ExpressCheckoutUI: React.FC<
 
       if (error) {
         // This point is only reached if there's an immediate error when
-        // creating the ConfirmationToken. Show the error to customer (for example, payment details incomplete)
+        // creating the ConfirmationToken.
+        // TODO: Handle this error with the others below. (pr #16653)
         logger.error(error)
         setExpressCheckoutSubmitting(false)
         return
