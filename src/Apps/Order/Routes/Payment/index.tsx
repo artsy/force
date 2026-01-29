@@ -12,6 +12,7 @@ import type { PaymentRouteSetOrderPaymentMutation } from "__generated__/PaymentR
 import type { Payment_me$data } from "__generated__/Payment_me.graphql"
 import type { Payment_order$data } from "__generated__/Payment_order.graphql"
 
+import { useFlag } from "@unleash/proxy-client-react"
 import { useStripePaymentBySetupIntentId } from "Apps/Order/Hooks/useStripePaymentBySetupIntentId"
 import { useSetPayment } from "Apps/Order/Mutations/useSetPayment"
 import {
@@ -19,7 +20,6 @@ import {
   injectCommitMutation,
 } from "Apps/Order/Utils/commitMutation"
 import { getInitialPaymentMethodValue } from "Apps/Order/Utils/orderUtils"
-import { useFlag } from "@unleash/proxy-client-react"
 import { useRouter } from "System/Hooks/useRouter"
 // utils, hooks, mutations and system tools
 import { extractNodes } from "Utils/extractNodes"
@@ -222,10 +222,13 @@ export const PaymentRoute: FC<
   // sets payment with Credit Card
   const { jumpTo } = useJump()
   const handleCreditCardContinue = async () => {
+    setIsSavingPayment(true)
+
     try {
       const result = await CreditCardPicker?.current?.getCreditCardId()
 
       if (result?.type === "invalid_form") {
+        setIsSavingPayment(false)
         jumpTo("paymentDetailsTop", { behavior: "smooth" })
         return
       }
@@ -246,6 +249,7 @@ export const PaymentRoute: FC<
           message:
             "Please enter another payment method or contact your bank for more information.",
         })
+        setIsSavingPayment(false)
         return
       }
 
@@ -265,10 +269,9 @@ export const PaymentRoute: FC<
           title: "An internal error occurred",
         })
         logger.error(result.error)
+        setIsSavingPayment(false)
         return
       }
-
-      setIsSavingPayment(true)
 
       const orderOrError = (
         await setOrderPayment({
