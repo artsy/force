@@ -48,6 +48,7 @@ import { useOrder2ExpressCheckoutSubmitOrderMutation } from "./Mutations/useOrde
 import { useOrder2ExpressCheckoutUnsetOrderFulfillmentOptionMutation } from "./Mutations/useOrder2ExpressCheckoutUnsetOrderFulfillmentOptionMutation"
 import { useOrder2ExpressCheckoutUnsetOrderPaymentMethodMutation } from "./Mutations/useOrder2ExpressCheckoutUnsetOrderPaymentMethodMutation"
 import { useOrder2ExpressCheckoutUpdateOrderShippingAddressMutation } from "./Mutations/useOrder2ExpressCheckoutUpdateOrderShippingAddressMutation"
+import { expressCheckoutErrorBannerPropsForCode } from "./expressCheckoutErrorBannerPropsForCode"
 
 interface Order2ExpressCheckoutUIProps {
   order: Order2ExpressCheckoutUI_order$key
@@ -61,60 +62,6 @@ type HandleCancelCallback = NonNullable<
 >
 
 const EXPRESS_CHECKOUT_OPEN_RESOLVE_DELAY_MS = 500
-
-const errorBannerPropsForErrorCode = (
-  errorCode: string,
-): CheckoutErrorBannerProps["error"] => {
-  // Card/payment failed errors
-  if (
-    [
-      "card_declined",
-      "insufficient_funds",
-      "incorrect_number",
-      "expired_card",
-      "charge_authorization_failed",
-      "credit_card_not_found",
-      "credit_card_deactivated",
-      "invalid_credit_card",
-      "processing_error",
-    ].includes(errorCode)
-  ) {
-    return {
-      title: "Payment failed",
-      message: "There was an issue with your payment method. Please try again.",
-    }
-  }
-
-  // Shipping address errors
-  if (
-    [
-      "unsupported_shipping_location",
-      "missing_postal_code",
-      "missing_country",
-      "missing_phone_number",
-      "missing_shipping_info",
-    ].includes(errorCode)
-  ) {
-    return {
-      title: "Shipping address error",
-      message: "Please check your shipping address and try again.",
-    }
-  }
-
-  // Payment method not supported
-  if (errorCode === "unsupported_payment_method") {
-    return {
-      title: "Payment method not supported",
-      message:
-        "This payment method is not supported. Please try a different payment method.",
-    }
-  }
-
-  // Fallback for all other errors
-  return {
-    title: "An error occurred",
-  }
-}
 
 export const Order2ExpressCheckoutUI: React.FC<
   Order2ExpressCheckoutUIProps
@@ -357,7 +304,7 @@ export const Order2ExpressCheckoutUI: React.FC<
         flow: "Express checkout",
       })
 
-      const errorBannerProps = errorBannerPropsForErrorCode(errorRef.current)
+      const errorBannerProps = expressCheckoutErrorBannerPropsForCode(errorRef.current)
       sessionStorage.setItem(
         "expressCheckoutError",
         JSON.stringify(errorBannerProps),
@@ -577,7 +524,7 @@ export const Order2ExpressCheckoutUI: React.FC<
         flow: "Express checkout",
       })
 
-      const errorBannerProps = errorBannerPropsForErrorCode(errorRef.current)
+      const errorBannerProps = expressCheckoutErrorBannerPropsForCode(errorRef.current)
       sessionStorage.setItem(
         "expressCheckoutError",
         JSON.stringify(errorBannerProps),
