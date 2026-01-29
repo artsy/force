@@ -1,12 +1,27 @@
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { BorderBox, Box, HTML, Tab, type TabInfo, Tabs } from "@artsy/palette"
+import {
+  BorderBox,
+  Box,
+  HTML,
+  Skeleton,
+  SkeletonText,
+  StackableBorderBox,
+  Tab,
+  type TabInfo,
+  Tabs,
+} from "@artsy/palette"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import type { ArtworkDetailsQuery } from "__generated__/ArtworkDetailsQuery.graphql"
 import type { ArtworkDetails_artwork$data } from "__generated__/ArtworkDetails_artwork.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import styled from "styled-components"
 import { ArtworkDetailsAboutTheWorkFromArtsyFragmentContainer } from "./ArtworkDetailsAboutTheWorkFromArtsy"
-import { ArtworkDetailsAdditionalInfoFragmentContainer } from "./ArtworkDetailsAdditionalInfo"
+import {
+  ArtworkDetailsAdditionalInfoFragmentContainer,
+  ArtworkDetailsAdditionalInfoSkeleton,
+} from "./ArtworkDetailsAdditionalInfo"
 import { ArtworkDetailsArticlesFragmentContainer } from "./ArtworkDetailsArticles"
 
 export interface ArtworkDetailsProps {
@@ -32,6 +47,7 @@ const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({ artwork }) => {
           <ArtworkDetailsAboutTheWorkFromArtsyFragmentContainer
             artwork={artwork}
           />
+
           <ArtworkDetailsAdditionalInfoFragmentContainer artwork={artwork} />
         </Tab>
 
@@ -102,3 +118,58 @@ const ArtworkDetailsContainer = TabContainer
 const ExhibitionHistory = TabContainer
 const Literature = TabContainer
 const Provenance = TabContainer
+
+const PLACEHOLDER = (
+  <Skeleton>
+    <Tabs>
+      <Tab name="About the work">
+        <StackableBorderBox>
+          <SkeletonText variant="sm">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime
+            omnis explicabo nam architecto voluptatem dolores impedit cum
+            inventore.
+          </SkeletonText>
+        </StackableBorderBox>
+
+        <BorderBox>
+          <ArtworkDetailsAdditionalInfoSkeleton />
+        </BorderBox>
+      </Tab>
+    </Tabs>
+  </Skeleton>
+)
+
+interface ArtworkDetailsQueryRendererProps {
+  slug: string
+}
+
+export const ArtworkDetailsQueryRenderer: React.FC<
+  ArtworkDetailsQueryRendererProps
+> = ({ slug }) => {
+  return (
+    <SystemQueryRenderer<ArtworkDetailsQuery>
+      lazyLoad
+      placeholder={PLACEHOLDER}
+      query={graphql`
+        query ArtworkDetailsQuery($slug: String!) {
+          artwork(id: $slug) {
+            ...ArtworkDetails_artwork
+          }
+        }
+      `}
+      variables={{ slug }}
+      render={({ error, props }) => {
+        if (error) {
+          console.error(error)
+          return null
+        }
+
+        if (!props?.artwork) {
+          return PLACEHOLDER
+        }
+
+        return <ArtworkDetailsFragmentContainer artwork={props.artwork} />
+      }}
+    />
+  )
+}
