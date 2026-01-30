@@ -389,7 +389,6 @@ export const Order2ExpressCheckoutUI: React.FC<
 
   // User confirms the payment
   const handleConfirm = async ({
-    paymentFailed,
     billingDetails,
     shippingAddress,
     expressPaymentType,
@@ -450,7 +449,7 @@ export const Order2ExpressCheckoutUI: React.FC<
 
       if (error) {
         // This point is only reached if there's an immediate error when
-        // creating the ConfirmationToken.
+        // creating the ConfirmationToken (before payment submission).
         logger.error("Stripe Error creating confirmation token", {
           errorCode: error.code,
           errorMessage: error.message,
@@ -460,9 +459,6 @@ export const Order2ExpressCheckoutUI: React.FC<
         // Store error code for display after reset - tracking happens when banner displays
         const errorCode = (error.code || "confirmation_token_error") as string
         sessionStorage.setItem("expressCheckoutError", errorCode)
-
-        // Notify Stripe that payment failed
-        paymentFailed({ reason: "fail" })
 
         resetOrder()
         return
@@ -545,8 +541,6 @@ export const Order2ExpressCheckoutUI: React.FC<
       // Store error code for display after reset - tracking happens when banner displays
       const errorCode = (error.code || "unknown_error") as string
       sessionStorage.setItem("expressCheckoutError", errorCode)
-
-      paymentFailed({ reason: "fail" })
 
       resetOrder()
     }
