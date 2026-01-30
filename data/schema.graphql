@@ -1967,6 +1967,9 @@ type Artist implements EntityWithFilterArtworksConnectionInterface & Node & Sear
     slugs: [String!]
   ): [MarketingCollection!]!
   meta(page: ArtistPage = ABOUT): ArtistMeta!
+    @deprecated(
+      reason: "Use `name` and `biographyBlurb` fields to build meta tags client-side"
+    )
   middle: String
   name: String
   nationality: String
@@ -11287,13 +11290,8 @@ union DeleteArtworkImportResponseOrError =
   | DeleteArtworkImportSuccess
 
 type DeleteArtworkImportSuccess {
-  deletedArtworkIds: [String]
-  deletedArtworksCount: Int
-  deletedSaleArtworkIds: [Int]
-  deletedSaleArtworksCount: Int
-  errors: [String]
-  importCanceled: Boolean
-  success: Boolean
+  # Whether the deletion job has been queued. Deletion happens asynchronously in the background.
+  queued: Boolean
 }
 
 input DeleteArtworkMutationInput {
@@ -17356,7 +17354,7 @@ type Mutation {
   # Deletes an image from an artwork in my collection
   deleteArtworkImage(input: DeleteArtworkImageInput!): DeleteArtworkImagePayload
 
-  # Delete an artwork import and all associated artworks and sale artworks
+  # Queues an asynchronous job to delete an artwork import and associated unpublished artworks. Published artworks are preserved. Deletion happens in the background and results are sent via WebSocket.
   deleteArtworkImport(
     input: DeleteArtworkImportInput!
   ): DeleteArtworkImportPayload
