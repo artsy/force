@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3534ee1464909f2021615da1616fd2b0>>
+ * @generated SignedSource<<050b25226dd4fc90f23fe9fba34d89a6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -30,6 +30,7 @@ export type useOrder2ExpressCheckoutSubmitOrderMutation$data = {
     } | {
       readonly __typename: "OrderMutationError";
       readonly mutationError: {
+        readonly code: string;
         readonly message: string;
       };
     } | {
@@ -94,6 +95,13 @@ v4 = {
           "args": null,
           "kind": "ScalarField",
           "name": "message",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "code",
           "storageKey": null
         }
       ],
@@ -243,16 +251,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a344688a6bd3f2c70534d947fa1ffcd4",
+    "cacheID": "9df47c69d6aa8ef5d9d8f2901b9d5e27",
     "id": null,
     "metadata": {},
     "name": "useOrder2ExpressCheckoutSubmitOrderMutation",
     "operationKind": "mutation",
-    "text": "mutation useOrder2ExpressCheckoutSubmitOrderMutation(\n  $input: submitOrderInput!\n) {\n  submitOrder(input: $input) {\n    orderOrError {\n      __typename\n      ... on OrderMutationSuccess {\n        order {\n          internalID\n          id\n        }\n      }\n      ... on OrderMutationError {\n        mutationError {\n          message\n        }\n      }\n      ... on OrderMutationActionRequired {\n        actionData {\n          clientSecret\n        }\n      }\n    }\n  }\n}\n"
+    "text": "mutation useOrder2ExpressCheckoutSubmitOrderMutation(\n  $input: submitOrderInput!\n) {\n  submitOrder(input: $input) {\n    orderOrError {\n      __typename\n      ... on OrderMutationSuccess {\n        order {\n          internalID\n          id\n        }\n      }\n      ... on OrderMutationError {\n        mutationError {\n          message\n          code\n        }\n      }\n      ... on OrderMutationActionRequired {\n        actionData {\n          clientSecret\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "c8eec210a37ec2fa5c7b93590e49b68c";
+(node as any).hash = "40939328ef6714e6df272fd6cee20bb1";
 
 export default node;
