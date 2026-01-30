@@ -39,3 +39,4 @@ CheckoutErrorBanner.displayName = "CheckoutErrorBanner"
 export const MailtoOrderSupport = () => {
   return <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a>
 }
+MailtoOrderSupport.displayName = SUPPORT_EMAIL
