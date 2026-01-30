@@ -37,7 +37,7 @@ import type { TrackingProp } from "react-tracking"
 import styled from "styled-components"
 import { ArtistInfoQueryRenderer } from "./Components/ArtistInfo"
 import { ArtworkArtistSeriesQueryRenderer } from "./Components/ArtworkArtistSeries"
-import { ArtworkDetailsQueryRenderer } from "./Components/ArtworkDetails"
+import { ArtworkDetailsFragmentContainer } from "./Components/ArtworkDetails"
 import { ArtworkImageBrowserFragmentContainer } from "./Components/ArtworkImageBrowser/ArtworkImageBrowser"
 import { ArtworkMeta } from "./Components/ArtworkMeta"
 import { ArtworkRelatedArtistsQueryRenderer } from "./Components/ArtworkRelatedArtists"
@@ -77,7 +77,7 @@ const BelowTheFoldArtworkDetails: React.FC<
 
       <Box data-test="belowTheFoldArtworkDetails">
         <Join separator={<Spacer y={2} />}>
-          <ArtworkDetailsQueryRenderer slug={slug} />
+          <ArtworkDetailsFragmentContainer artwork={artwork} />
 
           <PricingContextQueryRenderer slug={slug} />
 
@@ -401,6 +401,7 @@ const ArtworkAppFragmentContainer = createFragmentContainer(
         ...ArtworkAuctionCreateAlertHeader_artwork
         ...PrivateArtworkDetails_artwork
         ...ArtworkPageBanner_artwork
+        ...ArtworkDetails_artwork
 
         attributionClass {
           internalID
