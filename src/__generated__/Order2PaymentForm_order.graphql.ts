@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d001d5aa99af106cd8eb82564d77fa49>>
+ * @generated SignedSource<<bf328d6403e8883d2f623b9a1b70a30f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,9 +13,11 @@ export type BankAccountBalanceCheckResult = "INSUFFICIENT" | "INVALID" | "NOT_SU
 export type OrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type OrderPaymentMethodEnum = "CREDIT_CARD" | "SEPA_DEBIT" | "US_BANK_ACCOUNT" | "WIRE_TRANSFER" | "%future added value";
 export type OrderSourceEnum = "ARTWORK_PAGE" | "INQUIRY" | "PARTNER_OFFER" | "PRIVATE_SALE" | "%future added value";
+export type OrderStripePaymentMethodTypeEnum = "card" | "sepa_debit" | "us_bank_account" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type Order2PaymentForm_order$data = {
   readonly availablePaymentMethods: ReadonlyArray<OrderPaymentMethodEnum>;
+  readonly availableStripePaymentMethodTypes: ReadonlyArray<OrderStripePaymentMethodTypeEnum>;
   readonly bankAccountBalanceCheck: {
     readonly message: string | null | undefined;
     readonly result: BankAccountBalanceCheckResult;
@@ -128,6 +130,13 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "availablePaymentMethods",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "availableStripePaymentMethodTypes",
       "storageKey": null
     },
     {
@@ -372,6 +381,6 @@ return {
 };
 })();
 
-(node as any).hash = "6d42f3d736e3ab274e767d08bc9ad888";
+(node as any).hash = "4ac470c47b95091ae6e954aa0d9d23e8";
 
 export default node;
