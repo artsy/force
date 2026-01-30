@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bf328d6403e8883d2f623b9a1b70a30f>>
+ * @generated SignedSource<<958782db2fbff5393b61d6881c662e22>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -52,6 +52,10 @@ export type Order2PaymentForm_order$data = {
   } | null | undefined>;
   readonly mode: OrderModeEnum;
   readonly pendingOffer: {
+    readonly amount: {
+      readonly amount: string | null | undefined;
+      readonly currencyCode: string;
+    } | null | undefined;
     readonly pricingBreakdownLines: ReadonlyArray<{
       readonly amount?: {
         readonly amount: string | null | undefined;
@@ -80,7 +84,26 @@ var v0 = {
   "name": "currencyCode",
   "storageKey": null
 },
-v1 = [
+v1 = {
+  "alias": null,
+  "args": null,
+  "concreteType": "Money",
+  "kind": "LinkedField",
+  "name": "amount",
+  "plural": false,
+  "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "amount",
+      "storageKey": null
+    },
+    (v0/*: any*/)
+  ],
+  "storageKey": null
+},
+v2 = [
   {
     "alias": null,
     "args": null,
@@ -172,6 +195,7 @@ return {
       "name": "pendingOffer",
       "plural": false,
       "selections": [
+        (v1/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -183,25 +207,7 @@ return {
             {
               "kind": "InlineFragment",
               "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "concreteType": "Money",
-                  "kind": "LinkedField",
-                  "name": "amount",
-                  "plural": false,
-                  "selections": [
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "amount",
-                      "storageKey": null
-                    },
-                    (v0/*: any*/)
-                  ],
-                  "storageKey": null
-                }
+                (v1/*: any*/)
               ],
               "type": "TotalLine",
               "abstractKey": null
@@ -219,7 +225,7 @@ return {
       "kind": "LinkedField",
       "name": "itemsTotal",
       "plural": false,
-      "selections": (v1/*: any*/),
+      "selections": (v2/*: any*/),
       "storageKey": null
     },
     {
@@ -229,7 +235,7 @@ return {
       "kind": "LinkedField",
       "name": "buyerTotal",
       "plural": false,
-      "selections": (v1/*: any*/),
+      "selections": (v2/*: any*/),
       "storageKey": null
     },
     {
@@ -381,6 +387,6 @@ return {
 };
 })();
 
-(node as any).hash = "4ac470c47b95091ae6e954aa0d9d23e8";
+(node as any).hash = "e1254b94ed74837ab6c434ed6d946a2d";
 
 export default node;

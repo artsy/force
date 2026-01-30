@@ -949,6 +949,112 @@ describe("Order2DeliveryForm", () => {
         ).not.toHaveBeenCalled()
       })
 
+      it("allows OFFER mode orders to proceed with SHIPPING_TBD fulfillment option", async () => {
+        const { mockResolveLastOperation } = renderWithRelay({
+          Me: () => ({
+            ...baseMeProps,
+            order: {
+              ...baseOrderProps,
+              mode: "OFFER",
+              fulfillmentDetails: {
+                name: "",
+                addressLine1: "",
+                addressLine2: "",
+                city: "",
+                region: "",
+                postalCode: "",
+                country: "US",
+                phoneNumber: {
+                  regionCode: "us",
+                  originalNumber: "",
+                },
+              },
+            },
+          }),
+        })
+
+        await waitFor(() => {
+          expect(screen.getByText("Delivery address")).toBeInTheDocument()
+        })
+
+        // Fill out the form with valid data
+        await userEvent.type(
+          screen.getByPlaceholderText("Add full name"),
+          "Jane Smith",
+        )
+        await userEvent.type(
+          screen.getByLabelText("Street address"),
+          "456 Oak Ave",
+        )
+        await userEvent.type(screen.getByLabelText("City"), "Los Angeles")
+        await userEvent.type(
+          screen.getByLabelText("State, region or province"),
+          "CA",
+        )
+        await userEvent.type(screen.getByLabelText("ZIP/Postal code"), "90210")
+        await userEvent.type(
+          screen.getByTestId("addressFormFields.phoneNumber"),
+          "5559876543",
+        )
+
+        act(() => {
+          userEvent.click(screen.getByText("See Shipping Methods"))
+        })
+
+        await waitFor(() => {
+          mockResolveLastOperation({
+            updateOrderShippingAddressPayload: () =>
+              orderMutationSuccess(
+                { ...baseOrderProps, mode: "OFFER" },
+                {
+                  fulfillmentDetails: {
+                    name: "Jane Smith",
+                    addressLine1: "456 Oak Ave",
+                    addressLine2: "",
+                    city: "Los Angeles",
+                    region: "CA",
+                    postalCode: "90210",
+                    country: "US",
+                    phoneNumber: {
+                      regionCode: "us",
+                      originalNumber: "5559876543",
+                    },
+                  },
+                  fulfillmentOptions: [
+                    {
+                      type: "SHIPPING_TBD",
+                    },
+                  ],
+                },
+              ),
+          })
+        })
+        await flushPromiseQueue()
+
+        await waitFor(() => {
+          mockResolveLastOperation({
+            CreateUserAddressPayload: () => ({
+              userAddressOrErrors: {
+                __typename: "UserAddress",
+                internalID: "new-address-id",
+              },
+            }),
+          })
+        })
+        await flushPromiseQueue()
+
+        // OFFER mode should NOT show error for missing shipping options
+        expect(mockCheckoutContext.setStepErrorMessage).toHaveBeenCalledWith({
+          error: null,
+          step: "FULFILLMENT_DETAILS",
+        })
+
+        // Should proceed with checkout
+        expect(
+          mockCheckoutContext.setFulfillmentDetailsComplete,
+        ).toHaveBeenCalledWith({})
+      })
+
       it("saves address to user profile when user has no saved addresses", async () => {
         const { mockResolveLastOperation } = renderWithRelay({
           Me: () => ({

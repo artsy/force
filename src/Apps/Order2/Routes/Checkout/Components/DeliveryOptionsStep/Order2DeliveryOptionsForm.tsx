@@ -82,10 +82,7 @@ export const Order2DeliveryOptionsForm: React.FC<
             input: {
               id: orderData.internalID,
               fulfillmentOption: {
-                type: deliveryOption.type as Exclude<
-                  DeliveryOption["type"],
-                  "SHIPPING_TBD"
-                >,
+                type: deliveryOption.type,
               },
             },
           },
