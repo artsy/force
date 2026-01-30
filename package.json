@@ -80,7 +80,7 @@
     "@artsy/icons": "3.64.0",
     "@artsy/img": "1.1.0",
     "@artsy/multienv": "^1.2.0",
-    "@artsy/palette": "45.13.0",
+    "@artsy/palette": "45.13.1",
     "@artsy/palette-charts": "44.13.1",
     "@artsy/palette-tokens": "7.3.0",
     "@artsy/react-html-parser": "^3.0.2",
