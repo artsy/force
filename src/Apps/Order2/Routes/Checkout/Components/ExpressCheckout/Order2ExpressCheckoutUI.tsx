@@ -286,30 +286,30 @@ export const Order2ExpressCheckoutUI: React.FC<
   }
 
   const handleCancel: HandleCancelCallback = async () => {
-    if (!errorRef.current) {
-      checkoutTracking.clickedCancelExpressCheckout({
-        walletType: expressCheckoutType as string,
-      })
-    }
-
     if (errorRef.current) {
+      const errorBannerProps = expressCheckoutErrorBannerPropsForCode(
+        errorRef.current,
+      )
+
       checkoutTracking.errorMessageViewed({
         error_code: errorRef.current,
-        title: "An error occurred",
+        title: errorBannerProps?.title || "An error occurred",
         message:
+          String(errorBannerProps?.message) ||
           "Something went wrong. Please try again or contact orders@artsy.net",
         flow: "Express checkout",
       })
 
-      const errorBannerProps = expressCheckoutErrorBannerPropsForCode(
-        errorRef.current,
-      )
       sessionStorage.setItem(
         "expressCheckoutError",
         JSON.stringify(errorBannerProps),
       )
 
       errorRef.current = null
+    } else {
+      checkoutTracking.clickedCancelExpressCheckout({
+        walletType: expressCheckoutType as string,
+      })
     }
 
     setExpressCheckoutType(null)
@@ -375,7 +375,7 @@ export const Order2ExpressCheckoutUI: React.FC<
   }
 
   // User confirms the payment
-  const onConfirm = async ({
+  const handleConfirm = async ({
     paymentFailed,
     billingDetails,
     shippingAddress,
@@ -574,7 +574,7 @@ export const Order2ExpressCheckoutUI: React.FC<
           onLoadError={e => {
             logger.error("Express checkout element error", e)
           }}
-          onConfirm={onConfirm}
+          onConfirm={handleConfirm}
         />
       </Box>
       <Text variant="xs" color="mono60" mt={[1, 1, 2]}>
