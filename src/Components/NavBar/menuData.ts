@@ -3,7 +3,7 @@ export interface MenuData {
   links: LinkData[]
 }
 
-export type LinkData = MenuLinkData | SimpleLinkData
+export type LinkData = MenuLinkData | SimpleLinkData | VisualComponentData
 
 export const isMenuLinkData = (
   linkData: LinkData,
@@ -24,6 +24,13 @@ export interface MenuLinkData {
   text: string
   menu: MenuData
   dividerBelow?: boolean
+}
+
+// e.g. FeaturedLink visual component
+export interface VisualComponentData {
+  type: "FeaturedLink"
+  setKey: string
+  headerText: string
 }
 
 export const WHATS_NEW_SUBMENU_DATA: MenuLinkData = {
@@ -130,6 +137,11 @@ export const WHATS_NEW_SUBMENU_DATA: MenuLinkData = {
             },
           ],
         },
+      },
+      {
+        type: "FeaturedLink",
+        setKey: "nav-visual:whats-new",
+        headerText: "What's Next",
       },
     ],
   },
@@ -258,6 +270,11 @@ export const ARTISTS_SUBMENU_DATA: MenuLinkData = {
         dividerBelow: true,
       },
       {
+        type: "FeaturedLink",
+        setKey: "nav-visual:artists",
+        headerText: "Artists to Discover",
+      },
+      {
         text: "View All Artists",
         href: "/artists",
       },
@@ -378,6 +395,11 @@ export const ARTWORKS_SUBMENU_DATA: MenuLinkData = {
           ],
         },
         dividerBelow: true,
+      },
+      {
+        type: "FeaturedLink",
+        setKey: "nav-visual:artworks",
+        headerText: "Get Inspired",
       },
       {
         text: "View All Artworks",
