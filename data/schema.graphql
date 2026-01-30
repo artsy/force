@@ -1967,6 +1967,9 @@ type Artist implements EntityWithFilterArtworksConnectionInterface & Node & Sear
     slugs: [String!]
   ): [MarketingCollection!]!
   meta(page: ArtistPage = ABOUT): ArtistMeta!
+    @deprecated(
+      reason: "Use `name` and `biographyBlurb` fields to build meta tags client-side"
+    )
   middle: String
   name: String
   nationality: String
