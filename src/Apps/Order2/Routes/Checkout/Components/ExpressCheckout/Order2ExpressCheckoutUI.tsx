@@ -27,6 +27,7 @@ import {
 } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { fetchAndSetConfirmationToken } from "Apps/Order2/Utils/confirmationTokenUtils"
+import { LocalCheckoutError } from "Apps/Order2/Utils/errors"
 import { preventHardReload } from "Apps/Order2/Utils/navigationGuards"
 import { RouterLink } from "System/Components/RouterLink"
 import createLogger from "Utils/logger"
@@ -190,13 +191,16 @@ export const Order2ExpressCheckoutUI: React.FC<
       lineItems: extractLineItems(order),
     }
 
+    // Check if shipping options are available
+    if (initialResult.shippingRates.length === 0) {
+      // No shipping options available - throw error to exit checkout
+      throw new LocalCheckoutError("no_shipping_options")
+    }
+
     // Auto-select first fulfillment option for Google Pay
     // Google Pay doesn't reliably trigger onShippingRateChange, so we auto-set for it
     const requiresFulfillmentAutoSelect = expressCheckoutType === "google_pay"
-    if (
-      requiresFulfillmentAutoSelect &&
-      initialResult.shippingRates.length > 0 // TODO: This should be an error - exit checkout and display an error to user (pr #16653)
-    ) {
+    if (requiresFulfillmentAutoSelect) {
       return await setFulfillmentOption(
         initialResult.shippingRates[0].id as FulfillmentOptionInputEnum,
       )
@@ -346,7 +350,11 @@ export const Order2ExpressCheckoutUI: React.FC<
       })
     } catch (error) {
       errorRef.current = error.code || "unknown_error"
-      logger.error("Error updating order", error)
+      logger.error("Error updating shipping address", {
+        code: error.code,
+        message: error.message,
+        error,
+      })
       reject()
     }
   }
@@ -370,7 +378,11 @@ export const Order2ExpressCheckoutUI: React.FC<
       })
     } catch (error) {
       errorRef.current = error.code || "unknown_error"
-      logger.error("Error updating order", error)
+      logger.error("Error setting fulfillment option", {
+        code: error.code,
+        message: error.message,
+        error,
+      })
       reject()
     }
   }
@@ -439,9 +451,20 @@ export const Order2ExpressCheckoutUI: React.FC<
       if (error) {
         // This point is only reached if there's an immediate error when
         // creating the ConfirmationToken.
-        // TODO: Handle this error with the others below. (pr #16653)
-        logger.error(error)
-        setExpressCheckoutSubmitting(false)
+        logger.error("Stripe Error creating confirmation token", {
+          errorCode: error.code,
+          errorMessage: error.message,
+          fullError: error,
+        })
+
+        // Store error code for display after reset - tracking happens when banner displays
+        const errorCode = (error.code || "confirmation_token_error") as string
+        sessionStorage.setItem("expressCheckoutError", errorCode)
+
+        // Notify Stripe that payment failed
+        paymentFailed({ reason: "fail" })
+
+        resetOrder()
         return
       }
 
@@ -513,13 +536,16 @@ export const Order2ExpressCheckoutUI: React.FC<
       redirectToOrderDetails()
       return
     } catch (error) {
-      logger.error("Error confirming payment", error)
+      logger.error("Error confirming payment", {
+        errorCode: error.code,
+        errorMessage: error.message,
+        fullError: error,
+      })
 
       // Store error code for display after reset - tracking happens when banner displays
       const errorCode = (error.code || "unknown_error") as string
       sessionStorage.setItem("expressCheckoutError", errorCode)
 
-      // Notify Stripe that payment failed
       paymentFailed({ reason: "fail" })
 
       resetOrder()
