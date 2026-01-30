@@ -620,7 +620,7 @@ describe("ExpressCheckoutUI", () => {
       })
     })
 
-    it("stores error and tracks error message viewed event when there is an error", async () => {
+    it("stores error when there is an error", async () => {
       const mockErrorRef = { current: "test_error_code" }
       jest.spyOn(React, "useRef").mockReturnValue(mockErrorRef)
 
@@ -630,24 +630,9 @@ describe("ExpressCheckoutUI", () => {
 
       fireEvent.click(screen.getByTestId("express-checkout-cancel"))
 
-      expect(trackEvent).toHaveBeenCalledWith({
-        action: "errorMessageViewed",
-        context_owner_id: "order-id-from-context",
-        context_owner_type: "owner-type-from-context",
-        error_code: "test_error_code",
-        title: "An error occurred",
-        message:
-          "Something went wrong. Please try again or contact orders@artsy.net",
-        flow: "Express checkout",
-      })
-
       expect(sessionStorage.setItem).toHaveBeenCalledWith(
         "expressCheckoutError",
-        JSON.stringify({
-          title: "An error occurred",
-          message:
-            "Something went wrong. Please try again or contact orders@artsy.net",
-        }),
+        "test_error_code",
       )
     })
   })
@@ -713,11 +698,7 @@ describe("ExpressCheckoutUI", () => {
 
       expect(sessionStorage.setItem).toHaveBeenCalledWith(
         "expressCheckoutError",
-        JSON.stringify({
-          title: "Payment failed",
-          message:
-            "There was an issue with your payment method. Please try again.",
-        }),
+        "processing_error",
       )
     })
 
@@ -733,10 +714,7 @@ describe("ExpressCheckoutUI", () => {
 
       expect(sessionStorage.setItem).toHaveBeenCalledWith(
         "expressCheckoutError",
-        JSON.stringify({
-          title: "Payment verification failed",
-          message: "Please check your payment details and try again.",
-        }),
+        "confirmation_token_error",
       )
     })
 
@@ -752,11 +730,7 @@ describe("ExpressCheckoutUI", () => {
 
       expect(sessionStorage.setItem).toHaveBeenCalledWith(
         "expressCheckoutError",
-        JSON.stringify({
-          title: "An error occurred",
-          message:
-            "Something went wrong. Please try again or contact orders@artsy.net",
-        }),
+        "unknown_error",
       )
     })
   })

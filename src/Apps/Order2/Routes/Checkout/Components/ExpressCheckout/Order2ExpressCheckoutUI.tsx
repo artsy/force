@@ -21,7 +21,10 @@ import {
   validateAndExtractOrderResponse,
 } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
 import type { ExpressCheckoutPaymentMethod } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
-import { CheckoutErrorBanner } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
+import {
+  CheckoutErrorBanner,
+  type CheckoutErrorBannerMessage,
+} from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { fetchAndSetConfirmationToken } from "Apps/Order2/Utils/confirmationTokenUtils"
 import { preventHardReload } from "Apps/Order2/Utils/navigationGuards"
@@ -83,7 +86,7 @@ export const Order2ExpressCheckoutUI: React.FC<
 
   const [expressCheckoutType, setExpressCheckoutType] =
     useState<ExpressPaymentType | null>(null)
-  const [error, setError] = useState<object | null>(null)
+  const [error, setError] = useState<CheckoutErrorBannerMessage | null>(null)
 
   const errorRef = useRef<string | null>(null)
 
@@ -99,15 +102,28 @@ export const Order2ExpressCheckoutUI: React.FC<
   } = useCheckoutContext()
 
   useEffect(() => {
-    const storedError = sessionStorage.getItem("expressCheckoutError")
+    const storedErrorCode = sessionStorage.getItem("expressCheckoutError")
 
-    const errorDetails = storedError ? JSON.parse(storedError) : null
-
-    if (errorDetails) {
-      setError(errorDetails)
+    if (storedErrorCode) {
+      const errorBannerProps =
+        expressCheckoutErrorBannerPropsForCode(storedErrorCode)
+      setError(errorBannerProps)
       sessionStorage.removeItem("expressCheckoutError")
+
+      // Track when error is actually displayed to user
+      const messageText =
+        "displayText" in errorBannerProps
+          ? errorBannerProps.displayText
+          : errorBannerProps.message
+
+      checkoutTracking.errorMessageViewed({
+        error_code: storedErrorCode,
+        title: errorBannerProps?.title || "An error occurred",
+        message: messageText,
+        flow: "Express checkout",
+      })
     }
-  }, [])
+  }, [checkoutTracking])
 
   if (!(stripe && elements)) {
     return null
@@ -287,23 +303,8 @@ export const Order2ExpressCheckoutUI: React.FC<
 
   const handleCancel: HandleCancelCallback = async () => {
     if (errorRef.current) {
-      const errorBannerProps = expressCheckoutErrorBannerPropsForCode(
-        errorRef.current,
-      )
-
-      checkoutTracking.errorMessageViewed({
-        error_code: errorRef.current,
-        title: errorBannerProps?.title || "An error occurred",
-        message:
-          String(errorBannerProps?.message) ||
-          "Something went wrong. Please try again or contact orders@artsy.net",
-        flow: "Express checkout",
-      })
-
-      sessionStorage.setItem(
-        "expressCheckoutError",
-        JSON.stringify(errorBannerProps),
-      )
+      // Store error code for display after reset - tracking happens when banner displays
+      sessionStorage.setItem("expressCheckoutError", errorRef.current)
 
       errorRef.current = null
     } else {
@@ -513,23 +514,13 @@ export const Order2ExpressCheckoutUI: React.FC<
       return
     } catch (error) {
       logger.error("Error confirming payment", error)
-      errorRef.current = (error.code || "unknown_error") as string
 
-      checkoutTracking.errorMessageViewed({
-        error_code: errorRef.current,
-        title: "Payment failed",
-        message:
-          "Something went wrong. Please try again or contact orders@artsy.net",
-        flow: "Express checkout",
-      })
+      // Store error code for display after reset - tracking happens when banner displays
+      const errorCode = (error.code || "unknown_error") as string
+      sessionStorage.setItem("expressCheckoutError", errorCode)
 
-      const errorBannerProps = expressCheckoutErrorBannerPropsForCode(
-        errorRef.current,
-      )
-      sessionStorage.setItem(
-        "expressCheckoutError",
-        JSON.stringify(errorBannerProps),
-      )
+      // Notify Stripe that payment failed
+      paymentFailed({ reason: "fail" })
 
       resetOrder()
     }

@@ -1,14 +1,44 @@
 import { Message } from "@artsy/palette"
 import { forwardRef } from "react"
 
-export interface CheckoutErrorBannerProps {
-  error?: {
-    title?: string
-    message?: string | React.ReactNode
-  } | null
+export const ORDER_SUPPORT_EMAIL = "orders@artsy.net" as const
+
+export const MailtoOrderSupport = () => {
+  return <a href={`mailto:${ORDER_SUPPORT_EMAIL}`}>{ORDER_SUPPORT_EMAIL}</a>
 }
 
-const SUPPORT_EMAIL = "orders@artsy.net" as const
+/**
+ * A message that can be displayed in an error banner. If it has a
+ * ReactNode `message`, the displayText property should be used for
+ * logging purposes.
+ */
+export type CheckoutErrorBannerMessage =
+  | {
+      title: string
+      message: React.ReactNode
+      displayText: string
+    }
+  | {
+      title: string
+      message: string
+    }
+
+export const ERROR_MESSAGES: Record<string, CheckoutErrorBannerMessage> = {
+  generic: {
+    title: "An error occurred",
+    message: (
+      <>
+        Something went wrong. Please try again or contact <MailtoOrderSupport />
+        .
+      </>
+    ) as React.ReactNode,
+    displayText: `Something went wrong. Please try again or contact ${ORDER_SUPPORT_EMAIL}.`,
+  },
+} as const
+
+export interface CheckoutErrorBannerProps {
+  error?: CheckoutErrorBannerMessage | null
+}
 
 export const CheckoutErrorBanner = forwardRef<
   HTMLDivElement,
@@ -16,12 +46,8 @@ export const CheckoutErrorBanner = forwardRef<
 >(({ error }, ref) => {
   if (!error) return null
 
-  const title = error.title || "An error occurred"
-  const message = error.message || (
-    <>
-      Something went wrong. Please try again or contact <MailtoOrderSupport />.
-    </>
-  )
+  const title = error.title
+  const message = error.message
 
   const variant = "error"
 
@@ -33,10 +59,3 @@ export const CheckoutErrorBanner = forwardRef<
     </div>
   )
 })
-
-CheckoutErrorBanner.displayName = "CheckoutErrorBanner"
-
-export const MailtoOrderSupport = () => {
-  return <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a>
-}
-MailtoOrderSupport.displayName = SUPPORT_EMAIL
