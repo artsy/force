@@ -45,6 +45,7 @@ import { useOrder2ExpressCheckoutSubmitOrderMutation } from "./Mutations/useOrde
 import { useOrder2ExpressCheckoutUnsetOrderFulfillmentOptionMutation } from "./Mutations/useOrder2ExpressCheckoutUnsetOrderFulfillmentOptionMutation"
 import { useOrder2ExpressCheckoutUnsetOrderPaymentMethodMutation } from "./Mutations/useOrder2ExpressCheckoutUnsetOrderPaymentMethodMutation"
 import { useOrder2ExpressCheckoutUpdateOrderShippingAddressMutation } from "./Mutations/useOrder2ExpressCheckoutUpdateOrderShippingAddressMutation"
+import { expressCheckoutErrorBannerPropsForCode } from "./expressCheckoutErrorBannerPropsForCode"
 
 interface Order2ExpressCheckoutUIProps {
   order: Order2ExpressCheckoutUI_order$key
@@ -300,11 +301,12 @@ export const Order2ExpressCheckoutUI: React.FC<
         flow: "Express checkout",
       })
 
+      const errorBannerProps = expressCheckoutErrorBannerPropsForCode(
+        errorRef.current,
+      )
       sessionStorage.setItem(
         "expressCheckoutError",
-        JSON.stringify({
-          title: "An error occurred",
-        }),
+        JSON.stringify(errorBannerProps),
       )
 
       errorRef.current = null
@@ -511,7 +513,7 @@ export const Order2ExpressCheckoutUI: React.FC<
       return
     } catch (error) {
       logger.error("Error confirming payment", error)
-      errorRef.current = error.code || "unknown_error"
+      errorRef.current = (error.code || "unknown_error") as string
 
       checkoutTracking.errorMessageViewed({
         error_code: errorRef.current,
@@ -521,11 +523,12 @@ export const Order2ExpressCheckoutUI: React.FC<
         flow: "Express checkout",
       })
 
+      const errorBannerProps = expressCheckoutErrorBannerPropsForCode(
+        errorRef.current,
+      )
       sessionStorage.setItem(
         "expressCheckoutError",
-        JSON.stringify({
-          title: "Payment failed",
-        }),
+        JSON.stringify(errorBannerProps),
       )
 
       resetOrder()
