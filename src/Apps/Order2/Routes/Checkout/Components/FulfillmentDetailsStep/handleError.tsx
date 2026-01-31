@@ -1,6 +1,7 @@
 import {
-  type CheckoutErrorBannerProps,
+  type CheckoutErrorBannerMessage,
   MailtoOrderSupport,
+  ORDER_SUPPORT_EMAIL,
 } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import type {
   CheckoutMutationError,
@@ -13,8 +14,8 @@ import type { FormikHelpers } from "formik"
 export const handleError = (
   error: CheckoutMutationError | LocalCheckoutError | Error,
   formikHelpers: FormikHelpers<FormikContextWithAddress>,
-  defaultErrorBanner: CheckoutErrorBannerProps["error"],
-  setErrorBanner: (error: CheckoutErrorBannerProps["error"]) => void,
+  defaultErrorBanner: CheckoutErrorBannerMessage | null,
+  setErrorBanner: (error?: CheckoutErrorBannerMessage | null) => void,
 ) => {
   const errorMatchField = ("code" in error && error.code) || error.message
 
@@ -46,6 +47,7 @@ export const handleError = (
             purchase.
           </>
         ),
+        displayText: `Please contact ${ORDER_SUPPORT_EMAIL} so we can assist you with your purchase.`,
       },
     },
 
@@ -58,6 +60,7 @@ export const handleError = (
             If the issue continues contact <MailtoOrderSupport />.
           </>
         ),
+        displayText: `Please confirm that your address details are correct and try again. If the issue continues contact ${ORDER_SUPPORT_EMAIL}.`,
       },
     },
   }
@@ -76,6 +79,6 @@ export const handleError = (
 }
 
 interface ErrorHandlerConfig {
-  errorBanner?: CheckoutErrorBannerProps["error"]
+  errorBanner?: CheckoutErrorBannerMessage | null
   fieldErrors?: Record<string, string>
 }

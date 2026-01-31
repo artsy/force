@@ -5,7 +5,7 @@ import type { FormikHelpers } from "formik"
 let formikHelpers: Partial<FormikHelpers<any>>
 let setErrorBanner: jest.Mock
 
-const defaultErrorBannerArgs = {}
+const defaultErrorBannerArgs = null
 
 beforeEach(() => {
   formikHelpers = {

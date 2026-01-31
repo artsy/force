@@ -21,9 +21,13 @@ import {
   validateAndExtractOrderResponse,
 } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
 import type { ExpressCheckoutPaymentMethod } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
-import { CheckoutErrorBanner } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
+import {
+  CheckoutErrorBanner,
+  type CheckoutErrorBannerMessage,
+} from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { fetchAndSetConfirmationToken } from "Apps/Order2/Utils/confirmationTokenUtils"
+import { LocalCheckoutError } from "Apps/Order2/Utils/errors"
 import { preventHardReload } from "Apps/Order2/Utils/navigationGuards"
 import { RouterLink } from "System/Components/RouterLink"
 import createLogger from "Utils/logger"
@@ -45,7 +49,7 @@ import { useOrder2ExpressCheckoutSubmitOrderMutation } from "./Mutations/useOrde
 import { useOrder2ExpressCheckoutUnsetOrderFulfillmentOptionMutation } from "./Mutations/useOrder2ExpressCheckoutUnsetOrderFulfillmentOptionMutation"
 import { useOrder2ExpressCheckoutUnsetOrderPaymentMethodMutation } from "./Mutations/useOrder2ExpressCheckoutUnsetOrderPaymentMethodMutation"
 import { useOrder2ExpressCheckoutUpdateOrderShippingAddressMutation } from "./Mutations/useOrder2ExpressCheckoutUpdateOrderShippingAddressMutation"
-import { expressCheckoutErrorBannerPropsForCode } from "./expressCheckoutErrorBannerPropsForCode"
+import { expressCheckoutErrorBannerPropsForCode } from "./errorHandling"
 
 interface Order2ExpressCheckoutUIProps {
   order: Order2ExpressCheckoutUI_order$key
@@ -83,7 +87,7 @@ export const Order2ExpressCheckoutUI: React.FC<
 
   const [expressCheckoutType, setExpressCheckoutType] =
     useState<ExpressPaymentType | null>(null)
-  const [error, setError] = useState<object | null>(null)
+  const [error, setError] = useState<CheckoutErrorBannerMessage | null>(null)
 
   const errorRef = useRef<string | null>(null)
 
@@ -99,15 +103,28 @@ export const Order2ExpressCheckoutUI: React.FC<
   } = useCheckoutContext()
 
   useEffect(() => {
-    const storedError = sessionStorage.getItem("expressCheckoutError")
+    const storedErrorCode = sessionStorage.getItem("expressCheckoutError")
 
-    const errorDetails = storedError ? JSON.parse(storedError) : null
-
-    if (errorDetails) {
-      setError(errorDetails)
+    if (storedErrorCode) {
+      const errorBannerProps =
+        expressCheckoutErrorBannerPropsForCode(storedErrorCode)
+      setError(errorBannerProps)
       sessionStorage.removeItem("expressCheckoutError")
+
+      // Track when error is actually displayed to user
+      const messageText =
+        "displayText" in errorBannerProps
+          ? errorBannerProps.displayText
+          : errorBannerProps.message
+
+      checkoutTracking.errorMessageViewed({
+        error_code: storedErrorCode,
+        title: errorBannerProps?.title || "An error occurred",
+        message: messageText,
+        flow: "Express checkout",
+      })
     }
-  }, [])
+  }, [checkoutTracking])
 
   if (!(stripe && elements)) {
     return null
@@ -174,13 +191,16 @@ export const Order2ExpressCheckoutUI: React.FC<
       lineItems: extractLineItems(order),
     }
 
+    // Check if shipping options are available
+    if (initialResult.shippingRates.length === 0) {
+      // No shipping options available - throw error to exit checkout
+      throw new LocalCheckoutError("no_shipping_options")
+    }
+
     // Auto-select first fulfillment option for Google Pay
     // Google Pay doesn't reliably trigger onShippingRateChange, so we auto-set for it
     const requiresFulfillmentAutoSelect = expressCheckoutType === "google_pay"
-    if (
-      requiresFulfillmentAutoSelect &&
-      initialResult.shippingRates.length > 0 // TODO: This should be an error - exit checkout and display an error to user (pr #16653)
-    ) {
+    if (requiresFulfillmentAutoSelect) {
       return await setFulfillmentOption(
         initialResult.shippingRates[0].id as FulfillmentOptionInputEnum,
       )
@@ -229,6 +249,7 @@ export const Order2ExpressCheckoutUI: React.FC<
   }
 
   const resetOrder = async () => {
+    logger.log("Resetting order for express checkout")
     window.removeEventListener("beforeunload", preventHardReload)
 
     try {
@@ -242,11 +263,15 @@ export const Order2ExpressCheckoutUI: React.FC<
           variables: { input: { id: orderData.internalID } },
         })
 
+      // TODO: Should we unset shipping address here too?
+
       validateAndExtractOrderResponse(unsetOrderPaymentMethod?.orderOrError)
       validateAndExtractOrderResponse(unsetOrderFulfillmentOption?.orderOrError)
+      logger.log("Successfully reset order for express checkout")
     } catch (error) {
       logger.error("Error resetting order", error)
     } finally {
+      logger.log("Reloading page to reset express checkout state...")
       window.location.reload()
     }
   }
@@ -286,30 +311,15 @@ export const Order2ExpressCheckoutUI: React.FC<
   }
 
   const handleCancel: HandleCancelCallback = async () => {
-    if (!errorRef.current) {
+    if (errorRef.current) {
+      // Store error code for display after reset - tracking happens when banner displays
+      sessionStorage.setItem("expressCheckoutError", errorRef.current)
+
+      errorRef.current = null
+    } else {
       checkoutTracking.clickedCancelExpressCheckout({
         walletType: expressCheckoutType as string,
       })
-    }
-
-    if (errorRef.current) {
-      checkoutTracking.errorMessageViewed({
-        error_code: errorRef.current,
-        title: "An error occurred",
-        message:
-          "Something went wrong. Please try again or contact orders@artsy.net",
-        flow: "Express checkout",
-      })
-
-      const errorBannerProps = expressCheckoutErrorBannerPropsForCode(
-        errorRef.current,
-      )
-      sessionStorage.setItem(
-        "expressCheckoutError",
-        JSON.stringify(errorBannerProps),
-      )
-
-      errorRef.current = null
     }
 
     setExpressCheckoutType(null)
@@ -345,7 +355,11 @@ export const Order2ExpressCheckoutUI: React.FC<
       })
     } catch (error) {
       errorRef.current = error.code || "unknown_error"
-      logger.error("Error updating order", error)
+      logger.error("Error updating shipping address", {
+        code: error.code,
+        message: error.message,
+        error,
+      })
       reject()
     }
   }
@@ -369,14 +383,17 @@ export const Order2ExpressCheckoutUI: React.FC<
       })
     } catch (error) {
       errorRef.current = error.code || "unknown_error"
-      logger.error("Error updating order", error)
+      logger.error("Error setting fulfillment option", {
+        code: error.code,
+        message: error.message,
+        error,
+      })
       reject()
     }
   }
 
   // User confirms the payment
-  const onConfirm = async ({
-    paymentFailed,
+  const handleConfirm = async ({
     billingDetails,
     shippingAddress,
     expressPaymentType,
@@ -437,10 +454,18 @@ export const Order2ExpressCheckoutUI: React.FC<
 
       if (error) {
         // This point is only reached if there's an immediate error when
-        // creating the ConfirmationToken.
-        // TODO: Handle this error with the others below. (pr #16653)
-        logger.error(error)
-        setExpressCheckoutSubmitting(false)
+        // creating the ConfirmationToken (before payment submission).
+        logger.error("Stripe Error creating confirmation token", {
+          errorCode: error.code,
+          errorMessage: error.message,
+          fullError: error,
+        })
+
+        // Store error code for display after reset - tracking happens when banner displays
+        const errorCode = (error.code || "confirmation_token_error") as string
+        sessionStorage.setItem("expressCheckoutError", errorCode)
+
+        resetOrder()
         return
       }
 
@@ -463,6 +488,12 @@ export const Order2ExpressCheckoutUI: React.FC<
             },
           },
         })
+
+      logger.log("setOrderPayment result", {
+        typename:
+          updateOrderPaymentMethodResult.setOrderPayment?.orderOrError
+            ?.__typename,
+      })
 
       validateAndExtractOrderResponse(
         updateOrderPaymentMethodResult.setOrderPayment?.orderOrError,
@@ -490,6 +521,12 @@ export const Order2ExpressCheckoutUI: React.FC<
           },
         })
 
+      logger.log("updateOrderShippingAddress result", {
+        typename:
+          updateOrderShippingAddressResult.updateOrderShippingAddress
+            ?.orderOrError?.__typename,
+      })
+
       validateAndExtractOrderResponse(
         updateOrderShippingAddressResult.updateOrderShippingAddress
           ?.orderOrError,
@@ -504,6 +541,22 @@ export const Order2ExpressCheckoutUI: React.FC<
         },
       })
 
+      logger.log("submitOrder result", submitOrderResult.submitOrder)
+
+      if (
+        submitOrderResult.submitOrder?.orderOrError?.__typename ===
+        "OrderMutationError"
+      ) {
+        logger.error("submitOrder returned error", {
+          message:
+            submitOrderResult.submitOrder.orderOrError.mutationError.message,
+          code: (
+            submitOrderResult.submitOrder.orderOrError.mutationError as any
+          ).code,
+          fullResponse: submitOrderResult.submitOrder.orderOrError,
+        })
+      }
+
       validateAndExtractOrderResponse(
         submitOrderResult.submitOrder?.orderOrError,
       )
@@ -512,24 +565,15 @@ export const Order2ExpressCheckoutUI: React.FC<
       redirectToOrderDetails()
       return
     } catch (error) {
-      logger.error("Error confirming payment", error)
-      errorRef.current = (error.code || "unknown_error") as string
-
-      checkoutTracking.errorMessageViewed({
-        error_code: errorRef.current,
-        title: "Payment failed",
-        message:
-          "Something went wrong. Please try again or contact orders@artsy.net",
-        flow: "Express checkout",
+      logger.error("Error confirming payment", {
+        errorCode: error.code,
+        errorMessage: error.message,
+        fullError: error,
       })
 
-      const errorBannerProps = expressCheckoutErrorBannerPropsForCode(
-        errorRef.current,
-      )
-      sessionStorage.setItem(
-        "expressCheckoutError",
-        JSON.stringify(errorBannerProps),
-      )
+      // Store error code for display after reset - tracking happens when banner displays
+      const errorCode = (error.code || "unknown_error") as string
+      sessionStorage.setItem("expressCheckoutError", errorCode)
 
       resetOrder()
     }
@@ -574,7 +618,7 @@ export const Order2ExpressCheckoutUI: React.FC<
           onLoadError={e => {
             logger.error("Express checkout element error", e)
           }}
-          onConfirm={onConfirm}
+          onConfirm={handleConfirm}
         />
       </Box>
       <Text variant="xs" color="mono60" mt={[1, 1, 2]}>
