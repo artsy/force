@@ -49,7 +49,7 @@ import { useOrder2ExpressCheckoutSubmitOrderMutation } from "./Mutations/useOrde
 import { useOrder2ExpressCheckoutUnsetOrderFulfillmentOptionMutation } from "./Mutations/useOrder2ExpressCheckoutUnsetOrderFulfillmentOptionMutation"
 import { useOrder2ExpressCheckoutUnsetOrderPaymentMethodMutation } from "./Mutations/useOrder2ExpressCheckoutUnsetOrderPaymentMethodMutation"
 import { useOrder2ExpressCheckoutUpdateOrderShippingAddressMutation } from "./Mutations/useOrder2ExpressCheckoutUpdateOrderShippingAddressMutation"
-import { expressCheckoutErrorBannerPropsForCode } from "./expressCheckoutErrorBannerPropsForCode"
+import { expressCheckoutErrorBannerPropsForCode } from "./errorHandling"
 
 interface Order2ExpressCheckoutUIProps {
   order: Order2ExpressCheckoutUI_order$key
@@ -262,6 +262,8 @@ export const Order2ExpressCheckoutUI: React.FC<
         await unsetFulfillmentOptionMutation.submitMutation({
           variables: { input: { id: orderData.internalID } },
         })
+
+      // TODO: Should we unset shipping address here too?
 
       validateAndExtractOrderResponse(unsetOrderPaymentMethod?.orderOrError)
       validateAndExtractOrderResponse(unsetOrderFulfillmentOption?.orderOrError)
