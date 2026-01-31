@@ -543,6 +543,20 @@ export const Order2ExpressCheckoutUI: React.FC<
 
       logger.log("submitOrder result", submitOrderResult.submitOrder)
 
+      if (
+        submitOrderResult.submitOrder?.orderOrError?.__typename ===
+        "OrderMutationError"
+      ) {
+        logger.error("submitOrder returned error", {
+          message:
+            submitOrderResult.submitOrder.orderOrError.mutationError.message,
+          code: (
+            submitOrderResult.submitOrder.orderOrError.mutationError as any
+          ).code,
+          fullResponse: submitOrderResult.submitOrder.orderOrError,
+        })
+      }
+
       validateAndExtractOrderResponse(
         submitOrderResult.submitOrder?.orderOrError,
       )
