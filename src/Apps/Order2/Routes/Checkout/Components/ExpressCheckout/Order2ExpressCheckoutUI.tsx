@@ -270,9 +270,7 @@ export const Order2ExpressCheckoutUI: React.FC<
       logger.error("Error resetting order", error)
     } finally {
       logger.log("Reloading page to reset express checkout state...")
-      setTimeout(() => {
-        window.location.reload()
-      }, 5000)
+      window.location.reload()
     }
   }
 
