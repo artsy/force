@@ -536,9 +536,7 @@ export const Order2ExpressCheckoutUI: React.FC<
         },
       })
 
-      logger.log("submitOrder result", {
-        typename: submitOrderResult.submitOrder?.orderOrError?.__typename,
-      })
+      logger.log("submitOrder result", submitOrderResult.submitOrder)
 
       validateAndExtractOrderResponse(
         submitOrderResult.submitOrder?.orderOrError,
