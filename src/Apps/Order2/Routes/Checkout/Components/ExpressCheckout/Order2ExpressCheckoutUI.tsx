@@ -249,6 +249,7 @@ export const Order2ExpressCheckoutUI: React.FC<
   }
 
   const resetOrder = async () => {
+    logger.log("Resetting order for express checkout")
     window.removeEventListener("beforeunload", preventHardReload)
 
     try {
@@ -264,10 +265,14 @@ export const Order2ExpressCheckoutUI: React.FC<
 
       validateAndExtractOrderResponse(unsetOrderPaymentMethod?.orderOrError)
       validateAndExtractOrderResponse(unsetOrderFulfillmentOption?.orderOrError)
+      logger.log("Successfully reset order for express checkout")
     } catch (error) {
       logger.error("Error resetting order", error)
     } finally {
-      window.location.reload()
+      logger.log("Reloading page to reset express checkout state...")
+      setTimeout(() => {
+        window.location.reload()
+      }, 5000)
     }
   }
 
