@@ -484,6 +484,12 @@ export const Order2ExpressCheckoutUI: React.FC<
           },
         })
 
+      logger.log("setOrderPayment result", {
+        typename:
+          updateOrderPaymentMethodResult.setOrderPayment?.orderOrError
+            ?.__typename,
+      })
+
       validateAndExtractOrderResponse(
         updateOrderPaymentMethodResult.setOrderPayment?.orderOrError,
       )
@@ -510,6 +516,12 @@ export const Order2ExpressCheckoutUI: React.FC<
           },
         })
 
+      logger.log("updateOrderShippingAddress result", {
+        typename:
+          updateOrderShippingAddressResult.updateOrderShippingAddress
+            ?.orderOrError?.__typename,
+      })
+
       validateAndExtractOrderResponse(
         updateOrderShippingAddressResult.updateOrderShippingAddress
           ?.orderOrError,
@@ -522,6 +534,10 @@ export const Order2ExpressCheckoutUI: React.FC<
             confirmationToken: confirmationToken.id,
           },
         },
+      })
+
+      logger.log("submitOrder result", {
+        typename: submitOrderResult.submitOrder?.orderOrError?.__typename,
       })
 
       validateAndExtractOrderResponse(
