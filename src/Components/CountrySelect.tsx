@@ -405,6 +405,7 @@ export const SMS_UNSUPPORTED_COUNTRY_CODES = [
   { text: "Saudi Arabia", value: "SA" },
   { text: "Senegal", value: "SN" },
   { text: "Sierra Leone", value: "SL" },
+  { text: "Slovenia", value: "SI" },
   { text: "Solomon Islands", value: "SB" },
   { text: "Somalia", value: "SO" },
   { text: "South Sudan", value: "SS" },
