@@ -90,7 +90,8 @@ export const Order2OfferOptions: React.FC<Order2OfferOptionsProps> = ({
   const formatCurrency = (amount: number) => {
     return appendCurrencySymbol(
       amount.toLocaleString("en-US", {
-        minimumFractionDigits: 2,
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
         style: "currency",
         currency: orderData.currencyCode,
       }),
