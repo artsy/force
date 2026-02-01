@@ -75,7 +75,9 @@ const getPaymentMethodContent = (
     case "BankAccount":
       return {
         Icon: InstitutionIcon,
-        text: `${paymentMethodDetails.bankName} •••• ${paymentMethodDetails.last4}`,
+        text: paymentMethodDetails.bankName
+          ? `${paymentMethodDetails.bankName} •••• ${paymentMethodDetails.last4}`
+          : `•••• ${paymentMethodDetails.last4}`,
       }
 
     case "WireTransfer":
