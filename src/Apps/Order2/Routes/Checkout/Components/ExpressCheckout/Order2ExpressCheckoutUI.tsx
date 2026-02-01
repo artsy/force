@@ -110,21 +110,8 @@ export const Order2ExpressCheckoutUI: React.FC<
         expressCheckoutErrorBannerPropsForCode(storedErrorCode)
       setError(errorBannerProps)
       sessionStorage.removeItem("expressCheckoutError")
-
-      // Track when error is actually displayed to user
-      const messageText =
-        "displayText" in errorBannerProps
-          ? errorBannerProps.displayText
-          : errorBannerProps.message
-
-      checkoutTracking.errorMessageViewed({
-        error_code: storedErrorCode,
-        title: errorBannerProps?.title || "An error occurred",
-        message: messageText,
-        flow: "Express checkout",
-      })
     }
-  }, [checkoutTracking])
+  }, [])
 
   if (!(stripe && elements)) {
     return null
@@ -603,7 +590,12 @@ export const Order2ExpressCheckoutUI: React.FC<
       <Spacer y={[1, 1, 2]} />
       {error && checkoutMode === "express" && (
         <>
-          <CheckoutErrorBanner error={error} />
+          <CheckoutErrorBanner
+            error={error}
+            analytics={{
+              flow: "Express checkout",
+            }}
+          />
           <Spacer y={1} />
         </>
       )}

@@ -46,7 +46,9 @@ interface FormValues {
   deliveryOption: DeliveryOption
 }
 
-const DELIVERY_OPTION_ERROR: CheckoutErrorBannerMessage = {
+const deliveryOptionSelectionError = (
+  code?: string,
+): CheckoutErrorBannerMessage => ({
   title: "An error occurred",
   message: (
     <>
@@ -55,7 +57,8 @@ const DELIVERY_OPTION_ERROR: CheckoutErrorBannerMessage = {
     </>
   ) as React.ReactNode,
   displayText: `Something went wrong while selecting your shipping method. Please try again or contact ${ORDER_SUPPORT_EMAIL}.`,
-}
+  code,
+})
 
 export const Order2DeliveryOptionsForm: React.FC<
   Order2DeliveryOptionsFormProps
@@ -117,7 +120,7 @@ export const Order2DeliveryOptionsForm: React.FC<
       console.error("Error setting delivery option:", error)
       setStepErrorMessage({
         step: CheckoutStepName.DELIVERY_OPTION,
-        error: DELIVERY_OPTION_ERROR,
+        error: deliveryOptionSelectionError(error?.code),
       })
     }
   }
@@ -141,6 +144,7 @@ export const Order2DeliveryOptionsForm: React.FC<
                   <CheckoutErrorBanner
                     ref={errorBannerRef}
                     error={deliveryOptionError}
+                    analytics={{ flow: "User setting delivery method" }}
                   />
                   <Spacer y={2} />
                 </>

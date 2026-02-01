@@ -8,7 +8,6 @@ import {
 import {
   CheckoutErrorBanner,
   type CheckoutErrorBannerMessage,
-  type CheckoutErrorBannerProps,
   MailtoOrderSupport,
   ORDER_SUPPORT_EMAIL,
 } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
@@ -67,7 +66,7 @@ interface Order2OfferStepProps {
 
 interface Order2OfferStepFormContentProps {
   orderData: Order2OfferStep_order$data
-  offerAmountError: CheckoutErrorBannerProps["error"]
+  offerAmountError?: CheckoutErrorBannerMessage | null
   currentStep: CheckoutStepState | undefined
   completedViewProps: Order2OfferCompletedViewProps | null
   isSubmittingOffer: boolean
@@ -323,6 +322,7 @@ const Order2OfferStepFormContent: React.FC<Order2OfferStepFormContentProps> = ({
             <CheckoutErrorBanner
               ref={errorBannerRef}
               error={offerAmountError}
+              analytics={{ flow: "User setting offer" }}
             />
           )}
         </Flex>

@@ -16,11 +16,16 @@ export const expressCheckoutErrorBannerPropsForCode = (
     return {
       title: "Payment failed",
       message: "There was an issue with your payment method. Please try again.",
+      code: errorCode,
     }
   }
 
+  // Log unhandled error codes
   logger.error("Unhandled express checkout error code:", errorCode)
 
   // Fallback for all other errors
-  return ERROR_MESSAGES.generic
+  return {
+    ...ERROR_MESSAGES.generic,
+    code: errorCode,
+  }
 }

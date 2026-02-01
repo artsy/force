@@ -8,7 +8,7 @@ import {
   CheckoutStepName,
   CheckoutStepState,
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
-import type { CheckoutErrorBannerProps } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
+import type { CheckoutErrorBannerMessage } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { useBuildInitialSteps } from "Apps/Order2/Routes/Checkout/Hooks/useBuildInitialSteps"
 import { useCheckoutTracking } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutTracking"
 import { useRouter } from "System/Hooks/useRouter"
@@ -52,7 +52,7 @@ type ConfirmationTokenState = {
 } | null
 
 type Messages = Partial<
-  Record<CheckoutStepName, { error: CheckoutErrorBannerProps["error"] }>
+  Record<CheckoutStepName, { error: CheckoutErrorBannerMessage | null }>
 >
 
 export interface Order2CheckoutModel {
@@ -101,7 +101,10 @@ export interface Order2CheckoutModel {
   setUserAddressMode: Action<this, UserAddressMode | null>
   setStepErrorMessage: Action<
     this,
-    { step: CheckoutStepName; error: CheckoutErrorBannerProps["error"] }
+    {
+      step: CheckoutStepName
+      error: CheckoutErrorBannerMessage | null | undefined
+    }
   >
 }
 
