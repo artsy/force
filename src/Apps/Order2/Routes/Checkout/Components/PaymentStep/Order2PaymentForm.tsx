@@ -61,7 +61,7 @@ const PAYMENT_ERROR_MESSAGES: Record<string, CheckoutErrorBannerMessage> = {
   },
   insufficientFunds: {
     title: "Insufficient funds",
-    message: "Insufficient funds in bank account",
+    message: "Update payment details or choose an alternative payment method",
   },
 }
 
@@ -359,20 +359,15 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
   )
 
   const handleBalanceCheckComplete = useCallback(
-    async (result: BankAccountBalanceCheckResult, message?: string) => {
+    async (result: BankAccountBalanceCheckResult) => {
       setIsCheckingBankBalance(false)
 
       switch (result) {
         // We only want to block the checkout when we know there is insufficient funds.
         case BankAccountBalanceCheckResult.INSUFFICIENT:
-          handleError(
-            message
-              ? { title: "Insufficient funds", message }
-              : PAYMENT_ERROR_MESSAGES.insufficientFunds,
-          )
+          handleError(PAYMENT_ERROR_MESSAGES.insufficientFunds)
           break
         default:
-          // For SUFFICIENT, PENDING, TIMEOUT, or OTHER, proceed with checkout
           setPaymentComplete()
           setIsSubmittingToStripe(false)
           resetElementsToInitialParams()
