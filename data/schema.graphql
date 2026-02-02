@@ -479,6 +479,7 @@ type Alert {
     sold: Boolean
     sort: String
     tagID: String
+    viewingRoomID: ID
     visibilityLevel: String
     width: String
   ): FilterArtworksConnection
@@ -1893,6 +1894,7 @@ type Artist implements EntityWithFilterArtworksConnectionInterface & Node & Sear
     sold: Boolean
     sort: String
     tagID: String
+    viewingRoomID: ID
     visibilityLevel: String
     width: String
   ): FilterArtworksConnection
@@ -2344,6 +2346,7 @@ type ArtistPartnerEdge {
     sold: Boolean
     sort: String
     tagID: String
+    viewingRoomID: ID
     visibilityLevel: String
     width: String
   ): FilterArtworksConnection
@@ -2511,6 +2514,7 @@ type ArtistSeries implements Node {
     sold: Boolean
     sort: String
     tagID: String
+    viewingRoomID: ID
     visibilityLevel: String
     width: String
   ): FilterArtworksConnection
@@ -3426,6 +3430,7 @@ type ArtworkFilterNode {
     sold: Boolean
     sort: String
     tagID: String
+    viewingRoomID: ID
     visibilityLevel: String
     width: String
   ): FilterArtworksConnection
@@ -12492,6 +12497,7 @@ interface EntityWithFilterArtworksConnectionInterface {
     sold: Boolean
     sort: String
     tagID: String
+    viewingRoomID: ID
     visibilityLevel: String
     width: String
   ): FilterArtworksConnection
@@ -12788,6 +12794,7 @@ type Fair implements EntityWithFilterArtworksConnectionInterface & Node {
     sold: Boolean
     sort: String
     tagID: String
+    viewingRoomID: ID
     visibilityLevel: String
     width: String
   ): FilterArtworksConnection
@@ -13328,6 +13335,7 @@ input FilterArtworksInput {
   sold: Boolean
   sort: String
   tagID: String
+  viewingRoomID: ID
   visibilityLevel: String
   width: String
 }
@@ -13894,6 +13902,7 @@ type Gene implements Node & Searchable {
     sold: Boolean
     sort: String
     tagID: String
+    viewingRoomID: ID
     visibilityLevel: String
     width: String
   ): FilterArtworksConnection
@@ -15826,6 +15835,7 @@ type MarketingCollection implements Node {
     sold: Boolean
     sort: String
     tagID: String
+    viewingRoomID: ID
     visibilityLevel: String
     width: String
   ): FilterArtworksConnection
@@ -19260,6 +19270,7 @@ type Partner implements Node {
     sold: Boolean
     sort: String
     tagID: String
+    viewingRoomID: ID
     visibilityLevel: String
     width: String
   ): FilterArtworksConnection
@@ -19630,6 +19641,7 @@ type PartnerArtist {
     sold: Boolean
     sort: String
     tagID: String
+    viewingRoomID: ID
     visibilityLevel: String
     width: String
   ): FilterArtworksConnection
@@ -19830,6 +19842,7 @@ type PartnerArtistEdge {
     sold: Boolean
     sort: String
     tagID: String
+    viewingRoomID: ID
     visibilityLevel: String
     width: String
   ): FilterArtworksConnection
@@ -21193,6 +21206,7 @@ type Query {
     sold: Boolean
     sort: String
     tagID: String
+    viewingRoomID: ID
     visibilityLevel: String
     width: String
   ): FilterArtworksConnection
@@ -21597,6 +21611,7 @@ type Query {
     sold: Boolean
     sort: String
     tagID: String
+    viewingRoomID: ID
     visibilityLevel: String
     width: String
   ): FilterArtworksConnection
@@ -24165,6 +24180,7 @@ type Show implements EntityWithFilterArtworksConnectionInterface & Node {
     sold: Boolean
     sort: String
     tagID: String
+    viewingRoomID: ID
     visibilityLevel: String
     width: String
   ): FilterArtworksConnection
@@ -24739,6 +24755,7 @@ type Tag implements Node {
     sold: Boolean
     sort: String
     tagID: String
+    viewingRoomID: ID
     visibilityLevel: String
     width: String
   ): FilterArtworksConnection
@@ -27785,6 +27802,7 @@ type Viewer {
     sold: Boolean
     sort: String
     tagID: String
+    viewingRoomID: ID
     visibilityLevel: String
     width: String
   ): FilterArtworksConnection
@@ -28063,6 +28081,7 @@ type Viewer {
     sold: Boolean
     sort: String
     tagID: String
+    viewingRoomID: ID
     visibilityLevel: String
     width: String
   ): FilterArtworksConnection
