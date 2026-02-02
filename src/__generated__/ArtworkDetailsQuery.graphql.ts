@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f87f3977174281d4c20fc4cb428d584f>>
+ * @generated SignedSource<<d5e8d1e14c7e4a9d79e07b61c4817ca5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -74,11 +74,7 @@ v5 = {
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
-},
-v6 = [
-  (v4/*: any*/),
-  (v5/*: any*/)
-];
+};
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -288,7 +284,10 @@ return {
             "kind": "LinkedField",
             "name": "attributionClass",
             "plural": false,
-            "selections": (v6/*: any*/),
+            "selections": [
+              (v4/*: any*/),
+              (v5/*: any*/)
+            ],
             "storageKey": null
           },
           {
@@ -300,112 +299,10 @@ return {
           },
           {
             "alias": null,
-            "args": [
-              {
-                "kind": "Literal",
-                "name": "size",
-                "value": 10
-              }
-            ],
-            "concreteType": "Article",
-            "kind": "LinkedField",
-            "name": "articles",
-            "plural": true,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "Author",
-                "kind": "LinkedField",
-                "name": "author",
-                "plural": false,
-                "selections": (v6/*: any*/),
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "href",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": [
-                  {
-                    "kind": "Literal",
-                    "name": "format",
-                    "value": "MMM Do, YYYY"
-                  }
-                ],
-                "kind": "ScalarField",
-                "name": "publishedAt",
-                "storageKey": "publishedAt(format:\"MMM Do, YYYY\")"
-              },
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "Image",
-                "kind": "LinkedField",
-                "name": "thumbnailImage",
-                "plural": false,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": [
-                      {
-                        "kind": "Literal",
-                        "name": "height",
-                        "value": 150
-                      },
-                      {
-                        "kind": "Literal",
-                        "name": "width",
-                        "value": 200
-                      }
-                    ],
-                    "concreteType": "CroppedImageUrl",
-                    "kind": "LinkedField",
-                    "name": "cropped",
-                    "plural": false,
-                    "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "src",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "srcSet",
-                        "storageKey": null
-                      }
-                    ],
-                    "storageKey": "cropped(height:150,width:200)"
-                  }
-                ],
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "thumbnailTitle",
-                "storageKey": null
-              },
-              (v5/*: any*/),
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "slug",
-                "storageKey": null
-              }
-            ],
-            "storageKey": "articles(size:10)"
+            "args": null,
+            "kind": "ScalarField",
+            "name": "slug",
+            "storageKey": null
           },
           {
             "alias": null,
@@ -435,12 +332,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "018084d098771a3a97caf80fdb084be5",
+    "cacheID": "ea324e4cec4ff8e542d9c1cb40701a0e",
     "id": null,
     "metadata": {},
     "name": "ArtworkDetailsQuery",
     "operationKind": "query",
-    "text": "query ArtworkDetailsQuery(\n  $slug: String!\n) {\n  artwork(id: $slug) {\n    ...ArtworkDetails_artwork\n    id\n  }\n}\n\nfragment ArtworkDetailsAboutTheWorkFromArtsy_artwork on Artwork {\n  descriptionHTML: description(format: HTML)\n  additionalInformationHTML: additionalInformation(format: HTML)\n}\n\nfragment ArtworkDetailsAdditionalInfo_artwork on Artwork {\n  category\n  series\n  publisher\n  manufacturer\n  image_rights: imageRights\n  canRequestLotConditionsReport\n  internalID\n  isUnlisted\n  framed {\n    label\n    details\n  }\n  signatureInfo {\n    label\n    details\n  }\n  conditionDescription {\n    label\n    details\n  }\n  certificateOfAuthenticity {\n    label\n    details\n  }\n  mediumType {\n    __typename\n  }\n  dimensions {\n    in\n    cm\n  }\n  attributionClass {\n    name\n    id\n  }\n  medium\n  ...ArtworkDetailsMediumModal_artwork\n}\n\nfragment ArtworkDetailsArticles_artwork on Artwork {\n  articles(size: 10) {\n    author {\n      name\n      id\n    }\n    href\n    publishedAt(format: \"MMM Do, YYYY\")\n    thumbnailImage {\n      cropped(width: 200, height: 150) {\n        src\n        srcSet\n      }\n    }\n    thumbnailTitle\n    id\n  }\n}\n\nfragment ArtworkDetailsMediumModal_artwork on Artwork {\n  mediumType {\n    name\n    longDescription\n  }\n}\n\nfragment ArtworkDetails_artwork on Artwork {\n  ...ArtworkDetailsAboutTheWorkFromArtsy_artwork\n  ...ArtworkDetailsAdditionalInfo_artwork\n  ...ArtworkDetailsArticles_artwork\n  articles(size: 10) {\n    slug\n    id\n  }\n  literature(format: HTML)\n  exhibition_history: exhibitionHistory(format: HTML)\n  provenance(format: HTML)\n}\n"
+    "text": "query ArtworkDetailsQuery(\n  $slug: String!\n) {\n  artwork(id: $slug) {\n    ...ArtworkDetails_artwork\n    id\n  }\n}\n\nfragment ArtworkDetailsAboutTheWorkFromArtsy_artwork on Artwork {\n  descriptionHTML: description(format: HTML)\n  additionalInformationHTML: additionalInformation(format: HTML)\n}\n\nfragment ArtworkDetailsAdditionalInfo_artwork on Artwork {\n  category\n  series\n  publisher\n  manufacturer\n  image_rights: imageRights\n  canRequestLotConditionsReport\n  internalID\n  isUnlisted\n  framed {\n    label\n    details\n  }\n  signatureInfo {\n    label\n    details\n  }\n  conditionDescription {\n    label\n    details\n  }\n  certificateOfAuthenticity {\n    label\n    details\n  }\n  mediumType {\n    __typename\n  }\n  dimensions {\n    in\n    cm\n  }\n  attributionClass {\n    name\n    id\n  }\n  medium\n  ...ArtworkDetailsMediumModal_artwork\n}\n\nfragment ArtworkDetailsMediumModal_artwork on Artwork {\n  mediumType {\n    name\n    longDescription\n  }\n}\n\nfragment ArtworkDetails_artwork on Artwork {\n  ...ArtworkDetailsAboutTheWorkFromArtsy_artwork\n  ...ArtworkDetailsAdditionalInfo_artwork\n  slug\n  literature(format: HTML)\n  exhibition_history: exhibitionHistory(format: HTML)\n  provenance(format: HTML)\n}\n"
   }
 };
 })();

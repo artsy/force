@@ -22,7 +22,10 @@ import {
   ArtworkDetailsAdditionalInfoFragmentContainer,
   ArtworkDetailsAdditionalInfoSkeleton,
 } from "./ArtworkDetailsAdditionalInfo"
-import { ArtworkDetailsArticlesFragmentContainer } from "./ArtworkDetailsArticles"
+import {
+  ArtworkDetailsArticlesFragmentContainer,
+  useArtworkArticles,
+} from "./ArtworkDetailsArticles"
 
 export interface ArtworkDetailsProps {
   artwork: ArtworkDetails_artwork$data
@@ -30,6 +33,7 @@ export interface ArtworkDetailsProps {
 
 const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({ artwork }) => {
   const tracking = useTracking()
+  const artworkWithArticles = useArtworkArticles(artwork.slug)
 
   const handleTabChange = ({ data }: TabInfo) => {
     tracking.trackEvent({
@@ -51,9 +55,11 @@ const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({ artwork }) => {
           <ArtworkDetailsAdditionalInfoFragmentContainer artwork={artwork} />
         </Tab>
 
-        {artwork.articles && artwork.articles.length > 0 && (
+        {artworkWithArticles && (
           <Tab name="Articles" data={{ trackingLabel: "articles" }}>
-            <ArtworkDetailsArticlesFragmentContainer artwork={artwork} />
+            <ArtworkDetailsArticlesFragmentContainer
+              artwork={artworkWithArticles}
+            />
           </Tab>
         )}
 
@@ -101,10 +107,7 @@ export const ArtworkDetailsFragmentContainer = createFragmentContainer(
       fragment ArtworkDetails_artwork on Artwork {
         ...ArtworkDetailsAboutTheWorkFromArtsy_artwork
         ...ArtworkDetailsAdditionalInfo_artwork
-        ...ArtworkDetailsArticles_artwork
-        articles(size: 10) {
-          slug
-        }
+        slug
         literature(format: HTML)
         exhibition_history: exhibitionHistory(format: HTML)
         provenance(format: HTML)

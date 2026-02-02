@@ -1,23 +1,25 @@
-import { BorderBox, Box, Flex, Image, Join, Spacer, Text } from "@artsy/palette"
+import { BorderBox, Box, Image, Stack, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
+import { useClientQuery } from "Utils/Hooks/useClientQuery"
+import type { ArtworkDetailsArticlesQuery } from "__generated__/ArtworkDetailsArticlesQuery.graphql"
 import type { ArtworkDetailsArticles_artwork$data } from "__generated__/ArtworkDetailsArticles_artwork.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
-export interface ArtworkDetailsArticlesProps {
+interface ArtworkDetailsArticlesProps {
   artwork: ArtworkDetailsArticles_artwork$data
 }
 
-export const ArtworkDetailsArticles: React.FC<
-  React.PropsWithChildren<ArtworkDetailsArticlesProps>
-> = ({ artwork: { articles } }) => {
-  if (!articles || articles.length < 1) {
-    return null
-  }
+const ArtworkDetailsArticles: React.FC<ArtworkDetailsArticlesProps> = ({
+  artwork,
+}) => {
+  const { articles } = artwork
+
+  if (!articles?.length) return null
 
   return (
     <BorderBox flexDirection="column">
-      <Join separator={<Spacer y={2} />}>
+      <Stack gap={2}>
         {articles.map((article, index) => {
           if (!article) return null
 
@@ -29,7 +31,7 @@ export const ArtworkDetailsArticles: React.FC<
               to={article.href ?? ""}
               style={{ display: "block", textDecoration: "none" }}
             >
-              <Flex>
+              <Stack gap={2} flexDirection="row">
                 {image ? (
                   <Image
                     src={image.src}
@@ -42,22 +44,20 @@ export const ArtworkDetailsArticles: React.FC<
                   <Box width={200} height={150} bg="mono5" />
                 )}
 
-                <Box ml={2}>
+                <Stack gap={0.5}>
                   <Text variant="xs">
-                    {article.author?.name ?? "Artsy Editorial"}
+                    {article.byline ?? "Artsy Editorial"}
                   </Text>
 
-                  <Text variant="lg-display" my={0.5}>
-                    {article.thumbnailTitle}
-                  </Text>
+                  <Text variant="lg-display">{article.thumbnailTitle}</Text>
 
                   <Text variant="sm-display">{article.publishedAt}</Text>
-                </Box>
-              </Flex>
+                </Stack>
+              </Stack>
             </RouterLink>
           )
         })}
-      </Join>
+      </Stack>
     </BorderBox>
   )
 }
@@ -68,21 +68,38 @@ export const ArtworkDetailsArticlesFragmentContainer = createFragmentContainer(
     artwork: graphql`
       fragment ArtworkDetailsArticles_artwork on Artwork {
         articles(size: 10) {
-          author {
-            name
-          }
+          byline
           href
           publishedAt(format: "MMM Do, YYYY")
+          thumbnailTitle
           thumbnailImage {
-            # 4:3
             cropped(width: 200, height: 150) {
               src
               srcSet
             }
           }
-          thumbnailTitle
         }
       }
     `,
   },
 )
+
+export const useArtworkArticles = (slug: string) => {
+  const { data } = useClientQuery<ArtworkDetailsArticlesQuery>({
+    variables: { slug },
+    query: graphql`
+      query ArtworkDetailsArticlesQuery($slug: String!) {
+        artwork(id: $slug) {
+          ...ArtworkDetailsArticles_artwork
+          articles(size: 10) {
+            internalID
+          }
+        }
+      }
+    `,
+  })
+
+  if (!data?.artwork?.articles?.length) return null
+
+  return data.artwork
+}
