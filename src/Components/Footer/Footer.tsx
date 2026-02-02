@@ -93,8 +93,8 @@ export const Footer: React.FC<React.PropsWithChildren<FooterProps>> = props => {
                 Open Source
               </FooterLink>
 
-              <FooterLink my={2} to="https://medium.com/artsy-blog">
-                Blog
+              <FooterLink my={2} to="/articles">
+                Editorial
               </FooterLink>
 
               <FooterLink my={2} to="/categories">
