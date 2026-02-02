@@ -4,9 +4,7 @@ import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCh
 import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import {
   CheckoutErrorBanner,
-  type CheckoutErrorBannerMessage,
-  MailtoOrderSupport,
-  ORDER_SUPPORT_EMAIL,
+  somethingWentWrongError,
 } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { SavedAddressOptions } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/SavedAddressOptions/Order2SavedAddressOptions"
 import { handleError } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/handleError"
@@ -37,17 +35,6 @@ import type { Order2DeliveryForm_order$key } from "__generated__/Order2DeliveryF
 import { Form, Formik, type FormikHelpers } from "formik"
 import { useCallback, useMemo } from "react"
 import { graphql, useFragment } from "react-relay"
-
-const DELIVERY_ADDRESS_UPDATE_ERROR: CheckoutErrorBannerMessage = {
-  title: "An error occurred",
-  message: (
-    <>
-      Something went wrong while updating your delivery address. Please try
-      again or contact <MailtoOrderSupport />.
-    </>
-  ) as React.ReactNode,
-  displayText: `Something went wrong while updating your delivery address. Please try again or contact ${ORDER_SUPPORT_EMAIL}.`,
-}
 
 interface Order2DeliveryFormProps {
   order: Order2DeliveryForm_order$key
@@ -270,7 +257,10 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
         handleError(
           error,
           formikHelpers,
-          DELIVERY_ADDRESS_UPDATE_ERROR,
+          somethingWentWrongError(
+            "updating your delivery address",
+            error?.code,
+          ),
           error =>
             setStepErrorMessage({
               step: CheckoutStepName.FULFILLMENT_DETAILS,

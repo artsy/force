@@ -26,18 +26,25 @@ export type CheckoutErrorBannerMessage =
       code?: string
     }
 
-export const ERROR_MESSAGES: Record<string, CheckoutErrorBannerMessage> = {
-  generic: {
-    title: "An error occurred",
-    message: (
-      <>
-        Something went wrong. Please try again or contact <MailtoOrderSupport />
-        .
-      </>
-    ) as React.ReactNode,
-    displayText: `Something went wrong. Please try again or contact ${ORDER_SUPPORT_EMAIL}.`,
-  },
-} as const
+/**
+ * Factory function for creating a fallback 'something went wrong' error.
+ * @param whileClause - Description of what action was being performed (e.g., "selecting your payment method")
+ * @param code - Optional error code from the backend
+ */
+export const somethingWentWrongError = (
+  whileClause: string,
+  code?: string,
+): CheckoutErrorBannerMessage => ({
+  title: "An error occurred",
+  message: (
+    <>
+      Something went wrong while {whileClause}. Please try again or contact{" "}
+      <MailtoOrderSupport />.
+    </>
+  ) as React.ReactNode,
+  displayText: `Something went wrong while ${whileClause}. Please try again or contact ${ORDER_SUPPORT_EMAIL}.`,
+  code,
+})
 
 export interface CheckoutErrorBannerProps {
   error?: CheckoutErrorBannerMessage | null

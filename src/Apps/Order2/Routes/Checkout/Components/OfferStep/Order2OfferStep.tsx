@@ -8,8 +8,7 @@ import {
 import {
   CheckoutErrorBanner,
   type CheckoutErrorBannerMessage,
-  MailtoOrderSupport,
-  ORDER_SUPPORT_EMAIL,
+  somethingWentWrongError,
 } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { OfferInput } from "Apps/Order2/Routes/Checkout/Components/OfferStep/Components/OfferInput"
 import { Order2OfferOptions } from "Apps/Order2/Routes/Checkout/Components/OfferStep/Components/Order2OfferOptions"
@@ -40,17 +39,7 @@ const logger = createLogger(
 
 const offerError = (code?: string): CheckoutErrorBannerMessage => {
   if (code) {
-    return {
-      title: "An error occurred",
-      message: (
-        <>
-          Something went wrong while selecting your offer amount. Please try
-          again or contact <MailtoOrderSupport />.
-        </>
-      ) as React.ReactNode,
-      displayText: `Something went wrong while selecting your offer amount. Please try again or contact ${ORDER_SUPPORT_EMAIL}.`,
-      code,
-    }
+    return somethingWentWrongError("selecting your offer amount", code)
   }
 
   return {

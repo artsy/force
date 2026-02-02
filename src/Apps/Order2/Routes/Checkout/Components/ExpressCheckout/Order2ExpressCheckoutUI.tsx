@@ -24,6 +24,8 @@ import type { ExpressCheckoutPaymentMethod } from "Apps/Order2/Routes/Checkout/C
 import {
   CheckoutErrorBanner,
   type CheckoutErrorBannerMessage,
+  MailtoOrderSupport,
+  ORDER_SUPPORT_EMAIL,
 } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { fetchAndSetConfirmationToken } from "Apps/Order2/Utils/confirmationTokenUtils"
@@ -49,7 +51,6 @@ import { useOrder2ExpressCheckoutSubmitOrderMutation } from "./Mutations/useOrde
 import { useOrder2ExpressCheckoutUnsetOrderFulfillmentOptionMutation } from "./Mutations/useOrder2ExpressCheckoutUnsetOrderFulfillmentOptionMutation"
 import { useOrder2ExpressCheckoutUnsetOrderPaymentMethodMutation } from "./Mutations/useOrder2ExpressCheckoutUnsetOrderPaymentMethodMutation"
 import { useOrder2ExpressCheckoutUpdateOrderShippingAddressMutation } from "./Mutations/useOrder2ExpressCheckoutUpdateOrderShippingAddressMutation"
-import { expressCheckoutErrorBannerPropsForCode } from "./errorHandling"
 
 interface Order2ExpressCheckoutUIProps {
   order: Order2ExpressCheckoutUI_order$key
@@ -776,4 +777,35 @@ function extractEnabledPaymentMethods(
   return Object.entries(paymentMethods)
     .filter(([_, isAvailable]) => isAvailable)
     .map(([method]) => method) as ExpressCheckoutPaymentMethod[]
+}
+
+const expressCheckoutErrorBannerPropsForCode = (
+  errorCode: string,
+): CheckoutErrorBannerMessage => {
+  // Errors that can occur after express checkout closes and during backend processing
+
+  // Backend payment processing errors
+  if (["create_credit_card_failed"].includes(errorCode)) {
+    return {
+      title: "Payment failed",
+      message: "There was an issue with your payment method. Please try again.",
+      code: errorCode,
+    }
+  }
+
+  // Log unhandled error codes
+  logger.error("Unhandled express checkout error code:", errorCode)
+
+  // Fallback for all other errors
+  return {
+    title: "An error occurred",
+    message: (
+      <>
+        Something went wrong. Please try again or contact <MailtoOrderSupport />
+        .
+      </>
+    ) as React.ReactNode,
+    displayText: `Something went wrong. Please try again or contact ${ORDER_SUPPORT_EMAIL}.`,
+    code: errorCode,
+  }
 }
