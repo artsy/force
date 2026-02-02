@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bc5f9fdeb81cf0f4fe5952b70f36f4c5>>
+ * @generated SignedSource<<ebd7c1fbe29f54d4a1b3b8355d3d50ed>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,9 +12,7 @@ import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkDetailsArticles_artwork$data = {
   readonly articles: ReadonlyArray<{
-    readonly author: {
-      readonly name: string;
-    } | null | undefined;
+    readonly byline: string | null | undefined;
     readonly href: string | null | undefined;
     readonly publishedAt: string | null | undefined;
     readonly thumbnailImage: {
@@ -55,19 +53,8 @@ const node: ReaderFragment = {
         {
           "alias": null,
           "args": null,
-          "concreteType": "Author",
-          "kind": "LinkedField",
-          "name": "author",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "name",
-              "storageKey": null
-            }
-          ],
+          "kind": "ScalarField",
+          "name": "byline",
           "storageKey": null
         },
         {
@@ -89,6 +76,13 @@ const node: ReaderFragment = {
           "kind": "ScalarField",
           "name": "publishedAt",
           "storageKey": "publishedAt(format:\"MMM Do, YYYY\")"
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "thumbnailTitle",
+          "storageKey": null
         },
         {
           "alias": null,
@@ -136,13 +130,6 @@ const node: ReaderFragment = {
             }
           ],
           "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "thumbnailTitle",
-          "storageKey": null
         }
       ],
       "storageKey": "articles(size:10)"
@@ -152,6 +139,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "84820200ab3d4b9e9cd76ca883049875";
+(node as any).hash = "2c246aaa7c11a4b2c3cf1ad429caf3e9";
 
 export default node;

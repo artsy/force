@@ -242,6 +242,11 @@ export const NavBarMobileSubMenuItem: React.FC<
     )
   }
 
+  // Skip visual components (like articles) in mobile menu
+  if ("type" in link) {
+    return null
+  }
+
   const handleClick = (
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
   ) => {

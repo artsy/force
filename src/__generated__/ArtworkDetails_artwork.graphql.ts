@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<63cbe0b0fc19055e31509a1fc3859675>>
+ * @generated SignedSource<<39fa2bb83a98d1962f36ed1bfdd152b0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,13 +11,11 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkDetails_artwork$data = {
-  readonly articles: ReadonlyArray<{
-    readonly slug: string | null | undefined;
-  } | null | undefined> | null | undefined;
   readonly exhibition_history: string | null | undefined;
   readonly literature: string | null | undefined;
   readonly provenance: string | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkDetailsAboutTheWorkFromArtsy_artwork" | "ArtworkDetailsAdditionalInfo_artwork" | "ArtworkDetailsArticles_artwork">;
+  readonly slug: string;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkDetailsAboutTheWorkFromArtsy_artwork" | "ArtworkDetailsAdditionalInfo_artwork">;
   readonly " $fragmentType": "ArtworkDetails_artwork";
 };
 export type ArtworkDetails_artwork$key = {
@@ -50,33 +48,11 @@ return {
       "name": "ArtworkDetailsAdditionalInfo_artwork"
     },
     {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArtworkDetailsArticles_artwork"
-    },
-    {
       "alias": null,
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "size",
-          "value": 10
-        }
-      ],
-      "concreteType": "Article",
-      "kind": "LinkedField",
-      "name": "articles",
-      "plural": true,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "slug",
-          "storageKey": null
-        }
-      ],
-      "storageKey": "articles(size:10)"
+      "args": null,
+      "kind": "ScalarField",
+      "name": "slug",
+      "storageKey": null
     },
     {
       "alias": null,
@@ -105,6 +81,6 @@ return {
 };
 })();
 
-(node as any).hash = "6be4d52aec696238dc923f77568c0f83";
+(node as any).hash = "a26cdc602532281178f9e470eb2edd0a";
 
 export default node;

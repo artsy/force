@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6ede41615df8da8a3564ff6ff57c0b89>>
+ * @generated SignedSource<<db28af3da9a489b4019d6fe3353400be>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -74,6 +74,7 @@ export type FilterArtworksInput = {
   sold?: boolean | null | undefined;
   sort?: string | null | undefined;
   tagID?: string | null | undefined;
+  viewingRoomID?: string | null | undefined;
   visibilityLevel?: string | null | undefined;
   width?: string | null | undefined;
 };
