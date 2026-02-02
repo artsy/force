@@ -92,6 +92,10 @@ export function trackingMiddleware(options: TrackingMiddlewareOptions = {}) {
 
             if (clientSideRoutingReferrer) {
               trackingData.referrer = getFullReferrerUrl()
+            } else if (window.__artsyInitialReferrer) {
+              // consume then clear to avoid recording stale external referrer
+              trackingData.referrer = window.__artsyInitialReferrer
+              window.__artsyInitialReferrer = undefined
             }
 
             window.analytics?.page(trackingData, {
