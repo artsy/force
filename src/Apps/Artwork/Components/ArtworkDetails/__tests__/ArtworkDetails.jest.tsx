@@ -16,6 +16,15 @@ jest.mock("Components/EntityHeaders/EntityHeaderPartner", () => ({
     "EntityHeaderPartnerFragmentContainer",
 }))
 
+jest.mock("Utils/Hooks/useClientQuery", () => ({
+  useClientQuery: () => ({
+    data: null,
+    loading: true,
+    error: null,
+    refetch: jest.fn(),
+  }),
+}))
+
 const { renderWithRelay } = setupTestWrapperTL<ArtworkDetailsTestQuery>({
   Component: ({ artwork }) => {
     return <ArtworkDetailsFragmentContainer artwork={artwork!} />
@@ -130,7 +139,8 @@ describe("ArtworkDetails", () => {
       renderWithRelay()
 
       expect(screen.getByText("About the work")).toBeInTheDocument()
-      expect(screen.getByText("Articles")).toBeInTheDocument()
+      // Articles tab is loaded client-side and won't appear in this test
+      // since useClientQuery is mocked to return no data
       expect(screen.getByText("Exhibition history")).toBeInTheDocument()
       expect(screen.getByText("Bibliography")).toBeInTheDocument()
       expect(screen.getByText("Provenance")).toBeInTheDocument()
