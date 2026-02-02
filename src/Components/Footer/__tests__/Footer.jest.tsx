@@ -1,4 +1,4 @@
-import type { Breakpoint } from "@artsy/palette/dist/themes/types"
+import type { Breakpoint } from "@artsy/palette"
 import { render, screen } from "@testing-library/react"
 import { Footer } from "Components/Footer/Footer"
 import { MockBoot } from "DevTools/MockBoot"
