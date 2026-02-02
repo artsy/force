@@ -236,7 +236,6 @@ export const Order2ExpressCheckoutUI: React.FC<
   }
 
   const resetOrder = async () => {
-    logger.log("Resetting order for express checkout")
     window.removeEventListener("beforeunload", preventHardReload)
 
     try {
@@ -254,11 +253,9 @@ export const Order2ExpressCheckoutUI: React.FC<
 
       validateAndExtractOrderResponse(unsetOrderPaymentMethod?.orderOrError)
       validateAndExtractOrderResponse(unsetOrderFulfillmentOption?.orderOrError)
-      logger.log("Successfully reset order for express checkout")
     } catch (error) {
       logger.error("Error resetting order", error)
     } finally {
-      logger.log("Reloading page to reset express checkout state...")
       window.location.reload()
     }
   }
@@ -476,12 +473,6 @@ export const Order2ExpressCheckoutUI: React.FC<
           },
         })
 
-      logger.log("setOrderPayment result", {
-        typename:
-          updateOrderPaymentMethodResult.setOrderPayment?.orderOrError
-            ?.__typename,
-      })
-
       validateAndExtractOrderResponse(
         updateOrderPaymentMethodResult.setOrderPayment?.orderOrError,
       )
@@ -508,12 +499,6 @@ export const Order2ExpressCheckoutUI: React.FC<
           },
         })
 
-      logger.log("updateOrderShippingAddress result", {
-        typename:
-          updateOrderShippingAddressResult.updateOrderShippingAddress
-            ?.orderOrError?.__typename,
-      })
-
       validateAndExtractOrderResponse(
         updateOrderShippingAddressResult.updateOrderShippingAddress
           ?.orderOrError,
@@ -527,22 +512,6 @@ export const Order2ExpressCheckoutUI: React.FC<
           },
         },
       })
-
-      logger.log("submitOrder result", submitOrderResult.submitOrder)
-
-      if (
-        submitOrderResult.submitOrder?.orderOrError?.__typename ===
-        "OrderMutationError"
-      ) {
-        logger.error("submitOrder returned error", {
-          message:
-            submitOrderResult.submitOrder.orderOrError.mutationError.message,
-          code: (
-            submitOrderResult.submitOrder.orderOrError.mutationError as any
-          ).code,
-          fullResponse: submitOrderResult.submitOrder.orderOrError,
-        })
-      }
 
       validateAndExtractOrderResponse(
         submitOrderResult.submitOrder?.orderOrError,
@@ -767,7 +736,7 @@ const shippingRateForFulfillmentOption = option => {
     case "SHIPPING_TBD":
       return null
     default:
-      logger.warn("Unhandled fulfillment option", type)
+      logger.error("Unhandled fulfillment option", type)
       return null
   }
 }

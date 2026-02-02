@@ -42,7 +42,6 @@ export const ERROR_MESSAGES: Record<string, CheckoutErrorBannerMessage> = {
 export interface CheckoutErrorBannerProps {
   error?: CheckoutErrorBannerMessage | null
   analytics?: {
-    errorCode?: string
     flow: string
   }
 }
@@ -61,7 +60,7 @@ export const CheckoutErrorBanner = forwardRef<
       "displayText" in error ? error.displayText : error.message
 
     checkoutTracking.errorMessageViewed({
-      error_code: error.code || analytics.errorCode || "unknown",
+      error_code: error.code || "unknown",
       title: error.title,
       message: messageText,
       flow: analytics.flow,

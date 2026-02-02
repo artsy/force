@@ -101,27 +101,6 @@ describe("CheckoutErrorBanner", () => {
     })
   })
 
-  it("uses analytics errorCode as fallback when error code is not provided", () => {
-    const error = {
-      title: "Fallback Error",
-      message: "Error message",
-    }
-
-    const analytics = {
-      errorCode: "fallback_code",
-      flow: "Express checkout",
-    }
-
-    render(<CheckoutErrorBanner error={error} analytics={analytics} />)
-
-    expect(mockCheckoutTracking.errorMessageViewed).toHaveBeenCalledWith({
-      error_code: "fallback_code",
-      title: "Fallback Error",
-      message: "Error message",
-      flow: "Express checkout",
-    })
-  })
-
   it("does not track when analytics is not provided", () => {
     const error = {
       title: "No Tracking",

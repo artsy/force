@@ -38,22 +38,26 @@ const logger = createLogger(
   "Order2/Routes/Checkout/Components/OfferStep/Order2OfferStep.tsx",
 )
 
-const OFFER_ERROR_MESSAGES = {
-  offerSubmissionError: {
-    title: "An error occurred",
-    message: (
-      <>
-        Something went wrong while selecting your offer amount. Please try again
-        or contact <MailtoOrderSupport />.
-      </>
-    ) as React.ReactNode,
-    displayText: `Something went wrong while selecting your offer amount. Please try again or contact ${ORDER_SUPPORT_EMAIL}.`,
-  },
-  offerAmountRequired: {
+const offerError = (code?: string): CheckoutErrorBannerMessage => {
+  if (code) {
+    return {
+      title: "An error occurred",
+      message: (
+        <>
+          Something went wrong while selecting your offer amount. Please try
+          again or contact <MailtoOrderSupport />.
+        </>
+      ) as React.ReactNode,
+      displayText: `Something went wrong while selecting your offer amount. Please try again or contact ${ORDER_SUPPORT_EMAIL}.`,
+      code,
+    }
+  }
+
+  return {
     title: "Offer amount required",
     message: "Select an offer amount or enter your own to continue.",
-  },
-} satisfies Record<string, CheckoutErrorBannerMessage>
+  }
+}
 
 interface OfferFormValues {
   offerValue: number
@@ -118,7 +122,7 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
       logger.error(error)
       setStepErrorMessage({
         step: CheckoutStepName.OFFER_AMOUNT,
-        error: OFFER_ERROR_MESSAGES.offerSubmissionError,
+        error: offerError(error.code),
       })
     }
 
@@ -249,7 +253,7 @@ const Order2OfferStepFormContent: React.FC<Order2OfferStepFormContentProps> = ({
       setFieldValue("offerValue", values.offerValue, true)
       setStepErrorMessage({
         step: CheckoutStepName.OFFER_AMOUNT,
-        error: OFFER_ERROR_MESSAGES.offerAmountRequired,
+        error: offerError(),
       })
       return
     }

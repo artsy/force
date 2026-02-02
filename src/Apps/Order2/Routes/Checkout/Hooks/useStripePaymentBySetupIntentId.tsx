@@ -10,11 +10,12 @@ import { useCheckoutContext } from "./useCheckoutContext"
 
 const logger = createLogger("useStripePaymentBySetupIntentId")
 
-const PAYMENT_PROCESSING_ERROR: CheckoutErrorBannerMessage = {
+const paymentProcessingError = (code?: string): CheckoutErrorBannerMessage => ({
   title: "Payment could not be processed",
   message:
     "Please try again or use a different payment method to complete your purchase.",
-}
+  code,
+})
 
 /*
  * Hook to handle Stripe redirect for newly-linked bank account in Order2
@@ -108,13 +109,11 @@ export function useStripePaymentBySetupIntentId(
       ).commerceSetPaymentByStripeIntent?.orderOrError
 
       if (orderOrError?.error) throw orderOrError.error
-
-      logger.log("Successfully set payment by setup intent")
     } catch (error) {
       logger.error("Failed to set payment by setup intent:", error)
       setStepErrorMessage({
         step: CheckoutStepName.PAYMENT,
-        error: PAYMENT_PROCESSING_ERROR,
+        error: paymentProcessingError(error?.code),
       })
       onComplete()
     }
