@@ -313,4 +313,55 @@ describe("AddAddressForm", () => {
     expect(mockUpdateUserDefaultAddress).not.toHaveBeenCalled()
     expect(mockOnSaveAddress).not.toHaveBeenCalled()
   })
+
+  it("calls onSaveAddress with new address ID to make it selected", async () => {
+    const newAddressID = "newly-created-address-123"
+
+    mockCreateUserAddress.mockResolvedValue({
+      createUserAddress: {
+        userAddressOrErrors: {
+          __typename: "UserAddress",
+          internalID: newAddressID,
+        },
+      },
+    })
+
+    render(<AddAddressForm {...mockProps} />)
+
+    // Fill out the form
+    await userEvent.type(
+      screen.getByPlaceholderText("Add full name"),
+      "John Doe",
+    )
+    await userEvent.type(screen.getByLabelText("Street address"), "123 Main St")
+    await userEvent.type(screen.getByLabelText("City"), "New York")
+    await userEvent.type(
+      screen.getByLabelText("State, region or province"),
+      "NY",
+    )
+    await userEvent.type(screen.getByLabelText("ZIP/Postal code"), "10001")
+    await userEvent.type(
+      screen.getByTestId("addressFormFields.phoneNumber"),
+      "5551234567",
+    )
+
+    // Submit the form
+    await userEvent.click(screen.getByText("Save Address"))
+
+    // Verify onSaveAddress is called with the newly created address ID
+    await waitFor(() => {
+      expect(mockOnSaveAddress).toHaveBeenCalledWith(
+        expect.objectContaining({
+          address: expect.objectContaining({
+            name: "John Doe",
+            addressLine1: "123 Main St",
+            city: "New York",
+            region: "NY",
+            postalCode: "10001",
+          }),
+        }),
+        newAddressID,
+      )
+    })
+  })
 })
