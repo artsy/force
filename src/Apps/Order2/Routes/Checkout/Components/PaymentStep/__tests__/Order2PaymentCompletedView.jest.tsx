@@ -106,7 +106,7 @@ describe("Order2PaymentCompletedView", () => {
             paymentMethodDetails: {
               __typename: "BankAccount",
               last4: "1234",
-              bankName: null,
+              bankName: "Deutsche Bank",
             },
           },
         },
