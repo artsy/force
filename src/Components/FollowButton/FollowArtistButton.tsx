@@ -134,6 +134,7 @@ const FollowArtistButton = ({
             kind: "artist",
             objectId: artist.slug,
           },
+          nodeId: artist.id,
         },
         analytics: {
           intent: Intent.followArtist,

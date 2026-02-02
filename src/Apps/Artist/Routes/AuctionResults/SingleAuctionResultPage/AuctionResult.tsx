@@ -42,6 +42,7 @@ export const AuctionResult: React.FC<
         options: {
           isCloseable: false,
           title: `Sign up or log in to see auction results for ${artist.name}`,
+          nodeId: artist?.id,
         },
         analytics: {
           contextModule: ContextModule.auctionResults,
@@ -112,6 +113,7 @@ export const AuctionResultFragmentContainer = createFragmentContainer(
       fragment AuctionResult_auctionResult on AuctionResult {
         internalID
         artist {
+          id
           name
           href
         }

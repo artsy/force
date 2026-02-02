@@ -11,6 +11,22 @@ jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({ sm: false }),
 }))
 
+jest.mock("react-relay", () => ({
+  ...jest.requireActual("react-relay"),
+  useFragment: jest.fn(() => null),
+}))
+
+jest.mock("System/Relay/SystemQueryRenderer", () => ({
+  SystemQueryRenderer: jest.fn(({ render }) =>
+    render({ error: null, props: { orderedSets: [] }, retry: null }),
+  ),
+}))
+
+jest.mock("@unleash/proxy-client-react", () => ({
+  useFlag: jest.fn(() => false),
+  useVariant: jest.fn(() => ({ name: "disabled", enabled: false })),
+}))
+
 jest.mock("@artsy/palette", () => ({
   ...jest.requireActual("@artsy/palette"),
   useDidMount: jest.fn().mockReturnValue(false), // SSR-render

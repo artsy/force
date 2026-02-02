@@ -85,6 +85,7 @@ const ArtistArtworkFilter: React.FC<
       >
         <ArtworkFilterAlertContextProvider
           initialCriteria={{ artistIDs: [artist.internalID] }}
+          nodeId={artist.id}
         >
           <ArtworkFilterSavedSearchAlertContextProvider
             entity={savedSearchEntity}
@@ -128,12 +129,10 @@ export const ArtistArtworkFilterRefetchContainer = createRefetchContainer(
           ...ArtworkFilterArtworkGrid_filtered_artworks
           ...ImmersiveView_filtered_artworks
         }
+        id
         internalID
         name
         slug
-        meta(page: ARTWORKS) {
-          title
-        }
       }
     `,
   },

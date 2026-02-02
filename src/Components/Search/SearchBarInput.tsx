@@ -318,6 +318,7 @@ export const SearchBarInput: FC<
         )
       }}
       dropdownMaxHeight={`calc(100vh - ${DESKTOP_NAV_BAR_TOP_TIER_HEIGHT}px - 90px)`}
+      dropdownMinWidth={600}
       flip={false}
       height={40}
     />

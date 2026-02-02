@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d07c2bb6e35c1d5ae6ff5c4537770a98>>
+ * @generated SignedSource<<5d5f93a5145c2316578fecb7c08bed96>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -53,13 +53,6 @@ v3 = {
   "storageKey": null
 },
 v4 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "title",
-  "storageKey": null
-},
-v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -121,31 +114,6 @@ return {
             "args": [
               {
                 "kind": "Literal",
-                "name": "page",
-                "value": "ARTIST_SERIES"
-              }
-            ],
-            "concreteType": "ArtistMeta",
-            "kind": "LinkedField",
-            "name": "meta",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "description",
-                "storageKey": null
-              },
-              (v4/*: any*/)
-            ],
-            "storageKey": "meta(page:\"ARTIST_SERIES\")"
-          },
-          {
-            "alias": null,
-            "args": [
-              {
-                "kind": "Literal",
                 "name": "first",
                 "value": 50
               }
@@ -172,7 +140,13 @@ return {
                     "plural": false,
                     "selections": [
                       (v3/*: any*/),
-                      (v4/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "title",
+                        "storageKey": null
+                      },
                       {
                         "alias": null,
                         "args": null,
@@ -236,7 +210,7 @@ return {
                         "storageKey": null
                       },
                       (v2/*: any*/),
-                      (v5/*: any*/)
+                      (v4/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -246,19 +220,19 @@ return {
             ],
             "storageKey": "artistSeriesConnection(first:50)"
           },
-          (v5/*: any*/)
+          (v4/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "0b28848008d9961d89e85cfe5479b1c8",
+    "cacheID": "54c988a3cb310dd6a2dea74cae88dd35",
     "id": null,
     "metadata": {},
     "name": "artistRoutes_ArtistSeriesQuery",
     "operationKind": "query",
-    "text": "query artistRoutes_ArtistSeriesQuery(\n  $artistID: String!\n) @cacheable {\n  artist(id: $artistID) @principalField {\n    ...ArtistArtistSeriesRoute_artist\n    id\n  }\n}\n\nfragment ArtistArtistSeriesRoute_artist on Artist {\n  internalID\n  name\n  slug\n  meta(page: ARTIST_SERIES) {\n    description\n    title\n  }\n  artistSeriesConnection(first: 50) {\n    edges {\n      node {\n        ...CellArtistSeries_artistSeries\n        internalID\n        id\n      }\n    }\n  }\n}\n\nfragment CellArtistSeries_artistSeries on ArtistSeries {\n  slug\n  title\n  artworksCountMessage\n  image {\n    cropped(width: 445, height: 334, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query artistRoutes_ArtistSeriesQuery(\n  $artistID: String!\n) @cacheable {\n  artist(id: $artistID) @principalField {\n    ...ArtistArtistSeriesRoute_artist\n    id\n  }\n}\n\nfragment ArtistArtistSeriesRoute_artist on Artist {\n  internalID\n  name\n  slug\n  artistSeriesConnection(first: 50) {\n    edges {\n      node {\n        ...CellArtistSeries_artistSeries\n        internalID\n        id\n      }\n    }\n  }\n}\n\nfragment CellArtistSeries_artistSeries on ArtistSeries {\n  slug\n  title\n  artworksCountMessage\n  image {\n    cropped(width: 445, height: 334, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();

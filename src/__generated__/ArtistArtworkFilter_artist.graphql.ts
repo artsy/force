@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d2b6714465692bfb3f699048bfed80ab>>
+ * @generated SignedSource<<8bcc88329fd7dd6999545d61cf9210f8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -26,10 +26,8 @@ export type ArtistArtworkFilter_artist$data = {
     readonly id: string;
     readonly " $fragmentSpreads": FragmentRefs<"ArtworkFilterArtworkGrid_filtered_artworks" | "ImmersiveView_filtered_artworks">;
   } | null | undefined;
+  readonly id: string;
   readonly internalID: string;
-  readonly meta: {
-    readonly title: string;
-  };
   readonly name: string | null | undefined;
   readonly slug: string;
   readonly " $fragmentType": "ArtistArtworkFilter_artist";
@@ -39,7 +37,15 @@ export type ArtistArtworkFilter_artist$key = {
   readonly " $fragmentSpreads": FragmentRefs<"ArtistArtworkFilter_artist">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [
     {
       "defaultValue": null,
@@ -123,13 +129,7 @@ const node: ReaderFragment = {
       "name": "filterArtworksConnection",
       "plural": false,
       "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "id",
-          "storageKey": null
-        },
+        (v0/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -167,6 +167,7 @@ const node: ReaderFragment = {
       ],
       "storageKey": null
     },
+    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -187,36 +188,13 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "slug",
       "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "page",
-          "value": "ARTWORKS"
-        }
-      ],
-      "concreteType": "ArtistMeta",
-      "kind": "LinkedField",
-      "name": "meta",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "title",
-          "storageKey": null
-        }
-      ],
-      "storageKey": "meta(page:\"ARTWORKS\")"
     }
   ],
   "type": "Artist",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "eb952be86a8a420fc96c6d4e09e50156";
+(node as any).hash = "586b8e6d7b471903b27810857e20e8ed";
 
 export default node;

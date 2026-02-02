@@ -50,6 +50,7 @@ export const useSaveArtworkToLists = (options: SaveArtworkToListsOptions) => {
           kind: "artworks",
           objectId: artwork.internalID,
         },
+        nodeId: artwork.id,
       },
       analytics: {
         intent: Intent.saveArtwork,

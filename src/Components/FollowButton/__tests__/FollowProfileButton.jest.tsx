@@ -98,6 +98,7 @@ describe("FollowProfileButton", () => {
             kind: "profile",
             objectId: "example",
           },
+          galleryImage: true,
           title: expect.any(String),
         },
       })

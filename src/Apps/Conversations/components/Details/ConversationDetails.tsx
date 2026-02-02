@@ -21,6 +21,7 @@ export const ConversationDetails: React.FC<
   const data = useFragment(
     graphql`
       fragment ConversationDetails_conversation on Conversation {
+        internalID
         orderConnection(
           first: 1
           states: [
@@ -66,7 +67,7 @@ export const ConversationDetails: React.FC<
 
       <ConversationAttachments conversation={data} />
 
-      <ConversationSupport />
+      <ConversationSupport conversationId={data.internalID} />
     </Flex>
   )
 }

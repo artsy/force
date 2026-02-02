@@ -128,7 +128,8 @@ describe("ArtworkApp", () => {
           contextModule: "artworkSidebar",
         },
         options: {
-          title: expect.any(String),
+          title: "Log in or sign up to view gallery offer",
+          nodeId: "<Artwork-mock-id-10>",
         },
       })
     })

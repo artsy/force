@@ -39,6 +39,7 @@ export const FairOrganizerFollowButton: React.FC<
             action: "follow",
             objectId: fairOrganizer.slug,
           },
+          galleryImage: true,
         },
         analytics: {
           intent: Intent.followPartner,

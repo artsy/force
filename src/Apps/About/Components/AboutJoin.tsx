@@ -25,7 +25,7 @@ export const AboutJoin = () => {
       py={4}
     >
       <Image
-        {...cropped("https://files.artsy.net/images/about2-join.jpg", {
+        {...cropped("https://files.artsy.net/images/about2-join-2.png", {
           width: 2000,
           height: 781,
         })}

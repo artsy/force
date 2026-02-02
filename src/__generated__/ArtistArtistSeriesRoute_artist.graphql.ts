@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f14411afd1e1bb504b25d791ed1733b1>>
+ * @generated SignedSource<<633808ad05d14c2d475fc2f52ebf66e3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,10 +20,6 @@ export type ArtistArtistSeriesRoute_artist$data = {
     } | null | undefined> | null | undefined;
   } | null | undefined;
   readonly internalID: string;
-  readonly meta: {
-    readonly description: string;
-    readonly title: string;
-  };
   readonly name: string | null | undefined;
   readonly slug: string;
   readonly " $fragmentType": "ArtistArtistSeriesRoute_artist";
@@ -61,37 +57,6 @@ return {
       "kind": "ScalarField",
       "name": "slug",
       "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "page",
-          "value": "ARTIST_SERIES"
-        }
-      ],
-      "concreteType": "ArtistMeta",
-      "kind": "LinkedField",
-      "name": "meta",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "description",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "title",
-          "storageKey": null
-        }
-      ],
-      "storageKey": "meta(page:\"ARTIST_SERIES\")"
     },
     {
       "alias": null,
@@ -144,6 +109,6 @@ return {
 };
 })();
 
-(node as any).hash = "b8643c28f8daea03ccc5ca458017f425";
+(node as any).hash = "e37bf1ef8c3aaa0cddb341cdd5509ac9";
 
 export default node;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a214dfb7b4ee5549677929e8e2e60810>>
+ * @generated SignedSource<<aa48fd0e9e3daff01e2985b2b0535054>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -61,12 +61,6 @@ v5 = {
   "nullable": false,
   "plural": false,
   "type": "ID"
-},
-v6 = {
-  "enumValues": null,
-  "nullable": false,
-  "plural": false,
-  "type": "String"
 };
 return {
   "fragment": {
@@ -153,35 +147,28 @@ return {
           },
           (v1/*: any*/),
           {
-            "alias": null,
+            "alias": "biographyBlurbPlain",
             "args": [
               {
                 "kind": "Literal",
-                "name": "page",
-                "value": "ABOUT"
+                "name": "format",
+                "value": "PLAIN"
               }
             ],
-            "concreteType": "ArtistMeta",
+            "concreteType": "ArtistBlurb",
             "kind": "LinkedField",
-            "name": "meta",
+            "name": "biographyBlurb",
             "plural": false,
             "selections": [
               {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
-                "name": "title",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "description",
+                "name": "text",
                 "storageKey": null
               }
             ],
-            "storageKey": "meta(page:\"ABOUT\")"
+            "storageKey": "biographyBlurb(format:\"PLAIN\")"
           },
           {
             "alias": null,
@@ -269,30 +256,6 @@ return {
             "name": "alternateNames",
             "storageKey": null
           },
-          {
-            "alias": "biographyBlurbPlain",
-            "args": [
-              {
-                "kind": "Literal",
-                "name": "format",
-                "value": "PLAIN"
-              }
-            ],
-            "concreteType": "ArtistBlurb",
-            "kind": "LinkedField",
-            "name": "biographyBlurb",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "text",
-                "storageKey": null
-              }
-            ],
-            "storageKey": "biographyBlurb(format:\"PLAIN\")"
-          },
           (v3/*: any*/)
         ],
         "storageKey": "artist(id:\"example\")"
@@ -300,7 +263,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3259dd2f786416f1850c5fd90fec1177",
+    "cacheID": "317ff98372dc2fd23819e5a4e78ab16c",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -343,14 +306,6 @@ return {
         "artist.gender": (v4/*: any*/),
         "artist.href": (v4/*: any*/),
         "artist.id": (v5/*: any*/),
-        "artist.meta": {
-          "enumValues": null,
-          "nullable": false,
-          "plural": false,
-          "type": "ArtistMeta"
-        },
-        "artist.meta.description": (v6/*: any*/),
-        "artist.meta.title": (v6/*: any*/),
         "artist.name": (v4/*: any*/),
         "artist.nationality": (v4/*: any*/),
         "artist.partnersConnection": {
@@ -379,7 +334,7 @@ return {
     },
     "name": "ArtistMeta_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistMeta_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistMeta_artist\n    id\n  }\n}\n\nfragment ArtistMeta_artist on Artist {\n  ...ArtistStructuredData_artist\n  name\n  nationality\n  birthday\n  deathday\n  alternateNames\n  biographyBlurbPlain: biographyBlurb(format: PLAIN) {\n    text\n  }\n  coverArtwork {\n    image {\n      large: url(version: \"large\")\n    }\n    id\n  }\n}\n\nfragment ArtistStructuredData_artist on Artist {\n  slug\n  name\n  birthday\n  deathday\n  gender\n  nationality\n  href\n  meta(page: ABOUT) {\n    title\n    description\n  }\n  coverArtwork {\n    image {\n      url(version: \"large\")\n    }\n    id\n  }\n  partnersConnection(first: 10) {\n    edges {\n      node {\n        href\n        id\n      }\n      id\n    }\n  }\n}\n"
+    "text": "query ArtistMeta_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistMeta_artist\n    id\n  }\n}\n\nfragment ArtistMeta_artist on Artist {\n  ...ArtistStructuredData_artist\n  name\n  nationality\n  birthday\n  deathday\n  alternateNames\n  biographyBlurbPlain: biographyBlurb(format: PLAIN) {\n    text\n  }\n  coverArtwork {\n    image {\n      large: url(version: \"large\")\n    }\n    id\n  }\n}\n\nfragment ArtistStructuredData_artist on Artist {\n  slug\n  name\n  birthday\n  deathday\n  gender\n  nationality\n  href\n  biographyBlurbPlain: biographyBlurb(format: PLAIN) {\n    text\n  }\n  coverArtwork {\n    image {\n      url(version: \"large\")\n    }\n    id\n  }\n  partnersConnection(first: 10) {\n    edges {\n      node {\n        href\n        id\n      }\n      id\n    }\n  }\n}\n"
   }
 };
 })();

@@ -27,8 +27,7 @@ export const OrderDetailsMessage = ({
     collectorProfile?.isEmailConfirmed &&
     collectorProfile?.profession &&
     collectorProfile?.isIdentityVerified &&
-    collectorProfile?.otherRelevantPositions &&
-    collectorProfile?.bio
+    collectorProfile?.otherRelevantPositions
   )
 
   return (
@@ -140,14 +139,7 @@ const MessageContent = ({
                 contact the gallery
               </RouterLink>
             ) : (
-              <a
-                href="/user/conversations"
-                onClick={() => {
-                  tracking.clickedContactGallery(order.internalID)
-                }}
-              >
-                contact the gallery
-              </a>
+              "contact the gallery"
             )}{" "}
             with any questions about your offer.
           </Text>
@@ -447,7 +439,6 @@ const ME_FRAGMENT = graphql`
       profession
       isIdentityVerified
       otherRelevantPositions
-      bio
     }
   }
 `

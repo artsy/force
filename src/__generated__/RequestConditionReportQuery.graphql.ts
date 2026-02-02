@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8c3f88095847ae84faa1873e317c0ec2>>
+ * @generated SignedSource<<01c6c5ce35eae273cacd476aa39817e8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -132,6 +132,7 @@ return {
         "name": "artwork",
         "plural": false,
         "selections": [
+          (v3/*: any*/),
           (v2/*: any*/),
           {
             "alias": null,
@@ -152,20 +153,19 @@ return {
               (v3/*: any*/)
             ],
             "storageKey": null
-          },
-          (v3/*: any*/)
+          }
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "472196dd4778c5c10158b014f69275ca",
+    "cacheID": "c01d7375d6d41d7f76b0787b0ec76c65",
     "id": null,
     "metadata": {},
     "name": "RequestConditionReportQuery",
     "operationKind": "query",
-    "text": "query RequestConditionReportQuery(\n  $artworkID: String!\n) {\n  me {\n    ...RequestConditionReport_me\n    id\n  }\n  artwork(id: $artworkID) {\n    ...RequestConditionReport_artwork\n    id\n  }\n}\n\nfragment RequestConditionReport_artwork on Artwork {\n  internalID\n  slug\n  saleArtwork {\n    internalID\n    id\n  }\n}\n\nfragment RequestConditionReport_me on Me {\n  email\n  internalID\n}\n"
+    "text": "query RequestConditionReportQuery(\n  $artworkID: String!\n) {\n  me {\n    ...RequestConditionReport_me\n    id\n  }\n  artwork(id: $artworkID) {\n    ...RequestConditionReport_artwork\n    id\n  }\n}\n\nfragment RequestConditionReport_artwork on Artwork {\n  id\n  internalID\n  slug\n  saleArtwork {\n    internalID\n    id\n  }\n}\n\nfragment RequestConditionReport_me on Me {\n  email\n  internalID\n}\n"
   }
 };
 })();
