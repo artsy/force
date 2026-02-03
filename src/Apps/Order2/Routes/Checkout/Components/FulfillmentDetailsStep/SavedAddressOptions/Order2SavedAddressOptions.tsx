@@ -77,17 +77,13 @@ export const SavedAddressOptions = ({
       await onSelectAddress(values)
       setUserAddressMode(null)
 
-      const address = savedAddresses.find(a => a.internalID === addressID)
-
-      if (!address) return
-
       const isValid = validateAddressFields(values)
       const isShippable = availableShippingCountries.includes(
         values.address.country,
       )
 
       setSelectedAddress({
-        ...address,
+        internalID: addressID,
         ...values,
         isValid,
         isShippable,
@@ -115,7 +111,6 @@ export const SavedAddressOptions = ({
     [
       onSelectAddress,
       setUserAddressMode,
-      savedAddresses,
       setStepErrorMessage,
       availableShippingCountries,
     ],
