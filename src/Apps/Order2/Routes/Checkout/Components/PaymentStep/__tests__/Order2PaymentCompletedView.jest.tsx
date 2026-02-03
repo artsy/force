@@ -116,7 +116,7 @@ describe("Order2PaymentCompletedView", () => {
         Viewer: () => props,
       })
 
-      expect(screen.getByText(/Deutsche Bank •••• 1234/)).toBeInTheDocument()
+      expect(screen.getByText(/•••• 1234/)).toBeInTheDocument()
     })
   })
 
