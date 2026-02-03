@@ -9,6 +9,7 @@ import {
   usePrevious,
 } from "@artsy/palette"
 import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
+import type { CheckoutErrorBannerMessage } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { AddressDisplay } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/AddressDisplay"
 import { AddAddressForm } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/SavedAddressOptions/AddAddressForm"
 import { UpdateAddressForm } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/SavedAddressOptions/UpdateAddressForm"
@@ -21,6 +22,17 @@ import { useScrollToStep } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToSt
 import type { FormikContextWithAddress } from "Components/Address/AddressFormFields"
 import { useFormikContext } from "formik"
 import { useCallback, useEffect, useState } from "react"
+
+const ADDRESS_ERROR_MESSAGES = {
+  unableToShipToAddress: {
+    title: "Unable to ship to this address",
+    message: "Select a different address or add a new one to continue.",
+  },
+  missingAddressInfo: {
+    title: "Missing required information",
+    message: "Edit your address and/or phone number to continue.",
+  },
+} satisfies Record<string, CheckoutErrorBannerMessage>
 
 interface SavedAddressOptionsProps {
   savedAddresses: ProcessedUserAddress[]
@@ -84,20 +96,14 @@ export const SavedAddressOptions = ({
       if (!isShippable) {
         return setStepErrorMessage({
           step: CheckoutStepName.FULFILLMENT_DETAILS,
-          error: {
-            title: "Unable to ship to this address",
-            message: "Select a different address or add a new one to continue.",
-          },
+          error: ADDRESS_ERROR_MESSAGES.unableToShipToAddress,
         })
       }
 
       if (!isValid) {
         return setStepErrorMessage({
           step: CheckoutStepName.FULFILLMENT_DETAILS,
-          error: {
-            title: "Missing required information",
-            message: "Edit your address and/or phone number to continue.",
-          },
+          error: ADDRESS_ERROR_MESSAGES.missingAddressInfo,
         })
       }
 
@@ -146,20 +152,14 @@ export const SavedAddressOptions = ({
       if (!isShippable) {
         return setStepErrorMessage({
           step: CheckoutStepName.FULFILLMENT_DETAILS,
-          error: {
-            title: "Unable to ship to this address",
-            message: "Select a different address or add a new one to continue.",
-          },
+          error: ADDRESS_ERROR_MESSAGES.unableToShipToAddress,
         })
       }
 
       if (!isValid) {
         return setStepErrorMessage({
           step: CheckoutStepName.FULFILLMENT_DETAILS,
-          error: {
-            title: "Missing required information",
-            message: "Edit your address and/or phone number to continue.",
-          },
+          error: ADDRESS_ERROR_MESSAGES.missingAddressInfo,
         })
       }
 

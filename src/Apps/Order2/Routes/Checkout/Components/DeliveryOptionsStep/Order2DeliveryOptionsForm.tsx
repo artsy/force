@@ -14,7 +14,7 @@ import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCh
 import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import {
   CheckoutErrorBanner,
-  MailtoOrderSupport,
+  somethingWentWrongError,
 } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import {
   deliveryOptionLabel,
@@ -104,15 +104,10 @@ export const Order2DeliveryOptionsForm: React.FC<
       console.error("Error setting delivery option:", error)
       setStepErrorMessage({
         step: CheckoutStepName.DELIVERY_OPTION,
-        error: {
-          title: "An error occurred",
-          message: (
-            <>
-              Something went wrong while selecting your shipping method. Please
-              try again or contact <MailtoOrderSupport />.
-            </>
-          ),
-        },
+        error: somethingWentWrongError(
+          "selecting your shipping method",
+          error?.code,
+        ),
       })
     }
   }
@@ -136,6 +131,7 @@ export const Order2DeliveryOptionsForm: React.FC<
                   <CheckoutErrorBanner
                     ref={errorBannerRef}
                     error={deliveryOptionError}
+                    analytics={{ flow: "User setting delivery method" }}
                   />
                   <Spacer y={2} />
                 </>

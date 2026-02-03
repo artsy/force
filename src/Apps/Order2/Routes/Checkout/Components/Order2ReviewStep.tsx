@@ -8,6 +8,7 @@ import {
   CheckoutStepName,
   CheckoutStepState,
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
+import type { CheckoutErrorBannerMessage } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { CheckoutModalError } from "Apps/Order2/Routes/Checkout/Components/CheckoutModal"
 import { Order2CheckoutPricingBreakdown } from "Apps/Order2/Routes/Checkout/Components/Order2CheckoutPricingBreakdown"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
@@ -24,6 +25,12 @@ import { useState } from "react"
 import { graphql, useFragment } from "react-relay"
 
 const logger = createLogger("Order2ReviewStep.tsx")
+
+const PAYMENT_METHOD_UPDATE_REQUIRED: CheckoutErrorBannerMessage = {
+  title: "Payment error",
+  message: "Please update your payment method",
+  code: "stripe_error",
+}
 
 interface Order2ReviewStepProps {
   order: Order2ReviewStep_order$key
@@ -65,10 +72,7 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
     editPayment()
     setStepErrorMessage({
       step: CheckoutStepName.PAYMENT,
-      error: {
-        title: "Payment error",
-        message: "Please update your payment method",
-      },
+      error: PAYMENT_METHOD_UPDATE_REQUIRED,
     })
   }
 

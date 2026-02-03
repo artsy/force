@@ -96,12 +96,19 @@ const mockCheckoutContext = {
   setSavePaymentMethod: jest.fn(),
   setPaymentComplete: jest.fn(),
   savePaymentMethod: false,
-  messages: jest.fn(),
-  setStepErrorMessage: jest.fn(),
+  messages: {
+    PAYMENT: {
+      error: null,
+    },
+  },
+  setStepErrorMessage: jest.fn(({ step, error }) => {
+    mockCheckoutContext.messages[step] = { error }
+  }),
   checkoutTracking: {
     clickedPaymentMethod: jest.fn(),
     clickedOrderProgression: jest.fn(),
     savedPaymentMethodViewed: jest.fn(),
+    errorMessageViewed: jest.fn(),
   },
   steps: [
     {
@@ -1407,6 +1414,69 @@ describe("Order2PaymentForm", () => {
       // Verify payment completes immediately without balance check
       await waitFor(() => {
         expect(mockCheckoutContext.setPaymentComplete).toHaveBeenCalled()
+      })
+    })
+  })
+
+  describe("error tracking", () => {
+    it("tracks error message when payment error is displayed", async () => {
+      const tokenId = "test-token-id"
+
+      renderPaymentForm()
+      await waitForPaymentElement()
+
+      // Select a payment method
+      await userEvent.click(screen.getByTestId("mock-credit-card"))
+
+      // Set up Stripe to succeed
+      setupStripeSubmission(tokenId)
+      mockFetchQuery.mockImplementationOnce(() =>
+        createConfirmationTokenResponse(MOCK_CARD_PREVIEW),
+      )
+
+      // Simulate triggering an error - mock mutation failure
+      mockSetPaymentMutation.submitMutation.mockResolvedValueOnce({
+        setOrderPayment: {
+          orderOrError: {
+            __typename: "OrderMutationError",
+            mutationError: {
+              message: "Payment selection failed",
+              code: "payment_selection_error",
+            },
+          },
+        },
+      })
+
+      // Click submit button
+      const continueButton = screen.getByText("Continue to Review")
+      await userEvent.click(continueButton)
+
+      // Wait for setStepErrorMessage to be called with the error
+      await waitFor(() => {
+        expect(mockCheckoutContext.setStepErrorMessage).toHaveBeenCalledWith({
+          step: "PAYMENT",
+          error: expect.objectContaining({
+            title: expect.any(String),
+            message: expect.anything(),
+          }),
+        })
+      })
+
+      // Wait for error banner to appear
+      await waitFor(() => {
+        expect(screen.getByRole("alert")).toBeInTheDocument()
+      })
+
+      // Wait for error tracking to be called
+      await waitFor(() => {
+        expect(
+          mockCheckoutContext.checkoutTracking.errorMessageViewed,
+        ).toHaveBeenCalledWith({
+          error_code: "payment_selection_error",
+          title: expect.any(String),
+          message: expect.any(String),
+          flow: "User setting payment",
+        })
       })
     })
   })

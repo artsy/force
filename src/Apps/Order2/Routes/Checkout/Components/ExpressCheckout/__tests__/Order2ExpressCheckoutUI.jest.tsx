@@ -620,7 +620,7 @@ describe("ExpressCheckoutUI", () => {
       })
     })
 
-    it("stores error and tracks error message viewed event when there is an error", async () => {
+    it("stores error when there is an error", async () => {
       const mockErrorRef = { current: "test_error_code" }
       jest.spyOn(React, "useRef").mockReturnValue(mockErrorRef)
 
@@ -630,22 +630,9 @@ describe("ExpressCheckoutUI", () => {
 
       fireEvent.click(screen.getByTestId("express-checkout-cancel"))
 
-      expect(trackEvent).toHaveBeenCalledWith({
-        action: "errorMessageViewed",
-        context_owner_id: "order-id-from-context",
-        context_owner_type: "owner-type-from-context",
-        error_code: "test_error_code",
-        title: "An error occurred",
-        message:
-          "Something went wrong. Please try again or contact orders@artsy.net",
-        flow: "Express checkout",
-      })
-
       expect(sessionStorage.setItem).toHaveBeenCalledWith(
         "expressCheckoutError",
-        JSON.stringify({
-          title: "An error occurred",
-        }),
+        "test_error_code",
       )
     })
   })
@@ -699,8 +686,8 @@ describe("ExpressCheckoutUI", () => {
       jest.clearAllMocks()
     })
 
-    it("shows payment failed message for card errors", async () => {
-      const mockErrorRef = { current: "card_declined" }
+    it("shows payment failed message for backend processing errors", async () => {
+      const mockErrorRef = { current: "processing_error" }
       jest.spyOn(React, "useRef").mockReturnValue(mockErrorRef)
 
       renderWithRelay({
@@ -711,16 +698,12 @@ describe("ExpressCheckoutUI", () => {
 
       expect(sessionStorage.setItem).toHaveBeenCalledWith(
         "expressCheckoutError",
-        JSON.stringify({
-          title: "Payment failed",
-          message:
-            "There was an issue with your payment method. Please try again.",
-        }),
+        "processing_error",
       )
     })
 
-    it("shows shipping address error message for address errors", async () => {
-      const mockErrorRef = { current: "unsupported_shipping_location" }
+    it("shows payment verification failed for confirmation token errors", async () => {
+      const mockErrorRef = { current: "confirmation_token_error" }
       jest.spyOn(React, "useRef").mockReturnValue(mockErrorRef)
 
       renderWithRelay({
@@ -731,30 +714,7 @@ describe("ExpressCheckoutUI", () => {
 
       expect(sessionStorage.setItem).toHaveBeenCalledWith(
         "expressCheckoutError",
-        JSON.stringify({
-          title: "Shipping address error",
-          message: "Please check your shipping address and try again.",
-        }),
-      )
-    })
-
-    it("shows payment method not supported message for unsupported payment method", async () => {
-      const mockErrorRef = { current: "unsupported_payment_method" }
-      jest.spyOn(React, "useRef").mockReturnValue(mockErrorRef)
-
-      renderWithRelay({
-        Order: () => ({ ...orderData }),
-      })
-
-      fireEvent.click(screen.getByTestId("express-checkout-cancel"))
-
-      expect(sessionStorage.setItem).toHaveBeenCalledWith(
-        "expressCheckoutError",
-        JSON.stringify({
-          title: "Payment method not supported",
-          message:
-            "This payment method is not supported. Please try a different payment method.",
-        }),
+        "confirmation_token_error",
       )
     })
 
@@ -770,9 +730,7 @@ describe("ExpressCheckoutUI", () => {
 
       expect(sessionStorage.setItem).toHaveBeenCalledWith(
         "expressCheckoutError",
-        JSON.stringify({
-          title: "An error occurred",
-        }),
+        "unknown_error",
       )
     })
   })
