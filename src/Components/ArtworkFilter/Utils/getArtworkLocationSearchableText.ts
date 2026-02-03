@@ -1,5 +1,10 @@
-import { Item } from "@artsy/palette/dist/elements/FilterSelect/Components/FilterSelectContext"
 import { compact } from "lodash"
+
+interface Item {
+  label: string
+  value: string
+  [key: string]: string | number | boolean
+}
 
 export function getArtworkLocationSearchableText(item: Item) {
   const parts = item.label.split(", ")

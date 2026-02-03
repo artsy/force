@@ -1,6 +1,6 @@
 import { createMedia } from "@artsy/fresnel"
 import { unitlessBreakpoints } from "@artsy/palette"
-export { Breakpoint } from "@artsy/palette"
+export type { Breakpoint } from "@artsy/palette"
 
 export const BREAKPOINTS = {
   xs: 0,
