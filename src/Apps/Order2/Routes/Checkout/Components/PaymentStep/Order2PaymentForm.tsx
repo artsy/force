@@ -285,7 +285,6 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
   const paymentElementRef = useRef<HTMLDivElement>(null)
   const errorBannerRef = useScrollToErrorBanner(CheckoutStepName.PAYMENT)
   const billingFormRef = useRef<any>(null)
-  const hasTrackedSavedPaymentMethodViewed = useRef(false)
 
   // Default to saved payment method when available and track that it has been viewed
   useEffect(() => {
@@ -293,11 +292,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       return
     }
 
-    if (
-      !selectedPaymentMethod &&
-      (hasSavedCreditCards || hasSavedBankAccounts) &&
-      !hasTrackedSavedPaymentMethodViewed.current
-    ) {
+    if (!selectedPaymentMethod && (hasSavedCreditCards || hasSavedBankAccounts)) {
       setSelectedPaymentMethod("saved")
 
       const savedPaymentTypes = [
@@ -306,7 +301,6 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       ].filter(Boolean) as string[]
 
       checkoutTracking.savedPaymentMethodViewed(savedPaymentTypes)
-      hasTrackedSavedPaymentMethodViewed.current = true
     }
   }, [
     hasSavedCreditCards,

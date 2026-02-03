@@ -482,4 +482,166 @@ describe("SavedAddressOptions", () => {
       })
     })
   })
+
+  describe("Tracking", () => {
+    it("tracks savedAddressViewed when saved addresses are displayed and step is active", async () => {
+      const mockSavedAddressViewed = jest.fn()
+      mockCheckoutContext = {
+        ...mockCheckoutContext,
+        checkoutTracking: {
+          ...mockCheckoutContext.checkoutTracking,
+          savedAddressViewed: mockSavedAddressViewed,
+        },
+        steps: [
+          {
+            name: CheckoutStepName.FULFILLMENT_DETAILS,
+            state: "ACTIVE",
+          },
+        ],
+      } as any
+
+      mockUseCheckoutContext.mockReturnValue(mockCheckoutContext)
+
+      const onSelectAddress = jest.fn()
+
+      render(
+        <TestWrapper>
+          <SavedAddressOptions
+            savedAddresses={[mockUSAddress1, mockUSAddress2]}
+            initialSelectedAddress={mockUSAddress1}
+            onSelectAddress={onSelectAddress}
+            newAddressInitialValues={mockNewAddressInitialValues}
+          />
+        </TestWrapper>,
+      )
+
+      await waitFor(() => {
+        expect(mockSavedAddressViewed).toHaveBeenCalledTimes(1)
+      })
+    })
+
+    it("does not track savedAddressViewed when step is not active", async () => {
+      const mockSavedAddressViewed = jest.fn()
+      mockCheckoutContext = {
+        ...mockCheckoutContext,
+        checkoutTracking: {
+          ...mockCheckoutContext.checkoutTracking,
+          savedAddressViewed: mockSavedAddressViewed,
+        },
+        steps: [
+          {
+            name: CheckoutStepName.FULFILLMENT_DETAILS,
+            state: "UPCOMING",
+          },
+        ],
+      } as any
+
+      mockUseCheckoutContext.mockReturnValue(mockCheckoutContext)
+
+      const onSelectAddress = jest.fn()
+
+      render(
+        <TestWrapper>
+          <SavedAddressOptions
+            savedAddresses={[mockUSAddress1, mockUSAddress2]}
+            initialSelectedAddress={mockUSAddress1}
+            onSelectAddress={onSelectAddress}
+            newAddressInitialValues={mockNewAddressInitialValues}
+          />
+        </TestWrapper>,
+      )
+
+      await waitFor(() => {
+        expect(mockSavedAddressViewed).not.toHaveBeenCalled()
+      })
+    })
+
+    it("does not track savedAddressViewed when in add mode", async () => {
+      const mockSavedAddressViewed = jest.fn()
+      mockCheckoutContext = {
+        ...mockCheckoutContext,
+        checkoutTracking: {
+          ...mockCheckoutContext.checkoutTracking,
+          savedAddressViewed: mockSavedAddressViewed,
+        },
+        steps: [
+          {
+            name: CheckoutStepName.FULFILLMENT_DETAILS,
+            state: "ACTIVE",
+          },
+        ],
+        userAddressMode: { mode: "add" },
+      } as any
+
+      mockUseCheckoutContext.mockReturnValue(mockCheckoutContext)
+
+      const onSelectAddress = jest.fn()
+
+      render(
+        <TestWrapper>
+          <SavedAddressOptions
+            savedAddresses={[mockUSAddress1, mockUSAddress2]}
+            initialSelectedAddress={mockUSAddress1}
+            onSelectAddress={onSelectAddress}
+            newAddressInitialValues={mockNewAddressInitialValues}
+          />
+        </TestWrapper>,
+      )
+
+      // The component should render the AddAddressForm instead
+      expect(screen.queryByText("Delivery address")).not.toBeInTheDocument()
+      expect(mockSavedAddressViewed).not.toHaveBeenCalled()
+    })
+
+    it("only tracks savedAddressViewed once", async () => {
+      const mockSavedAddressViewed = jest.fn()
+      mockCheckoutContext = {
+        ...mockCheckoutContext,
+        checkoutTracking: {
+          ...mockCheckoutContext.checkoutTracking,
+          savedAddressViewed: mockSavedAddressViewed,
+        },
+        steps: [
+          {
+            name: CheckoutStepName.FULFILLMENT_DETAILS,
+            state: "ACTIVE",
+          },
+        ],
+      } as any
+
+      mockUseCheckoutContext.mockReturnValue(mockCheckoutContext)
+
+      const onSelectAddress = jest.fn()
+
+      const { rerender } = render(
+        <TestWrapper>
+          <SavedAddressOptions
+            savedAddresses={[mockUSAddress1, mockUSAddress2]}
+            initialSelectedAddress={mockUSAddress1}
+            onSelectAddress={onSelectAddress}
+            newAddressInitialValues={mockNewAddressInitialValues}
+          />
+        </TestWrapper>,
+      )
+
+      await waitFor(() => {
+        expect(mockSavedAddressViewed).toHaveBeenCalledTimes(1)
+      })
+
+      // Rerender with same props
+      rerender(
+        <TestWrapper>
+          <SavedAddressOptions
+            savedAddresses={[mockUSAddress1, mockUSAddress2]}
+            initialSelectedAddress={mockUSAddress1}
+            onSelectAddress={onSelectAddress}
+            newAddressInitialValues={mockNewAddressInitialValues}
+          />
+        </TestWrapper>,
+      )
+
+      // Should still only be called once
+      expect(mockSavedAddressViewed).toHaveBeenCalledTimes(1)
+    })
+  })
 })
