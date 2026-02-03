@@ -7,8 +7,8 @@ import {
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import {
   CheckoutErrorBanner,
-  type CheckoutErrorBannerProps,
-  MailtoOrderSupport,
+  type CheckoutErrorBannerMessage,
+  somethingWentWrongError,
 } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { OfferInput } from "Apps/Order2/Routes/Checkout/Components/OfferStep/Components/OfferInput"
 import { Order2OfferOptions } from "Apps/Order2/Routes/Checkout/Components/OfferStep/Components/Order2OfferOptions"
@@ -37,6 +37,17 @@ const logger = createLogger(
   "Order2/Routes/Checkout/Components/OfferStep/Order2OfferStep.tsx",
 )
 
+const offerError = (code?: string): CheckoutErrorBannerMessage => {
+  if (code) {
+    return somethingWentWrongError("selecting your offer amount", code)
+  }
+
+  return {
+    title: "Offer amount required",
+    message: "Select an offer amount or enter your own to continue.",
+  }
+}
+
 interface OfferFormValues {
   offerValue: number
   offerNote: string
@@ -48,7 +59,7 @@ interface Order2OfferStepProps {
 
 interface Order2OfferStepFormContentProps {
   orderData: Order2OfferStep_order$data
-  offerAmountError: CheckoutErrorBannerProps["error"]
+  offerAmountError?: CheckoutErrorBannerMessage | null
   currentStep: CheckoutStepState | undefined
   completedViewProps: Order2OfferCompletedViewProps | null
   isSubmittingOffer: boolean
@@ -100,15 +111,7 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
       logger.error(error)
       setStepErrorMessage({
         step: CheckoutStepName.OFFER_AMOUNT,
-        error: {
-          title: "An error occurred",
-          message: (
-            <>
-              Something went wrong while selecting your offer amount. Please try
-              again or contact <MailtoOrderSupport />.
-            </>
-          ),
-        },
+        error: offerError(error.code),
       })
     }
 
@@ -239,10 +242,7 @@ const Order2OfferStepFormContent: React.FC<Order2OfferStepFormContentProps> = ({
       setFieldValue("offerValue", values.offerValue, true)
       setStepErrorMessage({
         step: CheckoutStepName.OFFER_AMOUNT,
-        error: {
-          title: "Offer amount required",
-          message: "Select an offer amount or enter your own to continue.",
-        },
+        error: offerError(),
       })
       return
     }
@@ -312,7 +312,11 @@ const Order2OfferStepFormContent: React.FC<Order2OfferStepFormContentProps> = ({
           </Text>
           <Spacer y={1} />
           {offerAmountError && (
-            <CheckoutErrorBanner ref={errorBannerRef} error={offerAmountError} />
+            <CheckoutErrorBanner
+              ref={errorBannerRef}
+              error={offerAmountError}
+              analytics={{ flow: "User setting offer" }}
+            />
           )}
         </Flex>
       </Box>

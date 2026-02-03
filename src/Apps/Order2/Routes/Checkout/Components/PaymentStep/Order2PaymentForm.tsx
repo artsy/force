@@ -20,7 +20,8 @@ import {
 import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import {
   CheckoutErrorBanner,
-  MailtoOrderSupport,
+  type CheckoutErrorBannerMessage,
+  somethingWentWrongError,
 } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useScrollToErrorBanner } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToErrorBanner"
@@ -48,12 +49,20 @@ import { WireTransferOption } from "./WireTransferOption"
 
 const logger = createLogger("Order2PaymentForm")
 
-const defaultErrorMessage = (
-  <>
-    Something went wrong while selecting your payment method. Please try again
-    or contact <MailtoOrderSupport />.
-  </>
-)
+const PAYMENT_ERROR_MESSAGES: Record<string, CheckoutErrorBannerMessage> = {
+  noPaymentMethodSelected: {
+    title: "Payment method required",
+    message: "Select a payment method",
+  },
+  noSavedPaymentMethodSelected: {
+    title: "Payment method required",
+    message: "Select a saved payment method",
+  },
+  insufficientFunds: {
+    title: "Insufficient funds",
+    message: "Update payment details or choose an alternative payment method",
+  },
+}
 
 const defaultBillingAddress = {
   ...emptyAddress,
@@ -89,6 +98,7 @@ const getBaseStripeOptions = (
   mode: Order2PaymentForm_order$data["mode"],
   total: { minor: number; currencyCode: string },
   merchantAccountExternalId: string | undefined,
+  availablePaymentMethodTypes?: ReadonlyArray<string> | null,
 ) => {
   const sharedOptions = {
     currency: total.currencyCode.toLowerCase(),
@@ -107,6 +117,7 @@ const getBaseStripeOptions = (
       },
     },
     onBehalfOf: merchantAccountExternalId,
+    paymentMethodTypes: availablePaymentMethodTypes as string[],
   }
 
   return mode === "BUY"
@@ -118,7 +129,6 @@ const getBaseStripeOptions = (
     : {
         ...sharedOptions,
         mode: "setup" as const,
-        paymentMethodTypes: ["card"],
       }
 }
 
@@ -134,7 +144,7 @@ export const Order2PaymentForm: React.FC<Order2PaymentFormProps> = ({
   const orderData = useFragment(ORDER_FRAGMENT, order)
   const meData = useFragment(ME_FRAGMENT, me)
   const stripe = useStripe()
-  const { seller, mode } = orderData
+  const { seller, mode, availableStripePaymentMethodTypes } = orderData
 
   const total = getTotalForPayment(orderData)
 
@@ -148,6 +158,7 @@ export const Order2PaymentForm: React.FC<Order2PaymentFormProps> = ({
     mode,
     total,
     seller?.merchantAccount?.externalId,
+    availableStripePaymentMethodTypes,
   )
 
   const options: StripeElementsOptions = {
@@ -298,22 +309,23 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
     const total = getTotalForPayment(order)
     if (!total) return
 
+    const { mode, availableStripePaymentMethodTypes } = order
+
     const options = getBaseStripeOptions(
-      order.mode,
+      mode,
       total,
       merchantAccountExternalId,
+      availableStripePaymentMethodTypes,
     )
 
     elements.update(options)
   }, [elements, merchantAccountExternalId, order])
 
   const handleError = useCallback(
-    (error?: { message?: string | JSX.Element }) => {
+    (error?: CheckoutErrorBannerMessage) => {
       setStepErrorMessage({
         step: CheckoutStepName.PAYMENT,
-        error: {
-          message: error?.message,
-        },
+        error,
       })
 
       setIsSubmittingToStripe(false)
@@ -337,18 +349,15 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
   )
 
   const handleBalanceCheckComplete = useCallback(
-    async (result: BankAccountBalanceCheckResult, message?: string) => {
+    async (result: BankAccountBalanceCheckResult) => {
       setIsCheckingBankBalance(false)
 
       switch (result) {
         // We only want to block the checkout when we know there is insufficient funds.
         case BankAccountBalanceCheckResult.INSUFFICIENT:
-          handleError({
-            message: message || "Insufficient funds in bank account",
-          })
+          handleError(PAYMENT_ERROR_MESSAGES.insufficientFunds)
           break
         default:
-          // For SUFFICIENT, PENDING, TIMEOUT, or OTHER, proceed with checkout
           setPaymentComplete()
           setIsSubmittingToStripe(false)
           resetElementsToInitialParams()
@@ -514,7 +523,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
     }
 
     if (!selectedPaymentMethod) {
-      handleError({ message: "Select a payment method" })
+      handleError(PAYMENT_ERROR_MESSAGES.noPaymentMethodSelected)
       return
     }
 
@@ -577,7 +586,9 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       )
 
       if (error) {
-        handleError({ message: defaultErrorMessage })
+        handleError(
+          somethingWentWrongError("selecting your payment method", error.code),
+        )
         return
       }
 
@@ -590,7 +601,12 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       setSavePaymentMethod(savePaymentMethod)
 
       if (!response) {
-        handleError({ message: defaultErrorMessage })
+        handleError(
+          somethingWentWrongError(
+            "selecting your payment method",
+            "confirmation_token_fetch_failed",
+          ),
+        )
         return
       }
 
@@ -629,7 +645,9 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         setIsSubmittingToStripe(false)
         resetElementsToInitialParams()
       } catch (error) {
-        handleError({ message: defaultErrorMessage })
+        handleError(
+          somethingWentWrongError("selecting your payment method", error.code),
+        )
         logger.error(
           "Error while submitting order with new stripe payment method",
           error,
@@ -653,7 +671,9 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
 
         validateAndExtractOrderResponse(result.setOrderPayment?.orderOrError)
       } catch (error) {
-        handleError({ message: defaultErrorMessage })
+        handleError(
+          somethingWentWrongError("selecting your payment method", error.code),
+        )
         logger.error(
           "Error while submitting order with wire trasnfer payment method",
           error,
@@ -669,7 +689,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
 
     if (selectedPaymentMethod === "saved") {
       if (!selectedSavedPaymentMethod) {
-        handleError({ message: "Select a saved payment method" })
+        handleError(PAYMENT_ERROR_MESSAGES.noSavedPaymentMethodSelected)
         return
       }
 
@@ -706,7 +726,9 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         resetElementsToInitialParams()
         setPaymentComplete()
       } catch (error) {
-        handleError({ message: defaultErrorMessage })
+        handleError(
+          somethingWentWrongError("selecting your payment method", error.code),
+        )
         logger.error(
           "Error while submitting order with saved payment method",
           error,
@@ -775,7 +797,11 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
 
       {paymentError && (
         <>
-          <CheckoutErrorBanner ref={errorBannerRef} error={paymentError} />
+          <CheckoutErrorBanner
+            ref={errorBannerRef}
+            error={paymentError}
+            analytics={{ flow: "User setting payment" }}
+          />
           <Spacer y={4} />
         </>
       )}
@@ -828,6 +854,7 @@ const ORDER_FRAGMENT = graphql`
     internalID
     currencyCode
     availablePaymentMethods
+    availableStripePaymentMethodTypes
     bankAccountBalanceCheck {
       result
       message

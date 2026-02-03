@@ -4,7 +4,7 @@ import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCh
 import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import {
   CheckoutErrorBanner,
-  MailtoOrderSupport,
+  somethingWentWrongError,
 } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { SavedAddressOptions } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/SavedAddressOptions/Order2SavedAddressOptions"
 import { handleError } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/handleError"
@@ -257,15 +257,10 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
         handleError(
           error,
           formikHelpers,
-          {
-            title: "An error occurred",
-            message: (
-              <>
-                Something went wrong while updating your delivery address.
-                Please try again or contact <MailtoOrderSupport />.
-              </>
-            ),
-          },
+          somethingWentWrongError(
+            "updating your delivery address",
+            error?.code,
+          ),
           error =>
             setStepErrorMessage({
               step: CheckoutStepName.FULFILLMENT_DETAILS,
@@ -303,6 +298,7 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
                 <CheckoutErrorBanner
                   ref={errorBannerRef}
                   error={fulfillmentDetailsError}
+                  analytics={{ flow: "User setting shipping address" }}
                 />
                 <Spacer y={2} />
               </>

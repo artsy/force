@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c88b99d57c1b3ba0594292afbee1efb2>>
+ * @generated SignedSource<<d0e3a55756ed5e5c65c9c2491945edb5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,6 +13,7 @@ import { FragmentRefs } from "relay-runtime";
 export type SmsSecondFactor_me$data = {
   readonly email: string | null | undefined;
   readonly hasSecondFactorEnabled: boolean;
+  readonly isEmailConfirmed: boolean;
   readonly smsSecondFactors: ReadonlyArray<{
     readonly __typename: "SmsSecondFactor";
     readonly formattedPhoneNumber: string | null | undefined;
@@ -47,6 +48,13 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "hasSecondFactorEnabled",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isEmailConfirmed",
       "storageKey": null
     },
     {
@@ -101,6 +109,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "9a5480f4d7b516b95d4b80874821951e";
+(node as any).hash = "35d3dcb7ef9c7bdee5de2b44105c8676";
 
 export default node;

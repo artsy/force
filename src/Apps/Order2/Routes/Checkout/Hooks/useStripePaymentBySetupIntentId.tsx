@@ -1,5 +1,6 @@
 import { useSetPaymentByStripeIntent } from "Apps/Order/Mutations/useSetPaymentByStripeIntentMutation"
 import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
+import type { CheckoutErrorBannerMessage } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { fetchAndSetConfirmationToken } from "Apps/Order2/Utils/confirmationTokenUtils"
 import { useRouter } from "System/Hooks/useRouter"
 import createLogger from "Utils/logger"
@@ -8,6 +9,13 @@ import { useRelayEnvironment } from "react-relay"
 import { useCheckoutContext } from "./useCheckoutContext"
 
 const logger = createLogger("useStripePaymentBySetupIntentId")
+
+const paymentProcessingError = (code?: string): CheckoutErrorBannerMessage => ({
+  title: "Payment could not be processed",
+  message:
+    "Please try again or use a different payment method to complete your purchase.",
+  code,
+})
 
 /*
  * Hook to handle Stripe redirect for newly-linked bank account in Order2
@@ -101,18 +109,11 @@ export function useStripePaymentBySetupIntentId(
       ).commerceSetPaymentByStripeIntent?.orderOrError
 
       if (orderOrError?.error) throw orderOrError.error
-
-      logger.log("Successfully set payment by setup intent")
     } catch (error) {
       logger.error("Failed to set payment by setup intent:", error)
-      // TODO: placeholder message
       setStepErrorMessage({
         step: CheckoutStepName.PAYMENT,
-        error: {
-          title: "Payment could not be processed",
-          message:
-            "Please try again or use a different payment method to complete your purchase.",
-        },
+        error: paymentProcessingError(error?.code),
       })
       onComplete()
     }

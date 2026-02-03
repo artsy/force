@@ -1,18 +1,16 @@
+import { fireEvent, render, screen } from "@testing-library/react"
 import { CollectionHubFixture } from "Apps/__tests__/Fixtures/Collections"
-import { render, screen, fireEvent } from "@testing-library/react"
 import { useTracking } from "react-tracking"
 import "jest-styled-components"
-import { paginateCarousel } from "@artsy/palette"
 import { OtherCollectionsRail } from "Apps/Collect/Routes/Collection/Components/CollectionsHubRails/OtherCollectionsRail/index"
 import { AnalyticsCombinedContextProvider } from "System/Contexts/AnalyticsContext"
 
-jest.mock("@artsy/palette/dist/elements/Carousel/paginate")
 jest.mock("@artsy/palette", () => {
   const moduleMock = jest.requireActual("@artsy/palette")
   return {
     ...moduleMock,
     useMutationObserver: jest.fn(),
-    paginate: () => [0, 100],
+    paginateCarousel: jest.fn(() => [0, 100, 200]),
   }
 })
 
@@ -36,7 +34,6 @@ describe("CollectionsRail", () => {
         trackEvent,
       }
     })
-    ;(paginateCarousel as jest.Mock).mockImplementation(() => [0, 100, 200])
   })
 
   const renderComponent = (passedProps = props) => {
