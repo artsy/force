@@ -256,9 +256,7 @@ export const SmsSecondFactor: React.FC<
           >
             {emailSent ? (
               <>
-                Please check your inbox and click the link to verify your email.
-                This page will automatically update once verified (or refresh
-                manually).{" "}
+                Please check your inbox and click the link to verify your email.{" "}
                 <Clickable
                   onClick={handleSendVerifyEmail}
                   textDecoration="underline"
