@@ -269,7 +269,12 @@ describe("Order2PaymentForm", () => {
       code: "TEST-ORDER-123",
       mode: "BUY",
       source: "ARTWORK_PAGE",
-      availablePaymentMethods: ["CREDIT_CARD", "WIRE_TRANSFER"],
+      availablePaymentMethods: [
+        "CREDIT_CARD",
+        "US_BANK_ACCOUNT",
+        "WIRE_TRANSFER",
+      ],
+      availableStripePaymentMethodTypes: ["card", "us_bank_account"],
       itemsTotal: {
         minor: 100000,
         currencyCode: "USD",
@@ -1293,6 +1298,7 @@ describe("Order2PaymentForm", () => {
               "US_BANK_ACCOUNT",
               "WIRE_TRANSFER",
             ],
+            availableStripePaymentMethodTypes: ["card", "us_bank_account"],
           },
         }),
       })

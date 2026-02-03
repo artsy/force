@@ -98,6 +98,7 @@ const getBaseStripeOptions = (
   mode: Order2PaymentForm_order$data["mode"],
   total: { minor: number; currencyCode: string },
   merchantAccountExternalId: string | undefined,
+  availablePaymentMethodTypes?: ReadonlyArray<string> | null,
 ) => {
   const sharedOptions = {
     currency: total.currencyCode.toLowerCase(),
@@ -116,6 +117,7 @@ const getBaseStripeOptions = (
       },
     },
     onBehalfOf: merchantAccountExternalId,
+    paymentMethodTypes: availablePaymentMethodTypes as string[],
   }
 
   return mode === "BUY"
@@ -127,7 +129,6 @@ const getBaseStripeOptions = (
     : {
         ...sharedOptions,
         mode: "setup" as const,
-        paymentMethodTypes: ["card"],
       }
 }
 
@@ -143,7 +144,7 @@ export const Order2PaymentForm: React.FC<Order2PaymentFormProps> = ({
   const orderData = useFragment(ORDER_FRAGMENT, order)
   const meData = useFragment(ME_FRAGMENT, me)
   const stripe = useStripe()
-  const { seller, mode } = orderData
+  const { seller, mode, availableStripePaymentMethodTypes } = orderData
 
   const total = getTotalForPayment(orderData)
 
@@ -157,6 +158,7 @@ export const Order2PaymentForm: React.FC<Order2PaymentFormProps> = ({
     mode,
     total,
     seller?.merchantAccount?.externalId,
+    availableStripePaymentMethodTypes,
   )
 
   const options: StripeElementsOptions = {
@@ -307,10 +309,13 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
     const total = getTotalForPayment(order)
     if (!total) return
 
+    const { mode, availableStripePaymentMethodTypes } = order
+
     const options = getBaseStripeOptions(
-      order.mode,
+      mode,
       total,
       merchantAccountExternalId,
+      availableStripePaymentMethodTypes,
     )
 
     elements.update(options)
@@ -849,6 +854,7 @@ const ORDER_FRAGMENT = graphql`
     internalID
     currencyCode
     availablePaymentMethods
+    availableStripePaymentMethodTypes
     bankAccountBalanceCheck {
       result
       message
