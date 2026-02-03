@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Clickable,
   Flex,
   Message,
   ModalDialog,
@@ -14,11 +15,12 @@ import { afterUpdateRedirect } from "Apps/Settings/Routes/EditSettings/Component
 import { ConfirmPasswordModal } from "Components/ConfirmPasswordModal"
 import { RouterLink } from "System/Components/RouterLink"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import { useVerifyEmail } from "Apps/Settings/Routes/EditProfile/Mutations/useVerifyEmail"
 import { isArtsyEmail } from "Utils/isArtsyEmail"
 import type { CreateSmsSecondFactorInput } from "__generated__/CreateSmsSecondFactorMutation.graphql"
 import type { SmsSecondFactor_me$data } from "__generated__/SmsSecondFactor_me.graphql"
 import type * as React from "react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import {
   type RelayRefetchProp,
   createRefetchContainer,
@@ -48,6 +50,9 @@ export const SmsSecondFactor: React.FC<
   const [isDisabling] = useState(false) // ???
   const [isCreating, setCreating] = useState(false)
   const [passwordConfirmation, setPasswordConfirmation] = useState("")
+  const [emailSent, setEmailSent] = useState(false)
+  const [isSendingEmail, setIsSendingEmail] = useState(false)
+  const [lastSentTime, setLastSentTime] = useState<number | null>(null)
 
   // Reset's _all_ of these state flags.
   // NOTE: Don't do this. Just hacking around the architecture here.
@@ -62,6 +67,7 @@ export const SmsSecondFactor: React.FC<
   }
 
   const { sendToast } = useToasts()
+  const { submitMutation: submitVerifyEmailMutation } = useVerifyEmail()
 
   const [stagedSecondFactor, setStagedSecondFactor] = useState(null)
 
@@ -162,7 +168,62 @@ export const SmsSecondFactor: React.FC<
     })
   }
 
+  async function handleSendVerifyEmail() {
+    const COOLDOWN_MS = 30000 // 30 seconds
+    const now = Date.now()
+
+    // Guard: Check if already sending
+    if (isSendingEmail) return
+
+    // Guard: Check cooldown period
+    if (lastSentTime && now - lastSentTime < COOLDOWN_MS) {
+      const remainingSeconds = Math.ceil(
+        (COOLDOWN_MS - (now - lastSentTime)) / 1000,
+      )
+      sendToast({
+        variant: "message",
+        message: "Please wait",
+        description: `You can resend the verification email in ${remainingSeconds} seconds.`,
+      })
+      return
+    }
+
+    setIsSendingEmail(true)
+
+    try {
+      await submitVerifyEmailMutation({
+        variables: { input: {} },
+        rejectIf: res => {
+          return res.sendConfirmationEmail?.confirmationOrError?.mutationError
+        },
+      })
+
+      setEmailSent(true)
+      setLastSentTime(now)
+    } catch (error) {
+      sendToast({
+        variant: "error",
+        message: "There was a problem",
+        description: error.message || "Something went wrong",
+      })
+    } finally {
+      setIsSendingEmail(false)
+    }
+  }
+
+  // Poll for email verification after user requests verification email
+  useEffect(() => {
+    if (emailSent && !me.isEmailConfirmed) {
+      const interval = setInterval(() => {
+        relay.refetch({}, null, {}, { force: true })
+      }, 5000) // Check every 5 seconds
+
+      return () => clearInterval(interval)
+    }
+  }, [emailSent, me.isEmailConfirmed, relay])
+
   const show2FAWarning = isArtsyEmail(me?.email)
+  const showEmailVerificationWarning = !isEnabled && !me.isEmailConfirmed
 
   return (
     <>
@@ -181,6 +242,48 @@ export const SmsSecondFactor: React.FC<
               here in Notion
             </RouterLink>
             .
+          </Message>
+        )}
+
+        {showEmailVerificationWarning && (
+          <Message
+            variant={emailSent ? "success" : "error"}
+            title={
+              emailSent
+                ? "Verification email sent"
+                : "Email verification required"
+            }
+          >
+            {emailSent ? (
+              <>
+                Please check your inbox and click the link to verify your email.{" "}
+                <Clickable
+                  onClick={handleSendVerifyEmail}
+                  textDecoration="underline"
+                  style={{ opacity: isSendingEmail ? 0.5 : 1 }}
+                >
+                  <Text variant="sm-display">
+                    {isSendingEmail
+                      ? "Sending..."
+                      : "Resend verification email"}
+                  </Text>
+                </Clickable>
+              </>
+            ) : (
+              <>
+                You must verify your email address before setting up text
+                message two-factor authentication.{" "}
+                <Clickable
+                  onClick={handleSendVerifyEmail}
+                  textDecoration="underline"
+                  style={{ opacity: isSendingEmail ? 0.5 : 1 }}
+                >
+                  <Text variant="sm-display">
+                    {isSendingEmail ? "Sending..." : "Send verification email"}
+                  </Text>
+                </Clickable>
+              </>
+            )}
           </Message>
         )}
 
@@ -230,9 +333,20 @@ export const SmsSecondFactor: React.FC<
             ) : (
               <Button
                 width={["100%", "auto"]}
-                onClick={() => setShowConfirmPassword(true)}
+                onClick={() => {
+                  if (!me.isEmailConfirmed) {
+                    sendToast({
+                      variant: "error",
+                      message: "Email verification required",
+                      description:
+                        "Please verify your email before setting up text message two-factor authentication.",
+                    })
+                    return
+                  }
+                  setShowConfirmPassword(true)
+                }}
                 loading={isCreating}
-                disabled={isCreating}
+                disabled={isCreating || !me.isEmailConfirmed}
               >
                 Set Up
               </Button>
@@ -311,6 +425,7 @@ export const SmsSecondFactorRefetchContainer = createRefetchContainer(
       fragment SmsSecondFactor_me on Me {
         email
         hasSecondFactorEnabled
+        isEmailConfirmed
 
         smsSecondFactors: secondFactors(kinds: [sms]) {
           ... on SmsSecondFactor {
