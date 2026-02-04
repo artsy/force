@@ -542,6 +542,7 @@ describe("Order2PaymentForm", () => {
           id: "bank-1",
           last4: "5678",
           bankName: "Test Bank",
+          type: "US_BANK_ACCOUNT",
         },
       ]
 
@@ -561,7 +562,7 @@ describe("Order2PaymentForm", () => {
 
       expect(
         mockCheckoutContext.checkoutTracking.savedPaymentMethodViewed,
-      ).toHaveBeenCalledWith(["CREDIT_CARD"])
+      ).toHaveBeenCalledWith(["CREDIT_CARD", "BANK_ACCOUNT"])
     })
 
     it("tracks order progression when submitting payment", async () => {

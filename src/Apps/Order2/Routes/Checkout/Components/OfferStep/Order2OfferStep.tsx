@@ -211,7 +211,13 @@ const Order2OfferStepFormContent: React.FC<Order2OfferStepFormContentProps> = ({
     })
   }
 
-  const trackOfferOption = (value: number, description?: string) => {
+  const trackOfferOption = ({
+    value,
+    description,
+  }: {
+    value: number
+    description?: string
+  }) => {
     if (value !== undefined && value > 0) {
       checkoutTracking.clickedOfferOption(
         orderData.currencyCode,
@@ -222,15 +228,15 @@ const Order2OfferStepFormContent: React.FC<Order2OfferStepFormContentProps> = ({
     }
   }
 
-  const onOfferOptionSelected = (value: number) => {
+  const onOfferOptionSelected = (value: number, description?: string) => {
     setFieldValue("offerValue", value)
     clearOfferError()
 
-    trackOfferOption(value, "Custom amount")
+    trackOfferOption({ value, description })
   }
 
   const onCustomOfferBlur = (value: number) => {
-    trackOfferOption(value, "Custom amount")
+    trackOfferOption({ value, description: "Custom amount" })
   }
 
   const onOfferNoteChange = (noteValue: OfferNoteValue) => {

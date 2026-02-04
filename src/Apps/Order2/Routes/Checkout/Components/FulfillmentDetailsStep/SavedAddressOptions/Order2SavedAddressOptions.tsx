@@ -8,7 +8,10 @@ import {
   Text,
   usePrevious,
 } from "@artsy/palette"
-import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
+import {
+  CheckoutStepName,
+  CheckoutStepState,
+} from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import type { CheckoutErrorBannerMessage } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { AddressDisplay } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/AddressDisplay"
 import { AddAddressForm } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/SavedAddressOptions/AddAddressForm"
@@ -53,6 +56,7 @@ export const SavedAddressOptions = ({
     userAddressMode,
     setStepErrorMessage,
     checkoutTracking,
+    steps,
   } = useCheckoutContext()
   const { scrollToStep } = useScrollToStep()
   const parentFormikContext = useFormikContext<FormikContextWithAddress>()
@@ -62,6 +66,29 @@ export const SavedAddressOptions = ({
   >(initialSelectedAddress)
 
   const previousUserAddressMode = usePrevious(userAddressMode)
+
+  const fulfillmentDetailsStep = steps?.find(
+    step => step.name === CheckoutStepName.FULFILLMENT_DETAILS,
+  )
+
+  // Track when saved addresses are viewed (only once when step is active)
+  useEffect(() => {
+    if (
+      !checkoutTracking ||
+      fulfillmentDetailsStep?.state !== CheckoutStepState.ACTIVE
+    ) {
+      return
+    }
+
+    if (savedAddresses.length > 0 && !userAddressMode) {
+      checkoutTracking.savedAddressViewed()
+    }
+  }, [
+    savedAddresses.length,
+    checkoutTracking,
+    fulfillmentDetailsStep?.state,
+    userAddressMode,
+  ])
 
   // Scroll to top of step whenever userAddressMode changes
   // This covers: beginning edit, completing edit, canceling edit,

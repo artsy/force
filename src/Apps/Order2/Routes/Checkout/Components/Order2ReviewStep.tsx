@@ -215,7 +215,10 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
         </Box>
       </Flex>
       <Box>
-        <Order2CheckoutPricingBreakdown order={orderData} />
+        <Order2CheckoutPricingBreakdown
+          order={orderData}
+          contextModule={ContextModule.ordersReview}
+        />
       </Box>
       <Spacer y={2} />
       <Message variant="default" p={1}>
@@ -225,7 +228,11 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
           <Text variant="xs" color="mono100">
             Your purchase is protected with{" "}
             <RouterLink
-              onClick={() => checkoutTracking.clickedBuyerProtection()}
+              onClick={() =>
+                checkoutTracking.clickedBuyerProtection(
+                  ContextModule.ordersReview,
+                )
+              }
               inline
               target="_blank"
               to={BUYER_GUARANTEE_URL}

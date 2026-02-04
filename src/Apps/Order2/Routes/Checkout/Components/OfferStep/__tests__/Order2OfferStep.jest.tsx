@@ -550,7 +550,7 @@ describe("Order2OfferStep", () => {
   })
 
   describe("Tracking", () => {
-    it("tracks clickedOfferOption when selecting a price range offer", () => {
+    it("tracks clickedOfferOption with 'Midpoint' when selecting a price range midpoint", () => {
       renderWithRelay({
         Viewer: () => ({
           me: {
@@ -567,11 +567,53 @@ describe("Order2OfferStep", () => {
         "USD",
         "order-id",
         1500,
-        "Custom amount",
+        "Midpoint",
       )
     })
 
-    it("tracks clickedOfferOption when selecting an exact price offer", () => {
+    it("tracks clickedOfferOption with 'Top-end of range' when selecting price range maximum", () => {
+      renderWithRelay({
+        Viewer: () => ({
+          me: {
+            order: MOCK_PRICE_RANGE_ORDER,
+          },
+        }),
+      })
+
+      // Select the top-end option
+      const topEndRadio = screen.getByText("Top-end of range")
+      fireEvent.click(topEndRadio)
+
+      expect(mockCheckoutTracking.clickedOfferOption).toHaveBeenCalledWith(
+        "USD",
+        "order-id",
+        2000,
+        "Top-end of range",
+      )
+    })
+
+    it("tracks clickedOfferOption with 'Low-end of range' when selecting price range minimum", () => {
+      renderWithRelay({
+        Viewer: () => ({
+          me: {
+            order: MOCK_PRICE_RANGE_ORDER,
+          },
+        }),
+      })
+
+      // Select the low-end option
+      const lowEndRadio = screen.getByText("Low-end of range")
+      fireEvent.click(lowEndRadio)
+
+      expect(mockCheckoutTracking.clickedOfferOption).toHaveBeenCalledWith(
+        "USD",
+        "order-id",
+        1000,
+        "Low-end of range",
+      )
+    })
+
+    it("tracks clickedOfferOption with 'List price' when selecting list price", () => {
       renderWithRelay({
         Viewer: () => ({
           me: {
@@ -588,11 +630,53 @@ describe("Order2OfferStep", () => {
         "USD",
         "order-id",
         5000,
-        "Custom amount",
+        "List price",
       )
     })
 
-    it("tracks clickedOfferOption for custom offers", async () => {
+    it("tracks clickedOfferOption with '10% below list price' when selecting 10% below", () => {
+      renderWithRelay({
+        Viewer: () => ({
+          me: {
+            order: MOCK_EXACT_PRICE_ORDER,
+          },
+        }),
+      })
+
+      // Select the 10% below option
+      const tenPercentBelowRadio = screen.getByText("10% below list price")
+      fireEvent.click(tenPercentBelowRadio)
+
+      expect(mockCheckoutTracking.clickedOfferOption).toHaveBeenCalledWith(
+        "USD",
+        "order-id",
+        4500,
+        "10% below list price",
+      )
+    })
+
+    it("tracks clickedOfferOption with '20% below list price' when selecting 20% below", () => {
+      renderWithRelay({
+        Viewer: () => ({
+          me: {
+            order: MOCK_EXACT_PRICE_ORDER,
+          },
+        }),
+      })
+
+      // Select the 20% below option
+      const twentyPercentBelowRadio = screen.getByText("20% below list price")
+      fireEvent.click(twentyPercentBelowRadio)
+
+      expect(mockCheckoutTracking.clickedOfferOption).toHaveBeenCalledWith(
+        "USD",
+        "order-id",
+        4000,
+        "20% below list price",
+      )
+    })
+
+    it("tracks clickedOfferOption with 'Custom amount' for custom offers", async () => {
       renderWithRelay({
         Viewer: () => ({
           me: {

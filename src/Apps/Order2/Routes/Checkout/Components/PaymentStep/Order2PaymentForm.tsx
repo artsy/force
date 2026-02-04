@@ -17,7 +17,10 @@ import {
   BankAccountBalanceCheckResult,
   Order2PollBankAccountBalanceQueryRenderer,
 } from "Apps/Order2/Components/Order2PollBankAccountBalance"
-import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
+import {
+  CheckoutStepName,
+  CheckoutStepState,
+} from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import {
   CheckoutErrorBanner,
   type CheckoutErrorBannerMessage,
@@ -224,9 +227,11 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
     activeFulfillmentDetailsTab,
     messages,
     setStepErrorMessage,
+    steps,
   } = useCheckoutContext()
 
   const paymentError = messages[CheckoutStepName.PAYMENT]?.error
+  const paymentStep = steps.find(step => step.name === CheckoutStepName.PAYMENT)
 
   const unsetStepError = () => {
     setStepErrorMessage({
@@ -283,10 +288,11 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
 
   // Default to saved payment method when available and track that it has been viewed
   useEffect(() => {
-    if (
-      !selectedPaymentMethod &&
-      (hasSavedCreditCards || hasSavedBankAccounts)
-    ) {
+    if (!checkoutTracking || paymentStep?.state !== CheckoutStepState.ACTIVE) {
+      return
+    }
+
+    if (!selectedPaymentMethod && (hasSavedCreditCards || hasSavedBankAccounts)) {
       setSelectedPaymentMethod("saved")
 
       const savedPaymentTypes = [
@@ -301,6 +307,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
     hasSavedBankAccounts,
     selectedPaymentMethod,
     checkoutTracking,
+    paymentStep?.state,
   ])
 
   const resetElementsToInitialParams = useCallback(() => {
