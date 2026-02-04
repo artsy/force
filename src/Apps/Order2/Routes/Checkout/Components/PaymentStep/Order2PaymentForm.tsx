@@ -74,32 +74,16 @@ const defaultBillingAddress = {
 
 const getTotalForPayment = (
   orderData: Order2PaymentForm_order$data,
-): { minor: number; currencyCode: string } | null => {
-  const { mode, itemsTotal, pendingOffer } = orderData
+): { minor?: number; currencyCode: string } | null => {
+  const { mode, itemsTotal, currencyCode } = orderData
 
-  if (mode === "BUY" && itemsTotal) {
+  if (mode === "BUY" && itemsTotal && itemsTotal.minor) {
     return itemsTotal
   }
 
   if (mode === "OFFER") {
-    const totalLine = pendingOffer?.pricingBreakdownLines?.find(
-      line => line?.amount?.amount != null,
-    )
-
-    if (totalLine?.amount?.amount) {
-      return {
-        minor: Math.round(Number.parseFloat(totalLine.amount.amount) * 100),
-        currencyCode: totalLine.amount.currencyCode,
-      }
-    }
-
-    // In case we're missing shipping information (required for totalLine)
-    // default to the offer amount
-    if (pendingOffer?.amount?.amount) {
-      return {
-        minor: Math.round(Number.parseFloat(pendingOffer.amount.amount) * 100),
-        currencyCode: pendingOffer.amount.currencyCode,
-      }
+    return {
+      currencyCode: currencyCode,
     }
   }
 
@@ -108,7 +92,7 @@ const getTotalForPayment = (
 
 const getBaseStripeOptions = (
   mode: Order2PaymentForm_order$data["mode"],
-  total: { minor: number; currencyCode: string },
+  total: { minor?: number; currencyCode: string },
   merchantAccountExternalId: string | undefined,
   availablePaymentMethodTypes?: ReadonlyArray<string> | null,
 ) => {
@@ -888,25 +872,7 @@ const ORDER_FRAGMENT = graphql`
       result
       message
     }
-    pendingOffer {
-      amount {
-        amount
-        currencyCode
-      }
-      pricingBreakdownLines {
-        ... on TotalLine {
-          amount {
-            amount
-            currencyCode
-          }
-        }
-      }
-    }
     itemsTotal {
-      minor
-      currencyCode
-    }
-    buyerTotal {
       minor
       currencyCode
     }

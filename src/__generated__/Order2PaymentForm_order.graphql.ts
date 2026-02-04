@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<958782db2fbff5393b61d6881c662e22>>
+ * @generated SignedSource<<6068c7b0e26ac3e3eec0f3dc28966d2c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,10 +21,6 @@ export type Order2PaymentForm_order$data = {
   readonly bankAccountBalanceCheck: {
     readonly message: string | null | undefined;
     readonly result: BankAccountBalanceCheckResult;
-  } | null | undefined;
-  readonly buyerTotal: {
-    readonly currencyCode: string;
-    readonly minor: any;
   } | null | undefined;
   readonly code: string;
   readonly currencyCode: string;
@@ -51,18 +47,6 @@ export type Order2PaymentForm_order$data = {
     } | null | undefined;
   } | null | undefined>;
   readonly mode: OrderModeEnum;
-  readonly pendingOffer: {
-    readonly amount: {
-      readonly amount: string | null | undefined;
-      readonly currencyCode: string;
-    } | null | undefined;
-    readonly pricingBreakdownLines: ReadonlyArray<{
-      readonly amount?: {
-        readonly amount: string | null | undefined;
-        readonly currencyCode: string;
-      } | null | undefined;
-    } | null | undefined>;
-  } | null | undefined;
   readonly seller: {
     readonly merchantAccount?: {
       readonly externalId: string;
@@ -83,36 +67,7 @@ var v0 = {
   "kind": "ScalarField",
   "name": "currencyCode",
   "storageKey": null
-},
-v1 = {
-  "alias": null,
-  "args": null,
-  "concreteType": "Money",
-  "kind": "LinkedField",
-  "name": "amount",
-  "plural": false,
-  "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "amount",
-      "storageKey": null
-    },
-    (v0/*: any*/)
-  ],
-  "storageKey": null
-},
-v2 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "minor",
-    "storageKey": null
-  },
-  (v0/*: any*/)
-];
+};
 return {
   "argumentDefinitions": [],
   "kind": "Fragment",
@@ -190,52 +145,20 @@ return {
     {
       "alias": null,
       "args": null,
-      "concreteType": "Offer",
-      "kind": "LinkedField",
-      "name": "pendingOffer",
-      "plural": false,
-      "selections": [
-        (v1/*: any*/),
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": null,
-          "kind": "LinkedField",
-          "name": "pricingBreakdownLines",
-          "plural": true,
-          "selections": [
-            {
-              "kind": "InlineFragment",
-              "selections": [
-                (v1/*: any*/)
-              ],
-              "type": "TotalLine",
-              "abstractKey": null
-            }
-          ],
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
       "concreteType": "Money",
       "kind": "LinkedField",
       "name": "itemsTotal",
       "plural": false,
-      "selections": (v2/*: any*/),
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "Money",
-      "kind": "LinkedField",
-      "name": "buyerTotal",
-      "plural": false,
-      "selections": (v2/*: any*/),
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "minor",
+          "storageKey": null
+        },
+        (v0/*: any*/)
+      ],
       "storageKey": null
     },
     {
@@ -387,6 +310,6 @@ return {
 };
 })();
 
-(node as any).hash = "e1254b94ed74837ab6c434ed6d946a2d";
+(node as any).hash = "787fed911f32bb5e58af62a303baa4ba";
 
 export default node;
