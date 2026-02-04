@@ -174,9 +174,9 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
   return (
     <Flex flexDirection="column" backgroundColor="mono0" py={2} px={[2, 2, 4]}>
       <Text
-        variant={["sm-display", "sm-display", "md"]}
-        fontWeight={["bold", "bold", "normal"]}
         color="mono100"
+        fontWeight="bold"
+        variant={["sm-display", "sm-display", "md"]}
       >
         {isOffer ? "Offer" : "Order"} summary
       </Text>

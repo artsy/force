@@ -221,8 +221,8 @@ export const SavedAddressOptions = ({
   return (
     <Flex flexDirection="column">
       <Text
-        fontWeight={["bold", "bold", "normal"]}
         color="mono100"
+        fontWeight="bold"
         variant={["sm-display", "sm-display", "md"]}
       >
         Delivery address

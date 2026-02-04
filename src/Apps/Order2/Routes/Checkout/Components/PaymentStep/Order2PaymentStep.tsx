@@ -39,9 +39,9 @@ export const Order2PaymentStep: React.FC<Order2PaymentStepProps> = ({
       >
         <Flex flexDirection="column">
           <Text
-            variant={["sm-display", "sm-display", "md"]}
-            fontWeight={["bold", "bold", "normal"]}
             color="mono100"
+            fontWeight="bold"
+            variant={["sm-display", "sm-display", "md"]}
           >
             Payment
           </Text>
@@ -66,9 +66,9 @@ export const Order2PaymentStep: React.FC<Order2PaymentStepProps> = ({
       >
         <Flex flexDirection="column">
           <Text
-            variant={["sm-display", "sm-display", "md"]}
-            fontWeight={["bold", "bold", "normal"]}
             color="mono100"
+            fontWeight="bold"
+            variant={["sm-display", "sm-display", "md"]}
           >
             Payment
           </Text>

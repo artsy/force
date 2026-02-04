@@ -276,9 +276,9 @@ const Order2OfferStepFormContent: React.FC<Order2OfferStepFormContentProps> = ({
       >
         <Flex flexDirection="column">
           <Text
-            variant={["sm-display", "sm-display", "md"]}
-            fontWeight={["bold", "bold", "normal"]}
             color="mono100"
+            fontWeight="bold"
+            variant={["sm-display", "sm-display", "md"]}
           >
             Offer
           </Text>
@@ -306,9 +306,9 @@ const Order2OfferStepFormContent: React.FC<Order2OfferStepFormContentProps> = ({
       >
         <Flex flexDirection="column">
           <Text
-            variant={["sm-display", "sm-display", "md"]}
-            fontWeight={["bold", "bold", "normal"]}
             color="mono100"
+            fontWeight="bold"
+            variant={["sm-display", "sm-display", "md"]}
           >
             Offer
           </Text>
@@ -346,9 +346,9 @@ const Order2OfferStepFormContent: React.FC<Order2OfferStepFormContentProps> = ({
 
         <Flex flexDirection="column">
           <Text
-            variant={["sm-display", "sm-display", "md"]}
-            fontWeight={["bold", "bold", "normal"]}
             color="mono100"
+            fontWeight="bold"
+            variant={["sm-display", "sm-display", "md"]}
           >
             Offer note
           </Text>

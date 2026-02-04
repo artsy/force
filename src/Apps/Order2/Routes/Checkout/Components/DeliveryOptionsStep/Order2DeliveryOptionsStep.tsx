@@ -42,9 +42,9 @@ export const Order2DeliveryOptionsStep: React.FC<
       <Box py={2} px={[2, 2, 4]} data-testid="DeliveryOptionsStep">
         <Flex flexDirection="column">
           <Text
-            variant={["sm-display", "sm-display", "md"]}
-            fontWeight={["bold", "bold", "normal"]}
             color="mono100"
+            fontWeight="bold"
+            variant={["sm-display", "sm-display", "md"]}
           >
             Shipping method
           </Text>

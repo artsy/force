@@ -57,9 +57,9 @@ export const Order2FulfillmentDetailsStep: React.FC<
       <Box px={[2, 2, 4]} hidden={stepState !== CheckoutStepState.UPCOMING}>
         <Flex flexDirection="column">
           <Text
-            variant={["sm-display", "sm-display", "md"]}
-            fontWeight={["bold", "bold", "normal"]}
             color="mono100"
+            fontWeight="bold"
+            variant={["sm-display", "sm-display", "md"]}
           >
             Delivery
           </Text>
