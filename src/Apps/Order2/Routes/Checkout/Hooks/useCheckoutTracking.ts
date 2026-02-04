@@ -129,12 +129,16 @@ export const useCheckoutTracking = ({
       },
 
       // Loaded from the more generic shared useOrder2Tracking hook
-      clickedBuyerProtection: () =>
-        order2Tracking.clickedBuyerProtection(ContextModule.ordersCheckout),
+      clickedBuyerProtection: (contextModule?: ContextModule) =>
+        order2Tracking.clickedBuyerProtection(
+          contextModule || ContextModule.ordersCheckout,
+        ),
 
       // Loaded from the more generic shared useOrder2Tracking hook
-      clickedImportFees: () =>
-        order2Tracking.clickedImportFees(ContextModule.ordersCheckout),
+      clickedImportFees: (contextModule?: ContextModule) =>
+        order2Tracking.clickedImportFees(
+          contextModule || ContextModule.ordersCheckout,
+        ),
 
       clickedPaymentMethod: ({
         paymentMethod,
@@ -176,7 +180,7 @@ export const useCheckoutTracking = ({
       clickedShippingAddress: () => {
         const payload: ClickedShippingAddress = {
           action: ActionType.clickedShippingAddress,
-          context_module: ContextModule.ordersShipping,
+          context_module: ContextModule.ordersFulfillment,
           context_page_owner_type: contextPageOwnerType,
           context_page_owner_id: contextPageOwnerId,
         }
@@ -189,7 +193,7 @@ export const useCheckoutTracking = ({
           action: ActionType.clickedAddNewShippingAddress,
           context_page_owner_type: contextPageOwnerType,
           context_page_owner_id: contextPageOwnerId,
-          context_module: ContextModule.ordersShipping,
+          context_module: ContextModule.ordersFulfillment,
         }
 
         trackEvent(payload)

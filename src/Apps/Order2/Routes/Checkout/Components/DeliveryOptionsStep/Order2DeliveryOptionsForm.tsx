@@ -168,7 +168,11 @@ export const Order2DeliveryOptionsForm: React.FC<
                 <Text variant="xs" color="mono60">
                   All options are protected against damage and loss with{" "}
                   <RouterLink
-                    onClick={() => checkoutTracking.clickedBuyerProtection()}
+                    onClick={() =>
+                      checkoutTracking.clickedBuyerProtection(
+                        ContextModule.ordersShippingMethods,
+                      )
+                    }
                     inline
                     target="_blank"
                     to={BUYER_GUARANTEE_URL}

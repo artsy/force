@@ -1,3 +1,4 @@
+import { ContextModule } from "@artsy/cohesion"
 import StopwatchIcon from "@artsy/icons/StopwatchIcon"
 import { Flex, Spacer, Text } from "@artsy/palette"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
@@ -13,6 +14,7 @@ import { graphql, useFragment } from "react-relay"
 
 interface Order2CheckoutPricingBreakdownProps {
   order: Order2CheckoutPricingBreakdown_order$key
+  contextModule?: ContextModule
 }
 
 const TAX_CALCULATION_ARTICLE_URL =
@@ -20,7 +22,7 @@ const TAX_CALCULATION_ARTICLE_URL =
 
 export const Order2CheckoutPricingBreakdown: React.FC<
   Order2CheckoutPricingBreakdownProps
-> = ({ order }) => {
+> = ({ order, contextModule = ContextModule.ordersCheckout }) => {
   const { checkoutTracking } = useCheckoutContext()
   const orderData = useFragment(FRAGMENT, order)
   const { mode, pendingOffer, source, buyerStateExpiresAt } = orderData
@@ -130,7 +132,7 @@ export const Order2CheckoutPricingBreakdown: React.FC<
           target="_blank"
           rel="noopener noreferrer"
           onClick={() => {
-            checkoutTracking.clickedImportFees()
+            checkoutTracking.clickedImportFees(contextModule)
           }}
         >
           may apply at import
