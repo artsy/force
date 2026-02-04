@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<24c546b451c5efdc37a91d5d75b46a03>>
+ * @generated SignedSource<<56a04a83127ac271ec5c87c2f4e986ee>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -33,6 +33,7 @@ export type Order2ReviewStep_order$data = {
         // value in case none of the concrete values match.
         readonly __typename: "%other";
       }>;
+      readonly internalID: string;
     } | null | undefined;
     readonly artworkOrEditionSet: {
       readonly __typename: "Artwork";
@@ -360,6 +361,7 @@ return {
           "name": "artwork",
           "plural": false,
           "selections": [
+            (v0/*: any*/),
             {
               "alias": null,
               "args": [
@@ -410,6 +412,6 @@ return {
 };
 })();
 
-(node as any).hash = "8e68dcccdc97c0aa9a0672cb290b2b49";
+(node as any).hash = "c1391f79711e91a6f8030b0ee21dc46f";
 
 export default node;

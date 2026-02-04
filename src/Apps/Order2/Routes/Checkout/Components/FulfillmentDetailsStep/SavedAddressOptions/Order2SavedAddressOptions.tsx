@@ -85,10 +85,11 @@ export const SavedAddressOptions = ({
     }
 
     if (savedAddresses.length > 0 && !userAddressMode) {
-      checkoutTracking.savedAddressViewed()
+      const addressIds = savedAddresses.map(address => address.internalID)
+      checkoutTracking.savedAddressViewed(addressIds)
     }
   }, [
-    savedAddresses.length,
+    savedAddresses,
     checkoutTracking,
     fulfillmentDetailsStep?.state,
     userAddressMode,

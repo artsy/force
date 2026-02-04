@@ -49,7 +49,21 @@ export const Order2CollapsibleOrderSummary: React.FC<
         justifyContent="space-between"
       >
         {imageUrl && (
-          <RouterLink flex={0} to={artworkPath} target="_blank">
+          <RouterLink
+            flex={0}
+            to={artworkPath}
+            target="_blank"
+            onClick={() => {
+              const artworkInternalID =
+                orderData.lineItems[0]?.artwork?.internalID
+              if (artworkInternalID) {
+                checkoutTracking.clickedOrderArtworkImage({
+                  destinationPageOwnerId: artworkInternalID,
+                  contextModule: ContextModule.ordersCheckout,
+                })
+              }
+            }}
+          >
             <Image
               mr={1}
               src={imageUrl}
@@ -132,6 +146,7 @@ const FRAGMENT = graphql`
         }
       }
       artwork {
+        internalID
         figures(includeAll: false) {
           __typename
           ... on Image {
