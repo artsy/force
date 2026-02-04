@@ -145,8 +145,7 @@ const getDisplayDetails = (
       break
     }
 
-    case "US_BANK_ACCOUNT":
-    case "SEPA_DEBIT": {
+    case "US_BANK_ACCOUNT": {
       if (paymentPreview && paymentPreview.__typename === "USBankAccount") {
         return {
           cardBrand: null,
@@ -160,6 +159,25 @@ const getDisplayDetails = (
           cardBrand: null,
           last4: savedPaymentMethod.last4,
           bankName: savedPaymentMethod.bankName,
+        }
+      }
+      break
+    }
+
+    case "SEPA_DEBIT": {
+      if (paymentPreview && paymentPreview.__typename === "SEPADebit") {
+        return {
+          cardBrand: null,
+          last4: paymentPreview.last4,
+          bankName: null,
+        }
+      }
+
+      if (savedPaymentMethod?.__typename === "BankAccount") {
+        return {
+          cardBrand: null,
+          last4: savedPaymentMethod.last4,
+          bankName: null,
         }
       }
       break
