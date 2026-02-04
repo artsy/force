@@ -86,7 +86,7 @@ const mockUnshippableAddress: ProcessedUserAddress = {
   isShippable: false,
   isDefault: false,
   address: {
-    name: "Invalid Address",
+    name: "Unshippable Address",
     addressLine1: "789 Invalid St",
     addressLine2: "",
     city: "Invalid City",
@@ -266,8 +266,12 @@ describe("SavedAddressOptions", () => {
       })
     })
 
-    it("displays error banner when selecting an unshippable address", async () => {
+    it("displays error banner when selecting an unshippable address in non-OFFER mode", async () => {
       const onSelectAddress = jest.fn()
+      mockUseCheckoutContext.mockReturnValue({
+        ...mockCheckoutContext,
+        orderData: { mode: "BUY" },
+      })
 
       render(
         <TestWrapper>
@@ -281,7 +285,7 @@ describe("SavedAddressOptions", () => {
       )
 
       const unshippableAddress = screen.getByRole("radio", {
-        name: /Invalid Address/i,
+        name: /Unshippable Address/i,
       })
       await userEvent.click(unshippableAddress)
 
@@ -292,6 +296,37 @@ describe("SavedAddressOptions", () => {
             title: "Unable to ship to this address",
             message: "Select a different address or add a new one to continue.",
           },
+        })
+      })
+    })
+
+    it("does not display error banner when selecting an unshippable address in OFFER mode", async () => {
+      const onSelectAddress = jest.fn()
+      mockUseCheckoutContext.mockReturnValue({
+        ...mockCheckoutContext,
+        orderData: { mode: "OFFER" },
+      })
+
+      render(
+        <TestWrapper>
+          <SavedAddressOptions
+            savedAddresses={[mockUSAddress1, mockUnshippableAddress]}
+            initialSelectedAddress={mockUSAddress1}
+            onSelectAddress={onSelectAddress}
+            newAddressInitialValues={mockNewAddressInitialValues}
+          />
+        </TestWrapper>,
+      )
+
+      const unshippableAddress = screen.getByRole("radio", {
+        name: /Unshippable Address/i,
+      })
+      await userEvent.click(unshippableAddress)
+
+      await waitFor(() => {
+        expect(mockCheckoutContext.setStepErrorMessage).toHaveBeenCalledWith({
+          step: CheckoutStepName.FULFILLMENT_DETAILS,
+          error: null,
         })
       })
     })
@@ -319,6 +354,104 @@ describe("SavedAddressOptions", () => {
           error: null,
         })
       })
+    })
+  })
+
+  describe("Submit button state", () => {
+    it("disables submit button for unshippable address in non-OFFER mode", async () => {
+      const onSelectAddress = jest.fn()
+      mockUseCheckoutContext.mockReturnValue({
+        ...mockCheckoutContext,
+        orderData: { mode: "BUY" },
+      })
+
+      render(
+        <TestWrapper>
+          <SavedAddressOptions
+            savedAddresses={[mockUnshippableAddress]}
+            initialSelectedAddress={mockUnshippableAddress}
+            onSelectAddress={onSelectAddress}
+            newAddressInitialValues={mockNewAddressInitialValues}
+          />
+        </TestWrapper>,
+      )
+
+      const submitButton = screen.getByRole("button", {
+        name: /See Shipping Methods/i,
+      })
+      expect(submitButton).toBeDisabled()
+    })
+
+    it("enables submit button for unshippable address in OFFER mode", async () => {
+      const onSelectAddress = jest.fn()
+      mockUseCheckoutContext.mockReturnValue({
+        ...mockCheckoutContext,
+        orderData: { mode: "OFFER" },
+      })
+
+      render(
+        <TestWrapper>
+          <SavedAddressOptions
+            savedAddresses={[mockUnshippableAddress]}
+            initialSelectedAddress={mockUnshippableAddress}
+            onSelectAddress={onSelectAddress}
+            newAddressInitialValues={mockNewAddressInitialValues}
+          />
+        </TestWrapper>,
+      )
+
+      const submitButton = screen.getByRole("button", {
+        name: /See Shipping Methods/i,
+      })
+      expect(submitButton).toBeEnabled()
+    })
+
+    it("disables submit button for invalid address regardless of order mode", async () => {
+      const onSelectAddress = jest.fn()
+      mockUseCheckoutContext.mockReturnValue({
+        ...mockCheckoutContext,
+        orderData: { mode: "OFFER" },
+      })
+
+      render(
+        <TestWrapper>
+          <SavedAddressOptions
+            savedAddresses={[mockInvalidAddress]}
+            initialSelectedAddress={mockInvalidAddress}
+            onSelectAddress={onSelectAddress}
+            newAddressInitialValues={mockNewAddressInitialValues}
+          />
+        </TestWrapper>,
+      )
+
+      const submitButton = screen.getByRole("button", {
+        name: /See Shipping Methods/i,
+      })
+      expect(submitButton).toBeDisabled()
+    })
+
+    it("enables submit button for valid and shippable address", async () => {
+      const onSelectAddress = jest.fn()
+      mockUseCheckoutContext.mockReturnValue({
+        ...mockCheckoutContext,
+        orderData: { mode: "BUY" },
+      })
+
+      render(
+        <TestWrapper>
+          <SavedAddressOptions
+            savedAddresses={[mockUSAddress1]}
+            initialSelectedAddress={mockUSAddress1}
+            onSelectAddress={onSelectAddress}
+            newAddressInitialValues={mockNewAddressInitialValues}
+          />
+        </TestWrapper>,
+      )
+
+      const submitButton = screen.getByRole("button", {
+        name: /See Shipping Methods/i,
+      })
+      expect(submitButton).toBeEnabled()
     })
   })
 

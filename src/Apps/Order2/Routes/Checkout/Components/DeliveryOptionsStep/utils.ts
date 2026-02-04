@@ -3,8 +3,6 @@ import { DateTime } from "luxon"
 // TODO: Get these from MP
 export const deliveryOptionLabel = (type?: string | null) => {
   switch (type) {
-    case null:
-      return null
     case "DOMESTIC_FLAT":
       return "Flat rate"
     case "INTERNATIONAL_FLAT":
@@ -15,8 +13,10 @@ export const deliveryOptionLabel = (type?: string | null) => {
       return "Express"
     case "ARTSY_WHITE_GLOVE":
       return "White Glove"
+    case "SHIPPING_TBD":
+      return "Shipping to be confirmed by seller"
     default:
-      return `(TODO) ${type?.replace(/_/g, " ").toLocaleLowerCase()}`
+      return `Shipping details unavailable: Delivery type returned "${type}"`
   }
 }
 
@@ -44,8 +44,6 @@ export const deliveryOptionTimeEstimate = (
   from: Date = today,
 ): [string, string] | null => {
   switch (type) {
-    case null:
-      return null
     case "DOMESTIC_FLAT":
       return [
         "Estimated to ship between",
@@ -91,14 +89,12 @@ export const deliveryOptionTimeEstimate = (
           endOffsetDays: 56,
         }),
       ]
-    default:
+    case "SHIPPING_TBD":
       return [
-        "Estimated to ship between",
-        dateRangeString({
-          from,
-          startOffsetDays: 8,
-          endOffsetDays: 10,
-        }),
+        "The seller will coordinate shipping details after checkout and share the final cost with you. You will be able to review and approve the updated total before completing your purchase.",
+        "",
       ]
+    default:
+      return ["Something went wrong.", "Please contact orders@artsy.net"]
   }
 }

@@ -92,6 +92,15 @@ const getTotalForPayment = (
         currencyCode: totalLine.amount.currencyCode,
       }
     }
+
+    // In case we're missing shipping information (required for totalLine)
+    // default to the offer amount
+    if (pendingOffer?.amount?.amount) {
+      return {
+        minor: Math.round(Number.parseFloat(pendingOffer.amount.amount) * 100),
+        currencyCode: pendingOffer.amount.currencyCode,
+      }
+    }
   }
 
   return null
@@ -867,6 +876,10 @@ const ORDER_FRAGMENT = graphql`
       message
     }
     pendingOffer {
+      amount {
+        amount
+        currencyCode
+      }
       pricingBreakdownLines {
         ... on TotalLine {
           amount {
