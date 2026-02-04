@@ -25,7 +25,7 @@ import {
 } from "@artsy/cohesion"
 import { useOrder2Tracking } from "Apps/Order2/Hooks/useOrder2Tracking"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import { useMemo, useRef } from "react"
+import { useMemo } from "react"
 import { useTracking } from "react-tracking"
 
 export const useCheckoutTracking = ({
@@ -46,9 +46,6 @@ export const useCheckoutTracking = ({
     source === "PARTNER_OFFER" ? "Partner offer" : "Buy now",
     "Make offer",
   )
-
-  // Track which one-time events have been fired
-  const trackedOneTimeEvents = useRef(new Set<string>())
 
   const checkoutTracking = useMemo(() => {
     return {
@@ -98,7 +95,6 @@ export const useCheckoutTracking = ({
           action: ActionType.clickedCancelExpressCheckout,
           context_page_owner_type: contextPageOwnerType,
           context_page_owner_id: contextPageOwnerId,
-          // order_id: contextPageOwnerId, // TODO: Clarify whether we are using order_id
           flow,
           credit_card_wallet_type: walletType,
         }
@@ -285,11 +281,6 @@ export const useCheckoutTracking = ({
       },
 
       savedPaymentMethodViewed: (paymentMethods: string[]) => {
-        // Only track once per session
-        if (trackedOneTimeEvents.current.has("savedPaymentMethodViewed")) {
-          return
-        }
-
         const payload: SavedPaymentMethodViewed = {
           action: ActionType.savedPaymentMethodViewed,
           context_page_owner_type: contextPageOwnerType,
@@ -298,15 +289,9 @@ export const useCheckoutTracking = ({
           payment_methods: paymentMethods,
         }
         trackEvent(payload)
-        trackedOneTimeEvents.current.add("savedPaymentMethodViewed")
       },
 
       savedAddressViewed: () => {
-        // Only track once per session
-        if (trackedOneTimeEvents.current.has("savedAddressViewed")) {
-          return
-        }
-
         const payload: SavedAddressViewed = {
           action: ActionType.savedAddressViewed,
           context_page_owner_type: contextPageOwnerType,
@@ -314,7 +299,6 @@ export const useCheckoutTracking = ({
           flow,
         }
         trackEvent(payload)
-        trackedOneTimeEvents.current.add("savedAddressViewed")
       },
 
       toggledCollapsibleOrderSummary: (expanded: boolean) => {
@@ -327,6 +311,7 @@ export const useCheckoutTracking = ({
         }
         trackEvent(payload)
       },
+
       clickedOfferOption: (
         currencyCode: string,
         orderId: string,
