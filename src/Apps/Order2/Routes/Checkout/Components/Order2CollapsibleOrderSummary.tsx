@@ -1,3 +1,4 @@
+import { ContextModule } from "@artsy/cohesion"
 import ChevronDownIcon from "@artsy/icons/ChevronDownIcon"
 import { Box, Clickable, Flex, Image, Spacer, Text } from "@artsy/palette"
 import { Order2CheckoutPricingBreakdown } from "Apps/Order2/Routes/Checkout/Components/Order2CheckoutPricingBreakdown"
@@ -91,7 +92,10 @@ export const Order2CollapsibleOrderSummary: React.FC<
       >
         <Spacer y={1} />
         <Box mb={2}>
-          <Order2CheckoutPricingBreakdown order={orderData} />
+          <Order2CheckoutPricingBreakdown
+            order={orderData}
+            contextModule={ContextModule.ordersCheckout}
+          />
         </Box>
         <Spacer y={1} />
       </Box>

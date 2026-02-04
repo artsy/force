@@ -1,3 +1,4 @@
+import { ContextModule } from "@artsy/cohesion"
 import { screen } from "@testing-library/react"
 import type { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useCheckoutTracking } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutTracking"
@@ -52,7 +53,12 @@ const { renderWithRelay } =
   setupTestWrapperTL<Order2CheckoutPricingBreakdownTestQuery>({
     Component: props => {
       const order = props.me!.order!
-      return <Order2CheckoutPricingBreakdown order={order} />
+      return (
+        <Order2CheckoutPricingBreakdown
+          order={order}
+          contextModule={ContextModule.ordersCheckout}
+        />
+      )
     },
     query: graphql`
       query Order2CheckoutPricingBreakdownTestQuery @relay_test_operation {
