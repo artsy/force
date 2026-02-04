@@ -251,7 +251,7 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
           error: null,
         })
 
-        setFulfillmentDetailsComplete({}) // TODO: Clean up signature
+        setFulfillmentDetailsComplete({})
         setUserAddressMode(null)
       } catch (error) {
         handleError(
