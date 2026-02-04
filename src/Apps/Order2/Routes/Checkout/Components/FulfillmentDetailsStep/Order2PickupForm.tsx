@@ -151,7 +151,7 @@ export const Order2PickupForm: React.FC<Order2PickupFormProps> = ({
       <Spacer y={1} />
       {shippingOrigin && (
         <Text variant="xs" color="mono60">
-          Ships from {shippingOrigin}
+          {shippingOrigin}
         </Text>
       )}
       <Text variant="xs" color="mono60">
