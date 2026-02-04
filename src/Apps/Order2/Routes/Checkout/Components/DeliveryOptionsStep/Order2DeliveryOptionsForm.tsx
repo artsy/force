@@ -136,9 +136,9 @@ export const Order2DeliveryOptionsForm: React.FC<
               <Flex flexDirection="column">
                 <Flex>
                   <Text
-                    variant={["sm-display", "sm-display", "md"]}
-                    fontWeight="bold"
                     color="mono100"
+                    fontWeight="bold"
+                    variant={["sm-display", "sm-display", "md"]}
                   >
                     Shipping method
                   </Text>
