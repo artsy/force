@@ -11,6 +11,7 @@ import {
   Tooltip,
 } from "@artsy/palette"
 import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
+import { SectionHeading } from "Apps/Order2/Components/SectionHeading"
 import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import {
   CheckoutErrorBanner,
@@ -62,7 +63,7 @@ export const Order2DeliveryOptionsForm: React.FC<
     CheckoutStepName.DELIVERY_OPTION,
   )
 
-  const { fulfillmentOptions } = orderData
+  const { fulfillmentOptions, shippingOrigin } = orderData
   const deliveryOptions = fulfillmentOptions.filter(
     option => option.type !== "PICKUP",
   )
@@ -135,13 +136,7 @@ export const Order2DeliveryOptionsForm: React.FC<
               )}
               <Flex flexDirection="column">
                 <Flex>
-                  <Text
-                    variant={["sm-display", "sm-display", "md"]}
-                    fontWeight="bold"
-                    color="mono100"
-                  >
-                    Shipping method
-                  </Text>
+                  <SectionHeading>Shipping method</SectionHeading>
 
                   <Tooltip
                     variant="defaultDark"
@@ -161,6 +156,14 @@ export const Order2DeliveryOptionsForm: React.FC<
                     </Clickable>
                   </Tooltip>
                 </Flex>
+
+                <Spacer y={1} />
+
+                {shippingOrigin && (
+                  <Text variant="xs" color="mono60">
+                    Ships from {shippingOrigin}
+                  </Text>
+                )}
 
                 <Text variant="xs" color="mono60">
                   All options are protected against damage and loss with{" "}
@@ -215,6 +218,7 @@ const FRAGMENT = graphql`
       type
       selected
     }
+    shippingOrigin
   }
 `
 

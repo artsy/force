@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<02b4afdac83d6a86a62c679ddc88ded3>>
+ * @generated SignedSource<<a2dc89fdbb217fa0a0a9d545c34f4294>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -43,6 +43,12 @@ v2 = {
   "nullable": false,
   "plural": false,
   "type": "ID"
+},
+v3 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
 };
 return {
   "fragment": {
@@ -154,6 +160,13 @@ return {
                 ],
                 "storageKey": null
               },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "shippingOrigin",
+                "storageKey": null
+              },
               (v1/*: any*/)
             ],
             "storageKey": "order(id:\"order-id\")"
@@ -165,7 +178,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "63752bfd79d27740474cdb2d26bbf807",
+    "cacheID": "2d106ea9eb18553c994cc10071c16184",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -194,12 +207,7 @@ return {
           "plural": false,
           "type": "Money"
         },
-        "me.order.fulfillmentOptions.amount.display": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "String"
-        },
+        "me.order.fulfillmentOptions.amount.display": (v3/*: any*/),
         "me.order.fulfillmentOptions.selected": {
           "enumValues": null,
           "nullable": true,
@@ -221,12 +229,13 @@ return {
           "type": "FulfillmentOptionTypeEnum"
         },
         "me.order.id": (v2/*: any*/),
-        "me.order.internalID": (v2/*: any*/)
+        "me.order.internalID": (v2/*: any*/),
+        "me.order.shippingOrigin": (v3/*: any*/)
       }
     },
     "name": "Order2DeliveryOptionsFormTestQuery",
     "operationKind": "query",
-    "text": "query Order2DeliveryOptionsFormTestQuery {\n  me {\n    order(id: \"order-id\") {\n      ...Order2DeliveryOptionsForm_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DeliveryOptionsForm_order on Order {\n  internalID\n  fulfillmentOptions {\n    amount {\n      display\n    }\n    type\n    selected\n  }\n}\n"
+    "text": "query Order2DeliveryOptionsFormTestQuery {\n  me {\n    order(id: \"order-id\") {\n      ...Order2DeliveryOptionsForm_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DeliveryOptionsForm_order on Order {\n  internalID\n  fulfillmentOptions {\n    amount {\n      display\n    }\n    type\n    selected\n  }\n  shippingOrigin\n}\n"
   }
 };
 })();

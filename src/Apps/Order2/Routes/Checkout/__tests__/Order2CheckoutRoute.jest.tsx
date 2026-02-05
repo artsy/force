@@ -475,6 +475,7 @@ describe("Order2CheckoutRoute", () => {
             fulfillmentDetails: null,
             selectedFulfillmentOption: null,
             stripeConfirmationToken: null,
+            shippingOrigin: "Eagle, CO, US",
           },
           creditCards: {
             edges: [
@@ -505,7 +506,8 @@ describe("Order2CheckoutRoute", () => {
         userEvent.click(screen.getByText("Pickup"))
       })
       expect(screen.getByText("Free pickup from")).toBeInTheDocument()
-      expect(screen.queryByText("Eagle, CO, US")).toBeInTheDocument()
+      expect(screen.getByText("Eagle, CO, US")).toBeInTheDocument()
+      expect(screen.queryByText(/Ships from/)).not.toBeInTheDocument()
 
       // Verify submit button is present and disabled
       const submitButton = screen.getByText("Continue to Payment")

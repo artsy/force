@@ -7,6 +7,7 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
+import { SectionHeading } from "Apps/Order2/Components/SectionHeading"
 import {
   type ProcessedUserAddress,
   deliveryAddressValidationSchema,
@@ -189,13 +190,7 @@ export const UpdateAddressForm = ({
       {({ isSubmitting }) => {
         return (
           <Form noValidate>
-            <Text
-              fontWeight={["bold", "bold", "normal"]}
-              color="mono100"
-              variant={["sm-display", "sm-display", "md"]}
-            >
-              Edit address
-            </Text>
+            <SectionHeading>Edit address</SectionHeading>
 
             <Spacer y={2} />
 
