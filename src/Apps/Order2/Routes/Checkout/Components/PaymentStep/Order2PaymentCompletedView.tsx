@@ -1,6 +1,7 @@
 import CheckmarkIcon from "@artsy/icons/CheckmarkIcon"
 import InstitutionIcon from "@artsy/icons/InstitutionIcon"
 import { Clickable, Flex, Spacer, Text } from "@artsy/palette"
+import { SectionHeading } from "Apps/Order2/Components/SectionHeading"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { type Brand, BrandCreditCardIcon } from "Components/BrandCreditCardIcon"
 import type {
@@ -41,13 +42,7 @@ export const Order2PaymentCompletedView: React.FC<
         <Flex alignItems="center">
           <CheckmarkIcon fill="mono100" />
           <Spacer x={1} />
-          <Text
-            color="mono100"
-            fontWeight="bold"
-            variant={["sm-display", "sm-display", "md"]}
-          >
-            Payment
-          </Text>
+          <SectionHeading>Payment</SectionHeading>
         </Flex>
         <Clickable
           textDecoration="underline"

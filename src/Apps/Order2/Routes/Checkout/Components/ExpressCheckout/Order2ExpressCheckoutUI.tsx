@@ -1,4 +1,5 @@
 import { Box, Spacer, Text } from "@artsy/palette"
+import { SectionHeading } from "Apps/Order2/Components/SectionHeading"
 import {
   ExpressCheckoutElement,
   useElements,
@@ -554,13 +555,7 @@ export const Order2ExpressCheckoutUI: React.FC<
 
   return (
     <Box>
-      <Text
-        color="mono100"
-        fontWeight="bold"
-        variant={["sm-display", "sm-display", "md"]}
-      >
-        Express checkout
-      </Text>
+      <SectionHeading>Express checkout</SectionHeading>
       <Spacer y={[1, 1, 2]} />
       {error && checkoutMode === "express" && (
         <>

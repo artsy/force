@@ -1,6 +1,7 @@
 import { ContextModule } from "@artsy/cohesion"
 import { Box, Button, Flex, Spacer, Text, TextArea } from "@artsy/palette"
 import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
+import { SectionHeading } from "Apps/Order2/Components/SectionHeading"
 import {
   CheckoutStepName,
   CheckoutStepState,
@@ -275,13 +276,7 @@ const Order2OfferStepFormContent: React.FC<Order2OfferStepFormContentProps> = ({
         hidden={currentStep !== CheckoutStepState.UPCOMING}
       >
         <Flex flexDirection="column">
-          <Text
-            color="mono100"
-            fontWeight="bold"
-            variant={["sm-display", "sm-display", "md"]}
-          >
-            Offer
-          </Text>
+          <SectionHeading>Offer</SectionHeading>
           <Text variant="sm" color="mono60">
             If accepted, your payment will be processed. All offers are binding
             once submitted.
@@ -305,13 +300,7 @@ const Order2OfferStepFormContent: React.FC<Order2OfferStepFormContentProps> = ({
         hidden={currentStep !== CheckoutStepState.ACTIVE}
       >
         <Flex flexDirection="column">
-          <Text
-            color="mono100"
-            fontWeight="bold"
-            variant={["sm-display", "sm-display", "md"]}
-          >
-            Offer
-          </Text>
+          <SectionHeading>Offer</SectionHeading>
           <Text variant="sm" color="mono100">
             If accepted, your payment will be processed. All offers are binding
             once submitted.
@@ -345,13 +334,7 @@ const Order2OfferStepFormContent: React.FC<Order2OfferStepFormContentProps> = ({
         <Spacer y={4} />
 
         <Flex flexDirection="column">
-          <Text
-            color="mono100"
-            fontWeight="bold"
-            variant={["sm-display", "sm-display", "md"]}
-          >
-            Offer note
-          </Text>
+          <SectionHeading>Offer note</SectionHeading>
           <Text variant="sm" color="mono100">
             Additional context to help the gallery evaluate your offer.
           </Text>

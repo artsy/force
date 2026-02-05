@@ -1,4 +1,5 @@
 import { Box, Flex, Text } from "@artsy/palette"
+import { SectionHeading } from "Apps/Order2/Components/SectionHeading"
 import {
   CheckoutStepName,
   CheckoutStepState,
@@ -38,13 +39,7 @@ export const Order2PaymentStep: React.FC<Order2PaymentStepProps> = ({
         hidden={stepState !== CheckoutStepState.UPCOMING}
       >
         <Flex flexDirection="column">
-          <Text
-            color="mono100"
-            fontWeight="bold"
-            variant={["sm-display", "sm-display", "md"]}
-          >
-            Payment
-          </Text>
+          <SectionHeading>Payment</SectionHeading>
           <Text variant="sm" color="mono60">
             Options vary based on price, gallery, and location
           </Text>
@@ -65,13 +60,7 @@ export const Order2PaymentStep: React.FC<Order2PaymentStepProps> = ({
         hidden={stepState !== CheckoutStepState.ACTIVE}
       >
         <Flex flexDirection="column">
-          <Text
-            color="mono100"
-            fontWeight="bold"
-            variant={["sm-display", "sm-display", "md"]}
-          >
-            Payment
-          </Text>
+          <SectionHeading>Payment</SectionHeading>
           <Order2PaymentForm order={orderData} me={meData} />
         </Flex>
       </Box>

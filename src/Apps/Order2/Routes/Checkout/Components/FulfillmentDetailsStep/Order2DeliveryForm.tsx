@@ -1,6 +1,7 @@
 import { ContextModule } from "@artsy/cohesion"
-import { Button, Flex, Spacer, Text } from "@artsy/palette"
+import { Button, Flex, Spacer } from "@artsy/palette"
 import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
+import { SectionHeading } from "Apps/Order2/Components/SectionHeading"
 import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import {
   CheckoutErrorBanner,
@@ -319,13 +320,7 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
               />
             ) : (
               <Form noValidate>
-                <Text
-                  color="mono100"
-                  fontWeight="bold"
-                  variant={["sm-display", "sm-display", "md"]}
-                >
-                  Delivery address
-                </Text>
+                <SectionHeading>Delivery address</SectionHeading>
 
                 <Spacer y={2} />
 

@@ -8,6 +8,7 @@ import {
   Text,
   usePrevious,
 } from "@artsy/palette"
+import { SectionHeading } from "Apps/Order2/Components/SectionHeading"
 import {
   CheckoutStepName,
   CheckoutStepState,
@@ -220,13 +221,7 @@ export const SavedAddressOptions = ({
 
   return (
     <Flex flexDirection="column">
-      <Text
-        color="mono100"
-        fontWeight="bold"
-        variant={["sm-display", "sm-display", "md"]}
-      >
-        Delivery address
-      </Text>
+      <SectionHeading>Delivery address</SectionHeading>
 
       <Spacer y={1} />
 

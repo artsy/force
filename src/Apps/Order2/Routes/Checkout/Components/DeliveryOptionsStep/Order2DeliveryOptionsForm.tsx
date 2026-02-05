@@ -11,6 +11,7 @@ import {
   Tooltip,
 } from "@artsy/palette"
 import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
+import { SectionHeading } from "Apps/Order2/Components/SectionHeading"
 import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import {
   CheckoutErrorBanner,
@@ -135,13 +136,7 @@ export const Order2DeliveryOptionsForm: React.FC<
               )}
               <Flex flexDirection="column">
                 <Flex>
-                  <Text
-                    color="mono100"
-                    fontWeight="bold"
-                    variant={["sm-display", "sm-display", "md"]}
-                  >
-                    Shipping method
-                  </Text>
+                  <SectionHeading>Shipping method</SectionHeading>
 
                   <Tooltip
                     variant="defaultDark"

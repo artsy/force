@@ -1,5 +1,6 @@
 import CheckmarkIcon from "@artsy/icons/CheckmarkIcon"
 import { Box, Clickable, Flex, Spacer, Text } from "@artsy/palette"
+import { SectionHeading } from "Apps/Order2/Components/SectionHeading"
 import { AddressDisplay } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/AddressDisplay"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 
@@ -36,13 +37,7 @@ export const Order2FulfillmentDetailsCompletedView: React.FC<
           <Flex alignItems="center">
             <CheckmarkIcon fill="mono100" />
             <Spacer x={1} />
-            <Text
-              color="mono100"
-              fontWeight="bold"
-              variant={["sm-display", "sm-display", "md"]}
-            >
-              Pickup
-            </Text>
+            <SectionHeading>Pickup</SectionHeading>
           </Flex>
           <Clickable
             textDecoration="underline"
@@ -71,13 +66,7 @@ export const Order2FulfillmentDetailsCompletedView: React.FC<
         <Flex alignItems="center">
           <CheckmarkIcon height={20} width={20} fill="mono100" />
           <Box flexGrow={1} mx={0.5} />
-          <Text
-            color="mono100"
-            fontWeight="bold"
-            variant={["sm-display", "sm-display", "md"]}
-          >
-            Delivery
-          </Text>
+          <SectionHeading>Delivery</SectionHeading>
         </Flex>
         <Clickable
           textDecoration="underline"

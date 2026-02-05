@@ -1,4 +1,5 @@
 import { Box, Flex, Tab, Tabs, Text } from "@artsy/palette"
+import { SectionHeading } from "Apps/Order2/Components/SectionHeading"
 import {
   CheckoutStepName,
   CheckoutStepState,
@@ -56,13 +57,7 @@ export const Order2FulfillmentDetailsStep: React.FC<
     >
       <Box px={[2, 2, 4]} hidden={stepState !== CheckoutStepState.UPCOMING}>
         <Flex flexDirection="column">
-          <Text
-            color="mono100"
-            fontWeight="bold"
-            variant={["sm-display", "sm-display", "md"]}
-          >
-            Delivery
-          </Text>
+          <SectionHeading>Delivery</SectionHeading>
           <Text variant="sm" color="mono60">
             Pickup availability and shipping costs vary by location
           </Text>

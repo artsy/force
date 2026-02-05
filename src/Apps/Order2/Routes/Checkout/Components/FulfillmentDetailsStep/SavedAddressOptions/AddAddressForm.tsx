@@ -1,4 +1,5 @@
-import { Button, Spacer, Text } from "@artsy/palette"
+import { Button, Spacer } from "@artsy/palette"
+import { SectionHeading } from "Apps/Order2/Components/SectionHeading"
 import { deliveryAddressValidationSchema } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/utils"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useScrollToFieldErrorOnSubmit } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToFieldErrorOnSubmit"
@@ -93,13 +94,7 @@ export const AddAddressForm = ({
       {({ isSubmitting }) => {
         return (
           <Form noValidate>
-            <Text
-              color="mono100"
-              fontWeight="bold"
-              variant={["sm-display", "sm-display", "md"]}
-            >
-              Add address
-            </Text>
+            <SectionHeading>Add address</SectionHeading>
 
             <Spacer y={2} />
 
