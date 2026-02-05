@@ -251,7 +251,7 @@ describe("Order2DeliveryOptionsForm", () => {
         screen.getByText("Shipping to be confirmed by seller"),
       ).toBeInTheDocument()
       expect(
-        screen.getByText(/The seller will coordinate shipping details/),
+        screen.getByText(/Shipping details will be updated after checkout/),
       ).toBeInTheDocument()
     })
   })

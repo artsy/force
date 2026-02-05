@@ -91,7 +91,7 @@ export const deliveryOptionTimeEstimate = (
       ]
     case "SHIPPING_TBD":
       return [
-        "The seller will coordinate shipping details after checkout and share the final cost with you. You will be able to review and approve the updated total before completing your purchase.",
+        "Shipping details will be updated after checkout. You will be able to review and approve the final total before purchase",
         "",
       ]
     default:
