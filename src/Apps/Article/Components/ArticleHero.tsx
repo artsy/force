@@ -44,7 +44,7 @@ const ArticleHero: FC<React.PropsWithChildren<ArticleHeroProps>> = ({
       <>
         {" "}
         {article.authors.length === 0 ? (
-          "Artsy Editors"
+          article.byline
         ) : (
           <CommaList>
             {article.authors.map(author => (
@@ -64,7 +64,7 @@ const ArticleHero: FC<React.PropsWithChildren<ArticleHeroProps>> = ({
         )}
       </>
     )
-  }, [article.authors])
+  }, [article.authors, article.byline])
 
   if (!article.hero) return null
 
@@ -285,6 +285,7 @@ export const ArticleHeroFragmentContainer = createFragmentContainer(
           slug
           name
         }
+        byline
         hero {
           ... on ArticleFeatureSection {
             layout

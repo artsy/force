@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<182a3551851d8affc59261536dc1208f>>
+ * @generated SignedSource<<187e9d0025d0a8bfe9c8d9817807aacc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -159,6 +159,13 @@ return {
           {
             "alias": null,
             "args": null,
+            "kind": "ScalarField",
+            "name": "byline",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": null,
             "kind": "LinkedField",
             "name": "hero",
@@ -264,12 +271,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "fc536cc1342109a601aadb9479447e9f",
+    "cacheID": "61dff9cd28a4bb7db2eaf8e8a0008a71",
     "id": null,
     "metadata": {},
     "name": "ArticleHeroStoryQuery",
     "operationKind": "query",
-    "text": "query ArticleHeroStoryQuery(\n  $id: String!\n) {\n  article(id: $id) {\n    ...ArticleHero_article\n    id\n  }\n}\n\nfragment ArticleHero_article on Article {\n  title\n  href\n  vertical\n  authors {\n    internalID\n    slug\n    name\n    id\n  }\n  hero {\n    __typename\n    ... on ArticleFeatureSection {\n      layout\n      embed\n      media\n      image {\n        url\n        split: resized(width: 900) {\n          src\n          srcSet\n        }\n        text: cropped(width: 1600, height: 900) {\n          src\n          srcSet\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query ArticleHeroStoryQuery(\n  $id: String!\n) {\n  article(id: $id) {\n    ...ArticleHero_article\n    id\n  }\n}\n\nfragment ArticleHero_article on Article {\n  title\n  href\n  vertical\n  authors {\n    internalID\n    slug\n    name\n    id\n  }\n  byline\n  hero {\n    __typename\n    ... on ArticleFeatureSection {\n      layout\n      embed\n      media\n      image {\n        url\n        split: resized(width: 900) {\n          src\n          srcSet\n        }\n        text: cropped(width: 1600, height: 900) {\n          src\n          srcSet\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
