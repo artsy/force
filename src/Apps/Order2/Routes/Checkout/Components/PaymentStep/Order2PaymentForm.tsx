@@ -301,7 +301,10 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       return
     }
 
-    if (!selectedPaymentMethod && (hasSavedCreditCards || hasSavedBankAccounts)) {
+    if (
+      !selectedPaymentMethod &&
+      (hasSavedCreditCards || hasSavedBankAccounts)
+    ) {
       setSelectedPaymentMethod("saved")
 
       const savedPaymentTypes = [
@@ -309,7 +312,15 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         hasSavedBankAccounts && "BANK_ACCOUNT",
       ].filter(Boolean) as string[]
 
-      checkoutTracking.savedPaymentMethodViewed(savedPaymentTypes)
+      const paymentMethodIds = [
+        ...savedCreditCards.map(card => card.internalID),
+        ...allowedSavedBankAccounts.map(bank => bank.internalID),
+      ]
+
+      checkoutTracking.savedPaymentMethodViewed(
+        savedPaymentTypes,
+        paymentMethodIds,
+      )
     }
   }, [
     hasSavedCreditCards,
@@ -317,6 +328,8 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
     selectedPaymentMethod,
     checkoutTracking,
     paymentStep?.state,
+    savedCreditCards,
+    allowedSavedBankAccounts,
   ])
 
   const resetElementsToInitialParams = useCallback(() => {

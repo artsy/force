@@ -182,7 +182,19 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
       </Text>
       <Flex py={1} justifyContent="space-between" alignItems="flex-start">
         {artworkData?.image?.resized?.url && (
-          <RouterLink flex={0} to={artworkPath} target="_blank">
+          <RouterLink
+            flex={0}
+            to={artworkPath}
+            target="_blank"
+            onClick={() => {
+              if (artworkData.artworkInternalID) {
+                checkoutTracking.clickedOrderArtworkImage({
+                  destinationPageOwnerId: artworkData.artworkInternalID,
+                  contextModule: ContextModule.ordersReview,
+                })
+              }
+            }}
+          >
             <Image
               mr={1}
               src={artworkData?.image?.resized?.url}
@@ -290,6 +302,7 @@ const extractLineItemMetadata = (
     price,
     dimensions,
     attributionClass,
+    artworkInternalID: artwork?.internalID,
   }
 }
 
@@ -346,6 +359,7 @@ const FRAGMENT = graphql`
         }
       }
       artwork {
+        internalID
         figures(includeAll: false) {
           __typename
           ... on Image {

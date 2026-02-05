@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cd2bcbf7145b3059a817f21a232facd4>>
+ * @generated SignedSource<<6775e8370a55333e52a806aebf66291f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -30,6 +30,7 @@ export type Order2CollapsibleOrderSummary_order$data = {
         // value in case none of the concrete values match.
         readonly __typename: "%other";
       }>;
+      readonly internalID: string;
     } | null | undefined;
     readonly artworkVersion: {
       readonly artistNames: string | null | undefined;
@@ -221,6 +222,13 @@ return {
           "selections": [
             {
               "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "internalID",
+              "storageKey": null
+            },
+            {
+              "alias": null,
               "args": [
                 {
                   "kind": "Literal",
@@ -263,6 +271,6 @@ return {
 };
 })();
 
-(node as any).hash = "94c627474454218a63a66b7ee36be85a";
+(node as any).hash = "8bf2577505fdf8b5b622473804949c47";
 
 export default node;
