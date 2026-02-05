@@ -79,12 +79,13 @@ export const SavedAddressOptions = ({
   useEffect(() => {
     if (
       !checkoutTracking ||
-      fulfillmentDetailsStep?.state !== CheckoutStepState.ACTIVE
+      fulfillmentDetailsStep?.state !== CheckoutStepState.ACTIVE ||
+      !!userAddressMode
     ) {
       return
     }
 
-    if (savedAddresses.length > 0 && !userAddressMode) {
+    if (savedAddresses.length > 0) {
       const addressIds = savedAddresses.map(address => address.internalID)
       checkoutTracking.savedAddressViewed(addressIds)
     }
