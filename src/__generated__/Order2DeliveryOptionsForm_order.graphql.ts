@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d7215519a731cdec6defea527b9bed31>>
+ * @generated SignedSource<<6b6b415a6bc2e71609b06246c5561e28>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,6 +20,7 @@ export type Order2DeliveryOptionsForm_order$data = {
     readonly type: FulfillmentOptionTypeEnum;
   }>;
   readonly internalID: string;
+  readonly shippingOrigin: string | null | undefined;
   readonly " $fragmentType": "Order2DeliveryOptionsForm_order";
 };
 export type Order2DeliveryOptionsForm_order$key = {
@@ -82,12 +83,19 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "shippingOrigin",
+      "storageKey": null
     }
   ],
   "type": "Order",
   "abstractKey": null
 };
 
-(node as any).hash = "4a28c023d68ba1fa401be382eb0e9a51";
+(node as any).hash = "11ed8be2230538da38dee420e0d08001";
 
 export default node;

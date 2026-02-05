@@ -236,6 +236,7 @@ describe("Order2DeliveryOptionsForm", () => {
         Me: () => ({
           order: {
             internalID: "order-123",
+            shippingOrigin: "New York, NY",
             fulfillmentOptions: [
               {
                 type: "SHIPPING_TBD",
@@ -253,6 +254,49 @@ describe("Order2DeliveryOptionsForm", () => {
       expect(
         screen.getByText(/Shipping details will be updated after checkout/),
       ).toBeInTheDocument()
+      expect(screen.getByText("Ships from New York, NY")).toBeInTheDocument()
+    })
+  })
+
+  describe("shipping origin", () => {
+    it("displays 'Ships from' when shipping origin is available", () => {
+      renderWithRelay({
+        Me: () => ({
+          order: {
+            internalID: "order-123",
+            shippingOrigin: "New York, NY",
+            fulfillmentOptions: [
+              {
+                type: "ARTSY_STANDARD",
+                amount: { display: "$25.00" },
+                selected: true,
+              },
+            ],
+          },
+        }),
+      })
+
+      expect(screen.getByText("Ships from New York, NY")).toBeInTheDocument()
+    })
+
+    it("does not display 'Ships from' when shipping origin is not available", () => {
+      renderWithRelay({
+        Me: () => ({
+          order: {
+            internalID: "order-123",
+            shippingOrigin: null,
+            fulfillmentOptions: [
+              {
+                type: "ARTSY_STANDARD",
+                amount: { display: "$25.00" },
+                selected: true,
+              },
+            ],
+          },
+        }),
+      })
+
+      expect(screen.queryByText(/Ships from/)).not.toBeInTheDocument()
     })
   })
 })

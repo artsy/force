@@ -131,4 +131,51 @@ describe("ArticleBody", () => {
 
     expect(screen.getByTestId("ArticleSectionEmbed")).toBeInTheDocument()
   })
+
+  describe("when author ids are present", () => {
+    it("renders a list of linked authors", () => {
+      renderWithRelay({
+        Article: () => ({
+          hero: null,
+          authors: [
+            {
+              internalID: "author-1",
+              slug: "author-one",
+              name: "Author One",
+            },
+            {
+              internalID: "author-2",
+              slug: "author-two",
+              name: "Author Two",
+            },
+          ],
+        }),
+      })
+
+      expect(
+        screen.getByRole("link", { name: "Author One" }),
+      ).toBeInTheDocument()
+      expect(
+        screen.getByRole("link", { name: "Author Two" }),
+      ).toBeInTheDocument()
+    })
+  })
+
+  describe("when only author names are present", () => {
+    it("renders a plain byline", () => {
+      renderWithRelay({
+        Article: () => ({
+          hero: null,
+          authors: [],
+          byline: "Artsy Editorial",
+        }),
+      })
+
+      const bylines = screen.getAllByText("Artsy Editorial")
+      expect(bylines.length).toBeGreaterThan(0)
+      expect(
+        screen.queryByRole("link", { name: /Artsy Editorial/i }),
+      ).not.toBeInTheDocument()
+    })
+  })
 })

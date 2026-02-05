@@ -1,6 +1,7 @@
 import { ContextModule } from "@artsy/cohesion"
 import { Button, SelectInput, Spacer, Text } from "@artsy/palette"
 import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
+import { SectionHeading } from "Apps/Order2/Components/SectionHeading"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useScrollToFieldErrorOnSubmit } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToFieldErrorOnSubmit"
 import { useOrder2SetOrderFulfillmentOptionMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderFulfillmentOptionMutation"
@@ -42,7 +43,7 @@ export const Order2PickupForm: React.FC<Order2PickupFormProps> = ({
   const { setFulfillmentDetailsComplete, checkoutTracking, setCheckoutMode } =
     useCheckoutContext()
 
-  const fulfillmentOptions = orderData?.fulfillmentOptions
+  const { fulfillmentOptions, shippingOrigin } = orderData
   // By the time we get here, this option should be available
   const pickupFulfillmentOption = fulfillmentOptions?.find(
     option => option.type === "PICKUP",
@@ -141,19 +142,14 @@ export const Order2PickupForm: React.FC<Order2PickupFormProps> = ({
 
   return (
     <>
-      <Text
-        fontWeight="normal"
-        color="mono100"
-        variant={["sm-display", "sm-display", "md"]}
-      >
-        Free pickup from
-      </Text>
+      <SectionHeading>Free pickup from</SectionHeading>
       <Spacer y={1} />
-      <Text variant="sm" color="mono60">
-        {orderData.shippingOrigin}
-      </Text>
-      <Spacer y={1} />
-      <Text variant="sm" color="mono60">
+      {shippingOrigin && (
+        <Text variant="xs" color="mono60">
+          {shippingOrigin}
+        </Text>
+      )}
+      <Text variant="xs" color="mono60">
         After the seller confirms your order, you'll be appointed an Artsy
         specialist within 2 business days to handle pickup logistics.
       </Text>
