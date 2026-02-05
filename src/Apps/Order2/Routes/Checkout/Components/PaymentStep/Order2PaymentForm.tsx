@@ -17,7 +17,10 @@ import {
   BankAccountBalanceCheckResult,
   Order2PollBankAccountBalanceQueryRenderer,
 } from "Apps/Order2/Components/Order2PollBankAccountBalance"
-import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
+import {
+  CheckoutStepName,
+  CheckoutStepState,
+} from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import {
   CheckoutErrorBanner,
   type CheckoutErrorBannerMessage,
@@ -87,6 +90,15 @@ const getTotalForPayment = (
       return {
         minor: Math.round(Number.parseFloat(totalLine.amount.amount) * 100),
         currencyCode: totalLine.amount.currencyCode,
+      }
+    }
+
+    // In case we're missing shipping information (required for totalLine)
+    // default to the offer amount
+    if (pendingOffer?.amount?.amount) {
+      return {
+        minor: Math.round(Number.parseFloat(pendingOffer.amount.amount) * 100),
+        currencyCode: pendingOffer.amount.currencyCode,
       }
     }
   }
@@ -224,9 +236,11 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
     activeFulfillmentDetailsTab,
     messages,
     setStepErrorMessage,
+    steps,
   } = useCheckoutContext()
 
   const paymentError = messages[CheckoutStepName.PAYMENT]?.error
+  const paymentStep = steps.find(step => step.name === CheckoutStepName.PAYMENT)
 
   const unsetStepError = () => {
     setStepErrorMessage({
@@ -283,6 +297,10 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
 
   // Default to saved payment method when available and track that it has been viewed
   useEffect(() => {
+    if (!checkoutTracking || paymentStep?.state !== CheckoutStepState.ACTIVE) {
+      return
+    }
+
     if (
       !selectedPaymentMethod &&
       (hasSavedCreditCards || hasSavedBankAccounts)
@@ -294,13 +312,24 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         hasSavedBankAccounts && "BANK_ACCOUNT",
       ].filter(Boolean) as string[]
 
-      checkoutTracking.savedPaymentMethodViewed(savedPaymentTypes)
+      const paymentMethodIds = [
+        ...savedCreditCards.map(card => card.internalID),
+        ...allowedSavedBankAccounts.map(bank => bank.internalID),
+      ]
+
+      checkoutTracking.savedPaymentMethodViewed(
+        savedPaymentTypes,
+        paymentMethodIds,
+      )
     }
   }, [
     hasSavedCreditCards,
     hasSavedBankAccounts,
     selectedPaymentMethod,
     checkoutTracking,
+    paymentStep?.state,
+    savedCreditCards,
+    allowedSavedBankAccounts,
   ])
 
   const resetElementsToInitialParams = useCallback(() => {
@@ -860,6 +889,10 @@ const ORDER_FRAGMENT = graphql`
       message
     }
     pendingOffer {
+      amount {
+        amount
+        currencyCode
+      }
       pricingBreakdownLines {
         ... on TotalLine {
           amount {

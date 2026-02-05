@@ -2,12 +2,14 @@ import {
   ActionType,
   type ClickedAddNewShippingAddress,
   type ClickedCancelExpressCheckout,
+  type ClickedChangeOfferOption,
   type ClickedChangePaymentMethod,
   type ClickedChangeShippingAddress,
   type ClickedChangeShippingMethod,
   type ClickedExpressCheckout,
   type ClickedFulfillmentTab,
   type ClickedOfferOption,
+  type ClickedOrderArtworkImage,
   type ClickedOrderProgression,
   type ClickedPaymentMethod,
   type ClickedSelectShippingOption,
@@ -16,7 +18,9 @@ import {
   type ErrorMessageViewed,
   type ExpressCheckoutViewed,
   type OrderProgressionViewed,
+  OwnerType,
   type PageOwnerType,
+  type SavedAddressViewed,
   type SavedPaymentMethodViewed,
   type SubmittedOffer,
   type SubmittedOrder,
@@ -94,7 +98,6 @@ export const useCheckoutTracking = ({
           action: ActionType.clickedCancelExpressCheckout,
           context_page_owner_type: contextPageOwnerType,
           context_page_owner_id: contextPageOwnerId,
-          // order_id: contextPageOwnerId, // TODO: Clarify whether we are using order_id
           flow,
           credit_card_wallet_type: walletType,
         }
@@ -125,12 +128,16 @@ export const useCheckoutTracking = ({
       },
 
       // Loaded from the more generic shared useOrder2Tracking hook
-      clickedBuyerProtection: () =>
-        order2Tracking.clickedBuyerProtection(ContextModule.ordersCheckout),
+      clickedBuyerProtection: (contextModule?: ContextModule) =>
+        order2Tracking.clickedBuyerProtection(
+          contextModule || ContextModule.ordersCheckout,
+        ),
 
       // Loaded from the more generic shared useOrder2Tracking hook
-      clickedImportFees: () =>
-        order2Tracking.clickedImportFees(ContextModule.ordersCheckout),
+      clickedImportFees: (contextModule?: ContextModule) =>
+        order2Tracking.clickedImportFees(
+          contextModule || ContextModule.ordersCheckout,
+        ),
 
       clickedPaymentMethod: ({
         paymentMethod,
@@ -172,7 +179,7 @@ export const useCheckoutTracking = ({
       clickedShippingAddress: () => {
         const payload: ClickedShippingAddress = {
           action: ActionType.clickedShippingAddress,
-          context_module: ContextModule.ordersShipping,
+          context_module: ContextModule.ordersFulfillment,
           context_page_owner_type: contextPageOwnerType,
           context_page_owner_id: contextPageOwnerId,
         }
@@ -185,7 +192,7 @@ export const useCheckoutTracking = ({
           action: ActionType.clickedAddNewShippingAddress,
           context_page_owner_type: contextPageOwnerType,
           context_page_owner_id: contextPageOwnerId,
-          context_module: ContextModule.ordersShipping,
+          context_module: ContextModule.ordersFulfillment,
         }
 
         trackEvent(payload)
@@ -276,13 +283,28 @@ export const useCheckoutTracking = ({
         trackEvent(payload)
       },
 
-      savedPaymentMethodViewed: (paymentMethods: string[]) => {
+      savedPaymentMethodViewed: (
+        paymentMethods: string[],
+        paymentMethodIds: string[],
+      ) => {
         const payload: SavedPaymentMethodViewed = {
           action: ActionType.savedPaymentMethodViewed,
           context_page_owner_type: contextPageOwnerType,
           context_page_owner_id: contextPageOwnerId,
           flow,
           payment_methods: paymentMethods,
+          payment_method_ids: paymentMethodIds,
+        }
+        trackEvent(payload)
+      },
+
+      savedAddressViewed: (addressIds: string[]) => {
+        const payload: SavedAddressViewed = {
+          action: ActionType.savedAddressViewed,
+          context_page_owner_type: contextPageOwnerType,
+          context_page_owner_id: contextPageOwnerId,
+          flow,
+          address_ids: addressIds,
         }
         trackEvent(payload)
       },
@@ -297,6 +319,7 @@ export const useCheckoutTracking = ({
         }
         trackEvent(payload)
       },
+
       clickedOfferOption: (
         currencyCode: string,
         orderId: string,
@@ -312,6 +335,36 @@ export const useCheckoutTracking = ({
           flow: flow,
           offer: offerDescription || "Other amount",
           amount: offerAmount,
+        }
+
+        trackEvent(payload)
+      },
+
+      clickedChangeOfferOption: () => {
+        const payload: ClickedChangeOfferOption = {
+          action: ActionType.clickedChangeOfferOption,
+          context_module: ContextModule.ordersCheckout,
+          context_page_owner_type: contextPageOwnerType,
+          context_page_owner_id: contextPageOwnerId,
+        }
+
+        trackEvent(payload)
+      },
+
+      clickedOrderArtworkImage: ({
+        destinationPageOwnerId,
+        contextModule,
+      }: {
+        destinationPageOwnerId: string
+        contextModule: ContextModule
+      }) => {
+        const payload: ClickedOrderArtworkImage = {
+          action: ActionType.clickedOrderArtworkImage,
+          context_module: contextModule,
+          context_page_owner_type: contextPageOwnerType,
+          context_page_owner_id: contextPageOwnerId,
+          destination_page_owner_id: destinationPageOwnerId,
+          destination_page_owner_type: OwnerType.artwork,
         }
 
         trackEvent(payload)

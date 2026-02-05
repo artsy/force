@@ -250,8 +250,6 @@ export const Order2ExpressCheckoutUI: React.FC<
           variables: { input: { id: orderData.internalID } },
         })
 
-      // TODO: Should we unset shipping address here too?
-
       validateAndExtractOrderResponse(unsetOrderPaymentMethod?.orderOrError)
       validateAndExtractOrderResponse(unsetOrderFulfillmentOption?.orderOrError)
     } catch (error) {

@@ -472,6 +472,7 @@ describe("Order2PaymentForm", () => {
       const savedCards = [
         {
           id: "card-1",
+          internalID: "card-1",
           brand: "Visa",
           last4: "1234",
         },
@@ -491,7 +492,7 @@ describe("Order2PaymentForm", () => {
       // Should track saved payment method viewed
       expect(
         mockCheckoutContext.checkoutTracking.savedPaymentMethodViewed,
-      ).toHaveBeenCalledWith(["CREDIT_CARD"])
+      ).toHaveBeenCalledWith(["CREDIT_CARD"], ["card-1"])
     })
 
     it("tracks payment method selection for saved credit card", async () => {
@@ -532,6 +533,7 @@ describe("Order2PaymentForm", () => {
       const savedCards = [
         {
           id: "card-1",
+          internalID: "card-1",
           brand: "Visa",
           last4: "1234",
         },
@@ -540,8 +542,10 @@ describe("Order2PaymentForm", () => {
       const savedBankAccounts = [
         {
           id: "bank-1",
+          internalID: "bank-1",
           last4: "5678",
           bankName: "Test Bank",
+          type: "US_BANK_ACCOUNT",
         },
       ]
 
@@ -561,7 +565,10 @@ describe("Order2PaymentForm", () => {
 
       expect(
         mockCheckoutContext.checkoutTracking.savedPaymentMethodViewed,
-      ).toHaveBeenCalledWith(["CREDIT_CARD"])
+      ).toHaveBeenCalledWith(
+        ["CREDIT_CARD", "BANK_ACCOUNT"],
+        ["card-1", "bank-1"],
+      )
     })
 
     it("tracks order progression when submitting payment", async () => {

@@ -229,4 +229,30 @@ describe("Order2DeliveryOptionsForm", () => {
       expect(screen.queryByText("Pickup")).not.toBeInTheDocument()
     })
   })
+
+  describe("SHIPPING_TBD option", () => {
+    it("renders SHIPPING_TBD option with seller confirmation message", () => {
+      renderWithRelay({
+        Me: () => ({
+          order: {
+            internalID: "order-123",
+            fulfillmentOptions: [
+              {
+                type: "SHIPPING_TBD",
+                amount: { display: null },
+                selected: true,
+              },
+            ],
+          },
+        }),
+      })
+
+      expect(
+        screen.getByText("Shipping to be confirmed by seller"),
+      ).toBeInTheDocument()
+      expect(
+        screen.getByText(/Shipping details will be updated after checkout/),
+      ).toBeInTheDocument()
+    })
+  })
 })

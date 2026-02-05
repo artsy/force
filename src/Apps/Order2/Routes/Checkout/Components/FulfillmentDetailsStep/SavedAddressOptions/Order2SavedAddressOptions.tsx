@@ -8,7 +8,11 @@ import {
   Text,
   usePrevious,
 } from "@artsy/palette"
-import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
+import {
+  CheckoutStepName,
+  CheckoutStepState,
+} from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
+import type { Order2CheckoutContext_order$data } from "__generated__/Order2CheckoutContext_order.graphql"
 import type { CheckoutErrorBannerMessage } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { AddressDisplay } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/AddressDisplay"
 import { AddAddressForm } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/SavedAddressOptions/AddAddressForm"
@@ -53,6 +57,8 @@ export const SavedAddressOptions = ({
     userAddressMode,
     setStepErrorMessage,
     checkoutTracking,
+    steps,
+    orderData,
   } = useCheckoutContext()
   const { scrollToStep } = useScrollToStep()
   const parentFormikContext = useFormikContext<FormikContextWithAddress>()
@@ -62,6 +68,33 @@ export const SavedAddressOptions = ({
   >(initialSelectedAddress)
 
   const previousUserAddressMode = usePrevious(userAddressMode)
+  const isOfferOrder =
+    (orderData as Order2CheckoutContext_order$data)?.mode === "OFFER"
+
+  const fulfillmentDetailsStep = steps?.find(
+    step => step.name === CheckoutStepName.FULFILLMENT_DETAILS,
+  )
+
+  // Track when saved addresses are viewed (only once when step is active)
+  useEffect(() => {
+    if (
+      !checkoutTracking ||
+      fulfillmentDetailsStep?.state !== CheckoutStepState.ACTIVE ||
+      !!userAddressMode
+    ) {
+      return
+    }
+
+    if (savedAddresses.length > 0) {
+      const addressIds = savedAddresses.map(address => address.internalID)
+      checkoutTracking.savedAddressViewed(addressIds)
+    }
+  }, [
+    savedAddresses,
+    checkoutTracking,
+    fulfillmentDetailsStep?.state,
+    userAddressMode,
+  ])
 
   // Scroll to top of step whenever userAddressMode changes
   // This covers: beginning edit, completing edit, canceling edit,
@@ -89,7 +122,7 @@ export const SavedAddressOptions = ({
         isShippable,
       })
 
-      if (!isShippable) {
+      if (!isShippable && !isOfferOrder) {
         return setStepErrorMessage({
           step: CheckoutStepName.FULFILLMENT_DETAILS,
           error: ADDRESS_ERROR_MESSAGES.unableToShipToAddress,
@@ -113,6 +146,7 @@ export const SavedAddressOptions = ({
       setUserAddressMode,
       setStepErrorMessage,
       availableShippingCountries,
+      isOfferOrder,
     ],
   )
 
@@ -144,7 +178,7 @@ export const SavedAddressOptions = ({
       setSelectedAddress(processedAddress)
       await onSelectAddress(processedAddress)
 
-      if (!isShippable) {
+      if (!isShippable && !isOfferOrder) {
         return setStepErrorMessage({
           step: CheckoutStepName.FULFILLMENT_DETAILS,
           error: ADDRESS_ERROR_MESSAGES.unableToShipToAddress,
@@ -163,7 +197,7 @@ export const SavedAddressOptions = ({
         error: null,
       })
     },
-    [checkoutTracking, onSelectAddress, setStepErrorMessage],
+    [checkoutTracking, onSelectAddress, setStepErrorMessage, isOfferOrder],
   )
 
   if (userAddressMode?.mode === "add") {
@@ -262,7 +296,10 @@ export const SavedAddressOptions = ({
       <Button
         type="submit"
         loading={parentFormikContext.isSubmitting}
-        disabled={!selectedAddress?.isShippable || !selectedAddress?.isValid}
+        disabled={
+          (!selectedAddress?.isShippable && !isOfferOrder) ||
+          !selectedAddress?.isValid
+        }
         onClick={() => {
           parentFormikContext.handleSubmit()
         }}

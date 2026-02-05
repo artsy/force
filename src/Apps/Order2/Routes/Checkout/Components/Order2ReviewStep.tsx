@@ -182,7 +182,19 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
       </Text>
       <Flex py={1} justifyContent="space-between" alignItems="flex-start">
         {artworkData?.image?.resized?.url && (
-          <RouterLink flex={0} to={artworkPath} target="_blank">
+          <RouterLink
+            flex={0}
+            to={artworkPath}
+            target="_blank"
+            onClick={() => {
+              if (artworkData.artworkInternalID) {
+                checkoutTracking.clickedOrderArtworkImage({
+                  destinationPageOwnerId: artworkData.artworkInternalID,
+                  contextModule: ContextModule.ordersReview,
+                })
+              }
+            }}
+          >
             <Image
               mr={1}
               src={artworkData?.image?.resized?.url}
@@ -215,7 +227,10 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
         </Box>
       </Flex>
       <Box>
-        <Order2CheckoutPricingBreakdown order={orderData} />
+        <Order2CheckoutPricingBreakdown
+          order={orderData}
+          contextModule={ContextModule.ordersReview}
+        />
       </Box>
       <Spacer y={2} />
       <Message variant="default" p={1}>
@@ -225,7 +240,11 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
           <Text variant="xs" color="mono100">
             Your purchase is protected with{" "}
             <RouterLink
-              onClick={() => checkoutTracking.clickedBuyerProtection()}
+              onClick={() =>
+                checkoutTracking.clickedBuyerProtection(
+                  ContextModule.ordersReview,
+                )
+              }
               inline
               target="_blank"
               to={BUYER_GUARANTEE_URL}
@@ -283,6 +302,7 @@ const extractLineItemMetadata = (
     price,
     dimensions,
     attributionClass,
+    artworkInternalID: artwork?.internalID,
   }
 }
 
@@ -339,6 +359,7 @@ const FRAGMENT = graphql`
         }
       }
       artwork {
+        internalID
         figures(includeAll: false) {
           __typename
           ... on Image {

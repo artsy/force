@@ -727,12 +727,6 @@ describe("Order2CheckoutRoute", () => {
 
       expectTrackedEvents({ mockTrackEvent }, [
         {
-          action: "savedPaymentMethodViewed",
-          context_page_owner_id: "order-id",
-          flow: "Buy now",
-          payment_methods: ["CREDIT_CARD"],
-        },
-        {
           action: "orderProgressionViewed",
           context_module: "ordersFulfillment",
           context_page_owner_id: "order-id",
@@ -749,6 +743,13 @@ describe("Order2CheckoutRoute", () => {
           context_module: "ordersFulfillment",
           context_page_owner_id: "order-id",
           flow: "Buy now",
+        },
+        {
+          action: "savedPaymentMethodViewed",
+          context_page_owner_id: "order-id",
+          flow: "Buy now",
+          payment_methods: ["CREDIT_CARD"],
+          payment_method_ids: ["<CreditCard-mock-id-1>"],
         },
         {
           action: "orderProgressionViewed",

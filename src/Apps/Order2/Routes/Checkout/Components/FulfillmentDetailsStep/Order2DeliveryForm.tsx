@@ -234,15 +234,15 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
             ?.orderOrError,
         ).order
 
-        const isMissingShippingOption = !newOrder.fulfillmentOptions.some(
-          option => !["PICKUP", "SHIPPING_TBD"].includes(option.type),
+        const isMissingShippingOption = newOrder.fulfillmentOptions.every(
+          option => ["PICKUP", "SHIPPING_TBD"].includes(option.type),
         )
 
         if (!hasSavedAddresses) {
           await saveAddressToUser(values)
         }
 
-        if (isMissingShippingOption) {
+        if (isMissingShippingOption && orderData?.mode !== "OFFER") {
           throw new LocalCheckoutError("no_shipping_options")
         }
 
@@ -251,7 +251,7 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
           error: null,
         })
 
-        setFulfillmentDetailsComplete({}) // TODO: Clean up signature
+        setFulfillmentDetailsComplete({})
         setUserAddressMode(null)
       } catch (error) {
         handleError(
@@ -274,6 +274,7 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
       hasSavedAddresses,
       orderData.internalID,
       orderData.selectedFulfillmentOption?.type,
+      orderData?.mode,
       saveAddressToUser,
       setCheckoutMode,
       setFulfillmentDetailsComplete,
@@ -401,6 +402,7 @@ const ORDER_FRAGMENT = graphql`
     selectedFulfillmentOption {
       type
     }
+    mode
     availableShippingCountries
     fulfillmentDetails {
       addressLine1

@@ -82,10 +82,7 @@ export const Order2DeliveryOptionsForm: React.FC<
             input: {
               id: orderData.internalID,
               fulfillmentOption: {
-                type: deliveryOption.type as Exclude<
-                  DeliveryOption["type"],
-                  "SHIPPING_TBD"
-                >,
+                type: deliveryOption.type,
               },
             },
           },
@@ -168,7 +165,11 @@ export const Order2DeliveryOptionsForm: React.FC<
                 <Text variant="xs" color="mono60">
                   All options are protected against damage and loss with{" "}
                   <RouterLink
-                    onClick={() => checkoutTracking.clickedBuyerProtection()}
+                    onClick={() =>
+                      checkoutTracking.clickedBuyerProtection(
+                        ContextModule.ordersShippingMethods,
+                      )
+                    }
                     inline
                     target="_blank"
                     to={BUYER_GUARANTEE_URL}
