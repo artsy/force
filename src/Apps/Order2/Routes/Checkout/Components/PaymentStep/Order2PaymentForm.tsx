@@ -72,32 +72,15 @@ const defaultBillingAddress = {
   country: "US",
 }
 
-const getTotalForPayment = (
-  orderData: Order2PaymentForm_order$data,
-): { minor?: number; currencyCode: string } | null => {
-  const { mode, itemsTotal, currencyCode } = orderData
-
-  if (mode === "BUY" && itemsTotal && itemsTotal.minor) {
-    return itemsTotal
-  }
-
-  if (mode === "OFFER") {
-    return {
-      currencyCode: currencyCode,
-    }
-  }
-
-  return null
-}
-
 const getBaseStripeOptions = (
   mode: Order2PaymentForm_order$data["mode"],
-  total: { minor?: number; currencyCode: string },
   merchantAccountExternalId: string | undefined,
+  currencyCode: string,
+  amount?: number,
   availablePaymentMethodTypes?: ReadonlyArray<string> | null,
 ) => {
   const sharedOptions = {
-    currency: total.currencyCode.toLowerCase(),
+    currency: currencyCode.toLowerCase(),
     setupFutureUsage: "off_session" as const,
     captureMethod: "automatic" as const,
     paymentMethodOptions: {
@@ -120,7 +103,7 @@ const getBaseStripeOptions = (
     ? {
         ...sharedOptions,
         mode: "payment" as const,
-        amount: total.minor,
+        amount: amount,
       }
     : {
         ...sharedOptions,
@@ -140,11 +123,15 @@ export const Order2PaymentForm: React.FC<Order2PaymentFormProps> = ({
   const orderData = useFragment(ORDER_FRAGMENT, order)
   const meData = useFragment(ME_FRAGMENT, me)
   const stripe = useStripe()
-  const { seller, mode, availableStripePaymentMethodTypes } = orderData
+  const {
+    seller,
+    mode,
+    availableStripePaymentMethodTypes,
+    itemsTotal,
+    currencyCode,
+  } = orderData
 
-  const total = getTotalForPayment(orderData)
-
-  if (!total) {
+  if (mode === "BUY" && !itemsTotal) {
     return null
   }
 
@@ -152,8 +139,9 @@ export const Order2PaymentForm: React.FC<Order2PaymentFormProps> = ({
 
   const baseOptions = getBaseStripeOptions(
     mode,
-    total,
     seller?.merchantAccount?.externalId,
+    currencyCode,
+    itemsTotal?.minor,
     availableStripePaymentMethodTypes,
   )
 
@@ -319,15 +307,22 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
   const resetElementsToInitialParams = useCallback(() => {
     if (!elements) return
 
-    const total = getTotalForPayment(order)
-    if (!total) return
+    const {
+      mode,
+      availableStripePaymentMethodTypes,
+      currencyCode,
+      itemsTotal,
+    } = order
 
-    const { mode, availableStripePaymentMethodTypes } = order
+    if (mode === "BUY" && !itemsTotal) {
+      return null
+    }
 
     const options = getBaseStripeOptions(
       mode,
-      total,
       merchantAccountExternalId,
+      currencyCode,
+      itemsTotal?.minor,
       availableStripePaymentMethodTypes,
     )
 
