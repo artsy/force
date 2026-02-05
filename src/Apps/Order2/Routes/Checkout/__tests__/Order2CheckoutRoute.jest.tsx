@@ -751,6 +751,7 @@ describe("Order2CheckoutRoute", () => {
           context_page_owner_id: "order-id",
           flow: "Buy now",
           payment_methods: ["CREDIT_CARD"],
+          payment_method_ids: ["<CreditCard-mock-id-1>"],
         },
         {
           action: "orderProgressionViewed",

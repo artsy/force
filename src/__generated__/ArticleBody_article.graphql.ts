@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<061325c0432beb877d1713e554f835cb>>
+ * @generated SignedSource<<644a8d9be736074538f3c71e66a87903>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,6 +17,7 @@ export type ArticleBody_article$data = {
     readonly name: string;
     readonly slug: string | null | undefined;
   }>;
+  readonly byline: string | null | undefined;
   readonly hero: {
     readonly __typename: string;
   } | null | undefined;
@@ -79,6 +80,13 @@ v2 = {
   "storageKey": null
 },
 v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "byline",
+  "storageKey": null
+},
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -175,6 +183,7 @@ return {
       ],
       "storageKey": null
     },
+    (v3/*: any*/),
     (v1/*: any*/),
     (v2/*: any*/),
     {
@@ -191,7 +200,7 @@ return {
       "name": "leadParagraph",
       "storageKey": null
     },
-    (v3/*: any*/),
+    (v4/*: any*/),
     (v0/*: any*/),
     {
       "alias": null,
@@ -232,15 +241,9 @@ return {
       "plural": true,
       "selections": [
         (v1/*: any*/),
-        (v3/*: any*/),
+        (v4/*: any*/),
         (v0/*: any*/),
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "byline",
-          "storageKey": null
-        },
+        (v3/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -297,6 +300,6 @@ return {
 };
 })();
 
-(node as any).hash = "7c0e7606c87df78d0e7188463194dd41";
+(node as any).hash = "642ae5b6500092f504903186ec80b55a";
 
 export default node;

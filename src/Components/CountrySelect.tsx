@@ -304,6 +304,7 @@ export const EU_COUNTRY_SELECT_OPTIONS = [
 ]
 
 export const SMS_UNSUPPORTED_COUNTRY_CODES = [
+  { text: "", value: "" },
   { text: "Afghanistan", value: "AF" },
   { text: "Algeria", value: "DZ" },
   { text: "American Samoa", value: "AS" },

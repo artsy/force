@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<74684c14f8661198f7fcd085211a4cff>>
+ * @generated SignedSource<<824804428d7396fcc60599fc9fe421d7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,6 +17,7 @@ export type ArticleHero_article$data = {
     readonly name: string;
     readonly slug: string | null | undefined;
   }>;
+  readonly byline: string | null | undefined;
   readonly hero: {
     readonly embed?: string | null | undefined;
     readonly image?: {
@@ -122,6 +123,13 @@ return {
     {
       "alias": null,
       "args": null,
+      "kind": "ScalarField",
+      "name": "byline",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": null,
       "kind": "LinkedField",
       "name": "hero",
@@ -219,6 +227,6 @@ return {
 };
 })();
 
-(node as any).hash = "eb83db72c5b3b06579c545065dafc5e8";
+(node as any).hash = "6b732ad4a6c5f21043d442849ecea20a";
 
 export default node;

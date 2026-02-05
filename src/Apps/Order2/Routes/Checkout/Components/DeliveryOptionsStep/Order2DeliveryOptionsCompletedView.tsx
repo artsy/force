@@ -16,7 +16,7 @@ export const Order2DeliveryOptionsCompletedView: React.FC<
   const { editDeliveryOption, checkoutTracking } = useCheckoutContext()
 
   const onClickEdit = useCallback(() => {
-    checkoutTracking.clickedChangePaymentMethod()
+    checkoutTracking.clickedChangeDeliveryOptions()
 
     editDeliveryOption()
   }, [checkoutTracking, editDeliveryOption])

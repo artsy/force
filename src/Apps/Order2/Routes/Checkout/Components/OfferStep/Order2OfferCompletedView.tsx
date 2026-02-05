@@ -16,7 +16,7 @@ export interface Order2OfferCompletedViewProps {
 export const Order2OfferCompletedView: React.FC<
   Order2OfferCompletedViewProps
 > = ({ lastOfferAmount, lastOfferNote }) => {
-  const { editOfferAmount } = useCheckoutContext()
+  const { editOfferAmount, checkoutTracking } = useCheckoutContext()
 
   if (!lastOfferAmount) {
     logger.warn("No offer amount provided for Order2OfferCompletedView")
@@ -24,7 +24,7 @@ export const Order2OfferCompletedView: React.FC<
   }
 
   const onClickEdit = () => {
-    // TODO: Add tracking when available
+    checkoutTracking.clickedChangeOfferOption()
     editOfferAmount()
   }
 
