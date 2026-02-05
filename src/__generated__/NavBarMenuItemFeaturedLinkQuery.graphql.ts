@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<95b3fb4ad92e1b01d9ff4e40c97dc7f8>>
+ * @generated SignedSource<<b7ca0dd42663f80843bb96729a2760c9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -174,11 +174,16 @@ return {
                               "wide",
                               "large_rectangle"
                             ]
+                          },
+                          {
+                            "kind": "Literal",
+                            "name": "width",
+                            "value": 400
                           }
                         ],
-                        "concreteType": "ResizedImageUrl",
+                        "concreteType": "CroppedImageUrl",
                         "kind": "LinkedField",
-                        "name": "resized",
+                        "name": "cropped",
                         "plural": false,
                         "selections": [
                           {
@@ -194,9 +199,23 @@ return {
                             "kind": "ScalarField",
                             "name": "srcSet",
                             "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "width",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "height",
+                            "storageKey": null
                           }
                         ],
-                        "storageKey": "resized(height:400,version:[\"main\",\"wide\",\"large_rectangle\"])"
+                        "storageKey": "cropped(height:400,version:[\"main\",\"wide\",\"large_rectangle\"],width:400)"
                       }
                     ],
                     "storageKey": null
@@ -234,12 +253,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "8ffd6a533c3588b80447c096624d1a60",
+    "cacheID": "875dab65914ed2fa1f26b7f53b99da4d",
     "id": null,
     "metadata": {},
     "name": "NavBarMenuItemFeaturedLinkQuery",
     "operationKind": "query",
-    "text": "query NavBarMenuItemFeaturedLinkQuery(\n  $key: String!\n) {\n  orderedSets(key: $key) {\n    ...NavBarMenuItemFeaturedLink_orderedSet\n    id\n  }\n}\n\nfragment NavBarMenuItemFeaturedLink_orderedSet on OrderedSet {\n  internalID\n  itemType\n  items {\n    __typename\n    ... on FeaturedLink {\n      internalID\n      title\n      subtitle(format: PLAIN)\n      href\n      image {\n        resized(height: 400, version: [\"main\", \"wide\", \"large_rectangle\"]) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on Profile {\n      id\n    }\n    ... on Video {\n      id\n    }\n  }\n}\n"
+    "text": "query NavBarMenuItemFeaturedLinkQuery(\n  $key: String!\n) {\n  orderedSets(key: $key) {\n    ...NavBarMenuItemFeaturedLink_orderedSet\n    id\n  }\n}\n\nfragment NavBarMenuItemFeaturedLink_orderedSet on OrderedSet {\n  internalID\n  itemType\n  items {\n    __typename\n    ... on FeaturedLink {\n      internalID\n      title\n      subtitle(format: PLAIN)\n      href\n      image {\n        cropped(width: 400, height: 400, version: [\"main\", \"wide\", \"large_rectangle\"]) {\n          src\n          srcSet\n          width\n          height\n        }\n      }\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on Profile {\n      id\n    }\n    ... on Video {\n      id\n    }\n  }\n}\n"
   }
 };
 })();

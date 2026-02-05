@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2b0e5c78d086e90ad6bb192104faaf2d>>
+ * @generated SignedSource<<48df6833cf8c29601b62c50177d07d48>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,9 +17,11 @@ export type NavBarMenuItemFeaturedLink_orderedSet$data = {
     readonly __typename: "FeaturedLink";
     readonly href: string | null | undefined;
     readonly image: {
-      readonly resized: {
+      readonly cropped: {
+        readonly height: number;
         readonly src: string;
         readonly srcSet: string;
+        readonly width: number;
       } | null | undefined;
     } | null | undefined;
     readonly internalID: string;
@@ -129,11 +131,16 @@ return {
                         "wide",
                         "large_rectangle"
                       ]
+                    },
+                    {
+                      "kind": "Literal",
+                      "name": "width",
+                      "value": 400
                     }
                   ],
-                  "concreteType": "ResizedImageUrl",
+                  "concreteType": "CroppedImageUrl",
                   "kind": "LinkedField",
-                  "name": "resized",
+                  "name": "cropped",
                   "plural": false,
                   "selections": [
                     {
@@ -149,9 +156,23 @@ return {
                       "kind": "ScalarField",
                       "name": "srcSet",
                       "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "width",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "height",
+                      "storageKey": null
                     }
                   ],
-                  "storageKey": "resized(height:400,version:[\"main\",\"wide\",\"large_rectangle\"])"
+                  "storageKey": "cropped(height:400,version:[\"main\",\"wide\",\"large_rectangle\"],width:400)"
                 }
               ],
               "storageKey": null
@@ -169,6 +190,6 @@ return {
 };
 })();
 
-(node as any).hash = "5e3d1f93fca56575c2c9c4cbcc064799";
+(node as any).hash = "28a3cc1eea728b7279d209a343adfa16";
 
 export default node;
