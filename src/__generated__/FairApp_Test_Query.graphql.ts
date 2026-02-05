@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<91f65c64cbdcb558128ec21a2cd56cda>>
+ * @generated SignedSource<<a80df7b50b5f22b3757ad74e89d6edda>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -222,7 +222,14 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "slug",
+            "name": "isEvergreen",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "tagline",
             "storageKey": null
           },
           {
@@ -281,7 +288,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5e33984781f18fd717baae8634bf6a3c",
+    "cacheID": "0f538d2f62b9086c55939ca501ba1d8e",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -316,6 +323,12 @@ return {
         "fair.image": (v4/*: any*/),
         "fair.image.url": (v2/*: any*/),
         "fair.internalID": (v3/*: any*/),
+        "fair.isEvergreen": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "Boolean"
+        },
         "fair.metaDescription": (v2/*: any*/),
         "fair.metaDescriptionFallback": (v2/*: any*/),
         "fair.metaImage": (v4/*: any*/),
@@ -330,12 +343,12 @@ return {
         "fair.profile.icon": (v4/*: any*/),
         "fair.profile.icon.url": (v2/*: any*/),
         "fair.profile.id": (v3/*: any*/),
-        "fair.slug": (v3/*: any*/)
+        "fair.tagline": (v2/*: any*/)
       }
     },
     "name": "FairApp_Test_Query",
     "operationKind": "query",
-    "text": "query FairApp_Test_Query {\n  fair(id: \"example\") {\n    ...FairApp_fair\n    id\n  }\n}\n\nfragment ExhibitorsLetterNav_fair on Fair {\n  exhibitorsGroupedByName {\n    letter\n  }\n}\n\nfragment FairApp_fair on Fair {\n  ...FairMeta_fair\n  ...FairTabs_fair\n  ...FairHeader_fair\n  ...FairHeaderImage_fair\n  ...ExhibitorsLetterNav_fair\n  internalID\n  profile {\n    id\n  }\n}\n\nfragment FairHeaderImage_fair on Fair {\n  image {\n    url(version: \"wide\")\n  }\n}\n\nfragment FairHeader_fair on Fair {\n  name\n  exhibitionPeriod\n  profile {\n    icon {\n      url(version: [\"large\", \"square\", \"square140\"])\n    }\n    id\n  }\n  slug\n}\n\nfragment FairMeta_fair on Fair {\n  name\n  metaDescription: summary\n  metaDescriptionFallback: about(format: PLAIN)\n  metaImage: image {\n    src: url(version: \"large_rectangle\")\n  }\n}\n\nfragment FairTabs_fair on Fair {\n  href\n  counts {\n    artworks\n  }\n}\n"
+    "text": "query FairApp_Test_Query {\n  fair(id: \"example\") {\n    ...FairApp_fair\n    id\n  }\n}\n\nfragment ExhibitorsLetterNav_fair on Fair {\n  exhibitorsGroupedByName {\n    letter\n  }\n}\n\nfragment FairApp_fair on Fair {\n  ...FairMeta_fair\n  ...FairTabs_fair\n  ...FairHeader_fair\n  ...FairHeaderImage_fair\n  ...ExhibitorsLetterNav_fair\n  internalID\n  profile {\n    id\n  }\n}\n\nfragment FairHeaderImage_fair on Fair {\n  image {\n    url(version: \"wide\")\n  }\n}\n\nfragment FairHeader_fair on Fair {\n  name\n  exhibitionPeriod\n  profile {\n    icon {\n      url(version: [\"large\", \"square\", \"square140\"])\n    }\n    id\n  }\n  isEvergreen\n  tagline\n}\n\nfragment FairMeta_fair on Fair {\n  name\n  metaDescription: summary\n  metaDescriptionFallback: about(format: PLAIN)\n  metaImage: image {\n    src: url(version: \"large_rectangle\")\n  }\n}\n\nfragment FairTabs_fair on Fair {\n  href\n  counts {\n    artworks\n  }\n}\n"
   }
 };
 })();

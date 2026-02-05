@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0ca9cb1a0d6ee0b470600658607983b2>>
+ * @generated SignedSource<<ce12be87bd09a2b63b06e54abc921978>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -222,6 +222,20 @@ return {
           {
             "alias": null,
             "args": null,
+            "kind": "ScalarField",
+            "name": "isEvergreen",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "tagline",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": "Image",
             "kind": "LinkedField",
             "name": "image",
@@ -275,12 +289,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "572b9bf6c225a60905d3cd0dbd125e6c",
+    "cacheID": "eba05ba233e5183897ad32d241115399",
     "id": null,
     "metadata": {},
     "name": "fairRoutes_FairQuery",
     "operationKind": "query",
-    "text": "query fairRoutes_FairQuery(\n  $slug: String!\n) @cacheable {\n  fair(id: $slug) @principalField {\n    slug\n    ...FairApp_fair\n    id\n  }\n}\n\nfragment ExhibitorsLetterNav_fair on Fair {\n  exhibitorsGroupedByName {\n    letter\n  }\n}\n\nfragment FairApp_fair on Fair {\n  ...FairMeta_fair\n  ...FairTabs_fair\n  ...FairHeader_fair\n  ...FairHeaderImage_fair\n  ...ExhibitorsLetterNav_fair\n  internalID\n  profile {\n    id\n  }\n}\n\nfragment FairHeaderImage_fair on Fair {\n  image {\n    url(version: \"wide\")\n  }\n}\n\nfragment FairHeader_fair on Fair {\n  name\n  exhibitionPeriod\n  profile {\n    icon {\n      url(version: [\"large\", \"square\", \"square140\"])\n    }\n    id\n  }\n  slug\n}\n\nfragment FairMeta_fair on Fair {\n  name\n  metaDescription: summary\n  metaDescriptionFallback: about(format: PLAIN)\n  metaImage: image {\n    src: url(version: \"large_rectangle\")\n  }\n}\n\nfragment FairTabs_fair on Fair {\n  href\n  counts {\n    artworks\n  }\n}\n"
+    "text": "query fairRoutes_FairQuery(\n  $slug: String!\n) @cacheable {\n  fair(id: $slug) @principalField {\n    slug\n    ...FairApp_fair\n    id\n  }\n}\n\nfragment ExhibitorsLetterNav_fair on Fair {\n  exhibitorsGroupedByName {\n    letter\n  }\n}\n\nfragment FairApp_fair on Fair {\n  ...FairMeta_fair\n  ...FairTabs_fair\n  ...FairHeader_fair\n  ...FairHeaderImage_fair\n  ...ExhibitorsLetterNav_fair\n  internalID\n  profile {\n    id\n  }\n}\n\nfragment FairHeaderImage_fair on Fair {\n  image {\n    url(version: \"wide\")\n  }\n}\n\nfragment FairHeader_fair on Fair {\n  name\n  exhibitionPeriod\n  profile {\n    icon {\n      url(version: [\"large\", \"square\", \"square140\"])\n    }\n    id\n  }\n  isEvergreen\n  tagline\n}\n\nfragment FairMeta_fair on Fair {\n  name\n  metaDescription: summary\n  metaDescriptionFallback: about(format: PLAIN)\n  metaImage: image {\n    src: url(version: \"large_rectangle\")\n  }\n}\n\nfragment FairTabs_fair on Fair {\n  href\n  counts {\n    artworks\n  }\n}\n"
   }
 };
 })();
