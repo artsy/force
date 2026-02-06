@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<14859199f709f0ca8149852499e8b72f>>
+ * @generated SignedSource<<0cb38f6b292d19ea8a5c4bd13035b3fe>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,13 +12,14 @@ import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FairHeader_fair$data = {
   readonly exhibitionPeriod: string | null | undefined;
+  readonly isEvergreen: boolean;
   readonly name: string | null | undefined;
   readonly profile: {
     readonly icon: {
       readonly url: string | null | undefined;
     } | null | undefined;
   } | null | undefined;
-  readonly slug: string;
+  readonly tagline: string | null | undefined;
   readonly " $fragmentType": "FairHeader_fair";
 };
 export type FairHeader_fair$key = {
@@ -89,7 +90,14 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "slug",
+      "name": "isEvergreen",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "tagline",
       "storageKey": null
     }
   ],
@@ -97,6 +105,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "d76057730cc02d72a054ef7fc1e2def0";
+(node as any).hash = "e98def9998f24cc403cab87ff2b744ab";
 
 export default node;

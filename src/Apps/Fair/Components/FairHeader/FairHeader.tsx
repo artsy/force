@@ -11,10 +11,9 @@ interface FairHeaderProps extends BoxProps {
 const FairHeader: React.FC<React.PropsWithChildren<FairHeaderProps>> = ({
   fair,
 }) => {
-  const { name, exhibitionPeriod, profile } = fair
+  const { name, exhibitionPeriod, profile, isEvergreen, tagline } = fair
 
   const avatar = profile?.icon?.url
-  const isArtsyEditionShop = fair.slug === "the-artsy-edition-shop"
 
   return (
     <GridColumns>
@@ -34,9 +33,9 @@ const FairHeader: React.FC<React.PropsWithChildren<FairHeaderProps>> = ({
           {name}
         </Text>
 
-        {isArtsyEditionShop ? (
+        {isEvergreen ? (
           <Text variant={["md", "lg-display"]} color="mono60">
-            Your Chance to Own an Icon
+            {tagline}
           </Text>
         ) : (
           <Text variant={["lg-display", "xl"]} color="mono60">
@@ -58,7 +57,8 @@ export const FairHeaderFragmentContainer = createFragmentContainer(FairHeader, {
           url(version: ["large", "square", "square140"])
         }
       }
-      slug
+      isEvergreen
+      tagline
     }
   `,
 })

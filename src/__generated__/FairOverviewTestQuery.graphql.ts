@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<400076c1ef44bf273f3a9b1796c22deb>>
+ * @generated SignedSource<<c9659f7c73ec88f43d12980443c260d4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -592,6 +592,13 @@ return {
             "name": "about",
             "storageKey": "about(format:\"HTML\")"
           },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "isEvergreen",
+            "storageKey": null
+          },
           (v9/*: any*/),
           (v4/*: any*/)
         ],
@@ -600,7 +607,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "969e8033d153c49f0a8dcf83aaa9eb63",
+    "cacheID": "a8c6082be77c006af79ab3c11e1a7342",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -655,6 +662,12 @@ return {
         "fair.endAt": (v10/*: any*/),
         "fair.href": (v10/*: any*/),
         "fair.id": (v12/*: any*/),
+        "fair.isEvergreen": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "Boolean"
+        },
         "fair.location": {
           "enumValues": null,
           "nullable": true,
@@ -734,7 +747,7 @@ return {
     },
     "name": "FairOverviewTestQuery",
     "operationKind": "query",
-    "text": "query FairOverviewTestQuery {\n  fair(id: \"example\") {\n    ...FairOverview_fair\n    id\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  thumbnailTitle\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment FairAbout_fair on Fair {\n  ...FairTimer_fair\n  about(format: HTML)\n  slug\n}\n\nfragment FairCollection_collection on MarketingCollection {\n  id\n  slug\n  title\n  artworks: artworksConnection(first: 3) {\n    counts {\n      total\n    }\n    edges {\n      node {\n        image {\n          url(version: \"larger\")\n        }\n        id\n      }\n    }\n    id\n  }\n}\n\nfragment FairCollections_fair on Fair {\n  marketingCollections(size: 5) {\n    id\n    slug\n    ...FairCollection_collection\n  }\n}\n\nfragment FairEditorialRailArticles_fair on Fair {\n  href\n  articlesConnection(first: 6, sort: PUBLISHED_AT_DESC) {\n    totalCount\n    edges {\n      node {\n        ...CellArticle_article\n        internalID\n        slug\n        id\n      }\n    }\n  }\n}\n\nfragment FairOverview_fair on Fair {\n  ...FairStructuredData_fair\n  ...FairEditorialRailArticles_fair\n  ...FairCollections_fair\n  ...FairAbout_fair\n  slug\n  articlesConnection(first: 6, sort: PUBLISHED_AT_DESC) {\n    edges {\n      __typename\n    }\n  }\n  marketingCollections(size: 5) {\n    id\n  }\n}\n\nfragment FairStructuredData_fair on Fair {\n  name\n  href\n  description: about(format: PLAIN)\n  structuredDataStartAt: startAt(format: \"YYYY-MM-DD\")\n  structuredDataEndAt: endAt(format: \"YYYY-MM-DD\")\n  location {\n    address\n    address2\n    city\n    state\n    country\n    summary\n    postalCode\n    id\n  }\n  organizer {\n    name\n    website\n    id\n  }\n  structuredDataImage: image {\n    cropped(width: 1200, height: 900, version: [\"larger\", \"large\"]) {\n      src\n      width\n      height\n    }\n  }\n}\n\nfragment FairTimer_fair on Fair {\n  endAt\n}\n"
+    "text": "query FairOverviewTestQuery {\n  fair(id: \"example\") {\n    ...FairOverview_fair\n    id\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  thumbnailTitle\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment FairAbout_fair on Fair {\n  ...FairTimer_fair\n  about(format: HTML)\n  isEvergreen\n}\n\nfragment FairCollection_collection on MarketingCollection {\n  id\n  slug\n  title\n  artworks: artworksConnection(first: 3) {\n    counts {\n      total\n    }\n    edges {\n      node {\n        image {\n          url(version: \"larger\")\n        }\n        id\n      }\n    }\n    id\n  }\n}\n\nfragment FairCollections_fair on Fair {\n  marketingCollections(size: 5) {\n    id\n    slug\n    ...FairCollection_collection\n  }\n}\n\nfragment FairEditorialRailArticles_fair on Fair {\n  href\n  articlesConnection(first: 6, sort: PUBLISHED_AT_DESC) {\n    totalCount\n    edges {\n      node {\n        ...CellArticle_article\n        internalID\n        slug\n        id\n      }\n    }\n  }\n}\n\nfragment FairOverview_fair on Fair {\n  ...FairStructuredData_fair\n  ...FairEditorialRailArticles_fair\n  ...FairCollections_fair\n  ...FairAbout_fair\n  slug\n  articlesConnection(first: 6, sort: PUBLISHED_AT_DESC) {\n    edges {\n      __typename\n    }\n  }\n  marketingCollections(size: 5) {\n    id\n  }\n}\n\nfragment FairStructuredData_fair on Fair {\n  name\n  href\n  description: about(format: PLAIN)\n  structuredDataStartAt: startAt(format: \"YYYY-MM-DD\")\n  structuredDataEndAt: endAt(format: \"YYYY-MM-DD\")\n  location {\n    address\n    address2\n    city\n    state\n    country\n    summary\n    postalCode\n    id\n  }\n  organizer {\n    name\n    website\n    id\n  }\n  structuredDataImage: image {\n    cropped(width: 1200, height: 900, version: [\"larger\", \"large\"]) {\n      src\n      width\n      height\n    }\n  }\n}\n\nfragment FairTimer_fair on Fair {\n  endAt\n}\n"
   }
 };
 })();

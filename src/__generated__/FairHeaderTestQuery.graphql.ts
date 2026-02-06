@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2d3052e21294d849c63c2335250001d1>>
+ * @generated SignedSource<<047c6799bac194d8f95ef4074da5c95f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -147,7 +147,14 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "slug",
+            "name": "isEvergreen",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "tagline",
             "storageKey": null
           },
           (v1/*: any*/)
@@ -157,7 +164,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f45dcb053f03724b9f38425e1262a4fd",
+    "cacheID": "dabe2c8dc8f90805b4e2371fe6fa8f08",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -169,6 +176,12 @@ return {
         },
         "fair.exhibitionPeriod": (v2/*: any*/),
         "fair.id": (v3/*: any*/),
+        "fair.isEvergreen": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "Boolean"
+        },
         "fair.name": (v2/*: any*/),
         "fair.profile": {
           "enumValues": null,
@@ -184,12 +197,12 @@ return {
         },
         "fair.profile.icon.url": (v2/*: any*/),
         "fair.profile.id": (v3/*: any*/),
-        "fair.slug": (v3/*: any*/)
+        "fair.tagline": (v2/*: any*/)
       }
     },
     "name": "FairHeaderTestQuery",
     "operationKind": "query",
-    "text": "query FairHeaderTestQuery {\n  fair(id: \"example\") {\n    ...FairHeader_fair\n    id\n  }\n}\n\nfragment FairHeader_fair on Fair {\n  name\n  exhibitionPeriod\n  profile {\n    icon {\n      url(version: [\"large\", \"square\", \"square140\"])\n    }\n    id\n  }\n  slug\n}\n"
+    "text": "query FairHeaderTestQuery {\n  fair(id: \"example\") {\n    ...FairHeader_fair\n    id\n  }\n}\n\nfragment FairHeader_fair on Fair {\n  name\n  exhibitionPeriod\n  profile {\n    icon {\n      url(version: [\"large\", \"square\", \"square140\"])\n    }\n    id\n  }\n  isEvergreen\n  tagline\n}\n"
   }
 };
 })();

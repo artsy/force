@@ -33,11 +33,12 @@ describe("FairHeader", () => {
     expect(screen.getByText("Miart 2020")).toBeInTheDocument()
   })
 
-  it("displays subheader for Artsy Edition Shop", () => {
+  it("displays tagline for evergreen fairs", () => {
     renderWithRelay({
       Fair: () => ({
         name: "The Artsy Edition Shop",
-        slug: "the-artsy-edition-shop",
+        tagline: "Your Chance to Own an Icon",
+        isEvergreen: true,
       }),
     })
 
