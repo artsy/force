@@ -11,14 +11,12 @@ interface FairAboutProps {
 const FairAbout: React.FC<React.PropsWithChildren<FairAboutProps>> = ({
   fair,
 }) => {
-  const { about } = fair
-
-  const isArtsyEditionShop = fair.slug === "the-artsy-edition-shop"
+  const { about, isEvergreen } = fair
 
   return (
     <>
       <GridColumns mt={[2, 4]}>
-        {!isArtsyEditionShop && (
+        {!isEvergreen && (
           <Column span={6}>
             <FairTimer fair={fair} />
           </Column>
@@ -26,11 +24,9 @@ const FairAbout: React.FC<React.PropsWithChildren<FairAboutProps>> = ({
 
         {about && (
           <Column span={6}>
-            {!isArtsyEditionShop && (
-              <Text variant="xs" mb={1}>
-                About
-              </Text>
-            )}
+            <Text variant="xs" mb={1}>
+              About
+            </Text>
 
             <HTML variant="sm">
               <ReadMore maxLines={7} content={about} />
@@ -47,7 +43,7 @@ export const FairAboutFragmentContainer = createFragmentContainer(FairAbout, {
     fragment FairAbout_fair on Fair {
       ...FairTimer_fair
       about(format: HTML)
-      slug
+      isEvergreen
     }
   `,
 })

@@ -123,14 +123,14 @@ describe("FairOverview", () => {
     expect(container.textContent).not.toContain("Closes in:")
   })
 
-  it("does not display the timer for the Artsy Edition Shop", () => {
+  it("does not display the timer for evergreen fairs", () => {
     const openTime = new Date()
     openTime.setDate(openTime.getDate() + 1)
 
     const { container } = renderWithRelay({
       Fair: () => ({
         endAt: openTime.toISOString(),
-        slug: "the-artsy-edition-shop",
+        isEvergreen: true,
       }),
     })
 

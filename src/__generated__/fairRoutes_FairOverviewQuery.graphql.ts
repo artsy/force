@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e39d15a62ffb10034c45c0d8a46f4fc2>>
+ * @generated SignedSource<<ce66407c4319083c6065f12d77ae9ad4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -565,6 +565,13 @@ return {
             "name": "about",
             "storageKey": "about(format:\"HTML\")"
           },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "isEvergreen",
+            "storageKey": null
+          },
           (v10/*: any*/),
           (v5/*: any*/)
         ],
@@ -573,12 +580,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "36d68cff611638d79c7292b3eed7b9e1",
+    "cacheID": "477133280a1cfe39ce934e9142aae5b5",
     "id": null,
     "metadata": {},
     "name": "fairRoutes_FairOverviewQuery",
     "operationKind": "query",
-    "text": "query fairRoutes_FairOverviewQuery(\n  $slug: String!\n) @cacheable {\n  fair(id: $slug) @principalField {\n    ...FairOverview_fair\n    id\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  thumbnailTitle\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment FairAbout_fair on Fair {\n  ...FairTimer_fair\n  about(format: HTML)\n  slug\n}\n\nfragment FairCollection_collection on MarketingCollection {\n  id\n  slug\n  title\n  artworks: artworksConnection(first: 3) {\n    counts {\n      total\n    }\n    edges {\n      node {\n        image {\n          url(version: \"larger\")\n        }\n        id\n      }\n    }\n    id\n  }\n}\n\nfragment FairCollections_fair on Fair {\n  marketingCollections(size: 5) {\n    id\n    slug\n    ...FairCollection_collection\n  }\n}\n\nfragment FairEditorialRailArticles_fair on Fair {\n  href\n  articlesConnection(first: 6, sort: PUBLISHED_AT_DESC) {\n    totalCount\n    edges {\n      node {\n        ...CellArticle_article\n        internalID\n        slug\n        id\n      }\n    }\n  }\n}\n\nfragment FairOverview_fair on Fair {\n  ...FairStructuredData_fair\n  ...FairEditorialRailArticles_fair\n  ...FairCollections_fair\n  ...FairAbout_fair\n  slug\n  articlesConnection(first: 6, sort: PUBLISHED_AT_DESC) {\n    edges {\n      __typename\n    }\n  }\n  marketingCollections(size: 5) {\n    id\n  }\n}\n\nfragment FairStructuredData_fair on Fair {\n  name\n  href\n  description: about(format: PLAIN)\n  structuredDataStartAt: startAt(format: \"YYYY-MM-DD\")\n  structuredDataEndAt: endAt(format: \"YYYY-MM-DD\")\n  location {\n    address\n    address2\n    city\n    state\n    country\n    summary\n    postalCode\n    id\n  }\n  organizer {\n    name\n    website\n    id\n  }\n  structuredDataImage: image {\n    cropped(width: 1200, height: 900, version: [\"larger\", \"large\"]) {\n      src\n      width\n      height\n    }\n  }\n}\n\nfragment FairTimer_fair on Fair {\n  endAt\n}\n"
+    "text": "query fairRoutes_FairOverviewQuery(\n  $slug: String!\n) @cacheable {\n  fair(id: $slug) @principalField {\n    ...FairOverview_fair\n    id\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  thumbnailTitle\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment FairAbout_fair on Fair {\n  ...FairTimer_fair\n  about(format: HTML)\n  isEvergreen\n}\n\nfragment FairCollection_collection on MarketingCollection {\n  id\n  slug\n  title\n  artworks: artworksConnection(first: 3) {\n    counts {\n      total\n    }\n    edges {\n      node {\n        image {\n          url(version: \"larger\")\n        }\n        id\n      }\n    }\n    id\n  }\n}\n\nfragment FairCollections_fair on Fair {\n  marketingCollections(size: 5) {\n    id\n    slug\n    ...FairCollection_collection\n  }\n}\n\nfragment FairEditorialRailArticles_fair on Fair {\n  href\n  articlesConnection(first: 6, sort: PUBLISHED_AT_DESC) {\n    totalCount\n    edges {\n      node {\n        ...CellArticle_article\n        internalID\n        slug\n        id\n      }\n    }\n  }\n}\n\nfragment FairOverview_fair on Fair {\n  ...FairStructuredData_fair\n  ...FairEditorialRailArticles_fair\n  ...FairCollections_fair\n  ...FairAbout_fair\n  slug\n  articlesConnection(first: 6, sort: PUBLISHED_AT_DESC) {\n    edges {\n      __typename\n    }\n  }\n  marketingCollections(size: 5) {\n    id\n  }\n}\n\nfragment FairStructuredData_fair on Fair {\n  name\n  href\n  description: about(format: PLAIN)\n  structuredDataStartAt: startAt(format: \"YYYY-MM-DD\")\n  structuredDataEndAt: endAt(format: \"YYYY-MM-DD\")\n  location {\n    address\n    address2\n    city\n    state\n    country\n    summary\n    postalCode\n    id\n  }\n  organizer {\n    name\n    website\n    id\n  }\n  structuredDataImage: image {\n    cropped(width: 1200, height: 900, version: [\"larger\", \"large\"]) {\n      src\n      width\n      height\n    }\n  }\n}\n\nfragment FairTimer_fair on Fair {\n  endAt\n}\n"
   }
 };
 })();
