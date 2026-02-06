@@ -129,7 +129,7 @@ describe("ArtworkApp", () => {
         },
         options: {
           title: "Log in or sign up to view gallery offer",
-          nodeId: "<Artwork-mock-id-10>",
+          nodeId: "<Artwork-mock-id-4>",
         },
       })
     })
