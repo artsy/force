@@ -19,12 +19,14 @@ interface NavBarSubMenuProps {
   parentNavigationItem: string
   /** Detect any click to possibly close the menu */
   onClick(): void
+  /** Whether the dropdown is currently visible */
+  isVisible?: boolean
 }
 
 /** Component for full-width sub-menus (Artworks, Artists) */
 export const NavBarSubMenu: React.FC<
   React.PropsWithChildren<NavBarSubMenuProps>
-> = ({ menu, contextModule, parentNavigationItem, onClick }) => {
+> = ({ menu, contextModule, parentNavigationItem, onClick, isVisible }) => {
   const { trackEvent } = useTracking()
   const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
     useAnalyticsContext()
@@ -207,6 +209,7 @@ export const NavBarSubMenu: React.FC<
                     contextModule={contextModule}
                     parentNavigationItem={parentNavigationItem}
                     onDataLoaded={setHasVisualComponentData}
+                    isVisible={isVisible}
                   />
                 )}
                 {/* Hidden query to check if data exists */}
@@ -218,6 +221,7 @@ export const NavBarSubMenu: React.FC<
                       contextModule={contextModule}
                       parentNavigationItem={parentNavigationItem}
                       onDataLoaded={setHasVisualComponentData}
+                      isVisible={isVisible}
                     />
                   </div>
                 )}

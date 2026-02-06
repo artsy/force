@@ -43,7 +43,7 @@ export const NavBarDropdownPanel: React.FC<NavBarDropdownPanelProps> = ({
       delay={shouldTransition ? 100 : 0}
       transition={shouldTransition}
       // eslint-disable-next-line react/no-unstable-nested-components
-      dropdown={({ setVisible }) => {
+      dropdown={({ setVisible, visible }) => {
         return (
           <NavBarSubMenu
             menu={menu}
@@ -52,6 +52,7 @@ export const NavBarDropdownPanel: React.FC<NavBarDropdownPanelProps> = ({
             }
             onClick={() => setVisible(false)}
             parentNavigationItem={label}
+            isVisible={visible}
           />
         )
       }}

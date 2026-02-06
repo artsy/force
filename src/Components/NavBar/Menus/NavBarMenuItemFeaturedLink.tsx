@@ -1,5 +1,12 @@
 import type { ClickedNavigationDropdownItem } from "@artsy/cohesion"
-import { Box, Column, Flex, Image, Text } from "@artsy/palette"
+import {
+  Column,
+  Flex,
+  Image,
+  ResponsiveBox,
+  Spacer,
+  Text,
+} from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useSystemContext } from "System/Hooks/useSystemContext"
@@ -16,6 +23,8 @@ interface NavBarMenuItemFeaturedLinkProps {
   headerText: string
   contextModule: string
   parentNavigationItem: string
+  /** Whether the dropdown is currently visible - used to defer image loading */
+  isVisible?: boolean
 }
 
 export const NavBarMenuItemFeaturedLinkQueryRenderer: FC<
@@ -62,6 +71,8 @@ interface NavBarMenuItemFeaturedLinkInnerProps {
   headerText: string
   contextModule: string
   parentNavigationItem: string
+  /** Whether the dropdown is currently visible - used to defer image loading */
+  isVisible?: boolean
 }
 
 const NavBarMenuItemFeaturedLink: FC<NavBarMenuItemFeaturedLinkInnerProps> = ({
@@ -69,6 +80,7 @@ const NavBarMenuItemFeaturedLink: FC<NavBarMenuItemFeaturedLinkInnerProps> = ({
   headerText,
   contextModule,
   parentNavigationItem,
+  isVisible,
 }) => {
   const { trackEvent } = useTracking()
   const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
@@ -80,7 +92,7 @@ const NavBarMenuItemFeaturedLink: FC<NavBarMenuItemFeaturedLinkInnerProps> = ({
   )
   const featuredLink = featuredLinks[0]
 
-  if (!featuredLink || !featuredLink.image?.resized) {
+  if (!featuredLink || !featuredLink.image?.cropped) {
     return null
   }
 
@@ -91,9 +103,9 @@ const NavBarMenuItemFeaturedLink: FC<NavBarMenuItemFeaturedLinkInnerProps> = ({
       borderLeftStyle="solid"
       gap={1}
       pl={4}
+      pr={[0, 0, 4]}
       pb={4}
       flexDirection="column"
-      maxHeight={480}
     >
       <Text variant={["xs", "xs", "sm"]} mb={0.5}>
         {headerText}
@@ -120,24 +132,28 @@ const NavBarMenuItemFeaturedLink: FC<NavBarMenuItemFeaturedLinkInnerProps> = ({
           } satisfies ClickedNavigationDropdownItem)
         }}
       >
-        <Box mb={2} maxHeight={370}>
-          <Image
-            src={featuredLink.image.resized.src}
-            srcSet={featuredLink.image.resized.srcSet}
-            width="100%"
-            height="100%"
-            style={{
-              objectFit: "contain",
-              objectPosition: "left top",
-              maxHeight: "370px",
-            }}
-            alt=""
-          />
-        </Box>
+        <ResponsiveBox
+          aspectWidth={featuredLink.image.cropped.width ?? 1}
+          aspectHeight={featuredLink.image.cropped.height ?? 1}
+          maxWidth="100%"
+          bg="mono10"
+        >
+          {isVisible && (
+            <Image
+              src={featuredLink.image.cropped.src}
+              srcSet={featuredLink.image.cropped.srcSet}
+              width="100%"
+              height="100%"
+            />
+          )}
+        </ResponsiveBox>
+
+        <Spacer y={2} />
 
         <Text color="mono60" variant={["xs", "xs", "sm"]} lineHeight="20px">
           {featuredLink.subtitle}
         </Text>
+
         <Text color="mono100" variant={["xs", "xs", "sm"]} lineHeight="20px">
           {featuredLink.title}
         </Text>
@@ -158,9 +174,15 @@ const fragment = graphql`
         subtitle(format: PLAIN)
         href
         image {
-          resized(height: 400, version: ["main", "wide", "large_rectangle"]) {
+          cropped(
+            width: 400
+            height: 400
+            version: ["main", "wide", "large_rectangle"]
+          ) {
             src
             srcSet
+            width
+            height
           }
         }
       }
@@ -207,6 +229,7 @@ export const NavBarMenuItemFeaturedLinkWithColumn: FC<
         }
 
         props.onDataLoaded?.(true)
+
         return (
           <Column span={4} px={2}>
             <NavBarMenuItemFeaturedLink
@@ -214,6 +237,7 @@ export const NavBarMenuItemFeaturedLinkWithColumn: FC<
               headerText={props.headerText}
               contextModule={props.contextModule}
               parentNavigationItem={props.parentNavigationItem}
+              isVisible={props.isVisible}
             />
           </Column>
         )
