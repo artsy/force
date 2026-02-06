@@ -26,6 +26,7 @@ describe("trackingMiddleware", () => {
 
   afterEach(() => {
     window.analytics = analytics
+    window.__artsyInitialReferrer = undefined
   })
 
   it("tracks pageviews", () => {
@@ -133,7 +134,7 @@ describe("trackingMiddleware", () => {
         expect(global.analytics.page).toBeCalledWith(
           {
             path: pathToTest,
-            referrer: `http://testing.com/referrer?with=queryparams`,
+            referrer: "http://testing.com/referrer?with=queryparams",
             url: `http://testing.com${pathToTest}`,
           },
           { integrations: { Marketo: false } },
@@ -143,6 +144,72 @@ describe("trackingMiddleware", () => {
           "http://testing.com/referrer?with=queryparams",
         )
       })
+    })
+
+    it("uses __artsyInitialReferrer when no client-side routing referrer exists", () => {
+      window.__artsyInitialReferrer = "https://google.com"
+
+      trackingMiddleware()(store)(noop)({
+        type: ActionTypes.UPDATE_LOCATION,
+        payload: {
+          pathname: "/collect",
+        },
+      })
+
+      expect(global.analytics.page).toBeCalledWith(
+        {
+          path: "/collect",
+          referrer: "https://google.com",
+          url: "http://testing.com/collect",
+        },
+        { integrations: { Marketo: false } },
+      )
+    })
+
+    it("clears __artsyInitialReferrer after consuming it", () => {
+      window.__artsyInitialReferrer = "https://google.com"
+
+      trackingMiddleware()(store)(noop)({
+        type: ActionTypes.UPDATE_LOCATION,
+        payload: {
+          pathname: "/collect",
+        },
+      })
+
+      expect(window.__artsyInitialReferrer).toBeUndefined()
+    })
+
+    it("prefers client-side routing referrer over __artsyInitialReferrer", () => {
+      window.__artsyInitialReferrer = "https://google.com"
+
+      trackingMiddleware()({
+        getState: () => {
+          return {
+            found: {
+              match: {
+                location: {
+                  pathname: "/previous-page",
+                  search: "",
+                },
+              },
+            },
+          }
+        },
+      })(noop)({
+        type: ActionTypes.UPDATE_LOCATION,
+        payload: {
+          pathname: "/collect",
+        },
+      })
+
+      expect(global.analytics.page).toBeCalledWith(
+        {
+          path: "/collect",
+          referrer: "http://testing.com/previous-page",
+          url: "http://testing.com/collect",
+        },
+        { integrations: { Marketo: false } },
+      )
     })
   })
 })
