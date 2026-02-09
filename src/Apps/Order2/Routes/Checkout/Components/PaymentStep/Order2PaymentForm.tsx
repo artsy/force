@@ -116,6 +116,8 @@ const getBaseStripeOptions = (
     currency: total.currencyCode.toLowerCase(),
     setupFutureUsage: "off_session" as const,
     captureMethod: "automatic" as const,
+    onBehalfOf: merchantAccountExternalId,
+    paymentMethodTypes: availablePaymentMethodTypes as string[],
     paymentMethodOptions: {
       us_bank_account: {
         verification_method: "instant" as const,
@@ -128,8 +130,6 @@ const getBaseStripeOptions = (
         },
       },
     },
-    onBehalfOf: merchantAccountExternalId,
-    paymentMethodTypes: availablePaymentMethodTypes as string[],
   }
 
   return mode === "BUY"
@@ -564,14 +564,11 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       if (selectedPaymentMethod === "stripe-card") {
         elements.update({
           captureMethod: "manual",
-          // @ts-ignore Stripe type issue
-          paymentMethodOptions: null,
         })
       } else if (selectedPaymentMethod === "stripe-ach") {
         elements.update({
           setupFutureUsage: null,
           mode: "setup",
-          paymentMethodTypes: ["us_bank_account"],
           // @ts-ignore Stripe type issue
           onBehalfOf: null,
         })
@@ -579,7 +576,6 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         elements.update({
           setupFutureUsage: null,
           mode: "setup",
-          paymentMethodTypes: ["sepa_debit"],
         })
       }
 
