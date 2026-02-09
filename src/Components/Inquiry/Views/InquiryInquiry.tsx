@@ -113,29 +113,6 @@ const InquiryInquiry: React.FC<
 
       <Separator my={2} />
 
-      {user && (
-        <>
-          <Text variant="sm-display" my={2}>
-            <Box display="inline-block" width={60} color="mono60">
-              From
-            </Box>
-            {user.name}
-          </Text>
-
-          <Separator my={2} />
-        </>
-      )}
-
-      <Text variant="sm-display" my={2}>
-        <Box display="inline-block" width={60} color="mono60">
-          To
-        </Box>
-
-        {artwork.partner?.name}
-      </Text>
-
-      <Separator my={2} />
-
       <Flex alignItems="center">
         <Image
           src={artwork.image?.resized?.src}
@@ -250,24 +227,6 @@ export const InquiryInquiryPlaceholder: React.FC<
     <Skeleton>
       <SkeletonText variant="lg-display" mr={4}>
         Send message to gallery
-      </SkeletonText>
-
-      <Separator my={2} />
-
-      <SkeletonText variant="sm-display" my={2}>
-        <Box display="inline-block" width={60}>
-          From
-        </Box>
-        Example
-      </SkeletonText>
-
-      <Separator my={2} />
-
-      <SkeletonText variant="sm-display" my={2}>
-        <Box display="inline-block" width={60}>
-          To
-        </Box>
-        Example Partner
       </SkeletonText>
 
       <Separator my={2} />
