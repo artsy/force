@@ -3,7 +3,16 @@ import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchem
 import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
 import CloseIcon from "@artsy/icons/CloseIcon"
 import PersonIcon from "@artsy/icons/PersonIcon"
-import { Box, Clickable, Flex, Spacer, THEME, Text } from "@artsy/palette"
+import {
+  Box,
+  Clickable,
+  Flex,
+  Spacer,
+  THEME,
+  Text,
+  useDidMount,
+} from "@artsy/palette"
+import { useFlag } from "@unleash/proxy-client-react"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { NavBarLoggedOutActions } from "Components/NavBar/NavBarLoggedOutActions"
@@ -34,6 +43,7 @@ import { Media } from "Utils/Responsive"
 import { track, useTracking } from "react-tracking"
 import styled from "styled-components"
 import { NavBarDropdownPanel } from "./NavBarDropdownPanel"
+import { NavBarDynamicContent } from "./NavBarDynamicContent"
 import { NavBarItemButton, NavBarItemLink } from "./NavBarItem"
 import { NavBarLoggedInActionsQueryRenderer } from "./NavBarLoggedInActions"
 import { NavBarMobileMenuNotificationsIndicatorQueryRenderer } from "./NavBarMobileMenu/NavBarMobileMenuNotificationsIndicator"
@@ -63,6 +73,11 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
   const { trackEvent } = useTracking()
 
   const { router } = useRouter()
+
+  // TODO: removing this causes flickering of the server-driven nav
+  const isMounted = useDidMount()
+  const enableServerNav = useFlag("onyx_server-navigation")
+  const shouldUseServerNav = isMounted && enableServerNav
 
   const [mode, setMode] = useState<"Idle" | "Search" | "Profile" | "More">(
     "Idle",
@@ -367,44 +382,54 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
                 minWidth={0}
                 onMouseLeave={handleMenuLeave}
               >
-                <NavBarDropdownPanel
-                  href="/collection/new-this-week"
-                  label={WHATS_NEW_SUBMENU_DATA.text}
-                  menu={WHATS_NEW_SUBMENU_DATA.menu}
-                  contextModule={
-                    DeprecatedAnalyticsSchema.ContextModule
-                      .HeaderWhatsNewDropdown
-                  }
-                  onMenuEnter={handleMenuEnter}
-                  handleClick={handleClick}
-                  shouldTransition={shouldTransition}
-                />
+                {shouldUseServerNav ? (
+                  <NavBarDynamicContent
+                    onMenuEnter={handleMenuEnter}
+                    handleClick={handleClick}
+                    shouldTransition={shouldTransition}
+                  />
+                ) : (
+                  <>
+                    <NavBarDropdownPanel
+                      href="/collection/new-this-week"
+                      label={WHATS_NEW_SUBMENU_DATA.text}
+                      menu={WHATS_NEW_SUBMENU_DATA.menu}
+                      contextModule={
+                        DeprecatedAnalyticsSchema.ContextModule
+                          .HeaderWhatsNewDropdown
+                      }
+                      onMenuEnter={handleMenuEnter}
+                      handleClick={handleClick}
+                      shouldTransition={shouldTransition}
+                    />
 
-                <NavBarDropdownPanel
-                  href="/artists"
-                  label="Artists"
-                  menu={ARTISTS_SUBMENU_DATA.menu}
-                  contextModule={
-                    DeprecatedAnalyticsSchema.ContextModule
-                      .HeaderArtistsDropdown
-                  }
-                  onMenuEnter={handleMenuEnter}
-                  handleClick={handleClick}
-                  shouldTransition={shouldTransition}
-                />
+                    <NavBarDropdownPanel
+                      href="/artists"
+                      label="Artists"
+                      menu={ARTISTS_SUBMENU_DATA.menu}
+                      contextModule={
+                        DeprecatedAnalyticsSchema.ContextModule
+                          .HeaderArtistsDropdown
+                      }
+                      onMenuEnter={handleMenuEnter}
+                      handleClick={handleClick}
+                      shouldTransition={shouldTransition}
+                    />
 
-                <NavBarDropdownPanel
-                  href="/collect"
-                  label="Artworks"
-                  menu={ARTWORKS_SUBMENU_DATA.menu}
-                  contextModule={
-                    DeprecatedAnalyticsSchema.ContextModule
-                      .HeaderArtworksDropdown
-                  }
-                  onMenuEnter={handleMenuEnter}
-                  handleClick={handleClick}
-                  shouldTransition={shouldTransition}
-                />
+                    <NavBarDropdownPanel
+                      href="/collect"
+                      label="Artworks"
+                      menu={ARTWORKS_SUBMENU_DATA.menu}
+                      contextModule={
+                        DeprecatedAnalyticsSchema.ContextModule
+                          .HeaderArtworksDropdown
+                      }
+                      onMenuEnter={handleMenuEnter}
+                      handleClick={handleClick}
+                      shouldTransition={shouldTransition}
+                    />
+                  </>
+                )}
 
                 <NavBarItemLink
                   href="/auctions"
@@ -459,6 +484,7 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
                 >
                   Museums
                 </NavBarItemInstitutionsLink>
+
                 <NavBarItemLink
                   href="/feature/how-to-buy-art"
                   onMouseOver={() => prefetch("/feature/how-to-buy-art")}
@@ -478,6 +504,7 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
           onClose={() => setMode("Idle")}
           isOpen
           onNavButtonClick={handleMobileNavClick}
+          shouldUseServerNav={shouldUseServerNav}
         />
       )}
 

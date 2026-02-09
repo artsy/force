@@ -20,16 +20,18 @@ import {
 import { NavBarMobileMenuNavigationProvider } from "./NavBarMobileMenuNavigation"
 import { NavBarMobileMenuTransition } from "./NavBarMobileMenuTransition"
 import { NavBarMobileSubMenu } from "./NavBarMobileSubMenu"
+import { NavBarMobileMenuServer } from "./NavBarMobileMenuServer"
 
 interface NavBarMobileMenuProps {
   isOpen: boolean
   onClose: () => void
   onNavButtonClick?: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void
+  shouldUseServerNav?: boolean
 }
 
 export const NavBarMobileMenu: React.FC<
   React.PropsWithChildren<NavBarMobileMenuProps>
-> = ({ isOpen, onNavButtonClick, onClose }) => {
+> = ({ isOpen, onNavButtonClick, onClose, shouldUseServerNav }) => {
   const { isLoggedIn } = useSystemContext()
 
   const { downloadAppUrl } = useDeviceDetection()
@@ -88,17 +90,24 @@ export const NavBarMobileMenu: React.FC<
               Buy
             </NavBarMobileMenuItemLink>
 
-            <NavBarMobileSubMenu menu={WHATS_NEW_SUBMENU_DATA.menu}>
-              {WHATS_NEW_SUBMENU_DATA.text}
-            </NavBarMobileSubMenu>
+            {/* Feature flag: Server-driven vs Static sub-menus */}
+            {shouldUseServerNav ? (
+              <NavBarMobileMenuServer />
+            ) : (
+              <>
+                <NavBarMobileSubMenu menu={WHATS_NEW_SUBMENU_DATA.menu}>
+                  {WHATS_NEW_SUBMENU_DATA.text}
+                </NavBarMobileSubMenu>
 
-            <NavBarMobileSubMenu menu={ARTISTS_SUBMENU_DATA.menu}>
-              {ARTISTS_SUBMENU_DATA.menu.title}
-            </NavBarMobileSubMenu>
+                <NavBarMobileSubMenu menu={ARTISTS_SUBMENU_DATA.menu}>
+                  {ARTISTS_SUBMENU_DATA.menu.title}
+                </NavBarMobileSubMenu>
 
-            <NavBarMobileSubMenu menu={ARTWORKS_SUBMENU_DATA.menu}>
-              {ARTWORKS_SUBMENU_DATA.menu.title}
-            </NavBarMobileSubMenu>
+                <NavBarMobileSubMenu menu={ARTWORKS_SUBMENU_DATA.menu}>
+                  {ARTWORKS_SUBMENU_DATA.menu.title}
+                </NavBarMobileSubMenu>
+              </>
+            )}
 
             <NavBarMobileMenuItemLink to="/auctions" onClick={handleClick}>
               Auctions
