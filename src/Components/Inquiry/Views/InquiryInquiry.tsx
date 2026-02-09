@@ -12,7 +12,7 @@ import {
   Text,
   TextArea,
 } from "@artsy/palette"
-import { useVariant } from "@unleash/proxy-client-react"
+import { useFlag, useVariant } from "@unleash/proxy-client-react"
 import { InquiryQuestionsList } from "Components/Inquiry/Components/InquiryQuestionsList"
 import { useArtworkInquiryRequest } from "Components/Inquiry/Hooks/useArtworkInquiryRequest"
 import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
@@ -50,6 +50,10 @@ const InquiryInquiry: React.FC<
 
   const variant = useVariant(INQUIRY_CHECKBOXES_FLAG)
   const enableCheckboxes = variant.name === "experiment"
+
+  const collectorInquirySimplifiedLayout = useFlag(
+    "topaz_collector-inquiry-simplified-layout",
+  )
 
   useTrackFeatureVariantOnMount({
     experimentName: INQUIRY_CHECKBOXES_FLAG,
@@ -112,6 +116,27 @@ const InquiryInquiry: React.FC<
       </Text>
 
       <Separator my={2} />
+      {!collectorInquirySimplifiedLayout && user && (
+        <>
+          <Text variant="sm-display" my={2}>
+            <Box display="inline-block" width={60} color="mono60">
+              From
+            </Box>
+            {user.name}
+          </Text>
+
+          <Separator my={2} />
+
+          <Text variant="sm-display" my={2}>
+            <Box display="inline-block" width={60} color="mono60">
+              To
+            </Box>
+
+            {artwork.partner?.name}
+          </Text>
+          <Separator my={2} />
+        </>
+      )}
 
       <Flex alignItems="center">
         <Image

@@ -1,16 +1,18 @@
+import { render, screen } from "@testing-library/react"
 import { useArtworkInquiryRequest } from "Components/Inquiry/Hooks/useArtworkInquiryRequest"
 import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
 import { InquiryInquiryQueryRenderer } from "Components/Inquiry/Views/InquiryInquiry"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { render, screen } from "@testing-library/react"
 
 jest.mock("../../Hooks/useInquiryContext")
 jest.mock("System/Hooks/useSystemContext")
 jest.mock("../../Hooks/useArtworkInquiryRequest")
 
 const mockUseVariant = jest.fn()
+const mockUseFlag = jest.fn()
 jest.mock("@unleash/proxy-client-react", () => ({
   useVariant: (flagName: string) => mockUseVariant(flagName),
+  useFlag: (flagName: string) => mockUseFlag(flagName),
 }))
 jest.mock("System/Hooks/useTrackFeatureVariant", () => ({
   useTrackFeatureVariantOnMount: jest.fn(),
@@ -202,6 +204,46 @@ describe("InquiryInquiry", () => {
 
       const textarea = screen.getByTitle("Your message")
       expect(textarea).toBeRequired()
+    })
+  })
+
+  describe("From and To section visibility", () => {
+    it("shows the 'From' and 'To' sections when collectorInquirySimplifiedLayout flag is disabled", () => {
+      mockUseFlag.mockReturnValue(false)
+      ;(useInquiryContext as jest.Mock).mockImplementation(() => ({
+        next: mockNext,
+        setInquiry: mockSetInquiry,
+        inquiry: { message: "Test message" },
+        artworkID: "artwork-123",
+        setContext: mockSetContext,
+        questions: [],
+      }))
+
+      render(<InquiryInquiryQueryRenderer />)
+
+      expect(screen.getByText("From")).toBeInTheDocument()
+      expect(screen.getByText("Test User")).toBeInTheDocument()
+      expect(screen.getByText("To")).toBeInTheDocument()
+      expect(screen.getByText("Test Gallery")).toBeInTheDocument()
+    })
+
+    it("hides the 'From' and 'To' sections when collectorInquirySimplifiedLayout flag is enabled", () => {
+      mockUseFlag.mockReturnValue(true)
+      ;(useInquiryContext as jest.Mock).mockImplementation(() => ({
+        next: mockNext,
+        setInquiry: mockSetInquiry,
+        inquiry: { message: "Test message" },
+        artworkID: "artwork-123",
+        setContext: mockSetContext,
+        questions: [],
+      }))
+
+      render(<InquiryInquiryQueryRenderer />)
+
+      expect(screen.queryByText("From")).not.toBeInTheDocument()
+      expect(screen.queryByText("Test User")).not.toBeInTheDocument()
+      expect(screen.queryByText("To")).not.toBeInTheDocument()
+      expect(screen.queryByText("Test Gallery")).not.toBeInTheDocument()
     })
   })
 })
