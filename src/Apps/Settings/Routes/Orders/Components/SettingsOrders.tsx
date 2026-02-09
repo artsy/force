@@ -1,16 +1,16 @@
 import { Button, Join, Message, Spacer } from "@artsy/palette"
-import { CommercePaginationFragmentContainer } from "Components/Pagination/CommercePagination"
+import { PaginationFragmentContainer } from "Components/Pagination"
 import { RouterLink } from "System/Components/RouterLink"
+import { useRouter } from "System/Hooks/useRouter"
 import { extractNodes } from "Utils/extractNodes"
 import type { SettingsOrders_me$data } from "__generated__/SettingsOrders_me.graphql"
-import { type FC, useState, Suspense } from "react"
+import type { FC } from "react"
 import {
   type RelayRefetchProp,
   createRefetchContainer,
   graphql,
 } from "react-relay"
-import { SettingsOrdersRowLoader } from "./SettingsOrdersRowLoader"
-import { SettingsOrdersRowPlaceholder } from "./SettingsOrdersRow"
+import { SettingsOrdersRowFragmentContainer } from "./SettingsOrdersRow"
 
 export interface SettingsOrdersProps {
   me: SettingsOrders_me$data
@@ -21,9 +21,9 @@ const SettingsOrders: FC<React.PropsWithChildren<SettingsOrdersProps>> = ({
   me,
   relay,
 }: SettingsOrdersProps) => {
-  const [loading, setLoading] = useState(false)
+  const { match, router } = useRouter()
 
-  const orders = extractNodes(me.orders)
+  const orders = extractNodes(me.ordersConnection)
 
   if (orders.length === 0) {
     return (
@@ -38,30 +38,26 @@ const SettingsOrders: FC<React.PropsWithChildren<SettingsOrdersProps>> = ({
     )
   }
 
-  const hasNextPage = me.orders?.pageInfo.hasNextPage ?? false
-  const endCursor = me.orders?.pageInfo.endCursor!
-  const pageCursors = me.orders?.pageCursors
+  const hasNextPage = me.ordersConnection?.pageInfo.hasNextPage ?? false
+  const pageCursors = me.ordersConnection?.pageCursors
 
-  const handleNext = () => {
-    if (!hasNextPage) return
-
-    handleClick(endCursor)
-  }
-
-  const handleClick = (cursor: string) => {
-    setLoading(true)
-
+  const handleClick = (_cursor: string, page: number) => {
     relay.refetch(
       {
-        after: cursor,
-        first: 10,
-        states: [
+        page,
+        buyerState: [
           "SUBMITTED",
-          "PROCESSING_APPROVAL",
+          "OFFER_RECEIVED",
+          "PAYMENT_FAILED",
+          "PROCESSING_PAYMENT",
+          "PROCESSING_OFFLINE_PAYMENT",
           "APPROVED",
+          "SHIPPED",
+          "COMPLETED",
           "CANCELED",
-          "FULFILLED",
           "REFUNDED",
+          "DECLINED_BY_SELLER",
+          "DECLINED_BY_BUYER",
         ],
       },
       null,
@@ -70,39 +66,71 @@ const SettingsOrders: FC<React.PropsWithChildren<SettingsOrdersProps>> = ({
           console.error(error)
         }
 
-        setLoading(false)
+        // Update URL without reload
+        router.push({
+          pathname: match.location.pathname,
+          query: { ...match.location.query, page },
+        })
       },
     )
   }
 
-  return !loading ? (
+  const handleNext = (page: number) => {
+    if (!hasNextPage) return
+
+    relay.refetch(
+      {
+        page,
+        buyerState: [
+          "SUBMITTED",
+          "OFFER_RECEIVED",
+          "PAYMENT_FAILED",
+          "PROCESSING_PAYMENT",
+          "PROCESSING_OFFLINE_PAYMENT",
+          "APPROVED",
+          "SHIPPED",
+          "COMPLETED",
+          "CANCELED",
+          "REFUNDED",
+          "DECLINED_BY_SELLER",
+          "DECLINED_BY_BUYER",
+        ],
+      },
+      null,
+      error => {
+        if (error) {
+          console.error(error)
+        }
+
+        // Update URL without reload
+        router.push({
+          pathname: match.location.pathname,
+          query: { ...match.location.query, page },
+        })
+      },
+    )
+  }
+
+  return (
     <>
       <Join separator={<Spacer y={4} />}>
         {orders.map(order => (
-          <Suspense
+          <SettingsOrdersRowFragmentContainer
             key={order.internalID}
-            fallback={<SettingsOrdersRowPlaceholder />}
-          >
-            <SettingsOrdersRowLoader orderInternalID={order.internalID} />
-          </Suspense>
+            order={order}
+          />
         ))}
       </Join>
 
       {pageCursors && (
-        <CommercePaginationFragmentContainer
+        <PaginationFragmentContainer
           hasNextPage={hasNextPage}
+          pageCursors={pageCursors}
           onClick={handleClick}
           onNext={handleNext}
-          pageCursors={pageCursors}
         />
       )}
     </>
-  ) : (
-    <Join separator={<Spacer y={4} />}>
-      {[...new Array(10)].map((_, i) => {
-        return <SettingsOrdersRowPlaceholder key={i} />
-      })}
-    </Join>
   )
 }
 
@@ -112,33 +140,37 @@ export const SettingsOrdersFragmentContainer = createRefetchContainer(
     me: graphql`
       fragment SettingsOrders_me on Me
       @argumentDefinitions(
-        after: { type: "String" }
-        first: { type: "Int", defaultValue: 10 }
-        states: {
-          type: "[CommerceOrderStateEnum!]"
+        page: { type: "Int", defaultValue: 1 }
+        buyerState: {
+          type: "[OrderBuyerStateEnum]"
           defaultValue: [
-            APPROVED
-            CANCELED
-            FULFILLED
-            REFUNDED
             SUBMITTED
-            PROCESSING_APPROVAL
+            OFFER_RECEIVED
+            PAYMENT_FAILED
+            PROCESSING_PAYMENT
+            PROCESSING_OFFLINE_PAYMENT
+            APPROVED
+            SHIPPED
+            COMPLETED
+            CANCELED
+            REFUNDED
+            DECLINED_BY_SELLER
+            DECLINED_BY_BUYER
           ]
         }
       ) {
-        name
-        orders(states: $states, first: $first, after: $after) {
-          totalCount
+        ordersConnection(first: 10, page: $page, buyerState: $buyerState) {
           pageInfo {
             hasNextPage
-            endCursor
+            hasPreviousPage
           }
           pageCursors {
-            ...CommercePagination_pageCursors
+            ...Pagination_pageCursors
           }
           edges {
             node {
               internalID
+              ...SettingsOrdersRow_order
             }
           }
         }
@@ -146,14 +178,9 @@ export const SettingsOrdersFragmentContainer = createRefetchContainer(
     `,
   },
   graphql`
-    query SettingsOrdersQuery(
-      $states: [CommerceOrderStateEnum!]
-      $first: Int!
-      $after: String
-    ) {
+    query SettingsOrdersQuery($page: Int, $buyerState: [OrderBuyerStateEnum]) {
       me {
-        ...SettingsOrders_me
-          @arguments(states: $states, first: $first, after: $after)
+        ...SettingsOrders_me @arguments(page: $page, buyerState: $buyerState)
       }
     }
   `,

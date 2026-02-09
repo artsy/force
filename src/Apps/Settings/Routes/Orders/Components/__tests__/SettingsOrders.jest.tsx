@@ -4,15 +4,10 @@ import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
-jest.mock("Components/Pagination/CommercePagination", () => ({
-  CommercePaginationFragmentContainer: () => null,
-}))
 
-// Mock SettingsOrdersRowLoader since it uses useLazyLoadQuery which is difficult to test with Suspense
-jest.mock("../SettingsOrdersRowLoader", () => ({
-  SettingsOrdersRowLoader: () => {
-    return null // Return null to simplify testing - we test SettingsOrdersRow separately
-  },
+// Mock SettingsOrdersRow since we test it separately
+jest.mock("../SettingsOrdersRow", () => ({
+  SettingsOrdersRowFragmentContainer: () => null,
 }))
 
 const { renderWithRelay } = setupTestWrapperTL({
@@ -30,7 +25,7 @@ describe("SettingsOrders", () => {
   it("renders orders list when orders exist", () => {
     renderWithRelay({
       Me: () => ({
-        orders: {
+        ordersConnection: {
           edges: [
             {
               node: {
@@ -54,7 +49,7 @@ describe("SettingsOrders", () => {
   it("renders empty state when no orders exist", () => {
     renderWithRelay({
       Me: () => ({
-        orders: {
+        ordersConnection: {
           edges: [],
         },
       }),
@@ -68,7 +63,7 @@ describe("SettingsOrders", () => {
   it("renders blank state with info variant and explore artworks button", () => {
     renderWithRelay({
       Me: () => ({
-        orders: {
+        ordersConnection: {
           edges: [],
         },
       }),
@@ -84,7 +79,7 @@ describe("SettingsOrders", () => {
   it("handles pagination data correctly", () => {
     renderWithRelay({
       Me: () => ({
-        orders: {
+        ordersConnection: {
           edges: [
             {
               node: {
@@ -94,12 +89,15 @@ describe("SettingsOrders", () => {
           ],
           pageInfo: {
             hasNextPage: true,
-            endCursor: "cursor123",
+            hasPreviousPage: false,
           },
           pageCursors: {
-            around: [],
-            first: null,
-            last: null,
+            around: [
+              { cursor: "cursor1", page: 1, isCurrent: true },
+              { cursor: "cursor2", page: 2, isCurrent: false },
+            ],
+            first: { cursor: "cursor1", page: 1, isCurrent: true },
+            last: { cursor: "cursor2", page: 2, isCurrent: false },
             previous: null,
           },
         },

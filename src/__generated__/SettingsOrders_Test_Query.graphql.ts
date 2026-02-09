@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0fb406f43f915aec96baaaf6e37fd45a>>
+ * @generated SignedSource<<9b00fabd2f0f8ea5cb17a5b8050bcdcc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -55,40 +55,97 @@ v3 = {
   "storageKey": null
 },
 v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "href",
+  "storageKey": null
+},
+v5 = [
+  {
+    "alias": null,
+    "args": [
+      {
+        "kind": "Literal",
+        "name": "height",
+        "value": 45
+      },
+      {
+        "kind": "Literal",
+        "name": "width",
+        "value": 45
+      }
+    ],
+    "concreteType": "CroppedImageUrl",
+    "kind": "LinkedField",
+    "name": "cropped",
+    "plural": false,
+    "selections": [
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "src",
+        "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "srcSet",
+        "storageKey": null
+      }
+    ],
+    "storageKey": "cropped(height:45,width:45)"
+  }
+],
+v6 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v5 = {
+v7 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "String"
-},
-v6 = {
-  "enumValues": null,
-  "nullable": false,
-  "plural": false,
-  "type": "String"
-},
-v7 = {
-  "enumValues": null,
-  "nullable": false,
-  "plural": false,
-  "type": "Boolean"
 },
 v8 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
-  "type": "Int"
+  "type": "String"
 },
 v9 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "CommercePageCursor"
+  "type": "Image"
+},
+v10 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "CroppedImageUrl"
+},
+v11 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "Boolean"
+},
+v12 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "Int"
+},
+v13 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "PageCursor"
 };
 return {
   "fragment": {
@@ -133,14 +190,25 @@ return {
         "selections": [
           {
             "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "name",
-            "storageKey": null
-          },
-          {
-            "alias": null,
             "args": [
+              {
+                "kind": "Literal",
+                "name": "buyerState",
+                "value": [
+                  "SUBMITTED",
+                  "OFFER_RECEIVED",
+                  "PAYMENT_FAILED",
+                  "PROCESSING_PAYMENT",
+                  "PROCESSING_OFFLINE_PAYMENT",
+                  "APPROVED",
+                  "SHIPPED",
+                  "COMPLETED",
+                  "CANCELED",
+                  "REFUNDED",
+                  "DECLINED_BY_SELLER",
+                  "DECLINED_BY_BUYER"
+                ]
+              },
               {
                 "kind": "Literal",
                 "name": "first",
@@ -148,33 +216,19 @@ return {
               },
               {
                 "kind": "Literal",
-                "name": "states",
-                "value": [
-                  "APPROVED",
-                  "CANCELED",
-                  "FULFILLED",
-                  "REFUNDED",
-                  "SUBMITTED",
-                  "PROCESSING_APPROVAL"
-                ]
+                "name": "page",
+                "value": 1
               }
             ],
-            "concreteType": "CommerceOrderConnectionWithTotalCount",
+            "concreteType": "MeOrdersConnection",
             "kind": "LinkedField",
-            "name": "orders",
+            "name": "ordersConnection",
             "plural": false,
             "selections": [
               {
                 "alias": null,
                 "args": null,
-                "kind": "ScalarField",
-                "name": "totalCount",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "CommercePageInfo",
+                "concreteType": "PageInfo",
                 "kind": "LinkedField",
                 "name": "pageInfo",
                 "plural": false,
@@ -190,7 +244,7 @@ return {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
-                    "name": "endCursor",
+                    "name": "hasPreviousPage",
                     "storageKey": null
                   }
                 ],
@@ -199,7 +253,7 @@ return {
               {
                 "alias": null,
                 "args": null,
-                "concreteType": "CommercePageCursors",
+                "concreteType": "PageCursors",
                 "kind": "LinkedField",
                 "name": "pageCursors",
                 "plural": false,
@@ -207,7 +261,7 @@ return {
                   {
                     "alias": null,
                     "args": null,
-                    "concreteType": "CommercePageCursor",
+                    "concreteType": "PageCursor",
                     "kind": "LinkedField",
                     "name": "around",
                     "plural": true,
@@ -217,7 +271,7 @@ return {
                   {
                     "alias": null,
                     "args": null,
-                    "concreteType": "CommercePageCursor",
+                    "concreteType": "PageCursor",
                     "kind": "LinkedField",
                     "name": "first",
                     "plural": false,
@@ -227,7 +281,7 @@ return {
                   {
                     "alias": null,
                     "args": null,
-                    "concreteType": "CommercePageCursor",
+                    "concreteType": "PageCursor",
                     "kind": "LinkedField",
                     "name": "last",
                     "plural": false,
@@ -237,7 +291,7 @@ return {
                   {
                     "alias": null,
                     "args": null,
-                    "concreteType": "CommercePageCursor",
+                    "concreteType": "PageCursor",
                     "kind": "LinkedField",
                     "name": "previous",
                     "plural": false,
@@ -253,7 +307,7 @@ return {
               {
                 "alias": null,
                 "args": null,
-                "concreteType": "CommerceOrderEdge",
+                "concreteType": "MeOrdersEdge",
                 "kind": "LinkedField",
                 "name": "edges",
                 "plural": true,
@@ -261,7 +315,7 @@ return {
                   {
                     "alias": null,
                     "args": null,
-                    "concreteType": null,
+                    "concreteType": "Order",
                     "kind": "LinkedField",
                     "name": "node",
                     "plural": false,
@@ -270,14 +324,305 @@ return {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "__typename",
+                        "name": "internalID",
                         "storageKey": null
                       },
                       {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "internalID",
+                        "name": "source",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "code",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "buyerState",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "createdAt",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "creditCardWalletType",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "DisplayTexts",
+                        "kind": "LinkedField",
+                        "name": "displayTexts",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "stateName",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "actionPrompt",
+                            "storageKey": null
+                          }
+                        ],
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "DeliveryInfo",
+                        "kind": "LinkedField",
+                        "name": "deliveryInfo",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "trackingURL",
+                            "storageKey": null
+                          }
+                        ],
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "FulfillmentOption",
+                        "kind": "LinkedField",
+                        "name": "selectedFulfillmentOption",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "type",
+                            "storageKey": null
+                          }
+                        ],
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": null,
+                        "kind": "LinkedField",
+                        "name": "paymentMethodDetails",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "__typename",
+                            "storageKey": null
+                          },
+                          {
+                            "kind": "InlineFragment",
+                            "selections": [
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "lastDigits",
+                                "storageKey": null
+                              },
+                              (v3/*: any*/)
+                            ],
+                            "type": "CreditCard",
+                            "abstractKey": null
+                          },
+                          {
+                            "kind": "InlineFragment",
+                            "selections": [
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "last4",
+                                "storageKey": null
+                              },
+                              (v3/*: any*/)
+                            ],
+                            "type": "BankAccount",
+                            "abstractKey": null
+                          }
+                        ],
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "Money",
+                        "kind": "LinkedField",
+                        "name": "buyerTotal",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "display",
+                            "storageKey": null
+                          }
+                        ],
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "LineItem",
+                        "kind": "LinkedField",
+                        "name": "lineItems",
+                        "plural": true,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "concreteType": "Artwork",
+                            "kind": "LinkedField",
+                            "name": "artwork",
+                            "plural": false,
+                            "selections": [
+                              (v4/*: any*/),
+                              {
+                                "alias": null,
+                                "args": null,
+                                "concreteType": "Partner",
+                                "kind": "LinkedField",
+                                "name": "partner",
+                                "plural": false,
+                                "selections": [
+                                  (v4/*: any*/),
+                                  {
+                                    "alias": null,
+                                    "args": null,
+                                    "kind": "ScalarField",
+                                    "name": "initials",
+                                    "storageKey": null
+                                  },
+                                  {
+                                    "alias": null,
+                                    "args": null,
+                                    "kind": "ScalarField",
+                                    "name": "name",
+                                    "storageKey": null
+                                  },
+                                  {
+                                    "alias": null,
+                                    "args": null,
+                                    "concreteType": "Profile",
+                                    "kind": "LinkedField",
+                                    "name": "profile",
+                                    "plural": false,
+                                    "selections": [
+                                      {
+                                        "alias": null,
+                                        "args": null,
+                                        "concreteType": "Image",
+                                        "kind": "LinkedField",
+                                        "name": "icon",
+                                        "plural": false,
+                                        "selections": (v5/*: any*/),
+                                        "storageKey": null
+                                      },
+                                      (v3/*: any*/)
+                                    ],
+                                    "storageKey": null
+                                  },
+                                  (v3/*: any*/)
+                                ],
+                                "storageKey": null
+                              },
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "shippingOrigin",
+                                "storageKey": null
+                              },
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "title",
+                                "storageKey": null
+                              },
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "artistNames",
+                                "storageKey": null
+                              },
+                              {
+                                "alias": null,
+                                "args": [
+                                  {
+                                    "kind": "Literal",
+                                    "name": "shallow",
+                                    "value": true
+                                  }
+                                ],
+                                "concreteType": "Artist",
+                                "kind": "LinkedField",
+                                "name": "artists",
+                                "plural": true,
+                                "selections": [
+                                  (v4/*: any*/),
+                                  (v3/*: any*/)
+                                ],
+                                "storageKey": "artists(shallow:true)"
+                              },
+                              (v3/*: any*/)
+                            ],
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "concreteType": "ArtworkVersion",
+                            "kind": "LinkedField",
+                            "name": "artworkVersion",
+                            "plural": false,
+                            "selections": [
+                              {
+                                "alias": null,
+                                "args": null,
+                                "concreteType": "Image",
+                                "kind": "LinkedField",
+                                "name": "image",
+                                "plural": false,
+                                "selections": (v5/*: any*/),
+                                "storageKey": null
+                              },
+                              (v3/*: any*/)
+                            ],
+                            "storageKey": null
+                          },
+                          (v3/*: any*/)
+                        ],
                         "storageKey": null
                       },
                       (v3/*: any*/)
@@ -288,7 +633,7 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "orders(first:10,states:[\"APPROVED\",\"CANCELED\",\"FULFILLED\",\"REFUNDED\",\"SUBMITTED\",\"PROCESSING_APPROVAL\"])"
+            "storageKey": "ordersConnection(buyerState:[\"SUBMITTED\",\"OFFER_RECEIVED\",\"PAYMENT_FAILED\",\"PROCESSING_PAYMENT\",\"PROCESSING_OFFLINE_PAYMENT\",\"APPROVED\",\"SHIPPED\",\"COMPLETED\",\"CANCELED\",\"REFUNDED\",\"DECLINED_BY_SELLER\",\"DECLINED_BY_BUYER\"],first:10,page:1)"
           },
           (v3/*: any*/)
         ],
@@ -297,7 +642,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "4a3e5896ab8275e75a5e08e4ac6d86cb",
+    "cacheID": "5e8794cc1034aa4017ecb5f9ea06322d",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -307,74 +652,219 @@ return {
           "plural": false,
           "type": "Me"
         },
-        "me.id": (v4/*: any*/),
-        "me.name": (v5/*: any*/),
-        "me.orders": {
+        "me.id": (v6/*: any*/),
+        "me.ordersConnection": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
-          "type": "CommerceOrderConnectionWithTotalCount"
+          "type": "MeOrdersConnection"
         },
-        "me.orders.edges": {
+        "me.ordersConnection.edges": {
           "enumValues": null,
           "nullable": true,
           "plural": true,
-          "type": "CommerceOrderEdge"
+          "type": "MeOrdersEdge"
         },
-        "me.orders.edges.node": {
+        "me.ordersConnection.edges.node": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
-          "type": "CommerceOrder"
+          "type": "Order"
         },
-        "me.orders.edges.node.__typename": (v6/*: any*/),
-        "me.orders.edges.node.id": (v4/*: any*/),
-        "me.orders.edges.node.internalID": (v4/*: any*/),
-        "me.orders.pageCursors": {
+        "me.ordersConnection.edges.node.buyerState": {
+          "enumValues": [
+            "APPROVED",
+            "CANCELED",
+            "COMPLETED",
+            "DECLINED_BY_BUYER",
+            "DECLINED_BY_SELLER",
+            "INCOMPLETE",
+            "OFFER_RECEIVED",
+            "PAYMENT_FAILED",
+            "PROCESSING_OFFLINE_PAYMENT",
+            "PROCESSING_PAYMENT",
+            "REFUNDED",
+            "SHIPPED",
+            "SUBMITTED",
+            "UNKNOWN"
+          ],
+          "nullable": true,
+          "plural": false,
+          "type": "OrderBuyerStateEnum"
+        },
+        "me.ordersConnection.edges.node.buyerTotal": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
-          "type": "CommercePageCursors"
+          "type": "Money"
         },
-        "me.orders.pageCursors.around": {
+        "me.ordersConnection.edges.node.buyerTotal.display": (v7/*: any*/),
+        "me.ordersConnection.edges.node.code": (v8/*: any*/),
+        "me.ordersConnection.edges.node.createdAt": (v7/*: any*/),
+        "me.ordersConnection.edges.node.creditCardWalletType": {
+          "enumValues": [
+            "APPLE_PAY",
+            "GOOGLE_PAY"
+          ],
+          "nullable": true,
+          "plural": false,
+          "type": "OrderCreditCardWalletTypeEnum"
+        },
+        "me.ordersConnection.edges.node.deliveryInfo": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "DeliveryInfo"
+        },
+        "me.ordersConnection.edges.node.deliveryInfo.trackingURL": (v7/*: any*/),
+        "me.ordersConnection.edges.node.displayTexts": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "DisplayTexts"
+        },
+        "me.ordersConnection.edges.node.displayTexts.actionPrompt": (v7/*: any*/),
+        "me.ordersConnection.edges.node.displayTexts.stateName": (v8/*: any*/),
+        "me.ordersConnection.edges.node.id": (v6/*: any*/),
+        "me.ordersConnection.edges.node.internalID": (v6/*: any*/),
+        "me.ordersConnection.edges.node.lineItems": {
           "enumValues": null,
           "nullable": false,
           "plural": true,
-          "type": "CommercePageCursor"
+          "type": "LineItem"
         },
-        "me.orders.pageCursors.around.cursor": (v6/*: any*/),
-        "me.orders.pageCursors.around.isCurrent": (v7/*: any*/),
-        "me.orders.pageCursors.around.page": (v8/*: any*/),
-        "me.orders.pageCursors.first": (v9/*: any*/),
-        "me.orders.pageCursors.first.cursor": (v6/*: any*/),
-        "me.orders.pageCursors.first.isCurrent": (v7/*: any*/),
-        "me.orders.pageCursors.first.page": (v8/*: any*/),
-        "me.orders.pageCursors.last": (v9/*: any*/),
-        "me.orders.pageCursors.last.cursor": (v6/*: any*/),
-        "me.orders.pageCursors.last.isCurrent": (v7/*: any*/),
-        "me.orders.pageCursors.last.page": (v8/*: any*/),
-        "me.orders.pageCursors.previous": (v9/*: any*/),
-        "me.orders.pageCursors.previous.cursor": (v6/*: any*/),
-        "me.orders.pageCursors.previous.page": (v8/*: any*/),
-        "me.orders.pageInfo": {
-          "enumValues": null,
-          "nullable": false,
-          "plural": false,
-          "type": "CommercePageInfo"
-        },
-        "me.orders.pageInfo.endCursor": (v5/*: any*/),
-        "me.orders.pageInfo.hasNextPage": (v7/*: any*/),
-        "me.orders.totalCount": {
+        "me.ordersConnection.edges.node.lineItems.artwork": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
-          "type": "Int"
-        }
+          "type": "Artwork"
+        },
+        "me.ordersConnection.edges.node.lineItems.artwork.artistNames": (v7/*: any*/),
+        "me.ordersConnection.edges.node.lineItems.artwork.artists": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "Artist"
+        },
+        "me.ordersConnection.edges.node.lineItems.artwork.artists.href": (v7/*: any*/),
+        "me.ordersConnection.edges.node.lineItems.artwork.artists.id": (v6/*: any*/),
+        "me.ordersConnection.edges.node.lineItems.artwork.href": (v7/*: any*/),
+        "me.ordersConnection.edges.node.lineItems.artwork.id": (v6/*: any*/),
+        "me.ordersConnection.edges.node.lineItems.artwork.partner": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Partner"
+        },
+        "me.ordersConnection.edges.node.lineItems.artwork.partner.href": (v7/*: any*/),
+        "me.ordersConnection.edges.node.lineItems.artwork.partner.id": (v6/*: any*/),
+        "me.ordersConnection.edges.node.lineItems.artwork.partner.initials": (v7/*: any*/),
+        "me.ordersConnection.edges.node.lineItems.artwork.partner.name": (v7/*: any*/),
+        "me.ordersConnection.edges.node.lineItems.artwork.partner.profile": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Profile"
+        },
+        "me.ordersConnection.edges.node.lineItems.artwork.partner.profile.icon": (v9/*: any*/),
+        "me.ordersConnection.edges.node.lineItems.artwork.partner.profile.icon.cropped": (v10/*: any*/),
+        "me.ordersConnection.edges.node.lineItems.artwork.partner.profile.icon.cropped.src": (v8/*: any*/),
+        "me.ordersConnection.edges.node.lineItems.artwork.partner.profile.icon.cropped.srcSet": (v8/*: any*/),
+        "me.ordersConnection.edges.node.lineItems.artwork.partner.profile.id": (v6/*: any*/),
+        "me.ordersConnection.edges.node.lineItems.artwork.shippingOrigin": (v7/*: any*/),
+        "me.ordersConnection.edges.node.lineItems.artwork.title": (v7/*: any*/),
+        "me.ordersConnection.edges.node.lineItems.artworkVersion": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ArtworkVersion"
+        },
+        "me.ordersConnection.edges.node.lineItems.artworkVersion.id": (v6/*: any*/),
+        "me.ordersConnection.edges.node.lineItems.artworkVersion.image": (v9/*: any*/),
+        "me.ordersConnection.edges.node.lineItems.artworkVersion.image.cropped": (v10/*: any*/),
+        "me.ordersConnection.edges.node.lineItems.artworkVersion.image.cropped.src": (v8/*: any*/),
+        "me.ordersConnection.edges.node.lineItems.artworkVersion.image.cropped.srcSet": (v8/*: any*/),
+        "me.ordersConnection.edges.node.lineItems.id": (v6/*: any*/),
+        "me.ordersConnection.edges.node.paymentMethodDetails": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "PaymentMethodUnion"
+        },
+        "me.ordersConnection.edges.node.paymentMethodDetails.__typename": (v8/*: any*/),
+        "me.ordersConnection.edges.node.paymentMethodDetails.id": (v6/*: any*/),
+        "me.ordersConnection.edges.node.paymentMethodDetails.last4": (v8/*: any*/),
+        "me.ordersConnection.edges.node.paymentMethodDetails.lastDigits": (v8/*: any*/),
+        "me.ordersConnection.edges.node.selectedFulfillmentOption": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "FulfillmentOption"
+        },
+        "me.ordersConnection.edges.node.selectedFulfillmentOption.type": {
+          "enumValues": [
+            "ARTSY_EXPRESS",
+            "ARTSY_STANDARD",
+            "ARTSY_WHITE_GLOVE",
+            "DOMESTIC_FLAT",
+            "INTERNATIONAL_FLAT",
+            "PICKUP",
+            "SHIPPING_TBD"
+          ],
+          "nullable": false,
+          "plural": false,
+          "type": "FulfillmentOptionTypeEnum"
+        },
+        "me.ordersConnection.edges.node.source": {
+          "enumValues": [
+            "ARTWORK_PAGE",
+            "INQUIRY",
+            "PARTNER_OFFER",
+            "PRIVATE_SALE"
+          ],
+          "nullable": false,
+          "plural": false,
+          "type": "OrderSourceEnum"
+        },
+        "me.ordersConnection.pageCursors": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "PageCursors"
+        },
+        "me.ordersConnection.pageCursors.around": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": true,
+          "type": "PageCursor"
+        },
+        "me.ordersConnection.pageCursors.around.cursor": (v8/*: any*/),
+        "me.ordersConnection.pageCursors.around.isCurrent": (v11/*: any*/),
+        "me.ordersConnection.pageCursors.around.page": (v12/*: any*/),
+        "me.ordersConnection.pageCursors.first": (v13/*: any*/),
+        "me.ordersConnection.pageCursors.first.cursor": (v8/*: any*/),
+        "me.ordersConnection.pageCursors.first.isCurrent": (v11/*: any*/),
+        "me.ordersConnection.pageCursors.first.page": (v12/*: any*/),
+        "me.ordersConnection.pageCursors.last": (v13/*: any*/),
+        "me.ordersConnection.pageCursors.last.cursor": (v8/*: any*/),
+        "me.ordersConnection.pageCursors.last.isCurrent": (v11/*: any*/),
+        "me.ordersConnection.pageCursors.last.page": (v12/*: any*/),
+        "me.ordersConnection.pageCursors.previous": (v13/*: any*/),
+        "me.ordersConnection.pageCursors.previous.cursor": (v8/*: any*/),
+        "me.ordersConnection.pageCursors.previous.page": (v12/*: any*/),
+        "me.ordersConnection.pageInfo": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "PageInfo"
+        },
+        "me.ordersConnection.pageInfo.hasNextPage": (v11/*: any*/),
+        "me.ordersConnection.pageInfo.hasPreviousPage": (v11/*: any*/)
       }
     },
     "name": "SettingsOrders_Test_Query",
     "operationKind": "query",
-    "text": "query SettingsOrders_Test_Query {\n  me {\n    ...SettingsOrders_me\n    id\n  }\n}\n\nfragment CommercePagination_pageCursors on CommercePageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment SettingsOrders_me on Me {\n  name\n  orders(states: [APPROVED, CANCELED, FULFILLED, REFUNDED, SUBMITTED, PROCESSING_APPROVAL], first: 10) {\n    totalCount\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...CommercePagination_pageCursors\n    }\n    edges {\n      node {\n        __typename\n        internalID\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query SettingsOrders_Test_Query {\n  me {\n    ...SettingsOrders_me\n    id\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment SettingsOrdersRow_order on Order {\n  source\n  internalID\n  code\n  buyerState\n  createdAt\n  creditCardWalletType\n  displayTexts {\n    stateName\n    actionPrompt\n  }\n  deliveryInfo {\n    trackingURL\n  }\n  selectedFulfillmentOption {\n    type\n  }\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      lastDigits\n      id\n    }\n    ... on BankAccount {\n      last4\n      id\n    }\n    ... on WireTransfer {\n      __typename\n    }\n  }\n  buyerTotal {\n    display\n  }\n  lineItems {\n    artwork {\n      href\n      partner {\n        href\n        initials\n        name\n        profile {\n          icon {\n            cropped(width: 45, height: 45) {\n              src\n              srcSet\n            }\n          }\n          id\n        }\n        id\n      }\n      shippingOrigin\n      title\n      artistNames\n      artists(shallow: true) {\n        href\n        id\n      }\n      id\n    }\n    artworkVersion {\n      image {\n        cropped(width: 45, height: 45) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment SettingsOrders_me on Me {\n  ordersConnection(first: 10, page: 1, buyerState: [SUBMITTED, OFFER_RECEIVED, PAYMENT_FAILED, PROCESSING_PAYMENT, PROCESSING_OFFLINE_PAYMENT, APPROVED, SHIPPED, COMPLETED, CANCELED, REFUNDED, DECLINED_BY_SELLER, DECLINED_BY_BUYER]) {\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        internalID\n        ...SettingsOrdersRow_order\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
