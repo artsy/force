@@ -78,7 +78,7 @@
     "@artsy/express-reloadable": "^1.7.0",
     "@artsy/fresnel": "^8.1.0",
     "@artsy/icons": "3.65.0",
-    "@artsy/img": "1.1.1",
+    "@artsy/img": "1.1.2",
     "@artsy/multienv": "^1.2.0",
     "@artsy/palette": "46.1.0",
     "@artsy/palette-charts": "45.1.0",

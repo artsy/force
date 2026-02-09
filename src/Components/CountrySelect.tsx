@@ -366,6 +366,7 @@ export const SMS_UNSUPPORTED_COUNTRY_CODES = [
   { text: "Iran, Islamic Republic Of", value: "IR" },
   { text: "Iraq", value: "IQ" },
   { text: "Jamaica", value: "JM" },
+  { text: "Kazakhstan", value: "KZ" },
   { text: "Kiribati", value: "KI" },
   { text: "Korea, Democratic People'S Republic of", value: "KP" },
   { text: "Kuwait", value: "KW" },
