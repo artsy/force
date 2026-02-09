@@ -102,12 +102,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@artsy/img@npm:1.1.1":
-  version: 1.1.1
-  resolution: "@artsy/img@npm:1.1.1"
+"@artsy/img@npm:1.1.2":
+  version: 1.1.2
+  resolution: "@artsy/img@npm:1.1.2"
   dependencies:
     md5: "npm:^2.3.0"
-  checksum: 10c0/1df382834d07e5c560e3c63e7b97cf2237087c924d5a197a917414415e6c8f6c90a1c42618a33ef5ddfb695fb8db1ae35a85c315eefbf26168d7ed0bcc1f2b2e
+  checksum: 10c0/973642cec7fbff286f71860285114f17f0560fa64784a0bf8a49ef5a21b8fe90f69875a52b913bc32ffd048137017e56f85e09090d1d544b3b779171fc5c4eee
   languageName: node
   linkType: hard
 
@@ -8907,7 +8907,7 @@ __metadata:
     "@artsy/express-reloadable": "npm:^1.7.0"
     "@artsy/fresnel": "npm:^8.1.0"
     "@artsy/icons": "npm:3.65.0"
-    "@artsy/img": "npm:1.1.1"
+    "@artsy/img": "npm:1.1.2"
     "@artsy/multienv": "npm:^1.2.0"
     "@artsy/palette": "npm:46.1.0"
     "@artsy/palette-charts": "npm:45.1.0"
