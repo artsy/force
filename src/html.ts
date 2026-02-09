@@ -75,6 +75,8 @@ export function buildHtmlTemplate({
 
       <link type="text/css" rel="stylesheet" href="${fontUrl}/all-webfonts.css" />
 
+      <script>window.__artsyInitialReferrer = document.referrer</script>
+
       ${content.linkPreloadTags ? content.linkPreloadTags.join("") : ""}
       ${content.head || ""}
       ${content.style || ""}
