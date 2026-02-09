@@ -46,7 +46,7 @@ export const DEFAULT_CONTEXT: Context = {
 }
 
 export const DEFAULT_MESSAGE =
-  "I'm interested in this piece and would like to learn more about it. Could you please provide additional details?"
+  "Personalize your message and include details for the best response."
 
 export interface InquiryState {
   message: string

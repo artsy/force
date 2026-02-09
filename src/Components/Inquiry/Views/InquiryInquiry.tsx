@@ -163,14 +163,10 @@ const InquiryInquiry: React.FC<
         <InquiryQuestionsList inquiryQuestions={artwork.inquiryQuestions} />
       )}
 
-      <Text variant="sm">
-        Personalize your message and include details for the best response.
-      </Text>
-
       <Spacer y={2} />
 
       <TextArea
-        placeholder="Provide the gallery with some details about your interest in this work."
+        placeholder="Personalize your message and include details for the best response."
         title="Your message"
         defaultValue={inquiry.message}
         onChange={handleTextAreaChange}
@@ -178,7 +174,6 @@ const InquiryInquiry: React.FC<
           showErrorMessage &&
           "Please enter a message or select at least one option."
         }
-        required={!enableCheckboxes}
       />
 
       <Spacer y={1} />
