@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e9bed1daa7d6f3210633bee8562df893>>
+ * @generated SignedSource<<c1b775c694592d536cbe072c583fd718>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,6 +14,12 @@ export type ArtworkLightbox_artwork$data = {
   readonly caption: string | null | undefined;
   readonly formattedMetadata: string | null | undefined;
   readonly images: ReadonlyArray<{
+    readonly desktop: {
+      readonly height: number | null | undefined;
+      readonly src: string;
+      readonly srcSet: string;
+      readonly width: number | null | undefined;
+    } | null | undefined;
     readonly fallback: {
       readonly height: number;
       readonly src: string;
@@ -22,19 +28,13 @@ export type ArtworkLightbox_artwork$data = {
     } | null | undefined;
     readonly internalID: string | null | undefined;
     readonly isDefault: boolean | null | undefined;
-    readonly mobileLightboxSource: {
+    readonly mobile: {
       readonly height: number | null | undefined;
       readonly src: string;
       readonly srcSet: string;
       readonly width: number | null | undefined;
     } | null | undefined;
     readonly placeholder: string | null | undefined;
-    readonly resized: {
-      readonly height: number | null | undefined;
-      readonly src: string;
-      readonly srcSet: string;
-      readonly width: number | null | undefined;
-    } | null | undefined;
     readonly versions: ReadonlyArray<string | null | undefined> | null | undefined;
   } | null | undefined> | null | undefined;
   readonly " $fragmentType": "ArtworkLightbox_artwork";
@@ -186,7 +186,7 @@ return {
           "storageKey": "cropped(height:800,quality:80,version:[\"main\",\"normalized\",\"larger\",\"large\"],width:800)"
         },
         {
-          "alias": null,
+          "alias": "desktop",
           "args": (v3/*: any*/),
           "concreteType": "ResizedImageUrl",
           "kind": "LinkedField",
@@ -196,7 +196,7 @@ return {
           "storageKey": "resized(height:800,quality:80,version:[\"main\",\"normalized\",\"larger\",\"large\"],width:800)"
         },
         {
-          "alias": "mobileLightboxSource",
+          "alias": "mobile",
           "args": [
             (v0/*: any*/),
             {
@@ -230,6 +230,6 @@ return {
 };
 })();
 
-(node as any).hash = "c380599947a00f3c3a6ac52e0e6b4d30";
+(node as any).hash = "4314845bf64df21d6c09db237136f00a";
 
 export default node;

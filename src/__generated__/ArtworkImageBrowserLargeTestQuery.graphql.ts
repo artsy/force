@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<760135d34c21d7866ce2176e9f952379>>
+ * @generated SignedSource<<fbf83bb525e464c085e9b8a851aeb4ae>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -256,7 +256,7 @@ return {
                 "storageKey": "cropped(height:800,quality:80,version:[\"main\",\"normalized\",\"larger\",\"large\"],width:800)"
               },
               {
-                "alias": null,
+                "alias": "desktop",
                 "args": (v6/*: any*/),
                 "concreteType": "ResizedImageUrl",
                 "kind": "LinkedField",
@@ -266,7 +266,7 @@ return {
                 "storageKey": "resized(height:800,quality:80,version:[\"main\",\"normalized\",\"larger\",\"large\"],width:800)"
               },
               {
-                "alias": "mobileLightboxSource",
+                "alias": "mobile",
                 "args": [
                   (v3/*: any*/),
                   {
@@ -460,7 +460,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "56cb3ab57e31385432bb07ba98c9aa02",
+    "cacheID": "d693091ed3025ee165e0dae34dcae1f6",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -517,6 +517,11 @@ return {
           "plural": true,
           "type": "Image"
         },
+        "artwork.images.desktop": (v16/*: any*/),
+        "artwork.images.desktop.height": (v11/*: any*/),
+        "artwork.images.desktop.src": (v10/*: any*/),
+        "artwork.images.desktop.srcSet": (v10/*: any*/),
+        "artwork.images.desktop.width": (v11/*: any*/),
         "artwork.images.fallback": {
           "enumValues": null,
           "nullable": true,
@@ -529,17 +534,12 @@ return {
         "artwork.images.fallback.width": (v15/*: any*/),
         "artwork.images.internalID": (v13/*: any*/),
         "artwork.images.isDefault": (v14/*: any*/),
-        "artwork.images.mobileLightboxSource": (v16/*: any*/),
-        "artwork.images.mobileLightboxSource.height": (v11/*: any*/),
-        "artwork.images.mobileLightboxSource.src": (v10/*: any*/),
-        "artwork.images.mobileLightboxSource.srcSet": (v10/*: any*/),
-        "artwork.images.mobileLightboxSource.width": (v11/*: any*/),
+        "artwork.images.mobile": (v16/*: any*/),
+        "artwork.images.mobile.height": (v11/*: any*/),
+        "artwork.images.mobile.src": (v10/*: any*/),
+        "artwork.images.mobile.srcSet": (v10/*: any*/),
+        "artwork.images.mobile.width": (v11/*: any*/),
         "artwork.images.placeholder": (v9/*: any*/),
-        "artwork.images.resized": (v16/*: any*/),
-        "artwork.images.resized.height": (v11/*: any*/),
-        "artwork.images.resized.src": (v10/*: any*/),
-        "artwork.images.resized.srcSet": (v10/*: any*/),
-        "artwork.images.resized.width": (v11/*: any*/),
         "artwork.images.versions": {
           "enumValues": null,
           "nullable": true,
@@ -553,7 +553,7 @@ return {
     },
     "name": "ArtworkImageBrowserLargeTestQuery",
     "operationKind": "query",
-    "text": "query ArtworkImageBrowserLargeTestQuery {\n  artwork(id: \"example\") {\n    ...ArtworkImageBrowserLarge_artwork\n    id\n  }\n}\n\nfragment ArtworkImageBrowserLarge_artwork on Artwork {\n  ...ArtworkLightbox_artwork_FOvjt\n  ...ArtworkVideoPlayer_artwork_FOvjt\n  isSetVideoAsCover\n  figures(includeAll: false) {\n    __typename\n    ... on Image {\n      ...DeepZoom_image\n      __typename\n      internalID\n      isZoomable\n    }\n    ... on Video {\n      __typename\n      id\n    }\n  }\n}\n\nfragment ArtworkLightbox_artwork_FOvjt on Artwork {\n  caption\n  formattedMetadata\n  images(includeAll: false) {\n    internalID\n    isDefault\n    placeholder: url(version: [\"small\", \"medium\"])\n    fallback: cropped(quality: 80, width: 800, height: 800, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n    resized(quality: 80, width: 800, height: 800, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n    mobileLightboxSource: resized(quality: 50, width: 800, height: 800, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n    versions\n  }\n}\n\nfragment ArtworkVideoPlayer_artwork_FOvjt on Artwork {\n  internalID\n  slug\n  figures(includeAll: false) {\n    __typename\n    ... on Video {\n      __typename\n      playerUrl\n      videoWidth: width\n      videoHeight: height\n      id\n    }\n  }\n}\n\nfragment DeepZoom_image on Image {\n  deepZoom {\n    Image {\n      xmlns\n      Url\n      Format\n      TileSize\n      Overlap\n      Size {\n        Width\n        Height\n      }\n    }\n  }\n}\n"
+    "text": "query ArtworkImageBrowserLargeTestQuery {\n  artwork(id: \"example\") {\n    ...ArtworkImageBrowserLarge_artwork\n    id\n  }\n}\n\nfragment ArtworkImageBrowserLarge_artwork on Artwork {\n  ...ArtworkLightbox_artwork_FOvjt\n  ...ArtworkVideoPlayer_artwork_FOvjt\n  isSetVideoAsCover\n  figures(includeAll: false) {\n    __typename\n    ... on Image {\n      ...DeepZoom_image\n      __typename\n      internalID\n      isZoomable\n    }\n    ... on Video {\n      __typename\n      id\n    }\n  }\n}\n\nfragment ArtworkLightbox_artwork_FOvjt on Artwork {\n  caption\n  formattedMetadata\n  images(includeAll: false) {\n    internalID\n    isDefault\n    placeholder: url(version: [\"small\", \"medium\"])\n    fallback: cropped(quality: 80, width: 800, height: 800, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n    desktop: resized(quality: 80, width: 800, height: 800, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n    mobile: resized(quality: 50, width: 800, height: 800, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n    versions\n  }\n}\n\nfragment ArtworkVideoPlayer_artwork_FOvjt on Artwork {\n  internalID\n  slug\n  figures(includeAll: false) {\n    __typename\n    ... on Video {\n      __typename\n      playerUrl\n      videoWidth: width\n      videoHeight: height\n      id\n    }\n  }\n}\n\nfragment DeepZoom_image on Image {\n  deepZoom {\n    Image {\n      xmlns\n      Url\n      Format\n      TileSize\n      Overlap\n      Size {\n        Width\n        Height\n      }\n    }\n  }\n}\n"
   }
 };
 })();
