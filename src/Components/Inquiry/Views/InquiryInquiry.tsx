@@ -12,14 +12,13 @@ import {
   Text,
   TextArea,
 } from "@artsy/palette"
-import { useFlag, useVariant } from "@unleash/proxy-client-react"
+import { useFlag } from "@unleash/proxy-client-react"
 import { InquiryQuestionsList } from "Components/Inquiry/Components/InquiryQuestionsList"
 import { useArtworkInquiryRequest } from "Components/Inquiry/Hooks/useArtworkInquiryRequest"
 import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
 import { logger } from "Components/Inquiry/util"
 import { RouterLink } from "System/Components/RouterLink"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { useTrackFeatureVariantOnMount } from "System/Hooks/useTrackFeatureVariant"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { wait } from "Utils/wait"
 import type { InquiryInquiryQuery } from "__generated__/InquiryInquiryQuery.graphql"
@@ -27,8 +26,6 @@ import type { InquiryInquiry_artwork$data } from "__generated__/InquiryInquiry_a
 import type * as React from "react"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-
-const INQUIRY_CHECKBOXES_FLAG = "emerald_inquiry-checkboxes-on-web"
 
 type Mode = "Pending" | "Sending" | "Error" | "Success"
 
@@ -48,17 +45,9 @@ const InquiryInquiry: React.FC<
 
   const { submitArtworkInquiryRequest } = useArtworkInquiryRequest()
 
-  const variant = useVariant(INQUIRY_CHECKBOXES_FLAG)
-  const enableCheckboxes = variant.name === "experiment"
-
   const collectorInquirySimplifiedLayout = useFlag(
     "topaz_collector-inquiry-simplified-layout",
   )
-
-  useTrackFeatureVariantOnMount({
-    experimentName: INQUIRY_CHECKBOXES_FLAG,
-    variantName: variant.name,
-  })
 
   const handleTextAreaChange = ({ value }: { value: string }) => {
     setInquiry(prevState => ({ ...prevState, message: value }))
@@ -105,9 +94,7 @@ const InquiryInquiry: React.FC<
   }[mode]
 
   const showErrorMessage =
-    enableCheckboxes &&
-    questions?.length === 0 &&
-    inquiry.message.trim().length === 0
+    questions?.length === 0 && inquiry.message.trim().length === 0
 
   return (
     <Box as="form" onSubmit={handleSubmit}>
@@ -159,9 +146,7 @@ const InquiryInquiry: React.FC<
 
       <Separator my={2} />
 
-      {enableCheckboxes && (
-        <InquiryQuestionsList inquiryQuestions={artwork.inquiryQuestions} />
-      )}
+      <InquiryQuestionsList inquiryQuestions={artwork.inquiryQuestions} />
 
       <Spacer y={2} />
 
