@@ -18,22 +18,22 @@ export const LayoutCheckout: FC<React.PropsWithChildren<BaseLayoutProps>> = ({
     <>
       <AppToasts />
 
-      <Box
-        as="header"
-        position={["initial", "initial", "sticky"]}
-        py={1}
-        top={0}
-        zIndex={Z.globalNav}
-        bg="mono0"
-      >
-        {!isEigen && (
+      {!isEigen && (
+        <Box
+          as="header"
+          position={["initial", "initial", "sticky"]}
+          py={1}
+          top={0}
+          zIndex={Z.globalNav}
+          bg="mono0"
+        >
           <HorizontalPadding>
             <RouterLink to="/">
               <NavBarPrimaryLogo />
             </RouterLink>
           </HorizontalPadding>
-        )}
-      </Box>
+        </Box>
+      )}
 
       <Flex
         width="100%"
