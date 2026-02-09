@@ -16,6 +16,9 @@ declare global {
   }
 
   interface Window {
+    /** Copied from document.referrer early in the initial page load, for correct referer attribution */
+    __artsyInitialReferrer: string | undefined
+
     __webpack_public_path__: string
     __getPublicPath: () => string
     __BOOTSTRAP__?: any

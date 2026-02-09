@@ -163,6 +163,10 @@ export const ArtworkApp: React.FC<React.PropsWithChildren<Props>> = props => {
         properties.referrer = clientSideRoutingReferrer
       } else if (referrer) {
         properties.referrer = referrer
+      } else if (window.__artsyInitialReferrer) {
+        // consume then clear to avoid recording stale external referrer
+        properties.referrer = window.__artsyInitialReferrer
+        window.__artsyInitialReferrer = undefined
       }
 
       // This breaks our automatic global pageview tracking middleware
