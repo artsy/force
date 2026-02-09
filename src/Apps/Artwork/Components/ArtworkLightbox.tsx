@@ -6,7 +6,6 @@ import {
 } from "@artsy/palette"
 import { useFlag } from "@unleash/proxy-client-react"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { getENV } from "Utils/getENV"
 import { useLocalImage } from "Utils/localImageHelpers"
 import { userIsTeam } from "Utils/user"
 import type { ArtworkLightbox_artwork$data } from "__generated__/ArtworkLightbox_artwork.graphql"
@@ -55,10 +54,9 @@ const ArtworkLightbox: React.FC<
 
   if (!activeImage) return null
 
-  const { fallback, internalID, isDefault, placeholder, desktop, mobile } =
-    activeImage
+  const { fallback, internalID, isDefault, placeholder, resized } = activeImage
 
-  const hasGeometry = !!images[0]?.desktop?.width
+  const hasGeometry = !!images[0]?.resized?.width
 
   const image = useMemo(() => {
     if (localImage) {
@@ -69,12 +67,10 @@ const ArtworkLightbox: React.FC<
       }
     }
 
-    if (getENV("IS_MOBILE") && mobile) return mobile
-
-    if (hasGeometry) return desktop
+    if (hasGeometry) return resized
 
     return fallback
-  }, [localImage, mobile, hasGeometry, desktop, fallback])
+  }, [localImage, hasGeometry, resized, fallback])
 
   if (!image) return null
 
@@ -134,7 +130,7 @@ const ArtworkLightbox: React.FC<
               srcSet={image.srcSet}
               alt={artworkCaption ?? ""}
               {...(isDefault
-                ? { loading: "eager", fetchPriority: "high", decoding: "async" }
+                ? { loading: "eager", fetchPriority: "high" }
                 : {})}
               lazyLoad={lazyLoad}
               position="relative"
@@ -173,19 +169,8 @@ export const ArtworkLightboxFragmentContainer = createFragmentContainer(
             src
             srcSet
           }
-          desktop: resized(
+          resized(
             quality: 80
-            width: 800
-            height: 800
-            version: ["main", "normalized", "larger", "large"]
-          ) {
-            width
-            height
-            src
-            srcSet
-          }
-          mobile: resized(
-            quality: 50
             width: 800
             height: 800
             version: ["main", "normalized", "larger", "large"]
