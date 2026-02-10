@@ -146,9 +146,14 @@ const InquiryInquiry: React.FC<
 
       <Separator my={2} />
 
-      <InquiryQuestionsList inquiryQuestions={artwork.inquiryQuestions} />
+      {collectorInquirySimplifiedLayout && (
+        <>
+          <InquiryQuestionsList inquiryQuestions={artwork.inquiryQuestions} />
+          <Spacer y={2} />
+        </>
+      )}
 
-      <Spacer y={2} />
+      {!collectorInquirySimplifiedLayout && <Spacer y={2} />}
 
       <TextArea
         placeholder="Personalize your message and include details for the best response."
