@@ -539,9 +539,6 @@ describe("Order2CheckoutRoute", () => {
       expect(submitButton).not.toBeDisabled()
 
       // Submit form again (why waitFor? says no pointer events otherwise)
-      const pickupCompleteMessage =
-        "After your order is confirmed, a specialist will contact you within 2 business days to coordinate pickup."
-      expect(screen.queryByText(pickupCompleteMessage)).not.toBeInTheDocument()
       await waitFor(() => {
         act(() => {
           userEvent.click(screen.getByText("Continue to Payment"))
@@ -601,8 +598,14 @@ describe("Order2CheckoutRoute", () => {
         await flushPromiseQueue()
       })
 
-      // Verify that the step is complete
-      await screen.findByText(pickupCompleteMessage)
+      // Verify that the step is complete by checking for the Edit button in the completed view
+      await waitFor(() => {
+        const fulfillmentStep = screen.getByTestId(
+          testIDs.fulfillmentDetailsStep,
+        )
+        const editButton = within(fulfillmentStep).getByText("Edit")
+        expect(editButton).toBeInTheDocument()
+      })
       expect(screen.queryByText("Shipping method")).not.toBeInTheDocument()
 
       await userEvent.click(screen.getByText("Mock enter credit card"))
