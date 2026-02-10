@@ -4,6 +4,7 @@ import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { Order2PaymentFormTestQuery } from "__generated__/Order2PaymentFormTestQuery.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
+import { Elements } from "@stripe/react-stripe-js"
 import { Order2PaymentForm } from "../Order2PaymentForm"
 
 jest.unmock("react-relay")
@@ -235,6 +236,7 @@ beforeEach(() => {
   ;(useTracking as jest.Mock).mockImplementation(() => ({
     trackEvent: jest.fn(),
   }))
+  ;(Elements as jest.Mock).mockClear()
 
   // Set up default mock response for confirmation token query
   mockFetchQuery.mockImplementation(() =>
@@ -326,6 +328,39 @@ describe("Order2PaymentForm", () => {
     expect(screen.getByTestId("payment-element")).toBeInTheDocument()
   })
 
+  it("initializes Elements with correct paymentMethodTypes and paymentMethodOptions from order", async () => {
+    renderPaymentForm()
+
+    await waitFor(() => {
+      expect(screen.getByTestId("payment-element")).toBeInTheDocument()
+    })
+
+    // Verify Elements was called with the correct options including paymentMethodTypes and paymentMethodOptions
+    expect(Elements).toHaveBeenCalledWith(
+      expect.objectContaining({
+        options: expect.objectContaining({
+          paymentMethodTypes: ["card", "us_bank_account"],
+          onBehalfOf: "merchant-123",
+          currency: "usd",
+          mode: "payment",
+          amount: 100000,
+          setupFutureUsage: "off_session",
+          captureMethod: "automatic",
+          paymentMethodOptions: {
+            us_bank_account: {
+              verification_method: "instant",
+              financial_connections: {
+                permissions: ["payment_method", "balances", "ownership"],
+                prefetch: ["balances"],
+              },
+            },
+          },
+        }),
+      }),
+      expect.anything(),
+    )
+  })
+
   describe("payment method switching behavior", () => {
     it("updates Stripe elements on submit for credit card", async () => {
       const tokenId = "test-token-id"
@@ -347,7 +382,6 @@ describe("Order2PaymentForm", () => {
 
       expect(mockElements.update).toHaveBeenCalledWith({
         captureMethod: "manual",
-        paymentMethodOptions: null,
       })
     })
 
@@ -372,7 +406,6 @@ describe("Order2PaymentForm", () => {
       expect(mockElements.update).toHaveBeenCalledWith({
         setupFutureUsage: null,
         mode: "setup",
-        paymentMethodTypes: ["us_bank_account"],
         onBehalfOf: null,
       })
     })
@@ -402,7 +435,6 @@ describe("Order2PaymentForm", () => {
       expect(mockElements.update).toHaveBeenCalledWith({
         setupFutureUsage: null,
         mode: "setup",
-        paymentMethodTypes: ["sepa_debit"],
       })
     })
   })
