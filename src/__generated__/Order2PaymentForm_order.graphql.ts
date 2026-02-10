@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7ece6c28ff8910b0a543bad451cfee94>>
+ * @generated SignedSource<<40797ce9e80113b0988ebc972b18950a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -22,6 +22,10 @@ export type Order2PaymentForm_order$data = {
     readonly message: string | null | undefined;
     readonly result: BankAccountBalanceCheckResult;
   } | null | undefined;
+  readonly buyerTotal: {
+    readonly currencyCode: string;
+    readonly minor: any;
+  } | null | undefined;
   readonly code: string;
   readonly currencyCode: string;
   readonly fulfillmentDetails: {
@@ -34,10 +38,6 @@ export type Order2PaymentForm_order$data = {
     readonly region: string | null | undefined;
   } | null | undefined;
   readonly internalID: string;
-  readonly itemsTotal: {
-    readonly currencyCode: string;
-    readonly minor: any;
-  } | null | undefined;
   readonly mode: OrderModeEnum;
   readonly seller: {
     readonly merchantAccount?: {
@@ -145,7 +145,7 @@ return {
       "args": null,
       "concreteType": "Money",
       "kind": "LinkedField",
-      "name": "itemsTotal",
+      "name": "buyerTotal",
       "plural": false,
       "selections": [
         {
@@ -261,6 +261,6 @@ return {
 };
 })();
 
-(node as any).hash = "1626494016faf8460a61d3e50abfe4f6";
+(node as any).hash = "65f2cd2324d8460deef6b6e28133f0d4";
 
 export default node;

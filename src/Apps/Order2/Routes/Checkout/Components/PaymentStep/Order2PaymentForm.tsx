@@ -126,11 +126,11 @@ export const Order2PaymentForm: React.FC<Order2PaymentFormProps> = ({
     seller,
     mode,
     availableStripePaymentMethodTypes,
-    itemsTotal,
+    buyerTotal,
     currencyCode,
   } = orderData
 
-  if (mode === "BUY" && !itemsTotal) {
+  if (mode === "BUY" && !buyerTotal) {
     return null
   }
 
@@ -140,7 +140,7 @@ export const Order2PaymentForm: React.FC<Order2PaymentFormProps> = ({
     mode,
     seller?.merchantAccount?.externalId,
     currencyCode,
-    itemsTotal?.minor,
+    buyerTotal?.minor,
     availableStripePaymentMethodTypes,
   )
 
@@ -230,8 +230,8 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
   ) => {
     checkoutTracking.clickedPaymentMethod({
       paymentMethod,
-      amountMinor: order.itemsTotal?.minor,
-      currency: order.itemsTotal?.currencyCode ?? "",
+      amountMinor: order.buyerTotal?.minor,
+      currency: order.buyerTotal?.currencyCode ?? "",
     })
   }
 
@@ -308,10 +308,10 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       mode,
       availableStripePaymentMethodTypes,
       currencyCode,
-      itemsTotal,
+      buyerTotal,
     } = order
 
-    if (mode === "BUY" && !itemsTotal) {
+    if (mode === "BUY" && !buyerTotal) {
       return null
     }
 
@@ -319,7 +319,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       mode,
       merchantAccountExternalId,
       currencyCode,
-      itemsTotal?.minor,
+      buyerTotal?.minor,
       availableStripePaymentMethodTypes,
     )
 
@@ -853,7 +853,7 @@ const ORDER_FRAGMENT = graphql`
       result
       message
     }
-    itemsTotal {
+    buyerTotal {
       minor
       currencyCode
     }
