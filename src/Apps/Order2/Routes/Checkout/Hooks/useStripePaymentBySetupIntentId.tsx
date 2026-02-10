@@ -29,7 +29,7 @@ export function useStripePaymentBySetupIntentId(
     useSetPaymentByStripeIntent()
   const { router } = useRouter()
   const environment = useRelayEnvironment()
-  const { setConfirmationToken, setPaymentComplete, setStepErrorMessage } =
+  const { setConfirmationToken, setPaymentComplete, setSectionErrorMessage } =
     useCheckoutContext()
 
   useEffect(() => {
@@ -111,8 +111,8 @@ export function useStripePaymentBySetupIntentId(
       if (orderOrError?.error) throw orderOrError.error
     } catch (error) {
       logger.error("Failed to set payment by setup intent:", error)
-      setStepErrorMessage({
-        step: CheckoutStepName.PAYMENT,
+      setSectionErrorMessage({
+        section: CheckoutStepName.PAYMENT,
         error: paymentProcessingError(error?.code),
       })
       onComplete()
