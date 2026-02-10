@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6068c7b0e26ac3e3eec0f3dc28966d2c>>
+ * @generated SignedSource<<7ece6c28ff8910b0a543bad451cfee94>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -38,14 +38,6 @@ export type Order2PaymentForm_order$data = {
     readonly currencyCode: string;
     readonly minor: any;
   } | null | undefined;
-  readonly lineItems: ReadonlyArray<{
-    readonly artwork: {
-      readonly artworkMeta: {
-        readonly share: string | null | undefined;
-      } | null | undefined;
-      readonly href: string | null | undefined;
-    } | null | undefined;
-  } | null | undefined>;
   readonly mode: OrderModeEnum;
   readonly seller: {
     readonly merchantAccount?: {
@@ -53,6 +45,7 @@ export type Order2PaymentForm_order$data = {
     } | null | undefined;
   } | null | undefined;
   readonly source: OrderSourceEnum;
+  readonly " $fragmentSpreads": FragmentRefs<"WireTransferOption_order">;
   readonly " $fragmentType": "Order2PaymentForm_order";
 };
 export type Order2PaymentForm_order$key = {
@@ -74,6 +67,11 @@ return {
   "metadata": null,
   "name": "Order2PaymentForm_order",
   "selections": [
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "WireTransferOption_order"
+    },
     {
       "alias": null,
       "args": null,
@@ -256,53 +254,6 @@ return {
         }
       ],
       "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "LineItem",
-      "kind": "LinkedField",
-      "name": "lineItems",
-      "plural": true,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "Artwork",
-          "kind": "LinkedField",
-          "name": "artwork",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "href",
-              "storageKey": null
-            },
-            {
-              "alias": "artworkMeta",
-              "args": null,
-              "concreteType": "ArtworkMeta",
-              "kind": "LinkedField",
-              "name": "meta",
-              "plural": false,
-              "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "share",
-                  "storageKey": null
-                }
-              ],
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
     }
   ],
   "type": "Order",
@@ -310,6 +261,6 @@ return {
 };
 })();
 
-(node as any).hash = "787fed911f32bb5e58af62a303baa4ba";
+(node as any).hash = "1626494016faf8460a61d3e50abfe4f6";
 
 export default node;
