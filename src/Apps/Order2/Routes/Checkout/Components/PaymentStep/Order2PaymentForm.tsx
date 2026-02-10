@@ -45,7 +45,6 @@ import type {
 import type React from "react"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { graphql, useFragment, useRelayEnvironment } from "react-relay"
-import { data as sd } from "sharify"
 import { SavedPaymentMethodOption } from "./SavedPaymentMethodOption"
 import { StripePaymentCheckboxes } from "./StripePaymentCheckboxes"
 import { WireTransferOption } from "./WireTransferOption"
@@ -259,8 +258,6 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
     order.availablePaymentMethods?.includes(bankAccount.type),
   )
   const hasSavedBankAccounts = allowedSavedBankAccounts.length > 0
-  const [wireEmailSubject, setWireEmailSubject] = useState<string | null>(null)
-  const [wireEmailBody, setWireEmailBody] = useState<string | null>(null)
   const merchantAccountExternalId = order.seller?.merchantAccount?.externalId
 
   const paymentElementRef = useRef<HTMLDivElement>(null)
@@ -458,13 +455,6 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
     trackPaymentMethodSelection("WIRE_TRANSFER")
     unsetStepError()
     setSelectedPaymentMethod("wire")
-    setWireEmailSubject(`Wire transfer inquiry (CODE #${order.code})`)
-    const artworkInfo =
-      order.lineItems[0]?.artwork?.artworkMeta?.share?.slice(10) // Removing "Check out " from the share metadata
-    const artworkUrl = sd.APP_URL + order.lineItems[0]?.artwork?.href
-    setWireEmailBody(
-      `Hello%2C%0D%0AI'm interested in paying by wire transfer and would like some assistance.%0D%0A${artworkInfo} on Artsy: ${artworkUrl}`,
-    )
     elements?.getElement("payment")?.collapse()
   }
 
@@ -767,8 +757,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       {order.availablePaymentMethods?.includes("WIRE_TRANSFER") && (
         <WireTransferOption
           isSelected={selectedPaymentMethod === "wire"}
-          wireEmailSubject={wireEmailSubject}
-          wireEmailBody={wireEmailBody}
+          order={order}
           onSelect={onClickWirePaymentMethods}
         />
       )}
@@ -852,6 +841,7 @@ const ME_FRAGMENT = graphql`
 
 const ORDER_FRAGMENT = graphql`
   fragment Order2PaymentForm_order on Order {
+    ...WireTransferOption_order
     code
     mode
     source
@@ -882,14 +872,6 @@ const ORDER_FRAGMENT = graphql`
       region
       postalCode
       country
-    }
-    lineItems {
-      artwork {
-        href
-        artworkMeta: meta {
-          share
-        }
-      }
     }
   }
 `

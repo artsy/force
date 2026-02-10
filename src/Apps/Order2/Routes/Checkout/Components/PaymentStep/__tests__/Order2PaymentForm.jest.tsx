@@ -271,6 +271,7 @@ describe("Order2PaymentForm", () => {
       code: "TEST-ORDER-123",
       mode: "BUY",
       source: "ARTWORK_PAGE",
+      currencyCode: "USD",
       availablePaymentMethods: [
         "CREDIT_CARD",
         "US_BANK_ACCOUNT",
@@ -291,7 +292,7 @@ describe("Order2PaymentForm", () => {
         {
           artwork: {
             href: "/artwork/test-artwork",
-            artworkMeta: {
+            meta: {
               share: "Check out Test Artwork by Test Artist",
             },
           },

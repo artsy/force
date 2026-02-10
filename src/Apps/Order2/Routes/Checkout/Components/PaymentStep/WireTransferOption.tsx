@@ -2,24 +2,37 @@ import ReceiptIcon from "@artsy/icons/ReceiptIcon"
 import { Box, Flex, Spacer, Text } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import { Collapse } from "Apps/Order/Components/Collapse"
+import { ORDER_SUPPORT_EMAIL } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { FadeInBox } from "Components/FadeInBox"
 import { RouterLink } from "System/Components/RouterLink"
+import { getENV } from "Utils/getENV"
+import type { WireTransferOption_order$key } from "__generated__/WireTransferOption_order.graphql"
 import type React from "react"
+import { graphql, useFragment } from "react-relay"
 import styled from "styled-components"
 
 interface WireTransferOptionProps {
   isSelected: boolean
-  wireEmailSubject: string | null
-  wireEmailBody: string | null
+  order: WireTransferOption_order$key
   onSelect: () => void
 }
 
+const APP_URL = getENV("APP_URL")
+
 export const WireTransferOption: React.FC<WireTransferOptionProps> = ({
   isSelected,
-  wireEmailSubject,
-  wireEmailBody,
+  order: orderKey,
   onSelect,
 }) => {
+  const order = useFragment(ORDER_FRAGMENT, orderKey)
+
+  const emailSubject = `Wire transfer inquiry (CODE #${order.code})`
+
+  const artworkInfo = order.lineItems[0]?.artwork?.meta?.share?.slice(10) // Removing "Check out " from the share metadata
+  const artworkUrl = APP_URL + order.lineItems[0]?.artwork?.href
+  const emailBody = `Hello,\n\nI'm interested in paying by wire transfer and would like some assistance.\n\n${artworkInfo} on Artsy: ${artworkUrl}`
+
+  const mailtoLink = `mailto:${ORDER_SUPPORT_EMAIL}?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`
   return (
     <FadeInBox>
       <Box
@@ -59,10 +72,7 @@ export const WireTransferOption: React.FC<WireTransferOptionProps> = ({
 
           <Text color="mono100" variant="sm" ml="50px">
             You can contact{" "}
-            <RouterLink
-              inline
-              to={`mailto:orders@artsy.net?subject=${wireEmailSubject}&body=${wireEmailBody}`}
-            >
+            <RouterLink inline to={mailtoLink}>
               orders@artsy.net
             </RouterLink>{" "}
             with any questions.
@@ -93,5 +103,19 @@ const HoverFlex = styled(Flex)`
 
   &:hover ${HoverIcon} svg {
     fill: ${themeGet("colors.mono100")};
+  }
+`
+
+const ORDER_FRAGMENT = graphql`
+  fragment WireTransferOption_order on Order {
+    code
+    lineItems {
+      artwork {
+        href
+        meta {
+          share
+        }
+      }
+    }
   }
 `
