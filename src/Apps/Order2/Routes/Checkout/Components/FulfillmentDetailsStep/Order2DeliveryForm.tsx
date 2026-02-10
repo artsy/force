@@ -77,7 +77,7 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
     checkoutTracking,
     setFulfillmentDetailsComplete,
     setUserAddressMode,
-    setStepErrorMessage,
+    setSectionErrorMessage,
     messages,
   } = checkoutContext
 
@@ -247,8 +247,8 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
           throw new LocalCheckoutError("no_shipping_options")
         }
 
-        setStepErrorMessage({
-          step: CheckoutStepName.FULFILLMENT_DETAILS,
+        setSectionErrorMessage({
+          section: CheckoutStepName.FULFILLMENT_DETAILS,
           error: null,
         })
 
@@ -263,8 +263,8 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
             error?.code,
           ),
           error =>
-            setStepErrorMessage({
-              step: CheckoutStepName.FULFILLMENT_DETAILS,
+            setSectionErrorMessage({
+              section: CheckoutStepName.FULFILLMENT_DETAILS,
               error,
             }),
         )
@@ -279,7 +279,7 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
       saveAddressToUser,
       setCheckoutMode,
       setFulfillmentDetailsComplete,
-      setStepErrorMessage,
+      setSectionErrorMessage,
       setUserAddressMode,
       unsetOrderFulfillmentOption,
       setOrderDeliveryAddressMutation,

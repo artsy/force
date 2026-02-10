@@ -48,12 +48,29 @@ const mockSetExpressCheckoutLoaded = jest.fn()
 const mockSetShowOrderSubmittingSpinner = jest.fn()
 const mockSetCheckoutMode = jest.fn()
 const mockSetConfirmationToken = jest.fn()
+
+const mockMessages = {
+  EXPRESS_CHECKOUT: { error: null },
+  FULFILLMENT_DETAILS: { error: null },
+  DELIVERY_OPTION: { error: null },
+  PAYMENT: { error: null },
+  OFFER_AMOUNT: { error: null },
+  CONFIRMATION: { error: null },
+}
+
+const mockSetSectionErrorMessage = jest.fn(({ section, error }) => {
+  mockMessages[section] = { error }
+  mockCheckoutContext.messages = { ...mockMessages }
+})
+
 const mockCheckoutContext = {
   setExpressCheckoutLoaded: mockSetExpressCheckoutLoaded,
   setExpressCheckoutSubmitting: mockSetShowOrderSubmittingSpinner,
   redirectToOrderDetails: mockRedirectToOrderDetails,
   setCheckoutMode: mockSetCheckoutMode,
   setConfirmationToken: mockSetConfirmationToken,
+  setSectionErrorMessage: mockSetSectionErrorMessage,
+  messages: { ...mockMessages },
 } as any
 
 jest.mock("Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext", () => ({
@@ -182,6 +199,13 @@ describe("ExpressCheckoutUI", () => {
     jest.clearAllMocks()
     mockTracking.mockImplementation(() => ({ trackEvent }))
     trackEvent.mockClear()
+    // Reset messages
+    mockMessages.EXPRESS_CHECKOUT = { error: null }
+    mockMessages.FULFILLMENT_DETAILS = { error: null }
+    mockMessages.DELIVERY_OPTION = { error: null }
+    mockMessages.PAYMENT = { error: null }
+    mockMessages.OFFER_AMOUNT = { error: null }
+    mockMessages.CONFIRMATION = { error: null }
     locationDescriptor = Object.getOwnPropertyDescriptor(window, "location")
     Object.defineProperty(window, "location", {
       configurable: true,
@@ -624,9 +648,6 @@ describe("ExpressCheckoutUI", () => {
       const mockErrorRef = { current: "test_error_code" }
       jest.spyOn(React, "useRef").mockReturnValue(mockErrorRef)
 
-      // Set checkout mode to express before rendering
-      mockCheckoutContext.checkoutMode = "express"
-
       const { mockResolveLastOperation } = renderWithRelay({
         Order: () => ({ ...orderData }),
       })
@@ -654,10 +675,15 @@ describe("ExpressCheckoutUI", () => {
 
       await flushPromiseQueue()
 
-      // Error banner should be displayed
-      await waitFor(() => {
-        expect(screen.getByText("An error occurred")).toBeInTheDocument()
-      })
+      // Verify error was set for the express checkout section
+      expect(mockSetSectionErrorMessage).toHaveBeenCalledWith(
+        expect.objectContaining({
+          section: "EXPRESS_CHECKOUT",
+          error: expect.objectContaining({
+            title: "An error occurred",
+          }),
+        }),
+      )
     })
   })
 
@@ -712,9 +738,6 @@ describe("ExpressCheckoutUI", () => {
         Order: () => ({ ...orderData }),
       })
 
-      // Set checkout mode to express
-      mockCheckoutContext.checkoutMode = "express"
-
       fireEvent.click(screen.getByTestId("express-checkout-cancel"))
 
       // Resolve the mutations
@@ -738,10 +761,15 @@ describe("ExpressCheckoutUI", () => {
 
       await flushPromiseQueue()
 
-      // Error banner should display payment failed message
-      await waitFor(() => {
-        expect(screen.getByText("Payment failed")).toBeInTheDocument()
-      })
+      // Verify error was set for the express checkout section with payment failed message
+      expect(mockSetSectionErrorMessage).toHaveBeenCalledWith(
+        expect.objectContaining({
+          section: "EXPRESS_CHECKOUT",
+          error: expect.objectContaining({
+            title: "Payment failed",
+          }),
+        }),
+      )
     })
 
     it("shows fallback message for unhandled errors", async () => {
@@ -752,9 +780,6 @@ describe("ExpressCheckoutUI", () => {
         Order: () => ({ ...orderData }),
       })
 
-      // Set checkout mode to express
-      mockCheckoutContext.checkoutMode = "express"
-
       fireEvent.click(screen.getByTestId("express-checkout-cancel"))
 
       // Resolve the mutations
@@ -778,10 +803,15 @@ describe("ExpressCheckoutUI", () => {
 
       await flushPromiseQueue()
 
-      // Error banner should display fallback message
-      await waitFor(() => {
-        expect(screen.getByText("An error occurred")).toBeInTheDocument()
-      })
+      // Verify error was set for the express checkout section with fallback message
+      expect(mockSetSectionErrorMessage).toHaveBeenCalledWith(
+        expect.objectContaining({
+          section: "EXPRESS_CHECKOUT",
+          error: expect.objectContaining({
+            title: "An error occurred",
+          }),
+        }),
+      )
     })
   })
 })

@@ -89,7 +89,6 @@ export const Order2ExpressCheckoutUI: React.FC<
 
   const [expressCheckoutType, setExpressCheckoutType] =
     useState<ExpressPaymentType | null>(null)
-  const [error, setError] = useState<CheckoutErrorBannerMessage | null>(null)
 
   const errorRef = useRef<string | null>(null)
 
@@ -98,11 +97,21 @@ export const Order2ExpressCheckoutUI: React.FC<
     redirectToOrderDetails,
     setExpressCheckoutSubmitting,
     expressCheckoutSubmitting,
-    checkoutMode,
     setCheckoutMode,
     checkoutTracking,
     setConfirmationToken,
+    setSectionErrorMessage,
+    messages,
   } = useCheckoutContext()
+
+  const error = messages["EXPRESS_CHECKOUT"]?.error
+
+  const unsetStepError = () => {
+    setSectionErrorMessage({
+      section: "EXPRESS_CHECKOUT",
+      error: null,
+    })
+  }
 
   if (!(stripe && elements)) {
     return null
@@ -252,7 +261,10 @@ export const Order2ExpressCheckoutUI: React.FC<
       if (errorCode) {
         const errorBannerProps =
           expressCheckoutErrorBannerPropsForCode(errorCode)
-        setError(errorBannerProps)
+        setSectionErrorMessage({
+          section: "EXPRESS_CHECKOUT",
+          error: errorBannerProps,
+        })
       }
     } catch (error) {
       logger.error("Error resetting order", error)
@@ -266,6 +278,7 @@ export const Order2ExpressCheckoutUI: React.FC<
   }: StripeExpressCheckoutElementClickEvent) => {
     setCheckoutMode("express")
     setExpressCheckoutType(expressPaymentType)
+    unsetStepError() // Clear any previous errors
 
     checkoutTracking.clickedExpressCheckout({
       walletType: expressPaymentType,
@@ -305,6 +318,10 @@ export const Order2ExpressCheckoutUI: React.FC<
     }
 
     if (!expressCheckoutSubmitting) {
+      // Clear any displayed errors when manually canceling
+      if (!errorCode) {
+        unsetStepError()
+      }
       await resetOrder(errorCode || undefined)
     } else {
       setExpressCheckoutType(null)
@@ -549,7 +566,7 @@ export const Order2ExpressCheckoutUI: React.FC<
     <Box>
       <SectionHeading>Express checkout</SectionHeading>
       <Spacer y={[1, 1, 2]} />
-      {error && checkoutMode === "express" && (
+      {error && (
         <>
           <CheckoutErrorBanner
             error={error}
