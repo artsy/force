@@ -1,4 +1,5 @@
 import type {
+  CheckoutSection,
   CheckoutStep,
   ExpressCheckoutPaymentMethod,
   FulfillmentDetailsTab,
@@ -52,7 +53,7 @@ type ConfirmationTokenState = {
 } | null
 
 type Messages = Partial<
-  Record<CheckoutStepName, { error: CheckoutErrorBannerMessage | null }>
+  Record<CheckoutSection, { error: CheckoutErrorBannerMessage | null }>
 >
 
 export interface Order2CheckoutModel {
@@ -99,10 +100,10 @@ export interface Order2CheckoutModel {
   redirectToOrderDetails: Action<this>
   setCheckoutMode: Action<this, CheckoutMode>
   setUserAddressMode: Action<this, UserAddressMode | null>
-  setStepErrorMessage: Action<
+  setSectionErrorMessage: Action<
     this,
     {
-      step: CheckoutStepName
+      section: CheckoutSection
       error: CheckoutErrorBannerMessage | null | undefined
     }
   >
@@ -466,10 +467,10 @@ export const Order2CheckoutContext: ReturnType<
     state.router.replace(orderDetailsURL)
   }),
 
-  setStepErrorMessage: action((state, { step, error }) => {
+  setSectionErrorMessage: action((state, { section, error }) => {
     state.messages = {
       ...state.messages,
-      [step]: { error },
+      [section]: { error },
     }
   }),
 }))
