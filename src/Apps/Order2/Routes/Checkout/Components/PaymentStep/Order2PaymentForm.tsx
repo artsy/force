@@ -72,48 +72,15 @@ const defaultBillingAddress = {
   country: "US",
 }
 
-const getTotalForPayment = (
-  orderData: Order2PaymentForm_order$data,
-): { minor: number; currencyCode: string } | null => {
-  const { mode, itemsTotal, pendingOffer } = orderData
-
-  if (mode === "BUY" && itemsTotal) {
-    return itemsTotal
-  }
-
-  if (mode === "OFFER") {
-    const totalLine = pendingOffer?.pricingBreakdownLines?.find(
-      line => line?.amount?.amount != null,
-    )
-
-    if (totalLine?.amount?.amount) {
-      return {
-        minor: Math.round(Number.parseFloat(totalLine.amount.amount) * 100),
-        currencyCode: totalLine.amount.currencyCode,
-      }
-    }
-
-    // In case we're missing shipping information (required for totalLine)
-    // default to the offer amount
-    if (pendingOffer?.amount?.amount) {
-      return {
-        minor: Math.round(Number.parseFloat(pendingOffer.amount.amount) * 100),
-        currencyCode: pendingOffer.amount.currencyCode,
-      }
-    }
-  }
-
-  return null
-}
-
 const getBaseStripeOptions = (
   mode: Order2PaymentForm_order$data["mode"],
-  total: { minor: number; currencyCode: string },
   merchantAccountExternalId: string | undefined,
+  currencyCode: string,
+  amount?: number,
   availablePaymentMethodTypes?: ReadonlyArray<string> | null,
 ) => {
   const sharedOptions = {
-    currency: total.currencyCode.toLowerCase(),
+    currency: currencyCode.toLowerCase(),
     setupFutureUsage: "off_session" as const,
     captureMethod: "automatic" as const,
     onBehalfOf: merchantAccountExternalId,
@@ -136,7 +103,7 @@ const getBaseStripeOptions = (
     ? {
         ...sharedOptions,
         mode: "payment" as const,
-        amount: total.minor,
+        amount: amount,
       }
     : {
         ...sharedOptions,
@@ -156,11 +123,15 @@ export const Order2PaymentForm: React.FC<Order2PaymentFormProps> = ({
   const orderData = useFragment(ORDER_FRAGMENT, order)
   const meData = useFragment(ME_FRAGMENT, me)
   const stripe = useStripe()
-  const { seller, mode, availableStripePaymentMethodTypes } = orderData
+  const {
+    seller,
+    mode,
+    availableStripePaymentMethodTypes,
+    itemsTotal,
+    currencyCode,
+  } = orderData
 
-  const total = getTotalForPayment(orderData)
-
-  if (!total) {
+  if (mode === "BUY" && !itemsTotal) {
     return null
   }
 
@@ -168,8 +139,9 @@ export const Order2PaymentForm: React.FC<Order2PaymentFormProps> = ({
 
   const baseOptions = getBaseStripeOptions(
     mode,
-    total,
     seller?.merchantAccount?.externalId,
+    currencyCode,
+    itemsTotal?.minor,
     availableStripePaymentMethodTypes,
   )
 
@@ -335,15 +307,22 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
   const resetElementsToInitialParams = useCallback(() => {
     if (!elements) return
 
-    const total = getTotalForPayment(order)
-    if (!total) return
+    const {
+      mode,
+      availableStripePaymentMethodTypes,
+      currencyCode,
+      itemsTotal,
+    } = order
 
-    const { mode, availableStripePaymentMethodTypes } = order
+    if (mode === "BUY" && !itemsTotal) {
+      return null
+    }
 
     const options = getBaseStripeOptions(
       mode,
-      total,
       merchantAccountExternalId,
+      currencyCode,
+      itemsTotal?.minor,
       availableStripePaymentMethodTypes,
     )
 
@@ -884,25 +863,7 @@ const ORDER_FRAGMENT = graphql`
       result
       message
     }
-    pendingOffer {
-      amount {
-        amount
-        currencyCode
-      }
-      pricingBreakdownLines {
-        ... on TotalLine {
-          amount {
-            amount
-            currencyCode
-          }
-        }
-      }
-    }
     itemsTotal {
-      minor
-      currencyCode
-    }
-    buyerTotal {
       minor
       currencyCode
     }
