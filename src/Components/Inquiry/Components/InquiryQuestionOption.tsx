@@ -57,7 +57,14 @@ export const InquiryQuestionOption: React.FC<InquiryQuestionOptionProps> = ({
   }
 
   return (
-    <Flex flexDirection="column">
+    <Flex
+      flexDirection="column"
+      border="1px solid"
+      borderColor="mono10"
+      borderRadius={5}
+      p={2}
+      mb={1}
+    >
       <Checkbox selected={questionSelected} onSelect={setSelection}>
         <Text variant="sm" color="mono100">
           {question}
