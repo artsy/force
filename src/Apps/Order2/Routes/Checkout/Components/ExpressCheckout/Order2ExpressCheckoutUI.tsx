@@ -44,7 +44,7 @@ import type {
 } from "__generated__/useOrder2ExpressCheckoutSetFulfillmentOptionMutation.graphql"
 import type { OrderCreditCardWalletTypeEnum } from "__generated__/useOrder2ExpressCheckoutSetOrderPaymentMutation.graphql"
 import type React from "react"
-import { useEffect, useRef, useState } from "react"
+import { useRef, useState } from "react"
 import { graphql, useFragment, useRelayEnvironment } from "react-relay"
 import { useOrder2ExpressCheckoutSetFulfillmentOptionMutation } from "./Mutations/useOrder2ExpressCheckoutSetFulfillmentOptionMutation"
 import { useOrder2ExpressCheckoutSetOrderPaymentMutation } from "./Mutations/useOrder2ExpressCheckoutSetOrderPaymentMutation"
@@ -103,17 +103,6 @@ export const Order2ExpressCheckoutUI: React.FC<
     checkoutTracking,
     setConfirmationToken,
   } = useCheckoutContext()
-
-  useEffect(() => {
-    const storedErrorCode = sessionStorage.getItem("expressCheckoutError")
-
-    if (storedErrorCode) {
-      const errorBannerProps =
-        expressCheckoutErrorBannerPropsForCode(storedErrorCode)
-      setError(errorBannerProps)
-      sessionStorage.removeItem("expressCheckoutError")
-    }
-  }, [])
 
   if (!(stripe && elements)) {
     return null
@@ -237,7 +226,7 @@ export const Order2ExpressCheckoutUI: React.FC<
     }
   }
 
-  const resetOrder = async () => {
+  const resetOrder = async (errorCode?: string) => {
     window.removeEventListener("beforeunload", preventHardReload)
 
     try {
@@ -253,10 +242,21 @@ export const Order2ExpressCheckoutUI: React.FC<
 
       validateAndExtractOrderResponse(unsetOrderPaymentMethod?.orderOrError)
       validateAndExtractOrderResponse(unsetOrderFulfillmentOption?.orderOrError)
+
+      // Reset local state
+      setExpressCheckoutType(null)
+      setExpressCheckoutSubmitting(false)
+      setCheckoutMode("standard")
+
+      // Show error if provided
+      if (errorCode) {
+        const errorBannerProps =
+          expressCheckoutErrorBannerPropsForCode(errorCode)
+        setError(errorBannerProps)
+      }
     } catch (error) {
       logger.error("Error resetting order", error)
-    } finally {
-      window.location.reload()
+      setExpressCheckoutSubmitting(false)
     }
   }
 
@@ -295,21 +295,19 @@ export const Order2ExpressCheckoutUI: React.FC<
   }
 
   const handleCancel: HandleCancelCallback = async () => {
-    if (errorRef.current) {
-      // Store error code for display after reset - tracking happens when banner displays
-      sessionStorage.setItem("expressCheckoutError", errorRef.current)
+    const errorCode = errorRef.current
+    errorRef.current = null
 
-      errorRef.current = null
-    } else {
+    if (!errorCode) {
       checkoutTracking.clickedCancelExpressCheckout({
         walletType: expressCheckoutType as string,
       })
     }
 
-    setExpressCheckoutType(null)
-
     if (!expressCheckoutSubmitting) {
-      resetOrder()
+      await resetOrder(errorCode || undefined)
+    } else {
+      setExpressCheckoutType(null)
     }
   }
 
@@ -445,11 +443,8 @@ export const Order2ExpressCheckoutUI: React.FC<
           fullError: error,
         })
 
-        // Store error code for display after reset - tracking happens when banner displays
         const errorCode = (error.code || "confirmation_token_error") as string
-        sessionStorage.setItem("expressCheckoutError", errorCode)
-
-        resetOrder()
+        await resetOrder(errorCode)
         return
       }
 
@@ -527,11 +522,8 @@ export const Order2ExpressCheckoutUI: React.FC<
         fullError: error,
       })
 
-      // Store error code for display after reset - tracking happens when banner displays
       const errorCode = (error.code || "unknown_error") as string
-      sessionStorage.setItem("expressCheckoutError", errorCode)
-
-      resetOrder()
+      await resetOrder(errorCode)
     }
   }
 
