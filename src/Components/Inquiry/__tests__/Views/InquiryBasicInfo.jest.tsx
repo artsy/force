@@ -57,7 +57,9 @@ describe("InquiryBasicInfo", () => {
     })
 
     expect(
-      screen.getByText("Tell Example Partner a little bit about yourself."),
+      screen.getByText(
+        "Stand out and save time by sharing details with the gallery.",
+      ),
     ).toBeInTheDocument()
   })
 
@@ -82,7 +84,7 @@ describe("InquiryBasicInfo", () => {
     )
     fireEvent.change(input, { target: { value: "Collector" } })
 
-    screen.getByText("Save & Continue").click()
+    screen.getByText("Save Profile Details").click()
 
     await flushPromiseQueue()
 
@@ -131,7 +133,7 @@ describe("InquiryBasicInfo", () => {
       target: { value: "Artist" },
     })
 
-    screen.getByText("Save & Continue").click()
+    screen.getByText("Save Profile Details").click()
 
     await flushPromiseQueue()
 
