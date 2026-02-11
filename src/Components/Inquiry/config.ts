@@ -1,4 +1,5 @@
 import { WorkflowEngine } from "Utils/WorkflowEngine"
+import { DateTime } from "luxon"
 import { useEffect, useRef, useState } from "react"
 import type { Context } from "./Hooks/useInquiryContext"
 import { InquiryAccount } from "./Views/InquiryAccount"
@@ -42,7 +43,18 @@ export const useEngine = ({ context, onDone }: UseEngine) => {
       return (context.current?.userInterestsConnection?.totalCount ?? 0) > 0
     },
     wasRecentlyPromptedForCollection: () => {
-      return !!context.current?.collectorProfile?.lastUpdatePromptAt
+      const lastUpdatePromptAt =
+        context.current?.collectorProfile?.lastUpdatePromptAt
+
+      if (!lastUpdatePromptAt) {
+        return false
+      }
+
+      const lastPromptDate = DateTime.fromISO(lastUpdatePromptAt)
+      const now = DateTime.now()
+      const daysSincePrompt = now.diff(lastPromptDate, "days").days
+
+      return daysSincePrompt < 7
     },
   }
 
