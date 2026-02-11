@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<df0b4c314b01db216a2fe760de7ebde6>>
+ * @generated SignedSource<<140992eab6302cbb0889b10fc816d39b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -27,6 +27,8 @@ export type ArtistHeader_artist$data = {
       readonly width: number | null | undefined;
     } | null | undefined;
     readonly imageTitle: string | null | undefined;
+    readonly internalID: string;
+    readonly slug: string;
     readonly title: string | null | undefined;
   } | null | undefined;
   readonly formattedNationalityAndBirthday: string | null | undefined;
@@ -73,17 +75,24 @@ v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "name",
+  "name": "slug",
   "storageKey": null
 },
 v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "href",
   "storageKey": null
 },
-v3 = [
+v4 = [
   {
     "alias": null,
     "args": null,
@@ -99,14 +108,8 @@ return {
   "name": "ArtistHeader_artist",
   "selections": [
     (v0/*: any*/),
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "slug",
-      "storageKey": null
-    },
     (v1/*: any*/),
+    (v2/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -203,8 +206,8 @@ return {
           "plural": false,
           "selections": [
             (v0/*: any*/),
-            (v1/*: any*/),
             (v2/*: any*/),
+            (v3/*: any*/),
             {
               "alias": null,
               "args": null,
@@ -239,7 +242,7 @@ return {
                       "kind": "LinkedField",
                       "name": "cropped",
                       "plural": false,
-                      "selections": (v3/*: any*/),
+                      "selections": (v4/*: any*/),
                       "storageKey": "cropped(height:30,width:30)"
                     },
                     {
@@ -260,7 +263,7 @@ return {
                       "kind": "LinkedField",
                       "name": "cropped",
                       "plural": false,
-                      "selections": (v3/*: any*/),
+                      "selections": (v4/*: any*/),
                       "storageKey": "cropped(height:60,width:60)"
                     }
                   ],
@@ -283,6 +286,8 @@ return {
       "name": "coverArtwork",
       "plural": false,
       "selections": [
+        (v0/*: any*/),
+        (v1/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -297,7 +302,7 @@ return {
           "name": "imageTitle",
           "storageKey": null
         },
-        (v2/*: any*/),
+        (v3/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -348,6 +353,6 @@ return {
 };
 })();
 
-(node as any).hash = "c224dda436b4f73fca88cbeed8d625f6";
+(node as any).hash = "d9b240d9f05c56b63dd7827c84bd6c64";
 
 export default node;

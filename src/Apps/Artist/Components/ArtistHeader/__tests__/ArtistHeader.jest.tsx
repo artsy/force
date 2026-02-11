@@ -329,6 +329,46 @@ describe("ArtistHeaderFragmentContainer", () => {
 
       expect(screen.queryByRole("img")).not.toBeInTheDocument()
     })
+
+    it("tracks clicks on cover artwork image", () => {
+      renderWithRelay({
+        Artist: () => ({
+          name: "Pablo Picasso",
+          slug: "pablo-picasso",
+          internalID: "artist-id-123",
+          coverArtwork: {
+            internalID: "artwork-id-456",
+            slug: "pablo-picasso-les-demoiselles-davignon",
+            title: "Les Demoiselles d'Avignon",
+            imageTitle: "Les Demoiselles d'Avignon by Pablo Picasso",
+            href: "/artwork/pablo-picasso-les-demoiselles-davignon",
+            image: {
+              src: "https://example.com/image.jpg",
+              width: 400,
+              height: 300,
+            },
+          },
+        }),
+      })
+
+      const artworkLink = screen
+        .getByAltText("Les Demoiselles d'Avignon by Pablo Picasso")
+        .closest("a")
+      artworkLink?.click()
+
+      expect(trackEvent).toHaveBeenCalledWith(
+        expect.objectContaining({
+          action: "clickedArtistArtworkImage",
+          context_module: "artistHeader",
+          context_page_owner_type: "artist",
+          context_page_owner_id: "4d8b92b34eb68a1b2c0003f4",
+          context_page_owner_slug: "pablo-picasso",
+          destination_page_owner_type: "artwork",
+          destination_page_owner_id: "artwork-id-456",
+          destination_page_owner_slug: "pablo-picasso-les-demoiselles-davignon",
+        }),
+      )
+    })
   })
 
   describe("Verified representatives", () => {
