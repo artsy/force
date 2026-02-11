@@ -521,3 +521,21 @@ export const SettingsOrdersRowPlaceholder: FC<
     </Skeleton>
   )
 }
+
+export const SettingsOrdersDisplayErrorRow: FC = () => {
+  return (
+    <Box border="1px solid" borderColor="mono10">
+      <Box
+        display="flex"
+        bg="mono5"
+        justifyContent="space-between"
+        alignItems="center"
+        p={2}
+      >
+        <Text variant="sm-display" color="mono60" fontStyle="italic">
+          Legacy order that can not be displayed.
+        </Text>
+      </Box>
+    </Box>
+  )
+}

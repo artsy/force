@@ -10,7 +10,10 @@ import {
   createRefetchContainer,
   graphql,
 } from "react-relay"
-import { SettingsOrdersRowFragmentContainer } from "./SettingsOrdersRow"
+import {
+  SettingsOrdersRowFragmentContainer,
+  SettingsOrdersDisplayErrorRow,
+} from "Apps/Settings/Routes/Orders/Components/SettingsOrdersRow"
 
 export interface SettingsOrdersProps {
   me: SettingsOrders_me$data
@@ -114,12 +117,16 @@ const SettingsOrders: FC<React.PropsWithChildren<SettingsOrdersProps>> = ({
   return (
     <>
       <Join separator={<Spacer y={4} />}>
-        {orders.map(order => (
-          <SettingsOrdersRowFragmentContainer
-            key={order.internalID}
-            order={order}
-          />
-        ))}
+        {orders.map((order, index) =>
+          order ? (
+            <SettingsOrdersRowFragmentContainer
+              key={order.internalID}
+              order={order}
+            />
+          ) : (
+            <SettingsOrdersDisplayErrorRow key={`order-error-${index}`} />
+          ),
+        )}
       </Join>
 
       {pageCursors && (
