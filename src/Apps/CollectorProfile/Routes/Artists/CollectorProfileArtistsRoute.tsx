@@ -94,6 +94,7 @@ export const CollectorProfileArtistsRoute: FC<
           title="Select an artist"
           onClose={handleClose}
           onSuccess={() => {
+            handleClose()
             router.push({
               pathname: "/collector-profile/artists",
               query: { page: 1 },
