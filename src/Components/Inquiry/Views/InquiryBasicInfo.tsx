@@ -92,7 +92,11 @@ const InquiryBasicInfo: React.FC<
 
       await submitUpdateMyUserProfile(payload)
 
-      sendToast({ variant: "success", message: "Profile information saved." })
+      sendToast({
+        variant: "success",
+        message: "Profile details saved",
+        description: "Update your profile at any time in Settings.",
+      })
 
       const editedUserProfile: EditedUserProfile = {
         action: ActionType.editedUserProfile,
