@@ -10,9 +10,7 @@ import {
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { Order2ExpressCheckoutUI } from "Apps/Order2/Routes/Checkout/Components/ExpressCheckout/Order2ExpressCheckoutUI"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import createLogger from "Utils/logger"
-import type { Order2ExpressCheckoutQuery } from "__generated__/Order2ExpressCheckoutQuery.graphql"
 import type {
   Order2ExpressCheckout_order$data,
   Order2ExpressCheckout_order$key,
@@ -112,32 +110,3 @@ const FRAGMENT = graphql`
     }
   }
 `
-
-interface Order2ExpressCheckoutQueryRendererProps {
-  orderID: string
-}
-
-export const Order2ExpressCheckoutQueryRenderer: React.FC<
-  Order2ExpressCheckoutQueryRendererProps
-> = ({ orderID }) => {
-  return (
-    <SystemQueryRenderer<Order2ExpressCheckoutQuery>
-      query={graphql`
-        query Order2ExpressCheckoutQuery($orderID: ID!) {
-          me {
-            order(id: $orderID) {
-              ...Order2ExpressCheckout_order
-            }
-          }
-        }
-      `}
-      variables={{ orderID }}
-      render={({ props }) => {
-        if (props?.me?.order) {
-          return <Order2ExpressCheckout order={props.me.order} />
-        }
-        return null
-      }}
-    />
-  )
-}
