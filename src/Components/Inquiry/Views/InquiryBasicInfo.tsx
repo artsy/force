@@ -86,6 +86,8 @@ const InquiryBasicInfo: React.FC<
         location,
         profession: values.profession,
         otherRelevantPositions: values.otherRelevantPositions,
+        linkedIn: values.linkedIn,
+        instagram: values.instagram,
       }
 
       setContext(payload)
@@ -124,8 +126,8 @@ const InquiryBasicInfo: React.FC<
         locationSelected: true,
         profession: me?.profession ?? "",
         otherRelevantPositions: me?.otherRelevantPositions ?? "",
-        linkedIn: "",
-        instagram: "",
+        linkedIn: me?.collectorProfile?.linkedIn ?? "",
+        instagram: me?.collectorProfile?.instagram ?? "",
       }}
       validationSchema={editProfileVerificationSchema}
       validateOnBlur
@@ -293,6 +295,10 @@ export const InquiryBasicInfoFragmentContainer = createFragmentContainer(
         }
         otherRelevantPositions
         profession
+        collectorProfile {
+          instagram
+          linkedIn
+        }
       }
     `,
   },

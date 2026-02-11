@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1575e822ab5d4e59b200f36ec7e0995e>>
+ * @generated SignedSource<<7e08cf43503a9b989c4d525c46563333>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -195,6 +195,32 @@ return {
             "name": "profession",
             "storageKey": null
           },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "CollectorProfileType",
+            "kind": "LinkedField",
+            "name": "collectorProfile",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "instagram",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "linkedIn",
+                "storageKey": null
+              },
+              (v2/*: any*/)
+            ],
+            "storageKey": null
+          },
           (v2/*: any*/)
         ],
         "storageKey": null
@@ -202,7 +228,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "cae170ccd1a84499231ef3b0b294d564",
+    "cacheID": "ab19458edf53bec1b4b3d092d6f56bc1",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -227,6 +253,15 @@ return {
           "plural": false,
           "type": "Me"
         },
+        "me.collectorProfile": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "CollectorProfileType"
+        },
+        "me.collectorProfile.id": (v3/*: any*/),
+        "me.collectorProfile.instagram": (v4/*: any*/),
+        "me.collectorProfile.linkedIn": (v4/*: any*/),
         "me.id": (v3/*: any*/),
         "me.location": {
           "enumValues": null,
@@ -246,7 +281,7 @@ return {
     },
     "name": "InquiryBasicInfo_Test_Query",
     "operationKind": "query",
-    "text": "query InquiryBasicInfo_Test_Query {\n  artwork(id: \"example\") {\n    ...InquiryBasicInfo_artwork\n    id\n  }\n  me {\n    ...InquiryBasicInfo_me\n    id\n  }\n}\n\nfragment InquiryBasicInfo_artwork on Artwork {\n  partner {\n    name\n    id\n  }\n}\n\nfragment InquiryBasicInfo_me on Me {\n  name\n  location {\n    display\n    city\n    state\n    country\n    id\n  }\n  otherRelevantPositions\n  profession\n}\n"
+    "text": "query InquiryBasicInfo_Test_Query {\n  artwork(id: \"example\") {\n    ...InquiryBasicInfo_artwork\n    id\n  }\n  me {\n    ...InquiryBasicInfo_me\n    id\n  }\n}\n\nfragment InquiryBasicInfo_artwork on Artwork {\n  partner {\n    name\n    id\n  }\n}\n\nfragment InquiryBasicInfo_me on Me {\n  name\n  location {\n    display\n    city\n    state\n    country\n    id\n  }\n  otherRelevantPositions\n  profession\n  collectorProfile {\n    instagram\n    linkedIn\n    id\n  }\n}\n"
   }
 };
 })();

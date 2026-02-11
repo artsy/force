@@ -69,6 +69,10 @@ describe("InquiryBasicInfo", () => {
         location: null,
         name: "Example User",
         profession: null,
+        collectorProfile: {
+          instagram: "",
+          linkedIn: "",
+        },
       }),
     })
 
@@ -99,6 +103,8 @@ describe("InquiryBasicInfo", () => {
       },
       profession: "",
       otherRelevantPositions: "Collector",
+      linkedIn: "",
+      instagram: "",
     })
 
     expect(mockNext).toBeCalled()
@@ -113,6 +119,10 @@ describe("InquiryBasicInfo", () => {
           state: "NY",
         },
         name: "Example User",
+        collectorProfile: {
+          instagram: "",
+          linkedIn: "",
+        },
       }),
     })
 
@@ -148,6 +158,8 @@ describe("InquiryBasicInfo", () => {
       },
       profession: "Carpenter",
       otherRelevantPositions: "Artist",
+      linkedIn: "",
+      instagram: "",
     })
 
     expect(mockNext).toBeCalled()
