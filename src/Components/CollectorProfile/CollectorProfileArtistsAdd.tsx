@@ -25,6 +25,7 @@ import type {
   UserInterestInterestType,
 } from "__generated__/CollectorProfileArtistsAddCreateUserInterestsMutation.graphql"
 import type { CollectorProfileArtistsAddQuery } from "__generated__/CollectorProfileArtistsAddQuery.graphql"
+import { useRouter } from "found"
 import { type FC, useRef, useState } from "react"
 import { type Environment, graphql } from "react-relay"
 
@@ -39,6 +40,8 @@ interface CollectorProfileArtistsAddProps {
 export const CollectorProfileArtistsAdd: FC<
   React.PropsWithChildren<CollectorProfileArtistsAddProps>
 > = ({ description, onCancel, onSuccess, relayEnvironment }) => {
+  const { router } = useRouter()
+
   const [query, setQuery] = useState("")
 
   const { debouncedValue: debouncedQuery } = useDebouncedValue({
@@ -90,6 +93,11 @@ export const CollectorProfileArtistsAdd: FC<
       })
 
       await submitMutation({ variables: { input: { userInterests } } })
+
+      router.push({
+        pathname: "/collector-profile/artists",
+        query: { page: 1 },
+      })
 
       sendToast({
         variant: "success",
@@ -177,8 +185,9 @@ export const CollectorProfileArtistsAdd: FC<
 
         {debouncedQuery.length === 0 && (
           <Message>
-            Results will appear here as you search. Select an artist to add them
-            to your collection.
+            Select an artist to add them to your collection.
+            <br />
+            Results will appear here as you search.
           </Message>
         )}
 
