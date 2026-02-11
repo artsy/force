@@ -159,10 +159,15 @@ export const settingsRoutes: RouteProps[] = [
         onPreloadJS: () => {
           OrdersRoute.preload()
         },
+        prepareVariables: (_params, { location }) => {
+          return {
+            page: Number.parseInt(location.query.page, 10) || 1,
+          }
+        },
         query: graphql`
-          query settingsRoutes_OrdersRouteQuery {
+          query settingsRoutes_OrdersRouteQuery($page: Int) {
             me {
-              ...SettingsOrdersRoute_me
+              ...SettingsOrdersRoute_me @arguments(page: $page)
             }
           }
         `,
