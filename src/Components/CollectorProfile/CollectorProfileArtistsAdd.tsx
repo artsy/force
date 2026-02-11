@@ -19,6 +19,7 @@ import { useClientQuery } from "Utils/Hooks/useClientQuery"
 import { useDebouncedValue } from "Utils/Hooks/useDebounce"
 import { useMutation } from "Utils/Hooks/useMutation"
 import { extractNodes } from "Utils/extractNodes"
+import { wait } from "Utils/wait"
 import type {
   CollectorProfileArtistsAddCreateUserInterestsMutation,
   UserInterestCategory,
@@ -98,6 +99,8 @@ export const CollectorProfileArtistsAdd: FC<
         pathname: "/collector-profile/artists",
         query: { page: 1 },
       })
+
+      await wait(500)
 
       sendToast({
         variant: "success",
