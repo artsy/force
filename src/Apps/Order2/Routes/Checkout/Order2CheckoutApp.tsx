@@ -61,6 +61,7 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
     expressCheckoutSpinner,
     steps,
     checkoutTracking,
+    checkoutMode,
   } = useCheckoutContext()
 
   const { checkoutModalError, checkoutModalTitle, checkoutModalDescription } =
@@ -109,6 +110,13 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
         break
     }
   }, [activeStep?.name, checkoutTracking])
+
+  // Scroll to top when returning to standard checkout mode (and at load time)
+  useEffect(() => {
+    if (checkoutMode === "standard") {
+      window.scrollTo({ top: 0, behavior: "smooth" })
+    }
+  }, [checkoutMode])
 
   return (
     <>

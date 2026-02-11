@@ -102,6 +102,7 @@ export const Order2ExpressCheckoutUI: React.FC<
     setCheckoutMode,
     checkoutTracking,
     setConfirmationToken,
+    editFulfillmentDetails,
   } = useCheckoutContext()
 
   if (!(stripe && elements)) {
@@ -274,6 +275,8 @@ export const Order2ExpressCheckoutUI: React.FC<
     resolve,
   }: StripeExpressCheckoutElementClickEvent) => {
     setCheckoutMode("express")
+    // Manually go back to first buy now step to avoid ui glitches under the express checkout ui
+    editFulfillmentDetails()
     setExpressCheckoutType(expressPaymentType)
 
     checkoutTracking.clickedExpressCheckout({
