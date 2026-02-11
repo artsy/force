@@ -15,7 +15,7 @@ interface InquiryQuestionOptionProps {
 export enum InquiryQuestionIDs {
   Shipping = "shipping_quote",
   PriceAndAvailability = "price_and_availability",
-  ConditionAndProvance = "condition_and_provenance",
+  ConditionAndProvenance = "condition_and_provenance",
   SimilarWork = "similar_work",
   ArtistInformation = "artist_information",
   ArtworkInformation = "artwork_information",
