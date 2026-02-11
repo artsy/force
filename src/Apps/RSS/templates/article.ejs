@@ -4,8 +4,8 @@
   <link><%= appUrl %><%= article.href %></link>
   <dc:creator><%= article.byline %></dc:creator>
   <pubDate><%= new Date(article.publishedAt).toUTCString() %></pubDate>
-  <% if (article.thumbnailImage && article.thumbnailImage.resized) { %>
-    <enclosure url="<%= article.thumbnailImage.resized.src %>" length="0" type="image/jpeg" />
+  <% if (article.thumbnailImage && article.thumbnailImage.imageURL) { %>
+    <enclosure url="<%= article.thumbnailImage.imageURL %>" length="0" type="image/jpeg" />
   <% } %>
   <description>
     <![CDATA[

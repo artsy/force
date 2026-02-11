@@ -13,9 +13,7 @@ export const RSS_ARTICLES_QUERY = graphql`
           publishedAt
           thumbnailTitle
           thumbnailImage {
-            resized(width: 1100) {
-              src
-            }
+            imageURL
           }
           href
           byline
