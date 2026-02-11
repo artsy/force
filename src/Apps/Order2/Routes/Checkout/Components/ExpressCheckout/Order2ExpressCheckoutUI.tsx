@@ -1,5 +1,4 @@
 import { Box, Spacer, Text } from "@artsy/palette"
-import { SectionHeading } from "Apps/Order2/Components/SectionHeading"
 import {
   ExpressCheckoutElement,
   useElements,
@@ -21,6 +20,7 @@ import {
   type OrderMutationSuccess,
   validateAndExtractOrderResponse,
 } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
+import { SectionHeading } from "Apps/Order2/Components/SectionHeading"
 import type { ExpressCheckoutPaymentMethod } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import {
   CheckoutErrorBanner,
@@ -96,8 +96,8 @@ export const Order2ExpressCheckoutUI: React.FC<
   const {
     setExpressCheckoutLoaded,
     redirectToOrderDetails,
-    setExpressCheckoutSubmitting,
-    expressCheckoutSubmitting,
+    setExpressCheckoutSpinner,
+    expressCheckoutSpinner,
     checkoutMode,
     setCheckoutMode,
     checkoutTracking,
@@ -226,8 +226,18 @@ export const Order2ExpressCheckoutUI: React.FC<
     }
   }
 
-  const resetOrder = async (errorCode?: string) => {
+  const resetOrder = async (options?: {
+    errorCode?: string
+    submissionError?: boolean
+  }) => {
+    const { errorCode, submissionError = false } = options || {}
+
     window.removeEventListener("beforeunload", preventHardReload)
+
+    // Only show reset spinner if not preserving existing submit spinner
+    if (!submissionError) {
+      setExpressCheckoutSpinner("reset")
+    }
 
     try {
       const { unsetOrderPaymentMethod } =
@@ -243,11 +253,6 @@ export const Order2ExpressCheckoutUI: React.FC<
       validateAndExtractOrderResponse(unsetOrderPaymentMethod?.orderOrError)
       validateAndExtractOrderResponse(unsetOrderFulfillmentOption?.orderOrError)
 
-      // Reset local state
-      setExpressCheckoutType(null)
-      setExpressCheckoutSubmitting(false)
-      setCheckoutMode("standard")
-
       // Show error if provided
       if (errorCode) {
         const errorBannerProps =
@@ -256,7 +261,11 @@ export const Order2ExpressCheckoutUI: React.FC<
       }
     } catch (error) {
       logger.error("Error resetting order", error)
-      setExpressCheckoutSubmitting(false)
+    } finally {
+      // Reset local state
+      setExpressCheckoutType(null)
+      setCheckoutMode("standard")
+      setExpressCheckoutSpinner(null)
     }
   }
 
@@ -304,8 +313,8 @@ export const Order2ExpressCheckoutUI: React.FC<
       })
     }
 
-    if (!expressCheckoutSubmitting) {
-      await resetOrder(errorCode || undefined)
+    if (!expressCheckoutSpinner) {
+      await resetOrder({ errorCode: errorCode || undefined })
     } else {
       setExpressCheckoutType(null)
     }
@@ -382,7 +391,7 @@ export const Order2ExpressCheckoutUI: React.FC<
     shippingRate,
   }: StripeExpressCheckoutElementConfirmEvent) => {
     window.removeEventListener("beforeunload", preventHardReload)
-    setExpressCheckoutSubmitting(true)
+    setExpressCheckoutSpinner("submit")
 
     const creditCardWalletType =
       expressPaymentType.toUpperCase() as OrderCreditCardWalletTypeEnum
@@ -406,8 +415,13 @@ export const Order2ExpressCheckoutUI: React.FC<
       // Trigger form validation and wallet collection
       const { error: submitError } = await elements.submit()
       if (submitError) {
-        logger.error(submitError)
-        setExpressCheckoutSubmitting(false)
+        logger.error("stripe elements.submit() error", {
+          code: submitError.code,
+          message: submitError.message,
+          fullError: submitError,
+        })
+        const errorCode = (submitError.code || "submit_error") as string
+        await resetOrder({ errorCode, submissionError: true })
         return
       }
 
@@ -437,14 +451,14 @@ export const Order2ExpressCheckoutUI: React.FC<
       if (error) {
         // This point is only reached if there's an immediate error when
         // creating the ConfirmationToken (before payment submission).
-        logger.error("Stripe Error creating confirmation token", {
+        logger.error("stripe.createConfirmationToken() error", {
           errorCode: error.code,
           errorMessage: error.message,
           fullError: error,
         })
 
         const errorCode = (error.code || "confirmation_token_error") as string
-        await resetOrder(errorCode)
+        await resetOrder({ errorCode, submissionError: true })
         return
       }
 
@@ -523,7 +537,7 @@ export const Order2ExpressCheckoutUI: React.FC<
       })
 
       const errorCode = (error.code || "unknown_error") as string
-      await resetOrder(errorCode)
+      await resetOrder({ errorCode, submissionError: true })
     }
   }
 

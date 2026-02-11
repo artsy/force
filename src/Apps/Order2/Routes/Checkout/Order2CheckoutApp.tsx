@@ -8,9 +8,9 @@ import {
   Stack,
   breakpoints,
 } from "@artsy/palette"
-import { SubmittingOrderSpinner } from "Apps/Order/Components/SubmittingOrderSpinner"
 import { OrderErrorApp } from "Apps/Order2/Components/Order2ErrorApp"
 import { Order2HelpLinksWithInquiry } from "Apps/Order2/Components/Order2HelpLinks"
+import { Order2Spinner } from "Apps/Order2/Components/Order2Spinner"
 import {
   CheckoutStepName,
   CheckoutStepState,
@@ -58,7 +58,7 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
   const {
     isLoading,
     setExpressCheckoutLoaded,
-    expressCheckoutSubmitting,
+    expressCheckoutSpinner,
     steps,
     checkoutTracking,
   } = useCheckoutContext()
@@ -132,13 +132,15 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
         }}
       >
         <Column span={[12, 12, 6]} start={[1, 1, 2]}>
-          {expressCheckoutSubmitting && <SubmittingOrderSpinner />}
+          {expressCheckoutSpinner && (
+            <Order2Spinner state={expressCheckoutSpinner} />
+          )}
           <Box
             // Introduce padding with constrained single-column width at `sm` breakpoint
             maxWidth={["100%", breakpoints.sm, "100%"]}
             mx={[0, "auto", 0]}
             style={{
-              display: expressCheckoutSubmitting ? "none" : "block",
+              display: expressCheckoutSpinner ? "none" : "block",
             }}
           >
             <Stack gap={1}>
