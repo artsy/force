@@ -4,7 +4,6 @@ import type { Context } from "./Hooks/useInquiryContext"
 import { InquiryAccount } from "./Views/InquiryAccount"
 import { InquiryArtistsInCollection } from "./Views/InquiryArtistsInCollection"
 import { InquiryBasicInfoQueryRenderer } from "./Views/InquiryBasicInfo"
-import { InquiryConfirmation } from "./Views/InquiryConfirmation"
 import { InquiryInquiryQueryRenderer } from "./Views/InquiryInquiry"
 import { InquirySpecialist } from "./Views/InquirySpecialist"
 import { Visited } from "./Visited"
@@ -12,7 +11,6 @@ import { Visited } from "./Visited"
 const VIEWS = {
   Account: InquiryAccount,
   BasicInfo: InquiryBasicInfoQueryRenderer,
-  Confirmation: InquiryConfirmation,
   Inquiry: InquiryInquiryQueryRenderer,
   Specialist: InquirySpecialist,
   ArtistsInCollection: InquiryArtistsInCollection,
@@ -104,7 +102,14 @@ export const useEngine = ({ context, onDone }: UseEngine) => {
       return
     }
 
-    setCurrent(engine.current.next())
+    const nextView = engine.current.next()
+
+    if (nextView === "Confirmation") {
+      onDone()
+      return
+    }
+
+    setCurrent(nextView)
   }
 
   return {
