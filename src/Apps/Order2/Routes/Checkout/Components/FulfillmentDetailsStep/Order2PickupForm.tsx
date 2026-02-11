@@ -150,8 +150,8 @@ export const Order2PickupForm: React.FC<Order2PickupFormProps> = ({
         </Text>
       )}
       <Text variant="xs" color="mono60">
-        After the seller confirms your order, you'll be appointed an Artsy
-        specialist within 2 business days to handle pickup logistics.
+        After your order is confirmed, a specialist will contact you with
+        details on how to pick up the work.
       </Text>
       <Spacer y={[2, 2, 4]} />
       <Formik<PickupFormValues>
