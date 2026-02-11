@@ -1,8 +1,5 @@
 import { useArtworkInquiryRequest } from "Components/Inquiry/Hooks/useArtworkInquiryRequest"
-import {
-  DEFAULT_MESSAGE,
-  useInquiryContext,
-} from "Components/Inquiry/Hooks/useInquiryContext"
+import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
 import { InquirySpecialist } from "Components/Inquiry/Views/InquirySpecialist"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { useSystemContext } from "System/Hooks/useSystemContext"
@@ -137,7 +134,7 @@ describe("InquirySpecialist", () => {
         contactGallery: false,
         // TODO: Figure out why this state doesn't update within text (works in dev)
         // message: "Hello world.",
-        message: DEFAULT_MESSAGE,
+        message: "",
       })
 
       // Calls next
