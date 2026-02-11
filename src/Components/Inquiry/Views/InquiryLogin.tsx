@@ -15,6 +15,7 @@ import {
   Separator,
   Spacer,
   Text,
+  useToasts,
 } from "@artsy/palette"
 import { formatErrorMessage } from "Components/AuthDialog/Utils/formatErrorMessage"
 import { useArtworkInquiryRequest } from "Components/Inquiry/Hooks/useArtworkInquiryRequest"
@@ -53,6 +54,8 @@ export const InquiryLogin: React.FC<React.PropsWithChildren<unknown>> = () => {
     setRelayEnvironment,
   } = useInquiryContext()
   const { navigateTo } = useInquiryAccountContext()
+
+  const { sendToast } = useToasts()
 
   const [mode, setMode] = useState<Mode>("Pending")
 
@@ -102,7 +105,15 @@ export const InquiryLogin: React.FC<React.PropsWithChildren<unknown>> = () => {
       })
 
       setMode("Success")
+
       await wait(500)
+
+      sendToast({
+        variant: "success",
+        message: "Message sent",
+        description: "Expect a response within 1-3 business days.",
+      })
+
       next()
 
       const options: SuccessfullyLoggedIn = {
