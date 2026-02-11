@@ -252,6 +252,11 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
           error: null,
         })
 
+        setSectionErrorMessage({
+          section: "EXPRESS_CHECKOUT",
+          error: null,
+        })
+
         setFulfillmentDetailsComplete({})
         setUserAddressMode(null)
       } catch (error) {
