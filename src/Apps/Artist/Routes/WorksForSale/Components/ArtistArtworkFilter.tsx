@@ -35,18 +35,30 @@ interface ArtistArtworkFilterProps {
   match?: Match
 }
 
-const ArtistArtworkFilter: React.FC<
+const FALLBACK_COUNTS: Counts = {
+  for_sale_artworks: 0,
+  ecommerce_artworks: 0,
+  auction_artworks: 0,
+  artworks: 0,
+  has_make_offer_artworks: false,
+}
+
+const FALLBACK_RELAY = {
+  // The fallback never executes refetches; this is only to satisfy BaseArtworkFilter’s relay contract.
+  refetch: (_variables, _renderVariables, _observerOrCallback) => {
+    return {
+      dispose: () => {},
+    }
+  },
+} as RelayRefetchProp
+
+export const ArtistArtworkFilter: React.FC<
   React.PropsWithChildren<ArtistArtworkFilterProps>
 > = props => {
   const { userPreferences } = useSystemContext()
   const { match } = useRouter()
   const { relay, aggregations, artist } = props
-  const { filtered_artworks } = artist
-  const hasFilter = filtered_artworks && filtered_artworks.id
-
-  if (!hasFilter) {
-    return null
-  }
+  const counts = (artist.counts as Counts | null | undefined) ?? FALLBACK_COUNTS
 
   const savedSearchEntity: SavedSearchEntity = {
     owner: {
@@ -69,7 +81,7 @@ const ArtistArtworkFilter: React.FC<
     <>
       <ArtworkFilterContextProvider
         aggregations={aggregations}
-        counts={artist.counts as Counts}
+        counts={counts}
         filters={match.location.query}
         sortOptions={[
           { value: "-decayed_merch", text: "Recommended" },
@@ -104,6 +116,32 @@ const ArtistArtworkFilter: React.FC<
         </ArtworkFilterAlertContextProvider>
       </ArtworkFilterContextProvider>
     </>
+  )
+}
+
+const ArtistArtworkFilterErrorFallback: FC<{ id: string }> = ({ id }) => {
+  const { match } = useRouter()
+
+  const artistSlug =
+    typeof match.params.artistID === "string" ? match.params.artistID : ""
+
+  const fallbackArtist = {
+    id: `artist-artwork-filter-fallback:${id}`,
+    internalID: id,
+    name: "Unknown",
+    slug: artistSlug,
+    counts: FALLBACK_COUNTS,
+    filtered_artworks: null,
+  } as ArtistArtworkFilter_artist$data
+
+  // Keep the filter shell mounted on API validation errors so the user can still
+  // see/clear the invalid URL-driven filter state instead of hitting a null render.
+  return (
+    <ArtistArtworkFilter
+      artist={fallbackArtist}
+      aggregations={[]}
+      relay={FALLBACK_RELAY}
+    />
   )
 }
 
@@ -206,7 +244,7 @@ export const ArtistArtworkFilterQueryRenderer: FC<
             error,
           )
 
-          return null
+          return <ArtistArtworkFilterErrorFallback id={id} />
         }
 
         if (!props || !props.artist) {
