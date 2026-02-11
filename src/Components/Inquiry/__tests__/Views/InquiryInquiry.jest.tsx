@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react"
+import { render, screen, fireEvent } from "@testing-library/react"
 import { useArtworkInquiryRequest } from "Components/Inquiry/Hooks/useArtworkInquiryRequest"
 import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
 import { InquiryInquiryQueryRenderer } from "Components/Inquiry/Views/InquiryInquiry"
@@ -62,7 +62,7 @@ describe("InquiryInquiry", () => {
     mockSetContext.mockReset()
   })
 
-  it("shows error and disables button when message is empty and no questions selected", () => {
+  it("shows error after submit attempt when message is empty and no questions selected", () => {
     ;(useInquiryContext as jest.Mock).mockImplementation(() => ({
       next: mockNext,
       setInquiry: mockSetInquiry,
@@ -74,12 +74,21 @@ describe("InquiryInquiry", () => {
 
     render(<InquiryInquiryQueryRenderer />)
 
+    // Error should not show initially
+    expect(
+      screen.queryByText(
+        "Please enter a message or select at least one option.",
+      ),
+    ).not.toBeInTheDocument()
+
+    // Submit the form
+    const button = screen.getByRole("button", { name: "Send" })
+    fireEvent.click(button)
+
+    // Error should now show after submit attempt
     expect(
       screen.getByText("Please enter a message or select at least one option."),
     ).toBeInTheDocument()
-
-    const button = screen.getByRole("button", { name: "Send" })
-    expect(button).toBeDisabled()
   })
 
   it("does not show error when message has content", () => {

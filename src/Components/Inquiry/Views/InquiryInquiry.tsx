@@ -42,6 +42,7 @@ const InquiryInquiry: React.FC<
     useInquiryContext()
 
   const [mode, setMode] = useState<Mode>("Pending")
+  const [hasAttemptedSubmit, setHasAttemptedSubmit] = useState(false)
 
   const { submitArtworkInquiryRequest } = useArtworkInquiryRequest()
 
@@ -55,6 +56,14 @@ const InquiryInquiry: React.FC<
 
   const handleSubmit = async (event: React.FormEvent<HTMLElement>) => {
     event.preventDefault()
+    setHasAttemptedSubmit(true)
+
+    const isInvalid =
+      questions?.length === 0 && inquiry.message.trim().length === 0
+
+    if (isInvalid) {
+      return
+    }
 
     // If the user is logged out we just go to the next view which should
     // be the authentication step. The inquiry gets sent after login or sign up.
@@ -93,8 +102,10 @@ const InquiryInquiry: React.FC<
     ["Error"]: "Error",
   }[mode]
 
-  const showErrorMessage =
+  const isFormInvalid =
     questions?.length === 0 && inquiry.message.trim().length === 0
+
+  const showErrorMessage = hasAttemptedSubmit && isFormInvalid
 
   return (
     <Box as="form" onSubmit={handleSubmit}>
@@ -185,7 +196,7 @@ const InquiryInquiry: React.FC<
         display="block"
         width="100%"
         loading={mode === "Sending"}
-        disabled={mode === "Success" || showErrorMessage}
+        disabled={mode === "Success"}
       >
         {label}
       </Button>
