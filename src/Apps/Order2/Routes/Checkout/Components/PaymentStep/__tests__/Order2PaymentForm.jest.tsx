@@ -278,7 +278,7 @@ describe("Order2PaymentForm", () => {
         "WIRE_TRANSFER",
       ],
       availableStripePaymentMethodTypes: ["card", "us_bank_account"],
-      itemsTotal: {
+      buyerTotal: {
         minor: 100000,
         currencyCode: "USD",
       },
