@@ -7,20 +7,23 @@ import {
 import {
   Button,
   Input,
+  LabeledInput,
   Skeleton,
   SkeletonText,
+  Spacer,
   Stack,
   Text,
   useToasts,
 } from "@artsy/palette"
+import { editProfileVerificationSchema } from "Apps/CollectorProfile/Utils/ValidationSchemas"
 import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
 import { useUpdateMyUserProfile } from "Components/Inquiry/Hooks/useUpdateMyUserProfile"
 import { logger } from "Components/Inquiry/util"
 import {
   type Location,
   LocationAutocompleteInput,
-  normalizePlace,
   type Place,
+  normalizePlace,
 } from "Components/LocationAutocompleteInput"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
@@ -31,20 +34,11 @@ import type { InquiryBasicInfo_me$data } from "__generated__/InquiryBasicInfo_me
 import { Form, Formik } from "formik"
 import { type Environment, createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import * as Yup from "yup"
 
 interface InquiryBasicInfoProps {
   artwork: InquiryBasicInfo_artwork$data
   me: InquiryBasicInfo_me$data | null | undefined
 }
-
-const inquiryBasicInfoValidationSchema = Yup.object().shape({
-  locationSelected: Yup.boolean().test(
-    "location-selected",
-    "Please select a city from the dropdown",
-    value => value === true,
-  ),
-})
 
 const InquiryBasicInfo: React.FC<
   React.PropsWithChildren<InquiryBasicInfoProps>
@@ -126,8 +120,10 @@ const InquiryBasicInfo: React.FC<
         locationSelected: true,
         profession: me?.profession ?? "",
         otherRelevantPositions: me?.otherRelevantPositions ?? "",
+        linkedIn: "",
+        instagram: "",
       }}
-      validationSchema={inquiryBasicInfoValidationSchema}
+      validationSchema={editProfileVerificationSchema}
       validateOnBlur
     >
       {({
@@ -142,11 +138,10 @@ const InquiryBasicInfo: React.FC<
         touched,
       }) => {
         return (
-          <Stack as={Form} gap={4}>
+          <Form>
             <Stack gap={2}>
               <Text variant="lg-display" pr={2}>
-                Tell {artwork.partner?.name ?? "us"} a little bit about
-                yourself.
+                Stand out and save time by sharing details with the gallery.
               </Text>
 
               <Input
@@ -198,7 +193,33 @@ const InquiryBasicInfo: React.FC<
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
+
+              <Input
+                title="LinkedIn"
+                placeholder="LinkedIn handle"
+                name="linkedIn"
+                maxLength={256}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.linkedIn}
+                error={touched.linkedIn && errors.linkedIn}
+              />
+
+              <LabeledInput
+                title="Instagram"
+                placeholder="Instagram handle"
+                name="instagram"
+                maxLength={256}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.instagram}
+                error={touched.instagram && errors.instagram}
+                label="@"
+                variant="prefix"
+              />
             </Stack>
+
+            <Spacer y={4} />
 
             <Button
               type="submit"
@@ -206,9 +227,15 @@ const InquiryBasicInfo: React.FC<
               loading={isSubmitting}
               disabled={!isValid}
             >
-              Save & Continue
+              Save Profile Details
             </Button>
-          </Stack>
+
+            <Spacer y={1} />
+
+            <Text variant="xs" color="mono60" textAlign="center">
+              You can update your profile at any time in Settings.
+            </Text>
+          </Form>
         )
       }}
     </Formik>
@@ -314,4 +341,6 @@ interface InquiryBasicInfoInput {
   locationSelected: boolean
   profession: string
   otherRelevantPositions: string
+  linkedIn: string
+  instagram: string
 }
