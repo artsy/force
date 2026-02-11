@@ -102,6 +102,7 @@ export const Order2ExpressCheckoutUI: React.FC<
     setConfirmationToken,
     setSectionErrorMessage,
     messages,
+    editFulfillmentDetails,
   } = useCheckoutContext()
 
   const error = messages["EXPRESS_CHECKOUT"]?.error
@@ -286,6 +287,8 @@ export const Order2ExpressCheckoutUI: React.FC<
     resolve,
   }: StripeExpressCheckoutElementClickEvent) => {
     setCheckoutMode("express")
+    // Manually go back to first buy now step to avoid ui glitches under the express checkout ui
+    editFulfillmentDetails()
     setExpressCheckoutType(expressPaymentType)
     unsetStepError() // Clear any previous errors
 
