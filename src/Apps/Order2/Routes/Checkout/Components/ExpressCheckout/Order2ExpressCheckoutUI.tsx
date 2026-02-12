@@ -98,7 +98,6 @@ export const Order2ExpressCheckoutUI: React.FC<
     redirectToOrderDetails,
     setExpressCheckoutState,
     expressCheckoutState,
-    checkoutMode,
     setCheckoutMode,
     checkoutTracking,
     setConfirmationToken,
@@ -563,7 +562,7 @@ export const Order2ExpressCheckoutUI: React.FC<
     <Box>
       <SectionHeading>Express checkout</SectionHeading>
       <Spacer y={[1, 1, 2]} />
-      {error && checkoutMode === "express" && (
+      {error && (
         <>
           <CheckoutErrorBanner
             error={error}

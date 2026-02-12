@@ -706,6 +706,47 @@ describe("ExpressCheckoutUI", () => {
     expect(window.location.reload).not.toHaveBeenCalled()
   })
 
+  it("displays error after resetOrder changes checkoutMode to standard", async () => {
+    const mockErrorRef = { current: "test_error_code" }
+    jest.spyOn(React, "useRef").mockReturnValue(mockErrorRef)
+
+    // Don't set checkoutMode to "express" - it will be "standard" after resetOrder
+    const { mockResolveLastOperation } = renderWithRelay({
+      Order: () => ({ ...orderData }),
+    })
+
+    fireEvent.click(screen.getByTestId("express-checkout-cancel"))
+
+    // Resolve the mutations
+    await mockResolveLastOperation({
+      unsetOrderPaymentMethodPayload: () => ({
+        orderOrError: {
+          __typename: "OrderMutationSuccess",
+          order: orderData,
+        },
+      }),
+    })
+
+    await mockResolveLastOperation({
+      unsetOrderFulfillmentOptionPayload: () => ({
+        orderOrError: {
+          __typename: "OrderMutationSuccess",
+          order: orderData,
+        },
+      }),
+    })
+
+    await flushPromiseQueue()
+
+    // After resetOrder completes, checkoutMode is set to "standard"
+    expect(mockSetCheckoutMode).toHaveBeenCalledWith("standard")
+
+    // Error banner should still be displayed even though checkoutMode is "standard"
+    await waitFor(() => {
+      expect(screen.getByText("An error occurred")).toBeInTheDocument()
+    })
+  })
+
   describe("Error message handling by error code", () => {
     it("shows payment failed message for backend processing errors", async () => {
       const mockErrorRef = { current: "create_credit_card_failed" }
