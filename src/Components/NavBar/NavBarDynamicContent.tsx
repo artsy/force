@@ -1,10 +1,10 @@
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { NavBarItemLink } from "Components/NavBar/NavBarItem"
 import { NavBarDropdownPanelServer } from "Components/NavBar/NavBarDropdownPanelServer"
-import type { useNavigationGroupsQuery } from "__generated__/useNavigationGroupsQuery.graphql"
+import type { buildAppRoutesQuery } from "__generated__/buildAppRoutesQuery.graphql"
 
 interface NavBarDynamicContentProps {
-  navigationData?: useNavigationGroupsQuery["response"] | null
+  navigationData?: buildAppRoutesQuery["response"] | null
   onMenuEnter?: () => void
   handleClick?: (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void
   shouldTransition?: boolean

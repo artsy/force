@@ -42,6 +42,7 @@ import { NavBarMobileMenuNotificationsIndicatorQueryRenderer } from "./NavBarMob
 import { NavBarPrimaryLogo } from "./NavBarPrimaryLogo"
 import { NavBarSkipLink } from "./NavBarSkipLink"
 import { useNavBarHeight } from "./useNavBarHeight"
+import { getENV } from "Utils/getENV"
 
 /**
  * NOTE: Fresnel doesn't work correctly here because this is included
@@ -69,9 +70,7 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
   // Get navigation data from context (provided by buildAppRoutes query)
   const navigationData = useNavigationData()
 
-  const shouldUseServerNav =
-    typeof window !== "undefined" &&
-    (window as any).sd?.ENABLE_SERVER_DRIVEN_NAVIGATION
+  const shouldUseServerNav = getENV("ENABLE_SERVER_DRIVEN_NAVIGATION")
 
   const [mode, setMode] = useState<"Idle" | "Search" | "Profile" | "More">(
     "Idle",
@@ -496,6 +495,7 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
 
       {mode === "More" && (
         <NavBarMobileMenu
+          navigationData={navigationData}
           onClose={() => setMode("Idle")}
           isOpen
           onNavButtonClick={handleMobileNavClick}

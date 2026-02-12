@@ -21,8 +21,10 @@ import { NavBarMobileMenuNavigationProvider } from "./NavBarMobileMenuNavigation
 import { NavBarMobileMenuTransition } from "./NavBarMobileMenuTransition"
 import { NavBarMobileSubMenu } from "./NavBarMobileSubMenu"
 import { NavBarMobileMenuServer } from "./NavBarMobileMenuServer"
+import type { buildAppRoutesQuery } from "__generated__/buildAppRoutesQuery.graphql"
 
 interface NavBarMobileMenuProps {
+  navigationData?: buildAppRoutesQuery["response"] | null
   isOpen: boolean
   onClose: () => void
   onNavButtonClick?: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void
@@ -31,7 +33,13 @@ interface NavBarMobileMenuProps {
 
 export const NavBarMobileMenu: React.FC<
   React.PropsWithChildren<NavBarMobileMenuProps>
-> = ({ isOpen, onNavButtonClick, onClose, shouldUseServerNav }) => {
+> = ({
+  navigationData,
+  isOpen,
+  onNavButtonClick,
+  onClose,
+  shouldUseServerNav,
+}) => {
   const { isLoggedIn } = useSystemContext()
 
   const { downloadAppUrl } = useDeviceDetection()
@@ -92,7 +100,7 @@ export const NavBarMobileMenu: React.FC<
 
             {/* Feature flag: Server-driven vs Static sub-menus */}
             {shouldUseServerNav ? (
-              <NavBarMobileMenuServer />
+              <NavBarMobileMenuServer navigationData={navigationData} />
             ) : (
               <>
                 <NavBarMobileSubMenu menu={WHATS_NEW_SUBMENU_DATA.menu}>
