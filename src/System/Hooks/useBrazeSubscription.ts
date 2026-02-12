@@ -8,7 +8,7 @@ export const useBrazeSubscription = () => {
 
   useEffect(() => {
     if (!isLoggedIn) {
-      // If you want re-subscribe after logout/login in the same tab:
+      // Reset flag on logout to allow re-subscription if user logs back in
       hasSubscribed.current = false
       return
     }
