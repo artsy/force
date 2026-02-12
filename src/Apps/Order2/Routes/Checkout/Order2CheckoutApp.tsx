@@ -10,7 +10,6 @@ import {
 } from "@artsy/palette"
 import { OrderErrorApp } from "Apps/Order2/Components/Order2ErrorApp"
 import { Order2HelpLinksWithInquiry } from "Apps/Order2/Components/Order2HelpLinks"
-import { Order2Spinner } from "Apps/Order2/Components/Order2Spinner"
 import {
   CheckoutStepName,
   CheckoutStepState,
@@ -58,7 +57,7 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
   const {
     isLoading,
     setExpressCheckoutLoaded,
-    expressCheckoutSpinner,
+    expressCheckoutState,
     steps,
     checkoutTracking,
     checkoutMode,
@@ -118,6 +117,8 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
     }
   }, [checkoutMode])
 
+  const showLoadingSkeleton = isLoading || expressCheckoutState !== null
+
   return (
     <>
       <Title>Checkout | Artsy</Title>
@@ -129,27 +130,26 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
             : "width=device-width, initial-scale=1, maximum-scale=5 viewport-fit=cover"
         }
       />
-      {isLoading && <Order2CheckoutLoadingSkeleton order={orderData} />}
+      {showLoadingSkeleton && (
+        <Order2CheckoutLoadingSkeleton
+          order={orderData}
+          expressCheckoutState={expressCheckoutState}
+        />
+      )}
       <GridColumns
         px={[0, 0, 4]}
         // add vertical padding at `sm` instead of `md` because horizontal padding starts to appear
         // at [maxWidth=] breakpoints.sm
         py={[0, 4]}
         style={{
-          display: isLoading ? "none" : "grid",
+          display: showLoadingSkeleton ? "none" : "grid",
         }}
       >
         <Column span={[12, 12, 6]} start={[1, 1, 2]}>
-          {expressCheckoutSpinner && (
-            <Order2Spinner state={expressCheckoutSpinner} />
-          )}
           <Box
             // Introduce padding with constrained single-column width at `sm` breakpoint
             maxWidth={["100%", breakpoints.sm, "100%"]}
             mx={[0, "auto", 0]}
-            style={{
-              display: expressCheckoutSpinner ? "none" : "block",
-            }}
           >
             <Stack gap={1}>
               <Box display={["block", "block", "none"]}>
