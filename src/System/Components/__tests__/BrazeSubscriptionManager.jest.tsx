@@ -1,8 +1,7 @@
 import { render } from "@testing-library/react"
-import { BrazeSubscriptionManager } from "../BrazeSubscriptionManager"
 import { useBrazeSubscription } from "System/Hooks/useBrazeSubscription"
+import { BrazeSubscriptionManager } from "../BrazeSubscriptionManager"
 
-// Mock the hook
 jest.mock("System/Hooks/useBrazeSubscription")
 
 const mockUseBrazeSubscription = useBrazeSubscription as jest.Mock

@@ -1,9 +1,8 @@
 import { renderHook } from "@testing-library/react"
+import { subscribeToInAppMessagesByPath } from "Server/analytics/brazeMessagingIntegration"
 import { useBrazeSubscription } from "../useBrazeSubscription"
 import { useSystemContext } from "../useSystemContext"
-import { subscribeToInAppMessagesByPath } from "Server/analytics/brazeMessagingIntegration"
 
-// Mock dependencies
 jest.mock("../useSystemContext")
 jest.mock("Server/analytics/brazeMessagingIntegration")
 
