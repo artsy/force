@@ -45,9 +45,6 @@ export const DEFAULT_CONTEXT: Context = {
   collectorProfile: { lastUpdatePromptAt: null },
 }
 
-export const DEFAULT_MESSAGE =
-  "I'm interested in this piece and would like to learn more about it. Could you please provide additional details?"
-
 export interface InquiryState {
   message: string
   /** Discarded once user signs up or logs in */
@@ -83,7 +80,7 @@ const InquiryContext = createContext<{
   context: React.createRef<Context>(),
   current: "",
   engine: new WorkflowEngine({ workflow: [] }),
-  inquiry: { message: DEFAULT_MESSAGE },
+  inquiry: { message: "" },
   next: () => {},
   dispatchCreateAlert: () => {},
   onClose: () => {},
@@ -127,7 +124,7 @@ export const InquiryProvider: React.FC<
   }, [])
 
   const [inquiry, setInquiry] = useState<InquiryState>({
-    message: DEFAULT_MESSAGE,
+    message: "",
   })
 
   const handleClose = () => {

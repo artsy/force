@@ -1,4 +1,8 @@
-import { ActionType, type SentArtworkInquiry } from "@artsy/cohesion"
+import {
+  ActionType,
+  InquiryCheckboxLabel,
+  type SentArtworkInquiry,
+} from "@artsy/cohesion"
 import type {
   SubmitInquiryRequestMutationInput,
   useArtworkInquiryRequestMutation,
@@ -48,11 +52,21 @@ export const useArtworkInquiryRequest = () => {
             const inquiry = res.submitInquiryRequestMutation?.inquiryRequest
             const artwork = inquiry?.inquireable
 
+            const inquiryCheckboxes = questions
+              .map(q => q.questionID)
+              .filter((id): id is InquiryCheckboxLabel =>
+                Object.values(InquiryCheckboxLabel).includes(
+                  id as InquiryCheckboxLabel,
+                ),
+              )
+
             const options: SentArtworkInquiry = {
               action: ActionType.sentArtworkInquiry,
               artwork_id: artwork?.internalID as string,
               artwork_slug: artwork?.slug as string,
               inquiry_id: inquiry?.internalID as string,
+              inquiry_checkboxes:
+                inquiryCheckboxes.length > 0 ? inquiryCheckboxes : undefined,
               products: [
                 {
                   price: artwork?.price || COMPLETELY_MYSTERIOUS_PRICE_DEFAULT,

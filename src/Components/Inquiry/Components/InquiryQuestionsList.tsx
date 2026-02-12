@@ -18,7 +18,7 @@ export const InquiryQuestionsList: React.FC<InquiryQuestionsListProps> = ({
     <>
       <Text variant="sm">What information are you looking for?</Text>
       <Spacer y={1} />
-      <Flex flexDirection="column" gap={1} px={2}>
+      <Flex flexDirection="column">
         {inquiryQuestions.map(question => {
           if (!question) return null
 
@@ -31,7 +31,6 @@ export const InquiryQuestionsList: React.FC<InquiryQuestionsListProps> = ({
           )
         })}
       </Flex>
-      <Spacer y={2} />
     </>
   )
 }
