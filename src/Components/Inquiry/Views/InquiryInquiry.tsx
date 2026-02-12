@@ -2,8 +2,10 @@ import InfoIcon from "@artsy/icons/InfoIcon"
 import {
   Box,
   Button,
+  Expandable,
   Flex,
   Image,
+  Join,
   Separator,
   Skeleton,
   SkeletonBox,
@@ -12,7 +14,7 @@ import {
   Text,
   TextArea,
 } from "@artsy/palette"
-import { useFlag, useVariant } from "@unleash/proxy-client-react"
+import { useVariant } from "@unleash/proxy-client-react"
 import { InquiryQuestionsList } from "Components/Inquiry/Components/InquiryQuestionsList"
 import { useArtworkInquiryRequest } from "Components/Inquiry/Hooks/useArtworkInquiryRequest"
 import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
@@ -27,6 +29,7 @@ import type { InquiryInquiry_artwork$data } from "__generated__/InquiryInquiry_a
 import type * as React from "react"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+import { useArtworkDimensions } from "Apps/Artwork/useArtworkDimensions"
 
 const INQUIRY_CHECKBOXES_FLAG = "emerald_inquiry-checkboxes-on-web"
 
@@ -50,10 +53,6 @@ const InquiryInquiry: React.FC<
 
   const variant = useVariant(INQUIRY_CHECKBOXES_FLAG)
   const enableCheckboxes = variant.name === "experiment"
-
-  const collectorInquirySimplifiedLayout = useFlag(
-    "topaz_collector-inquiry-simplified-layout",
-  )
 
   useTrackFeatureVariantOnMount({
     experimentName: INQUIRY_CHECKBOXES_FLAG,
@@ -109,6 +108,22 @@ const InquiryInquiry: React.FC<
     questions?.length === 0 &&
     inquiry.message.trim().length === 0
 
+  const { dimensionsLabel } = useArtworkDimensions(artwork.dimensions)
+
+  const artworkDetailItems = [
+    { label: "Price", value: artwork.saleMessage },
+    { label: "Medium", value: artwork.category },
+    { label: "Materials", value: artwork.medium },
+    { label: "Classification", value: artwork.attributionClass?.name },
+    { label: "Dimensions", value: dimensionsLabel },
+    { label: "Signature", value: artwork.signatureInfo?.details },
+    { label: "Frame", value: artwork.framed?.details },
+    {
+      label: "Certificate of Authenticity",
+      value: artwork.certificateOfAuthenticity?.details,
+    },
+  ].filter(item => item.value != null && item.value !== "")
+
   return (
     <Box as="form" onSubmit={handleSubmit}>
       <Text variant="lg-display" mr={4}>
@@ -116,7 +131,7 @@ const InquiryInquiry: React.FC<
       </Text>
 
       <Separator my={2} />
-      {!collectorInquirySimplifiedLayout && user && (
+      {user && (
         <>
           <Text variant="sm-display" my={2}>
             <Box display="inline-block" width={60} color="mono60">
@@ -138,7 +153,8 @@ const InquiryInquiry: React.FC<
         </>
       )}
 
-      <Flex alignItems="center">
+      {/* Desktop */}
+      <Flex alignItems="center" display={["none", "flex"]}>
         <Image
           src={artwork.image?.resized?.src}
           srcSet={artwork.image?.resized?.srcSet}
@@ -151,11 +167,76 @@ const InquiryInquiry: React.FC<
         <Box flex={1} ml={2}>
           <Text variant="sm-display">{artwork.artist?.name}</Text>
 
-          <Text variant="sm-display">
+          <Text variant="sm-display" color="mono60">
             {artwork.title} ({artwork.date})
+          </Text>
+
+          <Text variant="sm-display" color="mono60" fontStyle="italic">
+            {artwork.partner?.name}
           </Text>
         </Box>
       </Flex>
+
+      {/* Mobile */}
+      {/* Margin top and bottom below are needed to offset Expandable's spacing */}
+      <Box display={["block", "none"]} mt={-2} mb={-1}>
+        <Expandable
+          label={
+            <Flex alignItems="center">
+              <Image
+                src={artwork.image?.resized?.src}
+                srcSet={artwork.image?.resized?.srcSet}
+                width={artwork.image?.resized?.width}
+                height={artwork.image?.resized?.height}
+                alt=""
+                lazyLoad
+              />
+
+              <Box flex={1} ml={1} overflow="hidden">
+                {/* overflowEllipsis is not working properly within the Expandable label, that's why lineClamp is being used here */}
+                <Text variant="sm-display" lineClamp={1}>
+                  {artwork.artist?.name}
+                </Text>
+                <Text variant="sm-display" color="mono60" lineClamp={1}>
+                  {artwork.title} ({artwork.date})
+                </Text>
+                <Text
+                  variant="sm-display"
+                  color="mono60"
+                  fontStyle="italic"
+                  lineClamp={1}
+                >
+                  {artwork.partner?.name}
+                </Text>
+              </Box>
+            </Flex>
+          }
+          borderColor="transparent"
+        >
+          {artworkDetailItems.length > 0 && (
+            <>
+              <Spacer y={2} />
+              <Join separator={<Spacer y={1} />}>
+                {artworkDetailItems.map(({ label, value }) => (
+                  <Flex key={label}>
+                    <Text
+                      variant="xs"
+                      color="mono60"
+                      width={100}
+                      flexShrink={0}
+                      mr={2}
+                    >
+                      {label}
+                    </Text>
+                    <Text variant="xs">{value}</Text>
+                  </Flex>
+                ))}
+              </Join>
+              <Spacer y={2} />
+            </>
+          )}
+        </Expandable>
+      </Box>
 
       <Separator my={2} />
 
@@ -222,6 +303,28 @@ const InquiryInquiryFragmentContainer = createFragmentContainer(
         internalID
         title
         date
+        saleMessage
+        category
+        medium
+        attributionClass {
+          name
+        }
+        framed {
+          label
+          details
+        }
+        signatureInfo {
+          label
+          details
+        }
+        certificateOfAuthenticity {
+          label
+          details
+        }
+        dimensions {
+          in
+          cm
+        }
         artist(shallow: true) {
           name
         }
