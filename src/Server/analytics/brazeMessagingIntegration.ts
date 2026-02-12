@@ -35,11 +35,6 @@ export const subscribeToInAppMessagesByPath = () => {
 
   if (!analytics || !braze || !location) return
 
-  console.log(
-    "[Braze] Subscribing to Braze In-App Messages for path:",
-    location.pathname,
-  )
-
   braze.subscribeToInAppMessage(inAppMessage => {
     if (!isMatchingRoute(location.pathname)) return
 
