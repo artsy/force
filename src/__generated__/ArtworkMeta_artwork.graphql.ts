@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<87ecbaffb08d452e1929eb28146a6f18>>
+ * @generated SignedSource<<0c0149ffef6c8333bf92ac3bfd90dcda>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -27,7 +27,8 @@ export type ArtworkMeta_artwork$data = {
       readonly width: number | null | undefined;
     } | null | undefined;
   } | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkChatBubble_artwork" | "ArtworkStructuredData_artwork">;
+  readonly slug: string;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkChatBubble_artwork">;
   readonly " $fragmentType": "ArtworkMeta_artwork";
 };
 export type ArtworkMeta_artwork$key = {
@@ -47,9 +48,11 @@ const node: ReaderFragment = {
       "name": "ArtworkChatBubble_artwork"
     },
     {
+      "alias": null,
       "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArtworkStructuredData_artwork"
+      "kind": "ScalarField",
+      "name": "slug",
+      "storageKey": null
     },
     {
       "alias": null,
@@ -191,6 +194,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "67ca654f149e87b26a90e1fcedd0934f";
+(node as any).hash = "7c9fb370f5c782b076e5da4601944424";
 
 export default node;
