@@ -17,7 +17,7 @@ import { graphql, useFragment } from "react-relay"
 
 interface Order2CheckoutLoadingSkeletonProps {
   order: Order2CheckoutLoadingSkeleton_order$key
-  expressCheckoutState?: "submit" | "awaiting" | null
+  expressCheckoutState?: "submit" | "active" | null
 }
 
 export const Order2CheckoutLoadingSkeleton: React.FC<
