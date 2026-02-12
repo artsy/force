@@ -11,21 +11,14 @@ import {
   AuthDialog,
   type AuthDialogProps,
 } from "Components/AuthDialog/AuthDialog"
-import {
-  getResizedAuthDialogGalleryImage,
-  getResizedAuthDialogImages,
-} from "Components/AuthDialog/Utils/authDialogConstants"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { prefetchUrlWithSizes } from "System/Utils/prefetchUrl"
 import type { AfterAuthAction } from "Utils/Hooks/useAuthIntent"
-import { getENV } from "Utils/getENV"
 import { merge } from "lodash"
 import {
   type FC,
   createContext,
   useCallback,
   useContext,
-  useEffect,
   useReducer,
 } from "react"
 
@@ -163,23 +156,6 @@ export const AuthDialogProvider: FC<
   const hideAuthDialog = () => {
     dispatch({ type: "HIDE" })
   }
-
-  // Prefetch carousel images after page load (desktop only)
-  useEffect(() => {
-    if (!isLoggedIn && !getENV("IS_MOBILE")) {
-      getResizedAuthDialogImages().forEach(img =>
-        prefetchUrlWithSizes({
-          url: img.src,
-          srcSet: img.srcSet,
-        }),
-      )
-      const galleryImage = getResizedAuthDialogGalleryImage()
-      prefetchUrlWithSizes({
-        url: galleryImage.src,
-        srcSet: galleryImage.srcSet,
-      })
-    }
-  }, [isLoggedIn])
 
   const showAuthDialog = useCallback(
     ({
