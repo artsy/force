@@ -6,7 +6,6 @@ export const MODAL_WIDTH = 900
 export const COLUMN_WIDTH =
   MODAL_WIDTH / 2 - Number.parseInt(THEME.space["2"].replace("px", ""))
 const IMAGE_HEIGHT = 2030
-const PLACEHOLDER_WIDTH = 20
 
 export const IMAGE = {
   width: MODAL_WIDTH,
@@ -44,10 +43,10 @@ export const getResizedAuthDialogImages = () =>
   )
 
 export const getResizedAuthDialogImagePlaceholder = () =>
-  resized(DEFAULT_IMAGES[0].src, { width: PLACEHOLDER_WIDTH, quality: 20 })
+  resized(DEFAULT_IMAGES[0].src, { width: COLUMN_WIDTH, quality: 1 })
 
 export const getResizedAuthDialogGalleryImagePlaceholder = () =>
-  resized(DEFAULT_IMAGES[0].src, { width: PLACEHOLDER_WIDTH, quality: 20 })
+  resized(GALLERY_IMAGE.src, { width: GALLERY_IMAGE.width, quality: 1 })
 
 export const getResizedAuthDialogGalleryImage = () =>
   resized(GALLERY_IMAGE.src, { width: GALLERY_IMAGE.width, quality: 80 })

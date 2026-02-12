@@ -87,7 +87,7 @@ export const AuthDialogImageCarousel: FC = () => {
                   height="100%"
                   fetchPriority="high"
                   alt=""
-                  style={{ objectFit: "cover" }}
+                  style={{ objectFit: "cover", filter: "blur(10px)" }}
                 />
               </>
             ) : (
@@ -96,7 +96,6 @@ export const AuthDialogImageCarousel: FC = () => {
                 width="100%"
                 height="100%"
                 lazyLoad={index !== 0}
-                fetchPriority={index === 0 ? "high" : "auto"}
                 alt=""
                 style={{ objectFit: "cover" }}
               />

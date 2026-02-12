@@ -1,6 +1,6 @@
 import { Box, Image } from "@artsy/palette"
-import { type FC, useState } from "react"
 import type { Sized } from "Utils/resized"
+import { type FC, useState } from "react"
 
 export interface AuthDialogImageWithPlaceholderProps {
   image: Sized
@@ -33,14 +33,13 @@ export const AuthDialogImageWithPlaceholder: FC<
           height="100%"
           fetchPriority="high"
           alt=""
-          style={{ objectFit: "cover" }}
+          style={{ objectFit: "cover", filter: "blur(10px)" }}
         />
       ) : (
         <Image
           {...image}
           width="100%"
           height="100%"
-          fetchPriority="high"
           alt=""
           style={{ objectFit: "cover" }}
         />
