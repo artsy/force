@@ -20,8 +20,8 @@ import {
 import { NavBarMobileMenuNavigationProvider } from "./NavBarMobileMenuNavigation"
 import { NavBarMobileMenuTransition } from "./NavBarMobileMenuTransition"
 import { NavBarMobileSubMenu } from "./NavBarMobileSubMenu"
-import { NavBarMobileMenuServer } from "./NavBarMobileMenuServer"
 import type { buildAppRoutesQuery } from "__generated__/buildAppRoutesQuery.graphql"
+import { NavBarMobileSubMenuServer } from "Components/NavBar/NavBarMobileMenu/NavBarMobileSubMenuServer"
 
 interface NavBarMobileMenuProps {
   navigationData?: buildAppRoutesQuery["response"] | null
@@ -100,7 +100,34 @@ export const NavBarMobileMenu: React.FC<
 
             {/* Feature flag: Server-driven vs Static sub-menus */}
             {shouldUseServerNav ? (
-              <NavBarMobileMenuServer navigationData={navigationData} />
+              <>
+                {navigationData?.whatsNewNavigation && (
+                  <NavBarMobileSubMenuServer
+                    navigationVersion={navigationData.whatsNewNavigation}
+                    menuType="whatsNew"
+                  >
+                    What’s New
+                  </NavBarMobileSubMenuServer>
+                )}
+
+                {navigationData?.artistsNavigation && (
+                  <NavBarMobileSubMenuServer
+                    navigationVersion={navigationData.artistsNavigation}
+                    menuType="artists"
+                  >
+                    Artists
+                  </NavBarMobileSubMenuServer>
+                )}
+
+                {navigationData?.artworksNavigation && (
+                  <NavBarMobileSubMenuServer
+                    navigationVersion={navigationData.artworksNavigation}
+                    menuType="artworks"
+                  >
+                    Artworks
+                  </NavBarMobileSubMenuServer>
+                )}
+              </>
             ) : (
               <>
                 <NavBarMobileSubMenu menu={WHATS_NEW_SUBMENU_DATA.menu}>

@@ -49,16 +49,7 @@ export const NavBarSubMenuServer: React.FC<NavBarSubMenuServerProps> = ({
     return null
   }
 
-  const isArtistsDropdown = menuType === "artists"
-
-  // Sort sections by position
-  const sortedSections = [...navigationVersion.items].sort(
-    (a, b) => (a?.position ?? 0) - (b?.position ?? 0),
-  )
-
-  // Show featured link if data is available (no extra flag needed for server-driven nav)
   const shouldShowFeaturedLink = featuredLinkData && featuredLinkData.length > 0
-
   const columnSpan = 3
 
   // Determine header text for featured link based on menu type
@@ -106,13 +97,8 @@ export const NavBarSubMenuServer: React.FC<NavBarSubMenuServerProps> = ({
             {/* Left outer column: contains nav columns and bottom elements */}
             <Column span={shouldShowFeaturedLink ? 8 : 12}>
               <GridColumns gridColumnGap={0}>
-                {sortedSections.map((section, sectionIndex) => {
+                {navigationVersion.items.map((section, sectionIndex) => {
                   if (!section?.title || !section.children) return null
-
-                  // Sort items within section by position
-                  const sortedItems = [...section.children].sort(
-                    (a, b) => (a?.position ?? 0) - (b?.position ?? 0),
-                  )
 
                   return (
                     <Column key={sectionIndex} span={columnSpan}>
@@ -122,7 +108,7 @@ export const NavBarSubMenuServer: React.FC<NavBarSubMenuServerProps> = ({
 
                       <Spacer y={1} />
 
-                      {sortedItems.map((item, itemIndex) => {
+                      {section.children.map((item, itemIndex) => {
                         if (!item?.title || !item.href) return null
 
                         return (
@@ -140,7 +126,7 @@ export const NavBarSubMenuServer: React.FC<NavBarSubMenuServerProps> = ({
                 })}
 
                 {/* View All Artists + Browse by Name (Artists dropdown only) */}
-                {isArtistsDropdown && (
+                {menuType === "artists" && (
                   <>
                     <Column span={3}>
                       <NavBarMenuItemLink
@@ -150,6 +136,7 @@ export const NavBarSubMenuServer: React.FC<NavBarSubMenuServerProps> = ({
                         View All Artists
                       </NavBarMenuItemLink>
                     </Column>
+
                     <Column span={8}>
                       <Text variant="xs" py={1} px={2} color="mono60">
                         Browse by name

@@ -1,6 +1,5 @@
 import { ActionType } from "@artsy/cohesion"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import ChevronLeftIcon from "@artsy/icons/ChevronLeftIcon"
 import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
 import { Box, Flex, Separator, Text } from "@artsy/palette"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
@@ -12,6 +11,7 @@ import {
   NavBarMobileMenuItemButton,
   NavBarMobileMenuItemLink,
 } from "./NavBarMobileMenuItem"
+import { NavBarMobileSubMenuBackButton } from "./NavBarMobileSubMenuBackButton"
 import { useNavBarMobileMenuNavigation } from "./NavBarMobileMenuNavigation"
 import { NavBarMobileMenuTransition } from "./NavBarMobileMenuTransition"
 import { useTrackingContextModule } from "./useTrackingContextModule"
@@ -165,13 +165,6 @@ const NavBarMobileSubMenuPanelServer: React.FC<
   const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
     useAnalyticsContext()
 
-  const isArtistsMenu = menuType === "artists"
-
-  // Sort sections by position
-  const sortedSections = [...(navigationVersion.items || [])].sort(
-    (a, b) => (a?.position ?? 0) - (b?.position ?? 0),
-  )
-
   const handleClick = (
     _event: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
     itemTitle: string,
@@ -195,7 +188,7 @@ const NavBarMobileSubMenuPanelServer: React.FC<
   return (
     <NavBarMobileMenuTransition isOpen={isOpen}>
       <Flex position="relative" alignItems="stretch" height={60}>
-        {showBacknav && <NavBarMobileSubMenuBack />}
+        {showBacknav && <NavBarMobileSubMenuBackButton />}
 
         <Text variant="sm" color="mono100" display="flex" m="auto">
           {title}
@@ -205,7 +198,7 @@ const NavBarMobileSubMenuPanelServer: React.FC<
         {showBacknav && <Box size={60} />}
       </Flex>
 
-      {sortedSections.map((section, sectionIndex) => {
+      {navigationVersion.items.map((section, sectionIndex) => {
         if (!section?.title) return null
 
         return (
@@ -250,7 +243,7 @@ const NavBarMobileSubMenuPanelServer: React.FC<
       )}
 
       {/* A-Z letters for Artists menu */}
-      {isArtistsMenu && (
+      {menuType === "artists" && (
         <Flex flexWrap="wrap" justifyContent="center">
           {LETTERS.map(letter => {
             return (
@@ -277,43 +270,6 @@ const NavBarMobileSubMenuPanelServer: React.FC<
         </Flex>
       )}
     </NavBarMobileMenuTransition>
-  )
-}
-
-const NavBarMobileSubMenuBack: React.FC<
-  React.PropsWithChildren<unknown>
-> = () => {
-  const { trackEvent } = useTracking()
-  const { pop } = useNavBarMobileMenuNavigation()
-  const contextModule = useTrackingContextModule()
-
-  return (
-    <NavBarMobileMenuItemButton
-      width={60}
-      height={60}
-      display="flex"
-      py={0}
-      px={0}
-      aria-label="Back"
-      onClick={() => {
-        trackEvent({
-          action_type: DeprecatedAnalyticsSchema.ActionType.Click,
-          context_module: contextModule,
-          flow: "Header",
-          subject: "Back link",
-        })
-
-        pop()
-      }}
-    >
-      <ChevronLeftIcon
-        fill="mono100"
-        height={14}
-        width={14}
-        m="auto"
-        aria-hidden
-      />
-    </NavBarMobileMenuItemButton>
   )
 }
 
@@ -385,11 +341,6 @@ const NAVIGATION_VERSION_FRAGMENT = graphql`
         title
         href
         position
-        children {
-          title
-          href
-          position
-        }
       }
     }
   }

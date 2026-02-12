@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<203cc6e71fd664b58e891ae11b4eefa5>>
+ * @generated SignedSource<<f60b21f069b4376b4cfa836a46666db1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,11 +13,6 @@ import { FragmentRefs } from "relay-runtime";
 export type NavBarMobileSubMenuServer_navigationVersion$data = {
   readonly items: ReadonlyArray<{
     readonly children: ReadonlyArray<{
-      readonly children: ReadonlyArray<{
-        readonly href: string | null | undefined;
-        readonly position: number;
-        readonly title: string;
-      }>;
       readonly href: string | null | undefined;
       readonly position: number;
       readonly title: string;
@@ -46,13 +41,6 @@ v1 = {
   "kind": "ScalarField",
   "name": "position",
   "storageKey": null
-},
-v2 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "href",
-  "storageKey": null
 };
 return {
   "argumentDefinitions": [],
@@ -79,22 +67,14 @@ return {
           "plural": true,
           "selections": [
             (v0/*: any*/),
-            (v2/*: any*/),
-            (v1/*: any*/),
             {
               "alias": null,
               "args": null,
-              "concreteType": "NavigationItem",
-              "kind": "LinkedField",
-              "name": "children",
-              "plural": true,
-              "selections": [
-                (v0/*: any*/),
-                (v2/*: any*/),
-                (v1/*: any*/)
-              ],
+              "kind": "ScalarField",
+              "name": "href",
               "storageKey": null
-            }
+            },
+            (v1/*: any*/)
           ],
           "storageKey": null
         }
@@ -107,6 +87,6 @@ return {
 };
 })();
 
-(node as any).hash = "d9c0de6923b568a3ba85fb27d419bd17";
+(node as any).hash = "eb73eab8e1be567aee3dff9ffab53c82";
 
 export default node;

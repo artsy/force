@@ -35,7 +35,6 @@ import { Media } from "Utils/Responsive"
 import { track, useTracking } from "react-tracking"
 import styled from "styled-components"
 import { NavBarDropdownPanel } from "./NavBarDropdownPanel"
-import { NavBarDynamicContent } from "./NavBarDynamicContent"
 import { NavBarItemButton, NavBarItemLink } from "./NavBarItem"
 import { NavBarLoggedInActionsQueryRenderer } from "./NavBarLoggedInActions"
 import { NavBarMobileMenuNotificationsIndicatorQueryRenderer } from "./NavBarMobileMenu/NavBarMobileMenuNotificationsIndicator"
@@ -43,6 +42,7 @@ import { NavBarPrimaryLogo } from "./NavBarPrimaryLogo"
 import { NavBarSkipLink } from "./NavBarSkipLink"
 import { useNavBarHeight } from "./useNavBarHeight"
 import { getENV } from "Utils/getENV"
+import { NavBarDropdownPanelServer } from "Components/NavBar/NavBarDropdownPanelServer"
 
 /**
  * NOTE: Fresnel doesn't work correctly here because this is included
@@ -376,12 +376,58 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
                 onMouseLeave={handleMenuLeave}
               >
                 {shouldUseServerNav ? (
-                  <NavBarDynamicContent
-                    navigationData={navigationData}
-                    onMenuEnter={handleMenuEnter}
-                    handleClick={handleClick}
-                    shouldTransition={shouldTransition}
-                  />
+                  <>
+                    {navigationData?.whatsNewNavigation && (
+                      <NavBarDropdownPanelServer
+                        navigationData={navigationData.whatsNewNavigation}
+                        featuredLinkData={navigationData.whatsNewFeaturedLink}
+                        label="What’s New"
+                        href="/collection/new-this-week"
+                        contextModule={
+                          DeprecatedAnalyticsSchema.ContextModule
+                            .HeaderWhatsNewDropdown
+                        }
+                        menuType="whatsNew"
+                        onMenuEnter={handleMenuEnter}
+                        handleClick={handleClick}
+                        shouldTransition={shouldTransition}
+                      />
+                    )}
+
+                    {navigationData?.artistsNavigation && (
+                      <NavBarDropdownPanelServer
+                        navigationData={navigationData.artistsNavigation}
+                        featuredLinkData={navigationData.artistsFeaturedLink}
+                        label="Artists"
+                        href="/artists"
+                        contextModule={
+                          DeprecatedAnalyticsSchema.ContextModule
+                            .HeaderArtistsDropdown
+                        }
+                        menuType="artists"
+                        onMenuEnter={handleMenuEnter}
+                        handleClick={handleClick}
+                        shouldTransition={shouldTransition}
+                      />
+                    )}
+
+                    {navigationData?.artworksNavigation && (
+                      <NavBarDropdownPanelServer
+                        navigationData={navigationData.artworksNavigation}
+                        featuredLinkData={navigationData.artworksFeaturedLink}
+                        label="Artworks"
+                        href="/collect"
+                        contextModule={
+                          DeprecatedAnalyticsSchema.ContextModule
+                            .HeaderArtworksDropdown
+                        }
+                        menuType="artworks"
+                        onMenuEnter={handleMenuEnter}
+                        handleClick={handleClick}
+                        shouldTransition={shouldTransition}
+                      />
+                    )}
+                  </>
                 ) : (
                   <>
                     <NavBarDropdownPanel
