@@ -96,8 +96,8 @@ export const Order2ExpressCheckoutUI: React.FC<
   const {
     setExpressCheckoutLoaded,
     redirectToOrderDetails,
-    setExpressCheckoutSpinner,
-    expressCheckoutSpinner,
+    setExpressCheckoutState,
+    expressCheckoutState,
     checkoutMode,
     setCheckoutMode,
     checkoutTracking,
@@ -237,7 +237,7 @@ export const Order2ExpressCheckoutUI: React.FC<
 
     // Only show reset spinner if not preserving existing submit spinner
     if (!submissionError) {
-      setExpressCheckoutSpinner("reset")
+      setExpressCheckoutState("reset")
     }
 
     try {
@@ -266,7 +266,7 @@ export const Order2ExpressCheckoutUI: React.FC<
       // Reset local state
       setExpressCheckoutType(null)
       setCheckoutMode("standard")
-      setExpressCheckoutSpinner(null)
+      setExpressCheckoutState(null)
     }
   }
 
@@ -275,6 +275,7 @@ export const Order2ExpressCheckoutUI: React.FC<
     resolve,
   }: StripeExpressCheckoutElementClickEvent) => {
     setCheckoutMode("express")
+    setExpressCheckoutState("awaiting")
     // Manually go back to first buy now step to avoid ui glitches under the express checkout ui
     editFulfillmentDetails()
     setExpressCheckoutType(expressPaymentType)
@@ -316,7 +317,12 @@ export const Order2ExpressCheckoutUI: React.FC<
       })
     }
 
-    if (!expressCheckoutSpinner) {
+    // Allow cancel when awaiting user action or not in express checkout
+    // Prevent cancel during submit/reset operations
+    const canCancel =
+      !expressCheckoutState || expressCheckoutState === "awaiting"
+
+    if (canCancel) {
       await resetOrder({ errorCode: errorCode || undefined })
     } else {
       setExpressCheckoutType(null)
@@ -394,7 +400,7 @@ export const Order2ExpressCheckoutUI: React.FC<
     shippingRate,
   }: StripeExpressCheckoutElementConfirmEvent) => {
     window.removeEventListener("beforeunload", preventHardReload)
-    setExpressCheckoutSpinner("submit")
+    setExpressCheckoutState("submit")
 
     const creditCardWalletType =
       expressPaymentType.toUpperCase() as OrderCreditCardWalletTypeEnum

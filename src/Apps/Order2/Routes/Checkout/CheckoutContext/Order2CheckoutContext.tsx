@@ -58,8 +58,8 @@ type Messages = Partial<
 export interface Order2CheckoutModel {
   // State
   isLoading: boolean
-  /** Express checkout loading state: 'submit' when submitting payment, 'reset' when resetting order, null when idle */
-  expressCheckoutSpinner: "submit" | "reset" | null
+  /** Express checkout loading state: 'submit' when submitting payment, 'reset' when resetting order, 'awaiting' when waiting for user to complete payment, null when idle */
+  expressCheckoutState: "submit" | "reset" | "awaiting" | null
   expressCheckoutPaymentMethods: ExpressCheckoutPaymentMethod[] | null
   steps: CheckoutStep[]
   activeFulfillmentDetailsTab: FulfillmentDetailsTab | null
@@ -77,7 +77,7 @@ export interface Order2CheckoutModel {
 
   // Actions
   setExpressCheckoutLoaded: Action<this, ExpressCheckoutPaymentMethod[]>
-  setExpressCheckoutSpinner: Action<this, "submit" | "reset" | null>
+  setExpressCheckoutState: Action<this, "submit" | "reset" | "awaiting" | null>
   setFulfillmentDetailsComplete: Action<
     this,
     { isPickup?: boolean; isFlatShipping?: boolean }
@@ -113,7 +113,7 @@ export const Order2CheckoutContext: ReturnType<
 > = createContextStore<Order2CheckoutModel>(initialState => ({
   // Initial state with defaults
   isLoading: true,
-  expressCheckoutSpinner: null,
+  expressCheckoutState: null,
   expressCheckoutPaymentMethods: null,
   activeFulfillmentDetailsTab: null,
   confirmationToken: null,
@@ -140,8 +140,8 @@ export const Order2CheckoutContext: ReturnType<
     }
   }),
 
-  setExpressCheckoutSpinner: action((state, isSubmitting) => {
-    state.expressCheckoutSpinner = isSubmitting
+  setExpressCheckoutState: action((state, isSubmitting) => {
+    state.expressCheckoutState = isSubmitting
   }),
 
   setActiveFulfillmentDetailsTab: action(
@@ -504,7 +504,7 @@ export const Order2CheckoutContextProvider: React.FC<
   const runtimeModel = {
     // Default values
     isLoading: true,
-    expressCheckoutSpinner: null,
+    expressCheckoutState: null,
     expressCheckoutPaymentMethods: null,
     activeFulfillmentDetailsTab: null,
     confirmationToken: null,
@@ -570,7 +570,7 @@ const initialStateForOrder = (
 
   return {
     isLoading: true,
-    expressCheckoutSpinner: null,
+    expressCheckoutState: null,
     expressCheckoutPaymentMethods: null,
     activeFulfillmentDetailsTab: fulfillmentComplete
       ? (activeFulfillmentDetailsTab as FulfillmentDetailsTab)
