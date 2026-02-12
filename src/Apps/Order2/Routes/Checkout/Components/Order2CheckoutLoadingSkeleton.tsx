@@ -17,7 +17,7 @@ import { graphql, useFragment } from "react-relay"
 
 interface Order2CheckoutLoadingSkeletonProps {
   order: Order2CheckoutLoadingSkeleton_order$key
-  expressCheckoutState?: "submit" | "reset" | "awaiting" | null
+  expressCheckoutState?: "submit" | "awaiting" | null
 }
 
 export const Order2CheckoutLoadingSkeleton: React.FC<
@@ -27,8 +27,7 @@ export const Order2CheckoutLoadingSkeleton: React.FC<
 
   const artworkVersion = orderData.lineItems[0]?.artworkVersion
 
-  const showExpressCheckoutSpinner =
-    expressCheckoutState === "submit" || expressCheckoutState === "reset"
+  const showExpressCheckoutSpinner = expressCheckoutState === "submit"
 
   if (showExpressCheckoutSpinner) {
     return (
@@ -48,17 +47,13 @@ export const Order2CheckoutLoadingSkeleton: React.FC<
             <Spinner size="large" color="blue100" />
           </Box>
 
-          {expressCheckoutState === "submit" && (
-            <>
-              <Text variant="md" color="mono100">
-                Submitting your order
-              </Text>
+          <Text variant="md" color="mono100">
+            Submitting your order
+          </Text>
 
-              <Text variant="sm" color="mono60">
-                Please do not close or refresh this window
-              </Text>
-            </>
-          )}
+          <Text variant="sm" color="mono60">
+            Please do not close or refresh this window
+          </Text>
         </Flex>
       </Box>
     )

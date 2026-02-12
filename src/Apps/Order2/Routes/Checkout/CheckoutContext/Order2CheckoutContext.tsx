@@ -58,8 +58,8 @@ type Messages = Partial<
 export interface Order2CheckoutModel {
   // State
   isLoading: boolean
-  /** Express checkout loading state: 'submit' when submitting payment, 'reset' when resetting order, 'awaiting' when waiting for user to complete payment, null when idle */
-  expressCheckoutState: "submit" | "reset" | "awaiting" | null
+  /** Express checkout loading state: 'submit' when submitting payment, 'awaiting' when waiting for user to complete payment, null when idle */
+  expressCheckoutState: "submit" | "awaiting" | null
   expressCheckoutPaymentMethods: ExpressCheckoutPaymentMethod[] | null
   steps: CheckoutStep[]
   activeFulfillmentDetailsTab: FulfillmentDetailsTab | null
@@ -77,7 +77,7 @@ export interface Order2CheckoutModel {
 
   // Actions
   setExpressCheckoutLoaded: Action<this, ExpressCheckoutPaymentMethod[]>
-  setExpressCheckoutState: Action<this, "submit" | "reset" | "awaiting" | null>
+  setExpressCheckoutState: Action<this, "submit" | "awaiting" | null>
   setFulfillmentDetailsComplete: Action<
     this,
     { isPickup?: boolean; isFlatShipping?: boolean }
