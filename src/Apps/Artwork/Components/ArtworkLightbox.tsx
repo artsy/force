@@ -6,13 +6,13 @@ import {
 } from "@artsy/palette"
 import { useFlag } from "@unleash/proxy-client-react"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { getENV } from "Utils/getENV"
 import { useLocalImage } from "Utils/localImageHelpers"
 import { userIsTeam } from "Utils/user"
 import type { ArtworkLightbox_artwork$data } from "__generated__/ArtworkLightbox_artwork.graphql"
 import { compact } from "lodash"
 import { scale } from "proportional-scale"
 import type * as React from "react"
+import { useMemo } from "react"
 import { Link } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkLightboxPlaceholder } from "./ArtworkLightboxPlaceholder"
@@ -41,57 +41,52 @@ const ArtworkLightbox: React.FC<
   ...rest
 }) => {
   const { user } = useSystemContext()
-  const isTeam = userIsTeam(user)
-  const images = compact(artwork.images)
-  const hasGeometry = !!images[0]?.resized?.width
 
-  const localImage = useLocalImage(images[activeIndex])
+  const isTeam = userIsTeam(user)
+
+  const images = compact(artwork.images)
+
+  const activeImage = images[activeIndex]
+
+  const localImage = useLocalImage(activeImage)
 
   const isArtworkCaptionEnabled = useFlag("diamond_artwork-captions")
 
-  const resizedLocalImage = localImage && {
-    src: localImage.data,
-    srcSet: undefined,
-    ...scale({ ...localImage, maxWidth: MAX_SIZE, maxHeight: MAX_SIZE }),
-  }
+  if (!activeImage) return null
 
-  if (!images?.[activeIndex]) return null
+  const { fallback, internalID, isDefault, placeholder, resized } = activeImage
 
-  const {
-    fallback,
-    internalID,
-    isDefault,
-    placeholder,
-    resized,
-    mobileLightboxSource,
-  } = images[activeIndex]
+  const hasGeometry = !!images[0]?.resized?.width
+
+  const image = useMemo(() => {
+    if (localImage) {
+      return {
+        src: localImage.data,
+        srcSet: undefined,
+        ...scale({ ...localImage, maxWidth: MAX_SIZE, maxHeight: MAX_SIZE }),
+      }
+    }
+
+    if (hasGeometry) return resized
+
+    return fallback
+  }, [localImage, hasGeometry, resized, fallback])
+
+  if (!image) return null
 
   const artworkCaption =
     isArtworkCaptionEnabled && isDefault
       ? (artwork.caption ?? artwork.formattedMetadata)
       : artwork.formattedMetadata
 
-  const image = resizedLocalImage ?? (hasGeometry ? resized : fallback)
-
-  if (!image) return null
-
-  let lightboxImage = image
-
-  if (getENV("IS_MOBILE") && mobileLightboxSource) {
-    lightboxImage = mobileLightboxSource
-  }
-
-  // Always preload the 2x image for mobile lightbox if available
-  const preloadImage = mobileLightboxSource?.srcSet?.match(/ ([^ ]+) 2x/)?.[1]
-
   return (
     <>
-      {isDefault && shouldRenderFullImage && preloadImage && (
+      {isDefault && (
         <Link
           rel="preload"
           as="image"
-          href={preloadImage}
-          imageSrcSet={lightboxImage.srcSet}
+          href={image.src}
+          imageSrcSet={image.srcSet}
           fetchPriority="high"
         />
       )}
@@ -120,8 +115,6 @@ const ArtworkLightbox: React.FC<
             <ArtworkLightboxPlaceholder
               key={placeholder}
               src={placeholder}
-              preload={!!isDefault}
-              // Deliberate, to improve LCP
               lazyLoad={false}
             />
           )}
@@ -130,23 +123,19 @@ const ArtworkLightbox: React.FC<
             <Image
               data-testid="artwork-lightbox-image"
               key={`${internalID}`}
-              {...(isDefault
-                ? {
-                    id: "transitionFrom--ViewInRoom",
-                    fetchPriority: "high",
-                  }
-                : {})}
+              id={isDefault ? "transitionFrom--ViewInRoom" : undefined}
               width="100%"
               height="100%"
-              src={lightboxImage.src}
-              srcSet={lightboxImage.srcSet}
+              src={image.src}
+              srcSet={image.srcSet}
               alt={artworkCaption ?? ""}
+              {...(isDefault
+                ? { loading: "eager", fetchPriority: "high" }
+                : {})}
               lazyLoad={lazyLoad}
               position="relative"
               preventRightClick={!isTeam}
-              style={{
-                objectFit: "cover",
-              }}
+              style={{ objectFit: "cover" }}
             />
           )}
         </ResponsiveBox>
@@ -182,17 +171,6 @@ export const ArtworkLightboxFragmentContainer = createFragmentContainer(
           }
           resized(
             quality: 80
-            width: 800
-            height: 800
-            version: ["main", "normalized", "larger", "large"]
-          ) {
-            width
-            height
-            src
-            srcSet
-          }
-          mobileLightboxSource: resized(
-            quality: 50
             width: 800
             height: 800
             version: ["main", "normalized", "larger", "large"]
