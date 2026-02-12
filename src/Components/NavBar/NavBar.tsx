@@ -3,16 +3,7 @@ import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchem
 import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
 import CloseIcon from "@artsy/icons/CloseIcon"
 import PersonIcon from "@artsy/icons/PersonIcon"
-import {
-  Box,
-  Clickable,
-  Flex,
-  Spacer,
-  THEME,
-  Text,
-  useDidMount,
-} from "@artsy/palette"
-import { useFlag } from "@unleash/proxy-client-react"
+import { Box, Clickable, Flex, Spacer, THEME, Text } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { NavBarLoggedOutActions } from "Components/NavBar/NavBarLoggedOutActions"
@@ -23,6 +14,7 @@ import {
 } from "Components/NavBar/menuData"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import { useNavigationData } from "System/Contexts/NavigationDataContext"
 import Events from "Utils/Events"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 import type * as React from "react"
@@ -74,10 +66,12 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
 
   const { router } = useRouter()
 
-  // TODO: removing this causes flickering of the server-driven nav
-  const isMounted = useDidMount()
-  const enableServerNav = useFlag("onyx_server-navigation")
-  const shouldUseServerNav = isMounted && enableServerNav
+  // Get navigation data from context (provided by buildAppRoutes query)
+  const navigationData = useNavigationData()
+
+  const shouldUseServerNav =
+    typeof window !== "undefined" &&
+    (window as any).sd?.ENABLE_SERVER_DRIVEN_NAVIGATION
 
   const [mode, setMode] = useState<"Idle" | "Search" | "Profile" | "More">(
     "Idle",
@@ -384,6 +378,7 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
               >
                 {shouldUseServerNav ? (
                   <NavBarDynamicContent
+                    navigationData={navigationData}
                     onMenuEnter={handleMenuEnter}
                     handleClick={handleClick}
                     shouldTransition={shouldTransition}
