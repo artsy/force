@@ -233,7 +233,7 @@ export const Order2ExpressCheckoutUI: React.FC<
     window.removeEventListener("beforeunload", preventHardReload)
 
     // Keep showing loading skeleton during reset
-    // (awaiting state remains visible, no special reset spinner needed)
+    // (active state remains visible, no special reset spinner needed)
 
     try {
       const { unsetOrderPaymentMethod } =
@@ -270,7 +270,7 @@ export const Order2ExpressCheckoutUI: React.FC<
     resolve,
   }: StripeExpressCheckoutElementClickEvent) => {
     setCheckoutMode("express")
-    setExpressCheckoutState("awaiting")
+    setExpressCheckoutState("active")
     // Manually go back to first buy now step to avoid ui glitches under the express checkout ui
     editFulfillmentDetails()
     setExpressCheckoutType(expressPaymentType)
@@ -312,10 +312,10 @@ export const Order2ExpressCheckoutUI: React.FC<
       })
     }
 
-    // Allow cancel when awaiting user action or not in express checkout
+    // Allow cancel when active user action or not in express checkout
     // Prevent cancel during submit/reset operations
     const canCancel =
-      !expressCheckoutState || expressCheckoutState === "awaiting"
+      !expressCheckoutState || expressCheckoutState === "active"
 
     if (canCancel) {
       await resetOrder({ errorCode: errorCode || undefined })
