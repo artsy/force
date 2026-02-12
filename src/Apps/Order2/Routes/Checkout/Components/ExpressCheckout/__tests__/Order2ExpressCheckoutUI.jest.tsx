@@ -45,9 +45,10 @@ let shippingRateId = "DOMESTIC_FLAT"
 
 const mockRedirectToOrderDetails = jest.fn()
 const mockSetExpressCheckoutLoaded = jest.fn()
-const mockSetShowOrderSubmittingSpinner = jest.fn()
+const mockSetExpressCheckoutState = jest.fn()
 const mockSetCheckoutMode = jest.fn()
 const mockSetConfirmationToken = jest.fn()
+const mockEditFulfillmentDetails = jest.fn()
 
 const mockMessages = {
   EXPRESS_CHECKOUT: { error: null },
@@ -65,11 +66,12 @@ const mockSetSectionErrorMessage = jest.fn(({ section, error }) => {
 
 const mockCheckoutContext = {
   setExpressCheckoutLoaded: mockSetExpressCheckoutLoaded,
-  setExpressCheckoutSubmitting: mockSetShowOrderSubmittingSpinner,
+  setExpressCheckoutState: mockSetExpressCheckoutState,
   redirectToOrderDetails: mockRedirectToOrderDetails,
   setCheckoutMode: mockSetCheckoutMode,
   setConfirmationToken: mockSetConfirmationToken,
   setSectionErrorMessage: mockSetSectionErrorMessage,
+  editFulfillmentDetails: mockEditFulfillmentDetails,
   messages: { ...mockMessages },
 } as any
 
@@ -725,7 +727,7 @@ describe("ExpressCheckoutUI", () => {
 
     // Verify state is reset without page reload
     expect(mockSetCheckoutMode).toHaveBeenCalledWith("standard")
-    expect(mockSetShowOrderSubmittingSpinner).toHaveBeenCalledWith(false)
+    expect(mockSetExpressCheckoutState).toHaveBeenCalledWith(null)
     expect(window.location.reload).not.toHaveBeenCalled()
   })
 

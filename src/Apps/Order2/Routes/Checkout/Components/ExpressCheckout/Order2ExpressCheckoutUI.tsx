@@ -236,18 +236,13 @@ export const Order2ExpressCheckoutUI: React.FC<
     }
   }
 
-  const resetOrder = async (options?: {
-    errorCode?: string
-    submissionError?: boolean
-  }) => {
-    const { errorCode, submissionError = false } = options || {}
+  const resetOrder = async (options?: { errorCode?: string }) => {
+    const { errorCode } = options || {}
 
     window.removeEventListener("beforeunload", preventHardReload)
 
-    // Only show reset spinner if not preserving existing submit spinner
-    if (!submissionError) {
-      setExpressCheckoutState("reset")
-    }
+    // Keep showing loading skeleton during reset
+    // (awaiting state remains visible, no special reset spinner needed)
 
     try {
       const { unsetOrderPaymentMethod } =
@@ -447,7 +442,7 @@ export const Order2ExpressCheckoutUI: React.FC<
           fullError: submitError,
         })
         const errorCode = (submitError.code || "submit_error") as string
-        await resetOrder({ errorCode, submissionError: true })
+        await resetOrder({ errorCode })
         return
       }
 
@@ -484,7 +479,7 @@ export const Order2ExpressCheckoutUI: React.FC<
         })
 
         const errorCode = (error.code || "confirmation_token_error") as string
-        await resetOrder({ errorCode, submissionError: true })
+        await resetOrder({ errorCode })
         return
       }
 
@@ -563,7 +558,7 @@ export const Order2ExpressCheckoutUI: React.FC<
       })
 
       const errorCode = (error.code || "unknown_error") as string
-      await resetOrder({ errorCode, submissionError: true })
+      await resetOrder({ errorCode })
     }
   }
 
