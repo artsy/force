@@ -128,7 +128,7 @@ export const signUp = async (args: {
   email: string
   password: string
   agreedToReceiveEmails?: boolean
-  signupValidator: string
+  signupValidator?: string
 }) => {
   const signUpUrl = `${getENV("APP_URL")}${getENV("AP").signupPagePath}`
 
