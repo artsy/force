@@ -126,7 +126,7 @@ const getDeliveryMethodText = (
     return "Pickup"
   }
 
-  return shippingLine?.displayName || "Delivery"
+  return shippingLine?.displayName || "N/A"
 }
 
 const OrderLink: FC<OrderLinkProps> = ({
