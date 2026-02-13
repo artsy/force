@@ -14,7 +14,6 @@ import {
   Text,
   TextArea,
 } from "@artsy/palette"
-import { useVariant } from "@unleash/proxy-client-react"
 import { InquiryQuestionsList } from "Components/Inquiry/Components/InquiryQuestionsList"
 import { useArtworkInquiryRequest } from "Components/Inquiry/Hooks/useArtworkInquiryRequest"
 import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
@@ -49,14 +48,6 @@ const InquiryInquiry: React.FC<
   const [hasAttemptedSubmit, setHasAttemptedSubmit] = useState(false)
 
   const { submitArtworkInquiryRequest } = useArtworkInquiryRequest()
-
-  const variant = useVariant(INQUIRY_CHECKBOXES_FLAG)
-  const enableCheckboxes = variant.name === "experiment"
-
-  useTrackFeatureVariantOnMount({
-    experimentName: INQUIRY_CHECKBOXES_FLAG,
-    variantName: variant.name,
-  })
 
   const handleTextAreaChange = ({ value }: { value: string }) => {
     setInquiry(prevState => ({ ...prevState, message: value }))
