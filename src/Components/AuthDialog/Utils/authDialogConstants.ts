@@ -42,6 +42,12 @@ export const getResizedAuthDialogImages = () =>
     resized(image.src, { width: image.width, quality: 80 }),
   )
 
+export const getResizedAuthDialogImagePlaceholder = () =>
+  resized(DEFAULT_IMAGES[0].src, { width: COLUMN_WIDTH, quality: 1 })
+
+export const getResizedAuthDialogGalleryImagePlaceholder = () =>
+  resized(GALLERY_IMAGE.src, { width: GALLERY_IMAGE.width, quality: 1 })
+
 export const getResizedAuthDialogGalleryImage = () =>
   resized(GALLERY_IMAGE.src, { width: GALLERY_IMAGE.width, quality: 80 })
 

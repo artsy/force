@@ -75,7 +75,7 @@ export const onLocalLogin = (
         err.response.body.error_description === "invalid email or password"
       ) {
         return res.redirect(
-          opts.loginPagePath + "?error=Invalid email or password.",
+          `${opts.loginPagePath}?error=Invalid email or password.`,
         )
       } else if (err) {
         return next(err)
@@ -93,7 +93,7 @@ export const onLocalSignup = (
 ) => {
   req.artsyPassportSignedUp = true
   request
-    .post(opts.ARTSY_URL + "/api/v1/user")
+    .post(`${opts.ARTSY_URL}/api/v1/user`)
     .set({
       "X-Xapp-Token": artsyXapp.token,
       "X-Forwarded-For": forwardedFor(req),
@@ -108,6 +108,7 @@ export const onLocalSignup = (
       sign_up_referer: req.body.signupReferer,
       accepted_terms_of_service: req.body.accepted_terms_of_service,
       agreed_to_receive_emails: req.body.agreed_to_receive_emails,
+      signup_validator: req.body.signup_validator,
       recaptcha_token: req.body.recaptcha_token,
     })
     .end((err, sres) => {
@@ -117,7 +118,7 @@ export const onLocalSignup = (
         if (req.xhr) {
           return res.status(403).send({ success: false, error: msg })
         } else {
-          return res.redirect(opts.signupPagePath + `?error=${msg}`)
+          return res.redirect(`${opts.signupPagePath}?error=${msg}`)
         }
       } else if (err && req.xhr) {
         if (

@@ -1,6 +1,7 @@
 import { StructuredData } from "Components/Seo/StructuredData"
 import { getArtistMeta } from "Apps/Artist/Utils/getArtistMeta"
 import { getENV } from "Utils/getENV"
+import { useRouter } from "System/Hooks/useRouter"
 import type { ArtistStructuredData_artist$key } from "__generated__/ArtistStructuredData_artist.graphql"
 import compact from "lodash/compact"
 import { graphql, useFragment } from "react-relay"
@@ -13,7 +14,11 @@ export const ArtistStructuredData: React.FC<ArtistStructuredDataProps> = ({
   artist,
 }) => {
   const data = useFragment(fragment, artist)
+  const { match } = useRouter()
+  const pathname = match.location.pathname
+
   const artistUrl = `${getENV("APP_URL")}${data.href}`
+  const pageUrl = `${getENV("APP_URL")}${pathname}`
 
   const memberOf = compact(
     data.partnersConnection?.edges?.map(edge => {
@@ -43,7 +48,7 @@ export const ArtistStructuredData: React.FC<ArtistStructuredDataProps> = ({
             description,
             gender: data.gender ?? undefined,
             image: data.coverArtwork?.image?.url ?? undefined,
-            mainEntityOfPage: artistUrl,
+            mainEntityOfPage: pageUrl,
             memberOf: memberOf.length ? memberOf : undefined,
             name: data.name ?? undefined,
             nationality: data.nationality
@@ -53,7 +58,8 @@ export const ArtistStructuredData: React.FC<ArtistStructuredDataProps> = ({
           },
           {
             "@type": "WebPage",
-            "@id": artistUrl,
+            "@id": pageUrl,
+            url: pageUrl,
             name: title,
             description,
             mainEntity: {

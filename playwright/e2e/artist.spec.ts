@@ -9,7 +9,7 @@ test.describe("/artist/:id", () => {
 
   test("renders metadata", async ({ page }) => {
     await expect(page).toHaveTitle(
-      /Pablo Picasso - Biography, Shows, Articles & More \| Artsy/,
+      /Pablo Picasso - Art & Prints for Sale \| Artsy/,
     )
 
     const metaDescription = page.locator('meta[name="description"]')

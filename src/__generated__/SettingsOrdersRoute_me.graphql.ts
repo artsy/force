@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<50dda0d51bbf89faea8b2fb203dda55a>>
+ * @generated SignedSource<<d3bed6fb2a3a5efad7cebfee5e728f5e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,13 +20,25 @@ export type SettingsOrdersRoute_me$key = {
 };
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
+  "argumentDefinitions": [
+    {
+      "defaultValue": 1,
+      "kind": "LocalArgument",
+      "name": "page"
+    }
+  ],
   "kind": "Fragment",
   "metadata": null,
   "name": "SettingsOrdersRoute_me",
   "selections": [
     {
-      "args": null,
+      "args": [
+        {
+          "kind": "Variable",
+          "name": "page",
+          "variableName": "page"
+        }
+      ],
       "kind": "FragmentSpread",
       "name": "SettingsOrders_me"
     }
@@ -35,6 +47,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "5c8566d794655dd3d56b83caabcd1fb8";
+(node as any).hash = "978f307365bf430b588a46989eea226b";
 
 export default node;
