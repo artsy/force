@@ -1,10 +1,10 @@
 import { WorkflowEngine } from "Utils/WorkflowEngine"
+import { DateTime } from "luxon"
 import { useEffect, useRef, useState } from "react"
 import type { Context } from "./Hooks/useInquiryContext"
 import { InquiryAccount } from "./Views/InquiryAccount"
 import { InquiryArtistsInCollection } from "./Views/InquiryArtistsInCollection"
 import { InquiryBasicInfoQueryRenderer } from "./Views/InquiryBasicInfo"
-import { InquiryConfirmation } from "./Views/InquiryConfirmation"
 import { InquiryInquiryQueryRenderer } from "./Views/InquiryInquiry"
 import { InquirySpecialist } from "./Views/InquirySpecialist"
 import { Visited } from "./Visited"
@@ -12,7 +12,6 @@ import { Visited } from "./Visited"
 const VIEWS = {
   Account: InquiryAccount,
   BasicInfo: InquiryBasicInfoQueryRenderer,
-  Confirmation: InquiryConfirmation,
   Inquiry: InquiryInquiryQueryRenderer,
   Specialist: InquirySpecialist,
   ArtistsInCollection: InquiryArtistsInCollection,
@@ -44,7 +43,18 @@ export const useEngine = ({ context, onDone }: UseEngine) => {
       return (context.current?.userInterestsConnection?.totalCount ?? 0) > 0
     },
     wasRecentlyPromptedForCollection: () => {
-      return !!context.current?.collectorProfile?.lastUpdatePromptAt
+      const lastUpdatePromptAt =
+        context.current?.collectorProfile?.lastUpdatePromptAt
+
+      if (!lastUpdatePromptAt) {
+        return false
+      }
+
+      const lastPromptDate = DateTime.fromISO(lastUpdatePromptAt)
+      const now = DateTime.now()
+      const daysSincePrompt = now.diff(lastPromptDate, "days").days
+
+      return daysSincePrompt < 7
     },
   }
 
@@ -104,7 +114,14 @@ export const useEngine = ({ context, onDone }: UseEngine) => {
       return
     }
 
-    setCurrent(engine.current.next())
+    const nextView = engine.current.next()
+
+    if (nextView === "Confirmation") {
+      onDone()
+      return
+    }
+
+    setCurrent(nextView)
   }
 
   return {

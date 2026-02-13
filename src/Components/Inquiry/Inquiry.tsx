@@ -50,7 +50,7 @@ const InquiryDialog: React.FC<React.PropsWithChildren<unknown>> = () => {
       position="relative"
       bg="mono0"
       // FIXME: Not a good pattern
-      width={["100vw", current === "Confirmation" ? 450 : 550]}
+      width={["100vw", 550]}
       height={["100vh", current === "ArtistsInCollection" ? 700 : "100%"]}
       p={2}
       style={{ boxShadow: theme.effects.dropShadow }}

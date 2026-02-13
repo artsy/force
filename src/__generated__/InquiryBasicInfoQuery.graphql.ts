@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<58132d98d7a65dca5ff4faee363bcc9a>>
+ * @generated SignedSource<<ff2edea364f94d9c9f6bf4f89c207f9d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -192,6 +192,32 @@ return {
             "name": "profession",
             "storageKey": null
           },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "CollectorProfileType",
+            "kind": "LinkedField",
+            "name": "collectorProfile",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "instagram",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "linkedIn",
+                "storageKey": null
+              },
+              (v3/*: any*/)
+            ],
+            "storageKey": null
+          },
           (v3/*: any*/)
         ],
         "storageKey": null
@@ -199,12 +225,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "35b814f5053a6993d823fd76f430fca6",
+    "cacheID": "7cf70b87de18264593ad19c8ad5dbaae",
     "id": null,
     "metadata": {},
     "name": "InquiryBasicInfoQuery",
     "operationKind": "query",
-    "text": "query InquiryBasicInfoQuery(\n  $id: String!\n) {\n  artwork(id: $id) {\n    ...InquiryBasicInfo_artwork\n    id\n  }\n  me {\n    ...InquiryBasicInfo_me\n    id\n  }\n}\n\nfragment InquiryBasicInfo_artwork on Artwork {\n  partner {\n    name\n    id\n  }\n}\n\nfragment InquiryBasicInfo_me on Me {\n  name\n  location {\n    display\n    city\n    state\n    country\n    id\n  }\n  otherRelevantPositions\n  profession\n}\n"
+    "text": "query InquiryBasicInfoQuery(\n  $id: String!\n) {\n  artwork(id: $id) {\n    ...InquiryBasicInfo_artwork\n    id\n  }\n  me {\n    ...InquiryBasicInfo_me\n    id\n  }\n}\n\nfragment InquiryBasicInfo_artwork on Artwork {\n  partner {\n    name\n    id\n  }\n}\n\nfragment InquiryBasicInfo_me on Me {\n  name\n  location {\n    display\n    city\n    state\n    country\n    id\n  }\n  otherRelevantPositions\n  profession\n  collectorProfile {\n    instagram\n    linkedIn\n    id\n  }\n}\n"
   }
 };
 })();

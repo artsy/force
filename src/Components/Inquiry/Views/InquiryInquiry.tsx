@@ -11,6 +11,7 @@ import {
   Spacer,
   Text,
   TextArea,
+  useToasts,
 } from "@artsy/palette"
 import { useFlag } from "@unleash/proxy-client-react"
 import { InquiryQuestionsList } from "Components/Inquiry/Components/InquiryQuestionsList"
@@ -37,6 +38,7 @@ const InquiryInquiry: React.FC<
   React.PropsWithChildren<InquiryInquiryProps>
 > = ({ artwork }) => {
   const { user } = useSystemContext()
+  const { sendToast } = useToasts()
 
   const { next, setInquiry, inquiry, artworkID, setContext, questions } =
     useInquiryContext()
@@ -87,6 +89,12 @@ const InquiryInquiry: React.FC<
       setMode("Success")
 
       await wait(500)
+
+      sendToast({
+        variant: "success",
+        message: "Message sent",
+        description: "Expect a response within 1-3 business days.",
+      })
 
       next()
     } catch (err) {
