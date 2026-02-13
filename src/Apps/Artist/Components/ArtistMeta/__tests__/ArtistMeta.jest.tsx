@@ -365,7 +365,7 @@ describe("AdminMeta", () => {
 
         const titleTag = document.querySelector("title")
         expect(titleTag?.textContent).toBe(
-          "Andy Warhol - Biography, Shows, Articles & More | Artsy",
+          "Andy Warhol - Art & Prints for Sale | Artsy",
         )
       })
 
