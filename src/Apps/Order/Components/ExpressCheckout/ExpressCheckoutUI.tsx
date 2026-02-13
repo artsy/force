@@ -258,11 +258,37 @@ export const ExpressCheckoutUI = ({
           ?.orderOrError,
       )
 
-      const shippingRates = extractShippingRates(validatedResult.order)
-      const lineItems = extractLineItems(validatedResult.order)
+      let shippingRates = extractShippingRates(validatedResult.order)
+      let lineItems = extractLineItems(validatedResult.order)
+      let buyerTotalMinor = validatedResult.order.buyerTotal?.minor
+
+      // Auto-select first fulfillment option for Google Pay
+      // Google Pay doesn't reliably trigger onShippingRateChange, so we auto-set for it
+      const requiresFulfillmentAutoSelect = expressCheckoutType === "google_pay"
+      if (requiresFulfillmentAutoSelect && shippingRates.length > 0) {
+        const setFulfillmentResult =
+          await setFulfillmentOptionMutation.submitMutation({
+            variables: {
+              input: {
+                id: orderData.internalID,
+                fulfillmentOption: {
+                  type: shippingRates[0].id as FulfillmentOptionInputEnum,
+                },
+              },
+            },
+          })
+
+        const fulfillmentValidatedResult = validateAndExtractOrderResponse(
+          setFulfillmentResult.setOrderFulfillmentOption?.orderOrError,
+        )
+
+        shippingRates = extractShippingRates(fulfillmentValidatedResult.order)
+        lineItems = extractLineItems(fulfillmentValidatedResult.order)
+        buyerTotalMinor = fulfillmentValidatedResult.order.buyerTotal?.minor
+      }
 
       return updateOrderTotalAndResolve({
-        buyerTotalMinor: validatedResult.order.buyerTotal?.minor,
+        buyerTotalMinor,
         resolveDetails: () =>
           resolve({
             shippingRates,
