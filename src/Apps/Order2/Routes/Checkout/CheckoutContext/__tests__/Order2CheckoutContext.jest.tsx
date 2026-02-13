@@ -131,7 +131,7 @@ describe("Order2CheckoutContext", () => {
       expect(Object.keys(getState())).toEqual(
         expect.arrayContaining([
           "isLoading",
-          "expressCheckoutSubmitting",
+          "expressCheckoutState",
           "expressCheckoutPaymentMethods",
           "steps",
           "activeFulfillmentDetailsTab",
@@ -147,7 +147,7 @@ describe("Order2CheckoutContext", () => {
       expect(Object.keys(actions)).toEqual(
         expect.arrayContaining([
           "setExpressCheckoutLoaded",
-          "setExpressCheckoutSubmitting",
+          "setExpressCheckoutState",
           "setFulfillmentDetailsComplete",
           "setActiveFulfillmentDetailsTab",
           "editFulfillmentDetails",
@@ -170,7 +170,7 @@ describe("Order2CheckoutContext", () => {
 
       expect(state).toMatchObject({
         isLoading: true,
-        expressCheckoutSubmitting: false,
+        expressCheckoutState: null,
         expressCheckoutPaymentMethods: null,
         activeFulfillmentDetailsTab: null,
         confirmationToken: null,

@@ -7,7 +7,9 @@ import {
   SkeletonBox,
   SkeletonText,
   Spacer,
+  Spinner,
   Stack,
+  Text,
   breakpoints,
 } from "@artsy/palette"
 import type { Order2CheckoutLoadingSkeleton_order$key } from "__generated__/Order2CheckoutLoadingSkeleton_order.graphql"
@@ -15,14 +17,47 @@ import { graphql, useFragment } from "react-relay"
 
 interface Order2CheckoutLoadingSkeletonProps {
   order: Order2CheckoutLoadingSkeleton_order$key
+  expressCheckoutState?: "submit" | "active" | null
 }
 
 export const Order2CheckoutLoadingSkeleton: React.FC<
   Order2CheckoutLoadingSkeletonProps
-> = ({ order }) => {
+> = ({ order, expressCheckoutState }) => {
   const orderData = useFragment(FRAGMENT, order)
 
   const artworkVersion = orderData.lineItems[0]?.artworkVersion
+
+  const showExpressCheckoutSpinner = expressCheckoutState === "submit"
+
+  if (showExpressCheckoutSpinner) {
+    return (
+      <Box
+        position="fixed"
+        top={0}
+        left={0}
+        right={0}
+        bottom={0}
+        bg="mono5"
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+      >
+        <Flex alignItems="center" flexDirection="column">
+          <Box position="relative" height={100}>
+            <Spinner size="large" color="blue100" />
+          </Box>
+
+          <Text variant="md" color="mono100">
+            Submitting your order
+          </Text>
+
+          <Text variant="sm" color="mono60">
+            Please do not close or refresh this window
+          </Text>
+        </Flex>
+      </Box>
+    )
+  }
 
   return (
     <Skeleton aria-label="Checkout loading skeleton" bg="mono5" height="100vh">

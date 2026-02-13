@@ -45,15 +45,18 @@ let shippingRateId = "DOMESTIC_FLAT"
 
 const mockRedirectToOrderDetails = jest.fn()
 const mockSetExpressCheckoutLoaded = jest.fn()
-const mockSetShowOrderSubmittingSpinner = jest.fn()
+const mockSetExpressCheckoutState = jest.fn()
 const mockSetCheckoutMode = jest.fn()
 const mockSetConfirmationToken = jest.fn()
+const mockEditFulfillmentDetails = jest.fn()
+
 const mockCheckoutContext = {
   setExpressCheckoutLoaded: mockSetExpressCheckoutLoaded,
-  setExpressCheckoutSubmitting: mockSetShowOrderSubmittingSpinner,
+  setExpressCheckoutState: mockSetExpressCheckoutState,
   redirectToOrderDetails: mockRedirectToOrderDetails,
   setCheckoutMode: mockSetCheckoutMode,
   setConfirmationToken: mockSetConfirmationToken,
+  editFulfillmentDetails: mockEditFulfillmentDetails,
 } as any
 
 jest.mock("Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext", () => ({
@@ -620,24 +623,48 @@ describe("ExpressCheckoutUI", () => {
       })
     })
 
-    it("stores error when there is an error", async () => {
+    it("displays error when there is an error", async () => {
       const mockErrorRef = { current: "test_error_code" }
       jest.spyOn(React, "useRef").mockReturnValue(mockErrorRef)
 
-      renderWithRelay({
+      // Set checkout mode to express before rendering
+      mockCheckoutContext.checkoutMode = "express"
+
+      const { mockResolveLastOperation } = renderWithRelay({
         Order: () => ({ ...orderData }),
       })
 
       fireEvent.click(screen.getByTestId("express-checkout-cancel"))
 
-      expect(sessionStorage.setItem).toHaveBeenCalledWith(
-        "expressCheckoutError",
-        "test_error_code",
-      )
+      // Resolve the mutations
+      await mockResolveLastOperation({
+        unsetOrderPaymentMethodPayload: () => ({
+          orderOrError: {
+            __typename: "OrderMutationSuccess",
+            order: orderData,
+          },
+        }),
+      })
+
+      await mockResolveLastOperation({
+        unsetOrderFulfillmentOptionPayload: () => ({
+          orderOrError: {
+            __typename: "OrderMutationSuccess",
+            order: orderData,
+          },
+        }),
+      })
+
+      await flushPromiseQueue()
+
+      // Error banner should be displayed
+      await waitFor(() => {
+        expect(screen.getByText("An error occurred")).toBeInTheDocument()
+      })
     })
   })
 
-  it("resets the order and reloads the page", async () => {
+  it("resets the order without reloading the page", async () => {
     const { mockResolveLastOperation, env } = renderWithRelay({
       Order: () => orderData,
     })
@@ -672,66 +699,133 @@ describe("ExpressCheckoutUI", () => {
 
     await flushPromiseQueue()
     expect(env.mock.getAllOperations()).toHaveLength(0)
-    expect(window.location.reload).toHaveBeenCalled()
+
+    // Verify state is reset without page reload
+    expect(mockSetCheckoutMode).toHaveBeenCalledWith("standard")
+    expect(mockSetExpressCheckoutState).toHaveBeenCalledWith(null)
+    expect(window.location.reload).not.toHaveBeenCalled()
+  })
+
+  it("displays error after resetOrder changes checkoutMode to standard", async () => {
+    const mockErrorRef = { current: "test_error_code" }
+    jest.spyOn(React, "useRef").mockReturnValue(mockErrorRef)
+
+    // Don't set checkoutMode to "express" - it will be "standard" after resetOrder
+    const { mockResolveLastOperation } = renderWithRelay({
+      Order: () => ({ ...orderData }),
+    })
+
+    fireEvent.click(screen.getByTestId("express-checkout-cancel"))
+
+    // Resolve the mutations
+    await mockResolveLastOperation({
+      unsetOrderPaymentMethodPayload: () => ({
+        orderOrError: {
+          __typename: "OrderMutationSuccess",
+          order: orderData,
+        },
+      }),
+    })
+
+    await mockResolveLastOperation({
+      unsetOrderFulfillmentOptionPayload: () => ({
+        orderOrError: {
+          __typename: "OrderMutationSuccess",
+          order: orderData,
+        },
+      }),
+    })
+
+    await flushPromiseQueue()
+
+    // After resetOrder completes, checkoutMode is set to "standard"
+    expect(mockSetCheckoutMode).toHaveBeenCalledWith("standard")
+
+    // Error banner should still be displayed even though checkoutMode is "standard"
+    await waitFor(() => {
+      expect(screen.getByText("An error occurred")).toBeInTheDocument()
+    })
   })
 
   describe("Error message handling by error code", () => {
-    beforeEach(() => {
-      jest
-        .spyOn(window.sessionStorage.__proto__, "setItem")
-        .mockImplementation(() => {})
-    })
-
-    afterEach(() => {
-      jest.clearAllMocks()
-    })
-
     it("shows payment failed message for backend processing errors", async () => {
-      const mockErrorRef = { current: "processing_error" }
+      const mockErrorRef = { current: "create_credit_card_failed" }
       jest.spyOn(React, "useRef").mockReturnValue(mockErrorRef)
 
-      renderWithRelay({
+      const { mockResolveLastOperation } = renderWithRelay({
         Order: () => ({ ...orderData }),
       })
 
+      // Set checkout mode to express
+      mockCheckoutContext.checkoutMode = "express"
+
       fireEvent.click(screen.getByTestId("express-checkout-cancel"))
 
-      expect(sessionStorage.setItem).toHaveBeenCalledWith(
-        "expressCheckoutError",
-        "processing_error",
-      )
-    })
-
-    it("shows payment verification failed for confirmation token errors", async () => {
-      const mockErrorRef = { current: "confirmation_token_error" }
-      jest.spyOn(React, "useRef").mockReturnValue(mockErrorRef)
-
-      renderWithRelay({
-        Order: () => ({ ...orderData }),
+      // Resolve the mutations
+      await mockResolveLastOperation({
+        unsetOrderPaymentMethodPayload: () => ({
+          orderOrError: {
+            __typename: "OrderMutationSuccess",
+            order: orderData,
+          },
+        }),
       })
 
-      fireEvent.click(screen.getByTestId("express-checkout-cancel"))
+      await mockResolveLastOperation({
+        unsetOrderFulfillmentOptionPayload: () => ({
+          orderOrError: {
+            __typename: "OrderMutationSuccess",
+            order: orderData,
+          },
+        }),
+      })
 
-      expect(sessionStorage.setItem).toHaveBeenCalledWith(
-        "expressCheckoutError",
-        "confirmation_token_error",
-      )
+      await flushPromiseQueue()
+
+      // Error banner should display payment failed message
+      await waitFor(() => {
+        expect(screen.getByText("Payment failed")).toBeInTheDocument()
+      })
     })
 
     it("shows fallback message for unhandled errors", async () => {
       const mockErrorRef = { current: "unknown_error" }
       jest.spyOn(React, "useRef").mockReturnValue(mockErrorRef)
 
-      renderWithRelay({
+      const { mockResolveLastOperation } = renderWithRelay({
         Order: () => ({ ...orderData }),
       })
 
+      // Set checkout mode to express
+      mockCheckoutContext.checkoutMode = "express"
+
       fireEvent.click(screen.getByTestId("express-checkout-cancel"))
 
-      expect(sessionStorage.setItem).toHaveBeenCalledWith(
-        "expressCheckoutError",
-        "unknown_error",
-      )
+      // Resolve the mutations
+      await mockResolveLastOperation({
+        unsetOrderPaymentMethodPayload: () => ({
+          orderOrError: {
+            __typename: "OrderMutationSuccess",
+            order: orderData,
+          },
+        }),
+      })
+
+      await mockResolveLastOperation({
+        unsetOrderFulfillmentOptionPayload: () => ({
+          orderOrError: {
+            __typename: "OrderMutationSuccess",
+            order: orderData,
+          },
+        }),
+      })
+
+      await flushPromiseQueue()
+
+      // Error banner should display fallback message
+      await waitFor(() => {
+        expect(screen.getByText("An error occurred")).toBeInTheDocument()
+      })
     })
   })
 })

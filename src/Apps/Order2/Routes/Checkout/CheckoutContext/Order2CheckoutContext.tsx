@@ -58,8 +58,8 @@ type Messages = Partial<
 export interface Order2CheckoutModel {
   // State
   isLoading: boolean
-  /** Order is redirecting to the details page */
-  expressCheckoutSubmitting: boolean
+  /** Express checkout loading state: 'submit' when submitting payment, 'active' when waiting for user to complete payment, null when idle */
+  expressCheckoutState: "submit" | "active" | null
   expressCheckoutPaymentMethods: ExpressCheckoutPaymentMethod[] | null
   steps: CheckoutStep[]
   activeFulfillmentDetailsTab: FulfillmentDetailsTab | null
@@ -77,7 +77,7 @@ export interface Order2CheckoutModel {
 
   // Actions
   setExpressCheckoutLoaded: Action<this, ExpressCheckoutPaymentMethod[]>
-  setExpressCheckoutSubmitting: Action<this, boolean>
+  setExpressCheckoutState: Action<this, "submit" | "active" | null>
   setFulfillmentDetailsComplete: Action<
     this,
     { isPickup?: boolean; isFlatShipping?: boolean }
@@ -113,7 +113,7 @@ export const Order2CheckoutContext: ReturnType<
 > = createContextStore<Order2CheckoutModel>(initialState => ({
   // Initial state with defaults
   isLoading: true,
-  expressCheckoutSubmitting: false,
+  expressCheckoutState: null,
   expressCheckoutPaymentMethods: null,
   activeFulfillmentDetailsTab: null,
   confirmationToken: null,
@@ -140,8 +140,8 @@ export const Order2CheckoutContext: ReturnType<
     }
   }),
 
-  setExpressCheckoutSubmitting: action((state, isSubmitting) => {
-    state.expressCheckoutSubmitting = isSubmitting
+  setExpressCheckoutState: action((state, isSubmitting) => {
+    state.expressCheckoutState = isSubmitting
   }),
 
   setActiveFulfillmentDetailsTab: action(
@@ -504,7 +504,7 @@ export const Order2CheckoutContextProvider: React.FC<
   const runtimeModel = {
     // Default values
     isLoading: true,
-    expressCheckoutSubmitting: false,
+    expressCheckoutState: null,
     expressCheckoutPaymentMethods: null,
     activeFulfillmentDetailsTab: null,
     confirmationToken: null,
@@ -570,7 +570,7 @@ const initialStateForOrder = (
 
   return {
     isLoading: true,
-    expressCheckoutSubmitting: false,
+    expressCheckoutState: null,
     expressCheckoutPaymentMethods: null,
     activeFulfillmentDetailsTab: fulfillmentComplete
       ? (activeFulfillmentDetailsTab as FulfillmentDetailsTab)
