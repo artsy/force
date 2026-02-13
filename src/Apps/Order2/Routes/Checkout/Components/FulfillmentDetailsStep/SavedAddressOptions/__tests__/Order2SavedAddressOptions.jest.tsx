@@ -139,7 +139,7 @@ describe("SavedAddressOptions", () => {
     mockCheckoutContext = {
       setUserAddressMode: jest.fn(),
       userAddressMode: null,
-      setStepErrorMessage: jest.fn(),
+      setSectionErrorMessage: jest.fn(),
       checkoutTracking: {
         clickedShippingAddress: jest.fn(),
       },
@@ -256,13 +256,15 @@ describe("SavedAddressOptions", () => {
       await userEvent.click(invalidAddress)
 
       await waitFor(() => {
-        expect(mockCheckoutContext.setStepErrorMessage).toHaveBeenCalledWith({
-          step: CheckoutStepName.FULFILLMENT_DETAILS,
-          error: {
-            title: "Missing required information",
-            message: "Edit your address and/or phone number to continue.",
+        expect(mockCheckoutContext.setSectionErrorMessage).toHaveBeenCalledWith(
+          {
+            section: CheckoutStepName.FULFILLMENT_DETAILS,
+            error: {
+              title: "Missing required information",
+              message: "Edit your address and/or phone number to continue.",
+            },
           },
-        })
+        )
       })
     })
 
@@ -290,13 +292,16 @@ describe("SavedAddressOptions", () => {
       await userEvent.click(unshippableAddress)
 
       await waitFor(() => {
-        expect(mockCheckoutContext.setStepErrorMessage).toHaveBeenCalledWith({
-          step: CheckoutStepName.FULFILLMENT_DETAILS,
-          error: {
-            title: "Unable to ship to this address",
-            message: "Select a different address or add a new one to continue.",
+        expect(mockCheckoutContext.setSectionErrorMessage).toHaveBeenCalledWith(
+          {
+            section: CheckoutStepName.FULFILLMENT_DETAILS,
+            error: {
+              title: "Unable to ship to this address",
+              message:
+                "Select a different address or add a new one to continue.",
+            },
           },
-        })
+        )
       })
     })
 
@@ -324,10 +329,12 @@ describe("SavedAddressOptions", () => {
       await userEvent.click(unshippableAddress)
 
       await waitFor(() => {
-        expect(mockCheckoutContext.setStepErrorMessage).toHaveBeenCalledWith({
-          step: CheckoutStepName.FULFILLMENT_DETAILS,
-          error: null,
-        })
+        expect(mockCheckoutContext.setSectionErrorMessage).toHaveBeenCalledWith(
+          {
+            section: CheckoutStepName.FULFILLMENT_DETAILS,
+            error: null,
+          },
+        )
       })
     })
 
@@ -349,10 +356,12 @@ describe("SavedAddressOptions", () => {
       await userEvent.click(validAddress)
 
       await waitFor(() => {
-        expect(mockCheckoutContext.setStepErrorMessage).toHaveBeenCalledWith({
-          step: CheckoutStepName.FULFILLMENT_DETAILS,
-          error: null,
-        })
+        expect(mockCheckoutContext.setSectionErrorMessage).toHaveBeenCalledWith(
+          {
+            section: CheckoutStepName.FULFILLMENT_DETAILS,
+            error: null,
+          },
+        )
       })
     })
   })
@@ -490,13 +499,15 @@ describe("SavedAddressOptions", () => {
       await userEvent.click(invalidAddress)
 
       await waitFor(() => {
-        expect(mockCheckoutContext.setStepErrorMessage).toHaveBeenCalledWith({
-          step: CheckoutStepName.FULFILLMENT_DETAILS,
-          error: {
-            title: "Missing required information",
-            message: "Edit your address and/or phone number to continue.",
+        expect(mockCheckoutContext.setSectionErrorMessage).toHaveBeenCalledWith(
+          {
+            section: CheckoutStepName.FULFILLMENT_DETAILS,
+            error: {
+              title: "Missing required information",
+              message: "Edit your address and/or phone number to continue.",
+            },
           },
-        })
+        )
       })
 
       const updatedValidAddress: FormikContextWithAddress = {
@@ -522,8 +533,8 @@ describe("SavedAddressOptions", () => {
           const { isShippable, isValid } = address
 
           if (isShippable && isValid) {
-            mockCheckoutContext.setStepErrorMessage({
-              step: CheckoutStepName.FULFILLMENT_DETAILS,
+            mockCheckoutContext.setSectionErrorMessage({
+              section: CheckoutStepName.FULFILLMENT_DETAILS,
               error: null,
             })
           }
@@ -535,8 +546,10 @@ describe("SavedAddressOptions", () => {
         mockInvalidAddressWithMissingCity.internalID,
       )
 
-      expect(mockCheckoutContext.setStepErrorMessage).toHaveBeenLastCalledWith({
-        step: CheckoutStepName.FULFILLMENT_DETAILS,
+      expect(
+        mockCheckoutContext.setSectionErrorMessage,
+      ).toHaveBeenLastCalledWith({
+        section: CheckoutStepName.FULFILLMENT_DETAILS,
         error: null,
       })
     })
@@ -556,7 +569,7 @@ describe("SavedAddressOptions", () => {
         </TestWrapper>,
       )
 
-      expect(mockCheckoutContext.setStepErrorMessage).not.toHaveBeenCalled()
+      expect(mockCheckoutContext.setSectionErrorMessage).not.toHaveBeenCalled()
 
       const updatedInvalidAddress: FormikContextWithAddress = {
         ...mockUSAddress1,
@@ -580,8 +593,8 @@ describe("SavedAddressOptions", () => {
         const isShippable = ["US"].includes(values.address.country)
 
         if (!isShippable) {
-          mockCheckoutContext.setStepErrorMessage({
-            step: CheckoutStepName.FULFILLMENT_DETAILS,
+          mockCheckoutContext.setSectionErrorMessage({
+            section: CheckoutStepName.FULFILLMENT_DETAILS,
             error: {
               title: "Unable to ship to this address",
               message:
@@ -589,16 +602,16 @@ describe("SavedAddressOptions", () => {
             },
           })
         } else if (!isValid) {
-          mockCheckoutContext.setStepErrorMessage({
-            step: CheckoutStepName.FULFILLMENT_DETAILS,
+          mockCheckoutContext.setSectionErrorMessage({
+            section: CheckoutStepName.FULFILLMENT_DETAILS,
             error: {
               title: "Missing required information",
               message: "Edit your address and/or phone number to continue.",
             },
           })
         } else {
-          mockCheckoutContext.setStepErrorMessage({
-            step: CheckoutStepName.FULFILLMENT_DETAILS,
+          mockCheckoutContext.setSectionErrorMessage({
+            section: CheckoutStepName.FULFILLMENT_DETAILS,
             error: null,
           })
         }
@@ -606,8 +619,10 @@ describe("SavedAddressOptions", () => {
 
       await mockOnSaveAddress(updatedInvalidAddress)
 
-      expect(mockCheckoutContext.setStepErrorMessage).toHaveBeenLastCalledWith({
-        step: CheckoutStepName.FULFILLMENT_DETAILS,
+      expect(
+        mockCheckoutContext.setSectionErrorMessage,
+      ).toHaveBeenLastCalledWith({
+        section: CheckoutStepName.FULFILLMENT_DETAILS,
         error: {
           title: "Missing required information",
           message: "Edit your address and/or phone number to continue.",

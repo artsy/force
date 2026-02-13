@@ -56,7 +56,7 @@ export const SavedAddressOptions = ({
   const {
     setUserAddressMode,
     userAddressMode,
-    setStepErrorMessage,
+    setSectionErrorMessage,
     checkoutTracking,
     steps,
     orderData,
@@ -124,28 +124,28 @@ export const SavedAddressOptions = ({
       })
 
       if (!isShippable && !isOfferOrder) {
-        return setStepErrorMessage({
-          step: CheckoutStepName.FULFILLMENT_DETAILS,
+        return setSectionErrorMessage({
+          section: CheckoutStepName.FULFILLMENT_DETAILS,
           error: ADDRESS_ERROR_MESSAGES.unableToShipToAddress,
         })
       }
 
       if (!isValid) {
-        return setStepErrorMessage({
-          step: CheckoutStepName.FULFILLMENT_DETAILS,
+        return setSectionErrorMessage({
+          section: CheckoutStepName.FULFILLMENT_DETAILS,
           error: ADDRESS_ERROR_MESSAGES.missingAddressInfo,
         })
       }
 
-      setStepErrorMessage({
-        step: CheckoutStepName.FULFILLMENT_DETAILS,
+      setSectionErrorMessage({
+        section: CheckoutStepName.FULFILLMENT_DETAILS,
         error: null,
       })
     },
     [
       onSelectAddress,
       setUserAddressMode,
-      setStepErrorMessage,
+      setSectionErrorMessage,
       availableShippingCountries,
       isOfferOrder,
     ],
@@ -180,25 +180,25 @@ export const SavedAddressOptions = ({
       await onSelectAddress(processedAddress)
 
       if (!isShippable && !isOfferOrder) {
-        return setStepErrorMessage({
-          step: CheckoutStepName.FULFILLMENT_DETAILS,
+        return setSectionErrorMessage({
+          section: CheckoutStepName.FULFILLMENT_DETAILS,
           error: ADDRESS_ERROR_MESSAGES.unableToShipToAddress,
         })
       }
 
       if (!isValid) {
-        return setStepErrorMessage({
-          step: CheckoutStepName.FULFILLMENT_DETAILS,
+        return setSectionErrorMessage({
+          section: CheckoutStepName.FULFILLMENT_DETAILS,
           error: ADDRESS_ERROR_MESSAGES.missingAddressInfo,
         })
       }
 
-      setStepErrorMessage({
-        step: CheckoutStepName.FULFILLMENT_DETAILS,
+      setSectionErrorMessage({
+        section: CheckoutStepName.FULFILLMENT_DETAILS,
         error: null,
       })
     },
-    [checkoutTracking, onSelectAddress, setStepErrorMessage, isOfferOrder],
+    [checkoutTracking, onSelectAddress, setSectionErrorMessage, isOfferOrder],
   )
 
   if (userAddressMode?.mode === "add") {
@@ -271,8 +271,8 @@ export const SavedAddressOptions = ({
       <Clickable
         onClick={() => {
           checkoutTracking.clickedAddNewShippingAddress()
-          setStepErrorMessage({
-            step: CheckoutStepName.FULFILLMENT_DETAILS,
+          setSectionErrorMessage({
+            section: CheckoutStepName.FULFILLMENT_DETAILS,
             error: null,
           })
           setUserAddressMode({ mode: "add" })

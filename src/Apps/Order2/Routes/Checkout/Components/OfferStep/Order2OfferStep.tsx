@@ -73,7 +73,7 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
     setOfferAmountComplete,
     checkoutTracking,
     messages,
-    setStepErrorMessage,
+    setSectionErrorMessage,
   } = useCheckoutContext()
 
   const offerAmountError = messages[CheckoutStepName.OFFER_AMOUNT]?.error
@@ -110,8 +110,8 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
   }) => {
     const handleSubmitError = (error: { code: string }) => {
       logger.error(error)
-      setStepErrorMessage({
-        step: CheckoutStepName.OFFER_AMOUNT,
+      setSectionErrorMessage({
+        section: CheckoutStepName.OFFER_AMOUNT,
         error: offerError(error.code),
       })
     }
@@ -202,12 +202,12 @@ const Order2OfferStepFormContent: React.FC<Order2OfferStepFormContentProps> = ({
 }) => {
   const { values, errors, setFieldValue, submitForm } =
     useFormikContext<OfferFormValues>()
-  const { setStepErrorMessage, checkoutTracking } = useCheckoutContext()
+  const { setSectionErrorMessage, checkoutTracking } = useCheckoutContext()
   const errorBannerRef = useScrollToErrorBanner(CheckoutStepName.OFFER_AMOUNT)
 
   const clearOfferError = () => {
-    setStepErrorMessage({
-      step: CheckoutStepName.OFFER_AMOUNT,
+    setSectionErrorMessage({
+      section: CheckoutStepName.OFFER_AMOUNT,
       error: null,
     })
   }
@@ -247,8 +247,8 @@ const Order2OfferStepFormContent: React.FC<Order2OfferStepFormContentProps> = ({
   const onContinueButtonPressed = async () => {
     if (values.offerValue === undefined || values.offerValue === 0) {
       setFieldValue("offerValue", values.offerValue, true)
-      setStepErrorMessage({
-        step: CheckoutStepName.OFFER_AMOUNT,
+      setSectionErrorMessage({
+        section: CheckoutStepName.OFFER_AMOUNT,
         error: offerError(),
       })
       return

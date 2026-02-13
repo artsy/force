@@ -8,6 +8,9 @@ export enum CheckoutStepName {
   CONFIRMATION = "CONFIRMATION",
 }
 
+// Sections that can display error messages
+export type CheckoutSection = CheckoutStepName | "EXPRESS_CHECKOUT"
+
 export enum CheckoutStepState {
   UPCOMING = "UPCOMING",
   ACTIVE = "ACTIVE",

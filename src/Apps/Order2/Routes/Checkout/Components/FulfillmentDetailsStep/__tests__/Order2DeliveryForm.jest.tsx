@@ -32,7 +32,7 @@ beforeEach(() => {
     },
     setFulfillmentDetailsComplete: jest.fn(),
     setUserAddressMode: jest.fn(),
-    setStepErrorMessage: jest.fn(),
+    setSectionErrorMessage: jest.fn(),
     userAddressMode: null,
     messages: {},
   }
@@ -477,10 +477,12 @@ describe("Order2DeliveryForm", () => {
           "standard",
         )
 
-        expect(mockCheckoutContext.setStepErrorMessage).toHaveBeenCalledWith({
-          error: null,
-          step: "FULFILLMENT_DETAILS",
-        })
+        expect(mockCheckoutContext.setSectionErrorMessage).toHaveBeenCalledWith(
+          {
+            error: null,
+            section: "FULFILLMENT_DETAILS",
+          },
+        )
 
         expect(
           mockCheckoutContext.setFulfillmentDetailsComplete,
@@ -937,12 +939,14 @@ describe("Order2DeliveryForm", () => {
           "standard",
         )
 
-        expect(mockCheckoutContext.setStepErrorMessage).toHaveBeenCalledWith({
-          error: expect.objectContaining({
-            title: "Unable to provide shipping quote",
-          }),
-          step: "FULFILLMENT_DETAILS",
-        })
+        expect(mockCheckoutContext.setSectionErrorMessage).toHaveBeenCalledWith(
+          {
+            error: expect.objectContaining({
+              title: "Unable to provide shipping quote",
+            }),
+            section: "FULFILLMENT_DETAILS",
+          },
+        )
 
         expect(
           mockCheckoutContext.setFulfillmentDetailsComplete,
@@ -1044,10 +1048,12 @@ describe("Order2DeliveryForm", () => {
         await flushPromiseQueue()
 
         // OFFER mode should NOT show error for missing shipping options
-        expect(mockCheckoutContext.setStepErrorMessage).toHaveBeenCalledWith({
-          error: null,
-          step: "FULFILLMENT_DETAILS",
-        })
+        expect(mockCheckoutContext.setSectionErrorMessage).toHaveBeenCalledWith(
+          {
+            error: null,
+            section: "FULFILLMENT_DETAILS",
+          },
+        )
 
         // Should proceed with checkout
         expect(
