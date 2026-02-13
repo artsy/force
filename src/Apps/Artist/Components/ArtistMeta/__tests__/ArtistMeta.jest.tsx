@@ -190,6 +190,163 @@ describe("AdminMeta", () => {
       )
       expect(structuredDataTag).not.toBeNull()
     })
+
+    describe("WebPage and Person URLs", () => {
+      const getStructuredData = () => {
+        const structuredDataTag = document.querySelector(
+          "script[type='application/ld+json']",
+        )
+        return structuredDataTag
+          ? JSON.parse(structuredDataTag.textContent || "{}")
+          : null
+      }
+
+      it("uses artist root URL for default artist page", () => {
+        mockLocation.pathname = "/artist/andy-warhol"
+        const artist = { href: "/artist/andy-warhol" }
+        renderWithRelay({ Artist: () => artist })
+
+        const structuredData = getStructuredData()
+        const graph = structuredData?.["@graph"]
+
+        const personSchema = graph?.find(
+          (item: any) => item["@type"] === "Person",
+        )
+        const webPageSchema = graph?.find(
+          (item: any) => item["@type"] === "WebPage",
+        )
+
+        expect(personSchema?.["@id"]).toBe("undefined/artist/andy-warhol")
+        expect(personSchema?.mainEntityOfPage).toBe(
+          "undefined/artist/andy-warhol",
+        )
+        expect(personSchema?.url).toBe("undefined/artist/andy-warhol")
+
+        expect(webPageSchema?.["@id"]).toBe("undefined/artist/andy-warhol")
+        expect(webPageSchema?.url).toBe("undefined/artist/andy-warhol")
+        expect(webPageSchema?.mainEntity?.["@id"]).toBe(
+          "undefined/artist/andy-warhol",
+        )
+      })
+
+      it("uses articles URL for articles subpage", () => {
+        mockLocation.pathname = "/artist/andy-warhol/articles"
+        const artist = { href: "/artist/andy-warhol" }
+        renderWithRelay({ Artist: () => artist })
+
+        const structuredData = getStructuredData()
+        const graph = structuredData?.["@graph"]
+
+        const personSchema = graph?.find(
+          (item: any) => item["@type"] === "Person",
+        )
+        const webPageSchema = graph?.find(
+          (item: any) => item["@type"] === "WebPage",
+        )
+
+        expect(personSchema?.["@id"]).toBe("undefined/artist/andy-warhol")
+        expect(personSchema?.mainEntityOfPage).toBe(
+          "undefined/artist/andy-warhol/articles",
+        )
+        expect(personSchema?.url).toBe("undefined/artist/andy-warhol")
+
+        expect(webPageSchema?.["@id"]).toBe(
+          "undefined/artist/andy-warhol/articles",
+        )
+        expect(webPageSchema?.url).toBe("undefined/artist/andy-warhol/articles")
+        expect(webPageSchema?.mainEntity?.["@id"]).toBe(
+          "undefined/artist/andy-warhol",
+        )
+      })
+
+      it("uses cv URL for cv subpage", () => {
+        mockLocation.pathname = "/artist/andy-warhol/cv"
+        const artist = { href: "/artist/andy-warhol" }
+        renderWithRelay({ Artist: () => artist })
+
+        const structuredData = getStructuredData()
+        const graph = structuredData?.["@graph"]
+
+        const personSchema = graph?.find(
+          (item: any) => item["@type"] === "Person",
+        )
+        const webPageSchema = graph?.find(
+          (item: any) => item["@type"] === "WebPage",
+        )
+
+        expect(personSchema?.["@id"]).toBe("undefined/artist/andy-warhol")
+        expect(personSchema?.mainEntityOfPage).toBe(
+          "undefined/artist/andy-warhol/cv",
+        )
+        expect(personSchema?.url).toBe("undefined/artist/andy-warhol")
+
+        expect(webPageSchema?.["@id"]).toBe("undefined/artist/andy-warhol/cv")
+        expect(webPageSchema?.url).toBe("undefined/artist/andy-warhol/cv")
+        expect(webPageSchema?.mainEntity?.["@id"]).toBe(
+          "undefined/artist/andy-warhol",
+        )
+      })
+
+      it("uses series URL for series subpage", () => {
+        mockLocation.pathname = "/artist/andy-warhol/series"
+        const artist = { href: "/artist/andy-warhol" }
+        renderWithRelay({ Artist: () => artist })
+
+        const structuredData = getStructuredData()
+        const graph = structuredData?.["@graph"]
+
+        const personSchema = graph?.find(
+          (item: any) => item["@type"] === "Person",
+        )
+        const webPageSchema = graph?.find(
+          (item: any) => item["@type"] === "WebPage",
+        )
+
+        expect(personSchema?.["@id"]).toBe("undefined/artist/andy-warhol")
+        expect(personSchema?.mainEntityOfPage).toBe(
+          "undefined/artist/andy-warhol/series",
+        )
+        expect(personSchema?.url).toBe("undefined/artist/andy-warhol")
+
+        expect(webPageSchema?.["@id"]).toBe(
+          "undefined/artist/andy-warhol/series",
+        )
+        expect(webPageSchema?.url).toBe("undefined/artist/andy-warhol/series")
+        expect(webPageSchema?.mainEntity?.["@id"]).toBe(
+          "undefined/artist/andy-warhol",
+        )
+      })
+
+      it("uses shows URL for shows subpage", () => {
+        mockLocation.pathname = "/artist/andy-warhol/shows"
+        const artist = { href: "/artist/andy-warhol" }
+        renderWithRelay({ Artist: () => artist })
+
+        const structuredData = getStructuredData()
+        const graph = structuredData?.["@graph"]
+
+        const personSchema = graph?.find(
+          (item: any) => item["@type"] === "Person",
+        )
+        const webPageSchema = graph?.find(
+          (item: any) => item["@type"] === "WebPage",
+        )
+
+        expect(personSchema?.["@id"]).toBe("undefined/artist/andy-warhol")
+        expect(personSchema?.mainEntityOfPage).toBe(
+          "undefined/artist/andy-warhol/shows",
+        )
+        expect(personSchema?.url).toBe("undefined/artist/andy-warhol")
+
+        expect(webPageSchema?.["@id"]).toBe(
+          "undefined/artist/andy-warhol/shows",
+        )
+        expect(webPageSchema?.url).toBe("undefined/artist/andy-warhol/shows")
+        expect(webPageSchema?.mainEntity?.["@id"]).toBe(
+          "undefined/artist/andy-warhol",
+        )
+      })
+    })
   })
 
   describe("route-specific titles and descriptions", () => {
