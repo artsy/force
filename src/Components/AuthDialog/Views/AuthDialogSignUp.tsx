@@ -130,6 +130,7 @@ export const AuthDialogSignUp: FC<React.PropsWithChildren<unknown>> = () => {
                 </Box>
                 <Input
                   display={"none"}
+                  onChange={handleChange}
                   name={"signupValidator"}
                   value={values.signupValidator}
                 />
