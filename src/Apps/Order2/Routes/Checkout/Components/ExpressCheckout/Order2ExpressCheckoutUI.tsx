@@ -31,7 +31,6 @@ import {
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { fetchAndSetConfirmationToken } from "Apps/Order2/Utils/confirmationTokenUtils"
 import { LocalCheckoutError } from "Apps/Order2/Utils/errors"
-import { preventHardReload } from "Apps/Order2/Utils/navigationGuards"
 import { RouterLink } from "System/Components/RouterLink"
 import createLogger from "Utils/logger"
 import type {
@@ -229,8 +228,6 @@ export const Order2ExpressCheckoutUI: React.FC<
   const resetOrder = async (options?: { errorCode?: string }) => {
     const { errorCode } = options || {}
 
-    window.removeEventListener("beforeunload", preventHardReload)
-
     try {
       const { unsetOrderPaymentMethod } =
         await unsetPaymentMethodMutation.submitMutation({
@@ -389,7 +386,6 @@ export const Order2ExpressCheckoutUI: React.FC<
     expressPaymentType,
     shippingRate,
   }: StripeExpressCheckoutElementConfirmEvent) => {
-    window.removeEventListener("beforeunload", preventHardReload)
     setExpressCheckoutState("submit")
 
     const creditCardWalletType =
