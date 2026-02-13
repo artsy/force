@@ -122,7 +122,7 @@ const InquiryInquiry: React.FC<
       label: "Certificate of Authenticity",
       value: artwork.certificateOfAuthenticity?.details,
     },
-  ].filter(item => item.value != null && item.value !== "")
+  ].filter(Boolean)
 
   return (
     <Box as="form" onSubmit={handleSubmit}>
