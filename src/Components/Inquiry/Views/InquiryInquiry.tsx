@@ -30,6 +30,7 @@ import type * as React from "react"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useArtworkDimensions } from "Apps/Artwork/useArtworkDimensions"
+import { Media } from "Utils/Responsive"
 
 const INQUIRY_CHECKBOXES_FLAG = "emerald_inquiry-checkboxes-on-web"
 
@@ -154,89 +155,93 @@ const InquiryInquiry: React.FC<
       )}
 
       {/* Desktop */}
-      <Flex alignItems="center" display={["none", "flex"]}>
-        <Image
-          src={artwork.image?.resized?.src}
-          srcSet={artwork.image?.resized?.srcSet}
-          width={artwork.image?.resized?.width}
-          height={artwork.image?.resized?.height}
-          alt=""
-          lazyLoad
-        />
+      <Media greaterThan="xs">
+        <Flex alignItems="center">
+          <Image
+            src={artwork.image?.resized?.src}
+            srcSet={artwork.image?.resized?.srcSet}
+            width={artwork.image?.resized?.width}
+            height={artwork.image?.resized?.height}
+            alt=""
+            lazyLoad
+          />
 
-        <Box flex={1} ml={2}>
-          <Text variant="sm-display">{artwork.artist?.name}</Text>
+          <Box flex={1} ml={2}>
+            <Text variant="sm-display">{artwork.artist?.name}</Text>
 
-          <Text variant="sm-display" color="mono60">
-            {artwork.title} ({artwork.date})
-          </Text>
+            <Text variant="sm-display" color="mono60">
+              {artwork.title} ({artwork.date})
+            </Text>
 
-          <Text variant="sm-display" color="mono60" fontStyle="italic">
-            {artwork.partner?.name}
-          </Text>
-        </Box>
-      </Flex>
+            <Text variant="sm-display" color="mono60" fontStyle="italic">
+              {artwork.partner?.name}
+            </Text>
+          </Box>
+        </Flex>
+      </Media>
 
       {/* Mobile */}
       {/* Margin top and bottom below are needed to offset Expandable's spacing */}
-      <Box display={["block", "none"]} mt={-2} mb={-1}>
-        <Expandable
-          label={
-            <Flex alignItems="center">
-              <Image
-                src={artwork.image?.resized?.src}
-                srcSet={artwork.image?.resized?.srcSet}
-                width={artwork.image?.resized?.width}
-                height={artwork.image?.resized?.height}
-                alt=""
-                lazyLoad
-              />
+      <Media at="xs">
+        <Box mt={-2} mb={-1}>
+          <Expandable
+            label={
+              <Flex alignItems="center">
+                <Image
+                  src={artwork.image?.resized?.src}
+                  srcSet={artwork.image?.resized?.srcSet}
+                  width={artwork.image?.resized?.width}
+                  height={artwork.image?.resized?.height}
+                  alt=""
+                  lazyLoad
+                />
 
-              <Box flex={1} ml={1} overflow="hidden">
-                {/* overflowEllipsis is not working properly within the Expandable label, that's why lineClamp is being used here */}
-                <Text variant="sm-display" lineClamp={1}>
-                  {artwork.artist?.name}
-                </Text>
-                <Text variant="sm-display" color="mono60" lineClamp={1}>
-                  {artwork.title} ({artwork.date})
-                </Text>
-                <Text
-                  variant="sm-display"
-                  color="mono60"
-                  fontStyle="italic"
-                  lineClamp={1}
-                >
-                  {artwork.partner?.name}
-                </Text>
-              </Box>
-            </Flex>
-          }
-          borderColor="transparent"
-        >
-          {artworkDetailItems.length > 0 && (
-            <>
-              <Spacer y={2} />
-              <Join separator={<Spacer y={1} />}>
-                {artworkDetailItems.map(({ label, value }) => (
-                  <Flex key={label}>
-                    <Text
-                      variant="xs"
-                      color="mono60"
-                      width={100}
-                      flexShrink={0}
-                      mr={2}
-                    >
-                      {label}
-                    </Text>
-                    <Text variant="xs">{value}</Text>
-                  </Flex>
-                ))}
-              </Join>
-              <Spacer y={2} />
-            </>
-          )}
-        </Expandable>
-      </Box>
+                <Box flex={1} ml={1} overflow="hidden">
+                  {/* overflowEllipsis is not working properly within the Expandable label, that's why lineClamp is being used here */}
+                  <Text variant="sm-display" lineClamp={1}>
+                    {artwork.artist?.name}
+                  </Text>
+                  <Text variant="sm-display" color="mono60" lineClamp={1}>
+                    {artwork.title} ({artwork.date})
+                  </Text>
+                  <Text
+                    variant="sm-display"
+                    color="mono60"
+                    fontStyle="italic"
+                    lineClamp={1}
+                  >
+                    {artwork.partner?.name}
+                  </Text>
+                </Box>
+              </Flex>
+            }
+            borderColor="transparent"
+          >
+            {artworkDetailItems.length > 0 && (
+              <>
+                <Spacer y={2} />
+                <Join separator={<Spacer y={1} />}>
+                  {artworkDetailItems.map(({ label, value }) => (
+                    <Flex key={label}>
+                      <Text
+                        variant="xs"
+                        color="mono60"
+                        width={100}
+                        flexShrink={0}
+                        mr={2}
+                      >
+                        {label}
+                      </Text>
+                      <Text variant="xs">{value}</Text>
+                    </Flex>
+                  ))}
+                </Join>
+                <Spacer y={2} />
+              </>
+            )}
+          </Expandable>
+        </Box>
+      </Media>
 
       <Separator my={2} />
 
