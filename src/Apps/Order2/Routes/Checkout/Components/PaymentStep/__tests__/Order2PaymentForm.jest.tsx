@@ -329,113 +329,358 @@ describe("Order2PaymentForm", () => {
     expect(screen.getByTestId("payment-element")).toBeInTheDocument()
   })
 
-  it("initializes Elements with correct paymentMethodTypes and paymentMethodOptions from order", async () => {
-    renderPaymentForm()
-
-    await waitFor(() => {
-      expect(screen.getByTestId("payment-element")).toBeInTheDocument()
-    })
-
-    // Verify Elements was called with the correct options including paymentMethodTypes and paymentMethodOptions
-    expect(Elements).toHaveBeenCalledWith(
-      expect.objectContaining({
-        options: expect.objectContaining({
-          paymentMethodTypes: ["card", "us_bank_account"],
-          onBehalfOf: "merchant-123",
-          currency: "usd",
-          mode: "payment",
-          amount: 100000,
-          setupFutureUsage: "off_session",
-          captureMethod: "automatic",
-          paymentMethodOptions: {
-            us_bank_account: {
-              verification_method: "instant",
-              financial_connections: {
-                permissions: ["payment_method", "balances", "ownership"],
-                prefetch: ["balances"],
+  describe("Stripe Elements configuration", () => {
+    describe("Initializing Elements", () => {
+      it("initializes for BUY with payment mode and automatic capture", async () => {
+        renderWithRelay({
+          Me: () => ({
+            ...baseMeProps,
+            order: {
+              ...baseMeProps.order,
+              mode: "BUY",
+              buyerTotal: {
+                minor: 100000,
+                currencyCode: "USD",
               },
             },
+          }),
+        })
+
+        await waitFor(() => {
+          expect(screen.getByTestId("payment-element")).toBeInTheDocument()
+        })
+
+        expect(Elements).toHaveBeenCalledWith(
+          expect.objectContaining({
+            options: {
+              mode: "payment",
+              amount: 100000,
+              currency: "usd",
+              setupFutureUsage: "off_session",
+              captureMethod: "automatic",
+              onBehalfOf: "merchant-123",
+              paymentMethodTypes: ["card", "us_bank_account"],
+              paymentMethodOptions: {
+                us_bank_account: {
+                  verification_method: "instant",
+                  financial_connections: {
+                    permissions: ["payment_method", "balances", "ownership"],
+                    prefetch: ["balances"],
+                  },
+                },
+              },
+              appearance: expect.any(Object),
+            },
+          }),
+          expect.anything(),
+        )
+      })
+
+      it("initializes for OFFER with setup mode and automatic capture", async () => {
+        renderWithRelay({
+          Me: () => ({
+            ...baseMeProps,
+            order: {
+              ...baseMeProps.order,
+              mode: "OFFER",
+              buyerTotal: null,
+            },
+          }),
+        })
+
+        await waitFor(() => {
+          expect(screen.getByTestId("payment-element")).toBeInTheDocument()
+        })
+
+        expect(Elements).toHaveBeenCalledWith(
+          expect.objectContaining({
+            options: {
+              mode: "setup",
+              currency: "usd",
+              setupFutureUsage: "off_session",
+              captureMethod: "automatic",
+              onBehalfOf: "merchant-123",
+              paymentMethodTypes: ["card", "us_bank_account"],
+              paymentMethodOptions: {
+                us_bank_account: {
+                  verification_method: "instant",
+                  financial_connections: {
+                    permissions: ["payment_method", "balances", "ownership"],
+                    prefetch: ["balances"],
+                  },
+                },
+              },
+              appearance: expect.any(Object),
+            },
+          }),
+          expect.anything(),
+        )
+      })
+    })
+
+    describe("On submission - elements.update() calls", () => {
+      describe("BUY mode", () => {
+        it("Credit Card: updates captureMethod to manual", async () => {
+          const tokenId = "buy-cc-token"
+          renderPaymentForm()
+          await waitForPaymentElement()
+
+          await userEvent.click(screen.getByTestId("mock-credit-card"))
+
+          setupStripeSubmission(tokenId)
+          mockFetchQuery.mockImplementationOnce(() =>
+            createConfirmationTokenResponse(MOCK_CARD_PREVIEW),
+          )
+          mockSetPaymentMutation.submitMutation.mockResolvedValueOnce(
+            MOCK_ORDER_SUCCESS("CREDIT_CARD", tokenId),
+          )
+
+          await userEvent.click(screen.getByText("Continue to Review"))
+
+          // Resulting params after update:
+          //   mode: "payment"
+          //   amount: 100000
+          //   currency: "usd"
+          //   captureMethod: "manual"
+          //   setupFutureUsage: "off_session"
+          //   onBehalfOf: "merchant-123"
+          //   paymentMethodTypes: ["card", "us_bank_account"]
+          //   paymentMethodOptions: {
+          //     us_bank_account: {
+          //       verification_method: "instant",
+          //       financial_connections: {
+          //         permissions: ["payment_method", "balances", "ownership"],
+          //         prefetch: ["balances"]
+          //       }
+          //     }
+          //   }
+          expect(mockElements.update).toHaveBeenCalledWith({
+            captureMethod: "manual",
+          })
+        })
+
+        it("US Bank Account: updates to setup mode with null setupFutureUsage and onBehalfOf", async () => {
+          const tokenId = "buy-ach-token"
+          renderPaymentForm()
+          await waitForPaymentElement()
+
+          await userEvent.click(screen.getByTestId("mock-ach"))
+
+          setupStripeSubmission(tokenId)
+          mockFetchQuery.mockImplementationOnce(() =>
+            createConfirmationTokenResponse(MOCK_ACH_PREVIEW),
+          )
+          mockSetPaymentMutation.submitMutation.mockResolvedValueOnce(
+            MOCK_ORDER_SUCCESS("US_BANK_ACCOUNT", tokenId),
+          )
+
+          await userEvent.click(screen.getByText("Continue to Review"))
+
+          // Resulting params after update:
+          //   mode: "setup"
+          //   amount: 100000
+          //   currency: "usd"
+          //   setupFutureUsage: null
+          //   onBehalfOf: null
+          //   captureMethod: "automatic"
+          //   paymentMethodTypes: ["card", "us_bank_account"]
+          //   paymentMethodOptions: {
+          //     us_bank_account: {
+          //       verification_method: "instant",
+          //       financial_connections: {
+          //         permissions: ["payment_method", "balances", "ownership"],
+          //         prefetch: ["balances"]
+          //       }
+          //     }
+          //   }
+          expect(mockElements.update).toHaveBeenCalledWith({
+            setupFutureUsage: null,
+            mode: "setup",
+            onBehalfOf: null,
+          })
+        })
+
+        it("SEPA Debit: updates to setup mode with null setupFutureUsage", async () => {
+          const tokenId = "buy-sepa-token"
+          renderPaymentForm()
+          await waitForPaymentElement()
+
+          await userEvent.click(screen.getByTestId("mock-sepa"))
+
+          setupStripeSubmission(tokenId)
+          mockFetchQuery.mockImplementationOnce(() =>
+            createConfirmationTokenResponse({
+              __typename: "SEPADebit" as const,
+              bankCode: "12345",
+              last4: "1234",
+            }),
+          )
+          mockSetPaymentMutation.submitMutation.mockResolvedValueOnce(
+            MOCK_ORDER_SUCCESS("SEPA_DEBIT", tokenId),
+          )
+
+          await userEvent.click(screen.getByText("Continue to Review"))
+
+          // Resulting params after update:
+          //   mode: "setup"
+          //   amount: 100000
+          //   currency: "usd"
+          //   setupFutureUsage: null
+          //   onBehalfOf: "merchant-123"
+          //   captureMethod: "automatic"
+          //   paymentMethodTypes: ["card", "us_bank_account"]
+          //   paymentMethodOptions: {
+          //     us_bank_account: {
+          //       verification_method: "instant",
+          //       financial_connections: {
+          //         permissions: ["payment_method", "balances", "ownership"],
+          //         prefetch: ["balances"]
+          //       }
+          //     }
+          //   }
+          expect(mockElements.update).toHaveBeenCalledWith({
+            setupFutureUsage: null,
+            mode: "setup",
+          })
+        })
+      })
+
+      describe("OFFER mode", () => {
+        const offerMeProps = {
+          ...baseMeProps,
+          order: {
+            ...baseMeProps.order,
+            mode: "OFFER" as const,
+            buyerTotal: null,
           },
-        }),
-      }),
-      expect.anything(),
-    )
-  })
+        }
 
-  describe("payment method switching behavior", () => {
-    it("updates Stripe elements on submit for credit card", async () => {
-      const tokenId = "test-token-id"
-      renderPaymentForm()
-      await waitForPaymentElement()
+        it("Credit Card: updates captureMethod to manual", async () => {
+          const tokenId = "offer-cc-token"
+          renderWithRelay({
+            Me: () => offerMeProps,
+          })
+          await waitForPaymentElement()
 
-      // Select credit card
-      await userEvent.click(screen.getByTestId("mock-credit-card"))
+          await userEvent.click(screen.getByTestId("mock-credit-card"))
 
-      setupStripeSubmission(tokenId)
-      mockFetchQuery.mockImplementationOnce(() =>
-        createConfirmationTokenResponse(MOCK_CARD_PREVIEW),
-      )
-      mockSetPaymentMutation.submitMutation.mockResolvedValueOnce(
-        MOCK_ORDER_SUCCESS("CREDIT_CARD", tokenId),
-      )
+          setupStripeSubmission(tokenId)
+          mockFetchQuery.mockImplementationOnce(() =>
+            createConfirmationTokenResponse(MOCK_CARD_PREVIEW),
+          )
+          mockSetPaymentMutation.submitMutation.mockResolvedValueOnce(
+            MOCK_ORDER_SUCCESS("CREDIT_CARD", tokenId),
+          )
 
-      await userEvent.click(screen.getByText("Continue to Review"))
+          await userEvent.click(screen.getByText("Continue to Review"))
 
-      expect(mockElements.update).toHaveBeenCalledWith({
-        captureMethod: "manual",
-      })
-    })
+          // Resulting params after update:
+          //   mode: "setup"
+          //   currency: "usd"
+          //   captureMethod: "manual"
+          //   setupFutureUsage: "off_session"
+          //   onBehalfOf: "merchant-123"
+          //   paymentMethodTypes: ["card", "us_bank_account"]
+          //   paymentMethodOptions: {
+          //     us_bank_account: {
+          //       verification_method: "instant",
+          //       financial_connections: {
+          //         permissions: ["payment_method", "balances", "ownership"],
+          //         prefetch: ["balances"]
+          //       }
+          //     }
+          //   }
+          expect(mockElements.update).toHaveBeenCalledWith({
+            captureMethod: "manual",
+          })
+        })
 
-    it("updates Stripe elements on submit for ACH", async () => {
-      const tokenId = "test-token-id"
-      renderPaymentForm()
-      await waitForPaymentElement()
+        it("US Bank Account: updates to setup mode with null setupFutureUsage and onBehalfOf", async () => {
+          const tokenId = "offer-ach-token"
+          renderWithRelay({
+            Me: () => offerMeProps,
+          })
+          await waitForPaymentElement()
 
-      // Select ACH
-      await userEvent.click(screen.getByTestId("mock-ach"))
+          await userEvent.click(screen.getByTestId("mock-ach"))
 
-      setupStripeSubmission(tokenId)
-      mockFetchQuery.mockImplementationOnce(() =>
-        createConfirmationTokenResponse(MOCK_ACH_PREVIEW),
-      )
-      mockSetPaymentMutation.submitMutation.mockResolvedValueOnce(
-        MOCK_ORDER_SUCCESS("US_BANK_ACCOUNT", tokenId),
-      )
+          setupStripeSubmission(tokenId)
+          mockFetchQuery.mockImplementationOnce(() =>
+            createConfirmationTokenResponse(MOCK_ACH_PREVIEW),
+          )
+          mockSetPaymentMutation.submitMutation.mockResolvedValueOnce(
+            MOCK_ORDER_SUCCESS("US_BANK_ACCOUNT", tokenId),
+          )
 
-      await userEvent.click(screen.getByText("Continue to Review"))
+          await userEvent.click(screen.getByText("Continue to Review"))
 
-      expect(mockElements.update).toHaveBeenCalledWith({
-        setupFutureUsage: null,
-        mode: "setup",
-        onBehalfOf: null,
-      })
-    })
+          // Resulting params after update:
+          //   mode: "setup"
+          //   currency: "usd"
+          //   setupFutureUsage: null
+          //   captureMethod: "automatic"
+          //   onBehalfOf: null
+          //   paymentMethodTypes: ["card", "us_bank_account"]
+          //   paymentMethodOptions: {
+          //     us_bank_account: {
+          //       verification_method: "instant",
+          //       financial_connections: {
+          //         permissions: ["payment_method", "balances", "ownership"],
+          //         prefetch: ["balances"]
+          //       }
+          //     }
+          //   }
+          expect(mockElements.update).toHaveBeenCalledWith({
+            setupFutureUsage: null,
+            mode: "setup",
+            onBehalfOf: null,
+          })
+        })
 
-    it("updates Stripe elements on submit for SEPA", async () => {
-      const tokenId = "test-token-id"
-      renderPaymentForm()
-      await waitForPaymentElement()
+        it("SEPA Debit: updates to setup mode with null setupFutureUsage", async () => {
+          const tokenId = "offer-sepa-token"
+          renderWithRelay({
+            Me: () => offerMeProps,
+          })
+          await waitForPaymentElement()
 
-      // Select SEPA
-      await userEvent.click(screen.getByTestId("mock-sepa"))
+          await userEvent.click(screen.getByTestId("mock-sepa"))
 
-      setupStripeSubmission(tokenId)
-      mockFetchQuery.mockImplementationOnce(() =>
-        createConfirmationTokenResponse({
-          __typename: "SEPADebit" as const,
-          bankCode: "12345",
-          last4: "1234",
-        }),
-      )
-      mockSetPaymentMutation.submitMutation.mockResolvedValueOnce(
-        MOCK_ORDER_SUCCESS("SEPA_DEBIT", tokenId),
-      )
+          setupStripeSubmission(tokenId)
+          mockFetchQuery.mockImplementationOnce(() =>
+            createConfirmationTokenResponse({
+              __typename: "SEPADebit" as const,
+              bankCode: "12345",
+              last4: "1234",
+            }),
+          )
+          mockSetPaymentMutation.submitMutation.mockResolvedValueOnce(
+            MOCK_ORDER_SUCCESS("SEPA_DEBIT", tokenId),
+          )
 
-      await userEvent.click(screen.getByText("Continue to Review"))
+          await userEvent.click(screen.getByText("Continue to Review"))
 
-      expect(mockElements.update).toHaveBeenCalledWith({
-        setupFutureUsage: null,
-        mode: "setup",
+          // Resulting params after update:
+          //   mode: "setup"
+          //   currency: "usd"
+          //   setupFutureUsage: null
+          //   captureMethod: "automatic"
+          //   onBehalfOf: "merchant-123"
+          //   paymentMethodTypes: ["card", "us_bank_account"]
+          //   paymentMethodOptions: {
+          //     us_bank_account: {
+          //       verification_method: "instant",
+          //       financial_connections: {
+          //         permissions: ["payment_method", "balances", "ownership"],
+          //         prefetch: ["balances"]
+          //       }
+          //     }
+          //   }
+          expect(mockElements.update).toHaveBeenCalledWith({
+            setupFutureUsage: null,
+            mode: "setup",
+          })
+        })
       })
     })
   })
