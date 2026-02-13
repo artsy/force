@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<621acc86524a3cda2b68e7e22266ec1b>>
+ * @generated SignedSource<<b82190452d333be7b81eea8f50c518ba>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -393,7 +393,7 @@ return {
                 "args": null,
                 "concreteType": "Money",
                 "kind": "LinkedField",
-                "name": "itemsTotal",
+                "name": "buyerTotal",
                 "plural": false,
                 "selections": [
                   {
@@ -523,7 +523,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e1bd17d4af0f9a2d4973764ae70676d9",
+    "cacheID": "d01b8d53f3b6af3eec2bca2800d7066d",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -637,6 +637,19 @@ return {
           "plural": false,
           "type": "BankAccountBalanceCheckResult"
         },
+        "me.order.buyerTotal": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Money"
+        },
+        "me.order.buyerTotal.currencyCode": (v6/*: any*/),
+        "me.order.buyerTotal.minor": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "Long"
+        },
         "me.order.code": (v6/*: any*/),
         "me.order.currencyCode": (v6/*: any*/),
         "me.order.fulfillmentDetails": {
@@ -654,19 +667,6 @@ return {
         "me.order.fulfillmentDetails.region": (v7/*: any*/),
         "me.order.id": (v8/*: any*/),
         "me.order.internalID": (v8/*: any*/),
-        "me.order.itemsTotal": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Money"
-        },
-        "me.order.itemsTotal.currencyCode": (v6/*: any*/),
-        "me.order.itemsTotal.minor": {
-          "enumValues": null,
-          "nullable": false,
-          "plural": false,
-          "type": "Long"
-        },
         "me.order.lineItems": {
           "enumValues": null,
           "nullable": false,
@@ -729,7 +729,7 @@ return {
     },
     "name": "Order2PaymentFormTestQuery",
     "operationKind": "query",
-    "text": "query Order2PaymentFormTestQuery {\n  me {\n    ...Order2PaymentForm_me\n    order(id: \"order-id\") {\n      ...Order2PaymentForm_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2PaymentForm_me on Me {\n  creditCards(first: 10) {\n    edges {\n      node {\n        __typename\n        internalID\n        brand\n        lastDigits\n        expirationYear\n        expirationMonth\n        id\n      }\n    }\n  }\n  bankAccounts(first: 10) {\n    edges {\n      node {\n        __typename\n        type\n        internalID\n        last4\n        bankName\n        id\n      }\n    }\n  }\n}\n\nfragment Order2PaymentForm_order on Order {\n  ...WireTransferOption_order\n  code\n  mode\n  source\n  internalID\n  currencyCode\n  availablePaymentMethods\n  availableStripePaymentMethodTypes\n  bankAccountBalanceCheck {\n    result\n    message\n  }\n  itemsTotal {\n    minor\n    currencyCode\n  }\n  seller {\n    __typename\n    ... on Partner {\n      merchantAccount {\n        externalId\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  fulfillmentDetails {\n    name\n    addressLine1\n    addressLine2\n    city\n    region\n    postalCode\n    country\n  }\n}\n\nfragment WireTransferOption_order on Order {\n  code\n  lineItems {\n    artwork {\n      href\n      meta {\n        share\n      }\n      id\n    }\n    id\n  }\n}\n"
+    "text": "query Order2PaymentFormTestQuery {\n  me {\n    ...Order2PaymentForm_me\n    order(id: \"order-id\") {\n      ...Order2PaymentForm_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2PaymentForm_me on Me {\n  creditCards(first: 10) {\n    edges {\n      node {\n        __typename\n        internalID\n        brand\n        lastDigits\n        expirationYear\n        expirationMonth\n        id\n      }\n    }\n  }\n  bankAccounts(first: 10) {\n    edges {\n      node {\n        __typename\n        type\n        internalID\n        last4\n        bankName\n        id\n      }\n    }\n  }\n}\n\nfragment Order2PaymentForm_order on Order {\n  ...WireTransferOption_order\n  code\n  mode\n  source\n  internalID\n  currencyCode\n  availablePaymentMethods\n  availableStripePaymentMethodTypes\n  bankAccountBalanceCheck {\n    result\n    message\n  }\n  buyerTotal {\n    minor\n    currencyCode\n  }\n  seller {\n    __typename\n    ... on Partner {\n      merchantAccount {\n        externalId\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  fulfillmentDetails {\n    name\n    addressLine1\n    addressLine2\n    city\n    region\n    postalCode\n    country\n  }\n}\n\nfragment WireTransferOption_order on Order {\n  code\n  lineItems {\n    artwork {\n      href\n      meta {\n        share\n      }\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();
