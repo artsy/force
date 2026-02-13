@@ -112,6 +112,23 @@ const getPaymentMethodText = (
   }
 }
 
+const getDeliveryMethodText = (
+  selectedFulfillmentOption: SettingsOrdersRow_order$data["selectedFulfillmentOption"],
+  shippingLine:
+    | Extract<
+        SettingsOrdersRow_order$data["pricingBreakdownLines"][number],
+        { __typename: "ShippingLine" }
+      >
+    | null
+    | undefined,
+) => {
+  if (selectedFulfillmentOption?.type === "PICKUP") {
+    return "Pickup"
+  }
+
+  return shippingLine?.displayName || "Delivery"
+}
+
 const OrderLink: FC<OrderLinkProps> = ({
   code,
   orderId,
@@ -204,6 +221,11 @@ const SettingsOrdersRow: FC<
   const orderCreatedAt = DateTime.fromISO(order.createdAt || "")
 
   const trackingUrl = order.deliveryInfo?.trackingURL || null
+
+  const shippingLine = order.pricingBreakdownLines.find(
+    (line): line is Extract<typeof line, { __typename: "ShippingLine" }> =>
+      line?.__typename === "ShippingLine",
+  )
 
   const { trackEvent } = useTracking()
   const trackChangePaymentMethodClick = (orderID: string) => () => {
@@ -358,9 +380,10 @@ const SettingsOrdersRow: FC<
           <Text variant="sm-display">Delivery method</Text>
 
           <Text variant="sm-display" color="mono60">
-            {order.selectedFulfillmentOption?.type === "PICKUP"
-              ? "Pickup"
-              : "Delivery"}
+            {getDeliveryMethodText(
+              order.selectedFulfillmentOption,
+              shippingLine,
+            )}
           </Text>
         </Column>
       </GridColumns>
@@ -404,6 +427,12 @@ export const SettingsOrdersRowFragmentContainer = createFragmentContainer(
         }
         selectedFulfillmentOption {
           type
+        }
+        pricingBreakdownLines {
+          __typename
+          ... on ShippingLine {
+            displayName
+          }
         }
         paymentMethodDetails {
           __typename

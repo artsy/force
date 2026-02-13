@@ -187,6 +187,12 @@ describe("SettingsOrdersRow", () => {
           selectedFulfillmentOption: {
             type: "ARTSY_STANDARD",
           },
+          pricingBreakdownLines: [
+            {
+              __typename: "ShippingLine",
+              displayName: "Delivery",
+            },
+          ],
           displayTexts: {
             stateName: "Confirmed",
             actionPrompt: null,
@@ -217,6 +223,7 @@ describe("SettingsOrdersRow", () => {
       renderWithRelay({
         Order: () => ({
           selectedFulfillmentOption: null,
+          pricingBreakdownLines: [],
           displayTexts: {
             stateName: "Confirmed",
             actionPrompt: null,
@@ -225,6 +232,28 @@ describe("SettingsOrdersRow", () => {
       })
 
       expect(screen.getByText("Delivery")).toBeInTheDocument()
+    })
+
+    it("renders shipping line displayName when available", () => {
+      renderWithRelay({
+        Order: () => ({
+          selectedFulfillmentOption: {
+            type: "ARTSY_STANDARD",
+          },
+          pricingBreakdownLines: [
+            {
+              __typename: "ShippingLine",
+              displayName: "Standard Shipping",
+            },
+          ],
+          displayTexts: {
+            stateName: "Confirmed",
+            actionPrompt: null,
+          },
+        }),
+      })
+
+      expect(screen.getByText("Standard Shipping")).toBeInTheDocument()
     })
   })
 })
