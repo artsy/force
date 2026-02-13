@@ -216,7 +216,7 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
         {biographyContent && (
           <Bio variant="sm">
             <ReadMore
-              maxLines={4}
+              maxLines={2}
               content={biographyContent}
               onReadMoreClicked={() => trackToggledArtistBio(true)}
               onReadLessClicked={() => trackToggledArtistBio(false)}
