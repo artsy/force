@@ -43,7 +43,7 @@ export const getArtistMeta = ({
       const baseDescription = `Explore ${name}’s biography, achievements, artworks, auction results, and shows on Artsy.`
       const blurb = biographyBlurb?.text?.substring(0, 70) || ""
       return {
-        title: `${name} - Biography, Shows, Articles & More | Artsy`,
+        title: `${name} - Art & Prints for Sale | Artsy`,
         description: blurb ? `${baseDescription} ${blurb}` : baseDescription,
       }
     }
