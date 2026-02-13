@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<528aeacf4617557764bd71065a215931>>
+ * @generated SignedSource<<1ae859993d88b6f27365344a0e593737>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -76,6 +76,14 @@ export type SettingsOrdersRow_order$data = {
     // value in case none of the concrete values match.
     readonly __typename: "%other";
   } | null | undefined;
+  readonly pricingBreakdownLines: ReadonlyArray<{
+    readonly __typename: "ShippingLine";
+    readonly displayName: string;
+  } | {
+    // This will never be '%other', but we need some
+    // value in case none of the concrete values match.
+    readonly __typename: "%other";
+  } | null | undefined>;
   readonly selectedFulfillmentOption: {
     readonly type: FulfillmentOptionTypeEnum;
   } | null | undefined;
@@ -92,10 +100,17 @@ var v0 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "__typename",
+  "storageKey": null
+},
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "href",
   "storageKey": null
 },
-v1 = [
+v2 = [
   {
     "alias": null,
     "args": [
@@ -247,16 +262,36 @@ return {
       "args": null,
       "concreteType": null,
       "kind": "LinkedField",
+      "name": "pricingBreakdownLines",
+      "plural": true,
+      "selections": [
+        (v0/*: any*/),
+        {
+          "kind": "InlineFragment",
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "displayName",
+              "storageKey": null
+            }
+          ],
+          "type": "ShippingLine",
+          "abstractKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": null,
+      "kind": "LinkedField",
       "name": "paymentMethodDetails",
       "plural": false,
       "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "__typename",
-          "storageKey": null
-        },
+        (v0/*: any*/),
         {
           "kind": "InlineFragment",
           "selections": [
@@ -322,7 +357,7 @@ return {
           "name": "artwork",
           "plural": false,
           "selections": [
-            (v0/*: any*/),
+            (v1/*: any*/),
             {
               "alias": null,
               "args": null,
@@ -331,7 +366,7 @@ return {
               "name": "partner",
               "plural": false,
               "selections": [
-                (v0/*: any*/),
+                (v1/*: any*/),
                 {
                   "alias": null,
                   "args": null,
@@ -361,7 +396,7 @@ return {
                       "kind": "LinkedField",
                       "name": "icon",
                       "plural": false,
-                      "selections": (v1/*: any*/),
+                      "selections": (v2/*: any*/),
                       "storageKey": null
                     }
                   ],
@@ -405,7 +440,7 @@ return {
               "name": "artists",
               "plural": true,
               "selections": [
-                (v0/*: any*/)
+                (v1/*: any*/)
               ],
               "storageKey": "artists(shallow:true)"
             }
@@ -427,7 +462,7 @@ return {
               "kind": "LinkedField",
               "name": "image",
               "plural": false,
-              "selections": (v1/*: any*/),
+              "selections": (v2/*: any*/),
               "storageKey": null
             }
           ],
@@ -442,6 +477,6 @@ return {
 };
 })();
 
-(node as any).hash = "32318031c913b715b38685d391e86f18";
+(node as any).hash = "bbd32673317b8450fb4eebd49cac0e4f";
 
 export default node;

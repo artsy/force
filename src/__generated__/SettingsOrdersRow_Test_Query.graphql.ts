@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9692a008b6be0d27eed4acfac7530353>>
+ * @generated SignedSource<<92599c777986884573ca5fc2786570ee>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -35,17 +35,24 @@ v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "__typename",
   "storageKey": null
 },
 v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "href",
   "storageKey": null
 },
-v3 = [
+v4 = [
   {
     "alias": null,
     "args": [
@@ -83,31 +90,31 @@ v3 = [
     "storageKey": "cropped(height:45,width:45)"
   }
 ],
-v4 = {
+v5 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v5 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "String"
-},
 v6 = {
   "enumValues": null,
-  "nullable": false,
+  "nullable": true,
   "plural": false,
   "type": "String"
 },
 v7 = {
   "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
+},
+v8 = {
+  "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "Image"
 },
-v8 = {
+v9 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
@@ -281,16 +288,36 @@ return {
                 "args": null,
                 "concreteType": null,
                 "kind": "LinkedField",
+                "name": "pricingBreakdownLines",
+                "plural": true,
+                "selections": [
+                  (v1/*: any*/),
+                  {
+                    "kind": "InlineFragment",
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "displayName",
+                        "storageKey": null
+                      }
+                    ],
+                    "type": "ShippingLine",
+                    "abstractKey": null
+                  }
+                ],
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": null,
+                "kind": "LinkedField",
                 "name": "paymentMethodDetails",
                 "plural": false,
                 "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "__typename",
-                    "storageKey": null
-                  },
+                  (v1/*: any*/),
                   {
                     "kind": "InlineFragment",
                     "selections": [
@@ -301,7 +328,7 @@ return {
                         "name": "lastDigits",
                         "storageKey": null
                       },
-                      (v1/*: any*/)
+                      (v2/*: any*/)
                     ],
                     "type": "CreditCard",
                     "abstractKey": null
@@ -316,7 +343,7 @@ return {
                         "name": "last4",
                         "storageKey": null
                       },
-                      (v1/*: any*/)
+                      (v2/*: any*/)
                     ],
                     "type": "BankAccount",
                     "abstractKey": null
@@ -358,7 +385,7 @@ return {
                     "name": "artwork",
                     "plural": false,
                     "selections": [
-                      (v2/*: any*/),
+                      (v3/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -367,7 +394,7 @@ return {
                         "name": "partner",
                         "plural": false,
                         "selections": [
-                          (v2/*: any*/),
+                          (v3/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -397,14 +424,14 @@ return {
                                 "kind": "LinkedField",
                                 "name": "icon",
                                 "plural": false,
-                                "selections": (v3/*: any*/),
+                                "selections": (v4/*: any*/),
                                 "storageKey": null
                               },
-                              (v1/*: any*/)
+                              (v2/*: any*/)
                             ],
                             "storageKey": null
                           },
-                          (v1/*: any*/)
+                          (v2/*: any*/)
                         ],
                         "storageKey": null
                       },
@@ -443,12 +470,12 @@ return {
                         "name": "artists",
                         "plural": true,
                         "selections": [
-                          (v2/*: any*/),
-                          (v1/*: any*/)
+                          (v3/*: any*/),
+                          (v2/*: any*/)
                         ],
                         "storageKey": "artists(shallow:true)"
                       },
-                      (v1/*: any*/)
+                      (v2/*: any*/)
                     ],
                     "storageKey": null
                   },
@@ -467,29 +494,29 @@ return {
                         "kind": "LinkedField",
                         "name": "image",
                         "plural": false,
-                        "selections": (v3/*: any*/),
+                        "selections": (v4/*: any*/),
                         "storageKey": null
                       },
-                      (v1/*: any*/)
+                      (v2/*: any*/)
                     ],
                     "storageKey": null
                   },
-                  (v1/*: any*/)
+                  (v2/*: any*/)
                 ],
                 "storageKey": null
               },
-              (v1/*: any*/)
+              (v2/*: any*/)
             ],
             "storageKey": "order(id:\"test-id\")"
           },
-          (v1/*: any*/)
+          (v2/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "e534de5810c35af2181609263076cd2d",
+    "cacheID": "5c5617f9c6f9997552617d9c563aacef",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -499,7 +526,7 @@ return {
           "plural": false,
           "type": "Me"
         },
-        "me.id": (v4/*: any*/),
+        "me.id": (v5/*: any*/),
         "me.order": {
           "enumValues": null,
           "nullable": true,
@@ -533,9 +560,9 @@ return {
           "plural": false,
           "type": "Money"
         },
-        "me.order.buyerTotal.display": (v5/*: any*/),
-        "me.order.code": (v6/*: any*/),
-        "me.order.createdAt": (v5/*: any*/),
+        "me.order.buyerTotal.display": (v6/*: any*/),
+        "me.order.code": (v7/*: any*/),
+        "me.order.createdAt": (v6/*: any*/),
         "me.order.creditCardWalletType": {
           "enumValues": [
             "APPLE_PAY",
@@ -551,17 +578,17 @@ return {
           "plural": false,
           "type": "DeliveryInfo"
         },
-        "me.order.deliveryInfo.trackingURL": (v5/*: any*/),
+        "me.order.deliveryInfo.trackingURL": (v6/*: any*/),
         "me.order.displayTexts": {
           "enumValues": null,
           "nullable": false,
           "plural": false,
           "type": "DisplayTexts"
         },
-        "me.order.displayTexts.actionPrompt": (v5/*: any*/),
-        "me.order.displayTexts.stateName": (v6/*: any*/),
-        "me.order.id": (v4/*: any*/),
-        "me.order.internalID": (v4/*: any*/),
+        "me.order.displayTexts.actionPrompt": (v6/*: any*/),
+        "me.order.displayTexts.stateName": (v7/*: any*/),
+        "me.order.id": (v5/*: any*/),
+        "me.order.internalID": (v5/*: any*/),
         "me.order.lineItems": {
           "enumValues": null,
           "nullable": false,
@@ -574,62 +601,70 @@ return {
           "plural": false,
           "type": "Artwork"
         },
-        "me.order.lineItems.artwork.artistNames": (v5/*: any*/),
+        "me.order.lineItems.artwork.artistNames": (v6/*: any*/),
         "me.order.lineItems.artwork.artists": {
           "enumValues": null,
           "nullable": true,
           "plural": true,
           "type": "Artist"
         },
-        "me.order.lineItems.artwork.artists.href": (v5/*: any*/),
-        "me.order.lineItems.artwork.artists.id": (v4/*: any*/),
-        "me.order.lineItems.artwork.href": (v5/*: any*/),
-        "me.order.lineItems.artwork.id": (v4/*: any*/),
+        "me.order.lineItems.artwork.artists.href": (v6/*: any*/),
+        "me.order.lineItems.artwork.artists.id": (v5/*: any*/),
+        "me.order.lineItems.artwork.href": (v6/*: any*/),
+        "me.order.lineItems.artwork.id": (v5/*: any*/),
         "me.order.lineItems.artwork.partner": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Partner"
         },
-        "me.order.lineItems.artwork.partner.href": (v5/*: any*/),
-        "me.order.lineItems.artwork.partner.id": (v4/*: any*/),
-        "me.order.lineItems.artwork.partner.initials": (v5/*: any*/),
-        "me.order.lineItems.artwork.partner.name": (v5/*: any*/),
+        "me.order.lineItems.artwork.partner.href": (v6/*: any*/),
+        "me.order.lineItems.artwork.partner.id": (v5/*: any*/),
+        "me.order.lineItems.artwork.partner.initials": (v6/*: any*/),
+        "me.order.lineItems.artwork.partner.name": (v6/*: any*/),
         "me.order.lineItems.artwork.partner.profile": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Profile"
         },
-        "me.order.lineItems.artwork.partner.profile.icon": (v7/*: any*/),
-        "me.order.lineItems.artwork.partner.profile.icon.cropped": (v8/*: any*/),
-        "me.order.lineItems.artwork.partner.profile.icon.cropped.src": (v6/*: any*/),
-        "me.order.lineItems.artwork.partner.profile.icon.cropped.srcSet": (v6/*: any*/),
-        "me.order.lineItems.artwork.partner.profile.id": (v4/*: any*/),
-        "me.order.lineItems.artwork.shippingOrigin": (v5/*: any*/),
-        "me.order.lineItems.artwork.title": (v5/*: any*/),
+        "me.order.lineItems.artwork.partner.profile.icon": (v8/*: any*/),
+        "me.order.lineItems.artwork.partner.profile.icon.cropped": (v9/*: any*/),
+        "me.order.lineItems.artwork.partner.profile.icon.cropped.src": (v7/*: any*/),
+        "me.order.lineItems.artwork.partner.profile.icon.cropped.srcSet": (v7/*: any*/),
+        "me.order.lineItems.artwork.partner.profile.id": (v5/*: any*/),
+        "me.order.lineItems.artwork.shippingOrigin": (v6/*: any*/),
+        "me.order.lineItems.artwork.title": (v6/*: any*/),
         "me.order.lineItems.artworkVersion": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "ArtworkVersion"
         },
-        "me.order.lineItems.artworkVersion.id": (v4/*: any*/),
-        "me.order.lineItems.artworkVersion.image": (v7/*: any*/),
-        "me.order.lineItems.artworkVersion.image.cropped": (v8/*: any*/),
-        "me.order.lineItems.artworkVersion.image.cropped.src": (v6/*: any*/),
-        "me.order.lineItems.artworkVersion.image.cropped.srcSet": (v6/*: any*/),
-        "me.order.lineItems.id": (v4/*: any*/),
+        "me.order.lineItems.artworkVersion.id": (v5/*: any*/),
+        "me.order.lineItems.artworkVersion.image": (v8/*: any*/),
+        "me.order.lineItems.artworkVersion.image.cropped": (v9/*: any*/),
+        "me.order.lineItems.artworkVersion.image.cropped.src": (v7/*: any*/),
+        "me.order.lineItems.artworkVersion.image.cropped.srcSet": (v7/*: any*/),
+        "me.order.lineItems.id": (v5/*: any*/),
         "me.order.paymentMethodDetails": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "PaymentMethodUnion"
         },
-        "me.order.paymentMethodDetails.__typename": (v6/*: any*/),
-        "me.order.paymentMethodDetails.id": (v4/*: any*/),
-        "me.order.paymentMethodDetails.last4": (v6/*: any*/),
-        "me.order.paymentMethodDetails.lastDigits": (v6/*: any*/),
+        "me.order.paymentMethodDetails.__typename": (v7/*: any*/),
+        "me.order.paymentMethodDetails.id": (v5/*: any*/),
+        "me.order.paymentMethodDetails.last4": (v7/*: any*/),
+        "me.order.paymentMethodDetails.lastDigits": (v7/*: any*/),
+        "me.order.pricingBreakdownLines": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": true,
+          "type": "PricingBreakdownLineUnion"
+        },
+        "me.order.pricingBreakdownLines.__typename": (v7/*: any*/),
+        "me.order.pricingBreakdownLines.displayName": (v7/*: any*/),
         "me.order.selectedFulfillmentOption": {
           "enumValues": null,
           "nullable": true,
@@ -665,7 +700,7 @@ return {
     },
     "name": "SettingsOrdersRow_Test_Query",
     "operationKind": "query",
-    "text": "query SettingsOrdersRow_Test_Query {\n  me {\n    order(id: \"test-id\") {\n      ...SettingsOrdersRow_order\n      id\n    }\n    id\n  }\n}\n\nfragment SettingsOrdersRow_order on Order {\n  source\n  internalID\n  code\n  buyerState\n  createdAt\n  creditCardWalletType\n  displayTexts {\n    stateName\n    actionPrompt\n  }\n  deliveryInfo {\n    trackingURL\n  }\n  selectedFulfillmentOption {\n    type\n  }\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      lastDigits\n      id\n    }\n    ... on BankAccount {\n      last4\n      id\n    }\n    ... on WireTransfer {\n      __typename\n    }\n  }\n  buyerTotal {\n    display\n  }\n  lineItems {\n    artwork {\n      href\n      partner {\n        href\n        initials\n        name\n        profile {\n          icon {\n            cropped(width: 45, height: 45) {\n              src\n              srcSet\n            }\n          }\n          id\n        }\n        id\n      }\n      shippingOrigin\n      title\n      artistNames\n      artists(shallow: true) {\n        href\n        id\n      }\n      id\n    }\n    artworkVersion {\n      image {\n        cropped(width: 45, height: 45) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    id\n  }\n}\n"
+    "text": "query SettingsOrdersRow_Test_Query {\n  me {\n    order(id: \"test-id\") {\n      ...SettingsOrdersRow_order\n      id\n    }\n    id\n  }\n}\n\nfragment SettingsOrdersRow_order on Order {\n  source\n  internalID\n  code\n  buyerState\n  createdAt\n  creditCardWalletType\n  displayTexts {\n    stateName\n    actionPrompt\n  }\n  deliveryInfo {\n    trackingURL\n  }\n  selectedFulfillmentOption {\n    type\n  }\n  pricingBreakdownLines {\n    __typename\n    ... on ShippingLine {\n      displayName\n    }\n  }\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      lastDigits\n      id\n    }\n    ... on BankAccount {\n      last4\n      id\n    }\n    ... on WireTransfer {\n      __typename\n    }\n  }\n  buyerTotal {\n    display\n  }\n  lineItems {\n    artwork {\n      href\n      partner {\n        href\n        initials\n        name\n        profile {\n          icon {\n            cropped(width: 45, height: 45) {\n              src\n              srcSet\n            }\n          }\n          id\n        }\n        id\n      }\n      shippingOrigin\n      title\n      artistNames\n      artists(shallow: true) {\n        href\n        id\n      }\n      id\n    }\n    artworkVersion {\n      image {\n        cropped(width: 45, height: 45) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();

@@ -187,6 +187,12 @@ describe("SettingsOrdersRow", () => {
           selectedFulfillmentOption: {
             type: "ARTSY_STANDARD",
           },
+          pricingBreakdownLines: [
+            {
+              __typename: "ShippingLine",
+              displayName: "Free shipping",
+            },
+          ],
           displayTexts: {
             stateName: "Confirmed",
             actionPrompt: null,
@@ -194,7 +200,7 @@ describe("SettingsOrdersRow", () => {
         }),
       })
 
-      expect(screen.getByText("Delivery")).toBeInTheDocument()
+      expect(screen.getByText("Free shipping")).toBeInTheDocument()
     })
 
     it("renders Pickup when selectedFulfillmentOption type is PICKUP", () => {
@@ -213,10 +219,11 @@ describe("SettingsOrdersRow", () => {
       expect(screen.getByText("Pickup")).toBeInTheDocument()
     })
 
-    it("renders Delivery as default when selectedFulfillmentOption is null", () => {
+    it("renders N/A as default when selectedFulfillmentOption is null", () => {
       renderWithRelay({
         Order: () => ({
           selectedFulfillmentOption: null,
+          pricingBreakdownLines: [],
           displayTexts: {
             stateName: "Confirmed",
             actionPrompt: null,
@@ -224,7 +231,29 @@ describe("SettingsOrdersRow", () => {
         }),
       })
 
-      expect(screen.getByText("Delivery")).toBeInTheDocument()
+      expect(screen.getByText("N/A")).toBeInTheDocument()
+    })
+
+    it("renders shipping line displayName when available", () => {
+      renderWithRelay({
+        Order: () => ({
+          selectedFulfillmentOption: {
+            type: "ARTSY_STANDARD",
+          },
+          pricingBreakdownLines: [
+            {
+              __typename: "ShippingLine",
+              displayName: "Standard Shipping",
+            },
+          ],
+          displayTexts: {
+            stateName: "Confirmed",
+            actionPrompt: null,
+          },
+        }),
+      })
+
+      expect(screen.getByText("Standard Shipping")).toBeInTheDocument()
     })
   })
 })
