@@ -23,6 +23,10 @@ jest.mock("System/Hooks/useAnalyticsContext", () => ({
   })),
 }))
 
+jest.mock("System/Hooks/useBrazeSubscription", () => ({
+  useBrazeSubscription: jest.fn(),
+}))
+
 jest.mock("Apps/Order2/Utils/confirmationTokenUtils", () => ({
   fetchAndSetConfirmationToken: jest.fn(
     async (tokenId, environment, setConfirmationToken) => {

@@ -1,4 +1,3 @@
-import { subscribeToInAppMessagesByPath } from "Server/analytics/brazeMessagingIntegration"
 import { getContextPageFromClient } from "Server/getContextPage"
 import { reportLoadTimeToVolley } from "Server/volley"
 import { getClientParam } from "Utils/getClientParam"
@@ -54,7 +53,6 @@ export const beforeAnalyticsReady = () => {
  */
 export const onAnalyticsReady = () => {
   identify()
-  subscribeToInAppMessagesByPath()
 }
 
 export const setupAnalytics = () => {

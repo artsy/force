@@ -24,6 +24,10 @@ jest.mock("System/Hooks/useAnalyticsContext", () => ({
   })),
 }))
 
+jest.mock("System/Hooks/useBrazeSubscription", () => ({
+  useBrazeSubscription: jest.fn(),
+}))
+
 let shippingRateId = "DOMESTIC_FLAT"
 
 const mockShippingContext: DeepPartial<ShippingContextProps> = {
