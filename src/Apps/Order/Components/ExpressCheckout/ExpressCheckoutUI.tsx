@@ -715,7 +715,7 @@ const extractShippingRates = (order: ParseableOrder): Array<ShippingRate> => {
   const selectedFulfillmentOption = order.fulfillmentOptions.find(
     option => option.selected,
   )
-  if (selectedFulfillmentOption!.type === "PICKUP") {
+  if (selectedFulfillmentOption?.type === "PICKUP") {
     // if pickup is selected, it should be the first option since Stripe auto
     // selects the first option
     return finalRates
