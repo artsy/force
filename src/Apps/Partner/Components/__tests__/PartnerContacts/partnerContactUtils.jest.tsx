@@ -129,7 +129,7 @@ describe("PartnerContactUtils", () => {
 
     expect(result).toContain("https://maps.googleapis.com/maps/api/staticmap")
     expect(result).toContain("center=1%2C2")
-    expect(result).toContain("markers=color%3A0x873ff0%7C1%2C2")
+    expect(result).toContain("markers=color%3A0x8a94ff%7C1%2C2")
   })
 
   it("getGoogleStaticMapImageUrl returns correct result when coordinates empty", () => {
@@ -143,7 +143,7 @@ describe("PartnerContactUtils", () => {
       "center=address%2C%20postalCode%2C%20United%20States",
     )
     expect(result).toContain(
-      "markers=color%3A0x873ff0%7Caddress%2C%20postalCode%2C%20United%20States",
+      "markers=color%3A0x8a94ff%7Caddress%2C%20postalCode%2C%20United%20States",
     )
   })
 })
