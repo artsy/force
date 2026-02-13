@@ -17,8 +17,9 @@ export const SettingsOrdersRouteFragmentContainer = createFragmentContainer(
   SettingsOrdersRoute,
   {
     me: graphql`
-      fragment SettingsOrdersRoute_me on Me {
-        ...SettingsOrders_me
+      fragment SettingsOrdersRoute_me on Me
+      @argumentDefinitions(page: { type: "Int", defaultValue: 1 }) {
+        ...SettingsOrders_me @arguments(page: $page)
       }
     `,
   },
