@@ -6,7 +6,7 @@ export const DESKTOP_QUALITY: [number, number] = [80, 80]
 export const optimizedQuality = () =>
   getENV("IS_MOBILE") ? MOBILE_QUALITY : DESKTOP_QUALITY
 
-type Sized = { src: string; srcSet: string; quality2x: string }
+export type Sized = { src: string; srcSet: string; quality2x: string }
 type Resize = Parameters<typeof resize>
 
 function normalizeQuality(
