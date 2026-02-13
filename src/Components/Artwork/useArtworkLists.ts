@@ -9,9 +9,11 @@ import { useAuthIntent } from "Utils/Hooks/useAuthIntent"
 import type { useArtworkListsArtworkSaveStatesQuery } from "__generated__/useArtworkListsArtworkSaveStatesQuery.graphql"
 import { useEffect } from "react"
 import { fetchQuery, graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 export const useArtworkLists = (options: SaveArtworkToListsOptions) => {
   const { artwork } = options
+  const tracking = useTracking()
   const { sendToast } = useToasts()
   const { relayEnvironment } = useSystemContext()
 
@@ -93,6 +95,16 @@ export const useArtworkLists = (options: SaveArtworkToListsOptions) => {
       action === ResultAction.RemovedFromDefaultList
     ) {
       showToastByAction(action, artwork.isInAuction)
+
+      tracking.trackEvent({
+        action:
+          action === ResultAction.SavedToDefaultList
+            ? "Saved Artwork"
+            : "Removed Artwork",
+        // @ts-ignore TODO: Cohesion schema
+        entity_slug: artwork.slug,
+        entity_id: artwork.internalID,
+      })
     }
 
     return action

@@ -1,9 +1,9 @@
 import { StructuredData } from "Components/Seo/StructuredData"
 import { getENV } from "Utils/getENV"
-import type { ArtworkStructuredData_artwork$key } from "__generated__/ArtworkStructuredData_artwork.graphql"
+import type { ArtworkStructuredDataQuery } from "__generated__/ArtworkStructuredDataQuery.graphql"
 import { map } from "lodash"
 import { useMemo } from "react"
-import { graphql, useFragment } from "react-relay"
+import { graphql, useLazyLoadQuery } from "react-relay"
 import type {
   ArtGallery,
   ImageObject,
@@ -13,13 +13,20 @@ import type {
 } from "schema-dts"
 
 interface ArtworkStructuredDataProps {
-  artwork: ArtworkStructuredData_artwork$key
+  id: string
 }
 
 export const ArtworkStructuredData: React.FC<ArtworkStructuredDataProps> = ({
-  artwork: _artwork,
+  id,
 }) => {
-  const artwork = useFragment(fragment, _artwork)
+  const { artwork } = useLazyLoadQuery<ArtworkStructuredDataQuery>(
+    QUERY,
+    { id },
+    { fetchPolicy: "store-or-network" },
+  )
+
+  if (!artwork) return null
+
   const artworkUrl = `${getENV("APP_URL")}${artwork.href}`
   const artistUrl = `${getENV("APP_URL")}${artwork.artists?.[0]?.href}`
   const creator: Person | undefined = artwork.artists
@@ -176,69 +183,71 @@ export const ArtworkStructuredData: React.FC<ArtworkStructuredDataProps> = ({
   )
 }
 
-const fragment = graphql`
-  fragment ArtworkStructuredData_artwork on Artwork {
-    slug
-    href
-    title
-    medium
-    editionOf
-    mediumType {
-      name
-    }
-    artists(shallow: true) {
-      name
+const QUERY = graphql`
+  query ArtworkStructuredDataQuery($id: String!) {
+    artwork(id: $id) {
+      slug
       href
-    }
-    date
-    width
-    height
-    depth
-    metric
-    image {
-      large: resized(width: 1920, height: 1920) {
-        url
-        width
-        height
+      title
+      medium
+      editionOf
+      mediumType {
+        name
       }
-    }
-    description(format: PLAIN)
-    isPriceHidden
-    availability
-    listPrice {
-      __typename
-      ... on PriceRange {
-        minPrice {
+      artists(shallow: true) {
+        name
+        href
+      }
+      date
+      width
+      height
+      depth
+      metric
+      image {
+        large: resized(width: 1920, height: 1920) {
+          url
+          width
+          height
+        }
+      }
+      description(format: PLAIN)
+      isPriceHidden
+      availability
+      listPrice {
+        __typename
+        ... on PriceRange {
+          minPrice {
+            major
+            currencyCode
+          }
+          maxPrice {
+            major
+          }
+        }
+        ... on Money {
           major
           currencyCode
         }
-        maxPrice {
-          major
-        }
       }
-      ... on Money {
-        major
-        currencyCode
-      }
-    }
-    partner {
-      name
-      href
-      profile {
-        image {
-          resized(width: 320, height: 320) {
-            url
+      partner {
+        name
+        href
+        profile {
+          image {
+            resized(width: 320, height: 320) {
+              url
+            }
           }
         }
-      }
-      locationsConnection {
-        edges {
-          node {
-            address
-            city
-            state
-            postalCode
-            country
+        locationsConnection(first: 1) {
+          edges {
+            node {
+              address
+              city
+              state
+              postalCode
+              country
+            }
           }
         }
       }

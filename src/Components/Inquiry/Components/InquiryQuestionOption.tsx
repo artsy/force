@@ -15,7 +15,7 @@ interface InquiryQuestionOptionProps {
 export enum InquiryQuestionIDs {
   Shipping = "shipping_quote",
   PriceAndAvailability = "price_and_availability",
-  ConditionAndProvance = "condition_and_provenance",
+  ConditionAndProvenance = "condition_and_provenance",
   SimilarWork = "similar_work",
   ArtistInformation = "artist_information",
   ArtworkInformation = "artwork_information",
@@ -57,7 +57,14 @@ export const InquiryQuestionOption: React.FC<InquiryQuestionOptionProps> = ({
   }
 
   return (
-    <Flex flexDirection="column">
+    <Flex
+      flexDirection="column"
+      border="1px solid"
+      borderColor="mono10"
+      borderRadius={5}
+      p={2}
+      mb={1}
+    >
       <Checkbox selected={questionSelected} onSelect={setSelection}>
         <Text variant="sm" color="mono100">
           {question}

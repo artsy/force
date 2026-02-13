@@ -1,5 +1,6 @@
 import {
   ActionType,
+  type ClickedArtistArtworkImage,
   type ClickedCV,
   type ClickedVerifiedRepresentative,
   ContextModule,
@@ -89,6 +90,23 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
     trackEvent(payload)
   }
 
+  const trackClickedArtistArtworkImage = () => {
+    if (!contextPageOwnerId || !contextPageOwnerSlug) return
+    if (!artist.coverArtwork?.internalID || !artist.coverArtwork?.slug) return
+
+    const payload: ClickedArtistArtworkImage = {
+      action: ActionType.clickedArtistArtworkImage,
+      context_module: ContextModule.artistHeader,
+      context_page_owner_type: contextPageOwnerType,
+      context_page_owner_id: contextPageOwnerId,
+      context_page_owner_slug: contextPageOwnerSlug,
+      destination_page_owner_type: OwnerType.artwork,
+      destination_page_owner_id: artist.coverArtwork.internalID,
+      destination_page_owner_slug: artist.coverArtwork.slug,
+    }
+    trackEvent(payload)
+  }
+
   return (
     <GridColumns gridRowGap={2} gridColumnGap={[0, 4]} data-test="artistHeader">
       {artist.coverArtwork && hasImage && (
@@ -98,7 +116,11 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
           flexDirection="column"
           alignItems="center"
         >
-          <RouterLink to={artist.coverArtwork.href} display="block">
+          <RouterLink
+            to={artist.coverArtwork.href}
+            display="block"
+            onClick={trackClickedArtistArtworkImage}
+          >
             <ArtistHeaderImage image={image} alt={altText} />
           </RouterLink>
         </Column>
@@ -194,7 +216,7 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
         {biographyContent && (
           <Bio variant="sm">
             <ReadMore
-              maxLines={4}
+              maxLines={2}
               content={biographyContent}
               onReadMoreClicked={() => trackToggledArtistBio(true)}
               onReadLessClicked={() => trackToggledArtistBio(false)}
@@ -323,6 +345,8 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
           }
         }
         coverArtwork {
+          internalID
+          slug
           title
           imageTitle
           href

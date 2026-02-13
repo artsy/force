@@ -165,6 +165,7 @@ describe("AuthDialogSignUp", () => {
         email: "example@example.com",
         password: "Secret000", // pragma: allowlist secret
         agreedToReceiveEmails: true,
+        signupValidator: "",
       })
     })
   })

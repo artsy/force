@@ -21,7 +21,6 @@ import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
 import { logger } from "Components/Inquiry/util"
 import { RouterLink } from "System/Components/RouterLink"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { useTrackFeatureVariantOnMount } from "System/Hooks/useTrackFeatureVariant"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { wait } from "Utils/wait"
 import type { InquiryInquiryQuery } from "__generated__/InquiryInquiryQuery.graphql"
@@ -31,8 +30,6 @@ import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useArtworkDimensions } from "Apps/Artwork/useArtworkDimensions"
 import { Media } from "Utils/Responsive"
-
-const INQUIRY_CHECKBOXES_FLAG = "emerald_inquiry-checkboxes-on-web"
 
 type Mode = "Pending" | "Sending" | "Error" | "Success"
 
@@ -49,6 +46,7 @@ const InquiryInquiry: React.FC<
     useInquiryContext()
 
   const [mode, setMode] = useState<Mode>("Pending")
+  const [hasAttemptedSubmit, setHasAttemptedSubmit] = useState(false)
 
   const { submitArtworkInquiryRequest } = useArtworkInquiryRequest()
 
@@ -66,6 +64,14 @@ const InquiryInquiry: React.FC<
 
   const handleSubmit = async (event: React.FormEvent<HTMLElement>) => {
     event.preventDefault()
+    setHasAttemptedSubmit(true)
+
+    const isInvalid =
+      questions?.length === 0 && inquiry.message.trim().length === 0
+
+    if (isInvalid) {
+      return
+    }
 
     // If the user is logged out we just go to the next view which should
     // be the authentication step. The inquiry gets sent after login or sign up.
@@ -104,10 +110,10 @@ const InquiryInquiry: React.FC<
     ["Error"]: "Error",
   }[mode]
 
-  const showErrorMessage =
-    enableCheckboxes &&
-    questions?.length === 0 &&
-    inquiry.message.trim().length === 0
+  const isFormInvalid =
+    questions?.length === 0 && inquiry.message.trim().length === 0
+
+  const showErrorMessage = hasAttemptedSubmit && isFormInvalid
 
   const { dimensionsLabel } = useArtworkDimensions(artwork.dimensions)
 
@@ -245,18 +251,11 @@ const InquiryInquiry: React.FC<
 
       <Separator my={2} />
 
-      {enableCheckboxes && (
-        <InquiryQuestionsList inquiryQuestions={artwork.inquiryQuestions} />
-      )}
-
-      <Text variant="sm">
-        Personalize your message and include details for the best response.
-      </Text>
-
+      <InquiryQuestionsList inquiryQuestions={artwork.inquiryQuestions} />
       <Spacer y={2} />
 
       <TextArea
-        placeholder="Provide the gallery with some details about your interest in this work."
+        placeholder="Personalize your message and include details for the best response."
         title="Your message"
         defaultValue={inquiry.message}
         onChange={handleTextAreaChange}
@@ -264,7 +263,6 @@ const InquiryInquiry: React.FC<
           showErrorMessage &&
           "Please enter a message or select at least one option."
         }
-        required={!enableCheckboxes}
       />
 
       <Spacer y={1} />
@@ -292,7 +290,7 @@ const InquiryInquiry: React.FC<
         display="block"
         width="100%"
         loading={mode === "Sending"}
-        disabled={mode === "Success" || showErrorMessage}
+        disabled={mode === "Success"}
       >
         {label}
       </Button>
