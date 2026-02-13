@@ -48,7 +48,7 @@ export const AuthDialogSignUp: FC<React.PropsWithChildren<unknown>> = () => {
       }}
       validationSchema={VALIDATION_SCHEMA}
       onSubmit={async (
-        { name, email, password, agreedToReceiveEmails },
+        { name, email, password, agreedToReceiveEmails, signupValidator },
         { setFieldValue, setStatus },
       ) => {
         setStatus({ error: null })
@@ -60,6 +60,7 @@ export const AuthDialogSignUp: FC<React.PropsWithChildren<unknown>> = () => {
             name,
             password,
             agreedToReceiveEmails,
+            signupValidator,
           })
 
           runAfterAuthentication({ accessToken: user.accessToken })
@@ -127,6 +128,11 @@ export const AuthDialogSignUp: FC<React.PropsWithChildren<unknown>> = () => {
                     lowercase letter, uppercase letter, and digit.
                   </Text>
                 </Box>
+                <Input
+                  display={"none"}
+                  name={"signupValidator"}
+                  value={values.signupValidator}
+                />
               </Stack>
 
               {!isAutomaticallySubscribed && (
@@ -191,6 +197,7 @@ export const INITIAL_VALUES = {
   password: "",
   agreedToReceiveEmails: false,
   mode: "Pending",
+  signupValidator: "",
 }
 
 export const passwordValidator = Yup.string()
