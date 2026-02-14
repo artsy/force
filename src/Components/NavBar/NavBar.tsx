@@ -14,6 +14,7 @@ import {
 } from "Components/NavBar/menuData"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import { useNavigationData } from "System/Contexts/NavigationDataContext"
 import Events from "Utils/Events"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 import type * as React from "react"
@@ -40,6 +41,8 @@ import { NavBarMobileMenuNotificationsIndicatorQueryRenderer } from "./NavBarMob
 import { NavBarPrimaryLogo } from "./NavBarPrimaryLogo"
 import { NavBarSkipLink } from "./NavBarSkipLink"
 import { useNavBarHeight } from "./useNavBarHeight"
+import { getENV } from "Utils/getENV"
+import { NavBarDropdownPanelServer } from "Components/NavBar/NavBarDropdownPanelServer"
 
 /**
  * NOTE: Fresnel doesn't work correctly here because this is included
@@ -63,6 +66,11 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
   const { trackEvent } = useTracking()
 
   const { router } = useRouter()
+
+  // Get navigation data from context (provided by buildAppRoutes query)
+  const navigationData = useNavigationData()
+
+  const shouldUseServerNav = getENV("ENABLE_SERVER_DRIVEN_NAVIGATION")
 
   const [mode, setMode] = useState<"Idle" | "Search" | "Profile" | "More">(
     "Idle",
@@ -367,44 +375,101 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
                 minWidth={0}
                 onMouseLeave={handleMenuLeave}
               >
-                <NavBarDropdownPanel
-                  href="/collection/new-this-week"
-                  label={WHATS_NEW_SUBMENU_DATA.text}
-                  menu={WHATS_NEW_SUBMENU_DATA.menu}
-                  contextModule={
-                    DeprecatedAnalyticsSchema.ContextModule
-                      .HeaderWhatsNewDropdown
-                  }
-                  onMenuEnter={handleMenuEnter}
-                  handleClick={handleClick}
-                  shouldTransition={shouldTransition}
-                />
+                {shouldUseServerNav ? (
+                  <>
+                    {navigationData?.whatsNewNavigation && (
+                      <NavBarDropdownPanelServer
+                        navigationData={navigationData.whatsNewNavigation}
+                        featuredLinkData={navigationData.whatsNewFeaturedLink}
+                        label="What’s New"
+                        href="/collection/new-this-week"
+                        contextModule={
+                          DeprecatedAnalyticsSchema.ContextModule
+                            .HeaderWhatsNewDropdown
+                        }
+                        menuType="whatsNew"
+                        onMenuEnter={handleMenuEnter}
+                        handleClick={handleClick}
+                        shouldTransition={shouldTransition}
+                      />
+                    )}
 
-                <NavBarDropdownPanel
-                  href="/artists"
-                  label="Artists"
-                  menu={ARTISTS_SUBMENU_DATA.menu}
-                  contextModule={
-                    DeprecatedAnalyticsSchema.ContextModule
-                      .HeaderArtistsDropdown
-                  }
-                  onMenuEnter={handleMenuEnter}
-                  handleClick={handleClick}
-                  shouldTransition={shouldTransition}
-                />
+                    {navigationData?.artistsNavigation && (
+                      <NavBarDropdownPanelServer
+                        navigationData={navigationData.artistsNavigation}
+                        featuredLinkData={navigationData.artistsFeaturedLink}
+                        label="Artists"
+                        href="/artists"
+                        contextModule={
+                          DeprecatedAnalyticsSchema.ContextModule
+                            .HeaderArtistsDropdown
+                        }
+                        menuType="artists"
+                        onMenuEnter={handleMenuEnter}
+                        handleClick={handleClick}
+                        shouldTransition={shouldTransition}
+                      />
+                    )}
 
-                <NavBarDropdownPanel
-                  href="/collect"
-                  label="Artworks"
-                  menu={ARTWORKS_SUBMENU_DATA.menu}
-                  contextModule={
-                    DeprecatedAnalyticsSchema.ContextModule
-                      .HeaderArtworksDropdown
-                  }
-                  onMenuEnter={handleMenuEnter}
-                  handleClick={handleClick}
-                  shouldTransition={shouldTransition}
-                />
+                    {navigationData?.artworksNavigation && (
+                      <NavBarDropdownPanelServer
+                        navigationData={navigationData.artworksNavigation}
+                        featuredLinkData={navigationData.artworksFeaturedLink}
+                        label="Artworks"
+                        href="/collect"
+                        contextModule={
+                          DeprecatedAnalyticsSchema.ContextModule
+                            .HeaderArtworksDropdown
+                        }
+                        menuType="artworks"
+                        onMenuEnter={handleMenuEnter}
+                        handleClick={handleClick}
+                        shouldTransition={shouldTransition}
+                      />
+                    )}
+                  </>
+                ) : (
+                  <>
+                    <NavBarDropdownPanel
+                      href="/collection/new-this-week"
+                      label={WHATS_NEW_SUBMENU_DATA.text}
+                      menu={WHATS_NEW_SUBMENU_DATA.menu}
+                      contextModule={
+                        DeprecatedAnalyticsSchema.ContextModule
+                          .HeaderWhatsNewDropdown
+                      }
+                      onMenuEnter={handleMenuEnter}
+                      handleClick={handleClick}
+                      shouldTransition={shouldTransition}
+                    />
+
+                    <NavBarDropdownPanel
+                      href="/artists"
+                      label="Artists"
+                      menu={ARTISTS_SUBMENU_DATA.menu}
+                      contextModule={
+                        DeprecatedAnalyticsSchema.ContextModule
+                          .HeaderArtistsDropdown
+                      }
+                      onMenuEnter={handleMenuEnter}
+                      handleClick={handleClick}
+                      shouldTransition={shouldTransition}
+                    />
+
+                    <NavBarDropdownPanel
+                      href="/collect"
+                      label="Artworks"
+                      menu={ARTWORKS_SUBMENU_DATA.menu}
+                      contextModule={
+                        DeprecatedAnalyticsSchema.ContextModule
+                          .HeaderArtworksDropdown
+                      }
+                      onMenuEnter={handleMenuEnter}
+                      handleClick={handleClick}
+                      shouldTransition={shouldTransition}
+                    />
+                  </>
+                )}
 
                 <NavBarItemLink
                   href="/auctions"
@@ -459,6 +524,7 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
                 >
                   Museums
                 </NavBarItemInstitutionsLink>
+
                 <NavBarItemLink
                   href="/feature/how-to-buy-art"
                   onMouseOver={() => prefetch("/feature/how-to-buy-art")}
@@ -475,9 +541,11 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
 
       {mode === "More" && (
         <NavBarMobileMenu
+          navigationData={navigationData}
           onClose={() => setMode("Idle")}
           isOpen
           onNavButtonClick={handleMobileNavClick}
+          shouldUseServerNav={shouldUseServerNav}
         />
       )}
 
