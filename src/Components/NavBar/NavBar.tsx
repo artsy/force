@@ -1,4 +1,3 @@
-import { ActionType } from "@artsy/cohesion"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
 import CloseIcon from "@artsy/icons/CloseIcon"
@@ -32,8 +31,9 @@ import { ProgressiveOnboardingSaveFind } from "Components/ProgressiveOnboarding/
 import { SearchBar } from "Components/Search/SearchBar"
 import { usePrefetchRoute } from "System/Hooks/usePrefetchRoute"
 import { Media } from "Utils/Responsive"
-import { track, useTracking } from "react-tracking"
+import { track } from "react-tracking"
 import styled from "styled-components"
+import { useNavBarTracking } from "./useNavBarTracking"
 import { NavBarDropdownPanel } from "./NavBarDropdownPanel"
 import { NavBarItemButton, NavBarItemLink } from "./NavBarItem"
 import { NavBarLoggedInActionsQueryRenderer } from "./NavBarLoggedInActions"
@@ -63,7 +63,7 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
 
   const { prefetch } = usePrefetchRoute()
 
-  const { trackEvent } = useTracking()
+  const tracking = useNavBarTracking()
 
   const { router } = useRouter()
 
@@ -131,10 +131,9 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
     const text = (link.getAttribute("data-label") || link.textContent) ?? ""
     const href = link.getAttribute("href") as string
 
-    trackEvent({
-      action_type: DeprecatedAnalyticsSchema.ActionType.Click,
-      destination_path: href,
+    tracking.clickedNavLink({
       subject: text,
+      destinationPath: href,
     })
   }
 
@@ -143,9 +142,7 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
   const handleNotificationsClick = () => {
     router.push("/notifications")
 
-    trackEvent({
-      action: ActionType.clickedNotificationsBell,
-    })
+    tracking.clickedNotificationsBell()
   }
 
   const handleMobileSearchBarClose = () => {
@@ -347,12 +344,7 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
 
                     setMode("More")
 
-                    trackEvent({
-                      action_type: DeprecatedAnalyticsSchema.ActionType.Click,
-                      subject:
-                        DeprecatedAnalyticsSchema.Subject
-                          .SmallScreenMenuSandwichIcon,
-                    })
+                    tracking.clickedMobileMenuHamburger()
                   }}
                 >
                   <NavBarMobileMenuIcon open={mode === "More"} />

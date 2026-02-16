@@ -1,15 +1,14 @@
-import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import ChevronLeftIcon from "@artsy/icons/ChevronLeftIcon"
 import type * as React from "react"
-import { useTracking } from "react-tracking"
 import { NavBarMobileMenuItemButton } from "./NavBarMobileMenuItem"
 import { useNavBarMobileMenuNavigation } from "./NavBarMobileMenuNavigation"
 import { useTrackingContextModule } from "./useTrackingContextModule"
+import { useNavBarTracking } from "../useNavBarTracking"
 
 export const NavBarMobileSubMenuBackButton: React.FC<
   React.PropsWithChildren<unknown>
 > = () => {
-  const { trackEvent } = useTracking()
+  const tracking = useNavBarTracking()
   const { pop } = useNavBarMobileMenuNavigation()
   const contextModule = useTrackingContextModule()
 
@@ -22,12 +21,7 @@ export const NavBarMobileSubMenuBackButton: React.FC<
       px={0}
       aria-label="Back"
       onClick={() => {
-        trackEvent({
-          action_type: DeprecatedAnalyticsSchema.ActionType.Click,
-          context_module: contextModule,
-          flow: "Header",
-          subject: "Back link",
-        })
+        tracking.clickedMobileSubMenuBack({ contextModule })
 
         pop()
       }}

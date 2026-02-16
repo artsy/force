@@ -1,4 +1,3 @@
-import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import ArtworkIcon from "@artsy/icons/ArtworkIcon"
 import BagIcon from "@artsy/icons/BagIcon"
 import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
@@ -24,15 +23,15 @@ import { getENV } from "Utils/getENV"
 import { userIsAdmin } from "Utils/user"
 import type * as React from "react"
 import { Suspense } from "react"
-import { useTracking } from "react-tracking"
 import { NavBarMenuItemButton, NavBarMenuItemLink } from "./NavBarMenuItem"
+import { useNavBarTracking } from "../useNavBarTracking"
 
 interface NavBarUserMenuProps extends BoxProps {}
 
 export const NavBarUserMenu: React.FC<
   React.PropsWithChildren<NavBarUserMenuProps>
 > = props => {
-  const { trackEvent } = useTracking()
+  const tracking = useNavBarTracking()
 
   const { user } = useSystemContext()
 
@@ -44,12 +43,9 @@ export const NavBarUserMenu: React.FC<
     const text = link.innerText
     const href = link.getAttribute("href")
 
-    trackEvent({
-      action_type: DeprecatedAnalyticsSchema.ActionType.Click,
-      context_module:
-        DeprecatedAnalyticsSchema.ContextModule.HeaderUserDropdown,
+    tracking.clickedUserMenuItem({
       subject: text,
-      destination_path: href,
+      destinationPath: href,
     })
   }
 

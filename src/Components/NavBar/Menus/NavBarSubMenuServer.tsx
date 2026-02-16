@@ -1,16 +1,14 @@
-import type { ClickedNavigationDropdownItem } from "@artsy/cohesion"
 import type * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
-import { useTracking } from "react-tracking"
 import { RouterLink } from "System/Components/RouterLink"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { NavBarMenuItemLink } from "./NavBarMenuItem"
 import { graphql, useFragment } from "react-relay"
 import type { NavBarSubMenuServer_navigationVersion$key } from "__generated__/NavBarSubMenuServer_navigationVersion.graphql"
 import type { NavBarMenuItemFeaturedLinkColumn_featuredLinkData$key } from "__generated__/NavBarMenuItemFeaturedLinkColumn_featuredLinkData.graphql"
 import { NavBarMenuItemFeaturedLinkColumn } from "./NavBarMenuItemFeaturedLinkColumn"
+import { useNavBarTracking } from "../useNavBarTracking"
 
 const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("")
 
@@ -36,9 +34,7 @@ export const NavBarSubMenuServer: React.FC<NavBarSubMenuServerProps> = ({
   onClick,
   isVisible,
 }) => {
-  const { trackEvent } = useTracking()
-  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
-    useAnalyticsContext()
+  const tracking = useNavBarTracking()
 
   const navigationVersion = useFragment(
     NAVIGATION_VERSION_FRAGMENT,
@@ -68,19 +64,13 @@ export const NavBarSubMenuServer: React.FC<NavBarSubMenuServerProps> = ({
     const text = link.textContent?.trim() || link.innerText
     const href = link.getAttribute("href") || ""
 
-    trackEvent({
-      action: "click",
-      flow: "Header",
-      // @ts-expect-error - ContextModule types between deprecated and new schema
-      context_module: contextModule,
-      context_page_owner_type: contextPageOwnerType!,
-      context_page_owner_id: contextPageOwnerId,
-      context_page_owner_slug: contextPageOwnerSlug,
-      parent_navigation_item: label,
-      dropdown_group: dropdownGroup,
+    tracking.clickedNavigationDropdownItem({
+      contextModule,
+      parentNavigationItem: label,
+      dropdownGroup,
       subject: text || "",
-      destination_path: href || "",
-    } satisfies ClickedNavigationDropdownItem)
+      destinationPath: href || "",
+    })
 
     onClick?.()
   }

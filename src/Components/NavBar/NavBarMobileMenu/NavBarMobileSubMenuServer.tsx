@@ -1,11 +1,7 @@
-import { ActionType } from "@artsy/cohesion"
-import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
 import { Box, Flex, Separator, Text } from "@artsy/palette"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import type * as React from "react"
 import { useEffect, useRef } from "react"
-import { useTracking } from "react-tracking"
 import { graphql, useFragment } from "react-relay"
 import {
   NavBarMobileMenuItemButton,
@@ -16,6 +12,7 @@ import { useNavBarMobileMenuNavigation } from "./NavBarMobileMenuNavigation"
 import { NavBarMobileMenuTransition } from "./NavBarMobileMenuTransition"
 import { useTrackingContextModule } from "./useTrackingContextModule"
 import type { NavBarMobileSubMenuServer_navigationVersion$key } from "__generated__/NavBarMobileSubMenuServer_navigationVersion.graphql"
+import { useNavBarTracking } from "../useNavBarTracking"
 
 const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("")
 
@@ -62,11 +59,9 @@ interface NavBarMobileSubMenuDrilldownProps {
 const NavBarMobileSubMenuDrilldown: React.FC<
   NavBarMobileSubMenuDrilldownProps
 > = ({ title, navigationData, menuType, level }) => {
-  const { trackEvent } = useTracking()
+  const tracking = useNavBarTracking()
   const { path, push } = useNavBarMobileMenuNavigation()
   const contextModule = useTrackingContextModule()
-  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
-    useAnalyticsContext()
 
   const hasTrackedRef = useRef(false)
   const timeoutRef = useRef<NodeJS.Timeout | null>(null)
@@ -79,15 +74,10 @@ const NavBarMobileSubMenuDrilldown: React.FC<
     if (isOpen && !hasTrackedRef.current) {
       // Only fire if menu stays open for at least 500ms
       timeoutRef.current = setTimeout(() => {
-        trackEvent({
-          action: ActionType.navigationDropdownViewed,
-          context_module: "header" as any,
-          context_page_owner_type: contextPageOwnerType!,
-          context_page_owner_id: contextPageOwnerId,
-          context_page_owner_slug: contextPageOwnerSlug,
-          navigation_item: title,
+        tracking.navigationDropdownViewed({
+          navigationItem: title,
           level: level,
-          interaction_type: "drilldown",
+          interactionType: "drilldown",
         })
         hasTrackedRef.current = true
       }, 500)
@@ -110,10 +100,8 @@ const NavBarMobileSubMenuDrilldown: React.FC<
         onClick={() => {
           push(title)
 
-          trackEvent({
-            action_type: DeprecatedAnalyticsSchema.ActionType.Click,
-            context_module: contextModule,
-            flow: "Header",
+          tracking.clickedMobileSubMenuOpen({
+            contextModule,
             subject: title,
           })
         }}
@@ -160,10 +148,8 @@ const NavBarMobileSubMenuPanelServer: React.FC<
   level,
   showBacknav = true,
 }) => {
-  const { trackEvent } = useTracking()
+  const tracking = useNavBarTracking()
   const contextModule = useTrackingContextModule()
-  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
-    useAnalyticsContext()
 
   const handleClick = (
     _event: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
@@ -171,17 +157,12 @@ const NavBarMobileSubMenuPanelServer: React.FC<
     href: string,
     sectionTitle: string,
   ) => {
-    trackEvent({
-      action: "click",
-      flow: "Header",
-      context_module: contextModule,
-      context_page_owner_type: contextPageOwnerType!,
-      context_page_owner_id: contextPageOwnerId,
-      context_page_owner_slug: contextPageOwnerSlug,
-      parent_navigation_item: title,
+    tracking.clickedNavigationDropdownItem({
+      contextModule,
+      parentNavigationItem: title,
+      dropdownGroup: sectionTitle,
       subject: itemTitle,
-      destination_path: href,
-      navigation_dropdown_group: sectionTitle,
+      destinationPath: href,
     })
   }
 
@@ -288,10 +269,8 @@ const NavBarMobileSubMenuItem: React.FC<NavBarMobileSubMenuItemProps> = ({
   level,
   menuType,
 }) => {
-  const { trackEvent } = useTracking()
+  const tracking = useNavBarTracking()
   const contextModule = useTrackingContextModule()
-  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
-    useAnalyticsContext()
 
   // If item has children, it's a nested submenu - use the drilldown component
   if (item.children && item.children.length > 0) {
@@ -311,17 +290,12 @@ const NavBarMobileSubMenuItem: React.FC<NavBarMobileSubMenuItemProps> = ({
   const handleClick = (
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
   ) => {
-    trackEvent({
-      action: "click",
-      flow: "Header",
-      context_module: contextModule,
-      context_page_owner_type: contextPageOwnerType!,
-      context_page_owner_id: contextPageOwnerId,
-      context_page_owner_slug: contextPageOwnerSlug,
-      parent_navigation_item: parentNavigationItem,
+    tracking.clickedNavigationDropdownItem({
+      contextModule,
+      parentNavigationItem,
+      dropdownGroup: sectionTitle,
       subject: item.title,
-      destination_path: item.href,
-      navigation_dropdown_group: sectionTitle,
+      destinationPath: item.href,
     })
   }
 

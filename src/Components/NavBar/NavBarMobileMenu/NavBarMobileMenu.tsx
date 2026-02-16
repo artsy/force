@@ -1,4 +1,3 @@
-import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import CloseIcon from "@artsy/icons/CloseIcon"
 import MenuIcon from "@artsy/icons/MenuIcon"
 import { ModalBase, Separator, Text } from "@artsy/palette"
@@ -11,8 +10,8 @@ import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useDeviceDetection } from "Utils/Hooks/useDeviceDetection"
 import { logout } from "Utils/auth"
 import type * as React from "react"
-import { useTracking } from "react-tracking"
 import { NavBarMobileMenuAuthentication } from "./NavBarMobileMenuAuthentication"
+import { useNavBarTracking } from "../useNavBarTracking"
 import {
   NavBarMobileMenuItemButton,
   NavBarMobileMenuItemLink,
@@ -43,7 +42,7 @@ export const NavBarMobileMenu: React.FC<
   const { isLoggedIn } = useSystemContext()
 
   const { downloadAppUrl } = useDeviceDetection()
-  const { trackEvent } = useTracking()
+  const tracking = useNavBarTracking()
 
   const handleClick = (
     event: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement, MouseEvent>,
@@ -52,12 +51,9 @@ export const NavBarMobileMenu: React.FC<
     const text = node.textContent ?? ""
     const href = node.getAttribute("href")
 
-    trackEvent({
-      action_type: DeprecatedAnalyticsSchema.ActionType.Click,
-      context_module: DeprecatedAnalyticsSchema.ContextModule.Header,
-      flow: "Header",
+    tracking.clickedMobileNavLink({
       subject: text,
-      destination_path: href,
+      destinationPath: href,
     })
   }
 
