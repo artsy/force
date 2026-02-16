@@ -97,6 +97,7 @@ export const NavBarDropdownPanel: React.FC<NavBarDropdownPanelProps> = ({
           <NavBarItemButton
             ref={anchorRef as any}
             active={visible}
+            data-testid="static-dropdown"
             onMouseEnter={e => {
               onMouseEnter?.(e)
               onMenuEnter()
