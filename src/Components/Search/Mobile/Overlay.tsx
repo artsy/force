@@ -36,14 +36,12 @@ interface OverlayProps {
   viewer: Overlay_viewer$data
   relay: RelayRefetchProp
   onClose: () => void
-  variant?: string
 }
 
 export const Overlay: FC<React.PropsWithChildren<OverlayProps>> = ({
   viewer,
   relay,
   onClose,
-  variant,
 }) => {
   const tracking = useTracking()
   const inputRef = useRef<HTMLInputElement | null>(null)
@@ -80,7 +78,6 @@ export const Overlay: FC<React.PropsWithChildren<OverlayProps>> = ({
           hasTerm: true,
           term: value,
           entities: entities,
-          variant,
         },
         null,
         error => {
@@ -97,7 +94,7 @@ export const Overlay: FC<React.PropsWithChildren<OverlayProps>> = ({
         },
       )
     },
-    [relay, variant],
+    [relay],
   )
 
   const handlePillClick = (pill: PillType) => {
@@ -158,11 +155,10 @@ export const OverlayRefetchContainer = createRefetchContainer(
         term: { type: "String!", defaultValue: "" }
         hasTerm: { type: "Boolean!", defaultValue: false }
         entities: { type: "[SearchEntity]" }
-        variant: { type: "String" }
       ) {
         ...SearchInputPills_viewer @arguments(term: $term)
         ...SearchResultsList_viewer
-          @arguments(term: $term, entities: $entities, variant: $variant)
+          @arguments(term: $term, entities: $entities)
           @include(if: $hasTerm)
       }
     `,
@@ -172,16 +168,10 @@ export const OverlayRefetchContainer = createRefetchContainer(
       $term: String!
       $hasTerm: Boolean!
       $entities: [SearchEntity]
-      $variant: String
     ) {
       viewer {
         ...Overlay_viewer
-          @arguments(
-            term: $term
-            hasTerm: $hasTerm
-            entities: $entities
-            variant: $variant
-          )
+          @arguments(term: $term, hasTerm: $hasTerm, entities: $entities)
       }
     }
   `,

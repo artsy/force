@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<502ba2f1813eb00bd57d03860a276009>>
+ * @generated SignedSource<<4ded4266cca31d8892b20c850b6f82f5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -69,11 +69,6 @@ return {
       "defaultValue": "",
       "kind": "LocalArgument",
       "name": "term"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "variant"
     }
   ],
   "kind": "Fragment",
@@ -108,11 +103,6 @@ return {
           "kind": "Variable",
           "name": "query",
           "variableName": "term"
-        },
-        {
-          "kind": "Variable",
-          "name": "variant",
-          "variableName": "variant"
         }
       ],
       "concreteType": "SearchableConnection",
@@ -303,6 +293,6 @@ return {
 };
 })();
 
-(node as any).hash = "3ec2b9f055d3dacb8dca427a3393458c";
+(node as any).hash = "a67cada8e53b6181a5cd66c1114ce7b1";
 
 export default node;

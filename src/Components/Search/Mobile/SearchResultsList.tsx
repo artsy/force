@@ -159,7 +159,6 @@ export const SearchResultsListPaginationContainer = createPaginationContainer(
         after: { type: "String" }
         term: { type: "String!", defaultValue: "" }
         entities: { type: "[SearchEntity]" }
-        variant: { type: "String" }
       ) {
         searchConnection(
           query: $term
@@ -167,7 +166,6 @@ export const SearchResultsListPaginationContainer = createPaginationContainer(
           mode: AUTOSUGGEST
           first: $first
           after: $after
-          variant: $variant
         ) @connection(key: "SearchResultsList_searchConnection") {
           edges {
             node {
@@ -212,7 +210,6 @@ export const SearchResultsListPaginationContainer = createPaginationContainer(
         after: cursor,
         term: fragmentVariables.term,
         entities: fragmentVariables.entities,
-        variant: fragmentVariables.variant,
       }
     },
     query: graphql`
@@ -220,16 +217,10 @@ export const SearchResultsListPaginationContainer = createPaginationContainer(
         $after: String
         $term: String!
         $entities: [SearchEntity]
-        $variant: String
       ) {
         viewer {
           ...SearchResultsList_viewer
-            @arguments(
-              term: $term
-              entities: $entities
-              after: $after
-              variant: $variant
-            )
+            @arguments(term: $term, entities: $entities, after: $after)
         }
       }
     `,
