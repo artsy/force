@@ -216,7 +216,7 @@ const NavBarMobileSubMenuPanelServer: React.FC<
       })}
 
       {/* View All links */}
-      {menuType === "artists" && (
+      {menuType === "artists" && level === 0 && (
         <>
           <Separator my={1} />
           <NavBarMobileMenuItemLink
@@ -229,7 +229,7 @@ const NavBarMobileSubMenuPanelServer: React.FC<
         </>
       )}
 
-      {menuType === "artworks" && (
+      {menuType === "artworks" && level === 0 && (
         <>
           <Separator my={1} />
           <NavBarMobileMenuItemLink
@@ -243,7 +243,7 @@ const NavBarMobileSubMenuPanelServer: React.FC<
       )}
 
       {/* A-Z letters for Artists menu */}
-      {menuType === "artists" && (
+      {menuType === "artists" && level === 0 && (
         <Flex flexWrap="wrap" justifyContent="center">
           {LETTERS.map(letter => {
             return (
