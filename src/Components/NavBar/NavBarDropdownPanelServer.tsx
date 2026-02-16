@@ -97,7 +97,9 @@ export const NavBarDropdownPanelServer: React.FC<
               })
               hasTrackedRef.current = true
             }, 500)
-          } else if (!visible && timeoutRef.current) {
+          }
+
+          if (!visible && timeoutRef.current) {
             // Cancel tracking if dropdown closes before delay
             clearTimeout(timeoutRef.current)
             timeoutRef.current = null
@@ -114,6 +116,7 @@ export const NavBarDropdownPanelServer: React.FC<
           <NavBarItemButton
             ref={anchorRef as any}
             active={visible}
+            data-testid="server-dropdown"
             onMouseEnter={e => {
               onMouseEnter?.(e)
               onMenuEnter?.()

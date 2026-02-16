@@ -105,11 +105,11 @@ export const NavBarMenuItemFeaturedLinkColumn: React.FC<
 
           <Spacer y={2} />
 
-          <Text color="mono60" variant={["xs", "xs", "sm"]} lineHeight="20px">
+          <Text color="mono60" variant={["xs", "xs", "sm"]}>
             {item.subtitle}
           </Text>
 
-          <Text color="mono100" variant={["xs", "xs", "sm"]} lineHeight="20px">
+          <Text color="mono100" variant={["xs", "xs", "sm"]}>
             {item.title}
           </Text>
         </RouterLink>

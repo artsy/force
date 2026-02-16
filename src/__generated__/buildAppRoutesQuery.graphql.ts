@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6583d75d651d04d7a63a019e66760944>>
+ * @generated SignedSource<<1b67a57fa9e1800d2c88faba28770dd8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,7 +12,7 @@ import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type NavigationVersionState = "DRAFT" | "LIVE" | "%future added value";
 export type buildAppRoutesQuery$variables = {
-  requstedVersionState: NavigationVersionState;
+  requestedVersionState: NavigationVersionState;
 };
 export type buildAppRoutesQuery$data = {
   readonly artistsFeaturedLink: ReadonlyArray<{
@@ -44,13 +44,13 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "requstedVersionState"
+    "name": "requestedVersionState"
   }
 ],
 v1 = {
   "kind": "Variable",
   "name": "state",
-  "variableName": "requstedVersionState"
+  "variableName": "requestedVersionState"
 },
 v2 = [
   {
@@ -451,16 +451,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d2ce62186549f3a9246595be2adf0d57",
+    "cacheID": "b489190942fb970749053858ff31ccca",
     "id": null,
     "metadata": {},
     "name": "buildAppRoutesQuery",
     "operationKind": "query",
-    "text": "query buildAppRoutesQuery(\n  $requstedVersionState: NavigationVersionState!\n) @cacheable {\n  whatsNewNavigation: navigationVersion(groupID: \"whats-new\", state: $requstedVersionState) {\n    ...NavBarSubMenuServer_navigationVersion\n    ...NavBarMobileSubMenuServer_navigationVersion\n    id\n  }\n  artistsNavigation: navigationVersion(groupID: \"artists\", state: $requstedVersionState) {\n    ...NavBarSubMenuServer_navigationVersion\n    ...NavBarMobileSubMenuServer_navigationVersion\n    id\n  }\n  artworksNavigation: navigationVersion(groupID: \"artworks\", state: $requstedVersionState) {\n    ...NavBarSubMenuServer_navigationVersion\n    ...NavBarMobileSubMenuServer_navigationVersion\n    id\n  }\n  whatsNewFeaturedLink: orderedSets(key: \"nav-visual:whats-new\") {\n    ...NavBarMenuItemFeaturedLinkColumn_featuredLinkData\n    id\n  }\n  artistsFeaturedLink: orderedSets(key: \"nav-visual:artists\") {\n    ...NavBarMenuItemFeaturedLinkColumn_featuredLinkData\n    id\n  }\n  artworksFeaturedLink: orderedSets(key: \"nav-visual:artworks\") {\n    ...NavBarMenuItemFeaturedLinkColumn_featuredLinkData\n    id\n  }\n}\n\nfragment NavBarMenuItemFeaturedLinkColumn_featuredLinkData on OrderedSet {\n  items {\n    __typename\n    ... on FeaturedLink {\n      title\n      subtitle(format: PLAIN)\n      href\n      image {\n        cropped(width: 400, height: 400, version: [\"main\", \"wide\", \"large_rectangle\"]) {\n          src\n          srcSet\n          width\n          height\n        }\n      }\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on Profile {\n      id\n    }\n    ... on Video {\n      id\n    }\n  }\n}\n\nfragment NavBarMobileSubMenuServer_navigationVersion on NavigationVersion {\n  items {\n    title\n    position\n    children {\n      title\n      href\n      position\n      id\n    }\n    id\n  }\n}\n\nfragment NavBarSubMenuServer_navigationVersion on NavigationVersion {\n  items {\n    title\n    position\n    children {\n      title\n      href\n      position\n      id\n    }\n    id\n  }\n}\n"
+    "text": "query buildAppRoutesQuery(\n  $requestedVersionState: NavigationVersionState!\n) @cacheable {\n  whatsNewNavigation: navigationVersion(groupID: \"whats-new\", state: $requestedVersionState) {\n    ...NavBarSubMenuServer_navigationVersion\n    ...NavBarMobileSubMenuServer_navigationVersion\n    id\n  }\n  artistsNavigation: navigationVersion(groupID: \"artists\", state: $requestedVersionState) {\n    ...NavBarSubMenuServer_navigationVersion\n    ...NavBarMobileSubMenuServer_navigationVersion\n    id\n  }\n  artworksNavigation: navigationVersion(groupID: \"artworks\", state: $requestedVersionState) {\n    ...NavBarSubMenuServer_navigationVersion\n    ...NavBarMobileSubMenuServer_navigationVersion\n    id\n  }\n  whatsNewFeaturedLink: orderedSets(key: \"nav-visual:whats-new\") {\n    ...NavBarMenuItemFeaturedLinkColumn_featuredLinkData\n    id\n  }\n  artistsFeaturedLink: orderedSets(key: \"nav-visual:artists\") {\n    ...NavBarMenuItemFeaturedLinkColumn_featuredLinkData\n    id\n  }\n  artworksFeaturedLink: orderedSets(key: \"nav-visual:artworks\") {\n    ...NavBarMenuItemFeaturedLinkColumn_featuredLinkData\n    id\n  }\n}\n\nfragment NavBarMenuItemFeaturedLinkColumn_featuredLinkData on OrderedSet {\n  items {\n    __typename\n    ... on FeaturedLink {\n      title\n      subtitle(format: PLAIN)\n      href\n      image {\n        cropped(width: 400, height: 400, version: [\"main\", \"wide\", \"large_rectangle\"]) {\n          src\n          srcSet\n          width\n          height\n        }\n      }\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on Profile {\n      id\n    }\n    ... on Video {\n      id\n    }\n  }\n}\n\nfragment NavBarMobileSubMenuServer_navigationVersion on NavigationVersion {\n  items {\n    title\n    position\n    children {\n      title\n      href\n      position\n      id\n    }\n    id\n  }\n}\n\nfragment NavBarSubMenuServer_navigationVersion on NavigationVersion {\n  items {\n    title\n    position\n    children {\n      title\n      href\n      position\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "c981191287fd6d5693cc78fc645aa77e";
+(node as any).hash = "b9313fac02d9fbfc84822d92ff55f14f";
 
 export default node;

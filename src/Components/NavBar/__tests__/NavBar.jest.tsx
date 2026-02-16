@@ -4,6 +4,8 @@ import { SystemContextProvider } from "System/Contexts/SystemContext"
 import { render, screen } from "@testing-library/react"
 import { fireEvent } from "@testing-library/react"
 import { useTracking } from "react-tracking"
+import { getENV } from "Utils/getENV"
+import { useNavigationData } from "System/Contexts/NavigationDataContext"
 
 jest.mock("Components/Search/SearchBar", () => {
   return {
@@ -69,6 +71,12 @@ jest.mock(
     ProgressiveOnboardingAlertFind: ({ children }) => children,
   }),
 )
+
+jest.mock("Utils/getENV")
+jest.mock("System/Contexts/NavigationDataContext", () => ({
+  useNavigationData: jest.fn(() => null),
+  NavigationDataProvider: ({ children }) => children,
+}))
 
 describe("NavBar", () => {
   const trackEvent = jest.fn()
@@ -204,6 +212,80 @@ describe("NavBar", () => {
 
       const { container: eigenContainer } = getWrapper({ isEigen: true })
       expect(eigenContainer.firstChild).toBeNull()
+    })
+  })
+
+  describe("shouldUseServerNav", () => {
+    const mockGetENV = getENV as jest.Mock
+    const mockUseNavigationData = useNavigationData as jest.Mock
+
+    beforeEach(() => {
+      mockGetENV.mockReset()
+      mockUseNavigationData.mockReset()
+    })
+
+    describe("conditional render (desktop dropdown)", () => {
+      it("renders client NavBarDropdownPanel when ENABLE_SERVER_DRIVEN_NAVIGATION is false", () => {
+        mockGetENV.mockImplementation((key: string) =>
+          key === "ENABLE_SERVER_DRIVEN_NAVIGATION" ? false : undefined,
+        )
+        mockUseNavigationData.mockReturnValue(null)
+
+        getWrapper()
+
+        expect(screen.getAllByTestId("static-dropdown").length).toEqual(3)
+      })
+
+      it("renders NavBarDropdownPanelServer when ENABLE_SERVER_DRIVEN_NAVIGATION is true", () => {
+        mockGetENV.mockImplementation((key: string) =>
+          key === "ENABLE_SERVER_DRIVEN_NAVIGATION" ? true : undefined,
+        )
+        mockUseNavigationData.mockReturnValue({
+          whatsNewNavigation: {},
+          artistsNavigation: {},
+          artworksNavigation: {},
+          whatsNewFeaturedLink: null,
+          artistsFeaturedLink: null,
+          artworksFeaturedLink: null,
+        })
+
+        getWrapper()
+
+        expect(screen.getAllByTestId("server-dropdown").length).toEqual(3)
+      })
+    })
+
+    describe("prop drill to NavBarMobileMenu", () => {
+      it("passes shouldUseServerNav=false to NavBarMobileMenu when flag is disabled", () => {
+        mockGetENV.mockImplementation((key: string) =>
+          key === "ENABLE_SERVER_DRIVEN_NAVIGATION" ? false : undefined,
+        )
+        mockUseNavigationData.mockReturnValue(null)
+
+        getWrapper()
+
+        fireEvent.click(screen.getByLabelText("Menu"))
+
+        const mobileMenu = screen.getByTestId("NavBarMobileMenu")
+        expect(mobileMenu).toHaveAttribute(
+          "data-should-use-server-nav",
+          "false",
+        )
+      })
+
+      it("passes shouldUseServerNav=true to NavBarMobileMenu when flag is enabled", () => {
+        mockGetENV.mockImplementation((key: string) =>
+          key === "ENABLE_SERVER_DRIVEN_NAVIGATION" ? true : undefined,
+        )
+        mockUseNavigationData.mockReturnValue(null)
+
+        getWrapper()
+
+        fireEvent.click(screen.getByLabelText("Menu"))
+
+        const mobileMenu = screen.getByTestId("NavBarMobileMenu")
+        expect(mobileMenu).toHaveAttribute("data-should-use-server-nav", "true")
+      })
     })
   })
 })

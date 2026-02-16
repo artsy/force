@@ -1,15 +1,15 @@
 import type { buildAppRoutesQuery$data } from "__generated__/buildAppRoutesQuery.graphql"
 import { createContext, useContext } from "react"
 
-export type NavigationData = Pick<
-  buildAppRoutesQuery$data,
+type NavigationDataKeys =
   | "whatsNewNavigation"
   | "artistsNavigation"
   | "artworksNavigation"
   | "whatsNewFeaturedLink"
   | "artistsFeaturedLink"
   | "artworksFeaturedLink"
->
+
+export type NavigationData = Pick<buildAppRoutesQuery$data, NavigationDataKeys>
 
 const NavigationDataContext = createContext<NavigationData | null>(null)
 
