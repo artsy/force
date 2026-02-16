@@ -1,8 +1,6 @@
 import { ModalDialog } from "@artsy/palette"
-import { useFlag } from "@unleash/proxy-client-react"
 import {
   type AuthDialogMode,
-  type AuthDialogOptions,
   useAuthDialogContext,
 } from "Components/AuthDialog/AuthDialogContext"
 import { AuthDialogLeftPanel } from "Components/AuthDialog/AuthDialogLeftPanel"
@@ -25,8 +23,6 @@ export const AuthDialog: FC<React.PropsWithChildren<AuthDialogProps>> = ({
   onClose,
 }) => {
   useRecaptcha()
-  const newSignupEnabled = useFlag("onyx_new-signup-modal")
-
   const {
     state: { mode, options },
   } = useAuthDialogContext()
@@ -48,7 +44,7 @@ export const AuthDialog: FC<React.PropsWithChildren<AuthDialogProps>> = ({
   }
 
   const isCloseable = options.isCloseable ?? true
-  const modalProps = getModalProps(options, newSignupEnabled)
+  const modalProps = getModalProps()
 
   return (
     <ModalDialog
@@ -92,21 +88,15 @@ export const DEFAULT_TITLES: Record<AuthDialogMode, string> = {
   Welcome: "Sign up or log in",
 }
 
-const getModalProps = (
-  options: AuthDialogOptions,
-  newSignupEnabled: boolean,
-) => {
-  if (
-    !getENV("IS_MOBILE") &&
-    (!!options.nodeId || !!options.seoImage || newSignupEnabled)
-  ) {
+const getModalProps = () => {
+  if (getENV("IS_MOBILE")) {
     return {
-      width: ["100%", MODAL_WIDTH],
-      leftPanel: <AuthDialogLeftPanel />,
+      width: ["100%", 450],
     }
   }
 
   return {
-    width: ["100%", 450],
+    width: ["100%", MODAL_WIDTH],
+    leftPanel: <AuthDialogLeftPanel />,
   }
 }
