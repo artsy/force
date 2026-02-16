@@ -52,7 +52,7 @@ export const Order2DeliveryOptionsForm: React.FC<
   const {
     checkoutTracking,
     setDeliveryOptionComplete,
-    setStepErrorMessage,
+    setSectionErrorMessage,
     messages,
   } = useCheckoutContext()
   const setFulfillmentOptionMutation =
@@ -93,15 +93,15 @@ export const Order2DeliveryOptionsForm: React.FC<
         setFulfillmentOptionResult.setOrderFulfillmentOption?.orderOrError,
       ).order
 
-      setStepErrorMessage({
-        step: CheckoutStepName.DELIVERY_OPTION,
+      setSectionErrorMessage({
+        section: CheckoutStepName.DELIVERY_OPTION,
         error: null,
       })
       setDeliveryOptionComplete()
     } catch (error) {
       console.error("Error setting delivery option:", error)
-      setStepErrorMessage({
-        step: CheckoutStepName.DELIVERY_OPTION,
+      setSectionErrorMessage({
+        section: CheckoutStepName.DELIVERY_OPTION,
         error: somethingWentWrongError(
           "selecting your shipping method",
           error?.code,

@@ -206,7 +206,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
     savePaymentMethod,
     activeFulfillmentDetailsTab,
     messages,
-    setStepErrorMessage,
+    setSectionErrorMessage,
     steps,
   } = useCheckoutContext()
 
@@ -214,8 +214,8 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
   const paymentStep = steps.find(step => step.name === CheckoutStepName.PAYMENT)
 
   const unsetStepError = () => {
-    setStepErrorMessage({
-      step: CheckoutStepName.PAYMENT,
+    setSectionErrorMessage({
+      section: CheckoutStepName.PAYMENT,
       error: null,
     })
   }
@@ -328,19 +328,19 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
 
   const handleError = useCallback(
     (error?: CheckoutErrorBannerMessage) => {
-      setStepErrorMessage({
-        step: CheckoutStepName.PAYMENT,
+      setSectionErrorMessage({
+        section: CheckoutStepName.PAYMENT,
         error,
       })
 
       setIsSubmittingToStripe(false)
       resetElementsToInitialParams()
     },
-    [resetElementsToInitialParams, setStepErrorMessage],
+    [resetElementsToInitialParams, setSectionErrorMessage],
   )
 
   const handlePaymentElementError = useCallback(
-    // do not setStepErrorMessage since the error is being handled by the PaymentElement
+    // do not setSectionErrorMessage since the error is being handled by the PaymentElement
     (error: StripeError) => {
       paymentElementRef.current?.scrollIntoView({
         behavior: "smooth",

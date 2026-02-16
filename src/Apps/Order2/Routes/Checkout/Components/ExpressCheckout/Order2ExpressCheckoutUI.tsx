@@ -88,7 +88,6 @@ export const Order2ExpressCheckoutUI: React.FC<
 
   const [expressCheckoutType, setExpressCheckoutType] =
     useState<ExpressPaymentType | null>(null)
-  const [error, setError] = useState<CheckoutErrorBannerMessage | null>(null)
 
   const errorRef = useRef<string | null>(null)
 
@@ -101,7 +100,18 @@ export const Order2ExpressCheckoutUI: React.FC<
     checkoutTracking,
     setConfirmationToken,
     editFulfillmentDetails,
+    setSectionErrorMessage,
+    messages,
   } = useCheckoutContext()
+
+  const error = messages["EXPRESS_CHECKOUT"]?.error
+
+  const unsetStepError = () => {
+    setSectionErrorMessage({
+      section: "EXPRESS_CHECKOUT",
+      error: null,
+    })
+  }
 
   if (!(stripe && elements)) {
     return null
@@ -246,7 +256,10 @@ export const Order2ExpressCheckoutUI: React.FC<
       if (errorCode) {
         const errorBannerProps =
           expressCheckoutErrorBannerPropsForCode(errorCode)
-        setError(errorBannerProps)
+        setSectionErrorMessage({
+          section: "EXPRESS_CHECKOUT",
+          error: errorBannerProps,
+        })
       }
     } catch (error) {
       logger.error("Error resetting order", error)
@@ -267,6 +280,7 @@ export const Order2ExpressCheckoutUI: React.FC<
     setExpressCheckoutState("active")
 
     setExpressCheckoutType(expressPaymentType)
+    unsetStepError() // Clear any previous errors
 
     checkoutTracking.clickedExpressCheckout({
       walletType: expressPaymentType,
@@ -310,6 +324,10 @@ export const Order2ExpressCheckoutUI: React.FC<
     const canCancel = !expressCheckoutState || expressCheckoutState === "active"
 
     if (canCancel) {
+      // Clear any displayed errors when manually canceling
+      if (!errorCode) {
+        unsetStepError()
+      }
       await resetOrder({ errorCode: errorCode || undefined })
     } else {
       setExpressCheckoutType(null)
