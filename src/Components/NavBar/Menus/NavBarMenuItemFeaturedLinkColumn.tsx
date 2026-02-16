@@ -1,4 +1,3 @@
-import type { ClickedNavigationDropdownItem } from "@artsy/cohesion"
 import type * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import {
   Column,
@@ -10,10 +9,9 @@ import {
 } from "@artsy/palette"
 import { compact } from "lodash"
 import { graphql, useFragment } from "react-relay"
-import { useTracking } from "react-tracking"
 import { RouterLink } from "System/Components/RouterLink"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import type { NavBarMenuItemFeaturedLinkColumn_featuredLinkData$key } from "__generated__/NavBarMenuItemFeaturedLinkColumn_featuredLinkData.graphql"
+import { useNavBarTracking } from "../useNavBarTracking"
 
 export interface NavBarMenuItemFeaturedLinkColumnProps {
   orderedSet: NavBarMenuItemFeaturedLinkColumn_featuredLinkData$key
@@ -33,9 +31,7 @@ export const NavBarMenuItemFeaturedLinkColumn: React.FC<
   headerText,
   isVisible,
 }) => {
-  const { trackEvent } = useTracking()
-  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
-    useAnalyticsContext()
+  const tracking = useNavBarTracking()
 
   const orderedSetData = useFragment(FEATURED_LINK_DATA_FRAGMENT, orderedSetKey)
 
@@ -49,19 +45,13 @@ export const NavBarMenuItemFeaturedLinkColumn: React.FC<
   }
 
   const handleClick = () => {
-    trackEvent({
-      action: "click",
-      flow: "Header",
-      // @ts-expect-error - ContextModule types between deprecated and new schema
-      context_module: contextModule,
-      context_page_owner_type: contextPageOwnerType!,
-      context_page_owner_id: contextPageOwnerId,
-      context_page_owner_slug: contextPageOwnerSlug,
-      parent_navigation_item: label,
-      dropdown_group: headerText,
+    tracking.clickedNavigationDropdownItem({
+      contextModule,
+      parentNavigationItem: label,
+      dropdownGroup: headerText,
       subject: item.title || "",
-      destination_path: item.href || "",
-    } satisfies ClickedNavigationDropdownItem)
+      destinationPath: item.href || "",
+    })
   }
 
   return (

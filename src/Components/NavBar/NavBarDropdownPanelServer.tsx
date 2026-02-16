@@ -1,15 +1,13 @@
-import { ActionType } from "@artsy/cohesion"
 import type * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { Dropdown } from "@artsy/palette"
 import { Z } from "Apps/Components/constants"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { usePrefetchRoute } from "System/Hooks/usePrefetchRoute"
 import { useEffect, useRef } from "react"
-import { useTracking } from "react-tracking"
 import { NavBarSubMenuServer } from "./Menus/NavBarSubMenuServer"
 import { NavBarItemButton, NavBarItemUnfocusableAnchor } from "./NavBarItem"
 import type { NavBarSubMenuServer_navigationVersion$key } from "__generated__/NavBarSubMenuServer_navigationVersion.graphql"
 import type { NavBarMenuItemFeaturedLinkColumn_featuredLinkData$key } from "__generated__/NavBarMenuItemFeaturedLinkColumn_featuredLinkData.graphql"
+import { useNavBarTracking } from "./useNavBarTracking"
 
 interface NavBarDropdownPanelServerProps {
   navigationData: NavBarSubMenuServer_navigationVersion$key
@@ -39,9 +37,7 @@ export const NavBarDropdownPanelServer: React.FC<
   shouldTransition,
 }) => {
   const { prefetch } = usePrefetchRoute()
-  const { trackEvent } = useTracking()
-  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
-    useAnalyticsContext()
+  const tracking = useNavBarTracking()
 
   // Filter out null/undefined from featured link data
   const validFeaturedLinkData = featuredLinkData?.filter(
@@ -85,15 +81,10 @@ export const NavBarDropdownPanelServer: React.FC<
           if (visible && !hasTrackedRef.current) {
             // Only fire if dropdown stays open for at least 500ms
             timeoutRef.current = setTimeout(() => {
-              trackEvent({
-                action: ActionType.navigationDropdownViewed,
-                context_module: "header" as any,
-                context_page_owner_type: contextPageOwnerType!,
-                context_page_owner_id: contextPageOwnerId,
-                context_page_owner_slug: contextPageOwnerSlug,
-                navigation_item: label,
+              tracking.navigationDropdownViewed({
+                navigationItem: label,
                 level: 0,
-                interaction_type: "hover",
+                interactionType: "hover",
               })
               hasTrackedRef.current = true
             }, 500)
