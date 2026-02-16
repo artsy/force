@@ -128,7 +128,7 @@ const FollowArtistButton = ({
     if (!isLoggedIn) {
       showAuthDialog({
         options: {
-          title: `Sign up or log in to follow ${artist.name}`,
+          title: `Sign in to follow ${artist.name} and never miss a new work`,
           afterAuthAction: {
             action: "follow",
             kind: "artist",

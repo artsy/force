@@ -44,7 +44,7 @@ export const useSaveArtworkToLists = (options: SaveArtworkToListsOptions) => {
   const showAuthDialog = () => {
     _showAuthDialog({
       options: {
-        title: "Sign up or log in to save artworks",
+        title: "Sign in to save this work and keep track of your favorites",
         afterAuthAction: {
           action: "saveArtworkToLists",
           kind: "artworks",

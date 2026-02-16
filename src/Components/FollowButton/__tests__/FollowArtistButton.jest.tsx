@@ -93,7 +93,7 @@ describe("FollowArtistButton", () => {
             kind: "artist",
             objectId: "example",
           },
-          title: "Sign up or log in to follow Example",
+          title: "Sign in to follow Example and never miss a new work",
           nodeId: "<Artist-mock-id-2>",
         },
       })

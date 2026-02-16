@@ -97,7 +97,7 @@ const FollowProfileButton: React.FC<
     if (!isLoggedIn) {
       showAuthDialog({
         options: {
-          title: `Sign up or log in to follow ${profile.name}`,
+          title: `Sign in to follow ${profile.name} and never miss a new work`,
           afterAuthAction: {
             action: "follow",
             kind: "profile",

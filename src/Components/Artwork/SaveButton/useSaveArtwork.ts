@@ -76,7 +76,7 @@ export const useSaveArtwork = ({
     } else {
       showAuthDialog({
         options: {
-          title: "Sign up or log in to save artworks",
+          title: "Sign in to save this work and keep track of your favorites",
           afterAuthAction: {
             action: "save",
             kind: "artworks",

@@ -89,7 +89,7 @@ describe("FollowGeneButton", () => {
             kind: "gene",
             objectId: "example",
           },
-          title: "Sign up or log in to follow Example",
+          title: "Sign in to follow Example and never miss a new work",
           nodeId: "<Gene-mock-id-1>",
         },
       })
