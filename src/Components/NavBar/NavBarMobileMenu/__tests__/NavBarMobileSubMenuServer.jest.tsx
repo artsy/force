@@ -212,7 +212,7 @@ describe("NavBarMobileSubMenuServer", () => {
         parent_navigation_item: "The Home Edit",
         subject: "Art for Small Spaces",
         destination_path: "/collection/art-for-small-spaces",
-        navigation_dropdown_group: "",
+        dropdown_group: "",
       })
     })
 
