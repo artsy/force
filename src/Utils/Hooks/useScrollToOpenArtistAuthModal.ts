@@ -35,9 +35,7 @@ export const useScrollToOpenArtistAuthModal = ({
             seoImage: true,
             onClose: dismiss,
             onSuccess: dismiss,
-            title: `Sign up or log in to discover new works by ${
-              name || "this artist"
-            } and more artists you love`,
+            title: `Sign in to save your favorite works by ${name || "this artist"}`,
           },
           analytics: {
             contextModule: ContextModule.popUpModal,

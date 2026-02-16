@@ -115,10 +115,7 @@ export class ArtworkSidebarBidAction extends React.Component<
       this.props.showAuthDialog({
         options: {
           redirectTo,
-          title: mode => {
-            const action = mode === "SignUp" ? "Sign up" : "Log in"
-            return `${action} to bid on artworks`
-          },
+          title: "Sign in to bind on this work",
           nodeId: this.props.artwork.id,
         },
         analytics: {

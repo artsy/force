@@ -59,7 +59,7 @@ describe("SaveButton", () => {
             kind: "artworks",
             objectId: "opaque-internal-id",
           },
-          title: "Sign up or log in to save artworks",
+          title: "Sign in to save this work and keep track of your favorites",
           nodeId: "<Artwork-mock-id-1>",
         },
       },

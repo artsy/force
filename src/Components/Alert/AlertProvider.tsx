@@ -200,7 +200,8 @@ export const AlertProvider: FC<React.PropsWithChildren<AlertProviderProps>> = ({
     if (!isLoggedIn) {
       showAuthDialog({
         options: {
-          title: "Sign up or log in to create your alert",
+          title:
+            "Sign in to create an alert and get notified when new artworks match your interests",
           afterAuthAction: {
             action: Intent.createAlert,
           },
