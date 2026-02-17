@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<832e6bcc53a7d33afa2009609b27646c>>
+ * @generated SignedSource<<e723f720cf3916f42eac5d1c5b22d39a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -47,6 +47,11 @@ v1 = {
       "args": [
         {
           "kind": "Literal",
+          "name": "cachePolicy",
+          "value": "short"
+        },
+        {
+          "kind": "Literal",
           "name": "height",
           "value": 45
         },
@@ -81,7 +86,7 @@ v1 = {
           "storageKey": null
         }
       ],
-      "storageKey": "resized(height:45,version:\"large_square\",width:45)"
+      "storageKey": "resized(cachePolicy:\"short\",height:45,version:\"large_square\",width:45)"
     }
   ],
   "storageKey": null
@@ -139,16 +144,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "05d876177c9c7a40927ddf8dfcf358c4",
+    "cacheID": "a550ae76257ba6b78512dede97c30c1b",
     "id": null,
     "metadata": {},
     "name": "NavBarUserMenuAvatarQuery",
     "operationKind": "query",
-    "text": "query NavBarUserMenuAvatarQuery {\n  me {\n    initials\n    icon {\n      resized(height: 45, width: 45, version: \"large_square\") {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query NavBarUserMenuAvatarQuery {\n  me {\n    initials\n    icon {\n      resized(height: 45, width: 45, version: \"large_square\", cachePolicy: \"short\") {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "862f026dd09f96bf86ca7adb060f37e9";
+(node as any).hash = "ac98ef1c1c3abc1625bca21e49f1b4d1";
 
 export default node;
