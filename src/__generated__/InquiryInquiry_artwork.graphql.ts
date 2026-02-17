@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1a760078cd893e1f8af6e10a2efd2ad8>>
+ * @generated SignedSource<<a26acb06095e5ca8a92497a6f74dd53d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,7 +14,23 @@ export type InquiryInquiry_artwork$data = {
   readonly artist: {
     readonly name: string | null | undefined;
   } | null | undefined;
+  readonly attributionClass: {
+    readonly name: string | null | undefined;
+  } | null | undefined;
+  readonly category: string | null | undefined;
+  readonly certificateOfAuthenticity: {
+    readonly details: string | null | undefined;
+    readonly label: string | null | undefined;
+  } | null | undefined;
   readonly date: string | null | undefined;
+  readonly dimensions: {
+    readonly cm: string | null | undefined;
+    readonly in: string | null | undefined;
+  } | null | undefined;
+  readonly framed: {
+    readonly details: string | null | undefined;
+    readonly label: string | null | undefined;
+  } | null | undefined;
   readonly image: {
     readonly resized: {
       readonly height: number | null | undefined;
@@ -28,8 +44,14 @@ export type InquiryInquiry_artwork$data = {
     readonly question: string;
   } | null | undefined> | null | undefined;
   readonly internalID: string;
+  readonly medium: string | null | undefined;
   readonly partner: {
     readonly name: string | null | undefined;
+  } | null | undefined;
+  readonly saleMessage: string | null | undefined;
+  readonly signatureInfo: {
+    readonly details: string | null | undefined;
+    readonly label: string | null | undefined;
   } | null | undefined;
   readonly title: string | null | undefined;
   readonly " $fragmentType": "InquiryInquiry_artwork";
@@ -55,6 +77,22 @@ v1 = [
     "name": "name",
     "storageKey": null
   }
+],
+v2 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "label",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "details",
+    "storageKey": null
+  }
 ];
 return {
   "argumentDefinitions": [],
@@ -75,6 +113,92 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "date",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "saleMessage",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "category",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "medium",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "AttributionClass",
+      "kind": "LinkedField",
+      "name": "attributionClass",
+      "plural": false,
+      "selections": (v1/*: any*/),
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "ArtworkInfoRow",
+      "kind": "LinkedField",
+      "name": "framed",
+      "plural": false,
+      "selections": (v2/*: any*/),
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "ArtworkInfoRow",
+      "kind": "LinkedField",
+      "name": "signatureInfo",
+      "plural": false,
+      "selections": (v2/*: any*/),
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "ArtworkInfoRow",
+      "kind": "LinkedField",
+      "name": "certificateOfAuthenticity",
+      "plural": false,
+      "selections": (v2/*: any*/),
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "dimensions",
+      "kind": "LinkedField",
+      "name": "dimensions",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "in",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "cm",
+          "storageKey": null
+        }
+      ],
       "storageKey": null
     },
     {
@@ -189,6 +313,6 @@ return {
 };
 })();
 
-(node as any).hash = "763650a61a5a080d27623eb47c1b7554";
+(node as any).hash = "c86980d6c546794a22f9169458efe851";
 
 export default node;
