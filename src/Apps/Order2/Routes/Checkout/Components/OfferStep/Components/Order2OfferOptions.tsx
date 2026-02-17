@@ -11,7 +11,7 @@ import { graphql, useFragment } from "react-relay"
 const logger = createLogger("Order2OfferOptions")
 
 interface PriceOption {
-  key: string
+  key: PriceOptionKey
   value: number
   description: string
 }
@@ -20,13 +20,20 @@ interface Order2OfferOptionsProps extends OfferFormProps {
   order: Order2OfferOptions_order$key
 }
 
+enum PriceOptionKey {
+  MAX = "price-option-max",
+  MID = "price-option-mid",
+  MIN = "price-option-min",
+  CUSTOM = "price-option-custom",
+}
+
 /**
  * Determines which radio option should be selected based on the current offer value
  */
 const getInitialSelectedRadio = (
   offerValue: number,
   priceOptions: PriceOption[],
-): string | undefined => {
+): PriceOptionKey | undefined => {
   if (!offerValue || offerValue === 0) {
     return undefined
   }
@@ -39,7 +46,7 @@ const getInitialSelectedRadio = (
   }
 
   // If it doesn't match any preset option but has a value, it's a custom amount
-  return "price-option-custom"
+  return PriceOptionKey.CUSTOM
 }
 
 export const Order2OfferOptions: React.FC<Order2OfferOptionsProps> = ({
@@ -71,17 +78,17 @@ export const Order2OfferOptions: React.FC<Order2OfferOptionsProps> = ({
 
       return [
         {
-          key: "price-option-max",
+          key: PriceOptionKey.MAX,
           value: Math.round(maxPriceRange),
           description: "Top-end of range",
         },
         {
-          key: "price-option-mid",
+          key: PriceOptionKey.MID,
           value: midPriceRange,
           description: "Midpoint",
         },
         {
-          key: "price-option-min",
+          key: PriceOptionKey.MIN,
           value: Math.round(minPriceRange),
           description: "Low-end of range",
         },
@@ -102,26 +109,26 @@ export const Order2OfferOptions: React.FC<Order2OfferOptionsProps> = ({
 
     return [
       {
-        key: "price-option-max",
+        key: PriceOptionKey.MAX,
         value: Math.round(listPriceMajor),
         description: "List price",
       },
       {
-        key: "price-option-mid",
+        key: PriceOptionKey.MID,
         value: Math.round(listPriceMajor * 0.9), // 10% below
         description: "10% below list price",
       },
       {
-        key: "price-option-min",
+        key: PriceOptionKey.MIN,
         value: Math.round(listPriceMajor * 0.8), // 20% below
         description: "20% below list price",
       },
     ]
   }, [orderData])
 
-  const [selectedRadio, setSelectedRadio] = useState<string | undefined>(() =>
-    getInitialSelectedRadio(values.offerValue, priceOptions),
-  )
+  const [selectedRadio, setSelectedRadio] = useState<
+    PriceOptionKey | undefined
+  >(() => getInitialSelectedRadio(values.offerValue, priceOptions))
 
   const formatCurrency = (amount: number) => {
     return appendCurrencySymbol(
@@ -147,7 +154,7 @@ export const Order2OfferOptions: React.FC<Order2OfferOptionsProps> = ({
       onOfferOptionSelected(0, "Custom amount")
     }
 
-    setSelectedRadio(value)
+    setSelectedRadio(value as PriceOptionKey)
   }
 
   return (
