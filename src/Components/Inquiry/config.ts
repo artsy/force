@@ -42,7 +42,7 @@ export const useEngine = ({ context, onDone }: UseEngine) => {
     hasArtistsInCollection: () => {
       return (context.current?.userInterestsConnection?.totalCount ?? 0) > 0
     },
-    wasRecentlyPromptedForCollection: () => {
+    wasRecentlyPrompted: () => {
       const lastUpdatePromptAt =
         context.current?.collectorProfile?.lastUpdatePromptAt
 
@@ -72,18 +72,18 @@ export const useEngine = ({ context, onDone }: UseEngine) => {
                 },
               },
               {
-                hasArtistsInCollection: {
+                wasRecentlyPrompted: {
                   false: [
                     {
-                      wasRecentlyPromptedForCollection: {
+                      hasArtistsInCollection: {
                         false: ["ArtistsInCollection"],
-                      },
-                    },
-                  ],
-                  true: [
-                    {
-                      hasBasicInfo: {
-                        false: ["BasicInfo"],
+                        true: [
+                          {
+                            hasBasicInfo: {
+                              false: ["BasicInfo"],
+                            },
+                          },
+                        ],
                       },
                     },
                   ],
