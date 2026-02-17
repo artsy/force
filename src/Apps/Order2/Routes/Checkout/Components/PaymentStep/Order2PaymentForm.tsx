@@ -122,6 +122,8 @@ export const Order2PaymentForm: React.FC<Order2PaymentFormProps> = ({
   const orderData = useFragment(ORDER_FRAGMENT, order)
   const meData = useFragment(ME_FRAGMENT, me)
   const stripe = useStripe()
+  const { theme } = useTheme()
+
   const {
     seller,
     mode,
@@ -129,12 +131,6 @@ export const Order2PaymentForm: React.FC<Order2PaymentFormProps> = ({
     buyerTotal,
     currencyCode,
   } = orderData
-
-  if (mode === "BUY" && !buyerTotal) {
-    return null
-  }
-
-  const { theme } = useTheme()
 
   // Memoize options to prevent unnecessary re-renders of Stripe payment elements
   const options: StripeElementsOptions = useMemo(() => {
@@ -187,6 +183,10 @@ export const Order2PaymentForm: React.FC<Order2PaymentFormProps> = ({
     availableStripePaymentMethodTypes,
     theme,
   ])
+
+  if (mode === "BUY" && !buyerTotal) {
+    return null
+  }
 
   return (
     <Elements stripe={stripe} options={options}>
