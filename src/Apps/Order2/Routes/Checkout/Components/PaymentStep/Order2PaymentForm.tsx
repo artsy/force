@@ -43,7 +43,7 @@ import type {
   Order2PaymentForm_order$key,
 } from "__generated__/Order2PaymentForm_order.graphql"
 import type React from "react"
-import { useCallback, useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { graphql, useFragment, useRelayEnvironment } from "react-relay"
 import { SavedPaymentMethodOption } from "./SavedPaymentMethodOption"
 import { StripePaymentCheckboxes } from "./StripePaymentCheckboxes"
@@ -122,6 +122,8 @@ export const Order2PaymentForm: React.FC<Order2PaymentFormProps> = ({
   const orderData = useFragment(ORDER_FRAGMENT, order)
   const meData = useFragment(ME_FRAGMENT, me)
   const stripe = useStripe()
+  const { theme } = useTheme()
+
   const {
     seller,
     mode,
@@ -130,52 +132,60 @@ export const Order2PaymentForm: React.FC<Order2PaymentFormProps> = ({
     currencyCode,
   } = orderData
 
-  if (mode === "BUY" && !buyerTotal) {
-    return null
-  }
+  // Memoize options to prevent unnecessary re-renders of Stripe payment elements
+  const options: StripeElementsOptions = useMemo(() => {
+    const baseOptions = getBaseStripeOptions(
+      mode,
+      seller?.merchantAccount?.externalId,
+      currencyCode,
+      buyerTotal?.minor,
+      availableStripePaymentMethodTypes,
+    )
 
-  const { theme } = useTheme()
-
-  const baseOptions = getBaseStripeOptions(
+    return {
+      ...baseOptions,
+      appearance: {
+        variables: {
+          // https://docs.stripe.com/elements/appearance-api#variables
+          accordionItemSpacing: "10px",
+          fontFamily: theme.fonts.sans,
+          colorPrimary: theme.colors.mono100, // Accordian selected.
+          colorTextSecondary: theme.colors.mono60, // Accordian not selected.
+        },
+        rules: {
+          ".AccordionItem": {
+            lineHeight: "26px",
+            fontSize: "16px",
+            fontWeight: "normal",
+            border: "1px solid transparent",
+            backgroundColor: theme.colors.mono5,
+          },
+          ".AccordionItem--selected": {
+            lineHeight: "26px",
+            fontSize: "16px",
+            fontWeight: "bold",
+            border: `1px solid ${theme.colors.mono10}`,
+          },
+          ".AccordionItem:hover": {
+            color: "var(--colorPrimary)",
+          },
+          ".Label": {
+            color: "var(--colorPrimary)",
+          },
+        },
+      },
+    }
+  }, [
     mode,
     seller?.merchantAccount?.externalId,
     currencyCode,
     buyerTotal?.minor,
     availableStripePaymentMethodTypes,
-  )
+    theme,
+  ])
 
-  const options: StripeElementsOptions = {
-    ...baseOptions,
-    appearance: {
-      variables: {
-        // https://docs.stripe.com/elements/appearance-api#variables
-        accordionItemSpacing: "10px",
-        fontFamily: theme.fonts.sans,
-        colorPrimary: theme.colors.mono100, // Accordian selected.
-        colorTextSecondary: theme.colors.mono60, // Accordian not selected.
-      },
-      rules: {
-        ".AccordionItem": {
-          lineHeight: "26px",
-          fontSize: "16px",
-          fontWeight: "normal",
-          border: "1px solid transparent",
-          backgroundColor: theme.colors.mono5,
-        },
-        ".AccordionItem--selected": {
-          lineHeight: "26px",
-          fontSize: "16px",
-          fontWeight: "bold",
-          border: `1px solid ${theme.colors.mono10}`,
-        },
-        ".AccordionItem:hover": {
-          color: "var(--colorPrimary)",
-        },
-        ".Label": {
-          color: "var(--colorPrimary)",
-        },
-      },
-    },
+  if (mode === "BUY" && !buyerTotal) {
+    return null
   }
 
   return (
