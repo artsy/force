@@ -3,6 +3,10 @@ import { SystemContextProvider } from "System/Contexts/SystemContext"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { buildAppRoutes } from "System/Router/Utils/buildAppRoutes"
 import { setupClientRouter } from "System/Router/clientRouter"
+import { getRequest } from "relay-runtime"
+import { getENV } from "Utils/getENV"
+
+jest.mock("Utils/getENV")
 
 jest.mock("Components/NavBar/NavBar", () => ({
   NavBar: () => <div />,
@@ -104,6 +108,65 @@ describe("buildAppRoutes", () => {
     await waitFor(() => {
       expect(screen.getByText("AppShell")).toBeInTheDocument()
       expect(screen.getByText("foo route")).toBeInTheDocument()
+    })
+  })
+
+  describe("ENABLE_SERVER_DRIVEN_NAVIGATION feature flag", () => {
+    const mockGetENV = getENV as jest.Mock
+
+    beforeEach(() => {
+      mockGetENV.mockReset()
+    })
+
+    it("attaches the GraphQL query to the route when the flag is enabled", () => {
+      mockGetENV.mockImplementation(
+        (key: string) => key === "ENABLE_SERVER_DRIVEN_NAVIGATION",
+      )
+
+      const routes = buildAppRoutes([[{ path: "/foo" }]])
+      const route = routes[0]
+
+      expect(route.query).toBeDefined()
+      const request = getRequest(route.query!)
+      expect(request.params.name).toBe("buildAppRoutesQuery")
+    })
+
+    it("prepareVariables returns LIVE by default", () => {
+      mockGetENV.mockImplementation(
+        (key: string) => key === "ENABLE_SERVER_DRIVEN_NAVIGATION",
+      )
+
+      const routes = buildAppRoutes([[{ path: "/foo" }]])
+      const prepareVariables = routes[0].prepareVariables!
+
+      const result = prepareVariables({}, { location: { query: {} } } as any)
+      expect(result).toEqual({ requestedVersionState: "LIVE" })
+    })
+
+    it("prepareVariables returns DRAFT when navigationVersion=draft query param is present", () => {
+      mockGetENV.mockImplementation(
+        (key: string) => key === "ENABLE_SERVER_DRIVEN_NAVIGATION",
+      )
+
+      const routes = buildAppRoutes([[{ path: "/foo" }]])
+      const prepareVariables = routes[0].prepareVariables!
+
+      const result = prepareVariables({}, {
+        location: { query: { navigationVersion: "draft" } },
+      } as any)
+      expect(result).toEqual({ requestedVersionState: "DRAFT" })
+    })
+
+    it("does not attach query or prepareVariables when the flag is disabled", () => {
+      mockGetENV.mockImplementation(
+        (key: string) => key !== "ENABLE_SERVER_DRIVEN_NAVIGATION",
+      )
+
+      const routes = buildAppRoutes([[{ path: "/foo" }]])
+      const route = routes[0]
+
+      expect(route.query).toBeUndefined()
+      expect(route.prepareVariables).toBeUndefined()
     })
   })
 })

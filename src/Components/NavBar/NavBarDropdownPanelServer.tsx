@@ -1,34 +1,49 @@
 import type * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { Dropdown } from "@artsy/palette"
 import { Z } from "Apps/Components/constants"
-import type { MenuData } from "Components/NavBar/menuData"
 import { usePrefetchRoute } from "System/Hooks/usePrefetchRoute"
 import { useEffect, useRef } from "react"
-import { NavBarSubMenu } from "./Menus"
+import { NavBarSubMenuServer } from "./Menus/NavBarSubMenuServer"
 import { NavBarItemButton, NavBarItemUnfocusableAnchor } from "./NavBarItem"
+import type { NavBarSubMenuServer_navigationVersion$key } from "__generated__/NavBarSubMenuServer_navigationVersion.graphql"
+import type { NavBarMenuItemFeaturedLinkColumn_featuredLinkData$key } from "__generated__/NavBarMenuItemFeaturedLinkColumn_featuredLinkData.graphql"
 import { useNavBarTracking } from "./useNavBarTracking"
 
-interface NavBarDropdownPanelProps {
-  href: string
+interface NavBarDropdownPanelServerProps {
+  navigationData: NavBarSubMenuServer_navigationVersion$key
+  featuredLinkData?: ReadonlyArray<
+    NavBarMenuItemFeaturedLinkColumn_featuredLinkData$key | null | undefined
+  > | null
   label: string
-  menu: MenuData
+  href: string
   contextModule: string
-  onMenuEnter: () => void
-  handleClick: (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void
-  shouldTransition: boolean
+  menuType: "whatsNew" | "artists" | "artworks"
+  onMenuEnter?: () => void
+  handleClick?: (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void
+  shouldTransition?: boolean
 }
 
-export const NavBarDropdownPanel: React.FC<NavBarDropdownPanelProps> = ({
-  href,
+export const NavBarDropdownPanelServer: React.FC<
+  NavBarDropdownPanelServerProps
+> = ({
+  navigationData,
+  featuredLinkData,
   label,
-  menu,
+  href,
   contextModule,
+  menuType,
   onMenuEnter,
   handleClick,
   shouldTransition,
 }) => {
   const { prefetch } = usePrefetchRoute()
   const tracking = useNavBarTracking()
+
+  // Filter out null/undefined from featured link data
+  const validFeaturedLinkData = featuredLinkData?.filter(
+    (item): item is NavBarMenuItemFeaturedLinkColumn_featuredLinkData$key =>
+      item != null,
+  )
 
   return (
     <Dropdown
@@ -41,13 +56,15 @@ export const NavBarDropdownPanel: React.FC<NavBarDropdownPanelProps> = ({
       // eslint-disable-next-line react/no-unstable-nested-components
       dropdown={({ setVisible, visible }) => {
         return (
-          <NavBarSubMenu
-            menu={menu}
+          <NavBarSubMenuServer
+            navigationVersion={navigationData}
+            featuredLinkData={validFeaturedLinkData}
+            label={label}
+            menuType={menuType}
             contextModule={
               contextModule as DeprecatedAnalyticsSchema.ContextModule
             }
             onClick={() => setVisible(false)}
-            parentNavigationItem={label}
             isVisible={visible}
           />
         )
@@ -71,7 +88,9 @@ export const NavBarDropdownPanel: React.FC<NavBarDropdownPanelProps> = ({
               })
               hasTrackedRef.current = true
             }, 500)
-          } else if (!visible && timeoutRef.current) {
+          }
+
+          if (!visible && timeoutRef.current) {
             // Cancel tracking if dropdown closes before delay
             clearTimeout(timeoutRef.current)
             timeoutRef.current = null
@@ -88,10 +107,10 @@ export const NavBarDropdownPanel: React.FC<NavBarDropdownPanelProps> = ({
           <NavBarItemButton
             ref={anchorRef as any}
             active={visible}
-            data-testid="static-dropdown"
+            data-testid="server-dropdown"
             onMouseEnter={e => {
               onMouseEnter?.(e)
-              onMenuEnter()
+              onMenuEnter?.()
             }}
             {...restAnchorProps}
           >
@@ -99,7 +118,7 @@ export const NavBarDropdownPanel: React.FC<NavBarDropdownPanelProps> = ({
               href={href}
               onMouseOver={() => prefetch(href)}
               onClick={event => {
-                handleClick(event)
+                handleClick?.(event)
                 setTimeout(() => setVisible(false), 100)
               }}
               data-label={label}

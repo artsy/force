@@ -1,4 +1,3 @@
-import type { ClickedNavigationDropdownItem } from "@artsy/cohesion"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { Column, GridColumns, Spacer, Text, useDidMount } from "@artsy/palette"
 import { useFlag } from "@unleash/proxy-client-react"
@@ -6,12 +5,11 @@ import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import type { MenuData } from "Components/NavBar/menuData"
 import { RouterLink } from "System/Components/RouterLink"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import type * as React from "react"
 import { useState } from "react"
-import { useTracking } from "react-tracking"
 import { NavBarMenuItemLink } from "./NavBarMenuItem"
 import { NavBarMenuItemFeaturedLinkWithColumn } from "./NavBarMenuItemFeaturedLink"
+import { useNavBarTracking } from "../useNavBarTracking"
 
 interface NavBarSubMenuProps {
   menu: MenuData
@@ -27,9 +25,7 @@ interface NavBarSubMenuProps {
 export const NavBarSubMenu: React.FC<
   React.PropsWithChildren<NavBarSubMenuProps>
 > = ({ menu, contextModule, parentNavigationItem, onClick, isVisible }) => {
-  const { trackEvent } = useTracking()
-  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
-    useAnalyticsContext()
+  const tracking = useNavBarTracking()
   const isMounted = useDidMount()
   const enableVisualComponents = useFlag("onyx_nav-submenu-visual-component")
   const [hasVisualComponentData, setHasVisualComponentData] = useState<
@@ -64,19 +60,13 @@ export const NavBarSubMenu: React.FC<
       }
     }
 
-    trackEvent({
-      action: "click",
-      flow: "Header",
-      // @ts-expect-error - ContextModule types between deprecated and new schema
-      context_module: contextModule,
-      context_page_owner_type: contextPageOwnerType!,
-      context_page_owner_id: contextPageOwnerId,
-      context_page_owner_slug: contextPageOwnerSlug,
-      parent_navigation_item: parentNavigationItem,
-      dropdown_group: dropdownGroup,
+    tracking.clickedNavigationDropdownItem({
+      contextModule,
+      parentNavigationItem,
+      dropdownGroup,
       subject: text || "",
-      destination_path: href || "",
-    } satisfies ClickedNavigationDropdownItem)
+      destinationPath: href || "",
+    })
   }
 
   const isArtistsDropdown =
