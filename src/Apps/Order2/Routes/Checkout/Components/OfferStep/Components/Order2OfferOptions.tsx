@@ -2,10 +2,13 @@ import { Flex, Radio, RadioGroup, Spacer, Text } from "@artsy/palette"
 import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
 import { OfferInput } from "Apps/Order2/Routes/Checkout/Components/OfferStep/Components/OfferInput"
 import type { OfferFormProps } from "Apps/Order2/Routes/Checkout/Components/OfferStep/types"
+import createLogger from "Utils/logger"
 import type { Order2OfferOptions_order$key } from "__generated__/Order2OfferOptions_order.graphql"
 import { useFormikContext } from "formik"
 import { useMemo, useState } from "react"
 import { graphql, useFragment } from "react-relay"
+
+const logger = createLogger("Order2OfferOptions")
 
 interface PriceOption {
   key: string
@@ -57,6 +60,10 @@ export const Order2OfferOptions: React.FC<Order2OfferOptionsProps> = ({
       const maxPriceRange = artworkListPrice?.maxPrice?.major
 
       if (!minPriceRange || !maxPriceRange) {
+        logger.error(
+          "Missing price range data for artwork - no preset offer options will be shown",
+          { minPriceRange, maxPriceRange },
+        )
         return []
       }
 
@@ -86,6 +93,10 @@ export const Order2OfferOptions: React.FC<Order2OfferOptionsProps> = ({
     const listPriceMajor = listPrice?.major
 
     if (!listPriceMajor) {
+      logger.warn(
+        "Missing list price for artwork - no preset offer options will be shown",
+        { listPrice },
+      )
       return []
     }
 
