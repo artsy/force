@@ -26,7 +26,7 @@ const ArtistApp: React.FC<React.PropsWithChildren<ArtistAppProps>> = ({
 
         <ArtistHeaderFragmentContainer artist={artist} />
 
-        <Spacer y={4} />
+        <Spacer y={[0, 4]} />
 
         <Jump id="artistContentArea" />
 
