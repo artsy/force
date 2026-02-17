@@ -1,8 +1,10 @@
 import { type BoxProps, FullBleed, Image, ResponsiveBox } from "@artsy/palette"
 import { getENV } from "Utils/getENV"
 import { maxDimensionsByArea, resized } from "Utils/resized"
+import type { ArtistHeaderImage_artwork$data } from "__generated__/ArtistHeaderImage_artwork.graphql"
 import type { FC } from "react"
 import { Link } from "react-head"
+import { createFragmentContainer, graphql } from "react-relay"
 
 const MOBILE_SIZE = {
   width: 350,
@@ -11,20 +13,30 @@ const MOBILE_SIZE = {
 
 interface ArtistHeaderImageProps
   extends Omit<BoxProps, "maxHeight" | "maxWidth"> {
-  image: ValidImage
-  alt: string
+  artwork: ArtistHeaderImage_artwork$data
 }
 
 export const ArtistHeaderImage: FC<
   React.PropsWithChildren<ArtistHeaderImageProps>
-> = ({ image, alt, ...rest }) => {
+> = ({ artwork, ...rest }) => {
+  if (!isValidImage(artwork.image)) {
+    return null
+  }
+
+  const alt = artwork.imageTitle || `Artwork by ${artwork.artist?.name!}`
+  const { image } = artwork
+
   const max = maxDimensionsByArea({
-    width: image.width,
-    height: image.height,
+    width: image?.width,
+    height: image?.height,
     area: 300 * 300,
   })
 
-  const desktop = resized(image.src, { width: max.width, height: max.height })
+  const desktop = resized(image.src, {
+    width: max.width,
+    height: max.height,
+  })
+
   const mobile = resized(image.src, {
     width: MOBILE_SIZE.width,
     height: MOBILE_SIZE.height,
@@ -74,8 +86,8 @@ export const ArtistHeaderImage: FC<
         // Desktop
         <>
           <ResponsiveBox
-            aspectWidth={image.width}
-            aspectHeight={image.height}
+            aspectWidth={artwork.image.width}
+            aspectHeight={artwork.image.height}
             maxWidth={max.width}
             maxHeight={max.height}
             bg="mono5"
@@ -117,3 +129,22 @@ export const isValidImage = (
 ): image is ValidImage => {
   return Boolean(image && image.src && image.width && image.height)
 }
+
+export const ArtistHeaderImageFragmentContainer = createFragmentContainer(
+  ArtistHeaderImage,
+  {
+    artwork: graphql`
+      fragment ArtistHeaderImage_artwork on Artwork {
+        imageTitle
+        image {
+          src: url(version: ["larger", "larger"])
+          width
+          height
+        }
+        artist {
+          name
+        }
+      }
+    `,
+  },
+)

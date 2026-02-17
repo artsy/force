@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9634acf986bcd95364bd7d9b458c30d0>>
+ * @generated SignedSource<<824a81529fbe42f1d06c6b94b6b68e20>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -84,33 +84,39 @@ v8 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "String"
+  "type": "Artist"
 },
 v9 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v10 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v10 = {
+v11 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "Image"
 },
-v11 = {
+v12 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "Int"
 },
-v12 = {
+v13 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "String"
 },
-v13 = {
+v14 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
@@ -351,20 +357,6 @@ return {
             "selections": [
               (v1/*: any*/),
               (v2/*: any*/),
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "title",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "imageTitle",
-                "storageKey": null
-              },
               (v5/*: any*/),
               {
                 "alias": null,
@@ -407,6 +399,26 @@ return {
                 ],
                 "storageKey": null
               },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "imageTitle",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Artist",
+                "kind": "LinkedField",
+                "name": "artist",
+                "plural": false,
+                "selections": [
+                  (v3/*: any*/),
+                  (v7/*: any*/)
+                ],
+                "storageKey": null
+              },
               (v7/*: any*/)
             ],
             "storageKey": null
@@ -418,24 +430,19 @@ return {
     ]
   },
   "params": {
-    "cacheID": "332a4cbe4b3ceeefc18865cab45062d9",
+    "cacheID": "1c0be225f816e2f316128ccd3cb187ad",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
-        "artist": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Artist"
-        },
+        "artist": (v8/*: any*/),
         "artist.biographyBlurb": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "ArtistBlurb"
         },
-        "artist.biographyBlurb.credit": (v8/*: any*/),
-        "artist.biographyBlurb.text": (v8/*: any*/),
+        "artist.biographyBlurb.credit": (v9/*: any*/),
+        "artist.biographyBlurb.text": (v9/*: any*/),
         "artist.counts": {
           "enumValues": null,
           "nullable": true,
@@ -454,25 +461,27 @@ return {
           "plural": false,
           "type": "Artwork"
         },
-        "artist.coverArtwork.href": (v8/*: any*/),
-        "artist.coverArtwork.id": (v9/*: any*/),
-        "artist.coverArtwork.image": (v10/*: any*/),
-        "artist.coverArtwork.image.height": (v11/*: any*/),
-        "artist.coverArtwork.image.src": (v8/*: any*/),
-        "artist.coverArtwork.image.width": (v11/*: any*/),
-        "artist.coverArtwork.imageTitle": (v8/*: any*/),
-        "artist.coverArtwork.internalID": (v9/*: any*/),
-        "artist.coverArtwork.slug": (v9/*: any*/),
-        "artist.coverArtwork.title": (v8/*: any*/),
-        "artist.formattedNationalityAndBirthday": (v8/*: any*/),
-        "artist.id": (v9/*: any*/),
+        "artist.coverArtwork.artist": (v8/*: any*/),
+        "artist.coverArtwork.artist.id": (v10/*: any*/),
+        "artist.coverArtwork.artist.name": (v9/*: any*/),
+        "artist.coverArtwork.href": (v9/*: any*/),
+        "artist.coverArtwork.id": (v10/*: any*/),
+        "artist.coverArtwork.image": (v11/*: any*/),
+        "artist.coverArtwork.image.height": (v12/*: any*/),
+        "artist.coverArtwork.image.src": (v9/*: any*/),
+        "artist.coverArtwork.image.width": (v12/*: any*/),
+        "artist.coverArtwork.imageTitle": (v9/*: any*/),
+        "artist.coverArtwork.internalID": (v10/*: any*/),
+        "artist.coverArtwork.slug": (v10/*: any*/),
+        "artist.formattedNationalityAndBirthday": (v9/*: any*/),
+        "artist.id": (v10/*: any*/),
         "artist.insights": {
           "enumValues": null,
           "nullable": false,
           "plural": true,
           "type": "ArtistInsight"
         },
-        "artist.insights.description": (v8/*: any*/),
+        "artist.insights.description": (v9/*: any*/),
         "artist.insights.entities": {
           "enumValues": null,
           "nullable": false,
@@ -503,44 +512,44 @@ return {
           "plural": false,
           "type": "ArtistInsightKind"
         },
-        "artist.insights.label": (v12/*: any*/),
-        "artist.internalID": (v9/*: any*/),
-        "artist.name": (v8/*: any*/),
-        "artist.slug": (v9/*: any*/),
+        "artist.insights.label": (v13/*: any*/),
+        "artist.internalID": (v10/*: any*/),
+        "artist.name": (v9/*: any*/),
+        "artist.slug": (v10/*: any*/),
         "artist.verifiedRepresentatives": {
           "enumValues": null,
           "nullable": false,
           "plural": true,
           "type": "VerifiedRepresentative"
         },
-        "artist.verifiedRepresentatives.id": (v9/*: any*/),
+        "artist.verifiedRepresentatives.id": (v10/*: any*/),
         "artist.verifiedRepresentatives.partner": {
           "enumValues": null,
           "nullable": false,
           "plural": false,
           "type": "Partner"
         },
-        "artist.verifiedRepresentatives.partner.href": (v8/*: any*/),
-        "artist.verifiedRepresentatives.partner.id": (v9/*: any*/),
-        "artist.verifiedRepresentatives.partner.internalID": (v9/*: any*/),
-        "artist.verifiedRepresentatives.partner.name": (v8/*: any*/),
+        "artist.verifiedRepresentatives.partner.href": (v9/*: any*/),
+        "artist.verifiedRepresentatives.partner.id": (v10/*: any*/),
+        "artist.verifiedRepresentatives.partner.internalID": (v10/*: any*/),
+        "artist.verifiedRepresentatives.partner.name": (v9/*: any*/),
         "artist.verifiedRepresentatives.partner.profile": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Profile"
         },
-        "artist.verifiedRepresentatives.partner.profile.icon": (v10/*: any*/),
-        "artist.verifiedRepresentatives.partner.profile.icon.src1x": (v13/*: any*/),
-        "artist.verifiedRepresentatives.partner.profile.icon.src1x.src": (v12/*: any*/),
-        "artist.verifiedRepresentatives.partner.profile.icon.src2x": (v13/*: any*/),
-        "artist.verifiedRepresentatives.partner.profile.icon.src2x.src": (v12/*: any*/),
-        "artist.verifiedRepresentatives.partner.profile.id": (v9/*: any*/)
+        "artist.verifiedRepresentatives.partner.profile.icon": (v11/*: any*/),
+        "artist.verifiedRepresentatives.partner.profile.icon.src1x": (v14/*: any*/),
+        "artist.verifiedRepresentatives.partner.profile.icon.src1x.src": (v13/*: any*/),
+        "artist.verifiedRepresentatives.partner.profile.icon.src2x": (v14/*: any*/),
+        "artist.verifiedRepresentatives.partner.profile.icon.src2x.src": (v13/*: any*/),
+        "artist.verifiedRepresentatives.partner.profile.id": (v10/*: any*/)
       }
     },
     "name": "ArtistHeader_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistHeader_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistHeader_artist\n    id\n  }\n}\n\nfragment ArtistCareerHighlight_insight on ArtistInsight {\n  kind\n  label\n  entities\n  description(format: HTML)\n}\n\nfragment ArtistHeader_artist on Artist {\n  internalID\n  slug\n  name\n  formattedNationalityAndBirthday\n  counts {\n    follows\n  }\n  biographyBlurb(format: HTML) {\n    text\n    credit\n  }\n  insights {\n    kind\n    ...ArtistCareerHighlight_insight\n  }\n  verifiedRepresentatives {\n    partner {\n      internalID\n      name\n      href\n      profile {\n        icon {\n          src1x: cropped(width: 30, height: 30) {\n            src\n          }\n          src2x: cropped(width: 60, height: 60) {\n            src\n          }\n        }\n        id\n      }\n      id\n    }\n    id\n  }\n  coverArtwork {\n    internalID\n    slug\n    title\n    imageTitle\n    href\n    image {\n      src: url(version: [\"larger\", \"larger\"])\n      width\n      height\n    }\n    id\n  }\n}\n"
+    "text": "query ArtistHeader_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistHeader_artist\n    id\n  }\n}\n\nfragment ArtistCareerHighlight_insight on ArtistInsight {\n  kind\n  label\n  entities\n  description(format: HTML)\n}\n\nfragment ArtistHeaderImage_artwork on Artwork {\n  imageTitle\n  image {\n    src: url(version: [\"larger\", \"larger\"])\n    width\n    height\n  }\n  artist {\n    name\n    id\n  }\n}\n\nfragment ArtistHeader_artist on Artist {\n  internalID\n  slug\n  name\n  formattedNationalityAndBirthday\n  counts {\n    follows\n  }\n  biographyBlurb(format: HTML) {\n    text\n    credit\n  }\n  insights {\n    kind\n    ...ArtistCareerHighlight_insight\n  }\n  verifiedRepresentatives {\n    partner {\n      internalID\n      name\n      href\n      profile {\n        icon {\n          src1x: cropped(width: 30, height: 30) {\n            src\n          }\n          src2x: cropped(width: 60, height: 60) {\n            src\n          }\n        }\n        id\n      }\n      id\n    }\n    id\n  }\n  coverArtwork {\n    internalID\n    slug\n    href\n    image {\n      src: url(version: [\"larger\", \"larger\"])\n      width\n      height\n    }\n    ...ArtistHeaderImage_artwork\n    id\n  }\n}\n"
   }
 };
 })();

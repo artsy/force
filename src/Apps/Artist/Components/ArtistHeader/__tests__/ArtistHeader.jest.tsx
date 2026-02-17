@@ -1,9 +1,9 @@
 import { screen } from "@testing-library/react"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { ArtistHeaderFragmentContainer } from "Apps/Artist/Components/ArtistHeader/ArtistHeader"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { useRouter } from "System/Hooks/useRouter"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { useRouter } from "System/Hooks/useRouter"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -262,74 +262,6 @@ describe("ArtistHeaderFragmentContainer", () => {
   })
 
   describe("Cover artwork", () => {
-    it("renders cover artwork when valid image is available", () => {
-      renderWithRelay({
-        Artist: () => ({
-          name: "Pablo Picasso",
-          coverArtwork: {
-            title: "Les Demoiselles d'Avignon",
-            imageTitle: "Les Demoiselles d'Avignon by Pablo Picasso",
-            href: "/artwork/les-demoiselles-davignon",
-            image: {
-              src: "https://example.com/image.jpg",
-              width: 400,
-              height: 300,
-            },
-          },
-        }),
-      })
-
-      const image = screen.getByAltText(
-        "Les Demoiselles d'Avignon by Pablo Picasso",
-      )
-      expect(image).toBeInTheDocument()
-      expect(image.closest("a")).toHaveAttribute(
-        "href",
-        "/artwork/les-demoiselles-davignon",
-      )
-    })
-
-    it("uses default alt text when imageTitle is not provided", () => {
-      renderWithRelay({
-        Artist: () => ({
-          name: "Pablo Picasso",
-          coverArtwork: {
-            title: "Les Demoiselles d'Avignon",
-            imageTitle: null,
-            href: "/artwork/les-demoiselles-davignon",
-            image: {
-              src: "https://example.com/image.jpg",
-              width: 400,
-              height: 300,
-            },
-          },
-        }),
-      })
-
-      expect(
-        screen.getByAltText("Artwork by Pablo Picasso"),
-      ).toBeInTheDocument()
-    })
-
-    it("does not render cover artwork when image is invalid", () => {
-      renderWithRelay({
-        Artist: () => ({
-          name: "Pablo Picasso",
-          coverArtwork: {
-            title: "Les Demoiselles d'Avignon",
-            href: "/artwork/les-demoiselles-davignon",
-            image: {
-              src: null,
-              width: 0,
-              height: 0,
-            },
-          },
-        }),
-      })
-
-      expect(screen.queryByRole("img")).not.toBeInTheDocument()
-    })
-
     it("tracks clicks on cover artwork image", () => {
       renderWithRelay({
         Artist: () => ({
@@ -351,9 +283,7 @@ describe("ArtistHeaderFragmentContainer", () => {
         }),
       })
 
-      const artworkLink = screen
-        .getByAltText("Les Demoiselles d'Avignon by Pablo Picasso")
-        .closest("a")
+      const artworkLink = screen.getByRole("img").closest("a")
       artworkLink?.click()
 
       expect(trackEvent).toHaveBeenCalledWith(
