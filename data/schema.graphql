@@ -12030,6 +12030,30 @@ type DisableSecondFactorPayload {
   secondFactorOrErrors: SecondFactorOrErrorsUnion!
 }
 
+type DiscardNavigationDraftFailure {
+  mutationError: GravityMutationError!
+}
+
+input DiscardNavigationDraftInput {
+  clientMutationId: String
+
+  # The ID of the navigation version to discard
+  versionID: String!
+}
+
+type DiscardNavigationDraftPayload {
+  clientMutationId: String
+  discardNavigationDraftResponseOrError: DiscardNavigationDraftResponseOrError!
+}
+
+union DiscardNavigationDraftResponseOrError =
+  | DiscardNavigationDraftFailure
+  | DiscardNavigationDraftSuccess
+
+type DiscardNavigationDraftSuccess {
+  success: Boolean!
+}
+
 # A discovery category that contains artwork filters
 type DiscoveryArtworksWithFiltersCollection implements Node {
   # The ID of the category
@@ -17550,6 +17574,11 @@ type Mutation {
     input: DisableSecondFactorInput!
   ): DisableSecondFactorPayload
 
+  # Discard a draft navigation version. Versions that have been published cannot be discarded.
+  discardNavigationDraft(
+    input: DiscardNavigationDraftInput!
+  ): DiscardNavigationDraftPayload
+
   # Add (or remove) an artwork to (from) a users dislikes.
   dislikeArtwork(input: DislikeArtworkInput!): DislikeArtworkPayload
 
@@ -17614,6 +17643,8 @@ type Mutation {
   myCollectionUpdateArtwork(
     input: MyCollectionUpdateArtworkInput!
   ): MyCollectionUpdateArtworkPayload
+
+  # Publish a draft navigation version. Accepts either a groupID (for backward compatibility) or versionID (preferred for admin workflows).
   publishNavigationDraft(
     input: PublishNavigationDraftInput!
   ): PublishNavigationDraftPayload
@@ -20826,8 +20857,11 @@ type PublishNavigationDraftFailure {
 input PublishNavigationDraftInput {
   clientMutationId: String
 
-  # The ID of the navigation group
-  groupID: String!
+  # The ID of the navigation group. Supported for backward compatibility, but versionID is preferred for admin UI workflows.
+  groupID: String
+
+  # The ID of the specific navigation version to publish. Preferred approach for admin UIs.
+  versionID: String
 }
 
 type PublishNavigationDraftPayload {
@@ -21971,9 +22005,15 @@ type Query {
   ): NavigationGroup!
   navigationGroups: [NavigationGroup!]!
 
-  # A snapshot of the server-driven navigation structure (e.g., What’s New -> By Price -> Art under $500, etc.)
+  # A snapshot of the server-driven navigation structure (e.g., What's New -> By Price -> Art under $500, etc.). Fetch by groupID + state for public/cached access, or by id for admin-specific lookups.
   navigationVersion(
-    groupID: String!
+    # The ID of the navigation group (e.g., 'whats-new'). Used with state for public UI lookups with heavy caching (LIVE) or admin preview (DRAFT).
+    groupID: String
+
+    # The internal ID of a specific navigation version. For admin UI use only, always uses authenticated loader.
+    id: String
+
+    # The state of the version (LIVE or DRAFT). LIVE uses unauthenticated/cached loader, DRAFT uses authenticated/uncached loader for admin preview.
     state: NavigationVersionState = LIVE
   ): NavigationVersion
 
@@ -28463,9 +28503,15 @@ type Viewer {
   ): NavigationGroup!
   navigationGroups: [NavigationGroup!]!
 
-  # A snapshot of the server-driven navigation structure (e.g., What’s New -> By Price -> Art under $500, etc.)
+  # A snapshot of the server-driven navigation structure (e.g., What's New -> By Price -> Art under $500, etc.). Fetch by groupID + state for public/cached access, or by id for admin-specific lookups.
   navigationVersion(
-    groupID: String!
+    # The ID of the navigation group (e.g., 'whats-new'). Used with state for public UI lookups with heavy caching (LIVE) or admin preview (DRAFT).
+    groupID: String
+
+    # The internal ID of a specific navigation version. For admin UI use only, always uses authenticated loader.
+    id: String
+
+    # The state of the version (LIVE or DRAFT). LIVE uses unauthenticated/cached loader, DRAFT uses authenticated/uncached loader for admin preview.
     state: NavigationVersionState = LIVE
   ): NavigationVersion
 
