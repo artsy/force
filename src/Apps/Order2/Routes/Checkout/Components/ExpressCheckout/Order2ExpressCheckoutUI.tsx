@@ -284,7 +284,6 @@ export const Order2ExpressCheckoutUI: React.FC<
           code: error.code,
         },
       })
-
       return
     }
 
