@@ -1,4 +1,6 @@
 import { type BoxProps, FullBleed, Image, ResponsiveBox } from "@artsy/palette"
+import { useVariant } from "@unleash/proxy-client-react"
+import { useTrackFeatureVariantOnMount } from "System/Hooks/useTrackFeatureVariant"
 import { getENV } from "Utils/getENV"
 import { maxDimensionsByArea, resized } from "Utils/resized"
 import type { ArtistHeaderImage_artwork$data } from "__generated__/ArtistHeaderImage_artwork.graphql"
@@ -11,6 +13,8 @@ const MOBILE_SIZE = {
   height: 220,
 }
 
+const COVER_ARTWORK_EXPERIMENT = "diamond_artist-cover-artwork-experiment"
+
 interface ArtistHeaderImageProps
   extends Omit<BoxProps, "maxHeight" | "maxWidth"> {
   artwork: ArtistHeaderImage_artwork$data
@@ -19,6 +23,16 @@ interface ArtistHeaderImageProps
 export const ArtistHeaderImage: FC<
   React.PropsWithChildren<ArtistHeaderImageProps>
 > = ({ artwork, ...rest }) => {
+  const isMobile = getENV("IS_MOBILE")
+
+  const variant = useVariant(COVER_ARTWORK_EXPERIMENT)
+  useTrackFeatureVariantOnMount({
+    experimentName: COVER_ARTWORK_EXPERIMENT,
+    variantName: variant?.name,
+  })
+  const shouldRenderExperiment =
+    !isMobile && variant.enabled && variant.name === "experiment"
+
   if (!isValidImage(artwork.image)) {
     return null
   }
@@ -42,8 +56,6 @@ export const ArtistHeaderImage: FC<
     height: MOBILE_SIZE.height,
     quality: 50,
   })
-
-  const isMobile = getENV("IS_MOBILE")
 
   return (
     <>
@@ -106,6 +118,8 @@ export const ArtistHeaderImage: FC<
               fetchPriority="high"
             />
           </ResponsiveBox>
+
+          {shouldRenderExperiment && <div>Artist tombstone TK on desktop</div>}
         </>
       )}
     </>
