@@ -114,8 +114,9 @@ describe("ArtistHeaderImage", () => {
           Artwork: () => mockCoverArtwork,
         })
 
-        const experimentDiv = screen.getByText(/Artist tombstone TK on desktop/)
-        expect(experimentDiv).toBeInTheDocument()
+        screen.debug()
+        expect(screen.getByText(/Guernica/)).toBeInTheDocument()
+        expect(screen.getByText(/1937/)).toBeInTheDocument()
       })
 
       it("renders control otherwise", () => {
@@ -128,10 +129,8 @@ describe("ArtistHeaderImage", () => {
           Artwork: () => mockCoverArtwork,
         })
 
-        const experimentDiv = screen.queryByText(
-          /Artist tombstone TK on desktop/,
-        )
-        expect(experimentDiv).not.toBeInTheDocument()
+        expect(screen.queryByText(/Guernica/)).not.toBeInTheDocument()
+        expect(screen.queryByText(/1937/)).not.toBeInTheDocument()
       })
     })
 
@@ -145,21 +144,21 @@ describe("ArtistHeaderImage", () => {
           Artwork: () => mockCoverArtwork,
         })
 
-        const experimentDiv = screen.queryByText(
-          /Artist tombstone TK on desktop/,
-        )
-        expect(experimentDiv).not.toBeInTheDocument()
+        expect(screen.queryByText(/Guernica/)).not.toBeInTheDocument()
+        expect(screen.queryByText(/1937/)).not.toBeInTheDocument()
       })
     })
   })
 })
 
 const mockCoverArtwork = {
+  title: "Guernica",
+  date: "1937",
   imageTitle: "Guernica by Pablo Picasso",
   image: {
     src: "https://example.com/image.jpg",
     width: 800,
     height: 600,
   },
-  artist: { name: "Pablo Picasso" },
+  fallbackArtist: { name: "Pablo Picasso" },
 }

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e73c4cea8ed47fc58e7861f3082fa5c5>>
+ * @generated SignedSource<<4cd08194017112200d50804dcd43e126>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistHeaderImage_artwork$data = {
-  readonly artist: {
+  readonly fallbackArtist: {
     readonly name: string | null | undefined;
   } | null | undefined;
   readonly image: {
@@ -20,6 +20,7 @@ export type ArtistHeaderImage_artwork$data = {
     readonly width: number | null | undefined;
   } | null | undefined;
   readonly imageTitle: string | null | undefined;
+  readonly " $fragmentSpreads": FragmentRefs<"Details_artwork">;
   readonly " $fragmentType": "ArtistHeaderImage_artwork";
 };
 export type ArtistHeaderImage_artwork$key = {
@@ -82,7 +83,7 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
-      "alias": null,
+      "alias": "fallbackArtist",
       "args": null,
       "concreteType": "Artist",
       "kind": "LinkedField",
@@ -98,12 +99,17 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": null
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "Details_artwork"
     }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
 
-(node as any).hash = "9d9ffa948feb4d1d14ccee555ae363dc";
+(node as any).hash = "218b6a1df3bb87d68b4ab1b44b28e14b";
 
 export default node;

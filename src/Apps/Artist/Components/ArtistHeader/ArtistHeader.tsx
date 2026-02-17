@@ -117,6 +117,7 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
           <RouterLink
             to={artist.coverArtwork.href}
             display="block"
+            textDecoration="none"
             onClick={trackClickedArtistArtworkImage}
           >
             <ArtistHeaderImageFragmentContainer artwork={artist.coverArtwork} />

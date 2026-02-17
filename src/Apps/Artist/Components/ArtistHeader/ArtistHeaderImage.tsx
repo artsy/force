@@ -1,5 +1,13 @@
-import { type BoxProps, FullBleed, Image, ResponsiveBox } from "@artsy/palette"
+import {
+  Box,
+  type BoxProps,
+  FullBleed,
+  Image,
+  ResponsiveBox,
+  Spacer,
+} from "@artsy/palette"
 import { useVariant } from "@unleash/proxy-client-react"
+import { DetailsFragmentContainer } from "Components/Artwork/Details/Details"
 import { useTrackFeatureVariantOnMount } from "System/Hooks/useTrackFeatureVariant"
 import { getENV } from "Utils/getENV"
 import { maxDimensionsByArea, resized } from "Utils/resized"
@@ -37,7 +45,8 @@ export const ArtistHeaderImage: FC<
     return null
   }
 
-  const alt = artwork.imageTitle || `Artwork by ${artwork.artist?.name!}`
+  const alt =
+    artwork.imageTitle || `Artwork by ${artwork.fallbackArtist?.name!}`
   const { image } = artwork
 
   const max = maxDimensionsByArea({
@@ -119,7 +128,19 @@ export const ArtistHeaderImage: FC<
             />
           </ResponsiveBox>
 
-          {shouldRenderExperiment && <div>Artist tombstone TK on desktop</div>}
+          {shouldRenderExperiment && (
+            <>
+              <Spacer y={1} />
+
+              <Box maxWidth={max.width}>
+                <DetailsFragmentContainer
+                  artwork={artwork!}
+                  includeLinks={false}
+                  hideSaleInfo={true}
+                />
+              </Box>
+            </>
+          )}
         </>
       )}
     </>
@@ -155,9 +176,10 @@ export const ArtistHeaderImageFragmentContainer = createFragmentContainer(
           width
           height
         }
-        artist {
+        fallbackArtist: artist {
           name
         }
+        ...Details_artwork
       }
     `,
   },
