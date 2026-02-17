@@ -28,9 +28,14 @@ export const useBrazeSubscription = () => {
       const brazeReady = !!(window as any)?.braze?.subscribeToInAppMessage
 
       if (analyticsReady && brazeReady) {
-        subscribeToInAppMessagesByPath()
-        hasSubscribed.current = true
-        return
+        try {
+          subscribeToInAppMessagesByPath()
+          hasSubscribed.current = true
+          return
+        } catch (error) {
+          // Braze not fully initialized yet, will retry
+          console.debug("Braze not ready, retrying...", error)
+        }
       }
 
       attempt += 1
