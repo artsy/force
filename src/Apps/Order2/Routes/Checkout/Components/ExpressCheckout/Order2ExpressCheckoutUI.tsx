@@ -24,9 +24,7 @@ import { SectionHeading } from "Apps/Order2/Components/SectionHeading"
 import type { ExpressCheckoutPaymentMethod } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import {
   CheckoutErrorBanner,
-  type CheckoutErrorBannerMessage,
-  MailtoOrderSupport,
-  ORDER_SUPPORT_EMAIL,
+  somethingWentWrongError,
 } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { fetchAndSetConfirmationToken } from "Apps/Order2/Utils/confirmationTokenUtils"
@@ -43,7 +41,7 @@ import type {
 } from "__generated__/useOrder2ExpressCheckoutSetFulfillmentOptionMutation.graphql"
 import type { OrderCreditCardWalletTypeEnum } from "__generated__/useOrder2ExpressCheckoutSetOrderPaymentMutation.graphql"
 import type React from "react"
-import { useRef, useState } from "react"
+import { useState } from "react"
 import { graphql, useFragment, useRelayEnvironment } from "react-relay"
 import { useOrder2ExpressCheckoutSetFulfillmentOptionMutation } from "./Mutations/useOrder2ExpressCheckoutSetFulfillmentOptionMutation"
 import { useOrder2ExpressCheckoutSetOrderPaymentMutation } from "./Mutations/useOrder2ExpressCheckoutSetOrderPaymentMutation"
@@ -88,8 +86,6 @@ export const Order2ExpressCheckoutUI: React.FC<
 
   const [expressCheckoutType, setExpressCheckoutType] =
     useState<ExpressPaymentType | null>(null)
-
-  const errorRef = useRef<string | null>(null)
 
   const {
     setExpressCheckoutLoaded,
@@ -235,9 +231,7 @@ export const Order2ExpressCheckoutUI: React.FC<
     }
   }
 
-  const resetOrder = async (options?: { errorCode?: string }) => {
-    const { errorCode } = options || {}
-
+  const resetOrder = async () => {
     try {
       const { unsetOrderPaymentMethod } =
         await unsetPaymentMethodMutation.submitMutation({
@@ -251,16 +245,6 @@ export const Order2ExpressCheckoutUI: React.FC<
 
       validateAndExtractOrderResponse(unsetOrderPaymentMethod?.orderOrError)
       validateAndExtractOrderResponse(unsetOrderFulfillmentOption?.orderOrError)
-
-      // Show error if provided
-      if (errorCode) {
-        const errorBannerProps =
-          expressCheckoutErrorBannerPropsForCode(errorCode)
-        setSectionErrorMessage({
-          section: "EXPRESS_CHECKOUT",
-          error: errorBannerProps,
-        })
-      }
     } catch (error) {
       logger.error("Error resetting order", error)
     } finally {
@@ -270,6 +254,47 @@ export const Order2ExpressCheckoutUI: React.FC<
       setCheckoutMode("standard")
       setExpressCheckoutState(null)
     }
+  }
+
+  const handleSubmitError = (error: any) => {
+    logger.error("Error submitting express checkout order", {
+      ...error,
+      orderId: orderData.internalID,
+      shouldLogErrorToSentry: true,
+    })
+
+    if (error.code === "insufficient_inventory") {
+      setSectionErrorMessage({
+        section: "EXPRESS_CHECKOUT",
+        error: {
+          title: "Not available",
+          message: "Sorry, the work is no longer available.",
+          code: error.code,
+        },
+      })
+      return
+    }
+
+    if (error.code === "charge_authorization_failed") {
+      setSectionErrorMessage({
+        section: "EXPRESS_CHECKOUT",
+        error: {
+          title: "An error occurred while processing your payment",
+          message: error.message,
+          code: error.code,
+        },
+      })
+
+      return
+    }
+
+    setSectionErrorMessage({
+      section: "EXPRESS_CHECKOUT",
+      error: somethingWentWrongError(
+        "submitting your payment",
+        error.code || "payment_submission_error",
+      ),
+    })
   }
 
   const handleOpenExpressCheckout = async ({
@@ -310,28 +335,19 @@ export const Order2ExpressCheckoutUI: React.FC<
   }
 
   const handleCancel: HandleCancelCallback = async () => {
-    const errorCode = errorRef.current
-    errorRef.current = null
-
-    if (!errorCode) {
+    // Do not track cancellation when Stripe calls onCancel for payment errors
+    if (!error) {
       checkoutTracking.clickedCancelExpressCheckout({
         walletType: expressCheckoutType as string,
       })
     }
 
-    // Allow cancel when active user action or not in express checkout
-    // Prevent cancel during submit/reset operations
-    const canCancel = !expressCheckoutState || expressCheckoutState === "active"
-
-    if (canCancel) {
-      // Clear any displayed errors when manually canceling
-      if (!errorCode) {
-        unsetStepError()
-      }
-      await resetOrder({ errorCode: errorCode || undefined })
-    } else {
-      setExpressCheckoutType(null)
+    // Do not reset order when Stripe calls onCancel when submitting Apple Pay order on Chrome
+    if (expressCheckoutState === "submit") {
+      return
     }
+
+    await resetOrder()
   }
 
   // User selects a shipping address
@@ -359,12 +375,20 @@ export const Order2ExpressCheckoutUI: React.FC<
         lineItems: result.lineItems,
       })
     } catch (error) {
-      errorRef.current = error.code || "unknown_error"
       logger.error("Error updating shipping address", {
         code: error.code,
         message: error.message,
         error,
       })
+
+      setSectionErrorMessage({
+        section: "EXPRESS_CHECKOUT",
+        error: somethingWentWrongError(
+          "updating your shipping address",
+          error.code || "shipping_address_update_error",
+        ),
+      })
+
       reject()
     }
   }
@@ -387,12 +411,20 @@ export const Order2ExpressCheckoutUI: React.FC<
         lineItems: result.lineItems,
       })
     } catch (error) {
-      errorRef.current = error.code || "unknown_error"
       logger.error("Error setting fulfillment option", {
         code: error.code,
         message: error.message,
         error,
       })
+
+      setSectionErrorMessage({
+        section: "EXPRESS_CHECKOUT",
+        error: somethingWentWrongError(
+          "updating your shipping rate",
+          error.code || "shipping_rate_update_error",
+        ),
+      })
+
       reject()
     }
   }
@@ -427,14 +459,11 @@ export const Order2ExpressCheckoutUI: React.FC<
     try {
       // Trigger form validation and wallet collection
       const { error: submitError } = await elements.submit()
+
       if (submitError) {
-        logger.error("stripe elements.submit() error", {
-          code: submitError.code,
-          message: submitError.message,
-          fullError: submitError,
-        })
-        const errorCode = (submitError.code || "submit_error") as string
-        await resetOrder({ errorCode })
+        handleSubmitError(submitError)
+
+        await resetOrder()
         return
       }
 
@@ -464,14 +493,9 @@ export const Order2ExpressCheckoutUI: React.FC<
       if (error) {
         // This point is only reached if there's an immediate error when
         // creating the ConfirmationToken (before payment submission).
-        logger.error("stripe.createConfirmationToken() error", {
-          errorCode: error.code,
-          errorMessage: error.message,
-          fullError: error,
-        })
+        handleSubmitError(error)
 
-        const errorCode = (error.code || "confirmation_token_error") as string
-        await resetOrder({ errorCode })
+        await resetOrder()
         return
       }
 
@@ -543,14 +567,9 @@ export const Order2ExpressCheckoutUI: React.FC<
       redirectToOrderDetails()
       return
     } catch (error) {
-      logger.error("Error confirming payment", {
-        errorCode: error.code,
-        errorMessage: error.message,
-        fullError: error,
-      })
+      handleSubmitError(error)
 
-      const errorCode = (error.code || "unknown_error") as string
-      await resetOrder({ errorCode })
+      await resetOrder()
     }
   }
 
@@ -795,35 +814,4 @@ function extractEnabledPaymentMethods(
   return Object.entries(paymentMethods)
     .filter(([_, isAvailable]) => isAvailable)
     .map(([method]) => method) as ExpressCheckoutPaymentMethod[]
-}
-
-const expressCheckoutErrorBannerPropsForCode = (
-  errorCode: string,
-): CheckoutErrorBannerMessage => {
-  // Errors that can occur after express checkout closes and during backend processing
-
-  // Backend payment processing errors
-  if (["create_credit_card_failed"].includes(errorCode)) {
-    return {
-      title: "Payment failed",
-      message: "There was an issue with your payment method. Please try again.",
-      code: errorCode,
-    }
-  }
-
-  // Log unhandled error codes
-  logger.error("Unhandled express checkout error code:", errorCode)
-
-  // Fallback for all other errors
-  return {
-    title: "An error occurred",
-    message: (
-      <>
-        Something went wrong. Please try again or contact <MailtoOrderSupport />
-        .
-      </>
-    ) as React.ReactNode,
-    displayText: `Something went wrong. Please try again or contact ${ORDER_SUPPORT_EMAIL}.`,
-    code: errorCode,
-  }
 }
