@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1e0571f4208965ad8feca1f29e500984>>
+ * @generated SignedSource<<eea6badb19e15d40bdc6e1bc8f6ffcb0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -104,6 +104,11 @@ return {
                 "args": [
                   {
                     "kind": "Literal",
+                    "name": "cachePolicy",
+                    "value": "short"
+                  },
+                  {
+                    "kind": "Literal",
                     "name": "height",
                     "value": 100
                   },
@@ -133,7 +138,7 @@ return {
                     "storageKey": null
                   }
                 ],
-                "storageKey": "cropped(height:100,width:100)"
+                "storageKey": "cropped(cachePolicy:\"short\",height:100,width:100)"
               }
             ],
             "storageKey": null
@@ -197,12 +202,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2b8f3d79904c5975d2aa8744024e5274",
+    "cacheID": "76c504bc288ae445842008b8dfef2db3",
     "id": null,
     "metadata": {},
     "name": "collectorProfileRoutes_CollectorProfileQuery",
     "operationKind": "query",
-    "text": "query collectorProfileRoutes_CollectorProfileQuery {\n  me {\n    ...CollectorProfileApp_me\n    id\n  }\n}\n\nfragment CollectorProfileApp_me on Me {\n  ...CollectorProfileHeader_me\n  name\n}\n\nfragment CollectorProfileHeaderAvatar_me on Me {\n  initials\n  icon {\n    internalID\n    versions\n    cropped(height: 100, width: 100) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment CollectorProfileHeader_me on Me {\n  ...CollectorProfileHeaderAvatar_me\n  name\n  initials\n  icon {\n    cropped(height: 100, width: 100) {\n      src\n      srcSet\n    }\n  }\n  location {\n    display\n    id\n  }\n  collectorProfile {\n    isIdentityVerified\n    confirmedBuyerAt\n    id\n  }\n}\n"
+    "text": "query collectorProfileRoutes_CollectorProfileQuery {\n  me {\n    ...CollectorProfileApp_me\n    id\n  }\n}\n\nfragment CollectorProfileApp_me on Me {\n  ...CollectorProfileHeader_me\n  name\n}\n\nfragment CollectorProfileHeaderAvatar_me on Me {\n  initials\n  icon {\n    internalID\n    versions\n    cropped(height: 100, width: 100, cachePolicy: \"short\") {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment CollectorProfileHeader_me on Me {\n  ...CollectorProfileHeaderAvatar_me\n  name\n  initials\n  icon {\n    cropped(height: 100, width: 100, cachePolicy: \"short\") {\n      src\n      srcSet\n    }\n  }\n  location {\n    display\n    id\n  }\n  collectorProfile {\n    isIdentityVerified\n    confirmedBuyerAt\n    id\n  }\n}\n"
   }
 };
 })();

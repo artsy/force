@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e6c7c83a80390d8af9f2938307a3e37e>>
+ * @generated SignedSource<<d8b527f0d57ef9a7a2b80ccdbfb2abdc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -96,6 +96,11 @@ const node: ConcreteRequest = {
                 "args": [
                   {
                     "kind": "Literal",
+                    "name": "cachePolicy",
+                    "value": "short"
+                  },
+                  {
+                    "kind": "Literal",
                     "name": "height",
                     "value": 100
                   },
@@ -125,7 +130,7 @@ const node: ConcreteRequest = {
                     "storageKey": null
                   }
                 ],
-                "storageKey": "cropped(height:100,width:100)"
+                "storageKey": "cropped(cachePolicy:\"short\",height:100,width:100)"
               }
             ],
             "storageKey": null
@@ -143,12 +148,12 @@ const node: ConcreteRequest = {
     ]
   },
   "params": {
-    "cacheID": "9d2ab7f69b8a80197d51082b7d13c00b",
+    "cacheID": "59e13b78206c7255f6f07d560ec04944",
     "id": null,
     "metadata": {},
     "name": "SettingsEditProfileImageQuery",
     "operationKind": "query",
-    "text": "query SettingsEditProfileImageQuery {\n  me {\n    ...SettingsEditProfileImage_me\n    id\n  }\n}\n\nfragment CollectorProfileHeaderAvatar_me on Me {\n  initials\n  icon {\n    internalID\n    versions\n    cropped(height: 100, width: 100) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment SettingsEditProfileImage_me on Me {\n  ...CollectorProfileHeaderAvatar_me\n  initials\n  icon {\n    internalID\n    versions\n    cropped(height: 100, width: 100) {\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query SettingsEditProfileImageQuery {\n  me {\n    ...SettingsEditProfileImage_me\n    id\n  }\n}\n\nfragment CollectorProfileHeaderAvatar_me on Me {\n  initials\n  icon {\n    internalID\n    versions\n    cropped(height: 100, width: 100, cachePolicy: \"short\") {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment SettingsEditProfileImage_me on Me {\n  ...CollectorProfileHeaderAvatar_me\n  initials\n  icon {\n    internalID\n    versions\n    cropped(height: 100, width: 100, cachePolicy: \"short\") {\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 
