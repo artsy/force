@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7f5f7df18f733adc62294f6b446f868e>>
+ * @generated SignedSource<<b74744bc9e8b56aad4095e7e93816623>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -61,6 +61,22 @@ v4 = [
     "storageKey": null
   },
   (v3/*: any*/)
+],
+v5 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "label",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "details",
+    "storageKey": null
+  }
 ];
 return {
   "fragment": {
@@ -116,6 +132,92 @@ return {
             "args": null,
             "kind": "ScalarField",
             "name": "date",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "saleMessage",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "category",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "medium",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "AttributionClass",
+            "kind": "LinkedField",
+            "name": "attributionClass",
+            "plural": false,
+            "selections": (v4/*: any*/),
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "ArtworkInfoRow",
+            "kind": "LinkedField",
+            "name": "framed",
+            "plural": false,
+            "selections": (v5/*: any*/),
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "ArtworkInfoRow",
+            "kind": "LinkedField",
+            "name": "signatureInfo",
+            "plural": false,
+            "selections": (v5/*: any*/),
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "ArtworkInfoRow",
+            "kind": "LinkedField",
+            "name": "certificateOfAuthenticity",
+            "plural": false,
+            "selections": (v5/*: any*/),
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "dimensions",
+            "kind": "LinkedField",
+            "name": "dimensions",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "in",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "cm",
+                "storageKey": null
+              }
+            ],
             "storageKey": null
           },
           {
@@ -232,12 +334,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f3aabd7177b69d63bebb7d21111d58ce",
+    "cacheID": "c7d81b72a4e578bedc100a641952928e",
     "id": null,
     "metadata": {},
     "name": "InquiryInquiryQuery",
     "operationKind": "query",
-    "text": "query InquiryInquiryQuery(\n  $id: String!\n) {\n  artwork(id: $id) {\n    ...InquiryInquiry_artwork\n    id\n  }\n}\n\nfragment InquiryInquiry_artwork on Artwork {\n  internalID\n  title\n  date\n  artist(shallow: true) {\n    name\n    id\n  }\n  partner {\n    name\n    id\n  }\n  image {\n    resized(width: 60, height: 45) {\n      height\n      width\n      src\n      srcSet\n    }\n  }\n  inquiryQuestions {\n    internalID\n    question\n    id\n  }\n}\n"
+    "text": "query InquiryInquiryQuery(\n  $id: String!\n) {\n  artwork(id: $id) {\n    ...InquiryInquiry_artwork\n    id\n  }\n}\n\nfragment InquiryInquiry_artwork on Artwork {\n  internalID\n  title\n  date\n  saleMessage\n  category\n  medium\n  attributionClass {\n    name\n    id\n  }\n  framed {\n    label\n    details\n  }\n  signatureInfo {\n    label\n    details\n  }\n  certificateOfAuthenticity {\n    label\n    details\n  }\n  dimensions {\n    in\n    cm\n  }\n  artist(shallow: true) {\n    name\n    id\n  }\n  partner {\n    name\n    id\n  }\n  image {\n    resized(width: 60, height: 45) {\n      height\n      width\n      src\n      srcSet\n    }\n  }\n  inquiryQuestions {\n    internalID\n    question\n    id\n  }\n}\n"
   }
 };
 })();

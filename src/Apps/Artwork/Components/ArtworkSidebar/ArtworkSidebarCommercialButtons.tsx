@@ -230,7 +230,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<
     } else {
       showAuthDialog({
         options: {
-          title: "Sign up or log in to buy art with ease",
+          title: "Sign in to purchase this work",
           afterAuthAction: {
             action: "buyNow",
             kind: "artworks",
@@ -294,7 +294,7 @@ export const ArtworkSidebarCommercialButtons: React.FC<
     } else {
       showAuthDialog({
         options: {
-          title: "Sign up or log in to make an offer",
+          title: "Sign in to make an offer on this work",
           afterAuthAction: {
             action: "makeOffer",
             kind: "artworks",

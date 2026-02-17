@@ -1,4 +1,3 @@
-import { ActionType } from "@artsy/cohesion"
 import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
 import EnvelopeIcon from "@artsy/icons/EnvelopeIcon"
 import PersonIcon from "@artsy/icons/PersonIcon"
@@ -18,17 +17,17 @@ import type {
 } from "__generated__/NavBarLoggedInActionsQuery.graphql"
 import type * as React from "react"
 import { graphql } from "react-relay"
-import { useTracking } from "react-tracking"
 import { NavBarUserMenu } from "./Menus"
 import { NavBarNotifications } from "./Menus/NavBarNotifications"
 import { NavBarItemButton, NavBarItemLink } from "./NavBarItem"
 import { NavBarNotificationIndicator } from "./NavBarNotificationIndicator"
+import { useNavBarTracking } from "./useNavBarTracking"
 
 /** Displays action icons for logged in users such as inbox, profile, and notifications */
 export const NavBarLoggedInActions: React.FC<
   React.PropsWithChildren<Partial<NavBarLoggedInActionsQuery$data>>
 > = ({ me }) => {
-  const { trackEvent } = useTracking()
+  const tracking = useNavBarTracking()
   const unreadNotificationsCount = me?.unreadNotificationsCount ?? 0
   const unreadConversationCount = me?.unreadConversationCount ?? 0
   const unseenNotificationsCount = me?.unseenNotificationsCount ?? 0
@@ -70,9 +69,7 @@ export const NavBarLoggedInActions: React.FC<
               anchorProps.onClick?.(event)
 
               if (!visible) {
-                trackEvent({
-                  action: ActionType.clickedNotificationsBell,
-                })
+                tracking.clickedNotificationsBell()
               }
             }}
           >

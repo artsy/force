@@ -7,11 +7,9 @@ import {
   type SearchedWithResults,
   type SelectedItemFromSearch,
 } from "@artsy/cohesion"
-import { useVariant } from "@unleash/proxy-client-react"
 import { DESKTOP_NAV_BAR_TOP_TIER_HEIGHT } from "Components/NavBar/constants"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useRouter } from "System/Hooks/useRouter"
-import { useTrackFeatureVariantOnMount } from "System/Hooks/useTrackFeatureVariant"
 import { useClientQuery } from "Utils/Hooks/useClientQuery"
 import { extractNodes } from "Utils/extractNodes"
 import type {
@@ -32,8 +30,6 @@ import { type PillType, SEARCH_DEBOUNCE_DELAY, TOP_PILL } from "./constants"
 import { getLabel } from "./utils/getLabel"
 import { shouldStartSearching } from "./utils/shouldStartSearching"
 
-const SEARCH_AUTOSUGGEST_VARIANT_EXPERIMENT = "onyx_search-autosuggest-variant"
-
 export interface SearchBarInputProps {
   searchTerm: string
 }
@@ -47,26 +43,12 @@ export const SearchBarInput: FC<
 
   const isClient = useDidMount()
 
-  // Get variant from Unleash for A/B testing
-  const unleashVariant = useVariant(SEARCH_AUTOSUGGEST_VARIANT_EXPERIMENT)
-  const variant =
-    unleashVariant.enabled && unleashVariant.name !== "disabled"
-      ? unleashVariant.name
-      : undefined
-
-  // Track experiment view for analytics
-  useTrackFeatureVariantOnMount({
-    experimentName: SEARCH_AUTOSUGGEST_VARIANT_EXPERIMENT,
-    variantName: unleashVariant.name,
-  })
-
   const { data, refetch } = useClientQuery<SearchBarInputSuggestQuery>({
     query: QUERY,
     variables: {
       hasTerm: shouldStartSearching(searchTerm ?? ""),
       term: searchTerm ? String(searchTerm) : "",
       entities: [],
-      variant,
     },
     skip: !searchTerm,
   })
@@ -138,7 +120,6 @@ export const SearchBarInput: FC<
       hasTerm: true,
       term: String(value),
       entities,
-      variant,
     })
 
     lastRefetchDisposableRef.current = disposable
@@ -330,7 +311,6 @@ const QUERY = graphql`
     $term: String!
     $hasTerm: Boolean!
     $entities: [SearchEntity]
-    $variant: String
   ) {
     viewer {
       ...SearchInputPills_viewer @arguments(term: $term)
@@ -340,7 +320,6 @@ const QUERY = graphql`
         entities: $entities
         mode: AUTOSUGGEST
         first: 7
-        variant: $variant
       ) @include(if: $hasTerm) {
         edges {
           node {

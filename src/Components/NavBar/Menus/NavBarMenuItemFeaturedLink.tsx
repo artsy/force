@@ -1,4 +1,3 @@
-import type { ClickedNavigationDropdownItem } from "@artsy/cohesion"
 import {
   Column,
   Flex,
@@ -8,7 +7,6 @@ import {
   Text,
 } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import type { NavBarMenuItemFeaturedLinkQuery } from "__generated__/NavBarMenuItemFeaturedLinkQuery.graphql"
@@ -16,12 +14,13 @@ import type { NavBarMenuItemFeaturedLink_orderedSet$key } from "__generated__/Na
 import { compact } from "lodash"
 import type { FC } from "react"
 import { graphql, useFragment } from "react-relay"
-import { useTracking } from "react-tracking"
+import { useNavBarTracking } from "../useNavBarTracking"
+import type * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 
 interface NavBarMenuItemFeaturedLinkProps {
   setKey: string
   headerText: string
-  contextModule: string
+  contextModule: DeprecatedAnalyticsSchema.ContextModule
   parentNavigationItem: string
   /** Whether the dropdown is currently visible - used to defer image loading */
   isVisible?: boolean
@@ -69,7 +68,7 @@ export const NavBarMenuItemFeaturedLinkQueryRenderer: FC<
 interface NavBarMenuItemFeaturedLinkInnerProps {
   orderedSet: NavBarMenuItemFeaturedLink_orderedSet$key
   headerText: string
-  contextModule: string
+  contextModule: DeprecatedAnalyticsSchema.ContextModule
   parentNavigationItem: string
   /** Whether the dropdown is currently visible - used to defer image loading */
   isVisible?: boolean
@@ -82,9 +81,7 @@ const NavBarMenuItemFeaturedLink: FC<NavBarMenuItemFeaturedLinkInnerProps> = ({
   parentNavigationItem,
   isVisible,
 }) => {
-  const { trackEvent } = useTracking()
-  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
-    useAnalyticsContext()
+  const tracking = useNavBarTracking()
   const orderedSet = useFragment(fragment, orderedSetKey)
 
   const featuredLinks = compact(orderedSet.items).flatMap(item =>
@@ -117,19 +114,13 @@ const NavBarMenuItemFeaturedLink: FC<NavBarMenuItemFeaturedLinkInnerProps> = ({
         flexDirection="column"
         textDecoration="none"
         onClick={() => {
-          trackEvent({
-            action: "click",
-            flow: "Header",
-            // @ts-expect-error - ContextModule types between deprecated and new schema
-            context_module: contextModule,
-            context_page_owner_type: contextPageOwnerType!,
-            context_page_owner_id: contextPageOwnerId,
-            context_page_owner_slug: contextPageOwnerSlug,
-            parent_navigation_item: parentNavigationItem,
-            dropdown_group: headerText,
+          tracking.clickedNavigationDropdownItem({
+            contextModule,
+            parentNavigationItem,
+            dropdownGroup: headerText,
             subject: featuredLink.title || "",
-            destination_path: featuredLink.href || "",
-          } satisfies ClickedNavigationDropdownItem)
+            destinationPath: featuredLink.href || "",
+          })
         }}
       >
         <ResponsiveBox

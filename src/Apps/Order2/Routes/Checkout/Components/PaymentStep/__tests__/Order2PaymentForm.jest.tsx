@@ -102,8 +102,8 @@ const mockCheckoutContext = {
       error: null,
     },
   },
-  setStepErrorMessage: jest.fn(({ step, error }) => {
-    mockCheckoutContext.messages[step] = { error }
+  setSectionErrorMessage: jest.fn(({ section, error }) => {
+    mockCheckoutContext.messages[section] = { error }
   }),
   checkoutTracking: {
     clickedPaymentMethod: jest.fn(),
@@ -1497,15 +1497,17 @@ describe("Order2PaymentForm", () => {
       const continueButton = screen.getByText("Continue to Review")
       await userEvent.click(continueButton)
 
-      // Wait for setStepErrorMessage to be called with the error
+      // Wait for setSectionErrorMessage to be called with the error
       await waitFor(() => {
-        expect(mockCheckoutContext.setStepErrorMessage).toHaveBeenCalledWith({
-          step: "PAYMENT",
-          error: expect.objectContaining({
-            title: expect.any(String),
-            message: expect.anything(),
-          }),
-        })
+        expect(mockCheckoutContext.setSectionErrorMessage).toHaveBeenCalledWith(
+          {
+            section: "PAYMENT",
+            error: expect.objectContaining({
+              title: expect.any(String),
+              message: expect.anything(),
+            }),
+          },
+        )
       })
 
       // Wait for error banner to appear

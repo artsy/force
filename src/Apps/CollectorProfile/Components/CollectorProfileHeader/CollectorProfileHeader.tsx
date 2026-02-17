@@ -130,7 +130,7 @@ export const CollectorProfileHeaderFragmentContainer = createFragmentContainer(
         name
         initials
         icon {
-          cropped(height: 100, width: 100) {
+          cropped(height: 100, width: 100, cachePolicy: "short") {
             src
             srcSet
           }

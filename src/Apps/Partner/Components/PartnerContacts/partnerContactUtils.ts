@@ -1,9 +1,8 @@
+import { getENV } from "Utils/getENV"
 import type { PartnerContactAddress_location$data } from "__generated__/PartnerContactAddress_location.graphql"
 import type { PartnerContactMap_location$data } from "__generated__/PartnerContactMap_location.graphql"
 import { compact } from "lodash"
 import qs from "qs"
-// eslint-disable-next-line no-restricted-imports
-import { data as sd } from "sharify"
 
 export function getContactAddressLines(
   location:
@@ -57,14 +56,12 @@ export function getGoogleStaticMapImageUrl(
     maptype: "roadmap",
     sensor: false,
     style: "lightness:50|saturation:-100",
-    scale: 1,
+    scale: 2,
     zoom: 16,
     size: `${width}x${height}`,
     center: locationString,
-    markers: `color:0x873ff0|${locationString}`,
-    key: sd.PUBLIC_GOOGLE_MAPS_API_KEY
-      ? sd.PUBLIC_GOOGLE_MAPS_API_KEY
-      : undefined,
+    markers: `color:0x8a94ff|${locationString}`,
+    key: getENV("PUBLIC_GOOGLE_MAPS_API_KEY"),
   }
 
   return `https://maps.googleapis.com/maps/api/staticmap?${qs.stringify(

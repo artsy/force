@@ -181,7 +181,7 @@ describe("Order2OfferStep", () => {
       setOfferAmountComplete: mockSetOfferAmountComplete,
       checkoutTracking: mockCheckoutTracking,
       messages: {},
-      setStepErrorMessage: jest.fn(),
+      setSectionErrorMessage: jest.fn(),
     })
     mockUseOrder2AddInitialOfferMutation.mockReturnValue({
       submitMutation: mockSubmitMutation,

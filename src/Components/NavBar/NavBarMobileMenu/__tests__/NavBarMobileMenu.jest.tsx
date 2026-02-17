@@ -1,28 +1,97 @@
+import type * as React from "react"
 import { NavBarMobileMenu } from "Components/NavBar/NavBarMobileMenu/NavBarMobileMenu"
 import { SystemContextProvider } from "System/Contexts/SystemContext"
+import type { buildAppRoutesQuery } from "__generated__/buildAppRoutesQuery.graphql"
 import { logout } from "Utils/auth"
-import { render } from "@testing-library/react"
+import { render, screen } from "@testing-library/react"
 import { fireEvent } from "@testing-library/react"
 import { useTracking } from "react-tracking"
 
 jest.mock("react-tracking")
-
+jest.mock("System/Relay/SystemQueryRenderer", () => ({
+  SystemQueryRenderer: jest.fn(({ render: renderFn }) =>
+    renderFn({ error: null, props: { me: null }, retry: null }),
+  ),
+}))
+jest.mock("react-relay", () => ({
+  ...jest.requireActual("react-relay"),
+  useFragment: jest.fn(() => null),
+}))
 jest.mock("@artsy/palette", () => ({
   ...jest.requireActual("@artsy/palette"),
   useDidMount: jest.fn().mockReturnValue(false), // SSR-render
+  ModalBase: ({ children }: { children: React.ReactNode }) => <>{children}</>,
 }))
+jest.mock(
+  "Components/NavBar/NavBarMobileMenu/NavBarMobileMenuNotifications",
+  () => ({
+    NavBarMobileMenuNotificationsQueryRenderer: () => (
+      <a href="/user/conversations">Inbox</a>
+    ),
+  }),
+)
+jest.mock("Components/NavBar/NavBarMobileMenu/NavBarMobileSubMenu", () => ({
+  NavBarMobileSubMenu: ({ children }: { children: React.ReactNode }) => (
+    <>
+      <button type="button">{children}</button>
+      <div data-testid="static-mobile-sub-menu" />
+    </>
+  ),
+}))
+jest.mock(
+  "Components/NavBar/NavBarMobileMenu/NavBarMobileSubMenuServer",
+  () => ({
+    NavBarMobileSubMenuServer: ({
+      children,
+    }: {
+      children: React.ReactNode
+    }) => (
+      <>
+        <button type="button">{children}</button>
+        <div data-testid="server-mobile-sub-menu" />
+      </>
+    ),
+  }),
+)
 
 jest.mock("Utils/auth", () => ({ logout: jest.fn() }))
+
+interface GetWrapperProps {
+  user?: { type: string; lab_features?: string[] } | null
+  shouldUseServerNav?: boolean
+  navigationData?: Partial<{
+    whatsNewNavigation: unknown
+    artistsNavigation: unknown
+    artworksNavigation: unknown
+    whatsNewFeaturedLink: unknown
+    artistsFeaturedLink: unknown
+    artworksFeaturedLink: unknown
+  }> | null
+}
 
 describe("NavBarMobileMenu", () => {
   const mockLogout = logout as jest.Mock
 
   const trackEvent = jest.fn()
   const noop = () => {}
-  const getWrapper = props => {
+  const getWrapper = (props: GetWrapperProps = {}) => {
+    const {
+      user,
+      shouldUseServerNav,
+      navigationData,
+      ...navBarMobileMenuProps
+    } = props
     return render(
-      <SystemContextProvider user={props.user} isLoggedIn={!!props.user}>
-        <NavBarMobileMenu isOpen onClose={noop} />
+      <SystemContextProvider user={user} isLoggedIn={!!user}>
+        <NavBarMobileMenu
+          isOpen
+          onClose={noop}
+          shouldUseServerNav={shouldUseServerNav}
+          navigationData={
+            navigationData as buildAppRoutesQuery["response"] | null | undefined
+          }
+          {...navBarMobileMenuProps}
+        />
       </SystemContextProvider>,
     )
   }
@@ -102,9 +171,11 @@ describe("NavBarMobileMenu", () => {
         )
         .filter(link => defaultMobileMenuLinks.includes(link))
 
-      // Ensure that the mobile menu links at least include the links we expect
-      // and that they're in the right relative order
-      expect(renderedMobileMenuLinks).toEqual(defaultMobileMenuLinks)
+      // Ensure that the mobile menu links include the links we expect
+      // (submenus also contain some of these links, so we check presence)
+      expect(renderedMobileMenuLinks).toEqual(
+        expect.arrayContaining(defaultMobileMenuLinks),
+      )
 
       const subMenuButtons = container.querySelectorAll("button")
       const subMenuButtonLabels = Array.from(subMenuButtons)
@@ -141,6 +212,44 @@ describe("NavBarMobileMenu", () => {
       }
 
       expect(container.innerHTML).toContain("Inbox")
+    })
+  })
+
+  describe("shouldUseServerNav", () => {
+    it("renders static NavBarMobileSubMenu content when shouldUseServerNav is false", () => {
+      getWrapper({ shouldUseServerNav: false })
+
+      expect(screen.getAllByTestId("static-mobile-sub-menu").length).toEqual(3)
+    })
+
+    it("renders NavBarMobileSubMenuServer when shouldUseServerNav is true and navigationData is provided", () => {
+      const { useFragment } = require("react-relay")
+      ;(useFragment as jest.Mock).mockReturnValue({
+        items: [
+          {
+            title: "Section",
+            position: 0,
+            children: [
+              {
+                title: "Test Link",
+                href: "/test-link",
+                position: 0,
+              },
+            ],
+          },
+        ],
+      })
+
+      getWrapper({
+        shouldUseServerNav: true,
+        navigationData: {
+          whatsNewNavigation: {},
+          artistsNavigation: {},
+          artworksNavigation: {},
+        },
+      })
+
+      expect(screen.getAllByTestId("server-mobile-sub-menu").length).toEqual(3)
     })
   })
 

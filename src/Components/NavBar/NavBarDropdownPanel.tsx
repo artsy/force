@@ -1,14 +1,12 @@
-import { ActionType } from "@artsy/cohesion"
 import type * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { Dropdown } from "@artsy/palette"
 import { Z } from "Apps/Components/constants"
 import type { MenuData } from "Components/NavBar/menuData"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { usePrefetchRoute } from "System/Hooks/usePrefetchRoute"
 import { useEffect, useRef } from "react"
-import { useTracking } from "react-tracking"
 import { NavBarSubMenu } from "./Menus"
 import { NavBarItemButton, NavBarItemUnfocusableAnchor } from "./NavBarItem"
+import { useNavBarTracking } from "./useNavBarTracking"
 
 interface NavBarDropdownPanelProps {
   href: string
@@ -30,9 +28,7 @@ export const NavBarDropdownPanel: React.FC<NavBarDropdownPanelProps> = ({
   shouldTransition,
 }) => {
   const { prefetch } = usePrefetchRoute()
-  const { trackEvent } = useTracking()
-  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
-    useAnalyticsContext()
+  const tracking = useNavBarTracking()
 
   return (
     <Dropdown
@@ -68,15 +64,10 @@ export const NavBarDropdownPanel: React.FC<NavBarDropdownPanelProps> = ({
           if (visible && !hasTrackedRef.current) {
             // Only fire if dropdown stays open for at least 500ms
             timeoutRef.current = setTimeout(() => {
-              trackEvent({
-                action: ActionType.navigationDropdownViewed,
-                context_module: "header" as any,
-                context_page_owner_type: contextPageOwnerType!,
-                context_page_owner_id: contextPageOwnerId,
-                context_page_owner_slug: contextPageOwnerSlug,
-                navigation_item: label,
+              tracking.navigationDropdownViewed({
+                navigationItem: label,
                 level: 0,
-                interaction_type: "hover",
+                interactionType: "hover",
               })
               hasTrackedRef.current = true
             }, 500)
@@ -97,6 +88,7 @@ export const NavBarDropdownPanel: React.FC<NavBarDropdownPanelProps> = ({
           <NavBarItemButton
             ref={anchorRef as any}
             active={visible}
+            data-testid="static-dropdown"
             onMouseEnter={e => {
               onMouseEnter?.(e)
               onMenuEnter()

@@ -40,7 +40,7 @@ export const CollectorProfileHeaderAvatarFragmentContainer =
         icon {
           internalID
           versions
-          cropped(height: 100, width: 100) {
+          cropped(height: 100, width: 100, cachePolicy: "short") {
             src
             srcSet
           }

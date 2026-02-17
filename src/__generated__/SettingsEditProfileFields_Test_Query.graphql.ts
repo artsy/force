@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<224541ebeb60ed3d5fe869b093f6a170>>
+ * @generated SignedSource<<3fa32b3b6eaac4a1346d6417411de791>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -129,6 +129,11 @@ return {
                 "args": [
                   {
                     "kind": "Literal",
+                    "name": "cachePolicy",
+                    "value": "short"
+                  },
+                  {
+                    "kind": "Literal",
                     "name": "height",
                     "value": 100
                   },
@@ -158,7 +163,7 @@ return {
                     "storageKey": null
                   }
                 ],
-                "storageKey": "cropped(height:100,width:100)"
+                "storageKey": "cropped(cachePolicy:\"short\",height:100,width:100)"
               }
             ],
             "storageKey": null
@@ -286,7 +291,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "bd46a278d5ec0b6dad74eb4f7f468fdf",
+    "cacheID": "743ed2646c4b7dc9a3ddb1c0723cf4bb",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -361,7 +366,7 @@ return {
     },
     "name": "SettingsEditProfileFields_Test_Query",
     "operationKind": "query",
-    "text": "query SettingsEditProfileFields_Test_Query {\n  me {\n    ...SettingsEditProfileFields_me\n    id\n  }\n}\n\nfragment CollectorProfileHeaderAvatar_me on Me {\n  initials\n  icon {\n    internalID\n    versions\n    cropped(height: 100, width: 100) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment SettingsEditProfileFields_me on Me {\n  ...SettingsEditProfileImage_me\n  internalID\n  name\n  profession\n  otherRelevantPositions\n  location {\n    display\n    city\n    state\n    country\n    id\n  }\n  email\n  isEmailConfirmed\n  isIdentityVerified\n  canRequestEmailConfirmation\n  collectorProfile {\n    linkedIn\n    instagram\n    id\n  }\n}\n\nfragment SettingsEditProfileImage_me on Me {\n  ...CollectorProfileHeaderAvatar_me\n  initials\n  icon {\n    internalID\n    versions\n    cropped(height: 100, width: 100) {\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query SettingsEditProfileFields_Test_Query {\n  me {\n    ...SettingsEditProfileFields_me\n    id\n  }\n}\n\nfragment CollectorProfileHeaderAvatar_me on Me {\n  initials\n  icon {\n    internalID\n    versions\n    cropped(height: 100, width: 100, cachePolicy: \"short\") {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment SettingsEditProfileFields_me on Me {\n  ...SettingsEditProfileImage_me\n  internalID\n  name\n  profession\n  otherRelevantPositions\n  location {\n    display\n    city\n    state\n    country\n    id\n  }\n  email\n  isEmailConfirmed\n  isIdentityVerified\n  canRequestEmailConfirmation\n  collectorProfile {\n    linkedIn\n    instagram\n    id\n  }\n}\n\nfragment SettingsEditProfileImage_me on Me {\n  ...CollectorProfileHeaderAvatar_me\n  initials\n  icon {\n    internalID\n    versions\n    cropped(height: 100, width: 100, cachePolicy: \"short\") {\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();

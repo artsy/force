@@ -24,5 +24,9 @@ export const hasNoCacheParamPresent = url => {
  * queries include this argument, those queries will not be cached.
  */
 export const hasPersonalizedArguments = (variables: Variables) => {
+  if (variables?.requestedVersionState === "DRAFT") {
+    return true
+  }
+
   return variables?.input?.includeArtworksByFollowedArtists
 }

@@ -1,5 +1,4 @@
 import { Box, Spacer, Text } from "@artsy/palette"
-import { SectionHeading } from "Apps/Order2/Components/SectionHeading"
 import {
   ExpressCheckoutElement,
   useElements,
@@ -21,6 +20,7 @@ import {
   type OrderMutationSuccess,
   validateAndExtractOrderResponse,
 } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
+import { SectionHeading } from "Apps/Order2/Components/SectionHeading"
 import type { ExpressCheckoutPaymentMethod } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import {
   CheckoutErrorBanner,
@@ -31,7 +31,6 @@ import {
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { fetchAndSetConfirmationToken } from "Apps/Order2/Utils/confirmationTokenUtils"
 import { LocalCheckoutError } from "Apps/Order2/Utils/errors"
-import { preventHardReload } from "Apps/Order2/Utils/navigationGuards"
 import { RouterLink } from "System/Components/RouterLink"
 import createLogger from "Utils/logger"
 import type {
@@ -44,7 +43,7 @@ import type {
 } from "__generated__/useOrder2ExpressCheckoutSetFulfillmentOptionMutation.graphql"
 import type { OrderCreditCardWalletTypeEnum } from "__generated__/useOrder2ExpressCheckoutSetOrderPaymentMutation.graphql"
 import type React from "react"
-import { useEffect, useRef, useState } from "react"
+import { useRef, useState } from "react"
 import { graphql, useFragment, useRelayEnvironment } from "react-relay"
 import { useOrder2ExpressCheckoutSetFulfillmentOptionMutation } from "./Mutations/useOrder2ExpressCheckoutSetFulfillmentOptionMutation"
 import { useOrder2ExpressCheckoutSetOrderPaymentMutation } from "./Mutations/useOrder2ExpressCheckoutSetOrderPaymentMutation"
@@ -89,31 +88,30 @@ export const Order2ExpressCheckoutUI: React.FC<
 
   const [expressCheckoutType, setExpressCheckoutType] =
     useState<ExpressPaymentType | null>(null)
-  const [error, setError] = useState<CheckoutErrorBannerMessage | null>(null)
 
   const errorRef = useRef<string | null>(null)
 
   const {
     setExpressCheckoutLoaded,
     redirectToOrderDetails,
-    setExpressCheckoutSubmitting,
-    expressCheckoutSubmitting,
-    checkoutMode,
+    setExpressCheckoutState,
+    expressCheckoutState,
     setCheckoutMode,
     checkoutTracking,
     setConfirmationToken,
+    editFulfillmentDetails,
+    setSectionErrorMessage,
+    messages,
   } = useCheckoutContext()
 
-  useEffect(() => {
-    const storedErrorCode = sessionStorage.getItem("expressCheckoutError")
+  const error = messages["EXPRESS_CHECKOUT"]?.error
 
-    if (storedErrorCode) {
-      const errorBannerProps =
-        expressCheckoutErrorBannerPropsForCode(storedErrorCode)
-      setError(errorBannerProps)
-      sessionStorage.removeItem("expressCheckoutError")
-    }
-  }, [])
+  const unsetStepError = () => {
+    setSectionErrorMessage({
+      section: "EXPRESS_CHECKOUT",
+      error: null,
+    })
+  }
 
   if (!(stripe && elements)) {
     return null
@@ -237,8 +235,8 @@ export const Order2ExpressCheckoutUI: React.FC<
     }
   }
 
-  const resetOrder = async () => {
-    window.removeEventListener("beforeunload", preventHardReload)
+  const resetOrder = async (options?: { errorCode?: string }) => {
+    const { errorCode } = options || {}
 
     try {
       const { unsetOrderPaymentMethod } =
@@ -253,10 +251,24 @@ export const Order2ExpressCheckoutUI: React.FC<
 
       validateAndExtractOrderResponse(unsetOrderPaymentMethod?.orderOrError)
       validateAndExtractOrderResponse(unsetOrderFulfillmentOption?.orderOrError)
+
+      // Show error if provided
+      if (errorCode) {
+        const errorBannerProps =
+          expressCheckoutErrorBannerPropsForCode(errorCode)
+        setSectionErrorMessage({
+          section: "EXPRESS_CHECKOUT",
+          error: errorBannerProps,
+        })
+      }
     } catch (error) {
       logger.error("Error resetting order", error)
     } finally {
-      window.location.reload()
+      // Reset local state
+      setExpressCheckoutType(null)
+      editFulfillmentDetails()
+      setCheckoutMode("standard")
+      setExpressCheckoutState(null)
     }
   }
 
@@ -265,7 +277,10 @@ export const Order2ExpressCheckoutUI: React.FC<
     resolve,
   }: StripeExpressCheckoutElementClickEvent) => {
     setCheckoutMode("express")
+    setExpressCheckoutState("active")
+
     setExpressCheckoutType(expressPaymentType)
+    unsetStepError() // Clear any previous errors
 
     checkoutTracking.clickedExpressCheckout({
       walletType: expressPaymentType,
@@ -295,21 +310,27 @@ export const Order2ExpressCheckoutUI: React.FC<
   }
 
   const handleCancel: HandleCancelCallback = async () => {
-    if (errorRef.current) {
-      // Store error code for display after reset - tracking happens when banner displays
-      sessionStorage.setItem("expressCheckoutError", errorRef.current)
+    const errorCode = errorRef.current
+    errorRef.current = null
 
-      errorRef.current = null
-    } else {
+    if (!errorCode) {
       checkoutTracking.clickedCancelExpressCheckout({
         walletType: expressCheckoutType as string,
       })
     }
 
-    setExpressCheckoutType(null)
+    // Allow cancel when active user action or not in express checkout
+    // Prevent cancel during submit/reset operations
+    const canCancel = !expressCheckoutState || expressCheckoutState === "active"
 
-    if (!expressCheckoutSubmitting) {
-      resetOrder()
+    if (canCancel) {
+      // Clear any displayed errors when manually canceling
+      if (!errorCode) {
+        unsetStepError()
+      }
+      await resetOrder({ errorCode: errorCode || undefined })
+    } else {
+      setExpressCheckoutType(null)
     }
   }
 
@@ -383,8 +404,7 @@ export const Order2ExpressCheckoutUI: React.FC<
     expressPaymentType,
     shippingRate,
   }: StripeExpressCheckoutElementConfirmEvent) => {
-    window.removeEventListener("beforeunload", preventHardReload)
-    setExpressCheckoutSubmitting(true)
+    setExpressCheckoutState("submit")
 
     const creditCardWalletType =
       expressPaymentType.toUpperCase() as OrderCreditCardWalletTypeEnum
@@ -408,8 +428,13 @@ export const Order2ExpressCheckoutUI: React.FC<
       // Trigger form validation and wallet collection
       const { error: submitError } = await elements.submit()
       if (submitError) {
-        logger.error(submitError)
-        setExpressCheckoutSubmitting(false)
+        logger.error("stripe elements.submit() error", {
+          code: submitError.code,
+          message: submitError.message,
+          fullError: submitError,
+        })
+        const errorCode = (submitError.code || "submit_error") as string
+        await resetOrder({ errorCode })
         return
       }
 
@@ -439,17 +464,14 @@ export const Order2ExpressCheckoutUI: React.FC<
       if (error) {
         // This point is only reached if there's an immediate error when
         // creating the ConfirmationToken (before payment submission).
-        logger.error("Stripe Error creating confirmation token", {
+        logger.error("stripe.createConfirmationToken() error", {
           errorCode: error.code,
           errorMessage: error.message,
           fullError: error,
         })
 
-        // Store error code for display after reset - tracking happens when banner displays
         const errorCode = (error.code || "confirmation_token_error") as string
-        sessionStorage.setItem("expressCheckoutError", errorCode)
-
-        resetOrder()
+        await resetOrder({ errorCode })
         return
       }
 
@@ -527,11 +549,8 @@ export const Order2ExpressCheckoutUI: React.FC<
         fullError: error,
       })
 
-      // Store error code for display after reset - tracking happens when banner displays
       const errorCode = (error.code || "unknown_error") as string
-      sessionStorage.setItem("expressCheckoutError", errorCode)
-
-      resetOrder()
+      await resetOrder({ errorCode })
     }
   }
 
@@ -557,7 +576,7 @@ export const Order2ExpressCheckoutUI: React.FC<
     <Box>
       <SectionHeading>Express checkout</SectionHeading>
       <Spacer y={[1, 1, 2]} />
-      {error && checkoutMode === "express" && (
+      {error && (
         <>
           <CheckoutErrorBanner
             error={error}
