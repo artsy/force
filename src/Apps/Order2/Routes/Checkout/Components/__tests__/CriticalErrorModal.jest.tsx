@@ -186,7 +186,7 @@ describe("CriticalErrorModal", () => {
 
   describe("stripe_error error", () => {
     it("shows payment authentication error message with Continue button", () => {
-      render(<CheckoutModal error={CheckoutModalError.STRIPE_ERROR} />)
+      render(<CheckoutModal error={CheckoutModalError.CHARGE_AUTHORIZATION_FAILED} />)
 
       expect(screen.getByText("An error occurred")).toBeInTheDocument()
       expect(
@@ -199,7 +199,7 @@ describe("CriticalErrorModal", () => {
     })
 
     it("dismisses modal when Continue button is clicked", async () => {
-      render(<CheckoutModal error={CheckoutModalError.STRIPE_ERROR} />)
+      render(<CheckoutModal error={CheckoutModalError.CHARGE_AUTHORIZATION_FAILED} />)
 
       const continueButton = screen.getByText("Continue")
       await userEvent.click(continueButton)
@@ -209,7 +209,7 @@ describe("CriticalErrorModal", () => {
     })
 
     it("dismisses modal when X button is clicked", async () => {
-      render(<CheckoutModal error={CheckoutModalError.STRIPE_ERROR} />)
+      render(<CheckoutModal error={CheckoutModalError.CHARGE_AUTHORIZATION_FAILED} />)
 
       const closeButton = screen.getByLabelText("Close")
       await userEvent.click(closeButton)

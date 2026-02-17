@@ -84,21 +84,24 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
     })
 
     if (error.code === "insufficient_inventory") {
-      showCheckoutErrorModal(CheckoutModalError.ARTWORK_NOT_FOR_SALE)
+      showCheckoutErrorModal({
+        error: CheckoutModalError.ARTWORK_NOT_FOR_SALE,
+      })
       return
     }
 
-    if (error.code === "stripe_error") {
-      showCheckoutErrorModal(
-        CheckoutModalError.STRIPE_ERROR,
-        "An error occurred while processing your payment",
-        error.message,
-        showPaymentError,
-      )
+    if (error.code === "charge_authorization_failed") {
+      showCheckoutErrorModal({
+        error: CheckoutModalError.CHARGE_AUTHORIZATION_FAILED,
+        description: error.message,
+        onClose: showPaymentError,
+      })
       return
     }
 
-    showCheckoutErrorModal(CheckoutModalError.SUBMIT_ERROR)
+    showCheckoutErrorModal({
+      error: CheckoutModalError.SUBMIT_ERROR,
+    })
   }
 
   const handleSubmit = async (confirmedSetupIntentId?: any) => {
@@ -155,7 +158,7 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
         })
 
         if (error) {
-          throw { code: "stripe_error", message: error.message }
+          throw { code: "charge_authorization_failed", message: error.message }
         } else {
           isOffer ? handleSubmit(setupIntent?.id) : handleSubmit()
           return

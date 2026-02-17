@@ -108,7 +108,9 @@ export const useLoadCheckout = (order: useLoadCheckout_order$key) => {
       setOrderValidated(true)
     } catch (error) {
       logger.error("Error validating order: ", error.message)
-      showCheckoutErrorModal(error.message)
+      showCheckoutErrorModal({
+        error: CheckoutModalError.OTHER_ERROR,
+      })
     }
   }, [orderData, orderValidated, showCheckoutErrorModal])
 
@@ -149,7 +151,9 @@ export const useLoadCheckout = (order: useLoadCheckout_order$key) => {
         )
 
         logger.error(error)
-        showCheckoutErrorModal(CheckoutModalError.LOADING_TIMEOUT)
+        showCheckoutErrorModal({
+          error: CheckoutModalError.LOADING_TIMEOUT,
+        })
       }
     }, MAX_LOADING_MS)
     return () => clearTimeout(timeout)
