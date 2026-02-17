@@ -57,10 +57,13 @@ export const Order2OfferOptions: React.FC<Order2OfferOptionsProps> = ({
   const orderData = useFragment(FRAGMENT, order)
   const { values } = useFormikContext<{ offerValue: number }>()
 
-  const priceOptions = useMemo((): PriceOption[] => {
-    const artwork = orderData.lineItems?.[0]?.artworkOrEditionSet
-    const artworkListPrice = artwork?.listPrice
+  const artwork = orderData.lineItems?.[0]?.artworkOrEditionSet
+  const artworkListPrice = artwork?.listPrice
 
+  // exact price case
+  const lineItemListPrice = orderData.lineItems?.[0]?.listPrice
+
+  const priceOptions = useMemo((): PriceOption[] => {
     // Handle price range case
     if (artworkListPrice?.__typename === "PriceRange") {
       const minPriceRange = artworkListPrice?.minPrice?.major
@@ -95,14 +98,12 @@ export const Order2OfferOptions: React.FC<Order2OfferOptionsProps> = ({
       ]
     }
 
-    // Handle exact price case
-    const listPrice = orderData.lineItems?.[0]?.listPrice
-    const listPriceMajor = listPrice?.major
+    const lineItemListPriceMajor = lineItemListPrice?.major
 
-    if (!listPriceMajor) {
-      logger.warn(
+    if (!lineItemListPriceMajor) {
+      logger.error(
         "Missing list price for artwork - no preset offer options will be shown",
-        { listPrice },
+        { listPrice: lineItemListPrice },
       )
       return []
     }
@@ -110,21 +111,21 @@ export const Order2OfferOptions: React.FC<Order2OfferOptionsProps> = ({
     return [
       {
         key: PriceOptionKey.MAX,
-        value: Math.round(listPriceMajor),
+        value: Math.round(lineItemListPriceMajor),
         description: "List price",
       },
       {
         key: PriceOptionKey.MID,
-        value: Math.round(listPriceMajor * 0.9), // 10% below
+        value: Math.round(lineItemListPriceMajor * 0.9), // 10% below
         description: "10% below list price",
       },
       {
         key: PriceOptionKey.MIN,
-        value: Math.round(listPriceMajor * 0.8), // 20% below
+        value: Math.round(lineItemListPriceMajor * 0.8), // 20% below
         description: "20% below list price",
       },
     ]
-  }, [orderData])
+  }, [artworkListPrice, lineItemListPrice])
 
   const [selectedRadio, setSelectedRadio] = useState<
     PriceOptionKey | undefined
