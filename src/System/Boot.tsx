@@ -10,6 +10,7 @@ import { CookieConsentManager } from "Components/CookieConsentManager/CookieCons
 import { DeveloperBreakpointOverlay } from "Components/DeveloperBreakpointOverlay"
 import { PROGRESSIVE_ONBOARDING_KEYS } from "Components/ProgressiveOnboarding/progressiveOnboardingKeys"
 import { StickyProvider } from "Components/Sticky"
+import { BrazeSubscriptionManager } from "System/Components/BrazeSubscriptionManager"
 import { ErrorBoundary } from "System/Components/ErrorBoundary"
 import { SystemContextProvider } from "System/Contexts/SystemContext"
 import { FeatureFlagProvider } from "System/FeatureFlags/FeatureFlagContext"
@@ -74,6 +75,7 @@ export const Boot: React.FC<
 
         <HeadProvider headTags={headTags}>
           <SystemContextProvider {...contextProps}>
+            <BrazeSubscriptionManager />
             <EnvironmentProvider environment={props.relayEnvironment}>
               <ErrorBoundary>
                 <FeatureFlagProvider>
