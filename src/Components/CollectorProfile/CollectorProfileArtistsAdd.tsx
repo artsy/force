@@ -188,9 +188,9 @@ export const CollectorProfileArtistsAdd: FC<
 
         {debouncedQuery.length === 0 && (
           <Message>
-            Select an artist to add them to your collection.
-            <br />
             Results will appear here as you search.
+            <br />
+            Select an artist to add them to your collection.
           </Message>
         )}
 
@@ -229,7 +229,7 @@ export const CollectorProfileArtistsAdd: FC<
           )}
         </Stack>
 
-        <Stack gap={1}>
+        <Stack gap={2} alignItems="center">
           <Button
             disabled={selected.length === 0 || mode === "Adding"}
             width="100%"
@@ -241,9 +241,13 @@ export const CollectorProfileArtistsAdd: FC<
           </Button>
 
           {onCancel && (
-            <Button variant="tertiary" onClick={handleCancel}>
-              I haven't started a collection yet
-            </Button>
+            <Clickable
+              type="button"
+              onClick={handleCancel}
+              textDecoration="underline"
+            >
+              <Text>I haven't started a collection yet</Text>
+            </Clickable>
           )}
         </Stack>
       </Stack>
