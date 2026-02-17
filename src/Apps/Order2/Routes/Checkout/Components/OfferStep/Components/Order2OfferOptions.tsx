@@ -3,7 +3,8 @@ import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
 import { OfferInput } from "Apps/Order2/Routes/Checkout/Components/OfferStep/Components/OfferInput"
 import type { OfferFormProps } from "Apps/Order2/Routes/Checkout/Components/OfferStep/types"
 import type { Order2OfferOptions_order$key } from "__generated__/Order2OfferOptions_order.graphql"
-import { useState } from "react"
+import { useFormikContext } from "formik"
+import { useMemo, useState } from "react"
 import { graphql, useFragment } from "react-relay"
 
 interface PriceOption {
@@ -16,15 +17,37 @@ interface Order2OfferOptionsProps extends OfferFormProps {
   order: Order2OfferOptions_order$key
 }
 
+/**
+ * Determines which radio option should be selected based on the current offer value
+ */
+const getInitialSelectedRadio = (
+  offerValue: number,
+  priceOptions: PriceOption[],
+): string | undefined => {
+  if (!offerValue || offerValue === 0) {
+    return undefined
+  }
+
+  // Check if the current value matches one of the preset options
+  const matchingOption = priceOptions.find(opt => opt.value === offerValue)
+
+  if (matchingOption) {
+    return matchingOption.key
+  }
+
+  // If it doesn't match any preset option but has a value, it's a custom amount
+  return "price-option-custom"
+}
+
 export const Order2OfferOptions: React.FC<Order2OfferOptionsProps> = ({
   order,
   onOfferOptionSelected,
   onCustomOfferBlur,
 }) => {
   const orderData = useFragment(FRAGMENT, order)
-  const [selectedRadio, setSelectedRadio] = useState<string>()
+  const { values } = useFormikContext<{ offerValue: number }>()
 
-  const getPriceOptions = (): PriceOption[] => {
+  const priceOptions = useMemo((): PriceOption[] => {
     const artwork = orderData.lineItems?.[0]?.artworkOrEditionSet
     const artworkListPrice = artwork?.listPrice
 
@@ -83,9 +106,11 @@ export const Order2OfferOptions: React.FC<Order2OfferOptionsProps> = ({
         description: "20% below list price",
       },
     ]
-  }
+  }, [orderData])
 
-  const priceOptions = getPriceOptions()
+  const [selectedRadio, setSelectedRadio] = useState<string | undefined>(() =>
+    getInitialSelectedRadio(values.offerValue, priceOptions),
+  )
 
   const formatCurrency = (amount: number) => {
     return appendCurrencySymbol(
