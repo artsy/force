@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<12987371966f87c46cf6142998059ecb>>
+ * @generated SignedSource<<fb48aad8b7223290075e01ca444192ea>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -103,6 +103,11 @@ return {
                 "args": [
                   {
                     "kind": "Literal",
+                    "name": "cachePolicy",
+                    "value": "short"
+                  },
+                  {
+                    "kind": "Literal",
                     "name": "height",
                     "value": 100
                   },
@@ -132,7 +137,7 @@ return {
                     "storageKey": null
                   }
                 ],
-                "storageKey": "cropped(height:100,width:100)"
+                "storageKey": "cropped(cachePolicy:\"short\",height:100,width:100)"
               }
             ],
             "storageKey": null
@@ -150,7 +155,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "92bff54218bc0a8e43436f3f57b52859",
+    "cacheID": "dadd65b78e11d27c65973c684b8eefc6",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -202,7 +207,7 @@ return {
     },
     "name": "CollectorProfileHeaderAvatarTestQuery",
     "operationKind": "query",
-    "text": "query CollectorProfileHeaderAvatarTestQuery {\n  me {\n    ...CollectorProfileHeaderAvatar_me\n    id\n  }\n}\n\nfragment CollectorProfileHeaderAvatar_me on Me {\n  initials\n  icon {\n    internalID\n    versions\n    cropped(height: 100, width: 100) {\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query CollectorProfileHeaderAvatarTestQuery {\n  me {\n    ...CollectorProfileHeaderAvatar_me\n    id\n  }\n}\n\nfragment CollectorProfileHeaderAvatar_me on Me {\n  initials\n  icon {\n    internalID\n    versions\n    cropped(height: 100, width: 100, cachePolicy: \"short\") {\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();

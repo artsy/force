@@ -44,7 +44,12 @@ const QUERY = graphql`
     me {
       initials
       icon {
-        resized(height: 45, width: 45, version: "large_square") {
+        resized(
+          height: 45
+          width: 45
+          version: "large_square"
+          cachePolicy: "short"
+        ) {
           src
           srcSet
         }

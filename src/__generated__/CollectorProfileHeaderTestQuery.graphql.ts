@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<961b869ab284c6441d532ef0f71f82ca>>
+ * @generated SignedSource<<253a3e24357e0caec062fef32ecb88e2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -122,6 +122,11 @@ return {
                 "args": [
                   {
                     "kind": "Literal",
+                    "name": "cachePolicy",
+                    "value": "short"
+                  },
+                  {
+                    "kind": "Literal",
                     "name": "height",
                     "value": 100
                   },
@@ -151,7 +156,7 @@ return {
                     "storageKey": null
                   }
                 ],
-                "storageKey": "cropped(height:100,width:100)"
+                "storageKey": "cropped(cachePolicy:\"short\",height:100,width:100)"
               }
             ],
             "storageKey": null
@@ -215,7 +220,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e4d9c2a5c6bce8c6b61164ee9565988e",
+    "cacheID": "0de20596bc15bac66d918674de9118ed",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -280,7 +285,7 @@ return {
     },
     "name": "CollectorProfileHeaderTestQuery",
     "operationKind": "query",
-    "text": "query CollectorProfileHeaderTestQuery {\n  me {\n    ...CollectorProfileHeader_me\n    id\n  }\n}\n\nfragment CollectorProfileHeaderAvatar_me on Me {\n  initials\n  icon {\n    internalID\n    versions\n    cropped(height: 100, width: 100) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment CollectorProfileHeader_me on Me {\n  ...CollectorProfileHeaderAvatar_me\n  name\n  initials\n  icon {\n    cropped(height: 100, width: 100) {\n      src\n      srcSet\n    }\n  }\n  location {\n    display\n    id\n  }\n  collectorProfile {\n    isIdentityVerified\n    confirmedBuyerAt\n    id\n  }\n}\n"
+    "text": "query CollectorProfileHeaderTestQuery {\n  me {\n    ...CollectorProfileHeader_me\n    id\n  }\n}\n\nfragment CollectorProfileHeaderAvatar_me on Me {\n  initials\n  icon {\n    internalID\n    versions\n    cropped(height: 100, width: 100, cachePolicy: \"short\") {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment CollectorProfileHeader_me on Me {\n  ...CollectorProfileHeaderAvatar_me\n  name\n  initials\n  icon {\n    cropped(height: 100, width: 100, cachePolicy: \"short\") {\n      src\n      srcSet\n    }\n  }\n  location {\n    display\n    id\n  }\n  collectorProfile {\n    isIdentityVerified\n    confirmedBuyerAt\n    id\n  }\n}\n"
   }
 };
 })();
