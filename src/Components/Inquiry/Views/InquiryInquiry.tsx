@@ -233,7 +233,7 @@ const InquiryInquiry: React.FC<
       <Spacer y={2} />
 
       <TextArea
-        placeholder="Personalize your message and include details for the best response."
+        placeholder="Have questions? Ask about shipping options, pricing, or anything else you’d like to know."
         title="Your message"
         defaultValue={inquiry.message}
         onChange={handleTextAreaChange}
