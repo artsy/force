@@ -129,27 +129,6 @@ const InquiryInquiry: React.FC<
       </Text>
 
       <Separator my={2} />
-      {user && (
-        <>
-          <Text variant="sm-display" my={2}>
-            <Box display="inline-block" width={60} color="mono60">
-              From
-            </Box>
-            {user.name}
-          </Text>
-
-          <Separator my={2} />
-
-          <Text variant="sm-display" my={2}>
-            <Box display="inline-block" width={60} color="mono60">
-              To
-            </Box>
-
-            {artwork.partner?.name}
-          </Text>
-          <Separator my={2} />
-        </>
-      )}
 
       {/* Desktop */}
       <Media greaterThan="xs">
