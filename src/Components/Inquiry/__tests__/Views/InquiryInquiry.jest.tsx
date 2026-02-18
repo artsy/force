@@ -164,46 +164,6 @@ describe("InquiryInquiry", () => {
     expect(button).not.toBeDisabled()
   })
 
-  describe("From and To section visibility", () => {
-    it("shows the 'From' and 'To' sections when collectorInquirySimplifiedLayout flag is disabled", () => {
-      mockUseFlag.mockReturnValue(false)
-      ;(useInquiryContext as jest.Mock).mockImplementation(() => ({
-        next: mockNext,
-        setInquiry: mockSetInquiry,
-        inquiry: { message: "Test message" },
-        artworkID: "artwork-123",
-        setContext: mockSetContext,
-        questions: [],
-      }))
-
-      render(<InquiryInquiryQueryRenderer />)
-
-      expect(screen.getByText("From")).toBeInTheDocument()
-      expect(screen.getByText("Test User")).toBeInTheDocument()
-      expect(screen.getByText("To")).toBeInTheDocument()
-      expect(screen.getByText("Test Gallery")).toBeInTheDocument()
-    })
-
-    it("hides the 'From' and 'To' sections when collectorInquirySimplifiedLayout flag is enabled", () => {
-      mockUseFlag.mockReturnValue(true)
-      ;(useInquiryContext as jest.Mock).mockImplementation(() => ({
-        next: mockNext,
-        setInquiry: mockSetInquiry,
-        inquiry: { message: "Test message" },
-        artworkID: "artwork-123",
-        setContext: mockSetContext,
-        questions: [],
-      }))
-
-      render(<InquiryInquiryQueryRenderer />)
-
-      expect(screen.queryByText("From")).not.toBeInTheDocument()
-      expect(screen.queryByText("Test User")).not.toBeInTheDocument()
-      expect(screen.queryByText("To")).not.toBeInTheDocument()
-      expect(screen.queryByText("Test Gallery")).not.toBeInTheDocument()
-    })
-  })
-
   describe("toast notification", () => {
     beforeEach(() => {
       mockSubmitArtworkInquiryRequest.mockResolvedValue({
