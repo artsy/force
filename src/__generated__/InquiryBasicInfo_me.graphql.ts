@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d7d82ee70f6fd08aa2a15ac3ad4ea0db>>
+ * @generated SignedSource<<6b38a02d3f199d89da82dd5b70c5ef03>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,10 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type InquiryBasicInfo_me$data = {
+  readonly collectorProfile: {
+    readonly instagram: string | null | undefined;
+    readonly linkedIn: string | null | undefined;
+  } | null | undefined;
   readonly location: {
     readonly city: string | null | undefined;
     readonly country: string | null | undefined;
@@ -92,12 +96,37 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "profession",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "CollectorProfileType",
+      "kind": "LinkedField",
+      "name": "collectorProfile",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "instagram",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "linkedIn",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
     }
   ],
   "type": "Me",
   "abstractKey": null
 };
 
-(node as any).hash = "342984bd38b6508f58e94951289cefdc";
+(node as any).hash = "210e6efec0046e6e9540d280dbb41adc";
 
 export default node;

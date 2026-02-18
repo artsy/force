@@ -3,7 +3,7 @@ import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
 import { InquirySignUp } from "Components/Inquiry/Views/InquirySignUp"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { signUp } from "Utils/auth"
-import { render, screen, fireEvent } from "@testing-library/react"
+import { render, screen, fireEvent, waitFor } from "@testing-library/react"
 import { useTracking } from "react-tracking"
 
 jest.mock("Utils/auth")
@@ -11,6 +11,12 @@ jest.mock("../../Hooks/useArtworkInquiryRequest")
 jest.mock("../../Hooks/useInquiryContext")
 jest.mock("Utils/wait", () => ({ wait: () => Promise.resolve() }))
 jest.mock("react-tracking")
+
+const mockSendToast = jest.fn()
+jest.mock("@artsy/palette", () => ({
+  ...jest.requireActual("@artsy/palette"),
+  useToasts: () => ({ sendToast: mockSendToast }),
+}))
 
 describe("InquirySignUp", () => {
   const next = jest.fn()
@@ -147,6 +153,57 @@ describe("InquirySignUp", () => {
       expect(submitArtworkInquiryRequest).not.toBeCalled()
       expect(next).not.toBeCalled()
       expect(screen.getByText("something went wrong")).toBeInTheDocument()
+    })
+  })
+
+  describe("toast notification", () => {
+    beforeEach(() => {
+      mockSendToast.mockClear()
+      submitArtworkInquiryRequest.mockResolvedValue({
+        submitInquiryRequestMutation: {
+          inquiryRequest: {
+            internalID: "inquiry-123",
+          },
+        },
+      })
+      ;(signUp as jest.Mock).mockImplementation(() =>
+        Promise.resolve({ user: { id: "example-id", access_token: "token" } }),
+      )
+    })
+
+    it("displays success toast with correct message after signing up and sending inquiry", async () => {
+      render(<InquirySignUp />)
+
+      // Fill inputs
+      fireEvent.change(screen.getByPlaceholderText("Your full name"), {
+        target: { value: "Example Example" },
+      })
+      fireEvent.change(screen.getByDisplayValue("example@example.com"), {
+        target: { value: "example@example.com" },
+      })
+      fireEvent.change(screen.getByPlaceholderText("Your password"), {
+        target: { value: "secret" },
+      })
+
+      // Submit form
+      const form = screen
+        .getByText("Sign up to send your message")
+        .closest("form")
+      if (!form) {
+        throw new Error("Form not found")
+      }
+      fireEvent.submit(form)
+      await flushPromiseQueue()
+
+      await waitFor(() => {
+        expect(mockSendToast).toHaveBeenCalledWith({
+          variant: "success",
+          message: "Message sent",
+          description: "Expect a response within 1-3 business days.",
+        })
+      })
+
+      expect(next).toHaveBeenCalled()
     })
   })
 })

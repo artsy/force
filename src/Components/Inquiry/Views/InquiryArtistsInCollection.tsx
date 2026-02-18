@@ -73,10 +73,12 @@ export const InquiryArtistsInCollection: FC<
   return (
     <Stack gap={2} height="100%">
       <Box>
-        <Text variant="lg-display">Add artists to My Collection:</Text>
+        <Text variant="lg-display">
+          Already own works by this artist or similar artists?
+        </Text>
 
         <Text variant="sm">
-          Show off your collection and make a great impression.
+          Showcase your collection and stand out with galleries.
         </Text>
       </Box>
 

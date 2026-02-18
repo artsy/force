@@ -57,7 +57,9 @@ describe("InquiryBasicInfo", () => {
     })
 
     expect(
-      screen.getByText("Tell Example Partner a little bit about yourself."),
+      screen.getByText(
+        "Stand out and save time by sharing details with the gallery.",
+      ),
     ).toBeInTheDocument()
   })
 
@@ -67,6 +69,10 @@ describe("InquiryBasicInfo", () => {
         location: null,
         name: "Example User",
         profession: null,
+        collectorProfile: {
+          instagram: "",
+          linkedIn: "",
+        },
       }),
     })
 
@@ -82,7 +88,7 @@ describe("InquiryBasicInfo", () => {
     )
     fireEvent.change(input, { target: { value: "Collector" } })
 
-    screen.getByText("Save & Continue").click()
+    screen.getByText("Save Profile Details").click()
 
     await flushPromiseQueue()
 
@@ -97,6 +103,8 @@ describe("InquiryBasicInfo", () => {
       },
       profession: "",
       otherRelevantPositions: "Collector",
+      linkedIn: "",
+      instagram: "",
     })
 
     expect(mockNext).toBeCalled()
@@ -111,6 +119,10 @@ describe("InquiryBasicInfo", () => {
           state: "NY",
         },
         name: "Example User",
+        collectorProfile: {
+          instagram: "",
+          linkedIn: "",
+        },
       }),
     })
 
@@ -131,7 +143,7 @@ describe("InquiryBasicInfo", () => {
       target: { value: "Artist" },
     })
 
-    screen.getByText("Save & Continue").click()
+    screen.getByText("Save Profile Details").click()
 
     await flushPromiseQueue()
 
@@ -146,6 +158,8 @@ describe("InquiryBasicInfo", () => {
       },
       profession: "Carpenter",
       otherRelevantPositions: "Artist",
+      linkedIn: "",
+      instagram: "",
     })
 
     expect(mockNext).toBeCalled()
