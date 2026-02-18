@@ -106,6 +106,44 @@ export const SavedAddressOptions = ({
     }
   }, [userAddressMode, previousUserAddressMode, scrollToStep])
 
+  // Auto-expand edit modal if there's only one address and it's invalid
+  useEffect(() => {
+    if (
+      savedAddresses.length === 1 &&
+      initialSelectedAddress &&
+      !initialSelectedAddress.isValid &&
+      !userAddressMode
+    ) {
+      const address = savedAddresses[0]
+
+      // Set the error message
+      if (!address.isShippable && !isOfferOrder) {
+        setSectionErrorMessage({
+          section: CheckoutStepName.FULFILLMENT_DETAILS,
+          error: ADDRESS_ERROR_MESSAGES.unableToShipToAddress,
+        })
+      } else if (!address.isValid) {
+        setSectionErrorMessage({
+          section: CheckoutStepName.FULFILLMENT_DETAILS,
+          error: ADDRESS_ERROR_MESSAGES.missingAddressInfo,
+        })
+      }
+
+      // Auto-open the edit modal
+      setUserAddressMode({
+        mode: "edit",
+        address: initialSelectedAddress,
+      })
+    }
+  }, [
+    savedAddresses,
+    initialSelectedAddress,
+    userAddressMode,
+    setUserAddressMode,
+    setSectionErrorMessage,
+    isOfferOrder,
+  ])
+
   const onSaveAddress = useCallback(
     async (values, addressID) => {
       await onSelectAddress(values)
