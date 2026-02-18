@@ -23,6 +23,7 @@ export interface DetailsProps {
   hideSaleInfo?: boolean
   hideArtistName?: boolean
   hidePartnerName?: boolean
+  hidePrimaryLabel?: boolean
   isHovered?: boolean
   showHighDemandIcon?: boolean
   showHoverDetails?: boolean
@@ -232,6 +233,7 @@ export const Details: React.FC<React.PropsWithChildren<DetailsProps>> = ({
   contextModule,
   hideArtistName,
   hidePartnerName,
+  hidePrimaryLabel,
   hideSaleInfo,
   isHovered,
   showHighDemandIcon = false,
@@ -254,7 +256,7 @@ export const Details: React.FC<React.PropsWithChildren<DetailsProps>> = ({
   const artworkId = rest?.artwork?.internalID
 
   const primaryLabel = rest?.artwork?.collectorSignals?.primaryLabel
-  const showPrimaryLabelLine: boolean = !isAuction
+  const showPrimaryLabelLine = !hidePrimaryLabel && !isAuction
 
   // FIXME: Extract into a real component
   const renderSaveButtonComponent = () => {

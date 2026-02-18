@@ -137,6 +137,7 @@ export const ArtistHeaderImage: FC<
                   artwork={artwork!}
                   includeLinks={false}
                   hideSaleInfo={true}
+                  hidePrimaryLabel={true}
                 />
               </Box>
             </>
