@@ -1,37 +1,70 @@
-import { type BoxProps, FullBleed, Image, ResponsiveBox } from "@artsy/palette"
+import {
+  Box,
+  type BoxProps,
+  FullBleed,
+  Image,
+  ResponsiveBox,
+  Spacer,
+} from "@artsy/palette"
+import { useVariant } from "@unleash/proxy-client-react"
+import { DetailsFragmentContainer } from "Components/Artwork/Details/Details"
+import { useTrackFeatureVariantOnMount } from "System/Hooks/useTrackFeatureVariant"
 import { getENV } from "Utils/getENV"
 import { maxDimensionsByArea, resized } from "Utils/resized"
+import type { ArtistHeaderImage_artwork$data } from "__generated__/ArtistHeaderImage_artwork.graphql"
 import type { FC } from "react"
 import { Link } from "react-head"
+import { createFragmentContainer, graphql } from "react-relay"
 
 const MOBILE_SIZE = {
   width: 350,
   height: 220,
 }
 
+const COVER_ARTWORK_EXPERIMENT = "diamond_artist-cover-artwork-experiment"
+
 interface ArtistHeaderImageProps
   extends Omit<BoxProps, "maxHeight" | "maxWidth"> {
-  image: ValidImage
-  alt: string
+  artwork: ArtistHeaderImage_artwork$data
 }
 
 export const ArtistHeaderImage: FC<
   React.PropsWithChildren<ArtistHeaderImageProps>
-> = ({ image, alt, ...rest }) => {
+> = ({ artwork, ...rest }) => {
+  const isMobile = getENV("IS_MOBILE")
+
+  const variant = useVariant(COVER_ARTWORK_EXPERIMENT)
+  useTrackFeatureVariantOnMount({
+    experimentName: COVER_ARTWORK_EXPERIMENT,
+    variantName: variant?.name,
+  })
+  const shouldRenderExperiment =
+    !isMobile && variant.enabled && variant.name === "experiment"
+
+  if (!isValidImage(artwork.image)) {
+    return null
+  }
+
+  const alt =
+    artwork.imageTitle || `Artwork by ${artwork.fallbackArtist?.name!}`
+  const { image } = artwork
+
   const max = maxDimensionsByArea({
-    width: image.width,
-    height: image.height,
+    width: image?.width,
+    height: image?.height,
     area: 300 * 300,
   })
 
-  const desktop = resized(image.src, { width: max.width, height: max.height })
+  const desktop = resized(image.src, {
+    width: max.width,
+    height: max.height,
+  })
+
   const mobile = resized(image.src, {
     width: MOBILE_SIZE.width,
     height: MOBILE_SIZE.height,
     quality: 50,
   })
-
-  const isMobile = getENV("IS_MOBILE")
 
   return (
     <>
@@ -74,8 +107,8 @@ export const ArtistHeaderImage: FC<
         // Desktop
         <>
           <ResponsiveBox
-            aspectWidth={image.width}
-            aspectHeight={image.height}
+            aspectWidth={artwork.image.width}
+            aspectHeight={artwork.image.height}
             maxWidth={max.width}
             maxHeight={max.height}
             bg="mono5"
@@ -94,6 +127,20 @@ export const ArtistHeaderImage: FC<
               fetchPriority="high"
             />
           </ResponsiveBox>
+
+          {shouldRenderExperiment && (
+            <>
+              <Spacer y={1} />
+
+              <Box maxWidth={max.width}>
+                <DetailsFragmentContainer
+                  artwork={artwork!}
+                  includeLinks={false}
+                  hideSaleInfo={true}
+                />
+              </Box>
+            </>
+          )}
         </>
       )}
     </>
@@ -117,3 +164,23 @@ export const isValidImage = (
 ): image is ValidImage => {
   return Boolean(image && image.src && image.width && image.height)
 }
+
+export const ArtistHeaderImageFragmentContainer = createFragmentContainer(
+  ArtistHeaderImage,
+  {
+    artwork: graphql`
+      fragment ArtistHeaderImage_artwork on Artwork {
+        imageTitle
+        image {
+          src: url(version: ["larger", "larger"])
+          width
+          height
+        }
+        fallbackArtist: artist {
+          name
+        }
+        ...Details_artwork
+      }
+    `,
+  },
+)

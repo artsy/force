@@ -21,7 +21,7 @@ import {
   Text,
 } from "@artsy/palette"
 import {
-  ArtistHeaderImage,
+  ArtistHeaderImageFragmentContainer,
   isValidImage,
 } from "Apps/Artist/Components/ArtistHeader/ArtistHeaderImage"
 import { ArtistCareerHighlightFragmentContainer } from "Apps/Artist/Routes/Overview/Components/ArtistCareerHighlight"
@@ -49,8 +49,6 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
 
   const image = artist.coverArtwork?.image
   const hasImage = isValidImage(image)
-  const altText =
-    artist.coverArtwork?.imageTitle ?? `Artwork by ${artist.name!}`
   const biographyText = artist.biographyBlurb?.text
   const biographyCredit = artist.biographyBlurb?.credit
   const hasBio = !!biographyText
@@ -119,9 +117,10 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
           <RouterLink
             to={artist.coverArtwork.href}
             display="block"
+            textDecoration="none"
             onClick={trackClickedArtistArtworkImage}
           >
-            <ArtistHeaderImage image={image} alt={altText} />
+            <ArtistHeaderImageFragmentContainer artwork={artist.coverArtwork} />
           </RouterLink>
         </Column>
       )}
@@ -347,14 +346,13 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
         coverArtwork {
           internalID
           slug
-          title
-          imageTitle
           href
           image {
             src: url(version: ["larger", "larger"])
             width
             height
           }
+          ...ArtistHeaderImage_artwork
         }
       }
     `,
