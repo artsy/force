@@ -329,7 +329,7 @@ describe("FulfillmentDetailsStep utils", () => {
       expect(result).toBeUndefined()
     })
 
-    it("returns undefined when no valid addresses exist", () => {
+    it("returns single invalid address when it's the only option", () => {
       const invalidAddresses: ProcessedUserAddress[] = [
         {
           internalID: "invalid1",
@@ -367,7 +367,9 @@ describe("FulfillmentDetailsStep utils", () => {
 
       const result = findInitialSelectedAddress(invalidAddresses, initialValues)
 
-      expect(result).toBeUndefined()
+      // Single address should always be auto-selected, even if invalid
+      // (error messaging will be triggered)
+      expect(result).toEqual(invalidAddresses[0])
     })
 
     it("matches addresses with partial empty fields", () => {
@@ -596,6 +598,128 @@ describe("FulfillmentDetailsStep utils", () => {
         initialValues,
       )
       expect(result?.internalID).toBe("address1") // Falls back to first valid address
+    })
+
+    it("selects first shippable address when none are valid", () => {
+      const addressesWithShippableButInvalid: ProcessedUserAddress[] = [
+        {
+          internalID: "address1",
+          isShippable: false,
+          isValid: false,
+          isDefault: false,
+          phoneNumber: "",
+          phoneNumberCountryCode: "",
+          phoneNumberParsed: null,
+          address: {
+            name: "Invalid Address",
+            addressLine1: "123 Invalid St",
+            addressLine2: "",
+            city: "Invalid City",
+            region: "",
+            postalCode: "12345",
+            country: "XX",
+          },
+        },
+        {
+          internalID: "address2",
+          isShippable: true,
+          isValid: false,
+          isDefault: false,
+          phoneNumber: "",
+          phoneNumberCountryCode: "",
+          phoneNumberParsed: null,
+          address: {
+            name: "Shippable But Incomplete",
+            addressLine1: "456 Main St",
+            addressLine2: "",
+            city: "Valid City",
+            region: "",
+            postalCode: "67890",
+            country: "US",
+          },
+        },
+      ]
+
+      const initialValues: FormikContextWithAddress = {
+        phoneNumber: "0000000000",
+        phoneNumberCountryCode: "YY",
+        address: {
+          name: "No Match",
+          addressLine1: "No Match St",
+          addressLine2: "",
+          city: "No Match City",
+          region: "YY",
+          postalCode: "00000",
+          country: "YY",
+        },
+      }
+
+      const result = findInitialSelectedAddress(
+        addressesWithShippableButInvalid,
+        initialValues,
+      )
+      expect(result?.internalID).toBe("address2") // Shippable address selected over non-shippable
+    })
+
+    it("selects first address when none are shippable or valid", () => {
+      const allInvalidAddresses: ProcessedUserAddress[] = [
+        {
+          internalID: "address1",
+          isShippable: false,
+          isValid: false,
+          isDefault: false,
+          phoneNumber: "",
+          phoneNumberCountryCode: "",
+          phoneNumberParsed: null,
+          address: {
+            name: "Invalid Address 1",
+            addressLine1: "123 Invalid St",
+            addressLine2: "",
+            city: "Invalid City",
+            region: "",
+            postalCode: "12345",
+            country: "XX",
+          },
+        },
+        {
+          internalID: "address2",
+          isShippable: false,
+          isValid: false,
+          isDefault: false,
+          phoneNumber: "",
+          phoneNumberCountryCode: "",
+          phoneNumberParsed: null,
+          address: {
+            name: "Invalid Address 2",
+            addressLine1: "456 Invalid Ave",
+            addressLine2: "",
+            city: "Invalid City",
+            region: "",
+            postalCode: "67890",
+            country: "YY",
+          },
+        },
+      ]
+
+      const initialValues: FormikContextWithAddress = {
+        phoneNumber: "0000000000",
+        phoneNumberCountryCode: "ZZ",
+        address: {
+          name: "No Match",
+          addressLine1: "No Match St",
+          addressLine2: "",
+          city: "No Match City",
+          region: "ZZ",
+          postalCode: "00000",
+          country: "ZZ",
+        },
+      }
+
+      const result = findInitialSelectedAddress(
+        allInvalidAddresses,
+        initialValues,
+      )
+      expect(result?.internalID).toBe("address1") // Falls back to first address
     })
   })
 

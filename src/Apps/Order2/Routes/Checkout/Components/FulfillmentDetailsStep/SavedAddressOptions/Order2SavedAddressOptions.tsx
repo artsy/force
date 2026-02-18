@@ -13,7 +13,6 @@ import {
   CheckoutStepName,
   CheckoutStepState,
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
-import type { Order2CheckoutContext_order$data } from "__generated__/Order2CheckoutContext_order.graphql"
 import type { CheckoutErrorBannerMessage } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { AddressDisplay } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/AddressDisplay"
 import { AddAddressForm } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/SavedAddressOptions/AddAddressForm"
@@ -25,6 +24,7 @@ import {
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useScrollToStep } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToStep"
 import type { FormikContextWithAddress } from "Components/Address/AddressFormFields"
+import type { Order2CheckoutContext_order$data } from "__generated__/Order2CheckoutContext_order.graphql"
 import { useFormikContext } from "formik"
 import { useCallback, useEffect, useState } from "react"
 
@@ -106,42 +106,53 @@ export const SavedAddressOptions = ({
     }
   }, [userAddressMode, previousUserAddressMode, scrollToStep])
 
-  // Auto-expand edit modal if there's only one address and it's invalid
+  // Validate selected address and show appropriate error messages
   useEffect(() => {
-    if (
-      savedAddresses.length === 1 &&
-      initialSelectedAddress &&
-      !initialSelectedAddress.isValid &&
-      !userAddressMode
-    ) {
-      const address = savedAddresses[0]
+    // Don't show errors while in edit/add mode or if no address selected
+    if (!selectedAddress || userAddressMode) {
+      return
+    }
 
-      // Set the error message
-      if (!address.isShippable && !isOfferOrder) {
-        setSectionErrorMessage({
-          section: CheckoutStepName.FULFILLMENT_DETAILS,
-          error: ADDRESS_ERROR_MESSAGES.unableToShipToAddress,
-        })
-      } else if (!address.isValid) {
-        setSectionErrorMessage({
-          section: CheckoutStepName.FULFILLMENT_DETAILS,
-          error: ADDRESS_ERROR_MESSAGES.missingAddressInfo,
+    // Check for validation errors and set appropriate message
+    if (!selectedAddress.isShippable && !isOfferOrder) {
+      // Unshippable address - user needs to select a different one, not edit this one
+      setSectionErrorMessage({
+        section: CheckoutStepName.FULFILLMENT_DETAILS,
+        error: ADDRESS_ERROR_MESSAGES.unableToShipToAddress,
+      })
+      return
+    }
+
+    if (!selectedAddress.isValid) {
+      // Invalid address - user can edit to fix missing information
+      const handleEditClick = () => {
+        setUserAddressMode({
+          mode: "edit",
+          address: selectedAddress,
         })
       }
 
-      // Auto-open the edit modal
-      setUserAddressMode({
-        mode: "edit",
-        address: initialSelectedAddress,
+      setSectionErrorMessage({
+        section: CheckoutStepName.FULFILLMENT_DETAILS,
+        error: createAddressErrorWithEditLink(
+          ADDRESS_ERROR_MESSAGES.missingAddressInfo,
+          handleEditClick,
+        ),
       })
+      return
     }
+
+    // Clear error if address is valid
+    setSectionErrorMessage({
+      section: CheckoutStepName.FULFILLMENT_DETAILS,
+      error: null,
+    })
   }, [
-    savedAddresses,
-    initialSelectedAddress,
+    selectedAddress,
     userAddressMode,
-    setUserAddressMode,
-    setSectionErrorMessage,
     isOfferOrder,
+    setSectionErrorMessage,
+    setUserAddressMode,
   ])
 
   const onSaveAddress = useCallback(
@@ -154,39 +165,16 @@ export const SavedAddressOptions = ({
         values.address.country,
       )
 
-      setSelectedAddress({
+      const processedAddress = {
         internalID: addressID,
         ...values,
         isValid,
         isShippable,
-      })
-
-      if (!isShippable && !isOfferOrder) {
-        return setSectionErrorMessage({
-          section: CheckoutStepName.FULFILLMENT_DETAILS,
-          error: ADDRESS_ERROR_MESSAGES.unableToShipToAddress,
-        })
       }
 
-      if (!isValid) {
-        return setSectionErrorMessage({
-          section: CheckoutStepName.FULFILLMENT_DETAILS,
-          error: ADDRESS_ERROR_MESSAGES.missingAddressInfo,
-        })
-      }
-
-      setSectionErrorMessage({
-        section: CheckoutStepName.FULFILLMENT_DETAILS,
-        error: null,
-      })
+      setSelectedAddress(processedAddress)
     },
-    [
-      onSelectAddress,
-      setUserAddressMode,
-      setSectionErrorMessage,
-      availableShippingCountries,
-      isOfferOrder,
-    ],
+    [onSelectAddress, setUserAddressMode, availableShippingCountries],
   )
 
   const onDeleteAddress = useCallback(
@@ -211,32 +199,11 @@ export const SavedAddressOptions = ({
 
   const handleAddressClick = useCallback(
     async (processedAddress: ProcessedUserAddress) => {
-      const { isShippable, isValid } = processedAddress
-
       checkoutTracking.clickedShippingAddress()
       setSelectedAddress(processedAddress)
       await onSelectAddress(processedAddress)
-
-      if (!isShippable && !isOfferOrder) {
-        return setSectionErrorMessage({
-          section: CheckoutStepName.FULFILLMENT_DETAILS,
-          error: ADDRESS_ERROR_MESSAGES.unableToShipToAddress,
-        })
-      }
-
-      if (!isValid) {
-        return setSectionErrorMessage({
-          section: CheckoutStepName.FULFILLMENT_DETAILS,
-          error: ADDRESS_ERROR_MESSAGES.missingAddressInfo,
-        })
-      }
-
-      setSectionErrorMessage({
-        section: CheckoutStepName.FULFILLMENT_DETAILS,
-        error: null,
-      })
     },
-    [checkoutTracking, onSelectAddress, setSectionErrorMessage, isOfferOrder],
+    [checkoutTracking, onSelectAddress],
   )
 
   if (userAddressMode?.mode === "add") {
@@ -341,4 +308,34 @@ export const SavedAddressOptions = ({
       </Button>
     </Flex>
   )
+}
+
+const createAddressErrorWithEditLink = (
+  baseError: CheckoutErrorBannerMessage,
+  onEditClick: () => void,
+): CheckoutErrorBannerMessage => {
+  const baseMessage =
+    typeof baseError.message === "string"
+      ? baseError.message
+      : "displayText" in baseError
+        ? baseError.displayText
+        : ""
+
+  return {
+    title: baseError.title,
+    message: (
+      <>
+        {baseError.message}{" "}
+        <Clickable
+          onClick={onEditClick}
+          textDecoration="underline"
+          display="inline"
+        >
+          Edit this address
+        </Clickable>
+        .
+      </>
+    ) as React.ReactNode,
+    displayText: `${baseMessage} Edit this address.`,
+  }
 }

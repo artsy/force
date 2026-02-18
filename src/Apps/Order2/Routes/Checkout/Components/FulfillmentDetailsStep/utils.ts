@@ -105,7 +105,8 @@ export const findInitialSelectedAddress = (
     return (
       initialValues.address.name === processedAddress.address.name &&
       initialValues.address.country === processedAddress.address.country &&
-      initialValues.address.postalCode === processedAddress.address.postalCode &&
+      initialValues.address.postalCode ===
+        processedAddress.address.postalCode &&
       initialValues.address.addressLine1 ===
         processedAddress.address.addressLine1 &&
       initialValues.address.addressLine2 ===
@@ -122,16 +123,32 @@ export const findInitialSelectedAddress = (
     return matchingAddress
   }
 
-  // If there's only one saved address, auto-select it regardless of validity
+  // If there's only one saved address, always auto-select it
+  // (error messaging will be triggered if invalid)
   if (processedAddresses.length === 1) {
     return processedAddresses[0]
   }
 
-  // Otherwise, find the first valid and shippable address
-  return processedAddresses.find(
+  // For multiple addresses, select in priority order:
+  // 1. First shippable and valid address
+  const shippableAndValid = processedAddresses.find(
     processedAddress =>
       processedAddress.isShippable && processedAddress.isValid,
   )
+  if (shippableAndValid) {
+    return shippableAndValid
+  }
+
+  // 2. First shippable address (even if not valid)
+  const shippable = processedAddresses.find(
+    processedAddress => processedAddress.isShippable,
+  )
+  if (shippable) {
+    return shippable
+  }
+
+  // 3. First address (as last resort)
+  return processedAddresses[0]
 }
 
 export const deliveryAddressValidationSchema = yup
