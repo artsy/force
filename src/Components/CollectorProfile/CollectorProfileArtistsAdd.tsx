@@ -19,12 +19,14 @@ import { useClientQuery } from "Utils/Hooks/useClientQuery"
 import { useDebouncedValue } from "Utils/Hooks/useDebounce"
 import { useMutation } from "Utils/Hooks/useMutation"
 import { extractNodes } from "Utils/extractNodes"
+import { wait } from "Utils/wait"
 import type {
   CollectorProfileArtistsAddCreateUserInterestsMutation,
   UserInterestCategory,
   UserInterestInterestType,
 } from "__generated__/CollectorProfileArtistsAddCreateUserInterestsMutation.graphql"
 import type { CollectorProfileArtistsAddQuery } from "__generated__/CollectorProfileArtistsAddQuery.graphql"
+import { useRouter } from "found"
 import { type FC, useRef, useState } from "react"
 import { type Environment, graphql } from "react-relay"
 
@@ -39,6 +41,8 @@ interface CollectorProfileArtistsAddProps {
 export const CollectorProfileArtistsAdd: FC<
   React.PropsWithChildren<CollectorProfileArtistsAddProps>
 > = ({ description, onCancel, onSuccess, relayEnvironment }) => {
+  const { router } = useRouter()
+
   const [query, setQuery] = useState("")
 
   const { debouncedValue: debouncedQuery } = useDebouncedValue({
@@ -90,6 +94,13 @@ export const CollectorProfileArtistsAdd: FC<
       })
 
       await submitMutation({ variables: { input: { userInterests } } })
+
+      router.push({
+        pathname: "/collector-profile/artists",
+        query: { page: 1 },
+      })
+
+      await wait(500)
 
       sendToast({
         variant: "success",
@@ -177,8 +188,9 @@ export const CollectorProfileArtistsAdd: FC<
 
         {debouncedQuery.length === 0 && (
           <Message>
-            Results will appear here as you search. Select an artist to add them
-            to your collection.
+            Results will appear here as you search.
+            <br />
+            Select an artist to add them to your collection.
           </Message>
         )}
 
@@ -217,7 +229,7 @@ export const CollectorProfileArtistsAdd: FC<
           )}
         </Stack>
 
-        <Stack gap={1}>
+        <Stack gap={2} alignItems="center">
           <Button
             disabled={selected.length === 0 || mode === "Adding"}
             width="100%"
@@ -229,9 +241,13 @@ export const CollectorProfileArtistsAdd: FC<
           </Button>
 
           {onCancel && (
-            <Button variant="tertiary" onClick={handleCancel}>
-              I haven't started a collection yet
-            </Button>
+            <Clickable
+              type="button"
+              onClick={handleCancel}
+              textDecoration="underline"
+            >
+              <Text>I haven't started a collection yet</Text>
+            </Clickable>
           )}
         </Stack>
       </Stack>

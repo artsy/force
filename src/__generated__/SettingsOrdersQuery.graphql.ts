@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5547033edd735cf6ce48527065a253d8>>
+ * @generated SignedSource<<da91d7c9e7a97d95cb22bf47ddab5d89>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -75,17 +75,24 @@ v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "__typename",
   "storageKey": null
 },
 v8 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v9 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "href",
   "storageKey": null
 },
-v9 = [
+v10 = [
   {
     "alias": null,
     "args": [
@@ -392,16 +399,36 @@ return {
                         "args": null,
                         "concreteType": null,
                         "kind": "LinkedField",
+                        "name": "pricingBreakdownLines",
+                        "plural": true,
+                        "selections": [
+                          (v7/*: any*/),
+                          {
+                            "kind": "InlineFragment",
+                            "selections": [
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "displayName",
+                                "storageKey": null
+                              }
+                            ],
+                            "type": "ShippingLine",
+                            "abstractKey": null
+                          }
+                        ],
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": null,
+                        "kind": "LinkedField",
                         "name": "paymentMethodDetails",
                         "plural": false,
                         "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "__typename",
-                            "storageKey": null
-                          },
+                          (v7/*: any*/),
                           {
                             "kind": "InlineFragment",
                             "selections": [
@@ -412,7 +439,7 @@ return {
                                 "name": "lastDigits",
                                 "storageKey": null
                               },
-                              (v7/*: any*/)
+                              (v8/*: any*/)
                             ],
                             "type": "CreditCard",
                             "abstractKey": null
@@ -427,7 +454,7 @@ return {
                                 "name": "last4",
                                 "storageKey": null
                               },
-                              (v7/*: any*/)
+                              (v8/*: any*/)
                             ],
                             "type": "BankAccount",
                             "abstractKey": null
@@ -469,7 +496,7 @@ return {
                             "name": "artwork",
                             "plural": false,
                             "selections": [
-                              (v8/*: any*/),
+                              (v9/*: any*/),
                               {
                                 "alias": null,
                                 "args": null,
@@ -478,7 +505,7 @@ return {
                                 "name": "partner",
                                 "plural": false,
                                 "selections": [
-                                  (v8/*: any*/),
+                                  (v9/*: any*/),
                                   {
                                     "alias": null,
                                     "args": null,
@@ -508,14 +535,14 @@ return {
                                         "kind": "LinkedField",
                                         "name": "icon",
                                         "plural": false,
-                                        "selections": (v9/*: any*/),
+                                        "selections": (v10/*: any*/),
                                         "storageKey": null
                                       },
-                                      (v7/*: any*/)
+                                      (v8/*: any*/)
                                     ],
                                     "storageKey": null
                                   },
-                                  (v7/*: any*/)
+                                  (v8/*: any*/)
                                 ],
                                 "storageKey": null
                               },
@@ -554,12 +581,12 @@ return {
                                 "name": "artists",
                                 "plural": true,
                                 "selections": [
-                                  (v8/*: any*/),
-                                  (v7/*: any*/)
+                                  (v9/*: any*/),
+                                  (v8/*: any*/)
                                 ],
                                 "storageKey": "artists(shallow:true)"
                               },
-                              (v7/*: any*/)
+                              (v8/*: any*/)
                             ],
                             "storageKey": null
                           },
@@ -578,18 +605,18 @@ return {
                                 "kind": "LinkedField",
                                 "name": "image",
                                 "plural": false,
-                                "selections": (v9/*: any*/),
+                                "selections": (v10/*: any*/),
                                 "storageKey": null
                               },
-                              (v7/*: any*/)
+                              (v8/*: any*/)
                             ],
                             "storageKey": null
                           },
-                          (v7/*: any*/)
+                          (v8/*: any*/)
                         ],
                         "storageKey": null
                       },
-                      (v7/*: any*/)
+                      (v8/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -599,19 +626,19 @@ return {
             ],
             "storageKey": null
           },
-          (v7/*: any*/)
+          (v8/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "363df893748d793c7dba0bb006d8b09d",
+    "cacheID": "8beb5076455c412378e0677f639fdbbc",
     "id": null,
     "metadata": {},
     "name": "SettingsOrdersQuery",
     "operationKind": "query",
-    "text": "query SettingsOrdersQuery(\n  $page: Int\n  $buyerState: [OrderBuyerStateEnum]\n) {\n  me {\n    ...SettingsOrders_me_1T01WT\n    id\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment SettingsOrdersRow_order on Order {\n  source\n  internalID\n  code\n  buyerState\n  createdAt\n  creditCardWalletType\n  displayTexts {\n    stateName\n    actionPrompt\n  }\n  deliveryInfo {\n    trackingURL\n  }\n  selectedFulfillmentOption {\n    type\n  }\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      lastDigits\n      id\n    }\n    ... on BankAccount {\n      last4\n      id\n    }\n    ... on WireTransfer {\n      __typename\n    }\n  }\n  buyerTotal {\n    display\n  }\n  lineItems {\n    artwork {\n      href\n      partner {\n        href\n        initials\n        name\n        profile {\n          icon {\n            cropped(width: 45, height: 45) {\n              src\n              srcSet\n            }\n          }\n          id\n        }\n        id\n      }\n      shippingOrigin\n      title\n      artistNames\n      artists(shallow: true) {\n        href\n        id\n      }\n      id\n    }\n    artworkVersion {\n      image {\n        cropped(width: 45, height: 45) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment SettingsOrders_me_1T01WT on Me {\n  ordersConnection(first: 10, page: $page, buyerState: $buyerState) {\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        internalID\n        ...SettingsOrdersRow_order\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query SettingsOrdersQuery(\n  $page: Int\n  $buyerState: [OrderBuyerStateEnum]\n) {\n  me {\n    ...SettingsOrders_me_1T01WT\n    id\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment SettingsOrdersRow_order on Order {\n  source\n  internalID\n  code\n  buyerState\n  createdAt\n  creditCardWalletType\n  displayTexts {\n    stateName\n    actionPrompt\n  }\n  deliveryInfo {\n    trackingURL\n  }\n  selectedFulfillmentOption {\n    type\n  }\n  pricingBreakdownLines {\n    __typename\n    ... on ShippingLine {\n      displayName\n    }\n  }\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      lastDigits\n      id\n    }\n    ... on BankAccount {\n      last4\n      id\n    }\n    ... on WireTransfer {\n      __typename\n    }\n  }\n  buyerTotal {\n    display\n  }\n  lineItems {\n    artwork {\n      href\n      partner {\n        href\n        initials\n        name\n        profile {\n          icon {\n            cropped(width: 45, height: 45) {\n              src\n              srcSet\n            }\n          }\n          id\n        }\n        id\n      }\n      shippingOrigin\n      title\n      artistNames\n      artists(shallow: true) {\n        href\n        id\n      }\n      id\n    }\n    artworkVersion {\n      image {\n        cropped(width: 45, height: 45) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment SettingsOrders_me_1T01WT on Me {\n  ordersConnection(first: 10, page: $page, buyerState: $buyerState) {\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        internalID\n        ...SettingsOrdersRow_order\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

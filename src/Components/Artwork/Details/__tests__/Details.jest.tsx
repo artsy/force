@@ -466,6 +466,32 @@ describe("Details", () => {
         ).toBeInTheDocument()
         expect(screen.getByText("SaleMessageQueryRenderer")).toBeInTheDocument()
       })
+
+      it("does not render the primary label if hidePrimaryLabel is true", () => {
+        const { renderWithRelay } = setupTestWrapperTL<Details_Test_Query>({
+          Component: ({ artwork }) => (
+            <ArtworkGridContextProvider isAuctionArtwork={false}>
+              <DetailsFragmentContainer
+                artwork={artwork!}
+                includeLinks
+                hidePrimaryLabel
+              />
+            </ArtworkGridContextProvider>
+          ),
+          query,
+        })
+
+        renderWithRelay({
+          Artwork: () => ({
+            ...artworkNotInAuction,
+            collectorSignals: { primaryLabel: "PARTNER_OFFER" },
+          }),
+        })
+
+        expect(
+          screen.queryByText("PrimaryLabelLineQueryRenderer"),
+        ).not.toBeInTheDocument()
+      })
     })
 
     describe("in auction", () => {

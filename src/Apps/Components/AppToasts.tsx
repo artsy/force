@@ -19,7 +19,7 @@ export const AppToasts: React.FC<React.PropsWithChildren<unknown>> = () => {
     >
       <AppContainer px={[2, 4]} py={4}>
         <GridColumns>
-          <Column span={4} start={5}>
+          <Column span={[12, 6, 4]} start={[1, 4, 5]}>
             <Box style={{ pointerEvents: "auto" }}>
               <Toasts />
             </Box>

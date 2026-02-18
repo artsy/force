@@ -3,7 +3,7 @@ import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
 import { InquiryLogin } from "Components/Inquiry/Views/InquiryLogin"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { login } from "Utils/auth"
-import { render, screen, fireEvent } from "@testing-library/react"
+import { render, screen, fireEvent, waitFor } from "@testing-library/react"
 import { useTracking } from "react-tracking"
 
 jest.mock("Utils/auth")
@@ -11,6 +11,12 @@ jest.mock("../../Hooks/useArtworkInquiryRequest")
 jest.mock("../../Hooks/useInquiryContext")
 jest.mock("Utils/wait", () => ({ wait: () => Promise.resolve() }))
 jest.mock("react-tracking")
+
+const mockSendToast = jest.fn()
+jest.mock("@artsy/palette", () => ({
+  ...jest.requireActual("@artsy/palette"),
+  useToasts: () => ({ sendToast: mockSendToast }),
+}))
 
 describe("InquiryLogin", () => {
   const next = jest.fn()
@@ -186,6 +192,46 @@ describe("InquiryLogin", () => {
 
       expect(submitArtworkInquiryRequest).toBeCalled()
       expect(next).toBeCalled()
+    })
+  })
+
+  describe("toast notification", () => {
+    beforeEach(() => {
+      mockSendToast.mockClear()
+      submitArtworkInquiryRequest.mockResolvedValue({
+        submitInquiryRequestMutation: {
+          inquiryRequest: {
+            internalID: "inquiry-123",
+          },
+        },
+      })
+      ;(login as jest.Mock).mockImplementation(() =>
+        Promise.resolve({ user: { id: "example-id", access_token: "token" } }),
+      )
+    })
+
+    it("displays success toast with correct message after logging in and sending inquiry", async () => {
+      const { container } = render(<InquiryLogin />)
+
+      // Enter password
+      const passwordInput = container.querySelector(
+        'input[name="password"]',
+      ) as HTMLInputElement
+      fireEvent.change(passwordInput, { target: { value: "secret" } })
+
+      // Submit form
+      fireEvent.submit(container.querySelector("form")!)
+      await flushPromiseQueue()
+
+      await waitFor(() => {
+        expect(mockSendToast).toHaveBeenCalledWith({
+          variant: "success",
+          message: "Message sent",
+          description: "Expect a response within 1-3 business days.",
+        })
+      })
+
+      expect(next).toHaveBeenCalled()
     })
   })
 })

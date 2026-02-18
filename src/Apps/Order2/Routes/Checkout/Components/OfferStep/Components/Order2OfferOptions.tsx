@@ -2,12 +2,16 @@ import { Flex, Radio, RadioGroup, Spacer, Text } from "@artsy/palette"
 import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
 import { OfferInput } from "Apps/Order2/Routes/Checkout/Components/OfferStep/Components/OfferInput"
 import type { OfferFormProps } from "Apps/Order2/Routes/Checkout/Components/OfferStep/types"
+import createLogger from "Utils/logger"
 import type { Order2OfferOptions_order$key } from "__generated__/Order2OfferOptions_order.graphql"
-import { useState } from "react"
+import { useFormikContext } from "formik"
+import { useMemo, useState } from "react"
 import { graphql, useFragment } from "react-relay"
 
+const logger = createLogger("Order2OfferOptions")
+
 interface PriceOption {
-  key: string
+  key: PriceOptionKey
   value: number
   description: string
 }
@@ -16,24 +20,60 @@ interface Order2OfferOptionsProps extends OfferFormProps {
   order: Order2OfferOptions_order$key
 }
 
+enum PriceOptionKey {
+  MAX = "price-option-max",
+  MID = "price-option-mid",
+  MIN = "price-option-min",
+  CUSTOM = "price-option-custom",
+}
+
+/**
+ * Determines which radio option should be selected based on the current offer value
+ */
+const getInitialSelectedRadio = (
+  offerValue: number,
+  priceOptions: PriceOption[],
+): PriceOptionKey | undefined => {
+  if (!offerValue || offerValue === 0) {
+    return undefined
+  }
+
+  // Check if the current value matches one of the preset options
+  const matchingOption = priceOptions.find(opt => opt.value === offerValue)
+
+  if (matchingOption) {
+    return matchingOption.key
+  }
+
+  // If it doesn't match any preset option but has a value, it's a custom amount
+  return PriceOptionKey.CUSTOM
+}
+
 export const Order2OfferOptions: React.FC<Order2OfferOptionsProps> = ({
   order,
   onOfferOptionSelected,
   onCustomOfferBlur,
 }) => {
   const orderData = useFragment(FRAGMENT, order)
-  const [selectedRadio, setSelectedRadio] = useState<string>()
+  const { values } = useFormikContext<{ offerValue: number }>()
 
-  const getPriceOptions = (): PriceOption[] => {
-    const artwork = orderData.lineItems?.[0]?.artworkOrEditionSet
-    const artworkListPrice = artwork?.listPrice
+  const artwork = orderData.lineItems?.[0]?.artworkOrEditionSet
+  const artworkListPrice = artwork?.listPrice
 
+  // exact price case
+  const lineItemListPrice = orderData.lineItems?.[0]?.listPrice
+
+  const priceOptions = useMemo((): PriceOption[] => {
     // Handle price range case
     if (artworkListPrice?.__typename === "PriceRange") {
       const minPriceRange = artworkListPrice?.minPrice?.major
       const maxPriceRange = artworkListPrice?.maxPrice?.major
 
       if (!minPriceRange || !maxPriceRange) {
+        logger.error(
+          "Missing price range data for artwork - no preset offer options will be shown",
+          { minPriceRange, maxPriceRange },
+        )
         return []
       }
 
@@ -41,51 +81,55 @@ export const Order2OfferOptions: React.FC<Order2OfferOptionsProps> = ({
 
       return [
         {
-          key: "price-option-max",
+          key: PriceOptionKey.MAX,
           value: Math.round(maxPriceRange),
           description: "Top-end of range",
         },
         {
-          key: "price-option-mid",
+          key: PriceOptionKey.MID,
           value: midPriceRange,
           description: "Midpoint",
         },
         {
-          key: "price-option-min",
+          key: PriceOptionKey.MIN,
           value: Math.round(minPriceRange),
           description: "Low-end of range",
         },
       ]
     }
 
-    // Handle exact price case
-    const listPrice = orderData.lineItems?.[0]?.listPrice
-    const listPriceMajor = listPrice?.major
+    const lineItemListPriceMajor = lineItemListPrice?.major
 
-    if (!listPriceMajor) {
+    if (!lineItemListPriceMajor) {
+      logger.error(
+        "Missing list price for artwork - no preset offer options will be shown",
+        { listPrice: lineItemListPrice },
+      )
       return []
     }
 
     return [
       {
-        key: "price-option-max",
-        value: Math.round(listPriceMajor),
+        key: PriceOptionKey.MAX,
+        value: Math.round(lineItemListPriceMajor),
         description: "List price",
       },
       {
-        key: "price-option-mid",
-        value: Math.round(listPriceMajor * 0.9), // 10% below
+        key: PriceOptionKey.MID,
+        value: Math.round(lineItemListPriceMajor * 0.9), // 10% below
         description: "10% below list price",
       },
       {
-        key: "price-option-min",
-        value: Math.round(listPriceMajor * 0.8), // 20% below
+        key: PriceOptionKey.MIN,
+        value: Math.round(lineItemListPriceMajor * 0.8), // 20% below
         description: "20% below list price",
       },
     ]
-  }
+  }, [artworkListPrice, lineItemListPrice])
 
-  const priceOptions = getPriceOptions()
+  const [selectedRadio, setSelectedRadio] = useState<
+    PriceOptionKey | undefined
+  >(() => getInitialSelectedRadio(values.offerValue, priceOptions))
 
   const formatCurrency = (amount: number) => {
     return appendCurrencySymbol(
@@ -111,7 +155,7 @@ export const Order2OfferOptions: React.FC<Order2OfferOptionsProps> = ({
       onOfferOptionSelected(0, "Custom amount")
     }
 
-    setSelectedRadio(value)
+    setSelectedRadio(value as PriceOptionKey)
   }
 
   return (

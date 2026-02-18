@@ -13,6 +13,7 @@ import {
   Spacer,
   Text,
   TextArea,
+  useToasts,
 } from "@artsy/palette"
 import { InquiryQuestionsList } from "Components/Inquiry/Components/InquiryQuestionsList"
 import { useArtworkInquiryRequest } from "Components/Inquiry/Hooks/useArtworkInquiryRequest"
@@ -40,6 +41,7 @@ const InquiryInquiry: React.FC<
   React.PropsWithChildren<InquiryInquiryProps>
 > = ({ artwork }) => {
   const { user } = useSystemContext()
+  const { sendToast } = useToasts()
 
   const { next, setInquiry, inquiry, artworkID, setContext, questions } =
     useInquiryContext()
@@ -87,6 +89,12 @@ const InquiryInquiry: React.FC<
 
       await wait(500)
 
+      sendToast({
+        variant: "success",
+        message: "Message sent",
+        description: "Expect a response within 1-3 business days.",
+      })
+
       next()
     } catch (err) {
       logger.error(err)
@@ -129,27 +137,6 @@ const InquiryInquiry: React.FC<
       </Text>
 
       <Separator my={2} />
-      {user && (
-        <>
-          <Text variant="sm-display" my={2}>
-            <Box display="inline-block" width={60} color="mono60">
-              From
-            </Box>
-            {user.name}
-          </Text>
-
-          <Separator my={2} />
-
-          <Text variant="sm-display" my={2}>
-            <Box display="inline-block" width={60} color="mono60">
-              To
-            </Box>
-
-            {artwork.partner?.name}
-          </Text>
-          <Separator my={2} />
-        </>
-      )}
 
       {/* Desktop */}
       <Media greaterThan="xs">
@@ -246,7 +233,7 @@ const InquiryInquiry: React.FC<
       <Spacer y={2} />
 
       <TextArea
-        placeholder="Personalize your message and include details for the best response."
+        placeholder="Have questions? Ask about shipping options, pricing, or anything else you’d like to know."
         title="Your message"
         defaultValue={inquiry.message}
         onChange={handleTextAreaChange}

@@ -1,4 +1,5 @@
-import { render, screen, fireEvent } from "@testing-library/react"
+import { fireEvent, render, screen, waitFor } from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
 import { useArtworkInquiryRequest } from "Components/Inquiry/Hooks/useArtworkInquiryRequest"
 import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
 import { InquiryInquiryQueryRenderer } from "Components/Inquiry/Views/InquiryInquiry"
@@ -7,6 +8,12 @@ import { useSystemContext } from "System/Hooks/useSystemContext"
 jest.mock("../../Hooks/useInquiryContext")
 jest.mock("System/Hooks/useSystemContext")
 jest.mock("../../Hooks/useArtworkInquiryRequest")
+
+const mockSendToast = jest.fn()
+jest.mock("@artsy/palette", () => ({
+  ...jest.requireActual("@artsy/palette"),
+  useToasts: () => ({ sendToast: mockSendToast }),
+}))
 
 const mockUseFlag = jest.fn()
 jest.mock("@unleash/proxy-client-react", () => ({
@@ -155,5 +162,43 @@ describe("InquiryInquiry", () => {
 
     const button = screen.getByRole("button", { name: "Send" })
     expect(button).not.toBeDisabled()
+  })
+
+  describe("toast notification", () => {
+    beforeEach(() => {
+      mockSubmitArtworkInquiryRequest.mockResolvedValue({
+        submitInquiryRequestMutation: {
+          inquiryRequest: {
+            internalID: "inquiry-123",
+          },
+        },
+      })
+    })
+
+    it("displays success toast with correct message after sending inquiry", async () => {
+      ;(useInquiryContext as jest.Mock).mockImplementation(() => ({
+        next: mockNext,
+        setInquiry: mockSetInquiry,
+        inquiry: { message: "I'm interested in this artwork" },
+        artworkID: "artwork-123",
+        setContext: mockSetContext,
+        questions: [],
+      }))
+
+      render(<InquiryInquiryQueryRenderer />)
+
+      const sendButton = screen.getByRole("button", { name: "Send" })
+      userEvent.click(sendButton)
+
+      await waitFor(() => {
+        expect(mockSendToast).toHaveBeenCalledWith({
+          variant: "success",
+          message: "Message sent",
+          description: "Expect a response within 1-3 business days.",
+        })
+      })
+
+      expect(mockNext).toHaveBeenCalled()
+    })
   })
 })
