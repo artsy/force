@@ -11,7 +11,6 @@ import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
 import { getOfferItemFromOrder } from "Apps/Order/Utils/offerUtils"
 import { get } from "Utils/get"
 import type { ArtworkSummaryItem_order$data } from "__generated__/ArtworkSummaryItem_order.graphql"
-import type { Omit } from "lodash"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 

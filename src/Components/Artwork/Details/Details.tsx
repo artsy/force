@@ -8,7 +8,7 @@ import { SaveButtonQueryRenderer } from "Components/Artwork/SaveButton/SaveButto
 import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
 import { RouterLink, type RouterLinkProps } from "System/Components/RouterLink"
 import type { Details_artwork$data } from "__generated__/Details_artwork.graphql"
-import { isFunction } from "lodash"
+import isFunction from "lodash/isFunction"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"

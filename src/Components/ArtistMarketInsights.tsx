@@ -1,7 +1,7 @@
 import { BorderBox, Box, Join, Spacer } from "@artsy/palette"
 import { ArtworkDefinitionList } from "Apps/Artwork/Components/ArtworkDefinitionList"
 import type { ArtistMarketInsights_artist$data } from "__generated__/ArtistMarketInsights_artist.graphql"
-import { groupBy } from "lodash"
+import groupBy from "lodash/groupBy"
 import { Component } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 

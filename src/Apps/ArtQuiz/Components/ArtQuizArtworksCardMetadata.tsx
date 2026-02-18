@@ -6,7 +6,7 @@ import {
   stringifyRgba,
 } from "Utils/color"
 import type { ArtQuizArtworksCardMetadata_artwork$data } from "__generated__/ArtQuizArtworksCardMetadata_artwork.graphql"
-import { compact } from "lodash"
+import compact from "lodash/compact"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 

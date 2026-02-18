@@ -5,7 +5,7 @@ import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import type { PartnersLocationAutocompleteQuery } from "__generated__/PartnersLocationAutocompleteQuery.graphql"
 import type { PartnersLocationAutocomplete_viewer$data } from "__generated__/PartnersLocationAutocomplete_viewer.graphql"
-import { omit } from "lodash"
+import omit from "lodash/omit"
 import { type FC, useMemo, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 

@@ -4,7 +4,7 @@ import {
   CollectorProfileArtistsListArtistSkeleton,
 } from "Apps/CollectorProfile/Components/CollectorProfileArtists/CollectorProfileArtistsListArtist"
 import type { CollectorProfileArtistsSearchResultsQuery } from "__generated__/CollectorProfileArtistsSearchResultsQuery.graphql"
-import { compact } from "lodash"
+import compact from "lodash/compact"
 import { type FC, Suspense, useMemo } from "react"
 import { graphql, useLazyLoadQuery } from "react-relay"
 

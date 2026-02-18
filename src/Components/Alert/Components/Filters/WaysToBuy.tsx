@@ -2,7 +2,7 @@ import { Checkbox, Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import { WAYS_TO_BUY_OPTIONS } from "Components/ArtworkFilter/ArtworkFilters/WaysToBuyFilter"
 import type { SearchCriteriaAttributeKeys } from "Components/SavedSearchAlert/types"
-import { entries } from "lodash"
+import entries from "lodash/entries"
 import type { FC } from "react"
 
 interface WayToBuy {

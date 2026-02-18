@@ -1,5 +1,6 @@
 import type { RouteProps } from "System/Router/Route"
-import { compact, uniq } from "lodash"
+import compact from "lodash/compact"
+import uniq from "lodash/uniq"
 import { type MatchResult, match } from "path-to-regexp"
 
 export function getRoutes(): {

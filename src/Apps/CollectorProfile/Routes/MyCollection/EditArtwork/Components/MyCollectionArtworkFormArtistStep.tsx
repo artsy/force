@@ -22,7 +22,8 @@ import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/En
 import { extractNodes } from "Utils/extractNodes"
 import type { MyCollectionArtworkFormArtistStep_me$key } from "__generated__/MyCollectionArtworkFormArtistStep_me.graphql"
 import { useFormikContext } from "formik"
-import { debounce, sortBy } from "lodash"
+import debounce from "lodash/debounce"
+import sortBy from "lodash/sortBy"
 import { useEffect, useMemo, useState } from "react"
 import { graphql, useFragment } from "react-relay"
 

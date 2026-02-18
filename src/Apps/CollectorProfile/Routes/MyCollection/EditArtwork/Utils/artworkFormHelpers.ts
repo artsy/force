@@ -1,6 +1,6 @@
 import type { Photo } from "Components/PhotoUpload/Utils/fileUtils"
 import type { MyCollectionEditArtwork_artwork$data } from "__generated__/MyCollectionEditArtwork_artwork.graphql"
-import { compact } from "lodash"
+import compact from "lodash/compact"
 import type { Artist, ArtworkModel, MyCollectionPhoto } from "./artworkModel"
 import { getAttributionClassByName } from "./rarityOptions"
 

@@ -1,5 +1,5 @@
 import { useRouter } from "System/Hooks/useRouter"
-import { omit } from "lodash"
+import omit from "lodash/omit"
 import { useCallback, useEffect, useState } from "react"
 
 /**

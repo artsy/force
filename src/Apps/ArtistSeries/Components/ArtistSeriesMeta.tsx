@@ -1,6 +1,6 @@
 import { PaginatedMetaTags } from "Components/PaginatedMetaTags"
 import type { ArtistSeriesMeta_artistSeries$data } from "__generated__/ArtistSeriesMeta_artistSeries.graphql"
-import { truncate } from "lodash"
+import truncate from "lodash/truncate"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 

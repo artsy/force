@@ -22,7 +22,7 @@ import type { AuctionBidRoute_me$data } from "__generated__/AuctionBidRoute_me.g
 import type { AuctionBidRoute_sale$data } from "__generated__/AuctionBidRoute_sale.graphql"
 import { Form, Formik } from "formik"
 import type { Match } from "found"
-import { dropWhile } from "lodash"
+import dropWhile from "lodash/dropWhile"
 import { useEffect } from "react"
 import {
   type RelayRefetchProp,

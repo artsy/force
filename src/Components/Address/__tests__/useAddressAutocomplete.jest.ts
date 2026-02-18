@@ -6,7 +6,7 @@ import {
 } from "Components/Address/useAddressAutocomplete"
 import { useFlag } from "@unleash/proxy-client-react"
 import { getENV } from "Utils/getENV"
-import { throttle } from "lodash"
+import throttle from "lodash/throttle"
 import { useTracking } from "react-tracking"
 
 jest.mock("react-tracking")

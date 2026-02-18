@@ -2,7 +2,7 @@ import { AutocompleteInput } from "@artsy/palette"
 import { useClientQuery } from "Utils/Hooks/useClientQuery"
 import { extractNodes } from "Utils/extractNodes"
 import type { PriceDatabaseArtistAutosuggestQuery } from "__generated__/PriceDatabaseArtistAutosuggestQuery.graphql"
-import { compact } from "lodash"
+import compact from "lodash/compact"
 import { useState } from "react"
 import { graphql } from "react-relay"
 

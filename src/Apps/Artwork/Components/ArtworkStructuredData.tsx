@@ -1,7 +1,7 @@
 import { StructuredData } from "Components/Seo/StructuredData"
 import { getENV } from "Utils/getENV"
 import type { ArtworkStructuredDataQuery } from "__generated__/ArtworkStructuredDataQuery.graphql"
-import { map } from "lodash"
+import map from "lodash/map"
 import { useMemo } from "react"
 import { graphql, useLazyLoadQuery } from "react-relay"
 import type {

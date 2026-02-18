@@ -18,7 +18,11 @@ import {
   parseSizeRange,
 } from "Utils/customSizeUtils"
 import { DEFAULT_METRIC, type Metric } from "Utils/metrics"
-import { compact, difference, find, flatten, keyBy } from "lodash"
+import compact from "lodash/compact"
+import difference from "lodash/difference"
+import find from "lodash/find"
+import flatten from "lodash/flatten"
+import keyBy from "lodash/keyBy"
 import { aggregationForFilter } from "./aggregationForFilter"
 
 export const extractPillFromAggregation = (

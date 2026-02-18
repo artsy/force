@@ -32,7 +32,10 @@ Use the following commands to verify the quality of uncommitted code:
 - Write correctly typed code; avoid adding `@ts-expect-error`
 - Prefer named exports; avoid default exports
 - Prefer explicit returns; avoid implicit returns
-- Force follows conventional typographical style and prefers curly typographic single quotes(`‘` and `’`) and double quotes (`“` and `”`) in user-facing texts. Consider this when generating or updating code, including tests
+- Force follows conventional typographical style and prefers curly typographic single quotes(`'` and `'`) and double quotes (`"` and `"`) in user-facing texts. Consider this when generating or updating code, including tests
+- **Lodash**: Always import individual methods, never the whole library:
+  - `import compact from "lodash/compact"` ✓
+  - `import { compact } from "lodash"` ✗ — enforced by `yarn check:lodash`
 
 ## Commit Style
 
@@ -44,6 +47,7 @@ Ensure the following commands produce no warnings or errors for pending files:
 yarn type-check
 yarn jest $(git ls-files --modified --others --exclude-standard)
 yarn lint $(git ls-files --modified --others --exclude-standard)
+yarn check:lodash
 ```
 
 **Only after all checks pass** should you create the commit:

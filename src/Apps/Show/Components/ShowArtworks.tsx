@@ -14,7 +14,7 @@ import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import type { ShowArtworksFilterQuery } from "__generated__/ShowArtworksFilterQuery.graphql"
 import type { ShowArtworks_show$data } from "__generated__/ShowArtworks_show.graphql"
-import { omit } from "lodash"
+import omit from "lodash/omit"
 import type * as React from "react"
 import {
   type RelayRefetchProp,

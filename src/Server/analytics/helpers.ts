@@ -1,7 +1,9 @@
 import { getContextPageFromClient } from "Server/getContextPage"
 import { reportLoadTimeToVolley } from "Server/volley"
 import { getClientParam } from "Utils/getClientParam"
-import { extend, omit, pick } from "lodash"
+import extend from "lodash/extend"
+import omit from "lodash/omit"
+import pick from "lodash/pick"
 // eslint-disable-next-line no-restricted-imports
 import { data as sd } from "sharify"
 import { setAnalyticsClientReferrerOptions } from "./setAnalyticsClientReferrerOptions"

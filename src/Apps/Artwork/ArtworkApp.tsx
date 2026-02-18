@@ -29,7 +29,7 @@ import type { ArtworkApp_artwork$data } from "__generated__/ArtworkApp_artwork.g
 import type { ArtworkApp_artworkResult$data } from "__generated__/ArtworkApp_artworkResult.graphql"
 import type { ArtworkApp_me$data } from "__generated__/ArtworkApp_me.graphql"
 import type { Match, RenderProps, Router } from "found"
-import { compact } from "lodash"
+import compact from "lodash/compact"
 import type React from "react"
 import { useCallback, useEffect } from "react"
 import { createFragmentContainer, graphql } from "react-relay"

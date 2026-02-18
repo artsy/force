@@ -1,7 +1,7 @@
 import SearchIcon from "@artsy/icons/SearchIcon"
 import { Clickable, LabeledInput, type LabeledInputProps } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
-import { isEmpty } from "lodash"
+import isEmpty from "lodash/isEmpty"
 import * as React from "react"
 import styled from "styled-components"
 

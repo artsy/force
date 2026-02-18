@@ -1,7 +1,7 @@
 import { CreateAlertButton } from "Components/Alert/Components/CreateAlertButton"
 import { ProgressiveOnboardingAlertCreate } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertCreate"
 import { useSavedSearchAlertContext } from "Components/SavedSearchAlert/SavedSearchAlertContext"
-import { isEmpty } from "lodash"
+import isEmpty from "lodash/isEmpty"
 import type { FC, ReactNode } from "react"
 
 interface ArtworkFilterCreateAlertProps {

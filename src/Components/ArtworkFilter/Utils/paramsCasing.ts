@@ -1,5 +1,5 @@
-import { camelCase, snakeCase } from "lodash"
-
+import camelCase from "lodash/camelCase"
+import snakeCase from "lodash/snakeCase"
 // Utility method to convert keys of a hash into snake case.
 export const paramsToSnakeCase = params => {
   return Object.entries(params).reduce((acc, [field, value]) => {

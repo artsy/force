@@ -7,7 +7,8 @@ import {
 } from "@artsy/palette"
 import { useLoadScript } from "Utils/Hooks/useLoadScript"
 import { getENV } from "Utils/getENV"
-import { compact, debounce } from "lodash"
+import compact from "lodash/compact"
+import debounce from "lodash/debounce"
 import {
   type ChangeEvent,
   type FC,

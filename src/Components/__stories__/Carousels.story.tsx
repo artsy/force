@@ -12,7 +12,7 @@ import {
   Text,
   splitBoxProps,
 } from "@artsy/palette"
-import { random } from "lodash"
+import random from "lodash/random"
 import { useState } from "react"
 import * as React from "react"
 import { ContentHeaderExample } from "./Components/ContentHeaderExample"

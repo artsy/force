@@ -1,5 +1,4 @@
-import { compact } from "lodash"
-
+import compact from "lodash/compact"
 interface Item {
   label: string
   value: string

@@ -36,6 +36,7 @@
     "format": "yarn prettier --write",
     "jest": "node_modules/.bin/jest --config jest.config.js",
     "jest:debug": "node --inspect node_modules/.bin/jest --runInBand",
+    "check:lodash": "scripts/check-lodash-imports.sh",
     "lint": "yarn biome lint --no-errors-on-unmatched",
     "local-palette-dev": "./scripts/yalc-link-local-palette",
     "local-palette-dev:stop": "./scripts/yalc-unlink-local-palette",

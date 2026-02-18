@@ -16,7 +16,7 @@ import {
   addressFormFieldsValidator,
 } from "Components/Address/AddressFormFields"
 import { Form, Formik } from "formik"
-import { isEqual } from "lodash"
+import isEqual from "lodash/isEqual"
 import type React from "react"
 import * as yup from "yup"
 

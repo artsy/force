@@ -10,14 +10,15 @@
 //
 // See this doc for more details: https://github.com/artsy/force/blob/master/docs/env_configuration.md
 //
-import _ from "lodash"
+import extend from "lodash/extend"
+import pick from "lodash/pick"
 // eslint-disable-next-line
 import sharify from "sharify"
 import * as config from "./config"
 
 export const bootstrapSharify = () => {
-  const publicClientEnvVars = _.extend(
-    _.pick(
+  const publicClientEnvVars = extend(
+    pick(
       config,
       "ACTIVE_BIDS_POLL_INTERVAL",
       "ADMIN_URL",

@@ -11,7 +11,8 @@ import { ArtworkDefinitionList } from "Apps/Artwork/Components/ArtworkDefinition
 import { Media } from "Utils/Responsive"
 import type { SelectedExhibitions_exhibitions$data } from "__generated__/SelectedExhibitions_exhibitions.graphql"
 import { Link } from "found"
-import { groupBy, toPairs } from "lodash"
+import groupBy from "lodash/groupBy"
+import toPairs from "lodash/toPairs"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 

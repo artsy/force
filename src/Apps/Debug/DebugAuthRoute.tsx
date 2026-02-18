@@ -13,7 +13,7 @@ import {
   AUTH_DIALOG_MODES,
   type AuthDialogMode,
 } from "Components/AuthDialog/AuthDialogContext"
-import { merge } from "lodash"
+import merge from "lodash/merge"
 import { type FC, useState } from "react"
 import { Title } from "react-head"
 
