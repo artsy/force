@@ -159,18 +159,42 @@ export const ArtworkApp: React.FC<React.PropsWithChildren<Props>> = props => {
       const clientSideRoutingReferrer =
         window.analytics.__artsyClientSideRoutingReferrer
 
+      console.group("ArtworkApp referrer")
       if (clientSideRoutingReferrer) {
+        console.log(
+          "ArtworkApp using clientSideRoutingReferrer:",
+          clientSideRoutingReferrer,
+        )
         properties.referrer = clientSideRoutingReferrer
       } else if (referrer) {
+        console.log(
+          "ArtworkApp using referrer (link interception):",
+          window.referrer,
+        )
         properties.referrer = referrer
       } else if (window.__artsyInitialReferrer) {
+        console.log(
+          "ArtworkApp using window.__artsyInitialReferrer:",
+          window.__artsyInitialReferrer,
+        )
         // consume then clear to avoid recording stale external referrer
         properties.referrer = window.__artsyInitialReferrer
         window.__artsyInitialReferrer = undefined
+        console.log(
+          "ArtworkApp clearing window.__artsyInitialReferrer:",
+          window.__artsyInitialReferrer,
+        )
+      } else {
+        console.log("ArtworkApp not setting referrer?")
       }
 
       // This breaks our automatic global pageview tracking middleware
       // patterns due passing some custom properties to the pageview.
+      console.log(
+        "ArtworkApp sending page event with referrer:",
+        properties.referrer,
+      )
+      console.groupEnd()
       window.analytics.page(properties, { integrations: { Marketo: false } })
 
       if (typeof window._sift !== "undefined") {

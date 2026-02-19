@@ -90,14 +90,31 @@ export function trackingMiddleware(options: TrackingMiddlewareOptions = {}) {
               url,
             }
 
+            console.group("Middleware referrer")
             if (clientSideRoutingReferrer) {
+              console.log(
+                "ArtworkApp using clientSideRoutingReferrer / getFullReferrerUrl():",
+                clientSideRoutingReferrer,
+                getFullReferrerUrl(),
+              )
               trackingData.referrer = getFullReferrerUrl()
             } else if (window.__artsyInitialReferrer) {
+              console.log(
+                "middleware using window.__artsyInitialReferrer:",
+                window.__artsyInitialReferrer,
+              )
               // consume then clear to avoid recording stale external referrer
               trackingData.referrer = window.__artsyInitialReferrer
               window.__artsyInitialReferrer = undefined
+            } else {
+              console.log("middleware not setting referrer?")
             }
 
+            console.log(
+              "middleware sending page event with referrer:",
+              trackingData.referrer,
+            )
+            console.groupEnd()
             window.analytics?.page(trackingData, {
               integrations: {
                 Marketo: false,
