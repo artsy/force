@@ -10,6 +10,7 @@ import {
 } from "System/Relay/isRequestCacheable"
 import { cacheHeaderMiddleware } from "System/Relay/middleware/cacheHeaderMiddleware"
 import { cacheLoggerMiddleware } from "System/Relay/middleware/cacheLoggerMiddleware"
+import { serverDrivenNavigationCacheMiddleware } from "System/Relay/middleware/serverDrivenNavigationCacheMiddleware"
 import { isEmpty } from "lodash"
 import type { Environment as IEnvironment } from "react-relay"
 import type RelayClientSSR from "react-relay-network-modern-ssr/lib/client"
@@ -137,6 +138,7 @@ export function createRelaySSREnvironment(config: Config = {}) {
     principalFieldErrorHandlerMiddleware(),
     metaphysicsErrorHandlerMiddleware({ checkStatus }),
     cacheHeaderMiddleware({ url, user }),
+    serverDrivenNavigationCacheMiddleware(),
     cacheLoggerMiddleware(),
     loggingEnabled && loggerMiddleware(),
     loggingEnabled && metaphysicsExtensionsLoggerMiddleware(),
