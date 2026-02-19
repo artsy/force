@@ -25,7 +25,7 @@ import { RouterLink } from "System/Components/RouterLink"
 import { useTimer } from "Utils/Hooks/useTimer"
 import { Media } from "Utils/Responsive"
 import type { ArtworkAuctionCreateAlertHeader_artwork$data } from "__generated__/ArtworkAuctionCreateAlertHeader_artwork.graphql"
-import compact from "lodash/compact"
+import { compact } from "es-toolkit"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
@@ -51,7 +51,7 @@ const ArtworkAuctionCreateAlertHeader: FC<
   const artistSlug = artwork.artists?.[0]?.slug
   let aggregations: Aggregations = []
   let additionalGeneIDs: string[] = []
-  const artists = compact(artwork.artists)
+  const artists = compact(artwork.artists ?? [])
   const attributionClass = compact([artwork.attributionClass?.internalID])
   const artistIDs = artists.map(artist => artist.internalID)
   const defaultArtistsCriteria: SavedSearchEntityCriteria[] = artists.map(

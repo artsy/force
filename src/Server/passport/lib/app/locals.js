@@ -1,4 +1,4 @@
-const pick = require("lodash/pick")
+const { pick } = require("../utils/nativeHelpers")
 const { escapeHTML } = require("underscore.string")
 const opts = require("../options")
 
@@ -19,8 +19,7 @@ module.exports = (req, res, next) => {
     res.locals.sd.ERROR = res.locals.error
   }
   if (res.locals.sd != null) {
-    res.locals.ap = pick(
-      opts,
+    res.locals.ap = pick(opts, [
       "applePath",
       "appleCallbackPath",
       "facebookPath",
@@ -32,7 +31,7 @@ module.exports = (req, res, next) => {
       "settingsPagePath",
       "afterSignupPagePath",
       "logoutPath",
-    )
+    ])
     res.locals.sd.AP = res.locals.ap
   }
   next()

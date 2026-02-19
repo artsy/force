@@ -5,7 +5,6 @@ import {
 } from "Apps/Artist/Routes/AuctionResults/initialAuctionResultsFilterState"
 import { allowedAuctionResultFilters } from "Apps/Artist/Utils/allowedAuctionResultFilters"
 import type { FilterPill } from "Components/SavedSearchAlert/types"
-import isArray from "lodash/isArray"
 import { extractAuctionResultPillsFromCriteria } from "./Utils/extractAuctionResultPills"
 
 // Special field handlers for removal
@@ -59,7 +58,7 @@ export const useAuctionResultsActiveFilters = (
     }
 
     const currentValue = filters?.[pill.field]
-    const newValue = isArray(currentValue)
+    const newValue = Array.isArray(currentValue)
       ? currentValue.filter(value => value !== pill.value)
       : initialState[pill.field as keyof AuctionResultsFilters]
 

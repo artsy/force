@@ -2,7 +2,6 @@ import { Checkbox, Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import { WAYS_TO_BUY_OPTIONS } from "Components/ArtworkFilter/ArtworkFilters/WaysToBuyFilter"
 import type { SearchCriteriaAttributeKeys } from "Components/SavedSearchAlert/types"
-import entries from "lodash/entries"
 import type { FC } from "react"
 
 interface WayToBuy {
@@ -14,7 +13,7 @@ interface WayToBuy {
 export const WaysToBuy: FC<React.PropsWithChildren<unknown>> = () => {
   const { state, dispatch } = useAlertContext()
 
-  const checkboxes: WayToBuy[] = entries(WAYS_TO_BUY_OPTIONS).map(
+  const checkboxes: WayToBuy[] = Object.entries(WAYS_TO_BUY_OPTIONS).map(
     ([key, value]) => ({
       key: key as SearchCriteriaAttributeKeys,
       name: value.name,

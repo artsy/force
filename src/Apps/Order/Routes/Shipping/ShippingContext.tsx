@@ -14,7 +14,7 @@ import type createLogger from "Utils/logger"
 import type { ShippingContext_me$key } from "__generated__/ShippingContext_me.graphql"
 import type { ShippingContext_order$key } from "__generated__/ShippingContext_order.graphql"
 import type { FormikProps } from "formik"
-import compact from "lodash/compact"
+import { compact } from "es-toolkit"
 import {
   type FC,
   createContext,

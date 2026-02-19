@@ -17,7 +17,7 @@ import { Media } from "Utils/Responsive"
 import { getENV } from "Utils/getENV"
 import type { ArtistsIndex_featuredArtists$data } from "__generated__/ArtistsIndex_featuredArtists.graphql"
 import type { ArtistsIndex_featuredGenes$data } from "__generated__/ArtistsIndex_featuredGenes.graphql"
-import compact from "lodash/compact"
+import { compact } from "es-toolkit"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
@@ -33,8 +33,8 @@ export const ArtistsIndex: React.FC<
   const [featuredGenesSet] = featuredGenes ?? []
 
   const headline = featuredArtistsSet?.name ?? "Artists"
-  const artists = compact(featuredArtistsSet?.artists) ?? []
-  const genes = compact(featuredGenesSet?.genes) ?? []
+  const artists = compact(featuredArtistsSet?.artists ?? [])
+  const genes = compact(featuredGenesSet?.genes ?? [])
 
   const isMobile = getENV("IS_MOBILE")
 

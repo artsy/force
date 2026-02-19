@@ -13,7 +13,7 @@ import { PaginationFragmentContainer } from "Components/Pagination"
 import { useRouter } from "System/Hooks/useRouter"
 import type { CollectorProfileArtistsListArtistsQuery } from "__generated__/CollectorProfileArtistsListArtistsQuery.graphql"
 import type { CollectorProfileArtistsList_me$key } from "__generated__/CollectorProfileArtistsList_me.graphql"
-import compact from "lodash/compact"
+import { compact } from "es-toolkit"
 import { type FC, Suspense } from "react"
 import { graphql, useFragment, useLazyLoadQuery } from "react-relay"
 
@@ -79,7 +79,7 @@ const CollectorProfileArtistsListArtists: FC<
     data.me as CollectorProfileArtistsList_me$key,
   )
 
-  const userInterestEdges = compact(me?.userInterestsConnection?.edges)
+  const userInterestEdges = compact(me?.userInterestsConnection?.edges ?? [])
   const hasNextPage = me?.userInterestsConnection?.pageInfo?.hasNextPage
   const pageCursors = me?.userInterestsConnection?.pageCursors
 

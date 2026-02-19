@@ -18,11 +18,7 @@ import {
   parseSizeRange,
 } from "Utils/customSizeUtils"
 import { DEFAULT_METRIC, type Metric } from "Utils/metrics"
-import compact from "lodash/compact"
-import difference from "lodash/difference"
-import find from "lodash/find"
-import flatten from "lodash/flatten"
-import keyBy from "lodash/keyBy"
+import { compact, difference, flatten, keyBy } from "es-toolkit"
 import { aggregationForFilter } from "./aggregationForFilter"
 
 export const extractPillFromAggregation = (
@@ -35,7 +31,7 @@ export const extractPillFromAggregation = (
   const { paramName, paramValue } = filter
 
   const aggregation = aggregationForFilter(paramName, aggregations)
-  const aggregationByValue = keyBy(aggregation?.counts, "value")
+  const aggregationByValue = keyBy(aggregation?.counts ?? [], item => item.value)
   const pills = (paramValue as string[]).map(value => {
     if (aggregationByValue[value]) {
       return {
@@ -135,7 +131,7 @@ export const extractPillsFromCriteria = ({
       case "sizes": {
         result = paramValue.map(value => {
           const SIZES = getPredefinedSizesByMetric(metric)
-          const sizeItem = find(SIZES, option => value === option.name)
+          const sizeItem = SIZES.find(option => value === option.name)
 
           return {
             field: paramName,
@@ -149,7 +145,7 @@ export const extractPillsFromCriteria = ({
         result = paramValue.map(value => ({
           field: paramName,
           value,
-          displayValue: find(COLOR_OPTIONS, option => value === option.value)
+          displayValue: COLOR_OPTIONS.find(option => value === option.value)
             ?.name,
         }))
         break
@@ -158,8 +154,7 @@ export const extractPillsFromCriteria = ({
         result = paramValue.map(value => ({
           field: paramName,
           value,
-          displayValue: find(
-            ATTRIBUTION_CLASS_OPTIONS,
+          displayValue: ATTRIBUTION_CLASS_OPTIONS.find(
             option => value === option.value,
           )?.name,
         }))

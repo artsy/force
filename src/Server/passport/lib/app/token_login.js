@@ -9,8 +9,7 @@ const opts = require("../options")
 const qs = require("querystring")
 // TODO: Remove let added for 'rewire'
 const request = require("superagent")
-const omit = require("lodash/omit")
-const isEmpty = require("lodash/isEmpty")
+const { omit, isEmpty } = require("../utils/nativeHelpers")
 
 module.exports.headerLogin = (req, _res, next) => {
   if (req.path === opts.logoutPath) {
@@ -56,7 +55,7 @@ module.exports.trustTokenLogin = (req, res, next) => {
         }
 
         let path = req.url.split("?")[0]
-        const params = omit(req.query, "trust_token")
+        const params = omit(req.query, ["trust_token"])
 
         if (!isEmpty(params)) {
           path += `?${qs.stringify(params)}`

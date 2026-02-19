@@ -14,7 +14,7 @@ import { isValueSelected } from "Components/Alert/Helpers/isValueSelected"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import type { SearchCriteriaAttributeKeys } from "Components/SavedSearchAlert/types"
 import type { SuggestedFiltersFetchQuery } from "__generated__/SuggestedFiltersFetchQuery.graphql"
-import times from "lodash/times"
+import { times } from "es-toolkit/compat"
 import { Suspense } from "react"
 import { graphql, useLazyLoadQuery } from "react-relay"
 interface SuggestedFiltersProps {

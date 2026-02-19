@@ -15,7 +15,7 @@ import type { ArtworkModel } from "Apps/CollectorProfile/Routes/MyCollection/Edi
 import { useMyCollectionTracking } from "Apps/CollectorProfile/Routes/MyCollection/Hooks/useMyCollectionTracking"
 import { SearchInputContainer } from "Components/Search/SearchInputContainer"
 import { useFormikContext } from "formik"
-import pickBy from "lodash/pickBy"
+import { pickBy } from "es-toolkit"
 import { Suspense, useCallback, useState } from "react"
 
 type MyCollectionArtworkFormArtworkStepProps = {}

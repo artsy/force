@@ -1,6 +1,6 @@
 import { PaginatedMetaTags } from "Components/PaginatedMetaTags"
 import type { ArtistSeriesMeta_artistSeries$data } from "__generated__/ArtistSeriesMeta_artistSeries.graphql"
-import truncate from "lodash/truncate"
+import { truncateText } from "Utils/truncateText"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
@@ -16,7 +16,7 @@ export const ArtistSeriesMeta: React.FC<
   const artistName = artist?.name ? `${artist.name}’s ` : ""
   const title = `${artistName}${artistSeries.title} - For Sale on Artsy`
   const descriptionFirstSentence = `Discover and collect art from ${artistName}iconic ${artistSeries.title} series and more. `
-  const description = truncate(
+  const description = truncateText(
     `${descriptionFirstSentence}${artistSeries.description}`,
     { length: 160, separator: " " },
   )

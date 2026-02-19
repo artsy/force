@@ -7,7 +7,7 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import compact from "lodash/compact"
+import { compact } from "es-toolkit"
 import { graphql, useFragment } from "react-relay"
 import { RouterLink } from "System/Components/RouterLink"
 import type { NavBarMenuItemFeaturedLinkColumn_featuredLinkData$key } from "__generated__/NavBarMenuItemFeaturedLinkColumn_featuredLinkData.graphql"
@@ -35,7 +35,7 @@ export const NavBarMenuItemFeaturedLinkColumn: React.FC<
 
   const orderedSetData = useFragment(FEATURED_LINK_DATA_FRAGMENT, orderedSetKey)
 
-  const featuredLinks = compact(orderedSetData.items).flatMap(item =>
+  const featuredLinks = compact(orderedSetData.items ?? []).flatMap(item =>
     item.__typename === "FeaturedLink" ? [item] : [],
   )
   const item = featuredLinks[0]

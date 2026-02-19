@@ -1,4 +1,4 @@
-import trim from "lodash/trim"
+import { trim } from "es-toolkit"
 import * as yup from "yup"
 
 export const MyCollectionArtworkDetailsValidationSchema = yup.object().shape({

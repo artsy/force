@@ -3,7 +3,7 @@ import {
   initialAuctionResultsFilterState,
 } from "Apps/Artist/Routes/AuctionResults/initialAuctionResultsFilterState"
 import { type Metric, getSupportedMetric } from "Utils/metrics"
-import omit from "lodash/omit"
+import { omit } from "es-toolkit"
 import * as React from "react"
 import { useContext, useReducer, useRef, useState } from "react"
 import useDeepCompareEffect from "use-deep-compare-effect"

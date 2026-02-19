@@ -1,7 +1,7 @@
 import { useOnboarding } from "Components/Onboarding"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import omit from "lodash/omit"
+import { omit } from "es-toolkit"
 import { useEffect, useRef } from "react"
 
 // TODO: Lazy load
@@ -28,7 +28,7 @@ export const useOnboardingModal = () => {
 
     router.replace({
       ...match.location,
-      query: omit(match.location.query, "onboarding"),
+      query: omit(match.location.query, ["onboarding"]),
     })
 
     initialized.current = true

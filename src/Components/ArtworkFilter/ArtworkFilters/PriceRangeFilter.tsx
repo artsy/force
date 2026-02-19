@@ -9,7 +9,7 @@ import type { HistogramBarEntity } from "Components/PriceRange/Histogram"
 import { PriceRange } from "Components/PriceRange/PriceRange"
 import { parsePriceRange } from "Components/PriceRange/Utils/parsePriceRange"
 import type { CustomRange } from "Components/PriceRange/constants"
-import sortBy from "lodash/sortBy"
+import { sortBy } from "es-toolkit"
 import { type FC, useMemo } from "react"
 import { FilterExpandable } from "./FilterExpandable"
 import { isCustomValue } from "./Utils/isCustomValue"
@@ -56,7 +56,7 @@ export const aggregationsToHistogram = (
     ({ count, value }) => ({ count, value: Number(value) }),
   )
 
-  return sortBy(bars, "value")
+  return sortBy(bars, [item => item.value])
 }
 
 export const usePriceRangeFilter = () => {

@@ -1,17 +1,20 @@
 import type { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes"
-import isEqual from "lodash/isEqual"
-import isObject from "lodash/isObject"
-import transform from "lodash/transform"
-const difference = (initial: {}, next: {}) => {
-  return transform(next, (result, value, key) => {
+import { isEqual } from "es-toolkit"
+import { isObject } from "es-toolkit/compat"
+const difference = (
+  initial: Record<string, any>,
+  next: Record<string, any>
+): Record<string, any> => {
+  return Object.keys(next).reduce<Record<string, any>>((result, key) => {
+    const value = next[key]
     if (!isEqual(value, initial[key])) {
       result[key] =
         isObject(value) && isObject(initial[key])
-          ? // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-            difference(value, initial[key])
+          ? difference(value, initial[key])
           : value
     }
-  })
+    return result
+  }, {})
 }
 
 export const countChangedFilters = (

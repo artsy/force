@@ -14,7 +14,7 @@ import type {
   CollectionArtworkSorts,
   SavesArtworksGridQuery,
 } from "__generated__/SavesArtworksGridQuery.graphql"
-import isEqual from "lodash/isEqual"
+import { isEqual } from "es-toolkit"
 import { type FC, Fragment, useMemo } from "react"
 import { graphql, useLazyLoadQuery } from "react-relay"
 

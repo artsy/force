@@ -1,6 +1,6 @@
 import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/paramsCasing"
 import type { SortOptions } from "Components/SortFilter"
-import omit from "lodash/omit"
+import { omit } from "es-toolkit"
 import { createContext, useContext, useReducer } from "react"
 import type * as React from "react"
 import useDeepCompareEffect from "use-deep-compare-effect"

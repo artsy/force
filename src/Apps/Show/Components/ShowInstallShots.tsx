@@ -14,7 +14,7 @@ import { FullscreenBox } from "Components/FullscreenBox"
 import { useNextPrevious } from "Utils/Hooks/useNextPrevious"
 import { maxDimensionsByArea, resized } from "Utils/resized"
 import type { ShowInstallShots_show$data } from "__generated__/ShowInstallShots_show.graphql"
-import compact from "lodash/compact"
+import { compact } from "es-toolkit"
 import { type FC, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
@@ -31,7 +31,7 @@ export const ShowInstallShots: FC<
 
   const [mode, setMode] = useState<"Idle" | "Zoom">("Idle")
 
-  const images = compact(show.images)
+  const images = compact(show.images ?? [])
 
   const { handleNext, handlePrev, index, setCursor } = useCursor({
     max: images.length,

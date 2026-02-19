@@ -1,4 +1,4 @@
-import omit from "lodash/omit"
+import { omit } from "es-toolkit"
 
 /**
  * This takes the extra extension metadata that staging and dev metaphysics

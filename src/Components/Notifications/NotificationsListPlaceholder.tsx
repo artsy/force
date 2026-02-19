@@ -6,7 +6,7 @@ import {
   SkeletonText,
   Spacer,
 } from "@artsy/palette"
-import times from "lodash/times"
+import { times } from "es-toolkit/compat"
 import type { FC } from "react"
 
 interface NotificationItemPlaceholderProps {

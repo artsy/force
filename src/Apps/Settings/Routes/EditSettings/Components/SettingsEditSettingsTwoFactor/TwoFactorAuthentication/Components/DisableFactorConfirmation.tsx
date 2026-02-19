@@ -2,7 +2,6 @@ import { ConfirmPasswordModal } from "Components/ConfirmPasswordModal"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import type { DisableSecondFactorInput } from "__generated__/DisableSecondFactorMutation.graphql"
 import type { FormikProps } from "formik"
-import map from "lodash/map"
 import type * as React from "react"
 import { DisableSecondFactor } from "./Mutation/DisableSecondFactor"
 
@@ -36,7 +35,7 @@ export const DisableFactorConfirmation: React.FC<
       })
       onConfirm()
     } catch (err) {
-      const formattedErrors = map(err, "message").join(", ")
+      const formattedErrors = err.map(e => e.message).join(", ")
       formikBag.setStatus({ error: formattedErrors })
     }
   }

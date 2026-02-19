@@ -1,5 +1,5 @@
 import Cookies from "cookies-js"
-import uniq from "lodash/uniq"
+import { uniq } from "es-toolkit"
 export class Visited {
   name: string
 

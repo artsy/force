@@ -1,5 +1,5 @@
 import { cleanObject } from "Utils/cleanObject"
-import isEqual from "lodash/isEqual"
+import { isEqual } from "es-toolkit"
 /**
  * Handler for `found-scroll` used for determining if scroll management should
  * be applied on route change, based on keys attached to a route.

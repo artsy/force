@@ -1,9 +1,8 @@
 import { getContextPageFromClient } from "Server/getContextPage"
 import { reportLoadTimeToVolley } from "Server/volley"
 import { getClientParam } from "Utils/getClientParam"
-import extend from "lodash/extend"
-import omit from "lodash/omit"
-import pick from "lodash/pick"
+import { omit } from "es-toolkit"
+import { pick } from "es-toolkit/compat"
 // eslint-disable-next-line no-restricted-imports
 import { data as sd } from "sharify"
 import { setAnalyticsClientReferrerOptions } from "./setAnalyticsClientReferrerOptions"
@@ -118,9 +117,7 @@ const identify = () => {
       "phone",
       "type",
     ]
-    const traits = extend(pick(sd.CURRENT_USER, allowedlist), {
-      session_id: sd.SESSION_ID,
-    })
+    const traits = { ...pick(sd.CURRENT_USER, allowedlist as any), session_id: sd.SESSION_ID }
     window?.analytics?.identify(sd?.CURRENT_USER?.id || "", traits, {
       integrations: { Marketo: false },
     })

@@ -1,4 +1,4 @@
-import merge from "lodash/merge"
+import { merge } from "es-toolkit"
 export const orderMutationSuccess = (initialValues, newValues) => {
   return {
     orderOrError: {

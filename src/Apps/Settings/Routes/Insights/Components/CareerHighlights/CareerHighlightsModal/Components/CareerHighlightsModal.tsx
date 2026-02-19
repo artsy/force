@@ -13,7 +13,7 @@ import {
 } from "@artsy/palette"
 import { useCareerHighlightsStoriesContext } from "Apps/Settings/Routes/Insights/Components/CareerHighlights/CareerHighlightsModal/Hooks/useCareerHighlightsStoriesContext"
 import { useNextPrevious } from "Utils/Hooks/useNextPrevious"
-import omit from "lodash/omit"
+import { omit } from "es-toolkit"
 type CareerHighlightModalProps = ModalBaseProps
 
 export const CareerHighlightModal: React.FC<
@@ -41,7 +41,7 @@ export const CareerHighlightModal: React.FC<
         width: ["100%", 900],
         ...modalProps.dialogProps,
       }}
-      {...omit(modalProps, "dialogProps")}
+      {...omit(modalProps, ["dialogProps"])}
     >
       <Flex
         ref={containerRef as any}

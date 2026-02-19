@@ -1,4 +1,4 @@
-import uniqBy from "lodash/uniqBy"
+import { uniqBy } from "es-toolkit"
 import { useState } from "react"
 import { logger } from "../util"
 import { useInquiryContext } from "./useInquiryContext"

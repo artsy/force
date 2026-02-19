@@ -5,7 +5,7 @@ import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import type { PartnersLocationAutocompleteQuery } from "__generated__/PartnersLocationAutocompleteQuery.graphql"
 import type { PartnersLocationAutocomplete_viewer$data } from "__generated__/PartnersLocationAutocomplete_viewer.graphql"
-import omit from "lodash/omit"
+import { omit } from "es-toolkit/compat"
 import { type FC, useMemo, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
@@ -39,7 +39,7 @@ const PartnersLocationAutocomplete: FC<
       router.push({
         pathname: match.location.pathname,
         query: {
-          ...omit(match.location.query, "location", "near"),
+          ...omit(match.location.query, ["location", "near"]),
         },
       })
 
@@ -60,7 +60,7 @@ const PartnersLocationAutocomplete: FC<
     router.push({
       pathname: match.location.pathname,
       query: {
-        ...omit(match.location.query, "location", "near"),
+        ...omit(match.location.query, ["location", "near"]),
       },
     })
   }

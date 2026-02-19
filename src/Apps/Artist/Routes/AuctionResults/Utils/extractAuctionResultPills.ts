@@ -4,8 +4,7 @@ import { isCustomValue } from "Components/ArtworkFilter/ArtworkFilters/Utils/isC
 import { priceRangeToLabel } from "Components/PriceRange/Utils/priceRangeToLabel"
 import type { FilterPill } from "Components/SavedSearchAlert/types"
 import type { Metric } from "Utils/metrics"
-import compact from "lodash/compact"
-import isNil from "lodash/isNil"
+import { compact, isNil } from "es-toolkit"
 import {
   BOOLEAN_FILTER_LABELS,
   INVERTED_BOOLEAN_FILTERS,

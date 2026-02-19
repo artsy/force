@@ -1,10 +1,8 @@
 import type { AddressVerifiedBy } from "Apps/Order/Components/AddressVerificationFlow"
 import { postalCodeValidator } from "Components/Address/utils"
 import type { ShippingContext_me$data } from "__generated__/ShippingContext_me.graphql"
-import isEqual from "lodash/isEqual"
-import isNil from "lodash/isNil"
-import omitBy from "lodash/omitBy"
-import pick from "lodash/pick"
+import { isEqual, isNil, omitBy } from "es-toolkit"
+import { pick } from "es-toolkit/compat"
 import * as Yup from "yup"
 
 export enum FulfillmentType {
@@ -110,7 +108,7 @@ export const addressWithFallbackValues = (
   address: any,
 ): ShippingAddressFormValues => ({
   ...ORDER_EMPTY_ADDRESS,
-  ...omitBy<ShippingAddressFormValues>(onlyAddressValues(address), isNil),
+  ...omitBy(onlyAddressValues(address), (value): boolean => isNil(value)),
 })
 
 export type SavedAddressType = NonNullable<

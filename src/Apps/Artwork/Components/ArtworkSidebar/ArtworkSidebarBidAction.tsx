@@ -21,7 +21,7 @@ import { bidderQualifications } from "Utils/identityVerificationRequirements"
 import type { ArtworkSidebarBidAction_artwork$data } from "__generated__/ArtworkSidebarBidAction_artwork.graphql"
 import type { ArtworkSidebarBidAction_me$data } from "__generated__/ArtworkSidebarBidAction_me.graphql"
 import type { Router } from "found"
-import compact from "lodash/compact"
+import { compact } from "es-toolkit"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { type TrackingProp, useTracking } from "react-tracking"
@@ -299,7 +299,7 @@ export class ArtworkSidebarBidAction extends React.Component<
         hasMyBids && myLotStanding?.most_recent_bid?.max_bid?.cents
 
       const increments = compact(
-        artwork.sale_artwork?.increments?.filter(
+        (artwork.sale_artwork?.increments ?? []).filter(
           increment => (increment?.cents ?? 0) > (myLastMaxBid || 0),
         ),
       )

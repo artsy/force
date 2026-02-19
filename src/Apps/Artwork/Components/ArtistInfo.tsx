@@ -17,7 +17,7 @@ import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import type { ArtistInfoQuery } from "__generated__/ArtistInfoQuery.graphql"
 import type { ArtistInfo_artist$data } from "__generated__/ArtistInfo_artist.graphql"
-import compact from "lodash/compact"
+import { compact } from "es-toolkit"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -76,7 +76,7 @@ const ArtistInfo: React.FC<ArtistInfoProps> = ({ artist }) => {
         artistID={artist.internalID}
         border={false}
         totalExhibitions={artist.counts?.partnerShows ?? 0}
-        exhibitions={compact(artist.exhibitionHighlights)}
+        exhibitions={compact(artist.exhibitionHighlights ?? [])}
         ViewAllLink={
           <RouterLink inline to={`/artist/${artist.slug}/cv`}>
             View all

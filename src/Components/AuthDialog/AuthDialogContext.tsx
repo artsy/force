@@ -13,7 +13,7 @@ import {
 } from "Components/AuthDialog/AuthDialog"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import type { AfterAuthAction } from "Utils/Hooks/useAuthIntent"
-import merge from "lodash/merge"
+import { merge } from "es-toolkit/compat"
 import {
   type FC,
   createContext,

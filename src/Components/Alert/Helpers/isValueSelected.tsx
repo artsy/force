@@ -1,5 +1,5 @@
 import type { SearchCriteriaAttributes } from "Components/SavedSearchAlert/types"
-import isEqual from "lodash/isEqual"
+import { isEqual } from "es-toolkit"
 export const isValueSelected = ({
   selectedCriteria,
   value,

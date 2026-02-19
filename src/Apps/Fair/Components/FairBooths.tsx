@@ -14,7 +14,7 @@ import { extractNodes } from "Utils/extractNodes"
 import createLogger from "Utils/logger"
 import type { FairBoothsContainerQuery } from "__generated__/FairBoothsContainerQuery.graphql"
 import type { FairBooths_fair$data } from "__generated__/FairBooths_fair.graphql"
-import isEqual from "lodash/isEqual"
+import { isEqual } from "es-toolkit"
 import { useState } from "react"
 import type * as React from "react"
 import {

@@ -37,11 +37,13 @@ import type {
   ShippingTestQuery$rawResponse,
 } from "__generated__/ShippingTestQuery.graphql"
 /* eslint-disable jest/no-disabled-tests */
-import cloneDeep from "lodash/cloneDeep"
-import merge from "lodash/merge"
+import { cloneDeep } from "es-toolkit"
+import { merge as _merge } from "es-toolkit/compat"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { type MockEnvironment, createMockEnvironment } from "relay-test-utils"
+
+const merge: (...args: any[]) => any = _merge
 
 jest.setTimeout(10000)
 

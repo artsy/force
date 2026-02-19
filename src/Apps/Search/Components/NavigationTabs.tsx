@@ -8,7 +8,7 @@ import { RouterLink } from "System/Components/RouterLink"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useIsRouteActive } from "System/Hooks/useRouter"
 import type { NavigationTabs_searchableConnection$data } from "__generated__/NavigationTabs_searchableConnection.graphql"
-import compact from "lodash/compact"
+import { compact } from "es-toolkit"
 import { type FC, useMemo } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -161,7 +161,7 @@ export const NavigationTabs: FC<
   const counts = useMemo(() => {
     return compact(
       searchableConnection.aggregations?.find(agg => agg?.slice === "TYPE")
-        ?.counts,
+        ?.counts ?? [],
     )
   }, [searchableConnection.aggregations])
 

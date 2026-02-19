@@ -27,7 +27,7 @@ import { extractNodes } from "Utils/extractNodes"
 import createLogger from "Utils/logger"
 import type { ArtistAuctionResultsQueryRendererQuery } from "__generated__/ArtistAuctionResultsQueryRendererQuery.graphql"
 import type { ArtistAuctionResults_artist$data } from "__generated__/ArtistAuctionResults_artist.graphql"
-import isEqual from "lodash/isEqual"
+import { isEqual } from "es-toolkit"
 import type * as React from "react"
 import { useContext, useRef, useState } from "react"
 import {

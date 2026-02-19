@@ -7,7 +7,6 @@ const glob = require("glob")
 const mime = require("mime")
 const path = require("path")
 const s3 = require("s3")
-const last = require("lodash/last")
 
 const options = {
   root: "dist",
@@ -45,7 +44,7 @@ const generateHeaders = file => {
 console.log(chalk.green("[uploadToS3] Starting S3 sync...\n"))
 
 files.forEach(file => {
-  const s3Path = last(file.split(options.root)).substring(1)
+  const s3Path = file.split(options.root).at(-1).substring(1)
   const uploader = client.uploadFile({
     localFile: file,
 

@@ -1,5 +1,5 @@
 import type { ArtworkDownloadButton_artwork$data } from "__generated__/ArtworkDownloadButton_artwork.graphql"
-import compact from "lodash/compact"
+import { compact } from "es-toolkit"
 import { createFragmentContainer, graphql } from "react-relay"
 import { UtilButton, UtilButtonLink } from "./UtilButton"
 

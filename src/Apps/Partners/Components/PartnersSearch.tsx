@@ -7,7 +7,7 @@ import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import type { PartnersSearchQuery } from "__generated__/PartnersSearchQuery.graphql"
-import compact from "lodash/compact"
+import { compact } from "es-toolkit"
 import type React from "react"
 import { type FC, useState } from "react"
 import { graphql } from "react-relay"
@@ -87,7 +87,7 @@ export const PartnersSearchQueryRenderer: FC<
         }
 
         if (props?.filterPartners) {
-          const options = compact(props.filterPartners.hits).map(
+          const options = compact(props.filterPartners.hits ?? []).map(
             ({ text, value }) => ({
               text: text!,
               value,

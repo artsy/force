@@ -9,7 +9,7 @@ const opts = require("../options")
 
 const request = require("superagent")
 const async = require("async")
-const pick = require("lodash/pick")
+const { pick } = require("../utils/nativeHelpers")
 
 module.exports.serialize = (req, user, done) =>
   async.parallel(

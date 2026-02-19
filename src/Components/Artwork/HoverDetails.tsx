@@ -1,7 +1,7 @@
 import { Box, Join, Pill, Spacer } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import type { HoverDetails_artwork$data } from "__generated__/HoverDetails_artwork.graphql"
-import compact from "lodash/compact"
+import { compact } from "es-toolkit"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"

@@ -20,7 +20,7 @@ import {
 import { type Address, emptyAddress } from "Components/Address/utils"
 import { CountrySelect } from "Components/CountrySelect"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import isEqual from "lodash/isEqual"
+import { isEqual } from "es-toolkit"
 import * as React from "react"
 import { useTracking } from "react-tracking"
 

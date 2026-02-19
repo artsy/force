@@ -10,16 +10,14 @@
 //
 // See this doc for more details: https://github.com/artsy/force/blob/master/docs/env_configuration.md
 //
-import extend from "lodash/extend"
-import pick from "lodash/pick"
+import { pick } from "es-toolkit/compat"
 // eslint-disable-next-line
 import sharify from "sharify"
 import * as config from "./config"
 
 export const bootstrapSharify = () => {
-  const publicClientEnvVars = extend(
-    pick(
-      config,
+  const publicClientEnvVars = {
+    ...pick(config, [
       "ACTIVE_BIDS_POLL_INTERVAL",
       "ADMIN_URL",
       "AP",
@@ -101,8 +99,8 @@ export const bootstrapSharify = () => {
       "VOLLEY_ENDPOINT",
       "WEBFONT_URL",
       "X_THEME_HEADER",
-    ),
-  )
+    ] as const),
+  }
 
   // @ts-expect-error - sharify.data is "read only"
   sharify.data = publicClientEnvVars

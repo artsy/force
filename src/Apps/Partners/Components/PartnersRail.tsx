@@ -7,8 +7,7 @@ import { Rail } from "Components/Rail/Rail"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import type { PartnersRailQuery } from "__generated__/PartnersRailQuery.graphql"
 import type { PartnersRail_partnerCategory$data } from "__generated__/PartnersRail_partnerCategory.graphql"
-import compact from "lodash/compact"
-import take from "lodash/take"
+import { compact, take } from "es-toolkit"
 import { useMemo } from "react"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -22,8 +21,8 @@ const PartnersRail: React.FC<React.PropsWithChildren<PartnersRailProps>> = ({
 }) => {
   const partners = useMemo(() => {
     return mergeBuckets(
-      compact(partnerCategory.primary),
-      compact(partnerCategory.secondary),
+      compact(partnerCategory.primary ?? []),
+      compact(partnerCategory.secondary ?? []),
     )
   }, [partnerCategory.primary, partnerCategory.secondary])
 

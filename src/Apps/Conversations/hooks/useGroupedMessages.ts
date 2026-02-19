@@ -1,7 +1,7 @@
 import { fromToday } from "Apps/Conversations/components/Message/Utils/dateFormatters"
 import { extractNodes } from "Utils/extractNodes"
 import type { ConversationMessages_conversation$data } from "__generated__/ConversationMessages_conversation.graphql"
-import sortBy from "lodash/sortBy"
+import { sortBy } from "es-toolkit"
 import { DateTime } from "luxon"
 import { useEffect, useState } from "react"
 
@@ -51,7 +51,7 @@ export const useGroupedMessages = ({
 
     const sortedMessages = sortBy(
       [...orderEventsWithoutFailedPayment, ...allMessages],
-      message => DateTime.fromISO(message.createdAt as string),
+      [message => DateTime.fromISO(message.createdAt as string)],
     )
 
     const groupAllMessages = groupMessages(

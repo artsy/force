@@ -6,9 +6,14 @@ import {
   type AddressAutocompleteInputProps,
 } from "Components/Address/AddressAutocompleteInput"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
-import compact from "lodash/compact"
+import { compact } from "es-toolkit"
 import { type FC, useState } from "react"
 import { useTracking } from "react-tracking"
+
+jest.mock("es-toolkit", () => ({
+  ...jest.requireActual("es-toolkit"),
+  throttle: jest.fn(fn => fn),
+}))
 
 jest.mock("Utils/getENV", () => ({
   getENV: jest.fn().mockImplementation(() => {

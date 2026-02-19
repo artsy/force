@@ -29,7 +29,7 @@ import type { ArtworkApp_artwork$data } from "__generated__/ArtworkApp_artwork.g
 import type { ArtworkApp_artworkResult$data } from "__generated__/ArtworkApp_artworkResult.graphql"
 import type { ArtworkApp_me$data } from "__generated__/ArtworkApp_me.graphql"
 import type { Match, RenderProps, Router } from "found"
-import compact from "lodash/compact"
+import { compact } from "es-toolkit"
 import type React from "react"
 import { useCallback, useEffect } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -357,7 +357,7 @@ const WrappedArtworkApp: React.FC<React.PropsWithChildren<Props>> = props => {
 
   const initialAlertCriteria = {
     attributionClass: compact([attributionClass?.internalID]),
-    artistIDs: compact(artists).map(artist => artist.internalID),
+    artistIDs: compact(artists ?? []).map(artist => artist.internalID),
     additionalGeneIDs: compact([mediumType?.filterGene?.slug as string]),
   }
 

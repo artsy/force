@@ -4,7 +4,7 @@ import { redirectIfLoggedIn } from "Apps/Authentication/Middleware/redirectIfLog
 import { redirectPostAuth } from "Apps/Authentication/Middleware/redirectPostAuth"
 import { setReferer } from "Apps/Authentication/Middleware/setReferer"
 import type { RouteProps } from "System/Router/Route"
-import flow from "lodash/flow"
+import { flow } from "es-toolkit"
 import { stringify } from "qs"
 
 const ForgotPasswordRoute = loadable(

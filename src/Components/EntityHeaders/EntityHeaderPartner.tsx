@@ -4,8 +4,7 @@ import { FollowProfileButtonQueryRenderer } from "Components/FollowButton/Follow
 import { RouterLink } from "System/Components/RouterLink"
 import { extractNodes } from "Utils/extractNodes"
 import type { EntityHeaderPartner_partner$data } from "__generated__/EntityHeaderPartner_partner.graphql"
-import compact from "lodash/compact"
-import uniq from "lodash/uniq"
+import { compact, uniq } from "es-toolkit"
 import { type FC, Fragment } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 

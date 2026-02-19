@@ -1,7 +1,6 @@
 import { StructuredData } from "Components/Seo/StructuredData"
 import { getENV } from "Utils/getENV"
 import type { ArtworkStructuredDataQuery } from "__generated__/ArtworkStructuredDataQuery.graphql"
-import map from "lodash/map"
 import { useMemo } from "react"
 import { graphql, useLazyLoadQuery } from "react-relay"
 import type {
@@ -33,7 +32,7 @@ export const ArtworkStructuredData: React.FC<ArtworkStructuredDataProps> = ({
     ? {
         "@type": "Person",
         "@id": `${getENV("APP_URL")}${artwork.artists[0]?.href}`,
-        name: map(artwork.artists, "name").join(", ") ?? "Unknown Artist",
+        name: artwork.artists.map(a => a?.name).join(", ") ?? "Unknown Artist",
       }
     : undefined
 

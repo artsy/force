@@ -27,7 +27,7 @@ import { useTracking } from "react-tracking"
 
 import ChevronLeftIcon from "@artsy/icons/ChevronLeftIcon"
 import { ArtQuizArtworksCardFragmentContainer } from "Apps/ArtQuiz/Components/ArtQuizArtworksCard"
-import compact from "lodash/compact"
+import { compact } from "es-toolkit"
 interface ArtQuizArtworksProps {
   me: ArtQuizArtworks_me$data
 }

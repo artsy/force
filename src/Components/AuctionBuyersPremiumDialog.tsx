@@ -12,7 +12,7 @@ import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import type { AuctionBuyersPremiumDialogQuery } from "__generated__/AuctionBuyersPremiumDialogQuery.graphql"
 import type { AuctionBuyersPremiumDialog_sale$data } from "__generated__/AuctionBuyersPremiumDialog_sale.graphql"
-import compact from "lodash/compact"
+import { compact } from "es-toolkit"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
@@ -24,7 +24,7 @@ interface AuctionBuyersPremiumDialogProps {
 const AuctionBuyersPremiumDialog: React.FC<
   React.PropsWithChildren<AuctionBuyersPremiumDialogProps>
 > = ({ onClose, sale }) => {
-  const schedule = compact(sale.buyersPremium).sort(
+  const schedule = compact(sale.buyersPremium ?? []).sort(
     (a, b) => (a.cents ?? 0) - (b.cents ?? 0),
   )
 
