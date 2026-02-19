@@ -75,7 +75,7 @@ export function buildHtmlTemplate({
 
       <link type="text/css" rel="stylesheet" href="${fontUrl}/all-webfonts.css" />
 
-      <script>window.__artsyInitialReferrer = document.referrer; console.log("Setting window.__artsyInitialReferrer to", document.referrer);</script>
+      <script>window.__artsyInitialReferrer = document.referrer; console.log("Setting window.__artsyInitialReferrer to", document.referrer); document.referrer = undefined; console.log("Unsetting document.referrer:", document.referrer);</script>
 
       ${content.linkPreloadTags ? content.linkPreloadTags.join("") : ""}
       ${content.head || ""}
