@@ -7,6 +7,8 @@ import {
   type CarouselRailProps,
   Flex,
   Image,
+  Text,
+  useTheme,
 } from "@artsy/palette"
 import {
   COLUMN_WIDTH,
@@ -32,6 +34,7 @@ const CAROUSEL_INTERVAL = 4000
 export const AuthDialogImageCarousel: FC = () => {
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
   const [isLoading, setIsLoading] = useState(true)
+  const { theme } = useTheme()
 
   const { index, setCursor } = useCursor({ max: DEFAULT_IMAGES.length })
 
@@ -91,14 +94,32 @@ export const AuthDialogImageCarousel: FC = () => {
                 />
               </>
             ) : (
-              <Image
-                {...img}
-                width="100%"
-                height="100%"
-                lazyLoad={index !== 0}
-                alt=""
-                style={{ objectFit: "cover" }}
-              />
+              <>
+                <Image
+                  {...img}
+                  width="100%"
+                  height="100%"
+                  lazyLoad={index !== 0}
+                  alt=""
+                  style={{ objectFit: "cover" }}
+                />
+
+                <Box
+                  position="absolute"
+                  bottom={theme.space["4"]}
+                  width="100%"
+                  px={2}
+                >
+                  {img?.title && (
+                    <Text color="white" variant="md" fontWeight="bold">
+                      {img.title}
+                    </Text>
+                  )}
+                  <Text color="white" variant="sm">
+                    {img.subtitle}
+                  </Text>
+                </Box>
+              </>
             )}
           </Box>
         ))}
