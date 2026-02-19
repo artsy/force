@@ -174,9 +174,9 @@ describe("useLoadCheckout", () => {
       renderHook(() => useLoadCheckout(mockOrder))
 
       await waitFor(() => {
-        expect(mockShowCheckoutErrorModal).toHaveBeenCalledWith(
-          "missing_line_item_data",
-        )
+        expect(mockShowCheckoutErrorModal).toHaveBeenCalledWith({
+          error: "missing_line_item_data",
+        })
       })
     })
 
@@ -191,9 +191,9 @@ describe("useLoadCheckout", () => {
       renderHook(() => useLoadCheckout(mockOrder))
 
       await waitFor(() => {
-        expect(mockShowCheckoutErrorModal).toHaveBeenCalledWith(
-          "missing_line_item_data",
-        )
+        expect(mockShowCheckoutErrorModal).toHaveBeenCalledWith({
+          error: "missing_line_item_data",
+        })
       })
     })
   })
@@ -207,9 +207,9 @@ describe("useLoadCheckout", () => {
       })
 
       await waitFor(() => {
-        expect(mockShowCheckoutErrorModal).toHaveBeenCalledWith(
-          "loading_timeout",
-        )
+        expect(mockShowCheckoutErrorModal).toHaveBeenCalledWith({
+          error: "loading_timeout",
+        })
       })
 
       expect(mockLogger.error).toHaveBeenCalled()

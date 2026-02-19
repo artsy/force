@@ -503,7 +503,6 @@ describe("Order2ReviewStep", () => {
       await waitFor(() => {
         expect(mockCheckoutModal.showCheckoutErrorModal).toHaveBeenCalledWith({
           error: CheckoutModalError.CHARGE_AUTHORIZATION_FAILED,
-          title: "An error occurred while processing your payment",
           description: "Authentication failed",
           onClose: expect.any(Function),
         })
@@ -599,7 +598,6 @@ describe("Order2ReviewStep", () => {
       await waitFor(() => {
         expect(mockCheckoutModal.showCheckoutErrorModal).toHaveBeenCalledWith({
           error: CheckoutModalError.CHARGE_AUTHORIZATION_FAILED,
-          title: "An error occurred while processing your payment",
           description: "Authentication failed",
           onClose: expect.any(Function),
         })
@@ -637,7 +635,6 @@ describe("Order2ReviewStep", () => {
       await waitFor(() => {
         expect(mockCheckoutModal.showCheckoutErrorModal).toHaveBeenCalledWith({
           error: CheckoutModalError.CHARGE_AUTHORIZATION_FAILED,
-          title: "An error occurred while processing your payment",
           description: "Some other error",
           onClose: expect.any(Function),
         })

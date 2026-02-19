@@ -33,7 +33,7 @@ export const CheckoutModal: React.FC<{
   let canReload = false
   let canDismiss = false
 
-  let defaultTitle = "Checkout Error"
+  let defaultTitle = "Checkout error"
   let defaultDescription: string
 
   switch (error) {

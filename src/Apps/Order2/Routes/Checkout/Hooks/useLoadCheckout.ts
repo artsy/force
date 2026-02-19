@@ -109,7 +109,7 @@ export const useLoadCheckout = (order: useLoadCheckout_order$key) => {
     } catch (error) {
       logger.error("Error validating order: ", error.message)
       showCheckoutErrorModal({
-        error: CheckoutModalError.OTHER_ERROR,
+        error: error.message,
       })
     }
   }, [orderData, orderValidated, showCheckoutErrorModal])
