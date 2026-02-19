@@ -1,9 +1,14 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.4.2/schema.json",
   "vcs": { "enabled": false, "clientKind": "git", "useIgnoreFile": false },
   "files": {
     "ignoreUnknown": false,
-    "ignore": ["src/__generated__/**/*", ".cache/**/*", "dist/**/*"]
+    "includes": [
+      "**",
+      "!**/src/__generated__/**/*",
+      "!**/.cache/**/*",
+      "!**/dist/**/*"
+    ]
   },
   "formatter": {
     "enabled": true,
@@ -15,22 +20,45 @@
     "lineWidth": 80,
     "attributePosition": "auto",
     "bracketSpacing": true,
-    "ignore": ["**/__generated__", "hokusai/*.yml", ".cache/**/*", "dist/**/*"]
+    "includes": [
+      "**",
+      "!**/__generated__",
+      "!**/hokusai/**/*.yml",
+      "!**/.cache/**/*",
+      "!**/dist/**/*"
+    ]
   },
-  "organizeImports": { "enabled": true },
+  "assist": { "actions": { "source": { "organizeImports": "on" } } },
   "linter": {
     "enabled": true,
     "rules": {
       "recommended": true,
       "correctness": {
-        "noSwitchDeclarations": "off"
+        "noEmptyPattern": "off",
+        "noSwitchDeclarations": "off",
+        "noUnreachable": "off",
+        "noUnsafeOptionalChaining": "off",
+        "noUnusedFunctionParameters": "off",
+        "noUnusedImports": "off",
+        "noUnusedVariables": "off",
+        "useExhaustiveDependencies": "off",
+        "useHookAtTopLevel": "off",
+        "useJsxKeyInIterable": "off",
+        "useParseIntRadix": "off"
       },
       "complexity": {
+        "noArguments": "off",
         "noBannedTypes": "off",
-        "noExtraBooleanCast": "off",
         "noExcessiveNestedTestSuites": "off",
+        "noExtraBooleanCast": "off",
         "noForEach": "off",
+        "noUselessCatch": "off",
+        "noUselessEscapeInRegex": "off",
         "noUselessFragments": "off",
+        "noUselessSwitchCase": "off",
+        "noUselessTernary": "off",
+        "noUselessUndefinedInitialization": "off",
+        "useDateNow": "off",
         "useLiteralKeys": "off",
         "useOptionalChain": "off"
       },
@@ -42,19 +70,56 @@
         "noDangerouslySetInnerHtml": "off"
       },
       "style": {
-        "noArguments": "off",
         "noNonNullAssertion": "off",
+        "noRestrictedImports": {
+          "level": "error",
+          "options": {
+            "paths": {
+              "lodash": "Avoid importing the entire lodash library for bundle size reasons. Use per-method imports instead, e.g. `import debounce from 'lodash/debounce'`."
+            }
+          }
+        },
         "noUselessElse": "off",
-        "useNodejsImportProtocol": "off"
+        "useConst": "off",
+        "useExponentiationOperator": "off",
+        "useImportType": "off",
+        "useNodejsImportProtocol": "off",
+        "useTemplate": "off"
       },
       "suspicious": {
         "noArrayIndexKey": "off",
+        "noAssignInExpressions": "off",
         "noAsyncPromiseExecutor": "off",
+        "noConfusingVoidType": "off",
+        "noDoubleEquals": "off",
+        "noDuplicateTestHooks": "off",
         "noExplicitAny": "off",
-        "noImplicitAnyLet": "off"
+        "noGlobalAssign": "off",
+        "noGlobalIsNan": "off",
+        "noImplicitAnyLet": "off",
+        "noNonNullAssertedOptionalChain": "off",
+        "noPrototypeBuiltins": "off",
+        "noShadowRestrictedNames": "off",
+        "noTemplateCurlyInString": "off",
+        "noThenProperty": "off",
+        "noTsIgnore": "off",
+        "useIterableCallbackReturn": "off"
+      },
+      "a11y": {
+        "noStaticElementInteractions": "off",
+        "noSvgWithoutTitle": "off",
+        "useAltText": "off",
+        "useButtonType": "off",
+        "useKeyWithClickEvents": "off",
+        "useValidAnchor": "off"
       }
     },
-    "ignore": ["src/__generated__/**/*", ".cache/**/*", "dist/**/*"]
+    "includes": [
+      "**",
+      "!**/src/__generated__/**/*",
+      "!**/.cache/**/*",
+      "!**/dist/**/*"
+    ]
   },
   "javascript": {
     "formatter": {
@@ -70,13 +135,18 @@
     }
   },
   "overrides": [
-    { "include": ["*.cy.js", "*.cy.ts"], "linter": { "rules": {} } },
+    { "includes": ["**/*.cy.js", "**/*.cy.ts"], "linter": { "rules": {} } },
     {
-      "include": ["webpack/**/*"],
+      "includes": ["**/webpack/**/*"],
       "linter": { "rules": { "suspicious": { "noConsole": "off" } } }
     },
     {
-      "include": ["*.test.ts", "*.test.tsx", "*.jest.ts", "**/*.jest.tsx"],
+      "includes": [
+        "**/*.test.ts",
+        "**/*.test.tsx",
+        "**/*.jest.ts",
+        "**/*.jest.tsx"
+      ],
       "linter": { "rules": { "style": { "noNonNullAssertion": "off" } } }
     }
   ]
