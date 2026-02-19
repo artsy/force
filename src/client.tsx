@@ -1,5 +1,6 @@
 import "Server/webpackPublicPath"
 import { loadableReady } from "@loadable/component"
+import { dispatchHydrationError } from "Components/HydrationErrorOverlay"
 import { setupAnalytics } from "Server/analytics/helpers"
 import { getOrInitUnleashClient } from "System/FeatureFlags/unleashClient"
 import { setupClientRouter } from "System/Router/clientRouter"
@@ -30,6 +31,17 @@ setupWebVitals()
     hydrateRoot(
       document.getElementById("root") as HTMLElement,
       <ClientRouter />,
+      {
+        onRecoverableError:
+          process.env.NODE_ENV === "development"
+            ? (error, errorInfo) => {
+                dispatchHydrationError(
+                  error,
+                  errorInfo.componentStack ?? undefined,
+                )
+              }
+            : undefined,
+      },
     )
   })
 })()
