@@ -1,6 +1,5 @@
 import { Box, Button, Clickable, Flex, ModalBase, Text } from "@artsy/palette"
-import isEqual from "lodash/isEqual"
-import omit from "lodash/omit"
+import { isEqual, omit } from "es-toolkit"
 import { type ReactNode, useEffect, useRef } from "react"
 import styled from "styled-components"
 import { useArtworkFilterContext } from "./ArtworkFilterContext"
@@ -20,7 +19,7 @@ export const ArtworkFilterMobileOverlay: React.FC<
 
   // This reflects our zero state for this UI which doesn't include the keyword
   const isReset = isEqual(
-    omit(filterContext.stagedFilters, "reset", "keyword"),
+    omit(filterContext.stagedFilters ?? {}, ["reset", "keyword"]),
     filterContext.defaultFilters,
   )
 

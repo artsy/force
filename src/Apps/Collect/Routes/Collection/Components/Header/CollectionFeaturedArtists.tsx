@@ -9,9 +9,7 @@ import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import type { CollectionFeaturedArtistsQuery } from "__generated__/CollectionFeaturedArtistsQuery.graphql"
 import type { CollectionFeaturedArtists_artworks$data } from "__generated__/CollectionFeaturedArtists_artworks.graphql"
 import type { CollectionFeaturedArtists_collection$data } from "__generated__/CollectionFeaturedArtists_collection.graphql"
-import compact from "lodash/compact"
-import filter from "lodash/filter"
-import take from "lodash/take"
+import { compact, take } from "es-toolkit"
 import { createFragmentContainer, graphql } from "react-relay"
 
 interface CollectionFeaturedArtistsProps {
@@ -193,7 +191,7 @@ export const getFeaturedArtists = (
 ) => {
   if ((collection?.query?.artistIDs?.length ?? 0) > 0) {
     return compact(
-      filter(merchandisableArtists, artist =>
+      (merchandisableArtists ?? []).filter(artist =>
         (collection?.query?.artistIDs ?? []).includes(
           artist?.internalID as string,
         ),
@@ -203,7 +201,7 @@ export const getFeaturedArtists = (
 
   if ((merchandisableArtists?.length ?? 0) > 0) {
     const filteredArtistsIds = compact(
-      merchandisableArtists?.filter(artist => {
+      (merchandisableArtists ?? []).filter(artist => {
         return !collection?.featuredArtistExclusionIds?.includes(
           artist?.internalID as string,
         )

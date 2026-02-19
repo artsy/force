@@ -7,7 +7,7 @@ import {
 import { fetchFollowedArtists } from "Components/ArtworkFilter/Utils/fetchFollowedArtists"
 import { useFilterLabelCountByKey } from "Components/ArtworkFilter/Utils/useFilterLabelCountByKey"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import sortBy from "lodash/sortBy"
+import { sortBy } from "es-toolkit"
 import { type FC, useEffect } from "react"
 import type * as React from "react"
 import { FilterExpandable } from "./FilterExpandable"
@@ -107,7 +107,7 @@ export const ArtistsFilter: FC<React.PropsWithChildren<ArtistsFilterProps>> = ({
     return null
   }
 
-  const artistsSorted = sortBy(artists.counts, ["name"])
+  const artistsSorted = sortBy(artists.counts, [item => item.name])
 
   const isFollowedArtistCheckboxSelected =
     !!user && includeArtworksByFollowedArtists

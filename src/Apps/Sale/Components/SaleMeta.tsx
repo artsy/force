@@ -1,6 +1,6 @@
 import { MetaTags } from "Components/MetaTags"
 import type { SaleMeta_sale$data } from "__generated__/SaleMeta_sale.graphql"
-import truncate from "lodash/truncate"
+import { truncateText } from "Utils/truncateText"
 import { createFragmentContainer, graphql } from "react-relay"
 
 interface SaleMetaProps {
@@ -12,7 +12,7 @@ export const SaleMeta: React.FC<
 > = props => {
   const { sale } = props
   const title = `${sale.name} | Artsy`
-  const description = truncate(sale.description ?? "", {
+  const description = truncateText(sale.description ?? "", {
     length: 160,
     separator: " ",
   })

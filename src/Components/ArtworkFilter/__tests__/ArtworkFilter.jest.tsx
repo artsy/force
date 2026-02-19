@@ -5,7 +5,7 @@ import { initialArtworkFilterState } from "Components/ArtworkFilter/ArtworkFilte
 import { ArtworkQueryFilter } from "Components/ArtworkFilter/ArtworkQueryFilter"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import omit from "lodash/omit"
+import { omit } from "es-toolkit"
 import { useTracking } from "react-tracking"
 import { ArtworkFilterFixture } from "./fixtures/ArtworkFilter.fixture"
 
@@ -100,7 +100,7 @@ describe("ArtworkFilter", () => {
             ...filters,
             acquireable: true,
           },
-          "keyword",
+          ["keyword"],
         ),
       )
 

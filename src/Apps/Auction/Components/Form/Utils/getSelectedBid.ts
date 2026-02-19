@@ -1,4 +1,3 @@
-import find from "lodash/find"
 export const getSelectedBid = ({
   initialSelectedBid,
   displayIncrements,
@@ -12,7 +11,7 @@ export const getSelectedBid = ({
     selectedIncrement = displayIncrements[0]
   } else {
     const bid = Number(initialSelectedBid)
-    const foundIncrement = find(displayIncrements, i => Number(i.value) === bid)
+    const foundIncrement = displayIncrements.find(i => Number(i.value) === bid)
     selectedIncrement = foundIncrement || displayIncrements[0]
   }
 

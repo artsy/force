@@ -4,7 +4,7 @@ import {
   useArtworkFilterContext,
   useCurrentlySelectedFilters,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
-import debounce from "lodash/debounce"
+import { debounce } from "es-toolkit"
 import type React from "react"
 import { useEffect, useMemo, useRef, useState } from "react"
 import { FilterExpandable } from "./FilterExpandable"

@@ -25,7 +25,7 @@ import { Media } from "Utils/Responsive"
 import { cropped } from "Utils/resized"
 import type { FairsIndex_featuredFairs$data } from "__generated__/FairsIndex_featuredFairs.graphql"
 import type { FairsIndex_viewer$data } from "__generated__/FairsIndex_viewer.graphql"
-import compact from "lodash/compact"
+import { compact } from "es-toolkit"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
@@ -41,10 +41,10 @@ export const FairsIndex: React.FC<React.PropsWithChildren<FairsIndexProps>> = ({
   const { user } = useSystemContext()
   const isLoggedIn = Boolean(user)
 
-  const promoSlides = compact(featuredFairs[0]?.items)
-  const runningFairs = compact(viewer.runningFairs)
-  const closedFairs = compact(viewer.closedFairs)
-  const upcomingFairs = compact(viewer.upcomingFairs).filter(fair => {
+  const promoSlides = compact(featuredFairs[0]?.items ?? [])
+  const runningFairs = compact(viewer.runningFairs ?? [])
+  const closedFairs = compact(viewer.closedFairs ?? [])
+  const upcomingFairs = compact(viewer.upcomingFairs ?? []).filter(fair => {
     return fair.isPublished
   })
 

@@ -3,7 +3,7 @@ import { getArtistMeta } from "Apps/Artist/Utils/getArtistMeta"
 import { getENV } from "Utils/getENV"
 import { useRouter } from "System/Hooks/useRouter"
 import type { ArtistStructuredData_artist$key } from "__generated__/ArtistStructuredData_artist.graphql"
-import compact from "lodash/compact"
+import { compact } from "es-toolkit"
 import { graphql, useFragment } from "react-relay"
 
 interface ArtistStructuredDataProps {
@@ -21,7 +21,7 @@ export const ArtistStructuredData: React.FC<ArtistStructuredDataProps> = ({
   const pageUrl = `${getENV("APP_URL")}${pathname}`
 
   const memberOf = compact(
-    data.partnersConnection?.edges?.map(edge => {
+    (data.partnersConnection?.edges ?? []).map(edge => {
       const partner = edge?.node
       return partner?.href
         ? { "@id": `${getENV("APP_URL")}${partner.href}` }

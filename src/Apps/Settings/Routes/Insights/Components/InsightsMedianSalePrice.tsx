@@ -5,7 +5,7 @@ import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/En
 import { useRouter } from "System/Hooks/useRouter"
 import { extractNodes } from "Utils/extractNodes"
 import type { InsightsMedianSalePrice_me$data } from "__generated__/InsightsMedianSalePrice_me.graphql"
-import groupBy from "lodash/groupBy"
+import { groupBy } from "es-toolkit"
 import { Fragment } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
@@ -27,7 +27,7 @@ const InsightsMedianSalePrice: React.FC<
   const groupedMedianSalePrices = Object.values(
     groupBy(
       medianSalePrices,
-      medianSalePrice => medianSalePrice?.artist?.internalID,
+      medianSalePrice => medianSalePrice?.artist?.internalID ?? "",
     ),
   )
 

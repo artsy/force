@@ -1,6 +1,6 @@
 import type { Photo } from "Components/PhotoUpload/Utils/fileUtils"
 import type { MyCollectionEditArtwork_artwork$data } from "__generated__/MyCollectionEditArtwork_artwork.graphql"
-import compact from "lodash/compact"
+import { compact } from "es-toolkit"
 import type { Artist, ArtworkModel, MyCollectionPhoto } from "./artworkModel"
 import { getAttributionClassByName } from "./rarityOptions"
 
@@ -21,7 +21,7 @@ export const getMyCollectionArtworkFormInitialValues = (
   width: artwork?.width ?? "",
   depth: artwork?.depth ?? "",
   metric: artwork?.metric ?? "in",
-  photos: compact(artwork?.images),
+  photos: compact(artwork?.images ?? []),
   newPhotos: [],
   pricePaidDollars: artwork?.pricePaid
     ? (artwork?.pricePaid.minor / 100).toString()

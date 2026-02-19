@@ -1,7 +1,6 @@
 import { media } from "@artsy/palette"
 import type { PartnerHeader_partner$data } from "__generated__/PartnerHeader_partner.graphql"
-import compact from "lodash/compact"
-import uniq from "lodash/uniq"
+import { compact, uniq } from "es-toolkit"
 import * as React from "react"
 import styled from "styled-components"
 
@@ -15,7 +14,7 @@ export const TextWithNoWrap = styled.span`
 export const PartnerHeaderAddress: React.FC<
   React.PropsWithChildren<PartnerHeader_partner$data["locations"]>
 > = ({ edges }) => {
-  const cities = uniq(compact(edges?.map(edge => edge?.node?.city?.trim())))
+  const cities = uniq(compact((edges ?? []).map(edge => edge?.node?.city?.trim())))
   if (!cities || cities.length === 0) return null
 
   return (

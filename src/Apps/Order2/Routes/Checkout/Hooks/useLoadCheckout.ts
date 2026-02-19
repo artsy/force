@@ -16,7 +16,6 @@ import type {
   useLoadCheckout_order$key,
 } from "__generated__/useLoadCheckout_order.graphql"
 
-import every from "lodash/every"
 import { useEffect, useRef, useState } from "react"
 import { graphql, useFragment } from "react-relay"
 
@@ -201,7 +200,7 @@ const ORDER_FRAGMENT = graphql`
 const validateOrder = (order: useLoadCheckout_order$data) => {
   const hasLineItemsWithData =
     order.lineItems.length &&
-    every(order.lineItems, lineItem => {
+    order.lineItems.every(lineItem => {
       return !!lineItem?.artworkVersion?.internalID
     })
 

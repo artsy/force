@@ -3,8 +3,7 @@ import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/paramsCasing"
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
 import type { SortOptions } from "Components/SortFilter"
 import { DEFAULT_METRIC, type Metric, getSupportedMetric } from "Utils/metrics"
-import isArray from "lodash/isArray"
-import omit from "lodash/omit"
+import { omit } from "es-toolkit"
 import { useContext, useReducer, useRef, useState } from "react"
 import * as React from "react"
 import useDeepCompareEffect from "use-deep-compare-effect"
@@ -583,7 +582,7 @@ export const getSelectedFiltersCounts = (
         }
         break
       }
-      case isArray(paramValue): {
+      case Array.isArray(paramValue): {
         if (paramValue.length) {
           counts[paramName] = paramValue.length
         }

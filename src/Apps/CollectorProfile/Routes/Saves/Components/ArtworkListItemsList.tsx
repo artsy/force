@@ -3,7 +3,7 @@ import { ArtworkListItemFragmentContainer } from "Apps/CollectorProfile/Routes/S
 import { useRouter } from "System/Hooks/useRouter"
 import { extractNodes } from "Utils/extractNodes"
 import type { ArtworkListItemsListQuery } from "__generated__/ArtworkListItemsListQuery.graphql"
-import times from "lodash/times"
+import { times } from "es-toolkit/compat"
 import { type FC, useRef } from "react"
 import { graphql, useLazyLoadQuery } from "react-relay"
 

@@ -3,7 +3,7 @@ import { StructuredData } from "Components/Seo/StructuredData"
 import { getENV } from "Utils/getENV"
 import { getAuthorPath } from "Utils/getAuthorPath"
 import type { ArticleStructuredData_article$key } from "__generated__/ArticleStructuredData_article.graphql"
-import compact from "lodash/compact"
+import { compact } from "es-toolkit"
 import { graphql } from "react-relay"
 import { useFragment } from "react-relay"
 

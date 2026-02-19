@@ -6,8 +6,7 @@ import {
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import type { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes"
 import { useFilterLabelCountByKey } from "Components/ArtworkFilter/Utils/useFilterLabelCountByKey"
-import entries from "lodash/entries"
-import isEmpty from "lodash/isEmpty"
+import { isEmpty } from "es-toolkit/compat"
 import type { FC } from "react"
 import { FilterExpandable } from "./FilterExpandable"
 
@@ -63,7 +62,7 @@ export const WaysToBuyFilter: FC<
     return !Boolean(condition)
   }
 
-  const checkboxes: WayToBuy[] = entries(WAYS_TO_BUY_OPTIONS).reduce(
+  const checkboxes: WayToBuy[] = Object.entries(WAYS_TO_BUY_OPTIONS).reduce(
     (acc, [key, value]) => {
       acc.push({
         key: key as keyof ArtworkFilters,

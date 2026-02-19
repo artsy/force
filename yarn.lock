@@ -4297,13 +4297,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/lodash@npm:4.14.111":
-  version: 4.14.111
-  resolution: "@types/lodash@npm:4.14.111"
-  checksum: 10c0/f0fa0bbf3425bcf56ce561d8110f13677d883b7aa5003804b6d7b01423ea78bdd5938b5f0fa6c193540452763c5ec6a6e6356157dd270b91d6009813b8ae7be8
-  languageName: node
-  linkType: hard
-
 "@types/lodash@npm:^4.14.165":
   version: 4.14.165
   resolution: "@types/lodash@npm:4.14.165"
@@ -8076,6 +8069,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"es-toolkit@npm:^1.32.0":
+  version: 1.44.0
+  resolution: "es-toolkit@npm:1.44.0"
+  dependenciesMeta:
+    "@trivago/prettier-plugin-sort-imports@4.3.0":
+      unplugged: true
+    prettier-plugin-sort-re-exports@0.0.1:
+      unplugged: true
+  checksum: 10c0/b80ff52ddc85ba26914cda57c9d4e46379ccc38c60dc097ef0d065cc0b20f95a16cf8d537969eea600b51c6687b5900a6cce67489db16d5ccc14d47597a29c34
+  languageName: node
+  linkType: hard
+
 "es6-promise@npm:^4.0.3":
   version: 4.2.8
   resolution: "es6-promise@npm:4.2.8"
@@ -8957,7 +8962,6 @@ __metadata:
     "@types/jest": "npm:27.0.2"
     "@types/jwt-decode": "npm:2.2.0"
     "@types/loadable__component": "npm:5.13.1"
-    "@types/lodash": "npm:4.14.111"
     "@types/luxon": "npm:^3.2.0"
     "@types/memoize-one": "npm:3.1.1"
     "@types/morgan": "npm:1.9.2"
@@ -9007,6 +9011,7 @@ __metadata:
     dotenv: "npm:4.0.0"
     easy-peasy: "npm:^6.1.0"
     ejs: "npm:3.1.10"
+    es-toolkit: "npm:^1.32.0"
     eventemitter3: "npm:4.0.7"
     express: "npm:4.22.1"
     express-ipfilter: "npm:0.2.6"
@@ -9034,7 +9039,6 @@ __metadata:
     jwt-decode: "npm:2.2.0"
     lint-staged: "npm:10.2.6"
     localforage: "npm:^1.10.0"
-    lodash: "npm:^4.17.23"
     luxon: "npm:^3.2.1"
     map-cursor-to-max: "npm:^1.0.0"
     memoize-one: "npm:^5.2.1"

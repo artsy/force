@@ -10,7 +10,7 @@ import {
 } from "System/Relay/isRequestCacheable"
 import { cacheHeaderMiddleware } from "System/Relay/middleware/cacheHeaderMiddleware"
 import { cacheLoggerMiddleware } from "System/Relay/middleware/cacheLoggerMiddleware"
-import isEmpty from "lodash/isEmpty"
+import { isEmpty } from "es-toolkit/compat"
 import type { Environment as IEnvironment } from "react-relay"
 import type RelayClientSSR from "react-relay-network-modern-ssr/lib/client"
 import type RelayServerSSR from "react-relay-network-modern-ssr/lib/server"

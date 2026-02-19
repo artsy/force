@@ -2,7 +2,7 @@ import { Box, Button, Column, GridColumns, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
 import { extractNodes } from "Utils/extractNodes"
 import type { ArtistCVGroup_artist$data } from "__generated__/ArtistCVGroup_artist.graphql"
-import groupBy from "lodash/groupBy"
+import { groupBy } from "es-toolkit"
 import { type FC, Fragment, useState } from "react"
 import {
   type RelayPaginationProp,
@@ -58,7 +58,7 @@ const ArtistCVGroup: FC<React.PropsWithChildren<ArtistCVGroupProps>> = ({
     )
   }
 
-  const groupedByYear = groupBy(nodes, show => show.startAt)
+  const groupedByYear = groupBy(nodes, show => show.startAt ?? "")
 
   return (
     <GridColumns>

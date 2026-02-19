@@ -4,7 +4,7 @@ import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import type { NearbyGalleriesRailRendererQuery } from "__generated__/NearbyGalleriesRailRendererQuery.graphql"
 import type { NearbyGalleriesRail_partners$data } from "__generated__/NearbyGalleriesRail_partners.graphql"
-import compact from "lodash/compact"
+import { compact } from "es-toolkit"
 import { createFragmentContainer, graphql } from "react-relay"
 import { NearbyGalleriesRailPlaceholder } from "./NearbyGalleriesRailPlaceholder"
 
@@ -94,7 +94,7 @@ export const NearbyGalleriesRailRenderer: React.FC<
           <NearbyGalleriesRailFragmentContainer
             {...rest}
             {...props}
-            partners={compact(props?.partnersConnection?.edges)}
+            partners={compact(props?.partnersConnection?.edges ?? [])}
           />
         )
       }}

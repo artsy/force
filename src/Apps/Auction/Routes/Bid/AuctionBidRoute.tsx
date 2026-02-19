@@ -22,7 +22,7 @@ import type { AuctionBidRoute_me$data } from "__generated__/AuctionBidRoute_me.g
 import type { AuctionBidRoute_sale$data } from "__generated__/AuctionBidRoute_sale.graphql"
 import { Form, Formik } from "formik"
 import type { Match } from "found"
-import dropWhile from "lodash/dropWhile"
+import { dropWhile } from "es-toolkit"
 import { useEffect } from "react"
 import {
   type RelayRefetchProp,
@@ -250,7 +250,7 @@ const computeProps = ({
   const bidderID = bidder?.id
 
   const displayIncrements = dropWhile(
-    artwork.saleArtwork?.increments,
+    artwork.saleArtwork?.increments ?? [],
     increment => {
       // @ts-ignore
       return increment.cents < artwork.saleArtwork?.minimumNextBid!.cents!

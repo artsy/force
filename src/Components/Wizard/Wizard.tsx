@@ -1,5 +1,5 @@
 import { Form, Formik, type FormikHelpers as FormikActions } from "formik"
-import isEmpty from "lodash/isEmpty"
+import { isEmpty } from "es-toolkit/compat"
 import { Component } from "react"
 import * as React from "react"
 import type { StepElement, StepProps, WizardRenderProps } from "./types"

@@ -4,7 +4,6 @@
 // username/password form to login, signup, or link an account.
 //
 
-const extend = require("lodash/extend")
 // TODO: Remove let added for 'rewire'
 const request = require("superagent")
 // TODO: Remove let added for 'rewire'
@@ -234,7 +233,7 @@ const onAccessToken = (req, done, params) => (err, res) => {
         agreed_to_receive_emails,
         accepted_terms_of_service,
       } = req.session
-      extend(params, {
+      Object.assign(params, {
         sign_up_intent,
         sign_up_referer,
         agreed_to_receive_emails,
@@ -256,11 +255,11 @@ const onAccessToken = (req, done, params) => (err, res) => {
 
         let auth_params = {}
         if (params.provider === "apple") {
-          auth_params = extend(params, {
+          auth_params = Object.assign(params, {
             grant_type: "apple_uid",
           })
         } else {
-          auth_params = extend(params, {
+          auth_params = Object.assign(params, {
             grant_type: "oauth_token",
             oauth_provider: params.provider,
           })
@@ -270,7 +269,7 @@ const onAccessToken = (req, done, params) => (err, res) => {
           .post(`${opts.ARTSY_URL}/oauth2/access_token`)
           .set({ "User-Agent": req.get("user-agent") })
           .send(
-            extend(auth_params, {
+            Object.assign(auth_params, {
               client_id: opts.ARTSY_ID,
               client_secret: opts.ARTSY_SECRET,
             }),

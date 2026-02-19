@@ -11,9 +11,7 @@ import type {
 } from "Server/middleware/artsyExpress"
 import opts from "Server/passport/lib/options"
 import type { NextFunction } from "express"
-import get from "lodash/get"
-import isFunction from "lodash/isFunction"
-import isString from "lodash/isString"
+import { isFunction, isString } from "es-toolkit"
 import passport from "passport"
 // eslint-disable-next-line no-restricted-imports
 import request from "superagent"
@@ -313,12 +311,12 @@ export const extractError = (err: unknown): string => {
     return err
   }
 
-  const response = get(err, "response.body.message", null)
+  const response = (err as any)?.response?.body?.message ?? null
   if (isString(response)) {
     return response
   }
 
-  const message = get(err, "message", null)
+  const message = (err as any)?.message ?? null
   if (isString(message)) {
     return message
   }

@@ -2,7 +2,7 @@ import SearchIcon from "@artsy/icons/SearchIcon"
 import { LabeledInput } from "@artsy/palette"
 import { useAuctionResultsFilterContext } from "Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
 import { FilterExpandable } from "Components/ArtworkFilter/ArtworkFilters/FilterExpandable"
-import debounce from "lodash/debounce"
+import { debounce } from "es-toolkit"
 import { useEffect, useMemo } from "react"
 import type * as React from "react"
 

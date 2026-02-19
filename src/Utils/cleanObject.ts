@@ -1,5 +1,4 @@
-import identity from "lodash/identity"
-import pickBy from "lodash/pickBy"
+import { identity, pickBy } from "es-toolkit"
 /**
  * Removes null and undefined values from an object
  */

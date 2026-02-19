@@ -3,7 +3,7 @@ import { usePrefetchRoute } from "System/Hooks/usePrefetchRoute"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { findRoutesByPath } from "System/Router/Utils/routeUtils"
-import take from "lodash/take"
+import { take } from "es-toolkit"
 import { fetchQuery } from "react-relay"
 
 jest.mock("react-relay", () => ({
@@ -18,7 +18,10 @@ jest.mock("System/Hooks/useSystemContext", () => ({
 jest.mock("System/Router/Utils/routeUtils", () => ({
   findRoutesByPath: jest.fn(),
 }))
-jest.mock("lodash/take", () => jest.fn())
+jest.mock("es-toolkit", () => ({
+  ...jest.requireActual("es-toolkit"),
+  take: jest.fn(),
+}))
 jest.mock("Utils/device", () => ({
   isDevelopment: true,
 }))

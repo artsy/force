@@ -25,7 +25,10 @@ const useTracking = _useTracking as jest.Mock
 track.mockImplementation(() => x => x as any)
 useTracking.mockImplementation(() => ({ trackEvent: jest.fn() }))
 
-jest.mock("lodash/debounce", () => jest.fn(e => e))
+jest.mock("es-toolkit", () => ({
+  ...jest.requireActual("es-toolkit"),
+  debounce: jest.fn(e => e),
+}))
 jest.mock("Utils/logger")
 jest.mock("System/FeatureFlags/FeatureFlagContext.tsx", () => ({
   FeatureFlagProvider: ({ children }) => children,

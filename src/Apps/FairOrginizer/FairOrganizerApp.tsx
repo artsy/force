@@ -1,7 +1,7 @@
 import { Spacer } from "@artsy/palette"
 import { MetaTags } from "Components/MetaTags"
 import type { FairOrganizerApp_fairOrganizer$data } from "__generated__/FairOrganizerApp_fairOrganizer.graphql"
-import truncate from "lodash/truncate"
+import { truncateText } from "Utils/truncateText"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairOrganizerHeaderFragmentContainer as FairOrganizerHeader } from "./Components/FairOrganizerHeader/FairOrganizerHeader"
@@ -24,7 +24,7 @@ const FairOrganizerApp: React.FC<
     <>
       <MetaTags
         description={
-          description ? truncate(description, { length: 200 }) : undefined
+          description ? truncateText(description, { length: 200 }) : undefined
         }
         imageURL={profile?.image?.url}
         pathname={`fair-organizer/${slug}`}

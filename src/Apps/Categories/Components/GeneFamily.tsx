@@ -3,7 +3,7 @@ import { Masonry } from "Components/Masonry"
 import { RouterLink } from "System/Components/RouterLink"
 import { Jump } from "Utils/Hooks/useJump"
 import type { GeneFamily_geneFamily$data } from "__generated__/GeneFamily_geneFamily.graphql"
-import sortBy from "lodash/sortBy"
+import { sortBy } from "es-toolkit"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
@@ -20,11 +20,12 @@ export const GeneFamily: React.FC<React.PropsWithChildren<GeneFamilyProps>> = ({
     return null
   }
 
-  const publishedGenes = genes.filter(g => !!g && g.isPublished)
-  const sortedGenes = sortBy(
-    publishedGenes,
-    gene => gene?.displayName || gene?.name,
+  const publishedGenes = genes.filter(
+    (g): g is NonNullable<typeof g> => !!g && !!g.isPublished,
   )
+  const sortedGenes = sortBy(publishedGenes, [
+    gene => gene.displayName || gene.name,
+  ])
 
   return (
     <Jump id={geneFamily.slug}>

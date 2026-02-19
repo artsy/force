@@ -11,7 +11,7 @@ import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import type { NavBarMenuItemFeaturedLinkQuery } from "__generated__/NavBarMenuItemFeaturedLinkQuery.graphql"
 import type { NavBarMenuItemFeaturedLink_orderedSet$key } from "__generated__/NavBarMenuItemFeaturedLink_orderedSet.graphql"
-import compact from "lodash/compact"
+import { compact } from "es-toolkit"
 import type { FC } from "react"
 import { graphql, useFragment } from "react-relay"
 import { useNavBarTracking } from "../useNavBarTracking"
@@ -84,7 +84,7 @@ const NavBarMenuItemFeaturedLink: FC<NavBarMenuItemFeaturedLinkInnerProps> = ({
   const tracking = useNavBarTracking()
   const orderedSet = useFragment(fragment, orderedSetKey)
 
-  const featuredLinks = compact(orderedSet.items).flatMap(item =>
+  const featuredLinks = compact(orderedSet.items ?? []).flatMap(item =>
     item.__typename === "FeaturedLink" ? [item] : [],
   )
   const featuredLink = featuredLinks[0]

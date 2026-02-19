@@ -1,7 +1,7 @@
 import type { CreateTokenCardData } from "@stripe/stripe-js"
 import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
 import type { utilsValidatePhoneNumberQuery } from "__generated__/utilsValidatePhoneNumberQuery.graphql"
-import debounce from "lodash/debounce"
+import { debounce } from "es-toolkit"
 import { useCallback, useEffect, useState } from "react"
 import { fetchQuery, graphql } from "react-relay"
 import * as Yup from "yup"

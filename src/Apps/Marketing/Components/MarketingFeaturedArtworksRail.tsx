@@ -8,7 +8,7 @@ import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
 import type { MarketingFeaturedArtworksRailQuery } from "__generated__/MarketingFeaturedArtworksRailQuery.graphql"
 import type { MarketingFeaturedArtworksRail_viewer$data } from "__generated__/MarketingFeaturedArtworksRail_viewer.graphql"
-import compact from "lodash/compact"
+import { compact } from "es-toolkit"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 

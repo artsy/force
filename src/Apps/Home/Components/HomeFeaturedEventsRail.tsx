@@ -17,8 +17,7 @@ import { RouterLink } from "System/Components/RouterLink"
 import { Media } from "Utils/Responsive"
 import { getInternalHref } from "Utils/url"
 import type { HomeFeaturedEventsRail_orderedSet$data } from "__generated__/HomeFeaturedEventsRail_orderedSet.graphql"
-import compact from "lodash/compact"
-import take from "lodash/take"
+import { compact, take } from "es-toolkit"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -33,7 +32,7 @@ const HomeFeaturedEventsRail: React.FC<
   const { trackEvent } = useTracking()
 
   const events = take(
-    compact(orderedSet.items).flatMap(item =>
+    compact(orderedSet.items ?? []).flatMap(item =>
       item.__typename === "FeaturedLink" ? [item] : [],
     ),
     4,

@@ -5,7 +5,7 @@ import {
   type StepSummaryItemProps,
 } from "Components/StepSummaryItem"
 import type { ShippingArtaSummaryItem_order$data } from "__generated__/ShippingArtaSummaryItem_order.graphql"
-import startCase from "lodash/startCase"
+import { startCase } from "es-toolkit"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 

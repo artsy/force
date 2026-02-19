@@ -1,8 +1,7 @@
 import { Box, Button, Clickable, Flex, ModalBase, Text } from "@artsy/palette"
 import { useAuctionResultsFilterContext } from "Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
 import { initialAuctionResultsFilterState } from "Apps/Artist/Routes/AuctionResults/initialAuctionResultsFilterState"
-import isEqual from "lodash/isEqual"
-import omit from "lodash/omit"
+import { isEqual, omit } from "es-toolkit"
 import { type FC, useEffect, useRef } from "react"
 import styled from "styled-components"
 
@@ -18,7 +17,7 @@ export const AuctionFilterMobileActionSheet: FC<
 
   // This reflects our zero state for this UI which doesn't include the keyword
   const isReset = isEqual(
-    omit(filterContext.stagedFilters, "reset", "keyword"),
+    omit(filterContext.stagedFilters ?? {}, ["reset", "keyword"]),
     initialAuctionResultsFilterState,
   )
 

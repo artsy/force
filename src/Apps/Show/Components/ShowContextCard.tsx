@@ -21,7 +21,7 @@ import { StyledLink } from "Components/Links/StyledLink"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { cropped } from "Utils/resized"
 import type { ShowContextCard_show$data } from "__generated__/ShowContextCard_show.graphql"
-import compact from "lodash/compact"
+import { compact } from "es-toolkit"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -112,7 +112,7 @@ const PartnerInfo: React.FC<
   const partnerHref = partner?.href
   const partnerName = partner?.name
   const imageUrls = compact(
-    partner?.artworksConnection?.edges?.map(
+    (partner?.artworksConnection?.edges ?? []).map(
       ({
         node,
       }: NonNullable<

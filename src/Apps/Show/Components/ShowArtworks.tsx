@@ -14,7 +14,7 @@ import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import type { ShowArtworksFilterQuery } from "__generated__/ShowArtworksFilterQuery.graphql"
 import type { ShowArtworks_show$data } from "__generated__/ShowArtworks_show.graphql"
-import omit from "lodash/omit"
+import { omit } from "es-toolkit"
 import type * as React from "react"
 import {
   type RelayRefetchProp,
@@ -46,7 +46,7 @@ const ShowArtworksFilter: React.FC<
       sort: "partner_show_position",
       ...(match && match.location.query),
     },
-    "from_show_guide", // TODO: Investigate if we need this param.
+    ["from_show_guide"], // TODO: Investigate if we need this param.
   )
 
   return (

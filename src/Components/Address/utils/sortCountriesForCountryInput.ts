@@ -1,5 +1,5 @@
 import type { countries as countryPhoneOptions } from "Utils/countries"
-import sortBy from "lodash/sortBy"
+import { sortBy } from "es-toolkit"
 type CountryData = (typeof countryPhoneOptions)[number]
 
 /**
@@ -17,7 +17,7 @@ export const sortCountriesForCountryInput = (
 
   const sortedCountries = sortBy(unsorted, [
     country => country.value !== firstCode,
-    "name",
+    country => country.name,
   ])
 
   const options = [

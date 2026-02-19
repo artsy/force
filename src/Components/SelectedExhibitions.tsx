@@ -11,8 +11,7 @@ import { ArtworkDefinitionList } from "Apps/Artwork/Components/ArtworkDefinition
 import { Media } from "Utils/Responsive"
 import type { SelectedExhibitions_exhibitions$data } from "__generated__/SelectedExhibitions_exhibitions.graphql"
 import { Link } from "found"
-import groupBy from "lodash/groupBy"
-import toPairs from "lodash/toPairs"
+import { groupBy } from "es-toolkit"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
@@ -123,7 +122,7 @@ const FullExhibitionList: React.FC<
 
   return (
     <Join separator={<Spacer y={1} />}>
-      {toPairs(groupBy(props.exhibitions, ({ start_at }) => start_at))
+      {Object.entries(groupBy(props.exhibitions, ({ start_at }) => start_at ?? ""))
         .reverse()
         .map(([year, exhibitions]) => (
           <ExhibitionYearList

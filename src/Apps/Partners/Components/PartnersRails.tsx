@@ -5,8 +5,7 @@ import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import type { PartnersRailsQuery } from "__generated__/PartnersRailsQuery.graphql"
 import type { PartnersRails_viewer$data } from "__generated__/PartnersRails_viewer.graphql"
-import compact from "lodash/compact"
-import shuffle from "lodash/shuffle"
+import { compact, shuffle } from "es-toolkit"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { PartnersRailQueryRenderer } from "./PartnersRail"
@@ -20,7 +19,7 @@ const PartnersRails: FC<React.PropsWithChildren<PartnersRailsProps>> = ({
   viewer,
   type,
 }) => {
-  const categories = shuffle(compact(viewer.partnerCategories))
+  const categories = shuffle(compact(viewer.partnerCategories ?? []))
 
   return (
     <Join separator={<Spacer y={4} />}>

@@ -22,8 +22,7 @@ import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/En
 import { extractNodes } from "Utils/extractNodes"
 import type { MyCollectionArtworkFormArtistStep_me$key } from "__generated__/MyCollectionArtworkFormArtistStep_me.graphql"
 import { useFormikContext } from "formik"
-import debounce from "lodash/debounce"
-import sortBy from "lodash/sortBy"
+import { debounce, sortBy } from "es-toolkit"
 import { useEffect, useMemo, useState } from "react"
 import { graphql, useFragment } from "react-relay"
 
@@ -43,7 +42,7 @@ export const MyCollectionArtworkFormArtistStep: React.FC<
 
   const collectedArtists = sortBy(
     extractNodes(me?.myCollectionInfo?.collectedArtistsConnection),
-    ["displayLabel"],
+    [item => item.displayLabel],
   )
 
   const [artistNotFound, setArtistNotFound] = useState(false)

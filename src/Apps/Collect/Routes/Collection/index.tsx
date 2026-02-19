@@ -19,7 +19,7 @@ import { useRouter } from "System/Hooks/useRouter"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import type { CollectionArtworksQuery } from "__generated__/CollectionArtworksQuery.graphql"
 import type { Collection_collection$data } from "__generated__/Collection_collection.graphql"
-import truncate from "lodash/truncate"
+import { truncateText } from "Utils/truncateText"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { CollectionArtworksFilterRefetchContainer } from "./Components/CollectionArtworksFilter"
@@ -43,7 +43,7 @@ export const CollectionApp: React.FC<
   const { title, slug, headerImage, metaDescription } = collection
 
   const metadataDescription = metaDescription
-    ? `Buy, bid, and inquire on ${title} on Artsy. ${truncate(metaDescription, {
+    ? `Buy, bid, and inquire on ${title} on Artsy. ${truncateText(metaDescription, {
         length: 158,
       })}`
     : `Buy, bid, and inquire on ${title} on Artsy.`

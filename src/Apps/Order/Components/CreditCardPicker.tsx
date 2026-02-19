@@ -39,8 +39,8 @@ import {
   type SystemContextProps,
 } from "System/Contexts/SystemContext"
 import { createStripeWrapper } from "Utils/createStripeWrapper"
-import isNull from "lodash/isNull"
-import mergeWith from "lodash/mergeWith"
+import { isNull } from "es-toolkit"
+import { mergeWith } from "es-toolkit/compat"
 import { type TrackingProp, useTracking } from "react-tracking"
 import { CreditCardDetails } from "./CreditCardDetails"
 
@@ -378,7 +378,7 @@ export class CreditCardPicker extends React.Component<
       emptyAddress,
       this.props.order.requestedFulfillment,
       (o, s) => (isNull(s) ? o : s),
-    )
+    ) as Address
     const selectedBillingAddress = (
       this.needsAddress() ? this.state.address : shippingAddress
     ) as Address

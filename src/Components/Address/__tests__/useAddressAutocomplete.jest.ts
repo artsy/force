@@ -6,13 +6,16 @@ import {
 } from "Components/Address/useAddressAutocomplete"
 import { useFlag } from "@unleash/proxy-client-react"
 import { getENV } from "Utils/getENV"
-import throttle from "lodash/throttle"
+import { throttle } from "es-toolkit/compat"
 import { useTracking } from "react-tracking"
 
 jest.mock("react-tracking")
 jest.mock("Utils/getENV")
 
-jest.mock("lodash/throttle", () => jest.fn(fn => fn))
+jest.mock("es-toolkit/compat", () => ({
+  ...jest.requireActual("es-toolkit/compat"),
+  throttle: jest.fn(fn => fn),
+}))
 
 const mockuseTracking = useTracking as jest.Mock
 const trackingSpy = jest.fn()

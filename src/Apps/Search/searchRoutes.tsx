@@ -2,7 +2,7 @@ import loadable from "@loadable/component"
 import { allowedFilters } from "Components/ArtworkFilter/Utils/allowedFilters"
 import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/paramsCasing"
 import type { RouteProps } from "System/Router/Route"
-import omit from "lodash/omit"
+import { omit } from "es-toolkit"
 import { graphql } from "react-relay"
 import { redirectQueryToTerm } from "./Server/redirectQueryToTerm"
 
@@ -53,7 +53,7 @@ const prepareVariables = (_params, { location }) => {
   ]
 
   return {
-    ...paramsToCamelCase(omit(location.query, "term")),
+    ...paramsToCamelCase(omit(location.query, ["term"])),
     keyword: location.query.term.toString(),
     aggregations,
   }

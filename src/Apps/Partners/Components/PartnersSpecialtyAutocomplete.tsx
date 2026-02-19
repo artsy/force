@@ -9,8 +9,8 @@ import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import type { PartnersSpecialtyAutocompleteQuery } from "__generated__/PartnersSpecialtyAutocompleteQuery.graphql"
 import type { PartnersSpecialtyAutocomplete_viewer$data } from "__generated__/PartnersSpecialtyAutocomplete_viewer.graphql"
-import compact from "lodash/compact"
-import omit from "lodash/omit"
+import { compact } from "es-toolkit"
+import { omit } from "es-toolkit/compat"
 import { type FC, useMemo, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
@@ -22,11 +22,11 @@ const PartnersSpecialtyAutocomplete: FC<
   React.PropsWithChildren<PartnersSpecialtyAutocompleteProps>
 > = ({ viewer: { allOptions, filterPartners } }) => {
   const specialties = useMemo(() => {
-    return compact(filterPartners?.aggregations?.[0]?.counts)
+    return compact(filterPartners?.aggregations?.[0]?.counts ?? [])
   }, [filterPartners])
 
   const all = useMemo(() => {
-    return compact(allOptions?.aggregations?.[0]?.counts)
+    return compact(allOptions?.aggregations?.[0]?.counts ?? [])
   }, [allOptions])
 
   const { router, match } = useRouter()
@@ -47,7 +47,7 @@ const PartnersSpecialtyAutocomplete: FC<
     if (value === "all") {
       router.push({
         pathname: match.location.pathname,
-        query: { ...omit(match.location.query, "category") },
+        query: { ...omit(match.location.query, ["category"]) },
       })
 
       return
@@ -63,7 +63,7 @@ const PartnersSpecialtyAutocomplete: FC<
     router.push({
       pathname: match.location.pathname,
       query: {
-        ...omit(match.location.query, "category"),
+        ...omit(match.location.query, ["category"]),
       },
     })
   }

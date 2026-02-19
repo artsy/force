@@ -11,7 +11,7 @@ import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import type { HomeFeaturedShowsRailQuery } from "__generated__/HomeFeaturedShowsRailQuery.graphql"
 import type { HomeFeaturedShowsRail_orderedSet$data } from "__generated__/HomeFeaturedShowsRail_orderedSet.graphql"
-import compact from "lodash/compact"
+import { compact } from "es-toolkit"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -26,7 +26,7 @@ const HomeFeaturedShowsRail: React.FC<
 > = ({ orderedSet }) => {
   const { trackEvent } = useTracking()
 
-  const shows = compact(orderedSet.items).flatMap(item =>
+  const shows = compact(orderedSet.items ?? []).flatMap(item =>
     item.__typename === "Show" ? [item] : [],
   )
 

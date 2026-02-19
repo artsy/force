@@ -44,7 +44,7 @@ import {
   type FormikTouched,
   useFormikContext,
 } from "formik"
-import pick from "lodash/pick"
+import { pick } from "es-toolkit"
 import { useCallback, useEffect, useState } from "react"
 
 export interface FulfillmentDetailsFormProps

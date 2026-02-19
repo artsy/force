@@ -5,9 +5,7 @@ import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import type { ShowBannersRailRendererQuery } from "__generated__/ShowBannersRailRendererQuery.graphql"
 import type { ShowBannersRail_partner$data } from "__generated__/ShowBannersRail_partner.graphql"
-import compact from "lodash/compact"
-import take from "lodash/take"
-import uniqBy from "lodash/uniqBy"
+import { compact, take, uniqBy } from "es-toolkit"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ShowBannersRailPlaceholder } from "./ShowBannersRailPlaceholder"
@@ -21,13 +19,13 @@ const ShowBannersRail: React.FC<
 > = ({ partner, ...rest }) => {
   if (!partner) return null
 
-  const featured = compact(partner?.featuredShow?.edges)
-  const current = compact(partner?.currentShows?.edges)
-  const upcoming = compact(partner?.upcomingShows?.edges)
-  const past = compact(partner?.pastShows?.edges)
+  const featured = compact(partner?.featuredShow?.edges ?? [])
+  const current = compact(partner?.currentShows?.edges ?? [])
+  const upcoming = compact(partner?.upcomingShows?.edges ?? [])
+  const past = compact(partner?.pastShows?.edges ?? [])
 
   let shows = take(
-    uniqBy([...featured, ...current, ...upcoming], "node.id"),
+    uniqBy([...featured, ...current, ...upcoming], item => item.node?.id ?? ""),
     10,
   )
 

@@ -17,9 +17,11 @@ import {
   UserPendingIDV,
 } from "Apps/__tests__/Fixtures/Artwork/ArtworkSidebar/ArtworkSidebarBidAction"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import merge from "lodash/merge"
+import { merge as _merge } from "es-toolkit/compat"
 import { graphql } from "react-relay"
 import { screen } from "@testing-library/react"
+
+const merge: (...args: any[]) => any = _merge
 
 jest.unmock("react-relay")
 

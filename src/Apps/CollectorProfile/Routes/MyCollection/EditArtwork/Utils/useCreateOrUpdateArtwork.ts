@@ -7,7 +7,7 @@ import type {
   MyCollectionCreateArtworkInput,
 } from "__generated__/useCreateArtworkMutation.graphql"
 import type { MyCollectionUpdateArtworkInput } from "__generated__/useUpdateArtworkMutation.graphql"
-import compact from "lodash/compact"
+import { compact } from "es-toolkit"
 export type ArtworkInput =
   | MyCollectionCreateArtworkInput
   | MyCollectionUpdateArtworkInput

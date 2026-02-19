@@ -6,7 +6,6 @@ import createLogger from "Utils/logger"
 import { wait } from "Utils/wait"
 import type { MyCollectionEditArtwork_artwork$data } from "__generated__/MyCollectionEditArtwork_artwork.graphql"
 import { Formik } from "formik"
-import reverse from "lodash/reverse"
 import { createFragmentContainer, graphql } from "react-relay"
 import { getMyCollectionArtworkFormInitialValues } from "./Utils/artworkFormHelpers"
 import type { ArtworkModel } from "./Utils/artworkModel"
@@ -74,9 +73,9 @@ export const MyCollectionEditArtwork: React.FC<
 
       // Store images locally and start from the end because
       // it's only possible to add new images at the end
-      const reversedImages = reverse([...(updatedArtwork?.images ?? [])])
+      const reversedImages = [...(updatedArtwork?.images ?? [])].reverse()
 
-      reverse(localImages).forEach((image, index) => {
+      ;[...localImages].reverse().forEach((image, index) => {
         const imageID = reversedImages[index]?.internalID
 
         if (!imageID) return

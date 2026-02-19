@@ -9,7 +9,7 @@ import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useLocalImage } from "Utils/localImageHelpers"
 import { userIsTeam } from "Utils/user"
 import type { ArtworkLightbox_artwork$data } from "__generated__/ArtworkLightbox_artwork.graphql"
-import compact from "lodash/compact"
+import { compact } from "es-toolkit"
 import { scale } from "proportional-scale"
 import type * as React from "react"
 import { useMemo } from "react"
@@ -44,7 +44,7 @@ const ArtworkLightbox: React.FC<
 
   const isTeam = userIsTeam(user)
 
-  const images = compact(artwork.images)
+  const images = compact(artwork.images ?? [])
 
   const activeImage = images[activeIndex]
 

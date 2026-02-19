@@ -50,7 +50,7 @@ import { Jump, useJump } from "Utils/Hooks/useJump"
 import { usePrevious } from "Utils/Hooks/usePrevious"
 import { Media } from "Utils/Responsive"
 import { getENV } from "Utils/getENV"
-import isEqual from "lodash/isEqual"
+import { isEqual } from "es-toolkit"
 import type React from "react"
 import { useEffect, useMemo, useState } from "react"
 import {

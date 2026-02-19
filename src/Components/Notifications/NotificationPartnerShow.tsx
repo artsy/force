@@ -4,8 +4,8 @@ import { CellShowStatus } from "Components/Cells/CellShow"
 import { NOTIFICATION_MAX_WIDTH } from "Components/Notifications/Notification"
 import { RouterLink, type RouterLinkProps } from "System/Components/RouterLink"
 import type { NotificationPartnerShow_show$key } from "__generated__/NotificationPartnerShow_show.graphql"
-import compact from "lodash/compact"
-import truncate from "lodash/truncate"
+import { compact } from "es-toolkit"
+import { truncateText } from "Utils/truncateText"
 import type * as React from "react"
 import { graphql, useFragment } from "react-relay"
 
@@ -71,7 +71,7 @@ export const NotificationPartnerShow: React.FC<
 
         {!!show.description && (
           <Text variant="sm-display">
-            {truncate(show.description, { length: 200 })}
+            {truncateText(show.description, { length: 200 })}
           </Text>
         )}
       </RouterLink>

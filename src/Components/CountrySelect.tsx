@@ -1,5 +1,5 @@
 import { Select, type SelectProps } from "@artsy/palette"
-import uniqBy from "lodash/uniqBy"
+import { uniqBy } from "es-toolkit"
 import type { FC } from "react"
 
 export interface CountrySelectProps extends Omit<SelectProps, "options"> {
@@ -464,7 +464,7 @@ const SMS_SUPPORTED_COUNTRY_SELECT_OPTIONS = COUNTRY_SELECT_OPTIONS.filter(
 
 export const ALL_COUNTRY_SELECT_OPTIONS = uniqBy(
   [...COUNTRY_SELECT_OPTIONS, ...EU_COUNTRY_SELECT_OPTIONS],
-  "value",
+  item => item.value,
 )
 
 export const ALL_COUNTRY_CODES = ALL_COUNTRY_SELECT_OPTIONS.map(c => c.value)

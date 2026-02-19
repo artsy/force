@@ -4,7 +4,7 @@ import {
   CollectorProfileArtistsListArtistSkeleton,
 } from "Apps/CollectorProfile/Components/CollectorProfileArtists/CollectorProfileArtistsListArtist"
 import type { CollectorProfileArtistsSearchResultsQuery } from "__generated__/CollectorProfileArtistsSearchResultsQuery.graphql"
-import compact from "lodash/compact"
+import { compact } from "es-toolkit"
 import { type FC, Suspense, useMemo } from "react"
 import { graphql, useLazyLoadQuery } from "react-relay"
 
@@ -37,7 +37,7 @@ const CollectorProfileArtistsSearchResultsArtists: FC<
     if (term === "" || !me) return []
 
     return compact(
-      me?.userInterestsConnection?.edges?.filter(edge => {
+      (me?.userInterestsConnection?.edges ?? []).filter(edge => {
         return edge?.node?.name?.toLowerCase().includes(term.toLowerCase())
       }),
     )
