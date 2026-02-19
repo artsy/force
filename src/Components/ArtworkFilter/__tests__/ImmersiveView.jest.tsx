@@ -3,7 +3,7 @@ import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { ImmersiveView } from "Components/ArtworkFilter/ImmersiveView"
 import type { ImmersiveViewTestQuery } from "__generated__/ImmersiveViewTestQuery.graphql"
 import { graphql } from "react-relay"
-import { ImmersiveView_filtered_artworks$data } from "__generated__/ImmersiveView_filtered_artworks.graphql"
+import type { ImmersiveView_filtered_artworks$data } from "__generated__/ImmersiveView_filtered_artworks.graphql"
 import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
@@ -148,6 +148,48 @@ describe("ImmersiveView", () => {
     await waitFor(() => {
       expect(prevButton).not.toBeDisabled()
     })
+  })
+
+  it("disables next button on the very last artwork when no next page exists", async () => {
+    renderWithRelay({
+      FilterArtworksConnection: () => filterArtworksConnectionNoNextPageData,
+    })
+
+    const nextButton = screen.getByRole("button", { name: "Next artwork" })
+
+    expect(nextButton).not.toBeDisabled()
+
+    fireEvent.click(nextButton)
+    fireEvent.click(nextButton)
+
+    await waitFor(() => {
+      expect(screen.getByText("Artwork 3")).toBeInTheDocument()
+      expect(nextButton).toBeDisabled()
+    })
+  })
+
+  it("announces the currently displayed artwork for screen readers", () => {
+    renderWithRelay({
+      FilterArtworksConnection: () => filterArtworksConnectionData,
+    })
+
+    const status = screen.getByRole("status")
+    expect(status).toHaveTextContent("Viewing artwork 1 of 3: Artwork 1.")
+
+    fireEvent.keyDown(document, { key: "ArrowRight" })
+
+    expect(status).toHaveTextContent("Viewing artwork 2 of 3: Artwork 2.")
+  })
+
+  it("opens artwork links in a new tab safely", () => {
+    renderWithRelay({
+      FilterArtworksConnection: () => filterArtworksConnectionData,
+    })
+
+    const artworkLink = screen.getByRole("link")
+
+    expect(artworkLink).toHaveAttribute("target", "_blank")
+    expect(artworkLink).toHaveAttribute("rel", "noopener noreferrer")
   })
 
   it("navigates to prev/next pages via keyboard", async () => {
@@ -370,4 +412,14 @@ const filterArtworksConnectionData: Pick<
       },
     },
   ],
+}
+
+const filterArtworksConnectionNoNextPageData: Pick<
+  ImmersiveView_filtered_artworks$data,
+  "edges" | "pageInfo"
+> = {
+  ...filterArtworksConnectionData,
+  pageInfo: {
+    hasNextPage: false,
+  },
 }

@@ -16,6 +16,7 @@ import {
   ShelfPrevious,
   Text,
   useTheme,
+  VisuallyHidden,
 } from "@artsy/palette"
 import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
@@ -65,6 +66,9 @@ export const ImmersiveView: React.FC<ImmersiveViewProps> = props => {
   const isFirstPage = (filters?.page ?? 1) === 1
   const isFirstArtwork = currentIndex === 0
   const isVeryFirstArtwork = isFirstPage && isFirstArtwork
+  const isLastArtwork = currentIndex === artworks.length - 1
+  const isVeryLastArtwork = !artworkNodes.pageInfo.hasNextPage && isLastArtwork
+  const isNavigationDisabled = isPageLoading || artworks.length === 0
 
   const navigateToPreviousPage = useCallback(() => {
     const page = filters?.page ?? 1
@@ -85,6 +89,8 @@ export const ImmersiveView: React.FC<ImmersiveViewProps> = props => {
   }, [filters?.page, setFilter, artworkNodes.pageInfo.hasNextPage])
 
   const handlePreviousArtwork = useCallback(() => {
+    if (isPageLoading) return
+
     const newIndex = Math.max(0, currentIndex - 1)
     if (newIndex !== currentIndex) {
       setCurrentIndex(newIndex)
@@ -92,9 +98,11 @@ export const ImmersiveView: React.FC<ImmersiveViewProps> = props => {
     } else {
       navigateToPreviousPage()
     }
-  }, [currentIndex, navigateToPreviousPage])
+  }, [currentIndex, isPageLoading, navigateToPreviousPage])
 
   const handleNextArtwork = useCallback(() => {
+    if (isPageLoading || artworks.length === 0) return
+
     const newIndex = Math.min(artworks.length - 1, currentIndex + 1)
     if (newIndex !== currentIndex) {
       setCurrentIndex(newIndex)
@@ -102,16 +110,18 @@ export const ImmersiveView: React.FC<ImmersiveViewProps> = props => {
     } else {
       navigateToNextPage()
     }
-  }, [artworks.length, currentIndex, navigateToNextPage])
+  }, [artworks.length, currentIndex, isPageLoading, navigateToNextPage])
 
   const handleKeyDown = useCallback(
     (event: KeyboardEvent) => {
       switch (event.key) {
         case "ArrowLeft": {
+          event.preventDefault()
           handlePreviousArtwork()
           break
         }
         case "ArrowRight": {
+          event.preventDefault()
           handleNextArtwork()
           break
         }
@@ -173,6 +183,13 @@ export const ImmersiveView: React.FC<ImmersiveViewProps> = props => {
   }, [handleKeyDown])
 
   const { theme } = useTheme()
+  const artworkAnnouncement = isPageLoading
+    ? "Loading more artworks."
+    : isArtworkMissing
+      ? "No artwork to display."
+      : `Viewing artwork ${currentIndex + 1} of ${artworks.length}: ${
+          currentArtwork.formattedMetadata ?? "Untitled artwork"
+        }.`
 
   return (
     <ModalBase
@@ -197,6 +214,10 @@ export const ImmersiveView: React.FC<ImmersiveViewProps> = props => {
         {prevImageSrc && <Link rel="prefetch" href={prevImageSrc} as="image" />}
 
         <div className="immersive-view" data-testid="immersive-view">
+          <VisuallyHidden as="output" aria-live="polite" aria-atomic="true">
+            {artworkAnnouncement}
+          </VisuallyHidden>
+
           <Button
             onClick={onClose}
             variant={"tertiary"}
@@ -210,10 +231,14 @@ export const ImmersiveView: React.FC<ImmersiveViewProps> = props => {
           <Previous
             onClick={handlePreviousArtwork}
             aria-label="Previous artwork"
-            disabled={isVeryFirstArtwork}
+            disabled={isVeryFirstArtwork || isNavigationDisabled}
           />
 
-          <Next onClick={handleNextArtwork} aria-label="Next artwork" />
+          <Next
+            onClick={handleNextArtwork}
+            aria-label="Next artwork"
+            disabled={isVeryLastArtwork || isNavigationDisabled}
+          />
 
           {isPageLoading ? (
             <Text>Loading more artworks…</Text>
@@ -223,7 +248,8 @@ export const ImmersiveView: React.FC<ImmersiveViewProps> = props => {
             <a
               key={currentArtwork.slug}
               href={`/artwork/${currentArtwork.slug}`}
-              target="_new"
+              target="_blank"
+              rel="noopener noreferrer"
               style={{ textDecoration: "none" }}
               onClick={e => {
                 e.currentTarget.blur()
