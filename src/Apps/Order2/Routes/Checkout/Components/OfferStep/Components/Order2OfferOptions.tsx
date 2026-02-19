@@ -229,7 +229,11 @@ export const Order2OfferOptions: React.FC<Order2OfferOptionsProps> = ({
         >
           {selectedRadio === PriceOptionKey.CUSTOM && (
             <Flex flexDirection="column" mt={2}>
-              <OfferInput name="offerValue" onBlur={onCustomOfferBlur} />
+              <OfferInput
+                name="offerValue"
+                currencyCode={orderData.currencyCode}
+                onBlur={onCustomOfferBlur}
+              />
             </Flex>
           )}
         </Radio>

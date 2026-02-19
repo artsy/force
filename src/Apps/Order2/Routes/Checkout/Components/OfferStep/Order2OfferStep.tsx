@@ -324,7 +324,11 @@ const Order2OfferStepFormContent: React.FC<Order2OfferStepFormContentProps> = ({
       >
         {isPriceHidden ? (
           <>
-            <OfferInput name="offerValue" onBlur={onCustomOfferBlur} />
+            <OfferInput
+              name="offerValue"
+              onBlur={onCustomOfferBlur}
+              order={orderData}
+            />
             <Spacer y={4} />
           </>
         ) : (
