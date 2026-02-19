@@ -19,7 +19,7 @@ export const DEFAULT_IMAGES = [
     height: IMAGE_HEIGHT,
     src: "https://files.artsy.net/images/signup-01-1765895830875.png",
     title: "Welcome to Artsy",
-    subtitle: "The world\'s largest online art marketplace",
+    subtitle: "The world's largest online art marketplace",
   },
   {
     width: COLUMN_WIDTH,
