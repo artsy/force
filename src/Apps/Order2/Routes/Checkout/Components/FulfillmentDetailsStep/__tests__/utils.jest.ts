@@ -129,9 +129,9 @@ describe("FulfillmentDetailsStep utils", () => {
             region: "NY",
             postalCode: "10001",
             country: "US",
-            phoneNumber: "1234567890",
-            phoneNumberCountryCode: "US",
-            phoneNumberParsed: { display: "+1 1234567890" },
+            phoneNumber: "5551234567",
+            phoneNumberCountryCode: "+1",
+            phoneNumberParsed: { display: "+1 5551234567" },
             isDefault: false,
           },
         },
@@ -145,9 +145,9 @@ describe("FulfillmentDetailsStep utils", () => {
             region: "ON",
             postalCode: "M5V 3A8",
             country: "CA",
-            phoneNumber: "9876543210",
-            phoneNumberCountryCode: "CA",
-            phoneNumberParsed: { display: "+1 9876543210" },
+            phoneNumber: "4165551234",
+            phoneNumberCountryCode: "+1",
+            phoneNumberParsed: { display: "+1 4165551234" },
             isDefault: true,
           },
         },
@@ -162,14 +162,14 @@ describe("FulfillmentDetailsStep utils", () => {
       )
 
       expect(result).toHaveLength(2)
-      // After sorting: usable addresses come first (non-shippable default comes after usable)
+      // After sorting: shippable addresses come first, then non-shippable
       expect(result[0]).toMatchObject({
         internalID: "address1",
         isShippable: true, // US is in available countries
-        isValid: true, // All required fields present
+        isValid: true, // Lenient validation passes
         isDefault: false,
-        phoneNumber: "1234567890",
-        phoneNumberCountryCode: "US",
+        phoneNumber: "5551234567",
+        phoneNumberCountryCode: "+1",
         address: {
           name: "John Doe",
           country: "US",
@@ -179,10 +179,10 @@ describe("FulfillmentDetailsStep utils", () => {
       expect(result[1]).toMatchObject({
         internalID: "address2",
         isShippable: false, // CA is not in available countries
-        isValid: true, // All required fields present
+        isValid: true, // Lenient validation passes
         isDefault: true,
-        phoneNumber: "9876543210",
-        phoneNumberCountryCode: "CA",
+        phoneNumber: "4165551234",
+        phoneNumberCountryCode: "+1",
         address: {
           name: "Jane Smith",
           country: "CA",
