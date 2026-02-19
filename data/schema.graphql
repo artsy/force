@@ -3471,12 +3471,7 @@ type ArtworkImport implements Node {
   rowsConnection(
     after: String
     before: String
-    blockersOnly: Boolean
-    createdOnly: Boolean
-    errorTypes: [ArtworkImportError]
-    excludeErrorTypes: [ArtworkImportError]
     first: Int
-    hasErrors: Boolean
     last: Int
   ): ArtworkImportRowConnection
   state: ArtworkImportState
