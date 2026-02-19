@@ -376,6 +376,7 @@ const FRAGMENT = graphql`
   fragment Order2OfferStep_order on Order {
     ...useCompleteOfferData_order
     ...Order2OfferOptions_order
+    ...OfferInput_order
     internalID
     mode
     source

@@ -45,7 +45,6 @@ export const OfferInput: FC<OfferInputProps> = ({ name, order, onBlur }) => {
       inputMode={"numeric"}
       onBlur={handleBlur}
       value={formatValueForDisplay(field.value)}
-      prefix={currencySymbol}
       label={currencySymbol}
       variant="prefix"
       data-testid="offer-input"
