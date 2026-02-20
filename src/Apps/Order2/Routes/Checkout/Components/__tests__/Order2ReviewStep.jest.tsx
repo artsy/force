@@ -472,7 +472,7 @@ describe("Order2ReviewStep", () => {
       pendingOffer: null,
     }
 
-    it("sets STRIPE_ERROR modal error when handleNextAction returns a failure", async () => {
+    it("sets CHARGE_AUTHORIZATION_FAILED modal error when handleNextAction returns a failure", async () => {
       mockSubmitOrderMutation.submitMutation.mockResolvedValueOnce({
         submitOrder: {
           orderOrError: {
@@ -501,12 +501,11 @@ describe("Order2ReviewStep", () => {
       await userEvent.click(submitButton)
 
       await waitFor(() => {
-        expect(mockCheckoutModal.showCheckoutErrorModal).toHaveBeenCalledWith(
-          CheckoutModalError.STRIPE_ERROR,
-          "An error occurred while processing your payment",
-          "Authentication failed",
-          expect.any(Function),
-        )
+        expect(mockCheckoutModal.showCheckoutErrorModal).toHaveBeenCalledWith({
+          error: CheckoutModalError.CHARGE_AUTHORIZATION_FAILED,
+          description: "Authentication failed",
+          onClose: expect.any(Function),
+        })
       })
     })
 
@@ -526,9 +525,9 @@ describe("Order2ReviewStep", () => {
       await userEvent.click(submitButton)
 
       await waitFor(() => {
-        expect(mockCheckoutModal.showCheckoutErrorModal).toHaveBeenCalledWith(
-          CheckoutModalError.ARTWORK_NOT_FOR_SALE,
-        )
+        expect(mockCheckoutModal.showCheckoutErrorModal).toHaveBeenCalledWith({
+          error: CheckoutModalError.ARTWORK_NOT_FOR_SALE,
+        })
       })
     })
   })
@@ -568,7 +567,7 @@ describe("Order2ReviewStep", () => {
       pendingOffer: null,
     }
 
-    it("sets STRIPE_ERROR modal error when handleNextAction returns payment_intent_authentication_failure", async () => {
+    it("sets CHARGE_AUTHORIZATION_FAILED modal error when handleNextAction returns payment_intent_authentication_failure", async () => {
       mockSubmitOrderMutation.submitMutation.mockResolvedValueOnce({
         submitOrder: {
           orderOrError: {
@@ -597,16 +596,15 @@ describe("Order2ReviewStep", () => {
       await userEvent.click(submitButton)
 
       await waitFor(() => {
-        expect(mockCheckoutModal.showCheckoutErrorModal).toHaveBeenCalledWith(
-          CheckoutModalError.STRIPE_ERROR,
-          "An error occurred while processing your payment",
-          "Authentication failed",
-          expect.any(Function),
-        )
+        expect(mockCheckoutModal.showCheckoutErrorModal).toHaveBeenCalledWith({
+          error: CheckoutModalError.CHARGE_AUTHORIZATION_FAILED,
+          description: "Authentication failed",
+          onClose: expect.any(Function),
+        })
       })
     })
 
-    it("sets STRIPE_ERROR modal error for other Stripe errors", async () => {
+    it("sets CHARGE_AUTHORIZATION_FAILED modal error for other Stripe errors", async () => {
       mockSubmitOrderMutation.submitMutation.mockResolvedValueOnce({
         submitOrder: {
           orderOrError: {
@@ -635,12 +633,11 @@ describe("Order2ReviewStep", () => {
       await userEvent.click(submitButton)
 
       await waitFor(() => {
-        expect(mockCheckoutModal.showCheckoutErrorModal).toHaveBeenCalledWith(
-          CheckoutModalError.STRIPE_ERROR,
-          "An error occurred while processing your payment",
-          "Some other error",
-          expect.any(Function),
-        )
+        expect(mockCheckoutModal.showCheckoutErrorModal).toHaveBeenCalledWith({
+          error: CheckoutModalError.CHARGE_AUTHORIZATION_FAILED,
+          description: "Some other error",
+          onClose: expect.any(Function),
+        })
       })
     })
 
@@ -660,9 +657,9 @@ describe("Order2ReviewStep", () => {
       await userEvent.click(submitButton)
 
       await waitFor(() => {
-        expect(mockCheckoutModal.showCheckoutErrorModal).toHaveBeenCalledWith(
-          CheckoutModalError.SUBMIT_ERROR,
-        )
+        expect(mockCheckoutModal.showCheckoutErrorModal).toHaveBeenCalledWith({
+          error: CheckoutModalError.SUBMIT_ERROR,
+        })
       })
     })
 
@@ -682,9 +679,9 @@ describe("Order2ReviewStep", () => {
       await userEvent.click(submitButton)
 
       await waitFor(() => {
-        expect(mockCheckoutModal.showCheckoutErrorModal).toHaveBeenCalledWith(
-          CheckoutModalError.ARTWORK_NOT_FOR_SALE,
-        )
+        expect(mockCheckoutModal.showCheckoutErrorModal).toHaveBeenCalledWith({
+          error: CheckoutModalError.ARTWORK_NOT_FOR_SALE,
+        })
       })
     })
   })

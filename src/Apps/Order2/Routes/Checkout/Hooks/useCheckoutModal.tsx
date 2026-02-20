@@ -5,12 +5,12 @@ interface CheckoutModalContextValue {
   checkoutModalError: CheckoutModalError | null
   checkoutModalTitle?: string
   checkoutModalDescription?: string
-  showCheckoutErrorModal: (
-    error: CheckoutModalError,
-    title?: string,
-    description?: string,
-    onClose?: () => void,
-  ) => void
+  showCheckoutErrorModal: (params: {
+    error: CheckoutModalError
+    title?: string
+    description?: string
+    onClose?: () => void
+  }) => void
   dismissCheckoutErrorModal: () => void
 }
 
@@ -32,16 +32,16 @@ export const CheckoutModalProvider: React.FC<{
   const [onClose, setOnClose] = useState<(() => void) | undefined>()
 
   const showCheckoutErrorModal = useCallback(
-    (
-      error: CheckoutModalError,
-      title?: string,
-      description?: string,
-      onCloseCallback?: () => void,
-    ) => {
-      setCheckoutModalError(error)
-      setCheckoutModalTitle(title)
-      setCheckoutModalDescription(description)
-      setOnClose(() => onCloseCallback)
+    (params: {
+      error: CheckoutModalError
+      title?: string
+      description?: string
+      onClose?: () => void
+    }) => {
+      setCheckoutModalError(params.error)
+      setCheckoutModalTitle(params.title)
+      setCheckoutModalDescription(params.description)
+      setOnClose(() => params.onClose)
     },
     [],
   )

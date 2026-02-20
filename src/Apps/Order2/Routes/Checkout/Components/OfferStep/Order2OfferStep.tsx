@@ -9,7 +9,7 @@ import {
 import {
   CheckoutErrorBanner,
   type CheckoutErrorBannerMessage,
-  somethingWentWrongError,
+  fallbackError,
 } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { OfferInput } from "Apps/Order2/Routes/Checkout/Components/OfferStep/Components/OfferInput"
 import { Order2OfferOptions } from "Apps/Order2/Routes/Checkout/Components/OfferStep/Components/Order2OfferOptions"
@@ -40,7 +40,7 @@ const logger = createLogger(
 
 const offerError = (code?: string): CheckoutErrorBannerMessage => {
   if (code) {
-    return somethingWentWrongError("selecting your offer amount", code)
+    return fallbackError("selecting your offer amount", code)
   }
 
   return {

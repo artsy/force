@@ -5,7 +5,7 @@ import { SectionHeading } from "Apps/Order2/Components/SectionHeading"
 import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import {
   CheckoutErrorBanner,
-  somethingWentWrongError,
+  fallbackError,
 } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { SavedAddressOptions } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/SavedAddressOptions/Order2SavedAddressOptions"
 import { handleError } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/handleError"
@@ -263,10 +263,7 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
         handleError(
           error,
           formikHelpers,
-          somethingWentWrongError(
-            "updating your delivery address",
-            error?.code,
-          ),
+          fallbackError("updating your delivery address", error?.code),
           error =>
             setSectionErrorMessage({
               section: CheckoutStepName.FULFILLMENT_DETAILS,
