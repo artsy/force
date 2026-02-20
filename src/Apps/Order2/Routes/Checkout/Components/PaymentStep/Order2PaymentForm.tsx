@@ -24,7 +24,7 @@ import {
 import {
   CheckoutErrorBanner,
   type CheckoutErrorBannerMessage,
-  somethingWentWrongError,
+  fallbackError,
 } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useScrollToErrorBanner } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToErrorBanner"
@@ -590,9 +590,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       )
 
       if (error) {
-        handleError(
-          somethingWentWrongError("selecting your payment method", error.code),
-        )
+        handleError(fallbackError("selecting your payment method", error.code))
         return
       }
 
@@ -606,7 +604,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
 
       if (!response) {
         handleError(
-          somethingWentWrongError(
+          fallbackError(
             "selecting your payment method",
             "confirmation_token_fetch_failed",
           ),
@@ -649,9 +647,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         setIsSubmittingToStripe(false)
         resetElementsToInitialParams()
       } catch (error) {
-        handleError(
-          somethingWentWrongError("selecting your payment method", error.code),
-        )
+        handleError(fallbackError("selecting your payment method", error.code))
         logger.error(
           "Error while submitting order with new stripe payment method",
           error,
@@ -675,9 +671,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
 
         validateAndExtractOrderResponse(result.setOrderPayment?.orderOrError)
       } catch (error) {
-        handleError(
-          somethingWentWrongError("selecting your payment method", error.code),
-        )
+        handleError(fallbackError("selecting your payment method", error.code))
         logger.error(
           "Error while submitting order with wire trasnfer payment method",
           error,
@@ -730,9 +724,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         resetElementsToInitialParams()
         setPaymentComplete()
       } catch (error) {
-        handleError(
-          somethingWentWrongError("selecting your payment method", error.code),
-        )
+        handleError(fallbackError("selecting your payment method", error.code))
         logger.error(
           "Error while submitting order with saved payment method",
           error,

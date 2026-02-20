@@ -24,7 +24,7 @@ import { SectionHeading } from "Apps/Order2/Components/SectionHeading"
 import type { ExpressCheckoutPaymentMethod } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import {
   CheckoutErrorBanner,
-  somethingWentWrongError,
+  fallbackError,
 } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { fetchAndSetConfirmationToken } from "Apps/Order2/Utils/confirmationTokenUtils"
@@ -289,7 +289,7 @@ export const Order2ExpressCheckoutUI: React.FC<
 
     setSectionErrorMessage({
       section: "EXPRESS_CHECKOUT",
-      error: somethingWentWrongError(
+      error: fallbackError(
         "submitting your payment",
         error.code || "payment_submission_error",
       ),
@@ -333,15 +333,18 @@ export const Order2ExpressCheckoutUI: React.FC<
     }
   }
 
+  // Stripe calls onCancel in several non-user-initiated cases:
+  //   1. Payment errors — e.g. card declined, insufficient funds
+  //   2. Submitting an Apple Pay order in Chrome — Stripe fires onCancel
+  //      after the payment sheet closes, even on success
   const handleCancel: HandleCancelCallback = async () => {
-    // Do not track cancellation when Stripe calls onCancel for payment errors
+    // Do not track cancellation in non-user-initiated cases
     if (!error) {
       checkoutTracking.clickedCancelExpressCheckout({
         walletType: expressCheckoutType as string,
       })
     }
 
-    // Do not reset order when Stripe calls onCancel when submitting Apple Pay order on Chrome
     if (expressCheckoutState === "submit") {
       return
     }
@@ -382,7 +385,7 @@ export const Order2ExpressCheckoutUI: React.FC<
 
       setSectionErrorMessage({
         section: "EXPRESS_CHECKOUT",
-        error: somethingWentWrongError(
+        error: fallbackError(
           "updating your shipping address",
           error.code || "shipping_address_update_error",
         ),
@@ -418,7 +421,7 @@ export const Order2ExpressCheckoutUI: React.FC<
 
       setSectionErrorMessage({
         section: "EXPRESS_CHECKOUT",
-        error: somethingWentWrongError(
+        error: fallbackError(
           "updating your shipping rate",
           error.code || "shipping_rate_update_error",
         ),

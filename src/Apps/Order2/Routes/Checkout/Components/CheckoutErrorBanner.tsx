@@ -31,7 +31,7 @@ export type CheckoutErrorBannerMessage =
  * @param whileClause - Description of what action was being performed (e.g., "selecting your payment method")
  * @param code - Optional error code from the backend
  */
-export const somethingWentWrongError = (
+export const fallbackError = (
   whileClause: string,
   code?: string,
 ): CheckoutErrorBannerMessage => ({

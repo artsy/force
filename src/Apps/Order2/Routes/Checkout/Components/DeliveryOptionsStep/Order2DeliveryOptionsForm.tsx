@@ -15,7 +15,7 @@ import { SectionHeading } from "Apps/Order2/Components/SectionHeading"
 import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import {
   CheckoutErrorBanner,
-  somethingWentWrongError,
+  fallbackError,
 } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import {
   deliveryOptionLabel,
@@ -102,10 +102,7 @@ export const Order2DeliveryOptionsForm: React.FC<
       console.error("Error setting delivery option:", error)
       setSectionErrorMessage({
         section: CheckoutStepName.DELIVERY_OPTION,
-        error: somethingWentWrongError(
-          "selecting your shipping method",
-          error?.code,
-        ),
+        error: fallbackError("selecting your shipping method", error?.code),
       })
     }
   }
