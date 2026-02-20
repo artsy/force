@@ -95,7 +95,6 @@ export const PricingTransparencyQueryRenderer = ({
   // when the url changes after user places a successful bid and we redirect
   // back to artwork/id. If / when we remove the transition to the auction page
   // from artwork/id we can remove this hack.
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const variables = useMemo(() => {
     return {
       saleId,

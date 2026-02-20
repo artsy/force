@@ -63,7 +63,6 @@ export const PriceOptions: React.FC<
     selectedPriceOption,
   )
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (lastOffer) {
       onChange(lastOffer)

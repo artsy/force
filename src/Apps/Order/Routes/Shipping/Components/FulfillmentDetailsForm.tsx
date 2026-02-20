@@ -115,7 +115,6 @@ const FulfillmentDetailsFormLayout = (
    * via `shippingContext.state.fulfillmentDetailsCtx`
    */
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     shippingContext.actions.setFulfillmentDetailsFormikContext(formikContext)
   }, [formikContext.values, formikContext.isValid])
@@ -602,7 +601,6 @@ const VALIDATION_SCHEMA = Yup.object().shape({
 
   attributes: Yup.object().when("fulfillmentType", {
     is: FulfillmentType.SHIP,
-    // biome-ignore lint/suspicious/noThenProperty: <explanation>
     then: schema => schema.shape(ADDRESS_VALIDATION_SHAPE),
     otherwise: schema => schema.shape(BASIC_PHONE_VALIDATION_SHAPE),
   }),

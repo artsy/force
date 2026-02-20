@@ -131,7 +131,6 @@ export const useLoadCheckout = (order: useLoadCheckout_order$key) => {
   }, [checkoutModalError])
 
   // Set timeout for maximum loading duration
-  // biome-ignore lint/correctness/useExhaustiveDependencies: 1-time effect
   useEffect(() => {
     const timeout = setTimeout(() => {
       if (isLoadingRef.current && !loadingErrorRef.current) {

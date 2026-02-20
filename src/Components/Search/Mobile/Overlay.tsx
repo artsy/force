@@ -51,7 +51,6 @@ export const Overlay: FC<React.PropsWithChildren<OverlayProps>> = ({
   const [debouncedValue] = useDebounce(inputValue, SEARCH_DEBOUNCE_DELAY)
   const disablePills = !shouldStartSearching(inputValue)
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     inputRef.current?.focus()
 

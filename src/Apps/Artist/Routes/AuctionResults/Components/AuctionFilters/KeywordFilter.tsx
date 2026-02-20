@@ -15,7 +15,6 @@ export const KeywordFilter: React.FC<React.PropsWithChildren<unknown>> = () => {
     filterContext.setFilter?.("keyword", text)
   }
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const handleChangeText = useMemo(
     () => debounce(updateKeywordFilter, DEBOUNCE_DELAY),
     // FIXME:
@@ -23,7 +22,6 @@ export const KeywordFilter: React.FC<React.PropsWithChildren<unknown>> = () => {
   )
 
   // Stop the invocation of the debounced function after unmounting
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     return () => handleChangeText?.cancel?.()
     // FIXME:

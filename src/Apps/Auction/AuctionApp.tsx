@@ -54,7 +54,6 @@ export const AuctionApp: React.FC<React.PropsWithChildren<AuctionAppProps>> = ({
 
   const isFullBleedHeaderFixed = !cascadingEndTimeIntervalMinutes
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     tracking.auctionPageView({ sale, me })
   }, [])

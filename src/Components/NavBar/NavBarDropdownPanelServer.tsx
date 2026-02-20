@@ -76,7 +76,6 @@ export const NavBarDropdownPanelServer: React.FC<
         const timeoutRef = useRef<NodeJS.Timeout | null>(null)
 
         // Track when dropdown becomes visible (once per page load, with 500ms delay)
-        // biome-ignore lint/correctness/useExhaustiveDependencies: only track once per page load based on visibility
         useEffect(() => {
           if (visible && !hasTrackedRef.current) {
             // Only fire if dropdown stays open for at least 500ms

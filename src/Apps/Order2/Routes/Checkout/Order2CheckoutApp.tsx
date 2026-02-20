@@ -79,7 +79,6 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
     orderData.lineItems[0]?.artwork?.isFixedShippingFeeOnly
   const isExpressCheckoutEligible = !isOffer && isFixedShipping
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Mount effect
   useEffect(() => {
     if (!isExpressCheckoutEligible) {
       setExpressCheckoutLoaded([])

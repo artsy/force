@@ -147,7 +147,6 @@ export const useClientQuery = <T extends OperationType>({
     return { promise, disposable }
   }
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Intentionally excluding refetch to prevent infinite loop (see https://github.com/facebook/react/issues/25149)
   useEffect(() => {
     if (key.current !== prevKey.current) {
       setData(null)

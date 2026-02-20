@@ -2,16 +2,22 @@ import type { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes
 import isEqual from "lodash/isEqual"
 import isObject from "lodash/isObject"
 import transform from "lodash/transform"
-const difference = (initial: {}, next: {}) => {
-  return transform(next, (result, value, key) => {
-    if (!isEqual(value, initial[key])) {
-      result[key] =
-        isObject(value) && isObject(initial[key])
-          ? // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-            difference(value, initial[key])
-          : value
-    }
-  })
+
+type Obj = Record<string, unknown>
+
+const difference = (initial: Obj, next: Obj): Obj => {
+  return transform(
+    next,
+    (result: Obj, value: unknown, key: string) => {
+      if (!isEqual(value, initial[key])) {
+        result[key] =
+          isObject(value) && isObject(initial[key])
+            ? difference(value as Obj, initial[key] as Obj)
+            : value
+      }
+    },
+    {} as Obj,
+  )
 }
 
 export const countChangedFilters = (
@@ -31,5 +37,7 @@ export const countChangedFilters = (
 
   // We take the difference but just look at the number of keys changed,
   // which is equivalent to the number of filters changing.
-  return Object.keys(difference(filtersInitial, filtersAfter)).length
+  return Object.keys(
+    difference(filtersInitial as Obj, filtersAfter as Obj),
+  ).length
 }

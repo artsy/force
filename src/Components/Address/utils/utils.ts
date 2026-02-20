@@ -184,13 +184,11 @@ export const isRegionRequired = (alpha2Country?: string): boolean => {
 
 export const postalCodeValidator = Yup.string().when("country", {
   is: country => country === "US",
-  // biome-ignore lint/suspicious/noThenProperty: part of the Yup API
   then: Yup.string()
     .required("ZIP code is required")
     .matches(usPostalCodeRegexp, "Invalid postal code"),
   otherwise: Yup.string().when("country", {
     is: country => country === "CA",
-    // biome-ignore lint/suspicious/noThenProperty: this is part of the Yup API
     then: Yup.string()
       .required("Postal code is required")
       .matches(caPostalCodeRegexp, "Invalid postal code"),
@@ -206,7 +204,6 @@ export const yupAddressValidator = Yup.object().shape({
   postalCode: postalCodeValidator,
   region: Yup.string().when("country", {
     is: country => ["US", "CA"].includes(country),
-    // biome-ignore lint/suspicious/noThenProperty: this is part of the Yup API
     then: Yup.string().required("State is required"),
     otherwise: Yup.string(),
   }),

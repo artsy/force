@@ -51,7 +51,6 @@ export const PartnerOfferCheckout: FC<
     }
   }, [partnerCheckoutMutation, partnerOfferId, router])
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     handleRedirect()
   }, [])

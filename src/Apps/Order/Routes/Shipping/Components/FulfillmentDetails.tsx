@@ -67,7 +67,6 @@ export const FulfillmentDetails: FC<
    * the rest of its life and reset values
    */
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     const formLoaded =
       typeof shippingContext.state.fulfillmentDetailsFormikContext.setValues ===
@@ -96,7 +95,6 @@ export const FulfillmentDetails: FC<
    * require artsy shipping
    */
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     const { savedFulfillmentDetails } = shippingContext.orderData
 

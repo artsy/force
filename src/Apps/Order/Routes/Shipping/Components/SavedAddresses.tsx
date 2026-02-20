@@ -55,7 +55,6 @@ export const SavedAddresses: FC<
   const addressSavedToOrderID = savedAddressOnOrder?.internalID
 
   // Automatically select (save) best available address ID if it isn't present
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     const activeAndNoAddressSaved =
       props.active &&

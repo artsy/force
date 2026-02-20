@@ -37,7 +37,6 @@ export const Pagination: React.FC<React.PropsWithChildren<PaginationProps>> = ({
 }) => {
   const { jumpTo } = useJump({ offset })
 
-  // biome-ignore lint/correctness/useHookAtTopLevel: <explanation>
   const getHref = __getHref__ ?? useComputeHref()
 
   if (pageCursors?.around.length === 1) {

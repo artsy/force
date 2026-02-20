@@ -41,7 +41,6 @@ const PageApp: FC<React.PropsWithChildren<PageAppProps>> = ({ page }) => {
     }
   }, [page.internalID])
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (PAGE_SLUGS_WITH_AUTH_REQUIRED.includes(page.internalID) && !user?.id) {
       showAuthDialog({

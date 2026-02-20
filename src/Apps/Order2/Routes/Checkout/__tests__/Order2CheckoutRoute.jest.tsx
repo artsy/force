@@ -109,7 +109,6 @@ jest.mock(
     const MockExpressCheckout = jest.fn(() => {
       const { setExpressCheckoutLoaded, expressCheckoutPaymentMethods } =
         useCheckoutContext()
-      // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
       useEffect(() => {
         setExpressCheckoutLoaded([])
       }, [])

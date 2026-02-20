@@ -9,7 +9,6 @@ describe("SelectedExhibitions", () => {
     exhibitions: exhibitions as any,
     artistID: "andy-warhol",
     totalExhibitions: 100,
-    // biome-ignore lint/a11y/useValidAnchor: <explanation>
     ViewAllLink: <a href="#">hi</a>,
   }
 

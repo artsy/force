@@ -137,7 +137,6 @@ export const ConversationReply: FC<
     },
   )
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     resetForm()
   }, [data?.internalID, resetForm])

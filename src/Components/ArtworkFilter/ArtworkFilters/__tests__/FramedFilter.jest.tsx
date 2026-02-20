@@ -52,7 +52,6 @@ describe(FramedFilter, () => {
       const MobileVersionOfFramedFilter = () => {
         const filterContext = useArtworkFilterContext()
 
-        // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
         useEffect(() => {
           // on mount, initialize the staged filters
           filterContext.setShouldStageFilterChanges?.(true)
