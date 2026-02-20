@@ -18,16 +18,22 @@ export const DEFAULT_IMAGES = [
     width: COLUMN_WIDTH,
     height: IMAGE_HEIGHT,
     src: "https://files.artsy.net/images/signup-01-1765895830875.png",
+    title: "Welcome to Artsy",
+    subtitle: "The world's largest online art marketplace",
   },
   {
     width: COLUMN_WIDTH,
     height: IMAGE_HEIGHT,
     src: "https://files.artsy.net/images/signup-02-1765895830877.png",
+    title: "Welcome to Artsy",
+    subtitle: "Get personalized recommendations that match your taste",
   },
   {
     width: COLUMN_WIDTH,
     height: IMAGE_HEIGHT,
     src: "https://files.artsy.net/images/signup-03-1765895830761.png",
+    title: "Welcome to Artsy",
+    subtitle: "Discover and buy art you love",
   },
 ]
 
@@ -38,9 +44,11 @@ export const GALLERY_IMAGE = {
 }
 
 export const getResizedAuthDialogImages = () =>
-  DEFAULT_IMAGES.map(image =>
-    resized(image.src, { width: image.width, quality: 80 }),
-  )
+  DEFAULT_IMAGES.map(image => ({
+    ...resized(image.src, { width: image.width, quality: 80 }),
+    title: image.title,
+    subtitle: image.subtitle,
+  }))
 
 export const getResizedAuthDialogImagePlaceholder = () =>
   resized(DEFAULT_IMAGES[0].src, { width: COLUMN_WIDTH, quality: 1 })
