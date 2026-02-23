@@ -1,8 +1,8 @@
 import { ArtworkStructuredData } from "Apps/Artwork/Components/ArtworkStructuredData"
+import { ClientSuspense } from "Components/ClientSuspense"
 import { useRouter } from "System/Hooks/useRouter"
 import { getENV } from "Utils/getENV"
 import type { ArtworkMeta_artwork$key } from "__generated__/ArtworkMeta_artwork.graphql"
-import { Suspense } from "react"
 import { Link, Meta, Title } from "react-head"
 import { graphql, useFragment } from "react-relay"
 import { ArtworkChatBubbleFragmentContainer } from "./ArtworkChatBubble"
@@ -64,9 +64,9 @@ export const ArtworkMeta: React.FC<
 
       <ArtworkChatBubbleFragmentContainer artwork={data} />
 
-      <Suspense fallback={null}>
+      <ClientSuspense fallback={<></>}>
         <ArtworkStructuredData id={data.slug} />
-      </Suspense>
+      </ClientSuspense>
     </>
   )
 }
