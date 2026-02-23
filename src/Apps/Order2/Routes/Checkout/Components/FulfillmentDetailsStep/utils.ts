@@ -56,8 +56,11 @@ export const validateAddressFields = (
   try {
     savedAddressValidationSchema.validateSync(values)
     return true
-  } catch {
-    return false
+  } catch (error) {
+    if (error instanceof yup.ValidationError) {
+      return false
+    }
+    throw error
   }
 }
 
