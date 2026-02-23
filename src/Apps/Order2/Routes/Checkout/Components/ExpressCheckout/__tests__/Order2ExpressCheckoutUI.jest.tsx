@@ -6,7 +6,6 @@ import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { Order2ExpressCheckoutUI_Test_Query } from "__generated__/Order2ExpressCheckoutUI_Test_Query.graphql"
 import { useEffect } from "react"
-import React from "react"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { Order2ExpressCheckoutUI } from "../Order2ExpressCheckoutUI"
@@ -644,45 +643,19 @@ describe("ExpressCheckoutUI", () => {
       })
     })
 
-    it("displays error when there is an error", async () => {
-      const mockErrorRef = { current: "test_error_code" }
-      jest.spyOn(React, "useRef").mockReturnValue(mockErrorRef)
+    it("does not track cancel event when there is an existing error", async () => {
+      // Set up a pre-existing error in context (e.g. from a failed payment)
+      mockMessages.EXPRESS_CHECKOUT = {
+        error: { title: "An error occurred", message: "Something went wrong" } as any,
+      }
+      mockCheckoutContext.messages = { ...mockMessages }
 
-      const { mockResolveLastOperation } = renderWithRelay({
-        Order: () => ({ ...orderData }),
-      })
+      renderWithRelay({ Order: () => ({ ...orderData }) })
 
       fireEvent.click(screen.getByTestId("express-checkout-cancel"))
 
-      // Resolve the mutations
-      await mockResolveLastOperation({
-        unsetOrderPaymentMethodPayload: () => ({
-          orderOrError: {
-            __typename: "OrderMutationSuccess",
-            order: orderData,
-          },
-        }),
-      })
-
-      await mockResolveLastOperation({
-        unsetOrderFulfillmentOptionPayload: () => ({
-          orderOrError: {
-            __typename: "OrderMutationSuccess",
-            order: orderData,
-          },
-        }),
-      })
-
-      await flushPromiseQueue()
-
-      // Verify error was set for the express checkout section
-      expect(mockSetSectionErrorMessage).toHaveBeenCalledWith(
-        expect.objectContaining({
-          section: "EXPRESS_CHECKOUT",
-          error: expect.objectContaining({
-            title: "An error occurred",
-          }),
-        }),
+      expect(trackEvent).not.toHaveBeenCalledWith(
+        expect.objectContaining({ action: "clickedCancelExpressCheckout" }),
       )
     })
   })
@@ -729,89 +702,157 @@ describe("ExpressCheckoutUI", () => {
     expect(window.location.reload).not.toHaveBeenCalled()
   })
 
-  describe("Error message handling by error code", () => {
-    it("shows payment failed message for backend processing errors", async () => {
-      const mockErrorRef = { current: "create_credit_card_failed" }
-      jest.spyOn(React, "useRef").mockReturnValue(mockErrorRef)
+  describe("Error handling", () => {
+    describe("handleSubmitError", () => {
+      it("sets a 'not available' error when insufficient inventory", async () => {
+        const stripeModule = jest.requireMock("@stripe/react-stripe-js")
+        stripeModule.useElements.mockReturnValueOnce({
+          submit: jest.fn(async () => ({
+            error: {
+              code: "insufficient_inventory",
+              message: "Artwork unavailable",
+            },
+          })),
+          update: mockElementsUpdate,
+        })
 
-      const { mockResolveLastOperation } = renderWithRelay({
-        Order: () => ({ ...orderData }),
-      })
+        renderWithRelay({ Order: () => ({ ...orderData }) })
 
-      fireEvent.click(screen.getByTestId("express-checkout-cancel"))
+        fireEvent.click(screen.getByTestId("express-checkout-confirm"))
+        await flushPromiseQueue()
 
-      // Resolve the mutations
-      await mockResolveLastOperation({
-        unsetOrderPaymentMethodPayload: () => ({
-          orderOrError: {
-            __typename: "OrderMutationSuccess",
-            order: orderData,
-          },
-        }),
-      })
-
-      await mockResolveLastOperation({
-        unsetOrderFulfillmentOptionPayload: () => ({
-          orderOrError: {
-            __typename: "OrderMutationSuccess",
-            order: orderData,
-          },
-        }),
-      })
-
-      await flushPromiseQueue()
-
-      // Verify error was set for the express checkout section with payment failed message
-      expect(mockSetSectionErrorMessage).toHaveBeenCalledWith(
-        expect.objectContaining({
+        expect(mockSetSectionErrorMessage).toHaveBeenCalledWith({
           section: "EXPRESS_CHECKOUT",
-          error: expect.objectContaining({
-            title: "Payment failed",
-          }),
-        }),
-      )
-    })
-
-    it("shows fallback message for unhandled errors", async () => {
-      const mockErrorRef = { current: "unknown_error" }
-      jest.spyOn(React, "useRef").mockReturnValue(mockErrorRef)
-
-      const { mockResolveLastOperation } = renderWithRelay({
-        Order: () => ({ ...orderData }),
-      })
-
-      fireEvent.click(screen.getByTestId("express-checkout-cancel"))
-
-      // Resolve the mutations
-      await mockResolveLastOperation({
-        unsetOrderPaymentMethodPayload: () => ({
-          orderOrError: {
-            __typename: "OrderMutationSuccess",
-            order: orderData,
+          error: {
+            title: "Not available",
+            message: "Sorry, the work is no longer available.",
+            code: "insufficient_inventory",
           },
-        }),
+        })
       })
 
-      await mockResolveLastOperation({
-        unsetOrderFulfillmentOptionPayload: () => ({
-          orderOrError: {
-            __typename: "OrderMutationSuccess",
-            order: orderData,
+      it("sets a payment processing error when charge authorization fails", async () => {
+        const stripeModule = jest.requireMock("@stripe/react-stripe-js")
+        stripeModule.useElements.mockReturnValueOnce({
+          submit: jest.fn(async () => ({
+            error: {
+              code: "charge_authorization_failed",
+              message: "Your card was declined",
+            },
+          })),
+          update: mockElementsUpdate,
+        })
+
+        renderWithRelay({ Order: () => ({ ...orderData }) })
+
+        fireEvent.click(screen.getByTestId("express-checkout-confirm"))
+        await flushPromiseQueue()
+
+        expect(mockSetSectionErrorMessage).toHaveBeenCalledWith({
+          section: "EXPRESS_CHECKOUT",
+          error: {
+            title: "An error occurred while processing your payment",
+            message: "Your card was declined",
+            code: "charge_authorization_failed",
           },
-        }),
+        })
       })
 
-      await flushPromiseQueue()
+      it("sets a generic error for unhandled submit error codes", async () => {
+        const stripeModule = jest.requireMock("@stripe/react-stripe-js")
+        stripeModule.useElements.mockReturnValueOnce({
+          submit: jest.fn(async () => ({
+            error: {
+              code: "unexpected_error",
+              message: "Something went wrong",
+            },
+          })),
+          update: mockElementsUpdate,
+        })
 
-      // Verify error was set for the express checkout section with fallback message
-      expect(mockSetSectionErrorMessage).toHaveBeenCalledWith(
-        expect.objectContaining({
+        renderWithRelay({ Order: () => ({ ...orderData }) })
+
+        fireEvent.click(screen.getByTestId("express-checkout-confirm"))
+        await flushPromiseQueue()
+
+        expect(mockSetSectionErrorMessage).toHaveBeenCalledWith({
           section: "EXPRESS_CHECKOUT",
           error: expect.objectContaining({
             title: "An error occurred",
+            code: "unexpected_error",
           }),
+        })
+      })
+    })
+
+    it("sets an error and calls reject when handleShippingAddressChange fails", async () => {
+      const mockReject = jest.fn()
+      const mockResolve = jest.fn()
+
+      const { mockRejectLastOperation } = renderWithRelay({
+        Order: () => ({ ...orderData }),
+      })
+
+      const elementProps = mockExpressCheckoutElement.mock.calls[0][0]
+
+      elementProps.onShippingAddressChange({
+        address: {
+          city: "New York",
+          state: "NY",
+          country: "US",
+          postal_code: "10013",
+        },
+        name: "Buyer Name",
+        resolve: mockResolve,
+        reject: mockReject,
+      })
+
+      await flushPromiseQueue()
+
+      mockRejectLastOperation(new Error("Network error"))
+
+      await flushPromiseQueue()
+
+      expect(mockSetSectionErrorMessage).toHaveBeenCalledWith({
+        section: "EXPRESS_CHECKOUT",
+        error: expect.objectContaining({
+          title: "An error occurred",
+          code: "shipping_address_update_error",
         }),
-      )
+      })
+      expect(mockReject).toHaveBeenCalled()
+    })
+
+    it("sets an error and calls reject when handleShippingRateChange fails", async () => {
+      const mockReject = jest.fn()
+      const mockResolve = jest.fn()
+
+      const { mockRejectLastOperation } = renderWithRelay({
+        Order: () => ({ ...orderData }),
+      })
+
+      const elementProps = mockExpressCheckoutElement.mock.calls[0][0]
+
+      elementProps.onShippingRateChange({
+        shippingRate: { id: "DOMESTIC_FLAT", amount: 4200 },
+        resolve: mockResolve,
+        reject: mockReject,
+      })
+
+      await flushPromiseQueue()
+
+      mockRejectLastOperation(new Error("Network error"))
+
+      await flushPromiseQueue()
+
+      expect(mockSetSectionErrorMessage).toHaveBeenCalledWith({
+        section: "EXPRESS_CHECKOUT",
+        error: expect.objectContaining({
+          title: "An error occurred",
+          code: "shipping_rate_update_error",
+        }),
+      })
+      expect(mockReject).toHaveBeenCalled()
     })
   })
 })

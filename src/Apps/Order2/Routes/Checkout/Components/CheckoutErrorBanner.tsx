@@ -31,7 +31,7 @@ export type CheckoutErrorBannerMessage =
  * @param whileClause - Description of what action was being performed (e.g., "selecting your payment method")
  * @param code - Optional error code from the backend
  */
-export const somethingWentWrongError = (
+export const fallbackError = (
   whileClause: string,
   code?: string,
 ): CheckoutErrorBannerMessage => ({
@@ -58,11 +58,12 @@ export const CheckoutErrorBanner = forwardRef<
   CheckoutErrorBannerProps
 >(({ error, analytics }, ref) => {
   const { checkoutTracking } = useCheckoutContext()
+  const flow = analytics?.flow
 
+  // Track when error is displayed to user
   useEffect(() => {
-    if (!error || !analytics) return
+    if (!error || !flow) return
 
-    // Track when error is actually displayed to user
     const messageText =
       "displayText" in error ? error.displayText : error.message
 
@@ -70,20 +71,18 @@ export const CheckoutErrorBanner = forwardRef<
       error_code: error.code || "unknown",
       title: error.title,
       message: messageText,
-      flow: analytics.flow,
+      flow,
     })
-  }, [error, analytics, checkoutTracking])
+  }, [error, flow, checkoutTracking])
 
   if (!error) return null
 
   const title = error.title
   const message = error.message
 
-  const variant = "error"
-
   return (
     <div ref={ref} tabIndex={-1} data-error-banner="true" role="alert">
-      <Message variant={variant} title={title}>
+      <Message variant="error" title={title}>
         {message}
       </Message>
     </div>
