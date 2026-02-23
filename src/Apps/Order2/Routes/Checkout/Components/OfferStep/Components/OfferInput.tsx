@@ -1,4 +1,4 @@
-import { LabeledInput } from "@artsy/palette"
+import { Input } from "@artsy/palette"
 import { useField } from "formik"
 import type { FC } from "react"
 import { graphql, useFragment } from "react-relay"
@@ -37,7 +37,7 @@ export const OfferInput: FC<OfferInputProps> = ({ name, order, onBlur }) => {
   }
 
   return (
-    <LabeledInput
+    <Input
       title="Your offer"
       type="text"
       pattern="[0-9]"
@@ -45,8 +45,7 @@ export const OfferInput: FC<OfferInputProps> = ({ name, order, onBlur }) => {
       inputMode={"numeric"}
       onBlur={handleBlur}
       value={formatValueForDisplay(field.value)}
-      label={currencySymbol}
-      variant="prefix"
+      placeholder={`${currencySymbol}0`}
       data-testid="offer-input"
       onChange={event => {
         const currentValue = event.currentTarget.value
