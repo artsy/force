@@ -118,6 +118,7 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
             to={artist.coverArtwork.href}
             display="block"
             textDecoration="none"
+            maxWidth="100%"
             onClick={trackClickedArtistArtworkImage}
           >
             <ArtistHeaderImageFragmentContainer artwork={artist.coverArtwork} />
