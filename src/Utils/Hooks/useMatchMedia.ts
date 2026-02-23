@@ -30,8 +30,10 @@ export function __internal__useMatchMedia(
   mediaQueryString: string,
   { initialMatches = null } = {},
 ) {
+  // biome-ignore lint/correctness/useHookAtTopLevel: <explanation>
   const [matches, setMatches] = useState<boolean | null>(initialMatches)
 
+  // biome-ignore lint/correctness/useHookAtTopLevel: <explanation>
   useEffect(() => {
     if (typeof window === "undefined" || typeof matchMedia === "undefined") {
       return

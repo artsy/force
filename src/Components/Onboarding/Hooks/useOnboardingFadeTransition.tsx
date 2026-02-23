@@ -13,7 +13,7 @@ export const useOnboardingFadeTransition = ({
     initialStatus: "Out",
   })
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     const init = async () => {
       await wait(100)

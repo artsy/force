@@ -48,7 +48,7 @@ const NotificationsApp: React.FC<
   const isNotificationsPage = pathname.startsWith("/notifications")
 
   // Scroll to top of content pane when route changes
-  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
     useEffect(() => {
     contentRef.current?.scrollTo(0, 0)
   }, [pathname])

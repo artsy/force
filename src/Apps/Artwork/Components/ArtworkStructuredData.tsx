@@ -57,6 +57,7 @@ export const ArtworkStructuredData: React.FC<ArtworkStructuredDataProps> = ({
         }
       : undefined
 
+  // biome-ignore lint/correctness/useHookAtTopLevel: <explanation>
   const partner: ArtGallery | undefined = useMemo(() => {
     if (!artwork.partner?.name) return
     const partner = artwork.partner
@@ -84,6 +85,7 @@ export const ArtworkStructuredData: React.FC<ArtworkStructuredDataProps> = ({
     }
   }, [artwork.partner])
 
+  // biome-ignore lint/correctness/useHookAtTopLevel: <explanation>
   const offer: Offer | undefined = useMemo(() => {
     if (!artwork.listPrice || artwork.isPriceHidden) return
 

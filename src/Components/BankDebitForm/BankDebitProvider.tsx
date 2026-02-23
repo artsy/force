@@ -53,7 +53,7 @@ export const BankDebitProvider: FC<React.PropsWithChildren<Props>> = ({
   const [bankDebitSetupError, setBankDebitSetupError] = useState(false)
   const { submitMutation } = CreateBankDebitSetupForOrder()
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     const fetchData = async () => {
       try {

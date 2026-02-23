@@ -9,7 +9,7 @@ export const ArtsyGuaranteeMessage: React.FC<
   const { match } = useRouter()
   const [showBanner, setShowBanner] = useState(false)
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     setShowBanner(true)
 

@@ -43,8 +43,8 @@ const AuctionRegistrationRoute: React.FC<
   }
 
   // Track page view or redirect
-  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
-    useEffect(() => {
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  useEffect(() => {
     if (redirectToSaleHome(sale)) {
       router.replace(`/auction/${sale.slug}`)
     } else if (me.hasQualifiedCreditCards) {

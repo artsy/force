@@ -9,6 +9,7 @@ declare global {
 const emitter =
   typeof window !== "undefined"
     ? window.__reactionEventsEventEmitter ||
+      // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
       (window.__reactionEventsEventEmitter = new EventEmitter())
     : new EventEmitter()
 

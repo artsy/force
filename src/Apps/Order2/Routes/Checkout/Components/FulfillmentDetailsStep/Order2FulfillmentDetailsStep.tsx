@@ -43,7 +43,7 @@ export const Order2FulfillmentDetailsStep: React.FC<
     option => option.type === "PICKUP",
   )
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
+  // biome-ignore lint/correctness/useExhaustiveDependencies: we don't want this to update
   const initialPickupSelected = useMemo(() => {
     return pickupOption?.selected ?? false
   }, [])

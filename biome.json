@@ -42,7 +42,7 @@
         "noUnusedImports": "off",
         "noUnusedVariables": "off",
         "useExhaustiveDependencies": "warn",
-        "useHookAtTopLevel": "off",
+        "useHookAtTopLevel": "warn",
         "useJsxKeyInIterable": "off",
         "useParseIntRadix": "off"
       },
@@ -88,7 +88,7 @@
       },
       "suspicious": {
         "noArrayIndexKey": "off",
-        "noAssignInExpressions": "off",
+        "noAssignInExpressions": "warn",
         "noAsyncPromiseExecutor": "off",
         "noConfusingVoidType": "off",
         "noDoubleEquals": "off",
@@ -101,7 +101,7 @@
         "noPrototypeBuiltins": "off",
         "noShadowRestrictedNames": "off",
         "noTemplateCurlyInString": "off",
-        "noThenProperty": "off",
+        "noThenProperty": "warn",
         "noTsIgnore": "off",
         "useIterableCallbackReturn": "off"
       },
@@ -110,8 +110,8 @@
         "noSvgWithoutTitle": "off",
         "useAltText": "off",
         "useButtonType": "off",
-        "useKeyWithClickEvents": "off",
-        "useValidAnchor": "off"
+        "useKeyWithClickEvents": "warn",
+        "useValidAnchor": "warn"
       }
     },
     "includes": [

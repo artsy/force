@@ -43,6 +43,6 @@ export const useLoadScript = ({
         }
       }
     }
-  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   }, [id, onReady, removeOnUnmount, rest])
 }

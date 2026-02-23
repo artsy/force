@@ -64,7 +64,7 @@ export const SavesArtworks: FC<React.PropsWithChildren<SavesArtworksProps>> = ({
     )
   }, [state.priceMax, state.priceMin])
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const SaveArtworksInvalidFallback = useMemo(() => {
     return ({ onReset }: ErrorFallbackProps) => {
       return (

@@ -56,6 +56,7 @@ const NotificationItem: FC<React.PropsWithChildren<NotificationItemProps>> = ({
 
   const subTitle = getNotificationSubTitle(notification)
 
+  // biome-ignore lint/correctness/useHookAtTopLevel: <explanation>
   const images = useMemo(
     () =>
       notification.previewImages.filter(

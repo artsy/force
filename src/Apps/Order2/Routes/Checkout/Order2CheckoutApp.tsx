@@ -79,8 +79,9 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
     orderData.lineItems[0]?.artwork?.isFixedShippingFeeOnly
   const isExpressCheckoutEligible = !isOffer && isFixedShipping
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
-  useEffect(() => {
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Mount effect
+  // biome-ignore lint/correctness/useHookAtTopLevel: <explanation>
+    useEffect(() => {
     if (!isExpressCheckoutEligible) {
       setExpressCheckoutLoaded([])
     }
@@ -88,6 +89,7 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
 
   const activeStep = steps.find(step => step.state === CheckoutStepState.ACTIVE)
 
+  // biome-ignore lint/correctness/useHookAtTopLevel: <explanation>
   useEffect(() => {
     switch (activeStep?.name) {
       case CheckoutStepName.CONFIRMATION:
@@ -111,7 +113,8 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
   }, [activeStep?.name, checkoutTracking])
 
   // Scroll to top when returning to standard checkout mode (and at load time)
-  useEffect(() => {
+  // biome-ignore lint/correctness/useHookAtTopLevel: <explanation>
+    useEffect(() => {
     if (checkoutMode === "standard") {
       window.scrollTo({ top: 0, behavior: "smooth" })
     }

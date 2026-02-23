@@ -62,7 +62,7 @@ export const MyCollectionArtworkFormImages: React.FC<
     return photos.filter(c => !(c.geminiToken || c.url) && !c.loading)
   }
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     const imagesToUpload = getImagesToUpload(values.newPhotos)
 

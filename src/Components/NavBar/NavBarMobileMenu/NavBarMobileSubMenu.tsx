@@ -34,8 +34,8 @@ export const NavBarMobileSubMenu: React.FC<
   const isOpen = !!path?.includes(menu.title)
 
   // Track when drilldown menu becomes visible (once per page load, with 500ms delay)
-  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
-    useEffect(() => {
+  // biome-ignore lint/correctness/useExhaustiveDependencies: only track once per page load based on open state
+  useEffect(() => {
     if (isOpen && !hasTrackedRef.current) {
       // Only fire if menu stays open for at least 500ms
       timeoutRef.current = setTimeout(() => {

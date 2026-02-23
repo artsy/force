@@ -34,7 +34,7 @@ export const NotificationsContextProvider: FC<
   const [currentNotificationFilterType, setCurrentNotificationFilterType] =
     useState<NotificationType>("all")
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (!match.params.notificationId) return
 

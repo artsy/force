@@ -45,7 +45,7 @@ export const ConversationsSidebar: React.FC<
     totalDisplayedCount = SIDEBAR_FETCH_PAGE_SIZE
   }
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (!match.params.conversationId) {
       return

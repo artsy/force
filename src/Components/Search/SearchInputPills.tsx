@@ -103,12 +103,12 @@ const SearchInputPills: FC<React.PropsWithChildren<SearchInputPillsProps>> = ({
     }
   }
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     showNextChevronHandler()
   }, [])
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     const handleResize = () => {
       showNextChevronHandler()

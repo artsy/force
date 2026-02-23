@@ -86,7 +86,7 @@ const ShippingRouteLayout: FC<
   const isExpressCheckoutLoading =
     shippingContext.state.isExpressCheckoutLoading
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (shippingContext.state.stage === "shipping_quotes") {
       jumpTo("shippingOptionsTop", { behavior: "smooth" })

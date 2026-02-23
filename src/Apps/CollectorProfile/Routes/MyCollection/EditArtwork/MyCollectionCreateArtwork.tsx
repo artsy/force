@@ -87,7 +87,7 @@ export const MyCollectionCreateArtwork: React.FC<
     }
   }
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
+  // biome-ignore lint/correctness/useExhaustiveDependencies: we need to scroll to the top of the screen with each step
   useEffect(() => {
     window?.scrollTo?.({ top: 0 })
   }, [currentStep])

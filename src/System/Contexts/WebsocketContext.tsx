@@ -29,7 +29,7 @@ export const WebsocketContextProvider: React.FC<
 > = ({ channelInfo, enabled, children }) => {
   const [receivedData, setReceivedData] = useState(initialValues)
   const xapp_token = getENV("ARTSY_XAPP_TOKEN")
-  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (!enabled) return
     const actionCable = require("actioncable")

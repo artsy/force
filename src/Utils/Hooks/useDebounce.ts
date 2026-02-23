@@ -15,7 +15,7 @@ export const useDebounce = ({
   delay = 200,
   settings,
 }: UseDebounce) => {
-  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   return useCallback(debounce(callback, delay, settings), [callback, delay])
 }
 

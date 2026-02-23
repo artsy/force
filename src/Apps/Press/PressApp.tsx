@@ -17,6 +17,7 @@ const PressApp: FC<React.PropsWithChildren<PressAppProps>> = ({ page }) => {
 
   const {
     match: { location },
+  // biome-ignore lint/correctness/useHookAtTopLevel: <explanation>
   } = useRouter()
 
   return (

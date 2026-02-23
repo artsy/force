@@ -14,7 +14,7 @@ const getFirstFieldErrorName = errors => {
 export const ScrollToFieldError = () => {
   const { submitCount, isValid, errors } = useFormikContext()
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (isValid) return
 

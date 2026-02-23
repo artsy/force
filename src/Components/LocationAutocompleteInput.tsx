@@ -78,7 +78,7 @@ export const LocationAutocompleteInput: FC<
     return res?.predictions
   }
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const updateSuggestions = useCallback(async (value: string) => {
     setSuggestions([])
     if (!value.trim()) return

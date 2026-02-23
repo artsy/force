@@ -197,10 +197,12 @@ const VALIDATION_SCHEMA = Yup.object().shape({
   authenticationCode: Yup.string()
     .when("mode", {
       is: "OnDemand",
+      // biome-ignore lint/suspicious/noThenProperty: <explanation>
       then: Yup.string().required("Authentication code required."),
     })
     .when("mode", {
       is: "TwoFactor",
+      // biome-ignore lint/suspicious/noThenProperty: <explanation>
       then: Yup.string().required("Authentication code required."),
     }),
 })

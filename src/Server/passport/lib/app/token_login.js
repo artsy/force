@@ -28,6 +28,7 @@ module.exports.headerLogin = (req, _res, next) => {
 
 module.exports.trustTokenLogin = (req, res, next) => {
   let token
+  // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
   if ((token = req.query.trust_token) == null) {
     return next()
   }

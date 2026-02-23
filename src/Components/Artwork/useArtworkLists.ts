@@ -21,7 +21,7 @@ export const useArtworkLists = (options: SaveArtworkToListsOptions) => {
   const { saveArtworkToLists: saveToLists, openSelectListsForArtworkModal } =
     useSaveArtworkToLists(options)
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (
       !value ||

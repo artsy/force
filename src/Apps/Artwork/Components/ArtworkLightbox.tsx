@@ -58,6 +58,7 @@ const ArtworkLightbox: React.FC<
 
   const hasGeometry = !!images[0]?.resized?.width
 
+  // biome-ignore lint/correctness/useHookAtTopLevel: <explanation>
   const image = useMemo(() => {
     if (localImage) {
       return {

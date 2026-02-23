@@ -40,7 +40,7 @@ export const FairOrganizerDedicatedArticles: React.FC<
   const [isLoading, setIsLoading] = useState(false)
   const logger = createLogger("FairOrganizerDedicatedArticles.tsx")
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     setIsLoading(true)
 

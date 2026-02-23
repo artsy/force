@@ -177,6 +177,7 @@ export const NavigationTabs: FC<
     () =>
       MORE_TABS.reduce((prev, key) => {
         const count = counts.find(count => count.name === key)?.count ?? 0
+        // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
         return count ? (prev += count) : prev
       }, 0),
     [counts],

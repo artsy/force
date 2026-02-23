@@ -29,7 +29,8 @@ export function bootstrapSharifyAndContextLocalsMiddleware(
     req.session != null
       ? req.session.id != null
         ? req.session.id
-        : (req.session.id = uuid.v1())
+        : // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
+          (req.session.id = uuid.v1())
       : undefined,
   )
   updateSharifyAndContext(res, "ARTSY_XAPP_TOKEN", artsyXapp.token)

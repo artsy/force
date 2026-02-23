@@ -80,9 +80,8 @@ const CollectorProfileSavesRoute: FC<
    * To prevent this from happening, `useMemo` is used here
    */
 
-  
-// biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
-const  selectedArtworkList = useMemo(() => {
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  const selectedArtworkList = useMemo(() => {
     return artworkLists.find(
       artworkList => artworkList.internalID === selectedArtworkListId,
     )

@@ -77,6 +77,7 @@ export const ADDRESS_VALIDATION_SHAPE = {
   postalCode: postalCodeValidator,
   region: Yup.string().when("country", {
     is: country => ["US", "CA"].includes(country),
+    // biome-ignore lint/suspicious/noThenProperty: <explanation>
     then: Yup.string().required("State is required"),
     otherwise: Yup.string(),
   }),

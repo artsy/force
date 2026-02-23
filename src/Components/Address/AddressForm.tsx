@@ -115,7 +115,7 @@ export const AddressForm: React.FC<
     onChangeValue(key, value)
   }
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   React.useEffect(() => {
     if (key) {
       onChange(address, key)

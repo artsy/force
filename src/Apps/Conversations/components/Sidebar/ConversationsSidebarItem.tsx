@@ -31,7 +31,7 @@ export const ConversationsSidebarItem: React.FC<
 
   const shouldHighlight = isSelected || isUnread
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (isSelected) {
       scrollRef.current?.scrollIntoView?.({ block: "center" })

@@ -406,8 +406,8 @@ const useAutoScrollToBottom = ({
   }, [lastMessageId, triggerAutoScroll])
 
   // Additional effect to ensure initial scroll after component mount
-  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
-    useEffect(() => {
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  useEffect(() => {
     if (lastMessageId) {
       const timeoutId = setTimeout(() => {
         triggerAutoScroll({

@@ -29,8 +29,10 @@ export const AuctionResult: React.FC<
 
   if (!artist) return null
 
+  // biome-ignore lint/correctness/useHookAtTopLevel: <explanation>
   const isMounted = useRef(false)
 
+  // biome-ignore lint/correctness/useHookAtTopLevel: <explanation>
   useEffect(() => {
     if (isMounted.current) return
     if (!artist) return

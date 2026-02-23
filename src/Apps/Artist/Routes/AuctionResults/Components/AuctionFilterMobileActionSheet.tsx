@@ -32,7 +32,7 @@ export const AuctionFilterMobileActionSheet: FC<
     filterContext.stagedFilters,
   )
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     // While mobile sheet is mounted, the effect of the user's filter selections
     // should be merely staged until the Apply button is pressed, rather than

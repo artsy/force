@@ -99,7 +99,7 @@ export const useLocalImageStorage = (
     }
   }
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     changeLocalImage()
   }, [key])

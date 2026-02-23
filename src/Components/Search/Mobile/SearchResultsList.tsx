@@ -46,7 +46,7 @@ const SearchResultsList: FC<
     useAnalyticsContext()
   const options = extractNodes(viewer.searchConnection)
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (viewer.searchConnection) {
       const baseEvent = {
