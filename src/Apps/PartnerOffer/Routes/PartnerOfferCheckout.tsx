@@ -51,6 +51,7 @@ export const PartnerOfferCheckout: FC<
     }
   }, [partnerCheckoutMutation, partnerOfferId, router])
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
   useEffect(() => {
     handleRedirect()
   }, [])

@@ -28,6 +28,7 @@ export const ArtistsRoute: React.FC<
     ? match.location.hash.replace(/^#/, "")
     : undefined
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
   useEffect(() => {
     if (artistId && isLoaded && isMobile !== null) {
       jumpTo("PartnerArtistDetails")

@@ -46,6 +46,7 @@ export const ArtworkErrorApp: React.FC<
     }
   }, [])
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
   useEffect(() => {
     trackPageview()
   }, [])

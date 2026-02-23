@@ -28,6 +28,7 @@ export const usePrefetchRoute = ({
   // If we're transitioning routes, we don't want to prefetch
   const prefetchDisabled = !prefetchFeatureFlagEnabled || !match?.elements
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
   const prefetch = useCallback(
     (path = initialPath) => {
       if (prefetchDisabled) {

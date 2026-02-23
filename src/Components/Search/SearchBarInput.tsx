@@ -97,6 +97,7 @@ export const SearchBarInput: FC<
     },
   ]
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
   useEffect(() => {
     if (shouldStartSearching(debouncedValue)) {
       searchRequest(

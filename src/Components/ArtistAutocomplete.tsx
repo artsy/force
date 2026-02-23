@@ -117,6 +117,7 @@ export const ArtistAutoComplete: React.FC<
     }
   }
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
   const handleSuggestionsFetchRequested = useMemo(
     () => debounce(updateSuggestions, DEBOUNCE_DELAY),
     [],

@@ -105,7 +105,8 @@ export const ArtworkApp: React.FC<React.PropsWithChildren<Props>> = props => {
 
   // If the user is expecting a partner offer, require login and remove
   // the query param from the URL after login.
-  useEffect(() => {
+  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
+      useEffect(() => {
     const expectingPartnerOffer = !!match?.location?.query?.partner_offer_id
     const isLoggedIn = !!me
 

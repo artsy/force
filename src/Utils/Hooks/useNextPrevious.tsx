@@ -12,6 +12,7 @@ export interface UseNextPrevious {
 export const useNextPrevious = ({ onNext, onPrevious }: UseNextPrevious) => {
   const containerRef = useRef<HTMLElement | null>(null)
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
   useEffect(() => {
     const handleKeydown = ({ key }: KeyboardEvent) => {
       if (!containerRef.current) return

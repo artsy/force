@@ -63,6 +63,7 @@ export const PriceOptions: React.FC<
     selectedPriceOption,
   )
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
   useEffect(() => {
     if (lastOffer) {
       onChange(lastOffer)
@@ -71,6 +72,7 @@ export const PriceOptions: React.FC<
     }
   }, [])
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
   useEffect(() => {
     if (toggle) trackClick("Different amount", 0)
   }, [toggle])

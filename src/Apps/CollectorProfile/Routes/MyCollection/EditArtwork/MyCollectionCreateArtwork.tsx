@@ -87,6 +87,7 @@ export const MyCollectionCreateArtwork: React.FC<
     }
   }
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
   useEffect(() => {
     window?.scrollTo?.({ top: 0 })
   }, [currentStep])

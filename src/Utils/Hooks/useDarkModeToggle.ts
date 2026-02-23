@@ -27,6 +27,7 @@ export const useDarkModeToggle = ({
     [toggleDarkMode],
   )
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
   useEffect(() => {
     if (attachKeyListeners) {
       document.addEventListener("keydown", handleKeyDown)

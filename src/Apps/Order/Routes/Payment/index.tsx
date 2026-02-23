@@ -103,6 +103,7 @@ export const PaymentRoute: FC<
 
   const artworkVersion = extractNodes(order.lineItems)[0]?.artworkVersion
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
   useEffect(() => {
     const bankAccountsArray =
       selectedPaymentMethod !== "SEPA_DEBIT"
@@ -121,6 +122,7 @@ export const PaymentRoute: FC<
     }
   }, [order])
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
   useEffect(() => {
     setSelectedPaymentMethod(getInitialPaymentMethodValue(order))
   }, [order])
@@ -360,7 +362,8 @@ export const PaymentRoute: FC<
   }
 
   // complete payment when balance check is disabled and bank account is set
-  useEffect(() => {
+  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
+    useEffect(() => {
     if (
       !balanceCheckEnabled &&
       (selectedBankAccountId || isPaymentSetupSuccessful) &&
@@ -377,7 +380,8 @@ export const PaymentRoute: FC<
   ])
 
   // show error modal when payment setup error is set
-  useEffect(() => {
+  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
+    useEffect(() => {
     if (paymentSetupError) {
       let title = "An error occurred"
       let message =
@@ -453,6 +457,7 @@ export const PaymentRoute: FC<
     })
   }
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
   useEffect(() => {
     if (order && me) {
       setIsLoading(false)

@@ -115,7 +115,9 @@ const FulfillmentDetailsFormLayout = (
    * via `shippingContext.state.fulfillmentDetailsCtx`
    */
 
-  useEffect(() => {
+  
+// biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
+useEffect(() => {
     shippingContext.actions.setFulfillmentDetailsFormikContext(formikContext)
   }, [formikContext.values, formikContext.isValid])
 
@@ -137,6 +139,7 @@ const FulfillmentDetailsFormLayout = (
 
   const serializedValues = JSON.stringify(formikContext.values)
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
   const handleSelectSavedAddress = useCallback(
     (address: SavedAddressType) => {
       shippingContext.actions.setStage("fulfillment_details")
@@ -157,7 +160,8 @@ const FulfillmentDetailsFormLayout = (
   )
 
   // Use useEffect to submit the form after values are updated
-  useEffect(() => {
+  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
+    useEffect(() => {
     if (shouldSubmit) {
       formikContext.submitForm()
       setShouldSubmit(false) // Reset the state after submission

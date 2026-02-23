@@ -59,6 +59,7 @@ const ArtworkVideoPlayer: FC<
     }, 0)
   }
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
   useEffect(() => {
     window.addEventListener("blur", trackClickedPlayVideo)
 

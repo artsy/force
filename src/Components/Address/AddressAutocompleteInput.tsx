@@ -294,6 +294,7 @@ export const AddressAutocompleteInput = ({
   const serializedOptions = JSON.stringify(autocompleteOptions)
   const serializedPreviousOptions = JSON.stringify(previousOptions)
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
   useEffect(() => {
     if (
       serviceAvailability?.enabled &&

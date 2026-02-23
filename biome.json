@@ -41,7 +41,7 @@
         "noUnusedFunctionParameters": "off",
         "noUnusedImports": "off",
         "noUnusedVariables": "off",
-        "useExhaustiveDependencies": "off",
+        "useExhaustiveDependencies": "warn",
         "useHookAtTopLevel": "off",
         "useJsxKeyInIterable": "off",
         "useParseIntRadix": "off"

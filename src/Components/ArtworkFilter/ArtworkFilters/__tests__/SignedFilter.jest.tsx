@@ -52,6 +52,7 @@ describe(SignedFilter, () => {
       const MobileVersionOfSignedFilter = () => {
         const filterContext = useArtworkFilterContext()
 
+        // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
         useEffect(() => {
           // on mount, initialize the staged filters
           filterContext.setShouldStageFilterChanges?.(true)

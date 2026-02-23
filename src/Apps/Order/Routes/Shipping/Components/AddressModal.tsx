@@ -188,7 +188,8 @@ const AddressModalForm: FC<
     addressModalAction.type === "edit" ? Object.keys(errors.address || {}) : []
 
   // Touch fields that have errors on edit
-  useEffect(() => {
+  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
+    useEffect(() => {
     if (attributeErrorFieldsForEdit.length > 0) {
       attributeErrorFieldsForEdit.forEach(field => {
         setFieldTouched(`attributes.${field}`, true)

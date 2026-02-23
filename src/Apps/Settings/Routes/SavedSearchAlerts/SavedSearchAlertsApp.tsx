@@ -71,6 +71,7 @@ export const SavedSearchAlertsApp: React.FC<
 
   const [viewOption, setViewOption] = useState<"EDIT" | "ARTWORKS" | null>(null)
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
   useEffect(() => {
     if (!alerts || !alerts[0]) return
     if (match?.params?.alertID) return
@@ -201,6 +202,7 @@ export const SavedSearchAlertsApp: React.FC<
   const alertID = match?.params?.alertID ?? editAlertEntity?.id
   const path = match.location.pathname
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
   useEffect(() => {
     if (!alertID) return
 

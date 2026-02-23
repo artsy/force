@@ -147,6 +147,7 @@ export const useClientQuery = <T extends OperationType>({
     return { promise, disposable }
   }
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
   useEffect(() => {
     if (key.current !== prevKey.current) {
       setData(null)

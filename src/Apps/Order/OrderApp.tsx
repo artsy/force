@@ -45,6 +45,7 @@ const OrderApp: FC<React.PropsWithChildren<OrderAppProps>> = props => {
 
   const removeNavigationListenerRef = useRef<null | (() => void)>(null)
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
   useEffect(() => {
     if (!removeNavigationListenerRef.current) {
       removeNavigationListenerRef.current =

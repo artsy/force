@@ -6,6 +6,7 @@ export const useNetworkOfflineMonitor = () => {
 
   const { sendToast, retractToast } = useToasts()
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
   useEffect(() => {
     const handleOffline = () => {
       if (toastID.current) return

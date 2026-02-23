@@ -51,6 +51,7 @@ export const Overlay: FC<React.PropsWithChildren<OverlayProps>> = ({
   const [debouncedValue] = useDebounce(inputValue, SEARCH_DEBOUNCE_DELAY)
   const disablePills = !shouldStartSearching(inputValue)
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
   useEffect(() => {
     inputRef.current?.focus()
 
@@ -61,6 +62,7 @@ export const Overlay: FC<React.PropsWithChildren<OverlayProps>> = ({
     // When selecting another pill - this effect shouldn't be executed again, so we disable the linting rule
   }, [])
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
   useEffect(() => {
     if (shouldStartSearching(debouncedValue)) {
       refetch(debouncedValue, selectedPill.searchEntityName)

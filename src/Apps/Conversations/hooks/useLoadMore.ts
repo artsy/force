@@ -34,6 +34,7 @@ export const useLoadMore = ({
     return isFunction(isLoadingNext) ? isLoadingNext() : isLoadingNext
   }
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
   useEffect(() => {
     if (shouldLoadMore && hasMore() && !isLoading() && when !== false) {
       loadNext(pageSize, () => {

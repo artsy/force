@@ -157,6 +157,7 @@ export const SizeFilter: React.FC<React.PropsWithChildren<SizeFilterProps>> = ({
     setFilters?.(updatedFilters, { force: false })
   }
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
   useEffect(() => {
     if (width === "*-*" || height === "*-*") {
       setCustomSize({

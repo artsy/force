@@ -26,6 +26,7 @@ export const KeywordFilter: React.FC<React.PropsWithChildren<unknown>> = () => {
     setFilterRef.current("keyword", textOrUndefined)
   }
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
   const handleDebounce = useMemo(
     () => debounce(updateKeywordFilter, DEBOUNCE_DELAY),
     [],
@@ -37,10 +38,12 @@ export const KeywordFilter: React.FC<React.PropsWithChildren<unknown>> = () => {
   }
 
   // Stop the invocation of the debounced function after unmounting
-  useEffect(() => {
+  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
+    useEffect(() => {
     return () => handleDebounce.cancel?.()
   }, [])
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
   useEffect(() => {
     setValue(keyword ?? "")
   }, [keyword, setValue])

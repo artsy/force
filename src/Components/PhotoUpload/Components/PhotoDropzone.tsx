@@ -50,6 +50,7 @@ export const PhotoDropzone: React.FC<
     multiple: true,
   })
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
   useEffect(() => {
     const errors = concatDropzoneErrors(fileRejections, customErrors)
 

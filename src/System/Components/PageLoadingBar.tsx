@@ -17,6 +17,7 @@ export const PageLoadingBar: React.FC<
   const barRef = useRef<HTMLDivElement>(null)
   const [scaleX, setScaleX] = useState(0)
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
   useEffect(() => {
     firstMount.current = false
 

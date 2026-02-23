@@ -22,6 +22,7 @@ export const OrderDetailsPage = ({ order, me }: OrderDetailsPageProps) => {
   const meData = useFragment(ME_FRAGMENT, me)
   const tracking = useOrder2Tracking(orderData.source, orderData.mode)
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
   useEffect(() => {
     if (!!orderData) {
       tracking.orderDetailsViewed(

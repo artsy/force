@@ -31,6 +31,7 @@ export const SearchResultsArtworksRoute: React.FC<
   const { viewer } = props
   const { sidebar } = viewer
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
   useEffect(() => {
     const term = match.location.query.term
 

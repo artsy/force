@@ -151,7 +151,8 @@ const AddressVerificationFlow: React.FC<
   >(addressOptions[0]?.key)
 
   // perform only once when the flow first loads
-  useEffect(() => {
+  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
+    useEffect(() => {
     if (verificationPath === VerificationPath.ERROR_IMMEDIATE_CONFIRM) {
       const fallbackOption = fallbackFromFormValues(verificationInput)
       onChosenAddress(AddressVerifiedBy.USER, fallbackOption.address)
@@ -186,6 +187,7 @@ const AddressVerificationFlow: React.FC<
       setShowModal(false)
       onChosenAddress(verifiedBy, selectedAddress.address)
     }
+  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
   }, [addressOptions, onChosenAddress, selectedAddressKey])
 
   const handleCloseModal = ({

@@ -254,6 +254,7 @@ const useWidgetObserver = ({
     }
   }, [])
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
   useEffect(() => {
     if (visiblePrice) {
       onViewEstimatedPrice(visiblePrice)

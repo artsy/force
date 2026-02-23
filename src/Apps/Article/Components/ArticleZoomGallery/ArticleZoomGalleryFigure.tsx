@@ -179,6 +179,7 @@ const Image: FC<
 
   const ref = useRef<HTMLImageElement>(null)
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: ignored using `--suppress`
   useEffect(() => {
     if (ref.current?.complete) {
       setMode("Ready")
