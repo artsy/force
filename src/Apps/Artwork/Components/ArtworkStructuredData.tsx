@@ -7,6 +7,7 @@ import { graphql, useLazyLoadQuery } from "react-relay"
 import type {
   ArtGallery,
   ImageObject,
+  Organization,
   Offer,
   Person,
   PostalAddress,
@@ -115,6 +116,20 @@ export const ArtworkStructuredData: React.FC<ArtworkStructuredDataProps> = ({
     }
   }, [artwork.listPrice, artwork.isPriceHidden, artwork.availability, partner])
 
+  const publisher: Organization | undefined = artwork.publisher
+    ? {
+        "@type": "Organization",
+        name: artwork.publisher,
+      }
+    : undefined
+
+  const manufacturer: Organization | undefined = artwork.manufacturer
+    ? {
+        "@type": "Organization",
+        name: artwork.manufacturer,
+      }
+    : undefined
+
   return (
     <StructuredData
       schemaData={{
@@ -123,12 +138,21 @@ export const ArtworkStructuredData: React.FC<ArtworkStructuredDataProps> = ({
           {
             "@type": "VisualArtwork",
             "@id": `${artworkUrl}#visual-artwork`,
+            url: artworkUrl,
             name: artwork.title ?? "Untitled",
             creator,
             artform: artwork.mediumType?.name ?? undefined,
             artMedium: artwork.medium ?? undefined,
             dateCreated: artwork.date ?? undefined,
             artEdition: artwork.editionOf ?? undefined,
+            publisher,
+            isPartOf: artwork.series
+              ? {
+                  "@type": "CreativeWorkSeries",
+                  name: artwork.series,
+                }
+              : undefined,
+            copyrightNotice: artwork.imageRights ?? undefined,
             width: artwork.width
               ? {
                   "@type": "QuantitativeValue",
@@ -156,6 +180,7 @@ export const ArtworkStructuredData: React.FC<ArtworkStructuredDataProps> = ({
           {
             "@type": "Product",
             "@id": `${artworkUrl}#product`,
+            url: artworkUrl,
             name: artwork.title ?? "Untitled",
             brand: {
               "@id": artistUrl,
@@ -169,6 +194,7 @@ export const ArtworkStructuredData: React.FC<ArtworkStructuredDataProps> = ({
             category: artwork.mediumType?.name ?? undefined,
             offers: offer,
             productionDate: artwork.date ?? undefined,
+            manufacturer,
           },
           {
             "@type": "WebPage",
@@ -190,6 +216,10 @@ const QUERY = graphql`
       href
       title
       medium
+      series
+      publisher
+      manufacturer
+      imageRights
       editionOf
       mediumType {
         name

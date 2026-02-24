@@ -124,7 +124,7 @@ const privateArtworkAdditionalInfoFragment = graphql`
     series
     publisher
     manufacturer
-    image_rights: imageRights
+    imageRights
     canRequestLotConditionsReport
     internalID
     isUnlisted
