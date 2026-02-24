@@ -4,7 +4,6 @@ import {
   Clickable,
   Flex,
   type FlexProps,
-  HTML,
   ReadMore,
   StackableBorderBox,
   Text,
@@ -62,17 +61,17 @@ export const ArtworkDetailsAdditionalInfo: React.FC<
                 term={title}
                 onTitleClick={onTitleClick}
               >
-                <HTML variant="xs" color="mono60">
-                  {typeof value === "string" ? (
+                {typeof value === "string" ? (
+                  <Text variant="xs" color="mono60">
                     <ReadMore
                       onReadMoreClicked={onReadMoreClicked}
                       maxLines={2}
                       content={value}
                     />
-                  ) : (
-                    value
-                  )}
-                </HTML>
+                  </Text>
+                ) : (
+                  value
+                )}
               </ArtworkDefinitionList>
             ),
           )}
