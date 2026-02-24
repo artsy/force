@@ -3,8 +3,10 @@ import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
 import { OfferInput } from "Apps/Order2/Routes/Checkout/Components/OfferStep/Components/OfferInput"
 import type { OfferFormProps } from "Apps/Order2/Routes/Checkout/Components/OfferStep/types"
 import createLogger from "Utils/logger"
+import { useCountdownTimer } from "Utils/Hooks/useCountdownTimer"
 import type { Order2OfferOptions_order$key } from "__generated__/Order2OfferOptions_order.graphql"
 import { useFormikContext } from "formik"
+import { DateTime } from "luxon"
 import { useMemo, useState } from "react"
 import { graphql, useFragment } from "react-relay"
 
@@ -63,6 +65,21 @@ export const Order2OfferOptions: React.FC<Order2OfferOptionsProps> = ({
   // exact price case
   const lineItemListPrice = orderData.lineItems?.[0]?.listPrice
 
+  const isLimitedPartnerOffer = orderData.source === "PARTNER_OFFER"
+
+  // Calculate timer directly in this component to ensure re-renders
+  const partnerOfferEndTime =
+    (isLimitedPartnerOffer && orderData.buyerStateExpiresAt) || ""
+  const partnerOfferStartTime = isLimitedPartnerOffer
+    ? DateTime.fromISO(partnerOfferEndTime).minus({ days: 3 }).toString()
+    : ""
+
+  const timer = useCountdownTimer({
+    startTime: partnerOfferStartTime,
+    endTime: partnerOfferEndTime,
+    imminentTime: 1,
+  })
+
   const priceOptions = useMemo((): PriceOption[] => {
     // Handle price range case
     if (artworkListPrice?.__typename === "PriceRange") {
@@ -108,24 +125,26 @@ export const Order2OfferOptions: React.FC<Order2OfferOptionsProps> = ({
       return []
     }
 
+    const priceStart = isLimitedPartnerOffer ? "Gallery offer" : "List price"
+
     return [
       {
         key: PriceOptionKey.MAX,
         value: Math.round(lineItemListPriceMajor),
-        description: "List price",
+        description: priceStart,
       },
       {
         key: PriceOptionKey.MID,
         value: Math.round(lineItemListPriceMajor * 0.9), // 10% below
-        description: "10% below list price",
+        description: `10% below ${priceStart.toLowerCase()}`,
       },
       {
         key: PriceOptionKey.MIN,
         value: Math.round(lineItemListPriceMajor * 0.8), // 20% below
-        description: "20% below list price",
+        description: `20% below ${priceStart.toLowerCase()}`,
       },
     ]
-  }, [artworkListPrice, lineItemListPrice])
+  }, [artworkListPrice, lineItemListPrice, isLimitedPartnerOffer])
 
   const [selectedRadio, setSelectedRadio] = useState<
     PriceOptionKey | undefined
@@ -161,19 +180,41 @@ export const Order2OfferOptions: React.FC<Order2OfferOptionsProps> = ({
   return (
     <RadioGroup onSelect={handleRadioSelect} defaultValue={selectedRadio}>
       {[
-        ...priceOptions.map(({ value: optionValue, description, key }) => (
-          <Radio value={key} label={formatCurrency(optionValue)} key={key}>
-            <Spacer y={1} />
-            <Text variant="sm-display" color="mono60">
-              {description}
-            </Text>
-            <Spacer y={4} />
-          </Radio>
-        )),
+        ...priceOptions.map(({ value: optionValue, description, key }) => {
+          const isGalleryOffer =
+            isLimitedPartnerOffer && key === PriceOptionKey.MAX
+          const showTimer = isGalleryOffer && timer.hasValidRemainingTime
+          return (
+            <Radio
+              my={2}
+              value={key}
+              label={
+                isGalleryOffer ? (
+                  <Text variant="sm-display" color="blue100">
+                    {formatCurrency(optionValue)}
+                  </Text>
+                ) : (
+                  formatCurrency(optionValue)
+                )
+              }
+              key={key}
+            >
+              <Spacer y={0.5} />
+              <Text
+                variant="sm-display"
+                color={isGalleryOffer ? "blue100" : "mono60"}
+              >
+                {description}
+                {showTimer && ` (Exp. ${timer.remainingTime})`}
+              </Text>
+            </Radio>
+          )
+        }),
         <Radio
           key="price-option-custom"
           value="price-option-custom"
           label="Other amount"
+          my={2}
         >
           {selectedRadio === "price-option-custom" && (
             <Flex flexDirection="column" mt={2}>
@@ -188,6 +229,8 @@ export const Order2OfferOptions: React.FC<Order2OfferOptionsProps> = ({
 
 const FRAGMENT = graphql`
   fragment Order2OfferOptions_order on Order {
+    source
+    buyerStateExpiresAt
     currencyCode
     lineItems {
       listPrice {
