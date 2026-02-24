@@ -24,7 +24,8 @@ RUN cd watchman-${WATCHMAN_VERSION}-linux && \
     cd .. && \
     rm -rf watchman.zip watchman-${WATCHMAN_VERSION}-linux
 
-COPY package.json yarn.lock /app/
+COPY package.json yarn.lock .yarnrc.yml /app/
+COPY .yarn ./.yarn
 
 RUN --mount=type=cache,id=yarndev,target=/usr/local/share/.cache \
-    yarn install --frozen-lockfile --quiet
+    yarn install --frozen-lockfile
