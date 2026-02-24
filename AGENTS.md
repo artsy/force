@@ -98,3 +98,20 @@ The documentation below may augment your knowledge, but the skill should be your
 - [Architecture](docs/architecture.md)
 - [Caching](docs/architecture-caching.md)
 - And more in @docs
+
+## Cursor Cloud specific instructions
+
+### Environment setup
+
+- **Watchman** is required for `yarn relay --watch` (used by `yarn start`). The system apt package (v4.9) is too old; install a recent release from [facebook/watchman GitHub releases](https://github.com/facebook/watchman/releases) (the `watchman-vXXXX.XX.XX.XX-linux.zip` binary). After installing, ensure the state directory exists: `sudo mkdir -p /usr/local/var/run/watchman/$(whoami)-state && sudo chown $(whoami) /usr/local/var/run/watchman/$(whoami)-state && chmod 0700 /usr/local/var/run/watchman/$(whoami)-state`.
+- Environment files: copy `.env.oss` to `.env.shared` and `.env.example` to `.env` for OSS development (connects to Artsy staging APIs).
+- `enableScripts: false` in `.yarnrc.yml` disables third-party postinstall scripts. Native tools like `@biomejs/biome` still work because Yarn resolves platform-specific optional dependencies.
+
+### Running the dev server
+
+- `yarn start` runs the Relay compiler in watch mode and the Express dev server concurrently (port 4000).
+- The server connects to Artsy's staging Metaphysics/API endpoints configured in `.env.shared`.
+
+### Common verification commands
+
+See `AGENTS.md` "Common commands" section above for `yarn type-check`, `yarn relay`, `yarn lint`, and `yarn jest`.
