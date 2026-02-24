@@ -26,6 +26,7 @@ const MOCK_PRICE_RANGE_ORDER = {
   internalID: "order-id",
   mode: "OFFER",
   source: "artwork_page",
+  buyerStateExpiresAt: null,
   currencyCode: "USD",
   selectedFulfillmentOption: null,
   pendingOffer: null,
@@ -60,6 +61,7 @@ const MOCK_EXACT_PRICE_ORDER = {
   internalID: "order-id",
   mode: "OFFER",
   source: "artwork_page",
+  buyerStateExpiresAt: null,
   currencyCode: "USD",
   selectedFulfillmentOption: null,
   pendingOffer: null,
@@ -96,6 +98,7 @@ const MOCK_HIDDEN_PRICE_ORDER = {
   mode: "OFFER",
   currencyCode: "USD",
   source: "artwork_page",
+  buyerStateExpiresAt: null,
   selectedFulfillmentOption: null,
   pendingOffer: null,
   lineItems: [
@@ -117,6 +120,7 @@ const MOCK_EDITION_SET_PRICE_RANGE_ORDER = {
   internalID: "order-id",
   mode: "OFFER",
   source: "artwork_page",
+  buyerStateExpiresAt: null,
   currencyCode: "USD",
   selectedFulfillmentOption: null,
   pendingOffer: null,
@@ -141,6 +145,42 @@ const MOCK_EDITION_SET_PRICE_RANGE_ORDER = {
           __typename: "PriceRange",
           maxPrice: { major: 3000 },
           minPrice: { major: 1500 },
+        },
+      },
+    },
+  ],
+}
+
+const MOCK_PARTNER_OFFER_ORDER = {
+  internalID: "order-id",
+  mode: "OFFER",
+  source: "PARTNER_OFFER",
+  currencyCode: "USD",
+  buyerStateExpiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(), // 24 hours from now
+  selectedFulfillmentOption: null,
+  pendingOffer: null,
+  lineItems: [
+    {
+      artwork: {
+        slug: "artwork-slug",
+        priceDisplay: "exact",
+        isPriceRange: false,
+        listPrice: {
+          __typename: "Money",
+          major: 5000,
+        },
+        editionSets: [],
+        price: "$5,000",
+      },
+      listPrice: {
+        __typename: "Money",
+        major: 4500, // Partner offer price
+      },
+      artworkOrEditionSet: {
+        __typename: "Artwork",
+        listPrice: {
+          __typename: "Money",
+          major: 5000, // Original artwork price
         },
       },
     },
@@ -854,6 +894,78 @@ describe("Order2OfferStep", () => {
           },
         })
       })
+    })
+  })
+
+  describe("Partner Offer", () => {
+    it("displays 'Gallery offer' label instead of 'List price' for partner offers", () => {
+      renderWithRelay({
+        Viewer: () => ({
+          me: {
+            order: MOCK_PARTNER_OFFER_ORDER,
+          },
+        }),
+      })
+
+      // Should show "Gallery offer" instead of "List price"
+      expect(
+        screen.getByText((content, element) => {
+          return content.includes("Gallery offer") && content.includes("Exp.")
+        }),
+      ).toBeInTheDocument()
+      expect(screen.queryByText("List price")).not.toBeInTheDocument()
+
+      // Should show modified descriptions (these are in separate Text elements)
+      expect(
+        screen.getByText((content, element) => {
+          return content.includes("10% below gallery offer")
+        }),
+      ).toBeInTheDocument()
+      expect(
+        screen.getByText((content, element) => {
+          return content.includes("20% below gallery offer")
+        }),
+      ).toBeInTheDocument()
+    })
+
+    it("displays timer with expiration time for active partner offers", () => {
+      renderWithRelay({
+        Viewer: () => ({
+          me: {
+            order: MOCK_PARTNER_OFFER_ORDER,
+          },
+        }),
+      })
+
+      // Timer should be displayed
+      expect(
+        screen.getByText((content, element) => {
+          return content.includes("Exp.")
+        }),
+      ).toBeInTheDocument()
+    })
+
+    it("tracks clickedOfferOption with 'Gallery offer' when selecting partner offer", () => {
+      renderWithRelay({
+        Viewer: () => ({
+          me: {
+            order: MOCK_PARTNER_OFFER_ORDER,
+          },
+        }),
+      })
+
+      // Select the gallery offer option - it's in the text that includes timer
+      const galleryOfferText = screen.getByText((content, element) => {
+        return content.includes("Gallery offer") && content.includes("Exp.")
+      })
+      fireEvent.click(galleryOfferText)
+
+      expect(mockCheckoutTracking.clickedOfferOption).toHaveBeenCalledWith(
+        "USD",
+        "order-id",
+        4500,
+        "Gallery offer",
+      )
     })
   })
 })

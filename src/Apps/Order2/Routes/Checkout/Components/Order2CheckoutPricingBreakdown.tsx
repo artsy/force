@@ -27,11 +27,13 @@ export const Order2CheckoutPricingBreakdown: React.FC<
   const orderData = useFragment(FRAGMENT, order)
   const { mode, pendingOffer, source, buyerStateExpiresAt } = orderData
 
-  const hasPartnerOffer = source === "PARTNER_OFFER"
+  const isOffer = mode === "OFFER"
+  const accountForPartnerOffer = !isOffer && source === "PARTNER_OFFER"
 
   // Calculate timer directly in this component to ensure re-renders
-  const partnerOfferEndTime = (hasPartnerOffer && buyerStateExpiresAt) || ""
-  const partnerOfferStartTime = hasPartnerOffer
+  const partnerOfferEndTime =
+    (accountForPartnerOffer && buyerStateExpiresAt) || ""
+  const partnerOfferStartTime = accountForPartnerOffer
     ? DateTime.fromISO(partnerOfferEndTime).minus({ days: 3 }).toString()
     : ""
 
@@ -43,7 +45,7 @@ export const Order2CheckoutPricingBreakdown: React.FC<
 
   // Use pendingOffer.pricingBreakdownLines for OFFER mode, otherwise use order.pricingBreakdownLines
   const pricingBreakdownLines =
-    mode === "OFFER" && pendingOffer?.pricingBreakdownLines
+    isOffer && pendingOffer?.pricingBreakdownLines
       ? pendingOffer.pricingBreakdownLines
       : orderData.pricingBreakdownLines
 
@@ -66,12 +68,12 @@ export const Order2CheckoutPricingBreakdown: React.FC<
           case "SubtotalLine":
             if (line.amount) {
               amountText = `${line.amount.currencySymbol}${line.amount.amount}`
-            } else if (mode === "OFFER") {
-              amountText = "Waiting for offer"
+            } else if (isOffer) {
+              amountText = "Waiting for your offer"
             }
 
             // Show timer if we have a valid partner offer with time remaining
-            if (hasPartnerOffer && timer.hasValidRemainingTime) {
+            if (accountForPartnerOffer && timer.hasValidRemainingTime) {
               color = "blue100"
 
               secondLine = (
