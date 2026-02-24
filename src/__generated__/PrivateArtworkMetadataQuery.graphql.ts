@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<90a9d2e7932400188ba7888ba0821e13>>
+ * @generated SignedSource<<42073e00bb08f527cc5eab81f832b8ad>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -136,7 +136,7 @@ return {
             "storageKey": null
           },
           {
-            "alias": "image_rights",
+            "alias": null,
             "args": null,
             "kind": "ScalarField",
             "name": "imageRights",
@@ -295,12 +295,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "80b35a418439010c2b56457d7c1295c0",
+    "cacheID": "34764b17681c533b38e122d6407bd021",
     "id": null,
     "metadata": {},
     "name": "PrivateArtworkMetadataQuery",
     "operationKind": "query",
-    "text": "query PrivateArtworkMetadataQuery {\n  artwork(id: \"foo\") {\n    ...PrivateArtworkMetadata_artwork\n    id\n  }\n}\n\nfragment ArtworkDetailsAdditionalInfo_artwork on Artwork {\n  category\n  series\n  publisher\n  manufacturer\n  image_rights: imageRights\n  canRequestLotConditionsReport\n  internalID\n  isUnlisted\n  framed {\n    label\n    details\n  }\n  signatureInfo {\n    label\n    details\n  }\n  conditionDescription {\n    label\n    details\n  }\n  certificateOfAuthenticity {\n    label\n    details\n  }\n  mediumType {\n    __typename\n  }\n  dimensions {\n    in\n    cm\n  }\n  attributionClass {\n    name\n    id\n  }\n  medium\n  ...ArtworkDetailsMediumModal_artwork\n}\n\nfragment ArtworkDetailsMediumModal_artwork on Artwork {\n  mediumType {\n    name\n    longDescription\n  }\n}\n\nfragment PrivateArtworkMetadata_artwork on Artwork {\n  ...ArtworkDetailsAdditionalInfo_artwork\n  conditionDescription {\n    details\n  }\n  provenance(format: HTML)\n  exhibitionHistory(format: HTML)\n}\n"
+    "text": "query PrivateArtworkMetadataQuery {\n  artwork(id: \"foo\") {\n    ...PrivateArtworkMetadata_artwork\n    id\n  }\n}\n\nfragment ArtworkDetailsAdditionalInfo_artwork on Artwork {\n  category\n  series\n  publisher\n  manufacturer\n  imageRights\n  canRequestLotConditionsReport\n  internalID\n  isUnlisted\n  framed {\n    label\n    details\n  }\n  signatureInfo {\n    label\n    details\n  }\n  conditionDescription {\n    label\n    details\n  }\n  certificateOfAuthenticity {\n    label\n    details\n  }\n  mediumType {\n    __typename\n  }\n  dimensions {\n    in\n    cm\n  }\n  attributionClass {\n    name\n    id\n  }\n  medium\n  ...ArtworkDetailsMediumModal_artwork\n}\n\nfragment ArtworkDetailsMediumModal_artwork on Artwork {\n  mediumType {\n    name\n    longDescription\n  }\n}\n\nfragment PrivateArtworkMetadata_artwork on Artwork {\n  ...ArtworkDetailsAdditionalInfo_artwork\n  conditionDescription {\n    details\n  }\n  provenance(format: HTML)\n  exhibitionHistory(format: HTML)\n}\n"
   }
 };
 })();

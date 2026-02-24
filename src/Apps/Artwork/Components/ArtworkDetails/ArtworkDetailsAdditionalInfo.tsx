@@ -96,7 +96,7 @@ export const useArtworkDetailsAdditionalInfoFields = ({
     series,
     publisher,
     manufacturer,
-    image_rights,
+    imageRights,
     internalID,
     canRequestLotConditionsReport,
     framed,
@@ -237,7 +237,7 @@ export const useArtworkDetailsAdditionalInfoFields = ({
     { title: "Series", value: series },
     { title: "Publisher", value: publisher },
     { title: "Manufacturer", value: manufacturer },
-    { title: "Image rights", value: image_rights },
+    { title: "Image rights", value: imageRights },
   ]
 
   return {
@@ -255,7 +255,7 @@ export const ArtworkDetailsAdditionalInfoFragmentContainer =
         series
         publisher
         manufacturer
-        image_rights: imageRights
+        imageRights
         canRequestLotConditionsReport
         internalID
         isUnlisted
