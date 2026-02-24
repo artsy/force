@@ -16,25 +16,32 @@ interface ArtworkDefinitionListProps extends BoxProps {
 export const ArtworkDefinitionList: React.FC<
   React.PropsWithChildren<ArtworkDefinitionListProps>
 > = ({ term, children, onTitleClick, ...rest }) => {
+  const hasPlainTextChildren =
+    typeof children === "string" || typeof children === "number"
+
   return (
     <Flex as="dl" flexDirection={["column", "row"]} {...rest}>
-      {onTitleClick ? (
-        <>
+      <Text as="dt" variant="xs" width={150} flexShrink={0} mr={2}>
+        {onTitleClick ? (
           <Clickable textDecoration="underline" onClick={onTitleClick}>
-            <Text as="dt" variant="xs" width={150} flexShrink={0} mr={2}>
+            <Text as="span" variant="xs">
               {term}
             </Text>
           </Clickable>
-        </>
-      ) : (
-        <Text as="dt" variant="xs" width={150} flexShrink={0} mr={2}>
-          {term}
-        </Text>
-      )}
-
-      <Text as="dd" variant="xs" color="mono60" flex={1}>
-        {children}
+        ) : (
+          term
+        )}
       </Text>
+
+      <Flex as="dd" m={0} minWidth={0} flex={1}>
+        {hasPlainTextChildren ? (
+          <Text variant="xs" color="mono60">
+            {children}
+          </Text>
+        ) : (
+          children
+        )}
+      </Flex>
     </Flex>
   )
 }
