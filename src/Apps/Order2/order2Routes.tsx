@@ -1,15 +1,12 @@
 import loadable from "@loadable/component"
-import { newCheckoutEnabled } from "Apps/Order/redirects"
+import { getRedirect } from "Apps/Order/getRedirect"
+import { order2Redirects } from "Apps/Order2/redirects"
 import { OrderErrorApp } from "Apps/Order2/Components/Order2ErrorApp"
 import type { SystemContextProps } from "System/Contexts/SystemContext"
 import type { RouteProps } from "System/Router/Route"
-import createLogger from "Utils/logger"
-import type { order2Routes_CheckoutQuery$data } from "__generated__/order2Routes_CheckoutQuery.graphql"
 import { NOT_FOUND_ERROR } from "Apps/Order2/constants"
-import { type Match, RedirectException } from "found"
+import { HttpError, RedirectException } from "found"
 import { graphql } from "react-relay"
-
-const logger = createLogger("order2Routes.tsx")
 
 const Order2App = loadable(
   () => import(/* webpackChunkName: "checkoutBundle" */ "./Order2App"),
@@ -31,9 +28,59 @@ const CheckoutRoute = loadable(
 export const order2Routes: RouteProps[] = [
   {
     path: "/orders2/:orderID",
-    getComponent: () => Order2App,
+    Component: Order2App,
     onPreloadJS: () => {
       Order2App.preload()
+    },
+
+    query: graphql`
+      query order2Routes_OrderQuery($orderID: ID!) @raw_response_type {
+        me {
+          order(id: $orderID) {
+            ...redirects_order2 @relay(mask: false)
+          }
+        }
+      }
+    `,
+    render: ({ Component, props, resolving, error }: any) => {
+      if (error) {
+        if (error.status === 404 && !error.data) {
+          throw new HttpError(404, NOT_FOUND_ERROR)
+        }
+        throw error
+      }
+
+      if (!(Component && props)) {
+        return undefined
+      }
+
+      const order = props.me?.order
+
+      if (!order) {
+        return <OrderErrorApp code={404} message={NOT_FOUND_ERROR} />
+      }
+
+      if (resolving) {
+        const { match } = props as any
+        const { featureFlags } = match.context as SystemContextProps
+
+        const redirect = getRedirect(
+          order2Redirects,
+          match.location.pathname.replace(/orders2\/[^\/]+/, ""),
+          { order, featureFlags },
+        )
+
+        if (redirect !== null) {
+          if (process.env.NODE_ENV === "development") {
+            console.error(
+              `Redirecting from ${match.location.pathname} to ${redirect.path} because '${redirect.reason}'`,
+            )
+          }
+          throw new RedirectException(redirect.path)
+        }
+      }
+
+      return <Component {...props} />
     },
     children: [
       {
@@ -45,54 +92,15 @@ export const order2Routes: RouteProps[] = [
         query: graphql`
           query order2Routes_CheckoutQuery($orderID: ID!) {
             viewer {
-              me {
-                order(id: $orderID) {
-                  internalID
-                  mode
-                  buyerState
-                }
-              }
               ...Order2CheckoutRoute_viewer @arguments(orderID: $orderID)
             }
           }
         `,
-        render: args => {
-          const { props, Component } = args
+        render: ({ Component, props }: any) => {
           if (!(Component && props)) {
             return
           }
-          const typedProps = props as unknown as {
-            viewer: order2Routes_CheckoutQuery$data["viewer"]
-            match: Match<SystemContextProps>
-          }
-          const { viewer, match } = typedProps
-          const order = viewer?.me?.order
-          const featureFlags = match.context.featureFlags
-
-          if (!order) {
-            logger.warn("No order found - checkout page")
-            return <OrderErrorApp code={404} message={NOT_FOUND_ERROR} />
-          }
-
-          if (order.buyerState !== "INCOMPLETE") {
-            const redirectUrl = `/orders/${order.internalID}/details`
-            throw new RedirectException(redirectUrl)
-          }
-
-          if (!newCheckoutEnabled({ order, featureFlags })) {
-            const redirectUrl =
-              order.mode === "OFFER"
-                ? `/orders/${order.internalID}/offer`
-                : `/orders/${order.internalID}/shipping`
-            if (process.env.NODE_ENV === "development") {
-              console.error(
-                `Redirecting from to ${redirectUrl} because Order2 checkout is not enabled for this order`,
-              )
-            }
-            throw new RedirectException(redirectUrl)
-          }
-
-          return <Component viewer={viewer} />
+          return <Component viewer={props.viewer} />
         },
       },
       {
@@ -104,57 +112,15 @@ export const order2Routes: RouteProps[] = [
         query: graphql`
           query order2Routes_OfferQuery($orderID: ID!) {
             viewer {
-              me {
-                order(id: $orderID) {
-                  internalID
-                  mode
-                  buyerState
-                }
-              }
               ...Order2CheckoutRoute_viewer @arguments(orderID: $orderID)
             }
           }
         `,
-        render: args => {
-          const { props, Component } = args
+        render: ({ Component, props }: any) => {
           if (!(Component && props)) {
             return
           }
-          const typedProps = props as unknown as {
-            viewer: order2Routes_CheckoutQuery$data["viewer"]
-            match: Match<SystemContextProps>
-          }
-          const { viewer, match } = typedProps
-          const order = viewer?.me?.order
-          const featureFlags = match.context.featureFlags
-
-          if (!order) {
-            logger.warn("No order found - offer page")
-            return <OrderErrorApp code={404} message={NOT_FOUND_ERROR} />
-          }
-
-          if (order.mode !== "OFFER") {
-            logger.warn("Order is not an offer order - redirecting to checkout")
-            const redirectUrl = `/orders2/${order.internalID}/checkout`
-            throw new RedirectException(redirectUrl)
-          }
-
-          if (order.buyerState !== "INCOMPLETE") {
-            const redirectUrl = `/orders/${order.internalID}/details`
-            throw new RedirectException(redirectUrl)
-          }
-
-          if (!newCheckoutEnabled({ order, featureFlags })) {
-            const redirectUrl = `/orders/${order.internalID}/offer`
-            if (process.env.NODE_ENV === "development") {
-              console.error(
-                `Redirecting from to ${redirectUrl} because Order2 checkout is not enabled for this order`,
-              )
-            }
-            throw new RedirectException(redirectUrl)
-          }
-
-          return <Component viewer={viewer} />
+          return <Component viewer={props.viewer} />
         },
       },
     ],
