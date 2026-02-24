@@ -3,15 +3,14 @@ import {
   Flex,
   type FlexProps,
   HTML,
-  Join,
   ReadMore,
   Spacer,
   StackableBorderBox,
   Text,
 } from "@artsy/palette"
+import { ArtworkDefinitionList } from "Apps/Artwork/Components/ArtworkDefinitionList"
 import { useArtworkDetailsAdditionalInfoFields } from "Apps/Artwork/Components/ArtworkDetails/ArtworkDetailsAdditionalInfo"
 import { ConditionInfoModal } from "Apps/Artwork/Components/ArtworkDetails/ConditionInfoModal"
-import { PrivateArtworkDefinitionList } from "Apps/Artwork/Components/ArtworkSidebar/PrivateArtworkDefinitionList"
 import type { PrivateArtworkAdditionalInfo_artwork$key } from "__generated__/PrivateArtworkAdditionalInfo_artwork.graphql"
 import * as React from "react"
 import { graphql, useFragment } from "react-relay"
@@ -75,11 +74,14 @@ export const PrivateArtworkAdditionalInfo: React.FC<
         <ConditionInfoModal onClose={() => setOpenConditionModal(false)} />
       )}
       <Container flexDirection="column" {...flexProps}>
-        <Join separator={<Spacer y={1} />}>
+        <Flex as="dl" flexDirection="column" gap={1}>
           {displayItems.map(
             ({ title, value, onReadMoreClicked, onTitleClick }, index) => (
-              <PrivateArtworkDefinitionList
+              <ArtworkDefinitionList
                 key={title + index}
+                asRow
+                flexDirection="row"
+                termColor="mono60"
                 term={title}
                 onTitleClick={onTitleClick}
               >
@@ -94,10 +96,10 @@ export const PrivateArtworkAdditionalInfo: React.FC<
                     value
                   )}
                 </HTML>
-              </PrivateArtworkDefinitionList>
+              </ArtworkDefinitionList>
             ),
           )}
-        </Join>
+        </Flex>
         {!!isCollapsed && (
           <Flex flexDirection="row" justifyContent="flex-start">
             <Spacer x={150} />

@@ -5,9 +5,7 @@ import {
   Flex,
   type FlexProps,
   HTML,
-  Join,
   ReadMore,
-  Spacer,
   StackableBorderBox,
   Text,
 } from "@artsy/palette"
@@ -50,11 +48,12 @@ export const ArtworkDetailsAdditionalInfo: React.FC<
         <ConditionInfoModal onClose={() => setOpenConditionModal(false)} />
       )}
       <Container flexDirection="column" {...flexProps}>
-        <Join separator={<Spacer y={1} />}>
+        <Flex as="dl" flexDirection="column" gap={1}>
           {displayItems.map(
             ({ title, value, onReadMoreClicked, onTitleClick }, index) => (
               <ArtworkDefinitionList
                 key={title + index}
+                asRow
                 term={title}
                 onTitleClick={onTitleClick}
               >
@@ -72,7 +71,7 @@ export const ArtworkDetailsAdditionalInfo: React.FC<
               </ArtworkDefinitionList>
             ),
           )}
-        </Join>
+        </Flex>
       </Container>
     </>
   )

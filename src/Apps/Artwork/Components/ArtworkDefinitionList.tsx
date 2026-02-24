@@ -11,20 +11,34 @@ interface ArtworkDefinitionListProps extends BoxProps {
   term: string
   children: React.ReactNode
   onTitleClick?: () => void
+  asRow?: boolean
+  termColor?: string
 }
 
 export const ArtworkDefinitionList: React.FC<
   React.PropsWithChildren<ArtworkDefinitionListProps>
 > = ({ term, children, onTitleClick, ...rest }) => {
+  const { asRow = false, termColor, ...containerProps } = rest
   const hasPlainTextChildren =
     typeof children === "string" || typeof children === "number"
 
   return (
-    <Flex as="dl" flexDirection={["column", "row"]} {...rest}>
-      <Text as="dt" variant="xs" width={150} flexShrink={0} mr={2}>
+    <Flex
+      as={asRow ? "div" : "dl"}
+      flexDirection={["column", "row"]}
+      {...containerProps}
+    >
+      <Text
+        as="dt"
+        variant="xs"
+        width={150}
+        flexShrink={0}
+        mr={2}
+        color={termColor}
+      >
         {onTitleClick ? (
           <Clickable textDecoration="underline" onClick={onTitleClick}>
-            <Text as="span" variant="xs">
+            <Text as="span" variant="xs" color={termColor}>
               {term}
             </Text>
           </Clickable>
