@@ -28,4 +28,4 @@ COPY package.json yarn.lock .yarnrc.yml /app/
 COPY .yarn ./.yarn
 
 RUN --mount=type=cache,id=yarndev,target=/usr/local/share/.cache \
-    yarn install --frozen-lockfile
+    yarn install --immutable
