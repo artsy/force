@@ -12,7 +12,6 @@ import { withSystemContext } from "System/Contexts/SystemContext"
 import { Device, useDeviceDetection } from "Utils/Hooks/useDeviceDetection"
 import { extractNodes } from "Utils/extractNodes"
 import type { TransactionDetailsSummaryItem_order$data } from "__generated__/TransactionDetailsSummaryItem_order.graphql"
-import type { Omit } from "lodash"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 

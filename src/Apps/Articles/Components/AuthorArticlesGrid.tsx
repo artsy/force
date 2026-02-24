@@ -16,7 +16,7 @@ import {
 import { RouterLink } from "System/Components/RouterLink"
 import type { AuthorArticlesGridQuery } from "__generated__/AuthorArticlesGridQuery.graphql"
 import type { AuthorArticlesGrid_query$key } from "__generated__/AuthorArticlesGrid_query.graphql"
-import { compact } from "lodash"
+import compact from "lodash/compact"
 import type { FC } from "react"
 import { graphql, useLazyLoadQuery, usePaginationFragment } from "react-relay"
 

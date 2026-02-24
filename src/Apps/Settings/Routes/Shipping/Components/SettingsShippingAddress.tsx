@@ -10,7 +10,7 @@ import { useDeleteAddress } from "Apps/Settings/Routes/Shipping/useDeleteAddress
 import { useMode } from "Utils/Hooks/useMode"
 import { compactObject } from "Utils/compactObject"
 import type { SettingsShippingAddress_address$data } from "__generated__/SettingsShippingAddress_address.graphql"
-import { pick } from "lodash"
+import pick from "lodash/pick"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import {

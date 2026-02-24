@@ -1,6 +1,5 @@
 import type { Address } from "Components/Address/utils"
-import { isEmpty } from "lodash"
-
+import isEmpty from "lodash/isEmpty"
 export const validatePresence = (value: string): string | null => {
   if (value == null || isEmpty(value.trim())) {
     return "This field is required"

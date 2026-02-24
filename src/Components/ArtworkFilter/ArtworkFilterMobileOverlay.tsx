@@ -1,5 +1,6 @@
 import { Box, Button, Clickable, Flex, ModalBase, Text } from "@artsy/palette"
-import { isEqual, omit } from "lodash"
+import isEqual from "lodash/isEqual"
+import omit from "lodash/omit"
 import { type ReactNode, useEffect, useRef } from "react"
 import styled from "styled-components"
 import { useArtworkFilterContext } from "./ArtworkFilterContext"

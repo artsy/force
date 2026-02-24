@@ -1,7 +1,8 @@
 import type { FollowedArtists } from "Components/ArtworkFilter/ArtworkFilterContext"
 import type { fetchFollowedArtistsByFairIdQuery } from "__generated__/fetchFollowedArtistsByFairIdQuery.graphql"
 import type { fetchFollowedArtistsRawQuery } from "__generated__/fetchFollowedArtistsRawQuery.graphql"
-import { compact, isString } from "lodash"
+import compact from "lodash/compact"
+import isString from "lodash/isString"
 import { fetchQuery } from "react-relay"
 import { type Environment, graphql } from "react-relay"
 

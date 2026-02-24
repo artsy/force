@@ -1,5 +1,5 @@
-import { difference, uniq } from "lodash"
-
+import difference from "lodash/difference"
+import uniq from "lodash/uniq"
 interface ArtworkListEntity {
   isSavedArtwork: boolean
   internalID: string

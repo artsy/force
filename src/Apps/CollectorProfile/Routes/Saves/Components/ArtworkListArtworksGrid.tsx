@@ -16,7 +16,7 @@ import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { Jump } from "Utils/Hooks/useJump"
 import { usePrevious } from "Utils/Hooks/usePrevious"
 import type { ArtworkListArtworksGrid_me$data } from "__generated__/ArtworkListArtworksGrid_me.graphql"
-import { isEqual } from "lodash"
+import isEqual from "lodash/isEqual"
 import { type FC, useState } from "react"
 import {
   type RelayRefetchProp,

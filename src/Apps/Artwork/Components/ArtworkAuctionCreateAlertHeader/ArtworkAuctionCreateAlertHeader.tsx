@@ -25,7 +25,7 @@ import { RouterLink } from "System/Components/RouterLink"
 import { useTimer } from "Utils/Hooks/useTimer"
 import { Media } from "Utils/Responsive"
 import type { ArtworkAuctionCreateAlertHeader_artwork$data } from "__generated__/ArtworkAuctionCreateAlertHeader_artwork.graphql"
-import { compact } from "lodash"
+import compact from "lodash/compact"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 

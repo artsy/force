@@ -2,7 +2,7 @@ import { ConfirmPasswordModal } from "Components/ConfirmPasswordModal"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import type { DisableSecondFactorInput } from "__generated__/DisableSecondFactorMutation.graphql"
 import type { FormikProps } from "formik"
-import { map } from "lodash"
+import map from "lodash/map"
 import type * as React from "react"
 import { DisableSecondFactor } from "./Mutation/DisableSecondFactor"
 

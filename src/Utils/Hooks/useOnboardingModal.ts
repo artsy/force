@@ -1,7 +1,7 @@
 import { useOnboarding } from "Components/Onboarding"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { omit } from "lodash"
+import omit from "lodash/omit"
 import { useEffect, useRef } from "react"
 
 // TODO: Lazy load

@@ -62,6 +62,7 @@ export const Overlay: FC<React.PropsWithChildren<OverlayProps>> = ({
     // When selecting another pill - this effect shouldn't be executed again, so we disable the linting rule
   }, [])
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (shouldStartSearching(debouncedValue)) {
       refetch(debouncedValue, selectedPill.searchEntityName)

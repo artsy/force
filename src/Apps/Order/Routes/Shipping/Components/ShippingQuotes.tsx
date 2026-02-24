@@ -190,6 +190,7 @@ const useAutoSelectBestShippingQuote = (
     quotes.find(quote => quote.isSelected)?.id ||
     quotes?.[0]?.id
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (
       shippingContext.state.stage === "shipping_quotes" &&

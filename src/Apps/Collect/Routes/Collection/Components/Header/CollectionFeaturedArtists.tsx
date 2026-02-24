@@ -9,7 +9,9 @@ import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import type { CollectionFeaturedArtistsQuery } from "__generated__/CollectionFeaturedArtistsQuery.graphql"
 import type { CollectionFeaturedArtists_artworks$data } from "__generated__/CollectionFeaturedArtists_artworks.graphql"
 import type { CollectionFeaturedArtists_collection$data } from "__generated__/CollectionFeaturedArtists_collection.graphql"
-import { compact, filter, take } from "lodash"
+import compact from "lodash/compact"
+import filter from "lodash/filter"
+import take from "lodash/take"
 import { createFragmentContainer, graphql } from "react-relay"
 
 interface CollectionFeaturedArtistsProps {

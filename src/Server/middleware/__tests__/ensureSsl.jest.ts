@@ -40,6 +40,7 @@ describe("Ensure SSL middleware", () => {
   it("does not redirect https to https causing an infinite loop", () => {
     let next
     testContext.req.get = () => "https"
+    // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
     ensureSslMiddleware(testContext.req, testContext.res, (next = jest.fn()))
     expect(next.mock.calls.length).toBe(1)
   })

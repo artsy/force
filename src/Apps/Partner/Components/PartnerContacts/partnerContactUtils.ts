@@ -1,7 +1,7 @@
 import { getENV } from "Utils/getENV"
 import type { PartnerContactAddress_location$data } from "__generated__/PartnerContactAddress_location.graphql"
 import type { PartnerContactMap_location$data } from "__generated__/PartnerContactMap_location.graphql"
-import { compact } from "lodash"
+import compact from "lodash/compact"
 import qs from "qs"
 
 export function getContactAddressLines(

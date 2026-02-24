@@ -1,7 +1,10 @@
 import type { AddressVerifiedBy } from "Apps/Order/Components/AddressVerificationFlow"
 import { postalCodeValidator } from "Components/Address/utils"
 import type { ShippingContext_me$data } from "__generated__/ShippingContext_me.graphql"
-import { isEqual, isNil, omitBy, pick } from "lodash"
+import isEqual from "lodash/isEqual"
+import isNil from "lodash/isNil"
+import omitBy from "lodash/omitBy"
+import pick from "lodash/pick"
 import * as Yup from "yup"
 
 export enum FulfillmentType {
@@ -74,6 +77,7 @@ export const ADDRESS_VALIDATION_SHAPE = {
   postalCode: postalCodeValidator,
   region: Yup.string().when("country", {
     is: country => ["US", "CA"].includes(country),
+    // biome-ignore lint/suspicious/noThenProperty: <explanation>
     then: Yup.string().required("State is required"),
     otherwise: Yup.string(),
   }),

@@ -1,7 +1,7 @@
 import { fromToday } from "Apps/Conversations/components/Message/Utils/dateFormatters"
 import { extractNodes } from "Utils/extractNodes"
 import type { ConversationMessages_conversation$data } from "__generated__/ConversationMessages_conversation.graphql"
-import { sortBy } from "lodash"
+import sortBy from "lodash/sortBy"
 import { DateTime } from "luxon"
 import { useEffect, useState } from "react"
 

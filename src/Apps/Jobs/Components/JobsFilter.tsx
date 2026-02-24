@@ -9,7 +9,7 @@ import {
   Text,
 } from "@artsy/palette"
 import type { JobsFilter_viewer$data } from "__generated__/JobsFilter_viewer.graphql"
-import { uniq } from "lodash"
+import uniq from "lodash/uniq"
 import { type FC, Fragment, useMemo, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { JobLinkFragmentContainer } from "./JobLink"

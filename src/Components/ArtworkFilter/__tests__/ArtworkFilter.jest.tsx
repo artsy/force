@@ -5,7 +5,7 @@ import { initialArtworkFilterState } from "Components/ArtworkFilter/ArtworkFilte
 import { ArtworkQueryFilter } from "Components/ArtworkFilter/ArtworkQueryFilter"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { omit } from "lodash"
+import omit from "lodash/omit"
 import { useTracking } from "react-tracking"
 import { ArtworkFilterFixture } from "./fixtures/ArtworkFilter.fixture"
 

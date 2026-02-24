@@ -3,7 +3,7 @@ import { execSync } from "child_process"
 import { createReloadable } from "@artsy/express-reloadable"
 import { createRsbuild, loadConfig, logger } from "@rsbuild/core"
 import express from "express"
-import { isString } from "lodash"
+import isString from "lodash/isString"
 import { hideBin } from "yargs/helpers"
 import yargs from "yargs/yargs"
 

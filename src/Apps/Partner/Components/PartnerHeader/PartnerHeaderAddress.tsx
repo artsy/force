@@ -1,6 +1,7 @@
 import { media } from "@artsy/palette"
 import type { PartnerHeader_partner$data } from "__generated__/PartnerHeader_partner.graphql"
-import { compact, uniq } from "lodash"
+import compact from "lodash/compact"
+import uniq from "lodash/uniq"
 import * as React from "react"
 import styled from "styled-components"
 

@@ -11,7 +11,9 @@ import type {
 } from "Server/middleware/artsyExpress"
 import opts from "Server/passport/lib/options"
 import type { NextFunction } from "express"
-import { get, isFunction, isString } from "lodash"
+import get from "lodash/get"
+import isFunction from "lodash/isFunction"
+import isString from "lodash/isString"
 import passport from "passport"
 // eslint-disable-next-line no-restricted-imports
 import request from "superagent"

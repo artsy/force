@@ -12,7 +12,7 @@ import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import type { AuctionBuyersPremiumDialogQuery } from "__generated__/AuctionBuyersPremiumDialogQuery.graphql"
 import type { AuctionBuyersPremiumDialog_sale$data } from "__generated__/AuctionBuyersPremiumDialog_sale.graphql"
-import { compact } from "lodash"
+import compact from "lodash/compact"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 

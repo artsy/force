@@ -16,7 +16,7 @@ import { Device, useDeviceDetection } from "Utils/Hooks/useDeviceDetection"
 import { Jump, useJump } from "Utils/Hooks/useJump"
 import type { PriceOptions_artwork$data } from "__generated__/PriceOptions_artwork.graphql"
 import type { PriceOptions_order$data } from "__generated__/PriceOptions_order.graphql"
-import { compact } from "lodash"
+import compact from "lodash/compact"
 import { useEffect, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -72,6 +72,7 @@ export const PriceOptions: React.FC<
     }
   }, [])
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (toggle) trackClick("Different amount", 0)
   }, [toggle])

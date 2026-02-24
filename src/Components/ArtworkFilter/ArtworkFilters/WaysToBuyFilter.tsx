@@ -6,7 +6,8 @@ import {
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import type { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes"
 import { useFilterLabelCountByKey } from "Components/ArtworkFilter/Utils/useFilterLabelCountByKey"
-import { entries, isEmpty } from "lodash"
+import entries from "lodash/entries"
+import isEmpty from "lodash/isEmpty"
 import type { FC } from "react"
 import { FilterExpandable } from "./FilterExpandable"
 

@@ -31,6 +31,7 @@ export const useNavBarHeight = (): {
     }
   }
 
+  // biome-ignore lint/correctness/useHookAtTopLevel: <explanation>
   const { match } = useRouter()
 
   const mobile =

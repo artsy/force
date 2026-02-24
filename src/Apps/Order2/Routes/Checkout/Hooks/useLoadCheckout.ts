@@ -16,7 +16,7 @@ import type {
   useLoadCheckout_order$key,
 } from "__generated__/useLoadCheckout_order.graphql"
 
-import { every } from "lodash"
+import every from "lodash/every"
 import { useEffect, useRef, useState } from "react"
 import { graphql, useFragment } from "react-relay"
 

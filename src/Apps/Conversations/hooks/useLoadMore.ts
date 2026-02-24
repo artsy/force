@@ -1,4 +1,4 @@
-import { isFunction } from "lodash"
+import isFunction from "lodash/isFunction"
 import { useCallback, useEffect, useState } from "react"
 import type { RelayPaginationProp, usePaginationFragment } from "react-relay"
 

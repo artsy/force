@@ -7,7 +7,8 @@ import {
 } from "@artsy/palette"
 import { useLoadScript } from "Utils/Hooks/useLoadScript"
 import { getENV } from "Utils/getENV"
-import { compact, debounce } from "lodash"
+import compact from "lodash/compact"
+import debounce from "lodash/debounce"
 import {
   type ChangeEvent,
   type FC,
@@ -77,6 +78,7 @@ export const LocationAutocompleteInput: FC<
     return res?.predictions
   }
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const updateSuggestions = useCallback(async (value: string) => {
     setSuggestions([])
     if (!value.trim()) return

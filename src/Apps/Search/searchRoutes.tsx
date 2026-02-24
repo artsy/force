@@ -2,7 +2,7 @@ import loadable from "@loadable/component"
 import { allowedFilters } from "Components/ArtworkFilter/Utils/allowedFilters"
 import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/paramsCasing"
 import type { RouteProps } from "System/Router/Route"
-import { omit } from "lodash"
+import omit from "lodash/omit"
 import { graphql } from "react-relay"
 import { redirectQueryToTerm } from "./Server/redirectQueryToTerm"
 

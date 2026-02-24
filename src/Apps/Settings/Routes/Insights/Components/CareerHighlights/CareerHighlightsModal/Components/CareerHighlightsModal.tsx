@@ -13,8 +13,7 @@ import {
 } from "@artsy/palette"
 import { useCareerHighlightsStoriesContext } from "Apps/Settings/Routes/Insights/Components/CareerHighlights/CareerHighlightsModal/Hooks/useCareerHighlightsStoriesContext"
 import { useNextPrevious } from "Utils/Hooks/useNextPrevious"
-import { omit } from "lodash"
-
+import omit from "lodash/omit"
 type CareerHighlightModalProps = ModalBaseProps
 
 export const CareerHighlightModal: React.FC<

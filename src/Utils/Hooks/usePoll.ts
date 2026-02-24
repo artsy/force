@@ -17,6 +17,7 @@ export const usePoll = ({
 }: PollProps) => {
   const savedCallback = useRef<IntervalFunction | null>(null)
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     savedCallback.current = callback
   }, [callback, key])

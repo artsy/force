@@ -11,7 +11,7 @@ import {
 import { Media } from "Utils/Responsive"
 import { extractNodes } from "Utils/extractNodes"
 import type { ViewingRoomWorksRoute_viewingRoom$data } from "__generated__/ViewingRoomWorksRoute_viewingRoom.graphql"
-import { compact } from "lodash"
+import compact from "lodash/compact"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ViewingRoomArtworkDetailsFragmentContainer as ViewingRoomArtworkDetails } from "./Components/ViewingRoomArtworkDetails"

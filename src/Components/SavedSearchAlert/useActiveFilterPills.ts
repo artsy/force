@@ -5,7 +5,7 @@ import {
 import type { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes"
 import { allowedFilters } from "Components/ArtworkFilter/Utils/allowedFilters"
 import { DEFAULT_METRIC } from "Utils/metrics"
-import { isArray } from "lodash"
+import isArray from "lodash/isArray"
 import { extractPillsFromCriteria } from "./Utils/extractPills"
 import type { FilterPill } from "./types"
 

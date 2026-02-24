@@ -8,7 +8,7 @@ import { RouterLink } from "System/Components/RouterLink"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useIsRouteActive } from "System/Hooks/useRouter"
 import type { NavigationTabs_searchableConnection$data } from "__generated__/NavigationTabs_searchableConnection.graphql"
-import { compact } from "lodash"
+import compact from "lodash/compact"
 import { type FC, useMemo } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -177,6 +177,7 @@ export const NavigationTabs: FC<
     () =>
       MORE_TABS.reduce((prev, key) => {
         const count = counts.find(count => count.name === key)?.count ?? 0
+        // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
         return count ? (prev += count) : prev
       }, 0),
     [counts],

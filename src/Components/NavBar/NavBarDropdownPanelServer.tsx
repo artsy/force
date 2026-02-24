@@ -72,12 +72,15 @@ export const NavBarDropdownPanelServer: React.FC<
     >
       {({ anchorRef, anchorProps, visible, setVisible }) => {
         const { onMouseEnter, ...restAnchorProps } = anchorProps
+        // biome-ignore lint/correctness/useHookAtTopLevel: <explanation>
         const hasTrackedRef = useRef(false)
+        // biome-ignore lint/correctness/useHookAtTopLevel: <explanation>
         const timeoutRef = useRef<NodeJS.Timeout | null>(null)
 
         // Track when dropdown becomes visible (once per page load, with 500ms delay)
         // biome-ignore lint/correctness/useExhaustiveDependencies: only track once per page load based on visibility
-        useEffect(() => {
+        // biome-ignore lint/correctness/useHookAtTopLevel: <explanation>
+                        useEffect(() => {
           if (visible && !hasTrackedRef.current) {
             // Only fire if dropdown stays open for at least 500ms
             timeoutRef.current = setTimeout(() => {

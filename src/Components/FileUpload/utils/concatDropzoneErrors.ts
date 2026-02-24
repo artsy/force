@@ -1,4 +1,4 @@
-import { cloneDeep } from "lodash"
+import cloneDeep from "lodash/cloneDeep"
 import type { FileRejection } from "react-dropzone"
 
 export const concatDropzoneErrors = (

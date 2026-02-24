@@ -29,6 +29,7 @@ export const xmur3 = (str: string) => {
   return () => {
     h = Math.imul(h ^ (h >>> 16), 2246822507)
     h = Math.imul(h ^ (h >>> 13), 3266489909)
+    // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
     return (h ^= h >>> 16) >>> 0
   }
 }
@@ -38,6 +39,7 @@ export const xmur3 = (str: string) => {
  */
 export const mulberry32 = (a: number) => {
   return () => {
+    // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
     let t = (a += 0x6d2b79f5)
 
     t = Math.imul(t ^ (t >>> 15), t | 1)

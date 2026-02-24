@@ -8,7 +8,8 @@ import {
 import { QuickMultipleSelectAlertFilter } from "Components/Alert/Components/Filters/QuickMultipleSelectAlertFilter"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import type { ArtistSeriesOptionsQuery } from "__generated__/ArtistSeriesOptionsQuery.graphql"
-import { compact, times } from "lodash"
+import compact from "lodash/compact"
+import times from "lodash/times"
 import { type FC, Suspense } from "react"
 import { graphql, useLazyLoadQuery } from "react-relay"
 

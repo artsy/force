@@ -17,7 +17,7 @@ import { Media } from "Utils/Responsive"
 import { getENV } from "Utils/getENV"
 import type { ArtistsIndex_featuredArtists$data } from "__generated__/ArtistsIndex_featuredArtists.graphql"
 import type { ArtistsIndex_featuredGenes$data } from "__generated__/ArtistsIndex_featuredGenes.graphql"
-import { compact } from "lodash"
+import compact from "lodash/compact"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 

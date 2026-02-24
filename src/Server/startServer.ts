@@ -2,7 +2,7 @@ import http from "http"
 import { setupExpressErrorHandler } from "@sentry/node"
 import { APP_URL, NODE_ENV, PORT } from "Server/config"
 import withGracefulShutdown from "http-shutdown"
-import { once } from "lodash"
+import once from "lodash/once"
 import { initializeArtsyXapp } from "./artsyXapp"
 
 const { HEADERS_TIMEOUT_SECONDS, KEEPALIVE_TIMEOUT_SECONDS } = process.env

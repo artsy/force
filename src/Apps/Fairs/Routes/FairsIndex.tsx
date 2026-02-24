@@ -25,7 +25,7 @@ import { Media } from "Utils/Responsive"
 import { cropped } from "Utils/resized"
 import type { FairsIndex_featuredFairs$data } from "__generated__/FairsIndex_featuredFairs.graphql"
 import type { FairsIndex_viewer$data } from "__generated__/FairsIndex_viewer.graphql"
-import { compact } from "lodash"
+import compact from "lodash/compact"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 

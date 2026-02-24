@@ -6,7 +6,8 @@ import {
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import type { ArtQuizRecommendedArtistsQuery } from "__generated__/ArtQuizRecommendedArtistsQuery.graphql"
 import type { ArtQuizRecommendedArtists_me$data } from "__generated__/ArtQuizRecommendedArtists_me.graphql"
-import { compact, uniq } from "lodash"
+import compact from "lodash/compact"
+import uniq from "lodash/uniq"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 

@@ -49,6 +49,7 @@ export const HeroCarouselLarge: React.FC<
     intervalRef.current && clearInterval(intervalRef.current)
   }
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     intervalRef.current = setInterval(
       () => setCursor(prevCursor => prevCursor + 1),
@@ -58,11 +59,13 @@ export const HeroCarouselLarge: React.FC<
     return stopAutoPlay
   }, [setCursor])
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const handleNext = useCallback(() => {
     onNext()
     stopAutoPlay()
   }, [onNext])
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const handlePrev = useCallback(() => {
     onPrev()
     stopAutoPlay()

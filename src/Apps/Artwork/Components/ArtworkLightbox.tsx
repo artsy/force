@@ -9,7 +9,7 @@ import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useLocalImage } from "Utils/localImageHelpers"
 import { userIsTeam } from "Utils/user"
 import type { ArtworkLightbox_artwork$data } from "__generated__/ArtworkLightbox_artwork.graphql"
-import { compact } from "lodash"
+import compact from "lodash/compact"
 import { scale } from "proportional-scale"
 import type * as React from "react"
 import { useMemo } from "react"
@@ -58,6 +58,7 @@ const ArtworkLightbox: React.FC<
 
   const hasGeometry = !!images[0]?.resized?.width
 
+  // biome-ignore lint/correctness/useHookAtTopLevel: <explanation>
   const image = useMemo(() => {
     if (localImage) {
       return {

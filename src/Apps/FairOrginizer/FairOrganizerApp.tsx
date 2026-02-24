@@ -1,7 +1,7 @@
 import { Spacer } from "@artsy/palette"
 import { MetaTags } from "Components/MetaTags"
 import type { FairOrganizerApp_fairOrganizer$data } from "__generated__/FairOrganizerApp_fairOrganizer.graphql"
-import { truncate } from "lodash"
+import truncate from "lodash/truncate"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairOrganizerHeaderFragmentContainer as FairOrganizerHeader } from "./Components/FairOrganizerHeader/FairOrganizerHeader"

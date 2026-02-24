@@ -1,7 +1,7 @@
 import { StructuredData } from "Components/Seo/StructuredData"
 import { getENV } from "Utils/getENV"
 import type { ArtworkStructuredDataQuery } from "__generated__/ArtworkStructuredDataQuery.graphql"
-import { map } from "lodash"
+import map from "lodash/map"
 import { useMemo } from "react"
 import { graphql, useLazyLoadQuery } from "react-relay"
 import type {
@@ -57,6 +57,7 @@ export const ArtworkStructuredData: React.FC<ArtworkStructuredDataProps> = ({
         }
       : undefined
 
+  // biome-ignore lint/correctness/useHookAtTopLevel: <explanation>
   const partner: ArtGallery | undefined = useMemo(() => {
     if (!artwork.partner?.name) return
     const partner = artwork.partner
@@ -84,6 +85,7 @@ export const ArtworkStructuredData: React.FC<ArtworkStructuredDataProps> = ({
     }
   }, [artwork.partner])
 
+  // biome-ignore lint/correctness/useHookAtTopLevel: <explanation>
   const offer: Offer | undefined = useMemo(() => {
     if (!artwork.listPrice || artwork.isPriceHidden) return
 

@@ -4,7 +4,8 @@ import { useNotificationsTracking } from "Components/Notifications/Hooks/useNoti
 import type { NotificationType } from "Components/Notifications/types"
 import { useClientQuery } from "Utils/Hooks/useClientQuery"
 import type { NotificationsPillsQuery } from "__generated__/NotificationsPillsQuery.graphql"
-import { compact, times } from "lodash"
+import compact from "lodash/compact"
+import times from "lodash/times"
 import { graphql } from "react-relay"
 
 export const NotificationsPills: React.FC<

@@ -17,7 +17,7 @@ import {
   UserPendingIDV,
 } from "Apps/__tests__/Fixtures/Artwork/ArtworkSidebar/ArtworkSidebarBidAction"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { merge } from "lodash"
+import merge from "lodash/merge"
 import { graphql } from "react-relay"
 import { screen } from "@testing-library/react"
 

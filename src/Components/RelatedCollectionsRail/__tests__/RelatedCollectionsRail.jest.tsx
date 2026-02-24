@@ -3,7 +3,8 @@ import { CollectionsRailFixture } from "Apps/__tests__/Fixtures/Collections"
 import "jest-styled-components"
 import { RelatedCollectionsRail } from "Components/RelatedCollectionsRail/RelatedCollectionsRail"
 import { AnalyticsCombinedContextProvider } from "System/Contexts/AnalyticsContext"
-import { clone, drop } from "lodash"
+import clone from "lodash/clone"
+import drop from "lodash/drop"
 import { useTracking } from "react-tracking"
 
 jest.mock("@artsy/palette", () => {

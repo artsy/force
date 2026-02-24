@@ -87,6 +87,7 @@ export const ArticleHTML: FC<React.PropsWithChildren<ArticleHTMLProps>> = ({
 
   const [transformed, setTransformed] = useState<string | null>(null)
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     // Relies on the DOMParser global being available in the browser.
     import("@artsy/react-html-parser").then(({ default: reactHtmlParser }) => {

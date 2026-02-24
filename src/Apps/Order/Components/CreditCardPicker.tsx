@@ -39,7 +39,8 @@ import {
   type SystemContextProps,
 } from "System/Contexts/SystemContext"
 import { createStripeWrapper } from "Utils/createStripeWrapper"
-import { isNull, mergeWith } from "lodash"
+import isNull from "lodash/isNull"
+import mergeWith from "lodash/mergeWith"
 import { type TrackingProp, useTracking } from "react-tracking"
 import { CreditCardDetails } from "./CreditCardDetails"
 

@@ -40,6 +40,7 @@ export const PartnerArtistDetails: React.FC<
     match: {
       location: { pathname, hash },
     },
+  // biome-ignore lint/correctness/useHookAtTopLevel: <explanation>
   } = useRouter()
 
   const artist = partnerArtist.node

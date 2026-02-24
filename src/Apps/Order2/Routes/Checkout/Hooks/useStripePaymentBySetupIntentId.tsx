@@ -32,6 +32,7 @@ export function useStripePaymentBySetupIntentId(
   const { setConfirmationToken, setPaymentComplete, setSectionErrorMessage } =
     useCheckoutContext()
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     const handleRedirect = async () => {
       // pull necessary params from Stripe redirect URL

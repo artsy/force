@@ -34,6 +34,7 @@ export const PriceRange: FC<React.PropsWithChildren<PriceRangeProps>> = ({
   const [minValue, maxValue] = localRange
   const [defaultMinValue, defaultMaxValue] = DEFAULT_RANGE
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     const shouldUpdate = previousPriceRange !== priceRange
     if (!shouldUpdate) return

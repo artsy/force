@@ -1,5 +1,5 @@
 import { Select, type SelectProps } from "@artsy/palette"
-import { uniqBy } from "lodash"
+import uniqBy from "lodash/uniqBy"
 import type { FC } from "react"
 
 export interface CountrySelectProps extends Omit<SelectProps, "options"> {

@@ -7,7 +7,7 @@ import {
 import { fetchFollowedArtists } from "Components/ArtworkFilter/Utils/fetchFollowedArtists"
 import { useFilterLabelCountByKey } from "Components/ArtworkFilter/Utils/useFilterLabelCountByKey"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { sortBy } from "lodash"
+import sortBy from "lodash/sortBy"
 import { type FC, useEffect } from "react"
 import type * as React from "react"
 import { FilterExpandable } from "./FilterExpandable"

@@ -37,7 +37,8 @@ import type {
   ShippingTestQuery$rawResponse,
 } from "__generated__/ShippingTestQuery.graphql"
 /* eslint-disable jest/no-disabled-tests */
-import { cloneDeep, merge } from "lodash"
+import cloneDeep from "lodash/cloneDeep"
+import merge from "lodash/merge"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { type MockEnvironment, createMockEnvironment } from "relay-test-utils"

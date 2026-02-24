@@ -18,7 +18,7 @@ import type {
   AnalyticsPricingContextDimensionEnum,
   PricingContext_artwork$data,
 } from "__generated__/PricingContext_artwork.graphql"
-import { once } from "lodash"
+import once from "lodash/once"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"

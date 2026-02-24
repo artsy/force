@@ -14,7 +14,7 @@ import type {
   ArtistAutocomplete_SearchConnection_Query$data,
 } from "__generated__/ArtistAutocomplete_SearchConnection_Query.graphql"
 import { useFormikContext } from "formik"
-import { debounce } from "lodash"
+import debounce from "lodash/debounce"
 import { useEffect, useMemo, useState } from "react"
 import { type Environment, fetchQuery, graphql } from "react-relay"
 

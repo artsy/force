@@ -15,7 +15,9 @@ import type {
   SubGroupStatus,
 } from "__generated__/PreferencesApp_viewer.graphql"
 import { Form, Formik } from "formik"
-import { camelCase, isEmpty, snakeCase } from "lodash"
+import camelCase from "lodash/camelCase"
+import isEmpty from "lodash/isEmpty"
+import snakeCase from "lodash/snakeCase"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useEditNotificationPreferences } from "./useEditNotificationPreferences"

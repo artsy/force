@@ -1,4 +1,4 @@
-import { throttle } from "lodash"
+import throttle from "lodash/throttle"
 import { useEffect, useMemo, useRef, useState } from "react"
 
 interface UseDetectActivity {

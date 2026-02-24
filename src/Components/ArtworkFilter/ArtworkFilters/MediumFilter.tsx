@@ -5,7 +5,7 @@ import {
   useCurrentlySelectedFilters,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { useFilterLabelCountByKey } from "Components/ArtworkFilter/Utils/useFilterLabelCountByKey"
-import { intersection } from "lodash"
+import intersection from "lodash/intersection"
 import type { FC } from "react"
 import { FilterExpandable } from "./FilterExpandable"
 import { INITIAL_ITEMS_TO_SHOW, ShowMore } from "./ShowMore"

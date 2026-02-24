@@ -1,7 +1,8 @@
 import { Box, Button, Clickable, Flex, ModalBase, Text } from "@artsy/palette"
 import { useAuctionResultsFilterContext } from "Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
 import { initialAuctionResultsFilterState } from "Apps/Artist/Routes/AuctionResults/initialAuctionResultsFilterState"
-import { isEqual, omit } from "lodash"
+import isEqual from "lodash/isEqual"
+import omit from "lodash/omit"
 import { type FC, useEffect, useRef } from "react"
 import styled from "styled-components"
 

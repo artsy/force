@@ -1,6 +1,5 @@
 import type { countries as countryPhoneOptions } from "Utils/countries"
-import { sortBy } from "lodash"
-
+import sortBy from "lodash/sortBy"
 type CountryData = (typeof countryPhoneOptions)[number]
 
 /**

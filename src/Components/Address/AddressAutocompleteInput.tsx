@@ -15,7 +15,8 @@ import {
 import type { Address } from "Components/Address/utils"
 import { useFlag } from "@unleash/proxy-client-react"
 import { getENV } from "Utils/getENV"
-import { throttle, uniqBy } from "lodash"
+import throttle from "lodash/throttle"
+import uniqBy from "lodash/uniqBy"
 import { useCallback, useEffect, useReducer } from "react"
 import { useTracking } from "react-tracking"
 

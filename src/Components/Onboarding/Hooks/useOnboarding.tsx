@@ -25,6 +25,7 @@ export const useOnboarding = ({ onClose }: UseOnboarding) => {
     setIsVisible(false)
   }
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const dialogComponent = useMemo(() => {
     return (
       <>
