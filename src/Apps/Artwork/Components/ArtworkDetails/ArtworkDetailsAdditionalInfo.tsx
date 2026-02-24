@@ -48,7 +48,12 @@ export const ArtworkDetailsAdditionalInfo: React.FC<
         <ConditionInfoModal onClose={() => setOpenConditionModal(false)} />
       )}
       <Container flexDirection="column" {...flexProps}>
-        <Flex as="dl" flexDirection="column" gap={1}>
+        <Flex
+          as="dl"
+          flexDirection="column"
+          gap={1}
+          aria-label="Artwork details"
+        >
           {displayItems.map(
             ({ title, value, onReadMoreClicked, onTitleClick }, index) => (
               <ArtworkDefinitionList
