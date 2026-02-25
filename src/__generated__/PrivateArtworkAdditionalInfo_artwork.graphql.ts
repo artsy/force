@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0a1e0950ee566b13ea43d87d83eee5e7>>
+ * @generated SignedSource<<c673fc35380f64aed751c867681efdd6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -32,7 +32,7 @@ export type PrivateArtworkAdditionalInfo_artwork$data = {
     readonly details: string | null | undefined;
     readonly label: string | null | undefined;
   } | null | undefined;
-  readonly image_rights: string | null | undefined;
+  readonly imageRights: string | null | undefined;
   readonly internalID: string;
   readonly isUnlisted: boolean;
   readonly manufacturer: string | null | undefined;
@@ -106,7 +106,7 @@ return {
       "storageKey": null
     },
     {
-      "alias": "image_rights",
+      "alias": null,
       "args": null,
       "kind": "ScalarField",
       "name": "imageRights",
@@ -252,6 +252,6 @@ return {
 };
 })();
 
-(node as any).hash = "c91cc81c99bca583d41b3c75486eb225";
+(node as any).hash = "f7d379fa6683def26d117464d924c3c0";
 
 export default node;

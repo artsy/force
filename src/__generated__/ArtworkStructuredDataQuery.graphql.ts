@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<38fd2a0cad5160ff9165db007f42df83>>
+ * @generated SignedSource<<fdeda3eafc34cfcceed26860fc1576f5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -32,6 +32,7 @@ export type ArtworkStructuredDataQuery$data = {
         readonly width: number | null | undefined;
       } | null | undefined;
     } | null | undefined;
+    readonly imageRights: string | null | undefined;
     readonly isPriceHidden: boolean | null | undefined;
     readonly listPrice: {
       readonly __typename: "Money";
@@ -51,6 +52,7 @@ export type ArtworkStructuredDataQuery$data = {
       // value in case none of the concrete values match.
       readonly __typename: "%other";
     } | null | undefined;
+    readonly manufacturer: string | null | undefined;
     readonly medium: string | null | undefined;
     readonly mediumType: {
       readonly name: string | null | undefined;
@@ -78,6 +80,8 @@ export type ArtworkStructuredDataQuery$data = {
         } | null | undefined;
       } | null | undefined;
     } | null | undefined;
+    readonly publisher: string | null | undefined;
+    readonly series: string | null | undefined;
     readonly slug: string;
     readonly title: string | null | undefined;
     readonly width: string | null | undefined;
@@ -135,17 +139,45 @@ v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "editionOf",
+  "name": "series",
   "storageKey": null
 },
 v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "name",
+  "name": "publisher",
   "storageKey": null
 },
 v8 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "manufacturer",
+  "storageKey": null
+},
+v9 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "imageRights",
+  "storageKey": null
+},
+v10 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "editionOf",
+  "storageKey": null
+},
+v11 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+},
+v12 = {
   "alias": null,
   "args": null,
   "concreteType": "ArtworkMedium",
@@ -153,60 +185,60 @@ v8 = {
   "name": "mediumType",
   "plural": false,
   "selections": [
-    (v7/*: any*/)
+    (v11/*: any*/)
   ],
   "storageKey": null
 },
-v9 = [
+v13 = [
   {
     "kind": "Literal",
     "name": "shallow",
     "value": true
   }
 ],
-v10 = {
+v14 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "date",
   "storageKey": null
 },
-v11 = {
+v15 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "width",
   "storageKey": null
 },
-v12 = {
+v16 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "height",
   "storageKey": null
 },
-v13 = {
+v17 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "depth",
   "storageKey": null
 },
-v14 = {
+v18 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "metric",
   "storageKey": null
 },
-v15 = {
+v19 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "url",
   "storageKey": null
 },
-v16 = {
+v20 = {
   "alias": null,
   "args": null,
   "concreteType": "Image",
@@ -233,16 +265,16 @@ v16 = {
       "name": "resized",
       "plural": false,
       "selections": [
+        (v19/*: any*/),
         (v15/*: any*/),
-        (v11/*: any*/),
-        (v12/*: any*/)
+        (v16/*: any*/)
       ],
       "storageKey": "resized(height:1920,width:1920)"
     }
   ],
   "storageKey": null
 },
-v17 = {
+v21 = {
   "alias": null,
   "args": [
     {
@@ -255,29 +287,29 @@ v17 = {
   "name": "description",
   "storageKey": "description(format:\"PLAIN\")"
 },
-v18 = {
+v22 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "isPriceHidden",
   "storageKey": null
 },
-v19 = {
+v23 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "availability",
   "storageKey": null
 },
-v20 = {
+v24 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "major",
   "storageKey": null
 },
-v21 = [
-  (v20/*: any*/),
+v25 = [
+  (v24/*: any*/),
   {
     "alias": null,
     "args": null,
@@ -286,7 +318,7 @@ v21 = [
     "storageKey": null
   }
 ],
-v22 = {
+v26 = {
   "alias": null,
   "args": null,
   "concreteType": null,
@@ -311,7 +343,7 @@ v22 = {
           "kind": "LinkedField",
           "name": "minPrice",
           "plural": false,
-          "selections": (v21/*: any*/),
+          "selections": (v25/*: any*/),
           "storageKey": null
         },
         {
@@ -322,7 +354,7 @@ v22 = {
           "name": "maxPrice",
           "plural": false,
           "selections": [
-            (v20/*: any*/)
+            (v24/*: any*/)
           ],
           "storageKey": null
         }
@@ -332,14 +364,14 @@ v22 = {
     },
     {
       "kind": "InlineFragment",
-      "selections": (v21/*: any*/),
+      "selections": (v25/*: any*/),
       "type": "Money",
       "abstractKey": null
     }
   ],
   "storageKey": null
 },
-v23 = {
+v27 = {
   "alias": null,
   "args": null,
   "concreteType": "Image",
@@ -366,56 +398,56 @@ v23 = {
       "name": "resized",
       "plural": false,
       "selections": [
-        (v15/*: any*/)
+        (v19/*: any*/)
       ],
       "storageKey": "resized(height:320,width:320)"
     }
   ],
   "storageKey": null
 },
-v24 = [
+v28 = [
   {
     "kind": "Literal",
     "name": "first",
     "value": 1
   }
 ],
-v25 = {
+v29 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "address",
   "storageKey": null
 },
-v26 = {
+v30 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "city",
   "storageKey": null
 },
-v27 = {
+v31 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "state",
   "storageKey": null
 },
-v28 = {
+v32 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "postalCode",
   "storageKey": null
 },
-v29 = {
+v33 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "country",
   "storageKey": null
 },
-v30 = {
+v34 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -442,30 +474,34 @@ return {
           (v4/*: any*/),
           (v5/*: any*/),
           (v6/*: any*/),
+          (v7/*: any*/),
           (v8/*: any*/),
+          (v9/*: any*/),
+          (v10/*: any*/),
+          (v12/*: any*/),
           {
             "alias": null,
-            "args": (v9/*: any*/),
+            "args": (v13/*: any*/),
             "concreteType": "Artist",
             "kind": "LinkedField",
             "name": "artists",
             "plural": true,
             "selections": [
-              (v7/*: any*/),
+              (v11/*: any*/),
               (v3/*: any*/)
             ],
             "storageKey": "artists(shallow:true)"
           },
-          (v10/*: any*/),
-          (v11/*: any*/),
-          (v12/*: any*/),
-          (v13/*: any*/),
           (v14/*: any*/),
+          (v15/*: any*/),
           (v16/*: any*/),
           (v17/*: any*/),
           (v18/*: any*/),
-          (v19/*: any*/),
+          (v20/*: any*/),
+          (v21/*: any*/),
           (v22/*: any*/),
+          (v23/*: any*/),
+          (v26/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -474,7 +510,7 @@ return {
             "name": "partner",
             "plural": false,
             "selections": [
-              (v7/*: any*/),
+              (v11/*: any*/),
               (v3/*: any*/),
               {
                 "alias": null,
@@ -484,13 +520,13 @@ return {
                 "name": "profile",
                 "plural": false,
                 "selections": [
-                  (v23/*: any*/)
+                  (v27/*: any*/)
                 ],
                 "storageKey": null
               },
               {
                 "alias": null,
-                "args": (v24/*: any*/),
+                "args": (v28/*: any*/),
                 "concreteType": "LocationConnection",
                 "kind": "LinkedField",
                 "name": "locationsConnection",
@@ -512,11 +548,11 @@ return {
                         "name": "node",
                         "plural": false,
                         "selections": [
-                          (v25/*: any*/),
-                          (v26/*: any*/),
-                          (v27/*: any*/),
-                          (v28/*: any*/),
-                          (v29/*: any*/)
+                          (v29/*: any*/),
+                          (v30/*: any*/),
+                          (v31/*: any*/),
+                          (v32/*: any*/),
+                          (v33/*: any*/)
                         ],
                         "storageKey": null
                       }
@@ -555,31 +591,35 @@ return {
           (v4/*: any*/),
           (v5/*: any*/),
           (v6/*: any*/),
+          (v7/*: any*/),
           (v8/*: any*/),
+          (v9/*: any*/),
+          (v10/*: any*/),
+          (v12/*: any*/),
           {
             "alias": null,
-            "args": (v9/*: any*/),
+            "args": (v13/*: any*/),
             "concreteType": "Artist",
             "kind": "LinkedField",
             "name": "artists",
             "plural": true,
             "selections": [
-              (v7/*: any*/),
+              (v11/*: any*/),
               (v3/*: any*/),
-              (v30/*: any*/)
+              (v34/*: any*/)
             ],
             "storageKey": "artists(shallow:true)"
           },
-          (v10/*: any*/),
-          (v11/*: any*/),
-          (v12/*: any*/),
-          (v13/*: any*/),
           (v14/*: any*/),
+          (v15/*: any*/),
           (v16/*: any*/),
           (v17/*: any*/),
           (v18/*: any*/),
-          (v19/*: any*/),
+          (v20/*: any*/),
+          (v21/*: any*/),
           (v22/*: any*/),
+          (v23/*: any*/),
+          (v26/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -588,7 +628,7 @@ return {
             "name": "partner",
             "plural": false,
             "selections": [
-              (v7/*: any*/),
+              (v11/*: any*/),
               (v3/*: any*/),
               {
                 "alias": null,
@@ -598,14 +638,14 @@ return {
                 "name": "profile",
                 "plural": false,
                 "selections": [
-                  (v23/*: any*/),
-                  (v30/*: any*/)
+                  (v27/*: any*/),
+                  (v34/*: any*/)
                 ],
                 "storageKey": null
               },
               {
                 "alias": null,
-                "args": (v24/*: any*/),
+                "args": (v28/*: any*/),
                 "concreteType": "LocationConnection",
                 "kind": "LinkedField",
                 "name": "locationsConnection",
@@ -627,12 +667,12 @@ return {
                         "name": "node",
                         "plural": false,
                         "selections": [
-                          (v25/*: any*/),
-                          (v26/*: any*/),
-                          (v27/*: any*/),
-                          (v28/*: any*/),
                           (v29/*: any*/),
-                          (v30/*: any*/)
+                          (v30/*: any*/),
+                          (v31/*: any*/),
+                          (v32/*: any*/),
+                          (v33/*: any*/),
+                          (v34/*: any*/)
                         ],
                         "storageKey": null
                       }
@@ -642,27 +682,27 @@ return {
                 ],
                 "storageKey": "locationsConnection(first:1)"
               },
-              (v30/*: any*/)
+              (v34/*: any*/)
             ],
             "storageKey": null
           },
-          (v30/*: any*/)
+          (v34/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "bb9b260e758faead5a60279c576c96b2",
+    "cacheID": "5b112fd3ebf7a26e5d5527154b582502",
     "id": null,
     "metadata": {},
     "name": "ArtworkStructuredDataQuery",
     "operationKind": "query",
-    "text": "query ArtworkStructuredDataQuery(\n  $id: String!\n) {\n  artwork(id: $id) {\n    slug\n    href\n    title\n    medium\n    editionOf\n    mediumType {\n      name\n    }\n    artists(shallow: true) {\n      name\n      href\n      id\n    }\n    date\n    width\n    height\n    depth\n    metric\n    image {\n      large: resized(width: 1920, height: 1920) {\n        url\n        width\n        height\n      }\n    }\n    description(format: PLAIN)\n    isPriceHidden\n    availability\n    listPrice {\n      __typename\n      ... on PriceRange {\n        minPrice {\n          major\n          currencyCode\n        }\n        maxPrice {\n          major\n        }\n      }\n      ... on Money {\n        major\n        currencyCode\n      }\n    }\n    partner {\n      name\n      href\n      profile {\n        image {\n          resized(width: 320, height: 320) {\n            url\n          }\n        }\n        id\n      }\n      locationsConnection(first: 1) {\n        edges {\n          node {\n            address\n            city\n            state\n            postalCode\n            country\n            id\n          }\n        }\n      }\n      id\n    }\n    id\n  }\n}\n"
+    "text": "query ArtworkStructuredDataQuery(\n  $id: String!\n) {\n  artwork(id: $id) {\n    slug\n    href\n    title\n    medium\n    series\n    publisher\n    manufacturer\n    imageRights\n    editionOf\n    mediumType {\n      name\n    }\n    artists(shallow: true) {\n      name\n      href\n      id\n    }\n    date\n    width\n    height\n    depth\n    metric\n    image {\n      large: resized(width: 1920, height: 1920) {\n        url\n        width\n        height\n      }\n    }\n    description(format: PLAIN)\n    isPriceHidden\n    availability\n    listPrice {\n      __typename\n      ... on PriceRange {\n        minPrice {\n          major\n          currencyCode\n        }\n        maxPrice {\n          major\n        }\n      }\n      ... on Money {\n        major\n        currencyCode\n      }\n    }\n    partner {\n      name\n      href\n      profile {\n        image {\n          resized(width: 320, height: 320) {\n            url\n          }\n        }\n        id\n      }\n      locationsConnection(first: 1) {\n        edges {\n          node {\n            address\n            city\n            state\n            postalCode\n            country\n            id\n          }\n        }\n      }\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "4a36f3591a6af18d2da9018a89abbe70";
+(node as any).hash = "8d2170057d07d08042525f81610be5e1";
 
 export default node;

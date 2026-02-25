@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1e6d3bbd2dd86cea05e9ba2c98d6ee0d>>
+ * @generated SignedSource<<77d12b580ad1119ed09938175492ff80>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -147,7 +147,7 @@ return {
             "storageKey": null
           },
           {
-            "alias": "image_rights",
+            "alias": null,
             "args": null,
             "kind": "ScalarField",
             "name": "imageRights",
@@ -292,7 +292,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "113d2e286f960b3542db2824a333c1dc",
+    "cacheID": "a952b7911a9ccdba584f79f321deb6e0",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -335,7 +335,7 @@ return {
         "artwork.framed.details": (v5/*: any*/),
         "artwork.framed.label": (v5/*: any*/),
         "artwork.id": (v4/*: any*/),
-        "artwork.image_rights": (v5/*: any*/),
+        "artwork.imageRights": (v5/*: any*/),
         "artwork.internalID": (v4/*: any*/),
         "artwork.isUnlisted": {
           "enumValues": null,
@@ -368,7 +368,7 @@ return {
     },
     "name": "ArtworkDetailsAdditionalInfo_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkDetailsAdditionalInfo_Test_Query {\n  artwork(id: \"xxx\") {\n    ...ArtworkDetailsAdditionalInfo_artwork\n    id\n  }\n}\n\nfragment ArtworkDetailsAdditionalInfo_artwork on Artwork {\n  category\n  series\n  publisher\n  manufacturer\n  image_rights: imageRights\n  canRequestLotConditionsReport\n  internalID\n  isUnlisted\n  framed {\n    label\n    details\n  }\n  signatureInfo {\n    label\n    details\n  }\n  conditionDescription {\n    label\n    details\n  }\n  certificateOfAuthenticity {\n    label\n    details\n  }\n  mediumType {\n    __typename\n  }\n  dimensions {\n    in\n    cm\n  }\n  attributionClass {\n    name\n    id\n  }\n  medium\n  ...ArtworkDetailsMediumModal_artwork\n}\n\nfragment ArtworkDetailsMediumModal_artwork on Artwork {\n  mediumType {\n    name\n    longDescription\n  }\n}\n"
+    "text": "query ArtworkDetailsAdditionalInfo_Test_Query {\n  artwork(id: \"xxx\") {\n    ...ArtworkDetailsAdditionalInfo_artwork\n    id\n  }\n}\n\nfragment ArtworkDetailsAdditionalInfo_artwork on Artwork {\n  category\n  series\n  publisher\n  manufacturer\n  imageRights\n  canRequestLotConditionsReport\n  internalID\n  isUnlisted\n  framed {\n    label\n    details\n  }\n  signatureInfo {\n    label\n    details\n  }\n  conditionDescription {\n    label\n    details\n  }\n  certificateOfAuthenticity {\n    label\n    details\n  }\n  mediumType {\n    __typename\n  }\n  dimensions {\n    in\n    cm\n  }\n  attributionClass {\n    name\n    id\n  }\n  medium\n  ...ArtworkDetailsMediumModal_artwork\n}\n\nfragment ArtworkDetailsMediumModal_artwork on Artwork {\n  mediumType {\n    name\n    longDescription\n  }\n}\n"
   }
 };
 })();
