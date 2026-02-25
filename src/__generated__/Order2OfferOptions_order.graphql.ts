@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2bc4d47b9f01bef40ba37d0995e9c345>>
+ * @generated SignedSource<<b3e17809bf9cfb813c3ae2e5eee1b26d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,8 +9,10 @@
 // @ts-nocheck
 
 import { ReaderFragment } from 'relay-runtime';
+export type OrderSourceEnum = "ARTWORK_PAGE" | "INQUIRY" | "PARTNER_OFFER" | "PRIVATE_SALE" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type Order2OfferOptions_order$data = {
+  readonly buyerStateExpiresAt: string | null | undefined;
   readonly currencyCode: string;
   readonly lineItems: ReadonlyArray<{
     readonly artworkOrEditionSet: {
@@ -33,6 +35,7 @@ export type Order2OfferOptions_order$data = {
       readonly major: number;
     } | null | undefined;
   } | null | undefined>;
+  readonly source: OrderSourceEnum;
   readonly " $fragmentType": "Order2OfferOptions_order";
 };
 export type Order2OfferOptions_order$key = {
@@ -109,6 +112,20 @@ return {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
+      "name": "source",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "buyerStateExpiresAt",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "currencyCode",
       "storageKey": null
     },
@@ -165,6 +182,6 @@ return {
 };
 })();
 
-(node as any).hash = "59fd4f4f14dc1b13d922a103182f7640";
+(node as any).hash = "5b8efe775b89bdadcf318e959e1755af";
 
 export default node;

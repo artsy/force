@@ -27,13 +27,9 @@
     "detect-secrets:hook": "scripts/detect-secrets.sh hook",
     "detect-secrets:rescan": "scripts/detect-secrets.sh rescan",
     "detect-secrets:regen": "scripts/detect-secrets.sh regen",
-    "docker": "DOCKER_BUILDKIT=1; BUILDKIT_PROGRESS=plain; COMPOSE_DOCKER_CLI_BUILD=1; docker build .",
-    "docker:builder": "yarn docker --target builder -t force:builder",
-    "docker:electron": "yarn docker --target electron-runner -t force:electron",
-    "docker:force": "yarn docker -t force",
-    "docker:clean": "docker rmi force force:builder force:electron",
     "format-project": "yarn prettier format --write 'src/**/*.{ts,tsx,js,jsx}'",
     "format": "yarn prettier --write",
+    "hokusai": "yarn hokusai dev start --no-build",
     "jest": "node_modules/.bin/jest --config jest.config.js",
     "jest:debug": "node --inspect node_modules/.bin/jest --runInBand",
     "lint": "yarn biome lint --no-errors-on-unmatched",
@@ -71,7 +67,7 @@
     "sha.js": "^2.4.12"
   },
   "dependencies": {
-    "@artsy/cohesion": "4.346.0",
+    "@artsy/cohesion": "4.347.0",
     "@artsy/commerce_helpers": "artsy/commerce_helpers",
     "@artsy/detect-responsive-traits": "^0.2.0",
     "@artsy/dismissible": "^0.8.0",

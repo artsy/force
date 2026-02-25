@@ -317,21 +317,26 @@ const Order2OfferStepFormContent: React.FC<Order2OfferStepFormContentProps> = ({
       </Box>
 
       <Box
-        py={2}
+        pt={0}
+        pb={2}
         px={[2, 2, 4]}
         hidden={currentStep !== CheckoutStepState.ACTIVE}
       >
         {isPriceHidden ? (
-          <OfferInput name="offerValue" onBlur={onCustomOfferBlur} />
+          <>
+            <OfferInput name="offerValue" onBlur={onCustomOfferBlur} />
+            <Spacer y={4} />
+          </>
         ) : (
-          <Order2OfferOptions
-            order={orderData}
-            onOfferOptionSelected={onOfferOptionSelected}
-            onCustomOfferBlur={onCustomOfferBlur}
-          />
+          <>
+            <Order2OfferOptions
+              order={orderData}
+              onOfferOptionSelected={onOfferOptionSelected}
+              onCustomOfferBlur={onCustomOfferBlur}
+            />
+            <Spacer y={2} />
+          </>
         )}
-
-        <Spacer y={4} />
 
         <Flex flexDirection="column">
           <SectionHeading>Offer note</SectionHeading>

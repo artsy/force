@@ -306,7 +306,7 @@ describe("Order2PricingBreakdown", () => {
     expect(screen.queryByText("Exp.", { exact: false })).not.toBeInTheDocument()
   })
 
-  it("shows 'Waiting for offer' for offer orders with no amount yet", () => {
+  it("shows 'Waiting for your offer' for offer orders with no amount yet", () => {
     renderWithRelay({
       Me: () => ({
         order: {
@@ -341,9 +341,9 @@ describe("Order2PricingBreakdown", () => {
       }),
     })
 
-    // Subtotal should show "Waiting for offer"
+    // Subtotal should show "Waiting for your offer"
     const subtotalRow = screen.getByText("Your offer").parentElement
-    expect(subtotalRow).toHaveTextContent("Waiting for offer")
+    expect(subtotalRow).toHaveTextContent("Waiting for your offer")
 
     // Other lines should still show their fallback text
     const shippingRow = screen.getByText("Shipping").parentElement
