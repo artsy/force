@@ -17,6 +17,7 @@ import type { CheckoutErrorBannerMessage } from "Apps/Order2/Routes/Checkout/Com
 import { AddressDisplay } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/AddressDisplay"
 import { AddAddressForm } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/SavedAddressOptions/AddAddressForm"
 import { UpdateAddressForm } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/SavedAddressOptions/UpdateAddressForm"
+import { RadioOptionRow } from "Apps/Order2/Routes/Checkout/Components/RadioOptionRow"
 import {
   type ProcessedUserAddress,
   validateAddressFields,
@@ -235,16 +236,18 @@ export const SavedAddressOptions = ({
       {savedAddresses.map(processedAddress => {
         const { address, internalID, phoneNumberParsed } = processedAddress
         const isSelected = selectedAddress?.internalID === internalID
-        const backgroundColor = isSelected ? "mono5" : "mono0"
         const textColor = isSelected ? "mono100" : "mono60"
 
         return (
-          <Flex key={internalID} backgroundColor={backgroundColor} p={2}>
+          <RadioOptionRow
+            key={internalID}
+            isSelected={isSelected}
+            onClick={() => handleAddressClick(processedAddress)}
+          >
             <Radio
               flex={1}
               value={internalID}
               selected={isSelected}
-              onClick={() => handleAddressClick(processedAddress)}
               label={
                 <AddressDisplay
                   address={address}
@@ -256,7 +259,8 @@ export const SavedAddressOptions = ({
 
             <Clickable
               alignSelf="flex-start"
-              onClick={async () => {
+              onClick={e => {
+                e.stopPropagation()
                 setUserAddressMode({
                   mode: "edit",
                   address: processedAddress,
@@ -267,7 +271,7 @@ export const SavedAddressOptions = ({
                 Edit
               </Text>
             </Clickable>
-          </Flex>
+          </RadioOptionRow>
         )
       })}
 

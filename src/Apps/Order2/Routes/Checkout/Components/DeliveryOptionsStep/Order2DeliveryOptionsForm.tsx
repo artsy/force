@@ -5,11 +5,11 @@ import {
   Clickable,
   Flex,
   Radio,
-  RadioGroup,
   Spacer,
   Text,
   Tooltip,
 } from "@artsy/palette"
+import { RadioOptionRow } from "Apps/Order2/Routes/Checkout/Components/RadioOptionRow"
 import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
 import { SectionHeading } from "Apps/Order2/Components/SectionHeading"
 import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
@@ -261,22 +261,24 @@ const MultipleShippingOptionsForm = ({
 
   return (
     <Flex flexDirection="column">
-      <RadioGroup
-        defaultValue={selectedOption}
-        onSelect={selected => {
-          setSelectedOption(selected)
-          setFieldValue("deliveryOption", selected)
-          checkoutTracking.clickedSelectShippingOption(selected.type)
-        }}
-        gap={2}
-      >
-        {options.map((option, i) => {
-          const label = deliveryOptionLabel(option.type)
-          const timeEstimate = deliveryOptionTimeEstimate(option.type)
-          const [prefix, timeRange] = timeEstimate || []
+      {options.map((option, i) => {
+        const label = deliveryOptionLabel(option.type)
+        const timeEstimate = deliveryOptionTimeEstimate(option.type)
+        const [prefix, timeRange] = timeEstimate || []
+        const isSelected = selectedOption === option
 
-          return (
+        return (
+          <RadioOptionRow
+            key={`${option.type}:${i}`}
+            isSelected={isSelected}
+            onClick={() => {
+              setSelectedOption(option)
+              setFieldValue("deliveryOption", option)
+              checkoutTracking.clickedSelectShippingOption(option.type)
+            }}
+          >
             <Radio
+              flex={1}
               label={
                 <>
                   <Flex justifyContent="space-between" width="100%">
@@ -285,8 +287,8 @@ const MultipleShippingOptionsForm = ({
                   </Flex>
                 </>
               }
-              key={`${option.type}:${i}`}
               value={option}
+              selected={isSelected}
             >
               <Flex width="100%">
                 <Flex flexDirection="column">
@@ -296,19 +298,18 @@ const MultipleShippingOptionsForm = ({
                     </Text>
                   )}
 
-                  {option.type === "ARTSY_WHITE_GLOVE" &&
-                    selectedOption === option && (
-                      <Text variant="sm" color="mono60">
-                        This service includes custom packing, transportation on
-                        a fine art shuttle, and in-home delivery.
-                      </Text>
-                    )}
+                  {option.type === "ARTSY_WHITE_GLOVE" && isSelected && (
+                    <Text variant="sm" color="mono60">
+                      This service includes custom packing, transportation on a
+                      fine art shuttle, and in-home delivery.
+                    </Text>
+                  )}
                 </Flex>
               </Flex>
             </Radio>
-          )
-        })}
-      </RadioGroup>
+          </RadioOptionRow>
+        )
+      })}
     </Flex>
   )
 }

@@ -2,6 +2,7 @@ import { Flex, Radio, Spacer, Text } from "@artsy/palette"
 import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
 import { OfferInput } from "Apps/Order2/Routes/Checkout/Components/OfferStep/Components/OfferInput"
 import type { OfferFormProps } from "Apps/Order2/Routes/Checkout/Components/OfferStep/types"
+import { RadioOptionRow } from "Apps/Order2/Routes/Checkout/Components/RadioOptionRow"
 import createLogger from "Utils/logger"
 import { useCountdownTimer } from "Utils/Hooks/useCountdownTimer"
 import type { Order2OfferOptions_order$key } from "__generated__/Order2OfferOptions_order.graphql"
@@ -185,16 +186,15 @@ export const Order2OfferOptions: React.FC<Order2OfferOptionsProps> = ({
           isLimitedPartnerOffer && key === PriceOptionKey.MAX
         const showTimer = isGalleryOffer && timer.hasValidRemainingTime
         return (
-          <Flex
+          <RadioOptionRow
             key={key}
-            backgroundColor={isSelected ? "mono5" : "mono0"}
-            p={2}
+            isSelected={isSelected}
+            onClick={() => handleRadioSelect(key)}
           >
             <Radio
               flex={1}
               value={key}
               selected={isSelected}
-              onClick={() => handleRadioSelect(key)}
               label={
                 isGalleryOffer ? (
                   <Text variant="sm-display" color="blue100">
@@ -214,20 +214,17 @@ export const Order2OfferOptions: React.FC<Order2OfferOptionsProps> = ({
                 {showTimer && ` (Exp. ${timer.remainingTime})`}
               </Text>
             </Radio>
-          </Flex>
+          </RadioOptionRow>
         )
       })}
-      <Flex
-        backgroundColor={
-          selectedRadio === PriceOptionKey.CUSTOM ? "mono5" : "mono0"
-        }
-        p={2}
+      <RadioOptionRow
+        isSelected={selectedRadio === PriceOptionKey.CUSTOM}
+        onClick={() => handleRadioSelect(PriceOptionKey.CUSTOM)}
       >
         <Radio
           flex={1}
           value={PriceOptionKey.CUSTOM}
           selected={selectedRadio === PriceOptionKey.CUSTOM}
-          onClick={() => handleRadioSelect(PriceOptionKey.CUSTOM)}
           label="Other amount"
         >
           {selectedRadio === PriceOptionKey.CUSTOM && (
@@ -236,7 +233,7 @@ export const Order2OfferOptions: React.FC<Order2OfferOptionsProps> = ({
             </Flex>
           )}
         </Radio>
-      </Flex>
+      </RadioOptionRow>
     </Flex>
   )
 }
